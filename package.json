@@ -1,0 +1,21 @@
+{
+  "name": "golf-fpg",
+  "version": "2.0.0",
+  "description": "Pipeline de scorecards e análise de dados da Federação Portuguesa de Golfe",
+  "main": "golf-all.js",
+  "scripts": {
+    "login": "node golf-all.js --login 59252",
+    "update": "node golf-all.js --refresh --all",
+    "update:force": "node golf-all.js --force --all",
+    "render": "node golf-all.js --skip-download --all",
+    "index": "node generate-index.js",
+    "build": "npm run render && npm run index"
+  },
+  "keywords": ["golf", "fpg", "scorecards", "whs"],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "playwright": "^1.58.1"
+  }
+}

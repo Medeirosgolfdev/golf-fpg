@@ -1,0 +1,2156 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Golf FPG — Scorecards</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f8fafb;
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --text-dim: #64748b;
+    --green: #059669;
+    --green-light: #ecfdf5;
+    --green-dark: #047857;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .header {
+    background: linear-gradient(135deg, #047857, #059669, #0d9488);
+    color: white;
+    padding: 2rem 1.5rem;
+    text-align: center;
+  }
+  .header h1 { font-size: 1.8rem; font-weight: 700; }
+  .header p { opacity: 0.85; margin-top: 0.3rem; font-size: 0.95rem; }
+  .container { max-width: 900px; margin: 0 auto; padding: 1.5rem; }
+  .search-box {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 1rem;
+  }
+  .search-box:focus { border-color: var(--green); }
+  .stats { text-align: center; color: var(--text-dim); font-size: 0.85rem; margin-bottom: 1rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.75rem; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s;
+    display: block;
+  }
+  .card:hover { border-color: var(--green); box-shadow: 0 2px 8px rgba(5,150,105,0.12); transform: translateY(-1px); }
+  .card .name { font-weight: 600; font-size: 0.95rem; color: var(--text); }
+  .card .meta { font-size: 0.8rem; color: var(--text-dim); margin-top: 0.3rem; }
+  .card .hcp { display: inline-block; background: var(--green-light); color: var(--green-dark); padding: 0.1rem 0.5rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; margin-top: 0.4rem; }
+  .footer { text-align: center; padding: 2rem; color: var(--text-dim); font-size: 0.8rem; }
+  .empty { text-align: center; color: var(--text-dim); padding: 3rem; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>⛳ Golf FPG — Scorecards</h1>
+  <p>412 jogadores · Atualizado: 10 de fevereiro de 2026 às 18:59</p>
+</div>
+<div class="container">
+  <input type="text" class="search-box" placeholder="Pesquisar jogador, clube ou escalão..." id="search" autocomplete="off">
+  <div class="stats" id="stats">412 jogadores</div>
+  <div class="grid" id="grid">
+    <a class="card" href="56026/analysis/by-course-ui.html" data-search="afonso aniceto [object object] outros 56026">
+      <div class="name">Afonso Aniceto</div>
+      <div class="meta">[object Object] · Outros</div>
+      <span class="hcp">HCP 45.1</span>
+    </a>
+    <a class="card" href="20877/analysis/by-course-ui.html" data-search="afonso bento [object object] outros 20877">
+      <div class="name">Afonso Bento</div>
+      <div class="meta">[object Object] · Outros</div>
+      <span class="hcp">HCP 2.7</span>
+    </a>
+    <a class="card" href="31831/analysis/by-course-ui.html" data-search="afonso da costa rodrigues [object object] sub-21 31831">
+      <div class="name">Afonso Da Costa Rodrigues</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 2.8</span>
+    </a>
+    <a class="card" href="46480/analysis/by-course-ui.html" data-search="afonso de sousa pinto [object object] sub-14 46480">
+      <div class="name">Afonso de Sousa Pinto</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 10.2</span>
+    </a>
+    <a class="card" href="44722/analysis/by-course-ui.html" data-search="afonso guedes [object object] sub-21 44722">
+      <div class="name">Afonso Guedes</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 8.4</span>
+    </a>
+    <a class="card" href="34430/analysis/by-course-ui.html" data-search="afonso josé paim sousa [object object] sub-21 34430">
+      <div class="name">Afonso José Paim Sousa</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 10.7</span>
+    </a>
+    <a class="card" href="47819/analysis/by-course-ui.html" data-search="afonso paiva gonçalves [object object] sub-14 47819">
+      <div class="name">Afonso Paiva Gonçalves</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 15.1</span>
+    </a>
+    <a class="card" href="48629/analysis/by-course-ui.html" data-search="afonso ribeiro lima [object object] sub-12 48629">
+      <div class="name">Afonso Ribeiro Lima</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 18.3</span>
+    </a>
+    <a class="card" href="40452/analysis/by-course-ui.html" data-search="afonso rui oliveira [object object] sub-21 40452">
+      <div class="name">Afonso Rui Oliveira</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP -2.4</span>
+    </a>
+    <a class="card" href="46309/analysis/by-course-ui.html" data-search="afonso silva pinto [object object] sub-16 46309">
+      <div class="name">Afonso Silva Pinto</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 5.4</span>
+    </a>
+    <a class="card" href="55301/analysis/by-course-ui.html" data-search="afonso sousa [object object] sub-16 55301">
+      <div class="name">Afonso Sousa</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 23.7</span>
+    </a>
+    <a class="card" href="34895/analysis/by-course-ui.html" data-search="alberto costa marques [object object] sub-21 34895">
+      <div class="name">Alberto Costa Marques</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 5.1</span>
+    </a>
+    <a class="card" href="41294/analysis/by-course-ui.html" data-search="alexander amey [object object] sub-21 41294">
+      <div class="name">Alexander Amey</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP -0.9</span>
+    </a>
+    <a class="card" href="31408/analysis/by-course-ui.html" data-search="alexandre castelo [object object] sub-24 31408">
+      <div class="name">Alexandre Castelo</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 0</span>
+    </a>
+    <a class="card" href="48102/analysis/by-course-ui.html" data-search="alexandre lopes [object object] sub-18 48102">
+      <div class="name">Alexandre Lopes</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      
+    </a>
+    <a class="card" href="58937/analysis/by-course-ui.html" data-search="alfie dunbar [object object] sub-14 58937">
+      <div class="name">Alfie Dunbar</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 5.2</span>
+    </a>
+    <a class="card" href="58043/analysis/by-course-ui.html" data-search="alfie kelley [object object] sub-14 58043">
+      <div class="name">Alfie Kelley</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 18.8</span>
+    </a>
+    <a class="card" href="46481/analysis/by-course-ui.html" data-search="alfredo cunha [object object] sub-21 46481">
+      <div class="name">Alfredo Cunha</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 8.5</span>
+    </a>
+    <a class="card" href="54551/analysis/by-course-ui.html" data-search="alice araújo [object object] sub-14 54551">
+      <div class="name">Alice Araújo</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 54</span>
+    </a>
+    <a class="card" href="45429/analysis/by-course-ui.html" data-search="alice costa mendes [object object] sub-14 45429">
+      <div class="name">Alice Costa Mendes</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 18.9</span>
+    </a>
+    <a class="card" href="57936/analysis/by-course-ui.html" data-search="alina bingel [object object] sub-24 57936">
+      <div class="name">Alina Bingel</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP -3.4</span>
+    </a>
+    <a class="card" href="42690/analysis/by-course-ui.html" data-search="aline marques [object object] sub-21 42690">
+      <div class="name">Aline Marques</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 4.5</span>
+    </a>
+    <a class="card" href="40928/analysis/by-course-ui.html" data-search="alkinoos flippes [object object] sub-24 40928">
+      <div class="name">Alkinoos Flippes</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 0.5</span>
+    </a>
+    <a class="card" href="38233/analysis/by-course-ui.html" data-search="amélia gabin [object object] sub-18 38233">
+      <div class="name">Amélia Gabin</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP -2.6</span>
+    </a>
+    <a class="card" href="31899/analysis/by-course-ui.html" data-search="amelie abreu [object object] sub-24 31899">
+      <div class="name">Amelie Abreu</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 3.2</span>
+    </a>
+    <a class="card" href="31830/analysis/by-course-ui.html" data-search="ana da costa rodrigues [object object] sub-21 31830">
+      <div class="name">Ana Da Costa Rodrigues</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP -0.4</span>
+    </a>
+    <a class="card" href="55056/analysis/by-course-ui.html" data-search="andré castro mendes [object object] sub-18 55056">
+      <div class="name">André Castro Mendes</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 3.7</span>
+    </a>
+    <a class="card" href="42952/analysis/by-course-ui.html" data-search="andré ferreira [object object] sub-21 42952">
+      <div class="name">André Ferreira</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 8.8</span>
+    </a>
+    <a class="card" href="41121/analysis/by-course-ui.html" data-search="andre goncalves [object object] sub-18 41121">
+      <div class="name">andre goncalves</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 6.7</span>
+    </a>
+    <a class="card" href="41173/analysis/by-course-ui.html" data-search="andré neto lopes [object object] sub-21 41173">
+      <div class="name">André Neto Lopes</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 0</span>
+    </a>
+    <a class="card" href="52647/analysis/by-course-ui.html" data-search="andré petim [object object] outros 52647">
+      <div class="name">André Petim</div>
+      <div class="meta">[object Object] · Outros</div>
+      
+    </a>
+    <a class="card" href="40473/analysis/by-course-ui.html" data-search="andré von hafe [object object] sub-14 40473">
+      <div class="name">André Von Hafe</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 18.3</span>
+    </a>
+    <a class="card" href="51523/analysis/by-course-ui.html" data-search="angelina gao [object object] sub-16 51523">
+      <div class="name">Angelina Gao</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 4</span>
+    </a>
+    <a class="card" href="9572/analysis/by-course-ui.html" data-search="antónio ferreira da silva jr. [object object] outros 9572">
+      <div class="name">António Ferreira Da Silva Jr.</div>
+      <div class="meta">[object Object] · Outros</div>
+      
+    </a>
+    <a class="card" href="39116/analysis/by-course-ui.html" data-search="antónio maria barreto [object object] sub-21 39116">
+      <div class="name">António Maria Barreto</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 7.3</span>
+    </a>
+    <a class="card" href="40992/analysis/by-course-ui.html" data-search="antónio maria cavalinhos [object object] sub-18 40992">
+      <div class="name">António Maria Cavalinhos</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 8.3</span>
+    </a>
+    <a class="card" href="36148/analysis/by-course-ui.html" data-search="antónio mendes [object object] sub-21 36148">
+      <div class="name">António Mendes</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 1.8</span>
+    </a>
+    <a class="card" href="36901/analysis/by-course-ui.html" data-search="antónio pedro frade [object object] sub-18 36901">
+      <div class="name">António Pedro Frade</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 6.7</span>
+    </a>
+    <a class="card" href="52431/analysis/by-course-ui.html" data-search="antónio ribeiro rebelo [object object] sub-12 52431">
+      <div class="name">António Ribeiro Rebelo</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 52.9</span>
+    </a>
+    <a class="card" href="37680/analysis/by-course-ui.html" data-search="antónio teixeira e costa [object object] sub-21 37680">
+      <div class="name">António Teixeira e Costa</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 0.7</span>
+    </a>
+    <a class="card" href="50703/analysis/by-course-ui.html" data-search="antónio vasco [object object] sub-12 50703">
+      <div class="name">António Vasco</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 27.4</span>
+    </a>
+    <a class="card" href="52088/analysis/by-course-ui.html" data-search="archie storey [object object] sub-21 52088">
+      <div class="name">Archie Storey</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 11.3</span>
+    </a>
+    <a class="card" href="37318/analysis/by-course-ui.html" data-search="arthur manson [object object] sub-21 37318">
+      <div class="name">Arthur Manson</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 9.9</span>
+    </a>
+    <a class="card" href="44649/analysis/by-course-ui.html" data-search="artur santos [object object] sub-10 44649">
+      <div class="name">Artur Santos</div>
+      <div class="meta">[object Object] · Sub-10</div>
+      <span class="hcp">HCP 36.9</span>
+    </a>
+    <a class="card" href="59008/analysis/by-course-ui.html" data-search="artur sobrinho [object object] outros 59008">
+      <div class="name">Artur Sobrinho</div>
+      <div class="meta">[object Object] · Outros</div>
+      <span class="hcp">HCP 54</span>
+    </a>
+    <a class="card" href="47869/analysis/by-course-ui.html" data-search="ashton everest [object object] sub-16 47869">
+      <div class="name">Ashton Everest</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 4.6</span>
+    </a>
+    <a class="card" href="50528/analysis/by-course-ui.html" data-search="áurea matilda carvalho camacho [object object] sub-12 50528">
+      <div class="name">Áurea Matilda Carvalho Camacho</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 54</span>
+    </a>
+    <a class="card" href="46026/analysis/by-course-ui.html" data-search="beatriz mendes [object object] sub-14 46026">
+      <div class="name">Beatriz Mendes</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 40.3</span>
+    </a>
+    <a class="card" href="50247/analysis/by-course-ui.html" data-search="beau delfortrie [object object] sub-16 50247">
+      <div class="name">Beau Delfortrie</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 9.9</span>
+    </a>
+    <a class="card" href="50299/analysis/by-course-ui.html" data-search="benjamim tito martins [object object] sub-10 50299">
+      <div class="name">Benjamim Tito Martins</div>
+      <div class="meta">[object Object] · Sub-10</div>
+      <span class="hcp">HCP 23.4</span>
+    </a>
+    <a class="card" href="6437/analysis/by-course-ui.html" data-search="bento louro [object object] outros 6437">
+      <div class="name">Bento Louro</div>
+      <div class="meta">[object Object] · Outros</div>
+      <span class="hcp">HCP 7.6</span>
+    </a>
+    <a class="card" href="40682/analysis/by-course-ui.html" data-search="bernardo costa pinheiro [object object] sub-21 40682">
+      <div class="name">Bernardo Costa Pinheiro</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP -2.8</span>
+    </a>
+    <a class="card" href="49926/analysis/by-course-ui.html" data-search="bernardo matias [object object] sub-14 49926">
+      <div class="name">Bernardo Matias</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 48.7</span>
+    </a>
+    <a class="card" href="40754/analysis/by-course-ui.html" data-search="bernardo pinto [object object] sub-24 40754">
+      <div class="name">Bernardo Pinto</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 4.8</span>
+    </a>
+    <a class="card" href="40563/analysis/by-course-ui.html" data-search="bernardo tito martins [object object] sub-18 40563">
+      <div class="name">Bernardo Tito Martins</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 0.3</span>
+    </a>
+    <a class="card" href="51937/analysis/by-course-ui.html" data-search="bia sampio mesquita [object object] sub-21 51937">
+      <div class="name">Bia Sampio Mesquita</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 5.5</span>
+    </a>
+    <a class="card" href="44615/analysis/by-course-ui.html" data-search="bobby beasley [object object] sub-18 44615">
+      <div class="name">Bobby Beasley</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 5</span>
+    </a>
+    <a class="card" href="20292/analysis/by-course-ui.html" data-search="brandon hobley [object object] outros 20292">
+      <div class="name">Brandon Hobley</div>
+      <div class="meta">[object Object] · Outros</div>
+      <span class="hcp">HCP 0.5</span>
+    </a>
+    <a class="card" href="43359/analysis/by-course-ui.html" data-search="brooks barker [object object] sub-16 43359">
+      <div class="name">Brooks Barker</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 4.1</span>
+    </a>
+    <a class="card" href="55697/analysis/by-course-ui.html" data-search="callum ferguson [object object] sub-18 55697">
+      <div class="name">Callum Ferguson</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 11.4</span>
+    </a>
+    <a class="card" href="54241/analysis/by-course-ui.html" data-search="callum pearce [object object] sub-21 54241">
+      <div class="name">Callum Pearce</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP -0.3</span>
+    </a>
+    <a class="card" href="46297/analysis/by-course-ui.html" data-search="camila pazos [object object] sub-16 46297">
+      <div class="name">Camila Pazos</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 1.9</span>
+    </a>
+    <a class="card" href="45425/analysis/by-course-ui.html" data-search="carlos gonçalves dias [object object] sub-12 45425">
+      <div class="name">Carlos Gonçalves Dias</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 47.3</span>
+    </a>
+    <a class="card" href="47374/analysis/by-course-ui.html" data-search="carlota braz gil [object object] sub-14 47374">
+      <div class="name">Carlota Braz Gil</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 13.6</span>
+    </a>
+    <a class="card" href="50628/analysis/by-course-ui.html" data-search="carlotta balzer [object object] sub-14 50628">
+      <div class="name">Carlotta Balzer</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 18.7</span>
+    </a>
+    <a class="card" href="46314/analysis/by-course-ui.html" data-search="carolina carvalho paiva [object object] sub-12 46314">
+      <div class="name">Carolina Carvalho Paiva</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 47</span>
+    </a>
+    <a class="card" href="37704/analysis/by-course-ui.html" data-search="carolina moutinho ribeiro [object object] sub-21 37704">
+      <div class="name">Carolina Moutinho Ribeiro</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 7.8</span>
+    </a>
+    <a class="card" href="49328/analysis/by-course-ui.html" data-search="catarina loureiro [object object] sub-12 49328">
+      <div class="name">Catarina Loureiro</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 20.1</span>
+    </a>
+    <a class="card" href="48794/analysis/by-course-ui.html" data-search="catarina sousa conceição [object object] sub-14 48794">
+      <div class="name">Catarina Sousa Conceição</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 10.9</span>
+    </a>
+    <a class="card" href="46873/analysis/by-course-ui.html" data-search="catarina valério [object object] sub-14 46873">
+      <div class="name">Catarina Valério</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 18.1</span>
+    </a>
+    <a class="card" href="48132/analysis/by-course-ui.html" data-search="charlie lora silva [object object] sub-12 48132">
+      <div class="name">Charlie Lora Silva</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 34.1</span>
+    </a>
+    <a class="card" href="45812/analysis/by-course-ui.html" data-search="clara trindade [object object] sub-16 45812">
+      <div class="name">Clara Trindade</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 7.8</span>
+    </a>
+    <a class="card" href="50919/analysis/by-course-ui.html" data-search="clementy tarasov [object object] sub-16 50919">
+      <div class="name">Clementy Tarasov</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 8.4</span>
+    </a>
+    <a class="card" href="55398/analysis/by-course-ui.html" data-search="cole wall [object object] sub-14 55398">
+      <div class="name">Cole Wall</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 29.6</span>
+    </a>
+    <a class="card" href="37875/analysis/by-course-ui.html" data-search="constança mendonça [object object] sub-21 37875">
+      <div class="name">Constança Mendonça</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP -0.4</span>
+    </a>
+    <a class="card" href="58581/analysis/by-course-ui.html" data-search="cooper britton [object object] sub-21 58581">
+      <div class="name">Cooper Britton</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 5.4</span>
+    </a>
+    <a class="card" href="57640/analysis/by-course-ui.html" data-search="daniel augusto [object object] outros 57640">
+      <div class="name">Daniel Augusto</div>
+      <div class="meta">[object Object] · Outros</div>
+      <span class="hcp">HCP 54</span>
+    </a>
+    <a class="card" href="27849/analysis/by-course-ui.html" data-search="daniel da costa rodrigues [object object] sub-24 27849">
+      <div class="name">Daniel Da Costa Rodrigues</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP -5</span>
+    </a>
+    <a class="card" href="54888/analysis/by-course-ui.html" data-search="daniel dwyer [object object] sub-14 54888">
+      <div class="name">Daniel Dwyer</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 8.7</span>
+    </a>
+    <a class="card" href="51949/analysis/by-course-ui.html" data-search="david filip jun. [object object] sub-14 51949">
+      <div class="name">David Filip Jun.</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 7.8</span>
+    </a>
+    <a class="card" href="48164/analysis/by-course-ui.html" data-search="david stocksreiter ferreira [object object] sub-14 48164">
+      <div class="name">David Stocksreiter Ferreira</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 35.6</span>
+    </a>
+    <a class="card" href="36028/analysis/by-course-ui.html" data-search="davide joão ribeiro [object object] sub-21 36028">
+      <div class="name">Davide João Ribeiro</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 7.7</span>
+    </a>
+    <a class="card" href="36832/analysis/by-course-ui.html" data-search="diana mendes ribeiro [object object] sub-24 36832">
+      <div class="name">Diana Mendes Ribeiro</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 6.2</span>
+    </a>
+    <a class="card" href="49215/analysis/by-course-ui.html" data-search="diego lourenço [object object] sub-21 49215">
+      <div class="name">Diego Lourenço</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP -3.8</span>
+    </a>
+    <a class="card" href="49342/analysis/by-course-ui.html" data-search="dinis henriques [object object] sub-12 49342">
+      <div class="name">Dinis Henriques</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 41.3</span>
+    </a>
+    <a class="card" href="40910/analysis/by-course-ui.html" data-search="dinis silva [object object] sub-21 40910">
+      <div class="name">Dinis Silva</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 3.3</span>
+    </a>
+    <a class="card" href="36678/analysis/by-course-ui.html" data-search="dinis silva rebelo [object object] sub-21 36678">
+      <div class="name">Dinis Silva Rebelo</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 2.3</span>
+    </a>
+    <a class="card" href="45343/analysis/by-course-ui.html" data-search="diogo afonso [object object] sub-21 45343">
+      <div class="name">Diogo Afonso</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 8.9</span>
+    </a>
+    <a class="card" href="56632/analysis/by-course-ui.html" data-search="diogo guilherme [object object] sub-14 56632">
+      <div class="name">Diogo Guilherme</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 19</span>
+    </a>
+    <a class="card" href="49717/analysis/by-course-ui.html" data-search="diogo lima [object object] sub-14 49717">
+      <div class="name">Diogo Lima</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 11.9</span>
+    </a>
+    <a class="card" href="35874/analysis/by-course-ui.html" data-search="diogo marques lopes [object object] sub-21 35874">
+      <div class="name">Diogo Marques Lopes</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 5.4</span>
+    </a>
+    <a class="card" href="40093/analysis/by-course-ui.html" data-search="diogo pinto barbosa [object object] sub-21 40093">
+      <div class="name">Diogo Pinto Barbosa</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 6.8</span>
+    </a>
+    <a class="card" href="39524/analysis/by-course-ui.html" data-search="diogo salgueiro [object object] sub-24 39524">
+      <div class="name">Diogo Salgueiro</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 2.5</span>
+    </a>
+    <a class="card" href="56654/analysis/by-course-ui.html" data-search="diogo sequeira [object object] sub-16 56654">
+      <div class="name">Diogo Sequeira</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 4.9</span>
+    </a>
+    <a class="card" href="55954/analysis/by-course-ui.html" data-search="diogo silva [object object] sub-14 55954">
+      <div class="name">Diogo Silva</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 36</span>
+    </a>
+    <a class="card" href="34186/analysis/by-course-ui.html" data-search="diogo silva pinto rocha [object object] sub-21 34186">
+      <div class="name">Diogo Silva Pinto Rocha</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 0</span>
+    </a>
+    <a class="card" href="45475/analysis/by-course-ui.html" data-search="diogo vieira [object object] sub-21 45475">
+      <div class="name">Diogo Vieira</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 8.3</span>
+    </a>
+    <a class="card" href="58984/analysis/by-course-ui.html" data-search="dominic kowalczewski [object object] outros 58984">
+      <div class="name">Dominic Kowalczewski</div>
+      <div class="meta">[object Object] · Outros</div>
+      <span class="hcp">HCP 54</span>
+    </a>
+    <a class="card" href="35814/analysis/by-course-ui.html" data-search="duarte gonçalves [object object] sub-21 35814">
+      <div class="name">Duarte Gonçalves</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 1.7</span>
+    </a>
+    <a class="card" href="48531/analysis/by-course-ui.html" data-search="duarte soares franco [object object] sub-16 48531">
+      <div class="name">Duarte Soares Franco</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 8.3</span>
+    </a>
+    <a class="card" href="33815/analysis/by-course-ui.html" data-search="eduardo bianchi [object object] sub-21 33815">
+      <div class="name">Eduardo Bianchi</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 4</span>
+    </a>
+    <a class="card" href="55727/analysis/by-course-ui.html" data-search="eduardo capello moraes [object object] sub-18 55727">
+      <div class="name">Eduardo Capello Moraes</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 8.4</span>
+    </a>
+    <a class="card" href="51182/analysis/by-course-ui.html" data-search="eduardo rocha ferreira [object object] sub-12 51182">
+      <div class="name">Eduardo Rocha Ferreira</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 23.4</span>
+    </a>
+    <a class="card" href="56803/analysis/by-course-ui.html" data-search="elena leblond [object object] sub-14 56803">
+      <div class="name">Elena Leblond</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP -0.3</span>
+    </a>
+    <a class="card" href="57134/analysis/by-course-ui.html" data-search="eli vasily [object object] sub-24 57134">
+      <div class="name">Eli Vasily</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 6.2</span>
+    </a>
+    <a class="card" href="46475/analysis/by-course-ui.html" data-search="elisa garcez [object object] sub-18 46475">
+      <div class="name">Elisa Garcez</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 4.9</span>
+    </a>
+    <a class="card" href="42374/analysis/by-course-ui.html" data-search="ethan prybys orton [object object] sub-16 42374">
+      <div class="name">Ethan Prybys Orton</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 3.5</span>
+    </a>
+    <a class="card" href="48933/analysis/by-course-ui.html" data-search="ethan sutherland [object object] sub-16 48933">
+      <div class="name">Ethan Sutherland</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 4.1</span>
+    </a>
+    <a class="card" href="46437/analysis/by-course-ui.html" data-search="eva silva [object object] sub-16 46437">
+      <div class="name">Eva Silva</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 1.3</span>
+    </a>
+    <a class="card" href="28894/analysis/by-course-ui.html" data-search="filipa capelo [object object] sub-24 28894">
+      <div class="name">Filipa Capelo</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP -0.9</span>
+    </a>
+    <a class="card" href="46591/analysis/by-course-ui.html" data-search="filipe pinheiro [object object] sub-16 46591">
+      <div class="name">Filipe Pinheiro</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 3.1</span>
+    </a>
+    <a class="card" href="55269/analysis/by-course-ui.html" data-search="finn gordon [object object] sub-14 55269">
+      <div class="name">Finn Gordon</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 6</span>
+    </a>
+    <a class="card" href="49209/analysis/by-course-ui.html" data-search="florence murtagh [object object] sub-14 49209">
+      <div class="name">Florence Murtagh</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 44</span>
+    </a>
+    <a class="card" href="59452/analysis/by-course-ui.html" data-search="flynn barker [object object] sub-16 59452">
+      <div class="name">Flynn Barker</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 7.1</span>
+    </a>
+    <a class="card" href="40981/analysis/by-course-ui.html" data-search="francisca ferreira da costa [object object] sub-16 40981">
+      <div class="name">Francisca Ferreira Da Costa</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP -1.9</span>
+    </a>
+    <a class="card" href="53304/analysis/by-course-ui.html" data-search="francisca ribeiro fragoso [object object] sub-12 53304">
+      <div class="name">Francisca Ribeiro Fragoso</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 28.3</span>
+    </a>
+    <a class="card" href="40958/analysis/by-course-ui.html" data-search="francisca rocha [object object] sub-21 40958">
+      <div class="name">Francisca Rocha</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP -1.8</span>
+    </a>
+    <a class="card" href="43832/analysis/by-course-ui.html" data-search="francisca salgado [object object] sub-18 43832">
+      <div class="name">Francisca Salgado</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 0.8</span>
+    </a>
+    <a class="card" href="46009/analysis/by-course-ui.html" data-search="francisco anahory assis [object object] sub-18 46009">
+      <div class="name">Francisco Anahory Assis</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP -0.1</span>
+    </a>
+    <a class="card" href="40318/analysis/by-course-ui.html" data-search="francisco costa mendes [object object] sub-18 40318">
+      <div class="name">Francisco Costa Mendes</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 5.7</span>
+    </a>
+    <a class="card" href="56718/analysis/by-course-ui.html" data-search="francisco freitas [object object] outros 56718">
+      <div class="name">Francisco Freitas</div>
+      <div class="meta">[object Object] · Outros</div>
+      <span class="hcp">HCP 54</span>
+    </a>
+    <a class="card" href="54255/analysis/by-course-ui.html" data-search="francisco ivo de carvalho [object object] sub-10 54255">
+      <div class="name">Francisco Ivo de Carvalho</div>
+      <div class="meta">[object Object] · Sub-10</div>
+      <span class="hcp">HCP 33.3</span>
+    </a>
+    <a class="card" href="52713/analysis/by-course-ui.html" data-search="francisco lopes [object object] sub-10 52713">
+      <div class="name">Francisco Lopes</div>
+      <div class="meta">[object Object] · Sub-10</div>
+      <span class="hcp">HCP 27.5</span>
+    </a>
+    <a class="card" href="46299/analysis/by-course-ui.html" data-search="francisco nunes (jr) [object object] sub-14 46299">
+      <div class="name">Francisco Nunes (jr)</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 5.9</span>
+    </a>
+    <a class="card" href="40534/analysis/by-course-ui.html" data-search="francisco reis [object object] sub-16 40534">
+      <div class="name">Francisco Reis</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP -0.4</span>
+    </a>
+    <a class="card" href="39097/analysis/by-course-ui.html" data-search="francisco saraiva [object object] sub-14 39097">
+      <div class="name">Francisco Saraiva</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 7.9</span>
+    </a>
+    <a class="card" href="33823/analysis/by-course-ui.html" data-search="francisco sousa de oliveira [object object] sub-24 33823">
+      <div class="name">Francisco Sousa de Oliveira</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 6.9</span>
+    </a>
+    <a class="card" href="52856/analysis/by-course-ui.html" data-search="francisco vilardell carvalho [object object] sub-14 52856">
+      <div class="name">Francisco Vilardell Carvalho</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 11.1</span>
+    </a>
+    <a class="card" href="58936/analysis/by-course-ui.html" data-search="frankie dunbar-davies [object object] sub-10 58936">
+      <div class="name">Frankie Dunbar-Davies</div>
+      <div class="meta">[object Object] · Sub-10</div>
+      <span class="hcp">HCP 32</span>
+    </a>
+    <a class="card" href="41613/analysis/by-course-ui.html" data-search="frederico almeida da silva [object object] sub-16 41613">
+      <div class="name">Frederico Almeida da Silva</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 8.8</span>
+    </a>
+    <a class="card" href="53838/analysis/by-course-ui.html" data-search="gabriel costa [object object] sub-12 53838">
+      <div class="name">Gabriel Costa</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 21.4</span>
+    </a>
+    <a class="card" href="33811/analysis/by-course-ui.html" data-search="gabriel fantasia leite [object object] sub-21 33811">
+      <div class="name">Gabriel Fantasia Leite</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 4.5</span>
+    </a>
+    <a class="card" href="50526/analysis/by-course-ui.html" data-search="gabriel guimarães mota [object object] sub-14 50526">
+      <div class="name">Gabriel Guimarães Mota</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 27.9</span>
+    </a>
+    <a class="card" href="43053/analysis/by-course-ui.html" data-search="gabriel marques guerreiro [object object] sub-18 43053">
+      <div class="name">Gabriel Marques Guerreiro</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 4.4</span>
+    </a>
+    <a class="card" href="37010/analysis/by-course-ui.html" data-search="gabriel sardo [object object] sub-18 37010">
+      <div class="name">Gabriel Sardo</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP -0.9</span>
+    </a>
+    <a class="card" href="51074/analysis/by-course-ui.html" data-search="gaspard maes [object object] sub-16 51074">
+      <div class="name">Gaspard Maes</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 0.8</span>
+    </a>
+    <a class="card" href="59252/analysis/by-course-ui.html" data-search="gastão thomaz medeiros [object object] outros 59252">
+      <div class="name">Gastão Thomaz Medeiros</div>
+      <div class="meta">[object Object] · Outros</div>
+      <span class="hcp">HCP 54</span>
+    </a>
+    <a class="card" href="46415/analysis/by-course-ui.html" data-search="gil martins gonçalves [object object] sub-14 46415">
+      <div class="name">Gil Martins Gonçalves</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 18.3</span>
+    </a>
+    <a class="card" href="47810/analysis/by-course-ui.html" data-search="gil ribeiro [object object] sub-14 47810">
+      <div class="name">Gil Ribeiro</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 23.5</span>
+    </a>
+    <a class="card" href="41461/analysis/by-course-ui.html" data-search="gino vassily sganzerla [object object] sub-18 41461">
+      <div class="name">Gino Vassily Sganzerla</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 8.9</span>
+    </a>
+    <a class="card" href="39900/analysis/by-course-ui.html" data-search="gisele morna [object object] sub-24 39900">
+      <div class="name">Gisele Morna</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 0.3</span>
+    </a>
+    <a class="card" href="52773/analysis/by-course-ui.html" data-search="gonçalo albuquerque [object object] sub-18 52773">
+      <div class="name">Gonçalo Albuquerque</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 11.4</span>
+    </a>
+    <a class="card" href="46395/analysis/by-course-ui.html" data-search="gonçalo maia [object object] sub-16 46395">
+      <div class="name">Gonçalo Maia</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 9.4</span>
+    </a>
+    <a class="card" href="40761/analysis/by-course-ui.html" data-search="gonçalo mendes [object object] sub-24 40761">
+      <div class="name">Gonçalo Mendes</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 3.7</span>
+    </a>
+    <a class="card" href="55270/analysis/by-course-ui.html" data-search="grace gordon [object object] sub-16 55270">
+      <div class="name">Grace Gordon</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 3.6</span>
+    </a>
+    <a class="card" href="54550/analysis/by-course-ui.html" data-search="gui silva [object object] sub-12 54550">
+      <div class="name">Gui Silva</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 54</span>
+    </a>
+    <a class="card" href="46414/analysis/by-course-ui.html" data-search="guido martins gonçalves [object object] sub-14 46414">
+      <div class="name">Guido Martins Gonçalves</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 14.6</span>
+    </a>
+    <a class="card" href="57454/analysis/by-course-ui.html" data-search="guilherme batista de matos [object object] sub-14 57454">
+      <div class="name">Guilherme Batista de Matos</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 40.1</span>
+    </a>
+    <a class="card" href="32252/analysis/by-course-ui.html" data-search="guilherme brehm [object object] sub-24 32252">
+      <div class="name">Guilherme Brehm</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 5.3</span>
+    </a>
+    <a class="card" href="42205/analysis/by-course-ui.html" data-search="guilherme grabner moreira [object object] sub-18 42205">
+      <div class="name">Guilherme Grabner Moreira</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 1.5</span>
+    </a>
+    <a class="card" href="52724/analysis/by-course-ui.html" data-search="guilherme oliveira alves [object object] sub-14 52724">
+      <div class="name">Guilherme Oliveira Alves</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 31.6</span>
+    </a>
+    <a class="card" href="57903/analysis/by-course-ui.html" data-search="guo jiyang [object object] sub-10 57903">
+      <div class="name">Guo Jiyang</div>
+      <div class="meta">[object Object] · Sub-10</div>
+      <span class="hcp">HCP 35.3</span>
+    </a>
+    <a class="card" href="57904/analysis/by-course-ui.html" data-search="guo ziyang [object object] sub-12 57904">
+      <div class="name">Guo Ziyang</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 11.4</span>
+    </a>
+    <a class="card" href="49300/analysis/by-course-ui.html" data-search="gustavo barros silva ramos [object object] sub-14 49300">
+      <div class="name">Gustavo Barros Silva Ramos</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 29.4</span>
+    </a>
+    <a class="card" href="32263/analysis/by-course-ui.html" data-search="gustavo monteiro [object object] sub-24 32263">
+      <div class="name">Gustavo Monteiro</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 5</span>
+    </a>
+    <a class="card" href="46153/analysis/by-course-ui.html" data-search="harris landsburgh [object object] sub-21 46153">
+      <div class="name">Harris Landsburgh</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 5.7</span>
+    </a>
+    <a class="card" href="53932/analysis/by-course-ui.html" data-search="harry littlewood [object object] sub-24 53932">
+      <div class="name">Harry Littlewood</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 6.8</span>
+    </a>
+    <a class="card" href="54264/analysis/by-course-ui.html" data-search="harry seabrook [object object] sub-10 54264">
+      <div class="name">Harry Seabrook</div>
+      <div class="meta">[object Object] · Sub-10</div>
+      <span class="hcp">HCP 28.6</span>
+    </a>
+    <a class="card" href="41612/analysis/by-course-ui.html" data-search="henrique almeida da silva [object object] sub-18 41612">
+      <div class="name">Henrique Almeida da Silva</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 6.2</span>
+    </a>
+    <a class="card" href="36844/analysis/by-course-ui.html" data-search="henrique cunha [object object] sub-24 36844">
+      <div class="name">Henrique Cunha</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 4.5</span>
+    </a>
+    <a class="card" href="41080/analysis/by-course-ui.html" data-search="henrique ferreira da costa [object object] sub-16 41080">
+      <div class="name">Henrique Ferreira Da Costa</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 6.6</span>
+    </a>
+    <a class="card" href="39552/analysis/by-course-ui.html" data-search="henrique montenegro [object object] sub-18 39552">
+      <div class="name">Henrique Montenegro</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 1.8</span>
+    </a>
+    <a class="card" href="53646/analysis/by-course-ui.html" data-search="henrique pereira [object object] sub-14 53646">
+      <div class="name">Henrique Pereira</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 15.7</span>
+    </a>
+    <a class="card" href="34029/analysis/by-course-ui.html" data-search="henrique rebelo [object object] sub-24 34029">
+      <div class="name">Henrique Rebelo</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 3.7</span>
+    </a>
+    <a class="card" href="55539/analysis/by-course-ui.html" data-search="henrique santana [object object] outros 55539">
+      <div class="name">Henrique Santana</div>
+      <div class="meta">[object Object] · Outros</div>
+      <span class="hcp">HCP 31.4</span>
+    </a>
+    <a class="card" href="40407/analysis/by-course-ui.html" data-search="henrique são marcos dos reis [object object] sub-21 40407">
+      <div class="name">Henrique São Marcos Dos Reis</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 4.1</span>
+    </a>
+    <a class="card" href="39375/analysis/by-course-ui.html" data-search="henrique sousa [object object] sub-21 39375">
+      <div class="name">Henrique Sousa</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 10.3</span>
+    </a>
+    <a class="card" href="40957/analysis/by-course-ui.html" data-search="hugo ferreira [object object] sub-21 40957">
+      <div class="name">Hugo Ferreira</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 2.9</span>
+    </a>
+    <a class="card" href="38082/analysis/by-course-ui.html" data-search="hugo josé camelo ferreira [object object] sub-24 38082">
+      <div class="name">Hugo José Camelo Ferreira</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP -1.4</span>
+    </a>
+    <a class="card" href="53900/analysis/by-course-ui.html" data-search="iain sexton [object object] sub-21 53900">
+      <div class="name">Iain Sexton</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 8.8</span>
+    </a>
+    <a class="card" href="56072/analysis/by-course-ui.html" data-search="igor kostyn [object object] sub-18 56072">
+      <div class="name">Igor Kostyn</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 10.8</span>
+    </a>
+    <a class="card" href="38424/analysis/by-course-ui.html" data-search="ines belchior [object object] sub-21 38424">
+      <div class="name">ines belchior</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP -3.5</span>
+    </a>
+    <a class="card" href="39986/analysis/by-course-ui.html" data-search="inês simão gonçalves [object object] sub-24 39986">
+      <div class="name">Inês Simão Gonçalves</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 6.2</span>
+    </a>
+    <a class="card" href="51671/analysis/by-course-ui.html" data-search="infante paz ferreira [object object] sub-12 51671">
+      <div class="name">Infante Paz Ferreira</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 54</span>
+    </a>
+    <a class="card" href="47677/analysis/by-course-ui.html" data-search="íris ramos costa [object object] sub-12 47677">
+      <div class="name">Íris Ramos Costa</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 44.7</span>
+    </a>
+    <a class="card" href="46948/analysis/by-course-ui.html" data-search="isabel melo [object object] sub-14 46948">
+      <div class="name">Isabel Melo</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 32.6</span>
+    </a>
+    <a class="card" href="49296/analysis/by-course-ui.html" data-search="isaki nakamura smith [object object] sub-14 49296">
+      <div class="name">Isaki Nakamura Smith</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 48.2</span>
+    </a>
+    <a class="card" href="34082/analysis/by-course-ui.html" data-search="ivete rodrigues [object object] sub-24 34082">
+      <div class="name">Ivete Rodrigues</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP -0.3</span>
+    </a>
+    <a class="card" href="54232/analysis/by-course-ui.html" data-search="jack brando [object object] sub-18 54232">
+      <div class="name">Jack Brando</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 11.9</span>
+    </a>
+    <a class="card" href="41593/analysis/by-course-ui.html" data-search="jack murtagh [object object] sub-16 41593">
+      <div class="name">Jack Murtagh</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 8.9</span>
+    </a>
+    <a class="card" href="58463/analysis/by-course-ui.html" data-search="james orrison [object object] sub-12 58463">
+      <div class="name">James Orrison</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      
+    </a>
+    <a class="card" href="33628/analysis/by-course-ui.html" data-search="jamie mann [object object] sub-24 33628">
+      <div class="name">Jamie Mann</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP -3.6</span>
+    </a>
+    <a class="card" href="42920/analysis/by-course-ui.html" data-search="jamie player [object object] sub-21 42920">
+      <div class="name">Jamie Player</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 9.9</span>
+    </a>
+    <a class="card" href="2217/analysis/by-course-ui.html" data-search="joana sousa [object object] outros 2217">
+      <div class="name">Joana Sousa</div>
+      <div class="meta">[object Object] · Outros</div>
+      <span class="hcp">HCP 20.4</span>
+    </a>
+    <a class="card" href="2195/analysis/by-course-ui.html" data-search="joão abel freitas jr. [object object] outros 2195">
+      <div class="name">João Abel Freitas Jr.</div>
+      <div class="meta">[object Object] · Outros</div>
+      <span class="hcp">HCP 5.4</span>
+    </a>
+    <a class="card" href="45340/analysis/by-course-ui.html" data-search="joão alvim [object object] sub-16 45340">
+      <div class="name">João Alvim</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 2</span>
+    </a>
+    <a class="card" href="49012/analysis/by-course-ui.html" data-search="joão araújo [object object] sub-16 49012">
+      <div class="name">João Araújo</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 6.3</span>
+    </a>
+    <a class="card" href="46038/analysis/by-course-ui.html" data-search="joão balixa [object object] sub-14 46038">
+      <div class="name">João Balixa</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 9.9</span>
+    </a>
+    <a class="card" href="55914/analysis/by-course-ui.html" data-search="joão couto [object object] sub-12 55914">
+      <div class="name">João Couto</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 38.5</span>
+    </a>
+    <a class="card" href="53715/analysis/by-course-ui.html" data-search="joão gomes [object object] sub-16 53715">
+      <div class="name">João Gomes</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      
+    </a>
+    <a class="card" href="58962/analysis/by-course-ui.html" data-search="joão henriques de freitas [object object] outros 58962">
+      <div class="name">João Henriques de Freitas</div>
+      <div class="meta">[object Object] · Outros</div>
+      <span class="hcp">HCP 54</span>
+    </a>
+    <a class="card" href="38375/analysis/by-course-ui.html" data-search="joão iglésias [object object] sub-21 38375">
+      <div class="name">João Iglésias</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP -2.5</span>
+    </a>
+    <a class="card" href="57356/analysis/by-course-ui.html" data-search="joão lourenço sousa [object object] outros 57356">
+      <div class="name">João Lourenço Sousa</div>
+      <div class="meta">[object Object] · Outros</div>
+      <span class="hcp">HCP 54</span>
+    </a>
+    <a class="card" href="38334/analysis/by-course-ui.html" data-search="joão maria ivo de carvalho [object object] sub-18 38334">
+      <div class="name">João Maria Ivo de Carvalho</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP -2</span>
+    </a>
+    <a class="card" href="38580/analysis/by-course-ui.html" data-search="joão miguel pereira [object object] sub-24 38580">
+      <div class="name">João Miguel Pereira</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP -2.9</span>
+    </a>
+    <a class="card" href="49329/analysis/by-course-ui.html" data-search="joão oliveira [object object] sub-16 49329">
+      <div class="name">João Oliveira</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 36.1</span>
+    </a>
+    <a class="card" href="37678/analysis/by-course-ui.html" data-search="joão paixão [object object] sub-24 37678">
+      <div class="name">João Paixão</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 1.5</span>
+    </a>
+    <a class="card" href="45424/analysis/by-course-ui.html" data-search="joão pedro frade [object object] sub-14 45424">
+      <div class="name">João Pedro Frade</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 22.1</span>
+    </a>
+    <a class="card" href="45009/analysis/by-course-ui.html" data-search="joão pedro martins quadros [object object] sub-14 45009">
+      <div class="name">João Pedro Martins Quadros</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 20.7</span>
+    </a>
+    <a class="card" href="48297/analysis/by-course-ui.html" data-search="joão rocha [object object] sub-14 48297">
+      <div class="name">João Rocha</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 4.3</span>
+    </a>
+    <a class="card" href="40645/analysis/by-course-ui.html" data-search="joão santos [object object] sub-18 40645">
+      <div class="name">João Santos</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 2.1</span>
+    </a>
+    <a class="card" href="43732/analysis/by-course-ui.html" data-search="joão setúbal [object object] sub-16 43732">
+      <div class="name">João Setúbal</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 1.1</span>
+    </a>
+    <a class="card" href="36864/analysis/by-course-ui.html" data-search="joão teixeira e costa [object object] sub-24 36864">
+      <div class="name">João Teixeira e Costa</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP -1.8</span>
+    </a>
+    <a class="card" href="53714/analysis/by-course-ui.html" data-search="joaquim gomes [object object] sub-18 53714">
+      <div class="name">Joaquim Gomes</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 11.1</span>
+    </a>
+    <a class="card" href="39701/analysis/by-course-ui.html" data-search="jodo crasi alves [object object] sub-21 39701">
+      <div class="name">Jodo Crasi Alves</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP -2.2</span>
+    </a>
+    <a class="card" href="51804/analysis/by-course-ui.html" data-search="joe short [object object] sub-12 51804">
+      <div class="name">Joe Short</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 6.1</span>
+    </a>
+    <a class="card" href="8334/analysis/by-course-ui.html" data-search="jonathan fletcher [object object] outros 8334">
+      <div class="name">Jonathan Fletcher</div>
+      <div class="meta">[object Object] · Outros</div>
+      
+    </a>
+    <a class="card" href="36413/analysis/by-course-ui.html" data-search="jonny bedford [object object] sub-24 36413">
+      <div class="name">Jonny Bedford</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 3.9</span>
+    </a>
+    <a class="card" href="38718/analysis/by-course-ui.html" data-search="jorge barbosa [object object] sub-21 38718">
+      <div class="name">Jorge Barbosa</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 4.3</span>
+    </a>
+    <a class="card" href="48705/analysis/by-course-ui.html" data-search="jorge xavier graça silva [object object] sub-16 48705">
+      <div class="name">Jorge Xavier Graça Silva</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 7.7</span>
+    </a>
+    <a class="card" href="49205/analysis/by-course-ui.html" data-search="josé eduardo côrte [object object] outros 49205">
+      <div class="name">José Eduardo Côrte</div>
+      <div class="meta">[object Object] · Outros</div>
+      <span class="hcp">HCP 52.8</span>
+    </a>
+    <a class="card" href="43221/analysis/by-course-ui.html" data-search="josé gomes [object object] sub-21 43221">
+      <div class="name">José Gomes</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 6.5</span>
+    </a>
+    <a class="card" href="44617/analysis/by-course-ui.html" data-search="josé maria muiños espiñeira [object object] sub-21 44617">
+      <div class="name">José Maria Muiños Espiñeira</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 7.1</span>
+    </a>
+    <a class="card" href="53645/analysis/by-course-ui.html" data-search="josé maria pereira [object object] sub-12 53645">
+      <div class="name">José Maria Pereira</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 21.3</span>
+    </a>
+    <a class="card" href="40112/analysis/by-course-ui.html" data-search="josé miguel franco de sousa [object object] sub-21 40112">
+      <div class="name">José Miguel Franco de Sousa</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP -3</span>
+    </a>
+    <a class="card" href="38976/analysis/by-course-ui.html" data-search="josé pedro miranda [object object] sub-16 38976">
+      <div class="name">José Pedro Miranda</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 7</span>
+    </a>
+    <a class="card" href="54845/analysis/by-course-ui.html" data-search="josé silva [object object] sub-14 54845">
+      <div class="name">José Silva</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 11.1</span>
+    </a>
+    <a class="card" href="45918/analysis/by-course-ui.html" data-search="josé simão oliveira [object object] sub-24 45918">
+      <div class="name">José Simão Oliveira</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 1.7</span>
+    </a>
+    <a class="card" href="55147/analysis/by-course-ui.html" data-search="julian klatt [object object] sub-18 55147">
+      <div class="name">Julian Klatt</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 9.2</span>
+    </a>
+    <a class="card" href="54476/analysis/by-course-ui.html" data-search="julian pereira [object object] sub-12 54476">
+      <div class="name">Julian Pereira</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 28.8</span>
+    </a>
+    <a class="card" href="47556/analysis/by-course-ui.html" data-search="julian zintl [object object] sub-21 47556">
+      <div class="name">Julian Zintl</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 7.9</span>
+    </a>
+    <a class="card" href="57110/analysis/by-course-ui.html" data-search="karol reiff [object object] sub-10 57110">
+      <div class="name">Karol Reiff</div>
+      <div class="meta">[object Object] · Sub-10</div>
+      <span class="hcp">HCP 31.1</span>
+    </a>
+    <a class="card" href="34270/analysis/by-course-ui.html" data-search="kiko francisco coelho [object object] sub-24 34270">
+      <div class="name">Kiko Francisco Coelho</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP -4.9</span>
+    </a>
+    <a class="card" href="34238/analysis/by-course-ui.html" data-search="konstantin mikirtumov [object object] sub-21 34238">
+      <div class="name">Konstantin Mikirtumov</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP -1.9</span>
+    </a>
+    <a class="card" href="45393/analysis/by-course-ui.html" data-search="laura santos [object object] sub-14 45393">
+      <div class="name">Laura Santos</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 2.5</span>
+    </a>
+    <a class="card" href="43904/analysis/by-course-ui.html" data-search="leonardo ferrini [object object] sub-18 43904">
+      <div class="name">Leonardo Ferrini</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 0.5</span>
+    </a>
+    <a class="card" href="44453/analysis/by-course-ui.html" data-search="leonardo miguel tilly alves [object object] sub-21 44453">
+      <div class="name">Leonardo Miguel Tilly Alves</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 4.9</span>
+    </a>
+    <a class="card" href="51313/analysis/by-course-ui.html" data-search="louie sutherland [object object] sub-12 51313">
+      <div class="name">Louie Sutherland</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 20.2</span>
+    </a>
+    <a class="card" href="33193/analysis/by-course-ui.html" data-search="lourenço cunha [object object] sub-21 33193">
+      <div class="name">Lourenço Cunha</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 8.9</span>
+    </a>
+    <a class="card" href="37633/analysis/by-course-ui.html" data-search="lourenço de castro fernandes [object object] sub-21 37633">
+      <div class="name">Lourenço de Castro Fernandes</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 6.7</span>
+    </a>
+    <a class="card" href="56647/analysis/by-course-ui.html" data-search="lourenço vasconcelos [object object] outros 56647">
+      <div class="name">Lourenço Vasconcelos</div>
+      <div class="meta">[object Object] · Outros</div>
+      <span class="hcp">HCP 54</span>
+    </a>
+    <a class="card" href="50671/analysis/by-course-ui.html" data-search="lucas costa cubbin [object object] sub-21 50671">
+      <div class="name">Lucas Costa Cubbin</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      
+    </a>
+    <a class="card" href="37216/analysis/by-course-ui.html" data-search="lucas guerreiro madeira [object object] sub-21 37216">
+      <div class="name">Lucas Guerreiro Madeira</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 6.3</span>
+    </a>
+    <a class="card" href="35085/analysis/by-course-ui.html" data-search="lucas lopes azinheiro [object object] sub-24 35085">
+      <div class="name">Lucas Lopes Azinheiro</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 0.1</span>
+    </a>
+    <a class="card" href="54330/analysis/by-course-ui.html" data-search="lucas pereira amorim [object object] sub-10 54330">
+      <div class="name">Lucas Pereira Amorim</div>
+      <div class="meta">[object Object] · Sub-10</div>
+      <span class="hcp">HCP 15.9</span>
+    </a>
+    <a class="card" href="40196/analysis/by-course-ui.html" data-search="luciana reis [object object] sub-21 40196">
+      <div class="name">Luciana Reis</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP -1.8</span>
+    </a>
+    <a class="card" href="42845/analysis/by-course-ui.html" data-search="luis antónio silva [object object] sub-18 42845">
+      <div class="name">Luis António Silva</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP -4</span>
+    </a>
+    <a class="card" href="47697/analysis/by-course-ui.html" data-search="luís freitas [object object] sub-21 47697">
+      <div class="name">Luís Freitas</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 7.4</span>
+    </a>
+    <a class="card" href="43846/analysis/by-course-ui.html" data-search="luís mesquita guimarães jr [object object] sub-21 43846">
+      <div class="name">Luís Mesquita Guimarães Jr</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 11.6</span>
+    </a>
+    <a class="card" href="58960/analysis/by-course-ui.html" data-search="luis miguel alves [object object] outros 58960">
+      <div class="name">Luis Miguel Alves</div>
+      <div class="meta">[object Object] · Outros</div>
+      <span class="hcp">HCP 52.8</span>
+    </a>
+    <a class="card" href="47078/analysis/by-course-ui.html" data-search="madalena alexandra van zeller [object object] sub-18 47078">
+      <div class="name">Madalena Alexandra Van Zeller</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 7.6</span>
+    </a>
+    <a class="card" href="52011/analysis/by-course-ui.html" data-search="madalena figueiredo [object object] sub-16 52011">
+      <div class="name">Madalena Figueiredo</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 8.8</span>
+    </a>
+    <a class="card" href="53847/analysis/by-course-ui.html" data-search="madalena miguel araujo [object object] sub-14 53847">
+      <div class="name">Madalena Miguel Araujo</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 15.1</span>
+    </a>
+    <a class="card" href="45608/analysis/by-course-ui.html" data-search="madalena policarpo [object object] sub-14 45608">
+      <div class="name">Madalena Policarpo</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 19.4</span>
+    </a>
+    <a class="card" href="48622/analysis/by-course-ui.html" data-search="madalena vilela [object object] sub-12 48622">
+      <div class="name">Madalena Vilela</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 53</span>
+    </a>
+    <a class="card" href="54757/analysis/by-course-ui.html" data-search="mafalda sousa [object object] sub-14 54757">
+      <div class="name">Mafalda Sousa</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 53.1</span>
+    </a>
+    <a class="card" href="52815/analysis/by-course-ui.html" data-search="manuel dias [object object] sub-10 52815">
+      <div class="name">Manuel Dias</div>
+      <div class="meta">[object Object] · Sub-10</div>
+      <span class="hcp">HCP 20</span>
+    </a>
+    <a class="card" href="52884/analysis/by-course-ui.html" data-search="manuel f. medeiros [object object] sub-12 52884">
+      <div class="name">Manuel F. Medeiros</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 12</span>
+    </a>
+    <a class="card" href="52880/analysis/by-course-ui.html" data-search="manuel goes [object object] outros 52880">
+      <div class="name">Manuel Goes</div>
+      <div class="meta">[object Object] · Outros</div>
+      <span class="hcp">HCP 54</span>
+    </a>
+    <a class="card" href="41124/analysis/by-course-ui.html" data-search="manuel gouveia [object object] sub-16 41124">
+      <div class="name">Manuel Gouveia</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 20</span>
+    </a>
+    <a class="card" href="51430/analysis/by-course-ui.html" data-search="manuel pinto sousa vaz pinto [object object] sub-18 51430">
+      <div class="name">Manuel Pinto Sousa Vaz Pinto</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      
+    </a>
+    <a class="card" href="55540/analysis/by-course-ui.html" data-search="manuel silvério marques [object object] outros 55540">
+      <div class="name">Manuel Silvério Marques</div>
+      <div class="meta">[object Object] · Outros</div>
+      <span class="hcp">HCP 39.9</span>
+    </a>
+    <a class="card" href="46308/analysis/by-course-ui.html" data-search="marc costa [object object] sub-14 46308">
+      <div class="name">Marc Costa</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 13.5</span>
+    </a>
+    <a class="card" href="38006/analysis/by-course-ui.html" data-search="marcelo gaspar [object object] sub-18 38006">
+      <div class="name">Marcelo Gaspar</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 7</span>
+    </a>
+    <a class="card" href="38253/analysis/by-course-ui.html" data-search="marcos ramirez [object object] sub-21 38253">
+      <div class="name">Marcos Ramirez</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 0.9</span>
+    </a>
+    <a class="card" href="52069/analysis/by-course-ui.html" data-search="marek pejas [object object] sub-12 52069">
+      <div class="name">Marek Pejas</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 20.4</span>
+    </a>
+    <a class="card" href="45499/analysis/by-course-ui.html" data-search="margarida alves [object object] sub-16 45499">
+      <div class="name">Margarida Alves</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 3.6</span>
+    </a>
+    <a class="card" href="38633/analysis/by-course-ui.html" data-search="margarida rico [object object] sub-21 38633">
+      <div class="name">Margarida Rico</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 5.7</span>
+    </a>
+    <a class="card" href="46310/analysis/by-course-ui.html" data-search="margarida silva pinto [object object] sub-14 46310">
+      <div class="name">Margarida Silva Pinto</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 3.9</span>
+    </a>
+    <a class="card" href="52663/analysis/by-course-ui.html" data-search="maria benedita fleming carvalho [object object] sub-12 52663">
+      <div class="name">Maria Benedita Fleming Carvalho</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 54</span>
+    </a>
+    <a class="card" href="40990/analysis/by-course-ui.html" data-search="maria câmara [object object] sub-18 40990">
+      <div class="name">Maria Câmara</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 9.3</span>
+    </a>
+    <a class="card" href="46482/analysis/by-course-ui.html" data-search="maria cunha [object object] sub-16 46482">
+      <div class="name">Maria Cunha</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 4.6</span>
+    </a>
+    <a class="card" href="46853/analysis/by-course-ui.html" data-search="maria francisca santos [object object] sub-16 46853">
+      <div class="name">Maria Francisca Santos</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 3.9</span>
+    </a>
+    <a class="card" href="52488/analysis/by-course-ui.html" data-search="maria isabel teixeira dos santos [object object] sub-12 52488">
+      <div class="name">Maria Isabel Teixeira Dos Santos</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 50</span>
+    </a>
+    <a class="card" href="50786/analysis/by-course-ui.html" data-search="maria la piedad [object object] sub-12 50786">
+      <div class="name">Maria La Piedad</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 29.6</span>
+    </a>
+    <a class="card" href="46489/analysis/by-course-ui.html" data-search="maria loureiro [object object] sub-16 46489">
+      <div class="name">Maria Loureiro</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 6.3</span>
+    </a>
+    <a class="card" href="48113/analysis/by-course-ui.html" data-search="maria luz [object object] sub-12 48113">
+      <div class="name">Maria Luz</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 30.1</span>
+    </a>
+    <a class="card" href="57587/analysis/by-course-ui.html" data-search="maria madalena neves ferreira [object object] sub-12 57587">
+      <div class="name">Maria Madalena Neves Ferreira</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 25.9</span>
+    </a>
+    <a class="card" href="56944/analysis/by-course-ui.html" data-search="mariana costa [object object] sub-14 56944">
+      <div class="name">Mariana Costa</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 37.5</span>
+    </a>
+    <a class="card" href="53755/analysis/by-course-ui.html" data-search="mariana strattmann [object object] sub-14 53755">
+      <div class="name">Mariana Strattmann</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 54</span>
+    </a>
+    <a class="card" href="48021/analysis/by-course-ui.html" data-search="marianna ball [object object] sub-21 48021">
+      <div class="name">Marianna Ball</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 10.4</span>
+    </a>
+    <a class="card" href="54809/analysis/by-course-ui.html" data-search="mark fitzgerald [object object] sub-18 54809">
+      <div class="name">Mark Fitzgerald</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 7.5</span>
+    </a>
+    <a class="card" href="52270/analysis/by-course-ui.html" data-search="marta andrade [object object] sub-14 52270">
+      <div class="name">Marta Andrade</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 43.6</span>
+    </a>
+    <a class="card" href="48045/analysis/by-course-ui.html" data-search="marta mendes [object object] sub-12 48045">
+      <div class="name">Marta Mendes</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 32.3</span>
+    </a>
+    <a class="card" href="37570/analysis/by-course-ui.html" data-search="martim ávila [object object] sub-21 37570">
+      <div class="name">Martim Ávila</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 7.1</span>
+    </a>
+    <a class="card" href="39055/analysis/by-course-ui.html" data-search="martim gomes andrade [object object] sub-24 39055">
+      <div class="name">Martim Gomes Andrade</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 5.9</span>
+    </a>
+    <a class="card" href="39468/analysis/by-course-ui.html" data-search="martim gonçalves fernandes [object object] sub-21 39468">
+      <div class="name">Martim Gonçalves Fernandes</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 9.7</span>
+    </a>
+    <a class="card" href="40115/analysis/by-course-ui.html" data-search="martim pinto johansen [object object] sub-16 40115">
+      <div class="name">Martim Pinto Johansen</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP -0.3</span>
+    </a>
+    <a class="card" href="44891/analysis/by-course-ui.html" data-search="martim rodrigues da costa [object object] sub-16 44891">
+      <div class="name">Martim Rodrigues da Costa</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 35.7</span>
+    </a>
+    <a class="card" href="42985/analysis/by-course-ui.html" data-search="martim shipitsyn moreira [object object] sub-14 42985">
+      <div class="name">Martim Shipitsyn Moreira</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 8.3</span>
+    </a>
+    <a class="card" href="49714/analysis/by-course-ui.html" data-search="martim silva [object object] sub-12 49714">
+      <div class="name">Martim Silva</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 31.6</span>
+    </a>
+    <a class="card" href="41609/analysis/by-course-ui.html" data-search="martim sousa de morais [object object] sub-18 41609">
+      <div class="name">Martim Sousa de Morais</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 4.8</span>
+    </a>
+    <a class="card" href="52393/analysis/by-course-ui.html" data-search="mateus penucho [object object] sub-14 52393">
+      <div class="name">Mateus Penucho</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 16.7</span>
+    </a>
+    <a class="card" href="53150/analysis/by-course-ui.html" data-search="mateus pires [object object] sub-18 53150">
+      <div class="name">Mateus Pires</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 10.4</span>
+    </a>
+    <a class="card" href="48529/analysis/by-course-ui.html" data-search="matilde bandeira [object object] sub-14 48529">
+      <div class="name">Matilde Bandeira</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 44.8</span>
+    </a>
+    <a class="card" href="31550/analysis/by-course-ui.html" data-search="matilde fernandes [object object] sub-24 31550">
+      <div class="name">Matilde Fernandes</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 3.8</span>
+    </a>
+    <a class="card" href="41131/analysis/by-course-ui.html" data-search="matilde leal gouveia [object object] sub-18 41131">
+      <div class="name">Matilde Leal Gouveia</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 3.5</span>
+    </a>
+    <a class="card" href="58969/analysis/by-course-ui.html" data-search="matilde teixeira [object object] outros 58969">
+      <div class="name">Matilde Teixeira</div>
+      <div class="meta">[object Object] · Outros</div>
+      <span class="hcp">HCP 54</span>
+    </a>
+    <a class="card" href="44406/analysis/by-course-ui.html" data-search="matteo balzer [object object] sub-18 44406">
+      <div class="name">Matteo Balzer</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 3.7</span>
+    </a>
+    <a class="card" href="56696/analysis/by-course-ui.html" data-search="maximilian luckhardt [object object] outros 56696">
+      <div class="name">Maximilian Luckhardt</div>
+      <div class="meta">[object Object] · Outros</div>
+      <span class="hcp">HCP 50.1</span>
+    </a>
+    <a class="card" href="29593/analysis/by-course-ui.html" data-search="miguel azevedo cardoso [object object] sub-24 29593">
+      <div class="name">Miguel Azevedo Cardoso</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP -3.3</span>
+    </a>
+    <a class="card" href="44160/analysis/by-course-ui.html" data-search="miguel coelho porfírio [object object] sub-14 44160">
+      <div class="name">Miguel coelho Porfírio</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 12.7</span>
+    </a>
+    <a class="card" href="41744/analysis/by-course-ui.html" data-search="miguel dinis ferreira [object object] sub-21 41744">
+      <div class="name">Miguel Dinis Ferreira</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 4.6</span>
+    </a>
+    <a class="card" href="56604/analysis/by-course-ui.html" data-search="miguel freitas [object object] sub-10 56604">
+      <div class="name">Miguel Freitas</div>
+      <div class="meta">[object Object] · Sub-10</div>
+      <span class="hcp">HCP 44.8</span>
+    </a>
+    <a class="card" href="48052/analysis/by-course-ui.html" data-search="miguel nunes [object object] sub-12 48052">
+      <div class="name">Miguel Nunes</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 17</span>
+    </a>
+    <a class="card" href="56118/analysis/by-course-ui.html" data-search="miguel pereira da silva [object object] sub-14 56118">
+      <div class="name">Miguel Pereira da Silva</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      
+    </a>
+    <a class="card" href="41875/analysis/by-course-ui.html" data-search="miguel pinheiro [object object] sub-21 41875">
+      <div class="name">Miguel Pinheiro</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 4.6</span>
+    </a>
+    <a class="card" href="48946/analysis/by-course-ui.html" data-search="miguel santos pereira [object object] sub-12 48946">
+      <div class="name">Miguel Santos Pereira</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 21.3</span>
+    </a>
+    <a class="card" href="48791/analysis/by-course-ui.html" data-search="miguel silva [object object] sub-16 48791">
+      <div class="name">Miguel Silva</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 9.4</span>
+    </a>
+    <a class="card" href="35404/analysis/by-course-ui.html" data-search="miguel silveira [object object] sub-21 35404">
+      <div class="name">Miguel Silveira</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP -3.9</span>
+    </a>
+    <a class="card" href="52487/analysis/by-course-ui.html" data-search="miguel teles de menezes [object object] sub-21 52487">
+      <div class="name">Miguel Teles de Menezes</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 9.5</span>
+    </a>
+    <a class="card" href="56527/analysis/by-course-ui.html" data-search="miguel velez [object object] sub-16 56527">
+      <div class="name">Miguel Velez</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      
+    </a>
+    <a class="card" href="50485/analysis/by-course-ui.html" data-search="miguel vicente mendes [object object] sub-12 50485">
+      <div class="name">Miguel Vicente Mendes</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 40.6</span>
+    </a>
+    <a class="card" href="56705/analysis/by-course-ui.html" data-search="mikhail bugaev [object object] outros 56705">
+      <div class="name">Mikhail Bugaev</div>
+      <div class="meta">[object Object] · Outros</div>
+      <span class="hcp">HCP 52.8</span>
+    </a>
+    <a class="card" href="58580/analysis/by-course-ui.html" data-search="morgan inozentsev [object object] sub-21 58580">
+      <div class="name">Morgan Inozentsev</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 4.1</span>
+    </a>
+    <a class="card" href="50451/analysis/by-course-ui.html" data-search="naim khayali [object object] sub-14 50451">
+      <div class="name">Naim Khayali</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 34</span>
+    </a>
+    <a class="card" href="50648/analysis/by-course-ui.html" data-search="nathaniel lacy [object object] sub-16 50648">
+      <div class="name">Nathaniel Lacy</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 4.5</span>
+    </a>
+    <a class="card" href="56560/analysis/by-course-ui.html" data-search="nguyen dang my ky [object object] sub-10 56560">
+      <div class="name">Nguyen Dang My Ky</div>
+      <div class="meta">[object Object] · Sub-10</div>
+      <span class="hcp">HCP 29</span>
+    </a>
+    <a class="card" href="50042/analysis/by-course-ui.html" data-search="nick husemann [object object] sub-18 50042">
+      <div class="name">Nick Husemann</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 1.6</span>
+    </a>
+    <a class="card" href="50594/analysis/by-course-ui.html" data-search="nicolas rebossio insua [object object] sub-21 50594">
+      <div class="name">Nicolas Rebossio Insua</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 0.6</span>
+    </a>
+    <a class="card" href="56728/analysis/by-course-ui.html" data-search="nicole sardinha [object object] sub-18 56728">
+      <div class="name">Nicole Sardinha</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP -3.7</span>
+    </a>
+    <a class="card" href="49124/analysis/by-course-ui.html" data-search="nuno palmares [object object] sub-14 49124">
+      <div class="name">Nuno Palmares</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 4.4</span>
+    </a>
+    <a class="card" href="45647/analysis/by-course-ui.html" data-search="oliver smith [object object] sub-18 45647">
+      <div class="name">Oliver Smith</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP -4.3</span>
+    </a>
+    <a class="card" href="51612/analysis/by-course-ui.html" data-search="oliver smith [object object] sub-14 51612">
+      <div class="name">Oliver Smith</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 6.1</span>
+    </a>
+    <a class="card" href="53172/analysis/by-course-ui.html" data-search="oskar henze [object object] sub-10 53172">
+      <div class="name">Oskar Henze</div>
+      <div class="meta">[object Object] · Sub-10</div>
+      <span class="hcp">HCP 37.1</span>
+    </a>
+    <a class="card" href="51940/analysis/by-course-ui.html" data-search="pablo bourbon [object object] sub-24 51940">
+      <div class="name">Pablo Bourbon</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP -4.9</span>
+    </a>
+    <a class="card" href="53749/analysis/by-course-ui.html" data-search="pascal muller [object object] sub-24 53749">
+      <div class="name">Pascal Muller</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 3.4</span>
+    </a>
+    <a class="card" href="49770/analysis/by-course-ui.html" data-search="paul devillers [object object] sub-18 49770">
+      <div class="name">Paul Devillers</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 2.5</span>
+    </a>
+    <a class="card" href="45356/analysis/by-course-ui.html" data-search="paulo correia [object object] sub-21 45356">
+      <div class="name">Paulo Correia</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 6.5</span>
+    </a>
+    <a class="card" href="31111/analysis/by-course-ui.html" data-search="pedro afonso de correia mendes [object object] sub-24 31111">
+      <div class="name">Pedro Afonso de Correia Mendes</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP -2.6</span>
+    </a>
+    <a class="card" href="42068/analysis/by-course-ui.html" data-search="pedro aires [object object] sub-18 42068">
+      <div class="name">Pedro Aires</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 7.5</span>
+    </a>
+    <a class="card" href="31745/analysis/by-course-ui.html" data-search="pedro araújo [object object] outros 31745">
+      <div class="name">Pedro Araújo</div>
+      <div class="meta">[object Object] · Outros</div>
+      
+    </a>
+    <a class="card" href="44681/analysis/by-course-ui.html" data-search="pedro ataíde e sá [object object] sub-21 44681">
+      <div class="name">Pedro Ataíde E Sá</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 1.8</span>
+    </a>
+    <a class="card" href="46706/analysis/by-course-ui.html" data-search="pedro costa alemão [object object] sub-16 46706">
+      <div class="name">Pedro Costa Alemão</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 4.5</span>
+    </a>
+    <a class="card" href="33956/analysis/by-course-ui.html" data-search="pedro cruz silva [object object] sub-24 33956">
+      <div class="name">Pedro Cruz Silva</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP -3.8</span>
+    </a>
+    <a class="card" href="43810/analysis/by-course-ui.html" data-search="pedro ferreira [object object] sub-18 43810">
+      <div class="name">Pedro Ferreira</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 0.4</span>
+    </a>
+    <a class="card" href="52168/analysis/by-course-ui.html" data-search="pedro luís fernandes [object object] sub-14 52168">
+      <div class="name">Pedro Luís Fernandes</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 17.7</span>
+    </a>
+    <a class="card" href="36638/analysis/by-course-ui.html" data-search="pedro maria sousa machado [object object] sub-21 36638">
+      <div class="name">Pedro Maria Sousa Machado</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 2.4</span>
+    </a>
+    <a class="card" href="48628/analysis/by-course-ui.html" data-search="pedro ribeiro lima [object object] sub-12 48628">
+      <div class="name">Pedro Ribeiro Lima</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 14.6</span>
+    </a>
+    <a class="card" href="38668/analysis/by-course-ui.html" data-search="pedro santiago câmara [object object] sub-21 38668">
+      <div class="name">Pedro Santiago Câmara</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 9.4</span>
+    </a>
+    <a class="card" href="46577/analysis/by-course-ui.html" data-search="pedro santos pereira [object object] sub-21 46577">
+      <div class="name">Pedro Santos Pereira</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP -0.1</span>
+    </a>
+    <a class="card" href="50761/analysis/by-course-ui.html" data-search="peter yao [object object] sub-12 50761">
+      <div class="name">Peter Yao</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 25.4</span>
+    </a>
+    <a class="card" href="50450/analysis/by-course-ui.html" data-search="qais khayali [object object] sub-12 50450">
+      <div class="name">Qais Khayali</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 46.7</span>
+    </a>
+    <a class="card" href="40492/analysis/by-course-ui.html" data-search="rafa alves [object object] sub-24 40492">
+      <div class="name">rafa alves</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 1.2</span>
+    </a>
+    <a class="card" href="54774/analysis/by-course-ui.html" data-search="rafael benesi [object object] sub-16 54774">
+      <div class="name">Rafael Benesi</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 6.4</span>
+    </a>
+    <a class="card" href="44018/analysis/by-course-ui.html" data-search="rafael ourique azevedo [object object] sub-18 44018">
+      <div class="name">Rafael Ourique Azevedo</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      
+    </a>
+    <a class="card" href="56641/analysis/by-course-ui.html" data-search="rafael paço [object object] sub-10 56641">
+      <div class="name">Rafael Paço</div>
+      <div class="meta">[object Object] · Sub-10</div>
+      <span class="hcp">HCP 37.8</span>
+    </a>
+    <a class="card" href="37561/analysis/by-course-ui.html" data-search="rafael profírio [object object] sub-21 37561">
+      <div class="name">Rafael Profírio</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 5.5</span>
+    </a>
+    <a class="card" href="40390/analysis/by-course-ui.html" data-search="rafaela pinto [object object] sub-21 40390">
+      <div class="name">Rafaela Pinto</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 2.8</span>
+    </a>
+    <a class="card" href="46296/analysis/by-course-ui.html" data-search="raul pazos (jr) [object object] sub-14 46296">
+      <div class="name">Raul Pazos (jr)</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 10.8</span>
+    </a>
+    <a class="card" href="55188/analysis/by-course-ui.html" data-search="remi petim [object object] sub-14 55188">
+      <div class="name">Remi Petim</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 48.6</span>
+    </a>
+    <a class="card" href="42273/analysis/by-course-ui.html" data-search="ren hong bo [object object] sub-18 42273">
+      <div class="name">Ren Hong Bo</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 5.8</span>
+    </a>
+    <a class="card" href="58833/analysis/by-course-ui.html" data-search="renato da silva [object object] sub-21 58833">
+      <div class="name">Renato Da Silva</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 8</span>
+    </a>
+    <a class="card" href="47552/analysis/by-course-ui.html" data-search="reuben thapa [object object] sub-18 47552">
+      <div class="name">Reuben Thapa</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 3.4</span>
+    </a>
+    <a class="card" href="41799/analysis/by-course-ui.html" data-search="ricardo camacho [object object] sub-24 41799">
+      <div class="name">Ricardo Camacho</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 4.8</span>
+    </a>
+    <a class="card" href="49085/analysis/by-course-ui.html" data-search="ricardo castro ferreira [object object] sub-12 49085">
+      <div class="name">Ricardo Castro Ferreira</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 7.7</span>
+    </a>
+    <a class="card" href="51180/analysis/by-course-ui.html" data-search="ricardo rocha ferreira [object object] sub-12 51180">
+      <div class="name">Ricardo Rocha Ferreira</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 17.3</span>
+    </a>
+    <a class="card" href="28845/analysis/by-course-ui.html" data-search="ricardo serpa [object object] sub-24 28845">
+      <div class="name">Ricardo Serpa</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP -0.1</span>
+    </a>
+    <a class="card" href="41608/analysis/by-course-ui.html" data-search="rita gonçalves nunes [object object] sub-24 41608">
+      <div class="name">Rita Gonçalves Nunes</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 5.8</span>
+    </a>
+    <a class="card" href="42684/analysis/by-course-ui.html" data-search="rodrigo abreu [object object] sub-18 42684">
+      <div class="name">Rodrigo Abreu</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 9.8</span>
+    </a>
+    <a class="card" href="45278/analysis/by-course-ui.html" data-search="rodrigo faria constantino [object object] sub-21 45278">
+      <div class="name">Rodrigo Faria Constantino</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 1.3</span>
+    </a>
+    <a class="card" href="50831/analysis/by-course-ui.html" data-search="rodrigo horta [object object] sub-21 50831">
+      <div class="name">Rodrigo Horta</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 12</span>
+    </a>
+    <a class="card" href="37152/analysis/by-course-ui.html" data-search="rodrigo marques santos [object object] sub-21 37152">
+      <div class="name">Rodrigo Marques Santos</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP -1.6</span>
+    </a>
+    <a class="card" href="44934/analysis/by-course-ui.html" data-search="rodrigo sousa correia [object object] sub-16 44934">
+      <div class="name">Rodrigo Sousa Correia</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 2.8</span>
+    </a>
+    <a class="card" href="35233/analysis/by-course-ui.html" data-search="rodrigo teixeira [object object] sub-21 35233">
+      <div class="name">Rodrigo Teixeira</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 8.1</span>
+    </a>
+    <a class="card" href="39439/analysis/by-course-ui.html" data-search="romeu lopes [object object] sub-21 39439">
+      <div class="name">Romeu Lopes</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 9.9</span>
+    </a>
+    <a class="card" href="49076/analysis/by-course-ui.html" data-search="ruiqi li [object object] sub-14 49076">
+      <div class="name">Ruiqi Li</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 4.3</span>
+    </a>
+    <a class="card" href="45439/analysis/by-course-ui.html" data-search="ryan dantas [object object] sub-16 45439">
+      <div class="name">Ryan Dantas</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 6.9</span>
+    </a>
+    <a class="card" href="48971/analysis/by-course-ui.html" data-search="sabrina crisóstomo [object object] sub-12 48971">
+      <div class="name">Sabrina Crisóstomo</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 8.4</span>
+    </a>
+    <a class="card" href="52048/analysis/by-course-ui.html" data-search="sako caruana [object object] sub-10 52048">
+      <div class="name">Sako Caruana</div>
+      <div class="meta">[object Object] · Sub-10</div>
+      <span class="hcp">HCP 38.2</span>
+    </a>
+    <a class="card" href="43968/analysis/by-course-ui.html" data-search="salvador ivo de carvalho [object object] sub-14 43968">
+      <div class="name">Salvador Ivo de Carvalho</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 7.9</span>
+    </a>
+    <a class="card" href="39465/analysis/by-course-ui.html" data-search="salvador rodrigues [object object] sub-16 39465">
+      <div class="name">Salvador Rodrigues</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 6</span>
+    </a>
+    <a class="card" href="54281/analysis/by-course-ui.html" data-search="samuel dod [object object] sub-21 54281">
+      <div class="name">Samuel Dod</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 3.3</span>
+    </a>
+    <a class="card" href="53728/analysis/by-course-ui.html" data-search="santiago couto [object object] sub-14 53728">
+      <div class="name">Santiago Couto</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 48</span>
+    </a>
+    <a class="card" href="42908/analysis/by-course-ui.html" data-search="santiago dias [object object] sub-14 42908">
+      <div class="name">Santiago Dias</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 1.8</span>
+    </a>
+    <a class="card" href="56717/analysis/by-course-ui.html" data-search="santiago freitas [object object] outros 56717">
+      <div class="name">Santiago Freitas</div>
+      <div class="meta">[object Object] · Outros</div>
+      <span class="hcp">HCP 53.2</span>
+    </a>
+    <a class="card" href="44890/analysis/by-course-ui.html" data-search="santiago pacheco [object object] sub-14 44890">
+      <div class="name">Santiago Pacheco</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 35.8</span>
+    </a>
+    <a class="card" href="35715/analysis/by-course-ui.html" data-search="santiago tomé [object object] sub-24 35715">
+      <div class="name">Santiago Tomé</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 3.3</span>
+    </a>
+    <a class="card" href="33403/analysis/by-course-ui.html" data-search="sara rolita melo [object object] sub-24 33403">
+      <div class="name">Sara Rolita Melo</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 5.3</span>
+    </a>
+    <a class="card" href="57291/analysis/by-course-ui.html" data-search="seb toft [object object] sub-14 57291">
+      <div class="name">Seb Toft</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 5.3</span>
+    </a>
+    <a class="card" href="43972/analysis/by-course-ui.html" data-search="sebastião cadete [object object] sub-21 43972">
+      <div class="name">Sebastião Cadete</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 3.8</span>
+    </a>
+    <a class="card" href="40656/analysis/by-course-ui.html" data-search="sebastião parreira [object object] sub-24 40656">
+      <div class="name">Sebastião Parreira</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 5.8</span>
+    </a>
+    <a class="card" href="46195/analysis/by-course-ui.html" data-search="sebastiao sardinha saraiva [object object] sub-16 46195">
+      <div class="name">Sebastiao Sardinha Saraiva</div>
+      <div class="meta">[object Object] · Sub-16</div>
+      <span class="hcp">HCP 5.8</span>
+    </a>
+    <a class="card" href="47341/analysis/by-course-ui.html" data-search="sebastião soares [object object] sub-14 47341">
+      <div class="name">Sebastião Soares</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 14.3</span>
+    </a>
+    <a class="card" href="50087/analysis/by-course-ui.html" data-search="simão manata [object object] sub-14 50087">
+      <div class="name">Simão Manata</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 35.9</span>
+    </a>
+    <a class="card" href="47002/analysis/by-course-ui.html" data-search="simão rafael machado [object object] sub-18 47002">
+      <div class="name">Simão Rafael Machado</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 8.6</span>
+    </a>
+    <a class="card" href="30970/analysis/by-course-ui.html" data-search="simão tempera [object object] sub-24 30970">
+      <div class="name">Simão Tempera</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 3.3</span>
+    </a>
+    <a class="card" href="32437/analysis/by-course-ui.html" data-search="sofia barroso sá [object object] sub-24 32437">
+      <div class="name">Sofia Barroso Sá</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP -5.4</span>
+    </a>
+    <a class="card" href="32579/analysis/by-course-ui.html" data-search="teresa alves [object object] sub-24 32579">
+      <div class="name">Teresa Alves</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 3.2</span>
+    </a>
+    <a class="card" href="46589/analysis/by-course-ui.html" data-search="teresa ferreira [object object] sub-18 46589">
+      <div class="name">Teresa Ferreira</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 6.8</span>
+    </a>
+    <a class="card" href="39878/analysis/by-course-ui.html" data-search="theodor traser [object object] sub-21 39878">
+      <div class="name">Theodor Traser</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 10.1</span>
+    </a>
+    <a class="card" href="59128/analysis/by-course-ui.html" data-search="thiago gonzalez bernases [object object] sub-10 59128">
+      <div class="name">Thiago Gonzalez Bernases</div>
+      <div class="meta">[object Object] · Sub-10</div>
+      <span class="hcp">HCP 23.4</span>
+    </a>
+    <a class="card" href="50189/analysis/by-course-ui.html" data-search="thomas blake maia [object object] sub-14 50189">
+      <div class="name">Thomas Blake Maia</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 31.9</span>
+    </a>
+    <a class="card" href="38315/analysis/by-course-ui.html" data-search="tiago abrantes [object object] sub-21 38315">
+      <div class="name">Tiago Abrantes</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 4.4</span>
+    </a>
+    <a class="card" href="36995/analysis/by-course-ui.html" data-search="tiago cabral [object object] sub-21 36995">
+      <div class="name">Tiago Cabral</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 3.4</span>
+    </a>
+    <a class="card" href="35849/analysis/by-course-ui.html" data-search="tomás afonso araujo [object object] sub-21 35849">
+      <div class="name">Tomás Afonso Araujo</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP -0.5</span>
+    </a>
+    <a class="card" href="47495/analysis/by-course-ui.html" data-search="tomás alvadia [object object] sub-24 47495">
+      <div class="name">Tomás Alvadia</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 4.2</span>
+    </a>
+    <a class="card" href="49011/analysis/by-course-ui.html" data-search="tomás araújo [object object] sub-14 49011">
+      <div class="name">Tomás Araújo</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 16.5</span>
+    </a>
+    <a class="card" href="56943/analysis/by-course-ui.html" data-search="tomás duarte matias [object object] sub-14 56943">
+      <div class="name">Tomás Duarte Matias</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 16.3</span>
+    </a>
+    <a class="card" href="40444/analysis/by-course-ui.html" data-search="tomás fortes de sousa [object object] sub-21 40444">
+      <div class="name">Tomás Fortes de Sousa</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 7</span>
+    </a>
+    <a class="card" href="49628/analysis/by-course-ui.html" data-search="tomás graça [object object] sub-21 49628">
+      <div class="name">Tomás Graça</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 9.4</span>
+    </a>
+    <a class="card" href="46037/analysis/by-course-ui.html" data-search="tomás lima pinto [object object] sub-14 46037">
+      <div class="name">Tomás Lima Pinto</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 9.6</span>
+    </a>
+    <a class="card" href="36811/analysis/by-course-ui.html" data-search="tomás massena [object object] sub-21 36811">
+      <div class="name">Tomás Massena</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 7.1</span>
+    </a>
+    <a class="card" href="32543/analysis/by-course-ui.html" data-search="tomás mondim lopes [object object] sub-24 32543">
+      <div class="name">Tomás Mondim Lopes</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 6.5</span>
+    </a>
+    <a class="card" href="49087/analysis/by-course-ui.html" data-search="tomás pinto barbosa [object object] sub-12 49087">
+      <div class="name">Tomás Pinto Barbosa</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 34</span>
+    </a>
+    <a class="card" href="46311/analysis/by-course-ui.html" data-search="tomás rente [object object] sub-14 46311">
+      <div class="name">Tomás Rente</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 5.7</span>
+    </a>
+    <a class="card" href="35596/analysis/by-course-ui.html" data-search="tomás ribeiro [object object] sub-24 35596">
+      <div class="name">Tomás Ribeiro</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 5.7</span>
+    </a>
+    <a class="card" href="48046/analysis/by-course-ui.html" data-search="tomás sarmento de beires [object object] sub-12 48046">
+      <div class="name">Tomás Sarmento de Beires</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 16.8</span>
+    </a>
+    <a class="card" href="52077/analysis/by-course-ui.html" data-search="tomás tomásio [object object] sub-12 52077">
+      <div class="name">Tomás Tomásio</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 49.5</span>
+    </a>
+    <a class="card" href="38722/analysis/by-course-ui.html" data-search="tomás trigo pereira [object object] sub-18 38722">
+      <div class="name">Tomás Trigo Pereira</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 7.7</span>
+    </a>
+    <a class="card" href="50011/analysis/by-course-ui.html" data-search="tomás valério [object object] sub-12 50011">
+      <div class="name">Tomás Valério</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 26.6</span>
+    </a>
+    <a class="card" href="34166/analysis/by-course-ui.html" data-search="vasco dantas carneiro [object object] sub-24 34166">
+      <div class="name">Vasco Dantas Carneiro</div>
+      <div class="meta">[object Object] · Sub-24</div>
+      <span class="hcp">HCP 4.5</span>
+    </a>
+    <a class="card" href="36810/analysis/by-course-ui.html" data-search="vasco dias agudo [object object] sub-21 36810">
+      <div class="name">Vasco Dias Agudo</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 11.2</span>
+    </a>
+    <a class="card" href="48470/analysis/by-course-ui.html" data-search="vasco elavai [object object] sub-18 48470">
+      <div class="name">Vasco Elavai</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 7.4</span>
+    </a>
+    <a class="card" href="52798/analysis/by-course-ui.html" data-search="vicente messala [object object] sub-12 52798">
+      <div class="name">Vicente Messala</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 54</span>
+    </a>
+    <a class="card" href="58431/analysis/by-course-ui.html" data-search="wilhelmus freriks [object object] sub-21 58431">
+      <div class="name">Wilhelmus Freriks</div>
+      <div class="meta">[object Object] · Sub-21</div>
+      <span class="hcp">HCP 11.7</span>
+    </a>
+    <a class="card" href="58429/analysis/by-course-ui.html" data-search="will kilgannon [object object] sub-10 58429">
+      <div class="name">Will Kilgannon</div>
+      <div class="meta">[object Object] · Sub-10</div>
+      <span class="hcp">HCP 32.4</span>
+    </a>
+    <a class="card" href="51524/analysis/by-course-ui.html" data-search="william gao [object object] sub-14 51524">
+      <div class="name">William Gao</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 8.7</span>
+    </a>
+    <a class="card" href="42178/analysis/by-course-ui.html" data-search="yasmin batista [object object] sub-18 42178">
+      <div class="name">Yasmin Batista</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      
+    </a>
+    <a class="card" href="52229/analysis/by-course-ui.html" data-search="yunzhi liu [object object] sub-12 52229">
+      <div class="name">Yunzhi Liu</div>
+      <div class="meta">[object Object] · Sub-12</div>
+      <span class="hcp">HCP 27.7</span>
+    </a>
+    <a class="card" href="53780/analysis/by-course-ui.html" data-search="zachary neary [object object] sub-18 53780">
+      <div class="name">Zachary Neary</div>
+      <div class="meta">[object Object] · Sub-18</div>
+      <span class="hcp">HCP 2.8</span>
+    </a>
+    <a class="card" href="58886/analysis/by-course-ui.html" data-search="zoe zavoralova [object object] sub-14 58886">
+      <div class="name">Zoe Zavoralova</div>
+      <div class="meta">[object Object] · Sub-14</div>
+      <span class="hcp">HCP 3.4</span>
+    </a>
+  </div>
+  
+</div>
+<div class="footer">Golf FPG Scorecards · Dados da Federação Portuguesa de Golfe</div>
+<script>
+const search = document.getElementById('search');
+const cards = document.querySelectorAll('.card');
+const stats = document.getElementById('stats');
+search.addEventListener('input', () => {
+  const q = search.value.toLowerCase().trim();
+  let shown = 0;
+  cards.forEach(c => {
+    const match = !q || c.dataset.search.includes(q);
+    c.style.display = match ? '' : 'none';
+    if (match) shown++;
+  });
+  stats.textContent = shown + ' jogador' + (shown !== 1 ? 'es' : '');
+});
+</script>
+</body>
+</html>
