@@ -27,7 +27,7 @@ if (fs.existsSync(outputRoot)) {
     const pj = playersDb[fed] || {};
     let name = pj.name || "";
     let escalao = pj.escalao || "";
-    let club = pj.club || "";
+    let club = typeof pj.club === "object" ? (pj.club?.short || pj.club?.long || "") : (pj.club || "");
     let hcp = pj.hcp != null ? pj.hcp : null;
 
     // Fallback: tentar extrair nome do whs-list
@@ -145,10 +145,11 @@ const search = document.getElementById('search');
 const cards = document.querySelectorAll('.card');
 const stats = document.getElementById('stats');
 search.addEventListener('input', () => {
-  const q = search.value.toLowerCase().trim();
+  const words = search.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
   let shown = 0;
   cards.forEach(c => {
-    const match = !q || c.dataset.search.includes(q);
+    const s = c.dataset.search;
+    const match = !words.length || words.every(w => s.includes(w));
     c.style.display = match ? '' : 'none';
     if (match) shown++;
   });
