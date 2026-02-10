@@ -62,6 +62,8 @@ const html = `<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Golf FPG — Scorecards</title>
+<link rel="icon" type="image/png" href="golf-icon.png">
+<link rel="apple-touch-icon" href="golf-icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -124,7 +126,7 @@ const html = `<!DOCTYPE html>
 </head>
 <body>
 <div class="header">
-  <h1>⛳ Golf FPG — Scorecards</h1>
+  <h1><img src="golf-icon.png" alt="" style="height:1.4em;vertical-align:middle;margin-right:0.3em">Golf FPG — Scorecards</h1>
   <p>${players.length} jogadores · Atualizado: ${esc(now)}</p>
 </div>
 <div class="container">
@@ -145,7 +147,7 @@ const search = document.getElementById('search');
 const cards = document.querySelectorAll('.card');
 const stats = document.getElementById('stats');
 search.addEventListener('input', () => {
-  const words = search.value.toLowerCase().trim().split(/\\s+/).filter(Boolean);
+  const words = search.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
   let shown = 0;
   cards.forEach(c => {
     const s = c.dataset.search;
