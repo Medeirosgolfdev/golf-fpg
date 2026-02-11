@@ -12,6 +12,74 @@
 const fs = require("fs");
 const path = require("path");
 
+/* ------------------ Melhorias (correções manuais) ------------------ */
+let _melhorias = null;
+function loadMelhorias() {
+  if (_melhorias !== null) return _melhorias;
+  const mp = path.join(process.cwd(), "melhorias.json");
+  if (fs.existsSync(mp)) {
+    try {
+      _melhorias = JSON.parse(fs.readFileSync(mp, "utf-8"));
+      const nPlayers = Object.keys(_melhorias).filter(k => !k.startsWith("_")).length;
+      console.log(`✓ melhorias.json carregado (${nPlayers} jogador(es))`);
+    } catch (e) {
+      console.error("⚠ Erro ao ler melhorias.json:", e.message);
+      _melhorias = {};
+    }
+  } else {
+    _melhorias = {};
+  }
+  return _melhorias;
+}
+
+function getMelhoria(fed, scoreId) {
+  const m = loadMelhorias();
+  const patches = m[String(fed)];
+  if (!patches) return null;
+  return patches[String(scoreId)] || null;
+}
+
+function applyMelhorias(rows, fed) {
+  const m = loadMelhorias();
+  const patches = m[String(fed)];
+  if (!patches) return rows;
+  let count = 0;
+  for (const r of rows) {
+    const p = patches[String(r.score_id)];
+    if (p && p.whs) {
+      Object.assign(r, p.whs);
+      count++;
+    }
+  }
+  if (count > 0) console.log(`  ✓ ${count} melhoria(s) WHS aplicada(s) ao jogador ${fed}`);
+  return rows;
+}
+
+function applyMelhoriasScorecard(rec, fed, scoreId) {
+  const sid = rec?.id || rec?.score_id || scoreId;
+  if (!rec || !sid) return rec;
+  const p = getMelhoria(fed, sid);
+  if (p && p.scorecard) {
+    Object.assign(rec, p.scorecard);
+  }
+  return rec;
+}
+
+function getMelhoriaLinks(fed, scoreId) {
+  const p = getMelhoria(fed, scoreId);
+  return p && p.links ? p.links : null;
+}
+
+function getMelhoriaNotas(fed, scoreId) {
+  const p = getMelhoria(fed, scoreId);
+  return p && p.notas ? p.notas : null;
+}
+
+function getMelhoriaFpgOriginal(fed, scoreId) {
+  const p = getMelhoria(fed, scoreId);
+  return p && p._fpg_original ? p._fpg_original : null;
+}
+
 /* ------------------ Tee colors (como TeeBadge.tsx) ------------------ */
 const DEFAULT_TEE_COLORS = {
   pretas: "#111111", pretos: "#111111", black: "#111111",
@@ -374,6 +442,28 @@ function buildScorecardFragment({ fed, scoreId, rec, whsRow }) {
   const teeHex = teeColor(tee);
   const teeFg = teeTextColor(teeHex);
 
+  // Melhorias: links e notas
+  const mLinks = getMelhoriaLinks(fed, rec?.id || scoreId);
+  const mNotas = getMelhoriaNotas(fed, rec?.id || scoreId);
+  const mFpg = getMelhoriaFpgOriginal(fed, rec?.id || scoreId);
+
+  let linksHtml = '';
+  if (mLinks) {
+    const linkItems = Object.entries(mLinks).map(([label, url]) =>
+      `<a href="${esc(url)}" target="_blank" class="sc-ext-link" title="${esc(label)}">🔗 ${esc(label)}</a>`
+    ).join(' ');
+    linksHtml = `<div class="sc-links">${linkItems}</div>`;
+  }
+  let fpgBadge = '';
+  if (mFpg) {
+    const diffs = [];
+    if (mFpg.gross_total) diffs.push(`Gross FPG: ${mFpg.gross_total}`);
+    if (mFpg.course_rating) diffs.push(`CR FPG: ${mFpg.course_rating}`);
+    if (mFpg.slope) diffs.push(`Slope FPG: ${mFpg.slope}`);
+    if (mFpg.tee_name) diffs.push(`Tee FPG: ${mFpg.tee_name}`);
+    fpgBadge = `<span class="sc-fpg-badge" title="Dados FPG diferem: ${esc(diffs.join(', '))}">⚠ FPG</span>`;
+  }
+
   const H18 = Array.from({ length: 18 }, (_, i) => i + 1);
   const par18 = H18.map(h => toNum(rec?.[`par_${h}`]));
   const si18  = H18.map(h => toNum(rec?.[`stroke_index_${h}`]));
@@ -431,7 +521,9 @@ function buildScorecardFragment({ fed, scoreId, rec, whsRow }) {
         <span>Tee ${esc(tee)}</span>
         ${hi ? `<span>HCP ${hi}</span>` : ''}
         ${metersTotal ? `<span>${metersTotal}m</span>` : ''}
+        ${fpgBadge}
       </div>
+      ${linksHtml}
     </div>
     <div class="sc-header-right">
       <div class="sc-stat">
@@ -790,6 +882,7 @@ function extractPlayerStats(fed, outputRoot) {
 
   const whs = JSON.parse(fs.readFileSync(whsPath, "utf-8"));
   const rows = (whs?.d ?? whs)?.Records || whs?.Records || [];
+  applyMelhorias(rows, fed);
 
   const whsByScoreId = new Map();
   for (const r of rows) {
@@ -802,7 +895,11 @@ function extractPlayerStats(fed, outputRoot) {
       try {
         const json = JSON.parse(fs.readFileSync(path.join(scorecardsDir, f), "utf-8"));
         const rec = pickScorecardRec(json);
-        if (rec) cardByScoreId.set(path.basename(f, ".json"), rec);
+        if (rec) {
+          const sid = path.basename(f, ".json");
+          applyMelhoriasScorecard(rec, fed, sid);
+          cardByScoreId.set(sid, rec);
+        }
       } catch {}
     }
   }
@@ -1029,6 +1126,7 @@ function processPlayer(FED, allPlayers, crossStats) {
 
   const whs = JSON.parse(fs.readFileSync(whsPath, "utf-8"));
   const rows = whs?.Records || [];
+  applyMelhorias(rows, FED);
 
   console.log(`Jogador: ${playerName || FED}${playerEscalao ? ' [' + playerEscalao + ']' : ''}`);
 
@@ -1046,6 +1144,7 @@ function processPlayer(FED, allPlayers, crossStats) {
       const json = JSON.parse(fs.readFileSync(path.join(scorecardsDir, f), "utf-8"));
       const rec = pickScorecardRec(json);
       if (rec) {
+        applyMelhoriasScorecard(rec, FED, scoreId);
         cardByScoreId.set(String(scoreId), rec);
         holeCountByScoreId.set(String(scoreId), holeCountFromRec(rec));
       }
@@ -1468,6 +1567,10 @@ function processPlayer(FED, allPlayers, crossStats) {
   .sc-title{font-size:18px;font-weight:800;margin-bottom:4px}
   .sc-subtitle{font-size:13px;opacity:0.9;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
   .sc-subtitle>span:not(:last-child)::after{content:'·';margin-left:6px;opacity:0.6}
+  .sc-links{margin-top:4px;display:flex;gap:8px;flex-wrap:wrap}
+  .sc-ext-link{font-size:11px;color:inherit;opacity:0.85;text-decoration:none;border:1px solid rgba(255,255,255,0.3);border-radius:4px;padding:1px 6px}
+  .sc-ext-link:hover{opacity:1;background:rgba(255,255,255,0.15)}
+  .sc-fpg-badge{font-size:10px;background:rgba(255,200,0,0.3);border:1px solid rgba(255,200,0,0.5);border-radius:3px;padding:0 4px;cursor:help}
   .sc-stat{text-align:center;min-width:65px}
   .sc-stat-label{font-size:10px;text-transform:uppercase;letter-spacing:0.05em;opacity:0.8;margin-bottom:2px}
   .sc-stat-value{font-size:20px;font-weight:900;line-height:1}
@@ -2770,16 +2873,39 @@ function renderAnalysis(FILTERED_ROUNDS){
     best8SDIndices[sdIndexed[bi].idx] = bi + 1; // rank 1-8
   }
 
-  html+='<div class="an-card"><div class="an-k-title">Últimas 20 voltas</div>';
-  html+='<div class="muted" style="margin-bottom:8px">Os 8 melhores SD estão assinalados com ★ · <b>*</b> = Stableford normalizado 9B→18B (+17 pts WHS)</div>';
+  html+='<div class="an-card"><div class="an-k-title">Todas as rondas</div>';
+  html+='<div class="muted" style="margin-bottom:8px">Os 8 melhores SD das últimas 20 estão assinalados com ★ · <b>*</b> = Stableford normalizado 9B→18B (+17 pts WHS)</div>';
   html+='<table class="an-table" id="last20Table"><thead><tr>' +
         '<th class="an-sortable" data-col="0" data-type="text">Data</th><th class="an-sortable" data-col="1" data-type="text">Campo</th><th>Torneio</th><th>Tee</th>' +
         '<th class="right an-sortable" data-col="4" data-type="num">Bur.</th><th class="right an-sortable" data-col="5" data-type="num">HCP</th><th class="right an-sortable" data-col="6" data-type="num">Gross</th>' +
         '<th class="right an-sortable" data-col="7" data-type="num">Stb</th><th class="right an-sortable" data-col="8" data-type="num">SD</th><th class="right">Top 8</th>' +
         '</tr></thead><tbody>';
 
-  for (var r=0;r<last20.length;r++){
-    var x = last20[r];
+  var MONTH_NAMES_PT = ['','Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  var allRoundsTable = roundsDesc;
+  var prevYear = '', prevMonth = '';
+
+  for (var r=0;r<allRoundsTable.length;r++){
+    var x = allRoundsTable[r];
+
+    // Extrair ano e mês da data formatada (dd-mm-yyyy)
+    var dateParts = (x.date||'').split('-');
+    var curYear = dateParts.length>=3 ? dateParts[2] : '';
+    var curMonthNum = dateParts.length>=3 ? parseInt(dateParts[1],10) : 0;
+    var curMonth = curMonthNum > 0 && curMonthNum <= 12 ? MONTH_NAMES_PT[curMonthNum] : '';
+
+    // Separador de ano
+    if (curYear && curYear !== prevYear) {
+      html+='<tr class="year-divider-row"><td colspan="10" style="background:#1a5d1a;color:#fff;font-weight:700;font-size:0.9rem;padding:8px 10px;letter-spacing:1px">'+curYear+'</td></tr>';
+      prevYear = curYear;
+      prevMonth = '';
+    }
+    // Separador de mês
+    if (curMonth && curMonth !== prevMonth) {
+      html+='<tr class="month-divider-row"><td colspan="10" style="background:#e8f5e9;color:#1a5d1a;font-weight:600;font-size:0.8rem;padding:6px 10px">'+curMonth+'</td></tr>';
+      prevMonth = curMonth;
+    }
+
     var sdClass = '';
     var sdVal = x.sd;
     if (sdVal != null) {
@@ -2789,6 +2915,7 @@ function renderAnalysis(FILTERED_ROUNDS){
     var isBest8 = best8SDIndices.hasOwnProperty(r);
     var best8Html = isBest8 ? '<span style="color:#16a34a">★</span> <span style="font-weight:700">#' + best8SDIndices[r] + '</span>' : '';
     var rowStyle = isBest8 ? ' style="background:#f0fdf4"' : '';
+    var isLast20 = r < 20;
     
     // Stableford normalizado: 9 buracos + 17 (WHS)
     var stbDisplay = fmtStb(x.stb, x.holeCount);
