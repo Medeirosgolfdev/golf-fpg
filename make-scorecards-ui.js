@@ -82,18 +82,24 @@ function getMelhoriaFpgOriginal(fed, scoreId) {
 
 /* ------------------ Tee colors (como TeeBadge.tsx) ------------------ */
 const DEFAULT_TEE_COLORS = {
-  pretas: "#111111", pretos: "#111111", black: "#111111",
-  brancas: "#f2f2f2", brancos: "#f2f2f2", white: "#f2f2f2",
-  amarelas: "#ffd000", amarelos: "#ffd000", yellow: "#ffd000",
-  douradas: "#daa520", dourados: "#daa520", gold: "#daa520",
-  vermelhas: "#e74c3c", vermelhos: "#e74c3c", red: "#e74c3c",
-  azuis: "#1e88e5", azuisclaro: "#1e88e5", blue: "#1e88e5",
-  verdes: "#2e7d32", green: "#2e7d32",
-  roxas: "#7b1fa2", roxos: "#7b1fa2", purple: "#7b1fa2",
+  pretas: "#111111", pretos: "#111111", preto: "#111111", black: "#111111",
+  brancas: "#f2f2f2", brancos: "#f2f2f2", branco: "#f2f2f2", white: "#f2f2f2",
+  amarelas: "#ffd000", amarelos: "#ffd000", amarelo: "#ffd000", yellow: "#ffd000",
+  douradas: "#daa520", dourados: "#daa520", dourado: "#daa520", gold: "#daa520",
+  vermelhas: "#e74c3c", vermelhos: "#e74c3c", vermelho: "#e74c3c", red: "#e74c3c",
+  azuis: "#1e88e5", azuisclaro: "#1e88e5", azul: "#1e88e5", blue: "#1e88e5",
+  verdes: "#2e7d32", verde: "#2e7d32", green: "#2e7d32",
+  roxas: "#7b1fa2", roxos: "#7b1fa2", roxo: "#7b1fa2", purple: "#7b1fa2",
   laranjas: "#f57c00", laranja: "#f57c00", orange: "#f57c00",
-  castanhas: "#6d4c41", castanhos: "#6d4c41", brown: "#6d4c41",
-  prateadas: "#9e9e9e", prateados: "#9e9e9e", silver: "#9e9e9e",
-  cinzentas: "#9e9e9e", cinzentos: "#9e9e9e", grey: "#9e9e9e", gray: "#9e9e9e",
+  castanhas: "#6d4c41", castanhos: "#6d4c41", castanho: "#6d4c41", brown: "#6d4c41",
+  prateadas: "#9e9e9e", prateados: "#9e9e9e", prateado: "#9e9e9e", silver: "#9e9e9e",
+  cinzentas: "#9e9e9e", cinzentos: "#9e9e9e", cinzento: "#9e9e9e", grey: "#9e9e9e", gray: "#9e9e9e",
+  // Tees especiais (torneios internacionais juvenis)
+  boys11: "#06b6d4", "boys10-11": "#06b6d4", boys1011: "#06b6d4", boys1112: "#06b6d4", "boys11-12": "#06b6d4",
+  boys12: "#06b6d4", boys13: "#06b6d4", boys14: "#06b6d4",
+  girls11: "#06b6d4", "girls10-11": "#06b6d4", girls1011: "#06b6d4", "girls11-12": "#06b6d4", girls1112: "#06b6d4",
+  girls12: "#06b6d4", girls13: "#06b6d4", girls14: "#06b6d4",
+  rouge: "#e74c3c",
 };
 
 function normKey(s) {
@@ -107,7 +113,7 @@ function normKey(s) {
 
 function teeColor(teeName) {
   const k = normKey(teeName);
-  return DEFAULT_TEE_COLORS[k] || "#2e7d32";
+  return DEFAULT_TEE_COLORS[k] || "#06b6d4";
 }
 
 function teeTextColor(hex) {
@@ -530,10 +536,12 @@ function buildScorecardFragment({ fed, scoreId, rec, whsRow }) {
         <div class="sc-stat-label">PAR</div>
         <div class="sc-stat-value">${parTotal || '—'}</div>
       </div>
+      <div style="width:1px;height:28px;background:currentColor;opacity:0.25"></div>
       <div class="sc-stat">
         <div class="sc-stat-label">RESULTADO</div>
         <div class="sc-stat-value">${grossTotal || '—'}</div>
       </div>
+      <div style="width:1px;height:28px;background:currentColor;opacity:0.25"></div>
       <div class="sc-stat sc-stat-score">
         <div class="sc-stat-label">SCORE</div>
         <div class="sc-stat-value">${toParStr}</div>
@@ -541,55 +549,91 @@ function buildScorecardFragment({ fed, scoreId, rec, whsRow }) {
     </div>
   </div>
   
-  <table class="sc-table-modern">
+  <table class="sc-table-modern" data-sc-table="1">
     <thead>
       <tr>
-        <th class="hole-header" style="background:${teeHex};color:${teeFg}">Buraco</th>`;
+        <th class="hole-header" style="border-right:2px solid #e2e8f0">Buraco</th>`;
   
-  // Header com todos os buracos (9 ou 18)
+  const is9 = holeCount === 9;
+  const frontEnd = is9 ? holeCount : 9;
+  
+  // Header com todos os buracos + Out/In/TOTAL
   for (let h = 1; h <= holeCount; h++) {
-    const separator = (h === 10) ? ' sc-separator' : '';
-    html += `<th class="hole-header${separator}" style="background:${teeHex};color:${teeFg}">${h}</th>`;
+    html += `<th class="hole-header">${h}</th>`;
+    if (h === frontEnd && !is9) html += `<th class="hole-header col-out" style="font-size:10px">Out</th>`;
   }
-  html += `<th class="hole-header" style="background:${teeHex};color:${teeFg}">Total</th></tr></thead><tbody>`;
+  html += `<th class="hole-header col-${is9 ? 'total' : 'in'}" style="font-size:10px">${is9 ? 'TOTAL' : 'In'}</th>`;
+  if (!is9) html += `<th class="hole-header col-total">TOTAL</th>`;
+  html += `</tr></thead><tbody>`;
   
-  // Linha Handicap
-  html += '<tr><td class="row-label">Handicap</td>';
-  for (let h = 0; h < holeCount; h++) {
-    const separator = (h === 9) ? ' sc-separator' : '';
-    const hcpVal = si[h];
-    let hcpClass = '';
-    if (isMeaningful(hcpVal)) {
-      if (hcpVal <= 6) hcpClass = ' hcp-hard';
-      else if (hcpVal <= 12) hcpClass = ' hcp-medium';
-      else hcpClass = ' hcp-easy';
+  function sumRange(arr, from, to) { let s = 0; for (let i = from; i < to; i++) if (isMeaningful(arr[i])) s += arr[i]; return s; }
+  
+  // Linha Metros
+  if (meters && meters.some(isMeaningful)) {
+    html += '<tr class="meta-row"><td class="row-label" style="color:#b0b8c4;font-size:10px;font-weight:400">Metros</td>';
+    for (let h = 0; h < holeCount; h++) {
+      html += `<td>${isMeaningful(meters[h]) ? meters[h] : ''}</td>`;
+      if (h === frontEnd - 1 && !is9) html += `<td class="col-out" style="font-weight:600">${sumRange(meters, 0, frontEnd)}</td>`;
     }
-    html += `<td class="${separator}${hcpClass}">${isMeaningful(hcpVal) ? hcpVal : '—'}</td>`;
+    const inM = is9 ? sumRange(meters, 0, holeCount) : sumRange(meters, 9, holeCount);
+    html += `<td class="col-${is9 ? 'total' : 'in'}" style="font-weight:600">${inM}</td>`;
+    if (!is9) html += `<td class="col-total" style="color:#94a3b8;font-size:10px">${metersTotal}</td>`;
+    html += '</tr>';
   }
-  html += '<td class="sc-totals">—</td></tr>';
   
-  // Linha Par
-  html += '<tr><td class="row-label">Par</td>';
-  for (let h = 0; h < holeCount; h++) {
-    const separator = (h === 9) ? ' sc-separator' : '';
-    html += `<td class="${separator}">${isMeaningful(par[h]) ? par[h] : '—'}</td>`;
+  // Linha S.I.
+  if (si && si.some(isMeaningful)) {
+    html += '<tr class="meta-row"><td class="row-label" style="color:#b0b8c4;font-size:10px;font-weight:400">S.I.</td>';
+    for (let h = 0; h < holeCount; h++) {
+      html += `<td>${isMeaningful(si[h]) ? si[h] : ''}</td>`;
+      if (h === frontEnd - 1 && !is9) html += `<td class="col-out"></td>`;
+    }
+    html += `<td class="col-${is9 ? 'total' : 'in'}"></td>`;
+    if (!is9) html += `<td class="col-total"></td>`;
+    html += '</tr>';
   }
-  html += `<td class="sc-totals">${parTotal || '—'}</td></tr>`;
   
-  // Linha Resultado (com cores)
-  html += '<tr><td class="row-label">Resultado</td>';
+  // Linha Par (com separador)
+  html += '<tr class="sep-row"><td class="row-label par-label">Par</td>';
   for (let h = 0; h < holeCount; h++) {
-    const separator = (h === 9) ? ' sc-separator' : '';
+    html += `<td>${isMeaningful(par[h]) ? par[h] : '—'}</td>`;
+    if (h === frontEnd - 1 && !is9) html += `<td class="col-out" style="font-weight:700">${sumRange(par, 0, frontEnd)}</td>`;
+  }
+  const inPar = is9 ? parTotal : sumRange(par, 9, holeCount);
+  html += `<td class="col-${is9 ? 'total' : 'in'}" style="font-weight:700">${inPar}</td>`;
+  if (!is9) html += `<td class="col-total">${parTotal || '—'}</td>`;
+  html += '</tr>';
+  
+  // Linha Resultado (data pill + scores + toPar abaixo)
+  const dateFmt = date ? date.substring(0, 5).replace('-', '/') : 'Gross';
+  html += `<tr><td class="row-label"><span class="sc-pill" style="background:${teeHex};color:${teeFg}">${dateFmt}</span></td>`;
+  for (let h = 0; h < holeCount; h++) {
     const g = gross[h];
     const p = par[h];
     const cls = scoreClass(g, p);
     if (isMeaningful(g)) {
-      html += `<td class="${separator}"><span class="sc-score ${cls}">${g}</span></td>`;
+      html += `<td><span class="sc-score ${cls}">${g}</span></td>`;
     } else {
-      html += `<td class="${separator}">—</td>`;
+      html += `<td>—</td>`;
+    }
+    if (h === frontEnd - 1 && !is9) {
+      const outG = sumRange(gross, 0, frontEnd);
+      const outP = sumRange(par, 0, frontEnd);
+      const outTP = outG - outP;
+      const outTPcls = outTP > 0 ? 'sc-topar-pos' : (outTP < 0 ? 'sc-topar-neg' : 'sc-topar-zero');
+      html += `<td class="col-out" style="font-weight:700">${outG}<span class="sc-topar ${outTPcls}">${outTP > 0 ? '+' : ''}${outTP}</span></td>`;
     }
   }
-  html += `<td class="sc-totals">${grossTotal || '—'}</td></tr></tbody></table>`;
+  const inG = is9 ? grossTotal : sumRange(gross, 9, holeCount);
+  const inP = is9 ? parTotal : sumRange(par, 9, holeCount);
+  const inTP = inG - inP;
+  const inTPcls = inTP > 0 ? 'sc-topar-pos' : (inTP < 0 ? 'sc-topar-neg' : 'sc-topar-zero');
+  html += `<td class="col-${is9 ? 'total' : 'in'}" style="font-weight:700">${inG}<span class="sc-topar ${inTPcls}">${inTP > 0 ? '+' : ''}${inTP}</span></td>`;
+  if (!is9) {
+    const totTPcls = toPar > 0 ? 'sc-topar-pos' : (toPar < 0 ? 'sc-topar-neg' : 'sc-topar-zero');
+    html += `<td class="col-total">${grossTotal}<span class="sc-topar ${totTPcls}">${toParStr}</span></td>`;
+  }
+  html += `</tr></tbody></table>`;
   
   html += `
 </div>`;
@@ -1159,13 +1203,14 @@ function processPlayer(FED, allPlayers, crossStats) {
     fragments[scoreId] = buildScorecardFragment({ fed: FED, scoreId, rec, whsRow }).trim();
     // Per-hole gross for eclectic comparison
     const hc = holeCountFromRec(rec);
-    const g = [], p = [], si = [];
+    const g = [], p = [], si = [], m = [];
     for (let i = 1; i <= hc; i++) {
       g.push(toNum(rec[`gross_${i}`]) ?? null);
       p.push(toNum(rec[`par_${i}`]) ?? null);
       si.push(toNum(rec[`stroke_index_${i}`]) ?? null);
+      m.push(toNum(rec[`meters_${i}`]) ?? null);
     }
-    holeScores[scoreId] = { g, p, si, hc };
+    holeScores[scoreId] = { g, p, si, m, hc };
   }
 
   const rounds = [];
@@ -1266,6 +1311,140 @@ function processPlayer(FED, allPlayers, crossStats) {
       scoreOrigin: "",
       hasCard: true
     });
+  }
+
+  // ===== Injectar treinos e extra_rounds do melhorias.json =====
+  const melh = loadMelhorias();
+  const melhPlayer = melh[String(FED)];
+  if (melhPlayer) {
+    // Treinos (Game Book)
+    if (Array.isArray(melhPlayer.treinos)) {
+      for (let ti = 0; ti < melhPlayer.treinos.length; ti++) {
+        const t = melhPlayer.treinos[ti];
+        const dp = (t.data || '').split('-');  // yyyy-mm-dd
+        const dateObj = dp.length === 3 ? new Date(+dp[0], +dp[1]-1, +dp[2]) : null;
+        const fakeId = 'treino_' + ti;
+        const hc = t.holes || 9;
+        
+        // Criar fragment e holeScores para treinos
+        if (t.gross_holes && t.par_holes) {
+          holeScores[fakeId] = {
+            g: t.gross_holes,
+            p: t.par_holes,
+            si: t.si_holes || [],
+            m: t.meters_holes || [],
+            hc: hc
+          };
+        }
+        
+        rounds.push({
+          scoreId: fakeId,
+          holeCount: hc,
+          course: t.campo || '',
+          courseOrig: t.campo || '',
+          courseKey: norm(t.campo || ''),
+          date: dateObj ? fmtDate(dateObj) : '',
+          dateSort: dateObj ? dateObj.getTime() : 0,
+          tee: '',
+          teeKey: '',
+          meters: '',
+          gross: t.gross ?? '',
+          par: t.par ?? null,
+          stb: '',
+          sd: '',
+          hi: '',
+          eventName: 'Treino' + (t.companhia ? ' (c/ ' + t.companhia + ')' : ''),
+          eventKey: 'treino',
+          scoreOrigin: 'Treino',
+          hasCard: !!t.gross_holes,
+          _isTreino: true,
+          _fonte: t.fonte || 'Game Book'
+        });
+      }
+      console.log(`  + ${melhPlayer.treinos.length} treinos injectados`);
+    }
+
+    // Resolver nomes de campos dos treinos para coincidir com nomes FPG existentes
+    // Recolher courseKeys dos rounds FPG
+    const fpgCourseNames = new Map(); // norm(name) → displayName
+    for (const r of rounds) {
+      if (!r._isTreino && !r._isExtra && r.course) {
+        fpgCourseNames.set(r.courseKey, r.course);
+      }
+    }
+    // Para cada treino, tentar encontrar o campo FPG correspondente
+    for (const r of rounds) {
+      if (!r._isTreino) continue;
+      if (fpgCourseNames.has(r.courseKey)) continue; // Já coincide
+      
+      // Tentar match parcial: "Desertas Course" → procurar courseKey que contenha "desertas"
+      const treWords = r.courseKey.replace(/course|golfe|golf/gi, '').trim().split(/\s+/).filter(w => w.length > 2);
+      let bestMatch = null, bestScore = 0;
+      for (const [fKey, fName] of fpgCourseNames) {
+        let score = 0;
+        for (const w of treWords) {
+          if (fKey.indexOf(w) >= 0) score++;
+        }
+        if (score > bestScore) { bestScore = score; bestMatch = { key: fKey, name: fName }; }
+      }
+      if (bestMatch && bestScore >= 1) {
+        console.log(`  ↳ Treino "${r.course}" → "${bestMatch.name}"`);
+        r.course = bestMatch.name;
+        r.courseKey = bestMatch.key;
+      }
+    }
+
+    // Extra rounds (torneios não aceites pela FPG)
+    if (Array.isArray(melhPlayer.extra_rounds)) {
+      for (let ei = 0; ei < melhPlayer.extra_rounds.length; ei++) {
+        const ex = melhPlayer.extra_rounds[ei];
+        if (!Array.isArray(ex.dias)) continue;
+        for (let di = 0; di < ex.dias.length; di++) {
+          const dia = ex.dias[di];
+          const dp = (dia.data || '').split('-');
+          const dateObj = dp.length === 3 ? new Date(+dp[0], +dp[1]-1, +dp[2]) : null;
+          const fakeId = 'extra_' + ei + '_' + di;
+          const hc = dia.holes || 18;
+          
+          if (dia.gross_holes && dia.par_holes) {
+            holeScores[fakeId] = {
+              g: dia.gross_holes,
+              p: dia.par_holes,
+              si: dia.si_holes || [],
+              m: dia.meters_holes || [],
+              hc: hc
+            };
+          }
+          
+          const label = ex.torneio + (dia.dia ? ' ' + dia.dia : '');
+          rounds.push({
+            scoreId: fakeId,
+            holeCount: hc,
+            course: ex.campo || '',
+            courseOrig: ex.campo || '',
+            courseKey: norm(ex.campo || ''),
+            date: dateObj ? fmtDate(dateObj) : '',
+            dateSort: dateObj ? dateObj.getTime() : 0,
+            tee: ex.categoria || '',
+            teeKey: normKey(ex.categoria || ''),
+            meters: '',
+            gross: dia.gross ?? '',
+            par: dia.par ?? null,
+            stb: '',
+            sd: '',
+            hi: '',
+            eventName: label,
+            eventKey: norm(label),
+            scoreOrigin: 'Extra',
+            hasCard: !!dia.gross_holes,
+            _isExtra: true,
+            _naoAceiteFpg: ex.nao_aceite_fpg || false,
+            _link: ex.link || ''
+          });
+        }
+      }
+      console.log(`  + ${melhPlayer.extra_rounds.length} extra round(s) injectados`);
+    }
   }
 
   const byCourse = new Map();
@@ -1455,7 +1634,7 @@ function processPlayer(FED, allPlayers, crossStats) {
 <style>
   :root{
     --bg:#fff; --fg:#0f172a; --muted:#64748b; --line:#e5e7eb;
-    --chip:#f1f5f9; --head:#f8fafc; --accent:#111827;
+    --chip:#f1f5f9; --head:#f1f5f9; --accent:#111827;
   }
   body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;}
   header{padding:14px 18px;display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;border-bottom:1px solid var(--line)}
@@ -1500,14 +1679,16 @@ function processPlayer(FED, allPlayers, crossStats) {
   .toolbar{padding:10px 12px;border-bottom:1px solid var(--line);background:var(--head);display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;}
   .stats{display:flex;gap:10px;align-items:center}
   .pill{background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:12px;color:var(--muted);}
-  table{width:100%;border-collapse:collapse;font-size:13px}
-  th, td{border-bottom:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
-  th{font-size:12px;color:var(--muted);background:#fff}
-  tr:hover{background:#fafafa}
+  table{width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed}
+  th, td{border-bottom:1px solid #eef2f7;padding:6px 8px;text-align:left;vertical-align:middle;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  th{font-size:11px;color:#475569;background:#f1f5f9;font-weight:700;border-bottom:2px solid #cbd5e1}
+  tr:hover{background:#fafbfc}
+  .r,.right{text-align:right;white-space:nowrap}
   .rowHead{display:flex;gap:10px;align-items:center}
-  .count{width:26px;height:26px;border-radius:10px;background:#111827;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex:none;}
-  .courseBtn{border:0;background:transparent;padding:0;margin:0;color:var(--accent);font-weight:700;cursor:pointer;}
-  .sub{font-size:12px;color:var(--muted);margin-top:2px}
+  .count{width:24px;height:24px;border-radius:8px;background:#111827;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex:none;}
+  .courseBtn{border:0;background:transparent;padding:0;margin:0;color:#0369a1;font-weight:700;cursor:pointer;font-size:12px}
+  .courseBtn:hover{text-decoration:underline}
+  .sub{font-size:11px;color:var(--muted);margin-top:2px}
   .right{white-space:nowrap;text-align:right}
   .muted{color:var(--muted)}
   .details{display:none;background:#fff}
@@ -1516,10 +1697,17 @@ function processPlayer(FED, allPlayers, crossStats) {
   .innerWrap{padding:10px 10px 12px;background:#fff}
   .innerTop{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;margin-bottom:10px}
   .innerTable{width:100%;border:1px solid var(--line);border-radius:12px;overflow:hidden}
-  .innerTable table{font-size:12.5px}
-  .innerTable th{background:var(--head)}
+  .innerTable table{font-size:12px}
+  .innerTable th{background:var(--head);color:#475569;border-bottom:2px solid #cbd5e1}
+  .tee-date{display:inline-block;padding:2px 10px;border-radius:8px;font-size:11px;font-weight:700;white-space:nowrap}
+  .score-delta{display:block;font-size:10px;font-weight:600;margin-top:1px;color:#94a3b8}
+  .score-delta.pos{color:#dc2626}
+  .score-delta.neg{color:#16a34a}
+  .dt-compact th,.dt-compact td{padding:5px 8px}
   a.dateLink{color:#111827;text-decoration:underline;text-underline-offset:2px;cursor:pointer;}
   a.dateLink:hover{opacity:.75}
+  .tournPill{transition:all .15s}
+  .tournPill:hover{opacity:.8}
 
   .scorecardRow td{background:#fafafa;padding:8px 10px !important;}
   .scHost{border:1px solid var(--line);border-radius:14px;background:#fff;padding:10px;overflow:hidden;}
@@ -1571,15 +1759,26 @@ function processPlayer(FED, allPlayers, crossStats) {
   .sc-ext-link{font-size:11px;color:inherit;opacity:0.85;text-decoration:none;border:1px solid rgba(255,255,255,0.3);border-radius:4px;padding:1px 6px}
   .sc-ext-link:hover{opacity:1;background:rgba(255,255,255,0.15)}
   .sc-fpg-badge{font-size:10px;background:rgba(255,200,0,0.3);border:1px solid rgba(255,200,0,0.5);border-radius:3px;padding:0 4px;cursor:help}
-  .sc-stat{text-align:center;min-width:65px}
+  .sc-stat{text-align:center;min-width:55px}
   .sc-stat-label{font-size:10px;text-transform:uppercase;letter-spacing:0.05em;opacity:0.8;margin-bottom:2px}
-  .sc-stat-value{font-size:20px;font-weight:900;line-height:1}
-  .sc-stat-score .sc-stat-value{font-size:24px}
+  .sc-stat-value{font-size:18px;font-weight:900;line-height:1}
+  .sc-stat-score .sc-stat-value{font-size:18px}
   .sc-table-modern{width:100%;border-collapse:collapse;font-size:11px}
   .sc-table-modern th,.sc-table-modern td{padding:6px 2px;text-align:center;border:1px solid #e5e7eb}
   .sc-table-modern th{background:#f9fafb;font-weight:800;font-size:10px;color:#6b7280}
-  .sc-table-modern .hole-header{background:var(--tee-color);color:var(--tee-fg);font-weight:900;padding:8px 2px}
-  .sc-table-modern .row-label{text-align:left;padding-left:8px;font-weight:700;color:#374151;min-width:70px}
+  .sc-table-modern .hole-header{background:#f8fafc;color:#64748b;font-weight:700;font-size:11px;border-bottom:1px solid #e2e8f0}
+  .sc-table-modern .row-label{text-align:left;padding-left:8px;font-weight:700;color:#374151;min-width:70px;border-right:2px solid #e2e8f0}
+  .sc-table-modern .col-out,.sc-table-modern .col-in{background:#f4f6f8;border-left:1px solid #e2e8f0;border-right:1px solid #e2e8f0}
+  .sc-table-modern .col-total{background:#edf0f4;border-left:1px solid #dde1e7;font-weight:800}
+  .sc-table-modern .sep-row td{border-bottom:2px solid #cbd5e1}
+  .sc-table-modern .meta-row td{color:#b0b8c4;font-size:10px}
+  .sc-table-modern .par-label{color:#94a3b8;font-weight:600;font-size:11px}
+  .sc-topar{display:block;font-size:10px;font-weight:600;margin-top:1px}
+  .sc-topar-pos{color:#dc2626}
+  .sc-topar-neg{color:#16a34a}
+  .sc-topar-zero{color:#94a3b8}
+  .sc-bar-head{background:#f1f5f9;padding:8px 12px;font-size:12px;font-weight:700;color:#475569;display:flex;justify-content:space-between;border-bottom:2px solid #cbd5e1}
+  .sc-pill{display:inline-block;color:#fff;padding:2px 10px;border-radius:8px;font-size:11px;font-weight:700}
   .sc-separator{border-left:4px solid #fff !important}
   .sd-excellent{background:#d1fae5 !important}
   .sd-good{background:#fef3c7 !important}
@@ -1621,10 +1820,8 @@ function processPlayer(FED, allPlayers, crossStats) {
   .teePill{border-radius:999px;padding:2px 7px;font-weight:800;font-size:10px;border:1px solid rgba(0,0,0,.08);white-space:nowrap}
   .teePill-sm{padding:1px 6px;font-size:9px}
   /* Gross + par diff alignment */
-  .gross-wrap{display:inline-flex;align-items:baseline;gap:3px;justify-content:flex-end}
-  .gross-val{min-width:24px;text-align:right}
-  .gross-diff{font-size:10px;font-weight:400;min-width:30px;text-align:left}
-  .grpRow td{background:#f1f5f9;font-weight:900;color:#0f172a}
+  /* gross delta uses .score-delta class */
+  .grpRow td{background:#f8fafc;font-weight:700;color:#334155;font-size:12px;border-bottom:1px solid #e2e8f0;padding:6px 8px}
   .grpRow .muted{font-weight:600}
   .hb{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:999px;font-weight:900;font-size:12px;border:1px solid #e5e7eb;background:#fff}
   .eds-badge{display:inline-block;font-size:9px;font-weight:700;color:#0369a1;background:#e0f2fe;border-radius:3px;padding:0 3px;margin-left:4px;vertical-align:middle;letter-spacing:.5px}
@@ -1648,8 +1845,9 @@ function processPlayer(FED, allPlayers, crossStats) {
   .an-k-title{font-weight:700;margin-bottom:6px}
   .an-k-val{font-size:22px;line-height:1.1}
   .an-k-sub{margin-top:4px}
-  .an-table{width:100%;border-collapse:collapse;margin-top:8px}
-  .an-table th,.an-table td{border-top:1px solid #eef2f7;padding:8px 10px;font-size:13px;vertical-align:top}
+  .an-table{width:100%;border-collapse:collapse;margin-top:8px;table-layout:fixed}
+  .an-table th,.an-table td{border-top:1px solid #eef2f7;padding:6px 8px;font-size:12px;vertical-align:middle}
+  .an-table th{background:#f1f5f9;color:#475569;font-weight:700;font-size:11px;border-bottom:2px solid #cbd5e1;border-top:none}
   .an-rates{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px}
   .an-rates b{font-size:18px}
 
@@ -1659,8 +1857,8 @@ function processPlayer(FED, allPlayers, crossStats) {
   .ecLeft{width:100%}
   .ecRight{width:100%;min-height:180px;transition:min-height 0.2s ease}
   .ecPlaceholder{padding:20px;text-align:center;color:#94a3b8;font-size:14px;font-style:italic;border:2px dashed #e2e8f0;border-radius:12px;background:#f8fafc}
-  .ecDetailCard{border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;background:#fff}
-  .ecDetailHead{padding:8px 10px;background:#f8fafc;border-bottom:1px solid #e5e7eb;font-size:12px;color:#111827;font-weight:900}
+  .ecDetailCard{border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;background:#fff}
+  .ecDetailHead{padding:8px 12px;background:#f1f5f9;border-bottom:2px solid #cbd5e1;font-size:12px;color:#475569;font-weight:900}
   .ecDetailBody{padding:8px 10px;font-size:12px;color:#64748b}
   
   .courseAnalysis{margin:12px 0;padding:14px;border:1px solid #e2e8f0;border-radius:12px;background:#f8fafc}
@@ -1688,9 +1886,9 @@ function processPlayer(FED, allPlayers, crossStats) {
   .caTeeSection{margin-top:10px}
   .caTeeTitle{font-size:11px;font-weight:700;color:#64748b;margin-bottom:4px}
   .caTeeTable{width:100%;border-collapse:collapse;font-size:12px}
-  .caTeeTable th{font-size:10px;color:#94a3b8;font-weight:600;text-transform:uppercase;padding:4px 8px;border-bottom:1px solid #e5e7eb;text-align:left}
+  .caTeeTable th{font-size:11px;color:#475569;font-weight:700;padding:5px 8px;background:#f1f5f9;border-bottom:2px solid #cbd5e1;text-align:left}
   .caTeeTable th.right,.caTeeTable td.right{text-align:right}
-  .caTeeTable td{padding:4px 8px;border-bottom:1px solid #f1f5f9}
+  .caTeeTable td{padding:5px 8px;border-bottom:1px solid #eef2f7}
   .caConclusion{margin-top:10px;padding:10px 12px;background:#fffbeb;border:1px solid #fde68a;border-radius:10px}
   .caConcTitle{font-size:12px;font-weight:800;color:#92400e;margin-bottom:4px}
   .caConcText{font-size:12px;color:#78350f;line-height:1.5}
@@ -1754,8 +1952,9 @@ function processPlayer(FED, allPlayers, crossStats) {
   .an-k-title{font-weight:800;margin-bottom:6px}
   .an-k-val{font-size:22px;line-height:1.1}
   .an-k-sub{margin-top:4px}
-  .an-table{width:100%;border-collapse:collapse;margin-top:8px}
-  .an-table th,.an-table td{border-top:1px solid #eef2f7;padding:8px 10px;font-size:13px;vertical-align:top}
+  .an-table{width:100%;border-collapse:collapse;margin-top:8px;table-layout:fixed}
+  .an-table th,.an-table td{border-top:1px solid #eef2f7;padding:6px 8px;font-size:12px;vertical-align:middle}
+  .an-table th{background:#f1f5f9;color:#475569;font-weight:700;font-size:11px;border-bottom:2px solid #cbd5e1;border-top:none}
   .an-grid3{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
   @media (max-width: 980px){ .an-grid3{grid-template-columns:1fr} }
   .an-rec-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
@@ -2040,8 +2239,8 @@ function processPlayer(FED, allPlayers, crossStats) {
 .cross-tab.active{background:#0369a1;color:#fff;border-color:#0369a1}
 .cross-tab-count{font-size:10px;opacity:.7;margin-left:3px}
 .cross-section-title{font-size:14px;font-weight:700;color:#1e293b;margin:12px 0 8px;padding-bottom:4px;border-bottom:2px solid #e2e8f0}
-.cross-table{width:100%;font-size:13px;table-layout:auto}
-.cross-table th{background:#f8fafc}
+.cross-table{width:100%;font-size:12px;table-layout:auto}
+.cross-table th{background:#f1f5f9;color:#475569;font-size:11px;font-weight:700;border-bottom:2px solid #cbd5e1}
 .cross-table td,.cross-table th{white-space:nowrap}
 .cross-table .center{text-align:center}
 .cross-current{background:#f0fdf4 !important}
@@ -2062,7 +2261,7 @@ function processPlayer(FED, allPlayers, crossStats) {
 .cross-bar-val{font-size:12px;min-width:80px;text-align:right;font-weight:600}
 /* Course deep analysis */
 .cross-course-table{width:100%;font-size:12px;margin-top:6px}
-.cross-course-table th{background:#f1f5f9;font-size:11px;padding:6px 8px}
+.cross-course-table th{background:#f1f5f9;color:#475569;font-size:11px;padding:5px 8px;border-bottom:2px solid #cbd5e1}
 .cross-course-table td{padding:5px 8px}
 .cross-spark-track{position:relative;height:14px;background:#f1f5f9;border-radius:3px;min-width:90px}
 .cross-spark-bar{position:absolute;top:2px;height:10px;border-radius:2px;opacity:.5}
@@ -2116,8 +2315,8 @@ function processPlayer(FED, allPlayers, crossStats) {
 .cross-table tbody tr.cross-filtered-hide{display:none}
 .cross-name-cell{display:inline-flex;align-items:center;gap:1px;cursor:pointer}
 .cross-hdr-group th{border-bottom:none !important}
-.cross-hdr-voltas{text-align:center !important;background:#eef2ff !important;font-size:11px;letter-spacing:.5px}
-.cross-hdr-sub th{font-size:11px;background:#f0f4ff !important;padding-top:2px !important;padding-bottom:2px !important}
+.cross-hdr-voltas{text-align:center !important;background:#f1f5f9 !important;font-size:11px;letter-spacing:.5px;border-bottom:1px solid #cbd5e1 !important}
+.cross-hdr-sub th{font-size:11px;background:#f8fafc !important;padding-top:2px !important;padding-bottom:2px !important}
 /* Sortable headers */
 .cross-sort{cursor:pointer;user-select:none;position:relative;white-space:nowrap}
 .cross-sort:hover{background:#e0f2fe !important}
@@ -2233,11 +2432,21 @@ function processPlayer(FED, allPlayers, crossStats) {
     </div>
 
     <table>
+      <colgroup>
+        <col style="width:26%"><col style="width:6%"><col style="width:9%"><col style="width:6%"><col style="width:7%"><col style="width:12%"><col style="width:8%"><col style="width:9%"><col style="width:7%"><col style="width:7%">
+      </colgroup>
       <thead id="thead">
         <tr>
-          <th style="width:52%">Campo</th>
-          <th class="right" style="width:12%">Voltas</th>
-          <th style="width:36%">Última volta</th>
+          <th>Campo</th>
+          <th class="r">Voltas</th>
+          <th>Última</th>
+          <th class="r">Bur.</th>
+          <th class="r">HCP</th>
+          <th>Tee</th>
+          <th class="r">Dist.</th>
+          <th class="r">Gross</th>
+          <th class="r">Stb</th>
+          <th class="r">SD</th>
         </tr>
       </thead>
       <tbody id="tbody"></tbody>
@@ -2366,7 +2575,7 @@ function printAll() {
   }
   function teeHex(teeName){
     var k = normKey2(teeName);
-    return TEE[k] || "#2e7d32";
+    return TEE[k] || "#06b6d4";
   }
   function teeFg(hex){
     hex = (hex||"").replace("#","");
@@ -2601,7 +2810,7 @@ function printAll() {
     if (stb == null || stb === '') return '';
     if (holeCount == 9) {
       var norm = Number(stb) + 17;
-      return norm + '<span style="color:#94a3b8;font-size:11px">*</span>';
+      return '<span style="color:#94a3b8;font-size:11px">*</span>' + norm;
     }
     return String(stb);
   }
@@ -2610,6 +2819,8 @@ function printAll() {
   function fmtEds(origin) {
     if (origin === 'EDS') return '<span class="eds-badge">EDS</span>';
     if (origin === 'Indiv') return '<span class="eds-badge" style="background:#fef3c7;color:#92400e">INDIV</span>';
+    if (origin === 'Treino') return '<span class="eds-badge" style="background:#f3e5f5;color:#6a1b9a">TREINO</span>';
+    if (origin === 'Extra') return '<span class="eds-badge" style="background:#fce4ec;color:#c62828">EXTRA</span>';
     return '';
   }
 
@@ -2753,7 +2964,7 @@ function renderAnalysis(FILTERED_ROUNDS){
   }
 
   var html='';
-  html+='<tr><td colspan="10"><div class="an-wrap">';
+  html+='<tr><td colspan="11"><div class="an-wrap">';
   html+='<div class="an-grid">';
   html+=kpiCard('Média (últimas 5)',  kpiGross5==null?null:kpiGross5.toFixed(1), 'Gross 18B (' + last5_18.length + ' rondas)',
     'Média do gross das últimas 5 rondas de 18 buracos. Indica a forma muito recente.');
@@ -2875,15 +3086,25 @@ function renderAnalysis(FILTERED_ROUNDS){
 
   html+='<div class="an-card"><div class="an-k-title">Todas as rondas</div>';
   html+='<div class="muted" style="margin-bottom:8px">Os 8 melhores SD das últimas 20 estão assinalados com ★ · <b>*</b> = Stableford normalizado 9B→18B (+17 pts WHS)</div>';
-  html+='<table class="an-table" id="last20Table"><thead><tr>' +
-        '<th class="an-sortable" data-col="0" data-type="text">Data</th><th class="an-sortable" data-col="1" data-type="text">Campo</th><th>Torneio</th><th>Tee</th>' +
-        '<th class="right an-sortable" data-col="4" data-type="num">Bur.</th><th class="right an-sortable" data-col="5" data-type="num">HCP</th><th class="right an-sortable" data-col="6" data-type="num">Gross</th>' +
-        '<th class="right an-sortable" data-col="7" data-type="num">Stb</th><th class="right an-sortable" data-col="8" data-type="num">SD</th><th class="right">Top 8</th>' +
+  html+='<table class="an-table" id="last20Table">' +
+        '<colgroup><col style="width:8%"><col style="width:16%"><col style="width:12%"><col style="width:6%"><col style="width:6%"><col style="width:10%"><col style="width:8%"><col style="width:9%"><col style="width:7%"><col style="width:7%"><col style="width:7%"></colgroup>' +
+        '<thead><tr>' +
+        '<th class="an-sortable" data-col="0" data-type="text">Data</th><th class="an-sortable" data-col="1" data-type="text">Campo</th><th>Prova</th>' +
+        '<th class="right an-sortable" data-col="3" data-type="num">Bur.</th><th class="right an-sortable" data-col="4" data-type="num">HCP</th><th>Tee</th>' +
+        '<th class="right an-sortable" data-col="6" data-type="num">Dist.</th>' +
+        '<th class="right an-sortable" data-col="7" data-type="num">Gross</th>' +
+        '<th class="right an-sortable" data-col="8" data-type="num">Stb</th><th class="right an-sortable" data-col="9" data-type="num">SD</th><th class="right">Top 8</th>' +
         '</tr></thead><tbody>';
 
   var MONTH_NAMES_PT = ['','Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
   var allRoundsTable = roundsDesc;
   var prevYear = '', prevMonth = '';
+
+  // Recalcular best8 para últimas 20 (que estão no topo do roundsDesc)
+  var last20Set = {};
+  for (var li = 0; li < Math.min(20, roundsDesc.length); li++) {
+    last20Set[roundsDesc[li].scoreId] = true;
+  }
 
   for (var r=0;r<allRoundsTable.length;r++){
     var x = allRoundsTable[r];
@@ -2896,13 +3117,13 @@ function renderAnalysis(FILTERED_ROUNDS){
 
     // Separador de ano
     if (curYear && curYear !== prevYear) {
-      html+='<tr class="year-divider-row"><td colspan="10" style="background:#1a5d1a;color:#fff;font-weight:700;font-size:0.9rem;padding:8px 10px;letter-spacing:1px">'+curYear+'</td></tr>';
+      html+='<tr class="year-divider-row"><td colspan="11" style="padding:7px 10px;border-bottom:1px solid #e2e8f0"><span style="display:inline-block;border:2px solid #64748b;color:#475569;padding:2px 12px;border-radius:8px;font-weight:800;font-size:0.85rem;letter-spacing:0.5px">'+curYear+'</span></td></tr>';
       prevYear = curYear;
       prevMonth = '';
     }
     // Separador de mês
     if (curMonth && curMonth !== prevMonth) {
-      html+='<tr class="month-divider-row"><td colspan="10" style="background:#e8f5e9;color:#1a5d1a;font-weight:600;font-size:0.8rem;padding:6px 10px">'+curMonth+'</td></tr>';
+      html+='<tr class="month-divider-row"><td colspan="11" style="padding:4px 10px;border-bottom:1px solid #f0f0f0"><span style="display:inline-block;border:1px solid #cbd5e1;color:#94a3b8;padding:1px 8px;border-radius:6px;font-weight:600;font-size:0.72rem">'+curMonth+'</span></td></tr>';
       prevMonth = curMonth;
     }
 
@@ -2912,25 +3133,50 @@ function renderAnalysis(FILTERED_ROUNDS){
       var sdNum = Number(sdVal);
       sdClass = sdClassByHcp(sdNum, x.hi);
     }
-    var isBest8 = best8SDIndices.hasOwnProperty(r);
-    var best8Html = isBest8 ? '<span style="color:#16a34a">★</span> <span style="font-weight:700">#' + best8SDIndices[r] + '</span>' : '';
+    var isBest8Idx = -1;
+    // Check if this round is in the last 20 and is a best8
+    for (var bi2=0; bi2<Math.min(8, sdIndexed.length); bi2++){
+      var origIdx = sdIndexed[bi2].idx;
+      if (origIdx < last20.length && last20[origIdx].scoreId === x.scoreId) {
+        isBest8Idx = bi2 + 1;
+        break;
+      }
+    }
+    var isBest8 = isBest8Idx > 0;
+    var best8Html = isBest8 ? '<span style="color:#16a34a">★</span> <span style="font-weight:700">#' + isBest8Idx + '</span>' : '';
     var rowStyle = isBest8 ? ' style="background:#f0fdf4"' : '';
-    var isLast20 = r < 20;
+    var isLast20 = last20Set.hasOwnProperty(x.scoreId);
     
     // Stableford normalizado: 9 buracos + 17 (WHS)
     var stbDisplay = fmtStb(x.stb, x.holeCount);
     var stbSort = x.stb != null ? (x.holeCount == 9 ? x.stb + 17 : x.stb) : '';
     
-    html+='<tr'+rowStyle+' data-sort-date="'+(x.dateSort||0)+'" data-sort-gross="'+(x.gross!=null?x.gross:999)+'" data-sort-stb="'+stbSort+'" data-sort-sd="'+(x.sd!=null?x.sd:999)+'" data-sort-hcp="'+(x.hi!=null?x.hi:999)+'" data-sort-bur="'+(x.holeCount||18)+'">' +
-      '<td><a href="#" class="dateLink" data-score="'+x.scoreId+'">'+(x.date||'')+'</a><div class="muted" style="font-size:10px">#'+x.scoreId+'</div></td>' +
-      '<td><b>'+esc(x.course||'')+'</b></td>' +
+    var scoreIdLabel = '';
+    if (String(x.scoreId).indexOf('treino_') === 0) {
+      scoreIdLabel = '<div class="muted" style="font-size:10px">Game Book</div>';
+    } else if (String(x.scoreId).indexOf('extra_') === 0) {
+      scoreIdLabel = '<div class="muted" style="font-size:10px">Extra (não FPG)</div>';
+    } else {
+      scoreIdLabel = '<div class="muted" style="font-size:10px">#'+x.scoreId+'</div>';
+    }
+    
+    var hxL20 = teeHex(x.tee||''), fgL20 = teeFg(hxL20);
+    var shortDateL20 = (x.date||'').replace(/^(\d{2})-(\d{2})-\d{4}$/,'$1-$2');
+    var datePillL20 = (String(x.scoreId).indexOf('treino_') !== 0 && String(x.scoreId).indexOf('extra_') !== 0)
+      ? '<a href="#" class="dateLink" data-score="'+x.scoreId+'"><span class="tee-date" style="background:'+hxL20+';color:'+fgL20+'">'+shortDateL20+'</span></a>'
+      : '<span class="tee-date" style="background:'+hxL20+';color:'+fgL20+'">'+shortDateL20+'</span>';
+    
+    html+='<tr'+rowStyle+' data-sort-date="'+(x.dateSort||0)+'" data-sort-gross="'+(x.gross!=null?x.gross:999)+'" data-sort-stb="'+stbSort+'" data-sort-sd="'+(x.sd!=null?x.sd:999)+'" data-sort-hcp="'+(x.hi!=null?x.hi:999)+'" data-sort-bur="'+(x.holeCount||18)+'" data-sort-dist="'+(x.meters||0)+'">' +
+      '<td>'+datePillL20+scoreIdLabel+'</td>' +
+      '<td>'+esc(x.course||'')+'</td>' +
       '<td class="muted">'+esc(x.eventName||'')+fmtEds(x.scoreOrigin)+'</td>' +
-      '<td>'+renderTeeBadge(x.tee||'')+'</td>' +
       '<td class="right">'+(x.holeCount==9?'<span class="hb hb9">9</span>':'<span class="hb hb18">18</span>')+'</td>' +
-      '<td class="right"><b>'+(x.hi!=null?x.hi:'')+'</b></td>' +
+      '<td class="right">'+(x.hi!=null?x.hi:'')+'</td>' +
+      '<td>'+renderTeeBadge(x.tee||'')+'</td>' +
+      '<td class="right muted">'+(x.meters ? (x.meters+'m') : '')+'</td>' +
       '<td class="right">'+fmtGross(x.gross, x.par)+'</td>' +
       '<td class="right">'+stbDisplay+'</td>' +
-      '<td class="right '+(sdClass||'')+'">'+(x.sd!=null?x.sd:'')+'</td>' +
+      '<td class="right">'+(x.sd!=null?('<span class="'+(sdClass||'')+'" style="display:inline-block;min-width:36px;text-align:right;padding:2px 6px;border-radius:6px">'+x.sd+'</span>'):'')+'</td>' +
       '<td class="right">'+best8Html+'</td>' +
     '</tr>';
   }
@@ -3250,11 +3496,33 @@ function fmtGross(gross, par) {
   var p = Number(par);
   if (Number.isFinite(p) && p > 0) {
     var diff = g - p;
-    var col = diff > 0 ? '#dc2626' : diff < 0 ? '#16a34a' : '#64748b';
     var txt = diff === 0 ? 'E' : (diff > 0 ? '+' : '') + diff;
-    return '<span class="gross-wrap"><b class="gross-val">' + g + '</b><span class="gross-diff" style="color:'+col+'">(' + txt + ')</span></span>';
+    var cls = diff > 0 ? 'pos' : diff < 0 ? 'neg' : '';
+    return '<b>' + g + '</b><span class="score-delta ' + cls + '">' + txt + '</span>';
   }
   return '<b>' + g + '</b>';
+}
+
+// Gross com +/- por baixo e cor baseada no HCP
+function fmtGrossBelow(gross, par, hi, holeCount) {
+  if (gross == null || gross === '') return '';
+  var g = Number(gross);
+  if (!Number.isFinite(g)) return '<b>' + g + '</b>';
+  var p = Number(par);
+  if (!Number.isFinite(p) || p <= 0) return '<b>' + g + '</b>';
+  var diff = g - p;
+  var txt = diff === 0 ? 'E' : (diff > 0 ? '+' : '') + diff;
+  // Cor baseada no HCP
+  var col = '#64748b'; // default grey
+  if (diff <= 0) {
+    col = '#16a34a'; // green - par or better
+  } else if (hi != null && Number.isFinite(Number(hi))) {
+    var expected = (holeCount == 9) ? Number(hi) / 2 : Number(hi);
+    if (diff <= expected) col = '#2563eb';         // blue - within HCP
+    else if (diff <= expected + 5) col = '#ea580c'; // orange - slightly above
+    else col = '#dc2626';                           // red - well above
+  }
+  return '<span style="font-weight:700;font-size:0.95em">' + g + '</span><span style="display:block;font-size:0.72em;color:'+col+';margin-top:1px">' + txt + '</span>';
 }
 
 
@@ -3338,7 +3606,7 @@ function render(){
         setTimeout(function(){ renderCrossCharts(); }, 50);
       } catch (e) {
         console.error(e);
-        tbody.innerHTML = '<tr><td colspan="10" class="muted" style="padding:16px">Erro a renderizar <b>Análises</b>: '+esc(String(e && e.message ? e.message : e))+'</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="11" class="muted" style="padding:16px">Erro a renderizar <b>Análises</b>: '+esc(String(e && e.message ? e.message : e))+'</td></tr>';
       }
       return;
     }
@@ -3359,15 +3627,16 @@ function render(){
       all.sort(function(a,b){ return (b.dateSort - a.dateSort) || String(b.scoreId).localeCompare(String(a.scoreId)); });
 
       setThead('<tr>' +
-        '<th style="width:14%">Data</th>' +
-        '<th style="width:34%">Campo</th>' +
-        '<th style="width:18%">Prova</th>' +
-        '<th style="width:10%">Tee</th>' +
+        '<th style="width:9%">Data</th>' +
+        '<th style="width:18%">Campo</th>' +
+        '<th style="width:13%">Prova</th>' +
         '<th class="right" style="width:6%">Bur.</th>' +
         '<th class="right" style="width:7%">HCP</th>' +
-        '<th class="right" style="width:7%">Gross</th>' +
+        '<th style="width:10%">Tee</th>' +
+        '<th class="right" style="width:8%">Dist.</th>' +
+        '<th class="right" style="width:9%">Gross</th>' +
         '<th class="right" style="width:7%">Stb</th>' +
-        '<th class="right" style="width:6%">SD</th>' +
+        '<th class="right" style="width:7%">SD</th>' +
       '</tr>');
 
       cCourses.textContent = DATA.length;
@@ -3375,13 +3644,13 @@ function render(){
 
       var html = "";
       all.forEach(function(r){
-        var dateCell = r.hasCard
-          ? '<a class="dateLink" href="#" data-score="' + r.scoreId + '">' + (r.date || "") + "</a>"
-          : (r.date || "");
-        dateCell += '<div class="muted" style="font-size:10px">#' + r.scoreId + '</div>';
-        var teeP = (r.tee || "");
-        var hx = teeHex(teeP), fg = teeFg(hx);
-        var teeHtml = teeP ? '<span class="teePill" style="background:'+hx+';color:'+fg+'">'+teeP+'</span>' : "";
+        var hxD = teeHex(r.tee||""), fgD = teeFg(hxD);
+        var shortDateD = (r.date||"").replace(/^(\d{2})-(\d{2})-\d{4}$/,"$1-$2");
+        var datePillD = r.hasCard
+          ? '<a class="dateLink" href="#" data-score="' + r.scoreId + '"><span class="tee-date" style="background:'+hxD+';color:'+fgD+'">'+shortDateD+'</span></a>'
+          : '<span class="tee-date" style="background:'+hxD+';color:'+fgD+'">'+shortDateD+'</span>';
+        datePillD += '<div class="muted" style="font-size:10px">#' + r.scoreId + '</div>';
+        var teeHtml = (r.tee||"") ? '<span class="teePill" style="background:'+hxD+';color:'+fgD+'">'+r.tee+'</span>' : "";
         var sdClass = '';
         var sdVal = r.sd ?? '';
         if (sdVal !== '') {
@@ -3389,12 +3658,13 @@ function render(){
           sdClass = sdClassByHcp(sdNum, r.hi);
         }
         html += '<tr class="roundRow" data-score="'+r.scoreId+'" data-hascard="'+(r.hasCard?'1':'0')+'" data-course="'+esc(r.courseKey||'')+'" data-tee="'+esc(r.teeKey||'')+'">' +
-          '<td>'+dateCell+'</td>' +
-          '<td><b>'+r.course+'</b></td>' +
+          '<td>'+datePillD+'</td>' +
+          '<td>'+r.course+'</td>' +
           '<td><span class="muted">'+esc(r.eventName||"")+fmtEds(r.scoreOrigin)+'</span></td>' +
-          '<td>'+teeHtml+'</td>' +
           '<td class="right">'+(r.holeCount==9?'<span class="hb hb9">9</span>':'<span class="hb hb18">18</span>')+'</td>' +
-          '<td class="right"><b>'+(r.hi??"")+'</b></td>' +
+          '<td class="right">'+(r.hi??"")+'</td>' +
+          '<td>'+teeHtml+'</td>' +
+          '<td class="right muted">'+(r.meters ? (r.meters+'m') : '')+'</td>' +
           '<td class="right">'+fmtGross(r.gross, r.par)+'</td>' +
           '<td class="right">'+fmtStb(r.stb, r.holeCount)+'</td>' +
           '<td class="right '+(sdClass||'')+'">'+(r.sd??"")+'</td>' +
@@ -3404,7 +3674,7 @@ function render(){
       return;
       } catch (e) {
         console.error(e);
-        tbody.innerHTML = '<tr><td colspan="10" style="padding:16px" class="muted">Erro a renderizar vista por data: '+esc(String(e && e.message ? e.message : e))+'</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="11" style="padding:16px" class="muted">Erro a renderizar vista por data: '+esc(String(e && e.message ? e.message : e))+'</td></tr>';
         return;
       }
     }
@@ -3556,45 +3826,88 @@ function render(){
           '<td class="muted">'+dateTxt+'</td>' +
         '</tr>';
 
-        // details with rounds (newest first)
-        var rounds = it.rounds.slice().sort(function(a,b){ return b.dateSort - a.dateSort; });
-        var roundsHtml = "";
+        // details with rounds (chronological for comparison)
+        var rounds = it.rounds.slice().sort(function(a,b){ return a.dateSort - b.dateSort; });
+        var pillColors = ['#64748b','#94a3b8','#78909c','#546e7a'];
+
+        // --- Summary table ---
+        var totalGross = 0, totalStb = 0, totalHoles = 0, roundsWithGross = 0;
+        rounds.forEach(function(r){ 
+          if (r.gross != null) { totalGross += r.gross; roundsWithGross++; }
+          if (r.stb != null) totalStb += r.stb;
+          totalHoles += (r.holeCount || 18);
+        });
+        var totalPar = 0;
+        rounds.forEach(function(r){ if (r.par) totalPar += r.par; });
+        var toParTotal = totalPar ? totalGross - totalPar : null;
+        var toParStr = toParTotal != null ? (toParTotal > 0 ? '+' + toParTotal : (toParTotal === 0 ? 'E' : '' + toParTotal)) : '';
+
+        var summaryHtml = '';
+        summaryHtml += '<table class="dt-compact" style="table-layout:fixed">';
+        summaryHtml += '<colgroup><col style="width:17%"><col style="width:8%"><col style="width:9%"><col style="width:15%"><col style="width:11%"><col style="width:14%"><col style="width:10%"><col style="width:10%"></colgroup>';
+        summaryHtml += '<thead><tr>';
+        summaryHtml += '<th>Volta</th>';
+        summaryHtml += '<th class="right">Bur.</th>';
+        summaryHtml += '<th class="right">HCP</th>';
+        summaryHtml += '<th>Tee</th>';
+        summaryHtml += '<th class="right">Dist.</th>';
+        summaryHtml += '<th class="right">Gross</th>';
+        summaryHtml += '<th class="right">Stb</th>';
+        summaryHtml += '<th class="right">SD</th>';
+        summaryHtml += '</tr></thead><tbody>';
+
         rounds.forEach(function(r, j){
-          var dateCell = r.hasCard
-            ? '<a class="dateLink" href="#" data-score="' + r.scoreId + '">' + (r.date || "") + "</a>"
-            : (r.date || "");
+          var dateFmt = r.date ? r.date.substring(0,5).replace('-','/') : ('V'+(j+1));
           var hx = teeHex(r.tee||""), fg = teeFg(hx);
           var teeHtml = (r.tee||"") ? '<span class="teePill" style="background:'+hx+';color:'+fg+'">'+r.tee+'</span>' : "";
           var sdClass = '';
-          var sdVal = r.sd ?? '';
-          if (sdVal !== '') {
-            var sdNum = Number(sdVal);
-            sdClass = sdClassByHcp(sdNum, r.hi);
+          if (r.sd != null) sdClass = sdClassByHcp(Number(r.sd), r.hi);
+
+          summaryHtml += '<tr class="roundRow" data-score="'+r.scoreId+'" data-hascard="'+(r.hasCard?'1':'0')+'">';
+          summaryHtml += '<td><span class="tee-date tournPill" data-pill-for="'+rowId+'_sc_'+j+'" style="background:'+hx+';color:'+fg+';cursor:pointer">'+dateFmt+'</span> <span class="muted" style="font-size:10px">#'+r.scoreId+'</span></td>';
+          summaryHtml += '<td class="right">'+(r.holeCount==9?'<span class="hb hb9">9</span>':'<span class="hb hb18">18</span>')+'</td>';
+          summaryHtml += '<td class="right">'+(r.hi??"")+'</td>';
+          summaryHtml += '<td>'+teeHtml+'</td>';
+          summaryHtml += '<td class="right muted">'+(r.meters ? (r.meters+'m') : '')+'</td>';
+          summaryHtml += '<td class="right">'+fmtGross(r.gross, r.par)+'</td>';
+          summaryHtml += '<td class="right">'+fmtStb(r.stb, r.holeCount)+'</td>';
+          summaryHtml += '<td class="right '+(sdClass||'')+'">'+(r.sd??"")+'</td>';
+          summaryHtml += '</tr>';
+          // Individual scorecard container (hidden by default)
+          summaryHtml += '<tr class="tournScRow" id="'+rowId+'_sc_'+j+'" style="display:none"><td colspan="8" style="padding:0;background:#fafafa">';
+          summaryHtml += '<div class="scHost" style="margin:6px 8px;border:1px solid var(--line);border-radius:14px;background:#fff;padding:10px;overflow:hidden">';
+          var tournFrag = FRAG[String(r.scoreId)] || '<div class="muted" style="padding:10px">Scorecard não disponível</div>';
+          // Inject eclectic rows into scorecard table
+          var tournEcRows = buildEcleticRows(r.scoreId);
+          if (tournEcRows && tournFrag.indexOf('data-sc-table') > -1) {
+            tournFrag = tournFrag.replace('</tbody></table>', tournEcRows + '</tbody></table>');
           }
-          roundsHtml += '<tr class="roundRow" data-score="'+r.scoreId+'" data-hascard="'+(r.hasCard?'1':'0')+'">' +
-            '<td>'+dateCell+'<div class="muted" style="font-size:10px">#'+r.scoreId+'</div></td>' +
-            '<td>'+teeHtml+'</td>' +
-            '<td class="right">'+(r.holeCount==9?'<span class="hb hb9">9</span>':'<span class="hb hb18">18</span>')+'</td>' +
-            '<td class="right"><b>'+(r.hi??"")+'</b></td>' +
-            '<td class="right">'+fmtGross(r.gross, r.par)+'</td>' +
-            '<td class="right">'+fmtStb(r.stb, r.holeCount)+'</td>' +
-            '<td class="right '+(sdClass||'')+'">'+(r.sd??"")+'</td>' +
-          '</tr>';
+          summaryHtml += tournFrag;
+          summaryHtml += '</div></td></tr>';
         });
+
+        // Total row
+        if (roundsWithGross > 1) {
+          var toParCls = toParTotal > 0 ? 'pos' : (toParTotal < 0 ? 'neg' : '');
+          summaryHtml += '<tr style="background:#f8fafc;font-weight:700;border-top:2px solid #cbd5e1">';
+          summaryHtml += '<td colspan="5" class="right" style="font-weight:700;color:#475569">Total ('+roundsWithGross+' voltas)</td>';
+          summaryHtml += '<td class="right"><b>'+totalGross+'</b><span class="score-delta '+toParCls+'">'+toParStr+'</span></td>';
+          summaryHtml += '<td class="right">'+totalStb+'</td>';
+          summaryHtml += '<td></td>';
+          summaryHtml += '</tr>';
+        }
+        summaryHtml += '</tbody></table>';
+
+        // --- Comparative scorecard ---
+        var compHtml = buildTournamentComparison(rounds, pillColors);
 
         html += '<tr class="details' + ((openState[rowId]) ? ' open' : '') + '" id="'+rowId+'"><td class="inner" colspan="4">' +
           '<div class="innerWrap">' +
-            '<div class="actions">' +
-              '<button type="button" class="btn openAll" data-for="'+rowId+'">Abrir todos</button>' +
-              '<button type="button" class="btn closeAll" data-for="'+rowId+'">Fechar todos</button>' +
+            '<div class="actions" style="margin-top:8px">' +
               '<button type="button" class="btn btnPdf" data-printcourse="' + rowId + '" title="Guardar PDF">📄 PDF</button>' +
             '</div>' +
-            '<div class="innerTable">' +
-              '<table><thead><tr>' +
-                '<th>Data</th><th>Tee</th><th class="right">Bur.</th><th class="right">HCP</th>' +
-                '<th class="right">Gross</th><th class="right">Stb</th><th class="right">SD</th>' +
-              '</tr></thead><tbody>' + roundsHtml + '</tbody></table>' +
-            '</div>' +
+            '<div style="margin-top:10px">' + summaryHtml + '</div>' +
+            (compHtml ? '<div style="margin-top:12px">' + compHtml + '</div>' : '') +
           '</div></td></tr>';
       });
 
@@ -3602,7 +3915,7 @@ function render(){
       return;
       } catch (e) {
         console.error(e);
-        tbody.innerHTML = '<tr><td colspan="10" style="padding:16px" class="muted">Erro a renderizar vista por data: '+esc(String(e && e.message ? e.message : e))+'</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="11" style="padding:16px" class="muted">Erro a renderizar vista por data: '+esc(String(e && e.message ? e.message : e))+'</td></tr>';
         return;
       }
     }
@@ -3616,7 +3929,7 @@ function render(){
     else if (sort === "last_desc") list.sort(function(a,b){ return (b.lastDateSort - a.lastDateSort) || (b.count - a.count) || a.course.localeCompare(b.course); });
     else list.sort(function(a,b){ var d = (b.count - a.count); return d !== 0 ? d : a.course.localeCompare(b.course); });
 
-    setThead('<tr><th style="width:52%">Campo</th><th class="right" style="width:12%">Voltas</th><th style="width:36%">Última volta</th></tr>');
+    setThead('<tr><th style="width:26%">Campo</th><th class="right" style="width:6%">Voltas</th><th style="width:9%">Última</th><th class="right" style="width:6%">Bur.</th><th class="right" style="width:7%">HCP</th><th style="width:12%">Tee</th><th class="right" style="width:8%">Dist.</th><th class="right" style="width:9%">Gross</th><th class="right" style="width:7%">Stb</th><th class="right" style="width:7%">SD</th></tr>');
 
     cCourses.textContent = list.length;
     cRounds.textContent = list.reduce(function(a,x){ return a + x.count; }, 0);
@@ -3625,9 +3938,6 @@ function render(){
     for (var i=0;i<list.length;i++){
       var c = list[i];
       var last = c.rounds[0];
-      var lastTxt = last
-        ? (last.date + " · Tee: " + (last.tee || "-") + " · " + (last.meters ? (last.meters + " m") : "-") + " · Gross: " + (last.gross ?? "-"))
-        : "";
 
       var rowId = "row_" + i;
       var currentTeeKey = isSimple ? "" : (teeFilter[rowId] || "");
@@ -3679,66 +3989,98 @@ function render(){
           ecDetailHtml += '<div class="ecDetailHead">Eclético (gross) — tee selecionado</div>';
 
           var hc2 = det.holeCount || holes.length;
+          var is9_2 = hc2 === 9;
+          var frontEnd2 = is9_2 ? hc2 : 9;
           var siArr = det.si || [];
           var hasSI2 = siArr.some(function(v){ return v != null; });
-          var cellS2 = 'padding:3px 0;text-align:center;font-size:12px;min-width:28px;border:1px solid #e2e8f0';
-          var headS2 = cellS2 + ';background:#f1f5f9;color:#64748b;font-weight:600;font-size:11px';
-          var labelS2 = 'padding:3px 6px;text-align:left;font-size:11px;font-weight:600;color:#64748b;white-space:nowrap;border:1px solid #e2e8f0';
+          function sumA2(arr, from, to) { var s=0; for(var ii=from;ii<to;ii++) if(arr[ii]!=null) s+=arr[ii]; return s; }
+          var cellS2 = 'padding:3px 0;text-align:center;font-size:12px;min-width:28px;border-bottom:1px solid #f0f0f0';
+          var colLabel2 = cellS2 + ';text-align:left;padding-left:8px;font-size:11px;font-weight:600;color:#64748b;white-space:nowrap;border-right:2px solid #e2e8f0';
+          var colOut2 = cellS2 + ';background:#f4f6f8;border-left:1px solid #e2e8f0;border-right:1px solid #e2e8f0';
+          var colTot2 = cellS2 + ';background:#edf0f4;border-left:1px solid #dde1e7;font-weight:800';
 
-          ecDetailHtml += '<div style="overflow-x:auto;padding:10px;border-top:1px solid #e5e7eb">';
+          ecDetailHtml += '<div style="overflow-x:auto;padding:10px">';
           ecDetailHtml += '<table style="width:100%;border-collapse:collapse">';
 
-          // Row: Buraco
-          ecDetailHtml += '<tr><td style="' + labelS2 + '">Buraco</td>';
+          // Buraco row (neutral)
+          var parArr2 = [];
+          ecDetailHtml += '<tr style="background:#f8fafc">';
+          ecDetailHtml += '<td style="' + colLabel2 + ';font-weight:700;color:#64748b;font-size:11px;border-bottom:1px solid #e2e8f0">Buraco</td>';
           for (var hi2 = 0; hi2 < hc2; hi2++) {
-            var midB = (hi2 === 8 && hc2 === 18) ? 'border-left:2px solid #94a3b8;' : '';
-            ecDetailHtml += '<td style="' + headS2 + ';' + midB + '">' + (hi2 + 1) + '</td>';
+            ecDetailHtml += '<td style="' + cellS2 + ';font-weight:700;color:#64748b;font-size:11px;border-bottom:1px solid #e2e8f0;background:#f8fafc">' + (hi2 + 1) + '</td>';
+            if (hi2 === frontEnd2 - 1 && !is9_2) ecDetailHtml += '<td style="' + colOut2 + ';font-weight:700;color:#64748b;font-size:10px;border-bottom:1px solid #e2e8f0">Out</td>';
           }
-          ecDetailHtml += '<td style="' + headS2 + ';font-weight:700">Total</td></tr>';
+          ecDetailHtml += '<td style="' + (is9_2 ? colTot2 : colOut2) + ';font-weight:700;color:#64748b;font-size:10px;border-bottom:1px solid #e2e8f0">' + (is9_2 ? 'TOTAL' : 'In') + '</td>';
+          if (!is9_2) ecDetailHtml += '<td style="' + colTot2 + ';color:#475569;font-size:11px;border-bottom:1px solid #e2e8f0">TOTAL</td>';
+          ecDetailHtml += '</tr>';
 
-          // Row: Handicap (SI)
+          // Handicap row (with values)
           if (hasSI2) {
-            ecDetailHtml += '<tr><td style="' + labelS2 + '">Handicap</td>';
+            ecDetailHtml += '<tr>';
+            ecDetailHtml += '<td style="' + colLabel2 + ';color:#b0b8c4;font-size:10px">Handicap</td>';
+            var sumSI = 0;
             for (var hi2 = 0; hi2 < hc2; hi2++) {
-              var midB = (hi2 === 8 && hc2 === 18) ? 'border-left:2px solid #94a3b8;' : '';
-              ecDetailHtml += '<td style="' + cellS2 + ';color:#94a3b8;' + midB + '">' + (siArr[hi2] != null ? siArr[hi2] : '') + '</td>';
+              var sv = siArr[hi2] != null ? siArr[hi2] : '';
+              if (siArr[hi2] != null) sumSI += siArr[hi2];
+              ecDetailHtml += '<td style="' + cellS2 + ';color:#94a3b8;font-size:10px">' + sv + '</td>';
+              if (hi2 === frontEnd2 - 1 && !is9_2) ecDetailHtml += '<td style="' + colOut2 + ';color:#94a3b8;font-size:10px">' + sumA2(siArr, 0, frontEnd2) + '</td>';
             }
-            ecDetailHtml += '<td style="' + cellS2 + '">—</td></tr>';
+            var inSI = is9_2 ? sumSI : sumA2(siArr, 9, hc2);
+            ecDetailHtml += '<td style="' + (is9_2 ? colTot2 : colOut2) + ';color:#94a3b8;font-size:10px">' + inSI + '</td>';
+            if (!is9_2) ecDetailHtml += '<td style="' + colTot2 + ';color:#94a3b8;font-size:10px">' + sumSI + '</td>';
+            ecDetailHtml += '</tr>';
           }
 
-          // Row: Par
+          // Par row (separator)
           var sumPar2 = 0;
-          ecDetailHtml += '<tr><td style="' + labelS2 + '">Par</td>';
+          ecDetailHtml += '<tr>';
+          ecDetailHtml += '<td style="' + colLabel2 + ';font-weight:600;color:#94a3b8;font-size:11px;border-bottom:2px solid #cbd5e1">Par</td>';
           for (var hi2 = 0; hi2 < hc2; hi2++) {
-            var midB = (hi2 === 8 && hc2 === 18) ? 'border-left:2px solid #94a3b8;' : '';
             var pv3 = holes[hi2] ? holes[hi2].par : null;
-            if (pv3 != null) sumPar2 += pv3;
-            ecDetailHtml += '<td style="' + cellS2 + ';' + midB + '">' + (pv3 != null ? pv3 : '') + '</td>';
+            if (pv3 != null) { sumPar2 += pv3; parArr2.push(pv3); } else { parArr2.push(null); }
+            ecDetailHtml += '<td style="' + cellS2 + ';border-bottom:2px solid #cbd5e1">' + (pv3 != null ? pv3 : '') + '</td>';
+            if (hi2 === frontEnd2 - 1 && !is9_2) ecDetailHtml += '<td style="' + colOut2 + ';font-weight:700;border-bottom:2px solid #cbd5e1">' + sumA2(parArr2, 0, frontEnd2) + '</td>';
           }
-          ecDetailHtml += '<td style="' + cellS2 + ';font-weight:700">' + sumPar2 + '</td></tr>';
+          var inPar2 = is9_2 ? sumPar2 : sumA2(parArr2, 9, hc2);
+          ecDetailHtml += '<td style="' + (is9_2 ? colTot2 : colOut2) + ';font-weight:700;border-bottom:2px solid #cbd5e1">' + inPar2 + '</td>';
+          if (!is9_2) ecDetailHtml += '<td style="' + colTot2 + ';border-bottom:2px solid #cbd5e1">' + sumPar2 + '</td>';
+          ecDetailHtml += '</tr>';
 
-          // Row: Eclético (best per hole with sc-score classes + tooltip)
+          // Eclético row (best per hole with sc-score classes + tooltip)
           var sumEc2 = 0;
-          ecDetailHtml += '<tr><td style="' + labelS2 + ';color:#0369a1;font-weight:700">Eclético</td>';
+          var ecArr2 = [];
+          ecDetailHtml += '<tr>';
+          ecDetailHtml += '<td style="' + colLabel2 + ';color:#0369a1;font-weight:700">Eclético</td>';
           for (var hi2 = 0; hi2 < hc2; hi2++) {
-            var midB = (hi2 === 8 && hc2 === 18) ? 'border-left:2px solid #94a3b8;' : '';
             var hObj = holes[hi2];
             var ev3 = hObj ? hObj.best : null;
             var pv4 = hObj ? hObj.par : null;
             if (ev3 != null) sumEc2 += ev3;
+            ecArr2.push(ev3);
             var title3 = '';
             if (hObj && hObj.from && (hObj.from.date || hObj.from.scoreId)) {
               title3 = (hObj.from.date||'') + ' · #' + (hObj.from.scoreId||'');
             }
             var cls2 = (ev3 != null && pv4 != null) ? scClass(ev3, pv4) : '';
-            ecDetailHtml += '<td style="' + cellS2 + ';' + midB + '" title="' + title3 + '">';
+            ecDetailHtml += '<td style="' + cellS2 + '" title="' + title3 + '">';
             if (ev3 != null) {
               ecDetailHtml += '<span class="sc-score ' + cls2 + '" style="cursor:help">' + ev3 + '</span>';
             }
             ecDetailHtml += '</td>';
+            if (hi2 === frontEnd2 - 1 && !is9_2) {
+              var outEc = sumA2(ecArr2, 0, frontEnd2);
+              var outP2 = sumA2(parArr2, 0, frontEnd2);
+              var outTP2 = outEc - outP2;
+              ecDetailHtml += '<td style="' + colOut2 + ';font-weight:700">' + outEc + '<span class="sc-topar ' + (outTP2 > 0 ? 'sc-topar-pos' : (outTP2 < 0 ? 'sc-topar-neg' : 'sc-topar-zero')) + '">' + (outTP2 > 0 ? '+' : '') + outTP2 + '</span></td>';
+            }
           }
           var ecToPar = sumEc2 - sumPar2;
-          ecDetailHtml += '<td style="' + cellS2 + ';font-weight:800;font-size:14px">' + sumEc2 + ' <span style="font-size:10px;color:' + (ecToPar <= 0 ? '#16a34a' : '#dc2626') + '">(' + (ecToPar > 0 ? '+' : '') + ecToPar + ')</span></td></tr>';
+          var inEc = is9_2 ? sumEc2 : sumA2(ecArr2, 9, hc2);
+          var inEcP = is9_2 ? sumPar2 : sumA2(parArr2, 9, hc2);
+          var inEcTP = inEc - inEcP;
+          ecDetailHtml += '<td style="' + (is9_2 ? colTot2 : colOut2) + ';font-weight:700">' + inEc + '<span class="sc-topar ' + (inEcTP > 0 ? 'sc-topar-pos' : (inEcTP < 0 ? 'sc-topar-neg' : 'sc-topar-zero')) + '">' + (inEcTP > 0 ? '+' : '') + inEcTP + '</span></td>';
+          if (!is9_2) ecDetailHtml += '<td style="' + colTot2 + '">' + sumEc2 + '<span class="sc-topar ' + (ecToPar > 0 ? 'sc-topar-pos' : (ecToPar < 0 ? 'sc-topar-neg' : 'sc-topar-zero')) + '">' + (ecToPar > 0 ? '+' : '') + ecToPar + '</span></td>';
+          ecDetailHtml += '</tr>';
 
           ecDetailHtml += '</table></div>';
 
@@ -4277,16 +4619,17 @@ function render(){
         groups.forEach(function(g){
           var n = g.name || "Torneio";
           roundsHtml +=
-            '<tr class="grpRow"><td colspan="7">' +
+            '<tr class="grpRow"><td colspan="8">' +
               n + ' <span class="muted">(' + g.rounds.length + ' rondas)</span>' +
             '</td></tr>';
           var rr = g.rounds.slice().sort(function(a,b){ return b.dateSort - a.dateSort; });
           rr.forEach(function(r, idx){
-            var dateCell = r.hasCard
-              ? '<a class="dateLink" href="#" data-score="' + r.scoreId + '">' + (r.date || "") + "</a>"
-              : (r.date || "");
             var roundLabel = "R" + (rr.length - idx);
             var hx = teeHex(r.tee||""), fg = teeFg(hx);
+            var shortDate = (r.date||"").replace(/^(\d{2})-(\d{2})-\d{4}$/,"$1-$2");
+            var datePillHtml = r.hasCard
+              ? '<a class="dateLink" href="#" data-score="' + r.scoreId + '"><span class="tee-date" style="background:'+hx+';color:'+fg+'">'+shortDate+'</span></a>'
+              : '<span class="tee-date" style="background:'+hx+';color:'+fg+'">'+shortDate+'</span>';
             var teeHtml = (r.tee||"") ? '<span class="teePill" style="background:'+hx+';color:'+fg+'">'+r.tee+'</span>' : "";
             var sdClass = '';
             var sdVal = r.sd ?? '';
@@ -4296,11 +4639,11 @@ function render(){
             }
             roundsHtml +=
               '<tr class="roundRow" data-score="' + r.scoreId + '" data-hascard="' + (r.hasCard ? "1" : "0") + '">' +
-                '<td>' + dateCell + ' <span class="muted">· '+roundLabel+'</span>'+fmtEds(r.scoreOrigin)+'<div class="muted" style="font-size:10px">#'+r.scoreId+'</div></td>' +
-                '<td>' + teeHtml + '</td>' +
+                '<td>' + datePillHtml + ' <span class="muted">· '+roundLabel+'</span>'+fmtEds(r.scoreOrigin)+'<div class="muted" style="font-size:10px">#'+r.scoreId+'</div></td>' +
                 '<td class="right">' + (r.holeCount==9?'<span class="hb hb9">9</span>':'<span class="hb hb18">18</span>') + '</td>' +
-                '<td class="right"><b>' + (r.hi ?? "") + '</b></td>' +
-                '<td class="right">' + (r.meters ? (r.meters + " m") : "") + '</td>' +
+                '<td class="right">' + (r.hi ?? "") + '</td>' +
+                '<td>' + teeHtml + '</td>' +
+                '<td class="right muted">' + (r.meters ? (r.meters + "m") : "") + '</td>' +
                 '<td class="right">' + fmtGross(r.gross, r.par) + '</td>' +
                 '<td class="right">' + fmtStb(r.stb, r.holeCount) + '</td>' +
                 '<td class="right '+(sdClass||'')+'">' + (r.sd ?? "") + '</td>' +
@@ -4309,10 +4652,11 @@ function render(){
         });
       } else {
         roundsView.forEach(function(r){
-          var dateCell = r.hasCard
-            ? '<a class="dateLink" href="#" data-score="' + r.scoreId + '">' + (r.date || "") + "</a>"
-            : (r.date || "");
           var hx = teeHex(r.tee||""), fg = teeFg(hx);
+          var shortDate = (r.date||"").replace(/^(\d{2})-(\d{2})-\d{4}$/,"$1-$2");
+          var datePillHtml = r.hasCard
+            ? '<a class="dateLink" href="#" data-score="' + r.scoreId + '"><span class="tee-date" style="background:'+hx+';color:'+fg+'">'+shortDate+'</span></a>'
+            : '<span class="tee-date" style="background:'+hx+';color:'+fg+'">'+shortDate+'</span>';
           var teeHtml = (r.tee||"") ? '<span class="teePill" style="background:'+hx+';color:'+fg+'">'+r.tee+'</span>' : "";
           var sdClass = '';
           var sdVal = r.sd ?? '';
@@ -4322,11 +4666,11 @@ function render(){
           }
           roundsHtml +=
             '<tr class="roundRow" data-score="' + r.scoreId + '" data-hascard="' + (r.hasCard ? "1" : "0") + '">' +
-              '<td>' + dateCell + fmtEds(r.scoreOrigin) + '<div class="muted" style="font-size:10px">#'+r.scoreId+'</div></td>' +
-              '<td>' + teeHtml + '</td>' +
+              '<td>' + datePillHtml + fmtEds(r.scoreOrigin) + '<div class="muted" style="font-size:10px">#'+r.scoreId+'</div></td>' +
               '<td class="right">' + (r.holeCount==9?'<span class="hb hb9">9</span>':'<span class="hb hb18">18</span>') + '</td>' +
-              '<td class="right"><b>' + (r.hi ?? "") + '</b></td>' +
-              '<td class="right">' + (r.meters ? (r.meters + " m") : "") + '</td>' +
+              '<td class="right">' + (r.hi ?? "") + '</td>' +
+              '<td>' + teeHtml + '</td>' +
+              '<td class="right muted">' + (r.meters ? (r.meters + "m") : "") + '</td>' +
               '<td class="right">' + fmtGross(r.gross, r.par) + '</td>' +
               '<td class="right">' + fmtStb(r.stb, r.holeCount) + '</td>' +
               '<td class="right '+(sdClass||'')+'">' + (r.sd ?? "") + '</td>' +
@@ -4336,23 +4680,37 @@ function render(){
 
       var lastTeeHx = last ? teeHex(last.tee || '') : '#111827';
       var lastTeeFg2 = last ? teeFg(lastTeeHx) : '#fff';
+      var lastDatePill = last ? '<span class="tee-date" style="background:'+lastTeeHx+';color:'+lastTeeFg2+'">'+(last.date||'').replace(/^(\d{2})-(\d{2})-\d{4}$/,'$1-$2')+'</span>' : '';
+      var lastBurHtml = last ? (last.holeCount==9?'<span class="hb hb9">9</span>':'<span class="hb hb18">18</span>') : '';
+      var lastHcpTxt = last ? (last.hi ?? '') : '';
+      var lastTeeP = last ? '<span class="teePill" style="background:'+lastTeeHx+';color:'+lastTeeFg2+'">'+(last.tee||'-')+'</span>' : '';
+      var lastDistTxt = last ? (last.meters ? last.meters+'m' : '') : '';
+      var lastGrossHtml = last ? fmtGross(last.gross, last.par) : '';
+      var lastStbTxt = last ? fmtStb(last.stb, last.holeCount) : '';
+      var lastSdClass = '';
+      if (last && last.sd != null) { var lsn = Number(last.sd); lastSdClass = sdClassByHcp(lsn, last.hi); }
+      var lastSdTxt = last ? (last.sd ?? '') : '';
 
       html +=
         '<tr>' +
           '<td>' +
             '<div class="rowHead">' +
               '<div class="count" style="background:' + lastTeeHx + ';color:' + lastTeeFg2 + '">' + c.count + '</div>' +
-              '<div>' +
-                '<button type="button" class="courseBtn" data-toggle="' + rowId + '">' + c.course + '</button>' +
-                '<div class="sub muted">' + lastTxt + '</div>' +
-              '</div>' +
+              '<button type="button" class="courseBtn" data-toggle="' + rowId + '">' + c.course + '</button>' +
             '</div>' +
           '</td>' +
           '<td class="right"><b>' + c.count + '</b></td>' +
-          '<td class="muted">' + lastTxt + '</td>' +
+          '<td>' + lastDatePill + '</td>' +
+          '<td class="right">' + lastBurHtml + '</td>' +
+          '<td class="right">' + lastHcpTxt + '</td>' +
+          '<td>' + lastTeeP + '</td>' +
+          '<td class="right muted">' + lastDistTxt + '</td>' +
+          '<td class="right">' + lastGrossHtml + '</td>' +
+          '<td class="right">' + lastStbTxt + '</td>' +
+          '<td class="right '+(lastSdClass||'')+'">' + lastSdTxt + '</td>' +
         '</tr>' +
         '<tr class="details' + ((openState[rowId]) ? ' open' : '') + '" id="' + rowId + '">' +
-          '<td class="inner" colspan="3">' +
+          '<td class="inner" colspan="10">' +
             '<div class="innerWrap">' +
               (isSimple ? '' : '<div class="innerTop">' +
                 '<div class="actions">' +
@@ -4376,14 +4734,15 @@ function render(){
                   '<button type="button" class="btn closeAll" data-for="' + rowId + '">Fechar todos</button>' +
                 '</div>' : '') +
               '<div class="innerTable">' +
-                '<table>' +
+                '<table class="dt-compact">' +
+                  '<colgroup><col style="width:17%"><col style="width:8%"><col style="width:9%"><col style="width:15%"><col style="width:11%"><col style="width:14%"><col style="width:10%"><col style="width:10%"></colgroup>' +
                   '<thead>' +
                     '<tr>' +
                       '<th>Data</th>' +
-                      '<th>Tee</th>' +
                       '<th class="right">Bur.</th>' +
                       '<th class="right">HCP</th>' +
-                      '<th class="right">Distância</th>' +
+                      '<th>Tee</th>' +
+                      '<th class="right">Dist.</th>' +
                       '<th class="right">Gross</th>' +
                       '<th class="right">Stb</th>' +
                       '<th class="right">SD</th>' +
@@ -4439,154 +4798,433 @@ function render(){
     });
   });
 
-  function buildComparisonPanel(scoreId) {
+  // Build Eclético + Δ rows to inject INTO the scorecard table
+  function buildEcleticRows(scoreId) {
     var rd = ROUND_MAP[String(scoreId)];
     if (!rd) return '';
     var courseKey = rd.courseKey;
     var teeKey = rd.teeKey;
     
-    // Eclectic data
     var ec = ECDET[courseKey] && ECDET[courseKey][teeKey] ? ECDET[courseKey][teeKey] : null;
     var hs = HOLES[String(scoreId)];
+    if (!ec || !hs || !ec.holes || !hs.g) return '';
     
-    // Course+tee stats
-    var ctk = courseKey + '|' + teeKey;
-    var cts = CT_STATS[ctk];
+    var hc = Math.min(ec.holes.length, hs.g.length);
+    if (hc < 9) return '';
+    var is9 = hc === 9;
+    var frontEnd = is9 ? hc : 9;
     
-    var html = '<div style="margin-top:10px;padding:10px 12px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0">';
-    html += '<div style="font-weight:700;font-size:12px;color:#334155;margin-bottom:8px">📊 Análise comparativa</div>';
+    function sumA(arr, from, to) { var s=0; for(var i=from;i<to;i++) if(arr[i]!=null) s+=arr[i]; return s; }
     
-    // Summary stats
-    var items = [];
-    
-    if (rd.gross != null && rd.gross > 50 && rd.par != null) {
-      items.push({ label: 'vs Par', val: rd.gross - rd.par, fmt: function(d){ return (d > 0 ? '+' : '') + d; }, color: function(d){ return d <= 0 ? '#16a34a' : (d <= 5 ? '#eab308' : '#dc2626'); } });
+    var parArr = [], grossArr = [], ecArr = [];
+    for (var i = 0; i < hc; i++) {
+      parArr.push(ec.holes[i] ? ec.holes[i].par : (hs.p ? hs.p[i] : null));
+      grossArr.push(hs.g[i]);
+      ecArr.push(ec.holes[i] ? ec.holes[i].best : null);
     }
     
-    if (ec && rd.gross != null && rd.gross > 50) {
-      var diff = rd.gross - ec.totalGross;
-      items.push({ label: 'vs Eclético', val: diff, fmt: function(d){ return (d > 0 ? '+' : '') + d; }, color: function(d){ return d <= 0 ? '#16a34a' : (d <= 5 ? '#eab308' : '#dc2626'); },
-        sub: 'Eclético: ' + ec.totalGross + (ec.toPar != null ? ' (' + (ec.toPar > 0 ? '+' : '') + ec.toPar + ')' : '') });
-    }
+    var html = '';
     
-    if (cts && cts.grosses.length >= 2 && rd.gross != null && rd.gross > 50) {
-      var sum = 0; for (var i = 0; i < cts.grosses.length; i++) sum += cts.grosses[i];
-      var avg = sum / cts.grosses.length;
-      var diff2 = rd.gross - avg;
-      var best = Math.min.apply(null, cts.grosses);
-      var worst = Math.max.apply(null, cts.grosses);
-      items.push({ label: 'vs Média campo', val: diff2, fmt: function(d){ return (d > 0 ? '+' : '') + d.toFixed(1); }, color: function(d){ return d < -1 ? '#16a34a' : (d <= 1 ? '#eab308' : '#dc2626'); },
-        sub: 'Média: ' + avg.toFixed(1) + ' (' + cts.grosses.length + ' rondas) · Best: ' + best + ' · Worst: ' + worst });
-    }
-    
-    if (items.length > 0) {
-      html += '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:8px">';
-      for (var k = 0; k < items.length; k++) {
-        var it = items[k];
-        html += '<div style="background:#fff;border-radius:8px;padding:6px 12px;border:1px solid #e2e8f0;min-width:110px;text-align:center">';
-        html += '<div style="font-size:10px;color:#64748b">' + it.label + '</div>';
-        html += '<div style="font-size:20px;font-weight:800;color:' + it.color(it.val) + '">' + it.fmt(it.val) + '</div>';
-        if (it.sub) html += '<div style="font-size:9px;color:#94a3b8">' + it.sub + '</div>';
-        html += '</div>';
-      }
-      html += '</div>';
-    }
-    
-    // Hole-by-hole eclectic comparison
-    if (ec && hs && ec.holes && hs.g) {
-      var hc = Math.min(ec.holes.length, hs.g.length);
-      if (hc >= 9) {
-        
-        var cellS = 'padding:3px 0;text-align:center;font-size:12px;min-width:28px;border:1px solid #e2e8f0';
-        var headS = cellS + ';background:#f1f5f9;color:#64748b;font-weight:600;font-size:11px';
-        var labelS = 'padding:3px 6px;text-align:left;font-size:11px;font-weight:600;color:#64748b;white-space:nowrap;border:1px solid #e2e8f0';
-        
-        html += '<div style="overflow-x:auto;margin-top:6px">';
-        html += '<table style="width:100%;border-collapse:collapse">';
-        
-        // Row: Buraco numbers
-        html += '<tr><td style="' + labelS + '">Buraco</td>';
-        for (var hi = 0; hi < hc; hi++) {
-          var midBorder = (hi === 8 && hc === 18) ? 'border-left:2px solid #94a3b8;' : '';
-          html += '<td style="' + headS + ';' + midBorder + '">' + (hi + 1) + '</td>';
-        }
-        html += '<td style="' + headS + ';font-weight:700">Total</td></tr>';
-        
-        // Row: Handicap (SI) — only show if data available
-        var hasSI = hs.si && hs.si.some(function(v){ return v != null; });
-        if (hasSI) {
-          html += '<tr><td style="' + labelS + '">Handicap</td>';
-          for (var hi = 0; hi < hc; hi++) {
-            var midBorder = (hi === 8 && hc === 18) ? 'border-left:2px solid #94a3b8;' : '';
-            var siVal = hs.si[hi] != null ? hs.si[hi] : '';
-            html += '<td style="' + cellS + ';color:#94a3b8;' + midBorder + '">' + siVal + '</td>';
-          }
-          html += '<td style="' + cellS + '">—</td></tr>';
-        }
-        
-        // Row: Par
-        var sumPar = 0;
-        html += '<tr><td style="' + labelS + '">Par</td>';
-        for (var hi = 0; hi < hc; hi++) {
-          var midBorder = (hi === 8 && hc === 18) ? 'border-left:2px solid #94a3b8;' : '';
-          var pv = ec.holes[hi] ? ec.holes[hi].par : (hs.p[hi] || null);
-          if (pv != null) sumPar += pv;
-          html += '<td style="' + cellS + ';' + midBorder + '">' + (pv != null ? pv : '') + '</td>';
-        }
-        html += '<td style="' + cellS + ';font-weight:700">' + sumPar + '</td></tr>';
-        
-        // Row: Resultado (this round) — using scorecard color system
-        var sumGross = 0;
-        html += '<tr><td style="' + labelS + ';color:#334155;font-weight:700">Resultado</td>';
-        for (var hi = 0; hi < hc; hi++) {
-          var midBorder = (hi === 8 && hc === 18) ? 'border-left:2px solid #94a3b8;' : '';
-          var gv = hs.g[hi];
-          var pv2 = hs.p[hi] || (ec.holes[hi] ? ec.holes[hi].par : null);
-          if (gv != null) sumGross += gv;
-          var cls = (gv != null && pv2 != null) ? scClass(gv, pv2) : '';
-          html += '<td style="' + cellS + ';' + midBorder + '">';
-          if (gv != null) html += '<span class="sc-score ' + cls + '">' + gv + '</span>';
-          html += '</td>';
-        }
-        html += '<td style="' + cellS + ';font-weight:800;font-size:14px">' + sumGross + '</td></tr>';
-        
-        // Row: Eclético — with top separator, same color system
-        var sumEc = 0;
-        html += '<tr style="border-top:2px solid #94a3b8"><td style="' + labelS + ';color:#0369a1">Eclético</td>';
-        for (var hi = 0; hi < hc; hi++) {
-          var midBorder = (hi === 8 && hc === 18) ? 'border-left:2px solid #94a3b8;' : '';
-          var ev = ec.holes[hi] ? ec.holes[hi].best : null;
-          if (ev != null) sumEc += ev;
-          var ecPar = ec.holes[hi] ? ec.holes[hi].par : null;
-          var cls = (ev != null && ecPar != null) ? scClass(ev, ecPar) : '';
-          html += '<td style="' + cellS + ';' + midBorder + '">';
-          if (ev != null) html += '<span class="sc-score ' + cls + '">' + ev + '</span>';
-          html += '</td>';
-        }
-        html += '<td style="' + cellS + ';font-weight:700;font-size:13px">' + sumEc + '</td></tr>';
-        
-        // Row: Δ Eclético (diff)
-        html += '<tr><td style="' + labelS + ';color:#64748b">Δ Eclético</td>';
-        for (var hi = 0; hi < hc; hi++) {
-          var midBorder = (hi === 8 && hc === 18) ? 'border-left:2px solid #94a3b8;' : '';
-          var gv2 = hs.g[hi];
-          var ev2 = ec.holes[hi] ? ec.holes[hi].best : null;
-          var diff3 = (gv2 != null && ev2 != null) ? gv2 - ev2 : null;
-          var dc = 'color:#94a3b8';
-          if (diff3 != null) {
-            dc = diff3 === 0 ? 'color:#16a34a;font-weight:700' : (diff3 <= 1 ? 'color:#ca8a04' : 'color:#dc2626;font-weight:600');
-          }
-          html += '<td style="' + cellS + ';' + dc + ';' + midBorder + '">' + (diff3 != null ? (diff3 === 0 ? '=' : '+' + diff3) : '') + '</td>';
-        }
-        var totalDiff = sumGross - sumEc;
-        html += '<td style="' + cellS + ';font-weight:700;color:' + (totalDiff <= 0 ? '#16a34a' : '#dc2626') + '">' + (totalDiff > 0 ? '+' : '') + totalDiff + '</td></tr>';
-        
-        html += '</table></div>';
+    // Separator row before eclectic
+    html += '<tr class="sep-row"><td class="row-label" style="color:#0369a1;font-weight:700;font-size:10px">Eclético</td>';
+    var sumEc = 0;
+    for (var h = 0; h < hc; h++) {
+      var ev = ecArr[h];
+      if (ev != null) sumEc += ev;
+      var ecPar = parArr[h];
+      var cls = (ev != null && ecPar != null) ? scClass(ev, ecPar) : '';
+      html += '<td>';
+      if (ev != null) html += '<span class="sc-score ' + cls + '">' + ev + '</span>';
+      html += '</td>';
+      if (h === frontEnd - 1 && !is9) {
+        var outEc = sumA(ecArr, 0, frontEnd);
+        var outEcP = sumA(parArr, 0, frontEnd);
+        var outEcTP = outEc - outEcP;
+        html += '<td class="col-out" style="font-weight:700">' + outEc + '<span class="sc-topar ' + (outEcTP > 0 ? 'sc-topar-pos' : (outEcTP < 0 ? 'sc-topar-neg' : 'sc-topar-zero')) + '">' + (outEcTP > 0 ? '+' : '') + outEcTP + '</span></td>';
       }
     }
+    var inEc = is9 ? sumEc : sumA(ecArr, 9, hc);
+    var inEcP = is9 ? sumA(parArr, 0, hc) : sumA(parArr, 9, hc);
+    var inEcTP = inEc - inEcP;
+    html += '<td class="col-' + (is9 ? 'total' : 'in') + '" style="font-weight:700">' + inEc + '<span class="sc-topar ' + (inEcTP > 0 ? 'sc-topar-pos' : (inEcTP < 0 ? 'sc-topar-neg' : 'sc-topar-zero')) + '">' + (inEcTP > 0 ? '+' : '') + inEcTP + '</span></td>';
+    if (!is9) {
+      var ecToPar = sumEc - sumA(parArr, 0, hc);
+      html += '<td class="col-total">' + sumEc + '<span class="sc-topar ' + (ecToPar > 0 ? 'sc-topar-pos' : (ecToPar < 0 ? 'sc-topar-neg' : 'sc-topar-zero')) + '">' + (ecToPar > 0 ? '+' : '') + ecToPar + '</span></td>';
+    }
+    html += '</tr>';
     
+    // Δ row
+    html += '<tr style="background:#fafbfc"><td class="row-label" style="color:#64748b;font-weight:700;font-size:10px">Δ</td>';
+    for (var h = 0; h < hc; h++) {
+      var gv = grossArr[h];
+      var ev2 = ecArr[h];
+      var diff = (gv != null && ev2 != null) ? gv - ev2 : null;
+      var dc = 'color:#94a3b8';
+      if (diff != null) {
+        dc = diff === 0 ? 'color:#16a34a;font-weight:700' : (diff <= 1 ? 'color:#ca8a04' : 'color:#dc2626;font-weight:600');
+      }
+      html += '<td style="' + dc + '">' + (diff != null ? (diff === 0 ? '=' : '+' + diff) : '') + '</td>';
+      if (h === frontEnd - 1 && !is9) {
+        var dOut = sumA(grossArr, 0, frontEnd) - sumA(ecArr, 0, frontEnd);
+        var dOutClr = dOut === 0 ? '#16a34a' : (dOut > 0 ? '#dc2626' : '#16a34a');
+        html += '<td class="col-out" style="color:' + dOutClr + ';font-weight:600">' + (dOut === 0 ? '=' : (dOut > 0 ? '+' : '') + dOut) + '</td>';
+      }
+    }
+    var sumGross = sumA(grossArr, 0, hc);
+    var totalDiff = sumGross - sumEc;
+    var dIn = (is9 ? sumGross : sumA(grossArr, 9, hc)) - (is9 ? sumEc : sumA(ecArr, 9, hc));
+    var dInClr = dIn === 0 ? '#16a34a' : (dIn > 0 ? '#dc2626' : '#16a34a');
+    html += '<td class="col-' + (is9 ? 'total' : 'in') + '" style="color:' + dInClr + ';font-weight:600">' + (dIn === 0 ? '=' : (dIn > 0 ? '+' : '') + dIn) + '</td>';
+    if (!is9) {
+      html += '<td class="col-total" style="color:' + (totalDiff <= 0 ? '#16a34a' : '#dc2626') + '">' + (totalDiff > 0 ? '+' : '') + totalDiff + '</td>';
+    }
+    html += '</tr>';
+    
+    return html;
+  }
+
+  function buildTournamentComparison(rounds, pillColors) {
+    // Find reference data for par/meters/SI
+    var refData = null, hc = 18;
+    for (var i = 0; i < rounds.length; i++) {
+      var h = HOLES[rounds[i].scoreId];
+      if (h && h.p && h.p.some(function(v){ return v != null; })) { refData = h; hc = h.hc || 18; break; }
+    }
+    if (!refData) return '';
+
+    var is9 = hc === 9, frontEnd = is9 ? hc : 9, backStart = is9 ? 0 : 9;
+    function sumA(arr, from, to) { var s=0; for(var i=from;i<to;i++) if(arr[i]!=null) s+=arr[i]; return s; }
+    function scCls(g,p) { if(g==null||p==null) return ''; var d=g-p; if(g===1) return 'holeinone'; if(d<=-3) return 'albatross'; if(d===-2) return 'eagle'; if(d===-1) return 'birdie'; if(d===0) return 'par'; if(d===1) return 'bogey'; if(d===2) return 'double'; if(d===3) return 'triple'; return d===4?'quad':'worse'; }
+
+    var par = refData.p, meters = refData.m, si = refData.si;
+    var tee = rounds[0] ? (rounds[0].tee||'') : '';
+    var hx = teeHex(tee);
+    var fgT = teeFg(hx);
+    var totalPar = par ? sumA(par,0,hc) : null;
+    var totalDist = meters ? sumA(meters,0,hc) : null;
+    var hcpLabel = rounds[0] ? (rounds[0].hi||'') : '';
+
+    var cellS = 'padding:4px 6px;text-align:center;font-size:12px;border-bottom:1px solid #f0f0f0';
+    var colLabel = cellS + ';text-align:left;padding-left:8px;border-right:2px solid #e2e8f0';
+    var colOut = cellS + ';background:#f4f6f8;border-left:1px solid #e2e8f0;border-right:1px solid #e2e8f0';
+    var colIn = colOut;
+    var colTot = cellS + ';background:#edf0f4;border-left:1px solid #dde1e7;font-weight:800';
+
+    var html = '<div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;overflow:hidden">';
+    // Header
+    html += '<div class="sc-bar-head">';
+    html += '<span>Scorecard comparativo · HCP ' + hcpLabel + ' · Tee ' + tee + (totalDist ? ' · ' + totalDist + 'm' : '') + '</span>';
+    html += '<span>Par ' + (totalPar || '') + '</span>';
     html += '</div>';
-    return (items.length > 0 || (ec && hs)) ? html : '';
+
+    html += '<div style="overflow-x:auto">';
+    html += '<table style="width:100%;border-collapse:collapse;font-size:12px">';
+
+    // Buraco row (neutral)
+    html += '<tr style="background:#f8fafc">';
+    html += '<td style="'+colLabel+';font-weight:700;color:#64748b;font-size:11px;border-bottom:1px solid #e2e8f0">Buraco</td>';
+    for (var h=1; h<=hc; h++) {
+      html += '<td style="'+cellS+';font-weight:700;color:#64748b;font-size:11px;border-bottom:1px solid #e2e8f0">'+h+'</td>';
+      if (h===frontEnd && !is9) html += '<td style="'+colOut+';font-weight:700;color:#64748b;font-size:10px;border-bottom:1px solid #e2e8f0">Out</td>';
+    }
+    html += '<td style="'+(is9?colTot:colIn)+';font-weight:700;color:#64748b;font-size:10px;border-bottom:1px solid #e2e8f0">'+(is9?'TOTAL':'In')+'</td>';
+    if (!is9) html += '<td style="'+colTot+';color:#475569;font-size:11px;border-bottom:1px solid #e2e8f0">TOTAL</td>';
+    html += '</tr>';
+
+    // Metros row
+    if (meters && meters.some(function(v){ return v!=null&&v>0; })) {
+      html += '<tr>';
+      html += '<td style="'+colLabel+';color:#b0b8c4;font-size:10px">Metros</td>';
+      for (var h=1;h<=hc;h++) {
+        html += '<td style="'+cellS+';color:#b0b8c4;font-size:10px">'+(meters[h-1]||'')+'</td>';
+        if (h===frontEnd&&!is9) html += '<td style="'+colOut+';color:#b0b8c4;font-size:10px;font-weight:600">'+sumA(meters,0,frontEnd)+'</td>';
+      }
+      var inM = is9 ? sumA(meters,0,hc) : sumA(meters,backStart,hc);
+      html += '<td style="'+(is9?colTot:colIn)+';color:#b0b8c4;font-size:10px;font-weight:600">'+inM+'</td>';
+      if (!is9) html += '<td style="'+colTot+';color:#94a3b8;font-size:10px">'+sumA(meters,0,hc)+'</td>';
+      html += '</tr>';
+    }
+
+    // SI row
+    if (si && si.some(function(v){ return v!=null; })) {
+      html += '<tr>';
+      html += '<td style="'+colLabel+';color:#b0b8c4;font-size:10px">S.I.</td>';
+      for (var h=1;h<=hc;h++) {
+        html += '<td style="'+cellS+';color:#b0b8c4;font-size:10px">'+(si[h-1]!=null?si[h-1]:'')+'</td>';
+        if (h===frontEnd&&!is9) html += '<td style="'+colOut+'"></td>';
+      }
+      html += '<td style="'+(is9?colTot:colIn)+'"></td>';
+      if (!is9) html += '<td style="'+colTot+'"></td>';
+      html += '</tr>';
+    }
+
+    // Par row (separator)
+    if (par && par.some(function(v){ return v!=null; })) {
+      html += '<tr>';
+      html += '<td style="'+colLabel+';font-weight:600;color:#94a3b8;font-size:11px;border-bottom:2px solid #cbd5e1">Par</td>';
+      for (var h=1;h<=hc;h++) {
+        html += '<td style="'+cellS+';border-bottom:2px solid #cbd5e1">'+(par[h-1]!=null?par[h-1]:'')+'</td>';
+        if (h===frontEnd&&!is9) html += '<td style="'+colOut+';font-weight:700;border-bottom:2px solid #cbd5e1">'+sumA(par,0,frontEnd)+'</td>';
+      }
+      var inP = is9 ? sumA(par,0,hc) : sumA(par,backStart,hc);
+      html += '<td style="'+(is9?colTot:colIn)+';font-weight:700;border-bottom:2px solid #cbd5e1">'+inP+'</td>';
+      if (!is9) html += '<td style="'+colTot+';border-bottom:2px solid #cbd5e1">'+sumA(par,0,hc)+'</td>';
+      html += '</tr>';
+    }
+
+    // Each round row with grey pill label
+    var roundGross = [];
+    for (var ri=0; ri<rounds.length; ri++) {
+      var rd = rounds[ri];
+      var hd = HOLES[rd.scoreId];
+      var gross = hd ? hd.g : null;
+      if (!gross) { roundGross.push(null); continue; }
+      roundGross.push(gross);
+
+      var dateFmt = rd.date ? rd.date.substring(0,5).replace('-','/') : ('V'+(ri+1));
+
+      html += '<tr>';
+      html += '<td style="'+colLabel+'"><span class="sc-pill" style="background:'+hx+';color:'+fgT+'">'+dateFmt+'</span></td>';
+      for (var h=1;h<=hc;h++) {
+        var gv = gross[h-1], pv = par ? par[h-1] : null;
+        var cls = scCls(gv, pv);
+        html += '<td style="'+cellS+'"><span class="sc-score '+cls+'" style="display:inline-flex;width:26px;height:26px;align-items:center;justify-content:center;font-weight:700;font-size:12px">'+(gv!=null?gv:'')+'</span></td>';
+        if (h===frontEnd&&!is9) {
+          var outG = sumA(gross,0,frontEnd);
+          var outP2 = par ? sumA(par,0,frontEnd) : 0;
+          var outTP = outG - outP2;
+          html += '<td style="'+colOut+';font-weight:700">'+outG+'<span class="sc-topar '+(outTP>0?'sc-topar-pos':(outTP<0?'sc-topar-neg':'sc-topar-zero'))+'">'+(outTP>0?'+':'')+outTP+'</span></td>';
+        }
+      }
+      var inG = is9 ? sumA(gross,0,hc) : sumA(gross,backStart,hc);
+      var totalG = sumA(gross,0,hc);
+      var tp = par ? totalG - sumA(par,0,hc) : null;
+      var inP2 = is9 ? (par?sumA(par,0,hc):0) : (par?sumA(par,backStart,hc):0);
+      var inTP = inG - inP2;
+      html += '<td style="'+(is9?colTot:colIn)+';font-weight:700">'+inG+'<span class="sc-topar '+(inTP>0?'sc-topar-pos':(inTP<0?'sc-topar-neg':'sc-topar-zero'))+'">'+(inTP>0?'+':'')+inTP+'</span></td>';
+      if (!is9) {
+        var tps = tp!=null ? (tp>0?'+'+tp:(tp===0?'E':''+tp)) : '';
+        html += '<td style="'+colTot+'">'+totalG+'<span class="sc-topar '+(tp>0?'sc-topar-pos':(tp<0?'sc-topar-neg':'sc-topar-zero'))+'">'+tps+'</span></td>';
+      }
+      html += '</tr>';
+    }
+
+    // Delta row (last vs first) with separator
+    if (rounds.length >= 2 && roundGross[0] && roundGross[rounds.length-1]) {
+      var first = roundGross[0], last = roundGross[rounds.length-1];
+      html += '<tr style="background:#fafbfc;border-top:2px solid #cbd5e1">';
+      html += '<td style="'+colLabel+';font-weight:700;color:#64748b;font-size:11px">Δ</td>';
+      for (var h=1;h<=hc;h++) {
+        var d = (last[h-1]!=null && first[h-1]!=null) ? last[h-1]-first[h-1] : null;
+        var dStr = d==null ? '' : (d===0 ? '=' : (d>0 ? '+'+d : ''+d));
+        var dColor = d==null ? '#94a3b8' : (d===0 ? '#94a3b8' : (d<0 ? '#16a34a' : '#dc2626'));
+        var dW = (d!=null && d!==0) ? ';font-weight:600' : '';
+        html += '<td style="'+cellS+';color:'+dColor+';font-size:11px'+dW+'">'+dStr+'</td>';
+        if (h===frontEnd&&!is9) {
+          var dOut = sumA(last,0,frontEnd) - sumA(first,0,frontEnd);
+          var dOutStr = dOut===0 ? '=' : (dOut>0 ? '+'+dOut : ''+dOut);
+          html += '<td style="'+colOut+';color:'+(dOut===0?'#94a3b8':(dOut<0?'#16a34a':'#dc2626'))+';font-size:11px;'+(dOut!==0?'font-weight:600':'')+'">'+dOutStr+'</td>';
+        }
+      }
+      var dIn = (is9 ? sumA(last,0,hc) : sumA(last,backStart,hc)) - (is9 ? sumA(first,0,hc) : sumA(first,backStart,hc));
+      var dInStr = dIn===0 ? '=' : (dIn>0 ? '+'+dIn : ''+dIn);
+      html += '<td style="'+(is9?colTot:colIn)+';color:'+(dIn===0?'#94a3b8':(dIn<0?'#16a34a':'#dc2626'))+';font-size:11px;'+(dIn!==0?'font-weight:600':'')+'">'+dInStr+'</td>';
+      if (!is9) {
+        var dTot = sumA(last,0,hc) - sumA(first,0,hc);
+        var dTotStr = dTot===0 ? '=' : (dTot>0 ? '+'+dTot : ''+dTot);
+        html += '<td style="'+colTot+';color:'+(dTot===0?'#94a3b8':(dTot<0?'#16a34a':'#dc2626'))+';font-size:11px">'+dTotStr+'</td>';
+      }
+      html += '</tr>';
+    }
+
+    html += '</table></div></div>';
+    return html;
+  }
+
+  function buildCombinedScorecard(rounds) {
+    // Build a single scorecard table with all rounds stacked
+    // First, find a round with hole data to get par/meters
+    var refData = null;
+    var hc = 18;
+    for (var i = 0; i < rounds.length; i++) {
+      var h = HOLES[rounds[i].scoreId];
+      if (h && h.p && h.p.some(function(v){ return v != null; })) {
+        refData = h;
+        hc = h.hc || 18;
+        break;
+      }
+    }
+    if (!refData) return ''; // No hole data available
+
+    var is9 = hc === 9;
+    var frontEnd = is9 ? hc : 9;
+    var backStart = is9 ? 0 : 9;
+
+    function sumArr(arr, from, to) {
+      var s = 0;
+      for (var i = from; i < to; i++) { if (arr[i] != null) s += arr[i]; }
+      return s;
+    }
+
+    function scoreClass(g, p) {
+      if (g == null || p == null) return '';
+      var d = g - p;
+      if (g === 1) return 'holeinone';
+      if (d <= -3) return 'albatross';
+      if (d === -2) return 'eagle';
+      if (d === -1) return 'birdie';
+      if (d === 0) return 'par';
+      if (d === 1) return 'bogey';
+      if (d === 2) return 'double';
+      if (d === 3) return 'triple';
+      return 'worse';
+    }
+
+    var par = refData.p;
+    var meters = refData.m;
+    var si = refData.si;
+    var tee = rounds[0] ? (rounds[0].tee || '') : '';
+    var hx = teeHex(tee);
+    var fg = teeFg(hx);
+    var totalPar2 = par ? sumArr(par, 0, hc) : null;
+    var totalDist = meters ? sumArr(meters, 0, hc) : null;
+    var hcpLabel = rounds[0] ? (rounds[0].hi || '') : '';
+
+    var cS = 'padding:4px 6px;text-align:center;font-size:12px;border-bottom:1px solid #f0f0f0';
+    var colLabel = cS + ';text-align:left;padding-left:8px;border-right:2px solid #e2e8f0';
+    var colOut = cS + ';background:#f4f6f8;border-left:1px solid #e2e8f0;border-right:1px solid #e2e8f0';
+    var colIn = colOut;
+    var colTot = cS + ';background:#edf0f4;border-left:1px solid #dde1e7;font-weight:800';
+
+    var html = '<div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;margin:8px 0">';
+    // Grey bar header
+    html += '<div class="sc-bar-head">';
+    html += '<span>Scorecard comparativo · HCP ' + hcpLabel + ' · Tee ' + tee + (totalDist ? ' · ' + totalDist + 'm' : '') + '</span>';
+    html += '<span>Par ' + (totalPar2 || '') + '</span>';
+    html += '</div>';
+
+    html += '<div style="overflow-x:auto">';
+    html += '<table style="width:100%;border-collapse:collapse;font-size:12px">';
+
+    // Buraco row (neutral)
+    html += '<tr style="background:#f8fafc">';
+    html += '<td style="' + colLabel + ';font-weight:700;color:#64748b;font-size:11px;border-bottom:1px solid #e2e8f0">Buraco</td>';
+    for (var h = 1; h <= hc; h++) {
+      html += '<td style="' + cS + ';font-weight:700;color:#64748b;font-size:11px;border-bottom:1px solid #e2e8f0">' + h + '</td>';
+      if (h === frontEnd && !is9) html += '<td style="' + colOut + ';font-weight:700;color:#64748b;font-size:10px;border-bottom:1px solid #e2e8f0">Out</td>';
+    }
+    html += '<td style="' + (is9 ? colTot : colIn) + ';font-weight:700;color:#64748b;font-size:10px;border-bottom:1px solid #e2e8f0">' + (is9 ? 'TOTAL' : 'In') + '</td>';
+    if (!is9) html += '<td style="' + colTot + ';color:#475569;font-size:11px;border-bottom:1px solid #e2e8f0">TOTAL</td>';
+    html += '</tr>';
+
+    // Metros row
+    if (meters && meters.some(function(v){ return v != null && v > 0; })) {
+      html += '<tr>';
+      html += '<td style="' + colLabel + ';color:#b0b8c4;font-size:10px">Metros</td>';
+      for (var h = 1; h <= hc; h++) {
+        html += '<td style="' + cS + ';color:#b0b8c4;font-size:10px">' + (meters[h-1] || '') + '</td>';
+        if (h === frontEnd && !is9) html += '<td style="' + colOut + ';color:#b0b8c4;font-size:10px;font-weight:600">' + sumArr(meters, 0, frontEnd) + '</td>';
+      }
+      var inM = is9 ? sumArr(meters, 0, hc) : sumArr(meters, backStart, hc);
+      html += '<td style="' + (is9 ? colTot : colIn) + ';color:#b0b8c4;font-size:10px;font-weight:600">' + inM + '</td>';
+      if (!is9) html += '<td style="' + colTot + ';color:#94a3b8;font-size:10px">' + sumArr(meters, 0, hc) + '</td>';
+      html += '</tr>';
+    }
+
+    // SI row
+    if (si && si.some(function(v){ return v != null; })) {
+      html += '<tr>';
+      html += '<td style="' + colLabel + ';color:#b0b8c4;font-size:10px">S.I.</td>';
+      for (var h = 1; h <= hc; h++) {
+        html += '<td style="' + cS + ';color:#b0b8c4;font-size:10px">' + (si[h-1] != null ? si[h-1] : '') + '</td>';
+        if (h === frontEnd && !is9) html += '<td style="' + colOut + '"></td>';
+      }
+      html += '<td style="' + (is9 ? colTot : colIn) + '"></td>';
+      if (!is9) html += '<td style="' + colTot + '"></td>';
+      html += '</tr>';
+    }
+
+    // Par row (separator)
+    if (par && par.some(function(v){ return v != null; })) {
+      html += '<tr>';
+      html += '<td style="' + colLabel + ';font-weight:600;color:#94a3b8;font-size:11px;border-bottom:2px solid #cbd5e1">Par</td>';
+      for (var h = 1; h <= hc; h++) {
+        html += '<td style="' + cS + ';border-bottom:2px solid #cbd5e1">' + (par[h-1] != null ? par[h-1] : '') + '</td>';
+        if (h === frontEnd && !is9) html += '<td style="' + colOut + ';font-weight:700;border-bottom:2px solid #cbd5e1">' + sumArr(par, 0, frontEnd) + '</td>';
+      }
+      var inP2 = is9 ? sumArr(par, 0, hc) : sumArr(par, backStart, hc);
+      html += '<td style="' + (is9 ? colTot : colIn) + ';font-weight:700;border-bottom:2px solid #cbd5e1">' + inP2 + '</td>';
+      if (!is9) html += '<td style="' + colTot + ';border-bottom:2px solid #cbd5e1">' + sumArr(par, 0, hc) + '</td>';
+      html += '</tr>';
+    }
+
+    // Each round row with grey pill label
+    var roundGross = [];
+    for (var ri = 0; ri < rounds.length; ri++) {
+      var rd = rounds[ri];
+      var h2 = HOLES[rd.scoreId];
+      var gross = h2 ? h2.g : null;
+      if (!gross) { roundGross.push(null); continue; }
+      roundGross.push(gross);
+
+      var dateFmt = rd.date ? rd.date.substring(0,5).replace('-','/') : ('V'+(ri+1));
+
+      html += '<tr>';
+      html += '<td style="' + colLabel + '"><span class="sc-pill" style="background:' + hx + ';color:' + fg + '">' + dateFmt + '</span></td>';
+      for (var h = 1; h <= hc; h++) {
+        var gv = gross[h-1], pv = par ? par[h-1] : null;
+        var cls = scoreClass(gv, pv);
+        html += '<td style="' + cS + '"><span class="sc-score ' + cls + '" style="display:inline-flex;width:26px;height:26px;align-items:center;justify-content:center;font-weight:700;font-size:12px">' + (gv != null ? gv : '') + '</span></td>';
+        if (h === frontEnd && !is9) {
+          var outG = sumArr(gross, 0, frontEnd);
+          var outP = par ? sumArr(par, 0, frontEnd) : 0;
+          var outTP = outG - outP;
+          html += '<td style="' + colOut + ';font-weight:700">' + outG + '<span class="sc-topar ' + (outTP > 0 ? 'sc-topar-pos' : (outTP < 0 ? 'sc-topar-neg' : 'sc-topar-zero')) + '">' + (outTP > 0 ? '+' : '') + outTP + '</span></td>';
+        }
+      }
+      var inG = is9 ? sumArr(gross, 0, hc) : sumArr(gross, backStart, hc);
+      var totalG = sumArr(gross, 0, hc);
+      var tp = par ? totalG - sumArr(par, 0, hc) : null;
+      var inP3 = is9 ? (par ? sumArr(par, 0, hc) : 0) : (par ? sumArr(par, backStart, hc) : 0);
+      var inTP = inG - inP3;
+      html += '<td style="' + (is9 ? colTot : colIn) + ';font-weight:700">' + inG + '<span class="sc-topar ' + (inTP > 0 ? 'sc-topar-pos' : (inTP < 0 ? 'sc-topar-neg' : 'sc-topar-zero')) + '">' + (inTP > 0 ? '+' : '') + inTP + '</span></td>';
+      if (!is9) {
+        var tps = tp != null ? (tp > 0 ? '+' + tp : (tp === 0 ? 'E' : '' + tp)) : '';
+        html += '<td style="' + colTot + '">' + totalG + '<span class="sc-topar ' + (tp > 0 ? 'sc-topar-pos' : (tp < 0 ? 'sc-topar-neg' : 'sc-topar-zero')) + '">' + tps + '</span></td>';
+      }
+      html += '</tr>';
+    }
+
+    // Delta row (last vs first) with separator
+    if (rounds.length >= 2 && roundGross[0] && roundGross[rounds.length-1]) {
+      var first = roundGross[0], last = roundGross[rounds.length-1];
+      html += '<tr style="background:#fafbfc;border-top:2px solid #cbd5e1">';
+      html += '<td style="' + colLabel + ';font-weight:700;color:#64748b;font-size:11px">Δ</td>';
+      for (var h = 1; h <= hc; h++) {
+        var d = (last[h-1] != null && first[h-1] != null) ? last[h-1] - first[h-1] : null;
+        var dStr = d == null ? '' : (d === 0 ? '=' : (d > 0 ? '+' + d : '' + d));
+        var dColor = d == null ? '#94a3b8' : (d === 0 ? '#94a3b8' : (d < 0 ? '#16a34a' : '#dc2626'));
+        var dW = (d != null && d !== 0) ? ';font-weight:600' : '';
+        html += '<td style="' + cS + ';color:' + dColor + ';font-size:11px' + dW + '">' + dStr + '</td>';
+        if (h === frontEnd && !is9) {
+          var dOut = sumArr(last, 0, frontEnd) - sumArr(first, 0, frontEnd);
+          var dOutStr = dOut === 0 ? '=' : (dOut > 0 ? '+' + dOut : '' + dOut);
+          html += '<td style="' + colOut + ';color:' + (dOut === 0 ? '#94a3b8' : (dOut < 0 ? '#16a34a' : '#dc2626')) + ';font-size:11px;' + (dOut !== 0 ? 'font-weight:600' : '') + '">' + dOutStr + '</td>';
+        }
+      }
+      var dIn = (is9 ? sumArr(last, 0, hc) : sumArr(last, backStart, hc)) - (is9 ? sumArr(first, 0, hc) : sumArr(first, backStart, hc));
+      var dInStr = dIn === 0 ? '=' : (dIn > 0 ? '+' + dIn : '' + dIn);
+      html += '<td style="' + (is9 ? colTot : colIn) + ';color:' + (dIn === 0 ? '#94a3b8' : (dIn < 0 ? '#16a34a' : '#dc2626')) + ';font-size:11px;' + (dIn !== 0 ? 'font-weight:600' : '') + '">' + dInStr + '</td>';
+      if (!is9) {
+        var dTot = sumArr(last, 0, hc) - sumArr(first, 0, hc);
+        var dTotStr = dTot === 0 ? '=' : (dTot > 0 ? '+' + dTot : '' + dTot);
+        html += '<td style="' + colTot + ';color:' + (dTot === 0 ? '#94a3b8' : (dTot < 0 ? '#16a34a' : '#dc2626')) + ';font-size:11px">' + dTotStr + '</td>';
+      }
+      html += '</tr>';
+    }
+
+    html += '</table></div></div>';
+    return html;
   }
 
   function insertInline(afterTr, scoreId){
@@ -4607,7 +5245,17 @@ function render(){
 
     var host = document.createElement("div");
     host.className = "scHost";
-    host.innerHTML = frag + buildComparisonPanel(scoreId);
+    host.innerHTML = frag;
+
+    // Inject eclectic + Δ rows into the scorecard table
+    var ecRows = buildEcleticRows(scoreId);
+    if (ecRows) {
+      var scTable = host.querySelector('table[data-sc-table]');
+      if (scTable) {
+        var tbody = scTable.querySelector('tbody') || scTable;
+        tbody.insertAdjacentHTML('beforeend', ecRows);
+      }
+    }
 
     td.appendChild(host);
     row.appendChild(td);
@@ -4830,6 +5478,36 @@ function render(){
       return;
     }
 
+    // Tournament pill toggle — show/hide individual scorecard
+    var tPill = e.target.closest(".tournPill");
+    if (tPill) {
+      e.preventDefault();
+      e.stopPropagation();
+      var targetId = tPill.getAttribute("data-pill-for");
+      if (!targetId) return;
+      var scRow = document.getElementById(targetId);
+      if (!scRow) return;
+      // Close all other tournament scorecards in the same tournament
+      var parent = tPill.closest(".innerWrap");
+      if (parent) {
+        parent.querySelectorAll(".tournScRow").forEach(function(r) {
+          if (r.id !== targetId) r.style.display = "none";
+        });
+        parent.querySelectorAll(".tournPill").forEach(function(p) {
+          p.style.boxShadow = "none";
+        });
+      }
+      // Toggle this one
+      if (scRow.style.display === "none") {
+        scRow.style.display = "table-row";
+        tPill.style.boxShadow = "0 0 0 2px #fff, 0 0 0 4px " + tPill.style.backgroundColor;
+      } else {
+        scRow.style.display = "none";
+        tPill.style.boxShadow = "none";
+      }
+      return;
+    }
+
     var link = e.target.closest("a.dateLink");
     if (!link) return;
 
@@ -4862,7 +5540,15 @@ function render(){
       var count = 0;
       for (var i=0; i<links.length; i++) {
         var show = true;
-        if (term && (links[i].getAttribute("data-name") || "").indexOf(term) < 0) show = false;
+        if (term) {
+          var nameVal = (links[i].getAttribute("data-name") || "");
+          var words = term.split(/\s+/).filter(function(w){ return w.length > 0; });
+          var allMatch = true;
+          for (var wi = 0; wi < words.length; wi++) {
+            if (nameVal.indexOf(words[wi]) < 0) { allMatch = false; break; }
+          }
+          if (!allMatch) show = false;
+        }
         for (var dk in filters) {
           if (dk === "tags") {
             var linkTags = (links[i].getAttribute("data-tags") || "").split(",");
@@ -5539,7 +6225,7 @@ function render(){
       });
     } else {
       // Map col index to data-sort attribute
-      var attrMap = { 0: "data-sort-date", 4: "data-sort-bur", 5: "data-sort-hcp", 6: "data-sort-gross", 7: "data-sort-stb", 8: "data-sort-sd" };
+      var attrMap = { 0: "data-sort-date", 3: "data-sort-bur", 4: "data-sort-hcp", 6: "data-sort-dist", 7: "data-sort-gross", 8: "data-sort-stb", 9: "data-sort-sd" };
       var attr = attrMap[col];
       var isText = (col === 0 || col === 1);
       
