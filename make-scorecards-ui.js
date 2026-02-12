@@ -151,9 +151,11 @@ function parseDotNetDate(dotNetDate) {
 
 function fmtDate(d) {
   if (!d) return "";
-  const dd = String(d.getUTCDate()).padStart(2, "0");
-  const mm = String(d.getUTCMonth() + 1).padStart(2, "0");
-  const yyyy = d.getUTCFullYear();
+  // Usar hora local (Portugal UTC+0/+1) em vez de UTC
+  // para lidar com datas FPG que são midnight hora local
+  const dd = String(d.getDate()).padStart(2, "0");
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const yyyy = d.getFullYear();
   return `${dd}-${mm}-${yyyy}`;
 }
 
@@ -641,7 +643,139 @@ function buildScorecardFragment({ fed, scoreId, rec, whsRow }) {
   return html;
 }
 
-/* ------------------ Ecletico por tee (gross) ------------------ */
+/* Build a simplified scorecard fragment from manual data (treinos / extra_rounds) */
+function buildManualFragment({ courseName, dateFmt, gross, par, si, meters, holeCount, tee, link, label }) {
+  const hc = holeCount || gross.length || 9;
+  const is9 = hc === 9;
+  const frontEnd = is9 ? hc : 9;
+
+  const parTotal = par.reduce((s, v) => s + (v || 0), 0);
+  const grossTotal = gross.reduce((s, v) => s + (v || 0), 0);
+  const metersTotal = meters ? meters.reduce((s, v) => s + (v || 0), 0) : 0;
+  const toPar = grossTotal - parTotal;
+  const toParStr = toPar > 0 ? `+${toPar}` : String(toPar);
+
+  function scoreClass(g, p) {
+    if (!g || !p) return '';
+    const d = g - p;
+    if (g === 1) return 'holeinone';
+    if (d <= -3) return 'albatross';
+    if (d === -2) return 'eagle';
+    if (d === -1) return 'birdie';
+    if (d === 0) return 'par';
+    if (d === 1) return 'bogey';
+    if (d === 2) return 'double';
+    if (d === 3) return 'triple';
+    if (d === 4) return 'quad';
+    if (d === 5) return 'quint';
+    return 'worse';
+  }
+
+  function sumR(arr, from, to) { let s = 0; for (let i = from; i < to; i++) if (arr[i]) s += arr[i]; return s; }
+
+  const teeHex = tee ? teeColor(tee) : '#94a3b8';
+  const teeFg = teeTextColor(teeHex);
+
+  let linkHtml = '';
+  if (link) {
+    linkHtml = `<div class="sc-links"><a href="${esc(link)}" target="_blank" class="sc-ext-link">🔗 Ver torneio</a></div>`;
+  }
+
+  let badgeHtml = label ? `<span style="display:inline-block;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:600;background:#f3e5f5;color:#6a1b9a;margin-left:6px">${esc(label)}</span>` : '';
+
+  let html = `
+<div class="sc-modern" style="--tee-color:${teeHex};--tee-fg:${teeFg}">
+  <div class="sc-header ${teeFg === '#fff' ? 'sc-header-dark' : 'sc-header-light'}" style="background:${teeHex}">
+    <div class="sc-header-left">
+      <div class="sc-title">${esc(courseName)}${badgeHtml}</div>
+      <div class="sc-subtitle">
+        <span>${dateFmt || ''}</span>
+        ${tee ? `<span>Tee ${esc(tee)}</span>` : ''}
+        ${metersTotal ? `<span>${metersTotal}m</span>` : ''}
+      </div>
+      ${linkHtml}
+    </div>
+    <div class="sc-header-right">
+      <div class="sc-stat"><div class="sc-stat-label">PAR</div><div class="sc-stat-value">${parTotal || '—'}</div></div>
+      <div style="width:1px;height:28px;background:currentColor;opacity:0.25"></div>
+      <div class="sc-stat"><div class="sc-stat-label">RESULTADO</div><div class="sc-stat-value">${grossTotal || '—'}</div></div>
+      <div style="width:1px;height:28px;background:currentColor;opacity:0.25"></div>
+      <div class="sc-stat sc-stat-score"><div class="sc-stat-label">SCORE</div><div class="sc-stat-value">${toParStr}</div></div>
+    </div>
+  </div>
+  <table class="sc-table-modern" data-sc-table="1">
+    <thead><tr><th class="hole-header" style="border-right:2px solid #e2e8f0">Buraco</th>`;
+
+  for (let h = 1; h <= hc; h++) {
+    html += `<th class="hole-header">${h}</th>`;
+    if (h === frontEnd && !is9) html += `<th class="hole-header col-out" style="font-size:10px">Out</th>`;
+  }
+  html += `<th class="hole-header col-${is9 ? 'total' : 'in'}" style="font-size:10px">${is9 ? 'TOTAL' : 'In'}</th>`;
+  if (!is9) html += `<th class="hole-header col-total">TOTAL</th>`;
+  html += `</tr></thead><tbody>`;
+
+  // Metros
+  if (meters && meters.some(v => v)) {
+    html += '<tr class="meta-row"><td class="row-label" style="color:#b0b8c4;font-size:10px;font-weight:400">Metros</td>';
+    for (let h = 0; h < hc; h++) {
+      html += `<td>${meters[h] || ''}</td>`;
+      if (h === frontEnd - 1 && !is9) html += `<td class="col-out" style="font-weight:600">${sumR(meters, 0, frontEnd)}</td>`;
+    }
+    const inM = is9 ? sumR(meters, 0, hc) : sumR(meters, 9, hc);
+    html += `<td class="col-${is9 ? 'total' : 'in'}" style="font-weight:600">${inM}</td>`;
+    if (!is9) html += `<td class="col-total" style="color:#94a3b8;font-size:10px">${metersTotal}</td>`;
+    html += '</tr>';
+  }
+
+  // S.I.
+  if (si && si.some(v => v)) {
+    html += '<tr class="meta-row"><td class="row-label" style="color:#b0b8c4;font-size:10px;font-weight:400">S.I.</td>';
+    for (let h = 0; h < hc; h++) {
+      html += `<td>${si[h] || ''}</td>`;
+      if (h === frontEnd - 1 && !is9) html += `<td class="col-out"></td>`;
+    }
+    html += `<td class="col-${is9 ? 'total' : 'in'}"></td>`;
+    if (!is9) html += `<td class="col-total"></td>`;
+    html += '</tr>';
+  }
+
+  // Par
+  html += '<tr class="sep-row"><td class="row-label par-label">Par</td>';
+  for (let h = 0; h < hc; h++) {
+    html += `<td>${par[h] || '—'}</td>`;
+    if (h === frontEnd - 1 && !is9) html += `<td class="col-out" style="font-weight:700">${sumR(par, 0, frontEnd)}</td>`;
+  }
+  const inPar = is9 ? parTotal : sumR(par, 9, hc);
+  html += `<td class="col-${is9 ? 'total' : 'in'}" style="font-weight:700">${inPar}</td>`;
+  if (!is9) html += `<td class="col-total">${parTotal || '—'}</td>`;
+  html += '</tr>';
+
+  // Gross
+  const pill = dateFmt ? dateFmt.substring(0, 5).replace('-', '/') : 'Gross';
+  html += `<tr><td class="row-label"><span class="sc-pill" style="background:${teeHex};color:${teeFg}">${pill}</span></td>`;
+  for (let h = 0; h < hc; h++) {
+    const g = gross[h], p = par[h];
+    const cls = scoreClass(g, p);
+    html += g ? `<td><span class="sc-score ${cls}">${g}</span></td>` : `<td>—</td>`;
+    if (h === frontEnd - 1 && !is9) {
+      const outG = sumR(gross, 0, frontEnd), outP = sumR(par, 0, frontEnd);
+      const outTP = outG - outP;
+      const cls2 = outTP > 0 ? 'sc-topar-pos' : (outTP < 0 ? 'sc-topar-neg' : 'sc-topar-zero');
+      html += `<td class="col-out" style="font-weight:700">${outG}<span class="sc-topar ${cls2}">${outTP > 0 ? '+' : ''}${outTP}</span></td>`;
+    }
+  }
+  const inG = is9 ? grossTotal : sumR(gross, 9, hc);
+  const inP = is9 ? parTotal : sumR(par, 9, hc);
+  const inTP = inG - inP;
+  const inCls = inTP > 0 ? 'sc-topar-pos' : (inTP < 0 ? 'sc-topar-neg' : 'sc-topar-zero');
+  html += `<td class="col-${is9 ? 'total' : 'in'}" style="font-weight:700">${inG}<span class="sc-topar ${inCls}">${inTP > 0 ? '+' : ''}${inTP}</span></td>`;
+  if (!is9) {
+    const totCls = toPar > 0 ? 'sc-topar-pos' : (toPar < 0 ? 'sc-topar-neg' : 'sc-topar-zero');
+    html += `<td class="col-total">${grossTotal}<span class="sc-topar ${totCls}">${toParStr}</span></td>`;
+  }
+  html += `</tr></tbody></table></div>`;
+  return html;
+}
 function computeEclecticForTee(roundRecs, teeName) {
   if (!roundRecs.length) return null;
 
@@ -1205,7 +1339,8 @@ function processPlayer(FED, allPlayers, crossStats) {
     const hc = holeCountFromRec(rec);
     const g = [], p = [], si = [], m = [];
     for (let i = 1; i <= hc; i++) {
-      g.push(toNum(rec[`gross_${i}`]) ?? null);
+      const gv = toNum(rec[`gross_${i}`]);
+      g.push(gv && gv > 0 ? gv : null); // gross=0 means NR (No Return)
       p.push(toNum(rec[`par_${i}`]) ?? null);
       si.push(toNum(rec[`stroke_index_${i}`]) ?? null);
       m.push(toNum(rec[`meters_${i}`]) ?? null);
@@ -1317,24 +1452,60 @@ function processPlayer(FED, allPlayers, crossStats) {
   const melh = loadMelhorias();
   const melhPlayer = melh[String(FED)];
   if (melhPlayer) {
-    // Treinos (Game Book)
+    // Treinos (Game Book) — com deduplicação por data+campo
     if (Array.isArray(melhPlayer.treinos)) {
+      // Agrupar por data+campo para dedup
+      const treinoGroups = new Map();
       for (let ti = 0; ti < melhPlayer.treinos.length; ti++) {
         const t = melhPlayer.treinos[ti];
+        const key = (t.data || '') + '|' + norm(t.campo || '');
+        if (!treinoGroups.has(key)) treinoGroups.set(key, []);
+        treinoGroups.get(key).push({ idx: ti, t });
+      }
+      // Para cada grupo, manter o treino com mais informação
+      const treinos = [];
+      for (const [, group] of treinoGroups) {
+        group.sort((a, b) => {
+          // Preferir o que tem gross_holes (scorecard completo)
+          const aScore = (a.t.gross_holes ? 10 : 0) + (a.t.gross != null ? 1 : 0) + (a.t.companhia ? 1 : 0);
+          const bScore = (b.t.gross_holes ? 10 : 0) + (b.t.gross != null ? 1 : 0) + (b.t.companhia ? 1 : 0);
+          return bScore - aScore;
+        });
+        treinos.push(group[0]);
+        if (group.length > 1) {
+          console.log(`  ↳ Dedup treino ${group[0].t.data} ${group[0].t.campo}: ${group.length} → 1 (mantido o mais completo)`);
+        }
+      }
+      
+      for (let i = 0; i < treinos.length; i++) {
+        const { t } = treinos[i];
         const dp = (t.data || '').split('-');  // yyyy-mm-dd
         const dateObj = dp.length === 3 ? new Date(+dp[0], +dp[1]-1, +dp[2]) : null;
-        const fakeId = 'treino_' + ti;
+        const fakeId = 'treino_' + i;
         const hc = t.holes || 9;
         
         // Criar fragment e holeScores para treinos
         if (t.gross_holes && t.par_holes) {
+          const cleanG = t.gross_holes.map(v => (v != null && v > 0) ? v : null);
           holeScores[fakeId] = {
-            g: t.gross_holes,
+            g: cleanG,
             p: t.par_holes,
             si: t.si_holes || [],
             m: t.meters_holes || [],
             hc: hc
           };
+          fragments[fakeId] = buildManualFragment({
+            courseName: t.campo || '',
+            dateFmt: dateObj ? fmtDate(dateObj) : '',
+            gross: cleanG,
+            par: t.par_holes,
+            si: t.si_holes || [],
+            meters: t.meters_holes || [],
+            holeCount: hc,
+            tee: '',
+            link: '',
+            label: 'TREINO'
+          }).trim();
         }
         
         rounds.push({
@@ -1361,7 +1532,7 @@ function processPlayer(FED, allPlayers, crossStats) {
           _fonte: t.fonte || 'Game Book'
         });
       }
-      console.log(`  + ${melhPlayer.treinos.length} treinos injectados`);
+      console.log(`  + ${treinos.length} treinos injectados (de ${melhPlayer.treinos.length} originais)`);
     }
 
     // Resolver nomes de campos dos treinos para coincidir com nomes FPG existentes
@@ -1407,13 +1578,26 @@ function processPlayer(FED, allPlayers, crossStats) {
           const hc = dia.holes || 18;
           
           if (dia.gross_holes && dia.par_holes) {
+            const cleanG = dia.gross_holes.map(v => (v != null && v > 0) ? v : null);
             holeScores[fakeId] = {
-              g: dia.gross_holes,
+              g: cleanG,
               p: dia.par_holes,
               si: dia.si_holes || [],
               m: dia.meters_holes || [],
               hc: hc
             };
+            fragments[fakeId] = buildManualFragment({
+              courseName: ex.campo || '',
+              dateFmt: dateObj ? fmtDate(dateObj) : '',
+              gross: cleanG,
+              par: dia.par_holes,
+              si: dia.si_holes || [],
+              meters: dia.meters_holes || [],
+              holeCount: hc,
+              tee: ex.categoria || '',
+              link: ex.link || '',
+              label: ex.nao_aceite_fpg ? 'Não aceite FPG' : ''
+            }).trim();
           }
           
           const label = ex.torneio + (dia.dia ? ' ' + dia.dia : '');
@@ -1575,7 +1759,8 @@ function processPlayer(FED, allPlayers, crossStats) {
       const clubTag = p.club ? `<span class="pm-club">${esc(p.club)}</span>` : '';
       const tagsStr = (p.tags || []).join(',');
       const hcpStr = (p.hcp != null) ? `<span class="pm-hcp">${p.hcp > 0 ? '+' : ''}${p.hcp}</span>` : '';
-      return `<a href="${href}"${cls} data-name="${esc(p.name.toLowerCase())}" data-escalao="${esc(p.escalao || '')}" data-club="${esc(p.club || '')}" data-region="${esc(p.region || '')}" data-sex="${esc(p.sex || '')}" data-hcp="${p.hcp != null ? p.hcp : ''}" data-tags="${esc(tagsStr)}">${dot}${esc(p.name)}${esc2}${clubTag}${hcpStr}<span class="pm-fed">${esc(p.fed)}</span></a>`;
+      const normName = p.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+      return `<a href="${href}"${cls} data-name="${esc(normName)}" data-fed="${esc(p.fed || '')}" data-escalao="${esc(p.escalao || '')}" data-club="${esc(p.club || '')}" data-region="${esc(p.region || '')}" data-sex="${esc(p.sex || '')}" data-hcp="${p.hcp != null ? p.hcp : ''}" data-tags="${esc(tagsStr)}">${dot}${esc(p.name)}${esc2}${clubTag}${hcpStr}<span class="pm-fed">${esc(p.fed)}</span></a>`;
     }).join("");
 
     playerMenuHtml = filterHtml + `<div class="pm-list">${linksHtml}</div>`;
@@ -1853,7 +2038,7 @@ function processPlayer(FED, allPlayers, crossStats) {
 
 
   /* Ecletico layout: fixa posição e aspeto do cartão (evita saltos por flex-wrap) */
-  .ecGrid{display:flex;flex-direction:column;gap:12px;width:100%;max-width:1180px;margin:0 auto}
+  .ecGrid{display:flex;flex-direction:column;gap:12px;width:100%}
   .ecLeft{width:100%}
   .ecRight{width:100%;min-height:180px;transition:min-height 0.2s ease}
   .ecPlaceholder{padding:20px;text-align:center;color:#94a3b8;font-size:14px;font-style:italic;border:2px dashed #e2e8f0;border-radius:12px;background:#f8fafc}
@@ -1893,8 +2078,8 @@ function processPlayer(FED, allPlayers, crossStats) {
   .caConcTitle{font-size:12px;font-weight:800;color:#92400e;margin-bottom:4px}
   .caConcText{font-size:12px;color:#78350f;line-height:1.5}
   
-  .holeAnalysis{margin:12px 0;padding:14px;border:1px solid #dbeafe;border-radius:12px;background:#f0f7ff}
-  .haTitle{font-size:14px;font-weight:900;color:#1e40af;margin-bottom:12px}
+  .holeAnalysis{margin:12px 0;padding:14px;border:1px solid #e2e8f0;border-radius:12px;background:#fff}
+  .haTitle{font-size:14px;font-weight:900;color:#334155;margin-bottom:12px}
   .haSubTitle{font-size:12px;font-weight:800;color:#334155;margin-bottom:8px;margin-top:14px}
   .haDiag{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-bottom:4px}
   .haDiagCard{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:10px 12px}
@@ -2478,7 +2663,7 @@ function processPlayer(FED, allPlayers, crossStats) {
     </div>
 
     <table>
-      <colgroup>
+      <colgroup id="mainColgroup">
         <col style="width:26%"><col style="width:6%"><col style="width:9%"><col style="width:6%"><col style="width:7%"><col style="width:12%"><col style="width:8%"><col style="width:9%"><col style="width:7%"><col style="width:7%">
       </colgroup>
       <thead id="thead">
@@ -2872,7 +3057,7 @@ function printAll() {
 
   // Universal scorecard color class — used everywhere (eclectic, comparison, etc.)
   function scClass(gross, par) {
-    if (gross == null || par == null) return '';
+    if (gross == null || gross === 0 || par == null) return ''; // gross=0 means NR
     var d = gross - par;
     if (gross === 1) return 'holeinone';
     if (d <= -3) return 'albatross';
@@ -2990,7 +3175,7 @@ function renderAnalysis(FILTERED_ROUNDS){
   var kpiSigGross= stdevArr(grossAll18);
 
   // Todas as rondas para tabela
-  var last20= roundsDesc.slice(0,20);
+  var last20= roundsDesc.filter(function(r){ return !r._isTreino; }).slice(0,20);
 
   var gv=[];
   for (var i=0;i<grossAll18.length;i++){
@@ -3130,7 +3315,7 @@ function renderAnalysis(FILTERED_ROUNDS){
     best8SDIndices[sdIndexed[bi].idx] = bi + 1; // rank 1-8
   }
 
-  html+='<div class="an-card"><div class="an-k-title">Todas as rondas</div>';
+  html+='<div class="an-card"><div class="an-k-title">Últimas 20 rondas</div>';
   html+='<div class="muted" style="margin-bottom:8px">Os 8 melhores SD das últimas 20 estão assinalados com ★ · <b>*</b> = Stableford normalizado 9B→18B (+17 pts WHS)</div>';
   html+='<table class="an-table" id="last20Table">' +
         '<colgroup><col style="width:8%"><col style="width:16%"><col style="width:12%"><col style="width:6%"><col style="width:6%"><col style="width:10%"><col style="width:8%"><col style="width:9%"><col style="width:7%"><col style="width:7%"><col style="width:7%"></colgroup>' +
@@ -3142,36 +3327,18 @@ function renderAnalysis(FILTERED_ROUNDS){
         '<th class="right an-sortable" data-col="8" data-type="num">Stb</th><th class="right an-sortable" data-col="9" data-type="num">SD</th><th class="right">Top 8</th>' +
         '</tr></thead><tbody>';
 
-  var MONTH_NAMES_PT = ['','Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-  var allRoundsTable = roundsDesc;
-  var prevYear = '', prevMonth = '';
+  // Filtrar treinos e limitar a 20 rondas
+  var allRoundsTable = roundsDesc.filter(function(r){ return !r._isTreino; });
+  allRoundsTable = allRoundsTable.slice(0, 20);
 
   // Recalcular best8 para últimas 20 (que estão no topo do roundsDesc)
   var last20Set = {};
-  for (var li = 0; li < Math.min(20, roundsDesc.length); li++) {
-    last20Set[roundsDesc[li].scoreId] = true;
+  for (var li = 0; li < allRoundsTable.length; li++) {
+    last20Set[allRoundsTable[li].scoreId] = true;
   }
 
   for (var r=0;r<allRoundsTable.length;r++){
     var x = allRoundsTable[r];
-
-    // Extrair ano e mês da data formatada (dd-mm-yyyy)
-    var dateParts = (x.date||'').split('-');
-    var curYear = dateParts.length>=3 ? dateParts[2] : '';
-    var curMonthNum = dateParts.length>=3 ? parseInt(dateParts[1],10) : 0;
-    var curMonth = curMonthNum > 0 && curMonthNum <= 12 ? MONTH_NAMES_PT[curMonthNum] : '';
-
-    // Separador de ano
-    if (curYear && curYear !== prevYear) {
-      html+='<tr class="year-divider-row"><td colspan="11" style="padding:7px 10px;border-bottom:1px solid #e2e8f0"><span style="display:inline-block;border:2px solid #64748b;color:#475569;padding:2px 12px;border-radius:8px;font-weight:800;font-size:0.85rem;letter-spacing:0.5px">'+curYear+'</span></td></tr>';
-      prevYear = curYear;
-      prevMonth = '';
-    }
-    // Separador de mês
-    if (curMonth && curMonth !== prevMonth) {
-      html+='<tr class="month-divider-row"><td colspan="11" style="padding:4px 10px;border-bottom:1px solid #f0f0f0"><span style="display:inline-block;border:1px solid #cbd5e1;color:#94a3b8;padding:1px 8px;border-radius:6px;font-weight:600;font-size:0.72rem">'+curMonth+'</span></td></tr>';
-      prevMonth = curMonth;
-    }
 
     var sdClass = '';
     var sdVal = x.sd;
@@ -3637,13 +3804,15 @@ function render(){
 
 
     // Vista: Por campo (default) / Por data / Por torneio
-    function setThead(html){
+    function setThead(html, colHtml){
       var th = document.getElementById("thead");
       if (th) th.innerHTML = html;
+      var cg = document.getElementById("mainColgroup");
+      if (cg) cg.innerHTML = colHtml || '';
     }
 
     if (view === "analysis") {
-      setThead("<tr><th>Análises</th></tr>");
+      setThead("<tr><th>Análises</th></tr>", '<col style="width:100%">');
       try {
         renderAnalysis(FILTERED_ROUNDS);
         // Refresh dynamic analysis cards (histogram + records)
@@ -3683,7 +3852,8 @@ function render(){
         '<th class="right" style="width:9%">Gross</th>' +
         '<th class="right" style="width:7%">Stb</th>' +
         '<th class="right" style="width:7%">SD</th>' +
-      '</tr>');
+      '</tr>',
+      '<col style="width:9%"><col style="width:18%"><col style="width:13%"><col style="width:6%"><col style="width:7%"><col style="width:10%"><col style="width:8%"><col style="width:9%"><col style="width:7%"><col style="width:7%">');
 
       cCourses.textContent = DATA.length;
       cRounds.textContent = all.length;
@@ -3706,7 +3876,7 @@ function render(){
         html += '<tr class="roundRow" data-score="'+r.scoreId+'" data-hascard="'+(r.hasCard?'1':'0')+'" data-course="'+esc(r.courseKey||'')+'" data-tee="'+esc(r.teeKey||'')+'">' +
           '<td>'+datePillD+'</td>' +
           '<td>'+r.course+'</td>' +
-          '<td><span class="muted">'+esc(r.eventName||"")+fmtEds(r.scoreOrigin)+'</span></td>' +
+          '<td><span class="muted">'+esc(r.eventName||"")+fmtEds(r.scoreOrigin)+'</span>'+(r._link ? ' <a href="'+esc(r._link)+'" target="_blank" style="font-size:10px;color:#0369a1;text-decoration:none">🔗</a>' : '')+'</td>' +
           '<td class="right">'+(r.holeCount==9?'<span class="hb hb9">9</span>':'<span class="hb hb18">18</span>')+'</td>' +
           '<td class="right">'+(r.hi??"")+'</td>' +
           '<td>'+teeHtml+'</td>' +
@@ -3853,7 +4023,8 @@ function render(){
         '<th style="width:34%">Campo</th>' +
         '<th class="right" style="width:10%">Rondas</th>' +
         '<th style="width:10%">Datas</th>' +
-      '</tr>');
+      '</tr>',
+      '<col style="width:46%"><col style="width:34%"><col style="width:10%"><col style="width:10%">');
 
       cCourses.textContent = DATA.length;
       cRounds.textContent = items.reduce(function(a,it){ return a+it.rounds.length; },0);
@@ -3865,8 +4036,14 @@ function render(){
         var end = it.rounds[it.rounds.length-1]?.date || "";
         var dateTxt = start && end && start!==end ? (start+" → "+end) : (end||start||"");
         var edsTag = (it.rounds[0] && it.rounds[0].scoreOrigin) ? fmtEds(it.rounds[0].scoreOrigin) : '';
+        // Extract link from extra rounds
+        var eventLink = '';
+        for (var li = 0; li < it.rounds.length; li++) {
+          if (it.rounds[li]._link) { eventLink = it.rounds[li]._link; break; }
+        }
+        var linkTag = eventLink ? ' <a href="'+esc(eventLink)+'" target="_blank" style="font-size:11px;color:#0369a1;text-decoration:none" title="Ver torneio">🔗</a>' : '';
         html += '<tr>' +
-          '<td><button type="button" class="courseBtn" data-toggle="'+rowId+'">'+it.name+edsTag+'</button><div class="sub muted">'+dateTxt+'</div></td>' +
+          '<td><button type="button" class="courseBtn" data-toggle="'+rowId+'">'+it.name+edsTag+'</button>'+linkTag+'<div class="sub muted">'+dateTxt+'</div></td>' +
           '<td><b>'+it.course+'</b></td>' +
           '<td class="right"><b>'+it.rounds.length+'</b></td>' +
           '<td class="muted">'+dateTxt+'</td>' +
@@ -3947,10 +4124,17 @@ function render(){
         // --- Comparative scorecard ---
         var compHtml = buildTournamentComparison(rounds, pillColors);
 
+        // Extract link from rounds
+        var detailLink = '';
+        for (var dli = 0; dli < rounds.length; dli++) {
+          if (rounds[dli]._link) { detailLink = rounds[dli]._link; break; }
+        }
+
         html += '<tr class="details' + ((openState[rowId]) ? ' open' : '') + '" id="'+rowId+'"><td class="inner" colspan="4">' +
           '<div class="innerWrap">' +
             '<div class="actions" style="margin-top:8px">' +
               '<button type="button" class="btn btnPdf" data-printcourse="' + rowId + '" title="Guardar PDF">📄 PDF</button>' +
+              (detailLink ? ' <a href="'+esc(detailLink)+'" target="_blank" class="btn" style="text-decoration:none;background:#eff6ff;color:#0369a1;border-color:#bfdbfe">🔗 Ver torneio</a>' : '') +
             '</div>' +
             '<div style="margin-top:10px">' + summaryHtml + '</div>' +
             (compHtml ? '<div style="margin-top:12px">' + compHtml + '</div>' : '') +
@@ -3975,7 +4159,8 @@ function render(){
     else if (sort === "last_desc") list.sort(function(a,b){ return (b.lastDateSort - a.lastDateSort) || (b.count - a.count) || a.course.localeCompare(b.course); });
     else list.sort(function(a,b){ var d = (b.count - a.count); return d !== 0 ? d : a.course.localeCompare(b.course); });
 
-    setThead('<tr><th style="width:26%">Campo</th><th class="right" style="width:6%">Voltas</th><th style="width:9%">Última</th><th class="right" style="width:6%">Bur.</th><th class="right" style="width:7%">HCP</th><th style="width:12%">Tee</th><th class="right" style="width:8%">Dist.</th><th class="right" style="width:9%">Gross</th><th class="right" style="width:7%">Stb</th><th class="right" style="width:7%">SD</th></tr>');
+    setThead('<tr><th style="width:26%">Campo</th><th class="right" style="width:6%">Voltas</th><th style="width:9%">Última</th><th class="right" style="width:6%">Bur.</th><th class="right" style="width:7%">HCP</th><th style="width:12%">Tee</th><th class="right" style="width:8%">Dist.</th><th class="right" style="width:9%">Gross</th><th class="right" style="width:7%">Stb</th><th class="right" style="width:7%">SD</th></tr>',
+    '<col style="width:26%"><col style="width:6%"><col style="width:9%"><col style="width:6%"><col style="width:7%"><col style="width:12%"><col style="width:8%"><col style="width:9%"><col style="width:7%"><col style="width:7%">');
 
     cCourses.textContent = list.length;
     cRounds.textContent = list.reduce(function(a,x){ return a + x.count; }, 0);
@@ -4008,7 +4193,7 @@ function render(){
         ecHtml += '<div class="ecHint">Clique num tee na tabela de buracos para ver análise e filtrar rondas.</div>';
 
         // === TABLE 1: Summary ===
-        ecHtml += '<div class="dt-card" style="margin-bottom:10px"><table class="ec-sum">';
+        ecHtml += '<div style="border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;background:#fff;margin-bottom:10px"><table class="ec-sum">';
         ecHtml += '<colgroup><col style="width:18%"><col style="width:10%"><col style="width:10%"><col style="width:14%"><col style="width:12%"><col style="width:14%"><col style="width:14%"></colgroup>';
         ecHtml += '<thead><tr><th>Tee</th><th class="r">Rondas</th><th class="r">Par</th><th class="r">Eclético</th><th class="r">vs Par</th><th class="r">Melhor Gr.</th><th class="r">Média Gr.</th></tr></thead>';
         ecHtml += '<tbody>';
@@ -4048,7 +4233,9 @@ function render(){
 
         var colSpan = 21; // label + 9 + out + 9 + in + total
 
-        ecHtml += '<div class="dt-card"><div style="overflow-x:auto"><table class="ec-sc">';
+        ecHtml += '<div style="border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;background:#fff;margin-top:10px">';
+        ecHtml += '<div class="sc-bar-head"><span>Scorecard eclético — buracos</span></div>';
+        ecHtml += '<div style="overflow-x:auto"><table class="ec-sc">';
         // Header
         ecHtml += '<thead><tr><th class="row-label" style="border-bottom:2px solid #cbd5e1">Tee</th>';
         for (var hh=1;hh<=9;hh++) ecHtml += '<th>'+hh+'</th>';
@@ -4143,6 +4330,53 @@ function render(){
             ecHtml += '<td class="col-total" style="font-weight:900;font-size:13px">'+totE2+'<span class="sc-topar '+(totD2>0?'sc-topar-pos':(totD2<0?'sc-topar-neg':'sc-topar-zero'))+'">'+(totD2>0?'+':'')+totD2+'</span></td>';
           }
           ecHtml += '</tr>';
+
+          // === Individual round score rows for this tee ===
+          var teeRnds = c.rounds.filter(function(rr){ return normKey2(rr.tee) === tTk && HOLES[rr.scoreId]; });
+          teeRnds.sort(function(a,b){ return b.dateSort - a.dateSort; }); // newest first
+          for (var tri = 0; tri < teeRnds.length; tri++) {
+            var tr = teeRnds[tri];
+            var trH = HOLES[tr.scoreId];
+            if (!trH || !trH.g) continue;
+            var trG = trH.g;
+            var trHc = trH.hc || trG.length;
+            var trDate = tr.date ? tr.date.substring(0,5).replace('-','/') : ('R'+(tri+1));
+            var trBg = hexToRgba(tHx, 0.04);
+            ecHtml += '<tr style="background:'+trBg+'">';
+            ecHtml += '<td class="row-label" style="font-size:10px"><span class="sc-pill" style="background:'+tHx+';color:'+tFg+';font-size:9px;padding:1px 6px">'+trDate+'</span></td>';
+            for (var trh = 0; trh < 18; trh++) {
+              if (trh < trHc) {
+                var trGv = trG[trh], trPv = tParArr[trh];
+                var trCls = (trGv != null && trGv > 0 && trPv != null) ? scClass(trGv, trPv) : '';
+                ecHtml += '<td>'+((trGv != null && trGv > 0) ? '<span class="sc-score '+trCls+'" style="font-size:10px;width:20px;height:20px">'+trGv+'</span>' : '<span style="color:#d4d4d4;font-size:9px">NR</span>')+'</td>';
+              } else {
+                ecHtml += '<td style="color:#d4d4d4">—</td>';
+              }
+              if (trh === 8) {
+                var trOut = sumAEc(trG, 0, Math.min(trHc, 9));
+                var trOutP = sumAEc(tParArr, 0, Math.min(trHc, 9));
+                var trOutD = trOut - trOutP;
+                ecHtml += '<td class="col-out" style="font-weight:600;font-size:10px">'+trOut+'<span class="sc-topar '+(trOutD>0?'sc-topar-pos':(trOutD<0?'sc-topar-neg':'sc-topar-zero'))+'" style="font-size:9px">'+(trOutD>0?'+':'')+trOutD+'</span></td>';
+              }
+            }
+            if (trHc <= 9) {
+              ecHtml += '<td class="col-in" style="color:#d4d4d4">—</td>';
+              var trTot = sumAEc(trG, 0, trHc);
+              var trTotP = sumAEc(tParArr, 0, trHc);
+              var trTotD = trTot - trTotP;
+              ecHtml += '<td class="col-total" style="font-weight:700;font-size:11px">'+trTot+'<span class="sc-topar '+(trTotD>0?'sc-topar-pos':(trTotD<0?'sc-topar-neg':'sc-topar-zero'))+'" style="font-size:9px">'+(trTotD>0?'+':'')+trTotD+'</span></td>';
+            } else {
+              var trIn = sumAEc(trG, 9, trHc);
+              var trInP = sumAEc(tParArr, 9, 18);
+              var trInD = trIn - trInP;
+              ecHtml += '<td class="col-in" style="font-weight:600;font-size:10px">'+trIn+'<span class="sc-topar '+(trInD>0?'sc-topar-pos':(trInD<0?'sc-topar-neg':'sc-topar-zero'))+'" style="font-size:9px">'+(trInD>0?'+':'')+trInD+'</span></td>';
+              var trTot2 = sumAEc(trG, 0, trHc);
+              var trTotP2 = sumAEc(tParArr, 0, 18);
+              var trTotD2 = trTot2 - trTotP2;
+              ecHtml += '<td class="col-total" style="font-weight:700;font-size:11px">'+trTot2+'<span class="sc-topar '+(trTotD2>0?'sc-topar-pos':(trTotD2<0?'sc-topar-neg':'sc-topar-zero'))+'" style="font-size:9px">'+(trTotD2>0?'+':'')+trTotD2+'</span></td>';
+            }
+            ecHtml += '</tr>';
+          }
 
           // Detail row (expandable - shown only for active tee)
           ecHtml += '<tr class="ec-detail-row'+(isActive?' open':'')+'"><td colspan="'+colSpan+'">';
@@ -4543,45 +4777,74 @@ function render(){
 
           // ============ SECTION 5: HOLE-BY-HOLE TABLE ============
           var hc3 = hsData.holeCount;
-          var cellS3 = 'text-align:center;font-size:11px;padding:3px 2px;min-width:26px';
-          var labelS3 = 'font-size:10px;font-weight:700;color:#64748b;padding:3px 6px;white-space:nowrap';
+          // Unified column styles matching buildTournamentComparison
+          var haC = 'padding:4px 6px;text-align:center;font-size:11px;border-bottom:1px solid #f0f0f0';
+          var haL = haC + ';text-align:left;padding-left:8px;border-right:2px solid #e2e8f0;white-space:nowrap;min-width:70px';
+          var haOut = haC + ';background:#f4f6f8;border-left:1px solid #e2e8f0;border-right:1px solid #e2e8f0';
+          var haIn = haOut;
+          var haTot = haC + ';background:#edf0f4;border-left:1px solid #dde1e7;font-weight:800';
+          var is93 = hc3 === 9;
+          var fe3 = is93 ? hc3 : 9;
+          function sumH3(arr, from, to) { var s=0; for(var i=from;i<to;i++) if(arr[i]!=null) s+=arr[i]; return s; }
+
           holeAnalysisHtml += '<div class="haTableSection">';
-          holeAnalysisHtml += '<div class="haSubTitle">Detalhe Buraco a Buraco</div>';
+          holeAnalysisHtml += '<div style="border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;background:#fff">';
+          holeAnalysisHtml += '<div class="sc-bar-head"><span>Detalhe Buraco a Buraco</span></div>';
           holeAnalysisHtml += '<div style="overflow-x:auto">';
-          holeAnalysisHtml += '<table class="haTable" style="width:100%;border-collapse:collapse;font-size:11px">';
+          holeAnalysisHtml += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
 
-          holeAnalysisHtml += '<tr><td style="' + labelS3 + '">Buraco</td>';
+          // Buraco row
+          holeAnalysisHtml += '<tr style="background:#f8fafc">';
+          holeAnalysisHtml += '<td style="'+haL+';font-weight:700;color:#64748b;font-size:11px;border-bottom:1px solid #e2e8f0">Buraco</td>';
           for (var hi3 = 0; hi3 < hc3; hi3++) {
-            var midB3 = (hi3 === 9 && hc3 === 18) ? 'border-left:2px solid #94a3b8;' : '';
-            holeAnalysisHtml += '<td style="' + cellS3 + ';font-weight:800;' + midB3 + '">' + (hi3+1) + '</td>';
+            holeAnalysisHtml += '<td style="'+haC+';font-weight:700;color:#64748b;font-size:11px;border-bottom:1px solid #e2e8f0">' + (hi3+1) + '</td>';
+            if (hi3 === fe3-1 && !is93) holeAnalysisHtml += '<td style="'+haOut+';font-weight:700;color:#64748b;font-size:10px;border-bottom:1px solid #e2e8f0">Out</td>';
           }
-          holeAnalysisHtml += '<td style="' + cellS3 + ';font-weight:800">Tot</td></tr>';
+          holeAnalysisHtml += '<td style="'+(is93?haTot:haIn)+';font-weight:700;color:#64748b;font-size:10px;border-bottom:1px solid #e2e8f0">'+(is93?'TOTAL':'In')+'</td>';
+          if (!is93) holeAnalysisHtml += '<td style="'+haTot+';color:#475569;font-size:11px;border-bottom:1px solid #e2e8f0">TOTAL</td>';
+          holeAnalysisHtml += '</tr>';
 
+          // SI row
           var hasSI = hsData.holes.some(function(hd){ return hd.si != null; });
           if (hasSI) {
-            holeAnalysisHtml += '<tr style="color:#94a3b8"><td style="' + labelS3 + '">SI</td>';
+            holeAnalysisHtml += '<tr>';
+            holeAnalysisHtml += '<td style="'+haL+';color:#b0b8c4;font-size:10px;font-weight:400">S.I.</td>';
             for (var hi3 = 0; hi3 < hc3; hi3++) {
-              var midB3 = (hi3 === 9 && hc3 === 18) ? 'border-left:2px solid #94a3b8;' : '';
-              holeAnalysisHtml += '<td style="' + cellS3 + ';' + midB3 + '">' + (hsData.holes[hi3].si || '') + '</td>';
+              holeAnalysisHtml += '<td style="'+haC+';color:#b0b8c4;font-size:10px">' + (hsData.holes[hi3].si || '') + '</td>';
+              if (hi3 === fe3-1 && !is93) holeAnalysisHtml += '<td style="'+haOut+'"></td>';
             }
-            holeAnalysisHtml += '<td style="' + cellS3 + '"></td></tr>';
+            holeAnalysisHtml += '<td style="'+(is93?haTot:haIn)+'"></td>';
+            if (!is93) holeAnalysisHtml += '<td style="'+haTot+'"></td>';
+            holeAnalysisHtml += '</tr>';
           }
 
+          // Par row (separator)
           var sumPar3 = 0;
-          holeAnalysisHtml += '<tr><td style="' + labelS3 + '">Par</td>';
+          var parArr3 = [];
+          holeAnalysisHtml += '<tr>';
+          holeAnalysisHtml += '<td style="'+haL+';font-weight:600;color:#94a3b8;font-size:11px;border-bottom:2px solid #cbd5e1">Par</td>';
           for (var hi3 = 0; hi3 < hc3; hi3++) {
-            var midB3 = (hi3 === 9 && hc3 === 18) ? 'border-left:2px solid #94a3b8;' : '';
             var pv = hsData.holes[hi3].par;
+            parArr3.push(pv);
             if (pv != null) sumPar3 += pv;
-            holeAnalysisHtml += '<td style="' + cellS3 + ';' + midB3 + '">' + (pv != null ? pv : '') + '</td>';
+            holeAnalysisHtml += '<td style="'+haC+';border-bottom:2px solid #cbd5e1">' + (pv != null ? pv : '') + '</td>';
+            if (hi3 === fe3-1 && !is93) {
+              holeAnalysisHtml += '<td style="'+haOut+';font-weight:700;border-bottom:2px solid #cbd5e1">'+sumH3(parArr3,0,fe3)+'</td>';
+            }
           }
-          holeAnalysisHtml += '<td style="' + cellS3 + ';font-weight:700">' + sumPar3 + '</td></tr>';
+          var inPar3 = is93 ? sumPar3 : sumH3(parArr3,9,hc3);
+          holeAnalysisHtml += '<td style="'+(is93?haTot:haIn)+';font-weight:700;border-bottom:2px solid #cbd5e1">'+inPar3+'</td>';
+          if (!is93) holeAnalysisHtml += '<td style="'+haTot+';border-bottom:2px solid #cbd5e1">'+sumPar3+'</td>';
+          holeAnalysisHtml += '</tr>';
 
+          // Média row
           var sumAvg3 = 0, cntAvg3 = 0;
-          holeAnalysisHtml += '<tr style="background:#f0f7ff"><td style="' + labelS3 + ';color:#0369a1;font-weight:700">Média</td>';
+          var avgArr3 = [];
+          holeAnalysisHtml += '<tr style="background:#f0f7ff">';
+          holeAnalysisHtml += '<td style="'+haL+';color:#0369a1;font-weight:700">Média</td>';
           for (var hi3 = 0; hi3 < hc3; hi3++) {
-            var midB3 = (hi3 === 9 && hc3 === 18) ? 'border-left:2px solid #94a3b8;' : '';
             var hd = hsData.holes[hi3];
+            avgArr3.push(hd.avg);
             if (hd.avg != null) { sumAvg3 += hd.avg; cntAvg3++; }
             var avgCls = '';
             if (hd.avg != null && hd.par != null) {
@@ -4591,43 +4854,95 @@ function render(){
               else if (dif <= 0.5) avgCls = 'color:#d97706;font-weight:700';
               else avgCls = 'color:#dc2626;font-weight:800';
             }
-            holeAnalysisHtml += '<td style="' + cellS3 + ';' + midB3 + ';' + avgCls + '">' + (hd.avg != null ? hd.avg.toFixed(1) : '') + '</td>';
+            holeAnalysisHtml += '<td style="'+haC+';' + avgCls + '">' + (hd.avg != null ? hd.avg.toFixed(1) : '') + '</td>';
+            if (hi3 === fe3-1 && !is93) {
+              var outAvg3 = 0; for(var ai=0;ai<fe3;ai++) if(avgArr3[ai]!=null) outAvg3+=avgArr3[ai];
+              var outPar3 = sumH3(parArr3,0,fe3);
+              var outAvgTP3 = outAvg3 - outPar3;
+              holeAnalysisHtml += '<td style="'+haOut+';font-weight:700">'+outAvg3.toFixed(1)+'<span class="sc-topar '+(outAvgTP3>0?'sc-topar-pos':(outAvgTP3<0?'sc-topar-neg':'sc-topar-zero'))+'">'+(outAvgTP3>=0?'+':'')+outAvgTP3.toFixed(1)+'</span></td>';
+            }
           }
           var totalAvg3 = cntAvg3 ? sumAvg3.toFixed(1) : '';
-          holeAnalysisHtml += '<td style="' + cellS3 + ';font-weight:800">' + totalAvg3 + '</td></tr>';
+          if (!is93 && totalAvg3) {
+            var inAvg3 = 0; for(var ai=9;ai<hc3;ai++) if(avgArr3[ai]!=null) inAvg3+=avgArr3[ai];
+            var inAvgTP3 = inAvg3 - sumH3(parArr3,9,hc3);
+            holeAnalysisHtml += '<td style="'+haIn+';font-weight:700">'+inAvg3.toFixed(1)+'<span class="sc-topar '+(inAvgTP3>0?'sc-topar-pos':(inAvgTP3<0?'sc-topar-neg':'sc-topar-zero'))+'">'+(inAvgTP3>=0?'+':'')+inAvgTP3.toFixed(1)+'</span></td>';
+            var totAvgTP3 = sumAvg3 - sumPar3;
+            holeAnalysisHtml += '<td style="'+haTot+'">'+totalAvg3+'<span class="sc-topar '+(totAvgTP3>0?'sc-topar-pos':(totAvgTP3<0?'sc-topar-neg':'sc-topar-zero'))+'">'+(totAvgTP3>=0?'+':'')+totAvgTP3.toFixed(1)+'</span></td>';
+          } else {
+            holeAnalysisHtml += '<td style="'+(is93?haTot:haIn)+';font-weight:800">' + totalAvg3 + '</td>';
+            if (!is93) holeAnalysisHtml += '<td style="'+haTot+'">'+totalAvg3+'</td>';
+          }
+          holeAnalysisHtml += '</tr>';
 
+          // Melhor row
           var sumBest3 = 0;
-          holeAnalysisHtml += '<tr><td style="' + labelS3 + ';color:#16a34a">Melhor</td>';
+          var bestArr3 = [];
+          holeAnalysisHtml += '<tr>';
+          holeAnalysisHtml += '<td style="'+haL+';color:#16a34a;font-weight:700">Melhor</td>';
           for (var hi3 = 0; hi3 < hc3; hi3++) {
-            var midB3 = (hi3 === 9 && hc3 === 18) ? 'border-left:2px solid #94a3b8;' : '';
             var hd = hsData.holes[hi3];
+            bestArr3.push(hd.best);
             if (hd.best != null) sumBest3 += hd.best;
             var cls3 = (hd.best != null && hd.par != null) ? scClass(hd.best, hd.par) : '';
-            holeAnalysisHtml += '<td style="' + cellS3 + ';' + midB3 + '">';
+            holeAnalysisHtml += '<td style="'+haC+'">';
             if (hd.best != null) holeAnalysisHtml += '<span class="sc-score ' + cls3 + '">' + hd.best + '</span>';
             holeAnalysisHtml += '</td>';
+            if (hi3 === fe3-1 && !is93) {
+              var outBest3 = sumH3(bestArr3,0,fe3);
+              var outBP3 = sumH3(parArr3,0,fe3);
+              var outBTP3 = outBest3 - outBP3;
+              holeAnalysisHtml += '<td style="'+haOut+';font-weight:700;color:#16a34a">'+outBest3+'<span class="sc-topar '+(outBTP3>0?'sc-topar-pos':(outBTP3<0?'sc-topar-neg':'sc-topar-zero'))+'">'+(outBTP3>=0?'+':'')+outBTP3+'</span></td>';
+            }
           }
-          holeAnalysisHtml += '<td style="' + cellS3 + ';font-weight:700;color:#16a34a">' + sumBest3 + '</td></tr>';
+          var inBest3 = is93 ? sumBest3 : sumH3(bestArr3,9,hc3);
+          var inBP3 = is93 ? sumPar3 : sumH3(parArr3,9,hc3);
+          var inBTP3 = inBest3 - inBP3;
+          holeAnalysisHtml += '<td style="'+(is93?haTot:haIn)+';font-weight:700;color:#16a34a">'+inBest3+'<span class="sc-topar '+(inBTP3>0?'sc-topar-pos':(inBTP3<0?'sc-topar-neg':'sc-topar-zero'))+'">'+(inBTP3>=0?'+':'')+inBTP3+'</span></td>';
+          if (!is93) {
+            var totBTP3 = sumBest3 - sumPar3;
+            holeAnalysisHtml += '<td style="'+haTot+';color:#16a34a">'+sumBest3+'<span class="sc-topar '+(totBTP3>0?'sc-topar-pos':(totBTP3<0?'sc-topar-neg':'sc-topar-zero'))+'">'+(totBTP3>=0?'+':'')+totBTP3+'</span></td>';
+          }
+          holeAnalysisHtml += '</tr>';
 
+          // Pior row
           var sumWorst3 = 0;
-          holeAnalysisHtml += '<tr><td style="' + labelS3 + ';color:#dc2626">Pior</td>';
+          var worstArr3 = [];
+          holeAnalysisHtml += '<tr>';
+          holeAnalysisHtml += '<td style="'+haL+';color:#dc2626;font-weight:700">Pior</td>';
           for (var hi3 = 0; hi3 < hc3; hi3++) {
-            var midB3 = (hi3 === 9 && hc3 === 18) ? 'border-left:2px solid #94a3b8;' : '';
             var hd = hsData.holes[hi3];
+            worstArr3.push(hd.worst);
             if (hd.worst != null) sumWorst3 += hd.worst;
             var cls3 = (hd.worst != null && hd.par != null) ? scClass(hd.worst, hd.par) : '';
-            holeAnalysisHtml += '<td style="' + cellS3 + ';' + midB3 + '">';
+            holeAnalysisHtml += '<td style="'+haC+'">';
             if (hd.worst != null) holeAnalysisHtml += '<span class="sc-score ' + cls3 + '">' + hd.worst + '</span>';
             holeAnalysisHtml += '</td>';
+            if (hi3 === fe3-1 && !is93) {
+              var outWorst3 = sumH3(worstArr3,0,fe3);
+              var outWP3 = sumH3(parArr3,0,fe3);
+              var outWTP3 = outWorst3 - outWP3;
+              holeAnalysisHtml += '<td style="'+haOut+';font-weight:700;color:#dc2626">'+outWorst3+'<span class="sc-topar '+(outWTP3>0?'sc-topar-pos':(outWTP3<0?'sc-topar-neg':'sc-topar-zero'))+'">'+(outWTP3>=0?'+':'')+outWTP3+'</span></td>';
+            }
           }
-          holeAnalysisHtml += '<td style="' + cellS3 + ';font-weight:700;color:#dc2626">' + sumWorst3 + '</td></tr>';
+          var inWorst3 = is93 ? sumWorst3 : sumH3(worstArr3,9,hc3);
+          var inWP3 = is93 ? sumPar3 : sumH3(parArr3,9,hc3);
+          var inWTP3 = inWorst3 - inWP3;
+          holeAnalysisHtml += '<td style="'+(is93?haTot:haIn)+';font-weight:700;color:#dc2626">'+inWorst3+'<span class="sc-topar '+(inWTP3>0?'sc-topar-pos':(inWTP3<0?'sc-topar-neg':'sc-topar-zero'))+'">'+(inWTP3>=0?'+':'')+inWTP3+'</span></td>';
+          if (!is93) {
+            var totWTP3 = sumWorst3 - sumPar3;
+            holeAnalysisHtml += '<td style="'+haTot+';color:#dc2626">'+sumWorst3+'<span class="sc-topar '+(totWTP3>0?'sc-topar-pos':(totWTP3<0?'sc-topar-neg':'sc-topar-zero'))+'">'+(totWTP3>=0?'+':'')+totWTP3+'</span></td>';
+          }
+          holeAnalysisHtml += '</tr>';
 
-          // Row: Strokes lost heatmap
-          holeAnalysisHtml += '<tr style="background:#f0f7ff"><td style="' + labelS3 + ';font-weight:800;color:#1e40af">Panc. perdidas</td>';
+          // Pancadas perdidas row (heatmap)
+          var slArr3 = [];
+          holeAnalysisHtml += '<tr style="background:#f0f7ff">';
+          holeAnalysisHtml += '<td style="'+haL+';font-weight:800;color:#1e40af">Panc. perdidas</td>';
           for (var hi3 = 0; hi3 < hc3; hi3++) {
-            var midB3 = (hi3 === 9 && hc3 === 18) ? 'border-left:2px solid #94a3b8;' : '';
             var hd = hsData.holes[hi3];
             var sl = hd.strokesLost || 0;
+            slArr3.push(sl);
             var slStr = sl >= 0 ? '+' + sl.toFixed(1) : sl.toFixed(1);
             var slBg = '';
             if (sl <= -0.3) slBg = 'background:rgba(22,163,74,0.2)';
@@ -4636,12 +4951,23 @@ function render(){
             else if (sl <= 0.7) slBg = 'background:rgba(220,38,38,0.2)';
             else slBg = 'background:rgba(220,38,38,0.35)';
             var slCol = sl <= -0.3 ? '#16a34a' : (sl <= 0.15 ? '#64748b' : '#dc2626');
-            holeAnalysisHtml += '<td style="' + cellS3 + ';' + midB3 + ';' + slBg + ';color:' + slCol + ';font-weight:700;font-size:10px">' + (hd.n > 0 ? slStr : '') + '</td>';
+            holeAnalysisHtml += '<td style="'+haC+';' + slBg + ';color:' + slCol + ';font-weight:700;font-size:10px">' + (hd.n > 0 ? slStr : '') + '</td>';
+            if (hi3 === fe3-1 && !is93) {
+              var outSL3 = 0; for(var si3=0;si3<fe3;si3++) outSL3+=slArr3[si3];
+              var outSLCol = outSL3 <= 0 ? '#16a34a' : '#dc2626';
+              holeAnalysisHtml += '<td style="'+haOut+';font-weight:700;font-size:10px;color:'+outSLCol+'">'+(outSL3>=0?'+':'')+outSL3.toFixed(1)+'</td>';
+            }
           }
           var totalSL = hsData.totalStrokesLost;
-          holeAnalysisHtml += '<td style="' + cellS3 + ';font-weight:900;font-size:11px;color:' + (totalSL <= 0 ? '#16a34a' : '#dc2626') + '">' + (totalSL >= 0 ? '+' : '') + totalSL.toFixed(1) + '</td></tr>';
+          if (!is93) {
+            var inSL3 = 0; for(var si3=9;si3<hc3;si3++) inSL3+=slArr3[si3];
+            var inSLCol = inSL3 <= 0 ? '#16a34a' : '#dc2626';
+            holeAnalysisHtml += '<td style="'+haIn+';font-weight:700;font-size:10px;color:'+inSLCol+'">'+(inSL3>=0?'+':'')+inSL3.toFixed(1)+'</td>';
+          }
+          holeAnalysisHtml += '<td style="'+haTot+';font-weight:900;font-size:11px;color:' + (totalSL <= 0 ? '#16a34a' : '#dc2626') + '">' + (totalSL >= 0 ? '+' : '') + totalSL.toFixed(1) + '</td>';
+          holeAnalysisHtml += '</tr>';
 
-          holeAnalysisHtml += '</table></div></div>';
+          holeAnalysisHtml += '</table></div></div></div>';
 
           holeAnalysisHtml += '</div>';
         }
@@ -4765,17 +5091,14 @@ function render(){
         '<tr class="details' + ((openState[rowId]) ? ' open' : '') + '" id="' + rowId + '">' +
           '<td class="inner" colspan="10">' +
             '<div class="innerWrap">' +
-              (isSimple ? '' : '<div class="innerTop">' +
-                '<div class="actions">' +
-                  '<button type="button" class="btn openAll" data-for="' + rowId + '">Abrir todos</button>' +
-                  '<button type="button" class="btn closeAll" data-for="' + rowId + '">Fechar todos</button>' +
+              (isSimple ? '' :
+                '<div class="actions" style="margin-bottom:10px">' +
                   '<button type="button" class="btn btnGhost" data-clearfilter="'+rowId+'" style="display:' + (currentTeeKey ? 'inline-flex':'none') + '">Limpar filtro tee</button>' +
                   '<button type="button" class="btn btnPdf" data-printcourse="' + rowId + '" title="Guardar PDF deste campo">📄 PDF</button>' +
                 '</div>' +
                 '<div class="ecGrid">' +
                   ecHtml +
                 '</div>' +
-              '</div>' +
               courseStatsHtml +
               holeAnalysisHtml +
               bannerHtml) +
@@ -4945,7 +5268,7 @@ function render(){
 
     var is9 = hc === 9, frontEnd = is9 ? hc : 9, backStart = is9 ? 0 : 9;
     function sumA(arr, from, to) { var s=0; for(var i=from;i<to;i++) if(arr[i]!=null) s+=arr[i]; return s; }
-    function scCls(g,p) { if(g==null||p==null) return ''; var d=g-p; if(g===1) return 'holeinone'; if(d<=-3) return 'albatross'; if(d===-2) return 'eagle'; if(d===-1) return 'birdie'; if(d===0) return 'par'; if(d===1) return 'bogey'; if(d===2) return 'double'; if(d===3) return 'triple'; return d===4?'quad':'worse'; }
+    function scCls(g,p) { if(g==null||g===0||p==null) return ''; var d=g-p; if(g===1) return 'holeinone'; if(d<=-3) return 'albatross'; if(d===-2) return 'eagle'; if(d===-1) return 'birdie'; if(d===0) return 'par'; if(d===1) return 'bogey'; if(d===2) return 'double'; if(d===3) return 'triple'; return d===4?'quad':'worse'; }
 
     var par = refData.p, meters = refData.m, si = refData.si;
     var tee = rounds[0] ? (rounds[0].tee||'') : '';
@@ -4954,6 +5277,9 @@ function render(){
     var totalPar = par ? sumA(par,0,hc) : null;
     var totalDist = meters ? sumA(meters,0,hc) : null;
     var hcpLabel = rounds[0] ? (rounds[0].hi||'') : '';
+    // Check if all rounds share same tee
+    var allSameTee = rounds.every(function(r){ return (r.tee||'') === tee; });
+    var teeLabel = allSameTee ? ('Tee ' + tee) : 'Tees variados';
 
     var cellS = 'padding:4px 6px;text-align:center;font-size:12px;border-bottom:1px solid #f0f0f0';
     var colLabel = cellS + ';text-align:left;padding-left:8px;border-right:2px solid #e2e8f0';
@@ -4964,7 +5290,7 @@ function render(){
     var html = '<div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;overflow:hidden">';
     // Header
     html += '<div class="sc-bar-head">';
-    html += '<span>Scorecard comparativo · HCP ' + hcpLabel + ' · Tee ' + tee + (totalDist ? ' · ' + totalDist + 'm' : '') + '</span>';
+    html += '<span>Scorecard comparativo · HCP ' + hcpLabel + ' · ' + teeLabel + (totalDist && allSameTee ? ' · ' + totalDist + 'm' : '') + '</span>';
     html += '<span>Par ' + (totalPar || '') + '</span>';
     html += '</div>';
 
@@ -5035,11 +5361,15 @@ function render(){
       var dateFmt = rd.date ? rd.date.substring(0,5).replace('-','/') : ('V'+(ri+1));
 
       html += '<tr>';
-      html += '<td style="'+colLabel+'"><span class="sc-pill" style="background:'+hx+';color:'+fgT+'">'+dateFmt+'</span></td>';
+      var rdTee = rd.tee || '';
+      var rdHx = teeHex(rdTee);
+      var rdFg = teeFg(rdHx);
+      html += '<td style="'+colLabel+'"><span class="sc-pill" style="background:'+rdHx+';color:'+rdFg+'">'+dateFmt+'</span></td>';
       for (var h=1;h<=hc;h++) {
         var gv = gross[h-1], pv = par ? par[h-1] : null;
         var cls = scCls(gv, pv);
-        html += '<td style="'+cellS+'"><span class="sc-score '+cls+'" style="display:inline-flex;width:26px;height:26px;align-items:center;justify-content:center;font-weight:700;font-size:12px">'+(gv!=null?gv:'')+'</span></td>';
+        var gDisp = (gv!=null && gv>0) ? gv : '';
+        html += '<td style="'+cellS+'"><span class="sc-score '+cls+'" style="display:inline-flex;width:26px;height:26px;align-items:center;justify-content:center;font-weight:700;font-size:12px">'+gDisp+'</span></td>';
         if (h===frontEnd&&!is9) {
           var outG = sumA(gross,0,frontEnd);
           var outP2 = par ? sumA(par,0,frontEnd) : 0;
@@ -5084,192 +5414,6 @@ function render(){
         var dTot = sumA(last,0,hc) - sumA(first,0,hc);
         var dTotStr = dTot===0 ? '=' : (dTot>0 ? '+'+dTot : ''+dTot);
         html += '<td style="'+colTot+';color:'+(dTot===0?'#94a3b8':(dTot<0?'#16a34a':'#dc2626'))+';font-size:11px">'+dTotStr+'</td>';
-      }
-      html += '</tr>';
-    }
-
-    html += '</table></div></div>';
-    return html;
-  }
-
-  function buildCombinedScorecard(rounds) {
-    // Build a single scorecard table with all rounds stacked
-    // First, find a round with hole data to get par/meters
-    var refData = null;
-    var hc = 18;
-    for (var i = 0; i < rounds.length; i++) {
-      var h = HOLES[rounds[i].scoreId];
-      if (h && h.p && h.p.some(function(v){ return v != null; })) {
-        refData = h;
-        hc = h.hc || 18;
-        break;
-      }
-    }
-    if (!refData) return ''; // No hole data available
-
-    var is9 = hc === 9;
-    var frontEnd = is9 ? hc : 9;
-    var backStart = is9 ? 0 : 9;
-
-    function sumArr(arr, from, to) {
-      var s = 0;
-      for (var i = from; i < to; i++) { if (arr[i] != null) s += arr[i]; }
-      return s;
-    }
-
-    function scoreClass(g, p) {
-      if (g == null || p == null) return '';
-      var d = g - p;
-      if (g === 1) return 'holeinone';
-      if (d <= -3) return 'albatross';
-      if (d === -2) return 'eagle';
-      if (d === -1) return 'birdie';
-      if (d === 0) return 'par';
-      if (d === 1) return 'bogey';
-      if (d === 2) return 'double';
-      if (d === 3) return 'triple';
-      return 'worse';
-    }
-
-    var par = refData.p;
-    var meters = refData.m;
-    var si = refData.si;
-    var tee = rounds[0] ? (rounds[0].tee || '') : '';
-    var hx = teeHex(tee);
-    var fg = teeFg(hx);
-    var totalPar2 = par ? sumArr(par, 0, hc) : null;
-    var totalDist = meters ? sumArr(meters, 0, hc) : null;
-    var hcpLabel = rounds[0] ? (rounds[0].hi || '') : '';
-
-    var cS = 'padding:4px 6px;text-align:center;font-size:12px;border-bottom:1px solid #f0f0f0';
-    var colLabel = cS + ';text-align:left;padding-left:8px;border-right:2px solid #e2e8f0';
-    var colOut = cS + ';background:#f4f6f8;border-left:1px solid #e2e8f0;border-right:1px solid #e2e8f0';
-    var colIn = colOut;
-    var colTot = cS + ';background:#edf0f4;border-left:1px solid #dde1e7;font-weight:800';
-
-    var html = '<div style="background:#fff;border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;margin:8px 0">';
-    // Grey bar header
-    html += '<div class="sc-bar-head">';
-    html += '<span>Scorecard comparativo · HCP ' + hcpLabel + ' · Tee ' + tee + (totalDist ? ' · ' + totalDist + 'm' : '') + '</span>';
-    html += '<span>Par ' + (totalPar2 || '') + '</span>';
-    html += '</div>';
-
-    html += '<div style="overflow-x:auto">';
-    html += '<table style="width:100%;border-collapse:collapse;font-size:12px">';
-
-    // Buraco row (neutral)
-    html += '<tr style="background:#f8fafc">';
-    html += '<td style="' + colLabel + ';font-weight:700;color:#64748b;font-size:11px;border-bottom:1px solid #e2e8f0">Buraco</td>';
-    for (var h = 1; h <= hc; h++) {
-      html += '<td style="' + cS + ';font-weight:700;color:#64748b;font-size:11px;border-bottom:1px solid #e2e8f0">' + h + '</td>';
-      if (h === frontEnd && !is9) html += '<td style="' + colOut + ';font-weight:700;color:#64748b;font-size:10px;border-bottom:1px solid #e2e8f0">Out</td>';
-    }
-    html += '<td style="' + (is9 ? colTot : colIn) + ';font-weight:700;color:#64748b;font-size:10px;border-bottom:1px solid #e2e8f0">' + (is9 ? 'TOTAL' : 'In') + '</td>';
-    if (!is9) html += '<td style="' + colTot + ';color:#475569;font-size:11px;border-bottom:1px solid #e2e8f0">TOTAL</td>';
-    html += '</tr>';
-
-    // Metros row
-    if (meters && meters.some(function(v){ return v != null && v > 0; })) {
-      html += '<tr>';
-      html += '<td style="' + colLabel + ';color:#b0b8c4;font-size:10px">Metros</td>';
-      for (var h = 1; h <= hc; h++) {
-        html += '<td style="' + cS + ';color:#b0b8c4;font-size:10px">' + (meters[h-1] || '') + '</td>';
-        if (h === frontEnd && !is9) html += '<td style="' + colOut + ';color:#b0b8c4;font-size:10px;font-weight:600">' + sumArr(meters, 0, frontEnd) + '</td>';
-      }
-      var inM = is9 ? sumArr(meters, 0, hc) : sumArr(meters, backStart, hc);
-      html += '<td style="' + (is9 ? colTot : colIn) + ';color:#b0b8c4;font-size:10px;font-weight:600">' + inM + '</td>';
-      if (!is9) html += '<td style="' + colTot + ';color:#94a3b8;font-size:10px">' + sumArr(meters, 0, hc) + '</td>';
-      html += '</tr>';
-    }
-
-    // SI row
-    if (si && si.some(function(v){ return v != null; })) {
-      html += '<tr>';
-      html += '<td style="' + colLabel + ';color:#b0b8c4;font-size:10px">S.I.</td>';
-      for (var h = 1; h <= hc; h++) {
-        html += '<td style="' + cS + ';color:#b0b8c4;font-size:10px">' + (si[h-1] != null ? si[h-1] : '') + '</td>';
-        if (h === frontEnd && !is9) html += '<td style="' + colOut + '"></td>';
-      }
-      html += '<td style="' + (is9 ? colTot : colIn) + '"></td>';
-      if (!is9) html += '<td style="' + colTot + '"></td>';
-      html += '</tr>';
-    }
-
-    // Par row (separator)
-    if (par && par.some(function(v){ return v != null; })) {
-      html += '<tr>';
-      html += '<td style="' + colLabel + ';font-weight:600;color:#94a3b8;font-size:11px;border-bottom:2px solid #cbd5e1">Par</td>';
-      for (var h = 1; h <= hc; h++) {
-        html += '<td style="' + cS + ';border-bottom:2px solid #cbd5e1">' + (par[h-1] != null ? par[h-1] : '') + '</td>';
-        if (h === frontEnd && !is9) html += '<td style="' + colOut + ';font-weight:700;border-bottom:2px solid #cbd5e1">' + sumArr(par, 0, frontEnd) + '</td>';
-      }
-      var inP2 = is9 ? sumArr(par, 0, hc) : sumArr(par, backStart, hc);
-      html += '<td style="' + (is9 ? colTot : colIn) + ';font-weight:700;border-bottom:2px solid #cbd5e1">' + inP2 + '</td>';
-      if (!is9) html += '<td style="' + colTot + ';border-bottom:2px solid #cbd5e1">' + sumArr(par, 0, hc) + '</td>';
-      html += '</tr>';
-    }
-
-    // Each round row with grey pill label
-    var roundGross = [];
-    for (var ri = 0; ri < rounds.length; ri++) {
-      var rd = rounds[ri];
-      var h2 = HOLES[rd.scoreId];
-      var gross = h2 ? h2.g : null;
-      if (!gross) { roundGross.push(null); continue; }
-      roundGross.push(gross);
-
-      var dateFmt = rd.date ? rd.date.substring(0,5).replace('-','/') : ('V'+(ri+1));
-
-      html += '<tr>';
-      html += '<td style="' + colLabel + '"><span class="sc-pill" style="background:' + hx + ';color:' + fg + '">' + dateFmt + '</span></td>';
-      for (var h = 1; h <= hc; h++) {
-        var gv = gross[h-1], pv = par ? par[h-1] : null;
-        var cls = scoreClass(gv, pv);
-        html += '<td style="' + cS + '"><span class="sc-score ' + cls + '" style="display:inline-flex;width:26px;height:26px;align-items:center;justify-content:center;font-weight:700;font-size:12px">' + (gv != null ? gv : '') + '</span></td>';
-        if (h === frontEnd && !is9) {
-          var outG = sumArr(gross, 0, frontEnd);
-          var outP = par ? sumArr(par, 0, frontEnd) : 0;
-          var outTP = outG - outP;
-          html += '<td style="' + colOut + ';font-weight:700">' + outG + '<span class="sc-topar ' + (outTP > 0 ? 'sc-topar-pos' : (outTP < 0 ? 'sc-topar-neg' : 'sc-topar-zero')) + '">' + (outTP > 0 ? '+' : '') + outTP + '</span></td>';
-        }
-      }
-      var inG = is9 ? sumArr(gross, 0, hc) : sumArr(gross, backStart, hc);
-      var totalG = sumArr(gross, 0, hc);
-      var tp = par ? totalG - sumArr(par, 0, hc) : null;
-      var inP3 = is9 ? (par ? sumArr(par, 0, hc) : 0) : (par ? sumArr(par, backStart, hc) : 0);
-      var inTP = inG - inP3;
-      html += '<td style="' + (is9 ? colTot : colIn) + ';font-weight:700">' + inG + '<span class="sc-topar ' + (inTP > 0 ? 'sc-topar-pos' : (inTP < 0 ? 'sc-topar-neg' : 'sc-topar-zero')) + '">' + (inTP > 0 ? '+' : '') + inTP + '</span></td>';
-      if (!is9) {
-        var tps = tp != null ? (tp > 0 ? '+' + tp : (tp === 0 ? 'E' : '' + tp)) : '';
-        html += '<td style="' + colTot + '">' + totalG + '<span class="sc-topar ' + (tp > 0 ? 'sc-topar-pos' : (tp < 0 ? 'sc-topar-neg' : 'sc-topar-zero')) + '">' + tps + '</span></td>';
-      }
-      html += '</tr>';
-    }
-
-    // Delta row (last vs first) with separator
-    if (rounds.length >= 2 && roundGross[0] && roundGross[rounds.length-1]) {
-      var first = roundGross[0], last = roundGross[rounds.length-1];
-      html += '<tr style="background:#fafbfc;border-top:2px solid #cbd5e1">';
-      html += '<td style="' + colLabel + ';font-weight:700;color:#64748b;font-size:11px">Δ</td>';
-      for (var h = 1; h <= hc; h++) {
-        var d = (last[h-1] != null && first[h-1] != null) ? last[h-1] - first[h-1] : null;
-        var dStr = d == null ? '' : (d === 0 ? '=' : (d > 0 ? '+' + d : '' + d));
-        var dColor = d == null ? '#94a3b8' : (d === 0 ? '#94a3b8' : (d < 0 ? '#16a34a' : '#dc2626'));
-        var dW = (d != null && d !== 0) ? ';font-weight:600' : '';
-        html += '<td style="' + cS + ';color:' + dColor + ';font-size:11px' + dW + '">' + dStr + '</td>';
-        if (h === frontEnd && !is9) {
-          var dOut = sumArr(last, 0, frontEnd) - sumArr(first, 0, frontEnd);
-          var dOutStr = dOut === 0 ? '=' : (dOut > 0 ? '+' + dOut : '' + dOut);
-          html += '<td style="' + colOut + ';color:' + (dOut === 0 ? '#94a3b8' : (dOut < 0 ? '#16a34a' : '#dc2626')) + ';font-size:11px;' + (dOut !== 0 ? 'font-weight:600' : '') + '">' + dOutStr + '</td>';
-        }
-      }
-      var dIn = (is9 ? sumArr(last, 0, hc) : sumArr(last, backStart, hc)) - (is9 ? sumArr(first, 0, hc) : sumArr(first, backStart, hc));
-      var dInStr = dIn === 0 ? '=' : (dIn > 0 ? '+' + dIn : '' + dIn);
-      html += '<td style="' + (is9 ? colTot : colIn) + ';color:' + (dIn === 0 ? '#94a3b8' : (dIn < 0 ? '#16a34a' : '#dc2626')) + ';font-size:11px;' + (dIn !== 0 ? 'font-weight:600' : '') + '">' + dInStr + '</td>';
-      if (!is9) {
-        var dTot = sumArr(last, 0, hc) - sumArr(first, 0, hc);
-        var dTotStr = dTot === 0 ? '=' : (dTot > 0 ? '+' + dTot : '' + dTot);
-        html += '<td style="' + colTot + ';color:' + (dTot === 0 ? '#94a3b8' : (dTot < 0 ? '#16a34a' : '#dc2626')) + ';font-size:11px">' + dTotStr + '</td>';
       }
       html += '</tr>';
     }
@@ -5577,7 +5721,8 @@ function render(){
     var pmReset = document.getElementById("pmReset");
 
     function applyPlayerFilters() {
-      var term = pmSearch ? pmSearch.value.toLowerCase().trim() : "";
+      var rawTerm = pmSearch ? pmSearch.value.trim() : "";
+      var term = rawTerm.toLowerCase().normalize("NFD").replace(/[\\u0300-\\u036f]/g,"");
       var filters = {};
       var sels = dd.querySelectorAll(".pm-fsel");
       for (var si=0; si<sels.length; si++) {
@@ -5593,10 +5738,13 @@ function render(){
         var show = true;
         if (term) {
           var nameVal = (links[i].getAttribute("data-name") || "");
+          var fedVal = (links[i].getAttribute("data-fed") || "").toLowerCase();
+          var clubVal = (links[i].getAttribute("data-club") || "").toLowerCase().normalize("NFD").replace(/[\\u0300-\\u036f]/g,"");
+          var searchable = nameVal + " " + fedVal + " " + clubVal;
           var words = term.split(/\s+/).filter(function(w){ return w.length > 0; });
           var allMatch = true;
           for (var wi = 0; wi < words.length; wi++) {
-            if (nameVal.indexOf(words[wi]) < 0) { allMatch = false; break; }
+            if (searchable.indexOf(words[wi]) < 0) { allMatch = false; break; }
           }
           if (!allMatch) show = false;
         }
@@ -5687,6 +5835,7 @@ function render(){
     var totalShown = 0, totalAll = 0;
     for (var ti = 0; ti < tables.length; ti++) {
       var rows = tables[ti].querySelectorAll("tbody tr");
+      var visibleRank = 0;
       for (var ri = 0; ri < rows.length; ri++) {
         totalAll++;
         var row = rows[ri];
@@ -5699,6 +5848,20 @@ function render(){
         row.classList.remove("cross-filtered-fade", "cross-filtered-hide");
         if (!pass && hasAnyFilter) {
           row.classList.add(useFade ? "cross-filtered-fade" : "cross-filtered-hide");
+        }
+        // Update ranking: sequential for passing rows, original for faded
+        var rankCell = row.cells[0];
+        if (rankCell) {
+          var b = rankCell.querySelector("b");
+          if (b) {
+            if (pass) {
+              visibleRank++;
+              b.textContent = visibleRank;
+            } else {
+              // faded/hidden: show original rank dimmed
+              b.textContent = rankCell.getAttribute("data-v");
+            }
+          }
         }
         if (pass) totalShown++;
       }
@@ -5790,6 +5953,8 @@ function render(){
     
     // Re-append sorted rows
     for (var r = 0; r < rows.length; r++) tbody.appendChild(rows[r]);
+    // Renumber rankings after sort
+    applyCrossFilters();
   });
 
   // ========= Cross-Analysis: get checked feds for an escalão =========
