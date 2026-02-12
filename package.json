@@ -1,21 +1,26 @@
 {
   "name": "golf-fpg",
-  "version": "2.0.0",
-  "description": "Pipeline de scorecards e análise de dados da Federação Portuguesa de Golfe",
-  "main": "golf-all.js",
+  "version": "1.0.0",
+  "private": true,
   "scripts": {
-    "login": "node golf-all.js --login 59252",
-    "update": "node golf-all.js --refresh --all",
-    "update:force": "node golf-all.js --force --all",
-    "render": "node golf-all.js --skip-download --all",
-    "index": "node generate-index.js",
-    "build": "npm run render && npm run index"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "login": "node login.js",
+    "scrape": "node golf-all.js",
+    "generate-index": "node generate-index.js",
+    "scorecards": "node make-scorecards-ui.js"
   },
-  "keywords": ["golf", "fpg", "scorecards", "whs"],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
-    "playwright": "^1.58.1"
+    "playwright": "^1.52.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.4",
+    "typescript": "~5.9.3",
+    "vite": "^6.4.1"
   }
 }
