@@ -193,6 +193,7 @@ export default function CamposPage({ courses }: Props) {
   const [sexFilter, setSexFilter] = useState<SexFilter>("ALL");
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
   const [detailView, setDetailView] = useState<"scorecard" | "ratings">("scorecard");
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   /* Filtrar e ordenar campos */
   const filtered = useMemo(() => {
@@ -229,6 +230,13 @@ export default function CamposPage({ courses }: Props) {
       {/* Toolbar */}
       <div className="toolbar">
         <div className="toolbar-left">
+          <button
+            className="sidebar-toggle"
+            onClick={() => setSidebarOpen((v) => !v)}
+            title={sidebarOpen ? "Fechar painel" : "Abrir painel"}
+          >
+            {sidebarOpen ? "◀" : "▶"}
+          </button>
           <div className="field">
             <label>Pesquisa</label>
             <input
@@ -256,7 +264,7 @@ export default function CamposPage({ courses }: Props) {
       {/* Master-detail */}
       <div className="master-detail">
         {/* Lista de campos */}
-        <div className="course-list">
+        <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`}>
           {filtered.map((c) => {
             const active = selected?.courseKey === c.courseKey;
             const tees = filterTees(c.master.tees, sexFilter);

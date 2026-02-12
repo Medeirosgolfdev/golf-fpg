@@ -28,6 +28,7 @@ export default function JogadoresPage({ players }: Props) {
   const [regionFilter, setRegionFilter] = useState<string>("ALL");
   const [sortKey, setSortKey] = useState<SortKey>("name");
   const [selectedFed, setSelectedFed] = useState<string | null>(null);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   /* Converter DB em array */
   const allPlayers = useMemo(() => {
@@ -110,6 +111,13 @@ export default function JogadoresPage({ players }: Props) {
       {/* Toolbar */}
       <div className="toolbar">
         <div className="toolbar-left">
+          <button
+            className="sidebar-toggle"
+            onClick={() => setSidebarOpen((v) => !v)}
+            title={sidebarOpen ? "Fechar painel" : "Abrir painel"}
+          >
+            {sidebarOpen ? "◀" : "▶"}
+          </button>
           <div className="field">
             <label>Pesquisa</label>
             <input
@@ -164,7 +172,7 @@ export default function JogadoresPage({ players }: Props) {
       {/* Master-detail */}
       <div className="master-detail">
         {/* Lista de jogadores (sidebar) */}
-        <div className="course-list">
+        <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`}>
           {filtered.map((p) => {
             const active = selected?.fed === p.fed;
             const club = clubShort(p);

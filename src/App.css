@@ -135,17 +135,6 @@ html, body, #root {
   opacity: 0.45;
 }
 
-.nav-soon {
-  display: inline-block;
-  font-size: 9px;
-  padding: 1px 5px;
-  margin-left: 6px;
-  background: rgba(255,255,255,0.12);
-  border-radius: 8px;
-  vertical-align: middle;
-  letter-spacing: 0.03em;
-}
-
 .top-stats {
   margin-left: auto;
   display: flex;
@@ -197,9 +186,10 @@ html, body, #root {
   margin-bottom: 4px;
 }
 
-/* ─── Campos Page ─── */
+/* ─── Shared Page Layout ─── */
 
-.campos-page {
+.campos-page,
+.jogadores-page {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -228,6 +218,31 @@ html, body, #root {
   display: flex;
   gap: 8px;
   align-items: center;
+}
+
+/* Sidebar toggle */
+
+.sidebar-toggle {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--text-3);
+  font-size: 11px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.sidebar-toggle:hover {
+  background: var(--bg-hover);
+  color: var(--text);
+  border-color: var(--accent);
 }
 
 .field label {
@@ -270,7 +285,7 @@ html, body, #root {
   border-radius: 12px;
 }
 
-/* Master-detail */
+/* ─── Master-Detail + Sidebar ─── */
 
 .master-detail {
   display: flex;
@@ -278,15 +293,24 @@ html, body, #root {
   min-height: 0;
 }
 
-/* Lista de campos */
-
-.course-list {
+.sidebar {
   width: var(--sidebar-w);
   min-width: var(--sidebar-w);
   border-right: 1px solid var(--border-light);
   overflow-y: auto;
   background: var(--bg-card);
+  transition: width 0.2s ease, min-width 0.2s ease, opacity 0.2s ease;
 }
+
+.sidebar-closed {
+  width: 0;
+  min-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  border-right: none;
+}
+
+/* Sidebar items (shared between Campos and Jogadores) */
 
 .course-item {
   display: block;
@@ -324,7 +348,7 @@ html, body, #root {
   margin-top: 1px;
 }
 
-/* Detalhe do campo */
+/* Detail panel (shared) */
 
 .course-detail {
   flex: 1;
@@ -358,6 +382,7 @@ html, body, #root {
   color: var(--accent);
   text-decoration: none;
   font-weight: 500;
+  font-size: 12.5px;
 }
 
 .detail-link:hover {
@@ -397,7 +422,7 @@ html, body, #root {
   color: #fff;
 }
 
-/* Tee badges row */
+/* ─── Tee Badges ─── */
 
 .tee-badges-row {
   display: flex;
@@ -416,8 +441,6 @@ html, body, #root {
   border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
 }
-
-/* Tee badge (componente) */
 
 .tee-badge {
   display: inline-flex;
@@ -486,9 +509,7 @@ html, body, #root {
   border-right: 1px solid var(--border-light);
 }
 
-.sc-h {
-  min-width: 38px;
-}
+.sc-h { min-width: 38px; }
 
 .sc-tot {
   background: var(--accent-light) !important;
@@ -507,9 +528,7 @@ html, body, #root {
   font-family: 'DM Sans', sans-serif;
 }
 
-.sc-c {
-  text-align: center;
-}
+.sc-c { text-align: center; }
 
 .sc-tot-val {
   font-weight: 600;
@@ -583,50 +602,7 @@ html, body, #root {
   background: var(--bg-hover);
 }
 
-/* ─── Utility ─── */
-
-.muted {
-  color: var(--text-3);
-  font-size: 12px;
-}
-
-/* ─── Scrollbar ─── */
-
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--text-3); }
-
-/* ─── Responsive ─── */
-
-@media (max-width: 768px) {
-  .topbar { gap: 12px; padding: 0 12px; }
-  .brand-sub { display: none; }
-  .top-stats { gap: 10px; }
-  .master-detail { flex-direction: column; }
-  .course-list {
-    width: 100%;
-    min-width: unset;
-    max-height: 200px;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-  .input { width: 140px; }
-  .detail-header { flex-direction: column; }
-  .jog-grid {
-    grid-template-columns: 1fr !important;
-  }
-  .toolbar-left { flex-wrap: wrap; }
-  .jog-search { width: 100% !important; }
-}
-
 /* ─── Jogadores Page ─── */
-
-.jogadores-page {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
 
 .jog-sex-inline {
   display: inline-block;
@@ -681,4 +657,41 @@ html, body, #root {
   width: 100%;
   height: 100%;
   border: none;
+}
+
+/* ─── Utility ─── */
+
+.muted {
+  color: var(--text-3);
+  font-size: 12px;
+}
+
+/* ─── Scrollbar ─── */
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-3); }
+
+/* ─── Responsive ─── */
+
+@media (max-width: 768px) {
+  .topbar { gap: 12px; padding: 0 12px; }
+  .brand-sub { display: none; }
+  .top-stats { gap: 10px; }
+  .master-detail { flex-direction: column; }
+  .sidebar {
+    width: 100% !important;
+    min-width: unset !important;
+    max-height: 200px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .sidebar-closed {
+    max-height: 0;
+    border-bottom: none;
+  }
+  .input { width: 140px; }
+  .detail-header { flex-direction: column; }
+  .toolbar-left { flex-wrap: wrap; }
 }
