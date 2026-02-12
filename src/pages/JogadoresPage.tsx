@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { Player, PlayersDb } from "../data/types";
 import { norm } from "../utils/format";
 
@@ -11,6 +11,11 @@ type SortKey = "name" | "hcp" | "club" | "escalao";
 
 function clubShort(p: Player): string {
   if (typeof p.club === "object" && p.club) return p.club.short || p.club.long || "";
+  return String(p.club || "");
+}
+
+function clubLong(p: Player): string {
+  if (typeof p.club === "object" && p.club) return p.club.long || p.club.short || "";
   return String(p.club || "");
 }
 
@@ -106,6 +111,21 @@ export default function JogadoresPage({ players }: Props) {
 
   const iframeSrc = selected ? `/${selected.fed}/analysis/by-course-ui.html` : "";
 
+  /* Esconder header duplicado no iframe (same-origin) */
+  const onIframeLoad = useCallback((e: React.SyntheticEvent<HTMLIFrameElement>) => {
+    try {
+      const doc = e.currentTarget.contentDocument;
+      if (!doc) return;
+      const style = doc.createElement("style");
+      style.textContent = `
+        header > .hd-card { display: none !important; }
+        header { padding-top: 0 !important; }
+        header > .controls { border-top: none !important; }
+      `;
+      doc.head.appendChild(style);
+    } catch { /* cross-origin — ignora */ }
+  }, []);
+
   return (
     <div className="jogadores-page">
       {/* Toolbar */}
@@ -198,21 +218,29 @@ export default function JogadoresPage({ players }: Props) {
           )}
         </div>
 
-        {/* Detalhe (iframe com scorecard) */}
+        {/* Detalhe */}
         <div className="course-detail jog-detail">
           {selected ? (
             <>
               <div className="detail-header">
                 <div>
                   <h2 className="detail-title">{selected.name}</h2>
-                  <div className="detail-sub">
-                    <span className="muted">#{selected.fed}</span>
-                    {" · "}
-                    <span>{clubShort(selected)}</span>
-                    {selected.escalao && <> · {selected.escalao}</>}
-                    {selected.region && <> · {selected.region}</>}
+                  <div className="jog-pills">
+                    <span className="jog-pill jog-pill-fed">#{selected.fed}</span>
                     {selected.hcp != null && (
-                      <span className="jog-hcp-header">HCP {hcpDisplay(selected.hcp)}</span>
+                      <span className="jog-pill jog-pill-hcp">HCP {hcpDisplay(selected.hcp)}</span>
+                    )}
+                    <span className={`jog-pill jog-pill-sex-${selected.sex}`}>
+                      {selected.sex === "M" ? "Masculino" : selected.sex === "F" ? "Feminino" : selected.sex}
+                    </span>
+                    {selected.escalao && (
+                      <span className="jog-pill jog-pill-escalao">{selected.escalao}</span>
+                    )}
+                    {clubLong(selected) && (
+                      <span className="jog-pill jog-pill-club">{clubLong(selected)}</span>
+                    )}
+                    {selected.region && (
+                      <span className="jog-pill jog-pill-region">{selected.region}</span>
                     )}
                   </div>
                 </div>
@@ -232,6 +260,7 @@ export default function JogadoresPage({ players }: Props) {
                   src={iframeSrc}
                   className="jog-iframe"
                   title={`Scorecard de ${selected.name}`}
+                  onLoad={onIframeLoad}
                 />
               </div>
             </>
