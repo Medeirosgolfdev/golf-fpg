@@ -108,6 +108,11 @@ function getMelhoriaGroup(fed, scoreId) {
   return p && p._group ? p._group : '';
 }
 
+function getMelhoriaTornView(fed, scoreId) {
+  const p = getMelhoria(fed, scoreId);
+  return !!(p && p.torneio_view);
+}
+
 /* ------------------ Tee colors (como TeeBadge.tsx) ------------------ */
 const DEFAULT_TEE_COLORS = {
   pretas: "#111111", pretos: "#111111", preto: "#111111", black: "#111111",
@@ -1441,7 +1446,8 @@ function processPlayer(FED, allPlayers, crossStats) {
       hasCard: !!rec,
       _links: getMelhoriaLink(FED, scoreId),
       _pill: getMelhoriaPill(FED, scoreId),
-      _group: getMelhoriaGroup(FED, scoreId)
+      _group: getMelhoriaGroup(FED, scoreId),
+      _showInTournament: getMelhoriaTornView(FED, scoreId)
     });
   }
   
@@ -1492,7 +1498,8 @@ function processPlayer(FED, allPlayers, crossStats) {
       hasCard: true,
       _links: getMelhoriaLink(FED, scoreId),
       _pill: getMelhoriaPill(FED, scoreId),
-      _group: getMelhoriaGroup(FED, scoreId)
+      _group: getMelhoriaGroup(FED, scoreId),
+      _showInTournament: getMelhoriaTornView(FED, scoreId)
     });
   }
 
@@ -4144,6 +4151,11 @@ function render(){
           var gGroup = group._group || '';
           if (rGroup || gGroup) {
             if (rGroup !== gGroup) continue; // _groups diferentes — nunca juntar
+            // _groups iguais — forçar agrupamento (sem verificar datas/nomes)
+            group.rounds.push(r);
+            if (group.courses.indexOf(r.course) < 0) group.courses.push(r.course);
+            found = true;
+            break;
           }
 
           // Passar curso para ajudar na similaridade de nomes genéricos
