@@ -36,6 +36,7 @@ let refreshFlag = false;
 const fedCodes = [];
 
 let allFlag = false;
+let priorityFlag = false;
 
 for (const a of args) {
   if (a === "--login")         { doLoginFlag = true; continue; }
@@ -44,6 +45,7 @@ for (const a of args) {
   if (a === "--skip-render")   { skipRender = true; continue; }
   if (a === "--force")         { forceFlag = true; continue; }
   if (a === "--all")           { allFlag = true; continue; }
+  if (a === "--priority")      { priorityFlag = true; continue; }
   if (/^\d+$/.test(a))        { fedCodes.push(a); continue; }
   console.error(`Argumento desconhecido: ${a}`);
   process.exit(1);
@@ -58,6 +60,26 @@ if (allFlag && fedCodes.length === 0) {
     console.log(`--all: ${fedCodes.length} federados carregados de players.json`);
   } else {
     console.error("--all: não encontrei players.json");
+    process.exit(1);
+  }
+}
+
+// --priority: filtrar jogadores prioritários do players.json
+if (priorityFlag && fedCodes.length === 0) {
+  const pPath = path.join(process.cwd(), "players.json");
+  if (fs.existsSync(pPath)) {
+    const db = JSON.parse(fs.readFileSync(pPath, "utf-8"));
+    for (const [k, v] of Object.entries(db)) {
+      if (v.tags && v.tags.includes("no-priority")) continue;
+      const isPJA = v.tags && v.tags.includes("PJA");
+      const isMAD = v.region === "Madeira";
+      const isS12 = v.escalao === "Sub-12" && v.hcp != null && v.hcp < 35;
+      const isS14 = v.escalao === "Sub-14" && v.hcp != null && v.hcp < 25;
+      if (isPJA || isMAD || isS12 || isS14) fedCodes.push(k);
+    }
+    console.log("--priority: " + fedCodes.length + " jogadores prioritários carregados");
+  } else {
+    console.error("--priority: não encontrei players.json");
     process.exit(1);
   }
 }
@@ -78,6 +100,7 @@ if (fedCodes.length === 0) {
 ║    --skip-render    Saltar geração HTML               ║
 ║    --force          Re-descarregar tudo               ║
 ║    --all            Todos de players.json             ║
+║    --priority       Só jogadores prioritários          ║
 ║                                                      ║
 ║  Exemplos:                                           ║
 ║    node golf-all.js 52884                            ║
@@ -419,9 +442,9 @@ async function downloadScorecards(page, fedCode, outDir) {
   return true;
 }
 
-// ===== PASSO 4: GERAR HTML (chama make-scorecards-ui.js) =====
-function generateUI(fedCode) {
-  logStep("🎨", `[${fedCode}] Gerar relatório HTML`);
+// ===== PASSO 4: GERAR HTML (chama make-scorecards-ui.js em batch) =====
+function generateUIBatch(fedList) {
+  logStep("🎨", `Gerar relatórios HTML para ${fedList.length} jogador(es)`);
 
   const uiScript = path.join(process.cwd(), "make-scorecards-ui.js");
   if (!fs.existsSync(uiScript)) {
@@ -431,14 +454,16 @@ function generateUI(fedCode) {
   }
 
   try {
-    execSync(`node "${uiScript}" ${fedCode}`, {
+    const fedsArg = fedList.join(" ");
+    execSync(`node "${uiScript}" ${fedsArg}`, {
       stdio: "inherit",
-      cwd: process.cwd()
+      cwd: process.cwd(),
+      maxBuffer: 50 * 1024 * 1024
     });
-    logOK(`Relatório gerado em output/${fedCode}/analysis/by-course-ui.html`);
+    logOK(`${fedList.length} relatório(s) gerado(s)`);
     return true;
   } catch (err) {
-    logErr(`Erro ao gerar HTML: ${err.message}`);
+    logErr(`Erro ao gerar HTMLs: ${err.message}`);
     return false;
   }
 }
@@ -502,11 +527,9 @@ ${BOLD}╚═══════════════════════�
     await browser.close();
   }
 
-  // PASSO 4: Render HTML
+  // PASSO 4: Render HTML (batch — um único processo)
   if (!skipRender) {
-    for (const fed of fedCodes) {
-      generateUI(fed);
-    }
+    generateUIBatch(fedCodes);
   }
 
   // RESUMO

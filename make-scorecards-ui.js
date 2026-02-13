@@ -2788,7 +2788,7 @@ function processPlayer(FED, allPlayers, crossStats) {
         <div class="pill"><b id="cCourses">0</b> campos</div>
         <div class="pill"><b id="cRounds">0</b> voltas</div>
       </div>
-      <div class="meta">Pasta: output\\\\${esc(FED)}\\\\analysis</div>
+      <div class="meta">Última actualização: ${new Date().toLocaleDateString('pt-PT')} ${new Date().toLocaleTimeString('pt-PT', {hour:'2-digit', minute:'2-digit'})}</div>
     </div>
 
     <table>
@@ -6735,57 +6735,58 @@ function render(){
   console.log(`OK -> ${htmlPath}`);
 }
 
-// IIFE principal: descobrir jogadores e processar todos
+// IIFE principal: descobrir jogadores e processar (suporta batch)
 (async () => {
-  const FED = (process.argv[2] || "").trim();
+  const args = process.argv.slice(2).map(a => a.trim()).filter(Boolean);
   const outputRoot = path.join(process.cwd(), "output");
 
-  if (FED === "--all" || FED === "") {
-    // Processar TODOS os jogadores
+  // Determinar quais FEDs processar
+  let targetFeds = null; // null = todos
+  if (args.length === 0 || args[0] === "--all") {
     console.log("Modo: todos os jogadores");
-    const allPlayers = discoverPlayers(outputRoot, null);
-    if (allPlayers.length === 0) {
-      console.error("Nenhum jogador encontrado em output/");
-      process.exit(1);
-    }
-    console.log(`\nEncontrados ${allPlayers.length} jogadores\n`);
-    const crossStats = extractAllPlayerStats(allPlayers, outputRoot);
-    for (const p of allPlayers) {
-      try {
-        processPlayer(p.fed, allPlayers, crossStats);
-      } catch (e) {
-        console.error(`Erro ao processar ${p.name} (${p.fed}):`, e.message || e);
-      }
-    }
-    console.log(`\nTodos os ${allPlayers.length} jogador(es) processados.`);
-  } else if (/^\d+$/.test(FED)) {
-    // Processar UM jogador
-    const baseDir = path.join(outputRoot, FED);
-    if (!fs.existsSync(path.join(baseDir, "whs-list.json"))) {
-      console.error("Não encontrei:", path.join(baseDir, "whs-list.json"));
-      process.exit(1);
-    }
-    if (!fs.existsSync(path.join(baseDir, "scorecards"))) {
-      console.error("Não encontrei:", path.join(baseDir, "scorecards"));
-      process.exit(1);
-    }
-    console.log(`Modo: jogador ${FED}`);
-    const allPlayers = discoverPlayers(outputRoot, FED);
-    const crossStats = extractAllPlayerStats(allPlayers, outputRoot);
-    try {
-      processPlayer(FED, allPlayers, crossStats);
-      const p = allPlayers.find(x => x.fed === FED);
-      console.log(`\n✓ ${p ? p.name : FED} processado.`);
-    } catch (e) {
-      console.error(`Erro ao processar ${FED}:`, e.message || e);
-    }
+  } else if (args.every(a => /^\d+$/.test(a))) {
+    targetFeds = args;
+    const preview = targetFeds.slice(0, 5).join(", ") + (targetFeds.length > 5 ? `, ... (${targetFeds.length} total)` : "");
+    console.log(`Modo: ${targetFeds.length} jogador(es) [${preview}]`);
   } else {
     console.log(`
 Uso:
-  node make-scorecards-ui.js <FED>    Gerar HTML de um jogador
-  node make-scorecards-ui.js --all    Gerar HTML de todos
-  node make-scorecards-ui.js          Gerar HTML de todos
+  node make-scorecards-ui.js <FED> [<FED> ...]   Gerar HTML de um ou mais jogadores
+  node make-scorecards-ui.js --all                Gerar HTML de todos
+  node make-scorecards-ui.js                      Gerar HTML de todos
 `);
     process.exit(0);
   }
+
+  // Descobrir todos os jogadores e calcular cross-stats UMA única vez
+  const allPlayers = discoverPlayers(outputRoot, targetFeds ? targetFeds[0] : null);
+  if (allPlayers.length === 0) {
+    console.error("Nenhum jogador encontrado em output/");
+    process.exit(1);
+  }
+
+  // Filtrar quais processar
+  const toProcess = targetFeds
+    ? allPlayers.filter(p => targetFeds.includes(p.fed))
+    : allPlayers;
+
+  if (toProcess.length === 0) {
+    console.error("Nenhum dos FEDs indicados foi encontrado em output/");
+    process.exit(1);
+  }
+
+  console.log(`\nEncontrados ${allPlayers.length} jogadores, a processar ${toProcess.length}\n`);
+  const crossStats = extractAllPlayerStats(allPlayers, outputRoot);
+
+  let ok = 0, fail = 0;
+  for (const p of toProcess) {
+    try {
+      processPlayer(p.fed, allPlayers, crossStats);
+      ok++;
+    } catch (e) {
+      console.error(`Erro ao processar ${p.name} (${p.fed}):`, e.message || e);
+      fail++;
+    }
+  }
+  console.log(`\n✓ ${ok} jogador(es) processados${fail > 0 ? `, ${fail} erro(s)` : ""}.`);
 })();
