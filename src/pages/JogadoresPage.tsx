@@ -111,150 +111,15 @@ export default function JogadoresPage({ players }: Props) {
 
   const iframeSrc = selected ? `/${selected.fed}/analysis/by-course-ui.html` : "";
 
-  /* Esconder header duplicado e harmonizar visual com Campos */
+  /* Esconder header duplicado no iframe (same-origin) */
   const onIframeLoad = useCallback((e: React.SyntheticEvent<HTMLIFrameElement>) => {
     try {
       const doc = e.currentTarget.contentDocument;
       if (!doc) return;
       const style = doc.createElement("style");
       style.textContent = `
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
-
-        /* ── Esconder header duplicado ── */
         header > .hd-card { display: none !important; }
-        header { padding-top: 0 !important; border-bottom-color: #d5dac9 !important; }
-
-        /* ── Variáveis do design system Golf Portugal ── */
-        :root {
-          --bg: #f7f8f6 !important;
-          --fg: #1c2617 !important;
-          --muted: #7a8a6e !important;
-          --line: #d5dac9 !important;
-          --chip: #e0efdb !important;
-          --head: #eef2e8 !important;
-          --accent: #2d6a30 !important;
-        }
-
-        /* ── Tipografia ── */
-        body {
-          font-family: 'DM Sans', system-ui, -apple-system, sans-serif !important;
-          background: #f7f8f6 !important;
-          color: #1c2617 !important;
-        }
-
-        /* ── Inputs e controlos ── */
-        input, select {
-          border-color: #d5dac9 !important;
-          border-radius: 6px !important;
-          font-family: 'DM Sans', system-ui, sans-serif !important;
-          background: #f7f8f6 !important;
-        }
-        input:focus, select:focus {
-          border-color: #2d6a30 !important;
-          box-shadow: 0 0 0 2px #e0efdb !important;
-          outline: none !important;
-        }
-
-        /* ── Cards ── */
-        .card {
-          border-color: #d5dac9 !important;
-          border-radius: 10px !important;
-        }
-
-        /* ── Toolbar ── */
-        .toolbar {
-          background: #eef2e8 !important;
-          border-bottom-color: #d5dac9 !important;
-        }
-
-        /* ── Pills ── */
-        .pill {
-          background: #e0efdb !important;
-          border-color: #d5dac9 !important;
-          color: #4a5940 !important;
-        }
-
-        /* ── Tabelas ── */
-        th {
-          background: #eef2e8 !important;
-          color: #4a5940 !important;
-          border-bottom-color: #bcc5ad !important;
-          font-family: 'DM Sans', sans-serif !important;
-        }
-        td {
-          border-bottom-color: #e8ebdf !important;
-        }
-        tr:hover { background: #f0f2ec !important; }
-
-        /* ── Count badge ── */
-        .count {
-          background: #2d6a30 !important;
-          border-radius: 6px !important;
-        }
-
-        /* ── Links ── */
-        .courseBtn { color: #2d6a30 !important; }
-
-        /* ── Inner tables ── */
-        .innerTable { border-color: #d5dac9 !important; border-radius: 10px !important; }
-        .innerTable th { background: #eef2e8 !important; color: #4a5940 !important; border-bottom-color: #bcc5ad !important; }
-
-        /* ── Scorecard modern ── */
-        .sc-modern { border-radius: 10px !important; box-shadow: 0 2px 8px rgba(30,50,20,.08) !important; }
-        .sc-table-modern th { background: #eef2e8 !important; color: #4a5940 !important; }
-        .sc-table-modern .hole-header { background: #eef2e8 !important; color: #4a5940 !important; }
-        .sc-table-modern .col-out, .sc-table-modern .col-in { background: #f0f2ec !important; }
-        .sc-table-modern .col-total { background: #e0efdb !important; }
-        .sc-table-modern th, .sc-table-modern td { border-color: #d5dac9 !important; }
-        .sc-footer { background: #eef2e8 !important; border-top-color: #d5dac9 !important; }
-        .sc-footer-value { color: #1c2617 !important; }
-        .sc-bar-head { background: #eef2e8 !important; color: #4a5940 !important; border-bottom-color: #bcc5ad !important; }
-
-        /* ── Botões ── */
-        .btn {
-          border-color: #d5dac9 !important;
-          border-radius: 6px !important;
-          font-family: 'DM Sans', sans-serif !important;
-        }
-        .btn:hover { background: #f0f2ec !important; }
-        .btnGhost { background: #e0efdb !important; }
-        .btnPrint {
-          background: #e0efdb !important;
-          border-color: #2d6a30 !important;
-          color: #1e4d20 !important;
-        }
-        .btnPrint:hover { background: #d0e5c8 !important; }
-
-        /* ── Ecletico ── */
-        .ecPill { border-color: #d5dac9 !important; border-radius: 6px !important; }
-        .ecPill:hover { background: #f0f2ec !important; }
-        .ecPill.active { outline-color: #2d6a30 !important; }
-        .ecDetailCard { border-color: #d5dac9 !important; border-radius: 10px !important; }
-        .ecDetailHead { background: #eef2e8 !important; color: #4a5940 !important; border-bottom-color: #bcc5ad !important; }
-
-        /* ── Analysis cards ── */
-        .an-card { border-color: #d5dac9 !important; border-radius: 10px !important; }
-        .an-table th { background: #eef2e8 !important; color: #4a5940 !important; border-bottom-color: #bcc5ad !important; }
-        .courseAnalysis { border-color: #d5dac9 !important; border-radius: 10px !important; background: #fafbf9 !important; }
-        .holeAnalysis { border-color: #d5dac9 !important; border-radius: 10px !important; }
-        .haDiagCard { border-color: #d5dac9 !important; border-radius: 10px !important; }
-        .haParCard { border-color: #d5dac9 !important; border-radius: 10px !important; }
-        .caKpi { border-color: #d5dac9 !important; border-radius: 10px !important; }
-
-        /* ── Monospace numbers ── */
-        .sc-stat-value, .sc-score, .sc-topar,
-        .an-k-val, .caKpiVal, .haDiagVal, .haParAvg {
-          font-family: 'JetBrains Mono', monospace !important;
-        }
-
-        /* ── Group rows ── */
-        .grpRow td { background: #f0f2ec !important; border-bottom-color: #d5dac9 !important; }
-
-        /* ── Scrollbar ── */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #d5dac9; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #7a8a6e; }
+        header { padding-top: 0 !important; }
       `;
       doc.head.appendChild(style);
     } catch { /* cross-origin — ignora */ }
