@@ -1,11 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 import { loadMasterData, loadPlayers } from "./data/loader";
-import type { MasterData, PlayersDb } from "./data/types";
+import { extractAwayCourses } from "./data/melhoriasLoader";
+import { getExtraCourses } from "./data/extraCourses";
+import type { Course, MasterData, PlayersDb } from "./data/types";
 import CamposPage from "./pages/CamposPage";
 import JogadoresPage from "./pages/JogadoresPage";
+import SimuladorPage from "./pages/SimuladorPage";
 
-type Tab = "campos" | "jogadores";
+import melhoriasJson from "../melhorias.json";
+
+type Tab = "campos" | "jogadores" | "simulador";
+
+type MelhoriasJson = Record<string, Record<string, unknown>>;
 
 type Status =
   | { kind: "loading" }
@@ -26,6 +33,15 @@ export default function App() {
 
   const playerCount = status.kind === "ready" ? Object.keys(status.players).length : 0;
 
+  /* Campos FPG + Away (melhorias) + Extra (manuais) para o Simulador */
+  const simCourses: Course[] = useMemo(() => {
+    if (status.kind !== "ready") return [];
+    const fpg = status.data.courses;
+    const away = extractAwayCourses(melhoriasJson as MelhoriasJson);
+    const extra = getExtraCourses();
+    return [...fpg, ...away, ...extra];
+  }, [status]);
+
   return (
     <div className="app">
       {/* Topbar */}
@@ -34,7 +50,7 @@ export default function App() {
           <span className="brand-icon">⛳</span>
           <div>
             <div className="brand-title">Golf Portugal</div>
-            <div className="brand-sub">Campos · Jogadores · Análise</div>
+            <div className="brand-sub">Campos · Jogadores · Simulador</div>
           </div>
         </div>
 
@@ -50,6 +66,12 @@ export default function App() {
             onClick={() => setTab("jogadores")}
           >
             Jogadores
+          </button>
+          <button
+            className={`nav-btn ${tab === "simulador" ? "active" : ""}`}
+            onClick={() => setTab("simulador")}
+          >
+            Simulador
           </button>
         </nav>
 
@@ -85,11 +107,15 @@ export default function App() {
         )}
 
         {status.kind === "ready" && tab === "campos" && (
-          <CamposPage courses={status.data.courses} />
+          <CamposPage courses={simCourses} />
         )}
 
         {status.kind === "ready" && tab === "jogadores" && (
           <JogadoresPage players={status.players} />
+        )}
+
+        {status.kind === "ready" && tab === "simulador" && (
+          <SimuladorPage courses={simCourses} />
         )}
       </main>
     </div>

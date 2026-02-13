@@ -1,4 +1,12 @@
-// make-scorecards-ui.js (v44 - GAMEBOOK STYLE)
+// make-scorecards-ui.js (v45 - TREINOS/EXTRAS + DRIVE GROUPING)
+// v45:
+// ✅ Treinos excluídos da "Vista: Por torneio" (não são torneios)
+// ✅ Extra rounds com "torneio_view": true no melhorias.json aparecem na vista por torneio (exceção para USKIDS Barcelona)
+// ✅ Dados preenchidos para treinos/extras na vista por campo: Stb (scratch), SD (estimado ~), HI (interpolado), metros
+// ✅ SD estimado marcado com ~ e tooltip explicativo
+// ✅ _group respeitado na vista por torneio (DRIVE TOUR ≠ DRIVE CHALLENGE)
+// ✅ Nome _group usado como nome do torneio quando disponível
+// v44:
 // Adições pedidas:
 // ✅ Explica Ecletico (gross) no topo do campo
 // ✅ Ecletico pills servem como filtro por Tee (toggle). Ao clicar, mostra só as rondas desse tee.
@@ -78,6 +86,26 @@ function getMelhoriaNotas(fed, scoreId) {
 function getMelhoriaFpgOriginal(fed, scoreId) {
   const p = getMelhoria(fed, scoreId);
   return p && p._fpg_original ? p._fpg_original : null;
+}
+
+function getMelhoriaLink(fed, scoreId) {
+  const p = getMelhoria(fed, scoreId);
+  if (!p) return null;
+  // Novo formato: links (objecto {label: url})
+  if (p.links && typeof p.links === 'object') return p.links;
+  // Formato antigo: link (string)
+  if (p.link) return { link: p.link };
+  return null;
+}
+
+function getMelhoriaPill(fed, scoreId) {
+  const p = getMelhoria(fed, scoreId);
+  return p && p.pill ? p.pill : '';
+}
+
+function getMelhoriaGroup(fed, scoreId) {
+  const p = getMelhoria(fed, scoreId);
+  return p && p._group ? p._group : '';
 }
 
 /* ------------------ Tee colors (como TeeBadge.tsx) ------------------ */
@@ -456,9 +484,14 @@ function buildScorecardFragment({ fed, scoreId, rec, whsRow }) {
   const mFpg = getMelhoriaFpgOriginal(fed, rec?.id || scoreId);
 
   let linksHtml = '';
+  const _scLinkLabels = {
+    classificacao: 'Classificação', classificacao_d1: 'Classif. D1', classificacao_d2: 'Classif. D2',
+    leaderboard: 'Leaderboard', scorecard: 'Scorecard', resultados: 'Resultados',
+    fpg_scoring: 'FPG Scoring', noticia_teetimes: 'Notícia', link: 'Ver torneio'
+  };
   if (mLinks) {
     const linkItems = Object.entries(mLinks).map(([label, url]) =>
-      `<a href="${esc(url)}" target="_blank" class="sc-ext-link" title="${esc(label)}">🔗 ${esc(label)}</a>`
+      `<a href="${esc(url)}" target="_blank" class="sc-ext-link" title="${esc(_scLinkLabels[label] || label)}">🔗 ${esc(_scLinkLabels[label] || label)}</a>`
     ).join(' ');
     linksHtml = `<div class="sc-links">${linkItems}</div>`;
   }
@@ -644,7 +677,7 @@ function buildScorecardFragment({ fed, scoreId, rec, whsRow }) {
 }
 
 /* Build a simplified scorecard fragment from manual data (treinos / extra_rounds) */
-function buildManualFragment({ courseName, dateFmt, gross, par, si, meters, holeCount, tee, link, label }) {
+function buildManualFragment({ courseName, dateFmt, gross, par, si, meters, holeCount, tee, link, links, label }) {
   const hc = holeCount || gross.length || 9;
   const is9 = hc === 9;
   const frontEnd = is9 ? hc : 9;
@@ -676,9 +709,18 @@ function buildManualFragment({ courseName, dateFmt, gross, par, si, meters, hole
   const teeHex = tee ? teeColor(tee) : '#94a3b8';
   const teeFg = teeTextColor(teeHex);
 
+  const _linkLabels = {
+    classificacao: 'Classificação', classificacao_d1: 'Classif. D1', classificacao_d2: 'Classif. D2',
+    leaderboard: 'Leaderboard', scorecard: 'Scorecard', resultados: 'Resultados',
+    fpg_scoring: 'FPG Scoring', noticia_teetimes: 'Notícia', link: 'Ver torneio'
+  };
   let linkHtml = '';
-  if (link) {
-    linkHtml = `<div class="sc-links"><a href="${esc(link)}" target="_blank" class="sc-ext-link">🔗 Ver torneio</a></div>`;
+  const allLinks = links || (link ? { link } : null);
+  if (allLinks && typeof allLinks === 'object') {
+    const items = Object.entries(allLinks)
+      .filter(([, v]) => typeof v === 'string' && v.startsWith('http'))
+      .map(([k, v]) => `<a href="${esc(v)}" target="_blank" class="sc-ext-link">🔗 ${esc(_linkLabels[k] || k)}</a>`);
+    if (items.length) linkHtml = `<div class="sc-links">${items.join('')}</div>`;
   }
 
   let badgeHtml = label ? `<span style="display:inline-block;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:600;background:#f3e5f5;color:#6a1b9a;margin-left:6px">${esc(label)}</span>` : '';
@@ -1396,7 +1438,10 @@ function processPlayer(FED, allPlayers, crossStats) {
       eventName: eventName || "",
       eventKey: norm(eventName || ""),
       scoreOrigin: whsRow.score_origin || "",
-      hasCard: !!rec
+      hasCard: !!rec,
+      _links: getMelhoriaLink(FED, scoreId),
+      _pill: getMelhoriaPill(FED, scoreId),
+      _group: getMelhoriaGroup(FED, scoreId)
     });
   }
   
@@ -1444,7 +1489,10 @@ function processPlayer(FED, allPlayers, crossStats) {
       eventName: eventName || "",
       eventKey: norm(eventName || ""),
       scoreOrigin: "",
-      hasCard: true
+      hasCard: true,
+      _links: getMelhoriaLink(FED, scoreId),
+      _pill: getMelhoriaPill(FED, scoreId),
+      _group: getMelhoriaGroup(FED, scoreId)
     });
   }
 
@@ -1595,8 +1643,9 @@ function processPlayer(FED, allPlayers, crossStats) {
               meters: dia.meters_holes || [],
               holeCount: hc,
               tee: ex.categoria || '',
-              link: ex.link || '',
-              label: ex.nao_aceite_fpg ? 'Não aceite FPG' : ''
+              link: '',
+              links: ex.links || (ex.link ? { link: ex.link } : null),
+              label: (ex.nao_comunicado_fpg || ex.nao_aceite_fpg) ? 'Não comunicado FPG' : ''
             }).trim();
           }
           
@@ -1611,7 +1660,7 @@ function processPlayer(FED, allPlayers, crossStats) {
             dateSort: dateObj ? dateObj.getTime() : 0,
             tee: ex.categoria || '',
             teeKey: normKey(ex.categoria || ''),
-            meters: '',
+            meters: dia.meters_total || '',
             gross: dia.gross ?? '',
             par: dia.par ?? null,
             stb: '',
@@ -1622,12 +1671,80 @@ function processPlayer(FED, allPlayers, crossStats) {
             scoreOrigin: 'Extra',
             hasCard: !!dia.gross_holes,
             _isExtra: true,
+            _showInTournament: !!ex.torneio_view,
             _naoAceiteFpg: ex.nao_aceite_fpg || false,
-            _link: ex.link || ''
+            _links: ex.links || (ex.link ? { link: ex.link } : null),
+            _pill: ex.pill || ''
           });
         }
       }
       console.log(`  + ${melhPlayer.extra_rounds.length} extra round(s) injectados`);
+    }
+  }
+
+  // ===== Preencher campos em falta para treinos e extra_rounds =====
+  // 1) Calcular stableford (scratch) a partir de gross_holes/par_holes
+  // 2) Estimar SD ≈ gross - par (sem slope/CR oficiais)
+  // 3) Interpolar HI a partir dos records WHS mais próximos por data
+  // 4) Preencher metros se disponíveis
+
+  // Construir array de HI por data para interpolação
+  const hiTimeline = rows
+    .filter(r => r.new_handicap != null && r.hcp_dateStr)
+    .map(r => ({ date: new Date(r.hcp_dateStr).getTime(), hi: r.new_handicap }))
+    .sort((a, b) => a.date - b.date);
+
+  function interpolateHI(dateSort) {
+    if (!hiTimeline.length || !dateSort) return null;
+    // Encontrar o HI mais próximo anterior ou igual à data
+    let best = null;
+    for (const h of hiTimeline) {
+      if (h.date <= dateSort) best = h.hi;
+      else break;
+    }
+    // Se não há anterior, usar o primeiro disponível
+    if (best == null && hiTimeline.length) best = hiTimeline[0].hi;
+    return best;
+  }
+
+  function calcScratchStableford(grossHoles, parHoles) {
+    if (!grossHoles || !parHoles) return null;
+    let total = 0;
+    for (let i = 0; i < grossHoles.length; i++) {
+      const g = grossHoles[i], p = parHoles[i];
+      if (g != null && g > 0 && p != null) {
+        total += Math.max(0, 2 + p - g);
+      }
+    }
+    return total;
+  }
+
+  for (const r of rounds) {
+    if (!r._isTreino && !r._isExtra) continue;
+
+    const hs = holeScores[r.scoreId];
+
+    // Stableford (scratch — sem handicap de jogo)
+    if ((r.stb === '' || r.stb == null) && hs && hs.g && hs.p) {
+      r.stb = calcScratchStableford(hs.g, hs.p);
+    }
+
+    // SD estimado ≈ gross - par (slope=113, CR≈par)
+    if ((r.sd === '' || r.sd == null) && r.gross != null && r.gross !== '' && r.par != null) {
+      const sdEst = Number(r.gross) - Number(r.par);
+      r.sd = sdEst;
+      r._sdEstimated = true;
+    }
+
+    // HI interpolado
+    if ((r.hi === '' || r.hi == null) && r.dateSort) {
+      r.hi = interpolateHI(r.dateSort);
+    }
+
+    // Metros totais
+    if ((r.meters === '' || r.meters == null) && hs && hs.m && hs.m.length) {
+      const mTotal = hs.m.reduce((s, v) => s + (v || 0), 0);
+      if (mTotal > 0) r.meters = mTotal;
     }
   }
 
@@ -2011,6 +2128,10 @@ function processPlayer(FED, allPlayers, crossStats) {
   .grpRow .muted{font-weight:600}
   .hb{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:999px;font-weight:900;font-size:12px;border:1px solid #d5dac9;background:#fff}
   .eds-badge{display:inline-block;font-size:9px;font-weight:700;color:#2d6a30;background:#e0f2fe;border-radius:3px;padding:0 3px;margin-left:4px;vertical-align:middle;letter-spacing:.5px}
+  .away-pill{display:inline-block;font-size:9px;font-weight:800;color:#000;background:#39FF14;border-radius:3px;padding:0 4px;margin-left:4px;vertical-align:middle;letter-spacing:.5px;text-shadow:none}
+  .intl-pill{display:inline-block;font-size:9px;font-weight:800;color:#fff;background:#1e88e5;border-radius:3px;padding:0 4px;margin-left:2px;vertical-align:middle;letter-spacing:.5px}
+  .nacional-pill{display:inline-block;font-size:9px;font-weight:800;color:#fff;background:#c62828;border-radius:3px;padding:0 4px;margin-left:4px;vertical-align:middle;letter-spacing:.5px}
+  .regional-pill{display:inline-block;font-size:9px;font-weight:800;color:#fff;background:#e65100;border-radius:3px;padding:0 4px;margin-left:4px;vertical-align:middle;letter-spacing:.5px}
   .kpi-info{cursor:help;font-size:12px;margin-left:4px;opacity:0.5;position:relative}
   .kpi-info:hover{opacity:1}
   .hb9{color:#1c2617}
@@ -2912,6 +3033,7 @@ function printAll() {
     if (list.length < 2) return null;
 
     // grupos por proximidade (<=1 dia) e por "eventKey" se existir
+    // Respeitar _group: rounds com _group diferente nunca se juntam
     var groups = [];
     var cur = [list[0]];
     for (var i=1;i<list.length;i++){
@@ -2919,7 +3041,8 @@ function printAll() {
       var gapDays = (dayKey(now.dateSort) - dayKey(prev.dateSort)) / 86400000;
       var sameEvent = (norm2(now.eventName) && norm2(now.eventName) === norm2(prev.eventName));
       var bothEmpty = (!norm2(now.eventName) && !norm2(prev.eventName));
-      if (gapDays <= 1 && (sameEvent || bothEmpty)) cur.push(now);
+      var sameGroup = (!now._group && !prev._group) || (now._group && now._group === prev._group);
+      if (gapDays <= 1 && (sameEvent || bothEmpty) && sameGroup) cur.push(now);
       else { if (cur.length >= 2) groups.push(cur); cur = [now]; }
     }
     if (cur.length >= 2) groups.push(cur);
@@ -2935,37 +3058,57 @@ function printAll() {
 
   function buildGroupedRows(rounds){
     // agrupar por eventName (se existir) senão por clusters de dias consecutivos.
+    // _group override: rounds com _group são agrupados pelo valor de _group
     var list = rounds.slice().filter(function(r){ return r.dateSort; }).sort(function(a,b){ return a.dateSort - b.dateSort; });
 
-    // primeiro tenta por nome
-    var hasNames = list.some(function(r){ return norm2(r.eventName); });
+    // Separar rounds com _group dos restantes
+    var forcedMap = {};
+    var remaining = [];
+    list.forEach(function(r){
+      if (r._group) {
+        if (!forcedMap[r._group]) forcedMap[r._group] = [];
+        forcedMap[r._group].push(r);
+      } else {
+        remaining.push(r);
+      }
+    });
 
     var groups = [];
-    if (hasNames){
-      var map = {};
-      list.forEach(function(r){
-        var k = norm2(r.eventName) || "__sem_nome__";
-        if (!map[k]) map[k] = [];
-        map[k].push(r);
-      });
-      Object.keys(map).forEach(function(k){
-        var arr = map[k].slice().sort(function(a,b){ return a.dateSort - b.dateSort; });
-        groups.push({ name: (k==="__sem_nome__") ? "Torneio (nome não explícito)" : arr[0].eventName, rounds: arr });
-      });
-      groups.sort(function(a,b){ return b.rounds.length - a.rounds.length; });
-    } else {
-      // clusters por dias consecutivos
-      var cur = [list[0]];
-      for (var i=1;i<list.length;i++){
-        var prev = list[i-1], now = list[i];
-        var gapDays = (dayKey(now.dateSort) - dayKey(prev.dateSort)) / 86400000;
-        if (gapDays <= 1) cur.push(now);
-        else { groups.push({ name:"Torneio (nome não explícito)", rounds:cur }); cur=[now]; }
+    // Adicionar grupos forçados
+    Object.keys(forcedMap).forEach(function(k){
+      var arr = forcedMap[k].slice().sort(function(a,b){ return a.dateSort - b.dateSort; });
+      groups.push({ name: k, rounds: arr });
+    });
+
+    // Agrupar restantes normalmente
+    if (remaining.length > 0) {
+      var hasNames = remaining.some(function(r){ return norm2(r.eventName); });
+
+      if (hasNames){
+        var map = {};
+        remaining.forEach(function(r){
+          var k = norm2(r.eventName) || "__sem_nome__";
+          if (!map[k]) map[k] = [];
+          map[k].push(r);
+        });
+        Object.keys(map).forEach(function(k){
+          var arr = map[k].slice().sort(function(a,b){ return a.dateSort - b.dateSort; });
+          groups.push({ name: (k==="__sem_nome__") ? "Torneio (nome não explícito)" : arr[0].eventName, rounds: arr });
+        });
+      } else {
+        // clusters por dias consecutivos
+        var cur = [remaining[0]];
+        for (var i=1;i<remaining.length;i++){
+          var prev = remaining[i-1], now = remaining[i];
+          var gapDays = (dayKey(now.dateSort) - dayKey(prev.dateSort)) / 86400000;
+          if (gapDays <= 1) cur.push(now);
+          else { groups.push({ name:"Torneio (nome não explícito)", rounds:cur }); cur=[now]; }
+        }
+        groups.push({ name:"Torneio (nome não explícito)", rounds:cur });
       }
-      groups.push({ name:"Torneio (nome não explícito)", rounds:cur });
-      // só interessa grupos com 2+ como “torneio”, mas deixamos singles como grupo também
     }
 
+    groups.sort(function(a,b){ return b.rounds.length - a.rounds.length; });
     return groups;
   }
 
@@ -3047,6 +3190,26 @@ function printAll() {
     return String(stb);
   }
 
+  // Format SD — com indicador visual para valores estimados
+  function fmtSd(r) {
+    if (r.sd == null || r.sd === '') return '';
+    var val = r.sd;
+    var sdNum = Number(val);
+    var cls = sdClassByHcp(sdNum, r.hi);
+    if (r._sdEstimated) {
+      // SD estimado: prefixo ~ e estilo mais suave
+      return '<span class="' + (cls || '') + '" style="display:inline-block;min-width:36px;text-align:right;padding:2px 6px;border-radius:6px;opacity:0.75" title="SD estimado (sem slope/CR oficial): gross−par"><span style="color:#94a3b8;font-size:10px">~</span>' + val + '</span>';
+    }
+    return '<span class="' + (cls || '') + '" style="display:inline-block;min-width:36px;text-align:right;padding:2px 6px;border-radius:6px">' + val + '</span>';
+  }
+  // Simpler fmtSd for tournament detail (no span wrapping)
+  function fmtSdSimple(r) {
+    if (r.sd == null || r.sd === '') return '';
+    var cls = sdClassByHcp(Number(r.sd), r.hi);
+    var prefix = r._sdEstimated ? '<span style="color:#94a3b8;font-size:10px" title="SD estimado">~</span>' : '';
+    return prefix + r.sd;
+  }
+
   // Badge EDS / Indiv
   function fmtEds(origin) {
     if (origin === 'EDS') return '<span class="eds-badge">EDS</span>';
@@ -3054,6 +3217,63 @@ function printAll() {
     if (origin === 'Treino') return '<span class="eds-badge" style="background:#f3e5f5;color:#6a1b9a">TREINO</span>';
     if (origin === 'Extra') return '<span class="eds-badge" style="background:#fce4ec;color:#c62828">EXTRA</span>';
     return '';
+  }
+
+  // Render multiple external links from _links object
+  var linkLabels = {
+    classificacao: 'Classificação', classificacao_d1: 'Classif. D1', classificacao_d2: 'Classif. D2',
+    leaderboard: 'Leaderboard', scorecard: 'Scorecard', resultados: 'Resultados',
+    fpg_scoring: 'FPG Scoring', noticia_teetimes: 'Notícia', link: '🔗'
+  };
+  function fmtLinks(links, size) {
+    if (!links || typeof links !== 'object') return '';
+    var keys = Object.keys(links);
+    if (keys.length === 0) return '';
+    var sz = size || 10;
+    var parts = [];
+    for (var i = 0; i < keys.length; i++) {
+      var k = keys[i];
+      var url = links[k];
+      if (!url || typeof url !== 'string' || url.indexOf('http') !== 0) continue;
+      var label = linkLabels[k] || k;
+      parts.push('<a href="'+esc(url)+'" target="_blank" style="font-size:'+sz+'px;color:#2d6a30;text-decoration:none" title="'+esc(label)+'">🔗'+( keys.length > 1 ? '<span style="font-size:'+(sz-1)+'px;margin-left:1px">'+esc(label)+'</span>' : '' )+'</a>');
+    }
+    return parts.length ? ' ' + parts.join(' ') : '';
+  }
+  // Render multiple link buttons (for detail view)
+  function fmtLinkBtns(links) {
+    if (!links || typeof links !== 'object') return '';
+    var keys = Object.keys(links);
+    if (keys.length === 0) return '';
+    var parts = [];
+    for (var i = 0; i < keys.length; i++) {
+      var k = keys[i];
+      var url = links[k];
+      if (!url || typeof url !== 'string' || url.indexOf('http') !== 0) continue;
+      var label = linkLabels[k] || k;
+      parts.push(' <a href="'+esc(url)+'" target="_blank" class="btn" style="text-decoration:none;background:#eff6ff;color:#0369a1;border-color:#bfdbfe">🔗 '+esc(label)+'</a>');
+    }
+    return parts.join('');
+  }
+  // Render pill badges (supports multiple: "AWAY INTL" → 2 badges)
+  var pillStyles = {
+    AWAY:     'away-pill',
+    INTL:     'intl-pill',
+    NACIONAL: 'nacional-pill',
+    REGIONAL: 'regional-pill'
+  };
+  function fmtPills(pillStr) {
+    if (!pillStr) return '';
+    var tokens = pillStr.split(/\s+/);
+    var parts = [];
+    var icons = { INTL: '🌍 ', NACIONAL: '🏆 ', REGIONAL: '🏅 ' };
+    for (var i = 0; i < tokens.length; i++) {
+      var t = tokens[i];
+      var cls = pillStyles[t] || 'away-pill';
+      var icon = icons[t] || '';
+      parts.push('<span class="'+cls+'">'+icon+esc(t)+'</span>');
+    }
+    return parts.length ? ' ' + parts.join('') : '';
   }
 
   // Universal scorecard color class — used everywhere (eclectic, comparison, etc.)
@@ -3390,7 +3610,7 @@ function renderAnalysis(FILTERED_ROUNDS){
       '<td class="right muted">'+(x.meters ? (x.meters+'m') : '')+'</td>' +
       '<td class="right">'+fmtGross(x.gross, x.par)+'</td>' +
       '<td class="right">'+stbDisplay+'</td>' +
-      '<td class="right">'+(x.sd!=null?('<span class="'+(sdClass||'')+'" style="display:inline-block;min-width:36px;text-align:right;padding:2px 6px;border-radius:6px">'+x.sd+'</span>'):'')+'</td>' +
+      '<td class="right">'+fmtSd(x)+'</td>' +
       '<td class="right">'+best8Html+'</td>' +
     '</tr>';
   }
@@ -3877,14 +4097,14 @@ function render(){
         html += '<tr class="roundRow" data-score="'+r.scoreId+'" data-hascard="'+(r.hasCard?'1':'0')+'" data-course="'+esc(r.courseKey||'')+'" data-tee="'+esc(r.teeKey||'')+'">' +
           '<td>'+datePillD+'</td>' +
           '<td>'+r.course+'</td>' +
-          '<td><span class="muted">'+esc(r.eventName||"")+fmtEds(r.scoreOrigin)+'</span>'+(r._link ? ' <a href="'+esc(r._link)+'" target="_blank" style="font-size:10px;color:#0369a1;text-decoration:none">🔗</a>' : '')+'</td>' +
+          '<td><span class="muted">'+esc(r.eventName||"")+fmtEds(r.scoreOrigin)+'</span>'+fmtPills(r._pill)+fmtLinks(r._links, 10)+'</td>' +
           '<td class="right">'+(r.holeCount==9?'<span class="hb hb9">9</span>':'<span class="hb hb18">18</span>')+'</td>' +
           '<td class="right">'+(r.hi??"")+'</td>' +
           '<td>'+teeHtml+'</td>' +
           '<td class="right muted">'+(r.meters ? (r.meters+'m') : '')+'</td>' +
           '<td class="right">'+fmtGross(r.gross, r.par)+'</td>' +
           '<td class="right">'+fmtStb(r.stb, r.holeCount)+'</td>' +
-          '<td class="right '+(sdClass||'')+'">'+(r.sd??"")+'</td>' +
+          '<td class="right">'+fmtSd(r)+'</td>' +
         '</tr>';
       });
       tbody.innerHTML = html;
@@ -3899,22 +4119,33 @@ function render(){
     if (view === "by_tournament") {
       try {
       // Flatten todos os rounds com eventName primeiro (agrupamento global cross-campo)
+      // EXCLUIR treinos — não são torneios
       var allRoundsWithNames = [];
       DATA.forEach(function(c){
         c.rounds.forEach(function(r){
-          if (r.eventName && r.dateSort) {
+          if (r.eventName && r.dateSort && !r._isTreino) {
             allRoundsWithNames.push(Object.assign({ course: c.course }, r));
           }
         });
       });
       
       // Agrupar por similaridade de nome + dias consecutivos (ignorando campo)
+      // RESPEITAR _group: rounds com _group diferente nunca se juntam
       var globalGroups = [];
       allRoundsWithNames.sort(function(a,b){ return a.dateSort - b.dateSort; }).forEach(function(r){
         
         var found = false;
         for (var g = 0; g < globalGroups.length; g++) {
           var group = globalGroups[g];
+
+          // _group override: se ambos têm _group, só juntar se forem iguais
+          // Se um tem _group e o outro não, nunca juntar
+          var rGroup = r._group || '';
+          var gGroup = group._group || '';
+          if (rGroup || gGroup) {
+            if (rGroup !== gGroup) continue; // _groups diferentes — nunca juntar
+          }
+
           // Passar curso para ajudar na similaridade de nomes genéricos
           var similarity = nameSimilarity(r.eventName, group.name, r.course, group.courses[0]);
           
@@ -3951,7 +4182,8 @@ function render(){
           globalGroups.push({
             name: r.eventName,
             courses: [r.course],
-            rounds: [r]
+            rounds: [r],
+            _group: r._group || ''
           });
         }
       });
@@ -3978,14 +4210,23 @@ function render(){
             ? (realCourses.length === 1 ? realCourses[0] : realCourses.join(", "))
             : g.courses[0];
           
-          // SEM LIMPEZA - manter nome original
-          var cleanName = g.name;
+          // Usar _group como nome se disponível (mais limpo que o nome da FPG)
+          var cleanName = g._group || g.name;
           
           items.push({
             type: "event",
             course: finalCourse,
             name: cleanName,
             rounds: g.rounds.sort(function(a,b){ return a.dateSort - b.dateSort; })
+          });
+        } else if (g.rounds.length === 1 && g.rounds[0]._showInTournament) {
+          // Excepção explícita: ronda extra marcada com torneio_view no melhorias.json
+          addedCount++;
+          items.push({
+            type: "event",
+            course: g.courses[0],
+            name: g.name,
+            rounds: g.rounds
           });
         } else {
           ignoredCount++;
@@ -4038,13 +4279,19 @@ function render(){
         var dateTxt = start && end && start!==end ? (start+" → "+end) : (end||start||"");
         var edsTag = (it.rounds[0] && it.rounds[0].scoreOrigin) ? fmtEds(it.rounds[0].scoreOrigin) : '';
         // Extract link from extra rounds
-        var eventLink = '';
+        var eventLinks = null;
         for (var li = 0; li < it.rounds.length; li++) {
-          if (it.rounds[li]._link) { eventLink = it.rounds[li]._link; break; }
+          if (it.rounds[li]._links) { eventLinks = it.rounds[li]._links; break; }
         }
-        var linkTag = eventLink ? ' <a href="'+esc(eventLink)+'" target="_blank" style="font-size:11px;color:#0369a1;text-decoration:none" title="Ver torneio">🔗</a>' : '';
+        var linkTag = fmtLinks(eventLinks, 11);
+        // Extract pill from rounds
+        var eventPill = '';
+        for (var pi = 0; pi < it.rounds.length; pi++) {
+          if (it.rounds[pi]._pill) { eventPill = it.rounds[pi]._pill; break; }
+        }
+        var pillTag = fmtPills(eventPill);
         html += '<tr>' +
-          '<td><button type="button" class="courseBtn" data-toggle="'+rowId+'">'+it.name+edsTag+'</button>'+linkTag+'<div class="sub muted">'+dateTxt+'</div></td>' +
+          '<td><button type="button" class="courseBtn" data-toggle="'+rowId+'">'+it.name+edsTag+pillTag+'</button>'+linkTag+'<div class="sub muted">'+dateTxt+'</div></td>' +
           '<td><b>'+it.course+'</b></td>' +
           '<td class="right"><b>'+it.rounds.length+'</b></td>' +
           '<td class="muted">'+dateTxt+'</td>' +
@@ -4087,15 +4334,20 @@ function render(){
           var sdClass = '';
           if (r.sd != null) sdClass = sdClassByHcp(Number(r.sd), r.hi);
 
+          var scoreLabel = '';
+          if (String(r.scoreId).indexOf('extra_') === 0) scoreLabel = '<span class="muted" style="font-size:10px">Extra (não FPG)</span>';
+          else if (String(r.scoreId).indexOf('treino_') === 0) scoreLabel = '<span class="muted" style="font-size:10px">Game Book</span>';
+          else scoreLabel = '<span class="muted" style="font-size:10px">#'+r.scoreId+'</span>';
+
           summaryHtml += '<tr class="roundRow" data-score="'+r.scoreId+'" data-hascard="'+(r.hasCard?'1':'0')+'">';
-          summaryHtml += '<td><span class="tee-date tournPill" data-pill-for="'+rowId+'_sc_'+j+'" style="background:'+hx+';color:'+fg+';cursor:pointer">'+dateFmt+'</span> <span class="muted" style="font-size:10px">#'+r.scoreId+'</span></td>';
+          summaryHtml += '<td><span class="tee-date tournPill" data-pill-for="'+rowId+'_sc_'+j+'" style="background:'+hx+';color:'+fg+';cursor:pointer">'+dateFmt+'</span> '+scoreLabel+'</td>';
           summaryHtml += '<td class="right">'+(r.holeCount==9?'<span class="hb hb9">9</span>':'<span class="hb hb18">18</span>')+'</td>';
           summaryHtml += '<td class="right">'+(r.hi??"")+'</td>';
           summaryHtml += '<td>'+teeHtml+'</td>';
           summaryHtml += '<td class="right muted">'+(r.meters ? (r.meters+'m') : '')+'</td>';
           summaryHtml += '<td class="right">'+fmtGross(r.gross, r.par)+'</td>';
           summaryHtml += '<td class="right">'+fmtStb(r.stb, r.holeCount)+'</td>';
-          summaryHtml += '<td class="right '+(sdClass||'')+'">'+(r.sd??"")+'</td>';
+          summaryHtml += '<td class="right">'+fmtSd(r)+'</td>';
           summaryHtml += '</tr>';
           // Individual scorecard container (hidden by default)
           summaryHtml += '<tr class="tournScRow" id="'+rowId+'_sc_'+j+'" style="display:none"><td colspan="8" style="padding:0;background:#fafafa">';
@@ -4126,16 +4378,16 @@ function render(){
         var compHtml = buildTournamentComparison(rounds, pillColors);
 
         // Extract link from rounds
-        var detailLink = '';
+        var detailLinks = null;
         for (var dli = 0; dli < rounds.length; dli++) {
-          if (rounds[dli]._link) { detailLink = rounds[dli]._link; break; }
+          if (rounds[dli]._links) { detailLinks = rounds[dli]._links; break; }
         }
 
         html += '<tr class="details' + ((openState[rowId]) ? ' open' : '') + '" id="'+rowId+'"><td class="inner" colspan="4">' +
           '<div class="innerWrap">' +
             '<div class="actions" style="margin-top:8px">' +
               '<button type="button" class="btn btnPdf" data-printcourse="' + rowId + '" title="Guardar PDF">📄 PDF</button>' +
-              (detailLink ? ' <a href="'+esc(detailLink)+'" target="_blank" class="btn" style="text-decoration:none;background:#eff6ff;color:#0369a1;border-color:#bfdbfe">🔗 Ver torneio</a>' : '') +
+              (detailLinks ? fmtLinkBtns(detailLinks) : '') +
             '</div>' +
             '<div style="margin-top:10px">' + summaryHtml + '</div>' +
             (compHtml ? '<div style="margin-top:12px">' + compHtml + '</div>' : '') +
@@ -5026,7 +5278,7 @@ function render(){
                 '<td class="right muted">' + (r.meters ? (r.meters + "m") : "") + '</td>' +
                 '<td class="right">' + fmtGross(r.gross, r.par) + '</td>' +
                 '<td class="right">' + fmtStb(r.stb, r.holeCount) + '</td>' +
-                '<td class="right '+(sdClass||'')+'">' + (r.sd ?? "") + '</td>' +
+                '<td class="right">' + fmtSd(r) + '</td>' +
               '</tr>';
           });
         });
@@ -5038,12 +5290,6 @@ function render(){
             ? '<a class="dateLink" href="#" data-score="' + r.scoreId + '"><span class="tee-date" style="background:'+hx+';color:'+fg+'">'+shortDate+'</span></a>'
             : '<span class="tee-date" style="background:'+hx+';color:'+fg+'">'+shortDate+'</span>';
           var teeHtml = (r.tee||"") ? '<span class="teePill" style="background:'+hx+';color:'+fg+'">'+r.tee+'</span>' : "";
-          var sdClass = '';
-          var sdVal = r.sd ?? '';
-          if (sdVal !== '') {
-            var sdNum = Number(sdVal);
-            sdClass = sdClassByHcp(sdNum, r.hi);
-          }
           roundsHtml +=
             '<tr class="roundRow" data-score="' + r.scoreId + '" data-hascard="' + (r.hasCard ? "1" : "0") + '">' +
               '<td>' + datePillHtml + fmtEds(r.scoreOrigin) + '<div class="muted" style="font-size:10px">#'+r.scoreId+'</div></td>' +
@@ -5053,7 +5299,7 @@ function render(){
               '<td class="right muted">' + (r.meters ? (r.meters + "m") : "") + '</td>' +
               '<td class="right">' + fmtGross(r.gross, r.par) + '</td>' +
               '<td class="right">' + fmtStb(r.stb, r.holeCount) + '</td>' +
-              '<td class="right '+(sdClass||'')+'">' + (r.sd ?? "") + '</td>' +
+              '<td class="right">' + fmtSd(r) + '</td>' +
             '</tr>';
         });
       }
@@ -5067,9 +5313,7 @@ function render(){
       var lastDistTxt = last ? (last.meters ? last.meters+'m' : '') : '';
       var lastGrossHtml = last ? fmtGross(last.gross, last.par) : '';
       var lastStbTxt = last ? fmtStb(last.stb, last.holeCount) : '';
-      var lastSdClass = '';
-      if (last && last.sd != null) { var lsn = Number(last.sd); lastSdClass = sdClassByHcp(lsn, last.hi); }
-      var lastSdTxt = last ? (last.sd ?? '') : '';
+      var lastSdHtml = last ? fmtSd(last) : '';
 
       html +=
         '<tr>' +
@@ -5087,7 +5331,7 @@ function render(){
           '<td class="right muted">' + lastDistTxt + '</td>' +
           '<td class="right">' + lastGrossHtml + '</td>' +
           '<td class="right">' + lastStbTxt + '</td>' +
-          '<td class="right '+(lastSdClass||'')+'">' + lastSdTxt + '</td>' +
+          '<td class="right">' + lastSdHtml + '</td>' +
         '</tr>' +
         '<tr class="details' + ((openState[rowId]) ? ' open' : '') + '" id="' + rowId + '">' +
           '<td class="inner" colspan="10">' +
@@ -6482,43 +6726,54 @@ function render(){
 // IIFE principal: descobrir jogadores e processar todos
 (async () => {
   const FED = (process.argv[2] || "").trim();
-  if (!FED) {
-    console.error("Uso: node .\\make-scorecards-ui.js <NUM_FEDERADO>");
-    process.exit(1);
-  }
-
   const outputRoot = path.join(process.cwd(), "output");
 
-  // Verificar que o jogador pedido existe
-  const baseDir = path.join(outputRoot, FED);
-  if (!fs.existsSync(path.join(baseDir, "whs-list.json"))) {
-    console.error("Não encontrei:", path.join(baseDir, "whs-list.json"));
-    process.exit(1);
-  }
-  if (!fs.existsSync(path.join(baseDir, "scorecards"))) {
-    console.error("Não encontrei:", path.join(baseDir, "scorecards"));
-    process.exit(1);
-  }
-
-  // Descobrir todos os jogadores
-  const allPlayers = discoverPlayers(outputRoot, FED);
-  if (allPlayers.length > 1) {
-    console.log(`\nEncontrados ${allPlayers.length} jogadores:`);
-    allPlayers.forEach(p => console.log(`  ${p.isCurrent ? '→' : ' '} ${p.name} (${p.fed})${p.escalao ? ' [' + p.escalao + ']' : ''}`));
-    console.log('');
-  }
-
-  // Extrair stats de todos os jogadores para cross-analysis
-  const crossStats = extractAllPlayerStats(allPlayers, outputRoot);
-
-  // Processar todos os jogadores para que todos tenham o dropdown atualizado
-  for (const p of allPlayers) {
-    try {
-      processPlayer(p.fed, allPlayers, crossStats);
-    } catch (e) {
-      console.error(`Erro ao processar ${p.name} (${p.fed}):`, e.message || e);
+  if (FED === "--all" || FED === "") {
+    // Processar TODOS os jogadores
+    console.log("Modo: todos os jogadores");
+    const allPlayers = discoverPlayers(outputRoot, null);
+    if (allPlayers.length === 0) {
+      console.error("Nenhum jogador encontrado em output/");
+      process.exit(1);
     }
+    console.log(`\nEncontrados ${allPlayers.length} jogadores\n`);
+    const crossStats = extractAllPlayerStats(allPlayers, outputRoot);
+    for (const p of allPlayers) {
+      try {
+        processPlayer(p.fed, allPlayers, crossStats);
+      } catch (e) {
+        console.error(`Erro ao processar ${p.name} (${p.fed}):`, e.message || e);
+      }
+    }
+    console.log(`\nTodos os ${allPlayers.length} jogador(es) processados.`);
+  } else if (/^\d+$/.test(FED)) {
+    // Processar UM jogador
+    const baseDir = path.join(outputRoot, FED);
+    if (!fs.existsSync(path.join(baseDir, "whs-list.json"))) {
+      console.error("Não encontrei:", path.join(baseDir, "whs-list.json"));
+      process.exit(1);
+    }
+    if (!fs.existsSync(path.join(baseDir, "scorecards"))) {
+      console.error("Não encontrei:", path.join(baseDir, "scorecards"));
+      process.exit(1);
+    }
+    console.log(`Modo: jogador ${FED}`);
+    const allPlayers = discoverPlayers(outputRoot, FED);
+    const crossStats = extractAllPlayerStats(allPlayers, outputRoot);
+    try {
+      processPlayer(FED, allPlayers, crossStats);
+      const p = allPlayers.find(x => x.fed === FED);
+      console.log(`\n✓ ${p ? p.name : FED} processado.`);
+    } catch (e) {
+      console.error(`Erro ao processar ${FED}:`, e.message || e);
+    }
+  } else {
+    console.log(`
+Uso:
+  node make-scorecards-ui.js <FED>    Gerar HTML de um jogador
+  node make-scorecards-ui.js --all    Gerar HTML de todos
+  node make-scorecards-ui.js          Gerar HTML de todos
+`);
+    process.exit(0);
   }
-
-  console.log(`\nTodos os ${allPlayers.length} jogador(es) processados.`);
 })();
