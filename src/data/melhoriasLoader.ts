@@ -12,11 +12,12 @@
  */
 
 import type { Course, Tee, Hole, Ratings } from "./types";
+import { sumRange } from "../utils/format";
 
 type ScorecardEntry = Record<string, unknown>;
 type MelhoriasJson = Record<string, Record<string, unknown>>;
 
-/* ── Helpers ── */
+/* â”€â”€ Helpers â”€â”€ */
 
 function getNum(obj: ScorecardEntry, key: string): number | null {
   const v = obj[key];
@@ -28,17 +29,8 @@ function getStr(obj: ScorecardEntry, key: string): string {
   return typeof v === "string" ? v : "";
 }
 
-function sumRange(start: number, end: number, getter: (i: number) => number | null): number | null {
-  let total = 0;
-  let any = false;
-  for (let i = start; i <= end; i++) {
-    const v = getter(i);
-    if (v !== null) { total += v; any = true; }
-  }
-  return any ? total : null;
-}
 
-/* ── Tipo intermedio ── */
+/* â”€â”€ Tipo intermedio â”€â”€ */
 
 type TeeKey = string;
 
@@ -104,7 +96,7 @@ function addToCourseMap(
   }
 }
 
-/* ── Exportacao principal ── */
+/* â”€â”€ Exportacao principal â”€â”€ */
 
 export function extractAwayCourses(melhorias: MelhoriasJson): Course[] {
   const courseMap = new Map<string, CourseEntry>();

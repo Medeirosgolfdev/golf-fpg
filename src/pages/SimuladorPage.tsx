@@ -1,56 +1,15 @@
 import { useMemo, useState } from "react";
 import type { Course, Tee } from "../data/types";
 import TeeBadge from "../ui/TeeBadge";
-import { getTeeHex } from "../utils/teeColors";
 import { fmt, fmtCR, norm, titleCase } from "../utils/format";
+import { sortTees, filterTees, teeHexFromTee as teeHex } from "../utils/teeUtils";
+import { calcSD, calcScore, calcPlayingHcp } from "../utils/whsCalc";
 
 type Props = { courses: Course[] };
 
 type SexFilter = "ALL" | "M" | "F";
 type HolesMode = "18" | "front9" | "back9";
 
-/* ─── Helpers ─── */
-
-function teeHex(t: Tee): string {
-  return getTeeHex(t.teeName, t.scorecardMeta?.teeColor);
-}
-
-function sexRank(s: string) {
-  if (s === "M") return 0;
-  if (s === "F") return 1;
-  return 2;
-}
-
-function sortTees(tees: Tee[]): Tee[] {
-  return [...tees].sort((a, b) => {
-    const da = a.distances?.total ?? -1;
-    const db = b.distances?.total ?? -1;
-    if (db !== da) return db - da;
-    const sr = sexRank(a.sex) - sexRank(b.sex);
-    if (sr !== 0) return sr;
-    return a.teeName.localeCompare(b.teeName, "pt-PT", { sensitivity: "base" });
-  });
-}
-
-function filterTees(tees: Tee[], sex: SexFilter): Tee[] {
-  if (sex === "ALL") return tees;
-  return tees.filter((t) => t.sex === sex);
-}
-
-/** Score Differential = (113 / Slope) × (Score - CR - PCC) */
-function calcSD(score: number, cr: number, slope: number, pcc = 0): number {
-  return (113 / slope) * (score - cr - pcc);
-}
-
-/** Inverso: Score = SD × (Slope / 113) + CR + PCC */
-function calcScore(sd: number, cr: number, slope: number, pcc = 0): number {
-  return sd * (slope / 113) + cr + pcc;
-}
-
-/** Playing Handicap = HI × (Slope / 113) + (CR - Par) */
-function calcPlayingHcp(hi: number, slope: number, cr: number, par: number): number {
-  return hi * (slope / 113) + (cr - par);
-}
 
 /**
  * WHS 2024 – Expected 9-hole Score Differential.

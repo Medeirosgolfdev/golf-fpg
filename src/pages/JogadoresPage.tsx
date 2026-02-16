@@ -1,18 +1,24 @@
 import React, { useEffect, useMemo, useState, type ReactNode } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import type { Player, PlayersDb, Course } from "../data/types";
-import { norm } from "../utils/format";
-import { getTeeHex, textOnColor, normKey } from "../utils/teeColors";
+import { norm, shortDate } from "../utils/format";
+import { getTeeHex, textOnColor, normKey, teeBorder } from "../utils/teeColors";
+import { clubShort, clubLong, hcpDisplay } from "../utils/playerUtils";
+import { numSafe, meanArr, stdevArr, sumArr } from "../utils/mathUtils";
+import { scClass, fmtGrossDelta, fmtStb, sdClassByHcp, fmtSdVal } from "../utils/scoreDisplay";
 import {
   loadPlayerData,
   type PlayerPageData, type CourseData, type RoundData,
   type EclecticEntry, type HoleStatsData,
   type CrossPlayerData, type HcpInfo, type HoleScores,
 } from "../data/playerDataLoader";
+import PillBadge from "../ui/PillBadge";
+import TeePill from "../ui/TeePill";
+import TeeDate from "../ui/TeeDate";
 
-/* ════════════════════════════════════════════
+/* ══════════════════════════════════════════
    Utility functions (port from client JS)
-   ════════════════════════════════════════════ */
+   ══════════════════════════════════════════ */
 
 type Props = { players: PlayersDb; courses?: Course[] };
 type SexFilter = "ALL" | "M" | "F";
@@ -20,163 +26,25 @@ type SortKey = "name" | "hcp" | "club" | "escalao";
 type ViewKey = "by_course" | "by_course_analysis" | "by_date" | "by_tournament" | "analysis";
 type CourseSort = "last_desc" | "count_desc" | "name_asc";
 
-function clubShort(p: Player): string {
-  if (typeof p.club === "object" && p.club) return p.club.short || p.club.long || "";
-  return String(p.club || "");
-}
-function clubLong(p: Player): string {
-  if (typeof p.club === "object" && p.club) return p.club.long || p.club.short || "";
-  return String(p.club || "");
-}
-function hcpDisplay(hcp: number | null | undefined): string {
-  if (hcp == null) return "–";
-  return hcp.toFixed(1).replace(".", ",");
-}
-function norm2(s: string): string {
-  return (s ?? "").normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
-}
-function numSafe(v: unknown): number | null {
-  if (v === null || v === undefined) return null;
-  const n = parseFloat(String(v).replace(",", "."));
-  return isFinite(n) ? n : null;
-}
-function meanArr(arr: (number | null | undefined)[]): number | null {
-  let s = 0, c = 0;
-  for (const v of arr) { const n = numSafe(v); if (n != null) { s += n; c++; } }
-  return c ? s / c : null;
-}
-function stdevArr(arr: (number | null | undefined)[]): number | null {
-  const vals: number[] = [];
-  for (const v of arr) { const n = numSafe(v); if (n != null) vals.push(n); }
-  if (vals.length < 2) return null;
-  const m = vals.reduce((a, b) => a + b, 0) / vals.length;
-  const variance = vals.reduce((a, v) => a + (v - m) ** 2, 0) / (vals.length - 1);
-  return Math.sqrt(variance);
-}
-/* Mapa tee name → hex real (DataGolf), populado a partir de courses */
-let _teeColorMap: Map<string, string> = new Map();
-
-function buildTeeColorMap(courses: Course[]): Map<string, string> {
-  const m = new Map<string, string>();
-  for (const c of courses) {
-    for (const t of c.master.tees) {
-      const hex = t.scorecardMeta?.teeColor;
-      if (hex) {
-        const k = normKey(t.teeName);
-        if (!m.has(k)) m.set(k, hex.startsWith("#") ? hex : `#${hex}`);
-      }
-    }
-  }
-  return m;
-}
-
-function teeHex(name: string): string {
-  const k = normKey(name);
-  const real = _teeColorMap.get(k);
-  return getTeeHex(name, real);
-}
-
-/* ── Course key lookup: course display name → courseKey for /campos/:courseKey ── */
+/* —— Course key lookup: course display name → courseKey for /campos/:courseKey —— */
 let _courseKeyMap: Map<string, string> = new Map();
 function buildCourseKeyMap(courses: Course[]): Map<string, string> {
   const m = new Map<string, string>();
   for (const c of courses) {
-    m.set(norm2(c.master.name), c.courseKey);
-    m.set(norm2(c.courseKey), c.courseKey);
+    m.set(norm(c.master.name), c.courseKey);
+    m.set(norm(c.courseKey), c.courseKey);
   }
   return m;
 }
 function findCourseKey(courseName: string): string | null {
-  return _courseKeyMap.get(norm2(courseName)) ?? null;
+  return _courseKeyMap.get(norm(courseName)) ?? null;
 }
-function teeFg(hex: string): string { return textOnColor(hex); }
 
 const scHostStyle: React.CSSProperties = { margin: "6px 8px", border: "1px solid var(--line, #d5dac9)", borderRadius: 14, background: "#fff", padding: 10, overflow: "hidden" };
-
-function fmtGrossDelta(gross: number | null, par: number | null): { text: string; delta: string; cls: string } {
-  if (gross == null) return { text: "", delta: "", cls: "" };
-  const g = Number(gross);
-  if (!isFinite(g)) return { text: String(gross), delta: "", cls: "" };
-  const p = Number(par);
-  if (!isFinite(p) || p <= 0) return { text: String(g), delta: "", cls: "" };
-  const diff = g - p;
-  const txt = diff === 0 ? "E" : (diff > 0 ? "+" : "") + diff;
-  const cls = diff > 0 ? "pos" : diff < 0 ? "neg" : "";
-  return { text: String(g), delta: txt, cls };
-}
-
-function fmtStb(stb: number | null | undefined, holeCount: number | undefined): string {
-  if (stb == null) return "";
-  if (holeCount === 9) return `${stb + 17}*`;
-  return String(stb);
-}
-
-function sdClassByHcp(sd: number, hcp: number | null | undefined): string {
-  if (hcp == null || !isFinite(sd)) return "";
-  const hi = Number(hcp);
-  if (!isFinite(hi)) return "";
-  if (sd <= hi) return "sd-excellent";
-  if (sd <= hi + 3) return "sd-good";
-  return "sd-poor";
-}
-
-function fmtSdVal(r: RoundData): { text: string; cls: string } {
-  if (r.sd == null) return { text: "", cls: "" };
-  const cls = sdClassByHcp(Number(r.sd), r.hi);
-  return { text: String(r.sd), cls };
-}
-
-function shortDate(d: string): string {
-  return (d || "").replace(/^(\d{2})-(\d{2})-\d{4}$/, "$1-$2");
-}
-
-function sumArr(arr: (number | null)[], from: number, to: number): number {
-  let s = 0;
-  for (let i = from; i < to; i++) if (arr[i] != null) s += arr[i]!;
-  return s;
-}
-
-function scClass(gross: number | null, par: number | null): string {
-  if (gross == null || par == null || gross <= 0 || par <= 0) return "";
-  const d = gross - par;
-  if (gross === 1) return "holeinone";
-  if (d <= -3) return "albatross";
-  if (d === -2) return "eagle";
-  if (d === -1) return "birdie";
-  if (d === 0) return "par";
-  if (d === 1) return "bogey";
-  if (d === 2) return "double";
-  if (d === 3) return "triple";
-  if (d === 4) return "quad";
-  if (d === 5) return "quint";
-  return "worse";
-}
 
 /* ════════════════════════════════════════════
    Micro-components
    ════════════════════════════════════════════ */
-
-/** Tees claros (brancas, etc.) precisam de bordo para não desaparecer no fundo */
-function teeBorder(hex: string): string | undefined {
-  const h = hex.replace("#", "");
-  if (h.length !== 6) return undefined;
-  const r = parseInt(h.slice(0, 2), 16) / 255;
-  const g = parseInt(h.slice(2, 4), 16) / 255;
-  const b = parseInt(h.slice(4, 6), 16) / 255;
-  const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-  return lum > 0.82 ? "1px solid #bbb" : undefined;
-}
-
-function TeePill({ name }: { name: string }) {
-  if (!name) return null;
-  const hx = teeHex(name), fg = teeFg(hx);
-  return <span className="teePill" style={{ background: hx, color: fg, border: teeBorder(hx) }}>{name}</span>;
-}
-
-function TeeDate({ date, tee }: { date: string; tee: string }) {
-  const hx = teeHex(tee), fg = teeFg(hx);
-  return <span className="tee-date" style={{ background: hx, color: fg, border: teeBorder(hx) }}>{shortDate(date)}</span>;
-}
 
 function GrossCell({ gross, par }: { gross: number | null; par: number | null }) {
   const { text, delta, cls } = fmtGrossDelta(gross, par);
@@ -201,22 +69,6 @@ function ScoreCircle({ gross, par, size = "normal" }: { gross: number | null; pa
   const cls = par != null ? scClass(gross, par) : "";
   const sizeStyle = size === "small" ? { fontSize: "10px", width: "20px", height: "20px" } : {};
   return <span className={`sc-score ${cls}`} style={sizeStyle}>{gross}</span>;
-}
-
-/* ─── Pill Badge (REGIONAL, NACIONAL, INTL) ─── */
-function PillBadge({ pill }: { pill?: string }) {
-  if (!pill) return null;
-  let p = pill.trim().toUpperCase();
-  // Unificar: AWAY e AWAY INTL → INTL
-  if (p === "AWAY" || p === "AWAY INTL" || p === "INTERNACIONAL") p = "INTL";
-  const classMap: Record<string, string> = {
-    REGIONAL: "pill-torneio pill-regional",
-    NACIONAL: "pill-torneio pill-nacional",
-    INTL: "pill-torneio pill-intl",
-  };
-  const cls = classMap[p];
-  if (!cls) return null;
-  return <span className={cls}>{p}</span>;
 }
 
 /* ─── EDS / Score Origin Badge ─── */
@@ -287,7 +139,7 @@ function ByDateView({ data, search, onScoreClick }: {
   data: PlayerPageData; search: string; onScoreClick: (id: string) => void;
 }) {
   const all = useMemo(() => {
-    const term = norm2(search);
+    const term = norm(search);
     let rounds: (RoundData & { course: string })[] = [];
     data.DATA.forEach(c => {
       c.rounds.forEach(r => {
@@ -296,7 +148,7 @@ function ByDateView({ data, search, onScoreClick }: {
     });
     if (term) {
       rounds = rounds.filter(x =>
-        norm2(x.course).includes(term) || norm2(x.eventName || "").includes(term)
+        norm(x.course).includes(term) || norm(x.eventName || "").includes(term)
       );
     }
     rounds.sort((a, b) => (b.dateSort - a.dateSort) || String(b.scoreId).localeCompare(String(a.scoreId)));
@@ -421,7 +273,7 @@ function ByCourseRow({ course, idx, data, isAnalysis, openScorecard, openScoreca
   const [open, setOpen] = useState(false);
   const [activeTee, setActiveTee] = useState<string | null>(null);
   const last = course.rounds[0];
-  const courseKey = norm2(course.course);
+  const courseKey = norm(course.course);
 
   // Filter rounds by active tee
   const roundsView = useMemo(() => {
@@ -440,7 +292,7 @@ function ByCourseRow({ course, idx, data, isAnalysis, openScorecard, openScoreca
       <tr className={open ? "pa-row-open" : ""}>
         <td>
           <div className="rowHead">
-            <div className="count" style={{ background: teeHex(last?.tee || ""), color: teeFg(teeHex(last?.tee || "")), border: teeBorder(teeHex(last?.tee || "")) }}>{course.count}</div>
+            <div className="count" style={{ background: getTeeHex(last?.tee || ""), color: textOnColor(getTeeHex(last?.tee || "")), border: teeBorder(getTeeHex(last?.tee || "")) }}>{course.count}</div>
             <button type="button" className="courseBtn" onClick={() => setOpen(v => !v)}>{course.course}</button>
             {findCourseKey(course.course) && <Link to={`/campos/${findCourseKey(course.course)}`} className="courseLink" style={{ marginLeft: 4, fontSize: 10 }} title="Ver campo" onClick={e => e.stopPropagation()}>↗</Link>}
             <PillBadge pill={course.rounds.find(r => r._pill)?._pill} />
@@ -543,7 +395,7 @@ function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, eclecti
   const frontEnd = is9 ? holeCount : 9;
   const totalHoles = Math.min(holeCount, gross.length);
 
-  const teeHex_ = teeHex(tee || "");
+  const teeHex_ = getTeeHex(tee || "");
   const teeFg_ = textOnColor(teeHex_);
 
   const parTotal = sumArr(par, 0, totalHoles);
@@ -851,7 +703,7 @@ function RoundRow({ r, data, courseName, isOpen, onToggle }: {
   r: RoundData; data: PlayerPageData; courseName: string; isOpen: boolean; onToggle: () => void;
 }) {
   const holes = data.HOLES[String(r.scoreId)];
-  const courseKey = norm2(courseName);
+  const courseKey = norm(courseName);
   const teeKey = r.teeKey || normKey(r.tee || "");
   const ecEntry = data.ECDET?.[courseKey]?.[teeKey] || null;
   return (
@@ -902,9 +754,9 @@ function ByCourseView({ data, search, sort, isAnalysis }: {
 }) {
   const [openScorecardId, setOpenScorecardId] = useState<string | null>(null);
   const list = useMemo(() => {
-    const term = norm2(search);
+    const term = norm(search);
     let l = data.DATA.slice();
-    if (term) l = l.filter(c => norm2(c.course).includes(term));
+    if (term) l = l.filter(c => norm(c.course).includes(term));
     if (sort === "name_asc") l.sort((a, b) => a.course.localeCompare(b.course, "pt"));
     else if (sort === "last_desc") l.sort((a, b) => (b.lastDateSort - a.lastDateSort) || (b.count - a.count));
     else l.sort((a, b) => (b.count - a.count) || a.course.localeCompare(b.course, "pt"));
@@ -991,7 +843,7 @@ function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, ac
         const parArr = det.holes?.map(h => h.par) || [];
         const hc = ec.holeCount;
         const is9 = hc === 9;
-        const hx = teeHex(ec.teeName), fg = teeFg(hx);
+        const hx = getTeeHex(ec.teeName), fg = textOnColor(hx);
 
         // Get individual round scores for this tee
         const teeRounds = courseRounds
@@ -1885,7 +1737,7 @@ function Last20Table({ data, last20Table, best8 }: {
               const holes = data.HOLES[String(r.scoreId)];
 
               // Eclectic entry
-              const courseKey = norm2(r.course);
+              const courseKey = norm(r.course);
               const teeKey = r.teeKey || normKey(r.tee || "");
               const ecEntry = data.ECDET?.[courseKey]?.[teeKey] || null;
 
@@ -2350,8 +2202,8 @@ function TournamentComparison({ rounds, holesData }: {
   const meters = refData.m;
   const si = refData.si;
   const tee = rounds[0]?.tee || "";
-  const hx = teeHex(tee);
-  const fgT = teeFg(hx);
+  const hx = getTeeHex(tee);
+  const fgT = textOnColor(hx);
   const totalPar = par ? sumArr(par, 0, hc) : null;
   const totalDist = meters ? sumArr(meters, 0, hc) : null;
   const hcpLabel = rounds[0]?.hi ?? "";
@@ -2417,8 +2269,8 @@ function TournamentComparison({ rounds, holesData }: {
               const gross = roundGross[ri];
               if (!gross) return null;
               const dateFmt = rd.date ? rd.date.substring(0, 5).replace("-", "/") : `V${ri + 1}`;
-              const rdHx = teeHex(rd.tee || "");
-              const rdFg = teeFg(rdHx);
+              const rdHx = getTeeHex(rd.tee || "");
+              const rdFg = textOnColor(rdHx);
               return (
                 <CompScoreRow key={rd.scoreId} label={dateFmt} labelBg={rdHx} labelFg={rdFg}
                   gross={gross} par={par} hc={hc} is9={is9} frontEnd={frontEnd} backStart={backStart} />
@@ -2576,7 +2428,7 @@ function TournRoundRow({ r, idx, data }: {
 }) {
   const [scOpen, setScOpen] = useState(false);
   const holes = data.HOLES[String(r.scoreId)];
-  const courseKey = norm2(r.course);
+  const courseKey = norm(r.course);
   const teeKey = r.teeKey || normKey(r.tee || "");
   const ecEntry = data.ECDET?.[courseKey]?.[teeKey] || null;
 
@@ -2627,13 +2479,13 @@ function TournRoundRow({ r, idx, data }: {
 
 function ByTournamentView({ data, search }: { data: PlayerPageData; search: string }) {
   const items = useMemo(() => {
-    const term = norm2(search);
+    const term = norm(search);
 
     /* ─── nameSimilarity (port from helpers.js) ─── */
     function nameSimilarity(name1: string, name2: string, course1?: string, course2?: string): number {
       if (!name1 || !name2) return 0;
-      let n1 = norm2(name1).replace(/internancional|internaccional|interacional/g, "internacional");
-      let n2 = norm2(name2).replace(/internancional|internaccional|interacional/g, "internacional");
+      let n1 = norm(name1).replace(/internancional|internaccional|interacional/g, "internacional");
+      let n2 = norm(name2).replace(/internancional|internaccional|interacional/g, "internacional");
       if (n1 === n2) return 1;
       const awayKw = ["away", "internacional", "international", "tour", "viagem", "estrangeiro", "abroad"];
       const has1 = awayKw.some(k => n1.includes(k));
@@ -2646,7 +2498,7 @@ function ByTournamentView({ data, search }: { data: PlayerPageData; search: stri
           if (w1.some(a => w2.some(b => a === b || a.includes(b) || b.includes(a)))) return 0.95;
         }
         if (w1.length === 0 && w2.length === 0) {
-          if (course1 && course2 && norm2(course1) === norm2(course2)) return 0.95;
+          if (course1 && course2 && norm(course1) === norm(course2)) return 0.95;
           return 0.8;
         }
       }
@@ -2699,7 +2551,7 @@ function ByTournamentView({ data, search }: { data: PlayerPageData; search: stri
           const gap = Math.abs((r.dateSort - gr.dateSort) / 86400000);
           if (gap < minGap) minGap = gap;
         }
-        const sameCourse = group.courses.some(gc => norm2(gc) === norm2(r.course));
+        const sameCourse = group.courses.some(gc => norm(gc) === norm(r.course));
         const bothAway = /away|internacional|international|tour|viagem|estrangeiro|abroad/i.test(r.eventName) &&
           /away|internacional|international|tour|viagem|estrangeiro|abroad/i.test(group.name);
         if ((similarity >= 0.3 && minGap <= 2) ||
@@ -2722,7 +2574,7 @@ function ByTournamentView({ data, search }: { data: PlayerPageData; search: stri
 
     for (const g of globalGroups) {
       if (g.rounds.length >= 2) {
-        const realCourses = g.courses.filter(c => !placeholders.some(p => norm2(c) === p));
+        const realCourses = g.courses.filter(c => !placeholders.some(p => norm(c) === p));
         const finalCourse = realCourses.length > 0
           ? (realCourses.length === 1 ? realCourses[0] : realCourses.join(", "))
           : g.courses[0];
@@ -2757,7 +2609,7 @@ function ByTournamentView({ data, search }: { data: PlayerPageData; search: stri
 
     /* 5. Filter + sort */
     let result = items;
-    if (term) result = result.filter(it => norm2(it.course).includes(term) || norm2(it.name).includes(term));
+    if (term) result = result.filter(it => norm(it.course).includes(term) || norm(it.name).includes(term));
     result.sort((a, b) => {
       const al = a.rounds[a.rounds.length - 1]?.dateSort || 0;
       const bl = b.rounds[b.rounds.length - 1]?.dateSort || 0;
@@ -2982,11 +2834,17 @@ export default function JogadoresPage({ players, courses }: Props) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [playerMeta, setPlayerMeta] = useState<PlayerPageData["META"] | null>(null);
 
-  /* Sync URL param → selectedFed */
+  /* Ref para distinguir navegação interna (selectPlayer) de externa (URL directo) */
+  const internalNav = React.useRef(false);
+
+  /* Sync URL param → selectedFed (só limpa q em navegação externa) */
   useEffect(() => {
     if (urlFed && players[urlFed]) {
       setSelectedFed(urlFed);
-      setQ("");
+      if (!internalNav.current) {
+        setQ("");
+      }
+      internalNav.current = false;
     }
   }, [urlFed]);
 
@@ -2994,16 +2852,13 @@ export default function JogadoresPage({ players, courses }: Props) {
   const selectPlayer = (fed: string | null) => {
     setSelectedFed(fed);
     if (fed) {
+      internalNav.current = true;
       navigate(`/jogadores/${fed}`, { replace: true });
     } else {
       navigate("/jogadores", { replace: true });
     }
   };
 
-  // Populate tee color map from courses (DataGolf real colors) - eager, before first render
-  if (courses?.length && _teeColorMap.size === 0) {
-    _teeColorMap = buildTeeColorMap(courses);
-  }
   // Populate course key map for course links
   if (courses?.length && _courseKeyMap.size === 0) {
     _courseKeyMap = buildCourseKeyMap(courses);
