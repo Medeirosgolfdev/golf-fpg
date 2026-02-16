@@ -42,3 +42,8 @@ export function sumRange(from: number, to: number, getVal: (i: number) => number
   }
   return any ? sum : null;
 }
+
+/** Data abreviada: "25-03-2024" → "25-03" */
+export function shortDate(d: string): string {
+  return (d || "").replace(/^(\d{2})-(\d{2})-\d{4}$/, "$1-$2");
+}

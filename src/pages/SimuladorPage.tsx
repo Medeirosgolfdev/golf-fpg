@@ -1,41 +1,14 @@
 import { useMemo, useState } from "react";
-import type { Course, Tee } from "../data/types";
+import type { Course, Tee, SexFilter } from "../data/types";
 import TeeBadge from "../ui/TeeBadge";
-import { getTeeHex } from "../utils/teeColors";
 import { fmt, fmtCR, norm, titleCase } from "../utils/format";
+import { sortTees, filterTees, teeHexFromTee } from "../utils/teeUtils";
 
 type Props = { courses: Course[] };
 
-type SexFilter = "ALL" | "M" | "F";
 type HolesMode = "18" | "front9" | "back9";
 
 /* ─── Helpers ─── */
-
-function teeHex(t: Tee): string {
-  return getTeeHex(t.teeName, t.scorecardMeta?.teeColor);
-}
-
-function sexRank(s: string) {
-  if (s === "M") return 0;
-  if (s === "F") return 1;
-  return 2;
-}
-
-function sortTees(tees: Tee[]): Tee[] {
-  return [...tees].sort((a, b) => {
-    const da = a.distances?.total ?? -1;
-    const db = b.distances?.total ?? -1;
-    if (db !== da) return db - da;
-    const sr = sexRank(a.sex) - sexRank(b.sex);
-    if (sr !== 0) return sr;
-    return a.teeName.localeCompare(b.teeName, "pt-PT", { sensitivity: "base" });
-  });
-}
-
-function filterTees(tees: Tee[], sex: SexFilter): Tee[] {
-  if (sex === "ALL") return tees;
-  return tees.filter((t) => t.sex === sex);
-}
 
 /** Score Differential = (113 / Slope) × (Score - CR - PCC) */
 function calcSD(score: number, cr: number, slope: number, pcc = 0): number {
@@ -524,49 +497,34 @@ export default function SimuladorPage({ courses }: Props) {
           >
             {sidebarOpen ? "◀" : "▶"}
           </button>
-          <div className="field">
-            <label>Pesquisa</label>
-            <input
-              className="input"
-              value={q}
-              onChange={(e) => { setQ(e.target.value); setSelectedKey(null); }}
-              placeholder="Nome do campo…"
-            />
-          </div>
-          <div className="field">
-            <label>Buracos</label>
-            <select className="select" value={holesMode} onChange={(e) => { setHolesMode(e.target.value as HolesMode); setSelectedTeeId(null); }}>
-              <option value="18">18 buracos</option>
-              <option value="front9">Front 9</option>
-              <option value="back9">Back 9</option>
-            </select>
-          </div>
-          <div className="field">
-            <label>Sexo</label>
-            <select className="select" value={sexFilter} onChange={(e) => setSexFilter(e.target.value as SexFilter)}>
-              <option value="ALL">Todos</option>
-              <option value="M">Masculino</option>
-              <option value="F">Feminino</option>
-            </select>
-          </div>
-          <div className="field">
-            <label>HI (Índice)</label>
-            <input
-              className="input"
-              value={hiInput}
-              onChange={(e) => setHiInput(e.target.value)}
-              placeholder="ex: 15,4"
-              style={{ width: 80 }}
-            />
-          </div>
-          <div className="field">
-            <label>PCC</label>
-            <select className="select" value={pcc} onChange={(e) => setPcc(Number(e.target.value))}>
-              {[-3, -2, -1, 0, 1, 2, 3].map((v) => (
-                <option key={v} value={v}>{v === 0 ? "0" : v > 0 ? `+${v}` : v}</option>
-              ))}
-            </select>
-          </div>
+          <input
+            className="input"
+            value={q}
+            onChange={(e) => { setQ(e.target.value); setSelectedKey(null); }}
+            placeholder="Nome do campo…"
+          />
+          <select className="select" value={holesMode} onChange={(e) => { setHolesMode(e.target.value as HolesMode); setSelectedTeeId(null); }}>
+            <option value="18">18 buracos</option>
+            <option value="front9">Front 9</option>
+            <option value="back9">Back 9</option>
+          </select>
+          <select className="select" value={sexFilter} onChange={(e) => setSexFilter(e.target.value as SexFilter)}>
+            <option value="ALL">Sexo</option>
+            <option value="M">Masculino</option>
+            <option value="F">Feminino</option>
+          </select>
+          <input
+            className="input"
+            value={hiInput}
+            onChange={(e) => setHiInput(e.target.value)}
+            placeholder="HI (ex: 15,4)"
+            style={{ width: 100 }}
+          />
+          <select className="select" value={pcc} onChange={(e) => setPcc(Number(e.target.value))}>
+            {[-3, -2, -1, 0, 1, 2, 3].map((v) => (
+              <option key={v} value={v}>{v === 0 ? "PCC 0" : v > 0 ? `PCC +${v}` : `PCC ${v}`}</option>
+            ))}
+          </select>
         </div>
         <div className="toolbar-right">
           <div className="chip">{filtered.length} campos</div>
@@ -737,7 +695,7 @@ export default function SimuladorPage({ courses }: Props) {
                     >
                       <TeeBadge
                         label={titleCase(t.teeName)}
-                        colorHex={teeHex(t)}
+                        colorHex={teeHexFromTee(t)}
                         suffix={t.sex !== "U" ? t.sex : null}
                       />
                       <span className="sim-tee-info">

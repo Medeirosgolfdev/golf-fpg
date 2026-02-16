@@ -8,14 +8,15 @@
 //   --login          Forçar passo de login (abre browser para login manual)
 //   --refresh        Actualizar: re-descarrega lista WHS + só scorecards novos
 //   --skip-download  Saltar downloads (usar dados já existentes)
-//   --skip-render    Saltar geração do HTML final
+//   --skip-render    Saltar geração de dados
 //   --force          Re-descarregar TUDO (lista + todos os scorecards)
+//   --sync-players   Apenas sincronizar players.json com dados WHS existentes
 //
 // Exemplos:
 //   node golf-all.js 52884                      # Um atleta (primeira vez)
 //   node golf-all.js --refresh 52884 12345      # Apanhar novos scorecards
 //   node golf-all.js --login 52884              # Forçar login + pipeline
-//   node golf-all.js --skip-download 52884      # Só gerar HTML (dados já existem)
+//   node golf-all.js --skip-download 52884      # Só gerar dados (downloads já existem)
 //   node golf-all.js --force 52884              # Re-descarregar tudo
 //
 // Requisitos: npm install playwright
@@ -25,6 +26,13 @@ const fs = require("fs");
 const path = require("path");
 const { execSync } = require("child_process");
 const { chromium } = require("playwright");
+
+/** Ler JSON de ficheiro, removendo BOM se existir */
+function readJSON(fpath) {
+  let txt = fs.readFileSync(fpath, "utf-8");
+  if (txt.charCodeAt(0) === 0xFEFF) txt = txt.slice(1);
+  return JSON.parse(txt);
+}
 
 // ===== PARSE ARGUMENTOS =====
 const args = process.argv.slice(2);
@@ -37,6 +45,7 @@ const fedCodes = [];
 
 let allFlag = false;
 let priorityFlag = false;
+let syncPlayersFlag = false;
 
 for (const a of args) {
   if (a === "--login")         { doLoginFlag = true; continue; }
@@ -46,6 +55,7 @@ for (const a of args) {
   if (a === "--force")         { forceFlag = true; continue; }
   if (a === "--all")           { allFlag = true; continue; }
   if (a === "--priority")      { priorityFlag = true; continue; }
+  if (a === "--sync-players")  { syncPlayersFlag = true; continue; }
   if (/^\d+$/.test(a))        { fedCodes.push(a); continue; }
   console.error(`Argumento desconhecido: ${a}`);
   process.exit(1);
@@ -55,7 +65,7 @@ for (const a of args) {
 if (allFlag && fedCodes.length === 0) {
   const pPath = path.join(process.cwd(), "players.json");
   if (fs.existsSync(pPath)) {
-    const db = JSON.parse(fs.readFileSync(pPath, "utf-8"));
+    const db = readJSON(pPath);
     fedCodes.push(...Object.keys(db));
     console.log(`--all: ${fedCodes.length} federados carregados de players.json`);
   } else {
@@ -68,7 +78,7 @@ if (allFlag && fedCodes.length === 0) {
 if (priorityFlag && fedCodes.length === 0) {
   const pPath = path.join(process.cwd(), "players.json");
   if (fs.existsSync(pPath)) {
-    const db = JSON.parse(fs.readFileSync(pPath, "utf-8"));
+    const db = readJSON(pPath);
     for (const [k, v] of Object.entries(db)) {
       if (v.tags && v.tags.includes("no-priority")) continue;
       const isPJA = v.tags && v.tags.includes("PJA");
@@ -84,29 +94,38 @@ if (priorityFlag && fedCodes.length === 0) {
   }
 }
 
+// --sync-players: apenas sync players.json sem download ou render
+if (syncPlayersFlag) {
+  const pPath = path.join(process.cwd(), "players.json");
+  if (fs.existsSync(pPath)) {
+    const db = readJSON(pPath);
+    const allFeds = Object.keys(db);
+    console.log(`--sync-players: sincronizar ${allFeds.length} jogadores`);
+    syncPlayersJson(allFeds);
+    console.log("Sync concluído.");
+    process.exit(0);
+  } else {
+    console.error("--sync-players: não encontrei players.json");
+    process.exit(1);
+  }
+}
+
 if (fedCodes.length === 0) {
   console.log(`
 ╔══════════════════════════════════════════════════════╗
-║  golf-all.js — Pipeline completo de scorecards FPG  ║
+║       golf-all.js — Pipeline FPG Scorecards         ║
 ╠══════════════════════════════════════════════════════╣
+║  Uso: node golf-all.js [opcoes] <federados...>      ║
 ║                                                      ║
-║  Uso:                                                ║
-║    node golf-all.js [opções] <FED> [<FED> ...]       ║
-║                                                      ║
-║  Opções:                                             ║
-║    --login          Forçar login manual               ║
-║    --refresh        Apanhar novos (recomendado)       ║
-║    --skip-download  Saltar downloads                  ║
-║    --skip-render    Saltar geração HTML               ║
-║    --force          Re-descarregar tudo               ║
-║    --all            Todos de players.json             ║
-║    --priority       Só jogadores prioritários          ║
-║                                                      ║
-║  Exemplos:                                           ║
-║    node golf-all.js 52884                            ║
-║    node golf-all.js --refresh 52884 12345            ║
-║    node golf-all.js --skip-download 52884            ║
-║                                                      ║
+║  Opcoes:                                             ║
+║    --priority       So jogadores prioritarios        ║
+║    --all            Todos de players.json            ║
+║    --refresh        Actualizar (so novos scorecards) ║
+║    --force          Re-descarregar tudo              ║
+║    --skip-download  So gerar HTML                    ║
+║    --skip-render    So descarregar, sem HTML         ║
+║    --login          Forcar novo login                ║
+║    --sync-players   So sincronizar players.json      ║
 ╚══════════════════════════════════════════════════════╝
 `);
   process.exit(0);
@@ -265,7 +284,7 @@ async function downloadWHS(page, fedCode, outDir) {
 
   const whsPath = path.join(outDir, "whs-list.json");
   if (!forceFlag && !refreshFlag && fs.existsSync(whsPath)) {
-    const raw = JSON.parse(fs.readFileSync(whsPath, "utf-8"));
+    const raw = readJSON(whsPath);
     const count = raw?.Records?.length || 0;
     logOK(`Já existe (${count} registos) — a saltar. Usa --refresh para actualizar.`);
     return true;
@@ -345,7 +364,7 @@ async function downloadScorecards(page, fedCode, outDir) {
     return false;
   }
 
-  const raw = JSON.parse(fs.readFileSync(inputFile, "utf-8"));
+  const raw = readJSON(inputFile);
   const records = raw?.Records || [];
 
   if (records.length === 0) {
@@ -442,9 +461,9 @@ async function downloadScorecards(page, fedCode, outDir) {
   return true;
 }
 
-// ===== PASSO 4: GERAR HTML (chama make-scorecards-ui.js em batch) =====
+// ===== GERAR DADOS (chama make-scorecards-ui.js em batch) =====
 function generateUIBatch(fedList) {
-  logStep("🎨", `Gerar relatórios HTML para ${fedList.length} jogador(es)`);
+  logStep("🎨", `Gerar dados para ${fedList.length} jogador(es)`);
 
   const uiScript = path.join(process.cwd(), "make-scorecards-ui.js");
   if (!fs.existsSync(uiScript)) {
@@ -460,11 +479,128 @@ function generateUIBatch(fedList) {
       cwd: process.cwd(),
       maxBuffer: 50 * 1024 * 1024
     });
-    logOK(`${fedList.length} relatório(s) gerado(s)`);
+    logOK(`${fedList.length} jogador(es) processado(s)`);
     return true;
   } catch (err) {
-    logErr(`Erro ao gerar HTMLs: ${err.message}`);
+    logErr(`Erro ao gerar dados: ${err.message}`);
     return false;
+  }
+}
+
+// ===== SYNC players.json com dados frescos dos scorecards =====
+function syncPlayersJson(fedList) {
+  const pPath = path.join(process.cwd(), "players.json");
+  let playersDb = {};
+  try { playersDb = readJSON(pPath); } catch {}
+
+  let updated = 0;
+  for (const fed of fedList) {
+    const outDir = path.join(process.cwd(), "output", fed);
+    const scDir = path.join(outDir, "scorecards");
+    const whsPath = path.join(outDir, "whs-list.json");
+
+    // Get current entry or create stub
+    let entry = playersDb[fed];
+    if (!entry) continue;
+    if (typeof entry === "string") entry = { name: entry };
+
+    let changed = false;
+
+    // 1. Extract club from most recent scorecard
+    if (fs.existsSync(scDir)) {
+      const scFiles = fs.readdirSync(scDir).filter(f => f.endsWith(".json"));
+      let latestClub = null;
+      let latestClubCode = null;
+      let latestDate = 0;
+      for (const f of scFiles) {
+        try {
+          const sc = readJSON(path.join(scDir, f));
+          const rec = (sc.Records || [])[0];
+          if (!rec) continue;
+          const dateMatch = String(rec.played_at || "").match(/Date\((\d+)\)/);
+          const d = dateMatch ? Number(dateMatch[1]) : 0;
+          if (d > latestDate && rec.player_acronym) {
+            latestDate = d;
+            latestClub = rec.player_acronym;
+            latestClubCode = rec.player_club_code || null;
+          }
+        } catch {}
+      }
+      const currentClub = (typeof entry.club === "object" && entry.club) ? entry.club.short : (entry.club || "");
+      if (latestClub && latestClub !== currentClub) {
+        const oldClub = currentClub;
+        // Preserve object structure if it was an object, update all fields
+        if (typeof entry.club === "object" && entry.club) {
+          entry.club.short = latestClub;
+          entry.club.long = latestClub;
+          if (latestClubCode) entry.club.code = String(latestClubCode);
+        } else {
+          entry.club = latestClub;
+        }
+        changed = true;
+        console.log(`  [sync] ${fed}: clube ${oldClub || "?"} \u2192 ${latestClub}`);
+      }
+    }
+
+    // 2. Extract latest HCP from WHS data
+    if (fs.existsSync(whsPath)) {
+      try {
+        const whs = readJSON(whsPath);
+        const rows = (whs?.d ?? whs)?.Records || whs?.Records || [];
+        // Find most recent row — new_handicap is the post-round value
+        // exact_handicap = prev_handicap (pre-round) — NOT more precise, do NOT use
+        let latestHcp = null;
+        let latestHcpDate = 0;
+        for (const r of rows) {
+          const dateMatch = String(r.played_at || r.hcp_date || r.mov_date || "").match(/Date\((\d+)\)/);
+          const d = dateMatch ? Number(dateMatch[1]) : 0;
+          const nh = r.new_handicap != null ? parseFloat(r.new_handicap) : null;
+          if (d > latestHcpDate && nh != null && isFinite(nh)) {
+            latestHcpDate = d;
+            latestHcp = nh;
+          }
+        }
+        if (latestHcp != null && latestHcp !== entry.hcp) {
+          const oldHcp = entry.hcp;
+          entry.hcp = latestHcp;
+          changed = true;
+          console.log(`  [sync] ${fed}: HCP ${oldHcp ?? "?"} → ${latestHcp}`);
+        }
+      } catch {}
+    }
+
+    // 3. Recalculate escalão from dob
+    if (entry.dob) {
+      const refYear = new Date().getFullYear();
+      const y = Number(entry.dob.split("-")[0]);
+      if (y) {
+        const age = refYear - y;
+        let esc = "";
+        if (age >= 50) esc = "Sénior";
+        else if (age >= 19) esc = "Absoluto";
+        else if (age >= 17) esc = "Sub-18";
+        else if (age >= 15) esc = "Sub-16";
+        else if (age >= 13) esc = "Sub-14";
+        else if (age >= 11) esc = "Sub-12";
+        else esc = "Sub-10";
+        if (esc && esc !== entry.escalao) {
+          const oldEsc = entry.escalao;
+          entry.escalao = esc;
+          changed = true;
+          console.log(`  [sync] ${fed}: escalão ${oldEsc || "?"} → ${esc}`);
+        }
+      }
+    }
+
+    if (changed) {
+      playersDb[fed] = entry;
+      updated++;
+    }
+  }
+
+  if (updated > 0) {
+    fs.writeFileSync(pPath, JSON.stringify(playersDb, null, 2), "utf-8");
+    console.log(`  ✓ players.json actualizado (${updated} jogador(es))`);
   }
 }
 
@@ -485,6 +621,7 @@ ${BOLD}║${RESET}  Render:    ${(skipRender ? "Saltar" : "Sim").padEnd(39)}${BO
 ${BOLD}║${RESET}  Forçar:    ${(forceFlag ? "Sim" : "Não").padEnd(39)}${BOLD}║${RESET}
 ${BOLD}╚══════════════════════════════════════════════════════╝${RESET}
 `);
+
 
   // PASSO 1: Login (se necessário)
   if (needLogin && !skipDownload) {
@@ -527,9 +664,23 @@ ${BOLD}╚═══════════════════════�
     await browser.close();
   }
 
-  // PASSO 4: Render HTML (batch — um único processo)
+  // PASSO 4: Sync players.json com dados frescos (ANTES do render)
+  syncPlayersJson(fedCodes);
+
+  // PASSO 5: Render (batch)
   if (!skipRender) {
     generateUIBatch(fedCodes);
+  }
+
+  // PASSO 6: Extrair campos internacionais de todos os scorecards
+  try {
+    const extractScript = path.join(process.cwd(), "extract-courses.js");
+    if (fs.existsSync(extractScript)) {
+      logStep("\ud83c\udf0d", "Extrair campos internacionais");
+      require(extractScript);
+    }
+  } catch (e) {
+    logWarn(`extract-courses.js falhou: ${e.message}`);
   }
 
   // RESUMO
@@ -538,21 +689,21 @@ ${BOLD}╚═══════════════════════�
     const outDir = path.join(process.cwd(), "output", fed);
     const whsPath = path.join(outDir, "whs-list.json");
     const scDir = path.join(outDir, "scorecards");
-    const htmlPath = path.join(outDir, "analysis", "by-course-ui.html");
+    const dataPath = path.join(outDir, "analysis", "data.json");
 
     const whsCount = fs.existsSync(whsPath)
-      ? (JSON.parse(fs.readFileSync(whsPath, "utf-8"))?.Records?.length || 0)
+      ? (readJSON(whsPath)?.Records?.length || 0)
       : 0;
     const scCount = fs.existsSync(scDir)
       ? fs.readdirSync(scDir).filter(f => f.endsWith(".json")).length
       : 0;
-    const hasHtml = fs.existsSync(htmlPath);
+    const hasData = fs.existsSync(dataPath);
 
     console.log(`
   ${BOLD}Federado ${fed}:${RESET}
     WHS registos:  ${whsCount}
     Scorecards:    ${scCount}
-    HTML gerado:   ${hasHtml ? GREEN + "✓" + RESET + " " + htmlPath : RED + "✗" + RESET}
+    Dados gerados:   ${hasData ? GREEN + "✓" + RESET + " " + dataPath : RED + "✗" + RESET}
 `);
   }
 

@@ -1,39 +1,80 @@
 import { useMemo, useState } from "react";
-import type { Course, Tee } from "../data/types";
+import type { Course, Tee, SexFilter } from "../data/types";
 import TeeBadge from "../ui/TeeBadge";
-import { getTeeHex } from "../utils/teeColors";
+import PillBadge from "../ui/PillBadge";
+import { teeCanonicalLabel, teeGroupHex } from "../utils/teeColors";
 import { fmt, fmtCR, norm, titleCase, sumRange } from "../utils/format";
+import { sortTees, filterTees, teeHexFromTee } from "../utils/teeUtils";
 
 type Props = { courses: Course[] };
 
-type SexFilter = "ALL" | "M" | "F";
+type OriginFilter = "ALL" | "PT" | "INTL";
 
-/* ─── Helpers ─── */
+/* ——— Helpers ——— */
 
-function sexRank(s: string) {
-  if (s === "M") return 0;
-  if (s === "F") return 1;
-  return 2;
+/** Mapa de paises conhecidos — fallback para quando country nao vem nos dados */
+const KNOWN_AWAY: Record<string, { country: string; flag: string }> = {
+  "away-villa-padierna-flamingos":           { country: "Espanha",  flag: "\ud83c\uddea\ud83c\uddf8" },
+  "away-le-touquet-golf-club-la-for-t":      { country: "França",   flag: "\ud83c\uddeb\ud83c\uddf7" },
+  "away-golf-della-montecchia-white-red":    { country: "Itália",   flag: "\ud83c\uddee\ud83c\uddf9" },
+  "away-golden-palm":                        { country: "EUA",      flag: "\ud83c\uddfa\ud83c\uddf8" },
+  "away-real-club-de-golf-el-prat":          { country: "Espanha",  flag: "\ud83c\uddea\ud83c\uddf8" },
+  "away-terre-dei-consoli-golf-club":        { country: "Itália",   flag: "\ud83c\uddee\ud83c\uddf9" },
+  "away-marco-simone":                       { country: "Itália",   flag: "\ud83c\uddee\ud83c\uddf9" },
+};
+
+const COUNTRY_FLAGS: Record<string, string> = {
+  "portugal": "\ud83c\uddf5\ud83c\uddf9", "espanha": "\ud83c\uddea\ud83c\uddf8",
+  "italia": "\ud83c\uddee\ud83c\uddf9", "franca": "\ud83c\uddeb\ud83c\uddf7",
+  "eua": "\ud83c\uddfa\ud83c\uddf8", "reino unido": "\ud83c\uddec\ud83c\udde7",
+  "irlanda": "\ud83c\uddee\ud83c\uddea", "alemanha": "\ud83c\udde9\ud83c\uddea",
+  "holanda": "\ud83c\uddf3\ud83c\uddf1", "suica": "\ud83c\udde8\ud83c\udded",
+  "belgica": "\ud83c\udde7\ud83c\uddea", "turquia": "\ud83c\uddf9\ud83c\uddf7",
+  "marrocos": "\ud83c\uddf2\ud83c\udde6", "brasil": "\ud83c\udde7\ud83c\uddf7",
+  "africa do sul": "\ud83c\uddff\ud83c\udde6", "grecia": "\ud83c\uddec\ud83c\uddf7",
+};
+
+function normalizeCountryKey(raw: string): string {
+  // Reparar double-encoding UTF-8 (mojibake)
+  let s = raw;
+  try {
+    const bytes = new Uint8Array([...s].map(c => c.charCodeAt(0)));
+    const decoded = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+    if (decoded !== s) s = decoded;
+  } catch { /* ok */ }
+  return s.trim().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 }
 
-function sortTees(tees: Tee[]): Tee[] {
-  return [...tees].sort((a, b) => {
-    const da = a.distances?.total ?? -1;
-    const db = b.distances?.total ?? -1;
-    if (db !== da) return db - da;
-    const sr = sexRank(a.sex) - sexRank(b.sex);
-    if (sr !== 0) return sr;
-    return a.teeName.localeCompare(b.teeName, "pt-PT", { sensitivity: "base" });
-  });
+function resolveFlag(c: Course): string {
+  // 1) Tentar pelo country dos dados
+  if (c.master.country) {
+    const key = normalizeCountryKey(c.master.country);
+    const flag = COUNTRY_FLAGS[key];
+    if (flag) return flag;
+  }
+  // 2) Fallback: mapa de campos conhecidos
+  const known = KNOWN_AWAY[c.courseKey];
+  if (known) return known.flag;
+  // 3) Campo away desconhecido — bandeira generica
+  if (c.courseKey.startsWith("away-")) return "\ud83c\udff3\ufe0f";
+  return "";
 }
 
-function filterTees(tees: Tee[], sex: SexFilter): Tee[] {
-  if (sex === "ALL") return tees;
-  return tees.filter((t) => t.sex === sex);
+function resolveCountryName(c: Course): string {
+  if (c.master.country) {
+    let s = c.master.country;
+    try {
+      const bytes = new Uint8Array([...s].map(ch => ch.charCodeAt(0)));
+      const decoded = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+      if (decoded !== s) s = decoded;
+    } catch { /* ok */ }
+    return s.trim();
+  }
+  return KNOWN_AWAY[c.courseKey]?.country || "";
 }
 
-function teeHex(t: Tee): string {
-  return getTeeHex(t.teeName, t.scorecardMeta?.teeColor);
+function isAway(c: Course): boolean {
+  return c.courseKey.startsWith("away-");
 }
 
 function teeSuffix(t: Tee): string | null {
@@ -43,7 +84,16 @@ function teeSuffix(t: Tee): string | null {
   return null;
 }
 
-/* ─── Componente: Grelha Scorecard Multi-Tee ─── */
+function luminance(hex: string): number {
+  const h = hex.replace("#", "");
+  if (h.length !== 6) return 0;
+  const r = parseInt(h.slice(0, 2), 16) / 255;
+  const g = parseInt(h.slice(2, 4), 16) / 255;
+  const b = parseInt(h.slice(4, 6), 16) / 255;
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+/* ——— Componente: Grelha Scorecard Multi-Tee ——— */
 
 function ScorecardGrid({ tees }: { tees: Tee[] }) {
   const sorted = useMemo(() => sortTees(tees), [tees]);
@@ -91,7 +141,7 @@ function ScorecardGrid({ tees }: { tees: Tee[] }) {
                 <td className="sc-sticky sc-tee-cell">
                   <TeeBadge
                     label={titleCase(t.teeName)}
-                    colorHex={teeHex(t)}
+                    colorHex={teeHexFromTee(t)}
                     suffix={t.sex !== "U" ? t.sex : null}
                   />
                 </td>
@@ -109,31 +159,31 @@ function ScorecardGrid({ tees }: { tees: Tee[] }) {
           })}
 
           {/* PAR */}
-          <tr className="sc-meta-row">
+          <tr className="sc-meta-row sc-par-row">
             <td className="sc-sticky sc-meta-label">PAR</td>
             {Array.from({ length: 9 }, (_, i) => (
-              <td key={i + 1} className="sc-c">{refByHole.get(i + 1)?.par ?? "—"}</td>
+              <td key={i + 1} className="sc-c">{refByHole.get(i + 1)?.par ?? "–"}</td>
             ))}
             <td className="sc-c sc-tot-val">{fmt(sumRange(1, 9, (i) => refByHole.get(i)?.par ?? null))}</td>
             {Array.from({ length: 9 }, (_, i) => (
-              <td key={i + 10} className="sc-c">{refByHole.get(i + 10)?.par ?? "—"}</td>
+              <td key={i + 10} className="sc-c">{refByHole.get(i + 10)?.par ?? "–"}</td>
             ))}
             <td className="sc-c sc-tot-val">{fmt(sumRange(10, 18, (i) => refByHole.get(i)?.par ?? null))}</td>
             <td className="sc-c sc-tot-val">{fmt(sumRange(1, 18, (i) => refByHole.get(i)?.par ?? null))}</td>
           </tr>
 
           {/* SI / HCP */}
-          <tr className="sc-meta-row">
+          <tr className="sc-meta-row sc-hcp-row">
             <td className="sc-sticky sc-meta-label">HCP</td>
             {Array.from({ length: 9 }, (_, i) => (
-              <td key={i + 1} className="sc-c">{refByHole.get(i + 1)?.si ?? "—"}</td>
+              <td key={i + 1} className="sc-c">{refByHole.get(i + 1)?.si ?? "–"}</td>
             ))}
-            <td className="sc-c">—</td>
+            <td className="sc-c">–</td>
             {Array.from({ length: 9 }, (_, i) => (
-              <td key={i + 10} className="sc-c">{refByHole.get(i + 10)?.si ?? "—"}</td>
+              <td key={i + 10} className="sc-c">{refByHole.get(i + 10)?.si ?? "–"}</td>
             ))}
-            <td className="sc-c">—</td>
-            <td className="sc-c">—</td>
+            <td className="sc-c">–</td>
+            <td className="sc-c">–</td>
           </tr>
         </tbody>
       </table>
@@ -141,7 +191,7 @@ function ScorecardGrid({ tees }: { tees: Tee[] }) {
   );
 }
 
-/* ─── Componente: Tabela de Ratings por Tee ─── */
+/* ——— Componente: Tabela de Ratings por Tee ——— */
 
 function RatingsTable({ tees }: { tees: Tee[] }) {
   const sorted = sortTees(tees);
@@ -167,17 +217,17 @@ function RatingsTable({ tees }: { tees: Tee[] }) {
           {sorted.map((t) => (
             <tr key={t.teeId}>
               <td>
-                <TeeBadge label={titleCase(t.teeName)} colorHex={teeHex(t)} />
+                <TeeBadge label={titleCase(t.teeName)} colorHex={teeHexFromTee(t)} />
               </td>
               <td className="r-sex">{t.sex}</td>
               <td className="r-num">{fmt(t.distances?.total)}</td>
-              <td className="r-num">{t.ratings?.holes18?.par ?? "—"}</td>
+              <td className="r-num">{t.ratings?.holes18?.par ?? "–"}</td>
               <td className="r-num">{fmtCR(t.ratings?.holes18?.courseRating)}</td>
-              <td className="r-num">{t.ratings?.holes18?.slopeRating ?? "—"}</td>
+              <td className="r-num">{t.ratings?.holes18?.slopeRating ?? "–"}</td>
               <td className="r-num">{fmtCR(t.ratings?.holes9Front?.courseRating)}</td>
-              <td className="r-num">{t.ratings?.holes9Front?.slopeRating ?? "—"}</td>
+              <td className="r-num">{t.ratings?.holes9Front?.slopeRating ?? "–"}</td>
               <td className="r-num">{fmtCR(t.ratings?.holes9Back?.courseRating)}</td>
-              <td className="r-num">{t.ratings?.holes9Back?.slopeRating ?? "—"}</td>
+              <td className="r-num">{t.ratings?.holes9Back?.slopeRating ?? "–"}</td>
             </tr>
           ))}
         </tbody>
@@ -186,28 +236,58 @@ function RatingsTable({ tees }: { tees: Tee[] }) {
   );
 }
 
-/* ─── Página Principal ─── */
+/* ——— Página Principal ——— */
 
 export default function CamposPage({ courses }: Props) {
   const [q, setQ] = useState("");
   const [sexFilter, setSexFilter] = useState<SexFilter>("ALL");
+  const [teeFilter, setTeeFilter] = useState<string>("ALL");
+  const [originFilter, setOriginFilter] = useState<OriginFilter>("ALL");
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
   const [detailView, setDetailView] = useState<"scorecard" | "ratings">("scorecard");
   const [sidebarOpen, setSidebarOpen] = useState(true);
+
+  /* Unique tee color groups across all courses (for filter dropdown) */
+  const uniqueTees = useMemo(() => {
+    const map = new Map<string, { label: string; hex: string }>();
+    for (const c of courses) {
+      for (const t of c.master.tees) {
+        const hex = teeGroupHex(t.teeName, t.scorecardMeta?.teeColor);
+        if (!map.has(hex)) {
+          map.set(hex, {
+            label: teeCanonicalLabel(t.teeName, t.scorecardMeta?.teeColor),
+            hex,
+          });
+        }
+      }
+    }
+    return [...map.values()]
+      .sort((a, b) => a.label.localeCompare(b.label, "pt"));
+  }, [courses]);
 
   /* Filtrar e ordenar campos */
   const filtered = useMemo(() => {
     const qq = norm(q);
     let list = courses;
     if (qq) {
-      list = courses.filter((c) => {
+      list = list.filter((c) => {
         const name = norm(c.master.name);
         const key = norm(c.courseKey);
         return name.includes(qq) || key.includes(qq);
       });
     }
+    if (originFilter === "PT") {
+      list = list.filter((c) => !c.courseKey.startsWith("away-"));
+    } else if (originFilter === "INTL") {
+      list = list.filter((c) => c.courseKey.startsWith("away-"));
+    }
+    if (teeFilter !== "ALL") {
+      list = list.filter((c) =>
+        c.master.tees.some((t) => teeGroupHex(t.teeName, t.scorecardMeta?.teeColor) === teeFilter)
+      );
+    }
     return list;
-  }, [courses, q]);
+  }, [courses, q, originFilter, teeFilter]);
 
   /* Campo selecionado */
   const selected = useMemo(() => {
@@ -224,6 +304,7 @@ export default function CamposPage({ courses }: Props) {
 
   /* Stats globais */
   const totalTees = useMemo(() => courses.reduce((n, c) => n + c.master.tees.length, 0), [courses]);
+  const intlCount = useMemo(() => courses.filter(c => c.courseKey.startsWith("away-")).length, [courses]);
 
   return (
     <div className="campos-page">
@@ -237,27 +318,41 @@ export default function CamposPage({ courses }: Props) {
           >
             {sidebarOpen ? "◀" : "▶"}
           </button>
-          <div className="field">
-            <label>Pesquisa</label>
-            <input
-              className="input"
-              value={q}
-              onChange={(e) => { setQ(e.target.value); setSelectedKey(null); }}
-              placeholder="Nome do campo…"
-            />
-          </div>
-          <div className="field">
-            <label>Sexo</label>
-            <select className="select" value={sexFilter} onChange={(e) => setSexFilter(e.target.value as SexFilter)}>
-              <option value="ALL">Todos</option>
-              <option value="M">Masculino</option>
-              <option value="F">Feminino</option>
-            </select>
-          </div>
+          <input
+            className="input"
+            value={q}
+            onChange={(e) => { setQ(e.target.value); setSelectedKey(null); }}
+            placeholder="Nome do campo…"
+          />
+          <select
+            className="select"
+            value={originFilter}
+            onChange={(e) => { setOriginFilter(e.target.value as OriginFilter); setSelectedKey(null); }}
+          >
+            <option value="ALL">Origem</option>
+            <option value="PT">{"\ud83c\uddf5\ud83c\uddf9"} Portugal</option>
+            <option value="INTL">{"\ud83c\udf0d"} Internacional</option>
+          </select>
+          <select className="select" value={sexFilter} onChange={(e) => setSexFilter(e.target.value as SexFilter)}>
+            <option value="ALL">Sexo</option>
+            <option value="M">Masculino</option>
+            <option value="F">Feminino</option>
+          </select>
+          <select
+            className="select"
+            value={teeFilter}
+            onChange={(e) => { setTeeFilter(e.target.value); setSelectedKey(null); }}
+          >
+            <option value="ALL">Todos os tees</option>
+            {uniqueTees.map((t) => (
+              <option key={t.hex} value={t.hex}>{t.label}</option>
+            ))}
+          </select>
         </div>
         <div className="toolbar-right">
           <div className="chip">{filtered.length} campos</div>
           <div className="chip">{totalTees} tees</div>
+          {intlCount > 0 && <div className="chip">{"\ud83c\udf0d"} {intlCount} intl</div>}
         </div>
       </div>
 
@@ -274,7 +369,11 @@ export default function CamposPage({ courses }: Props) {
                 className={`course-item ${active ? "active" : ""}`}
                 onClick={() => setSelectedKey(c.courseKey)}
               >
-                <div className="course-item-name">{c.master.name}</div>
+                <div className="course-item-name">
+                  {resolveFlag(c) && <span className="course-flag">{resolveFlag(c)}</span>}
+                  <span>{c.master.name}</span>
+                  {c.courseKey.startsWith("away-") && <PillBadge pill="INTL" />}
+                </div>
                 <div className="course-item-meta">
                   {tees.length} tee{tees.length !== 1 ? "s" : ""}
                 </div>
@@ -290,9 +389,17 @@ export default function CamposPage({ courses }: Props) {
         <div className="course-detail">
           {selected ? (
             <>
-              <div className="detail-header">
+              <div className="detail-header" style={{ flexDirection: "row", alignItems: "flex-start", justifyContent: "space-between" }}>
                 <div>
-                  <h2 className="detail-title">{selected.master.name}</h2>
+                  <h2 className="detail-title">
+                    {selected.master.name}
+                    {resolveFlag(selected) && (
+                      <span className="course-country-badge">
+                        {resolveFlag(selected)} {resolveCountryName(selected)}
+                      </span>
+                    )}
+                    {isAway(selected) && <PillBadge pill="INTL" />}
+                  </h2>
                   <div className="detail-sub">
                     <span className="muted">{selected.courseKey}</span>
                     {scorecardLink && (
@@ -327,7 +434,7 @@ export default function CamposPage({ courses }: Props) {
                   <span key={t.teeId} className="tee-badge-card">
                     <TeeBadge
                       label={titleCase(t.teeName)}
-                      colorHex={teeHex(t)}
+                      colorHex={teeHexFromTee(t)}
                       suffix={teeSuffix(t)}
                     />
                     <span className="muted" style={{ fontSize: 11 }}>

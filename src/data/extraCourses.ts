@@ -9,7 +9,7 @@
 
 import type { Course, Tee, Hole } from "./types";
 
-/* ─── Marco Simone Golf & Country Club ─── */
+/* Marco Simone Golf & Country Club */
 
 const marcoSimoneHoles: Hole[] = [
   // Par: 4,5,3,4,4,5,4,3,4 | 4,5,3,4,4,5,3,4,4 = 72
@@ -120,7 +120,8 @@ const marcoSimone: Course = {
   courseKey: "away-marco-simone",
   master: {
     courseId: "away-marco-simone",
-    name: "Marco Simone Golf & Country Club ⚑",
+    name: "Marco Simone Golf & Country Club",
+    country: "It\u00e1lia",
     links: {
       fpg: null,
       scorecards: "https://golfmarcosimone.com/the-holes/",
@@ -129,7 +130,7 @@ const marcoSimone: Course = {
   },
 };
 
-/* ─── Exportação ─── */
+/* Exportação */
 
 /** Campos extra adicionados manualmente (ainda sem rondas no melhorias.json) */
 export function getExtraCourses(): Course[] {
