@@ -113,6 +113,7 @@ html, body, #root {
   border-radius: var(--radius);
   cursor: pointer;
   transition: all 0.15s;
+  text-decoration: none;
 }
 
 .nav-btn:hover:not(:disabled) {
@@ -877,6 +878,10 @@ html, body, #root {
 .count { display: inline-flex; align-items: center; justify-content: center; min-width: 22px; height: 22px; border-radius: 6px; font-size: 10px; font-weight: 700; padding: 0 5px; flex-shrink: 0; }
 .courseBtn { background: none; border: none; cursor: pointer; font: inherit; font-weight: 600; color: var(--text); text-align: left; padding: 0; }
 .courseBtn:hover { color: var(--accent); text-decoration: underline; }
+.courseLink { color: #2e7d32; text-decoration: underline; text-decoration-color: rgba(46,125,50,.3); text-underline-offset: 2px; cursor: pointer; }
+.courseLink:hover { color: #1b5e20; text-decoration-color: #1b5e20; }
+.sc-title .courseLink, .sc-header .courseLink { color: inherit; text-decoration-color: rgba(255,255,255,.4); }
+.sc-header-light .sc-title .courseLink { text-decoration-color: rgba(0,0,0,.3); }
 .pa-row-open > td { background: var(--bg-hover); }
 
 .details { display: none; }
@@ -1509,6 +1514,11 @@ a.dateLink .tee-date { text-decoration: underline; text-underline-offset: 2px; }
 .tourn-header-top { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
 .tourn-title { font-size: 20px; font-weight: 800; margin: 0; color: #1c2617; }
 .tourn-header-info { font-size: 13px; color: #888; display: flex; gap: 14px; flex-wrap: wrap; }
+.tourn-ext-links { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+.tourn-ext-group { display: inline-flex; align-items: center; gap: 4px; }
+.tourn-ext-group-label { font-size: 10px; font-weight: 700; color: #6b7a5e; margin-right: 2px; }
+.tourn-ext-link { display: inline-block; font-size: 10px; font-weight: 600; color: #4a5940; background: #eef2e8; border: 1px solid #d5dac9; border-radius: 4px; padding: 2px 8px; text-decoration: none; white-space: nowrap; }
+.tourn-ext-link:hover { background: #dde5d4; color: #2e5a10; }
 .tourn-loading { color: #e67e22; font-weight: 600; }
 .tourn-loaded { color: #28a745; font-weight: 600; }
 
@@ -1564,15 +1574,17 @@ a.dateLink .tee-date { text-decoration: underline; text-underline-offset: 2px; }
   display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
 }
 .tourn-pname { font-weight: 700; font-size: 14px; white-space: nowrap; color: #1c2617; }
-a.tourn-pname { text-decoration: none; color: #1c2617; }
-a.tourn-pname:hover { color: #2e5a10; text-decoration: underline; }
-.tourn-pname-link { cursor: pointer; }
-.tourn-pname-link:hover { color: #2e5a10; text-decoration: underline; }
+.tourn-pname.tourn-pname-link { cursor: pointer; color: #2e7d32; text-decoration: underline; text-decoration-color: rgba(46,125,50,.3); text-underline-offset: 2px; }
+.tourn-pname.tourn-pname-link:hover { color: #1b5e20; text-decoration-color: #1b5e20; }
 
 /* Reuse jog-pill but override sizes for tournament context */
 .tourn-draw-player .jog-pill {
   padding: 2px 10px; font-size: 11.5px; font-weight: 600; border-radius: 6px; line-height: 1.5;
 }
+.tourn-draw-player .teePill,
+.tourn-draw-tee .teePill { font-size: 10px; padding: 2px 8px; }
+.tourn-lb-pills .teePill,
+.tourn-meta .teePill { font-size: 10px; padding: 1px 7px; vertical-align: middle; }
 
 /* PJA + INTL use their own solid backgrounds */
 /* PJA pill — matches app design */
@@ -1621,6 +1633,7 @@ a.tourn-pname:hover { color: #2e5a10; text-decoration: underline; }
 .tourn-sum-under { background: #dcfce7 !important; }
 .tourn-sum-over { background: #f0f2ec; }
 .tourn-lb-name-col .tourn-pname { font-weight: 700; font-size: 12px; white-space: nowrap; }
+.tourn-lb-name-col .tourn-pname.tourn-pname-link { color: #2e7d32; }
 
 /* Female row — subtle blue tint */
 .tourn-female-row { background: #f0f4ff !important; }
@@ -1683,6 +1696,7 @@ a.tourn-pname:hover { color: #2e5a10; text-decoration: underline; }
 .tourn-table .r { text-align: right; }
 .tourn-table .tourn-mono { font-family: 'JetBrains Mono', monospace; }
 .tourn-table .tourn-pname { font-weight: 700; }
+.tourn-table .tourn-pname.tourn-pname-link { color: #2e7d32; }
 
 /* Hole distribution bars */
 .tourn-distrib { display: flex; height: 20px; border-radius: 4px; overflow: hidden; font-size: 10px; font-weight: 700; }
@@ -1696,6 +1710,7 @@ a.tourn-pname:hover { color: #2e5a10; text-decoration: underline; }
 .tourn-form-table td { padding: 6px 8px; border: 1px solid #e8ebe4; font-size: 12px; vertical-align: middle; }
 .tourn-form-table tbody tr:hover { background: #fafbf8; }
 .tourn-form-table .tourn-pname { font-weight: 700; font-size: 12px; }
+.tourn-form-table .tourn-pname.tourn-pname-link { color: #2e7d32; }
 
 /* Sparkline — mini SD dots */
 .tourn-sparkline { display: flex; gap: 3px; align-items: center; }

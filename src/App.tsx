@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Routes, Route, Navigate, NavLink, useNavigate } from "react-router-dom";
 import "./App.css";
 import { loadMasterData, loadPlayers, loadAwayCourses } from "./data/loader";
 import { initCourseColorCache } from "./utils/teeColors";
@@ -13,8 +14,6 @@ import golfBallSvg from "./assets/golf-ball.svg";
 
 import melhoriasJson from "../melhorias.json";
 
-type Tab = "campos" | "jogadores" | "simulador" | "torneio";
-
 type MelhoriasJson = Record<string, Record<string, unknown>>;
 
 type Status =
@@ -24,7 +23,11 @@ type Status =
 
 export default function App() {
   const [status, setStatus] = useState<Status>({ kind: "loading" });
-  const [tab, setTab] = useState<Tab>("jogadores");
+  const navigate = useNavigate();
+
+  const goToPlayer = (fed: string) => {
+    navigate(`/jogadores/${fed}`);
+  };
 
   useEffect(() => {
     let alive = true;
@@ -48,7 +51,6 @@ export default function App() {
     const melhoriasAway = extractAwayCourses(melhoriasJson as MelhoriasJson);
     const extra = getExtraCourses();
 
-    // Merge com dedup por courseKey (prioridade: pipeline > melhorias > extra)
     const map = new Map<string, Course>();
     for (const c of fpg) map.set(c.courseKey, c);
     for (const c of pipelineAway) if (!map.has(c.courseKey)) map.set(c.courseKey, c);
@@ -67,31 +69,18 @@ export default function App() {
         </div>
 
         <nav className="nav">
-          <button
-            className={`nav-btn ${tab === "campos" ? "active" : ""}`}
-            onClick={() => setTab("campos")}
-          >
+          <NavLink to="/campos" className={({ isActive }) => `nav-btn ${isActive ? "active" : ""}`}>
             Campos
-          </button>
-          <button
-            className={`nav-btn ${tab === "jogadores" ? "active" : ""}`}
-            onClick={() => setTab("jogadores")}
-          >
+          </NavLink>
+          <NavLink to="/jogadores" className={({ isActive }) => `nav-btn ${isActive ? "active" : ""}`}>
             Jogadores
-          </button>
-          <button
-            className={`nav-btn ${tab === "simulador" ? "active" : ""}`}
-            onClick={() => setTab("simulador")}
-          >
+          </NavLink>
+          <NavLink to="/simulador" className={({ isActive }) => `nav-btn ${isActive ? "active" : ""}`}>
             Simulador
-          </button>
-          <button
-            className={`nav-btn ${tab === "torneio" ? "active" : ""}`}
-            onClick={() => setTab("torneio")}
-            style={{ position: "relative" }}
-          >
+          </NavLink>
+          <NavLink to="/torneio" className={({ isActive }) => `nav-btn ${isActive ? "active" : ""}`} style={{ position: "relative" }}>
             🔒 Torneio
-          </button>
+          </NavLink>
         </nav>
 
         {status.kind === "ready" && (
@@ -125,20 +114,14 @@ export default function App() {
           </div>
         )}
 
-        {status.kind === "ready" && tab === "campos" && (
-          <CamposPage courses={simCourses} />
-        )}
-
-        {status.kind === "ready" && tab === "jogadores" && (
-          <JogadoresPage players={status.players} courses={simCourses} />
-        )}
-
-        {status.kind === "ready" && tab === "simulador" && (
-          <SimuladorPage courses={simCourses} />
-        )}
-
-        {status.kind === "ready" && tab === "torneio" && (
-          <TorneioPage players={status.players} />
+        {status.kind === "ready" && (
+          <Routes>
+            <Route path="/campos/:courseKey?" element={<CamposPage courses={simCourses} />} />
+            <Route path="/jogadores/:fed?" element={<JogadoresPage players={status.players} courses={simCourses} />} />
+            <Route path="/simulador" element={<SimuladorPage courses={simCourses} />} />
+            <Route path="/torneio" element={<TorneioPage players={status.players} onSelectPlayer={goToPlayer} />} />
+            <Route path="*" element={<Navigate to="/jogadores" replace />} />
+          </Routes>
         )}
       </main>
     </div>

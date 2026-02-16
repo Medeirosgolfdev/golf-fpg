@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import type { Player, PlayersDb, Course } from "../data/types";
 import { norm } from "../utils/format";
 import { getTeeHex, textOnColor, normKey } from "../utils/teeColors";
@@ -13,7 +14,7 @@ import {
    Utility functions (port from client JS)
    ════════════════════════════════════════════ */
 
-type Props = { players: PlayersDb; courses?: Course[]; initialFed?: string | null; onFedConsumed?: () => void };
+type Props = { players: PlayersDb; courses?: Course[] };
 type SexFilter = "ALL" | "M" | "F";
 type SortKey = "name" | "hcp" | "club" | "escalao";
 type ViewKey = "by_course" | "by_course_analysis" | "by_date" | "by_tournament" | "analysis";
@@ -73,6 +74,20 @@ function teeHex(name: string): string {
   const k = normKey(name);
   const real = _teeColorMap.get(k);
   return getTeeHex(name, real);
+}
+
+/* ── Course key lookup: course display name → courseKey for /campos/:courseKey ── */
+let _courseKeyMap: Map<string, string> = new Map();
+function buildCourseKeyMap(courses: Course[]): Map<string, string> {
+  const m = new Map<string, string>();
+  for (const c of courses) {
+    m.set(norm2(c.master.name), c.courseKey);
+    m.set(norm2(c.courseKey), c.courseKey);
+  }
+  return m;
+}
+function findCourseKey(courseName: string): string | null {
+  return _courseKeyMap.get(norm2(courseName)) ?? null;
 }
 function teeFg(hex: string): string { return textOnColor(hex); }
 
@@ -253,6 +268,17 @@ function EventInfo({ name, origin, pill, links }: {
   );
 }
 
+/* ─── Course name link → /campos/:courseKey ─── */
+function CourseLink({ name }: { name: string }) {
+  const key = findCourseKey(name);
+  if (!key) return <>{name}</>;
+  return (
+    <Link to={`/campos/${key}`} className="courseLink" title={`Ver campo: ${name}`} onClick={e => e.stopPropagation()}>
+      {name}
+    </Link>
+  );
+}
+
 /* ════════════════════════════════════════════
    By Date View
    ════════════════════════════════════════════ */
@@ -301,7 +327,7 @@ function ByDateView({ data, search, onScoreClick }: {
                   : <TeeDate date={r.date} tee={r.tee || ""} />}
                 <div className="muted" style={{ fontSize: 10 }}>#{r.scoreId}</div>
               </td>
-              <td>{r.course}</td>
+              <td><CourseLink name={r.course} /></td>
               <td><EventInfo name={r.eventName} origin={r.scoreOrigin} pill={r._pill} links={r._links} /></td>
               <td className="r"><HoleBadge hc={r.holeCount} /></td>
               <td className="r">{r.hi ?? ""}</td>
@@ -416,6 +442,7 @@ function ByCourseRow({ course, idx, data, isAnalysis, openScorecard, openScoreca
           <div className="rowHead">
             <div className="count" style={{ background: teeHex(last?.tee || ""), color: teeFg(teeHex(last?.tee || "")), border: teeBorder(teeHex(last?.tee || "")) }}>{course.count}</div>
             <button type="button" className="courseBtn" onClick={() => setOpen(v => !v)}>{course.course}</button>
+            {findCourseKey(course.course) && <Link to={`/campos/${findCourseKey(course.course)}`} className="courseLink" style={{ marginLeft: 4, fontSize: 10 }} title="Ver campo" onClick={e => e.stopPropagation()}>↗</Link>}
             <PillBadge pill={course.rounds.find(r => r._pill)?._pill} />
           </div>
         </td>
@@ -536,7 +563,7 @@ function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, eclecti
       {/* Header */}
       <div className={`sc-header ${teeFg_ === "#fff" ? "sc-header-dark" : "sc-header-light"}`} style={{ background: teeHex_, border: teeBorder(teeHex_) }}>
         <div className="sc-header-left">
-          <div className="sc-title">{courseName}</div>
+          <div className="sc-title"><CourseLink name={courseName} /></div>
           <div className="sc-subtitle">
             <span>{date}</span>
             <span>Tee {tee}</span>
@@ -1874,7 +1901,7 @@ function Last20Table({ data, last20Table, best8 }: {
                         <TeeDate date={r.date} tee={r.tee || ""} />
                       )}
                     </td>
-                    <td>{r.course}</td>
+                    <td><CourseLink name={r.course} /></td>
                     <td style={{ fontSize: 11 }}><EventInfo name={r.eventName} origin={r.scoreOrigin} pill={r._pill} links={r._links} /></td>
                     <td className="r"><HoleBadge hc={r.holeCount} /></td>
                     <td className="r">{r.hi ?? ""}</td>
@@ -2767,7 +2794,7 @@ function ByTournamentView({ data, search }: { data: PlayerPageData; search: stri
                       <PillBadge pill={it.rounds.find(r => r._pill)?._pill} />
                       <LinkBtns links={it.rounds.find(r => r._links)?._links} />
                     </td>
-                    <td><b>{it.course}</b></td>
+                    <td><b><CourseLink name={it.course} /></b></td>
                     <td className="r"><b>{it.rounds.length}</b></td>
                     <td className="muted">{dateStr}</td>
                   </tr>
@@ -2943,28 +2970,43 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
    Main Page — Jogadores (master-detail)
    ════════════════════════════════════════════ */
 
-export default function JogadoresPage({ players, courses, initialFed, onFedConsumed }: Props) {
+export default function JogadoresPage({ players, courses }: Props) {
+  const { fed: urlFed } = useParams<{ fed?: string }>();
+  const navigate = useNavigate();
   const [q, setQ] = useState("");
   const [sexFilter, setSexFilter] = useState<SexFilter>("ALL");
   const [escalaoFilter, setEscalaoFilter] = useState<string>("ALL");
   const [regionFilter, setRegionFilter] = useState<string>("ALL");
   const [sortKey, setSortKey] = useState<SortKey>("name");
-  const [selectedFed, setSelectedFed] = useState<string | null>(null);
+  const [selectedFed, setSelectedFed] = useState<string | null>(urlFed ?? null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [playerMeta, setPlayerMeta] = useState<PlayerPageData["META"] | null>(null);
 
-  /* Navigate to specific player from external component (e.g. TorneioPage) */
+  /* Sync URL param → selectedFed */
   useEffect(() => {
-    if (initialFed && players[initialFed]) {
-      setSelectedFed(initialFed);
+    if (urlFed && players[urlFed]) {
+      setSelectedFed(urlFed);
       setQ("");
-      onFedConsumed?.();
     }
-  }, [initialFed]);
+  }, [urlFed]);
+
+  /* Helper: select player and update URL */
+  const selectPlayer = (fed: string | null) => {
+    setSelectedFed(fed);
+    if (fed) {
+      navigate(`/jogadores/${fed}`, { replace: true });
+    } else {
+      navigate("/jogadores", { replace: true });
+    }
+  };
 
   // Populate tee color map from courses (DataGolf real colors) - eager, before first render
   if (courses?.length && _teeColorMap.size === 0) {
     _teeColorMap = buildTeeColorMap(courses);
+  }
+  // Populate course key map for course links
+  if (courses?.length && _courseKeyMap.size === 0) {
+    _courseKeyMap = buildCourseKeyMap(courses);
   }
 
   // Reset meta when player changes
@@ -3011,7 +3053,7 @@ export default function JogadoresPage({ players, courses, initialFed, onFedConsu
   }, [allPlayers, q, sexFilter, escalaoFilter, regionFilter, sortKey]);
 
   useEffect(() => {
-    if (!selectedFed && filtered.length > 0) setSelectedFed(filtered[0].fed);
+    if (!selectedFed && filtered.length > 0) selectPlayer(filtered[0].fed);
   }, [filtered, selectedFed]);
 
   const selected = useMemo(() => {
@@ -3026,7 +3068,7 @@ export default function JogadoresPage({ players, courses, initialFed, onFedConsu
           <button className="sidebar-toggle" onClick={() => setSidebarOpen(v => !v)} title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
             {sidebarOpen ? "◀" : "▶"}
           </button>
-          <input className="input" value={q} onChange={e => { setQ(e.target.value); setSelectedFed(null); }}
+          <input className="input" value={q} onChange={e => { setQ(e.target.value); selectPlayer(null); }}
             placeholder="Nome, clube, n.º federado…" style={{ width: 180 }} />
           <select className="select" value={sexFilter} onChange={e => setSexFilter(e.target.value as SexFilter)}>
             <option value="ALL">Sexo</option><option value="M">Masculino</option><option value="F">Feminino</option>
@@ -3059,7 +3101,7 @@ export default function JogadoresPage({ players, courses, initialFed, onFedConsu
             const displayHcp = (isActive) ? (playerMeta?.latestHcp ?? null) : p.hcp;
             return (
               <button key={p.fed} className={`course-item ${isActive ? "active" : ""}`}
-                onClick={() => setSelectedFed(p.fed)}>
+                onClick={() => selectPlayer(p.fed)}>
                 <div className="course-item-name">
                   {p.name}
                   <span className={`jog-sex-inline jog-sex-${p.sex}`}>{p.sex}</span>

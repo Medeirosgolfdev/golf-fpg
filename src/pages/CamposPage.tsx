@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import type { Course, Tee, SexFilter } from "../data/types";
 import TeeBadge from "../ui/TeeBadge";
 import PillBadge from "../ui/PillBadge";
@@ -239,13 +240,32 @@ function RatingsTable({ tees }: { tees: Tee[] }) {
 /* ——— Página Principal ——— */
 
 export default function CamposPage({ courses }: Props) {
+  const { courseKey: urlCourseKey } = useParams<{ courseKey?: string }>();
+  const navigate = useNavigate();
   const [q, setQ] = useState("");
   const [sexFilter, setSexFilter] = useState<SexFilter>("ALL");
   const [teeFilter, setTeeFilter] = useState<string>("ALL");
   const [originFilter, setOriginFilter] = useState<OriginFilter>("ALL");
-  const [selectedKey, setSelectedKey] = useState<string | null>(null);
+  const [selectedKey, setSelectedKey] = useState<string | null>(urlCourseKey ?? null);
   const [detailView, setDetailView] = useState<"scorecard" | "ratings">("scorecard");
   const [sidebarOpen, setSidebarOpen] = useState(true);
+
+  /* Sync URL param → selectedKey */
+  useEffect(() => {
+    if (urlCourseKey && courses.some(c => c.courseKey === urlCourseKey)) {
+      setSelectedKey(urlCourseKey);
+    }
+  }, [urlCourseKey]);
+
+  /* Helper: select course and update URL */
+  const selectCourse = (key: string | null) => {
+    setSelectedKey(key);
+    if (key) {
+      navigate(`/campos/${key}`, { replace: true });
+    } else {
+      navigate("/campos", { replace: true });
+    }
+  };
 
   /* Unique tee color groups across all courses (for filter dropdown) */
   const uniqueTees = useMemo(() => {
@@ -321,13 +341,13 @@ export default function CamposPage({ courses }: Props) {
           <input
             className="input"
             value={q}
-            onChange={(e) => { setQ(e.target.value); setSelectedKey(null); }}
+            onChange={(e) => { setQ(e.target.value); selectCourse(null); }}
             placeholder="Nome do campo…"
           />
           <select
             className="select"
             value={originFilter}
-            onChange={(e) => { setOriginFilter(e.target.value as OriginFilter); setSelectedKey(null); }}
+            onChange={(e) => { setOriginFilter(e.target.value as OriginFilter); selectCourse(null); }}
           >
             <option value="ALL">Origem</option>
             <option value="PT">{"\ud83c\uddf5\ud83c\uddf9"} Portugal</option>
@@ -341,7 +361,7 @@ export default function CamposPage({ courses }: Props) {
           <select
             className="select"
             value={teeFilter}
-            onChange={(e) => { setTeeFilter(e.target.value); setSelectedKey(null); }}
+            onChange={(e) => { setTeeFilter(e.target.value); selectCourse(null); }}
           >
             <option value="ALL">Todos os tees</option>
             {uniqueTees.map((t) => (
@@ -367,7 +387,7 @@ export default function CamposPage({ courses }: Props) {
               <button
                 key={c.courseKey}
                 className={`course-item ${active ? "active" : ""}`}
-                onClick={() => setSelectedKey(c.courseKey)}
+                onClick={() => selectCourse(c.courseKey)}
               >
                 <div className="course-item-name">
                   {resolveFlag(c) && <span className="course-flag">{resolveFlag(c)}</span>}

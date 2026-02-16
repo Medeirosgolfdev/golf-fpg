@@ -16,8 +16,16 @@
     "F": "Azuis"
   },
   "links": {
-    "draw_r1": "https://scoring-pt.datagolf.pt/scripts/draw.asp?club=935&tourn=10294&round_number=1",
-    "results_d1": "https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=935&tcode=10294&score=1&classif_order="
+    "draw_wagr_r1": "https://scoring-pt.datagolf.pt/scripts/draw.asp?club=935&tourn=10294&round_number=1",
+    "draw_wagr_r2": "https://scoring-pt.datagolf.pt/scripts/draw.asp?club=935&tourn=10294&round_number=2",
+    "draw_sub14": "https://scoring-pt.datagolf.pt/scripts/draw.asp?club=935&tourn=10295&round_number=1",
+    "draw_sub12": "https://scoring-pt.datagolf.pt/scripts/draw.asp?club=935&tourn=10296&round_number=1",
+    "results_wagr": "https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=935&tcode=10294&score=1&classif_order=",
+    "results_sub14": "https://scoring-pt.datagolf.pt/scripts/classif.asp?tourn=10295&club=935&ack=OT342GH16T",
+    "results_sub12": "https://scoring-pt.datagolf.pt/scripts/classif.asp?tourn=10296&club=935&ack=OT342GH16T",
+    "draw_wagr_r3": "https://scoring-pt.datagolf.pt/scripts/draw.asp?club=935&tourn=10294&round_number=3",
+    "draw_sub14_r2": "https://scoring-pt.datagolf.pt/scripts/draw.asp?club=935&tourn=10295&round_number=2",
+    "draw_sub12_r2": "https://scoring-pt.datagolf.pt/scripts/draw.asp?club=935&tourn=10296&round_number=2"
   },
   "results": {
     "d1": [
@@ -291,19 +299,293 @@
         "total": null,
         "status": "ND"
       }
+    ],
+    "sub14": [
+      {
+        "pos": 1,
+        "name": "Nuno Palmares Jr.",
+        "fed": "49124",
+        "club": "Estoril",
+        "toPar": 2,
+        "gross": 74,
+        "total": 74,
+        "status": "OK"
+      },
+      {
+        "pos": 2,
+        "name": "João Rocha",
+        "fed": "48297",
+        "club": "Estoril",
+        "toPar": 7,
+        "gross": 79,
+        "total": 79,
+        "status": "OK"
+      },
+      {
+        "pos": 3,
+        "name": "Tomás Lima Pinto",
+        "fed": "46037",
+        "club": "Vilamoura, C. G",
+        "toPar": 10,
+        "gross": 82,
+        "total": 82,
+        "status": "OK"
+      },
+      {
+        "pos": 4,
+        "name": "Finn Gordon",
+        "fed": "55269",
+        "club": "Vilamoura, C. G",
+        "toPar": 10,
+        "gross": 82,
+        "total": 82,
+        "status": "OK"
+      },
+      {
+        "pos": 5,
+        "name": "Salvador Ivo de Carvalho",
+        "fed": "43968",
+        "club": "Estoril",
+        "toPar": 12,
+        "gross": 84,
+        "total": 84,
+        "status": "OK"
+      },
+      {
+        "pos": 6,
+        "name": "William Gao",
+        "fed": "51524",
+        "club": "Quinta do Peru",
+        "toPar": 13,
+        "gross": 85,
+        "total": 85,
+        "status": "OK"
+      },
+      {
+        "pos": 7,
+        "name": "Tomás Rente",
+        "fed": "46311",
+        "club": "Miramar",
+        "toPar": 13,
+        "gross": 85,
+        "total": 85,
+        "status": "OK"
+      },
+      {
+        "pos": 8,
+        "name": "Seb Toft",
+        "fed": "57291",
+        "club": "Vilamoura, C. G",
+        "toPar": 13,
+        "gross": 85,
+        "total": 85,
+        "status": "OK"
+      },
+      {
+        "pos": 9,
+        "name": "Yoon Jun Lee",
+        "fed": null,
+        "club": "Internacional",
+        "toPar": 14,
+        "gross": 86,
+        "total": 86,
+        "status": "OK"
+      },
+      {
+        "pos": 10,
+        "name": "Afonso de Sousa Pinto",
+        "fed": "46480",
+        "club": "Oporto",
+        "toPar": 15,
+        "gross": 87,
+        "total": 87,
+        "status": "OK"
+      },
+      {
+        "pos": 11,
+        "name": "José Silva",
+        "fed": "54845",
+        "club": "Amendoeira",
+        "toPar": 16,
+        "gross": 88,
+        "total": 88,
+        "status": "OK"
+      },
+      {
+        "pos": 12,
+        "name": "Catarina Sousa Conceição",
+        "fed": "48794",
+        "club": "Vilamoura, C. G",
+        "toPar": 24,
+        "gross": 96,
+        "total": 96,
+        "status": "OK"
+      },
+      {
+        "pos": 13,
+        "name": "David Filip Jun.",
+        "fed": "51949",
+        "club": "Lisbon SC",
+        "toPar": 25,
+        "gross": 97,
+        "total": 97,
+        "status": "OK"
+      },
+      {
+        "pos": 14,
+        "name": "Alfie Kelley",
+        "fed": "58043",
+        "club": "Belas",
+        "toPar": 27,
+        "gross": 99,
+        "total": 99,
+        "status": "OK"
+      }
+    ],
+    "sub12": [
+      {
+        "pos": 1,
+        "name": "Ricardo Castro Ferreira",
+        "fed": "49085",
+        "club": "Estoril",
+        "toPar": 5,
+        "gross": 77,
+        "total": 77,
+        "status": "OK"
+      },
+      {
+        "pos": 2,
+        "name": "Joe Short",
+        "fed": "51804",
+        "club": "Vila Sol",
+        "toPar": 7,
+        "gross": 79,
+        "total": 79,
+        "status": "OK"
+      },
+      {
+        "pos": 3,
+        "name": "Guo Ziyang",
+        "fed": "57904",
+        "club": "Estoril",
+        "toPar": 13,
+        "gross": 85,
+        "total": 85,
+        "status": "OK"
+      },
+      {
+        "pos": 4,
+        "name": "Manuel Goulartt Medeiros",
+        "fed": "52884",
+        "club": "Santo da Serra",
+        "toPar": 15,
+        "gross": 87,
+        "total": 87,
+        "status": "OK"
+      },
+      {
+        "pos": 5,
+        "name": "Benji Botham",
+        "fed": null,
+        "club": "Internacional",
+        "toPar": 16,
+        "gross": 88,
+        "total": 88,
+        "status": "OK"
+      },
+      {
+        "pos": 6,
+        "name": "Marek Pejas",
+        "fed": "52069",
+        "club": "Vilamoura, C. G",
+        "toPar": 20,
+        "gross": 92,
+        "total": 92,
+        "status": "OK"
+      },
+      {
+        "pos": 7,
+        "name": "Miguel Santos Pereira",
+        "fed": "48946",
+        "club": "Vilamoura, C. G",
+        "toPar": 21,
+        "gross": 93,
+        "total": 93,
+        "status": "OK"
+      },
+      {
+        "pos": 8,
+        "name": "George Campbell",
+        "fed": null,
+        "club": "Internacional",
+        "toPar": 22,
+        "gross": 94,
+        "total": 94,
+        "status": "OK"
+      },
+      {
+        "pos": 9,
+        "name": "Harry Seabrook",
+        "fed": "54264",
+        "club": "Vila Sol",
+        "toPar": 26,
+        "gross": 98,
+        "total": 98,
+        "status": "OK"
+      },
+      {
+        "pos": 10,
+        "name": "Harley Botham",
+        "fed": null,
+        "club": "Internacional",
+        "toPar": 26,
+        "gross": 98,
+        "total": 98,
+        "status": "OK"
+      },
+      {
+        "pos": 11,
+        "name": "Gabriel Costa",
+        "fed": "53838",
+        "club": "Amendoeira",
+        "toPar": 27,
+        "gross": 99,
+        "total": 99,
+        "status": "OK"
+      },
+      {
+        "pos": 12,
+        "name": "Yeonjin Seo",
+        "fed": null,
+        "club": "Internacional",
+        "toPar": 35,
+        "gross": 107,
+        "total": 107,
+        "status": "OK"
+      }
     ]
   },
   "password": "figo2025",
   "_pja_feds": [
     "38334",
     "42908",
+    "43968",
     "44934",
-    "46591",
-    "51523",
-    "46706",
-    "56654",
     "45439",
-    "52011"
+    "46037",
+    "46311",
+    "46591",
+    "46706",
+    "48297",
+    "49085",
+    "49124",
+    "51523",
+    "51524",
+    "51949",
+    "52011",
+    "52884",
+    "56654",
+    "57904"
   ],
   "courseData": {
     "par": 72,
@@ -1114,8 +1396,8 @@
       "name": "João Rocha",
       "fed": "48297",
       "club": "Estoril",
-      "hcpExact": null,
-      "hcpPlay": null,
+      "hcpExact": 4.3,
+      "hcpPlay": 4,
       "sex": "M"
     },
     {
@@ -1126,8 +1408,8 @@
       "name": "Nuno Palmares Jr.",
       "fed": "49124",
       "club": "Estoril",
-      "hcpExact": null,
-      "hcpPlay": null,
+      "hcpExact": 4.4,
+      "hcpPlay": 4,
       "sex": "M"
     },
     {
@@ -1138,8 +1420,8 @@
       "name": "Seb Toft",
       "fed": "57291",
       "club": "Vilamoura, C. G",
-      "hcpExact": null,
-      "hcpPlay": null,
+      "hcpExact": 5.3,
+      "hcpPlay": 5,
       "sex": "M"
     },
     {
@@ -1150,8 +1432,8 @@
       "name": "Tomás Rente",
       "fed": "46311",
       "club": "Miramar",
-      "hcpExact": null,
-      "hcpPlay": null,
+      "hcpExact": 5.7,
+      "hcpPlay": 5,
       "sex": "M"
     },
     {
@@ -1162,8 +1444,8 @@
       "name": "Finn Gordon",
       "fed": "55269",
       "club": "Vilamoura, C. G",
-      "hcpExact": null,
-      "hcpPlay": null,
+      "hcpExact": 6,
+      "hcpPlay": 6,
       "sex": "M"
     },
     {
@@ -1186,8 +1468,8 @@
       "name": "David Filip Jun.",
       "fed": "51949",
       "club": "Lisbon SC",
-      "hcpExact": null,
-      "hcpPlay": null,
+      "hcpExact": 7.8,
+      "hcpPlay": 8,
       "sex": "M"
     },
     {
@@ -1198,8 +1480,8 @@
       "name": "Salvador Ivo de Carvalho",
       "fed": "43968",
       "club": "Estoril",
-      "hcpExact": null,
-      "hcpPlay": null,
+      "hcpExact": 7.9,
+      "hcpPlay": 8,
       "sex": "M"
     },
     {
@@ -1210,8 +1492,8 @@
       "name": "William Gao",
       "fed": "51524",
       "club": "Quinta do Peru",
-      "hcpExact": null,
-      "hcpPlay": null,
+      "hcpExact": 8.7,
+      "hcpPlay": 9,
       "sex": "M"
     },
     {
@@ -1222,8 +1504,8 @@
       "name": "Tomás Lima Pinto",
       "fed": "46037",
       "club": "Vilamoura, C. G",
-      "hcpExact": null,
-      "hcpPlay": null,
+      "hcpExact": 9.6,
+      "hcpPlay": 10,
       "sex": "M"
     },
     {
@@ -1234,8 +1516,8 @@
       "name": "Afonso de Sousa Pinto",
       "fed": "46480",
       "club": "Oporto",
-      "hcpExact": null,
-      "hcpPlay": null,
+      "hcpExact": 10.2,
+      "hcpPlay": 11,
       "sex": "M"
     },
     {
@@ -1246,8 +1528,8 @@
       "name": "José Silva",
       "fed": "54845",
       "club": "Amendoeira",
-      "hcpExact": null,
-      "hcpPlay": null,
+      "hcpExact": 11.1,
+      "hcpPlay": 12,
       "sex": "M"
     },
     {
@@ -1258,8 +1540,8 @@
       "name": "Alfie Kelley",
       "fed": "58043",
       "club": "Belas",
-      "hcpExact": null,
-      "hcpPlay": null,
+      "hcpExact": 18.8,
+      "hcpPlay": 21,
       "sex": "M"
     },
     {
@@ -1270,8 +1552,8 @@
       "name": "Catarina Sousa Conceição",
       "fed": "48794",
       "club": "Vilamoura, C. G",
-      "hcpExact": null,
-      "hcpPlay": null,
+      "hcpExact": 10.9,
+      "hcpPlay": 18,
       "sex": "F"
     }
   ],
@@ -1284,8 +1566,8 @@
       "name": "Joe Short",
       "fed": "51804",
       "club": "Vila Sol",
-      "hcpExact": null,
-      "hcpPlay": null,
+      "hcpExact": 6.1,
+      "hcpPlay": 1,
       "sex": "M"
     },
     {
@@ -1296,8 +1578,8 @@
       "name": "Ricardo Castro Ferreira",
       "fed": "49085",
       "club": "Estoril",
-      "hcpExact": null,
-      "hcpPlay": null,
+      "hcpExact": 7.7,
+      "hcpPlay": 2,
       "sex": "M"
     },
     {
@@ -1308,8 +1590,8 @@
       "name": "Guo Ziyang",
       "fed": "57904",
       "club": "Estoril",
-      "hcpExact": null,
-      "hcpPlay": null,
+      "hcpExact": 11.4,
+      "hcpPlay": 7,
       "sex": "M"
     },
     {
@@ -1320,8 +1602,8 @@
       "name": "Manuel Goulartt Medeiros",
       "fed": "52884",
       "club": "Santo da Serra",
-      "hcpExact": null,
-      "hcpPlay": null,
+      "hcpExact": 12,
+      "hcpPlay": 7,
       "sex": "M"
     },
     {
@@ -1356,8 +1638,8 @@
       "name": "Marek Pejas",
       "fed": "52069",
       "club": "Vilamoura, C. G",
-      "hcpExact": null,
-      "hcpPlay": null,
+      "hcpExact": 20.4,
+      "hcpPlay": 16,
       "sex": "M"
     },
     {
@@ -1368,8 +1650,8 @@
       "name": "Gabriel Costa",
       "fed": "53838",
       "club": "Amendoeira",
-      "hcpExact": null,
-      "hcpPlay": null,
+      "hcpExact": 21.4,
+      "hcpPlay": 17,
       "sex": "M"
     },
     {
@@ -1380,8 +1662,8 @@
       "name": "Miguel Santos Pereira",
       "fed": "48946",
       "club": "Vilamoura, C. G",
-      "hcpExact": null,
-      "hcpPlay": null,
+      "hcpExact": 21.3,
+      "hcpPlay": 17,
       "sex": "M"
     },
     {
@@ -1416,8 +1698,8 @@
       "name": "Harry Seabrook",
       "fed": "54264",
       "club": "Vila Sol",
-      "hcpExact": null,
-      "hcpPlay": null,
+      "hcpExact": 28.6,
+      "hcpPlay": 25,
       "sex": "M"
     }
   ],
@@ -1473,7 +1755,977 @@
   },
   "courseDataAzuis": {
     "par": 72,
-    "cr": 73.8,
-    "slope": 131
+    "cr": 76.3,
+    "slope": 139,
+    "holes": [
+      {
+        "h": 1,
+        "par": 5,
+        "si": 16,
+        "m": 443
+      },
+      {
+        "h": 2,
+        "par": 3,
+        "si": 12,
+        "m": 115
+      },
+      {
+        "h": 3,
+        "par": 4,
+        "si": 4,
+        "m": 336
+      },
+      {
+        "h": 4,
+        "par": 3,
+        "si": 6,
+        "m": 140
+      },
+      {
+        "h": 5,
+        "par": 4,
+        "si": 8,
+        "m": 289
+      },
+      {
+        "h": 6,
+        "par": 4,
+        "si": 18,
+        "m": 273
+      },
+      {
+        "h": 7,
+        "par": 4,
+        "si": 10,
+        "m": 293
+      },
+      {
+        "h": 8,
+        "par": 5,
+        "si": 14,
+        "m": 446
+      },
+      {
+        "h": 9,
+        "par": 4,
+        "si": 2,
+        "m": 358
+      },
+      {
+        "h": 10,
+        "par": 5,
+        "si": 17,
+        "m": 454
+      },
+      {
+        "h": 11,
+        "par": 4,
+        "si": 7,
+        "m": 346
+      },
+      {
+        "h": 12,
+        "par": 3,
+        "si": 5,
+        "m": 138
+      },
+      {
+        "h": 13,
+        "par": 4,
+        "si": 1,
+        "m": 379
+      },
+      {
+        "h": 14,
+        "par": 4,
+        "si": 3,
+        "m": 308
+      },
+      {
+        "h": 15,
+        "par": 5,
+        "si": 13,
+        "m": 481
+      },
+      {
+        "h": 16,
+        "par": 4,
+        "si": 15,
+        "m": 324
+      },
+      {
+        "h": 17,
+        "par": 3,
+        "si": 11,
+        "m": 130
+      },
+      {
+        "h": 18,
+        "par": 4,
+        "si": 9,
+        "m": 352
+      }
+    ]
+  },
+  "tourn_sub14": 10295,
+  "tourn_sub12": 10296,
+  "courseDataAmarelas": {
+    "par": 72,
+    "cr": 70.6,
+    "slope": 132,
+    "holes": [
+      {
+        "h": 1,
+        "par": 5,
+        "si": 16,
+        "m": 460
+      },
+      {
+        "h": 2,
+        "par": 3,
+        "si": 12,
+        "m": 121
+      },
+      {
+        "h": 3,
+        "par": 4,
+        "si": 4,
+        "m": 342
+      },
+      {
+        "h": 4,
+        "par": 3,
+        "si": 6,
+        "m": 150
+      },
+      {
+        "h": 5,
+        "par": 4,
+        "si": 8,
+        "m": 298
+      },
+      {
+        "h": 6,
+        "par": 4,
+        "si": 18,
+        "m": 280
+      },
+      {
+        "h": 7,
+        "par": 4,
+        "si": 10,
+        "m": 303
+      },
+      {
+        "h": 8,
+        "par": 5,
+        "si": 14,
+        "m": 456
+      },
+      {
+        "h": 9,
+        "par": 4,
+        "si": 2,
+        "m": 364
+      },
+      {
+        "h": 10,
+        "par": 5,
+        "si": 17,
+        "m": 464
+      },
+      {
+        "h": 11,
+        "par": 4,
+        "si": 7,
+        "m": 356
+      },
+      {
+        "h": 12,
+        "par": 3,
+        "si": 5,
+        "m": 148
+      },
+      {
+        "h": 13,
+        "par": 4,
+        "si": 1,
+        "m": 398
+      },
+      {
+        "h": 14,
+        "par": 4,
+        "si": 3,
+        "m": 318
+      },
+      {
+        "h": 15,
+        "par": 5,
+        "si": 13,
+        "m": 491
+      },
+      {
+        "h": 16,
+        "par": 4,
+        "si": 15,
+        "m": 334
+      },
+      {
+        "h": 17,
+        "par": 3,
+        "si": 11,
+        "m": 140
+      },
+      {
+        "h": 18,
+        "par": 4,
+        "si": 9,
+        "m": 360
+      }
+    ]
+  },
+  "courseDataVermelhas": {
+    "par": 72,
+    "cr": 66.1,
+    "slope": 123,
+    "holes": [
+      {
+        "h": 1,
+        "par": 5,
+        "si": 16,
+        "m": 403
+      },
+      {
+        "h": 2,
+        "par": 3,
+        "si": 12,
+        "m": 103
+      },
+      {
+        "h": 3,
+        "par": 4,
+        "si": 4,
+        "m": 323
+      },
+      {
+        "h": 4,
+        "par": 3,
+        "si": 6,
+        "m": 135
+      },
+      {
+        "h": 5,
+        "par": 4,
+        "si": 8,
+        "m": 220
+      },
+      {
+        "h": 6,
+        "par": 4,
+        "si": 18,
+        "m": 221
+      },
+      {
+        "h": 7,
+        "par": 4,
+        "si": 10,
+        "m": 235
+      },
+      {
+        "h": 8,
+        "par": 5,
+        "si": 14,
+        "m": 374
+      },
+      {
+        "h": 9,
+        "par": 4,
+        "si": 2,
+        "m": 320
+      },
+      {
+        "h": 10,
+        "par": 5,
+        "si": 17,
+        "m": 419
+      },
+      {
+        "h": 11,
+        "par": 4,
+        "si": 7,
+        "m": 304
+      },
+      {
+        "h": 12,
+        "par": 3,
+        "si": 5,
+        "m": 124
+      },
+      {
+        "h": 13,
+        "par": 4,
+        "si": 1,
+        "m": 320
+      },
+      {
+        "h": 14,
+        "par": 4,
+        "si": 3,
+        "m": 272
+      },
+      {
+        "h": 15,
+        "par": 5,
+        "si": 13,
+        "m": 443
+      },
+      {
+        "h": 16,
+        "par": 4,
+        "si": 15,
+        "m": 282
+      },
+      {
+        "h": 17,
+        "par": 3,
+        "si": 11,
+        "m": 107
+      },
+      {
+        "h": 18,
+        "par": 4,
+        "si": 9,
+        "m": 295
+      }
+    ]
+  },
+  "manualHolesSub14": {
+    "49124": {
+      "holes": [
+        4,
+        3,
+        4,
+        3,
+        4,
+        2,
+        3,
+        5,
+        4,
+        5,
+        5,
+        4,
+        5,
+        4,
+        6,
+        5,
+        3,
+        5
+      ],
+      "gross": 74,
+      "toPar": 2
+    },
+    "48297": {
+      "holes": [
+        6,
+        4,
+        6,
+        3,
+        4,
+        3,
+        5,
+        5,
+        4,
+        5,
+        4,
+        2,
+        5,
+        4,
+        6,
+        5,
+        3,
+        5
+      ],
+      "gross": 79,
+      "toPar": 7
+    },
+    "46037": {
+      "holes": [
+        4,
+        3,
+        5,
+        4,
+        4,
+        5,
+        5,
+        5,
+        5,
+        8,
+        5,
+        3,
+        4,
+        4,
+        5,
+        4,
+        4,
+        5
+      ],
+      "gross": 82,
+      "toPar": 10
+    },
+    "55269": {
+      "holes": [
+        5,
+        3,
+        3,
+        3,
+        4,
+        5,
+        5,
+        7,
+        4,
+        6,
+        5,
+        3,
+        5,
+        4,
+        5,
+        6,
+        4,
+        5
+      ],
+      "gross": 82,
+      "toPar": 10
+    },
+    "43968": {
+      "holes": [
+        5,
+        4,
+        5,
+        3,
+        5,
+        3,
+        5,
+        6,
+        6,
+        6,
+        4,
+        4,
+        5,
+        4,
+        6,
+        5,
+        3,
+        5
+      ],
+      "gross": 84,
+      "toPar": 12
+    },
+    "51524": {
+      "holes": [
+        6,
+        4,
+        4,
+        4,
+        3,
+        7,
+        4,
+        6,
+        6,
+        6,
+        4,
+        3,
+        5,
+        5,
+        5,
+        5,
+        3,
+        5
+      ],
+      "gross": 85,
+      "toPar": 13
+    },
+    "46311": {
+      "holes": [
+        5,
+        3,
+        5,
+        3,
+        5,
+        4,
+        4,
+        6,
+        5,
+        5,
+        6,
+        4,
+        5,
+        4,
+        6,
+        5,
+        5,
+        5
+      ],
+      "gross": 85,
+      "toPar": 13
+    },
+    "57291": {
+      "holes": [
+        4,
+        3,
+        4,
+        3,
+        5,
+        4,
+        4,
+        6,
+        6,
+        6,
+        5,
+        3,
+        5,
+        7,
+        6,
+        5,
+        4,
+        5
+      ],
+      "gross": 85,
+      "toPar": 13
+    },
+    "Yoon Jun Lee": {
+      "holes": [
+        5,
+        3,
+        6,
+        3,
+        5,
+        4,
+        4,
+        5,
+        7,
+        6,
+        7,
+        3,
+        5,
+        4,
+        5,
+        5,
+        3,
+        6
+      ],
+      "gross": 86,
+      "toPar": 14
+    },
+    "46480": {
+      "holes": [
+        5,
+        3,
+        5,
+        3,
+        5,
+        5,
+        4,
+        6,
+        5,
+        5,
+        5,
+        3,
+        5,
+        7,
+        6,
+        5,
+        6,
+        4
+      ],
+      "gross": 87,
+      "toPar": 15
+    },
+    "54845": {
+      "holes": [
+        5,
+        3,
+        5,
+        4,
+        7,
+        3,
+        4,
+        6,
+        6,
+        6,
+        5,
+        4,
+        4,
+        5,
+        6,
+        5,
+        4,
+        6
+      ],
+      "gross": 88,
+      "toPar": 16
+    },
+    "48794": {
+      "holes": [
+        7,
+        5,
+        6,
+        3,
+        10,
+        4,
+        4,
+        8,
+        5,
+        6,
+        5,
+        3,
+        4,
+        6,
+        6,
+        5,
+        4,
+        5
+      ],
+      "gross": 96,
+      "toPar": 24
+    },
+    "51949": {
+      "holes": [
+        8,
+        6,
+        6,
+        4,
+        11,
+        4,
+        5,
+        6,
+        6,
+        5,
+        4,
+        3,
+        4,
+        5,
+        6,
+        5,
+        4,
+        5
+      ],
+      "gross": 97,
+      "toPar": 25
+    },
+    "58043": {
+      "holes": [
+        10,
+        3,
+        6,
+        3,
+        8,
+        5,
+        4,
+        7,
+        7,
+        5,
+        4,
+        3,
+        5,
+        6,
+        6,
+        6,
+        5,
+        6
+      ],
+      "gross": 99,
+      "toPar": 27
+    }
+  },
+  "manualHolesSub12": {
+    "49085": {
+      "holes": [
+        5,
+        3,
+        4,
+        3,
+        5,
+        5,
+        4,
+        5,
+        4,
+        4,
+        5,
+        3,
+        5,
+        6,
+        5,
+        4,
+        2,
+        5
+      ],
+      "gross": 77,
+      "toPar": 5
+    },
+    "51804": {
+      "holes": [
+        5,
+        3,
+        7,
+        3,
+        3,
+        3,
+        5,
+        5,
+        5,
+        5,
+        4,
+        3,
+        4,
+        4,
+        6,
+        5,
+        4,
+        5
+      ],
+      "gross": 79,
+      "toPar": 7
+    },
+    "57904": {
+      "holes": [
+        7,
+        3,
+        5,
+        4,
+        4,
+        4,
+        5,
+        6,
+        4,
+        6,
+        5,
+        4,
+        5,
+        4,
+        6,
+        5,
+        3,
+        5
+      ],
+      "gross": 85,
+      "toPar": 13
+    },
+    "52884": {
+      "holes": [
+        6,
+        4,
+        4,
+        3,
+        6,
+        3,
+        3,
+        6,
+        5,
+        7,
+        5,
+        4,
+        6,
+        4,
+        8,
+        5,
+        5,
+        3
+      ],
+      "gross": 87,
+      "toPar": 15
+    },
+    "Benji Botham": {
+      "holes": [
+        5,
+        4,
+        5,
+        5,
+        5,
+        4,
+        4,
+        5,
+        5,
+        7,
+        5,
+        3,
+        5,
+        6,
+        7,
+        6,
+        3,
+        4
+      ],
+      "gross": 88,
+      "toPar": 16
+    },
+    "52069": {
+      "holes": [
+        6,
+        4,
+        6,
+        4,
+        6,
+        4,
+        4,
+        6,
+        5,
+        6,
+        5,
+        4,
+        6,
+        4,
+        6,
+        7,
+        3,
+        6
+      ],
+      "gross": 92,
+      "toPar": 20
+    },
+    "48946": {
+      "holes": [
+        6,
+        3,
+        5,
+        4,
+        5,
+        4,
+        5,
+        5,
+        5,
+        6,
+        6,
+        4,
+        4,
+        6,
+        9,
+        6,
+        3,
+        7
+      ],
+      "gross": 93,
+      "toPar": 21
+    },
+    "George Campbell": {
+      "holes": [
+        7,
+        3,
+        5,
+        3,
+        7,
+        5,
+        5,
+        8,
+        5,
+        6,
+        3,
+        3,
+        6,
+        5,
+        7,
+        6,
+        5,
+        5
+      ],
+      "gross": 94,
+      "toPar": 22
+    },
+    "54264": {
+      "holes": [
+        6,
+        5,
+        4,
+        3,
+        6,
+        7,
+        4,
+        6,
+        7,
+        6,
+        5,
+        5,
+        5,
+        7,
+        6,
+        6,
+        6,
+        4
+      ],
+      "gross": 98,
+      "toPar": 26
+    },
+    "Harley Botham": {
+      "holes": [
+        6,
+        3,
+        7,
+        4,
+        5,
+        5,
+        5,
+        7,
+        6,
+        6,
+        5,
+        3,
+        4,
+        7,
+        10,
+        7,
+        3,
+        5
+      ],
+      "gross": 98,
+      "toPar": 26
+    },
+    "53838": {
+      "holes": [
+        6,
+        4,
+        5,
+        4,
+        5,
+        5,
+        7,
+        7,
+        8,
+        6,
+        5,
+        4,
+        4,
+        3,
+        9,
+        6,
+        6,
+        5
+      ],
+      "gross": 99,
+      "toPar": 27
+    },
+    "Yeonjin Seo": {
+      "holes": [
+        5,
+        3,
+        7,
+        5,
+        7,
+        4,
+        4,
+        7,
+        7,
+        6,
+        7,
+        4,
+        6,
+        8,
+        8,
+        7,
+        7,
+        5
+      ],
+      "gross": 107,
+      "toPar": 35
+    }
   }
 }
