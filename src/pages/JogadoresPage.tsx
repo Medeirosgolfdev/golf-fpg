@@ -9,9 +9,9 @@ import {
   type CrossPlayerData, type HcpInfo, type HoleScores,
 } from "../data/playerDataLoader";
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ════════════════════════════════════════════
    Utility functions (port from client JS)
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   ════════════════════════════════════════════ */
 
 type Props = { players: PlayersDb; courses?: Course[]; initialFed?: string | null; onFedConsumed?: () => void };
 type SexFilter = "ALL" | "M" | "F";
@@ -52,7 +52,7 @@ function stdevArr(arr: (number | null | undefined)[]): number | null {
   const variance = vals.reduce((a, v) => a + (v - m) ** 2, 0) / (vals.length - 1);
   return Math.sqrt(variance);
 }
-/* Mapa tee name â†’ hex real (DataGolf), populado a partir de courses */
+/* Mapa tee name → hex real (DataGolf), populado a partir de courses */
 let _teeColorMap: Map<string, string> = new Map();
 
 function buildTeeColorMap(courses: Course[]): Map<string, string> {
@@ -137,9 +137,9 @@ function scClass(gross: number | null, par: number | null): string {
   return "worse";
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ════════════════════════════════════════════
    Micro-components
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   ════════════════════════════════════════════ */
 
 /** Tees claros (brancas, etc.) precisam de bordo para não desaparecer no fundo */
 function teeBorder(hex: string): string | undefined {
@@ -188,11 +188,11 @@ function ScoreCircle({ gross, par, size = "normal" }: { gross: number | null; pa
   return <span className={`sc-score ${cls}`} style={sizeStyle}>{gross}</span>;
 }
 
-/* â”€â”€â”€ Pill Badge (REGIONAL, NACIONAL, INTL) â”€â”€â”€ */
+/* ─── Pill Badge (REGIONAL, NACIONAL, INTL) ─── */
 function PillBadge({ pill }: { pill?: string }) {
   if (!pill) return null;
   let p = pill.trim().toUpperCase();
-  // Unificar: AWAY e AWAY INTL â†’ INTL
+  // Unificar: AWAY e AWAY INTL → INTL
   if (p === "AWAY" || p === "AWAY INTL" || p === "INTERNACIONAL") p = "INTL";
   const classMap: Record<string, string> = {
     REGIONAL: "pill-torneio pill-regional",
@@ -204,7 +204,7 @@ function PillBadge({ pill }: { pill?: string }) {
   return <span className={cls}>{p}</span>;
 }
 
-/* â”€â”€â”€ EDS / Score Origin Badge â”€â”€â”€ */
+/* ─── EDS / Score Origin Badge ─── */
 function EdsBadge({ origin }: { origin?: string }) {
   if (!origin) return null;
   const o = origin.trim();
@@ -213,7 +213,7 @@ function EdsBadge({ origin }: { origin?: string }) {
   return <span className="eds-badge">{o}</span>;
 }
 
-/* â”€â”€â”€ External Links (classificação, etc.) â”€â”€â”€ */
+/* ─── External Links (classificação, etc.) ─── */
 function LinkBtns({ links }: { links?: Record<string, string> }) {
   if (!links || Object.keys(links).length === 0) return null;
   return (
@@ -232,14 +232,14 @@ function LinkBtns({ links }: { links?: Record<string, string> }) {
           }}
           onClick={(e) => e.stopPropagation()}
         >
-          ðŸ”—
+          🔗
         </a>
       ))}
     </>
   );
 }
 
-/* â”€â”€â”€ Combined event info: name + EDS badge + pill + links â”€â”€â”€ */
+/* ─── Combined event info: name + EDS badge + pill + links ─── */
 function EventInfo({ name, origin, pill, links }: {
   name?: string; origin?: string; pill?: string; links?: Record<string, string>;
 }) {
@@ -253,9 +253,9 @@ function EventInfo({ name, origin, pill, links }: {
   );
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ════════════════════════════════════════════
    By Date View
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   ════════════════════════════════════════════ */
 
 function ByDateView({ data, search, onScoreClick }: {
   data: PlayerPageData; search: string; onScoreClick: (id: string) => void;
@@ -319,11 +319,11 @@ function ByDateView({ data, search, onScoreClick }: {
   );
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ════════════════════════════════════════════
    By Course View
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   ════════════════════════════════════════════ */
 
-/* â”€â”€â”€ Tee Summary Table (compact, for simple by_course view) â”€â”€â”€ */
+/* ─── Tee Summary Table (compact, for simple by_course view) ─── */
 function TeeSummaryTable({ rounds }: { rounds: RoundData[] }) {
   const tees = useMemo(() => {
     const map: Record<string, { tee: string; count: number; gross: number[]; stb: number[]; sd: number[]; hi: (number | null)[] }> = {};
@@ -491,7 +491,7 @@ function ByCourseRow({ course, idx, data, isAnalysis, openScorecard, openScoreca
   );
 }
 
-/* â”€â”€â”€ Native Scorecard Table â”€â”€â”€ */
+/* ─── Native Scorecard Table ─── */
 
 const linkLabels: Record<string, string> = {
   classificacao: "Classificação", classificacao_d1: "Classif. D1", classificacao_d2: "Classif. D2",
@@ -548,7 +548,7 @@ function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, eclecti
             <div className="sc-links">
               {linkEntries.map(([label, url]) => (
                 <a key={label} href={url} target="_blank" rel="noopener noreferrer" className="sc-ext-link" title={linkLabels[label] || label}>
-                  ðŸ”— {linkLabels[label] || label}
+                  🔗 {linkLabels[label] || label}
                 </a>
               ))}
             </div>
@@ -707,7 +707,7 @@ function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, eclecti
   );
 }
 
-/* â”€â”€â”€ Eclectic + Delta rows (sub-component of ScorecardTable) â”€â”€â”€ */
+/* ─── Eclectic + Delta rows (sub-component of ScorecardTable) ─── */
 
 function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
   gross: (number | null)[];
@@ -773,9 +773,9 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
         })()}
       </tr>
 
-      {/* Î” (delta) row */}
+      {/* Δ (delta) row */}
       <tr style={{ background: "#fafbfc" }}>
-        <td className="row-label" style={{ color: "#64748b", fontWeight: 700, fontSize: 10 }}>Î”</td>
+        <td className="row-label" style={{ color: "#64748b", fontWeight: 700, fontSize: 10 }}>Δ</td>
         {Array.from({ length: holeCount }, (_, h) => {
           const gv = gross[h];
           const ev = ecArr[h];
@@ -818,7 +818,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
   );
 }
 
-/* â”€â”€â”€ Scorecard wrapper that resolves HOLES data and renders ScorecardTable â”€â”€â”€ */
+/* ─── Scorecard wrapper that resolves HOLES data and renders ScorecardTable ─── */
 
 function RoundRow({ r, data, courseName, isOpen, onToggle }: {
   r: RoundData; data: PlayerPageData; courseName: string; isOpen: boolean; onToggle: () => void;
@@ -912,9 +912,9 @@ function ByCourseView({ data, search, sort, isAnalysis }: {
   );
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ════════════════════════════════════════════
    Eclectic Section (inside course detail)
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   ════════════════════════════════════════════ */
 
 function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, activeTee, onSelectTee }: {
   ecList: EclecticEntry[]; ecDet: Record<string, EclecticEntry>;
@@ -1051,11 +1051,11 @@ function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, ac
   );
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ════════════════════════════════════════════
    Hole Stats Section
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   ════════════════════════════════════════════ */
 
-/* â”€â”€â”€ Course Performance Analysis (KPIs + Conclusion) â”€â”€â”€ */
+/* ─── Course Performance Analysis (KPIs + Conclusion) ─── */
 function CoursePerformanceSection({ rounds }: { rounds: RoundData[] }) {
   const stats = useMemo(() => {
     const r18 = rounds.filter(r => r.holeCount === 18 && (r.sd != null || r.stb != null));
@@ -1084,14 +1084,14 @@ function CoursePerformanceSection({ rounds }: { rounds: RoundData[] }) {
     const max2 = (a: number[]) => a.length ? Math.max(...a) : null;
 
     // Trend: linear regression on SD
-    let trendLabel = "âž¡️ Estável", trendCls = "trend-flat";
+    let trendLabel = "➡️ Estável", trendCls = "trend-flat";
     if (sdArr.length >= 3) {
       const n = sdArr.length;
       let sx = 0, sy = 0, sxy = 0, sx2 = 0;
       for (let i = 0; i < n; i++) { sx += i; sy += sdArr[i]; sxy += i * sdArr[i]; sx2 += i * i; }
       const slope = (n * sxy - sx * sy) / (n * sx2 - sx * sx);
-      if (slope < -0.3) { trendLabel = "ðŸ“ˆ A melhorar"; trendCls = "trend-up"; }
-      else if (slope > 0.3) { trendLabel = "ðŸ“‰ A piorar"; trendCls = "trend-down"; }
+      if (slope < -0.3) { trendLabel = "📈 A melhorar"; trendCls = "trend-up"; }
+      else if (slope > 0.3) { trendLabel = "📉 A piorar"; trendCls = "trend-down"; }
     }
 
     // By tee breakdown
@@ -1176,7 +1176,7 @@ function CoursePerformanceSection({ rounds }: { rounds: RoundData[] }) {
       </div>
       {stats.conclusion.length > 0 && (
         <div className="caConclusion">
-          <div className="caConcTitle">ðŸ’¡ Resumo</div>
+          <div className="caConcTitle">💡 Resumo</div>
           <div className="caConcText">{stats.conclusion}</div>
         </div>
       )}
@@ -1226,26 +1226,26 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
 
   return (
     <div className="holeAnalysis">
-      <div className="haTitle">ðŸ“Š Análise de Performance <span className="muted" style={{ fontSize: 11 }}>({stats.nRounds} rondas)</span></div>
+      <div className="haTitle">📊 Análise de Performance <span className="muted" style={{ fontSize: 11 }}>({stats.nRounds} rondas)</span></div>
 
       {/* Diagnosis cards */}
       <div className="haDiag">
         <div className="haDiagCard">
-          <div className="haDiagIcon" style={{ background: slColor + "20", color: slColor }}>ðŸŽ¯</div>
+          <div className="haDiagIcon" style={{ background: slColor + "20", color: slColor }}>🎯</div>
           <div className="haDiagBody">
             <div className="haDiagVal" style={{ color: slColor }}>{fD(stats.totalStrokesLost)}</div>
             <div className="haDiagLbl">pancadas perdidas p/ volta vs par</div>
           </div>
         </div>
         <div className="haDiagCard">
-          <div className="haDiagIcon" style={{ background: pobCol + "20", color: pobCol }}>â›³</div>
+          <div className="haDiagIcon" style={{ background: pobCol + "20", color: pobCol }}>⛳</div>
           <div className="haDiagBody">
             <div className="haDiagVal" style={{ color: pobCol }}>{parOrBetterPct.toFixed(0)}%</div>
             <div className="haDiagLbl">par ou melhor ({parOrBetter}/{td?.total ?? 0} buracos)</div>
           </div>
         </div>
         <div className="haDiagCard">
-          <div className="haDiagIcon" style={{ background: dowCol + "20", color: dowCol }}>ðŸ’£</div>
+          <div className="haDiagIcon" style={{ background: dowCol + "20", color: dowCol }}>💣</div>
           <div className="haDiagBody">
             <div className="haDiagVal" style={{ color: dowCol }}>{dblOrWorsePct.toFixed(0)}%</div>
             <div className="haDiagLbl">double bogey ou pior ({dblOrWorse}/{td?.total ?? 0})</div>
@@ -1257,7 +1257,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
           if (!worse9) return null;
           return (
             <div className="haDiagCard">
-              <div className="haDiagIcon" style={{ background: "#7c3aed20", color: "#7c3aed" }}>ðŸ”„</div>
+              <div className="haDiagIcon" style={{ background: "#7c3aed20", color: "#7c3aed" }}>🔄</div>
               <div className="haDiagBody">
                 <div className="haDiagVal" style={{ color: "#7c3aed" }}>{worse9}</div>
                 <div className="haDiagLbl">custa mais {Math.abs(diff9).toFixed(1)} panc./volta (F9: {fD(stats.f9b9!.f9.strokesLost)}, B9: {fD(stats.f9b9!.b9.strokesLost)})</div>
@@ -1286,7 +1286,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
               return (
                 <div key={pt} className="haParCard"
                   style={{ borderColor: isWorst ? "#dc2626" : "#d5dac9", background: isWorst ? "#fef2f2" : "#fff" }}>
-                  {isWorst && <div className="haParAlert">âš ️ Área a melhorar</div>}
+                  {isWorst && <div className="haParAlert">⚠️ Área a melhorar</div>}
                   <div className="haParHead">Par {pt} <span className="muted">({g.nHoles} buracos)</span></div>
                   <div className="haParAvg" style={{ color: vpCol }}>{fD2(g.avgVsPar ?? 0)} <span style={{ fontSize: 10, color: "#64748b" }}>média vs par</span></div>
                   <div className="haParStat">{fD(g.strokesLostPerRound)} <span>pancadas/volta</span></div>
@@ -1309,7 +1309,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
       {ranked.length >= 4 && (
         <div className="haTopWrap">
           <div className="haTopCol haTopStrength">
-            <div className="haTopTitle"><span style={{ color: "#16a34a" }}>ðŸ’ª Pontos Fortes</span></div>
+            <div className="haTopTitle"><span style={{ color: "#16a34a" }}>💪 Pontos Fortes</span></div>
             {strengths.length === 0
               ? <div className="haTopEmpty">Nenhum buraco consistentemente ao par ou melhor.</div>
               : strengths.map(bh => {
@@ -1330,7 +1330,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
             }
           </div>
           <div className="haTopCol haTopWeakness">
-            <div className="haTopTitle"><span style={{ color: "#dc2626" }}>ðŸ”» Onde Perdes Mais Pancadas</span></div>
+            <div className="haTopTitle"><span style={{ color: "#dc2626" }}>🔻 Onde Perdes Mais Pancadas</span></div>
             {weaknesses.length === 0
               ? <div className="haTopEmpty">Sem buracos com perdas significativas.</div>
               : <>
@@ -1518,9 +1518,9 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
   );
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ════════════════════════════════════════════
    Analysis View — KPIs, Histogram, Trajectory, Records, WHS, Last 20, Cross
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   ════════════════════════════════════════════ */
 
 function AnalysisView({ data }: { data: PlayerPageData }) {
   const [histPeriod, setHistPeriod] = useState(12);
@@ -1586,7 +1586,7 @@ function AnalysisView({ data }: { data: PlayerPageData }) {
           <KPICard title="Best 20% (média)" val={best20?.toFixed(1) ?? null}
             sub={`Gross 18B (${n20} de ${sorted.length})`}
             tip="Média dos melhores 20% dos resultados gross." />
-          <KPICard title="Consistência (Ïƒ)" val={kpiSigma?.toFixed(2) ?? null}
+          <KPICard title="Consistência (σ)" val={kpiSigma?.toFixed(2) ?? null}
             sub={`Gross 18B (${sorted.length} rondas)`}
             tip="Desvio padrão do gross. Menor = mais consistente." />
         </div>
@@ -1611,24 +1611,24 @@ function AnalysisView({ data }: { data: PlayerPageData }) {
   );
 }
 
-/* â”€â”€â”€ KPI Card â”€â”€â”€ */
+/* ─── KPI Card ─── */
 function KPICard({ title, val, sub, tip }: { title: string; val: string | null; sub: string; tip?: string }) {
   return (
     <div className="an-card">
-      <div className="an-k-title">{title}{tip && <span className="kpi-info" title={tip}>â„¹️</span>}</div>
+      <div className="an-k-title">{title}{tip && <span className="kpi-info" title={tip}>ℹ️</span>}</div>
       <div className="an-k-val">{val ? <b>{val}</b> : <span className="muted">–</span>}</div>
       {sub && <div className="an-k-sub muted">{sub}</div>}
     </div>
   );
 }
 
-/* â”€â”€â”€ Histogram â”€â”€â”€ */
+/* ─── Histogram ─── */
 function HistogramCard({ rounds, period, setPeriod }: {
   rounds: (RoundData & { course: string })[]; period: number; setPeriod: (n: number) => void;
 }) {
   const bins = useMemo(() => {
     const defs = [
-      { label: "Excepcional (â‰¤0)", min: -999, max: 0, color: "#0d9488" },
+      { label: "Excepcional (≤0)", min: -999, max: 0, color: "#0d9488" },
       { label: "Bom (+1 a +5)", min: 1, max: 5, color: "#22c55e" },
       { label: "Razoável (+6 a +10)", min: 6, max: 10, color: "#3b82f6" },
       { label: "Difícil (+11 a +15)", min: 11, max: 15, color: "#f59e0b" },
@@ -1686,7 +1686,7 @@ function HistogramCard({ rounds, period, setPeriod }: {
   );
 }
 
-/* â”€â”€â”€ Trajectory â”€â”€â”€ */
+/* ─── Trajectory ─── */
 function TrajectoryCard({ rounds, period, setPeriod }: {
   rounds: (RoundData & { course: string })[]; period: number; setPeriod: (n: number) => void;
 }) {
@@ -1741,7 +1741,7 @@ function TrajectoryCard({ rounds, period, setPeriod }: {
   );
 }
 
-/* â”€â”€â”€ Records â”€â”€â”€ */
+/* ─── Records ─── */
 function RecordsCard({ rounds, period, setPeriod }: {
   rounds: (RoundData & { course: string })[]; period: number; setPeriod: (n: number) => void;
 }) {
@@ -1778,17 +1778,17 @@ function RecordsCard({ rounds, period, setPeriod }: {
       </div>
       {!records ? <div className="muted">Sem dados</div> : (
         <div>
-          <RecLine label="ðŸ† Melhor Gross" r={records.bestGross} field="gross" />
-          <RecLine label="ðŸ“‰ Melhor SD" r={records.bestSd} field="sd" />
+          <RecLine label="🏆 Melhor Gross" r={records.bestGross} field="gross" />
+          <RecLine label="📉 Melhor SD" r={records.bestSd} field="sd" />
           <RecLine label="⭐ Melhor Stb" r={records.bestStb} field="stb" />
-          <RecLine label="ðŸ’€ Pior Gross" r={records.worstGross} field="gross" />
+          <RecLine label="💀 Pior Gross" r={records.worstGross} field="gross" />
         </div>
       )}
     </div>
   );
 }
 
-/* â”€â”€â”€ WHS Detail â”€â”€â”€ */
+/* ─── WHS Detail ─── */
 function WHSDetail({ hcp }: { hcp: HcpInfo }) {
   if (hcp.current == null) {
     return <div className="an-card"><div className="an-k-title">Handicap — Detalhe WHS</div><div className="muted">Sem dados WHS disponíveis</div></div>;
@@ -1826,7 +1826,7 @@ function WHSDetail({ hcp }: { hcp: HcpInfo }) {
   );
 }
 
-/* â”€â”€â”€ Last 20 Table with scorecard expansion â”€â”€â”€ */
+/* ─── Last 20 Table with scorecard expansion ─── */
 function Last20Table({ data, last20Table, best8 }: {
   data: PlayerPageData;
   last20Table: (RoundData & { course: string })[];
@@ -1838,7 +1838,7 @@ function Last20Table({ data, last20Table, best8 }: {
     <div className="an-card">
       <div className="an-k-title">Últimas 20 rondas</div>
       <div className="muted" style={{ marginBottom: 8, fontSize: 11 }}>
-        Os 8 melhores SD das últimas 20 estão assinalados com â˜… · <b>*</b> = Stableford normalizado 9Bâ†’18B (+17 pts WHS)
+        Os 8 melhores SD das últimas 20 estão assinalados com ★ · <b>*</b> = Stableford normalizado 9B→18B (+17 pts WHS)
       </div>
       <div className="pa-table-wrap">
         <table className="an-table">
@@ -1885,7 +1885,7 @@ function Last20Table({ data, last20Table, best8 }: {
                     <td className="r"><SdCell round={r} /></td>
                     <td className="r">
                       {isBest8 && (
-                        <><span style={{ color: "#16a34a" }}>â˜…</span>{" "}<span style={{ fontWeight: 700 }}>#{rank}</span></>
+                        <><span style={{ color: "#16a34a" }}>★</span>{" "}<span style={{ fontWeight: 700 }}>#{rank}</span></>
                       )}
                     </td>
                   </tr>
@@ -1917,7 +1917,7 @@ function Last20Table({ data, last20Table, best8 }: {
   );
 }
 
-/* â”€â”€â”€ Cross Analysis â”€â”€â”€ */
+/* ─── Cross Analysis ─── */
 function CrossAnalysis({ data }: { data: PlayerPageData }) {
   const keys = Object.keys(data.CROSS_DATA);
   const [activeEsc, setActiveEsc] = useState<string>("");
@@ -1959,7 +1959,7 @@ function CrossAnalysis({ data }: { data: PlayerPageData }) {
 
   return (
     <div className="an-card" style={{ marginTop: 24 }}>
-      <div className="an-k-title" style={{ fontSize: 18, marginBottom: 16 }}>ðŸ“Š Cross-Análise por Escalão</div>
+      <div className="an-k-title" style={{ fontSize: 18, marginBottom: 16 }}>📊 Cross-Análise por Escalão</div>
       {/* Tabs */}
       <div className="cross-tabs" style={{ display: "flex", gap: 4, flexWrap: "wrap", marginBottom: 12 }}>
         {escalaos.map(esc => (
@@ -1981,7 +1981,7 @@ function CrossAnalysis({ data }: { data: PlayerPageData }) {
           value={hcpMax} onChange={e => setHcpMax(e.target.value)}>
           <option value="all">HCP máx</option>
           {[0, 3, 6, 9, 12, 15, 18, 21, 25, 28, 31, 38, 45].map(v => (
-            <option key={v} value={v}>{v === 0 ? "Scratch (â‰¤0)" : `â‰¤ ${v}`}</option>
+            <option key={v} value={v}>{v === 0 ? "Scratch (≤0)" : `≤ ${v}`}</option>
           ))}
         </select>
         <span className="muted" style={{ fontSize: 11, fontWeight: 600 }}>{players.length} jogadores</span>
@@ -2043,7 +2043,7 @@ function CrossAnalysis({ data }: { data: PlayerPageData }) {
   );
 }
 
-/* â”€â”€â”€ HCP Evolution SVG Chart â”€â”€â”€ */
+/* ─── HCP Evolution SVG Chart ─── */
 function HcpEvolutionChart({ players, currentFed, escName }: {
   players: CrossPlayerData[]; currentFed: string; escName: string;
 }) {
@@ -2151,7 +2151,7 @@ function HcpEvolutionChart({ players, currentFed, escName }: {
   );
 }
 
-/* â”€â”€â”€ Common Courses â”€â”€â”€ */
+/* ─── Common Courses ─── */
 function CommonCourses({ players, currentFed, escName }: {
   players: CrossPlayerData[]; currentFed: string; escName: string;
 }) {
@@ -2194,15 +2194,15 @@ function CommonCourses({ players, currentFed, escName }: {
             <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 8, padding: "8px 12px", cursor: "pointer" }}
               onClick={() => setOpenCard(isOpen ? null : ci)}>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span style={{ fontSize: 10, transition: "transform .2s", transform: isOpen ? "rotate(90deg)" : "" }}>â–¶</span>
-                <span style={{ fontWeight: 700 }}>â›³ {cc.course}</span>
+                <span style={{ fontSize: 10, transition: "transform .2s", transform: isOpen ? "rotate(90deg)" : "" }}>▶</span>
+                <span style={{ fontWeight: 700 }}>⛳ {cc.course}</span>
                 <TeePill name={cc.tee} />
                 <span className="muted" style={{ fontSize: 11 }}>{cc.players.length} jogadores</span>
               </div>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "2px 10px", fontSize: 11, marginTop: 4 }}>
                 {cc.players.map((mp, mr) => {
                   const isCur = mp.fed === currentFed;
-                  const medal = mr === 0 ? "ðŸ¥‡" : mr === 1 ? "ðŸ¥ˆ" : mr === 2 ? "ðŸ¥‰" : `${mr + 1}º`;
+                  const medal = mr === 0 ? "🥇" : mr === 1 ? "🥈" : mr === 2 ? "🥉" : `${mr + 1}º`;
                   return (
                     <span key={mp.fed} style={{ fontWeight: isCur ? 700 : 400, color: isCur ? "#16a34a" : undefined }}>
                       {medal} {mp.name.split(" ")[0]} <b>{mp.best ?? "–"}</b>
@@ -2217,7 +2217,7 @@ function CommonCourses({ players, currentFed, escName }: {
                   <thead>
                     <tr>
                       <th style={{ width: 32 }}>#</th><th>Jogador</th><th className="r">Voltas</th>
-                      <th className="r" style={{ color: "#16a34a" }}>â˜… Melhor</th><th className="r">Média</th>
+                      <th className="r" style={{ color: "#16a34a" }}>★ Melhor</th><th className="r">Média</th>
                       <th className="r" style={{ color: "#dc2626" }}>Pior</th><th className="r">Ampl.</th>
                       <th style={{ minWidth: 120 }}>Distribuição</th>
                     </tr>
@@ -2270,7 +2270,7 @@ function CommonCourses({ players, currentFed, escName }: {
                               <span style={{ color: "#64748b" }}>{rd.date || "–"}</span>
                               <span style={{ fontWeight: 700 }}>{rd.gross}{rd.par ? <span className={`score-delta ${(rd.gross - rd.par) > 0 ? "pos" : (rd.gross - rd.par) < 0 ? "neg" : ""}`} style={{ fontSize: 9, marginLeft: 2 }}>{(rd.gross - rd.par) > 0 ? "+" : ""}{rd.gross - rd.par}</span> : null}</span>
                               {rd.sd != null && <span style={{ color: "#64748b" }}>SD {rd.sd}</span>}
-                              {isBest && <span>â˜…</span>}
+                              {isBest && <span>★</span>}
                             </div>
                           );
                         })}
@@ -2301,7 +2301,7 @@ function PeriodSelect({ value, onChange }: { value: number; onChange: (n: number
   );
 }
 
-/* â”€â”€â”€ Tournament Comparison Scorecard â”€â”€â”€ */
+/* ─── Tournament Comparison Scorecard ─── */
 function TournamentComparison({ rounds, holesData }: {
   rounds: (RoundData & { course: string })[];
   holesData: Record<string, HoleScores>;
@@ -2514,7 +2514,7 @@ function CompDeltaRow({ first, last, hc, is9, frontEnd, backStart }: {
 
   return (
     <tr style={{ background: "#fafbfc", borderTop: "2px solid #cbd5e1" }}>
-      <td style={colLabel}>Î”</td>
+      <td style={colLabel}>Δ</td>
       {Array.from({ length: hc }, (_, i) => {
         const d = last[i] != null && first[i] != null ? last[i]! - first[i]! : null;
         const f = fmtDelta(d);
@@ -2543,7 +2543,7 @@ function CompDeltaRow({ first, last, hc, is9, frontEnd, backStart }: {
   );
 }
 
-/* â”€â”€â”€ Tournament Round Row (with expandable scorecard + eclectic injection) â”€â”€â”€ */
+/* ─── Tournament Round Row (with expandable scorecard + eclectic injection) ─── */
 function TournRoundRow({ r, idx, data }: {
   r: RoundData & { course: string }; idx: number; data: PlayerPageData;
 }) {
@@ -2594,15 +2594,15 @@ function TournRoundRow({ r, idx, data }: {
   );
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ════════════════════════════════════════════
    By Tournament View
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   ════════════════════════════════════════════ */
 
 function ByTournamentView({ data, search }: { data: PlayerPageData; search: string }) {
   const items = useMemo(() => {
     const term = norm2(search);
 
-    /* â”€â”€â”€ nameSimilarity (port from helpers.js) â”€â”€â”€ */
+    /* ─── nameSimilarity (port from helpers.js) ─── */
     function nameSimilarity(name1: string, name2: string, course1?: string, course2?: string): number {
       if (!name1 || !name2) return 0;
       let n1 = norm2(name1).replace(/internancional|internaccional|interacional/g, "internacional");
@@ -2756,7 +2756,7 @@ function ByTournamentView({ data, search }: { data: PlayerPageData; search: stri
             {items.map((it, idx) => {
               const start = it.rounds[0]?.date || "";
               const end = it.rounds[it.rounds.length - 1]?.date || "";
-              const dateStr = start && end && start !== end ? `${start} â†’ ${end}` : (end || start);
+              const dateStr = start && end && start !== end ? `${start} → ${end}` : (end || start);
               const isOpen = openIdx === idx;
               return (
                 <React.Fragment key={idx}>
@@ -2830,9 +2830,9 @@ function ByTournamentView({ data, search }: { data: PlayerPageData; search: stri
   );
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ════════════════════════════════════════════
    Player Detail — data loading + view switching
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   ════════════════════════════════════════════ */
 
 function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; selected: { fed: string } & Player; onMetaLoaded?: (meta: PlayerPageData["META"]) => void }) {
   const [data, setData] = useState<PlayerPageData | null>(null);
@@ -2939,9 +2939,9 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
   );
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ════════════════════════════════════════════
    Main Page — Jogadores (master-detail)
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   ════════════════════════════════════════════ */
 
 export default function JogadoresPage({ players, courses, initialFed, onFedConsumed }: Props) {
   const [q, setQ] = useState("");
@@ -3024,7 +3024,7 @@ export default function JogadoresPage({ players, courses, initialFed, onFedConsu
       <div className="toolbar">
         <div className="toolbar-left">
           <button className="sidebar-toggle" onClick={() => setSidebarOpen(v => !v)} title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
-            {sidebarOpen ? "â—€" : "â–¶"}
+            {sidebarOpen ? "◀" : "▶"}
           </button>
           <input className="input" value={q} onChange={e => { setQ(e.target.value); setSelectedFed(null); }}
             placeholder="Nome, clube, n.º federado…" style={{ width: 180 }} />

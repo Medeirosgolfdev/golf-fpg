@@ -198,7 +198,7 @@ function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
 /* ─── Draw View ─── */
 type DrawCat = "all" | "wagr" | "sub14" | "sub12";
 
-function DrawTable({ draw }: { draw: DrawEntry[] }) {
+function DrawTable({ draw, onSelectPlayer }: { draw: DrawEntry[]; onSelectPlayer?: (fed: string) => void }) {
   const groups = new Set(draw.map(d => `${d.time}-${d.group}`)).size;
   return (
     <>
@@ -292,7 +292,7 @@ function DrawView({ players, onSelectPlayer }: { players: PlayersDb; onSelectPla
         ))}
       </div>
 
-      <DrawTable draw={activeDraw} />
+      <DrawTable draw={activeDraw} onSelectPlayer={onSelectPlayer} />
     </div>
   );
 }
