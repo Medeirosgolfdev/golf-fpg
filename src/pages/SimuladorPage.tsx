@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import type { Course, Tee, Hole } from "../data/types";
 import TeeBadge from "../ui/TeeBadge";
 import { getTeeHex } from "../utils/teeColors";
@@ -414,14 +414,10 @@ function ManualInputs({
 }
 
 
-/* ─── Secção AGS: Scorecard interactivo + Adjusted Gross Score ─── */
+/* ─── Secção AGS: Scorecard horizontal + Adjusted Gross Score ─── */
 
 const USGA_NDB_LINK = "https://www.usga.org/content/usga/home-page/handicapping/world-handicap-system/topics/net-double-bogey.html";
 
-/**
- * Calcula pancadas recebidas por buraco dado o Course Handicap (100%) e SI.
- * ⚠ Usa-se Course Handicap, NÃO Playing Handicap.
- */
 function calcStrokesPerHole(holes: Hole[], ch: number) {
   return holes
     .filter(h => h.par != null && h.si != null)
@@ -454,7 +450,6 @@ function AgsSection({
   const courseHcp = hi !== null ? Math.round(calcCourseHcp(hi, slope, cr, par)) : null;
   const hasAgs = courseHcp !== null;
 
-  /* Hole data from selected tee */
   const fieldHoles = useMemo(() => {
     if (!holes?.length) return null;
     let subset = holes;
@@ -465,226 +460,314 @@ function AgsSection({
     return valid.length >= nHoles ? valid.sort((a, b) => a.hole - b.hole) : null;
   }, [holes, is9h, holesMode, nHoles]);
 
-  /* Build hole rows — with strokes when HI available, basic otherwise */
   const holeData = useMemo(() => {
     if (!fieldHoles) return null;
     if (hasAgs) return calcStrokesPerHole(fieldHoles, courseHcp!);
     return fieldHoles.map(h => ({ hole: h.hole, par: h.par!, si: h.si!, strokes: 0, maxScore: 0 }));
   }, [fieldHoles, courseHcp, hasAgs]);
 
-  /* Compute totals */
-  const result = useMemo(() => {
-    if (!holeData || holeData.length === 0) return null;
-    let grossTotal = 0, agsTotal = 0, filledCount = 0;
-    const rows = holeData.map(h => {
+  /* Computed values per hole */
+  const computed = useMemo(() => {
+    if (!holeData) return null;
+    return holeData.map(h => {
       const val = parseInt(scores[h.hole] || "", 10);
       const actual = !isNaN(val) && val > 0 ? val : null;
       const adjusted = actual !== null && hasAgs ? Math.min(actual, h.maxScore) : null;
-      if (actual !== null) {
-        grossTotal += actual;
-        if (adjusted !== null) agsTotal += adjusted;
-        filledCount++;
-      }
-      return { ...h, actual, adjusted };
+      const vsPar = actual !== null ? actual - h.par : null;
+      return { ...h, actual, adjusted, vsPar };
     });
-    const allFilled = filledCount === holeData.length && filledCount > 0;
+  }, [holeData, scores, hasAgs]);
+
+  /* Totals */
+  const totals = useMemo(() => {
+    if (!computed) return null;
+    const filled = computed.filter(h => h.actual !== null);
+    const allFilled = filled.length === computed.length && filled.length > 0;
+    const grossTotal = allFilled ? filled.reduce((s, h) => s + h.actual!, 0) : null;
+    const agsTotal = allFilled && hasAgs ? filled.reduce((s, h) => s + h.adjusted!, 0) : null;
     return {
-      rows, filledCount, totalHoles: holeData.length,
-      grossTotal: allFilled ? grossTotal : null,
-      agsTotal: allFilled && hasAgs ? agsTotal : null,
-      sdGross: allFilled ? calcSD(grossTotal, cr, slope, pcc) : null,
-      sdAgs: allFilled && hasAgs ? calcSD(agsTotal, cr, slope, pcc) : null,
+      grossTotal,
+      agsTotal,
+      sdGross: grossTotal !== null ? calcSD(grossTotal, cr, slope, pcc) : null,
+      sdAgs: agsTotal !== null ? calcSD(agsTotal, cr, slope, pcc) : null,
+      filled: filled.length,
+      total: computed.length,
     };
-  }, [holeData, scores, cr, slope, pcc, hasAgs]);
+  }, [computed, cr, slope, pcc, hasAgs]);
 
   const setScore = (hole: number, val: string) => setScores(prev => ({ ...prev, [hole]: val }));
   const clearAll = () => setScores({});
 
-  /* ── No hole data → info box only ── */
-  if (!fieldHoles) {
+  /* No hole data → info only */
+  if (!fieldHoles || !computed) {
     return (
       <div style={{ margin: "14px 0" }}>
         <div className="sim-info-box" style={{ background: "#fffbeb", borderColor: "#fde68a", color: "#92400e" }}>
           <strong>Scorecard / AGS:</strong> O scorecard para introduzir scores por buraco e calcular o SD exacto
-          (com Adjusted Gross Score) aparece quando selecionas um campo com dados de Par e Stroke Index.
+          aparece quando selecionas um campo com dados de Par e Stroke Index.
           {" "}<a href={USGA_NDB_LINK} target="_blank" rel="noopener noreferrer"
-            style={{ color: "#92400e", fontWeight: 600, textDecoration: "underline" }}>
-            Net Double Bogey — USGA →
-          </a>
+            style={{ color: "#92400e", fontWeight: 600, textDecoration: "underline" }}>Net Double Bogey — USGA →</a>
         </div>
       </div>
     );
   }
 
-  /* ── Render helpers ── */
-  const totalPar = holeData!.reduce((s, h) => s + h.par, 0);
+  /* ── Horizontal scorecard helpers ── */
+  const is18 = !is9h && computed.length >= 18;
+  const front = is18 ? computed.slice(0, 9) : computed;
+  const back = is18 ? computed.slice(9, 18) : [];
 
-  const renderHoleRow = (h: NonNullable<typeof result>["rows"][0]) => {
-    const capped = h.actual !== null && hasAgs && h.actual > h.maxScore;
-    const vsPar = h.actual != null ? h.actual - h.par : null;
-    return (
-      <tr key={h.hole} className="sim-row">
-        <td className="sim-td" style={{ textAlign: "center", fontWeight: 700 }}>{h.hole}</td>
-        <td className="sim-td" style={{ textAlign: "center" }}>{h.par}</td>
-        <td className="sim-td" style={{ textAlign: "center", color: "var(--text-3)" }}>{h.si}</td>
-        <td className="sim-td" style={{ textAlign: "center", padding: "2px 4px" }}>
-          <input type="text" inputMode="numeric"
-            value={scores[h.hole] || ""}
-            onChange={e => setScore(h.hole, e.target.value.replace(/\D/g, ""))}
-            style={{ width: 42, textAlign: "center", border: "1px solid var(--border)", borderRadius: "var(--radius)", padding: "3px 0", font: "inherit", fontSize: 13 }}
-            placeholder="–" />
-        </td>
-        <td className="sim-td" style={{ textAlign: "center", color: vsPar != null ? (vsPar <= -1 ? "#16a34a" : vsPar === 0 ? "var(--text)" : vsPar <= 2 ? "#b45309" : "#dc2626") : "var(--text-3)" }}>
-          {vsPar != null ? (vsPar === 0 ? "E" : vsPar > 0 ? `+${vsPar}` : vsPar) : "–"}
-        </td>
-        {hasAgs && (
-          <>
-            <td className="sim-td" style={{ textAlign: "center", color: h.strokes > 0 ? "#2563eb" : "var(--text-3)" }}>
-              {h.strokes > 0 ? h.strokes : "·"}
-            </td>
-            <td className="sim-td" style={{ textAlign: "center", fontWeight: 700, background: "#fffbeb", color: "#92400e" }}>{h.maxScore}</td>
-            <td className="sim-td" style={{ textAlign: "center", fontWeight: h.adjusted != null ? 700 : 400, color: capped ? "#dc2626" : h.adjusted != null ? "#16a34a" : "var(--text-3)" }}>
-              {h.adjusted != null ? h.adjusted : "–"}
-              {capped && <span style={{ fontSize: 9, marginLeft: 2 }}>✂</span>}
-            </td>
-          </>
-        )}
-      </tr>
-    );
+  const sumPar = (slice: typeof computed) => slice.reduce((s, h) => s + h.par, 0);
+  const sumGross = (slice: typeof computed) => {
+    const f = slice.filter(h => h.actual !== null);
+    return f.length === slice.length ? f.reduce((s, h) => s + h.actual!, 0) : null;
+  };
+  const sumAdj = (slice: typeof computed) => {
+    const f = slice.filter(h => h.adjusted !== null);
+    return f.length === slice.length ? f.reduce((s, h) => s + h.adjusted!, 0) : null;
+  };
+  const sumMax = (slice: typeof computed) => slice.reduce((s, h) => s + h.maxScore, 0);
+  const fmtVsPar = (gross: number | null, p: number) => {
+    if (gross === null) return "–";
+    const d = gross - p;
+    return d === 0 ? "E" : d > 0 ? `+${d}` : String(d);
   };
 
-  const renderSubtotal = (label: string, slice: NonNullable<typeof result>["rows"]) => {
-    const filled = slice.filter(h => h.actual !== null);
-    const allFilled = filled.length === slice.length;
-    const subGross = allFilled ? filled.reduce((s, h) => s + h.actual!, 0) : null;
-    const subPar = slice.reduce((s, h) => s + h.par, 0);
-    const subVsPar = subGross != null ? subGross - subPar : null;
-    return (
-      <tr className="sim-row-par">
-        <td className="sim-td" colSpan={3} style={{ textAlign: "right", fontWeight: 800, fontSize: 11, color: "var(--text-3)" }}>{label}</td>
-        <td className="sim-td" style={{ textAlign: "center", fontWeight: 700 }}>{subGross ?? "–"}</td>
-        <td className="sim-td" style={{ textAlign: "center", fontWeight: 700, color: "var(--text-3)" }}>
-          {subVsPar != null ? (subVsPar === 0 ? "E" : subVsPar > 0 ? `+${subVsPar}` : subVsPar) : "–"}
-        </td>
-        {hasAgs && (
-          <>
-            <td className="sim-td" />
-            <td className="sim-td" style={{ textAlign: "center", fontWeight: 700, background: "#fffbeb", color: "#92400e" }}>
-              {slice.reduce((s, h) => s + h.maxScore, 0)}
-            </td>
-            <td className="sim-td" style={{ textAlign: "center", fontWeight: 700, color: "#16a34a" }}>
-              {allFilled ? filled.reduce((s, h) => s + (h.adjusted ?? h.actual!), 0) : "–"}
-            </td>
-          </>
-        )}
-      </tr>
-    );
-  };
+  const totalParAll = sumPar(computed);
+  const grossOut = sumGross(front);
+  const grossIn = is18 ? sumGross(back) : null;
+  const grossTotal = totals?.grossTotal ?? null;
+  const adjOut = hasAgs ? sumAdj(front) : null;
+  const adjIn = hasAgs && is18 ? sumAdj(back) : null;
+  const adjTotal = totals?.agsTotal ?? null;
 
-  /* ── Main render ── */
   return (
     <div style={{ margin: "14px 0" }}>
-      {/* Título */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
         <h3 className="sim-section-title" style={{ margin: 0 }}>
-          Scorecard {hasAgs ? "— Net Double Bogey / AGS" : "— Score por buraco"}
+          Scorecard {hasAgs ? "— Net Double Bogey / AGS" : ""}
         </h3>
         {Object.keys(scores).length > 0 && (
           <button className="select" style={{ cursor: "pointer", fontSize: 12 }} onClick={clearAll}>Limpar</button>
         )}
       </div>
 
-      {/* TABELA — SEMPRE VISÍVEL */}
-      {result && (
-        <div className="sim-table-wrap" style={{ marginTop: 8 }}>
-          <table className="sim-table" style={{ minWidth: 0 }}>
-            <thead>
-              <tr>
-                <th className="sim-th" style={{ textAlign: "center" }}>H</th>
-                <th className="sim-th" style={{ textAlign: "center" }}>Par</th>
-                <th className="sim-th" style={{ textAlign: "center" }}>SI</th>
-                <th className="sim-th" style={{ textAlign: "center" }}>Score</th>
-                <th className="sim-th" style={{ textAlign: "center" }}>±Par</th>
-                {hasAgs && (
-                  <>
-                    <th className="sim-th" style={{ textAlign: "center", color: "#2563eb" }}>Panc.</th>
-                    <th className="sim-th" style={{ textAlign: "center", background: "#fef3c7", color: "#92400e" }}>Máx</th>
-                    <th className="sim-th" style={{ textAlign: "center", color: "#16a34a" }}>Ajust.</th>
-                  </>
-                )}
-              </tr>
-            </thead>
-            <tbody>
-              {result.rows.slice(0, is9h ? nHoles : 9).map(renderHoleRow)}
-              {!is9h && result.rows.length >= 9 && renderSubtotal("OUT", result.rows.slice(0, 9))}
-              {!is9h && result.rows.slice(9, 18).map(renderHoleRow)}
-              {!is9h && result.rows.length >= 18 && renderSubtotal("IN", result.rows.slice(9, 18))}
-              {/* TOTAL */}
-              <tr style={{ borderTop: "2px solid var(--border)" }}>
-                <td className="sim-td" colSpan={2} style={{ textAlign: "right", fontWeight: 900 }}>TOTAL</td>
-                <td className="sim-td" style={{ textAlign: "center", fontWeight: 700, color: "var(--text-3)" }}>{totalPar}</td>
-                <td className="sim-td" style={{ textAlign: "center", fontWeight: 900 }}>{result.grossTotal ?? "–"}</td>
-                <td className="sim-td" style={{ textAlign: "center", fontWeight: 900, color: "var(--text-3)" }}>
-                  {result.grossTotal != null ? (() => { const d = result.grossTotal! - totalPar; return d === 0 ? "E" : d > 0 ? `+${d}` : d; })() : "–"}
-                </td>
-                {hasAgs && (
-                  <>
-                    <td className="sim-td" />
-                    <td className="sim-td" style={{ textAlign: "center", fontWeight: 900, background: "#fef3c7", color: "#92400e" }}>
-                      {holeData!.reduce((s, h) => s + h.maxScore, 0)}
-                    </td>
-                    <td className="sim-td" style={{ textAlign: "center", fontWeight: 900, color: "#16a34a" }}>
-                      {result.agsTotal ?? "–"}
-                    </td>
-                  </>
-                )}
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      )}
+      <div style={{ overflowX: "auto" }}>
+        <table className="sc-table-modern" data-sc-table="1">
+          <thead>
+            <tr>
+              <th className="hole-header" style={{ borderRight: "2px solid #d5dac9" }}>Buraco</th>
+              {front.map((h, i) => (
+                <React.Fragment key={h.hole}>
+                  <th className="hole-header">{h.hole}</th>
+                  {is18 && i === 8 && <th className="hole-header col-out" style={{ fontSize: 10 }}>Out</th>}
+                </React.Fragment>
+              ))}
+              {is18 && back.map((h) => (
+                <th key={h.hole} className="hole-header">{h.hole}</th>
+              ))}
+              <th className={`hole-header col-${is18 ? "in" : "total"}`} style={{ fontSize: 10 }}>{is18 ? "In" : "TOTAL"}</th>
+              {is18 && <th className="hole-header col-total">TOTAL</th>}
+            </tr>
+          </thead>
+          <tbody>
+            {/* Par */}
+            <tr className="sep-row">
+              <td className="row-label par-label">Par</td>
+              {front.map((h, i) => (
+                <React.Fragment key={h.hole}>
+                  <td>{h.par}</td>
+                  {is18 && i === 8 && <td className="col-out" style={{ fontWeight: 700 }}>{sumPar(front)}</td>}
+                </React.Fragment>
+              ))}
+              {is18 && back.map((h) => <td key={h.hole}>{h.par}</td>)}
+              <td className={`col-${is18 ? "in" : "total"}`} style={{ fontWeight: 700 }}>{is18 ? sumPar(back) : totalParAll}</td>
+              {is18 && <td className="col-total" style={{ fontWeight: 700 }}>{totalParAll}</td>}
+            </tr>
 
-      {/* Resultado SD */}
-      {result && result.grossTotal !== null && (
+            {/* S.I. */}
+            <tr className="meta-row">
+              <td className="row-label" style={{ color: "#b0b8c4", fontSize: 10, fontWeight: 400 }}>S.I.</td>
+              {front.map((h, i) => (
+                <React.Fragment key={h.hole}>
+                  <td>{h.si}</td>
+                  {is18 && i === 8 && <td className="col-out" />}
+                </React.Fragment>
+              ))}
+              {is18 && back.map((h) => <td key={h.hole}>{h.si}</td>)}
+              <td className={`col-${is18 ? "in" : "total"}`} />
+              {is18 && <td className="col-total" />}
+            </tr>
+
+            {/* Score (inputs) */}
+            <tr className="sep-row">
+              <td className="row-label" style={{ fontWeight: 700 }}>Score</td>
+              {front.map((h, i) => (
+                <React.Fragment key={h.hole}>
+                  <td style={{ padding: "3px 1px" }}>
+                    <input type="text" inputMode="numeric"
+                      value={scores[h.hole] || ""}
+                      onChange={e => setScore(h.hole, e.target.value.replace(/\D/g, ""))}
+                      style={{ width: 30, textAlign: "center", border: "1px solid #d5dac9", borderRadius: 3, padding: "3px 0", font: "inherit", fontSize: 12, background: "#fff" }}
+                      placeholder="·" />
+                  </td>
+                  {is18 && i === 8 && (
+                    <td className="col-out" style={{ fontWeight: 700 }}>{grossOut ?? "–"}</td>
+                  )}
+                </React.Fragment>
+              ))}
+              {is18 && back.map((h) => (
+                <td key={h.hole} style={{ padding: "3px 1px" }}>
+                  <input type="text" inputMode="numeric"
+                    value={scores[h.hole] || ""}
+                    onChange={e => setScore(h.hole, e.target.value.replace(/\D/g, ""))}
+                    style={{ width: 30, textAlign: "center", border: "1px solid #d5dac9", borderRadius: 3, padding: "3px 0", font: "inherit", fontSize: 12, background: "#fff" }}
+                    placeholder="·" />
+                </td>
+              ))}
+              <td className={`col-${is18 ? "in" : "total"}`} style={{ fontWeight: 700 }}>{is18 ? (grossIn ?? "–") : (grossTotal ?? "–")}</td>
+              {is18 && <td className="col-total" style={{ fontWeight: 900 }}>{grossTotal ?? "–"}</td>}
+            </tr>
+
+            {/* ±Par */}
+            <tr className="meta-row">
+              <td className="row-label" style={{ color: "#b0b8c4", fontSize: 10, fontWeight: 400 }}>±Par</td>
+              {front.map((h, i) => (
+                <React.Fragment key={h.hole}>
+                  <td style={{ color: h.vsPar != null ? (h.vsPar < 0 ? "#16a34a" : h.vsPar === 0 ? "#666" : h.vsPar <= 2 ? "#b45309" : "#dc2626") : "#ccc", fontWeight: h.vsPar != null ? 600 : 400 }}>
+                    {h.vsPar != null ? (h.vsPar === 0 ? "E" : h.vsPar > 0 ? `+${h.vsPar}` : h.vsPar) : ""}
+                  </td>
+                  {is18 && i === 8 && (
+                    <td className="col-out" style={{ fontWeight: 600, color: grossOut != null ? (grossOut - sumPar(front) <= 0 ? "#16a34a" : "#b45309") : "#ccc" }}>
+                      {fmtVsPar(grossOut, sumPar(front))}
+                    </td>
+                  )}
+                </React.Fragment>
+              ))}
+              {is18 && back.map((h) => (
+                <td key={h.hole} style={{ color: h.vsPar != null ? (h.vsPar < 0 ? "#16a34a" : h.vsPar === 0 ? "#666" : h.vsPar <= 2 ? "#b45309" : "#dc2626") : "#ccc", fontWeight: h.vsPar != null ? 600 : 400 }}>
+                  {h.vsPar != null ? (h.vsPar === 0 ? "E" : h.vsPar > 0 ? `+${h.vsPar}` : h.vsPar) : ""}
+                </td>
+              ))}
+              <td className={`col-${is18 ? "in" : "total"}`} style={{ fontWeight: 600 }}>
+                {is18 ? fmtVsPar(grossIn, sumPar(back)) : fmtVsPar(grossTotal, totalParAll)}
+              </td>
+              {is18 && <td className="col-total" style={{ fontWeight: 700 }}>{fmtVsPar(grossTotal, totalParAll)}</td>}
+            </tr>
+
+            {/* ── AGS rows (only when HI filled) ── */}
+            {hasAgs && (
+              <>
+                {/* Pancadas */}
+                <tr className="meta-row">
+                  <td className="row-label" style={{ color: "#2563eb", fontSize: 10, fontWeight: 600 }}>Panc.</td>
+                  {front.map((h, i) => (
+                    <React.Fragment key={h.hole}>
+                      <td style={{ color: h.strokes > 0 ? "#2563eb" : "#ccc", fontWeight: h.strokes > 0 ? 700 : 400 }}>
+                        {h.strokes > 0 ? h.strokes : "·"}
+                      </td>
+                      {is18 && i === 8 && <td className="col-out" />}
+                    </React.Fragment>
+                  ))}
+                  {is18 && back.map((h) => (
+                    <td key={h.hole} style={{ color: h.strokes > 0 ? "#2563eb" : "#ccc", fontWeight: h.strokes > 0 ? 700 : 400 }}>
+                      {h.strokes > 0 ? h.strokes : "·"}
+                    </td>
+                  ))}
+                  <td className={`col-${is18 ? "in" : "total"}`} style={{ fontWeight: 700, color: "#2563eb" }}>{courseHcp}</td>
+                  {is18 && <td className="col-total" style={{ fontWeight: 700, color: "#2563eb" }}>{courseHcp}</td>}
+                </tr>
+
+                {/* Máx (Net Double Bogey) */}
+                <tr className="sep-row" style={{ background: "#fffbeb" }}>
+                  <td className="row-label" style={{ color: "#92400e", fontWeight: 700, fontSize: 11 }}>Máx</td>
+                  {front.map((h, i) => (
+                    <React.Fragment key={h.hole}>
+                      <td style={{ color: "#92400e", fontWeight: 700 }}>{h.maxScore}</td>
+                      {is18 && i === 8 && <td className="col-out" style={{ fontWeight: 700, color: "#92400e" }}>{sumMax(front)}</td>}
+                    </React.Fragment>
+                  ))}
+                  {is18 && back.map((h) => (
+                    <td key={h.hole} style={{ color: "#92400e", fontWeight: 700 }}>{h.maxScore}</td>
+                  ))}
+                  <td className={`col-${is18 ? "in" : "total"}`} style={{ fontWeight: 700, color: "#92400e" }}>{is18 ? sumMax(back) : sumMax(computed)}</td>
+                  {is18 && <td className="col-total" style={{ fontWeight: 900, color: "#92400e" }}>{sumMax(computed)}</td>}
+                </tr>
+
+                {/* Ajustado */}
+                <tr>
+                  <td className="row-label" style={{ color: "#16a34a", fontWeight: 700, fontSize: 11 }}>Ajust.</td>
+                  {front.map((h, i) => {
+                    const capped = h.actual !== null && h.actual > h.maxScore;
+                    return (
+                      <React.Fragment key={h.hole}>
+                        <td style={{ color: capped ? "#dc2626" : h.adjusted != null ? "#16a34a" : "#ccc", fontWeight: h.adjusted != null ? 700 : 400 }}>
+                          {h.adjusted != null ? h.adjusted : ""}
+                          {capped && <span style={{ fontSize: 8 }}>✂</span>}
+                        </td>
+                        {is18 && i === 8 && (
+                          <td className="col-out" style={{ fontWeight: 700, color: "#16a34a" }}>{adjOut ?? "–"}</td>
+                        )}
+                      </React.Fragment>
+                    );
+                  })}
+                  {is18 && back.map((h) => {
+                    const capped = h.actual !== null && h.actual > h.maxScore;
+                    return (
+                      <td key={h.hole} style={{ color: capped ? "#dc2626" : h.adjusted != null ? "#16a34a" : "#ccc", fontWeight: h.adjusted != null ? 700 : 400 }}>
+                        {h.adjusted != null ? h.adjusted : ""}
+                        {capped && <span style={{ fontSize: 8 }}>✂</span>}
+                      </td>
+                    );
+                  })}
+                  <td className={`col-${is18 ? "in" : "total"}`} style={{ fontWeight: 700, color: "#16a34a" }}>{is18 ? (adjIn ?? "–") : (adjTotal ?? "–")}</td>
+                  {is18 && <td className="col-total" style={{ fontWeight: 900, color: "#16a34a" }}>{adjTotal ?? "–"}</td>}
+                </tr>
+              </>
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      {/* SD results */}
+      {totals && totals.grossTotal !== null && (
         <div className="sim-summary" style={{ marginTop: 10 }}>
           <div className="sim-summary-item">
             <span className="sim-summary-label">Gross</span>
-            <span className="sim-summary-value">{result.grossTotal}</span>
-            <span className="sim-summary-detail">SD {fmtSD(result.sdGross!)}</span>
+            <span className="sim-summary-value">{totals.grossTotal}</span>
+            <span className="sim-summary-detail">SD {fmtSD(totals.sdGross!)}</span>
           </div>
-          {hasAgs && result.agsTotal !== null && (
+          {hasAgs && totals.agsTotal !== null && (
             <div className="sim-summary-item sim-summary-highlight" style={{ borderColor: "#16a34a" }}>
               <span className="sim-summary-label">Adjusted Gross (AGS)</span>
-              <span className="sim-summary-value" style={{ color: "#16a34a" }}>{result.agsTotal}</span>
-              <span className="sim-summary-detail">SD {fmtSD(result.sdAgs!)}</span>
+              <span className="sim-summary-value" style={{ color: "#16a34a" }}>{totals.agsTotal}</span>
+              <span className="sim-summary-detail">SD {fmtSD(totals.sdAgs!)}</span>
             </div>
           )}
-          {hasAgs && result.grossTotal !== null && result.agsTotal !== null && result.grossTotal > result.agsTotal && (
+          {hasAgs && totals.grossTotal !== null && totals.agsTotal !== null && totals.grossTotal > totals.agsTotal && (
             <div className="sim-summary-item">
               <span className="sim-summary-label">Cortadas</span>
-              <span className="sim-summary-value" style={{ color: "#dc2626" }}>−{result.grossTotal - result.agsTotal}</span>
-              <span className="sim-summary-detail">SD melhora {(result.sdGross! - result.sdAgs!).toFixed(1)}</span>
+              <span className="sim-summary-value" style={{ color: "#dc2626" }}>−{totals.grossTotal - totals.agsTotal}</span>
+              <span className="sim-summary-detail">SD melhora {(totals.sdGross! - totals.sdAgs!).toFixed(1)}</span>
             </div>
           )}
         </div>
       )}
 
-      {/* Status */}
-      {result && result.filledCount > 0 && result.filledCount < result.totalHoles && (
+      {totals && totals.filled > 0 && totals.filled < totals.total && (
         <div className="muted" style={{ marginTop: 6, fontSize: 12 }}>
-          {result.filledCount} de {result.totalHoles} buracos. Preenche todos para ver o SD.
+          {totals.filled} de {totals.total} buracos. Preenche todos para ver o SD.
         </div>
       )}
 
-      {/* Info AGS — colapsável */}
+      {/* Info AGS colapsável */}
       {hasAgs && (
         <details style={{ marginTop: 12 }}>
           <summary style={{ cursor: "pointer", fontWeight: 600, fontSize: 13, color: "#92400e" }}>
             ℹ Como funciona o Adjusted Gross Score?
           </summary>
           <div className="sim-info-box" style={{ background: "#fffbeb", borderColor: "#fde68a", color: "#92400e", marginTop: 6 }}>
-            O WHS calcula o SD com o <em>Adjusted Gross Score</em>, não com o gross bruto.
-            Máximo por buraco = <strong>Net Double Bogey</strong>:
+            O WHS calcula o SD com o <em>Adjusted Gross Score</em>. Máximo por buraco = <strong>Net Double Bogey</strong>:
             <code style={{ display: "block", margin: "6px 0", padding: "4px 10px", background: "rgba(146,64,14,0.08)", borderRadius: 6, color: "#92400e" }}>
               Máx = Par + 2 + Pancadas (Course HCP) nesse buraco
             </code>
@@ -693,34 +776,26 @@ function AgsSection({
               <div style={{ marginTop: 3 }}>② <strong>Course Handicap (CH)</strong> = HI × (Slope ÷ 113) + (CR − Par). Determina pancadas para o Net Double Bogey.</div>
               <div style={{ marginTop: 3 }}>③ <strong>Playing Handicap</strong> = CH × % competição. Para Net Score, <strong>não</strong> para Net Double Bogey.</div>
             </div>
-            Pancadas do CH distribuem-se por <strong>Stroke Index (SI)</strong>.
-            CH ≤ 18: 1 pancada nos SI mais baixos. CH &gt; 18: 2ª pancada.
             {courseHcp !== null && (
               <div style={{ marginTop: 6 }}>
-                HI <strong>{hi!.toFixed(1)}</strong> → CH = <strong>{courseHcp}</strong> ({calcCourseHcp(hi!, slope, cr, par).toFixed(1)}).
+                HI <strong>{hi!.toFixed(1)}</strong> → CH = <strong>{courseHcp}</strong>.
                 Recebes {courseHcp} pancada{courseHcp !== 1 ? "s" : ""} (SI 1–{Math.min(courseHcp, 18)}
                 {courseHcp > 18 && (<>, 2ª SI 1–{courseHcp - 18}</>)}).
               </div>
             )}
             <div style={{ marginTop: 6 }}>
               <a href={USGA_NDB_LINK} target="_blank" rel="noopener noreferrer"
-                style={{ color: "#92400e", fontWeight: 600, textDecoration: "underline" }}>
-                Net Double Bogey — USGA →
-              </a>
+                style={{ color: "#92400e", fontWeight: 600, textDecoration: "underline" }}>Net Double Bogey — USGA →</a>
             </div>
           </div>
         </details>
       )}
 
-      {/* Info simples sem HI */}
       {!hasAgs && (
         <div className="sim-info-box" style={{ background: "#fffbeb", borderColor: "#fde68a", color: "#92400e", marginTop: 10 }}>
-          Preenche o <strong>HI</strong> na toolbar para ver as colunas de <strong>Adjusted Gross Score</strong> (máximo
-          Net Double Bogey por buraco, pancadas recebidas e score ajustado).
+          Preenche o <strong>HI</strong> na toolbar para ver as linhas de <strong>Adjusted Gross Score</strong> (Panc., Máx, Ajust.).
           {" "}<a href={USGA_NDB_LINK} target="_blank" rel="noopener noreferrer"
-            style={{ color: "#92400e", fontWeight: 600, textDecoration: "underline" }}>
-            Saber mais (USGA) →
-          </a>
+            style={{ color: "#92400e", fontWeight: 600, textDecoration: "underline" }}>Saber mais (USGA) →</a>
         </div>
       )}
     </div>
