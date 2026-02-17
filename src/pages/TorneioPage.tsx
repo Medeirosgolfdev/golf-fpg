@@ -1,33 +1,46 @@
 /**
  * TorneioPage.tsx — Greatgolf Junior Open with Luis Figo Foundation
  *
- * Tab protegido por password com:
- *  - Draw R1 — tabela com pills (ano, PJA, clube, HCP, escalão)
- *  - Leaderboard — classificação + scorecard buraco-a-buraco
- *  - Análise — KPIs, performance vs HCP, resumo PJA
+ * Redesigned: results are derived LIVE from player scorecards.
+ * When a player's WHS data includes a round at the tournament course
+ * on a tournament date, it automatically appears in the leaderboard.
+ *
+ * Static JSON results (torneio-greatgolf.json) are used as fallback
+ * for international players without federation numbers.
  */
 import { useEffect, useMemo, useState } from "react";
 import type { PlayersDb } from "../data/types";
 import { loadPlayerData, type PlayerPageData, type HoleScores } from "../data/playerDataLoader";
 import TeePill from "../ui/TeePill";
+import LeaderboardView from "./LeaderboardView";
+import {
+  normalizeTournament,
+  type NormalizedTournament,
+  type PlayerHoles,
+  type LiveRound,
+  deriveResults,
+  isoToDD,
+  findDrawEntry,
+  isPja,
+  birthYear,
+  escalaoFromYear,
+  calcDaySD,
+  playerCategory as catOf,
+  dayKeys,
+} from "../utils/tournamentTypes";
 import tournData from "../../torneio-greatgolf.json";
 
-/* ─── Types ─── */
+/* ── Normalized tournament data (static baseline) ── */
+const NORM_BASE = normalizeTournament(tournData as Record<string, unknown>);
+
+/* ── Legacy constants (used by AnalysisView, kept for compat) ── */
+const PJA = NORM_BASE.pjaFeds;
+const COURSE = NORM_BASE.categories[0].courseData;
+const HOLES = COURSE.holes;
+const ALL_DRAW = NORM_BASE.allDraw;
+
+/* ── Types ── */
 type TournView = "draw" | "leaderboard" | "analysis";
-
-interface DrawEntry {
-  time: string; tee: number; teeColor: string; group: number;
-  name: string; fed: string | null; club: string;
-  hcpExact: number | null; hcpPlay: number | null; sex: string;
-}
-
-interface ResultEntry {
-  pos: number | null; name: string; fed: string | null; club: string;
-  toPar: number | null; gross: number | null; total: number | null; status: string;
-}
-
-interface HoleInfo { h: number; par: number; si: number; m: number; }
-type PlayerHoles = { fed: string | null; name: string; holes: (number | null)[]; gross: number; };
 
 interface RecentRound {
   date: string;
@@ -49,71 +62,16 @@ interface PlayerForm {
   daysSinceLast: number | null;
   avgSD5: number | null;
   trend: "up" | "stable" | "down" | "unknown";
+  /** Per-day results: d1Gross, d1SD, etc. (legacy, kept for AnalysisView) */
   d1Gross: number | null;
   d1ToPar: number | null;
   d1SD: number | null;
   d1Pos: number | null;
   predictedGross: number | null;
-  category: "wagr" | "sub14" | "sub12";
+  category: string;
 }
 
-/* ─── Statics ─── */
-const PJA = new Set(tournData._pja_feds || []);
-const COURSE = tournData.courseData as { par: number; cr: number; slope: number; holes: HoleInfo[] };
-const HOLES = COURSE.holes;
-const PAR_OUT = HOLES.slice(0, 9).reduce((s, h) => s + h.par, 0);
-const PAR_IN = HOLES.slice(9).reduce((s, h) => s + h.par, 0);
-const BIRTH = (tournData as any).birthYears as Record<string, number> || {};
-const DRAW_R1 = (tournData as any).draw_r1 as DrawEntry[];
-const DRAW_R2 = (tournData as any).draw_r2 as DrawEntry[] | undefined;
-const DRAW_SUB14 = (tournData as any).draw_sub14 as DrawEntry[] | undefined;
-const DRAW_SUB12 = (tournData as any).draw_sub12 as DrawEntry[] | undefined;
-const ALL_DRAW = [...DRAW_R1, ...(DRAW_R2 || []), ...(DRAW_SUB14 || []), ...(DRAW_SUB12 || [])];
-const D1 = tournData.results.d1 as ResultEntry[];
-const D1_SUB14 = ((tournData.results as any).sub14 || []) as ResultEntry[];
-const D1_SUB12 = ((tournData.results as any).sub12 || []) as ResultEntry[];
-
-/* Course data per tee */
-const COURSE_AMARELAS = (tournData as any).courseDataAmarelas as { par: number; cr: number; slope: number; holes: HoleInfo[] } | undefined;
-const COURSE_VERMELHAS = (tournData as any).courseDataVermelhas as { par: number; cr: number; slope: number; holes: HoleInfo[] } | undefined;
-const HOLES_AMARELAS = COURSE_AMARELAS?.holes || HOLES;
-const HOLES_VERMELHAS = COURSE_VERMELHAS?.holes || HOLES;
-
-/* Manual scorecards for international players (no WHS data) */
-const MANUAL_HOLES: Record<string, PlayerHoles> = {};
-const _mh = (tournData as any).manualHoles as Record<string, { d1: number[]; gross: number; toPar: number }> | undefined;
-if (_mh) {
-  for (const [name, md] of Object.entries(_mh)) {
-    if (md.d1 && md.d1.length >= 18) {
-      MANUAL_HOLES[name] = { fed: null, name, holes: md.d1, gross: md.gross };
-    }
-  }
-}
-
-/* Sub-category scorecards (stored by fed or name) */
-const MANUAL_HOLES_SUB14: Record<string, PlayerHoles> = {};
-const _mhS14 = (tournData as any).manualHolesSub14 as Record<string, { holes: number[]; gross: number }> | undefined;
-if (_mhS14) {
-  for (const [key, md] of Object.entries(_mhS14)) {
-    if (md.holes && md.holes.length >= 18) {
-      const entry = ALL_DRAW.find(d => d.fed === key || d.name === key);
-      MANUAL_HOLES_SUB14[key] = { fed: entry?.fed ?? null, name: entry?.name ?? key, holes: md.holes, gross: md.gross };
-    }
-  }
-}
-
-const MANUAL_HOLES_SUB12: Record<string, PlayerHoles> = {};
-const _mhS12 = (tournData as any).manualHolesSub12 as Record<string, { holes: number[]; gross: number }> | undefined;
-if (_mhS12) {
-  for (const [key, md] of Object.entries(_mhS12)) {
-    if (md.holes && md.holes.length >= 18) {
-      const entry = ALL_DRAW.find(d => d.fed === key || d.name === key);
-      MANUAL_HOLES_SUB12[key] = { fed: entry?.fed ?? null, name: entry?.name ?? key, holes: md.holes, gross: md.gross };
-    }
-  }
-}
-
-/* ─── Helpers ─── */
+/* ── Helpers ── */
 function fmtToPar(tp: number | null): string {
   if (tp == null) return "-";
   return tp === 0 ? "E" : tp > 0 ? `+${tp}` : String(tp);
@@ -127,10 +85,9 @@ function scoreClass(score: number | null, par: number): string {
   if (diff === 0) return "sc-par";
   if (diff === 1) return "sc-bogey";
   if (diff === 2) return "sc-dbogey";
-  return "sc-worse";  /* triple+ = deep blue */
+  return "sc-worse";
 }
 
-/* Render a score as a proper circle (under par) or square (over par) */
 function ScoreDot({ score, par }: { score: number | null; par: number }) {
   if (score == null) return <span className="sc-dot sc-empty">·</span>;
   const cls = scoreClass(score, par);
@@ -138,38 +95,9 @@ function ScoreDot({ score, par }: { score: number | null; par: number }) {
   return <span className={`${shape} ${cls}`}>{score}</span>;
 }
 
-function isFemale(fed: string | null, name: string): boolean {
-  const d = ALL_DRAW.find(dd => (fed && dd.fed === fed) || dd.name === name);
-  return d?.sex === "F";
-}
-
-/* Tee ratings for this tournament – all from master-courses.json */
-const TEE_RATINGS: Record<string, { cr: number; slope: number; par: number }> = {
-  "Brancas_M": { cr: COURSE.cr, slope: COURSE.slope, par: COURSE.par },                          // 71.8 / 135
-  "Azuis_F":   { cr: ((tournData as any).courseDataAzuis?.cr as number) || 76.3,
-                 slope: ((tournData as any).courseDataAzuis?.slope as number) || 139, par: 72 },   // 76.3 / 139
-  "Amarelas_M":{ cr: ((tournData as any).courseDataAmarelas?.cr as number) || 70.6,
-                 slope: ((tournData as any).courseDataAmarelas?.slope as number) || 132, par: 72 },// 70.6 / 132
-  "Vermelhas_M":{ cr: ((tournData as any).courseDataVermelhas?.cr as number) || 66.1,
-                  slope: ((tournData as any).courseDataVermelhas?.slope as number) || 123, par: 72},// 66.1 / 123
-  "Vermelhas_F":{ cr: 71.8, slope: 129, par: 72 },                                                // 71.8 / 129
-  "Azuis_M":   { cr: 69.8, slope: 130, par: 72 },                                                 // fallback
-};
-
-function teeRating(teeColor: string, sex: string): { cr: number; slope: number; par: number } {
-  const key = `${teeColor}_${sex}`;
-  return TEE_RATINGS[key] || TEE_RATINGS[`${teeColor}_M`] || TEE_RATINGS["Brancas_M"];
-}
-
-function calcSD(gross: number, teeColor: string, sex: string): number {
-  const r = teeRating(teeColor, sex);
-  return (113 / r.slope) * (gross - r.cr);
-}
-
-function playerCategory(fed: string | null, name: string): "wagr" | "sub14" | "sub12" {
-  if (DRAW_SUB12?.find(d => d.fed === fed || d.name === name)) return "sub12";
-  if (DRAW_SUB14?.find(d => d.fed === fed || d.name === name)) return "sub14";
-  return "wagr";
+function fmtHcp(v: number | null): string {
+  if (v == null) return "-";
+  return v > 0 ? v.toFixed(1) : `+${Math.abs(v).toFixed(1)}`;
 }
 
 function trendFromRounds(rounds: RecentRound[]): "up" | "stable" | "down" | "unknown" {
@@ -186,38 +114,19 @@ function trendFromRounds(rounds: RecentRound[]): "up" | "stable" | "down" | "unk
   return "stable";
 }
 
-function isPja(fed: string | null): boolean { return !!fed && PJA.has(fed); }
-function birthYear(fed: string | null): number | null { return fed ? BIRTH[fed] ?? null : null; }
-
-function escalaoFromDob(year: number | null): string {
-  if (!year) return "";
-  const age = 2026 - year;
-  if (age <= 10) return "Sub-10";
-  if (age <= 12) return "Sub-12";
-  if (age <= 14) return "Sub-14";
-  if (age <= 16) return "Sub-16";
-  if (age <= 18) return "Sub-18";
-  if (age <= 21) return "Sub-21";
-  return "Absoluto";
+/** Check if a course name matches the tournament course */
+function isTournCourse(courseName: string, norm: NormalizedTournament): boolean {
+  const lower = courseName.toLowerCase();
+  return norm.courseMatch.every(kw => lower.includes(kw));
 }
 
-function fmtHcp(v: number | null): string {
-  if (v == null) return "-";
-  return v > 0 ? v.toFixed(1) : `+${Math.abs(v).toFixed(1)}`;
-}
-
-function fmtHcpPlay(v: number | null): string {
-  if (v == null) return "-";
-  return v > 0 ? String(v) : `+${Math.abs(v)}`;
-}
-
-/* ─── Password Gate ─── */
+/* ── Password Gate ── */
 function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
   const [pw, setPw] = useState("");
   const [error, setError] = useState(false);
 
   const check = () => {
-    if (pw === tournData.password) onUnlock();
+    if (pw === NORM_BASE.password) onUnlock();
     else { setError(true); setTimeout(() => setError(false), 1500); }
   };
 
@@ -238,10 +147,15 @@ function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
   );
 }
 
-/* ─── Draw View ─── */
+/* ── Draw View ── */
 type DrawCat = "all" | "wagr" | "sub14" | "sub12";
 
-function DrawTable({ draw, onSelectPlayer }: { draw: DrawEntry[]; onSelectPlayer?: (fed: string) => void }) {
+function PlayerLink({ fed, name, onSelect }: { fed: string | null; name: string; onSelect?: (fed: string) => void }) {
+  if (fed && onSelect) return <span className="tourn-pname tourn-pname-link" onClick={() => onSelect(fed)}>{name}</span>;
+  return <span className="tourn-pname">{name}</span>;
+}
+
+function DrawTable({ draw, onSelectPlayer }: { draw: import("../utils/tournamentTypes").DrawEntry[]; onSelectPlayer?: (fed: string) => void }) {
   const groups = new Set(draw.map(d => `${d.time}-${d.group}`)).size;
   return (
     <>
@@ -263,17 +177,15 @@ function DrawTable({ draw, onSelectPlayer }: { draw: DrawEntry[]; onSelectPlayer
               const next = draw[i + 1];
               const isGroupStart = !prev || d.time !== prev.time || d.group !== prev.group;
               const isGroupEnd = !next || d.time !== next.time || d.group !== next.group;
-              const year = birthYear(d.fed);
-              const esc = escalaoFromDob(year);
-              const pja = isPja(d.fed);
+              const year = birthYear(NORM_BASE, d.fed);
+              const esc = escalaoFromYear(year);
+              const pja = isPja(NORM_BASE, d.fed);
               const showTeeBadge = isGroupStart || d.teeColor !== prev?.teeColor;
 
               return (
                 <tr key={i} className={`tourn-draw-row${isGroupStart ? " tourn-group-first" : ""}${isGroupEnd ? " tourn-group-last" : ""}${d.sex === "F" ? " tourn-female-row" : ""}`}>
                   <td className="tourn-draw-time">{isGroupStart ? d.time : ""}</td>
-                  <td className="tourn-draw-tee">
-                    {showTeeBadge && <TeePill name={d.teeColor} />}
-                  </td>
+                  <td className="tourn-draw-tee">{showTeeBadge && <TeePill name={d.teeColor} />}</td>
                   <td className="tourn-draw-player">
                     <PlayerLink fed={d.fed} name={d.name} onSelect={onSelectPlayer} />
                     {pja && <span className="jog-pill tourn-pill-pja">PJA</span>}
@@ -284,7 +196,7 @@ function DrawTable({ draw, onSelectPlayer }: { draw: DrawEntry[]; onSelectPlayer
                     <span className="jog-pill jog-pill-club">{d.club}</span>
                   </td>
                   <td className="r tourn-draw-hcp">{fmtHcp(d.hcpExact)}</td>
-                  <td className="r tourn-draw-hcp">{fmtHcpPlay(d.hcpPlay)}</td>
+                  <td className="r tourn-draw-hcp">{d.hcpPlay != null ? (d.hcpPlay > 0 ? String(d.hcpPlay) : `+${Math.abs(d.hcpPlay)}`) : "-"}</td>
                 </tr>
               );
             })}
@@ -299,10 +211,9 @@ function DrawView({ players, onSelectPlayer }: { players: PlayersDb; onSelectPla
   const [cat, setCat] = useState<DrawCat>("all");
   const [day, setDay] = useState<1 | 2>(2);
 
-  /* Sub-14 and Sub-12 only play on Day 2 */
-  const wagrDraw = day === 1 ? DRAW_R1 : (DRAW_R2 || DRAW_R1);
-  const sub14Draw = day === 2 ? DRAW_SUB14 : null;
-  const sub12Draw = day === 2 ? DRAW_SUB12 : null;
+  const wagrDraw = NORM_BASE.draws.wagr?.[`d${day}`] || NORM_BASE.draws.wagr?.d1 || [];
+  const sub14Draw = day === 2 ? (NORM_BASE.draws.sub14?.d1 || null) : null;
+  const sub12Draw = day === 2 ? (NORM_BASE.draws.sub12?.d1 || null) : null;
   const allDraw = [...wagrDraw, ...(sub14Draw || []), ...(sub12Draw || [])].sort((a, b) => a.time.localeCompare(b.time) || a.group - b.group);
 
   const cats: { key: DrawCat; label: string; count: number }[] = [
@@ -312,10 +223,9 @@ function DrawView({ players, onSelectPlayer }: { players: PlayersDb; onSelectPla
   if (sub14Draw) cats.push({ key: "sub14", label: "Sub-14", count: sub14Draw.length });
   if (sub12Draw) cats.push({ key: "sub12", label: "Sub-12", count: sub12Draw.length });
 
-  /* Reset cat if switching to day 1 and was on sub-category */
   const effectiveCat = (cat === "sub14" && !sub14Draw) || (cat === "sub12" && !sub12Draw) ? "all" : cat;
 
-  let activeDraw: DrawEntry[];
+  let activeDraw: import("../utils/tournamentTypes").DrawEntry[];
   if (effectiveCat === "wagr") activeDraw = wagrDraw;
   else if (effectiveCat === "sub14") activeDraw = sub14Draw || [];
   else if (effectiveCat === "sub12") activeDraw = sub12Draw || [];
@@ -323,13 +233,16 @@ function DrawView({ players, onSelectPlayer }: { players: PlayersDb; onSelectPla
 
   return (
     <div className="tourn-section">
-      {/* Day selector */}
       <div style={{ display: "flex", gap: 6, marginBottom: 10 }}>
-        <button className={`tourn-tab${day === 1 ? " tourn-tab-active" : ""}`} onClick={() => setDay(1)} style={{ fontSize: 11, padding: "4px 12px" }}>R1 — 15 Fev</button>
-        {DRAW_R2 && <button className={`tourn-tab${day === 2 ? " tourn-tab-active" : ""}`} onClick={() => setDay(2)} style={{ fontSize: 11, padding: "4px 12px" }}>R2 — 16 Fev</button>}
+        <button className={`tourn-tab${day === 1 ? " tourn-tab-active" : ""}`} onClick={() => setDay(1)} style={{ fontSize: 11, padding: "4px 12px" }}>
+          R1 — {NORM_BASE.dates[0]?.split("-").reverse().slice(0, 2).join("/") || ""}
+        </button>
+        {NORM_BASE.draws.wagr?.d2 && (
+          <button className={`tourn-tab${day === 2 ? " tourn-tab-active" : ""}`} onClick={() => setDay(2)} style={{ fontSize: 11, padding: "4px 12px" }}>
+            R2 — {NORM_BASE.dates[1]?.split("-").reverse().slice(0, 2).join("/") || ""}
+          </button>
+        )}
       </div>
-
-      {/* Category filter */}
       <div className="tourn-tabs">
         {cats.map(c => (
           <button key={c.key} className={`tourn-tab${effectiveCat === c.key ? " tourn-tab-active" : ""}`} onClick={() => setCat(c.key)}>
@@ -337,511 +250,33 @@ function DrawView({ players, onSelectPlayer }: { players: PlayersDb; onSelectPla
           </button>
         ))}
       </div>
-
       <DrawTable draw={activeDraw} onSelectPlayer={onSelectPlayer} />
     </div>
   );
 }
 
-/* ─── Leaderboard with hole-by-hole ─── */
-function PlayerLink({ fed, name, onSelect }: { fed: string | null; name: string; onSelect?: (fed: string) => void }) {
-  if (fed && onSelect) {
-    return <span className="tourn-pname tourn-pname-link" onClick={() => onSelect(fed)}>{name}</span>;
-  }
-  return <span className="tourn-pname">{name}</span>;
-}
-
-function getPlayerHoles(holeData: Map<string, PlayerHoles>, fed: string | null, name: string, extraManual?: Record<string, PlayerHoles>): PlayerHoles | undefined {
-  if (fed && holeData.has(fed)) return holeData.get(fed);
-  if (holeData.has(name)) return holeData.get(name);
-  if (extraManual) {
-    if (fed && extraManual[fed]) return extraManual[fed];
-    if (extraManual[name]) return extraManual[name];
-  }
-  if (MANUAL_HOLES[name]) return MANUAL_HOLES[name];
-  return undefined;
-}
-
-type SortKey = "pos" | "name" | "gross" | "toPar" | "out" | "in" | "sd";
-type SortDir = "asc" | "desc";
-type LbCat = "all" | "wagr" | "sub14" | "sub12";
-
-/* Combined results row (for "all" view) */
-type CombinedRow = ResultEntry & { catLabel: string; catKey: string; tee: string; cr: number; slope: number; sd: number | null };
-
-function AllResultsView({ players, onSelectPlayer }: { players: PlayersDb; onSelectPlayer?: (fed: string) => void }) {
-  const [sortKey, setSortKey] = useState<string>("sd");
-  const [sortDir, setSortDir] = useState<SortDir>("asc");
-  const [pjaOnly, setPjaOnly] = useState(false);
-
-  /* Merge all results with tee-aware SD */
-  const rows: CombinedRow[] = [];
-  const addRows = (results: ResultEntry[], catLabel: string, catKey: string, defaultTee: string, defaultCr: number, defaultSlope: number) => {
-    for (const r of results) {
-      if (r.status !== "OK") continue;
-      /* Use actual tee for females in WAGR/Sub-14 */
-      const drawEntry = ALL_DRAW.find(d => (r.fed && d.fed === r.fed) || d.name === r.name);
-      const sex = drawEntry?.sex || "M";
-      const teeColor = drawEntry?.teeColor || defaultTee;
-      const { cr, slope } = teeRating(teeColor, sex);
-      const sd = r.gross != null ? Math.round((113 / slope) * (r.gross - cr) * 10) / 10 : null;
-      rows.push({ ...r, catLabel, catKey, tee: teeColor, cr, slope, sd });
-    }
-  };
-  addRows(D1, "WAGR", "wagr", "Brancas", COURSE.cr, COURSE.slope);
-  if (COURSE_AMARELAS) addRows(D1_SUB14, "Sub-14", "sub14", "Amarelas", COURSE_AMARELAS.cr, COURSE_AMARELAS.slope);
-  if (COURSE_VERMELHAS) addRows(D1_SUB12, "Sub-12", "sub12", "Vermelhas", COURSE_VERMELHAS.cr, COURSE_VERMELHAS.slope);
-
-  let filtered = pjaOnly ? rows.filter(r => r.fed && PJA.has(r.fed)) : rows;
-  const pjaCount = rows.filter(r => r.fed && PJA.has(r.fed)).length;
-
-  const sorted = [...filtered].sort((a, b) => {
-    const dir = sortDir === "asc" ? 1 : -1;
-    switch (sortKey) {
-      case "toPar": return ((a.toPar ?? 999) - (b.toPar ?? 999)) * dir;
-      case "gross": return ((a.gross ?? 999) - (b.gross ?? 999)) * dir;
-      case "sd": return ((a.sd ?? 999) - (b.sd ?? 999)) * dir;
-      case "name": return a.name.localeCompare(b.name) * dir;
-      case "cat": return a.catLabel.localeCompare(b.catLabel) * dir;
-      default: return 0;
-    }
-  });
-
-  function toggleSort(key: string) {
-    if (sortKey === key) setSortDir(d => d === "asc" ? "desc" : "asc");
-    else { setSortKey(key); setSortDir("asc"); }
-  }
-  const arrow = (key: string) => sortKey === key ? (sortDir === "asc" ? " ▲" : " ▼") : "";
-
-  const catColors: Record<string, string> = { wagr: "#2e5a10", sub14: "#b8860b", sub12: "#c0392b" };
-
-  return (
-    <div className="tourn-section">
-      <div className="tourn-meta">{rows.length} jogadores · 3 categorias · ordenado por Score Differential</div>
-      <div className="tourn-tabs" style={{ marginBottom: 12 }}>
-        <button className={`tourn-tab${!pjaOnly ? " tourn-tab-active" : ""}`} onClick={() => setPjaOnly(false)}>
-          Todos <span style={{ opacity: .6, fontSize: 11 }}>({rows.length})</span>
-        </button>
-        <button className={`tourn-tab${pjaOnly ? " tourn-tab-active" : ""}`} onClick={() => setPjaOnly(p => !p)} style={{ background: pjaOnly ? "#046A38" : undefined, color: pjaOnly ? "#FFD700" : undefined }}>
-          PJA <span style={{ opacity: .6, fontSize: 11 }}>({pjaCount})</span>
-        </button>
-      </div>
-      <div className="tourn-scroll">
-        <table className="tourn-table tourn-form-table">
-          <thead>
-            <tr>
-              <th className="r" style={{ width: 30 }}>#</th>
-              <th className="sortable" onClick={() => toggleSort("name")} style={{ minWidth: 180 }}>Jogador{arrow("name")}</th>
-              <th className="sortable" onClick={() => toggleSort("cat")} style={{ width: 70 }}>Categ.{arrow("cat")}</th>
-              <th style={{ width: 65 }}>Tee</th>
-              <th className="r sortable" style={{ width: 50 }} onClick={() => toggleSort("gross")}>Gross{arrow("gross")}</th>
-              <th className="r sortable" style={{ width: 50 }} onClick={() => toggleSort("toPar")}>±Par{arrow("toPar")}</th>
-              <th className="r sortable" style={{ width: 50 }} onClick={() => toggleSort("sd")}>SD{arrow("sd")}</th>
-              <th style={{ width: 55 }}>Pos Cat</th>
-              <th style={{ width: 130 }}>Clube</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sorted.map((r, i) => {
-              const pja = r.fed ? PJA.has(r.fed) : false;
-              const female = isFemale(r.fed, r.name);
-              const year = birthYear(r.fed);
-              const esc = escalaoFromDob(year);
-              return (
-                <tr key={i} className={`${female ? "tourn-female-row" : ""}`}>
-                  <td className="r tourn-mono" style={{ fontWeight: 700, opacity: .5 }}>{i + 1}</td>
-                  <td>
-                    <div className="tourn-lb-pills">
-                      <PlayerLink fed={r.fed} name={r.name} onSelect={onSelectPlayer} />
-                      {pja && <span className="jog-pill tourn-pill-pja">PJA</span>}
-                      {!r.fed && <span className="jog-pill tourn-pill-intl">INTL</span>}
-                      {female && <span className="jog-pill jog-pill-sex-F">♀</span>}
-                      {year && <span className="jog-pill jog-pill-birth">{year}</span>}
-                    </div>
-                  </td>
-                  <td><span style={{ fontSize: 11, fontWeight: 700, color: catColors[r.catKey] || "#333", background: `${catColors[r.catKey] || "#333"}15`, padding: "1px 6px", borderRadius: 3 }}>{r.catLabel}</span></td>
-                  <td><TeePill name={r.tee} /></td>
-                  <td className="r tourn-mono" style={{ fontWeight: 700 }}>{r.gross}</td>
-                  <td className={`r tourn-mono`}>
-                    <span className={r.toPar != null && r.toPar <= 0 ? "tp-under" : r.toPar != null && r.toPar! <= 5 ? "tp-over1" : "tp-over2"} style={{ fontWeight: 700 }}>
-                      {fmtToPar(r.toPar)}
-                    </span>
-                  </td>
-                  <td className="r tourn-mono" style={{ fontSize: 11 }}>
-                    {r.sd != null ? (
-                      <span className={r.sd <= 0 ? "tp-under" : r.sd <= 5 ? "tp-over1" : r.sd <= 15 ? "" : "tp-over2"} style={{ fontWeight: 600 }}>{r.sd.toFixed(1)}</span>
-                    ) : "—"}
-                  </td>
-                  <td className="r tourn-mono" style={{ fontSize: 12 }}>{r.pos}</td>
-                  <td style={{ fontSize: 11, color: "#888" }}>{r.club}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-}
-
-function LeaderboardView({ players, holeData, onSelectPlayer }: { players: PlayersDb; holeData: Map<string, PlayerHoles>; onSelectPlayer?: (fed: string) => void }) {
-  const [lbCat, setLbCat] = useState<LbCat>("wagr");
-  const [escFilter, setEscFilter] = useState<string>("all");
-  const [pjaOnly, setPjaOnly] = useState(false);
-  const [sortKey, setSortKey] = useState<SortKey>("pos");
-  const [sortDir, setSortDir] = useState<SortDir>("asc");
-
-  /* Category-dependent data */
-  const catResults = lbCat === "sub14" ? D1_SUB14 : lbCat === "sub12" ? D1_SUB12 : D1;
-  const catHoles = lbCat === "sub14" ? HOLES_AMARELAS : lbCat === "sub12" ? HOLES_VERMELHAS : HOLES;
-  const catCourse = lbCat === "sub14" ? (COURSE_AMARELAS || COURSE) : lbCat === "sub12" ? (COURSE_VERMELHAS || COURSE) : COURSE;
-  const catTeeName = lbCat === "sub14" ? "Amarelas" : lbCat === "sub12" ? "Vermelhas" : "Brancas";
-  const catTotalM = catHoles.reduce((s, h) => s + h.m, 0);
-  const catParOut = catHoles.slice(0, 9).reduce((s, h) => s + h.par, 0);
-  const catParIn = catHoles.slice(9).reduce((s, h) => s + h.par, 0);
-  const hasResults = catResults.some(r => r.status === "OK");
-  const catDay = lbCat === "wagr" ? "Dia 1" : "Dia 2";
-
-  const allClassified = catResults.filter(r => r.status === "OK");
-  const others = catResults.filter(r => r.status !== "OK" && r.status !== "pending");
-  const pjaCount = allClassified.filter(r => r.fed && PJA.has(r.fed)).length;
-
-  /* Collect available escalões (WAGR only) */
-  const escSet = new Set<string>();
-  if (lbCat === "wagr") {
-    allClassified.forEach(r => {
-      const yr = birthYear(r.fed);
-      const esc = escalaoFromDob(yr);
-      if (esc) escSet.add(esc);
-    });
-  }
-  const escOptions = ["Sub-10","Sub-12","Sub-14","Sub-16","Sub-18","Sub-21","Absoluto"].filter(e => escSet.has(e));
-
-  /* Filter */
-  let filtered = escFilter === "all" ? allClassified : allClassified.filter(r => escalaoFromDob(birthYear(r.fed)) === escFilter);
-  if (pjaOnly) filtered = filtered.filter(r => r.fed && PJA.has(r.fed));
-
-  /* For pending categories, show starting list from draw */
-  let pendingDraw = !hasResults
-    ? (lbCat === "sub14" ? DRAW_SUB14 : lbCat === "sub12" ? DRAW_SUB12 : null) || []
-    : [];
-  if (pjaOnly && pendingDraw.length > 0) pendingDraw = pendingDraw.filter(d => d.fed && PJA.has(d.fed));
-
-  /* Enrich for sorting */
-  const catManualHoles = lbCat === "sub14" ? MANUAL_HOLES_SUB14 : lbCat === "sub12" ? MANUAL_HOLES_SUB12 : undefined;
-  const enriched = filtered.map(r => {
-    const ph = getPlayerHoles(holeData, r.fed, r.name, catManualHoles);
-    const hasHoles = ph && ph.holes.length >= 18;
-    const outScore = hasHoles ? ph.holes.slice(0, 9).reduce((s, v) => s + (v ?? 0), 0) : null;
-    const inScore = hasHoles ? ph.holes.slice(9, 18).reduce((s, v) => s + (v ?? 0), 0) : null;
-    const drawEntry = ALL_DRAW.find(d => (r.fed && d.fed === r.fed) || d.name === r.name);
-    const sex = drawEntry?.sex ?? "M";
-    const teeColor = drawEntry?.teeColor ?? catTeeName;
-    const sd = r.gross != null ? calcSD(r.gross, teeColor, sex) : null;
-    return { ...r, ph, hasHoles, outScore, inScore, sd };
-  });
-
-  /* Sort */
-  const sorted = [...enriched].sort((a, b) => {
-    const dir = sortDir === "asc" ? 1 : -1;
-    switch (sortKey) {
-      case "pos": return ((a.pos ?? 999) - (b.pos ?? 999)) * dir;
-      case "name": return a.name.localeCompare(b.name) * dir;
-      case "gross": return ((a.gross ?? 999) - (b.gross ?? 999)) * dir;
-      case "toPar": return ((a.toPar ?? 999) - (b.toPar ?? 999)) * dir;
-      case "out": return ((a.outScore ?? 999) - (b.outScore ?? 999)) * dir;
-      case "in": return ((a.inScore ?? 999) - (b.inScore ?? 999)) * dir;
-      case "sd": return ((a.sd ?? 999) - (b.sd ?? 999)) * dir;
-      default: return 0;
-    }
-  });
-
-  function toggleSort(key: SortKey) {
-    if (sortKey === key) setSortDir(d => d === "asc" ? "desc" : "asc");
-    else { setSortKey(key); setSortDir("asc"); }
-  }
-  const arrow = (key: SortKey) => sortKey === key ? (sortDir === "asc" ? " ▲" : " ▼") : "";
-
-  /* Category tab counts */
-  const wagrCount = D1.filter(r => r.status === "OK").length || DRAW_R1.length;
-  const sub14Count = D1_SUB14.some(r => r.status === "OK") ? D1_SUB14.filter(r => r.status === "OK").length : DRAW_SUB14?.length || 0;
-  const sub12Count = D1_SUB12.some(r => r.status === "OK") ? D1_SUB12.filter(r => r.status === "OK").length : DRAW_SUB12?.length || 0;
-
-  return (
-    <div className="tourn-section">
-      {/* Category tabs */}
-      <div className="tourn-tabs" style={{ marginBottom: 8 }}>
-        <button className={`tourn-tab${lbCat === "all" ? " tourn-tab-active" : ""}`} onClick={() => { setLbCat("all"); setEscFilter("all"); setPjaOnly(false); }}>
-          Todos <span style={{ opacity: .6, fontSize: 11 }}>({wagrCount + sub14Count + sub12Count})</span>
-        </button>
-        <button className={`tourn-tab${lbCat === "wagr" ? " tourn-tab-active" : ""}`} onClick={() => { setLbCat("wagr"); setEscFilter("all"); setPjaOnly(false); }}>
-          WAGR <span style={{ opacity: .6, fontSize: 11 }}>({wagrCount})</span>
-        </button>
-        {sub14Count > 0 && <button className={`tourn-tab${lbCat === "sub14" ? " tourn-tab-active" : ""}`} onClick={() => { setLbCat("sub14"); setEscFilter("all"); setPjaOnly(false); }}>
-          Sub-14 <span style={{ opacity: .6, fontSize: 11 }}>({sub14Count})</span>
-        </button>}
-        {sub12Count > 0 && <button className={`tourn-tab${lbCat === "sub12" ? " tourn-tab-active" : ""}`} onClick={() => { setLbCat("sub12"); setEscFilter("all"); setPjaOnly(false); }}>
-          Sub-12 <span style={{ opacity: .6, fontSize: 11 }}>({sub12Count})</span>
-        </button>}
-      </div>
-
-      {/* Combined results view */}
-      {lbCat === "all" && <AllResultsView players={players} onSelectPlayer={onSelectPlayer} />}
-
-      {/* Category-specific view */}
-      {lbCat !== "all" && <>
-      <div className="tourn-meta" style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
-        {catDay} · Par {catCourse.par} · CR {catCourse.cr} / Slope {catCourse.slope} · Vilamoura – Laguna · <TeePill name={catTeeName} /> {catTotalM}m
-      </div>
-
-      {/* Sub-filters: PJA for all categories, escalão for WAGR only */}
-      <div className="tourn-tabs" style={{ marginBottom: 12 }}>
-        <button className={`tourn-tab${escFilter === "all" && !pjaOnly ? " tourn-tab-active" : ""}`} onClick={() => { setEscFilter("all"); setPjaOnly(false); }}>
-          Todos <span style={{ opacity: .6, fontSize: 11 }}>({allClassified.length || pendingDraw.length})</span>
-        </button>
-        <button className={`tourn-tab${pjaOnly ? " tourn-tab-active" : ""}`} onClick={() => { setPjaOnly(p => !p); setEscFilter("all"); }} style={{ background: pjaOnly ? "#046A38" : undefined, color: pjaOnly ? "#FFD700" : undefined }}>
-          PJA <span style={{ opacity: .6, fontSize: 11 }}>({pjaCount || pendingDraw.filter(d => d.fed && PJA.has(d.fed)).length})</span>
-        </button>
-        {lbCat === "wagr" && escOptions.map(esc => {
-          const count = allClassified.filter(r => escalaoFromDob(birthYear(r.fed)) === esc).length;
-          return (
-            <button key={esc} className={`tourn-tab${escFilter === esc && !pjaOnly ? " tourn-tab-active" : ""}`} onClick={() => { setEscFilter(esc); setPjaOnly(false); }}>
-              {esc} <span style={{ opacity: .6, fontSize: 11 }}>({count})</span>
-            </button>
-          );
-        })}
-      </div>
-
-      {/* ── Results table (when we have scores) ── */}
-      {hasResults && (
-        <>
-          <div className="tourn-scroll">
-            <table className="tourn-table tourn-scorecard">
-              <thead>
-                <tr className="tourn-course-hdr">
-                  <th className="tourn-pos-col sortable" onClick={() => toggleSort("pos")}>Pos{arrow("pos")}</th>
-                  <th className="tourn-lb-name-col sortable" onClick={() => toggleSort("name")}>Jogador{arrow("name")}</th>
-                  <th className="r tourn-gross-col sortable" onClick={() => toggleSort("gross")}>Tot{arrow("gross")}</th>
-                  <th className="r tourn-par-col sortable" onClick={() => toggleSort("toPar")}>±Par{arrow("toPar")}</th>
-                  {catHoles.slice(0, 9).map(h => (
-                    <th key={h.h} className="r tourn-hole-col">{h.h}</th>
-                  ))}
-                  <th className="r tourn-sum-col sortable" onClick={() => toggleSort("out")}>OUT{arrow("out")}</th>
-                  {catHoles.slice(9).map(h => (
-                    <th key={h.h} className={`r tourn-hole-col${h.h === 10 ? " tourn-in-border" : ""}`}>{h.h}</th>
-                  ))}
-                  <th className="r tourn-sum-col sortable" onClick={() => toggleSort("in")}>IN{arrow("in")}</th>
-                  <th className="r tourn-sum-col sortable" onClick={() => toggleSort("sd")} style={{ width: 48 }}>SD{arrow("sd")}</th>
-                </tr>
-                <tr className="tourn-par-row">
-                  <td></td><td className="tourn-lbl">Par</td>
-                  <td className="r">{catCourse.par}</td><td></td>
-                  {catHoles.slice(0, 9).map(h => <td key={h.h} className="r">{h.par}</td>)}
-                  <td className="r">{catParOut}</td>
-                  {catHoles.slice(9).map(h => <td key={h.h} className={`r${h.h === 10 ? " tourn-in-border" : ""}`}>{h.par}</td>)}
-                  <td className="r">{catParIn}</td>
-                  <td></td>
-                </tr>
-                <tr className="tourn-dist-row">
-                  <td></td><td className="tourn-lbl">Metros</td>
-                  <td></td><td></td>
-                  {catHoles.slice(0, 9).map(h => <td key={h.h} className="r">{h.m}</td>)}
-                  <td className="r">{catHoles.slice(0,9).reduce((s,h) => s+h.m, 0)}</td>
-                  {catHoles.slice(9).map(h => <td key={h.h} className={`r${h.h === 10 ? " tourn-in-border" : ""}`}>{h.m}</td>)}
-                  <td className="r">{catHoles.slice(9).reduce((s,h) => s+h.m, 0)}</td>
-                  <td></td>
-                </tr>
-                <tr className="tourn-si-row">
-                  <td></td><td className="tourn-lbl">SI</td>
-                  <td></td><td></td>
-                  {catHoles.slice(0, 9).map(h => <td key={h.h} className="r">{h.si}</td>)}
-                  <td></td>
-                  {catHoles.slice(9).map(h => <td key={h.h} className={`r${h.h === 10 ? " tourn-in-border" : ""}`}>{h.si}</td>)}
-                  <td></td>
-                  <td></td>
-                </tr>
-              </thead>
-              <tbody>
-                {sorted.map((r, i) => {
-                  const pja = isPja(r.fed);
-                  const drawEntry = ALL_DRAW.find(d => (r.fed && d.fed === r.fed) || d.name === r.name);
-                  const female = isFemale(r.fed, r.name);
-                  const year = birthYear(r.fed);
-                  const esc = escalaoFromDob(year);
-                  const outToPar = r.outScore != null ? r.outScore - catParOut : null;
-                  const inToPar = r.inScore != null ? r.inScore - catParIn : null;
-
-                  return (
-                    <tr key={i} className={`tourn-player-row${female ? " tourn-female-row" : ""}`}>
-                      <td className="r tourn-pos">{r.pos}</td>
-                      <td className="tourn-lb-name-col">
-                        <div className="tourn-lb-pills">
-                          <PlayerLink fed={r.fed} name={r.name} onSelect={onSelectPlayer} />
-                          {pja && <span className="jog-pill tourn-pill-pja">PJA</span>}
-                          {!r.fed && <span className="jog-pill tourn-pill-intl">INTL</span>}
-                          {female && <><span className="jog-pill jog-pill-sex-F">♀</span><TeePill name={drawEntry?.teeColor ?? "Azuis"} /></>}
-                          {lbCat === "wagr" && esc && <span className={`jog-pill jog-pill-escalao jog-pill-escalao-${esc.toLowerCase().replace("-", "")}`}>{esc}</span>}
-                          {year && <span className="jog-pill jog-pill-birth">{year}</span>}
-                          {drawEntry && <span className="jog-pill jog-pill-stats">{fmtHcp(drawEntry.hcpExact)}</span>}
-                        </div>
-                      </td>
-                      <td className={`r tourn-sum-val ${r.toPar != null && r.toPar <= 0 ? "tourn-sum-under" : "tourn-sum-over"}`}>{r.gross ?? "-"}</td>
-                      <td className={`r tourn-sum-val ${r.toPar != null && r.toPar <= 0 ? "tourn-sum-under" : "tourn-sum-over"}`}>
-                        <span className={`tourn-topar ${r.toPar != null && r.toPar <= 0 ? "tp-under" : r.toPar != null && r.toPar <= 5 ? "tp-over1" : "tp-over2"}`}>
-                          {fmtToPar(r.toPar)}
-                        </span>
-                      </td>
-                      {/* Front 9 */}
-                      {r.hasHoles ? r.ph!.holes.slice(0, 9).map((sc, hi) => (
-                        <td key={hi} className="tourn-hole-cell">
-                          <ScoreDot score={sc} par={catHoles[hi].par} />
-                        </td>
-                      )) : Array.from({ length: 9 }, (_, hi) => (
-                        <td key={hi} className="tourn-hole-cell tourn-no-data">·</td>
-                      ))}
-                      {/* OUT */}
-                      <td className={`r tourn-sum-val ${outToPar != null && outToPar <= 0 ? "tourn-sum-under" : "tourn-sum-over"}`}>
-                        {r.outScore != null ? <>{r.outScore} <span className={`tourn-half-par ${outToPar! <= 0 ? "tp-under" : "tp-over1"}`}>({fmtToPar(outToPar)})</span></> : "-"}
-                      </td>
-                      {/* Back 9 */}
-                      {r.hasHoles ? r.ph!.holes.slice(9, 18).map((sc, hi) => (
-                        <td key={hi + 9} className={`tourn-hole-cell${hi === 0 ? " tourn-in-border" : ""}`}>
-                          <ScoreDot score={sc} par={catHoles[hi + 9].par} />
-                        </td>
-                      )) : Array.from({ length: 9 }, (_, hi) => (
-                        <td key={hi + 9} className={`tourn-hole-cell tourn-no-data${hi === 0 ? " tourn-in-border" : ""}`}>·</td>
-                      ))}
-                      {/* IN */}
-                      <td className={`r tourn-sum-val ${inToPar != null && inToPar <= 0 ? "tourn-sum-under" : "tourn-sum-over"}`}>
-                        {r.inScore != null ? <>{r.inScore} <span className={`tourn-half-par ${inToPar! <= 0 ? "tp-under" : "tp-over1"}`}>({fmtToPar(inToPar)})</span></> : "-"}
-                      </td>
-                      {/* SD */}
-                      <td className="r tourn-sum-val" style={{ fontSize: 11 }}>
-                        {r.sd != null ? (
-                          <span className={r.sd <= 0 ? "tp-under" : r.sd <= 5 ? "tp-over1" : r.sd <= 15 ? "" : "tp-over2"} style={{ fontWeight: 600 }}>{r.sd.toFixed(1)}</span>
-                        ) : "-"}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-
-          {others.length > 0 && (
-            <div className="tourn-others">
-              <div className="tourn-others-title">NÃO TERMINARAM / NÃO PARTIRAM</div>
-              {others.map((r, i) => (
-                <div key={i} className="tourn-other-line">
-                  <span className={`tourn-status ${r.status === "NS" ? "tourn-ns" : "tourn-nd"}`}>{r.status}</span>
-                  {r.name} <span style={{ color: "#aaa" }}>— {r.club}</span>
-                </div>
-              ))}
-            </div>
-          )}
-        </>
-      )}
-
-      {/* ── Starting list (when no results yet) ── */}
-      {!hasResults && pendingDraw.length > 0 && (
-        <>
-          <div className="tourn-meta" style={{ marginTop: 10, color: "#e67e22", fontWeight: 600 }}>⏳ Resultados ainda não disponíveis — lista de partida</div>
-          <div className="tourn-scroll" style={{ marginTop: 8 }}>
-            <table className="tourn-table tourn-scorecard">
-              <thead>
-                <tr className="tourn-course-hdr">
-                  <th style={{ width: 40 }}>#</th>
-                  <th>Jogador</th>
-                  <th className="r" style={{ width: 60 }}>HCP Ex.</th>
-                  <th className="r" style={{ width: 60 }}>HCP Jg</th>
-                  {catHoles.slice(0, 9).map(h => (
-                    <th key={h.h} className="r tourn-hole-col">{h.h}</th>
-                  ))}
-                  <th className="r tourn-sum-col">OUT</th>
-                  {catHoles.slice(9).map(h => (
-                    <th key={h.h} className={`r tourn-hole-col${h.h === 10 ? " tourn-in-border" : ""}`}>{h.h}</th>
-                  ))}
-                  <th className="r tourn-sum-col">IN</th>
-                </tr>
-                <tr className="tourn-par-row">
-                  <td></td><td className="tourn-lbl">Par</td><td></td><td></td>
-                  {catHoles.slice(0, 9).map(h => <td key={h.h} className="r">{h.par}</td>)}
-                  <td className="r">{catParOut}</td>
-                  {catHoles.slice(9).map(h => <td key={h.h} className={`r${h.h === 10 ? " tourn-in-border" : ""}`}>{h.par}</td>)}
-                  <td className="r">{catParIn}</td>
-                </tr>
-                <tr className="tourn-dist-row">
-                  <td></td><td className="tourn-lbl">Metros</td><td></td><td></td>
-                  {catHoles.slice(0, 9).map(h => <td key={h.h} className="r">{h.m}</td>)}
-                  <td className="r">{catHoles.slice(0,9).reduce((s,h) => s+h.m, 0)}</td>
-                  {catHoles.slice(9).map(h => <td key={h.h} className={`r${h.h === 10 ? " tourn-in-border" : ""}`}>{h.m}</td>)}
-                  <td className="r">{catHoles.slice(9).reduce((s,h) => s+h.m, 0)}</td>
-                </tr>
-                <tr className="tourn-si-row">
-                  <td></td><td className="tourn-lbl">SI</td><td></td><td></td>
-                  {catHoles.slice(0, 9).map(h => <td key={h.h} className="r">{h.si}</td>)}
-                  <td></td>
-                  {catHoles.slice(9).map(h => <td key={h.h} className={`r${h.h === 10 ? " tourn-in-border" : ""}`}>{h.si}</td>)}
-                  <td></td>
-                </tr>
-              </thead>
-              <tbody>
-                {pendingDraw.map((d, i) => {
-                  const year = birthYear(d.fed);
-                  const esc = escalaoFromDob(year);
-                  const female = d.sex === "F";
-                  const pja = isPja(d.fed);
-                  return (
-                    <tr key={i} className={`tourn-player-row${female ? " tourn-female-row" : ""}`}>
-                      <td className="r tourn-pos" style={{ opacity: .5 }}>{i + 1}</td>
-                      <td className="tourn-lb-name-col">
-                        <div className="tourn-lb-pills">
-                          <PlayerLink fed={d.fed} name={d.name} onSelect={onSelectPlayer} />
-                          {pja && <span className="jog-pill tourn-pill-pja">PJA</span>}
-                          {!d.fed && <span className="jog-pill tourn-pill-intl">INTL</span>}
-                          {female && <><span className="jog-pill jog-pill-sex-F">♀</span><TeePill name={d.teeColor} /></>}
-                          {esc && <span className={`jog-pill jog-pill-escalao jog-pill-escalao-${esc.toLowerCase().replace("-", "")}`}>{esc}</span>}
-                          {year && <span className="jog-pill jog-pill-birth">{year}</span>}
-                          {d.hcpExact != null && <span className="jog-pill jog-pill-stats">{fmtHcp(d.hcpExact)}</span>}
-                        </div>
-                      </td>
-                      <td className="r tourn-mono">{fmtHcp(d.hcpExact)}</td>
-                      <td className="r tourn-mono">{fmtHcpPlay(d.hcpPlay)}</td>
-                      {Array.from({ length: 9 }, (_, hi) => (
-                        <td key={hi} className="tourn-hole-cell tourn-no-data">·</td>
-                      ))}
-                      <td className="r tourn-sum-val tourn-sum-over">-</td>
-                      {Array.from({ length: 9 }, (_, hi) => (
-                        <td key={hi + 9} className={`tourn-hole-cell tourn-no-data${hi === 0 ? " tourn-in-border" : ""}`}>·</td>
-                      ))}
-                      <td className="r tourn-sum-val tourn-sum-over">-</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        </>
-      )}
-      </>}
-    </div>
-  );
-}
-
-/* ─── Analysis ─── */
+/* ── Analysis View (mostly unchanged, uses legacy D1 + playerHistory) ── */
 type AnalysisCat = "wagr" | "sub14" | "sub12";
-const TREND_ICONS: Record<string, string> = { up: "📈", stable: "➡️", down: "📉", unknown: "—" };
+const TREND_ICONS: Record<string, string> = { up: "📈", stable: "➡️", down: "📉", unknown: "–" };
 const TREND_LABELS: Record<string, string> = { up: "Em forma", stable: "Estável", down: "Em baixa", unknown: "Sem dados" };
 
-function AnalysisView({ players, holeData, playerHistory, onSelectPlayer }: { players: PlayersDb; holeData: Map<string, PlayerHoles>; playerHistory: Map<string, PlayerForm>; onSelectPlayer?: (fed: string) => void }) {
+function AnalysisView({ norm, players, holeDataByDay, playerHistory, onSelectPlayer }: {
+  norm: NormalizedTournament;
+  players: PlayersDb;
+  holeDataByDay: Record<string, Map<string, PlayerHoles>>;
+  playerHistory: Map<string, PlayerForm>;
+  onSelectPlayer?: (fed: string) => void;
+}) {
   const [cat, setCat] = useState<AnalysisCat>("wagr");
 
-  /* Category data */
   const allForms = Array.from(playerHistory.values());
   const catForms = allForms.filter(f => f.category === cat);
-  const classified = D1.filter(r => r.status === "OK" && r.gross != null);
 
-  /* ── KPIs (WAGR only for D1 data) ── */
+  /* D1 from live results */
+  const wagrD1 = norm.results.wagr?.d1 || [];
+  const classified = wagrD1.filter(r => r.status === "OK" && r.gross != null);
+
+  /* KPIs */
   const wagrForms = allForms.filter(f => f.category === "wagr");
   const grosses = classified.map(r => r.gross!);
   const avg = grosses.length > 0 ? grosses.reduce((a, b) => a + b, 0) / grosses.length : 0;
@@ -851,7 +286,6 @@ function AnalysisView({ players, holeData, playerHistory, onSelectPlayer }: { pl
   const under = classified.filter(r => r.toPar! <= 0).length;
   const pjaResults = classified.filter(r => r.fed && PJA.has(r.fed));
 
-  /* Category player list: sorted by D1 pos (if available), then by trend quality */
   const sorted = [...catForms].sort((a, b) => {
     if (a.d1Pos != null && b.d1Pos != null) return a.d1Pos - b.d1Pos;
     if (a.d1Pos != null) return -1;
@@ -860,12 +294,11 @@ function AnalysisView({ players, holeData, playerHistory, onSelectPlayer }: { pl
     return (tOrd[a.trend] ?? 2) - (tOrd[b.trend] ?? 2);
   });
 
-  /* Hole difficulty (WAGR scorecards) */
-  const allHoleData = new Map(holeData);
-  Object.entries(MANUAL_HOLES).forEach(([k, v]) => { if (!allHoleData.has(k)) allHoleData.set(k, v); });
+  /* Hole difficulty from WAGR D1 holeData */
+  const wagrHoles = holeDataByDay["wagr_d1"] || new Map();
   const holeDiff = HOLES.map((h, i) => {
     const scores: number[] = [];
-    allHoleData.forEach(ph => { if (ph.holes[i] != null) scores.push(ph.holes[i]!); });
+    wagrHoles.forEach(ph => { if (ph.holes[i] != null) scores.push(ph.holes[i]!); });
     const a = scores.length > 0 ? scores.reduce((s, v) => s + v, 0) / scores.length : null;
     return { hole: h.h, par: h.par, si: h.si, m: h.m, avg: a, n: scores.length,
       birdies: scores.filter(s => s < h.par).length,
@@ -881,7 +314,6 @@ function AnalysisView({ players, holeData, playerHistory, onSelectPlayer }: { pl
 
   return (
     <div className="tourn-section">
-      {/* Category tabs */}
       <div className="tourn-tabs" style={{ marginBottom: 14 }}>
         {(["wagr", "sub14", "sub12"] as AnalysisCat[]).filter(c => catCounts[c] > 0).map(c => (
           <button key={c} className={`tourn-tab${cat === c ? " tourn-tab-active" : ""}`} onClick={() => setCat(c)}>
@@ -890,15 +322,14 @@ function AnalysisView({ players, holeData, playerHistory, onSelectPlayer }: { pl
         ))}
       </div>
 
-      {/* KPIs (show D1 stats for WAGR) */}
       {cat === "wagr" && grosses.length > 0 && (
         <div className="tourn-kpis">
           {[
             { label: "Melhor Gross", val: Math.min(...grosses), sub: classified.find(r => r.gross === Math.min(...grosses))?.name },
             { label: "Média Campo", val: avg.toFixed(1), sub: `${classified.length} jog.` },
             { label: "Under/Even", val: `${under} de ${classified.length}` },
-            { label: "SD Médio", val: avgSD?.toFixed(1) ?? "—", sub: sdStdDev ? `σ ${sdStdDev.toFixed(1)}` : undefined },
-            { label: "Média PJA", val: pjaResults.length > 0 ? (pjaResults.reduce((a, r) => a + r.gross!, 0) / pjaResults.length).toFixed(1) : "—", sub: `${pjaResults.length} jog.` },
+            { label: "SD Médio", val: avgSD?.toFixed(1) ?? "–", sub: sdStdDev ? `σ ${sdStdDev.toFixed(1)}` : undefined },
+            { label: "Média PJA", val: pjaResults.length > 0 ? (pjaResults.reduce((a, r) => a + r.gross!, 0) / pjaResults.length).toFixed(1) : "–", sub: `${pjaResults.length} jog.` },
           ].map((k, i) => (
             <div key={i} className="tourn-kpi">
               <div className="tourn-kpi-lbl">{k.label}</div>
@@ -909,7 +340,6 @@ function AnalysisView({ players, holeData, playerHistory, onSelectPlayer }: { pl
         </div>
       )}
 
-      {/* Player form table */}
       {sorted.length > 0 ? (
         <>
           <h3 className="tourn-h3">Forma dos Jogadores — {cat === "wagr" ? "WAGR" : cat === "sub14" ? "Sub-14" : "Sub-12"}</h3>
@@ -931,11 +361,11 @@ function AnalysisView({ players, holeData, playerHistory, onSelectPlayer }: { pl
               </thead>
               <tbody>
                 {sorted.map((f, i) => {
-                  const pja = f.fed ? PJA.has(f.fed) : false;
-                  const female = isFemale(f.fed, f.name);
+                  const pja = isPja(norm, f.fed);
+                  const female = ALL_DRAW.find(d => d.fed === f.fed)?.sex === "F";
                   return (
-                    <tr key={i} className={`${female ? "tourn-female-row" : ""}`}>
-                      {cat === "wagr" && <td className="r tourn-mono" style={{ fontWeight: 700 }}>{f.d1Pos ?? "—"}</td>}
+                    <tr key={i} className={female ? "tourn-female-row" : ""}>
+                      {cat === "wagr" && <td className="r tourn-mono" style={{ fontWeight: 700 }}>{f.d1Pos ?? "–"}</td>}
                       <td>
                         <PlayerLink fed={f.fed} name={f.name} onSelect={onSelectPlayer} />
                         {pja && <span className="jog-pill tourn-pill-pja" style={{ marginLeft: 4 }}>PJA</span>}
@@ -944,30 +374,22 @@ function AnalysisView({ players, holeData, playerHistory, onSelectPlayer }: { pl
                       <td className="r tourn-mono">{fmtHcp(f.hcpExact)}</td>
                       {cat === "wagr" && (
                         <td className="r tourn-mono" style={{ fontWeight: 700 }}>
-                          {f.d1Gross != null ? (
-                            <><span>{f.d1Gross}</span> <span className={f.d1ToPar! <= 0 ? "tp-under" : "tp-over1"} style={{ fontSize: 10 }}>({fmtToPar(f.d1ToPar)})</span></>
-                          ) : "—"}
+                          {f.d1Gross != null ? <><span>{f.d1Gross}</span> <span className={f.d1ToPar! <= 0 ? "tp-under" : "tp-over1"} style={{ fontSize: 10 }}>({fmtToPar(f.d1ToPar)})</span></> : "–"}
                         </td>
                       )}
                       {cat === "wagr" && (
                         <td className="r tourn-mono" style={{ fontSize: 11 }}>
-                          {f.d1SD != null ? (
-                            <span className={f.d1SD <= 0 ? "tp-under" : f.d1SD <= 5 ? "tp-over1" : "tp-over2"} style={{ fontWeight: 600 }}>{f.d1SD.toFixed(1)}</span>
-                          ) : "—"}
+                          {f.d1SD != null ? <span className={f.d1SD <= 0 ? "tp-under" : f.d1SD <= 5 ? "tp-over1" : "tp-over2"} style={{ fontWeight: 600 }}>{f.d1SD.toFixed(1)}</span> : "–"}
                         </td>
                       )}
                       <td className="r" style={{ fontSize: 11 }}>
-                        {f.daysSinceLast != null ? (
-                          <span style={{ color: f.daysSinceLast <= 7 ? "#16a34a" : f.daysSinceLast <= 21 ? "#e67e22" : "#dc3545" }}>
-                            {f.daysSinceLast}d
-                          </span>
-                        ) : "—"}
+                        {f.daysSinceLast != null ? <span style={{ color: f.daysSinceLast <= 7 ? "#16a34a" : f.daysSinceLast <= 21 ? "#e67e22" : "#dc3545" }}>{f.daysSinceLast}d</span> : "–"}
                       </td>
                       <td>
                         <div className="tourn-sparkline">
                           {f.recentRounds.slice(0, 5).reverse().map((r, ri) => (
                             <span key={ri} className={`tourn-spark-dot ${r.sd != null ? (r.sd <= 0 ? "spark-green" : r.sd <= 10 ? "spark-amber" : "spark-red") : "spark-grey"}`}
-                              title={`${r.date} · ${r.course}\nGross: ${r.gross} · Par: ${r.par} · SD: ${r.sd?.toFixed(1) ?? "—"}`}>
+                              title={`${r.date} · ${r.course}\nGross: ${r.gross} · Par: ${r.par} · SD: ${r.sd?.toFixed(1) ?? "–"}`}>
                               {r.sd != null ? r.sd.toFixed(1) : "?"}
                             </span>
                           ))}
@@ -979,9 +401,7 @@ function AnalysisView({ players, holeData, playerHistory, onSelectPlayer }: { pl
                           {TREND_ICONS[f.trend]} {TREND_LABELS[f.trend]}
                         </span>
                       </td>
-                      <td className="r tourn-mono" style={{ fontWeight: 700, fontSize: 13 }}>
-                        {f.predictedGross ?? "—"}
-                      </td>
+                      <td className="r tourn-mono" style={{ fontWeight: 700, fontSize: 13 }}>{f.predictedGross ?? "–"}</td>
                     </tr>
                   );
                 })}
@@ -993,8 +413,7 @@ function AnalysisView({ players, holeData, playerHistory, onSelectPlayer }: { pl
         <div className="tourn-meta" style={{ padding: 20, textAlign: "center" }}>⏳ A carregar dados de jogadores...</div>
       )}
 
-      {/* Hole difficulty (WAGR scorecards) */}
-      {cat === "wagr" && holeDiff[0].n > 0 && <>
+      {cat === "wagr" && holeDiff[0]?.n > 0 && <>
         <h3 className="tourn-h3">Dificuldade por Buraco</h3>
         <div className="tourn-meta">{holeDiff[0].n} scorecards · ordenado do mais fácil ao mais difícil</div>
         <div className="tourn-scroll">
@@ -1019,7 +438,7 @@ function AnalysisView({ players, holeData, playerHistory, onSelectPlayer }: { pl
                     <td className="r">{h.par}</td>
                     <td className="r" style={{ color: "#aaa" }}>{h.si}</td>
                     <td className="r tourn-mono">{h.m}</td>
-                    <td className="r tourn-mono" style={{ fontWeight: 700 }}>{h.avg?.toFixed(1) ?? "—"}</td>
+                    <td className="r tourn-mono" style={{ fontWeight: 700 }}>{h.avg?.toFixed(1) ?? "–"}</td>
                     <td className="r">
                       {vp != null && <span style={{ color: vp <= 0 ? "#16a34a" : vp < 0.5 ? "#e67e22" : "#dc3545", fontWeight: 600 }}>
                         {vp > 0 ? `+${vp.toFixed(2)}` : vp.toFixed(2)}
@@ -1045,26 +464,38 @@ function AnalysisView({ players, holeData, playerHistory, onSelectPlayer }: { pl
   );
 }
 
-/* ─── Main ─── */
+/* ═══════════════════════════════════════════════
+   Main Component — with LIVE result derivation
+   ═══════════════════════════════════════════════ */
+
 export default function TorneioPage({ players, onSelectPlayer }: { players: PlayersDb; onSelectPlayer?: (fed: string) => void }) {
   const [unlocked, setUnlocked] = useState(false);
   const [view, setView] = useState<TournView>("leaderboard");
-  const [holeData, setHoleData] = useState<Map<string, PlayerHoles>>(new Map());
-  const [playerHistory, setPlayerHistory] = useState<Map<string, PlayerForm>>(new Map());
   const [loading, setLoading] = useState(false);
   const [loadCount, setLoadCount] = useState(0);
 
+  /* Live-derived state */
+  const [liveNorm, setLiveNorm] = useState<NormalizedTournament>(NORM_BASE);
+  const [holeDataByDay, setHoleDataByDay] = useState<Record<string, Map<string, PlayerHoles>>>({});
+  const [playerHistory, setPlayerHistory] = useState<Map<string, PlayerForm>>(new Map());
+
   const fedList = useMemo(() => [...new Set(ALL_DRAW.filter(d => d.fed).map(d => d.fed!))], []);
-  const TOURN_DATE = new Date((tournData.dates as string[])[0]); // 2026-02-15
+  const TOURN_DATE = new Date(NORM_BASE.dates[0]);
+
+  /* Tournament dates in DD-MM-YYYY format (for matching player rounds) */
+  const tournDatesDD = useMemo(() =>
+    new Set(NORM_BASE.dates.map(d => isoToDD(d))),
+    [],
+  );
 
   useEffect(() => {
-    if (!unlocked || holeData.size > 0) return;
+    if (!unlocked || Object.keys(holeDataByDay).length > 0) return;
     setLoading(true);
     let count = 0;
 
     const loadAll = async () => {
-      const hMap = new Map<string, PlayerHoles>();
       const fMap = new Map<string, PlayerForm>();
+      const liveRounds: LiveRound[] = [];
 
       for (let i = 0; i < fedList.length; i += 4) {
         const batch = fedList.slice(i, i + 4);
@@ -1077,12 +508,7 @@ export default function TorneioPage({ players, onSelectPlayer }: { players: Play
           const drawEntry = ALL_DRAW.find(dd => dd.fed === fed);
           if (!drawEntry) return;
 
-          /* ── Extract ALL recent rounds (pre-tournament) ── */
-          /* Pipeline date format is DD-MM-YYYY, tournament dates are YYYY-MM-DD */
-          const tournDatesDD = new Set((tournData.dates as string[]).map(d => {
-            const [y, m, dd] = d.split("-");
-            return `${dd}-${m}-${y}`;
-          }));
+          /* ── Extract ALL rounds ── */
           const allRounds: RecentRound[] = [];
           for (const c of data.DATA) {
             for (const r of c.rounds) {
@@ -1090,7 +516,7 @@ export default function TorneioPage({ players, onSelectPlayer }: { players: Play
               if (g == null || g <= 0 || r.holeCount !== 18) continue;
               const sd = typeof r.sd === "number" ? r.sd : null;
               allRounds.push({
-                date: r.date,           // DD-MM-YYYY from pipeline
+                date: r.date,
                 dateSort: r.dateSort,
                 course: c.course,
                 gross: g,
@@ -1099,80 +525,105 @@ export default function TorneioPage({ players, onSelectPlayer }: { players: Play
               });
             }
           }
-          allRounds.sort((a, b) => b.dateSort - a.dateSort); // newest first
+          allRounds.sort((a, b) => b.dateSort - a.dateSort);
 
-          /* Split: pre-tournament rounds vs tournament rounds */
+          /* ── Tournament rounds → LiveRound + holes ── */
+          for (const c of data.DATA) {
+            if (!isTournCourse(c.course, NORM_BASE)) continue;
+            for (const r of c.rounds) {
+              if (!tournDatesDD.has(r.date)) continue;
+              const g = typeof r.gross === "number" ? r.gross : null;
+              if (g == null || g <= 0 || r.holeCount !== 18) continue;
+
+              // Extract holes
+              const hs: HoleScores | undefined = data.HOLES[r.scoreId];
+              const holes18 = (hs?.g && hs.g.length >= 18) ? hs.g.slice(0, 18) : null;
+
+              liveRounds.push({
+                fed,
+                name: drawEntry.name,
+                club: drawEntry.club,
+                dateDD: r.date,
+                gross: g,
+                par: typeof r.par === "number" ? r.par : 72,
+                holes: holes18,
+                scoreId: r.scoreId,
+              });
+            }
+          }
+
+          /* ── Pre-tournament form (for AnalysisView) ── */
           const preTourn = allRounds.filter(r => !tournDatesDD.has(r.date));
           const recent = preTourn.slice(0, 15);
 
-          /* Days since last round */
           const lastDate = recent.length > 0 ? new Date(recent[0].dateSort) : null;
           const daysSince = lastDate ? Math.round((TOURN_DATE.getTime() - lastDate.getTime()) / 86400000) : null;
 
-          /* Average SD of last 5 */
           const recentSDs = recent.filter(r => r.sd != null).slice(0, 5).map(r => r.sd!);
           const avgSD5 = recentSDs.length > 0 ? recentSDs.reduce((a, b) => a + b, 0) / recentSDs.length : null;
 
-          /* D1 result */
-          const d1 = D1.find(dd => dd.fed === fed);
+          /* D1 result (from live rounds) */
+          const d1DateDD = NORM_BASE.catDates.wagr?.d1 ? isoToDD(NORM_BASE.catDates.wagr.d1) : null;
+          const d1Round = liveRounds.find(lr => lr.fed === fed && lr.dateDD === d1DateDD);
           const sex = drawEntry.sex || "M";
-          const d1SD = d1?.gross != null ? calcSD(d1.gross, drawEntry.teeColor, sex) : null;
-          const cat = playerCategory(fed, drawEntry.name);
+          const d1SD = d1Round ? calcDaySD(d1Round.gross, NORM_BASE, drawEntry.teeColor, sex) : null;
+          const pCat = catOf(NORM_BASE, fed, drawEntry.name);
 
-          /* Prediction: blend recent form + D1 (use player's actual tee ratings) */
+          /* Prediction */
           let predicted: number | null = null;
-          const { cr, slope: sl } = teeRating(drawEntry.teeColor, sex);
+          const tr = NORM_BASE.teeRatings[`${drawEntry.teeColor}_${sex}`] || NORM_BASE.teeRatings[`${drawEntry.teeColor}_M`] || { cr: 72, slope: 113 };
           if (avgSD5 != null && d1SD != null) {
-            const blendSD = d1SD * 0.4 + avgSD5 * 0.6;
-            predicted = Math.round(cr + blendSD * sl / 113);
+            predicted = Math.round(tr.cr + (d1SD * 0.4 + avgSD5 * 0.6) * tr.slope / 113);
           } else if (avgSD5 != null) {
-            predicted = Math.round(cr + avgSD5 * sl / 113);
-          } else if (d1?.gross != null) {
-            predicted = d1.gross;
+            predicted = Math.round(tr.cr + avgSD5 * tr.slope / 113);
+          } else if (d1Round) {
+            predicted = d1Round.gross;
           }
 
-          const form: PlayerForm = {
+          fMap.set(fed, {
             fed, name: drawEntry.name, club: drawEntry.club,
             hcpExact: drawEntry.hcpExact,
-            escalao: escalaoFromDob(birthYear(fed)),
+            escalao: escalaoFromYear(birthYear(NORM_BASE, fed)),
             teeColor: drawEntry.teeColor,
             recentRounds: recent,
             daysSinceLast: daysSince,
             avgSD5,
             trend: trendFromRounds(recent),
-            d1Gross: d1?.gross ?? null,
-            d1ToPar: d1?.toPar ?? null,
+            d1Gross: d1Round?.gross ?? null,
+            d1ToPar: d1Round ? d1Round.gross - (NORM_BASE.categories[0].courseData.par) : null,
             d1SD: d1SD != null ? Math.round(d1SD * 10) / 10 : null,
-            d1Pos: d1?.pos ?? null,
+            d1Pos: null, // filled after deriveResults
             predictedGross: predicted,
-            category: cat,
-          };
-          fMap.set(fed, form);
-
-          /* ── Tournament hole-by-hole (original logic) ── */
-          for (const c of data.DATA) {
-            const cLower = c.course.toLowerCase();
-            if (!cLower.includes("laguna") && !cLower.includes("vilamoura")) continue;
-            for (const r of c.rounds) {
-              if (!tournDatesDD.has(r.date)) continue;
-              const hs: HoleScores | undefined = data.HOLES[r.scoreId];
-              if (!hs || !hs.g || hs.g.length < 18) continue;
-              const holes18 = hs.g.slice(0, 18);
-              const holesGross = holes18.reduce((s, v) => s + (v ?? 0), 0);
-              const officialResult = D1.find(dd => dd.fed === fed);
-              if (officialResult && officialResult.gross != null && holesGross !== officialResult.gross) {
-                console.warn(`Scorecard mismatch for ${fed}: holes sum ${holesGross} vs official ${officialResult.gross}, skipping`);
-                continue;
-              }
-              hMap.set(fed, { fed, name: drawEntry.name, holes: holes18, gross: r.gross as number });
-            }
-          }
+            category: pCat,
+          });
 
           count++;
           setLoadCount(count);
         });
       }
-      setHoleData(hMap);
+
+      /* ── Derive live results from all collected rounds ── */
+      const { results: liveResults, holeDataByDay: hdbd } = deriveResults(NORM_BASE, liveRounds);
+
+      /* Update d1Pos in playerHistory from derived positions */
+      const wagrD1 = liveResults.wagr?.d1 || [];
+      for (const r of wagrD1) {
+        if (r.fed && fMap.has(r.fed)) {
+          const f = fMap.get(r.fed)!;
+          f.d1Pos = r.pos;
+          f.d1Gross = r.gross;
+          f.d1ToPar = r.toPar;
+        }
+      }
+
+      /* Create updated NORM with live results */
+      const updatedNorm: NormalizedTournament = {
+        ...NORM_BASE,
+        results: liveResults,
+      };
+
+      setLiveNorm(updatedNorm);
+      setHoleDataByDay(hdbd);
       setPlayerHistory(fMap);
       setLoading(false);
     };
@@ -1182,32 +633,35 @@ export default function TorneioPage({ players, onSelectPlayer }: { players: Play
 
   if (!unlocked) return <PasswordGate onUnlock={() => setUnlocked(true)} />;
 
+  /* Count total scorecards loaded */
+  const totalScorecards = Object.values(holeDataByDay).reduce((s, m) => s + m.size, 0);
+
   return (
     <div className="tourn-page">
       {/* Header */}
       <div className="tourn-header">
         <div className="tourn-header-top">
           <span className="tourn-pill-intl" style={{ fontSize: 9, padding: "2px 6px" }}>🌍 INTL</span>
-          <h2 className="tourn-title">{tournData.name}</h2>
+          <h2 className="tourn-title">{NORM_BASE.name}</h2>
         </div>
         <div className="tourn-header-info">
-          <span>📍 {tournData.course}</span>
-          <span>📅 {tournData.dates.join(" → ")}</span>
+          <span>📍 {NORM_BASE.course}</span>
+          <span>📅 {NORM_BASE.dates.join(" → ")}</span>
           <span>👥 {ALL_DRAW.length} jogadores</span>
-          <span>🏌️ 3 dias (D1 ✅ · D2 hoje)</span>
+          <span>🏌️ {NORM_BASE.totalDays} dias</span>
           {loading && <span className="tourn-loading">⏳ Scorecards {loadCount}/{fedList.length}</span>}
-          {!loading && holeData.size > 0 && <span className="tourn-loaded">✓ {holeData.size + Object.keys(MANUAL_HOLES).length + Object.keys(MANUAL_HOLES_SUB14).length + Object.keys(MANUAL_HOLES_SUB12).length} scorecards</span>}
+          {!loading && totalScorecards > 0 && <span className="tourn-loaded">✓ {totalScorecards} scorecards</span>}
         </div>
-        {/* External links – grouped by category */}
-        {tournData.links && (() => {
-          const links = tournData.links as Record<string, string>;
+        {/* External links */}
+        {NORM_BASE.links && (() => {
+          const links = NORM_BASE.links;
           const groups: { label: string; keys: string[]; labels: Record<string, string> }[] = [
-            { label: "WAGR", keys: ["draw_wagr_r1","draw_wagr_r2","draw_wagr_r3","results_wagr"],
-              labels: { draw_wagr_r1:"Draw R1", draw_wagr_r2:"Draw R2", draw_wagr_r3:"Draw R3", results_wagr:"Results" }},
-            { label: "Sub-14", keys: ["draw_sub14","draw_sub14_r2","results_sub14"],
-              labels: { draw_sub14:"Draw R1", draw_sub14_r2:"Draw R2", results_sub14:"Results" }},
-            { label: "Sub-12", keys: ["draw_sub12","draw_sub12_r2","results_sub12"],
-              labels: { draw_sub12:"Draw R1", draw_sub12_r2:"Draw R2", results_sub12:"Results" }},
+            { label: "WAGR", keys: ["draw_wagr_r1", "draw_wagr_r2", "draw_wagr_r3", "results_wagr"],
+              labels: { draw_wagr_r1: "Draw R1", draw_wagr_r2: "Draw R2", draw_wagr_r3: "Draw R3", results_wagr: "Results" }},
+            { label: "Sub-14", keys: ["draw_sub14", "draw_sub14_r2", "results_sub14"],
+              labels: { draw_sub14: "Draw R1", draw_sub14_r2: "Draw R2", results_sub14: "Results" }},
+            { label: "Sub-12", keys: ["draw_sub12", "draw_sub12_r2", "results_sub12"],
+              labels: { draw_sub12: "Draw R1", draw_sub12_r2: "Draw R2", results_sub12: "Results" }},
           ];
           return (
             <div className="tourn-ext-links">
@@ -1245,8 +699,8 @@ export default function TorneioPage({ players, onSelectPlayer }: { players: Play
       </div>
 
       {view === "draw" && <DrawView players={players} onSelectPlayer={onSelectPlayer} />}
-      {view === "leaderboard" && <LeaderboardView players={players} holeData={holeData} onSelectPlayer={onSelectPlayer} />}
-      {view === "analysis" && <AnalysisView players={players} holeData={holeData} playerHistory={playerHistory} onSelectPlayer={onSelectPlayer} />}
+      {view === "leaderboard" && <LeaderboardView norm={liveNorm} players={players} holeDataByDay={holeDataByDay} onSelectPlayer={onSelectPlayer} />}
+      {view === "analysis" && <AnalysisView norm={liveNorm} players={players} holeDataByDay={holeDataByDay} playerHistory={playerHistory} onSelectPlayer={onSelectPlayer} />}
     </div>
   );
 }

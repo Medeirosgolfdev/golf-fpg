@@ -15,6 +15,7 @@ import {
 import PillBadge from "../ui/PillBadge";
 import TeePill from "../ui/TeePill";
 import TeeDate from "../ui/TeeDate";
+import { loadPlayerStats, type PlayerStatsDb } from "../data/playerStatsTypes";
 
 /* ══════════════════════════════════════════
    Utility functions (port from client JS)
@@ -22,7 +23,8 @@ import TeeDate from "../ui/TeeDate";
 
 type Props = { players: PlayersDb; courses?: Course[] };
 type SexFilter = "ALL" | "M" | "F";
-type SortKey = "name" | "hcp" | "club" | "escalao";
+type SortKey = "name" | "hcp" | "club" | "escalao" | "ranking";
+type TrendFilter = "ALL" | "up" | "stable" | "down";
 type ViewKey = "by_course" | "by_course_analysis" | "by_date" | "by_tournament" | "analysis";
 type CourseSort = "last_desc" | "count_desc" | "name_asc";
 
@@ -2833,6 +2835,14 @@ export default function JogadoresPage({ players, courses }: Props) {
   const [selectedFed, setSelectedFed] = useState<string | null>(urlFed ?? null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [playerMeta, setPlayerMeta] = useState<PlayerPageData["META"] | null>(null);
+  const [playerStats, setPlayerStats] = useState<PlayerStatsDb>({});
+  const [trendFilter, setTrendFilter] = useState<TrendFilter>("ALL");
+  const [rankingMode, setRankingMode] = useState(false);
+
+  // Load player stats on mount
+  useEffect(() => {
+    loadPlayerStats().then(setPlayerStats);
+  }, []);
 
   /* Ref para distinguir navegação interna (selectPlayer) de externa (URL directo) */
   const internalNav = React.useRef(false);
@@ -2896,16 +2906,39 @@ export default function JogadoresPage({ players, courses }: Props) {
     if (sexFilter !== "ALL") list = list.filter(p => p.sex === sexFilter);
     if (escalaoFilter !== "ALL") list = list.filter(p => p.escalao === escalaoFilter);
     if (regionFilter !== "ALL") list = list.filter(p => p.region === regionFilter);
+    // Trend filter
+    if (trendFilter !== "ALL") {
+      list = list.filter(p => {
+        const st = playerStats[p.fed];
+        return st?.hcpTrend === trendFilter;
+      });
+    }
     return [...list].sort((a, b) => {
       switch (sortKey) {
         case "name": return a.name.localeCompare(b.name, "pt");
         case "hcp": return (a.hcp ?? 999) - (b.hcp ?? 999);
         case "club": return clubShort(a).localeCompare(clubShort(b), "pt");
         case "escalao": return a.escalao.localeCompare(b.escalao, "pt");
+        case "ranking": {
+          const aSD = playerStats[a.fed]?.avgSD8 ?? 999;
+          const bSD = playerStats[b.fed]?.avgSD8 ?? 999;
+          return aSD - bSD;
+        }
         default: return 0;
       }
     });
-  }, [allPlayers, q, sexFilter, escalaoFilter, regionFilter, sortKey]);
+  }, [allPlayers, q, sexFilter, escalaoFilter, regionFilter, sortKey, playerStats, trendFilter]);
+
+  // Ranking positions based on avgSD8 (global, not filtered)
+  const rankings = useMemo(() => {
+    if (Object.keys(playerStats).length === 0) return new Map<string, number>();
+    const withSD = allPlayers
+      .filter(p => playerStats[p.fed]?.avgSD8 != null)
+      .sort((a, b) => playerStats[a.fed]!.avgSD8! - playerStats[b.fed]!.avgSD8!);
+    const map = new Map<string, number>();
+    withSD.forEach((p, i) => map.set(p.fed, i + 1));
+    return map;
+  }, [allPlayers, playerStats]);
 
   useEffect(() => {
     if (!selectedFed && filtered.length > 0) selectPlayer(filtered[0].fed);
@@ -2940,6 +2973,23 @@ export default function JogadoresPage({ players, courses }: Props) {
             <option value="name">Nome</option><option value="hcp">Handicap</option>
             <option value="club">Clube</option><option value="escalao">Escalão</option>
           </select>
+          <div className="filter-divider" />
+          <select className="select" value={trendFilter}
+            onChange={e => setTrendFilter(e.target.value as TrendFilter)}
+            style={{ fontSize: 11, minWidth: 85 }}>
+            <option value="ALL">Tendência</option>
+            <option value="up">📈 Em subida</option>
+            <option value="stable">➡️ Estável</option>
+            <option value="down">📉 Em descida</option>
+          </select>
+          <button className={`ranking-toggle${rankingMode ? " active" : ""}`}
+            onClick={() => {
+              setRankingMode(v => !v);
+              if (!rankingMode) setSortKey("ranking");
+              else setSortKey("name");
+            }}>
+            🏆 Ranking
+          </button>
         </div>
         <div className="toolbar-right">
           <div className="chip">{filtered.length} jogadores</div>
@@ -2950,16 +3000,33 @@ export default function JogadoresPage({ players, courses }: Props) {
         <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`}>
           {filtered.map(p => {
             const isActive = selected?.fed === p.fed;
-            // For selected player, prefer loaded META over stale players.json
             const displayClub = (isActive && playerMeta?.club) ? playerMeta.club : clubShort(p);
             const displayEscalao = (isActive && playerMeta?.escalao) ? playerMeta.escalao : p.escalao;
             const displayHcp = (isActive) ? (playerMeta?.latestHcp ?? null) : p.hcp;
+            const st = playerStats[p.fed];
+            const rank = rankings.get(p.fed);
+            const alert = st?.formAlert;
+
             return (
               <button key={p.fed} className={`course-item ${isActive ? "active" : ""}`}
                 onClick={() => selectPlayer(p.fed)}>
-                <div className="course-item-name">
-                  {p.name}
-                  <span className={`jog-sex-inline jog-sex-${p.sex}`}>{p.sex}</span>
+                <div className="course-item-name" style={{ display: "flex", alignItems: "center" }}>
+                  {rankingMode && rank != null && (
+                    <span className={`sidebar-rank ${rank <= 3 ? "sidebar-rank-top3" : rank <= 10 ? "sidebar-rank-top10" : "sidebar-rank-rest"}`}>
+                      {rank}
+                    </span>
+                  )}
+                  <span style={{ flex: 1 }}>
+                    {p.name}
+                    <span className={`jog-sex-inline jog-sex-${p.sex}`}>{p.sex}</span>
+                  </span>
+                  {alert === "hot" && <span className="sidebar-alert">🔥</span>}
+                  {alert === "cold" && <span className="sidebar-alert">❄️</span>}
+                  {rankingMode && st?.avgSD8 != null && (
+                    <span className={`sidebar-sd ${st.avgSD8 <= 5 ? "sidebar-sd-good" : st.avgSD8 <= 15 ? "sidebar-sd-ok" : "sidebar-sd-high"}`}>
+                      {st.avgSD8.toFixed(1)}
+                    </span>
+                  )}
                 </div>
                 <div className="course-item-meta">
                   {[displayClub, displayEscalao, ...(p.tags?.filter(t => t !== "no-priority") || [])].filter(Boolean).join(" · ") || `#${p.fed}`}

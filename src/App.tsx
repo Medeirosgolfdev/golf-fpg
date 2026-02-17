@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Routes, Route, Navigate, NavLink, useNavigate } from "react-router-dom";
 import "./App.css";
+import "./Comparar.css";
 import { loadMasterData, loadPlayers, loadAwayCourses } from "./data/loader";
 import { initCourseColorCache } from "./utils/teeColors";
 import { extractAwayCourses } from "./data/melhoriasLoader";
@@ -10,6 +11,7 @@ import CamposPage from "./pages/CamposPage";
 import JogadoresPage from "./pages/JogadoresPage";
 import SimuladorPage from "./pages/SimuladorPage";
 import TorneioPage from "./pages/TorneioPage";
+import CompararPage from "./pages/CompararPage";
 import golfBallSvg from "./assets/golf-ball.svg";
 
 import melhoriasJson from "../melhorias.json";
@@ -75,6 +77,9 @@ export default function App() {
           <NavLink to="/jogadores" className={({ isActive }) => `nav-btn ${isActive ? "active" : ""}`}>
             Jogadores
           </NavLink>
+          <NavLink to="/comparar" className={({ isActive }) => `nav-btn ${isActive ? "active" : ""}`}>
+            ⚡ Comparar
+          </NavLink>
           <NavLink to="/simulador" className={({ isActive }) => `nav-btn ${isActive ? "active" : ""}`}>
             Simulador
           </NavLink>
@@ -118,6 +123,7 @@ export default function App() {
           <Routes>
             <Route path="/campos/:courseKey?" element={<CamposPage courses={simCourses} />} />
             <Route path="/jogadores/:fed?" element={<JogadoresPage players={status.players} courses={simCourses} />} />
+            <Route path="/comparar" element={<CompararPage players={status.players} />} />
             <Route path="/simulador" element={<SimuladorPage courses={simCourses} />} />
             <Route path="/torneio" element={<TorneioPage players={status.players} onSelectPlayer={goToPlayer} />} />
             <Route path="*" element={<Navigate to="/jogadores" replace />} />
