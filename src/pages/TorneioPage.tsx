@@ -11,6 +11,7 @@
 import { useEffect, useMemo, useState } from "react";
 import type { PlayersDb } from "../data/types";
 import { loadPlayerData, type PlayerPageData, type HoleScores } from "../data/playerDataLoader";
+import { deepFixMojibake } from "../utils/fixEncoding";
 import TeePill from "../ui/TeePill";
 import LeaderboardView from "./LeaderboardView";
 import {
@@ -505,6 +506,7 @@ export default function TorneioPage({ players, onSelectPlayer }: { players: Play
           const fed = batch[j];
           if (res.status !== "fulfilled") return;
           const data: PlayerPageData = res.value;
+          deepFixMojibake(data);
           const drawEntry = ALL_DRAW.find(dd => dd.fed === fed);
           if (!drawEntry) return;
 

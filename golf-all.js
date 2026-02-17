@@ -1,4 +1,4 @@
-// golf-all.js — Pipeline completo de scorecards FPG
+﻿// golf-all.js — Pipeline completo de scorecards FPG
 // Combina: login.js + download-fpg.js + download-scorecards.js + make-scorecards-ui.js
 //
 // Uso:
@@ -600,7 +600,11 @@ function syncPlayersJson(fedList) {
 
   if (updated > 0) {
     fs.writeFileSync(pPath, JSON.stringify(playersDb, null, 2), "utf-8");
-    console.log(`  ✓ players.json actualizado (${updated} jogador(es))`);
+    // Copiar para public/data/ (servido ao frontend)
+    const publicPath = path.join(process.cwd(), "public", "data", "players.json");
+    fs.mkdirSync(path.dirname(publicPath), { recursive: true });
+    fs.copyFileSync(pPath, publicPath);
+    console.log(`  ✓ players.json actualizado (${updated} jogador(es)) → public/data/`);
   }
 }
 

@@ -21,6 +21,7 @@ import { loadPlayerStats, type PlayerStatsDb } from "../data/playerStatsTypes";
 import { norm } from "../utils/format";
 import { clubShort, hcpDisplay } from "../utils/playerUtils";
 import { numSafe } from "../utils/mathUtils";
+import { deepFixMojibake } from "../utils/fixEncoding";
 
 const COLORS = ["#16a34a", "#2563eb", "#dc2626", "#d97706"];
 const COLORS_LIGHT = ["#dcfce7", "#dbeafe", "#fee2e2", "#fef3c7"];
@@ -472,7 +473,7 @@ export default function CompararPage({ players }: { players: PlayersDb }) {
     const player = players[fed]; if (!player) return;
     setSlots(prev => [...prev, { fed, player, data: null, loading: true, error: null }]);
     loadPlayerData(fed)
-      .then(data => setSlots(prev => prev.map(s => s.fed === fed ? { ...s, data, loading: false } : s)))
+      .then(data => { deepFixMojibake(data); setSlots(prev => prev.map(s => s.fed === fed ? { ...s, data, loading: false } : s)); })
       .catch(err => setSlots(prev => prev.map(s => s.fed === fed ? { ...s, loading: false, error: err?.message || "Erro" } : s)));
   };
   const removePlayer = (fed: string) => setSlots(prev => prev.filter(s => s.fed !== fed));

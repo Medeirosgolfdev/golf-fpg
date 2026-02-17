@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { Routes, Route, Navigate, NavLink, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./App.css";
-import "./Comparar.css";
 import { loadMasterData, loadPlayers, loadAwayCourses } from "./data/loader";
 import { initCourseColorCache } from "./utils/teeColors";
 import { extractAwayCourses } from "./data/melhoriasLoader";
@@ -9,13 +8,16 @@ import { getExtraCourses } from "./data/extraCourses";
 import type { Course, MasterData, PlayersDb } from "./data/types";
 import CamposPage from "./pages/CamposPage";
 import JogadoresPage from "./pages/JogadoresPage";
-import CompararPage from "./pages/CompararPage";
 import SimuladorPage from "./pages/SimuladorPage";
 import TorneioPage from "./pages/TorneioPage";
 import CalendarioPage from "./pages/CalendarioPage";
+import CompararPage from "./pages/CompararPage";
 import golfBallSvg from "./assets/golf-ball.svg";
 
+import { deepFixMojibake } from "./utils/fixEncoding";
 import melhoriasJson from "../melhorias.json";
+
+type Tab = "campos" | "jogadores" | "comparar" | "simulador" | "calendario" | "torneio";
 
 type MelhoriasJson = Record<string, Record<string, unknown>>;
 
@@ -26,10 +28,30 @@ type Status =
 
 export default function App() {
   const [status, setStatus] = useState<Status>({ kind: "loading" });
+  const [tab, setTab] = useState<Tab>("jogadores");
+  const [navigateToFed, setNavigateToFed] = useState<string | null>(null);
+  const location = useLocation();
   const navigate = useNavigate();
 
+  const goToTab = (t: Tab) => {
+    setTab(t);
+    navigate(`/${t}`, { replace: true });
+  };
+
+  /* Sync URL → tab: quando React Router navega (ex: Link), actualiza o tab */
+  useEffect(() => {
+    const path = location.pathname;
+    if (path.startsWith("/campos")) setTab("campos");
+    else if (path.startsWith("/jogadores")) setTab("jogadores");
+    else if (path.startsWith("/comparar")) setTab("comparar");
+    else if (path.startsWith("/simulador") || path.startsWith("/calculador")) setTab("simulador");
+    else if (path.startsWith("/torneio")) setTab("torneio");
+    else if (path.startsWith("/calendario")) setTab("calendario");
+  }, [location.pathname]);
+
   const goToPlayer = (fed: string) => {
-    navigate(`/jogadores/${fed}`);
+    setNavigateToFed(fed);
+    goToTab("jogadores");
   };
 
   useEffect(() => {
@@ -37,6 +59,7 @@ export default function App() {
     Promise.all([loadMasterData(), loadPlayers(), loadAwayCourses()])
       .then(([data, players, awayCourses]) => {
         if (!alive) return;
+        deepFixMojibake(players);
         initCourseColorCache([...data.courses, ...awayCourses]);
         setStatus({ kind: "ready", data, players, awayCourses });
       })
@@ -54,6 +77,7 @@ export default function App() {
     const melhoriasAway = extractAwayCourses(melhoriasJson as MelhoriasJson);
     const extra = getExtraCourses();
 
+    // Merge com dedup por courseKey (prioridade: pipeline > melhorias > extra)
     const map = new Map<string, Course>();
     for (const c of fpg) map.set(c.courseKey, c);
     for (const c of pipelineAway) if (!map.has(c.courseKey)) map.set(c.courseKey, c);
@@ -72,24 +96,43 @@ export default function App() {
         </div>
 
         <nav className="nav">
-          <NavLink to="/campos" className={({ isActive }) => `nav-btn ${isActive ? "active" : ""}`}>
+          <button
+            className={`nav-btn ${tab === "campos" ? "active" : ""}`}
+            onClick={() => goToTab("campos")}
+          >
             Campos
-          </NavLink>
-          <NavLink to="/jogadores" className={({ isActive }) => `nav-btn ${isActive ? "active" : ""}`}>
+          </button>
+          <button
+            className={`nav-btn ${tab === "simulador" ? "active" : ""}`}
+            onClick={() => goToTab("simulador")}
+          >
+            Calculadora
+          </button>
+          <button
+            className={`nav-btn ${tab === "jogadores" ? "active" : ""}`}
+            onClick={() => goToTab("jogadores")}
+          >
             Jogadores
-          </NavLink>
-          <NavLink to="/comparar" className={({ isActive }) => `nav-btn ${isActive ? "active" : ""}`}>
-            ⚡ Comparar
-          </NavLink>
-          <NavLink to="/simulador" className={({ isActive }) => `nav-btn ${isActive ? "active" : ""}`}>
-            Simulador
-          </NavLink>
-          <NavLink to="/torneio" className={({ isActive }) => `nav-btn ${isActive ? "active" : ""}`} style={{ position: "relative" }}>
-            🔑 Torneio
-          </NavLink>
-          <NavLink to="/calendario" className={({ isActive }) => `nav-btn ${isActive ? "active" : ""}`}>
-            📅 Calendário
-          </NavLink>
+          </button>
+          <button
+            className={`nav-btn ${tab === "comparar" ? "active" : ""}`}
+            onClick={() => goToTab("comparar")}
+          >
+            Comparar
+          </button>
+          <button
+            className={`nav-btn ${tab === "torneio" ? "active" : ""}`}
+            onClick={() => goToTab("torneio")}
+            style={{ position: "relative" }}
+          >
+            🔒 Torneio
+          </button>
+          <button
+            className={`nav-btn ${tab === "calendario" ? "active" : ""}`}
+            onClick={() => goToTab("calendario")}
+          >
+            Calendário
+          </button>
         </nav>
 
         {status.kind === "ready" && (
@@ -123,16 +166,28 @@ export default function App() {
           </div>
         )}
 
-        {status.kind === "ready" && (
-          <Routes>
-            <Route path="/campos/:courseKey?" element={<CamposPage courses={simCourses} />} />
-            <Route path="/jogadores/:fed?" element={<JogadoresPage players={status.players} courses={simCourses} />} />
-            <Route path="/comparar" element={<CompararPage players={status.players} />} />
-            <Route path="/simulador" element={<SimuladorPage courses={simCourses} />} />
-            <Route path="/torneio" element={<TorneioPage players={status.players} onSelectPlayer={goToPlayer} />} />
-            <Route path="/calendario" element={<CalendarioPage />} />
-            <Route path="*" element={<Navigate to="/jogadores" replace />} />
-          </Routes>
+        {status.kind === "ready" && tab === "campos" && (
+          <CamposPage courses={simCourses} />
+        )}
+
+        {status.kind === "ready" && tab === "jogadores" && (
+          <JogadoresPage players={status.players} courses={simCourses} initialFed={navigateToFed} onFedConsumed={() => setNavigateToFed(null)} />
+        )}
+
+        {status.kind === "ready" && tab === "simulador" && (
+          <SimuladorPage courses={simCourses} />
+        )}
+
+        {status.kind === "ready" && tab === "comparar" && (
+          <CompararPage players={status.players} />
+        )}
+
+        {status.kind === "ready" && tab === "calendario" && (
+          <CalendarioPage />
+        )}
+
+        {status.kind === "ready" && tab === "torneio" && (
+          <TorneioPage players={status.players} onSelectPlayer={goToPlayer} />
         )}
       </main>
     </div>

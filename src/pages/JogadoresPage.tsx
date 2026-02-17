@@ -15,7 +15,7 @@ import {
 import PillBadge from "../ui/PillBadge";
 import TeePill from "../ui/TeePill";
 import TeeDate from "../ui/TeeDate";
-import { loadPlayerStats, type PlayerStatsDb } from "../data/playerStatsTypes";
+import { deepFixMojibake } from "../utils/fixEncoding";
 
 /* ────────────────────────────────────────────────────────────────────────────────────
    Utility functions (port from client JS)
@@ -24,7 +24,6 @@ import { loadPlayerStats, type PlayerStatsDb } from "../data/playerStatsTypes";
 type Props = { players: PlayersDb; courses?: Course[] };
 type SexFilter = "ALL" | "M" | "F";
 type SortKey = "name" | "hcp" | "club" | "escalao" | "ranking";
-type TrendFilter = "ALL" | "up" | "stable" | "down";
 type ViewKey = "by_course" | "by_course_analysis" | "by_date" | "by_tournament" | "analysis";
 type CourseSort = "last_desc" | "count_desc" | "name_asc";
 
@@ -137,9 +136,11 @@ function CourseLink({ name }: { name: string }) {
    By Date View
    ──────────────────────────────────────────────────────────────────────────────────────── */
 
-function ByDateView({ data, search, onScoreClick }: {
-  data: PlayerPageData; search: string; onScoreClick: (id: string) => void;
+function ByDateView({ data, search }: {
+  data: PlayerPageData; search: string;
 }) {
+  const [openScorecardId, setOpenScorecardId] = useState<string | null>(null);
+
   const all = useMemo(() => {
     const term = norm(search);
     let rounds: (RoundData & { course: string })[] = [];
@@ -173,25 +174,56 @@ function ByDateView({ data, search, onScoreClick }: {
           </tr>
         </thead>
         <tbody>
-          {all.map(r => (
-            <tr key={r.scoreId} className="roundRow" onClick={() => r.hasCard && onScoreClick(r.scoreId)}>
-              <td>
-                {r.hasCard
-                  ? <a href="#" onClick={e => { e.preventDefault(); onScoreClick(r.scoreId); }}><TeeDate date={r.date} tee={r.tee || ""} /></a>
-                  : <TeeDate date={r.date} tee={r.tee || ""} />}
-                <div className="muted" style={{ fontSize: 10 }}>#{r.scoreId}</div>
-              </td>
-              <td><CourseLink name={r.course} /></td>
-              <td><EventInfo name={r.eventName} origin={r.scoreOrigin} pill={r._pill} links={r._links} /></td>
-              <td className="r"><HoleBadge hc={r.holeCount} /></td>
-              <td className="r">{r.hi ?? ""}</td>
-              <td><TeePill name={r.tee || ""} /></td>
-              <td className="r muted">{r.meters ? `${r.meters}m` : ""}</td>
-              <td className="r"><GrossCell gross={r.gross} par={r.par} /></td>
-              <td className="r">{fmtStb(r.stb, r.holeCount)}</td>
-              <td className="r"><SdCell round={r} /></td>
-            </tr>
-          ))}
+          {all.map(r => {
+            const isOpen = openScorecardId === r.scoreId;
+            const toggle = () => setOpenScorecardId(isOpen ? null : r.scoreId);
+            const holes = data.HOLES[String(r.scoreId)];
+            const courseKey = norm(r.course);
+            const teeKey = r.teeKey || normKey(r.tee || "");
+            const ecEntry = data.ECDET?.[courseKey]?.[teeKey] || null;
+
+            return (
+              <React.Fragment key={r.scoreId}>
+                <tr className={`roundRow${isOpen ? " pa-row-open" : ""}`}
+                  onClick={() => r.hasCard && toggle()}
+                  style={{ cursor: r.hasCard ? "pointer" : "default" }}>
+                  <td>
+                    {r.hasCard
+                      ? <a href="#" onClick={e => { e.preventDefault(); toggle(); }}><TeeDate date={r.date} tee={r.tee || ""} /></a>
+                      : <TeeDate date={r.date} tee={r.tee || ""} />}
+                    <div className="muted" style={{ fontSize: 10 }}>#{r.scoreId}</div>
+                  </td>
+                  <td><CourseLink name={r.course} /></td>
+                  <td><EventInfo name={r.eventName} origin={r.scoreOrigin} pill={r._pill} links={r._links} /></td>
+                  <td className="r"><HoleBadge hc={r.holeCount} /></td>
+                  <td className="r">{r.hi ?? ""}</td>
+                  <td><TeePill name={r.tee || ""} /></td>
+                  <td className="r muted">{r.meters ? `${r.meters}m` : ""}</td>
+                  <td className="r"><GrossCell gross={r.gross} par={r.par} /></td>
+                  <td className="r">{fmtStb(r.stb, r.holeCount)}</td>
+                  <td className="r"><SdCell round={r} /></td>
+                </tr>
+                {isOpen && holes && (
+                  <tr>
+                    <td colSpan={10} style={{ padding: 0, background: "#fafafa" }}>
+                      <div className="scHost" style={scHostStyle}>
+                        <ScorecardTable
+                          holes={holes}
+                          courseName={r.course}
+                          date={r.date}
+                          tee={r.tee || ""}
+                          hi={r.hi}
+                          links={r._links}
+                          pill={r._pill}
+                          eclecticEntry={ecEntry}
+                        />
+                      </div>
+                    </td>
+                  </tr>
+                )}
+              </React.Fragment>
+            );
+          })}
         </tbody>
       </table>
       {all.length === 0 && <div className="muted" style={{ padding: 16 }}>Nenhuma ronda encontrada</div>}
@@ -1107,7 +1139,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
 
   return (
     <div className="holeAnalysis">
-      <div className="haTitle">ðŸ“Š Análise de Performance <span className="muted" style={{ fontSize: 11 }}>({stats.nRounds} rondas)</span></div>
+      <div className="haTitle">📊 Análise de Performance <span className="muted" style={{ fontSize: 11 }}>({stats.nRounds} rondas)</span></div>
 
       {/* Diagnosis cards */}
       <div className="haDiag">
@@ -1467,7 +1499,7 @@ function AnalysisView({ data }: { data: PlayerPageData }) {
           <KPICard title="Best 20% (média)" val={best20?.toFixed(1) ?? null}
             sub={`Gross 18B (${n20} de ${sorted.length})`}
             tip="Média dos melhores 20% dos resultados gross." />
-          <KPICard title="Consistência (Ïƒ)" val={kpiSigma?.toFixed(2) ?? null}
+          <KPICard title="Consistência (σ)" val={kpiSigma?.toFixed(2) ?? null}
             sub={`Gross 18B (${sorted.length} rondas)`}
             tip="Desvio padrão do gross. Menor = mais consistente." />
         </div>
@@ -1659,7 +1691,7 @@ function RecordsCard({ rounds, period, setPeriod }: {
       </div>
       {!records ? <div className="muted">Sem dados</div> : (
         <div>
-          <RecLine label="ðŸ─† Melhor Gross" r={records.bestGross} field="gross" />
+          <RecLine label="🏆 Melhor Gross" r={records.bestGross} field="gross" />
           <RecLine label="📉 Melhor SD" r={records.bestSd} field="sd" />
           <RecLine label="⭐ Melhor Stb" r={records.bestStb} field="stb" />
           <RecLine label="💀 Pior Gross" r={records.worstGross} field="gross" />
@@ -1840,7 +1872,7 @@ function CrossAnalysis({ data }: { data: PlayerPageData }) {
 
   return (
     <div className="an-card" style={{ marginTop: 24 }}>
-      <div className="an-k-title" style={{ fontSize: 18, marginBottom: 16 }}>ðŸ“Š Cross-Análise por Escalão</div>
+      <div className="an-k-title" style={{ fontSize: 18, marginBottom: 16 }}>📊 Cross-Análise por Escalão</div>
       {/* Tabs */}
       <div className="cross-tabs" style={{ display: "flex", gap: 4, flexWrap: "wrap", marginBottom: 12 }}>
         {escalaos.map(esc => (
@@ -2083,7 +2115,7 @@ function CommonCourses({ players, currentFed, escName }: {
               <div style={{ display: "flex", flexWrap: "wrap", gap: "2px 10px", fontSize: 11, marginTop: 4 }}>
                 {cc.players.map((mp, mr) => {
                   const isCur = mp.fed === currentFed;
-                  const medal = mr === 0 ? "ðŸ¥‡" : mr === 1 ? "ðŸ¥ˆ" : mr === 2 ? "ðŸ¥‰" : `${mr + 1}º`;
+                  const medal = mr === 0 ? "🥇" : mr === 1 ? "🥈" : mr === 2 ? "🥉" : `${mr + 1}º`;
                   return (
                     <span key={mp.fed} style={{ fontWeight: isCur ? 700 : 400, color: isCur ? "#16a34a" : undefined }}>
                       {medal} {mp.name.split(" ")[0]} <b>{mp.best ?? "–"}</b>
@@ -2731,7 +2763,7 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
     setCourseSearch("");
 
     loadPlayerData(fedId)
-      .then(d => { if (!cancelled) { setData(d); setLoading(false); onMetaLoaded?.(d.META); } })
+      .then(d => { if (!cancelled) { deepFixMojibake(d); setData(d); setLoading(false); onMetaLoaded?.(d.META); } })
       .catch(e => { if (!cancelled) { setError(e.message); setLoading(false); } });
 
     return () => { cancelled = true; };
@@ -2804,8 +2836,7 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
                 isAnalysis={view === "by_course_analysis"} />
             )}
             {view === "by_date" && (
-              <ByDateView data={data} search={courseSearch}
-                onScoreClick={(id) => { /* TODO: open scorecard */ }} />
+              <ByDateView data={data} search={courseSearch} />
             )}
             {view === "by_tournament" && (
               <ByTournamentView data={data} search={courseSearch} />
@@ -2835,14 +2866,8 @@ export default function JogadoresPage({ players, courses }: Props) {
   const [selectedFed, setSelectedFed] = useState<string | null>(urlFed ?? null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [playerMeta, setPlayerMeta] = useState<PlayerPageData["META"] | null>(null);
-  const [playerStats, setPlayerStats] = useState<PlayerStatsDb>({});
-  const [trendFilter, setTrendFilter] = useState<TrendFilter>("ALL");
-  const [rankingMode, setRankingMode] = useState(false);
+  const rankingMode = sortKey === "ranking";
 
-  // Load player stats on mount
-  useEffect(() => {
-    loadPlayerStats().then(setPlayerStats);
-  }, []);
 
   /* Ref para distinguir navegação interna (selectPlayer) de externa (URL directo) */
   const internalNav = React.useRef(false);
@@ -2940,13 +2965,6 @@ export default function JogadoresPage({ players, courses }: Props) {
     if (sexFilter !== "ALL") list = list.filter(p => p.sex === sexFilter);
     if (escalaoFilter.size > 0) list = list.filter(p => escalaoFilter.has(p.escalao));
     if (regionFilter !== "ALL") list = list.filter(p => p.region === regionFilter);
-    // Trend filter
-    if (trendFilter !== "ALL") {
-      list = list.filter(p => {
-        const st = playerStats[p.fed];
-        return st?.hcpTrend === trendFilter;
-      });
-    }
     return [...list].sort((a, b) => {
       switch (sortKey) {
         case "name": return a.name.localeCompare(b.name, "pt");
@@ -2954,25 +2972,22 @@ export default function JogadoresPage({ players, courses }: Props) {
         case "club": return clubShort(a).localeCompare(clubShort(b), "pt");
         case "escalao": return a.escalao.localeCompare(b.escalao, "pt");
         case "ranking": {
-          const aSD = playerStats[a.fed]?.avgSD8 ?? 999;
-          const bSD = playerStats[b.fed]?.avgSD8 ?? 999;
-          return aSD - bSD;
+          return (a.hcp ?? 999) - (b.hcp ?? 999);
         }
         default: return 0;
       }
     });
-  }, [allPlayers, q, sexFilter, escalaoFilter, regionFilter, sortKey, playerStats, trendFilter]);
+  }, [allPlayers, q, sexFilter, escalaoFilter, regionFilter, sortKey]);
 
-  // Ranking positions based on avgSD8 (global, not filtered)
+  // Ranking positions based on HCP (global, not filtered)
   const rankings = useMemo(() => {
-    if (Object.keys(playerStats).length === 0) return new Map<string, number>();
-    const withSD = allPlayers
-      .filter(p => playerStats[p.fed]?.avgSD8 != null)
-      .sort((a, b) => playerStats[a.fed]!.avgSD8! - playerStats[b.fed]!.avgSD8!);
+    const withHcp = allPlayers
+      .filter(p => p.hcp != null)
+      .sort((a, b) => (a.hcp ?? 999) - (b.hcp ?? 999));
     const map = new Map<string, number>();
-    withSD.forEach((p, i) => map.set(p.fed, i + 1));
+    withHcp.forEach((p, i) => map.set(p.fed, i + 1));
     return map;
-  }, [allPlayers, playerStats]);
+  }, [allPlayers]);
 
   useEffect(() => {
     if (!selectedFed && filtered.length > 0) selectPlayer(filtered[0].fed);
@@ -3022,23 +3037,8 @@ export default function JogadoresPage({ players, courses }: Props) {
           <select className="select" value={sortKey} onChange={e => setSortKey(e.target.value as SortKey)}>
             <option value="name">Nome</option><option value="hcp">Handicap</option>
             <option value="club">Clube</option><option value="escalao">Escalão</option>
+            <option value="ranking">🏆 Ranking</option>
           </select>
-          <div className="filter-divider" />
-          <select className="select" value={trendFilter}
-            onChange={e => setTrendFilter(e.target.value as TrendFilter)}>
-            <option value="ALL">Tendência</option>
-            <option value="up">ðŸ“ˆ Subida</option>
-            <option value="stable">➡️ Estável</option>
-            <option value="down">ðŸ“‰ Descida</option>
-          </select>
-          <button className={`ranking-toggle${rankingMode ? " active" : ""}`}
-            onClick={() => {
-              setRankingMode(v => !v);
-              if (!rankingMode) setSortKey("ranking");
-              else setSortKey("name");
-            }}>
-            ðŸ─† Ranking
-          </button>
         </div>
         <div className="toolbar-right">
           <div className="chip">{filtered.length} jogadores</div>
@@ -3052,9 +3052,7 @@ export default function JogadoresPage({ players, courses }: Props) {
             const displayClub = (isActive && playerMeta?.club) ? playerMeta.club : clubShort(p);
             const displayEscalao = (isActive && playerMeta?.escalao) ? playerMeta.escalao : p.escalao;
             const displayHcp = (isActive) ? (playerMeta?.latestHcp ?? null) : p.hcp;
-            const st = playerStats[p.fed];
             const rank = rankings.get(p.fed);
-            const alert = st?.formAlert;
 
             return (
               <button key={p.fed} className={`course-item ${isActive ? "active" : ""}`}
@@ -3069,11 +3067,9 @@ export default function JogadoresPage({ players, courses }: Props) {
                     {p.name}
                     <span className={`jog-sex-inline jog-sex-${p.sex}`}>{p.sex}</span>
                   </span>
-                  {alert === "hot" && <span className="sidebar-alert">🔥</span>}
-                  {alert === "cold" && <span className="sidebar-alert">❄️</span>}
-                  {rankingMode && st?.avgSD8 != null && (
-                    <span className={`sidebar-sd ${st.avgSD8 <= 5 ? "sidebar-sd-good" : st.avgSD8 <= 15 ? "sidebar-sd-ok" : "sidebar-sd-high"}`}>
-                      {st.avgSD8.toFixed(1)}
+                  {rankingMode && displayHcp != null && (
+                    <span className={`sidebar-sd ${displayHcp <= 5 ? "sidebar-sd-good" : displayHcp <= 15 ? "sidebar-sd-ok" : "sidebar-sd-high"}`}>
+                      {hcpDisplay(displayHcp)}
                     </span>
                   )}
                 </div>

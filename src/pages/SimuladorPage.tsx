@@ -224,123 +224,6 @@ function SDTable({
   );
 }
 
-/* ─── Componente: Calculadora rápida (18h e 9h) ─── */
-
-function QuickCalc({
-  cr,
-  slope,
-  par,
-  pcc,
-  hi,
-  is9h,
-}: {
-  cr: number;
-  slope: number;
-  par: number;
-  pcc: number;
-  hi: number | null;
-  is9h: boolean;
-}) {
-  const [mode, setMode] = useState<"score-to-sd" | "sd-to-score">("score-to-sd");
-  const [inputVal, setInputVal] = useState("");
-
-  const result = useMemo(() => {
-    const v = parseFloat(inputVal.replace(",", "."));
-    if (isNaN(v)) return null;
-
-    if (mode === "score-to-sd") {
-      const sd = calcSD(v, cr, slope, pcc);
-
-      if (is9h && hi !== null) {
-        const exp9 = expectedSD9(hi);
-        const sd18 = sd + exp9;
-        return {
-          label: "SD 18h (WHS 2024)",
-          value: fmtSD(sd18),
-          detail: `SD 9h = ${sd.toFixed(1)} + Expected 9h (HI ${hi.toFixed(1)}) = ${exp9.toFixed(1)} → SD 18h = ${sd18.toFixed(1)}`,
-          extra: `Fórmula: (113/${slope}) × (${v} − ${fmtCR(cr)}${pcc ? ` − ${pcc}` : ""}) = ${sd.toFixed(1)}`,
-        };
-      }
-
-      return {
-        label: is9h ? "SD 9 buracos" : "Score Differential",
-        value: fmtSD(sd),
-        detail: `(113 / ${slope}) × (${v} − ${fmtCR(cr)}${pcc ? ` − ${pcc}` : ""}) = ${sd.toFixed(1)}`,
-        extra: is9h ? "Introduz o HI na toolbar para ver o SD 18h (WHS 2024)" : null,
-      };
-    } else {
-      // SD → Score: em modo 9h queremos o SD 18h final
-      if (is9h && hi !== null) {
-        const exp9 = expectedSD9(hi);
-        const target9hSD = v - exp9;
-        const score = calcScore(target9hSD, cr, slope, pcc);
-        return {
-          label: "Gross Score (9h) necessário",
-          value: Math.ceil(score).toString(),
-          detail: `SD 18h pretendido ${v.toFixed(1)} − Expected ${exp9.toFixed(1)} = SD 9h ${target9hSD.toFixed(1)} → Score = ${score.toFixed(1)} → ${Math.ceil(score)}`,
-          extra: null,
-        };
-      }
-
-      const score = calcScore(v, cr, slope, pcc);
-      return {
-        label: "Gross Score necessário",
-        value: Math.ceil(score).toString(),
-        detail: `${v.toFixed(1)} × (${slope} / 113) + ${fmtCR(cr)}${pcc ? ` + ${pcc}` : ""} = ${score.toFixed(1)} → ${Math.ceil(score)}`,
-        extra: null,
-      };
-    }
-  }, [inputVal, mode, cr, slope, pcc, hi, is9h]);
-
-  return (
-    <div className="sim-calc">
-      <div className="sim-calc-tabs">
-        <button
-          className={`tab-btn ${mode === "score-to-sd" ? "active" : ""}`}
-          onClick={() => { setMode("score-to-sd"); setInputVal(""); }}
-        >
-          Score → SD
-        </button>
-        <button
-          className={`tab-btn ${mode === "sd-to-score" ? "active" : ""}`}
-          onClick={() => { setMode("sd-to-score"); setInputVal(""); }}
-        >
-          SD → Score
-        </button>
-      </div>
-
-      <div className="sim-calc-input-row">
-        <div className="field">
-          <label>
-            {mode === "score-to-sd"
-              ? is9h ? "Gross Score (9h)" : "Gross Score"
-              : is9h ? "SD 18h pretendido" : "SD pretendido"
-            }
-          </label>
-          <input
-            className="input sim-calc-input"
-            type="text"
-            inputMode="decimal"
-            value={inputVal}
-            onChange={(e) => setInputVal(e.target.value)}
-            placeholder={mode === "score-to-sd" ? `ex: ${par}` : "ex: 18,0"}
-          />
-        </div>
-
-        {result && (
-          <div className="sim-calc-result">
-            <div className="sim-calc-result-label">{result.label}</div>
-            <div className="sim-calc-result-value">{result.value}</div>
-            <div className="sim-calc-result-detail">{result.detail}</div>
-            {result.extra && (
-              <div className="sim-calc-result-extra">{result.extra}</div>
-            )}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
 
 /* ─── Página Principal ─── */
 
@@ -413,8 +296,131 @@ function ManualInputs({
   );
 }
 
+/* ─── Componente: Strip de Handicaps + Ratings + Calc rápida ─── */
 
-/* ─── Secção AGS: Scorecard horizontal + Adjusted Gross Score ─── */
+function HcpStrip({
+  hi, courseHcp, playingHcp, allowance, cr, slope, par, pcc, is9h, exp9hSD,
+}: {
+  hi: number | null;
+  courseHcp: number | null;
+  playingHcp: number | null;
+  allowance: number;
+  cr: number;
+  slope: number;
+  par: number;
+  pcc: number;
+  is9h: boolean;
+  exp9hSD: number | null;
+}) {
+  const [calcMode, setCalcMode] = useState<"score-to-sd" | "sd-to-score">("score-to-sd");
+  const [calcInput, setCalcInput] = useState("");
+
+  const calcResult = useMemo(() => {
+    const v = parseFloat(calcInput.replace(",", "."));
+    if (isNaN(v)) return null;
+    if (calcMode === "score-to-sd") {
+      const sd = calcSD(v, cr, slope, pcc);
+      if (is9h && hi !== null) {
+        const exp9 = expectedSD9(hi);
+        return { value: fmtSD(sd + exp9), detail: `9h: ${sd.toFixed(1)} + ${exp9.toFixed(1)}` };
+      }
+      return { value: fmtSD(sd), detail: null };
+    } else {
+      if (is9h && hi !== null) {
+        const exp9 = expectedSD9(hi);
+        const score = calcScore(v - exp9, cr, slope, pcc);
+        return { value: String(Math.ceil(score)), detail: `SD 9h: ${(v - exp9).toFixed(1)}` };
+      }
+      const score = calcScore(v, cr, slope, pcc);
+      return { value: String(Math.ceil(score)), detail: null };
+    }
+  }, [calcInput, calcMode, cr, slope, pcc, hi, is9h]);
+
+  return (
+    <div className="sim-strip">
+      {/* HCP cards */}
+      {hi !== null && (
+        <>
+          <div className="sim-strip-cell">
+            <span className="sim-strip-label">Handicap Index</span>
+            <span className="sim-strip-num">{hi.toFixed(1)}</span>
+          </div>
+          <div className="sim-strip-cell sim-strip-cell-accent">
+            <span className="sim-strip-label">Course HCP{is9h ? " (9h)" : ""}</span>
+            <span className="sim-strip-num">{courseHcp !== null ? Math.round(courseHcp) : "–"}</span>
+            {courseHcp !== null && <span className="sim-strip-sub">({courseHcp.toFixed(1)})</span>}
+          </div>
+          <div className="sim-strip-cell sim-strip-cell-accent">
+            <span className="sim-strip-label">Playing HCP{allowance !== 100 ? ` (${allowance}%)` : ""}</span>
+            <span className="sim-strip-num">{playingHcp !== null ? Math.round(playingHcp) : "–"}</span>
+            {playingHcp !== null && <span className="sim-strip-sub">({playingHcp.toFixed(1)})</span>}
+          </div>
+        </>
+      )}
+
+      {/* Ratings */}
+      <div className="sim-strip-cell">
+        <span className="sim-strip-label">Course Rating</span>
+        <span className="sim-strip-num">{fmtCR(cr)}</span>
+      </div>
+      <div className="sim-strip-cell">
+        <span className="sim-strip-label">Slope Rating</span>
+        <span className="sim-strip-num">{slope}</span>
+      </div>
+      <div className="sim-strip-cell">
+        <span className="sim-strip-label">Par</span>
+        <span className="sim-strip-num">{par}</span>
+      </div>
+      {pcc !== 0 && (
+        <div className="sim-strip-cell">
+          <span className="sim-strip-label">PCC</span>
+          <span className="sim-strip-num">{pcc > 0 ? `+${pcc}` : pcc}</span>
+        </div>
+      )}
+      {exp9hSD !== null && (
+        <div className="sim-strip-cell sim-strip-cell-9h">
+          <span className="sim-strip-label">Expected SD 9h</span>
+          <span className="sim-strip-num">{exp9hSD.toFixed(1)}</span>
+        </div>
+      )}
+
+      {/* Inline QuickCalc — Score always left, SD always right */}
+      <div className="sim-strip-calc">
+        <div className="sim-strip-calc-tabs">
+          <button className={`sim-strip-tab${calcMode === "score-to-sd" ? " active" : ""}`}
+            onClick={() => { setCalcMode("score-to-sd"); setCalcInput(""); }}>Score → SD</button>
+          <button className={`sim-strip-tab${calcMode === "sd-to-score" ? " active" : ""}`}
+            onClick={() => { setCalcMode("sd-to-score"); setCalcInput(""); }}>SD → Score</button>
+        </div>
+        <div className="sim-strip-calc-fields">
+          {/* Left: always Gross Score */}
+          <div className="sim-strip-calc-field">
+            <span className="sim-strip-label">{is9h ? "Gross Score (9h)" : "Gross Score"}</span>
+            {calcMode === "score-to-sd" ? (
+              <input className="sim-strip-calc-input" type="text" inputMode="decimal"
+                value={calcInput} onChange={e => setCalcInput(e.target.value)}
+                placeholder={`ex: ${par}`} />
+            ) : (
+              <span className="sim-strip-calc-output">{calcResult ? calcResult.value : "–"}</span>
+            )}
+          </div>
+          {/* Right: always SD */}
+          <div className="sim-strip-calc-field">
+            <span className="sim-strip-label">{is9h ? "SD 18h" : "Score Differential"}</span>
+            {calcMode === "sd-to-score" ? (
+              <input className="sim-strip-calc-input" type="text" inputMode="decimal"
+                value={calcInput} onChange={e => setCalcInput(e.target.value)}
+                placeholder="ex: 18" />
+            ) : (
+              <span className="sim-strip-calc-output">{calcResult ? calcResult.value : "–"}</span>
+            )}
+          </div>
+        </div>
+        {calcResult?.detail && <span className="sim-strip-sub">{calcResult.detail}</span>}
+      </div>
+    </div>
+  );
+}
 
 const USGA_NDB_LINK = "https://www.usga.org/content/usga/home-page/handicapping/world-handicap-system/topics/net-double-bogey.html";
 
@@ -551,6 +557,36 @@ function AgsSection({
           <button className="select" style={{ cursor: "pointer", fontSize: 12 }} onClick={clearAll}>Limpar</button>
         )}
       </div>
+
+      {/* Results cards — above scorecard */}
+      {totals && totals.grossTotal !== null && (
+        <div className="sim-results-cards">
+          <div className="sim-strip-cell">
+            <span className="sim-strip-label">Gross</span>
+            <span className="sim-strip-num">{totals.grossTotal}</span>
+            <span className="sim-strip-sub">SD {fmtSD(totals.sdGross!)}</span>
+          </div>
+          {hasAgs && totals.agsTotal !== null && (
+            <div className="sim-strip-cell sim-strip-cell-ags">
+              <span className="sim-strip-label">Adjusted Gross (AGS)</span>
+              <span className="sim-strip-num">{totals.agsTotal}</span>
+              <span className="sim-strip-sub">SD {fmtSD(totals.sdAgs!)}</span>
+            </div>
+          )}
+          {hasAgs && totals.grossTotal !== null && totals.agsTotal !== null && totals.grossTotal > totals.agsTotal && (
+            <div className="sim-strip-cell sim-strip-cell-cut">
+              <span className="sim-strip-label">Cortadas</span>
+              <span className="sim-strip-num">−{totals.grossTotal - totals.agsTotal}</span>
+              <span className="sim-strip-sub">SD melhora {(totals.sdGross! - totals.sdAgs!).toFixed(1)}</span>
+            </div>
+          )}
+        </div>
+      )}
+      {totals && totals.filled > 0 && totals.filled < totals.total && (
+        <div className="muted" style={{ marginBottom: 8, fontSize: 12 }}>
+          {totals.filled} de {totals.total} buracos. Preenche todos para ver o SD.
+        </div>
+      )}
 
       <div style={{ overflowX: "auto" }}>
         <table className="sc-table-modern" data-sc-table="1">
@@ -729,37 +765,6 @@ function AgsSection({
         </table>
       </div>
 
-      {/* SD results */}
-      {totals && totals.grossTotal !== null && (
-        <div className="sim-summary" style={{ marginTop: 10 }}>
-          <div className="sim-summary-item">
-            <span className="sim-summary-label">Gross</span>
-            <span className="sim-summary-value">{totals.grossTotal}</span>
-            <span className="sim-summary-detail">SD {fmtSD(totals.sdGross!)}</span>
-          </div>
-          {hasAgs && totals.agsTotal !== null && (
-            <div className="sim-summary-item sim-summary-highlight" style={{ borderColor: "#16a34a" }}>
-              <span className="sim-summary-label">Adjusted Gross (AGS)</span>
-              <span className="sim-summary-value" style={{ color: "#16a34a" }}>{totals.agsTotal}</span>
-              <span className="sim-summary-detail">SD {fmtSD(totals.sdAgs!)}</span>
-            </div>
-          )}
-          {hasAgs && totals.grossTotal !== null && totals.agsTotal !== null && totals.grossTotal > totals.agsTotal && (
-            <div className="sim-summary-item">
-              <span className="sim-summary-label">Cortadas</span>
-              <span className="sim-summary-value" style={{ color: "#dc2626" }}>−{totals.grossTotal - totals.agsTotal}</span>
-              <span className="sim-summary-detail">SD melhora {(totals.sdGross! - totals.sdAgs!).toFixed(1)}</span>
-            </div>
-          )}
-        </div>
-      )}
-
-      {totals && totals.filled > 0 && totals.filled < totals.total && (
-        <div className="muted" style={{ marginTop: 6, fontSize: 12 }}>
-          {totals.filled} de {totals.total} buracos. Preenche todos para ver o SD.
-        </div>
-      )}
-
       {/* Info AGS colapsável */}
       {hasAgs && (
         <details style={{ marginTop: 12 }}>
@@ -791,13 +796,6 @@ function AgsSection({
         </details>
       )}
 
-      {!hasAgs && (
-        <div className="sim-info-box" style={{ background: "#fffbeb", borderColor: "#fde68a", color: "#92400e", marginTop: 10 }}>
-          Preenche o <strong>HI</strong> na toolbar para ver as linhas de <strong>Adjusted Gross Score</strong> (Panc., Máx, Ajust.).
-          {" "}<a href={USGA_NDB_LINK} target="_blank" rel="noopener noreferrer"
-            style={{ color: "#92400e", fontWeight: 600, textDecoration: "underline" }}>Saber mais (USGA) →</a>
-        </div>
-      )}
     </div>
   );
 }
@@ -971,6 +969,23 @@ export default function SimuladorPage({ courses }: Props) {
         </div>
       </div>
 
+      {/* Banner: preencher HI */}
+      {hi === null && (
+        <div className="sim-hi-banner">
+          <span className="sim-hi-banner-icon">⚠</span>
+          <span>
+            Preenche o <strong>Handicap Index (HI)</strong> na toolbar para calcular o
+            {" "}<strong>Course Handicap</strong>, <strong>Playing Handicap</strong>,
+            e as linhas de <strong>Adjusted Gross Score</strong> (Panc., Máx, Ajust.).
+            {" "}<a href="https://www.usga.org/content/usga/home-page/handicapping/world-handicap-system/topics/net-double-bogey.html"
+              target="_blank" rel="noopener noreferrer"
+              style={{ color: "#00838f", fontWeight: 600, textDecoration: "underline" }}>
+              Saber mais (USGA) →
+            </a>
+          </span>
+        </div>
+      )}
+
       {/* Master-detail */}
       <div className="master-detail">
         {/* Sidebar: lista de campos */}
@@ -1038,48 +1053,9 @@ export default function SimuladorPage({ courses }: Props) {
 
               {teeData && (
                 <>
-                  {/* Resumo */}
-                  <div className="sim-summary">
-                    <div className="sim-summary-item">
-                      <span className="sim-summary-label">Course Rating</span>
-                      <span className="sim-summary-value">{fmtCR(teeData.cr)}</span>
-                    </div>
-                    <div className="sim-summary-item">
-                      <span className="sim-summary-label">Slope Rating</span>
-                      <span className="sim-summary-value">{teeData.slope}</span>
-                    </div>
-                    <div className="sim-summary-item">
-                      <span className="sim-summary-label">Par</span>
-                      <span className="sim-summary-value">{teeData.par}</span>
-                    </div>
-                    {pcc !== 0 && (
-                      <div className="sim-summary-item">
-                        <span className="sim-summary-label">PCC</span>
-                        <span className="sim-summary-value">{pcc > 0 ? `+${pcc}` : pcc}</span>
-                      </div>
-                    )}
-                    {courseHcp !== null && (
-                      <div className="sim-summary-item sim-summary-highlight">
-                        <span className="sim-summary-label">Course HCP{is9h ? " (9h)" : ""}</span>
-                        <span className="sim-summary-value">{Math.round(courseHcp)}</span>
-                        <span className="sim-summary-detail">({courseHcp.toFixed(1)})</span>
-                      </div>
-                    )}
-                    {courseHcp !== null && allowance !== 100 && playingHcp !== null && (
-                      <div className="sim-summary-item sim-summary-highlight">
-                        <span className="sim-summary-label">Playing HCP ({allowance}%)</span>
-                        <span className="sim-summary-value">{Math.round(playingHcp)}</span>
-                        <span className="sim-summary-detail">({playingHcp.toFixed(1)})</span>
-                      </div>
-                    )}
-                    {exp9hSD !== null && (
-                      <div className="sim-summary-item sim-summary-9h">
-                        <span className="sim-summary-label">Expected SD 9h</span>
-                        <span className="sim-summary-value">{exp9hSD.toFixed(1)}</span>
-                        <span className="sim-summary-detail">WHS 2024 · HI {hi?.toFixed(1)}</span>
-                      </div>
-                    )}
-                  </div>
+                  {/* HCP strip + ratings */}
+                  <HcpStrip hi={hi} courseHcp={courseHcp} playingHcp={playingHcp} allowance={allowance}
+                    cr={teeData.cr} slope={teeData.slope} par={teeData.par} pcc={pcc} is9h={is9h} exp9hSD={exp9hSD} />
 
                   {is9h && (
                     <div className="sim-info-box">
@@ -1093,8 +1069,6 @@ export default function SimuladorPage({ courses }: Props) {
                   )}
 
                   <AgsSection hi={hi} holes={null} cr={teeData.cr} slope={teeData.slope} par={teeData.par} pcc={pcc} is9h={is9h} holesMode={holesMode} />
-
-                  <QuickCalc cr={teeData.cr} slope={teeData.slope} par={teeData.par} pcc={pcc} hi={hi} is9h={is9h} />
 
                   <h3 className="sim-section-title">
                     Tabela Score → SD {is9h ? `(${holesLabel})` : ""}
@@ -1157,48 +1131,9 @@ export default function SimuladorPage({ courses }: Props) {
                 )}
               </div>
 
-              {/* Resumo do tee + Playing Handicap */}
-              <div className="sim-summary">
-                <div className="sim-summary-item">
-                  <span className="sim-summary-label">Course Rating</span>
-                  <span className="sim-summary-value">{fmtCR(teeData.cr)}</span>
-                </div>
-                <div className="sim-summary-item">
-                  <span className="sim-summary-label">Slope Rating</span>
-                  <span className="sim-summary-value">{teeData.slope}</span>
-                </div>
-                <div className="sim-summary-item">
-                  <span className="sim-summary-label">Par</span>
-                  <span className="sim-summary-value">{teeData.par}</span>
-                </div>
-                {pcc !== 0 && (
-                  <div className="sim-summary-item">
-                    <span className="sim-summary-label">PCC</span>
-                    <span className="sim-summary-value">{pcc > 0 ? `+${pcc}` : pcc}</span>
-                  </div>
-                )}
-                {courseHcp !== null && (
-                  <div className="sim-summary-item sim-summary-highlight">
-                    <span className="sim-summary-label">Course HCP{is9h ? " (9h)" : ""}</span>
-                    <span className="sim-summary-value">{Math.round(courseHcp)}</span>
-                    <span className="sim-summary-detail">({courseHcp.toFixed(1)})</span>
-                  </div>
-                )}
-                {courseHcp !== null && allowance !== 100 && playingHcp !== null && (
-                  <div className="sim-summary-item sim-summary-highlight">
-                    <span className="sim-summary-label">Playing HCP ({allowance}%)</span>
-                    <span className="sim-summary-value">{Math.round(playingHcp)}</span>
-                    <span className="sim-summary-detail">({playingHcp.toFixed(1)})</span>
-                  </div>
-                )}
-                {exp9hSD !== null && (
-                  <div className="sim-summary-item sim-summary-9h">
-                    <span className="sim-summary-label">Expected SD 9h</span>
-                    <span className="sim-summary-value">{exp9hSD.toFixed(1)}</span>
-                    <span className="sim-summary-detail">WHS 2024 · HI {hi?.toFixed(1)}</span>
-                  </div>
-                )}
-              </div>
+              {/* HCP strip + ratings */}
+              <HcpStrip hi={hi} courseHcp={courseHcp} playingHcp={playingHcp} allowance={allowance}
+                cr={teeData.cr} slope={teeData.slope} par={teeData.par} pcc={pcc} is9h={is9h} exp9hSD={exp9hSD} />
 
               {/* Info box para 9 buracos */}
               {is9h && (
@@ -1213,9 +1148,6 @@ export default function SimuladorPage({ courses }: Props) {
               )}
 
               <AgsSection hi={hi} holes={selectedTee?.holes ?? null} cr={teeData.cr} slope={teeData.slope} par={teeData.par} pcc={pcc} is9h={is9h} holesMode={holesMode} />
-
-              {/* Calculadora rápida */}
-              <QuickCalc cr={teeData.cr} slope={teeData.slope} par={teeData.par} pcc={pcc} hi={hi} is9h={is9h} />
 
               {/* Tabela SD */}
               <h3 className="sim-section-title">
