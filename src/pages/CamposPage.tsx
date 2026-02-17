@@ -129,7 +129,7 @@ function ScorecardGrid({ tees }: { tees: Tee[] }) {
         </thead>
         <tbody>
           {/* Linhas de distância por tee */}
-          {sorted.map((t) => {
+          {sorted.map((t, idx) => {
             const byHole = new Map<number, (typeof t)["holes"][0]>();
             for (const h of t.holes ?? []) byHole.set(h.hole, h);
 
@@ -138,7 +138,7 @@ function ScorecardGrid({ tees }: { tees: Tee[] }) {
             const tot = (out ?? 0) + (inn ?? 0);
 
             return (
-              <tr key={t.teeId} className="sc-tee-row">
+              <tr key={`${t.teeId}-${idx}`} className="sc-tee-row">
                 <td className="sc-sticky sc-tee-cell">
                   <TeeBadge
                     label={titleCase(t.teeName)}
@@ -215,8 +215,8 @@ function RatingsTable({ tees }: { tees: Tee[] }) {
           </tr>
         </thead>
         <tbody>
-          {sorted.map((t) => (
-            <tr key={t.teeId}>
+          {sorted.map((t, idx) => (
+            <tr key={`${t.teeId}-${idx}`}>
               <td>
                 <TeeBadge label={titleCase(t.teeName)} colorHex={teeHexFromTee(t)} />
               </td>
@@ -450,8 +450,8 @@ export default function CamposPage({ courses }: Props) {
 
               {/* Tee badges resumo */}
               <div className="tee-badges-row">
-                {selectedTees.map((t) => (
-                  <span key={t.teeId} className="tee-badge-card">
+                {selectedTees.map((t, idx) => (
+                  <span key={`${t.teeId}-${idx}`} className="tee-badge-card">
                     <TeeBadge
                       label={titleCase(t.teeName)}
                       colorHex={teeHexFromTee(t)}

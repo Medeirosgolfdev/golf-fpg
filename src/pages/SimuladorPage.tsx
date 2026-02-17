@@ -805,7 +805,7 @@ export default function SimuladorPage({ courses }: Props) {
   const [sexFilter, setSexFilter] = useState<SexFilter>("ALL");
   const [holesMode, setHolesMode] = useState<HolesMode>("18");
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
-  const [selectedTeeId, setSelectedTeeId] = useState<string | null>(null);
+  const [selectedTeeIdx, setSelectedTeeIdx] = useState<number | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [pcc, setPcc] = useState(0);
   const [hiInput, setHiInput] = useState("");
@@ -862,12 +862,11 @@ export default function SimuladorPage({ courses }: Props) {
   /* Tee selecionado */
   const selectedTee = useMemo(() => {
     if (!availableTees.length) return null;
-    if (selectedTeeId) {
-      const found = availableTees.find((t) => t.teeId === selectedTeeId);
-      if (found) return found;
+    if (selectedTeeIdx !== null && selectedTeeIdx < availableTees.length) {
+      return availableTees[selectedTeeIdx];
     }
     return availableTees[0];
-  }, [availableTees, selectedTeeId]);
+  }, [availableTees, selectedTeeIdx]);
 
   /* Dados do tee para cálculos (18h ou 9h) — campo selecionado OU manual */
   const teeData = useMemo(() => {
@@ -932,7 +931,7 @@ export default function SimuladorPage({ courses }: Props) {
             onChange={(e) => { setQ(e.target.value); setSelectedKey(null); }}
             placeholder="Nome do campo…"
           />
-          <select className="select" value={holesMode} onChange={(e) => { setHolesMode(e.target.value as HolesMode); setSelectedTeeId(null); }}>
+          <select className="select" value={holesMode} onChange={(e) => { setHolesMode(e.target.value as HolesMode); setSelectedTeeIdx(null); }}>
             <option value="18">18 buracos</option>
             <option value="front9">Front 9</option>
             <option value="back9">Back 9</option>
@@ -993,7 +992,7 @@ export default function SimuladorPage({ courses }: Props) {
           {/* Opção manual — sempre visível */}
           <button
             className={`course-item ${isManual ? "active" : ""}`}
-            onClick={() => { setSelectedKey(MANUAL_KEY); setSelectedTeeId(null); }}
+            onClick={() => { setSelectedKey(MANUAL_KEY); setSelectedTeeIdx(null); }}
           >
             <div className="course-item-name">✎ Sem campo (manual)</div>
             <div className="course-item-meta">Introduzir CR/Slope</div>
@@ -1010,7 +1009,7 @@ export default function SimuladorPage({ courses }: Props) {
               <button
                 key={c.courseKey}
                 className={`course-item ${active ? "active" : ""}`}
-                onClick={() => { setSelectedKey(c.courseKey); setSelectedTeeId(null); }}
+                onClick={() => { setSelectedKey(c.courseKey); setSelectedTeeIdx(null); }}
               >
                 <div className="course-item-name">{c.master.name}</div>
                 <div className="course-item-meta">
@@ -1098,8 +1097,8 @@ export default function SimuladorPage({ courses }: Props) {
 
               {/* Seletor de Tee */}
               <div className="sim-tee-selector">
-                {availableTees.map((t) => {
-                  const isActive = selectedTee?.teeId === t.teeId;
+                {availableTees.map((t, idx) => {
+                  const isActive = (selectedTeeIdx !== null ? idx === selectedTeeIdx : idx === 0);
                   let crDisp: number | undefined, slDisp: number | undefined;
                   if (is9h) {
                     const r9 = get9hRatings(t, holesMode as "front9" | "back9");
@@ -1111,9 +1110,9 @@ export default function SimuladorPage({ courses }: Props) {
                   }
                   return (
                     <button
-                      key={t.teeId}
+                      key={`${t.teeId}-${idx}`}
                       className={`sim-tee-btn ${isActive ? "sim-tee-active" : ""}`}
-                      onClick={() => setSelectedTeeId(t.teeId)}
+                      onClick={() => setSelectedTeeIdx(idx)}
                     >
                       <TeeBadge
                         label={titleCase(t.teeName)}

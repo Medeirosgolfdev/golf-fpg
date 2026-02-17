@@ -9,110 +9,111 @@
 
 import type { Course, Tee, Hole } from "./types";
 
-/* Marco Simone Golf & Country Club */
+/* Marco Simone Golf & Country Club — distâncias por tee (metros) */
 
-const marcoSimoneHoles: Hole[] = [
-  // Par: 4,5,3,4,4,5,4,3,4 | 4,5,3,4,4,5,3,4,4 = 72
-  // SI:  11,1,3,17,13,15,5,9,7 | 4,16,12,18,6,2,10,14,8
-  { hole: 1,  par: 4, si: 11, distance: null },
-  { hole: 2,  par: 5, si: 1,  distance: null },
-  { hole: 3,  par: 3, si: 3,  distance: null },
-  { hole: 4,  par: 4, si: 17, distance: null },
-  { hole: 5,  par: 4, si: 13, distance: null },
-  { hole: 6,  par: 5, si: 15, distance: null },
-  { hole: 7,  par: 4, si: 5,  distance: null },
-  { hole: 8,  par: 3, si: 9,  distance: null },
-  { hole: 9,  par: 4, si: 7,  distance: null },
-  { hole: 10, par: 4, si: 4,  distance: null },
-  { hole: 11, par: 5, si: 16, distance: null },
-  { hole: 12, par: 3, si: 12, distance: null },
-  { hole: 13, par: 4, si: 18, distance: null },
-  { hole: 14, par: 4, si: 6,  distance: null },
-  { hole: 15, par: 5, si: 2,  distance: null },
-  { hole: 16, par: 3, si: 10, distance: null },
-  { hole: 17, par: 4, si: 14, distance: null },
-  { hole: 18, par: 4, si: 8,  distance: null },
-];
+// Par e SI são iguais para todos os tees
+const msPar = [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5];
+const msSI  = [11,1,3,17,13,15,5,9,7, 4,16,12,18,6,2,10,14,8];
 
-function msTeeName(name: string): string { return name; }
+// Distâncias por tee (Neri, Bianchi, Gialli/Blu, Verdi/Rossi, Arancio)
+const msDistNeri    = [407,435,414,172,344,348,203,480,537, 414,301,499,137,465,438,322,188,570];
+const msDistBianchi = [382,411,393,156,330,323,182,460,496, 386,281,467,131,442,402,302,173,517];
+const msDistGialli  = [362,388,371,133,302,295,169,421,450, 359,265,421,123,402,375,277,166,478]; // = Blu
+const msDistVerdi   = [336,365,342,113,266,258,152,375,420, 347,247,381,103,360,339,255,151,442]; // = Rossi
+const msDistArancio = [274,349,302,103,227,231,132,338,382, 307,219,356,91,310,292,225,133,404];
+
+function msHoles(dist: number[]): Hole[] {
+  return dist.map((d, i) => ({
+    hole: i + 1,
+    par: msPar[i],
+    si: msSI[i],
+    distance: d,
+  }));
+}
+
+function msDist(dist: number[]): { total: number; front9: number; back9: number; holesCount: 18; complete18: true } {
+  const front9 = dist.slice(0, 9).reduce((a, b) => a + b, 0);
+  const back9 = dist.slice(9).reduce((a, b) => a + b, 0);
+  return { total: front9 + back9, front9, back9, holesCount: 18, complete18: true };
+}
 
 const marcoSimoneTees: Tee[] = [
   {
     teeId: "ms-neri",
     sex: "M",
-    teeName: msTeeName("Neri"),
+    teeName: "Neri",
     scorecardMeta: { teeColor: "#1a1a1a" },
     ratings: {
-      holes18: { par: 72, courseRating: 76.2, slopeRating: 140 },
+      holes18: { par: 72, courseRating: null, slopeRating: null }, // CR 76.2 / Sl 140 — dados de 2021, campo remodelado
     },
-    holes: marcoSimoneHoles,
-    distances: { total: 6674, front9: 3340, back9: 3334, holesCount: 18, complete18: true },
+    holes: msHoles(msDistNeri),
+    distances: msDist(msDistNeri),
   },
   {
     teeId: "ms-bianchi",
     sex: "M",
-    teeName: msTeeName("Bianchi"),
+    teeName: "Bianchi",
     scorecardMeta: { teeColor: "#ffffff" },
     ratings: {
-      holes18: { par: 72, courseRating: 74.1, slopeRating: 133 },
+      holes18: { par: 72, courseRating: null, slopeRating: null }, // CR 74.1 / Sl 133 — dados de 2021, campo remodelado
     },
-    holes: marcoSimoneHoles,
-    distances: { total: 6234, front9: 3133, back9: 3101, holesCount: 18, complete18: true },
+    holes: msHoles(msDistBianchi),
+    distances: msDist(msDistBianchi),
   },
   {
     teeId: "ms-gialli",
     sex: "M",
-    teeName: msTeeName("Gialli"),
+    teeName: "Gialli",
     scorecardMeta: { teeColor: "#fbbf24" },
     ratings: {
       holes18: { par: 72, courseRating: 72.1, slopeRating: 129 },
     },
-    holes: marcoSimoneHoles,
-    distances: { total: 5757, front9: 2891, back9: 2866, holesCount: 18, complete18: true },
+    holes: msHoles(msDistGialli),
+    distances: msDist(msDistGialli),
   },
   {
     teeId: "ms-verdi",
     sex: "M",
-    teeName: msTeeName("Verdi"),
+    teeName: "Verdi",
     scorecardMeta: { teeColor: "#22c55e" },
     ratings: {
       holes18: { par: 72, courseRating: 69.6, slopeRating: 125 },
     },
-    holes: marcoSimoneHoles,
-    distances: { total: 5252, front9: 2627, back9: 2625, holesCount: 18, complete18: true },
+    holes: msHoles(msDistVerdi),
+    distances: msDist(msDistVerdi),
   },
   {
     teeId: "ms-blu",
     sex: "F",
-    teeName: msTeeName("Blu"),
+    teeName: "Blu",
     scorecardMeta: { teeColor: "#3b82f6" },
     ratings: {
       holes18: { par: 72, courseRating: 78.0, slopeRating: 144 },
     },
-    holes: marcoSimoneHoles,
-    distances: { total: 5757, front9: 2891, back9: 2866, holesCount: 18, complete18: true },
+    holes: msHoles(msDistGialli),  // Blu usa mesmas distâncias que Gialli
+    distances: msDist(msDistGialli),
   },
   {
     teeId: "ms-rossi",
     sex: "F",
-    teeName: msTeeName("Rossi"),
+    teeName: "Rossi",
     scorecardMeta: { teeColor: "#ef4444" },
     ratings: {
       holes18: { par: 72, courseRating: 75.0, slopeRating: 137 },
     },
-    holes: marcoSimoneHoles,
-    distances: { total: 5252, front9: 2627, back9: 2625, holesCount: 18, complete18: true },
+    holes: msHoles(msDistVerdi),  // Rossi usa mesmas distâncias que Verdi
+    distances: msDist(msDistVerdi),
   },
   {
     teeId: "ms-arancio",
     sex: "F",
-    teeName: msTeeName("Arancio"),
+    teeName: "Arancio",
     scorecardMeta: { teeColor: "#f97316" },
     ratings: {
       holes18: { par: 72, courseRating: 71.3, slopeRating: 130 },
     },
-    holes: marcoSimoneHoles,
-    distances: { total: 4675, front9: 2338, back9: 2337, holesCount: 18, complete18: true },
+    holes: msHoles(msDistArancio),
+    distances: msDist(msDistArancio),
   },
 ];
 
@@ -121,7 +122,7 @@ const marcoSimone: Course = {
   master: {
     courseId: "away-marco-simone",
     name: "Marco Simone Golf & Country Club",
-    country: "It\u00e1lia",
+    country: "Itália",
     links: {
       fpg: null,
       scorecards: "https://golfmarcosimone.com/the-holes/",
