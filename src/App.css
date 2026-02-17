@@ -229,6 +229,21 @@ html, body, #root {
   align-items: center;
 }
 
+/* Compact selects inside jogadores toolbar */
+.jogadores-page .toolbar .select {
+  height: 28px;
+  font-size: 11.5px;
+  min-width: 90px;
+  padding: 0 6px;
+}
+
+.jogadores-page .toolbar .input {
+  height: 28px;
+  font-size: 12px;
+  padding: 0 8px;
+  width: 180px;
+}
+
 /* Sidebar toggle */
 
 .sidebar-toggle {
@@ -768,6 +783,87 @@ html, body, #root {
 .jog-pill-region {
   display: none;
 }
+
+/* â"€â"€â"€ EscalÃ£o Multi-Select Pills (toolbar) â"€â"€â"€ */
+
+.escalao-pills {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.escalao-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 0 8px;
+  height: 24px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  border-radius: 10px;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: var(--bg);
+  color: var(--text-3);
+  opacity: 0.55;
+  line-height: 1;
+}
+
+.escalao-pill:hover {
+  opacity: 0.85;
+}
+
+.escalao-pill-active {
+  opacity: 1 !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+}
+
+.escalao-pill-count {
+  font-size: 9.5px;
+  font-weight: 500;
+  opacity: 0.7;
+  margin-left: 1px;
+}
+
+.escalao-pill-active .escalao-pill-count {
+  opacity: 0.85;
+}
+
+.escalao-pill-clear {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 10px;
+  opacity: 0.7;
+  background: var(--bg-hover);
+  color: var(--text-3);
+}
+.escalao-pill-clear:hover { opacity: 1; background: #f0d0d0; color: #c0392b; }
+
+/* Colour coding â€" reuses escalÃ£o palette */
+.escalao-pill-sub10  { background: #e8f0e2; color: #2a5a18; border-color: #2a5a18; }
+.escalao-pill-sub10.escalao-pill-active  { background: #2a5a18; color: #fff; }
+.escalao-pill-sub12  { background: #e8f0e2; color: #3a7a28; border-color: #3a7a28; }
+.escalao-pill-sub12.escalao-pill-active  { background: #3a7a28; color: #fff; }
+.escalao-pill-sub14  { background: #eef4e8; color: #5a9a40; border-color: #5a9a40; }
+.escalao-pill-sub14.escalao-pill-active  { background: #5a9a40; color: #fff; }
+.escalao-pill-sub16  { background: #f0f6e8; color: #5a8a30; border-color: #7aba60; }
+.escalao-pill-sub16.escalao-pill-active  { background: #7aba60; color: #1a3a10; }
+.escalao-pill-sub18  { background: #f4f8ee; color: #5a7a3a; border-color: #a0d480; }
+.escalao-pill-sub18.escalao-pill-active  { background: #a0d480; color: #1a3a10; }
+.escalao-pill-sub21, .escalao-pill-sub24 { background: #f6f8f0; color: #4a6a2a; border-color: #b4d498; }
+.escalao-pill-sub21.escalao-pill-active, .escalao-pill-sub24.escalao-pill-active { background: #b4d498; color: #1a3a10; }
+.escalao-pill-absoluto { background: #f4f6ee; color: #2a4a18; border-color: #c8d8b4; }
+.escalao-pill-absoluto.escalao-pill-active { background: #c8d8b4; color: #2a4a18; }
+.escalao-pill-snior, .escalao-pill-senior { background: #f0f0ea; color: #3a4a28; border-color: #d8dcc8; }
+.escalao-pill-snior.escalao-pill-active, .escalao-pill-senior.escalao-pill-active { background: #d8dcc8; color: #3a4a28; }
+.escalao-pill-outros { background: #f0f0f0; color: #666; border-color: #ccc; }
+.escalao-pill-outros.escalao-pill-active { background: #ccc; color: #333; }
 
 /* HCP Badge â€” 2-line block next to name */
 .jog-hcp-badge {
@@ -1490,6 +1586,8 @@ a.dateLink .tee-date { text-decoration: underline; text-underline-offset: 2px; }
   .detail-header { flex-direction: column; }
   .detail-header-top { flex-direction: column; align-items: flex-start; }
   .toolbar-left { flex-wrap: wrap; }
+  .escalao-pills { gap: 2px; }
+  .escalao-pill { font-size: 10px; padding: 1px 6px; }
 }
 
 

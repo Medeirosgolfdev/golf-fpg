@@ -17,9 +17,9 @@ import TeePill from "../ui/TeePill";
 import TeeDate from "../ui/TeeDate";
 import { loadPlayerStats, type PlayerStatsDb } from "../data/playerStatsTypes";
 
-/* ══════════════════════════════════════════
+/* ────────────────────────────────────────────────────────────────────────────────────
    Utility functions (port from client JS)
-   ══════════════════════════════════════════ */
+   ──────────────────────────────────────────────────────────────────────────────────── */
 
 type Props = { players: PlayersDb; courses?: Course[] };
 type SexFilter = "ALL" | "M" | "F";
@@ -44,9 +44,9 @@ function findCourseKey(courseName: string): string | null {
 
 const scHostStyle: React.CSSProperties = { margin: "6px 8px", border: "1px solid var(--line, #d5dac9)", borderRadius: 14, background: "#fff", padding: 10, overflow: "hidden" };
 
-/* ════════════════════════════════════════════
+/* ────────────────────────────────────────────────────────────────────────────────────────
    Micro-components
-   ════════════════════════════════════════════ */
+   ──────────────────────────────────────────────────────────────────────────────────────── */
 
 function GrossCell({ gross, par }: { gross: number | null; par: number | null }) {
   const { text, delta, cls } = fmtGrossDelta(gross, par);
@@ -133,9 +133,9 @@ function CourseLink({ name }: { name: string }) {
   );
 }
 
-/* ════════════════════════════════════════════
+/* ────────────────────────────────────────────────────────────────────────────────────────
    By Date View
-   ════════════════════════════════════════════ */
+   ──────────────────────────────────────────────────────────────────────────────────────── */
 
 function ByDateView({ data, search, onScoreClick }: {
   data: PlayerPageData; search: string; onScoreClick: (id: string) => void;
@@ -199,9 +199,9 @@ function ByDateView({ data, search, onScoreClick }: {
   );
 }
 
-/* ════════════════════════════════════════════
+/* ────────────────────────────────────────────────────────────────────────────────────────
    By Course View
-   ════════════════════════════════════════════ */
+   ──────────────────────────────────────────────────────────────────────────────────────── */
 
 /* ─── Tee Summary Table (compact, for simple by_course view) ─── */
 function TeeSummaryTable({ rounds }: { rounds: RoundData[] }) {
@@ -793,9 +793,9 @@ function ByCourseView({ data, search, sort, isAnalysis }: {
   );
 }
 
-/* ════════════════════════════════════════════
+/* ────────────────────────────────────────────────────────────────────────────────────────
    Eclectic Section (inside course detail)
-   ════════════════════════════════════════════ */
+   ──────────────────────────────────────────────────────────────────────────────────────── */
 
 function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, activeTee, onSelectTee }: {
   ecList: EclecticEntry[]; ecDet: Record<string, EclecticEntry>;
@@ -932,9 +932,9 @@ function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, ac
   );
 }
 
-/* ════════════════════════════════════════════
+/* ────────────────────────────────────────────────────────────────────────────────────────
    Hole Stats Section
-   ════════════════════════════════════════════ */
+   ──────────────────────────────────────────────────────────────────────────────────────── */
 
 /* ─── Course Performance Analysis (KPIs + Conclusion) ─── */
 function CoursePerformanceSection({ rounds }: { rounds: RoundData[] }) {
@@ -1107,7 +1107,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
 
   return (
     <div className="holeAnalysis">
-      <div className="haTitle">📊 Análise de Performance <span className="muted" style={{ fontSize: 11 }}>({stats.nRounds} rondas)</span></div>
+      <div className="haTitle">ðŸ“Š Análise de Performance <span className="muted" style={{ fontSize: 11 }}>({stats.nRounds} rondas)</span></div>
 
       {/* Diagnosis cards */}
       <div className="haDiag">
@@ -1399,9 +1399,9 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
   );
 }
 
-/* ════════════════════════════════════════════
+/* ────────────────────────────────────────────────────────────────────────────────────────
    Analysis View — KPIs, Histogram, Trajectory, Records, WHS, Last 20, Cross
-   ════════════════════════════════════════════ */
+   ──────────────────────────────────────────────────────────────────────────────────────── */
 
 function AnalysisView({ data }: { data: PlayerPageData }) {
   const [histPeriod, setHistPeriod] = useState(12);
@@ -1467,7 +1467,7 @@ function AnalysisView({ data }: { data: PlayerPageData }) {
           <KPICard title="Best 20% (média)" val={best20?.toFixed(1) ?? null}
             sub={`Gross 18B (${n20} de ${sorted.length})`}
             tip="Média dos melhores 20% dos resultados gross." />
-          <KPICard title="Consistência (σ)" val={kpiSigma?.toFixed(2) ?? null}
+          <KPICard title="Consistência (Ïƒ)" val={kpiSigma?.toFixed(2) ?? null}
             sub={`Gross 18B (${sorted.length} rondas)`}
             tip="Desvio padrão do gross. Menor = mais consistente." />
         </div>
@@ -1659,7 +1659,7 @@ function RecordsCard({ rounds, period, setPeriod }: {
       </div>
       {!records ? <div className="muted">Sem dados</div> : (
         <div>
-          <RecLine label="🏆 Melhor Gross" r={records.bestGross} field="gross" />
+          <RecLine label="ðŸ─† Melhor Gross" r={records.bestGross} field="gross" />
           <RecLine label="📉 Melhor SD" r={records.bestSd} field="sd" />
           <RecLine label="⭐ Melhor Stb" r={records.bestStb} field="stb" />
           <RecLine label="💀 Pior Gross" r={records.worstGross} field="gross" />
@@ -1840,7 +1840,7 @@ function CrossAnalysis({ data }: { data: PlayerPageData }) {
 
   return (
     <div className="an-card" style={{ marginTop: 24 }}>
-      <div className="an-k-title" style={{ fontSize: 18, marginBottom: 16 }}>📊 Cross-Análise por Escalão</div>
+      <div className="an-k-title" style={{ fontSize: 18, marginBottom: 16 }}>ðŸ“Š Cross-Análise por Escalão</div>
       {/* Tabs */}
       <div className="cross-tabs" style={{ display: "flex", gap: 4, flexWrap: "wrap", marginBottom: 12 }}>
         {escalaos.map(esc => (
@@ -2083,7 +2083,7 @@ function CommonCourses({ players, currentFed, escName }: {
               <div style={{ display: "flex", flexWrap: "wrap", gap: "2px 10px", fontSize: 11, marginTop: 4 }}>
                 {cc.players.map((mp, mr) => {
                   const isCur = mp.fed === currentFed;
-                  const medal = mr === 0 ? "🥇" : mr === 1 ? "🥈" : mr === 2 ? "🥉" : `${mr + 1}º`;
+                  const medal = mr === 0 ? "ðŸ¥‡" : mr === 1 ? "ðŸ¥ˆ" : mr === 2 ? "ðŸ¥‰" : `${mr + 1}º`;
                   return (
                     <span key={mp.fed} style={{ fontWeight: isCur ? 700 : 400, color: isCur ? "#16a34a" : undefined }}>
                       {medal} {mp.name.split(" ")[0]} <b>{mp.best ?? "–"}</b>
@@ -2475,9 +2475,9 @@ function TournRoundRow({ r, idx, data }: {
   );
 }
 
-/* ════════════════════════════════════════════
+/* ────────────────────────────────────────────────────────────────────────────────────────
    By Tournament View
-   ════════════════════════════════════════════ */
+   ──────────────────────────────────────────────────────────────────────────────────────── */
 
 function ByTournamentView({ data, search }: { data: PlayerPageData; search: string }) {
   const items = useMemo(() => {
@@ -2711,9 +2711,9 @@ function ByTournamentView({ data, search }: { data: PlayerPageData; search: stri
   );
 }
 
-/* ════════════════════════════════════════════
+/* ────────────────────────────────────────────────────────────────────────────────────────
    Player Detail — data loading + view switching
-   ════════════════════════════════════════════ */
+   ──────────────────────────────────────────────────────────────────────────────────────── */
 
 function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; selected: { fed: string } & Player; onMetaLoaded?: (meta: PlayerPageData["META"]) => void }) {
   const [data, setData] = useState<PlayerPageData | null>(null);
@@ -2754,7 +2754,7 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
           {data && (
             <div className="pa-controls-left">
               <input className="input" placeholder="Pesquisar campo…" value={courseSearch}
-                onChange={e => setCourseSearch(e.target.value)} style={{ width: 180 }} />
+                onChange={e => setCourseSearch(e.target.value)} />
               <select className="select" value={view}
                 onChange={e => setView(e.target.value as ViewKey)}>
                 <option value="by_course">Por campo</option>
@@ -2820,16 +2820,16 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
   );
 }
 
-/* ════════════════════════════════════════════
+/* ────────────────────────────────────────────────────────────────────────────────────────
    Main Page — Jogadores (master-detail)
-   ════════════════════════════════════════════ */
+   ──────────────────────────────────────────────────────────────────────────────────────── */
 
 export default function JogadoresPage({ players, courses }: Props) {
   const { fed: urlFed } = useParams<{ fed?: string }>();
   const navigate = useNavigate();
   const [q, setQ] = useState("");
   const [sexFilter, setSexFilter] = useState<SexFilter>("ALL");
-  const [escalaoFilter, setEscalaoFilter] = useState<string>("ALL");
+  const [escalaoFilter, setEscalaoFilter] = useState<Set<string>>(new Set(["Sub-10", "Sub-12", "Sub-14"]));
   const [regionFilter, setRegionFilter] = useState<string>("ALL");
   const [sortKey, setSortKey] = useState<SortKey>("name");
   const [selectedFed, setSelectedFed] = useState<string | null>(urlFed ?? null);
@@ -2882,9 +2882,10 @@ export default function JogadoresPage({ players, courses }: Props) {
     [players]);
 
   const escaloes = useMemo(() => {
-    const s = new Set<string>();
-    allPlayers.forEach(p => p.escalao && s.add(p.escalao));
-    return [...s].sort((a, b) => a.localeCompare(b, "pt"));
+    const order = ["Sub-10", "Sub-12", "Sub-14", "Sub-16", "Sub-18", "Sub-21", "Sub-24", "Absoluto", "Sénior", "Outros"];
+    const present = new Set<string>();
+    allPlayers.forEach(p => p.escalao && present.add(p.escalao));
+    return order.filter(e => present.has(e));
   }, [allPlayers]);
 
   const regions = useMemo(() => {
@@ -2892,6 +2893,39 @@ export default function JogadoresPage({ players, courses }: Props) {
     allPlayers.forEach(p => p.region && s.add(p.region));
     return [...s].sort((a, b) => a.localeCompare(b, "pt"));
   }, [allPlayers]);
+
+  const toggleEscalao = (esc: string) => {
+    setEscalaoFilter(prev => {
+      const next = new Set(prev);
+      if (next.has(esc)) next.delete(esc);
+      else next.add(esc);
+      return next;
+    });
+    selectPlayer(null);
+  };
+
+  const clearEscalao = () => {
+    setEscalaoFilter(new Set());
+  };
+
+  const escalaoCountMap = useMemo(() => {
+    const map: Record<string, number> = {};
+    let list = allPlayers;
+    const qq = norm(q);
+    if (qq) {
+      const words = qq.split(/\s+/).filter(Boolean);
+      list = list.filter(p => {
+        const haystack = norm([p.name, clubShort(p), p.escalao, p.fed, p.region, ...(p.tags || [])].join(" "));
+        return words.every(w => haystack.includes(w));
+      });
+    }
+    if (sexFilter !== "ALL") list = list.filter(p => p.sex === sexFilter);
+    if (regionFilter !== "ALL") list = list.filter(p => p.region === regionFilter);
+    for (const p of list) {
+      if (p.escalao) map[p.escalao] = (map[p.escalao] || 0) + 1;
+    }
+    return map;
+  }, [allPlayers, q, sexFilter, regionFilter]);
 
   const filtered = useMemo(() => {
     const qq = norm(q);
@@ -2904,7 +2938,7 @@ export default function JogadoresPage({ players, courses }: Props) {
       });
     }
     if (sexFilter !== "ALL") list = list.filter(p => p.sex === sexFilter);
-    if (escalaoFilter !== "ALL") list = list.filter(p => p.escalao === escalaoFilter);
+    if (escalaoFilter.size > 0) list = list.filter(p => escalaoFilter.has(p.escalao));
     if (regionFilter !== "ALL") list = list.filter(p => p.region === regionFilter);
     // Trend filter
     if (trendFilter !== "ALL") {
@@ -2957,14 +2991,30 @@ export default function JogadoresPage({ players, courses }: Props) {
             {sidebarOpen ? "◀" : "▶"}
           </button>
           <input className="input" value={q} onChange={e => { setQ(e.target.value); selectPlayer(null); }}
-            placeholder="Nome, clube, n.º federado…" style={{ width: 180 }} />
+            placeholder="Nome, clube, n.º federado…" />
           <select className="select" value={sexFilter} onChange={e => setSexFilter(e.target.value as SexFilter)}>
             <option value="ALL">Sexo</option><option value="M">Masculino</option><option value="F">Feminino</option>
           </select>
-          <select className="select" value={escalaoFilter} onChange={e => setEscalaoFilter(e.target.value)}>
-            <option value="ALL">Escalão</option>
-            {escaloes.map(e => <option key={e} value={e}>{e}</option>)}
-          </select>
+          <div className="escalao-pills">
+            {escalaoFilter.size > 0 && (
+              <button className="escalao-pill escalao-pill-clear" onClick={clearEscalao} title="Limpar filtros">✕</button>
+            )}
+            {escaloes.map(esc => {
+              const active = escalaoFilter.has(esc);
+              const cls = esc.toLowerCase().replace(/[^a-z0-9]/g, "");
+              const count = escalaoCountMap[esc] || 0;
+              return (
+                <button
+                  key={esc}
+                  className={`escalao-pill escalao-pill-${cls}${active ? " escalao-pill-active" : ""}`}
+                  onClick={() => toggleEscalao(esc)}
+                  title={`${esc} (${count})`}
+                >
+                  {esc.replace("Sub-", "S")}{count > 0 && <span className="escalao-pill-count">{count}</span>}
+                </button>
+              );
+            })}
+          </div>
           <select className="select" value={regionFilter} onChange={e => setRegionFilter(e.target.value)}>
             <option value="ALL">Região</option>
             {regions.map(r => <option key={r} value={r}>{r}</option>)}
@@ -2975,12 +3025,11 @@ export default function JogadoresPage({ players, courses }: Props) {
           </select>
           <div className="filter-divider" />
           <select className="select" value={trendFilter}
-            onChange={e => setTrendFilter(e.target.value as TrendFilter)}
-            style={{ fontSize: 11, minWidth: 85 }}>
+            onChange={e => setTrendFilter(e.target.value as TrendFilter)}>
             <option value="ALL">Tendência</option>
-            <option value="up">📈 Em subida</option>
+            <option value="up">ðŸ“ˆ Subida</option>
             <option value="stable">➡️ Estável</option>
-            <option value="down">📉 Em descida</option>
+            <option value="down">ðŸ“‰ Descida</option>
           </select>
           <button className={`ranking-toggle${rankingMode ? " active" : ""}`}
             onClick={() => {
@@ -2988,7 +3037,7 @@ export default function JogadoresPage({ players, courses }: Props) {
               if (!rankingMode) setSortKey("ranking");
               else setSortKey("name");
             }}>
-            🏆 Ranking
+            ðŸ─† Ranking
           </button>
         </div>
         <div className="toolbar-right">
