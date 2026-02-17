@@ -9,9 +9,10 @@ import { getExtraCourses } from "./data/extraCourses";
 import type { Course, MasterData, PlayersDb } from "./data/types";
 import CamposPage from "./pages/CamposPage";
 import JogadoresPage from "./pages/JogadoresPage";
+import CompararPage from "./pages/CompararPage";
 import SimuladorPage from "./pages/SimuladorPage";
 import TorneioPage from "./pages/TorneioPage";
-import CompararPage from "./pages/CompararPage";
+import CalendarioPage from "./pages/CalendarioPage";
 import golfBallSvg from "./assets/golf-ball.svg";
 
 import melhoriasJson from "../melhorias.json";
@@ -84,7 +85,10 @@ export default function App() {
             Simulador
           </NavLink>
           <NavLink to="/torneio" className={({ isActive }) => `nav-btn ${isActive ? "active" : ""}`} style={{ position: "relative" }}>
-            🔒 Torneio
+            🔑 Torneio
+          </NavLink>
+          <NavLink to="/calendario" className={({ isActive }) => `nav-btn ${isActive ? "active" : ""}`}>
+            📅 Calendário
           </NavLink>
         </nav>
 
@@ -126,6 +130,7 @@ export default function App() {
             <Route path="/comparar" element={<CompararPage players={status.players} />} />
             <Route path="/simulador" element={<SimuladorPage courses={simCourses} />} />
             <Route path="/torneio" element={<TorneioPage players={status.players} onSelectPlayer={goToPlayer} />} />
+            <Route path="/calendario" element={<CalendarioPage />} />
             <Route path="*" element={<Navigate to="/jogadores" replace />} />
           </Routes>
         )}
