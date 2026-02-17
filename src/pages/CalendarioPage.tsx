@@ -1,9 +1,17 @@
 /**
- * CalendarioPage.tsx — Calendário CGSS Época 2026
+ * CalendarioPage.tsx — Calendário Multi-Fonte 2026
  *
- * Vista mensal tipo Google Calendar com todas as provas do
- * Calendário Geral do Clube de Golf Santo da Serra.
- * Código de cores conforme legenda oficial.
+ * Código de cores:
+ *  • Azuis — CGSS Santo da Serra (Majors, O.M., Pares, Regional, etc.)
+ *  • Violeta — Drive Challenge (todas as zonas)
+ *  • Verde — Drive Tour (Sul/Norte/Tejo)
+ *  • Esmeralda — Drive Tour Madeira
+ *  • Índigo — Circuito AQUAPOR
+ *  • Roxo — Torneios FPG
+ *  • Vermelho/Laranja — Internacionais & Nacionais em destaque
+ *
+ * Drive Challenge/Tour Madeira: entradas do CGSS ocultadas
+ * quando duplicam a mesma prova no calendário FPG.
  */
 import { useState, useRef, useEffect, useMemo } from "react";
 
@@ -12,198 +20,350 @@ interface CalEvent {
   id: number;
   title: string;
   date: Date;
-  endDate?: Date;          // multi-day events
+  endDate?: Date;
   modalidade: string;
   campo: string;
-  circuito: CircuitType;
+  calId: string;
 }
 
-type CircuitType =
-  | "OM_A"          // Torneios do clube majors - nível A
-  | "OM_B"          // Torneios O.M nível B
-  | "OM_C"          // Torneios O.M nível C
-  | "PATROCINADOR"  // Torneios de patrocinador (X)
-  | "REGIONAL"      // Campeonatos de Golfe Regionais
-  | "REGIONAL_JR"   // Torneios juniores / circuitos regionais
-  | "NAC_JR"        // Torneios juniores / campeonatos Nacionais
-  | "OURO"          // Torneios ranking Ouro
-  | "PARES"         // Campeonato de Pares
-  | "FPG"           // FPG Nacional
-  | "INT_JR";       // Internacional Junior (Faldo)
+interface CalendarSource {
+  id: string;
+  name: string;
+  color: string;
+  group: "CGSS" | "DRIVE" | "FPG" | "DESTAQUE";
+}
 
-const CIRCUIT_META: Record<CircuitType, { label: string; color: string; bg: string }> = {
-  OM_A:          { label: "Majors — Nível A",         color: "#fff",  bg: "#c27c0e" },
-  OM_B:          { label: "O.M. Nível B",             color: "#fff",  bg: "#2d6a30" },
-  OM_C:          { label: "O.M. Nível C",             color: "#fff",  bg: "#5a8f5c" },
-  PATROCINADOR:  { label: "Patrocinador",             color: "#fff",  bg: "#6b7280" },
-  REGIONAL:      { label: "Regional",                 color: "#fff",  bg: "#0369a1" },
-  REGIONAL_JR:   { label: "Regional Juniores",        color: "#fff",  bg: "#7c3aed" },
-  NAC_JR:        { label: "Nacional Juniores",         color: "#fff",  bg: "#dc2626" },
-  OURO:          { label: "Ranking Ouro",             color: "#1a1a1a", bg: "#fbbf24" },
-  PARES:         { label: "Camp. Pares",              color: "#fff",  bg: "#0d9488" },
-  FPG:           { label: "FPG Nacional",             color: "#fff",  bg: "#be123c" },
-  INT_JR:        { label: "Internacional Junior",     color: "#fff",  bg: "#0891b2" },
-};
+/* ═══ Calendar Sources ═══ */
+const CALENDARS: CalendarSource[] = [
+  // ── CGSS Santo da Serra — azuis ──
+  { id: "cgss_major",     name: "Majors (A)",         color: "#1e3a8a", group: "CGSS" },
+  { id: "cgss_om_b",      name: "O.M. Nível B",       color: "#2563eb", group: "CGSS" },
+  { id: "cgss_om_c",      name: "O.M. Nível C",       color: "#60a5fa", group: "CGSS" },
+  { id: "cgss_pares",     name: "Camp. Pares",        color: "#0891b2", group: "CGSS" },
+  { id: "cgss_ouro",      name: "Ranking Ouro",       color: "#0ea5e9", group: "CGSS" },
+  { id: "cgss_patrocin",  name: "Patrocinador",       color: "#64748b", group: "CGSS" },
+  { id: "cgss_regional",  name: "Regional",           color: "#0284c7", group: "CGSS" },
+  { id: "cgss_fpg",       name: "FPG Nacional",       color: "#4338ca", group: "CGSS" },
 
-/* ═══ Events Data — CGSS 2026 ═══ */
+  // ── Drive — violeta / verde ──
+  { id: "drive_chall",    name: "Drive Challenge",     color: "#8b5cf6", group: "DRIVE" },
+  { id: "drive_tour",     name: "Drive Tour",          color: "#16a34a", group: "DRIVE" },
+  { id: "drive_tour_mad", name: "Drive Tour Madeira",  color: "#059669", group: "DRIVE" },
+
+  // ── FPG ──
+  { id: "fpg_aquapor",    name: "Circuito AQUAPOR",    color: "#6366f1", group: "FPG" },
+  { id: "fpg_torneios",   name: "Torneios FPG",        color: "#a855f7", group: "FPG" },
+
+  // ── Destaque — vermelho / laranja ──
+  { id: "dest_intl",      name: "Internacionais",      color: "#dc2626", group: "DESTAQUE" },
+  { id: "dest_nac_jr",    name: "Nacional Sub14&18",    color: "#dc2626", group: "DESTAQUE" },
+  { id: "dest_uskids",    name: "US Kids International",color: "#e11d48", group: "DESTAQUE" },
+  { id: "dest_uskids_tbc",name: "US Kids (a confirmar)",color: "#94a3b8", group: "DESTAQUE" },
+  { id: "dest_bjgt",      name: "BJGT",                color: "#be123c", group: "DESTAQUE" },
+  { id: "dest_pja",       name: "PJA Tour",            color: "#d946ef", group: "DESTAQUE" },
+  { id: "pessoal",        name: "🎂 Pessoal",          color: "#39ff14", group: "DESTAQUE" },
+  { id: "treino",         name: "⛳ Campo / Treino",    color: "#10b981", group: "DESTAQUE" },
+];
+
+const CAL_MAP = new Map(CALENDARS.map(c => [c.id, c]));
+
+/* ═══ Events ═══ */
+let _id = 0;
+const ev = (calId: string, title: string, d: Date, campo: string, mod = "", end?: Date): CalEvent =>
+  ({ id: ++_id, calId, title, date: d, endDate: end, campo, modalidade: mod });
+
 const EVENTS: CalEvent[] = [
-  // FEVEREIRO
-  { id: 1, title: "2º Torneio DRIVE Tour Madeira", date: new Date(2026, 1, 7), modalidade: "Strokeplay e Medal", campo: "Santo da Serra", circuito: "REGIONAL_JR" },
-  { id: 2, title: "2º Torneio DRIVE Challenge Madeira", date: new Date(2026, 1, 8), modalidade: "Strokeplay e Medal", campo: "Santo da Serra", circuito: "REGIONAL_JR" },
-  { id: 3, title: "Torneio de Carnaval CGSS", date: new Date(2026, 1, 14), modalidade: "Stableford", campo: "Santo da Serra", circuito: "OM_C" },
-  { id: 4, title: "II Prova Camp. Clube de Pares 2026", date: new Date(2026, 1, 28), modalidade: "Foursomes", campo: "Santo da Serra", circuito: "PARES" },
-  { id: 5, title: "Campeonato Regional de Jovens D1", date: new Date(2026, 1, 28), modalidade: "Strokeplay", campo: "Santo da Serra", circuito: "REGIONAL_JR" },
-  // MARÇO
-  { id: 6, title: "Campeonato Regional de Jovens D2", date: new Date(2026, 2, 1), modalidade: "Strokeplay", campo: "Santo da Serra", circuito: "REGIONAL_JR" },
-  { id: 7, title: "3º Torneio DRIVE Tour Madeira", date: new Date(2026, 2, 7), modalidade: "Strokeplay e Medal", campo: "Palheiro Golf", circuito: "REGIONAL_JR" },
-  { id: 8, title: "3º Torneio DRIVE Challenge Madeira", date: new Date(2026, 2, 8), modalidade: "Strokeplay e Medal", campo: "Palheiro Golf", circuito: "REGIONAL_JR" },
-  { id: 9, title: "Torneio da Primavera CGSS", date: new Date(2026, 2, 14), modalidade: "Stableford", campo: "Santo da Serra", circuito: "OM_C" },
-  { id: 10, title: "Torneio Golf & Clássicos 3rd edition", date: new Date(2026, 2, 21), modalidade: "Stableford", campo: "Santo da Serra", circuito: "PATROCINADOR" },
-  { id: 11, title: "Camp. Nacional Clubes Sub14 & 18", date: new Date(2026, 2, 31), endDate: new Date(2026, 3, 2), modalidade: "Strokeplay", campo: "Oporto", circuito: "NAC_JR" },
-  // ABRIL
-  { id: 12, title: "III Prova Camp. Clube de Pares", date: new Date(2026, 3, 11), modalidade: "Stableford Agg", campo: "Santo da Serra", circuito: "PARES" },
-  { id: 13, title: "4º Torneio DRIVE Tour Madeira", date: new Date(2026, 3, 11), modalidade: "Strokeplay e Medal", campo: "Porto Santo", circuito: "REGIONAL_JR" },
-  { id: 14, title: "4º Torneio DRIVE Challenge Madeira", date: new Date(2026, 3, 12), modalidade: "Strokeplay e Medal", campo: "Porto Santo", circuito: "REGIONAL_JR" },
-  { id: 15, title: "Torneio CGSS", date: new Date(2026, 3, 25), modalidade: "Stableford", campo: "Santo da Serra", circuito: "OM_C" },
-  // MAIO
-  { id: 16, title: "Camp. Nacional de Jovens", date: new Date(2026, 4, 1), endDate: new Date(2026, 4, 3), modalidade: "Strokeplay", campo: "Aroeira", circuito: "NAC_JR" },
-  { id: 17, title: "I Aberto CGSS 2026", date: new Date(2026, 4, 3), modalidade: "Strokeplay", campo: "Santo da Serra", circuito: "OURO" },
-  { id: 18, title: "Torneio Cidade de Machico", date: new Date(2026, 4, 9), modalidade: "Stableford 13pm", campo: "Santo da Serra", circuito: "PATROCINADOR" },
-  { id: 19, title: "Torneio NOS Empresas", date: new Date(2026, 4, 23), modalidade: "Stableford", campo: "Santo da Serra", circuito: "OM_B" },
-  { id: 20, title: "5º Torneio DRIVE Challenge Madeira", date: new Date(2026, 4, 24), modalidade: "Strokeplay e Medal", campo: "Santo da Serra", circuito: "REGIONAL_JR" },
-  { id: 21, title: "Torneio Clube de Golf Santo da Serra", date: new Date(2026, 4, 30), modalidade: "Stableford", campo: "Santo da Serra", circuito: "OM_B" },
-  // JUNHO
-  { id: 22, title: "Madeira Golf Trophy", date: new Date(2026, 5, 6), modalidade: "Strokeplay", campo: "Santo da Serra", circuito: "PATROCINADOR" },
-  { id: 23, title: "Camp. Nacional Ind. Absoluto", date: new Date(2026, 5, 4), endDate: new Date(2026, 5, 7), modalidade: "Strokeplay", campo: "Oporto", circuito: "FPG" },
-  { id: 24, title: "Torneio Diário de Notícias da Madeira", date: new Date(2026, 5, 13), modalidade: "Stableford", campo: "Santo da Serra", circuito: "PATROCINADOR" },
-  { id: 25, title: "Camp. Regional de Clubes D1", date: new Date(2026, 5, 20), modalidade: "Strokeplay", campo: "Palheiro", circuito: "REGIONAL" },
-  { id: 26, title: "Camp. Regional de Clubes D2", date: new Date(2026, 5, 21), modalidade: "Strokeplay", campo: "Palheiro", circuito: "REGIONAL" },
-  { id: 27, title: "6º Torneio DRIVE Challenge Madeira", date: new Date(2026, 5, 28), modalidade: "Strokeplay e Medal", campo: "Porto Santo", circuito: "REGIONAL_JR" },
-  // JULHO
-  { id: 28, title: "IV Prova Camp. Clube de Pares", date: new Date(2026, 6, 4), modalidade: "Texas Scramble", campo: "Santo da Serra", circuito: "PARES" },
-  { id: 29, title: "7º Torneio DRIVE Challenge Madeira", date: new Date(2026, 6, 11), modalidade: "Strokeplay e Medal", campo: "Santo da Serra", circuito: "REGIONAL_JR" },
-  { id: 30, title: "Final Regional DRIVE Challenge", date: new Date(2026, 6, 12), modalidade: "Strokeplay e Medal", campo: "Palheiro Golf", circuito: "REGIONAL_JR" },
-  { id: 31, title: "Taça do Clube", date: new Date(2026, 6, 25), modalidade: "Medal", campo: "Santo da Serra", circuito: "OM_A" },
-  // AGOSTO
-  { id: 32, title: "Torneio CGSS Rali", date: new Date(2026, 7, 1), modalidade: "Stableford", campo: "Santo da Serra", circuito: "OM_C" },
-  { id: 33, title: "Torneio Calheta Viva", date: new Date(2026, 7, 8), modalidade: "Stableford 13pm", campo: "Santo da Serra", circuito: "PATROCINADOR" },
-  { id: 34, title: "Torneio CGSS Summer", date: new Date(2026, 7, 22), modalidade: "Stableford", campo: "Santo da Serra", circuito: "OM_C" },
-  { id: 35, title: "Camp. Nacional de Clubes", date: new Date(2026, 7, 25), endDate: new Date(2026, 7, 28), modalidade: "Strokeplay", campo: "Pinhal", circuito: "FPG" },
-  { id: 36, title: "Torneio CGSS", date: new Date(2026, 7, 29), modalidade: "Stableford", campo: "Santo da Serra", circuito: "OM_C" },
-  // SETEMBRO
-  { id: 37, title: "Torneio Quinta de São João", date: new Date(2026, 8, 5), modalidade: "Stableford 13pm", campo: "Santo da Serra", circuito: "PATROCINADOR" },
-  { id: 38, title: "XIII Torneio Barbeito Madeira", date: new Date(2026, 8, 12), modalidade: "Stableford", campo: "Santo da Serra", circuito: "OM_B" },
-  { id: 39, title: "Porto Santo Colombos", date: new Date(2026, 8, 19), modalidade: "", campo: "Porto Santo", circuito: "PATROCINADOR" },
-  // OUTUBRO
-  { id: 40, title: "Faldo Series Madeira", date: new Date(2026, 9, 1), endDate: new Date(2026, 9, 3), modalidade: "Strokeplay", campo: "Santo da Serra", circuito: "INT_JR" },
-  { id: 41, title: "Torneio CGEx ZMM", date: new Date(2026, 9, 4), modalidade: "Stableford", campo: "Santo da Serra", circuito: "PATROCINADOR" },
-  { id: 42, title: "Torneio Serras / São Martinho CGSS", date: new Date(2026, 9, 10), modalidade: "Stableford", campo: "Santo da Serra", circuito: "OM_C" },
-  { id: 43, title: "Taça FPG", date: new Date(2026, 9, 10), endDate: new Date(2026, 9, 13), modalidade: "Strokeplay e Match", campo: "Ribagolfe", circuito: "NAC_JR" },
-  { id: 44, title: "Troféu João Sousa", date: new Date(2026, 9, 17), modalidade: "Stableford", campo: "Santo da Serra", circuito: "OM_A" },
-  { id: 45, title: "V Prova Camp. Clube de Pares", date: new Date(2026, 9, 24), modalidade: "Stableford Agg", campo: "Santo da Serra", circuito: "PARES" },
-  { id: 46, title: "Taça Presidente", date: new Date(2026, 9, 31), modalidade: "Stableford", campo: "Santo da Serra", circuito: "OM_A" },
-  // NOVEMBRO
-  { id: 47, title: "Torneio de São Martinho CGSS", date: new Date(2026, 10, 7), modalidade: "Stableford", campo: "Santo da Serra", circuito: "OM_C" },
-  { id: 48, title: "Taça 1937 — Gala Encerramento", date: new Date(2026, 10, 21), modalidade: "Stableford", campo: "Santo da Serra", circuito: "PATROCINADOR" },
-  { id: 49, title: "Camp. Regional Individual Absoluto D1", date: new Date(2026, 10, 28), modalidade: "Strokeplay", campo: "Santo da Serra", circuito: "REGIONAL" },
-  { id: 50, title: "Camp. Regional Individual Absoluto D2", date: new Date(2026, 10, 29), modalidade: "Strokeplay", campo: "Santo da Serra", circuito: "REGIONAL" },
-  // DEZEMBRO
-  { id: 51, title: "Torneio Solidário", date: new Date(2026, 11, 5), modalidade: "Stableford", campo: "Santo da Serra", circuito: "PATROCINADOR" },
-  { id: 52, title: "Torneio de Natal CGSS 2026", date: new Date(2026, 11, 12), modalidade: "Stableford", campo: "Santo da Serra", circuito: "OM_C" },
-  { id: 53, title: "Torneio Famílias & Amigos — P&P", date: new Date(2026, 11, 19), modalidade: "Texas Scramble", campo: "Santo da Serra", circuito: "PATROCINADOR" },
+
+  /* ══════════════════════════════════════
+     CGSS — Santo da Serra (azuis)
+     ══════════════════════════════════════ */
+
+  // Fevereiro
+  ev("cgss_om_c",     "Torneio de Carnaval CGSS",            new Date(2026,1,14), "Santo da Serra", "Stableford"),
+  ev("cgss_pares",    "II Prova Camp. Clube de Pares 2026",  new Date(2026,1,28), "Santo da Serra", "Foursomes"),
+  ev("cgss_regional", "Campeonato Regional de Jovens D1",    new Date(2026,1,28), "Santo da Serra", "Strokeplay"),
+  // Março
+  ev("cgss_regional", "Campeonato Regional de Jovens D2",    new Date(2026,2,1),  "Santo da Serra", "Strokeplay"),
+  ev("cgss_om_c",     "Torneio da Primavera CGSS",           new Date(2026,2,14), "Santo da Serra", "Stableford"),
+  ev("cgss_patrocin", "Torneio Golf & Clássicos 3rd edition",new Date(2026,2,21), "Santo da Serra", "Stableford"),
+  // Abril
+  ev("cgss_pares",    "III Prova Camp. Clube de Pares",       new Date(2026,3,11), "Santo da Serra", "Stableford Agg"),
+  ev("cgss_om_c",     "Torneio CGSS",                        new Date(2026,3,25), "Santo da Serra", "Stableford"),
+  // Maio
+  ev("cgss_ouro",     "I Aberto CGSS 2026",                  new Date(2026,4,3),  "Santo da Serra", "Strokeplay"),
+  ev("cgss_patrocin", "Torneio Cidade de Machico",           new Date(2026,4,9),  "Santo da Serra", "Stableford 13pm"),
+  ev("cgss_om_b",     "Torneio NOS Empresas",                new Date(2026,4,23), "Santo da Serra", "Stableford"),
+  ev("cgss_om_b",     "Torneio Clube de Golf Santo da Serra", new Date(2026,4,30), "Santo da Serra", "Stableford"),
+  // Junho
+  ev("cgss_fpg",      "Camp. Nacional Ind. Absoluto",        new Date(2026,5,4),  "Oporto",         "Strokeplay", new Date(2026,5,7)),
+  ev("cgss_patrocin", "Madeira Golf Trophy",                 new Date(2026,5,6),  "Santo da Serra", "Strokeplay"),
+  ev("cgss_patrocin", "Torneio Diário de Notícias da Madeira", new Date(2026,5,13), "Santo da Serra", "Stableford"),
+  ev("cgss_regional", "Camp. Regional de Clubes D1",         new Date(2026,5,20), "Palheiro",       "Strokeplay"),
+  ev("cgss_regional", "Camp. Regional de Clubes D2",         new Date(2026,5,21), "Palheiro",       "Strokeplay"),
+  // Julho
+  ev("cgss_pares",    "IV Prova Camp. Clube de Pares",       new Date(2026,6,4),  "Santo da Serra", "Texas Scramble"),
+  ev("cgss_major",    "Taça do Clube",                       new Date(2026,6,25), "Santo da Serra", "Medal"),
+  // Agosto
+  ev("cgss_om_c",     "Torneio CGSS Rali",                  new Date(2026,7,1),  "Santo da Serra", "Stableford"),
+  ev("cgss_patrocin", "Torneio Calheta Viva",               new Date(2026,7,8),  "Santo da Serra", "Stableford 13pm"),
+  ev("cgss_om_c",     "Torneio CGSS Summer",                new Date(2026,7,22), "Santo da Serra", "Stableford"),
+  ev("cgss_fpg",      "Camp. Nacional de Clubes",           new Date(2026,7,25), "Pinhal",         "Strokeplay", new Date(2026,7,28)),
+  ev("cgss_om_c",     "Torneio CGSS",                       new Date(2026,7,29), "Santo da Serra", "Stableford"),
+  // Setembro
+  ev("cgss_patrocin", "Torneio Quinta de São João",         new Date(2026,8,5),  "Santo da Serra", "Stableford 13pm"),
+  ev("cgss_om_b",     "XIII Torneio Barbeito Madeira",      new Date(2026,8,12), "Santo da Serra", "Stableford"),
+  ev("cgss_patrocin", "Porto Santo Colombos",               new Date(2026,8,19), "Porto Santo",    ""),
+  // Outubro
+  ev("cgss_om_c",     "Torneio Serras / São Martinho CGSS", new Date(2026,9,10), "Santo da Serra", "Stableford"),
+  ev("cgss_patrocin", "Torneio CGEx ZMM",                   new Date(2026,9,4),  "Santo da Serra", "Stableford"),
+  ev("cgss_major",    "Troféu João Sousa",                  new Date(2026,9,17), "Santo da Serra", "Stableford"),
+  ev("cgss_pares",    "V Prova Camp. Clube de Pares",       new Date(2026,9,24), "Santo da Serra", "Stableford Agg"),
+  ev("cgss_major",    "Taça Presidente",                    new Date(2026,9,31), "Santo da Serra", "Stableford"),
+  // Novembro
+  ev("cgss_om_c",     "Torneio de São Martinho CGSS",       new Date(2026,10,7), "Santo da Serra", "Stableford"),
+  ev("cgss_patrocin", "Taça 1937 — Gala Encerramento",      new Date(2026,10,21),"Santo da Serra", "Stableford"),
+  ev("cgss_regional", "Camp. Regional Ind. Absoluto D1",    new Date(2026,10,28),"Santo da Serra", "Strokeplay"),
+  ev("cgss_regional", "Camp. Regional Ind. Absoluto D2",    new Date(2026,10,29),"Santo da Serra", "Strokeplay"),
+  // Dezembro
+  ev("cgss_patrocin", "Torneio Solidário",                  new Date(2026,11,5), "Santo da Serra", "Stableford"),
+  ev("cgss_om_c",     "Torneio de Natal CGSS 2026",         new Date(2026,11,12),"Santo da Serra", "Stableford"),
+  ev("cgss_patrocin", "Torneio Famílias & Amigos — P&P",    new Date(2026,11,19),"Santo da Serra", "Texas Scramble"),
+
+  /* ══════════════════════════════════════
+     DRIVE CHALLENGE — violeta
+     (FPG como fonte principal, CGSS dupes ocultados)
+     ══════════════════════════════════════ */
+  ev("drive_chall", "1º Torneio Drive Challenge Madeira",     new Date(2026,0,4),  "Palheiro",       "Strokeplay e Medal"),
+  ev("drive_chall", "2º Torneio Drive Challenge Madeira",     new Date(2026,1,8),  "Santo da Serra",  "Strokeplay e Medal"),
+  ev("drive_chall", "5º Torneio Drive Challenge Madeira",     new Date(2026,2,8),  "Santo da Serra",  "Strokeplay e Medal"),
+  ev("drive_chall", "4º Torneio Drive Challenge Madeira",     new Date(2026,3,12), "Porto Santo",     "Strokeplay e Medal"),
+  ev("drive_chall", "3º Torneio Drive Challenge Madeira",     new Date(2026,4,24), "Palheiro",        "Strokeplay e Medal"),
+  ev("drive_chall", "6º Torneio Drive Challenge Madeira",     new Date(2026,5,28), "Porto Santo",     "Strokeplay e Medal"),
+  ev("drive_chall", "7º Torneio Drive Challenge Madeira",     new Date(2026,6,11), "Santo da Serra",  "Strokeplay e Medal"),
+  ev("drive_chall", "Final Regional Drive Challenge Madeira", new Date(2026,6,12), "Palheiro",        "Strokeplay e Medal"),
+
+  /* ══════════════════════════════════════
+     DRIVE TOUR — verde (Sul/Norte/Tejo)
+     ══════════════════════════════════════ */
+  // Sul
+  ev("drive_tour", "1º Torneio Drive Tour Sul",   new Date(2026,0,11), "Laguna GC",    "Strokeplay e Medal"),
+  ev("drive_tour", "2º Torneio Drive Tour Sul",   new Date(2026,1,1),  "Vila Sol",     "Strokeplay e Medal"),
+  ev("drive_tour", "3º Torneio Drive Tour Sul",   new Date(2026,3,4),  "Penina (TBC)", "Strokeplay e Medal"),
+  ev("drive_tour", "4º Torneio Drive Tour Sul",   new Date(2026,5,10), "Boavista",     "Strokeplay e Medal"),
+  // Norte
+  ev("drive_tour", "1º Torneio Drive Tour Norte", new Date(2026,0,4),  "Estela GC",      "Strokeplay e Medal"),
+  ev("drive_tour", "2º Torneio Drive Tour Norte", new Date(2026,1,1),  "Amarante",       "Strokeplay e Medal"),
+  ev("drive_tour", "3º Torneio Drive Tour Norte", new Date(2026,1,28), "Vale Pisão",     "Strokeplay e Medal", new Date(2026,2,1)),
+  ev("drive_tour", "4º Torneio Drive Tour Norte", new Date(2026,3,19), "Ponte de Lima",  "Strokeplay e Medal"),
+  // Tejo
+  ev("drive_tour", "1º Torneio Drive Tour Tejo",  new Date(2026,0,4),  "Montado",        "Strokeplay e Medal"),
+  ev("drive_tour", "2º Torneio Drive Tour Tejo",  new Date(2026,0,31), "Belas",          "Strokeplay e Medal"),
+  ev("drive_tour", "3º Torneio Drive Tour Tejo",  new Date(2026,2,28), "St. Estêvão",    "Strokeplay e Medal", new Date(2026,2,29)),
+  ev("drive_tour", "4º Torneio Drive Tour Tejo",  new Date(2026,3,12), "Lisbon SC",      "Strokeplay e Medal"),
+
+  /* ══════════════════════════════════════
+     DRIVE TOUR MADEIRA — esmeralda
+     (FPG como fonte, CGSS dupes ocultados)
+     ══════════════════════════════════════ */
+  ev("drive_tour_mad", "1º Torneio Drive Tour Madeira", new Date(2026,0,3),  "Palheiro Golf",     "Strokeplay e Medal"),
+  ev("drive_tour_mad", "2º Torneio Drive Tour Madeira", new Date(2026,1,7),  "Santo da Serra",    "Strokeplay e Medal"),
+  ev("drive_tour_mad", "3º Torneio Drive Tour Madeira", new Date(2026,2,7),  "Palheiro Golf",     "Strokeplay e Medal"),
+  ev("drive_tour_mad", "4º Torneio Drive Tour Madeira", new Date(2026,3,11), "Porto Santo Golfe", "Strokeplay e Medal"),
+
+  /* ══════════════════════════════════════
+     FPG — Circuito AQUAPOR (índigo)
+     ══════════════════════════════════════ */
+  ev("fpg_aquapor", "1º Torneio do Circuito AQUAPOR",  new Date(2026,0,17), "Morgado do Reguengo", "Strokeplay", new Date(2026,0,18)),
+  ev("fpg_aquapor", "2º Torneio do Circuito AQUAPOR",  new Date(2026,2,14), "Quinta do Peru",      "Strokeplay", new Date(2026,2,15)),
+  ev("fpg_aquapor", "3º Torneio do Circuito AQUAPOR",  new Date(2026,4,16), "Vidago Palace",       "Strokeplay", new Date(2026,4,17)),
+  ev("fpg_aquapor", "4º Torneio do Circuito AQUAPOR",  new Date(2026,6,18), "Palmares",            "Strokeplay", new Date(2026,6,19)),
+  ev("fpg_aquapor", "5º Torneio do Circuito AQUAPOR",  new Date(2026,8,19), "TBC",                 "Strokeplay", new Date(2026,8,20)),
+  ev("fpg_aquapor", "6º Torneio do Circuito AQUAPOR",  new Date(2026,9,17), "Estela",              "Strokeplay", new Date(2026,9,18)),
+  ev("fpg_aquapor", "7º Torneio do Circuito AQUAPOR",  new Date(2026,10,14),"Belas CC",            "Strokeplay", new Date(2026,10,15)),
+
+  /* ══════════════════════════════════════
+     FPG — Torneios (roxo)
+     ══════════════════════════════════════ */
+  ev("fpg_torneios", "Taça Kendall",            new Date(2026,3,25), "Oporto GC",     "Strokeplay", new Date(2026,3,26)),
+  ev("fpg_torneios", "Lisbon Cup",              new Date(2026,4,9),  "Lisbon SC",     "Strokeplay", new Date(2026,4,10)),
+  ev("fpg_torneios", "Aberto do Estoril",       new Date(2026,4,23), "CG Estoril",    "Strokeplay", new Date(2026,4,24)),
+  ev("fpg_torneios", "Taça RS Yeatman",         new Date(2026,5,20), "CG Miramar",    "Strokeplay", new Date(2026,5,21)),
+  ev("fpg_torneios", "Taça Mendes D'Almeida",   new Date(2026,7,15), "Vidago Palace", "Strokeplay", new Date(2026,7,16)),
+  ev("fpg_torneios", "Taça FPG",                new Date(2026,9,10), "Ribagolfe",     "Strokeplay e Match", new Date(2026,9,13)),
+
+  /* ══════════════════════════════════════
+     DESTAQUE — Internacionais (vermelho)
+     ══════════════════════════════════════ */
+  ev("dest_intl", "Faldo Series Madeira",                              new Date(2026,9,1),  "Santo da Serra",              "Strokeplay", new Date(2026,9,3)),
+  ev("dest_intl", "63º Open de Portugal PGA",                          new Date(2026,8,17), "Aroeira I",                   "Strokeplay", new Date(2026,8,20)),
+  ev("dest_intl", "2nd Castro Marim Portuguese International U14",     new Date(2026,11,4), "Championship Quinta do Vale", "Strokeplay", new Date(2026,11,6)),
+  ev("dest_intl", "Greatgolf Junior Open — Luis Figo Foundation",      new Date(2026,1,15), "Vilamoura",                   "Strokeplay", new Date(2026,1,17)),
+
+  /* ══════════════════════════════════════
+     DESTAQUE — Camp. Nacional Sub14 & 18 (laranja)
+     ══════════════════════════════════════ */
+  ev("dest_nac_jr", "Camp. Nacional Clubes Sub14 & 18",  new Date(2026,2,31), "Oporto",  "Strokeplay", new Date(2026,3,2)),
+  ev("dest_nac_jr", "Camp. Nacional de Jovens",          new Date(2026,4,1),  "Aroeira", "Strokeplay", new Date(2026,4,3)),
+
+  /* ══════════════════════════════════════
+     DESTAQUE — US Kids International (rosa)
+     ══════════════════════════════════════ */
+  ev("dest_uskids", "Marco Simone Invitational 2026",    new Date(2026,2,14), "Marco Simone, Guidonia (IT)",      "", new Date(2026,2,15)),
+  // ev("dest_uskids", "Panama Invitational 2026",       new Date(2026,3,2),  "Panamá",                           "", new Date(2026,3,4)),
+  // ev("dest_uskids", "Thailand Championship 2026",     new Date(2026,3,3),  "Tailândia",                        "", new Date(2026,3,5)),
+  // ev("dest_uskids", "Australian Masters 2026",        new Date(2026,3,9),  "Austrália",                        "", new Date(2026,3,10)),
+  // ev("dest_uskids", "The Big 5 South African Open",   new Date(2026,3,13), "África do Sul",                    "", new Date(2026,3,15)),
+  // ev("dest_uskids", "Korean Championship 2026",       new Date(2026,3,22), "Coreia",                           "", new Date(2026,3,24)),
+  ev("dest_uskids", "European Championship 2026",        new Date(2026,4,26), "Craigielaw, Aberlady (GB)",        "", new Date(2026,4,28)),
+  // ev("dest_uskids", "Vallarta Open 2026",             new Date(2026,3,30), "Puerto Vallarta (MX)",             "", new Date(2026,4,1)),
+  ev("dest_uskids_tbc", "Irish Open 2026",                   new Date(2026,6,1),  "Mountwolseley, Tullow (IE)",       "", new Date(2026,6,2)),
+  ev("dest_uskids_tbc", "Paris Invitational 2026",           new Date(2026,6,4),  "Magny-le-Hongre (FR)",             "", new Date(2026,6,6)),
+  // ev("dest_uskids", "Canadian Invitational 2026",     new Date(2026,6,6),  "Canadá",                           "", new Date(2026,6,7)),
+
+  /* ══════════════════════════════════════
+     DESTAQUE — BJGT (vermelho escuro)
+     ══════════════════════════════════════ */
+  ev("dest_bjgt", "Daily Mail World Junior Golf Championship 2026", new Date(2026,1,24), "Villa Padierna, Málaga (ES)", "", new Date(2026,1,27)),
+
+  /* ══════════════════════════════════════
+     PJA Tour 2026 (excluindo Drive Tour já listados)
+     ══════════════════════════════════════ */
+  // CANCELADO: ev("dest_pja", "PJA — Quinta da Marinha", new Date(2026,0,24), "Quinta da Marinha", "Strokeplay", new Date(2026,0,25)),
+  ev("dest_pja", "PJA — Great Golf Júnior Open 2026", new Date(2026,1,15), "Vilamoura",         "Strokeplay", new Date(2026,1,17)),
+  ev("dest_pja", "PJA — Miramar Open",               new Date(2026,7,19), "CG Miramar",         "Strokeplay", new Date(2026,7,21)),
+  ev("dest_pja", "PJA — Quinta do Peru",             new Date(2026,5,27), "Quinta do Peru",     "Strokeplay", new Date(2026,5,28)),
+  ev("dest_pja", "PJA — Torre",                      new Date(2026,8,5),  "Torre",              "Strokeplay", new Date(2026,8,6)),
+  ev("dest_pja", "PJA — Dunas — Grande Final",       new Date(2026,10,28),"Dunas",              "Strokeplay", new Date(2026,10,29)),
+
+  /* ══════════════════════════════════════
+     🎂 PESSOAL
+     ══════════════════════════════════════ */
+  ev("pessoal", "MANUEL 12 ANOS", new Date(2026,3,29), "", ""),
+
+  /* ══════════════════════════════════════
+     ⛳ CAMPO / TREINO
+     ══════════════════════════════════════ */
+  ev("treino", "Mypro Golf Algarve — Campo de Golf", new Date(2026,2,28), "Algarve", "", new Date(2026,3,4)),
 ];
 
 /* ═══ Helpers ═══ */
 const MONTHS_PT = [
-  "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
-  "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+  "Janeiro","Fevereiro","Março","Abril","Maio","Junho",
+  "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro",
 ];
-const DAYS_PT_SHORT = ["D", "S", "T", "Q", "Q", "S", "S"];
-const DAYS_PT = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+const MONTHS_SHORT = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+function monthLabel(m: number) { return `${MONTHS_PT[m]} (${String(m + 1).padStart(2, "0")})`; }
+const DAYS_SHORT = ["S","T","Q","Q","S","S","D"];
+const DAYS_PT = ["Seg","Ter","Qua","Qui","Sex","Sáb","Dom"];
+const DAY_NAMES = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"]; // indexed by JS getDay()
+const GROUP_LABELS: Record<string, string> = {
+  CGSS: "CGSS — Santo da Serra",
+  DRIVE: "Drive",
+  FPG: "FPG — Federação",
+  DESTAQUE: "Destaque",
+};
 
 function isSameDay(a: Date, b: Date) {
   return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
 }
-
 function getMonthDays(year: number, month: number) {
   const first = new Date(year, month, 1);
   const last = new Date(year, month + 1, 0);
   const days: { date: Date; inMonth: boolean }[] = [];
-  const startDow = first.getDay();
-  // pad before
-  for (let i = startDow - 1; i >= 0; i--) {
-    days.push({ date: new Date(year, month, -i), inMonth: false });
-  }
-  // month days
-  for (let d = 1; d <= last.getDate(); d++) {
+  // Monday-first offset: (0=Mon ... 6=Sun)
+  const offset = (first.getDay() + 6) % 7;
+  for (let i = offset; i > 0; i--)
+    days.push({ date: new Date(year, month, 1 - i), inMonth: false });
+  for (let d = 1; d <= last.getDate(); d++)
     days.push({ date: new Date(year, month, d), inMonth: true });
-  }
-  // pad after to 42
-  const rem = 42 - days.length;
-  for (let i = 1; i <= rem; i++) {
+  // fill to complete the last week (minimal trailing)
+  const rem = (7 - (days.length % 7)) % 7;
+  for (let i = 1; i <= rem; i++)
     days.push({ date: new Date(year, month + 1, i), inMonth: false });
-  }
   return days;
 }
+function eventOnDay(e: CalEvent, d: Date) {
+  if (isSameDay(e.date, d)) return true;
+  return !!(e.endDate && d >= e.date && d <= e.endDate);
+}
+function fmtRange(e: CalEvent): string {
+  const o: Intl.DateTimeFormatOptions = { day: "numeric", month: "short" };
+  if (!e.endDate || isSameDay(e.date, e.endDate))
+    return `${DAY_NAMES[e.date.getDay()]}, ${e.date.toLocaleDateString("pt-PT", o)} ${e.date.getFullYear()}`;
+  return `${e.date.toLocaleDateString("pt-PT", o)} – ${e.endDate.toLocaleDateString("pt-PT", o)} ${e.date.getFullYear()}`;
+}
+function calColor(e: CalEvent): string { return CAL_MAP.get(e.calId)?.color ?? "#6b7280"; }
 
-function eventsForDay(evts: CalEvent[], date: Date): CalEvent[] {
-  return evts.filter(e => {
-    if (isSameDay(e.date, date)) return true;
-    if (e.endDate) {
-      return date >= e.date && date <= e.endDate;
+/* Highlighted "full-cell" events */
+const HIGHLIGHT: Record<string, { bg: string; border: string; text: string; icon: string; cls: string }> = {
+  pessoal:     { bg: "#39ff14", border: "#2ecc40", text: "#1a1a1a", icon: "🎂", cls: "hl-green" },
+};
+/* Events that get animated bars (pulse/glow/shine) but NOT full-cell */
+const HL_BAR: Record<string, string> = {
+  treino:      "hl-teal",
+  dest_nac_jr: "hl-red",
+};
+function isHighlight(e: CalEvent) { return e.calId in HIGHLIGHT; }
+
+type EvPos = "single" | "start" | "mid" | "end";
+function getEvPos(e: CalEvent, day: Date, weekStart: Date, weekEnd: Date): EvPos {
+  if (!e.endDate || isSameDay(e.date, e.endDate)) return "single";
+  const effStart = e.date < weekStart ? weekStart : e.date;
+  const effEnd = e.endDate > weekEnd ? weekEnd : e.endDate;
+  const isS = isSameDay(day, effStart);
+  const isE = isSameDay(day, effEnd);
+  if (isS && isE) return "single";
+  if (isS) return "start";
+  if (isE) return "end";
+  return "mid";
+}
+
+/** Sort events for consistent lane ordering: multi-day first (by start, then length desc), then single */
+function sortEventsForGrid(evts: CalEvent[]): CalEvent[] {
+  return [...evts].sort((a, b) => {
+    const aMulti = a.endDate && !isSameDay(a.date, a.endDate) ? 1 : 0;
+    const bMulti = b.endDate && !isSameDay(b.date, b.endDate) ? 1 : 0;
+    if (aMulti !== bMulti) return bMulti - aMulti; // multi-day first
+    if (aMulti && bMulti) {
+      const diff = a.date.getTime() - b.date.getTime();
+      if (diff !== 0) return diff;
+      return (b.endDate!.getTime() - b.date.getTime()) - (a.endDate!.getTime() - a.date.getTime());
     }
-    return false;
+    return a.date.getTime() - b.date.getTime();
   });
 }
 
-function formatDateRange(e: CalEvent): string {
-  const d1 = e.date;
-  const opts: Intl.DateTimeFormatOptions = { day: "numeric", month: "short" };
-  if (!e.endDate || isSameDay(d1, e.endDate)) {
-    return `${DAYS_PT[d1.getDay()]}, ${d1.toLocaleDateString("pt-PT", opts)} ${d1.getFullYear()}`;
-  }
-  return `${d1.toLocaleDateString("pt-PT", opts)} – ${e.endDate.toLocaleDateString("pt-PT", opts)} ${d1.getFullYear()}`;
-}
+/* ═══ Sub-components ═══ */
 
-/* ═══ Components ═══ */
-
-/* — Mini Calendar Sidebar — */
-function MiniCal({ year, month, onSelect, selected }: {
-  year: number; month: number;
-  onSelect: (d: Date) => void; selected: Date | null;
+function MiniCal({ year, month, onSelect, selected, visibleEvents }: {
+  year: number; month: number; selected: Date | null;
+  onSelect: (d: Date) => void; visibleEvents: CalEvent[];
 }) {
   const days = getMonthDays(year, month);
   const today = new Date();
   return (
     <div style={{ userSelect: "none" }}>
-      <div style={{
-        display: "grid", gridTemplateColumns: "repeat(7, 1fr)",
-        gap: 0, textAlign: "center",
-      }}>
-        {DAYS_PT_SHORT.map((d, i) => (
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)", textAlign: "center" }}>
+        {DAYS_SHORT.map((d, i) => (
           <div key={i} style={{ fontSize: 10, color: "var(--text-3)", padding: "2px 0", fontWeight: 600 }}>{d}</div>
         ))}
         {days.map((d, i) => {
           const isToday = isSameDay(d.date, today);
           const isSel = selected && isSameDay(d.date, selected);
-          const hasEvt = EVENTS.some(e => isSameDay(e.date, d.date) || (e.endDate && d.date >= e.date && d.date <= e.endDate));
+          const has = visibleEvents.some(e => eventOnDay(e, d.date));
           return (
-            <div key={i} onClick={() => onSelect(d.date)}
-              style={{
-                fontSize: 11, cursor: "pointer", borderRadius: "50%",
-                width: 26, height: 26, display: "flex", alignItems: "center", justifyContent: "center",
-                margin: "1px auto", position: "relative",
-                color: !d.inMonth ? "var(--border)" : isToday ? "#fff" : isSel ? "var(--accent)" : "var(--text)",
-                backgroundColor: isToday ? "var(--accent)" : isSel ? "var(--accent-light)" : "transparent",
-                fontWeight: isToday || isSel ? 600 : 400,
-                transition: "background 0.15s",
-              }}>
+            <div key={i} onClick={() => onSelect(d.date)} style={{
+              fontSize: 11, cursor: "pointer", borderRadius: "50%",
+              width: 26, height: 26, display: "flex", alignItems: "center", justifyContent: "center",
+              margin: "1px auto", position: "relative",
+              color: !d.inMonth ? "var(--border)" : isToday ? "#fff" : isSel ? "var(--accent)" : "var(--text)",
+              backgroundColor: isToday ? "var(--accent)" : isSel ? "var(--accent-light)" : "transparent",
+              fontWeight: isToday || isSel ? 600 : 400, transition: "background 0.15s",
+            }}>
               {d.date.getDate()}
-              {hasEvt && d.inMonth && !isToday && (
-                <span style={{
-                  position: "absolute", bottom: 1, left: "50%", transform: "translateX(-50%)",
-                  width: 3, height: 3, borderRadius: "50%", background: "var(--accent)",
-                }} />
+              {has && d.inMonth && !isToday && (
+                <span style={{ position: "absolute", bottom: 1, left: "50%", transform: "translateX(-50%)",
+                  width: 3, height: 3, borderRadius: "50%", background: "var(--accent)" }} />
               )}
             </div>
           );
@@ -213,138 +373,99 @@ function MiniCal({ year, month, onSelect, selected }: {
   );
 }
 
-/* — Event Detail Popup — */
 function EventPopup({ event, onClose }: { event: CalEvent; onClose: () => void }) {
-  const meta = CIRCUIT_META[event.circuito];
-  const popupRef = useRef<HTMLDivElement>(null);
-
+  const color = calColor(event);
+  const calName = CAL_MAP.get(event.calId)?.name ?? "";
+  const ref = useRef<HTMLDivElement>(null);
+  const hl = HIGHLIGHT[event.calId];
   useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (popupRef.current && !popupRef.current.contains(e.target as Node)) onClose();
-    };
-    setTimeout(() => document.addEventListener("mousedown", handler), 10);
-    return () => document.removeEventListener("mousedown", handler);
+    const h = (e: MouseEvent) => { if (ref.current && !ref.current.contains(e.target as Node)) onClose(); };
+    setTimeout(() => document.addEventListener("mousedown", h), 10);
+    return () => document.removeEventListener("mousedown", h);
   }, [onClose]);
-
   return (
-    <div style={{
-      position: "fixed", inset: 0, zIndex: 1000,
-      display: "flex", alignItems: "center", justifyContent: "center",
-      background: "rgba(0,0,0,0.3)", backdropFilter: "blur(3px)",
-    }}>
-      <div ref={popupRef} style={{
-        background: "var(--bg-card)", borderRadius: 12,
-        boxShadow: "var(--shadow-lg)", width: 380, overflow: "hidden",
-        animation: "calPopIn 0.2s ease",
-      }}>
-        <div style={{
-          background: meta.bg, padding: "14px 18px",
-          display: "flex", justifyContent: "space-between", alignItems: "center",
-        }}>
-          <span style={{ color: meta.color, fontWeight: 600, fontSize: 12, textTransform: "uppercase", letterSpacing: "0.04em" }}>
-            {meta.label}
+    <div style={{ position: "fixed", inset: 0, zIndex: 1000, display: "flex", alignItems: "center",
+      justifyContent: "center", background: "rgba(0,0,0,0.3)", backdropFilter: "blur(3px)" }}>
+      <div ref={ref} style={{ background: "var(--bg-card)", borderRadius: 12,
+        boxShadow: "var(--shadow-lg)", width: 380, overflow: "hidden", animation: "calPopIn 0.2s ease" }}>
+        <div style={{ background: hl ? hl.bg : color,
+          padding: "14px 18px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <span style={{ color: hl ? hl.text : "#fff", fontWeight: 600, fontSize: 12, textTransform: "uppercase", letterSpacing: "0.04em" }}>
+            {calName}
           </span>
-          <button onClick={onClose} style={{
-            background: "rgba(255,255,255,0.2)", border: "none", color: meta.color,
+          <button onClick={onClose} style={{ background: hl ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.2)", border: "none",
+            color: hl ? hl.text : "#fff",
             width: 26, height: 26, borderRadius: "50%", cursor: "pointer", fontSize: 14,
-            display: "flex", alignItems: "center", justifyContent: "center",
-          }}>✕</button>
+            display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
         </div>
         <div style={{ padding: "16px 18px" }}>
-          <div style={{ fontSize: 17, fontWeight: 600, color: "var(--text)", marginBottom: 12, lineHeight: 1.3 }}>
-            {event.title}
-          </div>
+          <div style={{ fontSize: 17, fontWeight: 600, color: "var(--text)", marginBottom: 12, lineHeight: 1.3 }}>{event.title}</div>
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            <Row icon="📅" label={formatDateRange(event)} />
-            {event.modalidade && <Row icon="🏌️" label={event.modalidade} />}
-            <Row icon="⛳" label={event.campo} />
+            <InfoRow icon="📅" label={fmtRange(event)} />
+            {event.modalidade && <InfoRow icon="🏌️" label={event.modalidade} />}
+            {event.campo && <InfoRow icon="⛳" label={event.campo} />}
           </div>
         </div>
       </div>
     </div>
   );
 }
-
-function Row({ icon, label }: { icon: string; label: string }) {
-  return (
-    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-      <span style={{ fontSize: 15, width: 22, textAlign: "center" }}>{icon}</span>
-      <span style={{ fontSize: 13, color: "var(--text-2)" }}>{label}</span>
-    </div>
-  );
+function InfoRow({ icon, label }: { icon: string; label: string }) {
+  return (<div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+    <span style={{ fontSize: 15, width: 22, textAlign: "center" }}>{icon}</span>
+    <span style={{ fontSize: 13, color: "var(--text-2)" }}>{label}</span>
+  </div>);
 }
 
-/* — List View — */
-function ListView({ events, filter, onSelect }: {
-  events: CalEvent[]; filter: CircuitType | "ALL";
-  onSelect: (e: CalEvent) => void;
-}) {
-  const filtered = filter === "ALL" ? events : events.filter(e => e.circuito === filter);
-  // group by month
+function ListView({ events, onSelect }: { events: CalEvent[]; onSelect: (e: CalEvent) => void }) {
+  const today = new Date();
   const grouped = useMemo(() => {
-    const map = new Map<number, CalEvent[]>();
-    for (const e of filtered) {
-      const m = e.date.getMonth();
-      if (!map.has(m)) map.set(m, []);
-      map.get(m)!.push(e);
-    }
-    return [...map.entries()].sort((a, b) => a[0] - b[0]);
-  }, [filtered]);
-
+    const m = new Map<number, CalEvent[]>();
+    for (const e of events) { const k = e.date.getMonth(); if (!m.has(k)) m.set(k, []); m.get(k)!.push(e); }
+    return [...m.entries()].sort((a, b) => a[0] - b[0]);
+  }, [events]);
   return (
     <div style={{ padding: "16px 20px", display: "flex", flexDirection: "column", gap: 20 }}>
       {grouped.map(([month, evts]) => (
         <div key={month}>
-          <div style={{
-            fontSize: 13, fontWeight: 700, color: "var(--accent)",
-            textTransform: "uppercase", letterSpacing: "0.04em",
-            marginBottom: 8, paddingBottom: 4, borderBottom: "2px solid var(--accent-light)",
-          }}>
-            {MONTHS_PT[month]} 2026
+          <div style={{ fontSize: 13, fontWeight: 700, color: "var(--accent)", textTransform: "uppercase",
+            letterSpacing: "0.04em", marginBottom: 8, paddingBottom: 4, borderBottom: "2px solid var(--accent-light)" }}>
+            {monthLabel(month)} 2026
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
             {evts.map(e => {
-              const meta = CIRCUIT_META[e.circuito];
+              const c = calColor(e);
+              const hl = HIGHLIGHT[e.calId];
+              const isPast = (e.endDate || e.date) < today;
               return (
                 <div key={e.id} onClick={() => onSelect(e)}
-                  style={{
-                    display: "flex", alignItems: "center", gap: 10, padding: "8px 10px",
-                    borderRadius: "var(--radius)", cursor: "pointer",
-                    transition: "background 0.15s",
+                  style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 10px",
+                    borderRadius: hl ? 8 : "var(--radius)", cursor: "pointer", transition: "background 0.15s",
+                    background: hl ? `${hl.bg}18` : "transparent",
+                    border: hl ? `2px solid ${hl.bg}66` : "2px solid transparent",
+                    opacity: isPast ? 0.45 : 1,
                   }}
-                  onMouseEnter={ev => (ev.currentTarget.style.background = "var(--bg-hover)")}
-                  onMouseLeave={ev => (ev.currentTarget.style.background = "transparent")}
-                >
-                  <div style={{
-                    width: 42, textAlign: "center", flexShrink: 0,
-                  }}>
-                    <div style={{ fontSize: 10, color: "var(--text-3)", fontWeight: 500, textTransform: "uppercase" }}>
-                      {DAYS_PT[e.date.getDay()]}
-                    </div>
-                    <div style={{ fontSize: 18, fontWeight: 600, color: "var(--text)", lineHeight: 1.2 }}>
-                      {e.date.getDate()}
-                    </div>
+                  onMouseEnter={ev => (ev.currentTarget.style.background = hl ? `${hl.bg}30` : "var(--bg-hover)")}
+                  onMouseLeave={ev => (ev.currentTarget.style.background = hl ? `${hl.bg}18` : "transparent")}>
+                  <div style={{ width: 42, textAlign: "center", flexShrink: 0 }}>
+                    <div style={{ fontSize: 10, color: hl ? hl.border : "var(--text-3)", fontWeight: 500, textTransform: "uppercase" }}>{DAY_NAMES[e.date.getDay()]}</div>
+                    <div style={{ fontSize: 18, fontWeight: 600, color: hl ? hl.border : "var(--text)", lineHeight: 1.2 }}>{e.date.getDate()}</div>
                   </div>
-                  <div style={{
-                    width: 4, alignSelf: "stretch", borderRadius: 2,
-                    background: meta.bg, flexShrink: 0,
-                  }} />
+                  <div style={{ width: 4, alignSelf: "stretch", borderRadius: 2,
+                    background: hl ? hl.bg : c, flexShrink: 0 }} />
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{
-                      fontSize: 13, fontWeight: 600, color: "var(--text)",
-                      overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
-                    }}>
-                      {e.title}
+                    <div style={{ fontSize: 13, fontWeight: 600, color: "var(--text)",
+                      overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                      {hl ? `${hl.icon} ` : ""}{e.title}
                     </div>
                     <div style={{ fontSize: 11, color: "var(--text-3)", marginTop: 1 }}>
                       {e.modalidade}{e.modalidade && " · "}{e.campo}
                     </div>
                   </div>
-                  <span style={{
-                    fontSize: 10, fontWeight: 600, padding: "2px 8px", borderRadius: 10,
-                    background: meta.bg, color: meta.color, whiteSpace: "nowrap", flexShrink: 0,
-                  }}>
-                    {meta.label}
+                  <span style={{ fontSize: 10, fontWeight: 600, padding: "2px 8px", borderRadius: 10,
+                    background: hl ? hl.bg : c,
+                    color: hl ? hl.text : "#fff", whiteSpace: "nowrap", flexShrink: 0 }}>
+                    {CAL_MAP.get(e.calId)?.name ?? ""}
                   </span>
                 </div>
               );
@@ -353,9 +474,7 @@ function ListView({ events, filter, onSelect }: {
         </div>
       ))}
       {grouped.length === 0 && (
-        <div style={{ textAlign: "center", color: "var(--text-3)", padding: 40 }}>
-          Sem provas neste circuito.
-        </div>
+        <div style={{ textAlign: "center", color: "var(--text-3)", padding: 40 }}>Sem provas visíveis.</div>
       )}
     </div>
   );
@@ -363,207 +482,383 @@ function ListView({ events, filter, onSelect }: {
 
 /* ═══ Main Component ═══ */
 type ViewMode = "month" | "list";
+type GroupKey = "CGSS" | "DRIVE" | "FPG" | "DESTAQUE";
 
 export default function CalendarioPage() {
-  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
-  const [currentYear] = useState(2026);
+  const [currentMonth, setCurrentMonth] = useState(() => {
+    const now = new Date();
+    return now.getFullYear() === 2026 ? now.getMonth() : 1;
+  });
   const [selectedEvent, setSelectedEvent] = useState<CalEvent | null>(null);
   const [viewMode, setViewMode] = useState<ViewMode>("month");
-  const [circuitFilter, setCircuitFilter] = useState<CircuitType | "ALL">("ALL");
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [enabledCals, setEnabledCals] = useState<Set<string>>(() => new Set(CALENDARS.map(c => c.id)));
+  const [expandedCal, setExpandedCal] = useState<string | null>(null);
 
-  const monthDays = useMemo(() => getMonthDays(currentYear, currentMonth), [currentYear, currentMonth]);
+  const goToday = () => {
+    const now = new Date();
+    const m = now.getFullYear() === 2026 ? now.getMonth() : 1;
+    setCurrentMonth(m);
+    setSelectedDate(now.getFullYear() === 2026 ? now : null);
+  };
 
+  const toggleCal = (id: string) => setEnabledCals(prev => {
+    const next = new Set(prev); next.has(id) ? next.delete(id) : next.add(id); return next;
+  });
+  const toggleGroup = (group: GroupKey) => {
+    const ids = CALENDARS.filter(c => c.group === group).map(c => c.id);
+    const allOn = ids.every(id => enabledCals.has(id));
+    setEnabledCals(prev => {
+      const next = new Set(prev);
+      for (const id of ids) allOn ? next.delete(id) : next.add(id);
+      return next;
+    });
+  };
+
+  const visibleEvents = useMemo(() =>
+    EVENTS.filter(e => enabledCals.has(e.calId)).sort((a, b) => a.date.getTime() - b.date.getTime()),
+    [enabledCals]
+  );
+  const monthDays = useMemo(() => getMonthDays(2026, currentMonth), [currentMonth]);
+  const gridRows = monthDays.length / 7;
   const today = new Date();
-
-  // Count events per circuit for legend
-  const circuitCounts = useMemo(() => {
-    const map: Partial<Record<CircuitType, number>> = {};
-    for (const e of EVENTS) {
-      map[e.circuito] = (map[e.circuito] || 0) + 1;
-    }
-    return map;
-  }, []);
+  const groups: GroupKey[] = ["CGSS", "DRIVE", "FPG", "DESTAQUE"];
 
   return (
     <div style={{ height: "100%", display: "flex", overflow: "hidden" }}>
       <style>{`
         @keyframes calPopIn { from { transform: translateY(6px) scale(0.98); opacity: 0; } to { transform: none; opacity: 1; } }
+        @keyframes hlShine {
+          0% { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+        @keyframes hlGlowGreen {
+          0%, 100% { box-shadow: 0 0 4px 1px rgba(57,255,20,0.4); }
+          50% { box-shadow: 0 0 14px 5px rgba(57,255,20,0.5); }
+        }
+        @keyframes hlGlowTeal {
+          0%, 100% { box-shadow: 0 0 4px 1px rgba(16,185,129,0.4); }
+          50% { box-shadow: 0 0 14px 5px rgba(16,185,129,0.5); }
+        }
+        @keyframes hlGlowRed {
+          0%, 100% { box-shadow: 0 0 4px 1px rgba(220,38,38,0.4); }
+          50% { box-shadow: 0 0 14px 5px rgba(220,38,38,0.5); }
+        }
+        .hl-cell {
+          border-radius: 4px;
+          position: relative;
+          overflow: hidden;
+        }
+        .hl-cell::after {
+          content: '';
+          position: absolute; inset: 0;
+          background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
+          background-size: 300% 100%;
+          animation: hlShine 3s linear infinite;
+          pointer-events: none;
+          border-radius: 4px;
+        }
+        .hl-green  { animation: hlGlowGreen 2s ease-in-out infinite; }
+        .hl-teal   { animation: hlGlowTeal 2s ease-in-out infinite; }
+        .hl-red    { animation: hlGlowRed 2s ease-in-out infinite; }
+        .hl-bar {
+          position: relative;
+          overflow: hidden;
+        }
+        .hl-bar::after {
+          content: '';
+          position: absolute; inset: 0;
+          background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.25) 50%, transparent 70%);
+          background-size: 300% 100%;
+          animation: hlShine 3s linear infinite;
+          pointer-events: none;
+          border-radius: inherit;
+        }
       `}</style>
 
       {/* ── Sidebar ── */}
-      <div style={{
-        width: 250, borderRight: "1px solid var(--border-light)",
-        padding: 16, display: "flex", flexDirection: "column", gap: 16,
-        overflowY: "auto", flexShrink: 0, background: "var(--bg-card)",
-      }}>
-        {/* Month navigator */}
+      <div style={{ width: 250, borderRight: "1px solid var(--border-light)", padding: "12px 14px",
+        display: "flex", flexDirection: "column", gap: 12, overflowY: "auto", flexShrink: 0, background: "var(--bg-card)" }}>
+
+        {/* Mini cal */}
         <div>
-          <div style={{
-            display: "flex", alignItems: "center", justifyContent: "space-between",
-            marginBottom: 8,
-          }}>
-            <span style={{ fontSize: 13, fontWeight: 700, color: "var(--text)" }}>
-              {MONTHS_PT[currentMonth]} 2026
-            </span>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
+            <span style={{ fontSize: 13, fontWeight: 700, color: "var(--text)" }}>{monthLabel(currentMonth)} 2026</span>
             <div style={{ display: "flex", gap: 2 }}>
-              <NavBtn label="‹" onClick={() => setCurrentMonth(m => Math.max(0, m - 1))} disabled={currentMonth <= 0} />
-              <NavBtn label="›" onClick={() => setCurrentMonth(m => Math.min(11, m + 1))} disabled={currentMonth >= 11} />
+              <SmBtn l="‹" onClick={() => setCurrentMonth(m => Math.max(0, m - 1))} dis={currentMonth <= 0} />
+              <SmBtn l="›" onClick={() => setCurrentMonth(m => Math.min(11, m + 1))} dis={currentMonth >= 11} />
             </div>
           </div>
-          <MiniCal year={currentYear} month={currentMonth}
-            selected={selectedDate}
-            onSelect={(d) => {
-              setSelectedDate(d);
-              setCurrentMonth(d.getMonth());
-            }}
-          />
+          <MiniCal year={2026} month={currentMonth} selected={selectedDate} visibleEvents={visibleEvents}
+            onSelect={d => { setSelectedDate(d); setCurrentMonth(d.getMonth()); }} />
         </div>
 
-        {/* Legend / Filter */}
-        <div>
-          <div style={{
-            fontSize: 11, fontWeight: 700, color: "var(--text-3)",
-            textTransform: "uppercase", letterSpacing: "0.06em",
-            marginBottom: 8,
-          }}>
-            Circuitos
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            <LegendBtn
-              color="var(--accent)" label="Todos" count={EVENTS.length}
-              active={circuitFilter === "ALL"}
-              onClick={() => setCircuitFilter("ALL")}
-            />
-            {(Object.keys(CIRCUIT_META) as CircuitType[]).map(ct => (
-              <LegendBtn
-                key={ct}
-                color={CIRCUIT_META[ct].bg}
-                label={CIRCUIT_META[ct].label}
-                count={circuitCounts[ct] || 0}
-                active={circuitFilter === ct}
-                onClick={() => setCircuitFilter(f => f === ct ? "ALL" : ct)}
-              />
-            ))}
-          </div>
+        {/* Calendar toggles */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+          {groups.map(g => {
+            const cals = CALENDARS.filter(c => c.group === g);
+            const groupCount = EVENTS.filter(e => cals.some(c => c.id === e.calId)).length;
+            const allOn = cals.every(c => enabledCals.has(c.id));
+            return (
+              <div key={g}>
+                <button onClick={() => toggleGroup(g)} style={{
+                  display: "flex", alignItems: "center", gap: 8, width: "100%",
+                  padding: "6px 4px", border: "none", cursor: "pointer", fontFamily: "inherit",
+                  background: "transparent", borderBottom: "1px solid var(--border-light)",
+                }}>
+                  <span style={{ width: 16, height: 16, borderRadius: 3, border: "2px solid var(--accent)",
+                    background: allOn ? "var(--accent)" : "transparent", display: "flex", alignItems: "center",
+                    justifyContent: "center", flexShrink: 0, fontSize: 10, color: "#fff", lineHeight: 1, transition: "all 0.15s" }}>
+                    {allOn ? "✓" : ""}
+                  </span>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: "var(--text)", flex: 1, textAlign: "left",
+                    textTransform: "uppercase", letterSpacing: "0.04em" }}>{GROUP_LABELS[g]}</span>
+                  <span style={{ fontSize: 10, fontFamily: "'JetBrains Mono', monospace", color: "var(--text-3)" }}>{groupCount}</span>
+                </button>
+                <div style={{ display: "flex", flexDirection: "column", gap: 1, paddingLeft: 8, marginTop: 2 }}>
+                  {cals.map(cal => {
+                    const calEvts = EVENTS.filter(e => e.calId === cal.id).sort((a, b) => a.date.getTime() - b.date.getTime());
+                    const isExpanded = expandedCal === cal.id;
+                    return (
+                      <div key={cal.id}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 0 }}>
+                          {/* Checkbox */}
+                          <button onClick={() => toggleCal(cal.id)} style={{
+                            width: 28, height: 26, border: "none", cursor: "pointer", background: "transparent",
+                            display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, padding: 0,
+                          }}>
+                            <span style={{
+                              width: 12, height: 12, borderRadius: 2, transition: "all 0.15s",
+                              background: enabledCals.has(cal.id) ? cal.color : "transparent",
+                              border: `2px solid ${enabledCals.has(cal.id) ? cal.color : "var(--border)"}`,
+                            }} />
+                          </button>
+                          {/* Name — click to expand */}
+                          <button onClick={() => setExpandedCal(isExpanded ? null : cal.id)} style={{
+                            flex: 1, display: "flex", alignItems: "center", gap: 4, minWidth: 0,
+                            padding: "3px 4px", border: "none", cursor: "pointer", fontFamily: "inherit",
+                            background: isExpanded ? "var(--accent-light)" : "transparent",
+                            borderRadius: "var(--radius)", transition: "background 0.15s",
+                          }}
+                            onMouseEnter={e => { if (!isExpanded) e.currentTarget.style.background = "var(--bg-hover)"; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = isExpanded ? "var(--accent-light)" : "transparent"; }}>
+                            <span style={{
+                              fontSize: 11, color: enabledCals.has(cal.id) ? "var(--text)" : "var(--text-3)",
+                              flex: 1, textAlign: "left", fontWeight: isExpanded ? 600 : enabledCals.has(cal.id) ? 500 : 400,
+                              overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
+                            }}>{cal.name}</span>
+                            <span style={{ fontSize: 10, fontFamily: "'JetBrains Mono', monospace",
+                              color: "var(--text-3)", flexShrink: 0 }}>{calEvts.length}</span>
+                            <span style={{ fontSize: 8, color: "var(--text-3)", flexShrink: 0, transition: "transform 0.15s",
+                              transform: isExpanded ? "rotate(180deg)" : "none" }}>▼</span>
+                          </button>
+                        </div>
+                        {/* Expanded event list */}
+                        {isExpanded && (
+                          <div style={{ paddingLeft: 28, display: "flex", flexDirection: "column", gap: 0, marginBottom: 4 }}>
+                            {calEvts.map(ev => {
+                              const isPast = (ev.endDate || ev.date) < today;
+                              const d = ev.date;
+                              const dd = `${d.getDate()}/${d.getMonth() + 1}`;
+                              return (
+                                <button key={ev.id} onClick={() => {
+                                  setCurrentMonth(d.getMonth());
+                                  setSelectedDate(d);
+                                  setSelectedEvent(ev);
+                                }} style={{
+                                  display: "flex", alignItems: "center", gap: 6, width: "100%",
+                                  padding: "3px 6px", border: "none", cursor: "pointer", fontFamily: "inherit",
+                                  background: "transparent", borderRadius: "var(--radius)", transition: "background 0.12s",
+                                  opacity: isPast ? 0.45 : 1,
+                                }}
+                                  onMouseEnter={e => (e.currentTarget.style.background = "var(--bg-hover)")}
+                                  onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>
+                                  <span style={{ fontSize: 9, fontFamily: "'JetBrains Mono', monospace",
+                                    color: cal.color, fontWeight: 600, minWidth: 30, flexShrink: 0 }}>{dd}</span>
+                                  <span style={{ fontSize: 10, color: "var(--text-2)", flex: 1, textAlign: "left",
+                                    overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{ev.title}</span>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 
-      {/* ── Main Area ── */}
+      {/* ── Main ── */}
       <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
-        {/* Toolbar */}
-        <div style={{
-          display: "flex", alignItems: "center", padding: "10px 20px",
-          borderBottom: "1px solid var(--border-light)", gap: 12, flexShrink: 0,
-        }}>
-          <h2 style={{ fontSize: 18, fontWeight: 600, color: "var(--text)", margin: 0 }}>
-            Calendário CGSS — Época 2026
-          </h2>
-
+        <div style={{ display: "flex", alignItems: "center", padding: "10px 20px",
+          borderBottom: "1px solid var(--border-light)", gap: 12, flexShrink: 0 }}>
+          <h2 style={{ fontSize: 18, fontWeight: 600, color: "var(--text)", margin: 0 }}>Calendário 2026</h2>
+          <button onClick={goToday} style={{
+            border: "1px solid var(--accent)", background: "transparent", color: "var(--accent)",
+            padding: "4px 12px", borderRadius: "var(--radius)", cursor: "pointer",
+            fontSize: 12, fontWeight: 600, fontFamily: "inherit", transition: "all 0.15s",
+          }}
+            onMouseEnter={e => { e.currentTarget.style.background = "var(--accent)"; e.currentTarget.style.color = "#fff"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "var(--accent)"; }}>
+            Hoje
+          </button>
           <div style={{ marginLeft: "auto", display: "flex", gap: 2, background: "var(--bg)", borderRadius: "var(--radius)", padding: 2 }}>
             {(["month", "list"] as ViewMode[]).map(v => (
-              <button key={v} onClick={() => setViewMode(v)}
-                style={{
-                  border: "none", padding: "5px 14px", cursor: "pointer",
-                  fontSize: 12, fontWeight: 600, fontFamily: "inherit",
-                  borderRadius: "var(--radius)",
-                  background: viewMode === v ? "var(--bg-card)" : "transparent",
-                  color: viewMode === v ? "var(--accent)" : "var(--text-3)",
-                  boxShadow: viewMode === v ? "var(--shadow-sm)" : "none",
-                  transition: "all 0.15s",
-                }}>
-                {v === "month" ? "Mês" : "Lista"}
-              </button>
+              <button key={v} onClick={() => setViewMode(v)} style={{
+                border: "none", padding: "5px 14px", cursor: "pointer", fontSize: 12, fontWeight: 600,
+                fontFamily: "inherit", borderRadius: "var(--radius)",
+                background: viewMode === v ? "var(--bg-card)" : "transparent",
+                color: viewMode === v ? "var(--accent)" : "var(--text-3)",
+                boxShadow: viewMode === v ? "var(--shadow-sm)" : "none", transition: "all 0.15s",
+              }}>{v === "month" ? "Mês" : "Lista"}</button>
             ))}
           </div>
-
-          <span style={{
-            fontSize: 11, color: "var(--text-3)", fontFamily: "'JetBrains Mono', monospace",
-          }}>
-            {EVENTS.length} provas
+          <span style={{ fontSize: 11, color: "var(--text-3)", fontFamily: "'JetBrains Mono', monospace" }}>
+            {visibleEvents.length} provas
           </span>
+          <div style={{ display: "flex", alignItems: "center", gap: 6, marginLeft: 12 }}>
+            <button onClick={() => setCurrentMonth(m => Math.max(0, m - 1))} disabled={currentMonth <= 0}
+              style={{
+                width: 30, height: 30, borderRadius: "50%", border: "1px solid var(--border)",
+                background: "var(--bg-card)", cursor: currentMonth <= 0 ? "default" : "pointer",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: 16, color: currentMonth <= 0 ? "var(--border)" : "var(--text-2)",
+                transition: "all 0.15s",
+              }}>‹</button>
+            <span style={{
+              fontSize: 15, fontWeight: 700, color: "var(--text)", minWidth: 190, textAlign: "center",
+            }}>
+              {monthLabel(currentMonth)} 2026
+            </span>
+            <button onClick={() => setCurrentMonth(m => Math.min(11, m + 1))} disabled={currentMonth >= 11}
+              style={{
+                width: 30, height: 30, borderRadius: "50%", border: "1px solid var(--border)",
+                background: "var(--bg-card)", cursor: currentMonth >= 11 ? "default" : "pointer",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: 16, color: currentMonth >= 11 ? "var(--border)" : "var(--text-2)",
+                transition: "all 0.15s",
+              }}>›</button>
+          </div>
         </div>
 
-        {/* Content */}
         <div style={{ flex: 1, overflow: "auto" }}>
           {viewMode === "month" ? (
-            /* ── Month Grid ── */
-            <div style={{
-              display: "flex", flexDirection: "column", height: "100%",
-              padding: "0 12px 12px",
-            }}>
-              {/* Day headers */}
-              <div style={{
-                display: "grid", gridTemplateColumns: "repeat(7, 1fr)",
-                borderBottom: "1px solid var(--border-light)", marginBottom: 4,
-              }}>
+            <div style={{ display: "flex", flexDirection: "column", height: "100%", padding: "0 12px 12px" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)",
+                borderBottom: "1px solid var(--border-light)", marginBottom: 4 }}>
                 {DAYS_PT.map((d, i) => (
-                  <div key={i} style={{
-                    textAlign: "center", padding: "8px 0", fontSize: 11,
-                    fontWeight: 600, color: "var(--text-3)",
-                    textTransform: "uppercase", letterSpacing: "0.04em",
-                  }}>{d}</div>
+                  <div key={i} style={{ textAlign: "center", padding: "8px 0", fontSize: 11,
+                    fontWeight: 600, color: "var(--text-3)", textTransform: "uppercase", letterSpacing: "0.04em" }}>{d}</div>
                 ))}
               </div>
-              {/* Grid */}
-              <div style={{
-                flex: 1, display: "grid",
-                gridTemplateColumns: "repeat(7, 1fr)",
-                gridTemplateRows: "repeat(6, 1fr)",
-              }}>
+              <div style={{ flex: 1, display: "grid", gridTemplateColumns: "repeat(7,1fr)", gridTemplateRows: `repeat(${gridRows},1fr)` }}>
                 {monthDays.map((d, i) => {
-                  const dayEvts = eventsForDay(EVENTS, d.date)
-                    .filter(e => circuitFilter === "ALL" || e.circuito === circuitFilter);
+                  const dayEvts = sortEventsForGrid(visibleEvents.filter(e => eventOnDay(e, d.date)));
                   const isToday = isSameDay(d.date, today);
                   const isSel = selectedDate && isSameDay(d.date, selectedDate);
+                  const hlEvt = dayEvts.find(e => isHighlight(e));
+                  const weekIdx = Math.floor(i / 7);
+                  const weekStart = monthDays[weekIdx * 7].date;
+                  const weekEnd = monthDays[weekIdx * 7 + 6].date;
+                  const CP = 4;
+
+                  // Highlight cell: full colored square with icon + label
+                  if (hlEvt && d.inMonth) {
+                    const hl = HIGHLIGHT[hlEvt.calId];
+                    // For multi-day: show title only on first day
+                    const isFirst = isSameDay(d.date, hlEvt.date);
+                    const titleLines = hlEvt.title.split(/\s*[—–-]\s*/).filter(Boolean);
+                    return (
+                      <div key={i} onClick={() => setSelectedEvent(hlEvt)}
+                        className={`hl-cell ${hl.cls}`}
+                        style={{
+                          background: hl.bg, border: `2px solid ${hl.border}`,
+                          cursor: "pointer",
+                          display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+                          padding: 4, overflow: "hidden", transition: "filter 0.15s",
+                        }}
+                        onMouseEnter={ev => (ev.currentTarget.style.filter = "brightness(1.1)")}
+                        onMouseLeave={ev => (ev.currentTarget.style.filter = "none")}>
+                        <div style={{ fontSize: 10, fontWeight: 800, color: hl.text, opacity: 0.5 }}>
+                          <span style={{ fontSize: 8 }}>{MONTHS_SHORT[d.date.getMonth()]}</span> {d.date.getDate()}
+                        </div>
+                        <div style={{ fontSize: 14, lineHeight: 1 }}>{hl.icon}</div>
+                        {isFirst ? (
+                          <div style={{ fontSize: 9, fontWeight: 900, color: hl.text, textAlign: "center",
+                            lineHeight: 1.1, letterSpacing: "0.02em", marginTop: 1 }}>
+                            {titleLines.map((l, j) => <div key={j}>{l}</div>)}
+                          </div>
+                        ) : (
+                          <div style={{ fontSize: 8, fontWeight: 700, color: hl.text, opacity: 0.6, textAlign: "center",
+                            lineHeight: 1.1, marginTop: 1 }}>
+                            {hlEvt.title}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  }
+
                   return (
-                    <div key={i}
-                      onClick={() => setSelectedDate(d.date)}
+                    <div key={i} onClick={() => setSelectedDate(d.date)}
                       style={{
-                        borderRight: "1px solid var(--border-light)",
-                        borderBottom: "1px solid var(--border-light)",
-                        padding: 4, overflow: "hidden", cursor: "pointer",
-                        background: isSel ? "var(--accent-light)" : "transparent",
-                        transition: "background 0.12s",
-                        minHeight: 0,
-                      }}
+                      borderRight: "1px solid var(--border-light)",
+                      borderBottom: "1px solid var(--border-light)",
+                      padding: CP, overflow: "hidden", cursor: "pointer",
+                      background: isSel ? "var(--accent-light)" : "transparent",
+                      transition: "background 0.12s",
+                    }}
                       onMouseEnter={ev => { if (!isSel) ev.currentTarget.style.background = "var(--bg-hover)"; }}
-                      onMouseLeave={ev => { if (!isSel) ev.currentTarget.style.background = "transparent"; }}
-                    >
-                      <div style={{
-                        fontSize: 11, fontWeight: isToday ? 700 : 500,
-                        width: 24, height: 24, borderRadius: "50%",
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        margin: "0 auto 2px",
-                        color: !d.inMonth ? "var(--border)" : isToday ? "#fff" : "var(--text)",
-                        background: isToday ? "var(--accent)" : "transparent",
-                      }}>
+                      onMouseLeave={ev => { if (!isSel) ev.currentTarget.style.background = isSel ? "var(--accent-light)" : "transparent"; }}>
+                      <div style={{ fontSize: 11,
+                        fontWeight: isToday ? 700 : 500,
+                        minHeight: 22, borderRadius: 10, padding: "1px 4px",
+                        display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 2px",
+                        color: !d.inMonth ? "var(--text-3)" : isToday ? "#fff" : "var(--text)",
+                        background: isToday ? "var(--accent)" : !d.inMonth ? "var(--bg-hover)" : "transparent",
+                        gap: 2, whiteSpace: "nowrap" }}>
+                        <span style={{ fontSize: 9, fontWeight: 600, opacity: !d.inMonth ? 0.7 : 0.45 }}>{MONTHS_SHORT[d.date.getMonth()]}</span>
                         {d.date.getDate()}
                       </div>
                       {dayEvts.slice(0, 3).map(e => {
-                        const meta = CIRCUIT_META[e.circuito];
+                        const isPast = (e.endDate || e.date) < today;
+                        const pos = getEvPos(e, d.date, weekStart, weekEnd);
+                        const showTitle = pos === "single" || pos === "start";
+                        const barCls = HL_BAR[e.calId];
+                        const bRadius =
+                          pos === "start" ? "3px 0 0 3px" :
+                          pos === "end"   ? "0 3px 3px 0" :
+                          pos === "mid"   ? "0" : "3px";
                         return (
-                          <div key={e.id}
-                            onClick={(ev) => { ev.stopPropagation(); setSelectedEvent(e); }}
-                            title={e.title}
-                            style={{
-                              fontSize: 10, padding: "1px 5px", marginBottom: 1,
-                              borderRadius: 3, background: meta.bg, color: meta.color,
-                              overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis",
-                              cursor: "pointer", fontWeight: 600, lineHeight: 1.6,
-                              transition: "opacity 0.15s",
-                            }}
-                            onMouseEnter={ev => (ev.currentTarget.style.opacity = "0.85")}
-                            onMouseLeave={ev => (ev.currentTarget.style.opacity = "1")}
-                          >
-                            {e.title}
-                          </div>
+                        <div key={e.id} onClick={ev => { ev.stopPropagation(); setSelectedEvent(e); }}
+                          title={e.title}
+                          className={barCls ? `hl-bar ${barCls}` : undefined}
+                          style={{
+                            fontSize: 10,
+                            padding: showTitle ? "1px 5px" : "1px 0",
+                            marginBottom: 1,
+                            marginLeft:  (pos === "mid" || pos === "end") ? -CP : 0,
+                            marginRight: (pos === "mid" || pos === "start") ? -CP : 0,
+                            borderRadius: bRadius,
+                            background: calColor(e),
+                            color: "#fff", overflow: "hidden", whiteSpace: "nowrap",
+                            textOverflow: "ellipsis", cursor: "pointer",
+                            fontWeight: 600, lineHeight: 1.6,
+                            opacity: isPast ? 0.4 : 1,
+                            minHeight: pos !== "single" && !showTitle ? 16 : undefined,
+                            transition: "opacity 0.15s",
+                          }}
+                          onMouseEnter={ev => (ev.currentTarget.style.opacity = String(isPast ? 0.55 : 0.85))}
+                          onMouseLeave={ev => (ev.currentTarget.style.opacity = String(isPast ? 0.4 : 1))}>
+                          {showTitle ? e.title : "\u00A0"}
+                        </div>
                         );
                       })}
                       {dayEvts.length > 3 && (
-                        <div style={{ fontSize: 9, color: "var(--text-3)", textAlign: "center", fontWeight: 600 }}>
-                          +{dayEvts.length - 3} mais
-                        </div>
+                        <div style={{ fontSize: 9, color: "var(--text-3)", textAlign: "center", fontWeight: 600 }}>+{dayEvts.length - 3} mais</div>
                       )}
                     </div>
                   );
@@ -571,61 +866,23 @@ export default function CalendarioPage() {
               </div>
             </div>
           ) : (
-            /* ── List View ── */
-            <ListView events={EVENTS} filter={circuitFilter} onSelect={setSelectedEvent} />
+            <ListView events={visibleEvents} onSelect={setSelectedEvent} />
           )}
         </div>
       </div>
 
-      {/* Event Popup */}
       {selectedEvent && <EventPopup event={selectedEvent} onClose={() => setSelectedEvent(null)} />}
     </div>
   );
 }
 
-/* ═══ Small UI pieces ═══ */
-function NavBtn({ label, onClick, disabled }: { label: string; onClick: () => void; disabled?: boolean }) {
+function SmBtn({ l, onClick, dis }: { l: string; onClick: () => void; dis?: boolean }) {
   return (
-    <button onClick={onClick} disabled={disabled}
-      style={{
-        background: "none", border: "none", cursor: disabled ? "default" : "pointer",
-        fontSize: 16, color: disabled ? "var(--border)" : "var(--text-3)",
-        width: 24, height: 24, borderRadius: "50%",
-        display: "flex", alignItems: "center", justifyContent: "center", padding: 0,
-        transition: "background 0.15s",
-      }}>
-      {label}
-    </button>
-  );
-}
-
-function LegendBtn({ color, label, count, active, onClick }: {
-  color: string; label: string; count: number; active: boolean; onClick: () => void;
-}) {
-  return (
-    <button onClick={onClick}
-      style={{
-        display: "flex", alignItems: "center", gap: 8, width: "100%",
-        padding: "4px 8px", borderRadius: "var(--radius)",
-        border: "none", cursor: "pointer", fontFamily: "inherit",
-        background: active ? "var(--accent-light)" : "transparent",
-        transition: "background 0.15s",
-      }}
-      onMouseEnter={e => { if (!active) e.currentTarget.style.background = "var(--bg-hover)"; }}
-      onMouseLeave={e => { if (!active) e.currentTarget.style.background = active ? "var(--accent-light)" : "transparent"; }}
-    >
-      <span style={{
-        width: 10, height: 10, borderRadius: "50%", background: color, flexShrink: 0,
-      }} />
-      <span style={{ fontSize: 11, color: "var(--text-2)", flex: 1, textAlign: "left", fontWeight: active ? 600 : 400 }}>
-        {label}
-      </span>
-      <span style={{
-        fontSize: 10, fontFamily: "'JetBrains Mono', monospace",
-        color: "var(--text-3)", fontWeight: 500,
-      }}>
-        {count}
-      </span>
-    </button>
+    <button onClick={onClick} disabled={dis} style={{
+      background: "none", border: "none", cursor: dis ? "default" : "pointer",
+      fontSize: 16, color: dis ? "var(--border)" : "var(--text-3)",
+      width: 24, height: 24, borderRadius: "50%", display: "flex", alignItems: "center",
+      justifyContent: "center", padding: 0,
+    }}>{l}</button>
   );
 }
