@@ -20,439 +20,534 @@ type DD = {
 };
 
 type Vis = Record<string, boolean>;
-type Theme = { tx:string;tx2:string;tx3:string;tx4:string;div:string;div2:string;cardBg:string;cardBd:string;greenBg:string;greenBg2:string;parC:string;parBd:string;dash:string;posBd:string;dim:string; };
 type Stats = { pF:number;pB:number;pT:number;sF:number;sB:number;sT:number;vpT:number;vpF:number;vpB:number;sd:number;st:{eagles:number;birdies:number;pars:number;bogeys:number;doubles:number;triples:number}};
 
-/* ═══════ THEMES ═══════ */
-function mkTheme(mode: "white"|"black"): Theme {
-  const L=mode==="white";
-  return{tx:L?"#000":"#fff",tx2:L?"rgba(0,0,0,0.75)":"rgba(255,255,255,0.75)",tx3:L?"rgba(0,0,0,0.6)":"rgba(255,255,255,0.6)",tx4:L?"rgba(0,0,0,0.45)":"rgba(255,255,255,0.45)",
-    div:L?"rgba(0,0,0,0.2)":"rgba(255,255,255,0.25)",div2:L?"rgba(0,0,0,0.12)":"rgba(255,255,255,0.15)",
-    cardBg:L?"rgba(0,0,0,0.08)":"rgba(255,255,255,0.08)",cardBd:L?"rgba(0,0,0,0.15)":"rgba(255,255,255,0.12)",
-    greenBg:L?"rgba(45,106,48,0.25)":"rgba(45,106,48,0.75)",greenBg2:L?"rgba(45,106,48,0.2)":"rgba(45,106,48,0.5)",
-    parC:L?"rgba(0,0,0,0.65)":"rgba(255,255,255,0.65)",parBd:L?"2px solid rgba(0,0,0,0.15)":"2px solid rgba(255,255,255,0.12)",
-    dash:L?"rgba(0,0,0,0.25)":"rgba(255,255,255,0.25)",posBd:L?"rgba(0,0,0,0.3)":"rgba(255,255,255,0.35)",
-    dim:L?"rgba(0,0,0,0.65)":"rgba(255,255,255,0.7)"};
-}
+/* ═══════ FONTS ═══════ */
+const FONT_LINK = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Oswald:wght@400;500;600;700&family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,700;1,400;1,700&display=swap";
+const II = "'Inter',sans-serif", O = "'Oswald',sans-serif",
+  BE = "'Bebas Neue',sans-serif",
+  LO = "'Lora',serif";
 
-/* ═══════ SCORE COLORS (GameBook) ═══════ */
-function sty(score:number,par:number,t:Theme){const d=score-par;if(d<=-2)return{c:"#fff",bg:"#d4a017",sh:"circle"as const};if(d===-1)return{c:"#fff",bg:"#dc2626",sh:"circle"as const};if(d===0)return{c:t.tx,bg:"transparent",sh:"none"as const};if(d===1)return{c:"#fff",bg:"#5BADE6",sh:"sq"as const};if(d===2)return{c:"#fff",bg:"#2B6EA0",sh:"sq"as const};if(d===3)return{c:"#fff",bg:"#1B4570",sh:"sq"as const};return{c:"#fff",bg:"#0E2A45",sh:"sq"as const};}
-function vpc(d:number,t:Theme){if(d<=-2)return"#d4a017";if(d===-1)return"#dc2626";if(d===0)return t.tx2;if(d===1)return"#5BADE6";if(d===2)return"#2B6EA0";if(d===3)return"#1B4570";return"#0E2A45";}
+/* ═══════ SCORE COLORS ═══════ */
+function sty(score:number,par:number){
+  const d=score-par;
+  if(d<=-2)return{c:"#fff",bg:"#d4a017"};
+  if(d===-1)return{c:"#fff",bg:"#dc2626"};
+  if(d===0)return{c:"inherit",bg:"transparent"};
+  if(d===1)return{c:"#fff",bg:"#5BADE6"};
+  if(d===2)return{c:"#fff",bg:"#2B6EA0"};
+  if(d===3)return{c:"#fff",bg:"#1B4570"};
+  return{c:"#fff",bg:"#0E2A45"};
+}
+const isUnder=(sc:number,par:number)=>sc<par;
 const fvp=(v:number)=>v===0?"E":v>0?`+${v}`:`${v}`;
+const vpC=(v:number)=>{if(v<0)return"#22c55e";if(v===0)return"#a3a3a3";if(v<=3)return"#f59e0b";if(v<=6)return"#f97316";return"#ef4444";};
+const vpCd=(v:number)=>{if(v<0)return"#16a34a";if(v===0)return"#888";if(v<=3)return"#d97706";if(v<=6)return"#ea580c";return"#dc2626";};
 
-function SC({score,par,size=28,fs=14,t}:{score:number;par:number;size?:number;fs?:number;t:Theme}){
-  const s=sty(score,par,t);
-  return <div style={{width:size,height:size,display:"flex",alignItems:"center",justifyContent:"center",borderRadius:s.sh==="circle"?"50%":0,background:s.bg,fontSize:fs,fontWeight:900,color:s.c,lineHeight:1}}>{score}</div>;
+function SC({score,par,size=26,fs:fsProp}:{score:number;par:number;size?:number;fs?:number}){
+  const s=sty(score,par);const f=fsProp||size*0.5;
+  const base:React.CSSProperties={width:size,height:size,display:"flex",alignItems:"center",justifyContent:"center",fontWeight:900,fontSize:f,lineHeight:1};
+  if(s.bg==="transparent")return<div style={base}>{score}</div>;
+  return<div style={{...base,background:s.bg,color:s.c,borderRadius:isUnder(score,par)?"50%":0}}>{score}</div>;
+}
+function SQ({score,par,size=28,fs:fsProp}:{score:number;par:number;size?:number;fs?:number}){
+  const s=sty(score,par);const f=fsProp||size*0.48;
+  const base:React.CSSProperties={width:size,height:size,display:"flex",alignItems:"center",justifyContent:"center",fontWeight:900,fontSize:f,lineHeight:1};
+  if(s.bg==="transparent")return<div style={base}>{score}</div>;
+  if(isUnder(score,par))return<div style={{...base,background:s.bg,color:s.c,borderRadius:"50%"}}>{score}</div>;
+  return<div style={{...base,border:"2px solid rgba(255,255,255,0.5)",color:"#fff",borderRadius:0}}>{score}</div>;
+}
+function LSC({score,par,size=26,fs:fsProp}:{score:number;par:number;size?:number;fs?:number}){
+  const d=score-par;const f=fsProp||size*0.5;
+  const base:React.CSSProperties={width:size,height:size,display:"flex",alignItems:"center",justifyContent:"center",fontWeight:900,fontSize:f,lineHeight:1};
+  if(d<=-2)return<div style={{...base,background:"#d4a017",color:"#fff",borderRadius:"50%"}}>{score}</div>;
+  if(d===-1)return<div style={{...base,background:"#dc2626",color:"#fff",borderRadius:"50%"}}>{score}</div>;
+  if(d===0)return<div style={{...base,color:"#333"}}>{score}</div>;
+  return<div style={{...base,background:d===1?"#5BADE6":d===2?"#2B6EA0":"#1B4570",color:"#fff",borderRadius:0}}>{score}</div>;
 }
 
+function Grid99({d,size=26,gap=4,showNums=false,numFs=8}:{d:DD;size?:number;gap?:number;showNums?:boolean;numFs?:number}){
+  const is18=d.scores.length>=18;
+  const slices=is18?[{off:0,len:9},{off:9,len:9}]:[{off:0,len:d.scores.length}];
+  return<div style={{display:"flex",flexDirection:"column",gap,alignItems:"center"}}>
+    {slices.map(({off,len})=><div key={off} style={{display:"flex",gap}}>
+      {d.scores.slice(off,off+len).map((sc,i)=><div key={i} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:1}}>
+        {showNums&&<div style={{fontSize:numFs,fontWeight:700,color:"rgba(255,255,255,0.3)",fontFamily:II}}>{off+i+1}</div>}
+        <SC score={sc} par={d.par[off+i]} size={size}/></div>)}</div>)}</div>;
+}
 
-/* ═══════ STATS ═══════ */
-function calcStats(d:DD): Stats {
+function StatsLine({s,gap=14,fs=13,lfs=8,color="rgba(255,255,255,0.4)"}:{s:Stats;gap?:number;fs?:number;lfs?:number;color?:string}){
+  const items=[{n:s.st.eagles,l:"Eagle",c:"#d4a017"},{n:s.st.birdies,l:"Birdie",c:"#dc2626"},{n:s.st.pars,l:"Par",c:color},{n:s.st.bogeys,l:"Bogey",c:"#5BADE6"}].filter(x=>x.n>0);
+  if(!items.length)return null;
+  return<div style={{display:"flex",justifyContent:"center",gap,flexWrap:"wrap"}}>
+    {items.map(x=><div key={x.l} style={{display:"flex",alignItems:"center",gap:4}}>
+      <span style={{fontSize:fs,fontWeight:900,color:x.c}}>{x.n}</span>
+      <span style={{fontSize:lfs,fontWeight:700,color,letterSpacing:0.5}}>{x.l}</span></div>)}</div>;
+}
+
+function calcStats(d:DD):Stats{
   const n=d.scores.length;const is18=n>=18;
-  const pF=d.par.slice(0,9).reduce((a,b)=>a+b,0);const pB=is18?d.par.slice(9).reduce((a,b)=>a+b,0):0;
+  const pF=d.par.slice(0,Math.min(9,n)).reduce((a,b)=>a+b,0);
+  const pB=is18?d.par.slice(9).reduce((a,b)=>a+b,0):0;
   const pT=is18?pF+pB:d.par.reduce((a,b)=>a+b,0);
-  const sF=d.scores.slice(0,9).reduce((a,b)=>a+b,0);const sB=is18?d.scores.slice(9).reduce((a,b)=>a+b,0):0;
+  const sF=d.scores.slice(0,Math.min(9,n)).reduce((a,b)=>a+b,0);
+  const sB=is18?d.scores.slice(9).reduce((a,b)=>a+b,0):0;
   const sT=is18?sF+sB:d.scores.reduce((a,b)=>a+b,0);
   const st={eagles:0,birdies:0,pars:0,bogeys:0,doubles:0,triples:0};
-  d.scores.forEach((s,i)=>{const x=s-d.par[i];if(x<=-2)st.eagles++;else if(x===-1)st.birdies++;else if(x===0)st.pars++;else if(x===1)st.bogeys++;else if(x===2)st.doubles++;else st.triples++;});
+  d.scores.forEach((sc,i)=>{const x=sc-d.par[i];if(x<=-2)st.eagles++;else if(x===-1)st.birdies++;else if(x===0)st.pars++;else if(x===1)st.bogeys++;else if(x===2)st.doubles++;else st.triples++;});
   const sd=d.slope>0?(113/d.slope)*(sT-d.cr):0;
   return{pF,pB,pT,sF,sB,sT,vpT:sT-pT,vpF:sF-pF,vpB:is18?sB-pB:0,sd,st};
 }
 
-/* ═══════ SHARED SUB-COMPONENTS ═══════ */
-function SubLine({d,v,t}:{d:DD;v:Vis;t:Theme}){
-  const parts:string[]=[];
-  if(v.course&&d.course)parts.push(d.course);if(v.tee&&d.tee)parts.push(d.tee);
-  if(v.teeDist&&d.teeDist)parts.push(`${d.teeDist}m`);if(v.date&&d.date)parts.push(d.date);
-  if(!parts.length)return null;
-  return <div style={{fontSize:12,color:t.tx3,marginTop:1,fontWeight:700}}>{parts.join(" · ")}</div>;
+function subParts(d:DD,v:Vis):string{
+  return[v.course&&d.course,v.tee&&d.tee,v.teeDist&&d.teeDist&&`${d.teeDist}m`,v.date&&d.date].filter(Boolean).join(" \u00b7 ");
 }
-function TitleLine({d,v,t,fs=15}:{d:DD;v:Vis;t:Theme;fs?:number}){
-  if(!v.event&&!v.round)return null;
-  const ev=v.event&&d.event?d.event:"";const rn=v.round?`R${d.round}`:"";const sep=ev&&rn?" — ":"";
-  if(!ev&&!rn)return null;
-  return <div style={{fontSize:fs,fontWeight:900,color:t.tx}}>{ev}{sep}{rn}</div>;
+function hiChLine(d:DD,v:Vis,s:Stats):string{
+  const p:string[]=[];
+  if(v.hiCh&&d.hi!==null){p.push(`HI ${d.hi.toFixed(1)}`);if(d.courseHcp!==null)p.push(`CH ${d.courseHcp}`);}
+  if(v.sd)p.push(`SD ${s.sd.toFixed(1)}`);
+  return p.join(" \u00b7 ");
 }
-function HiChSdLine({d,v,t,fs=10}:{d:DD;v:Vis;t:Theme;fs?:number}){
-  const parts:string[]=[];
-  if(v.hiCh&&d.hi!==null){parts.push(`HI ${d.hi.toFixed(1)}`);if(d.courseHcp!==null)parts.push(`CH ${d.courseHcp}`);}
-  if(v.sd&&d.sd!==null)parts.push(`SD ${d.sd.toFixed(1)}`);
-  if(!parts.length)return null;
-  return <div style={{fontSize:fs,color:t.tx3,marginTop:3,fontWeight:700}}>{parts.join(" · ")}</div>;
-}
-function StatsRow({s,v,t,fs=20,gap=12}:{s:Stats;v:Vis;t:Theme;fs?:number;gap?:number}){
-  if(!v.stats)return null;const bogP=s.st.bogeys+s.st.doubles+s.st.triples;
-  return <div style={{display:"flex",justifyContent:"center",gap,marginTop:8}}>
-    {s.st.eagles>0&&<div style={{textAlign:"center"}}><div style={{fontSize:fs,fontWeight:900,color:"#d4a017",lineHeight:1}}>{s.st.eagles}</div><div style={{fontSize:11,color:t.tx4,marginTop:2,fontWeight:800}}>EAG</div></div>}
-    {s.st.birdies>0&&<div style={{textAlign:"center"}}><div style={{fontSize:fs,fontWeight:900,color:"#dc2626",lineHeight:1}}>{s.st.birdies}</div><div style={{fontSize:11,color:t.tx4,marginTop:2,fontWeight:800}}>BIR</div></div>}
-    <div style={{textAlign:"center"}}><div style={{fontSize:fs,fontWeight:900,color:t.dim,lineHeight:1}}>{s.st.pars}</div><div style={{fontSize:11,color:t.tx4,marginTop:2,fontWeight:800}}>PAR</div></div>
-    {bogP>0&&<div style={{textAlign:"center"}}><div style={{fontSize:fs,fontWeight:900,color:"#5BADE6",lineHeight:1}}>{bogP}</div><div style={{fontSize:11,color:t.tx4,marginTop:2,fontWeight:800}}>BOG+</div></div>}
+function hexToRgba(hex:string,a:number){const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return `rgba(${r},${g},${b},${a})`;}
+
+/* ═══ A. PGA COLUMNS ═══ */
+function DA({d,v,s,bg}:{d:DD;v:Vis;s:Stats;bg?:string|null}){
+  const sz=26;const is18=d.scores.length>=18;const sub=subParts(d,v);const hcl=hiChLine(d,v,s);
+  return<div style={{fontFamily:BE,width:140,color:"#fff",background:bg||"rgba(20,40,80,0.88)",overflow:"hidden",overflowWrap:"break-word"}}>
+    {(v.player||v.round)&&<div style={{padding:"14px 12px 4px"}}>
+      {v.player&&d.player&&<div style={{fontSize:30,lineHeight:1,letterSpacing:1}}>{d.player.toUpperCase()}</div>}
+      {v.round&&<div style={{fontFamily:II,fontSize:9,fontWeight:700,letterSpacing:2,color:"rgba(255,255,255,0.5)",marginTop:2}}>ROUND {d.round}</div>}</div>}
+    <div style={{height:3,background:"#dc2626",margin:"6px 12px"}}/>
+    {v.holeScores&&is18?<div style={{display:"flex",padding:"6px 10px 10px"}}>
+      {[{off:0,l:"FRONT",sc:s.sF},{off:9,l:"BACK",sc:s.sB}].map(({off,l,sc},ci)=>
+        <div key={off} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:1,borderRight:ci===0?"2px solid rgba(220,38,38,0.5)":"none",paddingRight:ci===0?7:0,paddingLeft:ci===1?7:0}}>
+          {d.scores.slice(off,off+9).map((scr,i)=><SC key={i} score={scr} par={d.par[off+i]} size={sz} fs={14}/>)}
+          <div style={{fontFamily:II,fontSize:8,fontWeight:700,letterSpacing:2,color:"rgba(255,255,255,0.4)",marginTop:5}}>{l}</div>
+          <div style={{fontSize:28,lineHeight:1}}>{sc}</div></div>)}</div>
+    :v.holeScores?<div style={{padding:"6px 10px 10px",display:"flex",flexDirection:"column",alignItems:"center",gap:1}}>
+      {d.scores.map((scr,i)=><SC key={i} score={scr} par={d.par[i]} size={sz} fs={14}/>)}</div>:null}
+    <div style={{background:"rgba(255,255,255,0.95)",color:"#14284f",padding:"8px 12px",textAlign:"center"}}>
+      <div style={{fontSize:44,lineHeight:1}}>{s.sT}</div>
+      <div style={{fontFamily:II,fontSize:18,fontWeight:900,color:vpCd(s.vpT),marginTop:-2}}>{fvp(s.vpT)}</div></div>
+    {(sub||hcl)&&<div style={{fontFamily:II,padding:"6px 12px 10px",fontSize:8,fontWeight:600,color:"rgba(255,255,255,0.4)"}}>{sub}{sub&&hcl?<br/>:null}{hcl}</div>}
   </div>;
 }
 
-/* ═══════ 20 DESIGNS ═══════ */
+/* ═══ B. GREEN COLUMNS ═══ */
+function DB({d,v,s,bg}:{d:DD;v:Vis;s:Stats;bg?:string|null}){
+  const sz=24;const is18=d.scores.length>=18;
+  return<div style={{fontFamily:O,width:140,color:"#fff",background:bg||"rgba(10,30,20,0.88)",borderRadius:14,overflow:"hidden",overflowWrap:"break-word"}}>
+    <div style={{padding:"14px 12px 4px"}}>
+      {(v.round||v.date)&&<div style={{fontFamily:II,fontSize:8,fontWeight:700,letterSpacing:2,color:"rgba(255,255,255,0.4)"}}>
+        {[v.round&&`R${d.round}`,v.date&&d.date].filter(Boolean).join(" \u00b7 ")}</div>}
+      {v.player&&d.player&&<div style={{fontSize:22,fontWeight:700,letterSpacing:1,marginTop:4}}>{d.player.toUpperCase()}</div>}
+      {v.course&&d.course&&<div style={{fontFamily:II,fontSize:9,fontWeight:500,color:"rgba(255,255,255,0.4)"}}>{d.course}</div>}</div>
+    <div style={{height:2,background:"#4ade80",margin:"6px 12px"}}/>
+    {v.holeScores&&is18?<div style={{display:"flex",padding:"6px 10px 10px"}}>
+      {[{off:0,l:"FRONT",sc:s.sF},{off:9,l:"BACK",sc:s.sB}].map(({off,l,sc},ci)=>
+        <div key={off} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:1,borderRight:ci===0?"2px solid rgba(74,222,128,0.3)":"none",paddingRight:ci===0?7:0,paddingLeft:ci===1?7:0}}>
+          {d.scores.slice(off,off+9).map((scr,i)=><SC key={i} score={scr} par={d.par[off+i]} size={sz} fs={13}/>)}
+          <div style={{fontFamily:II,fontSize:8,fontWeight:700,letterSpacing:2,color:"#4ade80",marginTop:5}}>{l}</div>
+          <div style={{fontSize:26,lineHeight:1}}>{sc}</div></div>)}</div>
+    :v.holeScores?<div style={{padding:"6px 10px 10px",display:"flex",flexDirection:"column",alignItems:"center",gap:1}}>
+      {d.scores.map((scr,i)=><SC key={i} score={scr} par={d.par[i]} size={sz} fs={13}/>)}</div>:null}
+    <div style={{background:"rgba(255,255,255,0.06)",padding:"8px 12px",textAlign:"center"}}>
+      <div style={{display:"flex",alignItems:"baseline",justifyContent:"center",gap:5}}>
+        <span style={{fontSize:38,lineHeight:1}}>{s.sT}</span>
+        <span style={{fontFamily:II,fontSize:16,fontWeight:900,color:vpC(s.vpT)}}>{fvp(s.vpT)}</span></div>
+      {v.stats&&<div style={{fontFamily:II,marginTop:5}}><StatsLine s={s} fs={11} lfs={7} gap={8}/></div>}</div>
+  </div>;
+}
 
-/* 1. Cartão Clássico */
-function D1({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
+/* ═══ C. 18BIRDIES ═══ */
+function DC({d,v,s,bg}:{d:DD;v:Vis;s:Stats;bg?:string|null}){
+  const is18=d.scores.length>=18;const hcl=hiChLine(d,v,s);
+  return<div style={{fontFamily:II,width:360,color:"#fff",background:bg||"rgba(15,15,25,0.9)",borderRadius:16,padding:"14px 10px"}}>
+    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:10,padding:"0 6px"}}>
+      <div>
+        {v.date&&d.date&&<div style={{fontSize:9,fontWeight:700,letterSpacing:2,color:"rgba(255,255,255,0.4)"}}>{d.date}</div>}
+        {v.course&&d.course&&<div style={{fontSize:13,fontWeight:900,marginTop:1}}>{d.course}</div>}
+        <div style={{fontSize:10,fontWeight:600,color:"rgba(255,255,255,0.4)"}}>Par {s.pT}{v.tee&&d.tee?` \u00b7 ${d.tee}`:""}{v.teeDist&&d.teeDist?` \u00b7 ${d.teeDist}m`:""}</div></div>
+      <div style={{textAlign:"right"}}><div style={{fontSize:28,fontWeight:900,letterSpacing:-1}}>{s.sT}</div>
+        <div style={{fontSize:9,fontWeight:700,color:"rgba(255,255,255,0.35)"}}>Gross</div></div></div>
+    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",background:"rgba(255,255,255,0.06)",borderRadius:8,padding:"6px 12px",marginBottom:8}}>
+      <span style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.5)"}}>To Par</span>
+      <span style={{fontSize:24,fontWeight:900,color:vpC(s.vpT)}}>{fvp(s.vpT)}</span></div>
+    {v.holeScores&&(is18?[{off:0,sub:s.sF},{off:9,sub:s.sB}]:[{off:0,sub:s.sT}]).map(({off,sub})=>
+      <div key={off} style={{display:"flex",alignItems:"center",marginBottom:3}}>
+        <div style={{display:"flex",gap:2}}>{d.scores.slice(off,off+(is18?9:d.scores.length)).map((sc,i)=>
+          <div key={i} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:1}}>
+            <div style={{fontSize:8,fontWeight:700,color:"rgba(255,255,255,0.25)"}}>{off+i+1}</div>
+            <SQ score={sc} par={d.par[off+i]} size={30}/></div>)}</div>
+        <div style={{marginLeft:6,fontSize:20,fontWeight:900,color:"rgba(255,255,255,0.6)",minWidth:32,textAlign:"center"}}>{sub}</div></div>)}
+    <div style={{display:"flex",justifyContent:"space-between",marginTop:8,fontSize:9,fontWeight:700,color:"rgba(255,255,255,0.3)",padding:"0 4px"}}>
+      {v.player&&d.player?<span>{d.player}</span>:<span/>}
+      {v.stats?<StatsLine s={s} gap={10} fs={11} lfs={7} color="rgba(255,255,255,0.3)"/>:<span/>}
+      {hcl?<span>{hcl}</span>:<span/>}</div>
+  </div>;
+}
+
+/* ═══ D. LIGHT CARD ═══ */
+function DD_({d,v,s,bg}:{d:DD;v:Vis;s:Stats;bg?:string|null}){
   const is18=d.scores.length>=18;
-  const HT=({pars,scores,sis,start,label}:{pars:number[];scores:number[];sis:number[];start:number;label:string})=>(
-    <div style={{marginBottom:2}}>
-      <div style={{display:"flex",background:t.greenBg,borderRadius:"4px 4px 0 0",padding:"3px 0"}}>
-        <div style={{width:60,padding:"0 4px",color:t.tx,fontWeight:900,fontSize:13}}>Buraco</div>
-        {pars.map((_,i)=><div key={i} style={{width:30,textAlign:"center",color:t.tx,fontWeight:800,fontSize:13}}>{start+i}</div>)}
-        <div style={{width:34,textAlign:"center",color:t.tx,fontWeight:900,fontSize:13}}>{label}</div></div>
-      {v.holeSI&&<div style={{display:"flex",background:t.cardBg,padding:"2px 0"}}>
-        <div style={{width:60,padding:"0 4px",color:t.tx3,fontSize:12}}>S.I.</div>
-        {sis.map((si,i)=><div key={i} style={{width:30,textAlign:"center",color:t.tx3,fontSize:12}}>{si}</div>)}<div style={{width:34}}/></div>}
-      {v.holePar&&<div style={{display:"flex",background:t.cardBg,padding:"2px 0"}}>
-        <div style={{width:60,padding:"0 4px",color:t.tx2,fontSize:12,fontWeight:700}}>Par</div>
-        {pars.map((p,i)=><div key={i} style={{width:30,textAlign:"center",color:t.tx2,fontSize:13}}>{p}</div>)}
-        <div style={{width:34,textAlign:"center",color:t.tx2,fontWeight:800,fontSize:13}}>{pars.reduce((a,b)=>a+b,0)}</div></div>}
-      {v.holeScores&&<div style={{display:"flex",padding:"3px 0"}}>
-        <div style={{width:60,padding:"0 4px",fontWeight:900,fontSize:13,color:t.tx}}>Score</div>
-        {scores.map((sc,i)=><div key={i} style={{width:30,display:"flex",justifyContent:"center"}}><SC score={sc} par={pars[i]} size={24} fs={12} t={t}/></div>)}
-        <div style={{width:34,textAlign:"center",fontWeight:900,fontSize:18,color:t.tx}}>{scores.reduce((a,b)=>a+b,0)}</div></div>}
-    </div>);
-  return <div style={{padding:"14px 10px",fontFamily:"'Inter',sans-serif",color:t.tx,width:is18?410:350}}>
-    {(v.event||v.course||v.round)&&<div style={{textAlign:"center",marginBottom:10}}><TitleLine d={d} v={v} t={t}/><SubLine d={d} v={v} t={t}/></div>}
-    {v.player&&d.player&&<div style={{textAlign:"center",fontSize:15,fontWeight:800,marginBottom:6}}>{d.player}</div>}
-    {is18?<><HT pars={d.par.slice(0,9)} scores={d.scores.slice(0,9)} sis={d.si.slice(0,9)} start={1} label="Out"/>
-      <HT pars={d.par.slice(9)} scores={d.scores.slice(9)} sis={d.si.slice(9)} start={10} label="In"/></>
-      :<HT pars={d.par} scores={d.scores} sis={d.si} start={1} label="Tot"/>}
-    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:8,padding:"0 4px"}}>
-      <span style={{fontSize:14,color:t.tx3}}>Par {s.pT}</span><span style={{fontSize:20,fontWeight:900}}>{s.sT}</span>
-      <span style={{fontSize:18,fontWeight:900,color:vpc(s.vpT,t)}}>{fvp(s.vpT)}</span></div>
-    <StatsRow s={s} v={v} t={t} fs={15} gap={10}/><div style={{textAlign:"center"}}><HiChSdLine d={d} v={v} s={s} t={t}/></div>
-    {v.position&&d.position&&<div style={{textAlign:"center",fontSize:11,color:t.tx4,marginTop:3}}>Posição: {d.position}º</div>}
+  return<div style={{fontFamily:II,width:380,background:bg||"rgba(255,255,255,0.92)",borderRadius:14,padding:"16px 14px",color:"#222",border:"1px solid rgba(0,0,0,0.08)"}}>
+    <div style={{borderBottom:"2px solid #e5e7eb",paddingBottom:10,marginBottom:12}}>
+      {v.course&&d.course&&<div style={{fontSize:16,fontWeight:900}}>{d.course}</div>}
+      <div style={{fontSize:10,fontWeight:600,color:"#999",marginTop:2}}>{[v.date&&d.date,v.tee&&d.tee].filter(Boolean).join(" \u00b7 ")}</div></div>
+    {v.holeScores&&(is18?[0,9]:[0]).map(off=>{const cnt=is18?9:d.scores.length;const subP=d.par.slice(off,off+cnt).reduce((a,b)=>a+b,0);const subS=d.scores.slice(off,off+cnt).reduce((a,b)=>a+b,0);
+      return<div key={off}>
+      <div style={{display:"flex",background:"#1e3a2f",borderRadius:off===0?"6px 6px 0 0":0,padding:"3px 0"}}>
+        <div style={{width:40,padding:"0 4px",fontSize:9,fontWeight:800,color:"rgba(255,255,255,0.7)",display:"flex",alignItems:"center"}}>Hole</div>
+        {d.par.slice(off,off+cnt).map((_,i)=><div key={i} style={{width:34,textAlign:"center",fontSize:11,fontWeight:800,color:"#fff"}}>{off+i+1}</div>)}
+        <div style={{width:36,textAlign:"center",fontSize:10,fontWeight:800,color:"rgba(255,255,255,0.7)"}}>{is18?(off===0?"Out":"In"):"Tot"}</div></div>
+      {v.holePar&&<div style={{display:"flex",background:"#e8f5e9",padding:"2px 0"}}>
+        <div style={{width:40,padding:"0 4px",fontSize:9,fontWeight:700,color:"#2e7d32",display:"flex",alignItems:"center"}}>Par</div>
+        {d.par.slice(off,off+cnt).map((p,i)=><div key={i} style={{width:34,textAlign:"center",fontSize:11,color:"#2e7d32",fontWeight:700}}>{p}</div>)}
+        <div style={{width:36,textAlign:"center",fontSize:11,fontWeight:800,color:"#2e7d32"}}>{subP}</div></div>}
+      <div style={{display:"flex",padding:"4px 0",marginBottom:off===0&&is18?6:0}}>
+        <div style={{width:40,padding:"0 4px",fontSize:9,fontWeight:900,color:"#333",display:"flex",alignItems:"center"}}>Score</div>
+        {d.scores.slice(off,off+cnt).map((sc,i)=><div key={i} style={{width:34,display:"flex",justifyContent:"center"}}><LSC score={sc} par={d.par[off+i]} size={28}/></div>)}
+        <div style={{width:36,textAlign:"center",fontSize:16,fontWeight:900,color:"#333",display:"flex",alignItems:"center",justifyContent:"center"}}>{subS}</div></div></div>;})}
+    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:10,padding:"8px 6px",background:"#f3f4f6",borderRadius:8}}>
+      {v.player&&d.player?<div style={{fontSize:14,fontWeight:900}}>{d.player}</div>:<div/>}
+      <div style={{display:"flex",alignItems:"baseline",gap:5}}><span style={{fontSize:28,fontWeight:900}}>{s.sT}</span>
+        <span style={{fontSize:18,fontWeight:900,color:vpCd(s.vpT)}}>{fvp(s.vpT)}</span></div></div>
   </div>;
 }
 
-/* 2. Scorecard Pro */
-function D2({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  const is18=d.scores.length>=18;
-  const R=({label,data,isSc,tot,off=0}:{label:string;data:number[];isSc?:boolean;tot:number|string;off?:number})=>(
-    <div style={{display:"flex",alignItems:"center"}}>
-      <div style={{width:36,fontSize:12,fontWeight:isSc?700:400,color:isSc?t.tx:t.tx3,padding:"3px 2px"}}>{label}</div>
-      {data.map((val,i)=><div key={i} style={{width:26,display:"flex",justifyContent:"center",padding:"2px 0"}}>
-        {isSc?<SC score={val} par={d.par[off+i]} size={22} fs={11} t={t}/>:<span style={{fontSize:13,color:t.tx2}}>{val}</span>}</div>)}
-      <div style={{width:30,textAlign:"center",fontWeight:900,fontSize:isSc?13:11,color:isSc?t.tx:t.tx2}}>{tot}</div></div>);
-  return <div style={{padding:"12px 8px",fontFamily:"'Inter',sans-serif",color:t.tx,width:is18?350:320}}>
-    <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:8,padding:"0 2px"}}>
-      <div>{v.player&&d.player&&<div style={{fontSize:15,fontWeight:900}}>{d.player}</div>}<SubLine d={d} v={v} t={t}/></div>
-      <div><span style={{fontSize:26,fontWeight:900}}>{s.sT}</span><span style={{fontSize:15,fontWeight:800,marginLeft:4,color:vpc(s.vpT,t)}}>{fvp(s.vpT)}</span></div></div>
-    {(v.event||v.round)&&<div style={{fontSize:12,color:t.tx3,marginBottom:6,textAlign:"center"}}>{v.event&&d.event}{v.round&&` R${d.round}`}</div>}
-    {(v.holeScores||v.holePar||v.holeSI)&&is18&&<>
-      <div style={{display:"flex"}}><div style={{width:36}}/>{[1,2,3,4,5,6,7,8,9].map(h=><div key={h} style={{width:26,textAlign:"center",fontSize:11,color:t.tx4,fontWeight:800}}>{h}</div>)}<div style={{width:30,textAlign:"center",fontSize:10,color:t.tx3,fontWeight:800}}>OUT</div></div>
-      {v.holeSI&&<R label="SI" data={d.si.slice(0,9)} tot=""/>}{v.holePar&&<R label="Par" data={d.par.slice(0,9)} tot={s.pF}/>}{v.holeScores&&<R label="Score" data={d.scores.slice(0,9)} isSc tot={s.sF}/>}
-      <div style={{height:6}}/>
-      <div style={{display:"flex"}}><div style={{width:36}}/>{[10,11,12,13,14,15,16,17,18].map(h=><div key={h} style={{width:26,textAlign:"center",fontSize:11,color:t.tx4,fontWeight:800}}>{h}</div>)}<div style={{width:30,textAlign:"center",fontSize:10,color:t.tx3,fontWeight:800}}>IN</div></div>
-      {v.holeSI&&<R label="SI" data={d.si.slice(9)} tot="" off={9}/>}{v.holePar&&<R label="Par" data={d.par.slice(9)} tot={s.pB} off={9}/>}{v.holeScores&&<R label="Score" data={d.scores.slice(9)} isSc tot={s.sB} off={9}/>}
-    </>}
-    {(v.holeScores||v.holePar||v.holeSI)&&!is18&&<>
-      <div style={{display:"flex"}}><div style={{width:36}}/>{d.par.map((_,i)=><div key={i} style={{width:26,textAlign:"center",fontSize:11,color:t.tx4,fontWeight:800}}>{i+1}</div>)}<div style={{width:30,textAlign:"center",fontSize:10,color:t.tx3,fontWeight:800}}>TOT</div></div>
-      {v.holeSI&&<R label="SI" data={d.si} tot=""/>}{v.holePar&&<R label="Par" data={d.par} tot={s.pT}/>}{v.holeScores&&<R label="Score" data={d.scores} isSc tot={s.sT}/>}
-    </>}
-    <StatsRow s={s} v={v} t={t} fs={13} gap={8}/><div style={{textAlign:"center"}}><HiChSdLine d={d} v={v} s={s} t={t}/></div>
-  </div>;
-}
+/* ═══ E-H: To Par Hero, Hero Giant, Sticker, Strip ═══ */
+function DE({d,v,s,bg}:{d:DD;v:Vis;s:Stats;bg?:string|null}){const sub=subParts(d,{...v,date:false});const hcl=hiChLine(d,v,s);
+  return<div style={{fontFamily:II,width:320,color:"#fff",background:bg||"rgba(0,0,0,0.75)",borderRadius:16,padding:"20px 16px",textAlign:"center"}}>
+    <div style={{fontSize:10,fontWeight:700,letterSpacing:3,color:"rgba(255,255,255,0.4)"}}>TO PAR</div>
+    <div style={{fontSize:80,fontWeight:900,lineHeight:0.9,color:vpC(s.vpT),letterSpacing:-4,margin:"4px 0"}}>{fvp(s.vpT)}</div>
+    <div style={{fontSize:14,fontWeight:700,color:"rgba(255,255,255,0.5)"}}>Gross <span style={{fontWeight:900,color:"#fff",fontSize:22}}>{s.sT}</span></div>
+    <div style={{height:1,background:"rgba(255,255,255,0.1)",margin:"14px 0"}}/>
+    {v.player&&d.player&&<div style={{fontSize:16,fontWeight:900,marginBottom:2}}>{d.player}</div>}
+    {sub&&<div style={{fontSize:10,fontWeight:500,color:"rgba(255,255,255,0.4)",marginBottom:12}}>{sub}{v.round?` \u00b7 R${d.round}`:""}</div>}
+    {v.holeScores&&<Grid99 d={d} size={26} gap={4} showNums numFs={8}/>}
+    {v.stats&&<div style={{marginTop:12}}><StatsLine s={s} fs={14} lfs={9}/></div>}
+    {hcl&&<div style={{fontSize:9,fontWeight:700,color:"rgba(255,255,255,0.2)",marginTop:8}}>{hcl}{v.date&&d.date?` \u00b7 ${d.date}`:""}</div>}</div>;}
 
-/* 3. Resumo */
-function D3({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  return <div style={{padding:"18px 22px",fontFamily:"'Inter',sans-serif",color:t.tx,width:210,textAlign:"center"}}>
-    {(v.event||v.round)&&<div style={{fontSize:12,color:t.tx3,marginBottom:6}}>{v.event&&d.event}{v.round&&` R${d.round}`}</div>}
-    <div style={{fontSize:56,fontWeight:900,lineHeight:1,letterSpacing:"-3px"}}>{s.sT}</div>
-    <div style={{fontSize:22,fontWeight:800,marginTop:2,color:vpc(s.vpT,t)}}>{fvp(s.vpT)}</div>
-    <StatsRow s={s} v={v} t={t} fs={18} gap={10}/>
-    {(v.player||v.course||v.date)&&<div style={{height:1,background:t.div,margin:"10px 14px"}}/>}
-    {v.player&&d.player&&<div style={{fontSize:14,fontWeight:800}}>{d.player}</div>}
-    <SubLine d={d} v={v} t={t}/><HiChSdLine d={d} v={v} s={s} t={t}/>
-    {v.position&&d.position&&<div style={{fontSize:11,color:t.tx4,marginTop:3}}>{d.position}º lugar</div>}
-  </div>;
-}
+function DF({d,v,s,bg}:{d:DD;v:Vis;s:Stats;bg?:string|null}){const hcl=hiChLine(d,v,s);
+  return<div style={{fontFamily:O,width:320,textAlign:"center",color:"#fff"}}><div style={{background:bg||"rgba(0,0,0,0.72)",borderRadius:16,padding:"20px 18px 16px"}}>
+    {v.round&&<div style={{fontFamily:II,fontSize:9,fontWeight:700,letterSpacing:3,color:"rgba(255,255,255,0.4)"}}>ROUND {d.round}</div>}
+    {v.player&&d.player&&<div style={{fontSize:26,fontWeight:700,letterSpacing:1,marginTop:2}}>{d.player.toUpperCase()}</div>}
+    {(v.course||v.tee)&&<div style={{fontFamily:II,fontSize:10,fontWeight:600,color:"rgba(255,255,255,0.45)"}}>{[v.course&&d.course,v.tee&&d.tee].filter(Boolean).join(" \u00b7 ")}</div>}
+    <div style={{display:"flex",alignItems:"baseline",justifyContent:"center",gap:6,margin:"14px 0 4px"}}>
+      <span style={{fontSize:90,lineHeight:0.85,letterSpacing:-2,fontWeight:700}}>{s.sT}</span>
+      <span style={{fontSize:40,fontWeight:700,color:vpC(s.vpT)}}>{fvp(s.vpT)}</span></div>
+    <div style={{fontFamily:II,fontSize:10,fontWeight:700,color:"rgba(255,255,255,0.35)",marginBottom:12}}>
+      Par {s.pT}{v.teeDist&&d.teeDist?` \u00b7 ${d.teeDist}m`:""}{v.date&&d.date?` \u00b7 ${d.date}`:""}</div>
+    {v.holeScores&&<Grid99 d={d} size={28} gap={4}/>}
+    {v.stats&&<div style={{fontFamily:II,marginTop:12}}><StatsLine s={s} fs={14} lfs={9}/></div>}
+    {hcl&&<div style={{fontFamily:II,fontSize:9,fontWeight:700,color:"rgba(255,255,255,0.25)",marginTop:6}}>{hcl}</div>}
+  </div></div>;}
 
-/* 4. Dots */
-function D4({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  const is18=d.scores.length>=18;
-  return <div style={{padding:"14px 12px",fontFamily:"'Inter',sans-serif",color:t.tx,width:is18?330:300}}>
-    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
-      <div>{v.player&&d.player&&<div style={{fontSize:15,fontWeight:900}}>{d.player}</div>}{(v.event||v.round)&&<div style={{fontSize:12,color:t.tx3,fontWeight:700}}>{v.event&&d.event}{v.round&&` R${d.round}`}</div>}</div>
-      <div><span style={{fontSize:28,fontWeight:900}}>{s.sT}</span><span style={{fontSize:18,fontWeight:800,marginLeft:4,color:vpc(s.vpT,t)}}>{fvp(s.vpT)}</span></div></div>
-    {v.holeScores&&is18&&[{l:"OUT",o:0},{l:"IN",o:9}].map(h=><div key={h.l} style={{marginBottom:4}}>
-      <div style={{display:"flex",alignItems:"center",gap:2}}>
-        <div style={{width:24,fontSize:12,fontWeight:900,color:t.tx3,textAlign:"right",paddingRight:3}}>{h.l}</div>
-        {d.scores.slice(h.o,h.o+9).map((sc,i)=><SC key={i} score={sc} par={d.par[h.o+i]} size={28} fs={13} t={t}/>)}
-        <div style={{width:30,textAlign:"center",fontWeight:900,fontSize:18}}>{d.scores.slice(h.o,h.o+9).reduce((a,b)=>a+b,0)}</div></div>
-      <div style={{display:"flex",gap:2}}><div style={{width:24}}/>{Array.from({length:9},(_,i)=><div key={i} style={{width:28,textAlign:"center",fontSize:10,color:t.tx4,fontWeight:700}}>{h.o+i+1}</div>)}</div></div>)}
-    {v.holeScores&&!is18&&<div style={{display:"flex",alignItems:"center",gap:2,marginBottom:4}}>
-      {d.scores.map((sc,i)=><SC key={i} score={sc} par={d.par[i]} size={28} fs={13} t={t}/>)}
-      <div style={{width:30,textAlign:"center",fontWeight:900,fontSize:18}}>{s.sT}</div></div>}
-    <SubLine d={d} v={v} t={t}/><StatsRow s={s} v={v} t={t} fs={13} gap={8}/><div style={{textAlign:"center"}}><HiChSdLine d={d} v={v} s={s} t={t}/></div>
-    {v.position&&d.position&&<div style={{fontSize:11,color:t.tx4,textAlign:"center",marginTop:2}}>{d.position}º</div>}
-  </div>;
-}
+function DG({d,v,s,bg}:{d:DD;v:Vis;s:Stats;bg?:string|null}){
+  return<div style={{fontFamily:BE,color:"#fff",background:bg||"rgba(20,40,70,0.85)",borderRadius:10,padding:"8px 14px",display:"inline-flex",alignItems:"center",gap:12,border:"1px solid rgba(255,255,255,0.15)"}}>
+    <div style={{fontSize:36,lineHeight:1}}>{s.sT}</div>
+    <div style={{fontFamily:II}}>{v.player&&d.player&&<div style={{fontSize:12,fontWeight:800}}>{d.player}</div>}
+      {v.course&&d.course&&<div style={{fontSize:9,fontWeight:500,color:"rgba(255,255,255,0.4)"}}>{d.course}</div>}</div>
+    <div style={{fontFamily:II,fontSize:20,fontWeight:900,color:vpC(s.vpT)}}>{fvp(s.vpT)}</div></div>;}
 
-/* 5. Medalha */
-function D5({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  return <div style={{padding:"16px 22px",fontFamily:"'Inter',sans-serif",color:t.tx,width:180,textAlign:"center"}}>
-    {v.event&&d.event&&<div style={{fontSize:12,fontWeight:900,color:t.tx3,letterSpacing:"1.5px",textTransform:"uppercase"}}>{d.event}</div>}
-    {v.round&&<div style={{fontSize:14,fontWeight:900,color:t.tx2,marginTop:2}}>R{d.round}</div>}
-    {v.position&&d.position&&<div style={{fontSize:12,color:t.tx3,marginTop:2}}>{d.position}º</div>}
-    <div style={{fontSize:48,fontWeight:900,lineHeight:1,marginTop:6}}>{s.sT}</div>
-    <div style={{fontSize:20,fontWeight:900,marginTop:2,color:vpc(s.vpT,t)}}>{fvp(s.vpT)}</div>
-    <StatsRow s={s} v={v} t={t} fs={15} gap={8}/>
-    {(v.player||v.course||v.date)&&<div style={{height:1,background:t.div,margin:"8px 0"}}/>}
-    {v.player&&d.player&&<div style={{fontSize:13,fontWeight:800}}>{d.player}</div>}
-    <SubLine d={d} v={v} t={t}/><HiChSdLine d={d} v={v} s={s} t={t}/>
-  </div>;
-}
+function DH({d,v,s,bg}:{d:DD;v:Vis;s:Stats;bg?:string|null}){
+  return<div style={{fontFamily:II,color:"#fff",background:bg||"rgba(0,0,0,0.72)",borderRadius:12,padding:"12px 16px",display:"inline-flex",alignItems:"center",gap:14}}>
+    <div>{v.player&&d.player&&<div style={{fontSize:14,fontWeight:700}}>{d.player}</div>}
+      <div style={{fontSize:9,fontWeight:500,color:"rgba(255,255,255,0.4)"}}>{[v.course&&d.course,v.round&&`R${d.round}`].filter(Boolean).join(" \u00b7 ")}</div></div>
+    <div style={{width:1,height:32,background:"rgba(255,255,255,0.15)"}}/>
+    <div style={{display:"flex",alignItems:"baseline",gap:5}}>
+      <span style={{fontSize:38,fontWeight:900,letterSpacing:-2}}>{s.sT}</span>
+      <span style={{fontSize:22,fontWeight:900,color:vpC(s.vpT)}}>{fvp(s.vpT)}</span></div></div>;}
 
-/* 6. Faixa */
-function D6({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  const bogP=s.st.bogeys+s.st.doubles+s.st.triples;
-  return <div style={{padding:"10px 16px",fontFamily:"'Inter',sans-serif",color:t.tx,display:"flex",alignItems:"center",gap:12}}>
-    <div><span style={{fontSize:32,fontWeight:900}}>{s.sT}</span><span style={{fontSize:18,fontWeight:800,marginLeft:4,color:vpc(s.vpT,t)}}>{fvp(s.vpT)}</span></div>
-    <div style={{width:1,height:28,background:t.div}}/>
-    <div>{v.player&&d.player&&<div style={{fontSize:14,fontWeight:800}}>{d.player}</div>}{(v.event||v.round)&&<div style={{fontSize:12,color:t.tx3,fontWeight:700}}>{v.event&&d.event}{v.round&&` R${d.round}`}</div>}
-      <SubLine d={d} v={{...v,event:false,round:false}} t={t}/></div>
-    {v.stats&&<><div style={{width:1,height:28,background:t.div}}/>
-      <div style={{display:"flex",gap:6}}>
-        {s.st.birdies>0&&<div style={{textAlign:"center"}}><div style={{fontSize:18,fontWeight:900,color:"#dc2626"}}>{s.st.birdies}</div><div style={{fontSize:10,color:t.tx4,fontWeight:700}}>BIR</div></div>}
-        <div style={{textAlign:"center"}}><div style={{fontSize:18,fontWeight:900,color:t.dim}}>{s.st.pars}</div><div style={{fontSize:10,color:t.tx4,fontWeight:700}}>PAR</div></div>
-        {bogP>0&&<div style={{textAlign:"center"}}><div style={{fontSize:18,fontWeight:900,color:"#5BADE6"}}>{bogP}</div><div style={{fontSize:10,color:t.tx4,fontWeight:700}}>BOG</div></div>}
-      </div></>}
-    {v.sd&&d.sd!==null&&<div style={{textAlign:"center",marginLeft:4}}><div style={{fontSize:11,color:t.tx4,fontWeight:800}}>SD</div><div style={{fontSize:15,fontWeight:900}}>{s.sd.toFixed(1)}</div></div>}
-    {v.position&&d.position&&<div style={{fontSize:13,fontWeight:900,color:t.tx3}}>{d.position}º</div>}
-  </div>;
-}
-
-/* 7. Painel */
-function D7({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  const B=({val,l,c,big}:{val:string|number;l:string;c?:string;big?:boolean})=><div style={{textAlign:"center",padding:big?"8px 12px":"6px 8px",background:t.cardBg,borderRadius:6,border:`1px solid ${t.cardBd}`}}>
-    <div style={{fontSize:big?30:20,fontWeight:900,color:c||t.tx,lineHeight:1}}>{val}</div><div style={{fontSize:11,fontWeight:800,color:t.tx4,marginTop:3,letterSpacing:"0.5px"}}>{l}</div></div>;
-  return <div style={{padding:16,fontFamily:"'Inter',sans-serif",color:t.tx,width:260}}>
-    <div style={{textAlign:"center",marginBottom:12}}>{v.player&&d.player&&<div style={{fontSize:18,fontWeight:900}}>{d.player}</div>}{(v.event||v.round)&&<div style={{fontSize:12,color:t.tx3,marginTop:1}}>{v.event&&d.event}{v.round&&` R${d.round}`}</div>}<SubLine d={d} v={{...v,event:false,round:false}} t={t}/></div>
-    <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,marginBottom:6}}><B val={s.sT} l="RESULTADO" big/><B val={fvp(s.vpT)} l="VS PAR" c={vpc(s.vpT,t)} big/></div>
-    {v.stats&&<div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:4}}><B val={s.st.birdies} l="BIRDIES" c="#dc2626"/><B val={s.st.pars} l="PARS" c={t.dim}/><B val={s.st.bogeys+s.st.doubles+s.st.triples} l="BOGEY+" c="#5BADE6"/></div>}
-    {(v.hiCh||v.sd)&&d.hi!==null&&<div style={{display:"grid",gridTemplateColumns:v.hiCh&&v.sd?"1fr 1fr 1fr":"1fr 1fr",gap:4,marginTop:6}}>{v.hiCh&&<B val={d.hi.toFixed(1)} l="HI"/>}{v.hiCh&&d.courseHcp!==null&&<B val={d.courseHcp} l="CH"/>}{v.sd&&<B val={s.sd.toFixed(1)} l="SD"/>}</div>}
-    {v.position&&d.position&&<div style={{textAlign:"center",fontSize:11,color:t.tx4,marginTop:6}}>{d.position}º</div>}
-  </div>;
-}
-
-/* 8. Pódio */
-function D8({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  return <div style={{padding:"18px 22px",fontFamily:"'Inter',sans-serif",color:t.tx,width:210,textAlign:"center"}}>
-    {v.position&&d.position&&<div style={{display:"inline-flex",alignItems:"center",justifyContent:"center",width:44,height:44,borderRadius:"50%",border:`2px solid ${t.posBd}`,fontSize:22,fontWeight:900}}>{d.position}º</div>}
-    {v.player&&d.player&&<div style={{fontSize:15,fontWeight:900,marginTop:8}}>{d.player}</div>}
-    {(v.event||v.round)&&<div style={{fontSize:12,color:t.tx3,marginTop:2}}>{v.event&&d.event}{v.round&&` R${d.round}`}</div>}
-    <div style={{height:1,background:t.div,margin:"10px 0"}}/>
-    <div style={{display:"flex",justifyContent:"center",gap:14}}>
-      <div><div style={{fontSize:26,fontWeight:900}}>{s.sT}</div><div style={{fontSize:11,color:t.tx4,fontWeight:800}}>SCORE</div></div>
-      <div><div style={{fontSize:26,fontWeight:900,color:vpc(s.vpT,t)}}>{fvp(s.vpT)}</div><div style={{fontSize:11,color:t.tx4,fontWeight:800}}>VS PAR</div></div>
-      {v.sd&&<div><div style={{fontSize:26,fontWeight:900}}>{s.sd.toFixed(1)}</div><div style={{fontSize:11,color:t.tx4,fontWeight:800}}>SD</div></div>}</div>
-    <StatsRow s={s} v={v} t={t} fs={15} gap={8}/><SubLine d={d} v={v} t={t}/><HiChSdLine d={d} v={{...v,sd:false}} s={s} t={t}/>
-  </div>;
-}
-
-/* 9. Grelha */
-function D9({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  const H=({label,scores,pars,total,pt,start}:{label:string;scores:number[];pars:number[];total:number;pt:number;start:number})=><div style={{flex:1}}>
-    <div style={{fontSize:12,fontWeight:900,color:t.tx3,marginBottom:4,textAlign:"center"}}>{label}</div>
-    {v.holeScores&&<div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:2,justifyItems:"center"}}>
-      {scores.map((sc,i)=><div key={i}><SC score={sc} par={pars[i]} size={28} fs={13} t={t}/><div style={{fontSize:10,color:t.tx4,fontWeight:700,textAlign:"center"}}>{start+i}</div></div>)}</div>}
-    <div style={{textAlign:"center",marginTop:6}}><span style={{fontSize:20,fontWeight:900}}>{total}</span><span style={{fontSize:13,fontWeight:700,marginLeft:3,color:vpc(total-pt,t)}}>{fvp(total-pt)}</span></div></div>;
-  return <div style={{padding:"14px 12px",fontFamily:"'Inter',sans-serif",color:t.tx,width:v.holeScores?250:190}}>
-    <div style={{textAlign:"center",marginBottom:10}}>{v.player&&d.player&&<div style={{fontSize:15,fontWeight:900}}>{d.player}</div>}{(v.event||v.round)&&<div style={{fontSize:12,color:t.tx3,fontWeight:700}}>{v.event&&d.event}{v.round&&` R${d.round}`}</div>}<SubLine d={d} v={{...v,event:false,round:false}} t={t}/></div>
-    <div style={{display:"flex",gap:10}}><H label="OUT" scores={d.scores.slice(0,9)} pars={d.par.slice(0,9)} total={s.sF} pt={s.pF} start={1}/><div style={{width:1,background:t.div2}}/><H label="IN" scores={d.scores.slice(9)} pars={d.par.slice(9)} total={s.sB} pt={s.pB} start={10}/></div>
-    <div style={{textAlign:"center",marginTop:10}}><span style={{fontSize:30,fontWeight:900}}>{s.sT}</span><span style={{fontSize:17,fontWeight:800,marginLeft:4,color:vpc(s.vpT,t)}}>{fvp(s.vpT)}</span></div>
-    <StatsRow s={s} v={v} t={t} fs={13} gap={8}/><div style={{textAlign:"center"}}><HiChSdLine d={d} v={v} s={s} t={t}/></div>
-    {v.position&&d.position&&<div style={{textAlign:"center",fontSize:11,color:t.tx4,marginTop:2}}>{d.position}º</div>}
-  </div>;
-}
-
-/* 10. Clean */
-function D10({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  return <div style={{padding:"12px 20px",fontFamily:"'Inter',sans-serif",color:t.tx,textAlign:"center"}}>
-    {(v.event||v.round)&&<div style={{fontSize:12,color:t.tx4,marginBottom:4}}>{v.event&&d.event}{v.round&&` R${d.round}`}</div>}
-    <div style={{fontSize:72,fontWeight:900,lineHeight:1,letterSpacing:"-4px"}}>{s.sT}</div>
-    <div style={{fontSize:26,fontWeight:900,color:vpc(s.vpT,t),marginTop:2}}>{fvp(s.vpT)}</div>
-    {v.player&&d.player&&<div style={{fontSize:13,color:t.tx3,marginTop:6}}>{d.player}</div>}
-    <SubLine d={d} v={v} t={t}/><HiChSdLine d={d} v={v} s={s} t={t}/>
-    {v.position&&d.position&&<div style={{fontSize:11,color:t.tx4,marginTop:2}}>{d.position}º</div>}
-  </div>;
-}
-
-/* 11. Dual */
-function D11({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  return <div style={{padding:"18px 14px",fontFamily:"'Inter',sans-serif",color:t.tx,width:200}}>
-    <div style={{textAlign:"center",marginBottom:2}}>
-      {v.event&&d.event&&<div style={{fontSize:12,fontWeight:900,color:t.tx3,letterSpacing:"1.5px"}}>{d.event.toUpperCase()}</div>}
-      {v.round&&<div style={{fontSize:22,fontWeight:900,marginTop:1}}>ROUND {d.round}</div>}
-      {v.player&&d.player&&<div style={{fontSize:13,fontWeight:700,color:t.tx2,marginTop:2}}>{d.player.toUpperCase()}</div>}
-      <SubLine d={d} v={{...v,event:false,round:false,player:false}} t={t}/></div>
-    {v.holeScores&&<div style={{display:"flex",gap:6,marginTop:8}}>
-      <div style={{flex:1}}>{d.scores.slice(0,9).map((sc,i)=><div key={i} style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"2px 2px",borderBottom:`1px solid ${t.div2}`}}>
-        <span style={{fontSize:12,color:t.tx4,width:14}}>{i+1}</span>{v.holePar&&<span style={{fontSize:11,color:t.tx4,width:14}}>{d.par[i]}</span>}<SC score={sc} par={d.par[i]} size={22} fs={11} t={t}/></div>)}</div>
-      <div style={{width:1,background:t.div2}}/>
-      <div style={{flex:1}}>{d.scores.slice(9).map((sc,i)=><div key={i} style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"2px 2px",borderBottom:`1px solid ${t.div2}`}}>
-        <SC score={sc} par={d.par[9+i]} size={22} fs={11} t={t}/>{v.holePar&&<span style={{fontSize:11,color:t.tx4,width:14,textAlign:"right"}}>{d.par[9+i]}</span>}<span style={{fontSize:12,color:t.tx4,width:14,textAlign:"right"}}>{10+i}</span></div>)}</div>
-    </div>}
-    <div style={{textAlign:"center",marginTop:10}}><span style={{fontSize:40,fontWeight:900,color:vpc(s.vpT,t)}}>{s.sT}</span><span style={{fontSize:20,fontWeight:900,marginLeft:3,color:t.tx2}}>{fvp(s.vpT)}</span></div>
-    <StatsRow s={s} v={v} t={t} fs={15} gap={8}/><div style={{textAlign:"center"}}><HiChSdLine d={d} v={v} s={s} t={t}/></div>
-    {v.position&&d.position&&<div style={{textAlign:"center",fontSize:11,color:t.tx4,marginTop:2}}>{d.position}º</div>}
-  </div>;
-}
-
-/* 12. Instagram */
-function D12({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  return <div style={{padding:"20px 12px",fontFamily:"'Inter',sans-serif",color:t.tx,width:180}}>
+/* ═══ I. GLASS CARD ═══ */
+function DI({d,v,s,bg}:{d:DD;v:Vis;s:Stats;bg?:string|null}){
+  const is18=d.scores.length>=18;const hcl=hiChLine(d,v,s);
+  const HT=({off,label}:{off:number;label:string})=>{const cnt=is18?9:d.scores.length;
+    return<div style={{marginBottom:off===0&&is18?2:0}}>
+      <div style={{display:"flex",background:"rgba(45,106,48,0.7)",borderRadius:off===0?"8px 8px 0 0":0,padding:"4px 0"}}>
+        <div style={{width:52,padding:"0 6px",fontWeight:900,fontSize:11}}>Hole</div>
+        {d.par.slice(off,off+cnt).map((_,i)=><div key={i} style={{width:32,textAlign:"center",fontWeight:800,fontSize:12}}>{off+i+1}</div>)}
+        <div style={{width:38,textAlign:"center",fontWeight:900,fontSize:11}}>{label}</div></div>
+      {v.holeSI&&<div style={{display:"flex",padding:"2px 0",background:"rgba(255,255,255,0.03)"}}>
+        <div style={{width:52,padding:"0 6px",fontSize:10,color:"rgba(255,255,255,0.35)"}}>S.I.</div>
+        {d.si.slice(off,off+cnt).map((si,i)=><div key={i} style={{width:32,textAlign:"center",fontSize:10,color:"rgba(255,255,255,0.35)"}}>{si}</div>)}
+        <div style={{width:38}}/></div>}
+      {v.holePar&&<div style={{display:"flex",padding:"2px 0",background:"rgba(255,255,255,0.05)"}}>
+        <div style={{width:52,padding:"0 6px",fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.55)"}}>Par</div>
+        {d.par.slice(off,off+cnt).map((p,i)=><div key={i} style={{width:32,textAlign:"center",fontSize:11,color:"rgba(255,255,255,0.55)"}}>{p}</div>)}
+        <div style={{width:38,textAlign:"center",fontWeight:800,fontSize:11,color:"rgba(255,255,255,0.55)"}}>{d.par.slice(off,off+cnt).reduce((a,b)=>a+b,0)}</div></div>}
+      <div style={{display:"flex",padding:"4px 0",borderBottom:off===0&&is18?"1px solid rgba(255,255,255,0.08)":"none"}}>
+        <div style={{width:52,padding:"0 6px",fontWeight:900,fontSize:12}}>Score</div>
+        {d.scores.slice(off,off+cnt).map((sc,i)=><div key={i} style={{width:32,display:"flex",justifyContent:"center"}}><SC score={sc} par={d.par[off+i]} size={26}/></div>)}
+        <div style={{width:38,textAlign:"center",fontWeight:900,fontSize:16}}>{d.scores.slice(off,off+cnt).reduce((a,b)=>a+b,0)}</div></div></div>;};
+  return<div style={{fontFamily:II,width:420,padding:18,background:bg||"rgba(0,0,0,0.72)",borderRadius:16,color:"#fff",border:"1px solid rgba(255,255,255,0.08)"}}>
     <div style={{textAlign:"center",marginBottom:14}}>
-      {(v.event||v.round)&&<div style={{fontSize:12,fontWeight:900,color:t.tx3}}>{v.event&&d.event.toUpperCase()}{v.round&&` · R${d.round}`}</div>}
-      {v.player&&d.player&&<div style={{fontSize:14,fontWeight:900,marginTop:3}}>{d.player}</div>}
-      <SubLine d={d} v={{...v,event:false,round:false,player:false}} t={t}/></div>
-    {v.holeScores&&d.scores.map((sc,i)=><div key={i} style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"3px 6px",borderBottom:i===8?`2px solid ${t.div}`:`1px solid ${t.div2}`}}>
-      <span style={{fontSize:12,color:t.tx4,width:16}}>{i+1}</span>{v.holeSI&&<span style={{fontSize:11,color:t.tx4,width:16,textAlign:"center"}}>{d.si[i]}</span>}{v.holePar&&<span style={{fontSize:12,color:t.tx3,width:16,textAlign:"center"}}>{d.par[i]}</span>}<SC score={sc} par={d.par[i]} size={22} fs={11} t={t}/></div>)}
-    <div style={{textAlign:"center",marginTop:12}}><div style={{fontSize:36,fontWeight:900}}>{s.sT}</div><div style={{fontSize:17,fontWeight:900,color:vpc(s.vpT,t)}}>{fvp(s.vpT)}</div></div>
-    <StatsRow s={s} v={v} t={t} fs={13} gap={6}/><div style={{textAlign:"center"}}><HiChSdLine d={d} v={v} s={s} t={t}/></div>
-    {v.position&&d.position&&<div style={{textAlign:"center",fontSize:11,color:t.tx4,marginTop:2}}>{d.position}º</div>}
+      {v.round&&<div style={{fontSize:10,fontWeight:700,letterSpacing:3,color:"rgba(255,255,255,0.4)"}}>ROUND {d.round}</div>}
+      {v.player&&d.player&&<div style={{fontSize:17,fontWeight:900,marginTop:2}}>{d.player}</div>}
+      {(v.course||v.tee||v.teeDist)&&<div style={{fontSize:11,fontWeight:600,color:"rgba(255,255,255,0.5)",marginTop:2}}>
+        {[v.course&&d.course,v.tee&&d.tee,v.teeDist&&d.teeDist&&`${d.teeDist}m`].filter(Boolean).join(" \u00b7 ")}</div>}</div>
+    {v.holeScores&&(is18?<><HT off={0} label="Out"/><HT off={9} label="In"/></>:<HT off={0} label="Tot"/>)}
+    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:12,padding:"10px 14px",background:"rgba(255,255,255,0.06)",borderRadius:10}}>
+      <div style={{fontSize:10,fontWeight:700,color:"rgba(255,255,255,0.4)"}}>Par {s.pT}</div>
+      <div style={{display:"flex",alignItems:"baseline",gap:8}}>
+        <span style={{fontSize:34,fontWeight:900,letterSpacing:-2}}>{s.sT}</span>
+        <span style={{fontSize:22,fontWeight:900,color:vpC(s.vpT)}}>{fvp(s.vpT)}</span></div>
+      {hcl&&<div style={{fontSize:10,fontWeight:700,color:"rgba(255,255,255,0.4)"}}>{hcl}</div>}</div>
+    {v.stats&&<div style={{marginTop:10}}><StatsLine s={s}/></div>}
   </div>;
 }
 
-/* 13. Vertical */
-function D13({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  return <div style={{padding:"14px 10px",fontFamily:"'Inter',sans-serif",color:t.tx,width:v.holeSI?230:210}}>
-    <div style={{textAlign:"center",marginBottom:8}}>{v.player&&d.player&&<div style={{fontSize:15,fontWeight:900}}>{d.player}</div>}{(v.event||v.round)&&<div style={{fontSize:12,color:t.tx3,fontWeight:700}}>{v.event&&d.event}{v.round&&` R${d.round}`}</div>}<SubLine d={d} v={{...v,event:false,round:false,player:false}} t={t}/></div>
-    {v.holeScores&&<><div style={{display:"flex",padding:"2px 0",borderBottom:`1px solid ${t.div}`}}>
-      <div style={{width:18,fontSize:11,color:t.tx4,fontWeight:800}}>H</div>{v.holeSI&&<div style={{width:18,fontSize:11,color:t.tx4,fontWeight:800,textAlign:"center"}}>SI</div>}{v.holePar&&<div style={{width:18,fontSize:11,color:t.tx4,fontWeight:800,textAlign:"center"}}>P</div>}<div style={{flex:1,fontSize:11,color:t.tx4,fontWeight:800,textAlign:"center"}}>Sc</div><div style={{width:24,fontSize:11,color:t.tx4,fontWeight:800,textAlign:"right"}}>±</div></div>
-    {d.scores.map((sc,i)=>{const x=sc-d.par[i];return <div key={i} style={{display:"flex",alignItems:"center",padding:"2px 0",borderBottom:i===8?`2px solid ${t.div}`:`1px solid ${t.div2}`}}>
-      <div style={{width:18,fontSize:12,color:t.tx4,fontWeight:700}}>{i+1}</div>{v.holeSI&&<div style={{width:18,fontSize:12,color:t.tx4,textAlign:"center"}}>{d.si[i]}</div>}{v.holePar&&<div style={{width:18,fontSize:12,color:t.tx3,textAlign:"center"}}>{d.par[i]}</div>}
-      <div style={{flex:1,display:"flex",justifyContent:"center"}}><SC score={sc} par={d.par[i]} size={22} fs={11} t={t}/></div>
-      <div style={{width:24,fontSize:12,fontWeight:700,textAlign:"right",color:vpc(x,t)}}>{x===0?"·":x>0?`+${x}`:x}</div></div>;})}</>}
-    <div style={{display:"flex",justifyContent:"space-between",marginTop:8}}><span style={{fontSize:12,color:t.tx3,fontWeight:700}}>Par {s.pT}</span><span style={{fontSize:20,fontWeight:900}}>{s.sT}</span><span style={{fontSize:15,fontWeight:900,color:vpc(s.vpT,t)}}>{fvp(s.vpT)}</span></div>
-    <StatsRow s={s} v={v} t={t} fs={13} gap={6}/><div style={{textAlign:"center"}}><HiChSdLine d={d} v={v} s={s} t={t}/></div>
-    {v.position&&d.position&&<div style={{textAlign:"center",fontSize:11,color:t.tx4,marginTop:2}}>{d.position}º</div>}
+/* ═══ J. CLASSIC TABLE ═══ */
+function DJ({d,v,s,bg}:{d:DD;v:Vis;s:Stats;bg?:string|null}){
+  const is18=d.scores.length>=18;const hcl=hiChLine(d,v,s);
+  const HT=({off,label}:{off:number;label:string})=>{const cnt=is18?9:d.scores.length;const isLast=!is18||off===9;
+    return<div style={{marginBottom:off===0&&is18?2:0}}>
+      <div style={{display:"flex",background:"rgba(20,45,75,0.9)",padding:"4px 0"}}>
+        <div style={{width:52,padding:"0 6px",fontWeight:900,fontSize:11}}>Hole</div>
+        {d.par.slice(off,off+cnt).map((_,i)=><div key={i} style={{width:32,textAlign:"center",fontWeight:800,fontSize:12}}>{off+i+1}</div>)}
+        <div style={{width:38,textAlign:"center",fontWeight:900,fontSize:11}}>{label}</div>
+        {isLast&&is18&&<div style={{width:38,textAlign:"center",fontWeight:900,fontSize:11}}>TOT</div>}</div>
+      {v.holePar&&<div style={{display:"flex",padding:"2px 0",background:"rgba(255,255,255,0.04)"}}>
+        <div style={{width:52,padding:"0 6px",fontSize:10,fontWeight:600,color:"rgba(255,255,255,0.45)"}}>Par</div>
+        {d.par.slice(off,off+cnt).map((p,i)=><div key={i} style={{width:32,textAlign:"center",fontSize:11,color:"rgba(255,255,255,0.5)"}}>{p}</div>)}
+        <div style={{width:38,textAlign:"center",fontWeight:700,fontSize:11,color:"rgba(255,255,255,0.5)"}}>{off===0?s.pF:s.pB}</div>
+        {isLast&&is18&&<div style={{width:38,textAlign:"center",fontWeight:800,fontSize:11,color:"rgba(255,255,255,0.5)"}}>{s.pT}</div>}</div>}
+      <div style={{display:"flex",padding:"4px 0"}}>
+        <div style={{width:52,padding:"0 6px",fontWeight:900,fontSize:12}}>Score</div>
+        {d.scores.slice(off,off+cnt).map((sc,i)=><div key={i} style={{width:32,display:"flex",justifyContent:"center"}}><SC score={sc} par={d.par[off+i]} size={26}/></div>)}
+        <div style={{width:38,textAlign:"center",fontWeight:900,fontSize:15,color:"rgba(255,255,255,0.7)"}}>{off===0?s.sF:s.sB}</div>
+        {isLast&&is18&&<div style={{width:38,textAlign:"center",fontWeight:900,fontSize:18}}>{s.sT}</div>}</div></div>;};
+  return<div style={{fontFamily:II,width:is18?460:380,padding:16,background:bg||"rgba(15,30,55,0.85)",borderRadius:14,color:"#fff"}}>
+    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
+      <div>{v.player&&d.player&&<div style={{fontSize:15,fontWeight:900}}>{d.player}</div>}
+        <div style={{fontSize:10,fontWeight:600,color:"rgba(255,255,255,0.45)"}}>
+          {[v.round&&`Round ${d.round}`,v.course&&d.course,v.tee&&d.tee].filter(Boolean).join(" \u00b7 ")}</div></div>
+      <div style={{display:"flex",alignItems:"baseline",gap:5}}>
+        <span style={{fontSize:28,fontWeight:900}}>{s.sT}</span>
+        <span style={{fontSize:18,fontWeight:900,color:vpC(s.vpT)}}>{fvp(s.vpT)}</span></div></div>
+    {v.holeScores&&(is18?<><HT off={0} label="Out"/><div style={{height:2,background:"rgba(100,180,100,0.4)",margin:"3px 0"}}/><HT off={9} label="In"/></>:<HT off={0} label="Tot"/>)}
+    <div style={{display:"flex",justifyContent:"space-between",marginTop:10,fontSize:9,fontWeight:700,color:"rgba(255,255,255,0.3)"}}>
+      {v.stats?<StatsLine s={s} gap={12} fs={12} lfs={8} color="rgba(255,255,255,0.3)"/>:<span/>}
+      {hcl&&<span>{hcl}</span>}</div>
   </div>;
 }
 
-/* 14. Poster */
-function D14({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  return <div style={{padding:"24px 22px",fontFamily:"'Inter',sans-serif",color:t.tx,width:250,textAlign:"center"}}>
-    {(v.event||v.round)&&<div style={{fontSize:12,fontWeight:900,color:t.tx3,letterSpacing:"2px"}}>{v.event&&d.event.toUpperCase()}{v.round&&` · R${d.round}`}</div>}
-    {v.position&&d.position&&<div style={{fontSize:12,color:t.tx3,marginTop:2}}>{d.position}º lugar</div>}
-    <div style={{fontSize:80,fontWeight:900,lineHeight:0.9,marginTop:6,letterSpacing:"-5px"}}>{s.sT}</div>
-    <div style={{fontSize:28,fontWeight:900,color:vpc(s.vpT,t),marginTop:2}}>{fvp(s.vpT)}</div>
-    <div style={{height:2,background:t.div,margin:"12px 30px"}}/>
-    {v.player&&d.player&&<div style={{fontSize:18,fontWeight:900}}>{d.player}</div>}
-    <SubLine d={d} v={{...v,player:false}} t={t}/>
-    <StatsRow s={s} v={v} t={t} fs={20} gap={14}/><HiChSdLine d={d} v={v} s={s} t={t}/>
+/* ═══ K. GRINT ROW ═══ */
+function DK({d,v,s,bg}:{d:DD;v:Vis;s:Stats;bg?:string|null}){
+  const is18=d.scores.length>=18;const hcl=hiChLine(d,v,s);
+  return<div style={{fontFamily:II,display:"inline-block",color:"#fff",background:bg||"rgba(25,45,75,0.88)",borderRadius:14,padding:"14px 12px",overflowWrap:"break-word"}}>
+    <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:10,gap:20}}>
+      <div>
+        {v.date&&d.date&&<div style={{fontSize:9,fontWeight:700,letterSpacing:2,color:"rgba(255,255,255,0.4)"}}>{d.date}</div>}
+        {v.course&&d.course&&<div style={{fontSize:14,fontWeight:900}}>{d.course.toUpperCase()}</div>}
+        <div style={{fontSize:10,fontWeight:600,color:"rgba(255,255,255,0.45)"}}>
+          {[v.player&&d.player,v.tee&&d.tee].filter(Boolean).join(" \u00b7 ")}</div></div>
+      <div style={{textAlign:"right"}}><div style={{fontSize:32,fontWeight:900,lineHeight:1,letterSpacing:-2}}>{s.sT}</div>
+        <div style={{fontSize:16,fontWeight:900,color:vpC(s.vpT),marginTop:-2}}>{fvp(s.vpT)}</div></div></div>
+    {v.holeScores&&<div style={{background:"rgba(0,0,0,0.2)",borderRadius:10,padding:"8px 6px",display:"inline-block"}}>
+      {(is18?[{off:0,cnt:9,sub:s.sF},{off:9,cnt:9,sub:s.sB}]:[{off:0,cnt:d.scores.length,sub:s.sT}]).map(({off,cnt,sub})=>
+        <div key={off} style={{display:"flex",alignItems:"center",marginBottom:2}}>
+          <div style={{display:"flex",gap:2}}>{d.scores.slice(off,off+cnt).map((sc,i)=><div key={i} style={{display:"flex",justifyContent:"center"}}><SC score={sc} par={d.par[off+i]} size={26}/></div>)}</div>
+          <div style={{width:2,height:26,background:"rgba(100,180,100,0.5)",margin:"0 5px"}}/>
+          <div style={{fontSize:16,fontWeight:900,color:"rgba(255,255,255,0.5)"}}>{sub}</div></div>)}</div>}
+    <div style={{display:"flex",justifyContent:"space-between",marginTop:8,fontSize:9,fontWeight:700,color:"rgba(255,255,255,0.35)"}}>
+      {v.stats?<StatsLine s={s} gap={10} fs={11} lfs={8} color="rgba(255,255,255,0.35)"/>:<span/>}
+      {hcl&&<span>{hcl}</span>}</div>
   </div>;
 }
 
-/* 15. Colunas */
-function D15({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  const Col=({label,scores,pars,sis,start,tot,pt}:{label:string;scores:number[];pars:number[];sis:number[];start:number;tot:number;pt:number})=><div>
-    <div style={{fontSize:12,fontWeight:900,color:t.tx3,textAlign:"center",marginBottom:4}}>{label}</div>
-    {v.holeScores&&scores.map((sc,i)=><div key={i} style={{display:"flex",alignItems:"center",gap:3,padding:"1px 0"}}>
-      <span style={{fontSize:11,color:t.tx4,width:14,textAlign:"right"}}>{start+i}</span>{v.holeSI&&<span style={{fontSize:11,color:t.tx4,fontWeight:800,width:14}}>{sis[i]}</span>}{v.holePar&&<span style={{fontSize:11,color:t.tx3,width:14}}>{pars[i]}</span>}<SC score={sc} par={pars[i]} size={22} fs={11} t={t}/></div>)}
-    <div style={{textAlign:"center",marginTop:4}}><span style={{fontSize:17,fontWeight:900}}>{tot}</span><span style={{fontSize:12,fontWeight:700,marginLeft:2,color:vpc(tot-pt,t)}}>{fvp(tot-pt)}</span></div></div>;
-  return <div style={{padding:"14px 12px",fontFamily:"'Inter',sans-serif",color:t.tx,width:v.holeSI?240:220}}>
-    <div style={{textAlign:"center",marginBottom:10}}>{v.player&&d.player&&<div style={{fontSize:14,fontWeight:900}}>{d.player}</div>}{(v.event||v.round)&&<div style={{fontSize:12,color:t.tx3,fontWeight:700}}>{v.event&&d.event}{v.round&&` R${d.round}`}</div>}<SubLine d={d} v={{...v,event:false,round:false,player:false}} t={t}/></div>
-    <div style={{display:"flex",gap:10,justifyContent:"center"}}>
-      <Col label="OUT" scores={d.scores.slice(0,9)} pars={d.par.slice(0,9)} sis={d.si.slice(0,9)} start={1} tot={s.sF} pt={s.pF}/>
-      <div style={{width:1,background:t.div2}}/><Col label="IN" scores={d.scores.slice(9)} pars={d.par.slice(9)} sis={d.si.slice(9)} start={10} tot={s.sB} pt={s.pB}/></div>
-    <div style={{textAlign:"center",marginTop:10}}><span style={{fontSize:30,fontWeight:900}}>{s.sT}</span><span style={{fontSize:17,fontWeight:800,marginLeft:4,color:vpc(s.vpT,t)}}>{fvp(s.vpT)}</span></div>
-    <StatsRow s={s} v={v} t={t} fs={13} gap={8}/><div style={{textAlign:"center"}}><HiChSdLine d={d} v={v} s={s} t={t}/></div>
-    {v.position&&d.position&&<div style={{textAlign:"center",fontSize:11,color:t.tx4,marginTop:2}}>{d.position}º</div>}
+/* ═══ L. DOTS GRID ═══ */
+function DL({d,v,s,bg}:{d:DD;v:Vis;s:Stats;bg?:string|null}){
+  return<div style={{fontFamily:II,width:360,color:"#fff",background:bg||"rgba(15,30,55,0.82)",borderRadius:16,padding:"16px 14px"}}>
+    <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:14}}>
+      <div>
+        {(v.round||v.date)&&<div style={{fontSize:9,fontWeight:700,letterSpacing:2,color:"rgba(255,255,255,0.4)"}}>
+          {[v.round&&`R${d.round}`,v.date&&d.date].filter(Boolean).join(" \u00b7 ")}</div>}
+        {v.player&&d.player&&<div style={{fontSize:18,fontWeight:900,marginTop:2}}>{d.player}</div>}
+        {v.course&&d.course&&<div style={{fontSize:10,fontWeight:500,color:"rgba(255,255,255,0.45)"}}>{d.course}</div>}</div>
+      <div style={{textAlign:"right"}}><div style={{fontSize:42,fontWeight:900,lineHeight:1,letterSpacing:-2}}>{s.sT}</div>
+        <div style={{fontSize:22,fontWeight:900,color:vpC(s.vpT),marginTop:-2}}>{fvp(s.vpT)}</div></div></div>
+    {v.holeScores&&<Grid99 d={d} size={32} gap={5} showNums numFs={9}/>}
+    {v.stats&&<div style={{marginTop:12}}><StatsLine s={s} gap={16} fs={14} lfs={9}/></div>}
   </div>;
 }
 
-/* 16. Mini */
-function D16({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  return <div style={{padding:"14px 10px",fontFamily:"'Inter',sans-serif",color:t.tx,width:180}}>
-    <div style={{textAlign:"center",marginBottom:8}}>{v.player&&d.player&&<div style={{fontSize:13,fontWeight:900}}>{d.player}</div>}{(v.event||v.round)&&<div style={{fontSize:11,color:t.tx3}}>{v.event&&d.event}{v.round&&` R${d.round}`}</div>}</div>
-    {v.holeScores&&<><div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:3,justifyItems:"center"}}>{d.scores.slice(0,9).map((sc,i)=><div key={i}><div style={{fontSize:10,color:t.tx4,fontWeight:700,textAlign:"center"}}>{i+1}</div><SC score={sc} par={d.par[i]} size={28} fs={12} t={t}/></div>)}</div>
-    <div style={{height:1,background:t.div2,margin:"4px 0"}}/>
-    <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:3,justifyItems:"center"}}>{d.scores.slice(9).map((sc,i)=><div key={i}><div style={{fontSize:10,color:t.tx4,fontWeight:700,textAlign:"center"}}>{10+i}</div><SC score={sc} par={d.par[9+i]} size={28} fs={12} t={t}/></div>)}</div></>}
-    <div style={{textAlign:"center",marginTop:8}}><span style={{fontSize:30,fontWeight:900}}>{s.sT}</span><span style={{fontSize:17,fontWeight:800,marginLeft:3,color:vpc(s.vpT,t)}}>{fvp(s.vpT)}</span></div>
-    <StatsRow s={s} v={v} t={t} fs={13} gap={6}/><SubLine d={d} v={v} t={t}/><div style={{textAlign:"center"}}><HiChSdLine d={d} v={v} s={s} t={t}/></div>
-    {v.position&&d.position&&<div style={{textAlign:"center",fontSize:11,color:t.tx4,marginTop:2}}>{d.position}º</div>}
+/* ═══ M. NEON RING ═══ */
+function DM({d,v,s,bg}:{d:DD;v:Vis;s:Stats;bg?:string|null}){const hcl=hiChLine(d,v,s);
+  return<div style={{fontFamily:II,width:190,color:"#fff",textAlign:"center",background:bg||"rgba(0,0,0,0.78)",borderRadius:16,padding:"22px 14px",border:`2px solid ${vpC(s.vpT)}33`}}>
+    {v.round&&<div style={{fontSize:9,fontWeight:700,letterSpacing:3,color:"rgba(255,255,255,0.35)"}}>ROUND {d.round}</div>}
+    {v.player&&d.player&&<div style={{fontSize:18,fontWeight:900,letterSpacing:0.5,marginTop:4}}>{d.player.toUpperCase()}</div>}
+    {v.course&&d.course&&<div style={{fontSize:10,fontWeight:500,color:"rgba(255,255,255,0.45)",marginTop:2}}>{d.course}</div>}
+    <div style={{margin:"16px auto",width:120,height:120,borderRadius:"50%",border:`3px solid ${vpC(s.vpT)}`,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"flex-end",paddingBottom:14,background:"rgba(255,255,255,0.04)"}}>
+      <div style={{fontSize:48,fontWeight:900,lineHeight:1,letterSpacing:-2}}>{s.sT}</div>
+      <div style={{fontSize:18,fontWeight:900,color:vpC(s.vpT)}}>{fvp(s.vpT)}</div></div>
+    <div style={{fontSize:10,fontWeight:600,color:"rgba(255,255,255,0.4)"}}>Par {s.pT}{v.tee&&d.tee?` \u00b7 ${d.tee}`:""}</div>
+    {v.stats&&<div style={{marginTop:10}}><StatsLine s={s} fs={14} lfs={9} gap={10}/></div>}
+    {hcl&&<div style={{fontSize:9,fontWeight:700,color:"rgba(255,255,255,0.25)",marginTop:8}}>{hcl}</div>}
   </div>;
 }
 
-/* 17. Números */
-function D17({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  const R=({val,l,c,big}:{val:string|number;l:string;c?:string;big?:boolean})=><div style={{display:"flex",alignItems:"center",gap:8,padding:big?"8px 0":"4px 0",borderBottom:`1px solid ${t.div2}`}}>
-    <div style={{fontSize:big?34:22,fontWeight:900,color:c||t.tx,width:50,textAlign:"right"}}>{val}</div><div style={{fontSize:big?11:10,color:t.tx3,fontWeight:700}}>{l}</div></div>;
-  return <div style={{padding:"18px 14px",fontFamily:"'Inter',sans-serif",color:t.tx,width:200}}>
-    <div style={{textAlign:"center",marginBottom:12}}>{v.player&&d.player&&<div style={{fontSize:15,fontWeight:900}}>{d.player}</div>}{(v.event||v.round)&&<div style={{fontSize:12,color:t.tx3,fontWeight:700}}>{v.event&&d.event}{v.round&&` R${d.round}`}</div>}<SubLine d={d} v={{...v,event:false,round:false,player:false}} t={t}/></div>
-    <R val={s.sT} l="RESULTADO" big/><R val={fvp(s.vpT)} l="VS PAR" c={vpc(s.vpT,t)} big/>
-    {v.stats&&<><R val={s.st.birdies} l="BIRDIES" c="#dc2626"/><R val={s.st.pars} l="PARS" c={t.dim}/><R val={s.st.bogeys+s.st.doubles+s.st.triples} l="BOGEY+" c="#5BADE6"/></>}
-    {v.sd&&<R val={s.sd.toFixed(1)} l="SD"/>}{v.hiCh&&d.hi!==null&&<><R val={d.hi.toFixed(1)} l="HI"/>{d.courseHcp!==null&&<R val={d.courseHcp} l="COURSE HCP"/>}</>}
-    {v.position&&d.position&&<R val={`${d.position}º`} l="POSIÇÃO"/>}
+/* ═══ N. GRADIENT BAR ═══ */
+function DN({d,v,s,bg}:{d:DD;v:Vis;s:Stats;bg?:string|null}){
+  const is18=d.scores.length>=18;const hcl=hiChLine(d,v,s);
+  return<div style={{fontFamily:II,width:420,color:"#fff",background:bg||"linear-gradient(135deg, rgba(15,30,55,0.85) 0%, rgba(20,50,35,0.8) 100%)",borderRadius:14,padding:"14px 18px"}}>
+    <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:10}}>
+      <div>{v.player&&d.player&&<div style={{fontSize:15,fontWeight:900}}>{d.player}</div>}
+        <div style={{fontSize:10,fontWeight:500,color:"rgba(255,255,255,0.45)"}}>
+          {[v.course&&d.course,v.tee&&d.tee,v.round&&`R${d.round}`].filter(Boolean).join(" \u00b7 ")}</div></div>
+      <div style={{display:"flex",alignItems:"baseline",gap:6}}>
+        <span style={{fontSize:32,fontWeight:900}}>{s.sT}</span>
+        <span style={{fontSize:20,fontWeight:900,color:vpC(s.vpT)}}>{fvp(s.vpT)}</span></div></div>
+    {v.holeScores&&(is18?[0,9]:[0]).map(off=>{const cnt=is18?9:d.scores.length;
+      return<div key={off} style={{display:"flex",gap:3,marginBottom:off===0&&is18?3:0}}>
+        {d.scores.slice(off,off+cnt).map((sc,i)=>
+          <div key={i} style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",gap:1}}>
+            <div style={{fontSize:9,fontWeight:700,color:"rgba(255,255,255,0.3)"}}>{off+i+1}</div>
+            <SC score={sc} par={d.par[off+i]} size={24}/></div>)}</div>;})}
+    <div style={{display:"flex",justifyContent:"space-between",borderTop:"1px solid rgba(255,255,255,0.08)",paddingTop:8,marginTop:6,fontSize:9,fontWeight:700,color:"rgba(255,255,255,0.35)"}}>
+      {v.date&&d.date?<span>{d.date}</span>:<span/>}
+      {v.stats?<StatsLine s={s} gap={12} fs={11} lfs={8} color="rgba(255,255,255,0.35)"/>:<span/>}
+      {hcl?<span>{hcl}</span>:<span/>}</div>
   </div>;
 }
 
-/* 18. Elegante */
-function D18({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  return <div style={{padding:"20px 18px",fontFamily:"'Inter',sans-serif",color:t.tx,width:180}}>
-    {(v.event||v.round)&&<div style={{fontSize:11,color:t.tx4,letterSpacing:"1px"}}>{v.event&&d.event}{v.round&&` · R${d.round}`}</div>}
-    {v.date&&d.date&&<div style={{fontSize:11,color:t.tx4,marginTop:2}}>{d.date}</div>}
-    {v.player&&d.player&&<div style={{fontSize:15,fontWeight:900,marginTop:4}}>{d.player}</div>}
-    {v.course&&d.course&&<div style={{fontSize:12,color:t.tx3,marginTop:1}}>{d.course}{v.tee&&d.tee&&` · ${d.tee}`}{v.teeDist&&d.teeDist&&` · ${d.teeDist}m`}</div>}
-    <div style={{marginTop:14}}><div style={{fontSize:52,fontWeight:900,lineHeight:1}}>{s.sT}</div><div style={{fontSize:22,fontWeight:900,color:vpc(s.vpT,t),marginTop:2}}>{fvp(s.vpT)}</div></div>
-    {v.stats&&<div style={{marginTop:14,display:"flex",flexDirection:"column",gap:3}}>
-      {[{n:s.st.birdies,l:"Birdies",c:"#dc2626"},{n:s.st.pars,l:"Pars",c:t.dim},{n:s.st.bogeys,l:"Bogeys",c:"#5BADE6"},{n:s.st.doubles+s.st.triples,l:"Doubles+",c:"#2B6EA0"}].filter(x=>x.n>0).map(x=>
-        <div key={x.l} style={{display:"flex",alignItems:"center",gap:6}}><div style={{width:3,height:14,background:x.c}}/><span style={{fontSize:20,fontWeight:900,color:x.c}}>{x.n}</span><span style={{fontSize:12,color:t.tx3,fontWeight:700}}>{x.l}</span></div>)}</div>}
-    <HiChSdLine d={d} v={v} s={s} t={t}/>
-    {v.position&&d.position&&<div style={{fontSize:11,color:t.tx4,marginTop:4}}>{d.position}º</div>}
+/* ═══ O. TOURNAMENT ═══ */
+function DO_({d,v,s,bg}:{d:DD;v:Vis;s:Stats;bg?:string|null}){const hcl=hiChLine(d,v,s);
+  return<div style={{fontFamily:II,width:320,color:"#fff",background:bg||"rgba(15,35,60,0.85)",borderRadius:14,overflow:"hidden"}}>
+    <div style={{background:"rgba(45,106,48,0.8)",padding:"12px 16px",textAlign:"center"}}>
+      <div style={{fontSize:11,fontWeight:700,letterSpacing:2,color:"rgba(255,255,255,0.6)"}}>
+        {[v.round&&`ROUND ${d.round}`,v.date&&d.date].filter(Boolean).join(" \u00b7 ")}</div>
+      {v.course&&d.course&&<div style={{fontSize:14,fontWeight:700,color:"rgba(255,255,255,0.7)",marginTop:3}}>{d.course}</div>}</div>
+    <div style={{padding:"14px 16px 10px",display:"flex",alignItems:"center",gap:14}}>
+      <div style={{flex:1}}>{v.player&&d.player&&<div style={{fontSize:17,fontWeight:900}}>{d.player}</div>}
+        <div style={{fontSize:10,fontWeight:500,color:"rgba(255,255,255,0.4)"}}>
+          {[v.tee&&d.tee,v.teeDist&&d.teeDist&&`${d.teeDist}m`].filter(Boolean).join(" \u00b7 ")}</div></div>
+      <div style={{textAlign:"right"}}><div style={{fontSize:36,fontWeight:900,lineHeight:1,letterSpacing:-2}}>{s.sT}</div>
+        <div style={{fontSize:20,fontWeight:900,color:vpC(s.vpT),marginTop:-2}}>{fvp(s.vpT)}</div></div></div>
+    {v.holeScores&&<div style={{padding:"0 12px 12px"}}><Grid99 d={d} size={28} gap={4}/></div>}
+    <div style={{padding:"8px 16px",background:"rgba(255,255,255,0.04)",display:"flex",justifyContent:"space-between"}}>
+      {v.stats?<StatsLine s={s} gap={10} fs={12} lfs={8}/>:<span/>}
+      {hcl&&<div style={{fontSize:9,fontWeight:700,color:"rgba(255,255,255,0.3)"}}>{hcl}</div>}</div>
   </div>;
 }
 
-/* 19. Talão */
-function D19({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  return <div style={{padding:"12px 10px",fontFamily:"'Inter',sans-serif",color:t.tx,width:170}}>
-    <div style={{textAlign:"center",fontSize:11,color:t.tx3,letterSpacing:"0.5px",paddingBottom:6,borderBottom:`1px dashed ${t.dash}`}}>
-      {v.event&&d.event&&<div>{d.event}{v.round&&` R${d.round}`}</div>}{v.course&&d.course&&<div>{d.course.toUpperCase()}</div>}{v.date&&d.date&&<div>{d.date}</div>}</div>
-    {v.player&&d.player&&<div style={{textAlign:"center",fontSize:12,fontWeight:800,padding:"4px 0",borderBottom:`1px dashed ${t.dash}`}}>{d.player}</div>}
-    {v.holeScores&&<div style={{padding:"4px 0"}}>{d.scores.map((sc,i)=><div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"1px 2px",fontSize:13,borderBottom:i===8?`1px dashed ${t.dash}`:"none"}}>
-      <span style={{color:t.tx4,width:14,fontWeight:700}}>{i+1}</span>{v.holeSI&&<span style={{color:t.tx4,width:14,fontSize:11}}>{d.si[i]}</span>}{v.holePar&&<span style={{color:t.tx3,width:14,fontWeight:700}}>{d.par[i]}</span>}
-      <SC score={sc} par={d.par[i]} size={22} fs={10} t={t}/><span style={{fontSize:11,color:vpc(sc-d.par[i],t),fontWeight:700,width:18,textAlign:"right"}}>{(sc-d.par[i])===0?"·":(sc-d.par[i])>0?`+${sc-d.par[i]}`:sc-d.par[i]}</span></div>)}</div>}
-    <div style={{borderTop:`1px dashed ${t.dash}`,paddingTop:6,textAlign:"center"}}><div style={{fontSize:26,fontWeight:900}}>{s.sT}</div><div style={{fontSize:15,fontWeight:800,color:vpc(s.vpT,t)}}>{fvp(s.vpT)}</div></div>
-    <StatsRow s={s} v={v} t={t} fs={11} gap={6}/><div style={{textAlign:"center"}}><HiChSdLine d={d} v={v} s={s} t={t} fs={9}/></div>
-    {v.position&&d.position&&<div style={{borderTop:`1px dashed ${t.dash}`,marginTop:4,paddingTop:4,textAlign:"center",fontSize:12,color:t.tx4,fontWeight:700}}>{d.position}º</div>}
+/* ═══ P. DASHBOARD ═══ */
+function DPx({d,v,s,bg}:{d:DD;v:Vis;s:Stats;bg?:string|null}){
+  const Bx=({val,label,c,big}:{val:string|number;label:string;c?:string;big?:boolean})=>
+    <div style={{flex:1,background:"rgba(255,255,255,0.06)",borderRadius:8,padding:big?"10px 8px":"6px 8px",textAlign:"center"}}>
+      <div style={{fontSize:big?28:18,fontWeight:900,color:c||"#fff"}}>{val}</div>
+      <div style={{fontSize:8,fontWeight:700,color:"rgba(255,255,255,0.35)",letterSpacing:1,marginTop:2}}>{label}</div></div>;
+  const hcl=hiChLine(d,v,s);
+  return<div style={{fontFamily:II,width:320,color:"#fff",background:bg||"rgba(15,25,45,0.82)",borderRadius:14,padding:"16px 14px"}}>
+    <div style={{textAlign:"center",marginBottom:12}}>
+      {v.player&&d.player&&<div style={{fontSize:18,fontWeight:900}}>{d.player}</div>}
+      <div style={{fontSize:10,fontWeight:500,color:"rgba(255,255,255,0.45)"}}>
+        {[v.course&&d.course,v.round&&`R${d.round}`].filter(Boolean).join(" \u00b7 ")}</div></div>
+    <div style={{display:"flex",gap:6,marginBottom:6}}>
+      <Bx val={s.sT} label="SCORE" big/><Bx val={fvp(s.vpT)} label="VS PAR" c={vpC(s.vpT)} big/></div>
+    {v.stats&&<div style={{display:"flex",gap:6,marginBottom:10}}>
+      <Bx val={s.st.eagles} label="EAGLE" c="#d4a017"/><Bx val={s.st.pars} label="PAR"/><Bx val={s.st.bogeys} label="BOGEY" c="#5BADE6"/></div>}
+    {v.holeScores&&<Grid99 d={d} size={26} gap={4}/>}
+    {hcl&&<div style={{textAlign:"center",fontSize:9,fontWeight:700,color:"rgba(255,255,255,0.25)",marginTop:10}}>
+      {[v.tee&&d.tee,v.teeDist&&d.teeDist&&`${d.teeDist}m`].filter(Boolean).join(" \u00b7 ")}{hcl?` \u00b7 ${hcl}`:""}</div>}
   </div>;
 }
 
-/* 20. Torneio */
-function D20({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  return <div style={{padding:"16px 14px",fontFamily:"'Inter',sans-serif",color:t.tx,width:240}}>
-    {(v.event||v.course)&&<div style={{background:t.greenBg2,borderRadius:6,padding:"6px 10px",textAlign:"center",marginBottom:10}}>
-      {(v.event||v.round)&&<div style={{fontSize:12,fontWeight:800,letterSpacing:"1px",color:t.tx2}}>{v.event&&d.event.toUpperCase()}{v.round&&` · R${d.round}`}</div>}
-      <SubLine d={d} v={{...v,event:false,round:false}} t={t}/></div>}
-    <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:10}}>
-      {v.position&&d.position&&<div style={{width:36,height:36,borderRadius:"50%",border:`2px solid ${t.posBd}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,fontWeight:900,flexShrink:0}}>{d.position}º</div>}
-      <div>{v.player&&d.player&&<div style={{fontSize:18,fontWeight:900}}>{d.player}</div>}{v.hiCh&&d.hi!==null&&<div style={{fontSize:12,color:t.tx3,fontWeight:700}}>HI {d.hi.toFixed(1)} · CH {d.courseHcp}</div>}</div></div>
-    <div style={{display:"flex",justifyContent:"space-around",padding:"8px 0",background:t.cardBg,borderRadius:6,marginBottom:8}}>
-      <div style={{textAlign:"center"}}><div style={{fontSize:26,fontWeight:900}}>{s.sT}</div><div style={{fontSize:11,color:t.tx4,fontWeight:800}}>SCORE</div></div>
-      <div style={{textAlign:"center"}}><div style={{fontSize:26,fontWeight:900,color:vpc(s.vpT,t)}}>{fvp(s.vpT)}</div><div style={{fontSize:11,color:t.tx4,fontWeight:800}}>VS PAR</div></div>
-      {v.sd&&<div style={{textAlign:"center"}}><div style={{fontSize:26,fontWeight:900}}>{s.sd.toFixed(1)}</div><div style={{fontSize:11,color:t.tx4,fontWeight:800}}>SD</div></div>}</div>
-    {v.holeScores&&<div style={{display:"flex",gap:1,justifyContent:"center",flexWrap:"wrap"}}>{d.scores.map((sc,i)=><SC key={i} score={sc} par={d.par[i]} size={20} fs={9} t={t}/>)}</div>}
-    <StatsRow s={s} v={v} t={t} fs={13} gap={6}/>
+/* ═══ Q. TICKET ═══ */
+function DQ({d,v,s,bg}:{d:DD;v:Vis;s:Stats;bg?:string|null}){const hcl=hiChLine(d,v,s);
+  return<div style={{fontFamily:LO,width:280,color:"#fff",background:bg||"rgba(0,0,0,0.75)",borderRadius:4,padding:"14px 12px",border:"1px solid rgba(255,255,255,0.12)"}}>
+    <div style={{textAlign:"center",borderBottom:"1px dashed rgba(255,255,255,0.2)",paddingBottom:10,marginBottom:10}}>
+      <div style={{fontFamily:II,fontSize:8,fontWeight:700,letterSpacing:3,color:"rgba(255,255,255,0.35)"}}>SCORECARD</div>
+      {v.player&&d.player&&<div style={{fontSize:16,fontWeight:700,fontStyle:"italic",marginTop:3}}>{d.player}</div>}
+      {v.course&&d.course&&<div style={{fontFamily:II,fontSize:9,fontWeight:500,color:"rgba(255,255,255,0.45)",marginTop:2}}>{d.course}</div>}</div>
+    <div style={{textAlign:"center",marginBottom:10}}>
+      <div style={{fontFamily:II,fontSize:42,fontWeight:900,lineHeight:1,letterSpacing:-2}}>{s.sT}</div>
+      <div style={{fontFamily:II,fontSize:20,fontWeight:900,color:vpC(s.vpT),marginTop:-2}}>{fvp(s.vpT)}</div></div>
+    {v.holeScores&&<Grid99 d={d} size={22} gap={4}/>}
+    <div style={{borderTop:"1px dashed rgba(255,255,255,0.2)",paddingTop:8,marginTop:10,fontFamily:II}}>
+      {v.stats&&<StatsLine s={s} gap={10} fs={11} lfs={7}/>}
+      {(hcl||(v.tee&&d.tee)||(v.date&&d.date))&&<div style={{textAlign:"center",fontSize:8,fontWeight:700,color:"rgba(255,255,255,0.25)",marginTop:6}}>
+        {[v.tee&&d.tee,v.teeDist&&d.teeDist&&`${d.teeDist}m`,v.date&&d.date,hcl].filter(Boolean).join(" \u00b7 ")}</div>}</div>
+  </div>;
+}
+
+/* ═══ R. HORIZONTAL WIDE ═══ */
+function DR({d,v,s,bg}:{d:DD;v:Vis;s:Stats;bg?:string|null}){
+  const is18=d.scores.length>=18;const hcl=hiChLine(d,v,s);
+  return<div style={{fontFamily:II,display:"inline-block",color:"#fff",background:bg||"rgba(15,25,45,0.85)",borderRadius:14,padding:"12px 12px",overflowWrap:"break-word"}}>
+    <div style={{display:"flex",alignItems:"flex-start",gap:12,marginBottom:8}}>
+      <div style={{display:"flex",alignItems:"baseline",gap:5}}>
+        <span style={{fontSize:32,fontWeight:900,letterSpacing:-2}}>{s.sT}</span>
+        <span style={{fontSize:20,fontWeight:900,color:vpC(s.vpT)}}>{fvp(s.vpT)}</span></div>
+      <div><div style={{fontSize:13,fontWeight:900}}>
+        {v.player&&d.player?d.player:""}{v.round?<>{" "}<span style={{fontWeight:600,color:"rgba(255,255,255,0.5)"}}>R{d.round}</span></>:null}</div>
+        <div style={{fontSize:9,fontWeight:500,color:"rgba(255,255,255,0.45)"}}>
+          {[v.course&&d.course,v.tee&&d.tee,v.date&&d.date].filter(Boolean).join(" \u00b7 ")}</div></div></div>
+    {v.holeScores&&(is18?[{off:0,cnt:9,sub:s.sF,lbl:"Out"},{off:9,cnt:9,sub:s.sB,lbl:"In"}]:[{off:0,cnt:d.scores.length,sub:s.sT,lbl:"Tot"}]).map(({off,cnt,sub,lbl})=>
+      <div key={off} style={{display:"flex",alignItems:"center",marginBottom:2}}>
+        <div style={{display:"flex",gap:2}}>{d.scores.slice(off,off+cnt).map((sc,i)=>
+          <div key={i} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:1}}>
+            <div style={{fontSize:8,fontWeight:700,color:"rgba(255,255,255,0.25)"}}>{off+i+1}</div>
+            <SC score={sc} par={d.par[off+i]} size={26}/></div>)}</div>
+        <div style={{width:2,height:26,background:"rgba(100,180,100,0.4)",margin:"0 6px"}}/>
+        <div style={{textAlign:"center"}}><div style={{fontSize:8,fontWeight:700,color:"rgba(255,255,255,0.3)"}}>{lbl}</div>
+          <div style={{fontSize:16,fontWeight:900}}>{sub}</div></div></div>)}
+    <div style={{display:"flex",justifyContent:"space-between",borderTop:"1px solid rgba(255,255,255,0.08)",paddingTop:6,marginTop:4,fontSize:9,fontWeight:700,color:"rgba(255,255,255,0.3)"}}>
+      {v.stats?<StatsLine s={s} gap={10} fs={11} lfs={8} color="rgba(255,255,255,0.3)"/>:<span/>}
+      {hcl?<span>{hcl}</span>:<span/>}</div>
+  </div>;
+}
+
+/* ═══ S. HORIZONTAL TABLE ═══ */
+function DS({d,v,s,bg}:{d:DD;v:Vis;s:Stats;bg?:string|null}){
+  const is18=d.scores.length>=18;
+  return<div style={{fontFamily:II,display:"inline-block",color:"#fff",background:bg||"rgba(20,35,60,0.88)",borderRadius:12,padding:"10px 8px",overflowWrap:"break-word"}}>
+    <div style={{display:"flex",alignItems:"flex-start",gap:12,marginBottom:6,padding:"0 4px"}}>
+      <div style={{display:"flex",alignItems:"baseline",gap:4}}>
+        <span style={{fontSize:22,fontWeight:900}}>{s.sT}</span>
+        <span style={{fontSize:14,fontWeight:900,color:vpC(s.vpT)}}>{fvp(s.vpT)}</span></div>
+      <div><div style={{fontSize:12,fontWeight:900}}>
+        {v.player&&d.player?d.player:""}{" "}<span style={{fontWeight:500,color:"rgba(255,255,255,0.4)",fontSize:9}}>
+          {[v.course&&d.course,v.round&&`R${d.round}`].filter(Boolean).join(" \u00b7 ")}</span></div></div></div>
+    {v.holeScores&&(is18?[{off:0,cnt:9,sub:s.sF,subP:s.pF,lbl:"Out"},{off:9,cnt:9,sub:s.sB,subP:s.pB,lbl:"In"}]:[{off:0,cnt:d.scores.length,sub:s.sT,subP:s.pT,lbl:"Tot"}]).map(({off,cnt,sub,subP,lbl})=>
+      <div key={off} style={{marginBottom:off===0&&is18?2:0}}>
+        <div style={{display:"flex",background:"rgba(45,106,48,0.6)",padding:"2px 0",borderRadius:off===0?"6px 6px 0 0":0}}>
+          <div style={{display:"flex"}}>{d.par.slice(off,off+cnt).map((_,i)=><div key={i} style={{width:34,textAlign:"center",fontSize:9,fontWeight:800,color:"rgba(255,255,255,0.7)"}}>{off+i+1}</div>)}</div>
+          <div style={{width:2,background:"rgba(100,180,100,0.3)"}}/>
+          <div style={{padding:"0 6px",fontSize:9,fontWeight:800,color:"rgba(255,255,255,0.5)"}}>{lbl}</div></div>
+        {v.holePar&&<div style={{display:"flex",padding:"1px 0",background:"rgba(255,255,255,0.03)"}}>
+          <div style={{display:"flex"}}>{d.par.slice(off,off+cnt).map((p,i)=><div key={i} style={{width:34,textAlign:"center",fontSize:9,fontWeight:600,color:"rgba(255,255,255,0.4)"}}>{p}</div>)}</div>
+          <div style={{width:2}}/><div style={{padding:"0 6px",fontSize:9,fontWeight:700,color:"rgba(255,255,255,0.4)"}}>{subP}</div></div>}
+        <div style={{display:"flex",padding:"3px 0",borderBottom:off===0&&is18?"1px solid rgba(255,255,255,0.06)":"none"}}>
+          <div style={{display:"flex"}}>{d.scores.slice(off,off+cnt).map((sc,i)=><div key={i} style={{width:34,display:"flex",justifyContent:"center"}}><SC score={sc} par={d.par[off+i]} size={24}/></div>)}</div>
+          <div style={{width:2,background:"rgba(100,180,100,0.3)"}}/>
+          <div style={{padding:"0 6px",fontSize:14,fontWeight:900,display:"flex",alignItems:"center"}}>{sub}</div></div></div>)}
   </div>;
 }
 
 /* ═══════ DESIGN REGISTRY ═══════ */
-type DesignDef = { id:string; label:string; C:React.FC<{d:DD;v:Vis;s:Stats;t:Theme}>; needsHoles:boolean };
+type DP_ = {d:DD;v:Vis;s:Stats;bg?:string|null};
+type DesignDef = { id:string; label:string; C:React.FC<DP_>; needsHoles:boolean };
 const DESIGNS: DesignDef[] = [
-  {id:"d1",label:"Cartão Clássico",C:D1,needsHoles:true},{id:"d2",label:"Scorecard Pro",C:D2,needsHoles:true},
-  {id:"d3",label:"Resumo",C:D3,needsHoles:false},{id:"d4",label:"Dots",C:D4,needsHoles:true},
-  {id:"d5",label:"Medalha",C:D5,needsHoles:false},{id:"d6",label:"Faixa",C:D6,needsHoles:false},
-  {id:"d7",label:"Painel",C:D7,needsHoles:false},{id:"d8",label:"Pódio",C:D8,needsHoles:false},
-  {id:"d9",label:"Grelha",C:D9,needsHoles:true},{id:"d10",label:"Clean",C:D10,needsHoles:false},
-  {id:"d11",label:"Dual",C:D11,needsHoles:true},{id:"d12",label:"Instagram",C:D12,needsHoles:true},
-  {id:"d13",label:"Vertical",C:D13,needsHoles:true},{id:"d14",label:"Poster",C:D14,needsHoles:false},
-  {id:"d15",label:"Colunas",C:D15,needsHoles:true},{id:"d16",label:"Mini",C:D16,needsHoles:true},
-  {id:"d17",label:"Números",C:D17,needsHoles:false},{id:"d18",label:"Elegante",C:D18,needsHoles:false},
-  {id:"d19",label:"Talão",C:D19,needsHoles:true},{id:"d20",label:"Torneio",C:D20,needsHoles:false},
+  {id:"A",label:"PGA Columns",C:DA,needsHoles:true},
+  {id:"B",label:"Green Columns",C:DB,needsHoles:true},
+  {id:"C",label:"18Birdies",C:DC,needsHoles:true},
+  {id:"D",label:"Light Card",C:DD_,needsHoles:true},
+  {id:"E",label:"To Par Hero",C:DE,needsHoles:true},
+  {id:"F",label:"Hero Giant",C:DF,needsHoles:true},
+  {id:"G",label:"Sticker",C:DG,needsHoles:false},
+  {id:"H",label:"Strip",C:DH,needsHoles:false},
+  {id:"I",label:"Glass Card",C:DI,needsHoles:true},
+  {id:"J",label:"Classic Table",C:DJ,needsHoles:true},
+  {id:"K",label:"Grint Row",C:DK,needsHoles:true},
+  {id:"L",label:"Dots Grid",C:DL,needsHoles:true},
+  {id:"M",label:"Neon Ring",C:DM,needsHoles:false},
+  {id:"N",label:"Gradient Bar",C:DN,needsHoles:true},
+  {id:"O",label:"Tournament",C:DO_,needsHoles:true},
+  {id:"P",label:"Dashboard",C:DPx,needsHoles:true},
+  {id:"Q",label:"Ticket",C:DQ,needsHoles:true},
+  {id:"R",label:"Horizontal Wide",C:DR,needsHoles:true},
+  {id:"S",label:"Horizontal Table",C:DS,needsHoles:true},
 ];
 
 /* ═══════ TOGGLES ═══════ */
@@ -465,31 +560,43 @@ const TOGGLES = [
 ];
 const defaultVis=():Vis=>Object.fromEntries(TOGGLES.map(t=>[t.key,true]));
 
+/* ═══════ BACKGROUND COLOR OPTIONS ═══════ */
+const BG_OPTIONS: {id:string;label:string;hex:string|null}[] = [
+  {id:"transparent",label:"Sem fundo",hex:null},
+  {id:"white",label:"Branco",hex:"#ffffff"},
+  {id:"light",label:"Cinzento claro",hex:"#e5e7eb"},
+  {id:"grey",label:"Cinzento",hex:"#9ca3af"},
+  {id:"black",label:"Preto",hex:"#000000"},
+  {id:"dark",label:"Carvão",hex:"#1a1a1a"},
+  {id:"navy",label:"Navy",hex:"#0f1e37"},
+  {id:"golf",label:"Golf Green",hex:"#0a2815"},
+  {id:"sage",label:"Sage",hex:"#2d5a3f"},
+  {id:"sky",label:"Céu",hex:"#87ceeb"},
+  {id:"sunset",label:"Pôr do Sol",hex:"#ff7e5f"},
+  {id:"cream",label:"Creme",hex:"#fdf6e3"},
+];
+
 /* ═══════ MAIN COMPONENT ═══════ */
 export default function OverlayExport({data}:{data:OverlayData}){
-  const [player,setPlayer]=useState("Manuel");
-  const [event,setEvent]=useState("");
-  const [round,setRound]=useState(1);
-  const [date,setDate]=useState(()=>{const n=new Date();const m=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];return`${n.getDate()} ${m[n.getMonth()]} ${n.getFullYear()}`;});
-  const [position,setPosition]=useState("");
+  const [player,setPlayer]=useState(data.player||"Manuel");
+  const [event,setEvent]=useState(data.event||"");
+  const [round,setRound]=useState(data.round||1);
+  const [date,setDate]=useState(()=>data.date||(() => {const n=new Date();const m=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];return`${n.getDate()} ${m[n.getMonth()]} ${n.getFullYear()}`;})());
+  const [position,setPosition]=useState(data.position||"");
 
   const [vis,setVis]=useState<Vis>(defaultVis);
-  const [theme,setTheme]=useState<"white"|"black">("black");
-  const [bgMode,setBgMode]=useState<"transparent"|"white"|"black">("transparent");
+  const [bgId,setBgId]=useState("transparent");
+  const [customBg,setCustomBg]=useState("#1a4a2e");
   const [bgAlpha,setBgAlpha]=useState(100);
   const [exporting,setExporting]=useState(false);
   const [collapsed,setCollapsed]=useState(true);
   const [manualScore,setManualScore]=useState<string>("");
   const designRefs=useRef<Record<string,HTMLDivElement|null>>({});
 
-  const t=useMemo(()=>mkTheme(theme),[theme]);
-
-  // Build scores: replace nulls with par (placeholder)
+  /* Build scores */
   const noHoleData=!data.hasHoles||data.scores.length===0;
   const allFilled=!noHoleData&&data.scores.every(s=>s!==null);
   const filledScores:number[]=noHoleData?[]:data.scores.map((s,i)=>s!==null?s:data.par[i]??4);
-
-  // Manual total score for when there's no hole data
   const manualTotal=noHoleData?parseInt(manualScore)||null:null;
   const effectiveTotal=noHoleData?(manualTotal??null):null;
   const manualSD=effectiveTotal!==null&&data.slope>0?(113/data.slope)*(effectiveTotal-data.cr):null;
@@ -504,7 +611,6 @@ export default function OverlayExport({data}:{data:OverlayData}){
     is9h:data.is9h,hasHoles:data.hasHoles,
   }),[data,player,event,round,date,position,filledScores,noHoleData,manualSD]);
 
-  // Stats: use calcStats for hole data, or build manual stats
   const stats=useMemo(():Stats=>{
     if(!noHoleData)return calcStats(dd);
     const sT=effectiveTotal??manualPar;
@@ -513,63 +619,53 @@ export default function OverlayExport({data}:{data:OverlayData}){
   },[dd,noHoleData,effectiveTotal,manualPar,manualSD]);
 
   const toggle=(key:string)=>setVis(prev=>({...prev,[key]:!prev[key]}));
-
-  // Available designs: filter by hasHoles
   const available=DESIGNS.filter(x=>!x.needsHoles||data.hasHoles);
 
-  // Background for preview
+  /* ── Background computation ── */
+  const isCustom=bgId==="custom";
+  const bgOpt=BG_OPTIONS.find(b=>b.id===bgId);
+  const bgHex=isCustom?customBg:(bgOpt?.hex??null);
+  const alpha=bgAlpha/100;
+  /* The bg color with alpha applied, or null for transparent */
+  const bgColor=bgHex?hexToRgba(bgHex,alpha):null;
+
+  /* Checkerboard for preview area */
   const checkerBg:React.CSSProperties={
     backgroundImage:"linear-gradient(45deg,#ccc 25%,transparent 25%),linear-gradient(-45deg,#ccc 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#ccc 75%),linear-gradient(-45deg,transparent 75%,#ccc 75%)",
     backgroundSize:"12px 12px",backgroundPosition:"0 0,0 6px,6px -6px,-6px 0px",backgroundColor:"#fff"};
-  const alpha=bgAlpha/100;
-  // Preview: always show checkerboard so user can gauge transparency
-  const previewWrapBg:React.CSSProperties=checkerBg;
-  // Background layer color (rendered inside capture div, behind content)
-  const bgLayerColor=bgMode==="transparent"?null:bgMode==="white"?`rgba(255,255,255,${alpha})`:`rgba(0,0,0,${alpha})`;
 
-  // Export: always null — the bg layer is part of the rendered element now
-  const bgColorForExport:string|null=null;
-
-  /* Export all — Web Share (mobile) or sequential download (desktop) */
+  /* ── Export all ── */
   const doExportAll=useCallback(async()=>{
     setExporting(true);
     try{
       const h2c=(await import("html2canvas")).default;
       const files:File[]=[];
       for(const design of available){
-        const el=designRefs.current[design.id];
-        if(!el)continue;
-        const canvas=await h2c(el,{backgroundColor:bgColorForExport,scale:3,useCORS:true,logging:false});
+        const el=designRefs.current[design.id];if(!el)continue;
+        const canvas=await h2c(el,{backgroundColor:null,scale:3,useCORS:true,logging:false});
         const blob=await new Promise<Blob|null>(r=>canvas.toBlob(r,"image/png"));
         if(blob)files.push(new File([blob],`${design.label}.png`,{type:"image/png"}));
       }
       if(!files.length)return;
-
-      // Try Web Share with all files (works great on iOS)
       if(navigator.share&&navigator.canShare){
-        const canShareAll=navigator.canShare({files});
-        if(canShareAll){
-          try{await navigator.share({files,title:"Scorecards"});return;}catch{/* user cancelled */}
-        }
+        if(navigator.canShare({files})){try{await navigator.share({files,title:"Scorecards"});return;}catch{}}
       }
-
-      // Fallback: sequential download (desktop)
       for(let i=0;i<files.length;i++){
         const url=URL.createObjectURL(files[i]);
         const a=document.createElement("a");a.href=url;a.download=files[i].name;a.click();
         URL.revokeObjectURL(url);
         if(i<files.length-1)await new Promise(r=>setTimeout(r,300));
       }
-    }catch(err){console.error(err);alert("Erro ao exportar. Verifica: npm install html2canvas");}
+    }catch(err){console.error(err);alert("Erro ao exportar.");}
     finally{setExporting(false);}
-  },[available,bgColorForExport]);
+  },[available]);
 
-  /* Export individual */
+  /* ── Export one ── */
   const doExportOne=useCallback(async(designId:string)=>{
     const el=designRefs.current[designId];if(!el)return;
     try{
       const h2c=(await import("html2canvas")).default;
-      const canvas=await h2c(el,{backgroundColor:bgColorForExport,scale:3,useCORS:true,logging:false});
+      const canvas=await h2c(el,{backgroundColor:null,scale:3,useCORS:true,logging:false});
       canvas.toBlob(async(blob:Blob|null)=>{
         if(!blob)return;
         const file=new File([blob],`scorecard-${designId}.png`,{type:"image/png"});
@@ -577,9 +673,11 @@ export default function OverlayExport({data}:{data:OverlayData}){
         const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download=file.name;a.click();URL.revokeObjectURL(url);
       },"image/png");
     }catch(err){console.error(err);alert("Erro ao exportar");}
-  },[bgColorForExport]);
+  },[]);
 
+  /* ═══════════ RENDER ═══════════ */
   return <div className="ov-export">
+    <link href={FONT_LINK} rel="stylesheet"/>
     <div className="ov-header" onClick={()=>setCollapsed(!collapsed)}>
       <h3 className="sim-section-title" style={{margin:0,cursor:"pointer",userSelect:"none"}}>
         📷 Partilhar Scorecard <span style={{fontSize:13,fontWeight:600,marginLeft:8,color:"#888"}}>{collapsed?"▸ expandir":"▾"}</span>
@@ -588,73 +686,85 @@ export default function OverlayExport({data}:{data:OverlayData}){
     </div>
 
     {!collapsed&&<>
-      {/* Manual fields */}
+      {/* ── Manual fields ── */}
       <div className="ov-fields">
         <div className="ov-field"><label>Jogador</label><input type="text" value={player} onChange={e=>setPlayer(e.target.value)} placeholder="Nome" className="input" style={{width:130}}/></div>
         <div className="ov-field"><label>Torneio</label><input type="text" value={event} onChange={e=>setEvent(e.target.value)} placeholder="Evento" className="input" style={{width:150}}/></div>
         <div className="ov-field"><label>R</label><input type="number" value={round} min={1} max={9} onChange={e=>setRound(Number(e.target.value))} className="input" style={{width:48}}/></div>
         <div className="ov-field"><label>Data</label><input type="text" value={date} onChange={e=>setDate(e.target.value)} className="input" style={{width:110}}/></div>
-        <div className="ov-field"><label>Pos.</label><input type="text" value={position} onChange={e=>setPosition(e.target.value)} placeholder="–" className="input" style={{width:44}}/></div>
+        <div className="ov-field"><label>Pos.</label><input type="text" value={position} onChange={e=>setPosition(e.target.value)} placeholder="—" className="input" style={{width:44}}/></div>
         {noHoleData&&<div className="ov-field"><label>Score Total</label><input type="text" inputMode="numeric" value={manualScore} onChange={e=>setManualScore(e.target.value.replace(/\D/g,""))} placeholder={String(manualPar)} className="input" style={{width:60,fontWeight:800}}/></div>}
       </div>
 
-      {/* Theme + Background + Opacity */}
+      {/* ── Background color picker ── */}
       <div className="ov-options">
-        <div className="ov-opt-group">
-          <span className="ov-opt-label">Tema</span>
-          <button className={`ov-opt-btn${theme==="white"?" active":""}`} onClick={()=>setTheme("white")}>☀ Claro</button>
-          <button className={`ov-opt-btn${theme==="black"?" active":""}`} onClick={()=>setTheme("black")}>🌙 Escuro</button>
-        </div>
-        <div className="ov-opt-group">
+        <div className="ov-opt-group" style={{flexWrap:"wrap",gap:4}}>
           <span className="ov-opt-label">Fundo</span>
-          <button className={`ov-opt-btn${bgMode==="transparent"?" active":""}`} onClick={()=>setBgMode("transparent")}>Transparente</button>
-          <button className={`ov-opt-btn${bgMode==="white"?" active":""}`} onClick={()=>setBgMode("white")}>Branco</button>
-          <button className={`ov-opt-btn${bgMode==="black"?" active":""}`} onClick={()=>setBgMode("black")}>Preto</button>
+          {BG_OPTIONS.map(bg=><button key={bg.id}
+            className={`ov-opt-btn${bgId===bg.id?" active":""}`}
+            onClick={()=>setBgId(bg.id)}
+            style={{display:"inline-flex",alignItems:"center",gap:5,padding:"3px 8px"}}>
+            <span style={{
+              display:"inline-block",width:14,height:14,borderRadius:3,flexShrink:0,
+              border:"1px solid rgba(128,128,128,0.4)",
+              background:bg.hex===null
+                ?"linear-gradient(45deg,#ccc 25%,#fff 25%,#fff 50%,#ccc 50%,#ccc 75%,#fff 75%)"
+                :bg.hex,
+              backgroundSize:bg.hex===null?"6px 6px":undefined,
+            }}/>
+            <span style={{fontSize:11}}>{bg.label}</span>
+          </button>)}
+          {/* Custom color picker */}
+          <button
+            className={`ov-opt-btn${bgId==="custom"?" active":""}`}
+            onClick={()=>setBgId("custom")}
+            style={{display:"inline-flex",alignItems:"center",gap:5,padding:"3px 8px"}}>
+            <input type="color" value={customBg}
+              onClick={e=>e.stopPropagation()}
+              onChange={e=>{setCustomBg(e.target.value);setBgId("custom");}}
+              style={{width:14,height:14,padding:0,border:"1px solid rgba(128,128,128,0.4)",borderRadius:3,cursor:"pointer"}}/>
+            <span style={{fontSize:11}}>Outra…</span>
+          </button>
         </div>
-        {bgMode!=="transparent"&&<div className="ov-opt-group">
+        {/* Opacity slider — only when not transparent */}
+        {bgHex&&<div className="ov-opt-group">
           <span className="ov-opt-label">Opacidade</span>
           <input type="range" min={0} max={100} value={bgAlpha} onChange={e=>setBgAlpha(parseInt(e.target.value))} style={{width:120,accentColor:"#2e7d32"}}/>
           <span style={{fontSize:13,color:"#888",minWidth:34,fontWeight:700}}>{bgAlpha}%</span>
         </div>}
-        {bgMode==="transparent"&&<div className="ov-opt-group" style={{opacity:0.4}}>
-          <span className="ov-opt-label">Opacidade</span>
-          <input type="range" disabled min={0} max={100} value={0} style={{width:120}}/>
-          <span style={{fontSize:12,color:"#888"}}>n/a</span>
-        </div>}
       </div>
 
-      {/* Toggles */}
+      {/* ── Toggles ── */}
       <div className="ov-toggles">
-        {TOGGLES.map(tt=><label key={tt.key} className="ov-toggle"><input type="checkbox" checked={vis[tt.key]} onChange={()=>toggle(tt.key)}/><span>{tt.label}</span></label>)}
+        {TOGGLES.map(tt=><label key={tt.key} className="ov-toggle"><input type="checkbox" checked={!!vis[tt.key]} onChange={()=>toggle(tt.key)}/><span>{tt.label}</span></label>)}
       </div>
 
-      {/* Export All */}
+      {/* ── Export All ── */}
       <div style={{display:"flex",gap:8,marginBottom:12}}>
         <button className="ov-export-btn" onClick={doExportAll} disabled={exporting}>
           {exporting?"A gerar imagens…":`📷 Descarregar Todos (${available.length})`}
         </button>
       </div>
 
-      {/* Gallery */}
+      {/* ── Gallery ── */}
       {noHoleData&&!effectiveTotal&&<div style={{padding:"12px 16px",background:"#fffbeb",border:"1px solid #fde68a",borderRadius:8,color:"#92400e",fontSize:13,fontWeight:700,marginBottom:12}}>
         Insere o <strong>Score Total</strong> acima para pré-visualizar os overlays.
       </div>}
       <div className="ov-gallery">
         {available.map(x=><div key={x.id} className="ov-card">
           <div className="ov-card-header">
-            <span className="ov-card-label">{x.label}</span>
+            <span className="ov-card-label">{x.id}. {x.label}</span>
             <button className="ov-share-btn" onClick={()=>doExportOne(x.id)} title="Partilhar / Descarregar">📤</button>
           </div>
-          <div className="ov-card-preview" style={previewWrapBg}>
-            <div ref={el=>{designRefs.current[x.id]=el;}} style={{display:"inline-block",position:"relative"}}>
-              {bgLayerColor&&<div style={{position:"absolute",inset:0,background:bgLayerColor,pointerEvents:"none"}}/>}
-              <div style={{position:"relative"}}>
-                <x.C d={dd} v={vis} s={stats} t={t}/>
-              </div>
+          <div className="ov-card-preview" style={checkerBg}>
+            {/* ▼ CAPTURE DIV — bg color behind design, visible through rgba backgrounds */}
+            <div ref={el=>{designRefs.current[x.id]=el;}}
+              style={{display:"inline-block"}}>
+              <x.C d={dd} v={vis} s={stats} bg={bgColor}/>
             </div>
           </div>
         </div>)}
       </div>
     </>}
   </div>;
-};
+}
