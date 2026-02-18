@@ -2069,3 +2069,141 @@ a.dateLink .tee-date { text-decoration: underline; text-underline-offset: 2px; }
 /* Utility classes for tournament */
 .tourn-lbl { text-align: left !important; padding-left: 8px !important; font-weight: 800; color: #4a5940; border-right: 2px solid #d5dac9 !important; font-size: 10px; text-transform: uppercase; }
 .tourn-mono { font-family: 'JetBrains Mono', monospace; }
+
+/* ═══════ Overlay Export ═══════ */
+.ov-export {
+  margin: 20px 0;
+  padding: 16px;
+  border: 2px solid #d5dac9;
+  border-radius: 10px;
+  background: #f8faf5;
+}
+
+.ov-header { padding: 0 0 8px; }
+
+.ov-designs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.ov-design-btn {
+  padding: 5px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #555;
+  transition: all 0.15s;
+}
+.ov-design-btn:hover { background: #f0f2ec; border-color: #aaa; }
+.ov-design-btn.active {
+  background: #2e7d32;
+  color: #fff;
+  border-color: #2e7d32;
+}
+
+.ov-fields {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  margin-bottom: 10px;
+}
+.ov-field { display: flex; flex-direction: column; gap: 2px; }
+.ov-field label { font-size: 10px; font-weight: 700; color: #888; text-transform: uppercase; }
+.ov-field .input { font-size: 12px; padding: 4px 8px; }
+
+.ov-options {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.ov-opt-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.ov-opt-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #888;
+  margin-right: 4px;
+  text-transform: uppercase;
+}
+.ov-opt-btn {
+  padding: 3px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #666;
+  transition: all 0.15s;
+}
+.ov-opt-btn:hover { background: #f5f5f5; }
+.ov-opt-btn.active {
+  background: #1c2617;
+  color: #fff;
+  border-color: #1c2617;
+}
+
+.ov-toggles {
+  display: flex;
+  gap: 6px 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.ov-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #555;
+  cursor: pointer;
+  user-select: none;
+}
+.ov-toggle input[type="checkbox"] {
+  accent-color: #2e7d32;
+  width: 14px;
+  height: 14px;
+}
+
+.ov-preview-wrap {
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  min-height: 100px;
+  overflow-x: auto;
+}
+
+.ov-export-btn {
+  padding: 8px 20px;
+  background: #2e7d32;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.ov-export-btn:hover { background: #256b29; }
+.ov-export-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+@media (max-width: 600px) {
+  .ov-fields { gap: 6px; }
+  .ov-field .input { font-size: 11px; padding: 3px 6px; }
+  .ov-options { gap: 8px; }
+  .ov-toggles { gap: 4px 8px; }
+  .ov-preview-wrap { padding: 8px; }
+}
