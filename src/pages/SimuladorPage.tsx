@@ -440,7 +440,7 @@ function calcStrokesPerHole(holes: Hole[], ch: number) {
     .sort((a, b) => a.hole - b.hole);
 }
 
-type OverlayHoleData = { par: number[]; scores: number[]; si: number[] } | null;
+type OverlayHoleData = { par: number[]; scores: (number | null)[]; si: number[] };
 
 function AgsSection({
   hi, holes, cr, slope, par, pcc, is9h, holesMode, onOverlayData,
@@ -453,7 +453,7 @@ function AgsSection({
   pcc: number;
   is9h: boolean;
   holesMode: string;
-  onOverlayData?: (data: OverlayHoleData) => void;
+  onOverlayData?: (data: OverlayHoleData | null) => void;
 }) {
   const nHoles = is9h ? 9 : 18;
   const [scores, setScores] = useState<Record<number, string>>({});
@@ -509,19 +509,16 @@ function AgsSection({
   const setScore = (hole: number, val: string) => setScores(prev => ({ ...prev, [hole]: val }));
   const clearAll = () => setScores({});
 
-  /* Report overlay data when all scores filled */
+  /* Always report overlay data (par/si/current scores) */
   React.useEffect(() => {
     if (!onOverlayData) return;
-    if (!computed || !totals || totals.grossTotal === null) {
-      onOverlayData(null);
-      return;
-    }
+    if (!computed) { onOverlayData(null); return; }
     onOverlayData({
       par: computed.map(h => h.par),
-      scores: computed.map(h => h.actual!),
+      scores: computed.map(h => h.actual),
       si: computed.map(h => h.si),
     });
-  }, [computed, totals, onOverlayData]);
+  }, [computed, onOverlayData]);
 
   /* No hole data → info only */
   if (!fieldHoles || !computed) {
@@ -836,8 +833,8 @@ export default function SimuladorPage({ courses }: Props) {
   const [manualB9, setManualB9] = useState<ManualRatings>(emptyManual());
 
   /* Overlay export state */
-  const [overlayHoleData, setOverlayHoleData] = useState<{ par: number[]; scores: number[]; si: number[] } | null>(null);
-  const handleOverlayData = useCallback((data: { par: number[]; scores: number[]; si: number[] } | null) => {
+  const [overlayHoleData, setOverlayHoleData] = useState<OverlayHoleData | null>(null);
+  const handleOverlayData = useCallback((data: OverlayHoleData | null) => {
     setOverlayHoleData(data);
   }, []);
 
@@ -938,20 +935,25 @@ export default function SimuladorPage({ courses }: Props) {
 
   const holesLabel = holesMode === "front9" ? "Front 9" : holesMode === "back9" ? "Back 9" : "18 buracos";
 
-  /* Overlay export data — só disponível com scores completos */
+  /* Overlay export data — disponível assim que existem dados do tee */
   const overlayData: OverlayData | null = useMemo(() => {
-    if (!overlayHoleData || !teeData) return null;
+    if (!teeData) return null;
     const courseName = isManual ? "Manual" : (selected?.master.name ?? "");
     const teeName = isManual ? "" : (selectedTee ? titleCase(selectedTee.teeName) : "");
     const teeDist = isManual ? null : (selectedTee?.distances?.total ?? null);
-    const grossTotal = overlayHoleData.scores.reduce((a, b) => a + b, 0);
-    const sd = calcSD(grossTotal, teeData.cr, teeData.slope, pcc);
+
+    // Scores completos para cálculo de SD
+    const holeScores = overlayHoleData?.scores ?? null;
+    const allFilled = holeScores ? holeScores.every(s => s !== null) : false;
+    const grossTotal = allFilled ? (holeScores as number[]).reduce((a, b) => a + b, 0) : null;
+    const sd = grossTotal !== null ? calcSD(grossTotal, teeData.cr, teeData.slope, pcc) : null;
+
     return {
       courseName, teeName, teeDist,
       cr: teeData.cr, slope: teeData.slope,
-      par: overlayHoleData.par, scores: overlayHoleData.scores, si: overlayHoleData.si,
+      par: overlayHoleData?.par ?? [], scores: holeScores ?? [], si: overlayHoleData?.si ?? [],
       hi, courseHcp: courseHcp !== null ? Math.round(courseHcp) : null, sd,
-      is9h,
+      is9h, hasHoles: !!overlayHoleData,
       player: "", event: "", round: 1, date: "", position: "",
     };
   }, [overlayHoleData, teeData, selected, selectedTee, isManual, hi, courseHcp, pcc, is9h]);
