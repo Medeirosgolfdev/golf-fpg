@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import "./App.css";
 import { loadMasterData, loadPlayers, loadAwayCourses } from "./data/loader";
 import { initCourseColorCache } from "./utils/teeColors";
@@ -30,28 +29,10 @@ export default function App() {
   const [status, setStatus] = useState<Status>({ kind: "loading" });
   const [tab, setTab] = useState<Tab>("jogadores");
   const [navigateToFed, setNavigateToFed] = useState<string | null>(null);
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  const goToTab = (t: Tab) => {
-    setTab(t);
-    navigate(`/${t}`, { replace: true });
-  };
-
-  /* Sync URL → tab: quando React Router navega (ex: Link), actualiza o tab */
-  useEffect(() => {
-    const path = location.pathname;
-    if (path.startsWith("/campos")) setTab("campos");
-    else if (path.startsWith("/jogadores")) setTab("jogadores");
-    else if (path.startsWith("/comparar")) setTab("comparar");
-    else if (path.startsWith("/simulador") || path.startsWith("/calculador")) setTab("simulador");
-    else if (path.startsWith("/torneio")) setTab("torneio");
-    else if (path.startsWith("/calendario")) setTab("calendario");
-  }, [location.pathname]);
 
   const goToPlayer = (fed: string) => {
     setNavigateToFed(fed);
-    goToTab("jogadores");
+    setTab("jogadores");
   };
 
   useEffect(() => {
@@ -98,40 +79,40 @@ export default function App() {
         <nav className="nav">
           <button
             className={`nav-btn ${tab === "campos" ? "active" : ""}`}
-            onClick={() => goToTab("campos")}
+            onClick={() => setTab("campos")}
           >
             Campos
           </button>
           <button
             className={`nav-btn ${tab === "simulador" ? "active" : ""}`}
-            onClick={() => goToTab("simulador")}
+            onClick={() => setTab("simulador")}
           >
-            Calculadora
+            Simulador
           </button>
           <button
             className={`nav-btn ${tab === "jogadores" ? "active" : ""}`}
-            onClick={() => goToTab("jogadores")}
+            onClick={() => setTab("jogadores")}
           >
             Jogadores
           </button>
           <button
             className={`nav-btn ${tab === "comparar" ? "active" : ""}`}
-            onClick={() => goToTab("comparar")}
+            onClick={() => setTab("comparar")}
           >
             Comparar
           </button>
           <button
             className={`nav-btn ${tab === "torneio" ? "active" : ""}`}
-            onClick={() => goToTab("torneio")}
+            onClick={() => setTab("torneio")}
             style={{ position: "relative" }}
           >
-            🔒 Torneio
+            ðŸ”’ Torneio
           </button>
           <button
             className={`nav-btn ${tab === "calendario" ? "active" : ""}`}
-            onClick={() => goToTab("calendario")}
+            onClick={() => setTab("calendario")}
           >
-            Calendário
+            CalendÃ¡rio
           </button>
         </nav>
 
@@ -156,7 +137,7 @@ export default function App() {
       {/* Content */}
       <main className="content">
         {status.kind === "loading" && (
-          <div className="center-msg">A carregar…</div>
+          <div className="center-msg">A carregarâ€¦</div>
         )}
 
         {status.kind === "error" && (

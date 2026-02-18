@@ -26,13 +26,13 @@ type Stats = { pF:number;pB:number;pT:number;sF:number;sB:number;sT:number;vpT:n
 /* ═══════ THEMES ═══════ */
 function mkTheme(mode: "white"|"black"): Theme {
   const L=mode==="white";
-  return{tx:L?"#000":"#fff",tx2:L?"rgba(0,0,0,0.7)":"rgba(255,255,255,0.7)",tx3:L?"rgba(0,0,0,0.5)":"rgba(255,255,255,0.5)",tx4:L?"rgba(0,0,0,0.3)":"rgba(255,255,255,0.3)",
-    div:L?"rgba(0,0,0,0.15)":"rgba(255,255,255,0.15)",div2:L?"rgba(0,0,0,0.08)":"rgba(255,255,255,0.08)",
-    cardBg:L?"rgba(0,0,0,0.04)":"rgba(255,255,255,0.04)",cardBd:L?"rgba(0,0,0,0.12)":"rgba(255,255,255,0.08)",
-    greenBg:L?"rgba(45,106,48,0.15)":"rgba(45,106,48,0.6)",greenBg2:L?"rgba(45,106,48,0.1)":"rgba(45,106,48,0.35)",
+  return{tx:L?"#000":"#fff",tx2:L?"rgba(0,0,0,0.75)":"rgba(255,255,255,0.75)",tx3:L?"rgba(0,0,0,0.6)":"rgba(255,255,255,0.6)",tx4:L?"rgba(0,0,0,0.45)":"rgba(255,255,255,0.45)",
+    div:L?"rgba(0,0,0,0.2)":"rgba(255,255,255,0.25)",div2:L?"rgba(0,0,0,0.12)":"rgba(255,255,255,0.15)",
+    cardBg:L?"rgba(0,0,0,0.08)":"rgba(255,255,255,0.08)",cardBd:L?"rgba(0,0,0,0.15)":"rgba(255,255,255,0.12)",
+    greenBg:L?"rgba(45,106,48,0.25)":"rgba(45,106,48,0.75)",greenBg2:L?"rgba(45,106,48,0.2)":"rgba(45,106,48,0.5)",
     parC:L?"rgba(0,0,0,0.65)":"rgba(255,255,255,0.65)",parBd:L?"2px solid rgba(0,0,0,0.15)":"2px solid rgba(255,255,255,0.12)",
-    dash:L?"rgba(0,0,0,0.2)":"rgba(255,255,255,0.15)",posBd:L?"rgba(0,0,0,0.2)":"rgba(255,255,255,0.25)",
-    dim:L?"rgba(0,0,0,0.55)":"rgba(255,255,255,0.6)"};
+    dash:L?"rgba(0,0,0,0.25)":"rgba(255,255,255,0.25)",posBd:L?"rgba(0,0,0,0.3)":"rgba(255,255,255,0.35)",
+    dim:L?"rgba(0,0,0,0.65)":"rgba(255,255,255,0.7)"};
 }
 
 /* ═══════ SCORE COLORS (GameBook) ═══════ */
@@ -113,7 +113,7 @@ function D1({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
         {scores.map((sc,i)=><div key={i} style={{width:30,display:"flex",justifyContent:"center"}}><SC score={sc} par={pars[i]} size={24} fs={12} t={t}/></div>)}
         <div style={{width:34,textAlign:"center",fontWeight:900,fontSize:18,color:t.tx}}>{scores.reduce((a,b)=>a+b,0)}</div></div>}
     </div>);
-  return <div style={{padding:"14px 10px",fontFamily:"'DM Sans',sans-serif",color:t.tx,width:is18?410:350}}>
+  return <div style={{padding:"14px 10px",fontFamily:"'Inter',sans-serif",color:t.tx,width:is18?410:350}}>
     {(v.event||v.course||v.round)&&<div style={{textAlign:"center",marginBottom:10}}><TitleLine d={d} v={v} t={t}/><SubLine d={d} v={v} t={t}/></div>}
     {v.player&&d.player&&<div style={{textAlign:"center",fontSize:15,fontWeight:800,marginBottom:6}}>{d.player}</div>}
     {is18?<><HT pars={d.par.slice(0,9)} scores={d.scores.slice(0,9)} sis={d.si.slice(0,9)} start={1} label="Out"/>
@@ -136,7 +136,7 @@ function D2({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
       {data.map((val,i)=><div key={i} style={{width:26,display:"flex",justifyContent:"center",padding:"2px 0"}}>
         {isSc?<SC score={val} par={d.par[off+i]} size={22} fs={11} t={t}/>:<span style={{fontSize:13,color:t.tx2}}>{val}</span>}</div>)}
       <div style={{width:30,textAlign:"center",fontWeight:900,fontSize:isSc?13:11,color:isSc?t.tx:t.tx2}}>{tot}</div></div>);
-  return <div style={{padding:"12px 8px",fontFamily:"'JetBrains Mono',monospace",color:t.tx,width:is18?350:320}}>
+  return <div style={{padding:"12px 8px",fontFamily:"'Inter',sans-serif",color:t.tx,width:is18?350:320}}>
     <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:8,padding:"0 2px"}}>
       <div>{v.player&&d.player&&<div style={{fontSize:15,fontWeight:900}}>{d.player}</div>}<SubLine d={d} v={v} t={t}/></div>
       <div><span style={{fontSize:26,fontWeight:900}}>{s.sT}</span><span style={{fontSize:15,fontWeight:800,marginLeft:4,color:vpc(s.vpT,t)}}>{fvp(s.vpT)}</span></div></div>
@@ -158,7 +158,7 @@ function D2({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
 
 /* 3. Resumo */
 function D3({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  return <div style={{padding:"18px 22px",fontFamily:"'DM Sans',sans-serif",color:t.tx,width:210,textAlign:"center"}}>
+  return <div style={{padding:"18px 22px",fontFamily:"'Inter',sans-serif",color:t.tx,width:210,textAlign:"center"}}>
     {(v.event||v.round)&&<div style={{fontSize:12,color:t.tx3,marginBottom:6}}>{v.event&&d.event}{v.round&&` R${d.round}`}</div>}
     <div style={{fontSize:56,fontWeight:900,lineHeight:1,letterSpacing:"-3px"}}>{s.sT}</div>
     <div style={{fontSize:22,fontWeight:800,marginTop:2,color:vpc(s.vpT,t)}}>{fvp(s.vpT)}</div>
@@ -173,7 +173,7 @@ function D3({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
 /* 4. Dots */
 function D4({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
   const is18=d.scores.length>=18;
-  return <div style={{padding:"14px 12px",fontFamily:"'JetBrains Mono',monospace",color:t.tx,width:is18?330:300}}>
+  return <div style={{padding:"14px 12px",fontFamily:"'Inter',sans-serif",color:t.tx,width:is18?330:300}}>
     <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
       <div>{v.player&&d.player&&<div style={{fontSize:15,fontWeight:900}}>{d.player}</div>}{(v.event||v.round)&&<div style={{fontSize:12,color:t.tx3,fontWeight:700}}>{v.event&&d.event}{v.round&&` R${d.round}`}</div>}</div>
       <div><span style={{fontSize:28,fontWeight:900}}>{s.sT}</span><span style={{fontSize:18,fontWeight:800,marginLeft:4,color:vpc(s.vpT,t)}}>{fvp(s.vpT)}</span></div></div>
@@ -193,7 +193,7 @@ function D4({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
 
 /* 5. Medalha */
 function D5({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  return <div style={{padding:"16px 22px",fontFamily:"'DM Sans',sans-serif",color:t.tx,width:180,textAlign:"center"}}>
+  return <div style={{padding:"16px 22px",fontFamily:"'Inter',sans-serif",color:t.tx,width:180,textAlign:"center"}}>
     {v.event&&d.event&&<div style={{fontSize:12,fontWeight:900,color:t.tx3,letterSpacing:"1.5px",textTransform:"uppercase"}}>{d.event}</div>}
     {v.round&&<div style={{fontSize:14,fontWeight:900,color:t.tx2,marginTop:2}}>R{d.round}</div>}
     {v.position&&d.position&&<div style={{fontSize:12,color:t.tx3,marginTop:2}}>{d.position}º</div>}
@@ -209,7 +209,7 @@ function D5({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
 /* 6. Faixa */
 function D6({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
   const bogP=s.st.bogeys+s.st.doubles+s.st.triples;
-  return <div style={{padding:"10px 16px",fontFamily:"'DM Sans',sans-serif",color:t.tx,display:"flex",alignItems:"center",gap:12}}>
+  return <div style={{padding:"10px 16px",fontFamily:"'Inter',sans-serif",color:t.tx,display:"flex",alignItems:"center",gap:12}}>
     <div><span style={{fontSize:32,fontWeight:900}}>{s.sT}</span><span style={{fontSize:18,fontWeight:800,marginLeft:4,color:vpc(s.vpT,t)}}>{fvp(s.vpT)}</span></div>
     <div style={{width:1,height:28,background:t.div}}/>
     <div>{v.player&&d.player&&<div style={{fontSize:14,fontWeight:800}}>{d.player}</div>}{(v.event||v.round)&&<div style={{fontSize:12,color:t.tx3,fontWeight:700}}>{v.event&&d.event}{v.round&&` R${d.round}`}</div>}
@@ -229,7 +229,7 @@ function D6({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
 function D7({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
   const B=({val,l,c,big}:{val:string|number;l:string;c?:string;big?:boolean})=><div style={{textAlign:"center",padding:big?"8px 12px":"6px 8px",background:t.cardBg,borderRadius:6,border:`1px solid ${t.cardBd}`}}>
     <div style={{fontSize:big?30:20,fontWeight:900,color:c||t.tx,lineHeight:1}}>{val}</div><div style={{fontSize:11,fontWeight:800,color:t.tx4,marginTop:3,letterSpacing:"0.5px"}}>{l}</div></div>;
-  return <div style={{padding:16,fontFamily:"'DM Sans',sans-serif",color:t.tx,width:260}}>
+  return <div style={{padding:16,fontFamily:"'Inter',sans-serif",color:t.tx,width:260}}>
     <div style={{textAlign:"center",marginBottom:12}}>{v.player&&d.player&&<div style={{fontSize:18,fontWeight:900}}>{d.player}</div>}{(v.event||v.round)&&<div style={{fontSize:12,color:t.tx3,marginTop:1}}>{v.event&&d.event}{v.round&&` R${d.round}`}</div>}<SubLine d={d} v={{...v,event:false,round:false}} t={t}/></div>
     <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,marginBottom:6}}><B val={s.sT} l="RESULTADO" big/><B val={fvp(s.vpT)} l="VS PAR" c={vpc(s.vpT,t)} big/></div>
     {v.stats&&<div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:4}}><B val={s.st.birdies} l="BIRDIES" c="#dc2626"/><B val={s.st.pars} l="PARS" c={t.dim}/><B val={s.st.bogeys+s.st.doubles+s.st.triples} l="BOGEY+" c="#5BADE6"/></div>}
@@ -240,7 +240,7 @@ function D7({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
 
 /* 8. Pódio */
 function D8({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  return <div style={{padding:"18px 22px",fontFamily:"'DM Sans',sans-serif",color:t.tx,width:210,textAlign:"center"}}>
+  return <div style={{padding:"18px 22px",fontFamily:"'Inter',sans-serif",color:t.tx,width:210,textAlign:"center"}}>
     {v.position&&d.position&&<div style={{display:"inline-flex",alignItems:"center",justifyContent:"center",width:44,height:44,borderRadius:"50%",border:`2px solid ${t.posBd}`,fontSize:22,fontWeight:900}}>{d.position}º</div>}
     {v.player&&d.player&&<div style={{fontSize:15,fontWeight:900,marginTop:8}}>{d.player}</div>}
     {(v.event||v.round)&&<div style={{fontSize:12,color:t.tx3,marginTop:2}}>{v.event&&d.event}{v.round&&` R${d.round}`}</div>}
@@ -260,7 +260,7 @@ function D9({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
     {v.holeScores&&<div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:2,justifyItems:"center"}}>
       {scores.map((sc,i)=><div key={i}><SC score={sc} par={pars[i]} size={28} fs={13} t={t}/><div style={{fontSize:10,color:t.tx4,fontWeight:700,textAlign:"center"}}>{start+i}</div></div>)}</div>}
     <div style={{textAlign:"center",marginTop:6}}><span style={{fontSize:20,fontWeight:900}}>{total}</span><span style={{fontSize:13,fontWeight:700,marginLeft:3,color:vpc(total-pt,t)}}>{fvp(total-pt)}</span></div></div>;
-  return <div style={{padding:"14px 12px",fontFamily:"'DM Sans',sans-serif",color:t.tx,width:v.holeScores?250:190}}>
+  return <div style={{padding:"14px 12px",fontFamily:"'Inter',sans-serif",color:t.tx,width:v.holeScores?250:190}}>
     <div style={{textAlign:"center",marginBottom:10}}>{v.player&&d.player&&<div style={{fontSize:15,fontWeight:900}}>{d.player}</div>}{(v.event||v.round)&&<div style={{fontSize:12,color:t.tx3,fontWeight:700}}>{v.event&&d.event}{v.round&&` R${d.round}`}</div>}<SubLine d={d} v={{...v,event:false,round:false}} t={t}/></div>
     <div style={{display:"flex",gap:10}}><H label="OUT" scores={d.scores.slice(0,9)} pars={d.par.slice(0,9)} total={s.sF} pt={s.pF} start={1}/><div style={{width:1,background:t.div2}}/><H label="IN" scores={d.scores.slice(9)} pars={d.par.slice(9)} total={s.sB} pt={s.pB} start={10}/></div>
     <div style={{textAlign:"center",marginTop:10}}><span style={{fontSize:30,fontWeight:900}}>{s.sT}</span><span style={{fontSize:17,fontWeight:800,marginLeft:4,color:vpc(s.vpT,t)}}>{fvp(s.vpT)}</span></div>
@@ -271,7 +271,7 @@ function D9({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
 
 /* 10. Clean */
 function D10({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  return <div style={{padding:"12px 20px",fontFamily:"'DM Sans',sans-serif",color:t.tx,textAlign:"center"}}>
+  return <div style={{padding:"12px 20px",fontFamily:"'Inter',sans-serif",color:t.tx,textAlign:"center"}}>
     {(v.event||v.round)&&<div style={{fontSize:12,color:t.tx4,marginBottom:4}}>{v.event&&d.event}{v.round&&` R${d.round}`}</div>}
     <div style={{fontSize:72,fontWeight:900,lineHeight:1,letterSpacing:"-4px"}}>{s.sT}</div>
     <div style={{fontSize:26,fontWeight:900,color:vpc(s.vpT,t),marginTop:2}}>{fvp(s.vpT)}</div>
@@ -283,7 +283,7 @@ function D10({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
 
 /* 11. Dual */
 function D11({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  return <div style={{padding:"18px 14px",fontFamily:"'DM Sans',sans-serif",color:t.tx,width:200}}>
+  return <div style={{padding:"18px 14px",fontFamily:"'Inter',sans-serif",color:t.tx,width:200}}>
     <div style={{textAlign:"center",marginBottom:2}}>
       {v.event&&d.event&&<div style={{fontSize:12,fontWeight:900,color:t.tx3,letterSpacing:"1.5px"}}>{d.event.toUpperCase()}</div>}
       {v.round&&<div style={{fontSize:22,fontWeight:900,marginTop:1}}>ROUND {d.round}</div>}
@@ -304,7 +304,7 @@ function D11({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
 
 /* 12. Instagram */
 function D12({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  return <div style={{padding:"20px 12px",fontFamily:"'DM Sans',sans-serif",color:t.tx,width:180}}>
+  return <div style={{padding:"20px 12px",fontFamily:"'Inter',sans-serif",color:t.tx,width:180}}>
     <div style={{textAlign:"center",marginBottom:14}}>
       {(v.event||v.round)&&<div style={{fontSize:12,fontWeight:900,color:t.tx3}}>{v.event&&d.event.toUpperCase()}{v.round&&` · R${d.round}`}</div>}
       {v.player&&d.player&&<div style={{fontSize:14,fontWeight:900,marginTop:3}}>{d.player}</div>}
@@ -319,7 +319,7 @@ function D12({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
 
 /* 13. Vertical */
 function D13({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  return <div style={{padding:"14px 10px",fontFamily:"'JetBrains Mono',monospace",color:t.tx,width:v.holeSI?230:210}}>
+  return <div style={{padding:"14px 10px",fontFamily:"'Inter',sans-serif",color:t.tx,width:v.holeSI?230:210}}>
     <div style={{textAlign:"center",marginBottom:8}}>{v.player&&d.player&&<div style={{fontSize:15,fontWeight:900}}>{d.player}</div>}{(v.event||v.round)&&<div style={{fontSize:12,color:t.tx3,fontWeight:700}}>{v.event&&d.event}{v.round&&` R${d.round}`}</div>}<SubLine d={d} v={{...v,event:false,round:false,player:false}} t={t}/></div>
     {v.holeScores&&<><div style={{display:"flex",padding:"2px 0",borderBottom:`1px solid ${t.div}`}}>
       <div style={{width:18,fontSize:11,color:t.tx4,fontWeight:800}}>H</div>{v.holeSI&&<div style={{width:18,fontSize:11,color:t.tx4,fontWeight:800,textAlign:"center"}}>SI</div>}{v.holePar&&<div style={{width:18,fontSize:11,color:t.tx4,fontWeight:800,textAlign:"center"}}>P</div>}<div style={{flex:1,fontSize:11,color:t.tx4,fontWeight:800,textAlign:"center"}}>Sc</div><div style={{width:24,fontSize:11,color:t.tx4,fontWeight:800,textAlign:"right"}}>±</div></div>
@@ -335,7 +335,7 @@ function D13({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
 
 /* 14. Poster */
 function D14({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  return <div style={{padding:"24px 22px",fontFamily:"'DM Sans',sans-serif",color:t.tx,width:250,textAlign:"center"}}>
+  return <div style={{padding:"24px 22px",fontFamily:"'Inter',sans-serif",color:t.tx,width:250,textAlign:"center"}}>
     {(v.event||v.round)&&<div style={{fontSize:12,fontWeight:900,color:t.tx3,letterSpacing:"2px"}}>{v.event&&d.event.toUpperCase()}{v.round&&` · R${d.round}`}</div>}
     {v.position&&d.position&&<div style={{fontSize:12,color:t.tx3,marginTop:2}}>{d.position}º lugar</div>}
     <div style={{fontSize:80,fontWeight:900,lineHeight:0.9,marginTop:6,letterSpacing:"-5px"}}>{s.sT}</div>
@@ -354,7 +354,7 @@ function D15({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
     {v.holeScores&&scores.map((sc,i)=><div key={i} style={{display:"flex",alignItems:"center",gap:3,padding:"1px 0"}}>
       <span style={{fontSize:11,color:t.tx4,width:14,textAlign:"right"}}>{start+i}</span>{v.holeSI&&<span style={{fontSize:11,color:t.tx4,fontWeight:800,width:14}}>{sis[i]}</span>}{v.holePar&&<span style={{fontSize:11,color:t.tx3,width:14}}>{pars[i]}</span>}<SC score={sc} par={pars[i]} size={22} fs={11} t={t}/></div>)}
     <div style={{textAlign:"center",marginTop:4}}><span style={{fontSize:17,fontWeight:900}}>{tot}</span><span style={{fontSize:12,fontWeight:700,marginLeft:2,color:vpc(tot-pt,t)}}>{fvp(tot-pt)}</span></div></div>;
-  return <div style={{padding:"14px 12px",fontFamily:"'DM Sans',sans-serif",color:t.tx,width:v.holeSI?240:220}}>
+  return <div style={{padding:"14px 12px",fontFamily:"'Inter',sans-serif",color:t.tx,width:v.holeSI?240:220}}>
     <div style={{textAlign:"center",marginBottom:10}}>{v.player&&d.player&&<div style={{fontSize:14,fontWeight:900}}>{d.player}</div>}{(v.event||v.round)&&<div style={{fontSize:12,color:t.tx3,fontWeight:700}}>{v.event&&d.event}{v.round&&` R${d.round}`}</div>}<SubLine d={d} v={{...v,event:false,round:false,player:false}} t={t}/></div>
     <div style={{display:"flex",gap:10,justifyContent:"center"}}>
       <Col label="OUT" scores={d.scores.slice(0,9)} pars={d.par.slice(0,9)} sis={d.si.slice(0,9)} start={1} tot={s.sF} pt={s.pF}/>
@@ -367,7 +367,7 @@ function D15({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
 
 /* 16. Mini */
 function D16({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  return <div style={{padding:"14px 10px",fontFamily:"'JetBrains Mono',monospace",color:t.tx,width:180}}>
+  return <div style={{padding:"14px 10px",fontFamily:"'Inter',sans-serif",color:t.tx,width:180}}>
     <div style={{textAlign:"center",marginBottom:8}}>{v.player&&d.player&&<div style={{fontSize:13,fontWeight:900}}>{d.player}</div>}{(v.event||v.round)&&<div style={{fontSize:11,color:t.tx3}}>{v.event&&d.event}{v.round&&` R${d.round}`}</div>}</div>
     {v.holeScores&&<><div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:3,justifyItems:"center"}}>{d.scores.slice(0,9).map((sc,i)=><div key={i}><div style={{fontSize:10,color:t.tx4,fontWeight:700,textAlign:"center"}}>{i+1}</div><SC score={sc} par={d.par[i]} size={28} fs={12} t={t}/></div>)}</div>
     <div style={{height:1,background:t.div2,margin:"4px 0"}}/>
@@ -382,7 +382,7 @@ function D16({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
 function D17({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
   const R=({val,l,c,big}:{val:string|number;l:string;c?:string;big?:boolean})=><div style={{display:"flex",alignItems:"center",gap:8,padding:big?"8px 0":"4px 0",borderBottom:`1px solid ${t.div2}`}}>
     <div style={{fontSize:big?34:22,fontWeight:900,color:c||t.tx,width:50,textAlign:"right"}}>{val}</div><div style={{fontSize:big?11:10,color:t.tx3,fontWeight:700}}>{l}</div></div>;
-  return <div style={{padding:"18px 14px",fontFamily:"'DM Sans',sans-serif",color:t.tx,width:200}}>
+  return <div style={{padding:"18px 14px",fontFamily:"'Inter',sans-serif",color:t.tx,width:200}}>
     <div style={{textAlign:"center",marginBottom:12}}>{v.player&&d.player&&<div style={{fontSize:15,fontWeight:900}}>{d.player}</div>}{(v.event||v.round)&&<div style={{fontSize:12,color:t.tx3,fontWeight:700}}>{v.event&&d.event}{v.round&&` R${d.round}`}</div>}<SubLine d={d} v={{...v,event:false,round:false,player:false}} t={t}/></div>
     <R val={s.sT} l="RESULTADO" big/><R val={fvp(s.vpT)} l="VS PAR" c={vpc(s.vpT,t)} big/>
     {v.stats&&<><R val={s.st.birdies} l="BIRDIES" c="#dc2626"/><R val={s.st.pars} l="PARS" c={t.dim}/><R val={s.st.bogeys+s.st.doubles+s.st.triples} l="BOGEY+" c="#5BADE6"/></>}
@@ -393,7 +393,7 @@ function D17({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
 
 /* 18. Elegante */
 function D18({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  return <div style={{padding:"20px 18px",fontFamily:"'DM Sans',sans-serif",color:t.tx,width:180}}>
+  return <div style={{padding:"20px 18px",fontFamily:"'Inter',sans-serif",color:t.tx,width:180}}>
     {(v.event||v.round)&&<div style={{fontSize:11,color:t.tx4,letterSpacing:"1px"}}>{v.event&&d.event}{v.round&&` · R${d.round}`}</div>}
     {v.date&&d.date&&<div style={{fontSize:11,color:t.tx4,marginTop:2}}>{d.date}</div>}
     {v.player&&d.player&&<div style={{fontSize:15,fontWeight:900,marginTop:4}}>{d.player}</div>}
@@ -409,7 +409,7 @@ function D18({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
 
 /* 19. Talão */
 function D19({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  return <div style={{padding:"12px 10px",fontFamily:"'JetBrains Mono',monospace",color:t.tx,width:170}}>
+  return <div style={{padding:"12px 10px",fontFamily:"'Inter',sans-serif",color:t.tx,width:170}}>
     <div style={{textAlign:"center",fontSize:11,color:t.tx3,letterSpacing:"0.5px",paddingBottom:6,borderBottom:`1px dashed ${t.dash}`}}>
       {v.event&&d.event&&<div>{d.event}{v.round&&` R${d.round}`}</div>}{v.course&&d.course&&<div>{d.course.toUpperCase()}</div>}{v.date&&d.date&&<div>{d.date}</div>}</div>
     {v.player&&d.player&&<div style={{textAlign:"center",fontSize:12,fontWeight:800,padding:"4px 0",borderBottom:`1px dashed ${t.dash}`}}>{d.player}</div>}
@@ -424,7 +424,7 @@ function D19({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
 
 /* 20. Torneio */
 function D20({d,v,s,t}:{d:DD;v:Vis;s:Stats;t:Theme}){
-  return <div style={{padding:"16px 14px",fontFamily:"'DM Sans',sans-serif",color:t.tx,width:240}}>
+  return <div style={{padding:"16px 14px",fontFamily:"'Inter',sans-serif",color:t.tx,width:240}}>
     {(v.event||v.course)&&<div style={{background:t.greenBg2,borderRadius:6,padding:"6px 10px",textAlign:"center",marginBottom:10}}>
       {(v.event||v.round)&&<div style={{fontSize:12,fontWeight:800,letterSpacing:"1px",color:t.tx2}}>{v.event&&d.event.toUpperCase()}{v.round&&` · R${d.round}`}</div>}
       <SubLine d={d} v={{...v,event:false,round:false}} t={t}/></div>}
@@ -467,7 +467,7 @@ const defaultVis=():Vis=>Object.fromEntries(TOGGLES.map(t=>[t.key,true]));
 
 /* ═══════ MAIN COMPONENT ═══════ */
 export default function OverlayExport({data}:{data:OverlayData}){
-  const [player,setPlayer]=useState("");
+  const [player,setPlayer]=useState("Manuel");
   const [event,setEvent]=useState("");
   const [round,setRound]=useState(1);
   const [date,setDate]=useState(()=>{const n=new Date();const m=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];return`${n.getDate()} ${m[n.getMonth()]} ${n.getFullYear()}`;});
@@ -479,24 +479,38 @@ export default function OverlayExport({data}:{data:OverlayData}){
   const [bgAlpha,setBgAlpha]=useState(100);
   const [exporting,setExporting]=useState(false);
   const [collapsed,setCollapsed]=useState(true);
+  const [manualScore,setManualScore]=useState<string>("");
   const designRefs=useRef<Record<string,HTMLDivElement|null>>({});
 
   const t=useMemo(()=>mkTheme(theme),[theme]);
 
   // Build scores: replace nulls with par (placeholder)
-  const allFilled=data.scores.length>0&&data.scores.every(s=>s!==null);
-  const filledScores:number[]=data.scores.map((s,i)=>s!==null?s:data.par[i]??4);
+  const noHoleData=!data.hasHoles||data.scores.length===0;
+  const allFilled=!noHoleData&&data.scores.every(s=>s!==null);
+  const filledScores:number[]=noHoleData?[]:data.scores.map((s,i)=>s!==null?s:data.par[i]??4);
+
+  // Manual total score for when there's no hole data
+  const manualTotal=noHoleData?parseInt(manualScore)||null:null;
+  const effectiveTotal=noHoleData?(manualTotal??null):null;
+  const manualSD=effectiveTotal!==null&&data.slope>0?(113/data.slope)*(effectiveTotal-data.cr):null;
+  const manualPar=data.is9h?36:72;
 
   const dd:DD=useMemo(()=>({
     player,event,round,date,position,
     course:data.courseName,tee:data.teeName,teeDist:data.teeDist,
     cr:data.cr,slope:data.slope,
-    par:data.par,scores:filledScores,si:data.si,
-    hi:data.hi,courseHcp:data.courseHcp,sd:data.sd,
+    par:noHoleData?[]:data.par,scores:filledScores,si:noHoleData?[]:data.si,
+    hi:data.hi,courseHcp:data.courseHcp,sd:noHoleData?(manualSD??null):data.sd,
     is9h:data.is9h,hasHoles:data.hasHoles,
-  }),[data,player,event,round,date,position,filledScores]);
+  }),[data,player,event,round,date,position,filledScores,noHoleData,manualSD]);
 
-  const stats=useMemo(()=>calcStats(dd),[dd]);
+  // Stats: use calcStats for hole data, or build manual stats
+  const stats=useMemo(():Stats=>{
+    if(!noHoleData)return calcStats(dd);
+    const sT=effectiveTotal??manualPar;
+    return{pF:0,pB:0,pT:manualPar,sF:0,sB:0,sT,vpT:sT-manualPar,vpF:0,vpB:0,sd:manualSD??0,
+      st:{eagles:0,birdies:0,pars:0,bogeys:0,doubles:0,triples:0}};
+  },[dd,noHoleData,effectiveTotal,manualPar,manualSD]);
 
   const toggle=(key:string)=>setVis(prev=>({...prev,[key]:!prev[key]}));
 
@@ -508,27 +522,43 @@ export default function OverlayExport({data}:{data:OverlayData}){
     backgroundImage:"linear-gradient(45deg,#ccc 25%,transparent 25%),linear-gradient(-45deg,#ccc 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#ccc 75%),linear-gradient(-45deg,transparent 75%,#ccc 75%)",
     backgroundSize:"12px 12px",backgroundPosition:"0 0,0 6px,6px -6px,-6px 0px",backgroundColor:"#fff"};
   const alpha=bgAlpha/100;
-  const overlayBg:React.CSSProperties=bgMode==="transparent"?checkerBg:bgMode==="white"?{background:`rgba(255,255,255,${alpha})`}:{background:`rgba(0,0,0,${alpha})`};
+  // Preview: always show checkerboard so user can gauge transparency
+  const previewWrapBg:React.CSSProperties=checkerBg;
+  // Background layer color (rendered inside capture div, behind content)
+  const bgLayerColor=bgMode==="transparent"?null:bgMode==="white"?`rgba(255,255,255,${alpha})`:`rgba(0,0,0,${alpha})`;
 
-  const bgColorForExport=bgMode==="transparent"?null:bgMode==="white"?`rgba(255,255,255,${alpha})`:`rgba(0,0,0,${alpha})`;
+  // Export: always null — the bg layer is part of the rendered element now
+  const bgColorForExport:string|null=null;
 
-  /* Export all — individual PNGs sequentially */
+  /* Export all — Web Share (mobile) or sequential download (desktop) */
   const doExportAll=useCallback(async()=>{
     setExporting(true);
     try{
       const h2c=(await import("html2canvas")).default;
-      for(let idx=0;idx<available.length;idx++){
-        const design=available[idx];
+      const files:File[]=[];
+      for(const design of available){
         const el=designRefs.current[design.id];
         if(!el)continue;
         const canvas=await h2c(el,{backgroundColor:bgColorForExport,scale:3,useCORS:true,logging:false});
         const blob=await new Promise<Blob|null>(r=>canvas.toBlob(r,"image/png"));
-        if(!blob)continue;
-        const url=URL.createObjectURL(blob);
-        const a=document.createElement("a");a.href=url;a.download=`${design.label}.png`;a.click();
+        if(blob)files.push(new File([blob],`${design.label}.png`,{type:"image/png"}));
+      }
+      if(!files.length)return;
+
+      // Try Web Share with all files (works great on iOS)
+      if(navigator.share&&navigator.canShare){
+        const canShareAll=navigator.canShare({files});
+        if(canShareAll){
+          try{await navigator.share({files,title:"Scorecards"});return;}catch{/* user cancelled */}
+        }
+      }
+
+      // Fallback: sequential download (desktop)
+      for(let i=0;i<files.length;i++){
+        const url=URL.createObjectURL(files[i]);
+        const a=document.createElement("a");a.href=url;a.download=files[i].name;a.click();
         URL.revokeObjectURL(url);
-        // Small delay between downloads so browser doesn't block them
-        if(idx<available.length-1)await new Promise(r=>setTimeout(r,300));
+        if(i<files.length-1)await new Promise(r=>setTimeout(r,300));
       }
     }catch(err){console.error(err);alert("Erro ao exportar. Verifica: npm install html2canvas");}
     finally{setExporting(false);}
@@ -554,7 +584,7 @@ export default function OverlayExport({data}:{data:OverlayData}){
       <h3 className="sim-section-title" style={{margin:0,cursor:"pointer",userSelect:"none"}}>
         📷 Partilhar Scorecard <span style={{fontSize:13,fontWeight:600,marginLeft:8,color:"#888"}}>{collapsed?"▸ expandir":"▾"}</span>
       </h3>
-      {!allFilled&&!collapsed&&<div style={{fontSize:13,fontWeight:700,color:"#b45309",marginTop:4}}>⚠ Preenche todos os buracos para scores exactos. A pré-visualização usa o Par como placeholder.</div>}
+      {!allFilled&&!noHoleData&&!collapsed&&<div style={{fontSize:13,fontWeight:700,color:"#b45309",marginTop:4}}>⚠ Preenche todos os buracos para scores exactos. A pré-visualização usa o Par como placeholder.</div>}
     </div>
 
     {!collapsed&&<>
@@ -565,6 +595,7 @@ export default function OverlayExport({data}:{data:OverlayData}){
         <div className="ov-field"><label>R</label><input type="number" value={round} min={1} max={9} onChange={e=>setRound(Number(e.target.value))} className="input" style={{width:48}}/></div>
         <div className="ov-field"><label>Data</label><input type="text" value={date} onChange={e=>setDate(e.target.value)} className="input" style={{width:110}}/></div>
         <div className="ov-field"><label>Pos.</label><input type="text" value={position} onChange={e=>setPosition(e.target.value)} placeholder="–" className="input" style={{width:44}}/></div>
+        {noHoleData&&<div className="ov-field"><label>Score Total</label><input type="text" inputMode="numeric" value={manualScore} onChange={e=>setManualScore(e.target.value.replace(/\D/g,""))} placeholder={String(manualPar)} className="input" style={{width:60,fontWeight:800}}/></div>}
       </div>
 
       {/* Theme + Background + Opacity */}
@@ -582,8 +613,13 @@ export default function OverlayExport({data}:{data:OverlayData}){
         </div>
         {bgMode!=="transparent"&&<div className="ov-opt-group">
           <span className="ov-opt-label">Opacidade</span>
-          <input type="range" min={0} max={100} value={bgAlpha} onChange={e=>setBgAlpha(parseInt(e.target.value))} style={{width:100,accentColor:"#2e7d32"}}/>
-          <span style={{fontSize:13,color:"#888",minWidth:30}}>{bgAlpha}%</span>
+          <input type="range" min={0} max={100} value={bgAlpha} onChange={e=>setBgAlpha(parseInt(e.target.value))} style={{width:120,accentColor:"#2e7d32"}}/>
+          <span style={{fontSize:13,color:"#888",minWidth:34,fontWeight:700}}>{bgAlpha}%</span>
+        </div>}
+        {bgMode==="transparent"&&<div className="ov-opt-group" style={{opacity:0.4}}>
+          <span className="ov-opt-label">Opacidade</span>
+          <input type="range" disabled min={0} max={100} value={0} style={{width:120}}/>
+          <span style={{fontSize:12,color:"#888"}}>n/a</span>
         </div>}
       </div>
 
@@ -592,27 +628,33 @@ export default function OverlayExport({data}:{data:OverlayData}){
         {TOGGLES.map(tt=><label key={tt.key} className="ov-toggle"><input type="checkbox" checked={vis[tt.key]} onChange={()=>toggle(tt.key)}/><span>{tt.label}</span></label>)}
       </div>
 
-      {/* Export All button */}
+      {/* Export All */}
       <div style={{display:"flex",gap:8,marginBottom:12}}>
         <button className="ov-export-btn" onClick={doExportAll} disabled={exporting}>
-          {exporting?"A exportar…":`📷 Descarregar Todos (${available.length} PNGs)`}
+          {exporting?"A gerar imagens…":`📷 Descarregar Todos (${available.length})`}
         </button>
       </div>
 
       {/* Gallery */}
+      {noHoleData&&!effectiveTotal&&<div style={{padding:"12px 16px",background:"#fffbeb",border:"1px solid #fde68a",borderRadius:8,color:"#92400e",fontSize:13,fontWeight:700,marginBottom:12}}>
+        Insere o <strong>Score Total</strong> acima para pré-visualizar os overlays.
+      </div>}
       <div className="ov-gallery">
         {available.map(x=><div key={x.id} className="ov-card">
           <div className="ov-card-header">
             <span className="ov-card-label">{x.label}</span>
             <button className="ov-share-btn" onClick={()=>doExportOne(x.id)} title="Partilhar / Descarregar">📤</button>
           </div>
-          <div className="ov-card-preview" style={overlayBg}>
-            <div ref={el=>{designRefs.current[x.id]=el;}} style={{display:"inline-block"}}>
-              <x.C d={dd} v={vis} s={stats} t={t}/>
+          <div className="ov-card-preview" style={previewWrapBg}>
+            <div ref={el=>{designRefs.current[x.id]=el;}} style={{display:"inline-block",position:"relative"}}>
+              {bgLayerColor&&<div style={{position:"absolute",inset:0,background:bgLayerColor,pointerEvents:"none"}}/>}
+              <div style={{position:"relative"}}>
+                <x.C d={dd} v={vis} s={stats} t={t}/>
+              </div>
             </div>
           </div>
         </div>)}
       </div>
     </>}
   </div>;
-}
+};

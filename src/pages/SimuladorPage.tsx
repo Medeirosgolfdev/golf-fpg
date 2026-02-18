@@ -457,19 +457,38 @@ function AgsSection({
 }) {
   const nHoles = is9h ? 9 : 18;
   const [scores, setScores] = useState<Record<number, string>>({});
+  const [customPars, setCustomPars] = useState<Record<number, string>>({});
+  const [customSIs, setCustomSIs] = useState<Record<number, string>>({});
+  const isSynthetic = !holes?.length;
 
   const courseHcp = hi !== null ? Math.round(calcCourseHcp(hi, slope, cr, par)) : null;
   const hasAgs = courseHcp !== null;
 
   const fieldHoles = useMemo(() => {
-    if (!holes?.length) return null;
-    let subset = holes;
-    if (is9h) {
-      subset = holesMode === "front9" ? holes.filter(h => h.hole <= 9) : holes.filter(h => h.hole > 9);
+    if (holes?.length) {
+      let subset = holes;
+      if (is9h) {
+        subset = holesMode === "front9" ? holes.filter(h => h.hole <= 9) : holes.filter(h => h.hole > 9);
+      }
+      const valid = subset.filter(h => h.par != null && h.si != null);
+      if (valid.length >= nHoles) return valid.sort((a, b) => a.hole - b.hole);
     }
-    const valid = subset.filter(h => h.par != null && h.si != null);
-    return valid.length >= nHoles ? valid.sort((a, b) => a.hole - b.hole) : null;
-  }, [holes, is9h, holesMode, nHoles]);
+    /* Sem dados de buracos → gerar sintéticos (editáveis pelo user) */
+    const parPer = par / nHoles;
+    const defPar = parPer >= 3.5 ? 4 : 3;
+    const start = is9h && holesMode === "back9" ? 10 : 1;
+    return Array.from({ length: nHoles }, (_, i) => {
+      const hole = start + i;
+      const cp = parseInt(customPars[hole] || "", 10);
+      const cs = parseInt(customSIs[hole] || "", 10);
+      return {
+        hole,
+        par: (!isNaN(cp) && cp >= 3 && cp <= 6 ? cp : defPar) as number,
+        si: (!isNaN(cs) && cs >= 1 && cs <= 18 ? cs : i + 1) as number,
+        distance: null as number | null,
+      };
+    }) as Hole[];
+  }, [holes, is9h, holesMode, nHoles, par, customPars, customSIs]);
 
   const holeData = useMemo(() => {
     if (!fieldHoles) return null;
@@ -507,7 +526,9 @@ function AgsSection({
   }, [computed, cr, slope, pcc, hasAgs]);
 
   const setScore = (hole: number, val: string) => setScores(prev => ({ ...prev, [hole]: val }));
-  const clearAll = () => setScores({});
+  const setCustomPar = (hole: number, val: string) => setCustomPars(prev => ({ ...prev, [hole]: val }));
+  const setCustomSI = (hole: number, val: string) => setCustomSIs(prev => ({ ...prev, [hole]: val }));
+  const clearAll = () => { setScores({}); if (isSynthetic) { setCustomPars({}); setCustomSIs({}); } };
 
   /* Always report overlay data (par/si/current scores) */
   React.useEffect(() => {
@@ -628,11 +649,23 @@ function AgsSection({
               <td className="row-label par-label">Par</td>
               {front.map((h, i) => (
                 <React.Fragment key={h.hole}>
-                  <td>{h.par}</td>
+                  <td>{isSynthetic ? (
+                    <input type="text" inputMode="numeric"
+                      value={customPars[h.hole] ?? String(h.par)}
+                      onChange={e => setCustomPar(h.hole, e.target.value.replace(/\D/g, ""))}
+                      style={{ width: 26, textAlign: "center", border: "1px solid #c5d4a0", borderRadius: 3, padding: "2px 0", font: "inherit", fontSize: 11, background: "#f0f5e8" }}
+                    />
+                  ) : h.par}</td>
                   {is18 && i === 8 && <td className="col-out" style={{ fontWeight: 700 }}>{sumPar(front)}</td>}
                 </React.Fragment>
               ))}
-              {is18 && back.map((h) => <td key={h.hole}>{h.par}</td>)}
+              {is18 && back.map((h) => <td key={h.hole}>{isSynthetic ? (
+                <input type="text" inputMode="numeric"
+                  value={customPars[h.hole] ?? String(h.par)}
+                  onChange={e => setCustomPar(h.hole, e.target.value.replace(/\D/g, ""))}
+                  style={{ width: 26, textAlign: "center", border: "1px solid #c5d4a0", borderRadius: 3, padding: "2px 0", font: "inherit", fontSize: 11, background: "#f0f5e8" }}
+                />
+              ) : h.par}</td>)}
               <td className={`col-${is18 ? "in" : "total"}`} style={{ fontWeight: 700 }}>{is18 ? sumPar(back) : totalParAll}</td>
               {is18 && <td className="col-total" style={{ fontWeight: 700 }}>{totalParAll}</td>}
             </tr>
@@ -642,11 +675,23 @@ function AgsSection({
               <td className="row-label" style={{ color: "#b0b8c4", fontSize: 10, fontWeight: 400 }}>S.I.</td>
               {front.map((h, i) => (
                 <React.Fragment key={h.hole}>
-                  <td>{h.si}</td>
+                  <td>{isSynthetic ? (
+                    <input type="text" inputMode="numeric"
+                      value={customSIs[h.hole] ?? String(h.si)}
+                      onChange={e => setCustomSI(h.hole, e.target.value.replace(/\D/g, ""))}
+                      style={{ width: 26, textAlign: "center", border: "1px solid #ddd", borderRadius: 3, padding: "2px 0", font: "inherit", fontSize: 10, background: "#fafafa", color: "#999" }}
+                    />
+                  ) : h.si}</td>
                   {is18 && i === 8 && <td className="col-out" />}
                 </React.Fragment>
               ))}
-              {is18 && back.map((h) => <td key={h.hole}>{h.si}</td>)}
+              {is18 && back.map((h) => <td key={h.hole}>{isSynthetic ? (
+                <input type="text" inputMode="numeric"
+                  value={customSIs[h.hole] ?? String(h.si)}
+                  onChange={e => setCustomSI(h.hole, e.target.value.replace(/\D/g, ""))}
+                  style={{ width: 26, textAlign: "center", border: "1px solid #ddd", borderRadius: 3, padding: "2px 0", font: "inherit", fontSize: 10, background: "#fafafa", color: "#999" }}
+                />
+              ) : h.si}</td>)}
               <td className={`col-${is18 ? "in" : "total"}`} />
               {is18 && <td className="col-total" />}
             </tr>
@@ -935,22 +980,28 @@ export default function SimuladorPage({ courses }: Props) {
 
   const holesLabel = holesMode === "front9" ? "Front 9" : holesMode === "back9" ? "Back 9" : "18 buracos";
 
-  /* Overlay export data — disponível assim que existem dados do tee */
+  /* Overlay export data — disponível sempre que há contexto mínimo */
   const overlayData: OverlayData | null = useMemo(() => {
-    if (!teeData) return null;
+    // Disponível com campo selecionado OU em modo manual (mesmo sem CR/Slope)
+    if (!isManual && !teeData) return null;
+
     const courseName = isManual ? "Manual" : (selected?.master.name ?? "");
     const teeName = isManual ? "" : (selectedTee ? titleCase(selectedTee.teeName) : "");
     const teeDist = isManual ? null : (selectedTee?.distances?.total ?? null);
+
+    const cr = teeData?.cr ?? 0;
+    const slope = teeData?.slope ?? 113;
+    const tdPar = teeData?.par ?? (is9h ? 36 : 72);
 
     // Scores completos para cálculo de SD
     const holeScores = overlayHoleData?.scores ?? null;
     const allFilled = holeScores ? holeScores.every(s => s !== null) : false;
     const grossTotal = allFilled ? (holeScores as number[]).reduce((a, b) => a + b, 0) : null;
-    const sd = grossTotal !== null ? calcSD(grossTotal, teeData.cr, teeData.slope, pcc) : null;
+    const sd = grossTotal !== null && slope > 0 ? calcSD(grossTotal, cr, slope, pcc) : null;
 
     return {
       courseName, teeName, teeDist,
-      cr: teeData.cr, slope: teeData.slope,
+      cr, slope,
       par: overlayHoleData?.par ?? [], scores: holeScores ?? [], si: overlayHoleData?.si ?? [],
       hi, courseHcp: courseHcp !== null ? Math.round(courseHcp) : null, sd,
       is9h, hasHoles: !!overlayHoleData,
@@ -1114,8 +1165,6 @@ export default function SimuladorPage({ courses }: Props) {
 
                   <AgsSection hi={hi} holes={null} cr={teeData.cr} slope={teeData.slope} par={teeData.par} pcc={pcc} is9h={is9h} holesMode={holesMode} onOverlayData={handleOverlayData} />
 
-                  {overlayData && <OverlayExport data={overlayData} />}
-
                   <h3 className="sim-section-title">
                     Tabela Score → SD {is9h ? `(${holesLabel})` : ""}
                   </h3>
@@ -1129,6 +1178,9 @@ export default function SimuladorPage({ courses }: Props) {
                   />
                 </>
               )}
+
+              {/* Overlay — sempre visível em modo manual */}
+              {overlayData && <OverlayExport data={overlayData} />}
             </>
           ) : selected && teeData ? (
             <>
