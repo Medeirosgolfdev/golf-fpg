@@ -113,12 +113,12 @@ function hexToRgba(hex:string,a:number){const r=parseInt(hex.slice(1,3),16),g=pa
 /* ═══ A. PGA COLUMNS ═══ */
 function DA({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){
   const sz=26;const is18=d.scores.length>=18;const sub=subParts(d,v);const hcl=hiChLine(d,v,s);
-  return<div style={{fontFamily:BE,width:140,color:tc||"#fff",background:bg||"rgba(20,40,80,0.88)",overflow:"hidden",overflowWrap:"break-word"}}>
-    {(v.player||v.round)&&<div style={{padding:"14px 12px 4px"}}>
+  return<div style={{fontFamily:BE,display:"inline-block",color:tc||"#fff",background:bg||"rgba(20,40,80,0.88)",overflow:"hidden",overflowWrap:"break-word"}}>
+    {(v.player||v.round)&&<div style={{padding:"14px 12px 4px",textAlign:"center"}}>
       {v.player&&d.player&&<div style={{fontSize:30,lineHeight:1,letterSpacing:1}}>{d.player.toUpperCase()}</div>}
       {v.round&&<div style={{fontFamily:II,fontSize:9,fontWeight:700,letterSpacing:2,color:"rgba(255,255,255,0.5)",marginTop:2}}>ROUND {d.round}</div>}</div>}
     <div style={{height:3,background:"#dc2626",margin:"6px 12px"}}/>
-    {v.holeScores&&is18?<div style={{display:"flex",padding:"6px 10px 10px"}}>
+    {v.holeScores&&is18?<div style={{display:"flex",justifyContent:"center",padding:"6px 10px 10px"}}>
       {[{off:0,l:"FRONT",sc:s.sF},{off:9,l:"BACK",sc:s.sB}].map(({off,l,sc},ci)=>
         <div key={off} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:1,borderRight:ci===0?"2px solid rgba(220,38,38,0.5)":"none",paddingRight:ci===0?7:0,paddingLeft:ci===1?7:0}}>
           {d.scores.slice(off,off+9).map((scr,i)=><SC key={i} score={scr} par={d.par[off+i]} size={sz} fs={14}/>)}
@@ -129,21 +129,21 @@ function DA({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){
     <div style={{background:"rgba(255,255,255,0.95)",color:"#14284f",padding:"8px 12px",textAlign:"center"}}>
       <div style={{fontSize:44,lineHeight:1}}>{s.sT}</div>
       <div style={{fontFamily:II,fontSize:18,fontWeight:900,color:vpCd(s.vpT),marginTop:-2}}>{fvp(s.vpT)}</div></div>
-    {(sub||hcl)&&<div style={{fontFamily:II,padding:"6px 12px 10px",fontSize:8,fontWeight:600,color:"rgba(255,255,255,0.4)"}}>{sub}{sub&&hcl?<br/>:null}{hcl}</div>}
+    {(sub||hcl)&&<div style={{fontFamily:II,padding:"6px 12px 10px",fontSize:8,fontWeight:600,color:"rgba(255,255,255,0.4)",textAlign:"center"}}>{sub}{sub&&hcl?<br/>:null}{hcl}</div>}
   </div>;
 }
 
 /* ═══ B. GREEN COLUMNS ═══ */
 function DB({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){
   const sz=24;const is18=d.scores.length>=18;
-  return<div style={{fontFamily:O,width:140,color:tc||"#fff",background:bg||"rgba(10,30,20,0.88)",borderRadius:14,overflow:"hidden",overflowWrap:"break-word"}}>
-    <div style={{padding:"14px 12px 4px"}}>
+  return<div style={{fontFamily:O,display:"inline-block",color:tc||"#fff",background:bg||"rgba(10,30,20,0.88)",borderRadius:14,overflow:"hidden",overflowWrap:"break-word"}}>
+    <div style={{padding:"14px 12px 4px",textAlign:"center"}}>
       {(v.round||v.date)&&<div style={{fontFamily:II,fontSize:8,fontWeight:700,letterSpacing:2,color:"rgba(255,255,255,0.4)"}}>
         {[v.round&&`R${d.round}`,v.date&&d.date].filter(Boolean).join(" \u00b7 ")}</div>}
       {v.player&&d.player&&<div style={{fontSize:22,fontWeight:700,letterSpacing:1,marginTop:4}}>{d.player.toUpperCase()}</div>}
       {v.course&&d.course&&<div style={{fontFamily:II,fontSize:9,fontWeight:500,color:"rgba(255,255,255,0.4)"}}>{d.course}</div>}</div>
     <div style={{height:2,background:"#4ade80",margin:"6px 12px"}}/>
-    {v.holeScores&&is18?<div style={{display:"flex",padding:"6px 10px 10px"}}>
+    {v.holeScores&&is18?<div style={{display:"flex",justifyContent:"center",padding:"6px 10px 10px"}}>
       {[{off:0,l:"FRONT",sc:s.sF},{off:9,l:"BACK",sc:s.sB}].map(({off,l,sc},ci)=>
         <div key={off} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:1,borderRight:ci===0?"2px solid rgba(74,222,128,0.3)":"none",paddingRight:ci===0?7:0,paddingLeft:ci===1?7:0}}>
           {d.scores.slice(off,off+9).map((scr,i)=><SC key={i} score={scr} par={d.par[off+i]} size={sz} fs={13}/>)}
