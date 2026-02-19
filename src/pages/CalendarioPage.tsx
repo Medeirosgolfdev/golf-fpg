@@ -34,7 +34,7 @@ interface CalendarSource {
   id: string;
   name: string;
   color: string;
-  group: "CGSS" | "DRIVE" | "FPG" | "DESTAQUE";
+  group: "CGSS" | "DRIVE" | "FPG" | "DESTAQUE" | "VIAGENS";
 }
 
 /* ═══ Calendar Sources ═══ */
@@ -67,6 +67,13 @@ const CALENDARS: CalendarSource[] = [
   { id: "dest_pja",       name: "PJA Tour",            color: "#d946ef", group: "DESTAQUE" },
   { id: "pessoal",        name: "🎂 Pessoal",          color: "#39ff14", group: "DESTAQUE" },
   { id: "treino",         name: "⛳ Campo / Treino",    color: "#10b981", group: "DESTAQUE" },
+
+  // ── Viagens — laranja / âmbar ──
+  { id: "viag_alg_fev",   name: "✈ Algarve (Fev)",      color: "#f59e0b", group: "VIAGENS" },
+  { id: "viag_malaga",    name: "✈ Málaga (Fev)",        color: "#f97316", group: "VIAGENS" },
+  { id: "viag_roma",      name: "✈ Roma (Mar)",          color: "#ef4444", group: "VIAGENS" },
+  { id: "viag_alg_mar",   name: "✈ Algarve (Mar/Abr)",  color: "#eab308", group: "VIAGENS" },
+  { id: "viag_edinb",     name: "✈ Edimburgo (Mai)",     color: "#06b6d4", group: "VIAGENS" },
 ];
 
 const CAL_MAP = new Map(CALENDARS.map(c => [c.id, c]));
@@ -248,6 +255,38 @@ const EVENTS: CalEvent[] = [
      ⛳ CAMPO / TREINO
      ══════════════════════════════════════ */
   ev("treino", "Mypro Golf Algarve — Campo de Golf", new Date(2026,2,28), "Algarve", "", new Date(2026,3,4)),
+
+  /* ══════════════════════════════════════
+     ✈ VIAGENS — Voos
+     ══════════════════════════════════════ */
+
+  // ── Algarve Fevereiro (XUUM45) ──
+  ev("viag_alg_fev", "TP1692 FNC → LIS 18:10–19:55",          new Date(2026,1,14), "TAP", "XUUM45"),
+  ev("viag_alg_fev", "TP1901 LIS → FAO 09:35–10:25",          new Date(2026,1,15), "TAP", "XUUM45"),
+  ev("viag_alg_fev", "TP1902 FAO → LIS 11:15–12:05",          new Date(2026,1,18), "TAP", "XUUM45"),
+  ev("viag_alg_fev", "TP1691 LIS → FNC 15:20–17:10",          new Date(2026,1,18), "TAP", "XUUM45"),
+
+  // ── Málaga (YZH6MC + YMAAUB) ──
+  ev("viag_malaga", "TP3842 FNC → LIS 12:50–14:55",            new Date(2026,1,22), "TAP", "YZH6MC"),
+  ev("viag_malaga", "TP1138 LIS → AGP 21:00–23:15",            new Date(2026,1,22), "TAP", "YMAAUB"),
+  ev("viag_malaga", "TP1137 AGP → LIS 15:00–16:25",            new Date(2026,1,28), "TAP", "YMAAUB"),
+  ev("viag_malaga", "TP1693 LIS → FNC 18:35–20:25",            new Date(2026,1,28), "TAP", "YZH6MC"),
+
+  // ── Roma (XUZ0XS) ──
+  ev("viag_roma", "TP1688 FNC → LIS 11:00–12:45",              new Date(2026,2,12), "TAP", "XUZ0XS"),
+  ev("viag_roma", "TP836 LIS → FCO 14:40–18:45",               new Date(2026,2,12), "TAP", "XUZ0XS"),
+  ev("viag_roma", "TP833 FCO → LIS 12:15–14:25",               new Date(2026,2,16), "TAP", "XUZ0XS"),
+  ev("viag_roma", "TP1693 LIS → FNC 18:35–20:25",              new Date(2026,2,16), "TAP", "XUZ0XS"),
+
+  // ── Algarve Março/Abril (XVCBD2) ──
+  ev("viag_alg_mar", "TP1694 FNC → LIS 21:15–23:00",           new Date(2026,2,27), "TAP", "XVCBD2"),
+  ev("viag_alg_mar", "TP1901 LIS → FAO 09:35–10:25",           new Date(2026,2,28), "TAP", "XVCBD2"),
+  ev("viag_alg_mar", "TP1906 FAO → LIS 18:10–19:05",           new Date(2026,3,4),  "TAP", "XVCBD2"),
+  ev("viag_alg_mar", "TP1695 LIS → FNC 22:20–00:10",           new Date(2026,3,4),  "TAP", "XVCBD2"),
+
+  // ── Edimburgo (Ryanair) ──
+  ev("viag_edinb", "FR6673 FNC → EDI 15:00–19:05",             new Date(2026,4,23), "Ryanair", ""),
+  ev("viag_edinb", "FR6674 EDI → FNC 19:30–23:40",             new Date(2026,4,30), "Ryanair", ""),
 ];
 
 /* ═══ Helpers ═══ */
@@ -265,6 +304,7 @@ const GROUP_LABELS: Record<string, string> = {
   DRIVE: "Drive",
   FPG: "FPG — Federação",
   DESTAQUE: "Destaque",
+  VIAGENS: "✈ Viagens",
 };
 
 function isSameDay(a: Date, b: Date) {
@@ -486,7 +526,7 @@ function ListView({ events, onSelect }: { events: CalEvent[]; onSelect: (e: CalE
 
 /* ═══ Main Component ═══ */
 type ViewMode = "month" | "list";
-type GroupKey = "CGSS" | "DRIVE" | "FPG" | "DESTAQUE";
+type GroupKey = "CGSS" | "DRIVE" | "FPG" | "DESTAQUE" | "VIAGENS";
 
 /* ── Password Gate ── */
 function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
@@ -568,7 +608,7 @@ function CalendarioContent() {
   const monthDays = useMemo(() => getMonthDays(2026, currentMonth), [currentMonth]);
   const gridRows = monthDays.length / 7;
   const today = new Date();
-  const groups: GroupKey[] = ["CGSS", "DRIVE", "FPG", "DESTAQUE"];
+  const groups: GroupKey[] = ["CGSS", "DRIVE", "FPG", "DESTAQUE", "VIAGENS"];
 
   return (
     <div style={{ height: "100%", display: "flex", overflow: "hidden" }}>
