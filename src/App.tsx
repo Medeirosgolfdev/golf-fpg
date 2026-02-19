@@ -8,7 +8,7 @@ import type { Course, MasterData, PlayersDb } from "./data/types";
 import CamposPage from "./pages/CamposPage";
 import JogadoresPage from "./pages/JogadoresPage";
 import SimuladorPage from "./pages/SimuladorPage";
-import TorneioPage from "./pages/TorneioPage";
+
 import CalendarioPage from "./pages/CalendarioPage";
 import CompararPage from "./pages/CompararPage";
 import golfBallSvg from "./assets/golf-ball.svg";
@@ -16,7 +16,7 @@ import golfBallSvg from "./assets/golf-ball.svg";
 import { deepFixMojibake } from "./utils/fixEncoding";
 import melhoriasJson from "../melhorias.json";
 
-type Tab = "campos" | "jogadores" | "comparar" | "simulador" | "calendario" | "torneio";
+type Tab = "campos" | "jogadores" | "comparar" | "simulador" | "calendario";
 
 type MelhoriasJson = Record<string, Record<string, unknown>>;
 
@@ -29,11 +29,6 @@ export default function App() {
   const [status, setStatus] = useState<Status>({ kind: "loading" });
   const [tab, setTab] = useState<Tab>("jogadores");
   const [navigateToFed, setNavigateToFed] = useState<string | null>(null);
-
-  const goToPlayer = (fed: string) => {
-    setNavigateToFed(fed);
-    setTab("jogadores");
-  };
 
   useEffect(() => {
     let alive = true;
@@ -102,17 +97,10 @@ export default function App() {
             Comparar
           </button>
           <button
-            className={`nav-btn ${tab === "torneio" ? "active" : ""}`}
-            onClick={() => setTab("torneio")}
-            style={{ position: "relative" }}
-          >
-            ðŸ”’ Torneio
-          </button>
-          <button
             className={`nav-btn ${tab === "calendario" ? "active" : ""}`}
             onClick={() => setTab("calendario")}
           >
-            CalendÃ¡rio
+            Calendário
           </button>
         </nav>
 
@@ -137,7 +125,7 @@ export default function App() {
       {/* Content */}
       <main className="content">
         {status.kind === "loading" && (
-          <div className="center-msg">A carregarâ€¦</div>
+          <div className="center-msg">A carregar…</div>
         )}
 
         {status.kind === "error" && (
@@ -167,9 +155,7 @@ export default function App() {
           <CalendarioPage />
         )}
 
-        {status.kind === "ready" && tab === "torneio" && (
-          <TorneioPage players={status.players} onSelectPlayer={goToPlayer} />
-        )}
+
       </main>
     </div>
   );

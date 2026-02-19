@@ -15,6 +15,10 @@
  */
 import { useState, useRef, useEffect, useMemo } from "react";
 
+/* ═══ Password ═══ */
+const CAL_PASSWORD = "machico";
+const STORAGE_KEY = "cal_unlocked";
+
 /* ═══ Types ═══ */
 interface CalEvent {
   id: number;
@@ -484,7 +488,49 @@ function ListView({ events, onSelect }: { events: CalEvent[]; onSelect: (e: CalE
 type ViewMode = "month" | "list";
 type GroupKey = "CGSS" | "DRIVE" | "FPG" | "DESTAQUE";
 
+/* ── Password Gate ── */
+function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
+  const [pw, setPw] = useState("");
+  const [error, setError] = useState(false);
+
+  const check = () => {
+    if (pw === CAL_PASSWORD) {
+      try { localStorage.setItem(STORAGE_KEY, "1"); } catch {}
+      onUnlock();
+    } else {
+      setError(true);
+      setTimeout(() => setError(false), 1500);
+    }
+  };
+
+  return (
+    <div className="tourn-pw-gate">
+      <div style={{ fontSize: 32 }}>🔒</div>
+      <div className="tourn-pw-title">Acesso restrito</div>
+      <div className="tourn-pw-sub">Este separador requer password</div>
+      <div className="tourn-pw-row">
+        <input type="password" value={pw} onChange={e => setPw(e.target.value)}
+          onKeyDown={e => e.key === "Enter" && check()}
+          placeholder="Password…" autoFocus
+          className={`tourn-pw-input${error ? " tourn-pw-error" : ""}`} />
+        <button onClick={check} className="tourn-pw-btn">Entrar</button>
+      </div>
+      {error && <div style={{ fontSize: 11, color: "#dc3545", fontWeight: 600 }}>Password incorrecta</div>}
+    </div>
+  );
+}
+
 export default function CalendarioPage() {
+  const [unlocked, setUnlocked] = useState(() => {
+    try { return localStorage.getItem(STORAGE_KEY) === "1"; } catch { return false; }
+  });
+
+  if (!unlocked) return <PasswordGate onUnlock={() => setUnlocked(true)} />;
+
+  return <CalendarioContent />;
+}
+
+function CalendarioContent() {
   const [currentMonth, setCurrentMonth] = useState(() => {
     const now = new Date();
     return now.getFullYear() === 2026 ? now.getMonth() : 1;
