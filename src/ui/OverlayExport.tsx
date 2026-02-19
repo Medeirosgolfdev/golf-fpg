@@ -66,13 +66,13 @@ function LSC({score,par,size=26,fs:fsProp}:{score:number;par:number;size?:number
   return<div style={{...base,background:d===1?"#5BADE6":d===2?"#2B6EA0":"#1B4570",color:"#fff",borderRadius:0}}>{score}</div>;
 }
 
-function Grid99({d,size=26,gap=4,showNums=false,numFs=8}:{d:DD;size?:number;gap?:number;showNums?:boolean;numFs?:number}){
+function Grid99({d,size=26,gap=4,showNums=false,numFs=8,numColor="rgba(255,255,255,0.3)"}:{d:DD;size?:number;gap?:number;showNums?:boolean;numFs?:number;numColor?:string}){
   const is18=d.scores.length>=18;
   const slices=is18?[{off:0,len:9},{off:9,len:9}]:[{off:0,len:d.scores.length}];
   return<div style={{display:"flex",flexDirection:"column",gap,alignItems:"center"}}>
     {slices.map(({off,len})=><div key={off} style={{display:"flex",gap}}>
       {d.scores.slice(off,off+len).map((sc,i)=><div key={i} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:1}}>
-        {showNums&&<div style={{fontSize:numFs,fontWeight:700,color:tc4,fontFamily:II}}>{off+i+1}</div>}
+        {showNums&&<div style={{fontSize:numFs,fontWeight:700,color:numColor,fontFamily:II}}>{off+i+1}</div>}
         <SC score={sc} par={d.par[off+i]} size={size}/></div>)}</div>)}</div>;
 }
 
@@ -224,7 +224,7 @@ function DE({d,v,s,bg,tc,tc2,tc3,tc4}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:st
     <div style={{height:1,background:"rgba(255,255,255,0.1)",margin:"14px 0"}}/>
     {v.player&&d.player&&<div style={{fontSize:16,fontWeight:900,marginBottom:2}}>{d.player}</div>}
     {sub&&<div style={{fontSize:10,fontWeight:500,color:tc3,marginBottom:12}}>{sub}{v.round?` \u00b7 R${d.round}`:""}</div>}
-    {v.holeScores&&<Grid99 d={d} size={26} gap={4} showNums numFs={8}/>}
+    {v.holeScores&&<Grid99 d={d} size={26} gap={4} showNums numFs={8} numColor={tc4}/>}
     {v.stats&&<div style={{marginTop:12}}><StatsLine s={s} fs={14} lfs={9} color={tc3}/></div>}
     {hcl&&<div style={{fontSize:9,fontWeight:700,color:tc4,marginTop:8}}>{hcl}{v.date&&d.date?` \u00b7 ${d.date}`:""}</div>}</div>;}
 
@@ -367,7 +367,7 @@ function DL({d,v,s,bg,tc,tc2,tc3,tc4}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:st
         {v.course&&d.course&&<div style={{fontSize:10,fontWeight:500,color:tc3}}>{d.course}</div>}</div>
       <div style={{textAlign:"right"}}><div style={{fontSize:42,fontWeight:900,lineHeight:1,letterSpacing:-2}}>{s.sT}</div>
         <div style={{fontSize:22,fontWeight:900,color:vpC(s.vpT),marginTop:-2}}>{fvp(s.vpT)}</div></div></div>
-    {v.holeScores&&<Grid99 d={d} size={32} gap={5} showNums numFs={9}/>}
+    {v.holeScores&&<Grid99 d={d} size={32} gap={5} showNums numFs={9} numColor={tc4}/>}
     {v.stats&&<div style={{marginTop:12}}><StatsLine s={s} gap={16} fs={14} lfs={9} color={tc3}/></div>}
   </div>;
 }
