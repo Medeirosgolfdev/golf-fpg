@@ -72,11 +72,11 @@ function Grid99({d,size=26,gap=4,showNums=false,numFs=8}:{d:DD;size?:number;gap?
   return<div style={{display:"flex",flexDirection:"column",gap,alignItems:"center"}}>
     {slices.map(({off,len})=><div key={off} style={{display:"flex",gap}}>
       {d.scores.slice(off,off+len).map((sc,i)=><div key={i} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:1}}>
-        {showNums&&<div style={{fontSize:numFs,fontWeight:700,color:"rgba(255,255,255,0.3)",fontFamily:II}}>{off+i+1}</div>}
+        {showNums&&<div style={{fontSize:numFs,fontWeight:700,color:tc4,fontFamily:II}}>{off+i+1}</div>}
         <SC score={sc} par={d.par[off+i]} size={size}/></div>)}</div>)}</div>;
 }
 
-function StatsLine({s,gap=14,fs=13,lfs=8,color="rgba(255,255,255,0.4)"}:{s:Stats;gap?:number;fs?:number;lfs?:number;color?:string}){
+function StatsLine({s,gap=14,fs=13,lfs=8,color}:{s:Stats;gap?:number;fs?:number;lfs?:number;color?:string}){
   const items=[{n:s.st.eagles,l:"Eagle",c:"#d4a017"},{n:s.st.birdies,l:"Birdie",c:"#dc2626"},{n:s.st.pars,l:"Par",c:color},{n:s.st.bogeys,l:"Bogey",c:"#5BADE6"}].filter(x=>x.n>0);
   if(!items.length)return null;
   return<div style={{display:"flex",justifyContent:"center",gap,flexWrap:"wrap"}}>
@@ -111,37 +111,37 @@ function hiChLine(d:DD,v:Vis,s:Stats):string{
 function hexToRgba(hex:string,a:number){const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return `rgba(${r},${g},${b},${a})`;}
 
 /* ═══ A. PGA COLUMNS ═══ */
-function DA({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){
+function DA({d,v,s,bg,tc,tc2,tc3,tc4}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string;tc2?:string;tc3?:string;tc4?:string}){
   const sz=26;const is18=d.scores.length>=18;const sub=subParts(d,v);const hcl=hiChLine(d,v,s);
   return<div style={{fontFamily:BE,display:"inline-block",color:tc||"#fff",background:bg||"rgba(20,40,80,0.88)",overflow:"hidden",overflowWrap:"break-word"}}>
     {(v.player||v.round)&&<div style={{padding:"14px 12px 4px",textAlign:"center"}}>
       {v.player&&d.player&&<div style={{fontSize:30,lineHeight:1,letterSpacing:1}}>{d.player.toUpperCase()}</div>}
-      {v.round&&<div style={{fontFamily:II,fontSize:9,fontWeight:700,letterSpacing:2,color:"rgba(255,255,255,0.5)",marginTop:2}}>ROUND {d.round}</div>}</div>}
+      {v.round&&<div style={{fontFamily:II,fontSize:9,fontWeight:700,letterSpacing:2,color:tc2,marginTop:2}}>ROUND {d.round}</div>}</div>}
     <div style={{height:3,background:"#dc2626",margin:"6px 12px"}}/>
     {v.holeScores&&is18?<div style={{display:"flex",justifyContent:"center",padding:"6px 10px 10px"}}>
       {[{off:0,l:"FRONT",sc:s.sF},{off:9,l:"BACK",sc:s.sB}].map(({off,l,sc},ci)=>
         <div key={off} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:1,borderRight:ci===0?"2px solid rgba(220,38,38,0.5)":"none",paddingRight:ci===0?7:0,paddingLeft:ci===1?7:0}}>
           {d.scores.slice(off,off+9).map((scr,i)=><SC key={i} score={scr} par={d.par[off+i]} size={sz} fs={14}/>)}
-          <div style={{fontFamily:II,fontSize:8,fontWeight:700,letterSpacing:2,color:"rgba(255,255,255,0.4)",marginTop:5}}>{l}</div>
+          <div style={{fontFamily:II,fontSize:8,fontWeight:700,letterSpacing:2,color:tc3,marginTop:5}}>{l}</div>
           <div style={{fontSize:28,lineHeight:1}}>{sc}</div></div>)}</div>
     :v.holeScores?<div style={{padding:"6px 10px 10px",display:"flex",flexDirection:"column",alignItems:"center",gap:1}}>
       {d.scores.map((scr,i)=><SC key={i} score={scr} par={d.par[i]} size={sz} fs={14}/>)}</div>:null}
     <div style={{background:"rgba(255,255,255,0.95)",color:"#14284f",padding:"8px 12px",textAlign:"center"}}>
       <div style={{fontSize:44,lineHeight:1}}>{s.sT}</div>
       <div style={{fontFamily:II,fontSize:18,fontWeight:900,color:vpCd(s.vpT),marginTop:-2}}>{fvp(s.vpT)}</div></div>
-    {(sub||hcl)&&<div style={{fontFamily:II,padding:"6px 12px 10px",fontSize:8,fontWeight:600,color:"rgba(255,255,255,0.4)",textAlign:"center"}}>{sub}{sub&&hcl?<br/>:null}{hcl}</div>}
+    {(sub||hcl)&&<div style={{fontFamily:II,padding:"6px 12px 10px",fontSize:8,fontWeight:600,color:tc3,textAlign:"center"}}>{sub}{sub&&hcl?<br/>:null}{hcl}</div>}
   </div>;
 }
 
 /* ═══ B. GREEN COLUMNS ═══ */
-function DB({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){
+function DB({d,v,s,bg,tc,tc2,tc3,tc4}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string;tc2?:string;tc3?:string;tc4?:string}){
   const sz=24;const is18=d.scores.length>=18;
   return<div style={{fontFamily:O,display:"inline-block",color:tc||"#fff",background:bg||"rgba(10,30,20,0.88)",borderRadius:14,overflow:"hidden",overflowWrap:"break-word"}}>
     <div style={{padding:"14px 12px 4px",textAlign:"center"}}>
-      {(v.round||v.date)&&<div style={{fontFamily:II,fontSize:8,fontWeight:700,letterSpacing:2,color:"rgba(255,255,255,0.4)"}}>
+      {(v.round||v.date)&&<div style={{fontFamily:II,fontSize:8,fontWeight:700,letterSpacing:2,color:tc3}}>
         {[v.round&&`R${d.round}`,v.date&&d.date].filter(Boolean).join(" \u00b7 ")}</div>}
       {v.player&&d.player&&<div style={{fontSize:22,fontWeight:700,letterSpacing:1,marginTop:4}}>{d.player.toUpperCase()}</div>}
-      {v.course&&d.course&&<div style={{fontFamily:II,fontSize:9,fontWeight:500,color:"rgba(255,255,255,0.4)"}}>{d.course}</div>}</div>
+      {v.course&&d.course&&<div style={{fontFamily:II,fontSize:9,fontWeight:500,color:tc3}}>{d.course}</div>}</div>
     <div style={{height:2,background:"#4ade80",margin:"6px 12px"}}/>
     {v.holeScores&&is18?<div style={{display:"flex",justifyContent:"center",padding:"6px 10px 10px"}}>
       {[{off:0,l:"FRONT",sc:s.sF},{off:9,l:"BACK",sc:s.sB}].map(({off,l,sc},ci)=>
@@ -155,40 +155,40 @@ function DB({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){
       <div style={{display:"flex",alignItems:"baseline",justifyContent:"center",gap:5}}>
         <span style={{fontSize:38,lineHeight:1}}>{s.sT}</span>
         <span style={{fontFamily:II,fontSize:16,fontWeight:900,color:vpC(s.vpT)}}>{fvp(s.vpT)}</span></div>
-      {v.stats&&<div style={{fontFamily:II,marginTop:5}}><StatsLine s={s} fs={11} lfs={7} gap={8}/></div>}</div>
+      {v.stats&&<div style={{fontFamily:II,marginTop:5}}><StatsLine s={s} fs={11} lfs={7} gap={8} color={tc3}/></div>}</div>
   </div>;
 }
 
 /* ═══ C. 18BIRDIES ═══ */
-function DC({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){
+function DC({d,v,s,bg,tc,tc2,tc3,tc4}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string;tc2?:string;tc3?:string;tc4?:string}){
   const is18=d.scores.length>=18;const hcl=hiChLine(d,v,s);
   return<div style={{fontFamily:II,width:360,color:tc||"#fff",background:bg||"rgba(15,15,25,0.9)",borderRadius:16,padding:"14px 10px"}}>
     <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:10,padding:"0 6px"}}>
       <div>
-        {v.date&&d.date&&<div style={{fontSize:9,fontWeight:700,letterSpacing:2,color:"rgba(255,255,255,0.4)"}}>{d.date}</div>}
+        {v.date&&d.date&&<div style={{fontSize:9,fontWeight:700,letterSpacing:2,color:tc3}}>{d.date}</div>}
         {v.course&&d.course&&<div style={{fontSize:13,fontWeight:900,marginTop:1}}>{d.course}</div>}
-        <div style={{fontSize:10,fontWeight:600,color:"rgba(255,255,255,0.4)"}}>Par {s.pT}{v.tee&&d.tee?` \u00b7 ${d.tee}`:""}{v.teeDist&&d.teeDist?` \u00b7 ${d.teeDist}m`:""}</div></div>
+        <div style={{fontSize:10,fontWeight:600,color:tc3}}>Par {s.pT}{v.tee&&d.tee?` \u00b7 ${d.tee}`:""}{v.teeDist&&d.teeDist?` \u00b7 ${d.teeDist}m`:""}</div></div>
       <div style={{textAlign:"right"}}><div style={{fontSize:28,fontWeight:900,letterSpacing:-1}}>{s.sT}</div>
-        <div style={{fontSize:9,fontWeight:700,color:"rgba(255,255,255,0.35)"}}>Gross</div></div></div>
+        <div style={{fontSize:9,fontWeight:700,color:tc3}}>Gross</div></div></div>
     <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",background:"rgba(255,255,255,0.06)",borderRadius:8,padding:"6px 12px",marginBottom:8}}>
-      <span style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.5)"}}>To Par</span>
+      <span style={{fontSize:11,fontWeight:700,color:tc2}}>To Par</span>
       <span style={{fontSize:24,fontWeight:900,color:vpC(s.vpT)}}>{fvp(s.vpT)}</span></div>
     {v.holeScores&&(is18?[{off:0,sub:s.sF},{off:9,sub:s.sB}]:[{off:0,sub:s.sT}]).map(({off,sub})=>
       <div key={off} style={{display:"flex",alignItems:"center",marginBottom:3}}>
         <div style={{display:"flex",gap:2}}>{d.scores.slice(off,off+(is18?9:d.scores.length)).map((sc,i)=>
           <div key={i} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:1}}>
-            <div style={{fontSize:8,fontWeight:700,color:"rgba(255,255,255,0.25)"}}>{off+i+1}</div>
+            <div style={{fontSize:8,fontWeight:700,color:tc4}}>{off+i+1}</div>
             <SQ score={sc} par={d.par[off+i]} size={30}/></div>)}</div>
-        <div style={{marginLeft:6,fontSize:20,fontWeight:900,color:"rgba(255,255,255,0.6)",minWidth:32,textAlign:"center"}}>{sub}</div></div>)}
-    <div style={{display:"flex",justifyContent:"space-between",marginTop:8,fontSize:9,fontWeight:700,color:"rgba(255,255,255,0.3)",padding:"0 4px"}}>
+        <div style={{marginLeft:6,fontSize:20,fontWeight:900,color:tc2,minWidth:32,textAlign:"center"}}>{sub}</div></div>)}
+    <div style={{display:"flex",justifyContent:"space-between",marginTop:8,fontSize:9,fontWeight:700,color:tc4,padding:"0 4px"}}>
       {v.player&&d.player?<span>{d.player}</span>:<span/>}
-      {v.stats?<StatsLine s={s} gap={10} fs={11} lfs={7} color="rgba(255,255,255,0.3)"/>:<span/>}
+      {v.stats?<StatsLine s={s} gap={10} fs={11} lfs={7} color={tc4}/>:<span/>}
       {hcl?<span>{hcl}</span>:<span/>}</div>
   </div>;
 }
 
 /* ═══ D. LIGHT CARD ═══ */
-function DD_({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){
+function DD_({d,v,s,bg,tc,tc2,tc3,tc4}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string;tc2?:string;tc3?:string;tc4?:string}){
   const is18=d.scores.length>=18;
   return<div style={{fontFamily:II,width:380,background:bg||"rgba(255,255,255,0.92)",borderRadius:14,padding:"16px 14px",color:tc||"#222",border:"1px solid rgba(0,0,0,0.08)"}}>
     <div style={{borderBottom:"2px solid #e5e7eb",paddingBottom:10,marginBottom:12}}>
@@ -197,9 +197,9 @@ function DD_({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){
     {v.holeScores&&(is18?[0,9]:[0]).map(off=>{const cnt=is18?9:d.scores.length;const subP=d.par.slice(off,off+cnt).reduce((a,b)=>a+b,0);const subS=d.scores.slice(off,off+cnt).reduce((a,b)=>a+b,0);
       return<div key={off}>
       <div style={{display:"flex",background:"#1e3a2f",borderRadius:off===0?"6px 6px 0 0":0,padding:"3px 0"}}>
-        <div style={{width:40,padding:"0 4px",fontSize:9,fontWeight:800,color:"rgba(255,255,255,0.7)",display:"flex",alignItems:"center"}}>Hole</div>
+        <div style={{width:40,padding:"0 4px",fontSize:9,fontWeight:800,color:tc2,display:"flex",alignItems:"center"}}>Hole</div>
         {d.par.slice(off,off+cnt).map((_,i)=><div key={i} style={{width:34,textAlign:"center",fontSize:11,fontWeight:800,color:"#fff"}}>{off+i+1}</div>)}
-        <div style={{width:36,textAlign:"center",fontSize:10,fontWeight:800,color:"rgba(255,255,255,0.7)"}}>{is18?(off===0?"Out":"In"):"Tot"}</div></div>
+        <div style={{width:36,textAlign:"center",fontSize:10,fontWeight:800,color:tc2}}>{is18?(off===0?"Out":"In"):"Tot"}</div></div>
       {v.holePar&&<div style={{display:"flex",background:"#e8f5e9",padding:"2px 0"}}>
         <div style={{width:40,padding:"0 4px",fontSize:9,fontWeight:700,color:"#2e7d32",display:"flex",alignItems:"center"}}>Par</div>
         {d.par.slice(off,off+cnt).map((p,i)=><div key={i} style={{width:34,textAlign:"center",fontSize:11,color:"#2e7d32",fontWeight:700}}>{p}</div>)}
@@ -216,51 +216,51 @@ function DD_({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){
 }
 
 /* ═══ E-H: To Par Hero, Hero Giant, Sticker, Strip ═══ */
-function DE({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){const sub=subParts(d,{...v,date:false});const hcl=hiChLine(d,v,s);
+function DE({d,v,s,bg,tc,tc2,tc3,tc4}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string;tc2?:string;tc3?:string;tc4?:string}){const sub=subParts(d,{...v,date:false});const hcl=hiChLine(d,v,s);
   return<div style={{fontFamily:II,width:320,color:tc||"#fff",background:bg||"rgba(0,0,0,0.75)",borderRadius:16,padding:"20px 16px",textAlign:"center"}}>
-    <div style={{fontSize:10,fontWeight:700,letterSpacing:3,color:"rgba(255,255,255,0.4)"}}>TO PAR</div>
+    <div style={{fontSize:10,fontWeight:700,letterSpacing:3,color:tc3}}>TO PAR</div>
     <div style={{fontSize:80,fontWeight:900,lineHeight:0.9,color:vpC(s.vpT),letterSpacing:-4,margin:"4px 0"}}>{fvp(s.vpT)}</div>
-    <div style={{fontSize:14,fontWeight:700,color:"rgba(255,255,255,0.5)"}}>Gross <span style={{fontWeight:900,color:"#fff",fontSize:22}}>{s.sT}</span></div>
+    <div style={{fontSize:14,fontWeight:700,color:tc2}}>Gross <span style={{fontWeight:900,color:"#fff",fontSize:22}}>{s.sT}</span></div>
     <div style={{height:1,background:"rgba(255,255,255,0.1)",margin:"14px 0"}}/>
     {v.player&&d.player&&<div style={{fontSize:16,fontWeight:900,marginBottom:2}}>{d.player}</div>}
-    {sub&&<div style={{fontSize:10,fontWeight:500,color:"rgba(255,255,255,0.4)",marginBottom:12}}>{sub}{v.round?` \u00b7 R${d.round}`:""}</div>}
+    {sub&&<div style={{fontSize:10,fontWeight:500,color:tc3,marginBottom:12}}>{sub}{v.round?` \u00b7 R${d.round}`:""}</div>}
     {v.holeScores&&<Grid99 d={d} size={26} gap={4} showNums numFs={8}/>}
-    {v.stats&&<div style={{marginTop:12}}><StatsLine s={s} fs={14} lfs={9}/></div>}
-    {hcl&&<div style={{fontSize:9,fontWeight:700,color:"rgba(255,255,255,0.2)",marginTop:8}}>{hcl}{v.date&&d.date?` \u00b7 ${d.date}`:""}</div>}</div>;}
+    {v.stats&&<div style={{marginTop:12}}><StatsLine s={s} fs={14} lfs={9} color={tc3}/></div>}
+    {hcl&&<div style={{fontSize:9,fontWeight:700,color:tc4,marginTop:8}}>{hcl}{v.date&&d.date?` \u00b7 ${d.date}`:""}</div>}</div>;}
 
-function DF({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){const hcl=hiChLine(d,v,s);
+function DF({d,v,s,bg,tc,tc2,tc3,tc4}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string;tc2?:string;tc3?:string;tc4?:string}){const hcl=hiChLine(d,v,s);
   return<div style={{fontFamily:O,width:320,textAlign:"center",color:tc||"#fff"}}><div style={{background:bg||"rgba(0,0,0,0.72)",borderRadius:16,padding:"20px 18px 16px"}}>
-    {v.round&&<div style={{fontFamily:II,fontSize:9,fontWeight:700,letterSpacing:3,color:"rgba(255,255,255,0.4)"}}>ROUND {d.round}</div>}
+    {v.round&&<div style={{fontFamily:II,fontSize:9,fontWeight:700,letterSpacing:3,color:tc3}}>ROUND {d.round}</div>}
     {v.player&&d.player&&<div style={{fontSize:26,fontWeight:700,letterSpacing:1,marginTop:2}}>{d.player.toUpperCase()}</div>}
-    {(v.course||v.tee)&&<div style={{fontFamily:II,fontSize:10,fontWeight:600,color:"rgba(255,255,255,0.45)"}}>{[v.course&&d.course,v.tee&&d.tee].filter(Boolean).join(" \u00b7 ")}</div>}
+    {(v.course||v.tee)&&<div style={{fontFamily:II,fontSize:10,fontWeight:600,color:tc3}}>{[v.course&&d.course,v.tee&&d.tee].filter(Boolean).join(" \u00b7 ")}</div>}
     <div style={{display:"flex",alignItems:"baseline",justifyContent:"center",gap:6,margin:"14px 0 4px"}}>
       <span style={{fontSize:90,lineHeight:0.85,letterSpacing:-2,fontWeight:700}}>{s.sT}</span>
       <span style={{fontSize:40,fontWeight:700,color:vpC(s.vpT)}}>{fvp(s.vpT)}</span></div>
-    <div style={{fontFamily:II,fontSize:10,fontWeight:700,color:"rgba(255,255,255,0.35)",marginBottom:12}}>
+    <div style={{fontFamily:II,fontSize:10,fontWeight:700,color:tc3,marginBottom:12}}>
       Par {s.pT}{v.teeDist&&d.teeDist?` \u00b7 ${d.teeDist}m`:""}{v.date&&d.date?` \u00b7 ${d.date}`:""}</div>
     {v.holeScores&&<Grid99 d={d} size={28} gap={4}/>}
-    {v.stats&&<div style={{fontFamily:II,marginTop:12}}><StatsLine s={s} fs={14} lfs={9}/></div>}
-    {hcl&&<div style={{fontFamily:II,fontSize:9,fontWeight:700,color:"rgba(255,255,255,0.25)",marginTop:6}}>{hcl}</div>}
+    {v.stats&&<div style={{fontFamily:II,marginTop:12}}><StatsLine s={s} fs={14} lfs={9} color={tc3}/></div>}
+    {hcl&&<div style={{fontFamily:II,fontSize:9,fontWeight:700,color:tc4,marginTop:6}}>{hcl}</div>}
   </div></div>;}
 
-function DG({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){
+function DG({d,v,s,bg,tc,tc2,tc3,tc4}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string;tc2?:string;tc3?:string;tc4?:string}){
   return<div style={{fontFamily:BE,color:tc||"#fff",background:bg||"rgba(20,40,70,0.85)",borderRadius:10,padding:"8px 14px",display:"inline-flex",alignItems:"center",gap:12,border:"1px solid rgba(255,255,255,0.15)"}}>
     <div style={{fontSize:36,lineHeight:1}}>{s.sT}</div>
     <div style={{fontFamily:II}}>{v.player&&d.player&&<div style={{fontSize:12,fontWeight:800}}>{d.player}</div>}
-      {v.course&&d.course&&<div style={{fontSize:9,fontWeight:500,color:"rgba(255,255,255,0.4)"}}>{d.course}</div>}</div>
+      {v.course&&d.course&&<div style={{fontSize:9,fontWeight:500,color:tc3}}>{d.course}</div>}</div>
     <div style={{fontFamily:II,fontSize:20,fontWeight:900,color:vpC(s.vpT)}}>{fvp(s.vpT)}</div></div>;}
 
-function DH({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){
+function DH({d,v,s,bg,tc,tc2,tc3,tc4}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string;tc2?:string;tc3?:string;tc4?:string}){
   return<div style={{fontFamily:II,color:tc||"#fff",background:bg||"rgba(0,0,0,0.72)",borderRadius:12,padding:"12px 16px",display:"inline-flex",alignItems:"center",gap:14}}>
     <div>{v.player&&d.player&&<div style={{fontSize:14,fontWeight:700}}>{d.player}</div>}
-      <div style={{fontSize:9,fontWeight:500,color:"rgba(255,255,255,0.4)"}}>{[v.course&&d.course,v.round&&`R${d.round}`].filter(Boolean).join(" \u00b7 ")}</div></div>
+      <div style={{fontSize:9,fontWeight:500,color:tc3}}>{[v.course&&d.course,v.round&&`R${d.round}`].filter(Boolean).join(" \u00b7 ")}</div></div>
     <div style={{width:1,height:32,background:"rgba(255,255,255,0.15)"}}/>
     <div style={{display:"flex",alignItems:"baseline",gap:5}}>
       <span style={{fontSize:38,fontWeight:900,letterSpacing:-2}}>{s.sT}</span>
       <span style={{fontSize:22,fontWeight:900,color:vpC(s.vpT)}}>{fvp(s.vpT)}</span></div></div>;}
 
 /* ═══ I. GLASS CARD ═══ */
-function DI({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){
+function DI({d,v,s,bg,tc,tc2,tc3,tc4}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string;tc2?:string;tc3?:string;tc4?:string}){
   const is18=d.scores.length>=18;const hcl=hiChLine(d,v,s);
   const HT=({off,label}:{off:number;label:string})=>{const cnt=is18?9:d.scores.length;
     return<div style={{marginBottom:off===0&&is18?2:0}}>
@@ -269,36 +269,36 @@ function DI({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){
         {d.par.slice(off,off+cnt).map((_,i)=><div key={i} style={{width:32,textAlign:"center",fontWeight:800,fontSize:12}}>{off+i+1}</div>)}
         <div style={{width:38,textAlign:"center",fontWeight:900,fontSize:11}}>{label}</div></div>
       {v.holeSI&&<div style={{display:"flex",padding:"2px 0",background:"rgba(255,255,255,0.03)"}}>
-        <div style={{width:52,padding:"0 6px",fontSize:10,color:"rgba(255,255,255,0.35)"}}>S.I.</div>
-        {d.si.slice(off,off+cnt).map((si,i)=><div key={i} style={{width:32,textAlign:"center",fontSize:10,color:"rgba(255,255,255,0.35)"}}>{si}</div>)}
+        <div style={{width:52,padding:"0 6px",fontSize:10,color:tc3}}>S.I.</div>
+        {d.si.slice(off,off+cnt).map((si,i)=><div key={i} style={{width:32,textAlign:"center",fontSize:10,color:tc3}}>{si}</div>)}
         <div style={{width:38}}/></div>}
       {v.holePar&&<div style={{display:"flex",padding:"2px 0",background:"rgba(255,255,255,0.05)"}}>
-        <div style={{width:52,padding:"0 6px",fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.55)"}}>Par</div>
-        {d.par.slice(off,off+cnt).map((p,i)=><div key={i} style={{width:32,textAlign:"center",fontSize:11,color:"rgba(255,255,255,0.55)"}}>{p}</div>)}
-        <div style={{width:38,textAlign:"center",fontWeight:800,fontSize:11,color:"rgba(255,255,255,0.55)"}}>{d.par.slice(off,off+cnt).reduce((a,b)=>a+b,0)}</div></div>}
+        <div style={{width:52,padding:"0 6px",fontSize:11,fontWeight:700,color:tc2}}>Par</div>
+        {d.par.slice(off,off+cnt).map((p,i)=><div key={i} style={{width:32,textAlign:"center",fontSize:11,color:tc2}}>{p}</div>)}
+        <div style={{width:38,textAlign:"center",fontWeight:800,fontSize:11,color:tc2}}>{d.par.slice(off,off+cnt).reduce((a,b)=>a+b,0)}</div></div>}
       <div style={{display:"flex",padding:"4px 0",borderBottom:off===0&&is18?"1px solid rgba(255,255,255,0.08)":"none"}}>
         <div style={{width:52,padding:"0 6px",fontWeight:900,fontSize:12}}>Score</div>
         {d.scores.slice(off,off+cnt).map((sc,i)=><div key={i} style={{width:32,display:"flex",justifyContent:"center"}}><SC score={sc} par={d.par[off+i]} size={26}/></div>)}
         <div style={{width:38,textAlign:"center",fontWeight:900,fontSize:16}}>{d.scores.slice(off,off+cnt).reduce((a,b)=>a+b,0)}</div></div></div>;};
   return<div style={{fontFamily:II,width:420,padding:18,background:bg||"rgba(0,0,0,0.72)",borderRadius:16,color:tc||"#fff",border:"1px solid rgba(255,255,255,0.08)"}}>
     <div style={{textAlign:"center",marginBottom:14}}>
-      {v.round&&<div style={{fontSize:10,fontWeight:700,letterSpacing:3,color:"rgba(255,255,255,0.4)"}}>ROUND {d.round}</div>}
+      {v.round&&<div style={{fontSize:10,fontWeight:700,letterSpacing:3,color:tc3}}>ROUND {d.round}</div>}
       {v.player&&d.player&&<div style={{fontSize:17,fontWeight:900,marginTop:2}}>{d.player}</div>}
-      {(v.course||v.tee||v.teeDist)&&<div style={{fontSize:11,fontWeight:600,color:"rgba(255,255,255,0.5)",marginTop:2}}>
+      {(v.course||v.tee||v.teeDist)&&<div style={{fontSize:11,fontWeight:600,color:tc2,marginTop:2}}>
         {[v.course&&d.course,v.tee&&d.tee,v.teeDist&&d.teeDist&&`${d.teeDist}m`].filter(Boolean).join(" \u00b7 ")}</div>}</div>
     {v.holeScores&&(is18?<><HT off={0} label="Out"/><HT off={9} label="In"/></>:<HT off={0} label="Tot"/>)}
     <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:12,padding:"10px 14px",background:"rgba(255,255,255,0.06)",borderRadius:10}}>
-      <div style={{fontSize:10,fontWeight:700,color:"rgba(255,255,255,0.4)"}}>Par {s.pT}</div>
+      <div style={{fontSize:10,fontWeight:700,color:tc3}}>Par {s.pT}</div>
       <div style={{display:"flex",alignItems:"baseline",gap:8}}>
         <span style={{fontSize:34,fontWeight:900,letterSpacing:-2}}>{s.sT}</span>
         <span style={{fontSize:22,fontWeight:900,color:vpC(s.vpT)}}>{fvp(s.vpT)}</span></div>
-      {hcl&&<div style={{fontSize:10,fontWeight:700,color:"rgba(255,255,255,0.4)"}}>{hcl}</div>}</div>
-    {v.stats&&<div style={{marginTop:10}}><StatsLine s={s}/></div>}
+      {hcl&&<div style={{fontSize:10,fontWeight:700,color:tc3}}>{hcl}</div>}</div>
+    {v.stats&&<div style={{marginTop:10}}><StatsLine s={s} color={tc3}/></div>}
   </div>;
 }
 
 /* ═══ J. CLASSIC TABLE ═══ */
-function DJ({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){
+function DJ({d,v,s,bg,tc,tc2,tc3,tc4}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string;tc2?:string;tc3?:string;tc4?:string}){
   const is18=d.scores.length>=18;const hcl=hiChLine(d,v,s);
   const HT=({off,label}:{off:number;label:string})=>{const cnt=is18?9:d.scores.length;const isLast=!is18||off===9;
     return<div style={{marginBottom:off===0&&is18?2:0}}>
@@ -308,39 +308,39 @@ function DJ({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){
         <div style={{width:38,textAlign:"center",fontWeight:900,fontSize:11}}>{label}</div>
         {isLast&&is18&&<div style={{width:38,textAlign:"center",fontWeight:900,fontSize:11}}>TOT</div>}</div>
       {v.holePar&&<div style={{display:"flex",padding:"2px 0",background:"rgba(255,255,255,0.04)"}}>
-        <div style={{width:52,padding:"0 6px",fontSize:10,fontWeight:600,color:"rgba(255,255,255,0.45)"}}>Par</div>
-        {d.par.slice(off,off+cnt).map((p,i)=><div key={i} style={{width:32,textAlign:"center",fontSize:11,color:"rgba(255,255,255,0.5)"}}>{p}</div>)}
-        <div style={{width:38,textAlign:"center",fontWeight:700,fontSize:11,color:"rgba(255,255,255,0.5)"}}>{off===0?s.pF:s.pB}</div>
-        {isLast&&is18&&<div style={{width:38,textAlign:"center",fontWeight:800,fontSize:11,color:"rgba(255,255,255,0.5)"}}>{s.pT}</div>}</div>}
+        <div style={{width:52,padding:"0 6px",fontSize:10,fontWeight:600,color:tc3}}>Par</div>
+        {d.par.slice(off,off+cnt).map((p,i)=><div key={i} style={{width:32,textAlign:"center",fontSize:11,color:tc2}}>{p}</div>)}
+        <div style={{width:38,textAlign:"center",fontWeight:700,fontSize:11,color:tc2}}>{off===0?s.pF:s.pB}</div>
+        {isLast&&is18&&<div style={{width:38,textAlign:"center",fontWeight:800,fontSize:11,color:tc2}}>{s.pT}</div>}</div>}
       <div style={{display:"flex",padding:"4px 0"}}>
         <div style={{width:52,padding:"0 6px",fontWeight:900,fontSize:12}}>Score</div>
         {d.scores.slice(off,off+cnt).map((sc,i)=><div key={i} style={{width:32,display:"flex",justifyContent:"center"}}><SC score={sc} par={d.par[off+i]} size={26}/></div>)}
-        <div style={{width:38,textAlign:"center",fontWeight:900,fontSize:15,color:"rgba(255,255,255,0.7)"}}>{off===0?s.sF:s.sB}</div>
+        <div style={{width:38,textAlign:"center",fontWeight:900,fontSize:15,color:tc2}}>{off===0?s.sF:s.sB}</div>
         {isLast&&is18&&<div style={{width:38,textAlign:"center",fontWeight:900,fontSize:18}}>{s.sT}</div>}</div></div>;};
   return<div style={{fontFamily:II,width:is18?460:380,padding:16,background:bg||"rgba(15,30,55,0.85)",borderRadius:14,color:tc||"#fff"}}>
     <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
       <div>{v.player&&d.player&&<div style={{fontSize:15,fontWeight:900}}>{d.player}</div>}
-        <div style={{fontSize:10,fontWeight:600,color:"rgba(255,255,255,0.45)"}}>
+        <div style={{fontSize:10,fontWeight:600,color:tc3}}>
           {[v.round&&`Round ${d.round}`,v.course&&d.course,v.tee&&d.tee].filter(Boolean).join(" \u00b7 ")}</div></div>
       <div style={{display:"flex",alignItems:"baseline",gap:5}}>
         <span style={{fontSize:28,fontWeight:900}}>{s.sT}</span>
         <span style={{fontSize:18,fontWeight:900,color:vpC(s.vpT)}}>{fvp(s.vpT)}</span></div></div>
     {v.holeScores&&(is18?<><HT off={0} label="Out"/><div style={{height:2,background:"rgba(100,180,100,0.4)",margin:"3px 0"}}/><HT off={9} label="In"/></>:<HT off={0} label="Tot"/>)}
-    <div style={{display:"flex",justifyContent:"space-between",marginTop:10,fontSize:9,fontWeight:700,color:"rgba(255,255,255,0.3)"}}>
-      {v.stats?<StatsLine s={s} gap={12} fs={12} lfs={8} color="rgba(255,255,255,0.3)"/>:<span/>}
+    <div style={{display:"flex",justifyContent:"space-between",marginTop:10,fontSize:9,fontWeight:700,color:tc4}}>
+      {v.stats?<StatsLine s={s} gap={12} fs={12} lfs={8} color={tc4}/>:<span/>}
       {hcl&&<span>{hcl}</span>}</div>
   </div>;
 }
 
 /* ═══ K. GRINT ROW ═══ */
-function DK({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){
+function DK({d,v,s,bg,tc,tc2,tc3,tc4}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string;tc2?:string;tc3?:string;tc4?:string}){
   const is18=d.scores.length>=18;const hcl=hiChLine(d,v,s);
   return<div style={{fontFamily:II,display:"inline-block",color:tc||"#fff",background:bg||"rgba(25,45,75,0.88)",borderRadius:14,padding:"14px 12px",overflowWrap:"break-word"}}>
     <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:10,gap:20}}>
       <div>
-        {v.date&&d.date&&<div style={{fontSize:9,fontWeight:700,letterSpacing:2,color:"rgba(255,255,255,0.4)"}}>{d.date}</div>}
+        {v.date&&d.date&&<div style={{fontSize:9,fontWeight:700,letterSpacing:2,color:tc3}}>{d.date}</div>}
         {v.course&&d.course&&<div style={{fontSize:14,fontWeight:900}}>{d.course.toUpperCase()}</div>}
-        <div style={{fontSize:10,fontWeight:600,color:"rgba(255,255,255,0.45)"}}>
+        <div style={{fontSize:10,fontWeight:600,color:tc3}}>
           {[v.player&&d.player,v.tee&&d.tee].filter(Boolean).join(" \u00b7 ")}</div></div>
       <div style={{textAlign:"right"}}><div style={{fontSize:32,fontWeight:900,lineHeight:1,letterSpacing:-2}}>{s.sT}</div>
         <div style={{fontSize:16,fontWeight:900,color:vpC(s.vpT),marginTop:-2}}>{fvp(s.vpT)}</div></div></div>
@@ -349,51 +349,51 @@ function DK({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){
         <div key={off} style={{display:"flex",alignItems:"center",marginBottom:2}}>
           <div style={{display:"flex",gap:2}}>{d.scores.slice(off,off+cnt).map((sc,i)=><div key={i} style={{display:"flex",justifyContent:"center"}}><SC score={sc} par={d.par[off+i]} size={26}/></div>)}</div>
           <div style={{width:2,height:26,background:"rgba(100,180,100,0.5)",margin:"0 5px"}}/>
-          <div style={{fontSize:16,fontWeight:900,color:"rgba(255,255,255,0.5)"}}>{sub}</div></div>)}</div>}
-    <div style={{display:"flex",justifyContent:"space-between",marginTop:8,fontSize:9,fontWeight:700,color:"rgba(255,255,255,0.35)"}}>
-      {v.stats?<StatsLine s={s} gap={10} fs={11} lfs={8} color="rgba(255,255,255,0.35)"/>:<span/>}
+          <div style={{fontSize:16,fontWeight:900,color:tc2}}>{sub}</div></div>)}</div>}
+    <div style={{display:"flex",justifyContent:"space-between",marginTop:8,fontSize:9,fontWeight:700,color:tc3}}>
+      {v.stats?<StatsLine s={s} gap={10} fs={11} lfs={8} color={tc3}/>:<span/>}
       {hcl&&<span>{hcl}</span>}</div>
   </div>;
 }
 
 /* ═══ L. DOTS GRID ═══ */
-function DL({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){
+function DL({d,v,s,bg,tc,tc2,tc3,tc4}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string;tc2?:string;tc3?:string;tc4?:string}){
   return<div style={{fontFamily:II,width:360,color:tc||"#fff",background:bg||"rgba(15,30,55,0.82)",borderRadius:16,padding:"16px 14px"}}>
     <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:14}}>
       <div>
-        {(v.round||v.date)&&<div style={{fontSize:9,fontWeight:700,letterSpacing:2,color:"rgba(255,255,255,0.4)"}}>
+        {(v.round||v.date)&&<div style={{fontSize:9,fontWeight:700,letterSpacing:2,color:tc3}}>
           {[v.round&&`R${d.round}`,v.date&&d.date].filter(Boolean).join(" \u00b7 ")}</div>}
         {v.player&&d.player&&<div style={{fontSize:18,fontWeight:900,marginTop:2}}>{d.player}</div>}
-        {v.course&&d.course&&<div style={{fontSize:10,fontWeight:500,color:"rgba(255,255,255,0.45)"}}>{d.course}</div>}</div>
+        {v.course&&d.course&&<div style={{fontSize:10,fontWeight:500,color:tc3}}>{d.course}</div>}</div>
       <div style={{textAlign:"right"}}><div style={{fontSize:42,fontWeight:900,lineHeight:1,letterSpacing:-2}}>{s.sT}</div>
         <div style={{fontSize:22,fontWeight:900,color:vpC(s.vpT),marginTop:-2}}>{fvp(s.vpT)}</div></div></div>
     {v.holeScores&&<Grid99 d={d} size={32} gap={5} showNums numFs={9}/>}
-    {v.stats&&<div style={{marginTop:12}}><StatsLine s={s} gap={16} fs={14} lfs={9}/></div>}
+    {v.stats&&<div style={{marginTop:12}}><StatsLine s={s} gap={16} fs={14} lfs={9} color={tc3}/></div>}
   </div>;
 }
 
 /* ═══ M. NEON RING ═══ */
-function DM({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){const hcl=hiChLine(d,v,s);
+function DM({d,v,s,bg,tc,tc2,tc3,tc4}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string;tc2?:string;tc3?:string;tc4?:string}){const hcl=hiChLine(d,v,s);
   return<div style={{fontFamily:II,width:190,color:tc||"#fff",textAlign:"center",background:bg||"rgba(0,0,0,0.78)",borderRadius:16,padding:"22px 14px",border:`2px solid ${vpC(s.vpT)}33`}}>
-    {v.round&&<div style={{fontSize:9,fontWeight:700,letterSpacing:3,color:"rgba(255,255,255,0.35)"}}>ROUND {d.round}</div>}
+    {v.round&&<div style={{fontSize:9,fontWeight:700,letterSpacing:3,color:tc3}}>ROUND {d.round}</div>}
     {v.player&&d.player&&<div style={{fontSize:18,fontWeight:900,letterSpacing:0.5,marginTop:4}}>{d.player.toUpperCase()}</div>}
-    {v.course&&d.course&&<div style={{fontSize:10,fontWeight:500,color:"rgba(255,255,255,0.45)",marginTop:2}}>{d.course}</div>}
+    {v.course&&d.course&&<div style={{fontSize:10,fontWeight:500,color:tc3,marginTop:2}}>{d.course}</div>}
     <div style={{margin:"16px auto",width:120,height:120,borderRadius:"50%",border:`3px solid ${vpC(s.vpT)}`,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"flex-end",paddingBottom:14,background:"rgba(255,255,255,0.04)"}}>
       <div style={{fontSize:48,fontWeight:900,lineHeight:1,letterSpacing:-2}}>{s.sT}</div>
       <div style={{fontSize:18,fontWeight:900,color:vpC(s.vpT)}}>{fvp(s.vpT)}</div></div>
-    <div style={{fontSize:10,fontWeight:600,color:"rgba(255,255,255,0.4)"}}>Par {s.pT}{v.tee&&d.tee?` \u00b7 ${d.tee}`:""}</div>
-    {v.stats&&<div style={{marginTop:10}}><StatsLine s={s} fs={14} lfs={9} gap={10}/></div>}
-    {hcl&&<div style={{fontSize:9,fontWeight:700,color:"rgba(255,255,255,0.25)",marginTop:8}}>{hcl}</div>}
+    <div style={{fontSize:10,fontWeight:600,color:tc3}}>Par {s.pT}{v.tee&&d.tee?` \u00b7 ${d.tee}`:""}</div>
+    {v.stats&&<div style={{marginTop:10}}><StatsLine s={s} fs={14} lfs={9} gap={10} color={tc3}/></div>}
+    {hcl&&<div style={{fontSize:9,fontWeight:700,color:tc4,marginTop:8}}>{hcl}</div>}
   </div>;
 }
 
 /* ═══ N. GRADIENT BAR ═══ */
-function DN({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){
+function DN({d,v,s,bg,tc,tc2,tc3,tc4}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string;tc2?:string;tc3?:string;tc4?:string}){
   const is18=d.scores.length>=18;const hcl=hiChLine(d,v,s);
   return<div style={{fontFamily:II,width:420,color:tc||"#fff",background:bg||"linear-gradient(135deg, rgba(15,30,55,0.85) 0%, rgba(20,50,35,0.8) 100%)",borderRadius:14,padding:"14px 18px"}}>
     <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:10}}>
       <div>{v.player&&d.player&&<div style={{fontSize:15,fontWeight:900}}>{d.player}</div>}
-        <div style={{fontSize:10,fontWeight:500,color:"rgba(255,255,255,0.45)"}}>
+        <div style={{fontSize:10,fontWeight:500,color:tc3}}>
           {[v.course&&d.course,v.tee&&d.tee,v.round&&`R${d.round}`].filter(Boolean).join(" \u00b7 ")}</div></div>
       <div style={{display:"flex",alignItems:"baseline",gap:6}}>
         <span style={{fontSize:32,fontWeight:900}}>{s.sT}</span>
@@ -402,77 +402,77 @@ function DN({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){
       return<div key={off} style={{display:"flex",gap:3,marginBottom:off===0&&is18?3:0}}>
         {d.scores.slice(off,off+cnt).map((sc,i)=>
           <div key={i} style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",gap:1}}>
-            <div style={{fontSize:9,fontWeight:700,color:"rgba(255,255,255,0.3)"}}>{off+i+1}</div>
+            <div style={{fontSize:9,fontWeight:700,color:tc4}}>{off+i+1}</div>
             <SC score={sc} par={d.par[off+i]} size={24}/></div>)}</div>;})}
-    <div style={{display:"flex",justifyContent:"space-between",borderTop:"1px solid rgba(255,255,255,0.08)",paddingTop:8,marginTop:6,fontSize:9,fontWeight:700,color:"rgba(255,255,255,0.35)"}}>
+    <div style={{display:"flex",justifyContent:"space-between",borderTop:"1px solid rgba(255,255,255,0.08)",paddingTop:8,marginTop:6,fontSize:9,fontWeight:700,color:tc3}}>
       {v.date&&d.date?<span>{d.date}</span>:<span/>}
-      {v.stats?<StatsLine s={s} gap={12} fs={11} lfs={8} color="rgba(255,255,255,0.35)"/>:<span/>}
+      {v.stats?<StatsLine s={s} gap={12} fs={11} lfs={8} color={tc3}/>:<span/>}
       {hcl?<span>{hcl}</span>:<span/>}</div>
   </div>;
 }
 
 /* ═══ O. TOURNAMENT ═══ */
-function DO_({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){const hcl=hiChLine(d,v,s);
+function DO_({d,v,s,bg,tc,tc2,tc3,tc4}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string;tc2?:string;tc3?:string;tc4?:string}){const hcl=hiChLine(d,v,s);
   return<div style={{fontFamily:II,width:320,color:tc||"#fff",background:bg||"rgba(15,35,60,0.85)",borderRadius:14,overflow:"hidden"}}>
     <div style={{background:"rgba(45,106,48,0.8)",padding:"12px 16px",textAlign:"center"}}>
-      <div style={{fontSize:11,fontWeight:700,letterSpacing:2,color:"rgba(255,255,255,0.6)"}}>
+      <div style={{fontSize:11,fontWeight:700,letterSpacing:2,color:tc2}}>
         {[v.round&&`ROUND ${d.round}`,v.date&&d.date].filter(Boolean).join(" \u00b7 ")}</div>
-      {v.course&&d.course&&<div style={{fontSize:14,fontWeight:700,color:"rgba(255,255,255,0.7)",marginTop:3}}>{d.course}</div>}</div>
+      {v.course&&d.course&&<div style={{fontSize:14,fontWeight:700,color:tc2,marginTop:3}}>{d.course}</div>}</div>
     <div style={{padding:"14px 16px 10px",display:"flex",alignItems:"center",gap:14}}>
       <div style={{flex:1}}>{v.player&&d.player&&<div style={{fontSize:17,fontWeight:900}}>{d.player}</div>}
-        <div style={{fontSize:10,fontWeight:500,color:"rgba(255,255,255,0.4)"}}>
+        <div style={{fontSize:10,fontWeight:500,color:tc3}}>
           {[v.tee&&d.tee,v.teeDist&&d.teeDist&&`${d.teeDist}m`].filter(Boolean).join(" \u00b7 ")}</div></div>
       <div style={{textAlign:"right"}}><div style={{fontSize:36,fontWeight:900,lineHeight:1,letterSpacing:-2}}>{s.sT}</div>
         <div style={{fontSize:20,fontWeight:900,color:vpC(s.vpT),marginTop:-2}}>{fvp(s.vpT)}</div></div></div>
     {v.holeScores&&<div style={{padding:"0 12px 12px"}}><Grid99 d={d} size={28} gap={4}/></div>}
     <div style={{padding:"8px 16px",background:"rgba(255,255,255,0.04)",display:"flex",justifyContent:"space-between"}}>
-      {v.stats?<StatsLine s={s} gap={10} fs={12} lfs={8}/>:<span/>}
-      {hcl&&<div style={{fontSize:9,fontWeight:700,color:"rgba(255,255,255,0.3)"}}>{hcl}</div>}</div>
+      {v.stats?<StatsLine s={s} gap={10} fs={12} lfs={8} color={tc3}/>:<span/>}
+      {hcl&&<div style={{fontSize:9,fontWeight:700,color:tc4}}>{hcl}</div>}</div>
   </div>;
 }
 
 /* ═══ P. DASHBOARD ═══ */
-function DPx({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){
+function DPx({d,v,s,bg,tc,tc2,tc3,tc4}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string;tc2?:string;tc3?:string;tc4?:string}){
   const Bx=({val,label,c,big}:{val:string|number;label:string;c?:string;big?:boolean})=>
     <div style={{flex:1,background:"rgba(255,255,255,0.06)",borderRadius:8,padding:big?"10px 8px":"6px 8px",textAlign:"center"}}>
       <div style={{fontSize:big?28:18,fontWeight:900,color:c||"#fff"}}>{val}</div>
-      <div style={{fontSize:8,fontWeight:700,color:"rgba(255,255,255,0.35)",letterSpacing:1,marginTop:2}}>{label}</div></div>;
+      <div style={{fontSize:8,fontWeight:700,color:tc3,letterSpacing:1,marginTop:2}}>{label}</div></div>;
   const hcl=hiChLine(d,v,s);
   return<div style={{fontFamily:II,width:320,color:tc||"#fff",background:bg||"rgba(15,25,45,0.82)",borderRadius:14,padding:"16px 14px"}}>
     <div style={{textAlign:"center",marginBottom:12}}>
       {v.player&&d.player&&<div style={{fontSize:18,fontWeight:900}}>{d.player}</div>}
-      <div style={{fontSize:10,fontWeight:500,color:"rgba(255,255,255,0.45)"}}>
+      <div style={{fontSize:10,fontWeight:500,color:tc3}}>
         {[v.course&&d.course,v.round&&`R${d.round}`].filter(Boolean).join(" \u00b7 ")}</div></div>
     <div style={{display:"flex",gap:6,marginBottom:6}}>
       <Bx val={s.sT} label="SCORE" big/><Bx val={fvp(s.vpT)} label="VS PAR" c={vpC(s.vpT)} big/></div>
     {v.stats&&<div style={{display:"flex",gap:6,marginBottom:10}}>
       <Bx val={s.st.eagles} label="EAGLE" c="#d4a017"/><Bx val={s.st.pars} label="PAR"/><Bx val={s.st.bogeys} label="BOGEY" c="#5BADE6"/></div>}
     {v.holeScores&&<Grid99 d={d} size={26} gap={4}/>}
-    {hcl&&<div style={{textAlign:"center",fontSize:9,fontWeight:700,color:"rgba(255,255,255,0.25)",marginTop:10}}>
+    {hcl&&<div style={{textAlign:"center",fontSize:9,fontWeight:700,color:tc4,marginTop:10}}>
       {[v.tee&&d.tee,v.teeDist&&d.teeDist&&`${d.teeDist}m`].filter(Boolean).join(" \u00b7 ")}{hcl?` \u00b7 ${hcl}`:""}</div>}
   </div>;
 }
 
 /* ═══ Q. TICKET ═══ */
-function DQ({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){const hcl=hiChLine(d,v,s);
+function DQ({d,v,s,bg,tc,tc2,tc3,tc4}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string;tc2?:string;tc3?:string;tc4?:string}){const hcl=hiChLine(d,v,s);
   return<div style={{fontFamily:LO,width:280,color:tc||"#fff",background:bg||"rgba(0,0,0,0.75)",borderRadius:4,padding:"14px 12px",border:"1px solid rgba(255,255,255,0.12)"}}>
     <div style={{textAlign:"center",borderBottom:"1px dashed rgba(255,255,255,0.2)",paddingBottom:10,marginBottom:10}}>
-      <div style={{fontFamily:II,fontSize:8,fontWeight:700,letterSpacing:3,color:"rgba(255,255,255,0.35)"}}>SCORECARD</div>
+      <div style={{fontFamily:II,fontSize:8,fontWeight:700,letterSpacing:3,color:tc3}}>SCORECARD</div>
       {v.player&&d.player&&<div style={{fontSize:16,fontWeight:700,fontStyle:"italic",marginTop:3}}>{d.player}</div>}
-      {v.course&&d.course&&<div style={{fontFamily:II,fontSize:9,fontWeight:500,color:"rgba(255,255,255,0.45)",marginTop:2}}>{d.course}</div>}</div>
+      {v.course&&d.course&&<div style={{fontFamily:II,fontSize:9,fontWeight:500,color:tc3,marginTop:2}}>{d.course}</div>}</div>
     <div style={{textAlign:"center",marginBottom:10}}>
       <div style={{fontFamily:II,fontSize:42,fontWeight:900,lineHeight:1,letterSpacing:-2}}>{s.sT}</div>
       <div style={{fontFamily:II,fontSize:20,fontWeight:900,color:vpC(s.vpT),marginTop:-2}}>{fvp(s.vpT)}</div></div>
     {v.holeScores&&<Grid99 d={d} size={22} gap={4}/>}
     <div style={{borderTop:"1px dashed rgba(255,255,255,0.2)",paddingTop:8,marginTop:10,fontFamily:II}}>
-      {v.stats&&<StatsLine s={s} gap={10} fs={11} lfs={7}/>}
-      {(hcl||(v.tee&&d.tee)||(v.date&&d.date))&&<div style={{textAlign:"center",fontSize:8,fontWeight:700,color:"rgba(255,255,255,0.25)",marginTop:6}}>
+      {v.stats&&<StatsLine s={s} gap={10} fs={11} lfs={7} color={tc3}/>}
+      {(hcl||(v.tee&&d.tee)||(v.date&&d.date))&&<div style={{textAlign:"center",fontSize:8,fontWeight:700,color:tc4,marginTop:6}}>
         {[v.tee&&d.tee,v.teeDist&&d.teeDist&&`${d.teeDist}m`,v.date&&d.date,hcl].filter(Boolean).join(" \u00b7 ")}</div>}</div>
   </div>;
 }
 
 /* ═══ R. HORIZONTAL WIDE ═══ */
-function DR({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){
+function DR({d,v,s,bg,tc,tc2,tc3,tc4}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string;tc2?:string;tc3?:string;tc4?:string}){
   const is18=d.scores.length>=18;const hcl=hiChLine(d,v,s);
   return<div style={{fontFamily:II,display:"inline-block",color:tc||"#fff",background:bg||"rgba(15,25,45,0.85)",borderRadius:14,padding:"12px 12px",overflowWrap:"break-word"}}>
     <div style={{display:"flex",alignItems:"flex-start",gap:12,marginBottom:8}}>
@@ -480,26 +480,26 @@ function DR({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){
         <span style={{fontSize:32,fontWeight:900,letterSpacing:-2}}>{s.sT}</span>
         <span style={{fontSize:20,fontWeight:900,color:vpC(s.vpT)}}>{fvp(s.vpT)}</span></div>
       <div><div style={{fontSize:13,fontWeight:900}}>
-        {v.player&&d.player?d.player:""}{v.round?<>{" "}<span style={{fontWeight:600,color:"rgba(255,255,255,0.5)"}}>R{d.round}</span></>:null}</div>
-        <div style={{fontSize:9,fontWeight:500,color:"rgba(255,255,255,0.45)"}}>
+        {v.player&&d.player?d.player:""}{v.round?<>{" "}<span style={{fontWeight:600,color:tc2}}>R{d.round}</span></>:null}</div>
+        <div style={{fontSize:9,fontWeight:500,color:tc3}}>
           {[v.course&&d.course,v.tee&&d.tee,v.date&&d.date].filter(Boolean).join(" \u00b7 ")}</div></div></div>
     {v.holeScores&&(is18?[{off:0,cnt:9,sub:s.sF,lbl:"Out"},{off:9,cnt:9,sub:s.sB,lbl:"In"}]:[{off:0,cnt:d.scores.length,sub:s.sT,lbl:"Tot"}]).map(({off,cnt,sub,lbl})=>
       <div key={off} style={{display:"flex",alignItems:"center",marginBottom:2}}>
         <div style={{display:"flex",gap:2}}>{d.scores.slice(off,off+cnt).map((sc,i)=>
           <div key={i} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:1}}>
-            <div style={{fontSize:8,fontWeight:700,color:"rgba(255,255,255,0.25)"}}>{off+i+1}</div>
+            <div style={{fontSize:8,fontWeight:700,color:tc4}}>{off+i+1}</div>
             <SC score={sc} par={d.par[off+i]} size={26}/></div>)}</div>
         <div style={{width:2,height:26,background:"rgba(100,180,100,0.4)",margin:"0 6px"}}/>
-        <div style={{textAlign:"center"}}><div style={{fontSize:8,fontWeight:700,color:"rgba(255,255,255,0.3)"}}>{lbl}</div>
+        <div style={{textAlign:"center"}}><div style={{fontSize:8,fontWeight:700,color:tc4}}>{lbl}</div>
           <div style={{fontSize:16,fontWeight:900}}>{sub}</div></div></div>)}
-    <div style={{display:"flex",justifyContent:"space-between",borderTop:"1px solid rgba(255,255,255,0.08)",paddingTop:6,marginTop:4,fontSize:9,fontWeight:700,color:"rgba(255,255,255,0.3)"}}>
-      {v.stats?<StatsLine s={s} gap={10} fs={11} lfs={8} color="rgba(255,255,255,0.3)"/>:<span/>}
+    <div style={{display:"flex",justifyContent:"space-between",borderTop:"1px solid rgba(255,255,255,0.08)",paddingTop:6,marginTop:4,fontSize:9,fontWeight:700,color:tc4}}>
+      {v.stats?<StatsLine s={s} gap={10} fs={11} lfs={8} color={tc4}/>:<span/>}
       {hcl?<span>{hcl}</span>:<span/>}</div>
   </div>;
 }
 
 /* ═══ S. HORIZONTAL TABLE ═══ */
-function DS({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){
+function DS({d,v,s,bg,tc,tc2,tc3,tc4}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string;tc2?:string;tc3?:string;tc4?:string}){
   const is18=d.scores.length>=18;
   return<div style={{fontFamily:II,display:"inline-block",color:tc||"#fff",background:bg||"rgba(20,35,60,0.88)",borderRadius:12,padding:"10px 8px",overflowWrap:"break-word"}}>
     <div style={{display:"flex",alignItems:"flex-start",gap:12,marginBottom:6,padding:"0 4px"}}>
@@ -507,17 +507,17 @@ function DS({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){
         <span style={{fontSize:22,fontWeight:900}}>{s.sT}</span>
         <span style={{fontSize:14,fontWeight:900,color:vpC(s.vpT)}}>{fvp(s.vpT)}</span></div>
       <div><div style={{fontSize:12,fontWeight:900}}>
-        {v.player&&d.player?d.player:""}{" "}<span style={{fontWeight:500,color:"rgba(255,255,255,0.4)",fontSize:9}}>
+        {v.player&&d.player?d.player:""}{" "}<span style={{fontWeight:500,color:tc3,fontSize:9}}>
           {[v.course&&d.course,v.round&&`R${d.round}`].filter(Boolean).join(" \u00b7 ")}</span></div></div></div>
     {v.holeScores&&(is18?[{off:0,cnt:9,sub:s.sF,subP:s.pF,lbl:"Out"},{off:9,cnt:9,sub:s.sB,subP:s.pB,lbl:"In"}]:[{off:0,cnt:d.scores.length,sub:s.sT,subP:s.pT,lbl:"Tot"}]).map(({off,cnt,sub,subP,lbl})=>
       <div key={off} style={{marginBottom:off===0&&is18?2:0}}>
         <div style={{display:"flex",background:"rgba(45,106,48,0.6)",padding:"2px 0",borderRadius:off===0?"6px 6px 0 0":0}}>
-          <div style={{display:"flex"}}>{d.par.slice(off,off+cnt).map((_,i)=><div key={i} style={{width:34,textAlign:"center",fontSize:9,fontWeight:800,color:"rgba(255,255,255,0.7)"}}>{off+i+1}</div>)}</div>
+          <div style={{display:"flex"}}>{d.par.slice(off,off+cnt).map((_,i)=><div key={i} style={{width:34,textAlign:"center",fontSize:9,fontWeight:800,color:tc2}}>{off+i+1}</div>)}</div>
           <div style={{width:2,background:"rgba(100,180,100,0.3)"}}/>
-          <div style={{padding:"0 6px",fontSize:9,fontWeight:800,color:"rgba(255,255,255,0.5)"}}>{lbl}</div></div>
+          <div style={{padding:"0 6px",fontSize:9,fontWeight:800,color:tc2}}>{lbl}</div></div>
         {v.holePar&&<div style={{display:"flex",padding:"1px 0",background:"rgba(255,255,255,0.03)"}}>
-          <div style={{display:"flex"}}>{d.par.slice(off,off+cnt).map((p,i)=><div key={i} style={{width:34,textAlign:"center",fontSize:9,fontWeight:600,color:"rgba(255,255,255,0.4)"}}>{p}</div>)}</div>
-          <div style={{width:2}}/><div style={{padding:"0 6px",fontSize:9,fontWeight:700,color:"rgba(255,255,255,0.4)"}}>{subP}</div></div>}
+          <div style={{display:"flex"}}>{d.par.slice(off,off+cnt).map((p,i)=><div key={i} style={{width:34,textAlign:"center",fontSize:9,fontWeight:600,color:tc3}}>{p}</div>)}</div>
+          <div style={{width:2}}/><div style={{padding:"0 6px",fontSize:9,fontWeight:700,color:tc3}}>{subP}</div></div>}
         <div style={{display:"flex",padding:"3px 0",borderBottom:off===0&&is18?"1px solid rgba(255,255,255,0.06)":"none"}}>
           <div style={{display:"flex"}}>{d.scores.slice(off,off+cnt).map((sc,i)=><div key={i} style={{width:34,display:"flex",justifyContent:"center"}}><SC score={sc} par={d.par[off+i]} size={24}/></div>)}</div>
           <div style={{width:2,background:"rgba(100,180,100,0.3)"}}/>
@@ -526,7 +526,7 @@ function DS({d,v,s,bg,tc}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string}){
 }
 
 /* ═══════ DESIGN REGISTRY ═══════ */
-type DP_ = {d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string};
+type DP_ = {d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string;tc2?:string;tc3?:string;tc4?:string};
 type DesignDef = { id:string; label:string; C:React.FC<DP_>; needsHoles:boolean };
 const DESIGNS: DesignDef[] = [
   {id:"A",label:"PGA Columns",C:DA,needsHoles:true},
@@ -628,6 +628,9 @@ export default function OverlayExport({data}:{data:OverlayData}){
   const bgColor=bgHex?hexToRgba(bgHex,alpha):null;
   /* Text color from theme */
   const tc=theme==="light"?"#1a1a1a":"#fff";
+  const tc2=theme==="light"?"rgba(0,0,0,0.55)":"rgba(255,255,255,0.6)";
+  const tc3=theme==="light"?"rgba(0,0,0,0.35)":"rgba(255,255,255,0.4)";
+  const tc4=theme==="light"?"rgba(0,0,0,0.2)":"rgba(255,255,255,0.25)";
 
   /* Checkerboard for preview area */
   const checkerBg:React.CSSProperties={
@@ -771,7 +774,7 @@ export default function OverlayExport({data}:{data:OverlayData}){
             {/* ▼ CAPTURE DIV — bg color behind design, visible through rgba backgrounds */}
             <div ref={el=>{designRefs.current[x.id]=el;}}
               style={{display:"inline-block"}}>
-              <x.C d={dd} v={vis} s={stats} bg={bgColor} tc={tc}/>
+              <x.C d={dd} v={vis} s={stats} bg={bgColor} tc={tc} tc2={tc2} tc3={tc3} tc4={tc4}/>
             </div>
           </div>
         </div>)}
