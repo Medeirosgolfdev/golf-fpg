@@ -129,7 +129,12 @@ function DA({d,v,s,bg,tc,tc2,tc3,tc4}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:st
     <div style={{background:"rgba(255,255,255,0.95)",color:"#14284f",padding:"8px 12px",textAlign:"center"}}>
       <div style={{fontSize:44,lineHeight:1}}>{s.sT}</div>
       <div style={{fontFamily:II,fontSize:18,fontWeight:900,color:vpCd(s.vpT),marginTop:-2}}>{fvp(s.vpT)}</div></div>
-    {(sub||hcl)&&<div style={{fontFamily:II,padding:"6px 12px 10px",fontSize:8,fontWeight:600,color:tc3,textAlign:"center"}}>{sub}{sub&&hcl?<br/>:null}{hcl}</div>}
+    {<div style={{fontFamily:II,padding:"6px 12px 10px",fontSize:8,fontWeight:600,color:tc3,textAlign:"center",lineHeight:1.6}}>
+      {v.course&&d.course&&<div>{d.course}</div>}
+      {v.tee&&d.tee&&<div>{d.tee}{v.teeDist&&d.teeDist?` · ${d.teeDist}m`:""}</div>}
+      {v.date&&d.date&&<div>{d.date}</div>}
+      {hiChLine(d,v,s)&&<div>{hiChLine(d,v,s)}</div>}
+    </div>}
   </div>;
 }
 
@@ -300,25 +305,23 @@ function DI({d,v,s,bg,tc,tc2,tc3,tc4}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:st
 /* ═══ J. CLASSIC TABLE ═══ */
 function DJ({d,v,s,bg,tc,tc2,tc3,tc4}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string;tc2?:string;tc3?:string;tc4?:string}){
   const is18=d.scores.length>=18;const hcl=hiChLine(d,v,s);
-  const HT=({off,label}:{off:number;label:string})=>{const cnt=is18?9:d.scores.length;const isLast=!is18||off===9;
+  const vl="1px solid rgba(255,255,255,0.15)";
+  const HT=({off,label}:{off:number;label:string})=>{const cnt=is18?9:d.scores.length;
     return<div style={{marginBottom:off===0&&is18?2:0}}>
       <div style={{display:"flex",background:"rgba(20,45,75,0.9)",padding:"4px 0"}}>
         <div style={{width:52,padding:"0 6px",fontWeight:900,fontSize:11}}>Hole</div>
-        {d.par.slice(off,off+cnt).map((_,i)=><div key={i} style={{width:32,textAlign:"center",fontWeight:800,fontSize:12}}>{off+i+1}</div>)}
-        <div style={{width:38,textAlign:"center",fontWeight:900,fontSize:11}}>{label}</div>
-        {isLast&&is18&&<div style={{width:38,textAlign:"center",fontWeight:900,fontSize:11}}>TOT</div>}</div>
+        {d.par.slice(off,off+cnt).map((_,i)=><div key={i} style={{width:32,textAlign:"center",fontWeight:800,fontSize:12,}}>{off+i+1}</div>)}
+        <div style={{width:38,textAlign:"center",fontWeight:900,fontSize:11,borderLeft:vl}}>{label}</div></div>
       {v.holePar&&<div style={{display:"flex",padding:"2px 0",background:"rgba(255,255,255,0.04)"}}>
         <div style={{width:52,padding:"0 6px",fontSize:10,fontWeight:600,color:tc3}}>Par</div>
-        {d.par.slice(off,off+cnt).map((p,i)=><div key={i} style={{width:32,textAlign:"center",fontSize:11,color:tc2}}>{p}</div>)}
-        <div style={{width:38,textAlign:"center",fontWeight:700,fontSize:11,color:tc2}}>{off===0?s.pF:s.pB}</div>
-        {isLast&&is18&&<div style={{width:38,textAlign:"center",fontWeight:800,fontSize:11,color:tc2}}>{s.pT}</div>}</div>}
+        {d.par.slice(off,off+cnt).map((p,i)=><div key={i} style={{width:32,textAlign:"center",fontSize:11,color:tc2,}}>{p}</div>)}
+        <div style={{width:38,textAlign:"center",fontWeight:700,fontSize:11,color:tc2,borderLeft:vl}}>{off===0?s.pF:s.pB}</div></div>}
       <div style={{display:"flex",padding:"4px 0"}}>
         <div style={{width:52,padding:"0 6px",fontWeight:900,fontSize:12}}>Score</div>
-        {d.scores.slice(off,off+cnt).map((sc,i)=><div key={i} style={{width:32,display:"flex",justifyContent:"center"}}><SC score={sc} par={d.par[off+i]} size={26}/></div>)}
-        <div style={{width:38,textAlign:"center",fontWeight:900,fontSize:15,color:tc2}}>{off===0?s.sF:s.sB}</div>
-        {isLast&&is18&&<div style={{width:38,textAlign:"center",fontWeight:900,fontSize:18}}>{s.sT}</div>}</div></div>;};
-  return<div style={{fontFamily:II,width:is18?460:380,padding:16,background:bg||"rgba(15,30,55,0.85)",borderRadius:14,color:tc||"#fff"}}>
-    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
+        {d.scores.slice(off,off+cnt).map((sc,i)=><div key={i} style={{width:32,display:"flex",justifyContent:"center",}}><SC score={sc} par={d.par[off+i]} size={26}/></div>)}
+        <div style={{width:38,textAlign:"center",fontWeight:900,fontSize:15,borderLeft:vl}}>{off===0?s.sF:s.sB}</div></div></div>;};
+  return<div style={{fontFamily:II,padding:16,display:"inline-block",background:bg||"rgba(15,30,55,0.85)",borderRadius:14,color:tc||"#fff"}}>
+    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12,gap:20}}>
       <div>{v.player&&d.player&&<div style={{fontSize:15,fontWeight:900}}>{d.player}</div>}
         <div style={{fontSize:10,fontWeight:600,color:tc3}}>
           {[v.round&&`Round ${d.round}`,v.course&&d.course,v.tee&&d.tee].filter(Boolean).join(" \u00b7 ")}</div></div>
