@@ -71,6 +71,7 @@ const CALENDARS: CalendarSource[] = [
   { id: "dest_bjgt",      name: "BJGT",                color: "#be123c", group: "DESTAQUE" },
   { id: "dest_pja",       name: "PJA Tour",            color: "#d946ef", group: "DESTAQUE" },
   { id: "pessoal",        name: "🎂 Pessoal",          color: "#39ff14", group: "DESTAQUE" },
+  { id: "ferias",         name: "🏖 Férias",            color: "#a3e635", group: "DESTAQUE" },
   { id: "treino",         name: "⛳ Campo / Treino",    color: "#10b981", group: "DESTAQUE" },
 
   // ── Viagens — laranja / âmbar ──
@@ -265,7 +266,7 @@ const EVENTS: CalEvent[] = [
      🎂 PESSOAL
      ══════════════════════════════════════ */
   ev("pessoal", "MANUEL 12 ANOS", new Date(2026,3,29), "", ""),
-  ev("pessoal", "🐣 Férias da Páscoa", new Date(2026,2,28), "", "", new Date(2026,3,12)),
+  ev("ferias",  "🐣 Férias da Páscoa", new Date(2026,2,28), "", "", new Date(2026,3,12)),
 
   /* ══════════════════════════════════════
      ⛳ CAMPO / TREINO
