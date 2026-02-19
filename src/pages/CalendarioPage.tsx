@@ -34,7 +34,7 @@ interface CalendarSource {
   id: string;
   name: string;
   color: string;
-  group: "CGSS" | "DRIVE" | "FPG" | "DESTAQUE" | "VIAGENS";
+  group: "CGSS" | "DRIVE" | "FPG" | "DESTAQUE" | "VIAGENS" | "JUNIOR";
 }
 
 /* ═══ Calendar Sources ═══ */
@@ -48,6 +48,11 @@ const CALENDARS: CalendarSource[] = [
   { id: "cgss_patrocin",  name: "Patrocinador",       color: "#64748b", group: "CGSS" },
   { id: "cgss_regional",  name: "Regional",           color: "#0284c7", group: "CGSS" },
   { id: "cgss_fpg",       name: "FPG Nacional",       color: "#4338ca", group: "CGSS" },
+
+  // ── Junior CGSS — Academia ──
+  { id: "jr_cgss",        name: "CGSS Jr",             color: "#f59e0b", group: "JUNIOR" },
+  { id: "jr_regional",    name: "Regional Jr",         color: "#0d9488", group: "JUNIOR" },
+  { id: "jr_fpg",         name: "FPG Jr",              color: "#e11d48", group: "JUNIOR" },
 
   // ── Drive — violeta / verde ──
   { id: "drive_chall",    name: "Drive Challenge",     color: "#8b5cf6", group: "DRIVE" },
@@ -92,9 +97,7 @@ const EVENTS: CalEvent[] = [
   // Fevereiro
   ev("cgss_om_c",     "Torneio de Carnaval CGSS",            new Date(2026,1,14), "Santo da Serra", "Stableford"),
   ev("cgss_pares",    "II Prova Camp. Clube de Pares 2026",  new Date(2026,1,28), "Santo da Serra", "Foursomes"),
-  ev("cgss_regional", "Campeonato Regional de Jovens D1",    new Date(2026,1,28), "Santo da Serra", "Strokeplay"),
   // Março
-  ev("cgss_regional", "Campeonato Regional de Jovens D2",    new Date(2026,2,1),  "Santo da Serra", "Strokeplay"),
   ev("cgss_om_c",     "Torneio da Primavera CGSS",           new Date(2026,2,14), "Santo da Serra", "Stableford"),
   ev("cgss_patrocin", "Torneio Golf & Clássicos 3rd edition",new Date(2026,2,21), "Santo da Serra", "Stableford"),
   // Abril
@@ -102,26 +105,18 @@ const EVENTS: CalEvent[] = [
   ev("cgss_om_c",     "Torneio CGSS",                        new Date(2026,3,25), "Santo da Serra", "Stableford"),
   // Maio
   ev("cgss_ouro",     "I Aberto CGSS 2026",                  new Date(2026,4,3),  "Santo da Serra", "Strokeplay"),
-  ev("cgss_patrocin", "Torneio Cidade de Machico",           new Date(2026,4,9),  "Santo da Serra", "Stableford 13pm"),
-  ev("cgss_om_b",     "Torneio NOS Empresas",                new Date(2026,4,23), "Santo da Serra", "Stableford"),
   ev("cgss_om_b",     "Torneio Clube de Golf Santo da Serra", new Date(2026,4,30), "Santo da Serra", "Stableford"),
   // Junho
-  ev("cgss_fpg",      "Camp. Nacional Ind. Absoluto",        new Date(2026,5,4),  "Oporto",         "Strokeplay", new Date(2026,5,7)),
   ev("cgss_patrocin", "Madeira Golf Trophy",                 new Date(2026,5,6),  "Santo da Serra", "Strokeplay"),
-  ev("cgss_patrocin", "Torneio Diário de Notícias da Madeira", new Date(2026,5,13), "Santo da Serra", "Stableford"),
-  ev("cgss_regional", "Camp. Regional de Clubes D1",         new Date(2026,5,20), "Palheiro",       "Strokeplay"),
-  ev("cgss_regional", "Camp. Regional de Clubes D2",         new Date(2026,5,21), "Palheiro",       "Strokeplay"),
   // Julho
   ev("cgss_pares",    "IV Prova Camp. Clube de Pares",       new Date(2026,6,4),  "Santo da Serra", "Texas Scramble"),
   ev("cgss_major",    "Taça do Clube",                       new Date(2026,6,25), "Santo da Serra", "Medal"),
   // Agosto
   ev("cgss_om_c",     "Torneio CGSS Rali",                  new Date(2026,7,1),  "Santo da Serra", "Stableford"),
-  ev("cgss_patrocin", "Torneio Calheta Viva",               new Date(2026,7,8),  "Santo da Serra", "Stableford 13pm"),
   ev("cgss_om_c",     "Torneio CGSS Summer",                new Date(2026,7,22), "Santo da Serra", "Stableford"),
   ev("cgss_fpg",      "Camp. Nacional de Clubes",           new Date(2026,7,25), "Pinhal",         "Strokeplay", new Date(2026,7,28)),
   ev("cgss_om_c",     "Torneio CGSS",                       new Date(2026,7,29), "Santo da Serra", "Stableford"),
   // Setembro
-  ev("cgss_patrocin", "Torneio Quinta de São João",         new Date(2026,8,5),  "Santo da Serra", "Stableford 13pm"),
   ev("cgss_om_b",     "XIII Torneio Barbeito Madeira",      new Date(2026,8,12), "Santo da Serra", "Stableford"),
   ev("cgss_patrocin", "Porto Santo Colombos",               new Date(2026,8,19), "Porto Santo",    ""),
   // Outubro
@@ -133,12 +128,32 @@ const EVENTS: CalEvent[] = [
   // Novembro
   ev("cgss_om_c",     "Torneio de São Martinho CGSS",       new Date(2026,10,7), "Santo da Serra", "Stableford"),
   ev("cgss_patrocin", "Taça 1937 — Gala Encerramento",      new Date(2026,10,21),"Santo da Serra", "Stableford"),
-  ev("cgss_regional", "Camp. Regional Ind. Absoluto D1",    new Date(2026,10,28),"Santo da Serra", "Strokeplay"),
-  ev("cgss_regional", "Camp. Regional Ind. Absoluto D2",    new Date(2026,10,29),"Santo da Serra", "Strokeplay"),
   // Dezembro
   ev("cgss_patrocin", "Torneio Solidário",                  new Date(2026,11,5), "Santo da Serra", "Stableford"),
   ev("cgss_om_c",     "Torneio de Natal CGSS 2026",         new Date(2026,11,12),"Santo da Serra", "Stableford"),
-  ev("cgss_patrocin", "Torneio Famílias & Amigos — P&P",    new Date(2026,11,19),"Santo da Serra", "Texas Scramble"),
+
+  /* ══════════════════════════════════════
+     JUNIOR CGSS — Academia (âmbar/teal/rosa)
+     ══════════════════════════════════════ */
+
+  // ── CGSS Jr — Torneios internos ──
+  ev("jr_cgss", "Torneio Cidade de Machico",               new Date(2026,4,9),  "Santo da Serra", "Stableford"),
+  ev("jr_cgss", "Torneio NOS Empresas",                    new Date(2026,4,23), "Santo da Serra", "Stableford"),
+  ev("jr_cgss", "Torneio Diário de Notícias da Madeira",   new Date(2026,5,13), "Santo da Serra", "Stableford"),
+  ev("jr_cgss", "Torneio Calheta Viva",                    new Date(2026,7,8),  "Santo da Serra", "Stableford"),
+  ev("jr_cgss", "Torneio Quinta de São João",              new Date(2026,8,5),  "Santo da Serra", "Stableford"),
+  ev("jr_cgss", "Torneio Famílias & Amigos — P&P",         new Date(2026,11,19),"Santo da Serra", "Texas Scramble"),
+
+  // ── Regional Jr ──
+  ev("jr_regional", "Campeonato Regional de Jovens D1",    new Date(2026,1,28), "Santo da Serra", "Strokeplay"),
+  ev("jr_regional", "Campeonato Regional de Jovens D2",    new Date(2026,2,1),  "Santo da Serra", "Strokeplay"),
+  ev("jr_regional", "Camp. Regional de Clubes D1",         new Date(2026,5,20), "Santo da Serra", "Strokeplay"),
+  ev("jr_regional", "Camp. Regional de Clubes D2",         new Date(2026,5,21), "Santo da Serra", "Strokeplay"),
+  ev("jr_regional", "Camp. da Madeira Ind. Absoluto D1",   new Date(2026,10,28),"Porto Santo",    "Strokeplay"),
+  ev("jr_regional", "Camp. da Madeira Ind. Absoluto D2",   new Date(2026,10,29),"Porto Santo",    "Strokeplay"),
+
+  // ── FPG Jr — Campeonatos Nacionais ──
+  ev("jr_fpg", "Camp. Nacional Ind. Absoluto",             new Date(2026,5,4),  "Oporto",         "Strokeplay", new Date(2026,5,7)),
 
   /* ══════════════════════════════════════
      DRIVE CHALLENGE — violeta
@@ -250,6 +265,7 @@ const EVENTS: CalEvent[] = [
      🎂 PESSOAL
      ══════════════════════════════════════ */
   ev("pessoal", "MANUEL 12 ANOS", new Date(2026,3,29), "", ""),
+  ev("pessoal", "🐣 Férias da Páscoa", new Date(2026,2,28), "", "", new Date(2026,3,12)),
 
   /* ══════════════════════════════════════
      ⛳ CAMPO / TREINO
@@ -261,32 +277,32 @@ const EVENTS: CalEvent[] = [
      ══════════════════════════════════════ */
 
   // ── Algarve Fevereiro (XUUM45) ──
-  ev("viag_alg_fev", "TP1692 FNC → LIS 18:10–19:55",          new Date(2026,1,14), "TAP", "XUUM45"),
-  ev("viag_alg_fev", "TP1901 LIS → FAO 09:35–10:25",          new Date(2026,1,15), "TAP", "XUUM45"),
-  ev("viag_alg_fev", "TP1902 FAO → LIS 11:15–12:05",          new Date(2026,1,18), "TAP", "XUUM45"),
-  ev("viag_alg_fev", "TP1691 LIS → FNC 15:20–17:10",          new Date(2026,1,18), "TAP", "XUUM45"),
+  ev("viag_alg_fev", "✈ TP1692 FNC → LIS 18:10–19:55",          new Date(2026,1,14), "TAP", "XUUM45"),
+  ev("viag_alg_fev", "✈ TP1901 LIS → FAO 09:35–10:25",          new Date(2026,1,15), "TAP", "XUUM45"),
+  ev("viag_alg_fev", "✈ TP1902 FAO → LIS 11:15–12:05",          new Date(2026,1,18), "TAP", "XUUM45"),
+  ev("viag_alg_fev", "✈ TP1691 LIS → FNC 15:20–17:10",          new Date(2026,1,18), "TAP", "XUUM45"),
 
   // ── Málaga (YZH6MC + YMAAUB) ──
-  ev("viag_malaga", "TP3842 FNC → LIS 12:50–14:55",            new Date(2026,1,22), "TAP", "YZH6MC"),
-  ev("viag_malaga", "TP1138 LIS → AGP 21:00–23:15",            new Date(2026,1,22), "TAP", "YMAAUB"),
-  ev("viag_malaga", "TP1137 AGP → LIS 15:00–16:25",            new Date(2026,1,28), "TAP", "YMAAUB"),
-  ev("viag_malaga", "TP1693 LIS → FNC 18:35–20:25",            new Date(2026,1,28), "TAP", "YZH6MC"),
+  ev("viag_malaga", "✈ TP3842 FNC → LIS 12:50–14:55",            new Date(2026,1,22), "TAP", "YZH6MC"),
+  ev("viag_malaga", "✈ TP1138 LIS → AGP 21:00–23:15",            new Date(2026,1,22), "TAP", "YMAAUB"),
+  ev("viag_malaga", "✈ TP1137 AGP → LIS 15:00–16:25",            new Date(2026,1,28), "TAP", "YMAAUB"),
+  ev("viag_malaga", "✈ TP1693 LIS → FNC 18:35–20:25",            new Date(2026,1,28), "TAP", "YZH6MC"),
 
   // ── Roma (XUZ0XS) ──
-  ev("viag_roma", "TP1688 FNC → LIS 11:00–12:45",              new Date(2026,2,12), "TAP", "XUZ0XS"),
-  ev("viag_roma", "TP836 LIS → FCO 14:40–18:45",               new Date(2026,2,12), "TAP", "XUZ0XS"),
-  ev("viag_roma", "TP833 FCO → LIS 12:15–14:25",               new Date(2026,2,16), "TAP", "XUZ0XS"),
-  ev("viag_roma", "TP1693 LIS → FNC 18:35–20:25",              new Date(2026,2,16), "TAP", "XUZ0XS"),
+  ev("viag_roma", "✈ TP1688 FNC → LIS 11:00–12:45",              new Date(2026,2,12), "TAP", "XUZ0XS"),
+  ev("viag_roma", "✈ TP836 LIS → FCO 14:40–18:45",               new Date(2026,2,12), "TAP", "XUZ0XS"),
+  ev("viag_roma", "✈ TP833 FCO → LIS 12:15–14:25",               new Date(2026,2,16), "TAP", "XUZ0XS"),
+  ev("viag_roma", "✈ TP1693 LIS → FNC 18:35–20:25",              new Date(2026,2,16), "TAP", "XUZ0XS"),
 
   // ── Algarve Março/Abril (XVCBD2) ──
-  ev("viag_alg_mar", "TP1694 FNC → LIS 21:15–23:00",           new Date(2026,2,27), "TAP", "XVCBD2"),
-  ev("viag_alg_mar", "TP1901 LIS → FAO 09:35–10:25",           new Date(2026,2,28), "TAP", "XVCBD2"),
-  ev("viag_alg_mar", "TP1906 FAO → LIS 18:10–19:05",           new Date(2026,3,4),  "TAP", "XVCBD2"),
-  ev("viag_alg_mar", "TP1695 LIS → FNC 22:20–00:10",           new Date(2026,3,4),  "TAP", "XVCBD2"),
+  ev("viag_alg_mar", "✈ TP1694 FNC → LIS 21:15–23:00",           new Date(2026,2,27), "TAP", "XVCBD2"),
+  ev("viag_alg_mar", "✈ TP1901 LIS → FAO 09:35–10:25",           new Date(2026,2,28), "TAP", "XVCBD2"),
+  ev("viag_alg_mar", "✈ TP1906 FAO → LIS 18:10–19:05",           new Date(2026,3,4),  "TAP", "XVCBD2"),
+  ev("viag_alg_mar", "✈ TP1695 LIS → FNC 22:20–00:10",           new Date(2026,3,4),  "TAP", "XVCBD2"),
 
   // ── Edimburgo (Ryanair) ──
-  ev("viag_edinb", "FR6673 FNC → EDI 15:00–19:05",             new Date(2026,4,23), "Ryanair", ""),
-  ev("viag_edinb", "FR6674 EDI → FNC 19:30–23:40",             new Date(2026,4,30), "Ryanair", ""),
+  ev("viag_edinb", "✈ FR6673 FNC → EDI 15:00–19:05",             new Date(2026,4,23), "Ryanair", ""),
+  ev("viag_edinb", "✈ FR6674 EDI → FNC 19:30–23:40",             new Date(2026,4,30), "Ryanair", ""),
 ];
 
 /* ═══ Helpers ═══ */
@@ -301,6 +317,7 @@ const DAYS_PT = ["Seg","Ter","Qua","Qui","Sex","Sáb","Dom"];
 const DAY_NAMES = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"]; // indexed by JS getDay()
 const GROUP_LABELS: Record<string, string> = {
   CGSS: "CGSS — Santo da Serra",
+  JUNIOR: "Junior CGSS — Academia",
   DRIVE: "Drive",
   FPG: "FPG — Federação",
   DESTAQUE: "Destaque",
@@ -526,7 +543,7 @@ function ListView({ events, onSelect }: { events: CalEvent[]; onSelect: (e: CalE
 
 /* ═══ Main Component ═══ */
 type ViewMode = "month" | "list";
-type GroupKey = "CGSS" | "DRIVE" | "FPG" | "DESTAQUE" | "VIAGENS";
+type GroupKey = "CGSS" | "JUNIOR" | "DRIVE" | "FPG" | "DESTAQUE" | "VIAGENS";
 
 /* ── Password Gate ── */
 function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
@@ -608,7 +625,7 @@ function CalendarioContent() {
   const monthDays = useMemo(() => getMonthDays(2026, currentMonth), [currentMonth]);
   const gridRows = monthDays.length / 7;
   const today = new Date();
-  const groups: GroupKey[] = ["CGSS", "DRIVE", "FPG", "DESTAQUE", "VIAGENS"];
+  const groups: GroupKey[] = ["CGSS", "JUNIOR", "DRIVE", "FPG", "DESTAQUE", "VIAGENS"];
 
   return (
     <div style={{ height: "100%", display: "flex", overflow: "hidden" }}>
