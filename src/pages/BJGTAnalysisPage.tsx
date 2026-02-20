@@ -306,6 +306,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
     }
     allTR.sort((a, b) => b.ds - a.ds);
     const hcp = data.HCP_INFO?.current != null ? Number(data.HCP_INFO.current) : null;
+    const avgOf = (arr: number[]) => arr.length > 0 ? arr.reduce((a, b) => a + b, 0) / arr.length : null;
 
     // 8) VP HOLE PROFILE — par, meters, SI for each VP hole
     const nH = cards.length > 0 && cards[0].h.g.length >= 18 ? 18 : 9;
