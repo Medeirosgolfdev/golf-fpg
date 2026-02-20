@@ -598,6 +598,7 @@ function CalendarioContent() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [enabledCals, setEnabledCals] = useState<Set<string>>(() => new Set(CALENDARS.map(c => c.id)));
   const [expandedCal, setExpandedCal] = useState<string | null>(null);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const goToday = () => {
     const now = new Date();
@@ -681,8 +682,8 @@ function CalendarioContent() {
       `}</style>
 
       {/* ── Sidebar ── */}
-      <div style={{ width: 250, borderRight: "1px solid var(--border-light)", padding: "12px 14px",
-        display: "flex", flexDirection: "column", gap: 12, overflowY: "auto", flexShrink: 0, background: "var(--bg-card)" }}>
+      <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`} style={{ padding: "12px 14px",
+        display: "flex", flexDirection: "column", gap: 12, flexShrink: 0 }}>
 
         {/* Mini cal */}
         <div>
@@ -800,6 +801,9 @@ function CalendarioContent() {
       <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
         <div style={{ display: "flex", alignItems: "center", padding: "10px 20px",
           borderBottom: "1px solid var(--border-light)", gap: 12, flexShrink: 0 }}>
+          <button className="sidebar-toggle" onClick={() => setSidebarOpen(v => !v)} title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
+            {sidebarOpen ? "◀" : "▶"}
+          </button>
           <h2 style={{ fontSize: 18, fontWeight: 600, color: "var(--text)", margin: 0 }}>Calendário 2026</h2>
           <button onClick={goToday} style={{
             border: "1px solid var(--accent)", background: "transparent", color: "var(--accent)",

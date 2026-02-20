@@ -11,13 +11,15 @@ import JogadoresPage from "./pages/JogadoresPage";
 import SimuladorPage from "./pages/SimuladorPage";
 
 import CalendarioPage from "./pages/CalendarioPage";
+import BJGTAnalysisPage from "./pages/BJGTAnalysisPage";
+import TorneioPage from "./pages/TorneioPage";
 import CompararPage from "./pages/CompararPage";
 import golfBallSvg from "./assets/golf-ball.svg";
 
 import { deepFixMojibake } from "./utils/fixEncoding";
 import melhoriasJson from "../melhorias.json";
 
-type Tab = "campos" | "jogadores" | "comparar" | "simulador" | "calendario";
+type Tab = "campos" | "jogadores" | "comparar" | "simulador" | "calendario" | "bjgt" | "torneio";
 
 type MelhoriasJson = Record<string, Record<string, unknown>>;
 
@@ -33,6 +35,8 @@ function tabFromPath(pathname: string): Tab {
   if (seg === "simulador") return "simulador";
   if (seg === "comparar") return "comparar";
   if (seg === "calendario") return "calendario";
+  if (seg === "bjgt") return "bjgt";
+  if (seg === "torneio") return "torneio";
   return "jogadores"; // default
 }
 
@@ -41,6 +45,18 @@ export default function App() {
   const location = useLocation();
   const navigate = useNavigate();
   const tab = tabFromPath(location.pathname);
+
+  /* Calendar unlock → show BJGT nav */
+  const [calUnlocked, setCalUnlocked] = useState(() => {
+    try { return localStorage.getItem("cal_unlocked") === "1"; } catch { return false; }
+  });
+  useEffect(() => {
+    const check = () => { try { setCalUnlocked(localStorage.getItem("cal_unlocked") === "1"); } catch {} };
+    window.addEventListener("storage", check);
+    // Also re-check when navigating (in case unlocked in same tab)
+    check();
+    return () => window.removeEventListener("storage", check);
+  }, [location.pathname]);
 
   useEffect(() => {
     let alive = true;
@@ -116,6 +132,22 @@ export default function App() {
           >
             Calendário
           </button>
+          {calUnlocked && (
+            <button
+              className={`nav-btn ${tab === "bjgt" ? "active" : ""}`}
+              onClick={() => goTo("/bjgt")}
+            >
+              🇪🇸 BJGT
+            </button>
+          )}
+          {calUnlocked && (
+            <button
+              className={`nav-btn ${tab === "torneio" ? "active" : ""}`}
+              onClick={() => goTo("/torneio")}
+            >
+              GG26
+            </button>
+          )}
         </nav>
 
         {status.kind === "ready" && (
@@ -156,6 +188,8 @@ export default function App() {
             <Route path="/simulador" element={<SimuladorPage courses={simCourses} />} />
             <Route path="/comparar" element={<CompararPage players={status.players} />} />
             <Route path="/calendario" element={<CalendarioPage />} />
+            <Route path="/bjgt/:fed?" element={<BJGTAnalysisPage />} />
+            <Route path="/torneio" element={<TorneioPage players={status.players} onSelectPlayer={(fed) => goTo(`/jogadores/${fed}`)} />} />
             <Route path="*" element={<Navigate to="/jogadores" replace />} />
           </Routes>
         )}

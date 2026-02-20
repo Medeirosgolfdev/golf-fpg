@@ -1,5 +1,5 @@
 /**
- * TorneioPage.tsx — Greatgolf Junior Open with Luis Figo Foundation
+ * TorneioPage.tsx — GG26
  *
  * Redesigned: results are derived LIVE from player scorecards.
  * When a player's WHS data includes a round at the tournament course
@@ -122,12 +122,18 @@ function isTournCourse(courseName: string, norm: NormalizedTournament): boolean 
 }
 
 /* ── Password Gate ── */
+const CAL_STORAGE_KEY = "cal_unlocked";
+
 function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
   const [pw, setPw] = useState("");
   const [error, setError] = useState(false);
 
   const check = () => {
-    if (pw === NORM_BASE.password) onUnlock();
+    if (pw === "machico") {
+      localStorage.setItem(CAL_STORAGE_KEY, "1");
+      window.dispatchEvent(new Event("storage"));
+      onUnlock();
+    }
     else { setError(true); setTimeout(() => setError(false), 1500); }
   };
 
@@ -470,7 +476,7 @@ function AnalysisView({ norm, players, holeDataByDay, playerHistory, onSelectPla
    ═══════════════════════════════════════════════ */
 
 export default function TorneioPage({ players, onSelectPlayer }: { players: PlayersDb; onSelectPlayer?: (fed: string) => void }) {
-  const [unlocked, setUnlocked] = useState(false);
+  const [unlocked, setUnlocked] = useState(() => localStorage.getItem(CAL_STORAGE_KEY) === "1");
   const [view, setView] = useState<TournView>("leaderboard");
   const [loading, setLoading] = useState(false);
   const [loadCount, setLoadCount] = useState(0);
@@ -644,7 +650,7 @@ export default function TorneioPage({ players, onSelectPlayer }: { players: Play
       <div className="tourn-header">
         <div className="tourn-header-top">
           <span className="tourn-pill-intl" style={{ fontSize: 9, padding: "2px 6px" }}>🌍 INTL</span>
-          <h2 className="tourn-title">{NORM_BASE.name}</h2>
+          <h2 className="tourn-title">GG26</h2>
         </div>
         <div className="tourn-header-info">
           <span>📍 {NORM_BASE.course}</span>
