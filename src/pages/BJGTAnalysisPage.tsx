@@ -463,6 +463,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
     const recoveryRate = totalRecovery > 0 ? goodRecovery / totalRecovery * 100 : null;
 
     return { stats, cards, ecl, allR, hcp, holePatterns, trapHoles, strongHoles, volatileHoles, daySummaries, bestDay, worstDay, f9avg, b9avg, f9par, b9par, recoveryRate, goodRecovery, badRecovery, totalRecovery, vpCards, nH, parArr, vpHoleProfiles, bands, distEvolution, metersGrowing, metersDiff, avgGrossShort, avgGrossLong, medianMeters, allHoleSamples };
+  }, [data]);
 
   /* ═══ RENDER ═══ */
   if (loading) return (
