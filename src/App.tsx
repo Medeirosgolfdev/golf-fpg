@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Routes, Route, useLocation, useNavigate, Navigate } from "react-router-dom";
 import "./App.css";
 import { loadMasterData, loadPlayers, loadAwayCourses } from "./data/loader";
 import { initCourseColorCache } from "./utils/teeColors";
@@ -25,10 +26,21 @@ type Status =
   | { kind: "error"; message: string }
   | { kind: "ready"; data: MasterData; players: PlayersDb; awayCourses: Course[] };
 
+/* Derivar tab activo a partir do pathname */
+function tabFromPath(pathname: string): Tab {
+  const seg = pathname.split("/")[1] || "";
+  if (seg === "campos") return "campos";
+  if (seg === "simulador") return "simulador";
+  if (seg === "comparar") return "comparar";
+  if (seg === "calendario") return "calendario";
+  return "jogadores"; // default
+}
+
 export default function App() {
   const [status, setStatus] = useState<Status>({ kind: "loading" });
-  const [tab, setTab] = useState<Tab>("jogadores");
-  const [navigateToFed, setNavigateToFed] = useState<string | null>(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const tab = tabFromPath(location.pathname);
 
   useEffect(() => {
     let alive = true;
@@ -62,6 +74,8 @@ export default function App() {
     return [...map.values()];
   }, [status]);
 
+  const goTo = (path: string) => navigate(path);
+
   return (
     <div className="app">
       {/* Topbar */}
@@ -73,32 +87,32 @@ export default function App() {
 
         <nav className="nav">
           <button
-            className={`nav-btn ${tab === "campos" ? "active" : ""}`}
-            onClick={() => setTab("campos")}
-          >
-            Campos
-          </button>
-          <button
-            className={`nav-btn ${tab === "simulador" ? "active" : ""}`}
-            onClick={() => setTab("simulador")}
-          >
-            Simulador
-          </button>
-          <button
             className={`nav-btn ${tab === "jogadores" ? "active" : ""}`}
-            onClick={() => setTab("jogadores")}
+            onClick={() => goTo("/jogadores")}
           >
             Jogadores
           </button>
           <button
             className={`nav-btn ${tab === "comparar" ? "active" : ""}`}
-            onClick={() => setTab("comparar")}
+            onClick={() => goTo("/comparar")}
           >
             Comparar
           </button>
           <button
+            className={`nav-btn ${tab === "campos" ? "active" : ""}`}
+            onClick={() => goTo("/campos")}
+          >
+            Campos
+          </button>
+          <button
+            className={`nav-btn ${tab === "simulador" ? "active" : ""}`}
+            onClick={() => goTo("/simulador")}
+          >
+            Simulador
+          </button>
+          <button
             className={`nav-btn ${tab === "calendario" ? "active" : ""}`}
-            onClick={() => setTab("calendario")}
+            onClick={() => goTo("/calendario")}
           >
             Calendário
           </button>
@@ -135,27 +149,16 @@ export default function App() {
           </div>
         )}
 
-        {status.kind === "ready" && tab === "campos" && (
-          <CamposPage courses={simCourses} />
+        {status.kind === "ready" && (
+          <Routes>
+            <Route path="/campos/:courseKey?" element={<CamposPage courses={simCourses} />} />
+            <Route path="/jogadores/:fed?" element={<JogadoresPage players={status.players} courses={simCourses} />} />
+            <Route path="/simulador" element={<SimuladorPage courses={simCourses} />} />
+            <Route path="/comparar" element={<CompararPage players={status.players} />} />
+            <Route path="/calendario" element={<CalendarioPage />} />
+            <Route path="*" element={<Navigate to="/jogadores" replace />} />
+          </Routes>
         )}
-
-        {status.kind === "ready" && tab === "jogadores" && (
-          <JogadoresPage players={status.players} courses={simCourses} initialFed={navigateToFed} onFedConsumed={() => setNavigateToFed(null)} />
-        )}
-
-        {status.kind === "ready" && tab === "simulador" && (
-          <SimuladorPage courses={simCourses} />
-        )}
-
-        {status.kind === "ready" && tab === "comparar" && (
-          <CompararPage players={status.players} />
-        )}
-
-        {status.kind === "ready" && tab === "calendario" && (
-          <CalendarioPage />
-        )}
-
-
       </main>
     </div>
   );
