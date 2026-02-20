@@ -1,29 +1,23 @@
 /**
  * CompararPage.tsx — Comparação entre jogadores (v2)
  *
- * Melhorias:
+ * NOTA: Todas as estatísticas são calculadas APENAS a partir de rondas
+ *       de torneio (exclui EDS, treinos e individuais).
+ *
+ * Secções:
  *   1. Radar chart — perfil comparativo visual
  *   2. Tabela comparativa lado a lado com highlight do melhor
  *   3. Distribuição de scores (eagle→triple) com barras
- *   4. Buraco a buraco (gráfico + tabela)
+ *   4. Buraco a buraco (gráfico + tabela) — só torneios
  *   5. Head-to-Head com barra de vitórias
- *   6. Evolução HCP com delta no período
- *
- * Classes CSS do design system existente:
- *   .holeAnalysis .haTitle .haSubTitle
- *   .haDiag .haDiagCard .haDiagIcon .haDiagBody .haDiagVal .haDiagLbl
- *   .courseAnalysis .caTitle .caKpis .caKpi .caKpiVal .caKpiLbl
- *   .haParGrid .haParCard .haParHead .haParAvg .haParStat
- *   .pa-table-wrap .pa-table .roundRow
- *   .jog-pill .chip .muted .input .select
+ *   6. Evolução em torneios (SD / Gross) com média móvel
  */
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import type { Player, PlayersDb } from "../data/types";
 import {
   loadPlayerData, type PlayerPageData, type RoundData,
-  type HoleStatsData,
+  type HoleScores,
 } from "../data/playerDataLoader";
-import { loadPlayerStats, type PlayerStatsDb } from "../data/playerStatsTypes";
 import { norm } from "../utils/format";
 import { clubShort, hcpDisplay } from "../utils/playerUtils";
 import { deepFixMojibake } from "../utils/fixEncoding";
@@ -36,68 +30,212 @@ interface Slot {
   data: PlayerPageData | null; loading: boolean; error: string | null;
 }
 
-/* ─── Helpers ─── */
+/* ─── Tournament round filter ─── */
+
+function isTournamentRound(r: RoundData): boolean {
+  if (r.holeCount !== 18 || r._isTreino || r.gross == null || Number(r.gross) <= 50) return false;
+  const o = (r.scoreOrigin || "").trim();
+  // Exclude known non-tournament origins
+  if (o === "EDS" || o === "Indiv" || o === "Treino") return false;
+  // Also exclude by eventName as fallback
+  const ev = (r.eventName || "").trim();
+  if (ev === "EDS" || ev === "Indiv") return false;
+  return true;
+}
+
+/* ─── Aggregate stats (tournament rounds only) ─── */
 
 interface AggStats {
-  totalStrokesLost: number;
+  totalStrokesOverPar: number;
   parOrBetterPct: number;
   dblOrWorsePct: number;
   byPar: Record<number, { avgVsPar: number; slPerRound: number }>;
   nRounds: number;
+  nRoundsWithCard: number;
   scoreDist: { eagle: number; birdie: number; par: number; bogey: number; double: number; triple: number; total: number };
   avgGross: number | null;
   bestGross: number | null;
   f9sl: number | null;
   b9sl: number | null;
+  /* SD stats — tournament only */
+  avgSD: number | null;
+  bestSD: number | null;
+  best8of20SD: number | null;
+  last5AvgSD: number | null;
 }
 
 function aggregateStats(data: PlayerPageData): AggStats | null {
-  let totalN = 0, totalSL = 0, totalHoles = 0, nRounds = 0;
-  let grossSum = 0, grossN = 0, bestGross: number | null = null;
-  let f9slSum = 0, b9slSum = 0, f9n = 0, b9n = 0;
-  const distAcc = { eagle: 0, birdie: 0, par: 0, bogey: 0, double: 0, triple: 0, total: 0 };
-  const parAgg: Record<number, { sumVsPar: number; sumSL: number; count: number }> = {};
-  for (const ck in data.HOLE_STATS) for (const tk in data.HOLE_STATS[ck]) {
-    const hs = data.HOLE_STATS[ck][tk];
-    if (hs.holeCount !== 18 || hs.nRounds < 2) continue;
-    nRounds += hs.nRounds; totalN++; totalSL += hs.totalStrokesLost;
-    if (hs.avgGross != null) { grossSum += hs.avgGross * hs.nRounds; grossN += hs.nRounds; }
-    if (hs.bestRound) { if (bestGross === null || hs.bestRound.gross < bestGross) bestGross = hs.bestRound.gross; }
-    const td = hs.totalDist;
-    if (td) {
-      distAcc.eagle += td.eagle; distAcc.birdie += td.birdie; distAcc.par += td.par;
-      distAcc.bogey += td.bogey; distAcc.double += td.double; distAcc.triple += td.triple;
-      distAcc.total += td.total; totalHoles += td.total;
-    }
-    if (hs.f9b9) {
-      f9slSum += hs.f9b9.f9.strokesLost * hs.nRounds; f9n += hs.nRounds;
-      b9slSum += hs.f9b9.b9.strokesLost * hs.nRounds; b9n += hs.nRounds;
-    }
-    for (const pt of [3, 4, 5]) {
-      const g = hs.byParType[pt]; if (!g || g.totalN === 0) continue;
-      if (!parAgg[pt]) parAgg[pt] = { sumVsPar: 0, sumSL: 0, count: 0 };
-      parAgg[pt].sumVsPar += (g.avgVsPar ?? 0) * g.totalN;
-      parAgg[pt].sumSL += g.strokesLostPerRound * hs.nRounds;
-      parAgg[pt].count += hs.nRounds;
+  const dist = { eagle: 0, birdie: 0, par: 0, bogey: 0, double: 0, triple: 0, total: 0 };
+  const parTypeAcc: Record<number, { sumDiff: number; count: number }> = {};
+  let grossSum = 0, nRounds = 0, nRoundsWithCard = 0, bestGross: number | null = null;
+  let sopSum = 0; // strokes over par total
+  let f9diff = 0, b9diff = 0, fbN = 0;
+  const sdAll: { sd: number; dateSort: number }[] = [];
+
+  for (const cd of data.DATA) {
+    for (const r of cd.rounds) {
+      if (!isTournamentRound(r)) continue;
+      const g = Number(r.gross);
+      grossSum += g;
+      nRounds++;
+      if (bestGross === null || g < bestGross) bestGross = g;
+
+      // Collect SD
+      if (r.sd != null && !isNaN(Number(r.sd))) {
+        sdAll.push({ sd: Number(r.sd), dateSort: r.dateSort });
+      }
+
+      // Hole-level stats from scorecard
+      const holes: HoleScores | undefined = data.HOLES[r.scoreId];
+      if (holes && holes.g && holes.g.length >= 18) {
+        nRoundsWithCard++;
+        let roundPar = 0, f9 = 0, b9 = 0;
+        for (let i = 0; i < 18; i++) {
+          const hg = holes.g[i];
+          const hp = holes.p[i];
+          if (hg == null || hp == null) continue;
+          const diff = hg - hp;
+          roundPar += hp;
+
+          // Score distribution
+          if (diff <= -2) dist.eagle++;
+          else if (diff === -1) dist.birdie++;
+          else if (diff === 0) dist.par++;
+          else if (diff === 1) dist.bogey++;
+          else if (diff === 2) dist.double++;
+          else dist.triple++;
+          dist.total++;
+
+          // Par type accumulator
+          if (!parTypeAcc[hp]) parTypeAcc[hp] = { sumDiff: 0, count: 0 };
+          parTypeAcc[hp].sumDiff += diff;
+          parTypeAcc[hp].count++;
+
+          // Front/back 9
+          if (i < 9) f9 += diff; else b9 += diff;
+        }
+        sopSum += (g - roundPar);
+        f9diff += f9; b9diff += b9; fbN++;
+      } else if (r.par != null) {
+        sopSum += (g - Number(r.par));
+      }
     }
   }
-  if (totalN === 0) return null;
+
+  if (nRounds < 2) return null;
+
   const byPar: Record<number, { avgVsPar: number; slPerRound: number }> = {};
   for (const pt of [3, 4, 5]) {
-    const a = parAgg[pt]; if (!a?.count) continue;
-    byPar[pt] = { avgVsPar: a.sumVsPar / a.count, slPerRound: a.sumSL / a.count };
+    const a = parTypeAcc[pt];
+    if (!a || a.count === 0) continue;
+    const avgVsPar = a.sumDiff / a.count;
+    const holesPerRound = a.count / (nRoundsWithCard || 1);
+    byPar[pt] = { avgVsPar, slPerRound: avgVsPar * holesPerRound };
   }
-  const pob = totalHoles > 0 ? (distAcc.eagle + distAcc.birdie + distAcc.par) / totalHoles * 100 : 0;
-  const dow = totalHoles > 0 ? (distAcc.double + distAcc.triple) / totalHoles * 100 : 0;
+
+  const totalHoles = dist.total;
+  const pob = totalHoles > 0 ? (dist.eagle + dist.birdie + dist.par) / totalHoles * 100 : 0;
+  const dow = totalHoles > 0 ? (dist.double + dist.triple) / totalHoles * 100 : 0;
+
+  // SD calculations (tournament only)
+  sdAll.sort((a, b) => b.dateSort - a.dateSort); // most recent first
+  const avgSD = sdAll.length > 0 ? sdAll.reduce((s, x) => s + x.sd, 0) / sdAll.length : null;
+  const bestSD = sdAll.length > 0 ? Math.min(...sdAll.map(x => x.sd)) : null;
+  const last20 = sdAll.slice(0, 20);
+  const best8of20SD = last20.length >= 8
+    ? [...last20].sort((a, b) => a.sd - b.sd).slice(0, 8).reduce((s, x) => s + x.sd, 0) / 8
+    : null;
+  const last5 = sdAll.slice(0, 5);
+  const last5AvgSD = last5.length >= 3 ? last5.reduce((s, x) => s + x.sd, 0) / last5.length : null;
+
   return {
-    totalStrokesLost: totalSL / totalN, parOrBetterPct: pob, dblOrWorsePct: dow,
-    byPar, nRounds, scoreDist: distAcc,
-    avgGross: grossN > 0 ? grossSum / grossN : null,
+    totalStrokesOverPar: sopSum / nRounds,
+    parOrBetterPct: pob,
+    dblOrWorsePct: dow,
+    byPar, nRounds, nRoundsWithCard,
+    scoreDist: dist,
+    avgGross: grossSum / nRounds,
     bestGross,
-    f9sl: f9n > 0 ? f9slSum / f9n : null,
-    b9sl: b9n > 0 ? b9slSum / b9n : null,
+    f9sl: fbN > 0 ? f9diff / fbN : null,
+    b9sl: fbN > 0 ? b9diff / fbN : null,
+    avgSD, bestSD, best8of20SD, last5AvgSD,
   };
 }
+
+/* ─── Hole-by-hole stats from tournament rounds only ─── */
+
+interface SimpleHoleEntry {
+  h: number;
+  par: number | null;
+  avg: number | null;
+  strokesLost: number | null;
+}
+
+interface SimpleHoleStats {
+  teeName: string;
+  holeCount: number;
+  nRounds: number;
+  avgGross: number | null;
+  holes: SimpleHoleEntry[];
+}
+
+function buildTourneyHoleStats(data: PlayerPageData): Map<string, { label: string; nR: number; stats: SimpleHoleStats }> {
+  const map = new Map<string, { label: string; nR: number; stats: SimpleHoleStats }>();
+  const grouped = new Map<string, { tee: string; course: string; scoreIds: string[] }>();
+
+  for (const cd of data.DATA) {
+    for (const r of cd.rounds) {
+      if (!isTournamentRound(r)) continue;
+      if (!data.HOLES[r.scoreId]) continue;
+      const holes = data.HOLES[r.scoreId];
+      if (!holes.g || holes.g.length < 18) continue;
+
+      const key = cd.course.replace(/ /g, "_") + "|" + r.teeKey;
+      if (!grouped.has(key)) grouped.set(key, { tee: r.tee, course: cd.course, scoreIds: [] });
+      grouped.get(key)!.scoreIds.push(r.scoreId);
+    }
+  }
+
+  for (const [key, { tee, course, scoreIds }] of grouped) {
+    if (scoreIds.length < 2) continue;
+    const nH = 18;
+    const holeSums = Array.from({ length: nH }, () => ({ gSum: 0, pSum: 0, n: 0 }));
+    let grossTotal = 0, grossN = 0;
+
+    for (const sid of scoreIds) {
+      const h = data.HOLES[sid];
+      if (!h || h.g.length < nH) continue;
+      let rGross = 0, rPar = 0, valid = true;
+      for (let i = 0; i < nH; i++) {
+        if (h.g[i] != null && h.p[i] != null) {
+          holeSums[i].gSum += h.g[i]!;
+          holeSums[i].pSum += h.p[i]!;
+          holeSums[i].n++;
+          rGross += h.g[i]!; rPar += h.p[i]!;
+        } else { valid = false; }
+      }
+      if (valid) { grossTotal += rGross; grossN++; }
+    }
+
+    const holes: SimpleHoleEntry[] = holeSums.map((hs, i) => ({
+      h: i + 1,
+      par: hs.n > 0 ? Math.round(hs.pSum / hs.n) : null,
+      avg: hs.n > 0 ? hs.gSum / hs.n : null,
+      strokesLost: hs.n > 0 ? (hs.gSum / hs.n) - (hs.pSum / hs.n) : null,
+    }));
+
+    const ck = key.split("|")[0];
+    map.set(key, {
+      label: ck.replace(/_/g, " ") + " — " + tee,
+      nR: scoreIds.length,
+      stats: { teeName: tee, holeCount: nH, nRounds: scoreIds.length, avgGross: grossN > 0 ? grossTotal / grossN : null, holes },
+    });
+  }
+
+  return map;
+}
+
+/* ─── Other helpers ─── */
 
 function shortName(name: string) { return name.split(" ").slice(0, 2).join(" "); }
 function firstName(name: string) { return name.split(" ")[0]; }
@@ -180,7 +318,7 @@ function RadarChart({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats | null
     { label: "Par 4", getValue: a => a.byPar[4]?.avgVsPar ?? null, invert: true },
     { label: "Par 5", getValue: a => a.byPar[5]?.avgVsPar ?? null, invert: true },
     { label: "Par≤ %", getValue: a => a.parOrBetterPct },
-    { label: "Panc. Perd.", getValue: a => a.totalStrokesLost, invert: true },
+    { label: "Panc. s/ Par", getValue: a => a.totalStrokesOverPar, invert: true },
     { label: "Dbl+ %", getValue: a => a.dblOrWorsePct, invert: true },
   ];
 
@@ -204,7 +342,7 @@ function RadarChart({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats | null
 
   return (
     <div className="courseAnalysis" style={{ padding: 16 }}>
-      <div className="caTitle">Perfil Comparativo</div>
+      <div className="caTitle">Perfil Comparativo <span className="muted" style={{ fontWeight: 400, fontSize: 11 }}>(apenas torneios)</span></div>
       <svg viewBox="0 0 300 290" style={{ width: "100%", maxWidth: 420, display: "block", margin: "0 auto" }}>
         {[0.25, 0.5, 0.75, 1].map(frac => (
           <polygon key={frac}
@@ -251,31 +389,28 @@ function RadarChart({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats | null
 
 /* ═══════════════════ § 2 TABELA COMPARATIVA ═══════════════════ */
 
-function StatsTable({ slots, allAgg, stats }: { slots: Slot[]; allAgg: (AggStats | null)[]; stats: PlayerStatsDb }) {
-  const loaded = slots.map((s, i) => ({ s, agg: allAgg[i], st: stats[s.fed], i })).filter(x => x.agg || x.st);
+function StatsTable({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats | null)[] }) {
+  const loaded = slots.map((s, i) => ({ s, agg: allAgg[i], i })).filter(x => x.agg);
   if (loaded.length < 2) return null;
 
   type Row = { label: string; values: (string | null)[]; best?: "low" | "high"; emoji?: string };
   const rows: Row[] = [];
-  const val = (fn: (agg: AggStats | null, st: typeof loaded[0]["st"]) => string | null) =>
-    loaded.map(x => fn(x.agg, x.st));
+  const val = (fn: (agg: AggStats | null) => string | null) =>
+    loaded.map(x => fn(x.agg));
 
-  rows.push({ label: "HCP Atual", emoji: "🏌️", values: val((_, st) => st?.currentHcp != null ? st.currentHcp.toFixed(1) : null), best: "low" });
-  rows.push({ label: "Melhor Gross", emoji: "🏆", values: val((a, st) => {
-    const v = a?.bestGross ?? st?.bestGross; return v != null ? String(v) : null;
-  }), best: "low" });
-  rows.push({ label: "Gross Médio", emoji: "📊", values: val((a, st) => {
-    const v = a?.avgGross ?? st?.avgGross5; return v != null ? v.toFixed(0) : null;
-  }), best: "low" });
-  rows.push({ label: "SD Best 8/20", emoji: "📈", values: val((_, st) => st?.avgSD8 != null ? st.avgSD8.toFixed(1) : null), best: "low" });
-  rows.push({ label: "Panc. Perdidas/Volta", emoji: "🎯", values: val((a) => a ? fD(a.totalStrokesLost) : null), best: "low" });
+  rows.push({ label: "Rondas Torneio", emoji: "🏟️", values: val((a) => a ? String(a.nRounds) : null), best: "high" });
+  rows.push({ label: "Melhor Gross", emoji: "🏆", values: val((a) => a?.bestGross != null ? String(a.bestGross) : null), best: "low" });
+  rows.push({ label: "Gross Médio", emoji: "📊", values: val((a) => a?.avgGross != null ? a.avgGross.toFixed(0) : null), best: "low" });
+  rows.push({ label: "SD Médio", emoji: "📈", values: val((a) => a?.avgSD != null ? a.avgSD.toFixed(1) : null), best: "low" });
+  rows.push({ label: "SD Best 8/20", emoji: "🎖️", values: val((a) => a?.best8of20SD != null ? a.best8of20SD.toFixed(1) : null), best: "low" });
+  rows.push({ label: "SD Últimas 5", emoji: "🔥", values: val((a) => a?.last5AvgSD != null ? a.last5AvgSD.toFixed(1) : null), best: "low" });
+  rows.push({ label: "Melhor SD", emoji: "⭐", values: val((a) => a?.bestSD != null ? a.bestSD.toFixed(1) : null), best: "low" });
+  rows.push({ label: "Panc. s/ Par/Volta", emoji: "🎯", values: val((a) => a ? fD(a.totalStrokesOverPar) : null), best: "low" });
   rows.push({ label: "Par ou Melhor", emoji: "⛳", values: val((a) => a ? pct(a.parOrBetterPct) : null), best: "high" });
   rows.push({ label: "Dbl+ ou Pior", emoji: "⚠️", values: val((a) => a ? pct(a.dblOrWorsePct) : null), best: "low" });
   rows.push({ label: "Par 3 vs Par", emoji: "🟢", values: val((a) => a?.byPar[3] ? fD2(a.byPar[3].avgVsPar) : null), best: "low" });
   rows.push({ label: "Par 4 vs Par", emoji: "🔵", values: val((a) => a?.byPar[4] ? fD2(a.byPar[4].avgVsPar) : null), best: "low" });
   rows.push({ label: "Par 5 vs Par", emoji: "🟣", values: val((a) => a?.byPar[5] ? fD2(a.byPar[5].avgVsPar) : null), best: "low" });
-  rows.push({ label: "Voltas 12m", emoji: "📅", values: val((_, st) => st?.roundsLast12m != null ? String(st.roundsLast12m) : null), best: "high" });
-  rows.push({ label: "Δ HCP 3m", emoji: "📉", values: val((_, st) => st?.hcpDelta3m != null ? ((st.hcpDelta3m > 0 ? "+" : "") + st.hcpDelta3m.toFixed(1)) : null), best: "low" });
 
   const bestIdx = rows.map(r => {
     const nums = r.values.map(v => v != null ? parseFloat(v.replace(/[+%]/g, "")) : null);
@@ -287,7 +422,7 @@ function StatsTable({ slots, allAgg, stats }: { slots: Slot[]; allAgg: (AggStats
 
   return (
     <div className="courseAnalysis" style={{ padding: 0, overflow: "hidden" }}>
-      <div className="caTitle" style={{ padding: "14px 16px 0" }}>Comparação Detalhada</div>
+      <div className="caTitle" style={{ padding: "14px 16px 0" }}>Comparação Detalhada <span className="muted" style={{ fontWeight: 400, fontSize: 11 }}>(apenas torneios)</span></div>
       <div className="pa-table-wrap" style={{ marginTop: 8 }}>
         <table className="pa-table" style={{ fontSize: 13 }}>
           <thead>
@@ -346,7 +481,7 @@ function ScoreDistribution({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats
 
   return (
     <div className="courseAnalysis" style={{ padding: 16 }}>
-      <div className="caTitle">Distribuição de Scores</div>
+      <div className="caTitle">Distribuição de Scores <span className="muted" style={{ fontWeight: 400, fontSize: 11 }}>(apenas torneios)</span></div>
       <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 8 }}>
         {cats.filter(c => c.key !== "total").map(cat => {
           const vals = loaded.map(x => {
@@ -392,25 +527,18 @@ function ScoreDistribution({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats
   );
 }
 
-/* ═══════════════════ § 4 BURACO A BURACO ═══════════════════ */
+/* ═══════════════════ § 4 BURACO A BURACO (torneios) ═══════════════════ */
 
 function HoleByHoleSection({ slots }: { slots: Slot[] }) {
   const loaded = slots.filter(s => s.data);
   if (loaded.length < 2) return null;
 
   const combos = useMemo(() => {
-    const maps = loaded.map(s => {
-      const m = new Map<string, { label: string; nR: number; stats: HoleStatsData }>();
-      for (const ck in s.data!.HOLE_STATS) for (const tk in s.data!.HOLE_STATS[ck]) {
-        const hs = s.data!.HOLE_STATS[ck][tk];
-        if (hs.holeCount !== 18 || hs.nRounds < 2) continue;
-        m.set(ck + "|" + tk, { label: ck.replace(/_/g, " ") + " — " + hs.teeName, nR: hs.nRounds, stats: hs });
-      }
-      return m;
-    });
+    const maps = loaded.map(s => buildTourneyHoleStats(s.data!));
+
     const allKeys = new Set<string>();
     maps.forEach(m => m.forEach((_, k) => allKeys.add(k)));
-    const result: { label: string; nRounds: number[]; stats: (HoleStatsData | null)[] }[] = [];
+    const result: { label: string; nRounds: number[]; stats: (SimpleHoleStats | null)[] }[] = [];
     for (const k of allKeys) {
       const entries = maps.map(m => m.get(k) || null);
       if (entries.filter(Boolean).length < 2) continue;
@@ -436,7 +564,7 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
   return (
     <div className="courseAnalysis">
       <div className="caTitle" style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-        Buraco a Buraco
+        Buraco a Buraco <span className="muted" style={{ fontWeight: 400, fontSize: 11 }}>(torneios)</span>
         <select className="select" value={sel} onChange={e => setSel(Number(e.target.value))}>
           {combos.map((c, i) => <option key={i} value={i}>{c.label} ({c.nRounds.filter(n => n > 0).join("/")} rondas)</option>)}
         </select>
@@ -484,7 +612,7 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
             <th className="r">H</th><th className="r">Par</th>
             {loaded.map((s, i) => (<React.Fragment key={s.fed}>
               <th className="r" style={{ color: COLORS[i] }}>{firstName(s.player.name)} Avg</th>
-              <th className="r" style={{ color: COLORS[i] }}>SL</th>
+              <th className="r" style={{ color: COLORS[i] }}>vs Par</th>
             </React.Fragment>))}
           </tr></thead>
           <tbody>
@@ -498,12 +626,11 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
                 <td className="r" style={{ color: "var(--text-3)" }}>{par}</td>
                 {entries.map((e, i) => {
                   const diff = e?.avg != null && e?.par != null ? e.avg - e.par : null;
-                  const sl = e?.strokesLost ?? null;
                   const isBest = diff != null && diff === bestAvg && avgs.filter(v => v === bestAvg).length === 1;
                   const diffCol = diff == null ? undefined : diff <= 0 ? "#16a34a" : diff <= 0.3 ? "#d97706" : "#dc2626";
                   return (<React.Fragment key={i}>
+                    <td className="r" style={{ color: COLORS[i] }}>{e?.avg != null ? e.avg.toFixed(1) : "–"}</td>
                     <td className="r" style={{ color: diffCol }}>{diff != null ? (isBest ? <b>{fD2(diff)}</b> : fD2(diff)) : "–"}</td>
-                    <td className="r" style={{ color: sl != null && sl > 0.2 ? "#dc2626" : "var(--text-3)" }}>{sl != null ? fD2(sl) : "–"}</td>
                   </React.Fragment>);
                 })}
               </tr>);
@@ -525,7 +652,7 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
     const eventMap = new Map<string, Map<number, RoundData & { course: string }>>();
     loaded.forEach((s, si) => {
       for (const c of s.data!.DATA) for (const r of c.rounds) {
-        if (!r.eventName || r.eventName === "EDS" || r.eventName === "Indiv" || r.holeCount !== 18) continue;
+        if (!isTournamentRound(r)) continue;
         const key = norm(r.eventName) + "|" + r.date;
         if (!eventMap.has(key)) eventMap.set(key, new Map());
         eventMap.get(key)!.set(si, { ...r, course: c.course });
@@ -628,49 +755,118 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
   );
 }
 
-/* ═══════════════════ § 6 EVOLUÇÃO HCP ═══════════════════ */
+/* ═══════════════════ § 6 EVOLUÇÃO EM TORNEIOS ═══════════════════ */
 
-function HcpEvolutionSection({ slots }: { slots: Slot[] }) {
+function TournamentEvolutionSection({ slots }: { slots: Slot[] }) {
   const [period, setPeriod] = useState(12);
-  const loaded = slots.filter(s => s.data && s.data.CROSS_DATA[s.fed]?.hcpHistory?.length >= 2);
+  const [metric, setMetric] = useState<"sd" | "gross">("sd");
+  const loaded = slots.filter(s => s.data);
   if (loaded.length < 2) return null;
+
   const cutoff = period > 0 ? Date.now() - period * 30.44 * 86400000 : 0;
-  const W = 800, H = 260, PAD = { top: 20, right: 20, bottom: 30, left: 45 };
-  const series = loaded.map((s, i) => ({ name: s.player.name, color: COLORS[i], pts: (s.data!.CROSS_DATA[s.fed]?.hcpHistory || []).filter(p => p.d >= cutoff).sort((a, b) => a.d - b.d) }));
+
+  // Build tournament-only series from DATA rounds
+  const series = useMemo(() => loaded.map((s, i) => {
+    const pts: { d: number; sd: number; gross: number; event: string }[] = [];
+    for (const cd of s.data!.DATA) {
+      for (const r of cd.rounds) {
+        if (!isTournamentRound(r)) continue;
+        if (r.dateSort < cutoff) continue;
+        const sd = r.sd != null ? Number(r.sd) : null;
+        const gross = Number(r.gross);
+        if (sd != null && !isNaN(sd) && gross > 50) {
+          pts.push({ d: r.dateSort, sd, gross, event: r.eventName });
+        }
+      }
+    }
+    pts.sort((a, b) => a.d - b.d);
+
+    // Compute rolling average (5-round window)
+    const rolling: { d: number; val: number; raw: number; event: string }[] = [];
+    const window = 5;
+    for (let j = 0; j < pts.length; j++) {
+      const start = Math.max(0, j - window + 1);
+      const slice = pts.slice(start, j + 1);
+      const avg = slice.reduce((s, p) => s + (metric === "sd" ? p.sd : p.gross), 0) / slice.length;
+      rolling.push({ d: pts[j].d, val: avg, raw: metric === "sd" ? pts[j].sd : pts[j].gross, event: pts[j].event });
+    }
+    return { name: s.player.name, color: COLORS[i], pts: rolling };
+  }), [loaded, cutoff, metric]);
+
   const allPts = series.flatMap(s => s.pts);
-  if (allPts.length === 0) return null;
+  if (allPts.length < 4) return null;
+
+  const W = 800, H = 260, PAD = { top: 20, right: 20, bottom: 30, left: 45 };
   const minD = Math.min(...allPts.map(p => p.d)), maxD = Math.max(...allPts.map(p => p.d));
-  const minH = Math.min(...allPts.map(p => p.h)), maxH = Math.max(...allPts.map(p => p.h));
-  const rangeD = maxD - minD || 1, rangeH = maxH - minH || 1, padH = rangeH * 0.1;
+  const allVals = allPts.map(p => p.val);
+  const minV = Math.min(...allVals), maxV = Math.max(...allVals);
+  const rangeD = maxD - minD || 1, rangeV = maxV - minV || 1, padV = rangeV * 0.1;
   const xPos = (d: number) => PAD.left + ((d - minD) / rangeD) * (W - PAD.left - PAD.right);
-  const yPos = (h: number) => H - PAD.bottom - ((h - (minH - padH)) / (rangeH + 2 * padH)) * (H - PAD.top - PAD.bottom);
+  const yPos = (v: number) => H - PAD.bottom - ((v - (minV - padV)) / (rangeV + 2 * padV)) * (H - PAD.top - PAD.bottom);
+
+  // For SD: lower is better, so invert visual logic in KPIs
+  const metricLabel = metric === "sd" ? "SD" : "Gross";
 
   return (
     <div className="courseAnalysis">
-      <div className="caTitle" style={{ display: "flex", alignItems: "center", gap: 10 }}>
-        Evolução HCP
+      <div className="caTitle" style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+        Evolução em Torneios
+        <select className="select" value={metric} onChange={e => setMetric(e.target.value as "sd" | "gross")}>
+          <option value="sd">Score Differential</option>
+          <option value="gross">Gross</option>
+        </select>
         <select className="select" value={period} onChange={e => setPeriod(Number(e.target.value))}>
           <option value={0}>Total</option><option value={36}>3 anos</option><option value={24}>2 anos</option><option value={12}>1 ano</option><option value={6}>6 meses</option>
         </select>
+        <span className="muted" style={{ fontSize: 10, fontWeight: 400 }}>média móvel 5 rondas</span>
       </div>
       <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", maxHeight: 280, background: "#fafafa", borderRadius: 8, border: "1px solid var(--border-light)" }}>
-        {Array.from({ length: 5 }, (_, i) => { const val = minH - padH + (rangeH + 2 * padH) * (i / 4); return (<g key={i}><line x1={PAD.left} y1={yPos(val)} x2={W - PAD.right} y2={yPos(val)} stroke="#e2e8f0" strokeWidth={0.5} /><text x={PAD.left - 4} y={yPos(val) + 3} textAnchor="end" fontSize={9} fill="#94a3b8">{val.toFixed(1)}</text></g>); })}
-        {series.map((s, si) => { if (s.pts.length < 2) return null; const d = s.pts.map(pt => `${xPos(pt.d).toFixed(1)},${yPos(pt.h).toFixed(1)}`).join(" L "); return (<g key={si}><path d={`M ${d}`} fill="none" stroke={s.color} strokeWidth={2} opacity={0.8} strokeLinejoin="round" />{s.pts.map((pt, j) => (<circle key={j} cx={xPos(pt.d)} cy={yPos(pt.h)} r={2.5} fill={s.color} opacity={0.5}><title>{s.name}: HCP {pt.h} ({new Date(pt.d).toLocaleDateString("pt-PT")})</title></circle>))}</g>); })}
+        {Array.from({ length: 5 }, (_, i) => {
+          const val = minV - padV + (rangeV + 2 * padV) * (i / 4);
+          return (
+            <g key={i}>
+              <line x1={PAD.left} y1={yPos(val)} x2={W - PAD.right} y2={yPos(val)} stroke="#e2e8f0" strokeWidth={0.5} />
+              <text x={PAD.left - 4} y={yPos(val) + 3} textAnchor="end" fontSize={9} fill="#94a3b8">{val.toFixed(1)}</text>
+            </g>
+          );
+        })}
+        {series.map((s, si) => {
+          if (s.pts.length < 2) return null;
+          const d = s.pts.map(pt => `${xPos(pt.d).toFixed(1)},${yPos(pt.val).toFixed(1)}`).join(" L ");
+          return (
+            <g key={si}>
+              <path d={`M ${d}`} fill="none" stroke={s.color} strokeWidth={2} opacity={0.8} strokeLinejoin="round" />
+              {s.pts.map((pt, j) => (
+                <circle key={j} cx={xPos(pt.d)} cy={yPos(pt.val)} r={2.5} fill={s.color} opacity={0.5}>
+                  <title>{s.name}: {metricLabel} {pt.raw.toFixed(1)} (avg {pt.val.toFixed(1)}) — {pt.event} ({new Date(pt.d).toLocaleDateString("pt-PT")})</title>
+                </circle>
+              ))}
+            </g>
+          );
+        })}
       </svg>
       <div className="caKpis" style={{ marginTop: 8 }}>
         {series.map((s, i) => {
-          const last = s.pts.length > 0 ? s.pts[s.pts.length - 1].h : null;
-          const first = s.pts.length > 0 ? s.pts[0].h : null;
+          const last = s.pts.length > 0 ? s.pts[s.pts.length - 1].val : null;
+          const first = s.pts.length > 0 ? s.pts[0].val : null;
           const delta = last != null && first != null ? last - first : null;
+          const best = s.pts.length > 0 ? Math.min(...s.pts.map(p => p.raw)) : null;
           return (
             <div key={i} className="caKpi" style={{ borderColor: s.color }}>
               <div className="caKpiVal" style={{ color: s.color }}>{last != null ? last.toFixed(1) : "–"}</div>
-              <div className="caKpiLbl">{shortName(s.name)}</div>
-              {delta != null && (
-                <div style={{ fontSize: 10, fontWeight: 700, marginTop: 2, color: delta < 0 ? "#16a34a" : delta > 0 ? "#dc2626" : "#7a8a6e" }}>
-                  {delta > 0 ? "+" : ""}{delta.toFixed(1)} no período
-                </div>
-              )}
+              <div className="caKpiLbl">{shortName(s.name)} · {s.pts.length} rondas</div>
+              <div style={{ display: "flex", gap: 8, justifyContent: "center", marginTop: 3 }}>
+                {delta != null && (
+                  <span style={{ fontSize: 10, fontWeight: 700, color: delta < 0 ? "#16a34a" : delta > 0 ? "#dc2626" : "#7a8a6e" }}>
+                    {delta > 0 ? "+" : ""}{delta.toFixed(1)}
+                  </span>
+                )}
+                {best != null && (
+                  <span style={{ fontSize: 10, fontWeight: 600, color: "#7a8a6e" }}>
+                    melhor: {best.toFixed(metric === "sd" ? 1 : 0)}
+                  </span>
+                )}
+              </div>
             </div>
           );
         })}
@@ -683,8 +879,6 @@ function HcpEvolutionSection({ slots }: { slots: Slot[] }) {
 
 export default function CompararPage({ players }: { players: PlayersDb }) {
   const [slots, setSlots] = useState<Slot[]>([]);
-  const [stats, setStats] = useState<PlayerStatsDb>({});
-  useEffect(() => { loadPlayerStats().then(setStats); }, []);
 
   const addPlayer = (fed: string) => {
     if (slots.length >= 4 || slots.find(s => s.fed === fed)) return;
@@ -710,8 +904,11 @@ export default function CompararPage({ players }: { players: PlayersDb }) {
           <div className="muted" style={{ fontSize: 13, lineHeight: 1.6 }}>
             Pesquisa e adiciona até 4 jogadores para comparar lado a lado.
           </div>
+          <div className="muted" style={{ fontSize: 12, marginTop: 4, color: "#7a8a6e" }}>
+            📌 Todas as estatísticas consideram apenas rondas de torneio (sem EDS nem individuais).
+          </div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "center", marginTop: 16 }}>
-            {["Perfil radar", "Tabela detalhada", "Distribuição de scores", "Buraco a buraco", "Head-to-head", "Evolução HCP"].map(label => (
+            {["Perfil radar", "Tabela detalhada", "Distribuição de scores", "Buraco a buraco", "Head-to-head", "Evolução torneios"].map(label => (
               <span key={label} style={{
                 padding: "4px 12px", borderRadius: 12, background: "#f0f2ec",
                 fontSize: 11, fontWeight: 600, color: "#4a5940",
@@ -730,11 +927,11 @@ export default function CompararPage({ players }: { players: PlayersDb }) {
 
       {slots.length >= 2 && !anyLoading && (<>
         <RadarChart slots={slots} allAgg={allAgg} />
-        <StatsTable slots={slots} allAgg={allAgg} stats={stats} />
+        <StatsTable slots={slots} allAgg={allAgg} />
         <ScoreDistribution slots={slots} allAgg={allAgg} />
         <HoleByHoleSection slots={slots} />
         <HeadToHeadSection slots={slots} />
-        <HcpEvolutionSection slots={slots} />
+        <TournamentEvolutionSection slots={slots} />
       </>)}
 
       {slots.length === 1 && !anyLoading && (
