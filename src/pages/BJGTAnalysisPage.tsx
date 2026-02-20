@@ -1148,6 +1148,22 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                   {ecl.holeCount >= 18 && <td className="col-in" style={{ fontWeight: 700 }}>{ecl.holes.slice(9, 18).reduce((s, h) => s + (h.par ?? 0), 0)}</td>}
                   <td className="col-total" style={{ fontWeight: 900 }}>{tp}</td>
                 </tr>
+                {vpHoleProfiles.length > 0 && vpHoleProfiles.some(h => h.meters != null) && (
+                <tr style={{ background: "#f8fafc" }}>
+                  <td className="row-label" style={{ fontWeight: 600, fontSize: 9, color: "#64748b" }}>m</td>
+                  {Array.from({ length: 9 }, (_, i) => {
+                    const m = vpHoleProfiles[i]?.meters;
+                    return <td key={i} style={{ fontSize: 9, color: "#94a3b8" }}>{m ?? "–"}</td>;
+                  })}
+                  <td className="col-out" style={{ fontSize: 9, color: "#94a3b8" }}>{vpHoleProfiles.slice(0, 9).reduce((s, h) => s + (h.meters ?? 0), 0) || "–"}</td>
+                  {ecl.holeCount >= 18 && Array.from({ length: 9 }, (_, i) => {
+                    const m = vpHoleProfiles[i + 9]?.meters;
+                    return <td key={i} style={{ fontSize: 9, color: "#94a3b8" }}>{m ?? "–"}</td>;
+                  })}
+                  {ecl.holeCount >= 18 && <td className="col-in" style={{ fontSize: 9, color: "#94a3b8" }}>{vpHoleProfiles.slice(9, 18).reduce((s, h) => s + (h.meters ?? 0), 0) || "–"}</td>}
+                  <td className="col-total" style={{ fontSize: 9, color: "#94a3b8" }}>{vpHoleProfiles.reduce((s, h) => s + (h.meters ?? 0), 0) || "–"}</td>
+                </tr>
+                )}
                 <tr style={{ borderTop: "2px solid #cbd5e1" }}>
                   <td className="row-label" style={{ color: "#0369a1", fontWeight: 700, fontSize: 10 }}>Eclético</td>
                   {ecl.holes.slice(0, 9).map((h, i) => <td key={i}><ScoreCircle g={h.best} p={h.par} /></td>)}
