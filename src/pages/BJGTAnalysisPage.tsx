@@ -62,18 +62,38 @@ const FIELD_2025 = {
   /* Difficulty rank: hardest first */
   diffRank: [10,1,18,15,13,9,4,12,11,8,3,6,16,14,17,5,7,2],
   leaderboard: [
-    { name:"Dmitrii Elchaninov", pos:1, total:205, result:-8, rounds:[68,69,68], best:68 },
-    { name:"Marcus Karim", pos:2, total:218, result:5, rounds:[74,73,71], best:71 },
-    { name:"Harrison Barnett", pos:3, total:220, result:7, rounds:[77,71,72], best:71 },
-    { name:"Julian Sepulveda", pos:4, total:223, result:10, rounds:[73,77,73], best:73 },
-    { name:"Mihir Pasura", pos:5, total:229, result:16, rounds:[82,74,73], best:73 },
-    { name:"Nicolas Pape", pos:6, total:231, result:18, rounds:[75,77,79], best:75 },
-    { name:"Harry-James Odell", pos:7, total:231, result:18, rounds:[77,74,80], best:74 },
-    { name:"Aronas Juodis", pos:8, total:232, result:19, rounds:[74,77,81], best:74 },
-    { name:"Hugo Luque Reina", pos:9, total:237, result:24, rounds:[78,77,82], best:77 },
-    { name:"Maxime Vervaet", pos:10, total:239, result:26, rounds:[83,77,79], best:77 },
+    { name:"Dmitrii Elchaninov", pos:1, country:"🇷🇺", total:205, result:-8, rounds:[68,69,68], best:68 },
+    { name:"Marcus Karim", pos:2, country:"🏴󠁧󠁢󠁥󠁮󠁧󠁿", total:218, result:5, rounds:[74,73,71], best:71 },
+    { name:"Harrison Barnett", pos:3, country:"🏴󠁧󠁢󠁥󠁮󠁧󠁿", total:220, result:7, rounds:[77,71,72], best:71 },
+    { name:"Julian Sepulveda", pos:4, country:"🇺🇸", total:223, result:10, rounds:[73,77,73], best:73 },
+    { name:"Mihir Pasura", pos:5, country:"🇬🇧", total:229, result:16, rounds:[82,74,73], best:73 },
+    { name:"Nicolas Pape", pos:6, country:"🇹🇭", total:231, result:18, rounds:[75,77,79], best:75 },
+    { name:"Harry-James Odell", pos:7, country:"🏴󠁧󠁢󠁥󠁮󠁧󠁿", total:231, result:18, rounds:[77,74,80], best:74 },
+    { name:"Aronas Juodis", pos:8, country:"🇱🇹", total:232, result:19, rounds:[74,77,81], best:74 },
+    { name:"Hugo Luque Reina", pos:9, country:"🇪🇸", total:237, result:24, rounds:[78,77,82], best:77 },
+    { name:"Maxime Vervaet", pos:10, country:"🇪🇸", total:239, result:26, rounds:[83,77,79], best:77 },
+    { name:"Miroslavs Bogdanovs", pos:24, country:"🇪🇸", total:263, result:50, rounds:[86,88,89], best:86 },
+    { name:"Alexis Beringer", pos:33, country:"🇨🇭", total:290, result:77, rounds:[93,94,103], best:93 },
   ],
-};/* ═══════════════════════════════════
+};
+const VP_PAR = [5,3,4,3,4,5,4,3,4,4,5,3,4,4,5,3,4,4]; // par 71
+const FIELD_CARDS = [
+  { name:"Dmitrii Elchaninov", pos:1, rounds:[[4,3,5,4,4,5,4,2,4,4,5,3,4,3,5,2,4,3],[5,3,5,3,4,5,3,3,4,4,4,3,4,3,5,3,4,4],[5,2,3,4,3,5,4,3,4,4,6,3,4,3,5,3,3,4]], ecl:[4,2,3,3,3,5,3,2,4,4,4,3,4,3,5,2,3,3], eclTotal:60 },
+  { name:"Marcus Karim", pos:2, rounds:[[7,3,4,3,4,4,4,3,3,4,4,4,5,4,6,3,4,5],[4,3,4,2,4,4,4,3,4,9,6,3,3,4,5,3,3,5],[7,2,4,3,4,4,4,3,5,4,5,2,5,3,5,3,3,5]], ecl:[4,2,4,2,4,4,4,3,3,4,4,2,3,3,5,3,3,5], eclTotal:62 },
+  { name:"Harrison Barnett", pos:3, rounds:[[5,3,4,3,4,5,3,3,4,5,6,4,4,7,4,5,3,5],[5,3,3,4,4,5,4,3,4,5,6,3,3,4,5,3,3,4],[5,3,5,4,3,5,4,3,4,4,5,3,5,3,6,3,4,3]], ecl:[5,3,3,3,3,5,3,3,4,4,5,3,3,3,4,3,3,3], eclTotal:63 },
+  { name:"Julian Sepulveda", pos:4, rounds:[[5,4,4,4,3,4,4,3,4,3,5,3,6,4,5,3,5,4],[6,3,5,3,3,6,5,3,4,5,6,4,4,4,5,3,4,4],[5,2,3,5,5,6,4,4,5,4,4,4,3,4,4,5,3,3]], ecl:[5,2,3,3,3,4,4,3,4,3,4,3,3,4,4,3,3,3], eclTotal:61 },
+  { name:"Mihir Pasura", pos:5, rounds:[[6,3,3,4,5,6,3,4,4,4,6,4,5,4,7,3,5,6],[5,3,4,3,4,6,4,3,6,4,5,3,5,4,4,2,4,5],[6,3,4,4,4,5,4,2,4,5,5,3,4,5,5,3,3,4]], ecl:[5,3,3,3,4,5,3,2,4,4,5,3,4,4,4,2,3,4], eclTotal:65 },
+  { name:"Nicolas Pape", pos:6, rounds:[[5,3,4,2,4,5,4,6,4,6,5,3,3,5,5,3,4,4],[5,4,4,3,4,6,4,3,4,5,6,4,5,4,5,2,4,5],[7,2,4,4,3,4,4,3,4,5,5,3,5,4,8,3,5,6]], ecl:[5,2,4,2,3,4,4,3,4,5,5,3,3,4,5,2,4,4], eclTotal:66 },
+  { name:"Harry-James Odell", pos:7, rounds:[[7,4,4,3,4,5,3,4,3,4,5,3,4,5,6,3,5,5],[6,4,6,3,4,5,3,3,5,6,5,2,3,3,5,3,4,4],[6,2,4,4,3,5,5,4,5,3,6,3,6,3,5,2,8,6]], ecl:[6,2,4,3,3,5,3,3,3,3,5,2,3,3,5,2,4,4], eclTotal:63 },
+  { name:"Aronas Juodis", pos:8, rounds:[[6,4,4,2,3,5,4,3,4,5,6,3,4,3,5,3,4,6],[5,3,4,4,4,5,4,3,5,5,4,3,4,5,6,3,4,6],[5,3,5,5,5,6,4,3,6,3,6,4,3,4,5,4,5,5]], ecl:[5,3,4,2,3,5,4,3,4,3,4,3,3,3,5,3,4,5], eclTotal:66 },
+  { name:"Hugo Luque Reina", pos:9, rounds:[[6,2,4,3,5,6,4,3,4,7,5,4,5,3,5,3,4,5],[5,4,4,3,6,5,4,4,4,4,5,3,4,5,5,3,5,4],[7,3,4,3,4,5,5,4,5,4,5,4,5,4,8,3,4,5]], ecl:[5,2,4,3,4,5,4,3,4,4,5,3,4,3,5,3,4,4], eclTotal:69 },
+  { name:"Maxime Vervaet", pos:10, rounds:[[6,4,6,4,4,7,4,3,4,5,5,5,5,5,4,3,4,5],[6,4,4,3,4,5,4,2,5,7,6,4,4,3,5,2,4,5],[5,3,5,3,4,4,4,5,6,5,6,3,4,4,6,4,4,4]], ecl:[5,3,4,3,4,4,4,2,4,5,5,3,4,3,4,2,4,4], eclTotal:67 },
+  { name:"Miroslavs Bogdanovs", pos:24, rounds:[[8,3,5,3,4,5,4,3,5,7,6,7,5,3,6,4,4,4],[6,3,4,4,5,5,5,5,8,6,5,2,4,7,7,4,4,4],[6,3,6,4,5,6,6,2,5,4,6,4,5,5,8,5,4,5]], ecl:[6,3,4,3,4,5,4,2,5,4,5,2,4,3,6,4,4,4], eclTotal:72 },
+  { name:"Alexis Beringer", pos:33, rounds:[[8,4,6,4,6,7,5,4,3,6,6,4,6,4,6,4,5,5],[7,3,5,3,6,6,5,5,4,5,7,3,6,8,6,4,6,5],[7,4,6,4,5,8,6,5,4,6,7,4,7,6,6,6,5,7]], ecl:[7,3,5,3,5,6,5,4,3,5,6,3,6,4,6,4,5,5], eclTotal:85 },
+];
+const MANUEL_POS = 26; // 26º de 35 no torneio real
+const FIELD_TOTAL = 35; // total de jogadores no torneio
+/* ═══════════════════════════════════
    HELPERS
    ═══════════════════════════════════ */
 function matchesCourse(name: string): boolean {
@@ -140,6 +160,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [tab, setTab] = useState<"analise" | "rivais">("analise");
+  const [distPeriod, setDistPeriod] = useState<number>(12); // months: 3,6,9,12,0=all
+  const [expandedPlayers, setExpandedPlayers] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     let alive = true;
@@ -157,6 +179,44 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
   /* ── Analysis ── */
   const A = useMemo(() => {
     if (!data) return null;
+
+    const MONTH_NAMES = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+    const MONTH_MAP: Record<string,number> = { jan:0,fev:1,feb:1,mar:2,abr:3,apr:3,mai:4,may:4,jun:5,jul:6,ago:7,aug:7,set:8,sep:8,out:9,oct:9,nov:10,dez:11,dec:11 };
+    /** Parse a round's date info into { key: "2025-06", label: "Jun 25" } */
+    function toMonth(dateStr: string, dateSort: number): { key: string; label: string } {
+      // Try date string first: "15 Jun 2024", "2024-06-15", "15/06/2024", etc.
+      if (dateStr) {
+        // Pattern: "DD Mon YYYY" or "DD-Mon-YYYY"
+        const m1 = dateStr.match(/(\d{1,2})\s+(\w{3})\w*\s+(\d{4})/);
+        if (m1) {
+          const mi = MONTH_MAP[m1[2].toLowerCase()];
+          if (mi != null) return { key: `${m1[3]}-${String(mi+1).padStart(2,"0")}`, label: `${MONTH_NAMES[mi]} ${m1[3].slice(2)}` };
+        }
+        // Pattern: "YYYY-MM-DD"
+        const m2 = dateStr.match(/(\d{4})-(\d{2})-(\d{2})/);
+        if (m2) {
+          const mi = Number(m2[2]) - 1;
+          if (mi >= 0 && mi < 12) return { key: `${m2[1]}-${m2[2]}`, label: `${MONTH_NAMES[mi]} ${m2[1].slice(2)}` };
+        }
+        // Pattern: "DD/MM/YYYY"
+        const m3 = dateStr.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+        if (m3) {
+          const mi = Number(m3[2]) - 1;
+          if (mi >= 0 && mi < 12) return { key: `${m3[3]}-${m3[2].padStart(2,"0")}`, label: `${MONTH_NAMES[mi]} ${m3[3].slice(2)}` };
+        }
+      }
+      // dateSort is a millisecond timestamp (epoch) — use Date constructor
+      if (dateSort > 9999999) {
+        const d = new Date(dateSort);
+        const yr = d.getFullYear();
+        const mo = d.getMonth(); // 0-11
+        if (yr >= 2000 && yr <= 2099) {
+          return { key: `${yr}-${String(mo+1).padStart(2,"0")}`, label: `${MONTH_NAMES[mo]} ${String(yr).slice(2)}` };
+        }
+      }
+      // Last fallback
+      return { key: `unknown-${dateSort}`, label: `?` };
+    }
 
     // 1) Find VP courses
     const vpCourses = data.DATA.filter(c => matchesCourse(c.course));
@@ -463,8 +523,215 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
     }
     const recoveryRate = totalRecovery > 0 ? goodRecovery / totalRecovery * 100 : null;
 
-    return { stats, cards, ecl, allR, hcp, holePatterns, trapHoles, strongHoles, volatileHoles, daySummaries, bestDay, worstDay, f9avg, b9avg, f9par, b9par, recoveryRate, goodRecovery, badRecovery, totalRecovery, vpCards, nH, parArr, vpHoleProfiles, bands, distEvolution, metersGrowing, metersDiff, avgGrossShort, avgGrossLong, medianMeters, allHoleSamples };
+    // 13) MONTHLY STATS — group all rounds by month for temporal analysis
+    type RoundDetail = { ds: number; month: string; gross: number; par: number; course: string;
+      f9: number; b9: number; nDbl: number; nHoles: number; nPob: number;
+      p3sum: number; p3n: number; p4sum: number; p4n: number; p5sum: number; p5n: number };
+    const roundDetails: RoundDetail[] = [];
+    for (const tr of allTR) {
+      const h = data.HOLES?.[tr.scoreId];
+      if (!h?.g || h.g.length < 18) continue;
+      let f9 = 0, b9 = 0, nDbl = 0, nPob = 0, nHoles = 0;
+      let p3sum = 0, p3n = 0, p4sum = 0, p4n = 0, p5sum = 0, p5n = 0;
+      for (let i = 0; i < 18; i++) {
+        const g = h.g[i], p = h.p[i] ?? 4;
+        if (g == null || g <= 0) continue;
+        nHoles++;
+        if (i < 9) f9 += g; else b9 += g;
+        if (g >= p + 2) nDbl++;
+        if (g <= p) nPob++;
+        if (p === 3) { p3sum += g; p3n++; }
+        else if (p === 4) { p4sum += g; p4n++; }
+        else if (p === 5) { p5sum += g; p5n++; }
+      }
+      // month from date string or dateSort
+      const { key: month } = toMonth(tr.date, tr.ds);
+      roundDetails.push({ ds: tr.ds, month, gross: tr.gross, par: tr.par, course: tr.course,
+        f9, b9, nDbl, nHoles, nPob, p3sum, p3n, p4sum, p4n, p5sum, p5n });
+    }
+    roundDetails.sort((a, b) => a.ds - b.ds);
+
+    type MonthBucket = { month: string; label: string; rounds: number;
+      avgGross: number; avgVsPar: number; dblPct: number; pobPct: number;
+      p3Avg: number | null; p4Avg: number | null; p5Avg: number | null;
+      f9Avg: number; b9Avg: number; bestGross: number; worstGross: number };
+    const monthMap = new Map<string, RoundDetail[]>();
+    for (const r of roundDetails) {
+      if (!monthMap.has(r.month)) monthMap.set(r.month, []);
+      monthMap.get(r.month)!.push(r);
+    }
+    const monthlyStats: MonthBucket[] = [];
+    for (const [month, rds] of Array.from(monthMap.entries()).sort((a, b) => a[0].localeCompare(b[0]))) {
+      const n = rds.length;
+      const avgGross = rds.reduce((s, r) => s + r.gross, 0) / n;
+      const avgVsPar = rds.reduce((s, r) => s + (r.gross - r.par), 0) / n;
+      const totalHoles = rds.reduce((s, r) => s + r.nHoles, 0);
+      const totalDbl = rds.reduce((s, r) => s + r.nDbl, 0);
+      const totalPob = rds.reduce((s, r) => s + r.nPob, 0);
+      const tp3n = rds.reduce((s, r) => s + r.p3n, 0);
+      const tp4n = rds.reduce((s, r) => s + r.p4n, 0);
+      const tp5n = rds.reduce((s, r) => s + r.p5n, 0);
+      const [y, mo] = month.split("-");
+      const moIdx = Number(mo) - 1;
+      const label = moIdx >= 0 && moIdx < 12 ? `${MONTH_NAMES[moIdx]} ${y.slice(2)}` : `${y.slice(2)}/${mo}`;
+      monthlyStats.push({
+        month, label, rounds: n,
+        avgGross, avgVsPar,
+        dblPct: totalHoles > 0 ? totalDbl / totalHoles * 100 : 0,
+        pobPct: totalHoles > 0 ? totalPob / totalHoles * 100 : 0,
+        p3Avg: tp3n > 0 ? rds.reduce((s, r) => s + r.p3sum, 0) / tp3n : null,
+        p4Avg: tp4n > 0 ? rds.reduce((s, r) => s + r.p4sum, 0) / tp4n : null,
+        p5Avg: tp5n > 0 ? rds.reduce((s, r) => s + r.p5sum, 0) / tp5n : null,
+        f9Avg: rds.reduce((s, r) => s + r.f9, 0) / n,
+        b9Avg: rds.reduce((s, r) => s + r.b9, 0) / n,
+        bestGross: Math.min(...rds.map(r => r.gross)),
+        worstGross: Math.max(...rds.map(r => r.gross)),
+      });
+    }
+
+    // 14) COACHING DEVELOPMENT INDICATORS
+    type CoachRound = {
+      ds: number; month: string; gross: number; par: number; sd: number | null;
+      grossSD: number; birdies: number; pobStreak: number; first3vp: number; last3vp: number;
+      bounceGood: number; bounceTotal: number; nDbl: number; nTriple: number; nPob: number; nHoles: number;
+    };
+    const coachRounds: CoachRound[] = [];
+    for (const tr of allTR) {
+      const h = data.HOLES?.[tr.scoreId];
+      if (!h?.g || h.g.length < 18) continue;
+      const { key: month } = toMonth(tr.date, tr.ds);
+      let birdies = 0, nDbl = 0, nTriple = 0, nPob = 0, nHoles = 0;
+      let streak = 0, maxStreak = 0;
+      let first3vp = 0, last3vp = 0;
+      let bounceGood = 0, bounceTotal = 0;
+      const scores: number[] = [];
+      for (let i = 0; i < 18; i++) {
+        const g = h.g[i], p = h.p[i] ?? 4;
+        if (g == null || g <= 0) continue;
+        nHoles++;
+        scores.push(g);
+        const diff = g - p;
+        if (diff <= -1) birdies++;
+        if (diff >= 2) nDbl++;
+        if (diff >= 3) nTriple++;
+        if (diff <= 0) { nPob++; streak++; maxStreak = Math.max(maxStreak, streak); } else { streak = 0; }
+        if (i < 3) first3vp += diff;
+        if (i >= 15) last3vp += diff;
+        // Bounce-back: if previous was double+, check this hole
+        if (i > 0) {
+          const pg = h.g[i - 1], pp = h.p[i - 1] ?? 4;
+          if (pg != null && pg >= pp + 2) {
+            bounceTotal++;
+            if (g <= p) bounceGood++;
+          }
+        }
+      }
+      // Gross standard deviation
+      const gMean = scores.reduce((a, b) => a + b, 0) / scores.length;
+      const gVar = scores.reduce((a, b) => a + (b - gMean) ** 2, 0) / scores.length;
+      const grossSD = Math.sqrt(gVar);
+      // SD from original data
+      const origR = allR.find(r => r.scoreId === tr.scoreId);
+      const sd = origR?.sd != null ? Number(origR.sd) : (tr.sd != null ? Number(tr.sd) : null);
+      coachRounds.push({ ds: tr.ds, month, gross: tr.gross, par: tr.par, sd,
+        grossSD, birdies, pobStreak: maxStreak, first3vp, last3vp,
+        bounceGood, bounceTotal, nDbl, nTriple, nPob, nHoles });
+    }
+    coachRounds.sort((a, b) => a.ds - b.ds);
+
+    // Aggregate coaching monthly
+    type CoachMonth = {
+      month: string; label: string; n: number;
+      avgGross: number; grossStdDev: number; bestVsAvgGap: number;
+      birdieRate: number; pobPct: number; dblRate: number; tripleRate: number;
+      avgPobStreak: number; bounceRate: number | null;
+      first3Avg: number; last3Avg: number;
+      avgSD: number | null; bestSD: number | null;
+      avgIntraSD: number; // avg within-round score SD (consistency per hole)
+    };
+    const cMonthMap = new Map<string, CoachRound[]>();
+    for (const r of coachRounds) {
+      if (!cMonthMap.has(r.month)) cMonthMap.set(r.month, []);
+      cMonthMap.get(r.month)!.push(r);
+    }
+    const coachMonthly: CoachMonth[] = [];
+    for (const [month, rds] of Array.from(cMonthMap.entries()).sort((a, b) => a[0].localeCompare(b[0]))) {
+      const n = rds.length;
+      const avG = rds.reduce((s, r) => s + r.gross, 0) / n;
+      const bestG = Math.min(...rds.map(r => r.gross));
+      const grossArr = rds.map(r => r.gross);
+      const mean = avG;
+      const variance = grossArr.reduce((s, g) => s + (g - mean) ** 2, 0) / n;
+      const grossStdDev = n >= 2 ? Math.sqrt(variance) : 0;
+      const totH = rds.reduce((s, r) => s + r.nHoles, 0);
+      const totB = rds.reduce((s, r) => s + r.birdies, 0);
+      const totDbl = rds.reduce((s, r) => s + r.nDbl, 0);
+      const totTrip = rds.reduce((s, r) => s + r.nTriple, 0);
+      const totPob = rds.reduce((s, r) => s + r.nPob, 0);
+      const totBounceG = rds.reduce((s, r) => s + r.bounceGood, 0);
+      const totBounceT = rds.reduce((s, r) => s + r.bounceTotal, 0);
+      const sds = rds.filter(r => r.sd != null).map(r => r.sd!);
+      const [yc, mc] = month.split("-");
+      const mcIdx = Number(mc) - 1;
+      const cLabel = mcIdx >= 0 && mcIdx < 12 ? `${MONTH_NAMES[mcIdx]} ${yc.slice(2)}` : `${yc.slice(2)}/${mc}`;
+      coachMonthly.push({
+        month, label: cLabel, n,
+        avgGross: avG, grossStdDev, bestVsAvgGap: avG - bestG,
+        birdieRate: totH > 0 ? totB / totH * 100 : 0,
+        pobPct: totH > 0 ? totPob / totH * 100 : 0,
+        dblRate: totH > 0 ? totDbl / totH * 100 : 0,
+        tripleRate: totH > 0 ? totTrip / totH * 100 : 0,
+        avgPobStreak: rds.reduce((s, r) => s + r.pobStreak, 0) / n,
+        bounceRate: totBounceT > 0 ? totBounceG / totBounceT * 100 : null,
+        first3Avg: rds.reduce((s, r) => s + r.first3vp, 0) / n,
+        last3Avg: rds.reduce((s, r) => s + r.last3vp, 0) / n,
+        avgSD: sds.length > 0 ? sds.reduce((a, b) => a + b, 0) / sds.length : null,
+        bestSD: sds.length > 0 ? Math.min(...sds) : null,
+        avgIntraSD: rds.reduce((s, r) => s + r.grossSD, 0) / n,
+      });
+    }
+
+    return { stats, cards, ecl, allR, hcp, holePatterns, trapHoles, strongHoles, volatileHoles, daySummaries, bestDay, worstDay, f9avg, b9avg, f9par, b9par, recoveryRate, goodRecovery, badRecovery, totalRecovery, vpCards, nH, parArr, vpHoleProfiles, bands, bandDefs, distEvolution, metersGrowing, metersDiff, avgGrossShort, avgGrossLong, medianMeters, allHoleSamples, monthlyStats, roundDetails, coachMonthly, coachRounds };
   }, [data]);
+
+  /* ── Filtered distance bands by period (must be before early returns!) ── */
+  const filteredBandsResult = useMemo(() => {
+    if (!A || "err" in A) return { filteredBands: [] as any[], filteredN: 0, periodLabel: "all-time" };
+    const { allHoleSamples: ahs, bandDefs: bd, bands: b } = A as any;
+    if (!ahs || !bd) return { filteredBands: [] as any[], filteredN: 0, periodLabel: "all-time" };
+    if (distPeriod === 0) return { filteredBands: b, filteredN: ahs.length, periodLabel: "all-time" };
+    const now = new Date();
+    const cutDate = new Date(now.getFullYear(), now.getMonth() - distPeriod, now.getDate());
+    const cutoff = Number(`${cutDate.getFullYear()}${String(cutDate.getMonth() + 1).padStart(2, "0")}${String(cutDate.getDate()).padStart(2, "0")}`);
+    const filtered = ahs.filter((h: any) => h.ds >= cutoff);
+    const fb: any[] = [];
+    for (const bdef of bd) {
+      const s = filtered.filter((h: any) => h.par === bdef.par && h.meters != null && h.meters >= bdef.minM && h.meters < bdef.maxM);
+      if (s.length < 3) continue;
+      const avg = s.reduce((a: number, b: any) => a + b.gross, 0) / s.length;
+      const pob = s.filter((h: any) => h.gross <= bdef.par).length / s.length * 100;
+      const dbl = s.filter((h: any) => h.gross >= bdef.par + 2).length / s.length * 100;
+      fb.push({ key: `${bdef.par}-${bdef.minM}`, label: bdef.label, par: bdef.par, minM: bdef.minM, maxM: bdef.maxM, samples: s, avg, pobPct: pob, dblPct: dbl, n: s.length });
+    }
+    return { filteredBands: fb, filteredN: filtered.length, periodLabel: `${distPeriod}m` };
+  }, [A, distPeriod]);
+
+  /* ── Period-filtered monthly & coach data (must be before early returns!) ── */
+  const filteredMonthly = useMemo(() => {
+    if (!A || "err" in A) return [];
+    const ms = (A as any).monthlyStats;
+    if (!ms) return [];
+    if (distPeriod === 0) return ms;
+    return ms.slice(-distPeriod);
+  }, [A, distPeriod]);
+
+  const filteredCoach = useMemo(() => {
+    if (!A || "err" in A) return [];
+    const cm = (A as any).coachMonthly;
+    if (!cm) return [];
+    if (distPeriod === 0) return cm;
+    return cm.slice(-distPeriod);
+  }, [A, distPeriod]);
 
   /* ═══ RENDER ═══ */
   if (loading) return (
@@ -505,7 +772,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
     );
   }
 
-  const { stats, cards, ecl, allR, hcp, holePatterns, trapHoles, strongHoles, volatileHoles, daySummaries, bestDay, worstDay, f9avg, b9avg, f9par, b9par, recoveryRate, goodRecovery, badRecovery, totalRecovery, vpCards, nH, parArr, vpHoleProfiles, bands, distEvolution, metersGrowing, metersDiff, avgGrossShort, avgGrossLong, medianMeters, allHoleSamples } = A;
+  const { stats, cards, ecl, allR, hcp, holePatterns, trapHoles, strongHoles, volatileHoles, daySummaries, bestDay, worstDay, f9avg, b9avg, f9par, b9par, recoveryRate, goodRecovery, badRecovery, totalRecovery, vpCards, nH, parArr, vpHoleProfiles, bands, bandDefs, distEvolution, metersGrowing, metersDiff, avgGrossShort, avgGrossLong, medianMeters, allHoleSamples, monthlyStats, roundDetails, coachMonthly, coachRounds } = A;
   const S = stats;
   const tp = S.totalPar;
   const pobN = S.totalDist.eagle + S.totalDist.birdie + S.totalDist.par;
@@ -516,8 +783,16 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
   const worstPT = Object.values(S.byParType).length > 1
     ? Object.values(S.byParType).reduce((a, b) => (b.avgVsPar ?? 0) > (a.avgVsPar ?? 0) ? b : a) : null;
 
+  const { filteredBands, filteredN } = filteredBandsResult;
+
   return (
-    <div className="tourn-page" style={{ maxWidth: tab === "rivais" ? 1800 : 960 }}>
+    <div className="tourn-page" style={{ maxWidth: tab === "rivais" ? 1800 : 960, overflowX: "hidden" }}>
+      <style>{`
+        .bjgt-chart-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .bjgt-chart-scroll > div { min-width: 320px; }
+        .holeAnalysis { max-width: 100%; overflow-x: auto; }
+        .holeAnalysis table { max-width: 100%; }
+      `}</style>
       <Header />
 
       {/* ── Tab Bar ── */}
@@ -535,6 +810,27 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
       {/* ═══ TAB: ANÁLISE VP ═══ */}
       {tab === "analise" && <>
+
+      {/* ── Global Period Filter ── */}
+      <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 10, flexWrap: "wrap", padding: "8px 12px", background: "#f8fafc", borderRadius: 10, border: "1px solid #e2e8f0" }}>
+        <span style={{ fontSize: 11, fontWeight: 800, color: "#1e40af" }}>📅 Período de análise:</span>
+        {[3, 6, 9, 12, 0].map(m => (
+          <button key={m} onClick={() => setDistPeriod(m)}
+            style={{
+              fontSize: 10, fontWeight: distPeriod === m ? 800 : 500,
+              padding: "4px 12px", borderRadius: 12, border: "1px solid",
+              borderColor: distPeriod === m ? "#1e40af" : "#d5dac9",
+              background: distPeriod === m ? "#1e40af" : "#fff",
+              color: distPeriod === m ? "#fff" : "#64748b",
+              cursor: "pointer",
+            }}>
+            {m === 0 ? "All-time" : `${m} meses`}
+          </button>
+        ))}
+        <span className="muted" style={{ fontSize: 9, marginLeft: 4 }}>
+          Aplica-se a: Perfil por Distância, Evolução Temporal, Indicadores
+        </span>
+      </div>
 
       {/* ── Objectivo: O Eclético ── */}
       {ecl && (
@@ -589,10 +885,10 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
           </div>
         </div>
         {/* Mini leaderboard */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 4, marginBottom: 6 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 4, marginBottom: 8 }}>
           {FIELD_2025.leaderboard.slice(0, 5).map(p => (
-            <div key={p.pos} style={{ display: "flex", alignItems: "center", gap: 6, padding: "5px 8px", borderRadius: 6, background: p.pos <= 3 ? "#fef3c7" : "#f8fafc", border: "1px solid #e2e8f0" }}>
-              <span style={{ fontWeight: 900, fontSize: 13, color: p.pos === 1 ? "#d97706" : "#64748b", minWidth: 16 }}>{p.pos}.</span>
+            <div key={p.pos} style={{ display: "flex", alignItems: "center", gap: 6, padding: "5px 8px", borderRadius: 6, background: "#f8fafc", border: "1px solid #e2e8f0" }}>
+              <span style={{ fontWeight: 900, fontSize: 13, color: "#64748b", minWidth: 16 }}>{p.pos}.</span>
               <div>
                 <div style={{ fontSize: 10, fontWeight: 700, lineHeight: 1.2 }}>{p.name.split(" ")[0]}</div>
                 <div style={{ fontSize: 9, color: "#64748b" }}>{p.rounds.join("-")} = {p.total} ({fmtTP(p.result)})</div>
@@ -600,6 +896,197 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
             </div>
           ))}
         </div>
+
+        {/* Full results table with expandable scorecards */}
+        <div className="muted" style={{ fontSize: 9, marginBottom: 4 }}>Clica num jogador para ver os scorecards completos e o eclético.</div>
+        <div className="tourn-scroll" style={{ marginBottom: 8 }}>
+          <table className="sc-table-modern" style={{ width: "100%", fontSize: 10 }}>
+            <thead>
+              <tr>
+                <th style={{ width: 28, textAlign: "center" }}>Pos</th>
+                <th className="row-label">Jogador</th>
+                <th style={{ width: 24, textAlign: "center" }}></th>
+                <th style={{ textAlign: "center" }}>R1</th>
+                <th style={{ textAlign: "center" }}>R2</th>
+                <th style={{ textAlign: "center" }}>R3</th>
+                <th style={{ textAlign: "center", fontWeight: 900 }}>Total</th>
+                <th style={{ textAlign: "center" }}>vs Par</th>
+                <th style={{ textAlign: "center" }}>Melhor</th>
+                <th style={{ textAlign: "center" }}>ECL</th>
+              </tr>
+            </thead>
+            <tbody>
+              {FIELD_2025.leaderboard.map((p) => {
+                const expanded = expandedPlayers.has(p.pos);
+                const fc = FIELD_CARDS.find(c => c.pos === p.pos);
+                const toggle = () => setExpandedPlayers(prev => {
+                  const next = new Set(prev);
+                  if (next.has(p.pos)) next.delete(p.pos); else next.add(p.pos);
+                  return next;
+                });
+                return (
+                  <React.Fragment key={p.pos}>
+                    <tr onClick={toggle} style={{ cursor: "pointer" }}>
+                      <td style={{ textAlign: "center", fontWeight: 700 }}>{p.pos}</td>
+                      <td className="row-label" style={{ fontWeight: 600 }}>{expanded ? "▾" : "▸"} {p.name}</td>
+                      <td style={{ textAlign: "center", fontSize: 12 }}>{p.country}</td>
+                      {p.rounds.map((r, ri) => (
+                        <td key={ri} style={{ textAlign: "center" }}>{r}</td>
+                      ))}
+                      <td style={{ textAlign: "center", fontWeight: 800 }}>{p.total}</td>
+                      <td style={{ textAlign: "center", fontWeight: 600 }}>{fmtTP(p.result)}</td>
+                      <td style={{ textAlign: "center" }}>{p.best}</td>
+                      <td style={{ textAlign: "center" }}>{fc?.eclTotal ?? "–"}</td>
+                    </tr>
+                    {expanded && fc && (
+                      <tr>
+                        <td colSpan={10} style={{ padding: 0, background: "#f8fafc" }}>
+                          <div style={{ padding: "6px 8px", overflowX: "auto" }}>
+                            <table style={{ width: "100%", fontSize: 9, borderCollapse: "collapse", minWidth: 600 }}>
+                              <thead>
+                                <tr style={{ background: "#e2e8f0" }}>
+                                  <td style={{ fontWeight: 700, padding: "2px 4px", width: 40 }}>Bur.</td>
+                                  {VP_PAR.map((_, hi) => (
+                                    <td key={hi} style={{ textAlign: "center", fontWeight: 700, padding: "2px 2px", width: 28, color: "#64748b" }}>{hi + 1}</td>
+                                  ))}
+                                  <td style={{ textAlign: "center", fontWeight: 900, padding: "2px 4px" }}>Tot</td>
+                                  <td style={{ textAlign: "center", fontWeight: 700, padding: "2px 4px", color: "#64748b" }}>±</td>
+                                </tr>
+                                <tr style={{ background: "#f1f5f9" }}>
+                                  <td style={{ fontWeight: 600, padding: "2px 4px", color: "#94a3b8" }}>Par</td>
+                                  {VP_PAR.map((p2, hi) => (
+                                    <td key={hi} style={{ textAlign: "center", padding: "2px 2px", color: "#94a3b8" }}>{p2}</td>
+                                  ))}
+                                  <td style={{ textAlign: "center", fontWeight: 600, color: "#94a3b8", padding: "2px 4px" }}>71</td>
+                                  <td></td>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {fc.rounds.map((rd, ri) => {
+                                  const rdTotal = rd.reduce((a, b) => a + b, 0);
+                                  return (
+                                    <tr key={ri} style={{ borderBottom: "1px solid #e2e8f0" }}>
+                                      <td style={{ fontWeight: 700, padding: "2px 4px" }}>R{ri + 1}</td>
+                                      {rd.map((s, hi) => (
+                                        <td key={hi} style={{ textAlign: "center", padding: "1px 0" }}>
+                                          <span className={`sc-score ${scClass(s, VP_PAR[hi])}`} style={{ fontSize: 9, minWidth: 18, minHeight: 18 }}>{s}</span>
+                                        </td>
+                                      ))}
+                                      <td style={{ textAlign: "center", fontWeight: 800, padding: "2px 4px" }}>{rdTotal}</td>
+                                      <td style={{ textAlign: "center", fontWeight: 600, padding: "2px 4px" }}>{fmtTP(rdTotal - 71)}</td>
+                                    </tr>
+                                  );
+                                })}
+                                <tr style={{ background: "#f0fdf4", borderTop: "1px solid #d5dac9" }}>
+                                  <td style={{ fontWeight: 800, padding: "2px 4px" }}>ECL</td>
+                                  {fc.ecl.map((s, hi) => (
+                                    <td key={hi} style={{ textAlign: "center", padding: "1px 0" }}>
+                                      <span className={`sc-score ${scClass(s, VP_PAR[hi])}`} style={{ fontSize: 9, minWidth: 18, minHeight: 18, fontWeight: 800 }}>{s}</span>
+                                    </td>
+                                  ))}
+                                  <td style={{ textAlign: "center", fontWeight: 900, padding: "2px 4px" }}>{fc.eclTotal}</td>
+                                  <td style={{ textAlign: "center", fontWeight: 800, padding: "2px 4px" }}>{fmtTP(fc.eclTotal - 71)}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </React.Fragment>
+                );
+              })}
+              {/* Manuel */}
+              {daySummaries.length === 3 && (() => {
+                const mTotal = daySummaries.reduce((s, d) => s + d.gross, 0);
+                const mResult = mTotal - 213;
+                const mRounds = daySummaries.map(d => d.gross);
+                const mBest = Math.min(...mRounds);
+                const mExpanded = expandedPlayers.has(-1);
+                const mToggle = () => setExpandedPlayers(prev => {
+                  const next = new Set(prev);
+                  if (next.has(-1)) next.delete(-1); else next.add(-1);
+                  return next;
+                });
+                return (
+                  <React.Fragment>
+                    <tr onClick={mToggle} style={{ cursor: "pointer", borderTop: "1px solid #d5dac9" }}>
+                      <td style={{ textAlign: "center", fontWeight: 700 }}>{MANUEL_POS}</td>
+                      <td className="row-label" style={{ fontWeight: 600 }}>{mExpanded ? "▾" : "▸"} {PLAYER_NAME}</td>
+                      <td style={{ textAlign: "center", fontSize: 12 }}>🇵🇹</td>
+                      {mRounds.map((r, ri) => (
+                        <td key={ri} style={{ textAlign: "center" }}>{r}</td>
+                      ))}
+                      <td style={{ textAlign: "center", fontWeight: 800 }}>{mTotal}</td>
+                      <td style={{ textAlign: "center", fontWeight: 600 }}>{fmtTP(mResult)}</td>
+                      <td style={{ textAlign: "center" }}>{mBest}</td>
+                      <td style={{ textAlign: "center" }}>{ecl?.totalGross ?? "–"}</td>
+                    </tr>
+                    {mExpanded && vpCards.length > 0 && (
+                      <tr>
+                        <td colSpan={10} style={{ padding: 0, background: "#f8fafc" }}>
+                          <div style={{ padding: "6px 8px", overflowX: "auto" }}>
+                            <table style={{ width: "100%", fontSize: 9, borderCollapse: "collapse", minWidth: 600 }}>
+                              <thead>
+                                <tr style={{ background: "#e2e8f0" }}>
+                                  <td style={{ fontWeight: 700, padding: "2px 4px", width: 40 }}>Bur.</td>
+                                  {VP_PAR.map((_, hi) => (
+                                    <td key={hi} style={{ textAlign: "center", fontWeight: 700, padding: "2px 2px", width: 28, color: "#64748b" }}>{hi + 1}</td>
+                                  ))}
+                                  <td style={{ textAlign: "center", fontWeight: 900, padding: "2px 4px" }}>Tot</td>
+                                  <td style={{ textAlign: "center", fontWeight: 700, padding: "2px 4px", color: "#64748b" }}>±</td>
+                                </tr>
+                                <tr style={{ background: "#f1f5f9" }}>
+                                  <td style={{ fontWeight: 600, padding: "2px 4px", color: "#94a3b8" }}>Par</td>
+                                  {VP_PAR.map((p2, hi) => (
+                                    <td key={hi} style={{ textAlign: "center", padding: "2px 2px", color: "#94a3b8" }}>{p2}</td>
+                                  ))}
+                                  <td style={{ textAlign: "center", fontWeight: 600, color: "#94a3b8", padding: "2px 4px" }}>71</td>
+                                  <td></td>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {vpCards.map((c, ri) => {
+                                  const g = c.h.g.slice(0, 18);
+                                  const rdTotal = g.reduce((a, b) => a + (b ?? 0), 0);
+                                  return (
+                                    <tr key={ri} style={{ borderBottom: "1px solid #e2e8f0" }}>
+                                      <td style={{ fontWeight: 700, padding: "2px 4px" }}>R{ri + 1}</td>
+                                      {g.map((s, hi) => (
+                                        <td key={hi} style={{ textAlign: "center", padding: "1px 0" }}>
+                                          {s != null ? <span className={`sc-score ${scClass(s, VP_PAR[hi])}`} style={{ fontSize: 9, minWidth: 18, minHeight: 18 }}>{s}</span> : "·"}
+                                        </td>
+                                      ))}
+                                      <td style={{ textAlign: "center", fontWeight: 800, padding: "2px 4px" }}>{rdTotal}</td>
+                                      <td style={{ textAlign: "center", fontWeight: 600, padding: "2px 4px" }}>{fmtTP(rdTotal - 71)}</td>
+                                    </tr>
+                                  );
+                                })}
+                                {ecl && (
+                                  <tr style={{ background: "#f0fdf4", borderTop: "1px solid #d5dac9" }}>
+                                    <td style={{ fontWeight: 800, padding: "2px 4px" }}>ECL</td>
+                                    {ecl.holes.map((eh, hi) => (
+                                      <td key={hi} style={{ textAlign: "center", padding: "1px 0" }}>
+                                        {eh.best != null ? <span className={`sc-score ${scClass(eh.best, VP_PAR[hi])}`} style={{ fontSize: 9, minWidth: 18, minHeight: 18, fontWeight: 800 }}>{eh.best}</span> : "·"}
+                                      </td>
+                                    ))}
+                                    <td style={{ textAlign: "center", fontWeight: 900, padding: "2px 4px" }}>{ecl.totalGross}</td>
+                                    <td style={{ textAlign: "center", fontWeight: 800, padding: "2px 4px" }}>{fmtTP(ecl.totalGross - 71)}</td>
+                                  </tr>
+                                )}
+                              </tbody>
+                            </table>
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </React.Fragment>
+                );
+              })()}
+            </tbody>
+          </table>
+        </div>
+        <div className="muted" style={{ fontSize: 8, marginBottom: 8 }}>BJGT Villa Padierna 2025 · Sub-12 Boys · Par 71 · {FIELD_TOTAL} jogadores · Scorecards de {FIELD_CARDS.length} jogadores · Clica para expandir · ECL = eclético (melhor score por buraco)</div>
         {/* Context for Manuel */}
         {daySummaries.length > 0 && ecl && (
           <div className="caConclusion" style={{ background: "#eff6ff", borderColor: "#bfdbfe" }}>
@@ -756,29 +1243,60 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
       {bands.length > 0 && (
         <div className="holeAnalysis">
           <div className="haTitle">🔬 Perfil por Distância — Como te sais em buracos assim?</div>
-          <div className="muted" style={{ fontSize: 10, marginBottom: 8 }}>Dados de {allHoleSamples.length} buracos jogados em todos os campos recentes, agrupados por tipo e distância.</div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 8 }}>
-            {bands.map(b => {
-              // Find VP holes in this band
+          <div className="muted" style={{ fontSize: 10, marginBottom: 8 }}>
+            {distPeriod === 0
+              ? `${allHoleSamples.length} buracos (all-time)`
+              : `${filteredN} buracos (últ. ${distPeriod} meses) · ${allHoleSamples.length} total`}
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 8 }}>
+            {(distPeriod === 0 ? bands : bands).map(b => {
               const vpInBand = vpHoleProfiles.filter(h => h.band?.key === b.key);
-              const avgCol = (b.avg - b.par) <= 0.3 ? "#16a34a" : (b.avg - b.par) <= 0.8 ? "#d97706" : "#dc2626";
+              const fb = filteredBands.find(r => r.key === b.key);
+              const showFiltered = distPeriod !== 0 && fb;
+              const mainAvg = showFiltered ? fb!.avg : b.avg;
+              const mainN = showFiltered ? fb!.n : b.n;
+              const mainPob = showFiltered ? fb!.pobPct : b.pobPct;
+              const mainDbl = showFiltered ? fb!.dblPct : b.dblPct;
+              const avgCol = (mainAvg - b.par) <= 0.3 ? "#16a34a" : (mainAvg - b.par) <= 0.8 ? "#d97706" : "#dc2626";
+              const trend = showFiltered ? fb!.avg - b.avg : null;
+              const trendCol = trend != null && trend < -0.15 ? "#16a34a" : trend != null && trend > 0.15 ? "#dc2626" : "#64748b";
+              const noData = distPeriod !== 0 && !fb;
               return (
-                <div key={b.key} style={{ border: "1px solid #d5dac9", borderRadius: 10, padding: "10px 12px", background: "#fff" }}>
+                <div key={b.key} style={{ border: "1px solid #d5dac9", borderRadius: 10, padding: "10px 12px", background: noData ? "#f8fafc" : "#fff", opacity: noData ? 0.5 : 1 }}>
                   <div style={{ fontWeight: 900, fontSize: 12, marginBottom: 4 }}>{b.label}</div>
-                  <div style={{ display: "flex", gap: 12, marginBottom: 4 }}>
-                    <div>
-                      <div style={{ fontSize: 18, fontWeight: 900, color: avgCol }}>{b.avg.toFixed(1)}</div>
-                      <div className="muted" style={{ fontSize: 9 }}>média ({b.n} buracos)</div>
-                    </div>
-                    <div>
-                      <div style={{ fontSize: 14, fontWeight: 800, color: "#16a34a" }}>{b.pobPct.toFixed(0)}%</div>
-                      <div className="muted" style={{ fontSize: 9 }}>par ou melhor</div>
-                    </div>
-                    <div>
-                      <div style={{ fontSize: 14, fontWeight: 800, color: "#dc2626" }}>{b.dblPct.toFixed(0)}%</div>
-                      <div className="muted" style={{ fontSize: 9 }}>double+</div>
-                    </div>
-                  </div>
+                  {noData ? (
+                    <div className="muted" style={{ fontSize: 10 }}>Sem dados suficientes nos últimos {distPeriod} meses (all-time: {b.avg.toFixed(1)}, {b.n} buracos)</div>
+                  ) : (
+                    <>
+                      <div style={{ display: "flex", gap: 12, marginBottom: 4 }}>
+                        <div>
+                          <div style={{ fontSize: 18, fontWeight: 900, color: avgCol }}>{mainAvg.toFixed(1)}</div>
+                          <div className="muted" style={{ fontSize: 9 }}>
+                            {showFiltered ? `últ. ${distPeriod}m (${mainN})` : `total (${mainN})`}
+                          </div>
+                        </div>
+                        <div>
+                          <div style={{ fontSize: 14, fontWeight: 800, color: "#16a34a" }}>{mainPob.toFixed(0)}%</div>
+                          <div className="muted" style={{ fontSize: 9 }}>par ou melhor</div>
+                        </div>
+                        <div>
+                          <div style={{ fontSize: 14, fontWeight: 800, color: "#dc2626" }}>{mainDbl.toFixed(0)}%</div>
+                          <div className="muted" style={{ fontSize: 9 }}>double+</div>
+                        </div>
+                      </div>
+                      {/* All-time reference + trend */}
+                      {showFiltered && (
+                        <div style={{ display: "flex", gap: 8, alignItems: "center", fontSize: 9, color: "#94a3b8", marginBottom: 4 }}>
+                          <span>All-time: <b style={{ color: "#64748b" }}>{b.avg.toFixed(1)}</b> ({b.n})</span>
+                          {trend != null && Math.abs(trend) > 0.1 && (
+                            <span style={{ color: trendCol, fontWeight: 700 }}>
+                              {trend < 0 ? `↗ ${Math.abs(trend).toFixed(1)} melhor` : `↘ +${trend.toFixed(1)} pior`}
+                            </span>
+                          )}
+                        </div>
+                      )}
+                    </>
+                  )}
                   {vpInBand.length > 0 && (
                     <div style={{ fontSize: 10, color: "#0369a1", fontWeight: 600, borderTop: "1px solid #e2e8f0", paddingTop: 4 }}>
                       VP buracos nesta faixa: {vpInBand.map(h => `#${h.h}`).join(", ")}
@@ -791,68 +1309,836 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
         </div>
       )}
 
+      {/* ══════════════════════════════════════════════════════
+          EVOLUÇÃO TEMPORAL — 5 análises com gráficos inline
+          ══════════════════════════════════════════════════════ */}
+      {filteredMonthly.length >= 3 && (
+        <div className="holeAnalysis">
+          <div className="haTitle">📈 Evolução Temporal — {filteredMonthly.length} meses de dados</div>
+          <div className="muted" style={{ fontSize: 10, marginBottom: 12 }}>
+            Baseado em {roundDetails.length} rondas de 18 buracos, de {filteredMonthly[0]?.label} a {filteredMonthly[filteredMonthly.length - 1]?.label}.
+          </div>
+
+          {/* ── 1. GROSS MÉDIO POR MÊS ── */}
+          <div style={{ marginBottom: 20 }}>
+            <div className="haSubTitle" style={{ color: "#1e40af" }}>🏌️ Gross Médio por Mês</div>
+            <div className="muted" style={{ fontSize: 9, marginBottom: 6 }}>
+              Cada barra = média do score bruto (gross) nas rondas de 18 buracos desse mês. Quanto mais baixa, melhor.
+              As linhas tracejadas mostram a média do Top 5 e do field do BJGT VP 2025 como referência.
+              A análise compara os 3 primeiros meses com os 3 últimos para avaliar a tendência.
+            </div>
+            {(() => {
+              const ms = filteredMonthly;
+              const minG = Math.min(...ms.map(m => m.bestGross));
+              const maxG = Math.max(...ms.map(m => m.worstGross));
+              const range = maxG - minG || 1;
+              const t5ref = FIELD_2025.top5Avg;
+              const fieldRef = FIELD_2025.fieldAvg;
+              // Trend line: first 3 months avg vs last 3 months avg
+              const first3 = ms.slice(0, Math.min(3, ms.length));
+              const last3 = ms.slice(-Math.min(3, ms.length));
+              const f3avg = first3.reduce((s, m) => s + m.avgGross, 0) / first3.length;
+              const l3avg = last3.reduce((s, m) => s + m.avgGross, 0) / last3.length;
+              const improving = l3avg < f3avg - 1;
+              return (
+                <div>
+                  <div style={{ position: "relative", height: 160, marginBottom: 4 }}>
+                    {/* Reference lines */}
+                    {[t5ref, fieldRef].map((ref, ri) => {
+                      const pct = 100 - ((ref - minG + 2) / (range + 4)) * 100;
+                      return (
+                        <div key={ri} style={{ position: "absolute", left: 0, right: 0, top: `${pct}%`,
+                          borderTop: `1px dashed ${ri === 0 ? "#d97706" : "#94a3b8"}`, zIndex: 1 }}>
+                          <span style={{ position: "absolute", right: 0, top: -12, fontSize: 8,
+                            color: ri === 0 ? "#d97706" : "#94a3b8", fontWeight: 700 }}>
+                            {ri === 0 ? "T5" : "Field"} {ref.toFixed(0)}
+                          </span>
+                        </div>
+                      );
+                    })}
+                    {/* Bars */}
+                    <div style={{ display: "flex", alignItems: "flex-end", height: "100%", gap: 2, position: "relative", zIndex: 2 }}>
+                      {ms.map((m, i) => {
+                        const barH = ((m.avgGross - minG + 2) / (range + 4)) * 100;
+                        const col = m.avgGross <= t5ref ? "#16a34a" : m.avgGross <= fieldRef ? "#0369a1" : m.avgGross <= fieldRef + 5 ? "#d97706" : "#dc2626";
+                        return (
+                          <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center" }}>
+                            <div style={{ fontSize: 8, fontWeight: 700, color: col, marginBottom: 2 }}>{m.avgGross.toFixed(0)}</div>
+                            <div style={{ width: "100%", height: `${barH}%`, background: col, borderRadius: "4px 4px 0 0", opacity: 0.7, minHeight: 4, position: "relative" }}>
+                              {/* Best/worst range */}
+                              {m.rounds > 1 && (
+                                <div style={{ position: "absolute", left: "50%", transform: "translateX(-50%)", bottom: 0,
+                                  width: 2, background: "#1e293b30",
+                                  height: `${((m.worstGross - m.bestGross) / (range + 4)) * 100}%` }} />
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  {/* Labels */}
+                  <div style={{ display: "flex", gap: 2 }}>
+                    {ms.map((m, i) => (
+                      <div key={i} style={{ flex: 1, textAlign: "center", fontSize: 8, color: "#94a3b8" }}>
+                        {m.label}<br /><span style={{ fontSize: 7 }}>({m.rounds}r)</span>
+                      </div>
+                    ))}
+                  </div>
+                  {/* Trend insight */}
+                  <div className="caConclusion" style={{ background: improving ? "#f0fdf4" : "#fef2f2", borderColor: improving ? "#bbf7d0" : "#fecaca", marginTop: 8 }}>
+                    <div className="caConcText" style={{ color: improving ? "#166534" : "#991b1b", fontSize: 11 }}>
+                      {improving
+                        ? <>📉 <b>A descer!</b> Primeiros meses: {f3avg.toFixed(0)} → Últimos meses: {l3avg.toFixed(0)}. Melhoria de {(f3avg - l3avg).toFixed(1)} pancadas.</>
+                        : Math.abs(f3avg - l3avg) < 1
+                          ? <>📊 <b>Estável.</b> Média mantém-se à volta de {l3avg.toFixed(0)} ({first3[0]?.label} → {last3[last3.length-1]?.label}).</>
+                          : <>📈 Primeiros meses: {f3avg.toFixed(0)} → Últimos: {l3avg.toFixed(0)}. Pode haver mais variância recente — ver doubles abaixo.</>
+                      }
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
+
+          {/* ── 2. PAR 3/4/5 AO LONGO DO TEMPO ── */}
+          <div style={{ marginBottom: 20 }}>
+            <div className="haSubTitle" style={{ color: "#7c3aed" }}>⛳ Desempenho Par 3 / 4 / 5 ao Longo do Tempo</div>
+            <div className="muted" style={{ fontSize: 9, marginBottom: 6 }}>
+              Média de pancadas por tipo de buraco em cada mês. Ex: "Par 3 → 3.81" significa que, em média, faz 3.81 pancadas nos buracos de par 3.
+              Compara o primeiro e último terço dos dados para ver tendência. "T5 BJGT" é a referência dos 5 melhores do torneio.
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }}>
+              {[
+                { par: 3, key: "p3Avg" as const, label: "Par 3", col: "#0369a1", refAvg: 3 },
+                { par: 4, key: "p4Avg" as const, label: "Par 4", col: "#7c3aed", refAvg: 4 },
+                { par: 5, key: "p5Avg" as const, label: "Par 5", col: "#16a34a", refAvg: 5 },
+              ].map(pt => {
+                const vals = filteredMonthly.filter(m => m[pt.key] != null).map(m => ({ label: m.label, avg: m[pt.key]! }));
+                if (vals.length < 3) return null;
+                const minV = Math.min(...vals.map(v => v.avg));
+                const maxV = Math.max(...vals.map(v => v.avg));
+                const range = maxV - minV || 0.5;
+                const first = vals.slice(0, Math.ceil(vals.length / 3));
+                const last = vals.slice(-Math.ceil(vals.length / 3));
+                const fAvg = first.reduce((s, v) => s + v.avg, 0) / first.length;
+                const lAvg = last.reduce((s, v) => s + v.avg, 0) / last.length;
+                const trend = lAvg - fAvg;
+                // BJGT T5 refs
+                const t5holes = FIELD_2025.holes.filter(h => h.par === pt.par);
+                const t5avg = t5holes.length > 0 ? t5holes.reduce((s, h) => s + h.t5, 0) / t5holes.length : null;
+                return (
+                  <div key={pt.par} style={{ border: "1px solid #e2e8f0", borderRadius: 8, padding: 8 }}>
+                    <div style={{ fontWeight: 900, fontSize: 11, color: pt.col, marginBottom: 4 }}>{pt.label}</div>
+                    <div style={{ display: "flex", alignItems: "flex-end", height: 60, gap: 1 }}>
+                      {vals.map((v, i) => {
+                        const h = ((v.avg - minV + 0.2) / (range + 0.4)) * 100;
+                        return (
+                          <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end", height: "100%" }}>
+                            <div style={{ width: "100%", height: `${h}%`, background: pt.col, borderRadius: 2, opacity: 0.6, minHeight: 3 }} />
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: 9, marginTop: 4 }}>
+                      <span style={{ color: "#94a3b8" }}>{vals[0].label}</span>
+                      <span style={{ color: "#94a3b8" }}>{vals[vals.length - 1].label}</span>
+                    </div>
+                    <div style={{ fontSize: 10, marginTop: 4, fontWeight: 700, color: trend < -0.15 ? "#16a34a" : trend > 0.15 ? "#dc2626" : "#64748b" }}>
+                      {fAvg.toFixed(2)} → {lAvg.toFixed(2)} ({trend > 0 ? "+" : ""}{trend.toFixed(2)})
+                    </div>
+                    {t5avg != null && (
+                      <div style={{ fontSize: 9, color: "#94a3b8" }}>T5 BJGT: {t5avg.toFixed(2)}</div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* ── 3. DOUBLES POR PERÍODO ── */}
+          <div style={{ marginBottom: 20 }}>
+            <div className="haSubTitle" style={{ color: "#dc2626" }}>💥 Doubles+ por Mês — Blow-ups a Diminuir?</div>
+            <div className="muted" style={{ fontSize: 9, marginBottom: 6 }}>
+              Percentagem de buracos onde o score foi double bogey ou pior (= 2+ pancadas acima do par).
+              Estes "blow-ups" são o maior destruidor de scores em juniores. Reduzir de 25% para 15% pode valer 4-5 pancadas por ronda.
+            </div>
+            {(() => {
+              const ms = filteredMonthly;
+              const maxDbl = Math.max(...ms.map(m => m.dblPct));
+              const first3 = ms.slice(0, Math.min(3, ms.length));
+              const last3 = ms.slice(-Math.min(3, ms.length));
+              const fDbl = first3.reduce((s, m) => s + m.dblPct, 0) / first3.length;
+              const lDbl = last3.reduce((s, m) => s + m.dblPct, 0) / last3.length;
+              const improving = lDbl < fDbl - 2;
+              return (
+                <div>
+                  <div style={{ display: "flex", alignItems: "flex-end", height: 80, gap: 2, marginBottom: 4 }}>
+                    {ms.map((m, i) => {
+                      const h = maxDbl > 0 ? (m.dblPct / maxDbl) * 100 : 0;
+                      const col = m.dblPct <= 15 ? "#16a34a" : m.dblPct <= 25 ? "#d97706" : "#dc2626";
+                      return (
+                        <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end", height: "100%" }}>
+                          <div style={{ fontSize: 8, fontWeight: 700, color: col }}>{m.dblPct.toFixed(0)}%</div>
+                          <div style={{ width: "100%", height: `${h}%`, background: col, borderRadius: "3px 3px 0 0", opacity: 0.7, minHeight: 3 }} />
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div style={{ display: "flex", gap: 2 }}>
+                    {ms.map((m, i) => (
+                      <div key={i} style={{ flex: 1, textAlign: "center", fontSize: 7, color: "#94a3b8" }}>{m.label}</div>
+                    ))}
+                  </div>
+                  <div className="caConclusion" style={{ background: improving ? "#f0fdf4" : "#fef2f2", borderColor: improving ? "#bbf7d0" : "#fecaca", marginTop: 8 }}>
+                    <div className="caConcText" style={{ color: improving ? "#166534" : "#991b1b", fontSize: 11 }}>
+                      {improving
+                        ? <>✅ <b>Menos blow-ups!</b> Doubles baixaram de {fDbl.toFixed(0)}% para {lDbl.toFixed(0)}%. Isto é maturidade competitiva.</>
+                        : lDbl > fDbl + 2
+                          ? <>⚠️ Doubles subiram de {fDbl.toFixed(0)}% para {lDbl.toFixed(0)}%. Pode ser campos mais difíceis ou momentos de pressão. Ver buracos trap.</>
+                          : <>📊 Doubles estáveis à volta de {lDbl.toFixed(0)}%. O Top 5 do BJGT faz ~{(FIELD_2025.holes.reduce((s, h) => s + h.t5Dbl, 0) / FIELD_2025.holes.length).toFixed(0)}% — este é o objectivo.</>
+                      }
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
+
+          {/* ── 4. FORMA RECENTE vs BENCHMARKS BJGT ── */}
+          <div style={{ marginBottom: 20 }}>
+            <div className="haSubTitle" style={{ color: "#d97706" }}>🏆 Forma Recente vs Benchmarks BJGT 2025</div>
+            <div className="muted" style={{ fontSize: 9, marginBottom: 6 }}>
+              Compara a forma dos últimos 3 meses com os benchmarks reais do BJGT Villa Padierna 2025: o score médio do vencedor, Top 5 e field inteiro.
+              Permite ver a que distância competitiva está e se a tendência se aproxima destes níveis.
+            </div>
+            {(() => {
+              const last6m = roundDetails.filter(r => {
+                const cutDate = new Date();
+                cutDate.setMonth(cutDate.getMonth() - 6);
+                const cutDs = Number(`${cutDate.getFullYear()}${String(cutDate.getMonth() + 1).padStart(2, "0")}${String(cutDate.getDate()).padStart(2, "0")}`);
+                return r.ds >= cutDs;
+              });
+              const last3m = roundDetails.filter(r => {
+                const cutDate = new Date();
+                cutDate.setMonth(cutDate.getMonth() - 3);
+                const cutDs = Number(`${cutDate.getFullYear()}${String(cutDate.getMonth() + 1).padStart(2, "0")}${String(cutDate.getDate()).padStart(2, "0")}`);
+                return r.ds >= cutDs;
+              });
+              const periods = [
+                { label: "Últimos 3m", data: last3m },
+                { label: "Últimos 6m", data: last6m },
+                { label: "All-time", data: roundDetails },
+              ].filter(p => p.data.length >= 2);
+              const benchmarks = [
+                { label: "🥇 Vencedor BJGT", value: FIELD_2025.leaderboard[0].total / 3, col: "#d97706" },
+                { label: "🏅 Top 5 BJGT", value: FIELD_2025.top5Avg, col: "#16a34a" },
+                { label: "📊 Field BJGT", value: FIELD_2025.fieldAvg, col: "#0369a1" },
+              ];
+              return (
+                <div>
+                  <div style={{ display: "grid", gridTemplateColumns: `repeat(${periods.length}, 1fr)`, gap: 8, marginBottom: 8 }}>
+                    {periods.map(p => {
+                      const avg = p.data.reduce((s, r) => s + r.gross, 0) / p.data.length;
+                      const best = Math.min(...p.data.map(r => r.gross));
+                      const dblPct = p.data.reduce((s, r) => s + r.nDbl, 0) / p.data.reduce((s, r) => s + r.nHoles, 0) * 100;
+                      const pobPct = p.data.reduce((s, r) => s + r.nPob, 0) / p.data.reduce((s, r) => s + r.nHoles, 0) * 100;
+                      return (
+                        <div key={p.label} style={{ border: "1px solid #e2e8f0", borderRadius: 8, padding: 8, textAlign: "center" }}>
+                          <div style={{ fontWeight: 900, fontSize: 11, marginBottom: 4 }}>{p.label}</div>
+                          <div style={{ fontSize: 9, color: "#94a3b8", marginBottom: 4 }}>{p.data.length} rondas</div>
+                          <div style={{ fontSize: 22, fontWeight: 900, color: "#1c2617" }}>{avg.toFixed(1)}</div>
+                          <div className="muted" style={{ fontSize: 9 }}>média</div>
+                          <div style={{ display: "flex", justifyContent: "center", gap: 10, marginTop: 4, fontSize: 10 }}>
+                            <span style={{ color: "#16a34a", fontWeight: 700 }}>⬇{best}</span>
+                            <span style={{ color: "#16a34a" }}>{pobPct.toFixed(0)}% pob</span>
+                            <span style={{ color: "#dc2626" }}>{dblPct.toFixed(0)}% dbl</span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  {/* Benchmark comparison bars */}
+                  {periods.length > 0 && (() => {
+                    const recentAvg = periods[0].data.reduce((s, r) => s + r.gross, 0) / periods[0].data.length;
+                    const recentBest = Math.min(...periods[0].data.map(r => r.gross));
+                    const allVals = [...benchmarks.map(b => b.value), recentAvg, recentBest];
+                    const minV = Math.min(...allVals) - 2;
+                    const maxV = Math.max(...allVals) + 2;
+                    const range = maxV - minV;
+                    return (
+                      <div style={{ marginTop: 8 }}>
+                        {[...benchmarks, { label: `📍 ${PLAYER_NAME} média`, value: recentAvg, col: "#1c2617" }, { label: `📍 ${PLAYER_NAME} melhor`, value: recentBest, col: "#16a34a" }].map((b, i) => (
+                          <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 3 }}>
+                            <span style={{ minWidth: 110, fontSize: 10, fontWeight: 600, color: b.col }}>{b.label}</span>
+                            <div style={{ flex: 1, height: 14, background: "#f1f5f9", borderRadius: 4, position: "relative" }}>
+                              <div style={{ width: `${((b.value - minV) / range) * 100}%`, height: "100%", background: b.col, borderRadius: 4, opacity: 0.6 }} />
+                              <span style={{ position: "absolute", right: 4, top: 0, fontSize: 9, fontWeight: 700, lineHeight: "14px" }}>{b.value.toFixed(1)}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  })()}
+                </div>
+              );
+            })()}
+          </div>
+
+          {/* ── 5. FRONT 9 vs BACK 9 AO LONGO DO TEMPO ── */}
+          <div style={{ marginBottom: 8 }}>
+            <div className="haSubTitle" style={{ color: "#0891b2" }}>⚡ Front 9 vs Back 9 — Gestão de Energia</div>
+            <div className="muted" style={{ fontSize: 9, marginBottom: 6 }}>
+              Compara a média de pancadas nos primeiros 9 buracos (F9) vs últimos 9 (B9). Se o B9 é consistentemente pior,
+              pode indicar fadiga física, perda de concentração ou má hidratação/nutrição durante a ronda.
+            </div>
+            {(() => {
+              const ms = filteredMonthly;
+              const maxSplit = Math.max(...ms.map(m => Math.max(m.f9Avg, m.b9Avg)));
+              const minSplit = Math.min(...ms.map(m => Math.min(m.f9Avg, m.b9Avg)));
+              const range = maxSplit - minSplit || 2;
+              const avgF9Gap = ms.reduce((s, m) => s + (m.b9Avg - m.f9Avg), 0) / ms.length;
+              const recentGap = ms.length >= 3 ? ms.slice(-3).reduce((s, m) => s + (m.b9Avg - m.f9Avg), 0) / 3 : avgF9Gap;
+              const earlyGap = ms.length >= 3 ? ms.slice(0, 3).reduce((s, m) => s + (m.b9Avg - m.f9Avg), 0) / 3 : avgF9Gap;
+              return (
+                <div>
+                  {/* Paired bars */}
+                  <div style={{ display: "flex", gap: 2, marginBottom: 4 }}>
+                    {ms.map((m, i) => {
+                      const f9h = ((m.f9Avg - minSplit + 1) / (range + 2)) * 100;
+                      const b9h = ((m.b9Avg - minSplit + 1) / (range + 2)) * 100;
+                      return (
+                        <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 1 }}>
+                          <div style={{ fontSize: 7, fontWeight: 600, color: "#0891b2" }}>{m.f9Avg.toFixed(0)}</div>
+                          <div style={{ display: "flex", gap: 1, height: 50, alignItems: "flex-end", width: "100%" }}>
+                            <div style={{ flex: 1, height: `${f9h}%`, background: "#0891b2", borderRadius: 2, opacity: 0.6, minHeight: 3 }} />
+                            <div style={{ flex: 1, height: `${b9h}%`, background: "#f59e0b", borderRadius: 2, opacity: 0.6, minHeight: 3 }} />
+                          </div>
+                          <div style={{ fontSize: 7, fontWeight: 600, color: "#f59e0b" }}>{m.b9Avg.toFixed(0)}</div>
+                          <div style={{ fontSize: 7, color: "#94a3b8" }}>{m.label}</div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  {/* Legend */}
+                  <div style={{ display: "flex", gap: 12, justifyContent: "center", fontSize: 9, marginBottom: 8 }}>
+                    <span><span style={{ display: "inline-block", width: 8, height: 8, background: "#0891b2", borderRadius: 2, opacity: 0.6, marginRight: 3 }} />Front 9</span>
+                    <span><span style={{ display: "inline-block", width: 8, height: 8, background: "#f59e0b", borderRadius: 2, opacity: 0.6, marginRight: 3 }} />Back 9</span>
+                  </div>
+                  <div className="caConclusion" style={{ background: "#eff6ff", borderColor: "#bfdbfe" }}>
+                    <div className="caConcText" style={{ color: "#1e3a5f", fontSize: 11 }}>
+                      {Math.abs(avgF9Gap) < 1
+                        ? <>📊 Front e Back 9 equilibrados (gap médio: {avgF9Gap > 0 ? "+" : ""}{avgF9Gap.toFixed(1)}). Boa gestão de energia!</>
+                        : avgF9Gap > 0
+                          ? <>⚠️ O Back 9 custa em média <b>+{avgF9Gap.toFixed(1)}</b> pancadas. {recentGap < earlyGap - 0.5 ? "Mas está a melhorar!" : "Água, banana, e rotina de reset entre buracos."}</>
+                          : <>💪 O Back 9 é mais forte (–{Math.abs(avgF9Gap).toFixed(1)})! Arranca mais concentrado e capitaliza no final.</>
+                      }
+                      {Math.abs(recentGap - earlyGap) > 1 && (
+                        <> Gap início: {earlyGap > 0 ? "+" : ""}{earlyGap.toFixed(1)} → recente: {recentGap > 0 ? "+" : ""}{recentGap.toFixed(1)}.
+                          {recentGap < earlyGap ? " 📉 A fechar o gap — bom sinal!" : " 📈 O gap está a abrir — cuidado com a fadiga."}
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
+        </div>
+      )}
+
+      {/* ══════════════════════════════════════════════════════
+          INDICADORES DE DESENVOLVIMENTO — Para Treinadores
+          ══════════════════════════════════════════════════════ */}
+      {filteredCoach.length >= 3 && (
+        <div className="holeAnalysis">
+          <div className="haTitle">🎓 Indicadores de Desenvolvimento</div>
+          <div className="muted" style={{ fontSize: 10, marginBottom: 8 }}>
+            Métricas que os treinadores de golfe analisam para avaliar a evolução de jovens jogadores.
+            Baseado em {coachRounds.length} rondas com scorecards detalhados (buraco a buraco).
+            Cada gráfico mostra a evolução mensal e compara o primeiro terço com o último terço dos dados.
+          </div>
+          <div className="muted" style={{ fontSize: 10, marginBottom: 12 }}>
+            Métricas que treinadores usam para avaliar evolução real. Dados de {coachRounds.length} rondas.
+          </div>
+
+          {/* ── 1. CONSISTÊNCIA — SD do gross + Best vs Avg gap ── */}
+          <div style={{ marginBottom: 20 }}>
+            <div className="haSubTitle" style={{ color: "#7c3aed" }}>🎯 Consistência — A Chave da Maturidade</div>
+            <div className="muted" style={{ fontSize: 9, marginBottom: 6 }}>
+              <b>Desvio-padrão (σ):</b> mede a variação entre rondas no mesmo mês. σ ≤ 3 = muito consistente, σ &gt; 5 = imprevisível.
+              <b>Gap Melhor–Média:</b> diferença entre a melhor ronda e a média do mês. Gap pequeno = joga sempre perto do seu melhor. Verde = bom, laranja = atenção, vermelho = a melhorar.
+            </div>
+            <div className="muted" style={{ fontSize: 9, marginBottom: 6 }}>Desvio-padrão (σ) do gross e gap melhor/média. σ a descer = jogador mais previsível. Gap a fechar = menos altos e baixos.</div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 8 }}>
+              {/* Gross SD */}
+              <div style={{ border: "1px solid #e2e8f0", borderRadius: 8, padding: 8 }}>
+                <div style={{ fontWeight: 800, fontSize: 10, color: "#7c3aed", marginBottom: 4 }}>σ Gross (desvio-padrão)</div>
+                <div style={{ display: "flex", alignItems: "flex-end", height: 50, gap: 1 }}>
+                  {filteredCoach.filter(m => m.n >= 2).map((m, i) => {
+                    const maxSD = Math.max(...filteredCoach.filter(x => x.n >= 2).map(x => x.grossStdDev));
+                    const h = maxSD > 0 ? (m.grossStdDev / maxSD) * 100 : 0;
+                    const col = m.grossStdDev <= 3 ? "#16a34a" : m.grossStdDev <= 5 ? "#d97706" : "#dc2626";
+                    return (
+                      <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end", height: "100%" }}>
+                        <div style={{ fontSize: 7, fontWeight: 700, color: col }}>{m.grossStdDev.toFixed(1)}</div>
+                        <div style={{ width: "100%", height: `${h}%`, background: col, borderRadius: 2, opacity: 0.6, minHeight: 3 }} />
+                        <div style={{ fontSize: 6, color: "#94a3b8", marginTop: 1 }}>{m.label}</div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              {/* Best vs Avg gap */}
+              <div style={{ border: "1px solid #e2e8f0", borderRadius: 8, padding: 8 }}>
+                <div style={{ fontWeight: 800, fontSize: 10, color: "#0369a1", marginBottom: 4 }}>Gap: Média − Melhor</div>
+                <div style={{ display: "flex", alignItems: "flex-end", height: 50, gap: 1 }}>
+                  {filteredCoach.filter(m => m.n >= 2).map((m, i) => {
+                    const maxGap = Math.max(...filteredCoach.filter(x => x.n >= 2).map(x => x.bestVsAvgGap));
+                    const h = maxGap > 0 ? (m.bestVsAvgGap / maxGap) * 100 : 0;
+                    const col = m.bestVsAvgGap <= 3 ? "#16a34a" : m.bestVsAvgGap <= 6 ? "#d97706" : "#dc2626";
+                    return (
+                      <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end", height: "100%" }}>
+                        <div style={{ fontSize: 7, fontWeight: 700, color: col }}>{m.bestVsAvgGap.toFixed(0)}</div>
+                        <div style={{ width: "100%", height: `${h}%`, background: col, borderRadius: 2, opacity: 0.6, minHeight: 3 }} />
+                        <div style={{ fontSize: 6, color: "#94a3b8", marginTop: 1 }}>{m.label}</div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+            {(() => {
+              const valid = filteredCoach.filter(m => m.n >= 2);
+              if (valid.length < 3) return null;
+              const first = valid.slice(0, Math.ceil(valid.length / 3));
+              const last = valid.slice(-Math.ceil(valid.length / 3));
+              const fSD = first.reduce((s, m) => s + m.grossStdDev, 0) / first.length;
+              const lSD = last.reduce((s, m) => s + m.grossStdDev, 0) / last.length;
+              const fGap = first.reduce((s, m) => s + m.bestVsAvgGap, 0) / first.length;
+              const lGap = last.reduce((s, m) => s + m.bestVsAvgGap, 0) / last.length;
+              const sdBetter = lSD < fSD - 0.5;
+              const gapBetter = lGap < fGap - 1;
+              return (
+                <div className="caConclusion" style={{ background: sdBetter || gapBetter ? "#f0fdf4" : "#fef2f2", borderColor: sdBetter || gapBetter ? "#bbf7d0" : "#fecaca" }}>
+                  <div className="caConcText" style={{ color: sdBetter || gapBetter ? "#166534" : "#991b1b", fontSize: 11 }}>
+                    σ: {fSD.toFixed(1)} → {lSD.toFixed(1)} {sdBetter ? "✅ mais consistente" : "— manter trabalho"}
+                    {" · "}Gap: {fGap.toFixed(0)} → {lGap.toFixed(0)} {gapBetter ? "✅ a fechar" : "— potencial por explorar"}.
+                    {sdBetter && gapBetter && " Evolução clara em consistência — sinal de maturidade competitiva."}
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
+
+          {/* ── 2. RESILIÊNCIA — Bounce-back rate ── */}
+          <div style={{ marginBottom: 20 }}>
+            <div className="haSubTitle" style={{ color: "#dc2626" }}>🧠 Resiliência — Bounce-back Após Double</div>
+            <div className="muted" style={{ fontSize: 9, marginBottom: 6 }}>
+              Depois de fazer double bogey ou pior, qual a % de vezes que faz par ou melhor no buraco seguinte?
+              Mede a capacidade de "limpar a cabeça" após um mau buraco. Top juniores: ≥40%. Abaixo de 25% = o mau buraco está a arrastar os seguintes.
+            </div>
+            <div className="muted" style={{ fontSize: 9, marginBottom: 6 }}>Depois de um double+, qual % de vezes faz par ou melhor no buraco seguinte? Top juniors: 40%+.</div>
+            <div style={{ display: "flex", alignItems: "flex-end", height: 60, gap: 2, marginBottom: 4 }}>
+              {filteredCoach.map((m, i) => {
+                const rate = m.bounceRate;
+                const h = rate != null ? Math.min(100, rate) : 0;
+                const col = rate == null ? "#e2e8f0" : rate >= 40 ? "#16a34a" : rate >= 25 ? "#d97706" : "#dc2626";
+                return (
+                  <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end", height: "100%" }}>
+                    <div style={{ fontSize: 8, fontWeight: 700, color: col }}>{rate != null ? `${rate.toFixed(0)}%` : "–"}</div>
+                    <div style={{ width: "100%", height: `${h}%`, background: col, borderRadius: "3px 3px 0 0", opacity: 0.7, minHeight: rate != null ? 3 : 1 }} />
+                    <div style={{ fontSize: 7, color: "#94a3b8", marginTop: 1 }}>{m.label}</div>
+                  </div>
+                );
+              })}
+            </div>
+            {(() => {
+              const withData = filteredCoach.filter(m => m.bounceRate != null);
+              if (withData.length < 3) return null;
+              const first = withData.slice(0, Math.ceil(withData.length / 3));
+              const last = withData.slice(-Math.ceil(withData.length / 3));
+              const fR = first.reduce((s, m) => s + m.bounceRate!, 0) / first.length;
+              const lR = last.reduce((s, m) => s + m.bounceRate!, 0) / last.length;
+              return (
+                <div className="caConclusion" style={{ background: lR > fR + 5 ? "#f0fdf4" : "#eff6ff", borderColor: lR > fR + 5 ? "#bbf7d0" : "#bfdbfe" }}>
+                  <div className="caConcText" style={{ color: lR > fR + 5 ? "#166534" : "#1e3a5f", fontSize: 11 }}>
+                    Bounce-back: {fR.toFixed(0)}% → {lR.toFixed(0)}%. {lR > fR + 5 ? "📈 A melhorar a gestão mental!" : lR >= fR ? "Estável." : "Trabalhar rotina de reset pós-erro."}
+                    {" "}Um double não tem de custar dois.
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
+
+          {/* ── 3. BIRDIES & PAR STREAKS — Capacidade Ofensiva + Concentração ── */}
+          <div style={{ marginBottom: 20 }}>
+            <div className="haSubTitle" style={{ color: "#16a34a" }}>🦅 Birdies & Séries de Pares — Ataque e Concentração</div>
+            <div className="muted" style={{ fontSize: 9, marginBottom: 6 }}>
+              <b>Taxa de Birdies (%):</b> % de buracos com birdie ou melhor — mede a capacidade ofensiva.
+              <b>Melhor série par+ (média):</b> maior nº consecutivo de buracos com par ou melhor na ronda — mede concentração e consistência mental.
+              Séries longas (&gt;5) indicam boa gestão do jogo.
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 8 }}>
+              {/* Birdie rate */}
+              <div style={{ border: "1px solid #e2e8f0", borderRadius: 8, padding: 8 }}>
+                <div style={{ fontWeight: 800, fontSize: 10, color: "#16a34a", marginBottom: 4 }}>🦅 Taxa de Birdies (%)</div>
+                <div style={{ display: "flex", alignItems: "flex-end", height: 50, gap: 1 }}>
+                  {filteredCoach.map((m, i) => {
+                    const maxB = Math.max(...filteredCoach.map(x => x.birdieRate), 1);
+                    const h = (m.birdieRate / maxB) * 100;
+                    return (
+                      <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end", height: "100%" }}>
+                        <div style={{ fontSize: 7, fontWeight: 700, color: "#16a34a" }}>{m.birdieRate.toFixed(1)}</div>
+                        <div style={{ width: "100%", height: `${h}%`, background: "#16a34a", borderRadius: 2, opacity: 0.6, minHeight: 3 }} />
+                        <div style={{ fontSize: 6, color: "#94a3b8", marginTop: 1 }}>{m.label}</div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              {/* Par streak */}
+              <div style={{ border: "1px solid #e2e8f0", borderRadius: 8, padding: 8 }}>
+                <div style={{ fontWeight: 800, fontSize: 10, color: "#0369a1", marginBottom: 4 }}>🔗 Melhor série par+ (média)</div>
+                <div style={{ display: "flex", alignItems: "flex-end", height: 50, gap: 1 }}>
+                  {filteredCoach.map((m, i) => {
+                    const maxS = Math.max(...filteredCoach.map(x => x.avgPobStreak), 1);
+                    const h = (m.avgPobStreak / maxS) * 100;
+                    return (
+                      <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end", height: "100%" }}>
+                        <div style={{ fontSize: 7, fontWeight: 700, color: "#0369a1" }}>{m.avgPobStreak.toFixed(1)}</div>
+                        <div style={{ width: "100%", height: `${h}%`, background: "#0369a1", borderRadius: 2, opacity: 0.6, minHeight: 3 }} />
+                        <div style={{ fontSize: 6, color: "#94a3b8", marginTop: 1 }}>{m.label}</div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+            {(() => {
+              if (filteredCoach.length < 3) return null;
+              const first = filteredCoach.slice(0, Math.ceil(filteredCoach.length / 3));
+              const last = filteredCoach.slice(-Math.ceil(filteredCoach.length / 3));
+              const fBird = first.reduce((s, m) => s + m.birdieRate, 0) / first.length;
+              const lBird = last.reduce((s, m) => s + m.birdieRate, 0) / last.length;
+              const fStreak = first.reduce((s, m) => s + m.avgPobStreak, 0) / first.length;
+              const lStreak = last.reduce((s, m) => s + m.avgPobStreak, 0) / last.length;
+              return (
+                <div className="caConclusion" style={{ background: "#eff6ff", borderColor: "#bfdbfe" }}>
+                  <div className="caConcText" style={{ color: "#1e3a5f", fontSize: 11 }}>
+                    Birdies: {fBird.toFixed(1)}% → {lBird.toFixed(1)}% {lBird > fBird + 0.5 ? "📈" : "—"}
+                    {" · "}Séries par+: {fStreak.toFixed(1)} → {lStreak.toFixed(1)} buracos {lStreak > fStreak + 0.3 ? "📈 mais focado" : "—"}.
+                    {lBird > fBird + 1 && " Está a começar a atacar mais — sinal de confiança."}
+                    {lStreak > fStreak + 1 && " Consegue manter o foco durante mais buracos consecutivos."}
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
+
+          {/* ── 4. INÍCIO vs FECHO — Nervos e Fadiga ── */}
+          <div style={{ marginBottom: 20 }}>
+            <div className="haSubTitle" style={{ color: "#d97706" }}>🏁 Arranque vs Fecho — Nervos e Fadiga</div>
+            <div className="muted" style={{ fontSize: 9, marginBottom: 6 }}>
+              Compara o desempenho nos 3 primeiros buracos (arranque) vs 3 últimos (fecho), medido em pancadas acima do par.
+              Arranque alto = nervos no tee do 1. Fecho alto = fadiga ou pressão final.
+              Ambos devem estar abaixo de +1.5. Acima disso, há trabalho específico a fazer (aquecimento, nutrição, rotina mental).
+            </div>
+            <div className="muted" style={{ fontSize: 9, marginBottom: 6 }}>Média vs par nos primeiros 3 buracos (#1-3) e últimos 3 (#16-18). Para juniors, o arranque é nervos e o fecho é fadiga.</div>
+            <div style={{ display: "flex", gap: 2, marginBottom: 4 }}>
+              {filteredCoach.map((m, i) => {
+                const maxAbs = Math.max(...filteredCoach.map(x => Math.max(Math.abs(x.first3Avg), Math.abs(x.last3Avg))), 1);
+                const f3h = Math.min(100, (Math.abs(m.first3Avg) / maxAbs) * 100);
+                const l3h = Math.min(100, (Math.abs(m.last3Avg) / maxAbs) * 100);
+                return (
+                  <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 1 }}>
+                    <div style={{ fontSize: 7, fontWeight: 600, color: m.first3Avg <= 0.5 ? "#16a34a" : "#d97706" }}>
+                      {m.first3Avg > 0 ? "+" : ""}{m.first3Avg.toFixed(1)}
+                    </div>
+                    <div style={{ display: "flex", gap: 1, height: 40, alignItems: "flex-end", width: "100%" }}>
+                      <div style={{ flex: 1, height: `${f3h}%`, background: "#d97706", borderRadius: 2, opacity: 0.6, minHeight: 3 }} />
+                      <div style={{ flex: 1, height: `${l3h}%`, background: "#7c3aed", borderRadius: 2, opacity: 0.6, minHeight: 3 }} />
+                    </div>
+                    <div style={{ fontSize: 7, fontWeight: 600, color: m.last3Avg <= 0.5 ? "#16a34a" : "#7c3aed" }}>
+                      {m.last3Avg > 0 ? "+" : ""}{m.last3Avg.toFixed(1)}
+                    </div>
+                    <div style={{ fontSize: 6, color: "#94a3b8" }}>{m.label}</div>
+                  </div>
+                );
+              })}
+            </div>
+            <div style={{ display: "flex", gap: 12, justifyContent: "center", fontSize: 9, marginBottom: 6 }}>
+              <span><span style={{ display: "inline-block", width: 8, height: 8, background: "#d97706", borderRadius: 2, opacity: 0.6, marginRight: 3 }} />Bur. 1-3</span>
+              <span><span style={{ display: "inline-block", width: 8, height: 8, background: "#7c3aed", borderRadius: 2, opacity: 0.6, marginRight: 3 }} />Bur. 16-18</span>
+            </div>
+            {(() => {
+              if (filteredCoach.length < 3) return null;
+              const last3 = filteredCoach.slice(-3);
+              const avgF = last3.reduce((s, m) => s + m.first3Avg, 0) / 3;
+              const avgL = last3.reduce((s, m) => s + m.last3Avg, 0) / 3;
+              const worse = avgF > avgL ? "arranque" : "fecho";
+              const wVal = Math.max(avgF, avgL);
+              return (
+                <div className="caConclusion" style={{ background: wVal > 2 ? "#fef2f2" : "#f0fdf4", borderColor: wVal > 2 ? "#fecaca" : "#bbf7d0" }}>
+                  <div className="caConcText" style={{ color: wVal > 2 ? "#991b1b" : "#166534", fontSize: 11 }}>
+                    {worse === "arranque" && avgF > 1.5
+                      ? <>⚠️ Perde mais nos primeiros 3 buracos (+{avgF.toFixed(1)} vs par). Pode ser nervos — aquecer bem e ter rotina pré-jogo.</>
+                      : worse === "fecho" && avgL > 1.5
+                        ? <>⚠️ Perde mais nos últimos 3 buracos (+{avgL.toFixed(1)} vs par). Fadiga ou perda de foco — hidratação e snacks no B9.</>
+                        : <>✅ Bom equilíbrio entre arranque ({avgF > 0 ? "+" : ""}{avgF.toFixed(1)}) e fecho ({avgL > 0 ? "+" : ""}{avgL.toFixed(1)}). Gestão de volta sólida.</>
+                    }
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
+
+          {/* ── 5. SCORING DISTRIBUTION SHIFT — Evolução da Distribuição ── */}
+          <div style={{ marginBottom: 20 }}>
+            <div className="haSubTitle" style={{ color: "#0369a1" }}>📊 Shift da Distribuição — Onde Vão os Scores?</div>
+            <div className="muted" style={{ fontSize: 9, marginBottom: 6 }}>
+              Divide os dados em 3 períodos (Início, Meio, Recente) e mostra a distribuição dos scores: que % foram eagle, birdie, par, bogey, double ou triple+.
+              Um jogador em evolução deve ver mais verde (pars+birdies) e menos vermelho (doubles+triples) no período recente.
+            </div>
+            <div className="muted" style={{ fontSize: 9, marginBottom: 6 }}>Como a distribuição eagle/birdie/par/bogey/double/triple+ está a mudar ao longo do tempo.</div>
+            {(() => {
+              const thirds = Math.ceil(filteredCoach.length / 3);
+              const periods = [
+                { label: "Início", data: filteredCoach.slice(0, thirds) },
+                { label: "Meio", data: filteredCoach.slice(thirds, thirds * 2) },
+                { label: "Recente", data: filteredCoach.slice(-thirds) },
+              ].filter(p => p.data.length > 0);
+              return (
+                <div style={{ display: "grid", gridTemplateColumns: `repeat(${periods.length}, 1fr)`, gap: 8 }}>
+                  {periods.map(p => {
+                    const avgPob = p.data.reduce((s, m) => s + m.pobPct, 0) / p.data.length;
+                    const avgBird = p.data.reduce((s, m) => s + m.birdieRate, 0) / p.data.length;
+                    const avgDbl = p.data.reduce((s, m) => s + m.dblRate, 0) / p.data.length;
+                    const avgTrip = p.data.reduce((s, m) => s + m.tripleRate, 0) / p.data.length;
+                    const avgBog = 100 - avgPob - avgDbl - avgTrip;
+                    return (
+                      <div key={p.label} style={{ border: "1px solid #e2e8f0", borderRadius: 8, padding: 8, textAlign: "center" }}>
+                        <div style={{ fontWeight: 900, fontSize: 11, marginBottom: 6 }}>{p.label}</div>
+                        <div style={{ fontSize: 9, color: "#94a3b8", marginBottom: 4 }}>{p.data.reduce((s, m) => s + m.n, 0)} rondas</div>
+                        {/* Stacked bar */}
+                        <div style={{ display: "flex", height: 16, borderRadius: 4, overflow: "hidden", marginBottom: 6, gap: 1 }}>
+                          {avgBird > 0 && <div style={{ flex: avgBird, background: "#0369a1" }} />}
+                          {avgPob - avgBird > 0 && <div style={{ flex: avgPob - avgBird, background: "#16a34a" }} />}
+                          {avgBog > 0 && <div style={{ flex: avgBog, background: "#d97706" }} />}
+                          {avgDbl > 0 && <div style={{ flex: avgDbl, background: "#dc2626" }} />}
+                          {avgTrip > 0 && <div style={{ flex: avgTrip, background: "#7f1d1d" }} />}
+                        </div>
+                        <div style={{ fontSize: 9, display: "flex", justifyContent: "space-between" }}>
+                          <span style={{ color: "#16a34a", fontWeight: 700 }}>Par+: {avgPob.toFixed(0)}%</span>
+                          <span style={{ color: "#dc2626", fontWeight: 700 }}>Dbl+: {(avgDbl + avgTrip).toFixed(0)}%</span>
+                        </div>
+                        <div style={{ fontSize: 9, color: "#0369a1", fontWeight: 600 }}>🦅 {avgBird.toFixed(1)}%</div>
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })()}
+          </div>
+
+          {/* ── 6. SD TREND — Score Differential (mais significativo que gross) ── */}
+          {filteredCoach.some(m => m.avgSD != null) && (
+            <div style={{ marginBottom: 8 }}>
+              <div className="haSubTitle" style={{ color: "#1e40af" }}>📉 Score Differential (SD) — O Indicador que Conta</div>
+              <div className="muted" style={{ fontSize: 9, marginBottom: 6 }}>
+                O SD normaliza o score para a dificuldade do campo: SD = (113 ÷ Slope) × (Gross − Course Rating).
+                Permite comparar rondas em campos diferentes. É o indicador usado pelo WHS para calcular o handicap.
+                Quanto mais baixo, melhor. A barra escura abaixo de cada mês mostra o melhor SD do mês.
+              </div>
+              <div className="muted" style={{ fontSize: 9, marginBottom: 6 }}>O SD normaliza para a dificuldade do campo. Melhor que o gross para ver evolução real. O HCP baseia-se nos 8 melhores SD das últimas 20 rondas.</div>
+              <div style={{ display: "flex", alignItems: "flex-end", height: 70, gap: 2, marginBottom: 4 }}>
+                {filteredCoach.map((m, i) => {
+                  if (m.avgSD == null) return <div key={i} style={{ flex: 1 }} />;
+                  const allSDs = filteredCoach.filter(x => x.avgSD != null).map(x => x.avgSD!);
+                  const minSD = Math.min(...allSDs);
+                  const maxSD = Math.max(...allSDs);
+                  const range = maxSD - minSD || 5;
+                  const h = ((m.avgSD - minSD + 1) / (range + 2)) * 100;
+                  const col = m.avgSD <= 15 ? "#16a34a" : m.avgSD <= 25 ? "#d97706" : "#dc2626";
+                  return (
+                    <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end", height: "100%" }}>
+                      <div style={{ fontSize: 8, fontWeight: 700, color: col }}>{m.avgSD.toFixed(1)}</div>
+                      <div style={{ width: "100%", height: `${h}%`, background: col, borderRadius: "3px 3px 0 0", opacity: 0.7, minHeight: 3 }} />
+                      {m.bestSD != null && (
+                        <div style={{ fontSize: 7, color: "#16a34a", fontWeight: 600 }}>⬇{m.bestSD.toFixed(1)}</div>
+                      )}
+                      <div style={{ fontSize: 7, color: "#94a3b8" }}>{m.label}</div>
+                    </div>
+                  );
+                })}
+              </div>
+              {(() => {
+                const withSD = filteredCoach.filter(m => m.avgSD != null);
+                if (withSD.length < 3) return null;
+                const first = withSD.slice(0, Math.ceil(withSD.length / 3));
+                const last = withSD.slice(-Math.ceil(withSD.length / 3));
+                const fSD = first.reduce((s, m) => s + m.avgSD!, 0) / first.length;
+                const lSD = last.reduce((s, m) => s + m.avgSD!, 0) / last.length;
+                const allBest = filteredCoach.filter(m => m.bestSD != null).map(m => m.bestSD!);
+                const overallBest = allBest.length > 0 ? Math.min(...allBest) : null;
+                return (
+                  <div className="caConclusion" style={{ background: lSD < fSD - 1 ? "#f0fdf4" : "#eff6ff", borderColor: lSD < fSD - 1 ? "#bbf7d0" : "#bfdbfe" }}>
+                    <div className="caConcText" style={{ color: lSD < fSD - 1 ? "#166534" : "#1e3a5f", fontSize: 11 }}>
+                      SD médio: {fSD.toFixed(1)} → {lSD.toFixed(1)} {lSD < fSD - 1 ? "📉 a baixar — evolução real!" : lSD > fSD + 1 ? "📈 a subir — pode ser campos mais duros" : "— estável"}.
+                      {overallBest != null && <> Melhor SD de sempre: <b>{overallBest.toFixed(1)}</b>.</>}
+                      {hcp != null && <> HCP actual: <b>{hcp.toFixed(1)}</b>.</>}
+                    </div>
+                  </div>
+                );
+              })()}
+            </div>
+          )}
+
+          {/* ── Summary table for coaches ── */}
+          <div style={{ marginTop: 12 }}>
+            <div className="haSubTitle">📋 Resumo para o Treinador</div>
+            <div className="tourn-scroll">
+            <table className="sc-table-modern" style={{ width: "100%", fontSize: 10 }}>
+              <thead><tr>
+                <th className="row-label">Mês</th>
+                <th>Rondas</th>
+                <th>μ Gross</th>
+                <th>σ</th>
+                <th>Par+%</th>
+                <th>🦅%</th>
+                <th>Dbl%</th>
+                <th>Bounce</th>
+                <th>Streak</th>
+                <th>#1-3</th>
+                <th>#16-18</th>
+                {filteredCoach.some(m => m.avgSD != null) && <th>μ SD</th>}
+              </tr></thead>
+              <tbody>
+                {filteredCoach.map(m => (
+                  <tr key={m.month}>
+                    <td className="row-label" style={{ fontWeight: 700 }}>{m.label}</td>
+                    <td>{m.n}</td>
+                    <td style={{ fontWeight: 700 }}>{m.avgGross.toFixed(0)}</td>
+                    <td style={{ color: m.grossStdDev <= 3 ? "#16a34a" : m.grossStdDev <= 5 ? "#d97706" : "#dc2626" }}>{m.n >= 2 ? m.grossStdDev.toFixed(1) : "–"}</td>
+                    <td style={{ color: "#16a34a", fontWeight: 600 }}>{m.pobPct.toFixed(0)}</td>
+                    <td style={{ color: "#0369a1" }}>{m.birdieRate.toFixed(1)}</td>
+                    <td style={{ color: "#dc2626" }}>{m.dblRate.toFixed(0)}</td>
+                    <td style={{ color: m.bounceRate != null && m.bounceRate >= 40 ? "#16a34a" : "#d97706" }}>{m.bounceRate != null ? `${m.bounceRate.toFixed(0)}%` : "–"}</td>
+                    <td style={{ color: "#0369a1" }}>{m.avgPobStreak.toFixed(1)}</td>
+                    <td style={{ color: m.first3Avg > 1.5 ? "#dc2626" : "#16a34a" }}>{m.first3Avg > 0 ? "+" : ""}{m.first3Avg.toFixed(1)}</td>
+                    <td style={{ color: m.last3Avg > 1.5 ? "#dc2626" : "#16a34a" }}>{m.last3Avg > 0 ? "+" : ""}{m.last3Avg.toFixed(1)}</td>
+                    {filteredCoach.some(x => x.avgSD != null) && <td style={{ fontWeight: 600 }}>{m.avgSD != null ? m.avgSD.toFixed(1) : "–"}</td>}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            </div>
+            <div className="muted" style={{ fontSize: 8, marginTop: 4 }}>σ = desvio-padrão do gross · Par+% = par ou melhor · 🦅% = birdies · Dbl% = doubles+ · Bounce = % par+ após double · Streak = melhor série consecutiva de par+ · #1-3/#16-18 = vs par nos primeiros/últimos 3 buracos · SD = Score Differential</div>
+          </div>
+        </div>
+      )}
+
       {/* ── VP Buraco a Buraco: eclético + scores + cross-ref ── */}
       {vpHoleProfiles.length > 0 && (
         <div className="holeAnalysis">
           <div className="haTitle">🗺️ VP Flamingos — Manuel vs Field vs Top 5</div>
-          <div className="muted" style={{ fontSize: 10, marginBottom: 8 }}>Cada buraco: os 3 dias do Manuel, o eclético, e como se compara com o field e os 5 melhores de 2025.</div>
+          <div className="muted" style={{ fontSize: 10, marginBottom: 8 }}>
+            Scorecard comparativo buraco a buraco. Cada coluna é um buraco (1-18). Mostra os 3 dias do Manuel, o eclético, e as médias do field e Top 5 do BJGT 2025.
+            <br />μ M = média do Manuel nos 3 dias · μ T5 = média dos 5 melhores · μ Field = média dos {FIELD_2025.nPlayers} jogadores · Diff = Manuel − Field (negativo = melhor que o field).
+          </div>
           <div className="tourn-scroll">
-          <table className="sc-table-modern" style={{ width: "100%" }}>
+          <table className="sc-table-modern" style={{ width: "100%", fontSize: 9 }}>
             <thead>
               <tr>
-                <th className="row-label">BUR.</th>
-                <th>Par</th>
-                {vpCards.map((_, i) => <th key={i}>D{i + 1}</th>)}
-                <th style={{ background: "#dcfce7" }}>ECL</th>
-                <th style={{ background: "#eff6ff" }}>μ M</th>
-                <th style={{ background: "#fef3c7" }}>μ T5</th>
-                <th style={{ background: "#f1f5f9" }}>μ Field</th>
-                <th>Diff</th>
+                <th className="row-label" style={{ minWidth: 55 }}></th>
+                {vpHoleProfiles.map(h => (
+                  <th key={h.h} style={{ textAlign: "center", minWidth: 28 }}>{h.h}</th>
+                ))}
+                <th style={{ textAlign: "center", fontWeight: 900, borderLeft: "1px solid #d5dac9" }}>Tot</th>
               </tr>
             </thead>
             <tbody>
-              {vpHoleProfiles.map(h => {
-                const fh = FIELD_2025.holes.find(x => x.h === h.h);
-                const fieldAvg = fh?.fAvg ?? 0;
-                const t5Avg = fh?.t5 ?? 0;
-                const diff = h.vpAvg - fieldAvg;
-                const diffCol = diff > 0.5 ? "#dc2626" : diff > 0.2 ? "#d97706" : diff < -0.2 ? "#16a34a" : "#64748b";
+              {/* Par row */}
+              <tr style={{ background: "#f1f5f9" }}>
+                <td className="row-label" style={{ fontWeight: 700, color: "#94a3b8" }}>Par</td>
+                {vpHoleProfiles.map(h => (
+                  <td key={h.h} style={{ textAlign: "center", color: "#94a3b8" }}>{h.par}</td>
+                ))}
+                <td style={{ textAlign: "center", fontWeight: 700, color: "#94a3b8", borderLeft: "1px solid #d5dac9" }}>{tp}</td>
+              </tr>
+              {/* Manuel day rows */}
+              {vpCards.map((c, di) => {
+                const g = c.h.g.slice(0, nH);
+                const rdTotal = g.reduce((a, b) => a + (b ?? 0), 0);
                 return (
-                  <tr key={h.h}>
-                    <td className="row-label">{h.h}</td>
-                    <td className="par-label">{h.par}</td>
-                    {h.vpScores.map((s, i) => <td key={i}><ScoreCircle g={s} p={h.par} sm /></td>)}
-                    {h.vpScores.length < vpCards.length && Array.from({ length: vpCards.length - h.vpScores.length }).map((_, i) => <td key={`e${i}`}>–</td>)}
-                    <td style={{ background: "#dcfce7", fontWeight: 800 }}><ScoreCircle g={h.eclBest} p={h.par} sm /></td>
-                    <td style={{ background: "#eff6ff", fontWeight: 700, fontSize: 10, color: (h.vpAvg - h.par) <= 0.3 ? "#16a34a" : (h.vpAvg - h.par) <= 1 ? "#d97706" : "#dc2626" }}>
-                      {h.vpAvg.toFixed(1)}
-                    </td>
-                    <td style={{ background: "#fef3c7", fontSize: 10, fontWeight: 600, color: "#92400e" }}>
-                      {t5Avg.toFixed(1)}
-                    </td>
-                    <td style={{ background: "#f1f5f9", fontSize: 10, color: "#64748b" }}>
-                      {fieldAvg.toFixed(1)}
-                    </td>
-                    <td style={{ fontSize: 10, fontWeight: 800, color: diffCol }}>
-                      {diff > 0 ? `+${diff.toFixed(1)}` : diff < 0 ? diff.toFixed(1) : "="}
-                    </td>
+                  <tr key={di} style={{ borderBottom: "1px solid #e2e8f0" }}>
+                    <td className="row-label" style={{ fontWeight: 700 }}>D{di + 1}</td>
+                    {g.map((s, hi) => (
+                      <td key={hi} style={{ textAlign: "center", padding: "1px 0" }}>
+                        {s != null ? <ScoreCircle g={s} p={vpHoleProfiles[hi]?.par ?? 4} sm /> : "·"}
+                      </td>
+                    ))}
+                    <td style={{ textAlign: "center", fontWeight: 800, borderLeft: "1px solid #d5dac9" }}>{rdTotal}</td>
                   </tr>
                 );
               })}
-              {/* Totals row */}
-              <tr style={{ borderTop: "2px solid #1c2617", fontWeight: 900 }}>
-                <td className="row-label" colSpan={2}>TOTAL</td>
-                {vpCards.map((_, i) => <td key={i} style={{ fontSize: 10 }}>{daySummaries[i]?.gross ?? "–"}</td>)}
-                <td style={{ background: "#dcfce7" }}>{ecl?.totalGross ?? "–"}</td>
-                <td style={{ background: "#eff6ff", fontSize: 10 }}>{daySummaries.length > 0 ? (daySummaries.reduce((a, d) => a + d.gross, 0) / daySummaries.length).toFixed(0) : "–"}</td>
-                <td style={{ background: "#fef3c7", fontSize: 10 }}>{FIELD_2025.top5Avg.toFixed(0)}</td>
-                <td style={{ background: "#f1f5f9", fontSize: 10 }}>{FIELD_2025.fieldAvg.toFixed(0)}</td>
-                <td></td>
+              {/* Eclectic row */}
+              {ecl && (
+                <tr style={{ background: "#f0fdf4", borderTop: "1px solid #d5dac9" }}>
+                  <td className="row-label" style={{ fontWeight: 800 }}>ECL</td>
+                  {ecl.holes.map((eh, hi) => (
+                    <td key={hi} style={{ textAlign: "center", padding: "1px 0" }}>
+                      {eh.best != null ? <ScoreCircle g={eh.best} p={vpHoleProfiles[hi]?.par ?? 4} sm /> : "·"}
+                    </td>
+                  ))}
+                  <td style={{ textAlign: "center", fontWeight: 900, borderLeft: "1px solid #d5dac9" }}>{ecl.totalGross}</td>
+                </tr>
+              )}
+              {/* μ Manuel */}
+              <tr style={{ borderTop: "2px solid #1c2617" }}>
+                <td className="row-label" style={{ fontWeight: 700 }}>μ M</td>
+                {vpHoleProfiles.map(h => (
+                  <td key={h.h} style={{ textAlign: "center", fontWeight: 600, fontSize: 9 }}>{h.vpAvg.toFixed(1)}</td>
+                ))}
+                <td style={{ textAlign: "center", fontWeight: 800, borderLeft: "1px solid #d5dac9" }}>
+                  {daySummaries.length > 0 ? (daySummaries.reduce((a, d) => a + d.gross, 0) / daySummaries.length).toFixed(0) : "–"}
+                </td>
+              </tr>
+              {/* μ T5 */}
+              <tr>
+                <td className="row-label" style={{ fontWeight: 700 }}>μ T5</td>
+                {vpHoleProfiles.map(h => {
+                  const fh = FIELD_2025.holes.find(x => x.h === h.h);
+                  return <td key={h.h} style={{ textAlign: "center", fontSize: 9 }}>{fh?.t5.toFixed(1) ?? "–"}</td>;
+                })}
+                <td style={{ textAlign: "center", fontWeight: 600, borderLeft: "1px solid #d5dac9" }}>{FIELD_2025.top5Avg.toFixed(0)}</td>
+              </tr>
+              {/* μ Field */}
+              <tr>
+                <td className="row-label" style={{ fontWeight: 700 }}>μ Field</td>
+                {vpHoleProfiles.map(h => {
+                  const fh = FIELD_2025.holes.find(x => x.h === h.h);
+                  return <td key={h.h} style={{ textAlign: "center", fontSize: 9, color: "#64748b" }}>{fh?.fAvg.toFixed(1) ?? "–"}</td>;
+                })}
+                <td style={{ textAlign: "center", color: "#64748b", borderLeft: "1px solid #d5dac9" }}>{FIELD_2025.fieldAvg.toFixed(0)}</td>
+              </tr>
+              {/* Diff row */}
+              <tr style={{ borderTop: "1px solid #d5dac9" }}>
+                <td className="row-label" style={{ fontWeight: 700 }}>Diff</td>
+                {vpHoleProfiles.map(h => {
+                  const fh = FIELD_2025.holes.find(x => x.h === h.h);
+                  const d = fh ? h.vpAvg - fh.fAvg : 0;
+                  const col = d > 0.5 ? "#dc2626" : d > 0.2 ? "#d97706" : d < -0.2 ? "#16a34a" : "#64748b";
+                  return <td key={h.h} style={{ textAlign: "center", fontWeight: 700, fontSize: 9, color: col }}>{d > 0 ? `+${d.toFixed(1)}` : d.toFixed(1)}</td>;
+                })}
+                <td style={{ borderLeft: "1px solid #d5dac9" }}></td>
               </tr>
             </tbody>
           </table>
           </div>
-          <div className="muted" style={{ fontSize: 9, marginTop: 4 }}>μ M = média Manuel · μ T5 = média Top 5 (2025) · μ Field = média {FIELD_2025.nPlayers} jogadores · Diff = Manuel vs Field</div>
+          <div className="muted" style={{ fontSize: 9, marginTop: 4 }}>
+            ECL = eclético (melhor score em cada buraco nos 3 dias) · Diff: vermelho = pior que o field, verde = melhor que o field.
+          </div>
           
           {/* Key takeaway: where Manuel loses most vs field */}
           {(() => {
