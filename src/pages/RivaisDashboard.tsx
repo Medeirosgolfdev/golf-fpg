@@ -243,7 +243,7 @@ function getTrend(p) {
   return "stable";
 }
 
-const TR_I = { up2: { i: "▲▲", c: "#16a34a" }, up: { i: "▲", c: "#22c55e" }, stable: { i: "●", c: "#94a3b8" }, down: { i: "▼", c: "#f97316" }, down2: { i: "▼▼", c: "#dc2626" } };
+const TR_I = { up2: { i: "▲▲", c: "#16a34a" }, up: { i: "▲", c: "#22c55e" }, stable: { i: "●", c: "var(--text-muted)" }, down: { i: "▼", c: "#f97316" }, down2: { i: "▼▼", c: "#dc2626" } };
 
 // Average z-score across all rounds played
 function getAvgZ(p) {
@@ -352,13 +352,13 @@ export default function RivaisDashboard() {
       return {
         val: score,
         bg: st.bg || "transparent",
-        color: st.c || "#6b7280",
+        color: st.c || "var(--text-3)",
         vsM, z,
       };
     }
 
     if (col.type === "total") {
-      if (res.p === "WD") return { val: "WD", bg: "transparent", color: "#9ca3af", sub: null };
+      if (res.p === "WD") return { val: "WD", bg: "transparent", color: "var(--text-muted)", sub: null };
       if (res.tp == null) return { val: "", bg: "transparent", color: "transparent", empty: true };
       const tObj = T.find(x => x.id === col.tid);
       const playerAvg = res.t / tObj.rounds;
@@ -383,14 +383,14 @@ export default function RivaisDashboard() {
       return {
         val: (res.tp > 0 ? "+" : "") + res.tp,
         bg: st.bg || "transparent",
-        color: st.c || "#6b7280",
+        color: st.c || "var(--text-3)",
         vsM, z,
       };
     }
     if (col.type === "pos") {
-      if (res.p === "WD") return { val: "WD", bg: "transparent", color: "#9ca3af", isPos: true };
+      if (res.p === "WD") return { val: "WD", bg: "transparent", color: "var(--text-muted)", isPos: true };
       if (res.tp == null) return { val: "", bg: "transparent", color: "transparent", empty: true };
-      return { val: res.p, bg: "transparent", color: "#374151", isPos: true };
+      return { val: res.p, bg: "transparent", color: "var(--text)", isPos: true };
     }
     return { val: "", bg: "transparent", color: "transparent", empty: true };
   }
@@ -406,111 +406,98 @@ export default function RivaisDashboard() {
   }
 
   return (
-    <div style={{ fontFamily: "'DM Sans', system-ui, -apple-system, sans-serif", background: "#f7f8f6", minHeight: "100vh" }}>
-      {/* Header */}
-      <div style={{ background: "#1a2e1a", color: "white", padding: "12px 20px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <span style={{ fontSize: 20 }}>⛳</span>
+    <div className="rivais-page">
+      {/* Manuel card */}
+      <div className="highlight-card highlight-card-accent">
+        <div className="rivais-header-info">
           <div>
-            <div style={{ fontSize: 15, fontWeight: 700 }}>Cruzamento de Jogadores</div>
-            <div style={{ fontSize: 10, opacity: 0.7 }}>Análise comparativa · Circuito Júnior Internacional</div>
+            <div className="rivais-header-name">🇵🇹 Manuel Francisco Sousa G. Medeiros</div>
+            <div className="rivais-header-pills">
+              <span className="pill-sm pill-info">2014</span>
+              <span className="pill-sm pill-warn">Sub-12</span>
+              <span className="pill-sm pill-info">HCP 12.6</span>
+            </div>
+          </div>
+          <div className="rivais-header-results">
+            {T.map(t => {
+              const res = manuel.r[t.id];
+              if (!res) return null;
+              return (
+                <div key={t.id} className="rivais-result-card">
+                  <div className="rivais-result-label">{t.short}</div>
+                  <div className="rivais-result-val">{res.tp > 0 ? "+" : ""}{res.tp}</div>
+                  <div className="rivais-result-meta">#{res.p} · {res.rd.join("-")}</div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
 
-      <div style={{ padding: "12px 16px", maxWidth: 1800, margin: "0 auto" }}>
-        {/* Manuel card */}
-        <div style={{ background: "white", border: "1px solid #d5dac9", borderRadius: 10, padding: "12px 16px", marginBottom: 12, borderLeft: "4px solid #1a2e1a" }}>
-          <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
-            <div>
-              <div style={{ fontSize: 15, fontWeight: 700, color: "#1f2937" }}>🇵🇹 Manuel Francisco Sousa G. Medeiros</div>
-              <div style={{ display: "flex", gap: 5, marginTop: 4, flexWrap: "wrap" }}>
-                <span style={{ background: "#e0e7ff", color: "#3730a3", padding: "1px 8px", borderRadius: 4, fontSize: 10, fontWeight: 600 }}>2014</span>
-                <span style={{ background: "#fef3c7", color: "#92400e", padding: "1px 8px", borderRadius: 4, fontSize: 10, fontWeight: 600 }}>Sub-12</span>
-                <span style={{ background: "#dbeafe", color: "#1e40af", padding: "1px 8px", borderRadius: 4, fontSize: 10, fontWeight: 600 }}>HCP 12.6</span>
-              </div>
-            </div>
-            <div style={{ marginLeft: "auto", display: "flex", gap: 8, flexWrap: "wrap" }}>
-              {T.map(t => {
-                const res = manuel.r[t.id];
-                if (!res) return null;
-                return (
-                  <div key={t.id} style={{ textAlign: "center", padding: "3px 10px", background: "#f9fafb", borderRadius: 5, border: "1px solid #d5dac9" }}>
-                    <div style={{ fontSize: 9, color: "#6b7280", fontWeight: 600 }}>{t.short}</div>
-                    <div style={{ fontSize: 14, fontWeight: 700, color: "#1f2937" }}>{res.tp > 0 ? "+" : ""}{res.tp}</div>
-                    <div style={{ fontSize: 9, color: "#9ca3af" }}>#{res.p} · {res.rd.join("-")}</div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
+      {/* Filters */}
+      <div className="filter-bar">
+        <input type="text" placeholder="Pesquisar..." value={q} onChange={e => setQ(e.target.value)} className="filter-input" />
+        <select value={fTour} onChange={e => setFTour(e.target.value)} className="filter-select">
+          <option value="all">Todos Torneios</option>
+          {T.map(t => <option key={t.id} value={t.id}>{t.short}</option>)}
+        </select>
+        <select value={fUp} onChange={e => setFUp(e.target.value)} className="filter-select">
+          <option value="all">Próximos: Todos</option>
+          {UP.map(u => <option key={u.id} value={u.id}>{u.name}</option>)}
+        </select>
+        <select value={fCo} onChange={e => setFCo(e.target.value)} className="filter-select">
+          <option value="all">🌍 País</option>
+          {allCountries.map(c => <option key={c} value={c}>{FL[c] || ""} {c}</option>)}
+        </select>
+        <label className="filter-checkbox">
+          <input type="checkbox" checked={vsOn} onChange={e => setVsOn(e.target.checked)} /> vs Manuel
+        </label>
+        <label className="filter-checkbox">
+          <input type="checkbox" checked={dOnly} onChange={e => setDOnly(e.target.checked)} /> Só com dados
+        </label>
+        <div className="filter-count">{list.length} jogadores</div>
+      </div>
 
-        {/* Filters */}
-        <div style={{ background: "white", border: "1px solid #d5dac9", borderRadius: 10, padding: "8px 12px", marginBottom: 10, display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
-          <input type="text" placeholder="Pesquisar..." value={q} onChange={e => setQ(e.target.value)}
-            style={{ border: "1px solid #d5dac9", borderRadius: 6, padding: "5px 8px", fontSize: 11, minWidth: 130, outline: "none", background: "#fafafa" }} />
-          <select value={fTour} onChange={e => setFTour(e.target.value)} style={ss}>
-            <option value="all">Todos Torneios</option>
-            {T.map(t => <option key={t.id} value={t.id}>{t.short}</option>)}
-          </select>
-          <select value={fUp} onChange={e => setFUp(e.target.value)} style={ss}>
-            <option value="all">Próximos: Todos</option>
-            {UP.map(u => <option key={u.id} value={u.id}>{u.name}</option>)}
-          </select>
-          <select value={fCo} onChange={e => setFCo(e.target.value)} style={ss}>
-            <option value="all">🌍 País</option>
-            {allCountries.map(c => <option key={c} value={c}>{FL[c] || ""} {c}</option>)}
-          </select>
-          <label style={{ display: "flex", alignItems: "center", gap: 3, fontSize: 10, color: "#6b7280", cursor: "pointer" }}>
-            <input type="checkbox" checked={vsOn} onChange={e => setVsOn(e.target.checked)} style={{ accentColor: "#2d6a30" }} /> vs Manuel
-          </label>
-          <label style={{ display: "flex", alignItems: "center", gap: 3, fontSize: 10, color: "#6b7280", cursor: "pointer" }}>
-            <input type="checkbox" checked={dOnly} onChange={e => setDOnly(e.target.checked)} style={{ accentColor: "#2d6a30" }} /> Só com dados
-          </label>
-          <div style={{ marginLeft: "auto", fontSize: 10, color: "#9ca3af" }}>{list.length} jogadores</div>
-        </div>
+      {/* Legend */}
+      <div className="legend-row">
+        <span className="fw-700">Nível (vs média campo):</span>
+        {Object.keys(TIER).map(k => (
+          <span key={k} className="legend-item">
+            <span className="legend-dot" style={{ background: TIER[k].bg }} />
+            <span style={{ color: TIER[k].c }}>{TIER_L[k]}</span>
+          </span>
+        ))}
+        <span style={{ color: "var(--border)" }}>|</span>
+        <span className="pill-xs pill-info">Manuel (referência)</span>
+      </div>
 
-        {/* Legend */}
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center", marginBottom: 8, fontSize: 10, color: "#6b7280" }}>
-          <span style={{ fontWeight: 700 }}>Nível (vs média campo):</span>
-          {Object.keys(TIER).map(k => (
-            <span key={k} style={{ display: "inline-flex", alignItems: "center", gap: 2 }}>
-              <span style={{ width: 9, height: 9, borderRadius: 2, background: TIER[k].bg, display: "inline-block" }} />
-              <span style={{ color: TIER[k].c }}>{TIER_L[k]}</span>
-            </span>
-          ))}
-          <span style={{ color: "#d1d5db" }}>|</span>
-          <span style={{ background: "#dbeafe", color: "#1e40af", padding: "1px 5px", borderRadius: 3, fontSize: 9 }}>Manuel (referência)</span>
-        </div>
-
-        {/* Table */}
-        <div style={{ background: "white", border: "1px solid #d5dac9", borderRadius: 10, overflow: "hidden" }}>
-          <div style={{ overflowX: "auto" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 11 }}>
+      {/* Table */}
+      <div className="section-card">
+        <div className="scroll-x">
+          <table className="rivais-table">
               <thead>
                 {/* Tournament group header */}
-                <tr style={{ background: "#1a2e1a", color: "white" }}>
-                  <th rowSpan={2} style={{ padding: "7px 8px", fontSize: 10, fontWeight: 700, textAlign: "left", minWidth: 170, position: "sticky", left: 0, background: "#1a2e1a", zIndex: 2, cursor: "pointer" }} onClick={() => doSort("name")}>
+                <tr className="rivais-group-header">
+                  <th rowSpan={2} className="rivais-th-name pointer" onClick={() => doSort("name")}>
                     Jogador {sort === "name" ? (dir === "asc" ? "↑" : "↓") : ""}
                   </th>
                   {tourGroups.map((g, gi) => (
                     <th key={g.id} colSpan={g.span} style={{ padding: "6px 4px", textAlign: "center", fontSize: 10, fontWeight: 700, borderLeft: "4px solid #1a1a1a", background: gi % 2 === 1 ? "rgba(255,255,255,0.08)" : "transparent", cursor: "pointer" }} onClick={() => doSort("t:"+g.id)}>
-                      {g.url ? <a href={g.url} target="_blank" rel="noopener noreferrer" style={{ color: "white", textDecoration: "underline", textDecorationStyle: "dotted", textUnderlineOffset: 2 }} onClick={e => e.stopPropagation()}>{g.short}</a> : g.short} <span style={{ fontWeight: 400, opacity: 0.6, fontSize: 9 }}>({g.date})</span>
-                      {sort === "t:"+g.id && <span style={{ marginLeft: 3, fontSize: 9 }}>{dir === "asc" ? "↑" : "↓"}</span>}
+                      {g.url ? <a href={g.url} target="_blank" rel="noopener noreferrer" style={{ color: "white", textDecoration: "underline", textDecorationStyle: "dotted", textUnderlineOffset: 2 }} onClick={e => e.stopPropagation()}>{g.short}</a> : g.short} <span className="op-6 fs-9" style={{ fontWeight: 400 }}>({g.date})</span>
+                      {sort === "t:"+g.id && <span className="ml-3 fs-9">{dir === "asc" ? "↑" : "↓"}</span>}
                     </th>
                   ))}
-                  <th rowSpan={2} style={{ padding: "7px 3px", textAlign: "center", fontSize: 9, fontWeight: 700, width: 35, borderLeft: "4px solid #1a1a1a" }}>Trend</th>
-                  <th rowSpan={2} style={{ padding: "7px 3px", textAlign: "center", fontSize: 8, fontWeight: 700, width: 42, borderLeft: "2px solid #cbd5e1", cursor: "pointer" }} onClick={() => doSort("zrank")} title="Ranking por z-score médio (desvios-padrão da média do campo)">
+                  <th rowSpan={2} className="rivais-th-wide rivais-border-mark">Trend</th>
+                  <th rowSpan={2} className="rivais-th-avg pointer" onClick={() => doSort("zrank")} title="Ranking por z-score médio (desvios-padrão da média do campo)">
                     Rank {sort === "zrank" ? (dir === "asc" ? "↑" : "↓") : ""}
                   </th>
-                  <th colSpan={2} style={{ padding: "7px 3px", textAlign: "center", fontSize: 9, fontWeight: 700, borderLeft: "4px solid #1a1a1a" }}>Próximos</th>
-                  {vsOn && <th rowSpan={2} style={{ padding: "7px 3px", textAlign: "center", fontSize: 9, fontWeight: 700, width: 35, cursor: "pointer" }} onClick={() => doSort("vsManuel")}>
+                  <th colSpan={2} className="rivais-th rivais-border-mark">Próximos</th>
+                  {vsOn && <th rowSpan={2} className="rivais-th-wide pointer" onClick={() => doSort("vsManuel")}>
                     vs M {sort === "vsManuel" ? (dir === "asc" ? "↑" : "↓") : ""}
                   </th>}
                 </tr>
                 {/* Round sub-headers */}
-                <tr style={{ background: "#2d4a2d", color: "rgba(255,255,255,0.85)" }}>
+                <tr className="rivais-sub-header">
                   {COLS.map((col, i) => (
                     <th key={i} style={{
                       padding: "3px 2px", textAlign: "center", fontSize: 9,
@@ -530,8 +517,8 @@ export default function RivaisDashboard() {
                   ))}
                 </tr>
                 {/* Field averages row */}
-                <tr style={{ background: "#f1f5f9" }}>
-                  <th style={{ padding: "3px 8px", fontSize: 9, fontWeight: 700, color: "#475569", textAlign: "left", position: "sticky", left: 0, background: "#f1f5f9", zIndex: 2, borderRight: "1px solid #cbd5e1", whiteSpace: "nowrap" }}>
+                <tr className="rivais-avg-row">
+                  <th className="rivais-td-name">
                     Média campo
                   </th>
                   {COLS.map((col, i) => {
@@ -546,23 +533,23 @@ export default function RivaisDashboard() {
                     return (
                       <th key={i} style={{
                         padding: "3px 2px", textAlign: "center", fontSize: 9, fontWeight: 600,
-                        color: "#64748b",
-                        borderLeft: col.isFirst ? "4px solid #1a1a1a" : col.isTot ? "2px solid #cbd5e1" : "none",
-                        background: col.type === "total" ? "#e2e8f0" : (col.tIdx % 2 === 1 ? "#e8ecf0" : "#f1f5f9"),
+                        color: "var(--text-3)",
+                        borderLeft: col.isFirst ? "4px solid #1a1a1a" : col.isTot ? "2px solid var(--border-heavy)" : "none",
+                        background: col.type === "total" ? "var(--bg-hover)" : (col.tIdx % 2 === 1 ? "var(--bg-hover)" : "var(--bg)"),
                       }}>
                         {avg != null ? avg.toFixed(0) : ""}
                       </th>
                     );
                   })}
-                  <th style={{ background: "#f1f5f9", borderLeft: "4px solid #1a1a1a" }}></th>
-                  <th style={{ background: "#f1f5f9", borderLeft: "2px solid #cbd5e1" }}></th>
-                  <th style={{ background: "#f1f5f9", borderLeft: "4px solid #1a1a1a" }}></th>
-                  <th style={{ background: "#f1f5f9" }}></th>
-                  {vsOn && <th style={{ background: "#f1f5f9" }}></th>}
+                  <th className="bg-page rivais-border-mark"></th>
+                  <th className="bg-page" style={{ borderLeft: "2px solid var(--border-heavy)" }}></th>
+                  <th className="bg-page rivais-border-mark"></th>
+                  <th className="bg-page"></th>
+                  {vsOn && <th className="bg-page"></th>}
                 </tr>
                 {/* SD row */}
-                <tr style={{ background: "#eef2f7", borderBottom: "2px solid #94a3b8" }}>
-                  <th style={{ padding: "2px 8px", fontSize: 8, fontWeight: 600, color: "#94a3b8", textAlign: "left", position: "sticky", left: 0, background: "#eef2f7", zIndex: 2, borderRight: "1px solid #cbd5e1", whiteSpace: "nowrap", fontStyle: "italic" }}>
+                <tr className="bg-hover" style={{ borderBottom: "2px solid var(--text-muted)" }}>
+                  <th className="rivais-td-avg">
                     σ (desvio)
                   </th>
                   {COLS.map((col, i) => {
@@ -577,19 +564,19 @@ export default function RivaisDashboard() {
                     return (
                       <th key={i} style={{
                         padding: "2px 2px", textAlign: "center", fontSize: 8, fontWeight: 500,
-                        color: "#94a3b8", fontStyle: "italic",
-                        borderLeft: col.isFirst ? "4px solid #1a1a1a" : col.isTot ? "2px solid #cbd5e1" : "none",
-                        background: col.type === "total" ? "#e2e8f0" : (col.tIdx % 2 === 1 ? "#e4e8ec" : "#eef2f7"),
+                        color: "var(--text-muted)", fontStyle: "italic",
+                        borderLeft: col.isFirst ? "4px solid #1a1a1a" : col.isTot ? "2px solid var(--border-heavy)" : "none",
+                        background: col.type === "total" ? "var(--bg-hover)" : (col.tIdx % 2 === 1 ? "var(--bg-hover)" : "var(--bg-muted)"),
                       }}>
                         {sd != null ? "±" + sd.toFixed(1) : ""}
                       </th>
                     );
                   })}
-                  <th style={{ background: "#eef2f7", borderLeft: "4px solid #1a1a1a" }}></th>
-                  <th style={{ background: "#eef2f7", borderLeft: "2px solid #cbd5e1" }}></th>
-                  <th style={{ background: "#eef2f7", borderLeft: "4px solid #1a1a1a" }}></th>
-                  <th style={{ background: "#eef2f7" }}></th>
-                  {vsOn && <th style={{ background: "#eef2f7" }}></th>}
+                  <th className="bg-hover rivais-border-mark"></th>
+                  <th className="bg-hover" style={{ borderLeft: "2px solid var(--border-heavy)" }}></th>
+                  <th className="bg-hover rivais-border-mark"></th>
+                  <th className="bg-hover"></th>
+                  {vsOn && <th className="bg-hover"></th>}
                 </tr>
               </thead>
               <tbody>
@@ -602,32 +589,28 @@ export default function RivaisDashboard() {
 
                   return (
                     <tr key={p.n} style={{
-                      borderBottom: isM ? "2px solid #93c5fd" : "1px solid #f3f4f6",
-                      background: "white",
+                      borderBottom: isM ? "2px solid #93c5fd" : "1px solid var(--border-light)",
+                      background: "var(--bg-card)",
                     }}>
-                      <td style={{
-                        padding: "7px 8px", whiteSpace: "nowrap",
-                        position: "sticky", left: 0, background: "white",
-                        zIndex: 1, borderRight: "1px solid #d5dac9",
-                      }}>
-                        <span style={{ fontSize: 14, marginRight: 4 }} title={p.co}>{flag}</span>
-                        <span style={{ fontWeight: isM ? 700 : 600, color: "#1f2937", fontSize: 11 }}>{p.n}</span>
-                        {isM && <span style={{ background: "#dbeafe", color: "#1e40af", fontSize: 8, padding: "1px 4px", borderRadius: 3, marginLeft: 4, fontWeight: 700 }}>REF</span>}
+                      <td className="rivais-player-name bg-card">
+                        <span className="rivais-flag" title={p.co}>{flag}</span>
+                        <span style={{ fontWeight: isM ? 700 : 600, color: "var(--text)", fontSize: 11 }}>{p.n}</span>
+                        {isM && <span className="pill-xs pill-info ml-4">REF</span>}
                       </td>
                       {COLS.map((col, i) => {
                         const cell = renderCell(p, col);
                         if (cell.empty) {
-                          return <td key={i} style={{ background: "white", borderLeft: col.isFirst ? "4px solid #1a1a1a" : "none" }}></td>;
+                          return <td key={i} style={{ background: "var(--bg-card)", borderLeft: col.isFirst ? "4px solid #1a1a1a" : "none" }}></td>;
                         }
                         const isTotal = col.type === "total";
                         const isPos = col.type === "pos";
                         const isOdd = col.tIdx % 2 === 1;
-                        const groupTint = isOdd ? "#f0f4f8" : "transparent";
+                        const groupTint = isOdd ? "var(--bg-muted)" : "transparent";
                         let bg = cell.bg;
                         if (isTotal) {
-                          bg = cell.bg !== "transparent" ? cell.bg : (isOdd ? "#e2e8f0" : "#e8ecf0");
+                          bg = cell.bg !== "transparent" ? cell.bg : (isOdd ? "var(--border-light)" : "var(--bg-hover)");
                         } else if (isPos) {
-                          bg = isOdd ? "#f5f7fa" : "#fafafa";
+                          bg = isOdd ? "var(--bg-detail)" : "var(--bg)";
                         } else if (bg === "transparent") {
                           bg = groupTint;
                         }
@@ -646,37 +629,37 @@ export default function RivaisDashboard() {
                             padding: isTotal ? "5px 6px" : "5px 3px",
                             textAlign: "center", fontSize: 11,
                             fontWeight: isTotal ? 700 : 600,
-                            borderLeft: col.isFirst ? "4px solid #1a1a1a" : col.isTot ? "2px solid #cbd5e1" : "none",
+                            borderLeft: col.isFirst ? "4px solid #1a1a1a" : col.isTot ? "2px solid var(--border-heavy)" : "none",
                             background: bg,
                             color: cell.color,
                           }}>
                             {cell.val}
                             {cell.z != null && <div style={{ fontSize: 7, fontWeight: 600, color: cell.z <= -0.4 ? "#166534" : cell.z <= 0.4 ? "#854d0e" : "#b91c1c", marginTop: 1, opacity: 0.75 }}>{cell.z > 0 ? "+" : ""}{cell.z.toFixed(1)}σ</div>}
-                            {vsOn && cell.vsM != null && <div style={{ fontSize: 8, fontWeight: 600, color: cell.vsM < 0 ? "#16a34a" : cell.vsM > 0 ? "#dc2626" : "#6b7280", marginTop: 1 }}>{cell.vsM > 0 ? "+" : ""}{cell.vsM}</div>}
+                            {vsOn && cell.vsM != null && <div style={{ fontSize: 8, fontWeight: 600, color: cell.vsM < 0 ? "#16a34a" : cell.vsM > 0 ? "#dc2626" : "var(--text-3)", marginTop: 1 }}>{cell.vsM > 0 ? "+" : ""}{cell.vsM}</div>}
                           </td>
                         );
                       })}
-                      <td style={{ textAlign: "center", padding: "7px 3px", borderLeft: "4px solid #1a1a1a" }}>
-                        {tr ? <span style={{ color: TR_I[tr].c, fontWeight: 700, fontSize: 12 }}>{TR_I[tr].i}</span> : <span style={{ color: "#d1d5db" }}>—</span>}
+                      <td className="rivais-td rivais-border-mark">
+                        {tr ? <span style={{ color: TR_I[tr].c, fontWeight: 700, fontSize: 12 }}>{TR_I[tr].i}</span> : <span style={{ color: "var(--border)" }}>—</span>}
                       </td>
-                      <td style={{ textAlign: "center", padding: "5px 3px", borderLeft: "2px solid #cbd5e1" }}>
+                      <td className="rivais-td-sep">
                         {zAvg != null ? (
                           <span style={{ fontWeight: 700, fontSize: 10, color: zAvg <= -0.4 ? "#166534" : zAvg <= 0.4 ? "#854d0e" : "#dc2626" }}>
                             {zAvg > 0 ? "+" : ""}{zAvg.toFixed(2)}
                           </span>
-                        ) : <span style={{ color: "#d1d5db", fontSize: 9 }}>—</span>}
+                        ) : <span className="fs-9" style={{ color: "var(--border)" }}>—</span>}
                       </td>
-                      <td style={{ textAlign: "center", padding: "7px 3px", borderLeft: "4px solid #1a1a1a" }}>
-                        {p.up.includes("wjgc26") ? <span style={{ fontSize: 10, fontWeight: 700, color: "#166534" }}>✓</span> : <span style={{ color: "#d1d5db", fontSize: 9 }}>—</span>}
+                      <td className="rivais-td rivais-border-mark">
+                        {p.up.includes("wjgc26") ? <span style={{ fontSize: 10, fontWeight: 700, color: "#166534" }}>✓</span> : <span className="fs-9" style={{ color: "var(--border)" }}>—</span>}
                       </td>
-                      <td style={{ textAlign: "center", padding: "7px 3px" }}>
-                        {p.up.includes("marco26") ? <span style={{ fontSize: 10, fontWeight: 700, color: "#3730a3" }}>✓</span> : <span style={{ color: "#d1d5db", fontSize: 9 }}>—</span>}
+                      <td className="rivais-td">
+                        {p.up.includes("marco26") ? <span style={{ fontSize: 10, fontWeight: 700, color: "#3730a3" }}>✓</span> : <span className="fs-9" style={{ color: "var(--border)" }}>—</span>}
                       </td>
                       {vsOn && (
-                        <td style={{ textAlign: "center", padding: "7px 3px" }}>
-                          {isM ? <span style={{ color: "#d1d5db", fontSize: 9 }}>—</span> :
-                            vsAvg != null ? <span style={{ fontWeight: 700, fontSize: 11, color: vsAvg < 0 ? "#16a34a" : vsAvg > 0 ? "#dc2626" : "#6b7280" }}>{vsAvg > 0 ? "+" : ""}{vsAvg}</span> :
-                              <span style={{ color: "#d1d5db", fontSize: 9 }}>—</span>}
+                        <td className="rivais-td">
+                          {isM ? <span className="fs-9" style={{ color: "var(--border)" }}>—</span> :
+                            vsAvg != null ? <span style={{ fontWeight: 700, fontSize: 11, color: vsAvg < 0 ? "#16a34a" : vsAvg > 0 ? "#dc2626" : "var(--text-3)" }}>{vsAvg > 0 ? "+" : ""}{vsAvg}</span> :
+                              <span className="fs-9" style={{ color: "var(--border)" }}>—</span>}
                         </td>
                       )}
                     </tr>
@@ -687,12 +670,10 @@ export default function RivaisDashboard() {
           </div>
         </div>
 
-        <div style={{ textAlign: "center", fontSize: 9, color: "#9ca3af", marginTop: 10, padding: "8px 0" }}>
+        <div className="section-subtitle ta-c mt-10" style={{ padding: "8px 0" }}>
           Nível calculado por desvio padrão (σ) em relação à média do campo · Rank = z-score médio (negativo = melhor que a média) · Clica nos cabeçalhos para ordenar
         </div>
       </div>
     </div>
   );
 }
-
-const ss = { border: "1px solid #d5dac9", borderRadius: 6, padding: "5px 6px", fontSize: 11, background: "white" };

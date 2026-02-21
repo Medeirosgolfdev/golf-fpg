@@ -90,13 +90,13 @@ function PlayerPills({ norm, fed, name, showEscalao = true, showHcp = false }: {
 
 function ToParSpan({ tp }: { tp: number | null }) {
   const cls = tp != null && tp <= 0 ? "tp-under" : tp != null && tp <= 5 ? "tp-over1" : "tp-over2";
-  return <span className={cls} style={{ fontWeight: 700 }}>{fmtToPar(tp)}</span>;
+  return <span className={`${cls} fw-700`}>{fmtToPar(tp)}</span>;
 }
 
 function SdSpan({ sd }: { sd: number | null }) {
   if (sd == null) return <span>–</span>;
   const cls = sd <= 0 ? "tp-under" : sd <= 5 ? "tp-over1" : sd <= 15 ? "" : "tp-over2";
-  return <span className={cls} style={{ fontWeight: 600 }}>{sd.toFixed(1)}</span>;
+  return <span className={`${cls} fw-600`}>{sd.toFixed(1)}</span>;
 }
 
 type SortDir = "asc" | "desc";
@@ -184,12 +184,12 @@ function DayScorecard({ norm, cat, dayKey, holeData, filters, onSelectPlayer }: 
         </div>
       );
     }
-    return <div className="tourn-meta" style={{ padding: 20, textAlign: "center" }}>Sem resultados para {dayLabel(dayKey)}</div>;
+    return <div className="tourn-meta empty-state-sm">Sem resultados para {dayLabel(dayKey)}</div>;
   }
 
   return (
     <>
-      <div className="tourn-meta" style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
+      <div className="tourn-meta flex-center-gap6 flex-wrap">
         {dayLabel(dayKey)} · Par {cat.courseData.par} · CR {cat.courseData.cr} / Slope {cat.courseData.slope} · <TeePill name={cat.tee} /> {catTotalM}m
       </div>
 
@@ -205,7 +205,7 @@ function DayScorecard({ norm, cat, dayKey, holeData, filters, onSelectPlayer }: 
               <th className="r tourn-sum-col sortable" onClick={() => sort.toggle("out")}>OUT{sort.arrow("out")}</th>
               {catHoles.slice(9).map(h => <th key={h.h} className={`r tourn-hole-col${h.h === 10 ? " tourn-in-border" : ""}`}>{h.h}</th>)}
               <th className="r tourn-sum-col sortable" onClick={() => sort.toggle("in")}>IN{sort.arrow("in")}</th>
-              <th className="r tourn-sum-col sortable" onClick={() => sort.toggle("sd")} style={{ width: 48 }}>SD{sort.arrow("sd")}</th>
+              <th className="r tourn-sum-col sortable col-w48" onClick={() => sort.toggle("sd")}>SD{sort.arrow("sd")}</th>
             </tr>
             {/* Par row */}
             <tr className="tourn-par-row">
@@ -270,7 +270,7 @@ function DayScorecard({ norm, cat, dayKey, holeData, filters, onSelectPlayer }: 
                   <td className={`r tourn-sum-val ${inToPar != null && inToPar <= 0 ? "tourn-sum-under" : "tourn-sum-over"}`}>
                     {r.inScore != null ? <>{r.inScore} <span className={`tourn-half-par ${inToPar! <= 0 ? "tp-under" : "tp-over1"}`}>({fmtToPar(inToPar)})</span></> : "-"}
                   </td>
-                  <td className="r tourn-sum-val" style={{ fontSize: 11 }}><SdSpan sd={r.sd} /></td>
+                  <td className="r tourn-sum-val fs-11"><SdSpan sd={r.sd} /></td>
                 </tr>
               );
             })}
@@ -284,7 +284,7 @@ function DayScorecard({ norm, cat, dayKey, holeData, filters, onSelectPlayer }: 
           {others.map((r, i) => (
             <div key={i} className="tourn-other-line">
               <span className={`tourn-status ${r.status === "NS" ? "tourn-ns" : "tourn-nd"}`}>{r.status}</span>
-              {r.name} <span style={{ color: "#aaa" }}>— {r.club}</span>
+              {r.name} <span className="c-muted">— {r.club}</span>
             </div>
           ))}
         </div>
@@ -356,7 +356,7 @@ function AccumulatedTable({ norm, cat, filters, onSelectPlayer }: {
   });
 
   if (daysAvailable.length === 0) {
-    return <div className="tourn-meta" style={{ padding: 20, textAlign: "center" }}>Sem resultados acumulados</div>;
+    return <div className="tourn-meta empty-state-sm">Sem resultados acumulados</div>;
   }
 
   return (
@@ -369,18 +369,18 @@ function AccumulatedTable({ norm, cat, filters, onSelectPlayer }: {
         <table className="tourn-table tourn-form-table">
           <thead>
             <tr>
-              <th className="r" style={{ width: 30 }}>#</th>
-              <th className="sortable" onClick={() => sort.toggle("name")} style={{ minWidth: 180 }}>Jogador{sort.arrow("name")}</th>
+              <th className="r col-w30">#</th>
+              <th className="sortable col-mw180" onClick={() => sort.toggle("name")}>Jogador{sort.arrow("name")}</th>
 
               {/* Per-day columns */}
               {daysAvailable.map(dk => (
-                <th key={dk} colSpan={3} className="tourn-day-group-hdr" style={{ textAlign: "center", borderLeft: "2px solid #e2e8f0" }}>
+                <th key={dk} colSpan={3} className="tourn-day-group-hdr ta-c lb-sep" style={{ fontWeight: "inherit" }}>
                   {dayLabel(dk)}
                 </th>
               ))}
 
               {/* Totals */}
-              <th colSpan={3} className="tourn-day-group-hdr" style={{ textAlign: "center", borderLeft: "2px solid #1e3a5f", background: "#f0f4f8" }}>
+              <th colSpan={3} className="tourn-day-group-hdr" style={{ textAlign: "center", borderLeft: "2px solid #1e3a5f", background: "var(--bg-muted)" }}>
                 Total
               </th>
             </tr>
@@ -389,13 +389,13 @@ function AccumulatedTable({ norm, cat, filters, onSelectPlayer }: {
               <th></th>
               {daysAvailable.map(dk => (
                 <React.Fragment key={dk}>
-                  <th className="r sortable" style={{ width: 42, borderLeft: "2px solid #e2e8f0" }} onClick={() => sort.toggle(`${dk}_gross`)}>
+                  <th className="r sortable col-w42 lb-sep" onClick={() => sort.toggle(`${dk}_gross`)}>
                     Gross{sort.arrow(`${dk}_gross`)}
                   </th>
-                  <th className="r sortable" style={{ width: 42 }} onClick={() => sort.toggle(`${dk}_par`)}>
+                  <th className="r sortable col-w42" onClick={() => sort.toggle(`${dk}_par`)}>
                     ±Par{sort.arrow(`${dk}_par`)}
                   </th>
-                  <th className="r sortable" style={{ width: 42 }} onClick={() => sort.toggle(`${dk}_sd`)}>
+                  <th className="r sortable col-w42" onClick={() => sort.toggle(`${dk}_sd`)}>
                     SD{sort.arrow(`${dk}_sd`)}
                   </th>
                 </React.Fragment>
@@ -403,10 +403,10 @@ function AccumulatedTable({ norm, cat, filters, onSelectPlayer }: {
               <th className="r sortable" style={{ width: 42, borderLeft: "2px solid #1e3a5f", fontWeight: 800 }} onClick={() => sort.toggle("total")}>
                 Gross{sort.arrow("total")}
               </th>
-              <th className="r sortable" style={{ width: 42, fontWeight: 800 }} onClick={() => sort.toggle("totalPar")}>
+              <th className="r sortable col-w42 fw-800" onClick={() => sort.toggle("totalPar")}>
                 ±Par{sort.arrow("totalPar")}
               </th>
-              <th className="r sortable" style={{ width: 48, fontWeight: 800 }} onClick={() => sort.toggle("avgSD")}>
+              <th className="r sortable col-w48 fw-800" onClick={() => sort.toggle("avgSD")}>
                 SD̄{sort.arrow("avgSD")}
               </th>
             </tr>
@@ -420,7 +420,7 @@ function AccumulatedTable({ norm, cat, filters, onSelectPlayer }: {
                   const female = isFemale(norm, r.fed, r.name);
                   return (
                     <tr key={`c-${i}`} className={female ? "tourn-female-row" : ""}>
-                      <td className="r tourn-mono" style={{ fontWeight: 700, opacity: .5 }}>{r.pos}</td>
+                      <td className="r tourn-mono lb-muted-bold">{r.pos}</td>
                       <td>
                         <div className="tourn-lb-pills">
                           <PlayerLink fed={r.fed} name={r.name} onSelect={onSelectPlayer} />
@@ -431,25 +431,25 @@ function AccumulatedTable({ norm, cat, filters, onSelectPlayer }: {
                         const day = r.days[dk];
                         return (
                           <React.Fragment key={dk}>
-                            <td className="r tourn-mono" style={{ fontWeight: 600, borderLeft: "2px solid #e2e8f0" }}>
-                              {day?.gross ?? <span style={{ color: "#ccc" }}>–</span>}
+                            <td className="r tourn-mono lb-sep">
+                              {day?.gross ?? <span className="c-text-3" style={{ color: "var(--border)" }}>–</span>}
                             </td>
                             <td className="r"><ToParSpan tp={day?.toPar ?? null} /></td>
-                            <td className="r" style={{ fontSize: 11 }}><SdSpan sd={day?.sd ?? null} /></td>
+                            <td className="r fs-11"><SdSpan sd={day?.sd ?? null} /></td>
                           </React.Fragment>
                         );
                       })}
-                      <td className="r tourn-mono" style={{ fontWeight: 800, fontSize: 14, borderLeft: "2px solid #1e3a5f" }}>
+                      <td className="r tourn-mono lb-total-sep">
                         {r.totalGross}
                       </td>
                       <td className="r"><ToParSpan tp={r.totalToPar} /></td>
-                      <td className="r" style={{ fontSize: 12 }}><SdSpan sd={r.avgSD} /></td>
+                      <td className="r fs-12"><SdSpan sd={r.avgSD} /></td>
                     </tr>
                   );
                 })}
                 {incompleteRows.length > 0 && completeRows.length > 0 && (
                   <tr>
-                    <td colSpan={99} style={{ padding: "6px 8px", fontSize: 10, color: "#999", fontWeight: 600, textTransform: "uppercase", letterSpacing: 1, background: "#f8f8f6", borderTop: "2px solid #cbd5e1" }}>
+                    <td colSpan={99} className="lb-day-header">
                       Não completaram todas as voltas ({incompleteRows.length})
                     </td>
                   </tr>
@@ -457,8 +457,8 @@ function AccumulatedTable({ norm, cat, filters, onSelectPlayer }: {
                 {incompleteRows.map((r, i) => {
                   const female = isFemale(norm, r.fed, r.name);
                   return (
-                    <tr key={`i-${i}`} className={female ? "tourn-female-row" : ""} style={{ opacity: 0.6 }}>
-                      <td className="r tourn-mono" style={{ color: "#aaa" }}>–</td>
+                    <tr key={`i-${i}`} className={`${female ? "tourn-female-row" : ""} op-6`}>
+                      <td className="r tourn-mono c-muted">–</td>
                       <td>
                         <div className="tourn-lb-pills">
                           <PlayerLink fed={r.fed} name={r.name} onSelect={onSelectPlayer} />
@@ -469,19 +469,19 @@ function AccumulatedTable({ norm, cat, filters, onSelectPlayer }: {
                         const day = r.days[dk];
                         return (
                           <React.Fragment key={dk}>
-                            <td className="r tourn-mono" style={{ fontWeight: 600, borderLeft: "2px solid #e2e8f0" }}>
-                              {day?.gross ?? <span style={{ color: "#ccc" }}>DNS</span>}
+                            <td className="r tourn-mono lb-sep">
+                              {day?.gross ?? <span className="c-text-3" style={{ color: "var(--border)" }}>DNS</span>}
                             </td>
                             <td className="r"><ToParSpan tp={day?.toPar ?? null} /></td>
-                            <td className="r" style={{ fontSize: 11 }}><SdSpan sd={day?.sd ?? null} /></td>
+                            <td className="r fs-11"><SdSpan sd={day?.sd ?? null} /></td>
                           </React.Fragment>
                         );
                       })}
-                      <td className="r tourn-mono" style={{ fontWeight: 800, fontSize: 14, borderLeft: "2px solid #1e3a5f", color: "#aaa" }}>
+                      <td className="r tourn-mono lb-total-sep c-muted">
                         {r.totalGross}
                       </td>
-                      <td className="r" style={{ color: "#aaa" }}>{fmtToPar(r.totalToPar)}</td>
-                      <td className="r" style={{ fontSize: 12, color: "#aaa" }}>{r.avgSD?.toFixed(1) ?? "–"}</td>
+                      <td className="r c-muted">{fmtToPar(r.totalToPar)}</td>
+                      <td className="r fs-12 c-muted">{r.avgSD?.toFixed(1) ?? "–"}</td>
                     </tr>
                   );
                 })}
@@ -548,15 +548,15 @@ function AllResultsDayTable({ norm, dayKey, filters, onSelectPlayer }: {
         <table className="tourn-table tourn-form-table">
           <thead>
             <tr>
-              <th className="r" style={{ width: 30 }}>#</th>
-              <th className="sortable" onClick={() => sort.toggle("name")} style={{ minWidth: 180 }}>Jogador{sort.arrow("name")}</th>
-              <th className="sortable" onClick={() => sort.toggle("cat")} style={{ width: 70 }}>Categ.{sort.arrow("cat")}</th>
-              <th style={{ width: 65 }}>Tee</th>
-              <th className="r sortable" style={{ width: 50 }} onClick={() => sort.toggle("gross")}>Gross{sort.arrow("gross")}</th>
-              <th className="r sortable" style={{ width: 50 }} onClick={() => sort.toggle("toPar")}>±Par{sort.arrow("toPar")}</th>
-              <th className="r sortable" style={{ width: 50 }} onClick={() => sort.toggle("sd")}>SD{sort.arrow("sd")}</th>
-              <th style={{ width: 55 }}>Pos Cat</th>
-              <th style={{ width: 130 }}>Clube</th>
+              <th className="r col-w30">#</th>
+              <th className="sortable col-mw180" onClick={() => sort.toggle("name")}>Jogador{sort.arrow("name")}</th>
+              <th className="sortable col-w70" onClick={() => sort.toggle("cat")}>Categ.{sort.arrow("cat")}</th>
+              <th className="col-w65">Tee</th>
+              <th className="r sortable col-w50" onClick={() => sort.toggle("gross")}>Gross{sort.arrow("gross")}</th>
+              <th className="r sortable col-w50" onClick={() => sort.toggle("toPar")}>±Par{sort.arrow("toPar")}</th>
+              <th className="r sortable col-w50" onClick={() => sort.toggle("sd")}>SD{sort.arrow("sd")}</th>
+              <th className="col-w55">Pos Cat</th>
+              <th className="col-w130">Clube</th>
             </tr>
           </thead>
           <tbody>
@@ -564,7 +564,7 @@ function AllResultsDayTable({ norm, dayKey, filters, onSelectPlayer }: {
               const female = isFemale(norm, r.fed, r.name);
               return (
                 <tr key={i} className={female ? "tourn-female-row" : ""}>
-                  <td className="r tourn-mono" style={{ fontWeight: 700, opacity: .5 }}>{i + 1}</td>
+                  <td className="r tourn-mono lb-muted-bold">{i + 1}</td>
                   <td>
                     <div className="tourn-lb-pills">
                       <PlayerLink fed={r.fed} name={r.name} onSelect={onSelectPlayer} />
@@ -577,11 +577,11 @@ function AllResultsDayTable({ norm, dayKey, filters, onSelectPlayer }: {
                     </span>
                   </td>
                   <td><TeePill name={r.tee} /></td>
-                  <td className="r tourn-mono" style={{ fontWeight: 700 }}>{r.gross}</td>
+                  <td className="r tourn-mono fw-700">{r.gross}</td>
                   <td className="r"><ToParSpan tp={r.toPar} /></td>
-                  <td className="r" style={{ fontSize: 11 }}><SdSpan sd={r.sd} /></td>
-                  <td className="r tourn-mono" style={{ fontSize: 12 }}>{r.pos}</td>
-                  <td style={{ fontSize: 11, color: "#888" }}>{r.club}</td>
+                  <td className="r fs-11"><SdSpan sd={r.sd} /></td>
+                  <td className="r tourn-mono fs-12">{r.pos}</td>
+                  <td className="fs-11 c-text-3">{r.club}</td>
                 </tr>
               );
             })}
@@ -645,14 +645,14 @@ function AllAccumulatedTable({ norm, filters, onSelectPlayer }: {
         <table className="tourn-table tourn-form-table">
           <thead>
             <tr>
-              <th className="r" style={{ width: 30 }}>#</th>
-              <th className="sortable" onClick={() => sort.toggle("name")} style={{ minWidth: 180 }}>Jogador{sort.arrow("name")}</th>
-              <th className="sortable" onClick={() => sort.toggle("cat")} style={{ width: 70 }}>Categ.{sort.arrow("cat")}</th>
-              <th className="r sortable" style={{ width: 50 }} onClick={() => sort.toggle("total")}>Total{sort.arrow("total")}</th>
-              <th className="r sortable" style={{ width: 50 }} onClick={() => sort.toggle("totalPar")}>±Par{sort.arrow("totalPar")}</th>
-              <th className="r sortable" style={{ width: 55 }} onClick={() => sort.toggle("avgSD")}>SD̄{sort.arrow("avgSD")}</th>
-              <th style={{ width: 50 }}>Dias</th>
-              <th style={{ width: 130 }}>Clube</th>
+              <th className="r col-w30">#</th>
+              <th className="sortable col-mw180" onClick={() => sort.toggle("name")}>Jogador{sort.arrow("name")}</th>
+              <th className="sortable col-w70" onClick={() => sort.toggle("cat")}>Categ.{sort.arrow("cat")}</th>
+              <th className="r sortable col-w50" onClick={() => sort.toggle("total")}>Total{sort.arrow("total")}</th>
+              <th className="r sortable col-w50" onClick={() => sort.toggle("totalPar")}>±Par{sort.arrow("totalPar")}</th>
+              <th className="r sortable col-w55" onClick={() => sort.toggle("avgSD")}>SD̄{sort.arrow("avgSD")}</th>
+              <th className="col-w50">Dias</th>
+              <th className="col-w130">Clube</th>
             </tr>
           </thead>
           <tbody>
@@ -665,34 +665,34 @@ function AllAccumulatedTable({ norm, filters, onSelectPlayer }: {
                   pos++;
                   return (
                     <tr key={`c-${i}`} className={isFemale(norm, r.fed, r.name) ? "tourn-female-row" : ""}>
-                      <td className="r tourn-mono" style={{ fontWeight: 700, opacity: .5 }}>{pos}</td>
+                      <td className="r tourn-mono lb-muted-bold">{pos}</td>
                       <td><div className="tourn-lb-pills"><PlayerLink fed={r.fed} name={r.name} onSelect={onSelectPlayer} /><PlayerPills norm={norm} fed={r.fed} name={r.name} /></div></td>
                       <td><span style={{ fontSize: 11, fontWeight: 700, color: catColors[r.catKey] || "#333", background: `${catColors[r.catKey] || "#333"}15`, padding: "1px 6px", borderRadius: 3 }}>{r.catLabel}</span></td>
-                      <td className="r tourn-mono" style={{ fontWeight: 800 }}>{r.totalGross}</td>
+                      <td className="r tourn-mono fw-800">{r.totalGross}</td>
                       <td className="r"><ToParSpan tp={r.totalToPar} /></td>
-                      <td className="r" style={{ fontSize: 12 }}><SdSpan sd={r.avgSD} /></td>
-                      <td className="r tourn-mono" style={{ fontSize: 11 }}>{r.daysPlayed}</td>
-                      <td style={{ fontSize: 11, color: "#888" }}>{r.club}</td>
+                      <td className="r fs-12"><SdSpan sd={r.avgSD} /></td>
+                      <td className="r tourn-mono fs-11">{r.daysPlayed}</td>
+                      <td className="fs-11 c-text-3">{r.club}</td>
                     </tr>
                   );
                 })}
                 {incompleteRows.length > 0 && completeRows.length > 0 && (
                   <tr>
-                    <td colSpan={99} style={{ padding: "6px 8px", fontSize: 10, color: "#999", fontWeight: 600, textTransform: "uppercase", letterSpacing: 1, background: "#f8f8f6", borderTop: "2px solid #cbd5e1" }}>
+                    <td colSpan={99} className="lb-day-header">
                       Não completaram todas as voltas ({incompleteRows.length})
                     </td>
                   </tr>
                 )}
                 {incompleteRows.map((r, i) => (
-                  <tr key={`i-${i}`} className={isFemale(norm, r.fed, r.name) ? "tourn-female-row" : ""} style={{ opacity: 0.6 }}>
-                    <td className="r tourn-mono" style={{ color: "#aaa" }}>–</td>
+                  <tr key={`i-${i}`} className={`${isFemale(norm, r.fed, r.name) ? "tourn-female-row" : ""} op-6`}>
+                    <td className="r tourn-mono c-muted">–</td>
                     <td><div className="tourn-lb-pills"><PlayerLink fed={r.fed} name={r.name} onSelect={onSelectPlayer} /><PlayerPills norm={norm} fed={r.fed} name={r.name} /></div></td>
                     <td><span style={{ fontSize: 11, fontWeight: 700, color: catColors[r.catKey] || "#333", background: `${catColors[r.catKey] || "#333"}15`, padding: "1px 6px", borderRadius: 3 }}>{r.catLabel}</span></td>
-                    <td className="r tourn-mono" style={{ fontWeight: 800, color: "#aaa" }}>{r.totalGross}</td>
-                    <td className="r" style={{ color: "#aaa" }}>{fmtToPar(r.totalToPar)}</td>
-                    <td className="r" style={{ fontSize: 12, color: "#aaa" }}>{r.avgSD?.toFixed(1) ?? "–"}</td>
-                    <td className="r tourn-mono" style={{ fontSize: 11 }}>{r.daysPlayed}</td>
-                    <td style={{ fontSize: 11, color: "#888" }}>{r.club}</td>
+                    <td className="r tourn-mono fw-800 c-muted">{r.totalGross}</td>
+                    <td className="r c-muted">{fmtToPar(r.totalToPar)}</td>
+                    <td className="r fs-12 c-muted">{r.avgSD?.toFixed(1) ?? "–"}</td>
+                    <td className="r tourn-mono fs-11">{r.daysPlayed}</td>
+                    <td className="fs-11 c-text-3">{r.club}</td>
                   </tr>
                 ))}
               </>;
@@ -813,27 +813,27 @@ export default function LeaderboardView({ norm, players, holeDataByDay, onSelect
   return (
     <div className="tourn-section">
       {/* ── Category tabs ── */}
-      <div className="tourn-tabs" style={{ marginBottom: 8 }}>
+      <div className="tourn-tabs mb-8">
         <button className={`tourn-tab${lbCat === "all" ? " tourn-tab-active" : ""}`}
           onClick={() => { setLbCat("all"); setEscFilter("all"); setPjaOnly(false); }}>
-          Todos <span style={{ opacity: .6, fontSize: 11 }}>({totalCount})</span>
+          Todos <span className="op-6 fs-11">({totalCount})</span>
         </button>
         {norm.categories.map(c => (
           <button key={c.key} className={`tourn-tab${lbCat === c.key ? " tourn-tab-active" : ""}`}
             onClick={() => { setLbCat(c.key); setEscFilter("all"); setPjaOnly(false); }}>
-            {c.label} <span style={{ opacity: .6, fontSize: 11 }}>({catCounts[c.key] || 0})</span>
+            {c.label} <span className="op-6 fs-11">({catCounts[c.key] || 0})</span>
           </button>
         ))}
       </div>
 
       {/* ── Day selector + filters ── */}
-      <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", marginBottom: 12 }}>
+      <div className="flex-wrap-gap8 items-center mb-12">
         {/* Day dropdown */}
         <select
           className="select"
           value={effectiveDayView}
           onChange={e => setDayView(e.target.value)}
-          style={{ minWidth: 130, fontWeight: 600 }}
+          className="col-mw130 fw-600"
         >
           {activeDays.map(dk => {
             const hasData = daysWithResults.includes(dk);
@@ -856,12 +856,12 @@ export default function LeaderboardView({ norm, players, holeDataByDay, onSelect
           onClick={() => setPjaOnly(p => !p)}
           style={{ background: pjaOnly ? "#046A38" : undefined, color: pjaOnly ? "#FFD700" : undefined, fontSize: 12, padding: "4px 10px" }}
         >
-          PJA <span style={{ opacity: .6, fontSize: 10 }}>({pjaCount})</span>
+          PJA <span className="op-6 fs-10">({pjaCount})</span>
         </button>
 
         {/* Escalão filter (WAGR only) */}
         {lbCat === "wagr" && escOptions.length > 0 && (
-          <select className="select" value={escFilter} onChange={e => setEscFilter(e.target.value)} style={{ fontSize: 12 }}>
+          <select className="select fs-12" value={escFilter} onChange={e => setEscFilter(e.target.value)}>
             <option value="all">Todos escalões</option>
             {escOptions.map(esc => <option key={esc} value={esc}>{esc}</option>)}
           </select>

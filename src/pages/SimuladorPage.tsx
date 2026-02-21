@@ -519,7 +519,7 @@ function ManualInputs({
             placeholder="ex: 68,4"
             value={value.cr}
             onChange={(e) => onChange({ ...value, cr: e.target.value })}
-            style={{ width: 72 }}
+            className="col-w72"
           />
         </div>
         <div className="field">
@@ -798,7 +798,7 @@ function AgsSection({
   if (!fieldHoles || !computed) {
     return (
       <div style={{ margin: "14px 0" }}>
-        <div className="sim-info-box" style={{ background: "#fffbeb", borderColor: "#fde68a", color: "#92400e" }}>
+        <div className="sim-info-box" style={{ background: "var(--bg-warn)", borderColor: "#fde68a", color: "#92400e" }}>
           <strong>Scorecard / AGS:</strong> O scorecard para introduzir scores por buraco e calcular o SD exacto
           aparece quando selecionas um campo com dados de Par e Stroke Index.
           {" "}<a href={USGA_NDB_LINK} target="_blank" rel="noopener noreferrer"
@@ -839,7 +839,7 @@ function AgsSection({
 
   return (
     <div style={{ margin: "14px 0" }}>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
+      <div className="flex-between-mb6">
         <h3 className="sim-section-title" style={{ margin: 0 }}>
           Scorecard {hasAgs ? "— Net Double Bogey / AGS" : ""}
         </h3>
@@ -878,7 +878,7 @@ function AgsSection({
         </div>
       )}
 
-      <div style={{ overflowX: "auto" }}>
+      <div className="scroll-x">
         <table className="sc-table-modern" data-sc-table="1">
           <thead>
             <tr>
@@ -886,13 +886,13 @@ function AgsSection({
               {front.map((h, i) => (
                 <React.Fragment key={h.hole}>
                   <th className="hole-header">{h.hole}</th>
-                  {is18 && i === 8 && <th className="hole-header col-out" style={{ fontSize: 10 }}>Out</th>}
+                  {is18 && i === 8 && <th className="hole-header col-out fs-10">Out</th>}
                 </React.Fragment>
               ))}
               {is18 && back.map((h) => (
                 <th key={h.hole} className="hole-header">{h.hole}</th>
               ))}
-              <th className={`hole-header col-${is18 ? "in" : "total"}`} style={{ fontSize: 10 }}>{is18 ? "In" : "TOTAL"}</th>
+              <th className={`hole-header col-${is18 ? "in" : "total"} fs-10`}>{is18 ? "In" : "TOTAL"}</th>
               {is18 && <th className="hole-header col-total">TOTAL</th>}
             </tr>
           </thead>
@@ -906,33 +906,33 @@ function AgsSection({
                     <input type="text" inputMode="numeric"
                       value={customPars[h.hole] ?? String(h.par)}
                       onChange={e => setCustomPar(h.hole, e.target.value.replace(/\D/g, ""))}
-                      style={{ width: 26, textAlign: "center", border: "1px solid #c5d4a0", borderRadius: 3, padding: "2px 0", font: "inherit", fontSize: 11, background: "#f0f5e8" }}
+                      className="sim-input-accent"
                     />
                   ) : h.par}</td>
-                  {is18 && i === 8 && <td className="col-out" style={{ fontWeight: 700 }}>{sumPar(front)}</td>}
+                  {is18 && i === 8 && <td className="col-out fw-700">{sumPar(front)}</td>}
                 </React.Fragment>
               ))}
               {is18 && back.map((h) => <td key={h.hole}>{isSynthetic ? (
                 <input type="text" inputMode="numeric"
                   value={customPars[h.hole] ?? String(h.par)}
                   onChange={e => setCustomPar(h.hole, e.target.value.replace(/\D/g, ""))}
-                  style={{ width: 26, textAlign: "center", border: "1px solid #c5d4a0", borderRadius: 3, padding: "2px 0", font: "inherit", fontSize: 11, background: "#f0f5e8" }}
+                  className="sim-input-accent"
                 />
               ) : h.par}</td>)}
-              <td className={`col-${is18 ? "in" : "total"}`} style={{ fontWeight: 700 }}>{is18 ? sumPar(back) : totalParAll}</td>
-              {is18 && <td className="col-total" style={{ fontWeight: 700 }}>{totalParAll}</td>}
+              <td className={`col-${is18 ? "in" : "total"} fw-700`}>{is18 ? sumPar(back) : totalParAll}</td>
+              {is18 && <td className="col-total fw-700">{totalParAll}</td>}
             </tr>
 
             {/* S.I. */}
             <tr className="meta-row">
-              <td className="row-label" style={{ color: "#b0b8c4", fontSize: 10, fontWeight: 400 }}>S.I.</td>
+              <td className="row-label c-muted fs-10" style={{ fontWeight: 400 }}>S.I.</td>
               {front.map((h, i) => (
                 <React.Fragment key={h.hole}>
                   <td>{isSynthetic ? (
                     <input type="text" inputMode="numeric"
                       value={customSIs[h.hole] ?? String(h.si)}
                       onChange={e => setCustomSI(h.hole, e.target.value.replace(/\D/g, ""))}
-                      style={{ width: 26, textAlign: "center", border: "1px solid #ddd", borderRadius: 3, padding: "2px 0", font: "inherit", fontSize: 10, background: "#fafafa", color: "#999" }}
+                      className="sim-input-sm"
                     />
                   ) : h.si}</td>
                   {is18 && i === 8 && <td className="col-out" />}
@@ -942,7 +942,7 @@ function AgsSection({
                 <input type="text" inputMode="numeric"
                   value={customSIs[h.hole] ?? String(h.si)}
                   onChange={e => setCustomSI(h.hole, e.target.value.replace(/\D/g, ""))}
-                  style={{ width: 26, textAlign: "center", border: "1px solid #ddd", borderRadius: 3, padding: "2px 0", font: "inherit", fontSize: 10, background: "#fafafa", color: "#999" }}
+                  className="sim-input-sm"
                 />
               ) : h.si}</td>)}
               <td className={`col-${is18 ? "in" : "total"}`} />
@@ -951,18 +951,18 @@ function AgsSection({
 
             {/* Score (inputs) */}
             <tr className="sep-row">
-              <td className="row-label" style={{ fontWeight: 700 }}>Score</td>
+              <td className="row-label fw-700">Score</td>
               {front.map((h, i) => (
                 <React.Fragment key={h.hole}>
                   <td style={{ padding: "3px 1px" }}>
                     <input type="text" inputMode="numeric"
                       value={scores[h.hole] || ""}
                       onChange={e => setScore(h.hole, e.target.value.replace(/\D/g, ""))}
-                      style={{ width: 30, textAlign: "center", border: "1px solid #d5dac9", borderRadius: 3, padding: "3px 0", font: "inherit", fontSize: 12, background: "#fff" }}
+                      className="sim-input"
                       placeholder="·" />
                   </td>
                   {is18 && i === 8 && (
-                    <td className="col-out" style={{ fontWeight: 700 }}>{grossOut ?? "–"}</td>
+                    <td className="col-out fw-700">{grossOut ?? "–"}</td>
                   )}
                 </React.Fragment>
               ))}
@@ -971,17 +971,17 @@ function AgsSection({
                   <input type="text" inputMode="numeric"
                     value={scores[h.hole] || ""}
                     onChange={e => setScore(h.hole, e.target.value.replace(/\D/g, ""))}
-                    style={{ width: 30, textAlign: "center", border: "1px solid #d5dac9", borderRadius: 3, padding: "3px 0", font: "inherit", fontSize: 12, background: "#fff" }}
+                    className="sim-input"
                     placeholder="·" />
                 </td>
               ))}
-              <td className={`col-${is18 ? "in" : "total"}`} style={{ fontWeight: 700 }}>{is18 ? (grossIn ?? "–") : (grossTotal ?? "–")}</td>
-              {is18 && <td className="col-total" style={{ fontWeight: 900 }}>{grossTotal ?? "–"}</td>}
+              <td className={`col-${is18 ? "in" : "total"} fw-700`}>{is18 ? (grossIn ?? "–") : (grossTotal ?? "–")}</td>
+              {is18 && <td className="col-total fw-900">{grossTotal ?? "–"}</td>}
             </tr>
 
             {/* ±Par */}
             <tr className="meta-row">
-              <td className="row-label" style={{ color: "#b0b8c4", fontSize: 10, fontWeight: 400 }}>±Par</td>
+              <td className="row-label c-muted fs-10" style={{ fontWeight: 400 }}>±Par</td>
               {front.map((h, i) => (
                 <React.Fragment key={h.hole}>
                   <td style={{ color: h.vsPar != null ? (h.vsPar < 0 ? "#16a34a" : h.vsPar === 0 ? "#666" : h.vsPar <= 2 ? "#b45309" : "#dc2626") : "#ccc", fontWeight: h.vsPar != null ? 600 : 400 }}>
@@ -999,10 +999,10 @@ function AgsSection({
                   {h.vsPar != null ? (h.vsPar === 0 ? "E" : h.vsPar > 0 ? `+${h.vsPar}` : h.vsPar) : ""}
                 </td>
               ))}
-              <td className={`col-${is18 ? "in" : "total"}`} style={{ fontWeight: 600 }}>
+              <td className={`col-${is18 ? "in" : "total"} fw-600`}>
                 {is18 ? fmtVsPar(grossIn, sumPar(back)) : fmtVsPar(grossTotal, totalParAll)}
               </td>
-              {is18 && <td className="col-total" style={{ fontWeight: 700 }}>{fmtVsPar(grossTotal, totalParAll)}</td>}
+              {is18 && <td className="col-total fw-700">{fmtVsPar(grossTotal, totalParAll)}</td>}
             </tr>
 
             {/* ── AGS rows (only when HI filled) ── */}
@@ -1024,24 +1024,24 @@ function AgsSection({
                       {h.strokes > 0 ? h.strokes : "·"}
                     </td>
                   ))}
-                  <td className={`col-${is18 ? "in" : "total"}`} style={{ fontWeight: 700, color: "#2563eb" }}>{courseHcp}</td>
-                  {is18 && <td className="col-total" style={{ fontWeight: 700, color: "#2563eb" }}>{courseHcp}</td>}
+                  <td className={`col-${is18 ? "in" : "total"} fw-700`} style={{ color: "#2563eb" }}>{courseHcp}</td>
+                  {is18 && <td className="col-total fw-700" style={{ color: "#2563eb" }}>{courseHcp}</td>}
                 </tr>
 
                 {/* Máx (Net Double Bogey) */}
-                <tr className="sep-row" style={{ background: "#fffbeb" }}>
+                <tr className="sep-row" style={{ background: "var(--bg-warn)" }}>
                   <td className="row-label" style={{ color: "#92400e", fontWeight: 700, fontSize: 11 }}>Máx</td>
                   {front.map((h, i) => (
                     <React.Fragment key={h.hole}>
-                      <td style={{ color: "#92400e", fontWeight: 700 }}>{h.maxScore}</td>
-                      {is18 && i === 8 && <td className="col-out" style={{ fontWeight: 700, color: "#92400e" }}>{sumMax(front)}</td>}
+                      <td className="cb-amber">{h.maxScore}</td>
+                      {is18 && i === 8 && <td className="col-out cb-amber">{sumMax(front)}</td>}
                     </React.Fragment>
                   ))}
                   {is18 && back.map((h) => (
-                    <td key={h.hole} style={{ color: "#92400e", fontWeight: 700 }}>{h.maxScore}</td>
+                    <td key={h.hole} className="cb-amber">{h.maxScore}</td>
                   ))}
-                  <td className={`col-${is18 ? "in" : "total"}`} style={{ fontWeight: 700, color: "#92400e" }}>{is18 ? sumMax(back) : sumMax(computed)}</td>
-                  {is18 && <td className="col-total" style={{ fontWeight: 900, color: "#92400e" }}>{sumMax(computed)}</td>}
+                  <td className={`col-${is18 ? "in" : "total"} cb-amber`}>{is18 ? sumMax(back) : sumMax(computed)}</td>
+                  {is18 && <td className="col-total fw-900 c-amber">{sumMax(computed)}</td>}
                 </tr>
 
                 {/* Ajustado */}
@@ -1053,10 +1053,10 @@ function AgsSection({
                       <React.Fragment key={h.hole}>
                         <td style={{ color: capped ? "#dc2626" : h.adjusted != null ? "#16a34a" : "#ccc", fontWeight: h.adjusted != null ? 700 : 400 }}>
                           {h.adjusted != null ? h.adjusted : ""}
-                          {capped && <span style={{ fontSize: 8 }}>✂</span>}
+                          {capped && <span className="fs-8">✂</span>}
                         </td>
                         {is18 && i === 8 && (
-                          <td className="col-out" style={{ fontWeight: 700, color: "#16a34a" }}>{adjOut ?? "–"}</td>
+                          <td className="col-out cb-par-ok">{adjOut ?? "–"}</td>
                         )}
                       </React.Fragment>
                     );
@@ -1066,12 +1066,12 @@ function AgsSection({
                     return (
                       <td key={h.hole} style={{ color: capped ? "#dc2626" : h.adjusted != null ? "#16a34a" : "#ccc", fontWeight: h.adjusted != null ? 700 : 400 }}>
                         {h.adjusted != null ? h.adjusted : ""}
-                        {capped && <span style={{ fontSize: 8 }}>✂</span>}
+                        {capped && <span className="fs-8">✂</span>}
                       </td>
                     );
                   })}
-                  <td className={`col-${is18 ? "in" : "total"}`} style={{ fontWeight: 700, color: "#16a34a" }}>{is18 ? (adjIn ?? "–") : (adjTotal ?? "–")}</td>
-                  {is18 && <td className="col-total" style={{ fontWeight: 900, color: "#16a34a" }}>{adjTotal ?? "–"}</td>}
+                  <td className={`col-${is18 ? "in" : "total"} cb-par-ok`}>{is18 ? (adjIn ?? "–") : (adjTotal ?? "–")}</td>
+                  {is18 && <td className="col-total fw-900 c-par-ok">{adjTotal ?? "–"}</td>}
                 </tr>
               </>
             )}
@@ -1081,7 +1081,7 @@ function AgsSection({
 
       {/* Info AGS colapsável */}
       {hasAgs && (
-        <details style={{ marginTop: 12 }}>
+        <details className="mt-12">
           <summary style={{ cursor: "pointer", fontWeight: 600, fontSize: 13, color: "#92400e", display: "flex", alignItems: "center", gap: 6 }}>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
               <circle cx="8" cy="8" r="7" stroke="#92400e" strokeWidth="1.5" fill="#fffbeb"/>
@@ -1089,18 +1089,18 @@ function AgsSection({
             </svg>
             Como funciona o Adjusted Gross Score?
           </summary>
-          <div className="sim-info-box" style={{ background: "#fffbeb", borderColor: "#fde68a", color: "#92400e", marginTop: 6 }}>
+          <div className="sim-info-box" style={{ background: "var(--bg-warn)", borderColor: "#fde68a", color: "#92400e", marginTop: 6 }}>
             O WHS calcula o SD com o <em>Adjusted Gross Score</em>. Máximo por buraco = <strong>Net Double Bogey</strong>:
             <code style={{ display: "block", margin: "6px 0", padding: "4px 10px", background: "rgba(146,64,14,0.08)", borderRadius: 6, color: "#92400e" }}>
               Máx = Par + 2 + Pancadas (Course HCP) nesse buraco
             </code>
             <div style={{ margin: "6px 0", padding: "6px 10px", background: "rgba(146,64,14,0.05)", borderRadius: 6, fontSize: "12px", lineHeight: 1.6 }}>
               <div>① <strong>Handicap Index (HI)</strong> — número base do jogador.</div>
-              <div style={{ marginTop: 3 }}>② <strong>Course Handicap (CH)</strong> = HI × (Slope ÷ 113) + (CR − Par). Determina pancadas para o Net Double Bogey.</div>
-              <div style={{ marginTop: 3 }}>③ <strong>Playing Handicap</strong> = CH × % competição. Para Net Score, <strong>não</strong> para Net Double Bogey.</div>
+              <div className="mt-3">② <strong>Course Handicap (CH)</strong> = HI × (Slope ÷ 113) + (CR − Par). Determina pancadas para o Net Double Bogey.</div>
+              <div className="mt-3">③ <strong>Playing Handicap</strong> = CH × % competição. Para Net Score, <strong>não</strong> para Net Double Bogey.</div>
             </div>
             {courseHcp !== null && (
-              <div style={{ marginTop: 6 }}>
+              <div className="mt-6">
                 HI <strong>{hi!.toFixed(1)}</strong> → CH = <strong>{courseHcp}</strong>.
                 Recebes {courseHcp} pancada{courseHcp !== 1 ? "s" : ""} (SI 1–{Math.min(courseHcp, 18)}
                 {courseHcp > 18 && (<>, 2ª SI 1–{courseHcp - 18}</>)}).
@@ -1113,13 +1113,13 @@ function AgsSection({
               const easiest = sorted[sorted.length - 1];
               if (!hardest || !easiest) return null;
               return (
-                <div style={{ marginTop: 8, padding: "6px 10px", background: "rgba(146,64,14,0.05)", borderRadius: 6, fontSize: 12, lineHeight: 1.6 }}>
+                <div className="sim-note">
                   <div>⛳ <strong>Buraco mais difícil:</strong> #{hardest.hole} (Par {hardest.par}, SI {hardest.si})</div>
                   <div>🏳 <strong>Buraco mais fácil:</strong> #{easiest.hole} (Par {easiest.par}, SI {easiest.si})</div>
                 </div>
               );
             })()}
-            <div style={{ marginTop: 6 }}>
+            <div className="mt-6">
               <a href={USGA_NDB_LINK} target="_blank" rel="noopener noreferrer"
                 style={{ color: "#92400e", fontWeight: 600, textDecoration: "underline" }}>Net Double Bogey — USGA →</a>
             </div>
@@ -1312,7 +1312,7 @@ export default function SimuladorPage({ courses }: Props) {
             value={hiInput}
             onChange={(e) => setHiInput(e.target.value)}
             placeholder="HI (ex: 15,4)"
-            style={{ width: 100 }}
+            className="col-w100"
           />
           <select className="select" value={pcc} onChange={(e) => setPcc(Number(e.target.value))}>
             {[-3, -2, -1, 0, 1, 2, 3].map((v) => (
@@ -1385,7 +1385,7 @@ export default function SimuladorPage({ courses }: Props) {
             );
           })}
           {filtered.length === 0 && (
-            <div className="muted" style={{ padding: 16 }}>Nenhum campo encontrado</div>
+            <div className="muted p-16">Nenhum campo encontrado</div>
           )}
         </div>
 
@@ -1435,11 +1435,11 @@ export default function SimuladorPage({ courses }: Props) {
 
                   <AgsSection hi={hi} holes={null} cr={teeData.cr} slope={teeData.slope} par={teeData.par} pcc={pcc} is9h={is9h} holesMode={holesMode} onOverlayData={handleOverlayData} />
 
-                  <details style={{ marginTop: 14 }}>
-                    <summary style={{ cursor: "pointer", fontWeight: 600, fontSize: 14, color: "var(--text)" }}>
+                  <details className="mt-14">
+                    <summary className="sim-section-toggle">
                       Tabela Score → SD {is9h ? `(${holesLabel})` : ""}
                     </summary>
-                    <div style={{ marginTop: 8 }}>
+                    <div className="mt-8">
                       <SDTable
                         cr={teeData.cr}
                         slope={teeData.slope}
@@ -1527,11 +1527,11 @@ export default function SimuladorPage({ courses }: Props) {
               {overlayData && <OverlayExport data={overlayData} />}
 
               {/* Tabela SD — Multi-Tee (todos os tees masculinos) */}
-              <details style={{ marginTop: 14 }}>
-                <summary style={{ cursor: "pointer", fontWeight: 600, fontSize: 14, color: "var(--text)" }}>
+              <details className="mt-14">
+                <summary className="sim-section-toggle">
                   Tabela Score → SD {is9h ? `(${holesLabel})` : ""} — Todos os Tees
                 </summary>
-                <div style={{ marginTop: 8 }}>
+                <div className="mt-8">
                   <MultiTeeSDTable
                     tees={selected.master.tees}
                     pcc={pcc}
@@ -1544,11 +1544,11 @@ export default function SimuladorPage({ courses }: Props) {
               </details>
 
               {/* Fallback: tabela single-tee (para o tee selecionado) */}
-              <details style={{ marginTop: 14 }}>
-                <summary style={{ cursor: "pointer", fontWeight: 600, fontSize: 14, color: "var(--text)" }}>
+              <details className="mt-14">
+                <summary className="sim-section-toggle">
                   Tabela Score → SD {is9h ? `(${holesLabel})` : ""} — {selectedTee?.teeName ?? "Tee"}
                 </summary>
-                <div style={{ marginTop: 8 }}>
+                <div className="mt-8">
                   <SDTable
                     cr={teeData.cr}
                     slope={teeData.slope}
@@ -1561,11 +1561,11 @@ export default function SimuladorPage({ courses }: Props) {
               </details>
             </>
           ) : selected && !teeData ? (
-            <div className="muted" style={{ padding: 24 }}>
+            <div className="muted p-24">
               Nenhum tee com Course Rating e Slope disponível para {holesLabel} neste campo/filtro.
             </div>
           ) : (
-            <div className="muted" style={{ padding: 24 }}>Seleciona um campo</div>
+            <div className="muted p-24">Seleciona um campo</div>
           )}
         </div>
       </div>

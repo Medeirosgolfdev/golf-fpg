@@ -45,7 +45,7 @@ const CALENDARS: CalendarSource[] = [
   { id: "cgss_om_c",      name: "O.M. Nível C",       color: "#60a5fa", group: "CGSS" },
   { id: "cgss_pares",     name: "Camp. Pares",        color: "#0891b2", group: "CGSS" },
   { id: "cgss_ouro",      name: "Ranking Ouro",       color: "#0ea5e9", group: "CGSS" },
-  { id: "cgss_patrocin",  name: "Patrocinador",       color: "#64748b", group: "CGSS" },
+  { id: "cgss_patrocin",  name: "Patrocinador",       color: "var(--text-3)", group: "CGSS" },
   { id: "cgss_regional",  name: "Regional",           color: "#0284c7", group: "CGSS" },
   { id: "cgss_fpg",       name: "FPG Nacional",       color: "#4338ca", group: "CGSS" },
 
@@ -67,7 +67,7 @@ const CALENDARS: CalendarSource[] = [
   { id: "dest_intl",      name: "Internacionais",      color: "#dc2626", group: "DESTAQUE" },
   { id: "dest_nac_jr",    name: "Nacional Sub14&18",    color: "#dc2626", group: "DESTAQUE" },
   { id: "dest_uskids",    name: "US Kids International",color: "#e11d48", group: "DESTAQUE" },
-  { id: "dest_uskids_tbc",name: "US Kids (a confirmar)",color: "#94a3b8", group: "DESTAQUE" },
+  { id: "dest_uskids_tbc",name: "US Kids (a confirmar)",color: "var(--text-muted)", group: "DESTAQUE" },
   { id: "dest_bjgt",      name: "BJGT",                color: "#be123c", group: "DESTAQUE" },
   { id: "dest_pja",       name: "PJA Tour",            color: "#d946ef", group: "DESTAQUE" },
   { id: "pessoal",        name: "🎂 Pessoal",          color: "#39ff14", group: "DESTAQUE" },
@@ -354,7 +354,7 @@ function fmtRange(e: CalEvent): string {
     return `${DAY_NAMES[e.date.getDay()]}, ${e.date.toLocaleDateString("pt-PT", o)} ${e.date.getFullYear()}`;
   return `${e.date.toLocaleDateString("pt-PT", o)} – ${e.endDate.toLocaleDateString("pt-PT", o)} ${e.date.getFullYear()}`;
 }
-function calColor(e: CalEvent): string { return CAL_MAP.get(e.calId)?.color ?? "#6b7280"; }
+function calColor(e: CalEvent): string { return CAL_MAP.get(e.calId)?.color ?? "var(--text-3)"; }
 
 /* Highlighted "full-cell" events */
 const HIGHLIGHT: Record<string, { bg: string; border: string; text: string; icon: string; cls: string }> = {
@@ -405,7 +405,7 @@ function MiniCal({ year, month, onSelect, selected, visibleEvents }: {
   const today = new Date();
   return (
     <div style={{ userSelect: "none" }}>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)", textAlign: "center" }}>
+      <div className="ta-c" style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)" }}>
         {DAYS_SHORT.map((d, i) => (
           <div key={i} style={{ fontSize: 10, color: "var(--text-3)", padding: "2px 0", fontWeight: 600 }}>{d}</div>
         ))}
@@ -448,7 +448,7 @@ function EventPopup({ event, onClose }: { event: CalEvent; onClose: () => void }
   return (
     <div style={{ position: "fixed", inset: 0, zIndex: 1000, display: "flex", alignItems: "center",
       justifyContent: "center", background: "rgba(0,0,0,0.3)", backdropFilter: "blur(3px)" }}>
-      <div ref={ref} style={{ background: "var(--bg-card)", borderRadius: 12,
+      <div ref={ref} style={{ background: "var(--bg-card)", borderRadius: "var(--radius-xl)",
         boxShadow: "var(--shadow-lg)", width: 380, overflow: "hidden", animation: "calPopIn 0.2s ease" }}>
         <div style={{ background: hl ? hl.bg : color,
           padding: "14px 18px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -462,7 +462,7 @@ function EventPopup({ event, onClose }: { event: CalEvent; onClose: () => void }
         </div>
         <div style={{ padding: "16px 18px" }}>
           <div style={{ fontSize: 17, fontWeight: 600, color: "var(--text)", marginBottom: 12, lineHeight: 1.3 }}>{event.title}</div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+          <div className="flex-col-gap8">
             <InfoRow icon="📅" label={fmtRange(event)} />
             {event.modalidade && <InfoRow icon="🏌️" label={event.modalidade} />}
             {event.campo && <InfoRow icon="⛳" label={event.campo} />}
@@ -473,9 +473,9 @@ function EventPopup({ event, onClose }: { event: CalEvent; onClose: () => void }
   );
 }
 function InfoRow({ icon, label }: { icon: string; label: string }) {
-  return (<div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+  return (<div className="flex-center-gap8">
     <span style={{ fontSize: 15, width: 22, textAlign: "center" }}>{icon}</span>
-    <span style={{ fontSize: 13, color: "var(--text-2)" }}>{label}</span>
+    <span className="fs-13 c-text-2">{label}</span>
   </div>);
 }
 
@@ -494,7 +494,7 @@ function ListView({ events, onSelect }: { events: CalEvent[]; onSelect: (e: CalE
             letterSpacing: "0.04em", marginBottom: 8, paddingBottom: 4, borderBottom: "2px solid var(--accent-light)" }}>
             {monthLabel(month)} 2026
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+          <div className="flex-col-gap4">
             {evts.map(e => {
               const c = calColor(e);
               const hl = HIGHLIGHT[e.calId];
@@ -509,18 +509,18 @@ function ListView({ events, onSelect }: { events: CalEvent[]; onSelect: (e: CalE
                   }}
                   onMouseEnter={ev => (ev.currentTarget.style.background = hl ? `${hl.bg}30` : "var(--bg-hover)")}
                   onMouseLeave={ev => (ev.currentTarget.style.background = hl ? `${hl.bg}18` : "transparent")}>
-                  <div style={{ width: 42, textAlign: "center", flexShrink: 0 }}>
+                  <div className="col-w42 ta-c" style={{ flexShrink: 0 }}>
                     <div style={{ fontSize: 10, color: hl ? hl.border : "var(--text-3)", fontWeight: 500, textTransform: "uppercase" }}>{DAY_NAMES[e.date.getDay()]}</div>
                     <div style={{ fontSize: 18, fontWeight: 600, color: hl ? hl.border : "var(--text)", lineHeight: 1.2 }}>{e.date.getDate()}</div>
                   </div>
                   <div style={{ width: 4, alignSelf: "stretch", borderRadius: 2,
                     background: hl ? hl.bg : c, flexShrink: 0 }} />
-                  <div style={{ flex: 1, minWidth: 0 }}>
+                  <div className="flex-1" style={{ minWidth: 0 }}>
                     <div style={{ fontSize: 13, fontWeight: 600, color: "var(--text)",
                       overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                       {hl ? `${hl.icon} ` : ""}{e.title}
                     </div>
-                    <div style={{ fontSize: 11, color: "var(--text-3)", marginTop: 1 }}>
+                    <div className="fs-11 c-text-3 mt-4" >
                       {e.modalidade}{e.modalidade && " · "}{e.campo}
                     </div>
                   </div>
@@ -536,7 +536,7 @@ function ListView({ events, onSelect }: { events: CalEvent[]; onSelect: (e: CalE
         </div>
       ))}
       {grouped.length === 0 && (
-        <div style={{ textAlign: "center", color: "var(--text-3)", padding: 40 }}>Sem provas visíveis.</div>
+        <div className="ta-c c-text-3" style={{ padding: 40 }}>Sem provas visíveis.</div>
       )}
     </div>
   );
@@ -562,18 +562,18 @@ function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
   };
 
   return (
-    <div className="tourn-pw-gate">
-      <div style={{ fontSize: 32 }}>🔒</div>
-      <div className="tourn-pw-title">Acesso restrito</div>
-      <div className="tourn-pw-sub">Este separador requer password</div>
-      <div className="tourn-pw-row">
+    <div className="pw-gate">
+      <div className="pw-icon">🔒</div>
+      <div className="pw-title">Acesso restrito</div>
+      <div className="pw-sub">Este separador requer password</div>
+      <div className="pw-row">
         <input type="password" value={pw} onChange={e => setPw(e.target.value)}
           onKeyDown={e => e.key === "Enter" && check()}
           placeholder="Password…" autoFocus
-          className={`tourn-pw-input${error ? " tourn-pw-error" : ""}`} />
-        <button onClick={check} className="tourn-pw-btn">Entrar</button>
+          className={`pw-input${error ? " pw-input-error" : ""}`} />
+        <button onClick={check} className="pw-btn">Entrar</button>
       </div>
-      {error && <div style={{ fontSize: 11, color: "#dc3545", fontWeight: 600 }}>Password incorrecta</div>}
+      {error && <div className="pw-error">Password incorrecta</div>}
     </div>
   );
 }
@@ -630,7 +630,7 @@ function CalendarioContent() {
   const groups: GroupKey[] = ["CGSS", "JUNIOR", "DRIVE", "FPG", "DESTAQUE", "VIAGENS"];
 
   return (
-    <div style={{ height: "100%", display: "flex", overflow: "hidden" }}>
+    <div className="cal-page">
       <style>{`
         @keyframes calPopIn { from { transform: translateY(6px) scale(0.98); opacity: 0; } to { transform: none; opacity: 1; } }
         @keyframes hlShine {
@@ -687,9 +687,9 @@ function CalendarioContent() {
 
         {/* Mini cal */}
         <div>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
-            <span style={{ fontSize: 13, fontWeight: 700, color: "var(--text)" }}>{monthLabel(currentMonth)} 2026</span>
-            <div style={{ display: "flex", gap: 2 }}>
+          <div className="flex-between-mb6">
+            <span className="fs-13 fw-700 c-text">{monthLabel(currentMonth)} 2026</span>
+            <div className="d-flex gap-2">
               <SmBtn l="‹" onClick={() => setCurrentMonth(m => Math.max(0, m - 1))} dis={currentMonth <= 0} />
               <SmBtn l="›" onClick={() => setCurrentMonth(m => Math.min(11, m + 1))} dis={currentMonth >= 11} />
             </div>
@@ -699,7 +699,7 @@ function CalendarioContent() {
         </div>
 
         {/* Calendar toggles */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+        <div className="flex-col-gap6">
           {groups.map(g => {
             const cals = CALENDARS.filter(c => c.group === g);
             const groupCount = EVENTS.filter(e => cals.some(c => c.id === e.calId)).length;
@@ -718,15 +718,15 @@ function CalendarioContent() {
                   </span>
                   <span style={{ fontSize: 11, fontWeight: 700, color: "var(--text)", flex: 1, textAlign: "left",
                     textTransform: "uppercase", letterSpacing: "0.04em" }}>{GROUP_LABELS[g]}</span>
-                  <span style={{ fontSize: 10, fontFamily: "'JetBrains Mono', monospace", color: "var(--text-3)" }}>{groupCount}</span>
+                  <span className="fs-10 c-text-3 mono">{groupCount}</span>
                 </button>
-                <div style={{ display: "flex", flexDirection: "column", gap: 1, paddingLeft: 8, marginTop: 2 }}>
+                <div className="flex-col-gap1" style={{ paddingLeft: 8, marginTop: 2 }}>
                   {cals.map(cal => {
                     const calEvts = EVENTS.filter(e => e.calId === cal.id).sort((a, b) => a.date.getTime() - b.date.getTime());
                     const isExpanded = expandedCal === cal.id;
                     return (
                       <div key={cal.id}>
-                        <div style={{ display: "flex", alignItems: "center", gap: 0 }}>
+                        <div className="flex-center" style={{ gap: 0 }}>
                           {/* Checkbox */}
                           <button onClick={() => toggleCal(cal.id)} style={{
                             width: 28, height: 26, border: "none", cursor: "pointer", background: "transparent",
@@ -825,10 +825,10 @@ function CalendarioContent() {
               }}>{v === "month" ? "Mês" : "Lista"}</button>
             ))}
           </div>
-          <span style={{ fontSize: 11, color: "var(--text-3)", fontFamily: "'JetBrains Mono', monospace" }}>
+          <span className="fs-11 c-text-3 mono">
             {visibleEvents.length} provas
           </span>
-          <div style={{ display: "flex", alignItems: "center", gap: 6, marginLeft: 12 }}>
+          <div className="flex-center-gap6" style={{ marginLeft: 12 }}>
             <button onClick={() => setCurrentMonth(m => Math.max(0, m - 1))} disabled={currentMonth <= 0}
               style={{
                 width: 30, height: 30, borderRadius: "50%", border: "1px solid var(--border)",
@@ -853,7 +853,7 @@ function CalendarioContent() {
           </div>
         </div>
 
-        <div style={{ flex: 1, overflow: "auto" }}>
+        <div className="flex-1 scroll-y" style={{ overflow: "auto" }}>
           {viewMode === "month" ? (
             <div style={{ display: "flex", flexDirection: "column", height: "100%", padding: "0 12px 12px" }}>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)",
@@ -892,9 +892,9 @@ function CalendarioContent() {
                         onMouseEnter={ev => (ev.currentTarget.style.filter = "brightness(1.1)")}
                         onMouseLeave={ev => (ev.currentTarget.style.filter = "none")}>
                         <div style={{ fontSize: 10, fontWeight: 800, color: hl.text, opacity: 0.5 }}>
-                          <span style={{ fontSize: 8 }}>{MONTHS_SHORT[d.date.getMonth()]}</span> {d.date.getDate()}
+                          <span className="fs-8">{MONTHS_SHORT[d.date.getMonth()]}</span> {d.date.getDate()}
                         </div>
-                        <div style={{ fontSize: 14, lineHeight: 1 }}>{hl.icon}</div>
+                        <div className="fs-14" style={{ lineHeight: 1 }}>{hl.icon}</div>
                         {isFirst ? (
                           <div style={{ fontSize: 9, fontWeight: 900, color: hl.text, textAlign: "center",
                             lineHeight: 1.1, letterSpacing: "0.02em", marginTop: 1 }}>
@@ -966,7 +966,7 @@ function CalendarioContent() {
                         );
                       })}
                       {dayEvts.length > 3 && (
-                        <div style={{ fontSize: 9, color: "var(--text-3)", textAlign: "center", fontWeight: 600 }}>+{dayEvts.length - 3} mais</div>
+                        <div className="fs-9 c-text-3 ta-c fw-600">+{dayEvts.length - 3} mais</div>
                       )}
                     </div>
                   );

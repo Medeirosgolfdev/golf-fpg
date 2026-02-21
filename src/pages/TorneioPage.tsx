@@ -138,18 +138,18 @@ function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
   };
 
   return (
-    <div className="tourn-pw-gate">
-      <div style={{ fontSize: 32 }}>🔒</div>
-      <div className="tourn-pw-title">Acesso restrito</div>
-      <div className="tourn-pw-sub">Este separador requer password</div>
-      <div className="tourn-pw-row">
+    <div className="pw-gate">
+      <div className="pw-icon">🔒</div>
+      <div className="pw-title">Acesso restrito</div>
+      <div className="pw-sub">Este separador requer password</div>
+      <div className="pw-row">
         <input type="password" value={pw} onChange={e => setPw(e.target.value)}
           onKeyDown={e => e.key === "Enter" && check()}
           placeholder="Password…" autoFocus
           className={`tourn-pw-input${error ? " tourn-pw-error" : ""}`} />
-        <button onClick={check} className="tourn-pw-btn">Entrar</button>
+        <button onClick={check} className="pw-btn">Entrar</button>
       </div>
-      {error && <div style={{ fontSize: 11, color: "#dc3545", fontWeight: 600 }}>Password incorrecta</div>}
+      {error && <div className="fs-11 fw-600" style={{ color: "var(--color-danger)" }}>Password incorrecta</div>}
     </div>
   );
 }
@@ -171,11 +171,11 @@ function DrawTable({ draw, onSelectPlayer }: { draw: import("../utils/tournament
         <table className="tourn-draw">
           <thead>
             <tr>
-              <th style={{ width: 60 }}>Hora</th>
-              <th style={{ width: 80 }}>Tee</th>
+              <th className="col-w60">Hora</th>
+              <th className="col-w80">Tee</th>
               <th>Jogador</th>
-              <th className="r" style={{ width: 70 }}>HCP Ex.</th>
-              <th className="r" style={{ width: 60 }}>HCP Jg</th>
+              <th className="r col-w70">HCP Ex.</th>
+              <th className="r col-w60">HCP Jg</th>
             </tr>
           </thead>
           <tbody>
@@ -240,12 +240,12 @@ function DrawView({ players, onSelectPlayer }: { players: PlayersDb; onSelectPla
 
   return (
     <div className="tourn-section">
-      <div style={{ display: "flex", gap: 6, marginBottom: 10 }}>
-        <button className={`tourn-tab${day === 1 ? " tourn-tab-active" : ""}`} onClick={() => setDay(1)} style={{ fontSize: 11, padding: "4px 12px" }}>
+      <div className="d-flex gap-6 mb-10">
+        <button className={`tourn-tab fs-11${day === 1 ? " tourn-tab-active" : ""}`} onClick={() => setDay(1)} style={{ padding: "4px 12px" }}>
           R1 — {NORM_BASE.dates[0]?.split("-").reverse().slice(0, 2).join("/") || ""}
         </button>
         {NORM_BASE.draws.wagr?.d2 && (
-          <button className={`tourn-tab${day === 2 ? " tourn-tab-active" : ""}`} onClick={() => setDay(2)} style={{ fontSize: 11, padding: "4px 12px" }}>
+          <button className={`tourn-tab fs-11${day === 2 ? " tourn-tab-active" : ""}`} onClick={() => setDay(2)} style={{ padding: "4px 12px" }}>
             R2 — {NORM_BASE.dates[1]?.split("-").reverse().slice(0, 2).join("/") || ""}
           </button>
         )}
@@ -253,7 +253,7 @@ function DrawView({ players, onSelectPlayer }: { players: PlayersDb; onSelectPla
       <div className="tourn-tabs">
         {cats.map(c => (
           <button key={c.key} className={`tourn-tab${effectiveCat === c.key ? " tourn-tab-active" : ""}`} onClick={() => setCat(c.key)}>
-            {c.label} <span style={{ opacity: .6, fontSize: 11 }}>({c.count})</span>
+            {c.label} <span className="op-6 fs-11">({c.count})</span>
           </button>
         ))}
       </div>
@@ -324,7 +324,7 @@ function AnalysisView({ norm, players, holeDataByDay, playerHistory, onSelectPla
       <div className="tourn-tabs" style={{ marginBottom: 14 }}>
         {(["wagr", "sub14", "sub12"] as AnalysisCat[]).filter(c => catCounts[c] > 0).map(c => (
           <button key={c} className={`tourn-tab${cat === c ? " tourn-tab-active" : ""}`} onClick={() => setCat(c)}>
-            {c === "wagr" ? "WAGR" : c === "sub14" ? "Sub-14" : "Sub-12"} <span style={{ opacity: .6, fontSize: 11 }}>({catCounts[c]})</span>
+            {c === "wagr" ? "WAGR" : c === "sub14" ? "Sub-14" : "Sub-12"} <span className="op-6 fs-11">({catCounts[c]})</span>
           </button>
         ))}
       </div>
@@ -355,15 +355,15 @@ function AnalysisView({ norm, players, holeDataByDay, playerHistory, onSelectPla
             <table className="tourn-table tourn-form-table">
               <thead>
                 <tr>
-                  {cat === "wagr" && <th className="r" style={{ width: 30 }}>Pos</th>}
+                  {cat === "wagr" && <th className="r col-w30">Pos</th>}
                   <th>Jogador</th>
-                  <th className="r" style={{ width: 42 }}>HCP</th>
-                  {cat === "wagr" && <th className="r" style={{ width: 40 }}>D1</th>}
-                  {cat === "wagr" && <th className="r" style={{ width: 40 }}>SD</th>}
-                  <th className="r" style={{ width: 45 }}>Últ. Jg</th>
-                  <th style={{ width: 220 }}>Últimas Rondas (SD)</th>
-                  <th style={{ width: 60 }}>Forma</th>
-                  <th className="r" style={{ width: 50 }}>R2 Est.</th>
+                  <th className="r col-w42">HCP</th>
+                  {cat === "wagr" && <th className="r col-w40">D1</th>}
+                  {cat === "wagr" && <th className="r col-w40">SD</th>}
+                  <th className="r col-w45">Últ. Jg</th>
+                  <th className="col-w220">Últimas Rondas (SD)</th>
+                  <th className="col-w60">Forma</th>
+                  <th className="r col-w50">R2 Est.</th>
                 </tr>
               </thead>
               <tbody>
@@ -372,25 +372,25 @@ function AnalysisView({ norm, players, holeDataByDay, playerHistory, onSelectPla
                   const female = ALL_DRAW.find(d => d.fed === f.fed)?.sex === "F";
                   return (
                     <tr key={i} className={female ? "tourn-female-row" : ""}>
-                      {cat === "wagr" && <td className="r tourn-mono" style={{ fontWeight: 700 }}>{f.d1Pos ?? "–"}</td>}
+                      {cat === "wagr" && <td className="r tourn-mono fw-700">{f.d1Pos ?? "–"}</td>}
                       <td>
                         <PlayerLink fed={f.fed} name={f.name} onSelect={onSelectPlayer} />
-                        {pja && <span className="jog-pill tourn-pill-pja" style={{ marginLeft: 4 }}>PJA</span>}
-                        <span className={`jog-pill jog-pill-escalao jog-pill-escalao-${f.escalao.toLowerCase().replace("-", "")}`} style={{ marginLeft: 4, fontSize: 9 }}>{f.escalao}</span>
+                        {pja && <span className="jog-pill tourn-pill-pja ml-4">PJA</span>}
+                        <span className={`jog-pill jog-pill-escalao jog-pill-escalao-${f.escalao.toLowerCase().replace("-", "")} ml-4 fs-9`}>{f.escalao}</span>
                       </td>
                       <td className="r tourn-mono">{fmtHcp(f.hcpExact)}</td>
                       {cat === "wagr" && (
-                        <td className="r tourn-mono" style={{ fontWeight: 700 }}>
-                          {f.d1Gross != null ? <><span>{f.d1Gross}</span> <span className={f.d1ToPar! <= 0 ? "tp-under" : "tp-over1"} style={{ fontSize: 10 }}>({fmtToPar(f.d1ToPar)})</span></> : "–"}
+                        <td className="r tourn-mono fw-700">
+                          {f.d1Gross != null ? <><span>{f.d1Gross}</span> <span className={`${f.d1ToPar! <= 0 ? "tp-under" : "tp-over1"} fs-10`}>({fmtToPar(f.d1ToPar)})</span></> : "–"}
                         </td>
                       )}
                       {cat === "wagr" && (
-                        <td className="r tourn-mono" style={{ fontSize: 11 }}>
-                          {f.d1SD != null ? <span className={f.d1SD <= 0 ? "tp-under" : f.d1SD <= 5 ? "tp-over1" : "tp-over2"} style={{ fontWeight: 600 }}>{f.d1SD.toFixed(1)}</span> : "–"}
+                        <td className="r tourn-mono fs-11">
+                          {f.d1SD != null ? <span className={`${f.d1SD <= 0 ? "tp-under" : f.d1SD <= 5 ? "tp-over1" : "tp-over2"} fw-600`}>{f.d1SD.toFixed(1)}</span> : "–"}
                         </td>
                       )}
-                      <td className="r" style={{ fontSize: 11 }}>
-                        {f.daysSinceLast != null ? <span style={{ color: f.daysSinceLast <= 7 ? "#16a34a" : f.daysSinceLast <= 21 ? "#e67e22" : "#dc3545" }}>{f.daysSinceLast}d</span> : "–"}
+                      <td className="r fs-11">
+                        {f.daysSinceLast != null ? <span style={{ color: f.daysSinceLast <= 7 ? "#16a34a" : f.daysSinceLast <= 21 ? "#e67e22" : "var(--color-danger)" }}>{f.daysSinceLast}d</span> : "–"}
                       </td>
                       <td>
                         <div className="tourn-sparkline">
@@ -408,7 +408,7 @@ function AnalysisView({ norm, players, holeDataByDay, playerHistory, onSelectPla
                           {TREND_ICONS[f.trend]} {TREND_LABELS[f.trend]}
                         </span>
                       </td>
-                      <td className="r tourn-mono" style={{ fontWeight: 700, fontSize: 13 }}>{f.predictedGross ?? "–"}</td>
+                      <td className="r tourn-mono fw-700 fs-13">{f.predictedGross ?? "–"}</td>
                     </tr>
                   );
                 })}
@@ -417,7 +417,7 @@ function AnalysisView({ norm, players, holeDataByDay, playerHistory, onSelectPla
           </div>
         </>
       ) : (
-        <div className="tourn-meta" style={{ padding: 20, textAlign: "center" }}>⏳ A carregar dados de jogadores...</div>
+        <div className="tourn-meta empty-state-sm">⏳ A carregar dados de jogadores...</div>
       )}
 
       {cat === "wagr" && holeDiff[0]?.n > 0 && <>
@@ -427,13 +427,13 @@ function AnalysisView({ norm, players, holeDataByDay, playerHistory, onSelectPla
           <table className="tourn-table tourn-form-table">
             <thead>
               <tr>
-                <th style={{ width: 40 }}>Buraco</th>
-                <th className="r" style={{ width: 30 }}>Par</th>
-                <th className="r" style={{ width: 30 }}>SI</th>
-                <th className="r" style={{ width: 50 }}>Dist</th>
-                <th className="r" style={{ width: 50 }}>Média</th>
-                <th className="r" style={{ width: 50 }}>vs Par</th>
-                <th style={{ width: 180 }}>Distribuição</th>
+                <th className="col-w40">Buraco</th>
+                <th className="r col-w30">Par</th>
+                <th className="r col-w30">SI</th>
+                <th className="r col-w50">Dist</th>
+                <th className="r col-w50">Média</th>
+                <th className="r col-w50">vs Par</th>
+                <th className="col-w180">Distribuição</th>
               </tr>
             </thead>
             <tbody>
@@ -441,13 +441,13 @@ function AnalysisView({ norm, players, holeDataByDay, playerHistory, onSelectPla
                 const vp = h.avg != null ? h.avg - h.par : null;
                 return (
                   <tr key={i}>
-                    <td className="tourn-mono" style={{ fontWeight: 700 }}>{h.hole}</td>
+                    <td className="tourn-mono fw-700">{h.hole}</td>
                     <td className="r">{h.par}</td>
-                    <td className="r" style={{ color: "#aaa" }}>{h.si}</td>
+                    <td className="r c-muted">{h.si}</td>
                     <td className="r tourn-mono">{h.m}</td>
-                    <td className="r tourn-mono" style={{ fontWeight: 700 }}>{h.avg?.toFixed(1) ?? "–"}</td>
+                    <td className="r tourn-mono fw-700">{h.avg?.toFixed(1) ?? "–"}</td>
                     <td className="r">
-                      {vp != null && <span style={{ color: vp <= 0 ? "#16a34a" : vp < 0.5 ? "#e67e22" : "#dc3545", fontWeight: 600 }}>
+                      {vp != null && <span style={{ color: vp <= 0 ? "#16a34a" : vp < 0.5 ? "#e67e22" : "var(--color-danger)", fontWeight: 600 }}>
                         {vp > 0 ? `+${vp.toFixed(2)}` : vp.toFixed(2)}
                       </span>}
                     </td>
@@ -649,7 +649,7 @@ export default function TorneioPage({ players, onSelectPlayer }: { players: Play
       {/* Header */}
       <div className="tourn-header">
         <div className="tourn-header-top">
-          <span className="tourn-pill-intl" style={{ fontSize: 9, padding: "2px 6px" }}>🌍 INTL</span>
+          <span className="tourn-pill-intl fs-9" style={{ padding: "2px 6px" }}>🌍 INTL</span>
           <h2 className="tourn-title">GG26</h2>
         </div>
         <div className="tourn-header-info">
@@ -681,7 +681,7 @@ export default function TorneioPage({ players, onSelectPlayer }: { players: Play
                     <span className="tourn-ext-group-label">{g.label}</span>
                     {available.map(k => (
                       <a key={k} href={links[k]} target="_blank" rel="noopener noreferrer" className="tourn-ext-link">
-                        {g.labels[k] || k}<span style={{ fontSize: 9, opacity: .6 }}> ↗</span>
+                        {g.labels[k] || k}<span className="fs-9 op-6"> ↗</span>
                       </a>
                     ))}
                   </span>
