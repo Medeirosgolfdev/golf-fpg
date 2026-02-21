@@ -701,8 +701,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
     if (!ahs || !bd) return { filteredBands: [] as any[], filteredN: 0, periodLabel: "all-time" };
     if (distPeriod === 0) return { filteredBands: b, filteredN: ahs.length, periodLabel: "all-time" };
     const now = new Date();
-    const cutDate = new Date(now.getFullYear(), now.getMonth() - distPeriod, now.getDate());
-    const cutoff = Number(`${cutDate.getFullYear()}${String(cutDate.getMonth() + 1).padStart(2, "0")}${String(cutDate.getDate()).padStart(2, "0")}`);
+    const cutoff = new Date(now.getFullYear(), now.getMonth() - distPeriod, now.getDate()).getTime();
     const filtered = ahs.filter((h: any) => h.ds >= cutoff);
     const fb: any[] = [];
     for (const bdef of bd) {
@@ -1186,6 +1185,10 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
       {distEvolution.length >= 4 && (
         <div className="holeAnalysis">
           <div className="haTitle">📏 Distância e Evolução</div>
+          <div className="muted" style={{ fontSize: 9, marginBottom: 8 }}>
+            Analisa como a distância total do campo (soma dos metros de todos os buracos) afecta o score.
+            Campos são divididos em "curtos" e "longos" pela mediana ({medianMeters}m). A diferença mostra quantas pancadas a mais custa jogar em campos mais longos.
+          </div>
           {metersGrowing && metersDiff != null && (
             <div className="caConclusion" style={{ background: "#eff6ff", borderColor: "#bfdbfe", marginBottom: 10 }}>
               <div className="caConcTitle" style={{ color: "#1e40af" }}>📈 Está a jogar campos mais longos</div>
@@ -1220,12 +1223,17 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
             </div>
           )}
           {/* Mini distance/gross scatter */}
-          <div style={{ fontSize: 10, color: "#94a3b8", fontWeight: 700, marginBottom: 4 }}>RONDAS POR DISTÂNCIA</div>
+          <div style={{ fontSize: 10, color: "#94a3b8", fontWeight: 700, marginBottom: 4 }}>ÚLTIMAS 20 RONDAS</div>
+          <div className="muted" style={{ fontSize: 9, marginBottom: 6 }}>
+            Cada quadrado é uma ronda recente, ordenada da mais antiga (esquerda) para a mais recente (direita).
+            O número é o gross. Cor: <span style={{ color: "#166534", fontWeight: 700 }}>verde ≤82</span> · <span style={{ color: "#92400e", fontWeight: 700 }}>amarelo 83–88</span> · <span style={{ color: "#991b1b", fontWeight: 700 }}>vermelho ≥89</span>.
+            Rondas em VP Flamingos têm borda vermelha e formato redondo. Passa o rato por cima para ver data, campo e distância.
+          </div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 3 }}>
             {distEvolution.slice(-20).map((r, i) => {
               const vpCourse = r.course.toLowerCase().includes("villa") || r.course.toLowerCase().includes("flamingos");
               return (
-                <div key={i} title={`${r.date} ${r.course} ${r.meters}m → ${r.gross}`}
+                <div key={i} title={`${r.date} · ${r.course} · ${r.meters ?? "?"}m → Gross ${r.gross}`}
                   style={{ width: 28, height: 28, borderRadius: vpCourse ? 999 : 4, display: "flex", alignItems: "center", justifyContent: "center",
                     fontSize: 9, fontWeight: 700, border: vpCourse ? "2px solid #dc2626" : "1px solid #d5dac9",
                     background: r.gross <= 82 ? "#dcfce7" : r.gross <= 88 ? "#fef3c7" : "#fef2f2",
@@ -1235,7 +1243,6 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               );
             })}
           </div>
-          <div className="muted" style={{ fontSize: 9, marginTop: 4 }}>Cada quadrado = 1 ronda · 🔴 = VP Flamingos · Hover para detalhes</div>
         </div>
       )}
 
@@ -1316,7 +1323,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
         <div className="holeAnalysis">
           <div className="haTitle">📈 Evolução Temporal — {filteredMonthly.length} meses de dados</div>
           <div className="muted" style={{ fontSize: 10, marginBottom: 12 }}>
-            Baseado em {roundDetails.length} rondas de 18 buracos, de {filteredMonthly[0]?.label} a {filteredMonthly[filteredMonthly.length - 1]?.label}.
+            Baseado em {filteredMonthly.reduce((s, m) => s + m.rounds, 0)} rondas de 18 buracos, de {filteredMonthly[0]?.label} a {filteredMonthly[filteredMonthly.length - 1]?.label}.
           </div>
 
           {/* ── 1. GROSS MÉDIO POR MÊS ── */}
@@ -1329,12 +1336,17 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
             </div>
             {(() => {
               const ms = filteredMonthly;
-              const minG = Math.min(...ms.map(m => m.bestGross));
-              const maxG = Math.max(...ms.map(m => m.worstGross));
-              const range = maxG - minG || 1;
+              const avgs = ms.map(m => m.avgGross);
+              const dataMin = Math.min(...avgs);
+              const dataMax = Math.max(...avgs);
               const t5ref = FIELD_2025.top5Avg;
               const fieldRef = FIELD_2025.fieldAvg;
-              // Trend line: first 3 months avg vs last 3 months avg
+              const chartH = 160; // px
+              const pad = 3; // score units padding
+              const lo = Math.floor(Math.min(dataMin, fieldRef) - pad);
+              const hi = Math.ceil(dataMax + pad);
+              const range = hi - lo || 1;
+              const toPx = (v: number) => ((v - lo) / range) * chartH;
               const first3 = ms.slice(0, Math.min(3, ms.length));
               const last3 = ms.slice(-Math.min(3, ms.length));
               const f3avg = first3.reduce((s, m) => s + m.avgGross, 0) / first3.length;
@@ -1342,36 +1354,30 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               const improving = l3avg < f3avg - 1;
               return (
                 <div>
-                  <div style={{ position: "relative", height: 160, marginBottom: 4 }}>
+                  <div style={{ position: "relative", height: chartH, marginBottom: 4 }}>
                     {/* Reference lines */}
-                    {[t5ref, fieldRef].map((ref, ri) => {
-                      const pct = 100 - ((ref - minG + 2) / (range + 4)) * 100;
+                    {[{ val: t5ref, label: "T5", col: "#d97706" }, { val: fieldRef, label: "Field", col: "#94a3b8" }].map(ref => {
+                      const bottom = toPx(ref.val);
+                      if (bottom < 0 || bottom > chartH) return null;
                       return (
-                        <div key={ri} style={{ position: "absolute", left: 0, right: 0, top: `${pct}%`,
-                          borderTop: `1px dashed ${ri === 0 ? "#d97706" : "#94a3b8"}`, zIndex: 1 }}>
-                          <span style={{ position: "absolute", right: 0, top: -12, fontSize: 8,
-                            color: ri === 0 ? "#d97706" : "#94a3b8", fontWeight: 700 }}>
-                            {ri === 0 ? "T5" : "Field"} {ref.toFixed(0)}
+                        <div key={ref.label} style={{ position: "absolute", left: 0, right: 0, bottom,
+                          borderTop: `1px dashed ${ref.col}`, zIndex: 1 }}>
+                          <span style={{ position: "absolute", right: 0, bottom: 1, fontSize: 8,
+                            color: ref.col, fontWeight: 700 }}>
+                            {ref.label} {ref.val.toFixed(0)}
                           </span>
                         </div>
                       );
                     })}
                     {/* Bars */}
-                    <div style={{ display: "flex", alignItems: "flex-end", height: "100%", gap: 2, position: "relative", zIndex: 2 }}>
+                    <div style={{ display: "flex", alignItems: "flex-end", height: chartH, gap: 2 }}>
                       {ms.map((m, i) => {
-                        const barH = ((m.avgGross - minG + 2) / (range + 4)) * 100;
+                        const barPx = Math.max(4, toPx(m.avgGross));
                         const col = m.avgGross <= t5ref ? "#16a34a" : m.avgGross <= fieldRef ? "#0369a1" : m.avgGross <= fieldRef + 5 ? "#d97706" : "#dc2626";
                         return (
-                          <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center" }}>
-                            <div style={{ fontSize: 8, fontWeight: 700, color: col, marginBottom: 2 }}>{m.avgGross.toFixed(0)}</div>
-                            <div style={{ width: "100%", height: `${barH}%`, background: col, borderRadius: "4px 4px 0 0", opacity: 0.7, minHeight: 4, position: "relative" }}>
-                              {/* Best/worst range */}
-                              {m.rounds > 1 && (
-                                <div style={{ position: "absolute", left: "50%", transform: "translateX(-50%)", bottom: 0,
-                                  width: 2, background: "#1e293b30",
-                                  height: `${((m.worstGross - m.bestGross) / (range + 4)) * 100}%` }} />
-                              )}
-                            </div>
+                          <div key={i} style={{ flex: 1, textAlign: "center" }}>
+                            <div style={{ fontSize: 9, fontWeight: 700, color: col, marginBottom: 2 }}>{m.avgGross.toFixed(0)}</div>
+                            <div style={{ height: barPx, background: col, borderRadius: "4px 4px 0 0", opacity: 0.75 }} />
                           </div>
                         );
                       })}
@@ -1513,18 +1519,12 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               Permite ver a que distância competitiva está e se a tendência se aproxima destes níveis.
             </div>
             {(() => {
-              const last6m = roundDetails.filter(r => {
-                const cutDate = new Date();
-                cutDate.setMonth(cutDate.getMonth() - 6);
-                const cutDs = Number(`${cutDate.getFullYear()}${String(cutDate.getMonth() + 1).padStart(2, "0")}${String(cutDate.getDate()).padStart(2, "0")}`);
-                return r.ds >= cutDs;
-              });
-              const last3m = roundDetails.filter(r => {
-                const cutDate = new Date();
-                cutDate.setMonth(cutDate.getMonth() - 3);
-                const cutDs = Number(`${cutDate.getFullYear()}${String(cutDate.getMonth() + 1).padStart(2, "0")}${String(cutDate.getDate()).padStart(2, "0")}`);
-                return r.ds >= cutDs;
-              });
+              const now6 = new Date(); now6.setMonth(now6.getMonth() - 6);
+              const cut6 = now6.getTime();
+              const last6m = roundDetails.filter(r => r.ds >= cut6);
+              const now3 = new Date(); now3.setMonth(now3.getMonth() - 3);
+              const cut3 = now3.getTime();
+              const last3m = roundDetails.filter(r => r.ds >= cut3);
               const periods = [
                 { label: "Últimos 3m", data: last3m },
                 { label: "Últimos 6m", data: last6m },
