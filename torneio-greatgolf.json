@@ -563,6 +563,128 @@
         "total": 107,
         "status": "OK"
       }
+    ],
+    "sub12_d2": [
+      {
+        "pos": 1,
+        "name": "Ricardo Castro Ferreira",
+        "fed": "49085",
+        "club": "Estoril",
+        "toPar": 5,
+        "gross": 77,
+        "total": 77,
+        "status": "OK"
+      },
+      {
+        "pos": 2,
+        "name": "Joe Short",
+        "fed": "51804",
+        "club": "Vila Sol",
+        "toPar": 15,
+        "gross": 87,
+        "total": 87,
+        "status": "OK"
+      },
+      {
+        "pos": 3,
+        "name": "Guo Ziyang",
+        "fed": "57904",
+        "club": "Estoril",
+        "toPar": 10,
+        "gross": 82,
+        "total": 82,
+        "status": "OK"
+      },
+      {
+        "pos": 4,
+        "name": "Manuel Goulartt Medeiros",
+        "fed": "52884",
+        "club": "Santo da Serra",
+        "toPar": 10,
+        "gross": 82,
+        "total": 82,
+        "status": "OK"
+      },
+      {
+        "pos": 5,
+        "name": "Benji Botham",
+        "fed": null,
+        "club": "Internacional",
+        "toPar": 15,
+        "gross": 87,
+        "total": 87,
+        "status": "OK"
+      },
+      {
+        "pos": 6,
+        "name": "Miguel Santos Pereira",
+        "fed": "48946",
+        "club": "Vilamoura, C. G",
+        "toPar": 16,
+        "gross": 88,
+        "total": 88,
+        "status": "OK"
+      },
+      {
+        "pos": 7,
+        "name": "Harry Seabrook",
+        "fed": "54264",
+        "club": "Vila Sol",
+        "toPar": 15,
+        "gross": 87,
+        "total": 87,
+        "status": "OK"
+      },
+      {
+        "pos": 8,
+        "name": "George Campbell",
+        "fed": null,
+        "club": "Internacional",
+        "toPar": 20,
+        "gross": 92,
+        "total": 92,
+        "status": "OK"
+      },
+      {
+        "pos": 9,
+        "name": "Marek Pejas",
+        "fed": "52069",
+        "club": "Vilamoura, C. G",
+        "toPar": 25,
+        "gross": 97,
+        "total": 97,
+        "status": "OK"
+      },
+      {
+        "pos": 10,
+        "name": "Gabriel Costa",
+        "fed": "53838",
+        "club": "Amendoeira",
+        "toPar": 19,
+        "gross": 91,
+        "total": 91,
+        "status": "OK"
+      },
+      {
+        "pos": 11,
+        "name": "Harley Botham",
+        "fed": null,
+        "club": "Internacional",
+        "toPar": 21,
+        "gross": 93,
+        "total": 93,
+        "status": "OK"
+      },
+      {
+        "pos": 12,
+        "name": "Yeonjin Seo",
+        "fed": null,
+        "club": "Internacional",
+        "toPar": 24,
+        "gross": 96,
+        "total": 96,
+        "status": "OK"
+      }
     ]
   },
   "password": "figo2025",
@@ -2730,65 +2852,274 @@
   },
   "manualHolesWagr": {
     "Doyeon Kim": {
-      "holes": [4, 3, 5, 3, 5, 3, 4, 4, 4, 8, 4, 4, 4, 6, 4, 3, 4, 4],
+      "holes": [
+        4,
+        3,
+        5,
+        3,
+        5,
+        3,
+        4,
+        4,
+        4,
+        8,
+        4,
+        4,
+        4,
+        6,
+        4,
+        3,
+        4,
+        4
+      ],
       "gross": 76,
       "toPar": 4
     },
     "Min Sung Seo": {
-      "holes": [5, 3, 4, 8, 4, 5, 4, 7, 6, 6, 5, 3, 4, 6, 6, 5, 4, 4],
+      "holes": [
+        5,
+        3,
+        4,
+        8,
+        4,
+        5,
+        4,
+        7,
+        6,
+        6,
+        5,
+        3,
+        4,
+        6,
+        6,
+        5,
+        4,
+        4
+      ],
       "gross": 89,
       "toPar": 17
     }
   },
   "manualHolesWagr_d2": {
     "Doyeon Kim": {
-      "holes": [6, 3, 5, 4, 4, 5, 4, 5, 4, 4, 4, 3, 4, 3, 5, 5, 4, 5],
+      "holes": [
+        6,
+        3,
+        5,
+        4,
+        4,
+        5,
+        4,
+        5,
+        4,
+        4,
+        4,
+        3,
+        4,
+        3,
+        5,
+        5,
+        4,
+        5
+      ],
       "gross": 77,
       "toPar": 5
     },
     "Min Sung Seo": {
-      "holes": [4, 3, 5, 4, 4, 7, 5, 5, 4, 6, 5, 3, 4, 5, 5, 5, 3, 4],
+      "holes": [
+        4,
+        3,
+        5,
+        4,
+        4,
+        7,
+        5,
+        5,
+        4,
+        6,
+        5,
+        3,
+        4,
+        5,
+        5,
+        5,
+        3,
+        4
+      ],
       "gross": 81,
       "toPar": 9
     }
   },
   "manualHolesWagr_d3": {
     "Doyeon Kim": {
-      "holes": [5, 3, 3, 2, 3, 4, 5, 4, 6, 5, 4, 3, 5, 4, 7, 4, 3, 4],
+      "holes": [
+        5,
+        3,
+        3,
+        2,
+        3,
+        4,
+        5,
+        4,
+        6,
+        5,
+        4,
+        3,
+        5,
+        4,
+        7,
+        4,
+        3,
+        4
+      ],
       "gross": 74,
       "toPar": 2
     },
     "Min Sung Seo": {
-      "holes": [7, 3, 5, 4, 4, 3, 4, 5, 5, 5, 3, 4, 5, 4, 5, 5, 4, 4],
+      "holes": [
+        7,
+        3,
+        5,
+        4,
+        4,
+        3,
+        4,
+        5,
+        5,
+        5,
+        3,
+        4,
+        5,
+        4,
+        5,
+        5,
+        4,
+        4
+      ],
       "gross": 79,
       "toPar": 7
     }
   },
   "manualHolesSub14_d2": {
     "Yoon Jun Lee": {
-      "holes": [7, 3, 4, 3, 4, 4, 5, 6, 4, 4, 6, 3, 4, 4, 8, 3, 3, 5],
+      "holes": [
+        7,
+        3,
+        4,
+        3,
+        4,
+        4,
+        5,
+        6,
+        4,
+        4,
+        6,
+        3,
+        4,
+        4,
+        8,
+        3,
+        3,
+        5
+      ],
       "gross": 80,
       "toPar": 8
     }
   },
   "manualHolesSub12_d2": {
     "Benji Botham": {
-      "holes": [5, 3, 4, 5, 5, 5, 5, 6, 4, 6, 6, 3, 5, 5, 7, 4, 4, 5],
+      "holes": [
+        5,
+        3,
+        4,
+        5,
+        5,
+        5,
+        5,
+        6,
+        4,
+        6,
+        6,
+        3,
+        5,
+        5,
+        7,
+        4,
+        4,
+        5
+      ],
       "gross": 87,
       "toPar": 15
     },
     "George Campbell": {
-      "holes": [5, 2, 6, 3, 5, 5, 4, 5, 7, 6, 6, 3, 8, 5, 7, 5, 4, 6],
+      "holes": [
+        5,
+        2,
+        6,
+        3,
+        5,
+        5,
+        4,
+        5,
+        7,
+        6,
+        6,
+        3,
+        8,
+        5,
+        7,
+        5,
+        4,
+        6
+      ],
       "gross": 92,
       "toPar": 20
     },
     "Harley Botham": {
-      "holes": [7, 2, 5, 4, 4, 4, 6, 6, 5, 6, 6, 5, 5, 6, 7, 6, 3, 6],
+      "holes": [
+        7,
+        2,
+        5,
+        4,
+        4,
+        4,
+        6,
+        6,
+        5,
+        6,
+        6,
+        5,
+        5,
+        6,
+        7,
+        6,
+        3,
+        6
+      ],
       "gross": 93,
       "toPar": 21
     },
     "Yeonjin Seo": {
-      "holes": [5, 4, 6, 4, 5, 5, 6, 6, 7, 7, 5, 5, 5, 5, 6, 5, 4, 6],
+      "holes": [
+        5,
+        4,
+        6,
+        4,
+        5,
+        5,
+        6,
+        6,
+        7,
+        7,
+        5,
+        5,
+        5,
+        5,
+        6,
+        5,
+        4,
+        6
+      ],
       "gross": 96,
       "toPar": 24
     }

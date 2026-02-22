@@ -151,19 +151,35 @@ function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
 const FL={"Portugal":"🇵🇹","Spain":"🇪🇸","England":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","Russian Federation":"🇷🇺","Bulgaria":"🇧🇬","Switzerland":"🇨🇭","Italy":"🇮🇹","France":"🇫🇷","Ireland":"🇮🇪","Northern Ireland":"🇬🇧","Germany":"🇩🇪","Netherlands":"🇳🇱","Norway":"🇳🇴","Lithuania":"🇱🇹","Thailand":"🇹🇭","United States":"🇺🇸","United Kingdom":"🇬🇧","Sweden":"🇸🇪","Morocco":"🇲🇦","Wales":"🏴󠁧󠁢󠁷󠁬󠁳󠁿","Belgium":"🇧🇪","Slovenia":"🇸🇮","Ukraine":"🇺🇦","Romania":"🇷🇴","China":"🇨🇳","Philippines":"🇵🇭","Slovakia":"🇸🇰","United Arab Emirates":"🇦🇪","Turkey":"🇹🇷","India":"🇮🇳","Viet Nam":"🇻🇳","Kazakhstan":"🇰🇿","Hungary":"🇭🇺","South Africa":"🇿🇦","Singapore":"🇸🇬","Denmark":"🇩🇰","Mexico":"🇲🇽","Canada":"🇨🇦","Austria":"🇦🇹","Paraguay":"🇵🇾","Brazil":"🇧🇷","Jersey":"🇯🇪","Nigeria":"🇳🇬","Oman":"🇴🇲","Chile":"🇨🇱","Colombia":"🇨🇴","Puerto Rico":"🇵🇷","Costa Rica":"🇨🇷","Great Britain":"🇬🇧","Latvia":"🇱🇻","South Korea":"🇰🇷"};
 
 const T=[
-  {id:"brjgt25",name:"WJGC 2025",short:"WJGC",date:"Fev 2025",rounds:3,par:71,url:"https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/34/leaderboard.htm"},
-  {id:"eowagr25",name:"European Open",short:"EU Open",date:"Ago 2025",rounds:3,par:72,url:"https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2512/contest/21/leaderboard.htm"},
-  {id:"venice25",name:"Venice Open 2025",short:"Venice",date:"Ago 2025",rounds:3,par:72,url:"https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/515206/venice-open-2025/results"},
-  {id:"rome25",name:"Rome Classic 2025",short:"Rome",date:"Out 2025",rounds:2,par:72,url:"https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516026/rome-classic-2025/results"},
-  {id:"doral25",name:"Doral Junior 2025",short:"Doral",date:"Dez 2025",rounds:2,par:71,url:"https://www.golfgenius.com/v2tournaments/4222407?called_from=widgets%2Fcustomized_tournament_results&hide_totals=false&player_stats_for_portal=true"},
-  {id:"qdl25",name:"QDL Junior Open 2025",short:"QDL",date:"Nov 2025",rounds:1,par:72},
-  {id:"gg26",name:"International kids",short:"GG",date:"Fev 2026",rounds:1,par:72},
+  {id:"brjgt25",name:"WJGC 2025",short:"WJGC",date:"Fev 2025",rounds:3,par:71,field:40,nations:17,url:"https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/34/leaderboard.htm"},
+  {id:"eowagr25",name:"European Open",short:"EU Open",date:"Ago 2025",rounds:3,par:72,field:8,nations:3,url:"https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2512/contest/21/leaderboard.htm"},
+  {id:"venice25",name:"Venice Open 2025",short:"Venice",date:"Ago 2025",rounds:3,par:72,field:39,nations:12,url:"https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/515206/venice-open-2025/results"},
+  {id:"rome25",name:"Rome Classic 2025",short:"Rome",date:"Out 2025",rounds:2,par:72,field:14,nations:3,url:"https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516026/rome-classic-2025/results"},
+  {id:"doral25",name:"Doral Junior 2025",short:"Doral",date:"Dez 2025",rounds:2,par:71,field:35,nations:9,url:"https://www.golfgenius.com/v2tournaments/4222407?called_from=widgets%2Fcustomized_tournament_results&hide_totals=false&player_stats_for_portal=true"},
+  {id:"qdl25",name:"QDL Junior Open 2025",short:"QDL",date:"Nov 2025",rounds:1,par:72,field:12,nations:7,intendedRounds:3,url:"https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=962&tcode=10080&classif_order=2"},
+  {id:"gg26",name:"Greatgolf Junior Open",short:"GG",date:"Fev 2026",rounds:2,par:72,field:12,nations:4,url:"https://scoring-pt.datagolf.pt/scripts/classif.asp?tourn=10296&club=935&ack=OT342GH16T"},
 ];
+
+// Tournament prestige weight: rounds (40%) + field size (35%) + internationality (25%)
+// Uses intendedRounds when available (e.g. QDL reduced by weather)
+const T_WEIGHTS: Record<string, number> = (() => {
+  const maxR = Math.max(...T.map(t => t.intendedRounds || t.rounds));
+  const maxF = Math.max(...T.map(t => t.field));
+  const maxN = Math.max(...T.map(t => t.nations));
+  const w: Record<string, number> = {};
+  for (const t of T) {
+    const rNorm = (t.intendedRounds || t.rounds) / maxR;
+    const fNorm = t.field / maxF;
+    const nNorm = t.nations / maxN;
+    w[t.id] = 0.40 * rNorm + 0.35 * fNorm + 0.25 * nNorm;
+  }
+  return w;
+})();
 
 const UP=[{id:"wjgc26",name:"WJGC 2026",short:"WJGC"},{id:"marco26",name:"Marco Simone Inv.",short:"M.SIMONE",url:"https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516989/marco-simone-invitational-2026/field"}];
 
 const D=[
-  {n:"Manuel Medeiros",co:"Portugal",isM:true,r:{brjgt25:{p:26,t:265,tp:52,rd:[90,85,90]},eowagr25:{p:7,t:238,tp:22,rd:[85,77,76]},venice25:{p:28,t:237,tp:21,rd:[78,76,83]},rome25:{p:10,t:166,tp:22,rd:[89,77]},doral25:{p:29,t:177,tp:35,rd:[98,79]},qdl25:{p:11,t:90,tp:18,rd:[90]},gg26:{p:4,t:87,tp:15,rd:[87]}},up:["wjgc26","marco26"]},
+  {n:"Manuel Medeiros",co:"Portugal",isM:true,r:{brjgt25:{p:26,t:265,tp:52,rd:[90,85,90]},eowagr25:{p:7,t:238,tp:22,rd:[85,77,76]},venice25:{p:28,t:237,tp:21,rd:[78,76,83]},rome25:{p:10,t:166,tp:22,rd:[89,77]},doral25:{p:29,t:177,tp:35,rd:[98,79]},qdl25:{p:11,t:90,tp:18,rd:[90]},gg26:{p:4,t:169,tp:25,rd:[87,82]}},up:["wjgc26","marco26"]},
   {n:"Dmitrii Elchaninov",co:"Russian Federation",r:{brjgt25:{p:1,t:205,tp:-8,rd:[69,68,68]},eowagr25:{p:2,t:218,tp:2,rd:[77,70,71]},venice25:{p:1,t:198,tp:-18,rd:[62,68,68]},qdl25:{p:1,t:71,tp:-1,rd:[71]}},up:["wjgc26"]},
   {n:"Diego Gross Paneque",co:"Spain",r:{brjgt25:{p:16,t:249,tp:36,rd:[80,84,85]}},up:["wjgc26"]},
   {n:"Álex Carrón",co:"Spain",r:{brjgt25:{p:13,t:246,tp:33,rd:[82,84,80]}},up:["wjgc26"]},
@@ -208,11 +224,11 @@ const D=[
   {n:"Jean Imperiali De Francavilla",co:"France",r:{brjgt25:{p:"WD",t:null,tp:null,rd:[]},venice25:{p:23,t:231,tp:15,rd:[77,75,79]},rome25:{p:5,t:152,tp:8,rd:[77,75]}},up:[]},
   {n:"Sebastiano Giacobbi",co:"Italy",r:{venice25:{p:37,t:267,tp:51,rd:[95,87,85]},rome25:{p:13,t:173,tp:29,rd:[87,86]}},up:["marco26"]},
   {n:"Leo Egozi",co:"United States",r:{venice25:{p:36,t:252,tp:36,rd:[83,84,85]},rome25:{p:11,t:167,tp:23,rd:[82,85]}},up:[]},
-  {n:"Joe Short",co:"Portugal",r:{gg26:{p:2,t:79,tp:7,rd:[79]}},up:["wjgc26"]},
+  {n:"Joe Short",co:"Portugal",r:{gg26:{p:2,t:166,tp:22,rd:[79,87]}},up:["wjgc26"]},
   {n:"Madalena Miguel Araújo",co:"Portugal",r:{},up:["wjgc26"]},
   {n:"Elijah Gibbons",co:"England",r:{},up:["wjgc26"]},
-  {n:"Harley Botham",co:"Northern Ireland",r:{gg26:{p:10,t:98,tp:26,rd:[98]}},up:["wjgc26"]},
-  {n:"Benji Botham",co:"Northern Ireland",r:{gg26:{p:5,t:88,tp:16,rd:[88]}},up:["wjgc26"]},
+  {n:"Harley Botham",co:"Northern Ireland",r:{gg26:{p:11,t:191,tp:47,rd:[98,93]}},up:["wjgc26"]},
+  {n:"Benji Botham",co:"Northern Ireland",r:{gg26:{p:5,t:175,tp:31,rd:[88,87]}},up:["wjgc26"]},
   {n:"Roman Hicks",co:"England",r:{},up:["wjgc26"]},
   {n:"Hanlin Wang",co:"England",r:{},up:["wjgc26"]},
   {n:"Mario Valiente Novella",co:"Spain",r:{},up:["wjgc26"]},
@@ -297,14 +313,14 @@ const D=[
   {n:"Marcos Ledesma",co:"Spain",r:{qdl25:{p:8,t:78,tp:6,rd:[78]}},up:[]},
   {n:"Francisco Carvalho",co:"Portugal",r:{qdl25:{p:9,t:80,tp:8,rd:[80]}},up:[]},
   {n:"Sabrina Ribeiro Crisóstomo",co:"Portugal",r:{qdl25:{p:10,t:88,tp:16,rd:[88]}},up:[]},
-  {n:"George Campbell",co:"Ireland",r:{qdl25:{p:12,t:99,tp:27,rd:[99]},gg26:{p:8,t:94,tp:22,rd:[94]}},up:["wjgc26"]},
-  {n:"Ricardo Castro Ferreira",co:"Portugal",r:{gg26:{p:1,t:77,tp:5,rd:[77]}},up:[]},
-  {n:"Guo Ziyang",co:"China",r:{gg26:{p:3,t:85,tp:13,rd:[85]}},up:[]},
-  {n:"Marek Pejas",co:"Portugal",r:{gg26:{p:6,t:92,tp:20,rd:[92]}},up:[]},
-  {n:"Miguel Santos Pereira",co:"Portugal",r:{gg26:{p:7,t:93,tp:21,rd:[93]}},up:[]},
-  {n:"Harry Seabrook",co:"Portugal",r:{gg26:{p:9,t:98,tp:26,rd:[98]}},up:[]},
-  {n:"Gabriel Costa",co:"Portugal",r:{gg26:{p:11,t:99,tp:27,rd:[99]}},up:[]},
-  {n:"Yeonjin Seo",co:"South Korea",r:{gg26:{p:12,t:107,tp:35,rd:[107]}},up:[]},
+  {n:"George Campbell",co:"Ireland",r:{qdl25:{p:12,t:99,tp:27,rd:[99]},gg26:{p:8,t:186,tp:42,rd:[94,92]}},up:["wjgc26"]},
+  {n:"Ricardo Castro Ferreira",co:"Portugal",r:{gg26:{p:1,t:154,tp:10,rd:[77,77]}},up:[]},
+  {n:"Guo Ziyang",co:"China",r:{gg26:{p:3,t:167,tp:23,rd:[85,82]}},up:[]},
+  {n:"Marek Pejas",co:"Portugal",r:{gg26:{p:9,t:189,tp:45,rd:[92,97]}},up:[]},
+  {n:"Miguel Santos Pereira",co:"Portugal",r:{gg26:{p:6,t:181,tp:37,rd:[93,88]}},up:[]},
+  {n:"Harry Seabrook",co:"Portugal",r:{gg26:{p:7,t:185,tp:41,rd:[98,87]}},up:[]},
+  {n:"Gabriel Costa",co:"Portugal",r:{gg26:{p:10,t:190,tp:46,rd:[99,91]}},up:[]},
+  {n:"Yeonjin Seo",co:"South Korea",r:{gg26:{p:12,t:203,tp:59,rd:[107,96]}},up:[]},
   {n:"Luke Arnao",co:"United States",r:{},up:["marco26"]},
   {n:"Zachary Blayney",co:"Great Britain",r:{},up:["marco26"]},
   {n:"Malthe Bryld Nissen",co:"Denmark",r:{},up:["marco26"]},
@@ -317,16 +333,7 @@ const D=[
 
 const manuel = D.find(x => x.isM);
 
-// Build column definitions: for each tournament, R1..Rn + Total
-const COLS = [];
-for (let ti = 0; ti < T.length; ti++) {
-  const t = T[ti];
-  for (let i = 0; i < t.rounds; i++) {
-    COLS.push({ tid: t.id, type: "round", ri: i, label: "R" + (i + 1), tIdx: ti, isFirst: i === 0 });
-  }
-  COLS.push({ tid: t.id, type: "total", ri: -1, label: "Tot", tIdx: ti, isFirst: false, isTot: true });
-  COLS.push({ tid: t.id, type: "pos", ri: -1, label: "Pos", tIdx: ti, isFirst: false });
-}
+
 
 // Compute field averages per round and per total
 const AVG_R = {};
@@ -370,20 +377,26 @@ const TIER_L = { elite: "Elite", strong: "Forte", solid: "Sólido", developing: 
 
 function getTrend(p) {
   const order = ["brjgt25", "eowagr25", "venice25", "rome25", "doral25", "qdl25", "gg26"];
-  const s = [];
-  for (const tid of order) {
-    const res = p.r[tid];
+  const pts: { x: number; y: number }[] = [];
+  for (let xi = 0; xi < order.length; xi++) {
+    const res = p.r[order[xi]];
     if (res && res.tp != null) {
-      const t = T.find(x => x.id === tid);
-      if (t) s.push(res.tp / t.rounds);
+      const t = T.find(x => x.id === order[xi]);
+      if (t) pts.push({ x: xi, y: res.tp / t.rounds });
     }
   }
-  if (s.length < 2) return null;
-  const d = s[s.length - 1] - s[0];
-  if (d <= -3) return "up2";
-  if (d < -0.5) return "up";
-  if (d > 3) return "down2";
-  if (d > 0.5) return "down";
+  if (pts.length < 2) return null;
+  // Linear regression slope
+  const n = pts.length;
+  const sx = pts.reduce((a, p) => a + p.x, 0);
+  const sy = pts.reduce((a, p) => a + p.y, 0);
+  const sxy = pts.reduce((a, p) => a + p.x * p.y, 0);
+  const sxx = pts.reduce((a, p) => a + p.x * p.x, 0);
+  const slope = (n * sxy - sx * sy) / (n * sxx - sx * sx);
+  if (slope <= -1.5) return "up2";
+  if (slope < -0.3) return "up";
+  if (slope >= 1.5) return "down2";
+  if (slope > 0.3) return "down";
   return "stable";
 }
 
@@ -391,42 +404,50 @@ const TR_I = { up2: { i: "▲▲", c: SC.good }, up: { i: "▲", c: "var(--score
 
 // Average z-score across all rounds played
 function getAvgZ(p) {
-  const zs = [];
+  // Weighted z-score per tournament, with par-bonus:
+  // - Prestige weight: rounds, field size, internationality
+  // - Par bonus: scoring well under par boosts that tournament's weight
+  let totalW = 0, sumWZ = 0, effRd = 0;
   for (const t of T) {
     const res = p.r[t.id];
     if (!res || !res.rd) continue;
+    const zs: number[] = [];
     for (let i = 0; i < t.rounds; i++) {
       const sc = res.rd[i];
       const stats = AVG_R[t.id] && AVG_R[t.id][i];
-      if (sc != null && stats && stats.s > 0) {
-        zs.push((sc - stats.m) / stats.s);
-      }
+      if (sc != null && stats && stats.s > 0) zs.push((sc - stats.m) / stats.s);
     }
+    if (zs.length === 0) continue;
+    const tournZ = zs.reduce((a, b) => a + b, 0) / zs.length;
+    const tpPerRd = res.tp != null ? res.tp / t.rounds : 0;
+    const parBonus = 1 + Math.max(0, -tpPerRd) * 0.15;
+    const w = (T_WEIGHTS[t.id] || 0.5) * parBonus;
+    sumWZ += tournZ * w;
+    totalW += w;
+    // Effective rounds: weighted by tournament prestige
+    // 2 rounds at GG(0.43) = 0.86 eff, 3 rounds at WJGC(1.0) = 3.0 eff
+    effRd += zs.length * (T_WEIGHTS[t.id] || 0.5);
   }
-  return zs.length > 0 ? zs.reduce((a, b) => a + b, 0) / zs.length : null;
-}
-
-// Get z-score for a specific round
-function getRoundZ(p, tid, ri) {
-  const res = p.r[tid];
-  if (!res || !res.rd || res.rd[ri] == null) return null;
-  const stats = AVG_R[tid] && AVG_R[tid][ri];
-  if (!stats || stats.s === 0) return null;
-  return (res.rd[ri] - stats.m) / stats.s;
+  if (totalW === 0) return null;
+  const weightedAvg = sumWZ / totalW;
+  // Bayesian shrinkage toward PRIOR (+1.5 = assume below average until proven)
+  // With few effective rounds → pulled heavily toward prior (mediocre)
+  // With many effective rounds → trust the data
+  const prior = 1.5;
+  const k = 12;
+  const alpha = effRd / (effRd + k);
+  return weightedAvg * alpha + prior * (1 - alpha);
 }
 
 const allCountries = [...new Set(D.map(p => p.co))].sort();
 
-// Group columns by tournament for header
-const tourGroups = T.map(t => ({ id: t.id, short: t.short, date: t.date, span: t.rounds + 2, url: t.url }));
-
-function RivaisDashboard() {
+function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) => void }) {
   const [fTour, setFTour] = useState("all");
   const [fUp, setFUp] = useState("all");
   const [fCo, setFCo] = useState("all");
   const [q, setQ] = useState("");
-  const [sort, setSort] = useState("name");
-  const [dir, setDir] = useState("asc");
+  const [sort, setSort] = useState("zrank");
+  const [dir, setDir] = useState<"asc"|"desc">("asc");
   const [dOnly, setDOnly] = useState(false);
   const [vsOn, setVsOn] = useState(true);
 
@@ -438,110 +459,41 @@ function RivaisDashboard() {
     if (fCo !== "all") pl = pl.filter(x => x.co === fCo);
     if (q) { const ql = q.toLowerCase(); pl = pl.filter(x => x.n.toLowerCase().includes(ql)); }
     pl.sort((a, b) => {
-      if (sort === "name") return dir === "asc" ? a.n.localeCompare(b.n) : b.n.localeCompare(a.n);
-      if (sort === "vsManuel") {
-        const avg = (x) => {
-          const ds = [];
-          Object.keys(x.r).forEach(tid => {
-            const m = manuel.r[tid];
-            if (m && x.r[tid].tp != null && m.tp != null) ds.push(x.r[tid].tp - m.tp);
-          });
-          return ds.length ? ds.reduce((a, b) => a + b, 0) / ds.length : 9999;
-        };
-        return dir === "asc" ? avg(a) - avg(b) : avg(b) - avg(a);
-      }
-      if (sort.startsWith("t:")) {
+      let cmp = 0;
+      if (sort === "name") cmp = a.n.localeCompare(b.n);
+      else if (sort === "zrank") { cmp = (getAvgZ(a) ?? 99) - (getAvgZ(b) ?? 99); }
+      else if (sort === "vsManuel") { cmp = (getVsAvg(a) ?? 999) - (getVsAvg(b) ?? 999); }
+      else if (sort.startsWith("t:")) {
         const tid = sort.slice(2);
-        const posOf = (x) => { const r = x.r[tid]; if (!r || r.tp == null) return 9999; return typeof r.p === "number" ? r.p : 9998; };
-        return dir === "asc" ? posOf(a) - posOf(b) : posOf(b) - posOf(a);
+        const posOf = (x: any) => { const r = x.r[tid]; if (!r || r.tp == null) return 9999; return typeof r.p === "number" ? r.p : 9998; };
+        cmp = posOf(a) - posOf(b);
       }
-      if (sort.startsWith("up:")) {
+      else if (sort.startsWith("up:")) {
         const uid = sort.slice(3);
-        const v = (x) => x.up.includes(uid) ? 0 : 1;
-        const d = v(a) - v(b);
-        if (d !== 0) return dir === "asc" ? d : -d;
-        return a.n.localeCompare(b.n);
+        cmp = (a.up.includes(uid) ? 0 : 1) - (b.up.includes(uid) ? 0 : 1);
+        if (cmp === 0) cmp = a.n.localeCompare(b.n);
       }
-      if (sort === "zrank") {
-        const za = getAvgZ(a) ?? 9999;
-        const zb = getAvgZ(b) ?? 9999;
-        return dir === "asc" ? za - zb : zb - za;
-      }
-      return 0;
+      return dir === "desc" ? -cmp : cmp;
     });
     return pl;
   }, [fTour, fUp, fCo, q, sort, dir, dOnly]);
 
-  const doSort = (c) => { if (sort === c) setDir(d => d === "asc" ? "desc" : "asc"); else { setSort(c); setDir("asc"); } };
+  const doSort = (c: string) => { if (sort === c) setDir(d => d === "asc" ? "desc" : "asc"); else { setSort(c); setDir("asc"); } };
+  const sortIcon = (c: string) => sort === c ? (dir === "asc" ? " ↑" : " ↓") : "";
 
-  function renderCell(player, col) {
-    const res = player.r[col.tid];
-    const isM = player.isM;
-    // Player didn't play this tournament at all
-    if (!res || (res.tp == null && res.p !== "WD")) {
-      return { val: "", bg: "transparent", color: "transparent", empty: true };
-    }
+  // Compute global ordinal rankings from z-score (across ALL players, not just filtered)
+  const rankMap = useMemo(() => {
+    const scored = D.map(p => ({ n: p.n, z: getAvgZ(p) })).filter(x => x.z != null) as { n: string; z: number }[];
+    scored.sort((a, b) => a.z - b.z); // lower z = better
+    const map: Record<string, number> = {};
+    scored.forEach((s, i) => { map[s.n] = i + 1; });
+    return map;
+  }, []);
+  const totalRanked = Object.keys(rankMap).length;
 
-    if (col.type === "round") {
-      const score = res.rd && res.rd[col.ri] != null ? res.rd[col.ri] : null;
-      if (score == null) return { val: "", bg: "transparent", color: "transparent", empty: true };
-      const stats = AVG_R[col.tid] && AVG_R[col.tid][col.ri];
-      const ti = zTier(score, stats);
-      const st = ti ? TIER[ti] : {};
-      const z = stats && stats.s > 0 ? (score - stats.m) / stats.s : null;
-      let vsM = null;
-      if (!isM && manuel.r[col.tid] && manuel.r[col.tid].rd && manuel.r[col.tid].rd[col.ri] != null) {
-        vsM = score - manuel.r[col.tid].rd[col.ri];
-      }
-      return {
-        val: score,
-        bg: st.bg || "transparent",
-        color: st.c || "var(--text-3)",
-        vsM, z,
-      };
-    }
-
-    if (col.type === "total") {
-      if (res.p === "WD") return { val: "WD", bg: "transparent", color: "var(--text-muted)", sub: null };
-      if (res.tp == null) return { val: "", bg: "transparent", color: "transparent", empty: true };
-      const tObj = T.find(x => x.id === col.tid);
-      const playerAvg = res.t / tObj.rounds;
-      const roundAvgs = AVG_R[col.tid];
-      let fieldAvg = null, fieldStd = null;
-      if (roundAvgs && roundAvgs.length > 0) {
-        const ms = roundAvgs.filter(x => x).map(x => x.m);
-        const ss = roundAvgs.filter(x => x).map(x => x.s);
-        if (ms.length > 0) {
-          fieldAvg = ms.reduce((a, b) => a + b, 0) / ms.length;
-          fieldStd = ss.reduce((a, b) => a + b, 0) / ss.length;
-        }
-      }
-      const ti = fieldAvg != null ? zTier(playerAvg, { m: fieldAvg, s: fieldStd }) : null;
-      const st = ti ? TIER[ti] : {};
-      const totalStats = AVG_T[col.tid];
-      const z = totalStats && totalStats.s > 0 ? (res.t - totalStats.m) / totalStats.s : null;
-      let vsM = null;
-      if (!isM && manuel.r[col.tid] && manuel.r[col.tid].tp != null) {
-        vsM = res.tp - manuel.r[col.tid].tp;
-      }
-      return {
-        val: (res.tp > 0 ? "+" : "") + res.tp,
-        bg: st.bg || "transparent",
-        color: st.c || "var(--text-3)",
-        vsM, z,
-      };
-    }
-    if (col.type === "pos") {
-      if (res.p === "WD") return { val: "WD", bg: "transparent", color: "var(--text-muted)", isPos: true };
-      if (res.tp == null) return { val: "", bg: "transparent", color: "transparent", empty: true };
-      return { val: res.p, bg: "transparent", color: "var(--text)", isPos: true };
-    }
-    return { val: "", bg: "transparent", color: "transparent", empty: true };
-  }
-
-  function getVsAvg(p) {
+  function getVsAvg(p: any) {
     if (p.isM) return null;
-    const ds = [];
+    const ds: number[] = [];
     Object.keys(p.r).forEach(tid => {
       const m = manuel.r[tid];
       if (m && p.r[tid].tp != null && m.tp != null) ds.push(p.r[tid].tp - m.tp);
@@ -549,9 +501,13 @@ function RivaisDashboard() {
     return ds.length ? Math.round(ds.reduce((a, b) => a + b, 0) / ds.length) : null;
   }
 
+  // Count tournaments & rounds played
+  const nPlayed = (p: any) => T.filter(t => p.r[t.id] && p.r[t.id].tp != null).length;
+  const nRounds = (p: any) => T.reduce((acc, t) => { const res = p.r[t.id]; return acc + (res && res.rd ? res.rd.filter((x: any) => x != null).length : 0); }, 0);
+
   return (
     <div className="tourn-section">
-      {/* Manuel tournament results — flat KPI grid */}
+      {/* Manuel KPIs */}
       <div className="tourn-kpis" style={{ gridTemplateColumns: `repeat(${T.length}, 1fr)` }}>
         {T.map(t => {
           const res = manuel.r[t.id];
@@ -575,7 +531,7 @@ function RivaisDashboard() {
 
       {/* Filters */}
       <div className="detail-toolbar">
-        <input type="text" placeholder="Pesquisar..." value={q} onChange={e => setQ(e.target.value)} className="input" />
+        <input type="text" placeholder="Pesquisar..." value={q} onChange={e => setQ(e.target.value)} className="input" style={{ maxWidth: 140 }} />
         <select value={fTour} onChange={e => setFTour(e.target.value)} className="select">
           <option value="all">Todos Torneios</option>
           {T.map(t => <option key={t.id} value={t.id}>{t.short}</option>)}
@@ -588,204 +544,154 @@ function RivaisDashboard() {
           <option value="all">🌍 País</option>
           {allCountries.map(c => <option key={c} value={c}>{FL[c] || ""} {c}</option>)}
         </select>
-        <label className="filter-checkbox">
-          <input type="checkbox" checked={vsOn} onChange={e => setVsOn(e.target.checked)} /> vs Manuel
-        </label>
-        <label className="filter-checkbox">
-          <input type="checkbox" checked={dOnly} onChange={e => setDOnly(e.target.checked)} /> Só com dados
-        </label>
+        <label className="filter-checkbox"><input type="checkbox" checked={dOnly} onChange={e => setDOnly(e.target.checked)} /> Só com dados</label>
+        <label className="filter-checkbox"><input type="checkbox" checked={vsOn} onChange={e => setVsOn(e.target.checked)} /> vs Manuel</label>
         <div className="chip">{list.length} jogadores</div>
       </div>
 
       {/* Legend */}
       <div className="legend-row">
-        <span className="fw-700">Nível (vs média campo):</span>
         {Object.keys(TIER).map(k => (
           <span key={k} className="legend-item">
             <span className="legend-dot" style={{ background: TIER[k].bg }} />
-            <span style={{ color: TIER[k].c }}>{TIER_L[k]}</span>
+            <span style={{ color: TIER[k].c, fontSize: 10 }}>{TIER_L[k]}</span>
           </span>
         ))}
- <span className="c-border" >|</span>
-        <span className="jog-pill jog-pill-stats fs-9">Manuel (referência)</span>
       </div>
 
       {/* Table */}
       <div className="section-card">
         <div className="scroll-x">
           <table className="tourn-form-table">
-              <thead>
-                {/* Tournament group header */}
-                <tr className="rivais-group-header">
-                  <th rowSpan={2} className="rivais-th-name pointer" onClick={() => doSort("name")}>
-                    Jogador {sort === "name" ? (dir === "asc" ? "↑" : "↓") : ""}
-                  </th>
-                  {tourGroups.map((g, gi) => (
- <th key={g.id} colSpan={g.span} className={`ta-center pointer fw-700 fs-10 rivais-col-first${gi % 2 === 1 ? " rivais-alt-bg" : ""}`} onClick={() => doSort("t:"+g.id)}>
- {g.url ? <a href={g.url} target="_blank" rel="noopener noreferrer" className="rivais-link" onClick={e => e.stopPropagation()}>{g.short}</a> : g.short} <span className="op-6 fs-9 fw-400 c-inv">({g.date})</span>
-                      {sort === "t:"+g.id && <span className="ml-3 fs-9">{dir === "asc" ? "↑" : "↓"}</span>}
-                    </th>
-                  ))}
-                  <th rowSpan={2} className="rivais-th-wide rivais-border-mark">Trend</th>
-                  <th rowSpan={2} className="rivais-th-avg pointer" onClick={() => doSort("zrank")} title="Ranking por z-score médio (desvios-padrão da média do campo)">
-                    Rank {sort === "zrank" ? (dir === "asc" ? "↑" : "↓") : ""}
-                  </th>
-                  <th colSpan={2} className="rivais-th rivais-border-mark">Próximos</th>
-                  {vsOn && <th rowSpan={2} className="rivais-th-wide pointer" onClick={() => doSort("vsManuel")}>
-                    vs M {sort === "vsManuel" ? (dir === "asc" ? "↑" : "↓") : ""}
-                  </th>}
-                </tr>
-                {/* Round sub-headers */}
-                <tr className="rivais-sub-header">
-                  {COLS.map((col, i) => (
-                    <th key={i} className={`${col.isFirst ? "rivais-col-first" : col.isTot ? "rivais-col-total" : ""}${col.tIdx % 2 === 1 ? " rivais-alt-bg" : ""}${col.type === "total" || col.type === "pos" ? " fw-700" : " fw-500"}`}
-                      style={{ minWidth: col.type === "total" ? 38 : col.type === "pos" ? 28 : 30 }}>
-                      {col.label}
-                    </th>
-                  ))}
-                  {UP.map(u => (
- <th key={u.id} className={`ta-center pointer fw-700 fs-9${u.id === "wjgc26" ? " rivais-col-first" : ""}`} style={{ minWidth: u.id === "marco26" ? 48 : 38 }} onClick={() => doSort("up:"+u.id)}>
-                      {u.url ? <a href={u.url} target="_blank" rel="noopener noreferrer" className="rivais-link" onClick={e => e.stopPropagation()}>{u.short}</a> : u.short}
-                      {sort === "up:"+u.id ? (dir === "asc" ? " ↑" : " ↓") : ""}
-                    </th>
-                  ))}
-                </tr>
-                {/* Field averages row */}
-                <tr className="rivais-avg-row">
-                  <th className="rivais-td-name">
-                    Média campo
-                  </th>
-                  {COLS.map((col, i) => {
-                    let avg = null;
-                    if (col.type === "round") {
-                      const ra = AVG_R[col.tid] && AVG_R[col.tid][col.ri];
-                      if (ra) avg = ra.m;
-                    } else if (col.type === "total") {
-                      const ta = AVG_T[col.tid];
-                      if (ta) avg = ta.m;
-                    }
-                    return (
-                      <th key={i} className={`ta-center fs-10 fw-600 c-text-3${col.isFirst ? " rivais-col-first" : col.isTot ? " rivais-col-total" : ""}${col.type === "total" || col.tIdx % 2 === 1 ? " rivais-alt-bg" : ""}`}>
-                        {avg != null ? avg.toFixed(0) : ""}
-                      </th>
-                    );
-                  })}
-                  <th className="bg-page rivais-border-mark"></th>
-                  <th className="bg-page bl-heavy"></th>
-                  <th className="bg-page rivais-border-mark"></th>
-                  <th className="bg-page"></th>
-                  {vsOn && <th className="bg-page"></th>}
-                </tr>
-                {/* SD row */}
-                <tr className="bg-hover rivais-sep-bottom">
-                  <th className="rivais-td-avg">
-                    σ (desvio)
-                  </th>
-                  {COLS.map((col, i) => {
-                    let sd = null;
-                    if (col.type === "round") {
-                      const ra = AVG_R[col.tid] && AVG_R[col.tid][col.ri];
-                      if (ra) sd = ra.s;
-                    } else if (col.type === "total") {
-                      const ta = AVG_T[col.tid];
-                      if (ta) sd = ta.s;
-                    }
-                    return (
-                      <th key={i} className={`ta-center fs-10 fw-500 c-muted${col.isFirst ? " rivais-col-first" : col.isTot ? " rivais-col-total" : ""}${col.type === "total" || col.tIdx % 2 === 1 ? " rivais-alt-bg" : ""}`}
-                        style={{ fontStyle: "italic" }}>
-                        {sd != null ? "±" + sd.toFixed(1) : ""}
-                      </th>
-                    );
-                  })}
-                  <th className="bg-hover rivais-border-mark"></th>
-                  <th className="bg-hover bl-heavy"></th>
-                  <th className="bg-hover rivais-border-mark"></th>
-                  <th className="bg-hover"></th>
-                  {vsOn && <th className="bg-hover"></th>}
-                </tr>
-              </thead>
-              <tbody>
-                {list.map(p => {
-                  const isM = p.isM;
-                  const tr = getTrend(p);
-                  const flag = FL[p.co] || "🏳️";
-                  const vsAvg = vsOn ? getVsAvg(p) : null;
-                  const zAvg = getAvgZ(p);
-
+            <thead>
+              <tr className="rivais-group-header">
+                <th className="rivais-th-name pointer" onClick={() => doSort("name")}>Jogador{sortIcon("name")}</th>
+                <th className="rivais-th pointer ta-center" onClick={() => doSort("zrank")} title="Torneios jogados">#T</th>
+                {T.map(t => {
+                  const w = T_WEIGHTS[t.id];
+                  const stars = w >= 0.9 ? "★★★" : w >= 0.6 ? "★★" : w >= 0.4 ? "★" : "½";
                   return (
-                    <tr key={p.n} className={`bg-card${isM ? " rivais-row-ref" : ""}`}>
-                      <td className="rivais-player-name bg-card">
-                        <span className="rivais-flag" title={p.co}>{flag}</span>
-                        <span className={`fs-11 c-text${isM ? " fw-700" : " fw-600"}`}>{p.n}</span>
-                        {isM && <span className="jog-pill jog-pill-stats fs-9 ml-4">REF</span>}
-                      </td>
-                      {COLS.map((col, i) => {
-                        const cell = renderCell(p, col);
-                        if (cell.empty) {
-                          return <td key={i} className={`bg-card${col.isFirst ? " rivais-col-first" : ""}`}></td>;
-                        }
-                        const isTotal = col.type === "total";
-                        const isPos = col.type === "pos";
-                        const isOdd = col.tIdx % 2 === 1;
-                        const groupTint = isOdd ? "var(--bg-muted)" : "transparent";
-                        let bg = cell.bg;
-                        if (isTotal) {
-                          bg = cell.bg !== "transparent" ? cell.bg : (isOdd ? "var(--border-light)" : "var(--bg-hover)");
-                        } else if (isPos) {
-                          bg = isOdd ? "var(--bg-detail)" : "var(--bg)";
-                        } else if (bg === "transparent") {
-                          bg = groupTint;
-                        }
-                        if (isPos) {
-                          return (
-                            <td key={i} className="ta-center fs-10 fw-700" style={{ color: cell.color, background: bg }}>
-                              {cell.val}
-                            </td>
-                          );
-                        }
-                        return (
-                          <td key={i} className={`ta-center${isTotal ? " fw-700 fs-11" : " fw-600 fs-11"}${col.isFirst ? " rivais-col-first" : col.isTot ? " rivais-col-total" : ""}`}
-                            style={{ background: bg, color: cell.color }}>
-                            {cell.val}
-                            {cell.z != null && <div className="fw-600 fs-10 mt-1" style={{ color: sc3m(cell.z, 0.4, 0.4), opacity: 0.75 }}>{cell.z > 0 ? "+" : ""}{cell.z.toFixed(1)}σ</div>}
-                            {vsOn && cell.vsM != null && <div className="fw-600 fs-10 mt-1" style={{ color: sc3m(cell.vsM, 0, 0) }}>{cell.vsM > 0 ? "+" : ""}{cell.vsM}</div>}
-                          </td>
-                        );
-                      })}
-                      <td className="rivais-td rivais-border-mark">
-                        {tr ? <span className="fw-700 fs-12" style={{ color: TR_I[tr].c }}>{TR_I[tr].i}</span> : <span className="c-border">—</span>}
-                      </td>
-                      <td className="rivais-td-sep">
-                        {zAvg != null ? (
-                          <span className="fs-10 fw-700" style={{ color: sc3m(zAvg, 0.4, 0.4) }}>
-                            {zAvg > 0 ? "+" : ""}{zAvg.toFixed(2)}
-                          </span>
-                        ) : <span className="fs-9 c-border">—</span>}
-                      </td>
-                      <td className="rivais-td rivais-border-mark">
-                        {p.up.includes("wjgc26") ? <span>✓</span> : <span className="c-border">—</span>}
-                      </td>
-                      <td className="rivais-td">
-                        {p.up.includes("marco26") ? <span className="c-text-2">✓</span> : <span className="c-border">—</span>}
-                      </td>
-                      {vsOn && (
-                        <td className="rivais-td">
-                          {isM ? <span className="fs-9 c-border">—</span> :
-                          vsAvg != null ? <span className="fs-11 fw-700" style={{ color: sc3m(vsAvg, 0, 0) }}>{vsAvg > 0 ? "+" : ""}{vsAvg}</span> :
-                          <span className="fs-9 c-border">—</span>}
-                        </td>
-                      )}
-                    </tr>
+                  <th key={t.id} className="rivais-th pointer ta-center" style={{ minWidth: 56 }} onClick={() => doSort("t:" + t.id)}>
+                    {t.url ? <a href={t.url} target="_blank" rel="noopener noreferrer" className="rivais-link" onClick={e => e.stopPropagation()}>{t.short}</a> : t.short}
+                    {sortIcon("t:" + t.id)}
+                    <div className="fs-9 fw-500" style={{ opacity: 0.6, marginTop: 1 }}>{stars}</div>
+                  </th>
                   );
                 })}
-              </tbody>
-            </table>
-          </div>
-        </div>
+                <th className="rivais-th pointer ta-center" style={{ borderLeft: "3px solid var(--text-muted)", minWidth: 56 }} onClick={() => doSort("zrank")}>Rank{sortIcon("zrank")}</th>
+                <th className="rivais-th ta-center">▲</th>
+                {UP.map(u => (
+                  <th key={u.id} className="rivais-th pointer ta-center" onClick={() => doSort("up:" + u.id)}>
+                    {u.url ? <a href={u.url} target="_blank" rel="noopener noreferrer" className="rivais-link" onClick={e => e.stopPropagation()}>{u.short}</a> : u.short}
+                    {sortIcon("up:" + u.id)}
+                  </th>
+                ))}
+                {vsOn && <th className="rivais-th pointer ta-center" onClick={() => doSort("vsManuel")}>vs M{sortIcon("vsManuel")}</th>}
+              </tr>
+            </thead>
+            <tbody>
+              {list.map(p => {
+                const isM = p.isM;
+                const tr = getTrend(p);
+                const flag = FL[p.co] || "🏳️";
+                const vsAvg = vsOn ? getVsAvg(p) : null;
+                const played = nPlayed(p);
 
-        <div className="section-subtitle ta-c mt-10 pt-8 pb-8">
-          Nível calculado por desvio padrão (σ) em relação à média do campo · Rank = z-score médio (negativo = melhor que a média) · Clica nos cabeçalhos para ordenar
+                return (
+                  <tr key={p.n} className={isM ? "rivais-row-ref" : ""}>
+                    {/* Player name — clickable */}
+                    <td className="rivais-player-name">
+                      <span className="rivais-flag" title={p.co}>{flag}</span>
+                      {onSelectPlayer ? (
+                        <button className="btn-link fs-12 fw-600" style={{ color: isM ? "var(--text)" : "var(--text-2)" }} onClick={() => onSelectPlayer(p.n)}>
+                          {p.n}
+                        </button>
+                      ) : (
+                        <span className={`fs-12${isM ? " fw-700" : " fw-600"}`} style={{ color: isM ? "var(--text)" : "var(--text-2)" }}>{p.n}</span>
+                      )}
+                      {isM && <span className="jog-pill jog-pill-stats fs-9 ml-4">REF</span>}
+                    </td>
+
+                    {/* # tournaments played */}
+                    <td className="ta-center fs-12 fw-600 c-text-3">{played || ""}</td>
+
+                    {/* One cell per tournament: ±par colored + position */}
+                    {T.map(t => {
+                      const res = p.r[t.id];
+                      if (!res || (res.tp == null && res.p !== "WD")) return <td key={t.id} />;
+                      if (res.p === "WD") return <td key={t.id} className="ta-center fs-11 c-muted">WD</td>;
+
+                      // Tier color
+                      const playerAvg = res.t / t.rounds;
+                      const roundAvgs = AVG_R[t.id];
+                      let fieldAvg: number | null = null, fieldStd: number | null = null;
+                      if (roundAvgs && roundAvgs.length > 0) {
+                        const ms = roundAvgs.filter((x: any) => x).map((x: any) => x.m);
+                        const ss = roundAvgs.filter((x: any) => x).map((x: any) => x.s);
+                        if (ms.length > 0) { fieldAvg = ms.reduce((a: number, b: number) => a + b, 0) / ms.length; fieldStd = ss.reduce((a: number, b: number) => a + b, 0) / ss.length; }
+                      }
+                      const ti = fieldAvg != null ? zTier(playerAvg, { m: fieldAvg, s: fieldStd }) : null;
+                      const st = ti ? TIER[ti] : {};
+                      const tpStr = (res.tp > 0 ? "+" : "") + res.tp;
+
+                      // vs Manuel delta
+                      let vsM: number | null = null;
+                      if (vsOn && !isM && manuel.r[t.id] && manuel.r[t.id].tp != null) {
+                        vsM = res.tp - manuel.r[t.id].tp;
+                      }
+
+                      return (
+                        <td key={t.id} className="ta-center" style={{ background: st.bg || "transparent", padding: "5px 4px" }}>
+                          <div className="fw-700 fs-13" style={{ color: st.c || "var(--text-3)" }}>{tpStr}</div>
+                          <div className="fs-10 fw-600 c-text-3">#{res.p}</div>
+                          {vsM != null && <div className="fs-10 fw-600" style={{ color: sc3m(vsM, 0, 0) }}>{vsM > 0 ? "+" : ""}{vsM}</div>}
+                        </td>
+                      );
+                    })}
+
+                    {/* Rank */}
+                    <td className="ta-center" style={{ borderLeft: "3px solid var(--border-light)", padding: "4px 6px" }}>
+                      {rankMap[p.n] != null ? (
+                        <div title={`z-score: ${(getAvgZ(p) ?? 0).toFixed(2)} · ${nRounds(p)} rondas`}>
+                          <div className="fw-800 fs-13" style={{ color: rankMap[p.n] <= 10 ? "var(--color-success-dark)" : rankMap[p.n] <= 30 ? "var(--text)" : "var(--text-3)" }}>
+                            {rankMap[p.n]}º
+                          </div>
+                          <div className="fs-10 c-text-3">{nPlayed(p)}T · {nRounds(p)}R</div>
+                        </div>
+                      ) : <span className="fs-10 c-border">s/d</span>}
+                    </td>
+
+                    {/* Trend */}
+                    <td className="ta-center">
+                      {tr ? <span className="fw-700 fs-13" style={{ color: TR_I[tr].c }}>{TR_I[tr].i}</span> : <span className="c-border">—</span>}
+                    </td>
+
+                    {/* Upcoming tournaments */}
+                    {UP.map(u => (
+                      <td key={u.id} className="ta-center fs-12">
+                        {p.up.includes(u.id) ? <span className="fw-700" style={{ color: "var(--color-success-dark)" }}>✓</span> : <span className="c-border">—</span>}
+                      </td>
+                    ))}
+
+                    {/* vs Manuel average */}
+                    {vsOn && (
+                      <td className="ta-center">
+                        {isM ? <span className="fs-10 c-border">—</span> :
+                        vsAvg != null ? <span className="fs-12 fw-700" style={{ color: sc3m(vsAvg, 0, 0) }}>{vsAvg > 0 ? "+" : ""}{vsAvg}</span> :
+                        <span className="fs-10 c-border">—</span>}
+                      </td>
+                    )}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
+      </div>
+
+      <div className="section-subtitle ta-c mt-10">
+        Clica num jogador para ver detalhe · Rank ponderado por prestígio: ★★★ peso máximo, ½ peso mínimo · ({totalRanked} jogadores com dados)
+      </div>
     </div>
   );
 }
@@ -1803,7 +1709,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
       )}
 
       {/* ═══ TAB: RIVAIS ═══ */}
-      {!selectedPlayer && tab === "rivais" && <RivaisDashboard />}
+      {!selectedPlayer && tab === "rivais" && <RivaisDashboard onSelectPlayer={setSelectedPlayer} />}
 
       {/* ═══ TAB: ANÁLISE VP ═══ */}
       {!selectedPlayer && tab === "analise" && <>

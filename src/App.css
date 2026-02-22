@@ -334,6 +334,17 @@ html, body, #root {
  border-radius: var(--radius-xl);
 }
 
+.btn-link {
+ background: none;
+ border: none;
+ padding: 0;
+ cursor: pointer;
+ text-align: left;
+ text-decoration: none;
+ font-family: inherit;
+}
+.btn-link:hover { text-decoration: underline; }
+
 /* ─── Master-Detail + Sidebar ─── */
 
 .master-detail {
@@ -1627,8 +1638,8 @@ tr.cross-current { background: var(--bg-success); }
 .rivais-col-total { border-left: 2px solid var(--border-heavy) !important; }
 .rivais-alt-bg { background: var(--bg-hover); }
 .rivais-sub-header th { padding: 3px 2px; text-align: center; font-size: 10px; }
-.rivais-link { color: var(--overlay-white-85); text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 2px; }
-.rivais-link:hover { color: #fff; }
+.rivais-link { color: #fff; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 2px; font-weight: 700; }
+.rivais-link:hover { color: #fff; opacity: 0.85; }
 .rivais-sep-bottom { border-bottom: 2px solid var(--text-muted); }
 .rivais-row-ref { border-bottom: 2px solid var(--color-info-alt) !important; }
 .rivais-row-ref .rivais-player-name { border-right-color: var(--color-info-alt); }
@@ -1934,8 +1945,8 @@ tr.cross-current { background: var(--bg-success); }
 .rivais-avg-row { background: var(--bg); }
 .rivais-avg-row th { font-size: 10px; font-weight: 600; color: var(--text-2); }
 
-.rivais-player-name { padding: 5px 8px; font-size: 10px; font-weight: 600; text-align: left; min-width: 160px; white-space: nowrap; border-right: 1px solid var(--border); }
-.rivais-flag { font-size: 11px; margin-right: 3px; }
+.rivais-player-name { padding: 6px 8px; font-size: 12px; font-weight: 600; text-align: left; min-width: 170px; white-space: nowrap; border-right: 1px solid var(--border); }
+.rivais-flag { font-size: 13px; margin-right: 4px; }
 /* ─── BJGT Analysis Page ─── */
 /* bjgt-page: removed, replaced by tourn-layout */
 
@@ -1952,7 +1963,7 @@ tr.cross-current { background: var(--bg-success); }
  .diag-row { grid-template-columns: 1fr; }
  /* bjgt-page responsive: merged into tourn-layout */
  .filter-bar { gap: 4px; }
- .rivais-player-name { min-width: 120px; font-size: 10px; }
+ .rivais-player-name { min-width: 130px; font-size: 11px; }
 }
 
 /* ═══════════════════════════════════════════
@@ -2150,10 +2161,10 @@ tr.cross-current { background: var(--bg-success); }
 .lb-muted-bold { font-weight: 700; opacity: 0.5; }
 
 /* ─── Rivais Dashboard table cells ─── */
-.rivais-th { padding: 7px 3px; text-align: center; font-size: 10px; font-weight: 700; }
+.rivais-th { padding: 8px 5px; text-align: center; font-size: 11px; font-weight: 700; }
 .rivais-th-wide { padding: 7px 3px; text-align: center; font-size: 10px; font-weight: 700; width: 35px; }
 .rivais-th-avg { padding: 7px 3px; text-align: center; font-size: 10px; font-weight: 700; width: 42px; border-left: 2px solid var(--border-heavy); }
-.rivais-th-name { padding: 7px 8px; font-size: 10px; font-weight: 700; text-align: left; min-width: 170px; position: sticky; left: 0; background: var(--bg-topbar); z-index: 2; }
+.rivais-th-name { padding: 8px 8px; font-size: 11px; font-weight: 700; text-align: left; min-width: 170px; position: sticky; left: 0; background: var(--bg-topbar); z-index: 2; }
 .rivais-td-name { padding: 3px 8px; font-size: 10px; font-weight: 700; color: var(--text-2); text-align: left; position: sticky; left: 0; background: var(--bg); z-index: 2; border-right: 1px solid var(--border-heavy); white-space: nowrap; }
 .rivais-td-avg { padding: 2px 8px; font-size: 10px; font-weight: 600; color: var(--text-muted); text-align: left; position: sticky; left: 0; background: var(--bg-hover); z-index: 2; border-right: 1px solid var(--border-heavy); white-space: nowrap; font-style: italic; }
 .rivais-td { text-align: center; padding: 7px 3px; }
