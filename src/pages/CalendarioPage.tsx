@@ -752,7 +752,7 @@ function CalendarioContent() {
                               flex: 1, textAlign: "left", fontWeight: isExpanded ? 600 : enabledCals.has(cal.id) ? 500 : 400,
                               overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
                             }}>{cal.name}</span>
-                            <span className="mono" style={{ fontSize: 10,
+                            <span style={{ fontSize: 10, fontFamily: "'JetBrains Mono', monospace",
                               color: "var(--text-3)", flexShrink: 0 }}>{calEvts.length}</span>
                             <span style={{ fontSize: 10, color: "var(--text-3)", flexShrink: 0, transition: "transform 0.15s",
                               transform: isExpanded ? "rotate(180deg)" : "none" }}>▼</span>
@@ -778,7 +778,7 @@ function CalendarioContent() {
                                 }}
                                   onMouseEnter={e => (e.currentTarget.style.background = "var(--bg-hover)")}
                                   onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>
-                                  <span className="mono" style={{ fontSize: 10,
+                                  <span style={{ fontSize: 10, fontFamily: "'JetBrains Mono', monospace",
                                     color: cal.color, fontWeight: 600, minWidth: 30, flexShrink: 0 }}>{dd}</span>
                                   <span style={{ fontSize: 10, color: "var(--text-2)", flex: 1, textAlign: "left",
                                     overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{ev.title}</span>
@@ -805,24 +805,15 @@ function CalendarioContent() {
             {sidebarOpen ? "◀" : "▶"}
           </button>
           <h2 className="cal-month-title">Calendário 2026</h2>
-          <button onClick={goToday} style={{
-            border: "1px solid var(--accent)", background: "transparent", color: "var(--accent)",
-            padding: "4px 12px", borderRadius: "var(--radius)", cursor: "pointer",
-            fontSize: 12, fontWeight: 600, fontFamily: "inherit", transition: "all 0.15s",
-          }}
-            onMouseEnter={e => { e.currentTarget.style.background = "var(--accent)"; e.currentTarget.style.color = "#fff"; }}
-            onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "var(--accent)"; }}>
+          <button onClick={goToday} className="filter-pill"
+            style={{ opacity: 1 }}>
             Hoje
           </button>
-          <div className="cal-switcher">
+          <div className="escalao-pills" style={{ marginLeft: "auto" }}>
             {(["month", "list"] as ViewMode[]).map(v => (
-              <button key={v} onClick={() => setViewMode(v)} style={{
-                border: "none", padding: "5px 14px", cursor: "pointer", fontSize: 12, fontWeight: 600,
-                fontFamily: "inherit", borderRadius: "var(--radius)",
-                background: viewMode === v ? "var(--bg-card)" : "transparent",
-                color: viewMode === v ? "var(--accent)" : "var(--text-3)",
-                boxShadow: viewMode === v ? "var(--shadow-sm)" : "none", transition: "all 0.15s",
-              }}>{v === "month" ? "Mês" : "Lista"}</button>
+              <button key={v} onClick={() => setViewMode(v)}
+                className={`filter-pill${viewMode === v ? " active" : ""}`}
+              >{v === "month" ? "Mês" : "Lista"}</button>
             ))}
           </div>
           <span className="fs-11 c-text-3 mono">

@@ -983,18 +983,18 @@ function AgsSection({
               <td className="row-label c-muted fs-10 fw-400">±Par</td>
               {front.map((h, i) => (
                 <React.Fragment key={h.hole}>
-                  <td style={{ color: h.vsPar != null ? (h.vsPar < 0 ? SC.good : h.vsPar === 0 ? "var(--grey-500)" : h.vsPar <= 2 ? SC.warn : SC.danger) : "var(--grey-300)", fontWeight: h.vsPar != null ? 600 : 400 }}>
+                  <td style={{ color: h.vsPar != null ? (h.vsPar < 0 ? SC.good : h.vsPar === 0 ? "var(--text-3)" : h.vsPar <= 2 ? SC.warn : SC.danger) : "var(--border)", fontWeight: h.vsPar != null ? 600 : 400 }}>
                     {h.vsPar != null ? (h.vsPar === 0 ? "E" : h.vsPar > 0 ? `+${h.vsPar}` : h.vsPar) : ""}
                   </td>
                   {is18 && i === 8 && (
- <td className="col-out fw-600" style={{ color: grossOut != null ? (grossOut - sumPar(front) <= 0 ? SC.good : SC.warn) : "var(--grey-300)" }}>
+ <td className="col-out fw-600" style={{ color: grossOut != null ? (grossOut - sumPar(front) <= 0 ? SC.good : SC.warn) : "var(--border)" }}>
                       {fmtVsPar(grossOut, sumPar(front))}
                     </td>
                   )}
                 </React.Fragment>
               ))}
               {is18 && back.map((h) => (
-                <td key={h.hole} style={{ color: h.vsPar != null ? (h.vsPar < 0 ? SC.good : h.vsPar === 0 ? "var(--grey-500)" : h.vsPar <= 2 ? SC.warn : SC.danger) : "var(--grey-300)", fontWeight: h.vsPar != null ? 600 : 400 }}>
+                <td key={h.hole} style={{ color: h.vsPar != null ? (h.vsPar < 0 ? SC.good : h.vsPar === 0 ? "var(--text-3)" : h.vsPar <= 2 ? SC.warn : SC.danger) : "var(--border)", fontWeight: h.vsPar != null ? 600 : 400 }}>
                   {h.vsPar != null ? (h.vsPar === 0 ? "E" : h.vsPar > 0 ? `+${h.vsPar}` : h.vsPar) : ""}
                 </td>
               ))}
@@ -1012,14 +1012,14 @@ function AgsSection({
                   <td className="row-label c-blue-2563-10">Panc.</td>
                   {front.map((h, i) => (
                     <React.Fragment key={h.hole}>
-                      <td style={{ color: h.strokes > 0 ? "var(--chart-2)" : "var(--grey-300)", fontWeight: h.strokes > 0 ? 700 : 400 }}>
+                      <td style={{ color: h.strokes > 0 ? "var(--chart-2)" : "var(--border)", fontWeight: h.strokes > 0 ? 700 : 400 }}>
                         {h.strokes > 0 ? h.strokes : "·"}
                       </td>
                       {is18 && i === 8 && <td className="col-out" />}
                     </React.Fragment>
                   ))}
                   {is18 && back.map((h) => (
-                    <td key={h.hole} style={{ color: h.strokes > 0 ? "var(--chart-2)" : "var(--grey-300)", fontWeight: h.strokes > 0 ? 700 : 400 }}>
+                    <td key={h.hole} style={{ color: h.strokes > 0 ? "var(--chart-2)" : "var(--border)", fontWeight: h.strokes > 0 ? 700 : 400 }}>
                       {h.strokes > 0 ? h.strokes : "·"}
                     </td>
                   ))}
@@ -1050,7 +1050,7 @@ function AgsSection({
                     const capped = h.actual !== null && h.actual > h.maxScore;
                     return (
                       <React.Fragment key={h.hole}>
-                        <td style={{ color: capped ? SC.danger : h.adjusted != null ? SC.good : "var(--grey-300)", fontWeight: h.adjusted != null ? 700 : 400 }}>
+                        <td style={{ color: capped ? SC.danger : h.adjusted != null ? SC.good : "var(--border)", fontWeight: h.adjusted != null ? 700 : 400 }}>
                           {h.adjusted != null ? h.adjusted : ""}
                           {capped && <span className="fs-8">✂</span>}
                         </td>
@@ -1063,7 +1063,7 @@ function AgsSection({
                   {is18 && back.map((h) => {
                     const capped = h.actual !== null && h.actual > h.maxScore;
                     return (
-                      <td key={h.hole} style={{ color: capped ? SC.danger : h.adjusted != null ? SC.good : "var(--grey-300)", fontWeight: h.adjusted != null ? 700 : 400 }}>
+                      <td key={h.hole} style={{ color: capped ? SC.danger : h.adjusted != null ? SC.good : "var(--border)", fontWeight: h.adjusted != null ? 700 : 400 }}>
                         {h.adjusted != null ? h.adjusted : ""}
                         {capped && <span className="fs-8">✂</span>}
                       </td>
