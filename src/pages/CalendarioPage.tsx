@@ -452,7 +452,7 @@ function EventPopup({ event, onClose }: { event: CalEvent; onClose: () => void }
         boxShadow: "var(--shadow-lg)", width: 380, overflow: "hidden", animation: "calPopIn 0.2s ease" }}>
         <div style={{ background: hl ? hl.bg : color,
           padding: "14px 18px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <span style={{ color: hl ? hl.text : "#fff", fontWeight: 600, fontSize: 12, textTransform: "uppercase", letterSpacing: "0.04em" }}>
+ <span className="uppercase fw-600 fs-12" style={{ color: hl ? hl.text : "#fff", letterSpacing: "0.04em" }}>
             {calName}
           </span>
           <button onClick={onClose} style={{ background: hl ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.2)", border: "none",
@@ -510,10 +510,10 @@ function ListView({ events, onSelect }: { events: CalEvent[]; onSelect: (e: CalE
                   onMouseEnter={ev => (ev.currentTarget.style.background = hl ? `${hl.bg}30` : "var(--bg-hover)")}
                   onMouseLeave={ev => (ev.currentTarget.style.background = hl ? `${hl.bg}18` : "transparent")}>
                   <div className="col-w42 ta-c flex-shrink-0">
-                    <div style={{ fontSize: 10, color: hl ? hl.border : "var(--text-3)", fontWeight: 500, textTransform: "uppercase" }}>{DAY_NAMES[e.date.getDay()]}</div>
-                    <div style={{ fontSize: 18, fontWeight: 600, color: hl ? hl.border : "var(--text)", lineHeight: 1.2 }}>{e.date.getDate()}</div>
+ <div className="uppercase fw-500 fs-10" style={{ color: hl ? hl.border : "var(--text-3)" }}>{DAY_NAMES[e.date.getDay()]}</div>
+ <div className="fw-600 fs-18" style={{ color: hl ? hl.border : "var(--text)", lineHeight: 1.2 }}>{e.date.getDate()}</div>
                   </div>
-                  <div style={{ width: 4, alignSelf: "stretch", borderRadius: 2,
+                  <div style={{ width: 4, alignSelf: "stretch", borderRadius: "var(--radius-xs)",
                     background: hl ? hl.bg : c, flexShrink: 0 }} />
                   <div className="flex-1" style={{ minWidth: 0 }}>
                     <div style={{ fontSize: 13, fontWeight: 600, color: "var(--text)",
@@ -524,7 +524,7 @@ function ListView({ events, onSelect }: { events: CalEvent[]; onSelect: (e: CalE
                       {e.modalidade}{e.modalidade && " · "}{e.campo}
                     </div>
                   </div>
-                  <span style={{ fontSize: 10, fontWeight: 600, padding: "2px 8px", borderRadius: 10,
+                  <span style={{ fontSize: 10, fontWeight: 600, padding: "2px 8px", borderRadius: "var(--radius-lg)",
                     background: hl ? hl.bg : c,
                     color: hl ? hl.text : "#fff", whiteSpace: "nowrap", flexShrink: 0 }}>
                     {CAL_MAP.get(e.calId)?.name ?? ""}
@@ -711,7 +711,7 @@ function CalendarioContent() {
                   padding: "6px 4px", border: "none", cursor: "pointer", fontFamily: "inherit",
                   background: "transparent", borderBottom: "1px solid var(--border-light)",
                 }}>
-                  <span style={{ width: 16, height: 16, borderRadius: 3, border: "2px solid var(--accent)",
+                  <span style={{ width: 16, height: 16, borderRadius: "var(--radius-sm)", border: "2px solid var(--accent)",
                     background: allOn ? "var(--accent)" : "transparent", display: "flex", alignItems: "center",
                     justifyContent: "center", flexShrink: 0, fontSize: 10, color: "#fff", lineHeight: 1, transition: "all 0.15s" }}>
                     {allOn ? "✓" : ""}
@@ -733,7 +733,7 @@ function CalendarioContent() {
                             display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, padding: 0,
                           }}>
                             <span style={{
-                              width: 12, height: 12, borderRadius: 2, transition: "all 0.15s",
+                              width: 12, height: 12, borderRadius: "var(--radius-xs)", transition: "all 0.15s",
                               background: enabledCals.has(cal.id) ? cal.color : "transparent",
                               border: `2px solid ${enabledCals.has(cal.id) ? cal.color : "var(--border)"}`,
                             }} />
@@ -754,7 +754,7 @@ function CalendarioContent() {
                             }}>{cal.name}</span>
                             <span style={{ fontSize: 10, fontFamily: "'JetBrains Mono', monospace",
                               color: "var(--text-3)", flexShrink: 0 }}>{calEvts.length}</span>
-                            <span style={{ fontSize: 8, color: "var(--text-3)", flexShrink: 0, transition: "transform 0.15s",
+                            <span style={{ fontSize: 10, color: "var(--text-3)", flexShrink: 0, transition: "transform 0.15s",
                               transform: isExpanded ? "rotate(180deg)" : "none" }}>▼</span>
                           </button>
                         </div>
@@ -778,7 +778,7 @@ function CalendarioContent() {
                                 }}
                                   onMouseEnter={e => (e.currentTarget.style.background = "var(--bg-hover)")}
                                   onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>
-                                  <span style={{ fontSize: 9, fontFamily: "'JetBrains Mono', monospace",
+                                  <span style={{ fontSize: 10, fontFamily: "'JetBrains Mono', monospace",
                                     color: cal.color, fontWeight: 600, minWidth: 30, flexShrink: 0 }}>{dd}</span>
                                   <span style={{ fontSize: 10, color: "var(--text-2)", flex: 1, textAlign: "left",
                                     overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{ev.title}</span>
@@ -798,7 +798,7 @@ function CalendarioContent() {
       </div>
 
       {/* ── Main ── */}
-      <div className="flex-1" style={{ display: "flex", flexDirection: "column", overflow: "hidden" }}>
+ <div className="flex-1 d-flex overflow-hidden" style={{ flexDirection: "column" }}>
         <div style={{ display: "flex", alignItems: "center", padding: "10px 20px",
           borderBottom: "1px solid var(--border-light)", gap: 12, flexShrink: 0 }}>
           <button className="sidebar-toggle" onClick={() => setSidebarOpen(v => !v)} title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
@@ -891,17 +891,17 @@ function CalendarioContent() {
                         }}
                         onMouseEnter={ev => (ev.currentTarget.style.filter = "brightness(1.1)")}
                         onMouseLeave={ev => (ev.currentTarget.style.filter = "none")}>
-                        <div style={{ fontSize: 10, fontWeight: 800, color: hl.text, opacity: 0.5 }}>
+ <div className="fs-10 fw-800" style={{ color: hl.text, opacity: 0.5 }}>
                           <span className="fs-8">{MONTHS_SHORT[d.date.getMonth()]}</span> {d.date.getDate()}
                         </div>
                         <div className="fs-14" style={{ lineHeight: 1 }}>{hl.icon}</div>
                         {isFirst ? (
-                          <div style={{ fontSize: 9, fontWeight: 900, color: hl.text, textAlign: "center",
+                          <div style={{ fontSize: 10, fontWeight: 900, color: hl.text, textAlign: "center",
                             lineHeight: 1.1, letterSpacing: "0.02em", marginTop: 1 }}>
                             {titleLines.map((l, j) => <div key={j}>{l}</div>)}
                           </div>
                         ) : (
-                          <div style={{ fontSize: 8, fontWeight: 700, color: hl.text, opacity: 0.6, textAlign: "center",
+                          <div style={{ fontSize: 10, fontWeight: 700, color: hl.text, opacity: 0.6, textAlign: "center",
                             lineHeight: 1.1, marginTop: 1 }}>
                             {hlEvt.title}
                           </div>
@@ -923,12 +923,12 @@ function CalendarioContent() {
                       onMouseLeave={ev => { if (!isSel) ev.currentTarget.style.background = isSel ? "var(--accent-light)" : "transparent"; }}>
                       <div style={{ fontSize: 11,
                         fontWeight: isToday ? 700 : 500,
-                        minHeight: 22, borderRadius: 10, padding: "1px 4px",
+                        minHeight: 22, borderRadius: "var(--radius-lg)", padding: "1px 4px",
                         display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 2px",
                         color: !d.inMonth ? "var(--text-3)" : isToday ? "#fff" : "var(--text)",
                         background: isToday ? "var(--accent)" : !d.inMonth ? "var(--bg-hover)" : "transparent",
                         gap: 2, whiteSpace: "nowrap" }}>
-                        <span style={{ fontSize: 9, fontWeight: 600, opacity: !d.inMonth ? 0.7 : 0.45 }}>{MONTHS_SHORT[d.date.getMonth()]}</span>
+ <span className="fw-600 fs-10" style={{ opacity: !d.inMonth ? 0.7 : 0.45 }}>{MONTHS_SHORT[d.date.getMonth()]}</span>
                         {d.date.getDate()}
                       </div>
                       {dayEvts.slice(0, 3).map(e => {

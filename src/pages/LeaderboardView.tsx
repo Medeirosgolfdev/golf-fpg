@@ -432,7 +432,7 @@ function AccumulatedTable({ norm, cat, filters, onSelectPlayer }: {
                         return (
                           <React.Fragment key={dk}>
                             <td className="r tourn-mono lb-sep">
-                              {day?.gross ?? <span className="c-text-3" style={{ color: "var(--border)" }}>–</span>}
+ {day?.gross ?? <span className="c-text-3 c-border" >–</span>}
                             </td>
                             <td className="r"><ToParSpan tp={day?.toPar ?? null} /></td>
                             <td className="r fs-11"><SdSpan sd={day?.sd ?? null} /></td>
@@ -470,7 +470,7 @@ function AccumulatedTable({ norm, cat, filters, onSelectPlayer }: {
                         return (
                           <React.Fragment key={dk}>
                             <td className="r tourn-mono lb-sep">
-                              {day?.gross ?? <span className="c-text-3" style={{ color: "var(--border)" }}>DNS</span>}
+ {day?.gross ?? <span className="c-text-3 c-border" >DNS</span>}
                             </td>
                             <td className="r"><ToParSpan tp={day?.toPar ?? null} /></td>
                             <td className="r fs-11"><SdSpan sd={day?.sd ?? null} /></td>
@@ -572,7 +572,7 @@ function AllResultsDayTable({ norm, dayKey, filters, onSelectPlayer }: {
                     </div>
                   </td>
                   <td>
-                    <span style={{ fontSize: 11, fontWeight: 700, color: catColors[r.catKey] || "#333", background: `${catColors[r.catKey] || "#333"}15`, padding: "1px 6px", borderRadius: 3 }}>
+                    <span style={{ fontSize: 11, fontWeight: 700, color: catColors[r.catKey] || "#333", background: `${catColors[r.catKey] || "#333"}15`, padding: "1px 6px", borderRadius: "var(--radius-sm)" }}>
                       {r.catLabel}
                     </span>
                   </td>
@@ -667,7 +667,7 @@ function AllAccumulatedTable({ norm, filters, onSelectPlayer }: {
                     <tr key={`c-${i}`} className={isFemale(norm, r.fed, r.name) ? "tourn-female-row" : ""}>
                       <td className="r tourn-mono lb-muted-bold">{pos}</td>
                       <td><div className="tourn-lb-pills"><PlayerLink fed={r.fed} name={r.name} onSelect={onSelectPlayer} /><PlayerPills norm={norm} fed={r.fed} name={r.name} /></div></td>
-                      <td><span style={{ fontSize: 11, fontWeight: 700, color: catColors[r.catKey] || "#333", background: `${catColors[r.catKey] || "#333"}15`, padding: "1px 6px", borderRadius: 3 }}>{r.catLabel}</span></td>
+                      <td><span style={{ fontSize: 11, fontWeight: 700, color: catColors[r.catKey] || "#333", background: `${catColors[r.catKey] || "#333"}15`, padding: "1px 6px", borderRadius: "var(--radius-sm)" }}>{r.catLabel}</span></td>
                       <td className="r tourn-mono fw-800">{r.totalGross}</td>
                       <td className="r"><ToParSpan tp={r.totalToPar} /></td>
                       <td className="r fs-12"><SdSpan sd={r.avgSD} /></td>
@@ -687,7 +687,7 @@ function AllAccumulatedTable({ norm, filters, onSelectPlayer }: {
                   <tr key={`i-${i}`} className={`${isFemale(norm, r.fed, r.name) ? "tourn-female-row" : ""} op-6`}>
                     <td className="r tourn-mono c-muted">–</td>
                     <td><div className="tourn-lb-pills"><PlayerLink fed={r.fed} name={r.name} onSelect={onSelectPlayer} /><PlayerPills norm={norm} fed={r.fed} name={r.name} /></div></td>
-                    <td><span style={{ fontSize: 11, fontWeight: 700, color: catColors[r.catKey] || "#333", background: `${catColors[r.catKey] || "#333"}15`, padding: "1px 6px", borderRadius: 3 }}>{r.catLabel}</span></td>
+                    <td><span style={{ fontSize: 11, fontWeight: 700, color: catColors[r.catKey] || "#333", background: `${catColors[r.catKey] || "#333"}15`, padding: "1px 6px", borderRadius: "var(--radius-sm)" }}>{r.catLabel}</span></td>
                     <td className="r tourn-mono fw-800 c-muted">{r.totalGross}</td>
                     <td className="r c-muted">{fmtToPar(r.totalToPar)}</td>
                     <td className="r fs-12 c-muted">{r.avgSD?.toFixed(1) ?? "–"}</td>
@@ -854,7 +854,7 @@ export default function LeaderboardView({ norm, players, holeDataByDay, onSelect
         <button
           className={`tourn-tab${pjaOnly ? " tourn-tab-active" : ""}`}
           onClick={() => setPjaOnly(p => !p)}
-          style={{ background: pjaOnly ? "#046A38" : undefined, color: pjaOnly ? "#FFD700" : undefined, fontSize: 12, padding: "4px 10px" }}
+ className="fs-12" style={{ background: pjaOnly ? "#046A38" : undefined, color: pjaOnly ? "#FFD700" : undefined, padding: "4px 10px" }}
         >
           PJA <span className="op-6 fs-10">({pjaCount})</span>
         </button>

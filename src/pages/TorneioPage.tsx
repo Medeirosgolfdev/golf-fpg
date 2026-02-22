@@ -242,11 +242,11 @@ function DrawView({ players, onSelectPlayer }: { players: PlayersDb; onSelectPla
   return (
     <div className="tourn-section">
       <div className="d-flex gap-6 mb-10">
-        <button className={`tourn-tab fs-11${day === 1 ? " tourn-tab-active" : ""}`} onClick={() => setDay(1)} style={{ padding: "4px 12px" }}>
+ <button className={`tourn-tab fs-11${day === 1 ? " tourn-tab-active" : ""} p-4-12`} onClick={() => setDay(1)} >
           R1 — {NORM_BASE.dates[0]?.split("-").reverse().slice(0, 2).join("/") || ""}
         </button>
         {NORM_BASE.draws.wagr?.d2 && (
-          <button className={`tourn-tab fs-11${day === 2 ? " tourn-tab-active" : ""}`} onClick={() => setDay(2)} style={{ padding: "4px 12px" }}>
+ <button className={`tourn-tab fs-11${day === 2 ? " tourn-tab-active" : ""} p-4-12`} onClick={() => setDay(2)} >
             R2 — {NORM_BASE.dates[1]?.split("-").reverse().slice(0, 2).join("/") || ""}
           </button>
         )}
@@ -448,7 +448,7 @@ function AnalysisView({ norm, players, holeDataByDay, playerHistory, onSelectPla
                     <td className="r tourn-mono">{h.m}</td>
                     <td className="r tourn-mono fw-700">{h.avg?.toFixed(1) ?? "–"}</td>
                     <td className="r">
-                      {vp != null && <span style={{ color: vp <= 0 ? SC.good : vp < 0.5 ? SC.warn : SC.danger, fontWeight: 600 }}>
+ {vp != null && <span className="fw-600" style={{ color: vp <= 0 ? SC.good : vp < 0.5 ? SC.warn : SC.danger }}>
                         {vp > 0 ? `+${vp.toFixed(2)}` : vp.toFixed(2)}
                       </span>}
                     </td>

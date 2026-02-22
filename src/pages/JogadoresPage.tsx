@@ -66,7 +66,7 @@ function HoleBadge({ hc }: { hc: number }) {
 }
 
 function ScoreCircle({ gross, par, size = "normal" }: { gross: number | null; par: number | null; size?: "normal" | "small" }) {
-  if (gross == null || gross <= 0) return <span style={{ color: "var(--border)", fontSize: "9px" }}>NR</span>;
+ if (gross == null || gross <= 0) return <span className="c-border" style={{ fontSize: "9px" }}>NR</span>;
   const cls = par != null ? scClass(gross, par) : "";
   const sizeStyle = size === "small" ? { fontSize: "10px", width: "20px", height: "20px" } : {};
   return <span className={`sc-score ${cls}`} style={sizeStyle}>{gross}</span>;
@@ -328,7 +328,7 @@ function ByCourseRow({ course, idx, data, isAnalysis, openScorecard, openScoreca
           <div className="rowHead">
             <div className="count" style={{ background: getTeeHex(last?.tee || ""), color: textOnColor(getTeeHex(last?.tee || "")), border: teeBorder(getTeeHex(last?.tee || "")) }}>{course.count}</div>
             <button type="button" className="courseBtn" onClick={() => setOpen(v => !v)}>{course.course}</button>
-            {findCourseKey(course.course) && <Link to={`/campos/${findCourseKey(course.course)}`} className="courseLink" style={{ marginLeft: 4, fontSize: 10 }} title="Ver campo" onClick={e => e.stopPropagation()}>↗</Link>}
+ {findCourseKey(course.course) && <Link to={`/campos/${findCourseKey(course.course)}`} className="courseLink fs-10 ml-4" title="Ver campo" onClick={e => e.stopPropagation()}>↗</Link>}
             <PillBadge pill={course.rounds.find(r => r._pill)?._pill} />
           </div>
         </td>
@@ -641,7 +641,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
     <>
       {/* Eclectic row */}
       <tr>
-        <td className="row-label" style={{ color: "var(--chart-2)", fontWeight: 700, fontSize: 10, ...ecBorder }}>Eclético</td>
+ <td className="row-label fw-700 fs-10" style={{ color: "var(--chart-2)", ...ecBorder }}>Eclético</td>
         {Array.from({ length: holeCount }, (_, h) => {
           const ev = ecArr[h];
           const cls = scClass(ev, parArr[h]);
@@ -688,7 +688,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
 
       {/* Δ (delta) row */}
       <tr className="bg-detail">
-        <td className="row-label" style={{ color: "var(--text-3)", fontWeight: 700, fontSize: 10 }}>Δ</td>
+ <td className="row-label fw-700 fs-10 c-text-3" >Δ</td>
         {Array.from({ length: holeCount }, (_, h) => {
           const gv = gross[h];
           const ev = ecArr[h];
@@ -702,7 +702,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
               {h === frontEnd - 1 && !is9 && (() => {
                 const dOut = sumArr(ecArr, 0, frontEnd) - sumArr(gross, 0, frontEnd);
                 return (
-                  <td className="col-out" style={{ color: sc2(dOut, 0), fontWeight: 600 }}>
+ <td className="col-out fw-600" style={{ color: sc2(dOut, 0) }}>
                     {dOut === 0 ? "=" : (dOut > 0 ? "+" : "") + dOut}
                   </td>
                 );
@@ -713,7 +713,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
         {(() => {
           const dIn = (is9 ? sumEc : sumArr(ecArr, 9, holeCount)) - (is9 ? sumGross : sumArr(gross, 9, holeCount));
           return (
-            <td className={`col-${is9 ? "total" : "in"}`} style={{ color: sc2(dIn, 0), fontWeight: 600 }}>
+ <td className={`col-${is9 ? "total" : "in"} fw-600`} style={{ color: sc2(dIn, 0) }}>
               {dIn === 0 ? "=" : (dIn > 0 ? "+" : "") + dIn}
             </td>
           );
@@ -860,7 +860,7 @@ function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, ac
                   <td className="r fw-600">{hs?.nRounds ?? ""}</td>
                   <td className="r">{ex.totalPar}</td>
                   <td className="r c-blue-13">{ex.totalGross}</td>
-                  <td className="r" style={{ color: tpCol, fontWeight: 700 }}>{tpStr}</td>
+ <td className="r fw-700" style={{ color: tpCol }}>{tpStr}</td>
                   <td className="r fw-600">{hs?.bestRound?.gross ?? "–"}</td>
                   <td className="r">{hs?.avgGross?.toFixed(1) ?? "–"}</td>
                 </tr>
@@ -886,8 +886,8 @@ function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, ac
 
         return (
           <div key={ec.teeKey} className={`ecPillBlock ${isActive ? "ecActive" : ""}`}
-            style={{ marginTop: 8, border: isActive ? "2px solid " + hx : "1px solid var(--border-light)", borderRadius: "var(--radius-lg)", overflow: "hidden" }}>
-            <div style={{ padding: "6px 10px", background: isActive ? hx + "10" : "var(--bg-detail)", cursor: "pointer", fontWeight: 600, fontSize: 12 }}
+ className="overflow-hidden br-lg mt-8" style={{ border: isActive ? "2px solid " + hx : "1px solid var(--border-light)" }}>
+ <div className="pointer fw-600 fs-12" style={{ padding: "6px 10px", background: isActive ? hx + "10" : "var(--bg-detail)" }}
               onClick={() => onSelectTee(ec.teeKey)}>
               <TeePill name={ec.teeName} />{" "}
               <span className="cb-blue-800">{ec.totalGross}</span>
@@ -895,7 +895,7 @@ function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, ac
             </div>
             {/* Eclectic hole-by-hole table */}
             <div className="scroll-x">
-              <table className="sc-table-ec" style={{ fontSize: 11, width: "100%" }}>
+ <table className="sc-table-ec fs-11 w-full" >
                 <thead>
                   <tr>
                     <th className="row-label col-w60">Bur.</th>
@@ -940,7 +940,7 @@ function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, ac
                     return (
                       <tr key={tr.scoreId} style={{ background: hx + "0A" }}>
                         <td className="row-label fs-10">
-                          <span className="sc-pill" style={{ background: hx, color: fg, fontSize: 10, padding: "1px 6px" }}>{trDate}</span>
+ <span className="sc-pill fs-10" style={{ background: hx, color: fg, padding: "1px 6px" }}>{trDate}</span>
                         </td>
                         {Array.from({ length: Math.min(hc, 9) }, (_, i) => (
                           <td key={i}><ScoreCircle gross={trG[i]} par={parArr[i]} size="small" /></td>
@@ -1304,27 +1304,27 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
         <div className="card-bordered">
           <div className="sc-bar-head"><span>Detalhe Buraco a Buraco</span></div>
           <div className="scroll-x">
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 11 }}>
+ <table className="w-full fs-11" style={{ borderCollapse: "collapse" }}>
               <tbody>
                 {/* Buraco row */}
                 <tr className="bg-detail">
-                  <td style={{ ...colL, fontWeight: 700, color: "var(--text-3)", fontSize: 11, borderBottom: "1px solid var(--border-light)" }}>Buraco</td>
+ <td className="fw-700 fs-11" style={{ ...colL, color: "var(--text-3)", borderBottom: "1px solid var(--border-light)" }}>Buraco</td>
                   {stats.holes.slice(0, hc).map((_, i) => (
                     <React.Fragment key={i}>
-                      <td style={{ ...cs, fontWeight: 700, color: "var(--text-3)", fontSize: 11, borderBottom: "1px solid var(--border-light)" }}>{i + 1}</td>
-                      {i === fe - 1 && !is9 && <td style={{ ...colOut, fontWeight: 700, color: "var(--text-3)", fontSize: 10, borderBottom: "1px solid var(--border-light)" }}>Out</td>}
+ <td className="fw-700 fs-11" style={{ ...cs, color: "var(--text-3)", borderBottom: "1px solid var(--border-light)" }}>{i + 1}</td>
+ {i === fe - 1 && !is9 && <td className="fw-700 fs-10" style={{ ...colOut, color: "var(--text-3)", borderBottom: "1px solid var(--border-light)" }}>Out</td>}
                     </React.Fragment>
                   ))}
-                  <td style={{ ...(is9 ? colTot : colIn), fontWeight: 700, color: "var(--text-3)", fontSize: 10, borderBottom: "1px solid var(--border-light)" }}>{is9 ? "TOTAL" : "In"}</td>
-                  {!is9 && <td style={{ ...colTot, color: "var(--text-2)", fontSize: 11, borderBottom: "1px solid var(--border-light)" }}>TOTAL</td>}
+ <td className="fw-700 fs-10" style={{ ...(is9 ? colTot : colIn), color: "var(--text-3)", borderBottom: "1px solid var(--border-light)" }}>{is9 ? "TOTAL" : "In"}</td>
+ {!is9 && <td className="fs-11" style={{ ...colTot, color: "var(--text-2)", borderBottom: "1px solid var(--border-light)" }}>TOTAL</td>}
                 </tr>
                 {/* SI row */}
                 {stats.holes.some(h => h.si != null) && (
                   <tr>
-                    <td style={{ ...colL, color: "var(--text-muted)", fontSize: 10 }}>S.I.</td>
+ <td className="fs-10" style={{ ...colL, color: "var(--text-muted)" }}>S.I.</td>
                     {stats.holes.slice(0, hc).map((h, i) => (
                       <React.Fragment key={i}>
-                        <td style={{ ...cs, color: "var(--text-muted)", fontSize: 10 }}>{h.si ?? ""}</td>
+ <td className="fs-10" style={{ ...cs, color: "var(--text-muted)" }}>{h.si ?? ""}</td>
                         {i === fe - 1 && !is9 && <td style={colOut} />}
                       </React.Fragment>
                     ))}
@@ -1334,39 +1334,39 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                 )}
                 {/* Par row */}
                 <tr>
-                  <td style={{ ...colL, fontWeight: 600, color: "var(--text-muted)", fontSize: 11, borderBottom: "2px solid var(--border-heavy)" }}>Par</td>
+ <td className="fw-600 fs-11" style={{ ...colL, color: "var(--text-muted)", borderBottom: "2px solid var(--border-heavy)" }}>Par</td>
                   {stats.holes.slice(0, hc).map((h, i) => (
                     <React.Fragment key={i}>
                       <td style={{ ...cs, borderBottom: "2px solid var(--border-heavy)" }}>{h.par ?? ""}</td>
-                      {i === fe - 1 && !is9 && <td style={{ ...colOut, fontWeight: 700, borderBottom: "2px solid var(--border-heavy)" }}>{sumArr(stats.holes.slice(0, fe).map(x => x.par ?? 0), 0, fe)}</td>}
+ {i === fe - 1 && !is9 && <td className="fw-700" style={{ ...colOut, borderBottom: "2px solid var(--border-heavy)" }}>{sumArr(stats.holes.slice(0, fe).map(x => x.par ?? 0), 0, fe)}</td>}
                     </React.Fragment>
                   ))}
-                  <td style={{ ...(is9 ? colTot : colIn), fontWeight: 700, borderBottom: "2px solid var(--border-heavy)" }}>
+ <td className="fw-700" style={{ ...(is9 ? colTot : colIn), borderBottom: "2px solid var(--border-heavy)" }}>
                     {is9 ? sumArr(stats.holes.slice(0, hc).map(x => x.par ?? 0), 0, hc) : sumArr(stats.holes.slice(0, hc).map(x => x.par ?? 0), 9, hc)}
                   </td>
                   {!is9 && <td style={{ ...colTot, borderBottom: "2px solid var(--border-heavy)" }}>{sumArr(stats.holes.slice(0, hc).map(x => x.par ?? 0), 0, hc)}</td>}
                 </tr>
                 {/* Avg row */}
                 <tr>
-                  <td style={{ ...colL, fontWeight: 700, color: "var(--text)" }}>Média</td>
+ <td className="fw-700" style={{ ...colL, color: "var(--text)" }}>Média</td>
                   {stats.holes.slice(0, hc).map((h, i) => {
                     const vp = h.avg != null && h.par != null ? h.avg - h.par : null;
                     const col = vp == null ? SC.muted : vp <= -0.1 ? SC.good : vp <= 0.3 ? SC.muted : SC.danger;
                     return (
                       <React.Fragment key={i}>
-                        <td style={{ ...cs, fontWeight: 700, color: col }}>{h.avg?.toFixed(1) ?? ""}</td>
-                        {i === fe - 1 && !is9 && <td style={{ ...colOut, fontWeight: 700 }}>{(stats.holes.slice(0, fe).reduce((s, x) => s + (x.avg ?? 0), 0)).toFixed(1)}</td>}
+ <td className="fw-700" style={{ ...cs, color: col }}>{h.avg?.toFixed(1) ?? ""}</td>
+ {i === fe - 1 && !is9 && <td className="fw-700" style={{ ...colOut }}>{(stats.holes.slice(0, fe).reduce((s, x) => s + (x.avg ?? 0), 0)).toFixed(1)}</td>}
                       </React.Fragment>
                     );
                   })}
-                  <td style={{ ...(is9 ? colTot : colIn), fontWeight: 700 }}>
+ <td className="fw-700" style={{ ...(is9 ? colTot : colIn) }}>
                     {(is9 ? stats.holes.slice(0, hc) : stats.holes.slice(9, hc)).reduce((s, x) => s + (x.avg ?? 0), 0).toFixed(1)}
                   </td>
-                  {!is9 && <td style={{ ...colTot, fontWeight: 900 }}>{stats.holes.slice(0, hc).reduce((s, x) => s + (x.avg ?? 0), 0).toFixed(1)}</td>}
+ {!is9 && <td className="fw-900" style={{ ...colTot }}>{stats.holes.slice(0, hc).reduce((s, x) => s + (x.avg ?? 0), 0).toFixed(1)}</td>}
                 </tr>
                 {/* Best row */}
                 <tr>
-                  <td style={{ ...colL, color: SC.good, fontWeight: 700, fontSize: 10 }}>Melhor</td>
+ <td className="fw-700 fs-10" style={{ ...colL, color: SC.good }}>Melhor</td>
                   {stats.holes.slice(0, hc).map((h, i) => {
                     const cls = h.best != null && h.par != null ? scClass(h.best, h.par) : "";
                     return (
@@ -1381,7 +1381,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                 </tr>
                 {/* Worst row */}
                 <tr>
-                  <td style={{ ...colL, color: SC.danger, fontWeight: 700, fontSize: 10 }}>Pior</td>
+ <td className="fw-700 fs-10" style={{ ...colL, color: SC.danger }}>Pior</td>
                   {stats.holes.slice(0, hc).map((h, i) => {
                     const cls = h.worst != null && h.par != null ? scClass(h.worst, h.par) : "";
                     return (
@@ -1396,7 +1396,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                 </tr>
                 {/* Strokes lost row */}
                 <tr>
-                  <td style={{ ...colL, color: "var(--text-3)", fontWeight: 700, fontSize: 10 }}>Panc. perd.</td>
+ <td className="fw-700 fs-10" style={{ ...colL, color: "var(--text-3)" }}>Panc. perd.</td>
                   {stats.holes.slice(0, hc).map((h, i) => {
                     const sl = h.strokesLost ?? 0;
                     let slBg = "";
@@ -1408,19 +1408,19 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                     const slCol = sl <= -0.3 ? SC.good : sl <= 0.15 ? SC.muted : SC.danger;
                     return (
                       <React.Fragment key={i}>
-                        <td style={{ ...cs, background: slBg, color: slCol, fontWeight: 700, fontSize: 10 }}>{h.n > 0 ? fD(sl) : ""}</td>
+ <td className="fw-700 fs-10" style={{ ...cs, background: slBg, color: slCol }}>{h.n > 0 ? fD(sl) : ""}</td>
                         {i === fe - 1 && !is9 && (() => {
                           const outSL = stats.holes.slice(0, fe).reduce((s, x) => s + (x.strokesLost ?? 0), 0);
-                          return <td style={{ ...colOut, fontWeight: 700, fontSize: 10, color: sc2(outSL, 0) }}>{fD(outSL)}</td>;
+ return <td className="fw-700 fs-10" style={{ ...colOut, color: sc2(outSL, 0) }}>{fD(outSL)}</td>;
                         })()}
                       </React.Fragment>
                     );
                   })}
                   {(() => {
                     const inSL = (is9 ? stats.holes.slice(0, hc) : stats.holes.slice(9, hc)).reduce((s, x) => s + (x.strokesLost ?? 0), 0);
-                    return <td style={{ ...(is9 ? colTot : colIn), fontWeight: 700, fontSize: 10, color: sc2(inSL, 0) }}>{fD(inSL)}</td>;
+ return <td className="fw-700 fs-10" style={{ ...(is9 ? colTot : colIn), color: sc2(inSL, 0) }}>{fD(inSL)}</td>;
                   })()}
-                  {!is9 && <td style={{ ...colTot, fontWeight: 900, fontSize: 11, color: sc2(stats.totalStrokesLost, 0) }}>{fD(stats.totalStrokesLost)}</td>}
+ {!is9 && <td className="fw-900 fs-11" style={{ ...colTot, color: sc2(stats.totalStrokesLost, 0) }}>{fD(stats.totalStrokesLost)}</td>}
                 </tr>
               </tbody>
             </table>
@@ -1632,14 +1632,14 @@ function TrajectoryCard({ rounds, period, setPeriod }: {
           <div className="bg-detail br-lg jog-cross-pad">
             <div className="muted fs-10">ÚLTIMAS 5</div>
             <div className="kpi-value">{stats.last5}</div>
-            <div style={{ fontSize: 11, fontWeight: 600, color: sc3m(stats.diff5, 1, 1) }}>
+ <div className="fw-600 fs-11" style={{ color: sc3m(stats.diff5, 1, 1) }}>
               {stats.diff5 > 0 ? "+" : ""}{stats.diff5.toFixed(1)}
             </div>
           </div>
           <div className="bg-detail br-lg jog-cross-pad">
             <div className="muted fs-10">ÚLTIMAS 10</div>
             <div className="kpi-value">{stats.last10}</div>
-            <div style={{ fontSize: 11, fontWeight: 600, color: sc3m(stats.diff10, 1, 1) }}>
+ <div className="fw-600 fs-11" style={{ color: sc3m(stats.diff10, 1, 1) }}>
               {stats.diff10 > 0 ? "+" : ""}{stats.diff10.toFixed(1)}
             </div>
           </div>
@@ -1718,7 +1718,7 @@ function WHSDetail({ hcp }: { hcp: HcpInfo }) {
           <div className="muted fs-10">ACTUAL</div>
           <div className="jog-big-val c-blue">{hcp.current.toFixed(1)}</div>
           {hcp.lowHcp != null && (
-            <div style={{ fontSize: 11, color: SC.danger, fontWeight: 600 }}>+{(hcp.current - hcp.lowHcp).toFixed(1)} do mínimo</div>
+ <div className="fs-11 fw-600" style={{ color: SC.danger }}>+{(hcp.current - hcp.lowHcp).toFixed(1)} do mínimo</div>
           )}
         </div>
         <div className="card-stat-detail">
@@ -1726,7 +1726,7 @@ function WHSDetail({ hcp }: { hcp: HcpInfo }) {
           <div className="jog-big-val c-text-3">{hcp.scoreAvg?.toFixed(1) ?? "–"}</div>
         </div>
       </div>
-      <div style={{ display: "flex", gap: 14, fontSize: 11, color: "var(--text-3)", borderTop: "1px solid var(--bg)", paddingTop: 8 }}>
+ <div className="fs-11 c-text-3 d-flex" style={{ gap: 14, borderTop: "1px solid var(--bg)", paddingTop: 8 }}>
         {hcp.softCap != null && <span>Soft cap: <b>{hcp.softCap.toFixed(1)}</b></span>}
         {hcp.hardCap != null && <span>Hard cap: <b>{hcp.hardCap.toFixed(1)}</b></span>}
         {hcp.qtyScores != null && hcp.qtyCalc != null && (
@@ -1872,7 +1872,7 @@ function CrossAnalysis({ data }: { data: PlayerPageData }) {
 
   return (
     <div className="an-card" style={{ marginTop: 24 }}>
-      <div className="an-k-title" style={{ fontSize: 18, marginBottom: 16 }}>📊 Cross-Análise por Escalão</div>
+ <div className="an-k-title fs-18" style={{ marginBottom: 16 }}>📊 Cross-Análise por Escalão</div>
       {/* Tabs */}
       <div className="cross-tabs jog-cross-wrap">
         {escalaos.map(esc => (
@@ -2017,7 +2017,7 @@ function HcpEvolutionChart({ players, currentFed, escName }: {
         </select>
         <span className="muted fs-11 fw-400">(clica na legenda para mostrar/esconder)</span>
       </div>
-      <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", maxHeight: 300, background: "var(--bg)", borderRadius: "var(--radius-lg)", border: "1px solid var(--border-light)" }}>
+ <svg viewBox={`0 0 ${W} ${H}`} className="br-lg w-full" style={{ maxHeight: 300, background: "var(--bg)", border: "1px solid var(--border-light)" }}>
         {Array.from({ length: 5 }, (_, i) => {
           const val = minH - padH + (rangeH + 2 * padH) * (i / 4);
           const vy = yPos(val);
@@ -2046,13 +2046,13 @@ function HcpEvolutionChart({ players, currentFed, escName }: {
           );
         })}
       </svg>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "4px 12px", marginTop: 6, fontSize: 11 }}>
+ <div className="d-flex mt-6 fs-11" style={{ flexWrap: "wrap", gap: "4px 12px" }}>
         {chartPlayers.map((p, pi) => {
           const col = colors[pi % colors.length];
           const isHidden = hidden.has(p.fed);
           const isCur = p.fed === currentFed;
           return (
-            <span key={p.fed} style={{ cursor: "pointer", opacity: isHidden ? 0.3 : 1, fontWeight: isCur ? 700 : 400 }}
+ <span key={p.fed} className="pointer" style={{ opacity: isHidden ? 0.3 : 1, fontWeight: isCur ? 700 : 400 }}
               onClick={() => togglePlayer(p.fed)}>
               <span style={{ display: "inline-block", width: 10, height: 10, borderRadius: "var(--radius-xs)", background: col, marginRight: 3 }} />
               {p.name.split(" ")[0]} {p.currentHcp != null ? `(${p.currentHcp.toFixed(1)})` : ""}
@@ -2107,12 +2107,12 @@ function CommonCourses({ players, currentFed, escName }: {
             <div className="card-detail pointer"
               onClick={() => setOpenCard(isOpen ? null : ci)}>
               <div className="flex-center-gap8">
-                <span style={{ fontSize: 10, transition: "transform .2s", transform: isOpen ? "rotate(90deg)" : "" }}>▶</span>
+ <span className="fs-10" style={{ transition: "transform .2s", transform: isOpen ? "rotate(90deg)" : "" }}>▶</span>
                 <span className="fw-700">⛳ {cc.course}</span>
                 <TeePill name={cc.tee} />
                 <span className="muted fs-11">{cc.players.length} jogadores</span>
               </div>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "2px 10px", fontSize: 11, marginTop: 4 }}>
+ <div className="d-flex fs-11 mt-4" style={{ flexWrap: "wrap", gap: "2px 10px" }}>
                 {cc.players.map((mp, mr) => {
                   const isCur = mp.fed === currentFed;
                   const medal = mr === 0 ? "🥇" : mr === 1 ? "🥈" : mr === 2 ? "🥉" : `${mr + 1}º`;
@@ -2151,7 +2151,7 @@ function CommonCourses({ players, currentFed, escName }: {
                           <td className="r">{cp.count}</td>
                           <td className="r cb-par-ok">{cp.best ?? "–"}</td>
                           <td className="r">{cp.avg.toFixed(1)}</td>
-                          <td className="r" style={{ color: SC.danger, fontWeight: 600 }}>{cp.worst ?? "–"}</td>
+ <td className="r fw-600" style={{ color: SC.danger }}>{cp.worst ?? "–"}</td>
                           <td className="r">{ampl ?? "–"}</td>
                           <td>
                             <div className="progress-track-sm">
@@ -2171,11 +2171,11 @@ function CommonCourses({ players, currentFed, escName }: {
                   const isCur = hp.fed === currentFed;
                   if (!hp.rounds?.length) return null;
                   return (
-                    <div key={hp.fed} style={{ marginTop: 6, padding: "6px 8px", borderRadius: "var(--radius)", border: isCur ? "1px solid #16a34a" : "1px solid var(--border-light)", background: isCur ? "#f0fdf4" : "var(--bg)" }}>
+ <div key={hp.fed} className="br-default mt-6" style={{ padding: "6px 8px", border: isCur ? "1px solid #16a34a" : "1px solid var(--border-light)", background: isCur ? "#f0fdf4" : "var(--bg)" }}>
                       <div className="fw-600 fs-11 mb-4">
                         {hp.name} <span className="muted">({hp.rounds.length} ronda{hp.rounds.length > 1 ? "s" : ""})</span>
                       </div>
-                      <div className="flex-wrap-gap8" style={{ gap: 4 }}>
+ <div className="flex-wrap-gap8 gap-4" >
                         {hp.rounds.map((rd: any, ri: number) => {
                           const isBest = rd.gross === hp.best;
                           return (
@@ -2201,7 +2201,7 @@ function CommonCourses({ players, currentFed, escName }: {
 }
 function PeriodSelect({ value, onChange }: { value: number; onChange: (n: number) => void }) {
   return (
-    <select style={{ fontSize: 11, padding: "2px 6px", border: "1px solid var(--border-heavy)", borderRadius: "var(--radius)", background: "var(--bg-card)", color: "var(--text-2)" }}
+ <select className="br-default c-text-2 fs-11" style={{ padding: "2px 6px", border: "1px solid var(--border-heavy)", background: "var(--bg-card)" }}
       value={value} onChange={e => onChange(Number(e.target.value))}>
       <option value={3}>3 meses</option>
       <option value={6}>6 meses</option>
@@ -2260,12 +2260,12 @@ function TournamentComparison({ rounds, holesData }: {
         <span>Par {totalPar || ""}</span>
       </div>
       <div className="scroll-x">
-        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
+ <table className="w-full fs-12" style={{ borderCollapse: "collapse" }}>
           <thead>
             <CompRow label="Buraco" hc={hc} is9={is9} frontEnd={frontEnd}
               cells={Array.from({ length: hc }, (_, i) => String(i + 1))}
               outVal="Out" inVal={is9 ? "TOTAL" : "In"} totalVal={is9 ? undefined : "TOTAL"}
-              style={{ background: "var(--bg-detail)", fontWeight: 700, color: "var(--text-3)", fontSize: 11, borderBottom: "1px solid var(--border-light)" }}
+ className="fw-700 fs-11 bb-light c-text-3" style={{ background: "var(--bg-detail)" }}
             />
           </thead>
           <tbody>
@@ -2382,7 +2382,7 @@ function CompScoreRow({ label, labelBg, labelFg, gross, par, hc, is9, frontEnd, 
           <React.Fragment key={i}>
             <td style={cs}>
               {gv != null && gv > 0
-                ? <span className={`sc-score ${cls}`} style={{ display: "inline-flex", width: 26, height: 26, alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 12 }}>{gv}</span>
+ ? <span className={`sc-score ${cls} ai-center jc-center fw-700 fs-12`} style={{ display: "inline-flex", width: 26, height: 26 }}>{gv}</span>
                 : ""}
             </td>
             {i === frontEnd - 1 && !is9 && (

@@ -989,7 +989,7 @@ function AgsSection({
                     {h.vsPar != null ? (h.vsPar === 0 ? "E" : h.vsPar > 0 ? `+${h.vsPar}` : h.vsPar) : ""}
                   </td>
                   {is18 && i === 8 && (
-                    <td className="col-out" style={{ fontWeight: 600, color: grossOut != null ? (grossOut - sumPar(front) <= 0 ? SC.good : SC.warn) : "#ccc" }}>
+ <td className="col-out fw-600" style={{ color: grossOut != null ? (grossOut - sumPar(front) <= 0 ? SC.good : SC.warn) : "#ccc" }}>
                       {fmtVsPar(grossOut, sumPar(front))}
                     </td>
                   )}

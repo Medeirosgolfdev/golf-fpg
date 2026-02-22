@@ -468,7 +468,7 @@ export default function RivaisDashboard() {
             <span style={{ color: TIER[k].c }}>{TIER_L[k]}</span>
           </span>
         ))}
-        <span style={{ color: "var(--border)" }}>|</span>
+ <span className="c-border" >|</span>
         <span className="pill-xs pill-info">Manuel (referência)</span>
       </div>
 
@@ -483,8 +483,8 @@ export default function RivaisDashboard() {
                     Jogador {sort === "name" ? (dir === "asc" ? "↑" : "↓") : ""}
                   </th>
                   {tourGroups.map((g, gi) => (
-                    <th key={g.id} colSpan={g.span} style={{ padding: "6px 4px", textAlign: "center", fontSize: 10, fontWeight: 700, borderLeft: "4px solid #1a1a1a", background: gi % 2 === 1 ? "rgba(255,255,255,0.08)" : "transparent", cursor: "pointer" }} onClick={() => doSort("t:"+g.id)}>
-                      {g.url ? <a href={g.url} target="_blank" rel="noopener noreferrer" style={{ color: "var(--text-inv)", textDecoration: "underline", textDecorationStyle: "dotted", textUnderlineOffset: 2 }} onClick={e => e.stopPropagation()}>{g.short}</a> : g.short} <span className="op-6 fs-9 fw-400">({g.date})</span>
+ <th key={g.id} colSpan={g.span} className="ta-center pointer fw-700 fs-10" style={{ padding: "6px 4px", borderLeft: "4px solid #1a1a1a", background: gi % 2 === 1 ? "rgba(255,255,255,0.08)" : "transparent" }} onClick={() => doSort("t:"+g.id)}>
+ {g.url ? <a href={g.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "underline", textDecorationStyle: "dotted", textUnderlineOffset: 2 }} onClick={e => e.stopPropagation()}>{g.short}</a> : g.short} <span className="op-6 fs-9 fw-400 c-inv">({g.date})</span>
                       {sort === "t:"+g.id && <span className="ml-3 fs-9">{dir === "asc" ? "↑" : "↓"}</span>}
                     </th>
                   ))}
@@ -511,7 +511,7 @@ export default function RivaisDashboard() {
                     </th>
                   ))}
                   {UP.map(u => (
-                    <th key={u.id} style={{ padding: "3px 2px", textAlign: "center", fontSize: u.id === "marco26" ? 7 : 8, fontWeight: 700, borderLeft: u.id === "wjgc26" ? "4px solid #1a1a1a" : "none", minWidth: u.id === "marco26" ? 48 : 38, cursor: "pointer" }} onClick={() => doSort("up:"+u.id)}>
+ <th key={u.id} className="ta-center pointer fw-700" style={{ padding: "3px 2px", fontSize: u.id === "marco26" ? 7 : 8, borderLeft: u.id === "wjgc26" ? "4px solid #1a1a1a" : "none", minWidth: u.id === "marco26" ? 48 : 38 }} onClick={() => doSort("up:"+u.id)}>
                       {u.url ? <a href={u.url} target="_blank" rel="noopener noreferrer" style={{ color: "rgba(255,255,255,0.85)", textDecoration: "underline", textDecorationStyle: "dotted" }} onClick={e => e.stopPropagation()}>{u.short}</a> : u.short}
                       {sort === "up:"+u.id ? (dir === "asc" ? " ↑" : " ↓") : ""}
                     </th>
@@ -595,7 +595,7 @@ export default function RivaisDashboard() {
                     }}>
                       <td className="rivais-player-name bg-card">
                         <span className="rivais-flag" title={p.co}>{flag}</span>
-                        <span style={{ fontWeight: isM ? 700 : 600, color: "var(--text)", fontSize: 11 }}>{p.n}</span>
+ <span className="fs-11 c-text" style={{ fontWeight: isM ? 700 : 600 }}>{p.n}</span>
                         {isM && <span className="pill-xs pill-info ml-4">REF</span>}
                       </td>
                       {COLS.map((col, i) => {
@@ -635,32 +635,32 @@ export default function RivaisDashboard() {
                             color: cell.color,
                           }}>
                             {cell.val}
-                            {cell.z != null && <div style={{ fontSize: 10, fontWeight: 600, color: sc3m(cell.z, 0.4, 0.4), marginTop: 1, opacity: 0.75 }}>{cell.z > 0 ? "+" : ""}{cell.z.toFixed(1)}σ</div>}
-                            {vsOn && cell.vsM != null && <div style={{ fontSize: 10, fontWeight: 600, color: sc3m(cell.vsM, 0, 0), marginTop: 1 }}>{cell.vsM > 0 ? "+" : ""}{cell.vsM}</div>}
+ {cell.z != null && <div className="fw-600 fs-10 mt-1" style={{ color: sc3m(cell.z, 0.4, 0.4), opacity: 0.75 }}>{cell.z > 0 ? "+" : ""}{cell.z.toFixed(1)}σ</div>}
+ {vsOn && cell.vsM != null && <div className="fw-600 fs-10 mt-1" style={{ color: sc3m(cell.vsM, 0, 0) }}>{cell.vsM > 0 ? "+" : ""}{cell.vsM}</div>}
                           </td>
                         );
                       })}
                       <td className="rivais-td rivais-border-mark">
-                        {tr ? <span style={{ color: TR_I[tr].c, fontWeight: 700, fontSize: 12 }}>{TR_I[tr].i}</span> : <span style={{ color: "var(--border)" }}>—</span>}
+ {tr ? <span className="fw-700 fs-12" style={{ color: TR_I[tr].c }}>{TR_I[tr].i}</span> : <span style={{ color: "var(--border)" }}>—</span>}
                       </td>
                       <td className="rivais-td-sep">
                         {zAvg != null ? (
-                          <span style={{ fontWeight: 700, fontSize: 10, color: sc3m(zAvg, 0.4, 0.4) }}>
+ <span className="fs-10 fw-700" style={{ color: sc3m(zAvg, 0.4, 0.4) }}>
                             {zAvg > 0 ? "+" : ""}{zAvg.toFixed(2)}
                           </span>
-                        ) : <span className="fs-9" style={{ color: "var(--border)" }}>—</span>}
+ ) : <span className="fs-9 c-border" >—</span>}
                       </td>
                       <td className="rivais-td rivais-border-mark">
-                        {p.up.includes("wjgc26") ? <span style={{ fontSize: 10, fontWeight: 700, color: "#166534" }}>✓</span> : <span className="fs-9" style={{ color: "var(--border)" }}>—</span>}
+ {p.up.includes("wjgc26") ? <span >✓</span> : <span className="fs-9 fs-10 fw-700 c-good-dark-inline" style={{ color: "var(--border)" }}>—</span>}
                       </td>
                       <td className="rivais-td">
-                        {p.up.includes("marco26") ? <span style={{ fontSize: 10, fontWeight: 700, color: "#3730a3" }}>✓</span> : <span className="fs-9" style={{ color: "var(--border)" }}>—</span>}
+ {p.up.includes("marco26") ? <span style={{ color: "#3730a3" }}>✓</span> : <span className="fs-9 fs-10 fw-700" style={{ color: "var(--border)" }}>—</span>}
                       </td>
                       {vsOn && (
                         <td className="rivais-td">
-                          {isM ? <span className="fs-9" style={{ color: "var(--border)" }}>—</span> :
-                            vsAvg != null ? <span style={{ fontWeight: 700, fontSize: 11, color: sc3m(vsAvg, 0, 0) }}>{vsAvg > 0 ? "+" : ""}{vsAvg}</span> :
-                              <span className="fs-9" style={{ color: "var(--border)" }}>—</span>}
+ {isM ? <span className="fs-9 c-border" >—</span> :
+ vsAvg != null ? <span className="fs-11 fw-700" style={{ color: sc3m(vsAvg, 0, 0) }}>{vsAvg > 0 ? "+" : ""}{vsAvg}</span> :
+ <span className="fs-9 c-border" >—</span>}
                         </td>
                       )}
                     </tr>

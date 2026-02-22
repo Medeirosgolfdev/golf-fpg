@@ -294,7 +294,7 @@ function PlayerSearch({ players, slots, onAdd, onRemove }: {
               borderColor: COLORS[i], background: COLORS_LIGHT[i],
               display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 14px", fontSize: 13, borderRadius: "var(--radius-pill)",
             }}>
-              <span style={{ width: 10, height: 10, borderRadius: "50%", background: COLORS[i], flexShrink: 0 }} />
+ <span className="round flex-shrink-0" style={{ width: 10, height: 10, background: COLORS[i] }} />
               <b>{shortName(s.player.name)}</b>
               <span className="muted fs-11">HCP {hcpDisplay(s.player.hcp)}</span>
               {s.loading && <span className="fs-11">⏳</span>}
@@ -504,7 +504,7 @@ function ScoreDistribution({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats
                   const barW = Math.max(2, (v / maxVal) * 100);
                   return (
                     <div key={x.i} className="flex-center-gap8">
-                      <span style={{ fontSize: 11, width: 60, textAlign: "right", color: COLORS[x.i], fontWeight: 600, flexShrink: 0 }}>
+ <span className="fs-11 ta-right fw-600 flex-shrink-0" style={{ width: 60, color: COLORS[x.i] }}>
                         {firstName(x.s.player.name)}
                       </span>
                       <div className="cmp-distrib-track">
@@ -513,7 +513,7 @@ function ScoreDistribution({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats
                           borderRadius: "var(--radius-sm)", opacity: 0.75,
                         }} />
                       </div>
-                      <span style={{ fontSize: 11, fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, width: 46, textAlign: "right", color: "var(--text-2)" }}>
+ <span className="ta-right fw-700 c-text-2 fs-11" style={{ fontFamily: "'JetBrains Mono', monospace", width: 46 }}>
                         {v.toFixed(1)}%
                       </span>
                     </div>
@@ -856,9 +856,9 @@ function TournamentEvolutionSection({ slots }: { slots: Slot[] }) {
             <div key={i} className="caKpi" style={{ borderColor: s.color }}>
               <div className="caKpiVal" style={{ color: s.color }}>{last != null ? last.toFixed(1) : "–"}</div>
               <div className="caKpiLbl">{shortName(s.name)} · {s.pts.length} rondas</div>
-              <div className="flex-wrap-gap8" style={{ justifyContent: "center", marginTop: 3 }}>
+ <div className="flex-wrap-gap8 jc-center" style={{ marginTop: 3 }}>
                 {delta != null && (
-                  <span style={{ fontSize: 10, fontWeight: 700, color: sc3m(delta, 0, 0) }}>
+ <span className="fw-700 fs-10" style={{ color: sc3m(delta, 0, 0) }}>
                     {delta > 0 ? "+" : ""}{delta.toFixed(1)}
                   </span>
                 )}
@@ -921,7 +921,7 @@ export default function CompararPage({ players }: { players: PlayersDb }) {
 
       {anyLoading && (
         <div className="holeAnalysis ta-c p-24">
-          <div className="mb-8" style={{ fontSize: 24 }}>⏳</div>
+ <div className="mb-8 fs-24" >⏳</div>
           <div className="muted">A carregar dados dos jogadores…</div>
         </div>
       )}
@@ -937,7 +937,7 @@ export default function CompararPage({ players }: { players: PlayersDb }) {
 
       {slots.length === 1 && !anyLoading && (
         <div className="holeAnalysis ta-c p-24">
-          <div className="mb-8" style={{ fontSize: 24 }}>👆</div>
+ <div className="mb-8 fs-24" >👆</div>
           <div className="muted">Adiciona mais jogadores para ver a comparação</div>
         </div>
       )}
