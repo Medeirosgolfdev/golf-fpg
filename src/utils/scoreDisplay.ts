@@ -63,3 +63,63 @@ export function fmtSdVal(r: RoundData): { text: string; cls: string } {
   const cls = sdClassByHcp(Number(r.sd), r.hi);
   return { text: String(r.sd), cls };
 }
+
+/* ═══ Semantic Color Utilities ═══
+ * Replace inline ternaries like:
+ *   color: val <= 3 ? "#16a34a" : val <= 5 ? "#d97706" : "#dc2626"
+ * with:
+ *   color: sc3(val, 3, 5)   →  "var(--color-good)" | "var(--color-warn)" | "var(--color-danger)"
+ */
+
+const C = {
+  good:     "var(--color-good)",     // #16a34a
+  warn:     "var(--color-warn)",     // #d97706
+  danger:   "var(--color-danger)",   // #dc2626
+  info:     "var(--color-info)",     // #1e40af
+  muted:    "var(--text-3)",         // #7a8a6e
+  goodDark: "var(--color-good-dark)",
+  dangerDark:"var(--color-danger-dark)",
+  warnDark: "var(--color-warn-dark)",
+  infoDark: "var(--color-navy)",
+} as const;
+
+/** 3-level semantic color: good / warn / danger
+ *  asc:  val <= lo → good, val <= hi → warn, else danger  (lower is better: SD, avg vs par)
+ *  desc: val >= hi → good, val >= lo → warn, else danger  (higher is better: bounce%, GIR) */
+export function sc3(val: number, lo: number, hi: number, dir: "asc" | "desc" = "asc"): string {
+  if (dir === "asc") return val <= lo ? C.good : val <= hi ? C.warn : C.danger;
+  return val >= hi ? C.good : val >= lo ? C.warn : C.danger;
+}
+
+/** 2-level semantic color: good / danger
+ *  asc:  val <= threshold → good, else danger  (lower is better)
+ *  desc: val >= threshold → good, else danger  (higher is better) */
+export function sc2(val: number, threshold: number, dir: "asc" | "desc" = "asc"): string {
+  if (dir === "asc") return val <= threshold ? C.good : C.danger;
+  return val >= threshold ? C.good : C.danger;
+}
+
+/** 2-level with warn instead of danger */
+export function sc2w(val: number, threshold: number, dir: "asc" | "desc" = "asc"): string {
+  if (dir === "asc") return val <= threshold ? C.good : C.warn;
+  return val >= threshold ? C.good : C.warn;
+}
+
+/** 3-level with muted middle (good / neutral / danger) */
+export function sc3m(val: number, lo: number, hi: number): string {
+  return val < -lo ? C.good : val > hi ? C.danger : C.muted;
+}
+
+/** Diagnostic level class: returns "diag-good" | "diag-warn" | "diag-danger" */
+export function diagLevel(val: number, lo: number, hi: number, dir: "asc" | "desc" = "asc"): string {
+  if (dir === "asc") return val <= lo ? "diag-good" : val <= hi ? "diag-warn" : "diag-danger";
+  return val >= hi ? "diag-good" : val >= lo ? "diag-warn" : "diag-danger";
+}
+
+/** Dark variants for conclusion text */
+export function scDark(level: "good" | "danger" | "info"): string {
+  return level === "good" ? C.goodDark : level === "danger" ? C.dangerDark : C.infoDark;
+}
+
+/** Export color constants for edge cases */
+export { C as SC };

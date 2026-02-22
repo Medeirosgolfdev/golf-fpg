@@ -21,8 +21,9 @@ import {
 import { norm } from "../utils/format";
 import { clubShort, hcpDisplay } from "../utils/playerUtils";
 import { deepFixMojibake } from "../utils/fixEncoding";
+import { sc3m } from "../utils/scoreDisplay";
 
-const COLORS = ["#16a34a", "#2563eb", "#dc2626", "#d97706"];
+const COLORS = ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)"];
 const COLORS_LIGHT = ["#dcfce7", "#dbeafe", "#fee2e2", "#fef3c7"];
 
 interface Slot {
@@ -291,7 +292,7 @@ function PlayerSearch({ players, slots, onAdd, onRemove }: {
           {slots.map((s, i) => (
             <span key={s.fed} className="jog-pill" style={{
               borderColor: COLORS[i], background: COLORS_LIGHT[i],
-              display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 14px", fontSize: 13, borderRadius: 20,
+              display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 14px", fontSize: 13, borderRadius: "var(--radius-pill)",
             }}>
               <span style={{ width: 10, height: 10, borderRadius: "50%", background: COLORS[i], flexShrink: 0 }} />
               <b>{shortName(s.player.name)}</b>
@@ -509,7 +510,7 @@ function ScoreDistribution({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats
                       <div className="cmp-distrib-track">
                         <div style={{
                           width: `${barW}%`, height: "100%", background: COLORS[x.i],
-                          borderRadius: 4, opacity: 0.75,
+                          borderRadius: "var(--radius-sm)", opacity: 0.75,
                         }} />
                       </div>
                       <span style={{ fontSize: 11, fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, width: 46, textAlign: "right", color: "var(--text-2)" }}>
@@ -571,7 +572,7 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
       </div>
 
       <svg viewBox={`0 0 ${W} ${H}`} className="cmp-radar-sm">
-        <line x1={PAD.left} x2={W - PAD.right} y1={yPos(0)} y2={yPos(0)} stroke="#16a34a" strokeWidth={1} strokeDasharray="4,3" opacity={0.5} />
+        <line x1={PAD.left} x2={W - PAD.right} y1={yPos(0)} y2={yPos(0)} stroke="var(--color-good)" strokeWidth={1} strokeDasharray="4,3" opacity={0.5} />
         {[-0.5, 0.5, 1.0].filter(v => v >= minV && v <= maxV).map(v => (
           <g key={v}><line x1={PAD.left} x2={W - PAD.right} y1={yPos(v)} y2={yPos(v)} stroke="var(--border-light)" strokeWidth={0.5} />
           <text x={PAD.left - 4} y={yPos(v) + 3} textAnchor="end" fontSize={9} fill="var(--text-muted)">{v > 0 ? "+" : ""}{v.toFixed(1)}</text></g>
@@ -627,7 +628,7 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
                 {entries.map((e, i) => {
                   const diff = e?.avg != null && e?.par != null ? e.avg - e.par : null;
                   const isBest = diff != null && diff === bestAvg && avgs.filter(v => v === bestAvg).length === 1;
-                  const diffCol = diff == null ? undefined : diff <= 0 ? "#16a34a" : diff <= 0.3 ? "#d97706" : "#dc2626";
+                  const diffCol = diff == null ? undefined : sc3(diff, 0, 0.3);
                   return (<React.Fragment key={i}>
                     <td className="r" style={{ color: COLORS[i] }}>{e?.avg != null ? e.avg.toFixed(1) : "–"}</td>
                     <td className="r" style={{ color: diffCol }}>{diff != null ? (isBest ? <b>{fD2(diff)}</b> : fD2(diff)) : "–"}</td>
@@ -857,7 +858,7 @@ function TournamentEvolutionSection({ slots }: { slots: Slot[] }) {
               <div className="caKpiLbl">{shortName(s.name)} · {s.pts.length} rondas</div>
               <div className="flex-wrap-gap8" style={{ justifyContent: "center", marginTop: 3 }}>
                 {delta != null && (
-                  <span style={{ fontSize: 10, fontWeight: 700, color: delta < 0 ? "#16a34a" : delta > 0 ? "#dc2626" : "var(--text-3)" }}>
+                  <span style={{ fontSize: 10, fontWeight: 700, color: sc3m(delta, 0, 0) }}>
                     {delta > 0 ? "+" : ""}{delta.toFixed(1)}
                   </span>
                 )}

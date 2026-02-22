@@ -18,6 +18,7 @@ import {
 } from "../data/playerDataLoader";
 import { deepFixMojibake } from "../utils/fixEncoding";
 import { norm } from "../utils/format";
+import { sc2, sc2w, sc3, sc3m, diagLevel, scDark, SC } from "../utils/scoreDisplay";
 import { scClass } from "../utils/scoreDisplay";
 import RivaisDashboard from "./RivaisDashboard";
 
@@ -862,21 +863,21 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
         <div className="haTitle">🏆 O Field 2025 — Quem Jogou e Como</div>
         <div className="haDiag mb-10">
           <div className="haDiagCard">
-            <div className="haDiagIcon diag-bg-amber">🥇</div>
+            <div className="haDiagIcon diag-warn">🥇</div>
             <div className="haDiagBody">
               <div className="haDiagVal c-eagle">{FIELD_2025.winner.total}</div>
               <div className="haDiagLbl">{FIELD_2025.winner.name} ({fmtTP(FIELD_2025.winner.result)})</div>
             </div>
           </div>
           <div className="haDiagCard">
-            <div className="haDiagIcon diag-bg-green">🏅</div>
+            <div className="haDiagIcon diag-good">🏅</div>
             <div className="haDiagBody">
               <div className="haDiagVal c-par-ok">{FIELD_2025.top5Avg.toFixed(0)}</div>
               <div className="haDiagLbl">média Top 5 por ronda</div>
             </div>
           </div>
           <div className="haDiagCard">
-            <div className="haDiagIcon diag-bg-blue">📊</div>
+            <div className="haDiagIcon diag-info">📊</div>
             <div className="haDiagBody">
               <div className="haDiagVal c-blue">{FIELD_2025.fieldAvg.toFixed(0)}</div>
               <div className="haDiagLbl">média field ({FIELD_2025.nPlayers} jogadores)</div>
@@ -1121,12 +1122,12 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
             const manuelVsField = manuelAvg != null ? manuelAvg - h.fAvg : null;
             return (
               <div key={h.h} className="flex-center-gap6-mb2">
-                <span style={{ minWidth: 26, fontWeight: 800, color: isHard ? "#dc2626" : isEasy ? "#16a34a" : "var(--text-3)" }}>#{h.h}</span>
+                <span style={{ minWidth: 26, fontWeight: 800, color: isHard ? SC.danger : isEasy ? SC.good : SC.muted }}>#{h.h}</span>
                 <span className="muted fs-9" style={{ minWidth: 24 }}>P{h.par}</span>
                 <div className="progress-track-overflow">
                   <div style={{
                     width: `${barPct}%`, height: "100%", borderRadius: "var(--radius-sm)",
-                    background: isHard ? "#dc2626" : vsPar > 0.4 ? "#f59e0b" : "#22c55e",
+                    background: isHard ? SC.danger : vsPar > 0.4 ? SC.warn : SC.good,
                     opacity: 0.7
                   }} />
                   <span className="bjgt-stat-abs">
@@ -1135,7 +1136,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                 </div>
                 <span className="fs-9 fw-700 c-blue" style={{ minWidth: 28 }}>T5:{h.t5.toFixed(1)}</span>
                 {manuelAvg != null && (
-                  <span style={{ minWidth: 32, fontSize: 10, fontWeight: 700, color: manuelVsField! > 0.3 ? "#dc2626" : manuelVsField! < -0.2 ? "#16a34a" : "var(--text-3)" }}>
+                  <span style={{ minWidth: 32, fontSize: 10, fontWeight: 700, color: sc3m(manuelVsField!, 0.2, 0.3) }}>
                     M:{manuelAvg.toFixed(1)}
                   </span>
                 )}
@@ -1200,21 +1201,21 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
           {avgGrossShort != null && avgGrossLong != null && (
             <div className="haDiag mb-10">
               <div className="haDiagCard">
-                <div className="haDiagIcon diag-bg-green">⛳</div>
+                <div className="haDiagIcon diag-good">⛳</div>
                 <div className="haDiagBody">
                   <div className="haDiagVal c-par-ok">{avgGrossShort.toFixed(0)}</div>
                   <div className="haDiagLbl">gross médio campos curtos (&lt;{medianMeters}m)</div>
                 </div>
               </div>
               <div className="haDiagCard">
-                <div className="haDiagIcon diag-bg-red">🏌️</div>
+                <div className="haDiagIcon diag-danger">🏌️</div>
                 <div className="haDiagBody">
                   <div className="haDiagVal c-birdie">{avgGrossLong.toFixed(0)}</div>
                   <div className="haDiagLbl">gross médio campos longos (≥{medianMeters}m)</div>
                 </div>
               </div>
               <div className="haDiagCard">
-                <div className="haDiagIcon diag-bg-amber">📊</div>
+                <div className="haDiagIcon diag-warn">📊</div>
                 <div className="haDiagBody">
                   <div className="haDiagVal c-eagle">{Math.abs(avgGrossLong - avgGrossShort).toFixed(0)}</div>
                   <div className="haDiagLbl">pancadas extra em campos longos</div>
@@ -1236,8 +1237,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                 <div key={i} title={`${r.date} · ${r.course} · ${r.meters ?? "?"}m → Gross ${r.gross}`}
                   style={{ width: 28, height: 28, borderRadius: vpCourse ? 999 : 4, display: "flex", alignItems: "center", justifyContent: "center",
                     fontSize: 10, fontWeight: 700, border: vpCourse ? "2px solid #dc2626" : "1px solid #d5dac9",
-                    background: r.gross <= 82 ? "#dcfce7" : r.gross <= 88 ? "#fef3c7" : "#fef2f2",
-                    color: r.gross <= 82 ? "#166534" : r.gross <= 88 ? "#92400e" : "#991b1b" }}>
+                    background: r.gross <= 82 ? "var(--bg-success)" : r.gross <= 88 ? "var(--bg-warn)" : "var(--bg-danger)",
+                    color: sc3(r.gross, 82, 88) }}>
                   {r.gross}
                 </div>
               );
@@ -1264,9 +1265,9 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               const mainN = showFiltered ? fb!.n : b.n;
               const mainPob = showFiltered ? fb!.pobPct : b.pobPct;
               const mainDbl = showFiltered ? fb!.dblPct : b.dblPct;
-              const avgCol = (mainAvg - b.par) <= 0.3 ? "#16a34a" : (mainAvg - b.par) <= 0.8 ? "#d97706" : "#dc2626";
+              const avgCol = sc3(mainAvg - b.par, 0.3, 0.8);
               const trend = showFiltered ? fb!.avg - b.avg : null;
-              const trendCol = trend != null && trend < -0.15 ? "#16a34a" : trend != null && trend > 0.15 ? "#dc2626" : "var(--text-3)";
+              const trendCol = trend != null ? sc3m(trend, 0.15, 0.15) : SC.muted;
               const noData = distPeriod !== 0 && !fb;
               return (
                 <div key={b.key} style={{ border: "1px solid var(--border)", borderRadius: "var(--radius-lg)", padding: "10px 12px", background: noData ? "var(--bg-detail)" : "var(--bg-card)", opacity: noData ? 0.5 : 1 }}>
@@ -1283,11 +1284,11 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                           </div>
                         </div>
                         <div>
-                          <div style={{ fontSize: 14, fontWeight: 800, color: "#16a34a" }}>{mainPob.toFixed(0)}%</div>
+                          <div style={{ fontSize: 14, fontWeight: 800, color: SC.good }}>{mainPob.toFixed(0)}%</div>
                           <div className="muted fs-9">par ou melhor</div>
                         </div>
                         <div>
-                          <div style={{ fontSize: 14, fontWeight: 800, color: "#dc2626" }}>{mainDbl.toFixed(0)}%</div>
+                          <div style={{ fontSize: 14, fontWeight: 800, color: SC.danger }}>{mainDbl.toFixed(0)}%</div>
                           <div className="muted fs-9">double+</div>
                         </div>
                       </div>
@@ -1305,7 +1306,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     </>
                   )}
                   {vpInBand.length > 0 && (
-                    <div style={{ fontSize: 10, color: "#0369a1", fontWeight: 600, borderTop: "1px solid var(--border-light)", paddingTop: 4 }}>
+                    <div style={{ fontSize: 10, color: "var(--chart-2)", fontWeight: 600, borderTop: "1px solid var(--border-light)", paddingTop: 4 }}>
                       VP buracos nesta faixa: {vpInBand.map(h => `#${h.h}`).join(", ")}
                     </div>
                   )}
@@ -1356,7 +1357,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                 <div>
                   <div style={{ position: "relative", height: chartH, marginBottom: 4 }}>
                     {/* Reference lines */}
-                    {[{ val: t5ref, label: "T5", col: "#d97706" }, { val: fieldRef, label: "Field", col: "var(--text-muted)" }].map(ref => {
+                    {[{ val: t5ref, label: "T5", col: SC.warn }, { val: fieldRef, label: "Field", col: "var(--text-muted)" }].map(ref => {
                       const bottom = toPx(ref.val);
                       if (bottom < 0 || bottom > chartH) return null;
                       return (
@@ -1373,7 +1374,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     <div className="chart-bars" style={{ height: chartH }}>
                       {ms.map((m, i) => {
                         const barPx = Math.max(4, toPx(m.avgGross));
-                        const col = m.avgGross <= t5ref ? "#16a34a" : m.avgGross <= fieldRef ? "#0369a1" : m.avgGross <= fieldRef + 5 ? "#d97706" : "#dc2626";
+                        const col = m.avgGross <= t5ref ? SC.good : m.avgGross <= fieldRef ? "var(--chart-2)" : m.avgGross <= fieldRef + 5 ? SC.warn : SC.danger;
                         return (
                           <div key={i} className="chart-cell">
                             <div style={{ fontSize: 10, fontWeight: 700, color: col, marginBottom: 2 }}>{m.avgGross.toFixed(0)}</div>
@@ -1393,7 +1394,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                   </div>
                   {/* Trend insight */}
                   <div className={`caConclusion ${improving ? "concl-success" : "concl-danger"}`} style={{ marginTop: 8 }}>
-                    <div className="caConcText" style={{ color: improving ? "#166534" : "#991b1b", fontSize: 11 }}>
+                    <div className="caConcText" style={{ color: scDark(improving ? "good" : "danger"), fontSize: 11 }}>
                       {improving
                         ? <>📉 <b>A descer!</b> Primeiros meses: {f3avg.toFixed(0)} → Últimos meses: {l3avg.toFixed(0)}. Melhoria de {(f3avg - l3avg).toFixed(1)} pancadas.</>
                         : Math.abs(f3avg - l3avg) < 1
@@ -1416,9 +1417,9 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
             </div>
             <div className="grid-3">
               {[
-                { par: 3, key: "p3Avg" as const, label: "Par 3", col: "#0369a1", refAvg: 3 },
-                { par: 4, key: "p4Avg" as const, label: "Par 4", col: "#7c3aed", refAvg: 4 },
-                { par: 5, key: "p5Avg" as const, label: "Par 5", col: "#16a34a", refAvg: 5 },
+                { par: 3, key: "p3Avg" as const, label: "Par 3", col: "var(--chart-2)", refAvg: 3 },
+                { par: 4, key: "p4Avg" as const, label: "Par 4", col: "var(--chart-5)", refAvg: 4 },
+                { par: 5, key: "p5Avg" as const, label: "Par 5", col: SC.good, refAvg: 5 },
               ].map(pt => {
                 const vals = filteredMonthly.filter(m => m[pt.key] != null).map(m => ({ label: m.label, avg: m[pt.key]! }));
                 if (vals.length < 3) return null;
@@ -1450,7 +1451,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                       <span className="c-muted">{vals[0].label}</span>
                       <span className="c-muted">{vals[vals.length - 1].label}</span>
                     </div>
-                    <div style={{ fontSize: 10, marginTop: 4, fontWeight: 700, color: trend < -0.15 ? "#16a34a" : trend > 0.15 ? "#dc2626" : "var(--text-3)" }}>
+                    <div style={{ fontSize: 10, marginTop: 4, fontWeight: 700, color: sc3m(trend, 0.15, 0.15) }}>
                       {fAvg.toFixed(2)} → {lAvg.toFixed(2)} ({trend > 0 ? "+" : ""}{trend.toFixed(2)})
                     </div>
                     {t5avg != null && (
@@ -1482,7 +1483,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                   <div className="chart-bars" style={{ height: 80, marginBottom: 4 }}>
                     {ms.map((m, i) => {
                       const h = maxDbl > 0 ? (m.dblPct / maxDbl) * 100 : 0;
-                      const col = m.dblPct <= 15 ? "#16a34a" : m.dblPct <= 25 ? "#d97706" : "#dc2626";
+                      const col = sc3(m.dblPct, 15, 25);
                       return (
                         <div key={i} className="bjgt-bar-col">
                           <div style={{ fontSize: 10, fontWeight: 700, color: col }}>{m.dblPct.toFixed(0)}%</div>
@@ -1497,7 +1498,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     ))}
                   </div>
                   <div className={`caConclusion ${improving ? "concl-success" : "concl-danger"}`} style={{ marginTop: 8 }}>
-                    <div className="caConcText" style={{ color: improving ? "#166534" : "#991b1b", fontSize: 11 }}>
+                    <div className="caConcText" style={{ color: scDark(improving ? "good" : "danger"), fontSize: 11 }}>
                       {improving
                         ? <>✅ <b>Menos blow-ups!</b> Doubles baixaram de {fDbl.toFixed(0)}% para {lDbl.toFixed(0)}%. Isto é maturidade competitiva.</>
                         : lDbl > fDbl + 2
@@ -1531,9 +1532,9 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                 { label: "All-time", data: roundDetails },
               ].filter(p => p.data.length >= 2);
               const benchmarks = [
-                { label: "🥇 Vencedor BJGT", value: FIELD_2025.leaderboard[0].total / 3, col: "#d97706" },
-                { label: "🏅 Top 5 BJGT", value: FIELD_2025.top5Avg, col: "#16a34a" },
-                { label: "📊 Field BJGT", value: FIELD_2025.fieldAvg, col: "#0369a1" },
+                { label: "🥇 Vencedor BJGT", value: FIELD_2025.leaderboard[0].total / 3, col: SC.warn },
+                { label: "🏅 Top 5 BJGT", value: FIELD_2025.top5Avg, col: SC.good },
+                { label: "📊 Field BJGT", value: FIELD_2025.fieldAvg, col: "var(--chart-2)" },
               ];
               return (
                 <div>
@@ -1568,7 +1569,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     const range = maxV - minV;
                     return (
                       <div className="mt-8">
-                        {[...benchmarks, { label: `📍 ${PLAYER_NAME} média`, value: recentAvg, col: "#1c2617" }, { label: `📍 ${PLAYER_NAME} melhor`, value: recentBest, col: "#16a34a" }].map((b, i) => (
+                        {[...benchmarks, { label: `📍 ${PLAYER_NAME} média`, value: recentAvg, col: "#1c2617" }, { label: `📍 ${PLAYER_NAME} melhor`, value: recentBest, col: SC.good }].map((b, i) => (
                           <div key={i} className="flex-center-gap6" style={{ marginBottom: 3 }}>
                             <span style={{ minWidth: 110, fontSize: 10, fontWeight: 600, color: b.col }}>{b.label}</span>
                             <div className="progress-track">
@@ -1587,7 +1588,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
           {/* ── 5. FRONT 9 vs BACK 9 AO LONGO DO TEMPO ── */}
           <div className="mb-8">
-            <div className="haSubTitle" style={{ color: "#0891b2" }}>⚡ Front 9 vs Back 9 — Gestão de Energia</div>
+            <div className="haSubTitle" style={{ color: "var(--chart-6)" }}>⚡ Front 9 vs Back 9 — Gestão de Energia</div>
             <div className="muted bjgt-sub">
               Compara a média de pancadas nos primeiros 9 buracos (F9) vs últimos 9 (B9). Se o B9 é consistentemente pior,
               pode indicar fadiga física, perda de concentração ou má hidratação/nutrição durante a ronda.
@@ -1609,12 +1610,12 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                       const b9h = ((m.b9Avg - minSplit + 1) / (range + 2)) * 100;
                       return (
                         <div key={i} className="bjgt-bar-cell">
-                          <div style={{ fontSize: 10, fontWeight: 600, color: "#0891b2" }}>{m.f9Avg.toFixed(0)}</div>
+                          <div style={{ fontSize: 10, fontWeight: 600, color: "var(--chart-6)" }}>{m.f9Avg.toFixed(0)}</div>
                           <div className="chart-bars-1" style={{ height: 50, width: "100%" }}>
-                            <div style={{ flex: 1, height: `${f9h}%`, background: "#0891b2", borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
-                            <div style={{ flex: 1, height: `${b9h}%`, background: "#f59e0b", borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
+                            <div style={{ flex: 1, height: `${f9h}%`, background: "var(--chart-6)", borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
+                            <div style={{ flex: 1, height: `${b9h}%`, background: "var(--chart-4)", borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
                           </div>
-                          <div style={{ fontSize: 10, fontWeight: 600, color: "#f59e0b" }}>{m.b9Avg.toFixed(0)}</div>
+                          <div style={{ fontSize: 10, fontWeight: 600, color: "var(--chart-4)" }}>{m.b9Avg.toFixed(0)}</div>
                           <div className="fs-7-muted">{m.label}</div>
                         </div>
                       );
@@ -1622,8 +1623,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                   </div>
                   {/* Legend */}
                   <div className="chart-legend-mb8">
-                    <span><span className="chart-legend-dot" style={{ background: "#0891b2" }} />Front 9</span>
-                    <span><span className="chart-legend-dot" style={{ background: "#f59e0b" }} />Back 9</span>
+                    <span><span className="chart-legend-dot" style={{ background: "var(--chart-6)" }} />Front 9</span>
+                    <span><span className="chart-legend-dot" style={{ background: "var(--chart-4)" }} />Back 9</span>
                   </div>
                   <div className="caConclusion bg-info bc-info">
                     <div className="caConcText c-dark-navy-11">
@@ -1678,7 +1679,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                   {filteredCoach.filter(m => m.n >= 2).map((m, i) => {
                     const maxSD = Math.max(...filteredCoach.filter(x => x.n >= 2).map(x => x.grossStdDev));
                     const h = maxSD > 0 ? (m.grossStdDev / maxSD) * 100 : 0;
-                    const col = m.grossStdDev <= 3 ? "#16a34a" : m.grossStdDev <= 5 ? "#d97706" : "#dc2626";
+                    const col = sc3(m.grossStdDev, 3, 5);
                     return (
                       <div key={i} className="bjgt-bar-col">
                         <div style={{ fontSize: 10, fontWeight: 700, color: col }}>{m.grossStdDev.toFixed(1)}</div>
@@ -1696,7 +1697,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                   {filteredCoach.filter(m => m.n >= 2).map((m, i) => {
                     const maxGap = Math.max(...filteredCoach.filter(x => x.n >= 2).map(x => x.bestVsAvgGap));
                     const h = maxGap > 0 ? (m.bestVsAvgGap / maxGap) * 100 : 0;
-                    const col = m.bestVsAvgGap <= 3 ? "#16a34a" : m.bestVsAvgGap <= 6 ? "#d97706" : "#dc2626";
+                    const col = sc3(m.bestVsAvgGap, 3, 6);
                     return (
                       <div key={i} className="bjgt-bar-col">
                         <div style={{ fontSize: 10, fontWeight: 700, color: col }}>{m.bestVsAvgGap.toFixed(0)}</div>
@@ -1721,7 +1722,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               const gapBetter = lGap < fGap - 1;
               return (
                 <div className={`caConclusion ${sdBetter || gapBetter ? "concl-success" : "concl-danger"}`}>
-                  <div className="caConcText" style={{ color: sdBetter || gapBetter ? "#166534" : "#991b1b", fontSize: 11 }}>
+                  <div className="caConcText" style={{ color: scDark(sdBetter || gapBetter ? "good" : "danger"), fontSize: 11 }}>
                     σ: {fSD.toFixed(1)} → {lSD.toFixed(1)} {sdBetter ? "✅ mais consistente" : "— manter trabalho"}
                     {" · "}Gap: {fGap.toFixed(0)} → {lGap.toFixed(0)} {gapBetter ? "✅ a fechar" : "— potencial por explorar"}.
                     {sdBetter && gapBetter && " Evolução clara em consistência — sinal de maturidade competitiva."}
@@ -1743,7 +1744,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               {filteredCoach.map((m, i) => {
                 const rate = m.bounceRate;
                 const h = rate != null ? Math.min(100, rate) : 0;
-                const col = rate == null ? "var(--border-light)" : rate >= 40 ? "#16a34a" : rate >= 25 ? "#d97706" : "#dc2626";
+                const col = rate == null ? "var(--border-light)" : sc3(rate, 25, 40, "desc");
                 return (
                   <div key={i} className="bjgt-bar-col">
                     <div style={{ fontSize: 10, fontWeight: 700, color: col }}>{rate != null ? `${rate.toFixed(0)}%` : "–"}</div>
@@ -1762,7 +1763,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               const lR = last.reduce((s, m) => s + m.bounceRate!, 0) / last.length;
               return (
                 <div className={`caConclusion ${lR > fR + 5 ? "concl-success" : "concl-info"}`}>
-                  <div className="caConcText" style={{ color: lR > fR + 5 ? "#166534" : "#1e3a5f", fontSize: 11 }}>
+                  <div className="caConcText" style={{ color: scDark(lR > fR + 5 ? "good" : "info"), fontSize: 11 }}>
                     Bounce-back: {fR.toFixed(0)}% → {lR.toFixed(0)}%. {lR > fR + 5 ? "📈 A melhorar a gestão mental!" : lR >= fR ? "Estável." : "Trabalhar rotina de reset pós-erro."}
                     {" "}Um double não tem de custar dois.
                   </div>
@@ -1789,8 +1790,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     const h = (m.birdieRate / maxB) * 100;
                     return (
                       <div key={i} className="bjgt-bar-col">
-                        <div style={{ fontSize: 10, fontWeight: 700, color: "#16a34a" }}>{m.birdieRate.toFixed(1)}</div>
-                        <div style={{ width: "100%", height: `${h}%`, background: "#16a34a", borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
+                        <div style={{ fontSize: 10, fontWeight: 700, color: SC.good }}>{m.birdieRate.toFixed(1)}</div>
+                        <div style={{ width: "100%", height: `${h}%`, background: SC.good, borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
                         <div className="bjgt-kpi-tiny">{m.label}</div>
                       </div>
                     );
@@ -1806,8 +1807,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     const h = (m.avgPobStreak / maxS) * 100;
                     return (
                       <div key={i} className="bjgt-bar-col">
-                        <div style={{ fontSize: 10, fontWeight: 700, color: "#0369a1" }}>{m.avgPobStreak.toFixed(1)}</div>
-                        <div style={{ width: "100%", height: `${h}%`, background: "#0369a1", borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
+                        <div style={{ fontSize: 10, fontWeight: 700, color: "var(--chart-2)" }}>{m.avgPobStreak.toFixed(1)}</div>
+                        <div style={{ width: "100%", height: `${h}%`, background: "var(--chart-2)", borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
                         <div className="bjgt-kpi-tiny">{m.label}</div>
                       </div>
                     );
@@ -1852,14 +1853,14 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                 const l3h = Math.min(100, (Math.abs(m.last3Avg) / maxAbs) * 100);
                 return (
                   <div key={i} className="bjgt-bar-cell">
-                    <div style={{ fontSize: 10, fontWeight: 600, color: m.first3Avg <= 0.5 ? "#16a34a" : "#d97706" }}>
+                    <div style={{ fontSize: 10, fontWeight: 600, color: sc2w(m.first3Avg, 0.5) }}>
                       {m.first3Avg > 0 ? "+" : ""}{m.first3Avg.toFixed(1)}
                     </div>
                     <div className="chart-bars-1" style={{ height: 40, width: "100%" }}>
-                      <div style={{ flex: 1, height: `${f3h}%`, background: "#d97706", borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
-                      <div style={{ flex: 1, height: `${l3h}%`, background: "#7c3aed", borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
+                      <div style={{ flex: 1, height: `${f3h}%`, background: SC.warn, borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
+                      <div style={{ flex: 1, height: `${l3h}%`, background: "var(--chart-5)", borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
                     </div>
-                    <div style={{ fontSize: 10, fontWeight: 600, color: m.last3Avg <= 0.5 ? "#16a34a" : "#7c3aed" }}>
+                    <div style={{ fontSize: 10, fontWeight: 600, color: m.last3Avg <= 0.5 ? SC.good : "var(--chart-5)" }}>
                       {m.last3Avg > 0 ? "+" : ""}{m.last3Avg.toFixed(1)}
                     </div>
                     <div style={{ fontSize: 10, color: "var(--text-muted)" }}>{m.label}</div>
@@ -1868,8 +1869,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               })}
             </div>
             <div className="chart-legend-mb6">
-              <span><span className="chart-legend-dot" style={{ background: "#d97706" }} />Bur. 1-3</span>
-              <span><span className="chart-legend-dot" style={{ background: "#7c3aed" }} />Bur. 16-18</span>
+              <span><span className="chart-legend-dot" style={{ background: SC.warn }} />Bur. 1-3</span>
+              <span><span className="chart-legend-dot" style={{ background: "var(--chart-5)" }} />Bur. 16-18</span>
             </div>
             {(() => {
               if (filteredCoach.length < 3) return null;
@@ -1880,7 +1881,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               const wVal = Math.max(avgF, avgL);
               return (
                 <div className={`caConclusion ${wVal > 2 ? "concl-danger" : "concl-success"}`}>
-                  <div className="caConcText" style={{ color: wVal > 2 ? "#991b1b" : "#166534", fontSize: 11 }}>
+                  <div className="caConcText" style={{ color: scDark(wVal > 2 ? "danger" : "good"), fontSize: 11 }}>
                     {worse === "arranque" && avgF > 1.5
                       ? <>⚠️ Perde mais nos primeiros 3 buracos (+{avgF.toFixed(1)} vs par). Pode ser nervos — aquecer bem e ter rotina pré-jogo.</>
                       : worse === "fecho" && avgL > 1.5
@@ -1922,17 +1923,17 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                         <div className="fs-9-muted-mb4">{p.data.reduce((s, m) => s + m.n, 0)} rondas</div>
                         {/* Stacked bar */}
                         <div className="flex-h16-bar">
-                          {avgBird > 0 && <div style={{ flex: avgBird, background: "#0369a1" }} />}
-                          {avgPob - avgBird > 0 && <div style={{ flex: avgPob - avgBird, background: "#16a34a" }} />}
-                          {avgBog > 0 && <div style={{ flex: avgBog, background: "#d97706" }} />}
-                          {avgDbl > 0 && <div style={{ flex: avgDbl, background: "#dc2626" }} />}
+                          {avgBird > 0 && <div style={{ flex: avgBird, background: "var(--chart-2)" }} />}
+                          {avgPob - avgBird > 0 && <div style={{ flex: avgPob - avgBird, background: SC.good }} />}
+                          {avgBog > 0 && <div style={{ flex: avgBog, background: SC.warn }} />}
+                          {avgDbl > 0 && <div style={{ flex: avgDbl, background: SC.danger }} />}
                           {avgTrip > 0 && <div style={{ flex: avgTrip, background: "#7f1d1d" }} />}
                         </div>
                         <div style={{ fontSize: 10, display: "flex", justifyContent: "space-between" }}>
                           <span className="cb-par-ok">Par+: {avgPob.toFixed(0)}%</span>
                           <span className="cb-birdie">Dbl+: {(avgDbl + avgTrip).toFixed(0)}%</span>
                         </div>
-                        <div style={{ fontSize: 10, color: "#0369a1", fontWeight: 600 }}>🦅 {avgBird.toFixed(1)}%</div>
+                        <div style={{ fontSize: 10, color: "var(--chart-2)", fontWeight: 600 }}>🦅 {avgBird.toFixed(1)}%</div>
                       </div>
                     );
                   })}
@@ -1959,13 +1960,13 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                   const maxSD = Math.max(...allSDs);
                   const range = maxSD - minSD || 5;
                   const h = ((m.avgSD - minSD + 1) / (range + 2)) * 100;
-                  const col = m.avgSD <= 15 ? "#16a34a" : m.avgSD <= 25 ? "#d97706" : "#dc2626";
+                  const col = sc3(m.avgSD, 15, 25);
                   return (
                     <div key={i} className="bjgt-bar-col">
                       <div style={{ fontSize: 10, fontWeight: 700, color: col }}>{m.avgSD.toFixed(1)}</div>
                       <div style={{ width: "100%", height: `${h}%`, background: col, borderRadius: "3px 3px 0 0", opacity: 0.7, minHeight: 3 }} />
                       {m.bestSD != null && (
-                        <div style={{ fontSize: 10, color: "#16a34a", fontWeight: 600 }}>⬇{m.bestSD.toFixed(1)}</div>
+                        <div style={{ fontSize: 10, color: SC.good, fontWeight: 600 }}>⬇{m.bestSD.toFixed(1)}</div>
                       )}
                       <div className="fs-7-muted">{m.label}</div>
                     </div>
@@ -1983,7 +1984,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                 const overallBest = allBest.length > 0 ? Math.min(...allBest) : null;
                 return (
                   <div className={`caConclusion ${lSD < fSD - 1 ? "concl-success" : "concl-info"}`}>
-                    <div className="caConcText" style={{ color: lSD < fSD - 1 ? "#166534" : "#1e3a5f", fontSize: 11 }}>
+                    <div className="caConcText" style={{ color: scDark(lSD < fSD - 1 ? "good" : "info"), fontSize: 11 }}>
                       SD médio: {fSD.toFixed(1)} → {lSD.toFixed(1)} {lSD < fSD - 1 ? "📉 a baixar — evolução real!" : lSD > fSD + 1 ? "📈 a subir — pode ser campos mais duros" : "— estável"}.
                       {overallBest != null && <> Melhor SD de sempre: <b>{overallBest.toFixed(1)}</b>.</>}
                       {hcp != null && <> HCP actual: <b>{hcp.toFixed(1)}</b>.</>}
@@ -2019,14 +2020,14 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     <td className="row-label fw-700">{m.label}</td>
                     <td>{m.n}</td>
                     <td className="fw-700">{m.avgGross.toFixed(0)}</td>
-                    <td style={{ color: m.grossStdDev <= 3 ? "#16a34a" : m.grossStdDev <= 5 ? "#d97706" : "#dc2626" }}>{m.n >= 2 ? m.grossStdDev.toFixed(1) : "–"}</td>
-                    <td style={{ color: "#16a34a", fontWeight: 600 }}>{m.pobPct.toFixed(0)}</td>
+                    <td style={{ color: sc3(m.grossStdDev, 3, 5) }}>{m.n >= 2 ? m.grossStdDev.toFixed(1) : "–"}</td>
+                    <td style={{ color: SC.good, fontWeight: 600 }}>{m.pobPct.toFixed(0)}</td>
                     <td className="c-blue">{m.birdieRate.toFixed(1)}</td>
                     <td className="c-birdie">{m.dblRate.toFixed(0)}</td>
-                    <td style={{ color: m.bounceRate != null && m.bounceRate >= 40 ? "#16a34a" : "#d97706" }}>{m.bounceRate != null ? `${m.bounceRate.toFixed(0)}%` : "–"}</td>
+                    <td style={{ color: m.bounceRate != null ? sc2w(m.bounceRate, 40, "desc") : SC.warn }}>{m.bounceRate != null ? `${m.bounceRate.toFixed(0)}%` : "–"}</td>
                     <td className="c-blue">{m.avgPobStreak.toFixed(1)}</td>
-                    <td style={{ color: m.first3Avg > 1.5 ? "#dc2626" : "#16a34a" }}>{m.first3Avg > 0 ? "+" : ""}{m.first3Avg.toFixed(1)}</td>
-                    <td style={{ color: m.last3Avg > 1.5 ? "#dc2626" : "#16a34a" }}>{m.last3Avg > 0 ? "+" : ""}{m.last3Avg.toFixed(1)}</td>
+                    <td style={{ color: sc2(m.first3Avg, 1.5) }}>{m.first3Avg > 0 ? "+" : ""}{m.first3Avg.toFixed(1)}</td>
+                    <td style={{ color: sc2(m.last3Avg, 1.5) }}>{m.last3Avg > 0 ? "+" : ""}{m.last3Avg.toFixed(1)}</td>
                     {filteredCoach.some(x => x.avgSD != null) && <td className="fw-600">{m.avgSD != null ? m.avgSD.toFixed(1) : "–"}</td>}
                   </tr>
                 ))}
@@ -2128,7 +2129,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                 {vpHoleProfiles.map(h => {
                   const fh = FIELD_2025.holes.find(x => x.h === h.h);
                   const d = fh ? h.vpAvg - fh.fAvg : 0;
-                  const col = d > 0.5 ? "#dc2626" : d > 0.2 ? "#d97706" : d < -0.2 ? "#16a34a" : "var(--text-3)";
+                  const col = d < -0.2 ? SC.good : d <= 0.2 ? SC.muted : d <= 0.5 ? SC.warn : SC.danger;
                   return <td key={h.h} style={{ textAlign: "center", fontWeight: 700, fontSize: 10, color: col }}>{d > 0 ? `+${d.toFixed(1)}` : d.toFixed(1)}</td>;
                 })}
                 <td className="bl-border"></td>
@@ -2172,7 +2173,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
             {daySummaries.map(d => {
               const isBest = bestDay && d.idx === bestDay.idx;
               const isWorst = worstDay && d.idx === worstDay.idx && daySummaries.length > 1;
-              const border = isBest ? "#16a34a" : isWorst ? "#dc2626" : "#d5dac9";
+              const border = isBest ? SC.good : isWorst ? SC.danger : "var(--border)";
               const bg = isBest ? "#f0fdf4" : isWorst ? "#fef2f2" : "#fff";
               return (
                 <div key={d.idx} style={{ border: `2px solid ${border}`, borderRadius: "var(--radius-lg)", padding: "10px 12px", background: bg }}>
@@ -2180,7 +2181,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     <span className="fw-900 fs-13">Dia {d.idx}</span>
                     <span className="muted fs-10">{d.date}</span>
                   </div>
-                  <div style={{ fontSize: 28, fontWeight: 900, color: isBest ? "#16a34a" : isWorst ? "#dc2626" : "#1c2617" }}>{d.gross}</div>
+                  <div style={{ fontSize: 28, fontWeight: 900, color: isBest ? SC.good : isWorst ? SC.danger : "var(--text)" }}>{d.gross}</div>
                   <div className="muted fs-10 mb-6">{fmtTP(d.gross - tp)}</div>
                   <div className="flex-gap8-fs10">
                     <span>F9: <b>{d.f9}</b></span>
@@ -2214,22 +2215,22 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
         {nH >= 18 && f9avg != null && b9avg != null && (
           <div className="haDiag mb-8">
             <div className="haDiagCard">
-              <div className="haDiagIcon diag-bg-blue">1️⃣</div>
+              <div className="haDiagIcon diag-info">1️⃣</div>
               <div className="haDiagBody">
                 <div className="haDiagVal c-blue">{f9avg.toFixed(0)}</div>
                 <div className="haDiagLbl">média Front 9 ({fmtTP(Math.round(f9avg - f9par))})</div>
               </div>
             </div>
             <div className="haDiagCard">
-              <div className="haDiagIcon" style={{ background: Math.round(b9avg) > Math.round(f9avg) + 2 ? "#dc262620" : "#16a34a20", color: Math.round(b9avg) > Math.round(f9avg) + 2 ? "#dc2626" : "#16a34a" }}>🔟</div>
+              <div className={`haDiagIcon ${Math.round(b9avg) > Math.round(f9avg) + 2 ? "diag-danger" : "diag-good"}`}>🔟</div>
               <div className="haDiagBody">
-                <div className="haDiagVal" style={{ color: Math.round(b9avg) > Math.round(f9avg) + 2 ? "#dc2626" : "#1c2617" }}>{b9avg.toFixed(0)}</div>
+                <div className="haDiagVal" style={{ color: Math.round(b9avg) > Math.round(f9avg) + 2 ? SC.danger : "var(--text)" }}>{b9avg.toFixed(0)}</div>
                 <div className="haDiagLbl">média Back 9 ({fmtTP(Math.round(b9avg - b9par))})</div>
               </div>
             </div>
             {Math.abs(f9avg - b9avg) > 2 && (
               <div className="haDiagCard">
-                <div className="haDiagIcon diag-bg-amber">⚡</div>
+                <div className="haDiagIcon diag-warn">⚡</div>
                 <div className="haDiagBody">
                   <div className="haDiagVal c-eagle">{Math.abs(f9avg - b9avg).toFixed(0)}</div>
                   <div className="haDiagLbl">{f9avg > b9avg ? "Front 9 custa mais — atenção à partida" : "Back 9 custa mais — gerir energia"}</div>
@@ -2242,10 +2243,10 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
         {/* Recovery after double */}
         {totalRecovery >= 2 && recoveryRate != null && (
           <div className={`caConclusion ${recoveryRate >= 60 ? "concl-success" : recoveryRate >= 40 ? "concl-warn" : "concl-danger"}`}>
-            <div className="caConcTitle" style={{ color: recoveryRate >= 60 ? "#166534" : recoveryRate >= 40 ? "#92400e" : "#991b1b" }}>
+            <div className="caConcTitle" style={{ color: sc3(recoveryRate, 40, 60, "desc") }}>
               {recoveryRate >= 60 ? "💪" : "⚠️"} Recuperação após double
             </div>
-            <div className="caConcText" style={{ color: recoveryRate >= 60 ? "#14532d" : recoveryRate >= 40 ? "#78350f" : "#7f1d1d" }}>
+            <div className="caConcText" style={{ color: sc3(recoveryRate, 40, 60, "desc") }}>
               Após um double, fizeste bogey ou melhor {goodRecovery} de {totalRecovery} vezes ({recoveryRate.toFixed(0)}%).
               {recoveryRate < 50 && <> Tendência para encadear buracos maus — pratica a rotina de reset: respira, esquece, joga o próximo buraco.</>}
               {recoveryRate >= 60 && <> Boa mentalidade — consegues isolar os maus buracos. Mantém essa força.</>}
@@ -2363,37 +2364,37 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
         <div className="haTitle">📊 Análise de Performance <span className="muted" style={{ fontSize: 11 }}>({S.nRounds} rondas · Vermelho par {tp})</span></div>
         <div className="haDiag">
           <div className="haDiagCard">
-            <div className="haDiagIcon diag-bg-red">🏌️</div>
+            <div className="haDiagIcon diag-danger">🏌️</div>
             <div className="haDiagBody">
               <div className="haDiagVal" style={{ color: "var(--text)" }}>{S.bestRound ? String(S.bestRound.gross) : "–"}</div>
               <div className="haDiagLbl">melhor gross {S.bestRound ? fmtTP(S.bestRound.gross - tp) : ""}</div>
             </div>
           </div>
           <div className="haDiagCard">
-            <div className="haDiagIcon diag-bg-blue">📊</div>
+            <div className="haDiagIcon diag-info">📊</div>
             <div className="haDiagBody">
               <div className="haDiagVal c-blue">{S.avgGross != null ? S.avgGross.toFixed(1) : "–"}</div>
               <div className="haDiagLbl">média gross {S.avgGross != null ? fmtTP(Math.round(S.avgGross - tp)) : ""}</div>
             </div>
           </div>
           <div className="haDiagCard">
-            <div className="haDiagIcon" style={{ background: (S.totalStrokesLost <= 8 ? "#16a34a" : S.totalStrokesLost <= 14 ? "#d97706" : "#dc2626") + "20", color: S.totalStrokesLost <= 8 ? "#16a34a" : S.totalStrokesLost <= 14 ? "#d97706" : "#dc2626" }}>🎯</div>
+            <div className={`haDiagIcon ${diagLevel(S.totalStrokesLost, 8, 14)}`}>🎯</div>
             <div className="haDiagBody">
-              <div className="haDiagVal" style={{ color: S.totalStrokesLost <= 8 ? "#16a34a" : S.totalStrokesLost <= 14 ? "#d97706" : "#dc2626" }}>+{S.totalStrokesLost.toFixed(1)}</div>
+              <div className="haDiagVal" style={{ color: sc3(S.totalStrokesLost, 8, 14) }}>+{S.totalStrokesLost.toFixed(1)}</div>
               <div className="haDiagLbl">pancadas perdidas p/ volta vs par</div>
             </div>
           </div>
           <div className="haDiagCard">
-            <div className="haDiagIcon" style={{ background: (pobP >= 50 ? "#16a34a" : pobP >= 35 ? "#d97706" : "#dc2626") + "20", color: pobP >= 50 ? "#16a34a" : pobP >= 35 ? "#d97706" : "#dc2626" }}>⛳</div>
+            <div className={`haDiagIcon ${diagLevel(pobP, 35, 50, "desc")}`}>⛳</div>
             <div className="haDiagBody">
-              <div className="haDiagVal" style={{ color: pobP >= 50 ? "#16a34a" : pobP >= 35 ? "#d97706" : "#dc2626" }}>{pobP.toFixed(0)}%</div>
+              <div className="haDiagVal" style={{ color: sc3(pobP, 35, 50, "desc") }}>{pobP.toFixed(0)}%</div>
               <div className="haDiagLbl">par ou melhor ({pobN}/{totN} buracos)</div>
             </div>
           </div>
           <div className="haDiagCard">
-            <div className="haDiagIcon" style={{ background: (dowP <= 8 ? "#16a34a" : dowP <= 18 ? "#d97706" : "#dc2626") + "20", color: dowP <= 8 ? "#16a34a" : dowP <= 18 ? "#d97706" : "#dc2626" }}>💣</div>
+            <div className={`haDiagIcon ${diagLevel(dowP, 8, 18)}`}>💣</div>
             <div className="haDiagBody">
-              <div className="haDiagVal" style={{ color: dowP <= 8 ? "#16a34a" : dowP <= 18 ? "#d97706" : "#dc2626" }}>{dowP.toFixed(0)}%</div>
+              <div className="haDiagVal" style={{ color: sc3(dowP, 8, 18) }}>{dowP.toFixed(0)}%</div>
               <div className="haDiagLbl">double bogey ou pior ({dowN}/{totN})</div>
             </div>
           </div>
@@ -2408,7 +2409,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
           {/* Tee header with color */}
           <div style={{ marginTop: 8, border: "2px solid #dc2626", borderRadius: "var(--radius-lg)", overflow: "hidden" }}>
             <div style={{ padding: "6px 10px", background: "#dc262610", fontWeight: 600, fontSize: 12 }}>
-              <span className="sc-pill" style={{ background: "#dc2626", color: "#fff", fontSize: 10, padding: "2px 10px" }}>Vermelho</span>{" "}
+              <span className="sc-pill" style={{ background: SC.danger, color: "#fff", fontSize: 10, padding: "2px 10px" }}>Vermelho</span>{" "}
               <span className="cb-blue-800">{ecl.totalGross}</span>
               <span className="muted ml-6">par {tp}</span>
             </div>
@@ -2464,7 +2465,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                   return (
                     <tr key={idx} style={{ background: "#dc26260A" }}>
                       <td className="row-label fs-10">
-                        <span className="sc-pill" style={{ background: "#dc2626", color: "#fff", fontSize: 10, padding: "1px 6px" }}>{trDate}</span>
+                        <span className="sc-pill" style={{ background: SC.danger, color: "#fff", fontSize: 10, padding: "1px 6px" }}>{trDate}</span>
                       </td>
                       {h.g.slice(0, 9).map((s, i) => <td key={i}><ScoreCircle g={s} p={ecl!.holes[i]?.par} sm /></td>)}
                       <td className="col-out fs-10-fw600">{out}</td>
@@ -2506,7 +2507,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
           <div className="haParGrid mb-16">
             {[3, 4, 5].map(pt => S.byParType[String(pt)]).filter(Boolean).map(d => {
               const isW = worstPT === d;
-              const col = (d.avgVsPar ?? 0) <= 0.1 ? "#16a34a" : (d.avgVsPar ?? 0) <= 0.4 ? "#d97706" : "#dc2626";
+              const col = sc3(d.avgVsPar ?? 0, 0.1, 0.4);
               return (
                 <div key={d.par} className="haParCard" style={isW ? { borderColor: "#fca5a5", background: "var(--bg-danger)" } : undefined}>
                   <div className="flex-between-mb6">
@@ -2522,7 +2523,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     {100 - d.parOrBetterPct - d.doubleOrWorsePct > 0 && <div className="seg-bogey" style={{ flex: 100 - d.parOrBetterPct - d.doubleOrWorsePct }} />}
                     {d.doubleOrWorsePct > 0 && <div className="seg-double" style={{ flex: d.doubleOrWorsePct }} />}
                   </div>
-                  {isW && <div style={{ fontSize: 10, fontWeight: 700, color: "#dc2626", marginTop: 4 }}>⚠ Tipo mais difícil</div>}
+                  {isW && <div style={{ fontSize: 10, fontWeight: 700, color: SC.danger, marginTop: 4 }}>⚠ Tipo mais difícil</div>}
                 </div>
               );
             })}
@@ -2534,7 +2535,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
       {S.f9b9 && Math.abs(S.f9b9.f9.strokesLost - S.f9b9.b9.strokesLost) > 0.3 && (
         <div className="haDiag mb-16">
           <div className="haDiagCard">
-            <div className="haDiagIcon diag-bg-purple">🔄</div>
+            <div className="haDiagIcon diag-purple">🔄</div>
             <div className="haDiagBody">
               <div className="haDiagVal c-purple">{S.f9b9.f9.strokesLost > S.f9b9.b9.strokesLost ? "Front 9" : "Back 9"}</div>
               <div className="haDiagLbl">custa mais {Math.abs(S.f9b9.f9.strokesLost - S.f9b9.b9.strokesLost).toFixed(1)} panc./ronda</div>
@@ -2566,7 +2567,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                   <td className="r">{h.par}</td>
                   <td className="r muted">{h.si}</td>
                   <td className="r tourn-mono fw-700">{h.avg?.toFixed(1) ?? "–"}</td>
-                  <td className="r" style={{ fontWeight: 800, color: vp == null ? "#999" : vp <= 0 ? "#16a34a" : vp <= 0.4 ? "#d97706" : "#dc2626" }}>
+                  <td className="r" style={{ fontWeight: 800, color: vp == null ? SC.muted : sc3(vp, 0, 0.4) }}>
                     {vp != null ? (vp >= 0 ? "+" : "") + vp.toFixed(2) : "–"}
                   </td>
                   <td className="r"><ScoreCircle g={h.best ?? null} p={h.par ?? 4} sm /></td>

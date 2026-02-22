@@ -5,7 +5,7 @@ import { norm, shortDate } from "../utils/format";
 import { getTeeHex, textOnColor, normKey, teeBorder } from "../utils/teeColors";
 import { clubShort, clubLong, hcpDisplay } from "../utils/playerUtils";
 import { numSafe, meanArr, stdevArr, sumArr } from "../utils/mathUtils";
-import { scClass, fmtGrossDelta, fmtStb, sdClassByHcp, fmtSdVal } from "../utils/scoreDisplay";
+import { scClass, fmtGrossDelta, fmtStb, sdClassByHcp, fmtSdVal, sc2, sc3m, SC } from "../utils/scoreDisplay";
 import {
   loadPlayerData,
   type PlayerPageData, type CourseData, type RoundData,
@@ -260,7 +260,7 @@ function TeeSummaryTable({ rounds }: { rounds: RoundData[] }) {
   const mn = (a: number[]) => a.length ? Math.min(...a) : null;
 
   return (
-    <div className="card-bordered-mb10">
+    <div className="card-bordered mb-10">
       <div className="sc-bar-head"><span>Resumo por Tee</span></div>
       <table className="pa-table" style={{ fontSize: 11.5, marginBottom: 0 }}>
         <thead>
@@ -641,7 +641,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
     <>
       {/* Eclectic row */}
       <tr>
-        <td className="row-label" style={{ color: "#0369a1", fontWeight: 700, fontSize: 10, ...ecBorder }}>Eclético</td>
+        <td className="row-label" style={{ color: "var(--chart-2)", fontWeight: 700, fontSize: 10, ...ecBorder }}>Eclético</td>
         {Array.from({ length: holeCount }, (_, h) => {
           const ev = ecArr[h];
           const cls = scClass(ev, parArr[h]);
@@ -693,7 +693,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
           const gv = gross[h];
           const ev = ecArr[h];
           const diff = gv != null && gv > 0 && ev != null ? ev - gv : null;
-          const dc = diff != null ? (diff <= 0 ? { color: "#16a34a", fontWeight: 700 } : { color: "#dc2626", fontWeight: 600 }) : { color: "var(--text-muted)" };
+          const dc = diff != null ? (diff <= 0 ? { color: SC.good, fontWeight: 700 } : { color: SC.danger, fontWeight: 600 }) : { color: "var(--text-muted)" };
           return (
             <React.Fragment key={h}>
               <td style={dc}>
@@ -702,7 +702,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
               {h === frontEnd - 1 && !is9 && (() => {
                 const dOut = sumArr(ecArr, 0, frontEnd) - sumArr(gross, 0, frontEnd);
                 return (
-                  <td className="col-out" style={{ color: dOut <= 0 ? "#16a34a" : "#dc2626", fontWeight: 600 }}>
+                  <td className="col-out" style={{ color: sc2(dOut, 0), fontWeight: 600 }}>
                     {dOut === 0 ? "=" : (dOut > 0 ? "+" : "") + dOut}
                   </td>
                 );
@@ -713,7 +713,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
         {(() => {
           const dIn = (is9 ? sumEc : sumArr(ecArr, 9, holeCount)) - (is9 ? sumGross : sumArr(gross, 9, holeCount));
           return (
-            <td className={`col-${is9 ? "total" : "in"}`} style={{ color: dIn <= 0 ? "#16a34a" : "#dc2626", fontWeight: 600 }}>
+            <td className={`col-${is9 ? "total" : "in"}`} style={{ color: sc2(dIn, 0), fontWeight: 600 }}>
               {dIn === 0 ? "=" : (dIn > 0 ? "+" : "") + dIn}
             </td>
           );
@@ -721,7 +721,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
         {!is9 && (() => {
           const totalDiff = sumEc - sumGross;
           return (
-            <td className="col-total" style={{ color: totalDiff <= 0 ? "#16a34a" : "#dc2626" }}>
+            <td className="col-total" style={{ color: sc2(totalDiff, 0) }}>
               {totalDiff > 0 ? "+" : ""}{totalDiff}
             </td>
           );
@@ -841,7 +841,7 @@ function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, ac
       <div className="ecHint">Clique num tee na tabela de buracos para ver análise e filtrar rondas.</div>
 
       {/* Summary table */}
-      <div className="card-bordered-mb10">
+      <div className="card-bordered mb-10">
         <table className="ec-sum">
           <thead>
             <tr><th>Tee</th><th className="r">Rondas</th><th className="r">Par</th>
@@ -853,7 +853,7 @@ function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, ac
               const hs = holeStats[ex.teeKey];
               const tp = ex.toPar;
               const tpStr = tp == null ? "" : (tp > 0 ? `+${tp}` : String(tp));
-              const tpCol = tp == null ? "" : (tp > 0 ? "#dc2626" : tp < 0 ? "#16a34a" : "var(--text-muted)");
+              const tpCol = tp == null ? "" : (tp > 0 ? SC.danger : tp < 0 ? SC.good : SC.muted);
               return (
                 <tr key={ex.teeKey} className="pointer" onClick={() => onSelectTee(ex.teeKey)}>
                   <td><TeePill name={ex.teeName} /></td>
@@ -1108,9 +1108,9 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
   const parOrBetterPct = td?.total ? parOrBetter / td.total * 100 : 0;
   const dblOrWorsePct = td?.total ? dblOrWorse / td.total * 100 : 0;
 
-  const slColor = stats.totalStrokesLost <= 5 ? "#16a34a" : stats.totalStrokesLost <= 12 ? "#d97706" : "#dc2626";
-  const pobCol = parOrBetterPct >= 60 ? "#16a34a" : parOrBetterPct >= 40 ? "#d97706" : "#dc2626";
-  const dowCol = dblOrWorsePct <= 5 ? "#16a34a" : dblOrWorsePct <= 15 ? "#d97706" : "#dc2626";
+  const slColor = sc3(stats.totalStrokesLost, 5, 12);
+  const pobCol = sc3(parOrBetterPct, 40, 60, "desc");
+  const dowCol = sc3(dblOrWorsePct, 5, 15);
 
   // By par type
   const parTypes = [3, 4, 5].filter(p => stats.byParType[p]);
@@ -1189,7 +1189,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
               const g = stats.byParType[pt];
               const isWorst = pt === worstPT && (g.avgVsPar ?? 0) > 0.3;
               const distTotal = g.dist.eagle + g.dist.birdie + g.dist.par + g.dist.bogey + g.dist.double + g.dist.triple;
-              const vpCol = (g.avgVsPar ?? 0) <= 0 ? "#16a34a" : (g.avgVsPar ?? 0) <= 0.4 ? "#d97706" : "#dc2626";
+              const vpCol = sc3(g.avgVsPar ?? 0, 0, 0.4);
               const segs = [
                 { n: g.dist.eagle + g.dist.birdie, cls: "seg-birdie", label: "Birdie+" },
                 { n: g.dist.par, cls: "seg-par", label: "Par" },
@@ -1198,7 +1198,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
               ];
               return (
                 <div key={pt} className="haParCard"
-                  style={{ borderColor: isWorst ? "#dc2626" : "#d5dac9", background: isWorst ? "var(--bg-danger)" : "var(--bg-card)" }}>
+                  style={{ borderColor: isWorst ? SC.danger : "var(--border)", background: isWorst ? "var(--bg-danger)" : "var(--bg-card)" }}>
                   {isWorst && <div className="haParAlert">⚠️ Área a melhorar</div>}
                   <div className="haParHead">Par {pt} <span className="muted">({g.nHoles} buracos)</span></div>
                   <div className="haParAvg" style={{ color: vpCol }}>{fD2(g.avgVsPar ?? 0)} <span style={{ fontSize: 10, color: "var(--text-3)" }}>média vs par</span></div>
@@ -1351,7 +1351,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                   <td style={{ ...colL, fontWeight: 700, color: "var(--text)" }}>Média</td>
                   {stats.holes.slice(0, hc).map((h, i) => {
                     const vp = h.avg != null && h.par != null ? h.avg - h.par : null;
-                    const col = vp == null ? "var(--text-3)" : vp <= -0.1 ? "#16a34a" : vp <= 0.3 ? "var(--text-3)" : "#dc2626";
+                    const col = vp == null ? SC.muted : vp <= -0.1 ? SC.good : vp <= 0.3 ? SC.muted : SC.danger;
                     return (
                       <React.Fragment key={i}>
                         <td style={{ ...cs, fontWeight: 700, color: col }}>{h.avg?.toFixed(1) ?? ""}</td>
@@ -1366,7 +1366,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                 </tr>
                 {/* Best row */}
                 <tr>
-                  <td style={{ ...colL, color: "#16a34a", fontWeight: 700, fontSize: 10 }}>Melhor</td>
+                  <td style={{ ...colL, color: SC.good, fontWeight: 700, fontSize: 10 }}>Melhor</td>
                   {stats.holes.slice(0, hc).map((h, i) => {
                     const cls = h.best != null && h.par != null ? scClass(h.best, h.par) : "";
                     return (
@@ -1381,7 +1381,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                 </tr>
                 {/* Worst row */}
                 <tr>
-                  <td style={{ ...colL, color: "#dc2626", fontWeight: 700, fontSize: 10 }}>Pior</td>
+                  <td style={{ ...colL, color: SC.danger, fontWeight: 700, fontSize: 10 }}>Pior</td>
                   {stats.holes.slice(0, hc).map((h, i) => {
                     const cls = h.worst != null && h.par != null ? scClass(h.worst, h.par) : "";
                     return (
@@ -1405,22 +1405,22 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                     else if (sl <= 0.4) slBg = "rgba(220,38,38,0.1)";
                     else if (sl <= 0.7) slBg = "rgba(220,38,38,0.2)";
                     else slBg = "rgba(220,38,38,0.35)";
-                    const slCol = sl <= -0.3 ? "#16a34a" : sl <= 0.15 ? "var(--text-3)" : "#dc2626";
+                    const slCol = sl <= -0.3 ? SC.good : sl <= 0.15 ? SC.muted : SC.danger;
                     return (
                       <React.Fragment key={i}>
                         <td style={{ ...cs, background: slBg, color: slCol, fontWeight: 700, fontSize: 10 }}>{h.n > 0 ? fD(sl) : ""}</td>
                         {i === fe - 1 && !is9 && (() => {
                           const outSL = stats.holes.slice(0, fe).reduce((s, x) => s + (x.strokesLost ?? 0), 0);
-                          return <td style={{ ...colOut, fontWeight: 700, fontSize: 10, color: outSL <= 0 ? "#16a34a" : "#dc2626" }}>{fD(outSL)}</td>;
+                          return <td style={{ ...colOut, fontWeight: 700, fontSize: 10, color: sc2(outSL, 0) }}>{fD(outSL)}</td>;
                         })()}
                       </React.Fragment>
                     );
                   })}
                   {(() => {
                     const inSL = (is9 ? stats.holes.slice(0, hc) : stats.holes.slice(9, hc)).reduce((s, x) => s + (x.strokesLost ?? 0), 0);
-                    return <td style={{ ...(is9 ? colTot : colIn), fontWeight: 700, fontSize: 10, color: inSL <= 0 ? "#16a34a" : "#dc2626" }}>{fD(inSL)}</td>;
+                    return <td style={{ ...(is9 ? colTot : colIn), fontWeight: 700, fontSize: 10, color: sc2(inSL, 0) }}>{fD(inSL)}</td>;
                   })()}
-                  {!is9 && <td style={{ ...colTot, fontWeight: 900, fontSize: 11, color: stats.totalStrokesLost <= 0 ? "#16a34a" : "#dc2626" }}>{fD(stats.totalStrokesLost)}</td>}
+                  {!is9 && <td style={{ ...colTot, fontWeight: 900, fontSize: 11, color: sc2(stats.totalStrokesLost, 0) }}>{fD(stats.totalStrokesLost)}</td>}
                 </tr>
               </tbody>
             </table>
@@ -1544,7 +1544,7 @@ function HistogramCard({ rounds, period, setPeriod }: {
       { label: "Excepcional (≤0)", min: -999, max: 0, color: "#0d9488" },
       { label: "Bom (+1 a +5)", min: 1, max: 5, color: "#22c55e" },
       { label: "Razoável (+6 a +10)", min: 6, max: 10, color: "#3b82f6" },
-      { label: "Difícil (+11 a +15)", min: 11, max: 15, color: "#f59e0b" },
+      { label: "Difícil (+11 a +15)", min: 11, max: 15, color: "var(--chart-4)" },
       { label: "Fraco (+16 a +20)", min: 16, max: 20, color: "#f97316" },
       { label: "Mau (+21 a +25)", min: 21, max: 25, color: "#ef4444" },
       { label: "Desastroso (>+25)", min: 26, max: 999, color: "#991b1b" },
@@ -1632,14 +1632,14 @@ function TrajectoryCard({ rounds, period, setPeriod }: {
           <div className="bg-detail br-lg jog-cross-pad">
             <div className="muted fs-10">ÚLTIMAS 5</div>
             <div className="kpi-value">{stats.last5}</div>
-            <div style={{ fontSize: 11, fontWeight: 600, color: stats.diff5 < -1 ? "#16a34a" : stats.diff5 > 1 ? "#dc2626" : "var(--text-3)" }}>
+            <div style={{ fontSize: 11, fontWeight: 600, color: sc3m(stats.diff5, 1, 1) }}>
               {stats.diff5 > 0 ? "+" : ""}{stats.diff5.toFixed(1)}
             </div>
           </div>
           <div className="bg-detail br-lg jog-cross-pad">
             <div className="muted fs-10">ÚLTIMAS 10</div>
             <div className="kpi-value">{stats.last10}</div>
-            <div style={{ fontSize: 11, fontWeight: 600, color: stats.diff10 < -1 ? "#16a34a" : stats.diff10 > 1 ? "#dc2626" : "var(--text-3)" }}>
+            <div style={{ fontSize: 11, fontWeight: 600, color: sc3m(stats.diff10, 1, 1) }}>
               {stats.diff10 > 0 ? "+" : ""}{stats.diff10.toFixed(1)}
             </div>
           </div>
@@ -1718,7 +1718,7 @@ function WHSDetail({ hcp }: { hcp: HcpInfo }) {
           <div className="muted fs-10">ACTUAL</div>
           <div className="jog-big-val c-blue">{hcp.current.toFixed(1)}</div>
           {hcp.lowHcp != null && (
-            <div style={{ fontSize: 11, color: "#dc2626", fontWeight: 600 }}>+{(hcp.current - hcp.lowHcp).toFixed(1)} do mínimo</div>
+            <div style={{ fontSize: 11, color: SC.danger, fontWeight: 600 }}>+{(hcp.current - hcp.lowHcp).toFixed(1)} do mínimo</div>
           )}
         </div>
         <div className="card-stat-detail">
@@ -2001,7 +2001,7 @@ function HcpEvolutionChart({ players, currentFed, escName }: {
   const xPos = (d: number) => PAD.left + ((d - minD) / rangeD) * (W - PAD.left - PAD.right);
   const yPos = (h: number) => H - PAD.bottom - ((h - (minH - padH)) / (rangeH + 2 * padH)) * (H - PAD.top - PAD.bottom);
 
-  const colors = ["#16a34a", "#2563eb", "#dc2626", "#d97706", "#7c3aed", "#0891b2", "#be185d", "#65a30d", "#c2410c", "#6366f1"];
+  const colors = ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)", "var(--chart-5)", "var(--chart-6)", "var(--chart-7)", "var(--chart-8)", "#c2410c", "#6366f1"];
 
   return (
     <div className="mt-20">
@@ -2117,7 +2117,7 @@ function CommonCourses({ players, currentFed, escName }: {
                   const isCur = mp.fed === currentFed;
                   const medal = mr === 0 ? "🥇" : mr === 1 ? "🥈" : mr === 2 ? "🥉" : `${mr + 1}º`;
                   return (
-                    <span key={mp.fed} style={{ fontWeight: isCur ? 700 : 400, color: isCur ? "#16a34a" : undefined }}>
+                    <span key={mp.fed} style={{ fontWeight: isCur ? 700 : 400, color: isCur ? SC.good : undefined }}>
                       {medal} {mp.name.split(" ")[0]} <b>{mp.best ?? "–"}</b>
                     </span>
                   );
@@ -2143,7 +2143,7 @@ function CommonCourses({ players, currentFed, escName }: {
                       let barW = cp.best != null && cp.worst != null ? ((cp.worst - cp.best) / gRange * 100) : 5;
                       if (barW < 3) barW = 3;
                       const avgM = cp.avg != null ? ((cp.avg - groupBest) / gRange * 100) : 50;
-                      const bCol = isCur ? "#16a34a" : "var(--text-muted)";
+                      const bCol = isCur ? SC.good : SC.muted;
                       return (
                         <tr key={cp.fed} className={isCur ? "cross-current" : ""}>
                           <td><b>{bi + 1}</b></td>
@@ -2151,7 +2151,7 @@ function CommonCourses({ players, currentFed, escName }: {
                           <td className="r">{cp.count}</td>
                           <td className="r cb-par-ok">{cp.best ?? "–"}</td>
                           <td className="r">{cp.avg.toFixed(1)}</td>
-                          <td className="r" style={{ color: "#dc2626", fontWeight: 600 }}>{cp.worst ?? "–"}</td>
+                          <td className="r" style={{ color: SC.danger, fontWeight: 600 }}>{cp.worst ?? "–"}</td>
                           <td className="r">{ampl ?? "–"}</td>
                           <td>
                             <div className="progress-track-sm">
@@ -2422,7 +2422,7 @@ function CompDeltaRow({ first, last, hc, is9, frontEnd, backStart }: {
   const fmtDelta = (d: number | null) => {
     if (d == null) return { text: "", color: "var(--text-muted)", weight: 400 as const };
     if (d === 0) return { text: "=", color: "var(--text-muted)", weight: 400 as const };
-    return { text: d > 0 ? `+${d}` : String(d), color: d < 0 ? "#16a34a" : "#dc2626", weight: 600 as const };
+    return { text: d > 0 ? `+${d}` : String(d), color: sc2(d, 0), weight: 600 as const };
   };
 
   return (

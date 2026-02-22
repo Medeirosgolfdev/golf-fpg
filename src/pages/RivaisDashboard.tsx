@@ -3,6 +3,7 @@
  * + QDL Junior Open 2025 + Greatgolf Junior Open 2026
  */
 import { useState, useMemo } from "react";
+import { sc3m, SC } from "../utils/scoreDisplay";
 
 const FL={"Portugal":"🇵🇹","Spain":"🇪🇸","England":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","Russian Federation":"🇷🇺","Bulgaria":"🇧🇬","Switzerland":"🇨🇭","Italy":"🇮🇹","France":"🇫🇷","Ireland":"🇮🇪","Northern Ireland":"🇬🇧","Germany":"🇩🇪","Netherlands":"🇳🇱","Norway":"🇳🇴","Lithuania":"🇱🇹","Thailand":"🇹🇭","United States":"🇺🇸","United Kingdom":"🇬🇧","Sweden":"🇸🇪","Morocco":"🇲🇦","Wales":"🏴󠁧󠁢󠁷󠁬󠁳󠁿","Belgium":"🇧🇪","Slovenia":"🇸🇮","Ukraine":"🇺🇦","Romania":"🇷🇴","China":"🇨🇳","Philippines":"🇵🇭","Slovakia":"🇸🇰","United Arab Emirates":"🇦🇪","Turkey":"🇹🇷","India":"🇮🇳","Viet Nam":"🇻🇳","Kazakhstan":"🇰🇿","Hungary":"🇭🇺","South Africa":"🇿🇦","Singapore":"🇸🇬","Denmark":"🇩🇰","Mexico":"🇲🇽","Canada":"🇨🇦","Austria":"🇦🇹","Paraguay":"🇵🇾","Brazil":"🇧🇷","Jersey":"🇯🇪","Nigeria":"🇳🇬","Oman":"🇴🇲","Chile":"🇨🇱","Colombia":"🇨🇴","Puerto Rico":"🇵🇷","Costa Rica":"🇨🇷","Great Britain":"🇬🇧","Latvia":"🇱🇻","South Korea":"🇰🇷"};
 
@@ -243,7 +244,7 @@ function getTrend(p) {
   return "stable";
 }
 
-const TR_I = { up2: { i: "▲▲", c: "#16a34a" }, up: { i: "▲", c: "#22c55e" }, stable: { i: "●", c: "var(--text-muted)" }, down: { i: "▼", c: "#f97316" }, down2: { i: "▼▼", c: "#dc2626" } };
+const TR_I = { up2: { i: "▲▲", c: SC.good }, up: { i: "▲", c: "var(--score-par-seg)" }, stable: { i: "●", c: "var(--text-muted)" }, down: { i: "▼", c: SC.warn }, down2: { i: "▼▼", c: SC.danger } };
 
 // Average z-score across all rounds played
 function getAvgZ(p) {
@@ -634,8 +635,8 @@ export default function RivaisDashboard() {
                             color: cell.color,
                           }}>
                             {cell.val}
-                            {cell.z != null && <div style={{ fontSize: 10, fontWeight: 600, color: cell.z <= -0.4 ? "#166534" : cell.z <= 0.4 ? "#854d0e" : "#b91c1c", marginTop: 1, opacity: 0.75 }}>{cell.z > 0 ? "+" : ""}{cell.z.toFixed(1)}σ</div>}
-                            {vsOn && cell.vsM != null && <div style={{ fontSize: 10, fontWeight: 600, color: cell.vsM < 0 ? "#16a34a" : cell.vsM > 0 ? "#dc2626" : "var(--text-3)", marginTop: 1 }}>{cell.vsM > 0 ? "+" : ""}{cell.vsM}</div>}
+                            {cell.z != null && <div style={{ fontSize: 10, fontWeight: 600, color: sc3m(cell.z, 0.4, 0.4), marginTop: 1, opacity: 0.75 }}>{cell.z > 0 ? "+" : ""}{cell.z.toFixed(1)}σ</div>}
+                            {vsOn && cell.vsM != null && <div style={{ fontSize: 10, fontWeight: 600, color: sc3m(cell.vsM, 0, 0), marginTop: 1 }}>{cell.vsM > 0 ? "+" : ""}{cell.vsM}</div>}
                           </td>
                         );
                       })}
@@ -644,7 +645,7 @@ export default function RivaisDashboard() {
                       </td>
                       <td className="rivais-td-sep">
                         {zAvg != null ? (
-                          <span style={{ fontWeight: 700, fontSize: 10, color: zAvg <= -0.4 ? "#166534" : zAvg <= 0.4 ? "#854d0e" : "#dc2626" }}>
+                          <span style={{ fontWeight: 700, fontSize: 10, color: sc3m(zAvg, 0.4, 0.4) }}>
                             {zAvg > 0 ? "+" : ""}{zAvg.toFixed(2)}
                           </span>
                         ) : <span className="fs-9" style={{ color: "var(--border)" }}>—</span>}
@@ -658,7 +659,7 @@ export default function RivaisDashboard() {
                       {vsOn && (
                         <td className="rivais-td">
                           {isM ? <span className="fs-9" style={{ color: "var(--border)" }}>—</span> :
-                            vsAvg != null ? <span style={{ fontWeight: 700, fontSize: 11, color: vsAvg < 0 ? "#16a34a" : vsAvg > 0 ? "#dc2626" : "var(--text-3)" }}>{vsAvg > 0 ? "+" : ""}{vsAvg}</span> :
+                            vsAvg != null ? <span style={{ fontWeight: 700, fontSize: 11, color: sc3m(vsAvg, 0, 0) }}>{vsAvg > 0 ? "+" : ""}{vsAvg}</span> :
                               <span className="fs-9" style={{ color: "var(--border)" }}>—</span>}
                         </td>
                       )}

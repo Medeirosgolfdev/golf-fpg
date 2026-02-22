@@ -12,6 +12,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { PlayersDb } from "../data/types";
 import { loadPlayerData, type PlayerPageData, type HoleScores } from "../data/playerDataLoader";
 import { deepFixMojibake } from "../utils/fixEncoding";
+import { SC } from "../utils/scoreDisplay";
 import TeePill from "../ui/TeePill";
 import LeaderboardView from "./LeaderboardView";
 import {
@@ -390,7 +391,7 @@ function AnalysisView({ norm, players, holeDataByDay, playerHistory, onSelectPla
                         </td>
                       )}
                       <td className="r fs-11">
-                        {f.daysSinceLast != null ? <span style={{ color: f.daysSinceLast <= 7 ? "#16a34a" : f.daysSinceLast <= 21 ? "#e67e22" : "var(--color-danger)" }}>{f.daysSinceLast}d</span> : "–"}
+                        {f.daysSinceLast != null ? <span style={{ color: f.daysSinceLast <= 7 ? SC.good : f.daysSinceLast <= 21 ? SC.warn : SC.danger }}>{f.daysSinceLast}d</span> : "–"}
                       </td>
                       <td>
                         <div className="tourn-sparkline">
@@ -447,7 +448,7 @@ function AnalysisView({ norm, players, holeDataByDay, playerHistory, onSelectPla
                     <td className="r tourn-mono">{h.m}</td>
                     <td className="r tourn-mono fw-700">{h.avg?.toFixed(1) ?? "–"}</td>
                     <td className="r">
-                      {vp != null && <span style={{ color: vp <= 0 ? "#16a34a" : vp < 0.5 ? "#e67e22" : "var(--color-danger)", fontWeight: 600 }}>
+                      {vp != null && <span style={{ color: vp <= 0 ? SC.good : vp < 0.5 ? SC.warn : SC.danger, fontWeight: 600 }}>
                         {vp > 0 ? `+${vp.toFixed(2)}` : vp.toFixed(2)}
                       </span>}
                     </td>

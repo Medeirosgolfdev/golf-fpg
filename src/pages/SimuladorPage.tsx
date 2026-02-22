@@ -3,6 +3,7 @@ import type { Course, Tee, Hole } from "../data/types";
 import TeeBadge from "../ui/TeeBadge";
 import { getTeeHex, textOnColor } from "../utils/teeColors";
 import { fmt, fmtCR, norm, titleCase } from "../utils/format";
+import { SC } from "../utils/scoreDisplay";
 import OverlayExport from "../ui/OverlayExport";
 import type { OverlayData } from "../ui/OverlayExport";
 
@@ -984,18 +985,18 @@ function AgsSection({
               <td className="row-label c-muted fs-10 fw-400">±Par</td>
               {front.map((h, i) => (
                 <React.Fragment key={h.hole}>
-                  <td style={{ color: h.vsPar != null ? (h.vsPar < 0 ? "#16a34a" : h.vsPar === 0 ? "#666" : h.vsPar <= 2 ? "#b45309" : "#dc2626") : "#ccc", fontWeight: h.vsPar != null ? 600 : 400 }}>
+                  <td style={{ color: h.vsPar != null ? (h.vsPar < 0 ? SC.good : h.vsPar === 0 ? "#666" : h.vsPar <= 2 ? SC.warn : SC.danger) : "#ccc", fontWeight: h.vsPar != null ? 600 : 400 }}>
                     {h.vsPar != null ? (h.vsPar === 0 ? "E" : h.vsPar > 0 ? `+${h.vsPar}` : h.vsPar) : ""}
                   </td>
                   {is18 && i === 8 && (
-                    <td className="col-out" style={{ fontWeight: 600, color: grossOut != null ? (grossOut - sumPar(front) <= 0 ? "#16a34a" : "#b45309") : "#ccc" }}>
+                    <td className="col-out" style={{ fontWeight: 600, color: grossOut != null ? (grossOut - sumPar(front) <= 0 ? SC.good : SC.warn) : "#ccc" }}>
                       {fmtVsPar(grossOut, sumPar(front))}
                     </td>
                   )}
                 </React.Fragment>
               ))}
               {is18 && back.map((h) => (
-                <td key={h.hole} style={{ color: h.vsPar != null ? (h.vsPar < 0 ? "#16a34a" : h.vsPar === 0 ? "#666" : h.vsPar <= 2 ? "#b45309" : "#dc2626") : "#ccc", fontWeight: h.vsPar != null ? 600 : 400 }}>
+                <td key={h.hole} style={{ color: h.vsPar != null ? (h.vsPar < 0 ? SC.good : h.vsPar === 0 ? "#666" : h.vsPar <= 2 ? SC.warn : SC.danger) : "#ccc", fontWeight: h.vsPar != null ? 600 : 400 }}>
                   {h.vsPar != null ? (h.vsPar === 0 ? "E" : h.vsPar > 0 ? `+${h.vsPar}` : h.vsPar) : ""}
                 </td>
               ))}
@@ -1051,7 +1052,7 @@ function AgsSection({
                     const capped = h.actual !== null && h.actual > h.maxScore;
                     return (
                       <React.Fragment key={h.hole}>
-                        <td style={{ color: capped ? "#dc2626" : h.adjusted != null ? "#16a34a" : "#ccc", fontWeight: h.adjusted != null ? 700 : 400 }}>
+                        <td style={{ color: capped ? SC.danger : h.adjusted != null ? SC.good : "#ccc", fontWeight: h.adjusted != null ? 700 : 400 }}>
                           {h.adjusted != null ? h.adjusted : ""}
                           {capped && <span className="fs-8">✂</span>}
                         </td>
@@ -1064,7 +1065,7 @@ function AgsSection({
                   {is18 && back.map((h) => {
                     const capped = h.actual !== null && h.actual > h.maxScore;
                     return (
-                      <td key={h.hole} style={{ color: capped ? "#dc2626" : h.adjusted != null ? "#16a34a" : "#ccc", fontWeight: h.adjusted != null ? 700 : 400 }}>
+                      <td key={h.hole} style={{ color: capped ? SC.danger : h.adjusted != null ? SC.good : "#ccc", fontWeight: h.adjusted != null ? 700 : 400 }}>
                         {h.adjusted != null ? h.adjusted : ""}
                         {capped && <span className="fs-8">✂</span>}
                       </td>
