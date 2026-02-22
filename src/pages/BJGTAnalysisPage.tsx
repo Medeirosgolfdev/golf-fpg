@@ -734,16 +734,16 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
   /* ═══ RENDER ═══ */
   if (loading) return (
-    <div className="bjgt-page"><div style={{ textAlign: "center", padding: 60 }}>
-      <div style={{ fontSize: 32, marginBottom: 12 }}>🏌️</div>
+    <div className="bjgt-page"><div className="empty-state-lg">
+      <div className="empty-icon">🏌️</div>
       <div style={{ fontSize: 15, fontWeight: 700, color: "var(--text-2)" }}>A carregar dados…</div>
     </div></div>
   );
   if (error) return (
     <div className="bjgt-page"><Header />
       <div className="courseAnalysis empty-state">
-        <div style={{ fontSize: 32, marginBottom: 8 }}>⚠️</div>
-        <div style={{ fontWeight: 700, color: "#dc2626" }}>Erro: {error}</div>
+        <div className="empty-icon">⚠️</div>
+        <div className="fw-700-dc">Erro: {error}</div>
       </div>
     </div>
   );
@@ -752,11 +752,11 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
     return (
       <div className="bjgt-page"><Header />
         <div className="courseAnalysis empty-state">
-          <div style={{ fontSize: 40, marginBottom: 8 }}>🔍</div>
-          <div style={{ fontWeight: 700, color: "var(--text-2)", marginBottom: 8 }}>
+          <div className="empty-icon-lg">🔍</div>
+          <div className="fw-700-text2-mb8">
             {info?.err === "no_course" ? "Sem campo Villa Padierna nos dados" : "Sem estatísticas de buracos disponíveis"}
           </div>
-          <div className="muted" style={{ fontSize: 11, lineHeight: 1.6 }}>
+          <div className="muted fs-11-lh16">
             {info?.err === "no_stats" && <>
               <div>Campo encontrado: {info.courses?.join(", ")}</div>
               <div>Rondas: {info.nRounds} · Scorecards: {info.nCards}</div>
@@ -811,7 +811,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
       {tab === "analise" && <>
 
       {/* ── Global Period Filter ── */}
-      <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 10, flexWrap: "wrap", padding: "8px 12px", background: "var(--bg-detail)", borderRadius: 10, border: "1px solid var(--border-light)" }}>
+      <div className="flex-center-gap6-mb10 vp-detail-bg">
         <span style={{ fontSize: 11, fontWeight: 800, color: "#1e40af" }}>📅 Período de análise:</span>
         {[3, 6, 9, 12, 0].map(m => (
           <button key={m} onClick={() => setDistPeriod(m)}
@@ -819,38 +819,38 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               fontSize: 10, fontWeight: distPeriod === m ? 800 : 500,
               padding: "4px 12px", borderRadius: "var(--radius-xl)", border: "1px solid",
               borderColor: distPeriod === m ? "#1e40af" : "#d5dac9",
-              background: distPeriod === m ? "#1e40af" : "#fff",
+              background: distPeriod === m ? "#1e40af" : "var(--bg-card)",
               color: distPeriod === m ? "#fff" : "var(--text-3)",
               cursor: "pointer",
             }}>
             {m === 0 ? "All-time" : `${m} meses`}
           </button>
         ))}
-        <span className="muted" style={{ fontSize: 9, marginLeft: 4 }}>
+        <span className="muted fs-9 ml-4">
           Aplica-se a: Perfil por Distância, Evolução Temporal, Indicadores
         </span>
       </div>
 
       {/* ── Objectivo: O Eclético ── */}
       {ecl && (
-        <div className="courseAnalysis" style={{ borderColor: "#16a34a", borderWidth: 2, background: "var(--bg-success)" }}>
+        <div className="courseAnalysis courseAnalysis-success">
           <div className="caTitle" style={{ color: "#166534", fontSize: 14 }}>🎯 Objectivo: bater o eclético</div>
           <div className="caConcText" style={{ color: "#14532d", marginBottom: 10 }}>
             O ano passado fizeste <b>{daySummaries.map(d => d.gross).join(", ")}</b>. O eclético — o melhor que fizeste em cada buraco, espalhado nos {vpCards.length} dias — é <b>{ecl.totalGross}</b> ({fmtTP(ecl.toPar ?? ecl.totalGross - tp)}).
             Com mais um ano de força, maturidade e experiência, o objectivo é juntar tudo isso e aproximar-te desse número.
           </div>
           <div style={{
-            padding: "12px 16px", borderRadius: 10,
+            padding: "12px 16px", borderRadius: "var(--radius-lg)",
             background: "linear-gradient(135deg, #1a2e1a, #2d4a2e)", color: "#fff",
           }}>
-            <div style={{ fontSize: 10, fontWeight: 700, opacity: 0.7, textTransform: "uppercase", letterSpacing: "0.08em" }}>
+            <div className="fs-10-fw700-op07">
               Objectivo por ronda
             </div>
             <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginTop: 4 }}>
               <span style={{ fontSize: 26, fontWeight: 900 }}>{ecl.totalGross}–{bestDay ? bestDay.gross : Math.round((ecl.totalGross + tp + 15) / 2)}</span>
               <span style={{ fontSize: 12, opacity: 0.8 }}>({fmtTP(ecl.toPar ?? ecl.totalGross - tp)} a {fmtTP(bestDay ? bestDay.gross - tp : 15)})</span>
             </div>
-            <div style={{ fontSize: 10, opacity: 0.6, marginTop: 4 }}>
+            <div className="fs-10-op6 mt-4">
               Eclético → Melhor dia 2025{hcp != null ? ` · HCP actual: ${hcp.toFixed(1)}` : ""}
             </div>
           </div>
@@ -884,31 +884,31 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
           </div>
         </div>
         {/* Mini leaderboard */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 4, marginBottom: 8 }}>
+        <div className="grid-auto-fill">
           {FIELD_2025.leaderboard.slice(0, 5).map(p => (
-            <div key={p.pos} style={{ display: "flex", alignItems: "center", gap: 6, padding: "5px 8px", borderRadius: 6, background: "var(--bg-detail)", border: "1px solid var(--border-light)" }}>
-              <span style={{ fontWeight: 900, fontSize: 13, color: "var(--text-3)", minWidth: 16 }}>{p.pos}.</span>
+            <div key={p.pos} className="flex-center-gap6 card-detail" style={{ padding: "5px 8px", borderRadius: "var(--radius)" }}>
+              <span className="fw-900-fs13-muted">{p.pos}.</span>
               <div>
-                <div style={{ fontSize: 10, fontWeight: 700, lineHeight: 1.2 }}>{p.name.split(" ")[0]}</div>
-                <div style={{ fontSize: 9, color: "var(--text-3)" }}>{p.rounds.join("-")} = {p.total} ({fmtTP(p.result)})</div>
+                <div className="fs-10-fw700-lh">{p.name.split(" ")[0]}</div>
+                <div style={{ fontSize: 10, color: "var(--text-3)" }}>{p.rounds.join("-")} = {p.total} ({fmtTP(p.result)})</div>
               </div>
             </div>
           ))}
         </div>
 
         {/* Full results table with expandable scorecards */}
-        <div className="muted" style={{ fontSize: 9, marginBottom: 4 }}>Clica num jogador para ver os scorecards completos e o eclético.</div>
+        <div className="muted fs-9-mb4">Clica num jogador para ver os scorecards completos e o eclético.</div>
         <div className="tourn-scroll mb-8">
-          <table className="sc-table-modern" style={{ width: "100%", fontSize: 10 }}>
+          <table className="sc-table-modern bjgt-mini-table-sm">
             <thead>
               <tr>
-                <th style={{ width: 28, textAlign: "center" }}>Pos</th>
+                <th className="sc-cell-w28 ta-c">Pos</th>
                 <th className="row-label">Jogador</th>
-                <th style={{ width: 24, textAlign: "center" }}></th>
+                <th style={{ width: 24 }} className="ta-c"></th>
                 <th className="ta-c">R1</th>
                 <th className="ta-c">R2</th>
                 <th className="ta-c">R3</th>
-                <th style={{ textAlign: "center", fontWeight: 900 }}>Total</th>
+                <th className="ta-c fw-900">Total</th>
                 <th className="ta-c">vs Par</th>
                 <th className="ta-c">Melhor</th>
                 <th className="ta-c">ECL</th>
@@ -940,19 +940,19 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     {expanded && fc && (
                       <tr>
                         <td colSpan={10} className="bg-detail p-0">
-                          <div className="scroll-x" style={{ padding: "6px 8px" }}>
-                            <table style={{ width: "100%", fontSize: 9, borderCollapse: "collapse", minWidth: 600 }}>
+                          <div className="scroll-x p-pad68">
+                            <table className="bjgt-mini-table">
                               <thead>
-                                <tr style={{ background: "var(--border-light)" }}>
-                                  <td className="fw-700" style={{ padding: "2px 4px", width: 40 }}>Bur.</td>
+                                <tr className="bg-border-light">
+                                  <td className="fw-700 sc-cell-w40">Bur.</td>
                                   {VP_PAR.map((_, hi) => (
-                                    <td key={hi} className="sc-cell-label" style={{ width: 28, padding: "2px 2px" }}>{hi + 1}</td>
+                                    <td key={hi} className="sc-cell-label sc-cell-w28">{hi + 1}</td>
                                   ))}
                                   <td className="sc-cell-heavy">Tot</td>
                                   <td className="sc-cell-label">±</td>
                                 </tr>
                                 <tr className="bg-page">
-                                  <td style={{ fontWeight: 600, padding: "2px 4px", color: "var(--text-muted)" }}>Par</td>
+                                  <td className="sc-cell-fw600-muted">Par</td>
                                   {VP_PAR.map((p2, hi) => (
                                     <td key={hi} className="sc-cell-sub">{p2}</td>
                                   ))}
@@ -965,10 +965,10 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                                   const rdTotal = rd.reduce((a, b) => a + b, 0);
                                   return (
                                     <tr key={ri} className="b-light cross-sep">
-                                      <td style={{ fontWeight: 700, padding: "2px 4px" }}>R{ri + 1}</td>
+                                      <td className="sc-cell-fw700">R{ri + 1}</td>
                                       {rd.map((s, hi) => (
                                         <td key={hi} className="bjgt-score-cell">
-                                          <span className={`sc-score ${scClass(s, VP_PAR[hi])}`} style={{ fontSize: 9, minWidth: 18, minHeight: 18 }}>{s}</span>
+                                          <span className={`sc-score ${scClass(s, VP_PAR[hi])} bjgt-mini-score`}>{s}</span>
                                         </td>
                                       ))}
                                       <td className="sc-cell-bold">{rdTotal}</td>
@@ -976,11 +976,11 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                                     </tr>
                                   );
                                 })}
-                                <tr className="bg-success" style={{ borderTop: "1px solid var(--border)" }}>
+                                <tr className="bg-success bt-section">
                                   <td className="fw-800" style={{ padding: "2px 4px" }}>ECL</td>
                                   {fc.ecl.map((s, hi) => (
                                     <td key={hi} className="bjgt-score-cell">
-                                      <span className={`sc-score ${scClass(s, VP_PAR[hi])}`} style={{ fontSize: 9, minWidth: 18, minHeight: 18, fontWeight: 800 }}>{s}</span>
+                                      <span className={`sc-score ${scClass(s, VP_PAR[hi])} bjgt-mini-score-b`}>{s}</span>
                                     </td>
                                   ))}
                                   <td className="sc-cell-heavy">{fc.eclTotal}</td>
@@ -1009,7 +1009,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                 });
                 return (
                   <React.Fragment>
-                    <tr onClick={mToggle} style={{ cursor: "pointer", borderTop: "1px solid #d5dac9" }}>
+                    <tr onClick={mToggle} className="pointer bt-border">
                       <td className="fw-700 ta-c">{MANUEL_POS}</td>
                       <td className="row-label fw-600">{mExpanded ? "▾" : "▸"} {PLAYER_NAME}</td>
                       <td className="ta-c fs-12">🇵🇹</td>
@@ -1024,19 +1024,19 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     {mExpanded && vpCards.length > 0 && (
                       <tr>
                         <td colSpan={10} className="bg-detail p-0">
-                          <div className="scroll-x" style={{ padding: "6px 8px" }}>
-                            <table style={{ width: "100%", fontSize: 9, borderCollapse: "collapse", minWidth: 600 }}>
+                          <div className="scroll-x p-pad68">
+                            <table className="bjgt-mini-table">
                               <thead>
-                                <tr style={{ background: "var(--border-light)" }}>
-                                  <td className="fw-700" style={{ padding: "2px 4px", width: 40 }}>Bur.</td>
+                                <tr className="bg-border-light">
+                                  <td className="fw-700 sc-cell-w40">Bur.</td>
                                   {VP_PAR.map((_, hi) => (
-                                    <td key={hi} className="sc-cell-label" style={{ width: 28, padding: "2px 2px" }}>{hi + 1}</td>
+                                    <td key={hi} className="sc-cell-label sc-cell-w28">{hi + 1}</td>
                                   ))}
                                   <td className="sc-cell-heavy">Tot</td>
                                   <td className="sc-cell-label">±</td>
                                 </tr>
                                 <tr className="bg-page">
-                                  <td style={{ fontWeight: 600, padding: "2px 4px", color: "var(--text-muted)" }}>Par</td>
+                                  <td className="sc-cell-fw600-muted">Par</td>
                                   {VP_PAR.map((p2, hi) => (
                                     <td key={hi} className="sc-cell-sub">{p2}</td>
                                   ))}
@@ -1050,10 +1050,10 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                                   const rdTotal = g.reduce((a, b) => a + (b ?? 0), 0);
                                   return (
                                     <tr key={ri} className="b-light cross-sep">
-                                      <td style={{ fontWeight: 700, padding: "2px 4px" }}>R{ri + 1}</td>
+                                      <td className="sc-cell-fw700">R{ri + 1}</td>
                                       {g.map((s, hi) => (
                                         <td key={hi} className="bjgt-score-cell">
-                                          {s != null ? <span className={`sc-score ${scClass(s, VP_PAR[hi])}`} style={{ fontSize: 9, minWidth: 18, minHeight: 18 }}>{s}</span> : "·"}
+                                          {s != null ? <span className={`sc-score ${scClass(s, VP_PAR[hi])} bjgt-mini-score`}>{s}</span> : "·"}
                                         </td>
                                       ))}
                                       <td className="sc-cell-bold">{rdTotal}</td>
@@ -1062,11 +1062,11 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                                   );
                                 })}
                                 {ecl && (
-                                  <tr className="bg-success" style={{ borderTop: "1px solid var(--border)" }}>
+                                  <tr className="bg-success bt-section">
                                     <td className="fw-800" style={{ padding: "2px 4px" }}>ECL</td>
                                     {ecl.holes.map((eh, hi) => (
                                       <td key={hi} className="bjgt-score-cell">
-                                        {eh.best != null ? <span className={`sc-score ${scClass(eh.best, VP_PAR[hi])}`} style={{ fontSize: 9, minWidth: 18, minHeight: 18, fontWeight: 800 }}>{eh.best}</span> : "·"}
+                                        {eh.best != null ? <span className={`sc-score ${scClass(eh.best, VP_PAR[hi])} bjgt-mini-score-b`}>{eh.best}</span> : "·"}
                                       </td>
                                     ))}
                                     <td className="sc-cell-heavy">{ecl.totalGross}</td>
@@ -1085,12 +1085,12 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
             </tbody>
           </table>
         </div>
-        <div className="muted" style={{ fontSize: 8, marginBottom: 8 }}>BJGT Villa Padierna 2025 · Sub-12 Boys · Par 71 · {FIELD_TOTAL} jogadores · Scorecards de {FIELD_CARDS.length} jogadores · Clica para expandir · ECL = eclético (melhor score por buraco)</div>
+        <div className="muted fs-8-mb8">BJGT Villa Padierna 2025 · Sub-12 Boys · Par 71 · {FIELD_TOTAL} jogadores · Scorecards de {FIELD_CARDS.length} jogadores · Clica para expandir · ECL = eclético (melhor score por buraco)</div>
         {/* Context for Manuel */}
         {daySummaries.length > 0 && ecl && (
-          <div className="caConclusion bg-info" style={{ borderColor: "#bfdbfe" }}>
+          <div className="caConclusion bg-info bc-info">
             <div className="caConcTitle c-navy">📍 Onde estava o Manuel?</div>
-            <div className="caConcText" style={{ color: "#1e3a5f" }}>
+            <div className="caConcText c-dark-navy">
               Fez <b>{daySummaries.map(d => d.gross).join(", ")}</b> (total {daySummaries.reduce((a, d) => a + d.gross, 0)}). 
               O eclético é <b>{ecl.totalGross}</b> — {ecl.totalGross <= FIELD_2025.leaderboard[4]?.total / 3
                 ? "um número de Top 5 se o conseguir manter nos 3 dias!"
@@ -1120,22 +1120,22 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
             const manuelAvg = manuelH?.avg;
             const manuelVsField = manuelAvg != null ? manuelAvg - h.fAvg : null;
             return (
-              <div key={h.h} style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 2, fontSize: 10 }}>
+              <div key={h.h} className="flex-center-gap6-mb2">
                 <span style={{ minWidth: 26, fontWeight: 800, color: isHard ? "#dc2626" : isEasy ? "#16a34a" : "var(--text-3)" }}>#{h.h}</span>
-                <span className="muted" style={{ minWidth: 24, fontSize: 9 }}>P{h.par}</span>
-                <div style={{ flex: 1, height: 14, background: "var(--bg)", borderRadius: 4, position: "relative", overflow: "hidden" }}>
+                <span className="muted fs-9" style={{ minWidth: 24 }}>P{h.par}</span>
+                <div className="progress-track-overflow">
                   <div style={{
-                    width: `${barPct}%`, height: "100%", borderRadius: 4,
+                    width: `${barPct}%`, height: "100%", borderRadius: "var(--radius-sm)",
                     background: isHard ? "#dc2626" : vsPar > 0.4 ? "#f59e0b" : "#22c55e",
                     opacity: 0.7
                   }} />
-                  <span style={{ position: "absolute", right: 4, top: 0, fontSize: 9, fontWeight: 700, lineHeight: "14px" }}>
+                  <span className="bjgt-stat-abs">
                     {vsPar > 0 ? `+${vsPar.toFixed(2)}` : vsPar.toFixed(2)}
                   </span>
                 </div>
-                <span style={{ minWidth: 28, fontSize: 9, fontWeight: 700, color: "#0369a1" }}>T5:{h.t5.toFixed(1)}</span>
+                <span className="fs-9 fw-700 c-blue" style={{ minWidth: 28 }}>T5:{h.t5.toFixed(1)}</span>
                 {manuelAvg != null && (
-                  <span style={{ minWidth: 32, fontSize: 9, fontWeight: 700, color: manuelVsField! > 0.3 ? "#dc2626" : manuelVsField! < -0.2 ? "#16a34a" : "var(--text-3)" }}>
+                  <span style={{ minWidth: 32, fontSize: 10, fontWeight: 700, color: manuelVsField! > 0.3 ? "#dc2626" : manuelVsField! < -0.2 ? "#16a34a" : "var(--text-3)" }}>
                     M:{manuelAvg.toFixed(1)}
                   </span>
                 )}
@@ -1150,15 +1150,15 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
           const easiest = FIELD_2025.holes.filter((_, i) => FIELD_2025.diffRank.indexOf(FIELD_2025.holes[i].h) >= FIELD_2025.diffRank.length - 3);
           const t5zero = FIELD_2025.holes.filter(h => h.t5Dbl === 0 && h.fDbl > 10);
           return (
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-              <div className="caConclusion" style={{ background: "var(--bg-danger)", borderColor: "#fecaca" }}>
-                <div className="caConcTitle" style={{ color: "#991b1b" }}>🔴 Mais difíceis</div>
+            <div className="grid-2">
+              <div className="caConclusion concl-danger">
+                <div className="caConcTitle c-dark-red">🔴 Mais difíceis</div>
                 <div className="caConcText" style={{ color: "#7f1d1d", fontSize: 11 }}>
                   {FIELD_2025.diffRank.slice(0, 4).map(h => `#${h}`).join(", ")} — todos sofrem aqui. Joga seguro, par é vitória.
                 </div>
               </div>
-              <div className="caConclusion" style={{ background: "var(--bg-success)", borderColor: "#bbf7d0" }}>
-                <div className="caConcTitle" style={{ color: "#166534" }}>🟢 Mais acessíveis</div>
+              <div className="caConclusion concl-success">
+                <div className="caConcTitle c-green-166">🟢 Mais acessíveis</div>
                 <div className="caConcText" style={{ color: "#14532d", fontSize: 11 }}>
                   {FIELD_2025.diffRank.slice(-4).map(h => `#${h}`).join(", ")} — aqui o Top 5 ataca. Oportunidade para ir buscar pancadas.
                 </div>
@@ -1172,7 +1172,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
           const t5zero = FIELD_2025.holes.filter(h => h.t5Dbl === 0 && h.fDbl >= 10);
           if (t5zero.length === 0) return null;
           return (
-            <div className="caConclusion" style={{ background: "#fef3c7", borderColor: "#fde68a", marginTop: 8 }}>
+            <div className="caConclusion concl-warn mt-8">
               <div className="caConcTitle" style={{ color: "#92400e" }}>💡 Onde o Top 5 nunca faz double</div>
               <div className="caConcText" style={{ color: "#78350f", fontSize: 11 }}>
                 Nos buracos {t5zero.map(h => `#${h.h}`).join(", ")}, o Top 5 fez <b>0% doubles</b> enquanto o field fez {t5zero.map(h => `${h.fDbl.toFixed(0)}%`).join(", ")}. 
@@ -1185,14 +1185,14 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
       {distEvolution.length >= 4 && (
         <div className="holeAnalysis">
           <div className="haTitle">📏 Distância e Evolução</div>
-          <div className="muted" style={{ fontSize: 9, marginBottom: 8 }}>
+          <div className="muted fs-9-mb8">
             Analisa como a distância total do campo (soma dos metros de todos os buracos) afecta o score.
             Campos são divididos em "curtos" e "longos" pela mediana ({medianMeters}m). A diferença mostra quantas pancadas a mais custa jogar em campos mais longos.
           </div>
           {metersGrowing && metersDiff != null && (
-            <div className="caConclusion" style={{ background: "var(--bg-info)", borderColor: "#bfdbfe", marginBottom: 10 }}>
+            <div className="caConclusion concl-info mb-10">
               <div className="caConcTitle c-navy">📈 Está a jogar campos mais longos</div>
-              <div className="caConcText" style={{ color: "#1e3a5f" }}>
+              <div className="caConcText c-dark-navy">
                 Distância média das rondas recentes é <b>+{metersDiff.toFixed(0)}m</b> acima das primeiras. Isto é crescimento real — mais força, mais distância.
               </div>
             </div>
@@ -1229,13 +1229,13 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
             O número é o gross. Cor: <span style={{ color: "#166534", fontWeight: 700 }}>verde ≤82</span> · <span style={{ color: "#92400e", fontWeight: 700 }}>amarelo 83–88</span> · <span style={{ color: "#991b1b", fontWeight: 700 }}>vermelho ≥89</span>.
             Rondas em VP Flamingos têm borda vermelha e formato redondo. Passa o rato por cima para ver data, campo e distância.
           </div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 3 }}>
+          <div className="flex-gap3">
             {distEvolution.slice(-20).map((r, i) => {
               const vpCourse = r.course.toLowerCase().includes("villa") || r.course.toLowerCase().includes("flamingos");
               return (
                 <div key={i} title={`${r.date} · ${r.course} · ${r.meters ?? "?"}m → Gross ${r.gross}`}
                   style={{ width: 28, height: 28, borderRadius: vpCourse ? 999 : 4, display: "flex", alignItems: "center", justifyContent: "center",
-                    fontSize: 9, fontWeight: 700, border: vpCourse ? "2px solid #dc2626" : "1px solid #d5dac9",
+                    fontSize: 10, fontWeight: 700, border: vpCourse ? "2px solid #dc2626" : "1px solid #d5dac9",
                     background: r.gross <= 82 ? "#dcfce7" : r.gross <= 88 ? "#fef3c7" : "#fef2f2",
                     color: r.gross <= 82 ? "#166534" : r.gross <= 88 ? "#92400e" : "#991b1b" }}>
                   {r.gross}
@@ -1255,7 +1255,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               ? `${allHoleSamples.length} buracos (all-time)`
               : `${filteredN} buracos (últ. ${distPeriod} meses) · ${allHoleSamples.length} total`}
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 8 }}>
+          <div className="grid-auto-240">
             {(distPeriod === 0 ? bands : bands).map(b => {
               const vpInBand = vpHoleProfiles.filter(h => h.band?.key === b.key);
               const fb = filteredBands.find(r => r.key === b.key);
@@ -1269,13 +1269,13 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               const trendCol = trend != null && trend < -0.15 ? "#16a34a" : trend != null && trend > 0.15 ? "#dc2626" : "var(--text-3)";
               const noData = distPeriod !== 0 && !fb;
               return (
-                <div key={b.key} style={{ border: "1px solid var(--border)", borderRadius: 10, padding: "10px 12px", background: noData ? "var(--bg-detail)" : "#fff", opacity: noData ? 0.5 : 1 }}>
-                  <div style={{ fontWeight: 900, fontSize: 12, marginBottom: 4 }}>{b.label}</div>
+                <div key={b.key} style={{ border: "1px solid var(--border)", borderRadius: "var(--radius-lg)", padding: "10px 12px", background: noData ? "var(--bg-detail)" : "var(--bg-card)", opacity: noData ? 0.5 : 1 }}>
+                  <div className="fw-900-fs12-mb4">{b.label}</div>
                   {noData ? (
                     <div className="muted fs-10">Sem dados suficientes nos últimos {distPeriod} meses (all-time: {b.avg.toFixed(1)}, {b.n} buracos)</div>
                   ) : (
                     <>
-                      <div style={{ display: "flex", gap: 12, marginBottom: 4 }}>
+                      <div className="flex-gap12-mb4">
                         <div>
                           <div style={{ fontSize: 18, fontWeight: 900, color: avgCol }}>{mainAvg.toFixed(1)}</div>
                           <div className="muted fs-9">
@@ -1293,7 +1293,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                       </div>
                       {/* All-time reference + trend */}
                       {showFiltered && (
-                        <div style={{ display: "flex", gap: 8, alignItems: "center", fontSize: 9, color: "var(--text-muted)", marginBottom: 4 }}>
+                        <div style={{ display: "flex", gap: 8, alignItems: "center", fontSize: 10, color: "var(--text-muted)", marginBottom: 4 }}>
                           <span>All-time: <b className="c-text-3">{b.avg.toFixed(1)}</b> ({b.n})</span>
                           {trend != null && Math.abs(trend) > 0.1 && (
                             <span style={{ color: trendCol, fontWeight: 700 }}>
@@ -1305,7 +1305,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     </>
                   )}
                   {vpInBand.length > 0 && (
-                    <div style={{ fontSize: 10, color: "#0369a1", fontWeight: 600, borderTop: "1px solid #e2e8f0", paddingTop: 4 }}>
+                    <div style={{ fontSize: 10, color: "#0369a1", fontWeight: 600, borderTop: "1px solid var(--border-light)", paddingTop: 4 }}>
                       VP buracos nesta faixa: {vpInBand.map(h => `#${h.h}`).join(", ")}
                     </div>
                   )}
@@ -1322,7 +1322,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
       {filteredMonthly.length >= 3 && (
         <div className="holeAnalysis">
           <div className="haTitle">📈 Evolução Temporal — {filteredMonthly.length} meses de dados</div>
-          <div className="muted" style={{ fontSize: 10, marginBottom: 12 }}>
+          <div className="muted fs-10-mb12">
             Baseado em {filteredMonthly.reduce((s, m) => s + m.rounds, 0)} rondas de 18 buracos, de {filteredMonthly[0]?.label} a {filteredMonthly[filteredMonthly.length - 1]?.label}.
           </div>
 
@@ -1362,7 +1362,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                       return (
                         <div key={ref.label} style={{ position: "absolute", left: 0, right: 0, bottom,
                           borderTop: `1px dashed ${ref.col}`, zIndex: 1 }}>
-                          <span style={{ position: "absolute", right: 0, bottom: 1, fontSize: 8,
+                          <span style={{ position: "absolute", right: 0, bottom: 1, fontSize: 10,
                             color: ref.col, fontWeight: 700 }}>
                             {ref.label} {ref.val.toFixed(0)}
                           </span>
@@ -1370,13 +1370,13 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                       );
                     })}
                     {/* Bars */}
-                    <div style={{ display: "flex", alignItems: "flex-end", height: chartH, gap: 2 }}>
+                    <div className="chart-bars" style={{ height: chartH }}>
                       {ms.map((m, i) => {
                         const barPx = Math.max(4, toPx(m.avgGross));
                         const col = m.avgGross <= t5ref ? "#16a34a" : m.avgGross <= fieldRef ? "#0369a1" : m.avgGross <= fieldRef + 5 ? "#d97706" : "#dc2626";
                         return (
-                          <div key={i} style={{ flex: 1, textAlign: "center" }}>
-                            <div style={{ fontSize: 9, fontWeight: 700, color: col, marginBottom: 2 }}>{m.avgGross.toFixed(0)}</div>
+                          <div key={i} className="chart-cell">
+                            <div style={{ fontSize: 10, fontWeight: 700, color: col, marginBottom: 2 }}>{m.avgGross.toFixed(0)}</div>
                             <div style={{ height: barPx, background: col, borderRadius: "4px 4px 0 0", opacity: 0.75 }} />
                           </div>
                         );
@@ -1384,15 +1384,15 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     </div>
                   </div>
                   {/* Labels */}
-                  <div style={{ display: "flex", gap: 2 }}>
+                  <div className="flex-gap2">
                     {ms.map((m, i) => (
-                      <div key={i} style={{ flex: 1, textAlign: "center", fontSize: 8, color: "var(--text-muted)" }}>
-                        {m.label}<br /><span style={{ fontSize: 7 }}>({m.rounds}r)</span>
+                      <div key={i} style={{ flex: 1, textAlign: "center", fontSize: 10, color: "var(--text-muted)" }}>
+                        {m.label}<br /><span className="fs-7">({m.rounds}r)</span>
                       </div>
                     ))}
                   </div>
                   {/* Trend insight */}
-                  <div className="caConclusion" style={{ background: improving ? "#f0fdf4" : "#fef2f2", borderColor: improving ? "#bbf7d0" : "#fecaca", marginTop: 8 }}>
+                  <div className={`caConclusion ${improving ? "concl-success" : "concl-danger"}`} style={{ marginTop: 8 }}>
                     <div className="caConcText" style={{ color: improving ? "#166534" : "#991b1b", fontSize: 11 }}>
                       {improving
                         ? <>📉 <b>A descer!</b> Primeiros meses: {f3avg.toFixed(0)} → Últimos meses: {l3avg.toFixed(0)}. Melhoria de {(f3avg - l3avg).toFixed(1)} pancadas.</>
@@ -1414,7 +1414,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               Média de pancadas por tipo de buraco em cada mês. Ex: "Par 3 → 3.81" significa que, em média, faz 3.81 pancadas nos buracos de par 3.
               Compara o primeiro e último terço dos dados para ver tendência. "T5 BJGT" é a referência dos 5 melhores do torneio.
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }}>
+            <div className="grid-3">
               {[
                 { par: 3, key: "p3Avg" as const, label: "Par 3", col: "#0369a1", refAvg: 3 },
                 { par: 4, key: "p4Avg" as const, label: "Par 4", col: "#7c3aed", refAvg: 4 },
@@ -1436,17 +1436,17 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                 return (
                   <div key={pt.par} className="bjgt-card-wrap">
                     <div style={{ fontWeight: 900, fontSize: 11, color: pt.col, marginBottom: 4 }}>{pt.label}</div>
-                    <div style={{ display: "flex", alignItems: "flex-end", height: 60, gap: 1 }}>
+                    <div className="chart-bars-1" style={{ height: 60 }}>
                       {vals.map((v, i) => {
                         const h = ((v.avg - minV + 0.2) / (range + 0.4)) * 100;
                         return (
                           <div key={i} className="bjgt-bar-col">
-                            <div style={{ width: "100%", height: `${h}%`, background: pt.col, borderRadius: 2, opacity: 0.6, minHeight: 3 }} />
+                            <div style={{ width: "100%", height: `${h}%`, background: pt.col, borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
                           </div>
                         );
                       })}
                     </div>
-                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: 9, marginTop: 4 }}>
+                    <div className="flex-spacebetween-fs9 mt-4">
                       <span className="c-muted">{vals[0].label}</span>
                       <span className="c-muted">{vals[vals.length - 1].label}</span>
                     </div>
@@ -1479,24 +1479,24 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               const improving = lDbl < fDbl - 2;
               return (
                 <div>
-                  <div style={{ display: "flex", alignItems: "flex-end", height: 80, gap: 2, marginBottom: 4 }}>
+                  <div className="chart-bars" style={{ height: 80, marginBottom: 4 }}>
                     {ms.map((m, i) => {
                       const h = maxDbl > 0 ? (m.dblPct / maxDbl) * 100 : 0;
                       const col = m.dblPct <= 15 ? "#16a34a" : m.dblPct <= 25 ? "#d97706" : "#dc2626";
                       return (
                         <div key={i} className="bjgt-bar-col">
-                          <div style={{ fontSize: 8, fontWeight: 700, color: col }}>{m.dblPct.toFixed(0)}%</div>
+                          <div style={{ fontSize: 10, fontWeight: 700, color: col }}>{m.dblPct.toFixed(0)}%</div>
                           <div style={{ width: "100%", height: `${h}%`, background: col, borderRadius: "3px 3px 0 0", opacity: 0.7, minHeight: 3 }} />
                         </div>
                       );
                     })}
                   </div>
-                  <div style={{ display: "flex", gap: 2 }}>
+                  <div className="flex-gap2">
                     {ms.map((m, i) => (
-                      <div key={i} style={{ flex: 1, textAlign: "center", fontSize: 7, color: "var(--text-muted)" }}>{m.label}</div>
+                      <div key={i} style={{ flex: 1, textAlign: "center", fontSize: 10, color: "var(--text-muted)" }}>{m.label}</div>
                     ))}
                   </div>
-                  <div className="caConclusion" style={{ background: improving ? "#f0fdf4" : "#fef2f2", borderColor: improving ? "#bbf7d0" : "#fecaca", marginTop: 8 }}>
+                  <div className={`caConclusion ${improving ? "concl-success" : "concl-danger"}`} style={{ marginTop: 8 }}>
                     <div className="caConcText" style={{ color: improving ? "#166534" : "#991b1b", fontSize: 11 }}>
                       {improving
                         ? <>✅ <b>Menos blow-ups!</b> Doubles baixaram de {fDbl.toFixed(0)}% para {lDbl.toFixed(0)}%. Isto é maturidade competitiva.</>
@@ -1544,13 +1544,13 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                       const dblPct = p.data.reduce((s, r) => s + r.nDbl, 0) / p.data.reduce((s, r) => s + r.nHoles, 0) * 100;
                       const pobPct = p.data.reduce((s, r) => s + r.nPob, 0) / p.data.reduce((s, r) => s + r.nHoles, 0) * 100;
                       return (
-                        <div key={p.label} style={{ border: "1px solid var(--border-light)", borderRadius: "var(--radius-lg)", padding: 8, textAlign: "center" }}>
-                          <div style={{ fontWeight: 900, fontSize: 11, marginBottom: 4 }}>{p.label}</div>
-                          <div style={{ fontSize: 9, color: "var(--text-muted)", marginBottom: 4 }}>{p.data.length} rondas</div>
+                        <div key={p.label} className="bjgt-card-box">
+                          <div className="fw-900-fs11-mb4">{p.label}</div>
+                          <div className="fs-9-muted-mb4">{p.data.length} rondas</div>
                           <div style={{ fontSize: 22, fontWeight: 900, color: "var(--text)" }}>{avg.toFixed(1)}</div>
                           <div className="muted fs-9">média</div>
-                          <div style={{ display: "flex", justifyContent: "center", gap: 10, marginTop: 4, fontSize: 10 }}>
-                            <span style={{ color: "#16a34a", fontWeight: 700 }}>⬇{best}</span>
+                          <div className="flex-jc-center-gap10">
+                            <span className="cb-par-ok">⬇{best}</span>
                             <span className="c-par-ok">{pobPct.toFixed(0)}% pob</span>
                             <span className="c-birdie">{dblPct.toFixed(0)}% dbl</span>
                           </div>
@@ -1567,13 +1567,13 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     const maxV = Math.max(...allVals) + 2;
                     const range = maxV - minV;
                     return (
-                      <div style={{ marginTop: 8 }}>
+                      <div className="mt-8">
                         {[...benchmarks, { label: `📍 ${PLAYER_NAME} média`, value: recentAvg, col: "#1c2617" }, { label: `📍 ${PLAYER_NAME} melhor`, value: recentBest, col: "#16a34a" }].map((b, i) => (
-                          <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 3 }}>
+                          <div key={i} className="flex-center-gap6" style={{ marginBottom: 3 }}>
                             <span style={{ minWidth: 110, fontSize: 10, fontWeight: 600, color: b.col }}>{b.label}</span>
-                            <div style={{ flex: 1, height: 14, background: "var(--bg)", borderRadius: 4, position: "relative" }}>
-                              <div style={{ width: `${((b.value - minV) / range) * 100}%`, height: "100%", background: b.col, borderRadius: 4, opacity: 0.6 }} />
-                              <span style={{ position: "absolute", right: 4, top: 0, fontSize: 9, fontWeight: 700, lineHeight: "14px" }}>{b.value.toFixed(1)}</span>
+                            <div className="progress-track">
+                              <div style={{ width: `${((b.value - minV) / range) * 100}%`, height: "100%", background: b.col, borderRadius: "var(--radius-sm)", opacity: 0.6 }} />
+                              <span className="bjgt-stat-abs">{b.value.toFixed(1)}</span>
                             </div>
                           </div>
                         ))}
@@ -1603,30 +1603,30 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               return (
                 <div>
                   {/* Paired bars */}
-                  <div style={{ display: "flex", gap: 2, marginBottom: 4 }}>
+                  <div className="flex-gap2-mb4">
                     {ms.map((m, i) => {
                       const f9h = ((m.f9Avg - minSplit + 1) / (range + 2)) * 100;
                       const b9h = ((m.b9Avg - minSplit + 1) / (range + 2)) * 100;
                       return (
-                        <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 1 }}>
-                          <div style={{ fontSize: 7, fontWeight: 600, color: "#0891b2" }}>{m.f9Avg.toFixed(0)}</div>
-                          <div style={{ display: "flex", gap: 1, height: 50, alignItems: "flex-end", width: "100%" }}>
-                            <div style={{ flex: 1, height: `${f9h}%`, background: "#0891b2", borderRadius: 2, opacity: 0.6, minHeight: 3 }} />
-                            <div style={{ flex: 1, height: `${b9h}%`, background: "#f59e0b", borderRadius: 2, opacity: 0.6, minHeight: 3 }} />
+                        <div key={i} className="bjgt-bar-cell">
+                          <div style={{ fontSize: 10, fontWeight: 600, color: "#0891b2" }}>{m.f9Avg.toFixed(0)}</div>
+                          <div className="chart-bars-1" style={{ height: 50, width: "100%" }}>
+                            <div style={{ flex: 1, height: `${f9h}%`, background: "#0891b2", borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
+                            <div style={{ flex: 1, height: `${b9h}%`, background: "#f59e0b", borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
                           </div>
-                          <div style={{ fontSize: 7, fontWeight: 600, color: "#f59e0b" }}>{m.b9Avg.toFixed(0)}</div>
-                          <div style={{ fontSize: 7, color: "var(--text-muted)" }}>{m.label}</div>
+                          <div style={{ fontSize: 10, fontWeight: 600, color: "#f59e0b" }}>{m.b9Avg.toFixed(0)}</div>
+                          <div className="fs-7-muted">{m.label}</div>
                         </div>
                       );
                     })}
                   </div>
                   {/* Legend */}
-                  <div style={{ display: "flex", gap: 12, justifyContent: "center", fontSize: 9, marginBottom: 8 }}>
-                    <span><span style={{ display: "inline-block", width: 8, height: 8, background: "#0891b2", borderRadius: 2, opacity: 0.6, marginRight: 3 }} />Front 9</span>
-                    <span><span style={{ display: "inline-block", width: 8, height: 8, background: "#f59e0b", borderRadius: 2, opacity: 0.6, marginRight: 3 }} />Back 9</span>
+                  <div className="chart-legend-mb8">
+                    <span><span className="chart-legend-dot" style={{ background: "#0891b2" }} />Front 9</span>
+                    <span><span className="chart-legend-dot" style={{ background: "#f59e0b" }} />Back 9</span>
                   </div>
-                  <div className="caConclusion bg-info" style={{ borderColor: "#bfdbfe" }}>
-                    <div className="caConcText" style={{ color: "#1e3a5f", fontSize: 11 }}>
+                  <div className="caConclusion bg-info bc-info">
+                    <div className="caConcText c-dark-navy-11">
                       {Math.abs(avgF9Gap) < 1
                         ? <>📊 Front e Back 9 equilibrados (gap médio: {avgF9Gap > 0 ? "+" : ""}{avgF9Gap.toFixed(1)}). Boa gestão de energia!</>
                         : avgF9Gap > 0
@@ -1658,7 +1658,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
             Baseado em {coachRounds.length} rondas com scorecards detalhados (buraco a buraco).
             Cada gráfico mostra a evolução mensal e compara o primeiro terço com o último terço dos dados.
           </div>
-          <div className="muted" style={{ fontSize: 10, marginBottom: 12 }}>
+          <div className="muted fs-10-mb12">
             Métricas que treinadores usam para avaliar evolução real. Dados de {coachRounds.length} rondas.
           </div>
 
@@ -1670,10 +1670,10 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               <b>Gap Melhor–Média:</b> diferença entre a melhor ronda e a média do mês. Gap pequeno = joga sempre perto do seu melhor. Verde = bom, laranja = atenção, vermelho = a melhorar.
             </div>
             <div className="muted bjgt-sub">Desvio-padrão (σ) do gross e gap melhor/média. σ a descer = jogador mais previsível. Gap a fechar = menos altos e baixos.</div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 8 }}>
+            <div className="bjgt-grid-2x2">
               {/* Gross SD */}
               <div className="bjgt-card-wrap">
-                <div style={{ fontWeight: 800, fontSize: 10, color: "#7c3aed", marginBottom: 4 }}>σ Gross (desvio-padrão)</div>
+                <div className="fw-800-fs10-purple-mb4">σ Gross (desvio-padrão)</div>
                 <div className="bjgt-bar-wrap">
                   {filteredCoach.filter(m => m.n >= 2).map((m, i) => {
                     const maxSD = Math.max(...filteredCoach.filter(x => x.n >= 2).map(x => x.grossStdDev));
@@ -1681,8 +1681,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     const col = m.grossStdDev <= 3 ? "#16a34a" : m.grossStdDev <= 5 ? "#d97706" : "#dc2626";
                     return (
                       <div key={i} className="bjgt-bar-col">
-                        <div style={{ fontSize: 7, fontWeight: 700, color: col }}>{m.grossStdDev.toFixed(1)}</div>
-                        <div style={{ width: "100%", height: `${h}%`, background: col, borderRadius: 2, opacity: 0.6, minHeight: 3 }} />
+                        <div style={{ fontSize: 10, fontWeight: 700, color: col }}>{m.grossStdDev.toFixed(1)}</div>
+                        <div style={{ width: "100%", height: `${h}%`, background: col, borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
                         <div className="bjgt-kpi-tiny">{m.label}</div>
                       </div>
                     );
@@ -1699,8 +1699,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     const col = m.bestVsAvgGap <= 3 ? "#16a34a" : m.bestVsAvgGap <= 6 ? "#d97706" : "#dc2626";
                     return (
                       <div key={i} className="bjgt-bar-col">
-                        <div style={{ fontSize: 7, fontWeight: 700, color: col }}>{m.bestVsAvgGap.toFixed(0)}</div>
-                        <div style={{ width: "100%", height: `${h}%`, background: col, borderRadius: 2, opacity: 0.6, minHeight: 3 }} />
+                        <div style={{ fontSize: 10, fontWeight: 700, color: col }}>{m.bestVsAvgGap.toFixed(0)}</div>
+                        <div style={{ width: "100%", height: `${h}%`, background: col, borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
                         <div className="bjgt-kpi-tiny">{m.label}</div>
                       </div>
                     );
@@ -1720,7 +1720,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               const sdBetter = lSD < fSD - 0.5;
               const gapBetter = lGap < fGap - 1;
               return (
-                <div className="caConclusion" style={{ background: sdBetter || gapBetter ? "#f0fdf4" : "#fef2f2", borderColor: sdBetter || gapBetter ? "#bbf7d0" : "#fecaca" }}>
+                <div className={`caConclusion ${sdBetter || gapBetter ? "concl-success" : "concl-danger"}`}>
                   <div className="caConcText" style={{ color: sdBetter || gapBetter ? "#166534" : "#991b1b", fontSize: 11 }}>
                     σ: {fSD.toFixed(1)} → {lSD.toFixed(1)} {sdBetter ? "✅ mais consistente" : "— manter trabalho"}
                     {" · "}Gap: {fGap.toFixed(0)} → {lGap.toFixed(0)} {gapBetter ? "✅ a fechar" : "— potencial por explorar"}.
@@ -1739,16 +1739,16 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               Mede a capacidade de "limpar a cabeça" após um mau buraco. Top juniores: ≥40%. Abaixo de 25% = o mau buraco está a arrastar os seguintes.
             </div>
             <div className="muted bjgt-sub">Depois de um double+, qual % de vezes faz par ou melhor no buraco seguinte? Top juniors: 40%+.</div>
-            <div style={{ display: "flex", alignItems: "flex-end", height: 60, gap: 2, marginBottom: 4 }}>
+            <div className="chart-bars" style={{ height: 60, marginBottom: 4 }}>
               {filteredCoach.map((m, i) => {
                 const rate = m.bounceRate;
                 const h = rate != null ? Math.min(100, rate) : 0;
                 const col = rate == null ? "var(--border-light)" : rate >= 40 ? "#16a34a" : rate >= 25 ? "#d97706" : "#dc2626";
                 return (
                   <div key={i} className="bjgt-bar-col">
-                    <div style={{ fontSize: 8, fontWeight: 700, color: col }}>{rate != null ? `${rate.toFixed(0)}%` : "–"}</div>
+                    <div style={{ fontSize: 10, fontWeight: 700, color: col }}>{rate != null ? `${rate.toFixed(0)}%` : "–"}</div>
                     <div style={{ width: "100%", height: `${h}%`, background: col, borderRadius: "3px 3px 0 0", opacity: 0.7, minHeight: rate != null ? 3 : 1 }} />
-                    <div style={{ fontSize: 7, color: "var(--text-muted)", marginTop: 1 }}>{m.label}</div>
+                    <div style={{ fontSize: 10, color: "var(--text-muted)", marginTop: 1 }}>{m.label}</div>
                   </div>
                 );
               })}
@@ -1761,7 +1761,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               const fR = first.reduce((s, m) => s + m.bounceRate!, 0) / first.length;
               const lR = last.reduce((s, m) => s + m.bounceRate!, 0) / last.length;
               return (
-                <div className="caConclusion" style={{ background: lR > fR + 5 ? "#f0fdf4" : "#eff6ff", borderColor: lR > fR + 5 ? "#bbf7d0" : "#bfdbfe" }}>
+                <div className={`caConclusion ${lR > fR + 5 ? "concl-success" : "concl-info"}`}>
                   <div className="caConcText" style={{ color: lR > fR + 5 ? "#166534" : "#1e3a5f", fontSize: 11 }}>
                     Bounce-back: {fR.toFixed(0)}% → {lR.toFixed(0)}%. {lR > fR + 5 ? "📈 A melhorar a gestão mental!" : lR >= fR ? "Estável." : "Trabalhar rotina de reset pós-erro."}
                     {" "}Um double não tem de custar dois.
@@ -1779,18 +1779,18 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               <b>Melhor série par+ (média):</b> maior nº consecutivo de buracos com par ou melhor na ronda — mede concentração e consistência mental.
               Séries longas (&gt;5) indicam boa gestão do jogo.
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 8 }}>
+            <div className="bjgt-grid-2x2">
               {/* Birdie rate */}
               <div className="bjgt-card-wrap">
-                <div style={{ fontWeight: 800, fontSize: 10, color: "#16a34a", marginBottom: 4 }}>🦅 Taxa de Birdies (%)</div>
+                <div className="fw-800-fs10-green-mb4">🦅 Taxa de Birdies (%)</div>
                 <div className="bjgt-bar-wrap">
                   {filteredCoach.map((m, i) => {
                     const maxB = Math.max(...filteredCoach.map(x => x.birdieRate), 1);
                     const h = (m.birdieRate / maxB) * 100;
                     return (
                       <div key={i} className="bjgt-bar-col">
-                        <div style={{ fontSize: 7, fontWeight: 700, color: "#16a34a" }}>{m.birdieRate.toFixed(1)}</div>
-                        <div style={{ width: "100%", height: `${h}%`, background: "#16a34a", borderRadius: 2, opacity: 0.6, minHeight: 3 }} />
+                        <div style={{ fontSize: 10, fontWeight: 700, color: "#16a34a" }}>{m.birdieRate.toFixed(1)}</div>
+                        <div style={{ width: "100%", height: `${h}%`, background: "#16a34a", borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
                         <div className="bjgt-kpi-tiny">{m.label}</div>
                       </div>
                     );
@@ -1806,8 +1806,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     const h = (m.avgPobStreak / maxS) * 100;
                     return (
                       <div key={i} className="bjgt-bar-col">
-                        <div style={{ fontSize: 7, fontWeight: 700, color: "#0369a1" }}>{m.avgPobStreak.toFixed(1)}</div>
-                        <div style={{ width: "100%", height: `${h}%`, background: "#0369a1", borderRadius: 2, opacity: 0.6, minHeight: 3 }} />
+                        <div style={{ fontSize: 10, fontWeight: 700, color: "#0369a1" }}>{m.avgPobStreak.toFixed(1)}</div>
+                        <div style={{ width: "100%", height: `${h}%`, background: "#0369a1", borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
                         <div className="bjgt-kpi-tiny">{m.label}</div>
                       </div>
                     );
@@ -1824,8 +1824,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               const fStreak = first.reduce((s, m) => s + m.avgPobStreak, 0) / first.length;
               const lStreak = last.reduce((s, m) => s + m.avgPobStreak, 0) / last.length;
               return (
-                <div className="caConclusion bg-info" style={{ borderColor: "#bfdbfe" }}>
-                  <div className="caConcText" style={{ color: "#1e3a5f", fontSize: 11 }}>
+                <div className="caConclusion bg-info bc-info">
+                  <div className="caConcText c-dark-navy-11">
                     Birdies: {fBird.toFixed(1)}% → {lBird.toFixed(1)}% {lBird > fBird + 0.5 ? "📈" : "—"}
                     {" · "}Séries par+: {fStreak.toFixed(1)} → {lStreak.toFixed(1)} buracos {lStreak > fStreak + 0.3 ? "📈 mais focado" : "—"}.
                     {lBird > fBird + 1 && " Está a começar a atacar mais — sinal de confiança."}
@@ -1845,31 +1845,31 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               Ambos devem estar abaixo de +1.5. Acima disso, há trabalho específico a fazer (aquecimento, nutrição, rotina mental).
             </div>
             <div className="muted bjgt-sub">Média vs par nos primeiros 3 buracos (#1-3) e últimos 3 (#16-18). Para juniors, o arranque é nervos e o fecho é fadiga.</div>
-            <div style={{ display: "flex", gap: 2, marginBottom: 4 }}>
+            <div className="flex-gap2-mb4">
               {filteredCoach.map((m, i) => {
                 const maxAbs = Math.max(...filteredCoach.map(x => Math.max(Math.abs(x.first3Avg), Math.abs(x.last3Avg))), 1);
                 const f3h = Math.min(100, (Math.abs(m.first3Avg) / maxAbs) * 100);
                 const l3h = Math.min(100, (Math.abs(m.last3Avg) / maxAbs) * 100);
                 return (
-                  <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 1 }}>
-                    <div style={{ fontSize: 7, fontWeight: 600, color: m.first3Avg <= 0.5 ? "#16a34a" : "#d97706" }}>
+                  <div key={i} className="bjgt-bar-cell">
+                    <div style={{ fontSize: 10, fontWeight: 600, color: m.first3Avg <= 0.5 ? "#16a34a" : "#d97706" }}>
                       {m.first3Avg > 0 ? "+" : ""}{m.first3Avg.toFixed(1)}
                     </div>
-                    <div style={{ display: "flex", gap: 1, height: 40, alignItems: "flex-end", width: "100%" }}>
-                      <div style={{ flex: 1, height: `${f3h}%`, background: "#d97706", borderRadius: 2, opacity: 0.6, minHeight: 3 }} />
-                      <div style={{ flex: 1, height: `${l3h}%`, background: "#7c3aed", borderRadius: 2, opacity: 0.6, minHeight: 3 }} />
+                    <div className="chart-bars-1" style={{ height: 40, width: "100%" }}>
+                      <div style={{ flex: 1, height: `${f3h}%`, background: "#d97706", borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
+                      <div style={{ flex: 1, height: `${l3h}%`, background: "#7c3aed", borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
                     </div>
-                    <div style={{ fontSize: 7, fontWeight: 600, color: m.last3Avg <= 0.5 ? "#16a34a" : "#7c3aed" }}>
+                    <div style={{ fontSize: 10, fontWeight: 600, color: m.last3Avg <= 0.5 ? "#16a34a" : "#7c3aed" }}>
                       {m.last3Avg > 0 ? "+" : ""}{m.last3Avg.toFixed(1)}
                     </div>
-                    <div style={{ fontSize: 6, color: "var(--text-muted)" }}>{m.label}</div>
+                    <div style={{ fontSize: 10, color: "var(--text-muted)" }}>{m.label}</div>
                   </div>
                 );
               })}
             </div>
-            <div style={{ display: "flex", gap: 12, justifyContent: "center", fontSize: 9, marginBottom: 6 }}>
-              <span><span style={{ display: "inline-block", width: 8, height: 8, background: "#d97706", borderRadius: 2, opacity: 0.6, marginRight: 3 }} />Bur. 1-3</span>
-              <span><span style={{ display: "inline-block", width: 8, height: 8, background: "#7c3aed", borderRadius: 2, opacity: 0.6, marginRight: 3 }} />Bur. 16-18</span>
+            <div className="chart-legend-mb6">
+              <span><span className="chart-legend-dot" style={{ background: "#d97706" }} />Bur. 1-3</span>
+              <span><span className="chart-legend-dot" style={{ background: "#7c3aed" }} />Bur. 16-18</span>
             </div>
             {(() => {
               if (filteredCoach.length < 3) return null;
@@ -1879,7 +1879,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               const worse = avgF > avgL ? "arranque" : "fecho";
               const wVal = Math.max(avgF, avgL);
               return (
-                <div className="caConclusion" style={{ background: wVal > 2 ? "#fef2f2" : "#f0fdf4", borderColor: wVal > 2 ? "#fecaca" : "#bbf7d0" }}>
+                <div className={`caConclusion ${wVal > 2 ? "concl-danger" : "concl-success"}`}>
                   <div className="caConcText" style={{ color: wVal > 2 ? "#991b1b" : "#166534", fontSize: 11 }}>
                     {worse === "arranque" && avgF > 1.5
                       ? <>⚠️ Perde mais nos primeiros 3 buracos (+{avgF.toFixed(1)} vs par). Pode ser nervos — aquecer bem e ter rotina pré-jogo.</>
@@ -1917,22 +1917,22 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     const avgTrip = p.data.reduce((s, m) => s + m.tripleRate, 0) / p.data.length;
                     const avgBog = 100 - avgPob - avgDbl - avgTrip;
                     return (
-                      <div key={p.label} style={{ border: "1px solid var(--border-light)", borderRadius: "var(--radius-lg)", padding: 8, textAlign: "center" }}>
-                        <div style={{ fontWeight: 900, fontSize: 11, marginBottom: 6 }}>{p.label}</div>
-                        <div style={{ fontSize: 9, color: "var(--text-muted)", marginBottom: 4 }}>{p.data.reduce((s, m) => s + m.n, 0)} rondas</div>
+                      <div key={p.label} className="bjgt-card-box">
+                        <div className="fw-900-fs11-mb6">{p.label}</div>
+                        <div className="fs-9-muted-mb4">{p.data.reduce((s, m) => s + m.n, 0)} rondas</div>
                         {/* Stacked bar */}
-                        <div style={{ display: "flex", height: 16, borderRadius: 4, overflow: "hidden", marginBottom: 6, gap: 1 }}>
+                        <div className="flex-h16-bar">
                           {avgBird > 0 && <div style={{ flex: avgBird, background: "#0369a1" }} />}
                           {avgPob - avgBird > 0 && <div style={{ flex: avgPob - avgBird, background: "#16a34a" }} />}
                           {avgBog > 0 && <div style={{ flex: avgBog, background: "#d97706" }} />}
                           {avgDbl > 0 && <div style={{ flex: avgDbl, background: "#dc2626" }} />}
                           {avgTrip > 0 && <div style={{ flex: avgTrip, background: "#7f1d1d" }} />}
                         </div>
-                        <div style={{ fontSize: 9, display: "flex", justifyContent: "space-between" }}>
-                          <span style={{ color: "#16a34a", fontWeight: 700 }}>Par+: {avgPob.toFixed(0)}%</span>
-                          <span style={{ color: "#dc2626", fontWeight: 700 }}>Dbl+: {(avgDbl + avgTrip).toFixed(0)}%</span>
+                        <div style={{ fontSize: 10, display: "flex", justifyContent: "space-between" }}>
+                          <span className="cb-par-ok">Par+: {avgPob.toFixed(0)}%</span>
+                          <span className="cb-birdie">Dbl+: {(avgDbl + avgTrip).toFixed(0)}%</span>
                         </div>
-                        <div style={{ fontSize: 9, color: "#0369a1", fontWeight: 600 }}>🦅 {avgBird.toFixed(1)}%</div>
+                        <div style={{ fontSize: 10, color: "#0369a1", fontWeight: 600 }}>🦅 {avgBird.toFixed(1)}%</div>
                       </div>
                     );
                   })}
@@ -1951,9 +1951,9 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                 Quanto mais baixo, melhor. A barra escura abaixo de cada mês mostra o melhor SD do mês.
               </div>
               <div className="muted bjgt-sub">O SD normaliza para a dificuldade do campo. Melhor que o gross para ver evolução real. O HCP baseia-se nos 8 melhores SD das últimas 20 rondas.</div>
-              <div style={{ display: "flex", alignItems: "flex-end", height: 70, gap: 2, marginBottom: 4 }}>
+              <div className="chart-bars" style={{ height: 70, marginBottom: 4 }}>
                 {filteredCoach.map((m, i) => {
-                  if (m.avgSD == null) return <div key={i} style={{ flex: 1 }} />;
+                  if (m.avgSD == null) return <div key={i} className="flex-1" />;
                   const allSDs = filteredCoach.filter(x => x.avgSD != null).map(x => x.avgSD!);
                   const minSD = Math.min(...allSDs);
                   const maxSD = Math.max(...allSDs);
@@ -1962,12 +1962,12 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                   const col = m.avgSD <= 15 ? "#16a34a" : m.avgSD <= 25 ? "#d97706" : "#dc2626";
                   return (
                     <div key={i} className="bjgt-bar-col">
-                      <div style={{ fontSize: 8, fontWeight: 700, color: col }}>{m.avgSD.toFixed(1)}</div>
+                      <div style={{ fontSize: 10, fontWeight: 700, color: col }}>{m.avgSD.toFixed(1)}</div>
                       <div style={{ width: "100%", height: `${h}%`, background: col, borderRadius: "3px 3px 0 0", opacity: 0.7, minHeight: 3 }} />
                       {m.bestSD != null && (
-                        <div style={{ fontSize: 7, color: "#16a34a", fontWeight: 600 }}>⬇{m.bestSD.toFixed(1)}</div>
+                        <div style={{ fontSize: 10, color: "#16a34a", fontWeight: 600 }}>⬇{m.bestSD.toFixed(1)}</div>
                       )}
-                      <div style={{ fontSize: 7, color: "var(--text-muted)" }}>{m.label}</div>
+                      <div className="fs-7-muted">{m.label}</div>
                     </div>
                   );
                 })}
@@ -1982,7 +1982,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                 const allBest = filteredCoach.filter(m => m.bestSD != null).map(m => m.bestSD!);
                 const overallBest = allBest.length > 0 ? Math.min(...allBest) : null;
                 return (
-                  <div className="caConclusion" style={{ background: lSD < fSD - 1 ? "#f0fdf4" : "#eff6ff", borderColor: lSD < fSD - 1 ? "#bbf7d0" : "#bfdbfe" }}>
+                  <div className={`caConclusion ${lSD < fSD - 1 ? "concl-success" : "concl-info"}`}>
                     <div className="caConcText" style={{ color: lSD < fSD - 1 ? "#166534" : "#1e3a5f", fontSize: 11 }}>
                       SD médio: {fSD.toFixed(1)} → {lSD.toFixed(1)} {lSD < fSD - 1 ? "📉 a baixar — evolução real!" : lSD > fSD + 1 ? "📈 a subir — pode ser campos mais duros" : "— estável"}.
                       {overallBest != null && <> Melhor SD de sempre: <b>{overallBest.toFixed(1)}</b>.</>}
@@ -1995,10 +1995,10 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
           )}
 
           {/* ── Summary table for coaches ── */}
-          <div style={{ marginTop: 12 }}>
+          <div className="mt-12">
             <div className="haSubTitle">📋 Resumo para o Treinador</div>
             <div className="tourn-scroll">
-            <table className="sc-table-modern" style={{ width: "100%", fontSize: 10 }}>
+            <table className="sc-table-modern bjgt-mini-table-sm">
               <thead><tr>
                 <th className="row-label">Mês</th>
                 <th>Rondas</th>
@@ -2033,7 +2033,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               </tbody>
             </table>
             </div>
-            <div className="muted" style={{ fontSize: 8, marginTop: 4 }}>σ = desvio-padrão do gross · Par+% = par ou melhor · 🦅% = birdies · Dbl% = doubles+ · Bounce = % par+ após double · Streak = melhor série consecutiva de par+ · #1-3/#16-18 = vs par nos primeiros/últimos 3 buracos · SD = Score Differential</div>
+            <div className="muted fs-8-mt4">σ = desvio-padrão do gross · Par+% = par ou melhor · 🦅% = birdies · Dbl% = doubles+ · Bounce = % par+ após double · Streak = melhor série consecutiva de par+ · #1-3/#16-18 = vs par nos primeiros/últimos 3 buracos · SD = Score Differential</div>
           </div>
         </div>
       )}
@@ -2047,12 +2047,12 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
             <br />μ M = média do Manuel nos 3 dias · μ T5 = média dos 5 melhores · μ Field = média dos {FIELD_2025.nPlayers} jogadores · Diff = Manuel − Field (negativo = melhor que o field).
           </div>
           <div className="tourn-scroll">
-          <table className="sc-table-modern" style={{ width: "100%", fontSize: 9 }}>
+          <table className="sc-table-modern w-full fs-9">
             <thead>
               <tr>
                 <th className="row-label" style={{ minWidth: 55 }}></th>
                 {vpHoleProfiles.map(h => (
-                  <th key={h.h} style={{ textAlign: "center", minWidth: 28 }}>{h.h}</th>
+                  <th key={h.h} className="ta-c" style={{ minWidth: 28 }}>{h.h}</th>
                 ))}
                 <th className="sc-cell-sep">Tot</th>
               </tr>
@@ -2060,11 +2060,11 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
             <tbody>
               {/* Par row */}
               <tr className="bg-page">
-                <td className="row-label" style={{ fontWeight: 700, color: "var(--text-muted)" }}>Par</td>
+                <td className="row-label fw-700-muted">Par</td>
                 {vpHoleProfiles.map(h => (
-                  <td key={h.h} style={{ textAlign: "center", color: "var(--text-muted)" }}>{h.par}</td>
+                  <td key={h.h} className="ta-c c-muted">{h.par}</td>
                 ))}
-                <td style={{ textAlign: "center", fontWeight: 700, color: "var(--text-muted)", borderLeft: "1px solid #d5dac9" }}>{tp}</td>
+                <td className="ta-c fw-700-muted bl-border">{tp}</td>
               </tr>
               {/* Manuel day rows */}
               {vpCards.map((c, di) => {
@@ -2084,7 +2084,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               })}
               {/* Eclectic row */}
               {ecl && (
-                <tr className="bg-success" style={{ borderTop: "1px solid var(--border)" }}>
+                <tr className="bg-success bt-section">
                   <td className="row-label fw-800">ECL</td>
                   {ecl.holes.map((eh, hi) => (
                     <td key={hi} className="bjgt-score-cell">
@@ -2095,10 +2095,10 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                 </tr>
               )}
               {/* μ Manuel */}
-              <tr style={{ borderTop: "2px solid #1c2617" }}>
+              <tr className="bt-dark">
                 <td className="row-label fw-700">μ M</td>
                 {vpHoleProfiles.map(h => (
-                  <td key={h.h} style={{ textAlign: "center", fontWeight: 600, fontSize: 9 }}>{h.vpAvg.toFixed(1)}</td>
+                  <td key={h.h} className="ta-c fw-600 fs-9">{h.vpAvg.toFixed(1)}</td>
                 ))}
                 <td className="sc-cell-sep-bold">
                   {daySummaries.length > 0 ? (daySummaries.reduce((a, d) => a + d.gross, 0) / daySummaries.length).toFixed(0) : "–"}
@@ -2109,34 +2109,34 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                 <td className="row-label fw-700">μ T5</td>
                 {vpHoleProfiles.map(h => {
                   const fh = FIELD_2025.holes.find(x => x.h === h.h);
-                  return <td key={h.h} style={{ textAlign: "center", fontSize: 9 }}>{fh?.t5.toFixed(1) ?? "–"}</td>;
+                  return <td key={h.h} className="ta-c fs-9">{fh?.t5.toFixed(1) ?? "–"}</td>;
                 })}
-                <td style={{ textAlign: "center", fontWeight: 600, borderLeft: "1px solid #d5dac9" }}>{FIELD_2025.top5Avg.toFixed(0)}</td>
+                <td className="ta-c fw-600 bl-border">{FIELD_2025.top5Avg.toFixed(0)}</td>
               </tr>
               {/* μ Field */}
               <tr>
                 <td className="row-label fw-700">μ Field</td>
                 {vpHoleProfiles.map(h => {
                   const fh = FIELD_2025.holes.find(x => x.h === h.h);
-                  return <td key={h.h} style={{ textAlign: "center", fontSize: 9, color: "var(--text-3)" }}>{fh?.fAvg.toFixed(1) ?? "–"}</td>;
+                  return <td key={h.h} className="ta-c fs-9 c-text-3">{fh?.fAvg.toFixed(1) ?? "–"}</td>;
                 })}
-                <td style={{ textAlign: "center", color: "var(--text-3)", borderLeft: "1px solid #d5dac9" }}>{FIELD_2025.fieldAvg.toFixed(0)}</td>
+                <td className="ta-c c-text-3 bl-border">{FIELD_2025.fieldAvg.toFixed(0)}</td>
               </tr>
               {/* Diff row */}
-              <tr style={{ borderTop: "1px solid #d5dac9" }}>
+              <tr className="bt-border">
                 <td className="row-label fw-700">Diff</td>
                 {vpHoleProfiles.map(h => {
                   const fh = FIELD_2025.holes.find(x => x.h === h.h);
                   const d = fh ? h.vpAvg - fh.fAvg : 0;
                   const col = d > 0.5 ? "#dc2626" : d > 0.2 ? "#d97706" : d < -0.2 ? "#16a34a" : "var(--text-3)";
-                  return <td key={h.h} style={{ textAlign: "center", fontWeight: 700, fontSize: 9, color: col }}>{d > 0 ? `+${d.toFixed(1)}` : d.toFixed(1)}</td>;
+                  return <td key={h.h} style={{ textAlign: "center", fontWeight: 700, fontSize: 10, color: col }}>{d > 0 ? `+${d.toFixed(1)}` : d.toFixed(1)}</td>;
                 })}
-                <td style={{ borderLeft: "1px solid #d5dac9" }}></td>
+                <td className="bl-border"></td>
               </tr>
             </tbody>
           </table>
           </div>
-          <div className="muted" style={{ fontSize: 9, marginTop: 4 }}>
+          <div className="muted fs-9-mt4">
             ECL = eclético (melhor score em cada buraco nos 3 dias) · Diff: vermelho = pior que o field, verde = melhor que o field.
           </div>
           
@@ -2150,8 +2150,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
             const gaining = diffs.filter(d => d.diff < -0.2).slice(-3);
             if (losing.length === 0) return null;
             return (
-              <div className="caConclusion" style={{ background: "var(--bg-danger)", borderColor: "#fecaca", marginTop: 8 }}>
-                <div className="caConcTitle" style={{ color: "#991b1b" }}>📉 Onde o Manuel perde mais vs o field</div>
+              <div className="caConclusion concl-danger mt-8">
+                <div className="caConcTitle c-dark-red">📉 Onde o Manuel perde mais vs o field</div>
                 <div className="caConcText" style={{ color: "#7f1d1d" }}>
                   Buracos {losing.map(d => `#${d.h} (+${d.diff.toFixed(1)})`).join(", ")} — aqui perdes {losing.reduce((a, d) => a + d.diff, 0).toFixed(1)} pancadas por ronda vs a média.
                   {gaining.length > 0 && <> Mas nos buracos {gaining.map(d => `#${d.h}`).join(", ")} estás <b>melhor</b> que o field!</>}
@@ -2175,14 +2175,14 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               const border = isBest ? "#16a34a" : isWorst ? "#dc2626" : "#d5dac9";
               const bg = isBest ? "#f0fdf4" : isWorst ? "#fef2f2" : "#fff";
               return (
-                <div key={d.idx} style={{ border: `2px solid ${border}`, borderRadius: 10, padding: "10px 12px", background: bg }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6 }}>
+                <div key={d.idx} style={{ border: `2px solid ${border}`, borderRadius: "var(--radius-lg)", padding: "10px 12px", background: bg }}>
+                  <div className="flex-between-mb6">
                     <span className="fw-900 fs-13">Dia {d.idx}</span>
                     <span className="muted fs-10">{d.date}</span>
                   </div>
                   <div style={{ fontSize: 28, fontWeight: 900, color: isBest ? "#16a34a" : isWorst ? "#dc2626" : "#1c2617" }}>{d.gross}</div>
                   <div className="muted fs-10 mb-6">{fmtTP(d.gross - tp)}</div>
-                  <div style={{ display: "flex", gap: 8, fontSize: 10 }}>
+                  <div className="flex-gap8-fs10">
                     <span>F9: <b>{d.f9}</b></span>
                     {nH >= 18 && <span>B9: <b>{d.b9}</b></span>}
                   </div>
@@ -2199,8 +2199,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
         {/* Key insight: what made the best day better? */}
         {bestDay && worstDay && bestDay.idx !== worstDay.idx && (
-          <div className="caConclusion" style={{ background: "var(--bg-success)", borderColor: "#bbf7d0", marginBottom: 8 }}>
-            <div className="caConcTitle" style={{ color: "#166534" }}>💡 O que fez a diferença no Dia {bestDay.idx}?</div>
+          <div className="caConclusion concl-success" style={{ marginBottom: 8 }}>
+            <div className="caConcTitle c-green-166">💡 O que fez a diferença no Dia {bestDay.idx}?</div>
             <div className="caConcText" style={{ color: "#14532d" }}>
               {bestDay.doubles < worstDay.doubles && <>Menos {worstDay.doubles - bestDay.doubles} double{worstDay.doubles - bestDay.doubles > 1 ? "s" : ""}. </>}
               {bestDay.pars > worstDay.pars && <>Mais {bestDay.pars - worstDay.pars} par{bestDay.pars - worstDay.pars > 1 ? "es" : ""} ou melhor. </>}
@@ -2241,10 +2241,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
         {/* Recovery after double */}
         {totalRecovery >= 2 && recoveryRate != null && (
-          <div className="caConclusion" style={{
-            background: recoveryRate >= 60 ? "#f0fdf4" : recoveryRate >= 40 ? "#fef3c7" : "#fef2f2",
-            borderColor: recoveryRate >= 60 ? "#bbf7d0" : recoveryRate >= 40 ? "#fde68a" : "#fecaca"
-          }}>
+          <div className={`caConclusion ${recoveryRate >= 60 ? "concl-success" : recoveryRate >= 40 ? "concl-warn" : "concl-danger"}`}>
             <div className="caConcTitle" style={{ color: recoveryRate >= 60 ? "#166534" : recoveryRate >= 40 ? "#92400e" : "#991b1b" }}>
               {recoveryRate >= 60 ? "💪" : "⚠️"} Recuperação após double
             </div>
@@ -2337,7 +2334,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
       </div>
 
       {/* ── Volta de Treino ── */}
-      <div className="courseAnalysis" style={{ borderColor: "#0369a1", borderWidth: 2, background: "var(--bg-info)" }}>
+      <div className="courseAnalysis courseAnalysis-info">
         <div className="caTitle" style={{ color: "#1e40af", fontSize: 14 }}>🏌️ Checklist — Volta de Treino</div>
         <div className="caConcText" style={{ color: "#1e3a5f", lineHeight: 1.7 }}>
           {trapHoles.length > 0 && <p className="mb-6">
@@ -2409,16 +2406,16 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
           <div className="ecTitle">Eclético (gross) por tee</div>
           <div className="ecHint">Clique num tee na tabela de buracos para ver análise e filtrar rondas.</div>
           {/* Tee header with color */}
-          <div style={{ marginTop: 8, border: "2px solid #dc2626", borderRadius: 10, overflow: "hidden" }}>
+          <div style={{ marginTop: 8, border: "2px solid #dc2626", borderRadius: "var(--radius-lg)", overflow: "hidden" }}>
             <div style={{ padding: "6px 10px", background: "#dc262610", fontWeight: 600, fontSize: 12 }}>
               <span className="sc-pill" style={{ background: "#dc2626", color: "#fff", fontSize: 10, padding: "2px 10px" }}>Vermelho</span>{" "}
-              <span style={{ color: "#0369a1", fontWeight: 800 }}>{ecl.totalGross}</span>
-              <span className="muted" style={{ marginLeft: 6 }}>par {tp}</span>
+              <span className="cb-blue-800">{ecl.totalGross}</span>
+              <span className="muted ml-6">par {tp}</span>
             </div>
             <div className="scroll-x">
-            <table className="sc-table-modern" style={{ width: "100%" }}>
+            <table className="sc-table-modern w-full">
               <thead><tr>
-                <th className="row-label" style={{ width: 60 }}>BUR.</th>
+                <th className="row-label col-w60">BUR.</th>
                 {Array.from({ length: 9 }, (_, i) => <th key={i}>{i + 1}</th>)}
                 <th className="col-out">OUT</th>
                 {ecl.holeCount >= 18 && Array.from({ length: 9 }, (_, i) => <th key={i + 9}>{i + 10}</th>)}
@@ -2427,7 +2424,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               </tr></thead>
               <tbody>
                 <tr className="bg-success">
-                  <td className="row-label" style={{ fontWeight: 700, fontSize: 10, color: "#2e5a10" }}>Par</td>
+                  <td className="row-label fw-700-fs10-green2">Par</td>
                   {ecl.holes.slice(0, 9).map((h, i) => <td key={i}>{h.par}</td>)}
                   <td className="col-out fw-700">{ecl.holes.slice(0, 9).reduce((s, h) => s + (h.par ?? 0), 0)}</td>
                   {ecl.holeCount >= 18 && ecl.holes.slice(9, 18).map((h, i) => <td key={i}>{h.par}</td>)}
@@ -2436,7 +2433,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                 </tr>
                 {vpHoleProfiles.length > 0 && vpHoleProfiles.some(h => h.meters != null) && (
                 <tr className="bg-detail">
-                  <td className="row-label" style={{ fontWeight: 600, fontSize: 9, color: "var(--text-3)" }}>m</td>
+                  <td className="row-label fw-600-fs9-text3">m</td>
                   {Array.from({ length: 9 }, (_, i) => {
                     const m = vpHoleProfiles[i]?.meters;
                     return <td key={i} className="fs-9 c-muted">{m ?? "–"}</td>;
@@ -2450,8 +2447,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                   <td className="col-total fs-9 c-muted">{vpHoleProfiles.reduce((s, h) => s + (h.meters ?? 0), 0) || "–"}</td>
                 </tr>
                 )}
-                <tr style={{ borderTop: "2px solid #cbd5e1" }}>
-                  <td className="row-label" style={{ color: "#0369a1", fontWeight: 700, fontSize: 10 }}>Eclético</td>
+                <tr className="bt-heavy">
+                  <td className="row-label cb-blue-10">Eclético</td>
                   {ecl.holes.slice(0, 9).map((h, i) => <td key={i}><ScoreCircle g={h.best} p={h.par} /></td>)}
                   <td className="col-out fw-700">{ecl.holes.slice(0, 9).reduce((s, h) => s + (h.best ?? h.par ?? 0), 0)}</td>
                   {ecl.holeCount >= 18 && ecl.holes.slice(9, 18).map((h, i) => <td key={i}><ScoreCircle g={h.best} p={h.par} /></td>)}
@@ -2467,12 +2464,12 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                   return (
                     <tr key={idx} style={{ background: "#dc26260A" }}>
                       <td className="row-label fs-10">
-                        <span className="sc-pill" style={{ background: "#dc2626", color: "#fff", fontSize: 9, padding: "1px 6px" }}>{trDate}</span>
+                        <span className="sc-pill" style={{ background: "#dc2626", color: "#fff", fontSize: 10, padding: "1px 6px" }}>{trDate}</span>
                       </td>
                       {h.g.slice(0, 9).map((s, i) => <td key={i}><ScoreCircle g={s} p={ecl!.holes[i]?.par} sm /></td>)}
-                      <td className="col-out" style={{ fontWeight: 600, fontSize: 10 }}>{out}</td>
+                      <td className="col-out fs-10-fw600">{out}</td>
                       {nH >= 18 && h.g.slice(9, 18).map((s, i) => <td key={i}><ScoreCircle g={s} p={ecl!.holes[i + 9]?.par} sm /></td>)}
-                      {nH >= 18 && <td className="col-in" style={{ fontWeight: 600, fontSize: 10 }}>{inn}</td>}
+                      {nH >= 18 && <td className="col-in fs-10-fw600">{inn}</td>}
                       <td className="col-total fw-700">{out + inn}</td>
                     </tr>
                   );
@@ -2494,9 +2491,9 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
           { l: "Double", n: S.totalDist.double, c: "double" }, { l: "Triple+", n: S.totalDist.triple, c: "triple" },
         ].map(x => (
           <div key={x.l} style={{ flex: Math.max(x.n, 1), textAlign: "center" }}>
-            <div className={`sc-score ${x.c}`} style={{ width: "100%", borderRadius: 6, padding: "6px 0", fontSize: 16, fontWeight: 900 }}>{x.n}</div>
-            <div style={{ fontSize: 9, fontWeight: 700, color: "var(--text-muted)", marginTop: 3 }}>{x.l}</div>
-            <div style={{ fontSize: 9, color: "var(--border-heavy)" }}>{totN > 0 ? `${(x.n / totN * 100).toFixed(0)}%` : ""}</div>
+            <div className={`sc-score ${x.c}`} style={{ width: "100%", borderRadius: "var(--radius)", padding: "6px 0", fontSize: 16, fontWeight: 900 }}>{x.n}</div>
+            <div style={{ fontSize: 10, fontWeight: 700, color: "var(--text-muted)", marginTop: 3 }}>{x.l}</div>
+            <div style={{ fontSize: 10, color: "var(--border-heavy)" }}>{totN > 0 ? `${(x.n / totN * 100).toFixed(0)}%` : ""}</div>
           </div>
         ))}
       </div>
@@ -2512,15 +2509,15 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               const col = (d.avgVsPar ?? 0) <= 0.1 ? "#16a34a" : (d.avgVsPar ?? 0) <= 0.4 ? "#d97706" : "#dc2626";
               return (
                 <div key={d.par} className="haParCard" style={isW ? { borderColor: "#fca5a5", background: "var(--bg-danger)" } : undefined}>
-                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
+                  <div className="flex-between-mb6">
                     <span className="bjgt-kpi-val">Par {d.par}</span>
                     <span className="muted">{d.nHoles} bur.</span>
                   </div>
                   <div style={{ fontSize: 20, fontWeight: 900, color: col }}>
                     {(d.avgVsPar ?? 0) >= 0 ? "+" : ""}{(d.avgVsPar ?? 0).toFixed(2)}
                   </div>
-                  <div className="muted" style={{ marginBottom: 6, fontSize: 10 }}>média vs par por buraco</div>
-                  <div style={{ display: "flex", height: 8, borderRadius: 4, overflow: "hidden", gap: 1 }}>
+                  <div className="muted mb-6-fs10">média vs par por buraco</div>
+                  <div style={{ display: "flex", height: 8, borderRadius: "var(--radius-sm)", overflow: "hidden", gap: 1 }}>
                     {d.parOrBetterPct > 0 && <div className="seg-birdie" style={{ flex: d.parOrBetterPct }} />}
                     {100 - d.parOrBetterPct - d.doubleOrWorsePct > 0 && <div className="seg-bogey" style={{ flex: 100 - d.parOrBetterPct - d.doubleOrWorsePct }} />}
                     {d.doubleOrWorsePct > 0 && <div className="seg-double" style={{ flex: d.doubleOrWorsePct }} />}
@@ -2551,13 +2548,13 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
       <div className="tourn-scroll mb-16">
         <table className="tourn-table">
           <thead><tr>
-            <th style={{ width: 40 }}>Bur.</th>
+            <th className="col-w40">Bur.</th>
             <th className="r col-w30">Par</th>
             <th className="r col-w30">SI</th>
             <th className="r col-w50">Média</th>
             <th className="r col-w50">vs Par</th>
             <th className="r" style={{ width: 35 }}>Best</th>
-            <th style={{ minWidth: 120 }}>Scores</th>
+            <th className="col-mw120">Scores</th>
           </tr></thead>
           <tbody>
             {S.holes.map(h => {
@@ -2582,7 +2579,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
       </div>
 
       {/* ── Plano de Jogo ── */}
-      <div className="courseAnalysis" style={{ borderColor: "#1a2e1a", borderWidth: 2 }}>
+      <div className="courseAnalysis courseAnalysis-accent">
         <div className="caTitle" style={{ fontSize: 15 }}>🗺️ Plano de Jogo — {TOURN.days} Dias em Málaga</div>
         <div className="caConcText" style={{ color: "var(--text)", lineHeight: 1.7 }}>
           {dowN > 0 && <p className="mb-8">
@@ -2619,7 +2616,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
       </>}
 
-      <div style={{ textAlign: "center", margin: "20px 0" }}>
+      <div className="ta-c" style={{ margin: "20px 0" }}>
         <Link to={`/jogadores/${fed}`} className="tourn-tab tourn-tab-active" style={{ textDecoration: "none", padding: "10px 24px" }}>
           Ver perfil completo do {PLAYER_NAME} →
         </Link>
@@ -2657,9 +2654,9 @@ function MiniBar({ d }: { d: { eagle: number; birdie: number; par: number; bogey
     { n: d.double + d.triple, cls: "seg-double" },
   ];
   return (
-    <div style={{ display: "flex", height: 14, borderRadius: 4, overflow: "hidden", gap: 1 }}>
+    <div style={{ display: "flex", height: 14, borderRadius: "var(--radius-sm)", overflow: "hidden", gap: 1 }}>
       {segs.filter(s => s.n > 0).map((s, i) => (
-        <div key={i} className={s.cls} style={{ flex: s.n, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 8, fontWeight: 700, color: "#fff" }}>
+        <div key={i} className={s.cls} style={{ flex: s.n, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 700, color: "#fff" }}>
           {s.n}
         </div>
       ))}

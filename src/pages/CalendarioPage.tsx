@@ -404,10 +404,10 @@ function MiniCal({ year, month, onSelect, selected, visibleEvents }: {
   const days = getMonthDays(year, month);
   const today = new Date();
   return (
-    <div style={{ userSelect: "none" }}>
+    <div className="cal-no-select">
       <div className="ta-c" style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)" }}>
         {DAYS_SHORT.map((d, i) => (
-          <div key={i} style={{ fontSize: 10, color: "var(--text-3)", padding: "2px 0", fontWeight: 600 }}>{d}</div>
+          <div key={i} className="fs-10 c-text-3 fw-600" style={{ padding: "2px 0" }}>{d}</div>
         ))}
         {days.map((d, i) => {
           const isToday = isSameDay(d.date, today);
@@ -460,8 +460,8 @@ function EventPopup({ event, onClose }: { event: CalEvent; onClose: () => void }
             width: 26, height: 26, borderRadius: "50%", cursor: "pointer", fontSize: 14,
             display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
         </div>
-        <div style={{ padding: "16px 18px" }}>
-          <div style={{ fontSize: 17, fontWeight: 600, color: "var(--text)", marginBottom: 12, lineHeight: 1.3 }}>{event.title}</div>
+        <div className="cal-sidebar">
+          <div className="cal-detail-title">{event.title}</div>
           <div className="flex-col-gap8">
             <InfoRow icon="📅" label={fmtRange(event)} />
             {event.modalidade && <InfoRow icon="🏌️" label={event.modalidade} />}
@@ -474,7 +474,7 @@ function EventPopup({ event, onClose }: { event: CalEvent; onClose: () => void }
 }
 function InfoRow({ icon, label }: { icon: string; label: string }) {
   return (<div className="flex-center-gap8">
-    <span style={{ fontSize: 15, width: 22, textAlign: "center" }}>{icon}</span>
+    <span className="cal-day-num">{icon}</span>
     <span className="fs-13 c-text-2">{label}</span>
   </div>);
 }
@@ -487,7 +487,7 @@ function ListView({ events, onSelect }: { events: CalEvent[]; onSelect: (e: CalE
     return [...m.entries()].sort((a, b) => a[0] - b[0]);
   }, [events]);
   return (
-    <div style={{ padding: "16px 20px", display: "flex", flexDirection: "column", gap: 20 }}>
+    <div className="cal-page-inner">
       {grouped.map(([month, evts]) => (
         <div key={month}>
           <div style={{ fontSize: 13, fontWeight: 700, color: "var(--accent)", textTransform: "uppercase",
@@ -509,7 +509,7 @@ function ListView({ events, onSelect }: { events: CalEvent[]; onSelect: (e: CalE
                   }}
                   onMouseEnter={ev => (ev.currentTarget.style.background = hl ? `${hl.bg}30` : "var(--bg-hover)")}
                   onMouseLeave={ev => (ev.currentTarget.style.background = hl ? `${hl.bg}18` : "transparent")}>
-                  <div className="col-w42 ta-c" style={{ flexShrink: 0 }}>
+                  <div className="col-w42 ta-c flex-shrink-0">
                     <div style={{ fontSize: 10, color: hl ? hl.border : "var(--text-3)", fontWeight: 500, textTransform: "uppercase" }}>{DAY_NAMES[e.date.getDay()]}</div>
                     <div style={{ fontSize: 18, fontWeight: 600, color: hl ? hl.border : "var(--text)", lineHeight: 1.2 }}>{e.date.getDate()}</div>
                   </div>
@@ -760,7 +760,7 @@ function CalendarioContent() {
                         </div>
                         {/* Expanded event list */}
                         {isExpanded && (
-                          <div style={{ paddingLeft: 28, display: "flex", flexDirection: "column", gap: 0, marginBottom: 4 }}>
+                          <div className="cal-indent">
                             {calEvts.map(ev => {
                               const isPast = (ev.endDate || ev.date) < today;
                               const d = ev.date;
@@ -798,13 +798,13 @@ function CalendarioContent() {
       </div>
 
       {/* ── Main ── */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+      <div className="flex-1" style={{ display: "flex", flexDirection: "column", overflow: "hidden" }}>
         <div style={{ display: "flex", alignItems: "center", padding: "10px 20px",
           borderBottom: "1px solid var(--border-light)", gap: 12, flexShrink: 0 }}>
           <button className="sidebar-toggle" onClick={() => setSidebarOpen(v => !v)} title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
             {sidebarOpen ? "◀" : "▶"}
           </button>
-          <h2 style={{ fontSize: 18, fontWeight: 600, color: "var(--text)", margin: 0 }}>Calendário 2026</h2>
+          <h2 className="cal-month-title">Calendário 2026</h2>
           <button onClick={goToday} style={{
             border: "1px solid var(--accent)", background: "transparent", color: "var(--accent)",
             padding: "4px 12px", borderRadius: "var(--radius)", cursor: "pointer",
@@ -814,7 +814,7 @@ function CalendarioContent() {
             onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "var(--accent)"; }}>
             Hoje
           </button>
-          <div style={{ marginLeft: "auto", display: "flex", gap: 2, background: "var(--bg)", borderRadius: "var(--radius)", padding: 2 }}>
+          <div className="cal-switcher">
             {(["month", "list"] as ViewMode[]).map(v => (
               <button key={v} onClick={() => setViewMode(v)} style={{
                 border: "none", padding: "5px 14px", cursor: "pointer", fontSize: 12, fontWeight: 600,
@@ -853,9 +853,9 @@ function CalendarioContent() {
           </div>
         </div>
 
-        <div className="flex-1 scroll-y" style={{ overflow: "auto" }}>
+        <div className="flex-1 scroll-y scroll-y">
           {viewMode === "month" ? (
-            <div style={{ display: "flex", flexDirection: "column", height: "100%", padding: "0 12px 12px" }}>
+            <div className="cal-content">
               <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)",
                 borderBottom: "1px solid var(--border-light)", marginBottom: 4 }}>
                 {DAYS_PT.map((d, i) => (

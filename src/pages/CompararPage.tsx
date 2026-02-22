@@ -269,10 +269,10 @@ function PlayerSearch({ players, slots, onAdd, onRemove }: {
   return (
     <div style={{ marginBottom: 18 }}>
       <div className="flex-center-gap8 mb-10" ref={ref}>
-        <div style={{ position: "relative", flex: 1 }}>
+        <div className="cmp-search-wrap">
           <input className="input" value={q} onChange={e => { setQ(e.target.value); setOpen(true); }} onFocus={() => q.trim() && setOpen(true)}
             placeholder="Pesquisar jogador…" disabled={slots.length >= 4}
-            style={{ width: "100%", fontSize: 14, padding: "10px 14px" }} />
+            className="cmp-search-input" />
           {open && results.length > 0 && (
             <div className="cmp-dropdown">
               {results.map(p => (
@@ -284,7 +284,7 @@ function PlayerSearch({ players, slots, onAdd, onRemove }: {
             </div>
           )}
         </div>
-        <span className="chip" style={{ fontSize: 13, padding: "6px 12px" }}>{slots.length}/4</span>
+        <span className="chip cmp-chip">{slots.length}/4</span>
       </div>
       {slots.length > 0 && (
         <div className="flex-wrap-gap8">
@@ -297,7 +297,7 @@ function PlayerSearch({ players, slots, onAdd, onRemove }: {
               <b>{shortName(s.player.name)}</b>
               <span className="muted fs-11">HCP {hcpDisplay(s.player.hcp)}</span>
               {s.loading && <span className="fs-11">⏳</span>}
-              <button onClick={() => onRemove(s.fed)} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--text-3)", padding: "0 2px", fontSize: 15, lineHeight: 1 }} title="Remover">✕</button>
+              <button onClick={() => onRemove(s.fed)} className="cmp-remove-btn" title="Remover">✕</button>
             </span>
           ))}
         </div>
@@ -342,8 +342,8 @@ function RadarChart({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats | null
 
   return (
     <div className="courseAnalysis p-16">
-      <div className="caTitle">Perfil Comparativo <span className="muted fs-11" style={{ fontWeight: 400 }}>(apenas torneios)</span></div>
-      <svg viewBox="0 0 300 290" style={{ width: "100%", maxWidth: 420, display: "block", margin: "0 auto" }}>
+      <div className="caTitle">Perfil Comparativo <span className="muted fs-11 fw-400">(apenas torneios)</span></div>
+      <svg viewBox="0 0 300 290" className="cmp-radar-wrap">
         {[0.25, 0.5, 0.75, 1].map(frac => (
           <polygon key={frac}
             points={Array.from({ length: N }, (_, i) => { const p = pointOnAxis(i, frac); return `${p.x},${p.y}`; }).join(" ")}
@@ -421,8 +421,8 @@ function StatsTable({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats | null
   });
 
   return (
-    <div className="courseAnalysis p-0" style={{ overflow: "hidden" }}>
-      <div className="caTitle" style={{ padding: "14px 16px 0" }}>Comparação Detalhada <span className="muted fs-11" style={{ fontWeight: 400 }}>(apenas torneios)</span></div>
+    <div className="courseAnalysis p-0 no-overflow">
+      <div className="caTitle" style={{ padding: "14px 16px 0" }}>Comparação Detalhada <span className="muted fs-11 fw-400">(apenas torneios)</span></div>
       <div className="pa-table-wrap mt-8">
         <table className="pa-table fs-13">
           <thead>
@@ -481,8 +481,8 @@ function ScoreDistribution({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats
 
   return (
     <div className="courseAnalysis p-16">
-      <div className="caTitle">Distribuição de Scores <span className="muted fs-11" style={{ fontWeight: 400 }}>(apenas torneios)</span></div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 8 }}>
+      <div className="caTitle">Distribuição de Scores <span className="muted fs-11 fw-400">(apenas torneios)</span></div>
+      <div className="flex-col-gap12 mt-8">
         {cats.filter(c => c.key !== "total").map(cat => {
           const vals = loaded.map(x => {
             const d = x.agg!.scoreDist;
@@ -491,22 +491,22 @@ function ScoreDistribution({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats
           const maxVal = Math.max(...vals, 1);
           return (
             <div key={cat.key}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                <span style={{ fontSize: 12, width: 75, fontWeight: 600, color: "var(--text-2)" }}>
+              <div className="flex-center-gap8-mb4">
+                <span className="cmp-stat-label">
                   {cat.emoji} {cat.label}
                 </span>
               </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+              <div className="flex-col-gap3">
                 {loaded.map(x => {
                   const d = x.agg!.scoreDist;
                   const v = d.total > 0 ? ((d[cat.key] as number) / d.total * 100) : 0;
                   const barW = Math.max(2, (v / maxVal) * 100);
                   return (
-                    <div key={x.i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    <div key={x.i} className="flex-center-gap8">
                       <span style={{ fontSize: 11, width: 60, textAlign: "right", color: COLORS[x.i], fontWeight: 600, flexShrink: 0 }}>
                         {firstName(x.s.player.name)}
                       </span>
-                      <div style={{ flex: 1, background: "var(--bg-hover)", borderRadius: 4, height: 18, overflow: "hidden" }}>
+                      <div className="cmp-distrib-track">
                         <div style={{
                           width: `${barW}%`, height: "100%", background: COLORS[x.i],
                           borderRadius: 4, opacity: 0.75,
@@ -564,13 +564,13 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
   return (
     <div className="courseAnalysis">
       <div className="caTitle flex-center-gap10 flex-wrap">
-        Buraco a Buraco <span className="muted fs-11" style={{ fontWeight: 400 }}>(torneios)</span>
+        Buraco a Buraco <span className="muted fs-11 fw-400">(torneios)</span>
         <select className="select" value={sel} onChange={e => setSel(Number(e.target.value))}>
           {combos.map((c, i) => <option key={i} value={i}>{c.label} ({c.nRounds.filter(n => n > 0).join("/")} rondas)</option>)}
         </select>
       </div>
 
-      <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", maxHeight: 230, marginTop: 8 }}>
+      <svg viewBox={`0 0 ${W} ${H}`} className="cmp-radar-sm">
         <line x1={PAD.left} x2={W - PAD.right} y1={yPos(0)} y2={yPos(0)} stroke="#16a34a" strokeWidth={1} strokeDasharray="4,3" opacity={0.5} />
         {[-0.5, 0.5, 1.0].filter(v => v >= minV && v <= maxV).map(v => (
           <g key={v}><line x1={PAD.left} x2={W - PAD.right} y1={yPos(v)} y2={yPos(v)} stroke="var(--border-light)" strokeWidth={0.5} />
@@ -682,7 +682,7 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
       <div className="caTitle">Head-to-Head ({totalMatches} torneios comuns)</div>
 
       {/* Win progress bar */}
-      <div style={{ display: "flex", height: 32, borderRadius: "var(--radius-lg)", overflow: "hidden", marginBottom: 12, border: "1px solid var(--border)" }}>
+      <div className="cmp-distrib-bar">
         {loaded.map((s, i) => {
           const w = totalMatches > 0 ? (wins[i] / totalMatches * 100) : 0;
           if (w === 0) return null;
@@ -721,7 +721,7 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
         )}
       </div>
 
-      <div className="pa-table-wrap" style={{ maxHeight: 340, overflowY: "auto" }}>
+      <div className="pa-table-wrap cmp-result-list">
         <table className="pa-table">
           <thead><tr>
             <th>Data</th><th>Torneio</th>
@@ -732,7 +732,7 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
             {matches.slice(0, 30).map((m, mi) => {
               const bestGross = Math.min(...m.results.map(r => r.gross));
               return (<tr key={mi} className="roundRow">
-                <td style={{ color: "var(--text-3)", whiteSpace: "nowrap" }}>{m.date}</td>
+                <td className="c-text-3 nowrap">{m.date}</td>
                 <td>{m.event}</td>
                 {loaded.map((_, i) => {
                   const r = m.results.find(r => r.idx === i);
@@ -818,9 +818,9 @@ function TournamentEvolutionSection({ slots }: { slots: Slot[] }) {
         <select className="select" value={period} onChange={e => setPeriod(Number(e.target.value))}>
           <option value={0}>Total</option><option value={36}>3 anos</option><option value={24}>2 anos</option><option value={12}>1 ano</option><option value={6}>6 meses</option>
         </select>
-        <span className="muted fs-10" style={{ fontWeight: 400 }}>média móvel 5 rondas</span>
+        <span className="muted fs-10 fw-400">média móvel 5 rondas</span>
       </div>
-      <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", maxHeight: 280, background: "var(--bg)", borderRadius: "var(--radius-lg)", border: "1px solid var(--border-light)" }}>
+      <svg viewBox={`0 0 ${W} ${H}`} className="cmp-radar-wrap-sm">
         {Array.from({ length: 5 }, (_, i) => {
           const val = minV - padV + (rangeV + 2 * padV) * (i / 4);
           return (
@@ -899,15 +899,15 @@ export default function CompararPage({ players }: { players: PlayersDb }) {
 
       {slots.length === 0 && (
         <div className="holeAnalysis empty-state">
-          <div style={{ fontSize: 40, marginBottom: 12 }}>⚔️</div>
-          <div className="haTitle" style={{ textAlign: "center", fontSize: 16, marginBottom: 6 }}>Comparar Jogadores</div>
-          <div className="muted" style={{ fontSize: 13, lineHeight: 1.6 }}>
+          <div className="cmp-empty-icon">⚔️</div>
+          <div className="haTitle cmp-empty-title">Comparar Jogadores</div>
+          <div className="muted fs-13-lh16">
             Pesquisa e adiciona até 4 jogadores para comparar lado a lado.
           </div>
-          <div className="muted" style={{ fontSize: 12, marginTop: 4, color: "var(--text-3)" }}>
+          <div className="muted fs-12 mt-4 c-text-3">
             📌 Todas as estatísticas consideram apenas rondas de torneio (sem EDS nem individuais).
           </div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "center", marginTop: 16 }}>
+          <div className="cmp-feature-tags">
             {["Perfil radar", "Tabela detalhada", "Distribuição de scores", "Buraco a buraco", "Head-to-head", "Evolução torneios"].map(label => (
               <span key={label} style={{
                 padding: "4px 12px", borderRadius: "var(--radius-xl)", background: "var(--bg-hover)",
@@ -920,7 +920,7 @@ export default function CompararPage({ players }: { players: PlayersDb }) {
 
       {anyLoading && (
         <div className="holeAnalysis ta-c p-24">
-          <div style={{ fontSize: 24 }} className="mb-8">⏳</div>
+          <div className="mb-8" style={{ fontSize: 24 }}>⏳</div>
           <div className="muted">A carregar dados dos jogadores…</div>
         </div>
       )}
@@ -936,7 +936,7 @@ export default function CompararPage({ players }: { players: PlayersDb }) {
 
       {slots.length === 1 && !anyLoading && (
         <div className="holeAnalysis ta-c p-24">
-          <div style={{ fontSize: 24 }} className="mb-8">👆</div>
+          <div className="mb-8" style={{ fontSize: 24 }}>👆</div>
           <div className="muted">Adiciona mais jogadores para ver a comparação</div>
         </div>
       )}

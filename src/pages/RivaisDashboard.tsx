@@ -483,7 +483,7 @@ export default function RivaisDashboard() {
                   </th>
                   {tourGroups.map((g, gi) => (
                     <th key={g.id} colSpan={g.span} style={{ padding: "6px 4px", textAlign: "center", fontSize: 10, fontWeight: 700, borderLeft: "4px solid #1a1a1a", background: gi % 2 === 1 ? "rgba(255,255,255,0.08)" : "transparent", cursor: "pointer" }} onClick={() => doSort("t:"+g.id)}>
-                      {g.url ? <a href={g.url} target="_blank" rel="noopener noreferrer" style={{ color: "white", textDecoration: "underline", textDecorationStyle: "dotted", textUnderlineOffset: 2 }} onClick={e => e.stopPropagation()}>{g.short}</a> : g.short} <span className="op-6 fs-9" style={{ fontWeight: 400 }}>({g.date})</span>
+                      {g.url ? <a href={g.url} target="_blank" rel="noopener noreferrer" style={{ color: "var(--text-inv)", textDecoration: "underline", textDecorationStyle: "dotted", textUnderlineOffset: 2 }} onClick={e => e.stopPropagation()}>{g.short}</a> : g.short} <span className="op-6 fs-9 fw-400">({g.date})</span>
                       {sort === "t:"+g.id && <span className="ml-3 fs-9">{dir === "asc" ? "↑" : "↓"}</span>}
                     </th>
                   ))}
@@ -500,7 +500,7 @@ export default function RivaisDashboard() {
                 <tr className="rivais-sub-header">
                   {COLS.map((col, i) => (
                     <th key={i} style={{
-                      padding: "3px 2px", textAlign: "center", fontSize: 9,
+                      padding: "3px 2px", textAlign: "center", fontSize: 10,
                       fontWeight: col.type === "total" || col.type === "pos" ? 700 : 500,
                       borderLeft: col.isFirst ? "4px solid #1a1a1a" : col.isTot ? "2px solid rgba(255,255,255,0.25)" : "none",
                       minWidth: col.type === "total" ? 38 : col.type === "pos" ? 28 : 30,
@@ -532,7 +532,7 @@ export default function RivaisDashboard() {
                     }
                     return (
                       <th key={i} style={{
-                        padding: "3px 2px", textAlign: "center", fontSize: 9, fontWeight: 600,
+                        padding: "3px 2px", textAlign: "center", fontSize: 10, fontWeight: 600,
                         color: "var(--text-3)",
                         borderLeft: col.isFirst ? "4px solid #1a1a1a" : col.isTot ? "2px solid var(--border-heavy)" : "none",
                         background: col.type === "total" ? "var(--bg-hover)" : (col.tIdx % 2 === 1 ? "var(--bg-hover)" : "var(--bg)"),
@@ -542,7 +542,7 @@ export default function RivaisDashboard() {
                     );
                   })}
                   <th className="bg-page rivais-border-mark"></th>
-                  <th className="bg-page" style={{ borderLeft: "2px solid var(--border-heavy)" }}></th>
+                  <th className="bg-page bl-heavy"></th>
                   <th className="bg-page rivais-border-mark"></th>
                   <th className="bg-page"></th>
                   {vsOn && <th className="bg-page"></th>}
@@ -563,7 +563,7 @@ export default function RivaisDashboard() {
                     }
                     return (
                       <th key={i} style={{
-                        padding: "2px 2px", textAlign: "center", fontSize: 8, fontWeight: 500,
+                        padding: "2px 2px", textAlign: "center", fontSize: 10, fontWeight: 500,
                         color: "var(--text-muted)", fontStyle: "italic",
                         borderLeft: col.isFirst ? "4px solid #1a1a1a" : col.isTot ? "2px solid var(--border-heavy)" : "none",
                         background: col.type === "total" ? "var(--bg-hover)" : (col.tIdx % 2 === 1 ? "var(--bg-hover)" : "var(--bg-muted)"),
@@ -573,7 +573,7 @@ export default function RivaisDashboard() {
                     );
                   })}
                   <th className="bg-hover rivais-border-mark"></th>
-                  <th className="bg-hover" style={{ borderLeft: "2px solid var(--border-heavy)" }}></th>
+                  <th className="bg-hover bl-heavy"></th>
                   <th className="bg-hover rivais-border-mark"></th>
                   <th className="bg-hover"></th>
                   {vsOn && <th className="bg-hover"></th>}
@@ -589,7 +589,7 @@ export default function RivaisDashboard() {
 
                   return (
                     <tr key={p.n} style={{
-                      borderBottom: isM ? "2px solid #93c5fd" : "1px solid var(--border-light)",
+                      borderBottom: isM ? "2px solid #60a5fa" : "1px solid var(--border-light)",
                       background: "var(--bg-card)",
                     }}>
                       <td className="rivais-player-name bg-card">
@@ -634,8 +634,8 @@ export default function RivaisDashboard() {
                             color: cell.color,
                           }}>
                             {cell.val}
-                            {cell.z != null && <div style={{ fontSize: 7, fontWeight: 600, color: cell.z <= -0.4 ? "#166534" : cell.z <= 0.4 ? "#854d0e" : "#b91c1c", marginTop: 1, opacity: 0.75 }}>{cell.z > 0 ? "+" : ""}{cell.z.toFixed(1)}σ</div>}
-                            {vsOn && cell.vsM != null && <div style={{ fontSize: 8, fontWeight: 600, color: cell.vsM < 0 ? "#16a34a" : cell.vsM > 0 ? "#dc2626" : "var(--text-3)", marginTop: 1 }}>{cell.vsM > 0 ? "+" : ""}{cell.vsM}</div>}
+                            {cell.z != null && <div style={{ fontSize: 10, fontWeight: 600, color: cell.z <= -0.4 ? "#166534" : cell.z <= 0.4 ? "#854d0e" : "#b91c1c", marginTop: 1, opacity: 0.75 }}>{cell.z > 0 ? "+" : ""}{cell.z.toFixed(1)}σ</div>}
+                            {vsOn && cell.vsM != null && <div style={{ fontSize: 10, fontWeight: 600, color: cell.vsM < 0 ? "#16a34a" : cell.vsM > 0 ? "#dc2626" : "var(--text-3)", marginTop: 1 }}>{cell.vsM > 0 ? "+" : ""}{cell.vsM}</div>}
                           </td>
                         );
                       })}
@@ -673,7 +673,6 @@ export default function RivaisDashboard() {
         <div className="section-subtitle ta-c mt-10" style={{ padding: "8px 0" }}>
           Nível calculado por desvio padrão (σ) em relação à média do campo · Rank = z-score médio (negativo = melhor que a média) · Clica nos cabeçalhos para ordenar
         </div>
-      </div>
     </div>
   );
 }

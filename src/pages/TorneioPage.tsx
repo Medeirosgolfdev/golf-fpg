@@ -149,7 +149,7 @@ function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
           className={`tourn-pw-input${error ? " tourn-pw-error" : ""}`} />
         <button onClick={check} className="pw-btn">Entrar</button>
       </div>
-      {error && <div className="fs-11 fw-600" style={{ color: "var(--color-danger)" }}>Password incorrecta</div>}
+      {error && <div className="fs-11 fw-600 c-danger">Password incorrecta</div>}
     </div>
   );
 }
@@ -321,7 +321,7 @@ function AnalysisView({ norm, players, holeDataByDay, playerHistory, onSelectPla
 
   return (
     <div className="tourn-section">
-      <div className="tourn-tabs" style={{ marginBottom: 14 }}>
+      <div className="tourn-tabs tourn-mb14">
         {(["wagr", "sub14", "sub12"] as AnalysisCat[]).filter(c => catCounts[c] > 0).map(c => (
           <button key={c} className={`tourn-tab${cat === c ? " tourn-tab-active" : ""}`} onClick={() => setCat(c)}>
             {c === "wagr" ? "WAGR" : c === "sub14" ? "Sub-14" : "Sub-12"} <span className="op-6 fs-11">({catCounts[c]})</span>

@@ -320,7 +320,7 @@ function MultiTeeSDTable({
   const stickyBase: React.CSSProperties = { position: "sticky", zIndex: 3 };
 
   return (
-    <div className="sim-table-wrap" style={{ overflowX: "auto", maxHeight: 500 }}>
+    <div className="sim-table-wrap scroll-x" style={{ maxHeight: 500 }}>
       <table className="sim-table sim-multi-tee" style={{ borderCollapse: "collapse" }}>
         <thead>
           {/* Row 1: tee color headers — sticky top:0 */}
@@ -358,7 +358,7 @@ function MultiTeeSDTable({
                   borderBottom: "none",
                 }}>
                 {c.teeName}
-                <span style={{ opacity: 0.7, fontWeight: 400, marginLeft: 5, fontSize: 9 }}>
+                <span className="op-7 fs-9 fw-400" style={{ marginLeft: 5 }}>
                   {c.dist != null && <>{fmt(c.dist)}m · </>}CR {fmtCR(c.cr)} · SR {c.slope} · Par {c.par}
                 </span>
               </th>
@@ -473,7 +473,7 @@ function MultiTeeSDTable({
         </tbody>
       </table>
       {is9h && exp9 !== null && (
-        <div style={{ fontSize: 11, color: "var(--text-3)", marginTop: 6, fontStyle: "italic", padding: "0 8px" }}>
+        <div className="sim-italic-note">
           SD 18h = SD 9h + Expected 9h ({exp9.toFixed(1)}) · Fórmula WHS 2024
         </div>
       )}
@@ -797,12 +797,12 @@ function AgsSection({
   /* No hole data → info only */
   if (!fieldHoles || !computed) {
     return (
-      <div style={{ margin: "14px 0" }}>
-        <div className="sim-info-box" style={{ background: "var(--bg-warn)", borderColor: "#fde68a", color: "#92400e" }}>
+      <div className="m-14-0">
+        <div className="sim-info-box sim-warn-box">
           <strong>Scorecard / AGS:</strong> O scorecard para introduzir scores por buraco e calcular o SD exacto
           aparece quando selecionas um campo com dados de Par e Stroke Index.
           {" "}<a href={USGA_NDB_LINK} target="_blank" rel="noopener noreferrer"
-            style={{ color: "#92400e", fontWeight: 600, textDecoration: "underline" }}>Net Double Bogey — USGA →</a>
+            className="c-amber-underline">Net Double Bogey — USGA →</a>
         </div>
       </div>
     );
@@ -838,13 +838,13 @@ function AgsSection({
   const adjTotal = totals?.agsTotal ?? null;
 
   return (
-    <div style={{ margin: "14px 0" }}>
+    <div className="m-14-0">
       <div className="flex-between-mb6">
-        <h3 className="sim-section-title" style={{ margin: 0 }}>
+        <h3 className="sim-section-title m-0">
           Scorecard {hasAgs ? "— Net Double Bogey / AGS" : ""}
         </h3>
         {Object.keys(scores).length > 0 && (
-          <button className="select" style={{ cursor: "pointer", fontSize: 12 }} onClick={clearAll}>Limpar</button>
+          <button className="select pointer fs-12" onClick={clearAll}>Limpar</button>
         )}
       </div>
 
@@ -873,7 +873,7 @@ function AgsSection({
         </div>
       )}
       {totals && totals.filled > 0 && totals.filled < totals.total && (
-        <div className="muted" style={{ marginBottom: 8, fontSize: 12 }}>
+        <div className="muted mb-8 fs-12">
           {totals.filled} de {totals.total} buracos. Preenche todos para ver o SD.
         </div>
       )}
@@ -882,7 +882,7 @@ function AgsSection({
         <table className="sc-table-modern" data-sc-table="1">
           <thead>
             <tr>
-              <th className="hole-header" style={{ borderRight: "2px solid #d5dac9" }}>Buraco</th>
+              <th className="hole-header sim-br-sep">Buraco</th>
               {front.map((h, i) => (
                 <React.Fragment key={h.hole}>
                   <th className="hole-header">{h.hole}</th>
@@ -925,7 +925,7 @@ function AgsSection({
 
             {/* S.I. */}
             <tr className="meta-row">
-              <td className="row-label c-muted fs-10" style={{ fontWeight: 400 }}>S.I.</td>
+              <td className="row-label c-muted fs-10 fw-400">S.I.</td>
               {front.map((h, i) => (
                 <React.Fragment key={h.hole}>
                   <td>{isSynthetic ? (
@@ -954,7 +954,7 @@ function AgsSection({
               <td className="row-label fw-700">Score</td>
               {front.map((h, i) => (
                 <React.Fragment key={h.hole}>
-                  <td style={{ padding: "3px 1px" }}>
+                  <td className="sim-cell-micro">
                     <input type="text" inputMode="numeric"
                       value={scores[h.hole] || ""}
                       onChange={e => setScore(h.hole, e.target.value.replace(/\D/g, ""))}
@@ -967,7 +967,7 @@ function AgsSection({
                 </React.Fragment>
               ))}
               {is18 && back.map((h) => (
-                <td key={h.hole} style={{ padding: "3px 1px" }}>
+                <td key={h.hole} className="sim-cell-micro">
                   <input type="text" inputMode="numeric"
                     value={scores[h.hole] || ""}
                     onChange={e => setScore(h.hole, e.target.value.replace(/\D/g, ""))}
@@ -981,7 +981,7 @@ function AgsSection({
 
             {/* ±Par */}
             <tr className="meta-row">
-              <td className="row-label c-muted fs-10" style={{ fontWeight: 400 }}>±Par</td>
+              <td className="row-label c-muted fs-10 fw-400">±Par</td>
               {front.map((h, i) => (
                 <React.Fragment key={h.hole}>
                   <td style={{ color: h.vsPar != null ? (h.vsPar < 0 ? "#16a34a" : h.vsPar === 0 ? "#666" : h.vsPar <= 2 ? "#b45309" : "#dc2626") : "#ccc", fontWeight: h.vsPar != null ? 600 : 400 }}>
@@ -1010,7 +1010,7 @@ function AgsSection({
               <>
                 {/* Pancadas */}
                 <tr className="meta-row">
-                  <td className="row-label" style={{ color: "#2563eb", fontSize: 10, fontWeight: 600 }}>Panc.</td>
+                  <td className="row-label c-blue-2563-10">Panc.</td>
                   {front.map((h, i) => (
                     <React.Fragment key={h.hole}>
                       <td style={{ color: h.strokes > 0 ? "#2563eb" : "#ccc", fontWeight: h.strokes > 0 ? 700 : 400 }}>
@@ -1024,13 +1024,13 @@ function AgsSection({
                       {h.strokes > 0 ? h.strokes : "·"}
                     </td>
                   ))}
-                  <td className={`col-${is18 ? "in" : "total"} fw-700`} style={{ color: "#2563eb" }}>{courseHcp}</td>
-                  {is18 && <td className="col-total fw-700" style={{ color: "#2563eb" }}>{courseHcp}</td>}
+                  <td className={`col-${is18 ? "in" : "total"} fw-700 c-blue-2563`}>{courseHcp}</td>
+                  {is18 && <td className="col-total fw-700 c-blue-2563">{courseHcp}</td>}
                 </tr>
 
                 {/* Máx (Net Double Bogey) */}
-                <tr className="sep-row" style={{ background: "var(--bg-warn)" }}>
-                  <td className="row-label" style={{ color: "#92400e", fontWeight: 700, fontSize: 11 }}>Máx</td>
+                <tr className="sep-row sim-warn-box">
+                  <td className="row-label c-amber-11">Máx</td>
                   {front.map((h, i) => (
                     <React.Fragment key={h.hole}>
                       <td className="cb-amber">{h.maxScore}</td>
@@ -1046,7 +1046,7 @@ function AgsSection({
 
                 {/* Ajustado */}
                 <tr>
-                  <td className="row-label" style={{ color: "#16a34a", fontWeight: 700, fontSize: 11 }}>Ajust.</td>
+                  <td className="row-label c-par-ok-11">Ajust.</td>
                   {front.map((h, i) => {
                     const capped = h.actual !== null && h.actual > h.maxScore;
                     return (
@@ -1082,19 +1082,19 @@ function AgsSection({
       {/* Info AGS colapsável */}
       {hasAgs && (
         <details className="mt-12">
-          <summary style={{ cursor: "pointer", fontWeight: 600, fontSize: 13, color: "#92400e", display: "flex", alignItems: "center", gap: 6 }}>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
+          <summary className="sim-toggle-link">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="flex-shrink-0">
               <circle cx="8" cy="8" r="7" stroke="#92400e" strokeWidth="1.5" fill="#fffbeb"/>
               <text x="8" y="12" textAnchor="middle" fontSize="11" fontWeight="700" fill="#92400e">i</text>
             </svg>
             Como funciona o Adjusted Gross Score?
           </summary>
-          <div className="sim-info-box" style={{ background: "var(--bg-warn)", borderColor: "#fde68a", color: "#92400e", marginTop: 6 }}>
+          <div className="sim-info-box sim-warn-box mt-6">
             O WHS calcula o SD com o <em>Adjusted Gross Score</em>. Máximo por buraco = <strong>Net Double Bogey</strong>:
-            <code style={{ display: "block", margin: "6px 0", padding: "4px 10px", background: "rgba(146,64,14,0.08)", borderRadius: 6, color: "#92400e" }}>
+            <code className="sim-note-block">
               Máx = Par + 2 + Pancadas (Course HCP) nesse buraco
             </code>
-            <div style={{ margin: "6px 0", padding: "6px 10px", background: "rgba(146,64,14,0.05)", borderRadius: 6, fontSize: "12px", lineHeight: 1.6 }}>
+            <div className="sim-note-alt">
               <div>① <strong>Handicap Index (HI)</strong> — número base do jogador.</div>
               <div className="mt-3">② <strong>Course Handicap (CH)</strong> = HI × (Slope ÷ 113) + (CR − Par). Determina pancadas para o Net Double Bogey.</div>
               <div className="mt-3">③ <strong>Playing Handicap</strong> = CH × % competição. Para Net Score, <strong>não</strong> para Net Double Bogey.</div>
@@ -1121,7 +1121,7 @@ function AgsSection({
             })()}
             <div className="mt-6">
               <a href={USGA_NDB_LINK} target="_blank" rel="noopener noreferrer"
-                style={{ color: "#92400e", fontWeight: 600, textDecoration: "underline" }}>Net Double Bogey — USGA →</a>
+                className="c-amber-underline">Net Double Bogey — USGA →</a>
             </div>
           </div>
         </details>
@@ -1344,7 +1344,7 @@ export default function SimuladorPage({ courses }: Props) {
             e as linhas de <strong>Adjusted Gross Score</strong> (Panc., Máx, Ajust.).
             {" "}<a href="https://www.usga.org/content/usga/home-page/handicapping/world-handicap-system/topics/net-double-bogey.html"
               target="_blank" rel="noopener noreferrer"
-              style={{ color: "#00838f", fontWeight: 600, textDecoration: "underline" }}>
+              className="c-teal">
               Saber mais (USGA) →
             </a>
           </span>
@@ -1363,7 +1363,7 @@ export default function SimuladorPage({ courses }: Props) {
             <div className="course-item-name">✎ Sem campo (manual)</div>
             <div className="course-item-meta">Introduzir CR/Slope</div>
           </button>
-          <div style={{ borderBottom: "1px solid var(--border, #ddd)", margin: "2px 0" }} />
+          <div className="bb-border" />
 
           {filtered.map((c) => {
             const active = selected?.courseKey === c.courseKey;

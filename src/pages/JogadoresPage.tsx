@@ -41,7 +41,7 @@ function findCourseKey(courseName: string): string | null {
   return _courseKeyMap.get(norm(courseName)) ?? null;
 }
 
-const scHostStyle: React.CSSProperties = { margin: "6px 8px", border: "1px solid var(--line, #d5dac9)", borderRadius: 14, background: "var(--bg-card)", padding: 10, overflow: "hidden" };
+const scHostStyle: React.CSSProperties = { margin: "6px 8px", border: "1px solid var(--line, #d5dac9)", borderRadius: "var(--radius-xl)", background: "var(--bg-card)", padding: 10, overflow: "hidden" };
 
 /* ────────────────────────────────────────────────────────────────────────────────────────
    Micro-components
@@ -260,7 +260,7 @@ function TeeSummaryTable({ rounds }: { rounds: RoundData[] }) {
   const mn = (a: number[]) => a.length ? Math.min(...a) : null;
 
   return (
-    <div style={{ marginBottom: 10, border: "1px solid var(--border-light)", borderRadius: 10, overflow: "hidden", background: "var(--bg-card)" }}>
+    <div className="card-bordered-mb10">
       <div className="sc-bar-head"><span>Resumo por Tee</span></div>
       <table className="pa-table" style={{ fontSize: 11.5, marginBottom: 0 }}>
         <thead>
@@ -283,7 +283,7 @@ function TeeSummaryTable({ rounds }: { rounds: RoundData[] }) {
               <tr key={t.tee}>
                 <td><TeePill name={t.tee} /></td>
                 <td className="r fw-600">{t.count}</td>
-                <td className="r" style={{ fontWeight: 700, color: "#16a34a" }}>{minG ?? "–"}</td>
+                <td className="r cb-par-ok">{minG ?? "–"}</td>
                 <td className="r fw-600">{avgG?.toFixed(1) ?? "–"}</td>
                 <td className="r">{avgStb?.toFixed(1) ?? "–"}</td>
                 <td className="r">{avgSd != null ? (
@@ -489,7 +489,7 @@ function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, eclecti
       <table className="sc-table-modern" data-sc-table="1">
         <thead>
           <tr>
-            <th className="hole-header" style={{ borderRight: "2px solid #d5dac9" }}>Buraco</th>
+            <th className="hole-header sim-br-sep">Buraco</th>
             {Array.from({ length: totalHoles }, (_, h) => (
               <React.Fragment key={h}>
                 <th className="hole-header">{h + 1}</th>
@@ -504,7 +504,7 @@ function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, eclecti
           {/* Metros row */}
           {meters && meters.some(v => v != null && v > 0) && (
             <tr className="meta-row">
-              <td className="row-label c-muted fs-10" style={{ fontWeight: 400 }}>Metros</td>
+              <td className="row-label c-muted fs-10 fw-400">Metros</td>
               {Array.from({ length: totalHoles }, (_, h) => (
                 <React.Fragment key={h}>
                   <td>{meters[h] != null && meters[h]! > 0 ? meters[h] : ""}</td>
@@ -523,7 +523,7 @@ function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, eclecti
           {/* S.I. row */}
           {si && si.some(v => v != null && v > 0) && (
             <tr className="meta-row">
-              <td className="row-label c-muted fs-10" style={{ fontWeight: 400 }}>S.I.</td>
+              <td className="row-label c-muted fs-10 fw-400">S.I.</td>
               {Array.from({ length: totalHoles }, (_, h) => (
                 <React.Fragment key={h}>
                   <td>{si[h] != null && si[h]! > 0 ? si[h] : ""}</td>
@@ -632,7 +632,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
 }) {
   const ecArr = eclectic.holes.slice(0, holeCount).map(h => h?.best ?? null);
   const parArr = eclectic.holes.slice(0, holeCount).map((h, i) => h?.par ?? par[i]);
-  const ecBorder = { borderTop: "2px solid #cbd5e1" } as const;
+  const ecBorder = { borderTop: "2px solid var(--border-heavy)" } as const;
 
   const sumEc = sumArr(ecArr, 0, holeCount);
   const sumGross = sumArr(gross, 0, holeCount);
@@ -841,7 +841,7 @@ function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, ac
       <div className="ecHint">Clique num tee na tabela de buracos para ver análise e filtrar rondas.</div>
 
       {/* Summary table */}
-      <div style={{ border: "1px solid var(--border-light)", borderRadius: 10, overflow: "hidden", background: "var(--bg-card)", marginBottom: 10 }}>
+      <div className="card-bordered-mb10">
         <table className="ec-sum">
           <thead>
             <tr><th>Tee</th><th className="r">Rondas</th><th className="r">Par</th>
@@ -855,11 +855,11 @@ function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, ac
               const tpStr = tp == null ? "" : (tp > 0 ? `+${tp}` : String(tp));
               const tpCol = tp == null ? "" : (tp > 0 ? "#dc2626" : tp < 0 ? "#16a34a" : "var(--text-muted)");
               return (
-                <tr key={ex.teeKey} style={{ cursor: "pointer" }} onClick={() => onSelectTee(ex.teeKey)}>
+                <tr key={ex.teeKey} className="pointer" onClick={() => onSelectTee(ex.teeKey)}>
                   <td><TeePill name={ex.teeName} /></td>
                   <td className="r fw-600">{hs?.nRounds ?? ""}</td>
                   <td className="r">{ex.totalPar}</td>
-                  <td className="r" style={{ fontWeight: 800, color: "#0369a1", fontSize: 13 }}>{ex.totalGross}</td>
+                  <td className="r c-blue-13">{ex.totalGross}</td>
                   <td className="r" style={{ color: tpCol, fontWeight: 700 }}>{tpStr}</td>
                   <td className="r fw-600">{hs?.bestRound?.gross ?? "–"}</td>
                   <td className="r">{hs?.avgGross?.toFixed(1) ?? "–"}</td>
@@ -886,12 +886,12 @@ function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, ac
 
         return (
           <div key={ec.teeKey} className={`ecPillBlock ${isActive ? "ecActive" : ""}`}
-            style={{ marginTop: 8, border: isActive ? "2px solid " + hx : "1px solid #e2e8f0", borderRadius: 10, overflow: "hidden" }}>
+            style={{ marginTop: 8, border: isActive ? "2px solid " + hx : "1px solid var(--border-light)", borderRadius: "var(--radius-lg)", overflow: "hidden" }}>
             <div style={{ padding: "6px 10px", background: isActive ? hx + "10" : "var(--bg-detail)", cursor: "pointer", fontWeight: 600, fontSize: 12 }}
               onClick={() => onSelectTee(ec.teeKey)}>
               <TeePill name={ec.teeName} />{" "}
-              <span style={{ color: "#0369a1", fontWeight: 800 }}>{ec.totalGross}</span>
-              <span className="muted" style={{ marginLeft: 6 }}>par {ec.totalPar}</span>
+              <span className="cb-blue-800">{ec.totalGross}</span>
+              <span className="muted ml-6">par {ec.totalPar}</span>
             </div>
             {/* Eclectic hole-by-hole table */}
             <div className="scroll-x">
@@ -908,17 +908,17 @@ function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, ac
                 </thead>
                 <tbody>
                   {/* Par row */}
-                  <tr style={{ background: "var(--bg-success)" }}>
-                    <td className="row-label" style={{ fontWeight: 700, fontSize: 10 }}>Par</td>
+                  <tr className="bg-success">
+                    <td className="row-label fw-700 fs-10">Par</td>
                     {Array.from({ length: Math.min(hc, 9) }, (_, i) => <td key={i}>{parArr[i] ?? ""}</td>)}
                     <td className="col-out fw-700">{sumArr(parArr, 0, Math.min(hc, 9))}</td>
                     {!is9 && Array.from({ length: 9 }, (_, i) => <td key={i + 9}>{parArr[i + 9] ?? ""}</td>)}
                     {!is9 && <td className="col-in fw-700">{sumArr(parArr, 9, 18)}</td>}
-                    <td className="col-total" style={{ fontWeight: 900 }}>{sumArr(parArr, 0, hc)}</td>
+                    <td className="col-total fw-900">{sumArr(parArr, 0, hc)}</td>
                   </tr>
                   {/* Eclectic row */}
-                  <tr style={{ borderTop: "2px solid #cbd5e1" }}>
-                    <td className="row-label" style={{ color: "#0369a1", fontWeight: 700, fontSize: 10 }}>Eclético</td>
+                  <tr className="bt-heavy">
+                    <td className="row-label cb-blue-10">Eclético</td>
                     {ec.holes.slice(0, Math.min(hc, 9)).map((h, i) => (
                       <td key={i}>{h.best != null ? <ScoreCircle gross={h.best} par={parArr[i]} /> : "–"}</td>
                     ))}
@@ -929,7 +929,7 @@ function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, ac
                       <td key={i + 9}>{h.best != null ? <ScoreCircle gross={h.best} par={parArr[i + 9]} /> : "–"}</td>
                     ))}
                     {!is9 && <td className="col-in fw-700">{sumArr(ec.holes.map(h => h.best), 9, 18)}</td>}
-                    <td className="col-total" style={{ fontWeight: 900, fontSize: 13 }}>{ec.totalGross}</td>
+                    <td className="col-total fw-900 fs-13">{ec.totalGross}</td>
                   </tr>
                   {/* Individual round rows */}
                   {teeRounds.map(tr => {
@@ -940,7 +940,7 @@ function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, ac
                     return (
                       <tr key={tr.scoreId} style={{ background: hx + "0A" }}>
                         <td className="row-label fs-10">
-                          <span className="sc-pill" style={{ background: hx, color: fg, fontSize: 9, padding: "1px 6px" }}>{trDate}</span>
+                          <span className="sc-pill" style={{ background: hx, color: fg, fontSize: 10, padding: "1px 6px" }}>{trDate}</span>
                         </td>
                         {Array.from({ length: Math.min(hc, 9) }, (_, i) => (
                           <td key={i}><ScoreCircle gross={trG[i]} par={parArr[i]} size="small" /></td>
@@ -950,7 +950,7 @@ function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, ac
                           <td key={i + 9}><ScoreCircle gross={trG[i + 9]} par={parArr[i + 9]} size="small" /></td>
                         ))}
                         {!is9 && <td className="col-in fw-600 fs-10">{sumArr(trG, 9, hc)}</td>}
-                        <td className="col-total" style={{ fontWeight: 700, fontSize: 11 }}>{sumArr(trG, 0, hc)}</td>
+                        <td className="col-total fs-11-fw700">{sumArr(trG, 0, hc)}</td>
                       </tr>
                     );
                   })}
@@ -1060,7 +1060,7 @@ function CoursePerformanceSection({ rounds }: { rounds: RoundData[] }) {
     <div className="courseAnalysis">
       <div className="caTitle">
         Análise de Performance
-        {stats.has9 && <span className="muted fs-11" style={{ fontWeight: 400 }}> (Stb de 9h normalizado: +17)</span>}
+        {stats.has9 && <span className="muted fs-11 fw-400"> (Stb de 9h normalizado: +17)</span>}
       </div>
       <div className="caKpis">
         {stats.sdArr.length >= 2 && (
@@ -1131,11 +1131,11 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
   const is9 = hc === 9;
   const fe = is9 ? hc : 9;
 
-  const cs: React.CSSProperties = { padding: "4px 6px", textAlign: "center", fontSize: 11, borderBottom: "1px solid #f0f0f0" };
-  const colL: React.CSSProperties = { ...cs, textAlign: "left", paddingLeft: 8, borderRight: "2px solid #e2e8f0", whiteSpace: "nowrap", minWidth: 70 };
-  const colOut: React.CSSProperties = { ...cs, background: "var(--bg-muted)", borderLeft: "1px solid #e2e8f0", borderRight: "1px solid #e2e8f0" };
+  const cs: React.CSSProperties = { padding: "4px 6px", textAlign: "center", fontSize: 11, borderBottom: "1px solid var(--bg-hover)" };
+  const colL: React.CSSProperties = { ...cs, textAlign: "left", paddingLeft: 8, borderRight: "2px solid var(--border-light)", whiteSpace: "nowrap", minWidth: 70 };
+  const colOut: React.CSSProperties = { ...cs, background: "var(--bg-muted)", borderLeft: "1px solid var(--border-light)", borderRight: "1px solid var(--border-light)" };
   const colIn: React.CSSProperties = { ...colOut };
-  const colTot: React.CSSProperties = { ...cs, background: "var(--bg-muted)", borderLeft: "1px solid #dde1e7", fontWeight: 800 };
+  const colTot: React.CSSProperties = { ...cs, background: "var(--bg-muted)", borderLeft: "1px solid var(--border-light)", fontWeight: 800 };
 
   return (
     <div className="holeAnalysis">
@@ -1170,9 +1170,9 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
           if (!worse9) return null;
           return (
             <div className="haDiagCard">
-              <div className="haDiagIcon" style={{ background: "#7c3aed20", color: "#7c3aed" }}>🔄</div>
+              <div className="haDiagIcon diag-bg-purple">🔄</div>
               <div className="haDiagBody">
-                <div className="haDiagVal" style={{ color: "#7c3aed" }}>{worse9}</div>
+                <div className="haDiagVal c-purple">{worse9}</div>
                 <div className="haDiagLbl">custa mais {Math.abs(diff9).toFixed(1)} panc./volta (F9: {fD(stats.f9b9!.f9.strokesLost)}, B9: {fD(stats.f9b9!.b9.strokesLost)})</div>
               </div>
             </div>
@@ -1198,7 +1198,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
               ];
               return (
                 <div key={pt} className="haParCard"
-                  style={{ borderColor: isWorst ? "#dc2626" : "#d5dac9", background: isWorst ? "#fef2f2" : "#fff" }}>
+                  style={{ borderColor: isWorst ? "#dc2626" : "#d5dac9", background: isWorst ? "var(--bg-danger)" : "var(--bg-card)" }}>
                   {isWorst && <div className="haParAlert">⚠️ Área a melhorar</div>}
                   <div className="haParHead">Par {pt} <span className="muted">({g.nHoles} buracos)</span></div>
                   <div className="haParAvg" style={{ color: vpCol }}>{fD2(g.avgVsPar ?? 0)} <span style={{ fontSize: 10, color: "var(--text-3)" }}>média vs par</span></div>
@@ -1256,7 +1256,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                         <div className="haTopDetail">
                           <div><b>Bur. {wh.h}</b> · Par {wh.par}{wh.si ? ` · SI ${wh.si}` : ""}</div>
                           <div className="haTopMeta">
-                            <span style={{ color: "#dc2626", fontWeight: 700 }}>{fD(wh.strokesLost)}</span> pancadas/volta
+                            <span className="cb-birdie">{fD(wh.strokesLost)}</span> pancadas/volta
                             {dblPct > 0 && <> · <span className="c-birdie">{dblPct}% double+</span></>}
                             {" "}· Média {wh.avg.toFixed(1)}
                           </div>
@@ -1301,7 +1301,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
 
       {/* Hole-by-hole table */}
       <div className="haTableSection">
-        <div style={{ border: "1px solid var(--border-light)", borderRadius: 10, overflow: "hidden", background: "var(--bg-card)" }}>
+        <div className="card-bordered">
           <div className="sc-bar-head"><span>Detalhe Buraco a Buraco</span></div>
           <div className="scroll-x">
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 11 }}>
@@ -1334,17 +1334,17 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                 )}
                 {/* Par row */}
                 <tr>
-                  <td style={{ ...colL, fontWeight: 600, color: "var(--text-muted)", fontSize: 11, borderBottom: "2px solid #cbd5e1" }}>Par</td>
+                  <td style={{ ...colL, fontWeight: 600, color: "var(--text-muted)", fontSize: 11, borderBottom: "2px solid var(--border-heavy)" }}>Par</td>
                   {stats.holes.slice(0, hc).map((h, i) => (
                     <React.Fragment key={i}>
-                      <td style={{ ...cs, borderBottom: "2px solid #cbd5e1" }}>{h.par ?? ""}</td>
-                      {i === fe - 1 && !is9 && <td style={{ ...colOut, fontWeight: 700, borderBottom: "2px solid #cbd5e1" }}>{sumArr(stats.holes.slice(0, fe).map(x => x.par ?? 0), 0, fe)}</td>}
+                      <td style={{ ...cs, borderBottom: "2px solid var(--border-heavy)" }}>{h.par ?? ""}</td>
+                      {i === fe - 1 && !is9 && <td style={{ ...colOut, fontWeight: 700, borderBottom: "2px solid var(--border-heavy)" }}>{sumArr(stats.holes.slice(0, fe).map(x => x.par ?? 0), 0, fe)}</td>}
                     </React.Fragment>
                   ))}
-                  <td style={{ ...(is9 ? colTot : colIn), fontWeight: 700, borderBottom: "2px solid #cbd5e1" }}>
+                  <td style={{ ...(is9 ? colTot : colIn), fontWeight: 700, borderBottom: "2px solid var(--border-heavy)" }}>
                     {is9 ? sumArr(stats.holes.slice(0, hc).map(x => x.par ?? 0), 0, hc) : sumArr(stats.holes.slice(0, hc).map(x => x.par ?? 0), 9, hc)}
                   </td>
-                  {!is9 && <td style={{ ...colTot, borderBottom: "2px solid #cbd5e1" }}>{sumArr(stats.holes.slice(0, hc).map(x => x.par ?? 0), 0, hc)}</td>}
+                  {!is9 && <td style={{ ...colTot, borderBottom: "2px solid var(--border-heavy)" }}>{sumArr(stats.holes.slice(0, hc).map(x => x.par ?? 0), 0, hc)}</td>}
                 </tr>
                 {/* Avg row */}
                 <tr>
@@ -1574,7 +1574,7 @@ function HistogramCard({ rounds, period, setPeriod }: {
   return (
     <div className="an-card">
       <div className="d-flex justify-between items-center mb-8">
-        <div className="an-k-title" style={{ margin: 0 }}>Desempenho vs Par</div>
+        <div className="an-k-title m-0">Desempenho vs Par</div>
         <PeriodSelect value={period} onChange={setPeriod} />
       </div>
       {bins.total === 0 ? <div className="muted">Sem dados</div> :
@@ -1590,7 +1590,7 @@ function HistogramCard({ rounds, period, setPeriod }: {
               </div>
             </div>
           ))}
-          <div className="muted" style={{ marginTop: 6, textAlign: "center", fontSize: 11 }}>
+          <div className="muted mt-6 ta-c fs-11">
             {bins.total} rondas · Média: +{bins.avg.toFixed(1)} · Mediana: +{bins.median.toFixed(0)}
           </div>
         </>
@@ -1624,26 +1624,26 @@ function TrajectoryCard({ rounds, period, setPeriod }: {
   return (
     <div className="an-card">
       <div className="d-flex justify-between items-center mb-8">
-        <div className="an-k-title" style={{ margin: 0 }}>Trajectória</div>
+        <div className="an-k-title m-0">Trajectória</div>
         <PeriodSelect value={period} onChange={setPeriod} />
       </div>
       {!stats ? <div className="muted">Poucos dados</div> : (
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, textAlign: "center" }}>
-          <div className="bg-detail br-lg" style={{ padding: "8px 4px" }}>
+        <div className="grid-3-tc">
+          <div className="bg-detail br-lg jog-cross-pad">
             <div className="muted fs-10">ÚLTIMAS 5</div>
             <div className="kpi-value">{stats.last5}</div>
             <div style={{ fontSize: 11, fontWeight: 600, color: stats.diff5 < -1 ? "#16a34a" : stats.diff5 > 1 ? "#dc2626" : "var(--text-3)" }}>
               {stats.diff5 > 0 ? "+" : ""}{stats.diff5.toFixed(1)}
             </div>
           </div>
-          <div className="bg-detail br-lg" style={{ padding: "8px 4px" }}>
+          <div className="bg-detail br-lg jog-cross-pad">
             <div className="muted fs-10">ÚLTIMAS 10</div>
             <div className="kpi-value">{stats.last10}</div>
             <div style={{ fontSize: 11, fontWeight: 600, color: stats.diff10 < -1 ? "#16a34a" : stats.diff10 > 1 ? "#dc2626" : "var(--text-3)" }}>
               {stats.diff10 > 0 ? "+" : ""}{stats.diff10.toFixed(1)}
             </div>
           </div>
-          <div className="bg-detail br-lg" style={{ padding: "8px 4px" }}>
+          <div className="bg-detail br-lg jog-cross-pad">
             <div className="muted fs-10">CARREIRA</div>
             <div className="kpi-value">{stats.overall}</div>
             <div className="muted fs-10">{stats.n} rondas</div>
@@ -1676,7 +1676,7 @@ function RecordsCard({ rounds, period, setPeriod }: {
     if (!r) return null;
     const val = field === "gross" ? r.gross : field === "sd" ? r.sd : r.stb;
     return (
-      <div style={{ display: "flex", justifyContent: "space-between", padding: "4px 0", borderBottom: "1px solid #f1f5f9", fontSize: 12 }}>
+      <div className="jog-field-line">
         <span>{label}</span>
         <span><b>{val}</b> <span className="muted">({shortDate(r.date)} · {r.course})</span></span>
       </div>
@@ -1686,7 +1686,7 @@ function RecordsCard({ rounds, period, setPeriod }: {
   return (
     <div className="an-card">
       <div className="d-flex justify-between items-center mb-8">
-        <div className="an-k-title" style={{ margin: 0 }}>Recordes Pessoais</div>
+        <div className="an-k-title m-0">Recordes Pessoais</div>
         <PeriodSelect value={period} onChange={setPeriod} />
       </div>
       {!records ? <div className="muted">Sem dados</div> : (
@@ -1709,24 +1709,24 @@ function WHSDetail({ hcp }: { hcp: HcpInfo }) {
   return (
     <div className="an-card">
       <div className="an-k-title">Handicap — Detalhe WHS</div>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, textAlign: "center", margin: "6px 0 10px" }}>
-        <div style={{ background: "var(--bg-success)", borderRadius: 10, padding: "10px 6px" }}>
+      <div className="jog-record-grid">
+        <div className="card-stat-green">
           <div className="muted fs-10">MÍNIMO ATINGIDO</div>
-          <div style={{ fontSize: 26, fontWeight: 900, color: "#16a34a" }}>{hcp.lowHcp?.toFixed(1) ?? "–"}</div>
+          <div className="jog-big-val c-par-ok">{hcp.lowHcp?.toFixed(1) ?? "–"}</div>
         </div>
-        <div style={{ background: "var(--bg-info)", borderRadius: 10, padding: "10px 6px" }}>
+        <div className="card-stat-blue">
           <div className="muted fs-10">ACTUAL</div>
-          <div style={{ fontSize: 26, fontWeight: 900, color: "#0369a1" }}>{hcp.current.toFixed(1)}</div>
+          <div className="jog-big-val c-blue">{hcp.current.toFixed(1)}</div>
           {hcp.lowHcp != null && (
             <div style={{ fontSize: 11, color: "#dc2626", fontWeight: 600 }}>+{(hcp.current - hcp.lowHcp).toFixed(1)} do mínimo</div>
           )}
         </div>
-        <div style={{ background: "var(--bg-detail)", borderRadius: 10, padding: "10px 6px" }}>
+        <div className="card-stat-detail">
           <div className="muted fs-10">MÉDIA {hcp.qtyCalc || 8} MELHORES</div>
-          <div style={{ fontSize: 26, fontWeight: 900, color: "var(--text-3)" }}>{hcp.scoreAvg?.toFixed(1) ?? "–"}</div>
+          <div className="jog-big-val c-text-3">{hcp.scoreAvg?.toFixed(1) ?? "–"}</div>
         </div>
       </div>
-      <div style={{ display: "flex", gap: 14, fontSize: 11, color: "var(--text-3)", borderTop: "1px solid #f1f5f9", paddingTop: 8 }}>
+      <div style={{ display: "flex", gap: 14, fontSize: 11, color: "var(--text-3)", borderTop: "1px solid var(--bg)", paddingTop: 8 }}>
         {hcp.softCap != null && <span>Soft cap: <b>{hcp.softCap.toFixed(1)}</b></span>}
         {hcp.hardCap != null && <span>Hard cap: <b>{hcp.hardCap.toFixed(1)}</b></span>}
         {hcp.qtyScores != null && hcp.qtyCalc != null && (
@@ -1750,7 +1750,7 @@ function Last20Table({ data, last20Table, best8 }: {
   return (
     <div className="an-card">
       <div className="an-k-title">Últimas 20 rondas</div>
-      <div className="muted" style={{ marginBottom: 8, fontSize: 11 }}>
+      <div className="muted mb-8 fs-11">
         Os 8 melhores SD das últimas 20 estão assinalados com ★ · <b>*</b> = Stableford normalizado 9B→18B (+17 pts WHS)
       </div>
       <div className="pa-table-wrap">
@@ -1874,7 +1874,7 @@ function CrossAnalysis({ data }: { data: PlayerPageData }) {
     <div className="an-card" style={{ marginTop: 24 }}>
       <div className="an-k-title" style={{ fontSize: 18, marginBottom: 16 }}>📊 Cross-Análise por Escalão</div>
       {/* Tabs */}
-      <div className="cross-tabs" style={{ display: "flex", gap: 4, flexWrap: "wrap", marginBottom: 12 }}>
+      <div className="cross-tabs jog-cross-wrap">
         {escalaos.map(esc => (
           <button key={esc} className={`cross-tab ${esc === activeEsc ? "active" : ""}`}
             onClick={() => setActiveEsc(esc)}>
@@ -1883,7 +1883,7 @@ function CrossAnalysis({ data }: { data: PlayerPageData }) {
         ))}
       </div>
       {/* Filters */}
-      <div style={{ display: "flex", gap: 8, marginBottom: 12, alignItems: "center" }}>
+      <div className="jog-cross-filter">
         <select className="mini-badge"
           value={sexFilter} onChange={e => setSexFilter(e.target.value)}>
           <option value="all">Sexo</option>
@@ -1897,7 +1897,7 @@ function CrossAnalysis({ data }: { data: PlayerPageData }) {
             <option key={v} value={v}>{v === 0 ? "Scratch (≤0)" : `≤ ${v}`}</option>
           ))}
         </select>
-        <span className="muted" style={{ fontSize: 11, fontWeight: 600 }}>{players.length} jogadores</span>
+        <span className="muted fw-600 fs-11">{players.length} jogadores</span>
       </div>
       {/* Ranking table */}
       <div className="pa-table-wrap">
@@ -2005,7 +2005,7 @@ function HcpEvolutionChart({ players, currentFed, escName }: {
 
   return (
     <div className="mt-20">
-      <div className="cross-section-title" style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+      <div className="cross-section-title flex-center-gap12">
         Evolução HCP — {escName}
         <select className="mini-badge"
           value={period} onChange={e => setPeriod(Number(e.target.value))}>
@@ -2015,7 +2015,7 @@ function HcpEvolutionChart({ players, currentFed, escName }: {
           <option value={12}>1 ano</option>
           <option value={6}>6 meses</option>
         </select>
-        <span className="muted fs-11" style={{ fontWeight: 400 }}>(clica na legenda para mostrar/esconder)</span>
+        <span className="muted fs-11 fw-400">(clica na legenda para mostrar/esconder)</span>
       </div>
       <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", maxHeight: 300, background: "var(--bg)", borderRadius: "var(--radius-lg)", border: "1px solid var(--border-light)" }}>
         {Array.from({ length: 5 }, (_, i) => {
@@ -2054,7 +2054,7 @@ function HcpEvolutionChart({ players, currentFed, escName }: {
           return (
             <span key={p.fed} style={{ cursor: "pointer", opacity: isHidden ? 0.3 : 1, fontWeight: isCur ? 700 : 400 }}
               onClick={() => togglePlayer(p.fed)}>
-              <span style={{ display: "inline-block", width: 10, height: 10, borderRadius: 2, background: col, marginRight: 3 }} />
+              <span style={{ display: "inline-block", width: 10, height: 10, borderRadius: "var(--radius-xs)", background: col, marginRight: 3 }} />
               {p.name.split(" ")[0]} {p.currentHcp != null ? `(${p.currentHcp.toFixed(1)})` : ""}
             </span>
           );
@@ -2096,17 +2096,17 @@ function CommonCourses({ players, currentFed, escName }: {
   return (
     <div className="mt-20">
       <div className="cross-section-title">Campos em Comum (mesmo tee) — {escName}</div>
-      <div className="muted" style={{ fontSize: 11, marginBottom: 8 }}>Ordenado pela melhor ronda. Clica num campo para ver detalhes.</div>
+      <div className="muted fs-11 mb-8">Ordenado pela melhor ronda. Clica num campo para ver detalhes.</div>
       {commonCT.map((cc, ci) => {
         const isOpen = openCard === ci;
         const groupBest = Math.min(...cc.players.map(p => p.best ?? 999));
         const groupWorst = Math.max(...cc.players.map(p => p.worst ?? 0));
         const gRange = (groupWorst - groupBest) || 1;
         return (
-          <div key={ci} style={{ marginBottom: 4 }}>
-            <div style={{ background: "var(--bg-detail)", border: "1px solid var(--border-light)", borderRadius: "var(--radius-lg)", padding: "8px 12px", cursor: "pointer" }}
+          <div key={ci} className="mb-4">
+            <div className="card-detail pointer"
               onClick={() => setOpenCard(isOpen ? null : ci)}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <div className="flex-center-gap8">
                 <span style={{ fontSize: 10, transition: "transform .2s", transform: isOpen ? "rotate(90deg)" : "" }}>▶</span>
                 <span className="fw-700">⛳ {cc.course}</span>
                 <TeePill name={cc.tee} />
@@ -2125,14 +2125,14 @@ function CommonCourses({ players, currentFed, escName }: {
               </div>
             </div>
             {isOpen && (
-              <div style={{ border: "1px solid var(--border-light)", borderTop: 0, borderRadius: "0 0 8px 8px", padding: 12, background: "var(--bg-card)" }}>
+              <div className="card-detail-inner">
                 <table className="an-table" style={{ fontSize: 11.5 }}>
                   <thead>
                     <tr>
                       <th style={{ width: 32 }}>#</th><th>Jogador</th><th className="r">Voltas</th>
                       <th className="r c-par-ok">★ Melhor</th><th className="r">Média</th>
                       <th className="r c-birdie">Pior</th><th className="r">Ampl.</th>
-                      <th style={{ minWidth: 120 }}>Distribuição</th>
+                      <th className="col-mw120">Distribuição</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -2154,8 +2154,8 @@ function CommonCourses({ players, currentFed, escName }: {
                           <td className="r" style={{ color: "#dc2626", fontWeight: 600 }}>{cp.worst ?? "–"}</td>
                           <td className="r">{ampl ?? "–"}</td>
                           <td>
-                            <div style={{ position: "relative", height: 14, background: "var(--bg)", borderRadius: 3 }}>
-                              <div style={{ position: "absolute", top: 2, height: 10, borderRadius: 2, background: bCol, opacity: 0.3, left: `${barLeft}%`, width: `${barW}%` }} />
+                            <div className="progress-track-sm">
+                              <div style={{ position: "absolute", top: 2, height: 10, borderRadius: "var(--radius-xs)", background: bCol, opacity: 0.3, left: `${barLeft}%`, width: `${barW}%` }} />
                               <div style={{ position: "absolute", top: 0, width: 2, height: 14, background: bCol, left: `${avgM}%` }} />
                             </div>
                           </td>
@@ -2164,24 +2164,24 @@ function CommonCourses({ players, currentFed, escName }: {
                     })}
                   </tbody>
                 </table>
-                <div style={{ marginTop: 10, fontSize: 11, fontWeight: 700, color: "var(--text-2)" }}>
+                <div className="mt-10 fs-11-fw700 c-text-2">
                   Histórico de rondas — {cc.course} ({cc.tee})
                 </div>
                 {cc.players.map(hp => {
                   const isCur = hp.fed === currentFed;
                   if (!hp.rounds?.length) return null;
                   return (
-                    <div key={hp.fed} style={{ marginTop: 6, padding: "6px 8px", borderRadius: 6, border: isCur ? "1px solid #16a34a" : "1px solid #e2e8f0", background: isCur ? "#f0fdf4" : "var(--bg)" }}>
-                      <div style={{ fontWeight: 600, fontSize: 11, marginBottom: 4 }}>
+                    <div key={hp.fed} style={{ marginTop: 6, padding: "6px 8px", borderRadius: "var(--radius)", border: isCur ? "1px solid #16a34a" : "1px solid var(--border-light)", background: isCur ? "#f0fdf4" : "var(--bg)" }}>
+                      <div className="fw-600 fs-11 mb-4">
                         {hp.name} <span className="muted">({hp.rounds.length} ronda{hp.rounds.length > 1 ? "s" : ""})</span>
                       </div>
-                      <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
+                      <div className="flex-wrap-gap8" style={{ gap: 4 }}>
                         {hp.rounds.map((rd: any, ri: number) => {
                           const isBest = rd.gross === hp.best;
                           return (
-                            <div key={ri} style={{ padding: "3px 8px", borderRadius: 6, fontSize: 10.5, background: isBest ? "#dcfce7" : "#fff", border: `1px solid ${isBest ? "#86efac" : "var(--border-light)"}`, display: "flex", gap: 6, alignItems: "center" }}>
+                            <div key={ri} style={{ padding: "3px 8px", borderRadius: "var(--radius)", fontSize: 10.5, background: isBest ? "#dcfce7" : "var(--bg-card)", border: `1px solid ${isBest ? "#86efac" : "var(--border-light)"}`, display: "flex", gap: 6, alignItems: "center" }}>
                               <span className="c-text-3">{rd.date || "–"}</span>
-                              <span className="fw-700">{rd.gross}{rd.par ? <span className={`score-delta ${(rd.gross - rd.par) > 0 ? "pos" : (rd.gross - rd.par) < 0 ? "neg" : ""}`} style={{ fontSize: 9, marginLeft: 2 }}>{(rd.gross - rd.par) > 0 ? "+" : ""}{rd.gross - rd.par}</span> : null}</span>
+                              <span className="fw-700">{rd.gross}{rd.par ? <span className={`score-delta ${(rd.gross - rd.par) > 0 ? "pos" : (rd.gross - rd.par) < 0 ? "neg" : ""}`} className="fs-9" style={{ marginLeft: 2 }}>{(rd.gross - rd.par) > 0 ? "+" : ""}{rd.gross - rd.par}</span> : null}</span>
                               {rd.sd != null && <span className="c-text-3">SD {rd.sd}</span>}
                               {isBest && <span>★</span>}
                             </div>
@@ -2201,7 +2201,7 @@ function CommonCourses({ players, currentFed, escName }: {
 }
 function PeriodSelect({ value, onChange }: { value: number; onChange: (n: number) => void }) {
   return (
-    <select style={{ fontSize: 11, padding: "2px 6px", border: "1px solid var(--border-heavy)", borderRadius: "var(--radius)", background: "var(--bg-card)", color: "#334155" }}
+    <select style={{ fontSize: 11, padding: "2px 6px", border: "1px solid var(--border-heavy)", borderRadius: "var(--radius)", background: "var(--bg-card)", color: "var(--text-2)" }}
       value={value} onChange={e => onChange(Number(e.target.value))}>
       <option value={3}>3 meses</option>
       <option value={6}>6 meses</option>
@@ -2254,7 +2254,7 @@ function TournamentComparison({ rounds, holesData }: {
   const headerText = `Scorecard comparativo · HCP ${hcpLabel} · ${teeLabel}${totalDist && allSameTee ? ` · ${totalDist}m` : ""}`;
 
   return (
-    <div style={{ background: "var(--bg-card)", border: "1px solid var(--border-light)", borderRadius: 10, overflow: "hidden", marginTop: 12 }}>
+    <div className="card-bordered mt-12">
       <div className="sc-bar-head">
         <span>{headerText}</span>
         <span>Par {totalPar || ""}</span>
@@ -2294,7 +2294,7 @@ function TournamentComparison({ rounds, holesData }: {
                 outVal={String(sumArr(par, 0, frontEnd))} outWeight={700}
                 inVal={String(is9 ? sumArr(par, 0, hc) : sumArr(par, backStart, hc))} inWeight={700}
                 totalVal={is9 ? undefined : String(sumArr(par, 0, hc))}
-                style={{ fontWeight: 600, color: "var(--text-muted)", fontSize: 11, borderBottom: "2px solid #cbd5e1" }}
+                className="fw-600 c-muted fs-11 bt-heavy"
                 sepRow
               />
             )}
@@ -2328,12 +2328,12 @@ function CompRow({ label, hc, is9, frontEnd, cells, outVal, inVal, totalVal, sty
   cells: string[]; outVal?: string; inVal?: string; totalVal?: string;
   style?: React.CSSProperties; sepRow?: boolean; outWeight?: number; inWeight?: number;
 }) {
-  const cs: React.CSSProperties = { padding: "4px 6px", textAlign: "center", fontSize: 12, borderBottom: "1px solid #f0f0f0", ...style };
-  const colLabel: React.CSSProperties = { ...cs, textAlign: "left", paddingLeft: 8, borderRight: "2px solid #e2e8f0" };
-  const colOut: React.CSSProperties = { ...cs, background: "var(--bg-muted)", borderLeft: "1px solid #e2e8f0", borderRight: "1px solid #e2e8f0", fontWeight: outWeight };
+  const cs: React.CSSProperties = { padding: "4px 6px", textAlign: "center", fontSize: 12, borderBottom: "1px solid var(--bg-hover)", ...style };
+  const colLabel: React.CSSProperties = { ...cs, textAlign: "left", paddingLeft: 8, borderRight: "2px solid var(--border-light)" };
+  const colOut: React.CSSProperties = { ...cs, background: "var(--bg-muted)", borderLeft: "1px solid var(--border-light)", borderRight: "1px solid var(--border-light)", fontWeight: outWeight };
   const colIn: React.CSSProperties = { ...colOut, fontWeight: inWeight };
-  const colTot: React.CSSProperties = { ...cs, background: "var(--bg-muted)", borderLeft: "1px solid #dde1e7", fontWeight: 800 };
-  if (sepRow) { cs.borderBottom = "2px solid #cbd5e1"; colLabel.borderBottom = "2px solid #cbd5e1"; colOut.borderBottom = "2px solid #cbd5e1"; colIn.borderBottom = "2px solid #cbd5e1"; colTot.borderBottom = "2px solid #cbd5e1"; }
+  const colTot: React.CSSProperties = { ...cs, background: "var(--bg-muted)", borderLeft: "1px solid var(--border-light)", fontWeight: 800 };
+  if (sepRow) { cs.borderBottom = "2px solid var(--border-heavy)"; colLabel.borderBottom = "2px solid var(--border-heavy)"; colOut.borderBottom = "2px solid var(--border-heavy)"; colIn.borderBottom = "2px solid var(--border-heavy)"; colTot.borderBottom = "2px solid var(--border-heavy)"; }
   return (
     <tr>
       <td style={colLabel}>{label}</td>
@@ -2355,11 +2355,11 @@ function CompScoreRow({ label, labelBg, labelFg, gross, par, hc, is9, frontEnd, 
   gross: (number | null)[]; par: (number | null)[] | null;
   hc: number; is9: boolean; frontEnd: number; backStart: number;
 }) {
-  const cs: React.CSSProperties = { padding: "4px 6px", textAlign: "center", fontSize: 12, borderBottom: "1px solid #f0f0f0" };
-  const colLabel: React.CSSProperties = { ...cs, textAlign: "left", paddingLeft: 8, borderRight: "2px solid #e2e8f0" };
-  const colOut: React.CSSProperties = { ...cs, background: "var(--bg-muted)", borderLeft: "1px solid #e2e8f0", borderRight: "1px solid #e2e8f0", fontWeight: 700 };
+  const cs: React.CSSProperties = { padding: "4px 6px", textAlign: "center", fontSize: 12, borderBottom: "1px solid var(--bg-hover)" };
+  const colLabel: React.CSSProperties = { ...cs, textAlign: "left", paddingLeft: 8, borderRight: "2px solid var(--border-light)" };
+  const colOut: React.CSSProperties = { ...cs, background: "var(--bg-muted)", borderLeft: "1px solid var(--border-light)", borderRight: "1px solid var(--border-light)", fontWeight: 700 };
   const colIn: React.CSSProperties = { ...colOut };
-  const colTot: React.CSSProperties = { ...cs, background: "var(--bg-muted)", borderLeft: "1px solid #dde1e7", fontWeight: 800 };
+  const colTot: React.CSSProperties = { ...cs, background: "var(--bg-muted)", borderLeft: "1px solid var(--border-light)", fontWeight: 800 };
 
   const toParSpan = (g: number, p: number) => {
     const tp = g - p;
@@ -2413,11 +2413,11 @@ function CompDeltaRow({ first, last, hc, is9, frontEnd, backStart }: {
   first: (number | null)[]; last: (number | null)[];
   hc: number; is9: boolean; frontEnd: number; backStart: number;
 }) {
-  const cs: React.CSSProperties = { padding: "4px 6px", textAlign: "center", fontSize: 11, borderBottom: "1px solid #f0f0f0" };
-  const colLabel: React.CSSProperties = { ...cs, textAlign: "left", paddingLeft: 8, borderRight: "2px solid #e2e8f0", fontWeight: 700, color: "var(--text-3)" };
-  const colOut: React.CSSProperties = { ...cs, background: "var(--bg-muted)", borderLeft: "1px solid #e2e8f0", borderRight: "1px solid #e2e8f0" };
+  const cs: React.CSSProperties = { padding: "4px 6px", textAlign: "center", fontSize: 11, borderBottom: "1px solid var(--bg-hover)" };
+  const colLabel: React.CSSProperties = { ...cs, textAlign: "left", paddingLeft: 8, borderRight: "2px solid var(--border-light)", fontWeight: 700, color: "var(--text-3)" };
+  const colOut: React.CSSProperties = { ...cs, background: "var(--bg-muted)", borderLeft: "1px solid var(--border-light)", borderRight: "1px solid var(--border-light)" };
   const colIn: React.CSSProperties = { ...colOut };
-  const colTot: React.CSSProperties = { ...cs, background: "var(--bg-muted)", borderLeft: "1px solid #dde1e7" };
+  const colTot: React.CSSProperties = { ...cs, background: "var(--bg-muted)", borderLeft: "1px solid var(--border-light)" };
 
   const fmtDelta = (d: number | null) => {
     if (d == null) return { text: "", color: "var(--text-muted)", weight: 400 as const };
@@ -2426,7 +2426,7 @@ function CompDeltaRow({ first, last, hc, is9, frontEnd, backStart }: {
   };
 
   return (
-    <tr style={{ background: "var(--bg-detail)", borderTop: "2px solid #cbd5e1" }}>
+    <tr className="bg-detail bt-heavy">
       <td style={colLabel}>Δ</td>
       {Array.from({ length: hc }, (_, i) => {
         const d = last[i] != null && first[i] != null ? last[i]! - first[i]! : null;
@@ -2714,8 +2714,8 @@ function ByTournamentView({ data, search }: { data: PlayerPageData; search: stri
                                 const toParStr = toPar != null ? (toPar > 0 ? `+${toPar}` : toPar === 0 ? "E" : String(toPar)) : "";
                                 const toParCls = toPar != null ? (toPar > 0 ? "pos" : toPar < 0 ? "neg" : "") : "";
                                 return (
-                                  <tr style={{ background: "var(--bg-detail)", fontWeight: 700, borderTop: "2px solid #cbd5e1" }}>
-                                    <td colSpan={5} className="r" style={{ fontWeight: 700, color: "var(--text-2)" }}>Total ({withGross.length} voltas)</td>
+                                  <tr className="bg-detail fw-700 bt-heavy">
+                                    <td colSpan={5} className="r fw-700 c-text-2">Total ({withGross.length} voltas)</td>
                                     <td className="r"><b>{totalGross}</b><span className={`score-delta ${toParCls}`}>{toParStr}</span></td>
                                     <td className="r">{totalStb || ""}</td>
                                     <td></td>
@@ -3057,13 +3057,13 @@ export default function JogadoresPage({ players, courses }: Props) {
             return (
               <button key={p.fed} className={`course-item ${isActive ? "active" : ""}`}
                 onClick={() => selectPlayer(p.fed)}>
-                <div className="course-item-name" style={{ display: "flex", alignItems: "center" }}>
+                <div className="course-item-name flex-center">
                   {rankingMode && rank != null && (
                     <span className={`sidebar-rank ${rank <= 3 ? "sidebar-rank-top3" : rank <= 10 ? "sidebar-rank-top10" : "sidebar-rank-rest"}`}>
                       {rank}
                     </span>
                   )}
-                  <span style={{ flex: 1 }}>
+                  <span className="flex-1">
                     {p.name}
                     <span className={`jog-sex-inline jog-sex-${p.sex}`}>{p.sex}</span>
                   </span>
@@ -3087,7 +3087,7 @@ export default function JogadoresPage({ players, courses }: Props) {
           {selected ? (
               <PlayerDetail key={selected.fed} fedId={selected.fed} selected={selected} onMetaLoaded={setPlayerMeta} />
           ) : (
-            <div className="muted" style={{ padding: 24 }}>Seleciona um jogador</div>
+            <div className="muted p-24">Seleciona um jogador</div>
           )}
         </div>
       </div>

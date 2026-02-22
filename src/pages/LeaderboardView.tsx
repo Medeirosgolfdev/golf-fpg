@@ -177,7 +177,7 @@ function DayScorecard({ norm, cat, dayKey, holeData, filters, onSelectPlayer }: 
     if (dayDraws.length > 0) {
       return (
         <div>
-          <div className="tourn-meta" style={{ marginTop: 10, color: "#e67e22", fontWeight: 600 }}>
+          <div className="tourn-meta mt-10 fw-600" style={{ color: "#e67e22" }}>
             ⏳ Resultados {dayLabel(dayKey)} ainda não disponíveis — lista de partida
           </div>
           <div className="tourn-meta">{dayDraws.length} jogadores</div>
@@ -374,13 +374,13 @@ function AccumulatedTable({ norm, cat, filters, onSelectPlayer }: {
 
               {/* Per-day columns */}
               {daysAvailable.map(dk => (
-                <th key={dk} colSpan={3} className="tourn-day-group-hdr ta-c lb-sep" style={{ fontWeight: "inherit" }}>
+                <th key={dk} colSpan={3} className="tourn-day-group-hdr ta-c lb-sep fw-400">
                   {dayLabel(dk)}
                 </th>
               ))}
 
               {/* Totals */}
-              <th colSpan={3} className="tourn-day-group-hdr" style={{ textAlign: "center", borderLeft: "2px solid #1e3a5f", background: "var(--bg-muted)" }}>
+              <th colSpan={3} className="tourn-day-group-hdr ta-c lb-sep-navy bg-muted">
                 Total
               </th>
             </tr>
@@ -400,7 +400,7 @@ function AccumulatedTable({ norm, cat, filters, onSelectPlayer }: {
                   </th>
                 </React.Fragment>
               ))}
-              <th className="r sortable" style={{ width: 42, borderLeft: "2px solid #1e3a5f", fontWeight: 800 }} onClick={() => sort.toggle("total")}>
+              <th className="r sortable col-w42 fw-800 lb-sep-navy" onClick={() => sort.toggle("total")}>
                 Gross{sort.arrow("total")}
               </th>
               <th className="r sortable col-w42 fw-800" onClick={() => sort.toggle("totalPar")}>
