@@ -752,7 +752,7 @@ function CalendarioContent() {
                               flex: 1, textAlign: "left", fontWeight: isExpanded ? 600 : enabledCals.has(cal.id) ? 500 : 400,
                               overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
                             }}>{cal.name}</span>
-                            <span style={{ fontSize: 10, fontFamily: "'JetBrains Mono', monospace",
+                            <span className="mono" style={{ fontSize: 10,
                               color: "var(--text-3)", flexShrink: 0 }}>{calEvts.length}</span>
                             <span style={{ fontSize: 10, color: "var(--text-3)", flexShrink: 0, transition: "transform 0.15s",
                               transform: isExpanded ? "rotate(180deg)" : "none" }}>▼</span>
@@ -778,7 +778,7 @@ function CalendarioContent() {
                                 }}
                                   onMouseEnter={e => (e.currentTarget.style.background = "var(--bg-hover)")}
                                   onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>
-                                  <span style={{ fontSize: 10, fontFamily: "'JetBrains Mono', monospace",
+                                  <span className="mono" style={{ fontSize: 10,
                                     color: cal.color, fontWeight: 600, minWidth: 30, flexShrink: 0 }}>{dd}</span>
                                   <span style={{ fontSize: 10, color: "var(--text-2)", flex: 1, textAlign: "left",
                                     overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{ev.title}</span>

@@ -446,10 +446,9 @@ function StatsTable({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats | null
                   const v = r.values[ci];
                   const isBest = bestIdx[ri] === ci;
                   return (
-                    <td key={ci} className="r" style={{
+                    <td key={ci} className="r mono" style={{
                       fontWeight: isBest ? 800 : 400,
                       color: isBest ? COLORS[x.i] : undefined,
-                      fontFamily: "'JetBrains Mono', monospace",
                       background: isBest ? COLORS_LIGHT[x.i] : undefined,
                     }}>
                       {v ?? "–"}
@@ -513,7 +512,7 @@ function ScoreDistribution({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats
                           borderRadius: "var(--radius-sm)", opacity: 0.75,
                         }} />
                       </div>
- <span className="ta-right fw-700 c-text-2 fs-11" style={{ fontFamily: "'JetBrains Mono', monospace", width: 46 }}>
+ <span className="ta-right fw-700 c-text-2 fs-11 mono" style={{ width: 46 }}>
                         {v.toFixed(1)}%
                       </span>
                     </div>
@@ -688,9 +687,9 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
           const w = totalMatches > 0 ? (wins[i] / totalMatches * 100) : 0;
           if (w === 0) return null;
           return (
-            <div key={i} style={{
+            <div key={i} className="mono" style={{
               width: `${w}%`, background: COLORS[i], display: "flex", alignItems: "center", justifyContent: "center",
-              color: "#fff", fontWeight: 800, fontSize: 12, fontFamily: "'JetBrains Mono', monospace",
+              color: "#fff", fontWeight: 800, fontSize: 12,
             }}>
               {wins[i] > 0 && `${firstName(s.player.name)} ${wins[i]}`}
             </div>
@@ -900,7 +899,7 @@ export default function CompararPage({ players }: { players: PlayersDb }) {
 
       {slots.length === 0 && (
         <div className="holeAnalysis empty-state">
-          <div className="cmp-empty-icon">⚔️</div>
+          <div className="empty-icon-lg">⚔️</div>
           <div className="haTitle cmp-empty-title">Comparar Jogadores</div>
           <div className="muted fs-13-lh16">
             Pesquisa e adiciona até 4 jogadores para comparar lado a lado.

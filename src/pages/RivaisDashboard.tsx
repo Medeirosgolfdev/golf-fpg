@@ -219,7 +219,7 @@ function zTier(score, stats) {
 const TIER = {
   elite: { bg: "var(--bg-success-strong)", c: "var(--color-good-dark)" },
   strong: { bg: "var(--bg-current)", c: "var(--text-current)" },
-  solid: { bg: "var(--bg-warn-light)", c: "var(--color-warn-dark)" },
+  solid: { bg: "var(--bg-warn-strong)", c: "var(--color-warn-dark)" },
   developing: { bg: "var(--bg-warn-strong)", c: "var(--color-warn-dark)" },
   beginner: { bg: "var(--bg-danger-subtle)", c: "var(--color-danger-dark)" },
 };
@@ -483,7 +483,7 @@ export default function RivaisDashboard() {
                     Jogador {sort === "name" ? (dir === "asc" ? "↑" : "↓") : ""}
                   </th>
                   {tourGroups.map((g, gi) => (
- <th key={g.id} colSpan={g.span} className="ta-center pointer fw-700 fs-10" style={{ padding: "6px 4px", borderLeft: "4px solid #1a1a1a", background: gi % 2 === 1 ? "rgba(255,255,255,0.08)" : "transparent" }} onClick={() => doSort("t:"+g.id)}>
+ <th key={g.id} colSpan={g.span} className="ta-center pointer fw-700 fs-10" style={{ padding: "6px 4px", borderLeft: "4px solid var(--grey-900)", background: gi % 2 === 1 ? "rgba(255,255,255,0.08)" : "transparent" }} onClick={() => doSort("t:"+g.id)}>
  {g.url ? <a href={g.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "underline", textDecorationStyle: "dotted", textUnderlineOffset: 2 }} onClick={e => e.stopPropagation()}>{g.short}</a> : g.short} <span className="op-6 fs-9 fw-400 c-inv">({g.date})</span>
                       {sort === "t:"+g.id && <span className="ml-3 fs-9">{dir === "asc" ? "↑" : "↓"}</span>}
                     </th>
@@ -503,7 +503,7 @@ export default function RivaisDashboard() {
                     <th key={i} style={{
                       padding: "3px 2px", textAlign: "center", fontSize: 10,
                       fontWeight: col.type === "total" || col.type === "pos" ? 700 : 500,
-                      borderLeft: col.isFirst ? "4px solid #1a1a1a" : col.isTot ? "2px solid rgba(255,255,255,0.25)" : "none",
+                      borderLeft: col.isFirst ? "4px solid var(--grey-900)" : col.isTot ? "2px solid rgba(255,255,255,0.25)" : "none",
                       minWidth: col.type === "total" ? 38 : col.type === "pos" ? 28 : 30,
                       background: col.tIdx % 2 === 1 ? "rgba(255,255,255,0.06)" : "transparent",
                     }}>
@@ -511,7 +511,7 @@ export default function RivaisDashboard() {
                     </th>
                   ))}
                   {UP.map(u => (
- <th key={u.id} className="ta-center pointer fw-700" style={{ padding: "3px 2px", fontSize: u.id === "marco26" ? 7 : 8, borderLeft: u.id === "wjgc26" ? "4px solid #1a1a1a" : "none", minWidth: u.id === "marco26" ? 48 : 38 }} onClick={() => doSort("up:"+u.id)}>
+ <th key={u.id} className="ta-center pointer fw-700" style={{ padding: "3px 2px", fontSize: 10, borderLeft: u.id === "wjgc26" ? "4px solid var(--grey-900)" : "none", minWidth: u.id === "marco26" ? 48 : 38 }} onClick={() => doSort("up:"+u.id)}>
                       {u.url ? <a href={u.url} target="_blank" rel="noopener noreferrer" style={{ color: "rgba(255,255,255,0.85)", textDecoration: "underline", textDecorationStyle: "dotted" }} onClick={e => e.stopPropagation()}>{u.short}</a> : u.short}
                       {sort === "up:"+u.id ? (dir === "asc" ? " ↑" : " ↓") : ""}
                     </th>
@@ -535,7 +535,7 @@ export default function RivaisDashboard() {
                       <th key={i} style={{
                         padding: "3px 2px", textAlign: "center", fontSize: 10, fontWeight: 600,
                         color: "var(--text-3)",
-                        borderLeft: col.isFirst ? "4px solid #1a1a1a" : col.isTot ? "2px solid var(--border-heavy)" : "none",
+                        borderLeft: col.isFirst ? "4px solid var(--grey-900)" : col.isTot ? "2px solid var(--border-heavy)" : "none",
                         background: col.type === "total" ? "var(--bg-hover)" : (col.tIdx % 2 === 1 ? "var(--bg-hover)" : "var(--bg)"),
                       }}>
                         {avg != null ? avg.toFixed(0) : ""}
@@ -566,7 +566,7 @@ export default function RivaisDashboard() {
                       <th key={i} style={{
                         padding: "2px 2px", textAlign: "center", fontSize: 10, fontWeight: 500,
                         color: "var(--text-muted)", fontStyle: "italic",
-                        borderLeft: col.isFirst ? "4px solid #1a1a1a" : col.isTot ? "2px solid var(--border-heavy)" : "none",
+                        borderLeft: col.isFirst ? "4px solid var(--grey-900)" : col.isTot ? "2px solid var(--border-heavy)" : "none",
                         background: col.type === "total" ? "var(--bg-hover)" : (col.tIdx % 2 === 1 ? "var(--bg-hover)" : "var(--bg-muted)"),
                       }}>
                         {sd != null ? "±" + sd.toFixed(1) : ""}
@@ -601,7 +601,7 @@ export default function RivaisDashboard() {
                       {COLS.map((col, i) => {
                         const cell = renderCell(p, col);
                         if (cell.empty) {
-                          return <td key={i} style={{ background: "var(--bg-card)", borderLeft: col.isFirst ? "4px solid #1a1a1a" : "none" }}></td>;
+                          return <td key={i} style={{ background: "var(--bg-card)", borderLeft: col.isFirst ? "4px solid var(--grey-900)" : "none" }}></td>;
                         }
                         const isTotal = col.type === "total";
                         const isPos = col.type === "pos";
@@ -630,7 +630,7 @@ export default function RivaisDashboard() {
                             padding: isTotal ? "5px 6px" : "5px 3px",
                             textAlign: "center", fontSize: 11,
                             fontWeight: isTotal ? 700 : 600,
-                            borderLeft: col.isFirst ? "4px solid #1a1a1a" : col.isTot ? "2px solid var(--border-heavy)" : "none",
+                            borderLeft: col.isFirst ? "4px solid var(--grey-900)" : col.isTot ? "2px solid var(--border-heavy)" : "none",
                             background: bg,
                             color: cell.color,
                           }}>
@@ -651,10 +651,10 @@ export default function RivaisDashboard() {
  ) : <span className="fs-9 c-border" >—</span>}
                       </td>
                       <td className="rivais-td rivais-border-mark">
- {p.up.includes("wjgc26") ? <span >✓</span> : <span className="fs-9 fs-10 fw-700 c-good-dark-inline" style={{ color: "var(--border)" }}>—</span>}
+ {p.up.includes("wjgc26") ? <span >✓</span> : <span className="fs-10 fw-700 c-good-dark-inline" style={{ color: "var(--border)" }}>—</span>}
                       </td>
                       <td className="rivais-td">
- {p.up.includes("marco26") ? <span style={{ color: "var(--badge-club-text)" }}>✓</span> : <span className="fs-9 fs-10 fw-700" style={{ color: "var(--border)" }}>—</span>}
+ {p.up.includes("marco26") ? <span style={{ color: "var(--accent)" }}>✓</span> : <span className="fs-10 fw-700" style={{ color: "var(--border)" }}>—</span>}
                       </td>
                       {vsOn && (
                         <td className="rivais-td">

@@ -76,7 +76,6 @@
  --bg-success-strong: #dcfce7; /* success badges/pills */
  --bg-danger-strong: #fee2e2;  /* danger badges/pills */
  --bg-warn-strong: #fef3c7;
- --bg-warn-light: #fef9c3;   /* warn badges/pills */
  --bg-danger-subtle: #fecaca;
  --border-success: #bbf7d0;
  --border-warn: #fde68a;
@@ -90,28 +89,26 @@
  --bg-female: #f0f4ff;
  --bg-female-hover: #e8eeff;
  --bg-purple: #f0edf5;
- --bg-intl: #e0f0e0;
- --badge-birth-bg: #f3e8ff;
- --badge-birth-text: #6b21a8;
- --badge-club-bg: #e0e7ff;
- --badge-club-text: #3730a3;
- --badge-male: #01A6EA;
- --badge-female: #FFB1CB;
+ --badge-birth-bg: #f0ece4;
+ --badge-birth-text: #6b5c3e;
+ --badge-male: #6A93A8;
+ --badge-female: #B87D8B;
+ --esc-dark: #2a5a18;          /* Sub-10/12 */
+ --esc-mid: #5a9a40;           /* Sub-14 */
+ --esc-light: #7aba60;         /* Sub-16 */
+ --esc-pale: #a0d480;          /* Sub-18/21/24 */
+ --esc-muted: #c8d8b4;         /* Absoluto/Sénior */
+ --esc-text-dark: #1a3a10;     /* text on light esc pills */
+ --bar-radius-top: 3px 3px 0 0;  /* chart bar top corners */
  --tee-white-bg: #f5f5f0;
  --tee-yellow: #eab308;
- --border-intl: #93c5a0;
+ --pill-navy: #263e78;         /* regional/intl text */
+ --pill-gold: #ffd700;         /* regional/nacional text */
+ --pill-fed-green: #046a38;    /* nacional/PJA bg */
  --text-purple: #5c4a8a;
  --color-teal: #00838f;
  --border-current: #00bcd4;
  --text-current: #006064;
- --sc-par-bg: #eef5e6;
- --sc-par-border: #d4e6c4;
- --sc-hcp-bg: #f0ece4;
- --sc-hcp-border: #ddd6c8;  /* danger trend/spark */
- --accent-text: #2e5a10;
- --link-color: #2e7d32;
- --link-hover: #1b5e20;     /* clickable links */
- --color-hcp: #6b5c3e;          /* hcp row label brown */
 
  /* Score badge ramp (under → over par) */
  --score-hio: #10b981;    /* hole-in-one / albatross — emerald */
@@ -409,18 +406,18 @@ html, body, #root {
 }
 
 .pill-regional {
- background: #263E78;
- color: #FFD700;
+ background: var(--pill-navy);
+ color: var(--pill-gold);
 }
 
 .pill-nacional {
- background: #046A38;
- color: #FFD700;
+ background: var(--pill-fed-green);
+ color: var(--pill-gold);
 }
 
 .pill-intl {
- background: #00FF00;
- color: #263E78;
+ background: var(--color-good);
+ color: var(--pill-navy);
 }
 
 .course-item-meta {
@@ -529,20 +526,20 @@ html, body, #root {
 }
 
 .sc-par-row td {
- background: var(--sc-par-bg);
- color: var(--accent-text);
- border-bottom-color: var(--sc-par-border);
+ background: var(--accent-light);
+ color: var(--text-dark);
+ border-bottom-color: var(--border-light);
 }
 
 .sc-hcp-row td {
- background: var(--sc-hcp-bg);
- color: var(--color-hcp);
- border-bottom-color: var(--sc-hcp-border);
+ background: var(--badge-birth-bg);
+ color: var(--badge-birth-text);
+ border-bottom-color: var(--border-light);
 }
 
 
-.sc-par-row .sc-meta-label { color: var(--accent-text); }
-.sc-hcp-row .sc-meta-label { color: var(--color-hcp); }
+.sc-par-row .sc-meta-label { color: var(--text-dark); }
+.sc-hcp-row .sc-meta-label { color: var(--badge-birth-text); }
 .ratings-table th {
  padding: 10px 8px;
  font-size: 11px;
@@ -587,32 +584,42 @@ html, body, #root {
  border: 1.5px solid var(--text-dark);
 }
 
-/* Fed — solid alert red */
+/* Fed — solid accent green */
 .jog-pill-fed {
- background: var(--color-danger-dark);
+ background: var(--accent);
  color: #fff;
  border: none;
 }
 
-/* Sexo — outline blue / pink */
+/* Sexo — solid colored */
 
+.jog-pill-sex-M {
+ background: var(--badge-male);
+ color: #fff;
+ border: none;
+}
 .jog-pill-sex-F {
- background: transparent;
- color: var(--badge-female);
- border-color: var(--badge-female);
+ background: var(--badge-female);
+ color: #fff;
+ border: none;
 }
 
 /* Escalão — solid gradient: darker = younger */
 .jog-pill-escalao { border: none; }
-.jog-pill-escalao-sub10 { background: #2a5a18; color: #fff; border: none; }
-.jog-pill-escalao-sub12 { background: #3a7a28; color: #fff; border: none; }
-.jog-pill-escalao-sub14 { background: #5a9a40; color: #fff; border: none; }
-.jog-pill-escalao-sub16 { background: #7aba60; color: #1a3a10; border: none; }
-.jog-pill-escalao-sub18 { background: #a0d480; color: #1a3a10; border: none; }
-.jog-pill-escalao-absoluto { background: #c8d8b4; color: #2a4a18; border: none; }
-.jog-pill-escalao-senior { background: #d8dcc8; color: #3a4a28; border: none; }
+.jog-pill-escalao-sub10 { background: var(--esc-dark); color: #fff; border: none; }
+.jog-pill-escalao-sub12 { background: var(--esc-dark); color: #fff; border: none; }
+.jog-pill-escalao-sub14 { background: var(--esc-mid); color: #fff; border: none; }
+.jog-pill-escalao-sub16 { background: var(--esc-light); color: var(--esc-text-dark); border: none; }
+.jog-pill-escalao-sub18 { background: var(--esc-pale); color: var(--esc-text-dark); border: none; }
+.jog-pill-escalao-absoluto { background: var(--esc-muted); color: var(--esc-text-dark); border: none; }
+.jog-pill-escalao-senior { background: var(--esc-muted); color: var(--esc-text-dark); border: none; }
 
-/* Birth, Club, Region, Tag, Stats — outline green (inherit from .jog-pill base) */
+/* Birth, Club, Region, Tag, Stats, HCP — outline green (inherit from .jog-pill base) */
+.jog-pill-birth {}
+.jog-pill-club {}
+.jog-pill-tag {}
+.jog-pill-stats {}
+.jog-pill-hcp {}
 
 .jog-pill-update {
  background: transparent;
@@ -621,6 +628,7 @@ html, body, #root {
 }
 
 /* Spacer pushes stats/update pills to the right */
+.jog-pills-spacer { flex: 1; min-width: 0; }
 
 /* Region pill hidden by default */
 .jog-pill-region {
@@ -689,14 +697,14 @@ html, body, #root {
 .escalao-pill-clear:hover { opacity: 1; background: var(--bg-danger); color: var(--color-danger-dark); }
 
 /* Colour coding — reuses escalão palette */
-.escalao-pill-sub10.escalao-pill-active { background: #2a5a18; color: #fff; }
-.escalao-pill-sub12.escalao-pill-active { background: #3a7a28; color: #fff; }
-.escalao-pill-sub14.escalao-pill-active { background: #5a9a40; color: #fff; }
-.escalao-pill-sub16.escalao-pill-active { background: #7aba60; color: #1a3a10; }
-.escalao-pill-sub18.escalao-pill-active { background: #a0d480; color: #1a3a10; }
-.escalao-pill-sub21.escalao-pill-active, .escalao-pill-sub24.escalao-pill.escalao-pill-active { background: #b4d498; color: #1a3a10; }
-.escalao-pill-absoluto.escalao-pill.escalao-pill-active { background: #c8d8b4; color: #2a4a18; }
-.escalao-pill-snior.escalao-pill-active, .escalao-pill-senior.escalao-pill.escalao-pill-active { background: #d8dcc8; color: #3a4a28; }
+.escalao-pill-sub10.escalao-pill-active { background: var(--esc-dark); color: #fff; }
+.escalao-pill-sub12.escalao-pill-active { background: var(--esc-dark); color: #fff; }
+.escalao-pill-sub14.escalao-pill-active { background: var(--esc-mid); color: #fff; }
+.escalao-pill-sub16.escalao-pill-active { background: var(--esc-light); color: var(--esc-text-dark); }
+.escalao-pill-sub18.escalao-pill-active { background: var(--esc-pale); color: var(--esc-text-dark); }
+.escalao-pill-sub21.escalao-pill-active, .escalao-pill-sub24.escalao-pill.escalao-pill-active { background: var(--esc-pale); color: var(--esc-text-dark); }
+.escalao-pill-absoluto.escalao-pill.escalao-pill-active { background: var(--esc-muted); color: var(--esc-text-dark); }
+.escalao-pill-snior.escalao-pill-active, .escalao-pill-senior.escalao-pill.escalao-pill-active { background: var(--esc-muted); color: var(--esc-text-dark); }
 .escalao-pill-outros.escalao-pill.escalao-pill-active { background: var(--border); color: var(--text); }
 
 /* HCP Badge — 2-line block next to name */
@@ -715,6 +723,8 @@ html, body, #root {
  margin-left: 6px;
  vertical-align: middle;
 }
+.jog-sex-M { background: var(--badge-male); color: #fff; }
+.jog-sex-F { background: var(--badge-female); color: #fff; }
 .master-detail .jog-detail {
  display: flex;
  flex-direction: column;
@@ -762,8 +772,8 @@ html, body, #root {
 .count { display: inline-flex; align-items: center; justify-content: center; min-width: 22px; height: 22px; border-radius: var(--radius); font-size: 10px; font-weight: 700; padding: 0 5px; flex-shrink: 0; }
 .courseBtn { background: none; border: none; cursor: pointer; font: inherit; font-weight: 600; color: var(--text); text-align: left; padding: 0; }
 .courseBtn:hover { color: var(--accent); text-decoration: underline; }
-.courseLink { color: var(--link-color); text-decoration: underline; text-decoration-color: var(--link-underline); text-underline-offset: 2px; cursor: pointer; }
-.courseLink:hover { color: var(--link-hover); text-decoration-color: var(--link-hover); }
+.courseLink { color: var(--accent); text-decoration: underline; text-decoration-color: var(--link-underline); text-underline-offset: 2px; cursor: pointer; }
+.courseLink:hover { color: var(--accent-hover); text-decoration-color: var(--accent-hover); }
 .sc-title .courseLink, .sc-header .courseLink { color: inherit; text-decoration-color: var(--link-underline-light); }
 .sc-header-light .sc-title .courseLink { text-decoration-color: var(--link-underline-dark); }
 .pa-row-open > td { background: var(--bg-hover); }
@@ -774,9 +784,9 @@ html, body, #root {
 .innerWrap { padding: 12px 14px; }
 .innerTable { margin-top: 8px; }
 
-/* .dt-compact → matches .data-table (base) */
+/* .dt-compact → alias de .an-table (consolidado) */
 .dt-compact { width: 100%; border-collapse: collapse; font-size: 12px; }
-.dt-compact th { padding: 5px 8px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); border-bottom: 1px solid var(--border); text-align: left; }
+.dt-compact th { padding: 5px 8px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); background: var(--bg); border-bottom: 2px solid var(--border); text-align: left; }
 .dt-compact th.r, .dt-compact td.r { text-align: right; }
 .dt-compact td { padding: 5px 8px; border-bottom: 1px solid var(--border-light); }
 
@@ -788,7 +798,9 @@ html, body, #root {
 .hb18 { background: var(--accent-light); color: var(--accent); }
 
 /* Pill badges (from melhorias.json) */
-.eds-badge { display: inline-block; font-size: 10px; font-weight: 800; color: #fff; background: var(--color-loading); border: none; border-radius: var(--radius-sm); padding: 1px 6px; margin-left: 4px; vertical-align: middle; letter-spacing: .5px; line-height: 1.5; text-transform: uppercase; }
+.eds-badge { display: inline-block; font-size: 10px; font-weight: 800; color: #fff; background: var(--color-warn); border: none; border-radius: var(--radius-sm); padding: 1px 6px; margin-left: 4px; vertical-align: middle; letter-spacing: .5px; line-height: 1.5; text-transform: uppercase; }
+.eds-badge-eds { background: var(--color-danger); }
+.eds-badge-extra { background: var(--badge-birth-text); }
 
 a.dateLink { color: var(--text); text-decoration: none; cursor: pointer; }
 a.dateLink:hover { opacity: .75; }
@@ -847,9 +859,9 @@ tr.cross-current { background: var(--bg-success); }
 .ecBlock { margin-bottom: 16px; }
 .ecTitle { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
 .ecHint { font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
-/* .ec-sum → matches .data-table .data-table-hover */
+/* .ec-sum → alias de .an-table + hover (consolidado) */
 .ec-sum { width: 100%; border-collapse: collapse; font-size: 12px; }
-.ec-sum th { padding: 5px 8px; text-align: left; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; color: var(--text-3); border-bottom: 1px solid var(--border); }
+.ec-sum th { padding: 5px 8px; text-align: left; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; color: var(--text-3); background: var(--bg); border-bottom: 2px solid var(--border); }
 .ec-sum th.r, .ec-sum td.r { text-align: right; }
 .ec-sum td { padding: 5px 8px; border-bottom: 1px solid var(--border-light); }
 .ec-sum tr:hover { background: var(--bg-hover); cursor: pointer; }
@@ -863,7 +875,9 @@ tr.cross-current { background: var(--bg-success); }
 
 .hd-pill { display: inline-block; padding: 1px 7px; border-radius: var(--radius-pill); font-weight: 600; line-height: 1.4; }
 .hd-birth { background: var(--badge-birth-bg); color: var(--badge-birth-text); }
-.hd-club { background: var(--badge-club-bg); color: var(--badge-club-text); }
+.hd-club { background: var(--accent-light); color: var(--accent); }
+.hd-sex-m { background: var(--badge-male); color: #fff; }
+.hd-sex-f { background: var(--badge-female); color: #fff; }
 
 /* ─── SD Pill (colored by HCP comparison) ─── */
 .sd-pill { display: inline-block; padding: 2px 10px; border-radius: var(--radius); font-weight: 600; font-size: 12px; }
@@ -1409,7 +1423,7 @@ tr.cross-current { background: var(--bg-success); }
  margin: 12px 0;
  padding: 14px;
  background: var(--bg);
- border: 1px solid var(--border, #e2e8f0);
+ border: 1px solid var(--border);
  border-radius: var(--radius, 6px);
 }
 
@@ -1423,7 +1437,7 @@ tr.cross-current { background: var(--bg-success); }
  font-weight: 600;
  font-size: 12px;
  min-width: 80px;
- color: var(--text-2, #555);
+ color: var(--text-2);
 }
 
 .sim-manual-fields {
@@ -1491,7 +1505,7 @@ tr.cross-current { background: var(--bg-success); }
 .tourn-ext-group { display: inline-flex; align-items: center; gap: 4px; }
 .tourn-ext-group-label { font-size: 10px; font-weight: 700; color: var(--text-label); margin-right: 2px; }
 .tourn-ext-link { display: inline-block; font-size: 10px; font-weight: 600; color: var(--text-2); background: var(--bg-header); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 2px 8px; text-decoration: none; white-space: nowrap; }
-.tourn-ext-link:hover { background: var(--bg-hover-subtle); color: var(--accent-text); }
+.tourn-ext-link:hover { background: var(--bg-hover-subtle); color: var(--text-dark); }
 .tourn-loading { color: var(--color-loading); font-weight: 600; }
 .tourn-loaded { color: var(--color-good); font-weight: 600; }
 
@@ -1499,6 +1513,8 @@ tr.cross-current { background: var(--bg-success); }
 .tourn-tabs { display: flex; gap: 6px; margin-bottom: 18px; }
 .tourn-tab { padding: 8px 18px; border: 1px solid var(--border-light); border-radius: var(--radius-lg); background: var(--bg-card); color: var(--text-3); cursor: pointer; font-size: 13px; font-weight: 600; }
 .tourn-tab-active { background: var(--text-dark); color: #fff; border-color: var(--text-dark); }
+.tourn-tab-sm { padding: 4px 10px; font-size: 12px; }
+.tourn-tab-sm.tourn-tab-active { background: var(--accent); color: var(--tee-yellow); border-color: var(--accent); }
 
 /* Section */
 .tourn-section { overflow: visible; }
@@ -1538,8 +1554,8 @@ tr.cross-current { background: var(--bg-success); }
  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
 }
 .tourn-pname { font-weight: 700; font-size: 14px; white-space: nowrap; color: var(--text); }
-.tourn-pname.tourn-pname-link { cursor: pointer; color: var(--link-color); text-decoration: underline; text-decoration-color: var(--link-underline); text-underline-offset: 2px; }
-.tourn-pname.tourn-pname-link:hover { color: var(--link-hover); text-decoration-color: var(--link-hover); }
+.tourn-pname.tourn-pname-link { cursor: pointer; color: var(--accent); text-decoration: underline; text-decoration-color: var(--link-underline); text-underline-offset: 2px; }
+.tourn-pname.tourn-pname-link:hover { color: var(--accent-hover); text-decoration-color: var(--accent-hover); }
 
 /* Reuse jog-pill but override sizes for tournament context */
 .tourn-draw-player .jog-pill {
@@ -1552,8 +1568,8 @@ tr.cross-current { background: var(--bg-success); }
 
 /* PJA + INTL use their own solid backgrounds */
 /* PJA pill — matches app design */
-.tourn-pill-pja { background: #046A38; color: #FFD700; border: none; font-weight: 800; letter-spacing: .03em; font-size: 10px; padding: 1px 6px; border-radius: var(--radius-sm); display: inline-block; vertical-align: middle; }
-.tourn-pill-intl { background: var(--bg-intl); color: var(--accent-text); border: 1.5px solid var(--border-intl); font-weight: 700; font-size: 10px; padding: 0px 5px; border-radius: var(--radius-sm); display: inline-block; vertical-align: middle; }
+.tourn-pill-pja { background: var(--pill-fed-green); color: var(--pill-gold); border: none; font-weight: 800; letter-spacing: .03em; font-size: 10px; padding: 1px 6px; border-radius: var(--radius-sm); display: inline-block; vertical-align: middle; }
+.tourn-pill-intl { background: var(--accent-light); color: var(--text-dark); border: 1.5px solid var(--border); font-weight: 700; font-size: 10px; padding: 0px 5px; border-radius: var(--radius-sm); display: inline-block; vertical-align: middle; }
 
 /* HCP columns */
 .tourn-draw-hcp { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; color: var(--text); }
@@ -1582,7 +1598,7 @@ tr.cross-current { background: var(--bg-success); }
 .tourn-scorecard .tourn-sum-col { background: var(--bg-hover); white-space: nowrap; padding: 4px 3px; }
 
 /* Course info rows */
-.tourn-par-row td { font-size: 11px; font-weight: 800; color: var(--accent-text); background: var(--sc-par-bg); }
+.tourn-par-row td { font-size: 11px; font-weight: 800; color: var(--text-dark); background: var(--accent-light); }
 .tourn-dist-row td { font-size: 10px; color: var(--text-muted); background: var(--bg-detail); }
 .tourn-si-row td { font-size: 10px; color: var(--text-muted); }
 .tourn-scorecard .tourn-in-border { border-left: 2.5px solid var(--border-heavy); }
@@ -1595,7 +1611,7 @@ tr.cross-current { background: var(--bg-success); }
 .tourn-scorecard .tourn-sum-under { background: var(--bg-success-strong); }
 .tourn-sum-over { background: var(--bg-hover); }
 .tourn-lb-name-col .tourn-pname { font-weight: 700; font-size: 12px; white-space: nowrap; }
-.tourn-lb-name-col .tourn-pname.tourn-pname-link { color: var(--link-color); }
+.tourn-lb-name-col .tourn-pname.tourn-pname-link { color: var(--accent); }
 
 /* Female row — subtle blue tint */
 .tourn-scorecard .tourn-female-row { background: var(--bg-female); }
@@ -1656,7 +1672,7 @@ tr.cross-current { background: var(--bg-success); }
 .tourn-table .r { text-align: right; }
 .tourn-table .tourn-mono { font-family: 'JetBrains Mono', monospace; }
 .tourn-table .tourn-pname { font-weight: 700; }
-.tourn-table .tourn-pname.tourn-pname-link { color: var(--link-color); }
+.tourn-table .tourn-pname.tourn-pname-link { color: var(--accent); }
 
 /* Hole distribution bars */
 .tourn-distrib { display: flex; height: 20px; border-radius: var(--radius-sm); overflow: hidden; font-size: 10px; font-weight: 700; }
@@ -1670,7 +1686,7 @@ tr.cross-current { background: var(--bg-success); }
 .tourn-form-table td { padding: 6px 8px; border: 1px solid var(--border-light); font-size: 12px; vertical-align: middle; }
 .tourn-form-table tbody tr:hover { background: var(--bg-detail); }
 .tourn-form-table .tourn-pname { font-weight: 700; font-size: 12px; }
-.tourn-form-table .tourn-pname.tourn-pname-link { color: var(--link-color); }
+.tourn-form-table .tourn-pname.tourn-pname-link { color: var(--accent); }
 
 /* Sparkline — mini SD dots */
 .tourn-sparkline { display: flex; gap: 3px; align-items: center; }
@@ -1700,7 +1716,7 @@ tr.cross-current { background: var(--bg-success); }
 
 .ov-opt-btn.active { background: var(--text); color: #fff; border-color: var(--text); }
 
-.ov-toggle input[type="checkbox"] { accent-color: var(--link-color); width: 14px; height: 14px; }
+.ov-toggle input[type="checkbox"] { accent-color: var(--accent); width: 14px; height: 14px; }
 @media (max-width: 600px) {
  .ov-fields { gap: 6px; }
  .ov-field .input { font-size: 11px; padding: 3px 6px; }
@@ -1774,6 +1790,7 @@ tr.cross-current { background: var(--bg-success); }
 .pill-info { background: var(--bg-info-strong); color: var(--color-info); }
 
 /* ─── Unified Section Card ─── */
+/* .section-card → alias de .pa-card (consolidado) */
 .section-card { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); }
 
 /* ─── Unified Info / Warning Boxes ─── */
@@ -1791,10 +1808,11 @@ tr.cross-current { background: var(--bg-success); }
 /* ─── Unified Distribution Bar ─── */
 
 /* ─── Unified Filter Bar ─── */
+/* .filter-* → variante compacta de .input/.select (Rivais) — font-size 11px, mesma borda/radius */
 .filter-bar { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 8px 12px; margin-bottom: var(--space-section); display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
-.filter-input { border: 1px solid var(--border); border-radius: var(--radius); padding: 5px 8px; font-size: 11px; min-width: 130px; outline: none; background: var(--bg); color: var(--text); }
+.filter-input { border: 1px solid var(--border); border-radius: var(--radius); padding: 5px 8px; font-size: 11px; min-width: 130px; outline: none; background: var(--bg-card); color: var(--text); font-family: inherit; }
 .filter-input:focus { border-color: var(--accent); }
-.filter-select { border: 1px solid var(--border); border-radius: var(--radius); padding: 5px 6px; font-size: 11px; background: var(--bg-card); color: var(--text); }
+.filter-select { border: 1px solid var(--border); border-radius: var(--radius); padding: 5px 6px; font-size: 11px; background: var(--bg-card); color: var(--text); font-family: inherit; }
 .filter-checkbox { display: flex; align-items: center; gap: 3px; font-size: 10px; color: var(--text-3); cursor: pointer; }
 .filter-checkbox input { accent-color: var(--accent); }
 .filter-count { margin-left: auto; font-size: 10px; color: var(--text-muted); }
@@ -1848,7 +1866,7 @@ tr.cross-current { background: var(--bg-success); }
  margin-left: auto; flex-shrink: 0;
 }
 .sidebar-sd-good { background: var(--bg-success-strong); color: var(--color-good-dark); }
-.sidebar-sd-ok  { background: var(--bg-warn-light); color: var(--color-warn-dark); }
+.sidebar-sd-ok  { background: var(--bg-warn-strong); color: var(--color-warn-dark); }
 .sidebar-sd-high { background: var(--bg-danger-strong); color: var(--color-danger-dark); }
 
 /* ─── Rivais Dashboard ─── */
@@ -2224,7 +2242,8 @@ tr.cross-current { background: var(--bg-success); }
 /* ═══ Phase 5: Exhaustive inline elimination ═══ */
 
 /* ─── Card / container patterns ─── */
-.card-bordered { border: 1px solid var(--border-light); border-radius: var(--radius-lg); overflow: hidden; background: var(--bg-card); }
+/* .card-bordered → alias de .pa-card (consolidado) */
+.card-bordered { border: 1px solid var(--border-light); border-radius: var(--radius-lg); overflow: hidden; background: var(--bg-card); box-shadow: var(--shadow-sm); }
 .card-detail { background: var(--bg-detail); border: 1px solid var(--border-light); border-radius: var(--radius-lg); padding: 8px 12px; }
 .card-detail-inner { border: 1px solid var(--border-light); border-top: 0; border-radius: 0 0 8px 8px; padding: 12px; background: var(--bg-card); }
 .card-stat-green { background: var(--bg-success); border-radius: var(--radius-lg); padding: 10px 6px; }
@@ -2272,7 +2291,7 @@ tr.cross-current { background: var(--bg-success); }
 .bt-dark { border-top: 2px solid var(--text); }
 .bt-border { border-top: 1px solid var(--border); }
 .bl-border { border-left: 1px solid var(--border); }
-.bb-border { border-bottom: 1px solid var(--border, #ddd); margin: 2px 0; }
+.bb-border { border-bottom: 1px solid var(--border); margin: 2px 0; }
 
 /* ─── Empty / loading states ─── */
 .empty-icon { font-size: 32px; margin-bottom: 12px; }
@@ -2293,7 +2312,7 @@ tr.cross-current { background: var(--bg-success); }
 .fw-900-fs11-mb4 { font-weight: 900; font-size: 11px; margin-bottom: 4px; }
 .fw-800-fs10-purple-mb4 { font-weight: 800; font-size: 10px; color: var(--chart-5); margin-bottom: 4px; }
 .fw-800-fs10-green-mb4 { font-weight: 800; font-size: 10px; color: var(--color-good); margin-bottom: 4px; }
-.fw-700-fs10-green2 { font-weight: 700; font-size: 10px; color: var(--accent-text); }
+.fw-700-fs10-green2 { font-weight: 700; font-size: 10px; color: var(--text-dark); }
 .fw-700-muted { font-weight: 700; color: var(--text-muted); }
 .fw-700-text2-mb8 { font-weight: 700; color: var(--text-2); margin-bottom: 8px; }
 .fw-700-text2 { font-weight: 700; color: var(--text-2); }
@@ -2596,7 +2615,7 @@ tr.cross-current { background: var(--bg-success); }
  display: flex; gap: 6px 12px; flex-wrap: wrap; margin-bottom: 12px;
 }
 .ov-export-btn {
- padding: 10px 24px; background: var(--link-color); color: #fff; border: none; border-radius: var(--radius);
+ padding: 10px 24px; background: var(--accent); color: #fff; border: none; border-radius: var(--radius);
  font-size: 14px; font-weight: 800; cursor: pointer; transition: background 0.15s;
 }
 .ov-export-btn:hover { background: var(--accent-hover); }
@@ -2654,8 +2673,8 @@ tr.cross-current { background: var(--bg-success); }
 .c-chart-6 { color: var(--chart-6); }
 .c-border-heavy { color: var(--border-heavy); }
 .c-good-dark-inline { color: var(--color-good-dark); }
-.c-good-darker { color: #14532d; }
+.c-good-darker { color: var(--color-good-dark); }
 .c-warn-dark-inline { color: var(--color-warn-dark); }
 .c-navy-inline { color: var(--color-info); }
-.c-danger-darker { color: #7f1d1d; }
+.c-danger-darker { color: var(--color-danger-dark); }
 .c-danger-dark-inline { color: var(--color-danger-dark); }

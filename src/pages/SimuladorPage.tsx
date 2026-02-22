@@ -447,10 +447,9 @@ function MultiTeeSDTable({
                         borderLeft: i > 0 ? "2px solid var(--border-light)" : undefined,
                         color: isHcp ? "var(--grey-900)" : isPar ? "var(--accent)" : undefined,
                       }}>{cell.score}</td>
-                      <td style={{
+                      <td className="mono" style={{
                         ...tdBase,
                         textAlign: "right",
-                        fontFamily: "'JetBrains Mono', monospace",
                         fontSize: 12,
                         fontWeight: isHcp ? 700 : 600,
                         color: isHcp ? "var(--grey-900)" : undefined,
@@ -514,13 +513,12 @@ function ManualInputs({
         <div className="field">
           <label>CR</label>
           <input
-            className="input"
+            className="input col-w72"
             type="text"
             inputMode="decimal"
             placeholder="ex: 68,4"
             value={value.cr}
             onChange={(e) => onChange({ ...value, cr: e.target.value })}
-            className="col-w72"
           />
         </div>
         <div className="field">
@@ -1309,11 +1307,10 @@ export default function SimuladorPage({ courses }: Props) {
             <option value="F">Feminino</option>
           </select>
           <input
-            className="input"
+            className="input col-w100"
             value={hiInput}
             onChange={(e) => setHiInput(e.target.value)}
             placeholder="HI (ex: 15,4)"
-            className="col-w100"
           />
           <select className="select" value={pcc} onChange={(e) => setPcc(Number(e.target.value))}>
             {[-3, -2, -1, 0, 1, 2, 3].map((v) => (

@@ -184,13 +184,14 @@ export default function App() {
         {status.kind === "ready" && (
           <Routes>
             <Route path="/campos/:courseKey?" element={<CamposPage courses={simCourses} />} />
-            <Route path="/jogadores/:fed?" element={<JogadoresPage players={status.players} courses={simCourses} />} />
+            <Route path="/jogadores/:fed" element={<JogadoresPage players={status.players} courses={simCourses} />} />
+            <Route path="/jogadores" element={<Navigate to="/jogadores/52884" replace />} />
             <Route path="/simulador" element={<SimuladorPage courses={simCourses} />} />
             <Route path="/comparar" element={<CompararPage players={status.players} />} />
             <Route path="/calendario" element={<CalendarioPage />} />
             <Route path="/bjgt/:fed?" element={<BJGTAnalysisPage />} />
             <Route path="/torneio" element={<TorneioPage players={status.players} onSelectPlayer={(fed) => goTo(`/jogadores/${fed}`)} />} />
-            <Route path="*" element={<Navigate to="/jogadores" replace />} />
+            <Route path="*" element={<Navigate to="/jogadores/52884" replace />} />
           </Routes>
         )}
       </main>

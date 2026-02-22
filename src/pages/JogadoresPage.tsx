@@ -78,7 +78,8 @@ function EdsBadge({ origin }: { origin?: string }) {
   const o = origin.trim();
   // Only show badges for non-tournament origins
   if (!o || o === "Torn" || o === "") return null;
-  return <span className="eds-badge">{o}</span>;
+  const sub = o === "EDS" || o === "Individuais" ? " eds-badge-eds" : o === "Extra" ? " eds-badge-extra" : "";
+  return <span className={`eds-badge${sub}`}>{o}</span>;
 }
 
 /* ─── External Links (classificação, etc.) ─── */
@@ -885,8 +886,8 @@ function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, ac
           .sort((a, b) => b.dateSort - a.dateSort);
 
         return (
-          <div key={ec.teeKey} className={`ecPillBlock ${isActive ? "ecActive" : ""}`}
- className="overflow-hidden br-lg mt-8" style={{ border: isActive ? "2px solid " + hx : "1px solid var(--border-light)" }}>
+          <div key={ec.teeKey} className={`ecPillBlock ${isActive ? "ecActive" : ""} overflow-hidden br-lg mt-8`}
+ style={{ border: isActive ? "2px solid " + hx : "1px solid var(--border-light)" }}>
  <div className="pointer fw-600 fs-12" style={{ padding: "6px 10px", background: isActive ? hx + "10" : "var(--bg-detail)" }}
               onClick={() => onSelectTee(ec.teeKey)}>
               <TeePill name={ec.teeName} />{" "}
@@ -2171,7 +2172,7 @@ function CommonCourses({ players, currentFed, escName }: {
                   const isCur = hp.fed === currentFed;
                   if (!hp.rounds?.length) return null;
                   return (
- <div key={hp.fed} className="br-default mt-6" style={{ padding: "6px 8px", border: isCur ? "1px solid #16a34a" : "1px solid var(--border-light)", background: isCur ? "var(--bg-success)" : "var(--bg)" }}>
+ <div key={hp.fed} className="br-default mt-6" style={{ padding: "6px 8px", border: isCur ? "1px solid var(--color-good)" : "1px solid var(--border-light)", background: isCur ? "var(--bg-success)" : "var(--bg)" }}>
                       <div className="fw-600 fs-11 mb-4">
                         {hp.name} <span className="muted">({hp.rounds.length} ronda{hp.rounds.length > 1 ? "s" : ""})</span>
                       </div>
@@ -2179,9 +2180,9 @@ function CommonCourses({ players, currentFed, escName }: {
                         {hp.rounds.map((rd: any, ri: number) => {
                           const isBest = rd.gross === hp.best;
                           return (
-                            <div key={ri} style={{ padding: "3px 8px", borderRadius: "var(--radius)", fontSize: 11, background: isBest ? "var(--bg-success-strong)" : "var(--bg-card)", border: `1px solid ${isBest ? "#86efac" : "var(--border-light)"}`, display: "flex", gap: 6, alignItems: "center" }}>
+                            <div key={ri} style={{ padding: "3px 8px", borderRadius: "var(--radius)", fontSize: 11, background: isBest ? "var(--bg-success-strong)" : "var(--bg-card)", border: `1px solid ${isBest ? "var(--border-success)" : "var(--border-light)"}`, display: "flex", gap: 6, alignItems: "center" }}>
                               <span className="c-text-3">{rd.date || "–"}</span>
-                              <span className="fw-700">{rd.gross}{rd.par ? <span className={`score-delta ${(rd.gross - rd.par) > 0 ? "pos" : (rd.gross - rd.par) < 0 ? "neg" : ""}`} className="fs-9" style={{ marginLeft: 2 }}>{(rd.gross - rd.par) > 0 ? "+" : ""}{rd.gross - rd.par}</span> : null}</span>
+                              <span className="fw-700">{rd.gross}{rd.par ? <span className={`score-delta fs-9 ${(rd.gross - rd.par) > 0 ? "pos" : (rd.gross - rd.par) < 0 ? "neg" : ""}`} style={{ marginLeft: 2 }}>{(rd.gross - rd.par) > 0 ? "+" : ""}{rd.gross - rd.par}</span> : null}</span>
                               {rd.sd != null && <span className="c-text-3">SD {rd.sd}</span>}
                               {isBest && <span>★</span>}
                             </div>
@@ -2201,7 +2202,7 @@ function CommonCourses({ players, currentFed, escName }: {
 }
 function PeriodSelect({ value, onChange }: { value: number; onChange: (n: number) => void }) {
   return (
- <select className="br-default c-text-2 fs-11" style={{ padding: "2px 6px", border: "1px solid var(--border-heavy)", background: "var(--bg-card)" }}
+ <select className="select fs-11" style={{ padding: "2px 6px" }}
       value={value} onChange={e => onChange(Number(e.target.value))}>
       <option value={3}>3 meses</option>
       <option value={6}>6 meses</option>
@@ -2860,10 +2861,11 @@ export default function JogadoresPage({ players, courses }: Props) {
   const navigate = useNavigate();
   const [q, setQ] = useState("");
   const [sexFilter, setSexFilter] = useState<SexFilter>("ALL");
-  const [escalaoFilter, setEscalaoFilter] = useState<Set<string>>(new Set(["Sub-10", "Sub-12", "Sub-14"]));
+  const [escalaoFilter, setEscalaoFilter] = useState<Set<string>>(new Set());
   const [regionFilter, setRegionFilter] = useState<string>("ALL");
   const [sortKey, setSortKey] = useState<SortKey>("name");
-  const [selectedFed, setSelectedFed] = useState<string | null>(urlFed ?? null);
+  const DEFAULT_FED = "52884";
+  const [selectedFed, setSelectedFed] = useState<string | null>(urlFed ?? DEFAULT_FED);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [playerMeta, setPlayerMeta] = useState<PlayerPageData["META"] | null>(null);
   const rankingMode = sortKey === "ranking";
@@ -2990,7 +2992,10 @@ export default function JogadoresPage({ players, courses }: Props) {
   }, [allPlayers]);
 
   useEffect(() => {
-    if (!selectedFed && filtered.length > 0) selectPlayer(filtered[0].fed);
+    if (!selectedFed && filtered.length > 0) {
+      const def = filtered.find(p => p.fed === DEFAULT_FED);
+      selectPlayer(def ? def.fed : filtered[0].fed);
+    }
   }, [filtered, selectedFed]);
 
   const selected = useMemo(() => {
@@ -3005,7 +3010,7 @@ export default function JogadoresPage({ players, courses }: Props) {
           <button className="sidebar-toggle" onClick={() => setSidebarOpen(v => !v)} title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
             {sidebarOpen ? "◀" : "▶"}
           </button>
-          <input className="input" value={q} onChange={e => { setQ(e.target.value); selectPlayer(null); }}
+          <input className="input" value={q} onChange={e => { setQ(e.target.value); setSelectedFed(null); }}
             placeholder="Nome, clube, n.º federado…" />
           <select className="select" value={sexFilter} onChange={e => setSexFilter(e.target.value as SexFilter)}>
             <option value="ALL">Sexo</option><option value="M">Masculino</option><option value="F">Feminino</option>

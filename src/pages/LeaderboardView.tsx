@@ -538,7 +538,7 @@ function AllResultsDayTable({ norm, dayKey, filters, onSelectPlayer }: {
     }
   });
 
-  const catColors: Record<string, string> = { wagr: "var(--accent-text)", sub14: "#b8860b", sub12: "var(--color-danger-dark)" };
+  const catColors: Record<string, string> = { wagr: "var(--text-dark)", sub14: "#b8860b", sub12: "var(--color-danger-dark)" };
 
   return (
     <>
@@ -636,7 +636,7 @@ function AllAccumulatedTable({ norm, filters, onSelectPlayer }: {
     }
   });
 
-  const catColors: Record<string, string> = { wagr: "var(--accent-text)", sub14: "#b8860b", sub12: "var(--color-danger-dark)" };
+  const catColors: Record<string, string> = { wagr: "var(--text-dark)", sub14: "#b8860b", sub12: "var(--color-danger-dark)" };
 
   return (
     <>
@@ -830,10 +830,9 @@ export default function LeaderboardView({ norm, players, holeDataByDay, onSelect
       <div className="flex-wrap-gap8 items-center mb-12">
         {/* Day dropdown */}
         <select
-          className="select"
+          className="select col-mw130 fw-600"
           value={effectiveDayView}
           onChange={e => setDayView(e.target.value)}
-          className="col-mw130 fw-600"
         >
           {activeDays.map(dk => {
             const hasData = daysWithResults.includes(dk);
@@ -852,9 +851,8 @@ export default function LeaderboardView({ norm, players, holeDataByDay, onSelect
 
         {/* PJA filter */}
         <button
-          className={`tourn-tab${pjaOnly ? " tourn-tab-active" : ""}`}
+          className={`tourn-tab tourn-tab-sm${pjaOnly ? " tourn-tab-active" : ""}`}
           onClick={() => setPjaOnly(p => !p)}
- className="fs-12" style={{ background: pjaOnly ? "var(--accent)" : undefined, color: pjaOnly ? "var(--tee-yellow)" : undefined, padding: "4px 10px" }}
         >
           PJA <span className="op-6 fs-10">({pjaCount})</span>
         </button>

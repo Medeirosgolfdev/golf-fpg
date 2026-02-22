@@ -849,7 +849,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
             </div>
  <div className="d-flex gap-10 mt-4 ai-baseline" >
  <span className="fw-900" style={{ fontSize: 26 }}>{ecl.totalGross}–{bestDay ? bestDay.gross : Math.round((ecl.totalGross + tp + 15) / 2)}</span>
- <span className="fs-12" style={{ opacity: 0.8 }}>({fmtTP(ecl.toPar ?? ecl.totalGross - tp)} a {fmtTP(bestDay ? bestDay.gross - tp : 15)})</span>
+ <span className="fs-12" style={{ opacity: 0.7 }}>({fmtTP(ecl.toPar ?? ecl.totalGross - tp)} a {fmtTP(bestDay ? bestDay.gross - tp : 15)})</span>
             </div>
             <div className="fs-10-op6 mt-4">
               Eclético → Melhor dia 2025{hcp != null ? ` · HCP actual: ${hcp.toFixed(1)}` : ""}
@@ -1236,7 +1236,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               return (
                 <div key={i} title={`${r.date} · ${r.course} · ${r.meters ?? "?"}m → Gross ${r.gross}`}
                   style={{ width: 28, height: 28, borderRadius: vpCourse ? 999 : 4, display: "flex", alignItems: "center", justifyContent: "center",
-                    fontSize: 10, fontWeight: 700, border: vpCourse ? "2px solid #dc2626" : "1px solid #d5dac9",
+                    fontSize: 10, fontWeight: 700, border: vpCourse ? "2px solid var(--color-danger)" : "1px solid var(--border-light)",
                     background: r.gross <= 82 ? "var(--bg-success)" : r.gross <= 88 ? "var(--bg-warn)" : "var(--bg-danger)",
                     color: sc3(r.gross, 82, 88) }}>
                   {r.gross}
@@ -1378,7 +1378,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                         return (
                           <div key={i} className="chart-cell">
  <div className="fs-10 fw-700" style={{ color: col, marginBottom: 2 }}>{m.avgGross.toFixed(0)}</div>
-                            <div style={{ height: barPx, background: col, borderRadius: "4px 4px 0 0", opacity: 0.75 }} />
+                            <div style={{ height: barPx, background: col, borderRadius: "var(--bar-radius-top)", opacity: 0.7 }} />
                           </div>
                         );
                       })}
@@ -1442,7 +1442,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                         const h = ((v.avg - minV + 0.2) / (range + 0.4)) * 100;
                         return (
                           <div key={i} className="bjgt-bar-col">
-                            <div style={{ width: "100%", height: `${h}%`, background: pt.col, borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
+                            <div style={{ width: "100%", height: `${h}%`, background: pt.col, borderRadius: "var(--radius-xs)", opacity: 0.7, minHeight: 3 }} />
                           </div>
                         );
                       })}
@@ -1487,7 +1487,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                       return (
                         <div key={i} className="bjgt-bar-col">
  <div className="fs-10 fw-700" style={{ color: col }}>{m.dblPct.toFixed(0)}%</div>
-                          <div style={{ width: "100%", height: `${h}%`, background: col, borderRadius: "3px 3px 0 0", opacity: 0.7, minHeight: 3 }} />
+                          <div style={{ width: "100%", height: `${h}%`, background: col, borderRadius: "var(--bar-radius-top)", opacity: 0.7, minHeight: 3 }} />
                         </div>
                       );
                     })}
@@ -1573,7 +1573,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                           <div key={i} className="flex-center-gap6" style={{ marginBottom: 3 }}>
  <span className="fs-10 fw-600" style={{ minWidth: 110, color: b.col }}>{b.label}</span>
                             <div className="progress-track">
-                              <div style={{ width: `${((b.value - minV) / range) * 100}%`, height: "100%", background: b.col, borderRadius: "var(--radius-sm)", opacity: 0.6 }} />
+                              <div style={{ width: `${((b.value - minV) / range) * 100}%`, height: "100%", background: b.col, borderRadius: "var(--radius-sm)", opacity: 0.7 }} />
                               <span className="bjgt-stat-abs">{b.value.toFixed(1)}</span>
                             </div>
                           </div>
@@ -1612,8 +1612,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                         <div key={i} className="bjgt-bar-cell">
  <div className="fw-600 c-chart-6 fs-10" >{m.f9Avg.toFixed(0)}</div>
  <div className="chart-bars-1 w-full" style={{ height: 50 }}>
-                            <div style={{ flex: 1, height: `${f9h}%`, background: "var(--chart-6)", borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
-                            <div style={{ flex: 1, height: `${b9h}%`, background: "var(--chart-4)", borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
+                            <div style={{ flex: 1, height: `${f9h}%`, background: "var(--chart-6)", borderRadius: "var(--radius-xs)", opacity: 0.7, minHeight: 3 }} />
+                            <div style={{ flex: 1, height: `${b9h}%`, background: "var(--chart-4)", borderRadius: "var(--radius-xs)", opacity: 0.7, minHeight: 3 }} />
                           </div>
  <div className="fw-600 fs-10" style={{ color: "var(--chart-4)" }}>{m.b9Avg.toFixed(0)}</div>
                           <div className="fs-7-muted">{m.label}</div>
@@ -1683,7 +1683,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     return (
                       <div key={i} className="bjgt-bar-col">
  <div className="fs-10 fw-700" style={{ color: col }}>{m.grossStdDev.toFixed(1)}</div>
-                        <div style={{ width: "100%", height: `${h}%`, background: col, borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
+                        <div style={{ width: "100%", height: `${h}%`, background: col, borderRadius: "var(--radius-xs)", opacity: 0.7, minHeight: 3 }} />
                         <div className="bjgt-kpi-tiny">{m.label}</div>
                       </div>
                     );
@@ -1701,7 +1701,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     return (
                       <div key={i} className="bjgt-bar-col">
  <div className="fs-10 fw-700" style={{ color: col }}>{m.bestVsAvgGap.toFixed(0)}</div>
-                        <div style={{ width: "100%", height: `${h}%`, background: col, borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
+                        <div style={{ width: "100%", height: `${h}%`, background: col, borderRadius: "var(--radius-xs)", opacity: 0.7, minHeight: 3 }} />
                         <div className="bjgt-kpi-tiny">{m.label}</div>
                       </div>
                     );
@@ -1748,7 +1748,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                 return (
                   <div key={i} className="bjgt-bar-col">
  <div className="fs-10 fw-700" style={{ color: col }}>{rate != null ? `${rate.toFixed(0)}%` : "–"}</div>
-                    <div style={{ width: "100%", height: `${h}%`, background: col, borderRadius: "3px 3px 0 0", opacity: 0.7, minHeight: rate != null ? 3 : 1 }} />
+                    <div style={{ width: "100%", height: `${h}%`, background: col, borderRadius: "var(--bar-radius-top)", opacity: 0.7, minHeight: rate != null ? 3 : 1 }} />
  <div className="c-muted fs-10 mt-1" >{m.label}</div>
                   </div>
                 );
@@ -1791,7 +1791,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     return (
                       <div key={i} className="bjgt-bar-col">
  <div className="fs-10 fw-700" style={{ color: SC.good }}>{m.birdieRate.toFixed(1)}</div>
-                        <div style={{ width: "100%", height: `${h}%`, background: SC.good, borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
+                        <div style={{ width: "100%", height: `${h}%`, background: SC.good, borderRadius: "var(--radius-xs)", opacity: 0.7, minHeight: 3 }} />
                         <div className="bjgt-kpi-tiny">{m.label}</div>
                       </div>
                     );
@@ -1808,7 +1808,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     return (
                       <div key={i} className="bjgt-bar-col">
  <div className="fw-700 c-chart-2 fs-10" >{m.avgPobStreak.toFixed(1)}</div>
-                        <div style={{ width: "100%", height: `${h}%`, background: "var(--chart-2)", borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
+                        <div style={{ width: "100%", height: `${h}%`, background: "var(--chart-2)", borderRadius: "var(--radius-xs)", opacity: 0.7, minHeight: 3 }} />
                         <div className="bjgt-kpi-tiny">{m.label}</div>
                       </div>
                     );
@@ -1857,8 +1857,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                       {m.first3Avg > 0 ? "+" : ""}{m.first3Avg.toFixed(1)}
                     </div>
  <div className="chart-bars-1 w-full" style={{ height: 40 }}>
-                      <div style={{ flex: 1, height: `${f3h}%`, background: SC.warn, borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
-                      <div style={{ flex: 1, height: `${l3h}%`, background: "var(--chart-5)", borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
+                      <div style={{ flex: 1, height: `${f3h}%`, background: SC.warn, borderRadius: "var(--radius-xs)", opacity: 0.7, minHeight: 3 }} />
+                      <div style={{ flex: 1, height: `${l3h}%`, background: "var(--chart-5)", borderRadius: "var(--radius-xs)", opacity: 0.7, minHeight: 3 }} />
                     </div>
  <div className="fw-600 fs-10" style={{ color: m.last3Avg <= 0.5 ? SC.good : "var(--chart-5)" }}>
                       {m.last3Avg > 0 ? "+" : ""}{m.last3Avg.toFixed(1)}
@@ -1964,7 +1964,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                   return (
                     <div key={i} className="bjgt-bar-col">
  <div className="fs-10 fw-700" style={{ color: col }}>{m.avgSD.toFixed(1)}</div>
-                      <div style={{ width: "100%", height: `${h}%`, background: col, borderRadius: "3px 3px 0 0", opacity: 0.7, minHeight: 3 }} />
+                      <div style={{ width: "100%", height: `${h}%`, background: col, borderRadius: "var(--bar-radius-top)", opacity: 0.7, minHeight: 3 }} />
                       {m.bestSD != null && (
  <div className="fs-10 fw-600" style={{ color: SC.good }}>⬇{m.bestSD.toFixed(1)}</div>
                       )}
@@ -2266,7 +2266,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
             <div className="muted fs-10 mb-6">Fizeste double+ em 2 ou mais dias. Na volta de treino, estuda ESTES buracos com atenção.</div>
             <div className="bjgt-diag-grid">
               {trapHoles.map(h => (
- <div key={h.h} className="br-lg" style={{ background: "var(--bg-danger)", border: "1px solid #fecaca", padding: "8px 10px" }}>
+ <div key={h.h} className="br-lg" style={{ background: "var(--bg-danger)", border: "1px solid var(--border-danger)", padding: "8px 10px" }}>
                   <div className="d-flex justify-between items-end">
                     <span className="bjgt-kpi-val">#{h.h}</span>
                     <span className="muted fs-10">Par {h.par}</span>
@@ -2291,7 +2291,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
             <div className="muted fs-10 mb-6">Fizeste par ou melhor em metade dos dias ou mais. Aqui podes atacar.</div>
             <div className="bjgt-diag-grid">
               {strongHoles.map(h => (
- <div key={h.h} className="br-lg" style={{ background: "var(--bg-success)", border: "1px solid #bbf7d0", padding: "8px 10px" }}>
+ <div key={h.h} className="br-lg" style={{ background: "var(--bg-success)", border: "1px solid var(--border-success)", padding: "8px 10px" }}>
                   <div className="d-flex justify-between items-end">
                     <span className="bjgt-kpi-val">#{h.h}</span>
                     <span className="muted fs-10">Par {h.par}</span>
@@ -2316,7 +2316,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
             <div className="muted fs-10 mb-6">Grande oscilação entre dias. Precisa de um plano claro — escolhe a jogada segura.</div>
             <div className="bjgt-diag-grid">
               {volatileHoles.slice(0, 4).map(h => (
- <div key={h.h} className="br-lg" style={{ background: "var(--bg-warn-strong)", border: "1px solid #fde68a", padding: "8px 10px" }}>
+ <div key={h.h} className="br-lg" style={{ background: "var(--bg-warn-strong)", border: "1px solid var(--border-warn)", padding: "8px 10px" }}>
                   <div className="d-flex justify-between items-end">
                     <span className="bjgt-kpi-val">#{h.h}</span>
                     <span className="muted fs-10">Par {h.par}</span>
@@ -2407,7 +2407,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
           <div className="ecTitle">Eclético (gross) por tee</div>
           <div className="ecHint">Clique num tee na tabela de buracos para ver análise e filtrar rondas.</div>
           {/* Tee header with color */}
- <div className="overflow-hidden br-lg mt-8" style={{ border: "2px solid #dc2626" }}>
+ <div className="overflow-hidden br-lg mt-8" style={{ border: "2px solid var(--color-danger)" }}>
  <div className="fw-600 fs-12" style={{ padding: "6px 10px", background: "var(--color-danger-alpha)" }}>
  <span className="sc-pill fs-10 c-white" style={{ background: SC.danger, padding: "2px 10px" }}>Vermelho</span>{" "}
               <span className="cb-blue-800">{ecl.totalGross}</span>
@@ -2657,7 +2657,7 @@ function MiniBar({ d }: { d: { eagle: number; birdie: number; par: number; bogey
   return (
  <div className="overflow-hidden br-sm d-flex" style={{ height: 14, gap: 1 }}>
       {segs.filter(s => s.n > 0).map((s, i) => (
- <div key={i} className={s.cls} className="d-flex ai-center jc-center fs-10 fw-700 c-white" style={{ flex: s.n }}>
+ <div key={i} className={`${s.cls} d-flex ai-center jc-center fs-10 fw-700 c-white`} style={{ flex: s.n }}>
           {s.n}
         </div>
       ))}
