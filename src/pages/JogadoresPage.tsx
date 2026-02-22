@@ -95,7 +95,7 @@ function LinkBtns({ links }: { links?: Record<string, string> }) {
           title={label.replace(/_/g, " ")}
           style={{
             display: "inline-flex", alignItems: "center", gap: 3,
-            fontSize: 10, marginLeft: 4, color: "#2563eb", textDecoration: "none",
+            fontSize: 10, marginLeft: 4, color: "var(--chart-2)", textDecoration: "none",
             verticalAlign: "middle",
           }}
           onClick={(e) => e.stopPropagation()}
@@ -262,7 +262,7 @@ function TeeSummaryTable({ rounds }: { rounds: RoundData[] }) {
   return (
     <div className="card-bordered mb-10">
       <div className="sc-bar-head"><span>Resumo por Tee</span></div>
-      <table className="pa-table" style={{ fontSize: 11.5, marginBottom: 0 }}>
+      <table className="pa-table" style={{ fontSize: 12, marginBottom: 0 }}>
         <thead>
           <tr>
             <th>Tee</th>
@@ -1547,7 +1547,7 @@ function HistogramCard({ rounds, period, setPeriod }: {
       { label: "Difícil (+11 a +15)", min: 11, max: 15, color: "var(--chart-4)" },
       { label: "Fraco (+16 a +20)", min: 16, max: 20, color: "#f97316" },
       { label: "Mau (+21 a +25)", min: 21, max: 25, color: "#ef4444" },
-      { label: "Desastroso (>+25)", min: 26, max: 999, color: "#991b1b" },
+      { label: "Desastroso (>+25)", min: 26, max: 999, color: "var(--color-danger-dark)" },
     ];
     const diffs: number[] = [];
     for (const r of rounds) {
@@ -2126,7 +2126,7 @@ function CommonCourses({ players, currentFed, escName }: {
             </div>
             {isOpen && (
               <div className="card-detail-inner">
-                <table className="an-table" style={{ fontSize: 11.5 }}>
+                <table className="an-table" style={{ fontSize: 12 }}>
                   <thead>
                     <tr>
                       <th style={{ width: 32 }}>#</th><th>Jogador</th><th className="r">Voltas</th>
@@ -2171,7 +2171,7 @@ function CommonCourses({ players, currentFed, escName }: {
                   const isCur = hp.fed === currentFed;
                   if (!hp.rounds?.length) return null;
                   return (
- <div key={hp.fed} className="br-default mt-6" style={{ padding: "6px 8px", border: isCur ? "1px solid #16a34a" : "1px solid var(--border-light)", background: isCur ? "#f0fdf4" : "var(--bg)" }}>
+ <div key={hp.fed} className="br-default mt-6" style={{ padding: "6px 8px", border: isCur ? "1px solid #16a34a" : "1px solid var(--border-light)", background: isCur ? "var(--bg-success)" : "var(--bg)" }}>
                       <div className="fw-600 fs-11 mb-4">
                         {hp.name} <span className="muted">({hp.rounds.length} ronda{hp.rounds.length > 1 ? "s" : ""})</span>
                       </div>
@@ -2179,7 +2179,7 @@ function CommonCourses({ players, currentFed, escName }: {
                         {hp.rounds.map((rd: any, ri: number) => {
                           const isBest = rd.gross === hp.best;
                           return (
-                            <div key={ri} style={{ padding: "3px 8px", borderRadius: "var(--radius)", fontSize: 10.5, background: isBest ? "#dcfce7" : "var(--bg-card)", border: `1px solid ${isBest ? "#86efac" : "var(--border-light)"}`, display: "flex", gap: 6, alignItems: "center" }}>
+                            <div key={ri} style={{ padding: "3px 8px", borderRadius: "var(--radius)", fontSize: 11, background: isBest ? "var(--bg-success-strong)" : "var(--bg-card)", border: `1px solid ${isBest ? "#86efac" : "var(--border-light)"}`, display: "flex", gap: 6, alignItems: "center" }}>
                               <span className="c-text-3">{rd.date || "–"}</span>
                               <span className="fw-700">{rd.gross}{rd.par ? <span className={`score-delta ${(rd.gross - rd.par) > 0 ? "pos" : (rd.gross - rd.par) < 0 ? "neg" : ""}`} className="fs-9" style={{ marginLeft: 2 }}>{(rd.gross - rd.par) > 0 ? "+" : ""}{rd.gross - rd.par}</span> : null}</span>
                               {rd.sd != null && <span className="c-text-3">SD {rd.sd}</span>}

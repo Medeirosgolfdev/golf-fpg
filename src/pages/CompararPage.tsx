@@ -24,7 +24,7 @@ import { deepFixMojibake } from "../utils/fixEncoding";
 import { sc3m } from "../utils/scoreDisplay";
 
 const COLORS = ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)"];
-const COLORS_LIGHT = ["#dcfce7", "#dbeafe", "#fee2e2", "#fef3c7"];
+const COLORS_LIGHT = ["var(--bg-success-strong)", "var(--bg-info-strong)", "var(--bg-danger-strong)", "var(--bg-warn-strong)"];
 
 interface Slot {
   fed: string; player: Player;
@@ -348,12 +348,12 @@ function RadarChart({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats | null
         {[0.25, 0.5, 0.75, 1].map(frac => (
           <polygon key={frac}
             points={Array.from({ length: N }, (_, i) => { const p = pointOnAxis(i, frac); return `${p.x},${p.y}`; }).join(" ")}
-            fill="none" stroke="#d5dac9" strokeWidth={frac === 1 ? 1 : 0.5} opacity={0.6}
+            fill="none" stroke="var(--border)" strokeWidth={frac === 1 ? 1 : 0.5} opacity={0.6}
           />
         ))}
         {axes.map((_, i) => {
           const p = pointOnAxis(i, 1);
-          return <line key={i} x1={CX} y1={CY} x2={p.x} y2={p.y} stroke="#d5dac9" strokeWidth={0.5} />;
+          return <line key={i} x1={CX} y1={CY} x2={p.x} y2={p.y} stroke="var(--border)" strokeWidth={0.5} />;
         })}
         {loaded.map(({ s, agg, i: si }) => {
           const pts = axisData.map((ad, ai) => {

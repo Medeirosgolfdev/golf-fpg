@@ -41,7 +41,7 @@ interface CalendarSource {
 const CALENDARS: CalendarSource[] = [
   // ── CGSS Santo da Serra — azuis ──
   { id: "cgss_major",     name: "Majors (A)",         color: "#1e3a8a", group: "CGSS" },
-  { id: "cgss_om_b",      name: "O.M. Nível B",       color: "#2563eb", group: "CGSS" },
+  { id: "cgss_om_b",      name: "O.M. Nível B",       color: "var(--chart-2)", group: "CGSS" },
   { id: "cgss_om_c",      name: "O.M. Nível C",       color: "#60a5fa", group: "CGSS" },
   { id: "cgss_pares",     name: "Camp. Pares",        color: "#0891b2", group: "CGSS" },
   { id: "cgss_ouro",      name: "Ranking Ouro",       color: "#0ea5e9", group: "CGSS" },

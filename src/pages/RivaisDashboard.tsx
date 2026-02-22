@@ -217,11 +217,11 @@ function zTier(score, stats) {
 }
 
 const TIER = {
-  elite: { bg: "#dcfce7", c: "#166534" },
-  strong: { bg: "#e0f2fe", c: "#0c4a6e" },
-  solid: { bg: "#fef9c3", c: "#854d0e" },
-  developing: { bg: "#fed7aa", c: "#9a3412" },
-  beginner: { bg: "#fecaca", c: "#991b1b" },
+  elite: { bg: "var(--bg-success-strong)", c: "var(--color-good-dark)" },
+  strong: { bg: "var(--bg-current)", c: "var(--text-current)" },
+  solid: { bg: "var(--bg-warn-light)", c: "var(--color-warn-dark)" },
+  developing: { bg: "var(--bg-warn-strong)", c: "var(--color-warn-dark)" },
+  beginner: { bg: "var(--bg-danger-subtle)", c: "var(--color-danger-dark)" },
 };
 const TIER_L = { elite: "Elite", strong: "Forte", solid: "Sólido", developing: "Em Desenv.", beginner: "Iniciante" };
 
@@ -654,7 +654,7 @@ export default function RivaisDashboard() {
  {p.up.includes("wjgc26") ? <span >✓</span> : <span className="fs-9 fs-10 fw-700 c-good-dark-inline" style={{ color: "var(--border)" }}>—</span>}
                       </td>
                       <td className="rivais-td">
- {p.up.includes("marco26") ? <span style={{ color: "#3730a3" }}>✓</span> : <span className="fs-9 fs-10 fw-700" style={{ color: "var(--border)" }}>—</span>}
+ {p.up.includes("marco26") ? <span style={{ color: "var(--badge-club-text)" }}>✓</span> : <span className="fs-9 fs-10 fw-700" style={{ color: "var(--border)" }}>—</span>}
                       </td>
                       {vsOn && (
                         <td className="rivais-td">

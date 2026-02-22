@@ -445,7 +445,7 @@ function MultiTeeSDTable({
                         textAlign: "center",
                         fontWeight: isHcp ? 800 : isPar ? 700 : 600,
                         borderLeft: i > 0 ? "2px solid var(--border-light)" : undefined,
-                        color: isHcp ? "#111" : isPar ? "var(--accent)" : undefined,
+                        color: isHcp ? "var(--grey-900)" : isPar ? "var(--accent)" : undefined,
                       }}>{cell.score}</td>
                       <td style={{
                         ...tdBase,
@@ -453,7 +453,7 @@ function MultiTeeSDTable({
                         fontFamily: "'JetBrains Mono', monospace",
                         fontSize: 12,
                         fontWeight: isHcp ? 700 : 600,
-                        color: isHcp ? "#111" : undefined,
+                        color: isHcp ? "var(--grey-900)" : undefined,
                       }}>
                         {fmtSD(cell.sd18)}
                       </td>
@@ -461,7 +461,7 @@ function MultiTeeSDTable({
                         <td style={{
                           ...tdBase,
                           textAlign: "right",
-                          color: isHcp ? "#111" : "var(--text-2)",
+                          color: isHcp ? "var(--grey-900)" : "var(--text-2)",
                           fontWeight: isHcp ? 700 : 400,
                         }}>{cell.net ?? "–"}</td>
                       )}
@@ -985,18 +985,18 @@ function AgsSection({
               <td className="row-label c-muted fs-10 fw-400">±Par</td>
               {front.map((h, i) => (
                 <React.Fragment key={h.hole}>
-                  <td style={{ color: h.vsPar != null ? (h.vsPar < 0 ? SC.good : h.vsPar === 0 ? "#666" : h.vsPar <= 2 ? SC.warn : SC.danger) : "#ccc", fontWeight: h.vsPar != null ? 600 : 400 }}>
+                  <td style={{ color: h.vsPar != null ? (h.vsPar < 0 ? SC.good : h.vsPar === 0 ? "var(--grey-500)" : h.vsPar <= 2 ? SC.warn : SC.danger) : "var(--grey-300)", fontWeight: h.vsPar != null ? 600 : 400 }}>
                     {h.vsPar != null ? (h.vsPar === 0 ? "E" : h.vsPar > 0 ? `+${h.vsPar}` : h.vsPar) : ""}
                   </td>
                   {is18 && i === 8 && (
- <td className="col-out fw-600" style={{ color: grossOut != null ? (grossOut - sumPar(front) <= 0 ? SC.good : SC.warn) : "#ccc" }}>
+ <td className="col-out fw-600" style={{ color: grossOut != null ? (grossOut - sumPar(front) <= 0 ? SC.good : SC.warn) : "var(--grey-300)" }}>
                       {fmtVsPar(grossOut, sumPar(front))}
                     </td>
                   )}
                 </React.Fragment>
               ))}
               {is18 && back.map((h) => (
-                <td key={h.hole} style={{ color: h.vsPar != null ? (h.vsPar < 0 ? SC.good : h.vsPar === 0 ? "#666" : h.vsPar <= 2 ? SC.warn : SC.danger) : "#ccc", fontWeight: h.vsPar != null ? 600 : 400 }}>
+                <td key={h.hole} style={{ color: h.vsPar != null ? (h.vsPar < 0 ? SC.good : h.vsPar === 0 ? "var(--grey-500)" : h.vsPar <= 2 ? SC.warn : SC.danger) : "var(--grey-300)", fontWeight: h.vsPar != null ? 600 : 400 }}>
                   {h.vsPar != null ? (h.vsPar === 0 ? "E" : h.vsPar > 0 ? `+${h.vsPar}` : h.vsPar) : ""}
                 </td>
               ))}
@@ -1014,14 +1014,14 @@ function AgsSection({
                   <td className="row-label c-blue-2563-10">Panc.</td>
                   {front.map((h, i) => (
                     <React.Fragment key={h.hole}>
-                      <td style={{ color: h.strokes > 0 ? "#2563eb" : "#ccc", fontWeight: h.strokes > 0 ? 700 : 400 }}>
+                      <td style={{ color: h.strokes > 0 ? "var(--chart-2)" : "var(--grey-300)", fontWeight: h.strokes > 0 ? 700 : 400 }}>
                         {h.strokes > 0 ? h.strokes : "·"}
                       </td>
                       {is18 && i === 8 && <td className="col-out" />}
                     </React.Fragment>
                   ))}
                   {is18 && back.map((h) => (
-                    <td key={h.hole} style={{ color: h.strokes > 0 ? "#2563eb" : "#ccc", fontWeight: h.strokes > 0 ? 700 : 400 }}>
+                    <td key={h.hole} style={{ color: h.strokes > 0 ? "var(--chart-2)" : "var(--grey-300)", fontWeight: h.strokes > 0 ? 700 : 400 }}>
                       {h.strokes > 0 ? h.strokes : "·"}
                     </td>
                   ))}
@@ -1052,7 +1052,7 @@ function AgsSection({
                     const capped = h.actual !== null && h.actual > h.maxScore;
                     return (
                       <React.Fragment key={h.hole}>
-                        <td style={{ color: capped ? SC.danger : h.adjusted != null ? SC.good : "#ccc", fontWeight: h.adjusted != null ? 700 : 400 }}>
+                        <td style={{ color: capped ? SC.danger : h.adjusted != null ? SC.good : "var(--grey-300)", fontWeight: h.adjusted != null ? 700 : 400 }}>
                           {h.adjusted != null ? h.adjusted : ""}
                           {capped && <span className="fs-8">✂</span>}
                         </td>
@@ -1065,7 +1065,7 @@ function AgsSection({
                   {is18 && back.map((h) => {
                     const capped = h.actual !== null && h.actual > h.maxScore;
                     return (
-                      <td key={h.hole} style={{ color: capped ? SC.danger : h.adjusted != null ? SC.good : "#ccc", fontWeight: h.adjusted != null ? 700 : 400 }}>
+                      <td key={h.hole} style={{ color: capped ? SC.danger : h.adjusted != null ? SC.good : "var(--grey-300)", fontWeight: h.adjusted != null ? 700 : 400 }}>
                         {h.adjusted != null ? h.adjusted : ""}
                         {capped && <span className="fs-8">✂</span>}
                       </td>
@@ -1085,8 +1085,8 @@ function AgsSection({
         <details className="mt-12">
           <summary className="sim-toggle-link">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="flex-shrink-0">
-              <circle cx="8" cy="8" r="7" stroke="#92400e" strokeWidth="1.5" fill="#fffbeb"/>
-              <text x="8" y="12" textAnchor="middle" fontSize="11" fontWeight="700" fill="#92400e">i</text>
+              <circle cx="8" cy="8" r="7" stroke="var(--color-warn-dark)" strokeWidth="1.5" fill="var(--bg-warn)"/>
+              <text x="8" y="12" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--color-warn-dark)">i</text>
             </svg>
             Como funciona o Adjusted Gross Score?
           </summary>

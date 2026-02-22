@@ -177,7 +177,7 @@ function DayScorecard({ norm, cat, dayKey, holeData, filters, onSelectPlayer }: 
     if (dayDraws.length > 0) {
       return (
         <div>
-          <div className="tourn-meta mt-10 fw-600" style={{ color: "#e67e22" }}>
+          <div className="tourn-meta mt-10 fw-600" style={{ color: "var(--color-loading)" }}>
             ⏳ Resultados {dayLabel(dayKey)} ainda não disponíveis — lista de partida
           </div>
           <div className="tourn-meta">{dayDraws.length} jogadores</div>
@@ -538,7 +538,7 @@ function AllResultsDayTable({ norm, dayKey, filters, onSelectPlayer }: {
     }
   });
 
-  const catColors: Record<string, string> = { wagr: "#2e5a10", sub14: "#b8860b", sub12: "#c0392b" };
+  const catColors: Record<string, string> = { wagr: "var(--accent-text)", sub14: "#b8860b", sub12: "var(--color-danger-dark)" };
 
   return (
     <>
@@ -572,7 +572,7 @@ function AllResultsDayTable({ norm, dayKey, filters, onSelectPlayer }: {
                     </div>
                   </td>
                   <td>
-                    <span style={{ fontSize: 11, fontWeight: 700, color: catColors[r.catKey] || "#333", background: `${catColors[r.catKey] || "#333"}15`, padding: "1px 6px", borderRadius: "var(--radius-sm)" }}>
+                    <span style={{ fontSize: 11, fontWeight: 700, color: catColors[r.catKey] || "var(--grey-700)", background: `${catColors[r.catKey] || "var(--grey-700)"}15`, padding: "1px 6px", borderRadius: "var(--radius-sm)" }}>
                       {r.catLabel}
                     </span>
                   </td>
@@ -636,7 +636,7 @@ function AllAccumulatedTable({ norm, filters, onSelectPlayer }: {
     }
   });
 
-  const catColors: Record<string, string> = { wagr: "#2e5a10", sub14: "#b8860b", sub12: "#c0392b" };
+  const catColors: Record<string, string> = { wagr: "var(--accent-text)", sub14: "#b8860b", sub12: "var(--color-danger-dark)" };
 
   return (
     <>
@@ -667,7 +667,7 @@ function AllAccumulatedTable({ norm, filters, onSelectPlayer }: {
                     <tr key={`c-${i}`} className={isFemale(norm, r.fed, r.name) ? "tourn-female-row" : ""}>
                       <td className="r tourn-mono lb-muted-bold">{pos}</td>
                       <td><div className="tourn-lb-pills"><PlayerLink fed={r.fed} name={r.name} onSelect={onSelectPlayer} /><PlayerPills norm={norm} fed={r.fed} name={r.name} /></div></td>
-                      <td><span style={{ fontSize: 11, fontWeight: 700, color: catColors[r.catKey] || "#333", background: `${catColors[r.catKey] || "#333"}15`, padding: "1px 6px", borderRadius: "var(--radius-sm)" }}>{r.catLabel}</span></td>
+                      <td><span style={{ fontSize: 11, fontWeight: 700, color: catColors[r.catKey] || "var(--grey-700)", background: `${catColors[r.catKey] || "var(--grey-700)"}15`, padding: "1px 6px", borderRadius: "var(--radius-sm)" }}>{r.catLabel}</span></td>
                       <td className="r tourn-mono fw-800">{r.totalGross}</td>
                       <td className="r"><ToParSpan tp={r.totalToPar} /></td>
                       <td className="r fs-12"><SdSpan sd={r.avgSD} /></td>
@@ -687,7 +687,7 @@ function AllAccumulatedTable({ norm, filters, onSelectPlayer }: {
                   <tr key={`i-${i}`} className={`${isFemale(norm, r.fed, r.name) ? "tourn-female-row" : ""} op-6`}>
                     <td className="r tourn-mono c-muted">–</td>
                     <td><div className="tourn-lb-pills"><PlayerLink fed={r.fed} name={r.name} onSelect={onSelectPlayer} /><PlayerPills norm={norm} fed={r.fed} name={r.name} /></div></td>
-                    <td><span style={{ fontSize: 11, fontWeight: 700, color: catColors[r.catKey] || "#333", background: `${catColors[r.catKey] || "#333"}15`, padding: "1px 6px", borderRadius: "var(--radius-sm)" }}>{r.catLabel}</span></td>
+                    <td><span style={{ fontSize: 11, fontWeight: 700, color: catColors[r.catKey] || "var(--grey-700)", background: `${catColors[r.catKey] || "var(--grey-700)"}15`, padding: "1px 6px", borderRadius: "var(--radius-sm)" }}>{r.catLabel}</span></td>
                     <td className="r tourn-mono fw-800 c-muted">{r.totalGross}</td>
                     <td className="r c-muted">{fmtToPar(r.totalToPar)}</td>
                     <td className="r fs-12 c-muted">{r.avgSD?.toFixed(1) ?? "–"}</td>
@@ -854,7 +854,7 @@ export default function LeaderboardView({ norm, players, holeDataByDay, onSelect
         <button
           className={`tourn-tab${pjaOnly ? " tourn-tab-active" : ""}`}
           onClick={() => setPjaOnly(p => !p)}
- className="fs-12" style={{ background: pjaOnly ? "#046A38" : undefined, color: pjaOnly ? "#FFD700" : undefined, padding: "4px 10px" }}
+ className="fs-12" style={{ background: pjaOnly ? "var(--accent)" : undefined, color: pjaOnly ? "var(--tee-yellow)" : undefined, padding: "4px 10px" }}
         >
           PJA <span className="op-6 fs-10">({pjaCount})</span>
         </button>
