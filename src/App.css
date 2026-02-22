@@ -168,7 +168,7 @@ input, button, select, textarea, table { font-family: inherit; }
 
 html, body, #root {
  height: 100%;
- 
+ font-family: 'DM Sans', sans-serif;
  font-size: 14px;
  color: var(--text);
  background: var(--bg);
