@@ -26,6 +26,32 @@ import { sc3m } from "../utils/scoreDisplay";
 const COLORS = ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)"];
 const COLORS_LIGHT = ["var(--bg-success-strong)", "var(--bg-info-strong)", "var(--bg-danger-strong)", "var(--bg-warn-strong)"];
 
+/* ─── Error Boundary ─── */
+class SectionErrorBoundary extends React.Component<
+  { label: string; children: React.ReactNode },
+  { error: Error | null }
+> {
+  state: { error: Error | null } = { error: null };
+  static getDerivedStateFromError(error: Error) { return { error }; }
+  componentDidCatch(error: Error, info: React.ErrorInfo) {
+    console.error(`[Comparar] Crash em "${this.props.label}":`, error, info.componentStack);
+  }
+  render() {
+    if (this.state.error) return (
+      <div className="holeAnalysis ta-c p-24" style={{ borderLeft: "3px solid var(--color-danger)" }}>
+        <div className="fw-700 mb-4" style={{ color: "var(--color-danger)" }}>
+          Erro em: {this.props.label}
+        </div>
+        <div className="muted fs-11 mono" style={{ maxWidth: 500, margin: "0 auto", wordBreak: "break-word" }}>
+          {this.state.error.message}
+        </div>
+        <button className="btn mt-8" onClick={() => this.setState({ error: null })}>Retry</button>
+      </div>
+    );
+    return this.props.children;
+  }
+}
+
 interface Slot {
   fed: string; player: Player;
   data: PlayerPageData | null; loading: boolean; error: string | null;
@@ -531,9 +557,10 @@ function ScoreDistribution({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats
 
 function HoleByHoleSection({ slots }: { slots: Slot[] }) {
   const loaded = slots.filter(s => s.data);
-  if (loaded.length < 2) return null;
+  const [sel, setSel] = useState(0);
 
   const combos = useMemo(() => {
+    if (loaded.length < 2) return [];
     const maps = loaded.map(s => buildTourneyHoleStats(s.data!));
 
     const allKeys = new Set<string>();
@@ -549,8 +576,7 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
     return result;
   }, [loaded]);
 
-  const [sel, setSel] = useState(0);
-  if (combos.length === 0) return null;
+  if (loaded.length < 2 || combos.length === 0) return null;
   const combo = combos[Math.min(sel, combos.length - 1)];
   const refStats = combo.stats.find(Boolean)!;
 
@@ -646,9 +672,9 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
 
 function HeadToHeadSection({ slots }: { slots: Slot[] }) {
   const loaded = slots.filter(s => s.data);
-  if (loaded.length < 2) return null;
 
   const matches = useMemo(() => {
+    if (loaded.length < 2) return [];
     const eventMap = new Map<string, Map<number, RoundData & { course: string }>>();
     loaded.forEach((s, si) => {
       for (const c of s.data!.DATA) for (const r of c.rounds) {
@@ -672,7 +698,7 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
     return res;
   }, [loaded]);
 
-  if (matches.length === 0) return null;
+  if (loaded.length < 2 || matches.length === 0) return null;
   const wins = loaded.map(() => 0);
   matches.forEach(m => { wins[m.results[0].idx]++; });
   const totalMatches = matches.length;
@@ -761,12 +787,13 @@ function TournamentEvolutionSection({ slots }: { slots: Slot[] }) {
   const [period, setPeriod] = useState(12);
   const [metric, setMetric] = useState<"sd" | "gross">("sd");
   const loaded = slots.filter(s => s.data);
-  if (loaded.length < 2) return null;
 
   const cutoff = period > 0 ? Date.now() - period * 30.44 * 86400000 : 0;
 
   // Build tournament-only series from DATA rounds
-  const series = useMemo(() => loaded.map((s, i) => {
+  const series = useMemo(() => {
+    if (loaded.length < 2) return [];
+    return loaded.map((s, i) => {
     const pts: { d: number; sd: number; gross: number; event: string }[] = [];
     for (const cd of s.data!.DATA) {
       for (const r of cd.rounds) {
@@ -791,8 +818,10 @@ function TournamentEvolutionSection({ slots }: { slots: Slot[] }) {
       rolling.push({ d: pts[j].d, val: avg, raw: metric === "sd" ? pts[j].sd : pts[j].gross, event: pts[j].event });
     }
     return { name: s.player.name, color: COLORS[i], pts: rolling };
-  }), [loaded, cutoff, metric]);
+  });
+  }, [loaded, cutoff, metric]);
 
+  if (loaded.length < 2) return null;
   const allPts = series.flatMap(s => s.pts);
   if (allPts.length < 4) return null;
 
@@ -885,13 +914,23 @@ export default function CompararPage({ players }: { players: PlayersDb }) {
     const player = players[fed]; if (!player) return;
     setSlots(prev => [...prev, { fed, player, data: null, loading: true, error: null }]);
     loadPlayerData(fed)
-      .then(data => { deepFixMojibake(data); setSlots(prev => prev.map(s => s.fed === fed ? { ...s, data, loading: false } : s)); })
-      .catch(err => setSlots(prev => prev.map(s => s.fed === fed ? { ...s, loading: false, error: err?.message || "Erro" } : s)));
+      .then(data => {
+        try { deepFixMojibake(data); } catch (e) { console.error("[Comparar] deepFixMojibake error for", fed, e); }
+        setSlots(prev => prev.map(s => s.fed === fed ? { ...s, data, loading: false } : s));
+      })
+      .catch(err => {
+        console.error("[Comparar] loadPlayerData error for", fed, err);
+        setSlots(prev => prev.map(s => s.fed === fed ? { ...s, loading: false, error: err?.message || "Erro" } : s));
+      });
   };
   const removePlayer = (fed: string) => setSlots(prev => prev.filter(s => s.fed !== fed));
   const anyLoading = slots.some(s => s.loading);
 
-  const allAgg = useMemo(() => slots.map(s => s.data ? aggregateStats(s.data) : null), [slots]);
+  const allAgg = useMemo(() => slots.map(s => {
+    if (!s.data) return null;
+    try { return aggregateStats(s.data); }
+    catch (e) { console.error("[Comparar] aggregateStats error for", s.fed, e); return null; }
+  }), [slots]);
 
   return (
     <div className="course-detail mx-auto" style={{ maxWidth: 1060 }}>
@@ -925,13 +964,33 @@ export default function CompararPage({ players }: { players: PlayersDb }) {
         </div>
       )}
 
+      {slots.filter(s => s.error).map(s => (
+        <div key={s.fed} className="holeAnalysis ta-c p-24" style={{ borderLeft: "3px solid var(--color-danger)" }}>
+          <div className="fw-600 fs-12" style={{ color: "var(--color-danger)" }}>
+            Erro ao carregar {s.player.name}: {s.error}
+          </div>
+        </div>
+      ))}
+
       {slots.length >= 2 && !anyLoading && (<>
-        <RadarChart slots={slots} allAgg={allAgg} />
-        <StatsTable slots={slots} allAgg={allAgg} />
-        <ScoreDistribution slots={slots} allAgg={allAgg} />
-        <HoleByHoleSection slots={slots} />
-        <HeadToHeadSection slots={slots} />
-        <TournamentEvolutionSection slots={slots} />
+        <SectionErrorBoundary label="Radar Chart">
+          <RadarChart slots={slots} allAgg={allAgg} />
+        </SectionErrorBoundary>
+        <SectionErrorBoundary label="Stats Table">
+          <StatsTable slots={slots} allAgg={allAgg} />
+        </SectionErrorBoundary>
+        <SectionErrorBoundary label="Score Distribution">
+          <ScoreDistribution slots={slots} allAgg={allAgg} />
+        </SectionErrorBoundary>
+        <SectionErrorBoundary label="Hole by Hole">
+          <HoleByHoleSection slots={slots} />
+        </SectionErrorBoundary>
+        <SectionErrorBoundary label="Head to Head">
+          <HeadToHeadSection slots={slots} />
+        </SectionErrorBoundary>
+        <SectionErrorBoundary label="Tournament Evolution">
+          <TournamentEvolutionSection slots={slots} />
+        </SectionErrorBoundary>
       </>)}
 
       {slots.length === 1 && !anyLoading && (

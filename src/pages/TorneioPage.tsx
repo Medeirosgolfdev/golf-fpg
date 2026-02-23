@@ -1492,6 +1492,18 @@ export default function TorneioPage({ players, onSelectPlayer }: { players: Play
           <span className="tourn-toolbar-title">GG26</span>
           <span className="tourn-toolbar-meta">📍 {NORM_BASE.course}</span>
           <span className="tourn-toolbar-meta">📅 {NORM_BASE.dates.join(" → ")}</span>
+          <a href="https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=52884" target="_blank" rel="noopener noreferrer"
+            style={{ padding: "3px 10px", borderRadius: "var(--radius)", fontSize: 11, fontWeight: 700,
+              background: "var(--accent)", color: "#fff", textDecoration: "none", display: "inline-flex",
+              alignItems: "center", gap: 4, whiteSpace: "nowrap" }}>
+            FPG WHS <span style={{ fontSize: 9, opacity: 0.7 }}>↗</span>
+          </a>
+          <a href="https://scoring.fpg.pt/lists/PlayerResults.aspx?no=52884" target="_blank" rel="noopener noreferrer"
+            style={{ padding: "3px 10px", borderRadius: "var(--radius)", fontSize: 11, fontWeight: 700,
+              background: "var(--bg-topbar)", color: "#e8eddf", textDecoration: "none", display: "inline-flex",
+              alignItems: "center", gap: 4, whiteSpace: "nowrap" }}>
+            FPG Resultados <span style={{ fontSize: 9, opacity: 0.7 }}>↗</span>
+          </a>
           <div className="tourn-toolbar-sep" />
           <div className="escalao-pills">
             {([
