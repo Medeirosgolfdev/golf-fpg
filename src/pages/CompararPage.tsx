@@ -368,7 +368,7 @@ function RadarChart({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats | null
             <g key={si}>
               <polygon points={polyStr} fill={COLORS[si]} fillOpacity={0.12} stroke={COLORS[si]} strokeWidth={2} strokeLinejoin="round" />
               {pts.map((p, j) => (
-                <circle key={j} cx={p.x} cy={p.y} r={3.5} fill={COLORS[si]} stroke="var(--bg-card)" strokeWidth={1}>
+                <circle key={j} cx={p.x} cy={p.y} r={3.5} fill={COLORS[si]} stroke="#fff" strokeWidth={1}>
                   <title>{shortName(s.player.name)}: {axes[j].label}</title>
                 </circle>
               ))}
@@ -589,7 +589,7 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
           const d = pts.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" L ");
           return (<g key={si}>
             <path d={`M ${d}`} fill="none" stroke={COLORS[si]} strokeWidth={2.5} opacity={0.8} strokeLinejoin="round" />
-            {pts.map((p, j) => (<circle key={j} cx={p.x} cy={p.y} r={3.5} fill={COLORS[si]} stroke="var(--bg-card)" strokeWidth={1}><title>{shortName(s.player.name)}: Bur. {p.hole} {fD2(p.val)} vs par</title></circle>))}
+            {pts.map((p, j) => (<circle key={j} cx={p.x} cy={p.y} r={3.5} fill={COLORS[si]} stroke="#fff" strokeWidth={1}><title>{shortName(s.player.name)}: Bur. {p.hole} {fD2(p.val)} vs par</title></circle>))}
           </g>);
         })}
       </svg>
@@ -689,7 +689,7 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
           return (
             <div key={i} style={{
               width: `${w}%`, background: COLORS[i], display: "flex", alignItems: "center", justifyContent: "center",
-              color: "var(--bg-card)", fontWeight: 800, fontSize: 12, fontFamily: "'JetBrains Mono', monospace",
+              color: "#fff", fontWeight: 800, fontSize: 12, fontFamily: "'JetBrains Mono', monospace",
             }}>
               {wins[i] > 0 && `${firstName(s.player.name)} ${wins[i]}`}
             </div>

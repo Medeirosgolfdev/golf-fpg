@@ -53,10 +53,20 @@ export default function App() {
   useEffect(() => {
     const check = () => { try { setCalUnlocked(localStorage.getItem("cal_unlocked") === "1"); } catch {} };
     window.addEventListener("storage", check);
+    window.addEventListener("cal-unlocked", check);
     // Also re-check when navigating (in case unlocked in same tab)
     check();
-    return () => window.removeEventListener("storage", check);
+    return () => { window.removeEventListener("storage", check); window.removeEventListener("cal-unlocked", check); };
   }, [location.pathname]);
+
+  /* Dynamic page title */
+  useEffect(() => {
+    const titles: Record<Tab, string> = {
+      campos: "Campos", jogadores: "Jogadores", comparar: "Comparar",
+      simulador: "Simulador", calendario: "Calendário", bjgt: "BJGT", torneio: "GG26",
+    };
+    document.title = `Golf FPG — ${titles[tab] || "Jogadores"}`;
+  }, [tab]);
 
   useEffect(() => {
     let alive = true;
@@ -188,7 +198,7 @@ export default function App() {
             <Route path="/jogadores" element={<Navigate to="/jogadores/52884" replace />} />
             <Route path="/simulador" element={<SimuladorPage courses={simCourses} />} />
             <Route path="/comparar" element={<CompararPage players={status.players} />} />
-            <Route path="/calendario" element={<CalendarioPage />} />
+            <Route path="/calendario" element={<CalendarioPage players={status.kind === "ready" ? status.players : undefined} />} />
             <Route path="/bjgt/:fed?" element={<BJGTAnalysisPage />} />
             <Route path="/torneio" element={<TorneioPage players={status.players} onSelectPlayer={(fed) => goTo(`/jogadores/${fed}`)} />} />
             <Route path="*" element={<Navigate to="/jogadores/52884" replace />} />

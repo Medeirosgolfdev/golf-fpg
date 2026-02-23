@@ -14,6 +14,7 @@
  * quando duplicam a mesma prova no calendário FPG.
  */
 import { useState, useRef, useEffect, useMemo } from "react";
+import type { PlayersDb } from "./data/types";
 
 /* ═══ Password ═══ */
 const CAL_PASSWORD = "machico";
@@ -34,7 +35,7 @@ interface CalendarSource {
   id: string;
   name: string;
   color: string;
-  group: "CGSS" | "DRIVE" | "FPG" | "DESTAQUE" | "VIAGENS" | "JUNIOR";
+  group: "CGSS" | "DRIVE" | "FPG" | "DESTAQUE" | "VIAGENS" | "JUNIOR" | "ANIVER";
 }
 
 /* ═══ Calendar Sources ═══ */
@@ -71,6 +72,15 @@ const CALENDARS: CalendarSource[] = [
   { id: "dest_bjgt",      name: "BJGT",                color: "#be123c", group: "DESTAQUE" },
   { id: "dest_pja",       name: "PJA Tour",            color: "#d946ef", group: "DESTAQUE" },
   { id: "pessoal",        name: "🎂 Pessoal",          color: "#39ff14", group: "DESTAQUE" },
+
+  // ── Aniversários por escalão ──
+  { id: "bday_sub10",     name: "🎂 Sub-10",            color: "#f9a8d4", group: "ANIVER" },
+  { id: "bday_sub12",     name: "🎂 Sub-12",            color: "#f472b6", group: "ANIVER" },
+  { id: "bday_sub14",     name: "🎂 Sub-14",            color: "#ec4899", group: "ANIVER" },
+  { id: "bday_sub16",     name: "🎂 Sub-16",            color: "#db2777", group: "ANIVER" },
+  { id: "bday_sub18",     name: "🎂 Sub-18",            color: "#be185d", group: "ANIVER" },
+  { id: "bday_pja",       name: "🎂 PJA",               color: "#d946ef", group: "ANIVER" },
+  { id: "bday_outros",    name: "🎂 Outros",            color: "#a78bfa", group: "ANIVER" },
   { id: "ferias",         name: "🏖 Férias",            color: "#a3e635", group: "DESTAQUE" },
   { id: "treino",         name: "⛳ Campo / Treino",    color: "#10b981", group: "DESTAQUE" },
 
@@ -322,6 +332,7 @@ const GROUP_LABELS: Record<string, string> = {
   DRIVE: "Drive",
   FPG: "FPG — Federação",
   DESTAQUE: "Destaque",
+  ANIVER: "🎂 Aniversários",
   VIAGENS: "✈ Viagens",
 };
 
@@ -358,7 +369,7 @@ function calColor(e: CalEvent): string { return CAL_MAP.get(e.calId)?.color ?? "
 
 /* Highlighted "full-cell" events */
 const HIGHLIGHT: Record<string, { bg: string; border: string; text: string; icon: string; cls: string }> = {
-  pessoal:     { bg: "#39ff14", border: "#2ecc40", text: "#1a1a1a", icon: "🎂", cls: "hl-green" },
+  pessoal:       { bg: "#39ff14", border: "#2ecc40", text: "#1a1a1a", icon: "🎂", cls: "hl-green" },
 };
 /* Events that get animated bars (pulse/glow/shine) but NOT full-cell */
 const HL_BAR: Record<string, string> = {
@@ -544,7 +555,7 @@ function ListView({ events, onSelect }: { events: CalEvent[]; onSelect: (e: CalE
 
 /* ═══ Main Component ═══ */
 type ViewMode = "month" | "list";
-type GroupKey = "CGSS" | "JUNIOR" | "DRIVE" | "FPG" | "DESTAQUE" | "VIAGENS";
+type GroupKey = "CGSS" | "JUNIOR" | "DRIVE" | "FPG" | "DESTAQUE" | "ANIVER" | "VIAGENS";
 
 /* ── Password Gate ── */
 function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
@@ -554,6 +565,7 @@ function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
   const check = () => {
     if (pw === CAL_PASSWORD) {
       try { localStorage.setItem(STORAGE_KEY, "1"); } catch {}
+      window.dispatchEvent(new Event("cal-unlocked"));
       onUnlock();
     } else {
       setError(true);
@@ -578,17 +590,17 @@ function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
   );
 }
 
-export default function CalendarioPage() {
+export default function CalendarioPage({ players }: { players?: PlayersDb }) {
   const [unlocked, setUnlocked] = useState(() => {
     try { return localStorage.getItem(STORAGE_KEY) === "1"; } catch { return false; }
   });
 
   if (!unlocked) return <PasswordGate onUnlock={() => setUnlocked(true)} />;
 
-  return <CalendarioContent />;
+  return <CalendarioContent players={players} />;
 }
 
-function CalendarioContent() {
+function CalendarioContent({ players }: { players?: PlayersDb }) {
   const [currentMonth, setCurrentMonth] = useState(() => {
     const now = new Date();
     return now.getFullYear() === 2026 ? now.getMonth() : 1;
@@ -599,12 +611,80 @@ function CalendarioContent() {
   const [enabledCals, setEnabledCals] = useState<Set<string>>(() => new Set(CALENDARS.map(c => c.id)));
   const [expandedCal, setExpandedCal] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [searchQ, setSearchQ] = useState("");
+  const [searchOpen, setSearchOpen] = useState(false);
+  const searchRef = useRef<HTMLDivElement>(null);
+
+  /* Generate birthday events from players */
+  const allEvents = useMemo(() => {
+    if (!players) return EVENTS;
+    const bdayEvs: CalEvent[] = [];
+    let bdayId = 90000;
+
+    const escalaoToCalId: Record<string, string> = {
+      "Sub-10": "bday_sub10", "Sub-12": "bday_sub12", "Sub-14": "bday_sub14",
+      "Sub-16": "bday_sub16", "Sub-18": "bday_sub18",
+    };
+
+    for (const [fed, p] of Object.entries(players)) {
+      if (!p.dob || p.tags?.includes("no-priority")) continue;
+      const parts = p.dob.split("-");
+      if (parts.length < 3) continue;
+      const m = parseInt(parts[1], 10) - 1; // 0-indexed month
+      const d = parseInt(parts[2], 10);
+      if (isNaN(m) || isNaN(d) || d < 1 || d > 31) continue;
+      const birthYear = parseInt(parts[0], 10);
+      const age = 2026 - birthYear;
+      const firstName = p.name.split(" ")[0];
+      const isPJA = p.tags?.includes("PJA");
+      const calId = isPJA ? "bday_pja" : (escalaoToCalId[p.escalao] || "bday_outros");
+      bdayEvs.push({
+        id: ++bdayId,
+        calId,
+        title: `🎂 ${firstName} — ${age} anos`,
+        date: new Date(2026, m, d),
+        campo: "",
+        modalidade: `${p.name} · #${fed}`,
+      });
+    }
+    return [...EVENTS, ...bdayEvs];
+  }, [players]);
 
   const goToday = () => {
     const now = new Date();
     const m = now.getFullYear() === 2026 ? now.getMonth() : 1;
     setCurrentMonth(m);
     setSelectedDate(now.getFullYear() === 2026 ? now : null);
+  };
+
+  /* Search */
+  const searchNorm = (s: string) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const searchResults = useMemo(() => {
+    const q = searchNorm(searchQ);
+    if (!q || q.length < 2) return [];
+    const words = q.split(/\s+/).filter(Boolean);
+    return allEvents
+      .filter(e => enabledCals.has(e.calId))
+      .filter(e => {
+        const hay = searchNorm([e.title, e.campo, e.modalidade, CAL_MAP.get(e.calId)?.name || ""].join(" "));
+        return words.every(w => hay.includes(w));
+      })
+      .sort((a, b) => a.date.getTime() - b.date.getTime())
+      .slice(0, 20);
+  }, [searchQ, allEvents, enabledCals]);
+
+  useEffect(() => {
+    const h = (e: MouseEvent) => { if (searchRef.current && !searchRef.current.contains(e.target as Node)) setSearchOpen(false); };
+    document.addEventListener("mousedown", h);
+    return () => document.removeEventListener("mousedown", h);
+  }, []);
+
+  const goToEvent = (ev: CalEvent) => {
+    setCurrentMonth(ev.date.getMonth());
+    setSelectedDate(ev.date);
+    setSelectedEvent(ev);
+    setSearchOpen(false);
+    setSearchQ("");
   };
 
   const toggleCal = (id: string) => setEnabledCals(prev => {
@@ -621,13 +701,13 @@ function CalendarioContent() {
   };
 
   const visibleEvents = useMemo(() =>
-    EVENTS.filter(e => enabledCals.has(e.calId)).sort((a, b) => a.date.getTime() - b.date.getTime()),
-    [enabledCals]
+    allEvents.filter(e => enabledCals.has(e.calId)).sort((a, b) => a.date.getTime() - b.date.getTime()),
+    [enabledCals, allEvents]
   );
   const monthDays = useMemo(() => getMonthDays(2026, currentMonth), [currentMonth]);
   const gridRows = monthDays.length / 7;
   const today = new Date();
-  const groups: GroupKey[] = ["CGSS", "JUNIOR", "DRIVE", "FPG", "DESTAQUE", "VIAGENS"];
+  const groups: GroupKey[] = ["CGSS", "JUNIOR", "DRIVE", "FPG", "DESTAQUE", "ANIVER", "VIAGENS"];
 
   return (
     <div className="cal-page">
@@ -702,7 +782,7 @@ function CalendarioContent() {
         <div className="flex-col-gap6">
           {groups.map(g => {
             const cals = CALENDARS.filter(c => c.group === g);
-            const groupCount = EVENTS.filter(e => cals.some(c => c.id === e.calId)).length;
+            const groupCount = allEvents.filter(e => cals.some(c => c.id === e.calId)).length;
             const allOn = cals.every(c => enabledCals.has(c.id));
             return (
               <div key={g}>
@@ -722,7 +802,7 @@ function CalendarioContent() {
                 </button>
                 <div className="flex-col-gap1" style={{ paddingLeft: 8, marginTop: 2 }}>
                   {cals.map(cal => {
-                    const calEvts = EVENTS.filter(e => e.calId === cal.id).sort((a, b) => a.date.getTime() - b.date.getTime());
+                    const calEvts = allEvents.filter(e => e.calId === cal.id).sort((a, b) => a.date.getTime() - b.date.getTime());
                     const isExpanded = expandedCal === cal.id;
                     return (
                       <div key={cal.id}>
@@ -809,6 +889,67 @@ function CalendarioContent() {
             style={{ opacity: 1 }}>
             Hoje
           </button>
+          {/* Search */}
+          <div ref={searchRef} style={{ position: "relative", flex: "0 1 220px", minWidth: 120 }}>
+            <input
+              value={searchQ}
+              onChange={e => { setSearchQ(e.target.value); setSearchOpen(true); }}
+              onFocus={() => searchQ.length >= 2 && setSearchOpen(true)}
+              placeholder="Pesquisar evento…"
+              style={{
+                width: "100%", padding: "5px 8px 5px 26px", border: "1px solid var(--border)",
+                borderRadius: "var(--radius)", fontSize: 11, fontFamily: "inherit",
+                background: "var(--bg-card)", color: "var(--text)", outline: "none",
+              }}
+              onKeyDown={e => { if (e.key === "Escape") { setSearchOpen(false); setSearchQ(""); } }}
+            />
+            <span style={{ position: "absolute", left: 8, top: "50%", transform: "translateY(-50%)",
+              fontSize: 12, color: "var(--text-muted)", pointerEvents: "none" }}>🔍</span>
+            {searchOpen && searchResults.length > 0 && (
+              <div style={{
+                position: "absolute", top: "100%", left: 0, right: 0, marginTop: 4,
+                background: "var(--bg-card)", border: "1px solid var(--border-light)",
+                borderRadius: "var(--radius-lg)", boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
+                maxHeight: 320, overflowY: "auto", zIndex: 100,
+              }}>
+                {searchResults.map(ev => {
+                  const cal = CAL_MAP.get(ev.calId);
+                  const d = ev.date;
+                  const dd = `${d.getDate()}/${d.getMonth() + 1}`;
+                  return (
+                    <button key={ev.id} onClick={() => goToEvent(ev)} style={{
+                      display: "flex", alignItems: "center", gap: 8, width: "100%",
+                      padding: "7px 10px", border: "none", cursor: "pointer", fontFamily: "inherit",
+                      background: "transparent", borderBottom: "1px solid var(--border-light)",
+                      transition: "background 0.1s", textAlign: "left",
+                    }}
+                      onMouseEnter={e => (e.currentTarget.style.background = "var(--bg-hover)")}
+                      onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>
+                      <span style={{
+                        width: 8, height: 8, borderRadius: 2, flexShrink: 0,
+                        background: cal?.color || "var(--text-3)",
+                      }} />
+                      <span style={{ fontSize: 10, fontFamily: "'JetBrains Mono', monospace",
+                        color: "var(--text-3)", fontWeight: 600, minWidth: 32, flexShrink: 0 }}>{dd}</span>
+                      <span style={{ fontSize: 11, color: "var(--text)", flex: 1,
+                        overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{ev.title}</span>
+                      {ev.campo && <span style={{ fontSize: 9, color: "var(--text-muted)", flexShrink: 0 }}>{ev.campo}</span>}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+            {searchOpen && searchQ.length >= 2 && searchResults.length === 0 && (
+              <div style={{
+                position: "absolute", top: "100%", left: 0, right: 0, marginTop: 4,
+                background: "var(--bg-card)", border: "1px solid var(--border-light)",
+                borderRadius: "var(--radius-lg)", boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
+                padding: "12px 14px", fontSize: 11, color: "var(--text-3)", textAlign: "center",
+              }}>
+                Nenhum evento encontrado
+              </div>
+            )}
+          </div>
           <div className="escalao-pills" style={{ marginLeft: "auto" }}>
             {(["month", "list"] as ViewMode[]).map(v => (
               <button key={v} onClick={() => setViewMode(v)}
