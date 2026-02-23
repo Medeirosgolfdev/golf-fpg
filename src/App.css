@@ -91,12 +91,13 @@
  --bg-female-hover: #e8eeff;
  --bg-purple: #f0edf5;
  --bg-intl: #e0f0e0;
- --badge-birth-bg: #f3e8ff;
- --badge-birth-text: #6b21a8;
- --badge-club-bg: #e0e7ff;
- --badge-club-text: #3730a3;
- --badge-male: #01A6EA;
- --badge-female: #FFB1CB;
+ --badge-birth-bg: #f0ece4;
+ --badge-birth-text: #6b5c3e;
+ --badge-club-bg: #e0efdb;
+ --badge-club-text: #2d6a30;
+ --badge-male: #6A93A8;
+ --badge-female: #B87D8B;
+ --badge-fed: #2d6a30;
  --tee-white-bg: #f5f5f0;
  --tee-yellow: #eab308;
  --border-intl: #93c5a0;
@@ -136,11 +137,25 @@
  --chart-6: #0891b2;     /* cyan */
  --chart-7: #be185d;     /* rose */
  --chart-8: #65a30d;     /* lime */
+ --chart-9: #c2410c;     /* rust */
+ --chart-10: #6366f1;    /* indigo */
+
+ /* Performance tier colours (gross vs par histogram) */
+ --tier-exceptional: #0d9488; /* teal */
+ --tier-good: #22c55e;     /* green */
+ --tier-fair: #3b82f6;     /* blue */
+ --tier-weak: #f97316;     /* orange */
+ --tier-bad: #ef4444;      /* red */
+
+ /* Highlight borders */
+ --border-current-good: #16a34a;  /* current-player green */
+ --border-best: #86efac;      /* best-round green-light */
 
  /* Borders */
- --border: #d5dac9;
- --border-light: #e8ebdf;
+ --border: #bcc5ad;
+ --border-light: #d5dac9;
  --border-heavy: #bcc5ad;
+ --border-separator: #111;
 
  /* Sizes */
  --topbar-h: 56px;
@@ -194,7 +209,7 @@ html, body, #root {
 }
 .nav-btn.active {
  background: var(--overlay-white-14);
- color: #fff;
+ color: var(--text-inv);
 }
 /* ─── Content ─── */
 
@@ -305,13 +320,12 @@ html, body, #root {
 }
 
 .input, .select {
- height: 32px;
- padding: 0 10px;
+ padding: 5px 8px;
  font: inherit;
- font-size: 13px;
+ font-size: 12px;
  border: 1px solid var(--border);
  border-radius: var(--radius);
- background: var(--bg);
+ background: var(--bg-card);
  color: var(--text);
  transition: border-color 0.15s;
 }
@@ -615,9 +629,8 @@ html, body, #root {
 .jog-pill {
  display: inline-block;
  padding: 2px 10px;
- font-size: 12px;
+ font-size: 11.5px;
  font-weight: 600;
- 
  border-radius: var(--radius);
  line-height: 1.5;
  background: transparent;
@@ -625,19 +638,24 @@ html, body, #root {
  border: 1.5px solid var(--text-dark);
 }
 
-/* Fed — solid alert red */
+/* Fed — solid green */
 .jog-pill-fed {
- background: var(--color-danger-dark);
+ background: var(--badge-fed);
  color: #fff;
  border: none;
 }
 
-/* Sexo — outline blue / pink */
+/* Sexo — solid male / female */
+.jog-pill-sex-M {
+ background: var(--badge-male);
+ color: #fff;
+ border: none;
+}
 
 .jog-pill-sex-F {
- background: transparent;
- color: var(--badge-female);
- border-color: var(--badge-female);
+ background: var(--badge-female);
+ color: #fff;
+ border: none;
 }
 
 /* Escalão — solid gradient: darker = younger */
@@ -650,7 +668,12 @@ html, body, #root {
 .jog-pill-escalao-absoluto { background: #c8d8b4; color: #2a4a18; border: none; }
 .jog-pill-escalao-senior { background: #d8dcc8; color: #3a4a28; border: none; }
 
-/* Birth, Club, Region, Tag, Stats — outline green (inherit from .jog-pill base) */
+/* Birth, Club — outline green (inherit from .jog-pill base) */
+
+/* HCP — neutral muted */
+.jog-pill-hcp { background: var(--bg-muted); color: var(--text-2); border: none; }
+
+/* Tag, Stats — outline green (inherit from .jog-pill base) */
 
 .jog-pill-update {
  background: transparent;
@@ -850,7 +873,7 @@ html, body, #root {
 
 /* .dt-compact → matches .data-table (base) */
 .dt-compact { width: 100%; border-collapse: collapse; font-size: 12px; }
-.dt-compact th { padding: 5px 8px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); border-bottom: 1px solid var(--border); text-align: left; }
+.dt-compact th { padding: 5px 8px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); background: var(--bg); border-bottom: 2px solid var(--border); text-align: left; }
 .dt-compact th.r, .dt-compact td.r { text-align: right; }
 .dt-compact td { padding: 5px 8px; border-bottom: 1px solid var(--border-light); }
 
@@ -862,7 +885,9 @@ html, body, #root {
 .hb18 { background: var(--accent-light); color: var(--accent); }
 
 /* Pill badges (from melhorias.json) */
-.eds-badge { display: inline-block; font-size: 10px; font-weight: 800; color: #fff; background: var(--color-loading); border: none; border-radius: var(--radius-sm); padding: 1px 6px; margin-left: 4px; vertical-align: middle; letter-spacing: .5px; line-height: 1.5; text-transform: uppercase; }
+.eds-badge { display: inline-block; font-size: 10px; font-weight: 800; color: #fff; background: var(--color-warn); border: none; border-radius: var(--radius-sm); padding: 1px 6px; margin-left: 4px; vertical-align: middle; letter-spacing: .5px; line-height: 1.5; text-transform: uppercase; }
+.eds-badge-extra { background: var(--badge-birth-text); }
+.eds-badge-eds { background: var(--color-danger); }
 
 a.dateLink { color: var(--text); text-decoration: none; cursor: pointer; }
 a.dateLink:hover { opacity: .75; }
@@ -885,7 +910,7 @@ a.dateLink .tee-date { text-decoration: underline; text-underline-offset: 2px; }
 .pill { padding: 3px 10px; font-size: 12px; font-weight: 500; color: var(--accent); background: var(--accent-light); border-radius: var(--radius-xl); }
 
 .actions { display: flex; gap: 6px; align-items: center; }
-.btn { padding: 4px 10px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-card); cursor: pointer; font: inherit; font-size: 11px; }
+.btn { padding: 4px 10px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-card); cursor: pointer; font: inherit; font-size: 11px; font-weight: 600; }
 .btn:hover { background: var(--bg-hover); }
 .btnGhost { border-color: transparent; color: var(--accent); }
 
@@ -920,7 +945,7 @@ tr.cross-current { background: var(--bg-success); }
 .ecHint { font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
 /* .ec-sum → matches .data-table .data-table-hover */
 .ec-sum { width: 100%; border-collapse: collapse; font-size: 12px; }
-.ec-sum th { padding: 5px 8px; text-align: left; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; color: var(--text-3); border-bottom: 1px solid var(--border); }
+.ec-sum th { padding: 5px 8px; text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); background: var(--bg); border-bottom: 2px solid var(--border); }
 .ec-sum th.r, .ec-sum td.r { text-align: right; }
 .ec-sum td { padding: 5px 8px; border-bottom: 1px solid var(--border-light); }
 .ec-sum tr:hover { background: var(--bg-hover); cursor: pointer; }
@@ -1638,8 +1663,8 @@ tr.cross-current { background: var(--bg-success); }
 .rivais-col-total { border-left: 2px solid var(--border-heavy) !important; }
 .rivais-alt-bg { background: var(--bg-hover); }
 .rivais-sub-header th { padding: 3px 2px; text-align: center; font-size: 10px; }
-.rivais-link { color: #fff; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 2px; font-weight: 700; }
-.rivais-link:hover { color: #fff; opacity: 0.85; }
+.rivais-link { color: #1a5c2a; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 2px; font-weight: 700; }
+.rivais-link:hover { color: #0d3a18; }
 .rivais-sep-bottom { border-bottom: 2px solid var(--text-muted); }
 .rivais-row-ref { border-bottom: 2px solid var(--color-info-alt) !important; }
 .rivais-row-ref .rivais-player-name { border-right-color: var(--color-info-alt); }
@@ -2290,7 +2315,7 @@ tr.cross-current { background: var(--bg-success); }
 /* ═══ Phase 5: Exhaustive inline elimination ═══ */
 
 /* ─── Card / container patterns ─── */
-.card-bordered { border: 1px solid var(--border-light); border-radius: var(--radius-lg); overflow: hidden; background: var(--bg-card); }
+.card-bordered { border: 1px solid var(--border-light); border-radius: var(--radius-lg); overflow: hidden; background: var(--bg-card); box-shadow: var(--shadow-sm); }
 .card-detail { background: var(--bg-detail); border: 1px solid var(--border-light); border-radius: var(--radius-lg); padding: 8px 12px; }
 .card-detail-inner { border: 1px solid var(--border-light); border-top: 0; border-radius: 0 0 8px 8px; padding: 12px; background: var(--bg-card); }
 .card-stat-green { background: var(--bg-success); border-radius: var(--radius-lg); padding: 10px 6px; }
@@ -2441,8 +2466,8 @@ tr.cross-current { background: var(--bg-success); }
  color: var(--nav-text);
  font: inherit;
  font-size: 13px;
- font-weight: 500;
- border-radius: var(--radius);
+ font-weight: 600;
+ border-radius: var(--radius-lg);
  cursor: pointer;
  transition: all 0.15s;
  text-decoration: none;
@@ -2723,3 +2748,92 @@ tr.cross-current { background: var(--bg-success); }
 .c-navy-inline { color: var(--color-info); }
 .c-danger-darker { color: #7f1d1d; }
 .c-danger-dark-inline { color: var(--color-danger-dark); }
+
+/* ═══════════════════════════════════════════
+   Audit Compliance — Missing Classes
+   ═══════════════════════════════════════════ */
+
+/* ─── Tourn Tab Buttons (section 7) ─── */
+.tourn-tab {
+ padding: 8px 18px;
+ border: 1px solid var(--border-light);
+ border-radius: var(--radius-lg);
+ background: var(--bg-card);
+ color: var(--text-3);
+ font-size: 13px;
+ font-weight: 600;
+ cursor: pointer;
+ font-family: inherit;
+ transition: all 0.15s;
+}
+.tourn-tab-active,
+.tourn-tab.active {
+ background: #3a4a2e;
+ color: #fff;
+ border-color: #3a4a2e;
+}
+.tourn-tab-sm {
+ padding: 4px 10px;
+ font-size: 12px;
+}
+.tourn-tab-sm.tourn-tab-active,
+.tourn-tab-sm.active {
+ background: var(--accent);
+ color: var(--tee-yellow);
+ border-color: var(--accent);
+}
+
+/* ─── Rivais Table (section 3) ─── */
+.rivais-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.rivais-table th {
+ padding: 6px 4px;
+ text-align: left;
+ font-size: 10px;
+ font-weight: 700;
+ text-transform: uppercase;
+ letter-spacing: 0.04em;
+ color: var(--text-3);
+ background: var(--bg);
+ border-bottom: 2px solid var(--border);
+}
+.rivais-table td { padding: 6px 4px; border-bottom: 1px solid var(--border-light); }
+.rivais-table th.r, .rivais-table td.r { text-align: right; }
+
+/* ─── Highlight Card (section 4) ─── */
+.highlight-card {
+ background: var(--bg-card);
+ border: 1px solid var(--border-light);
+ border-left: 4px solid var(--bg-topbar);
+ border-radius: var(--radius-lg);
+ padding: 12px 14px;
+}
+
+/* ─── BJGT Cards (section 4) ─── */
+.bjgt-card-wrap {
+ border: 1px solid var(--border-light);
+ border-radius: var(--radius-lg);
+ padding: 8px;
+}
+.bjgt-card-box {
+ border: 1px solid var(--border-light);
+ border-radius: var(--radius-lg);
+ padding: 8px;
+ text-align: center;
+}
+
+/* ─── Filter Input/Select — compact variant for Rivais (section 5) ─── */
+.filter-input, .filter-select {
+ padding: 5px 8px;
+ border: 1px solid var(--border);
+ border-radius: var(--radius);
+ font-size: 11px;
+ font-family: inherit;
+ background: var(--bg-card);
+ color: var(--text);
+ transition: border-color 0.15s;
+}
+.filter-input:focus, .filter-select:focus {
+ outline: none;
+ border-color: var(--accent);
+ box-shadow: 0 0 0 2px var(--accent-light);
+}

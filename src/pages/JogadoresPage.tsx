@@ -1541,12 +1541,12 @@ function HistogramCard({ rounds, period, setPeriod }: {
 }) {
   const bins = useMemo(() => {
     const defs = [
-      { label: "Excepcional (≤0)", min: -999, max: 0, color: "#0d9488" },
-      { label: "Bom (+1 a +5)", min: 1, max: 5, color: "#22c55e" },
-      { label: "Razoável (+6 a +10)", min: 6, max: 10, color: "#3b82f6" },
+      { label: "Excepcional (≤0)", min: -999, max: 0, color: "var(--tier-exceptional)" },
+      { label: "Bom (+1 a +5)", min: 1, max: 5, color: "var(--tier-good)" },
+      { label: "Razoável (+6 a +10)", min: 6, max: 10, color: "var(--tier-fair)" },
       { label: "Difícil (+11 a +15)", min: 11, max: 15, color: "var(--chart-4)" },
-      { label: "Fraco (+16 a +20)", min: 16, max: 20, color: "#f97316" },
-      { label: "Mau (+21 a +25)", min: 21, max: 25, color: "#ef4444" },
+      { label: "Fraco (+16 a +20)", min: 16, max: 20, color: "var(--tier-weak)" },
+      { label: "Mau (+21 a +25)", min: 21, max: 25, color: "var(--tier-bad)" },
       { label: "Desastroso (>+25)", min: 26, max: 999, color: "var(--color-danger-dark)" },
     ];
     const diffs: number[] = [];
@@ -2001,7 +2001,7 @@ function HcpEvolutionChart({ players, currentFed, escName }: {
   const xPos = (d: number) => PAD.left + ((d - minD) / rangeD) * (W - PAD.left - PAD.right);
   const yPos = (h: number) => H - PAD.bottom - ((h - (minH - padH)) / (rangeH + 2 * padH)) * (H - PAD.top - PAD.bottom);
 
-  const colors = ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)", "var(--chart-5)", "var(--chart-6)", "var(--chart-7)", "var(--chart-8)", "#c2410c", "#6366f1"];
+  const colors = ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)", "var(--chart-5)", "var(--chart-6)", "var(--chart-7)", "var(--chart-8)", "var(--chart-9)", "var(--chart-10)"];
 
   return (
     <div className="mt-20">
@@ -2024,7 +2024,7 @@ function HcpEvolutionChart({ players, currentFed, escName }: {
           return (
             <g key={i}>
               <line x1={PAD.left} y1={vy} x2={W - PAD.right} y2={vy} stroke="var(--border-light)" strokeWidth={0.5} />
-              <text x={PAD.left - 4} y={vy + 3} textAnchor="end" fontSize={9} fill="var(--text-muted)">{val.toFixed(1)}</text>
+              <text x={PAD.left - 4} y={vy + 3} textAnchor="end" fontSize={10} fill="var(--text-muted)">{val.toFixed(1)}</text>
             </g>
           );
         })}
@@ -2171,7 +2171,7 @@ function CommonCourses({ players, currentFed, escName }: {
                   const isCur = hp.fed === currentFed;
                   if (!hp.rounds?.length) return null;
                   return (
- <div key={hp.fed} className="br-default mt-6" style={{ padding: "6px 8px", border: isCur ? "1px solid #16a34a" : "1px solid var(--border-light)", background: isCur ? "var(--bg-success)" : "var(--bg)" }}>
+ <div key={hp.fed} className="br-default mt-6" style={{ padding: "6px 8px", border: isCur ? "1px solid var(--border-current-good)" : "1px solid var(--border-light)", background: isCur ? "var(--bg-success)" : "var(--bg)" }}>
                       <div className="fw-600 fs-11 mb-4">
                         {hp.name} <span className="muted">({hp.rounds.length} ronda{hp.rounds.length > 1 ? "s" : ""})</span>
                       </div>
@@ -2179,7 +2179,7 @@ function CommonCourses({ players, currentFed, escName }: {
                         {hp.rounds.map((rd: any, ri: number) => {
                           const isBest = rd.gross === hp.best;
                           return (
-                            <div key={ri} style={{ padding: "3px 8px", borderRadius: "var(--radius)", fontSize: 11, background: isBest ? "var(--bg-success-strong)" : "var(--bg-card)", border: `1px solid ${isBest ? "#86efac" : "var(--border-light)"}`, display: "flex", gap: 6, alignItems: "center" }}>
+                            <div key={ri} style={{ padding: "3px 8px", borderRadius: "var(--radius)", fontSize: 11, background: isBest ? "var(--bg-success-strong)" : "var(--bg-card)", border: `1px solid ${isBest ? "var(--border-best)" : "var(--border-light)"}`, display: "flex", gap: 6, alignItems: "center" }}>
                               <span className="c-text-3">{rd.date || "–"}</span>
                               <span className="fw-700">{rd.gross}{rd.par ? <span className={`score-delta ${(rd.gross - rd.par) > 0 ? "pos" : (rd.gross - rd.par) < 0 ? "neg" : ""} fs-9`} style={{ marginLeft: 2 }}>{(rd.gross - rd.par) > 0 ? "+" : ""}{rd.gross - rd.par}</span> : null}</span>
                               {rd.sd != null && <span className="c-text-3">SD {rd.sd}</span>}
@@ -2860,7 +2860,7 @@ export default function JogadoresPage({ players, courses }: Props) {
   const navigate = useNavigate();
   const [q, setQ] = useState("");
   const [sexFilter, setSexFilter] = useState<SexFilter>("ALL");
-  const [escalaoFilter, setEscalaoFilter] = useState<Set<string>>(new Set(["Sub-10", "Sub-12", "Sub-14"]));
+  const [escalaoFilter, setEscalaoFilter] = useState<Set<string>>(new Set());
   const [regionFilter, setRegionFilter] = useState<string>("ALL");
   const [sortKey, setSortKey] = useState<SortKey>("name");
   const [selectedFed, setSelectedFed] = useState<string | null>(urlFed ?? null);
@@ -3005,7 +3005,7 @@ export default function JogadoresPage({ players, courses }: Props) {
           <button className="sidebar-toggle" onClick={() => setSidebarOpen(v => !v)} title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
             {sidebarOpen ? "◀" : "▶"}
           </button>
-          <input className="input" value={q} onChange={e => { setQ(e.target.value); selectPlayer(null); }}
+          <input className="input" value={q} onChange={e => { setQ(e.target.value); setSelectedFed(null); }}
             placeholder="Nome, clube, n.º federado…" />
           <select className="select" value={sexFilter} onChange={e => setSexFilter(e.target.value as SexFilter)}>
             <option value="ALL">Sexo</option><option value="M">Masculino</option><option value="F">Feminino</option>

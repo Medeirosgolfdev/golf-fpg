@@ -401,7 +401,7 @@ function MultiTeeSDTable({
                 onClick={() => setSelectedDelta(prev => prev === r.delta ? null : r.delta)}
                 style={{
                   cursor: "pointer",
-                  background: isSel ? "var(--accent-light, #eff6ff)" : undefined,
+                  background: isSel ? "var(--accent-light)" : undefined,
                   outline: isSel ? "2px solid var(--accent)" : undefined,
                   outlineOffset: -1,
                 }}
@@ -418,7 +418,7 @@ function MultiTeeSDTable({
                   fontSize: 12,
                   borderBottom: "1px solid var(--border-light)",
                   background: isSel ? "var(--accent)" : isPar ? "var(--accent-light)" : undefined,
-                  color: isSel ? "#fff" : isPar ? "var(--accent)" : undefined,
+                  color: isSel ? "var(--bg-card)" : isPar ? "var(--accent)" : undefined,
                 }}>
                   {r.delta === 0 ? "E" : r.delta > 0 ? `+${r.delta}` : r.delta}
                 </td>

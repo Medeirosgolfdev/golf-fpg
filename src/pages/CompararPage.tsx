@@ -368,7 +368,7 @@ function RadarChart({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats | null
             <g key={si}>
               <polygon points={polyStr} fill={COLORS[si]} fillOpacity={0.12} stroke={COLORS[si]} strokeWidth={2} strokeLinejoin="round" />
               {pts.map((p, j) => (
-                <circle key={j} cx={p.x} cy={p.y} r={3.5} fill={COLORS[si]} stroke="#fff" strokeWidth={1}>
+                <circle key={j} cx={p.x} cy={p.y} r={3.5} fill={COLORS[si]} stroke="var(--bg-card)" strokeWidth={1}>
                   <title>{shortName(s.player.name)}: {axes[j].label}</title>
                 </circle>
               ))}
@@ -574,12 +574,12 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
         <line x1={PAD.left} x2={W - PAD.right} y1={yPos(0)} y2={yPos(0)} stroke="var(--color-good)" strokeWidth={1} strokeDasharray="4,3" opacity={0.5} />
         {[-0.5, 0.5, 1.0].filter(v => v >= minV && v <= maxV).map(v => (
           <g key={v}><line x1={PAD.left} x2={W - PAD.right} y1={yPos(v)} y2={yPos(v)} stroke="var(--border-light)" strokeWidth={0.5} />
-          <text x={PAD.left - 4} y={yPos(v) + 3} textAnchor="end" fontSize={9} fill="var(--text-muted)">{v > 0 ? "+" : ""}{v.toFixed(1)}</text></g>
+          <text x={PAD.left - 4} y={yPos(v) + 3} textAnchor="end" fontSize={10} fill="var(--text-muted)">{v > 0 ? "+" : ""}{v.toFixed(1)}</text></g>
         ))}
         {refStats.holes.map((h, i) => (
           <React.Fragment key={i}>
             <text x={PAD.left + i * holeW + holeW / 2} y={H - 8} textAnchor="middle" fontSize={10} fill="var(--text)">{i + 1}</text>
-            <text x={PAD.left + i * holeW + holeW / 2} y={H - 22} textAnchor="middle" fontSize={8} fill="var(--text-3)">P{h.par}</text>
+            <text x={PAD.left + i * holeW + holeW / 2} y={H - 22} textAnchor="middle" fontSize={10} fill="var(--text-3)">P{h.par}</text>
           </React.Fragment>
         ))}
         {loaded.map((s, si) => {
@@ -589,7 +589,7 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
           const d = pts.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" L ");
           return (<g key={si}>
             <path d={`M ${d}`} fill="none" stroke={COLORS[si]} strokeWidth={2.5} opacity={0.8} strokeLinejoin="round" />
-            {pts.map((p, j) => (<circle key={j} cx={p.x} cy={p.y} r={3.5} fill={COLORS[si]} stroke="#fff" strokeWidth={1}><title>{shortName(s.player.name)}: Bur. {p.hole} {fD2(p.val)} vs par</title></circle>))}
+            {pts.map((p, j) => (<circle key={j} cx={p.x} cy={p.y} r={3.5} fill={COLORS[si]} stroke="var(--bg-card)" strokeWidth={1}><title>{shortName(s.player.name)}: Bur. {p.hole} {fD2(p.val)} vs par</title></circle>))}
           </g>);
         })}
       </svg>
@@ -689,7 +689,7 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
           return (
             <div key={i} style={{
               width: `${w}%`, background: COLORS[i], display: "flex", alignItems: "center", justifyContent: "center",
-              color: "#fff", fontWeight: 800, fontSize: 12, fontFamily: "'JetBrains Mono', monospace",
+              color: "var(--bg-card)", fontWeight: 800, fontSize: 12, fontFamily: "'JetBrains Mono', monospace",
             }}>
               {wins[i] > 0 && `${firstName(s.player.name)} ${wins[i]}`}
             </div>
@@ -826,7 +826,7 @@ function TournamentEvolutionSection({ slots }: { slots: Slot[] }) {
           return (
             <g key={i}>
               <line x1={PAD.left} y1={yPos(val)} x2={W - PAD.right} y2={yPos(val)} stroke="var(--border-light)" strokeWidth={0.5} />
-              <text x={PAD.left - 4} y={yPos(val) + 3} textAnchor="end" fontSize={9} fill="var(--text-muted)">{val.toFixed(1)}</text>
+              <text x={PAD.left - 4} y={yPos(val) + 3} textAnchor="end" fontSize={10} fill="var(--text-muted)">{val.toFixed(1)}</text>
             </g>
           );
         })}

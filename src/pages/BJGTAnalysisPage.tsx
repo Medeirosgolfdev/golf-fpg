@@ -3053,7 +3053,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               const isBest = bestDay && d.idx === bestDay.idx;
               const isWorst = worstDay && d.idx === worstDay.idx && daySummaries.length > 1;
               const border = isBest ? SC.good : isWorst ? SC.danger : "var(--border)";
-              const bg = isBest ? "var(--bg-success)" : isWorst ? "var(--bg-danger)" : "#fff";
+              const bg = isBest ? "var(--bg-success)" : isWorst ? "var(--bg-danger)" : "var(--bg-card)";
               return (
                 <div key={d.idx} style={{ border: `2px solid ${border}`, borderRadius: "var(--radius-lg)", padding: "10px 12px", background: bg }}>
                   <div className="flex-between-mb6">
