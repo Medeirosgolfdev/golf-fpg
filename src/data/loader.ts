@@ -6,7 +6,7 @@ export async function loadMasterData(opts?: { force?: boolean }): Promise<Master
   if (!opts?.force && _cache) return _cache;
 
   _cache = (async () => {
-    const res = await fetch("/data/master-courses.json", { cache: "no-store" });
+    const res = await fetch("/data/master-courses.json");
     if (!res.ok) throw new Error(`Falha a carregar master-courses.json (${res.status})`);
     return (await res.json()) as MasterData;
   })();
@@ -20,7 +20,7 @@ export async function loadPlayers(opts?: { force?: boolean }): Promise<PlayersDb
   if (!opts?.force && _playersCache) return _playersCache;
 
   _playersCache = (async () => {
-    const res = await fetch("/data/players.json", { cache: "no-store" });
+    const res = await fetch("/data/players.json");
     if (!res.ok) throw new Error(`Falha a carregar players.json (${res.status})`);
     return (await res.json()) as PlayersDb;
   })();
@@ -40,7 +40,7 @@ export async function loadAwayCourses(opts?: { force?: boolean }): Promise<Cours
 
   _awayCache = (async () => {
     try {
-      const res = await fetch("/data/away-courses.json", { cache: "no-store" });
+      const res = await fetch("/data/away-courses.json");
       if (!res.ok) return [];
       const data = (await res.json()) as AwayCoursesData;
       return data.courses || [];

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { Routes, Route, useLocation, useNavigate, Navigate } from "react-router-dom";
 import "./App.css";
 import { loadMasterData, loadPlayers, loadAwayCourses } from "./data/loader";
@@ -6,18 +6,19 @@ import { initCourseColorCache } from "./utils/teeColors";
 import { extractAwayCourses } from "./data/melhoriasLoader";
 import { getExtraCourses } from "./data/extraCourses";
 import type { Course, MasterData, PlayersDb } from "./data/types";
-import CamposPage from "./pages/CamposPage";
-import JogadoresPage from "./pages/JogadoresPage";
-import SimuladorPage from "./pages/SimuladorPage";
-
-import CalendarioPage from "./pages/CalendarioPage";
-import BJGTAnalysisPage from "./pages/BJGTAnalysisPage";
-import TorneioPage from "./pages/TorneioPage";
-import CompararPage from "./pages/CompararPage";
 import golfBallSvg from "./assets/golf-ball.svg";
 
 import { deepFixMojibake } from "./utils/fixEncoding";
-import melhoriasJson from "../melhorias.json";
+import { isCalUnlocked, CAL_UNLOCK_EVENT } from "./utils/authConstants";
+
+/* ── Lazy-loaded pages (code-split per route) ── */
+const CamposPage = lazy(() => import("./pages/CamposPage"));
+const JogadoresPage = lazy(() => import("./pages/JogadoresPage"));
+const SimuladorPage = lazy(() => import("./pages/SimuladorPage"));
+const CalendarioPage = lazy(() => import("./pages/CalendarioPage"));
+const BJGTAnalysisPage = lazy(() => import("./pages/BJGTAnalysisPage"));
+const TorneioPage = lazy(() => import("./pages/TorneioPage"));
+const CompararPage = lazy(() => import("./pages/CompararPage"));
 
 type Tab = "campos" | "jogadores" | "comparar" | "simulador" | "calendario" | "bjgt" | "torneio";
 
@@ -26,7 +27,15 @@ type MelhoriasJson = Record<string, Record<string, unknown>>;
 type Status =
   | { kind: "loading" }
   | { kind: "error"; message: string }
-  | { kind: "ready"; data: MasterData; players: PlayersDb; awayCourses: Course[] };
+  | { kind: "ready"; data: MasterData; players: PlayersDb; awayCourses: Course[]; melhorias: MelhoriasJson };
+
+/* ── Start fetching data at module level (before React mounts) ── */
+const _earlyData = Promise.all([
+  loadMasterData(),
+  loadPlayers(),
+  loadAwayCourses(),
+  import("../melhorias.json").then(m => m.default as MelhoriasJson).catch(() => ({} as MelhoriasJson)),
+]);
 
 /* Derivar tab activo a partir do pathname */
 function tabFromPath(pathname: string): Tab {
@@ -47,16 +56,13 @@ export default function App() {
   const tab = tabFromPath(location.pathname);
 
   /* Calendar unlock → show BJGT nav */
-  const [calUnlocked, setCalUnlocked] = useState(() => {
-    try { return localStorage.getItem("cal_unlocked") === "1"; } catch { return false; }
-  });
+  const [calUnlocked, setCalUnlocked] = useState(() => isCalUnlocked());
   useEffect(() => {
-    const check = () => { try { setCalUnlocked(localStorage.getItem("cal_unlocked") === "1"); } catch {} };
+    const check = () => setCalUnlocked(isCalUnlocked());
     window.addEventListener("storage", check);
-    window.addEventListener("cal-unlocked", check);
-    // Also re-check when navigating (in case unlocked in same tab)
+    window.addEventListener(CAL_UNLOCK_EVENT, check);
     check();
-    return () => { window.removeEventListener("storage", check); window.removeEventListener("cal-unlocked", check); };
+    return () => { window.removeEventListener("storage", check); window.removeEventListener(CAL_UNLOCK_EVENT, check); };
   }, [location.pathname]);
 
   /* Dynamic page title */
@@ -70,12 +76,12 @@ export default function App() {
 
   useEffect(() => {
     let alive = true;
-    Promise.all([loadMasterData(), loadPlayers(), loadAwayCourses()])
-      .then(([data, players, awayCourses]) => {
+    _earlyData
+      .then(([data, players, awayCourses, melhorias]) => {
         if (!alive) return;
         deepFixMojibake(players);
         initCourseColorCache([...data.courses, ...awayCourses]);
-        setStatus({ kind: "ready", data, players, awayCourses });
+        setStatus({ kind: "ready", data, players, awayCourses, melhorias });
       })
       .catch((e) => alive && setStatus({ kind: "error", message: e?.message ?? String(e) }));
     return () => { alive = false; };
@@ -88,7 +94,7 @@ export default function App() {
     if (status.kind !== "ready") return [];
     const fpg = status.data.courses;
     const pipelineAway = status.awayCourses;
-    const melhoriasAway = extractAwayCourses(melhoriasJson as MelhoriasJson);
+    const melhoriasAway = extractAwayCourses(status.melhorias);
     const extra = getExtraCourses();
 
     // Merge com dedup por courseKey (prioridade: pipeline > melhorias > extra)
@@ -192,6 +198,7 @@ export default function App() {
         )}
 
         {status.kind === "ready" && (
+          <Suspense fallback={<div className="center-msg">A carregar…</div>}>
           <Routes>
             <Route path="/campos/:courseKey?" element={<CamposPage courses={simCourses} />} />
             <Route path="/jogadores/:fed" element={<JogadoresPage players={status.players} courses={simCourses} />} />
@@ -203,6 +210,7 @@ export default function App() {
             <Route path="/torneio" element={<TorneioPage players={status.players} onSelectPlayer={(fed) => goTo(`/jogadores/${fed}`)} />} />
             <Route path="*" element={<Navigate to="/jogadores/52884" replace />} />
           </Routes>
+          </Suspense>
         )}
       </main>
     </div>

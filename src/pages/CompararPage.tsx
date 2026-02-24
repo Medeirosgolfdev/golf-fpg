@@ -18,39 +18,17 @@ import {
   loadPlayerData, type PlayerPageData, type RoundData,
   type HoleScores,
 } from "../data/playerDataLoader";
-import { norm } from "../utils/format";
+import { norm, fD, fD2, firstName, shortName } from "../utils/format";
 import { clubShort, hcpDisplay } from "../utils/playerUtils";
 import { deepFixMojibake } from "../utils/fixEncoding";
 import { sc3m } from "../utils/scoreDisplay";
+import SectionErrorBoundary from "../ui/SectionErrorBoundary";
+import LoadingState from "../ui/LoadingState";
 
 const COLORS = ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)"];
 const COLORS_LIGHT = ["var(--bg-success-strong)", "var(--bg-info-strong)", "var(--bg-danger-strong)", "var(--bg-warn-strong)"];
 
-/* ─── Error Boundary ─── */
-class SectionErrorBoundary extends React.Component<
-  { label: string; children: React.ReactNode },
-  { error: Error | null }
-> {
-  state: { error: Error | null } = { error: null };
-  static getDerivedStateFromError(error: Error) { return { error }; }
-  componentDidCatch(error: Error, info: React.ErrorInfo) {
-    console.error(`[Comparar] Crash em "${this.props.label}":`, error, info.componentStack);
-  }
-  render() {
-    if (this.state.error) return (
-      <div className="holeAnalysis ta-c p-24" style={{ borderLeft: "3px solid var(--color-danger)" }}>
-        <div className="fw-700 mb-4" style={{ color: "var(--color-danger)" }}>
-          Erro em: {this.props.label}
-        </div>
-        <div className="muted fs-11 mono" style={{ maxWidth: 500, margin: "0 auto", wordBreak: "break-word" }}>
-          {this.state.error.message}
-        </div>
-        <button className="btn mt-8" onClick={() => this.setState({ error: null })}>Retry</button>
-      </div>
-    );
-    return this.props.children;
-  }
-}
+/* SectionErrorBoundary imported from src/ui/ */
 
 interface Slot {
   fed: string; player: Player;
@@ -264,10 +242,7 @@ function buildTourneyHoleStats(data: PlayerPageData): Map<string, { label: strin
 
 /* ─── Other helpers ─── */
 
-function shortName(name: string) { return name.split(" ").slice(0, 2).join(" "); }
-function firstName(name: string) { return name.split(" ")[0]; }
-const fD = (v: number) => (v >= 0 ? "+" : "") + v.toFixed(1);
-const fD2 = (v: number) => (v >= 0 ? "+" : "") + v.toFixed(2);
+/* fD, fD2, firstName, shortName → imported from format.ts */
 const pct = (v: number) => v.toFixed(0) + "%";
 
 /* ═══════════════════ Search + Chips ═══════════════════ */
@@ -294,7 +269,7 @@ function PlayerSearch({ players, slots, onAdd, onRemove }: {
   }, []);
 
   return (
-    <div style={{ marginBottom: 18 }}>
+    <div className="mb-18">
       <div className="flex-center-gap8 mb-10" ref={ref}>
         <div className="cmp-search-wrap">
           <input className="input cmp-search-input" value={q} onChange={e => { setQ(e.target.value); setOpen(true); }} onFocus={() => q.trim() && setOpen(true)}
@@ -448,7 +423,7 @@ function StatsTable({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats | null
 
   return (
     <div className="courseAnalysis p-0 no-overflow">
-      <div className="caTitle" style={{ padding: "14px 16px 0" }}>Comparação Detalhada <span className="muted fs-11 fw-400">(apenas torneios)</span></div>
+      <div className="caTitle p-14" style={{ paddingBottom: 0 }}>Comparação Detalhada <span className="muted fs-11 fw-400">(apenas torneios)</span></div>
       <div className="pa-table-wrap mt-8">
         <table className="pa-table fs-13">
           <thead>
@@ -538,7 +513,7 @@ function ScoreDistribution({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats
                           borderRadius: "var(--radius-sm)", opacity: 0.75,
                         }} />
                       </div>
- <span className="ta-right fw-700 c-text-2 fs-11" style={{ fontFamily: "'JetBrains Mono', monospace", width: 46 }}>
+ <span className="ta-right fw-700 c-text-2 fs-11 mono" style={{ width: 46 }}>
                         {v.toFixed(1)}%
                       </span>
                     </div>
@@ -933,7 +908,7 @@ export default function CompararPage({ players }: { players: PlayersDb }) {
   }), [slots]);
 
   return (
-    <div className="course-detail mx-auto" style={{ maxWidth: 1060 }}>
+    <div className="cmp-page">
       <PlayerSearch players={players} slots={slots} onAdd={addPlayer} onRemove={removePlayer} />
 
       {slots.length === 0 && (
@@ -948,10 +923,7 @@ export default function CompararPage({ players }: { players: PlayersDb }) {
           </div>
           <div className="cmp-feature-tags">
             {["Perfil radar", "Tabela detalhada", "Distribuição de scores", "Buraco a buraco", "Head-to-head", "Evolução torneios"].map(label => (
-              <span key={label} style={{
-                padding: "4px 12px", borderRadius: "var(--radius-xl)", background: "var(--bg-hover)",
-                fontSize: 11, fontWeight: 600, color: "var(--text-2)",
-              }}>{label}</span>
+              <span key={label} className="cmp-feature-tag">{label}</span>
             ))}
           </div>
         </div>
@@ -959,14 +931,13 @@ export default function CompararPage({ players }: { players: PlayersDb }) {
 
       {anyLoading && (
         <div className="holeAnalysis ta-c p-24">
- <div className="mb-8 fs-24" >⏳</div>
-          <div className="muted">A carregar dados dos jogadores…</div>
+          <LoadingState message="A carregar dados dos jogadores…" />
         </div>
       )}
 
       {slots.filter(s => s.error).map(s => (
-        <div key={s.fed} className="holeAnalysis ta-c p-24" style={{ borderLeft: "3px solid var(--color-danger)" }}>
-          <div className="fw-600 fs-12" style={{ color: "var(--color-danger)" }}>
+        <div key={s.fed} className="holeAnalysis ta-c error-panel">
+          <div className="error-panel-msg">
             Erro ao carregar {s.player.name}: {s.error}
           </div>
         </div>

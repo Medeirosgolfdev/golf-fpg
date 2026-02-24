@@ -1,21 +1,23 @@
 import React, { useEffect, useMemo, useState, type ReactNode } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import type { Player, PlayersDb, Course } from "../data/types";
-import { norm, shortDate } from "../utils/format";
+import { norm, shortDate, fD, fD2, firstName } from "../utils/format";
 import { getTeeHex, textOnColor, normKey, teeBorder } from "../utils/teeColors";
 import { clubShort, clubLong, hcpDisplay } from "../utils/playerUtils";
 import { numSafe, meanArr, stdevArr, sumArr } from "../utils/mathUtils";
-import { scClass, fmtGrossDelta, fmtStb, sdClassByHcp, fmtSdVal, sc2, sc3m, SC } from "../utils/scoreDisplay";
+import { scClass, fmtGrossDelta, fmtStb, sdClassByHcp, fmtSdVal, sc2, sc3m, SC, toParClass } from "../utils/scoreDisplay";
 import {
-  loadPlayerData,
   type PlayerPageData, type CourseData, type RoundData,
   type EclecticEntry, type HoleStatsData,
   type CrossPlayerData, type HcpInfo, type HoleScores,
 } from "../data/playerDataLoader";
+import { usePlayerData } from "../data/usePlayerData";
 import PillBadge from "../ui/PillBadge";
 import TeePill from "../ui/TeePill";
 import TeeDate from "../ui/TeeDate";
-import { deepFixMojibake } from "../utils/fixEncoding";
+import ScoreCircle from "../ui/ScoreCircle";
+import SectionErrorBoundary from "../ui/SectionErrorBoundary";
+import LoadingState from "../ui/LoadingState";
 
 /* ────────────────────────────────────────────────────────────────────────────────────
    Utility functions (port from client JS)
@@ -65,12 +67,7 @@ function HoleBadge({ hc }: { hc: number }) {
     : <span className="hb hb18">18</span>;
 }
 
-function ScoreCircle({ gross, par, size = "normal" }: { gross: number | null; par: number | null; size?: "normal" | "small" }) {
- if (gross == null || gross <= 0) return <span className="c-border" style={{ fontSize: "9px" }}>NR</span>;
-  const cls = par != null ? scClass(gross, par) : "";
-  const sizeStyle = size === "small" ? { fontSize: "10px", width: "20px", height: "20px" } : {};
-  return <span className={`sc-score ${cls}`} style={sizeStyle}>{gross}</span>;
-}
+/* ScoreCircle imported from src/ui/ */
 
 /* ─── EDS / Score Origin Badge ─── */
 function EdsBadge({ origin }: { origin?: string }) {
@@ -572,7 +569,7 @@ function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, eclecti
                     const outG = sumArr(gross, 0, frontEnd);
                     const outP = sumArr(par, 0, frontEnd);
                     const outTP = outG - outP;
-                    const tpCls = outTP > 0 ? "sc-topar-pos" : outTP < 0 ? "sc-topar-neg" : "sc-topar-zero";
+                    const tpCls = toParClass(outTP);
                     return (
                       <td className="col-out fw-700">
                         {outG}<span className={`sc-topar ${tpCls}`}>{outTP > 0 ? "+" : ""}{outTP}</span>
@@ -586,7 +583,7 @@ function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, eclecti
               const inG = is9 ? grossTotal : sumArr(gross, 9, totalHoles);
               const inP = is9 ? parTotal : sumArr(par, 9, totalHoles);
               const inTP = inG - inP;
-              const inCls = inTP > 0 ? "sc-topar-pos" : inTP < 0 ? "sc-topar-neg" : "sc-topar-zero";
+              const inCls = toParClass(inTP);
               return (
                 <td className={`col-${is9 ? "total" : "in"} fw-700`}>
                   {inG}<span className={`sc-topar ${inCls}`}>{inTP > 0 ? "+" : ""}{inTP}</span>
@@ -594,7 +591,7 @@ function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, eclecti
               );
             })()}
             {!is9 && (() => {
-              const totCls = toPar > 0 ? "sc-topar-pos" : toPar < 0 ? "sc-topar-neg" : "sc-topar-zero";
+              const totCls = toParClass(toPar);
               return (
                 <td className="col-total">
                   {grossTotal}<span className={`sc-topar ${totCls}`}>{toParStr}</span>
@@ -654,7 +651,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
                 const outEc = sumArr(ecArr, 0, frontEnd);
                 const outP = sumArr(parArr, 0, frontEnd);
                 const outTP = outEc - outP;
-                const tpCls = outTP > 0 ? "sc-topar-pos" : outTP < 0 ? "sc-topar-neg" : "sc-topar-zero";
+                const tpCls = toParClass(outTP);
                 return (
                   <td className="col-out" style={{ fontWeight: 700, ...ecBorder }}>
                     {outEc}<span className={`sc-topar ${tpCls}`}>{outTP > 0 ? "+" : ""}{outTP}</span>
@@ -668,7 +665,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
           const inEc = is9 ? sumEc : sumArr(ecArr, 9, holeCount);
           const inP = is9 ? sumArr(parArr, 0, holeCount) : sumArr(parArr, 9, holeCount);
           const inTP = inEc - inP;
-          const inCls = inTP > 0 ? "sc-topar-pos" : inTP < 0 ? "sc-topar-neg" : "sc-topar-zero";
+          const inCls = toParClass(inTP);
           return (
             <td className={`col-${is9 ? "total" : "in"}`} style={{ fontWeight: 700, ...ecBorder }}>
               {inEc}<span className={`sc-topar ${inCls}`}>{inTP > 0 ? "+" : ""}{inTP}</span>
@@ -677,7 +674,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
         })()}
         {!is9 && (() => {
           const ecTP = sumEc - sumArr(parArr, 0, holeCount);
-          const totCls = ecTP > 0 ? "sc-topar-pos" : ecTP < 0 ? "sc-topar-neg" : "sc-topar-zero";
+          const totCls = toParClass(ecTP);
           return (
             <td className="col-total" style={ecBorder}>
               {sumEc}<span className={`sc-topar ${totCls}`}>{ecTP > 0 ? "+" : ""}{ecTP}</span>
@@ -975,7 +972,7 @@ function CoursePerformanceSection({ rounds }: { rounds: RoundData[] }) {
     const r9 = rounds.filter(r => r.holeCount === 9 && (r.sd != null || r.stb != null));
     if (r18.length + r9.length < 2) return null;
 
-    interface NormRound { sd: number | null; stb: number | null; hi: any; tee: string; date: string; dateSort: number; holeCount: number; gross: number | null; par: number | null }
+    interface NormRound { sd: number | null; stb: number | null; hi: number | null; tee: string; date: string; dateSort: number; holeCount: number; gross: number | null; par: number | null }
     const allNorm: NormRound[] = [];
     r18.forEach(r => allNorm.push({
       sd: r.sd != null ? Number(r.sd) : null, stb: r.stb != null ? Number(r.stb) : null,
@@ -1098,8 +1095,6 @@ function CoursePerformanceSection({ rounds }: { rounds: RoundData[] }) {
 }
 
 function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
-  const fD = (v: number) => (v >= 0 ? "+" : "") + v.toFixed(1);
-  const fD2 = (v: number) => (v >= 0 ? "+" : "") + v.toFixed(2);
   const pctF = (n: number, tot: number) => tot ? (n / tot * 100).toFixed(0) : "0";
 
   const td = stats.totalDist;
@@ -1448,7 +1443,7 @@ function AnalysisView({ data }: { data: PlayerPageData }) {
     return arr;
   }, [data]);
 
-  const rounds18 = useMemo(() => allRoundsDesc.filter(r => r.holeCount === 18 || (r as any).hc === 18), [allRoundsDesc]);
+  const rounds18 = useMemo(() => allRoundsDesc.filter(r => r.holeCount === 18 || (r as RoundData & { hc?: number }).hc === 18), [allRoundsDesc]);
   const rounds18g = useMemo(() => rounds18.filter(r => numSafe(r.gross) != null && Number(r.gross) > 50), [rounds18]);
 
   // KPIs
@@ -1464,7 +1459,7 @@ function AnalysisView({ data }: { data: PlayerPageData }) {
 
   // Last 20 (non-training) for table
   const last20Table = useMemo(() =>
-    allRoundsDesc.filter(r => !(r as any)._isTreino).slice(0, 20),
+    allRoundsDesc.filter(r => !r._isTreino).slice(0, 20),
     [allRoundsDesc]
   );
 
@@ -2055,7 +2050,7 @@ function HcpEvolutionChart({ players, currentFed, escName }: {
  <span key={p.fed} className="pointer" style={{ opacity: isHidden ? 0.3 : 1, fontWeight: isCur ? 700 : 400 }}
               onClick={() => togglePlayer(p.fed)}>
               <span style={{ display: "inline-block", width: 10, height: 10, borderRadius: "var(--radius-xs)", background: col, marginRight: 3 }} />
-              {p.name.split(" ")[0]} {p.currentHcp != null ? `(${p.currentHcp.toFixed(1)})` : ""}
+              {firstName(p.name)} {p.currentHcp != null ? `(${p.currentHcp.toFixed(1)})` : ""}
             </span>
           );
         })}
@@ -2071,7 +2066,7 @@ function CommonCourses({ players, currentFed, escName }: {
   const [openCard, setOpenCard] = useState<number | null>(null);
 
   const commonCT = useMemo(() => {
-    const map: Record<string, { course: string; tee: string; players: { name: string; fed: string; best: number | null; avg: number; worst: number | null; count: number; rounds: any[] }[] }> = {};
+    const map: Record<string, { course: string; tee: string; players: { name: string; fed: string; best: number | null; avg: number; worst: number | null; count: number; rounds: RoundData[] }[] }> = {};
     for (const p of players) {
       if (!p.courseTee) continue;
       for (const ctk in p.courseTee) {
@@ -2118,7 +2113,7 @@ function CommonCourses({ players, currentFed, escName }: {
                   const medal = mr === 0 ? "🥇" : mr === 1 ? "🥈" : mr === 2 ? "🥉" : `${mr + 1}º`;
                   return (
                     <span key={mp.fed} style={{ fontWeight: isCur ? 700 : 400, color: isCur ? SC.good : undefined }}>
-                      {medal} {mp.name.split(" ")[0]} <b>{mp.best ?? "–"}</b>
+                      {medal} {mfirstName(p.name)} <b>{mp.best ?? "–"}</b>
                     </span>
                   );
                 })}
@@ -2176,7 +2171,7 @@ function CommonCourses({ players, currentFed, escName }: {
                         {hp.name} <span className="muted">({hp.rounds.length} ronda{hp.rounds.length > 1 ? "s" : ""})</span>
                       </div>
  <div className="flex-wrap-gap8 gap-4" >
-                        {hp.rounds.map((rd: any, ri: number) => {
+                        {hp.rounds.map((rd: RoundData, ri: number) => {
                           const isBest = rd.gross === hp.best;
                           return (
                             <div key={ri} style={{ padding: "3px 8px", borderRadius: "var(--radius)", fontSize: 11, background: isBest ? "var(--bg-success-strong)" : "var(--bg-card)", border: `1px solid ${isBest ? "var(--border-best)" : "var(--border-light)"}`, display: "flex", gap: 6, alignItems: "center" }}>
@@ -2363,7 +2358,7 @@ function CompScoreRow({ label, labelBg, labelFg, gross, par, hc, is9, frontEnd, 
 
   const toParSpan = (g: number, p: number) => {
     const tp = g - p;
-    const cls = tp > 0 ? "sc-topar-pos" : tp < 0 ? "sc-topar-neg" : "sc-topar-zero";
+    const cls = toParClass(tp);
     return <span className={`sc-topar ${cls}`}>{tp > 0 ? "+" : ""}{tp}</span>;
   };
 
@@ -2401,7 +2396,7 @@ function CompScoreRow({ label, labelBg, labelFg, gross, par, hc, is9, frontEnd, 
       {!is9 && (
         <td style={colTot}>
           {totalG}
-          {tp != null && <span className={`sc-topar ${tp > 0 ? "sc-topar-pos" : tp < 0 ? "sc-topar-neg" : "sc-topar-zero"}`}>{tp > 0 ? "+" : ""}{tp === 0 ? "E" : tp}</span>}
+          {tp != null && <span className={`sc-topar ${toParClass(tp)}`}>{tp > 0 ? "+" : ""}{tp === 0 ? "E" : tp}</span>}
         </td>
       )}
     </tr>
@@ -2748,26 +2743,16 @@ function ByTournamentView({ data, search }: { data: PlayerPageData; search: stri
    ──────────────────────────────────────────────────────────────────────────────────────── */
 
 function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; selected: { fed: string } & Player; onMetaLoaded?: (meta: PlayerPageData["META"]) => void }) {
-  const [data, setData] = useState<PlayerPageData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { data, loading, error } = usePlayerData(fedId);
   const [view, setView] = useState<ViewKey>("by_course");
   const [courseSearch, setCourseSearch] = useState("");
   const [courseSort, setCourseSort] = useState<CourseSort>("last_desc");
 
+  // Reset search + notify parent when player data loads
   useEffect(() => {
-    let cancelled = false;
-    setLoading(true);
-    setError(null);
-    setData(null);
     setCourseSearch("");
-
-    loadPlayerData(fedId)
-      .then(d => { if (!cancelled) { deepFixMojibake(d); setData(d); setLoading(false); onMetaLoaded?.(d.META); } })
-      .catch(e => { if (!cancelled) { setError(e.message); setLoading(false); } });
-
-    return () => { cancelled = true; };
-  }, [fedId]);
+    if (data?.META) onMetaLoaded?.(data.META);
+  }, [data]);
 
   // Stats (safe even when data is null)
   const totalCourses = data?.DATA.length ?? 0;
@@ -2824,7 +2809,7 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
       </div>
 
       {loading ? (
-        <div className="player-embed-loading">A carregar análise…</div>
+        <LoadingState size="sm" message="A carregar análise…" />
       ) : error || !data ? (
         <div className="player-embed-error">Não foi possível carregar: {error}</div>
       ) : (

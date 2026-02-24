@@ -10,6 +10,7 @@ import { loadPlayerData, type PlayerPageData, type HoleScores } from "../data/pl
 import { deepFixMojibake } from "../utils/fixEncoding";
 import { SC } from "../utils/scoreDisplay";
 import TeePill from "../ui/TeePill";
+import LoadingState from "../ui/LoadingState";
 import {
   normalizeTournament,
   type NormalizedTournament,
@@ -65,7 +66,7 @@ function ScoreDot({ score, par }: { score: number | null; par: number }) {
 }
 
 function PlayerLink({ fed, name, onSelect }: { fed: string | null; name: string; onSelect?: (fed: string) => void }) {
-  if (fed && onSelect) return <span className="tourn-pname tourn-pname-link" onClick={() => onSelect(fed)}>{name}</span>;
+  if (fed && onSelect) return <span className="tourn-pname tourn-pname-link" role="button" tabIndex={0} onClick={() => onSelect(fed)} onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onSelect(fed); } }}>{name}</span>;
   return <span className="tourn-pname">{name}</span>;
 }
 
@@ -1237,7 +1238,7 @@ function AnalysisView({ norm, players, holeDataByDay, playerHistory, onSelectPla
           </div>
         </>
       ) : (
-        <div className="tourn-meta empty-state-sm">⏳ A carregar dados de jogadores...</div>
+        <LoadingState size="sm" message="A carregar dados de jogadores..." />
       )}
 
       {cat === "wagr" && holeDiff[0]?.n > 0 && <>
@@ -1488,21 +1489,17 @@ export default function TorneioPage({ players, onSelectPlayer }: { players: Play
           <button className="sidebar-toggle" onClick={() => setSidebarOpen(v => !v)} title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
             {sidebarOpen ? "◀" : "▶"}
           </button>
-          <span className="tourn-pill-intl fs-9" style={{ padding: "2px 6px" }}>🌍 INTL</span>
+          <span className="tourn-pill-intl fs-9 p-2-6">🌍 INTL</span>
           <span className="tourn-toolbar-title">GG26</span>
           <span className="tourn-toolbar-meta">📍 {NORM_BASE.course}</span>
           <span className="tourn-toolbar-meta">📅 {NORM_BASE.dates.join(" → ")}</span>
           <a href="https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=52884" target="_blank" rel="noopener noreferrer"
-            style={{ padding: "3px 10px", borderRadius: "var(--radius)", fontSize: 11, fontWeight: 700,
-              background: "var(--accent)", color: "#fff", textDecoration: "none", display: "inline-flex",
-              alignItems: "center", gap: 4, whiteSpace: "nowrap" }}>
-            FPG WHS <span style={{ fontSize: 9, opacity: 0.7 }}>↗</span>
+            className="toolbar-badge-link toolbar-badge-link-accent">
+            FPG WHS <span className="toolbar-badge-arrow">↗</span>
           </a>
           <a href="https://scoring.fpg.pt/lists/PlayerResults.aspx?no=52884" target="_blank" rel="noopener noreferrer"
-            style={{ padding: "3px 10px", borderRadius: "var(--radius)", fontSize: 11, fontWeight: 700,
-              background: "var(--bg-topbar)", color: "#e8eddf", textDecoration: "none", display: "inline-flex",
-              alignItems: "center", gap: 4, whiteSpace: "nowrap" }}>
-            FPG Resultados <span style={{ fontSize: 9, opacity: 0.7 }}>↗</span>
+            className="toolbar-badge-link toolbar-badge-link-dark">
+            FPG Resultados <span className="toolbar-badge-arrow">↗</span>
           </a>
           <div className="tourn-toolbar-sep" />
           <div className="escalao-pills">
@@ -1564,7 +1561,7 @@ export default function TorneioPage({ players, onSelectPlayer }: { players: Play
         <div className={`sidebar${sidebarOpen ? "" : " sidebar-closed"}`}>
           <div className="sidebar-section-title">
             <input className="input" value={sidebarQ} onChange={e => setSidebarQ(e.target.value)}
-              placeholder="Pesquisar jogador…" style={{ width: "100%" }} />
+              placeholder="Pesquisar jogador…" className="w-full" />
           </div>
           {sidebarPlayers.map((d, i) => (
             <button key={i} className="course-item"

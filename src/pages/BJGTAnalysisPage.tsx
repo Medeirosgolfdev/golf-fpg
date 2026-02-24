@@ -5,10 +5,9 @@
  * Usa HOLE_STATS pré-calculado + HOLES/EC para eclético.
  * Inclui secção de rivais internacionais.
  */
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
-  loadPlayerData,
   type PlayerPageData,
   type RoundData,
   type HoleScores,
@@ -16,10 +15,56 @@ import {
   type HoleStatEntry,
   type EclecticEntry,
 } from "../data/playerDataLoader";
-import { deepFixMojibake } from "../utils/fixEncoding";
-import { norm } from "../utils/format";
-import { sc2, sc2w, sc3, sc3m, diagLevel, scDark, SC } from "../utils/scoreDisplay";
-import { scClass } from "../utils/scoreDisplay";
+import { usePlayerData } from "../data/usePlayerData";
+import { norm, fmtToPar, firstName } from "../utils/format";
+import { scClass, toParClass, sc2, sc2w, sc3, sc3m, diagLevel, scDark, SC } from "../utils/scoreDisplay";
+import { isCalUnlocked } from "../utils/authConstants";
+import PasswordGate from "../ui/PasswordGate";
+import ScoreCircle from "../ui/ScoreCircle";
+import SectionErrorBoundary from "../ui/SectionErrorBoundary";
+import LoadingState from "../ui/LoadingState";
+
+/* ═══════════════════════════════════
+   TYPES
+   ═══════════════════════════════════ */
+interface TournResult { p: number; t: number; tp: number; rd: number[] }
+interface RivalPlayer {
+  n: string;
+  co: string;
+  isM?: boolean;
+  r: Record<string, TournResult>;
+  up: string[];
+}
+interface TournDef {
+  id: string; name: string; short: string; date: string;
+  rounds: number; par: number; field: number; nations: number;
+  intendedRounds?: number; url: string;
+}
+
+/** Shape of a single hole sample for distance-band analysis */
+interface HoleSample { ds: number; par: number; meters: number | null; gross: number }
+
+/** Shape of a distance band definition */
+interface BandDef { par: number; minM: number; maxM: number; label: string }
+
+/** Filtered band result */
+interface FilteredBand { label: string; n: number; avg: number; pob: number; dbl: number; allAvg?: number; allN?: number; col?: string }
+
+/** Monthly stats entry */
+interface MonthStat {
+  key: string; label: string; avgGross: number; n: number;
+  grossStdDev: number; avgSD?: number; parOrBetter: number; doubleOrWorse: number;
+  bounceRate: number | null; bestRound?: number;
+  birdieRate?: number; bestStreak?: number;
+  first3VsPar?: number; last3VsPar?: number;
+  last3Avg?: number;
+}
+
+/** Coach monthly entry */
+interface CoachMonth { key: string; label: string; avgGross: number; n: number; grossStdDev: number }
+
+/** Round average entry */
+type RoundAvg = { m: number; s: number } | null;
 
 /* ═══════════════════════════════════
    CONFIG
@@ -100,48 +145,13 @@ function matchesCourse(name: string): boolean {
   const n = norm(name);
   return COURSE_KEYWORDS.some(kw => n.includes(kw));
 }
-function fmtTP(tp: number | null | undefined): string {
-  if (tp == null) return "–";
-  return tp === 0 ? "E" : tp > 0 ? `+${tp}` : String(tp);
-}
-function ScoreCircle({ g, p, sm }: { g: number | null; p: number | null; sm?: boolean }) {
-  if (g == null || g <= 0) return <span className="muted fs-9">·</span>;
-  return <span className={`sc-score ${scClass(g, p ?? 4)}`}
-    style={sm ? { fontSize: 10, minWidth: 20, minHeight: 20 } : undefined}>{g}</span>;
-}
+
+/* ScoreCircle + SectionErrorBoundary imported from src/ui/ */
 
 /* ═══════════════════════════════════
    MAIN COMPONENT
    ═══════════════════════════════════ */
-/* ═══ Password Gate (same as CalendarioPage) ═══ */
-const CAL_STORAGE_KEY = "cal_unlocked";
-const CAL_PASSWORD = "machico";
-
-function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
-  const [pw, setPw] = useState("");
-  const [error, setError] = useState(false);
-  const check = () => {
-    if (pw === CAL_PASSWORD) {
-      try { localStorage.setItem(CAL_STORAGE_KEY, "1"); } catch {}
-      onUnlock();
-    } else { setError(true); setTimeout(() => setError(false), 1500); }
-  };
-  return (
-    <div className="pw-gate">
-      <div className="pw-icon">🔒</div>
-      <div className="pw-title">Acesso restrito</div>
-      <div className="pw-sub">Este separador requer password</div>
-      <div className="pw-row">
-        <input type="password" value={pw} onChange={e => setPw(e.target.value)}
-          onKeyDown={e => e.key === "Enter" && check()}
-          placeholder="Password…" autoFocus
-          className={`tourn-pw-input${error ? " tourn-pw-error" : ""}`} />
-        <button onClick={check} className="pw-btn">Entrar</button>
-      </div>
-      {error && <div className="pw-error">Password incorrecta</div>}
-    </div>
-  );
-}
+/* PasswordGate + authConstants agora importados de src/ui/ e src/utils/ */
 
 
 /* ═══════════════════════════════════════════
@@ -150,7 +160,7 @@ function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
 
 const FL={"Portugal":"🇵🇹","Spain":"🇪🇸","England":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","Russian Federation":"🇷🇺","Bulgaria":"🇧🇬","Switzerland":"🇨🇭","Italy":"🇮🇹","France":"🇫🇷","Ireland":"🇮🇪","Northern Ireland":"🇬🇧","Germany":"🇩🇪","Netherlands":"🇳🇱","Norway":"🇳🇴","Lithuania":"🇱🇹","Thailand":"🇹🇭","United States":"🇺🇸","United Kingdom":"🇬🇧","Sweden":"🇸🇪","Morocco":"🇲🇦","Wales":"🏴󠁧󠁢󠁷󠁬󠁳󠁿","Belgium":"🇧🇪","Slovenia":"🇸🇮","Ukraine":"🇺🇦","Romania":"🇷🇴","China":"🇨🇳","Philippines":"🇵🇭","Slovakia":"🇸🇰","United Arab Emirates":"🇦🇪","Turkey":"🇹🇷","India":"🇮🇳","Viet Nam":"🇻🇳","Kazakhstan":"🇰🇿","Hungary":"🇭🇺","South Africa":"🇿🇦","Singapore":"🇸🇬","Denmark":"🇩🇰","Mexico":"🇲🇽","Canada":"🇨🇦","Austria":"🇦🇹","Paraguay":"🇵🇾","Brazil":"🇧🇷","Jersey":"🇯🇪","Nigeria":"🇳🇬","Oman":"🇴🇲","Chile":"🇨🇱","Colombia":"🇨🇴","Puerto Rico":"🇵🇷","Costa Rica":"🇨🇷","Great Britain":"🇬🇧","Latvia":"🇱🇻","South Korea":"🇰🇷"};
 
-const T=[
+const T: TournDef[]=[
   {id:"brjgt25",name:"WJGC 2025",short:"WJGC",date:"Fev 2025",rounds:3,par:71,field:40,nations:17,url:"https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/34/leaderboard.htm"},
   {id:"eowagr25",name:"European Open",short:"EU Open",date:"Ago 2025",rounds:3,par:72,field:8,nations:3,url:"https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2512/contest/21/leaderboard.htm"},
   {id:"venice25",name:"Venice Open 2025",short:"Venice",date:"Ago 2025",rounds:3,par:72,field:39,nations:12,url:"https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/515206/venice-open-2025/results"},
@@ -178,7 +188,7 @@ const T_WEIGHTS: Record<string, number> = (() => {
 
 const UP=[{id:"wjgc26",name:"WJGC 2026",short:"WJGC"},{id:"marco26",name:"Marco Simone Inv.",short:"M.SIMONE",url:"https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516989/marco-simone-invitational-2026/field"}];
 
-const D=[
+const D: RivalPlayer[]=[
   {n:"Manuel Medeiros",co:"Portugal",isM:true,r:{brjgt25:{p:26,t:265,tp:52,rd:[90,85,90]},eowagr25:{p:7,t:238,tp:22,rd:[85,77,76]},venice25:{p:28,t:237,tp:21,rd:[78,76,83]},rome25:{p:10,t:166,tp:22,rd:[89,77]},doral25:{p:29,t:177,tp:35,rd:[98,79]},qdl25:{p:11,t:90,tp:18,rd:[90]},gg26:{p:4,t:169,tp:25,rd:[87,82]}},up:["wjgc26","marco26"]},
   {n:"Dmitrii Elchaninov",co:"Russian Federation",r:{brjgt25:{p:1,t:205,tp:-8,rd:[69,68,68]},eowagr25:{p:2,t:218,tp:2,rd:[77,70,71]},venice25:{p:1,t:198,tp:-18,rd:[62,68,68]},qdl25:{p:1,t:71,tp:-1,rd:[71]}},up:["wjgc26"]},
   {n:"Diego Gross Paneque",co:"Spain",r:{brjgt25:{p:16,t:249,tp:36,rd:[80,84,85]}},up:["wjgc26"]},
@@ -465,7 +475,7 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
       else if (sort === "vsManuel") { cmp = (getVsAvg(a) ?? 999) - (getVsAvg(b) ?? 999); }
       else if (sort.startsWith("t:")) {
         const tid = sort.slice(2);
-        const posOf = (x: any) => { const r = x.r[tid]; if (!r || r.tp == null) return 9999; return typeof r.p === "number" ? r.p : 9998; };
+        const posOf = (x: RivalPlayer) => { const r = x.r[tid]; if (!r || r.tp == null) return 9999; return typeof r.p === "number" ? r.p : 9998; };
         cmp = posOf(a) - posOf(b);
       }
       else if (sort.startsWith("up:")) {
@@ -491,7 +501,7 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
   }, []);
   const totalRanked = Object.keys(rankMap).length;
 
-  function getVsAvg(p: any) {
+  function getVsAvg(p: RivalPlayer) {
     if (p.isM) return null;
     const ds: number[] = [];
     Object.keys(p.r).forEach(tid => {
@@ -502,8 +512,8 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
   }
 
   // Count tournaments & rounds played
-  const nPlayed = (p: any) => T.filter(t => p.r[t.id] && p.r[t.id].tp != null).length;
-  const nRounds = (p: any) => T.reduce((acc, t) => { const res = p.r[t.id]; return acc + (res && res.rd ? res.rd.filter((x: any) => x != null).length : 0); }, 0);
+  const nPlayed = (p: RivalPlayer) => T.filter(t => p.r[t.id] && p.r[t.id].tp != null).length;
+  const nRounds = (p: RivalPlayer) => T.reduce((acc, t) => { const res = p.r[t.id]; return acc + (res && res.rd ? res.rd.filter((x: number | null) => x != null).length : 0); }, 0);
 
   return (
     <div className="tourn-section">
@@ -514,13 +524,13 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
           if (!res) return (
             <div key={t.id} className="tourn-kpi op-4">
               <div className="tourn-kpi-lbl">{t.short}</div>
-              <div className="tourn-kpi-val" style={{ fontSize: 16 }}>–</div>
+              <div className="tourn-kpi-val fs-16">–</div>
             </div>
           );
           return (
             <div key={t.id} className="tourn-kpi">
               <div className="tourn-kpi-lbl">{t.short}</div>
-              <div className="tourn-kpi-val" style={{ fontSize: 16, color: res.tp <= 0 ? "var(--color-success-dark)" : res.tp <= 20 ? "var(--color-warn-dark)" : "var(--color-danger-dark)" }}>
+              <div className="tourn-kpi-val" style={{ fontSize: 16, color: res.tp <= 0 ? "var(--color-good-dark)" : res.tp <= 20 ? "var(--color-warn-dark)" : "var(--color-danger-dark)" }}>
                 {res.tp > 0 ? "+" : ""}{res.tp}
               </div>
               <div className="tourn-kpi-sub">#{res.p} · {res.rd.join("-")}</div>
@@ -574,7 +584,7 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
                   <th key={t.id} className="rivais-th pointer ta-center" style={{ minWidth: 56 }} onClick={() => doSort("t:" + t.id)}>
                     {t.url ? <a href={t.url} target="_blank" rel="noopener noreferrer" className="rivais-link" onClick={e => e.stopPropagation()}>{t.short}</a> : t.short}
                     {sortIcon("t:" + t.id)}
-                    <div className="fs-9 fw-500" style={{ opacity: 0.6, marginTop: 1 }}>{stars}</div>
+                    <div className="fs-9 fw-500 op-6 mt-1">{stars}</div>
                   </th>
                   );
                 })}
@@ -626,8 +636,8 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
                       const roundAvgs = AVG_R[t.id];
                       let fieldAvg: number | null = null, fieldStd: number | null = null;
                       if (roundAvgs && roundAvgs.length > 0) {
-                        const ms = roundAvgs.filter((x: any) => x).map((x: any) => x.m);
-                        const ss = roundAvgs.filter((x: any) => x).map((x: any) => x.s);
+                        const ms = roundAvgs.filter((x: RoundAvg): x is { m: number; s: number } => x != null).map(x => x.m);
+                        const ss = roundAvgs.filter((x: RoundAvg): x is { m: number; s: number } => x != null).map(x => x.s);
                         if (ms.length > 0) { fieldAvg = ms.reduce((a: number, b: number) => a + b, 0) / ms.length; fieldStd = ss.reduce((a: number, b: number) => a + b, 0) / ss.length; }
                       }
                       const ti = fieldAvg != null ? zTier(playerAvg, { m: fieldAvg, s: fieldStd }) : null;
@@ -653,7 +663,7 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
                     <td className="ta-center" style={{ borderLeft: "3px solid var(--border-light)", padding: "4px 6px" }}>
                       {rankMap[p.n] != null ? (
                         <div title={`z-score: ${(getAvgZ(p) ?? 0).toFixed(2)} · ${nRounds(p)} rondas`}>
-                          <div className="fw-800 fs-13" style={{ color: rankMap[p.n] <= 10 ? "var(--color-success-dark)" : rankMap[p.n] <= 30 ? "var(--text)" : "var(--text-3)" }}>
+                          <div className="fw-800 fs-13" style={{ color: rankMap[p.n] <= 10 ? "var(--color-good-dark)" : rankMap[p.n] <= 30 ? "var(--text)" : "var(--text-3)" }}>
                             {rankMap[p.n]}º
                           </div>
                           <div className="fs-10 c-text-3">{nPlayed(p)}T · {nRounds(p)}R</div>
@@ -669,7 +679,7 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
                     {/* Upcoming tournaments */}
                     {UP.map(u => (
                       <td key={u.id} className="ta-center fs-12">
-                        {p.up.includes(u.id) ? <span className="fw-700" style={{ color: "var(--color-success-dark)" }}>✓</span> : <span className="c-border">—</span>}
+                        {p.up.includes(u.id) ? <span className="fw-700" style={{ color: "var(--color-good-dark)" }}>✓</span> : <span className="c-border">—</span>}
                       </td>
                     ))}
 
@@ -717,13 +727,11 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
   const backPar = par.slice(9).reduce((a, b) => a + b, 0);
   const totalPar = frontPar + backPar;
   const sm = (arr: number[], f: number, t: number) => arr.slice(f, t).reduce((a, b) => a + b, 0);
-  const fmtTP = (tp: number | null) => tp == null ? "–" : tp === 0 ? "E" : tp > 0 ? `+${tp}` : `${tp}`;
-  const tpCls = (tp: number) => tp > 0 ? "sc-topar-pos" : tp < 0 ? "sc-topar-neg" : "sc-topar-zero";
 
   /* ── Sub-total cell with ±par annotation ── */
   const SubCell = ({ gross, parVal, cls }: { gross: number; parVal: number; cls: string }) => {
     const tp = gross - parVal;
-    return <td className={`${cls} fw-700`}>{gross}<span className={`sc-topar ${tpCls(tp)}`}>{tp > 0 ? "+" : ""}{tp}</span></td>;
+    return <td className={`${cls} fw-700`}>{gross}<span className={`sc-topar ${toParClass(tp)}`}>{tp > 0 ? "+" : ""}{tp}</span></td>;
   };
 
   /* ── Shared table header ── */
@@ -823,7 +831,7 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
     const total = sm(holes, 0, 18), tp = total - totalPar;
     return (
       <div key={idx} className="mb-12">
-        <div className="tourn-meta fw-700 mb-4">{label} — {total} ({fmtTP(tp)})</div>
+        <div className="tourn-meta fw-700 mb-4">{label} — {total} ({fmtToPar(tp)})</div>
         <div className="scroll-x">
           <table className="sc-table-modern" data-sc-table="1">
             <THead />
@@ -868,10 +876,10 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
 
   return (
     <div className="tourn-section">
-      <button className="filter-pill mb-12" onClick={onBack} style={{ opacity: 1 }}>← Análise</button>
+      <button className="filter-pill mb-12" onClick={onBack}>← Análise</button>
 
       <div className="d-flex items-center gap-8 mb-12">
-        <span className="fw-800 fs-15">{lbEntry?.country || (rival ? (FL as any)[rival.co] || "" : "")} {playerName}</span>
+        <span className="fw-800 fs-15">{lbEntry?.country || (rival ? (FL as Record<string, string>)[rival.co] || "" : "")} {playerName}</span>
         {lbEntry && <span className="jog-pill jog-pill-stats">BJGT #{lbEntry.pos}</span>}
         <span className="jog-pill jog-pill-escalao jog-pill-escalao-sub12">Sub-12</span>
         {rival?.co && <span className="jog-pill jog-pill-stats">{rival.co}</span>}
@@ -879,11 +887,11 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
 
       {/* KPIs */}
       <div className="tourn-kpis" style={{ gridTemplateColumns: `repeat(${card ? 5 : 4}, 1fr)`, marginBottom: 16 }}>
-        {lbEntry && <div className="tourn-kpi"><div className="tourn-kpi-lbl">BJGT Total</div><div className="tourn-kpi-val">{lbEntry.total}</div><div className="tourn-kpi-sub">{fmtTP(lbEntry.result)} · #{lbEntry.pos}</div></div>}
-        {bestTp != null && <div className="tourn-kpi"><div className="tourn-kpi-lbl">Melhor ±Par</div><div className="tourn-kpi-val" style={{ color: bestTp <= 0 ? "var(--color-success-dark)" : "var(--text)" }}>{fmtTP(bestTp)}</div></div>}
-        {bestRound != null && <div className="tourn-kpi"><div className="tourn-kpi-lbl">Melhor Ronda</div><div className="tourn-kpi-val" style={{ color: "var(--color-success-dark)" }}>{bestRound}</div></div>}
+        {lbEntry && <div className="tourn-kpi"><div className="tourn-kpi-lbl">BJGT Total</div><div className="tourn-kpi-val">{lbEntry.total}</div><div className="tourn-kpi-sub">{fmtToPar(lbEntry.result)} · #{lbEntry.pos}</div></div>}
+        {bestTp != null && <div className="tourn-kpi"><div className="tourn-kpi-lbl">Melhor ±Par</div><div className="tourn-kpi-val" style={{ color: bestTp <= 0 ? "var(--color-good-dark)" : "var(--text)" }}>{fmtToPar(bestTp)}</div></div>}
+        {bestRound != null && <div className="tourn-kpi"><div className="tourn-kpi-lbl">Melhor Ronda</div><div className="tourn-kpi-val" style={{ color: "var(--color-good-dark)" }}>{bestRound}</div></div>}
         {avgRound != null && <div className="tourn-kpi"><div className="tourn-kpi-lbl">Média Ronda</div><div className="tourn-kpi-val">{avgRound.toFixed(1)}</div></div>}
-        {card && <div className="tourn-kpi"><div className="tourn-kpi-lbl">Eclético BJGT</div><div className="tourn-kpi-val" style={{ color: "var(--color-success-dark)" }}>{card.eclTotal}</div><div className="tourn-kpi-sub">{fmtTP(card.eclTotal - totalPar)}</div></div>}
+        {card && <div className="tourn-kpi"><div className="tourn-kpi-lbl">Eclético BJGT</div><div className="tourn-kpi-val" style={{ color: "var(--color-good-dark)" }}>{card.eclTotal}</div><div className="tourn-kpi-sub">{fmtToPar(card.eclTotal - totalPar)}</div></div>}
       </div>
 
       {/* ── Scoring distribution ── */}
@@ -929,11 +937,11 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
                       {Array.from({ length: mx }, (_, j) => {
                         const rd = r.rounds[j]; if (rd == null) return <td key={j} />;
                         const rdTp = rd - r.par;
-                        const col = rdTp <= 0 ? "var(--color-success-dark)" : rdTp <= 5 ? "var(--color-warn-dark)" : "var(--color-danger-dark)";
+                        const col = rdTp <= 0 ? "var(--color-good-dark)" : rdTp <= 5 ? "var(--color-warn-dark)" : "var(--color-danger-dark)";
                         return <td key={j} className="r tourn-mono fw-600" style={{ color: col }}>{rd}</td>;
                       })}
                       <td className="r tourn-mono fw-800">{r.total ?? "–"}</td>
-                      <td className="r fw-700" style={{ color: r.tp != null && r.tp <= 0 ? "var(--color-success-dark)" : r.tp != null && r.tp <= 15 ? "var(--color-warn-dark)" : "var(--color-danger-dark)" }}>{fmtTP(r.tp)}</td>
+                      <td className="r fw-700" style={{ color: r.tp != null && r.tp <= 0 ? "var(--color-good-dark)" : r.tp != null && r.tp <= 15 ? "var(--color-warn-dark)" : "var(--color-danger-dark)" }}>{fmtToPar(r.tp)}</td>
                     </tr>
                   );
                 })}
@@ -982,7 +990,7 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
 
       {!card && lbEntry && (
         <div className="tourn-meta mb-12">
-          BJGT 2025: {lbEntry.rounds.join("-")} = {lbEntry.total} ({fmtTP(lbEntry.result)}) — scorecard buraco-a-buraco não disponível
+          BJGT 2025: {lbEntry.rounds.join("-")} = {lbEntry.total} ({fmtToPar(lbEntry.result)}) — scorecard buraco-a-buraco não disponível
         </div>
       )}
     </div>
@@ -991,7 +999,7 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
 
 export default function BJGTAnalysisPage({ playerFed }: { playerFed?: string }) {
   const [unlocked, setUnlocked] = useState(() => {
-    try { return localStorage.getItem(CAL_STORAGE_KEY) === "1"; } catch { return false; }
+    try { return isCalUnlocked(); } catch { return false; }
   });
 
   if (!unlocked) return <PasswordGate onUnlock={() => setUnlocked(true)} />;
@@ -1002,27 +1010,12 @@ export default function BJGTAnalysisPage({ playerFed }: { playerFed?: string }) 
 function BJGTContent({ playerFed }: { playerFed?: string }) {
   const { fed: urlFed } = useParams<{ fed?: string }>();
   const fed = urlFed || playerFed || PLAYER_FED;
-  const [data, setData] = useState<PlayerPageData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { data, loading, error } = usePlayerData(fed);
   const [tab, setTab] = useState<"analise" | "rivais">("analise");
   const [distPeriod, setDistPeriod] = useState<number>(12); // months: 3,6,9,12,0=all
   const [expandedPlayers, setExpandedPlayers] = useState<Set<number>>(new Set());
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
-
-  useEffect(() => {
-    let alive = true;
-    setLoading(true); setError(null); setData(null);
-    loadPlayerData(fed).then(d => {
-      if (!alive) return;
-      deepFixMojibake(d); setData(d); setLoading(false);
-    }).catch(e => {
-      if (!alive) return;
-      setError(e.message); setLoading(false);
-    });
-    return () => { alive = false; };
-  }, [fed]);
 
   /* ── Analysis ── */
   const A = useMemo(() => {
@@ -1544,20 +1537,20 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
   /* ── Filtered distance bands by period (must be before early returns!) ── */
   const filteredBandsResult = useMemo(() => {
-    if (!A || "err" in A) return { filteredBands: [] as any[], filteredN: 0, periodLabel: "all-time" };
-    const { allHoleSamples: ahs, bandDefs: bd, bands: b } = A as any;
-    if (!ahs || !bd) return { filteredBands: [] as any[], filteredN: 0, periodLabel: "all-time" };
+    if (!A || "err" in A) return { filteredBands: [] as FilteredBand[], filteredN: 0, periodLabel: "all-time" };
+    const { allHoleSamples: ahs, bandDefs: bd, bands: b } = A as { allHoleSamples: HoleSample[]; bandDefs: BandDef[]; bands: FilteredBand[] };
+    if (!ahs || !bd) return { filteredBands: [] as FilteredBand[], filteredN: 0, periodLabel: "all-time" };
     if (distPeriod === 0) return { filteredBands: b, filteredN: ahs.length, periodLabel: "all-time" };
     const now = new Date();
     const cutoff = new Date(now.getFullYear(), now.getMonth() - distPeriod, now.getDate()).getTime();
-    const filtered = ahs.filter((h: any) => h.ds >= cutoff);
-    const fb: any[] = [];
+    const filtered = ahs.filter((h: HoleSample) => h.ds >= cutoff);
+    const fb: FilteredBand[] = [];
     for (const bdef of bd) {
-      const s = filtered.filter((h: any) => h.par === bdef.par && h.meters != null && h.meters >= bdef.minM && h.meters < bdef.maxM);
+      const s = filtered.filter((h: HoleSample) => h.par === bdef.par && h.meters != null && h.meters >= bdef.minM && h.meters < bdef.maxM);
       if (s.length < 3) continue;
-      const avg = s.reduce((a: number, b: any) => a + b.gross, 0) / s.length;
-      const pob = s.filter((h: any) => h.gross <= bdef.par).length / s.length * 100;
-      const dbl = s.filter((h: any) => h.gross >= bdef.par + 2).length / s.length * 100;
+      const avg = s.reduce((a: number, b: HoleSample) => a + b.gross, 0) / s.length;
+      const pob = s.filter((h: HoleSample) => h.gross <= bdef.par).length / s.length * 100;
+      const dbl = s.filter((h: HoleSample) => h.gross >= bdef.par + 2).length / s.length * 100;
       fb.push({ key: `${bdef.par}-${bdef.minM}`, label: bdef.label, par: bdef.par, minM: bdef.minM, maxM: bdef.maxM, samples: s, avg, pobPct: pob, dblPct: dbl, n: s.length });
     }
     return { filteredBands: fb, filteredN: filtered.length, periodLabel: `${distPeriod}m` };
@@ -1566,7 +1559,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
   /* ── Period-filtered monthly & coach data (must be before early returns!) ── */
   const filteredMonthly = useMemo(() => {
     if (!A || "err" in A) return [];
-    const ms = (A as any).monthlyStats;
+    const ms = (A as { monthlyStats: MonthStat[] }).monthlyStats;
     if (!ms) return [];
     if (distPeriod === 0) return ms;
     return ms.slice(-distPeriod);
@@ -1574,7 +1567,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
   const filteredCoach = useMemo(() => {
     if (!A || "err" in A) return [];
-    const cm = (A as any).coachMonthly;
+    const cm = (A as { coachMonthly: CoachMonth[] }).coachMonthly;
     if (!cm) return [];
     if (distPeriod === 0) return cm;
     return cm.slice(-distPeriod);
@@ -1585,7 +1578,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
     <div className="tourn-layout">
       <div className="toolbar"><div className="toolbar-left"><span className="tourn-toolbar-title">🇪🇸 BJGT</span></div></div>
       <div className="master-detail"><div className="course-detail empty-state-lg">
-        <div className="empty-state-lg"><div className="empty-icon">🏌️</div><div className="fw-700 c-text-2 fs-14">A carregar dados…</div></div>
+        <LoadingState size="lg" icon="🏌️" message="A carregar dados…" />
       </div></div>
     </div>
   );
@@ -1598,7 +1591,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
     </div>
   );
   if (!A || "err" in A) {
-    const info = A as any;
+    const info = A as { err?: string; courses?: string[]; nRounds?: number; nCards?: number; hsKeys?: string[] };
     return (
       <div className="tourn-layout">
         <div className="toolbar"><div className="toolbar-left"><span className="tourn-toolbar-title">🇪🇸 BJGT</span></div></div>
@@ -1655,8 +1648,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
           <div className="tourn-toolbar-sep" />
           <div className="escalao-pills">
             {([["analise", "Análise VP"], ["rivais", "Rivais"]] as const).map(([k, l]) => (
-              <button key={k} onClick={() => setTab(k as any)}
-                className={`filter-pill${tab === k ? " active" : ""}`}>
+              <button key={k} onClick={() => setTab(k as "analise" | "rivais")}
+                className={`tourn-tab tourn-tab-sm${tab === k ? " active" : ""}`}>
                 {l}
               </button>
             ))}
@@ -1667,7 +1660,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               {[3, 6, 9, 12, 0].map(m => (
                 <button key={m} onClick={() => setDistPeriod(m)}
                   className={`filter-pill${distPeriod === m ? " active" : ""}`}
-                  style={{ fontSize: 10 }}>
+                  className="fs-10">
                   {m === 0 ? "All" : `${m}m`}
                 </button>
               ))}
@@ -1691,7 +1684,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               onClick={() => setSelectedPlayer(prev => prev === p.name ? null : p.name)}>
               <div className="course-item-name">
                 <span style={{ minWidth: 22, color: p.pos <= 3 ? "var(--color-warn-dark)" : "var(--text-3)", fontWeight: 800, fontSize: 11 }}>{p.pos}.</span>
-                {p.country} {p.name.split(" ")[0]}
+                {p.country} {firstName(p.name)}
               </div>
               <div className="course-item-meta">
                 {p.rounds.join("-")} = {p.total} ({p.result > 0 ? `+${p.result}` : p.result})
@@ -1719,7 +1712,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
         <div className="courseAnalysis courseAnalysis-success">
  <div className="caTitle fs-14 c-good-dark-inline" >🎯 Objectivo: bater o eclético</div>
  <div className="caConcText mb-10 c-good-darker" >
-            O ano passado fizeste <b>{daySummaries.map(d => d.gross).join(", ")}</b>. O eclético — o melhor que fizeste em cada buraco, espalhado nos {vpCards.length} dias — é <b>{ecl.totalGross}</b> ({fmtTP(ecl.toPar ?? ecl.totalGross - tp)}).
+            O ano passado fizeste <b>{daySummaries.map(d => d.gross).join(", ")}</b>. O eclético — o melhor que fizeste em cada buraco, espalhado nos {vpCards.length} dias — é <b>{ecl.totalGross}</b> ({fmtToPar(ecl.toPar ?? ecl.totalGross - tp)}).
             Com mais um ano de força, maturidade e experiência, o objectivo é juntar tudo isso e aproximar-te desse número.
           </div>
           <div className="objective-card">
@@ -1727,8 +1720,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               Objectivo por ronda
             </div>
  <div className="d-flex gap-10 mt-4 ai-baseline" >
- <span className="fw-900" style={{ fontSize: 26 }}>{ecl.totalGross}–{bestDay ? bestDay.gross : Math.round((ecl.totalGross + tp + 15) / 2)}</span>
- <span className="fs-12" style={{ opacity: 0.8 }}>({fmtTP(ecl.toPar ?? ecl.totalGross - tp)} a {fmtTP(bestDay ? bestDay.gross - tp : 15)})</span>
+ <span className="fw-900 fs-26">{ecl.totalGross}–{bestDay ? bestDay.gross : Math.round((ecl.totalGross + tp + 15) / 2)}</span>
+ <span className="fs-12 op-8">({fmtToPar(ecl.toPar ?? ecl.totalGross - tp)} a {fmtToPar(bestDay ? bestDay.gross - tp : 15)})</span>
             </div>
             <div className="fs-10-op6 mt-4">
               Eclético → Melhor dia 2025{hcp != null ? ` · HCP actual: ${hcp.toFixed(1)}` : ""}
@@ -1745,7 +1738,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
             <div className="haDiagIcon diag-warn">🥇</div>
             <div className="haDiagBody">
               <div className="haDiagVal c-eagle">{FIELD_2025.winner.total}</div>
-              <div className="haDiagLbl">{FIELD_2025.winner.name} ({fmtTP(FIELD_2025.winner.result)})</div>
+              <div className="haDiagLbl">{FIELD_2025.winner.name} ({fmtToPar(FIELD_2025.winner.result)})</div>
             </div>
           </div>
           <div className="haDiagCard">
@@ -1769,8 +1762,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
  <div key={p.pos} className="flex-center-gap6 card-detail br-default" style={{ padding: "5px 8px" }}>
               <span className="fw-900-fs13-muted">{p.pos}.</span>
               <div>
-                <div className="fs-10-fw700-lh">{p.name.split(" ")[0]}</div>
- <div className="c-text-3 fs-10" >{p.rounds.join("-")} = {p.total} ({fmtTP(p.result)})</div>
+                <div className="fs-10-fw700-lh">{firstName(p.name)}</div>
+ <div className="c-text-3 fs-10" >{p.rounds.join("-")} = {p.total} ({fmtToPar(p.result)})</div>
               </div>
             </div>
           ))}
@@ -1813,7 +1806,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                         <td key={ri} className="ta-c">{r}</td>
                       ))}
                       <td className="fw-800 ta-c">{p.total}</td>
-                      <td className="fw-600 ta-c">{fmtTP(p.result)}</td>
+                      <td className="fw-600 ta-c">{fmtToPar(p.result)}</td>
                       <td className="ta-c">{p.best}</td>
                       <td className="ta-c">{fc?.eclTotal ?? "–"}</td>
                     </tr>
@@ -1852,7 +1845,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                                         </td>
                                       ))}
                                       <td className="sc-cell-bold">{rdTotal}</td>
-                                      <td className="sc-cell-muted">{fmtTP(rdTotal - 71)}</td>
+                                      <td className="sc-cell-muted">{fmtToPar(rdTotal - 71)}</td>
                                     </tr>
                                   );
                                 })}
@@ -1864,7 +1857,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                                     </td>
                                   ))}
                                   <td className="sc-cell-heavy">{fc.eclTotal}</td>
-                                  <td className="sc-cell-bold">{fmtTP(fc.eclTotal - 71)}</td>
+                                  <td className="sc-cell-bold">{fmtToPar(fc.eclTotal - 71)}</td>
                                 </tr>
                               </tbody>
                             </table>
@@ -1897,7 +1890,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                         <td key={ri} className="ta-c">{r}</td>
                       ))}
                       <td className="fw-800 ta-c">{mTotal}</td>
-                      <td className="fw-600 ta-c">{fmtTP(mResult)}</td>
+                      <td className="fw-600 ta-c">{fmtToPar(mResult)}</td>
                       <td className="ta-c">{mBest}</td>
                       <td className="ta-c">{ecl?.totalGross ?? "–"}</td>
                     </tr>
@@ -1937,7 +1930,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                                         </td>
                                       ))}
                                       <td className="sc-cell-bold">{rdTotal}</td>
-                                      <td className="sc-cell-muted">{fmtTP(rdTotal - 71)}</td>
+                                      <td className="sc-cell-muted">{fmtToPar(rdTotal - 71)}</td>
                                     </tr>
                                   );
                                 })}
@@ -1950,7 +1943,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                                       </td>
                                     ))}
                                     <td className="sc-cell-heavy">{ecl.totalGross}</td>
-                                    <td className="sc-cell-bold">{fmtTP(ecl.totalGross - 71)}</td>
+                                    <td className="sc-cell-bold">{fmtToPar(ecl.totalGross - 71)}</td>
                                   </tr>
                                 )}
                               </tbody>
@@ -2185,7 +2178,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     </>
                   )}
                   {vpInBand.length > 0 && (
- <div className="fw-600 c-chart-2 fs-10" style={{ borderTop: "1px solid var(--border-light)", paddingTop: 4 }}>
+ <div className="fw-600 c-chart-2 fs-10 border-t pt-4">
                       VP buracos nesta faixa: {vpInBand.map(h => `#${h.h}`).join(", ")}
                     </div>
                   )}
@@ -2427,7 +2420,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                         <div key={p.label} className="card-detail ta-c">
                           <div className="fw-900-fs11-mb4">{p.label}</div>
                           <div className="fs-9-muted-mb4">{p.data.length} rondas</div>
- <div className="fw-900 c-text" style={{ fontSize: 22 }}>{avg.toFixed(1)}</div>
+ <div className="fw-900 c-text fs-22">{avg.toFixed(1)}</div>
                           <div className="muted fs-9">média</div>
                           <div className="flex-jc-center-gap10">
                             <span className="cb-par-ok">⬇{best}</span>
@@ -2449,7 +2442,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     return (
                       <div className="mt-8">
                         {[...benchmarks, { label: `📍 ${PLAYER_NAME} média`, value: recentAvg, col: "var(--text)" }, { label: `📍 ${PLAYER_NAME} melhor`, value: recentBest, col: SC.good }].map((b, i) => (
-                          <div key={i} className="flex-center-gap6" style={{ marginBottom: 3 }}>
+                          <div key={i} className="flex-center-gap6 mb-3">
  <span className="fs-10 fw-600" style={{ minWidth: 110, color: b.col }}>{b.label}</span>
                             <div className="progress-track">
                               <div style={{ width: `${((b.value - minV) / range) * 100}%`, height: "100%", background: b.col, borderRadius: "var(--radius-sm)", opacity: 0.6 }} />
@@ -2955,7 +2948,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     <td className="row-label fw-700">D{di + 1}</td>
                     {g.map((s, hi) => (
                       <td key={hi} className="ta-c">
-                        {s != null ? <ScoreCircle g={s} p={vpHoleProfiles[hi]?.par ?? 4} sm /> : "·"}
+                        {s != null ? <ScoreCircle gross={s} par={vpHoleProfiles[hi]?.par ?? 4} size="small" /> : "·"}
                       </td>
                     ))}
                     <td className="sc-cell-sep-bold">{rdTotal}</td>
@@ -2968,7 +2961,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                   <td className="row-label fw-800">ECL</td>
                   {ecl.holes.map((eh, hi) => (
                     <td key={hi} className="ta-c">
-                      {eh.best != null ? <ScoreCircle g={eh.best} p={vpHoleProfiles[hi]?.par ?? 4} sm /> : "·"}
+                      {eh.best != null ? <ScoreCircle gross={eh.best} par={vpHoleProfiles[hi]?.par ?? 4} size="small" /> : "·"}
                     </td>
                   ))}
                   <td className="sc-cell-sep">{ecl.totalGross}</td>
@@ -3061,7 +3054,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     <span className="muted fs-10">{d.date}</span>
                   </div>
  <div className="fw-900" style={{ fontSize: 28, color: isBest ? SC.good : isWorst ? SC.danger : "var(--text)" }}>{d.gross}</div>
-                  <div className="muted fs-10 mb-6">{fmtTP(d.gross - tp)}</div>
+                  <div className="muted fs-10 mb-6">{fmtToPar(d.gross - tp)}</div>
                   <div className="flex-gap8-fs10">
                     <span>F9: <b>{d.f9}</b></span>
                     {nH >= 18 && <span>B9: <b>{d.b9}</b></span>}
@@ -3097,14 +3090,14 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               <div className="haDiagIcon diag-info">1️⃣</div>
               <div className="haDiagBody">
                 <div className="haDiagVal c-blue">{f9avg.toFixed(0)}</div>
-                <div className="haDiagLbl">média Front 9 ({fmtTP(Math.round(f9avg - f9par))})</div>
+                <div className="haDiagLbl">média Front 9 ({fmtToPar(Math.round(f9avg - f9par))})</div>
               </div>
             </div>
             <div className="haDiagCard">
               <div className={`haDiagIcon ${Math.round(b9avg) > Math.round(f9avg) + 2 ? "diag-danger" : "diag-good"}`}>🔟</div>
               <div className="haDiagBody">
                 <div className="haDiagVal" style={{ color: Math.round(b9avg) > Math.round(f9avg) + 2 ? SC.danger : "var(--text)" }}>{b9avg.toFixed(0)}</div>
-                <div className="haDiagLbl">média Back 9 ({fmtTP(Math.round(b9avg - b9par))})</div>
+                <div className="haDiagLbl">média Back 9 ({fmtToPar(Math.round(b9avg - b9par))})</div>
               </div>
             </div>
             {Math.abs(f9avg - b9avg) > 2 && (
@@ -3151,7 +3144,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     <span className="muted fs-10">Par {h.par}</span>
                   </div>
                   <div className="d-flex gap-4 mb-4 mt-4">
-                    {h.scores.map((s, i) => <ScoreCircle key={i} g={s} p={h.par} sm />)}
+                    {h.scores.map((s, i) => <ScoreCircle key={i} gross={s} par={h.par} size="small" />)}
                   </div>
  <div className="fs-10 fw-600 c-danger-dark-inline" >
                     μ {h.avg.toFixed(1)} · {h.dblCount}× double+
@@ -3176,7 +3169,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     <span className="muted fs-10">Par {h.par}</span>
                   </div>
                   <div className="d-flex gap-4 mb-4 mt-4">
-                    {h.scores.map((s, i) => <ScoreCircle key={i} g={s} p={h.par} sm />)}
+                    {h.scores.map((s, i) => <ScoreCircle key={i} gross={s} par={h.par} size="small" />)}
                   </div>
  <div className="fs-10 fw-600 c-good-dark-inline" >
                     μ {h.avg.toFixed(1)} · {h.parOrBetter}× par ou melhor
@@ -3201,7 +3194,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     <span className="muted fs-10">Par {h.par}</span>
                   </div>
                   <div className="d-flex gap-4 mb-4 mt-4">
-                    {h.scores.map((s, i) => <ScoreCircle key={i} g={s} p={h.par} sm />)}
+                    {h.scores.map((s, i) => <ScoreCircle key={i} gross={s} par={h.par} size="small" />)}
                   </div>
  <div className="fs-10 fw-600 c-warn-dark-inline" >
                     {h.best}–{h.worst} (var. {h.variance.toFixed(1)})
@@ -3246,14 +3239,14 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
             <div className="haDiagIcon diag-danger">🏌️</div>
             <div className="haDiagBody">
  <div className="haDiagVal c-text" >{S.bestRound ? String(S.bestRound.gross) : "–"}</div>
-              <div className="haDiagLbl">melhor gross {S.bestRound ? fmtTP(S.bestRound.gross - tp) : ""}</div>
+              <div className="haDiagLbl">melhor gross {S.bestRound ? fmtToPar(S.bestRound.gross - tp) : ""}</div>
             </div>
           </div>
           <div className="haDiagCard">
             <div className="haDiagIcon diag-info">📊</div>
             <div className="haDiagBody">
               <div className="haDiagVal c-blue">{S.avgGross != null ? S.avgGross.toFixed(1) : "–"}</div>
-              <div className="haDiagLbl">média gross {S.avgGross != null ? fmtTP(Math.round(S.avgGross - tp)) : ""}</div>
+              <div className="haDiagLbl">média gross {S.avgGross != null ? fmtToPar(Math.round(S.avgGross - tp)) : ""}</div>
             </div>
           </div>
           <div className="haDiagCard">
@@ -3329,9 +3322,9 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                 )}
                 <tr className="bt-heavy">
                   <td className="row-label cb-blue-10">Eclético</td>
-                  {ecl.holes.slice(0, 9).map((h, i) => <td key={i}><ScoreCircle g={h.best} p={h.par} /></td>)}
+                  {ecl.holes.slice(0, 9).map((h, i) => <td key={i}><ScoreCircle gross={h.best} par={h.par} /></td>)}
                   <td className="col-out fw-700">{ecl.holes.slice(0, 9).reduce((s, h) => s + (h.best ?? h.par ?? 0), 0)}</td>
-                  {ecl.holeCount >= 18 && ecl.holes.slice(9, 18).map((h, i) => <td key={i}><ScoreCircle g={h.best} p={h.par} /></td>)}
+                  {ecl.holeCount >= 18 && ecl.holes.slice(9, 18).map((h, i) => <td key={i}><ScoreCircle gross={h.best} par={h.par} /></td>)}
                   {ecl.holeCount >= 18 && <td className="col-in fw-700">{ecl.holes.slice(9, 18).reduce((s, h) => s + (h.best ?? h.par ?? 0), 0)}</td>}
                   <td className="col-total fw-900 fs-13">{ecl.totalGross}</td>
                 </tr>
@@ -3346,9 +3339,9 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                       <td className="row-label fs-10">
  <span className="sc-pill fs-10 c-white" style={{ background: SC.danger, padding: "1px 6px" }}>{trDate}</span>
                       </td>
-                      {h.g.slice(0, 9).map((s, i) => <td key={i}><ScoreCircle g={s} p={ecl!.holes[i]?.par} sm /></td>)}
+                      {h.g.slice(0, 9).map((s, i) => <td key={i}><ScoreCircle gross={s} par={ecl!.holes[i]?.par} size="small" /></td>)}
                       <td className="col-out fs-10-fw600">{out}</td>
-                      {nH >= 18 && h.g.slice(9, 18).map((s, i) => <td key={i}><ScoreCircle g={s} p={ecl!.holes[i + 9]?.par} sm /></td>)}
+                      {nH >= 18 && h.g.slice(9, 18).map((s, i) => <td key={i}><ScoreCircle gross={s} par={ecl!.holes[i + 9]?.par} size="small" /></td>)}
                       {nH >= 18 && <td className="col-in fs-10-fw600">{inn}</td>}
                       <td className="col-total fw-700">{out + inn}</td>
                     </tr>
@@ -3364,7 +3357,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
       {/* ── Distribuição ── */}
       <div className="holeAnalysis">
         <div className="haTitle">Distribuição de Scores</div>
- <div className="d-flex gap-6" style={{ marginBottom: 16 }}>
+ <div className="d-flex gap-6 mb-16">
         {[
           { l: "Eagle+", n: S.totalDist.eagle, c: "eagle" }, { l: "Birdie", n: S.totalDist.birdie, c: "birdie" },
           { l: "Par", n: S.totalDist.par, c: "par" }, { l: "Bogey", n: S.totalDist.bogey, c: "bogey" },
@@ -3372,7 +3365,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
         ].map(x => (
  <div key={x.l} className="ta-center" style={{ flex: Math.max(x.n, 1) }}>
  <div className={`sc-score ${x.c} fw-900 fs-16 br-default w-full`} style={{ padding: "6px 0" }}>{x.n}</div>
- <div className="fw-700 c-muted fs-10" style={{ marginTop: 3 }}>{x.l}</div>
+ <div className="fw-700 c-muted fs-10 mt-3">{x.l}</div>
  <div className="c-border-heavy fs-10" >{totN > 0 ? `${(x.n / totN * 100).toFixed(0)}%` : ""}</div>
           </div>
         ))}
@@ -3449,7 +3442,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
  <td className="r fw-800" style={{ color: vp == null ? SC.muted : sc3(vp, 0, 0.4) }}>
                     {vp != null ? (vp >= 0 ? "+" : "") + vp.toFixed(2) : "–"}
                   </td>
-                  <td className="r"><ScoreCircle g={h.best ?? null} p={h.par ?? 4} sm /></td>
+                  <td className="r"><ScoreCircle gross={h.best ?? null} par={h.par ?? 4} size="small" /></td>
                   <td>{h.dist && <MiniBar d={h.dist} />}</td>
                 </tr>
               );
@@ -3461,7 +3454,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
       {/* ── Plano de Jogo ── */}
       <div className="courseAnalysis courseAnalysis-accent">
  <div className="caTitle fs-14" >🗺️ Plano de Jogo — {TOURN.days} Dias em Málaga</div>
- <div className="caConcText c-text" style={{ lineHeight: 1.7 }}>
+ <div className="caConcText c-text lh-17">
           {dowN > 0 && <p className="mb-8">
             <b>🚨 Regra nº1:</b> Evitar doubles! Tiveste <b>{dowN}</b> em {totN} buracos.
             Quando estás em apuros, joga para o centro do green — um bogey é sempre melhor que um double.
@@ -3488,7 +3481,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
             <b>🧘</b> Depois de um double, respira fundo. Rotina de reset: esquece o último, joga O PRÓXIMO buraco.
           </p>}
           <p className="mb-8">
-            <b>🏆 Benchmark:</b> O 5º lugar em 2025 fez {FIELD_2025.leaderboard[4]?.total} ({fmtTP(FIELD_2025.leaderboard[4]?.result)}), ou ~{FIELD_2025.top5Avg.toFixed(0)}/ronda. 
+            <b>🏆 Benchmark:</b> O 5º lugar em 2025 fez {FIELD_2025.leaderboard[4]?.total} ({fmtToPar(FIELD_2025.leaderboard[4]?.result)}), ou ~{FIELD_2025.top5Avg.toFixed(0)}/ronda. 
             {ecl && <> O teu eclético é {ecl.totalGross} — se juntares o melhor de cada buraco, é número de Top 5.</>}
           </p>
         </div>

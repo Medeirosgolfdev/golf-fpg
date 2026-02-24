@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from "react";
 import type { Course, Tee, Hole } from "../data/types";
 import TeeBadge from "../ui/TeeBadge";
 import { getTeeHex, textOnColor } from "../utils/teeColors";
-import { fmt, fmtCR, norm, titleCase } from "../utils/format";
+import { fmt, fmtCR, norm, titleCase, fmtSD } from "../utils/format";
 import { SC } from "../utils/scoreDisplay";
 import OverlayExport from "../ui/OverlayExport";
 import type { OverlayData } from "../ui/OverlayExport";
@@ -100,11 +100,7 @@ function expectedSD9(hi: number): number {
   return loVal + frac * (hiVal - loVal);
 }
 
-/** Formata SD com sinal e 1 casa decimal */
-function fmtSD(sd: number): string {
-  const sign = sd >= 0 ? "+" : "";
-  return `${sign}${sd.toFixed(1)}`;
-}
+/* fmtSD agora importada de format.ts */
 
 /** Extrai ratings de 9 buracos do tee */
 function get9hRatings(tee: Tee, nine: "front9" | "back9") {

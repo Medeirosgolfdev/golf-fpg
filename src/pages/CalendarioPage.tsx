@@ -18,6 +18,17 @@ import type { PlayersDb } from "./data/types";
 
 /* ═══ Password ═══ */
 const CAL_PASSWORD = "machico";
+
+/** a11y props for non-button clickable elements */
+function clickableA11y(handler: () => void) {
+  return {
+    role: "button" as const,
+    tabIndex: 0,
+    onKeyDown: (e: React.KeyboardEvent) => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); handler(); }
+    },
+  };
+}
 const STORAGE_KEY = "cal_unlocked";
 
 /* ═══ Types ═══ */
@@ -416,27 +427,23 @@ function MiniCal({ year, month, onSelect, selected, visibleEvents }: {
   const today = new Date();
   return (
     <div className="cal-no-select">
-      <div className="ta-c" style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)" }}>
+      <div className="ta-c cal-week-grid">
         {DAYS_SHORT.map((d, i) => (
-          <div key={i} className="fs-10 c-text-3 fw-600" style={{ padding: "2px 0" }}>{d}</div>
+          <div key={i} className="fs-10 c-text-3 fw-600 cal-day-label">{d}</div>
         ))}
         {days.map((d, i) => {
           const isToday = isSameDay(d.date, today);
           const isSel = selected && isSameDay(d.date, selected);
           const has = visibleEvents.some(e => eventOnDay(e, d.date));
           return (
-            <div key={i} onClick={() => onSelect(d.date)} style={{
-              fontSize: 11, cursor: "pointer", borderRadius: "50%",
-              width: 26, height: 26, display: "flex", alignItems: "center", justifyContent: "center",
-              margin: "1px auto", position: "relative",
+            <div key={i} onClick={() => onSelect(d.date)} {...clickableA11y(() => onSelect(d.date))} className="cal-day-cell" style={{
               color: !d.inMonth ? "var(--border)" : isToday ? "#fff" : isSel ? "var(--accent)" : "var(--text)",
               backgroundColor: isToday ? "var(--accent)" : isSel ? "var(--accent-light)" : "transparent",
-              fontWeight: isToday || isSel ? 600 : 400, transition: "background 0.15s",
+              fontWeight: isToday || isSel ? 600 : 400,
             }}>
               {d.date.getDate()}
               {has && d.inMonth && !isToday && (
-                <span style={{ position: "absolute", bottom: 1, left: "50%", transform: "translateX(-50%)",
-                  width: 3, height: 3, borderRadius: "50%", background: "var(--accent)" }} />
+                <span className="cal-dot-indicator" style={{ width: 3, height: 3, background: "var(--accent)" }} />
               )}
             </div>
           );
@@ -457,8 +464,7 @@ function EventPopup({ event, onClose }: { event: CalEvent; onClose: () => void }
     return () => document.removeEventListener("mousedown", h);
   }, [onClose]);
   return (
-    <div style={{ position: "fixed", inset: 0, zIndex: 1000, display: "flex", alignItems: "center",
-      justifyContent: "center", background: "rgba(0,0,0,0.3)", backdropFilter: "blur(3px)" }}>
+    <div className="cal-overlay" style={{ backdropFilter: "blur(3px)" }}>
       <div ref={ref} style={{ background: "var(--bg-card)", borderRadius: "var(--radius-xl)",
         boxShadow: "var(--shadow-lg)", width: 380, overflow: "hidden", animation: "calPopIn 0.2s ease" }}>
         <div style={{ background: hl ? hl.bg : color,
@@ -511,7 +517,7 @@ function ListView({ events, onSelect }: { events: CalEvent[]; onSelect: (e: CalE
               const hl = HIGHLIGHT[e.calId];
               const isPast = (e.endDate || e.date) < today;
               return (
-                <div key={e.id} onClick={() => onSelect(e)}
+                <div key={e.id} onClick={() => onSelect(e)} {...clickableA11y(() => onSelect(e))}
                   style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 10px",
                     borderRadius: hl ? 8 : "var(--radius)", cursor: "pointer", transition: "background 0.15s",
                     background: hl ? `${hl.bg}18` : "transparent",
@@ -547,7 +553,7 @@ function ListView({ events, onSelect }: { events: CalEvent[]; onSelect: (e: CalE
         </div>
       ))}
       {grouped.length === 0 && (
-        <div className="ta-c c-text-3" style={{ padding: 40 }}>Sem provas visíveis.</div>
+        <div className="ta-c c-text-3 p-40">Sem provas visíveis.</div>
       )}
     </div>
   );
@@ -762,8 +768,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
       `}</style>
 
       {/* ── Sidebar ── */}
-      <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`} style={{ padding: "12px 14px",
-        display: "flex", flexDirection: "column", gap: 12, flexShrink: 0 }}>
+      <div className={`sidebar cal-sidebar-main ${sidebarOpen ? "" : "sidebar-closed"}`}>
 
         {/* Mini cal */}
         <div>
@@ -878,7 +883,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
       </div>
 
       {/* ── Main ── */}
- <div className="flex-1 d-flex overflow-hidden" style={{ flexDirection: "column" }}>
+ <div className="flex-1 d-flex flex-col overflow-hidden">
         <div style={{ display: "flex", alignItems: "center", padding: "10px 20px",
           borderBottom: "1px solid var(--border-light)", gap: 12, flexShrink: 0 }}>
           <button className="sidebar-toggle" onClick={() => setSidebarOpen(v => !v)} title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
@@ -1013,7 +1018,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                     const isFirst = isSameDay(d.date, hlEvt.date);
                     const titleLines = hlEvt.title.split(/\s*[—–-]\s*/).filter(Boolean);
                     return (
-                      <div key={i} onClick={() => setSelectedEvent(hlEvt)}
+                      <div key={i} onClick={() => setSelectedEvent(hlEvt)} {...clickableA11y(() => setSelectedEvent(hlEvt))}
                         className={`hl-cell ${hl.cls}`}
                         style={{
                           background: hl.bg, border: `2px solid ${hl.border}`,
@@ -1043,7 +1048,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                   }
 
                   return (
-                    <div key={i} onClick={() => setSelectedDate(d.date)}
+                    <div key={i} onClick={() => setSelectedDate(d.date)} {...clickableA11y(() => setSelectedDate(d.date))}
                       style={{
                       borderRight: "1px solid var(--border-light)",
                       borderBottom: "1px solid var(--border-light)",
@@ -1073,7 +1078,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                           pos === "end"   ? "0 3px 3px 0" :
                           pos === "mid"   ? "0" : "3px";
                         return (
-                        <div key={e.id} onClick={ev => { ev.stopPropagation(); setSelectedEvent(e); }}
+                        <div key={e.id} role="button" tabIndex={0} onClick={ev => { ev.stopPropagation(); setSelectedEvent(e); }} onKeyDown={ev => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); ev.stopPropagation(); setSelectedEvent(e); } }}
                           title={e.title}
                           className={barCls ? `hl-bar ${barCls}` : undefined}
                           style={{
