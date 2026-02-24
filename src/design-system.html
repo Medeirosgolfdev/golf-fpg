@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Golf FPG — Design System</title>
+<link rel="stylesheet" href="App.css">
+<style>
+  body { background: var(--bg); padding: 0; margin: 0; }
+  .ds { max-width: 1100px; margin: 0 auto; padding: 24px 28px 80px; }
+  .ds-hero { padding: 40px 0 32px; border-bottom: 3px solid var(--accent); margin-bottom: 32px; }
+  .ds-hero h1 { font-size: 32px; font-weight: 900; color: var(--text); letter-spacing: -0.03em; margin-bottom: 4px; }
+  .ds-hero p { font-size: 14px; color: var(--text-3); }
+  .ds-section { margin-bottom: 40px; }
+  .ds-title { font-size: 20px; font-weight: 900; color: var(--text); margin-bottom: 4px; padding-bottom: 8px; border-bottom: 2px solid var(--border-light); display: flex; align-items: center; gap: 10px; }
+  .ds-title span { font-size: 12px; font-weight: 600; color: var(--text-3); background: var(--bg-muted); padding: 2px 8px; border-radius: var(--radius-sm); }
+  .ds-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; align-items: flex-start; }
+  .ds-col { display: flex; flex-direction: column; gap: 4px; }
+  .ds-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 2px; }
+  .ds-swatch { width: 48px; height: 48px; border-radius: var(--radius); border: 1px solid var(--border-light); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 2px; font-size: 8px; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
+  .ds-swatch-sm { width: 32px; height: 32px; border-radius: var(--radius-sm); border: 1px solid var(--border-light); }
+  .ds-code { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-3); background: var(--bg-muted); padding: 1px 5px; border-radius: var(--radius-sm); }
+  .ds-grid-4 { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+  .ds-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .ds-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .ds-box { border: 1px solid var(--border-light); border-radius: var(--radius-lg); padding: 14px; background: var(--bg-card); }
+  .ds-box-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 8px; }
+  .ds-section .card { margin: 0; }
+  .ds-section .conclusion-box { margin-top: 0; }
+</style>
+</head>
+<body>
+<div class="ds">
+
+<div class="ds-hero">
+  <h1>⛳ Golf FPG — Design System</h1>
+  <p>Catálogo visual completo · ~150 CSS variables · ~870 classes · 8 páginas</p>
+</div>
+
+<!-- 1. CORES -->
+<div class="ds-section">
+  <div class="ds-title">1. Cores Base <span>14 tokens</span></div>
+  <div class="ds-row">
+    <div class="ds-col"><div class="ds-label">--bg</div><div class="ds-swatch" style="background:var(--bg)"></div></div>
+    <div class="ds-col"><div class="ds-label">--bg-card</div><div class="ds-swatch" style="background:var(--bg-card)"></div></div>
+    <div class="ds-col"><div class="ds-label">--bg-hover</div><div class="ds-swatch" style="background:var(--bg-hover)"></div></div>
+    <div class="ds-col"><div class="ds-label">--bg-topbar</div><div class="ds-swatch" style="background:var(--bg-topbar)"></div></div>
+    <div class="ds-col"><div class="ds-label">--bg-detail</div><div class="ds-swatch" style="background:var(--bg-detail)"></div></div>
+    <div class="ds-col"><div class="ds-label">--bg-muted</div><div class="ds-swatch" style="background:var(--bg-muted)"></div></div>
+    <div class="ds-col"><div class="ds-label">--bg-header</div><div class="ds-swatch" style="background:var(--bg-header)"></div></div>
+  </div>
+  <div class="ds-row">
+    <div class="ds-col"><div class="ds-label">--text</div><div class="ds-swatch" style="background:var(--text)"></div></div>
+    <div class="ds-col"><div class="ds-label">--text-2</div><div class="ds-swatch" style="background:var(--text-2)"></div></div>
+    <div class="ds-col"><div class="ds-label">--text-3</div><div class="ds-swatch" style="background:var(--text-3)"></div></div>
+    <div class="ds-col"><div class="ds-label">--text-muted</div><div class="ds-swatch" style="background:var(--text-muted)"></div></div>
+    <div class="ds-col"><div class="ds-label">--text-dark</div><div class="ds-swatch" style="background:var(--text-dark)"></div></div>
+    <div class="ds-col"><div class="ds-label">--accent</div><div class="ds-swatch" style="background:var(--accent)"></div></div>
+    <div class="ds-col"><div class="ds-label">--accent-light</div><div class="ds-swatch" style="background:var(--accent-light)"></div></div>
+  </div>
+</div>
+
+<!-- 2. CORES SEMÂNTICAS -->
+<div class="ds-section">
+  <div class="ds-title">2. Semânticas + Chart Palette <span>18 tokens</span></div>
+  <div class="ds-row">
+    <div class="ds-col"><div class="ds-label">good</div><div class="ds-swatch" style="background:var(--color-good)">✓</div></div>
+    <div class="ds-col"><div class="ds-label">warn</div><div class="ds-swatch" style="background:var(--color-warn)">⚠</div></div>
+    <div class="ds-col"><div class="ds-label">danger</div><div class="ds-swatch" style="background:var(--color-danger)">✗</div></div>
+    <div class="ds-col"><div class="ds-label">info</div><div class="ds-swatch" style="background:var(--color-info)">ℹ</div></div>
+    <div class="ds-col"><div class="ds-label">navy</div><div class="ds-swatch" style="background:var(--color-navy)"></div></div>
+    <div class="ds-col"><div class="ds-label">teal</div><div class="ds-swatch" style="background:var(--color-teal)"></div></div>
+  </div>
+  <div class="ds-label" style="margin-top:8px">Chart Palette (10 séries)</div>
+  <div class="ds-row" style="gap:4px">
+    <div class="ds-swatch-sm" style="background:var(--chart-1)"></div>
+    <div class="ds-swatch-sm" style="background:var(--chart-2)"></div>
+    <div class="ds-swatch-sm" style="background:var(--chart-3)"></div>
+    <div class="ds-swatch-sm" style="background:var(--chart-4)"></div>
+    <div class="ds-swatch-sm" style="background:var(--chart-5)"></div>
+    <div class="ds-swatch-sm" style="background:var(--chart-6)"></div>
+    <div class="ds-swatch-sm" style="background:var(--chart-7)"></div>
+    <div class="ds-swatch-sm" style="background:var(--chart-8)"></div>
+    <div class="ds-swatch-sm" style="background:var(--chart-9)"></div>
+    <div class="ds-swatch-sm" style="background:var(--chart-10)"></div>
+  </div>
+  <div class="ds-label" style="margin-top:8px">Performance Tiers</div>
+  <div class="ds-row" style="gap:4px">
+    <div class="ds-swatch-sm" style="background:var(--tier-exceptional)"></div>
+    <div class="ds-swatch-sm" style="background:var(--tier-good)"></div>
+    <div class="ds-swatch-sm" style="background:var(--tier-fair)"></div>
+    <div class="ds-swatch-sm" style="background:var(--tier-weak)"></div>
+    <div class="ds-swatch-sm" style="background:var(--tier-bad)"></div>
+  </div>
+</div>
+
+<!-- 3. TIPOGRAFIA -->
+<div class="ds-section">
+  <div class="ds-title">3. Tipografia <span>DM Sans + JetBrains Mono</span></div>
+  <div class="ds-box">
+    <div style="font-size:28px;font-weight:900;margin-bottom:4px">DM Sans 900 — 28px <span class="ds-code">.an-k-val</span></div>
+    <div style="font-size:22px;font-weight:800;margin-bottom:4px">DM Sans 800 — 22px <span class="ds-code">.detail-title</span></div>
+    <div style="font-size:16px;font-weight:800;margin-bottom:4px">DM Sans 800 — 16px <span class="ds-code">.h-lg</span></div>
+    <div style="font-size:14px;font-weight:800;margin-bottom:4px">DM Sans 800 — 14px <span class="ds-code">.h-md</span></div>
+    <div style="font-size:12px;font-weight:800;margin-bottom:4px">DM Sans 800 — 12px <span class="ds-code">.h-sm</span></div>
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-3);margin-bottom:8px">DM SANS 700 UPPERCASE — 11PX <span class="ds-code">.h-xs</span></div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:14px;margin-bottom:4px">JetBrains Mono 400 — 14px <span class="ds-code">.mono</span></div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-3)">JetBrains Mono 400 — 11px (scores, dados tabulares)</div>
+  </div>
+</div>
+
+<!-- 4. HEADINGS -->
+<div class="ds-section">
+  <div class="ds-title">4. Headings Unificados <span>6 classes</span></div>
+  <div class="ds-grid-4">
+    <div class="ds-box"><div class="ds-box-label">.h-xs</div><div class="h-xs" style="margin:0">KPI Label / Sidebar</div><div class="ds-code">11px/700 uppercase</div></div>
+    <div class="ds-box"><div class="ds-box-label">.h-sm</div><div class="h-sm" style="margin:0">Sub-Secção</div><div class="ds-code">12px/800</div></div>
+    <div class="ds-box"><div class="ds-box-label">.h-sm-warn</div><div class="h-sm-warn">Conclusão / Alerta</div><div class="ds-code">12px/800 warn</div></div>
+    <div class="ds-box"><div class="ds-box-label">.h-md</div><div class="h-md" style="margin:0">Secção Normal</div><div class="ds-code">14px/800</div></div>
+    <div class="ds-box"><div class="ds-box-label">.h-lg</div><div class="h-lg" style="margin:0">Secção Grande</div><div class="ds-code">16px/800</div></div>
+    <div class="ds-box"><div class="ds-box-label">.detail-title</div><div class="detail-title" style="font-size:20px">Título de Página</div><div class="ds-code">22px/800 flex</div></div>
+  </div>
+</div>
+
+<!-- 5. CARDS -->
+<div class="ds-section">
+  <div class="ds-title">5. Cards <span>4 classes</span></div>
+  <div class="ds-grid-4">
+    <div class="card"><div class="ds-box-label">.card</div><div class="h-md" style="margin:0">Card Base</div><div style="font-size:12px;color:var(--text-3)">Antes: pa-card, an-card, holeAnalysis, section-card, card-bordered, courseAnalysis</div></div>
+    <div class="card-danger"><div class="ds-box-label">.card-danger</div><div style="font-size:12px;color:var(--color-danger-dark)">Alertas negativos</div></div>
+    <div class="card-success"><div class="ds-box-label">.card-success</div><div style="font-size:12px;color:var(--color-good-dark)">Resultados positivos</div></div>
+    <div class="card-warn"><div class="ds-box-label">.card-warn</div><div style="font-size:12px;color:var(--color-warn-dark)">Áreas de atenção</div></div>
+  </div>
+</div>
+
+<!-- 6. TABELAS -->
+<div class="ds-section">
+  <div class="ds-title">6. Data Tables <span>3 variantes</span></div>
+  <div class="ds-grid-2">
+    <div><div class="ds-box-label">.dtable — Compacta (12px)</div><div class="ds-box" style="padding:0;overflow:hidden">
+      <table class="dtable"><thead><tr><th>Buraco</th><th class="r">Par</th><th class="r">Avg</th><th class="r">Diff</th></tr></thead>
+      <tbody><tr><td>1</td><td class="r">4</td><td class="r">4.8</td><td class="r" style="color:var(--color-danger)">+0.8</td></tr>
+      <tr><td>2</td><td class="r">3</td><td class="r">3.1</td><td class="r" style="color:var(--color-good)">+0.1</td></tr>
+      <tr><td>3</td><td class="r">5</td><td class="r">5.5</td><td class="r" style="color:var(--color-warn)">+0.5</td></tr></tbody></table></div></div>
+    <div><div class="ds-box-label">.dtable-lg — Grande (13px, sticky)</div><div class="ds-box" style="padding:0;overflow:hidden">
+      <table class="dtable-lg"><thead><tr><th>Jogador</th><th class="r">Score</th><th class="r">vs Par</th><th class="r">SD</th></tr></thead>
+      <tbody><tr><td><span class="tourn-pname">Manuel Silva</span></td><td class="r">72</td><td class="r" style="color:var(--color-good)">E</td><td class="r mono">1.2</td></tr>
+      <tr><td><span class="tourn-pname">João Costa</span></td><td class="r">75</td><td class="r" style="color:var(--color-danger)">+3</td><td class="r mono">4.5</td></tr></tbody></table></div></div>
+  </div>
+</div>
+
+<!-- 7. NOTICES & CONCLUSIONS -->
+<div class="ds-section">
+  <div class="ds-title">7. Notices, Errors & Conclusions <span>10 classes</span></div>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div class="notice notice-info"><strong>.notice .notice-info</strong> — O SD é calculado com base no <code>Course Rating</code> e <code>Slope</code>.</div>
+    <div class="notice notice-warn"><strong>.notice .notice-warn</strong> — ⚠ Sem handicap definido. Preenche o HI na toolbar.</div>
+    <div class="notice-error"><div class="notice-error-msg">.notice-error — Erro ao carregar dados</div><div class="notice-error-detail ds-code" style="margin-top:4px">TypeError: Cannot read property 'rounds'</div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px">
+      <div class="conclusion-box conclusion-success"><div class="h-sm-warn" style="color:var(--color-good-dark)">🟢 Tendência positiva</div><div style="font-size:12px;color:var(--color-good-dark)">O gross médio baixou 2.3 pancadas.</div></div>
+      <div class="conclusion-box conclusion-danger"><div class="h-sm-warn" style="color:var(--color-danger-dark)">🔴 Par 3 fracos</div><div style="font-size:12px;color:var(--color-danger-dark)">Média de +1.4 vs par nos Par 3.</div></div>
+    </div>
+    <div class="conclusion-box conclusion-info" style="margin-top:0"><div class="h-sm-warn" style="color:var(--color-info)">📊 Nota</div><div style="font-size:12px;color:var(--color-info)">Baseado em 12 voltas competitivas.</div></div>
+  </div>
+</div>
+
+<!-- 8. SCORE SYSTEM -->
+<div class="ds-section">
+  <div class="ds-title">8. Score System <span>Circles + Squares + Distribution</span></div>
+  <div class="ds-box-label">⚠️ REGRA FIXA — Círculos = melhor que par · Quadrados (sem radius) = bogey+ · Par = limpo</div>
+  <div class="ds-row" style="gap:6px;margin-bottom:16px;align-items:center">
+    <div class="ds-col" style="align-items:center"><div class="ds-label">HIO</div><span class="sc-score holeinone">1</span></div>
+    <div class="ds-col" style="align-items:center"><div class="ds-label">Eagle</div><span class="sc-score eagle">3</span></div>
+    <div class="ds-col" style="align-items:center"><div class="ds-label">Birdie</div><span class="sc-score birdie">3</span></div>
+    <div class="ds-col" style="align-items:center"><div class="ds-label">Par</div><span class="sc-score par">4</span></div>
+    <div class="ds-col" style="align-items:center"><div class="ds-label">Bogey</div><span class="sc-score bogey">5</span></div>
+    <div class="ds-col" style="align-items:center"><div class="ds-label">Double</div><span class="sc-score double">6</span></div>
+    <div class="ds-col" style="align-items:center"><div class="ds-label">Triple</div><span class="sc-score triple">7</span></div>
+    <div class="ds-col" style="align-items:center"><div class="ds-label">Quad+</div><span class="sc-score quad">8</span></div>
+  </div>
+  <div class="ds-box-label" style="font-size:10px;color:var(--text-3)">Classe única: <code class="ds-code">.sc-score .{scClass()}</code> — scClass retorna eagle, birdie, par, bogey, double, triple, quad, quint, worse</div>
+  <div class="ds-box-label">Distribution Bar</div>
+  <div class="haDistBar" style="margin:0"><div class="haDistSeg seg-eagle" style="width:5%"></div><div class="haDistSeg seg-birdie" style="width:15%"></div><div class="haDistSeg seg-par" style="width:40%"></div><div class="haDistSeg seg-bogey" style="width:25%"></div><div class="haDistSeg seg-double" style="width:10%"></div><div class="haDistSeg seg-triple" style="width:5%"></div></div>
+  <div class="haDistLegend" style="margin-top:4px">
+    <span class="haLeg"><span class="haLegDot" style="background:var(--score-eagle)"></span> Eagle</span>
+    <span class="haLeg"><span class="haLegDot" style="background:var(--score-birdie)"></span> Birdie</span>
+    <span class="haLeg"><span class="haLegDot" style="background:var(--score-par-seg)"></span> Par</span>
+    <span class="haLeg"><span class="haLegDot" style="background:var(--score-bogey-border)"></span> Bogey</span>
+    <span class="haLeg"><span class="haLegDot" style="background:var(--score-double)"></span> Double</span>
+    <span class="haLeg"><span class="haLegDot" style="background:var(--score-triple)"></span> Triple+</span>
+  </div>
+</div>
+
+<!-- 9. PILLS & BADGES -->
+<div class="ds-section">
+  <div class="ds-title">9. Pills & Badges <span>~25 variantes</span></div>
+  <div class="ds-box-label">Player Pills (.jog-pill)</div>
+  <div class="ds-row" style="gap:6px;margin-bottom:12px;align-items:center">
+    <span class="jog-pill jog-pill-fed">12345</span>
+    <span class="jog-pill jog-pill-sex-M">M</span>
+    <span class="jog-pill jog-pill-sex-F">F</span>
+    <span class="jog-pill jog-pill-hcp">HCP 8.2</span>
+    <span class="jog-pill jog-pill-escalao-sub10">Sub-10</span>
+    <span class="jog-pill jog-pill-escalao-sub12">Sub-12</span>
+    <span class="jog-pill jog-pill-escalao-sub14">Sub-14</span>
+    <span class="jog-pill jog-pill-escalao-sub16">Sub-16</span>
+    <span class="jog-pill jog-pill-escalao-sub18">Sub-18</span>
+    <span class="jog-pill jog-pill-escalao-absoluto">Absoluto</span>
+    <span class="jog-pill jog-pill-escalao-senior">Sénior</span>
+  </div>
+  <div class="ds-row" style="gap:6px;margin-bottom:12px;align-items:center">
+    <span class="jog-pill">📅 2009</span>
+    <span class="jog-pill">🏌️ CGSS</span>
+    <span class="jog-pill jog-pill-update">↻ 2025-01-15</span>
+  </div>
+  <div class="ds-box-label">Tournament Pills</div>
+  <div class="ds-row" style="gap:6px;margin-bottom:12px;align-items:center">
+    <span class="pill-torneio pill-regional">REGIONAL</span>
+    <span class="pill-torneio pill-nacional">NACIONAL</span>
+    <span class="pill-torneio pill-intl">INTL</span>
+    <span class="tourn-pill-pja">PJA</span>
+    <span class="tourn-pill-intl">INTL</span>
+  </div>
+  <div class="ds-box-label">Filter Pills</div>
+  <div class="ds-row" style="gap:4px;margin-bottom:12px;align-items:center">
+    <span class="filter-pill active">Todos <span class="filter-pill-count">94</span></span>
+    <span class="filter-pill">Sub-14 <span class="filter-pill-count">12</span></span>
+    <span class="filter-pill">Sub-16 <span class="filter-pill-count">28</span></span>
+    <span class="filter-pill">WAGR <span class="filter-pill-count">8</span></span>
+  </div>
+  <div class="ds-box-label">SD Pills, HCP Badges, Mini Badges</div>
+  <div class="ds-row" style="gap:6px;margin-bottom:12px;align-items:center">
+    <span class="sd-pill sd-excellent">12.3</span>
+    <span class="sd-pill sd-good">18.5</span>
+    <span class="sd-pill sd-poor">32.1</span>
+    <span class="hd-pill hd-birth">📅 2009</span>
+    <span class="hd-pill hd-club">🏌️ CGSS</span>
+    <span class="mini-badge">3 voltas</span>
+    <span class="cat-badge cat-badge-wagr">WAGR</span>
+    <span class="cat-badge cat-badge-sub14">Sub-14</span>
+    <span class="eds-badge eds-badge-eds">EDS</span>
+  </div>
+  <div class="ds-box-label">Tee Pills</div>
+  <div class="ds-row" style="gap:6px;align-items:center">
+    <span class="teePill" style="background:#fff;color:#333;border:1px solid #ccc">Brancos</span>
+    <span class="teePill" style="background:var(--tee-yellow);color:#333">Amarelos</span>
+    <span class="teePill" style="background:#dc2626;color:#fff">Vermelhos</span>
+    <span class="teePill" style="background:#2563eb;color:#fff">Azuis</span>
+  </div>
+</div>
+
+<!-- 10. KPIs -->
+<div class="ds-section">
+  <div class="ds-title">10. KPI Cards <span>2 variantes</span></div>
+  <div class="ds-grid-4">
+    <div class="card" style="text-align:center"><div class="h-xs" style="margin:0">Handicap Index</div><div class="an-k-val">8.2</div><div class="an-k-sub c-text-3">WHS 2024</div></div>
+    <div class="card" style="text-align:center"><div class="h-xs" style="margin:0">Voltas</div><div class="an-k-val" style="color:var(--accent)">47</div><div class="an-k-sub c-text-3">competitivas</div></div>
+    <div class="caKpi"><div class="caKpiVal best">68</div><div class="caKpiLbl">Melhor Gross</div></div>
+    <div class="caKpi"><div class="caKpiVal worst">89</div><div class="caKpiLbl">Pior Gross</div></div>
+  </div>
+  <div class="ds-box-label" style="margin-top:16px">Tournament KPIs (.tourn-kpi)</div>
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px">
+    <div class="tourn-kpi"><div class="tourn-kpi-lbl">Jogadores</div><div class="tourn-kpi-val">42</div></div>
+    <div class="tourn-kpi"><div class="tourn-kpi-lbl">Avg Gross</div><div class="tourn-kpi-val">78.3</div></div>
+    <div class="tourn-kpi"><div class="tourn-kpi-lbl">Melhor</div><div class="tourn-kpi-val" style="color:var(--color-good)">68</div></div>
+    <div class="tourn-kpi"><div class="tourn-kpi-lbl">Pior</div><div class="tourn-kpi-val" style="color:var(--color-danger)">95</div></div>
+    <div class="tourn-kpi"><div class="tourn-kpi-lbl">Birdies</div><div class="tourn-kpi-val">31</div></div>
+  </div>
+</div>
+
+<!-- 11. SPARKLINES -->
+<div class="ds-section">
+  <div class="ds-title">11. Sparklines, Trends & Ranks</div>
+  <div class="ds-box">
+    <div class="ds-box-label">SD Sparkline</div>
+    <div class="tourn-sparkline" style="margin-bottom:12px">
+      <span class="tourn-spark-dot spark-green">18.2</span>
+      <span class="tourn-spark-dot spark-green">16.8</span>
+      <span class="tourn-spark-dot spark-amber">22.1</span>
+      <span class="tourn-spark-dot spark-red">28.5</span>
+      <span class="tourn-spark-dot spark-green">15.3</span>
+      <span class="tourn-spark-dot spark-grey">—</span>
+      <span class="tourn-spark-avg">avg 20.2</span>
+    </div>
+    <div class="ds-box-label">Trend Badges</div>
+    <div class="ds-row" style="gap:6px;align-items:center;margin-bottom:12px">
+      <span class="tourn-trend-badge trend-up">↗ Melhorando</span>
+      <span class="tourn-trend-badge trend-stable">→ Estável</span>
+      <span class="tourn-trend-badge trend-down">↘ Descendo</span>
+      <span class="tourn-trend-badge trend-unknown">? Sem dados</span>
+    </div>
+    <div class="ds-box-label">Sidebar Rank + SD</div>
+    <div class="ds-row" style="gap:6px;align-items:center">
+      <span class="sidebar-rank sidebar-rank-top3">1</span>
+      <span class="sidebar-rank sidebar-rank-top3">2</span>
+      <span class="sidebar-rank sidebar-rank-top3">3</span>
+      <span class="sidebar-rank sidebar-rank-top10">7</span>
+      <span class="sidebar-rank sidebar-rank-rest">15</span>
+      <span style="width:16px"></span>
+      <span class="sidebar-sd sidebar-sd-good">12.3</span>
+      <span class="sidebar-sd sidebar-sd-ok">22.5</span>
+      <span class="sidebar-sd sidebar-sd-high">35.1</span>
+    </div>
+  </div>
+</div>
+
+<!-- 12. BUTTONS & INPUTS -->
+<div class="ds-section">
+  <div class="ds-title">12. Buttons, Tabs & Inputs</div>
+  <div class="ds-grid-2">
+    <div class="ds-box">
+      <div class="ds-box-label">Buttons</div>
+      <div class="ds-row" style="gap:8px;align-items:center">
+        <button class="btn">Default</button>
+        <button class="pw-btn">Primary</button>
+        <button class="btn-link" style="color:var(--link-color);font-size:12px">Link →</button>
+        <button class="toolbar-badge-link toolbar-badge-link-accent">FPG <span class="toolbar-badge-arrow">↗</span></button>
+        <button class="toolbar-badge-link toolbar-badge-link-dark">Torneio <span class="toolbar-badge-arrow">↗</span></button>
+      </div>
+    </div>
+    <div class="ds-box">
+      <div class="ds-box-label">Tabs</div>
+      <div class="ds-row" style="gap:6px;align-items:center;margin-bottom:8px">
+        <button class="tourn-tab tourn-tab-active">Dia 1</button>
+        <button class="tourn-tab">Dia 2</button>
+        <button class="tourn-tab">Combinado</button>
+      </div>
+      <div class="ds-row" style="gap:0;align-items:center">
+        <button class="tourn-tab tourn-tab-sm tourn-tab-active">Scorecard</button>
+        <button class="tourn-tab tourn-tab-sm" style="border-radius:0">Analysis</button>
+        <button class="tourn-tab tourn-tab-sm">Eclectic</button>
+      </div>
+    </div>
+  </div>
+  <div class="ds-grid-2" style="margin-top:12px">
+    <div class="ds-box">
+      <div class="ds-box-label">Form Inputs</div>
+      <div class="ds-row" style="gap:8px;align-items:flex-end">
+        <div class="field"><label>Jogador</label><input class="input" placeholder="Nome..." value="Manuel"></div>
+        <div class="field"><label>Escalão</label><select class="select"><option>Sub-14</option><option>Sub-16</option></select></div>
+      </div>
+    </div>
+    <div class="ds-box">
+      <div class="ds-box-label">Simulador Inputs</div>
+      <div class="ds-row" style="gap:12px;align-items:center">
+        <input class="sim-input" value="72">
+        <input class="sim-input-sm" value="36">
+        <input class="sim-input-accent" value="4">
+        <div style="display:flex;gap:0">
+          <button class="sim-strip-tab active" style="border-radius:var(--radius) 0 0 var(--radius)">18h</button>
+          <button class="sim-strip-tab" style="border-radius:0 var(--radius) var(--radius) 0;border-left:0">9h</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 13. TOPBAR -->
+<div class="ds-section">
+  <div class="ds-title">13. Topbar & Navigation</div>
+  <div style="border-radius:var(--radius-lg);overflow:hidden">
+    <div class="topbar" style="position:relative;z-index:1">
+      <div class="brand">
+        <div class="brand-icon" style="background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px">⛳</div>
+        <div class="brand-title">Golf FPG</div>
+      </div>
+      <nav class="nav">
+        <button class="nav-btn">Campos</button>
+        <button class="nav-btn active">Jogadores</button>
+        <button class="nav-btn">Comparar</button>
+        <button class="nav-btn">Calculador</button>
+        <button class="nav-btn">Torneio</button>
+        <button class="nav-btn">Calendário</button>
+      </nav>
+      <div class="top-stats">
+        <div class="top-stat"><div class="top-stat-val">856</div><div class="top-stat-label">Campos</div></div>
+        <div class="top-stat"><div class="top-stat-val">12.4k</div><div class="top-stat-label">Jogadores</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 14. TOOLBAR -->
+<div class="ds-section">
+  <div class="ds-title">14. Toolbar</div>
+  <div style="border:1px solid var(--border-light);border-radius:var(--radius-lg);overflow:hidden">
+    <div class="toolbar" style="padding:6px 12px;gap:8px;align-items:center">
+      <div class="toolbar-left" style="gap:8px;align-items:center">
+        <button class="sidebar-toggle">☰</button>
+        <select class="select" style="height:28px;font-size:12px;min-width:90px;padding:0 6px"><option>Sub-14</option></select>
+        <input class="input" style="height:28px;font-size:12px;padding:0 8px;width:180px" placeholder="Pesquisar...">
+        <div class="escalao-pills">
+          <span class="filter-pill active">Todos <span class="filter-pill-count">94</span></span>
+          <span class="filter-pill">M <span class="filter-pill-count">56</span></span>
+          <span class="filter-pill">F <span class="filter-pill-count">38</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 15. DIAGNOSIS CARDS -->
+<div class="ds-section">
+  <div class="ds-title">15. Diagnosis Cards</div>
+  <div class="ds-row" style="gap:8px">
+    <div class="haDiagCard"><div class="haDiagIcon diag-good">⛳</div><div class="haDiagBody"><div class="haDiagVal" style="color:var(--color-good)">72.3</div><div class="haDiagLbl">Avg Gross</div></div></div>
+    <div class="haDiagCard"><div class="haDiagIcon diag-warn">📊</div><div class="haDiagBody"><div class="haDiagVal" style="color:var(--color-warn)">+4.2</div><div class="haDiagLbl">vs Par</div></div></div>
+    <div class="haDiagCard"><div class="haDiagIcon diag-danger">🔻</div><div class="haDiagBody"><div class="haDiagVal" style="color:var(--color-danger)">2.1</div><div class="haDiagLbl">Doubles/Volta</div></div></div>
+    <div class="haDiagCard"><div class="haDiagIcon" style="background:var(--color-info-alpha);color:var(--color-info)">📏</div><div class="haDiagBody"><div class="haDiagVal" style="color:var(--color-info)">5842</div><div class="haDiagLbl">Metros</div></div></div>
+  </div>
+</div>
+
+<!-- 16. CHARTS -->
+<div class="ds-section">
+  <div class="ds-title">16. Chart Elements</div>
+  <div class="ds-grid-2">
+    <div class="ds-box">
+      <div class="ds-box-label">Bar Chart</div>
+      <div class="chart-legend-mb6"><span><span class="chart-legend-dot" style="background:var(--chart-1)"></span> Birdies</span><span><span class="chart-legend-dot" style="background:var(--chart-2)"></span> Bogeys</span></div>
+      <div class="chart-bars" style="height:60px">
+        <div class="chart-cell"><div style="height:40px;background:var(--chart-1);border-radius:2px 2px 0 0"></div><div style="font-size:8px;color:var(--text-3);margin-top:2px">Jan</div></div>
+        <div class="chart-cell"><div style="height:55px;background:var(--chart-1);border-radius:2px 2px 0 0"></div><div style="font-size:8px;color:var(--text-3);margin-top:2px">Fev</div></div>
+        <div class="chart-cell"><div style="height:30px;background:var(--chart-2);border-radius:2px 2px 0 0"></div><div style="font-size:8px;color:var(--text-3);margin-top:2px">Mar</div></div>
+        <div class="chart-cell"><div style="height:60px;background:var(--chart-1);border-radius:2px 2px 0 0"></div><div style="font-size:8px;color:var(--text-3);margin-top:2px">Abr</div></div>
+        <div class="chart-cell"><div style="height:45px;background:var(--chart-1);border-radius:2px 2px 0 0"></div><div style="font-size:8px;color:var(--text-3);margin-top:2px">Mai</div></div>
+      </div>
+    </div>
+    <div class="ds-box">
+      <div class="ds-box-label">Progress Bars</div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span class="cmp-stat-label">Birdies</span><div class="progress-track-overflow"><div style="width:65%;height:100%;background:var(--color-good);border-radius:var(--radius-sm)"></div></div><span class="mono fs-11">65%</span></div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span class="cmp-stat-label">Bogeys</span><div class="progress-track-overflow"><div style="width:40%;height:100%;background:var(--chart-2);border-radius:var(--radius-sm)"></div></div><span class="mono fs-11">40%</span></div>
+      <div style="display:flex;align-items:center;gap:8px"><span class="cmp-stat-label">Doubles+</span><div class="progress-track-overflow"><div style="width:15%;height:100%;background:var(--color-danger);border-radius:var(--radius-sm)"></div></div><span class="mono fs-11">15%</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 17. LAYOUTS -->
+<div class="ds-section">
+  <div class="ds-title">17. Page Layouts <span>3 padrões</span></div>
+  <div class="ds-grid-3" style="gap:16px">
+    <div class="ds-box" style="padding:0;overflow:hidden;height:180px">
+      <div class="ds-box-label" style="padding:8px 12px;margin:0;border-bottom:1px solid var(--border-light)">Master-Detail</div>
+      <div style="display:flex;height:calc(100% - 34px)">
+        <div style="width:35%;background:var(--bg-card);border-right:1px solid var(--border-light);padding:6px">
+          <div style="padding:6px 8px;font-size:10px;border-left:3px solid var(--accent);background:var(--bg-active);border-radius:2px;margin-bottom:3px">Oporto GC ✓</div>
+          <div style="padding:6px 8px;font-size:10px;margin-bottom:3px">Estela GC</div>
+          <div style="padding:6px 8px;font-size:10px">Santo Serra</div>
+        </div>
+        <div style="flex:1;background:var(--bg-detail);padding:8px"><div style="font-size:11px;font-weight:800">Oporto Golf Club</div><div style="font-size:9px;color:var(--text-3);margin-top:2px">🇵🇹 Espinho · Par 71</div></div>
+      </div>
+    </div>
+    <div class="ds-box" style="padding:0;overflow:hidden;height:180px">
+      <div class="ds-box-label" style="padding:8px 12px;margin:0;border-bottom:1px solid var(--border-light)">Full-Width (.page-full)</div>
+      <div style="background:var(--bg-detail);height:calc(100% - 34px);padding:12px;display:flex;align-items:center;justify-content:center">
+        <div style="text-align:center"><div style="font-size:10px;font-weight:800;margin-bottom:6px">Comparar Jogadores</div><div style="display:flex;gap:4px;justify-content:center"><span class="chip" style="font-size:9px;padding:2px 6px">Manuel</span><span class="chip" style="font-size:9px;padding:2px 6px">João</span></div></div>
+      </div>
+    </div>
+    <div class="ds-box" style="padding:0;overflow:hidden;height:180px">
+      <div class="ds-box-label" style="padding:8px 12px;margin:0;border-bottom:1px solid var(--border-light)">Calendar (Sidebar + Grid)</div>
+      <div style="display:flex;height:calc(100% - 34px)">
+        <div style="width:55%;background:var(--bg-card);border-right:1px solid var(--border-light);padding:6px">
+          <div style="font-size:10px;font-weight:600;margin-bottom:4px">Fev 2025</div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:1px;font-size:8px;text-align:center">
+            <div style="color:var(--text-muted)">S</div><div style="color:var(--text-muted)">T</div><div style="color:var(--text-muted)">Q</div><div style="color:var(--text-muted)">Q</div><div style="color:var(--text-muted)">S</div><div style="color:var(--text-muted)">S</div><div style="color:var(--text-muted)">D</div>
+            <div></div><div></div><div></div><div></div><div></div><div>1</div><div>2</div>
+            <div>3</div><div style="background:var(--accent);color:#fff;border-radius:50%;width:16px;height:16px;display:flex;align-items:center;justify-content:center;margin:0 auto">4</div><div>5</div><div>6</div><div>7</div><div>8</div><div>9</div>
+          </div>
+        </div>
+        <div style="flex:1;background:var(--bg-detail);padding:6px;font-size:9px"><div style="font-weight:700;margin-bottom:4px">4 Fev</div><div style="color:var(--text-3)">Open CGSS</div><span class="pill-torneio pill-regional" style="font-size:7px;padding:0 4px">REG</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 18. LOADING & EMPTY -->
+<div class="ds-section">
+  <div class="ds-title">18. Loading & Empty States</div>
+  <div class="ds-grid-3">
+    <div class="ds-box"><div class="ds-box-label">Loading</div><div class="center-msg" style="height:80px;font-size:13px"><div style="color:var(--color-loading);font-weight:600">⏳ A carregar…</div></div></div>
+    <div class="ds-box"><div class="ds-box-label">Empty</div><div class="empty-state" style="padding:16px"><div class="empty-icon" style="font-size:24px;margin-bottom:6px">🔍</div><div style="font-size:12px;color:var(--text-3)">Nenhum resultado</div></div></div>
+    <div class="ds-box"><div class="ds-box-label">Error</div><div class="center-msg error-box" style="height:80px;font-size:13px"><div class="error-title" style="font-size:14px">Erro</div><div class="error-msg" style="font-size:11px">Não foi possível carregar</div></div></div>
+  </div>
+</div>
+
+<!-- 19. SPACING -->
+<div class="ds-section">
+  <div class="ds-title">19. Spacing, Radius & Shadows</div>
+  <div class="ds-grid-3">
+    <div class="ds-box">
+      <div class="ds-box-label">Spacing Tokens</div>
+      <div style="font-size:12px;display:flex;flex-direction:column;gap:6px">
+        <div><span class="ds-code">--space-section</span> 12px</div>
+        <div><span class="ds-code">--space-inner</span> 14px</div>
+        <div><span class="ds-code">--space-page</span> 16px 20px</div>
+      </div>
+    </div>
+    <div class="ds-box">
+      <div class="ds-box-label">Border Radius</div>
+      <div class="ds-row" style="gap:8px;align-items:flex-end">
+        <div class="ds-col" style="align-items:center"><div style="width:32px;height:32px;background:var(--accent);border-radius:var(--radius-xs)"></div><div class="ds-code">xs</div></div>
+        <div class="ds-col" style="align-items:center"><div style="width:32px;height:32px;background:var(--accent);border-radius:var(--radius-sm)"></div><div class="ds-code">sm</div></div>
+        <div class="ds-col" style="align-items:center"><div style="width:32px;height:32px;background:var(--accent);border-radius:var(--radius)"></div><div class="ds-code">6px</div></div>
+        <div class="ds-col" style="align-items:center"><div style="width:32px;height:32px;background:var(--accent);border-radius:var(--radius-lg)"></div><div class="ds-code">lg</div></div>
+        <div class="ds-col" style="align-items:center"><div style="width:32px;height:32px;background:var(--accent);border-radius:var(--radius-pill)"></div><div class="ds-code">pill</div></div>
+      </div>
+    </div>
+    <div class="ds-box">
+      <div class="ds-box-label">Shadows</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="padding:10px;background:var(--bg-card);box-shadow:var(--shadow-sm);border-radius:var(--radius);font-size:11px"><span class="ds-code">--shadow-sm</span></div>
+        <div style="padding:10px;background:var(--bg-card);box-shadow:var(--shadow);border-radius:var(--radius);font-size:11px"><span class="ds-code">--shadow</span></div>
+        <div style="padding:10px;background:var(--bg-card);box-shadow:var(--shadow-lg);border-radius:var(--radius);font-size:11px"><span class="ds-code">--shadow-lg</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 20. MIGRATION MAP -->
+<div class="ds-section">
+  <div class="ds-title">20. Migration Map <span>39 → 24 classes</span></div>
+  <div class="ds-box" style="padding:0;overflow:hidden">
+    <table class="dtable">
+      <thead><tr><th>Classe Nova</th><th>Substitui</th><th class="r">Usos</th></tr></thead>
+      <tbody>
+        <tr><td><code class="ds-code">.h-xs</code></td><td>an-k-title, sim-section-title, tourn-others-title</td><td class="r">12</td></tr>
+        <tr><td><code class="ds-code">.h-sm</code></td><td>haSubTitle, haTopTitle, ecTitle</td><td class="r">22</td></tr>
+        <tr><td><code class="ds-code">.h-sm-warn</code></td><td>caConcTitle</td><td class="r">9</td></tr>
+        <tr><td><code class="ds-code">.h-md</code></td><td>caTitle, haTitle, section-title, cross-section-title</td><td class="r">33</td></tr>
+        <tr><td><code class="ds-code">.h-lg</code></td><td>tourn-h3, cal-detail-title</td><td class="r">4</td></tr>
+        <tr><td><code class="ds-code">.card</code></td><td>pa-card, an-card, holeAnalysis, section-card, card-bordered, courseAnalysis</td><td class="r">33</td></tr>
+        <tr><td><code class="ds-code">.dtable</code></td><td>an-table</td><td class="r">3</td></tr>
+        <tr><td><code class="ds-code">.dtable-lg</code></td><td>pa-table, tourn-table</td><td class="r">21</td></tr>
+        <tr><td><code class="ds-code">.notice</code></td><td>info-box, sim-info-box</td><td class="r">5</td></tr>
+        <tr><td><code class="ds-code">.notice-error</code></td><td>error-panel, error-boundary-fallback</td><td class="r">3</td></tr>
+        <tr><td><code class="ds-code">.conclusion-box</code></td><td>caConclusion, concl-*</td><td class="r">10</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div style="text-align:center;padding:24px 0;font-size:11px;color:var(--text-muted)">
+  Golf FPG Design System · ~150 CSS variables · ~870 classes · Feb 2025
+</div>
+
+</div>
+</body>
+</html>

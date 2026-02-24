@@ -239,9 +239,9 @@ html, body, #root {
 .notice-warn-text { color: var(--color-warn-dark); font-weight: 600; }
 
 /* ─── Notice / Error ─── */
-.notice-error { padding: var(--space-inner); border-left: 3px solid var(--color-danger); border-radius: var(--radius-lg); background: var(--bg-card); }
+.notice-error { margin: 12px 0; padding: 10px 14px; border-radius: var(--radius-lg); font-size: 12px; line-height: 1.5; background: var(--bg-danger); border: 1px solid var(--border-danger); color: var(--color-danger-dark); }
 .notice-error.ta-c { text-align: center; }
-.notice-error-msg { color: var(--color-danger); font-weight: 600; font-size: 12px; }
+.notice-error-msg { color: var(--color-danger-dark); font-weight: 600; font-size: 12px; }
 .notice-error-detail { max-width: 500px; margin: 4px auto 0; word-break: break-word; }
 
 /* ─── Conclusion Boxes ─── */
@@ -1125,10 +1125,21 @@ tr.cross-current { background: var(--bg-success); }
  font-weight: 900; font-size: 13px; min-width: 26px; min-height: 26px;
  display: inline-flex; align-items: center; justify-content: center;
 }
-.sc-score.holeinone { background: var(--score-hio); color: #fff; border-radius: var(--radius-pill); }
-.sc-score.albatross { background: var(--score-hio); color: #fff; border-radius: var(--radius-pill); }
-.sc-score.eagle { background: var(--score-eagle); color: #fff; border-radius: var(--radius-pill); }
-.sc-score.birdie { background: var(--score-birdie); color: #fff; border-radius: var(--radius-pill); }
+/*
+ * ═══ SCORE DISPLAY — REGRA FIXA (NÃO ALTERAR) ═══
+ *
+ * UM único sistema: .sc-score + classe de scClass()
+ *   • Melhor que par (HIO, albatross, eagle, birdie) → CÍRCULO (border-radius: 50%)
+ *   • Par → sem fundo, sem forma
+ *   • Pior que par (bogey, double, triple, quad+)  → QUADRADO (border-radius: 0)
+ *
+ * Cores: ramp do verde/amarelo/vermelho (under) ao azul progressivo (over)
+ * Não existem outros sistemas de score (sc-dot foi eliminado).
+ */
+.sc-score.holeinone { background: var(--score-hio); color: #fff; border-radius: 50%; }
+.sc-score.albatross { background: var(--score-hio); color: #fff; border-radius: 50%; }
+.sc-score.eagle { background: var(--score-eagle); color: #fff; border-radius: 50%; }
+.sc-score.birdie { background: var(--score-birdie); color: #fff; border-radius: 50%; }
 .sc-score.par { background: transparent; color: var(--text); border-radius: 0; }
 .sc-score.bogey { background: var(--score-bogey); color: var(--score-bogey-fg); border-radius: 0; border: 1px solid var(--score-bogey-border); }
 .sc-score.double { background: var(--score-double); color: #fff; border-radius: 0; }
@@ -1136,6 +1147,7 @@ tr.cross-current { background: var(--bg-success); }
 .sc-score.quad { background: var(--score-quad); color: #fff; border-radius: 0; }
 .sc-score.quint { background: var(--score-quint); color: #fff; border-radius: 0; }
 .sc-score.worse { background: var(--score-worse); color: #fff; border-radius: 0; }
+.sc-score.sc-empty { color: var(--border); font-weight: 400; background: none; }
 
 .sc-pill { display: inline-block; color: #fff; padding: 2px 10px; border-radius: var(--radius-lg); font-size: 11px; font-weight: 700; }
 
@@ -1733,25 +1745,9 @@ tr.cross-current { background: var(--bg-success); }
 /* Female tee pill */
 
 
-/* ─── Score Dots: perfect circles & squares ─── */
+/* ─── Tournament Scorecard Cells ─── */
 .tourn-scorecard .tourn-hole-cell { padding: 2px 1px; text-align: center; vertical-align: middle; }
 
-.sc-dot {
- display: inline-flex; align-items: center; justify-content: center;
- width: 26px; height: 26px;
- font-family: 'JetBrains Mono', monospace; font-weight: 900; font-size: 12px;
-}
-.sc-circle { border-radius: 50%; }
-.sc-square { border-radius: var(--radius-sm); }
-.sc-empty { color: var(--border); font-weight: 400; }
-
-/* Score colors on dots */
-.sc-dot.sc-eagle { background: var(--score-eagle); color: #fff; }
-.sc-dot.sc-birdie { background: var(--score-birdie); color: #fff; }
-.sc-dot.sc-par { background: transparent; color: var(--text); }
-.sc-dot.sc-bogey { background: var(--score-bogey); color: var(--score-bogey-fg); border: 1.5px solid var(--score-bogey-border); }
-.sc-dot.sc-dbogey { background: var(--score-double); color: #fff; }
-.sc-dot.sc-worse { background: var(--score-triple); color: #fff; }
 .tourn-no-data { color: var(--border); font-weight: 400; text-align: center; }
 
 /* To-par */

@@ -8,7 +8,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import type { PlayersDb } from "../data/types";
 import { loadPlayerData, type PlayerPageData, type HoleScores } from "../data/playerDataLoader";
 import { deepFixMojibake } from "../utils/fixEncoding";
-import { SC } from "../utils/scoreDisplay";
+import { SC, scClass } from "../utils/scoreDisplay";
 import TeePill from "../ui/TeePill";
 import LoadingState from "../ui/LoadingState";
 import {
@@ -47,22 +47,9 @@ function fmtHcp(v: number | null): string {
   return v > 0 ? v.toFixed(1) : `+${Math.abs(v).toFixed(1)}`;
 }
 
-function scoreClass(score: number | null, par: number): string {
-  if (score == null) return "";
-  const diff = score - par;
-  if (diff <= -2) return "sc-eagle";
-  if (diff === -1) return "sc-birdie";
-  if (diff === 0) return "sc-par";
-  if (diff === 1) return "sc-bogey";
-  if (diff === 2) return "sc-dbogey";
-  return "sc-worse";
-}
-
 function ScoreDot({ score, par }: { score: number | null; par: number }) {
-  if (score == null) return <span className="sc-dot sc-empty">·</span>;
-  const cls = scoreClass(score, par);
-  const shape = (score - par) < 0 ? "sc-dot sc-circle" : "sc-dot sc-square";
-  return <span className={`${shape} ${cls}`}>{score}</span>;
+  if (score == null) return <span className="sc-score sc-empty">·</span>;
+  return <span className={`sc-score ${scClass(score, par)}`}>{score}</span>;
 }
 
 function PlayerLink({ fed, name, onSelect }: { fed: string | null; name: string; onSelect?: (fed: string) => void }) {
