@@ -32,7 +32,7 @@ export default class SectionErrorBoundary extends React.Component<Props, State> 
   render() {
     if (this.state.error)
       return (
-        <div className="error-boundary-fallback">
+        <div className="notice-error">
           <div className="fw-700 mb-4 c-danger">Erro em: {this.props.label}</div>
           <div className="muted fs-11 mono error-boundary-msg">
             {this.state.error.message}

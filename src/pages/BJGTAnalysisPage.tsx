@@ -15,7 +15,7 @@ import {
   type HoleStatEntry,
   type EclecticEntry,
 } from "../data/playerDataLoader";
-import { usePlayerData } from "../data/usePlayerData";
+import { usePlayerData } from "../hooks/usePlayerData";
 import { norm, fmtToPar, firstName } from "../utils/format";
 import { scClass, toParClass, sc2, sc2w, sc3, sc3m, diagLevel, scDark, SC } from "../utils/scoreDisplay";
 import { isCalUnlocked } from "../utils/authConstants";
@@ -570,7 +570,7 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
       </div>
 
       {/* Table */}
-      <div className="section-card">
+      <div className=""card"">
         <div className="scroll-x">
           <table className="tourn-form-table">
             <thead>
@@ -1586,7 +1586,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
     <div className="tourn-layout">
       <div className="toolbar"><div className="toolbar-left"><span className="tourn-toolbar-title">🇪🇸 BJGT</span></div></div>
       <div className="master-detail"><div className="course-detail">
-        <div className="courseAnalysis empty-state"><div className="empty-icon">⚠️</div><div className="fw-700-dc">Erro: {error}</div></div>
+        <div className="card empty-state"><div className="empty-icon">⚠️</div><div className="fw-700-dc">Erro: {error}</div></div>
       </div></div>
     </div>
   );
@@ -1596,7 +1596,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
       <div className="tourn-layout">
         <div className="toolbar"><div className="toolbar-left"><span className="tourn-toolbar-title">🇪🇸 BJGT</span></div></div>
         <div className="master-detail"><div className="course-detail">
-          <div className="courseAnalysis empty-state">
+          <div className="card empty-state">
             <div className="empty-icon-lg">🔍</div>
             <div className="fw-700-text2-mb8">
               {info?.err === "no_course" ? "Sem campo Villa Padierna nos dados" : "Sem estatísticas de buracos disponíveis"}
@@ -1709,8 +1709,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
       {/* ── Objectivo: O Eclético ── */}
       {ecl && (
-        <div className="courseAnalysis courseAnalysis-success">
- <div className="caTitle fs-14 c-good-dark-inline" >🎯 Objectivo: bater o eclético</div>
+        <div className="card">
+ <div className="h-md fs-14 c-good-dark-inline" >🎯 Objectivo: bater o eclético</div>
  <div className="caConcText mb-10 c-good-darker" >
             O ano passado fizeste <b>{daySummaries.map(d => d.gross).join(", ")}</b>. O eclético — o melhor que fizeste em cada buraco, espalhado nos {vpCards.length} dias — é <b>{ecl.totalGross}</b> ({fmtToPar(ecl.toPar ?? ecl.totalGross - tp)}).
             Com mais um ano de força, maturidade e experiência, o objectivo é juntar tudo isso e aproximar-te desse número.
@@ -1731,8 +1731,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
       )}
 
       {/* ── O Field 2025 ── */}
-      <div className="holeAnalysis">
-        <div className="haTitle">🏆 O Field 2025 — Quem Jogou e Como</div>
+      <div className="card">
+        <div className="h-md">🏆 O Field 2025 — Quem Jogou e Como</div>
         <div className="haDiag mb-10">
           <div className="haDiagCard">
             <div className="haDiagIcon diag-warn">🥇</div>
@@ -1772,7 +1772,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
         {/* Full results table with expandable scorecards */}
         <div className="muted fs-9-mb4">Clica num jogador para ver os scorecards completos e o eclético.</div>
         <div className="tourn-scroll mb-8">
-          <table className="sc-table-modern bjgt-mini-table-sm">
+          <table className="sc-table-modern dtable-mini-sm">
             <thead>
               <tr>
                 <th className="sc-cell-w28 ta-c">Pos</th>
@@ -1814,7 +1814,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                       <tr>
                         <td colSpan={10} className="bg-detail p-0">
                           <div className="scroll-x p-pad68">
-                            <table className="bjgt-mini-table">
+                            <table className="dtable-mini">
                               <thead>
                                 <tr className="bg-border-light">
                                   <td className="fw-700 sc-cell-w40">Bur.</td>
@@ -1898,7 +1898,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                       <tr>
                         <td colSpan={10} className="bg-detail p-0">
                           <div className="scroll-x p-pad68">
-                            <table className="bjgt-mini-table">
+                            <table className="dtable-mini">
                               <thead>
                                 <tr className="bg-border-light">
                                   <td className="fw-700 sc-cell-w40">Bur.</td>
@@ -1961,8 +1961,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
         <div className="muted fs-8-mb8">BJGT Villa Padierna 2025 · Sub-12 Boys · Par 71 · {FIELD_TOTAL} jogadores · Scorecards de {FIELD_CARDS.length} jogadores · Clica para expandir · ECL = eclético (melhor score por buraco)</div>
         {/* Context for Manuel */}
         {daySummaries.length > 0 && ecl && (
-          <div className="caConclusion bg-info bc-info">
-            <div className="caConcTitle c-navy">📍 Onde estava o Manuel?</div>
+          <div className="conclusion-box bg-info bc-info">
+            <div className="h-sm-warn c-navy">📍 Onde estava o Manuel?</div>
             <div className="caConcText c-dark-navy">
               Fez <b>{daySummaries.map(d => d.gross).join(", ")}</b> (total {daySummaries.reduce((a, d) => a + d.gross, 0)}). 
               O eclético é <b>{ecl.totalGross}</b> — {ecl.totalGross <= FIELD_2025.leaderboard[4]?.total / 3
@@ -1975,8 +1975,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
       </div>
 
       {/* ── Dificuldade Real do Campo ── */}
-      <div className="holeAnalysis">
-        <div className="haTitle">🔥 Dificuldade Real — O que o Field Diz</div>
+      <div className="card">
+        <div className="h-md">🔥 Dificuldade Real — O que o Field Diz</div>
         <div className="muted fs-10 mb-8">Baseado em {FIELD_2025.nRounds} rondas de {FIELD_2025.nPlayers} jogadores Sub-12. Não é o SI do campo — é onde estes miúdos realmente sofrem.</div>
         
         {/* Difficulty bars */}
@@ -2024,14 +2024,14 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
           const t5zero = FIELD_2025.holes.filter(h => h.t5Dbl === 0 && h.fDbl > 10);
           return (
             <div className="grid-2">
-              <div className="caConclusion concl-danger">
-                <div className="caConcTitle c-dark-red">🔴 Mais difíceis</div>
+              <div className="conclusion-box conclusion-danger">
+                <div className="h-sm-warn c-dark-red">🔴 Mais difíceis</div>
  <div className="caConcText fs-11 c-danger-darker" >
                   {FIELD_2025.diffRank.slice(0, 4).map(h => `#${h}`).join(", ")} — todos sofrem aqui. Joga seguro, par é vitória.
                 </div>
               </div>
-              <div className="caConclusion concl-success">
-                <div className="caConcTitle c-green-166">🟢 Mais acessíveis</div>
+              <div className="conclusion-box conclusion-success">
+                <div className="h-sm-warn c-green-166">🟢 Mais acessíveis</div>
  <div className="caConcText fs-11 c-good-darker" >
                   {FIELD_2025.diffRank.slice(-4).map(h => `#${h}`).join(", ")} — aqui o Top 5 ataca. Oportunidade para ir buscar pancadas.
                 </div>
@@ -2045,8 +2045,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
           const t5zero = FIELD_2025.holes.filter(h => h.t5Dbl === 0 && h.fDbl >= 10);
           if (t5zero.length === 0) return null;
           return (
-            <div className="caConclusion concl-warn mt-8">
- <div className="caConcTitle c-warn-dark-inline" >💡 Onde o Top 5 nunca faz double</div>
+            <div className="conclusion-box conclusion-warn mt-8">
+ <div className="h-sm-warn c-warn-dark-inline" >💡 Onde o Top 5 nunca faz double</div>
  <div className="caConcText fs-11" style={{ color: "var(--color-warn-dark)" }}>
                 Nos buracos {t5zero.map(h => `#${h.h}`).join(", ")}, o Top 5 fez <b>0% doubles</b> enquanto o field fez {t5zero.map(h => `${h.fDbl.toFixed(0)}%`).join(", ")}. 
                 A diferença não é talento — é decisão. Eles jogam seguro e evitam o erro grande.
@@ -2056,15 +2056,15 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
         })()}
       </div>
       {distEvolution.length >= 4 && (
-        <div className="holeAnalysis">
-          <div className="haTitle">📏 Distância e Evolução</div>
+        <div className="card">
+          <div className="h-md">📏 Distância e Evolução</div>
           <div className="muted fs-9-mb8">
             Analisa como a distância total do campo (soma dos metros de todos os buracos) afecta o score.
             Campos são divididos em "curtos" e "longos" pela mediana ({medianMeters}m). A diferença mostra quantas pancadas a mais custa jogar em campos mais longos.
           </div>
           {metersGrowing && metersDiff != null && (
-            <div className="caConclusion concl-info mb-10">
-              <div className="caConcTitle c-navy">📈 Está a jogar campos mais longos</div>
+            <div className="conclusion-box conclusion-info mb-10">
+              <div className="h-sm-warn c-navy">📈 Está a jogar campos mais longos</div>
               <div className="caConcText c-dark-navy">
                 Distância média das rondas recentes é <b>+{metersDiff.toFixed(0)}m</b> acima das primeiras. Isto é crescimento real — mais força, mais distância.
               </div>
@@ -2121,8 +2121,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
       {/* ── Perfil por Distância: Como se sai em buracos assim? ── */}
       {bands.length > 0 && (
-        <div className="holeAnalysis">
-          <div className="haTitle">🔬 Perfil por Distância — Como te sais em buracos assim?</div>
+        <div className="card">
+          <div className="h-md">🔬 Perfil por Distância — Como te sais em buracos assim?</div>
           <div className="muted fs-10 mb-8">
             {distPeriod === 0
               ? `${allHoleSamples.length} buracos (all-time)`
@@ -2142,7 +2142,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               const trendCol = trend != null ? sc3m(trend, 0.15, 0.15) : SC.muted;
               const noData = distPeriod !== 0 && !fb;
               return (
- <div key={b.key} className={`section-card${noData ? " op-5" : ""}`} style={{ padding: "10px 12px", background: noData ? "var(--bg-detail)" : undefined }}>
+ <div key={b.key} className={`card${noData ? " op-5" : ""}`} style={{ padding: "10px 12px", background: noData ? "var(--bg-detail)" : undefined }}>
                   <div className="fw-900-fs12-mb4">{b.label}</div>
                   {noData ? (
                     <div className="muted fs-10">Sem dados suficientes nos últimos {distPeriod} meses (all-time: {b.avg.toFixed(1)}, {b.n} buracos)</div>
@@ -2193,15 +2193,15 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
           EVOLUÇÃO TEMPORAL — 5 análises com gráficos inline
           ══════════════════════════════════════════════════════ */}
       {filteredMonthly.length >= 3 && (
-        <div className="holeAnalysis">
-          <div className="haTitle">📈 Evolução Temporal — {filteredMonthly.length} meses de dados</div>
+        <div className="card">
+          <div className="h-md">📈 Evolução Temporal — {filteredMonthly.length} meses de dados</div>
           <div className="muted fs-10-mb12">
             Baseado em {filteredMonthly.reduce((s, m) => s + m.rounds, 0)} rondas de 18 buracos, de {filteredMonthly[0]?.label} a {filteredMonthly[filteredMonthly.length - 1]?.label}.
           </div>
 
           {/* ── 1. GROSS MÉDIO POR MÊS ── */}
           <div className="mb-20">
-            <div className="haSubTitle c-navy">🏌️ Gross Médio por Mês</div>
+            <div className="h-sm c-navy">🏌️ Gross Médio por Mês</div>
             <div className="muted bjgt-sub">
               Cada barra = média do score bruto (gross) nas rondas de 18 buracos desse mês. Quanto mais baixa, melhor.
               As linhas tracejadas mostram a média do Top 5 e do field do BJGT VP 2025 como referência.
@@ -2265,7 +2265,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     ))}
                   </div>
                   {/* Trend insight */}
- <div className={`caConclusion ${improving ? "concl-success" : "concl-danger"} mt-8`} >
+ <div className={`conclusion-box ${improving ? "conclusion-success" : "conclusion-danger"} mt-8`} >
  <div className="caConcText fs-11" style={{ color: scDark(improving ? "good" : "danger") }}>
                       {improving
                         ? <>📉 <b>A descer!</b> Primeiros meses: {f3avg.toFixed(0)} → Últimos meses: {l3avg.toFixed(0)}. Melhoria de {(f3avg - l3avg).toFixed(1)} pancadas.</>
@@ -2282,7 +2282,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
           {/* ── 2. PAR 3/4/5 AO LONGO DO TEMPO ── */}
           <div className="mb-20">
-            <div className="haSubTitle c-purple">⛳ Desempenho Par 3 / 4 / 5 ao Longo do Tempo</div>
+            <div className="h-sm c-purple">⛳ Desempenho Par 3 / 4 / 5 ao Longo do Tempo</div>
             <div className="muted bjgt-sub">
               Média de pancadas por tipo de buraco em cada mês. Ex: "Par 3 → 3.81" significa que, em média, faz 3.81 pancadas nos buracos de par 3.
               Compara o primeiro e último terço dos dados para ver tendência. "T5 BJGT" é a referência dos 5 melhores do torneio.
@@ -2337,7 +2337,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
           {/* ── 3. DOUBLES POR PERÍODO ── */}
           <div className="mb-20">
-            <div className="haSubTitle c-birdie">💥 Doubles+ por Mês — Blow-ups a Diminuir?</div>
+            <div className="h-sm c-birdie">💥 Doubles+ por Mês — Blow-ups a Diminuir?</div>
             <div className="muted bjgt-sub">
               Percentagem de buracos onde o score foi double bogey ou pior (= 2+ pancadas acima do par).
               Estes "blow-ups" são o maior destruidor de scores em juniores. Reduzir de 25% para 15% pode valer 4-5 pancadas por ronda.
@@ -2369,7 +2369,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
  <div key={i} className="ta-center fs-10 c-muted flex-1" >{m.label}</div>
                     ))}
                   </div>
- <div className={`caConclusion ${improving ? "concl-success" : "concl-danger"} mt-8`} >
+ <div className={`conclusion-box ${improving ? "conclusion-success" : "conclusion-danger"} mt-8`} >
  <div className="caConcText fs-11" style={{ color: scDark(improving ? "good" : "danger") }}>
                       {improving
                         ? <>✅ <b>Menos blow-ups!</b> Doubles baixaram de {fDbl.toFixed(0)}% para {lDbl.toFixed(0)}%. Isto é maturidade competitiva.</>
@@ -2386,7 +2386,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
           {/* ── 4. FORMA RECENTE vs BENCHMARKS BJGT ── */}
           <div className="mb-20">
-            <div className="haSubTitle c-eagle">🏆 Forma Recente vs Benchmarks BJGT 2025</div>
+            <div className="h-sm c-eagle">🏆 Forma Recente vs Benchmarks BJGT 2025</div>
             <div className="muted bjgt-sub">
               Compara a forma dos últimos 3 meses com os benchmarks reais do BJGT Villa Padierna 2025: o score médio do vencedor, Top 5 e field inteiro.
               Permite ver a que distância competitiva está e se a tendência se aproxima destes níveis.
@@ -2460,7 +2460,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
           {/* ── 5. FRONT 9 vs BACK 9 AO LONGO DO TEMPO ── */}
           <div className="mb-8">
- <div className="haSubTitle c-chart-6" >⚡ Front 9 vs Back 9 — Gestão de Energia</div>
+ <div className="h-sm c-chart-6" >⚡ Front 9 vs Back 9 — Gestão de Energia</div>
             <div className="muted bjgt-sub">
               Compara a média de pancadas nos primeiros 9 buracos (F9) vs últimos 9 (B9). Se o B9 é consistentemente pior,
               pode indicar fadiga física, perda de concentração ou má hidratação/nutrição durante a ronda.
@@ -2498,7 +2498,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     <span><span className="chart-legend-dot" style={{ background: "var(--chart-6)" }} />Front 9</span>
                     <span><span className="chart-legend-dot" style={{ background: "var(--chart-4)" }} />Back 9</span>
                   </div>
-                  <div className="caConclusion bg-info bc-info">
+                  <div className="conclusion-box bg-info bc-info">
                     <div className="caConcText c-dark-navy-11">
                       {Math.abs(avgF9Gap) < 1
                         ? <>📊 Front e Back 9 equilibrados (gap médio: {avgF9Gap > 0 ? "+" : ""}{avgF9Gap.toFixed(1)}). Boa gestão de energia!</>
@@ -2524,8 +2524,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
           INDICADORES DE DESENVOLVIMENTO — Para Treinadores
           ══════════════════════════════════════════════════════ */}
       {filteredCoach.length >= 3 && (
-        <div className="holeAnalysis">
-          <div className="haTitle">🎓 Indicadores de Desenvolvimento</div>
+        <div className="card">
+          <div className="h-md">🎓 Indicadores de Desenvolvimento</div>
           <div className="muted fs-10 mb-8">
             Métricas que os treinadores de golfe analisam para avaliar a evolução de jovens jogadores.
             Baseado em {coachRounds.length} rondas com scorecards detalhados (buraco a buraco).
@@ -2537,7 +2537,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
           {/* ── 1. CONSISTÊNCIA — SD do gross + Best vs Avg gap ── */}
           <div className="mb-20">
-            <div className="haSubTitle c-purple">🎯 Consistência — A Chave da Maturidade</div>
+            <div className="h-sm c-purple">🎯 Consistência — A Chave da Maturidade</div>
             <div className="muted bjgt-sub">
               <b>Desvio-padrão (σ):</b> mede a variação entre rondas no mesmo mês. σ ≤ 3 = muito consistente, σ &gt; 5 = imprevisível.
               <b>Gap Melhor–Média:</b> diferença entre a melhor ronda e a média do mês. Gap pequeno = joga sempre perto do seu melhor. Verde = bom, laranja = atenção, vermelho = a melhorar.
@@ -2593,7 +2593,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               const sdBetter = lSD < fSD - 0.5;
               const gapBetter = lGap < fGap - 1;
               return (
-                <div className={`caConclusion ${sdBetter || gapBetter ? "concl-success" : "concl-danger"}`}>
+                <div className={`conclusion-box ${sdBetter || gapBetter ? "conclusion-success" : "conclusion-danger"}`}>
  <div className="caConcText fs-11" style={{ color: scDark(sdBetter || gapBetter ? "good" : "danger") }}>
                     σ: {fSD.toFixed(1)} → {lSD.toFixed(1)} {sdBetter ? "✅ mais consistente" : "— manter trabalho"}
                     {" · "}Gap: {fGap.toFixed(0)} → {lGap.toFixed(0)} {gapBetter ? "✅ a fechar" : "— potencial por explorar"}.
@@ -2606,7 +2606,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
           {/* ── 2. RESILIÊNCIA — Bounce-back rate ── */}
           <div className="mb-20">
-            <div className="haSubTitle c-birdie">🧠 Resiliência — Bounce-back Após Double</div>
+            <div className="h-sm c-birdie">🧠 Resiliência — Bounce-back Após Double</div>
             <div className="muted bjgt-sub">
               Depois de fazer double bogey ou pior, qual a % de vezes que faz par ou melhor no buraco seguinte?
               Mede a capacidade de "limpar a cabeça" após um mau buraco. Top juniores: ≥40%. Abaixo de 25% = o mau buraco está a arrastar os seguintes.
@@ -2634,7 +2634,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               const fR = first.reduce((s, m) => s + m.bounceRate!, 0) / first.length;
               const lR = last.reduce((s, m) => s + m.bounceRate!, 0) / last.length;
               return (
-                <div className={`caConclusion ${lR > fR + 5 ? "concl-success" : "concl-info"}`}>
+                <div className={`conclusion-box ${lR > fR + 5 ? "conclusion-success" : "conclusion-info"}`}>
  <div className="caConcText fs-11" style={{ color: scDark(lR > fR + 5 ? "good" : "info") }}>
                     Bounce-back: {fR.toFixed(0)}% → {lR.toFixed(0)}%. {lR > fR + 5 ? "📈 A melhorar a gestão mental!" : lR >= fR ? "Estável." : "Trabalhar rotina de reset pós-erro."}
                     {" "}Um double não tem de custar dois.
@@ -2646,7 +2646,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
           {/* ── 3. BIRDIES & PAR STREAKS — Capacidade Ofensiva + Concentração ── */}
           <div className="mb-20">
-            <div className="haSubTitle c-par-ok">🦅 Birdies & Séries de Pares — Ataque e Concentração</div>
+            <div className="h-sm c-par-ok">🦅 Birdies & Séries de Pares — Ataque e Concentração</div>
             <div className="muted bjgt-sub">
               <b>Taxa de Birdies (%):</b> % de buracos com birdie ou melhor — mede a capacidade ofensiva.
               <b>Melhor série par+ (média):</b> maior nº consecutivo de buracos com par ou melhor na ronda — mede concentração e consistência mental.
@@ -2697,7 +2697,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               const fStreak = first.reduce((s, m) => s + m.avgPobStreak, 0) / first.length;
               const lStreak = last.reduce((s, m) => s + m.avgPobStreak, 0) / last.length;
               return (
-                <div className="caConclusion bg-info bc-info">
+                <div className="conclusion-box bg-info bc-info">
                   <div className="caConcText c-dark-navy-11">
                     Birdies: {fBird.toFixed(1)}% → {lBird.toFixed(1)}% {lBird > fBird + 0.5 ? "📈" : "—"}
                     {" · "}Séries par+: {fStreak.toFixed(1)} → {lStreak.toFixed(1)} buracos {lStreak > fStreak + 0.3 ? "📈 mais focado" : "—"}.
@@ -2711,7 +2711,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
           {/* ── 4. INÍCIO vs FECHO — Nervos e Fadiga ── */}
           <div className="mb-20">
-            <div className="haSubTitle c-eagle">🏁 Arranque vs Fecho — Nervos e Fadiga</div>
+            <div className="h-sm c-eagle">🏁 Arranque vs Fecho — Nervos e Fadiga</div>
             <div className="muted bjgt-sub">
               Compara o desempenho nos 3 primeiros buracos (arranque) vs 3 últimos (fecho), medido em pancadas acima do par.
               Arranque alto = nervos no tee do 1. Fecho alto = fadiga ou pressão final.
@@ -2752,7 +2752,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               const worse = avgF > avgL ? "arranque" : "fecho";
               const wVal = Math.max(avgF, avgL);
               return (
-                <div className={`caConclusion ${wVal > 2 ? "concl-danger" : "concl-success"}`}>
+                <div className={`conclusion-box ${wVal > 2 ? "conclusion-danger" : "conclusion-success"}`}>
  <div className="caConcText fs-11" style={{ color: scDark(wVal > 2 ? "danger" : "good") }}>
                     {worse === "arranque" && avgF > 1.5
                       ? <>⚠️ Perde mais nos primeiros 3 buracos (+{avgF.toFixed(1)} vs par). Pode ser nervos — aquecer bem e ter rotina pré-jogo.</>
@@ -2768,7 +2768,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
           {/* ── 5. SCORING DISTRIBUTION SHIFT — Evolução da Distribuição ── */}
           <div className="mb-20">
-            <div className="haSubTitle c-blue">📊 Shift da Distribuição — Onde Vão os Scores?</div>
+            <div className="h-sm c-blue">📊 Shift da Distribuição — Onde Vão os Scores?</div>
             <div className="muted bjgt-sub">
               Divide os dados em 3 períodos (Início, Meio, Recente) e mostra a distribuição dos scores: que % foram eagle, birdie, par, bogey, double ou triple+.
               Um jogador em evolução deve ver mais verde (pars+birdies) e menos vermelho (doubles+triples) no período recente.
@@ -2817,7 +2817,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
           {/* ── 6. SD TREND — Score Differential (mais significativo que gross) ── */}
           {filteredCoach.some(m => m.avgSD != null) && (
             <div className="mb-8">
-              <div className="haSubTitle c-navy">📉 Score Differential (SD) — O Indicador que Conta</div>
+              <div className="h-sm c-navy">📉 Score Differential (SD) — O Indicador que Conta</div>
               <div className="muted bjgt-sub">
                 O SD normaliza o score para a dificuldade do campo: SD = (113 ÷ Slope) × (Gross − Course Rating).
                 Permite comparar rondas em campos diferentes. É o indicador usado pelo WHS para calcular o handicap.
@@ -2855,7 +2855,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                 const allBest = filteredCoach.filter(m => m.bestSD != null).map(m => m.bestSD!);
                 const overallBest = allBest.length > 0 ? Math.min(...allBest) : null;
                 return (
-                  <div className={`caConclusion ${lSD < fSD - 1 ? "concl-success" : "concl-info"}`}>
+                  <div className={`conclusion-box ${lSD < fSD - 1 ? "conclusion-success" : "conclusion-info"}`}>
  <div className="caConcText fs-11" style={{ color: scDark(lSD < fSD - 1 ? "good" : "info") }}>
                       SD médio: {fSD.toFixed(1)} → {lSD.toFixed(1)} {lSD < fSD - 1 ? "📉 a baixar — evolução real!" : lSD > fSD + 1 ? "📈 a subir — pode ser campos mais duros" : "— estável"}.
                       {overallBest != null && <> Melhor SD de sempre: <b>{overallBest.toFixed(1)}</b>.</>}
@@ -2869,9 +2869,9 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
           {/* ── Summary table for coaches ── */}
           <div className="mt-12">
-            <div className="haSubTitle">📋 Resumo para o Treinador</div>
+            <div className="h-sm">📋 Resumo para o Treinador</div>
             <div className="tourn-scroll">
-            <table className="sc-table-modern bjgt-mini-table-sm">
+            <table className="sc-table-modern dtable-mini-sm">
               <thead><tr>
                 <th className="row-label">Mês</th>
                 <th>Rondas</th>
@@ -2913,8 +2913,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
       {/* ── VP Buraco a Buraco: eclético + scores + cross-ref ── */}
       {vpHoleProfiles.length > 0 && (
-        <div className="holeAnalysis">
-          <div className="haTitle">🗺️ VP Flamingos — Manuel vs Field vs Top 5</div>
+        <div className="card">
+          <div className="h-md">🗺️ VP Flamingos — Manuel vs Field vs Top 5</div>
           <div className="muted fs-10 mb-8">
             Scorecard comparativo buraco a buraco. Cada coluna é um buraco (1-18). Mostra os 3 dias do Manuel, o eclético, e as médias do field e Top 5 do BJGT 2025.
             <br />μ M = média do Manuel nos 3 dias · μ T5 = média dos 5 melhores · μ Field = média dos {FIELD_2025.nPlayers} jogadores · Diff = Manuel − Field (negativo = melhor que o field).
@@ -3023,8 +3023,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
             const gaining = diffs.filter(d => d.diff < -0.2).slice(-3);
             if (losing.length === 0) return null;
             return (
-              <div className="caConclusion concl-danger mt-8">
-                <div className="caConcTitle c-dark-red">📉 Onde o Manuel perde mais vs o field</div>
+              <div className="conclusion-box conclusion-danger mt-8">
+                <div className="h-sm-warn c-dark-red">📉 Onde o Manuel perde mais vs o field</div>
  <div className="caConcText c-danger-darker" >
                   Buracos {losing.map(d => `#${d.h} (+${d.diff.toFixed(1)})`).join(", ")} — aqui perdes {losing.reduce((a, d) => a + d.diff, 0).toFixed(1)} pancadas por ronda vs a média.
                   {gaining.length > 0 && <> Mas nos buracos {gaining.map(d => `#${d.h}`).join(", ")} estás <b>melhor</b> que o field!</>}
@@ -3036,8 +3036,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
       )}
 
       {/* ── Como foi o ano passado ── */}
-      <div className="holeAnalysis">
-        <div className="haTitle">📋 Como foi em {TOURN.dates.split("–")[0].trim()} 2025</div>
+      <div className="card">
+        <div className="h-md">📋 Como foi em {TOURN.dates.split("–")[0].trim()} 2025</div>
 
         {/* Day summary cards */}
         {daySummaries.length > 0 && (
@@ -3072,8 +3072,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
         {/* Key insight: what made the best day better? */}
         {bestDay && worstDay && bestDay.idx !== worstDay.idx && (
- <div className="caConclusion concl-success mb-8" >
-            <div className="caConcTitle c-green-166">💡 O que fez a diferença no Dia {bestDay.idx}?</div>
+ <div className="conclusion-box conclusion-success mb-8" >
+            <div className="h-sm-warn c-green-166">💡 O que fez a diferença no Dia {bestDay.idx}?</div>
  <div className="caConcText c-good-darker" >
               {bestDay.doubles < worstDay.doubles && <>Menos {worstDay.doubles - bestDay.doubles} double{worstDay.doubles - bestDay.doubles > 1 ? "s" : ""}. </>}
               {bestDay.pars > worstDay.pars && <>Mais {bestDay.pars - worstDay.pars} par{bestDay.pars - worstDay.pars > 1 ? "es" : ""} ou melhor. </>}
@@ -3114,8 +3114,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
         {/* Recovery after double */}
         {totalRecovery >= 2 && recoveryRate != null && (
-          <div className={`caConclusion ${recoveryRate >= 60 ? "concl-success" : recoveryRate >= 40 ? "concl-warn" : "concl-danger"}`}>
-            <div className="caConcTitle" style={{ color: sc3(recoveryRate, 40, 60, "desc") }}>
+          <div className={`conclusion-box ${recoveryRate >= 60 ? "conclusion-success" : recoveryRate >= 40 ? "conclusion-warn" : "conclusion-danger"}`}>
+            <div className="h-sm-warn" style={{ color: sc3(recoveryRate, 40, 60, "desc") }}>
               {recoveryRate >= 60 ? "💪" : "⚠️"} Recuperação após double
             </div>
             <div className="caConcText" style={{ color: sc3(recoveryRate, 40, 60, "desc") }}>
@@ -3128,17 +3128,17 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
       </div>
 
       {/* ── Buracos-chave: onde estudar na volta de treino ── */}
-      <div className="holeAnalysis">
-        <div className="haTitle">🔍 Mapa do Campo — Onde Estudar</div>
+      <div className="card">
+        <div className="h-md">🔍 Mapa do Campo — Onde Estudar</div>
 
         {/* Trap holes */}
         {trapHoles.length > 0 && (
           <div className="mb-12">
-            <div className="haSubTitle c-birdie">🚨 Buracos Armadilha ({trapHoles.length})</div>
+            <div className="h-sm c-birdie">🚨 Buracos Armadilha ({trapHoles.length})</div>
             <div className="muted fs-10 mb-6">Fizeste double+ em 2 ou mais dias. Na volta de treino, estuda ESTES buracos com atenção.</div>
             <div className="bjgt-diag-grid">
               {trapHoles.map(h => (
- <div key={h.h} className="section-card-danger">
+ <div key={h.h} className="card-danger">
                   <div className="d-flex justify-between items-end">
                     <span className="bjgt-kpi-val">#{h.h}</span>
                     <span className="muted fs-10">Par {h.par}</span>
@@ -3159,11 +3159,11 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
         {/* Strong holes */}
         {strongHoles.length > 0 && (
           <div className="mb-12">
-            <div className="haSubTitle c-par-ok">💪 Buracos Fortes ({strongHoles.length})</div>
+            <div className="h-sm c-par-ok">💪 Buracos Fortes ({strongHoles.length})</div>
             <div className="muted fs-10 mb-6">Fizeste par ou melhor em metade dos dias ou mais. Aqui podes atacar.</div>
             <div className="bjgt-diag-grid">
               {strongHoles.map(h => (
- <div key={h.h} className="section-card-success">
+ <div key={h.h} className="card-success">
                   <div className="d-flex justify-between items-end">
                     <span className="bjgt-kpi-val">#{h.h}</span>
                     <span className="muted fs-10">Par {h.par}</span>
@@ -3184,11 +3184,11 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
         {/* Volatile holes */}
         {volatileHoles.length > 0 && (
           <div className="mb-8">
-            <div className="haSubTitle c-eagle">🎲 Buracos Imprevisíveis ({volatileHoles.length})</div>
+            <div className="h-sm c-eagle">🎲 Buracos Imprevisíveis ({volatileHoles.length})</div>
             <div className="muted fs-10 mb-6">Grande oscilação entre dias. Precisa de um plano claro — escolhe a jogada segura.</div>
             <div className="bjgt-diag-grid">
               {volatileHoles.slice(0, 4).map(h => (
- <div key={h.h} className="section-card-warn">
+ <div key={h.h} className="card-warn">
                   <div className="d-flex justify-between items-end">
                     <span className="bjgt-kpi-val">#{h.h}</span>
                     <span className="muted fs-10">Par {h.par}</span>
@@ -3207,8 +3207,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
       </div>
 
       {/* ── Volta de Treino ── */}
-      <div className="courseAnalysis courseAnalysis-info">
- <div className="caTitle fs-14 c-navy-inline" >🏌️ Checklist — Volta de Treino</div>
+      <div className="card">
+ <div className="h-md fs-14 c-navy-inline" >🏌️ Checklist — Volta de Treino</div>
         <div className="caConcText" style={{ color: "var(--color-navy)", lineHeight: 1.7 }}>
           {trapHoles.length > 0 && <p className="mb-6">
             <b>1. Estudar buracos armadilha:</b> #{trapHoles.map(h => h.h).join(", #")} — ver onde é o perigo, identificar a jogada segura, testar yardages.
@@ -3232,8 +3232,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
       </div>
 
       {/* ── KPIs (haDiag style, same as JogadoresPage) ── */}
-      <div className="holeAnalysis">
- <div className="haTitle fs-11">📊 Análise de Performance <span className="muted" >({S.nRounds} rondas · Vermelho par {tp})</span></div>
+      <div className="card">
+ <div className="h-md fs-11">📊 Análise de Performance <span className="muted" >({S.nRounds} rondas · Vermelho par {tp})</span></div>
         <div className="haDiag">
           <div className="haDiagCard">
             <div className="haDiagIcon diag-danger">🏌️</div>
@@ -3276,10 +3276,10 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
       {/* ── Eclético ── */}
       {ecl && ecl.holes.length > 0 && (
         <div className="ecBlock">
-          <div className="ecTitle">Eclético (gross) por tee</div>
+          <div className="h-sm">Eclético (gross) por tee</div>
           <div className="ecHint">Clique num tee na tabela de buracos para ver análise e filtrar rondas.</div>
           {/* Tee header with color */}
- <div className="section-card mt-8" style={{ borderColor: "var(--color-danger)", borderWidth: 2 }}>
+ <div className="card mt-8" style={{ borderColor: "var(--color-danger)", borderWidth: 2 }}>
  <div className="fw-600 fs-12" style={{ padding: "6px 10px", background: "var(--color-danger-alpha)" }}>
  <span className="sc-pill fs-10 c-white" style={{ background: SC.danger, padding: "2px 10px" }}>Vermelho</span>{" "}
               <span className="cb-blue-800">{ecl.totalGross}</span>
@@ -3355,8 +3355,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
       )}
 
       {/* ── Distribuição ── */}
-      <div className="holeAnalysis">
-        <div className="haTitle">Distribuição de Scores</div>
+      <div className="card">
+        <div className="h-md">Distribuição de Scores</div>
  <div className="d-flex gap-6 mb-16">
         {[
           { l: "Eagle+", n: S.totalDist.eagle, c: "eagle" }, { l: "Birdie", n: S.totalDist.birdie, c: "birdie" },
@@ -3374,8 +3374,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
       {/* ── Par types ── */}
       {Object.values(S.byParType).length > 1 && (
-        <div className="holeAnalysis">
-          <div className="haSubTitle">Desempenho por Tipo de Buraco</div>
+        <div className="card">
+          <div className="h-sm">Desempenho por Tipo de Buraco</div>
           <div className="haParGrid mb-16">
             {[3, 4, 5].map(pt => S.byParType[String(pt)]).filter(Boolean).map(d => {
               const isW = worstPT === d;
@@ -3417,9 +3417,9 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
       )}
 
       {/* ── Tabela buraco a buraco ── */}
-      <h3 className="tourn-h3">📊 Todos os Buracos</h3>
+      <h3 className="h-lg">📊 Todos os Buracos</h3>
       <div className="tourn-scroll mb-16">
-        <table className="tourn-table">
+        <table className="dtable-lg">
           <thead><tr>
             <th className="col-w40">Bur.</th>
             <th className="r col-w30">Par</th>
@@ -3452,8 +3452,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
       </div>
 
       {/* ── Plano de Jogo ── */}
-      <div className="courseAnalysis courseAnalysis-accent">
- <div className="caTitle fs-14" >🗺️ Plano de Jogo — {TOURN.days} Dias em Málaga</div>
+      <div className="card">
+ <div className="h-md fs-14" >🗺️ Plano de Jogo — {TOURN.days} Dias em Málaga</div>
  <div className="caConcText c-text lh-17">
           {dowN > 0 && <p className="mb-8">
             <b>🚨 Regra nº1:</b> Evitar doubles! Tiveste <b>{dowN}</b> em {totN} buracos.

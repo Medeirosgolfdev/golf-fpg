@@ -197,7 +197,7 @@ function DayScorecard({ norm, cat, dayKey, holeData, filters, onSelectPlayer }: 
       </div>
 
       <div className="tourn-scroll">
-        <table className="tourn-table tourn-scorecard">
+        <table className="dtable-lg tourn-scorecard">
           <thead>
             <tr className="tourn-course-hdr">
               <th className="tourn-pos-col sortable" onClick={() => sort.toggle("pos")}>Pos{sort.arrow("pos")}</th>
@@ -283,7 +283,7 @@ function DayScorecard({ norm, cat, dayKey, holeData, filters, onSelectPlayer }: 
 
       {others.length > 0 && (
         <div className="tourn-others">
-          <div className="tourn-others-title">NÃO TERMINARAM / NÃO PARTIRAM</div>
+          <div className="h-xs">NÃO TERMINARAM / NÃO PARTIRAM</div>
           {others.map((r, i) => (
             <div key={i} className="tourn-other-line">
               <span className={`tourn-status ${r.status === "NS" ? "tourn-ns" : "tourn-nd"}`}>{r.status}</span>
@@ -369,7 +369,7 @@ function AccumulatedTable({ norm, cat, filters, onSelectPlayer }: {
       </div>
 
       <div className="tourn-scroll">
-        <table className="tourn-table tourn-form-table">
+        <table className="dtable-lg tourn-form-table">
           <thead>
             <tr>
               <th className="r col-w30">#</th>
@@ -546,7 +546,7 @@ function AllResultsDayTable({ norm, dayKey, filters, onSelectPlayer }: {
       <div className="tourn-meta">{rows.length} jogadores · {norm.categories.length} categorias · {dayLabel(dayKey)} · ordenado por Score Differential</div>
 
       <div className="tourn-scroll">
-        <table className="tourn-table tourn-form-table">
+        <table className="dtable-lg tourn-form-table">
           <thead>
             <tr>
               <th className="r col-w30">#</th>
@@ -642,7 +642,7 @@ function AllAccumulatedTable({ norm, filters, onSelectPlayer }: {
     <>
       <div className="tourn-meta">{allRows.length} jogadores · Acumulado cross-categoria · ordenado por SD médio</div>
       <div className="tourn-scroll">
-        <table className="tourn-table tourn-form-table">
+        <table className="dtable-lg tourn-form-table">
           <thead>
             <tr>
               <th className="r col-w30">#</th>
@@ -1170,10 +1170,10 @@ function AnalysisView({ norm, players, holeDataByDay, playerHistory, onSelectPla
 
       {sorted.length > 0 ? (
         <>
-          <h3 className="tourn-h3">Forma dos Jogadores — {cat === "wagr" ? "WAGR" : cat === "sub14" ? "Sub-14" : "Sub-12"}</h3>
+          <h3 className="h-lg">Forma dos Jogadores — {cat === "wagr" ? "WAGR" : cat === "sub14" ? "Sub-14" : "Sub-12"}</h3>
           <div className="tourn-meta">{sorted.length} jogadores com histórico na app · dados pré-torneio</div>
           <div className="tourn-scroll">
-            <table className="tourn-table tourn-form-table">
+            <table className="dtable-lg tourn-form-table">
               <thead>
                 <tr>
                   {cat === "wagr" && <th className="r col-w30">Pos</th>}
@@ -1242,10 +1242,10 @@ function AnalysisView({ norm, players, holeDataByDay, playerHistory, onSelectPla
       )}
 
       {cat === "wagr" && holeDiff[0]?.n > 0 && <>
-        <h3 className="tourn-h3">Dificuldade por Buraco</h3>
+        <h3 className="h-lg">Dificuldade por Buraco</h3>
         <div className="tourn-meta">{holeDiff[0].n} scorecards · ordenado do mais fácil ao mais difícil</div>
         <div className="tourn-scroll">
-          <table className="tourn-table tourn-form-table">
+          <table className="dtable-lg tourn-form-table">
             <thead>
               <tr>
                 <th className="col-w40">Buraco</th>

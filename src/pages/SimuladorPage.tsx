@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from "react";
 import type { Course, Tee, Hole } from "../data/types";
 import TeeBadge from "../ui/TeeBadge";
 import { getTeeHex, textOnColor } from "../utils/teeColors";
-import { fmt, fmtCR, norm, titleCase, fmtSD } from "../utils/format";
+import { fmt, fmtCR, norm, titleCase } from "../utils/format";
 import { SC } from "../utils/scoreDisplay";
 import OverlayExport from "../ui/OverlayExport";
 import type { OverlayData } from "../ui/OverlayExport";
@@ -100,7 +100,11 @@ function expectedSD9(hi: number): number {
   return loVal + frac * (hiVal - loVal);
 }
 
-/* fmtSD agora importada de format.ts */
+/** Formata SD com sinal e 1 casa decimal */
+function fmtSD(sd: number): string {
+  const sign = sd >= 0 ? "+" : "";
+  return `${sign}${sd.toFixed(1)}`;
+}
 
 /** Extrai ratings de 9 buracos do tee */
 function get9hRatings(tee: Tee, nine: "front9" | "back9") {
@@ -793,7 +797,7 @@ function AgsSection({
   if (!fieldHoles || !computed) {
     return (
       <div className="m-14-0">
-        <div className="sim-info-box sim-warn-box">
+        <div className="notice notice-warn">
           <strong>Scorecard / AGS:</strong> O scorecard para introduzir scores por buraco e calcular o SD exacto
           aparece quando selecionas um campo com dados de Par e Stroke Index.
           {" "}<a href={USGA_NDB_LINK} target="_blank" rel="noopener noreferrer"
@@ -835,7 +839,7 @@ function AgsSection({
   return (
     <div className="m-14-0">
       <div className="flex-between-mb6">
-        <h3 className="sim-section-title m-0">
+        <h3 className="h-xs m-0">
           Scorecard {hasAgs ? "— Net Double Bogey / AGS" : ""}
         </h3>
         {Object.keys(scores).length > 0 && (
@@ -1024,7 +1028,7 @@ function AgsSection({
                 </tr>
 
                 {/* Máx (Net Double Bogey) */}
-                <tr className="sep-row sim-warn-box">
+                <tr className="sep-row notice-warn">
                   <td className="row-label c-amber-11">Máx</td>
                   {front.map((h, i) => (
                     <React.Fragment key={h.hole}>
@@ -1084,7 +1088,7 @@ function AgsSection({
             </svg>
             Como funciona o Adjusted Gross Score?
           </summary>
-          <div className="sim-info-box sim-warn-box mt-6">
+          <div className="notice notice-warn mt-6">
             O WHS calcula o SD com o <em>Adjusted Gross Score</em>. Máximo por buraco = <strong>Net Double Bogey</strong>:
             <code className="sim-note-block">
               Máx = Par + 2 + Pancadas (Course HCP) nesse buraco
@@ -1403,7 +1407,7 @@ export default function SimuladorPage({ courses }: Props) {
               </div>
 
               {!teeData && (
-                <div className="sim-info-box">
+                <div className="notice notice-info">
                   Preenche pelo menos <strong>CR</strong> e <strong>Slope</strong> de{" "}
                   {holesMode === "18" ? "18 buracos" : holesMode === "front9" ? "Front 9" : "Back 9"}{" "}
                   para ver os cálculos.
@@ -1417,12 +1421,12 @@ export default function SimuladorPage({ courses }: Props) {
                     cr={teeData.cr} slope={teeData.slope} par={teeData.par} pcc={pcc} is9h={is9h} exp9hSD={exp9hSD} />
 
                   {is9h && (
-                    <div className="sim-info-box">
+                    <div className="notice notice-info">
                       <strong>WHS 2024 — 9 buracos:</strong> O SD de 18 buracos é calculado somando
                       o SD dos 9 buracos jogados com o Expected SD baseado no HI do jogador.
                       Fórmula: <code>SD_18h = SD_9h + Expected_9h(HI)</code>
                       {hi === null && (
-                        <span className="sim-info-warn"> ⚠ Preenche o HI na toolbar para ver o SD 18h.</span>
+                        <span className="notice-warn-text"> ⚠ Preenche o HI na toolbar para ver o SD 18h.</span>
                       )}
                     </div>
                   )}
@@ -1506,12 +1510,12 @@ export default function SimuladorPage({ courses }: Props) {
 
               {/* Info box para 9 buracos */}
               {is9h && (
-                <div className="sim-info-box">
+                <div className="notice notice-info">
                   <strong>WHS 2024 — 9 buracos:</strong> O SD de 18 buracos é calculado somando
                   o SD dos 9 buracos jogados com o Expected SD baseado no HI do jogador.
                   Fórmula: <code>SD_18h = SD_9h + Expected_9h(HI)</code>
                   {hi === null && (
-                    <span className="sim-info-warn"> ⚠ Preenche o HI na toolbar para ver o SD 18h.</span>
+                    <span className="notice-warn-text"> ⚠ Preenche o HI na toolbar para ver o SD 18h.</span>
                   )}
                 </div>
               )}

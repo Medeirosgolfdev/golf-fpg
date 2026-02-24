@@ -343,7 +343,7 @@ function RadarChart({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats | null
 
   return (
     <div className="courseAnalysis p-16">
-      <div className="caTitle">Perfil Comparativo <span className="muted fs-11 fw-400">(apenas torneios)</span></div>
+      <div className="h-md">Perfil Comparativo <span className="muted fs-11 fw-400">(apenas torneios)</span></div>
       <svg viewBox="0 0 300 290" className="cmp-radar-wrap">
         {[0.25, 0.5, 0.75, 1].map(frac => (
           <polygon key={frac}
@@ -423,9 +423,9 @@ function StatsTable({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats | null
 
   return (
     <div className="courseAnalysis p-0 no-overflow">
-      <div className="caTitle p-14" style={{ paddingBottom: 0 }}>Comparação Detalhada <span className="muted fs-11 fw-400">(apenas torneios)</span></div>
-      <div className="pa-table-wrap mt-8">
-        <table className="pa-table fs-13">
+      <div className="h-md p-14" style={{ paddingBottom: 0 }}>Comparação Detalhada <span className="muted fs-11 fw-400">(apenas torneios)</span></div>
+      <div className="table-wrap mt-8">
+        <table className="dtable-lg fs-13">
           <thead>
             <tr>
               <th style={{ minWidth: 140 }}>Métrica</th>
@@ -482,7 +482,7 @@ function ScoreDistribution({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats
 
   return (
     <div className="courseAnalysis p-16">
-      <div className="caTitle">Distribuição de Scores <span className="muted fs-11 fw-400">(apenas torneios)</span></div>
+      <div className="h-md">Distribuição de Scores <span className="muted fs-11 fw-400">(apenas torneios)</span></div>
       <div className="flex-col-gap12 mt-8">
         {cats.filter(c => c.key !== "total").map(cat => {
           const vals = loaded.map(x => {
@@ -564,7 +564,7 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
 
   return (
     <div className="courseAnalysis">
-      <div className="caTitle flex-center-gap10 flex-wrap">
+      <div className="h-md flex-center-gap10 flex-wrap">
         Buraco a Buraco <span className="muted fs-11 fw-400">(torneios)</span>
         <select className="select" value={sel} onChange={e => setSel(Number(e.target.value))}>
           {combos.map((c, i) => <option key={i} value={i}>{c.label} ({c.nRounds.filter(n => n > 0).join("/")} rondas)</option>)}
@@ -607,8 +607,8 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
         })}
       </div>
 
-      <div className="pa-table-wrap mt-8">
-        <table className="pa-table">
+      <div className="table-wrap mt-8">
+        <table className="dtable-lg">
           <thead><tr>
             <th className="r">H</th><th className="r">Par</th>
             {loaded.map((s, i) => (<React.Fragment key={s.fed}>
@@ -680,7 +680,7 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
 
   return (
     <div className="courseAnalysis">
-      <div className="caTitle">Head-to-Head ({totalMatches} torneios comuns)</div>
+      <div className="h-md">Head-to-Head ({totalMatches} torneios comuns)</div>
 
       {/* Win progress bar */}
       <div className="cmp-distrib-bar">
@@ -722,8 +722,8 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
         )}
       </div>
 
-      <div className="pa-table-wrap cmp-result-list">
-        <table className="pa-table">
+      <div className="table-wrap cmp-result-list">
+        <table className="dtable-lg">
           <thead><tr>
             <th>Data</th><th>Torneio</th>
             {loaded.map((s, i) => <th key={i} className="r" style={{ color: COLORS[i] }}>{firstName(s.player.name)}</th>)}
@@ -813,7 +813,7 @@ function TournamentEvolutionSection({ slots }: { slots: Slot[] }) {
 
   return (
     <div className="courseAnalysis">
-      <div className="caTitle flex-center-gap10 flex-wrap">
+      <div className="h-md flex-center-gap10 flex-wrap">
         Evolução em Torneios
         <select className="select" value={metric} onChange={e => setMetric(e.target.value as "sd" | "gross")}>
           <option value="sd">Score Differential</option>
@@ -908,13 +908,13 @@ export default function CompararPage({ players }: { players: PlayersDb }) {
   }), [slots]);
 
   return (
-    <div className="cmp-page">
+    <div className="page-full">
       <PlayerSearch players={players} slots={slots} onAdd={addPlayer} onRemove={removePlayer} />
 
       {slots.length === 0 && (
-        <div className="holeAnalysis empty-state">
+        <div className="card empty-state">
           <div className="cmp-empty-icon">⚔️</div>
-          <div className="haTitle cmp-empty-title">Comparar Jogadores</div>
+          <div className="h-md cmp-empty-title">Comparar Jogadores</div>
           <div className="muted fs-13-lh16">
             Pesquisa e adiciona até 4 jogadores para comparar lado a lado.
           </div>
@@ -930,14 +930,14 @@ export default function CompararPage({ players }: { players: PlayersDb }) {
       )}
 
       {anyLoading && (
-        <div className="holeAnalysis ta-c p-24">
+        <div className="card ta-c p-24">
           <LoadingState message="A carregar dados dos jogadores…" />
         </div>
       )}
 
       {slots.filter(s => s.error).map(s => (
-        <div key={s.fed} className="holeAnalysis ta-c error-panel">
-          <div className="error-panel-msg">
+        <div key={s.fed} className="card ta-c notice-error">
+          <div className="notice-error-msg">
             Erro ao carregar {s.player.name}: {s.error}
           </div>
         </div>
@@ -965,7 +965,7 @@ export default function CompararPage({ players }: { players: PlayersDb }) {
       </>)}
 
       {slots.length === 1 && !anyLoading && (
-        <div className="holeAnalysis ta-c p-24">
+        <div className="card ta-c p-24">
  <div className="mb-8 fs-24" >👆</div>
           <div className="muted">Adiciona mais jogadores para ver a comparação</div>
         </div>

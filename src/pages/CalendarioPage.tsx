@@ -478,7 +478,7 @@ function EventPopup({ event, onClose }: { event: CalEvent; onClose: () => void }
             display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
         </div>
         <div className="cal-sidebar">
-          <div className="cal-detail-title">{event.title}</div>
+          <div className="h-lg">{event.title}</div>
           <div className="flex-col-gap8">
             <InfoRow icon="📅" label={fmtRange(event)} />
             {event.modalidade && <InfoRow icon="🏌️" label={event.modalidade} />}

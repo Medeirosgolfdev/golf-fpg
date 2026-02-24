@@ -156,8 +156,8 @@ function ByDateView({ data, search }: {
   }, [data, search]);
 
   return (
-    <div className="pa-table-wrap">
-      <table className="pa-table">
+    <div className="table-wrap">
+      <table className="dtable-lg">
         <colgroup>
           <col className="col-p9" /><col className="col-p18" /><col className="col-p13" />
           <col className="col-p6" /><col className="col-p7" /><col className="col-p10" />
@@ -257,9 +257,9 @@ function TeeSummaryTable({ rounds }: { rounds: RoundData[] }) {
   const mn = (a: number[]) => a.length ? Math.min(...a) : null;
 
   return (
-    <div className="card-bordered mb-10">
+    <div className="card mb-10">
       <div className="sc-bar-head"><span>Resumo por Tee</span></div>
-      <table className="pa-table" style={{ fontSize: 12, marginBottom: 0 }}>
+      <table className="dtable-lg" style={{ fontSize: 12, marginBottom: 0 }}>
         <thead>
           <tr>
             <th>Tee</th>
@@ -795,9 +795,9 @@ function ByCourseView({ data, search, sort, isAnalysis }: {
   }, [data, search, sort]);
 
   return (
-    <div className="pa-card">
-      <div className="pa-table-wrap">
-        <table className="pa-table">
+    <div className="card">
+      <div className="table-wrap">
+        <table className="dtable-lg">
           <colgroup>
             <col className="col-p26" /><col className="col-p6" /><col className="col-p9" />
             <col className="col-p6" /><col className="col-p7" /><col className="col-p12" />
@@ -834,11 +834,11 @@ function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, ac
 }) {
   return (
     <div className="ecBlock">
-      <div className="ecTitle">Eclético (gross) por tee</div>
+      <div className="h-sm">Eclético (gross) por tee</div>
       <div className="ecHint">Clique num tee na tabela de buracos para ver análise e filtrar rondas.</div>
 
       {/* Summary table */}
-      <div className="card-bordered mb-10">
+      <div className="card mb-10">
         <table className="ec-sum">
           <thead>
             <tr><th>Tee</th><th className="r">Rondas</th><th className="r">Par</th>
@@ -1054,8 +1054,8 @@ function CoursePerformanceSection({ rounds }: { rounds: RoundData[] }) {
   if (!stats) return null;
 
   return (
-    <div className="courseAnalysis">
-      <div className="caTitle">
+    <div className="card">
+      <div className="h-md">
         Análise de Performance
         {stats.has9 && <span className="muted fs-11 fw-400"> (Stb de 9h normalizado: +17)</span>}
       </div>
@@ -1085,8 +1085,8 @@ function CoursePerformanceSection({ rounds }: { rounds: RoundData[] }) {
         )}
       </div>
       {stats.conclusion.length > 0 && (
-        <div className="caConclusion">
-          <div className="caConcTitle">💡 Resumo</div>
+        <div className="conclusion-box">
+          <div className="h-sm-warn">💡 Resumo</div>
           <div className="caConcText">{stats.conclusion}</div>
         </div>
       )}
@@ -1133,8 +1133,8 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
   const colTot: React.CSSProperties = { ...cs, background: "var(--bg-muted)", borderLeft: "1px solid var(--border-light)", fontWeight: 800 };
 
   return (
-    <div className="holeAnalysis">
-      <div className="haTitle">📊 Análise de Performance <span className="muted fs-11">({stats.nRounds} rondas)</span></div>
+    <div className="card">
+      <div className="h-md">📊 Análise de Performance <span className="muted fs-11">({stats.nRounds} rondas)</span></div>
 
       {/* Diagnosis cards */}
       <div className="haDiag">
@@ -1178,7 +1178,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
       {/* By par type */}
       {parTypes.length > 1 && (
         <div className="haParTypes">
-          <div className="haSubTitle">Desempenho por Tipo de Buraco</div>
+          <div className="h-sm">Desempenho por Tipo de Buraco</div>
           <div className="haParGrid">
             {parTypes.map(pt => {
               const g = stats.byParType[pt];
@@ -1217,7 +1217,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
       {ranked.length >= 4 && (
         <div className="haTopWrap">
           <div className="haTopCol haTopStrength">
-            <div className="haTopTitle"><span className="c-par-ok">💪 Pontos Fortes</span></div>
+            <div className="h-sm"><span className="c-par-ok">💪 Pontos Fortes</span></div>
             {strengths.length === 0
               ? <div className="haTopEmpty">Nenhum buraco consistentemente ao par ou melhor.</div>
               : strengths.map(bh => {
@@ -1238,7 +1238,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
             }
           </div>
           <div className="haTopCol haTopWeakness">
-            <div className="haTopTitle"><span className="c-birdie">🔻 Onde Perdes Mais Pancadas</span></div>
+            <div className="h-sm"><span className="c-birdie">🔻 Onde Perdes Mais Pancadas</span></div>
             {weaknesses.length === 0
               ? <div className="haTopEmpty">Sem buracos com perdas significativas.</div>
               : <>
@@ -1274,7 +1274,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
       {/* Scoring distribution bar */}
       {td && td.total > 0 && (
         <div className="haDistSection">
-          <div className="haSubTitle">Distribuição de Scoring</div>
+          <div className="h-sm">Distribuição de Scoring</div>
           <div className="haDistBar">
             {td.eagle > 0 && <div className="haDistSeg seg-eagle" style={{ width: `${(td.eagle / td.total * 100).toFixed(1)}%` }} title={`Eagle+: ${td.eagle}`} />}
             {td.birdie > 0 && <div className="haDistSeg seg-birdie" style={{ width: `${(td.birdie / td.total * 100).toFixed(1)}%` }} title={`Birdie: ${td.birdie}`} />}
@@ -1296,7 +1296,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
 
       {/* Hole-by-hole table */}
       <div className="haTableSection">
-        <div className="card-bordered">
+        <div className="card">
           <div className="sc-bar-head"><span>Detalhe Buraco a Buraco</span></div>
           <div className="scroll-x">
  <table className="w-full fs-11" style={{ borderCollapse: "collapse" }}>
@@ -1481,7 +1481,7 @@ function AnalysisView({ data }: { data: PlayerPageData }) {
   }
 
   return (
-    <div className="pa-card">
+    <div className="card">
       <div className="an-wrap">
         {/* KPI Grid */}
         <div className="an-grid">
@@ -1522,8 +1522,8 @@ function AnalysisView({ data }: { data: PlayerPageData }) {
 /* ─── KPI Card ─── */
 function KPICard({ title, val, sub, tip }: { title: string; val: string | null; sub: string; tip?: string }) {
   return (
-    <div className="an-card">
-      <div className="an-k-title">{title}{tip && <span className="kpi-info" title={tip}>ℹ️</span>}</div>
+    <div className="card">
+      <div className="h-xs">{title}{tip && <span className="kpi-info" title={tip}>ℹ️</span>}</div>
       <div className="an-k-val">{val ? <b>{val}</b> : <span className="muted">–</span>}</div>
       {sub && <div className="an-k-sub muted">{sub}</div>}
     </div>
@@ -1567,9 +1567,9 @@ function HistogramCard({ rounds, period, setPeriod }: {
   }, [rounds]);
 
   return (
-    <div className="an-card">
+    <div className="card">
       <div className="d-flex justify-between items-center mb-8">
-        <div className="an-k-title m-0">Desempenho vs Par</div>
+        <div className="h-xs m-0">Desempenho vs Par</div>
         <PeriodSelect value={period} onChange={setPeriod} />
       </div>
       {bins.total === 0 ? <div className="muted">Sem dados</div> :
@@ -1617,9 +1617,9 @@ function TrajectoryCard({ rounds, period, setPeriod }: {
   }, [rounds]);
 
   return (
-    <div className="an-card">
+    <div className="card">
       <div className="d-flex justify-between items-center mb-8">
-        <div className="an-k-title m-0">Trajectória</div>
+        <div className="h-xs m-0">Trajectória</div>
         <PeriodSelect value={period} onChange={setPeriod} />
       </div>
       {!stats ? <div className="muted">Poucos dados</div> : (
@@ -1679,9 +1679,9 @@ function RecordsCard({ rounds, period, setPeriod }: {
   }
 
   return (
-    <div className="an-card">
+    <div className="card">
       <div className="d-flex justify-between items-center mb-8">
-        <div className="an-k-title m-0">Recordes Pessoais</div>
+        <div className="h-xs m-0">Recordes Pessoais</div>
         <PeriodSelect value={period} onChange={setPeriod} />
       </div>
       {!records ? <div className="muted">Sem dados</div> : (
@@ -1699,11 +1699,11 @@ function RecordsCard({ rounds, period, setPeriod }: {
 /* ─── WHS Detail ─── */
 function WHSDetail({ hcp }: { hcp: HcpInfo }) {
   if (hcp.current == null) {
-    return <div className="an-card"><div className="an-k-title">Handicap — Detalhe WHS</div><div className="muted">Sem dados WHS disponíveis</div></div>;
+    return <div className="card"><div className="h-xs">Handicap — Detalhe WHS</div><div className="muted">Sem dados WHS disponíveis</div></div>;
   }
   return (
-    <div className="an-card">
-      <div className="an-k-title">Handicap — Detalhe WHS</div>
+    <div className="card">
+      <div className="h-xs">Handicap — Detalhe WHS</div>
       <div className="jog-record-grid">
         <div className="card-stat-green">
           <div className="muted fs-10">MÍNIMO ATINGIDO</div>
@@ -1743,13 +1743,13 @@ function Last20Table({ data, last20Table, best8 }: {
   const [openSc, setOpenSc] = useState<string | null>(null);
 
   return (
-    <div className="an-card">
-      <div className="an-k-title">Últimas 20 rondas</div>
+    <div className="card">
+      <div className="h-xs">Últimas 20 rondas</div>
       <div className="muted mb-8 fs-11">
         Os 8 melhores SD das últimas 20 estão assinalados com ★ · <b>*</b> = Stableford normalizado 9B→18B (+17 pts WHS)
       </div>
-      <div className="pa-table-wrap">
-        <table className="an-table">
+      <div className="table-wrap">
+        <table className="dtable">
           <thead>
             <tr>
               <th>Data</th><th>Campo</th><th>Prova</th>
@@ -1866,8 +1866,8 @@ function CrossAnalysis({ data }: { data: PlayerPageData }) {
   const curYear = new Date().getFullYear();
 
   return (
-    <div className="an-card" style={{ marginTop: 24 }}>
- <div className="an-k-title fs-18" style={{ marginBottom: 16 }}>📊 Cross-Análise por Escalão</div>
+    <div className="card" style={{ marginTop: 24 }}>
+ <div className="h-xs fs-18" style={{ marginBottom: 16 }}>📊 Cross-Análise por Escalão</div>
       {/* Tabs */}
       <div className="escalao-pills jog-cross-wrap">
         {escalaos.map(esc => (
@@ -1895,8 +1895,8 @@ function CrossAnalysis({ data }: { data: PlayerPageData }) {
         <span className="muted fw-600 fs-11">{players.length} jogadores</span>
       </div>
       {/* Ranking table */}
-      <div className="pa-table-wrap">
-        <table className="an-table cross-table">
+      <div className="table-wrap">
+        <table className="dtable cross-table">
           <thead>
             <tr>
               <th className="r" style={{ width: 28 }}>#</th>
@@ -2000,7 +2000,7 @@ function HcpEvolutionChart({ players, currentFed, escName }: {
 
   return (
     <div className="mt-20">
-      <div className="cross-section-title flex-center-gap12">
+      <div className="h-md flex-center-gap12">
         Evolução HCP — {escName}
         <select className="mini-badge"
           value={period} onChange={e => setPeriod(Number(e.target.value))}>
@@ -2090,7 +2090,7 @@ function CommonCourses({ players, currentFed, escName }: {
 
   return (
     <div className="mt-20">
-      <div className="cross-section-title">Campos em Comum (mesmo tee) — {escName}</div>
+      <div className="h-md">Campos em Comum (mesmo tee) — {escName}</div>
       <div className="muted fs-11 mb-8">Ordenado pela melhor ronda. Clica num campo para ver detalhes.</div>
       {commonCT.map((cc, ci) => {
         const isOpen = openCard === ci;
@@ -2121,7 +2121,7 @@ function CommonCourses({ players, currentFed, escName }: {
             </div>
             {isOpen && (
               <div className="card-detail-inner">
-                <table className="an-table" style={{ fontSize: 12 }}>
+                <table className="dtable" style={{ fontSize: 12 }}>
                   <thead>
                     <tr>
                       <th style={{ width: 32 }}>#</th><th>Jogador</th><th className="r">Voltas</th>
@@ -2249,7 +2249,7 @@ function TournamentComparison({ rounds, holesData }: {
   const headerText = `Scorecard comparativo · HCP ${hcpLabel} · ${teeLabel}${totalDist && allSameTee ? ` · ${totalDist}m` : ""}`;
 
   return (
-    <div className="card-bordered mt-12">
+    <div className="card mt-12">
       <div className="sc-bar-head">
         <span>{headerText}</span>
         <span>Par {totalPar || ""}</span>
@@ -2650,9 +2650,9 @@ function ByTournamentView({ data, search }: { data: PlayerPageData; search: stri
   const [openIdx, setOpenIdx] = useState<number | null>(null);
 
   return (
-    <div className="pa-card">
-      <div className="pa-table-wrap">
-        <table className="pa-table">
+    <div className="card">
+      <div className="table-wrap">
+        <table className="dtable-lg">
           <colgroup>
             <col className="col-p46" /><col className="col-p34" />
             <col className="col-p10" /><col className="col-p10" />
