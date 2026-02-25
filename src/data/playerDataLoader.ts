@@ -245,7 +245,6 @@ async function _loadPlayerDataImpl(fedId: string): Promise<PlayerPageData> {
           club,
         },
       };
-      console.log(`[playerDataLoader] Loaded from data.json: DATA=${result.DATA.length} courses, CROSS_DATA=${Object.keys(result.CROSS_DATA).length} players`);
       return result;
     }
   } catch { /* fallback to HTML */ }
@@ -293,7 +292,6 @@ async function _loadPlayerDataImpl(fedId: string): Promise<PlayerPageData> {
   const club = typeof clubRaw === "string" ? clubRaw
     : (clubRaw?.short || clubRaw?.long || "");
 
-  console.log(`[playerDataLoader] Loaded from HTML: DATA=${result.DATA.length} courses, CROSS_DATA=${Object.keys(result.CROSS_DATA).length} players`);
 
   return {
     ...result,

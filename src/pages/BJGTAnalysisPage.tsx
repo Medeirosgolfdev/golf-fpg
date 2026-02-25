@@ -138,6 +138,63 @@ const FIELD_CARDS = [
 ];
 const MANUEL_POS = 26; // 26º de 35 no torneio real
 const FIELD_TOTAL = 35; // total de jogadores no torneio
+
+/* ═══ WJGC 2026 — R1 data (Villa Padierna Flamingos, par 72) ═══ */
+const VP26_PAR = [5,3,4,3,4,5,4,3,4, 5,5,3,4,4,5,3,4,4];
+const VP26_SI  = [4,10,6,18,16,8,14,12,2, 1,7,9,15,11,5,13,17,3];
+const VP26_PAR_F = 35, VP26_PAR_B = 37, VP26_PAR_T = 72;
+interface VP26Player { n:string; co:string; flag:string; s:number[]|null; f9:number; b9:number; gross:number; tp:number; pos:number|string }
+const VP26_RAW: {n:string;co:string;flag:string;s:number[]|null}[] = [
+  {n:"Dmitrii Elchaninov",co:"Russian Federation",flag:"🇷🇺",s:[6,3,4,3,3,5,5,2,4,5,5,2,4,4,5,3,4,5]},
+  {n:"Manuel Medeiros",co:"Portugal",flag:"🇵🇹",s:[5,3,3,3,4,7,3,3,4,4,6,3,5,4,6,4,4,4]},
+  {n:"William Harran",co:"Switzerland",flag:"🇨🇭",s:[4,3,4,3,5,4,4,4,4,5,6,2,5,4,5,3,5,5]},
+  {n:"Weilian Sun",co:"China",flag:"🇨🇳",s:[8,3,3,4,4,4,5,2,4,5,5,3,4,3,7,3,3,5]},
+  {n:"Henry Bucys",co:"England",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",s:[4,3,4,3,3,4,4,4,4,6,5,5,5,4,6,4,4,4]},
+  {n:"Myles Jones",co:"Wales",flag:"🏴󠁧󠁢󠁷󠁬󠁳󠁿",s:[5,4,4,4,4,6,5,3,4,4,6,3,4,4,5,3,5,5]},
+  {n:"Christian Chepishev",co:"Bulgaria",flag:"🇧🇬",s:[5,4,4,3,4,5,6,4,3,6,5,3,5,6,5,3,4,4]},
+  {n:"Sean Wilding",co:"Thailand",flag:"🇹🇭",s:[6,4,5,3,3,5,5,2,4,5,5,4,6,4,6,3,5,4]},
+  {n:"Leon Schneitter",co:"Switzerland",flag:"🇨🇭",s:[5,4,5,3,4,5,5,4,5,4,5,4,5,4,8,2,3,5]},
+  {n:"Dylan Dedaj Ungureanu",co:"Spain",flag:"🇪🇸",s:[5,3,4,2,4,6,5,3,4,5,7,3,4,5,7,4,5,4]},
+  {n:"Philippe Xiao",co:"France",flag:"🇫🇷",s:[6,4,4,3,5,6,5,2,4,5,5,4,5,6,6,2,4,4]},
+  {n:"Diego Gross Paneque",co:"Spain",flag:"🇪🇸",s:[5,3,5,5,5,4,5,4,5,5,5,4,4,4,5,3,5,5]},
+  {n:"Alexis Beringer",co:"Switzerland",flag:"🇨🇭",s:[4,5,5,4,4,5,7,4,3,5,5,3,5,4,5,3,5,5]},
+  {n:"Aineon Hiram Jabonero",co:"Philippines",flag:"🇵🇭",s:[5,6,5,4,3,6,5,4,4,4,5,4,4,4,5,4,5,5]},
+  {n:"Niko Alvarez Van Der Walt",co:"Spain",flag:"🇪🇸",s:[5,3,6,3,3,5,4,4,4,6,7,4,5,4,5,3,6,5]},
+  {n:"Hugo Strasser",co:"Switzerland",flag:"🇨🇭",s:[5,3,3,4,5,6,3,3,5,5,6,4,6,4,7,3,5,5]},
+  {n:"Álex Carrón",co:"Spain",flag:"🇪🇸",s:[5,3,4,3,4,6,4,4,4,7,7,4,5,4,6,3,5,5]},
+  {n:"Oscar Bunt",co:"England",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",s:[5,5,4,3,4,8,4,4,3,4,5,5,4,5,6,4,5,5]},
+  {n:"Benji Botham",co:"Northern Ireland",flag:"🇬🇧",s:[6,3,4,4,5,5,4,3,7,5,6,4,5,4,6,3,5,4]},
+  {n:"Lukas Doherty",co:"Norway",flag:"🇳🇴",s:[6,4,5,3,4,5,5,3,4,5,6,4,5,4,7,3,6,5]},
+  {n:"Elias Didjurgis",co:"Germany",flag:"🇩🇪",s:[7,5,4,3,4,6,6,2,6,5,6,3,5,4,7,3,5,5]},
+  {n:"Maddox Tiemann",co:"Sweden",flag:"🇸🇪",s:[5,3,6,3,4,6,5,3,4,7,5,3,6,4,7,3,5,8]},
+  {n:"Elijah Gibbons",co:"England",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",s:[6,4,4,3,5,6,3,4,4,9,5,4,6,3,7,5,4,5]},
+  {n:"Buster Airey",co:"England",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",s:[7,3,5,3,5,5,5,4,4,8,5,4,6,4,6,4,5,5]},
+  {n:"Aron Klinkenberg",co:"Netherlands",flag:"🇳🇱",s:[7,5,5,5,4,6,4,4,4,6,4,5,5,5,7,5,4,3]},
+  {n:"Hermes Stuart Cañizares Plaja",co:"Spain",flag:"🇪🇸",s:[5,4,5,2,5,5,4,4,8,4,6,3,10,3,7,3,5,5]},
+  {n:"Miroslavs Bogdanovs",co:"Spain",flag:"🇪🇸",s:[6,5,4,4,4,5,4,3,4,6,7,4,6,4,8,4,5,5]},
+  {n:"Henry Liechti",co:"Switzerland",flag:"🇨🇭",s:[7,6,5,4,4,6,4,4,4,7,5,4,4,5,7,3,6,4]},
+  {n:"Joe Short",co:"Portugal",flag:"🇵🇹",s:[6,4,6,3,3,8,6,4,3,5,6,3,5,5,6,7,4,6]},
+  {n:"Zeyn Lababedi",co:"England",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",s:[8,5,5,3,4,6,5,3,4,6,7,4,5,5,9,3,4,5]},
+  {n:"Rodrigo Palacios Bauer",co:"Spain",flag:"🇪🇸",s:[6,4,4,5,4,6,7,4,3,5,10,3,6,4,8,2,5,6]},
+  {n:"Arthur Lamblin",co:"France",flag:"🇫🇷",s:[8,4,5,4,4,8,4,3,5,6,6,3,5,5,6,3,6,7]},
+  {n:"Kai Russell",co:"England",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",s:[6,4,5,6,4,5,3,4,4,11,5,3,5,5,9,3,6,4]},
+  {n:"James Doyle",co:"Ireland",flag:"🇮🇪",s:[8,8,6,3,4,7,4,3,5,3,9,6,3,5,8,6,6,4]},
+  {n:"Joseph Robinson",co:"England",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",s:[8,6,4,4,4,8,7,3,5,5,6,4,6,4,4,4,12,5]},
+  {n:"Kevin Canton",co:"Italy",flag:"🇮🇹",s:[4,3,8,4,5,6,7,2,4,7,6,4,6,5,8,5,9,7]},
+  {n:"Isaac Cawrey",co:"England",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",s:null},
+  {n:"Travis Reaves",co:"United States",flag:"🇺🇸",s:null},
+];
+const VP26_PLAYERS: VP26Player[] = (() => {
+  const valid = VP26_RAW.filter(p => p.s).map(p => {
+    const f9 = p.s!.slice(0,9).reduce((a,b)=>a+b,0);
+    const b9 = p.s!.slice(9,18).reduce((a,b)=>a+b,0);
+    return { ...p, f9, b9, gross: f9+b9, tp: f9+b9-VP26_PAR_T, pos: 0 as number|string };
+  });
+  valid.sort((a,b) => a.gross - b.gross);
+  valid.forEach((v,i) => { v.pos = i===0 ? 1 : v.gross===valid[i-1].gross ? valid[i-1].pos : i+1; });
+  const dns = VP26_RAW.filter(p => !p.s).map(p => ({ ...p, f9:0, b9:0, gross:0, tp:0, pos:"DNS" as number|string }));
+  return [...valid, ...dns];
+})();
 /* ═══════════════════════════════════
    HELPERS
    ═══════════════════════════════════ */
@@ -168,6 +225,7 @@ const T: TournDef[]=[
   {id:"doral25",name:"Doral Junior 2025",short:"Doral",date:"Dez 2025",rounds:2,par:71,field:35,nations:9,url:"https://www.golfgenius.com/v2tournaments/4222407?called_from=widgets%2Fcustomized_tournament_results&hide_totals=false&player_stats_for_portal=true"},
   {id:"qdl25",name:"QDL Junior Open 2025",short:"QDL",date:"Nov 2025",rounds:1,par:72,field:12,nations:7,intendedRounds:3,url:"https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=962&tcode=10080&classif_order=2"},
   {id:"gg26",name:"Greatgolf Junior Open",short:"GG",date:"Fev 2026",rounds:2,par:72,field:12,nations:4,url:"https://scoring-pt.datagolf.pt/scripts/classif.asp?tourn=10296&club=935&ack=OT342GH16T"},
+  {id:"wjgc26",name:"WJGC 2026",short:"WJGC26",date:"Fev 2026",rounds:1,intendedRounds:3,par:72,field:36,nations:19,url:"https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/73/leaderboard.htm"},
 ];
 
 // Tournament prestige weight: rounds (40%) + field size (35%) + internationality (25%)
@@ -186,21 +244,21 @@ const T_WEIGHTS: Record<string, number> = (() => {
   return w;
 })();
 
-const UP=[{id:"wjgc26",name:"WJGC 2026",short:"WJGC"},{id:"marco26",name:"Marco Simone Inv.",short:"M.SIMONE",url:"https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516989/marco-simone-invitational-2026/field"}];
+const UP=[{id:"marco26",name:"Marco Simone Inv.",short:"M.SIMONE",url:"https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516989/marco-simone-invitational-2026/field"}];
 
 const D: RivalPlayer[]=[
-  {n:"Manuel Medeiros",co:"Portugal",isM:true,r:{brjgt25:{p:26,t:265,tp:52,rd:[90,85,90]},eowagr25:{p:7,t:238,tp:22,rd:[85,77,76]},venice25:{p:28,t:237,tp:21,rd:[78,76,83]},rome25:{p:10,t:166,tp:22,rd:[89,77]},doral25:{p:29,t:177,tp:35,rd:[98,79]},qdl25:{p:11,t:90,tp:18,rd:[90]},gg26:{p:4,t:169,tp:25,rd:[87,82]}},up:["wjgc26","marco26"]},
-  {n:"Dmitrii Elchaninov",co:"Russian Federation",r:{brjgt25:{p:1,t:205,tp:-8,rd:[69,68,68]},eowagr25:{p:2,t:218,tp:2,rd:[77,70,71]},venice25:{p:1,t:198,tp:-18,rd:[62,68,68]},qdl25:{p:1,t:71,tp:-1,rd:[71]}},up:["wjgc26"]},
-  {n:"Diego Gross Paneque",co:"Spain",r:{brjgt25:{p:16,t:249,tp:36,rd:[80,84,85]}},up:["wjgc26"]},
-  {n:"Álex Carrón",co:"Spain",r:{brjgt25:{p:13,t:246,tp:33,rd:[82,84,80]}},up:["wjgc26"]},
-  {n:"Henry Liechti",co:"Switzerland",r:{brjgt25:{p:17,t:250,tp:37,rd:[87,84,79]}},up:["wjgc26"]},
-  {n:"Niko Alvarez Van Der Walt",co:"Spain",r:{brjgt25:{p:22,t:261,tp:48,rd:[89,83,89]}},up:["wjgc26"]},
-  {n:"Miroslavs Bogdanovs",co:"Spain",r:{brjgt25:{p:24,t:263,tp:50,rd:[86,88,89]},venice25:{p:18,t:227,tp:11,rd:[76,74,77]}},up:["wjgc26"]},
-  {n:"Christian Chepishev",co:"Bulgaria",r:{brjgt25:{p:29,t:270,tp:57,rd:[87,86,97]}},up:["wjgc26","marco26"]},
-  {n:"James Doyle",co:"Ireland",r:{brjgt25:{p:32,t:277,tp:64,rd:[93,92,92]}},up:["wjgc26"]},
-  {n:"Alexis Beringer",co:"Switzerland",r:{brjgt25:{p:33,t:290,tp:77,rd:[93,94,103]}},up:["wjgc26"]},
-  {n:"Kevin Canton",co:"Italy",r:{brjgt25:{p:34,t:291,tp:78,rd:[98,96,97]}},up:["wjgc26"]},
-  {n:"Leon Schneitter",co:"Switzerland",r:{brjgt25:{p:"WD",t:null,tp:null,rd:[]}},up:["wjgc26"]},
+  {n:"Manuel Medeiros",co:"Portugal",isM:true,r:{brjgt25:{p:26,t:265,tp:52,rd:[90,85,90]},eowagr25:{p:7,t:238,tp:22,rd:[85,77,76]},venice25:{p:28,t:237,tp:21,rd:[78,76,83]},rome25:{p:10,t:166,tp:22,rd:[89,77]},doral25:{p:29,t:177,tp:35,rd:[98,79]},qdl25:{p:11,t:90,tp:18,rd:[90]},gg26:{p:4,t:169,tp:25,rd:[87,82]},wjgc26:{p:2,t:75,tp:3,rd:[75]}},up:["marco26"]},
+  {n:"Dmitrii Elchaninov",co:"Russian Federation",r:{brjgt25:{p:1,t:205,tp:-8,rd:[69,68,68]},eowagr25:{p:2,t:218,tp:2,rd:[77,70,71]},venice25:{p:1,t:198,tp:-18,rd:[62,68,68]},qdl25:{p:1,t:71,tp:-1,rd:[71]},wjgc26:{p:1,t:72,tp:0,rd:[72]}},up:[]},
+  {n:"Diego Gross Paneque",co:"Spain",r:{brjgt25:{p:16,t:249,tp:36,rd:[80,84,85]},wjgc26:{p:12,t:86,tp:14,rd:[86]}},up:[]},
+  {n:"Álex Carrón",co:"Spain",r:{brjgt25:{p:13,t:246,tp:33,rd:[82,84,80]},wjgc26:{p:17,t:88,tp:16,rd:[88]}},up:[]},
+  {n:"Henry Liechti",co:"Switzerland",r:{brjgt25:{p:17,t:250,tp:37,rd:[87,84,79]},wjgc26:{p:28,t:95,tp:23,rd:[95]}},up:[]},
+  {n:"Niko Alvarez Van Der Walt",co:"Spain",r:{brjgt25:{p:22,t:261,tp:48,rd:[89,83,89]},wjgc26:{p:13,t:87,tp:15,rd:[87]}},up:[]},
+  {n:"Miroslavs Bogdanovs",co:"Spain",r:{brjgt25:{p:24,t:263,tp:50,rd:[86,88,89]},venice25:{p:18,t:227,tp:11,rd:[76,74,77]},wjgc26:{p:25,t:93,tp:21,rd:[93]}},up:[]},
+  {n:"Christian Chepishev",co:"Bulgaria",r:{brjgt25:{p:29,t:270,tp:57,rd:[87,86,97]},wjgc26:{p:7,t:79,tp:7,rd:[79]}},up:["marco26"]},
+  {n:"James Doyle",co:"Ireland",r:{brjgt25:{p:32,t:277,tp:64,rd:[93,92,92]},wjgc26:{p:36,t:108,tp:36,rd:[108]}},up:[]},
+  {n:"Alexis Beringer",co:"Switzerland",r:{brjgt25:{p:33,t:290,tp:77,rd:[93,94,103]},wjgc26:{p:13,t:87,tp:15,rd:[87]}},up:[]},
+  {n:"Kevin Canton",co:"Italy",r:{brjgt25:{p:34,t:291,tp:78,rd:[98,96,97]},wjgc26:{p:34,t:104,tp:32,rd:[104]}},up:[]},
+  {n:"Leon Schneitter",co:"Switzerland",r:{brjgt25:{p:"WD",t:null,tp:null,rd:[]},wjgc26:{p:9,t:80,tp:8,rd:[80]}},up:[]},
   {n:"Victor Canot Januel",co:"France",r:{brjgt25:{p:30,t:274,tp:61,rd:[88,88,98]},venice25:{p:24,t:233,tp:17,rd:[76,82,75]}},up:[]},
   {n:"Theodore Dausse",co:"France",r:{brjgt25:{p:31,t:275,tp:62,rd:[96,90,89]},venice25:{p:30,t:244,tp:28,rd:[83,80,81]}},up:[]},
   {n:"Aronas Juodis",co:"Lithuania",r:{brjgt25:{p:8,t:232,tp:19,rd:[74,77,81]},eowagr25:{p:1,t:213,tp:-3,rd:[72,71,70]},qdl25:{p:4,t:75,tp:3,rd:[75]}},up:[]},
@@ -221,7 +279,7 @@ const D: RivalPlayer[]=[
   {n:"Edoardo Lemonnier",co:"Italy",r:{rome25:{p:3,t:143,tp:-1,rd:[69,74]}},up:["marco26"]},
   {n:"Haqvin Sylven",co:"Switzerland",r:{rome25:{p:8,t:160,tp:16,rd:[82,78]}},up:["marco26"]},
   {n:"Kimi Pulga",co:"Italy",r:{venice25:{p:26,t:234,tp:18,rd:[78,81,75]}},up:["marco26"]},
-  {n:"Hugo Strasser",co:"Switzerland",r:{},up:["wjgc26","marco26"]},
+  {n:"Hugo Strasser",co:"Switzerland",r:{wjgc26:{p:13,t:87,tp:15,rd:[87]}},up:["marco26"]},
   {n:"Skyy Wilding",co:"Thailand",r:{brjgt25:{p:"WD",t:null,tp:null,rd:[]},venice25:{p:2,t:203,tp:-13,rd:[65,65,73]}},up:[]},
   {n:"Felipe Seferian",co:"Spain",r:{venice25:{p:4,t:209,tp:-7,rd:[67,70,72]}},up:[]},
   {n:"Nicolas Pape",co:"Thailand",r:{brjgt25:{p:6,t:231,tp:18,rd:[75,77,79]}},up:[]},
@@ -234,20 +292,20 @@ const D: RivalPlayer[]=[
   {n:"Jean Imperiali De Francavilla",co:"France",r:{brjgt25:{p:"WD",t:null,tp:null,rd:[]},venice25:{p:23,t:231,tp:15,rd:[77,75,79]},rome25:{p:5,t:152,tp:8,rd:[77,75]}},up:[]},
   {n:"Sebastiano Giacobbi",co:"Italy",r:{venice25:{p:37,t:267,tp:51,rd:[95,87,85]},rome25:{p:13,t:173,tp:29,rd:[87,86]}},up:["marco26"]},
   {n:"Leo Egozi",co:"United States",r:{venice25:{p:36,t:252,tp:36,rd:[83,84,85]},rome25:{p:11,t:167,tp:23,rd:[82,85]}},up:[]},
-  {n:"Joe Short",co:"Portugal",r:{gg26:{p:2,t:166,tp:22,rd:[79,87]}},up:["wjgc26"]},
-  {n:"Madalena Miguel Araújo",co:"Portugal",r:{},up:["wjgc26"]},
-  {n:"Elijah Gibbons",co:"England",r:{},up:["wjgc26"]},
-  {n:"Harley Botham",co:"Northern Ireland",r:{gg26:{p:11,t:191,tp:47,rd:[98,93]}},up:["wjgc26"]},
-  {n:"Benji Botham",co:"Northern Ireland",r:{gg26:{p:5,t:175,tp:31,rd:[88,87]}},up:["wjgc26"]},
-  {n:"Roman Hicks",co:"England",r:{},up:["wjgc26"]},
-  {n:"Hanlin Wang",co:"England",r:{},up:["wjgc26"]},
-  {n:"Mario Valiente Novella",co:"Spain",r:{},up:["wjgc26"]},
-  {n:"Aineon Hiram Jabonero",co:"Philippines",r:{},up:["wjgc26"]},
-  {n:"David Dung Nguyen",co:"Viet Nam",r:{},up:["wjgc26"]},
-  {n:"Maddox Tiemann",co:"Sweden",r:{},up:["wjgc26"]},
-  {n:"William Harran",co:"Switzerland",r:{},up:["wjgc26"]},
-  {n:"Louis Harran",co:"Switzerland",r:{},up:["wjgc26"]},
-  {n:"Pietro Salvati",co:"Italy",r:{},up:["wjgc26"]},
+  {n:"Joe Short",co:"Portugal",r:{gg26:{p:2,t:166,tp:22,rd:[79,87]},wjgc26:{p:28,t:95,tp:23,rd:[95]}},up:[]},
+  {n:"Madalena Miguel Araújo",co:"Portugal",r:{},up:[]},
+  {n:"Elijah Gibbons",co:"England",r:{wjgc26:{p:21,t:92,tp:20,rd:[92]}},up:[]},
+  {n:"Harley Botham",co:"Northern Ireland",r:{gg26:{p:11,t:191,tp:47,rd:[98,93]}},up:[]},
+  {n:"Benji Botham",co:"Northern Ireland",r:{gg26:{p:5,t:175,tp:31,rd:[88,87]},wjgc26:{p:17,t:88,tp:16,rd:[88]}},up:[]},
+  {n:"Roman Hicks",co:"England",r:{},up:[]},
+  {n:"Hanlin Wang",co:"England",r:{},up:[]},
+  {n:"Mario Valiente Novella",co:"Spain",r:{},up:[]},
+  {n:"Aineon Hiram Jabonero",co:"Philippines",r:{wjgc26:{p:13,t:87,tp:15,rd:[87]}},up:[]},
+  {n:"David Dung Nguyen",co:"Viet Nam",r:{},up:[]},
+  {n:"Maddox Tiemann",co:"Sweden",r:{wjgc26:{p:21,t:92,tp:20,rd:[92]}},up:[]},
+  {n:"William Harran",co:"Switzerland",r:{wjgc26:{p:2,t:75,tp:3,rd:[75]}},up:[]},
+  {n:"Louis Harran",co:"Switzerland",r:{},up:[]},
+  {n:"Pietro Salvati",co:"Italy",r:{},up:[]},
   {n:"Erik Martel",co:"Spain",r:{brjgt25:{p:18,t:250,tp:37,rd:[83,79,88]}},up:[]},
   // BRJGT 2025 missing
   {n:"Hugo Luque Reina",co:"Spain",r:{brjgt25:{p:9,t:237,tp:24,rd:[78,77,82]}},up:[]},
@@ -323,7 +381,7 @@ const D: RivalPlayer[]=[
   {n:"Marcos Ledesma",co:"Spain",r:{qdl25:{p:8,t:78,tp:6,rd:[78]}},up:[]},
   {n:"Francisco Carvalho",co:"Portugal",r:{qdl25:{p:9,t:80,tp:8,rd:[80]}},up:[]},
   {n:"Sabrina Ribeiro Crisóstomo",co:"Portugal",r:{qdl25:{p:10,t:88,tp:16,rd:[88]}},up:[]},
-  {n:"George Campbell",co:"Ireland",r:{qdl25:{p:12,t:99,tp:27,rd:[99]},gg26:{p:8,t:186,tp:42,rd:[94,92]}},up:["wjgc26"]},
+  {n:"George Campbell",co:"Ireland",r:{qdl25:{p:12,t:99,tp:27,rd:[99]},gg26:{p:8,t:186,tp:42,rd:[94,92]}},up:[]},
   {n:"Ricardo Castro Ferreira",co:"Portugal",r:{gg26:{p:1,t:154,tp:10,rd:[77,77]}},up:[]},
   {n:"Guo Ziyang",co:"China",r:{gg26:{p:3,t:167,tp:23,rd:[85,82]}},up:[]},
   {n:"Marek Pejas",co:"Portugal",r:{gg26:{p:9,t:189,tp:45,rd:[92,97]}},up:[]},
@@ -386,7 +444,7 @@ const TIER = {
 const TIER_L = { elite: "Elite", strong: "Forte", solid: "Sólido", developing: "Em Desenv.", beginner: "Iniciante" };
 
 function getTrend(p) {
-  const order = ["brjgt25", "eowagr25", "venice25", "rome25", "doral25", "qdl25", "gg26"];
+  const order = ["brjgt25", "eowagr25", "venice25", "rome25", "doral25", "qdl25", "gg26", "wjgc26"];
   const pts: { x: number; y: number }[] = [];
   for (let xi = 0; xi < order.length; xi++) {
     const res = p.r[order[xi]];
@@ -1011,7 +1069,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
   const { fed: urlFed } = useParams<{ fed?: string }>();
   const fed = urlFed || playerFed || PLAYER_FED;
   const { data, loading, error } = usePlayerData(fed);
-  const [tab, setTab] = useState<"analise" | "rivais">("analise");
+  const [tab, setTab] = useState<"analise" | "rivais" | "vp2026">("analise");
   const [distPeriod, setDistPeriod] = useState<number>(12); // months: 3,6,9,12,0=all
   const [expandedPlayers, setExpandedPlayers] = useState<Set<number>>(new Set());
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -1647,8 +1705,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
           <span className="tourn-toolbar-meta">🏷️ {PLAYER_NAME} · Sub-12</span>
           <div className="tourn-toolbar-sep" />
           <div className="escalao-pills">
-            {([["analise", "Análise VP"], ["rivais", "Rivais"]] as const).map(([k, l]) => (
-              <button key={k} onClick={() => setTab(k as "analise" | "rivais")}
+            {([["analise", "VP 2025"], ["vp2026", "VP 2026 ⏳"], ["rivais", "Rivais"]] as const).map(([k, l]) => (
+              <button key={k} onClick={() => setTab(k as "analise" | "rivais" | "vp2026")}
                 className={`tourn-tab tourn-tab-sm${tab === k ? " active" : ""}`}>
                 {l}
               </button>
@@ -1676,9 +1734,19 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
         {/* Sidebar: Field 2025 players */}
         <div className={`sidebar${sidebarOpen ? "" : " sidebar-closed"}`}>
           <div className="sidebar-section-title">
-            Field 2025 — Sub-12
+            Field {tab === "vp2026" ? "2026" : "2025"} — Sub-12
           </div>
-          {FIELD_2025.leaderboard.map(p => (
+          {tab === "vp2026" ? VP26_PLAYERS.filter(p => p.s).map((p, idx) => (
+            <div key={idx} className="course-item" style={{padding:"4px 8px",display:"flex",justifyContent:"space-between",alignItems:"center",borderBottom:"1px solid var(--border-subtle)"}}>
+              <div className="course-item-name">
+                <span style={{ minWidth: 22, color: typeof p.pos === "number" && p.pos <= 3 ? "var(--color-warn-dark)" : "var(--text-3)", fontWeight: 800, fontSize: 11 }}>{typeof p.pos === "number" && (idx === 0 || p.pos !== VP26_PLAYERS[idx-1]?.pos) ? `${p.pos}.` : ""}</span>
+                {p.flag} {firstName(p.n)}
+              </div>
+              <div className="course-item-meta" style={{fontVariantNumeric:"tabular-nums"}}>
+                {p.gross} ({p.tp > 0 ? `+${p.tp}` : p.tp === 0 ? "E" : p.tp})
+              </div>
+            </div>
+          )) : FIELD_2025.leaderboard.map(p => (
             <button key={p.pos} className={`course-item${selectedPlayer === p.name ? " active" : ""}`}
               onClick={() => setSelectedPlayer(prev => prev === p.name ? null : p.name)}>
               <div className="course-item-name">
@@ -1703,7 +1771,162 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
       {/* ═══ TAB: RIVAIS ═══ */}
       {!selectedPlayer && tab === "rivais" && <RivaisDashboard onSelectPlayer={setSelectedPlayer} />}
 
-      {/* ═══ TAB: ANÁLISE VP ═══ */}
+      {/* ═══ TAB: VP 2026 — R1 Scorecards ═══ */}
+      {!selectedPlayer && tab === "vp2026" && <>
+        <div className="card">
+          <div className="h-md fs-14">🏆 WJGC 2026 — Round 1</div>
+          <div className="muted fs-10 mb-8">Villa Padierna — Flamingos Golf Club · Málaga · Par {VP26_PAR_T} (F9: {VP26_PAR_F} | B9: {VP26_PAR_B}) · Sub-12 (Boys 10-11) · {VP26_PLAYERS.filter(p=>p.s).length} jogadores · ⏳ Faltam 2 rounds</div>
+
+          <div className="bjgt-chart-scroll">
+          <table className="sc-table-modern" data-sc-table="1">
+            <thead>
+              <tr>
+                <th className="hole-header" style={{textAlign:"center",width:30}}>Pos</th>
+                <th className="hole-header" style={{textAlign:"left",paddingLeft:8,minWidth:50}}>Jogador</th>
+                <th className="hole-header col-total" style={{width:32}}>Tot</th>
+                <th className="hole-header" style={{width:32}}>±Par</th>
+                {[1,2,3,4,5,6,7,8,9].map(h=><th key={h} className="hole-header">{h}</th>)}
+                <th className="hole-header col-out fs-10">Out</th>
+                {[10,11,12,13,14,15,16,17,18].map(h=><th key={h} className="hole-header">{h}</th>)}
+                <th className="hole-header col-in fs-10">In</th>
+              </tr>
+            </thead>
+            <tbody>
+              {/* Par row */}
+              <tr className="sep-row">
+                <td></td>
+                <td className="row-label par-label">PAR</td>
+                <td className="col-total">{VP26_PAR_T}</td>
+                <td></td>
+                {VP26_PAR.slice(0,9).map((p,i)=><td key={i}>{p}</td>)}
+                <td className="col-out fw-600">{VP26_PAR_F}</td>
+                {VP26_PAR.slice(9,18).map((p,i)=><td key={i}>{p}</td>)}
+                <td className="col-in fw-600">{VP26_PAR_B}</td>
+              </tr>
+              {/* S.I. row */}
+              <tr className="meta-row sep-row">
+                <td></td>
+                <td className="row-label par-label">S.I.</td>
+                <td></td><td></td>
+                {VP26_SI.slice(0,9).map((s,i)=><td key={i}>{s}</td>)}
+                <td className="col-out"></td>
+                {VP26_SI.slice(9,18).map((s,i)=><td key={i}>{s}</td>)}
+                <td className="col-in"></td>
+              </tr>
+              {/* Player rows */}
+              {VP26_PLAYERS.map((p, idx) => {
+                const isPT = p.flag === "🇵🇹";
+                const isDNS = !p.s;
+                const showPos = typeof p.pos === "number" && (idx === 0 || p.pos !== VP26_PLAYERS[idx-1]?.pos);
+                const f9 = p.f9, b9 = p.b9;
+                const f9d = f9 - VP26_PAR_F, b9d = b9 - VP26_PAR_B;
+                const fmtSub = (v: number) => v === 0 ? "(E)" : v > 0 ? `(+${v})` : `(${v})`;
+                return (
+                  <tr key={idx} style={isPT ? {background:"var(--bg-success-subtle)"} : isDNS ? {opacity:0.35} : undefined}>
+                    <td className="fw-800" style={{color:"var(--text-3)"}}>{showPos ? p.pos : ""}</td>
+                    <td className="row-label fw-700" style={{whiteSpace:"nowrap"}}>{p.flag} {p.n}</td>
+                    <td className="col-total">{isDNS ? "–" : p.gross}</td>
+                    <td className="fw-700" style={{color: p.tp < 0 ? SC.danger : p.tp === 0 ? SC.good : "var(--text-3)"}}>
+                      {isDNS ? "DNS" : fmtToPar(p.tp)}
+                    </td>
+                    {p.s ? p.s.slice(0,9).map((sc,i) => (
+                      <td key={i}><span className={`sc-score ${scClass(sc, VP26_PAR[i])}`}>{sc}</span></td>
+                    )) : Array(9).fill(null).map((_,i)=><td key={i} className="c-muted">–</td>)}
+                    <td className="col-out fw-600">
+                      {isDNS ? "–" : <>{f9} <span className="fs-8 c-text-3">{fmtSub(f9d)}</span></>}
+                    </td>
+                    {p.s ? p.s.slice(9,18).map((sc,i) => (
+                      <td key={i}><span className={`sc-score ${scClass(sc, VP26_PAR[9+i])}`}>{sc}</span></td>
+                    )) : Array(9).fill(null).map((_,i)=><td key={i} className="c-muted">–</td>)}
+                    <td className="col-in fw-600">
+                      {isDNS ? "–" : <>{b9} <span className="fs-8 c-text-3">{fmtSub(b9d)}</span></>}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+          </div>
+        </div>
+
+        {/* ── Hole difficulty 2026 ── */}
+        <div className="card">
+          <div className="h-md fs-14">📊 Dificuldade por Buraco — R1</div>
+          <div className="muted fs-10 mb-8">Baseado em {VP26_PLAYERS.filter(p=>p.s).length} scorecards. Média field: {(VP26_PLAYERS.filter(p=>p.s).reduce((a,p)=>a+p.gross,0)/VP26_PLAYERS.filter(p=>p.s).length).toFixed(1)}</div>
+          <div className="bjgt-chart-scroll">
+          <table className="sc-table-modern" data-sc-table="1">
+            <thead><tr>
+              <th className="hole-header" style={{textAlign:"left",paddingLeft:8,minWidth:50}}>Buraco</th>
+              {VP26_PAR.slice(0,9).map((_,i)=><th key={i} className="hole-header">{i+1}</th>)}
+              <th className="hole-header col-out fs-10">Out</th>
+              {VP26_PAR.slice(9).map((_,i)=><th key={i+9} className="hole-header">{i+10}</th>)}
+              <th className="hole-header col-in fs-10">In</th>
+              <th className="hole-header col-total">TOT</th>
+            </tr></thead>
+            <tbody>
+              <tr className="sep-row">
+                <td className="row-label par-label">Par</td>
+                {VP26_PAR.slice(0,9).map((p,i)=><td key={i}>{p}</td>)}
+                <td className="col-out fw-600">{VP26_PAR_F}</td>
+                {VP26_PAR.slice(9).map((p,i)=><td key={i+9}>{p}</td>)}
+                <td className="col-in fw-600">{VP26_PAR_B}</td>
+                <td className="col-total">{VP26_PAR_T}</td>
+              </tr>
+              {/* Field avg */}
+              <tr>
+                <td className="row-label fw-700">Média</td>
+                {VP26_PAR.map((_,i) => {
+                  const avg = VP26_PLAYERS.filter(p=>p.s).reduce((a,p)=>a+p.s![i],0)/VP26_PLAYERS.filter(p=>p.s).length;
+                  const diff = avg - VP26_PAR[i];
+                  return (
+                    <React.Fragment key={i}>
+                      <td className="fw-600" style={{color: diff > 0.7 ? SC.danger : diff < 0.2 ? SC.good : "var(--text-2)"}}>{avg.toFixed(1)}</td>
+                      {i === 8 && <td className="col-out"></td>}
+                    </React.Fragment>
+                  );
+                })}
+                <td className="col-in"></td>
+                <td className="col-total fw-700">{(VP26_PLAYERS.filter(p=>p.s).reduce((a,p)=>a+p.gross,0)/VP26_PLAYERS.filter(p=>p.s).length).toFixed(1)}</td>
+              </tr>
+              {/* vs Par */}
+              <tr className="meta-row sep-row">
+                <td className="row-label c-muted fs-10">vs Par</td>
+                {VP26_PAR.map((_,i) => {
+                  const avg = VP26_PLAYERS.filter(p=>p.s).reduce((a,p)=>a+p.s![i],0)/VP26_PLAYERS.filter(p=>p.s).length;
+                  const diff = avg - VP26_PAR[i];
+                  return (
+                    <React.Fragment key={i}>
+                      <td className="fs-10 fw-600" style={{color: diff > 0.7 ? SC.danger : diff < 0.2 ? SC.good : "var(--text-muted)"}}>{diff > 0 ? `+${diff.toFixed(1)}` : diff.toFixed(1)}</td>
+                      {i === 8 && <td className="col-out"></td>}
+                    </React.Fragment>
+                  );
+                })}
+                <td className="col-in"></td>
+                <td className="col-total"></td>
+              </tr>
+              {/* Manuel */}
+              {(() => {
+                const m = VP26_PLAYERS.find(p => p.n === "Manuel Medeiros");
+                if (!m?.s) return null;
+                const f9 = m.f9, b9 = m.b9;
+                return (
+                  <tr style={{background:"var(--bg-success-subtle)"}}>
+                    <td className="row-label fw-700">🇵🇹 Manuel</td>
+                    {m.s.slice(0,9).map((sc,i) => <td key={i}><span className={`sc-score ${scClass(sc, VP26_PAR[i])}`}>{sc}</span></td>)}
+                    <td className="col-out fw-700">{f9}<span className={`sc-topar ${toParClass(f9-VP26_PAR_F)}`}>{f9-VP26_PAR_F > 0 ? "+" : ""}{f9-VP26_PAR_F}</span></td>
+                    {m.s.slice(9).map((sc,i) => <td key={i+9}><span className={`sc-score ${scClass(sc, VP26_PAR[9+i])}`}>{sc}</span></td>)}
+                    <td className="col-in fw-700">{b9}<span className={`sc-topar ${toParClass(b9-VP26_PAR_B)}`}>{b9-VP26_PAR_B > 0 ? "+" : ""}{b9-VP26_PAR_B}</span></td>
+                    <td className="col-total fw-700">{m.gross}<span className={`sc-topar ${toParClass(m.gross-VP26_PAR_T)}`}>{m.gross-VP26_PAR_T > 0 ? "+" : ""}{m.gross-VP26_PAR_T}</span></td>
+                  </tr>
+                );
+              })()}
+            </tbody>
+          </table>
+          </div>
+        </div>
+      </>}
+
+      {/* ═══ TAB: ANÁLISE VP 2025 ═══ */}
       {!selectedPlayer && tab === "analise" && <>
 
       {/* ── Objectivo: O Eclético ── */}

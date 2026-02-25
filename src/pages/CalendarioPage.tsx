@@ -15,21 +15,10 @@
  */
 import { useState, useRef, useEffect, useMemo } from "react";
 import type { PlayersDb } from "./data/types";
-
-/* ═══ Password ═══ */
-const CAL_PASSWORD = "machico";
-
-/** a11y props for non-button clickable elements */
-function clickableA11y(handler: () => void) {
-  return {
-    role: "button" as const,
-    tabIndex: 0,
-    onKeyDown: (e: React.KeyboardEvent) => {
-      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); handler(); }
-    },
-  };
-}
-const STORAGE_KEY = "cal_unlocked";
+import { isCalUnlocked } from "./utils/authConstants";
+import { clickableA11y } from "./utils/a11y";
+import { norm } from "./utils/format";
+import PasswordGate from "./ui/PasswordGate";
 
 /* ═══ Types ═══ */
 interface CalEvent {
@@ -563,43 +552,8 @@ function ListView({ events, onSelect }: { events: CalEvent[]; onSelect: (e: CalE
 type ViewMode = "month" | "list";
 type GroupKey = "CGSS" | "JUNIOR" | "DRIVE" | "FPG" | "DESTAQUE" | "ANIVER" | "VIAGENS";
 
-/* ── Password Gate ── */
-function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
-  const [pw, setPw] = useState("");
-  const [error, setError] = useState(false);
-
-  const check = () => {
-    if (pw === CAL_PASSWORD) {
-      try { localStorage.setItem(STORAGE_KEY, "1"); } catch {}
-      window.dispatchEvent(new Event("cal-unlocked"));
-      onUnlock();
-    } else {
-      setError(true);
-      setTimeout(() => setError(false), 1500);
-    }
-  };
-
-  return (
-    <div className="pw-gate">
-      <div className="pw-icon">🔒</div>
-      <div className="pw-title">Acesso restrito</div>
-      <div className="pw-sub">Este separador requer password</div>
-      <div className="pw-row">
-        <input type="password" value={pw} onChange={e => setPw(e.target.value)}
-          onKeyDown={e => e.key === "Enter" && check()}
-          placeholder="Password…" autoFocus
-          className={`pw-input${error ? " pw-input-error" : ""}`} />
-        <button onClick={check} className="pw-btn">Entrar</button>
-      </div>
-      {error && <div className="pw-error">Password incorrecta</div>}
-    </div>
-  );
-}
-
 export default function CalendarioPage({ players }: { players?: PlayersDb }) {
-  const [unlocked, setUnlocked] = useState(() => {
-    try { return localStorage.getItem(STORAGE_KEY) === "1"; } catch { return false; }
-  });
+  const [unlocked, setUnlocked] = useState(() => isCalUnlocked());
 
   if (!unlocked) return <PasswordGate onUnlock={() => setUnlocked(true)} />;
 
@@ -664,15 +618,14 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
   };
 
   /* Search */
-  const searchNorm = (s: string) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   const searchResults = useMemo(() => {
-    const q = searchNorm(searchQ);
+    const q = norm(searchQ);
     if (!q || q.length < 2) return [];
     const words = q.split(/\s+/).filter(Boolean);
     return allEvents
       .filter(e => enabledCals.has(e.calId))
       .filter(e => {
-        const hay = searchNorm([e.title, e.campo, e.modalidade, CAL_MAP.get(e.calId)?.name || ""].join(" "));
+        const hay = norm([e.title, e.campo, e.modalidade, CAL_MAP.get(e.calId)?.name || ""].join(" "));
         return words.every(w => hay.includes(w));
       })
       .sort((a, b) => a.date.getTime() - b.date.getTime())

@@ -8,9 +8,14 @@ import React, { useEffect, useMemo, useState } from "react";
 import type { PlayersDb } from "../data/types";
 import { loadPlayerData, type PlayerPageData, type HoleScores } from "../data/playerDataLoader";
 import { deepFixMojibake } from "../utils/fixEncoding";
-import { SC, scClass } from "../utils/scoreDisplay";
+import { fmtToPar as _fmtToPar, fmtHcp as _fmtHcp } from "../utils/format";
+import { SC } from "../utils/scoreDisplay";
 import TeePill from "../ui/TeePill";
 import LoadingState from "../ui/LoadingState";
+import ScoreCircle from "../ui/ScoreCircle";
+import PasswordGate from "../ui/PasswordGate";
+import PlayerLink from "../ui/PlayerLink";
+import { isCalUnlocked } from "../utils/authConstants";
 import {
   normalizeTournament,
   type NormalizedTournament,
@@ -35,27 +40,12 @@ import {
   getTeeRating,
 } from "../utils/tournamentTypes";
 import tournData from "../../torneio-greatgolf.json";
+
 /* ── Shared helpers ── */
 
-function fmtToPar(tp: number | null): string {
-  if (tp == null) return "-";
-  return tp === 0 ? "E" : tp > 0 ? `+${tp}` : String(tp);
-}
-
-function fmtHcp(v: number | null): string {
-  if (v == null) return "-";
-  return v > 0 ? v.toFixed(1) : `+${Math.abs(v).toFixed(1)}`;
-}
-
-function ScoreDot({ score, par }: { score: number | null; par: number }) {
-  if (score == null) return <span className="sc-score sc-empty">·</span>;
-  return <span className={`sc-score ${scClass(score, par)}`}>{score}</span>;
-}
-
-function PlayerLink({ fed, name, onSelect }: { fed: string | null; name: string; onSelect?: (fed: string) => void }) {
-  if (fed && onSelect) return <span className="tourn-pname tourn-pname-link" role="button" tabIndex={0} onClick={() => onSelect(fed)} onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onSelect(fed); } }}>{name}</span>;
-  return <span className="tourn-pname">{name}</span>;
-}
+/** Wrappers com placeholder "-" (contexto torneio) */
+const fmtToPar = (tp: number | null) => _fmtToPar(tp, "-");
+const fmtHcp = (v: number | null) => _fmtHcp(v, "-");
 
 /** Pills de jogador: PJA, INTL, ♀, escalão, ano, HCP */
 function PlayerPills({ norm, fed, name, showEscalao = true, showHcp = false }: {
@@ -244,7 +234,7 @@ function DayScorecard({ norm, cat, dayKey, holeData, filters, onSelectPlayer }: 
                   <td className="r tourn-sum-val"><ToParSpan tp={r.toPar} /></td>
                   {/* Front 9 */}
                   {r.hasHoles ? r.ph!.holes.slice(0, 9).map((sc, hi) => (
-                    <td key={hi} className="tourn-hole-cell"><ScoreDot score={sc} par={catHoles[hi].par} /></td>
+                    <td key={hi} className="tourn-hole-cell"><ScoreCircle gross={sc} par={catHoles[hi].par} empty="dot" /></td>
                   )) : Array.from({ length: 9 }, (_, hi) => (
                     <td key={hi} className="tourn-hole-cell tourn-no-data">·</td>
                   ))}
@@ -253,7 +243,7 @@ function DayScorecard({ norm, cat, dayKey, holeData, filters, onSelectPlayer }: 
                   </td>
                   {/* Back 9 */}
                   {r.hasHoles ? r.ph!.holes.slice(9, 18).map((sc, hi) => (
-                    <td key={hi + 9} className={`tourn-hole-cell${hi === 0 ? " tourn-in-border" : ""}`}><ScoreDot score={sc} par={catHoles[hi + 9].par} /></td>
+                    <td key={hi + 9} className={`tourn-hole-cell${hi === 0 ? " tourn-in-border" : ""}`}><ScoreCircle gross={sc} par={catHoles[hi + 9].par} empty="dot" /></td>
                   )) : Array.from({ length: 9 }, (_, hi) => (
                     <td key={hi + 9} className={`tourn-hole-cell tourn-no-data${hi === 0 ? " tourn-in-border" : ""}`}>·</td>
                   ))}
@@ -927,39 +917,6 @@ function isTournCourse(courseName: string, norm: NormalizedTournament): boolean 
   return norm.courseMatch.every(kw => lower.includes(kw));
 }
 
-/* ── Password Gate ── */
-const CAL_STORAGE_KEY = "cal_unlocked";
-
-function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
-  const [pw, setPw] = useState("");
-  const [error, setError] = useState(false);
-
-  const check = () => {
-    if (pw === "machico") {
-      localStorage.setItem(CAL_STORAGE_KEY, "1");
-      window.dispatchEvent(new Event("storage"));
-      onUnlock();
-    }
-    else { setError(true); setTimeout(() => setError(false), 1500); }
-  };
-
-  return (
-    <div className="pw-gate">
-      <div className="pw-icon">🔒</div>
-      <div className="pw-title">Acesso restrito</div>
-      <div className="pw-sub">Este separador requer password</div>
-      <div className="pw-row">
-        <input type="password" value={pw} onChange={e => setPw(e.target.value)}
-          onKeyDown={e => e.key === "Enter" && check()}
-          placeholder="Password…" autoFocus
-          className={`tourn-pw-input${error ? " tourn-pw-error" : ""}`} />
-        <button onClick={check} className="pw-btn">Entrar</button>
-      </div>
-      {error && <div className="fs-11 fw-600 c-danger">Password incorrecta</div>}
-    </div>
-  );
-}
-
 /* ── Draw View ── */
 type DrawCat = "all" | "wagr" | "sub14" | "sub12";
 
@@ -1284,7 +1241,7 @@ function AnalysisView({ norm, players, holeDataByDay, playerHistory, onSelectPla
    ═══════════════════════════════════════════════ */
 
 export default function TorneioPage({ players, onSelectPlayer }: { players: PlayersDb; onSelectPlayer?: (fed: string) => void }) {
-  const [unlocked, setUnlocked] = useState(() => localStorage.getItem(CAL_STORAGE_KEY) === "1");
+  const [unlocked, setUnlocked] = useState(() => isCalUnlocked());
   const [view, setView] = useState<TournView>("leaderboard");
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [sidebarQ, setSidebarQ] = useState("");

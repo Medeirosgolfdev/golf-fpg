@@ -22,30 +22,16 @@ import { norm, fD, fD2, firstName, shortName } from "../utils/format";
 import { clubShort, hcpDisplay } from "../utils/playerUtils";
 import { deepFixMojibake } from "../utils/fixEncoding";
 import { sc3m } from "../utils/scoreDisplay";
+import { isTournamentRound } from "../utils/roundFilters";
 import SectionErrorBoundary from "../ui/SectionErrorBoundary";
 import LoadingState from "../ui/LoadingState";
 
 const COLORS = ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)"];
 const COLORS_LIGHT = ["var(--bg-success-strong)", "var(--bg-info-strong)", "var(--bg-danger-strong)", "var(--bg-warn-strong)"];
 
-/* SectionErrorBoundary imported from src/ui/ */
-
 interface Slot {
   fed: string; player: Player;
   data: PlayerPageData | null; loading: boolean; error: string | null;
-}
-
-/* ─── Tournament round filter ─── */
-
-function isTournamentRound(r: RoundData): boolean {
-  if (r.holeCount !== 18 || r._isTreino || r.gross == null || Number(r.gross) <= 50) return false;
-  const o = (r.scoreOrigin || "").trim();
-  // Exclude known non-tournament origins
-  if (o === "EDS" || o === "Indiv" || o === "Treino") return false;
-  // Also exclude by eventName as fallback
-  const ev = (r.eventName || "").trim();
-  if (ev === "EDS" || ev === "Indiv") return false;
-  return true;
 }
 
 /* ─── Aggregate stats (tournament rounds only) ─── */

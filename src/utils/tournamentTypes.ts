@@ -10,6 +10,8 @@
  * para o novo formato nested automaticamente.
  */
 
+import { calcSD as _calcSD } from "./whsCalc";
+
 /* ── Core types ── */
 
 export interface HoleInfo {
@@ -176,7 +178,7 @@ export function calcDaySD(
   sex: string,
 ): number {
   const r = getTeeRating(norm, teeColor, sex);
-  return Math.round((113 / r.slope) * (gross - r.cr) * 10) / 10;
+  return Math.round(_calcSD(gross, r.cr, r.slope) * 10) / 10;
 }
 
 /* ── Date helpers ── */

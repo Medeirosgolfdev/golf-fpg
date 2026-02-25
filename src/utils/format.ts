@@ -75,21 +75,21 @@ export function shortName(name: string): string {
 /* ── Golf format helpers ── */
 
 /** Formata to-par: +5, -2, E */
-export function fmtToPar(tp: number | null | undefined): string {
-  if (tp == null || !Number.isFinite(tp)) return "—";
+export function fmtToPar(tp: number | null | undefined, placeholder = "—"): string {
+  if (tp == null || !Number.isFinite(tp)) return placeholder;
   if (tp === 0) return "E";
   return tp > 0 ? `+${tp}` : `${tp}`;
 }
 
 /** Formata handicap: +2.3, -1.0, 0.0 */
-export function fmtHcp(hcp: number | null | undefined): string {
-  if (hcp == null || !Number.isFinite(hcp)) return "—";
+export function fmtHcp(hcp: number | null | undefined, placeholder = "—"): string {
+  if (hcp == null || !Number.isFinite(hcp)) return placeholder;
   const s = Math.abs(hcp).toFixed(1);
   return hcp < 0 ? `+${s}` : hcp > 0 ? s : `0.0`;
 }
 
 /** Formata Score Differential: +1.2, -3.5 */
-export function fmtSD(sd: number | null | undefined): string {
-  if (sd == null || !Number.isFinite(sd)) return "—";
+export function fmtSD(sd: number | null | undefined, placeholder = "—"): string {
+  if (sd == null || !Number.isFinite(sd)) return placeholder;
   return sd >= 0 ? `+${sd.toFixed(1)}` : sd.toFixed(1);
 }

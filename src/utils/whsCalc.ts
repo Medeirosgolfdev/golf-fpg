@@ -19,7 +19,15 @@ export function calcScore(sd: number, cr: number, slope: number, pcc = 0): numbe
   return sd * (slope / 113) + cr + pcc;
 }
 
-/** Playing Handicap = HI × (Slope / 113) + (CR − Par) */
-export function calcPlayingHcp(hi: number, slope: number, cr: number, par: number): number {
+/** Course Handicap = HI × (Slope / 113) + (CR − Par)
+ *  Usado para: distribuição de pancadas por buraco, Net Double Bogey (AGS) */
+export function calcCourseHcp(hi: number, slope: number, cr: number, par: number): number {
   return hi * (slope / 113) + (cr - par);
+}
+
+/** Playing Handicap = Course Handicap × Allowance%
+ *  Sem allowance (100%) = Course Handicap.
+ *  Usado para: cálculo de Net Score em competição (95%, 85%, etc.) */
+export function calcPlayingHcp(hi: number, slope: number, cr: number, par: number, allowance = 1): number {
+  return calcCourseHcp(hi, slope, cr, par) * allowance;
 }

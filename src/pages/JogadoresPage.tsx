@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState, type ReactNode } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import type { Player, PlayersDb, Course } from "../data/types";
+import type { Player, PlayersDb, Course, SexFilter } from "../data/types";
 import { norm, shortDate, fD, fD2, firstName } from "../utils/format";
 import { getTeeHex, textOnColor, normKey, teeBorder } from "../utils/teeColors";
 import { clubShort, clubLong, hcpDisplay } from "../utils/playerUtils";
@@ -24,7 +24,6 @@ import LoadingState from "../ui/LoadingState";
    ──────────────────────────────────────────────────────────────────────────────────── */
 
 type Props = { players: PlayersDb; courses?: Course[] };
-type SexFilter = "ALL" | "M" | "F";
 type SortKey = "name" | "hcp" | "club" | "escalao" | "ranking";
 type ViewKey = "by_course" | "by_course_analysis" | "by_date" | "by_tournament" | "analysis";
 type CourseSort = "last_desc" | "count_desc" | "name_asc";
@@ -664,7 +663,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
 }) {
   const ecArr = eclectic.holes.slice(0, holeCount).map(h => h?.best ?? null);
   const parArr = eclectic.holes.slice(0, holeCount).map((h, i) => h?.par ?? par[i]);
-  const ecBorder = { borderTop: "2px solid var(--border-heavy)" } as const;
+  const ecBorder = { borderTop: "2px solid var(--border)" } as const;
 
   const sumEc = sumArr(ecArr, 0, holeCount);
   const sumGross = sumArr(gross, 0, holeCount);
@@ -1364,17 +1363,17 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                 )}
                 {/* Par row */}
                 <tr>
- <td className="fw-600 fs-11" style={{ ...colL, color: "var(--text-muted)", borderBottom: "2px solid var(--border-heavy)" }}>Par</td>
+ <td className="fw-600 fs-11" style={{ ...colL, color: "var(--text-muted)", borderBottom: "2px solid var(--border)" }}>Par</td>
                   {stats.holes.slice(0, hc).map((h, i) => (
                     <React.Fragment key={i}>
-                      <td style={{ ...cs, borderBottom: "2px solid var(--border-heavy)" }}>{h.par ?? ""}</td>
- {i === fe - 1 && !is9 && <td className="fw-700" style={{ ...colOut, borderBottom: "2px solid var(--border-heavy)" }}>{sumArr(stats.holes.slice(0, fe).map(x => x.par ?? 0), 0, fe)}</td>}
+                      <td style={{ ...cs, borderBottom: "2px solid var(--border)" }}>{h.par ?? ""}</td>
+ {i === fe - 1 && !is9 && <td className="fw-700" style={{ ...colOut, borderBottom: "2px solid var(--border)" }}>{sumArr(stats.holes.slice(0, fe).map(x => x.par ?? 0), 0, fe)}</td>}
                     </React.Fragment>
                   ))}
- <td className="fw-700" style={{ ...(is9 ? colTot : colIn), borderBottom: "2px solid var(--border-heavy)" }}>
+ <td className="fw-700" style={{ ...(is9 ? colTot : colIn), borderBottom: "2px solid var(--border)" }}>
                     {is9 ? sumArr(stats.holes.slice(0, hc).map(x => x.par ?? 0), 0, hc) : sumArr(stats.holes.slice(0, hc).map(x => x.par ?? 0), 9, hc)}
                   </td>
-                  {!is9 && <td style={{ ...colTot, borderBottom: "2px solid var(--border-heavy)" }}>{sumArr(stats.holes.slice(0, hc).map(x => x.par ?? 0), 0, hc)}</td>}
+                  {!is9 && <td style={{ ...colTot, borderBottom: "2px solid var(--border)" }}>{sumArr(stats.holes.slice(0, hc).map(x => x.par ?? 0), 0, hc)}</td>}
                 </tr>
                 {/* Avg row */}
                 <tr>
@@ -2148,7 +2147,7 @@ function CommonCourses({ players, currentFed, escName }: {
                   const medal = mr === 0 ? "🥇" : mr === 1 ? "🥈" : mr === 2 ? "🥉" : `${mr + 1}º`;
                   return (
                     <span key={mp.fed} style={{ fontWeight: isCur ? 700 : 400, color: isCur ? SC.good : undefined }}>
-                      {medal} {mfirstName(p.name)} <b>{mp.best ?? "–"}</b>
+                      {medal} {firstName(mp.name)} <b>{mp.best ?? "–"}</b>
                     </span>
                   );
                 })}
@@ -2231,7 +2230,7 @@ function CommonCourses({ players, currentFed, escName }: {
 }
 function PeriodSelect({ value, onChange }: { value: number; onChange: (n: number) => void }) {
   return (
- <select className="br-default c-text-2 fs-11" style={{ padding: "2px 6px", border: "1px solid var(--border-heavy)", background: "var(--bg-card)" }}
+ <select className="br-default c-text-2 fs-11" style={{ padding: "2px 6px", border: "1px solid var(--border)", background: "var(--bg-card)" }}
       value={value} onChange={e => onChange(Number(e.target.value))}>
       <option value={3}>3 meses</option>
       <option value={6}>6 meses</option>
@@ -2363,7 +2362,7 @@ function CompRow({ label, hc, is9, frontEnd, cells, outVal, inVal, totalVal, sty
   const colOut: React.CSSProperties = { ...cs, background: "var(--bg-muted)", borderLeft: "1px solid var(--border-light)", borderRight: "1px solid var(--border-light)", fontWeight: outWeight };
   const colIn: React.CSSProperties = { ...colOut, fontWeight: inWeight };
   const colTot: React.CSSProperties = { ...cs, background: "var(--bg-muted)", borderLeft: "1px solid var(--border-light)", fontWeight: 800 };
-  if (sepRow) { cs.borderBottom = "2px solid var(--border-heavy)"; colLabel.borderBottom = "2px solid var(--border-heavy)"; colOut.borderBottom = "2px solid var(--border-heavy)"; colIn.borderBottom = "2px solid var(--border-heavy)"; colTot.borderBottom = "2px solid var(--border-heavy)"; }
+  if (sepRow) { cs.borderBottom = "2px solid var(--border)"; colLabel.borderBottom = "2px solid var(--border)"; colOut.borderBottom = "2px solid var(--border)"; colIn.borderBottom = "2px solid var(--border)"; colTot.borderBottom = "2px solid var(--border)"; }
   return (
     <tr>
       <td style={colLabel}>{label}</td>

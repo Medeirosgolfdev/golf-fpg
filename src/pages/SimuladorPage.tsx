@@ -1,67 +1,19 @@
 import React, { useCallback, useMemo, useState } from "react";
-import type { Course, Tee, Hole } from "../data/types";
+import type { Course, Tee, Hole, SexFilter } from "../data/types";
 import TeeBadge from "../ui/TeeBadge";
 import { getTeeHex, textOnColor } from "../utils/teeColors";
-import { fmt, fmtCR, norm, titleCase } from "../utils/format";
+import { sortTees, filterTees, teeHexFromTee as teeHex } from "../utils/teeUtils";
+import { fmt, fmtCR, fmtSD, norm, titleCase } from "../utils/format";
+import { calcSD, calcScore, calcCourseHcp, calcPlayingHcp } from "../utils/whsCalc";
 import { SC } from "../utils/scoreDisplay";
 import OverlayExport from "../ui/OverlayExport";
 import type { OverlayData } from "../ui/OverlayExport";
 
 type Props = { courses: Course[] };
 
-type SexFilter = "ALL" | "M" | "F";
 type HolesMode = "18" | "front9" | "back9";
 
 /* ─── Helpers ─── */
-
-function teeHex(t: Tee): string {
-  return getTeeHex(t.teeName, t.scorecardMeta?.teeColor);
-}
-
-function sexRank(s: string) {
-  if (s === "M") return 0;
-  if (s === "F") return 1;
-  return 2;
-}
-
-function sortTees(tees: Tee[]): Tee[] {
-  return [...tees].sort((a, b) => {
-    const da = a.distances?.total ?? -1;
-    const db = b.distances?.total ?? -1;
-    if (db !== da) return db - da;
-    const sr = sexRank(a.sex) - sexRank(b.sex);
-    if (sr !== 0) return sr;
-    return a.teeName.localeCompare(b.teeName, "pt-PT", { sensitivity: "base" });
-  });
-}
-
-function filterTees(tees: Tee[], sex: SexFilter): Tee[] {
-  if (sex === "ALL") return tees;
-  return tees.filter((t) => t.sex === sex);
-}
-
-/** Score Differential = (113 / Slope) × (Score - CR - PCC) */
-function calcSD(score: number, cr: number, slope: number, pcc = 0): number {
-  return (113 / slope) * (score - cr - pcc);
-}
-
-/** Inverso: Score = SD × (Slope / 113) + CR + PCC */
-function calcScore(sd: number, cr: number, slope: number, pcc = 0): number {
-  return sd * (slope / 113) + cr + pcc;
-}
-
-/** Course Handicap = HI × (Slope / 113) + (CR - Par)
- *  Usado para: distribuição de pancadas por buraco, Net Double Bogey (AGS) */
-function calcCourseHcp(hi: number, slope: number, cr: number, par: number): number {
-  return hi * (slope / 113) + (cr - par);
-}
-
-/** Playing Handicap = Course Handicap × Allowance%
- *  Usado para: cálculo de Net Score em competição (95%, 85%, etc.)
- *  Sem allowance (100%) = Course Handicap */
-function calcPlayingHcp(hi: number, slope: number, cr: number, par: number, allowance = 1): number {
-  return calcCourseHcp(hi, slope, cr, par) * allowance;
-}
 
 /**
  * WHS 2024 – Expected 9-hole Score Differential.
@@ -98,12 +50,6 @@ function expectedSD9(hi: number): number {
   const hiVal = table[hiKey] ?? (hiKey * 0.52 + 1.2);
   const frac = clamped - lo;
   return loVal + frac * (hiVal - loVal);
-}
-
-/** Formata SD com sinal e 1 casa decimal */
-function fmtSD(sd: number): string {
-  const sign = sd >= 0 ? "+" : "";
-  return `${sign}${sd.toFixed(1)}`;
 }
 
 /** Extrai ratings de 9 buracos do tee */
@@ -322,7 +268,7 @@ function MultiTeeSDTable({
 
   return (
     <div className="sim-table-wrap scroll-x" style={{ maxHeight: 500 }}>
-      <table className="sim-table sim-multi-tee" style={{ borderCollapse: "collapse" }}>
+      <table className="sim-table sim-multi-tee">
         <thead>
           {/* Row 1: tee color headers — sticky top:0 */}
           <tr>
