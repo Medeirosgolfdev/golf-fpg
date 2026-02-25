@@ -1547,8 +1547,8 @@ export default function TorneioPage({ players, onSelectPlayer }: { players: Play
         {/* Sidebar: player list */}
         <div className={`sidebar${sidebarOpen ? "" : " sidebar-closed"}`}>
           <div className="sidebar-section-title">
-            <input className="input" value={sidebarQ} onChange={e => setSidebarQ(e.target.value)}
-              placeholder="Pesquisar jogador…" className="w-full" />
+            <input className="input w-full" value={sidebarQ} onChange={e => setSidebarQ(e.target.value)}
+              placeholder="Pesquisar jogador…" />
           </div>
           {sidebarPlayers.map((d, i) => (
             <button key={i} className="course-item"

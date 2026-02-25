@@ -11,7 +11,7 @@ import {
   type EclecticEntry, type HoleStatsData,
   type CrossPlayerData, type HcpInfo, type HoleScores,
 } from "../data/playerDataLoader";
-import { usePlayerData } from "../hooks/usePlayerData";
+import { usePlayerData } from "../data/usePlayerData";
 import PillBadge from "../ui/PillBadge";
 import TeePill from "../ui/TeePill";
 import TeeDate from "../ui/TeeDate";

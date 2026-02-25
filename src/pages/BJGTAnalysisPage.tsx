@@ -15,7 +15,7 @@ import {
   type HoleStatEntry,
   type EclecticEntry,
 } from "../data/playerDataLoader";
-import { usePlayerData } from "../hooks/usePlayerData";
+import { usePlayerData } from "../data/usePlayerData";
 import { norm, fmtToPar, firstName } from "../utils/format";
 import { scClass, toParClass, sc2, sc2w, sc3, sc3m, diagLevel, scDark, SC } from "../utils/scoreDisplay";
 import { isCalUnlocked } from "../utils/authConstants";
@@ -570,7 +570,7 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
       </div>
 
       {/* Table */}
-      <div className=""card"">
+      <div className="card">
         <div className="scroll-x">
           <table className="tourn-form-table">
             <thead>
@@ -1659,8 +1659,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
             <div className="escalao-pills">
               {[3, 6, 9, 12, 0].map(m => (
                 <button key={m} onClick={() => setDistPeriod(m)}
-                  className={`p p-filter${distPeriod === m ? " active" : ""}`}
-                  className="fs-10">
+                  className={`p p-filter fs-10${distPeriod === m ? " active" : ""}`}>
                   {m === 0 ? "All" : `${m}m`}
                 </button>
               ))}
