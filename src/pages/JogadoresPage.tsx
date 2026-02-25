@@ -3014,9 +3014,6 @@ export default function JogadoresPage({ players, courses }: Props) {
                 </button>
               );
             })}
-                </button>
-              );
-            })}
           </div>
           <select className="select" value={regionFilter} onChange={e => setRegionFilter(e.target.value)}>
             <option value="ALL">Região</option>

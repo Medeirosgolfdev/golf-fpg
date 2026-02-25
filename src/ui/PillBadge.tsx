@@ -17,7 +17,7 @@ const PILL_CLASSES: Record<string, string> = {
 /** Normaliza o valor da pill para uma das chaves conhecidas */
 function normalizePill(raw: string): string {
   const p = raw.trim().toUpperCase();
-  if (p === "AWAY" || p === "AWAY INTL" || p === "INTERNACIONAL") return "INTL";
+  if (p === "AWAY" || p === "AWAY INTL" || p === "INTERNACIONAL" || p === "INTERN") return "INTL";
   return p;
 }
 
