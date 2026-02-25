@@ -2,13 +2,13 @@ const ptFmt = new Intl.NumberFormat("pt-PT");
 
 /** Formata número ou "—" */
 export function fmt(n: number | null | undefined): string {
-  if (n === null || n === undefined || !Number.isFinite(n)) return "—";
+  if (n == null || !Number.isFinite(n)) return "—";
   return ptFmt.format(n);
 }
 
 /** Formata CR com 1 decimal e vírgula PT */
 export function fmtCR(n: number | null | undefined): string {
-  if (n === null || n === undefined || !Number.isFinite(n)) return "—";
+  if (n == null || !Number.isFinite(n)) return "—";
   return n.toFixed(1).replace(".", ",");
 }
 
@@ -22,11 +22,11 @@ export function norm(s: string): string {
     .trim();
 }
 
-/** Title case simples */
+/** Title case: capitaliza cada palavra */
 export function titleCase(s: string): string {
   const x = (s ?? "").trim();
   if (!x) return x;
-  return x[0].toUpperCase() + x.slice(1).toLowerCase();
+  return x.replace(/\S+/g, w => w[0].toUpperCase() + w.slice(1).toLowerCase());
 }
 
 /** Soma um range de valores com getter */
@@ -35,7 +35,7 @@ export function sumRange(from: number, to: number, getVal: (i: number) => number
   let any = false;
   for (let i = from; i <= to; i++) {
     const v = getVal(i);
-    if (v !== null && v !== undefined) {
+    if (v != null) {
       sum += v;
       any = true;
     }

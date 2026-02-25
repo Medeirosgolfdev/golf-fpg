@@ -27,22 +27,24 @@ export interface PlayerStats {
 
 export type PlayerStatsDb = Record<string, PlayerStats>;
 
-let _cache: PlayerStatsDb | null = null;
+let _cache: Promise<PlayerStatsDb> | null = null;
 
 export async function loadPlayerStats(): Promise<PlayerStatsDb> {
   if (_cache) return _cache;
-  try {
-    const resp = await fetch("/player-stats.json");
-    if (!resp.ok) {
-      console.warn("player-stats.json not found — sidebar enhancements disabled");
+  _cache = (async () => {
+    try {
+      const resp = await fetch("/player-stats.json");
+      if (!resp.ok) {
+        console.warn("player-stats.json not found — sidebar enhancements disabled");
+        return {};
+      }
+      let text = await resp.text();
+      if (text.charCodeAt(0) === 0xFEFF) text = text.slice(1);
+      return JSON.parse(text) as PlayerStatsDb;
+    } catch (e) {
+      console.warn("Failed to load player-stats.json:", e);
       return {};
     }
-    let text = await resp.text();
-    if (text.charCodeAt(0) === 0xFEFF) text = text.slice(1);
-    _cache = JSON.parse(text) as PlayerStatsDb;
-    return _cache;
-  } catch (e) {
-    console.warn("Failed to load player-stats.json:", e);
-    return {};
-  }
+  })();
+  return _cache;
 }

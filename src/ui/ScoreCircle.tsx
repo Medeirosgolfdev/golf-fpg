@@ -20,7 +20,7 @@ type Props = {
 export default function ScoreCircle({ gross, par, size = "normal", empty = "nr" }: Props) {
   if (gross == null || gross <= 0) {
     if (empty === "dot") return <span className="sc-score sc-empty">·</span>;
-    return <span className="c-border fs-9">NR</span>;
+    return <span className="sc-score sc-nr">NR</span>;
   }
   const cls = par != null ? scClass(gross, par) : "";
   return (

@@ -1026,6 +1026,7 @@ tr.cross-current { background: var(--bg-success); }
 .sc-score.quint { background: var(--score-quint); color: #fff; border-radius: 0; }
 .sc-score.worse { background: var(--score-worse); color: #fff; border-radius: 0; }
 .sc-score.sc-empty { color: var(--border); font-weight: 400; background: none; }
+.sc-score.sc-nr { color: var(--border); font-weight: 400; font-size: 9px; background: none; }
 
 @media (max-width: 900px) {
  .sc-header { flex-direction: column; align-items: flex-start; gap: 8px; }

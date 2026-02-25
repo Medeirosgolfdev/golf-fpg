@@ -19,7 +19,8 @@ export function clubLong(p: Player): string {
   return String(p.club || "");
 }
 
-/** Formata handicap: "12,3" ou "—" */
+/** Formata handicap para display PT: "12,3" ou "—"
+ *  Nota: para contexto de torneio com sinal (+/−), usar fmtHcp de format.ts */
 export function hcpDisplay(hcp: number | null | undefined): string {
   if (hcp == null) return "—";
   return hcp.toFixed(1).replace(".", ",");

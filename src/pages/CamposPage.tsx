@@ -5,6 +5,7 @@ import TeeBadge from "../ui/TeeBadge";
 import PillBadge from "../ui/PillBadge";
 import { teeCanonicalLabel, teeGroupHex } from "../utils/teeColors";
 import { fmt, fmtCR, norm, titleCase, sumRange } from "../utils/format";
+import { fixMojibake } from "../utils/fixEncoding";
 import { sortTees, filterTees, teeHexFromTee } from "../utils/teeUtils";
 
 type Props = { courses: Course[] };
@@ -36,13 +37,7 @@ const COUNTRY_FLAGS: Record<string, string> = {
 };
 
 function normalizeCountryKey(raw: string): string {
-  // Reparar double-encoding UTF-8 (mojibake)
-  let s = raw;
-  try {
-    const bytes = new Uint8Array([...s].map(c => c.charCodeAt(0)));
-    const decoded = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
-    if (decoded !== s) s = decoded;
-  } catch { /* ok */ }
+  const s = fixMojibake(raw);
   return s.trim().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 }
 
@@ -63,13 +58,7 @@ function resolveFlag(c: Course): string {
 
 function resolveCountryName(c: Course): string {
   if (c.master.country) {
-    let s = c.master.country;
-    try {
-      const bytes = new Uint8Array([...s].map(ch => ch.charCodeAt(0)));
-      const decoded = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
-      if (decoded !== s) s = decoded;
-    } catch { /* ok */ }
-    return s.trim();
+    return fixMojibake(c.master.country).trim();
   }
   return KNOWN_AWAY[c.courseKey]?.country || "";
 }
@@ -83,15 +72,6 @@ function teeSuffix(t: Tee): string | null {
   const sl = t.ratings?.holes18?.slopeRating;
   if (cr && sl) return `${fmtCR(cr)}/${sl}`;
   return null;
-}
-
-function luminance(hex: string): number {
-  const h = hex.replace("#", "");
-  if (h.length !== 6) return 0;
-  const r = parseInt(h.slice(0, 2), 16) / 255;
-  const g = parseInt(h.slice(2, 4), 16) / 255;
-  const b = parseInt(h.slice(4, 6), 16) / 255;
-  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }
 
 /* ——— Componente: Grelha Scorecard Multi-Tee ——— */
@@ -255,7 +235,7 @@ export default function CamposPage({ courses }: Props) {
     if (urlCourseKey && courses.some(c => c.courseKey === urlCourseKey)) {
       setSelectedKey(urlCourseKey);
     }
-  }, [urlCourseKey]);
+  }, [urlCourseKey, courses]);
 
   /* Helper: select course and update URL */
   const selectCourse = (key: string | null) => {
@@ -321,6 +301,7 @@ export default function CamposPage({ courses }: Props) {
   }, [selected, sexFilter]);
 
   const scorecardLink = selected?.master.links?.scorecards;
+  const selectedFlag = selected ? resolveFlag(selected) : "";
 
   /* Stats globais */
   const totalTees = useMemo(() => courses.reduce((n, c) => n + c.master.tees.length, 0), [courses]);
@@ -383,6 +364,7 @@ export default function CamposPage({ courses }: Props) {
           {filtered.map((c) => {
             const active = selected?.courseKey === c.courseKey;
             const tees = filterTees(c.master.tees, sexFilter);
+            const flag = resolveFlag(c);
             return (
               <button
                 key={c.courseKey}
@@ -390,7 +372,7 @@ export default function CamposPage({ courses }: Props) {
                 onClick={() => selectCourse(c.courseKey)}
               >
                 <div className="course-item-name">
-                  {resolveFlag(c) && <span className="course-flag">{resolveFlag(c)}</span>}
+                  {flag && <span className="course-flag">{flag}</span>}
                   <span>{c.master.name}</span>
                   {c.courseKey.startsWith("away-") && <PillBadge pill="INTL" />}
                 </div>
@@ -413,9 +395,9 @@ export default function CamposPage({ courses }: Props) {
                 <div>
                   <h2 className="detail-title">
                     {selected.master.name}
-                    {resolveFlag(selected) && (
+                    {selectedFlag && (
                       <span className="course-country-badge">
-                        {resolveFlag(selected)} {resolveCountryName(selected)}
+                        {selectedFlag} {resolveCountryName(selected)}
                       </span>
                     )}
                     {isAway(selected) && <PillBadge pill="INTL" />}

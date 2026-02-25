@@ -38,7 +38,7 @@ export default class SectionErrorBoundary extends React.Component<Props, State> 
             {this.state.error.message}
           </div>
           <button className="btn mt-8" onClick={() => this.setState({ error: null })}>
-            Retry
+            Repetir
           </button>
         </div>
       );
