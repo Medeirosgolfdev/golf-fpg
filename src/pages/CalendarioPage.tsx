@@ -14,11 +14,11 @@
  * quando duplicam a mesma prova no calendário FPG.
  */
 import { useState, useRef, useEffect, useMemo } from "react";
-import type { PlayersDb } from "./data/types";
-import { isCalUnlocked } from "./utils/authConstants";
-import { clickableA11y } from "./utils/a11y";
-import { norm } from "./utils/format";
-import PasswordGate from "./ui/PasswordGate";
+import type { PlayersDb } from "../data/types";
+import { isCalUnlocked } from "../utils/authConstants";
+import { clickableA11y } from "../utils/a11y";
+import { norm } from "../utils/format";
+import PasswordGate from "../ui/PasswordGate";
 
 /* ═══ Types ═══ */
 interface CalEvent {

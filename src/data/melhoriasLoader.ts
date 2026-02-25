@@ -126,7 +126,7 @@ export function extractAwayCourses(melhorias: MelhoriasJson): Course[] {
         if (!parsed) continue;
 
         const courseKey = `away-${parsed.courseName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-+$/, "")}`;
-        const teeKey = `${parsed.teeName}|${parsed.cr}|${parsed.slope}`;
+        const teeKey = `${parsed.teeName}|${parsed.cr}|${parsed.slope}|${parsed.par18 ?? ""}`;
         addToCourseMap(courseMap, courseKey, parsed.courseName, currentCountry, teeKey, parsed);
         continue;
       }
@@ -191,7 +191,7 @@ export function extractAwayCourses(melhorias: MelhoriasJson): Course[] {
           };
 
           const courseKey = `away-${campo.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-+$/, "")}`;
-          const teeKey = `${categoria}|${parsed.cr}|${parsed.slope}`;
+          const teeKey = `${categoria}|${parsed.cr}|${parsed.slope}|${parsed.par18 ?? ""}`;
           addToCourseMap(courseMap, courseKey, campo, pais || currentCountry, teeKey, parsed);
         }
       }
