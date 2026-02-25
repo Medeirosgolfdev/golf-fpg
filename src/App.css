@@ -242,7 +242,7 @@ html, body, #root {
 .notice-error { margin: 12px 0; padding: 10px 14px; border-radius: var(--radius-lg); font-size: 12px; line-height: 1.5; background: var(--bg-danger); border: 1px solid var(--border-danger); color: var(--color-danger-dark); }
 .notice-error.ta-c { text-align: center; }
 .notice-error-msg { color: var(--color-danger-dark); font-weight: 600; font-size: 12px; }
-.notice-error-detail { max-width: 500px; margin: 4px auto 0; word-break: break-word; }
+.notice-error-detail { max-width: 500px; margin: 4px auto 0; word-break: break-word; background: var(--bg-danger-strong); padding: 4px 10px; border-radius: var(--radius-sm); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--color-danger-dark); }
 
 /* ─── Conclusion Boxes ─── */
 .conclusion-box { margin-top: 10px; padding: 10px 14px; background: var(--bg-warn); border: 1px solid var(--border-warn); border-radius: var(--radius-lg); }
@@ -489,34 +489,91 @@ html, body, #root {
 
 /* Badge de pais no detalhe (titulo) */
 
-/* ——— Tournament pills: REGIONAL, NACIONAL, INTL ——— */
-
-.pill-torneio {
- display: inline-block;
- padding: 1px 7px;
- font-size: 10px;
- font-weight: 800;
- letter-spacing: 0.5px;
- border-radius: var(--radius-sm);
+/*
+ * ═══ UNIFIED PILL SYSTEM ═══
+ *
+ * Base: .p — 11px, 600, padding 2px 8px, radius 8px
+ * Small: .p-sm — 10px, padding 1px 6px (dentro de tabelas)
+ *
+ * 3 FORMAS:
+ *   Normal (8px radius) — player pills, SD, badges
+ *   Tournament .p-tourn (3px radius) — REGIONAL, NACIONAL, INTL, PJA
+ *   Tee .p-tee (12px radius) — cores FPG reais via TeePill
+ *
+ * Cor via variante: .p-fed, .p-male, .p-sub14, .p-regional, etc.
+ */
+.p {
+ display: inline-flex; align-items: center; justify-content: center;
+ padding: 2px 8px;
+ font-size: 11px; font-weight: 600; line-height: 1.4;
+ border-radius: var(--radius);
+ border: 1.5px solid transparent;
  white-space: nowrap;
  vertical-align: middle;
- margin-left: 4px;
 }
+.p-sm { font-size: 10px; padding: 1px 6px; }
 
-.pill-regional {
- background: #263E78;
- color: #FFD700;
-}
+/* ── Outline ── */
+.p-outline { border-color: var(--text-dark); color: var(--text-dark); background: transparent; }
 
-.pill-nacional {
- background: #046A38;
- color: #FFD700;
-}
+/* ── Player identity ── */
+.p-fed { background: var(--badge-fed); color: #fff; }
+.p-male { background: var(--badge-male); color: #fff; }
+.p-female { background: var(--badge-female); color: #fff; }
+.p-muted { background: var(--bg-muted); color: var(--text-2); }
+.p-accent { background: var(--accent-light); color: var(--accent); }
+.p-birth { background: var(--badge-birth-bg); color: var(--badge-birth-text); }
+.p-club { background: var(--badge-club-bg); color: var(--badge-club-text); }
 
-.pill-intl {
- background: #00FF00;
- color: #263E78;
-}
+/* ── Escalão ramp ── */
+.p-sub10 { background: #2a5a18; color: #fff; }
+.p-sub12 { background: #3a7a28; color: #fff; }
+.p-sub14 { background: #5a9a40; color: #fff; }
+.p-sub16 { background: #7aba60; color: #1a3a10; }
+.p-sub18 { background: #a0d480; color: #1a3a10; }
+.p-sub21 { background: #b4d498; color: #1a3a10; }
+.p-sub24 { background: #b4d498; color: #1a3a10; }
+.p-absoluto { background: #c8d8b4; color: #2a4a18; }
+.p-senior { background: #d8dcc8; color: #3a4a28; }
+.p-outros { background: var(--border); color: var(--text); }
+
+/* ── Tournament (3px radius — rectângular) ── */
+.p-tourn { border-radius: 3px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; }
+.p-regional { background: #263E78; color: #FFD700; }
+.p-nacional { background: #046A38; color: #FFD700; }
+.p-intl { background: #00FF00; color: #263E78; }
+.p-pja { background: #046A38; color: #FFD700; }
+
+/* ── Tee (12px radius — arredondado, cores inline via TeePill) ── */
+.p-tee { border-radius: var(--radius-lg); font-weight: 700; }
+
+/* ── Semânticos ── */
+.p-sd-excellent { background: var(--color-good); color: #fff; }
+.p-sd-good { background: var(--sd-badge-good); color: var(--text); }
+.p-sd-poor { background: var(--color-danger); color: #fff; }
+.p-eds { background: #f59e0b; color: #fff; font-weight: 700; }
+.p-wagr { background: var(--accent-light); color: var(--accent); font-weight: 700; }
+
+/* ── Interactivos (filtros) ── */
+.p-filter { cursor: pointer; transition: all 0.15s; background: var(--bg); color: var(--text-3); opacity: 0.6; }
+.p-filter:hover { opacity: 0.85; }
+.p-filter.active { opacity: 1; background: var(--text-dark); color: #fff; box-shadow: var(--shadow-sm); }
+.p-filter-count { font-size: 10px; font-weight: 500; opacity: 0.7; margin-left: 2px; }
+.active .p-filter-count { opacity: 0.85; }
+
+/* Escalão filter — active state shows escalão color via .p-sub* classes */
+.p-esc-filter { cursor: pointer; transition: all 0.15s; opacity: 0.55; }
+.p-esc-filter:not(.active) { background: var(--bg); color: var(--text-3); }
+.p-esc-filter:hover { opacity: 0.85; }
+.p-esc-filter.active { opacity: 1; box-shadow: var(--shadow-sm); }
+.p-esc-clear { width: 24px; height: 24px; padding: 0; justify-content: center; border-radius: 50%; font-size: 10px; opacity: 0.7; background: var(--bg-hover); color: var(--text-3); }
+.p-esc-clear:hover { opacity: 1; background: var(--bg-danger); color: var(--color-danger-dark); }
+
+/* ── Legacy aliases (pill-torneio → .p .p-tourn) ── */
+.pill-torneio { display: inline-block; padding: 1px 7px; font-size: 10px; font-weight: 800; letter-spacing: 0.5px; border-radius: 3px; white-space: nowrap; vertical-align: middle; margin-left: 4px; }
+.pill-regional { background: #263E78; color: #FFD700; }
+.pill-nacional { background: #046A38; color: #FFD700; }
+.pill-intl { background: #00FF00; color: #263E78; }
 
 .course-item-meta {
  font-size: 11px;
@@ -681,8 +738,7 @@ html, body, #root {
 
 /* ─── Jogadores Page ─── */
 
-/* Player pills — outline green style */
-
+/* Player pills container */
 .jog-pills {
  display: flex;
  flex-wrap: wrap;
@@ -691,67 +747,7 @@ html, body, #root {
  align-items: center;
 }
 
-.jog-pill {
- display: inline-block;
- padding: 2px 10px;
- font-size: 11.5px;
- font-weight: 600;
- border-radius: var(--radius);
- line-height: 1.5;
- background: transparent;
- color: var(--text-dark);
- border: 1.5px solid var(--text-dark);
-}
-
-/* Fed — solid green */
-.jog-pill-fed {
- background: var(--badge-fed);
- color: #fff;
- border: none;
-}
-
-/* Sexo — solid male / female */
-.jog-pill-sex-M {
- background: var(--badge-male);
- color: #fff;
- border: none;
-}
-
-.jog-pill-sex-F {
- background: var(--badge-female);
- color: #fff;
- border: none;
-}
-
-/* Escalão — solid gradient: darker = younger */
-.jog-pill-escalao { border: none; }
-.jog-pill-escalao-sub10 { background: #2a5a18; color: #fff; border: none; }
-.jog-pill-escalao-sub12 { background: #3a7a28; color: #fff; border: none; }
-.jog-pill-escalao-sub14 { background: #5a9a40; color: #fff; border: none; }
-.jog-pill-escalao-sub16 { background: #7aba60; color: #1a3a10; border: none; }
-.jog-pill-escalao-sub18 { background: #a0d480; color: #1a3a10; border: none; }
-.jog-pill-escalao-absoluto { background: #c8d8b4; color: #2a4a18; border: none; }
-.jog-pill-escalao-senior { background: #d8dcc8; color: #3a4a28; border: none; }
-
-/* Birth, Club — outline green (inherit from .jog-pill base) */
-
-/* HCP — neutral muted */
-.jog-pill-hcp { background: var(--bg-muted); color: var(--text-2); border: none; }
-
-/* Tag, Stats — outline green (inherit from .jog-pill base) */
-
-.jog-pill-update {
- background: transparent;
- color: var(--text-3);
- border: none;
-}
-
-/* Spacer pushes stats/update pills to the right */
-
-/* Region pill hidden by default */
-.jog-pill-region {
- display: none;
-}
+/* Old jog-pill classes removed — now using unified .p system */
 
 /* ─── Escalão Multi-Select Pills (toolbar) ─── */
 
@@ -762,104 +758,7 @@ html, body, #root {
  flex-wrap: wrap;
 }
 
-/* Generic filter pill — shared visual pattern for all toggle filters */
-.filter-pill {
- display: inline-flex;
- align-items: center;
- gap: 3px;
- padding: 0 8px;
- height: 24px;
- font: inherit;
- font-size: 11px;
- font-weight: 600;
- border-radius: var(--radius-lg);
- border: 1.5px solid transparent;
- cursor: pointer;
- transition: all 0.15s;
- background: var(--bg);
- color: var(--text-3);
- opacity: 0.65;
- line-height: 1;
-}
-.filter-pill:hover { opacity: 0.9; }
-.filter-pill.active {
- opacity: 1;
- background: var(--text-dark);
- color: #fff;
- border-color: var(--text-dark);
- box-shadow: var(--shadow-sm);
-}
-.filter-pill-count {
- font-size: 10px;
- font-weight: 500;
- opacity: 0.7;
- margin-left: 1px;
-}
-.active .filter-pill-count { opacity: 0.85; }
-
-/* Escalão pill — extends filter-pill with category colours */
-.escalao-pill {
- display: inline-flex;
- align-items: center;
- gap: 3px;
- padding: 0 8px;
- height: 24px;
- font-size: 11px;
- font-weight: 600;
- 
- border-radius: var(--radius-lg);
- border: 1.5px solid transparent;
- cursor: pointer;
- transition: all 0.15s;
- background: var(--bg);
- color: var(--text-3);
- opacity: 0.55;
- line-height: 1;
-}
-
-.escalao-pill:hover {
- opacity: 0.85;
-}
-
-.escalao-pill.escalao-pill-active {
- opacity: 1;
- box-shadow: var(--shadow-sm);
-}
-
-.escalao-pill-count {
- font-size: 10px;
- font-weight: 500;
- opacity: 0.7;
- margin-left: 1px;
-}
-
-.escalao-pill-active .escalao-pill-count {
- opacity: 0.85;
-}
-
-.escalao-pill-clear {
- width: 24px;
- height: 24px;
- padding: 0;
- justify-content: center;
- border-radius: 50%;
- font-size: 10px;
- opacity: 0.7;
- background: var(--bg-hover);
- color: var(--text-3);
-}
-.escalao-pill-clear:hover { opacity: 1; background: var(--bg-danger); color: var(--color-danger-dark); }
-
-/* Colour coding — reuses escalão palette */
-.escalao-pill-sub10.escalao-pill-active { background: #2a5a18; color: #fff; }
-.escalao-pill-sub12.escalao-pill-active { background: #3a7a28; color: #fff; }
-.escalao-pill-sub14.escalao-pill-active { background: #5a9a40; color: #fff; }
-.escalao-pill-sub16.escalao-pill-active { background: #7aba60; color: #1a3a10; }
-.escalao-pill-sub18.escalao-pill-active { background: #a0d480; color: #1a3a10; }
-.escalao-pill-sub21.escalao-pill-active, .escalao-pill-sub24.escalao-pill.escalao-pill-active { background: #b4d498; color: #1a3a10; }
-.escalao-pill-absoluto.escalao-pill.escalao-pill-active { background: #c8d8b4; color: #2a4a18; }
-.escalao-pill-snior.escalao-pill-active, .escalao-pill-senior.escalao-pill.escalao-pill-active { background: #d8dcc8; color: #3a4a28; }
-.escalao-pill-outros.escalao-pill.escalao-pill-active { background: var(--border); color: var(--text); }
+/* Old filter-pill, escalao-pill removed — now in unified .p system */
 
 /* HCP Badge — 2-line block next to name */
 
@@ -972,7 +871,7 @@ a.dateLink .tee-date { text-decoration: underline; text-underline-offset: 2px; }
 .lh-17 { line-height: 1.7; }
 
 .stats { display: flex; gap: 8px; }
-.pill { padding: 3px 10px; font-size: 12px; font-weight: 500; color: var(--accent); background: var(--accent-light); border-radius: var(--radius-xl); }
+/* .pill removed — use .p .p-accent */
 
 .actions { display: flex; gap: 6px; align-items: center; }
 .btn { padding: 4px 10px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-card); cursor: pointer; font: inherit; font-size: 11px; font-weight: 600; }
@@ -1013,15 +912,10 @@ tr.cross-current { background: var(--bg-success); }
 .sc-table-ec .col-out, .sc-table-ec .col-in { background: var(--bg); font-weight: 700; }
 .sc-table-ec .col-total { background: var(--bg-hover); font-weight: 900; }
 
-.hd-pill { display: inline-block; padding: 1px 7px; border-radius: var(--radius-pill); font-weight: 600; line-height: 1.4; }
-.hd-birth { background: var(--badge-birth-bg); color: var(--badge-birth-text); }
-.hd-club { background: var(--badge-club-bg); color: var(--badge-club-text); }
+/* hd-pill removed — use .p .p-birth, .p .p-club */
 
 /* ─── SD Pill (colored by HCP comparison) ─── */
-.sd-pill { display: inline-block; padding: 2px 10px; border-radius: var(--radius); font-weight: 600; font-size: 12px; }
-.sd-pill.sd-excellent { background: var(--color-good); color: #fff; }
-.sd-pill.sd-good { background: var(--sd-badge-good); color: var(--text); }
-.sd-pill.sd-poor { background: var(--color-danger); color: #fff; }
+/* sd-pill removed — use .p .p-sd-excellent/good/poor */
 
 /* ─── Course Performance Analysis ─── */
 /* courseAnalysis → .card (unified) */
@@ -1149,7 +1043,7 @@ tr.cross-current { background: var(--bg-success); }
 .sc-score.worse { background: var(--score-worse); color: #fff; border-radius: 0; }
 .sc-score.sc-empty { color: var(--border); font-weight: 400; background: none; }
 
-.sc-pill { display: inline-block; color: #fff; padding: 2px 10px; border-radius: var(--radius-lg); font-size: 11px; font-weight: 700; }
+/* sc-pill removed — use .p with inline styles */
 
 @media (max-width: 900px) {
  .sc-header { flex-direction: column; align-items: flex-start; gap: 8px; }
@@ -1589,13 +1483,13 @@ tr.cross-current { background: var(--bg-success); }
  .detail-header-top { flex-direction: column; align-items: flex-start; }
  .toolbar-left { flex-wrap: wrap; }
  .escalao-pills { gap: 2px; }
- .escalao-pill { font-size: 10px; padding: 1px 6px; }
+ .p-esc-filter { font-size: 10px; padding: 1px 6px; }
 }
 
 
 /* ═══════════════════════════════════════════════════════
   TORNEIO PAGE
-  Uses existing design language: jog-pill, sc-table-modern
+  Uses existing design language: .p unified pills, sc-table-modern
   ═══════════════════════════════════════════════════════ */
 
 /* tourn-page: removed, replaced by tourn-layout */
@@ -1665,19 +1559,18 @@ tr.cross-current { background: var(--bg-success); }
 .tourn-pname.tourn-pname-link { cursor: pointer; color: var(--link-color); text-decoration: underline; text-decoration-color: var(--link-underline); text-underline-offset: 2px; }
 .tourn-pname.tourn-pname-link:hover { color: var(--link-hover); text-decoration-color: var(--link-hover); }
 
-/* Reuse jog-pill but override sizes for tournament context */
-.tourn-draw-player .jog-pill {
+/* Override .p sizes for tournament draw context */
+.tourn-draw-player .p {
  padding: 2px 10px; font-size: 12px; font-weight: 600; border-radius: var(--radius); line-height: 1.5;
 }
-.tourn-draw-player .teePill,
-.tourn-draw-tee .teePill { font-size: 10px; padding: 2px 8px; }
-.tourn-lb-pills .teePill,
-.tourn-meta .teePill { font-size: 10px; padding: 1px 7px; vertical-align: middle; }
+.tourn-draw-player .p-tee,
+.tourn-draw-tee .p-tee { font-size: 10px; padding: 2px 8px; }
+.tourn-lb-pills .p-tee,
+.tourn-meta .p-tee { font-size: 10px; padding: 1px 7px; vertical-align: middle; }
 
 /* PJA + INTL use their own solid backgrounds */
 /* PJA pill — matches app design */
-.tourn-pill-pja { background: #046A38; color: #FFD700; border: none; font-weight: 800; letter-spacing: .03em; font-size: 10px; padding: 1px 6px; border-radius: var(--radius); display: inline-block; vertical-align: middle; }
-.tourn-pill-intl { background: var(--bg-intl); color: var(--accent-text); border: 1.5px solid var(--border-intl); font-weight: 700; font-size: 10px; padding: 0px 5px; border-radius: var(--radius); display: inline-block; vertical-align: middle; }
+/* tourn-pill-pja/intl removed — use .p .p-sm .p-tourn .p-pja/p-intl */
 
 /* Category badge pills — used in cross-category tables */
 .cat-badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: var(--radius); line-height: 1.5; }
@@ -1717,7 +1610,7 @@ tr.cross-current { background: var(--bg-success); }
 .tourn-pos-col { width: 32px; }
 .tourn-scorecard .tourn-lb-name-col { text-align: left; padding-left: 10px; border-right: 2px solid var(--border-heavy); white-space: nowrap; }
 .tourn-lb-pills { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
-.tourn-lb-pills .jog-pill { font-size: 10px; padding: 1px 7px; }
+.tourn-lb-pills .p { font-size: 10px; padding: 1px 7px; }
 .tourn-gross-col { width: 36px; }
 .tourn-par-col { width: 44px; }
 .tourn-scorecard .tourn-sum-col { background: var(--bg-hover); white-space: nowrap; padding: 4px 3px; }
@@ -2638,7 +2531,7 @@ tr.cross-current { background: var(--bg-success); }
  font-size: 12px;
  color: var(--text-3);
 }
-.teePill { display: inline-block; padding: 1px 8px; border-radius: var(--radius-lg); font-size: 11px; font-weight: 600; white-space: nowrap; }
+/* .teePill removed — use .p .p-tee */
 .tee-date { display: inline-block; padding: 1px 7px; border-radius: var(--radius); font-size: 11px; font-weight: 600; }
 .ov-export {
  margin: 20px 0;

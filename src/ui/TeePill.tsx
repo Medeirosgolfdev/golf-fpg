@@ -4,8 +4,8 @@
  * Pill colorida com o nome do tee — resolve a cor automaticamente
  * via getTeeHex (que consulta scorecardMeta + courseColorCache + fallback por nome).
  *
- * Usado em JogadoresPage para rondas onde só temos o nome do tee.
- * CamposPage/SimuladorPage usam TeeBadge (dot + label) que é visualmente diferente.
+ * Usa sistema unificado: .p .p-tee (radius 12px)
+ * Cores aplicadas inline via getTeeHex() + textOnColor().
  */
 
 import { getTeeHex, textOnColor, teeBorder } from "../utils/teeColors";
@@ -23,7 +23,7 @@ export default function TeePill({ name, hex }: Props) {
   const fg = textOnColor(hx);
   return (
     <span
-      className="teePill"
+      className="p p-tee"
       style={{ background: hx, color: fg, border: teeBorder(hx) }}
     >
       {name}

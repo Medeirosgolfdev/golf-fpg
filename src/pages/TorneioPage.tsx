@@ -69,12 +69,12 @@ function PlayerPills({ norm, fed, name, showEscalao = true, showHcp = false }: {
   const draw = findDrawEntry(norm, fed, name);
 
   return <>
-    {pja && <span className="jog-pill tourn-pill-pja">PJA</span>}
-    {!fed && <span className="jog-pill tourn-pill-intl">INTL</span>}
-    {female && <><span className="jog-pill jog-pill-sex-F">♀</span><TeePill name={draw?.teeColor ?? "Azuis"} /></>}
-    {showEscalao && esc && <span className={`jog-pill jog-pill-escalao jog-pill-escalao-${esc.toLowerCase().replace("-", "")}`}>{esc}</span>}
-    {year && <span className="jog-pill jog-pill-birth">{year}</span>}
-    {showHcp && draw && <span className="jog-pill jog-pill-stats">{fmtHcp(draw.hcpExact)}</span>}
+    {pja && <span className="p p-sm p-tourn p-pja">PJA</span>}
+    {!fed && <span className="p p-sm p-tourn p-intl">🌍 INTL</span>}
+    {female && <><span className="p p-sm p-female">♀</span><TeePill name={draw?.teeColor ?? "Azuis"} /></>}
+    {showEscalao && esc && <span className={`p p-sm p-${esc.toLowerCase().replace("-", "")}`}>{esc}</span>}
+    {year && <span className="p p-sm p-birth">{year}</span>}
+    {showHcp && draw && <span className="p p-sm p-outline">{fmtHcp(draw.hcpExact)}</span>}
   </>;
 }
 
@@ -803,14 +803,14 @@ function LeaderboardView({ norm, players, holeDataByDay, onSelectPlayer }: {
       <div className="detail-toolbar">
         {/* Category pills */}
         <div className="escalao-pills">
-          <button className={`filter-pill${lbCat === "all" ? " active" : ""}`}
+          <button className={`p p-filter${lbCat === "all" ? " active" : ""}`}
             onClick={() => { setLbCat("all"); setEscFilter("all"); setPjaOnly(false); }}>
-            Todos<span className="filter-pill-count">{totalCount}</span>
+            Todos<span className="p-filter-count">{totalCount}</span>
           </button>
           {norm.categories.map(c => (
-            <button key={c.key} className={`filter-pill${lbCat === c.key ? " active" : ""}`}
+            <button key={c.key} className={`p p-filter${lbCat === c.key ? " active" : ""}`}
               onClick={() => { setLbCat(c.key); setEscFilter("all"); setPjaOnly(false); }}>
-              {c.label}<span className="filter-pill-count">{catCounts[c.key] || 0}</span>
+              {c.label}<span className="p-filter-count">{catCounts[c.key] || 0}</span>
             </button>
           ))}
         </div>
@@ -834,9 +834,9 @@ function LeaderboardView({ norm, players, holeDataByDay, onSelectPlayer }: {
         </select>
 
         {/* PJA filter */}
-        <button className={`filter-pill${pjaOnly ? " active" : ""}`}
+        <button className={`p p-filter${pjaOnly ? " active" : ""}`}
           onClick={() => setPjaOnly(p => !p)}>
-          PJA<span className="filter-pill-count">{pjaCount}</span>
+          PJA<span className="p-filter-count">{pjaCount}</span>
         </button>
 
         {/* Escalão filter (WAGR only) */}
@@ -997,12 +997,12 @@ function DrawTable({ draw, onSelectPlayer }: { draw: import("../utils/tournament
                   <td className="tourn-draw-tee">{showTeeBadge && <TeePill name={d.teeColor} />}</td>
                   <td className="tourn-draw-player">
                     <PlayerLink fed={d.fed} name={d.name} onSelect={onSelectPlayer} />
-                    {pja && <span className="jog-pill tourn-pill-pja">PJA</span>}
-                    {!d.fed && <span className="jog-pill tourn-pill-intl">INTL</span>}
-                    {d.sex === "F" && <span className="jog-pill jog-pill-sex-F">♀</span>}
-                    {esc && <span className={`jog-pill jog-pill-escalao jog-pill-escalao-${esc.toLowerCase().replace("-", "")}`}>{esc}</span>}
-                    {year && <span className="jog-pill jog-pill-birth">{year}</span>}
-                    <span className="jog-pill jog-pill-club">{d.club}</span>
+                    {pja && <span className="p p-sm p-tourn p-pja">PJA</span>}
+                    {!d.fed && <span className="p p-sm p-tourn p-intl">🌍 INTL</span>}
+                    {d.sex === "F" && <span className="p p-sm p-female">♀</span>}
+                    {esc && <span className={`p p-sm p-${esc.toLowerCase().replace("-", "")}`}>{esc}</span>}
+                    {year && <span className="p p-sm p-birth">{year}</span>}
+                    <span className="p p-sm p-club">{d.club}</span>
                   </td>
                   <td className="r tourn-draw-hcp">{fmtHcp(d.hcpExact)}</td>
                   <td className="r tourn-draw-hcp">{d.hcpPlay != null ? (d.hcpPlay > 0 ? String(d.hcpPlay) : `+${Math.abs(d.hcpPlay)}`) : "-"}</td>
@@ -1045,11 +1045,11 @@ function DrawView({ players, onSelectPlayer }: { players: PlayersDb; onSelectPla
       <div className="detail-toolbar">
         {/* Day pills */}
         <div className="escalao-pills">
-          <button className={`filter-pill${day === 1 ? " active" : ""}`} onClick={() => setDay(1)}>
+          <button className={`p p-filter${day === 1 ? " active" : ""}`} onClick={() => setDay(1)}>
             R1 — {NORM_BASE.dates[0]?.split("-").reverse().slice(0, 2).join("/") || ""}
           </button>
           {NORM_BASE.draws.wagr?.d2 && (
-            <button className={`filter-pill${day === 2 ? " active" : ""}`} onClick={() => setDay(2)}>
+            <button className={`p p-filter${day === 2 ? " active" : ""}`} onClick={() => setDay(2)}>
               R2 — {NORM_BASE.dates[1]?.split("-").reverse().slice(0, 2).join("/") || ""}
             </button>
           )}
@@ -1057,8 +1057,8 @@ function DrawView({ players, onSelectPlayer }: { players: PlayersDb; onSelectPla
         {/* Category pills */}
         <div className="escalao-pills">
           {cats.map(c => (
-            <button key={c.key} className={`filter-pill${effectiveCat === c.key ? " active" : ""}`} onClick={() => setCat(c.key)}>
-              {c.label}<span className="filter-pill-count">{c.count}</span>
+            <button key={c.key} className={`p p-filter${effectiveCat === c.key ? " active" : ""}`} onClick={() => setCat(c.key)}>
+              {c.label}<span className="p-filter-count">{c.count}</span>
             </button>
           ))}
         </div>
@@ -1130,8 +1130,8 @@ function AnalysisView({ norm, players, holeDataByDay, playerHistory, onSelectPla
       <div className="detail-toolbar">
         <div className="escalao-pills">
           {(["wagr", "sub14", "sub12"] as AnalysisCat[]).filter(c => catCounts[c] > 0).map(c => (
-            <button key={c} className={`filter-pill${cat === c ? " active" : ""}`} onClick={() => setCat(c)}>
-              {c === "wagr" ? "WAGR" : c === "sub14" ? "Sub-14" : "Sub-12"}<span className="filter-pill-count">{catCounts[c]}</span>
+            <button key={c} className={`p p-filter${cat === c ? " active" : ""}`} onClick={() => setCat(c)}>
+              {c === "wagr" ? "WAGR" : c === "sub14" ? "Sub-14" : "Sub-12"}<span className="p-filter-count">{catCounts[c]}</span>
             </button>
           ))}
         </div>
@@ -1183,8 +1183,8 @@ function AnalysisView({ norm, players, holeDataByDay, playerHistory, onSelectPla
                       {cat === "wagr" && <td className="r tourn-mono fw-700">{f.d1Pos ?? "–"}</td>}
                       <td>
                         <PlayerLink fed={f.fed} name={f.name} onSelect={onSelectPlayer} />
-                        {pja && <span className="jog-pill tourn-pill-pja ml-4">PJA</span>}
-                        <span className={`jog-pill jog-pill-escalao jog-pill-escalao-${f.escalao.toLowerCase().replace("-", "")} ml-4 fs-9`}>{f.escalao}</span>
+                        {pja && <span className="p p-sm p-tourn p-pja ml-4">PJA</span>}
+                        <span className={`p p-sm p-${f.escalao.toLowerCase().replace("-", "")} ml-4`}>{f.escalao}</span>
                       </td>
                       <td className="r tourn-mono">{fmtHcp(f.hcpExact)}</td>
                       {cat === "wagr" && (
@@ -1476,7 +1476,7 @@ export default function TorneioPage({ players, onSelectPlayer }: { players: Play
           <button className="sidebar-toggle" onClick={() => setSidebarOpen(v => !v)} title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
             {sidebarOpen ? "◀" : "▶"}
           </button>
-          <span className="tourn-pill-intl fs-9 p-2-6">🌍 INTL</span>
+          <span className="p p-sm p-tourn p-intl">🌍 INTL</span>
           <span className="tourn-toolbar-title">GG26</span>
           <span className="tourn-toolbar-meta">📍 {NORM_BASE.course}</span>
           <span className="tourn-toolbar-meta">📅 {NORM_BASE.dates.join(" → ")}</span>
@@ -1496,7 +1496,7 @@ export default function TorneioPage({ players, onSelectPlayer }: { players: Play
               { key: "analysis" as const, label: "📊 Análise" },
             ]).map(t => (
               <button key={t.key} onClick={() => setView(t.key)}
-                className={`filter-pill${view === t.key ? " active" : ""}`}>
+                className={`p p-filter${view === t.key ? " active" : ""}`}>
                 {t.label}
               </button>
             ))}
@@ -1556,8 +1556,8 @@ export default function TorneioPage({ players, onSelectPlayer }: { players: Play
               style={{ cursor: d.fed ? "pointer" : "default" }}>
               <div className="course-item-name">
                 {d.name}
-                {d.pja && <span className="jog-pill tourn-pill-pja">PJA</span>}
-                {!d.fed && <span className="jog-pill tourn-pill-intl">INTL</span>}
+                {d.pja && <span className="p p-sm p-tourn p-pja">PJA</span>}
+                {!d.fed && <span className="p p-sm p-tourn p-intl">🌍 INTL</span>}
               </div>
               <div className="course-item-meta">
                 {[d.club, d.escalao, d.hcpExact != null ? `HCP ${d.hcpExact.toFixed(1)}` : null].filter(Boolean).join(" · ")}

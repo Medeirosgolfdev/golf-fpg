@@ -890,7 +890,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
             {sidebarOpen ? "◀" : "▶"}
           </button>
           <h2 className="cal-month-title">Calendário 2026</h2>
-          <button onClick={goToday} className="filter-pill"
+          <button onClick={goToday} className="p p-filter"
             style={{ opacity: 1 }}>
             Hoje
           </button>
@@ -958,7 +958,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
           <div className="escalao-pills" style={{ marginLeft: "auto" }}>
             {(["month", "list"] as ViewMode[]).map(v => (
               <button key={v} onClick={() => setViewMode(v)}
-                className={`filter-pill${viewMode === v ? " active" : ""}`}
+                className={`p p-filter${viewMode === v ? " active" : ""}`}
               >{v === "month" ? "Mês" : "Lista"}</button>
             ))}
           </div>

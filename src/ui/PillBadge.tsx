@@ -1,17 +1,17 @@
 /**
  * src/ui/PillBadge.tsx
  *
- * Pill de tipo de torneio: REGIONAL, NACIONAL, INTL.
+ * Pill de tipo de torneio: REGIONAL, NACIONAL, INTL, PJA.
  * Normaliza variantes ("AWAY", "AWAY INTL", "INTERNACIONAL" → "INTL").
  *
- * Usado por JogadoresPage (dados do pipeline) e CamposPage (campos away).
- * Estilos em App.css: .pill-torneio, .pill-regional, .pill-nacional, .pill-intl
+ * Usa sistema unificado de pills: .p .p-sm .p-tourn .p-{cor}
  */
 
 const PILL_CLASSES: Record<string, string> = {
-  REGIONAL: "pill-torneio pill-regional",
-  NACIONAL: "pill-torneio pill-nacional",
-  INTL: "pill-torneio pill-intl",
+  REGIONAL: "p p-sm p-tourn p-regional",
+  NACIONAL: "p p-sm p-tourn p-nacional",
+  INTL: "p p-sm p-tourn p-intl",
+  PJA: "p p-sm p-tourn p-pja",
 };
 
 /** Normaliza o valor da pill para uma das chaves conhecidas */
@@ -22,7 +22,7 @@ function normalizePill(raw: string): string {
 }
 
 type Props = {
-  /** Valor da pill (e.g. "REGIONAL", "NACIONAL", "INTL", "AWAY", "INTERNACIONAL") */
+  /** Valor da pill (e.g. "REGIONAL", "NACIONAL", "INTL", "AWAY", "INTERNACIONAL", "PJA") */
   pill?: string;
 };
 

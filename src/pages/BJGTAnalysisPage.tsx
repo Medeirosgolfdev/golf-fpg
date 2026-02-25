@@ -619,7 +619,7 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
                       ) : (
                         <span className={`fs-12${isM ? " fw-700" : " fw-600"}`} style={{ color: isM ? "var(--text)" : "var(--text-2)" }}>{p.n}</span>
                       )}
-                      {isM && <span className="jog-pill jog-pill-stats fs-9 ml-4">REF</span>}
+                      {isM && <span className="p p-sm p-outline ml-4">REF</span>}
                     </td>
 
                     {/* # tournaments played */}
@@ -716,7 +716,7 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
 
   if (!lbEntry && !rival) return (
     <div className="tourn-section">
-      <button className="filter-pill active mb-8" onClick={onBack}>← Voltar</button>
+      <button className="p p-filter active mb-8" onClick={onBack}>← Voltar</button>
       <div className="empty-state-sm">Sem dados disponíveis para {playerName}</div>
     </div>
   );
@@ -876,13 +876,13 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
 
   return (
     <div className="tourn-section">
-      <button className="filter-pill mb-12" onClick={onBack}>← Análise</button>
+      <button className="p p-filter mb-12" onClick={onBack}>← Análise</button>
 
       <div className="d-flex items-center gap-8 mb-12">
         <span className="fw-800 fs-15">{lbEntry?.country || (rival ? (FL as Record<string, string>)[rival.co] || "" : "")} {playerName}</span>
-        {lbEntry && <span className="jog-pill jog-pill-stats">BJGT #{lbEntry.pos}</span>}
-        <span className="jog-pill jog-pill-escalao jog-pill-escalao-sub12">Sub-12</span>
-        {rival?.co && <span className="jog-pill jog-pill-stats">{rival.co}</span>}
+        {lbEntry && <span className="p p-outline">BJGT #{lbEntry.pos}</span>}
+        <span className="p p-sub12">Sub-12</span>
+        {rival?.co && <span className="p p-outline">{rival.co}</span>}
       </div>
 
       {/* KPIs */}
@@ -1659,7 +1659,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
             <div className="escalao-pills">
               {[3, 6, 9, 12, 0].map(m => (
                 <button key={m} onClick={() => setDistPeriod(m)}
-                  className={`filter-pill${distPeriod === m ? " active" : ""}`}
+                  className={`p p-filter${distPeriod === m ? " active" : ""}`}
                   className="fs-10">
                   {m === 0 ? "All" : `${m}m`}
                 </button>
@@ -3281,7 +3281,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
           {/* Tee header with color */}
  <div className="card mt-8" style={{ borderColor: "var(--color-danger)", borderWidth: 2 }}>
  <div className="fw-600 fs-12" style={{ padding: "6px 10px", background: "var(--color-danger-alpha)" }}>
- <span className="sc-pill fs-10 c-white" style={{ background: SC.danger, padding: "2px 10px" }}>Vermelho</span>{" "}
+ <span className="p c-white" style={{ background: SC.danger, padding: "2px 10px" }}>Vermelho</span>{" "}
               <span className="cb-blue-800">{ecl.totalGross}</span>
               <span className="muted ml-6">par {tp}</span>
             </div>
@@ -3337,7 +3337,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                   return (
                     <tr key={idx} style={{ background: "rgba(220,38,38,0.04)" }}>
                       <td className="row-label fs-10">
- <span className="sc-pill fs-10 c-white" style={{ background: SC.danger, padding: "1px 6px" }}>{trDate}</span>
+ <span className="p c-white" style={{ background: SC.danger, padding: "1px 6px" }}>{trDate}</span>
                       </td>
                       {h.g.slice(0, 9).map((s, i) => <td key={i}><ScoreCircle gross={s} par={ecl!.holes[i]?.par} size="small" /></td>)}
                       <td className="col-out fs-10-fw600">{out}</td>
@@ -3491,7 +3491,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
       {!selectedPlayer && (
         <div className="ta-c" style={{ margin: "20px 0" }}>
-          <Link to={`/jogadores/${fed}`} className="filter-pill active" style={{ textDecoration: "none", padding: "8px 20px", fontSize: 13, height: "auto" }}>
+          <Link to={`/jogadores/${fed}`} className="p p-filter active" style={{ textDecoration: "none", padding: "8px 20px", fontSize: 13, height: "auto" }}>
             Ver perfil completo do {PLAYER_NAME} →
           </Link>
         </div>

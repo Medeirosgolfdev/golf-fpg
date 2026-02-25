@@ -11,7 +11,7 @@ import {
   type EclecticEntry, type HoleStatsData,
   type CrossPlayerData, type HcpInfo, type HoleScores,
 } from "../data/playerDataLoader";
-import { usePlayerData } from "../data/usePlayerData";
+import { usePlayerData } from "../hooks/usePlayerData";
 import PillBadge from "../ui/PillBadge";
 import TeePill from "../ui/TeePill";
 import TeeDate from "../ui/TeeDate";
@@ -58,7 +58,7 @@ function GrossCell({ gross, par }: { gross: number | null; par: number | null })
 function SdCell({ round }: { round: RoundData }) {
   const { text, cls } = fmtSdVal(round);
   if (!text) return null;
-  return <span className={`sd-pill ${cls}`}>{text}</span>;
+  return <span className={`p p-${cls}`}>{text}</span>;
 }
 
 function HoleBadge({ hc }: { hc: number }) {
@@ -284,7 +284,7 @@ function TeeSummaryTable({ rounds }: { rounds: RoundData[] }) {
                 <td className="r fw-600">{avgG?.toFixed(1) ?? "–"}</td>
                 <td className="r">{avgStb?.toFixed(1) ?? "–"}</td>
                 <td className="r">{avgSd != null ? (
-                  <span className={`sd-pill ${sdClassByHcp(avgSd, avg(t.hi.filter((x): x is number => x != null)) ?? null)}`}>
+                  <span className={`p p-${sdClassByHcp(avgSd, avg(t.hi.filter((x): x is number => x != null)) ?? null)}`}>
                     {avgSd.toFixed(1)}
                   </span>
                 ) : "–"}</td>
@@ -552,7 +552,7 @@ function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, eclecti
           {/* Gross row */}
           <tr>
             <td className="row-label">
-              <span className="sc-pill" style={{ background: teeHex_, color: teeFg_, border: teeBorder(teeHex_) }}>{datePill}</span>
+              <span className="p" style={{ background: teeHex_, color: teeFg_, border: teeBorder(teeHex_) }}>{datePill}</span>
             </td>
             {Array.from({ length: totalHoles }, (_, h) => {
               const g = gross[h];
@@ -937,7 +937,7 @@ function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, ac
                     return (
                       <tr key={tr.scoreId} style={{ background: hx + "0A" }}>
                         <td className="row-label fs-10">
- <span className="sc-pill fs-10" style={{ background: hx, color: fg, padding: "1px 6px" }}>{trDate}</span>
+ <span className="p p-sm" style={{ background: hx, color: fg, padding: "1px 6px" }}>{trDate}</span>
                         </td>
                         {Array.from({ length: Math.min(hc, 9) }, (_, i) => (
                           <td key={i}><ScoreCircle gross={trG[i]} par={parArr[i]} size="small" /></td>
@@ -1871,9 +1871,9 @@ function CrossAnalysis({ data }: { data: PlayerPageData }) {
       {/* Tabs */}
       <div className="escalao-pills jog-cross-wrap">
         {escalaos.map(esc => (
-          <button key={esc} className={`filter-pill${esc === activeEsc ? " active" : ""}`}
+          <button key={esc} className={`p p-filter${esc === activeEsc ? " active" : ""}`}
             onClick={() => setActiveEsc(esc)}>
-            {esc} <span className="filter-pill-count">{byEscalao[esc].length}</span>
+            {esc} <span className="p-filter-count">{byEscalao[esc].length}</span>
           </button>
         ))}
       </div>
@@ -1920,8 +1920,8 @@ function CrossAnalysis({ data }: { data: PlayerPageData }) {
                   <td>
                     {isCurrent ? <b>{p.name}</b> : p.name}
                     {" "}<span className="muted fs-10">{p.fed}</span>
-                    {p.birthYear && <span className="hd-pill hd-birth fs-9 ml-4" style={{ padding: "1px 5px" }}>{p.birthYear}</span>}
-                    {p.club && <span className="hd-pill hd-club fs-9 ml-4" style={{ padding: "1px 5px" }}>{p.club}</span>}
+                    {p.birthYear && <span className="p p-sm p-birth ml-4">{p.birthYear}</span>}
+                    {p.club && <span className="p p-sm p-club ml-4">{p.club}</span>}
                   </td>
                   <td className="r"><b>{p.currentHcp?.toFixed(1) ?? "–"}</b></td>
                   <td className={`r ${p.lastSD != null && p.currentHcp != null ? sdClassByHcp(p.lastSD, p.currentHcp) : ""}`}>
@@ -2368,7 +2368,7 @@ function CompScoreRow({ label, labelBg, labelFg, gross, par, hc, is9, frontEnd, 
 
   return (
     <tr>
-      <td style={colLabel}><span className="sc-pill" style={{ background: labelBg, color: labelFg }}>{label}</span></td>
+      <td style={colLabel}><span className="p" style={{ background: labelBg, color: labelFg }}>{label}</span></td>
       {Array.from({ length: hc }, (_, i) => {
         const gv = gross[i];
         const pv = par ? par[i] : null;
@@ -2792,19 +2792,19 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
           )}
         </div>
         <div className="jog-pills">
-          <span className="jog-pill jog-pill-fed">#{selected.fed}</span>
-          {latestHcp != null && <span className="jog-pill jog-pill-hcp">HCP {hcpDisplay(latestHcp)}</span>}
-          <span className={`jog-pill jog-pill-sex-${selected.sex}`}>{selected.sex === "M" ? "Masculino" : selected.sex === "F" ? "Feminino" : selected.sex}</span>
-          {selected.dob && <span className="jog-pill jog-pill-birth">{selected.dob.slice(0, 4)}</span>}
-          {selected.escalao && <span className="jog-pill jog-pill-escalao">{meta?.escalao || selected.escalao}</span>}
-          {(meta?.club || clubLong(selected)) && <span className="jog-pill jog-pill-club">{meta?.club || clubLong(selected)}</span>}
-          {selected.region && <span className="jog-pill jog-pill-region">{selected.region}</span>}
+          <span className="p p-fed">#{selected.fed}</span>
+          {latestHcp != null && <span className="p p-muted">HCP {hcpDisplay(latestHcp)}</span>}
+          <span className={`p ${selected.sex === "F" ? "p-female" : "p-male"}`}>{selected.sex === "M" ? "Masculino" : selected.sex === "F" ? "Feminino" : selected.sex}</span>
+          {selected.dob && <span className="p p-birth">{selected.dob.slice(0, 4)}</span>}
+          {selected.escalao && <span className={`p p-${(meta?.escalao || selected.escalao).toLowerCase().replace(/[- ]/g, "")}`}>{meta?.escalao || selected.escalao}</span>}
+          {(meta?.club || clubLong(selected)) && <span className="p p-club">{meta?.club || clubLong(selected)}</span>}
+          {selected.region && <span className="p p-outline" style={{ display: "none" }}>{selected.region}</span>}
           {selected.tags?.filter(t => t !== "no-priority").map(t => (
-            <span key={t} className="jog-pill jog-pill-tag">{t}</span>
+            <span key={t} className="p p-outline">{t}</span>
           ))}
-          {totalCourses > 0 && <span className="jog-pill jog-pill-stats">{totalCourses} campos</span>}
-          {totalRounds > 0 && <span className="jog-pill jog-pill-stats">{totalRounds} voltas</span>}
-          {meta?.lastUpdate && <span className="jog-pill jog-pill-update">Últ. act.: {meta.lastUpdate}</span>}
+          {totalCourses > 0 && <span className="p p-outline">{totalCourses} campos</span>}
+          {totalRounds > 0 && <span className="p p-outline">{totalRounds} voltas</span>}
+          {meta?.lastUpdate && <span className="muted fs-11">Últ. act.: {meta.lastUpdate}</span>}
         </div>
       </div>
 
@@ -2997,7 +2997,7 @@ export default function JogadoresPage({ players, courses }: Props) {
           </select>
           <div className="escalao-pills">
             {escalaoFilter.size > 0 && (
-              <button className="escalao-pill escalao-pill-clear" onClick={clearEscalao} title="Limpar filtros">✕</button>
+              <button className="p p-esc-clear" onClick={clearEscalao} title="Limpar filtros">✕</button>
             )}
             {escaloes.map(esc => {
               const active = escalaoFilter.has(esc);
@@ -3006,11 +3006,14 @@ export default function JogadoresPage({ players, courses }: Props) {
               return (
                 <button
                   key={esc}
-                  className={`escalao-pill escalao-pill-${cls}${active ? " escalao-pill-active" : ""}`}
+                  className={`p p-esc-filter p-${cls}${active ? " active" : ""}`}
                   onClick={() => toggleEscalao(esc)}
                   title={`${esc} (${count})`}
                 >
-                  {esc.replace("Sub-", "S")}{count > 0 && <span className="escalao-pill-count">{count}</span>}
+                  {esc.replace("Sub-", "S")}{count > 0 && <span className="p-filter-count">{count}</span>}
+                </button>
+              );
+            })}
                 </button>
               );
             })}

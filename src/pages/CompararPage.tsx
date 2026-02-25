@@ -290,7 +290,7 @@ function PlayerSearch({ players, slots, onAdd, onRemove }: {
       {slots.length > 0 && (
         <div className="flex-wrap-gap8">
           {slots.map((s, i) => (
-            <span key={s.fed} className="jog-pill" style={{
+            <span key={s.fed} className="p" style={{
               borderColor: COLORS[i], background: COLORS_LIGHT[i],
               display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 14px", fontSize: 13, borderRadius: "var(--radius-pill)",
             }}>
