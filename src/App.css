@@ -542,7 +542,15 @@ html, body, #root {
 .p-regional { background: #263E78; color: #FFD700; }
 .p-nacional { background: #046A38; color: #FFD700; }
 .p-intl { background: #00FF00; color: #263E78; }
-.p-pja { background: #046A38; color: #FFD700; }
+.p-pja { background: #dc2626; color: #fff; }
+
+/* Origin (score_origin) — same rectangular form */
+.p-origin { border-radius: 3px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; }
+.p-eds { background: #f59e0b; color: #fff; }
+.p-import { background: #8b5cf6; color: #fff; }
+.p-indiv { background: #f59e0b; color: #fff; }
+.p-treino { background: #f59e0b; color: #fff; }
+.p-extra { background: #f59e0b; color: #fff; }
 
 /* ── Tee (12px radius — arredondado, cores inline via TeePill) ── */
 .p-tee { border-radius: var(--radius-lg); font-weight: 700; }
@@ -551,7 +559,6 @@ html, body, #root {
 .p-sd-excellent { background: var(--color-good); color: #fff; }
 .p-sd-good { background: var(--sd-badge-good); color: var(--text); }
 .p-sd-poor { background: var(--color-danger); color: #fff; }
-.p-eds { background: #f59e0b; color: #fff; font-weight: 700; }
 .p-wagr { background: var(--accent-light); color: var(--accent); font-weight: 700; }
 
 /* ── Interactivos (filtros) ── */
@@ -841,9 +848,7 @@ html, body, #root {
 .hb18 { background: var(--accent-light); color: var(--accent); }
 
 /* Pill badges (from melhorias.json) */
-.eds-badge { display: inline-block; font-size: 10px; font-weight: 800; color: #fff; background: var(--color-warn); border: none; border-radius: var(--radius-sm); padding: 1px 6px; margin-left: 4px; vertical-align: middle; letter-spacing: .5px; line-height: 1.5; text-transform: uppercase; }
-.eds-badge-extra { background: var(--badge-birth-text); }
-.eds-badge-eds { background: var(--color-danger); }
+/* (eds-badge removed — unified into .p .p-sm .p-eds / .p-treino / .p-extra) */
 
 a.dateLink { color: var(--text); text-decoration: none; cursor: pointer; }
 a.dateLink:hover { opacity: .75; }

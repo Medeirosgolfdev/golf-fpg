@@ -31,16 +31,32 @@ type CourseSort = "last_desc" | "count_desc" | "name_asc";
 
 /* —— Course key lookup: course display name → courseKey for /campos/:courseKey —— */
 let _courseKeyMap: Map<string, string> = new Map();
+let _nationalCourseNames: Set<string> = new Set();
 function buildCourseKeyMap(courses: Course[]): Map<string, string> {
   const m = new Map<string, string>();
+  const nat = new Set<string>();
   for (const c of courses) {
     m.set(norm(c.master.name), c.courseKey);
     m.set(norm(c.courseKey), c.courseKey);
+    if (!c.courseKey.startsWith("away-")) {
+      nat.add(norm(c.master.name));
+      nat.add(norm(c.courseKey));
+    }
   }
+  _nationalCourseNames = nat;
   return m;
 }
 function findCourseKey(courseName: string): string | null {
   return _courseKeyMap.get(norm(courseName)) ?? null;
+}
+function isNationalCourse(courseName: string): boolean {
+  if (_nationalCourseNames.size === 0) return true; // not loaded yet
+  return _nationalCourseNames.has(norm(courseName));
+}
+
+/** Normaliza escalão para classe CSS: "Sénior" → "senior", "Sub-14" → "sub14" */
+function escCls(esc: string): string {
+  return esc.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "");
 }
 
 const scHostStyle: React.CSSProperties = { margin: "6px 8px", border: "1px solid var(--line, #d5dac9)", borderRadius: "var(--radius-xl)", background: "var(--bg-card)", padding: 10, overflow: "hidden" };
@@ -67,15 +83,34 @@ function HoleBadge({ hc }: { hc: number }) {
     : <span className="hb hb18">18</span>;
 }
 
+/** Retorna a pill efectiva: usa _pill dos dados ou auto-detecta INTL */
+function effectivePill(round: { _pill?: string; course?: string; scoreOrigin?: string }, courseName?: string): string {
+  if (round._pill) return round._pill;
+  const o = (round.scoreOrigin || "").trim().toUpperCase();
+  if (o === "INTERN") return "INTL";
+  const c = (courseName || round.course || "").trim().toUpperCase();
+  if (c === "INTERNACIONAL" || c === "INTERNATIONAL") return "INTL";
+  return "";
+}
+
 /* ScoreCircle imported from src/ui/ */
 
-/* ─── EDS / Score Origin Badge ─── */
-function EdsBadge({ origin }: { origin?: string }) {
+/* ─── Origin Pill (EDS / Treino / Extra / Import / Indiv) ─── */
+const ORIGIN_MAP: Record<string, { label: string; cls: string }> = {
+  EDS:     { label: "EDS",     cls: "p p-sm p-origin p-eds" },
+  IMPORT:  { label: "IMPORT",  cls: "p p-sm p-origin p-import" },
+  INDIV:   { label: "INDIV",   cls: "p p-sm p-origin p-indiv" },
+  TREINO:  { label: "TREINO",  cls: "p p-sm p-origin p-treino" },
+  EXTRA:   { label: "EXTRA",   cls: "p p-sm p-origin p-extra" },
+};
+function OriginPill({ origin }: { origin?: string }) {
   if (!origin) return null;
-  const o = origin.trim();
-  // Only show badges for non-tournament origins
-  if (!o || o === "Torn" || o === "") return null;
-  return <span className="eds-badge">{o}</span>;
+  const key = origin.trim().toUpperCase();
+  // "Torn" = torneio normal, "Intern" = tratado pelo effectivePill/PillBadge
+  if (!key || key === "TORN" || key === "INTERN") return null;
+  const entry = ORIGIN_MAP[key];
+  if (!entry) return null;
+  return <span className={entry.cls}>{entry.label}</span>;
 }
 
 /* ─── External Links (classificação, etc.) ─── */
@@ -111,7 +146,7 @@ function EventInfo({ name, origin, pill, links }: {
   return (
     <>
       <span className="muted">{name || ""}</span>
-      <EdsBadge origin={origin} />
+      <OriginPill origin={origin} />
       <PillBadge pill={pill} />
       <LinkBtns links={links} />
     </>
@@ -191,7 +226,7 @@ function ByDateView({ data, search }: {
                     <div className="muted fs-10">#{r.scoreId}</div>
                   </td>
                   <td><CourseLink name={r.course} /></td>
-                  <td><EventInfo name={r.eventName} origin={r.scoreOrigin} pill={r._pill} links={r._links} /></td>
+                  <td><EventInfo name={r.eventName} origin={r.scoreOrigin} pill={effectivePill(r)} links={r._links} /></td>
                   <td className="r"><HoleBadge hc={r.holeCount} /></td>
                   <td className="r">{r.hi ?? ""}</td>
                   <td><TeePill name={r.tee || ""} /></td>
@@ -211,7 +246,7 @@ function ByDateView({ data, search }: {
                           tee={r.tee || ""}
                           hi={r.hi}
                           links={r._links}
-                          pill={r._pill}
+                          pill={effectivePill(r)}
                           eclecticEntry={ecEntry}
                         />
                       </div>
@@ -326,7 +361,7 @@ function ByCourseRow({ course, idx, data, isAnalysis, openScorecard, openScoreca
             <div className="count" style={{ background: getTeeHex(last?.tee || ""), color: textOnColor(getTeeHex(last?.tee || "")), border: teeBorder(getTeeHex(last?.tee || "")) }}>{course.count}</div>
             <button type="button" className="courseBtn" onClick={() => setOpen(v => !v)}>{course.course}</button>
  {findCourseKey(course.course) && <Link to={`/campos/${findCourseKey(course.course)}`} className="courseLink fs-10 ml-4" title="Ver campo" onClick={e => e.stopPropagation()}>↗</Link>}
-            <PillBadge pill={course.rounds.find(r => r._pill)?._pill} />
+            <PillBadge pill={course.rounds.map(r => effectivePill(r, course.course)).find(Boolean) || ""} />
           </div>
         </td>
         <td className="r"><b>{course.count}</b></td>
@@ -745,8 +780,8 @@ function RoundRow({ r, data, courseName, isOpen, onToggle }: {
           {r.hasCard
             ? <a href="#" onClick={e => { e.preventDefault(); onToggle(); }}><TeeDate date={r.date} tee={r.tee || ""} /></a>
             : <TeeDate date={r.date} tee={r.tee || ""} />}
-          <EdsBadge origin={r.scoreOrigin} />
-          <PillBadge pill={r._pill} />
+          <OriginPill origin={r.scoreOrigin} />
+          <PillBadge pill={effectivePill(r, courseName)} />
           <LinkBtns links={r._links} />
           <div className="muted fs-10">#{r.scoreId}</div>
         </td>
@@ -769,7 +804,7 @@ function RoundRow({ r, data, courseName, isOpen, onToggle }: {
                 tee={r.tee || ""}
                 hi={r.hi}
                 links={r._links}
-                pill={r._pill}
+                pill={effectivePill(r, courseName)}
                 eclecticEntry={ecEntry}
               />
             </div>
@@ -1783,7 +1818,7 @@ function Last20Table({ data, last20Table, best8 }: {
                       )}
                     </td>
                     <td><CourseLink name={r.course} /></td>
-                    <td className="fs-11"><EventInfo name={r.eventName} origin={r.scoreOrigin} pill={r._pill} links={r._links} /></td>
+                    <td className="fs-11"><EventInfo name={r.eventName} origin={r.scoreOrigin} pill={effectivePill(r)} links={r._links} /></td>
                     <td className="r"><HoleBadge hc={r.holeCount} /></td>
                     <td className="r">{r.hi ?? ""}</td>
                     <td><TeePill name={r.tee || ""} /></td>
@@ -1808,7 +1843,7 @@ function Last20Table({ data, last20Table, best8 }: {
                             tee={r.tee || ""}
                             hi={r.hi}
                             links={r._links}
-                            pill={r._pill}
+                            pill={effectivePill(r)}
                             eclecticEntry={ecEntry}
                           />
                         </div>
@@ -2467,7 +2502,7 @@ function TournRoundRow({ r, idx, data }: {
         style={{ cursor: r.hasCard && holes ? "pointer" : "default" }}>
         <td>
           <TeeDate date={r.date} tee={r.tee || ""} />
-          <EdsBadge origin={r.scoreOrigin} />
+          <OriginPill origin={r.scoreOrigin} />
           {String(r.scoreId).startsWith("extra_")
             ? <span className="muted fs-10 ml-4">Extra</span>
             : <span className="muted fs-10 ml-4">#{r.scoreId}</span>}
@@ -2491,7 +2526,7 @@ function TournRoundRow({ r, idx, data }: {
                 tee={r.tee || ""}
                 hi={r.hi}
                 links={r._links}
-                pill={r._pill}
+                pill={effectivePill(r)}
                 eclecticEntry={ecEntry}
               />
             </div>
@@ -2671,8 +2706,8 @@ function ByTournamentView({ data, search }: { data: PlayerPageData; search: stri
                   <tr>
                     <td>
                       <button className="courseBtn" onClick={() => setOpenIdx(isOpen ? null : idx)}>{it.name}</button>
-                      <EdsBadge origin={it.rounds[0]?.scoreOrigin} />
-                      <PillBadge pill={it.rounds.find(r => r._pill)?._pill} />
+                      <OriginPill origin={it.rounds[0]?.scoreOrigin} />
+                      <PillBadge pill={it.rounds.map(r => effectivePill(r)).find(Boolean) || ""} />
                       <LinkBtns links={it.rounds.find(r => r._links)?._links} />
                     </td>
                     <td><b><CourseLink name={it.course} /></b></td>
@@ -2796,7 +2831,7 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
           {latestHcp != null && <span className="p p-muted">HCP {hcpDisplay(latestHcp)}</span>}
           <span className={`p ${selected.sex === "F" ? "p-female" : "p-male"}`}>{selected.sex === "M" ? "Masculino" : selected.sex === "F" ? "Feminino" : selected.sex}</span>
           {selected.dob && <span className="p p-birth">{selected.dob.slice(0, 4)}</span>}
-          {selected.escalao && <span className={`p p-${(meta?.escalao || selected.escalao).toLowerCase().replace(/[- ]/g, "")}`}>{meta?.escalao || selected.escalao}</span>}
+          {selected.escalao && <span className={`p p-${escCls(meta?.escalao || selected.escalao)}`}>{meta?.escalao || selected.escalao}</span>}
           {(meta?.club || clubLong(selected)) && <span className="p p-club">{meta?.club || clubLong(selected)}</span>}
           {selected.region && <span className="p p-outline" style={{ display: "none" }}>{selected.region}</span>}
           {selected.tags?.filter(t => t !== "no-priority").map(t => (
@@ -2911,7 +2946,6 @@ export default function JogadoresPage({ players, courses }: Props) {
       else next.add(esc);
       return next;
     });
-    selectPlayer(null);
   };
 
   const clearEscalao = () => {
@@ -2975,8 +3009,12 @@ export default function JogadoresPage({ players, courses }: Props) {
   }, [allPlayers]);
 
   useEffect(() => {
-    if (!selectedFed && filtered.length > 0) selectPlayer(filtered[0].fed);
-  }, [filtered, selectedFed]);
+    if (filtered.length === 0) return;
+    // If no selection, or current player not in filtered list → select first
+    if (!selectedFed || !filtered.some(p => p.fed === selectedFed)) {
+      selectPlayer(filtered[0].fed);
+    }
+  }, [filtered]);
 
   const selected = useMemo(() => {
     if (!selectedFed) return null;
@@ -3001,7 +3039,7 @@ export default function JogadoresPage({ players, courses }: Props) {
             )}
             {escaloes.map(esc => {
               const active = escalaoFilter.has(esc);
-              const cls = esc.toLowerCase().replace(/[^a-z0-9]/g, "");
+              const cls = escCls(esc);
               const count = escalaoCountMap[esc] || 0;
               return (
                 <button

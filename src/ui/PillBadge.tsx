@@ -31,5 +31,8 @@ export default function PillBadge({ pill }: Props) {
   const normalized = normalizePill(pill);
   const cls = PILL_CLASSES[normalized];
   if (!cls) return null;
-  return <span className={cls}>{normalized === "INTL" ? `🌍 ${normalized}` : normalized}</span>;
+  const label = normalized === "INTL" ? `🌍 ${normalized}`
+    : normalized === "NACIONAL" ? `🇵🇹 ${normalized}`
+    : normalized;
+  return <span className={cls}>{label}</span>;
 }
