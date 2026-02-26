@@ -41,3 +41,43 @@ export function sumArr(arr: (number | null)[], from: number, to: number): number
   for (let i = from; i < to; i++) if (arr[i] != null) s += arr[i]!;
   return s;
 }
+
+/** Mínimo de array numérico (ignora nulls) */
+export function minArr(arr: (number | null | undefined)[]): number | null {
+  let m: number | null = null;
+  for (const v of arr) {
+    const n = numSafe(v);
+    if (n != null && (m == null || n < m)) m = n;
+  }
+  return m;
+}
+
+/** Máximo de array numérico (ignora nulls) */
+export function maxArr(arr: (number | null | undefined)[]): number | null {
+  let m: number | null = null;
+  for (const v of arr) {
+    const n = numSafe(v);
+    if (n != null && (m == null || n > m)) m = n;
+  }
+  return m;
+}
+
+/** Declive de regressão linear para y igualmente espaçados (x = 0, 1, 2, …) */
+export function linearSlope(ys: number[]): number | null {
+  const n = ys.length;
+  if (n < 2) return null;
+  let sx = 0, sy = 0, sxy = 0, sx2 = 0;
+  for (let i = 0; i < n; i++) { sx += i; sy += ys[i]; sxy += i * ys[i]; sx2 += i * i; }
+  const d = n * sx2 - sx * sx;
+  return d === 0 ? null : (n * sxy - sx * sy) / d;
+}
+
+/** Declive de regressão linear para pares (x, y) arbitrários */
+export function linearSlopeXY(pts: { x: number; y: number }[]): number | null {
+  const n = pts.length;
+  if (n < 2) return null;
+  let sx = 0, sy = 0, sxy = 0, sxx = 0;
+  for (const p of pts) { sx += p.x; sy += p.y; sxy += p.x * p.y; sxx += p.x * p.x; }
+  const d = n * sxx - sx * sx;
+  return d === 0 ? null : (n * sxy - sx * sy) / d;
+}

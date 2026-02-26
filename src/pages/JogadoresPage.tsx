@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState, type ReactNode } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import type { Player, PlayersDb, Course, SexFilter } from "../data/types";
-import { norm, shortDate, fD, fD2, firstName } from "../utils/format";
+import { norm, shortDate, fD, fD2, firstName, fmtSign, fmtToPar } from "../utils/format";
 import { getTeeHex, textOnColor, normKey, teeBorder } from "../utils/teeColors";
 import { clubShort, clubLong, hcpDisplay } from "../utils/playerUtils";
-import { numSafe, meanArr, stdevArr, sumArr } from "../utils/mathUtils";
+import { numSafe, meanArr, stdevArr, sumArr, minArr, maxArr, linearSlope } from "../utils/mathUtils";
 import { scClass, fmtGrossDelta, fmtStb, sdClassByHcp, fmtSdVal, sc2, sc3m, SC, toParClass } from "../utils/scoreDisplay";
 import {
   type PlayerPageData, type CourseData, type RoundData,
@@ -16,7 +16,6 @@ import PillBadge from "../ui/PillBadge";
 import TeePill from "../ui/TeePill";
 import TeeDate from "../ui/TeeDate";
 import ScoreCircle from "../ui/ScoreCircle";
-import SectionErrorBoundary from "../ui/SectionErrorBoundary";
 import LoadingState from "../ui/LoadingState";
 
 /* ────────────────────────────────────────────────────────────────────────────────────
@@ -30,29 +29,17 @@ type CourseSort = "last_desc" | "count_desc" | "name_asc";
 
 /* —— Course key lookup: course display name → courseKey for /campos/:courseKey —— */
 let _courseKeyMap: Map<string, string> = new Map();
-let _nationalCourseNames: Set<string> = new Set();
 function buildCourseKeyMap(courses: Course[]): Map<string, string> {
   const m = new Map<string, string>();
-  const nat = new Set<string>();
   for (const c of courses) {
     m.set(norm(c.master.name), c.courseKey);
     m.set(norm(c.courseKey), c.courseKey);
-    if (!c.courseKey.startsWith("away-")) {
-      nat.add(norm(c.master.name));
-      nat.add(norm(c.courseKey));
-    }
   }
-  _nationalCourseNames = nat;
   return m;
 }
 function findCourseKey(courseName: string): string | null {
   return _courseKeyMap.get(norm(courseName)) ?? null;
 }
-function isNationalCourse(courseName: string): boolean {
-  if (_nationalCourseNames.size === 0) return true; // not loaded yet
-  return _nationalCourseNames.has(norm(courseName));
-}
-
 /** Normaliza escalão para classe CSS: "Sénior" → "senior", "Sub-14" → "sub14" */
 function escCls(esc: string): string {
   return esc.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -287,9 +274,6 @@ function TeeSummaryTable({ rounds }: { rounds: RoundData[] }) {
 
   if (tees.length <= 1) return null; // No point showing if only 1 tee
 
-  const avg = (a: number[]) => a.length ? a.reduce((s, v) => s + v, 0) / a.length : null;
-  const mn = (a: number[]) => a.length ? Math.min(...a) : null;
-
   return (
     <div className="card mb-10">
       <div className="sc-bar-head"><span>Resumo por Tee</span></div>
@@ -306,10 +290,10 @@ function TeeSummaryTable({ rounds }: { rounds: RoundData[] }) {
         </thead>
         <tbody>
           {tees.map(t => {
-            const avgG = avg(t.gross);
-            const minG = mn(t.gross);
-            const avgStb = avg(t.stb);
-            const avgSd = avg(t.sd);
+            const avgG = meanArr(t.gross);
+            const minG = minArr(t.gross);
+            const avgStb = meanArr(t.stb);
+            const avgSd = meanArr(t.sd);
             return (
               <tr key={t.tee}>
                 <td><TeePill name={t.tee} /></td>
@@ -318,7 +302,7 @@ function TeeSummaryTable({ rounds }: { rounds: RoundData[] }) {
                 <td className="r fw-600">{avgG?.toFixed(1) ?? "–"}</td>
                 <td className="r">{avgStb?.toFixed(1) ?? "–"}</td>
                 <td className="r">{avgSd != null ? (
-                  <span className={`p p-${sdClassByHcp(avgSd, avg(t.hi.filter((x): x is number => x != null)) ?? null)}`}>
+                  <span className={`p p-${sdClassByHcp(avgSd, meanArr(t.hi) ?? null)}`}>
                     {avgSd.toFixed(1)}
                   </span>
                 ) : "–"}</td>
@@ -331,8 +315,8 @@ function TeeSummaryTable({ rounds }: { rounds: RoundData[] }) {
   );
 }
 
-function ByCourseRow({ course, idx, data, isAnalysis, openScorecard, openScorecardId }: {
-  course: CourseData; idx: number; data: PlayerPageData; isAnalysis: boolean;
+function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId }: {
+  course: CourseData; data: PlayerPageData; isAnalysis: boolean;
   openScorecard: (id: string) => void; openScorecardId: string | null;
 }) {
   const [open, setOpen] = useState(false);
@@ -350,6 +334,8 @@ function ByCourseRow({ course, idx, data, isAnalysis, openScorecard, openScoreca
   const ecList = data.EC[courseKey] || [];
   const ecDet = data.ECDET[courseKey] || {};
   const holeStats = data.HOLE_STATS[courseKey] || {};
+  const lastHex = getTeeHex(last?.tee || "");
+  const courseLinkKey = findCourseKey(course.course);
 
   return (
     <>
@@ -357,9 +343,9 @@ function ByCourseRow({ course, idx, data, isAnalysis, openScorecard, openScoreca
       <tr className={open ? "pa-row-open" : ""}>
         <td>
           <div className="rowHead">
-            <div className="count" style={{ background: getTeeHex(last?.tee || ""), color: textOnColor(getTeeHex(last?.tee || "")), border: teeBorder(getTeeHex(last?.tee || "")) }}>{course.count}</div>
+            <div className="count" style={{ background: lastHex, color: textOnColor(lastHex), border: teeBorder(lastHex) }}>{course.count}</div>
             <button type="button" className="courseBtn" onClick={() => setOpen(v => !v)}>{course.course}</button>
- {findCourseKey(course.course) && <Link to={`/campos/${findCourseKey(course.course)}`} className="courseLink fs-10 ml-4" title="Ver campo" onClick={e => e.stopPropagation()}>↗</Link>}
+ {courseLinkKey && <Link to={`/campos/${courseLinkKey}`} className="courseLink fs-10 ml-4" title="Ver campo" onClick={e => e.stopPropagation()}>↗</Link>}
             <PillBadge pill={course.rounds.map(r => effectivePill(r, course.course)).find(Boolean) || ""} />
           </div>
         </td>
@@ -467,7 +453,7 @@ function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, eclecti
   const grossTotal = sumArr(gross, 0, totalHoles);
   const metersTotal = meters ? sumArr(meters, 0, totalHoles) : 0;
   const toPar = grossTotal - parTotal;
-  const toParStr = toPar > 0 ? `+${toPar}` : String(toPar);
+  const toParStr = fmtSign(toPar);
 
   // Date pill label (DD/MM)
   const datePill = date ? date.substring(0, 5).replace("-", "/") : "Gross";
@@ -606,7 +592,7 @@ function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, eclecti
                     const tpCls = toParClass(outTP);
                     return (
                       <td className="col-out fw-700">
-                        {outG}<span className={`sc-topar ${tpCls}`}>{outTP > 0 ? "+" : ""}{outTP}</span>
+                        {outG}<span className={`sc-topar ${tpCls}`}>{fmtSign(outTP)}</span>
                       </td>
                     );
                   })()}
@@ -620,7 +606,7 @@ function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, eclecti
               const inCls = toParClass(inTP);
               return (
                 <td className={`col-${is9 ? "total" : "in"} fw-700`}>
-                  {inG}<span className={`sc-topar ${inCls}`}>{inTP > 0 ? "+" : ""}{inTP}</span>
+                  {inG}<span className={`sc-topar ${inCls}`}>{fmtSign(inTP)}</span>
                 </td>
               );
             })()}
@@ -688,7 +674,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
                 const tpCls = toParClass(outTP);
                 return (
                   <td className="col-out" style={{ fontWeight: 700, ...ecBorder }}>
-                    {outEc}<span className={`sc-topar ${tpCls}`}>{outTP > 0 ? "+" : ""}{outTP}</span>
+                    {outEc}<span className={`sc-topar ${tpCls}`}>{fmtSign(outTP)}</span>
                   </td>
                 );
               })()}
@@ -702,7 +688,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
           const inCls = toParClass(inTP);
           return (
             <td className={`col-${is9 ? "total" : "in"}`} style={{ fontWeight: 700, ...ecBorder }}>
-              {inEc}<span className={`sc-topar ${inCls}`}>{inTP > 0 ? "+" : ""}{inTP}</span>
+              {inEc}<span className={`sc-topar ${inCls}`}>{fmtSign(inTP)}</span>
             </td>
           );
         })()}
@@ -711,7 +697,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
           const totCls = toParClass(ecTP);
           return (
             <td className="col-total" style={ecBorder}>
-              {sumEc}<span className={`sc-topar ${totCls}`}>{ecTP > 0 ? "+" : ""}{ecTP}</span>
+              {sumEc}<span className={`sc-topar ${totCls}`}>{fmtSign(ecTP)}</span>
             </td>
           );
         })()}
@@ -753,7 +739,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
           const totalDiff = sumEc - sumGross;
           return (
             <td className="col-total" style={{ color: sc2(totalDiff, 0) }}>
-              {totalDiff > 0 ? "+" : ""}{totalDiff}
+              {fmtSign(totalDiff)}
             </td>
           );
         })()}
@@ -846,7 +832,7 @@ function ByCourseView({ data, search, sort, isAnalysis }: {
           </thead>
           <tbody>
             {list.map((c, i) => (
-              <ByCourseRow key={c.course + i} course={c} idx={i} data={data}
+              <ByCourseRow key={c.course + i} course={c} data={data}
                 isAnalysis={isAnalysis} openScorecard={setOpenScorecardId} openScorecardId={openScorecardId} />
             ))}
           </tbody>
@@ -883,7 +869,7 @@ function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, ac
             {ecList.map(ex => {
               const hs = holeStats[ex.teeKey];
               const tp = ex.toPar;
-              const tpStr = tp == null ? "" : (tp > 0 ? `+${tp}` : String(tp));
+              const tpStr = tp == null ? "" : (fmtSign(tp));
               const tpCol = tp == null ? "" : (tp > 0 ? SC.danger : tp < 0 ? SC.good : SC.muted);
               return (
                 <tr key={ex.teeKey} className="pointer" onClick={() => onSelectTee(ex.teeKey)}>
@@ -1023,17 +1009,10 @@ function CoursePerformanceSection({ rounds }: { rounds: RoundData[] }) {
     const sdArr = allNorm.map(r => r.sd).filter((x): x is number => x != null && !isNaN(x));
     const stbArr = allNorm.map(r => r.stb).filter((x): x is number => x != null && !isNaN(x));
 
-    const avg = (a: number[]) => a.length ? a.reduce((s, v) => s + v, 0) / a.length : null;
-    const min2 = (a: number[]) => a.length ? Math.min(...a) : null;
-    const max2 = (a: number[]) => a.length ? Math.max(...a) : null;
-
     // Trend: linear regression on SD
     let trendLabel = "➡️ Estável", trendCls = "trend-flat";
     if (sdArr.length >= 3) {
-      const n = sdArr.length;
-      let sx = 0, sy = 0, sxy = 0, sx2 = 0;
-      for (let i = 0; i < n; i++) { sx += i; sy += sdArr[i]; sxy += i * sdArr[i]; sx2 += i * i; }
-      const slope = (n * sxy - sx * sy) / (n * sx2 - sx * sx);
+      const slope = linearSlope(sdArr)!;
       if (slope < -0.3) { trendLabel = "📈 A melhorar"; trendCls = "trend-up"; }
       else if (slope > 0.3) { trendLabel = "📉 A piorar"; trendCls = "trend-down"; }
     }
@@ -1053,16 +1032,16 @@ function CoursePerformanceSection({ rounds }: { rounds: RoundData[] }) {
     const grossArr18 = allNorm.filter(r => r.gross != null && r.par != null);
     const conclusion: React.ReactNode[] = [];
     if (grossArr18.length >= 2) {
-      const avgG = avg(grossArr18.map(r => r.gross!))!;
-      const avgP = avg(grossArr18.map(r => r.par!))!;
+      const avgG = meanArr(grossArr18.map(r => r.gross!))!;
+      const avgP = meanArr(grossArr18.map(r => r.par!))!;
       const diff = avgG - avgP;
-      const bestG = min2(grossArr18.map(r => r.gross!))!;
+      const bestG = minArr(grossArr18.map(r => r.gross!))!;
       const bestP = grossArr18.reduce((a, r) => r.gross! < a.gross! ? r : a).par;
-      conclusion.push(<span key="avg">Em média fazes <b>{avgG.toFixed(0)} pancadas</b> neste campo (<b>{diff >= 0 ? "+" : ""}{diff.toFixed(0)} vs par</b>). </span>);
+      conclusion.push(<span key="avg">Em média fazes <b>{avgG.toFixed(0)} pancadas</b> neste campo (<b>{fmtSign(diff, 0)} vs par</b>). </span>);
       conclusion.push(<span key="best">O teu melhor resultado foi <b>{bestG}</b> (par {bestP}). </span>);
     }
     if (stbArr.length >= 2) {
-      const avgStb = avg(stbArr)!;
+      const avgStb = meanArr(stbArr)!;
       if (avgStb >= 36) conclusion.push(<span key="stb">A tua média Stableford de <b>{avgStb.toFixed(0)}</b> mostra que jogas <b className="c-par-ok">consistentemente bem</b> aqui. </span>);
       else if (avgStb >= 30) conclusion.push(<span key="stb">A tua média Stableford de <b>{avgStb.toFixed(0)}</b> mostra desempenho <b>sólido</b>. </span>);
       else conclusion.push(<span key="stb">A tua média Stableford de <b>{avgStb.toFixed(0)}</b> sugere <b className="c-eagle">espaço para melhorar</b> neste campo. </span>);
@@ -1070,16 +1049,16 @@ function CoursePerformanceSection({ rounds }: { rounds: RoundData[] }) {
     if (trendCls === "trend-up") conclusion.push(<span key="trend">A tendência é <b className="c-par-ok">positiva</b> — estás a melhorar neste campo. </span>);
     else if (trendCls === "trend-down") conclusion.push(<span key="trend">A tendência é <b className="c-birdie">negativa</b> — os resultados recentes pioraram. </span>);
     if (teeArr.length > 1) {
-      const bestTee = teeArr.reduce((a, b) => (avg(b.stbs) ?? 0) > (avg(a.stbs) ?? 0) ? b : a);
-      if (bestTee.stbs.length >= 2) conclusion.push(<span key="tee">Os tees <b>{bestTee.tee}</b> são onde tens melhores resultados (Stb {avg(bestTee.stbs)!.toFixed(0)}). </span>);
+      const bestTee = teeArr.reduce((a, b) => (meanArr(b.stbs) ?? 0) > (meanArr(a.stbs) ?? 0) ? b : a);
+      if (bestTee.stbs.length >= 2) conclusion.push(<span key="tee">Os tees <b>{bestTee.tee}</b> são onde tens melhores resultados (Stb {meanArr(bestTee.stbs)!.toFixed(0)}). </span>);
     }
 
     return {
       has9: r9.length > 0, r18Count: r18.length, r9Count: r9.length,
       totalRounds: allNorm.length,
       sdArr, stbArr,
-      avgSd: avg(sdArr), minSd: min2(sdArr), maxSd: max2(sdArr),
-      avgStb: avg(stbArr), maxStb: max2(stbArr),
+      avgSd: meanArr(sdArr), minSd: minArr(sdArr), maxSd: maxArr(sdArr),
+      avgStb: meanArr(stbArr), maxStb: maxArr(stbArr),
       trendLabel, trendCls,
       conclusion,
     };
@@ -1159,6 +1138,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
   const hc = stats.holeCount;
   const is9 = hc === 9;
   const fe = is9 ? hc : 9;
+  const parArr = stats.holes.slice(0, hc).map(x => x.par ?? 0);
 
   const cs: React.CSSProperties = { padding: "4px 6px", textAlign: "center", fontSize: 11, borderBottom: "1px solid var(--bg-hover)" };
   const colL: React.CSSProperties = { ...cs, textAlign: "left", paddingLeft: 8, borderRight: "2px solid var(--border-light)", whiteSpace: "nowrap", minWidth: 70 };
@@ -1367,13 +1347,13 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                   {stats.holes.slice(0, hc).map((h, i) => (
                     <React.Fragment key={i}>
                       <td style={{ ...cs, borderBottom: "2px solid var(--border)" }}>{h.par ?? ""}</td>
- {i === fe - 1 && !is9 && <td className="fw-700" style={{ ...colOut, borderBottom: "2px solid var(--border)" }}>{sumArr(stats.holes.slice(0, fe).map(x => x.par ?? 0), 0, fe)}</td>}
+ {i === fe - 1 && !is9 && <td className="fw-700" style={{ ...colOut, borderBottom: "2px solid var(--border)" }}>{sumArr(parArr, 0, fe)}</td>}
                     </React.Fragment>
                   ))}
  <td className="fw-700" style={{ ...(is9 ? colTot : colIn), borderBottom: "2px solid var(--border)" }}>
-                    {is9 ? sumArr(stats.holes.slice(0, hc).map(x => x.par ?? 0), 0, hc) : sumArr(stats.holes.slice(0, hc).map(x => x.par ?? 0), 9, hc)}
+                    {is9 ? sumArr(parArr, 0, hc) : sumArr(parArr, 9, hc)}
                   </td>
-                  {!is9 && <td style={{ ...colTot, borderBottom: "2px solid var(--border)" }}>{sumArr(stats.holes.slice(0, hc).map(x => x.par ?? 0), 0, hc)}</td>}
+                  {!is9 && <td style={{ ...colTot, borderBottom: "2px solid var(--border)" }}>{sumArr(parArr, 0, hc)}</td>}
                 </tr>
                 {/* Avg row */}
                 <tr>
@@ -1592,7 +1572,7 @@ function HistogramCard({ rounds, period, setPeriod }: {
       if (count > maxCount) maxCount = count;
       return { ...d, count };
     });
-    const avg = diffs.length ? (diffs.reduce((a, b) => a + b, 0) / diffs.length) : 0;
+    const avg = meanArr(diffs) ?? 0;
     const sorted = [...diffs].sort((a, b) => a - b);
     const median = sorted.length % 2 === 0
       ? (sorted[sorted.length / 2 - 1] + sorted[sorted.length / 2]) / 2
@@ -1662,14 +1642,14 @@ function TrajectoryCard({ rounds, period, setPeriod }: {
             <div className="muted fs-10">ÚLTIMAS 5</div>
             <div className="kpi-value">{stats.last5}</div>
  <div className="fw-600 fs-11" style={{ color: sc3m(stats.diff5, 1, 1) }}>
-              {stats.diff5 > 0 ? "+" : ""}{stats.diff5.toFixed(1)}
+              {fmtSign(stats.diff5, 1)}
             </div>
           </div>
           <div className="bg-detail br-lg jog-cross-pad">
             <div className="muted fs-10">ÚLTIMAS 10</div>
             <div className="kpi-value">{stats.last10}</div>
  <div className="fw-600 fs-11" style={{ color: sc3m(stats.diff10, 1, 1) }}>
-              {stats.diff10 > 0 ? "+" : ""}{stats.diff10.toFixed(1)}
+              {fmtSign(stats.diff10, 1)}
             </div>
           </div>
           <div className="bg-detail br-lg jog-cross-pad">
@@ -2210,7 +2190,7 @@ function CommonCourses({ players, currentFed, escName }: {
                           return (
                             <div key={ri} style={{ padding: "3px 8px", borderRadius: "var(--radius)", fontSize: 11, background: isBest ? "var(--bg-success-strong)" : "var(--bg-card)", border: `1px solid ${isBest ? "var(--border-best)" : "var(--border-light)"}`, display: "flex", gap: 6, alignItems: "center" }}>
                               <span className="c-text-3">{rd.date || "–"}</span>
-                              <span className="fw-700">{rd.gross}{rd.par ? <span className={`score-delta ${(rd.gross - rd.par) > 0 ? "pos" : (rd.gross - rd.par) < 0 ? "neg" : ""} fs-9`} style={{ marginLeft: 2 }}>{(rd.gross - rd.par) > 0 ? "+" : ""}{rd.gross - rd.par}</span> : null}</span>
+                              <span className="fw-700">{rd.gross}{rd.par ? <span className={`score-delta ${(rd.gross - rd.par) > 0 ? "pos" : (rd.gross - rd.par) < 0 ? "neg" : ""} fs-9`} style={{ marginLeft: 2 }}>{fmtSign(rd.gross - rd.par)}</span> : null}</span>
                               {rd.sd != null && <span className="c-text-3">SD {rd.sd}</span>}
                               {isBest && <span>★</span>}
                             </div>
@@ -2393,7 +2373,7 @@ function CompScoreRow({ label, labelBg, labelFg, gross, par, hc, is9, frontEnd, 
   const toParSpan = (g: number, p: number) => {
     const tp = g - p;
     const cls = toParClass(tp);
-    return <span className={`sc-topar ${cls}`}>{tp > 0 ? "+" : ""}{tp}</span>;
+    return <span className={`sc-topar ${cls}`}>{fmtSign(tp)}</span>;
   };
 
   const totalG = sumArr(gross, 0, hc);
@@ -2430,7 +2410,7 @@ function CompScoreRow({ label, labelBg, labelFg, gross, par, hc, is9, frontEnd, 
       {!is9 && (
         <td style={colTot}>
           {totalG}
-          {tp != null && <span className={`sc-topar ${toParClass(tp)}`}>{tp > 0 ? "+" : ""}{tp === 0 ? "E" : tp}</span>}
+          {tp != null && <span className={`sc-topar ${toParClass(tp)}`}>{fmtToPar(tp, "")}</span>}
         </td>
       )}
     </tr>
@@ -2451,7 +2431,7 @@ function CompDeltaRow({ first, last, hc, is9, frontEnd, backStart }: {
   const fmtDelta = (d: number | null) => {
     if (d == null) return { text: "", color: "var(--text-muted)", weight: 400 as const };
     if (d === 0) return { text: "=", color: "var(--text-muted)", weight: 400 as const };
-    return { text: d > 0 ? `+${d}` : String(d), color: sc2(d, 0), weight: 600 as const };
+    return { text: fmtSign(d), color: sc2(d, 0), weight: 600 as const };
   };
 
   return (
@@ -2700,6 +2680,7 @@ function ByTournamentView({ data, search }: { data: PlayerPageData; search: stri
               const end = it.rounds[it.rounds.length - 1]?.date || "";
               const dateStr = start && end && start !== end ? `${start} → ${end}` : (end || start);
               const isOpen = openIdx === idx;
+              const sortedRounds = isOpen ? it.rounds.slice().sort((a, b) => a.dateSort - b.dateSort) : [];
               return (
                 <React.Fragment key={idx}>
                   <tr>
@@ -2726,21 +2707,20 @@ function ByTournamentView({ data, search }: { data: PlayerPageData; search: stri
                               </tr>
                             </thead>
                             <tbody>
-                              {it.rounds.slice().sort((a, b) => a.dateSort - b.dateSort).map((r, j) => {
+                              {sortedRounds.map((r, j) => {
                                 return (
                                   <TournRoundRow key={r.scoreId} r={r} idx={j} data={data} />
                                 );
                               })}
                               {/* Total row */}
                               {(() => {
-                                const sorted = it.rounds.slice().sort((a, b) => a.dateSort - b.dateSort);
-                                const withGross = sorted.filter(r => r.gross != null);
+                                const withGross = sortedRounds.filter(r => r.gross != null);
                                 if (withGross.length < 2) return null;
                                 const totalGross = withGross.reduce((a, r) => a + Number(r.gross), 0);
-                                const totalStb = sorted.reduce((a, r) => a + (r.stb ?? 0), 0);
-                                const totalPar = sorted.reduce((a, r) => a + (Number(r.par) || 0), 0);
+                                const totalStb = sortedRounds.reduce((a, r) => a + (r.stb ?? 0), 0);
+                                const totalPar = sortedRounds.reduce((a, r) => a + (Number(r.par) || 0), 0);
                                 const toPar = totalPar ? totalGross - totalPar : null;
-                                const toParStr = toPar != null ? (toPar > 0 ? `+${toPar}` : toPar === 0 ? "E" : String(toPar)) : "";
+                                const toParStr = fmtToPar(toPar, "");
                                 const toParCls = toPar != null ? (toPar > 0 ? "pos" : toPar < 0 ? "neg" : "") : "";
                                 return (
                                   <tr className="bg-detail fw-700 bt-heavy">
@@ -2755,7 +2735,7 @@ function ByTournamentView({ data, search }: { data: PlayerPageData; search: stri
                           </table>
                           {/* Comparative scorecard (all rounds side by side) */}
                           <TournamentComparison
-                            rounds={it.rounds.slice().sort((a, b) => a.dateSort - b.dateSort)}
+                            rounds={sortedRounds}
                             holesData={data.HOLES}
                           />
                         </div>
@@ -2832,7 +2812,6 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
           {selected.dob && <span className="p p-birth">{selected.dob.slice(0, 4)}</span>}
           {selected.escalao && <span className={`p p-${escCls(meta?.escalao || selected.escalao)}`}>{meta?.escalao || selected.escalao}</span>}
           {(meta?.club || clubLong(selected)) && <span className="p p-club">{meta?.club || clubLong(selected)}</span>}
-          {selected.region && <span className="p p-outline" style={{ display: "none" }}>{selected.region}</span>}
           {selected.tags?.filter(t => t !== "no-priority").map(t => (
             <span key={t} className="p p-outline">{t}</span>
           ))}
@@ -2900,7 +2879,7 @@ export default function JogadoresPage({ players, courses }: Props) {
       }
       internalNav.current = false;
     }
-  }, [urlFed]);
+  }, [urlFed, players]);
 
   /* Helper: select player and update URL */
   const selectPlayer = (fed: string | null) => {
@@ -2914,9 +2893,11 @@ export default function JogadoresPage({ players, courses }: Props) {
   };
 
   // Populate course key map for course links
-  if (courses?.length && _courseKeyMap.size === 0) {
-    _courseKeyMap = buildCourseKeyMap(courses);
-  }
+  useMemo(() => {
+    if (courses?.length) {
+      _courseKeyMap = buildCourseKeyMap(courses);
+    }
+  }, [courses]);
 
   // Reset meta when player changes
   useEffect(() => { setPlayerMeta(null); }, [selectedFed]);

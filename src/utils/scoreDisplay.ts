@@ -128,15 +128,3 @@ export { C as SC };
 export function toParClass(tp: number): string {
   return tp > 0 ? "sc-topar-pos" : tp < 0 ? "sc-topar-neg" : "sc-topar-zero";
 }
-
-/** Classe CSS para sc-dot compact (TorneioPage): sc-eagle, sc-birdie, sc-par, sc-bogey, sc-dbogey, sc-worse */
-export function scoreClassDot(score: number | null, par: number): string {
-  if (score == null) return "";
-  const diff = score - par;
-  if (diff <= -2) return "sc-eagle";
-  if (diff === -1) return "sc-birdie";
-  if (diff === 0) return "sc-par";
-  if (diff === 1) return "sc-bogey";
-  if (diff === 2) return "sc-dbogey";
-  return "sc-worse";
-}

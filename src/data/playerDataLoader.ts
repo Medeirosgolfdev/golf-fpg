@@ -46,7 +46,7 @@ export interface HoleScores {
   hc: number;
 }
 
-export interface EclecticHole {
+interface EclecticHole {
   h: number;
   best: number | null;
   par: number | null;
@@ -202,12 +202,6 @@ export async function loadPlayerData(fedId: string): Promise<PlayerPageData> {
   promise.catch(() => _playerCache.delete(fedId));
 
   return promise;
-}
-
-/** Invalidate cache for a specific player (useful after data refresh) */
-export function invalidatePlayerCache(fedId?: string): void {
-  if (fedId) _playerCache.delete(fedId);
-  else _playerCache.clear();
 }
 
 async function _loadPlayerDataImpl(fedId: string): Promise<PlayerPageData> {

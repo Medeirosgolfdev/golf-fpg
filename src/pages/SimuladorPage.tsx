@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from "react";
 import type { Course, Tee, Hole, SexFilter } from "../data/types";
 import TeeBadge from "../ui/TeeBadge";
-import { getTeeHex, textOnColor } from "../utils/teeColors";
+import { textOnColor } from "../utils/teeColors";
 import { sortTees, filterTees, teeHexFromTee as teeHex } from "../utils/teeUtils";
 import { fmt, fmtCR, fmtSD, norm, titleCase } from "../utils/format";
 import { calcSD, calcScore, calcCourseHcp, calcPlayingHcp } from "../utils/whsCalc";

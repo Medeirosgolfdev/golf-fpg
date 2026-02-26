@@ -9,7 +9,7 @@ import type { Tee, SexFilter } from "../data/types";
 import { getTeeHex } from "./teeColors";
 
 /** Rank por sexo para ordenação: M primeiro, F segundo, outros último */
-export function sexRank(s: string): number {
+function sexRank(s: string): number {
   if (s === "M") return 0;
   if (s === "F") return 1;
   return 2;

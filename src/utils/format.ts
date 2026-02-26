@@ -93,3 +93,9 @@ export function fmtSD(sd: number | null | undefined, placeholder = "—"): strin
   if (sd == null || !Number.isFinite(sd)) return placeholder;
   return sd >= 0 ? `+${sd.toFixed(1)}` : sd.toFixed(1);
 }
+
+/** Número com sinal explícito: "+5", "0", "-3". Com decimais: fmtSign(1.5, 1) → "+1.5" */
+export function fmtSign(n: number, decimals?: number): string {
+  const s = decimals != null ? n.toFixed(decimals) : String(n);
+  return n > 0 ? `+${s}` : s;
+}

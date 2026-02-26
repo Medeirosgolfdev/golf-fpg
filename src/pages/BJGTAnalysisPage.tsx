@@ -16,7 +16,8 @@ import {
   type EclecticEntry,
 } from "../data/playerDataLoader";
 import { usePlayerData } from "../data/usePlayerData";
-import { norm, fmtToPar, firstName } from "../utils/format";
+import { norm, fmtToPar, firstName, fmtSign } from "../utils/format";
+import { linearSlopeXY } from "../utils/mathUtils";
 import { scClass, toParClass, sc2, sc2w, sc3, sc3m, diagLevel, scDark, SC } from "../utils/scoreDisplay";
 import { isCalUnlocked } from "../utils/authConstants";
 import PasswordGate from "../ui/PasswordGate";
@@ -454,13 +455,8 @@ function getTrend(p) {
     }
   }
   if (pts.length < 2) return null;
-  // Linear regression slope
-  const n = pts.length;
-  const sx = pts.reduce((a, p) => a + p.x, 0);
-  const sy = pts.reduce((a, p) => a + p.y, 0);
-  const sxy = pts.reduce((a, p) => a + p.x * p.y, 0);
-  const sxx = pts.reduce((a, p) => a + p.x * p.x, 0);
-  const slope = (n * sxy - sx * sy) / (n * sxx - sx * sx);
+  const slope = linearSlopeXY(pts);
+  if (slope == null) return null;
   if (slope <= -1.5) return "up2";
   if (slope < -0.3) return "up";
   if (slope >= 1.5) return "down2";
@@ -589,7 +585,7 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
             <div key={t.id} className="tourn-kpi">
               <div className="tourn-kpi-lbl">{t.short}</div>
               <div className="tourn-kpi-val" style={{ fontSize: 16, color: res.tp <= 0 ? "var(--color-good-dark)" : res.tp <= 20 ? "var(--color-warn-dark)" : "var(--color-danger-dark)" }}>
-                {res.tp > 0 ? "+" : ""}{res.tp}
+                {fmtSign(res.tp)}
               </div>
               <div className="tourn-kpi-sub">#{res.p} · {res.rd.join("-")}</div>
             </div>
@@ -700,7 +696,7 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
                       }
                       const ti = fieldAvg != null ? zTier(playerAvg, { m: fieldAvg, s: fieldStd }) : null;
                       const st = ti ? TIER[ti] : {};
-                      const tpStr = (res.tp > 0 ? "+" : "") + res.tp;
+                      const tpStr = fmtSign(res.tp);
 
                       // vs Manuel delta
                       let vsM: number | null = null;
@@ -712,7 +708,7 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
                         <td key={t.id} className="ta-center" style={{ background: st.bg || "transparent", padding: "5px 4px" }}>
                           <div className="fw-700 fs-13" style={{ color: st.c || "var(--text-3)" }}>{tpStr}</div>
                           <div className="fs-10 fw-600 c-text-3">#{res.p}</div>
-                          {vsM != null && <div className="fs-10 fw-600" style={{ color: sc3m(vsM, 0, 0) }}>{vsM > 0 ? "+" : ""}{vsM}</div>}
+                          {vsM != null && <div className="fs-10 fw-600" style={{ color: sc3m(vsM, 0, 0) }}>{fmtSign(vsM)}</div>}
                         </td>
                       );
                     })}
@@ -745,7 +741,7 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
                     {vsOn && (
                       <td className="ta-center">
                         {isM ? <span className="fs-10 c-border">—</span> :
-                        vsAvg != null ? <span className="fs-12 fw-700" style={{ color: sc3m(vsAvg, 0, 0) }}>{vsAvg > 0 ? "+" : ""}{vsAvg}</span> :
+                        vsAvg != null ? <span className="fs-12 fw-700" style={{ color: sc3m(vsAvg, 0, 0) }}>{fmtSign(vsAvg)}</span> :
                         <span className="fs-10 c-border">—</span>}
                       </td>
                     )}
@@ -789,7 +785,7 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
   /* ── Sub-total cell with ±par annotation ── */
   const SubCell = ({ gross, parVal, cls }: { gross: number; parVal: number; cls: string }) => {
     const tp = gross - parVal;
-    return <td className={`${cls} fw-700`}>{gross}<span className={`sc-topar ${toParClass(tp)}`}>{tp > 0 ? "+" : ""}{tp}</span></td>;
+    return <td className={`${cls} fw-700`}>{gross}<span className={`sc-topar ${toParClass(tp)}`}>{fmtSign(tp)}</span></td>;
   };
 
   /* ── Shared table header ── */
@@ -840,7 +836,7 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
         const col = diff <= -0.5 ? "var(--color-good)" : diff >= 0.5 ? "var(--color-danger)" : "var(--text-muted)";
         return (
           <React.Fragment key={i}>
-            <td className="fs-10 fw-600" style={{ color: col }}>{diff > 0 ? "+" : ""}{diff.toFixed(1)}</td>
+            <td className="fs-10 fw-600" style={{ color: col }}>{fmtSign(diff, 1)}</td>
             {i === 8 && <td className="col-out" />}
           </React.Fragment>
         );
@@ -1743,7 +1739,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                 {p.flag} {firstName(p.n)}
               </div>
               <div className="course-item-meta" style={{fontVariantNumeric:"tabular-nums"}}>
-                {p.gross} ({p.tp > 0 ? `+${p.tp}` : p.tp === 0 ? "E" : p.tp})
+                {p.gross} ({fmtToPar(p.tp)})
               </div>
             </div>
           )) : FIELD_2025.leaderboard.map(p => (
@@ -1754,7 +1750,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                 {p.country} {firstName(p.name)}
               </div>
               <div className="course-item-meta">
-                {p.rounds.join("-")} = {p.total} ({p.result > 0 ? `+${p.result}` : p.result})
+                {p.rounds.join("-")} = {p.total} ({fmtSign(p.result)})
               </div>
             </button>
           ))}
@@ -1896,7 +1892,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                   const diff = avg - VP26_PAR[i];
                   return (
                     <React.Fragment key={i}>
-                      <td className="fs-10 fw-600" style={{color: diff > 0.7 ? SC.danger : diff < 0.2 ? SC.good : "var(--text-muted)"}}>{diff > 0 ? `+${diff.toFixed(1)}` : diff.toFixed(1)}</td>
+                      <td className="fs-10 fw-600" style={{color: diff > 0.7 ? SC.danger : diff < 0.2 ? SC.good : "var(--text-muted)"}}>{fmtSign(diff, 1)}</td>
                       {i === 8 && <td className="col-out"></td>}
                     </React.Fragment>
                   );
@@ -1913,10 +1909,10 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                   <tr style={{background:"var(--bg-success-subtle)"}}>
                     <td className="row-label fw-700">🇵🇹 Manuel</td>
                     {m.s.slice(0,9).map((sc,i) => <td key={i}><span className={`sc-score ${scClass(sc, VP26_PAR[i])}`}>{sc}</span></td>)}
-                    <td className="col-out fw-700">{f9}<span className={`sc-topar ${toParClass(f9-VP26_PAR_F)}`}>{f9-VP26_PAR_F > 0 ? "+" : ""}{f9-VP26_PAR_F}</span></td>
+                    <td className="col-out fw-700">{f9}<span className={`sc-topar ${toParClass(f9-VP26_PAR_F)}`}>{fmtSign(f9-VP26_PAR_F)}</span></td>
                     {m.s.slice(9).map((sc,i) => <td key={i+9}><span className={`sc-score ${scClass(sc, VP26_PAR[9+i])}`}>{sc}</span></td>)}
-                    <td className="col-in fw-700">{b9}<span className={`sc-topar ${toParClass(b9-VP26_PAR_B)}`}>{b9-VP26_PAR_B > 0 ? "+" : ""}{b9-VP26_PAR_B}</span></td>
-                    <td className="col-total fw-700">{m.gross}<span className={`sc-topar ${toParClass(m.gross-VP26_PAR_T)}`}>{m.gross-VP26_PAR_T > 0 ? "+" : ""}{m.gross-VP26_PAR_T}</span></td>
+                    <td className="col-in fw-700">{b9}<span className={`sc-topar ${toParClass(b9-VP26_PAR_B)}`}>{fmtSign(b9-VP26_PAR_B)}</span></td>
+                    <td className="col-total fw-700">{m.gross}<span className={`sc-topar ${toParClass(m.gross-VP26_PAR_T)}`}>{fmtSign(m.gross-VP26_PAR_T)}</span></td>
                   </tr>
                 );
               })()}
@@ -2225,7 +2221,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     opacity: 0.7
                   }} />
                   <span className="bjgt-stat-abs">
-                    {vsPar > 0 ? `+${vsPar.toFixed(2)}` : vsPar.toFixed(2)}
+                    {fmtSign(vsPar, 2)}
                   </span>
                 </div>
                 <span className="fs-9 fw-700 c-blue" style={{ minWidth: 28 }}>T5:{h.t5.toFixed(1)}</span>
@@ -2546,7 +2542,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                       <span className="c-muted">{vals[vals.length - 1].label}</span>
                     </div>
  <div className="fw-700 mt-4 fs-10" style={{ color: sc3m(trend, 0.15, 0.15) }}>
-                      {fAvg.toFixed(2)} → {lAvg.toFixed(2)} ({trend > 0 ? "+" : ""}{trend.toFixed(2)})
+                      {fAvg.toFixed(2)} → {lAvg.toFixed(2)} ({fmtSign(trend, 2)})
                     </div>
                     {t5avg != null && (
                       <div className="fs-9 c-muted">T5 BJGT: {t5avg.toFixed(2)}</div>
@@ -2723,13 +2719,13 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                   <div className="conclusion-box bg-info bc-info">
                     <div className="caConcText c-dark-navy-11">
                       {Math.abs(avgF9Gap) < 1
-                        ? <>📊 Front e Back 9 equilibrados (gap médio: {avgF9Gap > 0 ? "+" : ""}{avgF9Gap.toFixed(1)}). Boa gestão de energia!</>
+                        ? <>📊 Front e Back 9 equilibrados (gap médio: {fmtSign(avgF9Gap, 1)}). Boa gestão de energia!</>
                         : avgF9Gap > 0
                           ? <>⚠️ O Back 9 custa em média <b>+{avgF9Gap.toFixed(1)}</b> pancadas. {recentGap < earlyGap - 0.5 ? "Mas está a melhorar!" : "Água, banana, e rotina de reset entre buracos."}</>
                           : <>💪 O Back 9 é mais forte (–{Math.abs(avgF9Gap).toFixed(1)})! Arranca mais concentrado e capitaliza no final.</>
                       }
                       {Math.abs(recentGap - earlyGap) > 1 && (
-                        <> Gap início: {earlyGap > 0 ? "+" : ""}{earlyGap.toFixed(1)} → recente: {recentGap > 0 ? "+" : ""}{recentGap.toFixed(1)}.
+                        <> Gap início: {fmtSign(earlyGap, 1)} → recente: {fmtSign(recentGap, 1)}.
                           {recentGap < earlyGap ? " 📉 A fechar o gap — bom sinal!" : " 📈 O gap está a abrir — cuidado com a fadiga."}
                         </>
                       )}
@@ -2948,14 +2944,14 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                 return (
                   <div key={i} className="bjgt-bar-cell">
  <div className="fw-600 fs-10" style={{ color: sc2w(m.first3Avg, 0.5) }}>
-                      {m.first3Avg > 0 ? "+" : ""}{m.first3Avg.toFixed(1)}
+                      {fmtSign(m.first3Avg, 1)}
                     </div>
  <div className="chart-bars-1 w-full" style={{ height: 40 }}>
                       <div style={{ flex: 1, height: `${f3h}%`, background: SC.warn, borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
                       <div style={{ flex: 1, height: `${l3h}%`, background: "var(--chart-5)", borderRadius: "var(--radius-xs)", opacity: 0.6, minHeight: 3 }} />
                     </div>
  <div className="fw-600 fs-10" style={{ color: m.last3Avg <= 0.5 ? SC.good : "var(--chart-5)" }}>
-                      {m.last3Avg > 0 ? "+" : ""}{m.last3Avg.toFixed(1)}
+                      {fmtSign(m.last3Avg, 1)}
                     </div>
  <div className="c-muted fs-10" >{m.label}</div>
                   </div>
@@ -2980,7 +2976,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                       ? <>⚠️ Perde mais nos primeiros 3 buracos (+{avgF.toFixed(1)} vs par). Pode ser nervos — aquecer bem e ter rotina pré-jogo.</>
                       : worse === "fecho" && avgL > 1.5
                         ? <>⚠️ Perde mais nos últimos 3 buracos (+{avgL.toFixed(1)} vs par). Fadiga ou perda de foco — hidratação e snacks no B9.</>
-                        : <>✅ Bom equilíbrio entre arranque ({avgF > 0 ? "+" : ""}{avgF.toFixed(1)}) e fecho ({avgL > 0 ? "+" : ""}{avgL.toFixed(1)}). Gestão de volta sólida.</>
+                        : <>✅ Bom equilíbrio entre arranque ({fmtSign(avgF, 1)}) e fecho ({fmtSign(avgL, 1)}). Gestão de volta sólida.</>
                     }
                   </div>
                 </div>
@@ -3120,8 +3116,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                     <td className="c-birdie">{m.dblRate.toFixed(0)}</td>
                     <td style={{ color: m.bounceRate != null ? sc2w(m.bounceRate, 40, "desc") : SC.warn }}>{m.bounceRate != null ? `${m.bounceRate.toFixed(0)}%` : "–"}</td>
                     <td className="c-blue">{m.avgPobStreak.toFixed(1)}</td>
-                    <td style={{ color: sc2(m.first3Avg, 1.5) }}>{m.first3Avg > 0 ? "+" : ""}{m.first3Avg.toFixed(1)}</td>
-                    <td style={{ color: sc2(m.last3Avg, 1.5) }}>{m.last3Avg > 0 ? "+" : ""}{m.last3Avg.toFixed(1)}</td>
+                    <td style={{ color: sc2(m.first3Avg, 1.5) }}>{fmtSign(m.first3Avg, 1)}</td>
+                    <td style={{ color: sc2(m.last3Avg, 1.5) }}>{fmtSign(m.last3Avg, 1)}</td>
                     {filteredCoach.some(x => x.avgSD != null) && <td className="fw-600">{m.avgSD != null ? m.avgSD.toFixed(1) : "–"}</td>}
                   </tr>
                 ))}
@@ -3224,7 +3220,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
                   const fh = FIELD_2025.holes.find(x => x.h === h.h);
                   const d = fh ? h.vpAvg - fh.fAvg : 0;
                   const col = d < -0.2 ? SC.good : d <= 0.2 ? SC.muted : d <= 0.5 ? SC.warn : SC.danger;
- return <td key={h.h} className="ta-center fw-700 fs-10" style={{ color: col }}>{d > 0 ? `+${d.toFixed(1)}` : d.toFixed(1)}</td>;
+ return <td key={h.h} className="ta-center fw-700 fs-10" style={{ color: col }}>{fmtSign(d, 1)}</td>;
                 })}
                 <td className="bl-border"></td>
               </tr>
@@ -3728,21 +3724,6 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 /* ═══════════════════════════════════
    SUB-COMPONENTS
    ═══════════════════════════════════ */
-function Header() {
-  return (
-    <div className="tourn-header">
-      <div className="tourn-header-top">
-        <h1 className="tourn-title">🇪🇸 {TOURN.name}</h1>
-      </div>
-      <div className="tourn-header-info">
-        <span>📅 {TOURN.dates}</span>
-        <span>📍 {TOURN.location}</span>
-        <span>⛳ {TOURN.days} dias</span>
-        <span>🏷️ {PLAYER_NAME} · Sub-12</span>
-      </div>
-    </div>
-  );
-}
 
 function MiniBar({ d }: { d: { eagle: number; birdie: number; par: number; bogey: number; double: number; triple: number } }) {
   const tot = Object.values(d).reduce((a, b) => a + b, 0);

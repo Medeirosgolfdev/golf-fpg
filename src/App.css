@@ -197,7 +197,6 @@ html, body, #root {
 .h-xs { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); margin-bottom: 6px; }
 .h-sm { font-size: 12px; font-weight: 800; color: var(--text-dark); margin: 14px 0 8px; }
 .h-sm-warn { font-size: 12px; font-weight: 800; color: var(--color-warn-dark); margin-bottom: 4px; }
-.h-sm-sub { font-size: 11px; color: var(--text-3); margin-top: 2px; }
 .h-md { font-size: 14px; font-weight: 800; color: var(--text); margin-bottom: 10px; }
 .h-lg { font-size: 16px; font-weight: 800; color: var(--text); margin: 24px 0 8px; }
 
@@ -520,7 +519,6 @@ html, body, #root {
 .p-male { background: var(--badge-male); color: #fff; }
 .p-female { background: var(--badge-female); color: #fff; }
 .p-muted { background: var(--bg-muted); color: var(--text-2); }
-.p-accent { background: var(--accent-light); color: var(--accent); }
 .p-birth { background: var(--badge-birth-bg); color: var(--badge-birth-text); }
 .p-club { background: var(--badge-club-bg); color: var(--badge-club-text); }
 
@@ -881,7 +879,6 @@ a.dateLink .tee-date { text-decoration: underline; text-underline-offset: 2px; }
 .an-hist-bar { height: 18px; border-radius: var(--radius-sm); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; min-width: 4%; transition: width 0.3s; }
 
 
-.cross-tab.active { background: var(--text-dark); color: #fff; border-color: var(--text-dark); }
 tr.cross-current { background: var(--bg-success); }
 .cross-current td:first-child { border-left: 3px solid var(--color-good); }
 
@@ -1047,7 +1044,6 @@ tr.cross-current { background: var(--bg-success); }
  .pa-controls { flex-direction: column; align-items: flex-start; }
 }
 
-.player-embed-loading,
 .player-embed-error {
  padding: 24px;
  text-align: center;
@@ -1358,14 +1354,6 @@ tr.cross-current { background: var(--bg-success); }
 }
 
 
-.sim-strip-calc-result b {
- font-family: 'JetBrains Mono', monospace;
- font-size: 16px;
- font-weight: 800;
- color: var(--accent);
-}
-
-
 /* Result cards above scorecard */
 .sim-results-cards {
  display: flex;
@@ -1559,13 +1547,8 @@ tr.cross-current { background: var(--bg-success); }
 .cat-badge-sub12 { background: var(--bg-danger); color: var(--color-danger-dark); }
 
 /* RivaisDashboard column patterns */
-.rivais-col-first { border-left: 3px solid var(--border) !important; }
-.rivais-col-total { border-left: 2px solid var(--border) !important; }
-.rivais-alt-bg { background: var(--bg-hover); }
-.rivais-sub-header th { padding: 3px 2px; text-align: center; font-size: 10px; }
 .rivais-link { color: #1a5c2a; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 2px; font-weight: 700; }
 .rivais-link:hover { color: #0d3a18; }
-.rivais-sep-bottom { border-bottom: 2px solid var(--text-muted); }
 .rivais-row-ref { border-bottom: 2px solid var(--color-info-alt) !important; }
 .rivais-row-ref .rivais-player-name { border-right-color: var(--color-info-alt); }
 
@@ -1780,10 +1763,6 @@ tr.cross-current { background: var(--bg-success); }
 /* Rivais table */
 
 .rivais-group-header { background: var(--bg-topbar); color: var(--text-inv); }
-.rivais-sub-header { background: var(--bg-topbar); color: var(--overlay-white-85); }
-.rivais-avg-row { background: var(--bg); }
-.rivais-avg-row th { font-size: 10px; font-weight: 600; color: var(--text-2); }
-
 .rivais-player-name { padding: 6px 8px; font-size: 12px; font-weight: 600; text-align: left; min-width: 170px; white-space: nowrap; border-right: 1px solid var(--border); }
 .rivais-flag { font-size: 13px; margin-right: 4px; }
 
@@ -1797,9 +1776,6 @@ tr.cross-current { background: var(--bg-success); }
 
 /* ─── Responsive additions ─── */
 @media (max-width: 768px) {
- .kpi-row { grid-template-columns: repeat(3, 1fr); }
- .diag-row { grid-template-columns: 1fr; }
- .filter-bar { gap: 4px; }
  .rivais-player-name { min-width: 130px; font-size: 11px; }
 }
 
@@ -1850,11 +1826,8 @@ tr.cross-current { background: var(--bg-success); }
 .c-text-3 { color: var(--text-3); }
 .c-muted  { color: var(--text-muted); }
 .c-danger { color: var(--color-danger); }
-.c-info  { color: var(--color-info); }
-
 /* ─── Display / Flex ─── */
 .d-flex { display: flex; }
-.d-grid { display: grid; }
 .flex-1 { flex: 1; }
 .flex-col { flex-direction: column; }
 .flex-wrap { flex-wrap: wrap; }
@@ -1931,7 +1904,6 @@ tr.cross-current { background: var(--bg-success); }
 .col-w180 { width: 180px; }
 .col-w220 { width: 220px; }
 .col-mw120 { min-width: 120px; }
-.col-mw130 { min-width: 130px; }
 .col-mw180 { min-width: 180px; }
 
 /* Percentage widths (JogadoresPage cross-tables) */
@@ -1974,11 +1946,8 @@ tr.cross-current { background: var(--bg-success); }
 .mt-10 { margin-top: 10px; }
 .mt-14 { margin-top: 14px; }
 .mt-20 { margin-top: 20px; }
-.ml-3 { margin-left: 3px; }
 .ml-4 { margin-left: 4px; }
 .ml-6 { margin-left: 6px; }
-.mx-auto { margin-left: auto; margin-right: auto; }
-
 /* ─── Opacity ─── */
 .op-4 { opacity: 0.4; }
 .op-6 { opacity: 0.6; }
@@ -1990,8 +1959,6 @@ tr.cross-current { background: var(--bg-success); }
 .p-16 { padding: 16px; }
 .p-24 { padding: 24px; }
 .p-40 { padding: 40px; }
-.p-2-6 { padding: 2px 6px; }
-
 /* ─── Cursor ─── */
 .pointer { cursor: pointer; }
 
@@ -2007,15 +1974,7 @@ tr.cross-current { background: var(--bg-success); }
 
 /* ─── Rivais Dashboard table cells ─── */
 .rivais-th { padding: 8px 5px; text-align: center; font-size: 11px; font-weight: 700; }
-.rivais-th-wide { padding: 7px 3px; text-align: center; font-size: 10px; font-weight: 700; width: 35px; }
-.rivais-th-avg { padding: 7px 3px; text-align: center; font-size: 10px; font-weight: 700; width: 42px; border-left: 2px solid var(--border); }
 .rivais-th-name { padding: 8px 8px; font-size: 11px; font-weight: 700; text-align: left; min-width: 170px; position: sticky; left: 0; background: var(--bg-topbar); z-index: 2; }
-.rivais-td-name { padding: 3px 8px; font-size: 10px; font-weight: 700; color: var(--text-2); text-align: left; position: sticky; left: 0; background: var(--bg); z-index: 2; border-right: 1px solid var(--border); white-space: nowrap; }
-.rivais-td-avg { padding: 2px 8px; font-size: 10px; font-weight: 600; color: var(--text-muted); text-align: left; position: sticky; left: 0; background: var(--bg-hover); z-index: 2; border-right: 1px solid var(--border); white-space: nowrap; font-style: italic; }
-.rivais-td { text-align: center; padding: 7px 3px; }
-.rivais-td-sep { text-align: center; padding: 5px 3px; border-left: 2px solid var(--border); }
-.rivais-border-mark { border-left: 4px solid var(--text); }
-
 /* ─── Simulador inputs ─── */
 .sim-input { width: 30px; text-align: center; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 3px 0; font: inherit; font-size: 12px; background: var(--bg-card); }
 .sim-input-sm { width: 26px; text-align: center; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 2px 0; font: inherit; font-size: 10px; background: var(--bg); color: var(--text-muted); }
@@ -2075,7 +2034,6 @@ tr.cross-current { background: var(--bg-success); }
 
 /* ─── Borders ─── */
 .bt-section { border-top: 1px solid var(--border); }
-.bl-heavy { border-left: 2px solid var(--border); }
 .bc-info { border-color: var(--border-info); }
 
 /* ─── Specific page patterns ─── */
@@ -2090,9 +2048,6 @@ tr.cross-current { background: var(--bg-success); }
 .cal-dot-indicator { position: absolute; bottom: 1px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; border-radius: 50%; }
 .cal-day-cell { font-size: 11px; cursor: pointer; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; margin: 1px auto; position: relative; transition: background 0.15s; }
 .cal-overlay { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); }
-.cal-overlay-inner { background: var(--bg-card); border-radius: var(--radius-xl); box-shadow: 0 20px 60px rgba(0,0,0,0.3); width: 90vw; max-width: 440px; max-height: 85vh; overflow-y: auto; }
-.cal-filter-btn { background: none; border: none; padding: 0 2px; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 2px; }
-.cal-filter-count { font-size: 10px; font-family: 'JetBrains Mono', monospace; opacity: 0.5; margin-left: 2px; }
 .cal-no-select { user-select: none; }
 .cal-day-num { font-size: 15px; width: 22px; text-align: center; }
 
@@ -2172,7 +2127,6 @@ tr.cross-current { background: var(--bg-success); }
 .flex-gap12-mb4 { display: flex; gap: 12px; margin-bottom: 4px; }
 .flex-gap8-fs10 { display: flex; gap: 8px; font-size: 10px; }
 .flex-center-gap6-mb2 { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; font-size: 10px; }
-.flex-center-gap6-mb10 { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; padding: 8px 12px; }
 .flex-center-gap12 { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .flex-spacebetween-fs9 { display: flex; justify-content: space-between; font-size: 10px; }
 .flex-jc-center-gap10 { display: flex; justify-content: center; gap: 10px; margin-top: 4px; font-size: 10px; }
@@ -2237,8 +2191,6 @@ tr.cross-current { background: var(--bg-success); }
 /* ─── Torneio extras ─── */
 
 /* ─── VP detail ─── */
-.vp-detail-bg { background: var(--bg-detail); border-radius: var(--radius-lg); padding: 8px 12px; border: 1px solid var(--border-light); }
-
 /* courseAnalysis accent variants */
 
 /* P6: Diagnostic icon semantic levels */
@@ -2544,29 +2496,18 @@ tr.cross-current { background: var(--bg-success); }
 .overflow-hidden { overflow: hidden; }
 .uppercase { text-transform: uppercase; }
 .underline { text-decoration: underline; }
-.no-border { border: none; }
 .round { border-radius: 50%; }
 .c-border { color: var(--border); }
 .bb-light { border-bottom: 1px solid var(--border-light); }
 .gap-8 { gap: 8px; }
 .gap-10 { gap: 10px; }
-.cursor-pointer { cursor: pointer; }
-.p-8 { padding: 8px; }
-.p-10 { padding: 10px; }
 .p-14 { padding: 14px; }
-.mt-16 { margin-top: 16px; }
 .mb-18 { margin-bottom: 18px; }
-.w-10 { width: 10px; }
-.h-10 { height: 10px; }
-.lh-16 { line-height: 1.6; }
-.gap-12 { gap: 12px; }
 .p-2-4 { padding: 2px 4px; }
-.p-4-12 { padding: 4px 12px; }
 .br-default { border-radius: var(--radius); }
 .br-sm { border-radius: var(--radius-sm); }
 .ai-baseline { align-items: baseline; }
 .c-white { color: #fff; }
-.c-inv { color: var(--text-inv); }
 .c-chart-2 { color: var(--chart-2); }
 .c-chart-6 { color: var(--chart-6); }
 .c-border-heavy { color: var(--border); }
@@ -2611,57 +2552,3 @@ tr.cross-current { background: var(--bg-success); }
  border-color: var(--text-dark);
 }
 
-/* ─── Rivais Table (section 3) ─── */
-.rivais-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-.rivais-table th {
- padding: 6px 4px;
- text-align: left;
- font-size: 10px;
- font-weight: 700;
- text-transform: uppercase;
- letter-spacing: 0.04em;
- color: var(--text-3);
- background: var(--bg);
- border-bottom: 2px solid var(--border);
-}
-.rivais-table td { padding: 6px 4px; border-bottom: 1px solid var(--border-light); }
-.rivais-table th.r, .rivais-table td.r { text-align: right; }
-
-/* ─── Highlight Card (section 4) ─── */
-.highlight-card {
- background: var(--bg-card);
- border: 1px solid var(--border-light);
- border-left: 4px solid var(--bg-topbar);
- border-radius: var(--radius-lg);
- padding: 12px 14px;
-}
-
-/* ─── BJGT Cards (section 4) ─── */
-.bjgt-card-wrap {
- border: 1px solid var(--border-light);
- border-radius: var(--radius-lg);
- padding: 8px;
-}
-.bjgt-card-box {
- border: 1px solid var(--border-light);
- border-radius: var(--radius-lg);
- padding: 8px;
- text-align: center;
-}
-
-/* ─── Filter Input/Select — compact variant for Rivais (section 5) ─── */
-.filter-input, .filter-select {
- padding: 5px 8px;
- border: 1px solid var(--border);
- border-radius: var(--radius);
- font-size: 11px;
- font-family: inherit;
- background: var(--bg-card);
- color: var(--text);
- transition: border-color 0.15s;
-}
-.filter-input:focus, .filter-select:focus {
- outline: none;
- border-color: var(--accent);
- box-shadow: 0 0 0 2px var(--accent-light);
-}
