@@ -10,6 +10,7 @@ import golfBallSvg from "./assets/golf-ball.svg";
 
 import { deepFixMojibake } from "./utils/fixEncoding";
 import { isCalUnlocked, CAL_UNLOCK_EVENT } from "./utils/authConstants";
+import type { MelhoriasJson } from "./data/melhoriasTypes";
 
 /* ── Lazy-loaded pages (code-split per route) ── */
 const CamposPage = lazy(() => import("./pages/CamposPage"));
@@ -21,8 +22,6 @@ const TorneioPage = lazy(() => import("./pages/TorneioPage"));
 const CompararPage = lazy(() => import("./pages/CompararPage"));
 
 type Tab = "campos" | "jogadores" | "comparar" | "simulador" | "calendario" | "bjgt" | "torneio";
-
-type MelhoriasJson = Record<string, Record<string, unknown>>;
 
 type Status =
   | { kind: "loading" }

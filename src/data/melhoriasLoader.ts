@@ -12,10 +12,10 @@
  */
 
 import type { Course, Tee, Hole, Ratings } from "./types";
+import type { MelhoriasJson } from "./melhoriasTypes";
 import { sumRange } from "../utils/format";
 
 type ScorecardEntry = Record<string, unknown>;
-type MelhoriasJson = Record<string, Record<string, unknown>>;
 
 /* â”€â”€ Helpers â”€â”€ */
 

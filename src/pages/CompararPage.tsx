@@ -18,6 +18,7 @@ import {
   loadPlayerData, type PlayerPageData, type RoundData,
   type HoleScores,
 } from "../data/playerDataLoader";
+import { loadPlayerStats, type PlayerStatsDb, type PlayerStats, daysSince } from "../data/playerStatsTypes";
 import { norm, fD, fD2, firstName, shortName } from "../utils/format";
 import { clubShort, hcpDisplay } from "../utils/playerUtils";
 import { deepFixMojibake } from "../utils/fixEncoding";
@@ -233,8 +234,23 @@ const pct = (v: number) => v.toFixed(0) + "%";
 
 /* ═══════════════════ Search + Chips ═══════════════════ */
 
-function PlayerSearch({ players, slots, onAdd, onRemove }: {
-  players: PlayersDb; slots: Slot[];
+/** Badge de forma recente */
+function FormBadge({ ps }: { ps?: PlayerStats }) {
+  if (!ps) return null;
+  if (ps.formAlert === "hot") return <span className="fs-10" title="Boa forma recente">🔥</span>;
+  if (ps.formAlert === "cold") return <span className="fs-10" title="Má forma recente">❄️</span>;
+  return null;
+}
+
+/** Seta de tendência HCP */
+function TrendArrow({ ps }: { ps?: PlayerStats }) {
+  if (!ps || ps.hcpTrend === "stable") return null;
+  if (ps.hcpTrend === "up") return <span className="fs-10" style={{ color: "var(--color-good)" }} title={`HCP ↓ ${ps.hcpDelta3m != null ? ps.hcpDelta3m : ""} (3m)`}>↗</span>;
+  return <span className="fs-10" style={{ color: "var(--color-danger)" }} title={`HCP ↑ ${ps.hcpDelta3m != null ? `+${ps.hcpDelta3m}` : ""} (3m)`}>↘</span>;
+}
+
+function PlayerSearch({ players, slots, statsDb, onAdd, onRemove }: {
+  players: PlayersDb; slots: Slot[]; statsDb: PlayerStatsDb;
   onAdd: (fed: string) => void; onRemove: (fed: string) => void;
 }) {
   const [q, setQ] = useState(""); const [open, setOpen] = useState(false);
@@ -262,12 +278,21 @@ function PlayerSearch({ players, slots, onAdd, onRemove }: {
             placeholder="Pesquisar jogador…" disabled={slots.length >= 4} />
           {open && results.length > 0 && (
             <div className="cmp-dropdown">
-              {results.map(p => (
-                <button key={p.fed} className="course-item" onClick={() => { onAdd(p.fed); setQ(""); setOpen(false); }}>
-                  <div className="course-item-name">{p.name}</div>
-                  <div className="course-item-meta">{clubShort(p)} · {p.escalao} · HCP {hcpDisplay(p.hcp)}</div>
-                </button>
-              ))}
+              {results.map(p => {
+                const ps = statsDb[p.fed];
+                return (
+                  <button key={p.fed} className="course-item" onClick={() => { onAdd(p.fed); setQ(""); setOpen(false); }}>
+                    <div className="course-item-name">
+                      {p.name} <FormBadge ps={ps} /> <TrendArrow ps={ps} />
+                    </div>
+                    <div className="course-item-meta">
+                      {clubShort(p)} · {p.escalao} · HCP {hcpDisplay(p.hcp)}
+                      {ps?.roundsLast12m != null && <span> · {ps.roundsLast12m} rondas 12m</span>}
+                      {ps?.avgSD8 != null && <span> · SD8: {ps.avgSD8.toFixed(1)}</span>}
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           )}
         </div>
@@ -275,18 +300,23 @@ function PlayerSearch({ players, slots, onAdd, onRemove }: {
       </div>
       {slots.length > 0 && (
         <div className="flex-wrap-gap8">
-          {slots.map((s, i) => (
-            <span key={s.fed} className="p" style={{
-              borderColor: COLORS[i], background: COLORS_LIGHT[i],
-              display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 14px", fontSize: 13, borderRadius: "var(--radius-pill)",
-            }}>
- <span className="round flex-shrink-0" style={{ width: 10, height: 10, background: COLORS[i] }} />
-              <b>{shortName(s.player.name)}</b>
-              <span className="muted fs-11">HCP {hcpDisplay(s.player.hcp)}</span>
-              {s.loading && <span className="fs-11">⏳</span>}
-              <button onClick={() => onRemove(s.fed)} className="cmp-remove-btn" title="Remover">✕</button>
-            </span>
-          ))}
+          {slots.map((s, i) => {
+            const ps = statsDb[s.fed];
+            return (
+              <span key={s.fed} className="p" style={{
+                borderColor: COLORS[i], background: COLORS_LIGHT[i],
+                display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 14px", fontSize: 13, borderRadius: "var(--radius-pill)",
+              }}>
+                <span className="round flex-shrink-0" style={{ width: 10, height: 10, background: COLORS[i] }} />
+                <b>{shortName(s.player.name)}</b>
+                <span className="muted fs-11">HCP {hcpDisplay(s.player.hcp)}</span>
+                <FormBadge ps={ps} />
+                <TrendArrow ps={ps} />
+                {s.loading && <span className="fs-11">⏳</span>}
+                <button onClick={() => onRemove(s.fed)} className="cmp-remove-btn" title="Remover">✕</button>
+              </span>
+            );
+          })}
         </div>
       )}
     </div>
@@ -376,23 +406,47 @@ function RadarChart({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats | null
 
 /* ═══════════════════ § 2 TABELA COMPARATIVA ═══════════════════ */
 
-function StatsTable({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats | null)[] }) {
+function StatsTable({ slots, allAgg, statsDb }: { slots: Slot[]; allAgg: (AggStats | null)[]; statsDb: PlayerStatsDb }) {
   const loaded = slots.map((s, i) => ({ s, agg: allAgg[i], i })).filter(x => x.agg);
   if (loaded.length < 2) return null;
 
-  type Row = { label: string; values: (string | null)[]; best?: "low" | "high"; emoji?: string };
+  type Row = { label: string; values: (string | null)[]; best?: "low" | "high"; emoji?: string; section?: string };
   const rows: Row[] = [];
   const val = (fn: (agg: AggStats | null) => string | null) =>
     loaded.map(x => fn(x.agg));
+  const pVal = (fn: (ps: PlayerStats | undefined) => string | null) =>
+    loaded.map(x => fn(statsDb[x.s.fed]));
 
-  rows.push({ label: "Rondas Torneio", emoji: "🏟️", values: val((a) => a ? String(a.nRounds) : null), best: "high" });
+  /* ── Secção: Actividade ── */
+  rows.push({ section: "Actividade", label: "Última ronda", emoji: "🕐", values: pVal(ps => {
+    const d = daysSince(ps);
+    if (d == null) return null;
+    if (d <= 1) return "Hoje";
+    return `${d} dias`;
+  }), best: "low" });
+  rows.push({ label: "Rondas 12m", emoji: "📅", values: pVal(ps => ps?.roundsLast12m != null ? String(ps.roundsLast12m) : null), best: "high" });
+  rows.push({ label: "Rondas 3m", emoji: "🗓️", values: pVal(ps => ps?.roundsLast3m != null ? String(ps.roundsLast3m) : null), best: "high" });
+  rows.push({ label: "Tendência HCP", emoji: "📉", values: pVal(ps => {
+    if (!ps) return null;
+    const arrow = ps.hcpTrend === "up" ? "↗ A melhorar" : ps.hcpTrend === "down" ? "↘ A subir" : "→ Estável";
+    return ps.hcpDelta3m != null ? `${arrow} (${ps.hcpDelta3m > 0 ? "+" : ""}${ps.hcpDelta3m})` : arrow;
+  }) });
+  rows.push({ label: "Forma", emoji: "🔥", values: pVal(ps => {
+    if (!ps?.formAlert) return "Normal";
+    return ps.formAlert === "hot" ? "🔥 Boa forma" : "❄️ Má forma";
+  }) });
+
+  /* ── Secção: Torneios ── */
+  rows.push({ section: "Torneios", label: "Rondas Torneio", emoji: "🏟️", values: val((a) => a ? String(a.nRounds) : null), best: "high" });
   rows.push({ label: "Melhor Gross", emoji: "🏆", values: val((a) => a?.bestGross != null ? String(a.bestGross) : null), best: "low" });
   rows.push({ label: "Gross Médio", emoji: "📊", values: val((a) => a?.avgGross != null ? a.avgGross.toFixed(0) : null), best: "low" });
   rows.push({ label: "SD Médio", emoji: "📈", values: val((a) => a?.avgSD != null ? a.avgSD.toFixed(1) : null), best: "low" });
   rows.push({ label: "SD Best 8/20", emoji: "🎖️", values: val((a) => a?.best8of20SD != null ? a.best8of20SD.toFixed(1) : null), best: "low" });
-  rows.push({ label: "SD Últimas 5", emoji: "🔥", values: val((a) => a?.last5AvgSD != null ? a.last5AvgSD.toFixed(1) : null), best: "low" });
-  rows.push({ label: "Melhor SD", emoji: "⭐", values: val((a) => a?.bestSD != null ? a.bestSD.toFixed(1) : null), best: "low" });
-  rows.push({ label: "Panc. s/ Par/Volta", emoji: "🎯", values: val((a) => a ? fD(a.totalStrokesOverPar) : null), best: "low" });
+  rows.push({ label: "SD Últimas 5", emoji: "⭐", values: val((a) => a?.last5AvgSD != null ? a.last5AvgSD.toFixed(1) : null), best: "low" });
+  rows.push({ label: "Melhor SD", emoji: "💎", values: val((a) => a?.bestSD != null ? a.bestSD.toFixed(1) : null), best: "low" });
+
+  /* ── Secção: Análise por buraco ── */
+  rows.push({ section: "Análise", label: "Panc. s/ Par/Volta", emoji: "🎯", values: val((a) => a ? fD(a.totalStrokesOverPar) : null), best: "low" });
   rows.push({ label: "Par ou Melhor", emoji: "⛳", values: val((a) => a ? pct(a.parOrBetterPct) : null), best: "high" });
   rows.push({ label: "Dbl+ ou Pior", emoji: "⚠️", values: val((a) => a ? pct(a.dblOrWorsePct) : null), best: "low" });
   rows.push({ label: "Par 3 vs Par", emoji: "🟢", values: val((a) => a?.byPar[3] ? fD2(a.byPar[3].avgVsPar) : null), best: "low" });
@@ -424,25 +478,34 @@ function StatsTable({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats | null
           </thead>
           <tbody>
             {rows.map((r, ri) => (
-              <tr key={ri}>
-                <td className="fw-600 fs-12">
-                  <span style={{ marginRight: 6 }}>{r.emoji}</span>{r.label}
-                </td>
-                {loaded.map((x, ci) => {
-                  const v = r.values[ci];
-                  const isBest = bestIdx[ri] === ci;
-                  return (
-                    <td key={ci} className="r" style={{
-                      fontWeight: isBest ? 800 : 400,
-                      color: isBest ? COLORS[x.i] : undefined,
-                      fontFamily: "'JetBrains Mono', monospace",
-                      background: isBest ? COLORS_LIGHT[x.i] : undefined,
-                    }}>
-                      {v ?? "–"}
+              <React.Fragment key={ri}>
+                {r.section && (
+                  <tr>
+                    <td colSpan={loaded.length + 1} className="fw-700 fs-11 c-text-3" style={{ paddingTop: ri > 0 ? 12 : 6, paddingBottom: 2, borderBottom: "1px solid var(--border-light)", letterSpacing: "0.05em", textTransform: "uppercase" }}>
+                      {r.section}
                     </td>
-                  );
-                })}
-              </tr>
+                  </tr>
+                )}
+                <tr>
+                  <td className="fw-600 fs-12">
+                    <span style={{ marginRight: 6 }}>{r.emoji}</span>{r.label}
+                  </td>
+                  {loaded.map((x, ci) => {
+                    const v = r.values[ci];
+                    const isBest = bestIdx[ri] === ci;
+                    return (
+                      <td key={ci} className="r" style={{
+                        fontWeight: isBest ? 800 : 400,
+                        color: isBest ? COLORS[x.i] : undefined,
+                        fontFamily: "'JetBrains Mono', monospace",
+                        background: isBest ? COLORS_LIGHT[x.i] : undefined,
+                      }}>
+                        {v ?? "–"}
+                      </td>
+                    );
+                  })}
+                </tr>
+              </React.Fragment>
             ))}
           </tbody>
         </table>
@@ -869,6 +932,10 @@ function TournamentEvolutionSection({ slots }: { slots: Slot[] }) {
 
 export default function CompararPage({ players }: { players: PlayersDb }) {
   const [slots, setSlots] = useState<Slot[]>([]);
+  const [statsDb, setStatsDb] = useState<PlayerStatsDb>({});
+
+  /* Carregar player-stats.json uma vez */
+  useEffect(() => { loadPlayerStats().then(setStatsDb); }, []);
 
   const addPlayer = (fed: string) => {
     if (slots.length >= 4 || slots.find(s => s.fed === fed)) return;
@@ -895,7 +962,7 @@ export default function CompararPage({ players }: { players: PlayersDb }) {
 
   return (
     <div className="page-full">
-      <PlayerSearch players={players} slots={slots} onAdd={addPlayer} onRemove={removePlayer} />
+      <PlayerSearch players={players} slots={slots} statsDb={statsDb} onAdd={addPlayer} onRemove={removePlayer} />
 
       {slots.length === 0 && (
         <div className="card empty-state">
@@ -934,7 +1001,7 @@ export default function CompararPage({ players }: { players: PlayersDb }) {
           <RadarChart slots={slots} allAgg={allAgg} />
         </SectionErrorBoundary>
         <SectionErrorBoundary label="Stats Table">
-          <StatsTable slots={slots} allAgg={allAgg} />
+          <StatsTable slots={slots} allAgg={allAgg} statsDb={statsDb} />
         </SectionErrorBoundary>
         <SectionErrorBoundary label="Score Distribution">
           <ScoreDistribution slots={slots} allAgg={allAgg} />

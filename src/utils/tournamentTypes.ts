@@ -189,12 +189,6 @@ export function isoToDD(iso: string): string {
   return `${d}-${m}-${y}`;
 }
 
-/** "DD-MM-YYYY" → "YYYY-MM-DD" */
-export function ddToISO(dd: string): string {
-  const [d, m, y] = dd.split("-");
-  return `${y}-${m}-${d}`;
-}
-
 /** Build catDates mapping from tournament config */
 function buildCatDates(
   categories: TournCategory[],
@@ -586,6 +580,7 @@ export function escalaoFromYear(year: number | null): string {
   if (age <= 16) return "Sub-16";
   if (age <= 18) return "Sub-18";
   if (age <= 21) return "Sub-21";
+  if (age >= 50) return "Sénior";
   return "Absoluto";
 }
 
