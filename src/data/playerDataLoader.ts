@@ -25,6 +25,8 @@ export interface RoundData {
   eventName: string;
   scoreOrigin: string;
   _isTreino?: boolean;
+  _isTeamEvent?: boolean;
+  _isExtra?: boolean;
   _group?: string;
   _pill?: string;
   _links?: Record<string, string>;

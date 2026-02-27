@@ -25,7 +25,7 @@
 const fs = require("fs");
 const path = require("path");
 const { execSync } = require("child_process");
-const { chromium, firefox } = require("playwright");
+const { chromium } = require("playwright");
 
 /** Ler JSON de ficheiro, removendo BOM se existir */
 function readJSON(fpath) {
@@ -146,7 +146,137 @@ function logWarn(msg)        { console.log(`  ${YELLOW}⚠${RESET} ${msg}`); }
 function logErr(msg)         { console.error(`  ${RED}✗${RESET} ${msg}`); }
 function logInfo(msg)        { console.log(`  ${DIM}${msg}${RESET}`); }
 
-// ===== LOGIN — integrado no MAIN (usa browser real via channel) =====
+// ===== PASSO 1: LOGIN =====
+async function doLogin() {
+  const autoUser = process.env.FPG_USERNAME;
+  const autoPass = process.env.FPG_PASSWORD;
+
+  if (autoUser && autoPass) {
+    return await doAutoLogin(autoUser, autoPass);
+  }
+  return await doManualLogin();
+}
+
+async function doAutoLogin(username, password) {
+  logStep("🔑", "LOGIN AUTOMÁTICO (via variáveis de ambiente)");
+
+  const browser = await chromium.launch({ headless: true });
+  const context = await browser.newContext();
+  const page = await context.newPage();
+
+  try {
+    await page.goto("https://area.my.fpg.pt/login/", { waitUntil: "domcontentloaded" });
+    await page.waitForTimeout(1500);
+
+    // Tentar encontrar campos de login (vários seletores comuns)
+    const userSelectors = [
+      'input[name*="user" i]', 'input[name*="email" i]', 'input[name*="login" i]',
+      'input[type="email"]', 'input[type="text"]',
+      '#username', '#email', '#txtUsername', '#txtEmail',
+      'input[placeholder*="email" i]', 'input[placeholder*="user" i]'
+    ];
+    const passSelectors = [
+      'input[type="password"]',
+      'input[name*="pass" i]', 'input[name*="senha" i]',
+      '#password', '#txtPassword'
+    ];
+
+    let userField = null;
+    for (const sel of userSelectors) {
+      const el = await page.$(sel);
+      if (el && await el.isVisible()) { userField = el; break; }
+    }
+
+    let passField = null;
+    for (const sel of passSelectors) {
+      const el = await page.$(sel);
+      if (el && await el.isVisible()) { passField = el; break; }
+    }
+
+    if (!userField || !passField) {
+      logErr("Não consegui encontrar os campos de login na página.");
+      logInfo("Tenta correr localmente com --login para login manual.");
+      await browser.close();
+      process.exit(1);
+    }
+
+    await userField.fill(username);
+    await passField.fill(password);
+
+    // Submeter formulário
+    const submitSelectors = [
+      'button[type="submit"]', 'input[type="submit"]',
+      'button:has-text("Login")', 'button:has-text("Entrar")',
+      'button:has-text("Sign in")', '.btn-login', '.login-btn'
+    ];
+
+    let submitted = false;
+    for (const sel of submitSelectors) {
+      try {
+        const btn = await page.$(sel);
+        if (btn && await btn.isVisible()) {
+          await btn.click();
+          submitted = true;
+          break;
+        }
+      } catch {}
+    }
+
+    if (!submitted) {
+      await passField.press("Enter");
+    }
+
+    // Esperar navegação pós-login
+    await page.waitForTimeout(3000);
+    await page.waitForLoadState("domcontentloaded");
+
+    // Aquecer SSO — navegar pelos domínios necessários
+    await page.goto("https://my.fpg.pt/Home/Results.aspx", { waitUntil: "domcontentloaded" });
+    await page.waitForTimeout(1500);
+    await page.goto("https://scoring.fpg.pt/lists/PlayerWHS.aspx", { waitUntil: "domcontentloaded" });
+    await page.waitForTimeout(1000);
+
+    await context.storageState({ path: "session.json" });
+    logOK("Login automático concluído — sessão guardada");
+    await browser.close();
+
+  } catch (err) {
+    logErr(`Erro no login automático: ${err.message}`);
+    await browser.close();
+    process.exit(1);
+  }
+}
+
+async function doManualLogin() {
+  logStep("🔑", "LOGIN — Abrir browser para login manual");
+
+  const browser = await chromium.launch({ headless: false });
+  const context = await browser.newContext();
+  const page = await context.newPage();
+
+  console.log(`
+  ${YELLOW}╭──────────────────────────────────────────────────╮${RESET}
+  ${YELLOW}│  INSTRUÇÕES DE LOGIN:                            │${RESET}
+  ${YELLOW}│                                                  │${RESET}
+  ${YELLOW}│  1. Faz login manualmente (user/pass)            │${RESET}
+  ${YELLOW}│  2. Navega para:                                 │${RESET}
+  ${YELLOW}│     https://my.fpg.pt/Home/Results.aspx          │${RESET}
+  ${YELLOW}│  3. Confirma que consegues abrir:                │${RESET}
+  ${YELLOW}│     https://scoring.fpg.pt/lists/PlayerWHS.aspx  │${RESET}
+  ${YELLOW}│  4. Volta aqui e carrega ENTER                   │${RESET}
+  ${YELLOW}╰──────────────────────────────────────────────────╯${RESET}
+`);
+
+  await page.goto("https://area.my.fpg.pt/login/", { waitUntil: "domcontentloaded" });
+
+  await new Promise((resolve) => {
+    process.stdin.once("data", resolve);
+  });
+
+  await context.storageState({ path: "session.json" });
+  logOK("Sessão guardada em session.json");
+  await browser.close();
+}
 
 // ===== PASSO 2: DOWNLOAD WHS LIST =====
 async function downloadWHS(page, fedCode, outDir) {
@@ -163,7 +293,7 @@ async function downloadWHS(page, fedCode, outDir) {
   // Aquecer SSO
   await page.goto("https://my.fpg.pt/Home/Results.aspx", { waitUntil: "domcontentloaded" });
   await page.waitForTimeout(800);
-  await page.goto(`https://scoring.fpg.pt/lists/PlayerResults.aspx?no=${fedCode}`, { waitUntil: "domcontentloaded" });
+  await page.goto(`https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=${fedCode}`, { waitUntil: "domcontentloaded" });
   await page.waitForTimeout(800);
 
   const pageSize = 100;
@@ -175,7 +305,7 @@ async function downloadWHS(page, fedCode, outDir) {
     const jtPageSize = String(pageSize);
 
     const url =
-      `PlayerResults.aspx/ResultsLST?fed_code=${fedCode}` +
+      `PlayerWHS.aspx/HCPWhsFederLST?fed_code=${fedCode}` +
       `&jtStartIndex=${jtStartIndex}&jtPageSize=${jtPageSize}`;
 
     const result = await page.evaluate(async ({ url, FED_CODE, jtStartIndex, jtPageSize }) => {
@@ -212,11 +342,6 @@ async function downloadWHS(page, fedCode, outDir) {
     }
 
     const records = payload.Records || [];
-    // Normalizar: garantir que todos os registos têm score_id (a nova API pode usar "id")
-    for (const r of records) {
-      if (!r.score_id && r.id) r.score_id = r.id;
-      if (!r.id && r.score_id) r.id = r.score_id;
-    }
     all.push(...records);
 
     if (records.length < pageSize) break;
@@ -255,12 +380,12 @@ async function downloadScorecards(page, fedCode, outDir) {
   let skipped = 0;
 
   async function fetchOne(r) {
-    const scoreId = r.score_id || r.id;
+    const scoreId = r.score_id;
     const scoringType = r.scoring_type_id;
     const competitionType = r.competition_type_id;
 
     const url =
-      `PlayerResults.aspx/ScoreCard?score_id=${scoreId}` +
+      `PlayerWHS.aspx/ScoreCard?score_id=${scoreId}` +
       `&scoringtype=${scoringType}` +
       `&competitiontype=${competitionType}`;
 
@@ -293,7 +418,7 @@ async function downloadScorecards(page, fedCode, outDir) {
 
   for (let i = 0; i < records.length; i++) {
     const r = records[i];
-    const filePath = path.join(scorecardsDir, `${r.score_id || r.id}.json`);
+    const filePath = path.join(scorecardsDir, `${r.score_id}.json`);
 
     if (!forceFlag && fs.existsSync(filePath)) {
       ok++;
@@ -310,7 +435,7 @@ async function downloadScorecards(page, fedCode, outDir) {
     }
 
     if (!data || data.Result !== "OK") {
-      failed.push(r.score_id || r.id);
+      failed.push(r.score_id);
       continue;
     }
 
@@ -387,6 +512,8 @@ function syncPlayersJson(fedList) {
       let latestClub = null;
       let latestClubCode = null;
       let latestDate = 0;
+      // Country names that appear in player_acronym for international events
+      const countryNames = new Set(["Portugal","Spain","England","France","Germany","Italy","Switzerland","Netherlands","Belgium","Ireland","Scotland","Wales","Sweden","Norway","Denmark","Finland","Austria","Poland","Czech Republic","Slovakia","Hungary","Romania","Bulgaria","Slovenia","Croatia","Lithuania","Latvia","Estonia","Ukraine","Russia","Russian Federation","Turkey","Greece","Serbia","United States","USA","Canada","Mexico","Brazil","Colombia","Argentina","Chile","China","Japan","India","South Korea","Thailand","Philippines","Singapore","South Africa","Australia","New Zealand","United Kingdom","Great Britain","Northern Ireland","Jersey"]);
       for (const f of scFiles) {
         try {
           const sc = readJSON(path.join(scDir, f));
@@ -394,7 +521,7 @@ function syncPlayersJson(fedList) {
           if (!rec) continue;
           const dateMatch = String(rec.played_at || "").match(/Date\((\d+)\)/);
           const d = dateMatch ? Number(dateMatch[1]) : 0;
-          if (d > latestDate && rec.player_acronym) {
+          if (d > latestDate && rec.player_acronym && !countryNames.has(rec.player_acronym)) {
             latestDate = d;
             latestClub = rec.player_acronym;
             latestClubCode = rec.player_club_code || null;
@@ -417,19 +544,46 @@ function syncPlayersJson(fedList) {
       }
     }
 
-    // 2. Extract latest HCP from WHS data
-    if (fs.existsSync(whsPath)) {
+    // 2. Extract latest HCP from generated data.json (has Schema 2 normalization)
+    //    Fallback to whs-list.json if data.json not available
+    const dataJsonPath = path.join(outDir, "analysis", "data.json");
+    let gotHcpFromDataJson = false;
+    if (fs.existsSync(dataJsonPath)) {
+      try {
+        const dj = readJSON(dataJsonPath);
+        const djHcp = dj?.HCP_INFO?.current != null ? parseFloat(dj.HCP_INFO.current) : null;
+        if (djHcp != null && isFinite(djHcp) && djHcp !== entry.hcp) {
+          const oldHcp = entry.hcp;
+          entry.hcp = djHcp;
+          changed = true;
+          console.log(`  [sync] ${fed}: HCP ${oldHcp ?? "?"} → ${djHcp}`);
+        }
+        gotHcpFromDataJson = djHcp != null;
+
+        // lastRound from data.json META
+        const lr = dj?.META?.lastRoundDate;
+        if (lr && lr !== entry.lastRound) {
+          entry.lastRound = lr;
+          changed = true;
+        }
+      } catch {}
+    }
+
+    // Fallback: read from whs-list.json (works for Schema 1, limited for Schema 2)
+    if (!gotHcpFromDataJson && fs.existsSync(whsPath)) {
       try {
         const whs = readJSON(whsPath);
         const rows = (whs?.d ?? whs)?.Records || whs?.Records || [];
-        // Find most recent row — new_handicap is the post-round value
-        // exact_handicap = prev_handicap (pre-round) — NOT more precise, do NOT use
         let latestHcp = null;
         let latestHcpDate = 0;
         for (const r of rows) {
-          const dateMatch = String(r.played_at || r.hcp_date || r.mov_date || "").match(/Date\((\d+)\)/);
+          const dateMatch = String(r.played_at || r.hcp_date || r.score_date || r.mov_date || "").match(/Date\((\d+)\)/);
           const d = dateMatch ? Number(dateMatch[1]) : 0;
-          const nh = r.new_handicap != null ? parseFloat(r.new_handicap) : null;
+          // Schema 1: new_handicap, Schema 2: calc_hcp_index || exact_hcp
+          const nh = r.new_handicap != null ? parseFloat(r.new_handicap)
+            : r.calc_hcp_index != null ? parseFloat(r.calc_hcp_index)
+            : r.exact_hcp != null ? parseFloat(r.exact_hcp)
+            : null;
           if (d > latestHcpDate && nh != null && isFinite(nh)) {
             latestHcpDate = d;
             latestHcp = nh;
@@ -439,7 +593,16 @@ function syncPlayersJson(fedList) {
           const oldHcp = entry.hcp;
           entry.hcp = latestHcp;
           changed = true;
-          console.log(`  [sync] ${fed}: HCP ${oldHcp ?? "?"} → ${latestHcp}`);
+          console.log(`  [sync] ${fed}: HCP ${oldHcp ?? "?"} → ${latestHcp} (whs fallback)`);
+        }
+        // lastRound from WHS date
+        if (!entry.lastRound && latestHcpDate > 0) {
+          const ld = new Date(latestHcpDate);
+          const lr = String(ld.getDate()).padStart(2, "0") + "-" + String(ld.getMonth() + 1).padStart(2, "0") + "-" + ld.getFullYear();
+          if (lr !== entry.lastRound) {
+            entry.lastRound = lr;
+            changed = true;
+          }
         }
       } catch {}
     }
@@ -485,13 +648,15 @@ function syncPlayersJson(fedList) {
 
 // ===== MAIN =====
 (async () => {
-  const profileDir = path.join(process.cwd(), ".playwright-profile");
+  const sessionPath = path.join(process.cwd(), "session.json");
+  const needLogin = doLoginFlag || !fs.existsSync(sessionPath);
 
   console.log(`
 ${BOLD}╔══════════════════════════════════════════════════════╗${RESET}
 ${BOLD}║       golf-all.js — Pipeline FPG Scorecards         ║${RESET}
 ${BOLD}╠══════════════════════════════════════════════════════╣${RESET}
 ${BOLD}║${RESET}  Federados: ${fedCodes.join(", ").padEnd(39)}${BOLD}║${RESET}
+${BOLD}║${RESET}  Login:     ${(needLogin ? "Sim" : "Sessão existente").padEnd(39)}${BOLD}║${RESET}
 ${BOLD}║${RESET}  Modo:      ${(skipDownload ? "Só render" : forceFlag ? "Forçar tudo" : refreshFlag ? "Refresh (novos)" : "Normal").padEnd(39)}${BOLD}║${RESET}
 ${BOLD}║${RESET}  Download:  ${(skipDownload ? "Saltar" : "Sim").padEnd(39)}${BOLD}║${RESET}
 ${BOLD}║${RESET}  Render:    ${(skipRender ? "Saltar" : "Sim").padEnd(39)}${BOLD}║${RESET}
@@ -499,145 +664,55 @@ ${BOLD}║${RESET}  Forçar:    ${(forceFlag ? "Sim" : "Não").padEnd(39)}${BOLD
 ${BOLD}╚══════════════════════════════════════════════════════╝${RESET}
 `);
 
+
+  // PASSO 1: Login (se necessário)
+  if (needLogin && !skipDownload) {
+    await doLogin();
+  }
+
   let browser, context, page;
 
-  // PASSO 1 & 2 & 3: Downloads (usa browser real do utilizador via CDP)
+  // PASSO 2 & 3: Downloads
   if (!skipDownload) {
-
-    // === Detectar browser: Firefox primeiro (FPG SSO funciona melhor) ===
-    let browserType = null;
-    let channel = null;
-
-    // Tentar Firefox primeiro
-    try {
-      const testB = await firefox.launch({ headless: true });
-      await testB.close();
-      browserType = firefox;
-      channel = "firefox";
-    } catch {}
-
-    // Fallback para Chrome/Edge
-    if (!browserType) {
-      for (const ch of ["msedge", "chrome", "chromium"]) {
-        try {
-          const testB = await chromium.launch({ channel: ch, headless: true });
-          await testB.close();
-          browserType = chromium;
-          channel = ch;
-          break;
-        } catch {}
-      }
-    }
-
-    if (!browserType) {
-      logErr("Nenhum browser detectado. Instala o Firefox: npx playwright install firefox");
+    if (!fs.existsSync(sessionPath)) {
+      logErr("Não existe session.json — corre primeiro com --login");
       process.exit(1);
     }
 
-    logInfo(`Browser detectado: ${channel}`);
-
-    // Helper para lançar contexto persistente com o browser certo
-    const launchCtx = (opts) => {
-      if (channel === "firefox") {
-        return browserType.launchPersistentContext(profileDir, opts);
-      }
-      return browserType.launchPersistentContext(profileDir, { ...opts, channel });
-    };
-
-    // Primeiro login: headful para o utilizador ver e fazer login
-    if (doLoginFlag || !fs.existsSync(profileDir)) {
-      logStep("🔑", "LOGIN — Abrir browser para login manual");
-
-      context = await launchCtx({
-        headless: false,
-        viewport: { width: 1280, height: 800 },
-      });
-      page = context.pages()[0] || await context.newPage();
-
-      console.log(`
-  ${YELLOW}+----------------------------------------------------+${RESET}
-  ${YELLOW}|  INSTRUCOES DE LOGIN (browser: ${channel.padEnd(19)}|${RESET}
-  ${YELLOW}|                                                     |${RESET}
-  ${YELLOW}|  1. Faz login em area.my.fpg.pt                     |${RESET}
-  ${YELLOW}|  2. Navega para:                                    |${RESET}
-  ${YELLOW}|     https://my.fpg.pt/Home/Results.aspx             |${RESET}
-  ${YELLOW}|  3. Depois navega para:                             |${RESET}
-  ${YELLOW}|     https://scoring.fpg.pt/lists/PlayerResults.aspx |${RESET}
-  ${YELLOW}|  4. Confirma que VES a tabela de resultados         |${RESET}
-  ${YELLOW}|  5. Volta aqui e carrega ENTER                      |${RESET}
-  ${YELLOW}+----------------------------------------------------+${RESET}
-`);
-
-      await page.goto("https://area.my.fpg.pt/login/", { waitUntil: "domcontentloaded" });
-
-      await new Promise((resolve) => { process.stdin.once("data", resolve); });
-
-      // Testar scoring
-      try {
-        const testUrl = `https://scoring.fpg.pt/lists/PlayerResults.aspx?no=${fedCodes[0] || "52884"}`;
-        await page.goto(testUrl, { waitUntil: "domcontentloaded", timeout: 10000 });
-        const title = await page.title();
-        if (title.includes("Error")) {
-          logWarn(`scoring.fpg.pt erro (${title}) — verifica se navegaste lá no browser`);
-        } else {
-          logOK(`scoring.fpg.pt funciona! (${title})`);
-        }
-      } catch (err) {
-        logWarn(`Teste scoring: ${err.message}`);
-      }
-
-      logOK(`Perfil guardado em .playwright-profile/ (${channel})`);
-      await context.close();
-    }
-
-    // Agora usar o perfil em headless para downloads
-    logStep("📥", "Downloads");
-    context = await launchCtx({
-      headless: true,
-      viewport: { width: 1280, height: 800 },
-    });
-    page = context.pages()[0] || await context.newPage();
+    browser = await chromium.launch({ headless: true });
+    context = await browser.newContext({ storageState: sessionPath });
+    page = await context.newPage();
     page.setDefaultTimeout(60000);
 
     for (const fed of fedCodes) {
       const outDir = path.join(process.cwd(), "output", fed);
       fs.mkdirSync(outDir, { recursive: true });
 
-      // Aquecer sessão
+      // Aquecer sessão (uma vez por federado)
       await page.goto("https://my.fpg.pt/Home/Results.aspx", { waitUntil: "domcontentloaded" });
       await page.waitForTimeout(500);
-      await page.goto(`https://scoring.fpg.pt/lists/PlayerResults.aspx?no=${fed}`, { waitUntil: "domcontentloaded" });
+      await page.goto(`https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=${fed}`, { waitUntil: "domcontentloaded" });
       await page.waitForTimeout(500);
-
-      // Verificar se scoring respondeu OK
-      const scoringTitle = await page.title();
-      if (scoringTitle.includes("Error") || scoringTitle.includes("error")) {
-        logErr(`[${fed}] scoring.fpg.pt retornou erro (${scoringTitle}).`);
-        logWarn("Sessão expirada. Corre: node golf-all.js --login " + fed);
-        continue;
-      }
-
-      logOK(`[${fed}] scoring.fpg.pt OK`);
 
       const whsOk = await downloadWHS(page, fed, outDir);
       if (!whsOk) {
-        logErr(`[${fed}] Falha no download — a saltar scorecards.`);
+        logErr(`[${fed}] Falha no download WHS — a saltar scorecards.`);
         continue;
       }
 
       await downloadScorecards(page, fed, outDir);
     }
 
-    await context.close();
+    await browser.close();
   }
 
-  // PASSO 4: Sync players.json com dados frescos (ANTES do render)
-  syncPlayersJson(fedCodes);
-
-  // PASSO 5: Render (batch)
+  // PASSO 4: Render (batch) — ANTES do sync para que data.json esteja disponível
   if (!skipRender) {
     generateUIBatch(fedCodes);
   }
+
+  // PASSO 5: Sync players.json com dados frescos (DEPOIS do render → pode ler data.json)
+  syncPlayersJson(fedCodes);
 
   // PASSO 6: Extrair campos internacionais de todos os scorecards
   try {

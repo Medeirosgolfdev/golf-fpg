@@ -112,6 +112,7 @@ export type Player = {
   tags: string[];
   altNames: string[];
   extra: Record<string, unknown>;
+  lastRound?: string;
 };
 
 export type PlayersDb = Record<string, Player>;

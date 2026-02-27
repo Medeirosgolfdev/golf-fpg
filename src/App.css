@@ -770,6 +770,32 @@ html, body, #root {
  margin-left: 6px;
  vertical-align: middle;
 }
+.jog-sex-M {
+ background: var(--badge-male);
+ color: #fff;
+}
+.jog-sex-F {
+ background: var(--badge-female);
+ color: #fff;
+}
+.jog-updated-dot {
+ display: inline-block;
+ width: 6px;
+ height: 6px;
+ border-radius: 50%;
+ background: #22c55e;
+ margin-left: 5px;
+ vertical-align: middle;
+ flex-shrink: 0;
+}
+.sortable-th {
+ cursor: pointer;
+ user-select: none;
+ white-space: nowrap;
+}
+.sortable-th:hover {
+ color: var(--accent);
+}
 .master-detail .jog-detail {
  display: flex;
  flex-direction: column;
