@@ -17,11 +17,12 @@ const CamposPage = lazy(() => import("./pages/CamposPage"));
 const JogadoresPage = lazy(() => import("./pages/JogadoresPage"));
 const SimuladorPage = lazy(() => import("./pages/SimuladorPage"));
 const CalendarioPage = lazy(() => import("./pages/CalendarioPage"));
-const BJGTAnalysisPage = lazy(() => import("./pages/BJGTAnalysisPage"));
+const BJGTPage = lazy(() => import("./pages/BJGTPage"));
+const RivaisIntlPage = lazy(() => import("./pages/RivaisIntlPage"));
 const TorneioPage = lazy(() => import("./pages/TorneioPage"));
 const CompararPage = lazy(() => import("./pages/CompararPage"));
 
-type Tab = "campos" | "jogadores" | "comparar" | "simulador" | "calendario" | "bjgt" | "torneio";
+type Tab = "campos" | "jogadores" | "comparar" | "simulador" | "calendario" | "bjgt" | "torneio" | "rivais";
 
 type Status =
   | { kind: "loading" }
@@ -44,6 +45,7 @@ function tabFromPath(pathname: string): Tab {
   if (seg === "comparar") return "comparar";
   if (seg === "calendario") return "calendario";
   if (seg === "bjgt") return "bjgt";
+  if (seg === "rivais") return "rivais";
   if (seg === "torneio") return "torneio";
   return "jogadores"; // default
 }
@@ -68,7 +70,7 @@ export default function App() {
   useEffect(() => {
     const titles: Record<Tab, string> = {
       campos: "Campos", jogadores: "Jogadores", comparar: "Comparar",
-      simulador: "Simulador", calendario: "Calendário", bjgt: "BJGT", torneio: "GG26",
+      simulador: "Simulador", calendario: "Calendário", bjgt: "BJGT", torneio: "GG26", rivais: "Rivais Intl",
     };
     document.title = `Golf FPG — ${titles[tab] || "Jogadores"}`;
   }, [tab]);
@@ -157,6 +159,14 @@ export default function App() {
           )}
           {calUnlocked && (
             <button
+              className={`nav-btn ${tab === "rivais" ? "active" : ""}`}
+              onClick={() => goTo("/rivais")}
+            >
+              🌍 Riv Intl
+            </button>
+          )}
+          {calUnlocked && (
+            <button
               className={`nav-btn ${tab === "torneio" ? "active" : ""}`}
               onClick={() => goTo("/torneio")}
             >
@@ -205,7 +215,8 @@ export default function App() {
             <Route path="/simulador" element={<SimuladorPage courses={simCourses} />} />
             <Route path="/comparar" element={<CompararPage players={status.players} />} />
             <Route path="/calendario" element={<CalendarioPage players={status.kind === "ready" ? status.players : undefined} />} />
-            <Route path="/bjgt/:fed?" element={<BJGTAnalysisPage />} />
+            <Route path="/bjgt/:fed?" element={<BJGTPage />} />
+            <Route path="/rivais" element={<RivaisIntlPage />} />
             <Route path="/torneio" element={<TorneioPage players={status.players} onSelectPlayer={(fed) => goTo(`/jogadores/${fed}`)} />} />
             <Route path="*" element={<Navigate to="/jogadores/52884" replace />} />
           </Routes>
