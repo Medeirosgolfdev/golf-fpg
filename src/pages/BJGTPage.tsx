@@ -14,11 +14,13 @@ interface RoundData { day: number; scores: number[] | null; f9: number | null; b
 interface PlayerData { name: string; country: string; pos: number | null; result: number | null; total: number | null; rounds: RoundData[] }
 interface TData { tournament: string; par: number[]; si?: number[]; parF9: number; parB9: number; parTotal: number; players: PlayerData[] }
 interface TDef { id: string; label: string; shortLabel: string; data: TData; manuelName: string; year: number; category: string }
+interface EvoEntry { otherTotal: number; delta: number; from: string; to: string; pill: string }
 
 /* ── Data URLs ── */
 const URLS = [
-  { id: "2025_b1011", url: "/data/bjgt_vp_field_2025.json", label: "2025 // Boys 10-11", shortLabel: "2025", manuelName: "Manuel Medeiros", year: 2025, category: "Boys 10-11" },
-  { id: "2026_b1011", url: "/data/wjgc_2026_b1011.json", label: "2026 // Boys 10-11", shortLabel: "2026 Boys 10-11", manuelName: "Manuel Francisco Medeiros", year: 2026, category: "Boys 10-11" },
+  { id: "2025_b89", url: "/data/wjgc_2025_b89.json", label: "2025 // Boys 8-9", shortLabel: "2025 Boys 8-9", manuelName: "", year: 2025, category: "Boys 8-9" },
+  { id: "2025_b1011", url: "/data/bjgt_vp_field_2025.json", label: "2025 // Boys 10-11", shortLabel: "2025 Boys 10-11", manuelName: "Manuel Medeiros", year: 2025, category: "Boys 10-11" },
+  { id: "2026_b1011", url: "/data/wjgc_2026_b1011_3r.json", label: "2026 // Boys 10-11", shortLabel: "2026 Boys 10-11", manuelName: "Manuel Francisco Medeiros", year: 2026, category: "Boys 10-11" },
   { id: "2026_b1213", url: "/data/wjgc_2026_contest33.json", label: "2026 // Boys 12-13", shortLabel: "2026 Boys 12-13", manuelName: "", year: 2026, category: "Boys 12-13" },
 ];
 
@@ -28,9 +30,20 @@ const gf = (co: string) => FL[co] || "🏳️";
 
 function loadT(raw: any): TData {
   const d = raw as TData;
-  const players = d.players.filter((p: any) => p.total != null && p.rounds?.length > 0).sort((a: any, b: any) => a.total - b.total);
+  const maxR = Math.max(...d.players.filter((p: any) => p.rounds?.length > 0).map((p: any) => p.rounds.length));
+  const players = d.players.filter((p: any) => p.total != null && p.rounds?.length > 0)
+    .sort((a: any, b: any) => {
+      const aFull = a.rounds.length === maxR ? 0 : 1;
+      const bFull = b.rounds.length === maxR ? 0 : 1;
+      if (aFull !== bFull) return aFull - bFull;
+      return a.total - b.total;
+    });
   let pos = 1;
-  players.forEach((p: any, i: number) => { if (i > 0 && p.total > players[i - 1].total) pos = i + 1; p.pos = pos; });
+  players.forEach((p: any, i: number) => {
+    if (p.rounds.length < maxR) { p.pos = null; return; }
+    if (i > 0 && p.total > players[i - 1].total && players[i - 1].rounds.length === maxR) pos = i + 1;
+    p.pos = pos;
+  });
   return { ...d, players };
 }
 
@@ -40,9 +53,10 @@ const isM = (n: string) => n.includes("Manuel") && (n.includes("Medeiros") || n.
 /* ═══════════════════════════════════════════════════════════════
    ACCUMULATED LEADERBOARD — compact, ±par per round
    ═══════════════════════════════════════════════════════════════ */
-function AccLB({ data }: { data: TData }) {
+function AccLB({ data, evo, evoYear }: { data: TData; evo?: Map<string, EvoEntry>; evoYear?: string }) {
   const { parTotal, players } = data;
-  const nR = players[0]?.rounds.length || 0;
+  const nR = Math.max(...players.map(p => p.rounds.length), 0);
+  const hasEvo = evo && evo.size > 0;
   return (
     <div className="bjgt-chart-scroll">
       <table className="sc-table-modern" data-sc-table="1" style={{ width: "auto" }}>
@@ -55,19 +69,28 @@ function AccLB({ data }: { data: TData }) {
           </React.Fragment>))}
           <th className="hole-header col-total" style={{ width: 34, padding: "0 3px" }}>Tot</th>
           <th className="hole-header" style={{ width: 38, textAlign: "center", padding: "0 3px" }}>±Par</th>
+          {hasEvo && <>
+            <th className="hole-header" style={{ width: 36, textAlign: "center", padding: "0 3px", borderLeft: "2px solid var(--border)" }}>{evoYear || "2025"}</th>
+            <th className="hole-header" style={{ width: 34, textAlign: "center", padding: "0 3px" }}>Δ</th>
+            <th className="hole-header" style={{ width: 140, textAlign: "center", padding: "0 4px" }}>Percurso</th>
+          </>}
         </tr></thead>
         <tbody>
           {players.map((p, idx) => {
+            const incomplete = p.rounds.length < nR;
             const showPos = idx === 0 || p.pos !== players[idx - 1].pos;
-            const tp = p.result ?? (p.total != null ? p.total - parTotal * nR : null);
+            const tp = p.result ?? (p.total != null ? p.total - parTotal * p.rounds.length : null);
             const bg = isM(p.name) ? "var(--bg-success-subtle)" : p.country.includes("Portugal") ? "rgba(var(--rgb-success), 0.06)" : undefined;
+            const ev = hasEvo ? evo!.get(p.name) : undefined;
             return (
-              <tr key={idx} style={bg ? { background: bg } : undefined}>
-                <td className="fw-800 ta-center" style={{ color: "var(--text-3)", fontSize: 11, padding: "0 2px" }}>{showPos ? p.pos : ""}</td>
+              <tr key={idx} style={{ ...(bg ? { background: bg } : {}), ...(incomplete ? { opacity: 0.5 } : {}) }}>
+                <td className="fw-800 ta-center" style={{ color: "var(--text-3)", fontSize: 11, padding: "0 2px" }}>{incomplete ? "WD" : (showPos ? p.pos : "")}</td>
                 <td style={{ whiteSpace: "nowrap", paddingLeft: 6, paddingRight: 8, fontSize: 12 }}>
                   <span className="fw-700">{gf(p.country)} {p.name}</span>
                 </td>
-                {p.rounds.map((r, i) => {
+                {Array.from({ length: nR }, (_, i) => {
+                  const r = p.rounds[i];
+                  if (!r) return (<React.Fragment key={i}><td style={{ textAlign: "center", fontSize: 12, padding: "0 1px" }} className="c-muted">–</td><td style={{ textAlign: "center", fontSize: 10, padding: "0 1px" }} className="c-muted">–</td></React.Fragment>);
                   const rdTp = r.gross - parTotal;
                   const c = rdTp < 0 ? SC.danger : rdTp === 0 ? SC.good : "var(--text-3)";
                   return (<React.Fragment key={i}>
@@ -79,6 +102,21 @@ function AccLB({ data }: { data: TData }) {
                 <td className="fw-700" style={{ textAlign: "center", fontSize: 12, padding: "0 3px", color: tp != null && tp < 0 ? SC.danger : tp === 0 ? SC.good : "var(--text-3)" }}>
                   {tp != null ? fmtToPar(tp) : "–"}
                 </td>
+                {hasEvo && (ev ? <>
+                  <td style={{ textAlign: "center", fontSize: 11, fontWeight: 600, padding: "0 3px", borderLeft: "2px solid var(--border)" }}>{ev.otherTotal}</td>
+                  <td style={{ textAlign: "center", fontSize: 11, fontWeight: 700, padding: "0 3px", color: ev.delta < 0 ? "var(--good-dark)" : ev.delta > 0 ? SC.danger : "var(--text-3)" }}>
+                    {ev.delta > 0 ? "+" : ""}{ev.delta}
+                  </td>
+                  <td style={{ textAlign: "center", padding: "0 4px" }}>
+                    {ev.pill === "UP"
+                      ? <span style={{ background: "#dbeafe", color: "#1e40af", fontSize: 9, padding: "1px 5px", borderRadius: 6, fontWeight: 700, whiteSpace: "nowrap" }}>⬆ {ev.from}→{ev.to}</span>
+                      : <span style={{ background: "#fef3c7", color: "#92400e", fontSize: 9, padding: "1px 5px", borderRadius: 6, fontWeight: 700, whiteSpace: "nowrap" }}>= {ev.from}</span>}
+                  </td>
+                </> : <>
+                  <td style={{ textAlign: "center", fontSize: 11, padding: "0 3px", borderLeft: "2px solid var(--border)" }} className="c-muted">–</td>
+                  <td className="c-muted" style={{ textAlign: "center", fontSize: 11, padding: "0 3px" }}>–</td>
+                  <td style={{ textAlign: "center", padding: "0 4px" }}><span style={{ background: "#f3f4f6", color: "#9ca3af", fontSize: 9, padding: "1px 5px", borderRadius: 6, fontWeight: 600, whiteSpace: "nowrap" }}>{evoYear === "2026" ? "não voltou" : "novo"}</span></td>
+                </>)}
               </tr>
             );
           })}
@@ -249,11 +287,12 @@ function ManuelDay({ data, ri }: { data: TData; ri: number }) {
    ═══════════════════════════════════════════════════════════════ */
 function FStats({ data, ri }: { data: TData; ri: number | "all" }) {
   const { parTotal, players } = data;
-  const nR = players[0]?.rounds.length || 0;
+  const nR = Math.max(...players.map(p => p.rounds.length), 0);
+  const fullPlayers = players.filter(p => p.rounds.length === nR);
   const nSC = ri === "all" ? players.filter(p => p.rounds.some(r => r.scores)).length : players.filter(p => p.rounds[ri as number]?.scores).length;
   if (ri === "all") {
-    const avg = players.reduce((s,p) => s + p.total!, 0) / players.length;
-    return <div className="muted fs-10 mb-8">{players.length} jogadores · {nR} rondas · Par {parTotal} · Média: {avg.toFixed(1)} ({fmtToPar(Math.round(avg - parTotal * nR))}) · Líder: {players[0]?.name} ({players[0]?.total}){nSC < players.length && ` · ${nSC} com scorecard`}</div>;
+    const avg = fullPlayers.reduce((s,p) => s + p.total!, 0) / fullPlayers.length;
+    return <div className="muted fs-10 mb-8">{fullPlayers.length} jogadores ({nR} rondas){players.length > fullPlayers.length ? ` + ${players.length - fullPlayers.length} WD` : ""} · Par {parTotal} · Média: {avg.toFixed(1)} ({fmtToPar(Math.round(avg - parTotal * nR))}) · Líder: {fullPlayers[0]?.name} ({fullPlayers[0]?.total}){nSC < players.length && ` · ${nSC} com scorecard`}</div>;
   }
   const scores = players.filter(p => p.rounds[ri as number]).map(p => p.rounds[ri as number].gross);
   const avg = scores.reduce((s,v) => s+v, 0) / scores.length;
@@ -263,9 +302,9 @@ function FStats({ data, ri }: { data: TData; ri: number | "all" }) {
 /* ═══════════════════════════════════════════════════════════════
    TOURNAMENT VIEW — day tabs
    ═══════════════════════════════════════════════════════════════ */
-function TournView({ def }: { def: TDef }) {
+function TournView({ def, evo, evoYear }: { def: TDef; evo?: Map<string, EvoEntry>; evoYear?: string }) {
   const { data, manuelName } = def;
-  const nR = data.players[0]?.rounds.length || 0;
+  const nR = Math.max(...data.players.map(p => p.rounds.length), 0);
   const [dt, setDt] = useState<number | "all">("all");
   return (
     <div>
@@ -274,7 +313,7 @@ function TournView({ def }: { def: TDef }) {
         {Array.from({ length: nR }, (_, i) => <button key={i} onClick={() => setDt(i)} className={`tourn-tab tourn-tab-sm${dt === i ? " active" : ""}`}>R{i + 1}</button>)}
       </div>
       {dt === "all" && <>
-        <div className="card"><div className="h-md fs-14">🏆 Leaderboard — {def.label}</div><FStats data={data} ri="all" /><AccLB data={data} /></div>
+        <div className="card"><div className="h-md fs-14">🏆 Leaderboard — {def.label}</div><FStats data={data} ri="all" /><AccLB data={data} evo={evo} evoYear={evoYear} /></div>
         <div className="card"><div className="h-md fs-14">📊 Dificuldade por Buraco — Todas as rondas</div><FStats data={data} ri="all" /><HoleDiff data={data} ri="all" mn={manuelName} /></div>
       </>}
       {typeof dt === "number" && <>
@@ -290,8 +329,8 @@ function TournView({ def }: { def: TDef }) {
    MAIN PAGE
    ═══════════════════════════════════════════════════════════════ */
 function Content() {
-  const [ti, setTi] = useState(1);
-  const [all, setAll] = useState<(TDef | null)[]>([null, null, null]);
+  const [ti, setTi] = useState(2);
+  const [all, setAll] = useState<(TDef | null)[]>([null, null, null, null]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -318,10 +357,93 @@ function Content() {
           </div>
         </div>
         <div className="toolbar-right">
-          {cur && <span className="chip">{cur.data.players.length} field · {cur.data.players[0]?.rounds.length || 0}R · {cur.category}</span>}
+          {cur && <span className="chip">{cur.data.players.filter(p => p.rounds.length === Math.max(...cur.data.players.map(q => q.rounds.length))).length} field · {Math.max(...cur.data.players.map(p => p.rounds.length))}R · {cur.category}</span>}
         </div>
       </div>
-      {cur ? <TournView def={cur} /> : <div className="center-msg muted">Dados não disponíveis</div>}
+      {cur ? (() => {
+        let evoMap: Map<string, EvoEntry> | undefined;
+        let evoYear: string | undefined;
+        let manuelEvo: EvoEntry | undefined;
+
+        if (cur.year === 2026) {
+          // Backward: show 2025 totals for each 2026 player
+          evoYear = "2025";
+          const prev25 = all.filter(t => t && t.year === 2025) as TDef[];
+          if (prev25.length) {
+            const all25Players = prev25.flatMap(t => t.data.players.map(p => ({ ...p, cat: t.category })));
+            evoMap = new Map();
+            for (const p26 of cur.data.players) {
+              if (!p26.total) continue;
+              const match = all25Players.find(p25 => {
+                const n25 = p25.name.toLowerCase().replace(/\s+/g, " ");
+                const n26 = p26.name.toLowerCase().replace(/\s+/g, " ");
+                return n25 === n26 || (n25.includes(n26.split(" ")[0]) && n25.includes(n26.split(" ").slice(-1)[0]));
+              });
+              if (!match || !match.total) continue;
+              if (match.rounds.length !== p26.rounds.length) continue;
+              const entry: EvoEntry = {
+                otherTotal: match.total, delta: p26.total - match.total,
+                from: match.cat, to: cur.category,
+                pill: match.cat === cur.category ? "STAY" : "UP"
+              };
+              evoMap.set(p26.name, entry);
+              if (isM(p26.name)) manuelEvo = entry;
+            }
+            if (!evoMap.size) evoMap = undefined;
+          }
+        } else if (cur.year === 2025) {
+          // Forward: show where each 2025 player ended up in 2026
+          evoYear = "2026";
+          const next26 = all.filter(t => t && t.year === 2026) as TDef[];
+          if (next26.length) {
+            const all26Players = next26.flatMap(t => t.data.players.map(p => ({ ...p, cat: t.category })));
+            evoMap = new Map();
+            for (const p25 of cur.data.players) {
+              if (!p25.total) continue;
+              const match = all26Players.find(p26 => {
+                const n25 = p25.name.toLowerCase().replace(/\s+/g, " ");
+                const n26 = p26.name.toLowerCase().replace(/\s+/g, " ");
+                return n25 === n26 || (n26.includes(n25.split(" ")[0]) && n26.includes(n25.split(" ").slice(-1)[0]));
+              });
+              if (!match || !match.total) continue;
+              if (match.rounds.length !== p25.rounds.length) continue;
+              const entry: EvoEntry = {
+                otherTotal: match.total, delta: match.total - p25.total,
+                from: cur.category, to: match.cat,
+                pill: cur.category === match.cat ? "STAY" : "UP"
+              };
+              evoMap.set(p25.name, entry);
+              if (isM(p25.name)) manuelEvo = entry;
+            }
+            if (!evoMap.size) evoMap = undefined;
+          }
+        }
+
+        return (<>
+          <TournView def={cur} evo={evoMap} evoYear={evoYear} />
+          {manuelEvo && cur.year === 2026 && (
+            <div className="card" style={{ background: "var(--bg-success-subtle)", border: "1px solid var(--good)" }}>
+              <div className="h-md fs-14">🇵🇹 Manuel — Evolução WJGC</div>
+              <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
+                <div style={{ textAlign: "center", flex: "1 1 100px" }}>
+                  <div className="muted fs-10">2025 ({manuelEvo.from})</div>
+                  <div className="fw-900" style={{ fontSize: 24 }}>{manuelEvo.otherTotal}</div>
+                </div>
+                <div style={{ fontSize: 24, color: "var(--good-dark)" }}>→</div>
+                <div style={{ textAlign: "center", flex: "1 1 100px" }}>
+                  <div className="muted fs-10">2026 ({manuelEvo.to})</div>
+                  <div className="fw-900" style={{ fontSize: 24, color: manuelEvo.delta < 0 ? "var(--good-dark)" : "var(--text-3)" }}>{manuelEvo.otherTotal + manuelEvo.delta}</div>
+                </div>
+                <div style={{ textAlign: "center", flex: "1 1 80px" }}>
+                  <div className="muted fs-10">Δ</div>
+                  <div className="fw-900" style={{ fontSize: 24, color: manuelEvo.delta < 0 ? "var(--good-dark)" : SC.danger }}>{manuelEvo.delta > 0 ? "+" : ""}{manuelEvo.delta}</div>
+                  <div className="muted fs-10">pancadas (3R)</div>
+                </div>
+              </div>
+            </div>
+          )}
+        </>);
+      })() : <div className="center-msg muted">Dados não disponíveis</div>}
     </div>
   );
 }
