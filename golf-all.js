@@ -714,7 +714,19 @@ ${BOLD}╚═══════════════════════�
   // PASSO 5: Sync players.json com dados frescos (DEPOIS do render → pode ler data.json)
   syncPlayersJson(fedCodes);
 
-  // PASSO 6: Extrair campos internacionais de todos os scorecards
+  // PASSO 6: Enrich player-stats.json (badges, rankings, sidebar data)
+  try {
+    const enrichScript = path.join(process.cwd(), "enrich-players.js");
+    if (fs.existsSync(enrichScript)) {
+      logStep("📊", "Enriquecer player-stats.json");
+      execSync(`node "${enrichScript}" ${fedCodes.join(" ")}`, { stdio: "inherit", cwd: process.cwd() });
+      logOK("player-stats.json actualizado");
+    }
+  } catch (e) {
+    logWarn(`enrich-players.js falhou: ${e.message}`);
+  }
+
+  // PASSO 7: Extrair campos internacionais de todos os scorecards
   try {
     const extractScript = path.join(process.cwd(), "extract-courses.js");
     if (fs.existsSync(extractScript)) {
