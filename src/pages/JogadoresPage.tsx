@@ -17,6 +17,7 @@ import TeePill from "../ui/TeePill";
 import TeeDate from "../ui/TeeDate";
 import ScoreCircle from "../ui/ScoreCircle";
 import LoadingState from "../ui/LoadingState";
+import { loadPlayerStats, daysSince, type PlayerStatsDb } from "../data/playerStatsTypes";
 
 /* ────────────────────────────────────────────────────────────────────────────────────
    Utility functions (port from client JS)
@@ -1458,7 +1459,7 @@ function AnalysisView({ data }: { data: PlayerPageData }) {
   }, [data]);
 
   const rounds18 = useMemo(() => allRoundsDesc.filter(r => r.holeCount === 18 || (r as RoundData & { hc?: number }).hc === 18), [allRoundsDesc]);
-  const rounds18g = useMemo(() => rounds18.filter(r => numSafe(r.gross) != null && Number(r.gross) > 50 && !r._isTeamEvent), [rounds18]);
+  const rounds18g = useMemo(() => rounds18.filter(r => numSafe(r.gross) != null && Number(r.gross) > 50), [rounds18]);
 
   // KPIs
   const last5 = rounds18g.slice(0, 5);
@@ -1471,9 +1472,9 @@ function AnalysisView({ data }: { data: PlayerPageData }) {
   const n20 = sorted.length ? Math.max(1, Math.floor(sorted.length * 0.2)) : 0;
   const best20 = n20 ? meanArr(sorted.slice(0, n20)) : null;
 
-  // Last 20 (non-training, non-team) for table
+  // Last 20 (non-training) for table
   const last20Table = useMemo(() =>
-    allRoundsDesc.filter(r => !r._isTreino && !r._isTeamEvent).slice(0, 20),
+    allRoundsDesc.filter(r => !r._isTreino).slice(0, 20),
     [allRoundsDesc]
   );
 
@@ -1755,44 +1756,6 @@ function Last20Table({ data, last20Table, best8 }: {
   best8: Map<number, number>;
 }) {
   const [openSc, setOpenSc] = useState<string | null>(null);
-  type SortCol = "date" | "course" | "event" | "holes" | "hcp" | "gross" | "stb" | "sd" | "meters" | "top8";
-  const [sortCol, setSortCol] = useState<SortCol>("date");
-  const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
-
-  const toggleSort = (col: SortCol) => {
-    if (sortCol === col) setSortDir(d => d === "asc" ? "desc" : "asc");
-    else { setSortCol(col); setSortDir(col === "date" ? "desc" : "asc"); }
-  };
-
-  const sorted = useMemo(() => {
-    // Build array with original index for best8 lookup
-    const arr = last20Table.map((r, i) => ({ r, origIdx: i }));
-    const dir = sortDir === "asc" ? 1 : -1;
-    arr.sort((a, b) => {
-      let va: number | string, vb: number | string;
-      switch (sortCol) {
-        case "date": va = a.r.dateSort || 0; vb = b.r.dateSort || 0; break;
-        case "course": va = a.r.course || ""; vb = b.r.course || ""; return dir * (va as string).localeCompare(vb as string, "pt");
-        case "event": va = a.r.eventName || ""; vb = b.r.eventName || ""; return dir * (va as string).localeCompare(vb as string, "pt");
-        case "holes": va = a.r.holeCount || 0; vb = b.r.holeCount || 0; break;
-        case "hcp": va = numSafe(a.r.hi) ?? 999; vb = numSafe(b.r.hi) ?? 999; break;
-        case "gross": va = numSafe(a.r.gross) ?? 999; vb = numSafe(b.r.gross) ?? 999; break;
-        case "stb": va = numSafe(a.r.stb) ?? -999; vb = numSafe(b.r.stb) ?? -999; break;
-        case "sd": va = numSafe(a.r.sd) ?? 999; vb = numSafe(b.r.sd) ?? 999; break;
-        case "meters": va = numSafe(a.r.meters) ?? 0; vb = numSafe(b.r.meters) ?? 0; break;
-        case "top8": va = best8.get(a.origIdx) ?? 99; vb = best8.get(b.origIdx) ?? 99; break;
-        default: va = 0; vb = 0;
-      }
-      return dir * ((va as number) - (vb as number));
-    });
-    return arr;
-  }, [last20Table, sortCol, sortDir, best8]);
-
-  const thSort = (col: SortCol, label: string, cls = "") => (
-    <th className={`${cls} sortable-th`} onClick={() => toggleSort(col)} style={{ cursor: "pointer", userSelect: "none" }}>
-      {label}{sortCol === col ? (sortDir === "asc" ? " ▲" : " ▼") : ""}
-    </th>
-  );
 
   return (
     <div className="card">
@@ -1804,22 +1767,15 @@ function Last20Table({ data, last20Table, best8 }: {
         <table className="dtable">
           <thead>
             <tr>
-              {thSort("date", "Data")}
-              {thSort("course", "Campo")}
-              {thSort("event", "Prova")}
-              {thSort("holes", "Bur.", "r")}
-              {thSort("hcp", "HCP", "r")}
-              <th>Tee</th>
-              {thSort("meters", "Dist.", "r")}
-              {thSort("gross", "Gross", "r")}
-              {thSort("stb", "Stb", "r")}
-              {thSort("sd", "SD", "r")}
-              {thSort("top8", "Top 8", "r")}
+              <th>Data</th><th>Campo</th><th>Prova</th>
+              <th className="r">Bur.</th><th className="r">HCP</th><th>Tee</th>
+              <th className="r">Dist.</th><th className="r">Gross</th><th className="r">Stb</th>
+              <th className="r">SD</th><th className="r">Top 8</th>
             </tr>
           </thead>
           <tbody>
-            {sorted.map(({ r, origIdx }) => {
-              const rank = best8.get(origIdx);
+            {last20Table.map((r, i) => {
+              const rank = best8.get(i);
               const isBest8 = rank != null;
               const isOpen = openSc === r.scoreId;
               const holes = data.HOLES[String(r.scoreId)];
@@ -2910,6 +2866,11 @@ export default function JogadoresPage({ players, courses }: Props) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [playerMeta, setPlayerMeta] = useState<PlayerPageData["META"] | null>(null);
   const rankingMode = sortKey === "ranking";
+  const [statsDb, setStatsDb] = useState<PlayerStatsDb>({});
+  const [newFilter, setNewFilter] = useState(false);
+  const NEW_DAYS = 7; // threshold: "novo" = última ronda há ≤7 dias
+
+  useEffect(() => { loadPlayerStats().then(setStatsDb); }, []);
 
 
   /* Ref para distinguir navegação interna (selectPlayer) de externa (URL directo) */
@@ -3009,6 +2970,7 @@ export default function JogadoresPage({ players, courses }: Props) {
     if (sexFilter !== "ALL") list = list.filter(p => p.sex === sexFilter);
     if (escalaoFilter.size > 0) list = list.filter(p => escalaoFilter.has(p.escalao));
     if (regionFilter !== "ALL") list = list.filter(p => p.region === regionFilter);
+    if (newFilter) list = list.filter(p => { const d = daysSince(statsDb[p.fed]); return d != null && d <= NEW_DAYS; });
     return [...list].sort((a, b) => {
       switch (sortKey) {
         case "name": return a.name.localeCompare(b.name, "pt");
@@ -3021,7 +2983,7 @@ export default function JogadoresPage({ players, courses }: Props) {
         default: return 0;
       }
     });
-  }, [allPlayers, q, sexFilter, escalaoFilter, regionFilter, sortKey]);
+  }, [allPlayers, q, sexFilter, escalaoFilter, regionFilter, sortKey, newFilter, statsDb]);
 
   // Ranking positions based on HCP (global, not filtered)
   const rankings = useMemo(() => {
@@ -3082,6 +3044,20 @@ export default function JogadoresPage({ players, courses }: Props) {
             <option value="ALL">Região</option>
             {regions.map(r => <option key={r} value={r}>{r}</option>)}
           </select>
+          {Object.keys(statsDb).length > 0 && (() => {
+            const newCount = allPlayers.filter(p => { const d = daysSince(statsDb[p.fed]); return d != null && d <= NEW_DAYS; }).length;
+            if (newCount === 0) return null;
+            return (
+              <button
+                className={`p p-esc-filter p-novo${newFilter ? " active" : ""}`}
+                onClick={() => setNewFilter(v => !v)}
+                title={`${newCount} jogadores com rondas nos últimos ${NEW_DAYS} dias`}
+                style={{ background: newFilter ? "#16a34a" : undefined, color: newFilter ? "#fff" : undefined, borderColor: newFilter ? "#16a34a" : "#86efac", gap: 3 }}
+              >
+                🟢 Novos<span className="p-filter-count">{newCount}</span>
+              </button>
+            );
+          })()}
           <select className="select" value={sortKey} onChange={e => setSortKey(e.target.value as SortKey)}>
             <option value="name">Nome</option><option value="hcp">Handicap</option>
             <option value="club">Clube</option><option value="escalao">Escalão</option>
@@ -3114,12 +3090,7 @@ export default function JogadoresPage({ players, courses }: Props) {
                   <span className="flex-1">
                     {p.name}
                     <span className={`jog-sex-inline jog-sex-${p.sex}`}>{p.sex}</span>
-                    {p.lastRound && (() => {
-                      const [dd, mm, yyyy] = (p.lastRound as string).split("-").map(Number);
-                      const lr = new Date(yyyy, mm - 1, dd);
-                      const diff = (Date.now() - lr.getTime()) / 86400000;
-                      return diff <= 7 ? <span className="jog-updated-dot" title={`Últ. ronda: ${p.lastRound}`} /> : null;
-                    })()}
+                    {(() => { const d = daysSince(statsDb[p.fed]); return d != null && d <= NEW_DAYS ? <span style={{ display: "inline-block", width: 7, height: 7, borderRadius: "50%", background: "#22c55e", marginLeft: 4, verticalAlign: "middle", flexShrink: 0 }} title={`Ronda há ${d}d`} /> : null; })()}
                   </span>
                   {rankingMode && displayHcp != null && (
                     <span className={`sidebar-sd ${displayHcp <= 5 ? "sidebar-sd-good" : displayHcp <= 15 ? "sidebar-sd-ok" : "sidebar-sd-high"}`}>
