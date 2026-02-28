@@ -224,7 +224,7 @@ const server = http.createServer((req, res) => {
 <body style="font-family:monospace;padding:20px;background:#1a1a2e;color:#e0e0e0">
 <h2 style="color:#00d4aa">FPG Bridge v2</h2>
 <p>${totalPlayers} jogadores | ${qualifOnly ? "so qualificativas" : "todas as rondas"} | ${concurrency} paralelos</p>
-<p>Cola na consola do Firefox (F12):</p>
+<p>Cola na consola do Firefox (F12) em scoring.fpg.pt ou my.fpg.pt:</p>
 <pre style="background:#0d0d1a;padding:15px;border-radius:8px;color:#4fc3f7">fetch("http://localhost:${PORT}/browser-script.js").then(r=>r.text()).then(eval)</pre>
 </body></html>`);
     return;
@@ -243,12 +243,46 @@ const BROWSER_SCRIPT = `
   const logOk = (msg) => console.log("%c[FPG] " + msg, "color: #00d4aa; font-weight: bold");
   const logErr = (msg) => console.log("%c[FPG] x " + msg, "color: #ef5350");
 
-  if (!window.location.href.includes("scoring.fpg.pt")) {
-    logErr("Precisas de estar em scoring.fpg.pt/lists/PlayerResults.aspx");
+  const isMy = window.location.href.includes("my.fpg.pt");
+  const isScoring = window.location.href.includes("scoring.fpg.pt");
+  if (!isMy && !isScoring) {
+    logErr("Precisas de estar em scoring.fpg.pt ou my.fpg.pt");
     return;
   }
 
-  log("Iniciado!");
+  // Helper: call FPG API — uses jQuery $.ajax on my.fpg.pt (matches page's own requests)
+  const fpgPost = (endpoint, params) => {
+    const qs = Object.entries(params).map(([k,v]) => k + "=" + encodeURIComponent(v)).join("&");
+    const url = endpoint + "?" + qs;
+    const bodyObj = {};
+    for (const [k,v] of Object.entries(params)) bodyObj[k] = String(v);
+
+    if (isMy && window.jQuery) {
+      return new Promise((resolve) => {
+        window.jQuery.ajax({
+          url: url,
+          type: "POST",
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          data: JSON.stringify(bodyObj),
+          success: (data) => resolve({ ok: true, data: data?.d ?? data }),
+          error: () => resolve({ ok: false })
+        });
+      });
+    }
+    // Fallback: fetch (works on scoring.fpg.pt)
+    return fetch(url, {
+      method: "POST",
+      headers: { "x-requested-with": "XMLHttpRequest", "content-type": "application/json; charset=utf-8" },
+      body: JSON.stringify(bodyObj)
+    }).then(async r => {
+      if (r.status !== 200) return { ok: false };
+      const j = await r.json();
+      return { ok: true, data: j?.d ?? j };
+    }).catch(() => ({ ok: false }));
+  };
+
+  log("Iniciado!" + (isMy ? " (my.fpg.pt mode — jQuery)" : " (scoring.fpg.pt mode)"));
   const t0 = Date.now();
 
   while (true) {
@@ -267,28 +301,23 @@ const BROWSER_SCRIPT = `
     const { fed, index, total, existingScoreIds, oldWHSCount, refresh, force, qualifOnly, concurrency } = task;
     const existingSet = new Set(existingScoreIds);
 
-    // 1. WHS list — usar HCPWhsFederLST como PRIMARY (tem new_handicap, sgd, calc_low_hcp, etc.)
-    //    ResultsLST como SECONDARY (para rondas extra não-qualificativas)
-    
-    // 1a. Buscar dados HCP (endpoint antigo — fonte principal)
+    log("[" + (index+1) + "/" + total + "] Federado " + fed);
+
+    // Extra params for my.fpg.pt
+    const ppParams = isMy ? { pp: "N" } : {};
+
+    // 1a. HCP WHS list (primary source)
     const hcpRecords = [];
     let hcpIdx = 0, hcpOk = true;
     while (true) {
-      try {
-        const r = await fetch("PlayerWHS.aspx/HCPWhsFederLST?fed_code=" + fed + "&jtStartIndex=" + hcpIdx + "&jtPageSize=100", {
-          method: "POST",
-          headers: { "x-requested-with": "XMLHttpRequest", "content-type": "application/json; charset=utf-8" },
-          body: JSON.stringify({ fed_code: String(fed), jtStartIndex: String(hcpIdx), jtPageSize: "100" })
-        });
-        if (r.status !== 200) { hcpOk = false; break; }
-        const j = await r.json();
-        const p = j?.d ?? j;
-        if (p?.Result !== "OK") { hcpOk = false; break; }
-        const recs = p.Records || [];
-        hcpRecords.push(...recs);
-        if (recs.length < 100) break;
-        hcpIdx += 100;
-      } catch (e) { hcpOk = false; break; }
+      const res = await fpgPost("PlayerWHS.aspx/HCPWhsFederLST", {
+        fed_code: fed, ...ppParams, jtStartIndex: hcpIdx, jtPageSize: 100
+      });
+      if (!res.ok || res.data?.Result !== "OK") { hcpOk = false; break; }
+      const recs = res.data.Records || [];
+      hcpRecords.push(...recs);
+      if (recs.length < 100) break;
+      hcpIdx += 100;
     }
 
     // Normalize score_id
@@ -298,38 +327,31 @@ const BROWSER_SCRIPT = `
     }
     const hcpIdSet = new Set(hcpRecords.map(r => String(r.score_id || r.id)));
 
-    // 1b. Buscar ResultsLST (para rondas extra: não-qualif, treinos, etc.)
+    // 1b. ResultsLST (extra non-qualifying rounds)
     let extraRecords = [];
     if (!qualifOnly) {
       let startIdx = 0;
       while (true) {
-        try {
-          const r = await fetch("PlayerResults.aspx/ResultsLST?fed_code=" + fed + "&jtStartIndex=" + startIdx + "&jtPageSize=100", {
-            method: "POST",
-            headers: { "x-requested-with": "XMLHttpRequest", "content-type": "application/json; charset=utf-8" },
-            body: JSON.stringify({ fed_code: String(fed), jtStartIndex: String(startIdx), jtPageSize: "100" })
-          });
-          const j = await r.json();
-          const p = j?.d ?? j;
-          if (p?.Result !== "OK") break;
-          const recs = p.Records || [];
-          for (const r of recs) {
-            if (!r.score_id && r.id) r.score_id = r.id;
-            if (!r.id && r.score_id) r.id = r.score_id;
-          }
-          // Só manter rondas que NÃO estão no HCP list
-          const newOnly = recs.filter(r => !hcpIdSet.has(String(r.score_id || r.id)));
-          extraRecords.push(...newOnly);
-          if (recs.length < 100) break;
-          startIdx += 100;
-        } catch (e) { break; }
+        const res = await fpgPost("PlayerResults.aspx/ResultsLST", {
+          fed_code: fed, ...ppParams, jtStartIndex: startIdx, jtPageSize: 100
+        });
+        if (!res.ok || res.data?.Result !== "OK") break;
+        const recs = res.data.Records || [];
+        for (const r of recs) {
+          if (!r.score_id && r.id) r.score_id = r.id;
+          if (!r.id && r.score_id) r.id = r.score_id;
+        }
+        const newOnly = recs.filter(r => !hcpIdSet.has(String(r.score_id || r.id)));
+        extraRecords.push(...newOnly);
+        if (recs.length < 100) break;
+        startIdx += 100;
       }
     }
 
-    // Combinar: HCP records (completos) + extra records (só os novos)
     const allRecords = [...hcpRecords, ...extraRecords];
 
     if (!hcpOk || allRecords.length === 0) { log("[" + fed + "] WHS falhou, a saltar"); continue; }
+    log("[" + fed + "] WHS: " + allRecords.length + " registos (" + hcpRecords.length + " HCP + " + extraRecords.length + " extra)");
 
     // Refresh: skip if count same and no new score_ids
     if (refresh && !force && allRecords.length === oldWHSCount) {
@@ -373,26 +395,17 @@ const BROWSER_SCRIPT = `
       batchCount = 0;
     };
 
-    // Parallel chunks
+    log("[" + fed + "] Scorecards: " + toFetch.length + " a descarregar, " + scSkipped + " existentes");
+
     for (let i = 0; i < toFetch.length; i += concurrency) {
       const chunk = toFetch.slice(i, i + concurrency);
       const results = await Promise.allSettled(chunk.map(async (r) => {
         const sid = String(r.score_id || r.id);
-        try {
-          const res = await fetch(
-            "PlayerResults.aspx/ScoreCard?score_id=" + sid + "&scoringtype=" + r.scoring_type_id + "&competitiontype=" + r.competition_type_id,
-            {
-              method: "POST",
-              headers: { "x-requested-with": "XMLHttpRequest", "content-type": "application/json; charset=utf-8" },
-              body: JSON.stringify({ score_id: sid, scoringtype: String(r.scoring_type_id), competitiontype: String(r.competition_type_id) })
-            }
-          );
-          if (res.status !== 200) return null;
-          const j = await res.json();
-          const p = j?.d ?? j;
-          if (p?.Result === "OK") return { id: sid, data: p };
-          return null;
-        } catch { return null; }
+        const res = await fpgPost("PlayerResults.aspx/ScoreCard", {
+          score_id: sid, scoringtype: r.scoring_type_id, competitiontype: r.competition_type_id, ...ppParams
+        });
+        if (res.ok && res.data?.Result === "OK") return { id: sid, data: res.data };
+        return null;
       }));
 
       for (const r of results) {
@@ -405,10 +418,15 @@ const BROWSER_SCRIPT = `
           scFailed++;
         }
       }
+
+      if ((i + concurrency) % 40 === 0) {
+        log("[" + fed + "] SC: " + (i + chunk.length) + "/" + toFetch.length);
+      }
     }
     await flush();
 
-    // Player done
+    log("[" + fed + "] SC: " + scOk + " OK, " + scFailed + " falhas");
+
     await fetch(SERVER + "/player-done", {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ fed, whsCount: allRecords.length, scOk, scSkipped, scFailed })
@@ -435,7 +453,7 @@ ${B}|${X}  Paralelos:   ${String(concurrency).padEnd(37)}${B}|${X}
 ${B}|${X}  Render:      ${(skipRender ? "Nao" : "Sim").padEnd(37)}${B}|${X}
 ${B}+------------------------------------------------------+${X}
 
-${Y}No Firefox (em scoring.fpg.pt), cola na consola (F12):${X}
+${Y}No Firefox (em scoring.fpg.pt ou my.fpg.pt), cola na consola (F12):${X}
 
   ${G}fetch("http://localhost:${PORT}/browser-script.js").then(r=>r.text()).then(eval)${X}
 `);
