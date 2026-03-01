@@ -228,7 +228,7 @@ export default function App() {
             <Route path="/bjgt/:fed?" element={<BJGTPage />} />
             <Route path="/rivais" element={<RivaisIntlPage />} />
             <Route path="/torneio" element={<TorneioPage players={status.players} onSelectPlayer={(fed) => goTo(`/jogadores/${fed}`)} />} />
-            <Route path="/drive" element={<DrivePage onSelectPlayer={(fed) => goTo(`/jogadores/${fed}`)} />} />
+            <Route path="/drive" element={<DrivePage />} />
             <Route path="*" element={<Navigate to="/jogadores/52884" replace />} />
           </Routes>
           </Suspense>

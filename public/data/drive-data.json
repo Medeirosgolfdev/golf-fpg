@@ -1,172 +1,2355 @@
 {
   "lastUpdated": "2026-03-01",
-  "scrapedFrom": "scoring.datagolf.pt",
-  "_note": "Dados de exemplo para desenvolvimento. Substitui por dados reais do scraper.",
-  "series": {
-    "drive_tour": {
-      "name": "Drive Tour",
-      "regions": {
-        "norte": {
-          "name": "Norte",
-          "tournaments": [
-            {
-              "num": 1, "name": "1º Torneio Drive Tour Norte", "date": "2026-01-04", "campo": "Estela GC",
-              "url": "", "ccode": "", "tcode": "",
-              "results": [
-                { "pos": 1, "name": "João Silva", "fed": "50001", "club": "Estela GC", "gross": 78, "net": 68, "points": null },
-                { "pos": 2, "name": "Miguel Costa", "fed": "50002", "club": "Oporto GC", "gross": 80, "net": 70, "points": null },
-                { "pos": 3, "name": "Pedro Santos", "fed": "50003", "club": "Ponte de Lima", "gross": 82, "net": 71, "points": null },
-                { "pos": 4, "name": "Tiago Oliveira", "fed": "50004", "club": "Amarante GC", "gross": 84, "net": 73, "points": null },
-                { "pos": 5, "name": "Rui Pereira", "fed": "50005", "club": "Vale Pisão", "gross": 85, "net": 74, "points": null },
-                { "pos": 6, "name": "André Ferreira", "fed": "50006", "club": "Miramar", "gross": 87, "net": 75, "points": null }
-              ]
-            },
-            {
-              "num": 2, "name": "2º Torneio Drive Tour Norte", "date": "2026-02-01", "campo": "Amarante",
-              "url": "", "ccode": "", "tcode": "",
-              "results": [
-                { "pos": 1, "name": "Miguel Costa", "fed": "50002", "club": "Oporto GC", "gross": 76, "net": 66, "points": null },
-                { "pos": 2, "name": "João Silva", "fed": "50001", "club": "Estela GC", "gross": 79, "net": 69, "points": null },
-                { "pos": 3, "name": "Tiago Oliveira", "fed": "50004", "club": "Amarante GC", "gross": 81, "net": 70, "points": null },
-                { "pos": 4, "name": "Rui Pereira", "fed": "50005", "club": "Vale Pisão", "gross": 83, "net": 72, "points": null },
-                { "pos": 5, "name": "Pedro Santos", "fed": "50003", "club": "Ponte de Lima", "gross": 85, "net": 74, "points": null },
-                { "pos": 6, "name": "André Ferreira", "fed": "50006", "club": "Miramar", "gross": 88, "net": 76, "points": null }
-              ]
-            },
-            {
-              "num": 3, "name": "3º Torneio Drive Tour Norte", "date": "2026-02-28", "campo": "Vale Pisão",
-              "url": "", "ccode": "", "tcode": "", "results": []
-            },
-            {
-              "num": 4, "name": "4º Torneio Drive Tour Norte", "date": "2026-04-19", "campo": "Ponte de Lima",
-              "url": "", "ccode": "", "tcode": "", "results": []
-            }
-          ],
-          "ranking": []
+  "source": "scoring.datagolf.pt",
+  "totalTournaments": 24,
+  "totalPlayers": 228,
+  "totalScorecards": 0,
+  "tournaments": [
+    {
+      "name": "3º Torneio Drive Tour Norte – Vale Pisão",
+      "ccode": "987",
+      "tcode": "10208",
+      "series": "tour",
+      "region": "norte",
+      "escalao": null,
+      "num": 3,
+      "playerCount": 51,
+      "players": [
+        {
+          "scoreId": "4276",
+          "pos": "1",
+          "name": "Santiago Dias",
+          "club": "Oporto",
+          "grossTotal": "67",
+          "toPar": "-7",
+          "scores": []
         },
-        "centro": {
-          "name": "Centro / Tejo",
-          "tournaments": [
-            {
-              "num": 1, "name": "1º Torneio Drive Tour Tejo", "date": "2026-01-04", "campo": "Montado",
-              "url": "", "ccode": "", "tcode": "",
-              "results": [
-                { "pos": 1, "name": "Gonçalo Reis", "fed": "50010", "club": "Montado GC", "gross": 77, "net": 67, "points": null },
-                { "pos": 2, "name": "Bernardo Lopes", "fed": "50011", "club": "Belas CC", "gross": 79, "net": 69, "points": null },
-                { "pos": 3, "name": "Duarte Mendes", "fed": "50012", "club": "Lisbon SC", "gross": 81, "net": 70, "points": null },
-                { "pos": 4, "name": "Afonso Marques", "fed": "50013", "club": "St. Estêvão", "gross": 83, "net": 72, "points": null },
-                { "pos": 5, "name": "Tomás Almeida", "fed": "50014", "club": "Aroeira", "gross": 86, "net": 74, "points": null }
-              ]
-            },
-            {
-              "num": 2, "name": "2º Torneio Drive Tour Tejo", "date": "2026-01-31", "campo": "Belas",
-              "url": "", "ccode": "", "tcode": "",
-              "results": [
-                { "pos": 1, "name": "Duarte Mendes", "fed": "50012", "club": "Lisbon SC", "gross": 75, "net": 64, "points": null },
-                { "pos": 2, "name": "Gonçalo Reis", "fed": "50010", "club": "Montado GC", "gross": 78, "net": 68, "points": null },
-                { "pos": 3, "name": "Bernardo Lopes", "fed": "50011", "club": "Belas CC", "gross": 80, "net": 70, "points": null },
-                { "pos": 4, "name": "Tomás Almeida", "fed": "50014", "club": "Aroeira", "gross": 82, "net": 71, "points": null },
-                { "pos": 5, "name": "Afonso Marques", "fed": "50013", "club": "St. Estêvão", "gross": 85, "net": 74, "points": null }
-              ]
-            },
-            { "num": 3, "name": "3º Torneio Drive Tour Tejo", "date": "2026-03-28", "campo": "St. Estêvão", "url": "", "ccode": "", "tcode": "", "results": [] },
-            { "num": 4, "name": "4º Torneio Drive Tour Tejo", "date": "2026-04-12", "campo": "Lisbon SC", "url": "", "ccode": "", "tcode": "", "results": [] }
-          ],
-          "ranking": []
+        {
+          "scoreId": "4271",
+          "pos": "2",
+          "name": "Luis António Silva",
+          "club": "Oporto",
+          "grossTotal": "72",
+          "toPar": "-2",
+          "scores": []
         },
-        "sul": {
-          "name": "Sul",
-          "tournaments": [
-            {
-              "num": 1, "name": "1º Torneio Drive Tour Sul", "date": "2026-01-11", "campo": "Laguna GC",
-              "url": "", "ccode": "", "tcode": "",
-              "results": [
-                { "pos": 1, "name": "Rafael Nunes", "fed": "50020", "club": "Laguna GC", "gross": 74, "net": 64, "points": null },
-                { "pos": 2, "name": "Diogo Tavares", "fed": "50021", "club": "Vila Sol", "gross": 76, "net": 66, "points": null },
-                { "pos": 3, "name": "Martim Cardoso", "fed": "50022", "club": "Penina", "gross": 78, "net": 68, "points": null },
-                { "pos": 4, "name": "Francisco Ribeiro", "fed": "50023", "club": "Boavista", "gross": 80, "net": 69, "points": null }
-              ]
-            },
-            {
-              "num": 2, "name": "2º Torneio Drive Tour Sul", "date": "2026-02-01", "campo": "Vila Sol",
-              "url": "", "ccode": "", "tcode": "",
-              "results": [
-                { "pos": 1, "name": "Diogo Tavares", "fed": "50021", "club": "Vila Sol", "gross": 73, "net": 63, "points": null },
-                { "pos": 2, "name": "Rafael Nunes", "fed": "50020", "club": "Laguna GC", "gross": 77, "net": 67, "points": null },
-                { "pos": 3, "name": "Francisco Ribeiro", "fed": "50023", "club": "Boavista", "gross": 79, "net": 68, "points": null },
-                { "pos": 4, "name": "Martim Cardoso", "fed": "50022", "club": "Penina", "gross": 82, "net": 71, "points": null }
-              ]
-            },
-            { "num": 3, "name": "3º Torneio Drive Tour Sul", "date": "2026-04-04", "campo": "Penina", "url": "", "ccode": "", "tcode": "", "results": [] },
-            { "num": 4, "name": "4º Torneio Drive Tour Sul", "date": "2026-06-10", "campo": "Boavista", "url": "", "ccode": "", "tcode": "", "results": [] }
-          ],
-          "ranking": []
+        {
+          "scoreId": "4285",
+          "pos": "3",
+          "name": "Maria Loureiro",
+          "club": "Oporto",
+          "grossTotal": "77",
+          "toPar": "+3",
+          "scores": []
         },
-        "madeira": {
-          "name": "Madeira",
-          "tournaments": [
-            {
-              "num": 1, "name": "1º Torneio Drive Tour Madeira", "date": "2026-01-03", "campo": "Palheiro Golf",
-              "url": "", "ccode": "", "tcode": "",
-              "results": [
-                { "pos": 1, "name": "Manuel Medeiros", "fed": "52884", "club": "CGSS", "gross": 80, "net": 70, "points": null },
-                { "pos": 2, "name": "Santiago Abreu", "fed": "50030", "club": "CGSS", "gross": 83, "net": 72, "points": null },
-                { "pos": 3, "name": "Rodrigo Freitas", "fed": "50031", "club": "Porto Santo GC", "gross": 85, "net": 73, "points": null },
-                { "pos": 4, "name": "Lucas Fernandes", "fed": "50032", "club": "Palheiro Golf", "gross": 87, "net": 75, "points": null },
-                { "pos": 5, "name": "Henrique Sousa", "fed": "50033", "club": "CGSS", "gross": 90, "net": 77, "points": null }
-              ]
-            },
-            {
-              "num": 2, "name": "2º Torneio Drive Tour Madeira", "date": "2026-02-07", "campo": "Santo da Serra",
-              "url": "", "ccode": "", "tcode": "",
-              "results": [
-                { "pos": 1, "name": "Santiago Abreu", "fed": "50030", "club": "CGSS", "gross": 79, "net": 68, "points": null },
-                { "pos": 2, "name": "Manuel Medeiros", "fed": "52884", "club": "CGSS", "gross": 82, "net": 72, "points": null },
-                { "pos": 3, "name": "Lucas Fernandes", "fed": "50032", "club": "Palheiro Golf", "gross": 84, "net": 72, "points": null },
-                { "pos": 4, "name": "Rodrigo Freitas", "fed": "50031", "club": "Porto Santo GC", "gross": 86, "net": 74, "points": null },
-                { "pos": 5, "name": "Henrique Sousa", "fed": "50033", "club": "CGSS", "gross": 89, "net": 76, "points": null }
-              ]
-            },
-            { "num": 3, "name": "3º Torneio Drive Tour Madeira", "date": "2026-03-07", "campo": "Palheiro Golf", "url": "", "ccode": "", "tcode": "", "results": [] },
-            { "num": 4, "name": "4º Torneio Drive Tour Madeira", "date": "2026-04-11", "campo": "Porto Santo Golfe", "url": "", "ccode": "", "tcode": "", "results": [] }
-          ],
-          "ranking": []
+        {
+          "scoreId": "4272",
+          "pos": "4",
+          "name": "Pedro Ferreira",
+          "club": "Oporto",
+          "grossTotal": "79",
+          "toPar": "+5",
+          "scores": []
+        },
+        {
+          "scoreId": "4274",
+          "pos": "5",
+          "name": "Eva Silva",
+          "club": "Oporto",
+          "grossTotal": "79",
+          "toPar": "+5",
+          "scores": []
+        },
+        {
+          "scoreId": "4283",
+          "pos": "6",
+          "name": "Francisco Nunes (jr)",
+          "club": "Miramar",
+          "grossTotal": "80",
+          "toPar": "+6",
+          "scores": []
+        },
+        {
+          "scoreId": "4273",
+          "pos": "7",
+          "name": "Gaspard Maes",
+          "club": "Miramar",
+          "grossTotal": "80",
+          "toPar": "+6",
+          "scores": []
+        },
+        {
+          "scoreId": "4280",
+          "pos": "8",
+          "name": "Gabriel Marques Guerreiro",
+          "club": "Estela",
+          "grossTotal": "81",
+          "toPar": "+7",
+          "scores": []
+        },
+        {
+          "scoreId": "4279",
+          "pos": "9",
+          "name": "Margarida Silva Pinto",
+          "club": "Miramar",
+          "grossTotal": "81",
+          "toPar": "+7",
+          "scores": []
+        },
+        {
+          "scoreId": "4278",
+          "pos": "10",
+          "name": "Maria Francisca Santos",
+          "club": "Oporto",
+          "grossTotal": "81",
+          "toPar": "+7",
+          "scores": []
+        },
+        {
+          "scoreId": "4284",
+          "pos": "11",
+          "name": "Tomás Rente",
+          "club": "Miramar",
+          "grossTotal": "81",
+          "toPar": "+7",
+          "scores": []
+        },
+        {
+          "scoreId": "4301",
+          "pos": "12",
+          "name": "Lucas Pereira Amorim",
+          "club": "Oporto",
+          "grossTotal": "83",
+          "toPar": "+9",
+          "scores": []
+        },
+        {
+          "scoreId": "4277",
+          "pos": "13",
+          "name": "Camila Pazos",
+          "club": "Miramar",
+          "grossTotal": "83",
+          "toPar": "+9",
+          "scores": []
+        },
+        {
+          "scoreId": "4296",
+          "pos": "14",
+          "name": "Marc Costa",
+          "club": "Citynorte",
+          "grossTotal": "84",
+          "toPar": "+10",
+          "scores": []
+        },
+        {
+          "scoreId": "4282",
+          "pos": "15",
+          "name": "Sebastiao Sardinha Saraiva",
+          "club": "Oporto",
+          "grossTotal": "84",
+          "toPar": "+10",
+          "scores": []
+        },
+        {
+          "scoreId": "4292",
+          "pos": "16",
+          "name": "Afonso de Sousa Pinto",
+          "club": "Oporto",
+          "grossTotal": "84",
+          "toPar": "+10",
+          "scores": []
+        },
+        {
+          "scoreId": "4311",
+          "pos": "17",
+          "name": "André Von Hafe",
+          "club": "Estela",
+          "grossTotal": "84",
+          "toPar": "+10",
+          "scores": []
+        },
+        {
+          "scoreId": "4288",
+          "pos": "18",
+          "name": "Jorge Xavier Graça Silva",
+          "club": "Oporto",
+          "grossTotal": "85",
+          "toPar": "+11",
+          "scores": []
+        },
+        {
+          "scoreId": "4314",
+          "pos": "19",
+          "name": "Manuel Dias",
+          "club": "Braga",
+          "grossTotal": "85",
+          "toPar": "+11",
+          "scores": []
+        },
+        {
+          "scoreId": "4295",
+          "pos": "20",
+          "name": "Henrique Pereira",
+          "club": "Miramar",
+          "grossTotal": "85",
+          "toPar": "+11",
+          "scores": []
+        },
+        {
+          "scoreId": "4291",
+          "pos": "21",
+          "name": "João Balixa",
+          "club": "Miramar",
+          "grossTotal": "86",
+          "toPar": "+12",
+          "scores": []
+        },
+        {
+          "scoreId": "4281",
+          "pos": "22",
+          "name": "Afonso Silva Pinto",
+          "club": "Miramar",
+          "grossTotal": "87",
+          "toPar": "+13",
+          "scores": []
+        },
+        {
+          "scoreId": "4287",
+          "pos": "23",
+          "name": "Teresa Ferreira",
+          "club": "Oporto",
+          "grossTotal": "88",
+          "toPar": "+14",
+          "scores": []
+        },
+        {
+          "scoreId": "4289",
+          "pos": "24",
+          "name": "Francisco Saraiva",
+          "club": "Oporto",
+          "grossTotal": "89",
+          "toPar": "+15",
+          "scores": []
+        },
+        {
+          "scoreId": "4290",
+          "pos": "25",
+          "name": "António Maria Cavalinhos",
+          "club": "Miramar",
+          "grossTotal": "89",
+          "toPar": "+15",
+          "scores": []
+        },
+        {
+          "scoreId": "4293",
+          "pos": "26",
+          "name": "Raul Pazos (jr)",
+          "club": "Miramar",
+          "grossTotal": "90",
+          "toPar": "+16",
+          "scores": []
+        },
+        {
+          "scoreId": "4321",
+          "pos": "27",
+          "name": "Eduardo Rocha Ferreira",
+          "club": "Miramar",
+          "grossTotal": "90",
+          "toPar": "+16",
+          "scores": []
+        },
+        {
+          "scoreId": "4299",
+          "pos": "28",
+          "name": "Afonso Paiva Gonçalves",
+          "club": "Citynorte",
+          "grossTotal": "91",
+          "toPar": "+17",
+          "scores": []
+        },
+        {
+          "scoreId": "4286",
+          "pos": "29",
+          "name": "João Araújo",
+          "club": "Citynorte",
+          "grossTotal": "91",
+          "toPar": "+17",
+          "scores": []
+        },
+        {
+          "scoreId": "4294",
+          "pos": "30",
+          "name": "Diogo Lima",
+          "club": "Citynorte",
+          "grossTotal": "92",
+          "toPar": "+18",
+          "scores": []
+        },
+        {
+          "scoreId": "4297",
+          "pos": "31",
+          "name": "Sebastião Soares",
+          "club": "Oporto",
+          "grossTotal": "92",
+          "toPar": "+18",
+          "scores": []
+        },
+        {
+          "scoreId": "4300",
+          "pos": "32",
+          "name": "Manuel Rouco Castro",
+          "club": "Estela",
+          "grossTotal": "93",
+          "toPar": "+19",
+          "scores": []
+        },
+        {
+          "scoreId": "4310",
+          "pos": "33",
+          "name": "Pedro Luís Fernandes",
+          "club": "Citynorte",
+          "grossTotal": "93",
+          "toPar": "+19",
+          "scores": []
+        },
+        {
+          "scoreId": "4308",
+          "pos": "34",
+          "name": "Ricardo Rocha Ferreira",
+          "club": "Miramar",
+          "grossTotal": "95",
+          "toPar": "+21",
+          "scores": []
+        },
+        {
+          "scoreId": "4303",
+          "pos": "35",
+          "name": "Rafael Nogueira",
+          "club": "Paredes",
+          "grossTotal": "96",
+          "toPar": "+22",
+          "scores": []
+        },
+        {
+          "scoreId": "4318",
+          "pos": "36",
+          "name": "José Maria Pereira",
+          "club": "Miramar",
+          "grossTotal": "96",
+          "toPar": "+22",
+          "scores": []
+        },
+        {
+          "scoreId": "4306",
+          "pos": "37",
+          "name": "Tomás Sarmento de Beires",
+          "club": "Citynorte",
+          "grossTotal": "97",
+          "toPar": "+23",
+          "scores": []
+        },
+        {
+          "scoreId": "4304",
+          "pos": "38",
+          "name": "Tomás Araújo",
+          "club": "Citynorte",
+          "grossTotal": "97",
+          "toPar": "+23",
+          "scores": []
+        },
+        {
+          "scoreId": "4305",
+          "pos": "39",
+          "name": "Afonso Polery",
+          "club": "Estela",
+          "grossTotal": "97",
+          "toPar": "+23",
+          "scores": []
+        },
+        {
+          "scoreId": "4315",
+          "pos": "40",
+          "name": "Catarina Loureiro",
+          "club": "Oporto",
+          "grossTotal": "102",
+          "toPar": "+28",
+          "scores": []
+        },
+        {
+          "scoreId": "4316",
+          "pos": "41",
+          "name": "António Pereira Mendes",
+          "club": "Estela",
+          "grossTotal": "103",
+          "toPar": "+29",
+          "scores": []
+        },
+        {
+          "scoreId": "4298",
+          "pos": "42",
+          "name": "Guido Martins Gonçalves",
+          "club": "Quinta Lágrimas",
+          "grossTotal": "105",
+          "toPar": "+31",
+          "scores": []
+        },
+        {
+          "scoreId": "4319",
+          "pos": "43",
+          "name": "João Pedro Frade",
+          "club": "Citynorte",
+          "grossTotal": "108",
+          "toPar": "+34",
+          "scores": []
+        },
+        {
+          "scoreId": "4317",
+          "pos": "44",
+          "name": "Matias Carepa",
+          "club": "Citynorte",
+          "grossTotal": "109",
+          "toPar": "+35",
+          "scores": []
+        },
+        {
+          "scoreId": "4307",
+          "pos": "45",
+          "name": "Nuno Bessa",
+          "club": "Vale Pisão",
+          "grossTotal": "110",
+          "toPar": "+36",
+          "scores": []
+        },
+        {
+          "scoreId": "4320",
+          "pos": "46",
+          "name": "Leonardo Ferreira",
+          "club": "Paredes",
+          "grossTotal": "112",
+          "toPar": "+38",
+          "scores": []
+        },
+        {
+          "scoreId": "4313",
+          "pos": "47",
+          "name": "Gil Martins Gonçalves",
+          "club": "Quinta Lágrimas",
+          "grossTotal": "114",
+          "toPar": "+40",
+          "scores": []
+        },
+        {
+          "scoreId": "4309",
+          "pos": "48",
+          "name": "Gustavo Castro",
+          "club": "Paredes",
+          "grossTotal": "114",
+          "toPar": "+40",
+          "scores": []
+        },
+        {
+          "scoreId": "4323",
+          "pos": "49",
+          "name": "Gabriel Guimarães Mota",
+          "club": "Estela",
+          "grossTotal": "115",
+          "toPar": "+41",
+          "scores": []
+        },
+        {
+          "scoreId": "4312",
+          "pos": "50",
+          "name": "Dinis Seabra",
+          "club": "Oporto",
+          "grossTotal": "116",
+          "toPar": "+42",
+          "scores": []
+        },
+        {
+          "scoreId": "4322",
+          "pos": "51",
+          "name": "Ricardo Ferreira",
+          "club": "Oporto",
+          "grossTotal": "125",
+          "toPar": "+51",
+          "scores": []
         }
-      }
+      ]
     },
-    "drive_challenge": {
-      "name": "Drive Challenge",
-      "regions": {
-        "madeira": {
-          "name": "Madeira",
-          "tournaments": [
-            {
-              "num": 1, "name": "1º Torneio Drive Challenge Madeira", "date": "2026-01-04", "campo": "Palheiro",
-              "url": "", "ccode": "", "tcode": "",
-              "results": [
-                { "pos": 1, "name": "Manuel Medeiros", "fed": "52884", "club": "CGSS", "gross": 82, "net": 72, "points": null },
-                { "pos": 2, "name": "Santiago Abreu", "fed": "50030", "club": "CGSS", "gross": 84, "net": 73, "points": null },
-                { "pos": 3, "name": "Rodrigo Freitas", "fed": "50031", "club": "Porto Santo GC", "gross": 87, "net": 75, "points": null }
-              ]
-            },
-            {
-              "num": 2, "name": "2º Torneio Drive Challenge Madeira", "date": "2026-02-08", "campo": "Santo da Serra",
-              "url": "", "ccode": "", "tcode": "",
-              "results": [
-                { "pos": 1, "name": "Santiago Abreu", "fed": "50030", "club": "CGSS", "gross": 81, "net": 70, "points": null },
-                { "pos": 2, "name": "Manuel Medeiros", "fed": "52884", "club": "CGSS", "gross": 83, "net": 73, "points": null },
-                { "pos": 3, "name": "Rodrigo Freitas", "fed": "50031", "club": "Porto Santo GC", "gross": 86, "net": 74, "points": null }
-              ]
-            },
-            { "num": 3, "name": "3º Torneio Drive Challenge Madeira", "date": "2026-05-24", "campo": "Palheiro", "url": "", "ccode": "", "tcode": "", "results": [] },
-            { "num": 4, "name": "4º Torneio Drive Challenge Madeira", "date": "2026-04-12", "campo": "Porto Santo", "url": "", "ccode": "", "tcode": "", "results": [] },
-            { "num": 5, "name": "5º Torneio Drive Challenge Madeira", "date": "2026-03-08", "campo": "Santo da Serra", "url": "", "ccode": "", "tcode": "", "results": [] },
-            { "num": 6, "name": "6º Torneio Drive Challenge Madeira", "date": "2026-06-28", "campo": "Porto Santo", "url": "", "ccode": "", "tcode": "", "results": [] },
-            { "num": 7, "name": "7º Torneio Drive Challenge Madeira", "date": "2026-07-11", "campo": "Santo da Serra", "url": "", "ccode": "", "tcode": "", "results": [] }
-          ],
-          "ranking": []
+    {
+      "name": "2º Torneio Drive Tour Madeira - Santo da Serra",
+      "ccode": "982",
+      "tcode": "10199",
+      "series": "tour",
+      "region": "madeira",
+      "escalao": null,
+      "num": 2,
+      "playerCount": 13,
+      "players": [
+        {
+          "scoreId": "1677",
+          "pos": "1",
+          "name": "Matilde Leal Gouveia",
+          "club": "Santo da Serra",
+          "grossTotal": "74",
+          "toPar": "+2",
+          "scores": []
+        },
+        {
+          "scoreId": "1679",
+          "pos": "2",
+          "name": "Salvador Rodrigues",
+          "club": "Palheiro",
+          "grossTotal": "79",
+          "toPar": "+7",
+          "scores": []
+        },
+        {
+          "scoreId": "1680",
+          "pos": "3",
+          "name": "André Gonçalves",
+          "club": "Palheiro",
+          "grossTotal": "81",
+          "toPar": "+9",
+          "scores": []
+        },
+        {
+          "scoreId": "1681",
+          "pos": "4",
+          "name": "José Pedro Miranda",
+          "club": "Palheiro",
+          "grossTotal": "82",
+          "toPar": "+10",
+          "scores": []
+        },
+        {
+          "scoreId": "1678",
+          "pos": "5",
+          "name": "Maria Cunha",
+          "club": "Palheiro",
+          "grossTotal": "84",
+          "toPar": "+12",
+          "scores": []
+        },
+        {
+          "scoreId": "1684",
+          "pos": "6",
+          "name": "Maria Câmara",
+          "club": "Santo da Serra",
+          "grossTotal": "85",
+          "toPar": "+13",
+          "scores": []
+        },
+        {
+          "scoreId": "1682",
+          "pos": "7",
+          "name": "Marcelo Gaspar",
+          "club": "Santo da Serra",
+          "grossTotal": "86",
+          "toPar": "+14",
+          "scores": []
+        },
+        {
+          "scoreId": "1685",
+          "pos": "8",
+          "name": "Rodrigo Abreu",
+          "club": "Palheiro",
+          "grossTotal": "86",
+          "toPar": "+14",
+          "scores": []
+        },
+        {
+          "scoreId": "1689",
+          "pos": "9",
+          "name": "Manuel Gouveia",
+          "club": "Santo da Serra",
+          "grossTotal": "89",
+          "toPar": "+17",
+          "scores": []
+        },
+        {
+          "scoreId": "1688",
+          "pos": "10",
+          "name": "Vasco Leal Gouveia",
+          "club": "Santo da Serra",
+          "grossTotal": "92",
+          "toPar": "+20",
+          "scores": []
+        },
+        {
+          "scoreId": "1687",
+          "pos": "11",
+          "name": "Mateus Penucho",
+          "club": "Santo da Serra",
+          "grossTotal": "93",
+          "toPar": "+21",
+          "scores": []
+        },
+        {
+          "scoreId": "1686",
+          "pos": "12",
+          "name": "Manuel Goulartt Medeiros",
+          "club": "Santo da Serra",
+          "grossTotal": "94",
+          "toPar": "+22",
+          "scores": []
+        },
+        {
+          "scoreId": "1690",
+          "pos": "13",
+          "name": "Gonçalo Gouveia",
+          "club": "Santo da Serra",
+          "grossTotal": "96",
+          "toPar": "+24",
+          "scores": []
         }
-      }
+      ]
+    },
+    {
+      "name": "2º Torneio Drive Tour Sul – Vila Sol",
+      "ccode": "988",
+      "tcode": "10293",
+      "series": "tour",
+      "region": "sul",
+      "escalao": null,
+      "num": 2,
+      "playerCount": 24,
+      "players": [
+        {
+          "scoreId": "2982",
+          "pos": "1",
+          "name": "Joe Short",
+          "club": "Vila Sol",
+          "grossTotal": "79",
+          "toPar": "+7",
+          "scores": []
+        },
+        {
+          "scoreId": "2976",
+          "pos": "2",
+          "name": "Ethan Prybys Orton",
+          "club": "Vila Sol",
+          "grossTotal": "80",
+          "toPar": "+8",
+          "scores": []
+        },
+        {
+          "scoreId": "2981",
+          "pos": "3",
+          "name": "Finn Gordon",
+          "club": "Vilamoura, C. G",
+          "grossTotal": "81",
+          "toPar": "+9",
+          "scores": []
+        },
+        {
+          "scoreId": "2977",
+          "pos": "4",
+          "name": "Matteo Balzer",
+          "club": "Amendoeira",
+          "grossTotal": "82",
+          "toPar": "+10",
+          "scores": []
+        },
+        {
+          "scoreId": "2975",
+          "pos": "5",
+          "name": "Martim Pinto Johansen",
+          "club": "Vilamoura, C. G",
+          "grossTotal": "82",
+          "toPar": "+10",
+          "scores": []
+        },
+        {
+          "scoreId": "2988",
+          "pos": "6",
+          "name": "Beau Delfortrie",
+          "club": "Vila Sol",
+          "grossTotal": "83",
+          "toPar": "+11",
+          "scores": []
+        },
+        {
+          "scoreId": "2980",
+          "pos": "7",
+          "name": "Ashton Everest",
+          "club": "Vilamoura, C. G",
+          "grossTotal": "84",
+          "toPar": "+12",
+          "scores": []
+        },
+        {
+          "scoreId": "2979",
+          "pos": "8",
+          "name": "Ethan Sutherland",
+          "club": "Vila Sol",
+          "grossTotal": "85",
+          "toPar": "+13",
+          "scores": []
+        },
+        {
+          "scoreId": "2990",
+          "pos": "9",
+          "name": "José Silva",
+          "club": "Amendoeira",
+          "grossTotal": "85",
+          "toPar": "+13",
+          "scores": []
+        },
+        {
+          "scoreId": "2987",
+          "pos": "10",
+          "name": "Ethan Hutchinson",
+          "club": "Assoc. Qta.Lago",
+          "grossTotal": "88",
+          "toPar": "+16",
+          "scores": []
+        },
+        {
+          "scoreId": "2991",
+          "pos": "11",
+          "name": "Jack Brando",
+          "club": "Vila Sol",
+          "grossTotal": "89",
+          "toPar": "+17",
+          "scores": []
+        },
+        {
+          "scoreId": "2995",
+          "pos": "12",
+          "name": "Marek Pejas",
+          "club": "Vilamoura, C. G",
+          "grossTotal": "93",
+          "toPar": "+21",
+          "scores": []
+        },
+        {
+          "scoreId": "2985",
+          "pos": "13",
+          "name": "Miguel Silva",
+          "club": "Amendoeira",
+          "grossTotal": "94",
+          "toPar": "+22",
+          "scores": []
+        },
+        {
+          "scoreId": "2983",
+          "pos": "14",
+          "name": "Sabrina Ribeiro Crisóstomo",
+          "club": "Vilamoura, C. G",
+          "grossTotal": "95",
+          "toPar": "+23",
+          "scores": []
+        },
+        {
+          "scoreId": "2989",
+          "pos": "15",
+          "name": "Catarina Sousa Conceição",
+          "club": "Vilamoura, C. G",
+          "grossTotal": "97",
+          "toPar": "+25",
+          "scores": []
+        },
+        {
+          "scoreId": "2996",
+          "pos": "16",
+          "name": "Gabriel Costa",
+          "club": "Amendoeira",
+          "grossTotal": "98",
+          "toPar": "+26",
+          "scores": []
+        },
+        {
+          "scoreId": "2997",
+          "pos": "17",
+          "name": "Ethan Van Vuuren Maciel",
+          "club": "Vila Sol",
+          "grossTotal": "98",
+          "toPar": "+26",
+          "scores": []
+        },
+        {
+          "scoreId": "2992",
+          "pos": "18",
+          "name": "Nicholas Cordeiro",
+          "club": "Vilamoura, C. G",
+          "grossTotal": "99",
+          "toPar": "+27",
+          "scores": []
+        },
+        {
+          "scoreId": "2994",
+          "pos": "19",
+          "name": "Carlotta Balzer",
+          "club": "Amendoeira",
+          "grossTotal": "102",
+          "toPar": "+30",
+          "scores": []
+        },
+        {
+          "scoreId": "2998",
+          "pos": "20",
+          "name": "Cole Hutchison",
+          "club": "Vila Sol",
+          "grossTotal": "109",
+          "toPar": "+37",
+          "scores": []
+        },
+        {
+          "scoreId": "2993",
+          "pos": "21",
+          "name": "Luke Samanek",
+          "club": "Vila Sol",
+          "grossTotal": "127",
+          "toPar": "+55",
+          "scores": []
+        },
+        {
+          "scoreId": "3001",
+          "pos": "NS",
+          "name": "Tomás Lima Pinto",
+          "club": "Vilamoura, C. G",
+          "grossTotal": "NS",
+          "toPar": "NS",
+          "scores": [],
+          "status": 99
+        },
+        {
+          "scoreId": "2999",
+          "pos": "NS",
+          "name": "Grace Gordon",
+          "club": "Vilamoura, C. G",
+          "grossTotal": "NS",
+          "toPar": "NS",
+          "scores": [],
+          "status": 99
+        },
+        {
+          "scoreId": "3000",
+          "pos": "NS",
+          "name": "Jack Murtagh",
+          "club": "Vilamoura, C. G",
+          "grossTotal": "NS",
+          "toPar": "NS",
+          "scores": [],
+          "status": 99
+        }
+      ]
+    },
+    {
+      "name": "2º Torn.Drive Challenge Madeira-Stº da Serra-Sub18",
+      "ccode": "982",
+      "tcode": "10211",
+      "series": "challenge",
+      "region": "madeira",
+      "escalao": "Sub 18",
+      "num": 2,
+      "playerCount": 6,
+      "players": [
+        {
+          "scoreId": "1694",
+          "pos": "1",
+          "name": "Rodrigo Abreu",
+          "club": "Palheiro",
+          "grossTotal": "37",
+          "toPar": "+1",
+          "scores": []
+        },
+        {
+          "scoreId": "1693",
+          "pos": "2",
+          "name": "Maria Câmara",
+          "club": "Santo da Serra",
+          "grossTotal": "39",
+          "toPar": "+3",
+          "scores": []
+        },
+        {
+          "scoreId": "1696",
+          "pos": "3",
+          "name": "Tomás Câmara",
+          "club": "PXO Clube",
+          "grossTotal": "39",
+          "toPar": "+3",
+          "scores": []
+        },
+        {
+          "scoreId": "1692",
+          "pos": "4",
+          "name": "Marcelo Gaspar",
+          "club": "Santo da Serra",
+          "grossTotal": "40",
+          "toPar": "+4",
+          "scores": []
+        },
+        {
+          "scoreId": "1695",
+          "pos": "5",
+          "name": "Martim Lima",
+          "club": "Santo da Serra",
+          "grossTotal": "41",
+          "toPar": "+5",
+          "scores": []
+        },
+        {
+          "scoreId": "1691",
+          "pos": "6",
+          "name": "André Gonçalves",
+          "club": "Palheiro",
+          "grossTotal": "42",
+          "toPar": "+6",
+          "scores": []
+        }
+      ]
+    },
+    {
+      "name": "2º Torn.Drive Challenge Madeira-Stº da Serra-Sub16",
+      "ccode": "982",
+      "tcode": "10210",
+      "series": "challenge",
+      "region": "madeira",
+      "escalao": "Sub 16",
+      "num": 2,
+      "playerCount": 6,
+      "players": [
+        {
+          "scoreId": "1697",
+          "pos": "1",
+          "name": "Salvador Rodrigues",
+          "club": "Palheiro",
+          "grossTotal": "35",
+          "toPar": "-1",
+          "scores": []
+        },
+        {
+          "scoreId": "1698",
+          "pos": "2",
+          "name": "José Pedro Miranda",
+          "club": "Palheiro",
+          "grossTotal": "42",
+          "toPar": "+6",
+          "scores": []
+        },
+        {
+          "scoreId": "1700",
+          "pos": "3",
+          "name": "Manuel Gouveia",
+          "club": "Santo da Serra",
+          "grossTotal": "45",
+          "toPar": "+9",
+          "scores": []
+        },
+        {
+          "scoreId": "1699",
+          "pos": "4",
+          "name": "Vasco Leal Gouveia",
+          "club": "Santo da Serra",
+          "grossTotal": "51",
+          "toPar": "+15",
+          "scores": []
+        },
+        {
+          "scoreId": "1701",
+          "pos": "5",
+          "name": "Lucas Duarte",
+          "club": "Palheiro",
+          "grossTotal": "61",
+          "toPar": "+25",
+          "scores": []
+        },
+        {
+          "scoreId": "1702",
+          "pos": "6",
+          "name": "Isabela Ramalho",
+          "club": "Palheiro",
+          "grossTotal": "70",
+          "toPar": "+34",
+          "scores": []
+        }
+      ]
+    },
+    {
+      "name": "2º Torn.Drive Challenge Madeira-Stº da Serra-Sub14",
+      "ccode": "982",
+      "tcode": "10209",
+      "series": "challenge",
+      "region": "madeira",
+      "escalao": "Sub 14",
+      "num": 2,
+      "playerCount": 8,
+      "players": [
+        {
+          "scoreId": "1703",
+          "pos": "1",
+          "name": "Mateus Penucho",
+          "club": "Santo da Serra",
+          "grossTotal": "39",
+          "toPar": "+3",
+          "scores": []
+        },
+        {
+          "scoreId": "1704",
+          "pos": "2",
+          "name": "Gonçalo Gouveia",
+          "club": "Santo da Serra",
+          "grossTotal": "42",
+          "toPar": "+6",
+          "scores": []
+        },
+        {
+          "scoreId": "1706",
+          "pos": "3",
+          "name": "Santiago Santos",
+          "club": "PXO Clube",
+          "grossTotal": "44",
+          "toPar": "+8",
+          "scores": []
+        },
+        {
+          "scoreId": "1709",
+          "pos": "4",
+          "name": "Mafalda Sousa",
+          "club": "Santo da Serra",
+          "grossTotal": "48",
+          "toPar": "+12",
+          "scores": []
+        },
+        {
+          "scoreId": "1705",
+          "pos": "5",
+          "name": "Rafael Brito",
+          "club": "PXO Clube",
+          "grossTotal": "50",
+          "toPar": "+14",
+          "scores": []
+        },
+        {
+          "scoreId": "1707",
+          "pos": "6",
+          "name": "Remi Petim",
+          "club": "Palheiro",
+          "grossTotal": "58",
+          "toPar": "+22",
+          "scores": []
+        },
+        {
+          "scoreId": "1708",
+          "pos": "7",
+          "name": "Rafael Teixeira",
+          "club": "Palheiro",
+          "grossTotal": "63",
+          "toPar": "+27",
+          "scores": []
+        },
+        {
+          "scoreId": "1710",
+          "pos": "NS",
+          "name": "Valter Fernandes",
+          "club": "Palheiro",
+          "grossTotal": "NS",
+          "toPar": "NS",
+          "scores": [],
+          "status": 99
+        }
+      ]
+    },
+    {
+      "name": "2º Torn.Drive Challenge Madeira-Stº da Serra-Sub12",
+      "ccode": "982",
+      "tcode": "10208",
+      "series": "challenge",
+      "region": "madeira",
+      "escalao": "Sub 12",
+      "num": 2,
+      "playerCount": 7,
+      "players": [
+        {
+          "scoreId": "1711",
+          "pos": "1",
+          "name": "Manuel Goulartt Medeiros",
+          "club": "Santo da Serra",
+          "grossTotal": "36",
+          "toPar": "PAR",
+          "scores": []
+        },
+        {
+          "scoreId": "1713",
+          "pos": "2",
+          "name": "Irís Costa",
+          "club": "Palheiro",
+          "grossTotal": "48",
+          "toPar": "+12",
+          "scores": []
+        },
+        {
+          "scoreId": "1715",
+          "pos": "3",
+          "name": "Nicolau Rodrigues",
+          "club": "PXO Clube",
+          "grossTotal": "54",
+          "toPar": "+18",
+          "scores": []
+        },
+        {
+          "scoreId": "1714",
+          "pos": "4",
+          "name": "António Goes",
+          "club": "Santo da Serra",
+          "grossTotal": "55",
+          "toPar": "+19",
+          "scores": []
+        },
+        {
+          "scoreId": "1712",
+          "pos": "5",
+          "name": "Miguel Vicente Mendes",
+          "club": "Santo da Serra",
+          "grossTotal": "58",
+          "toPar": "+22",
+          "scores": []
+        },
+        {
+          "scoreId": "1717",
+          "pos": "6",
+          "name": "Laura Temtem",
+          "club": "Santo da Serra",
+          "grossTotal": "68",
+          "toPar": "+32",
+          "scores": []
+        },
+        {
+          "scoreId": "1716",
+          "pos": "7",
+          "name": "Áurea Camacho",
+          "club": "Palheiro",
+          "grossTotal": "71",
+          "toPar": "+35",
+          "scores": []
+        }
+      ]
+    },
+    {
+      "name": "2º Torn.Drive Challenge Madeira-Stº da Serra-Sub10",
+      "ccode": "982",
+      "tcode": "10207",
+      "series": "challenge",
+      "region": "madeira",
+      "escalao": "Sub 10",
+      "num": 2,
+      "playerCount": 18,
+      "players": [
+        {
+          "scoreId": "1718",
+          "pos": "1",
+          "name": "Henrique Santana",
+          "club": "Santo da Serra",
+          "grossTotal": "43",
+          "toPar": "+7",
+          "scores": []
+        },
+        {
+          "scoreId": "1720",
+          "pos": "2",
+          "name": "Afonso Aniceto",
+          "club": "Santo da Serra",
+          "grossTotal": "46",
+          "toPar": "+10",
+          "scores": []
+        },
+        {
+          "scoreId": "1721",
+          "pos": "3",
+          "name": "Maximilian Luckhardt",
+          "club": "Palheiro",
+          "grossTotal": "54",
+          "toPar": "+18",
+          "scores": []
+        },
+        {
+          "scoreId": "1730",
+          "pos": "4",
+          "name": "Dominic Kowalczewski",
+          "club": "Santo da Serra",
+          "grossTotal": "54",
+          "toPar": "+18",
+          "scores": []
+        },
+        {
+          "scoreId": "1727",
+          "pos": "5",
+          "name": "Daniel Augusto",
+          "club": "PXO Clube",
+          "grossTotal": "55",
+          "toPar": "+19",
+          "scores": []
+        },
+        {
+          "scoreId": "1728",
+          "pos": "6",
+          "name": "João Lourenço Sousa",
+          "club": "Santo da Serra",
+          "grossTotal": "56",
+          "toPar": "+20",
+          "scores": []
+        },
+        {
+          "scoreId": "1719",
+          "pos": "7",
+          "name": "Manuel Silvério Marques",
+          "club": "Santo da Serra",
+          "grossTotal": "57",
+          "toPar": "+21",
+          "scores": []
+        },
+        {
+          "scoreId": "1726",
+          "pos": "8",
+          "name": "João Henriques de Freitas",
+          "club": "Palheiro",
+          "grossTotal": "58",
+          "toPar": "+22",
+          "scores": []
+        },
+        {
+          "scoreId": "1724",
+          "pos": "9",
+          "name": "José Eduardo Côrte",
+          "club": "Palheiro",
+          "grossTotal": "58",
+          "toPar": "+22",
+          "scores": []
+        },
+        {
+          "scoreId": "1735",
+          "pos": "10",
+          "name": "Francisco Freitas",
+          "club": "Santo da Serra",
+          "grossTotal": "59",
+          "toPar": "+23",
+          "scores": []
+        },
+        {
+          "scoreId": "1733",
+          "pos": "11",
+          "name": "Artur Sobrinho",
+          "club": "Santo da Serra",
+          "grossTotal": "60",
+          "toPar": "+24",
+          "scores": []
+        },
+        {
+          "scoreId": "1722",
+          "pos": "12",
+          "name": "Mikhail Bugaev",
+          "club": "Palheiro",
+          "grossTotal": "60",
+          "toPar": "+24",
+          "scores": []
+        },
+        {
+          "scoreId": "1734",
+          "pos": "13",
+          "name": "Manuel Goes",
+          "club": "Santo da Serra",
+          "grossTotal": "63",
+          "toPar": "+27",
+          "scores": []
+        },
+        {
+          "scoreId": "1729",
+          "pos": "14",
+          "name": "Lourenço Vasconcelos",
+          "club": "Palheiro",
+          "grossTotal": "63",
+          "toPar": "+27",
+          "scores": []
+        },
+        {
+          "scoreId": "1725",
+          "pos": "15",
+          "name": "Santiago Freitas",
+          "club": "Santo da Serra",
+          "grossTotal": "65",
+          "toPar": "+29",
+          "scores": []
+        },
+        {
+          "scoreId": "1732",
+          "pos": "16",
+          "name": "Matilde Teixeira",
+          "club": "Palheiro",
+          "grossTotal": "74",
+          "toPar": "+38",
+          "scores": []
+        },
+        {
+          "scoreId": "1731",
+          "pos": "17",
+          "name": "Gastão Thomaz Medeiros",
+          "club": "Santo da Serra",
+          "grossTotal": "76",
+          "toPar": "+40",
+          "scores": []
+        },
+        {
+          "scoreId": "1723",
+          "pos": "18",
+          "name": "Luis Miguel Alves",
+          "club": "Palheiro",
+          "grossTotal": "82",
+          "toPar": "+46",
+          "scores": []
+        }
+      ]
+    },
+    {
+      "name": "2º Torneio Drive Challenge Tejo-Montado - Sub 18",
+      "ccode": "985",
+      "tcode": "10215",
+      "series": "challenge",
+      "region": "tejo",
+      "escalao": "Sub 18",
+      "num": 2,
+      "playerCount": 3,
+      "players": [
+        {
+          "scoreId": "2926",
+          "pos": "1",
+          "name": "Tiago Lúcio",
+          "club": "Jamor C.G.",
+          "grossTotal": "51",
+          "toPar": "+15",
+          "scores": []
+        },
+        {
+          "scoreId": "2925",
+          "pos": "2",
+          "name": "Manuel Vaz Pinto",
+          "club": "Lisbon SC",
+          "grossTotal": "58",
+          "toPar": "+22",
+          "scores": []
+        },
+        {
+          "scoreId": "2927",
+          "pos": "3",
+          "name": "Rodrigo Diamantino Manso",
+          "club": "Lisbon SC",
+          "grossTotal": "64",
+          "toPar": "+28",
+          "scores": []
+        }
+      ]
+    },
+    {
+      "name": "2º Torneio Drive Challenge Tejo-Montado - Sub 16",
+      "ccode": "985",
+      "tcode": "10214",
+      "series": "challenge",
+      "region": "tejo",
+      "escalao": "Sub 16",
+      "num": 2,
+      "playerCount": 4,
+      "players": [
+        {
+          "scoreId": "2928",
+          "pos": "1",
+          "name": "João Pereira",
+          "club": "Quinta do Peru",
+          "grossTotal": "44",
+          "toPar": "+8",
+          "scores": []
+        },
+        {
+          "scoreId": "2930",
+          "pos": "2",
+          "name": "Salvador Paulo Rodrigues",
+          "club": "Quinta do Peru",
+          "grossTotal": "47",
+          "toPar": "+11",
+          "scores": []
+        },
+        {
+          "scoreId": "2929",
+          "pos": "3",
+          "name": "Francisco Rodrigues",
+          "club": "Belas",
+          "grossTotal": "53",
+          "toPar": "+17",
+          "scores": []
+        },
+        {
+          "scoreId": "2931",
+          "pos": "4",
+          "name": "Afonso Rocha",
+          "club": "Belas",
+          "grossTotal": "56",
+          "toPar": "+20",
+          "scores": []
+        }
+      ]
+    },
+    {
+      "name": "2º Torneio Drive Challenge Tejo-Montado - Sub 14",
+      "ccode": "985",
+      "tcode": "10213",
+      "series": "challenge",
+      "region": "tejo",
+      "escalao": "Sub 14",
+      "num": 2,
+      "playerCount": 12,
+      "players": [
+        {
+          "scoreId": "2938",
+          "pos": "1",
+          "name": "Andres Pava",
+          "club": "ACP Golfe",
+          "grossTotal": "42",
+          "toPar": "+6",
+          "scores": []
+        },
+        {
+          "scoreId": "2932",
+          "pos": "2",
+          "name": "Catarina Valério",
+          "club": "Vilamoura, C. G",
+          "grossTotal": "46",
+          "toPar": "+10",
+          "scores": []
+        },
+        {
+          "scoreId": "2943",
+          "pos": "3",
+          "name": "Matilde Bandeira",
+          "club": "Vale de Janelas",
+          "grossTotal": "50",
+          "toPar": "+14",
+          "scores": []
+        },
+        {
+          "scoreId": "2942",
+          "pos": "4",
+          "name": "Mário Novaes Moura",
+          "club": "Quinta do Peru",
+          "grossTotal": "50",
+          "toPar": "+14",
+          "scores": []
+        },
+        {
+          "scoreId": "2940",
+          "pos": "5",
+          "name": "Beatriz Mendes",
+          "club": "Quinta do Peru",
+          "grossTotal": "50",
+          "toPar": "+14",
+          "scores": []
+        },
+        {
+          "scoreId": "2936",
+          "pos": "6",
+          "name": "Harri Tiuleniev",
+          "club": "RIO",
+          "grossTotal": "51",
+          "toPar": "+15",
+          "scores": []
+        },
+        {
+          "scoreId": "2933",
+          "pos": "7",
+          "name": "Miguel Maria Neves Ferreira",
+          "club": "Estoril",
+          "grossTotal": "52",
+          "toPar": "+16",
+          "scores": []
+        },
+        {
+          "scoreId": "2935",
+          "pos": "8",
+          "name": "Lourenço Cid",
+          "club": "Lisbon SC",
+          "grossTotal": "53",
+          "toPar": "+17",
+          "scores": []
+        },
+        {
+          "scoreId": "2937",
+          "pos": "9",
+          "name": "David Cruz da Silva",
+          "club": "Belas",
+          "grossTotal": "54",
+          "toPar": "+18",
+          "scores": []
+        },
+        {
+          "scoreId": "2939",
+          "pos": "10",
+          "name": "David Stocksreiter Ferreira",
+          "club": "Lisbon SC",
+          "grossTotal": "56",
+          "toPar": "+20",
+          "scores": []
+        },
+        {
+          "scoreId": "2944",
+          "pos": "11",
+          "name": "Pedro Uva Peixoto",
+          "club": "Lisbon SC",
+          "grossTotal": "57",
+          "toPar": "+21",
+          "scores": []
+        },
+        {
+          "scoreId": "2934",
+          "pos": "12",
+          "name": "Ario Kiani",
+          "club": "Qta. Marinha",
+          "grossTotal": "57",
+          "toPar": "+21",
+          "scores": []
+        }
+      ]
+    },
+    {
+      "name": "2º Torneio Drive Challenge Tejo-Montado - Sub 12",
+      "ccode": "985",
+      "tcode": "10212",
+      "series": "challenge",
+      "region": "tejo",
+      "escalao": "Sub 12",
+      "num": 2,
+      "playerCount": 9,
+      "players": [
+        {
+          "scoreId": "2945",
+          "pos": "1",
+          "name": "Miguel Santos Pereira",
+          "club": "Vilamoura, C. G",
+          "grossTotal": "34",
+          "toPar": "-2",
+          "scores": []
+        },
+        {
+          "scoreId": "2946",
+          "pos": "2",
+          "name": "Tomás Valério",
+          "club": "Vilamoura, C. G",
+          "grossTotal": "44",
+          "toPar": "+8",
+          "scores": []
+        },
+        {
+          "scoreId": "2948",
+          "pos": "3",
+          "name": "Maria Luz",
+          "club": "Belas",
+          "grossTotal": "48",
+          "toPar": "+12",
+          "scores": []
+        },
+        {
+          "scoreId": "2949",
+          "pos": "4",
+          "name": "João Lima",
+          "club": "Villa Batalha",
+          "grossTotal": "49",
+          "toPar": "+13",
+          "scores": []
+        },
+        {
+          "scoreId": "2950",
+          "pos": "5",
+          "name": "Vicente Lima",
+          "club": "Lisbon SC",
+          "grossTotal": "52",
+          "toPar": "+16",
+          "scores": []
+        },
+        {
+          "scoreId": "2952",
+          "pos": "6",
+          "name": "António Ferreira Lobo",
+          "club": "ACP Golfe",
+          "grossTotal": "54",
+          "toPar": "+18",
+          "scores": []
+        },
+        {
+          "scoreId": "2951",
+          "pos": "7",
+          "name": "Diogo Cajus",
+          "club": "CGCUL",
+          "grossTotal": "54",
+          "toPar": "+18",
+          "scores": []
+        },
+        {
+          "scoreId": "2947",
+          "pos": "8",
+          "name": "António Vasco",
+          "club": "Vidago Palace C",
+          "grossTotal": "54",
+          "toPar": "+18",
+          "scores": []
+        },
+        {
+          "scoreId": "2953",
+          "pos": "9",
+          "name": "Tomás Martins Bruno",
+          "club": "Quinta do Peru",
+          "grossTotal": "58",
+          "toPar": "+22",
+          "scores": []
+        }
+      ]
+    },
+    {
+      "name": "2º Torneio Drive Challenge Tejo-Montado - Sub 10",
+      "ccode": "985",
+      "tcode": "10211",
+      "series": "challenge",
+      "region": "tejo",
+      "escalao": "Sub 10",
+      "num": 2,
+      "playerCount": 3,
+      "players": [
+        {
+          "scoreId": "2954",
+          "pos": "1",
+          "name": "Oskar Henze",
+          "club": "Lisbon SC",
+          "grossTotal": "47",
+          "toPar": "+11",
+          "scores": []
+        },
+        {
+          "scoreId": "2956",
+          "pos": "2",
+          "name": "Afonso Martins Bruno",
+          "club": "Quinta do Peru",
+          "grossTotal": "54",
+          "toPar": "+18",
+          "scores": []
+        },
+        {
+          "scoreId": "2955",
+          "pos": "3",
+          "name": "José Duarte Santana Lopes",
+          "club": "Lisbon SC",
+          "grossTotal": "66",
+          "toPar": "+30",
+          "scores": []
+        }
+      ]
+    },
+    {
+      "name": "2º Torneio Drive Challenge Sul – Laguna G.C Sub 18",
+      "ccode": "988",
+      "tcode": "10297",
+      "series": "challenge",
+      "region": "sul",
+      "escalao": "Sub 18",
+      "num": 2,
+      "playerCount": 3,
+      "players": [
+        {
+          "scoreId": "3002",
+          "pos": "1",
+          "name": "Yasmin Batista",
+          "club": "Amendoeira",
+          "grossTotal": "51",
+          "toPar": "+15",
+          "scores": []
+        },
+        {
+          "scoreId": "3004",
+          "pos": "2",
+          "name": "Érica Furtado",
+          "club": "Amendoeira",
+          "grossTotal": "55",
+          "toPar": "+19",
+          "scores": []
+        },
+        {
+          "scoreId": "3003",
+          "pos": "3",
+          "name": "Luca Passarella Bueno",
+          "club": "Vilamoura, C. G",
+          "grossTotal": "60",
+          "toPar": "+24",
+          "scores": []
+        }
+      ]
+    },
+    {
+      "name": "2º Torneio Drive Challenge Sul - Laguna G C Sub 16",
+      "ccode": "988",
+      "tcode": "10300",
+      "series": "challenge",
+      "region": "sul",
+      "escalao": "Sub 16",
+      "num": 2,
+      "playerCount": 13,
+      "players": [
+        {
+          "scoreId": "3008",
+          "pos": "1",
+          "name": "Ethan Hutchinson",
+          "club": "Assoc. Qta.Lago",
+          "grossTotal": "38",
+          "toPar": "+2",
+          "scores": []
+        },
+        {
+          "scoreId": "3005",
+          "pos": "2",
+          "name": "Miguel Silva",
+          "club": "Amendoeira",
+          "grossTotal": "41",
+          "toPar": "+5",
+          "scores": []
+        },
+        {
+          "scoreId": "3009",
+          "pos": "3",
+          "name": "Santiago Lázaro",
+          "club": "Vilamoura, C. G",
+          "grossTotal": "43",
+          "toPar": "+7",
+          "scores": []
+        },
+        {
+          "scoreId": "3006",
+          "pos": "4",
+          "name": "Beau Delfortrie",
+          "club": "Vila Sol",
+          "grossTotal": "44",
+          "toPar": "+8",
+          "scores": []
+        },
+        {
+          "scoreId": "3011",
+          "pos": "5",
+          "name": "Ethan Van Vuuren Maciel",
+          "club": "Vila Sol",
+          "grossTotal": "48",
+          "toPar": "+12",
+          "scores": []
+        },
+        {
+          "scoreId": "3010",
+          "pos": "6",
+          "name": "Luke Samanek",
+          "club": "Vila Sol",
+          "grossTotal": "52",
+          "toPar": "+16",
+          "scores": []
+        },
+        {
+          "scoreId": "3014",
+          "pos": "7",
+          "name": "Bobby Moriarty",
+          "club": "Assoc. Qta.Lago",
+          "grossTotal": "53",
+          "toPar": "+17",
+          "scores": []
+        },
+        {
+          "scoreId": "3016",
+          "pos": "8",
+          "name": "Vasco Cabral",
+          "club": "Vilamoura, C. G",
+          "grossTotal": "60",
+          "toPar": "+24",
+          "scores": []
+        },
+        {
+          "scoreId": "3017",
+          "pos": "9",
+          "name": "Sidharth Gauba",
+          "club": "Vila Sol",
+          "grossTotal": "61",
+          "toPar": "+25",
+          "scores": []
+        },
+        {
+          "scoreId": "3015",
+          "pos": "10",
+          "name": "Vir Runganadhan",
+          "club": "Vila Sol",
+          "grossTotal": "61",
+          "toPar": "+25",
+          "scores": []
+        },
+        {
+          "scoreId": "3012",
+          "pos": "11",
+          "name": "Diogo Paulo Lourenço",
+          "club": "Vilamoura, C. G",
+          "grossTotal": "62",
+          "toPar": "+26",
+          "scores": []
+        },
+        {
+          "scoreId": "3013",
+          "pos": "12",
+          "name": "João Dragão",
+          "club": "Vilamoura, C. G",
+          "grossTotal": "63",
+          "toPar": "+27",
+          "scores": []
+        },
+        {
+          "scoreId": "3007",
+          "pos": "DQ",
+          "name": "Kira Gonzalez Bernases",
+          "club": "RIO",
+          "grossTotal": "DQ",
+          "toPar": "DQ",
+          "scores": [],
+          "status": 30
+        }
+      ]
+    },
+    {
+      "name": "2º Torneio Drive Challenge Sul – Laguna G.C Sub 14",
+      "ccode": "988",
+      "tcode": "10296",
+      "series": "challenge",
+      "region": "sul",
+      "escalao": "Sub 14",
+      "num": 2,
+      "playerCount": 10,
+      "players": [
+        {
+          "scoreId": "3020",
+          "pos": "1",
+          "name": "José Silva",
+          "club": "Amendoeira",
+          "grossTotal": "41",
+          "toPar": "+5",
+          "scores": []
+        },
+        {
+          "scoreId": "3019",
+          "pos": "2",
+          "name": "Catarina Sousa Conceição",
+          "club": "Vilamoura, C. G",
+          "grossTotal": "41",
+          "toPar": "+5",
+          "scores": []
+        },
+        {
+          "scoreId": "3018",
+          "pos": "3",
+          "name": "Tomás Lima Pinto",
+          "club": "Vilamoura, C. G",
+          "grossTotal": "42",
+          "toPar": "+6",
+          "scores": []
+        },
+        {
+          "scoreId": "3022",
+          "pos": "4",
+          "name": "Cole Wall",
+          "club": "Vila Sol",
+          "grossTotal": "46",
+          "toPar": "+10",
+          "scores": []
+        },
+        {
+          "scoreId": "3021",
+          "pos": "5",
+          "name": "Carlotta Balzer",
+          "club": "Amendoeira",
+          "grossTotal": "47",
+          "toPar": "+11",
+          "scores": []
+        },
+        {
+          "scoreId": "3027",
+          "pos": "6",
+          "name": "Xavier Neves",
+          "club": "Espiche",
+          "grossTotal": "51",
+          "toPar": "+15",
+          "scores": []
+        },
+        {
+          "scoreId": "3026",
+          "pos": "7",
+          "name": "Vicente Fernandes Fernandes",
+          "club": "Amendoeira",
+          "grossTotal": "52",
+          "toPar": "+16",
+          "scores": []
+        },
+        {
+          "scoreId": "3025",
+          "pos": "8",
+          "name": "Florence Murtagh",
+          "club": "Vilamoura, C. G",
+          "grossTotal": "53",
+          "toPar": "+17",
+          "scores": []
+        },
+        {
+          "scoreId": "3023",
+          "pos": "9",
+          "name": "Noah Ruane",
+          "club": "Vila Sol",
+          "grossTotal": "54",
+          "toPar": "+18",
+          "scores": []
+        },
+        {
+          "scoreId": "3024",
+          "pos": "10",
+          "name": "Inês Pinheiro",
+          "club": "Espiche",
+          "grossTotal": "57",
+          "toPar": "+21",
+          "scores": []
+        }
+      ]
+    },
+    {
+      "name": "2º Torneio Drive Challenge Sul – Laguna G.C Sub 12",
+      "ccode": "988",
+      "tcode": "10295",
+      "series": "challenge",
+      "region": "sul",
+      "escalao": "Sub 12",
+      "num": 2,
+      "playerCount": 13,
+      "players": [
+        {
+          "scoreId": "3028",
+          "pos": "1",
+          "name": "Joe Short",
+          "club": "Vila Sol",
+          "grossTotal": "38",
+          "toPar": "+2",
+          "scores": []
+        },
+        {
+          "scoreId": "3030",
+          "pos": "2",
+          "name": "Marek Pejas",
+          "club": "Vilamoura, C. G",
+          "grossTotal": "40",
+          "toPar": "+4",
+          "scores": []
+        },
+        {
+          "scoreId": "3029",
+          "pos": "3",
+          "name": "Sabrina Ribeiro Crisóstomo",
+          "club": "Vilamoura, C. G",
+          "grossTotal": "40",
+          "toPar": "+4",
+          "scores": []
+        },
+        {
+          "scoreId": "3033",
+          "pos": "4",
+          "name": "Zeyn Lababedi",
+          "club": "Vila Sol",
+          "grossTotal": "44",
+          "toPar": "+8",
+          "scores": []
+        },
+        {
+          "scoreId": "3032",
+          "pos": "5",
+          "name": "Peter Yao",
+          "club": "Vilamoura, C. G",
+          "grossTotal": "45",
+          "toPar": "+9",
+          "scores": []
+        },
+        {
+          "scoreId": "3031",
+          "pos": "6",
+          "name": "Gabriel Costa",
+          "club": "Amendoeira",
+          "grossTotal": "46",
+          "toPar": "+10",
+          "scores": []
+        },
+        {
+          "scoreId": "3034",
+          "pos": "7",
+          "name": "Thea Jensen",
+          "club": "Vila Sol",
+          "grossTotal": "51",
+          "toPar": "+15",
+          "scores": []
+        },
+        {
+          "scoreId": "3038",
+          "pos": "8",
+          "name": "Maria Carolina Custodinho",
+          "club": "Vilamoura, C. G",
+          "grossTotal": "56",
+          "toPar": "+20",
+          "scores": []
+        },
+        {
+          "scoreId": "3039",
+          "pos": "9",
+          "name": "Thomas Starreveld",
+          "club": "Assoc. Qta.Lago",
+          "grossTotal": "57",
+          "toPar": "+21",
+          "scores": []
+        },
+        {
+          "scoreId": "3040",
+          "pos": "10",
+          "name": "Poppy Seabrook",
+          "club": "Vila Sol",
+          "grossTotal": "58",
+          "toPar": "+22",
+          "scores": []
+        },
+        {
+          "scoreId": "3037",
+          "pos": "11",
+          "name": "Harry Rowat",
+          "club": "Vila Sol",
+          "grossTotal": "59",
+          "toPar": "+23",
+          "scores": []
+        },
+        {
+          "scoreId": "3036",
+          "pos": "12",
+          "name": "Martim Lage Guerreiro",
+          "club": "Vilamoura, C. G",
+          "grossTotal": "62",
+          "toPar": "+26",
+          "scores": []
+        },
+        {
+          "scoreId": "3035",
+          "pos": "13",
+          "name": "Henry McGovern",
+          "club": "Vila Sol",
+          "grossTotal": "65",
+          "toPar": "+29",
+          "scores": []
+        }
+      ]
+    },
+    {
+      "name": "2º Torneio Drive Challenge Sul – Laguna G.C Sub 10",
+      "ccode": "988",
+      "tcode": "10294",
+      "series": "challenge",
+      "region": "sul",
+      "escalao": "Sub 10",
+      "num": 2,
+      "playerCount": 8,
+      "players": [
+        {
+          "scoreId": "3041",
+          "pos": "1",
+          "name": "Harry Seabrook",
+          "club": "Vila Sol",
+          "grossTotal": "37",
+          "toPar": "+1",
+          "scores": []
+        },
+        {
+          "scoreId": "3042",
+          "pos": "2",
+          "name": "Thiago Gonzalez Bernases",
+          "club": "RIO",
+          "grossTotal": "38",
+          "toPar": "+2",
+          "scores": []
+        },
+        {
+          "scoreId": "3043",
+          "pos": "3",
+          "name": "Rafael Ribeiro Crisóstomo",
+          "club": "Vilamoura, C. G",
+          "grossTotal": "44",
+          "toPar": "+8",
+          "scores": []
+        },
+        {
+          "scoreId": "3044",
+          "pos": "4",
+          "name": "Tyson Canejo",
+          "club": "Vilamoura, C. G",
+          "grossTotal": "55",
+          "toPar": "+19",
+          "scores": []
+        },
+        {
+          "scoreId": "3048",
+          "pos": "5",
+          "name": "Nicholas Murtagh",
+          "club": "Vilamoura, C. G",
+          "grossTotal": "60",
+          "toPar": "+24",
+          "scores": []
+        },
+        {
+          "scoreId": "3046",
+          "pos": "6",
+          "name": "Afonso Furtado de Oliveira",
+          "club": "Espiche",
+          "grossTotal": "63",
+          "toPar": "+27",
+          "scores": []
+        },
+        {
+          "scoreId": "3045",
+          "pos": "7",
+          "name": "Alexander Adeoye",
+          "club": "Espiche",
+          "grossTotal": "72",
+          "toPar": "+36",
+          "scores": []
+        },
+        {
+          "scoreId": "3047",
+          "pos": "NS",
+          "name": "Carlota Houyet",
+          "club": "Espiche",
+          "grossTotal": "NS",
+          "toPar": "NS",
+          "scores": [],
+          "status": 99
+        }
+      ]
+    },
+    {
+      "name": "2º Torneio Drive Challenge Açores–Terceira-Sub 18",
+      "ccode": "983",
+      "tcode": "10154",
+      "series": "challenge",
+      "region": "acores",
+      "escalao": "Sub 18",
+      "num": 2,
+      "playerCount": 4,
+      "players": [
+        {
+          "scoreId": "576",
+          "pos": "1",
+          "name": "Maria Fonseca Azevedo",
+          "club": "Ilha Terceira",
+          "grossTotal": "45",
+          "toPar": "+10",
+          "scores": []
+        },
+        {
+          "scoreId": "578",
+          "pos": "2",
+          "name": "João Lucas Fagundes",
+          "club": "Ilha Terceira",
+          "grossTotal": "49",
+          "toPar": "+14",
+          "scores": []
+        },
+        {
+          "scoreId": "579",
+          "pos": "3",
+          "name": "Rafael Ourique Azevedo",
+          "club": "Ilha Terceira",
+          "grossTotal": "51",
+          "toPar": "+16",
+          "scores": []
+        },
+        {
+          "scoreId": "577",
+          "pos": "4",
+          "name": "Tomás Valadão",
+          "club": "Ilha Terceira",
+          "grossTotal": "51",
+          "toPar": "+16",
+          "scores": []
+        }
+      ]
+    },
+    {
+      "name": "2º Torneio Drive Challenge Açores–Terceira-Sub 16",
+      "ccode": "983",
+      "tcode": "10153",
+      "series": "challenge",
+      "region": "acores",
+      "escalao": "Sub 16",
+      "num": 2,
+      "playerCount": 4,
+      "players": [
+        {
+          "scoreId": "569",
+          "pos": "1",
+          "name": "Afonso Sousa",
+          "club": "Ilha Terceira",
+          "grossTotal": "44",
+          "toPar": "+9",
+          "scores": []
+        },
+        {
+          "scoreId": "571",
+          "pos": "2",
+          "name": "Martim Duarte",
+          "club": "Ilha Terceira",
+          "grossTotal": "52",
+          "toPar": "+17",
+          "scores": []
+        },
+        {
+          "scoreId": "570",
+          "pos": "3",
+          "name": "Martim Costa",
+          "club": "Ilha Terceira",
+          "grossTotal": "60",
+          "toPar": "+25",
+          "scores": []
+        },
+        {
+          "scoreId": "580",
+          "pos": "4",
+          "name": "Manuel Pires Nascimento",
+          "club": "Ilha Terceira",
+          "grossTotal": "61",
+          "toPar": "+26",
+          "scores": []
+        }
+      ]
+    },
+    {
+      "name": "2º Torneio Drive Challenge Açores–Terceira-Sub 14",
+      "ccode": "983",
+      "tcode": "10152",
+      "series": "challenge",
+      "region": "acores",
+      "escalao": "Sub 14",
+      "num": 2,
+      "playerCount": 1,
+      "players": [
+        {
+          "scoreId": "572",
+          "pos": "1",
+          "name": "João Pedro Quadros",
+          "club": "Ilha Terceira",
+          "grossTotal": "41",
+          "toPar": "+6",
+          "scores": []
+        }
+      ]
+    },
+    {
+      "name": "2º Torneio Drive Challenge Açores–Terceira-Sub 12",
+      "ccode": "983",
+      "tcode": "10151",
+      "series": "challenge",
+      "region": "acores",
+      "escalao": "Sub 12",
+      "num": 2,
+      "playerCount": 1,
+      "players": [
+        {
+          "scoreId": "573",
+          "pos": "1",
+          "name": "Miguel Nunes",
+          "club": "Ilha Terceira",
+          "grossTotal": "36",
+          "toPar": "+1",
+          "scores": []
+        }
+      ]
+    },
+    {
+      "name": "2º Torneio Drive Challenge Açores–Terceira-Sub 10",
+      "ccode": "983",
+      "tcode": "10150",
+      "series": "challenge",
+      "region": "acores",
+      "escalao": "Sub 10",
+      "num": 2,
+      "playerCount": 2,
+      "players": [
+        {
+          "scoreId": "574",
+          "pos": "1",
+          "name": "Miguel Freitas",
+          "club": "Ilha Terceira",
+          "grossTotal": "43",
+          "toPar": "+8",
+          "scores": []
+        },
+        {
+          "scoreId": "575",
+          "pos": "2",
+          "name": "Vicente Henrique Rocha",
+          "club": "Ilha Terceira",
+          "grossTotal": "46",
+          "toPar": "+11",
+          "scores": []
+        }
+      ]
+    },
+    {
+      "name": "1º Torneio Drive Challenge Açores–Terceira-Sub 18",
+      "ccode": "983",
+      "tcode": "10149",
+      "series": "challenge",
+      "region": "acores",
+      "escalao": "Sub 18",
+      "num": 1,
+      "playerCount": 5,
+      "players": [
+        {
+          "scoreId": "559",
+          "pos": "1",
+          "name": "Madalena Alexandra Van Zeller",
+          "club": "Ilha Terceira",
+          "grossTotal": "41",
+          "toPar": "+6",
+          "scores": []
+        },
+        {
+          "scoreId": "560",
+          "pos": "2",
+          "name": "Maria Fonseca Azevedo",
+          "club": "Ilha Terceira",
+          "grossTotal": "46",
+          "toPar": "+11",
+          "scores": []
+        },
+        {
+          "scoreId": "561",
+          "pos": "3",
+          "name": "Tomás Valadão",
+          "club": "Ilha Terceira",
+          "grossTotal": "47",
+          "toPar": "+12",
+          "scores": []
+        },
+        {
+          "scoreId": "562",
+          "pos": "4",
+          "name": "Rafael Ourique Azevedo",
+          "club": "Ilha Terceira",
+          "grossTotal": "48",
+          "toPar": "+13",
+          "scores": []
+        },
+        {
+          "scoreId": "563",
+          "pos": "5",
+          "name": "Manuel Pires Nascimento",
+          "club": "Ilha Terceira",
+          "grossTotal": "59",
+          "toPar": "+24",
+          "scores": []
+        }
+      ]
     }
-  }
+  ]
 }
