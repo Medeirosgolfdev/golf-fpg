@@ -23,7 +23,7 @@ const TorneioPage = lazy(() => import("./pages/TorneioPage"));
 const CompararPage = lazy(() => import("./pages/CompararPage"));
 const DrivePage = lazy(() => import("./pages/DrivePage"));
 
-type Tab = "campos" | "jogadores" | "comparar" | "simulador" | "calendario" | "bjgt" | "torneio" | "rivais" | "drive";
+type Tab = "campos" | "jogadores" | "comparar" | "simulador" | "calendario" | "drive" | "bjgt" | "torneio" | "rivais";
 
 type Status =
   | { kind: "loading" }
@@ -45,10 +45,10 @@ function tabFromPath(pathname: string): Tab {
   if (seg === "simulador") return "simulador";
   if (seg === "comparar") return "comparar";
   if (seg === "calendario") return "calendario";
+  if (seg === "drive") return "drive";
   if (seg === "bjgt") return "bjgt";
   if (seg === "rivais") return "rivais";
   if (seg === "torneio") return "torneio";
-  if (seg === "drive") return "drive";
   return "jogadores"; // default
 }
 
@@ -72,7 +72,7 @@ export default function App() {
   useEffect(() => {
     const titles: Record<Tab, string> = {
       campos: "Campos", jogadores: "Jogadores", comparar: "Comparar",
-      simulador: "Simulador", calendario: "Calendário", bjgt: "BJGT", torneio: "GG26", rivais: "Rivais Intl", drive: "DRIVE",
+      simulador: "Simulador", calendario: "Calendário", drive: "DRIVE", bjgt: "BJGT", torneio: "GG26", rivais: "Rivais Intl",
     };
     document.title = `Golf FPG — ${titles[tab] || "Jogadores"}`;
   }, [tab]);
@@ -153,6 +153,14 @@ export default function App() {
           </button>
           {calUnlocked && (
             <button
+              className={`nav-btn ${tab === "drive" ? "active" : ""}`}
+              onClick={() => goTo("/drive")}
+            >
+              🏁 DRIVE
+            </button>
+          )}
+          {calUnlocked && (
+            <button
               className={`nav-btn ${tab === "bjgt" ? "active" : ""}`}
               onClick={() => goTo("/bjgt")}
             >
@@ -173,14 +181,6 @@ export default function App() {
               onClick={() => goTo("/torneio")}
             >
               GG26
-            </button>
-          )}
-          {calUnlocked && (
-            <button
-              className={`nav-btn ${tab === "drive" ? "active" : ""}`}
-              onClick={() => goTo("/drive")}
-            >
-              🏁 DRIVE
             </button>
           )}
         </nav>
@@ -225,10 +225,10 @@ export default function App() {
             <Route path="/simulador" element={<SimuladorPage courses={simCourses} />} />
             <Route path="/comparar" element={<CompararPage players={status.players} />} />
             <Route path="/calendario" element={<CalendarioPage players={status.kind === "ready" ? status.players : undefined} />} />
+            <Route path="/drive" element={<DrivePage />} />
             <Route path="/bjgt/:fed?" element={<BJGTPage />} />
             <Route path="/rivais" element={<RivaisIntlPage />} />
             <Route path="/torneio" element={<TorneioPage players={status.players} onSelectPlayer={(fed) => goTo(`/jogadores/${fed}`)} />} />
-            <Route path="/drive" element={<DrivePage />} />
             <Route path="*" element={<Navigate to="/jogadores/52884" replace />} />
           </Routes>
           </Suspense>
