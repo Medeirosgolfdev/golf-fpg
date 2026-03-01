@@ -1,0 +1,172 @@
+{
+  "lastUpdated": "2026-03-01",
+  "scrapedFrom": "scoring.datagolf.pt",
+  "_note": "Dados de exemplo para desenvolvimento. Substitui por dados reais do scraper.",
+  "series": {
+    "drive_tour": {
+      "name": "Drive Tour",
+      "regions": {
+        "norte": {
+          "name": "Norte",
+          "tournaments": [
+            {
+              "num": 1, "name": "1º Torneio Drive Tour Norte", "date": "2026-01-04", "campo": "Estela GC",
+              "url": "", "ccode": "", "tcode": "",
+              "results": [
+                { "pos": 1, "name": "João Silva", "fed": "50001", "club": "Estela GC", "gross": 78, "net": 68, "points": null },
+                { "pos": 2, "name": "Miguel Costa", "fed": "50002", "club": "Oporto GC", "gross": 80, "net": 70, "points": null },
+                { "pos": 3, "name": "Pedro Santos", "fed": "50003", "club": "Ponte de Lima", "gross": 82, "net": 71, "points": null },
+                { "pos": 4, "name": "Tiago Oliveira", "fed": "50004", "club": "Amarante GC", "gross": 84, "net": 73, "points": null },
+                { "pos": 5, "name": "Rui Pereira", "fed": "50005", "club": "Vale Pisão", "gross": 85, "net": 74, "points": null },
+                { "pos": 6, "name": "André Ferreira", "fed": "50006", "club": "Miramar", "gross": 87, "net": 75, "points": null }
+              ]
+            },
+            {
+              "num": 2, "name": "2º Torneio Drive Tour Norte", "date": "2026-02-01", "campo": "Amarante",
+              "url": "", "ccode": "", "tcode": "",
+              "results": [
+                { "pos": 1, "name": "Miguel Costa", "fed": "50002", "club": "Oporto GC", "gross": 76, "net": 66, "points": null },
+                { "pos": 2, "name": "João Silva", "fed": "50001", "club": "Estela GC", "gross": 79, "net": 69, "points": null },
+                { "pos": 3, "name": "Tiago Oliveira", "fed": "50004", "club": "Amarante GC", "gross": 81, "net": 70, "points": null },
+                { "pos": 4, "name": "Rui Pereira", "fed": "50005", "club": "Vale Pisão", "gross": 83, "net": 72, "points": null },
+                { "pos": 5, "name": "Pedro Santos", "fed": "50003", "club": "Ponte de Lima", "gross": 85, "net": 74, "points": null },
+                { "pos": 6, "name": "André Ferreira", "fed": "50006", "club": "Miramar", "gross": 88, "net": 76, "points": null }
+              ]
+            },
+            {
+              "num": 3, "name": "3º Torneio Drive Tour Norte", "date": "2026-02-28", "campo": "Vale Pisão",
+              "url": "", "ccode": "", "tcode": "", "results": []
+            },
+            {
+              "num": 4, "name": "4º Torneio Drive Tour Norte", "date": "2026-04-19", "campo": "Ponte de Lima",
+              "url": "", "ccode": "", "tcode": "", "results": []
+            }
+          ],
+          "ranking": []
+        },
+        "centro": {
+          "name": "Centro / Tejo",
+          "tournaments": [
+            {
+              "num": 1, "name": "1º Torneio Drive Tour Tejo", "date": "2026-01-04", "campo": "Montado",
+              "url": "", "ccode": "", "tcode": "",
+              "results": [
+                { "pos": 1, "name": "Gonçalo Reis", "fed": "50010", "club": "Montado GC", "gross": 77, "net": 67, "points": null },
+                { "pos": 2, "name": "Bernardo Lopes", "fed": "50011", "club": "Belas CC", "gross": 79, "net": 69, "points": null },
+                { "pos": 3, "name": "Duarte Mendes", "fed": "50012", "club": "Lisbon SC", "gross": 81, "net": 70, "points": null },
+                { "pos": 4, "name": "Afonso Marques", "fed": "50013", "club": "St. Estêvão", "gross": 83, "net": 72, "points": null },
+                { "pos": 5, "name": "Tomás Almeida", "fed": "50014", "club": "Aroeira", "gross": 86, "net": 74, "points": null }
+              ]
+            },
+            {
+              "num": 2, "name": "2º Torneio Drive Tour Tejo", "date": "2026-01-31", "campo": "Belas",
+              "url": "", "ccode": "", "tcode": "",
+              "results": [
+                { "pos": 1, "name": "Duarte Mendes", "fed": "50012", "club": "Lisbon SC", "gross": 75, "net": 64, "points": null },
+                { "pos": 2, "name": "Gonçalo Reis", "fed": "50010", "club": "Montado GC", "gross": 78, "net": 68, "points": null },
+                { "pos": 3, "name": "Bernardo Lopes", "fed": "50011", "club": "Belas CC", "gross": 80, "net": 70, "points": null },
+                { "pos": 4, "name": "Tomás Almeida", "fed": "50014", "club": "Aroeira", "gross": 82, "net": 71, "points": null },
+                { "pos": 5, "name": "Afonso Marques", "fed": "50013", "club": "St. Estêvão", "gross": 85, "net": 74, "points": null }
+              ]
+            },
+            { "num": 3, "name": "3º Torneio Drive Tour Tejo", "date": "2026-03-28", "campo": "St. Estêvão", "url": "", "ccode": "", "tcode": "", "results": [] },
+            { "num": 4, "name": "4º Torneio Drive Tour Tejo", "date": "2026-04-12", "campo": "Lisbon SC", "url": "", "ccode": "", "tcode": "", "results": [] }
+          ],
+          "ranking": []
+        },
+        "sul": {
+          "name": "Sul",
+          "tournaments": [
+            {
+              "num": 1, "name": "1º Torneio Drive Tour Sul", "date": "2026-01-11", "campo": "Laguna GC",
+              "url": "", "ccode": "", "tcode": "",
+              "results": [
+                { "pos": 1, "name": "Rafael Nunes", "fed": "50020", "club": "Laguna GC", "gross": 74, "net": 64, "points": null },
+                { "pos": 2, "name": "Diogo Tavares", "fed": "50021", "club": "Vila Sol", "gross": 76, "net": 66, "points": null },
+                { "pos": 3, "name": "Martim Cardoso", "fed": "50022", "club": "Penina", "gross": 78, "net": 68, "points": null },
+                { "pos": 4, "name": "Francisco Ribeiro", "fed": "50023", "club": "Boavista", "gross": 80, "net": 69, "points": null }
+              ]
+            },
+            {
+              "num": 2, "name": "2º Torneio Drive Tour Sul", "date": "2026-02-01", "campo": "Vila Sol",
+              "url": "", "ccode": "", "tcode": "",
+              "results": [
+                { "pos": 1, "name": "Diogo Tavares", "fed": "50021", "club": "Vila Sol", "gross": 73, "net": 63, "points": null },
+                { "pos": 2, "name": "Rafael Nunes", "fed": "50020", "club": "Laguna GC", "gross": 77, "net": 67, "points": null },
+                { "pos": 3, "name": "Francisco Ribeiro", "fed": "50023", "club": "Boavista", "gross": 79, "net": 68, "points": null },
+                { "pos": 4, "name": "Martim Cardoso", "fed": "50022", "club": "Penina", "gross": 82, "net": 71, "points": null }
+              ]
+            },
+            { "num": 3, "name": "3º Torneio Drive Tour Sul", "date": "2026-04-04", "campo": "Penina", "url": "", "ccode": "", "tcode": "", "results": [] },
+            { "num": 4, "name": "4º Torneio Drive Tour Sul", "date": "2026-06-10", "campo": "Boavista", "url": "", "ccode": "", "tcode": "", "results": [] }
+          ],
+          "ranking": []
+        },
+        "madeira": {
+          "name": "Madeira",
+          "tournaments": [
+            {
+              "num": 1, "name": "1º Torneio Drive Tour Madeira", "date": "2026-01-03", "campo": "Palheiro Golf",
+              "url": "", "ccode": "", "tcode": "",
+              "results": [
+                { "pos": 1, "name": "Manuel Medeiros", "fed": "52884", "club": "CGSS", "gross": 80, "net": 70, "points": null },
+                { "pos": 2, "name": "Santiago Abreu", "fed": "50030", "club": "CGSS", "gross": 83, "net": 72, "points": null },
+                { "pos": 3, "name": "Rodrigo Freitas", "fed": "50031", "club": "Porto Santo GC", "gross": 85, "net": 73, "points": null },
+                { "pos": 4, "name": "Lucas Fernandes", "fed": "50032", "club": "Palheiro Golf", "gross": 87, "net": 75, "points": null },
+                { "pos": 5, "name": "Henrique Sousa", "fed": "50033", "club": "CGSS", "gross": 90, "net": 77, "points": null }
+              ]
+            },
+            {
+              "num": 2, "name": "2º Torneio Drive Tour Madeira", "date": "2026-02-07", "campo": "Santo da Serra",
+              "url": "", "ccode": "", "tcode": "",
+              "results": [
+                { "pos": 1, "name": "Santiago Abreu", "fed": "50030", "club": "CGSS", "gross": 79, "net": 68, "points": null },
+                { "pos": 2, "name": "Manuel Medeiros", "fed": "52884", "club": "CGSS", "gross": 82, "net": 72, "points": null },
+                { "pos": 3, "name": "Lucas Fernandes", "fed": "50032", "club": "Palheiro Golf", "gross": 84, "net": 72, "points": null },
+                { "pos": 4, "name": "Rodrigo Freitas", "fed": "50031", "club": "Porto Santo GC", "gross": 86, "net": 74, "points": null },
+                { "pos": 5, "name": "Henrique Sousa", "fed": "50033", "club": "CGSS", "gross": 89, "net": 76, "points": null }
+              ]
+            },
+            { "num": 3, "name": "3º Torneio Drive Tour Madeira", "date": "2026-03-07", "campo": "Palheiro Golf", "url": "", "ccode": "", "tcode": "", "results": [] },
+            { "num": 4, "name": "4º Torneio Drive Tour Madeira", "date": "2026-04-11", "campo": "Porto Santo Golfe", "url": "", "ccode": "", "tcode": "", "results": [] }
+          ],
+          "ranking": []
+        }
+      }
+    },
+    "drive_challenge": {
+      "name": "Drive Challenge",
+      "regions": {
+        "madeira": {
+          "name": "Madeira",
+          "tournaments": [
+            {
+              "num": 1, "name": "1º Torneio Drive Challenge Madeira", "date": "2026-01-04", "campo": "Palheiro",
+              "url": "", "ccode": "", "tcode": "",
+              "results": [
+                { "pos": 1, "name": "Manuel Medeiros", "fed": "52884", "club": "CGSS", "gross": 82, "net": 72, "points": null },
+                { "pos": 2, "name": "Santiago Abreu", "fed": "50030", "club": "CGSS", "gross": 84, "net": 73, "points": null },
+                { "pos": 3, "name": "Rodrigo Freitas", "fed": "50031", "club": "Porto Santo GC", "gross": 87, "net": 75, "points": null }
+              ]
+            },
+            {
+              "num": 2, "name": "2º Torneio Drive Challenge Madeira", "date": "2026-02-08", "campo": "Santo da Serra",
+              "url": "", "ccode": "", "tcode": "",
+              "results": [
+                { "pos": 1, "name": "Santiago Abreu", "fed": "50030", "club": "CGSS", "gross": 81, "net": 70, "points": null },
+                { "pos": 2, "name": "Manuel Medeiros", "fed": "52884", "club": "CGSS", "gross": 83, "net": 73, "points": null },
+                { "pos": 3, "name": "Rodrigo Freitas", "fed": "50031", "club": "Porto Santo GC", "gross": 86, "net": 74, "points": null }
+              ]
+            },
+            { "num": 3, "name": "3º Torneio Drive Challenge Madeira", "date": "2026-05-24", "campo": "Palheiro", "url": "", "ccode": "", "tcode": "", "results": [] },
+            { "num": 4, "name": "4º Torneio Drive Challenge Madeira", "date": "2026-04-12", "campo": "Porto Santo", "url": "", "ccode": "", "tcode": "", "results": [] },
+            { "num": 5, "name": "5º Torneio Drive Challenge Madeira", "date": "2026-03-08", "campo": "Santo da Serra", "url": "", "ccode": "", "tcode": "", "results": [] },
+            { "num": 6, "name": "6º Torneio Drive Challenge Madeira", "date": "2026-06-28", "campo": "Porto Santo", "url": "", "ccode": "", "tcode": "", "results": [] },
+            { "num": 7, "name": "7º Torneio Drive Challenge Madeira", "date": "2026-07-11", "campo": "Santo da Serra", "url": "", "ccode": "", "tcode": "", "results": [] }
+          ],
+          "ranking": []
+        }
+      }
+    }
+  }
+}

@@ -39,7 +39,7 @@ import {
   computeAccumulated,
   getTeeRating,
 } from "../utils/tournamentTypes";
-import tournData from "../../torneio-greatgolf.json";
+import tournData from "../data/torneio-greatgolf.json";
 
 /* ── Shared helpers ── */
 

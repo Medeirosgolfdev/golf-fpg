@@ -21,8 +21,9 @@ const BJGTPage = lazy(() => import("./pages/BJGTPage"));
 const RivaisIntlPage = lazy(() => import("./pages/RivaisIntlPage"));
 const TorneioPage = lazy(() => import("./pages/TorneioPage"));
 const CompararPage = lazy(() => import("./pages/CompararPage"));
+const DrivePage = lazy(() => import("./pages/DrivePage"));
 
-type Tab = "campos" | "jogadores" | "comparar" | "simulador" | "calendario" | "bjgt" | "torneio" | "rivais";
+type Tab = "campos" | "jogadores" | "comparar" | "simulador" | "calendario" | "bjgt" | "torneio" | "rivais" | "drive";
 
 type Status =
   | { kind: "loading" }
@@ -47,6 +48,7 @@ function tabFromPath(pathname: string): Tab {
   if (seg === "bjgt") return "bjgt";
   if (seg === "rivais") return "rivais";
   if (seg === "torneio") return "torneio";
+  if (seg === "drive") return "drive";
   return "jogadores"; // default
 }
 
@@ -70,7 +72,7 @@ export default function App() {
   useEffect(() => {
     const titles: Record<Tab, string> = {
       campos: "Campos", jogadores: "Jogadores", comparar: "Comparar",
-      simulador: "Simulador", calendario: "Calendário", bjgt: "BJGT", torneio: "GG26", rivais: "Rivais Intl",
+      simulador: "Simulador", calendario: "Calendário", bjgt: "BJGT", torneio: "GG26", rivais: "Rivais Intl", drive: "DRIVE",
     };
     document.title = `Golf FPG — ${titles[tab] || "Jogadores"}`;
   }, [tab]);
@@ -173,6 +175,14 @@ export default function App() {
               GG26
             </button>
           )}
+          {calUnlocked && (
+            <button
+              className={`nav-btn ${tab === "drive" ? "active" : ""}`}
+              onClick={() => goTo("/drive")}
+            >
+              🏁 DRIVE
+            </button>
+          )}
         </nav>
 
         {status.kind === "ready" && (
@@ -218,6 +228,7 @@ export default function App() {
             <Route path="/bjgt/:fed?" element={<BJGTPage />} />
             <Route path="/rivais" element={<RivaisIntlPage />} />
             <Route path="/torneio" element={<TorneioPage players={status.players} onSelectPlayer={(fed) => goTo(`/jogadores/${fed}`)} />} />
+            <Route path="/drive" element={<DrivePage onSelectPlayer={(fed) => goTo(`/jogadores/${fed}`)} />} />
             <Route path="*" element={<Navigate to="/jogadores/52884" replace />} />
           </Routes>
           </Suspense>
