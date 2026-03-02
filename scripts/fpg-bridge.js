@@ -202,7 +202,7 @@ const server = http.createServer((req, res) => {
     if (!skipRender) {
       console.log(`\n${B}A processar dados...${X}`);
       try {
-        execSync(`node pipeline.js --skip-import ${fedCodes.join(" ")}`, { stdio: "inherit", cwd: process.cwd(), maxBuffer: 50 * 1024 * 1024 });
+        execSync(`node golf-all.js --skip-download ${fedCodes.join(" ")}`, { stdio: "inherit", cwd: process.cwd(), maxBuffer: 50 * 1024 * 1024 });
       } catch (e) { console.log(`${Y}\u26A0 Pipeline com erros (parcial)${X}`); }
     }
     console.log(`\n${G}${B}Tudo feito!${X}\n`);
@@ -401,7 +401,7 @@ const BROWSER_SCRIPT = `
       const chunk = toFetch.slice(i, i + concurrency);
       const results = await Promise.allSettled(chunk.map(async (r) => {
         const sid = String(r.score_id || r.id);
-        const res = await fpgPost("PlayerResults.aspx/ScoreCard", {
+        const res = await fpgPost("PlayerWHS.aspx/ScoreCard", {
           score_id: sid, scoringtype: r.scoring_type_id, competitiontype: r.competition_type_id, ...ppParams
         });
         if (res.ok && res.data?.Result === "OK") return { id: sid, data: res.data };
