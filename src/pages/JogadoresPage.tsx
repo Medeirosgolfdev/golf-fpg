@@ -2951,6 +2951,7 @@ export default function JogadoresPage({ players, courses }: Props) {
     }
     if (sexFilter !== "ALL") list = list.filter(p => p.sex === sexFilter);
     if (regionFilter !== "ALL") list = list.filter(p => p.region === regionFilter);
+    list = list.filter(p => !p.tags?.includes("hidden"));
     for (const p of list) {
       if (p.escalao) map[p.escalao] = (map[p.escalao] || 0) + 1;
     }
