@@ -4,6 +4,7 @@
  *      + multi-round support (R1/R2/Total tabs)
  */
 import React, { useEffect, useState, useMemo, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { scClass, SC, sdClassByHcp } from "../utils/scoreDisplay";
 import { isCalUnlocked } from "../utils/authConstants";
 import PasswordGate from "../ui/PasswordGate";
@@ -1327,6 +1328,7 @@ function DriveContent() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [series, setSeries] = useState<"tour" | "challenge" | "aquapor">("tour");
+  const navigate = useNavigate();
 
   useEffect(() => {
     Promise.all([
@@ -1385,6 +1387,11 @@ function DriveContent() {
               💧 AQUAPOR ({countEvents(aquaporT)})
             </button>
           </div>
+          <div className="tourn-toolbar-sep" />
+          <button className="tourn-tab tourn-tab-sm" onClick={() => navigate("/drive/sub12")}
+            style={{ background: "#fef3c7", color: "#92400e", borderColor: "#fde68a", fontWeight: 700 }}>
+            👶 Sub-12
+          </button>
         </div>
         <div className="toolbar-right">
           {data.totalScorecards > 0 && <span className="chip" style={{ background: "#dcfce7", color: "#16a34a" }}>📊 {data.totalScorecards} sc</span>}

@@ -22,6 +22,7 @@ const RivaisIntlPage = lazy(() => import("./pages/RivaisIntlPage"));
 const TorneioPage = lazy(() => import("./pages/TorneioPage"));
 const CompararPage = lazy(() => import("./pages/CompararPage"));
 const DrivePage = lazy(() => import("./pages/DrivePage"));
+const DriveSub12Page = lazy(() => import("./pages/DriveSub12Page"));
 
 type Tab = "campos" | "jogadores" | "comparar" | "simulador" | "calendario" | "drive" | "bjgt" | "torneio" | "rivais";
 
@@ -225,6 +226,7 @@ export default function App() {
             <Route path="/simulador" element={<SimuladorPage courses={simCourses} />} />
             <Route path="/comparar" element={<CompararPage players={status.players} />} />
             <Route path="/calendario" element={<CalendarioPage players={status.kind === "ready" ? status.players : undefined} />} />
+            <Route path="/drive/sub12" element={<DriveSub12Page />} />
             <Route path="/drive" element={<DrivePage />} />
             <Route path="/bjgt/:fed?" element={<BJGTPage />} />
             <Route path="/rivais" element={<RivaisIntlPage />} />
