@@ -68,10 +68,12 @@ let allFlag = false;
 let priorityFlag = false;
 let batchFlag = false;
 let updateFlag = false;
+let batchFile = null;
 
 for (let i = 0; i < args.length; i++) {
   const a = args[i];
   if (a === "--downloads" && args[i + 1])  { downloadsDir = args[++i]; continue; }
+  if (a === "--batch-file" && args[i + 1]) { batchFile = args[++i]; continue; }
   if (a === "--skip-import")               { skipImport = true; continue; }
   if (a === "--skip-render")               { skipRender = true; continue; }
   if (a === "--sync-players")              { syncOnly = true; continue; }
@@ -109,6 +111,43 @@ if (priorityFlag && fedCodes.length === 0) {
   }
   skipImport = true;
   console.log(`--priority: ${fedCodes.length} jogadores prioritários`);
+}
+
+// --batch-file: importar um ficheiro batch específico
+if (batchFile) {
+  step("1/5", `Importar ficheiro batch: ${batchFile}`);
+  const bfPath = fs.existsSync(batchFile) ? batchFile : path.join(downloadsDir, batchFile);
+  if (!fs.existsSync(bfPath)) {
+    fail(`Não encontrei: ${batchFile}`);
+    fail(`Nem em: ${bfPath}`);
+    process.exit(1);
+  }
+
+  const batchData = readJSON(bfPath);
+  let totalPlayers = 0, totalSc = 0;
+
+  for (const [fed, data] of Object.entries(batchData)) {
+    const outDir = path.join(process.cwd(), "output", fed);
+    const scorecardsDir = path.join(outDir, "scorecards");
+    fs.mkdirSync(scorecardsDir, { recursive: true });
+
+    if (data.whs) {
+      fs.writeFileSync(path.join(outDir, "whs-list.json"), JSON.stringify(data.whs, null, 2), "utf-8");
+    }
+    let scCount = 0;
+    if (data.scorecards) {
+      for (const [scoreId, sc] of Object.entries(data.scorecards)) {
+        fs.writeFileSync(path.join(scorecardsDir, `${scoreId}.json`), JSON.stringify(sc, null, 2), "utf-8");
+        scCount++;
+      }
+    }
+    if (!fedCodes.includes(fed)) fedCodes.push(fed);
+    totalPlayers++;
+    totalSc += scCount;
+  }
+
+  ok(`${totalPlayers} jogadores importados · ${totalSc} scorecards`);
+  skipImport = true;
 }
 
 // --batch: importar fpg-batch-*.json dos Downloads
@@ -532,7 +571,7 @@ step("5/5", "Extrair campos internacionais");
 try {
   const extractScript = path.join(process.cwd(), "scripts", "extract-courses.js");
   if (fs.existsSync(extractScript)) {
-    require(extractScript);
+    execSync(`node "${extractScript}"`, { stdio: "inherit", cwd: process.cwd() });
     ok("away-courses.json actualizado");
   } else {
     warn("extract-courses.js não encontrado");

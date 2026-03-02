@@ -202,7 +202,7 @@ const server = http.createServer((req, res) => {
     if (!skipRender) {
       console.log(`\n${B}A processar dados...${X}`);
       try {
-        execSync(`node scripts/golf-all.js --skip-download ${fedCodes.join(" ")}`, { stdio: "inherit", cwd: process.cwd(), maxBuffer: 50 * 1024 * 1024 });
+        execSync(`node pipeline.js --skip-import ${fedCodes.join(" ")}`, { stdio: "inherit", cwd: process.cwd(), maxBuffer: 50 * 1024 * 1024 });
       } catch (e) { console.log(`${Y}\u26A0 Pipeline com erros (parcial)${X}`); }
     }
     console.log(`\n${G}${B}Tudo feito!${X}\n`);
