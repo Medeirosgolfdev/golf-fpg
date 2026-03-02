@@ -68,9 +68,9 @@ jobs:
           FPG_USERNAME: ${{ secrets.FPG_USERNAME }}
           FPG_PASSWORD: ${{ secrets.FPG_PASSWORD }}
 
-      - name: Gerar página índice
-        # run: node generate-index.js  # TODO: script nao existe, remover este step se nao for necessario
-
+      # - name: Gerar página índice
+      #   run: node generate-index.js  # TODO: criar este script
+      
       - name: Commit e push
         run: |
           git config user.name "GitHub Actions Bot"
