@@ -292,8 +292,102 @@ const fmtTP = (v: number | null): string => v == null ? "–" : v === 0 ? "E" : 
 const shortDate = (d: string) => { if (!d) return ""; const parts = d.split("-"); return parts.length >= 3 ? parts[0] + "/" + parts[1] : d; };
 
 /* ═══════════════════════════════════════════
-   Sub-components
+   Calendário DRIVE Sub-12 2026
    ═══════════════════════════════════════════ */
+
+interface CalEntry {
+  name: string; date: Date; endDate?: Date; campo: string; region: string;
+  series: "tour" | "challenge" | "aquapor";
+}
+
+const CAL_ENTRIES: CalEntry[] = [
+  // ── DRIVE TOUR SUL ──
+  { name: "1º DT Sul", date: new Date(2026, 0, 11), campo: "Laguna GC", region: "Sul", series: "tour" },
+  { name: "2º DT Sul", date: new Date(2026, 1, 1), campo: "Vila Sol", region: "Sul", series: "tour" },
+  { name: "3º DT Sul", date: new Date(2026, 3, 4), campo: "Penina (TBC)", region: "Sul", series: "tour" },
+  { name: "4º DT Sul", date: new Date(2026, 5, 10), campo: "Boavista", region: "Sul", series: "tour" },
+  // ── DRIVE TOUR NORTE ──
+  { name: "1º DT Norte", date: new Date(2026, 0, 4), campo: "Estela GC", region: "Norte", series: "tour" },
+  { name: "2º DT Norte", date: new Date(2026, 1, 1), campo: "Amarante", region: "Norte", series: "tour" },
+  { name: "3º DT Norte", date: new Date(2026, 1, 28), endDate: new Date(2026, 2, 1), campo: "Vale Pisão", region: "Norte", series: "tour" },
+  { name: "4º DT Norte", date: new Date(2026, 3, 19), campo: "Ponte de Lima", region: "Norte", series: "tour" },
+  // ── DRIVE TOUR TEJO ──
+  { name: "1º DT Tejo", date: new Date(2026, 0, 4), campo: "Montado", region: "Tejo", series: "tour" },
+  { name: "2º DT Tejo", date: new Date(2026, 0, 31), campo: "Belas", region: "Tejo", series: "tour" },
+  { name: "3º DT Tejo", date: new Date(2026, 2, 28), endDate: new Date(2026, 2, 29), campo: "St. Estêvão", region: "Tejo", series: "tour" },
+  { name: "4º DT Tejo", date: new Date(2026, 3, 12), campo: "Lisbon SC", region: "Tejo", series: "tour" },
+  // ── DRIVE TOUR MADEIRA ──
+  { name: "1º DT Madeira", date: new Date(2026, 0, 3), campo: "Palheiro Golf", region: "Madeira", series: "tour" },
+  { name: "2º DT Madeira", date: new Date(2026, 1, 7), campo: "Santo da Serra", region: "Madeira", series: "tour" },
+  { name: "3º DT Madeira", date: new Date(2026, 2, 7), campo: "Palheiro Golf", region: "Madeira", series: "tour" },
+  { name: "4º DT Madeira", date: new Date(2026, 3, 11), campo: "Porto Santo Golfe", region: "Madeira", series: "tour" },
+  // ── DRIVE CHALLENGE MADEIRA ──
+  { name: "1º DC Madeira", date: new Date(2026, 0, 4), campo: "Palheiro", region: "Madeira", series: "challenge" },
+  { name: "2º DC Madeira", date: new Date(2026, 1, 8), campo: "Santo da Serra", region: "Madeira", series: "challenge" },
+  { name: "5º DC Madeira", date: new Date(2026, 2, 8), campo: "Santo da Serra", region: "Madeira", series: "challenge" },
+  { name: "4º DC Madeira", date: new Date(2026, 3, 12), campo: "Porto Santo", region: "Madeira", series: "challenge" },
+  { name: "3º DC Madeira", date: new Date(2026, 4, 24), campo: "Palheiro", region: "Madeira", series: "challenge" },
+  { name: "6º DC Madeira", date: new Date(2026, 5, 28), campo: "Porto Santo", region: "Madeira", series: "challenge" },
+  { name: "7º DC Madeira", date: new Date(2026, 6, 11), campo: "Santo da Serra", region: "Madeira", series: "challenge" },
+  { name: "Final DC Madeira", date: new Date(2026, 6, 12), campo: "Palheiro", region: "Madeira", series: "challenge" },
+  // ── AQUAPOR ──
+  { name: "1º AQUAPOR", date: new Date(2026, 0, 17), endDate: new Date(2026, 0, 18), campo: "Morgado do Reguengo", region: "Sul", series: "aquapor" },
+  { name: "2º AQUAPOR", date: new Date(2026, 2, 14), endDate: new Date(2026, 2, 15), campo: "Quinta do Peru", region: "Tejo", series: "aquapor" },
+  { name: "3º AQUAPOR", date: new Date(2026, 4, 16), endDate: new Date(2026, 4, 17), campo: "Vidago Palace", region: "Norte", series: "aquapor" },
+  { name: "4º AQUAPOR", date: new Date(2026, 6, 18), endDate: new Date(2026, 6, 19), campo: "Palmares", region: "Sul", series: "aquapor" },
+  { name: "5º AQUAPOR", date: new Date(2026, 8, 19), endDate: new Date(2026, 8, 20), campo: "TBC", region: "", series: "aquapor" },
+  { name: "6º AQUAPOR", date: new Date(2026, 9, 17), endDate: new Date(2026, 9, 18), campo: "Estela", region: "Norte", series: "aquapor" },
+  { name: "7º AQUAPOR", date: new Date(2026, 10, 14), endDate: new Date(2026, 10, 15), campo: "Belas CC", region: "Tejo", series: "aquapor" },
+];
+
+const MESES = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+
+function fmtCalDate(d: Date, end?: Date): string {
+  const dd = d.getDate();
+  const mm = MESES[d.getMonth()];
+  if (!end || end.getTime() === d.getTime()) return `${dd} ${mm}`;
+  const dd2 = end.getDate();
+  const mm2 = MESES[end.getMonth()];
+  return mm === mm2 ? `${dd}–${dd2} ${mm}` : `${dd} ${mm}–${dd2} ${mm2}`;
+}
+
+const REGION_EMOJI: Record<string, string> = { Madeira: "🟣", Sul: "🟢", Norte: "🔵", Tejo: "🟡" };
+
+function UpcomingSchedule({ series }: { series: "tour" | "challenge" | "aquapor" }) {
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+
+  const entries = CAL_ENTRIES.filter(e => e.series === series).sort((a, b) => a.date.getTime() - b.date.getTime());
+  if (entries.length === 0) return null;
+
+  return (
+    <div className="card" style={{ padding: "8px 12px" }}>
+      <div className="h-xs" style={{ marginBottom: 6 }}>📅 Calendário {SERIE_LABELS[series]} 2026</div>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
+        {entries.map((e, i) => {
+          const endRef = e.endDate || e.date;
+          const isPast = endRef.getTime() < now.getTime();
+          const isNext = !isPast && (i === 0 || entries.slice(0, i).every(prev => (prev.endDate || prev.date).getTime() < now.getTime()));
+          return (
+            <div key={i} style={{
+              display: "inline-flex", alignItems: "center", gap: 4,
+              padding: "3px 8px", borderRadius: "var(--radius-pill)", fontSize: 10,
+              fontWeight: isNext ? 800 : isPast ? 400 : 600,
+              background: isNext ? (SERIE_COLORS[series] + "20") : isPast ? "var(--bg)" : "var(--bg-topbar)",
+              color: isPast ? "var(--text-muted)" : isNext ? SERIE_COLORS[series] : "var(--text)",
+              border: isNext ? `2px solid ${SERIE_COLORS[series]}` : "1px solid var(--border-light)",
+              textDecoration: isPast ? "line-through" : "none",
+              opacity: isPast ? 0.6 : 1,
+            }}>
+              {REGION_EMOJI[e.region] || ""} <span style={{ fontWeight: 700 }}>{fmtCalDate(e.date, e.endDate)}</span> {e.name} <span className="c-muted">{e.campo}</span>
+              {isNext && <span style={{ fontSize: 8, background: SERIE_COLORS[series], color: "#fff", padding: "0 4px", borderRadius: 3, marginLeft: 2 }}>PRÓXIMO</span>}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
 function KpiCard({ label, value, sub, color }: { label: string; value: string; sub?: string; color?: string }) {
   return (
@@ -776,6 +870,11 @@ function Sub12Content() {
         <KpiCard label="Rondas" value={String(totalRounds)} />
         <KpiCard label="SD Médio" value={globalAvgSD?.toFixed(1) ?? "–"} color={globalAvgSD != null && globalAvgSD <= 25 ? "var(--color-good)" : undefined} />
         <KpiCard label="Melhor Gross" value={bestPerf != null ? String(bestPerf) : "–"} color="var(--color-good-dark)" />
+      </div>
+
+      {/* Schedule */}
+      <div style={{ padding: "8px 12px 0" }}>
+        <UpcomingSchedule series={seriesTab} />
       </div>
 
       {/* Player detail */}

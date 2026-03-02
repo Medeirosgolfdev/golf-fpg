@@ -2999,11 +2999,13 @@ export default function JogadoresPage({ players, courses }: Props) {
 
   useEffect(() => {
     if (filtered.length === 0) return;
-    // If no selection, or current player not in filtered list → select first
-    if (!selectedFed || !filtered.some(p => p.fed === selectedFed)) {
+    // If no selection → select first. If selected player exists in allPlayers (even if hidden), keep it.
+    if (!selectedFed) {
+      selectPlayer(filtered[0].fed);
+    } else if (!allPlayers.some(p => p.fed === selectedFed)) {
       selectPlayer(filtered[0].fed);
     }
-  }, [filtered]);
+  }, [filtered, allPlayers]);
 
   const selected = useMemo(() => {
     if (!selectedFed) return null;
@@ -3030,6 +3032,7 @@ export default function JogadoresPage({ players, courses }: Props) {
               const active = escalaoFilter.has(esc);
               const cls = escCls(esc);
               const count = escalaoCountMap[esc] || 0;
+              if (count === 0 && !active) return null;
               return (
                 <button
                   key={esc}
