@@ -2970,6 +2970,7 @@ export default function JogadoresPage({ players, courses }: Props) {
     if (sexFilter !== "ALL") list = list.filter(p => p.sex === sexFilter);
     if (escalaoFilter.size > 0) list = list.filter(p => escalaoFilter.has(p.escalao));
     if (regionFilter !== "ALL") list = list.filter(p => p.region === regionFilter);
+    list = list.filter(p => !p.tags?.includes("hidden"));
     if (newFilter) list = list.filter(p => { const d = daysSince(statsDb[p.fed]); return d != null && d <= NEW_DAYS; });
     return [...list].sort((a, b) => {
       switch (sortKey) {
