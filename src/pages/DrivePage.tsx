@@ -9,6 +9,7 @@ import { scClass, SC, sdClassByHcp } from "../utils/scoreDisplay";
 import { isCalUnlocked } from "../utils/authConstants";
 import PasswordGate from "../ui/PasswordGate";
 import LoadingState from "../ui/LoadingState";
+import { resolveFedsInTournaments } from "../utils/playerUtils";
 
 /* ── Types ── */
 interface RoundScore {
@@ -1349,6 +1350,8 @@ function DriveContent() {
       }
       // Expand multi-round into R1 + R2 + Total
       driveData.tournaments = expandMultiRound(driveData.tournaments);
+      // Resolve missing feds by matching names against players DB
+      resolveFedsInTournaments(driveData.tournaments, pp as PlayersDB);
       setData(driveData);
       setPdb(pp as PlayersDB);
       setSdLookup(sd as SDLookup);

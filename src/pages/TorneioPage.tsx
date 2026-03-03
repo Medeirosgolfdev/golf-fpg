@@ -39,6 +39,7 @@ import {
   computeAccumulated,
   getTeeRating,
 } from "../utils/tournamentTypes";
+import { resolveFedsFromPlayers } from "../utils/playerUtils";
 import tournData from "../data/torneio-greatgolf.json";
 
 /* ── Shared helpers ── */
@@ -1241,6 +1242,7 @@ function AnalysisView({ norm, players, holeDataByDay, playerHistory, onSelectPla
    ═══════════════════════════════════════════════ */
 
 export default function TorneioPage({ players, onSelectPlayer }: { players: PlayersDb; onSelectPlayer?: (fed: string) => void }) {
+  resolveFedsFromPlayers(NORM_BASE, players);
   const [unlocked, setUnlocked] = useState(() => isCalUnlocked());
   const [view, setView] = useState<TournView>("leaderboard");
   const [sidebarOpen, setSidebarOpen] = useState(true);
