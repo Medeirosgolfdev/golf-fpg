@@ -1,0 +1,91 @@
+# .github/workflows/uskids-field.yml
+#
+# Actualiza automaticamente os dados de inscrição nos torneios internacionais USKids.
+# Corre 3x por dia e faz commit do JSON actualizado ao repositório.
+# O Vercel detecta o push e faz re-deploy automático.
+#
+# Podes também correr manualmente: Actions → "USKids Field Monitor" → Run workflow
+
+name: USKids Field Monitor
+
+on:
+  schedule:
+    # Corre às 07:00, 13:00 e 20:00 UTC (08:00, 14:00, 21:00 Lisboa no Verão)
+    - cron: '0 7 * * *'
+    - cron: '0 13 * * *'
+    - cron: '0 20 * * *'
+
+  # Permite correr manualmente pelo painel do GitHub Actions
+  workflow_dispatch:
+
+jobs:
+  update-field:
+    name: Actualizar campo dos torneios
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repositório
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Instalar browser Playwright (Chromium)
+        run: npx playwright install chromium --with-deps
+
+      - name: Correr fetch-uskids-field.js
+        run: node scripts/fetch-uskids-field.js
+
+      - name: Verificar se houve alterações
+        id: check_changes
+        run: |
+          if git diff --quiet public/data/uskids-field.json; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "Sem alterações nos dados."
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "Dados alterados — vai fazer commit."
+            git diff --stat public/data/uskids-field.json
+          fi
+
+      - name: Commit e push se houve alterações
+        if: steps.check_changes.outputs.changed == 'true'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/data/uskids-field.json
+          git commit -m "data: actualizar campo torneios USKids [$(date -u '+%Y-%m-%d %H:%M UTC')]"
+          git push
+
+      - name: Resumo
+        if: always()
+        run: |
+          echo "## USKids Field Monitor" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f public/data/uskids-field.json ]; then
+            echo "✅ JSON gerado com sucesso" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo '```json' >> $GITHUB_STEP_SUMMARY
+            # Mostra apenas o resumo (sem a lista completa de jogadores)
+            node -e "
+              const d = JSON.parse(require('fs').readFileSync('public/data/uskids-field.json'));
+              const resumo = d.torneios.map(t => ({
+                torneio: t.name,
+                total: t.total_inscritos + '/' + t.total_maximo,
+                boys12: t.escaloes?.find(e => e.nome === 'Boys 12')
+                  ? (e => e.inscritos + '/' + e.maximo + ' (' + e.vagas + ' vagas)'
+                    )(t.escaloes.find(e => e.nome === 'Boys 12'))
+                  : 'n/a',
+              }));
+              console.log(JSON.stringify(resumo, null, 2));
+            " >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ JSON não foi gerado" >> $GITHUB_STEP_SUMMARY
+          fi
