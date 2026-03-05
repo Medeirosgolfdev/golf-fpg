@@ -16,9 +16,9 @@ const { chromium } = require('playwright');
 // ── Torneios históricos do Manuel ──────────────
 // Preencher com os t= quando tiveres a lista completa
 const HISTORICOS = [
-  { t: 15573, name: 'Real Club de Golf El Prat 2023', date_inicio: '10/22/2023', date_fim: '10/22/2023', rondas: 1 },
-  { t: 19418, name: 'Venice Open 2025',               date_inicio: '8/17/2025',  date_fim: '8/17/2025',  rondas: 2 },
-  { t: 20175, name: 'Rome Classic 2025',              date_inicio: '10/18/2025', date_fim: '10/18/2025', rondas: 2 },
+  { t: 15573, name: 'Real Club de Golf El Prat 2023', date_inicio: '10/22/2023', date_fim: '10/22/2023', rondas: 1, ax: 2760 },
+  { t: 19418, name: 'Venice Open 2025',               date_inicio: '8/17/2025',  date_fim: '8/17/2025',  rondas: 2, ax: 1129 },
+  { t: 20175, name: 'Rome Classic 2025',              date_inicio: '10/18/2025', date_fim: '10/18/2025', rondas: 2, ax: 1129 },
 ];
 
 // Escalões a capturar nos resultados
@@ -31,8 +31,8 @@ const DIR        = path.join(__dirname, '..', 'public', 'data');
 const CACHE_PATH = path.join(DIR, 'uskids-discovery-cache.json');
 const OUTPUT     = path.join(DIR, 'uskids-results.json');
 
-const IFRAME_URL = (t) =>
-  `https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${t}`;
+const IFRAME_URL = (t, ax = 1129) =>
+  `https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=${ax}&t=${t}`;
 const API = 'https://www.signupanytime.com/plugins/links/admin/LinksAJAX.aspx';
 
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
@@ -112,7 +112,7 @@ async function processarResultados(page, torneio) {
   let meta;
   try {
     const metaP = esperarGetMeta(page, torneio.t, 12000);
-    await page.goto(IFRAME_URL(torneio.t), { waitUntil: 'domcontentloaded', timeout: 15000 });
+    await page.goto(IFRAME_URL(torneio.t, torneio.ax ?? 1129), { waitUntil: 'domcontentloaded', timeout: 15000 });
     meta = await metaP;
   } catch (err) {
     console.warn(`  ⚠️  GetMeta falhou: ${err.message}`);
