@@ -132,8 +132,8 @@ async function main() {
 
   // Navegar para o primeiro torneio (estabelece sessão sem precisar de EntryPage)
   const firstT = targetTournaments[0];
-  const initUrl = `${BASE_URL}/pt/Classifications.aspx?ccode=${firstT.ccode}&tcode=${firstT.tcode}`;
-  console.log(`  ${C}▸ A estabelecer sessão via Classifications.aspx...${X}`);
+  const initUrl = `${BASE_URL}/pt/classif.aspx?ccode=${firstT.ccode}&tcode=${firstT.tcode}`;
+  console.log(`  ${C}▸ A estabelecer sessão via classif.aspx...${X}`);
   await page.goto(initUrl, { waitUntil: "domcontentloaded", timeout: 30000 });
   const initTitle = await page.title();
   console.log(`  ${D}Título: ${initTitle}${X}`);
@@ -142,19 +142,26 @@ async function main() {
   const sess = ck.find(c => c.name === "ASP.NET_SessionId");
   console.log(`  ${G}✓${X} Sessão: ${sess?.value?.substring(0,8)||"anónima"}...\n`);
 
-  // Helper POST
-  const post = async (url, body) => {
-    return page.evaluate(async ({ url, body }) => {
+  // Helper POST — replica exactamente o fpgPost do fpg-bridge-drive.js:
+  // params tanto na query string como no body (todos como strings)
+  const post = async (endpoint, params) => {
+    return page.evaluate(async ({ endpoint, params }) => {
       try {
+        // Query string com todos os params
+        const qs = Object.entries(params).map(([k,v]) => k + "=" + encodeURIComponent(v)).join("&");
+        const url = endpoint + "?" + qs;
+        // Body com todos os params convertidos para string
+        const bodyObj = {};
+        for (const [k,v] of Object.entries(params)) bodyObj[k] = String(v);
+
         const r = await fetch(url, {
           method: "POST",
           credentials: "include",
           headers: {
             "Content-Type": "application/json; charset=utf-8",
-            "X-Requested-With": "XMLHttpRequest",
-            "Accept": "application/json, text/javascript, */*",
+            "x-requested-with": "XMLHttpRequest",
           },
-          body: JSON.stringify(body),
+          body: JSON.stringify(bodyObj),
         });
         const text = await r.text();
         if (!r.ok) return { ok: false, status: r.status, raw: text.substring(0, 200) };
@@ -167,7 +174,7 @@ async function main() {
       } catch (e) {
         return { ok: false, error: e.message };
       }
-    }, { url, body });
+    }, { endpoint, params });
   };
 
   // Processar torneios
@@ -180,13 +187,13 @@ async function main() {
 
     process.stdout.write(`  [${i+1}/${targetTournaments.length}] ${C}${t.name}${X}\n  `);
 
-    // Navegar para a página do torneio
-    const tournUrl = `${BASE_URL}/pt/Classifications.aspx?ccode=${t.ccode}&tcode=${t.tcode}`;
+    // Navegar para classif.aspx (página correcta para ClassifLST)
+    const tournUrl = `${BASE_URL}/pt/classif.aspx?ccode=${t.ccode}&tcode=${t.tcode}`;
     await page.goto(tournUrl, { waitUntil: "domcontentloaded", timeout: 30000 });
 
     // ClassifLST
     const classifRes = await post(
-      `${BASE_URL}/pt/classif.aspx/ClassifLST?jtStartIndex=0&jtPageSize=200&jtSorting=`,
+      `${BASE_URL}/pt/classif.aspx/ClassifLST`,
       {
         Classi: "1", tclub: t.ccode, tcode: t.tcode,
         classiforder: "1", classiftype: "I", classifroundtype: "D",
@@ -214,8 +221,10 @@ async function main() {
 
     for (const c of entries) {
       const scRes = await post(
-        `${BASE_URL}/pt/classif.aspx/ScoreCard?score_id=${c.score_id}&tclub=${t.ccode}&tcode=${t.tcode}&scoringtype=1&classiftype=I&classifround=1`,
-        { jtStartIndex: 0, jtPageSize: 10, jtSorting: "" }
+        `${BASE_URL}/pt/classif.aspx/ScoreCard`,
+        { score_id: String(c.score_id), tclub: t.ccode, tcode: t.tcode,
+          scoringtype: "1", classiftype: "I", classifround: "1",
+          jtStartIndex: 0, jtPageSize: 10, jtSorting: "" }
       );
 
       if (scRes.ok && scRes.data?.Result === "OK" && scRes.data.Records?.length) {
