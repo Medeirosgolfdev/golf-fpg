@@ -20,6 +20,10 @@ interface Torneio {
   ultima_atualizacao: string;
   sem_flights?: boolean; erro?: string;
 }
+interface IntlTorneio { id: string; name: string; short: string; date: string; rounds: number; par: number; url: string; }
+interface IntlJogador { n: string; co: string; isM?: boolean; r: Record<string, { p: number; t: number; tp: number; rd: number[] }>; up: string[]; }
+interface IntlData { torneios: IntlTorneio[]; proximos: { id: string; name: string }[]; jogadores: IntlJogador[]; }
+
 interface FieldData { gerado_em: string; torneios: Torneio[]; }
 
 // ─────────────────────────────────────────────
@@ -545,10 +549,10 @@ interface RivalInfo {
 }
 
 function TabelaConhecidos({
-  torneioT, torneioNome, rivals, fieldData,
+  torneioT, torneioNome, rivals, fieldData, intlData,
 }: {
   torneioT: number; torneioNome: string;
-  rivals: RivalInfo[]; fieldData: FieldData | null;
+  rivals: RivalInfo[]; fieldData: FieldData | null; intlData: IntlData | null;
 }) {
   const torneio = fieldData?.torneios.find(t => t.t === torneioT);
   if (!torneio) return (
@@ -639,7 +643,7 @@ function TabelaConhecidos({
   );
 }
 
-function TabRivais({ data, fieldData }: { data: ResultsData; fieldData: FieldData | null }) {
+function TabRivais({ data, fieldData, intlData }: { data: ResultsData; fieldData: FieldData | null; intlData: IntlData | null }) {
   const [filtro, setFiltro] = useState("");
   const [ordem,  setOrdem]  = useState<"encontros"|"pais"|"nome">("encontros");
   const [vista,  setVista]  = useState<"lista"|"marco"|"european">("lista");
@@ -729,11 +733,11 @@ function TabRivais({ data, fieldData }: { data: ResultsData; fieldData: FieldDat
 
       {vista === "marco" && (
         <TabelaConhecidos torneioT={21080} torneioNome="Marco Simone Invitational 2026"
-          rivals={rivals} fieldData={fieldData} />
+          rivals={rivals} fieldData={fieldData} intlData={intlData} />
       )}
       {vista === "european" && (
         <TabelaConhecidos torneioT={21131} torneioNome="European Championship 2026"
-          rivals={rivals} fieldData={fieldData} />
+          rivals={rivals} fieldData={fieldData} intlData={intlData} />
       )}
 
       {vista === "lista" && (<>
@@ -783,6 +787,7 @@ function TabRivais({ data, fieldData }: { data: ResultsData; fieldData: FieldDat
                     {torneiosUnicos.length}
                   </td>
                   <td style={{ fontSize:11, color:"var(--text-3)", padding:"5px 8px" }}>
+                    {/* USKids */}
                     {torneiosUnicos.map(enc => {
                       const manMelhor = enc.man_pos < enc.rival_pos;
                       const manPior   = enc.man_pos > enc.rival_pos;
@@ -798,16 +803,42 @@ function TabRivais({ data, fieldData }: { data: ResultsData; fieldData: FieldDat
                             <span style={{ color:"var(--text-3)" }}> vs </span>
                             <span style={{ fontWeight:700, color:"var(--text-2)" }}>{enc.rival_pos}º</span>
                           </span>
-                          {enc.man_to_par !== null && (
-                            <span style={{ marginLeft:4, fontSize:10, color:"var(--text-3)" }}>
-                              ({enc.man_to_par===0?"E":enc.man_to_par>0?"+"+enc.man_to_par:enc.man_to_par}
-                              {" vs "}
-                              {enc.rival_to_par===null?"-":enc.rival_to_par===0?"E":enc.rival_to_par>0?"+"+enc.rival_to_par:enc.rival_to_par})
-                            </span>
-                          )}
                         </span>
                       );
                     })}
+                    {/* BJGT/Intl */}
+                    {(() => {
+                      const intlJog = intlData?.jogadores.find(j =>
+                        j.n.toLowerCase().trim() === r.nome.toLowerCase().trim() && !j.isM
+                      );
+                      if (!intlJog) return null;
+                      const torns = intlData!.torneios.filter(t => intlJog.r[t.id]);
+                      if (!torns.length) return null;
+                      return torns.map(t => {
+                        const res = intlJog.r[t.id];
+                        const manRes = intlData!.jogadores.find(j => j.isM)?.r[t.id];
+                        const manMelhor = manRes && res.p > manRes.p;
+                        const manPior   = manRes && res.p < manRes.p;
+                        return (
+                          <span key={t.id} style={{ marginRight:12, whiteSpace:"nowrap" }}>
+                            <span style={{ color:"var(--color-info)", fontSize:9, fontWeight:700,
+                              border:"1px solid var(--border-info)", borderRadius:3,
+                              padding:"0 3px", marginRight:3 }}>BJGT</span>
+                            <a href={t.url} target="_blank" rel="noopener noreferrer"
+                              style={{ color:"var(--text-2)", textDecoration:"none" }}>{t.short}</a>
+                            {manRes && (
+                              <span style={{ marginLeft:4 }}>
+                                <span style={{ fontWeight:700, color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
+                                  {manRes.p}º
+                                </span>
+                                <span style={{ color:"var(--text-3)" }}> vs </span>
+                                <span style={{ fontWeight:700, color:"var(--text-2)" }}>{res.p}º</span>
+                              </span>
+                            )}
+                          </span>
+                        );
+                      });
+                    })()}
                   </td>
                 </tr>
               );
@@ -826,6 +857,7 @@ type Tab = "campo" | "resultados" | "rivais";
 export default function USKidsFieldPage() {
   const [fieldData,   setFieldData]   = useState<FieldData | null>(null);
   const [resultsData, setResultsData] = useState<ResultsData | null>(null);
+  const [intlData,    setIntlData]    = useState<IntlData | null>(null);
   const [tab,         setTab]         = useState<Tab>("campo");
   const [erro,        setErro]        = useState<string | null>(null);
 
@@ -912,7 +944,7 @@ export default function USKidsFieldPage() {
       )}
       {tab === "rivais" && (
         resultsData
-          ? <TabRivais data={resultsData} fieldData={fieldData} />
+          ? <TabRivais data={resultsData} fieldData={fieldData} intlData={intlData} />
           : <div style={{color:"#546e7a",padding:"24px 0"}}>A carregar…</div>
       )}
 
