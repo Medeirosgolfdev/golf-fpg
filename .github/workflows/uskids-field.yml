@@ -23,9 +23,13 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add public/data/uskids-field.json public/data/uskids-discovery-cache.json
-          git diff --cached --quiet || (
-            git commit -m "data: USKids field [$(date -u '+%Y-%m-%d %H:%M UTC')]" &&
-            git fetch origin main &&
-            git rebase -X ours origin/main &&
-            git push
-          )
+          git diff --cached --quiet && exit 0
+          git commit -m "data: USKids field [$(date -u '+%Y-%m-%d %H:%M UTC')]"
+          git fetch origin main
+          git reset --soft HEAD~1
+          git stash
+          git rebase origin/main
+          git stash pop
+          git add public/data/uskids-field.json public/data/uskids-discovery-cache.json
+          git commit -m "data: USKids field [$(date -u '+%Y-%m-%d %H:%M UTC')]"
+          git push
