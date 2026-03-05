@@ -238,7 +238,7 @@ function TabelaRonda({ ronda }: { ronda: RondaResult }) {
               <td style={{padding:"5px 8px",textAlign:"center",fontSize:12,fontWeight:700,
                 color:isManuel(j.nome)?"#90caf9":"#78909c"}}>{j.score||"–"}</td>
               <td style={{padding:"5px 8px",textAlign:"center",fontSize:11,
-                color: j.to_par===null??"#546e7a":j.to_par<0?"#80cbc4":j.to_par===0?"#cfd8dc":"#ef9a9a",
+                color: (j.to_par===null||j.to_par===undefined)?"#546e7a":j.to_par<0?"#80cbc4":j.to_par===0?"#cfd8dc":"#ef9a9a",
                 fontWeight:700}}>
                 {j.to_par===null||j.to_par===undefined?"–":j.to_par===0?"E":j.to_par>0?"+"+j.to_par:j.to_par}
               </td>
