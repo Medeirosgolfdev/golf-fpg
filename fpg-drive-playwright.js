@@ -79,116 +79,80 @@ async function main() {
   const startTime = Date.now();
 
   console.log(`
-${B}╔══════════════════════════════════════════════════════╗${X}
-${B}║     FPG Drive Playwright — Fase 1 Automática         ║${X}
-${B}╠══════════════════════════════════════════════════════╣${X}
-${B}║${X}  Ano:      ${String(filterYear).padEnd(43)}${B}║${X}
-${B}║${X}  Force:    ${(forceFlag?"sim":"não").padEnd(43)}${B}║${X}
-${B}║${X}  Output:   ${driveDataPath.slice(-43).padEnd(43)}${B}║${X}
-${B}╚══════════════════════════════════════════════════════╝${X}
+\x1b[1m╔══════════════════════════════════════════════════════╗\x1b[0m
+\x1b[1m║     FPG Drive Playwright — Fase 1 Automática         ║\x1b[0m
+\x1b[1m╠══════════════════════════════════════════════════════╣\x1b[0m
+\x1b[1m║\x1b[0m  Ano:      ${String(filterYear).padEnd(43)}\x1b[1m║\x1b[0m
+\x1b[1m║\x1b[0m  Force:    ${(forceFlag?"sim":"não").padEnd(43)}\x1b[1m║\x1b[0m
+\x1b[1m║\x1b[0m  Output:   ${driveDataPath.slice(-43).padEnd(43)}\x1b[1m║\x1b[0m
+\x1b[1m╚══════════════════════════════════════════════════════╝\x1b[0m
 `);
 
-  // Torneios já processados (para evitar repetir)
   const existingTcodes = new Set();
   if (existingDrive && !forceFlag) {
     for (const t of existingDrive.tournaments||[]) existingTcodes.add(t.tcode);
-    console.log(`  ${D}Torneios já processados: ${existingTcodes.size}${X}`);
+    console.log(`  \x1b[2mTorneios já processados: ${existingTcodes.size}\x1b[0m`);
   }
 
   // ── Lançar browser headless ──
-  console.log(`\n  ${C}▸ A lançar browser headless...${X}`);
-  const browser = await chromium.launch({
-    headless: true,
-    args: ["--no-sandbox", "--disable-setuid-sandbox"]
-  });
+  console.log(`\n  \x1b[36m▸ A lançar browser headless...\x1b[0m`);
+  const browser = await chromium.launch({ headless: true, args: ["--no-sandbox"] });
   const context = await browser.newContext({
     userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120 Safari/537.36",
     locale: "pt-PT",
   });
   const page = await context.newPage();
 
-  // ── Visitar página para estabelecer sessão ──
-  console.log(`  ${C}▸ A estabelecer sessão em scoring.datagolf.pt...${X}`);
-  // 1EntryPage redireciona para tournaments.aspx e define ccode=All na sessão
-  await page.goto(ENTRY_URL, { waitUntil: "networkidle", timeout: 30000 });
+  // ── Interceptar TournamentsLST antes de navegar ──
+  console.log(`  \x1b[36m▸ A preparar intercepção de TournamentsLST...\x1b[0m`);
+  let listData = null;
+  let captureResolve;
+  const capturePromise = new Promise(r => { captureResolve = r; });
 
-  // Verificar URL final (deve ter redirecionado para tournaments.aspx)
-  const finalUrl = page.url();
-  const title = await page.title();
-  console.log(`  ${D}URL: ${finalUrl}${X}`);
-  console.log(`  ${D}Título: ${title}${X}`);
+  await page.route("**/TournamentsLST**", async (route) => {
+    console.log(`  \x1b[2mInterceptado: ${route.request().url()}\x1b[0m`);
+    const resp = await route.fetch();
+    const text = await resp.text();
+    try {
+      const j = JSON.parse(text);
+      listData = j?.d ?? j;
+      console.log(`  \x1b[32m✓\x1b[0m TournamentsLST interceptado: ${listData?.Records?.length||0} registos`);
+    } catch(e) {
+      console.log(`  \x1b[33mTournamentsLST parse error: ${text.substring(0,100)}\x1b[0m`);
+    }
+    captureResolve();
+    await route.fulfill({ response: resp, body: text });
+  });
 
-  if (title.includes("Param Error") || title.includes("Runtime Error")) {
-    // O hash/dt pode ter expirado — tentar ir directamente a tournaments.aspx
-    console.log(`  ${Y}Param Error na EntryPage, a tentar tournaments.aspx directamente...${X}`);
-    await page.goto("https://scoring.datagolf.pt/pt/tournaments.aspx", { waitUntil: "domcontentloaded", timeout: 30000 });
-    const title2 = await page.title();
-    console.log(`  ${D}Título (directo): ${title2}${X}`);
-  }
+  // ── Injectar cookie e navegar ──
+  await context.addCookies([{
+    name: "DG_Lists_URL",
+    value: "OriginalUrl=https%3a%2f%2fscoring.datagolf.pt%3a443%2fpt%2f1EntryPage.aspx%3fuser%3dfpguser%26dt%3d5450%26page%3dtournlist%26hash%3d53f11d30ef5b83b66479e5323ba9ac64f92cd0a7%26ccode%3dAll%26pagelang%3dPT%26callcontext%3ddirect",
+    domain: "scoring.datagolf.pt", path: "/",
+  }]);
 
-  // Obter cookies da sessão
-  const cookies = await context.cookies();
-  const sessionCookie = cookies.find(c => c.name === "ASP.NET_SessionId");
-  const dgListsCookie = cookies.find(c => c.name === "DG_Lists_URL");
+  console.log(`  \x1b[36m▸ A navegar para tournaments.aspx...\x1b[0m`);
+  await page.goto("https://scoring.datagolf.pt/pt/tournaments.aspx", { waitUntil: "domcontentloaded", timeout: 30000 });
+  console.log(`  \x1b[2mTítulo: ${await page.title()}\x1b[0m`);
 
-  if (!sessionCookie) {
-    console.log(`  ${Y}Sem ASP.NET_SessionId — a usar contexto de página directamente${X}`);
-  } else {
-    console.log(`  ${G}✓${X} Sessão: ${sessionCookie.value.substring(0,8)}...`);
-  }
+  // Aguardar intercepção até 25s
+  await Promise.race([capturePromise, new Promise(r => setTimeout(r, 25000))]);
+  await page.unroute("**/TournamentsLST**");
 
-  // ── Helper: POST via page.evaluate (corre no browser, partilha cookies) ──
-  const post = async (url, body) => {
-    return page.evaluate(async ({ url, body }) => {
-      try {
-        const r = await fetch(url, {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json; charset=utf-8",
-            "X-Requested-With": "XMLHttpRequest",
-            "Accept": "application/json, text/javascript, */*",
-          },
-          body: JSON.stringify(body),
-        });
-        const text = await r.text();
-        if (!r.ok) return { ok: false, status: r.status, raw: text.substring(0, 400) };
-        try {
-          const j = JSON.parse(text);
-          return { ok: true, data: j?.d ?? j };
-        } catch {
-          return { ok: false, status: r.status, raw: text.substring(0, 400) };
-        }
-      } catch(e) {
-        return { ok: false, error: e.message };
-      }
-    }, { url, body });
-  };
-
-  // ── Debug: mostrar cookies activos ──
-  const debugCookies = await context.cookies(["https://scoring.datagolf.pt"]);
-  const ckNames = debugCookies.map(c => c.name + (c.name === "DG_Lists_URL" ? "=" + decodeURIComponent(c.value).substring(0,60) : ""));
-  console.log(`  ${D}Cookies: ${ckNames.join(" | ")}${X}`);
+  const ck = await context.cookies();
+  const sess = ck.find(c => c.name === "ASP.NET_SessionId");
+  console.log(`  \x1b[32m✓\x1b[0m Sessão: ${sess?.value?.substring(0,8)||"?"}...`);
 
   // ── Listar torneios DRIVE ──
-  console.log(`\n  ${C}▸ A listar torneios DRIVE ${filterYear}...${X}`);
+  console.log(`\n  \x1b[36m▸ A listar torneios DRIVE ${filterYear}...\x1b[0m`);
 
-  // Aguardar que a página termine de carregar completamente
-  await page.waitForLoadState("networkidle", { timeout: 15000 }).catch(() => {});
-
-  // Tentar primeiro com pageSize pequeno para confirmar que o endpoint funciona
-  const listRes = await post(
-    "/pt/tournaments.aspx/TournamentsLST",
-    { ClubCode: 0, dtIni: "", dtFim: "", CourseName: "", TournCode: "", TournName: "",
-      jtStartIndex: 0, jtPageSize: 2000, jtSorting: "started_at DESC" }
-  );
-
-  if (!listRes.ok) {
-    // debug: mostrar resposta crua
-    console.log(`  debug raw: ${JSON.stringify(listRes).substring(0, 300)}`);
+  if (!listData?.Records) {
+    console.log(`  \x1b[31m✗ TournamentsLST não interceptado — sem dados\x1b[0m`);
+    await browser.close();
+    process.exit(1);
   }
 
-  console.log(`  ${G}✓${X} Total recebido: ${listData.Records.length} torneios`);
+  console.log(`  \x1b[32m✓\x1b[0m Total recebido: ${listData.Records.length} torneios`);
 
   const yearStart = new Date(`${filterYear}-01-01`).getTime();
   const yearEnd   = new Date(`${filterYear+1}-01-01`).getTime();
@@ -205,25 +169,40 @@ ${B}╚════════════════════════�
     rounds: t.rounds||1
   }));
 
-  // Resumo por clube
   for (const [cc, cn] of Object.entries(DRIVE_CLUBS)) {
     const n = allFound.filter(t => t.ccode===cc).length;
-    if (n > 0) console.log(`  ${G}✓${X} ${cn}: ${n} torneios`);
+    if (n > 0) console.log(`  \x1b[32m✓\x1b[0m ${cn}: ${n} torneios`);
   }
 
   const newTournaments = forceFlag ? allFound : allFound.filter(t => !existingTcodes.has(t.tcode));
-  console.log(`\n  ${B}Encontrados: ${allFound.length} | Novos: ${newTournaments.length}${X}`);
+  console.log(`\n  \x1b[1mEncontrados: ${allFound.length} | Novos: ${newTournaments.length}\x1b[0m`);
 
   if (newTournaments.length === 0) {
-    console.log(`  ${Y}Nenhum torneio novo. Usa --force para re-processar.${X}`);
+    console.log(`  \x1b[33mNenhum torneio novo. Usa --force para re-processar.\x1b[0m`);
     await browser.close();
-
-    if (!forceFlag && existingDrive) {
-      console.log(`  ${D}drive-data.json mantido sem alterações.${X}`);
-      process.exit(0);
-    }
     process.exit(0);
   }
+
+  // ── Helper POST via page.evaluate ──
+  const post = async (url, body) => {
+    return page.evaluate(async ({ url, body }) => {
+      try {
+        const r = await fetch(url, {
+          method: "POST", credentials: "include",
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            "X-Requested-With": "XMLHttpRequest",
+            "Accept": "application/json, text/javascript, */*",
+          },
+          body: JSON.stringify(body),
+        });
+        const text = await r.text();
+        if (!r.ok) return { ok: false, status: r.status, raw: text.substring(0, 200) };
+        try { const j = JSON.parse(text); return { ok: true, data: j?.d ?? j }; }
+        catch { return { ok: false, status: r.status, raw: text.substring(0, 200) }; }
+      } catch(e) { return { ok: false, error: e.message }; }
+    }, { url, body });
+  };
 
   // ── Scorecards por torneio ──
   const processedTournaments = [];
@@ -232,9 +211,8 @@ ${B}╚════════════════════════�
   for (let i = 0; i < newTournaments.length; i++) {
     const t = newTournaments[i];
     const info = classifyTournament(t.name, t.ccode);
-    process.stdout.write(`  [${i+1}/${newTournaments.length}] ${C}${t.name}${X} `);
+    process.stdout.write(`  [${i+1}/${newTournaments.length}] \x1b[36m${t.name}\x1b[0m `);
 
-    // Classificação
     const classifRes = await post(
       "/pt/classif.aspx/ClassifLST?jtStartIndex=0&jtPageSize=200&jtSorting=",
       { Classi:"1", tclub:t.ccode, tcode:t.tcode,
@@ -246,9 +224,7 @@ ${B}╚════════════════════════�
         jtStartIndex:0, jtPageSize:200, jtSorting:"score_id DESC" }
     );
 
-    const entries = (classifRes.ok && classifRes.data?.Result==="OK")
-      ? (classifRes.data.Records||[]) : [];
-
+    const entries = (classifRes.ok && classifRes.data?.Result==="OK") ? (classifRes.data.Records||[]) : [];
     process.stdout.write(`${entries.length} jog `);
 
     const players = [];
@@ -280,8 +256,8 @@ ${B}╚════════════════════════�
           grossTotal:r.gross_total, parTotal:r.par_total,
           course:r.course_description||"",
           courseRating:r.course_rating, slope:r.slope,
-          teeName:r.tee_name||"",
-          nholes:nh, scores, par, si, meters
+          teeName:r.tee_name||"", nholes:nh,
+          scores, par, si, meters
         });
         scOk++;
       } else {
@@ -292,7 +268,7 @@ ${B}╚════════════════════════�
       await sleep(80);
     }
 
-    console.log(`${G}✓${X} ${scOk} SC`);
+    console.log(`\x1b[32m✓\x1b[0m ${scOk} SC`);
     totalScorecards += scOk;
     processedTournaments.push({ ...t, ...info, playerCount:players.length, players });
     await sleep(200);
@@ -300,17 +276,15 @@ ${B}╚════════════════════════�
 
   await browser.close();
 
-  // ── Combinar com existentes e guardar ──
+  // ── Guardar ──
   const allProcessed = forceFlag
     ? processedTournaments
     : [...(existingDrive?.tournaments||[]), ...processedTournaments];
-
   allProcessed.sort((a,b) => (b.date||"").localeCompare(a.date||""));
 
   const output = {
     lastUpdated: new Date().toISOString().split("T")[0],
-    source: "scoring.datagolf.pt",
-    filterYear,
+    source: "scoring.datagolf.pt", filterYear,
     totalTournaments: allProcessed.length,
     totalPlayers: allProcessed.reduce((s,t) => s+(t.players?.length||0), 0),
     totalScorecards: allProcessed.reduce((s,t) => s+(t.players?.filter(p=>p.scores?.length>0).length||0), 0),
@@ -323,16 +297,15 @@ ${B}╚════════════════════════�
 
   const elapsed = Math.ceil((Date.now()-startTime)/1000/60);
   console.log(`
-${B}╔══════════════════════════════════════════╗${X}
-${B}║     Concluído                            ║${X}
-${B}╠══════════════════════════════════════════╣${X}
-${B}║${X}  Torneios novos:  ${String(newTournaments.length).padEnd(24)}${B}║${X}
-${B}║${X}  Scorecards:      ${String(totalScorecards).padEnd(24)}${B}║${X}
-${B}║${X}  Total acumulado: ${String(allProcessed.length+" torneios").padEnd(24)}${B}║${X}
-${B}║${X}  Tempo:           ${String(elapsed+" min").padEnd(24)}${B}║${X}
-${B}╚══════════════════════════════════════════╝${X}`);
+\x1b[1m╔══════════════════════════════════════════╗\x1b[0m
+\x1b[1m║     Concluído                            ║\x1b[0m
+\x1b[1m╠══════════════════════════════════════════╣\x1b[0m
+\x1b[1m║\x1b[0m  Torneios novos:  ${String(newTournaments.length).padEnd(24)}\x1b[1m║\x1b[0m
+\x1b[1m║\x1b[0m  Scorecards:      ${String(totalScorecards).padEnd(24)}\x1b[1m║\x1b[0m
+\x1b[1m║\x1b[0m  Total acumulado: ${String(allProcessed.length+" torneios").padEnd(24)}\x1b[1m║\x1b[0m
+\x1b[1m║\x1b[0m  Tempo:           ${String(elapsed+" min").padEnd(24)}\x1b[1m║\x1b[0m
+\x1b[1m╚══════════════════════════════════════════╝\x1b[0m`);
 }
-
 main().catch(e => {
   console.error(`${"\x1b[31m"}ERRO: ${e.message}${"\x1b[0m"}`);
   process.exit(1);
