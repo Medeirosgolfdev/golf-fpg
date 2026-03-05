@@ -124,16 +124,12 @@ async function main() {
     await route.fulfill({ response: resp, body: text });
   });
 
-  // ── Injectar cookie e navegar ──
-  await context.addCookies([{
-    name: "DG_Lists_URL",
-    value: "OriginalUrl=https%3a%2f%2fscoring.datagolf.pt%3a443%2fpt%2f1EntryPage.aspx%3fuser%3dfpguser%26dt%3d5450%26page%3dtournlist%26hash%3d53f11d30ef5b83b66479e5323ba9ac64f92cd0a7%26ccode%3dAll%26pagelang%3dPT%26callcontext%3ddirect",
-    domain: "scoring.datagolf.pt", path: "/",
-  }]);
-
+  // Navegar directamente para tournaments.aspx — sem EntryPage (hash expira)
+  // O TournamentsLST devolve todos os torneios; filtramos por club_code do lado cliente
   console.log(`  \x1b[36m▸ A navegar para tournaments.aspx...\x1b[0m`);
   await page.goto("https://scoring.datagolf.pt/pt/tournaments.aspx", { waitUntil: "domcontentloaded", timeout: 30000 });
-  console.log(`  \x1b[2mTítulo: ${await page.title()}\x1b[0m`);
+  const pgTitle = await page.title();
+  console.log(`  \x1b[2mTítulo: ${pgTitle}\x1b[0m`);
 
   // Aguardar intercepção até 25s
   await Promise.race([capturePromise, new Promise(r => setTimeout(r, 25000))]);
