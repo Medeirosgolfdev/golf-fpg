@@ -1,96 +1,157 @@
-# .github/workflows/uskids-field.yml
-#
-# Actualiza automaticamente os dados de inscrição nos torneios internacionais USKids.
-# Corre 3x por dia e faz commit do JSON actualizado ao repositório.
-# O Vercel detecta o push e faz re-deploy automático.
-#
-# Podes também correr manualmente: Actions → "USKids Field Monitor" → Run workflow
-
 name: USKids Field Monitor
 
 on:
   schedule:
-    # Corre às 07:00, 13:00 e 20:00 UTC (08:00, 14:00, 21:00 Lisboa no Verão)
+    # Inscritos: todos os dias às 07:00 UTC
     - cron: '0 7 * * *'
+    # Resultados: todos os dias às 13:00 e 20:00 UTC (durante torneios)
     - cron: '0 13 * * *'
     - cron: '0 20 * * *'
+    # Descoberta: de 3 em 3 dias (dias 1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31)
+    - cron: '0 5 1,4,7,10,13,16,19,22,25,28,31 * *'
 
-  # Permite correr manualmente pelo painel do GitHub Actions
   workflow_dispatch:
+    inputs:
+      modo:
+        description: 'Modo de execução'
+        required: true
+        default: 'inscritos'
+        type: choice
+        options:
+          - inscritos
+          - descoberta
+          - resultados
+          - tudo
 
 permissions:
   contents: write
 
 jobs:
-  update-field:
-    name: Actualizar campo dos torneios
+  inscritos:
+    name: 📋 Actualizar inscritos
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+    if: |
+      github.event_name == 'workflow_dispatch' && github.event.inputs.modo == 'inscritos' ||
+      github.event_name == 'schedule' && (
+        startsWith(github.event.schedule, '0 7') ||
+        startsWith(github.event.schedule, '0 13') ||
+        startsWith(github.event.schedule, '0 20')
+      )
 
     steps:
-      - name: Checkout repositório
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
 
-      - name: Instalar dependências
-        run: npm ci
+      - run: npm ci
+      - run: npx playwright install chromium --with-deps
+      - run: node scripts/fetch-uskids-field.js inscritos
 
-      - name: Instalar browser Playwright (Chromium)
-        run: npx playwright install chromium --with-deps
-
-      - name: Correr fetch-uskids-field.js
-        run: node scripts/fetch-uskids-field.js
-
-      - name: Verificar se houve alterações
-        id: check_changes
-        run: |
-          if git diff --quiet public/data/uskids-field.json; then
-            echo "changed=false" >> $GITHUB_OUTPUT
-            echo "Sem alterações nos dados."
-          else
-            echo "changed=true" >> $GITHUB_OUTPUT
-            echo "Dados alterados — vai fazer commit."
-            git diff --stat public/data/uskids-field.json
-          fi
-
-      - name: Commit e push se houve alterações
-        if: steps.check_changes.outputs.changed == 'true'
+      - name: Commit se houve alterações
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add public/data/uskids-field.json
-          git commit -m "data: actualizar campo torneios USKids [$(date -u '+%Y-%m-%d %H:%M UTC')]"
-          git push
+          git diff --quiet public/data/uskids-field.json || (
+            git add public/data/uskids-field.json &&
+            git commit -m "data: inscritos USKids [$(date -u '+%Y-%m-%d %H:%M UTC')]" &&
+            git push
+          )
 
-      - name: Resumo
-        if: always()
+  descoberta:
+    name: 🔍 Descoberta de novos torneios
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    if: |
+      github.event_name == 'workflow_dispatch' && github.event.inputs.modo == 'descoberta' ||
+      github.event_name == 'schedule' && startsWith(github.event.schedule, '0 5')
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+      - run: npx playwright install chromium --with-deps
+      - run: node scripts/fetch-uskids-field.js descoberta
+
+      - name: Commit se houve alterações
         run: |
-          echo "## USKids Field Monitor" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          if [ -f public/data/uskids-field.json ]; then
-            echo "✅ JSON gerado com sucesso" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo '```json' >> $GITHUB_STEP_SUMMARY
-            # Mostra apenas o resumo (sem a lista completa de jogadores)
-            node -e "
-              const d = JSON.parse(require('fs').readFileSync('public/data/uskids-field.json'));
-              const resumo = d.torneios.map(t => ({
-                torneio: t.name,
-                total: t.total_inscritos + '/' + t.total_maximo,
-                boys12: t.escaloes?.find(e => e.nome === 'Boys 12')
-                  ? (e => e.inscritos + '/' + e.maximo + ' (' + e.vagas + ' vagas)'
-                    )(t.escaloes.find(e => e.nome === 'Boys 12'))
-                  : 'n/a',
-              }));
-              console.log(JSON.stringify(resumo, null, 2));
-            " >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
-          else
-            echo "❌ JSON não foi gerado" >> $GITHUB_STEP_SUMMARY
-          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git diff --quiet public/data/uskids-discovery-cache.json public/data/uskids-field.json || (
+            git add public/data/uskids-discovery-cache.json public/data/uskids-field.json &&
+            git commit -m "data: descoberta USKids [$(date -u '+%Y-%m-%d %H:%M UTC')]" &&
+            git push
+          )
+
+  resultados:
+    name: 🏆 Actualizar resultados
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    if: |
+      github.event_name == 'workflow_dispatch' && github.event.inputs.modo == 'resultados'
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+      - run: npx playwright install chromium --with-deps
+      - run: node scripts/fetch-uskids-field.js resultados
+
+      - name: Commit se houve alterações
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git diff --quiet public/data/uskids-field.json || (
+            git add public/data/uskids-field.json &&
+            git commit -m "data: resultados USKids [$(date -u '+%Y-%m-%d %H:%M UTC')]" &&
+            git push
+          )
+
+  tudo:
+    name: ⛳ Tudo (descoberta + inscritos + resultados)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.modo == 'tudo'
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+      - run: npx playwright install chromium --with-deps
+      - run: node scripts/fetch-uskids-field.js tudo
+
+      - name: Commit se houve alterações
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git diff --quiet public/data/ || (
+            git add public/data/ &&
+            git commit -m "data: update completo USKids [$(date -u '+%Y-%m-%d %H:%M UTC')]" &&
+            git push
+          )
