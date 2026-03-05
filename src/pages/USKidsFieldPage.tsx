@@ -176,7 +176,7 @@ function badgeVagas(vagas: number, maximo: number) {
   if (maximo === 0) return null;
   if (vagas === 0)  return { bg:"#7f0000", cor:"#ffcdd2", label:"FULL" };
   if (vagas <= 1)   return { bg:"#b71c1c", cor:"#ffcdd2", label:`+${vagas}` };
-  if (vagas <= 3)   return { bg:"#e65100", cor:"#ffe0b2", label:`+${vagas}` };
+  if (vagas <= 3)   return { bg:"var(--color-warn)", cor:"#ffe0b2", label:`+${vagas}` };
   if (vagas <= 6)   return { bg:"#f57f17", cor:"#fff9c4", label:`+${vagas}` };
   return               { bg:"#1b5e20", cor:"#c8e6c9", label:`+${vagas}` };
 }
@@ -345,7 +345,7 @@ function TabCampo({ data }: { data: FieldData }) {
 
   return (
     <div>
-      <div style={{ color:"#37474f", fontSize:11, marginBottom:14 }}>
+      <div style={{ color:"var(--text-3)", fontSize:11, marginBottom:14 }}>
         Actualizado {fmtTs(data.gerado_em)} · ★ = categoria do Manuel
       </div>
 
@@ -359,7 +359,7 @@ function TabCampo({ data }: { data: FieldData }) {
         return (
           <div key={t.t} style={{
             background:"var(--bg-card)",
-            border:`1px solid ${urgente ? "var(--color-danger)" : "var(--border)"}`,
+            border:`1px solid ${urgente ? "var(--color-warn)" : "var(--border)"}`,
             borderRadius:10, marginBottom:12, overflow:"hidden",
           }}>
             <div onClick={() => toggle(t.t)} style={{
@@ -372,11 +372,11 @@ function TabCampo({ data }: { data: FieldData }) {
                     {t.emoji} {t.name}
                   </span>
                   {dias >= 0 && dias <= 14 && (
-                    <span style={{ background:"#4a148c", color:"#e1bee7",
+                    <span style={{ background:"var(--chart-5)", color:"#fff",
                       padding:"1px 7px", borderRadius:8, fontSize:10 }}>daqui a {dias}d</span>
                   )}
                   {dias < 0 && diasAte(t.date_fim ?? t.date_inicio) >= -1 && (
-                    <span style={{ background:"#1b5e20", color:"#c8e6c9",
+                    <span style={{ background:"var(--color-good)", color:"#fff",
                       padding:"1px 7px", borderRadius:8, fontSize:10 }}>em curso</span>
                   )}
                 </div>
@@ -390,10 +390,10 @@ function TabCampo({ data }: { data: FieldData }) {
                 {t.sem_flights && (
                   <div style={{ color:"var(--text-3)", fontSize:11, marginTop:4 }}>⏳ Flights ainda não publicados</div>
                 )}
-                {t.erro && <div style={{ color:"#ef9a9a", fontSize:11, marginTop:4 }}>⚠️ {t.erro}</div>}
+                {t.erro && <div style={{ color:"var(--color-danger)", fontSize:11, marginTop:4 }}>⚠️ {t.erro}</div>}
                 {!t.erro && !t.sem_flights && (
                   <div style={{ marginTop:8, display:"flex", gap:6, flexWrap:"wrap", alignItems:"center" }}>
-                    <span style={{ background:"#1b3a1b", color:"#81c784",
+                    <span style={{ background:"var(--color-good-dark)", color:"#fff",
                       padding:"2px 8px", borderRadius:8, fontSize:11 }}>
                       {t.total_inscritos}/{t.total_maximo}
                     </span>
@@ -407,7 +407,7 @@ function TabCampo({ data }: { data: FieldData }) {
                       ) : null;
                     })()}
                     {ptTotal.length > 0 && (
-                      <span style={{ background:"#1a237e", color:"#9fa8da",
+                      <span style={{ background:"var(--color-info)", color:"#fff",
                         padding:"2px 8px", borderRadius:8, fontSize:11 }}>
                         🇵🇹 {ptTotal.map(j=>j.nome).join(", ")}
                       </span>
@@ -430,14 +430,14 @@ function TabCampo({ data }: { data: FieldData }) {
                     return (
                       <div key={e.age_group} style={{
                         background: man?"var(--bg-info)":dst?"var(--bg-detail)":"var(--bg)",
-                        border:`1px solid ${man?"var(--border-info)":dst?"var(--border)":"transparent"}`,
+                        border:`1px solid ${man?"var(--color-info)":dst?"var(--border)":"transparent"}`,
                         borderRadius:6, padding:"7px 10px",
                       }}>
                         <div style={{ display:"flex", justifyContent:"space-between",
                           alignItems:"center", marginBottom: e.jogadores?.length ? 5 : 0 }}>
                           <span style={{ fontSize:11, color:man?"var(--color-info)":dst?"var(--text-2)":"var(--text-3)" }}>
                             {man?"★ ":""}{e.nome}
-                            <span style={{ color:"#37474f", fontSize:10, marginLeft:3 }}>({e.holes}H)</span>
+                            <span style={{ color:"var(--text-3)", fontSize:10, marginLeft:3 }}>({e.holes}H)</span>
                           </span>
                           <div style={{ display:"flex", gap:4, alignItems:"center" }}>
                             <span style={{ fontSize:10, color:"var(--text-3)" }}>{e.inscritos}/{e.maximo}</span>
@@ -468,13 +468,13 @@ function TabCampo({ data }: { data: FieldData }) {
                 </div>
 
                 {ptTotal.length > 0 && (
-                  <div style={{ background:"#1a237e", borderRadius:8, padding:"10px 14px", marginBottom:8 }}>
-                    <div style={{ color:"#7986cb", fontWeight:700, fontSize:12, marginBottom:6 }}>🇵🇹 Portugueses inscritos</div>
+                  <div style={{ background:"var(--bg-info)", border:"1px solid var(--border-info)", borderRadius:8, padding:"10px 14px", marginBottom:8 }}>
+                    <div style={{ color:"var(--color-info)", fontWeight:700, fontSize:12, marginBottom:6 }}>🇵🇹 Portugueses inscritos</div>
                     {t.escaloes.filter(e=>e.jogadores?.some(j=>j.pais==="PT")).map(e=>(
                       <div key={e.age_group} style={{ marginBottom:4 }}>
-                        <div style={{ color:"var(--text-2)", fontSize:10, marginBottom:1 }}>{e.nome}</div>
+                        <div style={{ color:"var(--color-info)", fontSize:10, marginBottom:1 }}>{e.nome}</div>
                         {e.jogadores!.filter(j=>j.pais==="PT").map((j,i)=>(
-                          <div key={i} style={{ color:"#c5cae9", fontSize:12, paddingLeft:8 }}>
+                          <div key={i} style={{ color:"var(--text)", fontSize:12, paddingLeft:8 }}>
                             {j.nome} <span style={{ color:"var(--text-3)", fontSize:10 }}>{j.cidade}</span>
                           </div>
                         ))}
@@ -513,14 +513,14 @@ function TabResultados({ data }: { data: ResultsData }) {
   });
 
   if (!data.resultados.length) return (
-    <div style={{ color:"#37474f", padding:"32px 0", textAlign:"center", fontSize:13 }}>
+    <div style={{ color:"var(--text-3)", padding:"32px 0", textAlign:"center", fontSize:13 }}>
       Sem resultados ainda — os scorecards aparecerão aqui durante e após os torneios
     </div>
   );
 
   return (
     <div>
-      <div style={{ color:"#37474f", fontSize:11, marginBottom:14 }}>
+      <div style={{ color:"var(--text-3)", fontSize:11, marginBottom:14 }}>
         Actualizado {fmtTs(data.gerado_em)}
       </div>
 
@@ -537,8 +537,7 @@ function TabResultados({ data }: { data: ResultsData }) {
         );
 
         return (
-          <div key={t.t} style={{ background:"var(--bg-card)", border:"1px solid var(--border)",
-            borderRadius:10, marginBottom:12, overflow:"hidden" }}>
+          <div key={t.t} style={{ border:"1px solid var(--border)", borderRadius:10, marginBottom:12, overflow:"hidden", background:"var(--bg-card)" }}>
             <div onClick={() => toggle(t.t)} style={{ cursor:"pointer", padding:"13px 16px",
               display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
               <div style={{ flex:1 }}>
@@ -584,7 +583,7 @@ function TabResultados({ data }: { data: ResultsData }) {
                   <div key={e.age_group} style={{ marginBottom:20 }}>
                     <div style={{ fontSize:12, fontWeight:700,
                       color: isManuelEscalao ? "var(--color-info)" : "var(--text-3)",
-                      borderBottom:`1px solid ${isManuelEscalao ? "var(--border-info)" : "var(--border)"}`,
+                      borderBottom:`1px solid ${isManuelEscalao ? "var(--color-info)" : "var(--border)"}`,
                       paddingBottom:5, marginBottom:8 }}>
                       {isManuelEscalao ? "★ " : ""}{e.nome}
                     </div>
@@ -833,12 +832,10 @@ function TabRivais({ data, fieldData, intlData }: { data: ResultsData; fieldData
           { key:"marco",    label:"Marco Simone — já conhece?" },
           { key:"european", label:"European Championship — já conhece?" },
         ] as const).map(v => (
-          <button key={v.key} onClick={() => setVista(v.key)} style={{
-            padding:"5px 12px", fontSize:11, borderRadius:6, cursor:"pointer",
-            background: vista===v.key ? "var(--bg-active)" : "var(--bg-card)",
-            border:`1px solid ${vista===v.key ? "var(--border-success)" : "var(--border)"}`,
-            fontWeight: vista===v.key ? 700 : 400, color:"var(--text-2)",
-          }}>{v.label}</button>
+          <button key={v.key} onClick={() => setVista(v.key)}
+            className={`tourn-tab tourn-tab-sm${vista===v.key ? " active" : ""}`}>
+            {v.label}
+          </button>
         ))}
       </div>
 
@@ -917,32 +914,31 @@ function TabRivais({ data, fieldData, intlData }: { data: ResultsData; fieldData
                         </span>
                       );
                     })}
-                    {/* BJGT/Intl — só torneios não-USKids */}
+                    {/* BJGT/Intl */}
                     {(() => {
                       const intlJog = matchIntl(r.nome);
                       if (!intlJog) return null;
-                      const torns = (intlData?.torneios ?? []).filter(t =>
-                        intlJog.r[t.id] && t.circuito !== "uskids"
-                      );
+                      const torns = (intlData?.torneios ?? []).filter(t => intlJog.r[t.id] && t.circuito !== "uskids");
                       if (!torns.length) return null;
-                      const manuelIntl = intlData?.jogadores.find(j => j.isM);
                       return torns.map(t => {
-                        const res    = intlJog.r[t.id];
-                        const manRes = manuelIntl?.r[t.id];
-                        const manMelhor = manRes ? manRes.p < res.p : false;
-                        const manPior   = manRes ? manRes.p > res.p : false;
-                        const label = t.circuito === "bjgt" ? "BJGT" : t.circuito?.toUpperCase() ?? "INTL";
+                        const res = intlJog.r[t.id];
+                        const manRes = intlData?.jogadores.find(j => j.isM)?.r[t.id];
+                        const manMelhor = manRes && res.p > manRes.p;
+                        const manPior   = manRes && res.p < manRes.p;
                         return (
                           <span key={t.id} style={{ marginRight:12, whiteSpace:"nowrap" }}>
                             <span style={{ color:"var(--color-info)", fontSize:9, fontWeight:700,
-                              border:"1px solid var(--color-info)", borderRadius:3,
-                              padding:"0 3px", marginRight:4, opacity:0.8 }}>{label}</span>
+                              border:"1px solid var(--border-info)", borderRadius:3,
+                              padding:"0 3px", marginRight:3 }}>BJGT</span>
                             <a href={t.url} target="_blank" rel="noopener noreferrer"
                               style={{ color:"var(--text-2)", textDecoration:"none" }}>{t.short}</a>
                             {manRes && (
-                              <span style={{ marginLeft:4, fontWeight:700,
-                                color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
-                                {manRes.p}º vs {res.p}º
+                              <span style={{ marginLeft:4 }}>
+                                <span style={{ fontWeight:700, color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
+                                  {manRes.p}º
+                                </span>
+                                <span style={{ color:"var(--text-3)" }}> vs </span>
+                                <span style={{ fontWeight:700, color:"var(--text-2)" }}>{res.p}º</span>
                               </span>
                             )}
                           </span>
@@ -1001,7 +997,7 @@ export default function USKidsFieldPage() {
   }, [resultsData]);
 
   if (erro) return (
-    <div style={{ padding:32, color:"#ef9a9a", fontFamily:"monospace", fontSize:13 }}>
+    <div style={{ padding:32, color:"var(--color-danger)", fontFamily:"monospace", fontSize:13 }}>
       ⚠️ {erro}
     </div>
   );
@@ -1026,23 +1022,17 @@ export default function USKidsFieldPage() {
       </div>
 
       {/* Tabs */}
-      <div style={{ display:"flex", gap:2, marginBottom:20, borderBottom:"1px solid var(--border)" }}>
+      <div style={{ display:"flex", gap:4, marginBottom:20, borderBottom:"1px solid var(--border)" }}>
         {TABS.map(t => (
-          <button key={t.id} onClick={() => setTab(t.id)} style={{
-            background: tab===t.id ? "var(--bg-info)" : "transparent",
-            border:"none",
-            borderBottom: `2px solid ${tab===t.id ? "var(--color-info)" : "transparent"}`,
-            borderRadius:"6px 6px 0 0",
-            color: tab===t.id ? "var(--color-info)" : "var(--text-3)",
-            padding:"8px 14px", cursor:"pointer", fontSize:13,
-            fontWeight: tab===t.id ? 700 : 400,
-            display:"flex", alignItems:"center", gap:6,
-          }}>
+          <button key={t.id} onClick={() => setTab(t.id)}
+            className={`tourn-tab tourn-tab-sm${tab===t.id ? " active" : ""}`}
+            style={{ borderBottom: tab===t.id ? "2px solid var(--accent)" : "2px solid transparent",
+              borderRadius:"6px 6px 0 0", display:"flex", alignItems:"center", gap:6 }}>
             {t.label}
             {t.badge > 0 && (
               <span style={{
-                background: tab===t.id ? "var(--color-info)" : "var(--border)",
-                color: tab===t.id ? "var(--bg-card)" : "var(--text-3)",
+                background: tab===t.id ? "var(--accent)" : "var(--bg-muted)",
+                color: tab===t.id ? "#fff" : "var(--text-3)",
                 borderRadius:10, padding:"0 6px", fontSize:10, fontWeight:700,
               }}>{t.badge}</span>
             )}
