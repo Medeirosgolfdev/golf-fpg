@@ -144,6 +144,29 @@ async function descobrirTorneios(page) {
   const conhecidos = new Map(cache.torneios.map(t => [t.t, t]));
   let misses = 0, encontrados = 0;
 
+  // Garantir que todos os FORCAR_INCLUIR estão na cache (mesmo que já passaram na varredura)
+  for (const t of FORCAR_INCLUIR) {
+    if (!conhecidos.has(t)) {
+      try {
+        console.log(`   🔍 A forçar t=${t}...`);
+        const metaP = esperarGetMeta(page, t, 8000);
+        await page.goto(IFRAME_URL(t), { waitUntil: 'domcontentloaded', timeout: 10000 });
+        const meta = await metaP;
+        const tn = meta?.tournament;
+        if (tn?.name) {
+          conhecidos.set(t, {
+            t, name: tn.name.trim(),
+            date_inicio: tn.start_date, date_fim: tn.end_date,
+            rondas: tn.rounds, campo: tn.courses || null, fee_18: tn.fee_18 || null,
+          });
+          console.log(`   ✅ Forçado: t=${t} ${tn.name}`);
+          encontrados++;
+        }
+        await sleep(DELAY_SCAN);
+      } catch (e) { console.warn(`   ⚠️ Falhou t=${t}: ${e.message}`); }
+    }
+  }
+
   console.log(`   Desde t=${tInicio} | conhecidos: ${conhecidos.size}`);
 
   for (let t = tInicio; t <= T_MAX && misses < MISS_LIMIT; t++) {

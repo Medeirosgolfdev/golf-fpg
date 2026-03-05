@@ -118,136 +118,124 @@ function isManuel(nome: string) {
 // ─────────────────────────────────────────────
 // SCORECARD
 // ─────────────────────────────────────────────
-function LinhaScorecard({ j, buracos, par }: { j: RondaJogador; buracos: number; par?: number[] }) {
-  const manuel  = isManuel(j.nome);
-  // Nova estrutura: strokes directamente; legacy: dentro de rondas["1"]
-  const r1      = j.rondas?.["1"];
-  const strokes = (j.strokes?.length ? j.strokes : r1?.strokes ?? []).slice(0, buracos);
-
-  return (
-    <tr style={{ background: manuel ? "rgba(144,202,249,0.07)" : undefined,
-      borderBottom:"1px solid #0a1628" }}>
-      <td style={{ padding:"5px 8px", fontSize:11,
-        color: manuel ? "#90caf9" : "#90a4ae", whiteSpace:"nowrap" }}>
-        {manuel && <span style={{marginRight:4,color:"#ffb74d"}}>★</span>}{j.nome}
-      </td>
-      <td style={{ padding:"5px 6px", textAlign:"center", fontSize:11 }}>{flag(j.pais)}</td>
-      {strokes.map((s,i) => {
-        const p = par?.[i];
-        const diff = p ? s - p : null;
-        const cor = s === 0 ? "#263238"
-          : diff === null ? "#cfd8dc"
-          : diff <= -2 ? "#ffd54f"   // eagle+
-          : diff === -1 ? "#80cbc4"  // birdie
-          : diff === 0  ? "#cfd8dc"  // par
-          : diff === 1  ? "#ef9a9a"  // bogey
-          : "#b71c1c";               // double+
-        return (
-          <td key={i} style={{
-            padding:"4px 4px", textAlign:"center", fontSize:10,
-            fontVariantNumeric:"tabular-nums", color: cor,
-            fontWeight: diff !== null && diff <= -1 ? 700 : 400,
-          }}>{s || "·"}</td>
-        );
-      })}
-      {strokes.length < buracos && Array.from({length: buracos - strokes.length}).map((_,i) => (
-        <td key={"e"+i} style={{padding:"4px 4px",textAlign:"center",fontSize:10,color:"#263238"}}>·</td>
-      ))}
-      <td style={{ padding:"5px 8px", textAlign:"center", fontSize:12, fontWeight:700,
-        color: manuel ? "#90caf9" : "#78909c" }}>{j.score || "–"}</td>
-      <td style={{ padding:"5px 8px", textAlign:"center", fontSize:12, fontWeight:700,
-        color:"#ffb74d" }}>{j.pontos > 0 ? j.pontos : "–"}</td>
-    </tr>
-  );
-}
-
-function TabelaRonda({ ronda }: { ronda: RondaResult }) {
+function TabelaRonda({ ronda, expanded, onToggle }: { ronda: RondaResult; expanded: boolean; onToggle: () => void }) {
   const jogadores = ronda.leaderboard ?? ronda.jogadores ?? [];
-  const buracos   = ronda.buracos || jogadores[0]?.buracos || 9;
+  const buracos   = ronda.buracos || 18;
   const par       = ronda.par?.length ? ronda.par : undefined;
-  const nums      = Array.from({length: buracos}, (_,i) => i+1);
   const totalPar  = ronda.total_par;
+  const front9    = jogadores[0]?.strokes?.slice(0,9) ?? [];
+  const has18     = buracos >= 18;
+
+  // Totais out/in para cada jogador
+  const getStrokes = (j: RondaJogador) => j.strokes?.length ? j.strokes : (j.rondas?.["1"]?.strokes ?? []);
+  const outPar = par?.slice(0,9).reduce((s,p)=>s+p,0);
+  const inPar  = par?.slice(9,18).reduce((s,p)=>s+p,0);
 
   return (
-    <div style={{ overflowX:"auto", marginBottom:14 }}>
-      <div style={{ display:"flex", alignItems:"center", gap:12, marginBottom:4 }}>
-        <span style={{ fontSize:10, color:"#546e7a", fontWeight:600 }}>RONDA {ronda.ronda}</span>
-        {totalPar && <span style={{ fontSize:10, color:"#37474f" }}>Par {totalPar}</span>}
-        <span style={{ fontSize:10, color:"#37474f" }}>{jogadores.length} jogadores</span>
+    <div style={{marginBottom:8, border:"1px solid var(--border)", borderRadius:8, overflow:"hidden"}}>
+      {/* Header da ronda */}
+      <div onClick={onToggle} style={{
+        display:"flex", alignItems:"center", justifyContent:"space-between",
+        padding:"8px 12px", cursor:"pointer",
+        background: expanded ? "var(--bg-header)" : "var(--bg-card)",
+        borderBottom: expanded ? "1px solid var(--border)" : "none",
+      }}>
+        <div style={{display:"flex", alignItems:"center", gap:10}}>
+          <span style={{fontWeight:700, fontSize:13, color:"var(--text)"}}>Ronda {ronda.ronda}</span>
+          {totalPar && <span style={{fontSize:11, color:"var(--text-3)"}}>Par {totalPar}</span>}
+          <span style={{fontSize:11, color:"var(--text-3)"}}>{jogadores.length} jogadores · {buracos}H</span>
+        </div>
+        {/* Mini resumo dos top 3 */}
+        {!expanded && jogadores.slice(0,3).map((j,i) => (
+          <span key={i} style={{
+            fontSize:10, color:isManuel(j.nome)?"var(--color-info)":"var(--text-3)",
+            fontWeight:isManuel(j.nome)?700:400,
+          }}>
+            {i+1}. {j.nome.split(" ")[0]} {j.to_par!==null&&j.to_par!==undefined?(j.to_par===0?"E":j.to_par>0?"+"+j.to_par:j.to_par):"–"}
+          </span>
+        ))}
+        <span style={{color:"var(--text-3)", fontSize:12}}>{expanded?"▲":"▼"}</span>
       </div>
-      <table style={{ borderCollapse:"collapse", fontSize:11, minWidth:400 }}>
-        <thead>
-          <tr style={{ background:"#060f1a", borderBottom:"1px solid #1e3448" }}>
-            <th style={{padding:"4px 6px",textAlign:"center",color:"#37474f",fontWeight:400,minWidth:28}}>#</th>
-            <th style={{padding:"4px 8px",textAlign:"left",color:"#37474f",fontWeight:400,minWidth:130}}>Jogador</th>
-            <th style={{padding:"4px 6px",minWidth:22}}></th>
-            {par ? par.slice(0,buracos).map((p,i) => (
-              <th key={i} style={{padding:"3px 4px",textAlign:"center",color:"#37474f",
-                fontWeight:400,fontSize:9,minWidth:20}}>{p}</th>
-            )) : nums.map(n => (
-              <th key={n} style={{padding:"3px 4px",textAlign:"center",color:"#263238",
-                fontWeight:400,fontSize:9,minWidth:20}}>{n}</th>
-            ))}
-            <th style={{padding:"4px 8px",textAlign:"center",color:"#546e7a",fontSize:10}}>Tot</th>
-            <th style={{padding:"4px 8px",textAlign:"center",color:"#546e7a",fontSize:10}}>±</th>
-            <th style={{padding:"4px 8px",textAlign:"center",color:"#ffb74d",fontSize:10}}>Pts</th>
-          </tr>
-          {par && (
-            <tr style={{ background:"#060f1a", borderBottom:"1px solid #1e3448" }}>
-              <td colSpan={3} style={{padding:"2px 6px",fontSize:9,color:"#263238",textAlign:"right"}}>H</td>
-              {nums.map(n => (
-                <td key={n} style={{padding:"2px 4px",textAlign:"center",fontSize:9,color:"#263238"}}>{n}</td>
-              ))}
-              <td colSpan={3}></td>
-            </tr>
-          )}
-        </thead>
-        <tbody>
-          {jogadores.map((j,i) => (
-            <tr key={i} style={{ background: isManuel(j.nome) ? "rgba(144,202,249,0.07)" : undefined,
-              borderBottom:"1px solid #0a1628" }}>
-              <td style={{padding:"5px 6px",textAlign:"center",fontSize:10,color:"#37474f"}}>{i+1}</td>
-              <td style={{padding:"5px 8px",fontSize:11,
-                color:isManuel(j.nome)?"#90caf9":"#90a4ae",whiteSpace:"nowrap"}}>
-                {isManuel(j.nome) && <span style={{marginRight:4,color:"#ffb74d"}}>★</span>}
-                {j.nome}
-              </td>
-              <td style={{padding:"5px 6px",textAlign:"center",fontSize:11}}>{flag(j.pais)}</td>
-              {(j.strokes?.length ? j.strokes : j.rondas?.["1"]?.strokes ?? []).slice(0,buracos).map((s,idx) => {
-                const p = par?.[idx];
-                const diff = p && s > 0 ? s - p : null;
-                const cor = s === 0 ? "#263238"
-                  : diff === null ? "#cfd8dc"
-                  : diff <= -2 ? "#ffd54f"
-                  : diff === -1 ? "#80cbc4"
-                  : diff === 0  ? "#cfd8dc"
-                  : diff === 1  ? "#ef9a9a"
-                  : "#b71c1c";
+
+      {expanded && (
+        <div style={{overflowX:"auto"}}>
+          <table className="tourn-scorecard" style={{width:"100%", minWidth:500}}>
+            <thead>
+              {/* Linha par */}
+              {par && (
+                <tr className="sc-par-row">
+                  <td className="tourn-lbl" colSpan={3}>PAR</td>
+                  {par.slice(0,9).map((p,i) => <td key={i} className="tourn-hole-cell" style={{fontSize:10,fontWeight:600,color:"var(--text-2)"}}>{p}</td>)}
+                  {has18 && <td className="tourn-sum-col" style={{fontSize:10,fontWeight:600}}>{outPar}</td>}
+                  {has18 && par.slice(9,18).map((p,i) => <td key={i} className="tourn-hole-cell" style={{fontSize:10,fontWeight:600,color:"var(--text-2)"}}>{p}</td>)}
+                  {has18 && <td className="tourn-sum-col" style={{fontSize:10,fontWeight:600}}>{inPar}</td>}
+                  <td className="tourn-sum-col" style={{fontSize:10,fontWeight:600}}>{totalPar}</td>
+                  <td/><td/>
+                </tr>
+              )}
+              {/* Números dos buracos */}
+              <tr style={{background:"var(--bg-header)"}}>
+                <th className="tourn-pos-col">#</th>
+                <th className="tourn-lb-name-col">Jogador</th>
+                <th style={{width:28}}></th>
+                {Array.from({length:9},(_,i)=>(
+                  <th key={i} className="tourn-hole-cell" style={{fontSize:10,color:"var(--text-3)",fontWeight:400}}>{i+1}</th>
+                ))}
+                {has18 && <th className="tourn-sum-col" style={{fontSize:10}}>OUT</th>}
+                {has18 && Array.from({length:9},(_,i)=>(
+                  <th key={i+9} className="tourn-hole-cell" style={{fontSize:10,color:"var(--text-3)",fontWeight:400}}>{i+10}</th>
+                ))}
+                {has18 && <th className="tourn-sum-col" style={{fontSize:10}}>IN</th>}
+                <th className="tourn-sum-col" style={{fontSize:11}}>TOT</th>
+                <th className="tourn-sum-col" style={{fontSize:11}}>±</th>
+                {jogadores.some(j=>j.pontos>0) && <th className="tourn-sum-col" style={{fontSize:11}}>PTS</th>}
+              </tr>
+            </thead>
+            <tbody>
+              {jogadores.map((j,i) => {
+                const st = getStrokes(j);
+                const out9 = st.slice(0,9).reduce((s,v)=>s+(v||0),0);
+                const in9  = st.slice(9,18).reduce((s,v)=>s+(v||0),0);
+                const manuel = isManuel(j.nome);
                 return (
-                  <td key={idx} style={{padding:"4px 4px",textAlign:"center",fontSize:10,
-                    fontVariantNumeric:"tabular-nums",color:cor,
-                    fontWeight:diff!==null&&diff<=-1?700:400}}>
-                    {s||"·"}
-                  </td>
+                  <tr key={i} style={{
+                    background: manuel ? "var(--bg-info)" : i%2===0?"var(--bg-card)":"var(--bg-detail)",
+                    fontWeight: manuel ? 700 : 400,
+                  }}>
+                    <td className="tourn-pos-col" style={{textAlign:"center"}}>
+                      <span className="tourn-pos">{i+1}</span>
+                    </td>
+                    <td className="tourn-lb-name-col">
+                      {manuel && <span style={{color:"var(--color-warn)",marginRight:4}}>★</span>}
+                      {j.nome}
+                    </td>
+                    <td style={{textAlign:"center",fontSize:13}}>{flag(j.pais)}</td>
+                    {st.slice(0,9).map((s,idx) => <ScoreCell key={idx} s={s} par={par?.[idx]} />)}
+                    {has18 && <td className="tourn-sum-col">{out9||"–"}</td>}
+                    {has18 && st.slice(9,18).map((s,idx) => <ScoreCell key={idx+9} s={s} par={par?.[idx+9]} />)}
+                    {has18 && <td className="tourn-sum-col">{in9||"–"}</td>}
+                    <td className={`tourn-sum-col ${j.score && j.to_par!==null && j.to_par!==undefined && j.to_par<0?"tourn-sum-under":""}`}
+                      style={{fontWeight:700}}>
+                      {j.score||"–"}
+                    </td>
+                    <td className="tourn-sum-col" style={{
+                      fontWeight:700,
+                      color: (j.to_par===null||j.to_par===undefined)?"var(--text-3)":j.to_par<0?"var(--color-good)":j.to_par===0?"var(--text-2)":"var(--color-danger)",
+                    }}>
+                      {j.to_par===null||j.to_par===undefined?"–":j.to_par===0?"E":j.to_par>0?"+"+j.to_par:j.to_par}
+                    </td>
+                    {jogadores.some(jj=>jj.pontos>0) && (
+                      <td className="tourn-sum-col" style={{color:"var(--color-amber)",fontWeight:700}}>
+                        {j.pontos>0?j.pontos:"–"}
+                      </td>
+                    )}
+                  </tr>
                 );
               })}
-              {/* preencher colunas em falta */}
-              {Array.from({length: Math.max(0, buracos - (j.strokes?.length || 0))}).map((_,idx)=>(
-                <td key={"e"+idx} style={{padding:"4px 4px",textAlign:"center",fontSize:10,color:"#263238"}}>·</td>
-              ))}
-              <td style={{padding:"5px 8px",textAlign:"center",fontSize:12,fontWeight:700,
-                color:isManuel(j.nome)?"#90caf9":"#78909c"}}>{j.score||"–"}</td>
-              <td style={{padding:"5px 8px",textAlign:"center",fontSize:11,
-                color: (j.to_par===null||j.to_par===undefined)?"#546e7a":j.to_par<0?"#80cbc4":j.to_par===0?"#cfd8dc":"#ef9a9a",
-                fontWeight:700}}>
-                {j.to_par===null||j.to_par===undefined?"–":j.to_par===0?"E":j.to_par>0?"+"+j.to_par:j.to_par}
-              </td>
-              <td style={{padding:"5px 8px",textAlign:"center",fontSize:12,fontWeight:700,
-                color:"#ffb74d"}}>{j.pontos>0?j.pontos:"–"}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }
@@ -416,6 +404,15 @@ function TabCampo({ data }: { data: FieldData }) {
 // TAB RESULTADOS
 // ─────────────────────────────────────────────
 function TabResultados({ data }: { data: ResultsData }) {
+  const [expandedRondas, setExpandedRondas] = useState<Set<string>>(() => {
+    // Expandir automaticamente o escalão do Manuel na ronda 1
+    const s = new Set<string>();
+    for (const t of data.resultados) {
+      const em = t.escaloes.find(e => e.is_manuel);
+      if (em && em.rondas[0]) s.add(`${t.t}-${em.age_group}-1`);
+    }
+    return s;
+  });
   const [abertos, setAbertos] = useState<Set<number>>(new Set());
   const toggle = (t: number) => setAbertos(p => {
     const n = new Set(p); n.has(t) ? n.delete(t) : n.add(t); return n;
@@ -497,9 +494,19 @@ function TabResultados({ data }: { data: ResultsData }) {
                       paddingBottom:5, marginBottom:8 }}>
                       {isManuelEscalao ? "★ " : ""}{e.nome}
                     </div>
-                    {rondasComDados.map(r => (
-                      <TabelaRonda key={r.ronda} ronda={r} />
-                    ))}
+                    {rondasComDados.map(r => {
+                      const key = `${t.t}-${e.age_group}-${r.ronda}`;
+                      return (
+                        <TabelaRonda key={key} ronda={r}
+                          expanded={expandedRondas.has(key)}
+                          onToggle={() => setExpandedRondas(prev => {
+                            const s = new Set(prev);
+                            s.has(key) ? s.delete(key) : s.add(key);
+                            return s;
+                          })}
+                        />
+                      );
+                    })}
                   </div>
                   );
                 })}
