@@ -40,6 +40,7 @@ const KEYWORDS_EXCLUIR = [
   '(pa)','(ny)','(ct)','(ri)','(ma)','(vt)','(me)','(az)',
 ];
 const FORCAR_INCLUIR = new Set([21080, 21199, 21200, 21133]); // 21080=Marco Simone Invitational 2026
+const FORCAR_EXCLUIR  = new Set([21573]); // Marco Simone local tour
 
 // Escalões a buscar nomes (USKids standard)
 const ESCALOES_COM_NOMES = new Set([2102, 2103, 2104, 2105, 2114, 2106]);
@@ -154,7 +155,7 @@ async function descobrirTorneios(page) {
       misses = 0;
 
       const nome    = tn.name.trim();
-      const incluir = FORCAR_INCLUIR.has(t) || ehInternacional(nome);
+      const incluir = !FORCAR_EXCLUIR.has(t) && (FORCAR_INCLUIR.has(t) || ehInternacional(nome));
       const futuro  = diasAte(tn.start_date) >= -30;
 
       if (incluir && futuro) {
@@ -238,7 +239,7 @@ async function processarTorneio(page, torneio) {
       jogadores: null, paises: null,
     };
 
-    if (ESCALOES_COM_NOMES.has(parseInt(ag)) && inscr > 0) {
+    if (escalaoComNomes(nome) && inscr > 0) {
       try {
         // Buscar todas as páginas (cada página tem ~20 jogadores)
         const todosJogs = [];

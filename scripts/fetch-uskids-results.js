@@ -3,46 +3,43 @@
 /**
  * fetch-uskids-results.js
  * Corre às 16:00 UTC todos os dias.
- * Detecta torneios em curso (hoje ou ontem) e vai buscar
- * scorecards buraco-a-buraco → uskids-results.json
- *
- * Também inclui torneios históricos do Manuel (adicionar t= abaixo).
+ * Para torneios em curso: busca scorecards completos.
+ * Para históricos: busca na primeira execução e guarda.
+ * Output: uskids-results.json com leaderboard + strokes buraco-a-buraco + par/SI
  */
 
 const fs   = require('fs');
 const path = require('path');
 const { chromium } = require('playwright');
 
-// ── Torneios históricos do Manuel ──────────────
-// Preencher com os t= quando tiveres a lista completa
-// age_groups: IDs específicos por torneio (Manuel + escalão acima e abaixo)
-// url_resultados: link directo para confirmar resultados no browser
+// ── Torneios históricos do Manuel ─────────────
 const HISTORICOS = [
   {
     t: 15573, name: 'Real Club de Golf El Prat 2023',
     date_inicio: '10/22/2023', date_fim: '10/22/2023', rondas: 1, ax: 2760,
-    escalao_manuel: 2151,  // Boys 9
-    age_groups: [2150, 2151, 2152],  // Boys 8, Boys 9, Boys 10
+    escalao_manuel: 2151,
+    age_groups: [2150, 2151, 2152],
     url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=2760&t=15573',
   },
   {
     t: 19418, name: 'Venice Open 2025',
-    date_inicio: '8/17/2025', date_fim: '8/17/2025', rondas: 2, ax: 1129,
-    escalao_manuel: 2104,  // Boys 11
-    age_groups: [2103, 2104],  // Boys 10, Boys 11 (Boys 12 não existia neste torneio)
+    date_inicio: '8/17/2025', date_fim: '8/17/2025', rondas: 3, ax: 1129,
+    escalao_manuel: 2104,
+    age_groups: [2103, 2104],
     url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=19418',
   },
   {
     t: 20175, name: 'Rome Classic 2025',
     date_inicio: '10/18/2025', date_fim: '10/18/2025', rondas: 2, ax: 1129,
-    escalao_manuel: 2104,  // Boys 11
-    age_groups: [2103, 2104, 2105],  // Boys 10, Boys 11, Boys 12
+    escalao_manuel: 2104,
+    age_groups: [2103, 2104, 2105],
     url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=20175',
   },
 ];
 
-// Boys 11, 12, 13 para torneios futuros (escalão acima e abaixo do Manuel)
-const ESCALOES_RESULTADOS_DEFAULT = new Set([2104, 2105, 2114]);
+// Prefixos de escalão a capturar (apanha "Boys 12", "Boys 13-14", "Boys 13 & Under", etc.)
+const ESCALOES_PREFIXOS = ['boys 9', 'boys 10', 'boys 11', 'boys 12', 'boys 13'];
+const escalaoApanhar = (nome) => ESCALOES_PREFIXOS.some(p => nome.toLowerCase().startsWith(p));
 
 const DELAY_MS   = 400;
 const DIR        = path.join(__dirname, '..', 'public', 'data');
@@ -62,45 +59,16 @@ function parsearDataISO(s) {
   return `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
 }
 
-function diasAte(dateStr) {
-  const iso = parsearDataISO(dateStr);
+function diasAte(s) {
+  const iso = parsearDataISO(s);
   if (!iso) return 999;
   return Math.ceil((new Date(iso) - new Date()) / 86400000);
 }
 
 function estaEmCursoOuRecente(t) {
-  const diasInicio = diasAte(t.date_inicio);
-  const diasFim    = diasAte(t.date_fim || t.date_inicio);
-  // Em curso: começou há ≤1 dia e ainda não terminou há mais de 1 dia
-  return diasInicio <= 1 && diasFim >= -1;
-}
-
-function parsearScorecard(flightPlayers) {
-  return Object.values(flightPlayers || {})
-    .filter(p => p.status === 1)
-    .map(p => {
-      const rondas = {};
-      for (const [r, rd] of Object.entries(p.rounds || {})) {
-        rondas[r] = {
-          strokes:    (rd.strokes || []).filter((_, i) => i < (rd.num_holes || 18)),
-          total:      rd.num_strokes  || 0,
-          buracos:    rd.num_holes    || 18,
-          start_hole: rd.start_hole   || 1,
-          start_time: rd.start_time   || '',
-          grupo:      rd.group_number || 0,
-        };
-      }
-      return {
-        nome:    `${p.first || ''} ${p.last || ''}`.trim(),
-        pais:    (p.country || '').toUpperCase(),
-        cidade:  p.place  || '',
-        pontos:  p.points || 0,
-        score:   p.score  || 0,
-        tee:     p.teeMarkerName || '',
-        rondas,
-      };
-    })
-    .sort((a, b) => b.pontos - a.pontos);
+  const ini = diasAte(t.date_inicio);
+  const fim = diasAte(t.date_fim || t.date_inicio);
+  return ini <= 1 && fim >= -1;
 }
 
 function esperarGetMeta(page, t, ms = 12000) {
@@ -124,7 +92,71 @@ async function pageJSON(page, url) {
   }, url);
 }
 
-async function processarResultados(page, torneio) {
+// Buscar par e SI do campo para um flight/ronda
+async function buscarParSI(page, fid, ronda) {
+  try {
+    const d = await pageJSON(page, `${API}?op=GetCourseHoles&f=${fid}&r=${ronda}`);
+    const holes = d?.holes ?? d?.course_holes ?? [];
+    if (!holes.length) return { par: [], si: [] };
+    return {
+      par: holes.map(h => h.par ?? 0),
+      si:  holes.map(h => h.stroke_index ?? h.si ?? 0),
+    };
+  } catch {
+    return { par: [], si: [] };
+  }
+}
+
+// Parsear todos os jogadores com strokes completos, todas as páginas
+async function buscarJogadores(page, fid, ronda, total_inscritos) {
+  const todos = [];
+  const totalPags = Math.ceil((total_inscritos || 50) / 20) + 1;
+  for (let p = 1; p <= totalPags; p++) {
+    try {
+      await sleep(DELAY_MS);
+      const d = await pageJSON(page, `${API}?op=GetPlayerTeeTimes&f=${fid}&r=${ronda}&p=${p}&t=0`);
+      const jogadores = Object.values(d.flight_players || {})
+        .filter(j => j.status === 1)
+        .map(j => {
+          const rd = j.rounds?.[String(ronda)] || {};
+          const strokes = (rd.strokes || []).filter((_, i) => i < (rd.num_holes || 18));
+          return {
+            nome:       `${j.first || ''} ${j.last || ''}`.trim(),
+            pais:       (j.country || '').toUpperCase(),
+            cidade:     j.place || '',
+            tee:        j.teeMarkerName || '',
+            pontos:     j.points   || 0,
+            score:      rd.num_strokes || j.score || 0,
+            buracos:    rd.num_holes   || strokes.length || 0,
+            start_hole: rd.start_hole  || 1,
+            start_time: rd.start_time  || '',
+            grupo:      rd.group_number || 0,
+            strokes,
+          };
+        });
+      if (!jogadores.length) break;
+      todos.push(...jogadores);
+    } catch { break; }
+  }
+  // Deduplicar
+  const vistos = new Set();
+  return todos.filter(j => { if (vistos.has(j.nome)) return false; vistos.add(j.nome); return true; });
+}
+
+// Calcular to_par e ordenar leaderboard
+function calcularLeaderboard(jogadores, par) {
+  const totalPar = par.reduce((s, p) => s + p, 0) || 72;
+  return jogadores
+    .filter(j => j.score > 0)
+    .map(j => ({
+      ...j,
+      to_par: j.score > 0 ? j.score - totalPar : null,
+    }))
+    .sort((a, b) => (a.score || 999) - (b.score || 999));
+}
+
+// ── Processar torneio completo ────────────────
+async function processarTorneio(page, torneio) {
   console.log(`\n▶ ${torneio.name} (t=${torneio.t})`);
 
   let meta;
@@ -141,42 +173,79 @@ async function processarResultados(page, torneio) {
   const flights   = meta.flights    || {};
   const rondas    = meta.tournament?.rounds || torneio.rondas || 2;
 
-  // Usar age_groups específicos do torneio (se definido) ou o default
+  // Determinar quais age_groups apanhar
   const agsFiltro = torneio.age_groups
     ? new Set(torneio.age_groups)
-    : ESCALOES_RESULTADOS_DEFAULT;
+    : null; // null = usar filtro por nome
 
+  // Agrupar flights por age_group (primeiro flight de cada AG)
   const flightsPorAG = {};
-  for (const [fid, f] of Object.entries(flights))
-    if (!flightsPorAG[f.age_group]) flightsPorAG[f.age_group] = { fid, f };
+  for (const [fid, f] of Object.entries(flights)) {
+    const ag = f.age_group;
+    const agInfo = ageGroups[ag];
+    if (!agInfo) continue;
+    const nome = agInfo.name || '';
+    const incluir = agsFiltro
+      ? agsFiltro.has(parseInt(ag))
+      : escalaoApanhar(nome);
+    if (incluir && !flightsPorAG[ag]) {
+      flightsPorAG[ag] = { fid, nome, inscr: f.registered || 0 };
+    }
+  }
 
   const escaloes = [];
-  for (const [ag, { fid }] of Object.entries(flightsPorAG)) {
-    if (!agsFiltro.has(parseInt(ag))) continue;
-    const nome = ageGroups[ag]?.name || `ag_${ag}`;
+  for (const [ag, { fid, nome, inscr }] of Object.entries(flightsPorAG)) {
+    const agInfo   = ageGroups[ag] || {};
+    const buracos  = agInfo.holes_per_round || 18;
+    const isManuel = torneio.escalao_manuel
+      ? parseInt(ag) === torneio.escalao_manuel
+      : nome.toLowerCase().startsWith('boys 12');
+
+    console.log(`  ${isManuel ? '★' : '·'} ${nome} (ag=${ag}, f=${fid})`);
 
     const rondasData = [];
     for (let r = 1; r <= rondas; r++) {
-      try {
-        await sleep(DELAY_MS);
-        const d    = await pageJSON(page, `${API}?op=GetPlayerTeeTimes&f=${fid}&r=${r}&p=1&t=0`);
-        const jogs = parsearScorecard(d.flight_players);
-        rondasData.push({ ronda: r, jogadores: jogs });
+      // Par e SI
+      const { par, si } = await buscarParSI(page, fid, r);
+      await sleep(DELAY_MS);
 
-        const pt = jogs.filter(j => j.pais === 'PT');
-        if (pt.length) {
-          console.log(`  🇵🇹 ${nome} R${r}:`);
-          for (const j of pt)
-            console.log(`     ${j.nome}  ${j.pontos}pts  score:${j.score}`);
-        } else {
-          console.log(`  · ${nome} R${r}: ${jogs.length} jogadores`);
-        }
-      } catch {
-        rondasData.push({ ronda: r, jogadores: [] });
+      // Jogadores
+      const jogadores = await buscarJogadores(page, fid, r, inscr);
+      const leaderboard = calcularLeaderboard(jogadores, par);
+
+      // Log portugueses
+      const pt = leaderboard.filter(j => j.pais === 'PT');
+      if (pt.length) {
+        for (const j of pt)
+          console.log(`    🇵🇹 ${j.nome} — ${j.score} (${j.to_par >= 0 ? '+' : ''}${j.to_par}) ${j.pontos > 0 ? j.pontos + 'pts' : ''}`);
       }
+      console.log(`    R${r}: ${leaderboard.length} jogadores`);
+
+      rondasData.push({
+        ronda: r,
+        par,
+        si,
+        buracos,
+        total_par: par.reduce((s,p) => s+p, 0) || null,
+        leaderboard,
+      });
     }
-    escaloes.push({ age_group: parseInt(ag), nome, rondas: rondasData });
+
+    escaloes.push({
+      age_group:     parseInt(ag),
+      nome,
+      holes:         buracos,
+      is_manuel:     isManuel,
+      rondas:        rondasData,
+    });
   }
+
+  // Ordenar: escalão do Manuel primeiro, depois por age_group
+  escaloes.sort((a, b) => {
+    if (a.is_manuel && !b.is_manuel) return -1;
+    if (!a.is_manuel && b.is_manuel) return 1;
+    return a.age_group - b.age_group;
+  });
 
   return {
     t:              torneio.t,
@@ -184,6 +253,7 @@ async function processarResultados(page, torneio) {
     date_inicio:    meta.tournament?.start_date || torneio.date_inicio,
     date_fim:       meta.tournament?.end_date   || torneio.date_fim,
     campo:          meta.tournament?.courses    || null,
+    rondas_total:   rondas,
     escalao_manuel: torneio.escalao_manuel || null,
     url_resultados: torneio.url_resultados ||
       `https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=${torneio.ax || 1129}&t=${torneio.t}`,
@@ -192,13 +262,16 @@ async function processarResultados(page, torneio) {
   };
 }
 
+// ─────────────────────────────────────────────
+// MAIN
+// ─────────────────────────────────────────────
 async function main() {
   console.log('══════════════════════════════════════');
   console.log('🏆  USKids Results');
   console.log(`    ${new Date().toLocaleString('pt-PT')}`);
   console.log('══════════════════════════════════════');
 
-  // Torneios em curso (da cache de descoberta)
+  // Torneios em curso da cache
   let emCurso = [];
   if (fs.existsSync(CACHE_PATH)) {
     try {
@@ -207,21 +280,21 @@ async function main() {
     } catch {}
   }
 
-  // Juntar históricos (sempre processados se ainda não estiverem no output)
+  // Históricos ainda não processados
   const outputActual = fs.existsSync(OUTPUT)
     ? JSON.parse(fs.readFileSync(OUTPUT, 'utf8'))
     : { resultados: [] };
   const jaTemos = new Set((outputActual.resultados || []).map(r => r.t));
-
   const historicosNovos = HISTORICOS.filter(h => !jaTemos.has(h.t));
+
   const aProcessar = [...emCurso, ...historicosNovos];
 
+  console.log(`\n   Em curso: ${emCurso.length} | Históricos novos: ${historicosNovos.length}`);
+
   if (!aProcessar.length) {
-    console.log('\n   Sem torneios em curso nem históricos novos. Nada a fazer.');
+    console.log('   Nada a fazer.');
     return;
   }
-
-  console.log(`\n   Em curso: ${emCurso.length} | Históricos novos: ${historicosNovos.length}`);
 
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext({
@@ -229,22 +302,22 @@ async function main() {
   });
   const page = await context.newPage();
 
-  const novosResultados = [];
+  const novos = [];
   try {
-    for (const torneio of aProcessar) {
-      const resultado = await processarResultados(page, torneio);
-      if (resultado) novosResultados.push(resultado);
+    for (const t of aProcessar) {
+      const res = await processarTorneio(page, t);
+      if (res) novos.push(res);
       await sleep(DELAY_MS);
     }
   } finally {
     await browser.close();
   }
 
-  // Merge com resultados existentes (actualiza em curso, mantém históricos)
-  const mapaResultados = new Map((outputActual.resultados || []).map(r => [r.t, r]));
-  for (const r of novosResultados) mapaResultados.set(r.t, r);
+  // Merge com existentes
+  const mapa = new Map((outputActual.resultados || []).map(r => [r.t, r]));
+  for (const r of novos) mapa.set(r.t, r);
 
-  const todos = [...mapaResultados.values()]
+  const todos = [...mapa.values()]
     .sort((a, b) => (parsearDataISO(b.date_inicio)||'').localeCompare(parsearDataISO(a.date_inicio)||''));
 
   fs.mkdirSync(DIR, { recursive: true });
