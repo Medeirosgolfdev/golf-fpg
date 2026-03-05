@@ -15,10 +15,30 @@ const { chromium } = require('playwright');
 
 // ── Torneios históricos do Manuel ──────────────
 // Preencher com os t= quando tiveres a lista completa
+// age_groups: IDs específicos por torneio (Manuel + escalão acima e abaixo)
+// url_resultados: link directo para confirmar resultados no browser
 const HISTORICOS = [
-  { t: 15573, name: 'Real Club de Golf El Prat 2023', date_inicio: '10/22/2023', date_fim: '10/22/2023', rondas: 1, ax: 2760 },
-  { t: 19418, name: 'Venice Open 2025',               date_inicio: '8/17/2025',  date_fim: '8/17/2025',  rondas: 2, ax: 1129 },
-  { t: 20175, name: 'Rome Classic 2025',              date_inicio: '10/18/2025', date_fim: '10/18/2025', rondas: 2, ax: 1129 },
+  {
+    t: 15573, name: 'Real Club de Golf El Prat 2023',
+    date_inicio: '10/22/2023', date_fim: '10/22/2023', rondas: 1, ax: 2760,
+    escalao_manuel: 2151,  // Boys 9
+    age_groups: [2150, 2151, 2152],  // Boys 8, Boys 9, Boys 10
+    url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=2760&t=15573',
+  },
+  {
+    t: 19418, name: 'Venice Open 2025',
+    date_inicio: '8/17/2025', date_fim: '8/17/2025', rondas: 2, ax: 1129,
+    escalao_manuel: 2104,  // Boys 11
+    age_groups: [2103, 2104],  // Boys 10, Boys 11 (Boys 12 não existia neste torneio)
+    url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=19418',
+  },
+  {
+    t: 20175, name: 'Rome Classic 2025',
+    date_inicio: '10/18/2025', date_fim: '10/18/2025', rondas: 2, ax: 1129,
+    escalao_manuel: 2104,  // Boys 11
+    age_groups: [2103, 2104, 2105],  // Boys 10, Boys 11, Boys 12
+    url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=20175',
+  },
 ];
 
 // Escalões a capturar nos resultados
@@ -123,13 +143,18 @@ async function processarResultados(page, torneio) {
   const flights   = meta.flights    || {};
   const rondas    = meta.tournament?.rounds || torneio.rondas || 2;
 
+  // Usar age_groups específicos do torneio (se definido) ou o default
+  const agsFiltro = torneio.age_groups
+    ? new Set(torneio.age_groups)
+    : ESCALOES_RESULTADOS_DEFAULT;
+
   const flightsPorAG = {};
   for (const [fid, f] of Object.entries(flights))
     if (!flightsPorAG[f.age_group]) flightsPorAG[f.age_group] = { fid, f };
 
   const escaloes = [];
   for (const [ag, { fid }] of Object.entries(flightsPorAG)) {
-    if (!ESCALOES_RESULTADOS.has(parseInt(ag))) continue;
+    if (!agsFiltro.has(parseInt(ag))) continue;
     const nome = ageGroups[ag]?.name || `ag_${ag}`;
 
     const rondasData = [];
@@ -156,11 +181,14 @@ async function processarResultados(page, torneio) {
   }
 
   return {
-    t:           torneio.t,
-    name:        meta.tournament?.name || torneio.name,
-    date_inicio: meta.tournament?.start_date || torneio.date_inicio,
-    date_fim:    meta.tournament?.end_date   || torneio.date_fim,
-    campo:       meta.tournament?.courses    || null,
+    t:              torneio.t,
+    name:           meta.tournament?.name || torneio.name,
+    date_inicio:    meta.tournament?.start_date || torneio.date_inicio,
+    date_fim:       meta.tournament?.end_date   || torneio.date_fim,
+    campo:          meta.tournament?.courses    || null,
+    escalao_manuel: torneio.escalao_manuel || null,
+    url_resultados: torneio.url_resultados ||
+      `https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=${torneio.ax || 1129}&t=${torneio.t}`,
     escaloes,
     ultima_atualizacao: new Date().toISOString(),
   };

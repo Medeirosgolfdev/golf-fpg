@@ -38,6 +38,8 @@ interface EscalaoResult  { age_group: number; nome: string; rondas: RondaResult[
 interface TorneioResult  {
   t: number; name: string;
   date_inicio: string; date_fim?: string; campo: string | null;
+  escalao_manuel?: number;
+  url_resultados?: string;
   escaloes: EscalaoResult[];
   ultima_atualizacao: string;
 }
@@ -365,9 +367,16 @@ function TabResultados({ data }: { data: ResultsData }) {
                 <div style={{ fontSize:15, fontWeight:700, color:"#e0e0e0", marginBottom:3 }}>
                   {t.name}
                 </div>
-                <div style={{ fontSize:11, color:"#546e7a" }}>
-                  📅 {fmtDate(t.date_inicio)}
-                  {t.campo ? ` · ${t.campo}` : ""}
+                <div style={{ fontSize:11, color:"#546e7a", display:"flex", gap:10, alignItems:"center", flexWrap:"wrap" }}>
+                  <span>📅 {fmtDate(t.date_inicio)}{t.campo ? ` · ${t.campo}` : ""}</span>
+                  {t.url_resultados && (
+                    <a href={t.url_resultados} target="_blank" rel="noopener noreferrer"
+                      onClick={e => e.stopPropagation()}
+                      style={{ color:"#546e7a", fontSize:10, textDecoration:"none",
+                        border:"1px solid #1e3448", borderRadius:5, padding:"1px 7px" }}>
+                      ver fonte ↗
+                    </a>
+                  )}
                 </div>
                 {manuelRows.length > 0 && (
                   <div style={{ marginTop:7, display:"flex", gap:6, flexWrap:"wrap" }}>
@@ -387,11 +396,17 @@ function TabResultados({ data }: { data: ResultsData }) {
 
             {isAberto && (
               <div style={{ borderTop:"1px solid #1e3448", padding:"12px 16px" }}>
-                {t.escaloes.map(e => (
+                {t.escaloes.map(e => {
+                  const isManuelEscalao = t.escalao_manuel
+                    ? e.age_group === t.escalao_manuel
+                    : e.nome === ESCALAO_MANUEL;
+                  return (
                   <div key={e.age_group} style={{ marginBottom:20 }}>
-                    <div style={{ fontSize:12, fontWeight:700, color:"#546e7a",
-                      borderBottom:"1px solid #1e3448", paddingBottom:5, marginBottom:8 }}>
-                      {e.nome === ESCALAO_MANUEL ? "★ " : ""}{e.nome}
+                    <div style={{ fontSize:12, fontWeight:700,
+                      color: isManuelEscalao ? "#90caf9" : "#546e7a",
+                      borderBottom:`1px solid ${isManuelEscalao ? "#1565c0" : "#1e3448"}`,
+                      paddingBottom:5, marginBottom:8 }}>
+                      {isManuelEscalao ? "★ " : ""}{e.nome}
                     </div>
                     {e.rondas.filter(r => r.jogadores.length > 0).map(r => {
                       // inferir buracos do primeiro jogador que tenha dados
@@ -401,7 +416,8 @@ function TabResultados({ data }: { data: ResultsData }) {
                       return <TabelaRonda key={r.ronda} ronda={r} buracos={buracos} />;
                     })}
                   </div>
-                ))}
+                  );
+                })}
                 <div style={{ textAlign:"right", color:"#263238", fontSize:10 }}>
                   {fmtTs(t.ultima_atualizacao)}
                 </div>
