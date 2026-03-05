@@ -1,7 +1,12 @@
 #!/usr/bin/env node
 /**
- * fpg-drive-playwright.js — abordagem correcta
- * Lista hardcoded + Classifications.aspx (sem TournamentsLST, sem EntryPage)
+ * fpg-drive-playwright.js
+ * Recolhe torneios e classificações DRIVE via golf-portugal.pt/api
+ *
+ * Fluxo:
+ *  1. Playwright visita golf-portugal.pt (público) e extrai sessão do localStorage
+ *  2. Usa essa sessão como header para chamar golf-portugal.pt/api
+ *  3. golf-portugal.pt faz proxy para scoring.datagolf.pt
  *
  * Uso:
  *   node fpg-drive-playwright.js
@@ -10,11 +15,13 @@
  */
 
 const { chromium } = require("playwright");
-const fs   = require("fs");
-const path = require("path");
+const https = require("https");
+const fs    = require("fs");
+const path  = require("path");
 
-const BASE_URL      = "https://scoring.datagolf.pt";
+const BASE          = "https://golf-portugal.pt";
 const driveDataPath = path.join(__dirname, "public", "data", "drive-data.json");
+
 const args       = process.argv.slice(2);
 const forceFlag  = args.includes("--force");
 const yearArg    = args.find(a => /^\d{4}$/.test(a));
@@ -23,47 +30,7 @@ const filterYear = yearArg ? parseInt(yearArg) : new Date().getFullYear();
 const G = "\x1b[32m", R = "\x1b[31m", Y = "\x1b[33m";
 const C = "\x1b[36m", D = "\x1b[2m",  X = "\x1b[0m", B = "\x1b[1m";
 
-const DRIVE_TOURNAMENTS = [
-  // 2026
-  { name: "3º Torneio Drive Tour Norte - Vale Pisão",            ccode: "987", tcode: "10208", date: "2026-02-28", campo: "Vale Pisão" },
-  { name: "2º Torneio Drive Tour Madeira - Santo da Serra",      ccode: "982", tcode: "10199", date: "2026-02-07", campo: "Santo da Serra" },
-  { name: "2º Torneio Drive Tour Sul - Vila Sol",                ccode: "988", tcode: "10293", date: "2026-02-01", campo: "Vila Sol" },
-  { name: "1º Torneio Drive Tour Sul - Laguna G.C.",             ccode: "988", tcode: "10292", date: "2026-01-11", campo: "Vilamoura - Laguna" },
-  { name: "1º Torneio Drive Tour Tejo - Montado",                ccode: "985", tcode: "10202", date: "2026-01-04", campo: "Montado" },
-  { name: "1º Torneio Drive Tour Norte - Estela GC",             ccode: "987", tcode: "10206", date: "2026-01-04", campo: "Estela" },
-  { name: "1º Torneio Drive Tour Madeira - Palheiro Golf",       ccode: "982", tcode: "10198", date: "2026-01-03", campo: "Palheiro Golf" },
-  { name: "2º Drive Challenge Acores-Terceira-Sub 18",           ccode: "983", tcode: "10154", date: "2026-02-28", campo: "Terceira" },
-  { name: "2º Drive Challenge Acores-Terceira-Sub 16",           ccode: "983", tcode: "10153", date: "2026-02-28", campo: "Terceira" },
-  { name: "2º Drive Challenge Acores-Terceira-Sub 14",           ccode: "983", tcode: "10152", date: "2026-02-28", campo: "Terceira" },
-  { name: "2º Drive Challenge Acores-Terceira-Sub 12",           ccode: "983", tcode: "10151", date: "2026-02-28", campo: "Terceira" },
-  { name: "2º Drive Challenge Acores-Terceira-Sub 10",           ccode: "983", tcode: "10150", date: "2026-02-28", campo: "Terceira" },
-  { name: "2º Drive Challenge Tejo-Montado - Sub 18",            ccode: "985", tcode: "10215", date: "2026-02-22", campo: "Montado" },
-  { name: "2º Drive Challenge Tejo-Montado - Sub 16",            ccode: "985", tcode: "10214", date: "2026-02-22", campo: "Montado" },
-  { name: "2º Drive Challenge Tejo-Montado - Sub 14",            ccode: "985", tcode: "10213", date: "2026-02-22", campo: "Montado" },
-  { name: "2º Drive Challenge Tejo-Montado - Sub 12",            ccode: "985", tcode: "10212", date: "2026-02-22", campo: "Montado" },
-  { name: "2º Drive Challenge Tejo-Montado - Sub 10",            ccode: "985", tcode: "10211", date: "2026-02-22", campo: "Montado" },
-  { name: "2º Drive Challenge Sul - Laguna Sub 18",              ccode: "988", tcode: "10297", date: "2026-02-21", campo: "Vilamoura - Laguna" },
-  { name: "2º Drive Challenge Sul - Laguna Sub 16",              ccode: "988", tcode: "10300", date: "2026-02-21", campo: "Vilamoura - Laguna" },
-  { name: "2º Drive Challenge Sul - Laguna Sub 14",              ccode: "988", tcode: "10296", date: "2026-02-21", campo: "Vilamoura - Laguna" },
-  { name: "2º Drive Challenge Sul - Laguna Sub 12",              ccode: "988", tcode: "10295", date: "2026-02-21", campo: "Vilamoura - Laguna" },
-  { name: "2º Drive Challenge Sul - Laguna Sub 10",              ccode: "988", tcode: "10294", date: "2026-02-21", campo: "Vilamoura - Laguna" },
-  { name: "2º Drive Challenge Madeira-Sub18",                    ccode: "982", tcode: "10211", date: "2026-02-08", campo: "Santo da Serra" },
-  { name: "2º Drive Challenge Madeira-Sub16",                    ccode: "982", tcode: "10210", date: "2026-02-08", campo: "Santo da Serra" },
-  { name: "2º Drive Challenge Madeira-Sub14",                    ccode: "982", tcode: "10209", date: "2026-02-08", campo: "Santo da Serra" },
-  { name: "2º Drive Challenge Madeira-Sub12",                    ccode: "982", tcode: "10208", date: "2026-02-08", campo: "Santo da Serra" },
-  { name: "2º Drive Challenge Madeira-Sub10",                    ccode: "982", tcode: "10207", date: "2026-02-08", campo: "Santo da Serra" },
-  { name: "1º Drive Challenge Acores-Terceira-Sub 18",           ccode: "983", tcode: "10149", date: "2026-01-24", campo: "Terceira" },
-  { name: "1º Drive Challenge Acores-Terceira-Sub 16",           ccode: "983", tcode: "10148", date: "2026-01-24", campo: "Terceira" },
-  { name: "1º Drive Challenge Acores-Terceira-Sub 14",           ccode: "983", tcode: "10147", date: "2026-01-24", campo: "Terceira" },
-  { name: "1º Drive Challenge Acores-Terceira-Sub 12",           ccode: "983", tcode: "10146", date: "2026-01-24", campo: "Terceira" },
-  { name: "1º Drive Challenge Acores-Terceira-Sub 10",           ccode: "983", tcode: "10145", date: "2026-01-24", campo: "Terceira" },
-  { name: "1º Drive Challenge Madeira-Palheiro-Sub 18",          ccode: "982", tcode: "10205", date: "2026-01-04", campo: "Palheiro Golf" },
-  { name: "1º Drive Challenge Madeira-Palheiro-Sub 16",          ccode: "982", tcode: "10206", date: "2026-01-04", campo: "Palheiro Golf" },
-  { name: "1º Drive Challenge Madeira-Palheiro-Sub 14",          ccode: "982", tcode: "10204", date: "2026-01-04", campo: "Palheiro Golf" },
-  { name: "1º Drive Challenge Madeira-Palheiro-Sub 12",          ccode: "982", tcode: "10203", date: "2026-01-04", campo: "Palheiro Golf" },
-  { name: "1º Drive Challenge Madeira-Palheiro-Sub 10",          ccode: "982", tcode: "10202", date: "2026-01-04", campo: "Palheiro Golf" },
-  // 2025 — adicionar aqui os torneios de 2025
-];
+const DRIVE_CLUBS = { "982": "Madeira", "983": "Acores", "985": "Tejo", "987": "Norte", "988": "Sul" };
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
@@ -71,16 +38,42 @@ function classifyTournament(name) {
   const lc = name.toLowerCase();
   const series = lc.includes("challenge") ? "challenge" : "tour";
   let region = "outro";
-  if (lc.includes("madeira") || lc.includes("palheiro"))           region = "madeira";
-  else if (lc.includes("norte") || lc.includes("estela") || lc.includes("pisao")) region = "norte";
-  else if (lc.includes("tejo") || lc.includes("montado"))          region = "tejo";
-  else if (lc.includes("sul") || lc.includes("laguna") || lc.includes("vila sol")) region = "sul";
-  else if (lc.includes("acor") || lc.includes("terceira"))         region = "acores";
-  const em = lc.match(/sub\s*(\d+)/);
+  if (lc.includes("madeira") || lc.includes("palheiro"))                        region = "madeira";
+  else if (lc.includes("norte") || lc.includes("estela") || lc.includes("pis")) region = "norte";
+  else if (lc.includes("tejo") || lc.includes("montado"))                       region = "tejo";
+  else if (lc.includes("sul")  || lc.includes("laguna") || lc.includes("vila sol") || lc.includes("boavista") || lc.includes("benamor") || lc.includes("quinta")) region = "sul";
+  else if (lc.includes("acor") || lc.includes("açor") || lc.includes("terceira")) region = "acores";
+  const em = lc.match(/sub\s*(\d+)/i);
   const escalao = em ? "Sub " + em[1] : null;
   const nm = name.match(/(\d+)[º°]/);
   const num = nm ? parseInt(nm[1]) : null;
   return { series, region, escalao, num };
+}
+
+function parseDate(ts) {
+  const m = String(ts || "").match(/(\d+)/);
+  return m ? new Date(parseInt(m[1])).toISOString().split("T")[0] : null;
+}
+
+function apiGet(urlPath, sessionId, version) {
+  return new Promise((resolve, reject) => {
+    const url = BASE + urlPath;
+    const opts = {
+      headers: {
+        "Content-Type": "application/json",
+        "x-cookie-datagolf-session-id": sessionId,
+        "x-cookie-datagolf-version": version,
+      }
+    };
+    https.get(url, opts, res => {
+      let data = "";
+      res.on("data", d => data += d);
+      res.on("end", () => {
+        try { resolve(JSON.parse(data)); }
+        catch (e) { reject(new Error(`JSON error: ${data.substring(0, 100)}`)); }
+      });
+    }).on("error", reject);
+  });
 }
 
 let existingDrive = null;
@@ -88,8 +81,33 @@ if (fs.existsSync(driveDataPath)) {
   try { existingDrive = JSON.parse(fs.readFileSync(driveDataPath, "utf8")); } catch {}
 }
 
+async function getSession() {
+  console.log(`  ${C}▸ A obter sessão via golf-portugal.pt...${X}`);
+  const browser = await chromium.launch({ headless: true, args: ["--no-sandbox"] });
+  const ctx  = await browser.newContext({ locale: "pt-PT" });
+  const page = await ctx.newPage();
+
+  await page.goto(`${BASE}/tournaments`, { waitUntil: "domcontentloaded", timeout: 30000 });
+
+  // Aguardar que o localStorage seja preenchido
+  await page.waitForFunction(
+    () => localStorage.getItem("session_provider_DATAGOLF") !== null,
+    { timeout: 15000 }
+  ).catch(() => {});
+
+  const raw = await page.evaluate(() => localStorage.getItem("session_provider_DATAGOLF"));
+  await browser.close();
+
+  if (!raw) throw new Error("session_provider_DATAGOLF não encontrado no localStorage");
+
+  const parsed = JSON.parse(raw);
+  console.log(`  ${G}✓${X} Sessão obtida (expira em ${Math.round(parsed.ttl/60000)} min)`);
+  return { sessionId: parsed.value, version: parsed.version };
+}
+
 async function main() {
   const startTime = Date.now();
+
   console.log(`\n${B}╔══════════════════════════════════════════════════════╗${X}`);
   console.log(`${B}║     FPG Drive Playwright — Fase 1 Automática         ║${X}`);
   console.log(`${B}╠══════════════════════════════════════════════════════╣${X}`);
@@ -107,173 +125,100 @@ async function main() {
     console.log(`  ${D}Torneios já processados: ${existingMap.size}${X}`);
   }
 
-  // Filtrar por ano e novos
-  const targetTournaments = DRIVE_TOURNAMENTS.filter(t => {
-    if (!t.date.startsWith(String(filterYear))) return false;
-    if (!forceFlag && existingMap.has(`${t.ccode}_${t.tcode}`)) return false;
-    return true;
-  });
+  // Obter sessão
+  const { sessionId, version } = await getSession();
 
-  console.log(`  ${B}Torneios a processar: ${targetTournaments.length}${X}`);
+  // Listar torneios de todos os clubes DRIVE
+  console.log(`\n  ${C}▸ A listar torneios DRIVE ${filterYear}...${X}`);
+  const yearStart = new Date(`${filterYear}-01-01`).getTime();
+  const yearEnd   = new Date(`${filterYear + 1}-01-01`).getTime();
+
+  const allFound = [];
+  for (const [ccode, regionName] of Object.entries(DRIVE_CLUBS)) {
+    try {
+      const data = await apiGet(`/api/clubs/${ccode}/tournaments`, sessionId, version);
+      const records = data?.Records || [];
+      const filtered = records.filter(t => {
+        const m = String(t.started_at || "").match(/(\d+)/);
+        if (!m) return false;
+        const ts = parseInt(m[1]);
+        if (ts < yearStart || ts >= yearEnd) return false;
+        return (t.description || "").toLowerCase().includes("drive");
+      });
+      console.log(`  ${D}${regionName} (${ccode}): ${filtered.length} torneios DRIVE${X}`);
+      allFound.push(...filtered.map(t => ({ ...t, ccode })));
+    } catch (e) {
+      console.log(`  ${Y}${regionName} (${ccode}): erro — ${e.message}${X}`);
+    }
+    await sleep(150);
+  }
+
+  // Filtrar novos
+  const targetTournaments = allFound.filter(t =>
+    forceFlag || !existingMap.has(`${t.ccode}_${t.code}`)
+  );
+
+  console.log(`\n  ${B}Total encontrados: ${allFound.length} | A processar: ${targetTournaments.length}${X}`);
 
   if (targetTournaments.length === 0) {
-    console.log(`  ${Y}Nenhum torneio novo para ${filterYear}. Usa --force para re-processar.${X}`);
+    console.log(`  ${Y}Nenhum torneio novo. Usa --force para re-processar.${X}`);
     process.exit(0);
   }
 
-  // Lançar browser
-  console.log(`\n  ${C}▸ A lançar browser headless...${X}`);
-  const browser = await chromium.launch({ headless: true, args: ["--no-sandbox"] });
-  const context = await browser.newContext({
-    userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120 Safari/537.36",
-    locale: "pt-PT",
-  });
-  const page = await context.newPage();
-
-  // Navegar para o primeiro torneio (estabelece sessão sem precisar de EntryPage)
-  const firstT = targetTournaments[0];
-  const initUrl = `${BASE_URL}/pt/classif.aspx?ccode=${firstT.ccode}&tcode=${firstT.tcode}`;
-  console.log(`  ${C}▸ A estabelecer sessão via classif.aspx...${X}`);
-  await page.goto(initUrl, { waitUntil: "domcontentloaded", timeout: 30000 });
-  const initTitle = await page.title();
-  console.log(`  ${D}Título: ${initTitle}${X}`);
-
-  const ck = await context.cookies();
-  const sess = ck.find(c => c.name === "ASP.NET_SessionId");
-  console.log(`  ${G}✓${X} Sessão: ${sess?.value?.substring(0,8)||"anónima"}...\n`);
-
-  // Helper POST — replica exactamente o fpgPost do fpg-bridge-drive.js:
-  // params tanto na query string como no body (todos como strings)
-  const post = async (endpoint, params) => {
-    return page.evaluate(async ({ endpoint, params }) => {
-      try {
-        // Query string com todos os params
-        const qs = Object.entries(params).map(([k,v]) => k + "=" + encodeURIComponent(v)).join("&");
-        const url = endpoint + "?" + qs;
-        // Body com todos os params convertidos para string
-        const bodyObj = {};
-        for (const [k,v] of Object.entries(params)) bodyObj[k] = String(v);
-
-        const r = await fetch(url, {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json; charset=utf-8",
-            "x-requested-with": "XMLHttpRequest",
-          },
-          body: JSON.stringify(bodyObj),
-        });
-        const text = await r.text();
-        if (!r.ok) return { ok: false, status: r.status, raw: text.substring(0, 200) };
-        try {
-          const j = JSON.parse(text);
-          return { ok: true, data: j?.d ?? j };
-        } catch {
-          return { ok: false, status: r.status, raw: text.substring(0, 200) };
-        }
-      } catch (e) {
-        return { ok: false, error: e.message };
-      }
-    }, { endpoint, params });
-  };
-
-  // Processar torneios
+  // Processar classificações
   const processedTournaments = [];
-  let totalScorecards = 0;
 
   for (let i = 0; i < targetTournaments.length; i++) {
     const t = targetTournaments[i];
-    const info = classifyTournament(t.name);
+    const info = classifyTournament(t.description);
+    const date = parseDate(t.started_at);
 
-    process.stdout.write(`  [${i+1}/${targetTournaments.length}] ${C}${t.name}${X}\n  `);
+    process.stdout.write(`  [${i+1}/${targetTournaments.length}] ${C}${t.description}${X}\n  `);
 
-    // Navegar para classif.aspx (página correcta para ClassifLST)
-    const tournUrl = `${BASE_URL}/pt/classif.aspx?ccode=${t.ccode}&tcode=${t.tcode}`;
-    await page.goto(tournUrl, { waitUntil: "domcontentloaded", timeout: 30000 });
-
-    // ClassifLST
-    const classifRes = await post(
-      `${BASE_URL}/pt/classif.aspx/ClassifLST`,
-      {
-        Classi: "1", tclub: t.ccode, tcode: t.tcode,
-        classiforder: "1", classiftype: "I", classifroundtype: "D",
-        scoringtype: "1", round: "1", members: "0", playertypes: "0",
-        gender: "0", minagemen: "0", maxagemen: "999",
-        minageladies: "0", maxageladies: "999",
-        minhcp: "-8", maxhcp: "99", idfilter: "-1",
-        jtStartIndex: 0, jtPageSize: 200, jtSorting: "score_id DESC"
-      }
-    );
-
-    const entries = (classifRes.ok && classifRes.data?.Result === "OK")
-      ? (classifRes.data.Records || [])
-      : [];
-
-    if (!classifRes.ok) {
-      process.stdout.write(`${Y}ClassifLST erro: ${classifRes.raw||classifRes.error}${X}\n  `);
-    } else {
-      process.stdout.write(`${D}${entries.length} jog${X} `);
-    }
-
-    // ScoreCards
-    const players = [];
-    let scOk = 0;
-
-    for (const c of entries) {
-      const scRes = await post(
-        `${BASE_URL}/pt/classif.aspx/ScoreCard`,
-        { score_id: String(c.score_id), tclub: t.ccode, tcode: t.tcode,
-          scoringtype: "1", classiftype: "I", classifround: "1",
-          jtStartIndex: 0, jtPageSize: 10, jtSorting: "" }
+    try {
+      const classif = await apiGet(
+        `/api/clubs/${t.ccode}/tournaments/${t.id}/classification?rounds=1&scoringType=stroke-play&gender=all`,
+        sessionId, version
       );
 
-      if (scRes.ok && scRes.data?.Result === "OK" && scRes.data.Records?.length) {
-        const r = scRes.data.Records[0];
-        const nh = r.nholes || 18;
-        const scores = [], par = [], si = [], meters = [];
-        for (let h = 1; h <= nh; h++) {
-          scores.push(r[`gross_${h}`] || 0);
-          par.push(r[`par_${h}`] || 0);
-          si.push(r[`stroke_index_${h}`] || 0);
-          meters.push(r[`meters_${h}`] || 0);
-        }
-        players.push({
-          scoreId: String(c.score_id), pos: c.classif_pos,
-          name: r.player_name || "", fed: r.federated_code || "",
-          club: r.player_acronym || "",
-          hcpExact: r.exact_hcp, hcpPlay: r.play_hcp,
-          grossTotal: r.gross_total, parTotal: r.par_total,
-          course: r.course_description || "",
-          courseRating: r.course_rating, slope: r.slope,
-          teeName: r.tee_name || "", nholes: nh,
-          scores, par, si, meters,
-        });
-        scOk++;
-      } else {
-        players.push({
-          scoreId: String(c.score_id), pos: c.classif_pos,
-          name: c.player_name || "", club: c.player_club_description || "",
-          grossTotal: 999, scores: [],
-        });
-      }
-      await sleep(80);
+      const entries = Array.isArray(classif) ? classif : (classif?.Records || []);
+      process.stdout.write(`${D}${entries.length} jog${X} `);
+
+      const players = entries.map(c => ({
+        scoreId:    String(c.score_id || ""),
+        pos:        c.classif_pos,
+        name:       c.player_name || "",
+        club:       c.player_club_description || "",
+        hcpExact:   c.exact_hcp,
+        hcpPlay:    c.play_hcp,
+        grossTotal: c.gross_total,
+        toPar:      c.to_par_total,
+        scores:     [],
+      }));
+
+      process.stdout.write(`${G}✓${X}\n`);
+
+      processedTournaments.push({
+        id:          t.id,
+        tcode:       String(t.code),
+        ccode:       String(t.ccode),
+        name:        t.description,
+        date,
+        campo:       t.course_description || "",
+        series:      info.series,
+        region:      info.region,
+        escalao:     info.escalao,
+        num:         info.num,
+        playerCount: players.length,
+        players,
+      });
+
+    } catch (e) {
+      process.stdout.write(`${R}erro: ${e.message}${X}\n`);
     }
 
-    process.stdout.write(`${G}✓${X} ${scOk}/${entries.length} SC\n`);
-    totalScorecards += scOk;
-
-    processedTournaments.push({
-      tcode: t.tcode, ccode: t.ccode,
-      name: t.name, date: t.date, campo: t.campo,
-      series: info.series, region: info.region,
-      escalao: info.escalao, num: info.num,
-      playerCount: players.length, players,
-    });
-
-    await sleep(300);
+    await sleep(150);
   }
-
-  await browser.close();
 
   // Guardar
   const existingList = forceFlag ? [] : (existingDrive?.tournaments || []);
@@ -285,11 +230,11 @@ async function main() {
 
   const output = {
     lastUpdated:      new Date().toISOString().split("T")[0],
-    source:           "scoring.datagolf.pt",
+    source:           "golf-portugal.pt → scoring.datagolf.pt",
     filterYear,
     totalTournaments: allTournaments.length,
     totalPlayers:     allTournaments.reduce((s, t) => s + (t.players?.length || 0), 0),
-    totalScorecards:  allTournaments.reduce((s, t) => s + (t.players?.filter(p => p.scores?.length > 0).length || 0), 0),
+    totalScorecards:  0,
     tournaments:      allTournaments,
   };
 
@@ -302,14 +247,14 @@ async function main() {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(driveDataPath, JSON.stringify(output, null, 2));
 
-  const elapsed = Math.ceil((Date.now() - startTime) / 1000 / 60);
+  const elapsed = Math.ceil((Date.now() - startTime) / 1000);
   console.log(`\n${B}╔══════════════════════════════════════════╗${X}`);
   console.log(`${B}║     Concluido ${G}OK${X}${B}                         ║${X}`);
   console.log(`${B}╠══════════════════════════════════════════╣${X}`);
   console.log(`${B}║${X}  Torneios novos:  ${String(processedTournaments.length).padEnd(24)}${B}║${X}`);
-  console.log(`${B}║${X}  Scorecards:      ${String(totalScorecards).padEnd(24)}${B}║${X}`);
   console.log(`${B}║${X}  Total acumulado: ${String(allTournaments.length + " torneios").padEnd(24)}${B}║${X}`);
-  console.log(`${B}║${X}  Tempo:           ${String(elapsed + " min").padEnd(24)}${B}║${X}`);
+  console.log(`${B}║${X}  Jogadores:       ${String(output.totalPlayers).padEnd(24)}${B}║${X}`);
+  console.log(`${B}║${X}  Tempo:           ${String(elapsed + "s").padEnd(24)}${B}║${X}`);
   console.log(`${B}╚══════════════════════════════════════════╝${X}`);
 }
 
