@@ -28,16 +28,30 @@ interface FieldData { gerado_em: string; torneios: Torneio[]; }
 interface RondaJogador {
   nome: string; pais: string; cidade: string;
   pontos: number; score: number; tee: string;
-  rondas: Record<string, {
+  to_par: number | null;
+  buracos: number;
+  start_time: string; grupo: number;
+  strokes: number[];  // directamente no jogador (nova estrutura)
+  // legacy (estrutura antiga — manter compatibilidade)
+  rondas?: Record<string, {
     strokes: number[]; total: number; buracos: number;
     start_time: string; grupo: number;
   }>;
 }
-interface RondaResult    { ronda: number; jogadores: RondaJogador[]; }
-interface EscalaoResult  { age_group: number; nome: string; rondas: RondaResult[]; }
+interface RondaResult {
+  ronda: number;
+  par: number[];
+  si: number[];
+  buracos: number;
+  total_par: number | null;
+  leaderboard: RondaJogador[];  // nova estrutura
+  jogadores?: RondaJogador[];   // legacy
+}
+interface EscalaoResult  { age_group: number; nome: string; holes: number; is_manuel: boolean; rondas: RondaResult[]; }
 interface TorneioResult  {
   t: number; name: string;
   date_inicio: string; date_fim?: string; campo: string | null;
+  rondas_total: number;
   escalao_manuel?: number;
   url_resultados?: string;
   escaloes: EscalaoResult[];
@@ -104,10 +118,11 @@ function isManuel(nome: string) {
 // ─────────────────────────────────────────────
 // SCORECARD
 // ─────────────────────────────────────────────
-function LinhaScorecard({ j, buracos }: { j: RondaJogador; buracos: number }) {
+function LinhaScorecard({ j, buracos, par }: { j: RondaJogador; buracos: number; par?: number[] }) {
   const manuel  = isManuel(j.nome);
+  // Nova estrutura: strokes directamente; legacy: dentro de rondas["1"]
   const r1      = j.rondas?.["1"];
-  const strokes = (r1?.strokes ?? []).slice(0, buracos);
+  const strokes = (j.strokes?.length ? j.strokes : r1?.strokes ?? []).slice(0, buracos);
 
   return (
     <tr style={{ background: manuel ? "rgba(144,202,249,0.07)" : undefined,
@@ -117,13 +132,24 @@ function LinhaScorecard({ j, buracos }: { j: RondaJogador; buracos: number }) {
         {manuel && <span style={{marginRight:4,color:"#ffb74d"}}>★</span>}{j.nome}
       </td>
       <td style={{ padding:"5px 6px", textAlign:"center", fontSize:11 }}>{flag(j.pais)}</td>
-      {strokes.map((s,i) => (
-        <td key={i} style={{
-          padding:"4px 4px", textAlign:"center", fontSize:10,
-          fontVariantNumeric:"tabular-nums",
-          color: s === 0 ? "#263238" : s <= 3 ? "#80cbc4" : s >= 7 ? "#ef9a9a" : "#cfd8dc",
-        }}>{s || "·"}</td>
-      ))}
+      {strokes.map((s,i) => {
+        const p = par?.[i];
+        const diff = p ? s - p : null;
+        const cor = s === 0 ? "#263238"
+          : diff === null ? "#cfd8dc"
+          : diff <= -2 ? "#ffd54f"   // eagle+
+          : diff === -1 ? "#80cbc4"  // birdie
+          : diff === 0  ? "#cfd8dc"  // par
+          : diff === 1  ? "#ef9a9a"  // bogey
+          : "#b71c1c";               // double+
+        return (
+          <td key={i} style={{
+            padding:"4px 4px", textAlign:"center", fontSize:10,
+            fontVariantNumeric:"tabular-nums", color: cor,
+            fontWeight: diff !== null && diff <= -1 ? 700 : 400,
+          }}>{s || "·"}</td>
+        );
+      })}
       {strokes.length < buracos && Array.from({length: buracos - strokes.length}).map((_,i) => (
         <td key={"e"+i} style={{padding:"4px 4px",textAlign:"center",fontSize:10,color:"#263238"}}>·</td>
       ))}
@@ -135,29 +161,90 @@ function LinhaScorecard({ j, buracos }: { j: RondaJogador; buracos: number }) {
   );
 }
 
-function TabelaRonda({ ronda, buracos }: { ronda: RondaResult; buracos: number }) {
-  const nums = Array.from({length: buracos}, (_,i) => i+1);
+function TabelaRonda({ ronda }: { ronda: RondaResult }) {
+  const jogadores = ronda.leaderboard ?? ronda.jogadores ?? [];
+  const buracos   = ronda.buracos || jogadores[0]?.buracos || 9;
+  const par       = ronda.par?.length ? ronda.par : undefined;
+  const nums      = Array.from({length: buracos}, (_,i) => i+1);
+  const totalPar  = ronda.total_par;
+
   return (
     <div style={{ overflowX:"auto", marginBottom:14 }}>
-      <div style={{ fontSize:10, color:"#546e7a", marginBottom:3, fontWeight:600 }}>
-        RONDA {ronda.ronda}
+      <div style={{ display:"flex", alignItems:"center", gap:12, marginBottom:4 }}>
+        <span style={{ fontSize:10, color:"#546e7a", fontWeight:600 }}>RONDA {ronda.ronda}</span>
+        {totalPar && <span style={{ fontSize:10, color:"#37474f" }}>Par {totalPar}</span>}
+        <span style={{ fontSize:10, color:"#37474f" }}>{jogadores.length} jogadores</span>
       </div>
       <table style={{ borderCollapse:"collapse", fontSize:11, minWidth:400 }}>
         <thead>
           <tr style={{ background:"#060f1a", borderBottom:"1px solid #1e3448" }}>
+            <th style={{padding:"4px 6px",textAlign:"center",color:"#37474f",fontWeight:400,minWidth:28}}>#</th>
             <th style={{padding:"4px 8px",textAlign:"left",color:"#37474f",fontWeight:400,minWidth:130}}>Jogador</th>
             <th style={{padding:"4px 6px",minWidth:22}}></th>
-            {nums.map(n => (
+            {par ? par.slice(0,buracos).map((p,i) => (
+              <th key={i} style={{padding:"3px 4px",textAlign:"center",color:"#37474f",
+                fontWeight:400,fontSize:9,minWidth:20}}>{p}</th>
+            )) : nums.map(n => (
               <th key={n} style={{padding:"3px 4px",textAlign:"center",color:"#263238",
                 fontWeight:400,fontSize:9,minWidth:20}}>{n}</th>
             ))}
             <th style={{padding:"4px 8px",textAlign:"center",color:"#546e7a",fontSize:10}}>Tot</th>
+            <th style={{padding:"4px 8px",textAlign:"center",color:"#546e7a",fontSize:10}}>±</th>
             <th style={{padding:"4px 8px",textAlign:"center",color:"#ffb74d",fontSize:10}}>Pts</th>
           </tr>
+          {par && (
+            <tr style={{ background:"#060f1a", borderBottom:"1px solid #1e3448" }}>
+              <td colSpan={3} style={{padding:"2px 6px",fontSize:9,color:"#263238",textAlign:"right"}}>H</td>
+              {nums.map(n => (
+                <td key={n} style={{padding:"2px 4px",textAlign:"center",fontSize:9,color:"#263238"}}>{n}</td>
+              ))}
+              <td colSpan={3}></td>
+            </tr>
+          )}
         </thead>
         <tbody>
-          {ronda.jogadores.map((j,i) => (
-            <LinhaScorecard key={i} j={j} buracos={buracos} />
+          {jogadores.map((j,i) => (
+            <tr key={i} style={{ background: isManuel(j.nome) ? "rgba(144,202,249,0.07)" : undefined,
+              borderBottom:"1px solid #0a1628" }}>
+              <td style={{padding:"5px 6px",textAlign:"center",fontSize:10,color:"#37474f"}}>{i+1}</td>
+              <td style={{padding:"5px 8px",fontSize:11,
+                color:isManuel(j.nome)?"#90caf9":"#90a4ae",whiteSpace:"nowrap"}}>
+                {isManuel(j.nome) && <span style={{marginRight:4,color:"#ffb74d"}}>★</span>}
+                {j.nome}
+              </td>
+              <td style={{padding:"5px 6px",textAlign:"center",fontSize:11}}>{flag(j.pais)}</td>
+              {(j.strokes?.length ? j.strokes : j.rondas?.["1"]?.strokes ?? []).slice(0,buracos).map((s,idx) => {
+                const p = par?.[idx];
+                const diff = p && s > 0 ? s - p : null;
+                const cor = s === 0 ? "#263238"
+                  : diff === null ? "#cfd8dc"
+                  : diff <= -2 ? "#ffd54f"
+                  : diff === -1 ? "#80cbc4"
+                  : diff === 0  ? "#cfd8dc"
+                  : diff === 1  ? "#ef9a9a"
+                  : "#b71c1c";
+                return (
+                  <td key={idx} style={{padding:"4px 4px",textAlign:"center",fontSize:10,
+                    fontVariantNumeric:"tabular-nums",color:cor,
+                    fontWeight:diff!==null&&diff<=-1?700:400}}>
+                    {s||"·"}
+                  </td>
+                );
+              })}
+              {/* preencher colunas em falta */}
+              {Array.from({length: Math.max(0, buracos - (j.strokes?.length || 0))}).map((_,idx)=>(
+                <td key={"e"+idx} style={{padding:"4px 4px",textAlign:"center",fontSize:10,color:"#263238"}}>·</td>
+              ))}
+              <td style={{padding:"5px 8px",textAlign:"center",fontSize:12,fontWeight:700,
+                color:isManuel(j.nome)?"#90caf9":"#78909c"}}>{j.score||"–"}</td>
+              <td style={{padding:"5px 8px",textAlign:"center",fontSize:11,
+                color: j.to_par===null??"#546e7a":j.to_par<0?"#80cbc4":j.to_par===0?"#cfd8dc":"#ef9a9a",
+                fontWeight:700}}>
+                {j.to_par===null||j.to_par===undefined?"–":j.to_par===0?"E":j.to_par>0?"+"+j.to_par:j.to_par}
+              </td>
+              <td style={{padding:"5px 8px",textAlign:"center",fontSize:12,fontWeight:700,
+                color:"#ffb74d"}}>{j.pontos>0?j.pontos:"–"}</td>
+            </tr>
           ))}
         </tbody>
       </table>
@@ -352,7 +439,7 @@ function TabResultados({ data }: { data: ResultsData }) {
         // Resumo do Manuel neste torneio
         const manuelRows = t.escaloes.flatMap(e =>
           e.rondas.flatMap(r =>
-            r.jogadores
+            (r.leaderboard ?? r.jogadores ?? [])
               .filter(j => isManuel(j.nome))
               .map(j => ({ escalao:e.nome, ronda:r.ronda, ...j }))
           )
@@ -397,9 +484,11 @@ function TabResultados({ data }: { data: ResultsData }) {
             {isAberto && (
               <div style={{ borderTop:"1px solid #1e3448", padding:"12px 16px" }}>
                 {t.escaloes.map(e => {
-                  const isManuelEscalao = t.escalao_manuel
-                    ? e.age_group === t.escalao_manuel
-                    : e.nome === ESCALAO_MANUEL;
+                  const isManuelEscalao = e.is_manuel ||
+                    (t.escalao_manuel ? e.age_group === t.escalao_manuel : e.nome === ESCALAO_MANUEL);
+                  const rondasComDados = e.rondas.filter(r =>
+                    (r.leaderboard ?? r.jogadores ?? []).length > 0
+                  );
                   return (
                   <div key={e.age_group} style={{ marginBottom:20 }}>
                     <div style={{ fontSize:12, fontWeight:700,
@@ -408,13 +497,9 @@ function TabResultados({ data }: { data: ResultsData }) {
                       paddingBottom:5, marginBottom:8 }}>
                       {isManuelEscalao ? "★ " : ""}{e.nome}
                     </div>
-                    {e.rondas.filter(r => r.jogadores.length > 0).map(r => {
-                      // inferir buracos do primeiro jogador que tenha dados
-                      const buracos = r.jogadores[0]?.rondas?.["1"]?.buracos
-                        ?? r.jogadores[0]?.rondas?.["1"]?.strokes?.filter(s=>s>0).length
-                        ?? 9;
-                      return <TabelaRonda key={r.ronda} ronda={r} buracos={buracos} />;
-                    })}
+                    {rondasComDados.map(r => (
+                      <TabelaRonda key={r.ronda} ronda={r} />
+                    ))}
                   </div>
                   );
                 })}
@@ -452,10 +537,11 @@ function TabRivais({ data }: { data: ResultsData }) {
     for (const t of data.resultados) {
       for (const e of t.escaloes) {
         for (const r of e.rondas) {
-          const manuelJog = r.jogadores.find(j => isManuel(j.nome));
+          const lista = r.leaderboard ?? r.jogadores ?? [];
+          const manuelJog = lista.find(j => isManuel(j.nome));
           if (!manuelJog) continue;
 
-          for (const j of r.jogadores) {
+          for (const j of lista) {
             if (isManuel(j.nome)) continue;
             const key = j.nome.toLowerCase().trim();
             if (!mapa.has(key)) {
@@ -646,7 +732,7 @@ export default function USKidsFieldPage() {
     for (const t of resultsData.resultados)
       for (const e of t.escaloes)
         for (const r of e.rondas)
-          for (const j of r.jogadores)
+          for (const j of (r.leaderboard ?? r.jogadores ?? []))
             if (!isManuel(j.nome)) nomes.add(j.nome.toLowerCase().trim());
     return nomes.size;
   }, [resultsData]);
