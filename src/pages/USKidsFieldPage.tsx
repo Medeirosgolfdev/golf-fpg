@@ -358,8 +358,8 @@ function TabCampo({ data }: { data: FieldData }) {
 
         return (
           <div key={t.t} style={{
-            background:"#0d1f2d",
-            border:`1px solid ${urgente ? "#e65100" : "#1e3448"}`,
+            background:"var(--bg-card)",
+            border:`1px solid ${urgente ? "var(--color-danger)" : "var(--border)"}`,
             borderRadius:10, marginBottom:12, overflow:"hidden",
           }}>
             <div onClick={() => toggle(t.t)} style={{
@@ -368,7 +368,7 @@ function TabCampo({ data }: { data: FieldData }) {
             }}>
               <div style={{ flex:1 }}>
                 <div style={{ display:"flex", alignItems:"center", gap:7, marginBottom:3, flexWrap:"wrap" }}>
-                  <span style={{ fontSize:15, fontWeight:700, color:"#e0e0e0" }}>
+                  <span style={{ fontSize:15, fontWeight:700, color:"var(--text)" }}>
                     {t.emoji} {t.name}
                   </span>
                   {dias >= 0 && dias <= 14 && (
@@ -380,7 +380,7 @@ function TabCampo({ data }: { data: FieldData }) {
                       padding:"1px 7px", borderRadius:8, fontSize:10 }}>em curso</span>
                   )}
                 </div>
-                <div style={{ fontSize:11, color:"#546e7a" }}>
+                <div style={{ fontSize:11, color:"var(--text-3)" }}>
                   📅 {fmtDate(t.date_inicio)}
                   {t.date_fim && t.date_fim !== t.date_inicio ? ` → ${fmtDate(t.date_fim)}` : ""}
                   {t.rondas ? ` · ${t.rondas}R` : ""}
@@ -388,7 +388,7 @@ function TabCampo({ data }: { data: FieldData }) {
                   {t.fee_18  ? ` · 💵 ${t.fee_18}` : ""}
                 </div>
                 {t.sem_flights && (
-                  <div style={{ color:"#546e7a", fontSize:11, marginTop:4 }}>⏳ Flights ainda não publicados</div>
+                  <div style={{ color:"var(--text-3)", fontSize:11, marginTop:4 }}>⏳ Flights ainda não publicados</div>
                 )}
                 {t.erro && <div style={{ color:"#ef9a9a", fontSize:11, marginTop:4 }}>⚠️ {t.erro}</div>}
                 {!t.erro && !t.sem_flights && (
@@ -415,13 +415,13 @@ function TabCampo({ data }: { data: FieldData }) {
                   </div>
                 )}
               </div>
-              <span style={{ color:"#546e7a", fontSize:14, userSelect:"none" }}>
+              <span style={{ color:"var(--text-3)", fontSize:14, userSelect:"none" }}>
                 {isAberto ? "▲" : "▼"}
               </span>
             </div>
 
             {isAberto && !t.erro && !t.sem_flights && (
-              <div style={{ borderTop:"1px solid #1e3448", padding:"12px 16px" }}>
+              <div style={{ borderTop:"1px solid var(--border)", padding:"12px 16px" }}>
                 <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(210px,1fr))", gap:6, marginBottom:12 }}>
                   {t.escaloes.map(e => {
                     const bd  = badgeVagas(e.vagas, e.maximo);
@@ -429,28 +429,28 @@ function TabCampo({ data }: { data: FieldData }) {
                     const man = e.nome === ESCALAO_MANUEL;
                     return (
                       <div key={e.age_group} style={{
-                        background: man?"#0d2a4a":dst?"#0d1f35":"#0a1628",
-                        border:`1px solid ${man?"#1565c0":dst?"#1a3a5c":"transparent"}`,
+                        background: man?"var(--bg-info)":dst?"var(--bg-detail)":"var(--bg)",
+                        border:`1px solid ${man?"var(--border-info)":dst?"var(--border)":"transparent"}`,
                         borderRadius:6, padding:"7px 10px",
                       }}>
                         <div style={{ display:"flex", justifyContent:"space-between",
                           alignItems:"center", marginBottom: e.jogadores?.length ? 5 : 0 }}>
-                          <span style={{ fontSize:11, color:man?"#90caf9":dst?"#78909c":"#546e7a" }}>
+                          <span style={{ fontSize:11, color:man?"var(--color-info)":dst?"var(--text-2)":"var(--text-3)" }}>
                             {man?"★ ":""}{e.nome}
                             <span style={{ color:"#37474f", fontSize:10, marginLeft:3 }}>({e.holes}H)</span>
                           </span>
                           <div style={{ display:"flex", gap:4, alignItems:"center" }}>
-                            <span style={{ fontSize:10, color:"#546e7a" }}>{e.inscritos}/{e.maximo}</span>
+                            <span style={{ fontSize:10, color:"var(--text-3)" }}>{e.inscritos}/{e.maximo}</span>
                             {bd && <span style={{ background:bd.bg, color:bd.cor,
                               padding:"1px 5px", borderRadius:5, fontSize:9, fontWeight:700 }}>{bd.label}</span>}
                           </div>
                         </div>
                         {e.jogadores && e.jogadores.length > 0 && (
-                          <div style={{ borderTop:"1px solid #0d1628", paddingTop:4 }}>
+                          <div style={{ borderTop:"1px solid var(--border)", paddingTop:4 }}>
                             {e.jogadores.map((j,i) => (
                               <div key={i} style={{ display:"flex", justifyContent:"space-between",
                                 fontSize:10, padding:"1px 0",
-                                color: j.pais==="PT" ? "#90caf9" : "#607d8b" }}>
+                                color: j.pais==="PT" ? "var(--color-info)" : "var(--text-3)" }}>
                                 <span>{j.nome}</span>
                                 <span title={j.cidade}>{flag(j.pais)}</span>
                               </div>
@@ -458,7 +458,7 @@ function TabCampo({ data }: { data: FieldData }) {
                           </div>
                         )}
                         {!e.jogadores && e.paises && e.paises.length > 0 && (
-                          <div style={{ fontSize:10, color:"#455a64", marginTop:3 }}>
+                          <div style={{ fontSize:10, color:"var(--text-3)", marginTop:3 }}>
                             {e.paises.slice(0,5).map(p=>`${flag(p.pais)}${p.n}`).join(" ")}
                           </div>
                         )}
@@ -472,17 +472,17 @@ function TabCampo({ data }: { data: FieldData }) {
                     <div style={{ color:"#7986cb", fontWeight:700, fontSize:12, marginBottom:6 }}>🇵🇹 Portugueses inscritos</div>
                     {t.escaloes.filter(e=>e.jogadores?.some(j=>j.pais==="PT")).map(e=>(
                       <div key={e.age_group} style={{ marginBottom:4 }}>
-                        <div style={{ color:"#5c6bc0", fontSize:10, marginBottom:1 }}>{e.nome}</div>
+                        <div style={{ color:"var(--text-2)", fontSize:10, marginBottom:1 }}>{e.nome}</div>
                         {e.jogadores!.filter(j=>j.pais==="PT").map((j,i)=>(
                           <div key={i} style={{ color:"#c5cae9", fontSize:12, paddingLeft:8 }}>
-                            {j.nome} <span style={{ color:"#546e7a", fontSize:10 }}>{j.cidade}</span>
+                            {j.nome} <span style={{ color:"var(--text-3)", fontSize:10 }}>{j.cidade}</span>
                           </div>
                         ))}
                       </div>
                     ))}
                   </div>
                 )}
-                <div style={{ textAlign:"right", color:"#263238", fontSize:10 }}>
+                <div style={{ textAlign:"right", color:"var(--text-3)", fontSize:10 }}>
                   {fmtTs(t.ultima_atualizacao)}
                 </div>
               </div>
@@ -537,21 +537,21 @@ function TabResultados({ data }: { data: ResultsData }) {
         );
 
         return (
-          <div key={t.t} style={{ background:"#0d1f2d", border:"1px solid #1e3448",
+          <div key={t.t} style={{ background:"var(--bg-card)", border:"1px solid var(--border)",
             borderRadius:10, marginBottom:12, overflow:"hidden" }}>
             <div onClick={() => toggle(t.t)} style={{ cursor:"pointer", padding:"13px 16px",
               display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
               <div style={{ flex:1 }}>
-                <div style={{ fontSize:15, fontWeight:700, color:"#e0e0e0", marginBottom:3 }}>
+                <div style={{ fontSize:15, fontWeight:700, color:"var(--text)", marginBottom:3 }}>
                   {t.name}
                 </div>
-                <div style={{ fontSize:11, color:"#546e7a", display:"flex", gap:10, alignItems:"center", flexWrap:"wrap" }}>
+                <div style={{ fontSize:11, color:"var(--text-3)", display:"flex", gap:10, alignItems:"center", flexWrap:"wrap" }}>
                   <span>📅 {fmtDate(t.date_inicio)}{t.campo ? ` · ${t.campo}` : ""}</span>
                   {t.url_resultados && (
                     <a href={t.url_resultados} target="_blank" rel="noopener noreferrer"
                       onClick={e => e.stopPropagation()}
-                      style={{ color:"#546e7a", fontSize:10, textDecoration:"none",
-                        border:"1px solid #1e3448", borderRadius:5, padding:"1px 7px" }}>
+                      style={{ color:"var(--text-3)", fontSize:10, textDecoration:"none",
+                        border:"1px solid var(--border)", borderRadius:5, padding:"1px 7px" }}>
                       ver fonte ↗
                     </a>
                   )}
@@ -559,21 +559,21 @@ function TabResultados({ data }: { data: ResultsData }) {
                 {manuelRows.length > 0 && (
                   <div style={{ marginTop:7, display:"flex", gap:6, flexWrap:"wrap" }}>
                     {manuelRows.map((m,i) => (
-                      <span key={i} style={{ background:"#0d2a4a", border:"1px solid #1565c0",
-                        color:"#90caf9", padding:"2px 10px", borderRadius:8, fontSize:11, fontWeight:700 }}>
+                      <span key={i} style={{ background:"var(--bg-info)", border:"1px solid var(--border-info)",
+                        color:"var(--color-info)", padding:"2px 10px", borderRadius:8, fontSize:11, fontWeight:700 }}>
                         ★ {m.escalao} R{m.ronda}: {m.score} pan · {m.pontos} pts
                       </span>
                     ))}
                   </div>
                 )}
               </div>
-              <span style={{ color:"#546e7a", fontSize:14, userSelect:"none" }}>
+              <span style={{ color:"var(--text-3)", fontSize:14, userSelect:"none" }}>
                 {isAberto ? "▲" : "▼"}
               </span>
             </div>
 
             {isAberto && (
-              <div style={{ borderTop:"1px solid #1e3448", padding:"12px 16px" }}>
+              <div style={{ borderTop:"1px solid var(--border)", padding:"12px 16px" }}>
                 {t.escaloes.map(e => {
                   const isManuelEscalao = e.is_manuel ||
                     (t.escalao_manuel ? e.age_group === t.escalao_manuel : e.nome === ESCALAO_MANUEL);
@@ -583,8 +583,8 @@ function TabResultados({ data }: { data: ResultsData }) {
                   return (
                   <div key={e.age_group} style={{ marginBottom:20 }}>
                     <div style={{ fontSize:12, fontWeight:700,
-                      color: isManuelEscalao ? "#90caf9" : "#546e7a",
-                      borderBottom:`1px solid ${isManuelEscalao ? "#1565c0" : "#1e3448"}`,
+                      color: isManuelEscalao ? "var(--color-info)" : "var(--text-3)",
+                      borderBottom:`1px solid ${isManuelEscalao ? "var(--border-info)" : "var(--border)"}`,
                       paddingBottom:5, marginBottom:8 }}>
                       {isManuelEscalao ? "★ " : ""}{e.nome}
                     </div>
@@ -604,7 +604,7 @@ function TabResultados({ data }: { data: ResultsData }) {
                   </div>
                   );
                 })}
-                <div style={{ textAlign:"right", color:"#263238", fontSize:10 }}>
+                <div style={{ textAlign:"right", color:"var(--text-3)", fontSize:10 }}>
                   {fmtTs(t.ultima_atualizacao)}
                 </div>
               </div>
@@ -1006,7 +1006,7 @@ export default function USKidsFieldPage() {
     </div>
   );
   if (!fieldData) return (
-    <div style={{ padding:32, color:"#546e7a", fontSize:13 }}>A carregar…</div>
+    <div style={{ padding:32, color:"var(--text-3)", fontSize:13 }}>A carregar…</div>
   );
 
   const TABS: { id: Tab; label: string; badge: number }[] = [
@@ -1020,20 +1020,20 @@ export default function USKidsFieldPage() {
       fontFamily:"system-ui, sans-serif" }}>
 
       <div style={{ marginBottom:20 }}>
-        <h1 style={{ margin:0, fontSize:20, color:"#e0e0e0", fontWeight:700 }}>
+        <h1 style={{ margin:0, fontSize:20, color:"var(--text)", fontWeight:700 }}>
           USKids Golf Internacional
         </h1>
       </div>
 
       {/* Tabs */}
-      <div style={{ display:"flex", gap:2, marginBottom:20, borderBottom:"1px solid #1e3448" }}>
+      <div style={{ display:"flex", gap:2, marginBottom:20, borderBottom:"1px solid var(--border)" }}>
         {TABS.map(t => (
           <button key={t.id} onClick={() => setTab(t.id)} style={{
-            background: tab===t.id ? "#0d2a4a" : "transparent",
+            background: tab===t.id ? "var(--bg-info)" : "transparent",
             border:"none",
-            borderBottom: `2px solid ${tab===t.id ? "#1565c0" : "transparent"}`,
+            borderBottom: `2px solid ${tab===t.id ? "var(--color-info)" : "transparent"}`,
             borderRadius:"6px 6px 0 0",
-            color: tab===t.id ? "#90caf9" : "#546e7a",
+            color: tab===t.id ? "var(--color-info)" : "var(--text-3)",
             padding:"8px 14px", cursor:"pointer", fontSize:13,
             fontWeight: tab===t.id ? 700 : 400,
             display:"flex", alignItems:"center", gap:6,
@@ -1041,8 +1041,8 @@ export default function USKidsFieldPage() {
             {t.label}
             {t.badge > 0 && (
               <span style={{
-                background: tab===t.id ? "#1565c0" : "#1e3448",
-                color: tab===t.id ? "#e3f2fd" : "#546e7a",
+                background: tab===t.id ? "var(--color-info)" : "var(--border)",
+                color: tab===t.id ? "var(--bg-card)" : "var(--text-3)",
                 borderRadius:10, padding:"0 6px", fontSize:10, fontWeight:700,
               }}>{t.badge}</span>
             )}
@@ -1054,15 +1054,15 @@ export default function USKidsFieldPage() {
       {tab === "resultados" && (
         resultsData
           ? <TabResultados data={resultsData} />
-          : <div style={{color:"#546e7a",padding:"24px 0"}}>A carregar resultados…</div>
+          : <div style={{color:"var(--text-3)",padding:"24px 0"}}>A carregar resultados…</div>
       )}
       {tab === "rivais" && (
         resultsData
           ? <TabRivais data={resultsData} fieldData={fieldData} intlData={intlData} />
-          : <div style={{color:"#546e7a",padding:"24px 0"}}>A carregar…</div>
+          : <div style={{color:"var(--text-3)",padding:"24px 0"}}>A carregar…</div>
       )}
 
-      <div style={{ color:"#1e3448", fontSize:10, textAlign:"center", marginTop:16 }}>
+      <div style={{ color:"var(--border)", fontSize:10, textAlign:"center", marginTop:16 }}>
         signupanytime.com · actualização automática diária
       </div>
     </div>
