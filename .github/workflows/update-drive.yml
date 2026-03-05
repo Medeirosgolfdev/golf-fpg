@@ -1,0 +1,87 @@
+name: Actualizar Dados DRIVE
+
+on:
+  # Disparo manual (botão "Run workflow" no GitHub)
+  workflow_dispatch:
+    inputs:
+      year:
+        description: 'Ano dos torneios (vazio = ano actual)'
+        required: false
+        default: ''
+      force:
+        description: 'Re-processar torneios já existentes?'
+        required: false
+        default: 'false'
+        type: choice
+        options: ['false', 'true']
+
+  # Opcional: corre automaticamente todos os dias às 22h (Lisboa = UTC+0 no inverno, UTC+1 no verão)
+  # Descomenta as linhas abaixo se quiseres automático diário:
+  # schedule:
+  #   - cron: '0 21 * * *'   # 21:00 UTC = 22:00 Lisboa (inverno) / 23:00 (verão)
+
+jobs:
+  update-drive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: |
+          npm ci
+          # Instalar Playwright e browser Chromium
+          npm install playwright
+          npx playwright install chromium --with-deps
+
+      - name: Correr scraper DRIVE (Fase 1)
+        run: |
+          YEAR_ARG=""
+          if [ -n "${{ github.event.inputs.year }}" ]; then
+            YEAR_ARG="--year ${{ github.event.inputs.year }}"
+          fi
+
+          FORCE_ARG=""
+          if [ "${{ github.event.inputs.force }}" = "true" ]; then
+            FORCE_ARG="--force"
+          fi
+
+          node fpg-drive-playwright.js $YEAR_ARG $FORCE_ARG
+
+      - name: Verificar output
+        run: |
+          if [ ! -f "public/data/drive-data.json" ]; then
+            echo "ERRO: drive-data.json não foi criado"
+            exit 1
+          fi
+          TOTAL=$(node -e "const d=require('./public/data/drive-data.json'); console.log(d.totalTournaments)")
+          SC=$(node -e "const d=require('./public/data/drive-data.json'); console.log(d.totalScorecards)")
+          echo "✓ drive-data.json: $TOTAL torneios, $SC scorecards"
+
+      - name: Commit e push (se houver alterações)
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add public/data/drive-data.json
+
+          # Só faz commit se houver alterações reais
+          if git diff --staged --quiet; then
+            echo "Nenhuma alteração — sem commit."
+          else
+            DATE=$(date +'%Y-%m-%d %H:%M')
+            TOTAL=$(node -e "const d=require('./public/data/drive-data.json'); console.log(d.totalTournaments)")
+            git commit -m "data: update DRIVE ${DATE} (${TOTAL} torneios)"
+            git push
+            echo "✓ Push feito com sucesso."
+          fi

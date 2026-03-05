@@ -1,14 +1,10 @@
 name: USKids Results Monitor
-
 on:
   schedule:
-    # Todos os dias às 16:00 UTC (17:00 Lisboa Verão)
     - cron: '0 16 * * *'
   workflow_dispatch:
-
 permissions:
   contents: write
-
 jobs:
   resultados:
     name: 🏆 Resultados
@@ -29,5 +25,6 @@ jobs:
           git add public/data/uskids-results.json
           git diff --cached --quiet || (
             git commit -m "data: resultados USKids [$(date -u '+%Y-%m-%d %H:%M UTC')]" &&
+            git pull --rebase &&
             git push
           )

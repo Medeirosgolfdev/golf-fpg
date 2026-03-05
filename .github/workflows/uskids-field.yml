@@ -1,14 +1,10 @@
 name: USKids Field Monitor
-
 on:
   schedule:
-    # 1x por dia às 07:00 UTC — descobre se necessário, actualiza sempre inscritos
     - cron: '0 7 * * *'
   workflow_dispatch:
-
 permissions:
   contents: write
-
 jobs:
   update:
     name: ⛳ Descoberta + Inscritos
@@ -29,5 +25,6 @@ jobs:
           git add public/data/uskids-field.json public/data/uskids-discovery-cache.json
           git diff --cached --quiet || (
             git commit -m "data: USKids field [$(date -u '+%Y-%m-%d %H:%M UTC')]" &&
+            git pull --rebase &&
             git push
           )
