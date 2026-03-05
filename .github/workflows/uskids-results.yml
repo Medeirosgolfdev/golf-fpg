@@ -1,0 +1,33 @@
+name: USKids Results Monitor
+
+on:
+  schedule:
+    # Todos os dias às 16:00 UTC (17:00 Lisboa Verão)
+    - cron: '0 16 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  resultados:
+    name: 🏆 Resultados
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with: { token: '${{ secrets.GITHUB_TOKEN }}' }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20', cache: 'npm' }
+      - run: npm ci
+      - run: npx playwright install chromium --with-deps
+      - run: node scripts/fetch-uskids-results.js
+      - name: Commit
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git diff --quiet public/data/uskids-results.json || (
+            git add public/data/uskids-results.json &&
+            git commit -m "data: resultados USKids [$(date -u '+%Y-%m-%d %H:%M UTC')]" &&
+            git push
+          )

@@ -2,58 +2,39 @@ name: USKids Field Monitor
 
 on:
   schedule:
-    # Inscritos: todos os dias às 07:00 UTC
+    # Inscritos: 1x por dia às 07:00 UTC (08:00 Lisboa Verão)
     - cron: '0 7 * * *'
-    # Resultados: todos os dias às 13:00 e 20:00 UTC (durante torneios)
-    - cron: '0 13 * * *'
-    - cron: '0 20 * * *'
-    # Descoberta: de 3 em 3 dias (dias 1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31)
+    # Descoberta: de 3 em 3 dias às 05:00 UTC
     - cron: '0 5 1,4,7,10,13,16,19,22,25,28,31 * *'
-
   workflow_dispatch:
     inputs:
       modo:
-        description: 'Modo de execução'
+        description: 'Modo'
         required: true
         default: 'inscritos'
         type: choice
-        options:
-          - inscritos
-          - descoberta
-          - resultados
-          - tudo
+        options: [inscritos, descoberta]
 
 permissions:
   contents: write
 
 jobs:
   inscritos:
-    name: 📋 Actualizar inscritos
+    name: 📋 Inscritos
     runs-on: ubuntu-latest
     timeout-minutes: 20
     if: |
-      github.event_name == 'workflow_dispatch' && github.event.inputs.modo == 'inscritos' ||
-      github.event_name == 'schedule' && (
-        startsWith(github.event.schedule, '0 7') ||
-        startsWith(github.event.schedule, '0 13') ||
-        startsWith(github.event.schedule, '0 20')
-      )
-
+      (github.event_name == 'schedule' && github.event.schedule == '0 7 * * *') ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.modo == 'inscritos')
     steps:
       - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
+        with: { token: '${{ secrets.GITHUB_TOKEN }}' }
       - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
+        with: { node-version: '20', cache: 'npm' }
       - run: npm ci
       - run: npx playwright install chromium --with-deps
-      - run: node scripts/fetch-uskids-field.js inscritos
-
-      - name: Commit se houve alterações
+      - run: node scripts/fetch-uskids-field.js
+      - name: Commit
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -64,94 +45,26 @@ jobs:
           )
 
   descoberta:
-    name: 🔍 Descoberta de novos torneios
+    name: 🔍 Descoberta
     runs-on: ubuntu-latest
     timeout-minutes: 30
     if: |
-      github.event_name == 'workflow_dispatch' && github.event.inputs.modo == 'descoberta' ||
-      github.event_name == 'schedule' && startsWith(github.event.schedule, '0 5')
-
+      (github.event_name == 'schedule' && startsWith(github.event.schedule, '0 5')) ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.modo == 'descoberta')
     steps:
       - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
+        with: { token: '${{ secrets.GITHUB_TOKEN }}' }
       - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
+        with: { node-version: '20', cache: 'npm' }
       - run: npm ci
       - run: npx playwright install chromium --with-deps
-      - run: node scripts/fetch-uskids-field.js descoberta
-
-      - name: Commit se houve alterações
+      - run: node scripts/fetch-uskids-discovery.js
+      - name: Commit
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git diff --quiet public/data/uskids-discovery-cache.json public/data/uskids-field.json || (
-            git add public/data/uskids-discovery-cache.json public/data/uskids-field.json &&
+          git diff --quiet public/data/uskids-discovery-cache.json || (
+            git add public/data/uskids-discovery-cache.json &&
             git commit -m "data: descoberta USKids [$(date -u '+%Y-%m-%d %H:%M UTC')]" &&
-            git push
-          )
-
-  resultados:
-    name: 🏆 Actualizar resultados
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    if: |
-      github.event_name == 'workflow_dispatch' && github.event.inputs.modo == 'resultados'
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - run: npm ci
-      - run: npx playwright install chromium --with-deps
-      - run: node scripts/fetch-uskids-field.js resultados
-
-      - name: Commit se houve alterações
-        run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git diff --quiet public/data/uskids-field.json || (
-            git add public/data/uskids-field.json &&
-            git commit -m "data: resultados USKids [$(date -u '+%Y-%m-%d %H:%M UTC')]" &&
-            git push
-          )
-
-  tudo:
-    name: ⛳ Tudo (descoberta + inscritos + resultados)
-    runs-on: ubuntu-latest
-    timeout-minutes: 45
-    if: github.event_name == 'workflow_dispatch' && github.event.inputs.modo == 'tudo'
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - run: npm ci
-      - run: npx playwright install chromium --with-deps
-      - run: node scripts/fetch-uskids-field.js tudo
-
-      - name: Commit se houve alterações
-        run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git diff --quiet public/data/ || (
-            git add public/data/ &&
-            git commit -m "data: update completo USKids [$(date -u '+%Y-%m-%d %H:%M UTC')]" &&
             git push
           )
