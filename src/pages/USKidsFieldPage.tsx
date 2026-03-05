@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
+import ScoreCircle from "../ui/ScoreCircle";
 
 // ─────────────────────────────────────────────
 // TIPOS — CAMPO (inscritos)
@@ -211,23 +212,6 @@ function isManuel(nome: string) {
 // ─────────────────────────────────────────────
 // SCORECARD
 // ─────────────────────────────────────────────
-function ScoreCell({ s, par }: { s: number; par?: number }) {
-  if (!s) return <td className="tourn-hole-cell"><span style={{color:"var(--text-3)"}}>–</span></td>;
-  const diff = par != null ? s - par : null;
-  let cls = "";
-  if (diff !== null) {
-    if (diff <= -2) cls = "eagle";
-    else if (diff === -1) cls = "birdie";
-    else if (diff === 1) cls = "bogey";
-    else if (diff >= 2) cls = "double";
-  }
-  return (
-    <td className="tourn-hole-cell">
-      {cls ? <div className={`sc-score ${cls}`}>{s}</div> : <span>{s}</span>}
-    </td>
-  );
-}
-
 function TabelaRonda({ ronda, expanded, onToggle }: { ronda: RondaResult; expanded: boolean; onToggle: () => void }) {
   const jogadores = ronda.leaderboard ?? ronda.jogadores ?? [];
   const buracos   = ronda.buracos || 18;
@@ -320,9 +304,9 @@ function TabelaRonda({ ronda, expanded, onToggle }: { ronda: RondaResult; expand
                       {j.nome}
                     </td>
                     <td style={{textAlign:"center",fontSize:13}}>{flag(j.pais)}</td>
-                    {st.slice(0,9).map((s,idx) => <ScoreCell key={idx} s={s} par={par?.[idx]} />)}
+                    {st.slice(0,9).map((s,idx) => <td key={idx} className="tourn-hole-cell"><ScoreCircle gross={s||null} par={par?.[idx]??null} size="small" empty="dot" /></td>)}
                     {has18 && <td className="tourn-sum-col">{out9||"–"}</td>}
-                    {has18 && st.slice(9,18).map((s,idx) => <ScoreCell key={idx+9} s={s} par={par?.[idx+9]} />)}
+                    {has18 && st.slice(9,18).map((s,idx) => <td key={idx+9} className="tourn-hole-cell"><ScoreCircle gross={s||null} par={par?.[idx+9]??null} size="small" empty="dot" /></td>)}
                     {has18 && <td className="tourn-sum-col">{in9||"–"}</td>}
                     <td className={`tourn-sum-col ${j.score && j.to_par!==null && j.to_par!==undefined && j.to_par<0?"tourn-sum-under":""}`}
                       style={{fontWeight:700}}>
