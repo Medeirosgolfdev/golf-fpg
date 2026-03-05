@@ -2,30 +2,18 @@ name: USKids Field Monitor
 
 on:
   schedule:
-    # Inscritos: 1x por dia às 07:00 UTC (08:00 Lisboa Verão)
+    # 1x por dia às 07:00 UTC — descobre se necessário, actualiza sempre inscritos
     - cron: '0 7 * * *'
-    # Descoberta: de 3 em 3 dias às 05:00 UTC
-    - cron: '0 5 1,4,7,10,13,16,19,22,25,28,31 * *'
   workflow_dispatch:
-    inputs:
-      modo:
-        description: 'Modo'
-        required: true
-        default: 'inscritos'
-        type: choice
-        options: [inscritos, descoberta]
 
 permissions:
   contents: write
 
 jobs:
-  inscritos:
-    name: 📋 Inscritos
+  update:
+    name: ⛳ Descoberta + Inscritos
     runs-on: ubuntu-latest
-    timeout-minutes: 20
-    if: |
-      (github.event_name == 'schedule' && github.event.schedule == '0 7 * * *') ||
-      (github.event_name == 'workflow_dispatch' && github.event.inputs.modo == 'inscritos')
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
         with: { token: '${{ secrets.GITHUB_TOKEN }}' }
@@ -34,37 +22,12 @@ jobs:
       - run: npm ci
       - run: npx playwright install chromium --with-deps
       - run: node scripts/fetch-uskids-field.js
-      - name: Commit
+      - name: Commit se houve alterações
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git diff --quiet public/data/uskids-field.json || (
-            git add public/data/uskids-field.json &&
-            git commit -m "data: inscritos USKids [$(date -u '+%Y-%m-%d %H:%M UTC')]" &&
-            git push
-          )
-
-  descoberta:
-    name: 🔍 Descoberta
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    if: |
-      (github.event_name == 'schedule' && startsWith(github.event.schedule, '0 5')) ||
-      (github.event_name == 'workflow_dispatch' && github.event.inputs.modo == 'descoberta')
-    steps:
-      - uses: actions/checkout@v4
-        with: { token: '${{ secrets.GITHUB_TOKEN }}' }
-      - uses: actions/setup-node@v4
-        with: { node-version: '20', cache: 'npm' }
-      - run: npm ci
-      - run: npx playwright install chromium --with-deps
-      - run: node scripts/fetch-uskids-discovery.js
-      - name: Commit
-        run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git diff --quiet public/data/uskids-discovery-cache.json || (
-            git add public/data/uskids-discovery-cache.json &&
-            git commit -m "data: descoberta USKids [$(date -u '+%Y-%m-%d %H:%M UTC')]" &&
+          git diff --quiet public/data/ || (
+            git add public/data/uskids-field.json public/data/uskids-discovery-cache.json &&
+            git commit -m "data: USKids field [$(date -u '+%Y-%m-%d %H:%M UTC')]" &&
             git push
           )
