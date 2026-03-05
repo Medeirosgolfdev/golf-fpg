@@ -16,13 +16,15 @@ const { chromium } = require('playwright');
 // ── Torneios históricos do Manuel ──────────────
 // Preencher com os t= quando tiveres a lista completa
 const HISTORICOS = [
-  // { t: XXXXX, name: 'Venice Open 2025',            date_inicio: '2025-09-XX', date_fim: '2025-09-XX', rondas: 2 },
-  // { t: XXXXX, name: 'Rome Classic 2025',            date_inicio: '2025-XX-XX', date_fim: '2025-XX-XX', rondas: 2 },
-  // { t: XXXXX, name: 'Real Club El Prat 2023 Boys9', date_inicio: '2023-XX-XX', date_fim: '2023-XX-XX', rondas: 1 },
+  { t: 15573, name: 'Real Club de Golf El Prat 2023', date_inicio: '10/22/2023', date_fim: '10/22/2023', rondas: 1 },
+  { t: 19418, name: 'Venice Open 2025',               date_inicio: '8/17/2025',  date_fim: '8/17/2025',  rondas: 2 },
+  { t: 20175, name: 'Rome Classic 2025',              date_inicio: '10/18/2025', date_fim: '10/18/2025', rondas: 2 },
 ];
 
 // Escalões a capturar nos resultados
-const ESCALOES_RESULTADOS = new Set([2103, 2104, 2105, 2114, 2106]);
+// Boys 8=2101  Boys 9=2102  Boys 10=2103  Boys 11=2104  Boys 12=2105
+// Boys 13=2114  Boys 13-14=2106
+const ESCALOES_RESULTADOS = new Set([2101, 2102, 2103, 2104, 2105, 2114, 2106]);
 
 const DELAY_MS   = 400;
 const DIR        = path.join(__dirname, '..', 'public', 'data');
