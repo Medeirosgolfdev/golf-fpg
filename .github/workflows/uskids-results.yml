@@ -12,7 +12,10 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
-        with: { token: '${{ secrets.GITHUB_TOKEN }}' }
+        with:
+          token: '${{ secrets.GITHUB_TOKEN }}'
+          ref: main
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with: { node-version: '20', cache: 'npm' }
       - run: npm ci
@@ -24,12 +27,8 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add public/data/uskids-results.json
           git diff --cached --quiet && exit 0
-          git commit -m "data: resultados USKids [$(date -u '+%Y-%m-%d %H:%M UTC')]"
           git fetch origin main
-          git reset --soft HEAD~1
-          git stash
-          git rebase origin/main
-          git stash pop
+          git merge origin/main --no-edit --strategy-option=ours
           git add public/data/uskids-results.json
           git commit -m "data: resultados USKids [$(date -u '+%Y-%m-%d %H:%M UTC')]"
           git push
