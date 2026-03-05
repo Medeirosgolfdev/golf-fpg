@@ -525,46 +525,166 @@ function TabResultados({ data }: { data: ResultsData }) {
 // ─────────────────────────────────────────────
 // TAB RIVAIS
 // ─────────────────────────────────────────────
-interface RivalInfo {
-  nome: string; pais: string; cidade: string;
-  encontros: number;
-  man_ganhou: number;   // rondas em que Manuel teve mais pontos
-  rival_ganhou: number;
-  empates: number;
-  torneios: { nome: string; data: string; manPts: number; rivPts: number; ronda: number }[];
+
+interface Encontro {
+  torneio_t: number;
+  torneio_nome: string;
+  torneio_data: string;
+  escalao: string;
+  man_score: number;
+  rival_score: number;
+  man_to_par: number | null;
+  rival_to_par: number | null;
+  man_pos: number;
+  rival_pos: number;
 }
 
-function TabRivais({ data }: { data: ResultsData }) {
-  const [filtro, setFiltro] = useState("");
-  const [ordem,  setOrdem]  = useState<"encontros"|"pais"|"balance">("encontros");
+interface RivalInfo {
+  nome: string; pais: string; cidade: string;
+  encontros: Encontro[];
+}
 
-  const rivais = useMemo<RivalInfo[]>(() => {
+function TabelaConhecidos({
+  torneioT, torneioNome, rivals, fieldData,
+}: {
+  torneioT: number; torneioNome: string;
+  rivals: RivalInfo[]; fieldData: FieldData | null;
+}) {
+  const torneio = fieldData?.torneios.find(t => t.t === torneioT);
+  if (!torneio) return (
+    <div style={{ color:"var(--text-3)", fontSize:12 }}>Dados de inscritos não disponíveis para {torneioNome}</div>
+  );
+
+  const inscritos: { nome: string; pais: string; escalao: string }[] = [];
+  for (const e of torneio.escaloes) {
+    for (const j of (e.jogadores ?? [])) inscritos.push({ ...j, escalao: e.nome });
+  }
+
+  if (!inscritos.length) return (
+    <div style={{ color:"var(--text-3)", fontSize:12 }}>Sem inscritos ainda</div>
+  );
+
+  const rivalMap = new Map(rivals.map(r => [r.nome.toLowerCase().trim(), r]));
+  const conhecidos    = inscritos.filter(j => rivalMap.has(j.nome.toLowerCase().trim()));
+  const desconhecidos = inscritos.filter(j => !rivalMap.has(j.nome.toLowerCase().trim()));
+
+  return (
+    <div>
+      <div style={{ fontWeight:700, fontSize:14, color:"var(--text)", marginBottom:4 }}>
+        {torneioNome}
+      </div>
+      <div style={{ fontSize:12, color:"var(--text-3)", marginBottom:12 }}>
+        <span style={{ color:"var(--color-good)", fontWeight:700 }}>{conhecidos.length} conhecidos</span>
+        {" · "}
+        {desconhecidos.length} ainda não cruzou
+        {" · "}
+        {inscritos.length} total inscritos
+      </div>
+
+      {conhecidos.length === 0 ? (
+        <div style={{ fontSize:13, color:"var(--text-3)", padding:"16px 0" }}>
+          Nenhum adversário conhecido ainda inscrito neste torneio.
+        </div>
+      ) : (
+        <table className="tourn-scorecard" style={{ width:"100%", marginBottom:16 }}>
+          <thead>
+            <tr>
+              <th className="tourn-lb-name-col">Jogador</th>
+              <th style={{ width:30 }}></th>
+              <th style={{ textAlign:"center", width:80, fontSize:10 }}>Escalão</th>
+              <th style={{ textAlign:"left", fontSize:10 }}>Quando se encontraram</th>
+            </tr>
+          </thead>
+          <tbody>
+            {conhecidos.map((j, i) => {
+              const rival = rivalMap.get(j.nome.toLowerCase().trim())!;
+              const torneiosUnicos = [...new Map(rival.encontros.map(e => [e.torneio_t, e])).values()];
+              return (
+                <tr key={i} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)" }}>
+                  <td className="tourn-lb-name-col">{j.nome}</td>
+                  <td style={{ textAlign:"center" }}>{flag(j.pais)}</td>
+                  <td style={{ textAlign:"center", fontSize:11, color:"var(--text-3)" }}>{j.escalao}</td>
+                  <td style={{ fontSize:11, padding:"5px 8px" }}>
+                    {torneiosUnicos.map(enc => {
+                      const manMelhor = enc.man_pos < enc.rival_pos;
+                      const manPior   = enc.man_pos > enc.rival_pos;
+                      return (
+                        <span key={enc.torneio_t} style={{ marginRight:12, whiteSpace:"nowrap" }}>
+                          <span style={{ color:"var(--text-2)" }}>{enc.torneio_nome.replace(/\s\d{4}$/, "")}</span>
+                          <span style={{ marginLeft:5 }}>
+                            <span style={{ fontWeight:700, color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
+                              {enc.man_pos}º
+                            </span>
+                            <span style={{ color:"var(--text-3)" }}> vs </span>
+                            <span style={{ fontWeight:700, color:"var(--text-2)" }}>{enc.rival_pos}º</span>
+                          </span>
+                          {enc.man_to_par !== null && (
+                            <span style={{ marginLeft:4, fontSize:10, color:"var(--text-3)" }}>
+                              ({enc.man_to_par===0?"E":enc.man_to_par>0?"+"+enc.man_to_par:enc.man_to_par}
+                              {" vs "}
+                              {enc.rival_to_par===null?"-":enc.rival_to_par===0?"E":enc.rival_to_par>0?"+"+enc.rival_to_par:enc.rival_to_par})
+                            </span>
+                          )}
+                        </span>
+                      );
+                    })}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
+}
+
+function TabRivais({ data, fieldData }: { data: ResultsData; fieldData: FieldData | null }) {
+  const [filtro, setFiltro] = useState("");
+  const [ordem,  setOrdem]  = useState<"encontros"|"pais"|"nome">("encontros");
+  const [vista,  setVista]  = useState<"lista"|"marco"|"european">("lista");
+
+  const rivals = useMemo<RivalInfo[]>(() => {
     const mapa = new Map<string, RivalInfo>();
 
     for (const t of data.resultados) {
       for (const e of t.escaloes) {
-        for (const r of e.rondas) {
-          const lista = r.leaderboard ?? r.jogadores ?? [];
-          const manuelJog = lista.find(j => isManuel(j.nome));
-          if (!manuelJog) continue;
+        const todasRondas = e.rondas.flatMap(r => r.leaderboard ?? r.jogadores ?? []);
+        const manuelJogs = todasRondas.filter(j => isManuel(j.nome));
+        if (!manuelJogs.length) continue;
 
-          for (const j of lista) {
-            if (isManuel(j.nome)) continue;
-            const key = j.nome.toLowerCase().trim();
-            if (!mapa.has(key)) {
-              mapa.set(key, { nome:j.nome, pais:j.pais, cidade:j.cidade,
-                encontros:0, man_ganhou:0, rival_ganhou:0, empates:0, torneios:[] });
-            }
-            const rival = mapa.get(key)!;
-            rival.encontros++;
-            if (manuelJog.pontos > j.pontos) rival.man_ganhou++;
-            else if (j.pontos > manuelJog.pontos) rival.rival_ganhou++;
-            else rival.empates++;
-            rival.torneios.push({
-              nome: t.name, data: t.date_inicio,
-              manPts: manuelJog.pontos, rivPts: j.pontos, ronda: r.ronda,
-            });
+        const manuelJog = manuelJogs[0];
+        const lb0 = e.rondas[0]?.leaderboard ?? e.rondas[0]?.jogadores ?? [];
+        const manuelPos = lb0.findIndex(j => isManuel(j.nome)) + 1 || 99;
+
+        const adversariosVistos = new Set<string>();
+        for (const r of e.rondas) {
+          for (const j of (r.leaderboard ?? r.jogadores ?? [])) {
+            if (!isManuel(j.nome)) adversariosVistos.add(j.nome.trim());
           }
+        }
+
+        for (const nomeAdv of adversariosVistos) {
+          const key = nomeAdv.toLowerCase().trim();
+          const advJog = todasRondas.find(j => j.nome.trim() === nomeAdv);
+          if (!advJog) continue;
+          const advPos = lb0.findIndex(j => j.nome.trim() === nomeAdv) + 1 || 99;
+
+          if (!mapa.has(key)) {
+            mapa.set(key, { nome: advJog.nome, pais: advJog.pais, cidade: advJog.cidade, encontros: [] });
+          }
+          mapa.get(key)!.encontros.push({
+            torneio_t:    t.t,
+            torneio_nome: t.name,
+            torneio_data: t.date_inicio,
+            escalao:      e.nome,
+            man_score:    manuelJog.score || 0,
+            rival_score:  advJog.score || 0,
+            man_to_par:   manuelJog.to_par ?? null,
+            rival_to_par: advJog.to_par ?? null,
+            man_pos:      manuelPos,
+            rival_pos:    advPos,
+          });
         }
       }
     }
@@ -573,142 +693,132 @@ function TabRivais({ data }: { data: ResultsData }) {
 
   const ordenados = useMemo(() => {
     let lista = filtro.trim()
-      ? rivais.filter(r =>
+      ? rivals.filter(r =>
           r.nome.toLowerCase().includes(filtro.toLowerCase()) ||
           r.pais.toLowerCase().includes(filtro.toLowerCase()))
-      : [...rivais];
-
-    if (ordem === "encontros") lista.sort((a,b) => b.encontros - a.encontros);
-    else if (ordem === "pais")  lista.sort((a,b) => a.pais.localeCompare(b.pais) || b.encontros - a.encontros);
-    else lista.sort((a,b) => (b.man_ganhou - b.rival_ganhou) - (a.man_ganhou - a.rival_ganhou));
+      : [...rivals];
+    if (ordem === "encontros") lista.sort((a,b) => b.encontros.length - a.encontros.length);
+    else if (ordem === "pais")  lista.sort((a,b) => a.pais.localeCompare(b.pais));
+    else lista.sort((a,b) => a.nome.localeCompare(b.nome));
     return lista;
-  }, [rivais, filtro, ordem]);
+  }, [rivals, filtro, ordem]);
 
-  if (!rivais.length) return (
-    <div style={{ color:"#37474f", padding:"32px 0", textAlign:"center", fontSize:13 }}>
-      Sem dados de rivais ainda — precisamos de resultados de torneios
+  if (!rivals.length) return (
+    <div style={{ color:"var(--text-3)", padding:"32px 0", textAlign:"center", fontSize:13 }}>
+      Sem dados de rivais ainda — os scorecards aparecem após os torneios
     </div>
   );
 
-  const totalEncontros = rivais.reduce((s,r) => s+r.encontros, 0);
-  const totalManGanhou = rivais.reduce((s,r) => s+r.man_ganhou, 0);
-
   return (
     <div>
-      {/* Resumo */}
-      <div style={{ display:"flex", gap:10, marginBottom:16, flexWrap:"wrap" }}>
-        {[
-          { label:"Adversários", val: rivais.length, cor:"#78909c" },
-          { label:"Rondas disputadas", val: totalEncontros, cor:"#78909c" },
-          { label:"Manuel ganhou", val: `${totalManGanhou}`, cor:"#81c784" },
-        ].map(s => (
-          <div key={s.label} style={{ background:"#0a1628", border:"1px solid #1e3448",
-            borderRadius:8, padding:"8px 14px", minWidth:110 }}>
-            <div style={{ fontSize:18, fontWeight:700, color:s.cor }}>{s.val}</div>
-            <div style={{ fontSize:10, color:"#546e7a" }}>{s.label}</div>
-          </div>
+      {/* Sub-tabs */}
+      <div style={{ display:"flex", gap:6, marginBottom:16, borderBottom:"1px solid var(--border)", paddingBottom:8, flexWrap:"wrap" }}>
+        {([
+          { key:"lista",    label:`Todos os adversários (${rivals.length})` },
+          { key:"marco",    label:"Marco Simone — já conhece?" },
+          { key:"european", label:"European Championship — já conhece?" },
+        ] as const).map(v => (
+          <button key={v.key} onClick={() => setVista(v.key)} style={{
+            padding:"5px 12px", fontSize:11, borderRadius:6, cursor:"pointer",
+            background: vista===v.key ? "var(--bg-active)" : "var(--bg-card)",
+            border:`1px solid ${vista===v.key ? "var(--border-success)" : "var(--border)"}`,
+            fontWeight: vista===v.key ? 700 : 400, color:"var(--text-2)",
+          }}>{v.label}</button>
         ))}
       </div>
 
-      {/* Filtros */}
-      <div style={{ display:"flex", gap:8, marginBottom:12, alignItems:"center", flexWrap:"wrap" }}>
-        <input value={filtro} onChange={e=>setFiltro(e.target.value)}
-          placeholder="Nome ou país…"
-          style={{ background:"#0a1628", border:"1px solid #1e3448", borderRadius:7,
-            color:"#e0e0e0", padding:"6px 11px", fontSize:12, width:180, outline:"none" }} />
-        {(["encontros","balance","pais"] as const).map(o => (
-          <button key={o} onClick={() => setOrdem(o)} style={{
-            background: ordem===o ? "#1e3448" : "transparent",
-            border:`1px solid ${ordem===o?"#1565c0":"#1e3448"}`,
-            color: ordem===o ? "#90caf9" : "#546e7a",
-            borderRadius:7, padding:"5px 10px", fontSize:11, cursor:"pointer",
-          }}>
-            {o === "encontros" ? "Mais encontros" : o === "balance" ? "Balanço" : "Por país"}
-          </button>
-        ))}
-        <span style={{ color:"#37474f", fontSize:11, marginLeft:4 }}>
-          {ordenados.length} jogadores
-        </span>
-      </div>
+      {vista === "marco" && (
+        <TabelaConhecidos torneioT={21080} torneioNome="Marco Simone Invitational 2026"
+          rivals={rivals} fieldData={fieldData} />
+      )}
+      {vista === "european" && (
+        <TabelaConhecidos torneioT={21131} torneioNome="European Championship 2026"
+          rivals={rivals} fieldData={fieldData} />
+      )}
 
-      {/* Tabela */}
-      <div style={{ overflowX:"auto" }}>
-        <table style={{ borderCollapse:"collapse", width:"100%", fontSize:12 }}>
+      {vista === "lista" && (<>
+        <div style={{ display:"flex", gap:8, marginBottom:12, alignItems:"center", flexWrap:"wrap" }}>
+          <input value={filtro} onChange={e=>setFiltro(e.target.value)}
+            placeholder="Nome ou país…"
+            style={{ border:"1px solid var(--border)", borderRadius:7,
+              color:"var(--text)", background:"var(--bg-card)",
+              padding:"6px 11px", fontSize:12, width:180, outline:"none" }} />
+          {(["encontros","nome","pais"] as const).map(o => (
+            <button key={o} onClick={() => setOrdem(o)} style={{
+              background: ordem===o ? "var(--bg-active)" : "var(--bg-card)",
+              border:`1px solid ${ordem===o ? "var(--border-success)" : "var(--border)"}`,
+              color:"var(--text-2)", borderRadius:7, padding:"5px 10px",
+              fontSize:11, cursor:"pointer", fontWeight: ordem===o ? 700 : 400,
+            }}>
+              {o === "encontros" ? "Mais encontros" : o === "nome" ? "Nome" : "País"}
+            </button>
+          ))}
+          <span style={{ color:"var(--text-3)", fontSize:11 }}>{ordenados.length} jogadores</span>
+        </div>
+
+        <table className="tourn-scorecard" style={{ width:"100%" }}>
           <thead>
-            <tr style={{ background:"#060f1a", borderBottom:"2px solid #1e3448" }}>
-              {[
-                {label:"#",        w:30,  align:"center" as const},
-                {label:"Jogador",  w:160, align:"left"   as const},
-                {label:"País",     w:40,  align:"center" as const},
-                {label:"Rondas",   w:55,  align:"center" as const},
-                {label:"M 🏆",     w:45,  align:"center" as const},
-                {label:"R 🏆",     w:45,  align:"center" as const},
-                {label:"=",        w:35,  align:"center" as const},
-                {label:"Torneios", w:null,align:"left"   as const},
-              ].map(h => (
-                <th key={h.label} style={{ padding:"7px 8px", textAlign:h.align,
-                  color:"#37474f", fontWeight:600, fontSize:10,
-                  width:h.w ?? undefined }}>
-                  {h.label}
-                </th>
-              ))}
+            <tr>
+              <th className="tourn-pos-col">#</th>
+              <th className="tourn-lb-name-col">Jogador</th>
+              <th style={{ width:30 }}></th>
+              <th style={{ textAlign:"center", width:70, fontSize:10 }}>Torneios</th>
+              <th style={{ textAlign:"left", fontSize:10, padding:"6px 8px" }}>Historial</th>
             </tr>
           </thead>
           <tbody>
-            {ordenados.map((r,i) => {
-              const balance = r.man_ganhou - r.rival_ganhou;
+            {ordenados.map((r, i) => {
+              const torneiosUnicos = [...new Map(r.encontros.map(e => [e.torneio_t, e])).values()];
               return (
-                <tr key={r.nome} style={{ borderBottom:"1px solid #0a1628",
-                  background: i%2===0 ? "transparent" : "rgba(255,255,255,0.01)" }}>
-                  <td style={{ padding:"6px 8px", textAlign:"center", color:"#263238", fontSize:10 }}>{i+1}</td>
-                  <td style={{ padding:"6px 8px", color:"#cfd8dc",
-                    fontWeight: r.encontros >= 3 ? 600 : 400 }}>
+                <tr key={r.nome} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)" }}>
+                  <td className="tourn-pos-col" style={{ textAlign:"center" }}>
+                    <span className="tourn-pos">{i+1}</span>
+                  </td>
+                  <td className="tourn-lb-name-col">
                     {r.nome}
-                    {r.cidade && <span style={{ color:"#37474f", fontSize:10, marginLeft:5 }}>{r.cidade}</span>}
+                    {r.cidade && <span style={{ color:"var(--text-3)", fontSize:10, marginLeft:6 }}>{r.cidade}</span>}
                   </td>
-                  <td style={{ padding:"6px 8px", textAlign:"center", fontSize:14 }}>
-                    <span title={r.pais}>{flag(r.pais)}</span>
+                  <td style={{ textAlign:"center", fontSize:14 }}>{flag(r.pais)}</td>
+                  <td style={{ textAlign:"center", fontWeight:700, color:"var(--text-2)" }}>
+                    {torneiosUnicos.length}
                   </td>
-                  <td style={{ padding:"6px 8px", textAlign:"center", fontWeight:700, color:"#78909c" }}>
-                    {r.encontros}
-                  </td>
-                  <td style={{ padding:"6px 8px", textAlign:"center", fontWeight:700,
-                    color: r.man_ganhou > 0 ? "#81c784" : "#546e7a" }}>
-                    {r.man_ganhou}
-                  </td>
-                  <td style={{ padding:"6px 8px", textAlign:"center", fontWeight:700,
-                    color: r.rival_ganhou > 0 ? "#ef9a9a" : "#546e7a" }}>
-                    {r.rival_ganhou}
-                  </td>
-                  <td style={{ padding:"6px 8px", textAlign:"center", color:"#546e7a" }}>
-                    {r.empates}
-                  </td>
-                  <td style={{ padding:"6px 8px", color:"#455a64", fontSize:10 }}>
-                    {r.torneios.slice(0,3).map((t,j) => (
-                      <span key={j} style={{ marginRight:8, whiteSpace:"nowrap" }}>
-                        <span style={{ color:"#546e7a" }}>{t.nome.replace(/\s?\d{4}$/, "").trim()}</span>
-                        <span style={{
-                          marginLeft:3,
-                          color: t.manPts > t.rivPts ? "#81c784"
-                               : t.rivPts > t.manPts ? "#ef9a9a" : "#78909c",
-                        }}>({t.manPts}v{t.rivPts})</span>
-                      </span>
-                    ))}
-                    {r.torneios.length > 3 && (
-                      <span style={{ color:"#37474f" }}>+{r.torneios.length-3}</span>
-                    )}
+                  <td style={{ fontSize:11, color:"var(--text-3)", padding:"5px 8px" }}>
+                    {torneiosUnicos.map(enc => {
+                      const manMelhor = enc.man_pos < enc.rival_pos;
+                      const manPior   = enc.man_pos > enc.rival_pos;
+                      return (
+                        <span key={enc.torneio_t} style={{ marginRight:12, whiteSpace:"nowrap" }}>
+                          <span style={{ color:"var(--text-2)" }}>
+                            {enc.torneio_nome.replace(/\s\d{4}$/, "")}
+                          </span>
+                          <span style={{ marginLeft:5 }}>
+                            <span style={{ fontWeight:700, color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
+                              {enc.man_pos}º
+                            </span>
+                            <span style={{ color:"var(--text-3)" }}> vs </span>
+                            <span style={{ fontWeight:700, color:"var(--text-2)" }}>{enc.rival_pos}º</span>
+                          </span>
+                          {enc.man_to_par !== null && (
+                            <span style={{ marginLeft:4, fontSize:10, color:"var(--text-3)" }}>
+                              ({enc.man_to_par===0?"E":enc.man_to_par>0?"+"+enc.man_to_par:enc.man_to_par}
+                              {" vs "}
+                              {enc.rival_to_par===null?"-":enc.rival_to_par===0?"E":enc.rival_to_par>0?"+"+enc.rival_to_par:enc.rival_to_par})
+                            </span>
+                          )}
+                        </span>
+                      );
+                    })}
                   </td>
                 </tr>
               );
             })}
           </tbody>
         </table>
-      </div>
+      </>)}
     </div>
   );
 }
 
-// ─────────────────────────────────────────────
 // COMPONENTE PRINCIPAL
 // ─────────────────────────────────────────────
 type Tab = "campo" | "resultados" | "rivais";
@@ -802,7 +912,7 @@ export default function USKidsFieldPage() {
       )}
       {tab === "rivais" && (
         resultsData
-          ? <TabRivais data={resultsData} />
+          ? <TabRivais data={resultsData} fieldData={fieldData} />
           : <div style={{color:"#546e7a",padding:"24px 0"}}>A carregar…</div>
       )}
 
