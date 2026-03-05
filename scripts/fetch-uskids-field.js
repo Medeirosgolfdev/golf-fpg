@@ -28,7 +28,7 @@ const KEYWORDS_INCLUIR = [
 const KEYWORDS_EXCLUIR = [
   'tour championship', 'parent/child', 'qualifier',
   'state invitational', 'state championship',
-  'teen series', 'teen van horn',
+  'teen series', 'teen van horn', 'teen championship', 'world teen',
   'girls invitational', 'girls championship', 'girls open', 'girl',
   'golf course', 'golf club', 'country club',
   'veteran', 'world golf village', 'texas open',
@@ -39,7 +39,7 @@ const KEYWORDS_EXCLUIR = [
   '(ok)','(ar)','(la)','(ms)','(tn)','(ky)','(wv)','(md)','(de)',
   '(pa)','(ny)','(ct)','(ri)','(ma)','(vt)','(me)','(az)',
 ];
-const FORCAR_INCLUIR = new Set([21080, 21573, 21199, 21200, 21133]);
+const FORCAR_INCLUIR = new Set([21080, 21199, 21200, 21133]); // 21080=Marco Simone Invitational 2026
 
 // Escalões a buscar nomes (USKids standard)
 const ESCALOES_COM_NOMES = new Set([2102, 2103, 2104, 2105, 2114, 2106]);
@@ -240,10 +240,19 @@ async function processarTorneio(page, torneio) {
 
     if (ESCALOES_COM_NOMES.has(parseInt(ag)) && inscr > 0) {
       try {
-        await sleep(DELAY_FETCH);
-        const d    = await pageJSON(page, `${API}?op=GetPlayerTeeTimes&f=${fid}&r=1&p=1&t=0`);
-        const jogs = parsearJogadores(d.flight_players);
-        const cp   = {};
+        // Buscar todas as páginas (cada página tem ~20 jogadores)
+        const todosJogs = [];
+        const totalPags = Math.ceil(inscr / 20);
+        for (let p = 1; p <= totalPags; p++) {
+          await sleep(DELAY_FETCH);
+          const d = await pageJSON(page, `${API}?op=GetPlayerTeeTimes&f=${fid}&r=1&p=${p}&t=0`);
+          todosJogs.push(...parsearJogadores(d.flight_players));
+        }
+        // Deduplicar por nome
+        const vistos = new Set();
+        const jogs = todosJogs.filter(j => { if (vistos.has(j.nome)) return false; vistos.add(j.nome); return true; });
+        jogs.sort((a,b) => a.nome.localeCompare(b.nome));
+        const cp = {};
         for (const j of jogs) cp[j.pais] = (cp[j.pais]||0)+1;
         escalao.paises    = Object.entries(cp).sort((a,b)=>b[1]-a[1]).map(([pais,n])=>({pais,n}));
         escalao.jogadores = jogs;
