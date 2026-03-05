@@ -358,7 +358,7 @@ function TabCampo({ data }: { data: FieldData }) {
         return (
           <div key={t.t} style={{
             background:"var(--bg-card)",
-            border:`1px solid ${urgente ? "var(--color-warn, #e65100)" : "var(--border)"}`,
+            border:`1px solid ${urgente ? "var(--color-warn,#e65100)" : "var(--border)"}`,
             borderRadius:10, marginBottom:12, overflow:"hidden",
           }}>
             <div onClick={() => toggle(t.t)} style={{
@@ -367,7 +367,7 @@ function TabCampo({ data }: { data: FieldData }) {
             }}>
               <div style={{ flex:1 }}>
                 <div style={{ display:"flex", alignItems:"center", gap:7, marginBottom:3, flexWrap:"wrap" }}>
-                  <span style={{ fontSize:15, fontWeight:700, color:"var(--text)" }}>
+                  <span style={{ fontSize:15, fontWeight:700, color:"#e0e0e0" }}>
                     {t.emoji} {t.name}
                   </span>
                   {dias >= 0 && dias <= 14 && (
@@ -541,7 +541,7 @@ function TabResultados({ data }: { data: ResultsData }) {
             <div onClick={() => toggle(t.t)} style={{ cursor:"pointer", padding:"13px 16px",
               display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
               <div style={{ flex:1 }}>
-                <div style={{ fontSize:15, fontWeight:700, color:"var(--text)", marginBottom:3 }}>
+                <div style={{ fontSize:15, fontWeight:700, color:"#e0e0e0", marginBottom:3 }}>
                   {t.name}
                 </div>
                 <div style={{ fontSize:11, color:"var(--text-3)", display:"flex", gap:10, alignItems:"center", flexWrap:"wrap" }}>
@@ -893,61 +893,69 @@ function TabRivais({ data, fieldData, intlData }: { data: ResultsData; fieldData
                     {r.cidade && <span style={{ color:"var(--text-3)", fontSize:10, marginLeft:6 }}>{r.cidade}</span>}
                   </td>
                   <td style={{ textAlign:"center", fontSize:14 }}>{flag(r.pais)}</td>
-                  <td style={{ textAlign:"center", fontWeight:700, color:"var(--text-2)" }}>
-                    {torneiosUnicos.length}
-                  </td>
-                  <td style={{ fontSize:11, color:"var(--text-3)", padding:"5px 8px" }}>
-                    {/* USKids */}
-                    {torneiosUnicos.map(enc => {
-                      const manMelhor = enc.man_pos < enc.rival_pos;
-                      const manPior   = enc.man_pos > enc.rival_pos;
-                      return (
-                        <span key={enc.torneio_t} style={{ marginRight:12, whiteSpace:"nowrap" }}>
-                          <span style={{ color:"var(--text-2)" }}>
-                            {enc.torneio_nome.replace(/\s\d{4}$/, "")}
-                          </span>
-                          <span style={{ marginLeft:5 }}>
-                            <span style={{ fontWeight:700, color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
-                              {enc.man_pos}º
-                            </span>
-                            <span style={{ color:"var(--text-3)" }}> vs </span>
-                            <span style={{ fontWeight:700, color:"var(--text-2)" }}>{enc.rival_pos}º</span>
-                          </span>
-                        </span>
-                      );
-                    })}
-                    {/* BJGT/Intl */}
-                    {(() => {
-                      const intlJog = matchIntl(r.nome);
-                      if (!intlJog) return null;
-                      const torns = (intlData?.torneios ?? []).filter(t => intlJog.r[t.id]);
-                      if (!torns.length) return null;
-                      return torns.map(t => {
-                        const res = intlJog.r[t.id];
-                        const manRes = intlData?.jogadores.find(j => j.isM)?.r[t.id];
-                        const manMelhor = manRes && res.p > manRes.p;
-                        const manPior   = manRes && res.p < manRes.p;
-                        return (
-                          <span key={t.id} style={{ marginRight:12, whiteSpace:"nowrap" }}>
-                            <span style={{ color:"var(--color-info)", fontSize:9, fontWeight:700,
-                              border:"1px solid var(--border-info)", borderRadius:3,
-                              padding:"0 3px", marginRight:3 }}>BJGT</span>
-                            <a href={t.url} target="_blank" rel="noopener noreferrer"
-                              style={{ color:"var(--text-2)", textDecoration:"none" }}>{t.short}</a>
-                            {manRes && (
-                              <span style={{ marginLeft:4 }}>
-                                <span style={{ fontWeight:700, color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
-                                  {manRes.p}º
+                  {(() => {
+                      const intlJog   = matchIntl(r.nome);
+                      const intlTorns = intlJog ? (intlData?.torneios ?? []).filter(t => intlJog.r[t.id]) : [];
+                      const manuelIntl = intlData?.jogadores.find(j => j.isM);
+                      const totalEncontros = torneiosUnicos.length + intlTorns.length;
+                      return (<>
+                        <td style={{ textAlign:"center", fontWeight:700, color:"var(--text-2)" }}>
+                          <div>{totalEncontros}</div>
+                          {intlTorns.length > 0 && (
+                            <div style={{ fontSize:9, color:"var(--color-info)", fontWeight:400 }}>
+                              {torneiosUnicos.length}+{intlTorns.length}
+                            </div>
+                          )}
+                        </td>
+                        <td style={{ fontSize:11, color:"var(--text-3)", padding:"5px 8px" }}>
+                          {/* USKids */}
+                          {torneiosUnicos.map(enc => {
+                            const manMelhor = enc.man_pos < enc.rival_pos;
+                            const manPior   = enc.man_pos > enc.rival_pos;
+                            return (
+                              <span key={enc.torneio_t} style={{ marginRight:12, whiteSpace:"nowrap" }}>
+                                <span style={{ color:"var(--text-2)" }}>
+                                  {enc.torneio_nome.replace(/\s\d{4}$/, "")}
                                 </span>
-                                <span style={{ color:"var(--text-3)" }}> vs </span>
-                                <span style={{ fontWeight:700, color:"var(--text-2)" }}>{res.p}º</span>
+                                <span style={{ marginLeft:4, fontWeight:700,
+                                  color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
+                                  {enc.man_pos}º vs {enc.rival_pos}º
+                                </span>
                               </span>
-                            )}
-                          </span>
-                        );
-                      });
+                            );
+                          })}
+                          {/* BJGT — separador visual */}
+                          {intlTorns.length > 0 && (
+                            <>
+                              {torneiosUnicos.length > 0 && (
+                                <span style={{ color:"var(--border)", marginRight:8 }}>·</span>
+                              )}
+                              {intlTorns.map(t => {
+                                const res    = intlJog!.r[t.id];
+                                const manRes = manuelIntl?.r[t.id];
+                                const manMelhor = manRes ? manRes.p < res.p : false;
+                                const manPior   = manRes ? manRes.p > res.p : false;
+                                return (
+                                  <span key={t.id} style={{ marginRight:12, whiteSpace:"nowrap" }}>
+                                    <span style={{ color:"var(--color-info)", fontSize:9, fontWeight:700,
+                                      border:"1px solid var(--color-info)", borderRadius:3,
+                                      padding:"0 3px", marginRight:4, opacity:0.8 }}>BJGT</span>
+                                    <a href={t.url} target="_blank" rel="noopener noreferrer"
+                                      style={{ color:"var(--text-2)", textDecoration:"none" }}>{t.short}</a>
+                                    {manRes && (
+                                      <span style={{ marginLeft:4, fontWeight:700,
+                                        color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
+                                        {manRes.p}º vs {res.p}º
+                                      </span>
+                                    )}
+                                  </span>
+                                );
+                              })}
+                            </>
+                          )}
+                        </td>
+                      </>);
                     })()}
-                  </td>
                 </tr>
               );
             })}
@@ -1015,7 +1023,7 @@ export default function USKidsFieldPage() {
 
   return (
     <div style={{ padding:"20px 16px", maxWidth:900, margin:"0 auto",
-      fontFamily:"var(--font-family, system-ui, sans-serif)" }}>
+      fontFamily:"system-ui, sans-serif" }}>
 
       <div style={{ marginBottom:20 }}>
         <h1 style={{ margin:0, fontSize:20, color:"var(--text)", fontWeight:700 }}>
