@@ -25,6 +25,6 @@ jobs:
           git add public/data/uskids-field.json public/data/uskids-discovery-cache.json
           git diff --cached --quiet || (
             git commit -m "data: USKids field [$(date -u '+%Y-%m-%d %H:%M UTC')]" &&
-            git pull --rebase &&
+            git pull --rebase --autostash &&
             git push
           )

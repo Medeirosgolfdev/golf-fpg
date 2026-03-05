@@ -25,6 +25,6 @@ jobs:
           git add public/data/uskids-results.json
           git diff --cached --quiet || (
             git commit -m "data: resultados USKids [$(date -u '+%Y-%m-%d %H:%M UTC')]" &&
-            git pull --rebase &&
+            git pull --rebase --autostash &&
             git push
           )
