@@ -42,8 +42,9 @@ const KEYWORDS_EXCLUIR = [
 const FORCAR_INCLUIR = new Set([21080, 21199, 21200, 21133]); // 21080=Marco Simone Invitational 2026
 const FORCAR_EXCLUIR  = new Set([21573]); // Marco Simone local tour
 
-// Escalões a buscar nomes (USKids standard)
-const ESCALOES_COM_NOMES = new Set([2102, 2103, 2104, 2105, 2114, 2106]);
+// Prefixos de escalão — apanha "Boys 12", "Boys 13-14", "Boys 13 & Under", etc.
+const ESCALOES_PREFIXOS = ['boys 9', 'boys 10', 'boys 11', 'boys 12', 'boys 13'];
+const escalaoComNomes = (nome) => ESCALOES_PREFIXOS.some(p => nome.toLowerCase().startsWith(p));
 
 const T_MAX        = 23000;
 const MISS_LIMIT   = 100;
