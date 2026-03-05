@@ -41,10 +41,8 @@ const HISTORICOS = [
   },
 ];
 
-// Escalões a capturar nos resultados
-// Boys 8=2101  Boys 9=2102  Boys 10=2103  Boys 11=2104  Boys 12=2105
-// Boys 13=2114  Boys 13-14=2106
-const ESCALOES_RESULTADOS = new Set([2101, 2102, 2103, 2104, 2105, 2114, 2106]);
+// Boys 11, 12, 13 para torneios futuros (escalão acima e abaixo do Manuel)
+const ESCALOES_RESULTADOS_DEFAULT = new Set([2104, 2105, 2114]);
 
 const DELAY_MS   = 400;
 const DIR        = path.join(__dirname, '..', 'public', 'data');
