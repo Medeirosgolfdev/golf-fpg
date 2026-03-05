@@ -26,8 +26,8 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git diff --quiet public/data/ || (
-            git add public/data/uskids-field.json public/data/uskids-discovery-cache.json &&
+          git add public/data/uskids-field.json public/data/uskids-discovery-cache.json
+          git diff --cached --quiet || (
             git commit -m "data: USKids field [$(date -u '+%Y-%m-%d %H:%M UTC')]" &&
             git push
           )
