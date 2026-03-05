@@ -18,6 +18,9 @@ on:
   # Permite correr manualmente pelo painel do GitHub Actions
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   update-field:
     name: Actualizar campo dos torneios
@@ -26,6 +29,8 @@ jobs:
     steps:
       - name: Checkout repositório
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
