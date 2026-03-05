@@ -83,9 +83,27 @@ const DRIVE_CLUBS = {
   "988": "FPG_DRIVE",    // Sul
 };
 
-// Cookie estático que dá acesso a todos os clubes (não precisa de login)
-// Obtido a partir da URL pública da FPG: 1EntryPage.aspx?user=fpguser&ccode=All
-const STATIC_COOKIE = "DG_Lists_URL=OriginalUrl=https%3a%2f%2fscoring.datagolf.pt%3a443%2fpt%2f1EntryPage.aspx%3fuser%3dfpguser%26dt%3d5421%26page%3dtournlist%26hash%3d0fbd221aeee9dc401985f1d38ed7aeb5cac4961f%26ccode%3dAll%26pagelang%3dPT%26callcontext%3ddirect";
+// URL pública de entrada da FPG — pode mudar (dt= e hash= são gerados pelo servidor)
+// Valor actual guardado em session-datagolf.txt como JSON
+let ENTRY_URL = "/pt/1EntryPage.aspx?user=fpguser&dt=5428&page=tournlist&hash=4e675dc937a0933f1ecb8a2a7ba005172b247170&ccode=All&pagelang=PT&callcontext=direct";
+let DG_LISTS_COOKIE = "DG_Lists_URL=OriginalUrl=https%3a%2f%2fscoring.datagolf.pt%3a443%2fpt%2f1EntryPage.aspx%3fuser%3dfpguser%26dt%3d5428%26page%3dtournlist%26hash%3d4e675dc937a0933f1ecb8a2a7ba005172b247170%26ccode%3dAll%26pagelang%3dPT%26callcontext%3ddirect";
+
+// Sessão activa (preenchida por initSession)
+let sessionCookie = "";
+
+// Construir DG_LISTS_COOKIE a partir do valor legível do DG_Lists_URL
+function buildDGCookie(dgListsUrlValue) {
+  return "DG_Lists_URL=" + encodeURIComponent(dgListsUrlValue).replace(/%20/g, "+");
+}
+function buildEntryUrl(dgListsUrlValue) {
+  // Extrair o OriginalUrl do valor do cookie
+  const m = dgListsUrlValue.match(/OriginalUrl=(.+)/);
+  if (!m) return ENTRY_URL;
+  try {
+    const orig = decodeURIComponent(m[1]);
+    return new URL(orig).pathname + new URL(orig).search;
+  } catch { return ENTRY_URL; }
+}
 
 // ── Caminhos ──
 const playersJsonPath  = path.join(process.cwd(), "players.json");
@@ -93,42 +111,148 @@ const driveDataPath    = path.join(process.cwd(), "public", "data", "drive-data.
 const playersDB        = fs.existsSync(playersJsonPath) ? JSON.parse(fs.readFileSync(playersJsonPath, "utf-8")) : {};
 const existingDrive    = fs.existsSync(driveDataPath) ? JSON.parse(fs.readFileSync(driveDataPath, "utf-8")) : null;
 
-// ── HTTP helper (direct HTTPS para scoring.datagolf.pt) ──
-function dgPost(endpoint, body) {
-  return new Promise((resolve, reject) => {
-    const bodyStr = JSON.stringify(body);
-    const options = {
-      hostname: BASE_URL,
-      path: endpoint,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        "Content-Length": Buffer.byteLength(bodyStr),
-        "X-Requested-With": "XMLHttpRequest",
-        "Accept": "application/json, text/javascript, */*",
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-        "Referer": "https://scoring.datagolf.pt/pt/tournaments.aspx",
-        "Cookie": STATIC_COOKIE,
+// ── Inicializar sessão (GET à 1EntryPage pública) ──
+// ── Obter sessão: via argumento, ficheiro, ou pedido ao browser ──
+async function initSession() {
+  process.stdout.write(`  ${C}▸ A obter sessão...${X} `);
+
+  const sf = path.join(process.cwd(), "session-datagolf.txt");
+
+  // Ler --dg-url se fornecido (actualiza o cookie DG_Lists_URL)
+  const di = args.indexOf("--dg-url");
+  if (di !== -1 && args[di+1]) {
+    const dgVal = args[di+1];
+    DG_LISTS_COOKIE = buildDGCookie(dgVal);
+    ENTRY_URL = buildEntryUrl(dgVal);
+  }
+
+  // 1. Argumento --session XXXX
+  const si = args.indexOf("--session");
+  if (si !== -1 && args[si+1]) {
+    const s = args[si+1];
+    sessionCookie = `ASP.NET_SessionId=${s}; ${DG_LISTS_COOKIE}`;
+    // Guardar ambos os valores
+    fs.writeFileSync(sf, JSON.stringify({ session: s, dgListsUrl: DG_LISTS_COOKIE }));
+    console.log(`${G}✓${X} (via --session)`);
+    return true;
+  }
+
+  // 2. Ficheiro session-datagolf.txt (guardado da última vez)
+  if (fs.existsSync(sf)) {
+    try {
+      const saved = JSON.parse(fs.readFileSync(sf, "utf-8").trim());
+      if (saved.session) {
+        if (saved.dgListsUrl) DG_LISTS_COOKIE = saved.dgListsUrl;
+        sessionCookie = `ASP.NET_SessionId=${saved.session}; ${DG_LISTS_COOKIE}`;
+        console.log(`${G}✓${X} (session-datagolf.txt)`);
+        return true;
       }
+    } catch {
+      // ficheiro no formato antigo (só o session ID)
+      const s = fs.readFileSync(sf, "utf-8").trim();
+      if (s && !s.startsWith("{")) {
+        sessionCookie = `ASP.NET_SessionId=${s}; ${DG_LISTS_COOKIE}`;
+        console.log(`${G}✓${X} (session-datagolf.txt)`);
+        return true;
+      }
+    }
+  }
+
+  // 3. Pedir ao browser via servidor local temporário (porta 3457)
+  console.log(`${Y}a aguardar sessão do browser...${X}`);
+  return new Promise((resolve) => {
+    const tmpServer = http.createServer((req, res) => {
+      res.setHeader("Access-Control-Allow-Origin", "*");
+      res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+      if (req.method === "OPTIONS") { res.writeHead(204); res.end(); return; }
+      if (req.method === "POST" && req.url === "/set-session") {
+        let body = "";
+        req.on("data", c => body += c);
+        req.on("end", () => {
+          const m = body.match(/ASP\.NET_SessionId=([^;\s]+)/i);
+          if (m) {
+            sessionCookie = `ASP.NET_SessionId=${m[1]}; ${DG_LISTS_COOKIE}`;
+            fs.writeFileSync(sf, m[1]); // guardar para próximas vezes
+            res.writeHead(200); res.end("ok");
+            tmpServer.close();
+            console.log(`${G}✓${X} sessão: ${m[1].substring(0,8)}... (guardada em session-datagolf.txt)`);
+            resolve(true);
+          } else {
+            res.writeHead(400); res.end("sem sessao ASP.NET");
+          }
+        });
+        return;
+      }
+      res.writeHead(404); res.end();
+    });
+
+    tmpServer.listen(3457, () => {
+      console.log(`
+${B}  Abre o browser em:${X} ${C}https://scoring.datagolf.pt/pt/tournaments.aspx${X}
+${B}  Cola na consola F12:${X}
+
+  ${G}fetch("http://localhost:3457/set-session",{method:"POST",body:document.cookie})${X}
+
+${D}  (só precisas de fazer isto uma vez — fica guardado em session-datagolf.txt)${X}
+`);
+    });
+
+    tmpServer.on("error", () => {
+      sessionCookie = DG_LISTS_COOKIE;
+      console.log(`${R}erro ao iniciar servidor de sessão${X}`);
+      resolve(false);
+    });
+  });
+}
+
+// ── HTTP helpers (HTTPS para scoring.datagolf.pt) ──
+function dgRequest(method, path, body) {
+  return new Promise((resolve) => {
+    const bodyStr = body ? JSON.stringify(body) : null;
+    const headers = {
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+      "Accept": body ? "application/json, text/javascript, */*" : "text/html,application/xhtml+xml,*/*",
+      "Referer": "https://scoring.datagolf.pt/pt/tournaments.aspx",
+      "Cookie": sessionCookie,
     };
-    const req = https.request(options, (res) => {
+    if (bodyStr) {
+      headers["Content-Type"] = "application/json; charset=utf-8";
+      headers["Content-Length"] = Buffer.byteLength(bodyStr);
+      headers["X-Requested-With"] = "XMLHttpRequest";
+    }
+    const req = https.request({ hostname: BASE_URL, path, method, headers }, (res) => {
+      // Capturar novos cookies de sessão (refresh)
+      const setCookies = res.headers["set-cookie"] || [];
+      for (const c of setCookies) {
+        const m = c.match(/ASP\.NET_SessionId=([^;]+)/i);
+        if (m) {
+          sessionCookie = `ASP.NET_SessionId=${m[1]}; ${DG_LISTS_COOKIE}`;
+          const sf = path.join ? null : require("path").join(process.cwd(), "session-datagolf.txt");
+          // actualizar ficheiro
+          try { require("fs").writeFileSync(require("path").join(process.cwd(), "session-datagolf.txt"), m[1]); } catch {}
+        }
+      }
       let data = "";
       res.on("data", (c) => data += c);
       res.on("end", () => {
+        if (!bodyStr) { resolve({ ok: res.statusCode < 400, status: res.statusCode }); return; }
         try {
           const json = JSON.parse(data);
           resolve({ ok: res.statusCode === 200, data: json?.d ?? json, status: res.statusCode });
         } catch {
-          resolve({ ok: false, data: null, status: res.statusCode, raw: data.substring(0, 200) });
+          resolve({ ok: false, data: null, status: res.statusCode, raw: data.substring(0, 300) });
         }
       });
     });
     req.on("error", (e) => resolve({ ok: false, error: e.message }));
     req.setTimeout(15000, () => { req.destroy(); resolve({ ok: false, error: "timeout" }); });
-    req.write(bodyStr);
+    if (bodyStr) req.write(bodyStr);
     req.end();
   });
 }
+
+function dgGet(path) { return dgRequest("GET", path, null); }
+function dgPost(endpoint, body) { return dgRequest("POST", endpoint, body); }
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
@@ -172,34 +296,55 @@ async function fetchDriveTournaments() {
     console.log(`  ${D}Torneios já processados: ${existingTcodes.size}${X}`);
   }
 
-  // Passo 1: Listar todos os torneios DRIVE por club code
+  // Passo 1: Obter sessão
+  await initSession();
+
+  // Passo 2: Aquecer sessão no servidor (necessário para ccode=All)
+  process.stdout.write(`  ${C}▸ A validar sessão no servidor...${X} `);
+  const warmup = await dgGet(ENTRY_URL);
+  if (!warmup.ok) {
+    console.log(`${R}✗ sessão inválida ou expirada (status ${warmup.status})${X}`);
+    console.log(`
+${Y}  A sessão expirou. Vai a scoring.datagolf.pt, copia o ASP.NET_SessionId${X}`);
+    console.log(`${Y}  do Network tab e volta a correr com --session NOVO_VALOR${X}
+`);
+    // Limpar ficheiro de sessão inválida
+    const sf = require("path").join(process.cwd(), "session-datagolf.txt");
+    if (require("fs").existsSync(sf)) require("fs").unlinkSync(sf);
+    process.exit(1);
+  }
+  console.log(`${G}✓${X}`);
+
+  // Passo 3: Listar todos os torneios DRIVE por club code
   console.log(`\n  ${C}▸ A listar torneios DRIVE...${X}`);
 
   const allTournaments = [];
 
-  for (const [clubCode, clubName] of Object.entries(DRIVE_CLUBS)) {
-    const res = await dgPost(
-      "/pt/tournaments.aspx/TournamentsLST?jtStartIndex=0&jtPageSize=500&jtSorting=started_at%20DESC",
-      { ClubCode: clubCode, dtIni: "", dtFim: "", CourseName: "", TournCode: "", TournName: "",
-        jtStartIndex: "0", jtPageSize: "500", jtSorting: "started_at DESC" }
-    );
+  // Buscar todos os torneios de uma vez (ClubCode "0" = todos os clubes)
+  const driveCcodes = new Set(Object.keys(DRIVE_CLUBS));
+  const yearStart = new Date(`${filterYear}-01-01`).getTime();
+  const yearEnd   = new Date(`${filterYear + 1}-01-01`).getTime();
 
-    if (!res.ok || !res.data?.Records) {
-      console.log(`  ${R}✗${X} ${clubName} (${clubCode}): falhou (status ${res.status || "?"})`);
-      continue;
-    }
+  const res = await dgPost(
+    "/pt/tournaments.aspx/TournamentsLST?jtStartIndex=0&jtPageSize=1000&jtSorting=started_at%20DESC",
+    { ClubCode: "0", dtIni: "", dtFim: "", CourseName: "", TournCode: "", TournName: "",
+      jtStartIndex: "0", jtPageSize: "1000", jtSorting: "started_at DESC" }
+  );
 
-    // Filtrar por ano
-    const yearStart = new Date(`${filterYear}-01-01`).getTime();
-    const yearEnd   = new Date(`${filterYear}-12-31`).getTime();
+  if (!res.ok || !res.data?.Records) {
+    console.log(`  ${R}✗ TournamentsLST falhou (status ${res.status || "?"}, raw: ${res.raw || ""})${X}`);
+  } else {
+    console.log(`  ${G}✓${X} Total registos recebidos: ${res.data.Records.length} (TotalRecordCount: ${res.data.TotalRecordCount})`);
 
-    const filtered = res.data.Records.filter(t => {
+    for (const t of res.data.Records) {
+      // Filtrar só clubes DRIVE
+      if (!driveCcodes.has(String(t.club_code))) continue;
+      // Filtrar por ano
       const ts = parseInt(String(t.started_at || "").match(/(\d+)/)?.[1] || "0");
-      return ts >= yearStart && ts <= yearEnd;
-    });
+      if (ts < yearStart || ts >= yearEnd) continue;
 
-    console.log(`  ${G}✓${X} ${clubName}: ${filtered.length} torneios em ${filterYear} (de ${res.data.Records.length} total)`);
-    for (const t of filtered) {
+      const clubCode = String(t.club_code);
+      const clubName = DRIVE_CLUBS[clubCode] || clubCode;
       allTournaments.push({
         id: t.id,
         ccode: clubCode,
@@ -211,7 +356,12 @@ async function fetchDriveTournaments() {
         rounds: t.rounds || 1,
       });
     }
-    await sleep(200);
+
+    // Resumo por clube
+    for (const [cc, cn] of Object.entries(DRIVE_CLUBS)) {
+      const n = allTournaments.filter(t => t.ccode === cc).length;
+      if (n > 0) console.log(`  ${G}✓${X} ${cn}: ${n} torneios em ${filterYear}`);
+    }
   }
 
   // Separar novos vs já processados
