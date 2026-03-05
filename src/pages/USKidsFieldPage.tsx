@@ -24,6 +24,95 @@ interface IntlTorneio { id: string; name: string; short: string; date: string; r
 interface IntlJogador { n: string; co: string; isM?: boolean; r: Record<string, { p: number; t: number; tp: number; rd: number[] }>; up: string[]; }
 interface IntlData { torneios: IntlTorneio[]; proximos: { id: string; name: string }[]; jogadores: IntlJogador[]; }
 
+// ── Matching robusto USKids ↔ BJGT ──────────────────────────────
+function normNome(s: string): string {
+  return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase().replace(/\s+/g, ' ').trim();
+}
+
+function apelidos(nome: string): string[] {
+  const ignorar = new Set(['de','da','do','dos','das','van','von','le','la','el','al','del','and','jr','ii','iii']);
+  const partes = normNome(nome).split(' ');
+  return partes.slice(1).filter(p => !ignorar.has(p) && p.length > 2);
+}
+
+function scoreMatch(n1: string, n2: string): number {
+  const ap1 = new Set(apelidos(n1));
+  const ap2 = new Set(apelidos(n2));
+  if (!ap1.size || !ap2.size) return 0;
+  const comuns = [...ap1].filter(p => ap2.has(p));
+  if (!comuns.length) return 0;
+  // Exige pelo menos 1 apelido com >5 letras
+  if (!comuns.some(c => c.length > 5) && comuns.length < 2) return 0;
+  const base = comuns.length / Math.min(ap1.size, ap2.size);
+  const bonus = comuns.filter(c => c.length > 7).length * 0.15;
+  return Math.min(1.0, base + bonus);
+}
+
+function criarMatcherIntl(intlData: IntlData | null) {
+  if (!intlData) return (_: string) => null;
+
+  // Mapa canonical → jogador
+  const byNorm = new Map<string, IntlJogador>();
+  for (const j of intlData.jogadores) {
+    byNorm.set(normNome(j.n), j);
+  }
+
+  // Aliases: also → canonical
+  const aliasMap = new Map<string, string>();
+  for (const a of (intlData.aliases ?? [])) {
+    for (const also of a.also) {
+      aliasMap.set(normNome(also), a.canonical);
+    }
+  }
+
+  // Pares a não confundir
+  const naoConfundir = new Set<string>();
+  for (const grupo of (intlData.nao_confundir ?? [])) {
+    for (let i = 0; i < grupo.nomes.length; i++) {
+      for (let j = i + 1; j < grupo.nomes.length; j++) {
+        const chave = [normNome(grupo.nomes[i]), normNome(grupo.nomes[j])].sort().join('|');
+        naoConfundir.add(chave);
+      }
+    }
+  }
+
+  const bjgtNomes = intlData.jogadores.filter(j => !j.isM).map(j => j.n);
+
+  return (nomeUskids: string): IntlJogador | null => {
+    const nNorm = normNome(nomeUskids);
+
+    // 1. Alias directo
+    const canonical = aliasMap.get(nNorm);
+    if (canonical) {
+      const jog = byNorm.get(normNome(canonical));
+      if (jog) return jog;
+    }
+
+    // 2. Match exacto normalizado
+    const exact = byNorm.get(nNorm);
+    if (exact) return exact;
+
+    // 3. Fuzzy por apelidos
+    let melhorScore = 0;
+    let melhorNome: string | null = null;
+    for (const nb of bjgtNomes) {
+      const s = scoreMatch(nomeUskids, nb);
+      if (s > melhorScore) { melhorScore = s; melhorNome = nb; }
+    }
+
+    if (melhorScore >= 0.8 && melhorNome) {
+      // Verificar não-confundir
+      const chave = [nNorm, normNome(melhorNome)].sort().join('|');
+      if (naoConfundir.has(chave)) return null;
+      return byNorm.get(normNome(melhorNome)) ?? null;
+    }
+
+    return null;
+  };
+}
+// ─────────────────────────────────────────────────────────────────
+
 interface FieldData { gerado_em: string; torneios: Torneio[]; }
 
 // ─────────────────────────────────────────────
@@ -549,10 +638,11 @@ interface RivalInfo {
 }
 
 function TabelaConhecidos({
-  torneioT, torneioNome, rivals, fieldData, intlData,
+  torneioT, torneioNome, rivals, fieldData, intlData, matchIntl,
 }: {
   torneioT: number; torneioNome: string;
   rivals: RivalInfo[]; fieldData: FieldData | null; intlData: IntlData | null;
+  matchIntl: (nome: string) => IntlJogador | null;
 }) {
   const torneio = fieldData?.torneios.find(t => t.t === torneioT);
   if (!torneio) return (
@@ -603,6 +693,9 @@ function TabelaConhecidos({
             {conhecidos.map((j, i) => {
               const rival = rivalMap.get(j.nome.toLowerCase().trim())!;
               const torneiosUnicos = [...new Map(rival.encontros.map(e => [e.torneio_t, e])).values()];
+              const intlJog   = matchIntl(j.nome);
+              const intlTorns = intlJog ? intlData!.torneios.filter(t => intlJog.r[t.id]) : [];
+              const manuelIntl = intlData?.jogadores.find(jj => jj.isM);
               return (
                 <tr key={i} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)" }}>
                   <td className="tourn-lb-name-col">{j.nome}</td>
@@ -613,25 +706,40 @@ function TabelaConhecidos({
                       const manMelhor = enc.man_pos < enc.rival_pos;
                       const manPior   = enc.man_pos > enc.rival_pos;
                       return (
-                        <span key={enc.torneio_t} style={{ marginRight:12, whiteSpace:"nowrap" }}>
+                        <span key={enc.torneio_t} style={{ marginRight:10, whiteSpace:"nowrap" }}>
                           <span style={{ color:"var(--text-2)" }}>{enc.torneio_nome.replace(/\s\d{4}$/, "")}</span>
-                          <span style={{ marginLeft:5 }}>
-                            <span style={{ fontWeight:700, color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
-                              {enc.man_pos}º
-                            </span>
-                            <span style={{ color:"var(--text-3)" }}> vs </span>
-                            <span style={{ fontWeight:700, color:"var(--text-2)" }}>{enc.rival_pos}º</span>
+                          <span style={{ marginLeft:4, fontWeight:700,
+                            color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
+                            {" "}{enc.man_pos}º vs {enc.rival_pos}º
                           </span>
-                          {enc.man_to_par !== null && (
-                            <span style={{ marginLeft:4, fontSize:10, color:"var(--text-3)" }}>
-                              ({enc.man_to_par===0?"E":enc.man_to_par>0?"+"+enc.man_to_par:enc.man_to_par}
-                              {" vs "}
-                              {enc.rival_to_par===null?"-":enc.rival_to_par===0?"E":enc.rival_to_par>0?"+"+enc.rival_to_par:enc.rival_to_par})
-                            </span>
-                          )}
                         </span>
                       );
                     })}
+                  </td>
+                  <td style={{ fontSize:11, padding:"5px 8px" }}>
+                    {intlTorns.length === 0
+                      ? <span style={{ color:"var(--text-3)", fontSize:10 }}>—</span>
+                      : intlTorns.map(t => {
+                          const res    = intlJog!.r[t.id];
+                          const manRes = manuelIntl?.r[t.id];
+                          const manMelhor = manRes ? manRes.p < res.p : false;
+                          const manPior   = manRes ? manRes.p > res.p : false;
+                          return (
+                            <span key={t.id} style={{ marginRight:10, whiteSpace:"nowrap" }}>
+                              <a href={t.url} target="_blank" rel="noopener noreferrer"
+                                style={{ color:"var(--color-info)", textDecoration:"none", fontWeight:600 }}>
+                                {t.short}
+                              </a>
+                              {manRes && (
+                                <span style={{ marginLeft:4, fontWeight:700,
+                                  color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
+                                  {manRes.p}º vs {res.p}º
+                                </span>
+                              )}
+                            </span>
+                          );
+                        })
+                    }
                   </td>
                 </tr>
               );
@@ -647,6 +755,8 @@ function TabRivais({ data, fieldData, intlData }: { data: ResultsData; fieldData
   const [filtro, setFiltro] = useState("");
   const [ordem,  setOrdem]  = useState<"encontros"|"pais"|"nome">("encontros");
   const [vista,  setVista]  = useState<"lista"|"marco"|"european">("lista");
+
+  const matchIntl = useMemo(() => criarMatcherIntl(intlData), [intlData]);
 
   const rivals = useMemo<RivalInfo[]>(() => {
     const mapa = new Map<string, RivalInfo>();
@@ -733,11 +843,11 @@ function TabRivais({ data, fieldData, intlData }: { data: ResultsData; fieldData
 
       {vista === "marco" && (
         <TabelaConhecidos torneioT={21080} torneioNome="Marco Simone Invitational 2026"
-          rivals={rivals} fieldData={fieldData} intlData={intlData} />
+          rivals={rivals} fieldData={fieldData} intlData={intlData} matchIntl={matchIntl} />
       )}
       {vista === "european" && (
         <TabelaConhecidos torneioT={21131} torneioNome="European Championship 2026"
-          rivals={rivals} fieldData={fieldData} intlData={intlData} />
+          rivals={rivals} fieldData={fieldData} intlData={intlData} matchIntl={matchIntl} />
       )}
 
       {vista === "lista" && (<>
@@ -808,9 +918,7 @@ function TabRivais({ data, fieldData, intlData }: { data: ResultsData; fieldData
                     })}
                     {/* BJGT/Intl */}
                     {(() => {
-                      const intlJog = intlData?.jogadores.find(j =>
-                        j.n.toLowerCase().trim() === r.nome.toLowerCase().trim() && !j.isM
-                      );
+                      const intlJog = matchIntl(r.nome);
                       if (!intlJog) return null;
                       const torns = intlData!.torneios.filter(t => intlJog.r[t.id]);
                       if (!torns.length) return null;
