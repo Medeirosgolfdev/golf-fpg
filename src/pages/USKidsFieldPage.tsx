@@ -20,7 +20,7 @@ interface Torneio {
   ultima_atualizacao: string;
   sem_flights?: boolean; erro?: string;
 }
-interface IntlTorneio { id: string; name: string; short: string; date: string; rounds: number; par: number; url: string; }
+interface IntlTorneio { id: string; name: string; short: string; date: string; rounds: number; par: number; url: string; circuito?: string; }
 interface IntlJogador { n: string; co: string; isM?: boolean; r: Record<string, { p: number; t: number; tp: number; rd: number[] }>; up: string[]; }
 interface IntlData { torneios: IntlTorneio[]; proximos: { id: string; name: string }[]; jogadores: IntlJogador[]; }
 
@@ -211,6 +211,23 @@ function isManuel(nome: string) {
 // ─────────────────────────────────────────────
 // SCORECARD
 // ─────────────────────────────────────────────
+function ScoreCell({ s, par }: { s: number; par?: number }) {
+  if (!s) return <td className="tourn-hole-cell"><span style={{color:"var(--text-3)"}}>–</span></td>;
+  const diff = par != null ? s - par : null;
+  let cls = "";
+  if (diff !== null) {
+    if (diff <= -2) cls = "eagle";
+    else if (diff === -1) cls = "birdie";
+    else if (diff === 1) cls = "bogey";
+    else if (diff >= 2) cls = "double";
+  }
+  return (
+    <td className="tourn-hole-cell">
+      {cls ? <div className={`sc-score ${cls}`}>{s}</div> : <span>{s}</span>}
+    </td>
+  );
+}
+
 function TabelaRonda({ ronda, expanded, onToggle }: { ronda: RondaResult; expanded: boolean; onToggle: () => void }) {
   const jogadores = ronda.leaderboard ?? ronda.jogadores ?? [];
   const buracos   = ronda.buracos || 18;
@@ -357,8 +374,8 @@ function TabCampo({ data }: { data: FieldData }) {
 
         return (
           <div key={t.t} style={{
-            background:"var(--bg-card)",
-            border:`1px solid ${urgente ? "var(--color-warn,#e65100)" : "var(--border)"}`,
+            background:"#0d1f2d",
+            border:`1px solid ${urgente ? "#e65100" : "#1e3448"}`,
             borderRadius:10, marginBottom:12, overflow:"hidden",
           }}>
             <div onClick={() => toggle(t.t)} style={{
@@ -379,7 +396,7 @@ function TabCampo({ data }: { data: FieldData }) {
                       padding:"1px 7px", borderRadius:8, fontSize:10 }}>em curso</span>
                   )}
                 </div>
-                <div style={{ fontSize:11, color:"var(--text-3)" }}>
+                <div style={{ fontSize:11, color:"#546e7a" }}>
                   📅 {fmtDate(t.date_inicio)}
                   {t.date_fim && t.date_fim !== t.date_inicio ? ` → ${fmtDate(t.date_fim)}` : ""}
                   {t.rondas ? ` · ${t.rondas}R` : ""}
@@ -387,7 +404,7 @@ function TabCampo({ data }: { data: FieldData }) {
                   {t.fee_18  ? ` · 💵 ${t.fee_18}` : ""}
                 </div>
                 {t.sem_flights && (
-                  <div style={{ color:"var(--text-3)", fontSize:11, marginTop:4 }}>⏳ Flights ainda não publicados</div>
+                  <div style={{ color:"#546e7a", fontSize:11, marginTop:4 }}>⏳ Flights ainda não publicados</div>
                 )}
                 {t.erro && <div style={{ color:"#ef9a9a", fontSize:11, marginTop:4 }}>⚠️ {t.erro}</div>}
                 {!t.erro && !t.sem_flights && (
@@ -414,13 +431,13 @@ function TabCampo({ data }: { data: FieldData }) {
                   </div>
                 )}
               </div>
-              <span style={{ color:"var(--text-3)", fontSize:14, userSelect:"none" }}>
+              <span style={{ color:"#546e7a", fontSize:14, userSelect:"none" }}>
                 {isAberto ? "▲" : "▼"}
               </span>
             </div>
 
             {isAberto && !t.erro && !t.sem_flights && (
-              <div style={{ borderTop:"1px solid var(--border)", padding:"12px 16px" }}>
+              <div style={{ borderTop:"1px solid #1e3448", padding:"12px 16px" }}>
                 <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(210px,1fr))", gap:6, marginBottom:12 }}>
                   {t.escaloes.map(e => {
                     const bd  = badgeVagas(e.vagas, e.maximo);
@@ -428,18 +445,18 @@ function TabCampo({ data }: { data: FieldData }) {
                     const man = e.nome === ESCALAO_MANUEL;
                     return (
                       <div key={e.age_group} style={{
-                        background: man?"var(--bg-info)":dst?"var(--bg-detail)":"var(--bg)",
-                        border:`1px solid ${man?"var(--border-info)":dst?"var(--border)":"transparent"}`,
+                        background: man?"#0d2a4a":dst?"#0d1f35":"#0a1628",
+                        border:`1px solid ${man?"#1565c0":dst?"#1a3a5c":"transparent"}`,
                         borderRadius:6, padding:"7px 10px",
                       }}>
                         <div style={{ display:"flex", justifyContent:"space-between",
                           alignItems:"center", marginBottom: e.jogadores?.length ? 5 : 0 }}>
-                          <span style={{ fontSize:11, color:man?"var(--color-info)":dst?"var(--text-2)":"var(--text-3)" }}>
+                          <span style={{ fontSize:11, color:man?"#90caf9":dst?"#78909c":"#546e7a" }}>
                             {man?"★ ":""}{e.nome}
                             <span style={{ color:"#37474f", fontSize:10, marginLeft:3 }}>({e.holes}H)</span>
                           </span>
                           <div style={{ display:"flex", gap:4, alignItems:"center" }}>
-                            <span style={{ fontSize:10, color:"var(--text-3)" }}>{e.inscritos}/{e.maximo}</span>
+                            <span style={{ fontSize:10, color:"#546e7a" }}>{e.inscritos}/{e.maximo}</span>
                             {bd && <span style={{ background:bd.bg, color:bd.cor,
                               padding:"1px 5px", borderRadius:5, fontSize:9, fontWeight:700 }}>{bd.label}</span>}
                           </div>
@@ -449,7 +466,7 @@ function TabCampo({ data }: { data: FieldData }) {
                             {e.jogadores.map((j,i) => (
                               <div key={i} style={{ display:"flex", justifyContent:"space-between",
                                 fontSize:10, padding:"1px 0",
-                                color: j.pais==="PT" ? "var(--color-info)" : "var(--text-3)" }}>
+                                color: j.pais==="PT" ? "#90caf9" : "#607d8b" }}>
                                 <span>{j.nome}</span>
                                 <span title={j.cidade}>{flag(j.pais)}</span>
                               </div>
@@ -474,14 +491,14 @@ function TabCampo({ data }: { data: FieldData }) {
                         <div style={{ color:"#5c6bc0", fontSize:10, marginBottom:1 }}>{e.nome}</div>
                         {e.jogadores!.filter(j=>j.pais==="PT").map((j,i)=>(
                           <div key={i} style={{ color:"#c5cae9", fontSize:12, paddingLeft:8 }}>
-                            {j.nome} <span style={{ color:"var(--text-3)", fontSize:10 }}>{j.cidade}</span>
+                            {j.nome} <span style={{ color:"#546e7a", fontSize:10 }}>{j.cidade}</span>
                           </div>
                         ))}
                       </div>
                     ))}
                   </div>
                 )}
-                <div style={{ textAlign:"right", color:"var(--text-3)", fontSize:10 }}>
+                <div style={{ textAlign:"right", color:"#263238", fontSize:10 }}>
                   {fmtTs(t.ultima_atualizacao)}
                 </div>
               </div>
@@ -536,7 +553,7 @@ function TabResultados({ data }: { data: ResultsData }) {
         );
 
         return (
-          <div key={t.t} style={{ background:"var(--bg-card)", border:"1px solid var(--border)",
+          <div key={t.t} style={{ background:"#0d1f2d", border:"1px solid #1e3448",
             borderRadius:10, marginBottom:12, overflow:"hidden" }}>
             <div onClick={() => toggle(t.t)} style={{ cursor:"pointer", padding:"13px 16px",
               display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
@@ -544,13 +561,13 @@ function TabResultados({ data }: { data: ResultsData }) {
                 <div style={{ fontSize:15, fontWeight:700, color:"#e0e0e0", marginBottom:3 }}>
                   {t.name}
                 </div>
-                <div style={{ fontSize:11, color:"var(--text-3)", display:"flex", gap:10, alignItems:"center", flexWrap:"wrap" }}>
+                <div style={{ fontSize:11, color:"#546e7a", display:"flex", gap:10, alignItems:"center", flexWrap:"wrap" }}>
                   <span>📅 {fmtDate(t.date_inicio)}{t.campo ? ` · ${t.campo}` : ""}</span>
                   {t.url_resultados && (
                     <a href={t.url_resultados} target="_blank" rel="noopener noreferrer"
                       onClick={e => e.stopPropagation()}
-                      style={{ color:"var(--text-3)", fontSize:10, textDecoration:"none",
-                        border:"1px solid var(--border)", borderRadius:5, padding:"1px 7px" }}>
+                      style={{ color:"#546e7a", fontSize:10, textDecoration:"none",
+                        border:"1px solid #1e3448", borderRadius:5, padding:"1px 7px" }}>
                       ver fonte ↗
                     </a>
                   )}
@@ -558,21 +575,21 @@ function TabResultados({ data }: { data: ResultsData }) {
                 {manuelRows.length > 0 && (
                   <div style={{ marginTop:7, display:"flex", gap:6, flexWrap:"wrap" }}>
                     {manuelRows.map((m,i) => (
-                      <span key={i} style={{ background:"var(--bg-info)", border:"1px solid var(--border-info)",
-                        color:"var(--color-info)", padding:"2px 10px", borderRadius:8, fontSize:11, fontWeight:700 }}>
+                      <span key={i} style={{ background:"#0d2a4a", border:"1px solid #1565c0",
+                        color:"#90caf9", padding:"2px 10px", borderRadius:8, fontSize:11, fontWeight:700 }}>
                         ★ {m.escalao} R{m.ronda}: {m.score} pan · {m.pontos} pts
                       </span>
                     ))}
                   </div>
                 )}
               </div>
-              <span style={{ color:"var(--text-3)", fontSize:14, userSelect:"none" }}>
+              <span style={{ color:"#546e7a", fontSize:14, userSelect:"none" }}>
                 {isAberto ? "▲" : "▼"}
               </span>
             </div>
 
             {isAberto && (
-              <div style={{ borderTop:"1px solid var(--border)", padding:"12px 16px" }}>
+              <div style={{ borderTop:"1px solid #1e3448", padding:"12px 16px" }}>
                 {t.escaloes.map(e => {
                   const isManuelEscalao = e.is_manuel ||
                     (t.escalao_manuel ? e.age_group === t.escalao_manuel : e.nome === ESCALAO_MANUEL);
@@ -582,8 +599,8 @@ function TabResultados({ data }: { data: ResultsData }) {
                   return (
                   <div key={e.age_group} style={{ marginBottom:20 }}>
                     <div style={{ fontSize:12, fontWeight:700,
-                      color: isManuelEscalao ? "var(--color-info)" : "var(--text-3)",
-                      borderBottom:`1px solid ${isManuelEscalao ? "var(--border-info)" : "var(--border)"}`,
+                      color: isManuelEscalao ? "#90caf9" : "#546e7a",
+                      borderBottom:`1px solid ${isManuelEscalao ? "#1565c0" : "#1e3448"}`,
                       paddingBottom:5, marginBottom:8 }}>
                       {isManuelEscalao ? "★ " : ""}{e.nome}
                     </div>
@@ -603,7 +620,7 @@ function TabResultados({ data }: { data: ResultsData }) {
                   </div>
                   );
                 })}
-                <div style={{ textAlign:"right", color:"var(--text-3)", fontSize:10 }}>
+                <div style={{ textAlign:"right", color:"#263238", fontSize:10 }}>
                   {fmtTs(t.ultima_atualizacao)}
                 </div>
               </div>
@@ -694,7 +711,7 @@ function TabelaConhecidos({
               const rival = rivalMap.get(j.nome.toLowerCase().trim())!;
               const torneiosUnicos = [...new Map(rival.encontros.map(e => [e.torneio_t, e])).values()];
               const intlJog   = matchIntl(j.nome);
-              const intlTorns = intlJog ? intlData!.torneios.filter(t => intlJog.r[t.id]) : [];
+              const intlTorns = intlJog ? (intlData?.torneios ?? []).filter(t => intlJog.r[t.id] && t.circuito !== "uskids") : [];
               const manuelIntl = intlData?.jogadores.find(jj => jj.isM);
               return (
                 <tr key={i} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)" }}>
@@ -893,69 +910,62 @@ function TabRivais({ data, fieldData, intlData }: { data: ResultsData; fieldData
                     {r.cidade && <span style={{ color:"var(--text-3)", fontSize:10, marginLeft:6 }}>{r.cidade}</span>}
                   </td>
                   <td style={{ textAlign:"center", fontSize:14 }}>{flag(r.pais)}</td>
-                  {(() => {
-                      const intlJog   = matchIntl(r.nome);
-                      const intlTorns = intlJog ? (intlData?.torneios ?? []).filter(t => intlJog.r[t.id]) : [];
+                  <td style={{ textAlign:"center", fontWeight:700, color:"var(--text-2)" }}>
+                    {torneiosUnicos.length}
+                  </td>
+                  <td style={{ fontSize:11, color:"var(--text-3)", padding:"5px 8px" }}>
+                    {/* USKids */}
+                    {torneiosUnicos.map(enc => {
+                      const manMelhor = enc.man_pos < enc.rival_pos;
+                      const manPior   = enc.man_pos > enc.rival_pos;
+                      return (
+                        <span key={enc.torneio_t} style={{ marginRight:12, whiteSpace:"nowrap" }}>
+                          <span style={{ color:"var(--text-2)" }}>
+                            {enc.torneio_nome.replace(/\s\d{4}$/, "")}
+                          </span>
+                          <span style={{ marginLeft:5 }}>
+                            <span style={{ fontWeight:700, color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
+                              {enc.man_pos}º
+                            </span>
+                            <span style={{ color:"var(--text-3)" }}> vs </span>
+                            <span style={{ fontWeight:700, color:"var(--text-2)" }}>{enc.rival_pos}º</span>
+                          </span>
+                        </span>
+                      );
+                    })}
+                    {/* BJGT/Intl — só torneios não-USKids */}
+                    {(() => {
+                      const intlJog = matchIntl(r.nome);
+                      if (!intlJog) return null;
+                      const torns = (intlData?.torneios ?? []).filter(t =>
+                        intlJog.r[t.id] && t.circuito !== "uskids"
+                      );
+                      if (!torns.length) return null;
                       const manuelIntl = intlData?.jogadores.find(j => j.isM);
-                      const totalEncontros = torneiosUnicos.length + intlTorns.length;
-                      return (<>
-                        <td style={{ textAlign:"center", fontWeight:700, color:"var(--text-2)" }}>
-                          <div>{totalEncontros}</div>
-                          {intlTorns.length > 0 && (
-                            <div style={{ fontSize:9, color:"var(--color-info)", fontWeight:400 }}>
-                              {torneiosUnicos.length}+{intlTorns.length}
-                            </div>
-                          )}
-                        </td>
-                        <td style={{ fontSize:11, color:"var(--text-3)", padding:"5px 8px" }}>
-                          {/* USKids */}
-                          {torneiosUnicos.map(enc => {
-                            const manMelhor = enc.man_pos < enc.rival_pos;
-                            const manPior   = enc.man_pos > enc.rival_pos;
-                            return (
-                              <span key={enc.torneio_t} style={{ marginRight:12, whiteSpace:"nowrap" }}>
-                                <span style={{ color:"var(--text-2)" }}>
-                                  {enc.torneio_nome.replace(/\s\d{4}$/, "")}
-                                </span>
-                                <span style={{ marginLeft:4, fontWeight:700,
-                                  color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
-                                  {enc.man_pos}º vs {enc.rival_pos}º
-                                </span>
+                      return torns.map(t => {
+                        const res    = intlJog.r[t.id];
+                        const manRes = manuelIntl?.r[t.id];
+                        const manMelhor = manRes ? manRes.p < res.p : false;
+                        const manPior   = manRes ? manRes.p > res.p : false;
+                        const label = t.circuito === "bjgt" ? "BJGT" : t.circuito?.toUpperCase() ?? "INTL";
+                        return (
+                          <span key={t.id} style={{ marginRight:12, whiteSpace:"nowrap" }}>
+                            <span style={{ color:"var(--color-info)", fontSize:9, fontWeight:700,
+                              border:"1px solid var(--color-info)", borderRadius:3,
+                              padding:"0 3px", marginRight:4, opacity:0.8 }}>{label}</span>
+                            <a href={t.url} target="_blank" rel="noopener noreferrer"
+                              style={{ color:"var(--text-2)", textDecoration:"none" }}>{t.short}</a>
+                            {manRes && (
+                              <span style={{ marginLeft:4, fontWeight:700,
+                                color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
+                                {manRes.p}º vs {res.p}º
                               </span>
-                            );
-                          })}
-                          {/* BJGT — separador visual */}
-                          {intlTorns.length > 0 && (
-                            <>
-                              {torneiosUnicos.length > 0 && (
-                                <span style={{ color:"var(--border)", marginRight:8 }}>·</span>
-                              )}
-                              {intlTorns.map(t => {
-                                const res    = intlJog!.r[t.id];
-                                const manRes = manuelIntl?.r[t.id];
-                                const manMelhor = manRes ? manRes.p < res.p : false;
-                                const manPior   = manRes ? manRes.p > res.p : false;
-                                return (
-                                  <span key={t.id} style={{ marginRight:12, whiteSpace:"nowrap" }}>
-                                    <span style={{ color:"var(--color-info)", fontSize:9, fontWeight:700,
-                                      border:"1px solid var(--color-info)", borderRadius:3,
-                                      padding:"0 3px", marginRight:4, opacity:0.8 }}>BJGT</span>
-                                    <a href={t.url} target="_blank" rel="noopener noreferrer"
-                                      style={{ color:"var(--text-2)", textDecoration:"none" }}>{t.short}</a>
-                                    {manRes && (
-                                      <span style={{ marginLeft:4, fontWeight:700,
-                                        color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
-                                        {manRes.p}º vs {res.p}º
-                                      </span>
-                                    )}
-                                  </span>
-                                );
-                              })}
-                            </>
-                          )}
-                        </td>
-                      </>);
+                            )}
+                          </span>
+                        );
+                      });
                     })()}
+                  </td>
                 </tr>
               );
             })}
@@ -1012,7 +1022,7 @@ export default function USKidsFieldPage() {
     </div>
   );
   if (!fieldData) return (
-    <div style={{ padding:32, color:"var(--text-3)", fontSize:13 }}>A carregar…</div>
+    <div style={{ padding:32, color:"#546e7a", fontSize:13 }}>A carregar…</div>
   );
 
   const TABS: { id: Tab; label: string; badge: number }[] = [
@@ -1026,20 +1036,20 @@ export default function USKidsFieldPage() {
       fontFamily:"system-ui, sans-serif" }}>
 
       <div style={{ marginBottom:20 }}>
-        <h1 style={{ margin:0, fontSize:20, color:"var(--text)", fontWeight:700 }}>
+        <h1 style={{ margin:0, fontSize:20, color:"#e0e0e0", fontWeight:700 }}>
           USKids Golf Internacional
         </h1>
       </div>
 
       {/* Tabs */}
-      <div style={{ display:"flex", gap:2, marginBottom:20, borderBottom:"1px solid var(--border)" }}>
+      <div style={{ display:"flex", gap:2, marginBottom:20, borderBottom:"1px solid #1e3448" }}>
         {TABS.map(t => (
           <button key={t.id} onClick={() => setTab(t.id)} style={{
-            background: tab===t.id ? "var(--bg-info)" : "transparent",
+            background: tab===t.id ? "#0d2a4a" : "transparent",
             border:"none",
-            borderBottom: `2px solid ${tab===t.id ? "var(--color-info)" : "transparent"}`,
+            borderBottom: `2px solid ${tab===t.id ? "#1565c0" : "transparent"}`,
             borderRadius:"6px 6px 0 0",
-            color: tab===t.id ? "var(--color-info)" : "var(--text-3)",
+            color: tab===t.id ? "#90caf9" : "#546e7a",
             padding:"8px 14px", cursor:"pointer", fontSize:13,
             fontWeight: tab===t.id ? 700 : 400,
             display:"flex", alignItems:"center", gap:6,
@@ -1047,8 +1057,8 @@ export default function USKidsFieldPage() {
             {t.label}
             {t.badge > 0 && (
               <span style={{
-                background: tab===t.id ? "var(--color-info)" : "var(--border)",
-                color: tab===t.id ? "var(--bg-card)" : "var(--text-3)",
+                background: tab===t.id ? "#1565c0" : "#1e3448",
+                color: tab===t.id ? "#e3f2fd" : "#546e7a",
                 borderRadius:10, padding:"0 6px", fontSize:10, fontWeight:700,
               }}>{t.badge}</span>
             )}
@@ -1060,15 +1070,15 @@ export default function USKidsFieldPage() {
       {tab === "resultados" && (
         resultsData
           ? <TabResultados data={resultsData} />
-          : <div style={{color:"var(--text-3)",padding:"24px 0"}}>A carregar resultados…</div>
+          : <div style={{color:"#546e7a",padding:"24px 0"}}>A carregar resultados…</div>
       )}
       {tab === "rivais" && (
         resultsData
           ? <TabRivais data={resultsData} fieldData={fieldData} intlData={intlData} />
-          : <div style={{color:"var(--text-3)",padding:"24px 0"}}>A carregar…</div>
+          : <div style={{color:"#546e7a",padding:"24px 0"}}>A carregar…</div>
       )}
 
-      <div style={{ color:"var(--border)", fontSize:10, textAlign:"center", marginTop:16 }}>
+      <div style={{ color:"#1e3448", fontSize:10, textAlign:"center", marginTop:16 }}>
         signupanytime.com · actualização automática diária
       </div>
     </div>
