@@ -11,6 +11,7 @@ import { isCalUnlocked, CAL_UNLOCK_EVENT } from "./utils/authConstants";
 import type { MelhoriasJson } from "./data/melhoriasTypes";
 import { AppContext } from "./context/AppContext";
 import NavBar from "./ui/NavBar";
+import PasswordGate from "./ui/PasswordGate";
 
 /* ── Lazy-loaded pages (code-split per route) ── */
 const CamposPage = lazy(() => import("./pages/CamposPage"));
@@ -117,8 +118,22 @@ export default function App() {
         </>
       )}
 
-      {/* Quando os dados estão prontos — fornecer contexto a toda a árvore */}
-      {status.kind === "ready" && ctxValue && (
+      {/* Dados prontos mas password não introduzida — gate global */}
+      {status.kind === "ready" && ctxValue && !calUnlocked && (
+        <AppContext.Provider value={ctxValue}>
+          <header className="topbar">
+            <div className="brand">
+              <div className="brand-title">Golf</div>
+            </div>
+          </header>
+          <main className="content">
+            <PasswordGate onUnlock={() => setCalUnlocked(true)} />
+          </main>
+        </AppContext.Provider>
+      )}
+
+      {/* Dados prontos e desbloqueados — layout completo */}
+      {status.kind === "ready" && ctxValue && calUnlocked && (
         <AppContext.Provider value={ctxValue}>
           <NavBar />
           <main className="content">
