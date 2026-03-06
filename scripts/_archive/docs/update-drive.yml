@@ -1,0 +1,106 @@
+name: 🏌️ Actualização DRIVE Semanal
+
+on:
+  # Disparo manual no GitHub
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Modo de actualização'
+        required: true
+        default: 'tournaments-and-new-players'
+        type: choice
+        options:
+          - tournaments-only
+          - tournaments-and-new-players
+          - tournaments-and-all-players
+          - players-only-new
+          - players-only-refresh
+
+  # Automático: todas as segundas às 06:00 UTC (07:00 Lisboa)
+  schedule:
+    - cron: '0 6 * * 1'
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PAT }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Instalar Playwright (Chromium)
+        run: npx playwright install chromium --with-deps
+
+      # ── Restaurar sessão FPG ──
+      # O SESSION_JSON é o conteúdo do teu session.json guardado como Secret
+      - name: Restaurar session.json
+        run: echo '${{ secrets.FPG_SESSION_JSON }}' > session.json
+
+      # ── Executar scraper headless ──
+      - name: Correr scraper (torneios + jogadores)
+        run: |
+          MODE="${{ github.event.inputs.mode || 'tournaments-and-new-players' }}"
+          case "$MODE" in
+            tournaments-only)
+              node scraper-headless.js --tournaments ;;
+            tournaments-and-new-players)
+              node scraper-headless.js --tournaments --players --new-players ;;
+            tournaments-and-all-players)
+              node scraper-headless.js --tournaments --players --all-players --refresh ;;
+            players-only-new)
+              node scraper-headless.js --players --new-players ;;
+            players-only-refresh)
+              node scraper-headless.js --players --all-players --refresh ;;
+          esac
+        env:
+          HEADLESS: 'true'
+
+      # ── Guardar sessão actualizada (cookies podem ter sido renovadas) ──
+      - name: Actualizar FPG_SESSION_JSON Secret
+        if: success()
+        uses: gliech/create-github-secret-action@v1
+        with:
+          pa_token: ${{ secrets.GH_PAT }}
+          name: FPG_SESSION_JSON
+          value: ${{ steps.scraper.outputs.session_json }}
+        # NOTA: só funciona se o scraper exportar a sessão actualizada via output
+        # Ver scraper-headless.js → context.storageState()
+
+      # ── Commit e push dos dados actualizados ──
+      - name: Commit dados actualizados
+        run: |
+          git config user.name "drive-bot"
+          git config user.email "bot@drive-golf.pt"
+
+          # Verificar se há alterações
+          if git diff --quiet public/data/ output/ 2>/dev/null; then
+            echo "Sem alterações nos dados — nada a commitar"
+            exit 0
+          fi
+
+          git add public/data/drive-data.json || true
+          git add public/data/drive-sd-lookup.json || true
+          git add output/ || true
+
+          TIMESTAMP=$(TZ='Europe/Lisbon' date '+%Y-%m-%d %H:%M')
+          git commit -m "🏌️ update automático — $TIMESTAMP"
+          git push
+
+      # ── Notificação em caso de falha ──
+      - name: Notificar falha
+        if: failure()
+        run: |
+          echo "::error::O scraper falhou. Verifica se o FPG_SESSION_JSON precisa de ser renovado."
+          echo "Para renovar: corre 'node login.js' localmente e actualiza o Secret no GitHub."
