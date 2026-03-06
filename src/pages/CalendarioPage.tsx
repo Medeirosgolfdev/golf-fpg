@@ -15,6 +15,7 @@
  */
 import { useState, useRef, useEffect, useMemo } from "react";
 import type { PlayersDb } from "../data/types";
+import { useAppContext } from "../context/AppContext";
 import { isCalUnlocked } from "../utils/authConstants";
 import { clickableA11y } from "../utils/a11y";
 import { norm } from "../utils/format";
@@ -552,7 +553,8 @@ function ListView({ events, onSelect }: { events: CalEvent[]; onSelect: (e: CalE
 type ViewMode = "month" | "list";
 type GroupKey = "CGSS" | "JUNIOR" | "DRIVE" | "FPG" | "DESTAQUE" | "ANIVER" | "VIAGENS";
 
-export default function CalendarioPage({ players }: { players?: PlayersDb }) {
+export default function CalendarioPage() {
+  const { players } = useAppContext();
   const [unlocked, setUnlocked] = useState(() => isCalUnlocked());
 
   if (!unlocked) return <PasswordGate onUnlock={() => setUnlocked(true)} />;

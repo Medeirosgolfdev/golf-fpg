@@ -577,7 +577,7 @@ const BG_OPTIONS: {id:string;label:string;hex:string|null}[] = [
 ];
 
 /* ═══════ MAIN COMPONENT ═══════ */
-export default function OverlayExport({data}:{data:OverlayData}){
+export default function OverlayExport({data,inline}:{data:OverlayData;inline?:boolean}){
   const [player,setPlayer]=useState(data.player||"Manuel");
   const [event,setEvent]=useState(data.event||"");
   const [round,setRound]=useState(data.round||1);
@@ -682,16 +682,15 @@ export default function OverlayExport({data}:{data:OverlayData}){
   },[]);
 
   /* ═══════════ RENDER ═══════════ */
-  return <div className="ov-export">
-    <link href={FONT_LINK} rel="stylesheet"/>
-    <div className="ov-header" onClick={()=>setCollapsed(!collapsed)}>
-      <h3 className="sim-section-title" style={{margin:0,cursor:"pointer",userSelect:"none"}}>
+  return <div className={inline?"ov-export-inline":"ov-export"}>
+    {!inline&&<div className="ov-header" onClick={()=>setCollapsed(!collapsed)}>
+      <h3 className="h-xs" style={{margin:0,cursor:"pointer",userSelect:"none"}}>
         📷 Partilhar Scorecard <span style={{fontSize:13,fontWeight:600,marginLeft:8,color:"#888"}}>{collapsed?"▸ expandir":"▾"}</span>
       </h3>
       {!allFilled&&!noHoleData&&!collapsed&&<div style={{fontSize:13,fontWeight:700,color:"#b45309",marginTop:4}}>⚠ Preenche todos os buracos para scores exactos. A pré-visualização usa o Par como placeholder.</div>}
-    </div>
-
-    {!collapsed&&<>
+    </div>}
+    {inline&&!allFilled&&!noHoleData&&<div style={{fontSize:13,fontWeight:700,color:"#b45309",marginBottom:8}}>⚠ Preenche todos os buracos para scores exactos. A pré-visualização usa o Par como placeholder.</div>}
+    {!collapsed&&<><link href={FONT_LINK} rel="stylesheet"/>
       {/* ── Manual fields ── */}
       <div className="ov-fields">
         <div className="ov-field"><label>Jogador</label><input type="text" value={player} onChange={e=>setPlayer(e.target.value)} placeholder="Nome" className="input" style={{width:130}}/></div>

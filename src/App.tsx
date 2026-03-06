@@ -1,16 +1,16 @@
 import { lazy, Suspense, useEffect, useMemo, useState } from "react";
-import { Routes, Route, useLocation, useNavigate, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 import { loadMasterData, loadPlayers, loadAwayCourses } from "./data/loader";
 import { initCourseColorCache } from "./utils/teeColors";
 import { extractAwayCourses } from "./data/melhoriasLoader";
 import { getExtraCourses } from "./data/extraCourses";
 import type { Course, MasterData, PlayersDb } from "./data/types";
-import golfBallSvg from "./assets/golf-ball.svg";
-
 import { deepFixMojibake } from "./utils/fixEncoding";
 import { isCalUnlocked, CAL_UNLOCK_EVENT } from "./utils/authConstants";
 import type { MelhoriasJson } from "./data/melhoriasTypes";
+import { AppContext } from "./context/AppContext";
+import NavBar from "./ui/NavBar";
 
 /* ── Lazy-loaded pages (code-split per route) ── */
 const CamposPage = lazy(() => import("./pages/CamposPage"));
@@ -22,10 +22,7 @@ const RivaisIntlPage = lazy(() => import("./pages/RivaisIntlPage"));
 const TorneioPage = lazy(() => import("./pages/TorneioPage"));
 const CompararPage = lazy(() => import("./pages/CompararPage"));
 const DrivePage = lazy(() => import("./pages/DrivePage"));
-const DriveSub12Page = lazy(() => import("./pages/DriveSub12Page"));
 const USKidsFieldPage = lazy(() => import("./pages/USKidsFieldPage"));
-
-type Tab = "campos" | "jogadores" | "comparar" | "simulador" | "calendario" | "drive" | "bjgt" | "torneio" | "rivais" | "uskids";
 
 type Status =
   | { kind: "loading" }
@@ -40,46 +37,17 @@ const _earlyData = Promise.all([
   import("../melhorias.json").then(m => m.default as MelhoriasJson).catch(() => ({} as MelhoriasJson)),
 ]);
 
-/* Derivar tab activo a partir do pathname */
-function tabFromPath(pathname: string): Tab {
-  const seg = pathname.split("/")[1] || "";
-  if (seg === "campos") return "campos";
-  if (seg === "simulador") return "simulador";
-  if (seg === "comparar") return "comparar";
-  if (seg === "calendario") return "calendario";
-  if (seg === "drive") return "drive";
-  if (seg === "bjgt") return "bjgt";
-  if (seg === "rivais") return "rivais";
-  if (seg === "torneio") return "torneio";
-  if (seg === "uskids") return "uskids";
-  return "jogadores"; // default
-}
-
 export default function App() {
   const [status, setStatus] = useState<Status>({ kind: "loading" });
-  const location = useLocation();
-  const navigate = useNavigate();
-  const tab = tabFromPath(location.pathname);
 
-  /* Calendar unlock → show BJGT nav */
+  /* Calendar unlock state — passado para o contexto */
   const [calUnlocked, setCalUnlocked] = useState(() => isCalUnlocked());
   useEffect(() => {
     const check = () => setCalUnlocked(isCalUnlocked());
     window.addEventListener("storage", check);
     window.addEventListener(CAL_UNLOCK_EVENT, check);
-    check();
     return () => { window.removeEventListener("storage", check); window.removeEventListener(CAL_UNLOCK_EVENT, check); };
-  }, [location.pathname]);
-
-  /* Dynamic page title */
-  useEffect(() => {
-    const titles: Record<Tab, string> = {
-      campos: "Campos", jogadores: "Jogadores", comparar: "Comparar",
-      simulador: "Simulador", calendario: "Calendário", drive: "DRIVE", bjgt: "BJGT", torneio: "GG26", rivais: "Rivais Intl",
-      uskids: "USKids Field",
-    };
-    document.title = `Golf FPG — ${titles[tab] || "Jogadores"}`;
-  }, [tab]);
+  }, []);
 
   useEffect(() => {
     let alive = true;
@@ -113,141 +81,66 @@ export default function App() {
     return [...map.values()];
   }, [status]);
 
-  const goTo = (path: string) => navigate(path);
+  /* Valor do contexto — só fornecido quando os dados estão prontos */
+  const ctxValue = status.kind === "ready" ? {
+    masterData: status.data,
+    players: status.players,
+    simCourses,
+    melhorias: status.melhorias,
+    stats: {
+      courses: status.data.meta.stats.courses,
+      tees: status.data.meta.stats.tees,
+      players: playerCount,
+    },
+    calUnlocked,
+  } : null;
 
   return (
     <div className="app">
-      {/* Topbar */}
-      <header className="topbar">
-        <div className="brand">
-          <img src={golfBallSvg} alt="" className="brand-icon" />
-          <div className="brand-title">Golf</div>
-        </div>
+      {/* Estados de carregamento/erro (sem contexto disponível) */}
+      {status.kind === "loading" && (
+        <>
+          <header className="topbar"><div className="brand"><div className="brand-title">Golf</div></div></header>
+          <main className="content"><div className="center-msg">A carregar…</div></main>
+        </>
+      )}
 
-        <nav className="nav">
-          <button
-            className={`nav-btn ${tab === "jogadores" ? "active" : ""}`}
-            onClick={() => goTo("/jogadores")}
-          >
-            Jogadores
-          </button>
-          <button
-            className={`nav-btn ${tab === "comparar" ? "active" : ""}`}
-            onClick={() => goTo("/comparar")}
-          >
-            Comparar
-          </button>
-          <button
-            className={`nav-btn ${tab === "campos" ? "active" : ""}`}
-            onClick={() => goTo("/campos")}
-          >
-            Campos
-          </button>
-          <button
-            className={`nav-btn ${tab === "simulador" ? "active" : ""}`}
-            onClick={() => goTo("/simulador")}
-          >
-            Simulador
-          </button>
-          <button
-            className={`nav-btn ${tab === "calendario" ? "active" : ""}`}
-            onClick={() => goTo("/calendario")}
-          >
-            Calendário
-          </button>
-          {calUnlocked && (
-            <button
-              className={`nav-btn ${tab === "drive" ? "active" : ""}`}
-              onClick={() => goTo("/drive")}
-            >
-              🏁 DRIVE
-            </button>
-          )}
-          {calUnlocked && (
-            <button
-              className={`nav-btn ${tab === "bjgt" ? "active" : ""}`}
-              onClick={() => goTo("/bjgt")}
-            >
-              🇪🇸 BJGT
-            </button>
-          )}
-          {calUnlocked && (
-            <button
-              className={`nav-btn ${tab === "rivais" ? "active" : ""}`}
-              onClick={() => goTo("/rivais")}
-            >
-              🌍 Riv Intl
-            </button>
-          )}
-          {calUnlocked && (
-            <button
-              className={`nav-btn ${tab === "torneio" ? "active" : ""}`}
-              onClick={() => goTo("/torneio")}
-            >
-              GG26
-            </button>
-          )}
-          {calUnlocked && (
-            <button
-              className={`nav-btn ${tab === "uskids" ? "active" : ""}`}
-              onClick={() => goTo("/uskids")}
-            >
-              ⛳ USKids
-            </button>
-          )}
-        </nav>
-
-        {status.kind === "ready" && (
-          <div className="top-stats">
-            <div className="top-stat">
-              <div className="top-stat-val">{status.data.meta.stats.courses}</div>
-              <div className="top-stat-label">Campos</div>
+      {status.kind === "error" && (
+        <>
+          <header className="topbar"><div className="brand"><div className="brand-title">Golf</div></div></header>
+          <main className="content">
+            <div className="center-msg error-box">
+              <div className="error-title">Erro</div>
+              <div className="error-msg">{status.message}</div>
             </div>
-            <div className="top-stat">
-              <div className="top-stat-val">{status.data.meta.stats.tees}</div>
-              <div className="top-stat-label">Tees</div>
-            </div>
-            <div className="top-stat">
-              <div className="top-stat-val">{playerCount}</div>
-              <div className="top-stat-label">Jogadores</div>
-            </div>
-          </div>
-        )}
-      </header>
+          </main>
+        </>
+      )}
 
-      {/* Content */}
-      <main className="content">
-        {status.kind === "loading" && (
-          <div className="center-msg">A carregar…</div>
-        )}
-
-        {status.kind === "error" && (
-          <div className="center-msg error-box">
-            <div className="error-title">Erro</div>
-            <div className="error-msg">{status.message}</div>
-          </div>
-        )}
-
-        {status.kind === "ready" && (
-          <Suspense fallback={<div className="center-msg">A carregar…</div>}>
-          <Routes>
-            <Route path="/campos/:courseKey?" element={<CamposPage courses={simCourses} />} />
-            <Route path="/jogadores/:fed" element={<JogadoresPage players={status.players} courses={simCourses} />} />
-            <Route path="/jogadores" element={<Navigate to="/jogadores/52884" replace />} />
-            <Route path="/simulador" element={<SimuladorPage courses={simCourses} />} />
-            <Route path="/comparar" element={<CompararPage players={status.players} />} />
-            <Route path="/calendario" element={<CalendarioPage players={status.kind === "ready" ? status.players : undefined} />} />
-            <Route path="/drive/sub12" element={<DriveSub12Page />} />
-            <Route path="/drive" element={<DrivePage />} />
-            <Route path="/bjgt/:fed?" element={<BJGTPage />} />
-            <Route path="/rivais" element={<RivaisIntlPage />} />
-            <Route path="/torneio" element={<TorneioPage players={status.players} onSelectPlayer={(fed) => goTo(`/jogadores/${fed}`)} />} />
-            <Route path="/uskids" element={<USKidsFieldPage />} />
-            <Route path="*" element={<Navigate to="/jogadores/52884" replace />} />
-          </Routes>
-          </Suspense>
-        )}
-      </main>
+      {/* Quando os dados estão prontos — fornecer contexto a toda a árvore */}
+      {status.kind === "ready" && ctxValue && (
+        <AppContext.Provider value={ctxValue}>
+          <NavBar />
+          <main className="content">
+            <Suspense fallback={<div className="center-msg">A carregar…</div>}>
+              <Routes>
+                <Route path="/campos/:courseKey?" element={<CamposPage />} />
+                <Route path="/jogadores/:fed" element={<JogadoresPage />} />
+                <Route path="/jogadores" element={<Navigate to="/jogadores/52884" replace />} />
+                <Route path="/simulador" element={<SimuladorPage />} />
+                <Route path="/comparar" element={<CompararPage />} />
+                <Route path="/calendario" element={<CalendarioPage />} />
+                <Route path="/drive" element={<DrivePage />} />
+                <Route path="/bjgt/:fed?" element={<BJGTPage />} />
+                <Route path="/rivais" element={<RivaisIntlPage />} />
+                <Route path="/torneio" element={<TorneioPage />} />
+                <Route path="/uskids" element={<USKidsFieldPage />} />
+                <Route path="*" element={<Navigate to="/jogadores/52884" replace />} />
+              </Routes>
+            </Suspense>
+          </main>
+        </AppContext.Provider>
+      )}
     </div>
   );
 }

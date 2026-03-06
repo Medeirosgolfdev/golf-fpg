@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState, type ReactNode } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import type { Player, PlayersDb, Course, SexFilter } from "../data/types";
+import { useAppContext } from "../context/AppContext";
 import { norm, shortDate, fD, fD2, firstName, fmtSign, fmtToPar } from "../utils/format";
 import { getTeeHex, textOnColor, normKey, teeBorder } from "../utils/teeColors";
 import { clubShort, clubLong, hcpDisplay } from "../utils/playerUtils";
@@ -23,7 +24,7 @@ import { loadPlayerStats, daysSince, type PlayerStatsDb } from "../data/playerSt
    Utility functions (port from client JS)
    ──────────────────────────────────────────────────────────────────────────────────── */
 
-type Props = { players: PlayersDb; courses?: Course[] };
+
 type SortKey = "name" | "hcp" | "club" | "escalao" | "ranking";
 type ViewKey = "by_course" | "by_course_analysis" | "by_date" | "by_tournament" | "analysis";
 type CourseSort = "last_desc" | "count_desc" | "name_asc";
@@ -1881,8 +1882,8 @@ function CrossAnalysis({ data }: { data: PlayerPageData }) {
   const curYear = new Date().getFullYear();
 
   return (
-    <div className="card" style={{ marginTop: 24 }}>
- <div className="h-xs fs-18" style={{ marginBottom: 16 }}>📊 Cross-Análise por Escalão</div>
+    <div className="card mt-24">
+ <div className="h-xs fs-18 mb-16">📊 Cross-Análise por Escalão</div>
       {/* Tabs */}
       <div className="escalao-pills jog-cross-wrap">
         {escalaos.map(esc => (
@@ -2854,7 +2855,8 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
    Main Page — Jogadores (master-detail)
    ──────────────────────────────────────────────────────────────────────────────────────── */
 
-export default function JogadoresPage({ players, courses }: Props) {
+export default function JogadoresPage() {
+  const { players, simCourses: courses } = useAppContext();
   const { fed: urlFed } = useParams<{ fed?: string }>();
   const navigate = useNavigate();
   const [q, setQ] = useState("");

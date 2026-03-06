@@ -13,25 +13,29 @@ import LoadingState from "../ui/LoadingState";
 interface RoundData { day: number; scores: number[] | null; f9: number | null; b9: number | null; gross: number }
 interface PlayerData { name: string; country: string; pos: number | null; result: number | null; total: number | null; rounds: RoundData[] }
 interface TData { tournament: string; par: number[]; si?: number[]; parF9: number; parB9: number; parTotal: number; players: PlayerData[] }
-interface TDef { id: string; label: string; shortLabel: string; data: TData; manuelName: string; year: number; category: string }
+interface TDef { id: string; label: string; shortLabel: string; data: TData; manuelName: string; year: number; category: string; roundDates?: string[] }
 interface EvoEntry { otherTotal: number; delta: number; from: string; to: string; pill: string }
 
 /* ── Data URLs ── */
 const URLS = [
-  { id: "2025_b89", url: "/data/wjgc_2025_b89.json", label: "2025 // Boys 8-9", shortLabel: "2025 Boys 8-9", manuelName: "", year: 2025, category: "Boys 8-9" },
-  { id: "2025_b1011", url: "/data/bjgt_vp_field_2025.json", label: "2025 // Boys 10-11", shortLabel: "2025 Boys 10-11", manuelName: "Manuel Medeiros", year: 2025, category: "Boys 10-11" },
-  { id: "2026_b1011", url: "/data/wjgc_2026_b1011_3r.json", label: "2026 // Boys 10-11", shortLabel: "2026 Boys 10-11", manuelName: "Manuel Francisco Medeiros", year: 2026, category: "Boys 10-11" },
-  { id: "2026_b1213", url: "/data/wjgc_2026_contest33.json", label: "2026 // Boys 12-13", shortLabel: "2026 Boys 12-13", manuelName: "", year: 2026, category: "Boys 12-13" },
+  { id: "2025_b89",   url: "/data/wjgc_2025_b89.json",        label: "2025 // Boys 8-9",    shortLabel: "2025 Boys 8-9",    manuelName: "",                       year: 2025, category: "Boys 8-9",    roundDates: undefined,                              sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/28/leaderboard.htm" },
+  { id: "2025_b1011", url: "/data/bjgt_vp_field_2025.json",   label: "2025 // Boys 10-11",  shortLabel: "2025 Boys 10-11",  manuelName: "Manuel Medeiros",        year: 2025, category: "Boys 10-11", roundDates: undefined,                              sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/34/leaderboard.htm" },
+  { id: "2026_b1011", url: "/data/wjgc_2026_b1011_3r.json",   label: "2026 // Boys 10-11",  shortLabel: "2026 Boys 10-11",  manuelName: "Manuel Francisco Medeiros", year: 2026, category: "Boys 10-11", roundDates: ["25 Fev", "26 Fev", "27 Fev"] as string[],    sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/73/leaderboard.htm", reverseRounds: true },
+  { id: "2026_b1213", url: "/data/wjgc_2026_contest33.json",  label: "2026 // Boys 12-13",  shortLabel: "2026 Boys 12-13",  manuelName: "",                       year: 2026, category: "Boys 12-13", roundDates: ["25 Fev", "26 Fev", "27 Fev"] as string[],    sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/33/leaderboard.htm", reverseRounds: true },
 ];
 
 /* ── Flags ── */
 const FL: Record<string, string> = {"Portugal":"🇵🇹","Inglaterra":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","England":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","Federação Russa":"🇷🇺","Russian Federation":"🇷🇺","Suíça":"🇨🇭","Switzerland":"🇨🇭","China":"🇨🇳","Tailândia":"🇹🇭","Thailand":"🇹🇭","França":"🇫🇷","France":"🇫🇷","Espanha":"🇪🇸","Spain":"🇪🇸","Bulgária":"🇧🇬","Bulgaria":"🇧🇬","Gales":"🏴󠁧󠁢󠁷󠁬󠁳󠁿","Wales":"🏴󠁧󠁢󠁷󠁬󠁳󠁿","Alemanha":"🇩🇪","Germany":"🇩🇪","Holanda":"🇳🇱","Netherlands":"🇳🇱","Noruega":"🇳🇴","Norway":"🇳🇴","Lituânia":"🇱🇹","Lithuania":"🇱🇹","Estônia":"🇪🇪","Estonia":"🇪🇪","Estados Unidos":"🇺🇸","United States":"🇺🇸","Irlanda":"🇮🇪","Ireland":"🇮🇪","Irlanda do Norte":"🇬🇧","Northern Ireland":"🇬🇧","Itália":"🇮🇹","Italy":"🇮🇹","Escócia":"🏴󠁧󠁢󠁳󠁣󠁴󠁿","Scotland":"🏴󠁧󠁢󠁳󠁣󠁴󠁿","Filipinas":"🇵🇭","Philippines":"🇵🇭","Suécia":"🇸🇪","Sweden":"🇸🇪","Reino Unido":"🇬🇧","United Kingdom":"🇬🇧","Great Britain":"🇬🇧","Polônia":"🇵🇱","Poland":"🇵🇱","República Checa":"🇨🇿","Czech Republic":"🇨🇿","Colômbia":"🇨🇴","Colombia":"🇨🇴","México":"🇲🇽","Mexico":"🇲🇽","Marrocos":"🇲🇦","Morocco":"🇲🇦","Bélgica":"🇧🇪","Belgium":"🇧🇪","Eslovénia":"🇸🇮","Slovenia":"🇸🇮","Ucrânia":"🇺🇦","Ukraine":"🇺🇦","Roménia":"🇷🇴","Romania":"🇷🇴","Eslováquia":"🇸🇰","Slovakia":"🇸🇰","Emirados Árabes Unidos":"🇦🇪","United Arab Emirates":"🇦🇪","Turquia":"🇹🇷","Turkey":"🇹🇷","Índia":"🇮🇳","India":"🇮🇳","Vietname":"🇻🇳","Viet Nam":"🇻🇳","Cazaquistão":"🇰🇿","Kazakhstan":"🇰🇿","Hungria":"🇭🇺","Hungary":"🇭🇺","África do Sul":"🇿🇦","South Africa":"🇿🇦","Singapura":"🇸🇬","Singapore":"🇸🇬","Dinamarca":"🇩🇰","Denmark":"🇩🇰","Canadá":"🇨🇦","Canada":"🇨🇦","Áustria":"🇦🇹","Austria":"🇦🇹","Paraguai":"🇵🇾","Paraguay":"🇵🇾","Brasil":"🇧🇷","Brazil":"🇧🇷","Jersey":"🇯🇪","Nigéria":"🇳🇬","Nigeria":"🇳🇬","Omã":"🇴🇲","Oman":"🇴🇲","Chile":"🇨🇱","Porto Rico":"🇵🇷","Puerto Rico":"🇵🇷","Costa Rica":"🇨🇷","Letónia":"🇱🇻","Latvia":"🇱🇻","Coreia do Sul":"🇰🇷","South Korea":"🇰🇷"};
 const gf = (co: string) => FL[co] || "🏳️";
 
-function loadT(raw: any): TData {
+function loadT(raw: any, reverseRounds?: boolean): TData {
   const d = raw as TData;
-  const maxR = Math.max(...d.players.filter((p: any) => p.rounds?.length > 0).map((p: any) => p.rounds.length));
-  const players = d.players.filter((p: any) => p.total != null && p.rounds?.length > 0)
+  let players = d.players;
+  if (reverseRounds) {
+    players = players.map(p => ({ ...p, rounds: [...p.rounds].reverse() }));
+  }
+  const maxR = Math.max(...players.filter((p: any) => p.rounds?.length > 0).map((p: any) => p.rounds.length));
+  players = players.filter((p: any) => p.total != null && p.rounds?.length > 0)
     .sort((a: any, b: any) => {
       const aFull = a.rounds.length === maxR ? 0 : 1;
       const bFull = b.rounds.length === maxR ? 0 : 1;
@@ -53,7 +57,7 @@ const isM = (n: string) => n.includes("Manuel") && (n.includes("Medeiros") || n.
 /* ═══════════════════════════════════════════════════════════════
    ACCUMULATED LEADERBOARD — compact, ±par per round
    ═══════════════════════════════════════════════════════════════ */
-function AccLB({ data, evo, evoYear }: { data: TData; evo?: Map<string, EvoEntry>; evoYear?: string }) {
+function AccLB({ data, evo, evoYear, roundDates }: { data: TData; evo?: Map<string, EvoEntry>; evoYear?: string; roundDates?: string[] }) {
   const { parTotal, players } = data;
   const nR = Math.max(...players.map(p => p.rounds.length), 0);
   const hasEvo = evo && evo.size > 0;
@@ -64,7 +68,9 @@ function AccLB({ data, evo, evoYear }: { data: TData; evo?: Map<string, EvoEntry
           <th className="hole-header" style={{ textAlign: "center", width: 26, padding: "0 2px" }}>#</th>
           <th className="hole-header" style={{ textAlign: "left", paddingLeft: 6, paddingRight: 8 }}>Jogador</th>
           {Array.from({ length: nR }, (_, i) => (<React.Fragment key={i}>
-            <th className="hole-header" style={{ width: 30, textAlign: "center", padding: "0 1px" }}>R{i + 1}</th>
+            <th className="hole-header" style={{ width: roundDates?.[i] ? 52 : 30, textAlign: "center", padding: "0 1px" }}>
+              R{i + 1}{roundDates?.[i] ? <><br /><span style={{ fontSize: 9, fontWeight: 400, color: "var(--text-muted)" }}>{roundDates[i]}</span></> : ""}
+            </th>
             <th className="hole-header" style={{ width: 34, textAlign: "center", padding: "0 1px", color: "var(--text-muted)", fontWeight: 500, fontSize: 9 }}>±par</th>
           </React.Fragment>))}
           <th className="hole-header col-total" style={{ width: 34, padding: "0 3px" }}>Tot</th>
@@ -85,7 +91,7 @@ function AccLB({ data, evo, evoYear }: { data: TData; evo?: Map<string, EvoEntry
             return (
               <tr key={idx} style={{ ...(bg ? { background: bg } : {}), ...(incomplete ? { opacity: 0.5 } : {}) }}>
                 <td className="fw-800 ta-center" style={{ color: "var(--text-3)", fontSize: 11, padding: "0 2px" }}>{incomplete ? "WD" : (showPos ? p.pos : "")}</td>
-                <td style={{ whiteSpace: "nowrap", paddingLeft: 6, paddingRight: 8, fontSize: 12 }}>
+                <td style={{ whiteSpace: "nowrap", paddingLeft: 6, paddingRight: 8, fontSize: 12, textAlign: "left" }}>
                   <span className="fw-700">{gf(p.country)} {p.name}</span>
                 </td>
                 {Array.from({ length: nR }, (_, i) => {
@@ -258,9 +264,9 @@ function ManuelDay({ data, ri }: { data: TData; ri: number }) {
         {eagles.length > 0 && <div className="card-detail br-default" style={{ padding: "4px 8px" }}><span className="fw-800" style={{ color: SC.danger }}>🦅 {eagles.length}</span><span className="fs-10 c-text-3"> {eagles.map(h => "H"+h.h).join(", ")}</span></div>}
         <div className="card-detail br-default" style={{ padding: "4px 8px" }}><span className="fw-800" style={{ color: SC.danger }}>🐦 {birdies.length}</span><span className="fs-10 c-text-3"> {birdies.map(h => "H"+h.h).join(", ")}</span></div>
         <div className="card-detail br-default" style={{ padding: "4px 8px" }}><span className="fw-800" style={{ color: SC.good }}>⛳ {pars.length} pars</span></div>
-        <div className="card-detail br-default" style={{ padding: "4px 8px" }}><span className="fw-800" style={{ color: "var(--text-2)" }}>📦 {bogeys.length}</span><span className="fs-10 c-text-3"> {bogeys.map(h => "H"+h.h).join(", ")}</span></div>
-        {doubles.length > 0 && <div className="card-detail br-default" style={{ padding: "4px 8px" }}><span className="fw-800" style={{ color: "var(--color-warn-dark)" }}>💥 {doubles.length} dbl</span><span className="fs-10 c-text-3"> {doubles.map(h => "H"+h.h).join(", ")}</span></div>}
-        {worse.length > 0 && <div className="card-detail br-default" style={{ padding: "4px 8px" }}><span className="fw-800" style={{ color: "var(--color-warn-dark)" }}>🔥 {worse.length} triple+</span><span className="fs-10 c-text-3"> {worse.map(h => "H"+h.h+"(+"+h.diff+")").join(", ")}</span></div>}
+        <div className="card-detail br-default" style={{ padding: "4px 8px" }}><span className="fw-800 c-text-2">📦 {bogeys.length}</span><span className="fs-10 c-text-3"> {bogeys.map(h => "H"+h.h).join(", ")}</span></div>
+        {doubles.length > 0 && <div className="card-detail br-default" style={{ padding: "4px 8px" }}><span className="fw-800 c-warn-dark">💥 {doubles.length} dbl</span><span className="fs-10 c-text-3"> {doubles.map(h => "H"+h.h).join(", ")}</span></div>}
+        {worse.length > 0 && <div className="card-detail br-default" style={{ padding: "4px 8px" }}><span className="fw-800 c-warn-dark">🔥 {worse.length} triple+</span><span className="fs-10 c-text-3"> {worse.map(h => "H"+h.h+"(+"+h.diff+")").join(", ")}</span></div>}
       </div>
       <div className="muted fs-10 mb-4 fw-700">Performance por tipo de buraco</div>
       <div className="grid-auto-fill mb-8" style={{ gap: 6 }}>
@@ -274,7 +280,7 @@ function ManuelDay({ data, ri }: { data: TData; ri: number }) {
       {prevR?.scores && vsPrev && <>
         <div className="muted fs-10 mb-4 fw-700">vs R{ri} (anterior: {prevR.gross})</div>
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-          {worseVP.length > 0 && <div className="fs-10"><span className="fw-700" style={{ color: "var(--color-warn-dark)" }}>Pior (+{worseVP.reduce((s,h) => s+h.delta, 0)}):</span> {worseVP.map(h => `H${h.h} ${h.prev}→${h.gross}`).join(", ")}</div>}
+          {worseVP.length > 0 && <div className="fs-10"><span className="fw-700 c-warn-dark">Pior (+{worseVP.reduce((s,h) => s+h.delta, 0)}):</span> {worseVP.map(h => `H${h.h} ${h.prev}→${h.gross}`).join(", ")}</div>}
           {betterVP.length > 0 && <div className="fs-10"><span className="fw-700" style={{ color: SC.danger }}>Melhor ({betterVP.reduce((s,h) => s+h.delta, 0)}):</span> {betterVP.map(h => `H${h.h} ${h.prev}→${h.gross}`).join(", ")}</div>}
         </div>
       </>}
@@ -306,19 +312,20 @@ function TournView({ def, evo, evoYear }: { def: TDef; evo?: Map<string, EvoEntr
   const { data, manuelName } = def;
   const nR = Math.max(...data.players.map(p => p.rounds.length), 0);
   const [dt, setDt] = useState<number | "all">("all");
+  const rLabel = (i: number) => def.roundDates?.[i] ? `R${i + 1} · ${def.roundDates[i]}` : `R${i + 1}`;
   return (
     <div>
       <div className="escalao-pills mb-8" style={{ gap: 4 }}>
         <button onClick={() => setDt("all")} className={`tourn-tab tourn-tab-sm${dt === "all" ? " active" : ""}`}>Acumulado</button>
-        {Array.from({ length: nR }, (_, i) => <button key={i} onClick={() => setDt(i)} className={`tourn-tab tourn-tab-sm${dt === i ? " active" : ""}`}>R{i + 1}</button>)}
+        {Array.from({ length: nR }, (_, i) => <button key={i} onClick={() => setDt(i)} className={`tourn-tab tourn-tab-sm${dt === i ? " active" : ""}`}>{rLabel(i)}</button>)}
       </div>
       {dt === "all" && <>
-        <div className="card"><div className="h-md fs-14">🏆 Leaderboard — {def.label}</div><FStats data={data} ri="all" /><AccLB data={data} evo={evo} evoYear={evoYear} /></div>
+        <div className="card"><div className="h-md fs-14">🏆 Leaderboard — {def.label}</div><FStats data={data} ri="all" /><AccLB data={data} evo={evo} evoYear={evoYear} roundDates={def.roundDates} /></div>
         <div className="card"><div className="h-md fs-14">📊 Dificuldade por Buraco — Todas as rondas</div><FStats data={data} ri="all" /><HoleDiff data={data} ri="all" mn={manuelName} /></div>
       </>}
       {typeof dt === "number" && <>
-        <div className="card"><div className="h-md fs-14">🏆 R{dt+1} — Scorecards</div><FStats data={data} ri={dt} /><SCTable data={data} ri={dt} /></div>
-        <div className="card"><div className="h-md fs-14">📊 Dificuldade por Buraco — R{dt+1}</div><HoleDiff data={data} ri={dt} mn={manuelName} /></div>
+        <div className="card"><div className="h-md fs-14">🏆 {rLabel(dt)} — Scorecards</div><FStats data={data} ri={dt} /><SCTable data={data} ri={dt} /></div>
+        <div className="card"><div className="h-md fs-14">📊 Dificuldade por Buraco — {rLabel(dt)}</div><HoleDiff data={data} ri={dt} mn={manuelName} /></div>
         {manuelName && <ManuelDay data={data} ri={dt} />}
       </>}
     </div>
@@ -328,15 +335,67 @@ function TournView({ def, evo, evoYear }: { def: TDef; evo?: Map<string, EvoEntr
 /* ═══════════════════════════════════════════════════════════════
    MAIN PAGE
    ═══════════════════════════════════════════════════════════════ */
+function buildEvo(cur: TDef, all: (TDef | null)[]): { evoMap?: Map<string, EvoEntry>; evoYear?: string; manuelEvo?: EvoEntry } {
+  let evoMap: Map<string, EvoEntry> | undefined;
+  let evoYear: string | undefined;
+  let manuelEvo: EvoEntry | undefined;
+
+  if (cur.year === 2026) {
+    evoYear = "2025";
+    const prev25 = all.filter(t => t && t.year === 2025) as TDef[];
+    if (prev25.length) {
+      const all25Players = prev25.flatMap(t => t.data.players.map(p => ({ ...p, cat: t.category })));
+      evoMap = new Map();
+      for (const p26 of cur.data.players) {
+        if (!p26.total) continue;
+        const match = all25Players.find(p25 => {
+          const n25 = p25.name.toLowerCase().replace(/\s+/g, " ");
+          const n26 = p26.name.toLowerCase().replace(/\s+/g, " ");
+          return n25 === n26 || (n25.includes(n26.split(" ")[0]) && n25.includes(n26.split(" ").slice(-1)[0]));
+        });
+        if (!match || !match.total) continue;
+        if (match.rounds.length !== p26.rounds.length) continue;
+        const entry: EvoEntry = { otherTotal: match.total, delta: p26.total - match.total, from: match.cat, to: cur.category, pill: match.cat === cur.category ? "STAY" : "UP" };
+        evoMap.set(p26.name, entry);
+        if (isM(p26.name)) manuelEvo = entry;
+      }
+      if (!evoMap.size) evoMap = undefined;
+    }
+  } else if (cur.year === 2025) {
+    evoYear = "2026";
+    const next26 = all.filter(t => t && t.year === 2026) as TDef[];
+    if (next26.length) {
+      const all26Players = next26.flatMap(t => t.data.players.map(p => ({ ...p, cat: t.category })));
+      evoMap = new Map();
+      for (const p25 of cur.data.players) {
+        if (!p25.total) continue;
+        const match = all26Players.find(p26 => {
+          const n25 = p25.name.toLowerCase().replace(/\s+/g, " ");
+          const n26 = p26.name.toLowerCase().replace(/\s+/g, " ");
+          return n25 === n26 || (n26.includes(n25.split(" ")[0]) && n26.includes(n25.split(" ").slice(-1)[0]));
+        });
+        if (!match || !match.total) continue;
+        if (match.rounds.length !== p25.rounds.length) continue;
+        const entry: EvoEntry = { otherTotal: match.total, delta: match.total - p25.total, from: cur.category, to: match.cat, pill: cur.category === match.cat ? "STAY" : "UP" };
+        evoMap.set(p25.name, entry);
+        if (isM(p25.name)) manuelEvo = entry;
+      }
+      if (!evoMap.size) evoMap = undefined;
+    }
+  }
+  return { evoMap, evoYear, manuelEvo };
+}
+
 function Content() {
   const [ti, setTi] = useState(2);
   const [all, setAll] = useState<(TDef | null)[]>([null, null, null, null]);
   const [loading, setLoading] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   useEffect(() => {
     Promise.all(URLS.map(async (m) => {
       try { const res = await fetch(m.url); if (!res.ok) return null; const raw = await res.json();
-        return { id: m.id, label: m.label, shortLabel: m.shortLabel, data: loadT(raw), manuelName: m.manuelName, year: m.year, category: m.category } as TDef;
+        return { id: m.id, label: m.label, shortLabel: m.shortLabel, data: loadT(raw, (m as any).reverseRounds), manuelName: m.manuelName, year: m.year, category: m.category, roundDates: m.roundDates } as TDef;
       } catch { return null; }
     })).then(r => { setAll(r); setLoading(false); });
   }, []);
@@ -344,106 +403,99 @@ function Content() {
   const cur = all[ti];
   if (loading) return <LoadingState />;
 
+  const years = [...new Set(URLS.map(u => u.year))].sort();
+
+  const { evoMap, evoYear, manuelEvo } = cur ? buildEvo(cur, all) : {};
+
   return (
     <div className="tourn-layout">
       <style>{`.bjgt-chart-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; } .bjgt-chart-scroll > div, .bjgt-chart-scroll > table { min-width: 320px; }`}</style>
+
+      {/* Toolbar */}
       <div className="toolbar">
         <div className="toolbar-left">
-          <span className="tourn-toolbar-title">🇪🇸 BJGT</span>
-          <span className="tourn-toolbar-meta">📍 Villa Padierna — Flamingos</span>
-          <div className="tourn-toolbar-sep" />
-          <div className="escalao-pills">
-            {URLS.map((t, i) => <button key={t.id} onClick={() => setTi(i)} className={`tourn-tab tourn-tab-sm${ti === i ? " active" : ""}`}>{t.shortLabel}</button>)}
-          </div>
+          <button className="sidebar-toggle" onClick={() => setSidebarOpen(v => !v)}
+            title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
+            {sidebarOpen ? "◀" : "▶"}
+          </button>
+          <span className="toolbar-title">🇪🇸 BJGT</span>
+          {cur && <span className="toolbar-meta">{cur.category === "Boys 12-13" ? "📍 Villa Padierna — Alferini" : "📍 Villa Padierna — Flamingos"}</span>}
         </div>
         <div className="toolbar-right">
           {cur && <span className="chip">{cur.data.players.filter(p => p.rounds.length === Math.max(...cur.data.players.map(q => q.rounds.length))).length} field · {Math.max(...cur.data.players.map(p => p.rounds.length))}R · {cur.category}</span>}
         </div>
       </div>
-      {cur ? (() => {
-        let evoMap: Map<string, EvoEntry> | undefined;
-        let evoYear: string | undefined;
-        let manuelEvo: EvoEntry | undefined;
 
-        if (cur.year === 2026) {
-          // Backward: show 2025 totals for each 2026 player
-          evoYear = "2025";
-          const prev25 = all.filter(t => t && t.year === 2025) as TDef[];
-          if (prev25.length) {
-            const all25Players = prev25.flatMap(t => t.data.players.map(p => ({ ...p, cat: t.category })));
-            evoMap = new Map();
-            for (const p26 of cur.data.players) {
-              if (!p26.total) continue;
-              const match = all25Players.find(p25 => {
-                const n25 = p25.name.toLowerCase().replace(/\s+/g, " ");
-                const n26 = p26.name.toLowerCase().replace(/\s+/g, " ");
-                return n25 === n26 || (n25.includes(n26.split(" ")[0]) && n25.includes(n26.split(" ").slice(-1)[0]));
-              });
-              if (!match || !match.total) continue;
-              if (match.rounds.length !== p26.rounds.length) continue;
-              const entry: EvoEntry = {
-                otherTotal: match.total, delta: p26.total - match.total,
-                from: match.cat, to: cur.category,
-                pill: match.cat === cur.category ? "STAY" : "UP"
-              };
-              evoMap.set(p26.name, entry);
-              if (isM(p26.name)) manuelEvo = entry;
-            }
-            if (!evoMap.size) evoMap = undefined;
-          }
-        } else if (cur.year === 2025) {
-          // Forward: show where each 2025 player ended up in 2026
-          evoYear = "2026";
-          const next26 = all.filter(t => t && t.year === 2026) as TDef[];
-          if (next26.length) {
-            const all26Players = next26.flatMap(t => t.data.players.map(p => ({ ...p, cat: t.category })));
-            evoMap = new Map();
-            for (const p25 of cur.data.players) {
-              if (!p25.total) continue;
-              const match = all26Players.find(p26 => {
-                const n25 = p25.name.toLowerCase().replace(/\s+/g, " ");
-                const n26 = p26.name.toLowerCase().replace(/\s+/g, " ");
-                return n25 === n26 || (n26.includes(n25.split(" ")[0]) && n26.includes(n25.split(" ").slice(-1)[0]));
-              });
-              if (!match || !match.total) continue;
-              if (match.rounds.length !== p25.rounds.length) continue;
-              const entry: EvoEntry = {
-                otherTotal: match.total, delta: match.total - p25.total,
-                from: cur.category, to: match.cat,
-                pill: cur.category === match.cat ? "STAY" : "UP"
-              };
-              evoMap.set(p25.name, entry);
-              if (isM(p25.name)) manuelEvo = entry;
-            }
-            if (!evoMap.size) evoMap = undefined;
-          }
-        }
+      {/* Master-detail */}
+      <div className="master-detail">
 
-        return (<>
-          <TournView def={cur} evo={evoMap} evoYear={evoYear} />
-          {manuelEvo && cur.year === 2026 && (
-            <div className="card" style={{ background: "var(--bg-success-subtle)", border: "1px solid var(--good)" }}>
-              <div className="h-md fs-14">🇵🇹 Manuel — Evolução WJGC</div>
-              <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
-                <div style={{ textAlign: "center", flex: "1 1 100px" }}>
-                  <div className="muted fs-10">2025 ({manuelEvo.from})</div>
-                  <div className="fw-900" style={{ fontSize: 24 }}>{manuelEvo.otherTotal}</div>
-                </div>
-                <div style={{ fontSize: 24, color: "var(--good-dark)" }}>→</div>
-                <div style={{ textAlign: "center", flex: "1 1 100px" }}>
-                  <div className="muted fs-10">2026 ({manuelEvo.to})</div>
-                  <div className="fw-900" style={{ fontSize: 24, color: manuelEvo.delta < 0 ? "var(--good-dark)" : "var(--text-3)" }}>{manuelEvo.otherTotal + manuelEvo.delta}</div>
-                </div>
-                <div style={{ textAlign: "center", flex: "1 1 80px" }}>
-                  <div className="muted fs-10">Δ</div>
-                  <div className="fw-900" style={{ fontSize: 24, color: manuelEvo.delta < 0 ? "var(--good-dark)" : SC.danger }}>{manuelEvo.delta > 0 ? "+" : ""}{manuelEvo.delta}</div>
-                  <div className="muted fs-10">pancadas (3R)</div>
-                </div>
+        {/* Sidebar */}
+        <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`}>
+          {years.map(year => (
+            <React.Fragment key={year}>
+              <div className="sidebar-section-title-dark">{year}</div>
+              {URLS.filter(u => u.year === year).map((u, _, arr) => {
+                const idx = URLS.indexOf(u);
+                const t = all[idx];
+                const nR = t ? Math.max(...t.data.players.map(p => p.rounds.length), 0) : 0;
+                const nP = t ? t.data.players.filter(p => p.rounds.length === nR).length : 0;
+                return (
+                  <button key={u.id}
+                    className={`course-item ${ti === idx ? "active" : ""}`}
+                    onClick={() => setTi(idx)}>
+                    <div className="course-item-name">{u.category}</div>
+                    {t && <div className="course-item-meta">{nP} jog · {nR}R</div>}
+                    <a href={u.sourceUrl} target="_blank" rel="noopener noreferrer"
+                      className="tourn-ext-link" style={{ marginTop: 4 }}
+                      onClick={e => e.stopPropagation()}>
+                      🔗 Leaderboard oficial
+                    </a>
+                  </button>
+                );
+              })}
+            </React.Fragment>
+          ))}
+        </div>
+
+        {/* Detail */}
+        <div className="course-detail">
+          {cur ? (<>
+            <div className="detail-header">
+              <h2 className="detail-title">{cur.label}</h2>
+              <div className="detail-sub">
+                <span className="muted">{cur.category === "Boys 12-13" ? "📍 Villa Padierna — Alferini" : "📍 Villa Padierna — Flamingos"}</span>
+                <a href={URLS[ti].sourceUrl} target="_blank" rel="noopener noreferrer"
+                  className="tourn-ext-link" style={{ marginLeft: 8 }}>
+                  🔗 Leaderboard oficial
+                </a>
               </div>
             </div>
-          )}
-        </>);
-      })() : <div className="center-msg muted">Dados não disponíveis</div>}
+            <TournView def={cur} evo={evoMap} evoYear={evoYear} />
+            {manuelEvo && cur.year === 2026 && (
+              <div className="card" style={{ background: "var(--bg-success-subtle)", border: "1px solid var(--good)" }}>
+                <div className="h-md fs-14">🇵🇹 Manuel — Evolução WJGC</div>
+                <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
+                  <div style={{ textAlign: "center", flex: "1 1 100px" }}>
+                    <div className="muted fs-10">2025 ({manuelEvo.from})</div>
+                    <div className="fw-900" style={{ fontSize: 24 }}>{manuelEvo.otherTotal}</div>
+                  </div>
+                  <div style={{ fontSize: 24, color: "var(--good-dark)" }}>→</div>
+                  <div style={{ textAlign: "center", flex: "1 1 100px" }}>
+                    <div className="muted fs-10">2026 ({manuelEvo.to})</div>
+                    <div className="fw-900" style={{ fontSize: 24, color: manuelEvo.delta < 0 ? "var(--good-dark)" : "var(--text-3)" }}>{manuelEvo.otherTotal + manuelEvo.delta}</div>
+                  </div>
+                  <div style={{ textAlign: "center", flex: "1 1 80px" }}>
+                    <div className="muted fs-10">Δ</div>
+                    <div className="fw-900" style={{ fontSize: 24, color: manuelEvo.delta < 0 ? "var(--good-dark)" : SC.danger }}>{manuelEvo.delta > 0 ? "+" : ""}{manuelEvo.delta}</div>
+                    <div className="muted fs-10">pancadas (3R)</div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </>) : <div className="center-msg muted">Dados não disponíveis</div>}
+        </div>
+
+      </div>
     </div>
   );
 }

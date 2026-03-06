@@ -209,16 +209,67 @@ function isManuel(nome: string) {
   return nome.toLowerCase().includes(MANUEL_FRAGMENT);
 }
 
+// Derivar par por buraco quando não está disponível nos dados:
+// usa o percentil 15 dos scores como âncora, ajusta para atingir o total_par exacto
+function deriveParsFromLeaderboard(lb: RondaJogador[], total_par: number, n_holes: number): number[] {
+  if (!lb.length || !n_holes || !total_par) return [];
+  // Calcular total_par real a partir dos jogadores se não vier do servidor
+  const computedTotal = lb.find(j => j.score && j.to_par != null)
+    ? (lb.find(j => j.score && j.to_par != null)!.score - lb.find(j => j.score && j.to_par != null)!.to_par!)
+    : total_par;
+  // Sanity check: par total deve ser plausível (entre n_holes*3 e n_holes*5)
+  if (computedTotal < n_holes * 3 || computedTotal > n_holes * 5) return [];
+
+  const parEst: { par: number; median: number }[] = [];
+  for (let h = 0; h < n_holes; h++) {
+    const scores = lb
+      .filter(j => Array.isArray(j.strokes) && j.strokes.length > h)
+      .map(j => j.strokes[h])
+      .filter(s => typeof s === 'number' && s > 0)
+      .sort((a, b) => a - b);
+    if (!scores.length) { parEst.push({ par: 4, median: 4 }); continue; }
+    const idx = Math.max(0, Math.floor(scores.length * 0.15));
+    const anchor = scores[idx];
+    const med = scores[Math.floor(scores.length / 2)];
+    const par = anchor <= 3 ? 3 : anchor >= 5 ? 5 : 4;
+    parEst.push({ par, median: med });
+  }
+
+  // Ajustar até bater computedTotal exacto
+  let diff = computedTotal - parEst.reduce((s, p) => s + p.par, 0);
+  if (diff > 0) {
+    // Elevar 4→5: prioridade para os com maior mediana
+    const fours = parEst
+      .map((p, i) => ({ ...p, i }))
+      .filter(p => p.par === 4)
+      .sort((a, b) => b.median - a.median);
+    for (const f of fours) { if (diff <= 0) break; parEst[f.i].par = 5; diff--; }
+  } else if (diff < 0) {
+    // Reduzir 5→4: prioridade para os com menor mediana
+    const fives = parEst
+      .map((p, i) => ({ ...p, i }))
+      .filter(p => p.par === 5)
+      .sort((a, b) => a.median - b.median);
+    for (const f of fives) { if (diff >= 0) break; parEst[f.i].par = 4; diff++; }
+  }
+  return parEst.map(p => p.par);
+}
+
 // ─────────────────────────────────────────────
 // SCORECARD
 // ─────────────────────────────────────────────
 function TabelaRonda({ ronda, expanded, onToggle }: { ronda: RondaResult; expanded: boolean; onToggle: () => void }) {
   const jogadores = ronda.leaderboard ?? ronda.jogadores ?? [];
   const buracos   = ronda.buracos || 18;
-  const par       = ronda.par?.length ? ronda.par : undefined;
-  const totalPar  = ronda.total_par;
-  const front9    = jogadores[0]?.strokes?.slice(0,9) ?? [];
   const has18     = buracos >= 18;
+
+  // Usar par do servidor se disponível, senão derivar a partir dos scores
+  const par: number[] | undefined = (() => {
+    if (ronda.par?.length === buracos) return ronda.par;
+    const derived = deriveParsFromLeaderboard(jogadores, ronda.total_par ?? 0, buracos);
+    return derived.length === buracos ? derived : undefined;
+  })();
+  const totalPar = par ? par.reduce((s, p) => s + p, 0) : ronda.total_par;
 
   // Totais out/in para cada jogador
   const getStrokes = (j: RondaJogador) => j.strokes?.length ? j.strokes : (j.rondas?.["1"]?.strokes ?? []);
@@ -337,180 +388,157 @@ function TabelaRonda({ ronda, expanded, onToggle }: { ronda: RondaResult; expand
 // ─────────────────────────────────────────────
 // TAB CAMPO
 // ─────────────────────────────────────────────
-function TabCampo({ data }: { data: FieldData }) {
-  const [abertos, setAbertos] = useState<Set<number>>(new Set());
-  const toggle = (t: number) => setAbertos(p => {
-    const n = new Set(p); n.has(t) ? n.delete(t) : n.add(t); return n;
-  });
+function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
+  const b12     = t.escaloes.find(e => e.nome === ESCALAO_MANUEL);
+  const ptTotal = t.escaloes.flatMap(e => e.jogadores ?? []).filter(j => j.pais === "PT");
+  const dias    = diasAte(t.date_inicio);
+  const urgente = b12 && b12.vagas <= 3 && b12.vagas > 0;
 
   return (
     <div>
-      <div style={{ color:"var(--text-3)", fontSize:11, marginBottom:14 }}>
-        Actualizado {fmtTs(data.gerado_em)} · ★ = categoria do Manuel
+      {/* Header */}
+      <div style={{ marginBottom:16 }}>
+        <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:4, flexWrap:"wrap" }}>
+          <span style={{ fontSize:18, fontWeight:700, color:"var(--text)" }}>{t.emoji} {t.name}</span>
+          {dias >= 0 && dias <= 14 && (
+            <span style={{ background:"var(--chart-5)", color:"#fff", padding:"1px 7px", borderRadius:8, fontSize:10 }}>daqui a {dias}d</span>
+          )}
+          {dias < 0 && diasAte(t.date_fim ?? t.date_inicio) >= -1 && (
+            <span style={{ background:"var(--color-good)", color:"#fff", padding:"1px 7px", borderRadius:8, fontSize:10 }}>em curso</span>
+          )}
+        </div>
+        <div style={{ fontSize:12, color:"var(--text-3)" }}>
+          📅 {fmtDate(t.date_inicio)}
+          {t.date_fim && t.date_fim !== t.date_inicio ? ` → ${fmtDate(t.date_fim)}` : ""}
+          {t.rondas ? ` · ${t.rondas}R` : ""}
+          {t.campo   ? ` · ${t.campo}` : ""}
+          {t.fee_18  ? ` · 💵 ${t.fee_18}` : ""}
+        </div>
+
+        {t.sem_flights && (
+          <div style={{ color:"var(--text-3)", fontSize:11, marginTop:6 }}>⏳ Flights ainda não publicados</div>
+        )}
+        {t.erro && <div style={{ color:"var(--color-danger)", fontSize:11, marginTop:6 }}>⚠️ {t.erro}</div>}
+
+        {!t.erro && !t.sem_flights && (
+          <div style={{ marginTop:10, display:"flex", gap:6, flexWrap:"wrap", alignItems:"center" }}>
+            <span style={{ background:"var(--color-good-dark)", color:"#fff", padding:"2px 8px", borderRadius:8, fontSize:11 }}>
+              {t.total_inscritos}/{t.total_maximo} inscritos
+            </span>
+            {b12 && (() => {
+              const bd = badgeVagas(b12.vagas, b12.maximo);
+              return bd ? (
+                <span style={{ background: urgente ? bd.bg : "var(--bg-hover)", color: urgente ? bd.cor : "var(--text-2)",
+                  border:`1px solid ${bd.bg}`, padding:"2px 8px", borderRadius:8, fontSize:11, fontWeight:700 }}>
+                  ★ Boys 12: {b12.inscritos}/{b12.maximo} ({bd.label})
+                </span>
+              ) : null;
+            })()}
+          </div>
+        )}
       </div>
 
-      {data.torneios.map(t => {
-        const isAberto = abertos.has(t.t);
-        const b12      = t.escaloes.find(e => e.nome === ESCALAO_MANUEL);
-        const ptTotal  = t.escaloes.flatMap(e => e.jogadores ?? []).filter(j => j.pais === "PT");
-        const dias     = diasAte(t.date_inicio);
-        const urgente  = b12 && b12.vagas <= 3 && b12.vagas > 0;
-
-        return (
-          <div key={t.t} style={{
-            background:"var(--bg-card)",
-            border:`1px solid ${urgente ? "var(--color-warn)" : "var(--border)"}`,
-            borderRadius:10, marginBottom:12, overflow:"hidden",
-          }}>
-            <div onClick={() => toggle(t.t)} style={{
-              cursor:"pointer", padding:"13px 16px",
-              display:"flex", justifyContent:"space-between", alignItems:"flex-start", gap:12
-            }}>
-              <div style={{ flex:1 }}>
-                <div style={{ display:"flex", alignItems:"center", gap:7, marginBottom:3, flexWrap:"wrap" }}>
-                  <span style={{ fontSize:16, fontWeight:700, color:"var(--text)" }}>
-                    {t.emoji} {t.name}
-                  </span>
-                  {dias >= 0 && dias <= 14 && (
-                    <span style={{ background:"var(--chart-5)", color:"#fff",
-                      padding:"1px 7px", borderRadius:8, fontSize:10 }}>daqui a {dias}d</span>
-                  )}
-                  {dias < 0 && diasAte(t.date_fim ?? t.date_inicio) >= -1 && (
-                    <span style={{ background:"var(--color-good)", color:"#fff",
-                      padding:"1px 7px", borderRadius:8, fontSize:10 }}>em curso</span>
-                  )}
-                </div>
-                <div style={{ fontSize:11, color:"var(--text-3)" }}>
-                  📅 {fmtDate(t.date_inicio)}
-                  {t.date_fim && t.date_fim !== t.date_inicio ? ` → ${fmtDate(t.date_fim)}` : ""}
-                  {t.rondas ? ` · ${t.rondas}R` : ""}
-                  {t.campo   ? ` · ${t.campo}` : ""}
-                  {t.fee_18  ? ` · 💵 ${t.fee_18}` : ""}
-                </div>
-                {t.sem_flights && (
-                  <div style={{ color:"var(--text-3)", fontSize:11, marginTop:4 }}>⏳ Flights ainda não publicados</div>
-                )}
-                {t.erro && <div style={{ color:"var(--color-danger)", fontSize:11, marginTop:4 }}>⚠️ {t.erro}</div>}
-                {!t.erro && !t.sem_flights && (
-                  <div style={{ marginTop:8, display:"flex", gap:6, flexWrap:"wrap", alignItems:"center" }}>
-                    <span style={{ background:"var(--color-good-dark)", color:"#fff",
-                      padding:"2px 8px", borderRadius:8, fontSize:11 }}>
-                      {t.total_inscritos}/{t.total_maximo}
+      {t.erro || t.sem_flights ? null : (
+        <>
+          {/* Grid de escalões */}
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(210px,1fr))", gap:6, marginBottom:16 }}>
+            {t.escaloes.map(e => {
+              const bd  = badgeVagas(e.vagas, e.maximo);
+              const dst = ESCALOES_DESTAQUE.has(e.nome);
+              const man = e.nome === ESCALAO_MANUEL;
+              return (
+                <div key={e.age_group} style={{
+                  background: man?"var(--accent-light)":dst?"var(--bg-detail)":"var(--bg)",
+                  border:`1px solid ${man?"var(--accent)":dst?"var(--border)":"transparent"}`,
+                  borderRadius:6, padding:"7px 10px",
+                }}>
+                  <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom: e.jogadores?.length ? 5 : 0 }}>
+                    <span style={{ fontSize:11, color:man?"var(--accent)":dst?"var(--text-2)":"var(--text-3)" }}>
+                      {man?"★ ":""}{e.nome}
+                      <span style={{ color:"var(--text-3)", fontSize:10, marginLeft:3 }}>({e.holes}H)</span>
                     </span>
-                    {b12 && (() => {
-                      const bd = badgeVagas(b12.vagas, b12.maximo);
-                      return bd ? (
-                        <span style={{ background:bd.bg, color:bd.cor,
-                          padding:"2px 8px", borderRadius:8, fontSize:11, fontWeight:700 }}>
-                          ★ Boys 12: {b12.inscritos}/{b12.maximo} ({bd.label})
-                        </span>
-                      ) : null;
-                    })()}
-                    {ptTotal.length > 0 && (
-                      <span style={{ background:"var(--accent)", color:"#fff",
-                        padding:"2px 8px", borderRadius:8, fontSize:11 }}>
-                        🇵🇹 {ptTotal.map(j=>j.nome).join(", ")}
-                      </span>
-                    )}
+                    <div style={{ display:"flex", gap:4, alignItems:"center" }}>
+                      <span style={{ fontSize:10, color:"var(--text-3)" }}>{e.inscritos}/{e.maximo}</span>
+                      {bd && <span style={{ background:bd.bg, color:bd.cor, padding:"1px 5px", borderRadius:5, fontSize:9, fontWeight:700 }}>{bd.label}</span>}
+                    </div>
                   </div>
-                )}
-              </div>
-              <span style={{ color:"var(--text-3)", fontSize:14, userSelect:"none" }}>
-                {isAberto ? "▲" : "▼"}
-              </span>
-            </div>
-
-            {isAberto && !t.erro && !t.sem_flights && (
-              <div style={{ borderTop:"1px solid var(--border)", padding:"12px 16px" }}>
-                <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(210px,1fr))", gap:6, marginBottom:12 }}>
-                  {t.escaloes.map(e => {
-                    const bd  = badgeVagas(e.vagas, e.maximo);
-                    const dst = ESCALOES_DESTAQUE.has(e.nome);
-                    const man = e.nome === ESCALAO_MANUEL;
-                    return (
-                      <div key={e.age_group} style={{
-                        background: man?"var(--accent-light)":dst?"var(--bg-detail)":"var(--bg)",
-                        border:`1px solid ${man?"var(--accent)":dst?"var(--border)":"transparent"}`,
-                        borderRadius:6, padding:"7px 10px",
-                      }}>
-                        <div style={{ display:"flex", justifyContent:"space-between",
-                          alignItems:"center", marginBottom: e.jogadores?.length ? 5 : 0 }}>
-                          <span style={{ fontSize:11, color:man?"var(--accent)":dst?"var(--text-2)":"var(--text-3)" }}>
-                            {man?"★ ":""}{e.nome}
-                            <span style={{ color:"var(--text-3)", fontSize:10, marginLeft:3 }}>({e.holes}H)</span>
-                          </span>
-                          <div style={{ display:"flex", gap:4, alignItems:"center" }}>
-                            <span style={{ fontSize:10, color:"var(--text-3)" }}>{e.inscritos}/{e.maximo}</span>
-                            {bd && <span style={{ background:bd.bg, color:bd.cor,
-                              padding:"1px 5px", borderRadius:5, fontSize:9, fontWeight:700 }}>{bd.label}</span>}
-                          </div>
+                  {e.jogadores && e.jogadores.length > 0 && (
+                    <div style={{ borderTop:"1px solid var(--border)", paddingTop:4 }}>
+                      {e.jogadores.map((j,i) => (
+                        <div key={i} style={{ display:"flex", justifyContent:"space-between", fontSize:12, padding:"2px 0",
+                          color: j.pais==="PT" ? "var(--accent)" : "var(--text)" }}>
+                          <span>{j.nome}</span>
+                          <span title={j.cidade}>{flag(j.pais)}</span>
                         </div>
-                        {e.jogadores && e.jogadores.length > 0 && (
-                          <div style={{ borderTop:"1px solid var(--border)", paddingTop:4 }}>
-                            {e.jogadores.map((j,i) => (
-                              <div key={i} style={{ display:"flex", justifyContent:"space-between",
-                                fontSize:12, padding:"2px 0",
-                                color: j.pais==="PT" ? "var(--accent)" : "var(--text)" }}>
-                                <span>{j.nome}</span>
-                                <span title={j.cidade}>{flag(j.pais)}</span>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                        {!e.jogadores && e.paises && e.paises.length > 0 && (
-                          <div style={{ fontSize:10, color:"var(--text-3)", marginTop:3 }}>
-                            {e.paises.slice(0,5).map(p=>`${flag(p.pais)}${p.n}`).join(" ")}
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
+                      ))}
+                    </div>
+                  )}
+                  {!e.jogadores && e.paises && e.paises.length > 0 && (
+                    <div style={{ fontSize:10, color:"var(--text-3)", marginTop:3 }}>
+                      {e.paises.slice(0,5).map(p=>`${flag(p.pais)}${p.n}`).join(" ")}
+                    </div>
+                  )}
                 </div>
-
-                {ptTotal.length > 0 && (
-                  <div style={{ background:"var(--accent-light)", border:"1px solid var(--accent)", borderRadius:8, padding:"10px 14px", marginBottom:8 }}>
-                    <div style={{ color:"var(--accent)", fontWeight:700, fontSize:12, marginBottom:6 }}>🇵🇹 Portugueses inscritos</div>
-                    {t.escaloes.filter(e=>e.jogadores?.some(j=>j.pais==="PT")).map(e=>(
-                      <div key={e.age_group} style={{ marginBottom:4 }}>
-                        <div style={{ color:"var(--accent)", fontSize:10, marginBottom:1 }}>{e.nome}</div>
-                        {e.jogadores!.filter(j=>j.pais==="PT").map((j,i)=>(
-                          <div key={i} style={{ color:"var(--text)", fontSize:12, paddingLeft:8 }}>
-                            {j.nome} <span style={{ color:"var(--text-3)", fontSize:11 }}>{j.cidade}</span>
-                          </div>
-                        ))}
-                      </div>
-                    ))}
-                  </div>
-                )}
-                <div style={{ textAlign:"right", color:"var(--text-3)", fontSize:10 }}>
-                  {fmtTs(t.ultima_atualizacao)}
-                </div>
-              </div>
-            )}
+              );
+            })}
           </div>
-        );
-      })}
+
+          {/* Portugueses */}
+          {ptTotal.length > 0 && (
+            <div style={{ background:"var(--accent-light)", border:"1px solid var(--accent)", borderRadius:8, padding:"10px 14px", marginBottom:8 }}>
+              <div style={{ color:"var(--accent)", fontWeight:700, fontSize:12, marginBottom:6 }}>🇵🇹 Portugueses inscritos</div>
+              {t.escaloes.filter(e=>e.jogadores?.some(j=>j.pais==="PT")).map(e=>(
+                <div key={e.age_group} style={{ marginBottom:4 }}>
+                  <div style={{ color:"var(--accent)", fontSize:10, marginBottom:1 }}>{e.nome}</div>
+                  {e.jogadores!.filter(j=>j.pais==="PT").map((j,i)=>(
+                    <div key={i} style={{ color:"var(--text)", fontSize:12, paddingLeft:8 }}>
+                      {j.nome} <span style={{ color:"var(--text-3)", fontSize:11 }}>{j.cidade}</span>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          )}
+          <div style={{ textAlign:"right", color:"var(--text-3)", fontSize:10 }}>{fmtTs(t.ultima_atualizacao)}</div>
+        </>
+      )}
     </div>
   );
 }
 
+// manter TabCampo para compatibilidade (não é usada directamente mas pode existir)
+function TabCampo({ data }: { data: FieldData }) {
+  return <div>{data.torneios.map(t => <TabCampoDetalhe key={t.t} torneio={t} />)}</div>;
+}
+
+
 // ─────────────────────────────────────────────
 // TAB RESULTADOS
 // ─────────────────────────────────────────────
-function TabResultados({ data }: { data: ResultsData }) {
+function TabResultados({ data, selectedT }: {
+  data: ResultsData;
+  selectedT: number | null;
+}) {
+  const t = data.resultados.find(r => r.t === selectedT) ?? null;
+
   const [expandedRondas, setExpandedRondas] = useState<Set<string>>(() => {
-    // Expandir automaticamente o escalão do Manuel na ronda 1
     const s = new Set<string>();
-    for (const t of data.resultados) {
-      const em = t.escaloes.find(e => e.is_manuel);
-      if (em && em.rondas[0]) s.add(`${t.t}-${em.age_group}-1`);
+    for (const tr of data.resultados) {
+      const em = tr.escaloes.find(e => e.is_manuel);
+      if (em && em.rondas[0]) s.add(`${tr.t}-${em.age_group}-1`);
     }
     return s;
   });
-  const [abertos, setAbertos] = useState<Set<number>>(new Set());
-  const toggle = (t: number) => setAbertos(p => {
-    const n = new Set(p); n.has(t) ? n.delete(t) : n.add(t); return n;
-  });
+
+  // Quando muda torneio, expandir automaticamente o escalão do Manuel
+  useEffect(() => {
+    if (!t) return;
+    const em = t.escaloes.find(e => e.is_manuel);
+    if (em && em.rondas[0]) {
+      const key = `${t.t}-${em.age_group}-1`;
+      setExpandedRondas(prev => { const s = new Set(prev); s.add(key); return s; });
+    }
+  }, [selectedT]);
 
   if (!data.resultados.length) return (
     <div style={{ color:"var(--text-3)", padding:"32px 0", textAlign:"center", fontSize:13 }}>
@@ -518,96 +546,73 @@ function TabResultados({ data }: { data: ResultsData }) {
     </div>
   );
 
+  if (!t) return (
+    <div style={{ color:"var(--text-3)", padding:"32px 0", textAlign:"center", fontSize:13 }}>
+      Selecciona um torneio na sidebar
+    </div>
+  );
+
+  const manuelRows = t.escaloes.flatMap(e =>
+    e.rondas.flatMap(r =>
+      (r.leaderboard ?? r.jogadores ?? [])
+        .filter(j => isManuel(j.nome))
+        .map(j => ({ escalao:e.nome, ronda:r.ronda, ...j }))
+    )
+  );
+
   return (
     <div>
-      <div style={{ color:"var(--text-3)", fontSize:11, marginBottom:14 }}>
-        Actualizado {fmtTs(data.gerado_em)}
+      {/* Header torneio */}
+      <div style={{ marginBottom:16 }}>
+        <div style={{ fontSize:17, fontWeight:700, color:"var(--text)", marginBottom:4 }}>{t.name}</div>
+        <div style={{ fontSize:12, color:"var(--text-3)", display:"flex", gap:10, alignItems:"center", flexWrap:"wrap" }}>
+          <span>📅 {fmtDate(t.date_inicio)}{t.campo ? ` · ${t.campo}` : ""}</span>
+          <span>Actualizado {fmtTs(t.ultima_atualizacao)}</span>
+          {t.url_resultados && (
+            <a href={t.url_resultados} target="_blank" rel="noopener noreferrer"
+              style={{ color:"var(--text-3)", fontSize:10, textDecoration:"none",
+                border:"1px solid var(--border)", borderRadius:5, padding:"1px 7px" }}>
+              ver fonte ↗
+            </a>
+          )}
+        </div>
+        {manuelRows.length > 0 && (
+          <div style={{ marginTop:8, display:"flex", gap:6, flexWrap:"wrap" }}>
+            {manuelRows.map((m,i) => (
+              <span key={i} style={{ background:"var(--accent-light)", border:"1px solid var(--accent)",
+                color:"var(--accent)", padding:"2px 10px", borderRadius:8, fontSize:12, fontWeight:700 }}>
+                ★ {m.escalao} R{m.ronda}: {m.score} · {m.pontos} pts
+              </span>
+            ))}
+          </div>
+        )}
       </div>
 
-      {data.resultados.map(t => {
-        const isAberto = abertos.has(t.t);
-
-        // Resumo do Manuel neste torneio
-        const manuelRows = t.escaloes.flatMap(e =>
-          e.rondas.flatMap(r =>
-            (r.leaderboard ?? r.jogadores ?? [])
-              .filter(j => isManuel(j.nome))
-              .map(j => ({ escalao:e.nome, ronda:r.ronda, ...j }))
-          )
-        );
-
+      {/* Escalões e rondas */}
+      {t.escaloes.map(e => {
+        const isManuelEscalao = e.is_manuel ||
+          (t.escalao_manuel ? e.age_group === t.escalao_manuel : e.nome === ESCALAO_MANUEL);
+        const rondasComDados = e.rondas.filter(r => (r.leaderboard ?? r.jogadores ?? []).length > 0);
+        if (!rondasComDados.length) return null;
         return (
-          <div key={t.t} style={{ border:"1px solid var(--border)", borderRadius:10, marginBottom:12, overflow:"hidden", background:"var(--bg-card)" }}>
-            <div onClick={() => toggle(t.t)} style={{ cursor:"pointer", padding:"13px 16px",
-              display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
-              <div style={{ flex:1 }}>
-                <div style={{ fontSize:16, fontWeight:700, color:"var(--text)", marginBottom:3 }}>
-                  {t.name}
-                </div>
-                <div style={{ fontSize:12, color:"var(--text-3)", display:"flex", gap:10, alignItems:"center", flexWrap:"wrap" }}>
-                  <span>📅 {fmtDate(t.date_inicio)}{t.campo ? ` · ${t.campo}` : ""}</span>
-                  {t.url_resultados && (
-                    <a href={t.url_resultados} target="_blank" rel="noopener noreferrer"
-                      onClick={e => e.stopPropagation()}
-                      style={{ color:"var(--text-3)", fontSize:10, textDecoration:"none",
-                        border:"1px solid var(--border)", borderRadius:5, padding:"1px 7px" }}>
-                      ver fonte ↗
-                    </a>
-                  )}
-                </div>
-                {manuelRows.length > 0 && (
-                  <div style={{ marginTop:7, display:"flex", gap:6, flexWrap:"wrap" }}>
-                    {manuelRows.map((m,i) => (
-                      <span key={i} style={{ background:"var(--accent-light)", border:"1px solid var(--accent)",
-                        color:"var(--accent)", padding:"2px 10px", borderRadius:8, fontSize:12, fontWeight:700 }}>
-                        ★ {m.escalao} R{m.ronda}: {m.score} pan · {m.pontos} pts
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-              <span style={{ color:"var(--text-3)", fontSize:14, userSelect:"none" }}>
-                {isAberto ? "▲" : "▼"}
-              </span>
+          <div key={e.age_group} style={{ marginBottom:20 }}>
+            <div style={{ fontSize:12, fontWeight:700,
+              color: isManuelEscalao ? "var(--accent)" : "var(--text-3)",
+              borderBottom:`1px solid ${isManuelEscalao ? "var(--accent)" : "var(--border)"}`,
+              paddingBottom:5, marginBottom:8 }}>
+              {isManuelEscalao ? "★ " : ""}{e.nome}
             </div>
-
-            {isAberto && (
-              <div style={{ borderTop:"1px solid var(--border)", padding:"12px 16px" }}>
-                {t.escaloes.map(e => {
-                  const isManuelEscalao = e.is_manuel ||
-                    (t.escalao_manuel ? e.age_group === t.escalao_manuel : e.nome === ESCALAO_MANUEL);
-                  const rondasComDados = e.rondas.filter(r =>
-                    (r.leaderboard ?? r.jogadores ?? []).length > 0
-                  );
-                  return (
-                  <div key={e.age_group} style={{ marginBottom:20 }}>
-                    <div style={{ fontSize:12, fontWeight:700,
-                      color: isManuelEscalao ? "var(--accent)" : "var(--text-3)",
-                      borderBottom:`1px solid ${isManuelEscalao ? "var(--accent)" : "var(--border)"}`,
-                      paddingBottom:5, marginBottom:8 }}>
-                      {isManuelEscalao ? "★ " : ""}{e.nome}
-                    </div>
-                    {rondasComDados.map(r => {
-                      const key = `${t.t}-${e.age_group}-${r.ronda}`;
-                      return (
-                        <TabelaRonda key={key} ronda={r}
-                          expanded={expandedRondas.has(key)}
-                          onToggle={() => setExpandedRondas(prev => {
-                            const s = new Set(prev);
-                            s.has(key) ? s.delete(key) : s.add(key);
-                            return s;
-                          })}
-                        />
-                      );
-                    })}
-                  </div>
-                  );
-                })}
-                <div style={{ textAlign:"right", color:"var(--text-3)", fontSize:10 }}>
-                  {fmtTs(t.ultima_atualizacao)}
-                </div>
-              </div>
-            )}
+            {rondasComDados.map(r => {
+              const key = `${t.t}-${e.age_group}-${r.ronda}`;
+              return (
+                <TabelaRonda key={key} ronda={r}
+                  expanded={expandedRondas.has(key)}
+                  onToggle={() => setExpandedRondas(prev => {
+                    const s = new Set(prev); s.has(key) ? s.delete(key) : s.add(key); return s;
+                  })}
+                />
+              );
+            })}
           </div>
         );
       })}
@@ -978,11 +983,15 @@ export default function USKidsFieldPage() {
   const [intlData,    setIntlData]    = useState<IntlData | null>(null);
   const [tab,         setTab]         = useState<Tab>("campo");
   const [erro,        setErro]        = useState<string | null>(null);
+  const [selectedT,   setSelectedT]   = useState<number | null>(null);
 
   useEffect(() => {
     fetch("/data/uskids-field.json?v=" + Date.now())
       .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
-      .then(setFieldData)
+      .then((d: FieldData) => {
+        setFieldData(d);
+        if (d.torneios.length) setSelectedT(d.torneios[0].t);
+      })
       .catch(e => setErro(e.message));
 
     fetch("/data/uskids-results.json?v=" + Date.now())
@@ -1008,6 +1017,21 @@ export default function USKidsFieldPage() {
     return nomes.size;
   }, [resultsData]);
 
+  const torneiosCampo = useMemo(() => fieldData?.torneios ?? [], [fieldData]);
+  const torneiosResultados = useMemo(() => resultsData?.resultados ?? [], [resultsData]);
+
+  const allTorneios = useMemo(() => {
+    const map = new Map<number, { t: number; name: string; date: string; temResultados: boolean; temCampo: boolean }>();
+    for (const t of torneiosCampo) {
+      map.set(t.t, { t: t.t, name: t.name, date: t.date_inicio, temResultados: false, temCampo: true });
+    }
+    for (const t of torneiosResultados) {
+      if (map.has(t.t)) map.get(t.t)!.temResultados = true;
+      else map.set(t.t, { t: t.t, name: t.name, date: t.date_inicio, temResultados: true, temCampo: false });
+    }
+    return [...map.values()].sort((a, b) => isoDate(a.date).localeCompare(isoDate(b.date)));
+  }, [torneiosCampo, torneiosResultados]);
+
   if (erro) return (
     <div style={{ padding:32, color:"var(--color-danger)", fontFamily:"monospace", fontSize:13 }}>
       ⚠️ {erro}
@@ -1017,55 +1041,103 @@ export default function USKidsFieldPage() {
     <div style={{ padding:32, color:"var(--text-3)", fontSize:13 }}>A carregar…</div>
   );
 
+  // Quando muda de tab, verificar se o torneio seleccionado existe nessa tab
+  const handleTabChange = (newTab: Tab) => {
+    setTab(newTab);
+    // Seleccionar o primeiro torneio disponível para a nova tab se o actual não existir
+    if (newTab === "resultados" && selectedT) {
+      const exists = torneiosResultados.some(t => t.t === selectedT);
+      if (!exists && torneiosResultados.length) setSelectedT(torneiosResultados[0].t);
+    }
+  };
+
   const TABS: { id: Tab; label: string; badge: number }[] = [
     { id:"campo",      label:"⛳ Campo",      badge: fieldData.torneios.length },
     { id:"resultados", label:"🏆 Resultados", badge: nResultados },
     { id:"rivais",     label:"🤝 Rivais",     badge: nRivais },
   ];
 
+  const selectedFieldTorneio = fieldData.torneios.find(t => t.t === selectedT) ?? null;
+
   return (
-    <div style={{ padding:"20px 16px", maxWidth:900, margin:"0 auto",
-      fontFamily:"system-ui, sans-serif" }}>
+    <div className="master-detail" style={{ height:"calc(100vh - 52px)" }}>
 
-      <div style={{ marginBottom:20 }}>
-        <h1 style={{ margin:0, fontSize:20, color:"var(--text)", fontWeight:700 }}>
-          USKids Golf Internacional
-        </h1>
+      {/* ── SIDEBAR ── */}
+      <div className="sidebar" style={{ minWidth:220, maxWidth:260 }}>
+        <div style={{ padding:"12px 12px 4px", fontSize:13, fontWeight:700, color:"var(--text)" }}>
+          USKids Golf
+        </div>
+
+        {/* Tabs na sidebar */}
+        <div style={{ display:"flex", flexDirection:"column", gap:2, padding:"4px 8px 8px", borderBottom:"1px solid var(--border-light)" }}>
+          {TABS.map(t => (
+            <button key={t.id} onClick={() => handleTabChange(t.id)}
+              className={`course-item${tab === t.id ? " active" : ""}`}
+              style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+              <span>{t.label}</span>
+              {t.badge > 0 && (
+                <span style={{
+                  background: tab === t.id ? "var(--accent)" : "var(--bg-muted)",
+                  color: tab === t.id ? "#fff" : "var(--text-3)",
+                  borderRadius:10, padding:"0 6px", fontSize:10, fontWeight:700,
+                }}>{t.badge}</span>
+              )}
+            </button>
+          ))}
+        </div>
+
+        {/* Lista de torneios */}
+        <div className="sidebar-section-title" style={{ marginTop:8 }}>Torneios</div>
+        <div style={{ overflowY:"auto", flex:1 }}>
+          {allTorneios.map(t => {
+            const active = t.t === selectedT;
+            const temConteudo = tab === "resultados" ? t.temResultados : t.temCampo;
+            return (
+              <button key={t.t}
+                onClick={() => setSelectedT(t.t)}
+                className={`course-item${active ? " active" : ""}`}
+                style={{ opacity: temConteudo ? 1 : 0.45, width:"100%", textAlign:"left" }}>
+                <div style={{ fontWeight:600, fontSize:12 }}>{t.name.replace(/\s*\d{4}$/, "")}</div>
+                <div style={{ fontSize:10, color: active ? "var(--accent-light)" : "var(--text-muted)", marginTop:1 }}>
+                  {fmtDate(t.date)}
+                  {t.temResultados && <span style={{ marginLeft:4, opacity:0.8 }}>🏆</span>}
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="muted fs-10" style={{ padding:"8px 12px", borderTop:"1px solid var(--border-light)" }}>
+          signupanytime.com · actualização diária
+        </div>
       </div>
 
-      {/* Tabs */}
-      <div style={{ display:"flex", gap:4, marginBottom:20, borderBottom:"1px solid var(--border)" }}>
-        {TABS.map(t => (
-          <button key={t.id} onClick={() => setTab(t.id)}
-            className={`tourn-tab tourn-tab-sm${tab===t.id ? " active" : ""}`}
-            style={{ borderBottom: tab===t.id ? "2px solid var(--accent)" : "2px solid transparent",
-              borderRadius:"6px 6px 0 0", display:"flex", alignItems:"center", gap:6 }}>
-            {t.label}
-            {t.badge > 0 && (
-              <span style={{
-                background: tab===t.id ? "var(--accent)" : "var(--bg-muted)",
-                color: tab===t.id ? "#fff" : "var(--text-3)",
-                borderRadius:10, padding:"0 6px", fontSize:10, fontWeight:700,
-              }}>{t.badge}</span>
-            )}
-          </button>
-        ))}
-      </div>
+      {/* ── CONTEÚDO ── */}
+      <div style={{ flex:1, overflow:"auto", padding:"16px 20px" }}>
 
-      {tab === "campo"      && <TabCampo data={fieldData} />}
-      {tab === "resultados" && (
-        resultsData
-          ? <TabResultados data={resultsData} />
-          : <div style={{color:"var(--text-3)",padding:"24px 0"}}>A carregar resultados…</div>
-      )}
-      {tab === "rivais" && (
-        resultsData
-          ? <TabRivais data={resultsData} fieldData={fieldData} intlData={intlData} />
-          : <div style={{color:"var(--text-3)",padding:"24px 0"}}>A carregar…</div>
-      )}
+        {tab === "campo" && (
+          selectedFieldTorneio
+            ? <TabCampoDetalhe torneio={selectedFieldTorneio} />
+            : <div className="muted" style={{ padding:32, textAlign:"center" }}>Selecciona um torneio</div>
+        )}
 
-      <div style={{ color:"var(--border)", fontSize:10, textAlign:"center", marginTop:16 }}>
-        signupanytime.com · actualização automática diária
+        {tab === "resultados" && resultsData && (
+          <TabResultados
+            data={resultsData}
+            selectedT={selectedT}
+          />
+        )}
+        {tab === "resultados" && !resultsData && (
+          <div style={{color:"var(--text-3)",padding:"24px 0"}}>A carregar resultados…</div>
+        )}
+
+        {tab === "rivais" && resultsData && (
+          <TabRivais data={resultsData} fieldData={fieldData} intlData={intlData} />
+        )}
+        {tab === "rivais" && !resultsData && (
+          <div style={{color:"var(--text-3)",padding:"24px 0"}}>A carregar…</div>
+        )}
+
       </div>
     </div>
   );

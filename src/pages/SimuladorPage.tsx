@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react";
 import type { Course, Tee, Hole, SexFilter } from "../data/types";
+import { useAppContext } from "../context/AppContext";
 import TeeBadge from "../ui/TeeBadge";
 import { textOnColor } from "../utils/teeColors";
 import { sortTees, filterTees, teeHexFromTee as teeHex } from "../utils/teeUtils";
@@ -9,7 +10,7 @@ import { SC } from "../utils/scoreDisplay";
 import OverlayExport from "../ui/OverlayExport";
 import type { OverlayData } from "../ui/OverlayExport";
 
-type Props = { courses: Course[] };
+
 
 type HolesMode = "18" | "front9" | "back9";
 
@@ -1076,7 +1077,8 @@ function AgsSection({
   );
 }
 
-export default function SimuladorPage({ courses }: Props) {
+export default function SimuladorPage() {
+  const { simCourses: courses } = useAppContext();
   const [q, setQ] = useState("");
   const [sexFilter, setSexFilter] = useState<SexFilter>("ALL");
   const [holesMode, setHolesMode] = useState<HolesMode>("18");
@@ -1338,11 +1340,9 @@ export default function SimuladorPage({ courses }: Props) {
           {isManual ? (
             <>
               <div className="detail-header">
-                <div>
-                  <h2 className="detail-title">✎ Modo Manual</h2>
-                  <div className="detail-sub">
-                    <span className="muted">Introduz CR e Slope para calcular. Par é opcional.</span>
-                  </div>
+                <h2 className="detail-title">✎ Modo Manual</h2>
+                <div className="detail-sub">
+                  <span className="muted">Introduz CR e Slope para calcular. Par é opcional.</span>
                 </div>
               </div>
 
@@ -1353,7 +1353,7 @@ export default function SimuladorPage({ courses }: Props) {
               </div>
 
               {!teeData && (
-                <div className="notice notice-info">
+                <div className="notice notice-error">
                   Preenche pelo menos <strong>CR</strong> e <strong>Slope</strong> de{" "}
                   {holesMode === "18" ? "18 buracos" : holesMode === "front9" ? "Front 9" : "Back 9"}{" "}
                   para ver os cálculos.
@@ -1395,20 +1395,26 @@ export default function SimuladorPage({ courses }: Props) {
                     </div>
                   </details>
                 </>
+              )}\n
+              {/* Partilhar Scorecard — colapsável */}
+              {overlayData && (
+                <details className="mt-14">
+                  <summary className="sim-section-toggle">
+                    Partilhar Scorecard
+                  </summary>
+                  <div className="mt-8">
+                    <OverlayExport data={overlayData} inline />
+                  </div>
+                </details>
               )}
-
-              {/* Overlay — sempre visível em modo manual */}
-              {overlayData && <OverlayExport data={overlayData} />}
             </>
           ) : selected && teeData ? (
             <>
               <div className="detail-header">
-                <div>
-                  <h2 className="detail-title">{selected.master.name}</h2>
-                  <div className="detail-sub">
-                    <span className="muted">{selected.courseKey}</span>
-                    {is9h && <span className="muted"> · {holesLabel}</span>}
-                  </div>
+                <h2 className="detail-title">{selected.master.name}</h2>
+                <div className="detail-sub">
+                  <span className="muted">{selected.courseKey}</span>
+                  {is9h && <span className="muted"> · {holesLabel}</span>}
                 </div>
               </div>
 
@@ -1468,7 +1474,17 @@ export default function SimuladorPage({ courses }: Props) {
 
               <AgsSection hi={hi} holes={selectedTee?.holes ?? null} cr={teeData.cr} slope={teeData.slope} par={teeData.par} pcc={pcc} is9h={is9h} holesMode={holesMode} onOverlayData={handleOverlayData} />
 
-              {overlayData && <OverlayExport data={overlayData} />}
+              {/* Partilhar Scorecard — colapsável */}
+              {overlayData && (
+                <details className="mt-14">
+                  <summary className="sim-section-toggle">
+                    Partilhar Scorecard
+                  </summary>
+                  <div className="mt-8">
+                    <OverlayExport data={overlayData} inline />
+                  </div>
+                </details>
+              )}
 
               {/* Tabela SD — Multi-Tee (todos os tees masculinos) */}
               <details className="mt-14">

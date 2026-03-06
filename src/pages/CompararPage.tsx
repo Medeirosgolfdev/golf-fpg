@@ -14,6 +14,7 @@
  */
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import type { Player, PlayersDb } from "../data/types";
+import { useAppContext } from "../context/AppContext";
 import {
   loadPlayerData, type PlayerPageData, type RoundData,
   type HoleScores,
@@ -358,7 +359,7 @@ function RadarChart({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats | null
   };
 
   return (
-    <div className="courseAnalysis p-16">
+    <div className="card p-16">
       <div className="h-md">Perfil Comparativo <span className="muted fs-11 fw-400">(apenas torneios)</span></div>
       <svg viewBox="0 0 300 290" className="cmp-radar-wrap">
         {[0.25, 0.5, 0.75, 1].map(frac => (
@@ -462,7 +463,7 @@ function StatsTable({ slots, allAgg, statsDb }: { slots: Slot[]; allAgg: (AggSta
   });
 
   return (
-    <div className="courseAnalysis p-0 no-overflow">
+    <div className="card p-0 no-overflow">
       <div className="h-md p-14" style={{ paddingBottom: 0 }}>Comparação Detalhada <span className="muted fs-11 fw-400">(apenas torneios)</span></div>
       <div className="table-wrap mt-8">
         <table className="dtable-lg fs-13">
@@ -530,7 +531,7 @@ function ScoreDistribution({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats
   ];
 
   return (
-    <div className="courseAnalysis p-16">
+    <div className="card p-16">
       <div className="h-md">Distribuição de Scores <span className="muted fs-11 fw-400">(apenas torneios)</span></div>
       <div className="flex-col-gap12 mt-8">
         {cats.filter(c => c.key !== "total").map(cat => {
@@ -612,7 +613,7 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
   const yPos = (v: number) => PAD.top + ((maxV - v) / range) * (H - PAD.top - PAD.bottom);
 
   return (
-    <div className="courseAnalysis">
+    <div className="card">
       <div className="h-md flex-center-gap10 flex-wrap">
         Buraco a Buraco <span className="muted fs-11 fw-400">(torneios)</span>
         <select className="select" value={sel} onChange={e => setSel(Number(e.target.value))}>
@@ -728,7 +729,7 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
   const totalMatches = matches.length;
 
   return (
-    <div className="courseAnalysis">
+    <div className="card">
       <div className="h-md">Head-to-Head ({totalMatches} torneios comuns)</div>
 
       {/* Win progress bar */}
@@ -861,7 +862,7 @@ function TournamentEvolutionSection({ slots }: { slots: Slot[] }) {
   const metricLabel = metric === "sd" ? "SD" : "Gross";
 
   return (
-    <div className="courseAnalysis">
+    <div className="card">
       <div className="h-md flex-center-gap10 flex-wrap">
         Evolução em Torneios
         <select className="select" value={metric} onChange={e => setMetric(e.target.value as "sd" | "gross")}>
@@ -930,7 +931,8 @@ function TournamentEvolutionSection({ slots }: { slots: Slot[] }) {
 
 /* ═══════════════════ MAIN ═══════════════════ */
 
-export default function CompararPage({ players }: { players: PlayersDb }) {
+export default function CompararPage() {
+  const { players } = useAppContext();
   const [slots, setSlots] = useState<Slot[]>([]);
   const [statsDb, setStatsDb] = useState<PlayerStatsDb>({});
 

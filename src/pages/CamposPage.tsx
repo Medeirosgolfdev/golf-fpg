@@ -1,6 +1,7 @@
 import { useMemo, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import type { Course, Tee, SexFilter } from "../data/types";
+import { useAppContext } from "../context/AppContext";
 import TeeBadge from "../ui/TeeBadge";
 import PillBadge from "../ui/PillBadge";
 import { teeCanonicalLabel, teeGroupHex } from "../utils/teeColors";
@@ -8,7 +9,7 @@ import { fmt, fmtCR, norm, titleCase, sumRange } from "../utils/format";
 import { fixMojibake } from "../utils/fixEncoding";
 import { sortTees, filterTees, teeHexFromTee } from "../utils/teeUtils";
 
-type Props = { courses: Course[] };
+
 
 type OriginFilter = "ALL" | "PT" | "INTL";
 
@@ -219,7 +220,8 @@ function RatingsTable({ tees }: { tees: Tee[] }) {
 
 /* ——— Página Principal ——— */
 
-export default function CamposPage({ courses }: Props) {
+export default function CamposPage() {
+  const { simCourses: courses } = useAppContext();
   const { courseKey: urlCourseKey } = useParams<{ courseKey?: string }>();
   const navigate = useNavigate();
   const [q, setQ] = useState("");
@@ -391,7 +393,8 @@ export default function CamposPage({ courses }: Props) {
         <div className="course-detail">
           {selected ? (
             <>
-              <div className="detail-header" style={{ flexDirection: "row", alignItems: "flex-start", justifyContent: "space-between" }}>
+              <div className="detail-header">
+                <div className="detail-header-top">
                 <div>
                   <h2 className="detail-title">
                     {selected.master.name}
@@ -416,17 +419,18 @@ export default function CamposPage({ courses }: Props) {
                 </div>
                 <div className="detail-actions">
                   <button
-                    className={`tab-btn ${detailView === "scorecard" ? "active" : ""}`}
+                    className={`tourn-tab tourn-tab-sm ${detailView === "scorecard" ? "active" : ""}`}
                     onClick={() => setDetailView("scorecard")}
                   >
                     Scorecard
                   </button>
                   <button
-                    className={`tab-btn ${detailView === "ratings" ? "active" : ""}`}
+                    className={`tourn-tab tourn-tab-sm ${detailView === "ratings" ? "active" : ""}`}
                     onClick={() => setDetailView("ratings")}
                   >
                     Ratings
                   </button>
+                </div>
                 </div>
               </div>
 

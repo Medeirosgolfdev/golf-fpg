@@ -4,7 +4,7 @@
  *      + multi-round support (R1/R2/Total tabs)
  */
 import React, { useEffect, useState, useMemo, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from "recharts";
 import { scClass, SC, sdClassByHcp } from "../utils/scoreDisplay";
 import { isCalUnlocked } from "../utils/authConstants";
 import PasswordGate from "../ui/PasswordGate";
@@ -346,7 +346,11 @@ function uniquePC(ts: Tournament[]): number {
 }
 function countEvents(ts: Tournament[]): number {
   const s = new Set<string>();
-  for (const t of ts) s.add(t.region + "-" + t.num + "-" + t.date);
+  for (const t of ts) {
+    // Para torneios multi-ronda expandidos, contar só o grupo uma vez
+    const key = t._multiGroup || (t.region + "-" + t.num + "-" + t.date);
+    s.add(key);
+  }
   return s.size;
 }
 
@@ -400,11 +404,11 @@ function availEscaloes(tournaments: Tournament[], escLookup: EscLookup): string[
 }
 
 /** Filter tournaments keeping only players of a given escalão; recalculate positions */
-function filterTournByEsc(tournaments: Tournament[], esc: string, escLookup: EscLookup): Tournament[] {
+function filterTournByEsc(tournaments: Tournament[], escs: string[], escLookup: EscLookup): Tournament[] {
   return tournaments.map(t => {
     const filtered = t.players.filter(p => {
       if (isDNS(p)) return false;
-      return resolveEsc(p, escLookup) === esc;
+      return escs.includes(resolveEsc(p, escLookup));
     });
     if (!filtered.length) return null;
     // Recalculate positions
@@ -465,6 +469,7 @@ function SortTh(props: {
 /* ── Player name ── */
 function PName(props: { name: string; fed?: string; playersDB?: PlayersDB; highlight?: boolean }) {
   const hasProfile = props.fed && props.playersDB && props.playersDB[props.fed];
+  const sex = props.fed && props.playersDB ? props.playersDB[props.fed]?.sex : undefined;
   const truncName = props.name.length > 25 ? props.name.substring(0, 23) + "…" : props.name;
   const sty: React.CSSProperties = {
     fontSize: 12, fontWeight: 700, whiteSpace: "nowrap",
@@ -475,6 +480,8 @@ function PName(props: { name: string; fed?: string; playersDB?: PlayersDB; highl
     <span style={sty} onClick={handleClick}>
       {truncName}
       {props.highlight && <span style={{ marginLeft: 3, fontSize: 10 }}>⭐</span>}
+      {sex === "M" && <span className="jog-sex-inline jog-sex-M" style={{ marginLeft: 4 }}>M</span>}
+      {sex === "F" && <span className="jog-sex-inline jog-sex-F" style={{ marginLeft: 4 }}>F</span>}
     </span>
   );
 }
@@ -496,9 +503,10 @@ function SDCell(props: { sd: number | null; sdSource: string | null; hcp: number
 /* ═══════════════════════════════════════════════════════
    RESUMO TABLE
    ═══════════════════════════════════════════════════════ */
-function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; sdLookup: SDLookup; escLookup?: EscLookup }) {
+function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; sdLookup: SDLookup; escLookup?: EscLookup; mergeByEvent?: boolean }) {
   const { playersDB, sdLookup } = props;
   const globalEscLookup = props.escLookup;
+  const mergeByEvent = !!props.mergeByEvent;
   const sorted = useMemo(() => [...props.tournaments].sort((a, b) => a.date.localeCompare(b.date)), [props.tournaments]);
   const [sortKey, setSortKey] = useState<SortKey>("avgSD");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
@@ -517,14 +525,31 @@ function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; s
     });
   }, []);
 
-  // Build visible tournaments: hide R1/R2 when collapsed, always show Total and singles
+  // Chave de coluna — inline, sem useCallback
+  const mkKey = (t: Tournament) =>
+    mergeByEvent
+      ? String(t.num) + "|" + String(t.region) + "|" + String(t.date)
+      : (t.ccode + "-" + t.tcode);
+
+  // Torneios visíveis (colunas da tabela)
   const visibleSorted = useMemo(() => {
+    if (mergeByEvent) {
+      // Uma coluna por evento físico (num+region+date), ignorar duplicados por escalão
+      const seen = new Set<string>();
+      return sorted.filter(t => {
+        if (t._multiGroup && t._roundLabel !== "Total") return false;
+        const k = String(t.num) + "|" + String(t.region) + "|" + String(t.date);
+        if (seen.has(k)) return false;
+        seen.add(k);
+        return true;
+      });
+    }
     return sorted.filter(t => {
       if (!t._multiGroup) return true;
       if (t._roundLabel === "Total") return true;
       return expandedGroups.has(t._multiGroup);
     });
-  }, [sorted, expandedGroups]);
+  }, [sorted, expandedGroups, mergeByEvent]);
 
   interface PRow {
     pKey: string; name: string; club: string; fed: string; escalao: string; hcp: number | null;
@@ -550,12 +575,10 @@ function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; s
     const map = new Map<string, PRow>();
     const totalKeys = new Set<string>();
     for (const t of sorted) {
-      const tKey = t.ccode + "-" + t.tcode;
-      if (t._roundLabel === "Total") totalKeys.add(tKey);
+      if (t._roundLabel === "Total") totalKeys.add(mkKey(t));
     }
-
     for (const t of sorted) {
-      const tKey = t.ccode + "-" + t.tcode;
+      const tKey = mkKey(t);
       const isTotal = totalKeys.has(tKey);
       for (const p of t.players) {
         const pKey = p.fed || p.name;
@@ -644,7 +667,7 @@ function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; s
     });
   }, [rows, sortKey, sortDir]);
 
-  if (!sorted.length) return <div className="muted ta-center" style={{ padding: 24 }}>Sem torneios.</div>;
+  if (!sorted.length) return <div className="muted ta-center p-24">Sem torneios.</div>;
 
   const hs: React.CSSProperties = { fontSize: 11, padding: "6px 5px" };
   const cs: React.CSSProperties = { fontSize: 12, padding: "5px 5px", whiteSpace: "nowrap" };
@@ -694,7 +717,7 @@ function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; s
 
   return (
     <div className="bjgt-chart-scroll">
-      <table className="dtable" style={{ fontSize: 12, borderCollapse: "collapse", width: "auto" }}>
+      <table className="dtable tbl-compact">
         <thead>
           {/* Row 1: Group-level headers */}
           <tr>
@@ -730,7 +753,7 @@ function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; s
                       </button>
                     )}
                   </div>
-                  <div style={{ color: "var(--text-muted)", fontWeight: 500, fontSize: 10 }}>
+                  <div className="c-muted-fs10-fw5">
                     {fmtDate(t.date)} · Par {par} · {nh}h · {realCount} jog
                     {gh.isMulti && <> · {t._totalRounds}R</>}
                   </div>
@@ -748,15 +771,15 @@ function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; s
             <SortTh sortKey="club" current={sortKey} dir={sortDir} onSort={handleSort} style={{ ...hs, minWidth: 80 }}>Clube</SortTh>
             <SortTh sortKey="hcp" current={sortKey} dir={sortDir} onSort={handleSort} className="r" style={{ ...hs, width: 42, borderRight: bG }}>HCP</SortTh>
             {visibleSorted.map((t) => {
-              const tKey = t.ccode + "-" + t.tcode;
+              const tKey = mkKey(t);
               const roundLabel = t._roundLabel;
               const isRoundCol = roundLabel && roundLabel !== "Total";
               const isTotalCol = roundLabel === "Total";
-              const bg = isTotalCol ? "#fef9c3" : isRoundCol ? "#f0fdf4" : undefined;
+              const bg = isTotalCol ? "var(--bg-warn-subtle)" : isRoundCol ? "var(--bg-success-subtle)" : undefined;
               return (
                 <React.Fragment key={tKey}>
                   <SortTh sortKey={"pos_" + tKey} current={sortKey} dir={sortDir} onSort={handleSort} className="r" style={{ ...hs, width: 28, borderLeft: bG, background: bg }}>
-                    {roundLabel ? <span style={{ fontSize: 9, fontWeight: 800, color: isTotalCol ? "#a16207" : "#16a34a" }}>{isTotalCol ? "Σ" : roundLabel}</span> : "#"}
+                    {roundLabel ? <span style={{ fontSize: 9, fontWeight: 800, color: isTotalCol ? "var(--color-warn-dark)" : "var(--color-good-dark)" }}>{isTotalCol ? "Σ" : roundLabel}</span> : "#"}
                   </SortTh>
                   <SortTh sortKey={"gross_" + tKey} current={sortKey} dir={sortDir} onSort={handleSort} className="r" style={{ ...hs, width: 36, borderLeft: bS, background: bg }}>Gross</SortTh>
                   <SortTh sortKey={"toPar_" + tKey} current={sortKey} dir={sortDir} onSort={handleSort} className="r" style={{ ...hs, width: 32, borderLeft: bS, background: bg }}>±Par</SortTh>
@@ -787,15 +810,15 @@ function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; s
                   <PName name={row.name} fed={row.fed || undefined} playersDB={playersDB} highlight={isManuel(row)} />
                 </td>
                 <td style={{ ...cs, fontSize: 10, color: "var(--text-muted)", fontFamily: "'JetBrains Mono', monospace" }}>{row.fed || "–"}</td>
-                <td style={cs}>{row.escalao ? <span className={escCls} style={{ fontSize: 9 }}>{row.escalao}</span> : <span style={{ color: "var(--text-muted)", fontSize: 10 }}>–</span>}</td>
+                <td style={cs}>{row.escalao ? <span className={escCls + " fs-9"}>{row.escalao}</span> : <span className="c-muted-fs10">–</span>}</td>
                 <td style={{ ...cs, color: "var(--text-3)" }}>{row.club}</td>
                 <td className="r" style={{ ...cs, fontFamily: "'JetBrains Mono', monospace", color: "var(--text-3)", borderRight: bG }}>{row.hcp != null ? row.hcp.toFixed(1) : "–"}</td>
                 {visibleSorted.map((t) => {
-                  const tKey = t.ccode + "-" + t.tcode;
+                  const tKey = mkKey(t);
                   const rv = row.results.get(tKey);
                   const isTotalCol = t._roundLabel === "Total";
                   const isRoundCol = t._roundLabel && t._roundLabel !== "Total";
-                  const colBg = isTotalCol ? "#fffbeb" : isRoundCol ? "#f7fef7" : undefined;
+                  const colBg = isTotalCol ? "var(--bg-warn-subtle)" : isRoundCol ? "var(--bg-success-subtle)" : undefined;
                   if (!rv) return <td key={tKey} colSpan={7} style={{ textAlign: "center", borderLeft: bG, ...cs, background: colBg }}></td>;
                   if (rv === "dns") return <td key={tKey} colSpan={7} style={{ textAlign: "center", borderLeft: bG, ...cs, background: colBg }}><span style={{ color: "var(--text-muted)", fontWeight: 600, fontSize: 11 }}>NS</span></td>;
                   return (
@@ -831,7 +854,7 @@ function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; s
 function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB }) {
   const { tournament, playersDB } = props;
   const players = tournament.players.filter((p) => !isDNS(p) && p.scores && p.scores.length > 0);
-  if (!players.length) return <div className="muted ta-center" style={{ padding: 16 }}>Scorecards não disponíveis.</div>;
+  if (!players.length) return <div className="muted ta-center p-16">Scorecards não disponíveis.</div>;
   const refP = players[0];
   const par = refP.par || [];
   const nh = par.length;
@@ -860,7 +883,7 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB }) {
 
   return (
     <div>
-      <div className="muted fs-11 mb-8" style={{ padding: "0 4px" }}>
+      <div className="muted fs-11 mb-8 p-0-4px">
         {sorted.length} jogadores · Par {parTotal} · {nh}h · Média Rt: {avg.toFixed(1)} ({fmtTP(Math.round(avg - parTotal))})
         {refP.course && <> · 📍 {refP.course}</>}
         {refP.courseRating && <> · CR {refP.courseRating}</>}
@@ -880,7 +903,7 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB }) {
           </tr></thead>
           <tbody>
             <tr className="sep-row">
-              <td style={{ position: "sticky", left: 0, zIndex: 2, background: "var(--bg-card, #fff)" }}></td><td className="row-label par-label" style={{ position: "sticky", left: 26, zIndex: 2, background: "var(--bg-card, #fff)", boxShadow: "2px 0 4px rgba(0,0,0,0.06)" }}>PAR</td><td className="col-total">{parTotal}</td><td></td>
+              <td className="sticky-col-0"></td><td className="row-label par-label sticky-col-1">PAR</td><td className="col-total">{parTotal}</td><td></td>
               {par.slice(0, 9).map((p, i) => <td key={i}>{p}</td>)}
               <td className="col-out fw-600">{parF9}</td>
               {!is9 && par.slice(9, 18).map((p, i) => <td key={i}>{p}</td>)}
@@ -888,7 +911,7 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB }) {
             </tr>
             {si.length >= nh && (
               <tr className="meta-row sep-row">
-                <td style={{ position: "sticky", left: 0, zIndex: 2, background: "var(--bg-card, #fff)" }}></td><td className="row-label par-label" style={{ position: "sticky", left: 26, zIndex: 2, background: "var(--bg-card, #fff)", boxShadow: "2px 0 4px rgba(0,0,0,0.06)" }}>S.I.</td><td></td><td></td>
+                <td className="sticky-col-0"></td><td className="row-label par-label sticky-col-1">S.I.</td><td></td><td></td>
                 {si.slice(0, 9).map((s, i) => <td key={i}>{s}</td>)}
                 <td className="col-out"></td>
                 {!is9 && si.slice(9, 18).map((s, i) => <td key={i}>{s}</td>)}
@@ -933,7 +956,7 @@ function TotalLeaderboard(props: { tournament: Tournament; playersDB: PlayersDB;
   const { tournament, playersDB, sdLookup } = props;
   const nRounds = tournament._totalRounds || 2;
   const players = tournament.players.filter(p => !isDNS(p));
-  if (!players.length) return <div className="muted ta-center" style={{ padding: 16 }}>Sem resultados.</div>;
+  if (!players.length) return <div className="muted ta-center p-16">Sem resultados.</div>;
 
   // Players are already sorted with incomplete at the bottom by expandMultiRound
   const complete = players.filter(p => !p._incomplete);
@@ -947,12 +970,12 @@ function TotalLeaderboard(props: { tournament: Tournament; playersDB: PlayersDB;
 
   return (
     <div>
-      <div className="muted fs-11 mb-8" style={{ padding: "0 4px" }}>
+      <div className="muted fs-11 mb-8 p-0-4px">
         {complete.length} classificados · {incomplete.length > 0 && <>{incomplete.length} incompletos · </>}
         {nRounds} rondas · Par {parTotal}
       </div>
       <div className="bjgt-chart-scroll">
-        <table className="dtable" style={{ fontSize: 12, borderCollapse: "collapse", width: "auto" }}>
+        <table className="dtable tbl-compact">
           <thead>
             <tr>
               <th style={{ ...hs, width: 28, textAlign: "center" }}>#</th>
@@ -1015,18 +1038,18 @@ function TotalLeaderboard(props: { tournament: Tournament; playersDB: PlayersDB;
                     {p.hcpExact != null ? p.hcpExact.toFixed(1) : "–"}
                   </td>
                   <td className="r fw-800" style={{ ...cs, fontSize: 14, fontFamily: "'JetBrains Mono', monospace", borderLeft: bS }}>
-                    {p._incomplete ? <span style={{ opacity: 0.4 }}>{gross}</span> : gross}
+                    {p._incomplete ? <span className="opacity-40">{gross}</span> : gross}
                   </td>
                   <td className="r fw-700" style={{ ...cs, fontFamily: "'JetBrains Mono', monospace", color: p._incomplete ? undefined : tpColor(tp), borderLeft: bS }}>
-                    {p._incomplete ? <span style={{ opacity: 0.4 }}>{fmtTP(tp)}</span> : fmtTP(tp)}
+                    {p._incomplete ? <span className="opacity-40">{fmtTP(tp)}</span> : fmtTP(tp)}
                   </td>
                   {roundData.map((rd, r) => (
                     <React.Fragment key={r}>
                       <td className="r fw-700" style={{ ...cs, borderLeft: bS, fontFamily: "'JetBrains Mono', monospace", background: "var(--bg-hover)" }}>
-                        {rd ? rd.gross : <span style={{ color: "var(--text-muted)" }}>–</span>}
+                        {rd ? rd.gross : <span className="c-muted">–</span>}
                       </td>
                       <td className="r" style={{ ...cs, fontFamily: "'JetBrains Mono', monospace", color: rd ? tpColor(rd.toPar) : undefined, background: "var(--bg-hover)", fontSize: 11 }}>
-                        {rd ? fmtTP(rd.toPar) : <span style={{ color: "var(--text-muted)" }}>–</span>}
+                        {rd ? fmtTP(rd.toPar) : <span className="c-muted">–</span>}
                       </td>
                     </React.Fragment>
                   ))}
@@ -1055,13 +1078,22 @@ interface TournGroup {
   campo: string;
   num: number;
   date: string;
+  escalao: string | null; // para Challenge: "Sub 10", "Sub 12", etc.
   isMulti: boolean;
   totalRounds: number;
   entries: Tournament[];  // 1 for single, N+1 for multi (R1, R2, ..., Total)
 }
 
 function buildGroups(tournaments: Tournament[]): TournGroup[] {
-  const sorted = [...tournaments].sort((a, b) => a.date.localeCompare(b.date));
+  const escIdx = (esc: string | null) => {
+    const i = ESCALOES.indexOf(esc || "");
+    return i >= 0 ? i : 99;
+  };
+  const sorted = [...tournaments].sort((a, b) => {
+    const dateCmp = a.date.localeCompare(b.date);
+    if (dateCmp !== 0) return dateCmp;
+    return escIdx(a.escalao) - escIdx(b.escalao);
+  });
   const groups: TournGroup[] = [];
   const multiMap = new Map<string, Tournament[]>();
   const singles: Tournament[] = [];
@@ -1095,6 +1127,7 @@ function buildGroups(tournaments: Tournament[]): TournGroup[] {
         campo: t.campo,
         num: t.num,
         date: t.date,
+        escalao: t.escalao ?? null,
         isMulti: true,
         totalRounds: t._totalRounds || 2,
         entries,
@@ -1106,6 +1139,7 @@ function buildGroups(tournaments: Tournament[]): TournGroup[] {
         campo: t.campo,
         num: t.num,
         date: t.date,
+        escalao: t.escalao ?? null,
         isMulti: false,
         totalRounds: 1,
         entries: [t],
@@ -1115,300 +1149,1090 @@ function buildGroups(tournaments: Tournament[]): TournGroup[] {
   return groups;
 }
 
-function RegionView(props: { tournaments: Tournament[]; playersDB: PlayersDB; sdLookup: SDLookup; label: string; escLookup?: EscLookup }) {
-  const { playersDB, sdLookup, label } = props;
-  const sorted = useMemo(() => [...props.tournaments].sort((a, b) => a.date.localeCompare(b.date)), [props.tournaments]);
-  const groups = useMemo(() => buildGroups(props.tournaments), [props.tournaments]);
-  // For Resumo, we still need the flat list
-  const [tab, setTab] = useState<"resumo" | number>("resumo");
-  const [roundIdx, setRoundIdx] = useState(0);  // sub-tab within a multi-round group
 
-  // Reset round sub-tab when switching groups
-  const handleGroupTab = useCallback((idx: number) => {
-    setTab(idx);
-    setRoundIdx(0);
-  }, []);
+/* ═══════════════════════════════════════════════════════
+   MAIN — DriveContent com sidebar coerente
+   ═══════════════════════════════════════════════════════ */
 
-  const curGroup = typeof tab === "number" ? groups[tab] : null;
-  const curTournament = curGroup ? curGroup.entries[roundIdx] || curGroup.entries[0] : null;
+/* ═══════════════════════════════════════════════════════
+   SUB-12: Types & Data
+   ═══════════════════════════════════════════════════════ */
+interface TournResult {
+  tournKey: string; tournName: string; tournShort: string;
+  date: string; dateSort: number; campo: string; region: string;
+  series: "tour" | "challenge" | "aquapor";
+  gross: number; toPar: number; sd: number | null; sdSource: "fpg" | "ags" | "raw" | null;
+  pos: number | string | null; totalPlayers: number;
+  nholes: number; birdies: number; pars: number; bogeys: number;
+}
+interface Sub12Row {
+  fed: string; name: string; club: string; region: string; sex: string; hcp: number | null;
+  results: TournResult[];
+  avgGross: number | null; avgSD: number | null; bestGross: number | null; tourneiosPlayed: number;
+  totalBird: number; totalPars: number; totalBog: number;
+}
+type Sub12SeriesTab = "tour" | "challenge" | "aquapor";
+type Sub12ViewTab = "grid" | "ranking" | "evolucao";
+
+const SUB12_SERIES_TABS: { key: Sub12SeriesTab; label: string; emoji: string; color: string; bg: string; holes: string }[] = [
+  { key: "tour",      label: "Tour",      emoji: "🏌️", color: "#059669", bg: "#d1fae5", holes: "18h" },
+  { key: "challenge", label: "Challenge", emoji: "⚡",  color: "#7c3aed", bg: "#ede9fe", holes: "9h"  },
+  { key: "aquapor",   label: "AQUAPOR",   emoji: "💧", color: "#4338ca", bg: "#e0e7ff", holes: "18h" },
+];
+const CHART_COLORS = ["#2563eb","#dc2626","#16a34a","#d97706","#7c3aed","#0891b2","#be185d","#65a30d","#c2410c","#6366f1","#0d9488","#ea580c"];
+const SERIE_COLORS: Record<string, string> = { tour: "#059669", challenge: "#7c3aed", aquapor: "#4338ca" };
+const SERIE_LABELS: Record<string, string>  = { tour: "Tour",   challenge: "Challenge",  aquapor: "AQUAPOR" };
+const REGION_EMOJI: Record<string, string>  = { norte: "🔵", tejo: "🟡", sul: "🟢", madeira: "🟣", acores: "🔴", nacional: "⚪" };
+
+const numAvg = (nums: number[]): number | null => nums.length === 0 ? null : nums.reduce((a, b) => a + b, 0) / nums.length;
+
+function isSub12(esc: string): boolean {
+  if (!esc) return false;
+  const n = esc.toLowerCase().replace(/[\s-]/g, "");
+  return n === "sub10" || n === "sub12";
+}
+function computeSDWithSource(p: Player, sdLookup: SDLookup): { sd: number | null; source: "fpg" | "ags" | "raw" | null } {
+  const fed = p.fed || p.fedCode;
+  if (fed && sdLookup[fed] != null) return { sd: sdLookup[fed], source: "fpg" };
+  const scores = p.scores || [];
+  const parArr = p.par || [];
+  const si = p.si || [];
+  const nholes = p.nholes || scores.length || 18;
+  const parT = p.parTotal || (parArr.length ? parArr.reduce((a,b)=>a+b,0) : 72);
+  const gross = typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : (p.grossTotal as number);
+  if (gross == null || isNaN(gross)) return { sd: null, source: null };
+  const cr = p.courseRating;
+  const slope = p.slope;
+  const hcp = p.hcpExact;
+  if (cr && slope && hcp != null && scores.length >= nholes && parArr.length >= nholes && si.length >= nholes) {
+    const ags = calcAGS(scores, parArr, si, cr, slope, hcp, nholes);
+    const sd18 = nholes <= 9
+      ? Math.abs(ags - parT) / (slope / 113) * (18 / nholes) + (cr - parT * (18 / nholes))
+      : (ags - cr) * 113 / slope + (cr - (cr / (nholes / 18) * (nholes / 18)));
+    const sd = Math.max(0, Math.round(sd18 * 10) / 10);
+    return { sd, source: "ags" };
+  }
+  if (hcp != null) {
+    const exp = nholes <= 9 ? expectedSD9(Math.abs(hcp)) : Math.abs(hcp) * 1.06 + 1;
+    return { sd: Math.round(exp * 10) / 10, source: "raw" };
+  }
+  return { sd: null, source: null };
+}
+function tournShort(t: Tournament): string {
+  const num = t.num || "?";
+  const isAq = t.series === "aquapor";
+  const isCh = t.series === "challenge";
+  const prefix = isAq ? "AQ" : isCh ? "DC" : "DT";
+  if (t.name.toLowerCase().includes("final")) return `${prefix}F`;
+  let zona = "";
+  if (t.region === "madeira") zona = "Mad";
+  else if (t.region === "sul") zona = "Sul";
+  else if (t.region === "norte") zona = "Nrt";
+  else if (t.region === "tejo") zona = "Tjo";
+  return `${prefix}${num} ${zona}`.trim();
+}
+function dateToSort(d: string): number {
+  if (!d) return 0;
+  const parts = d.split("-");
+  if (parts.length === 3 && parts[0].length === 4) return new Date(d).getTime() || 0;
+  if (parts.length === 3 && parts[2].length === 4) return new Date(`${parts[2]}-${parts[1]}-${parts[0]}`).getTime() || 0;
+  return new Date(d).getTime() || 0;
+}
+function buildSub12Data(tournaments: Tournament[], playersDB: PlayersDB, sdLookup: SDLookup, escLookup: EscLookup): Sub12Row[] {
+  const singleRound = tournaments.filter(t => !t._roundLabel || t._roundLabel !== "Total");
+  const playerMap = new Map<string, Sub12Row>();
+  for (const t of singleRound) {
+    for (const p of t.players) {
+      if (isDNS(p)) continue;
+      const esc = resolveEsc(p, escLookup);
+      if (!isSub12(esc)) continue;
+      const fed = p.fed || p.fedCode || "";
+      if (!fed) continue;
+      const stats = computeStats(p, sdLookup);
+      if (!stats) continue;
+      const { gross: g, toPar: tp, sd18, sdSource, nholes, birdies, pars: parsCount, bogeys } = stats;
+      const tournKey = t.tcode + "_" + t.date;
+      if (!playerMap.has(fed)) {
+        const dbInfo = playersDB[fed];
+        playerMap.set(fed, {
+          fed, name: p.name || dbInfo?.name || `Fed. ${fed}`,
+          club: p.club || dbInfo?.club?.short || "",
+          region: dbInfo?.region || t.region || "",
+          sex: dbInfo?.sex || "", hcp: dbInfo?.hcp ?? p.hcpExact ?? null,
+          results: [], avgGross: null, avgSD: null, bestGross: null, tourneiosPlayed: 0,
+          totalBird: 0, totalPars: 0, totalBog: 0,
+        });
+      }
+      const row = playerMap.get(fed)!;
+      if (row.results.some(r => r.tournKey === tournKey)) continue;
+      row.results.push({
+        tournKey, tournName: t.name, tournShort: tournShort(t),
+        date: t.date, dateSort: dateToSort(t.date),
+        campo: t.campo || "", region: t.region, series: t.series,
+        gross: g, toPar: tp,
+        sd: sd18 != null ? Math.round(sd18 * 10) / 10 : null, sdSource,
+        pos: p.pos, totalPlayers: t.playerCount,
+        nholes, birdies, pars: parsCount, bogeys,
+      });
+      row.totalBird += birdies;
+      row.totalPars += parsCount;
+      row.totalBog  += bogeys;
+    }
+  }
+  for (const row of playerMap.values()) {
+    row.results.sort((a, b) => a.dateSort - b.dateSort);
+    const grosses = row.results.map(r => r.gross);
+    const sds = row.results.filter(r => r.sd != null).map(r => r.sd!);
+    row.tourneiosPlayed = row.results.length;
+    row.avgGross = numAvg(grosses);
+    row.avgSD = numAvg(sds);
+    row.bestGross = grosses.length > 0 ? Math.min(...grosses) : null;
+  }
+  return [...playerMap.values()].sort((a, b) => (a.avgSD ?? 999) - (b.avgSD ?? 999));
+}
+function filterBySub12Series(rows: Sub12Row[], series: Sub12SeriesTab): Sub12Row[] {
+  return rows.map(p => {
+    const fR = p.results.filter(r => r.series === series);
+    if (fR.length === 0) return null;
+    const fG = fR.map(r => r.gross);
+    const fS = fR.filter(r => r.sd != null).map(r => r.sd!);
+    return {
+      ...p, results: fR, tourneiosPlayed: fR.length,
+      avgGross: numAvg(fG), avgSD: numAvg(fS), bestGross: fG.length ? Math.min(...fG) : null,
+      totalBird: fR.reduce((s, r) => s + r.birdies, 0),
+      totalPars: fR.reduce((s, r) => s + r.pars, 0),
+      totalBog:  fR.reduce((s, r) => s + r.bogeys, 0),
+    };
+  }).filter(Boolean) as Sub12Row[];
+}
+
+const shortDate = (d: string) => {
+  if (!d) return "";
+  const parts = d.split("-");
+  return parts.length >= 3 ? (parts[0].length === 4 ? parts[2] + "/" + parts[1] : parts[0] + "/" + parts[1]) : d;
+};
+
+/* ─ Sub-12 Calendar ─ */
+const fmtCalDate = (d: Date, end?: Date): string => {
+  const dd = (n: number) => String(n).padStart(2, "0");
+  const base = dd(d.getDate()) + "/" + dd(d.getMonth() + 1);
+  return end ? base + "–" + dd(end.getDate()) + "/" + dd(end.getMonth() + 1) : base;
+};
+interface CalEntry { name: string; date: Date; endDate?: Date; campo: string; region: string; series: "tour"|"challenge"|"aquapor"; }
+const CAL_ENTRIES: CalEntry[] = [
+  { name: "1º DT Sul",     date: new Date(2026,0,11), campo: "Laguna GC",        region: "sul",     series: "tour" },
+  { name: "2º DT Sul",     date: new Date(2026,1,1),  campo: "Vila Sol",          region: "sul",     series: "tour" },
+  { name: "3º DT Sul",     date: new Date(2026,3,4),  campo: "Penina (TBC)",      region: "sul",     series: "tour" },
+  { name: "4º DT Sul",     date: new Date(2026,5,10), campo: "Boavista",          region: "sul",     series: "tour" },
+  { name: "1º DT Norte",   date: new Date(2026,0,4),  campo: "Estela GC",         region: "norte",   series: "tour" },
+  { name: "2º DT Norte",   date: new Date(2026,1,1),  campo: "Amarante",          region: "norte",   series: "tour" },
+  { name: "3º DT Norte",   date: new Date(2026,1,28), endDate: new Date(2026,2,1), campo: "Vale Pisão", region: "norte", series: "tour" },
+  { name: "4º DT Norte",   date: new Date(2026,3,19), campo: "Ponte de Lima",     region: "norte",   series: "tour" },
+  { name: "1º DT Tejo",    date: new Date(2026,0,4),  campo: "Montado",           region: "tejo",    series: "tour" },
+  { name: "2º DT Tejo",    date: new Date(2026,0,31), campo: "Belas",             region: "tejo",    series: "tour" },
+  { name: "3º DT Tejo",    date: new Date(2026,2,28), endDate: new Date(2026,2,29), campo: "St. Estêvão", region: "tejo", series: "tour" },
+  { name: "4º DT Tejo",    date: new Date(2026,3,12), campo: "Lisbon SC",         region: "tejo",    series: "tour" },
+  { name: "1º DT Madeira", date: new Date(2026,0,3),  campo: "Palheiro Golf",     region: "madeira", series: "tour" },
+  { name: "2º DT Madeira", date: new Date(2026,1,7),  campo: "Santo da Serra",    region: "madeira", series: "tour" },
+  { name: "3º DT Madeira", date: new Date(2026,2,7),  campo: "Palheiro Golf",     region: "madeira", series: "tour" },
+  { name: "4º DT Madeira", date: new Date(2026,3,11), campo: "Porto Santo Golfe", region: "madeira", series: "tour" },
+  { name: "1º DC Madeira", date: new Date(2026,0,4),  campo: "Palheiro",          region: "madeira", series: "challenge" },
+  { name: "2º DC Madeira", date: new Date(2026,1,8),  campo: "Santo da Serra",    region: "madeira", series: "challenge" },
+  { name: "3º DC Madeira", date: new Date(2026,2,8),  campo: "Santo da Serra",    region: "madeira", series: "challenge" },
+  { name: "4º DC Madeira", date: new Date(2026,3,12), campo: "Porto Santo",       region: "madeira", series: "challenge" },
+  { name: "1º DC Açores",  date: new Date(2026,0,24), campo: "Terceira Island GC",region: "acores",  series: "challenge" },
+  { name: "2º DC Açores",  date: new Date(2026,1,28), campo: "Terceira Island GC",region: "acores",  series: "challenge" },
+  { name: "AQUAPOR",       date: new Date(2026,0,17), endDate: new Date(2026,0,18), campo: "Vidago Palace", region: "nacional", series: "aquapor" },
+];
+
+/* ═══════════════════════════════════════════════════════
+   SUB-12: UI Components
+   ═══════════════════════════════════════════════════════ */
+function UpcomingSchedule({ series }: { series: Sub12SeriesTab }) {
+  const now = new Date(); now.setHours(0,0,0,0);
+  const entries = CAL_ENTRIES.filter(e => e.series === series).sort((a,b) => a.date.getTime()-b.date.getTime());
+  if (!entries.length) return null;
+  return (
+    <div className="card p-8-12">
+      <div className="h-xs mb-6">📅 Calendário {SERIE_LABELS[series]} 2026</div>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
+        {entries.map((e, i) => {
+          const endRef = e.endDate || e.date;
+          const isPast = endRef.getTime() < now.getTime();
+          const isNext = !isPast && entries.slice(0,i).every(prev => (prev.endDate||prev.date).getTime() < now.getTime());
+          const col = SERIE_COLORS[series];
+          return (
+            <div key={i} style={{
+              display: "inline-flex", alignItems: "center", gap: 4,
+              padding: "3px 8px", borderRadius: "var(--radius-pill)", fontSize: 10,
+              fontWeight: isNext ? 800 : isPast ? 400 : 600,
+              background: isNext ? col + "18" : isPast ? "transparent" : "var(--bg-card)",
+              color: isPast ? "var(--text-muted)" : isNext ? col : "var(--text-2)",
+              border: isNext ? `2px solid ${col}` : isPast ? "1px solid var(--border-light)" : "1px solid var(--border)",
+              textDecoration: isPast ? "line-through" : "none", opacity: isPast ? 0.6 : 1,
+            }}>
+              {REGION_EMOJI[e.region] || ""} <span className="fw-700">{fmtCalDate(e.date, e.endDate)}</span> {e.name} <span className="c-muted">{e.campo}</span>
+              {isNext && <span style={{ fontSize: 8, background: col, color: "#fff", padding: "0 4px", borderRadius: 3, marginLeft: 2 }}>PRÓXIMO</span>}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function KpiCard({ label, value, sub, color }: { label: string; value: string; sub?: string; color?: string }) {
+  return (
+    <div className="kpi" style={{ flex: "1 1 120px", minWidth: 120 }}>
+      <div className="kpi-lbl">{label}</div>
+      <div className="kpi-val" style={color ? { color } : undefined}>{value}</div>
+      {sub && <div className="kpi-sub">{sub}</div>}
+    </div>
+  );
+}
+function SdSpan({ sd, hcp }: { sd: number | null; hcp?: number | null }) {
+  if (sd == null) return <span className="c-muted">–</span>;
+  return <span className={"p p-sm fs-11 p-" + sdClassByHcp(sd, hcp ?? null)}>{sd.toFixed(1)}</span>;
+}
+function ToParSpan({ tp }: { tp: number | null }) {
+  if (tp == null) return <span className="c-muted">–</span>;
+  const color = tp < 0 ? SC.danger : tp === 0 ? SC.good : undefined;
+  const s = tp === 0 ? "E" : tp > 0 ? "+" + tp : "" + tp;
+  return <span style={{ fontWeight: 700, fontSize: 11, color }}>{s}</span>;
+}
+
+const STICKY_NAME_W = 170;
+const STICKY_HCP_W  = 48;
+const STICKY_BG      = "var(--bg-card)";
+const STICKY_BG_HEAD = "var(--bg-topbar)";
+const stickyBase     = (left: number, isLast?: boolean): React.CSSProperties => ({ position: "sticky", left, zIndex: 2, background: STICKY_BG, ...(isLast ? { borderRight: "2px solid var(--border)", boxShadow: "2px 0 4px rgba(0,0,0,0.06)" } : {}) });
+const stickyHeadBase = (left: number, isLast?: boolean): React.CSSProperties => ({ position: "sticky", left, zIndex: 3, background: STICKY_BG_HEAD, ...(isLast ? { borderRight: "2px solid var(--border)", boxShadow: "2px 0 4px rgba(0,0,0,0.06)" } : {}) });
+
+function TournamentGrid({ rows, allTournaments, onPlayerClick, playersDB, escLookup }: {
+  rows: Sub12Row[];
+  allTournaments: { key: string; short: string; date: string; series: string; campo?: string; nholes?: number }[];
+  onPlayerClick: (fed: string) => void;
+  playersDB: PlayersDB;
+  escLookup?: EscLookup;
+}) {
+  type S12SortKey = "name" | "fed" | "escalao" | "club" | "hcp" | "played" | "avgSD" | "avgGross" | string;
+  const [sortKey, setSortKey] = useState<S12SortKey>("avgSD");
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
+
+  const handleSort = useCallback((k: S12SortKey) => {
+    if (k === sortKey) setSortDir(d => d === "asc" ? "desc" : "asc");
+    else { setSortKey(k); setSortDir("asc"); }
+  }, [sortKey]);
+
+  const sorted = useMemo(() => {
+    const mult = sortDir === "asc" ? 1 : -1;
+    return [...rows].sort((a, b) => {
+      const INF = 9999;
+      switch (sortKey) {
+        case "name":     return mult * a.name.localeCompare(b.name, "pt");
+        case "fed":      return mult * (a.fed || "").localeCompare(b.fed || "");
+        case "escalao": {
+          const ea = playersDB[a.fed]?.escalao || "";
+          const eb = playersDB[b.fed]?.escalao || "";
+          return mult * ea.localeCompare(eb, "pt");
+        }
+        case "club":     return mult * (a.club || "").localeCompare(b.club || "", "pt");
+        case "hcp":      return mult * ((a.hcp ?? INF) - (b.hcp ?? INF));
+        case "totalBird": return mult * (b.totalBird - a.totalBird);
+        case "totalPars": return mult * (b.totalPars - a.totalPars);
+        case "totalBog":  return mult * (a.totalBog  - b.totalBog);
+        case "avgSD":    return mult * ((a.avgSD ?? INF) - (b.avgSD ?? INF));
+        case "avgGross": return mult * ((a.avgGross ?? INF) - (b.avgGross ?? INF));
+        default: {
+          if (sortKey.startsWith("gross_")) {
+            const tk = sortKey.replace("gross_", "");
+            const va = a.results.find(r => r.tournKey === tk)?.gross ?? INF;
+            const vb = b.results.find(r => r.tournKey === tk)?.gross ?? INF;
+            return mult * (va - vb);
+          }
+          if (sortKey.startsWith("toPar_")) {
+            const tk = sortKey.replace("toPar_", "");
+            const va = a.results.find(r => r.tournKey === tk)?.toPar ?? INF;
+            const vb = b.results.find(r => r.tournKey === tk)?.toPar ?? INF;
+            return mult * (va - vb);
+          }
+          if (sortKey.startsWith("sd_")) {
+            const tk = sortKey.replace("sd_", "");
+            const va = a.results.find(r => r.tournKey === tk)?.sd ?? INF;
+            const vb = b.results.find(r => r.tournKey === tk)?.sd ?? INF;
+            return mult * (va - vb);
+          }
+          if (sortKey.startsWith("pos_")) {
+            const tk = sortKey.replace("pos_", "");
+            const va = typeof a.results.find(r => r.tournKey === tk)?.pos === "number" ? (a.results.find(r => r.tournKey === tk)?.pos as number) : INF;
+            const vb = typeof b.results.find(r => r.tournKey === tk)?.pos === "number" ? (b.results.find(r => r.tournKey === tk)?.pos as number) : INF;
+            return mult * (va - vb);
+          }
+          if (sortKey.startsWith("bird_")) {
+            const tk = sortKey.replace("bird_", "");
+            const va = a.results.find(r => r.tournKey === tk)?.birdies ?? -1;
+            const vb = b.results.find(r => r.tournKey === tk)?.birdies ?? -1;
+            return mult * (vb - va); // mais birdies = melhor
+          }
+          if (sortKey.startsWith("par_")) {
+            const tk = sortKey.replace("par_", "");
+            const va = a.results.find(r => r.tournKey === tk)?.pars ?? -1;
+            const vb = b.results.find(r => r.tournKey === tk)?.pars ?? -1;
+            return mult * (vb - va);
+          }
+          if (sortKey.startsWith("bog_")) {
+            const tk = sortKey.replace("bog_", "");
+            const va = a.results.find(r => r.tournKey === tk)?.bogeys ?? 999;
+            const vb = b.results.find(r => r.tournKey === tk)?.bogeys ?? 999;
+            return mult * (va - vb); // menos bogeys = melhor
+          }
+          return 0;
+        }
+      }
+    });
+  }, [rows, sortKey, sortDir, playersDB]);
+
+  // Mesmas constantes exactas do ResumoTable
+  const hs: React.CSSProperties = { fontSize: 11, padding: "6px 5px" };
+  const cs: React.CSSProperties = { fontSize: 12, padding: "5px 5px", whiteSpace: "nowrap" };
+  const bG = "3px solid var(--border)";
+  const bS = "1px solid var(--border-light, #e5e7eb)";
+  const stickyBg = "var(--bg-card, #fff)";
+  const stickyCol0: React.CSSProperties = { position: "sticky", left: 0, zIndex: 3, minWidth: 26, background: stickyBg };
+  const stickyCol1: React.CSSProperties = { position: "sticky", left: 26, zIndex: 3, minWidth: 155, background: stickyBg, boxShadow: "2px 0 4px rgba(0,0,0,0.06)" };
+  const stickyHeadCol0: React.CSSProperties = { ...stickyCol0, zIndex: 5 };
+  const stickyHeadCol1: React.CSSProperties = { ...stickyCol1, zIndex: 5 };
+
+  const fmtTP2 = (v: number | null) => v == null ? "–" : v === 0 ? "E" : v > 0 ? "+" + v : "" + v;
+  const tpColor2 = (v: number | null) => v == null ? undefined : v < 0 ? SC.danger : v === 0 ? SC.good : undefined;
 
   return (
-    <div style={{ padding: "0 12px 12px" }}>
-      {/* Main tournament tabs */}
-      <div className="escalao-pills mb-8" style={{ gap: 4, flexWrap: "wrap" }}>
-        <button onClick={() => setTab("resumo")} className={"tourn-tab tourn-tab-sm" + (tab === "resumo" ? " active" : "")}>📋 Resumo</button>
-        {groups.map((g, i) => (
-          <button key={g.key} onClick={() => handleGroupTab(i)} className={"tourn-tab tourn-tab-sm" + (tab === i ? " active" : "")}>
-            🏆 T{g.num} · {g.label} · {fmtDate(g.date)}
-            {g.isMulti && <span style={{ marginLeft: 4, fontSize: 9, opacity: 0.7 }}>({g.totalRounds} dias)</span>}
-          </button>
-        ))}
-      </div>
-
-      {/* Round sub-tabs for multi-round tournaments */}
-      {tab !== "resumo" && curGroup?.isMulti && (
-        <div className="escalao-pills mb-8" style={{ gap: 3, flexWrap: "wrap", paddingLeft: 4 }}>
-          {curGroup.entries.map((entry, ri) => {
-            const lbl = entry._roundLabel || ("R" + (ri + 1));
-            const isTotal = lbl === "Total";
-            const activeCount = entry.players.filter(p => !isDNS(p)).length;
+    <div className="bjgt-chart-scroll">
+      <table className="dtable tbl-compact">
+        <thead>
+          {/* Linha 1: nome do torneio — igual ao ResumoTable */}
+          <tr>
+            <th colSpan={6} style={{ ...hs, borderBottom: "none" }}></th>
+            {allTournaments.map(t => (
+              <th key={t.key} colSpan={7} style={{ ...hs, textAlign: "center", borderLeft: bG, background: "var(--bg-hover)", lineHeight: 1.3 }}>
+                <div className="fw-800" style={{ fontSize: 13 }}>{t.short}</div>
+                <div className="c-muted-fs10-fw5">
+                  {shortDate(t.date)}{t.campo ? " · " + t.campo : ""}{t.nholes ? " · " + t.nholes + "h" : ""}
+                </div>
+              </th>
+            ))}
+            <th colSpan={6} style={{ ...hs, borderLeft: bG, textAlign: "center", background: "var(--bg-hover)", fontSize: 12, fontWeight: 800 }}>Temporada</th>
+          </tr>
+          {/* Linha 2: sub-colunas */}
+          <tr>
+            <SortTh sortKey="name" current={sortKey} dir={sortDir} onSort={handleSort} style={{ ...hs, textAlign: "center", width: 26, ...stickyHeadCol0 }}>#</SortTh>
+            <SortTh sortKey="name" current={sortKey} dir={sortDir} onSort={handleSort} style={{ ...hs, textAlign: "left", paddingLeft: 6, minWidth: 155, ...stickyHeadCol1 }}>Jogador</SortTh>
+            <SortTh sortKey="fed"     current={sortKey} dir={sortDir} onSort={handleSort} style={{ ...hs, width: 52 }}>Fed</SortTh>
+            <SortTh sortKey="escalao" current={sortKey} dir={sortDir} onSort={handleSort} style={{ ...hs, width: 52 }}>Esc.</SortTh>
+            <SortTh sortKey="club"    current={sortKey} dir={sortDir} onSort={handleSort} style={{ ...hs, minWidth: 80 }}>Clube</SortTh>
+            <SortTh sortKey="hcp"     current={sortKey} dir={sortDir} onSort={handleSort} className="r" style={{ ...hs, width: 42, borderRight: bG }}>HCP</SortTh>
+            {allTournaments.map(t => (
+              <React.Fragment key={t.key}>
+                <SortTh sortKey={"pos_" + t.key}   current={sortKey} dir={sortDir} onSort={handleSort} className="r" style={{ ...hs, width: 28, borderLeft: bG }}>#</SortTh>
+                <SortTh sortKey={"gross_" + t.key} current={sortKey} dir={sortDir} onSort={handleSort} className="r" style={{ ...hs, width: 40, borderLeft: bS }}>Gross</SortTh>
+                <SortTh sortKey={"toPar_" + t.key} current={sortKey} dir={sortDir} onSort={handleSort} className="r" style={{ ...hs, width: 36, borderLeft: bS }}>±Par</SortTh>
+                <SortTh sortKey={"sd_" + t.key}    current={sortKey} dir={sortDir} onSort={handleSort} className="r" style={{ ...hs, width: 44, borderLeft: bS }}>SD</SortTh>
+                <SortTh sortKey={"bird_" + t.key}  current={sortKey} dir={sortDir} onSort={handleSort} style={{ ...hs, width: 28, borderLeft: bS, textAlign: "center" }}>🐦</SortTh>
+                <SortTh sortKey={"par_" + t.key}   current={sortKey} dir={sortDir} onSort={handleSort} style={{ ...hs, width: 28, borderLeft: bS, textAlign: "center" }}>Par</SortTh>
+                <SortTh sortKey={"bog_" + t.key}   current={sortKey} dir={sortDir} onSort={handleSort} style={{ ...hs, width: 28, borderLeft: bS, textAlign: "center" }}>■</SortTh>
+              </React.Fragment>
+            ))}
+            <SortTh sortKey="played"    current={sortKey} dir={sortDir} onSort={handleSort} className="r" style={{ ...hs, width: 36, borderLeft: bG }}>Jogos</SortTh>
+            <SortTh sortKey="avgGross"  current={sortKey} dir={sortDir} onSort={handleSort} className="r" style={{ ...hs, width: 44, borderLeft: bS }}>Avg</SortTh>
+            <SortTh sortKey="avgSD"     current={sortKey} dir={sortDir} onSort={handleSort} className="r" style={{ ...hs, width: 50, borderLeft: bS }}>Avg SD</SortTh>
+            <SortTh sortKey="totalBird" current={sortKey} dir={sortDir} onSort={handleSort} style={{ ...hs, width: 28, borderLeft: bS, textAlign: "center" }}>🐦</SortTh>
+            <SortTh sortKey="totalPars" current={sortKey} dir={sortDir} onSort={handleSort} style={{ ...hs, width: 28, borderLeft: bS, textAlign: "center" }}>Par</SortTh>
+            <SortTh sortKey="totalBog"  current={sortKey} dir={sortDir} onSort={handleSort} style={{ ...hs, width: 28, borderLeft: bS, textAlign: "center" }}>■</SortTh>
+          </tr>
+        </thead>
+        <tbody>
+          {sorted.map((p, idx) => {
+            const dbInfo = playersDB[p.fed] || {};
+            const escalao = dbInfo.escalao || "";
+            const escCls = escalao ? "p p-sm p-" + escalao.toLowerCase().replace(/[\s-]/g, "") : "";
+            const cellBg = stickyBg;
             return (
-              <button key={entry.tcode} onClick={() => setRoundIdx(ri)}
-                className={"tourn-tab tourn-tab-sm" + (roundIdx === ri ? " active" : "")}
-                style={roundIdx === ri ? {} : isTotal ? { background: "#fef3c7", color: "#a16207", borderColor: "#fef3c7" } : {}}>
-                {isTotal ? "📊" : "🏌️"} {lbl}
-                <span style={{ fontSize: 9, marginLeft: 3, opacity: 0.7 }}>({activeCount} jog)</span>
-              </button>
+              <tr key={p.fed} className="pointer" onClick={() => onPlayerClick(p.fed)}>
+                <td className="fw-700 ta-center" style={{ ...cs, color: "var(--text-3)", ...stickyCol0, background: cellBg }}>{idx + 1}</td>
+                <td style={{ ...cs, paddingLeft: 6, ...stickyCol1, background: cellBg }}>
+                  <PName name={p.name} fed={p.fed || undefined} playersDB={playersDB} />
+                </td>
+                <td style={{ ...cs, fontSize: 10, color: "var(--text-muted)", fontFamily: "'JetBrains Mono', monospace" }}>{p.fed || "–"}</td>
+                <td style={cs}>{escalao ? <span className={escCls + " fs-9"}>{escalao}</span> : <span className="c-muted-fs10">–</span>}</td>
+                <td style={{ ...cs, color: "var(--text-3)" }}>{p.club}</td>
+                <td className="r" style={{ ...cs, fontFamily: "'JetBrains Mono', monospace", color: "var(--text-3)", borderRight: bG }}>{p.hcp != null ? p.hcp.toFixed(1) : "–"}</td>
+                {allTournaments.map(t => {
+                  const res = p.results.find(r => r.tournKey === t.key);
+                  if (!res) return (
+                    <td key={t.key} colSpan={7} style={{ textAlign: "center", borderLeft: bG, ...cs }}></td>
+                  );
+                  return (
+                    <React.Fragment key={t.key}>
+                      <td className="r fw-700" style={{ borderLeft: bG, ...cs, color: "var(--text-3)" }}>{res.pos ?? "–"}</td>
+                      <td className="r fw-800" style={{ ...cs, fontSize: 13, fontFamily: "'JetBrains Mono', monospace", borderLeft: bS }}>{res.gross}</td>
+                      <td className="r fw-700" style={{ ...cs, fontFamily: "'JetBrains Mono', monospace", color: tpColor2(res.toPar), borderLeft: bS }}>{fmtTP2(res.toPar)}</td>
+                      <td className="r" style={{ ...cs, borderLeft: bS }}>
+                        <SDCell sd={res.sd} sdSource={res.sdSource} hcp={p.hcp} nholes={res.nholes} style={{}} />
+                      </td>
+                      <td style={{ ...cs, borderLeft: bS, textAlign: "center" }}>{res.birdies}</td>
+                      <td style={{ ...cs, borderLeft: bS, textAlign: "center" }}>{res.pars}</td>
+                      <td style={{ ...cs, borderLeft: bS, textAlign: "center" }}>{res.bogeys}</td>
+                    </React.Fragment>
+                  );
+                })}
+                <td className="r fw-700" style={{ borderLeft: bG, ...cs, fontSize: 13 }}>{p.tourneiosPlayed}</td>
+                <td className="r" style={{ ...cs, borderLeft: bS, fontFamily: "'JetBrains Mono', monospace" }}>{p.avgGross != null ? p.avgGross.toFixed(0) : "–"}</td>
+                <td className="r" style={{ ...cs, borderLeft: bS }}>
+                  {p.avgSD != null ? <span className={"p p-sm p-" + sdClassByHcp(p.avgSD, p.hcp)}>{p.avgSD.toFixed(1)}</span> : "–"}
+                </td>
+                <td style={{ ...cs, borderLeft: bS, textAlign: "center" }}>{p.totalBird}</td>
+                <td style={{ ...cs, borderLeft: bS, textAlign: "center" }}>{p.totalPars}</td>
+                <td style={{ ...cs, borderLeft: bS, textAlign: "center" }}>{p.totalBog}</td>
+              </tr>
             );
           })}
-        </div>
-      )}
-
-      {tab === "resumo" ? (
-        <div className="card">
-          <div className="h-md fs-14">📋 {label} — Temporada 2026</div>
-          <div className="muted fs-11 mb-8">{groups.length} torneios · {uniquePC(props.tournaments)} jogadores · {sorted.filter(t => t._roundLabel !== "Total").reduce((a, t) => a + t.players.filter((p) => !isDNS(p)).length, 0)} presenças</div>
-          <ResumoTable tournaments={sorted} playersDB={playersDB} sdLookup={sdLookup} escLookup={props.escLookup} />
-        </div>
-      ) : curTournament && (
-        <div className="card">
-          <div className="h-md fs-14">
-            {curGroup!.isMulti ? (
-              <>🏆 {curTournament._roundLabel === "Total" ? "Acumulado" : curTournament._roundLabel} — {curGroup!.campo}</>
-            ) : (
-              <>🏆 R1 — Scorecards</>
-            )}
-          </div>
-          <div className="muted fs-11 mb-4">
-            T{curTournament.num} · 📍 {curTournament.campo} · 📅 {fmtDate(curTournament.date)}
-            {curGroup!.isMulti && <> · {curGroup!.totalRounds} rondas</>}
-            {" · "}{curTournament.players.filter((p) => !isDNS(p) && !p._incomplete).length} jog
-            {curTournament._roundLabel === "Total" && curTournament.players.some(p => p._incomplete) && (
-              <> + {curTournament.players.filter(p => p._incomplete).length} inc</>
-            )}
-            {" · "}{curTournament.players[0]?.nholes || 18}h
-          </div>
-          {curTournament._roundLabel === "Total" ? (
-            <TotalLeaderboard tournament={curTournament} playersDB={playersDB} sdLookup={sdLookup} />
-          ) : (
-            <ScorecardLB tournament={curTournament} playersDB={playersDB} />
+          {sorted.length === 0 && (
+            <tr><td colSpan={99} className="muted p-16">Nenhum jogador Sub-12 encontrado</td></tr>
           )}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+
+function RankingView({ rows, onPlayerClick }: { rows: Sub12Row[]; onPlayerClick: (fed: string) => void }) {
+  const ranked = [...rows].filter(p => p.avgSD != null && p.tourneiosPlayed >= 2).sort((a,b) => (a.avgSD??999)-(b.avgSD??999));
+  const medals = ["🥇","🥈","🥉"];
+  const oneTourney = rows.filter(p => p.tourneiosPlayed === 1);
+  return (
+    <div>
+      {ranked.length === 0 ? (
+        <div className="card"><div className="muted">Nenhum jogador com ≥2 torneios para gerar ranking</div></div>
+      ) : (
+        <div className="bjgt-chart-scroll">
+          <table className="dtable" style={{ fontSize: 12 }}>
+            <thead><tr>
+              <th className="r" style={{ width: 36 }}>#</th><th style={{ textAlign: "left", paddingLeft: 6 }}>Jogador</th><th>Clube</th>
+              <th className="r">HCP</th><th className="r">T</th><th className="r">Avg Gross</th>
+              <th className="r">Avg SD</th><th className="r">Melhor</th>
+            </tr></thead>
+            <tbody>
+              {ranked.map((p, i) => (
+                <tr key={p.fed} className={`pointer${p.sex === "F" ? " tourn-female-row" : ""}`} onClick={() => onPlayerClick(p.fed)}>
+                  <td className="r" style={{ fontSize: 16 }}>{i < 3 ? medals[i] : <span className="tourn-mono fw-700">{i+1}</span>}</td>
+                  <td>
+                    <span className="fw-700" style={{ cursor: "pointer", textDecoration: "underline", textDecorationColor: "var(--border)", textUnderlineOffset: 2 }}
+                      onClick={(e) => { e.stopPropagation(); window.open(`/jogadores/${p.fed}`, "_blank"); }}>{p.name}</span>
+                    {p.sex === "F" && <span className="jog-sex-inline jog-sex-F ml-4">F</span>}
+                    {p.sex === "M" && <span className="jog-sex-inline jog-sex-M ml-4">M</span>}
+                  </td>
+                  <td className="c-muted fs-11">{p.club}</td>
+                  <td className="r tourn-mono">{p.hcp != null ? p.hcp.toFixed(1) : "–"}</td>
+                  <td className="r tourn-mono">{p.tourneiosPlayed}</td>
+                  <td className="r tourn-mono">{p.avgGross?.toFixed(0) ?? "–"}</td>
+                  <td className="r"><SdSpan sd={p.avgSD} hcp={p.hcp} /></td>
+                  <td className="r tourn-mono fw-700 c-good-dark">{p.bestGross ?? "–"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+      {oneTourney.length > 0 && (
+        <div className="card mt-14">
+          <div className="h-xs">Com apenas 1 torneio ({oneTourney.length})</div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 6 }}>
+            {oneTourney.map(p => {
+              const r = p.results[0];
+              return (
+                <div key={p.fed} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "4px 8px", background: "var(--bg)", borderRadius: "var(--radius)", fontSize: 11, cursor: "pointer" }}
+                  onClick={() => onPlayerClick(p.fed)}>
+                  <span className="fw-600">{p.name}</span>
+                  <span className="tourn-mono">{r?.gross ?? "–"} <span className="c-muted">({r?.tournShort})</span></span>
+                </div>
+              );
+            })}
+          </div>
         </div>
       )}
     </div>
   );
 }
 
-function DriveTourView(props: { tournaments: Tournament[]; playersDB: PlayersDB; sdLookup: SDLookup; escLookup: EscLookup }) {
-  const { tournaments, playersDB, sdLookup, escLookup } = props;
-  const [ri, setRi] = useState(0);
-  const [escFilter, setEscFilter] = useState<string | null>(null); // null = Todos
-  const avail = useMemo(() => { const s = new Set(tournaments.map((t) => t.region)); return REGIONS.filter((r) => s.has(r.id)); }, [tournaments]);
-  const region = avail[ri]?.id;
-  const rT = useMemo(() => tournaments.filter((t) => t.region === region), [tournaments, region]);
-
-  // Available escalões for this region
-  const avE = useMemo(() => availEscaloes(rT, escLookup), [rT, escLookup]);
-  useEffect(() => { setEscFilter(null); }, [ri]);
-
-  // Filtered tournaments (filter players within each tournament)
-  const filteredT = useMemo(() => {
-    if (!escFilter) return rT;
-    return filterTournByEsc(rT, escFilter, escLookup);
-  }, [rT, escFilter, escLookup]);
-
-  if (!avail.length) return <div className="muted ta-center" style={{ padding: 24 }}>Sem torneios Drive Tour.</div>;
+function EvolutionChart({ rows }: { rows: Sub12Row[] }) {
+  const eligible = rows.filter(p => p.results.filter(r => r.sd != null).length >= 2);
+  if (!eligible.length) {
+    return <div className="card"><div className="h-xs">Evolução SD</div><div className="muted">Dados insuficientes (mínimo 2 torneios por jogador)</div></div>;
+  }
+  const top = [...eligible].sort((a,b) => b.results.filter(r=>r.sd!=null).length - a.results.filter(r=>r.sd!=null).length).slice(0,10);
+  const allDates = [...new Set(top.flatMap(p => p.results.filter(r=>r.sd!=null).map(r=>r.date)))].sort((a,b)=>dateToSort(a)-dateToSort(b));
+  const chartData = allDates.map(d => {
+    const point: Record<string, any> = { date: shortDate(d) };
+    for (const p of top) { const res = p.results.find(r => r.date===d && r.sd!=null); if (res) point[p.fed] = res.sd; }
+    return point;
+  });
   return (
-    <div>
-      <div className="escalao-pills" style={{ padding: "8px 12px", flexWrap: "wrap" }}>
-        {avail.map((reg, i) => {
-          const rt = tournaments.filter((t) => t.region === reg.id);
-          return (
-            <button key={reg.id} className={"tourn-tab tourn-tab-sm" + (ri === i ? " active" : "")} onClick={() => setRi(i)}
-              style={ri === i ? {} : { borderColor: reg.bg, color: reg.color, background: reg.bg }}>
-              {reg.emoji} {reg.label} ({countEvents(rt)}T · {uniquePC(rt)} jog)
-            </button>
-          );
-        })}
+    <div className="card">
+      <div className="h-xs">Evolução SD ao longo da época</div>
+      <div style={{ width: "100%", height: 340, marginTop: 8 }}>
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--border-light)" />
+            <XAxis dataKey="date" tick={{ fontSize: 10 }} />
+            <YAxis tick={{ fontSize: 10 }} domain={["dataMin - 2", "dataMax + 2"]} />
+            <Tooltip contentStyle={{ background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 6, fontSize: 11 }}
+              formatter={(value: number, name: string) => { const p = top.find(x => x.fed===name); return [value?.toFixed(1), p?.name||name]; }} />
+            <Legend formatter={(value: string) => { const p = top.find(x => x.fed===value); return <span style={{ fontSize: 10 }}>{p?.name||value}</span>; }} />
+            <ReferenceLine y={36} stroke="var(--color-danger)" strokeDasharray="4 4" strokeWidth={1} />
+            {top.map((p, i) => (
+              <Line key={p.fed} type="monotone" dataKey={p.fed} stroke={CHART_COLORS[i % CHART_COLORS.length]} strokeWidth={2} dot={{ r: 3 }} connectNulls />
+            ))}
+          </LineChart>
+        </ResponsiveContainer>
       </div>
-      {avE.length > 1 && (
-        <div className="escalao-pills" style={{ padding: "0 12px 8px", flexWrap: "wrap" }}>
-          <button className={"tourn-tab tourn-tab-sm" + (escFilter === null ? " active" : "")} onClick={() => setEscFilter(null)}>
-            Todos ({uniquePC(rT)} jog)
-          </button>
-          {avE.map((e) => (
-            <button key={e} className={"tourn-tab tourn-tab-sm" + (escFilter === e ? " active" : "")} onClick={() => setEscFilter(e)}>
-              {e} ({uniqueEscPC(rT, e, escLookup)} jog)
-            </button>
-          ))}
-        </div>
-      )}
-      <RegionView tournaments={filteredT} playersDB={playersDB} sdLookup={sdLookup} escLookup={escLookup}
-        label={"Drive Tour " + (regionOf(region)?.label || "") + (escFilter ? " — " + escFilter : "")} />
     </div>
   );
 }
 
-function DriveChallengeView(props: { tournaments: Tournament[]; playersDB: PlayersDB; sdLookup: SDLookup }) {
-  const { tournaments, playersDB, sdLookup } = props;
-  const [ri, setRi] = useState(0);
-  const [ei, setEi] = useState(0);
-  const avail = useMemo(() => { const s = new Set(tournaments.map((t) => t.region)); return REGIONS.filter((r) => s.has(r.id)); }, [tournaments]);
-  const region = avail[ri]?.id;
-  const rT = useMemo(() => tournaments.filter((t) => t.region === region), [tournaments, region]);
-  const avE = useMemo(() => { const s = new Set(rT.map((t) => t.escalao).filter(Boolean) as string[]); return ESCALOES.filter((e) => s.has(e)); }, [rT]);
-  useEffect(() => { setEi(0); }, [ri]);
-  const esc = avE[ei];
-  const fT = useMemo(() => rT.filter((t) => t.escalao === esc), [rT, esc]);
-  if (!avail.length) return <div className="muted ta-center" style={{ padding: 24 }}>Sem torneios Drive Challenge.</div>;
+function PlayerDetail({ row, onClose }: { row: Sub12Row; onClose: () => void }) {
   return (
-    <div>
-      <div className="escalao-pills" style={{ padding: "8px 12px", flexWrap: "wrap" }}>
-        {avail.map((reg, i) => {
-          const rt = tournaments.filter((t) => t.region === reg.id);
-          return (
-            <button key={reg.id} className={"tourn-tab tourn-tab-sm" + (ri === i ? " active" : "")} onClick={() => setRi(i)}
-              style={ri === i ? {} : { borderColor: reg.bg, color: reg.color, background: reg.bg }}>
-              {reg.emoji} {reg.label} ({countEvents(rt)}T · {uniquePC(rt)} jog)
-            </button>
-          );
-        })}
+    <div className="card" style={{ border: "2px solid var(--accent)", position: "relative" }}>
+      <button onClick={onClose} style={{ position: "absolute", top: 8, right: 10, background: "none", border: "none", cursor: "pointer", fontSize: 18, color: "var(--text-3)" }}>✕</button>
+      <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 8 }}>
+        <span style={{ fontSize: 16, fontWeight: 800 }}>{row.name}</span>
+        <span className="muted fs-11">{row.club} · {row.region} · HCP {row.hcp != null ? row.hcp.toFixed(1) : "–"}</span>
+        <a href={`/jogadores/${row.fed}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: "var(--accent)", textDecoration: "underline" }}>Ver perfil →</a>
       </div>
-      {avE.length > 0 && (
-        <div className="escalao-pills" style={{ padding: "0 12px 8px", flexWrap: "wrap" }}>
-          {avE.map((e, i) => (
-            <button key={e} className={"tourn-tab tourn-tab-sm" + (ei === i ? " active" : "")} onClick={() => setEi(i)}>
-              {e} ({uniquePC(rT.filter((t) => t.escalao === e))} jog)
-            </button>
+      <div style={{ display: "flex", gap: 6, marginBottom: 10, flexWrap: "wrap" }}>
+        <KpiCard label="Torneios"  value={String(row.tourneiosPlayed)} />
+        <KpiCard label="Avg Gross" value={row.avgGross?.toFixed(0) ?? "–"} />
+        <KpiCard label="Avg SD"    value={row.avgSD?.toFixed(1) ?? "–"} color={row.avgSD != null && row.avgSD <= 25 ? "var(--color-good)" : undefined} />
+        <KpiCard label="Melhor"    value={row.bestGross != null ? String(row.bestGross) : "–"} color="var(--color-good-dark)" />
+      </div>
+      <table className="dtable fs-11">
+        <thead><tr><th>Data</th><th>Torneio</th><th>Campo</th><th className="r">Pos</th><th className="r">Gross</th><th className="r">±Par</th><th className="r">SD</th></tr></thead>
+        <tbody>
+          {row.results.map((r, i) => (
+            <tr key={i}>
+              <td className="tourn-mono fs-10">{r.date}</td>
+              <td>
+                <span className="fw-600">{r.tournName}</span>
+                <span className="p p-sm ml-4" style={{ fontSize: 8, background: (SERIE_COLORS[r.series]||"#999")+"22", color: SERIE_COLORS[r.series], border: `1px solid ${SERIE_COLORS[r.series]}44` }}>
+                  {SERIE_LABELS[r.series]}
+                </span>
+              </td>
+              <td className="c-muted fs-10">{r.campo}</td>
+              <td className="r tourn-mono">{r.pos ?? "–"}<span className="c-muted fs-9">/{r.totalPlayers}</span></td>
+              <td className="r tourn-mono fw-700">{r.gross}</td>
+              <td className="r"><ToParSpan tp={r.toPar} /></td>
+              <td className="r"><SdSpan sd={r.sd} /></td>
+            </tr>
           ))}
-        </div>
-      )}
-      <RegionView tournaments={fT} playersDB={playersDB} sdLookup={sdLookup} label={"Challenge " + (regionOf(region)?.label || "") + " " + (esc || "")} />
-    </div>
-  );
-}
-
-function AquaporView(props: { tournaments: Tournament[]; playersDB: PlayersDB; sdLookup: SDLookup; escLookup: EscLookup }) {
-  const { tournaments, playersDB, sdLookup, escLookup } = props;
-  const [escFilter, setEscFilter] = useState<string | null>(null);
-  const avE = useMemo(() => availEscaloes(tournaments, escLookup), [tournaments, escLookup]);
-
-  const filteredT = useMemo(() => {
-    if (!escFilter) return tournaments;
-    return filterTournByEsc(tournaments, escFilter, escLookup);
-  }, [tournaments, escFilter, escLookup]);
-
-  if (!tournaments.length) return <div className="muted ta-center" style={{ padding: 24 }}>Sem torneios AQUAPOR.</div>;
-  return (
-    <div>
-      {avE.length > 1 && (
-        <div className="escalao-pills" style={{ padding: "8px 12px", flexWrap: "wrap" }}>
-          <button className={"tourn-tab tourn-tab-sm" + (escFilter === null ? " active" : "")} onClick={() => setEscFilter(null)}>
-            Todos ({uniquePC(tournaments)} jog)
-          </button>
-          {avE.map((e) => (
-            <button key={e} className={"tourn-tab tourn-tab-sm" + (escFilter === e ? " active" : "")} onClick={() => setEscFilter(e)}>
-              {e} ({uniqueEscPC(tournaments, e, escLookup)} jog)
-            </button>
-          ))}
-        </div>
-      )}
-      <RegionView tournaments={filteredT} playersDB={playersDB} sdLookup={sdLookup} escLookup={escLookup}
-        label={"Circuito AQUAPOR" + (escFilter ? " — " + escFilter : "")} />
+        </tbody>
+      </table>
     </div>
   );
 }
 
 /* ═══════════════════════════════════════════════════════
-   MAIN
+   MAIN — DriveContent unificado (Tour + Challenge + AQUAPOR + Sub-12)
    ═══════════════════════════════════════════════════════ */
 function DriveContent() {
-  const [data, setData] = useState<DriveData | null>(null);
-  const [pdb, setPdb] = useState<PlayersDB>({});
-  const [sdLookup, setSdLookup] = useState<SDLookup>({});
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [series, setSeries] = useState<"tour" | "challenge" | "aquapor">("tour");
-  const navigate = useNavigate();
+  const [data, setData]           = useState<DriveData | null>(null);
+  const [pdb, setPdb]             = useState<PlayersDB>({});
+  const [sdLookup, setSdLookup]   = useState<SDLookup>({});
+  const [loading, setLoading]     = useState(true);
+  const [error, setError]         = useState<string | null>(null);
+
+  // Série principal (inclui sub12 como 4ª tab)
+  const [series, setSeries]                     = useState<"tour"|"challenge"|"aquapor"|"sub12">("tour");
+  const [sidebarOpen, setSidebarOpen]           = useState(true);
+  const [regionFilter, setRegionFilter]         = useState<string | null>(null);
+  const [escFilter, setEscFilter]               = useState<string[]>([]);
+  const [selectedGroupKey, setSelectedGroupKey] = useState<string | null>(null);
+  const [roundIdx, setRoundIdx]                 = useState(0);
+
+  // Estado específico Sub-12
+  const [sub12Series, setSub12Series]   = useState<Sub12SeriesTab>("tour");
+  const [sub12View, setSub12View]       = useState<Sub12ViewTab>("grid");
+  const [sub12Region, setSub12Region]   = useState("all");
+  const [sub12Sex, setSub12Sex]         = useState("all");
+  const [sub12Search, setSub12Search]   = useState("");
+  const [sub12Player, setSub12Player]   = useState<Sub12Row | null>(null);
 
   useEffect(() => {
     Promise.all([
-      fetch("/data/drive-data.json").then((r) => { if (!r.ok) throw new Error("drive " + r.status); return r.json(); }),
-      fetch("/data/players.json").then((r) => r.ok ? r.json() : {}).catch(() => ({})),
-      fetch("/data/drive-sd-lookup.json").then((r) => r.ok ? r.json() : {}).catch(() => ({})),
-      fetch("/data/aquapor-data.json").then((r) => r.ok ? r.json() : null).catch(() => null),
+      fetch("/data/drive-data.json").then(r => { if (!r.ok) throw new Error("drive " + r.status); return r.json(); }),
+      fetch("/data/players.json").then(r => r.ok ? r.json() : {}).catch(() => ({})),
+      fetch("/data/drive-sd-lookup.json").then(r => r.ok ? r.json() : {}).catch(() => ({})),
+      fetch("/data/aquapor-data.json").then(r => r.ok ? r.json() : null).catch(() => null),
     ]).then(([dd, pp, sd, aq]) => {
       const driveData = dd as DriveData;
-      // Normalize all tournaments from scraper format
       driveData.tournaments = driveData.tournaments.map(normalizeTournament);
-      // Merge AQUAPOR tournaments into DriveData if loaded
-      if (aq && aq.tournaments) {
-        const aqTournaments = (aq.tournaments as Tournament[]).map(t => normalizeTournament({ ...t, series: "aquapor" as const }));
-        driveData.tournaments = [...driveData.tournaments, ...aqTournaments];
-        driveData.totalTournaments += aqTournaments.length;
-        driveData.totalPlayers += aqTournaments.reduce((s, t) => s + t.playerCount, 0);
+      if (aq?.tournaments) {
+        const aqT = (aq.tournaments as Tournament[]).map(t => normalizeTournament({ ...t, series: "aquapor" as const }));
+        driveData.tournaments = [...driveData.tournaments, ...aqT];
+        driveData.totalTournaments += aqT.length;
+        driveData.totalPlayers += aqT.reduce((s, t) => s + t.playerCount, 0);
       }
-      // Expand multi-round into R1 + R2 + Total
       driveData.tournaments = expandMultiRound(driveData.tournaments);
-      // Resolve missing feds by matching names against players DB
-      resolveFedsInTournaments(driveData.tournaments, pp as PlayersDB);
-      setData(driveData);
-      setPdb(pp as PlayersDB);
-      setSdLookup(sd as SDLookup);
-      setLoading(false);
-    }).catch((e) => { setError(e.message); setLoading(false); });
+      // Mostrar dados imediatamente; resolver feds em background
+      setData(driveData); setPdb(pp as PlayersDB); setSdLookup(sd as SDLookup); setLoading(false);
+      setTimeout(() => {
+        resolveFedsInTournaments(driveData.tournaments, pp as PlayersDB);
+        // Forçar re-render para aplicar feds resolvidos
+        setData({ ...driveData });
+      }, 0);
+    }).catch(e => { setError(e.message); setLoading(false); });
   }, []);
 
-  const tourT = useMemo(() => data?.tournaments.filter((t) => t.series === "tour") ?? [], [data]);
-  const challT = useMemo(() => data?.tournaments.filter((t) => t.series === "challenge") ?? [], [data]);
-  const aquaporT = useMemo(() => data?.tournaments.filter((t) => t.series === "aquapor") ?? [], [data]);
+  const tourT    = useMemo(() => data?.tournaments.filter(t => t.series === "tour")      ?? [], [data]);
+  const challT   = useMemo(() => data?.tournaments.filter(t => t.series === "challenge") ?? [], [data]);
+  const aquaporT = useMemo(() => data?.tournaments.filter(t => t.series === "aquapor")   ?? [], [data]);
   const escLookup = useMemo(() => buildEscLookup(pdb, data?.tournaments ?? []), [pdb, data]);
 
+  // Sub-12: só calcular quando a tab é activada pela primeira vez
+  const [sub12Ready, setSub12Ready] = useState(false);
+  useEffect(() => { if (series === "sub12" && !sub12Ready) setSub12Ready(true); }, [series, sub12Ready]);
+
+  const sub12Data = useMemo(() =>
+    sub12Ready && data ? buildSub12Data(data.tournaments, pdb, sdLookup, escLookup) : []
+  , [sub12Ready, data, pdb, sdLookup, escLookup]);
+
+  const sub12SeriesRows = useMemo(() => filterBySub12Series(sub12Data, sub12Series), [sub12Data, sub12Series]);
+  const sub12Tourns = useMemo(() => {
+    const m = new Map<string, { key: string; short: string; date: string; series: string; dateSort: number }>();
+    for (const row of sub12SeriesRows) {
+      for (const r of row.results) {
+        if (!m.has(r.tournKey)) m.set(r.tournKey, { key: r.tournKey, short: r.tournShort, date: r.date, series: r.series, dateSort: r.dateSort });
+      }
+    }
+    return [...m.values()].sort((a,b) => a.dateSort - b.dateSort);
+  }, [sub12SeriesRows]);
+
+  const sub12Filtered = useMemo(() => {
+    let list = sub12SeriesRows;
+    if (sub12Region !== "all") list = list.filter(p => p.region.toLowerCase().includes(sub12Region.toLowerCase()));
+    if (sub12Sex !== "all")    list = list.filter(p => p.sex === sub12Sex);
+    if (sub12Search.trim()) {
+      const q = sub12Search.toLowerCase();
+      list = list.filter(p => p.name.toLowerCase().includes(q) || p.club.toLowerCase().includes(q) || p.fed.includes(q));
+    }
+    return list;
+  }, [sub12SeriesRows, sub12Region, sub12Sex, sub12Search]);
+
+  const sub12AvailRegions = useMemo(() => [...new Set(sub12SeriesRows.map(p => p.region).filter(Boolean))].sort(), [sub12SeriesRows]);
+
+  const sub12Counts = useMemo(() => {
+    const counts: Record<string, { players: number; tourns: number }> = {};
+    for (const s of SUB12_SERIES_TABS) {
+      const rows = filterBySub12Series(sub12Data, s.key);
+      const tourns = new Set(rows.flatMap(p => p.results.map(r => r.tournKey)));
+      counts[s.key] = { players: rows.length, tourns: tourns.size };
+    }
+    return counts;
+  }, [sub12Data]);
+
+  const sub12KpiPlayers  = sub12Filtered.length;
+  const sub12KpiRounds   = sub12Filtered.reduce((s,p) => s + p.tourneiosPlayed, 0);
+  const sub12KpiAvgSD    = numAvg(sub12Filtered.filter(p => p.avgSD != null).map(p => p.avgSD!));
+  const sub12KpiBest     = sub12Filtered.reduce<number|null>((best,p) => p.bestGross != null && (best==null||p.bestGross<best) ? p.bestGross : best, null);
+
+  const handleSub12PlayerClick = useCallback((fed: string) => {
+    const p = sub12SeriesRows.find(x => x.fed === fed);
+    if (p) setSub12Player(prev => prev?.fed === fed ? null : p);
+  }, [sub12SeriesRows]);
+
+  // Série normal (tour/challenge/aquapor)
+  const seriesT = series === "tour" ? tourT : series === "challenge" ? challT : aquaporT;
+  const availRegions = useMemo(() => {
+    if (series === "sub12") return [];
+    const s = new Set(seriesT.map(t => t.region));
+    return REGIONS.filter(r => s.has(r.id));
+  }, [series, seriesT]);
+
+  const filteredT = useMemo(() => {
+    if (series === "sub12") return [];
+    let ts = seriesT;
+    if (regionFilter) ts = ts.filter(t => t.region === regionFilter);
+    if (escFilter.length > 0 && series === "challenge") ts = filterTournByEsc(ts, escFilter, escLookup);
+    return ts;
+  }, [series, seriesT, regionFilter, escFilter, escLookup]);
+
+  const filteredGroups = useMemo(() => series === "sub12" ? [] : buildGroups(filteredT), [series, filteredT]);
+  const regionT = useMemo(() => regionFilter ? seriesT.filter(t => t.region === regionFilter) : seriesT, [seriesT, regionFilter]);
+  const availEscs = useMemo(() => series === "challenge" ? availEscaloes(regionT, escLookup) : [], [series, regionT, escLookup]);
+
+  useEffect(() => { setRegionFilter(null); setEscFilter([]); setSelectedGroupKey(null); setRoundIdx(0); }, [series]);
+  useEffect(() => { setEscFilter([]); setSelectedGroupKey(null); setRoundIdx(0); }, [regionFilter]);
+  useEffect(() => { setSub12Player(null); }, [sub12Series]);
+
+  const selectedGroup = useMemo(
+    () => filteredGroups.find(g => g.key === selectedGroupKey) ?? null,
+    [filteredGroups, selectedGroupKey]
+  );
+  const curTournament = selectedGroup ? (selectedGroup.entries[roundIdx] || selectedGroup.entries[0]) : null;
+
+  // Pré-calcular labels sidebar
+  const sidebarNumCount = useMemo(() => {
+    const m = new Map<string, Map<number, number>>();
+    for (const g of filteredGroups) {
+      const region = g.entries[0]?.region || "";
+      if (!m.has(region)) m.set(region, new Map());
+      const rm = m.get(region)!;
+      rm.set(g.num, (rm.get(g.num) || 0) + 1);
+    }
+    return m;
+  }, [filteredGroups]);
+
+  const sidebarItemLabel = (g: TournGroup) => {
+    const region = g.entries[0]?.region || "";
+    const isDup = (sidebarNumCount.get(region)?.get(g.num) || 0) > 1;
+    return `T${g.num}${isDup ? " · " + fmtDate(g.date) : ""}${g.escalao ? " · " + g.label + " · " + g.escalao : " · " + g.label}`;
+  };
+
   if (loading) return <LoadingState />;
-  if (error) return <div className="tourn-layout"><div className="notice-error" style={{ margin: 16 }}>Erro: {error}</div></div>;
-  if (!data) return null;
+  if (error)   return <div className="jogadores-page"><div className="notice-error" style={{ margin: 16 }}>Erro: {error}</div></div>;
+  if (!data)   return null;
 
   const sdCount = Object.keys(sdLookup).length;
+  const isSub12Mode = series === "sub12";
 
   return (
-    <div className="tourn-layout">
+    <div className="jogadores-page">
+
+      {/* ── Toolbar ── */}
       <div className="toolbar">
         <div className="toolbar-left">
-          <span className="tourn-toolbar-title">🏁 {series === "aquapor" ? "AQUAPOR" : "DRIVE"} 2026</span>
-          <span className="tourn-toolbar-meta">{series === "aquapor" ? "Circuito Nacional Juvenil" : "Circuito Regional Juvenil"}</span>
-          <div className="tourn-toolbar-sep" />
+          {(
+            <button className="sidebar-toggle" onClick={() => setSidebarOpen(v => !v)}
+              title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
+              {sidebarOpen ? "◀" : "▶"}
+            </button>
+          )}
+          <span className="toolbar-title">
+            {isSub12Mode ? "Sub-12 DRIVE" : series === "aquapor" ? "💧 AQUAPOR" : "🏁 DRIVE"} 2026
+          </span>
+          <span className="toolbar-meta">
+            {isSub12Mode ? "Sub-10 + Sub-12" : series === "aquapor" ? "Circuito Nacional" : "Circuito Regional Juvenil"}
+          </span>
+          <div className="toolbar-sep" />
           <div className="escalao-pills">
-            <button className={"tourn-tab tourn-tab-sm" + (series === "tour" ? " active" : "")} onClick={() => setSeries("tour")}>
+            <button className={"tourn-tab tourn-tab-sm" + (series === "tour" ? " active" : "")}
+              onClick={() => setSeries("tour")}
+              style={series === "tour" ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
               🏌️ Tour ({countEvents(tourT)})
             </button>
-            <button className={"tourn-tab tourn-tab-sm" + (series === "challenge" ? " active" : "")} onClick={() => setSeries("challenge")}
-              style={series === "challenge" ? {} : { background: "#ede9fe", color: "#7c3aed", borderColor: "#ede9fe" }}>
+            <button className={"tourn-tab tourn-tab-sm" + (series === "challenge" ? " active" : "")}
+              onClick={() => setSeries("challenge")}
+              style={series === "challenge" ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
               ⚡ Challenge ({countEvents(challT)})
             </button>
-            <button className={"tourn-tab tourn-tab-sm" + (series === "aquapor" ? " active" : "")} onClick={() => setSeries("aquapor")}
-              style={series === "aquapor" ? {} : { background: "#e0e7ff", color: "#4338ca", borderColor: "#e0e7ff" }}>
+            <button className={"tourn-tab tourn-tab-sm" + (series === "aquapor" ? " active" : "")}
+              onClick={() => setSeries("aquapor")}
+              style={series === "aquapor" ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
               💧 AQUAPOR ({countEvents(aquaporT)})
             </button>
+            <button className={"tourn-tab tourn-tab-sm" + (series === "sub12" ? " active" : "")}
+              onClick={() => setSeries("sub12")}
+              style={series === "sub12" ? {} : { background: "var(--bg-warn-strong)", color: "var(--color-warn-dark)", borderColor: "var(--bg-warn-strong)", fontWeight: 700 }}>
+              Sub-12
+            </button>
           </div>
-          <div className="tourn-toolbar-sep" />
-          <button className="tourn-tab tourn-tab-sm" onClick={() => navigate("/drive/sub12")}
-            style={{ background: "#fef3c7", color: "#92400e", borderColor: "#fde68a", fontWeight: 700 }}>
-            👶 Sub-12
-          </button>
         </div>
         <div className="toolbar-right">
-          {data.totalScorecards > 0 && <span className="chip" style={{ background: "#dcfce7", color: "#16a34a" }}>📊 {data.totalScorecards} sc</span>}
+          {!isSub12Mode && data.totalScorecards > 0 && (
+            <span className="chip" style={{ background: "var(--bg-success-strong)", color: "var(--color-good-dark)" }}>
+              📊 {data.totalScorecards} sc
+            </span>
+          )}
           <span className="chip">📅 {data.lastUpdated}</span>
         </div>
       </div>
-      {series === "tour"
-        ? <DriveTourView tournaments={tourT} playersDB={pdb} sdLookup={sdLookup} escLookup={escLookup} />
-        : series === "challenge"
-        ? <DriveChallengeView tournaments={challT} playersDB={pdb} sdLookup={sdLookup} />
-        : <AquaporView tournaments={aquaporT} playersDB={pdb} sdLookup={sdLookup} escLookup={escLookup} />}
-      <div style={{ padding: "8px 12px", fontSize: 10, color: "var(--text-muted)", textAlign: "center" }}>
-        scoring.datagolf.pt · {data.lastUpdated} · SD: FPG oficial{sdCount > 0 && " (" + sdCount + ")"} → AGS → aproximado · * inclui Expected SD 9h
-      </div>
+
+      {/* ── Toolbar linha 2: filtros de série normal ── */}
+      {!isSub12Mode && (availRegions.length > 1 || (series === "challenge" && availEscs.length > 1)) && (
+        <div className="toolbar" style={{ minHeight: 0, padding: "4px 12px", borderTop: "1px solid var(--border-light)", gap: 6, flexWrap: "wrap" }}>
+          {availRegions.length > 1 && (
+            <div className="escalao-pills gap-4">
+              <button className={"tourn-tab tourn-tab-sm" + (regionFilter === null ? " active" : "")}
+                onClick={() => setRegionFilter(null)}>
+                Todas ({countEvents(seriesT)})
+              </button>
+              {availRegions.map(reg => {
+                const rt = seriesT.filter(t => t.region === reg.id);
+                return (
+                  <button key={reg.id}
+                    className={"tourn-tab tourn-tab-sm" + (regionFilter === reg.id ? " active" : "")}
+                    onClick={() => setRegionFilter(reg.id)}
+                    style={regionFilter === reg.id ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                    {reg.emoji} {reg.label} ({countEvents(rt)}T · {uniquePC(rt)} jog)
+                  </button>
+                );
+              })}
+            </div>
+          )}
+          {series === "challenge" && availEscs.length > 1 && (
+            <>
+              {availRegions.length > 1 && <div className="toolbar-sep" />}
+              <div className="escalao-pills gap-4">
+                <button className={"tourn-tab tourn-tab-sm" + (escFilter.length === 0 ? " active" : "")}
+                  onClick={() => setEscFilter([])}>
+                  Todos ({uniquePC(regionT)} jog)
+                </button>
+                {availEscs.map(e => {
+                  const on = escFilter.includes(e);
+                  return (
+                    <button key={e}
+                      className={"tourn-tab tourn-tab-sm" + (on ? " active" : "")}
+                      onClick={() => setEscFilter(prev => on ? prev.filter(x => x !== e) : [...prev, e])}
+                      style={on ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                      {e}
+                    </button>
+                  );
+                })}
+              </div>
+            </>
+          )}
+        </div>
+      )}
+
+      {/* ══════════════════════════════════════════
+          MODO SUB-12
+          ══════════════════════════════════════════ */}
+      {isSub12Mode && (
+        <div className="master-detail">
+
+          {/* Sidebar Sub-12 */}
+          <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`}>
+            {/* Séries */}
+            <div className="sidebar-section-title">Série</div>
+            {SUB12_SERIES_TABS.map(s => {
+              const c = sub12Counts[s.key];
+              if (!c || c.players === 0) return null;
+              const active = sub12Series === s.key;
+              return (
+                <button key={s.key}
+                  className={`course-item ${active ? "active" : ""}`}
+                  onClick={() => { setSub12Series(s.key); setSub12View("grid"); setSub12Player(null); }}>
+                  <div className="course-item-name">{s.emoji} {s.label}</div>
+                  <div className="course-item-sub">{c.tourns} torneios · {c.players} jog · {s.holes}</div>
+                </button>
+              );
+            })}
+
+            {/* Vistas */}
+            <div className="sidebar-section-title mt-8">Vista</div>
+            {(["grid", "ranking", "evolucao"] as Sub12ViewTab[]).map(v => {
+              const labels: Record<Sub12ViewTab, string> = { grid: "📊 Tabela", ranking: "🏆 Ranking", evolucao: "📈 Evolução" };
+              return (
+                <button key={v}
+                  className={`course-item ${sub12View === v ? "active" : ""}`}
+                  onClick={() => setSub12View(v)}>
+                  <div className="course-item-name">{labels[v]}</div>
+                </button>
+              );
+            })}
+
+            {/* Filtros compactos */}
+            <div className="sidebar-section-title mt-8">Filtros</div>
+            <div style={{ padding: "4px 8px", display: "flex", flexDirection: "column", gap: 4 }}>
+              {sub12AvailRegions.length > 1 && (
+                <select className="select w-full fs-11" value={sub12Region} onChange={e => setSub12Region(e.target.value)}>
+                  <option value="all">Todas as zonas</option>
+                  {sub12AvailRegions.map(z => <option key={z} value={z}>{z}</option>)}
+                </select>
+              )}
+              <select className="select w-full fs-11" value={sub12Sex} onChange={e => setSub12Sex(e.target.value)}>
+                <option value="all">Ambos os sexos</option>
+                <option value="M">Masculino</option>
+                <option value="F">Feminino</option>
+              </select>
+              <input className="input" style={{ width: "100%", fontSize: 11, boxSizing: "border-box" }}
+                value={sub12Search} onChange={e => setSub12Search(e.target.value)} placeholder="Nome, clube…" />
+            </div>
+
+            <div className="muted fs-10" style={{ padding: "8px 12px", borderTop: "1px solid var(--border-light)", marginTop: 8 }}>
+              Sub-10 + Sub-12 · scoring.datagolf.pt
+            </div>
+          </div>
+
+          {/* Conteúdo principal */}
+          <div className="flex-1-scroll">
+            <div style={{ padding: "0 12px 12px" }}>
+
+              {/* Detalhe jogador (se aberto) */}
+              {sub12Player && (
+                <div className="mt-12">
+                  <PlayerDetail row={sub12Player} onClose={() => setSub12Player(null)} />
+                </div>
+              )}
+
+              {/* Calendário no topo */}
+              <div className="mt-12">
+                <UpcomingSchedule series={sub12Series} />
+              </div>
+
+              <div className="card mt-8">
+                {/* Header do card igual ao Resumo */}
+                <div className="h-md fs-14">
+                  {sub12View === "grid" ? "📊" : sub12View === "ranking" ? "🏆" : "📈"}{" "}
+                  {sub12View === "grid" ? "Tabela" : sub12View === "ranking" ? "Ranking" : "Evolução SD"}{" "}
+                  — Sub-12 {SUB12_SERIES_TABS.find(s => s.key === sub12Series)?.label} 2026
+                </div>
+                <div className="muted fs-11 mb-8">
+                  {sub12KpiPlayers} jogadores · {sub12KpiRounds} rondas
+                  {sub12KpiAvgSD != null && <> · SD médio <span style={{ fontWeight: 700, color: sub12KpiAvgSD <= 25 ? "var(--color-good)" : "var(--text)" }}>{sub12KpiAvgSD.toFixed(1)}</span></>}
+                  {sub12KpiBest != null && <> · Melhor gross <span style={{ fontWeight: 700, color: "var(--color-good-dark)" }}>{sub12KpiBest}</span></>}
+                </div>
+
+                {/* Conteúdo */}
+                {sub12View === "grid"     && <TournamentGrid rows={sub12Filtered} allTournaments={sub12Tourns} onPlayerClick={handleSub12PlayerClick} playersDB={pdb} escLookup={escLookup} />}
+                {sub12View === "ranking"  && <RankingView    rows={sub12Filtered} onPlayerClick={handleSub12PlayerClick} />}
+                {sub12View === "evolucao" && <EvolutionChart rows={sub12Filtered} />}
+              </div>
+            </div>
+          </div>
+
+        </div>
+      )}
+
+      {/* ══════════════════════════════════════════
+          MODO NORMAL (Tour / Challenge / AQUAPOR)
+          ══════════════════════════════════════════ */}
+      {!isSub12Mode && (
+        <div className="master-detail">
+
+          {/* Sidebar */}
+          <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`}>
+            <button
+              className={`course-item ${selectedGroupKey === null ? "active" : ""}`}
+              onClick={() => { setSelectedGroupKey(null); setRoundIdx(0); }}>
+              <div className="course-item-name">📋 Resumo temporada</div>
+              <div className="course-item-sub">{filteredGroups.length} torneios · {uniquePC(filteredT)} jog</div>
+            </button>
+
+            {availRegions.length > 1 && !regionFilter
+              ? REGIONS
+                  .filter(r => filteredGroups.some(g => g.entries[0]?.region === r.id))
+                  .map(reg => {
+                    const regGroups = filteredGroups.filter(g => g.entries[0]?.region === reg.id);
+                    return (
+                      <React.Fragment key={reg.id}>
+                        <div className="sidebar-section-title">{reg.emoji} {reg.label}</div>
+                        {regGroups.map(g => (
+                          <button key={g.key}
+                            className={`course-item ${selectedGroupKey === g.key ? "active" : ""}`}
+                            onClick={() => { setSelectedGroupKey(g.key); setRoundIdx(0); }}>
+                            <div className="course-item-name">{sidebarItemLabel(g)}</div>
+                            <div className="course-item-sub">
+                              {fmtDate(g.date)} · {uniquePC(g.entries)} jog
+                              {g.isMulti && <span className="chip" style={{ marginLeft: 4, fontSize: 9, padding: "0 5px" }}>{g.totalRounds}R</span>}
+                            </div>
+                          </button>
+                        ))}
+                      </React.Fragment>
+                    );
+                  })
+              : filteredGroups.map(g => (
+                  <button key={g.key}
+                    className={`course-item ${selectedGroupKey === g.key ? "active" : ""}`}
+                    onClick={() => { setSelectedGroupKey(g.key); setRoundIdx(0); }}>
+                    <div className="course-item-name">{sidebarItemLabel(g)}</div>
+                    <div className="course-item-sub">
+                      {fmtDate(g.date)} · {uniquePC(g.entries)} jog
+                      {g.isMulti && <span className="chip" style={{ marginLeft: 4, fontSize: 9, padding: "0 5px" }}>{g.totalRounds}R</span>}
+                    </div>
+                  </button>
+                ))
+            }
+
+            {filteredGroups.length === 0 && (
+              <div className="muted" style={{ padding: "16px 12px", fontSize: 12 }}>Sem torneios</div>
+            )}
+            <div className="muted fs-10" style={{ padding: "8px 12px", borderTop: "1px solid var(--border-light)" }}>
+              scoring.datagolf.pt{sdCount > 0 && ` · SD: ${sdCount}`}
+            </div>
+          </div>
+
+          {/* Conteúdo principal */}
+          <div className="flex-1-scroll">
+
+            {/* RESUMO */}
+            {selectedGroupKey === null && (
+              <div style={{ padding: "0 12px 12px" }}>
+                <div className="card">
+                  <div className="h-md fs-14">
+                    📋 {series === "tour" ? "Drive Tour" : series === "challenge" ? "Drive Challenge" : "AQUAPOR"}
+                    {regionFilter ? " " + (regionOf(regionFilter)?.label || "") : ""}
+                    {escFilter.length > 0 ? " — " + escFilter.join(", ") : ""} — Temporada 2026
+                  </div>
+                  <div className="muted fs-11 mb-8">
+                    {filteredGroups.length} torneios · {uniquePC(filteredT)} jogadores ·{" "}
+                    {filteredT.filter(t => t._roundLabel !== "Total").reduce((a, t) => a + t.players.filter(p => !isDNS(p)).length, 0)} presenças
+                  </div>
+                  <ResumoTable tournaments={filteredT} playersDB={pdb} sdLookup={sdLookup} escLookup={escLookup} mergeByEvent={series === "challenge"} />
+                </div>
+              </div>
+            )}
+
+            {/* DETALHE DE TORNEIO */}
+            {selectedGroupKey !== null && selectedGroup && (
+              <div style={{ padding: "0 12px 12px" }}>
+                {selectedGroup.isMulti && (
+                  <div className="escalao-pills" style={{ gap: 3, flexWrap: "wrap", padding: "8px 0 0" }}>
+                    {selectedGroup.entries.map((entry, ri) => {
+                      const lbl = entry._roundLabel || ("R" + (ri + 1));
+                      const isTotal = lbl === "Total";
+                      const activeCount = entry.players.filter(p => !isDNS(p)).length;
+                      return (
+                        <button key={entry.tcode}
+                          className={"tourn-tab tourn-tab-sm" + (roundIdx === ri ? " active" : "")}
+                          onClick={() => setRoundIdx(ri)}
+                          style={roundIdx === ri ? {} : isTotal
+                            ? { background: "var(--bg-warn-strong)", color: "var(--color-warn-dark)", borderColor: "var(--bg-warn-strong)" }
+                            : {}}>
+                          {isTotal ? "📊" : "🏌️"} {lbl}
+                          <span style={{ fontSize: 9, marginLeft: 3, opacity: 0.7 }}>({activeCount} jog)</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+                {curTournament && (
+                  <div className="card" style={{ marginTop: selectedGroup.isMulti ? 8 : 0 }}>
+                    <div className="h-md fs-14">
+                      {selectedGroup.isMulti
+                        ? <>{curTournament._roundLabel === "Total" ? "📊 Acumulado" : "🏌️ " + curTournament._roundLabel} — {selectedGroup.campo}</>
+                        : <>🏆 Scorecard — {selectedGroup.label}</>}
+                    </div>
+                    <div className="muted fs-11 mb-4">
+                      T{curTournament.num} · 📍 {curTournament.campo} · 📅 {fmtDate(curTournament.date)}
+                      {selectedGroup.isMulti && <> · {selectedGroup.totalRounds} rondas</>}
+                      {" · "}{curTournament.players.filter(p => !isDNS(p) && !p._incomplete).length} jog
+                      {curTournament._roundLabel === "Total" && curTournament.players.some(p => p._incomplete) && (
+                        <> + {curTournament.players.filter(p => p._incomplete).length} inc</>
+                      )}
+                      {" · "}{curTournament.players[0]?.nholes || 18}h
+                    </div>
+                    {curTournament._roundLabel === "Total"
+                      ? <TotalLeaderboard tournament={curTournament} playersDB={pdb} sdLookup={sdLookup} />
+                      : <ScorecardLB tournament={curTournament} playersDB={pdb} />}
+                  </div>
+                )}
+              </div>
+            )}
+
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

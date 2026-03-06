@@ -5,7 +5,9 @@
  * Results are derived LIVE from player scorecards.
  */
 import React, { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import type { PlayersDb } from "../data/types";
+import { useAppContext } from "../context/AppContext";
 import { loadPlayerData, type PlayerPageData, type HoleScores } from "../data/playerDataLoader";
 import { deepFixMojibake } from "../utils/fixEncoding";
 import { fmtToPar as _fmtToPar, fmtHcp as _fmtHcp } from "../utils/format";
@@ -1096,7 +1098,7 @@ function AnalysisView({ norm, players, holeDataByDay, playerHistory, onSelectPla
       </div>
 
       {cat === "wagr" && grosses.length > 0 && (
-        <div className="tourn-kpis">
+        <div className="kpis">
           {[
             { label: "Melhor Gross", val: Math.min(...grosses), sub: classified.find(r => r.gross === Math.min(...grosses))?.name },
             { label: "Média Campo", val: avg.toFixed(1), sub: `${classified.length} jog.` },
@@ -1104,10 +1106,10 @@ function AnalysisView({ norm, players, holeDataByDay, playerHistory, onSelectPla
             { label: "SD Médio", val: avgSD?.toFixed(1) ?? "–", sub: sdStdDev ? `σ ${sdStdDev.toFixed(1)}` : undefined },
             { label: "Média PJA", val: pjaResults.length > 0 ? (pjaResults.reduce((a, r) => a + r.gross!, 0) / pjaResults.length).toFixed(1) : "–", sub: `${pjaResults.length} jog.` },
           ].map((k, i) => (
-            <div key={i} className="tourn-kpi">
-              <div className="tourn-kpi-lbl">{k.label}</div>
-              <div className="tourn-kpi-val">{k.val}</div>
-              {k.sub && <div className="tourn-kpi-sub">{k.sub}</div>}
+            <div key={i} className="kpi">
+              <div className="kpi-lbl">{k.label}</div>
+              <div className="kpi-val">{k.val}</div>
+              {k.sub && <div className="kpi-sub">{k.sub}</div>}
             </div>
           ))}
         </div>
@@ -1241,7 +1243,10 @@ function AnalysisView({ norm, players, holeDataByDay, playerHistory, onSelectPla
    Main Component — with LIVE result derivation
    ═══════════════════════════════════════════════ */
 
-export default function TorneioPage({ players, onSelectPlayer }: { players: PlayersDb; onSelectPlayer?: (fed: string) => void }) {
+export default function TorneioPage() {
+  const { players } = useAppContext();
+  const navigate = useNavigate();
+  const onSelectPlayer = (fed: string) => navigate(`/jogadores/${fed}`);
   resolveFedsFromPlayers(NORM_BASE, players);
   const [unlocked, setUnlocked] = useState(() => isCalUnlocked());
   const [view, setView] = useState<TournView>("leaderboard");
@@ -1436,9 +1441,9 @@ export default function TorneioPage({ players, onSelectPlayer }: { players: Play
             {sidebarOpen ? "◀" : "▶"}
           </button>
           <span className="p p-sm p-tourn p-intl">🌍 INTL</span>
-          <span className="tourn-toolbar-title">GG26</span>
-          <span className="tourn-toolbar-meta">📍 {NORM_BASE.course}</span>
-          <span className="tourn-toolbar-meta">📅 {NORM_BASE.dates.join(" → ")}</span>
+          <span className="toolbar-title">GG26</span>
+          <span className="toolbar-meta">📍 {NORM_BASE.course}</span>
+          <span className="toolbar-meta">📅 {NORM_BASE.dates.join(" → ")}</span>
           <a href="https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=52884" target="_blank" rel="noopener noreferrer"
             className="toolbar-badge-link toolbar-badge-link-accent">
             FPG WHS <span className="toolbar-badge-arrow">↗</span>
@@ -1447,7 +1452,7 @@ export default function TorneioPage({ players, onSelectPlayer }: { players: Play
             className="toolbar-badge-link toolbar-badge-link-dark">
             FPG Resultados <span className="toolbar-badge-arrow">↗</span>
           </a>
-          <div className="tourn-toolbar-sep" />
+          <div className="toolbar-sep" />
           <div className="escalao-pills">
             {([
               { key: "draw" as const, label: "📋 Draw" },

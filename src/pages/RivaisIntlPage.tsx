@@ -528,22 +528,22 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
   return (
     <div className="tourn-section">
       {/* Manuel KPIs */}
-      <div className="tourn-kpis" style={{ gridTemplateColumns: `repeat(${T.length}, 1fr)` }}>
+      <div className="kpis" style={{ gridTemplateColumns: `repeat(${T.length}, 1fr)` }}>
         {T.map(t => {
           const res = manuel.r[t.id];
           if (!res) return (
-            <div key={t.id} className="tourn-kpi op-4">
-              <div className="tourn-kpi-lbl">{t.short}</div>
-              <div className="tourn-kpi-val fs-16">–</div>
+            <div key={t.id} className="kpi op-4">
+              <div className="kpi-lbl">{t.short}</div>
+              <div className="kpi-val fs-16">–</div>
             </div>
           );
           return (
-            <div key={t.id} className="tourn-kpi">
-              <div className="tourn-kpi-lbl">{t.short}</div>
-              <div className="tourn-kpi-val" style={{ fontSize: 16, color: res.tp <= 0 ? "var(--color-good-dark)" : res.tp <= 20 ? "var(--color-warn-dark)" : "var(--color-danger-dark)" }}>
+            <div key={t.id} className="kpi">
+              <div className="kpi-lbl">{t.short}</div>
+              <div className="kpi-val" style={{ fontSize: 16, color: res.tp <= 0 ? "var(--color-good-dark)" : res.tp <= 20 ? "var(--color-warn-dark)" : "var(--color-danger-dark)" }}>
                 {fmtSign(res.tp)}
               </div>
-              <div className="tourn-kpi-sub">#{res.p} · {res.rd.join("-")}</div>
+              <div className="kpi-sub">#{res.p} · {res.rd.join("-")}</div>
             </div>
           );
         })}
@@ -689,7 +689,7 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
                     {/* Upcoming tournaments */}
                     {UP.map(u => (
                       <td key={u.id} className="ta-center fs-12">
-                        {p.up.includes(u.id) ? <span className="fw-700" style={{ color: "var(--color-good-dark)" }}>✓</span> : <span className="c-border">—</span>}
+                        {p.up.includes(u.id) ? <span className="fw-700 c-good-dark">✓</span> : <span className="c-border">—</span>}
                       </td>
                     ))}
 
@@ -893,12 +893,12 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
       </div>
 
       {/* KPIs */}
-      <div className="tourn-kpis" style={{ gridTemplateColumns: `repeat(${card ? 5 : 4}, 1fr)`, marginBottom: 16 }}>
-        {lbEntry && <div className="tourn-kpi"><div className="tourn-kpi-lbl">BJGT Total</div><div className="tourn-kpi-val">{lbEntry.total}</div><div className="tourn-kpi-sub">{fmtToPar(lbEntry.result)} · #{lbEntry.pos}</div></div>}
-        {bestTp != null && <div className="tourn-kpi"><div className="tourn-kpi-lbl">Melhor ±Par</div><div className="tourn-kpi-val" style={{ color: bestTp <= 0 ? "var(--color-good-dark)" : "var(--text)" }}>{fmtToPar(bestTp)}</div></div>}
-        {bestRound != null && <div className="tourn-kpi"><div className="tourn-kpi-lbl">Melhor Ronda</div><div className="tourn-kpi-val" style={{ color: "var(--color-good-dark)" }}>{bestRound}</div></div>}
-        {avgRound != null && <div className="tourn-kpi"><div className="tourn-kpi-lbl">Média Ronda</div><div className="tourn-kpi-val">{avgRound.toFixed(1)}</div></div>}
-        {card && <div className="tourn-kpi"><div className="tourn-kpi-lbl">Eclético BJGT</div><div className="tourn-kpi-val" style={{ color: "var(--color-good-dark)" }}>{card.eclTotal}</div><div className="tourn-kpi-sub">{fmtToPar(card.eclTotal - totalPar)}</div></div>}
+      <div className="kpis" style={{ gridTemplateColumns: `repeat(${card ? 5 : 4}, 1fr)`, marginBottom: 16 }}>
+        {lbEntry && <div className="kpi"><div className="kpi-lbl">BJGT Total</div><div className="kpi-val">{lbEntry.total}</div><div className="kpi-sub">{fmtToPar(lbEntry.result)} · #{lbEntry.pos}</div></div>}
+        {bestTp != null && <div className="kpi"><div className="kpi-lbl">Melhor ±Par</div><div className="kpi-val" style={{ color: bestTp <= 0 ? "var(--color-good-dark)" : "var(--text)" }}>{fmtToPar(bestTp)}</div></div>}
+        {bestRound != null && <div className="kpi"><div className="kpi-lbl">Melhor Ronda</div><div className="kpi-val c-good-dark">{bestRound}</div></div>}
+        {avgRound != null && <div className="kpi"><div className="kpi-lbl">Média Ronda</div><div className="kpi-val">{avgRound.toFixed(1)}</div></div>}
+        {card && <div className="kpi"><div className="kpi-lbl">Eclético BJGT</div><div className="kpi-val c-good-dark">{card.eclTotal}</div><div className="kpi-sub">{fmtToPar(card.eclTotal - totalPar)}</div></div>}
       </div>
 
       {/* ── Scoring distribution ── */}
@@ -1016,8 +1016,8 @@ function RivaisIntlContent() {
       {/* Toolbar */}
       <div className="toolbar">
         <div className="toolbar-left">
-          <span className="tourn-toolbar-title">🌍 Rivais Internacionais</span>
-          <span className="tourn-toolbar-meta">Manuel · Sub-12</span>
+          <span className="toolbar-title">🌍 Rivais Internacionais</span>
+          <span className="toolbar-meta">Manuel · Sub-12</span>
         </div>
       </div>
 
