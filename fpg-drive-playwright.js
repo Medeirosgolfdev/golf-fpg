@@ -153,10 +153,14 @@ async function main() {
     await sleep(150);
   }
 
-  // Filtrar novos
-  const targetTournaments = allFound.filter(t =>
-    forceFlag || !existingMap.has(`${t.ccode}_${t.code}`)
-  );
+  // Filtrar: novos OU já existentes com 0 jogadores (resultados ainda não estavam disponíveis)
+  const targetTournaments = allFound.filter(t => {
+    if (forceFlag) return true;
+    const key = `${t.ccode}_${t.code}`;
+    if (!existingMap.has(key)) return true;               // novo
+    const existing = existingMap.get(key);
+    return (existing.playerCount || 0) === 0;             // já existe mas sem jogadores
+  });
 
   console.log(`\n  ${B}Total encontrados: ${allFound.length} | A processar: ${targetTournaments.length}${X}`);
 
@@ -175,9 +179,16 @@ async function main() {
 
     process.stdout.write(`  [${i+1}/${targetTournaments.length}] ${C}${t.description}${X}\n  `);
 
+    // Diagnóstico: mostrar os campos de identificação do torneio
+    const tournId = t.id ?? t.code;
+    if (!tournId) {
+      process.stdout.write(`${R}erro: sem id nem code no registo do torneio${X}\n`);
+      continue;
+    }
+
     try {
       const classif = await apiGet(
-        `/api/clubs/${t.ccode}/tournaments/${t.id}/classification?rounds=1&scoringType=stroke-play&gender=all`,
+        `/api/clubs/${t.ccode}/tournaments/${tournId}/classification?rounds=1&scoringType=stroke-play&gender=all`,
         sessionId, version
       );
 
@@ -199,7 +210,7 @@ async function main() {
       process.stdout.write(`${G}✓${X}\n`);
 
       processedTournaments.push({
-        id:          t.id,
+        id:          tournId,
         tcode:       String(t.code),
         ccode:       String(t.ccode),
         name:        t.description,

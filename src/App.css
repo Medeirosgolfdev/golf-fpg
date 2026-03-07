@@ -224,6 +224,20 @@ html, body, #root {
 
 .table-wrap { overflow-x: auto; }
 
+/* ─── Scrollable table containers ─── */
+.bjgt-chart-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-left: calc(-1 * var(--space-inner));
+  margin-right: calc(-1 * var(--space-inner));
+}
+.bjgt-chart-scroll > table {
+  margin-left: var(--space-inner);
+}
+/* Trailing whitespace: handled via empty spacer column in JSX */
+/* Cards that contain wide scrollable tables must clip their children */
+.card-scroll { overflow: hidden; }
+
 /* ─── Notice / Alert Boxes ─── */
 .notice { margin: 12px 0; padding: 10px 14px; border-radius: var(--radius-lg); font-size: 12px; line-height: 1.5; }
 .notice code { background: var(--bg-code); padding: 1px 5px; border-radius: var(--radius-sm); font-family: 'JetBrains Mono', monospace; font-size: 12px; }

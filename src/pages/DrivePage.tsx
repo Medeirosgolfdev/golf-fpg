@@ -500,6 +500,75 @@ function SDCell(props: { sd: number | null; sdSource: string | null; hcp: number
   );
 }
 
+/* ── Drive Tour Points table ── */
+const DRIVE_POINTS: Record<number, number> = {
+  1: 250, 2: 165, 3: 94, 4: 75, 5: 64, 6: 53, 7: 45,
+  8: 38, 9: 33, 10: 30, 11: 27, 12: 26, 13: 24, 14: 23,
+  15: 22, 16: 21, 17: 20, 18: 19, 19: 18,
+};
+function drivePoints(pos: number | string | null): number {
+  if (pos == null) return 0;
+  const n = Number(pos);
+  if (isNaN(n) || n <= 0) return 0;
+  return DRIVE_POINTS[n] ?? 0;
+}
+
+/* ═══════════════════════════════════════════════════════
+   DRIVE POINTS TABLE (tabela de referência de pontos)
+   ═══════════════════════════════════════════════════════ */
+function DrivePointsTable() {
+  const [open, setOpen] = React.useState(false);
+  const entries = Object.entries(DRIVE_POINTS).map(([pos, pts]) => ({ pos: Number(pos), pts }));
+  const half = Math.ceil(entries.length / 2);
+  const col1 = entries.slice(0, half);
+  const col2 = entries.slice(half);
+
+  const medalColor = (pos: number) => {
+    if (pos === 1) return "#f59e0b";
+    if (pos === 2) return "#94a3b8";
+    if (pos === 3) return "#b45309";
+    return undefined;
+  };
+
+  return (
+    <div>
+      <button
+        onClick={() => setOpen(o => !o)}
+        style={{ background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex", alignItems: "center", gap: 6 }}>
+        <span className="h-md fs-13">🏅 Tabela de Pontos Drive Tour</span>
+        <span style={{ fontSize: 10, color: "var(--text-muted)", marginTop: 1 }}>{open ? "▲ fechar" : "▼ ver"}</span>
+      </button>
+      {open && (
+        <div style={{ marginTop: 10 }}>
+          <div className="muted fs-11 mb-8">Pontos atribuídos por posição final em cada torneio.</div>
+          <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
+            {[col1, col2].map((col, ci) => (
+              <table key={ci} className="dtable tbl-compact" style={{ width: "auto", minWidth: 140 }}>
+                <thead>
+                  <tr>
+                    <th className="r" style={{ fontSize: 11, padding: "4px 8px", width: 40 }}>Pos</th>
+                    <th className="r" style={{ fontSize: 11, padding: "4px 8px", width: 60, color: "var(--color-warn-dark)", fontWeight: 800 }}>Pts</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {col.map(({ pos, pts }) => (
+                    <tr key={pos}>
+                      <td className="r fw-700" style={{ padding: "3px 8px", fontSize: 12, color: medalColor(pos) ?? "var(--text)" }}>
+                        {pos === 1 ? "🥇" : pos === 2 ? "🥈" : pos === 3 ? "🥉" : pos + "º"}
+                      </td>
+                      <td className="r fw-800" style={{ padding: "3px 8px", fontSize: 13, color: "var(--color-warn-dark)" }}>{pts}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 /* ═══════════════════════════════════════════════════════
    RESUMO TABLE
    ═══════════════════════════════════════════════════════ */
@@ -508,8 +577,8 @@ function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; s
   const globalEscLookup = props.escLookup;
   const mergeByEvent = !!props.mergeByEvent;
   const sorted = useMemo(() => [...props.tournaments].sort((a, b) => a.date.localeCompare(b.date)), [props.tournaments]);
-  const [sortKey, setSortKey] = useState<SortKey>("avgSD");
-  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
+  const [sortKey, setSortKey] = useState<SortKey>("totalPts");
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
   const handleSort = useCallback((k: SortKey) => {
     if (k === sortKey) setSortDir((d) => (d === "asc" ? "desc" : "asc"));
@@ -554,7 +623,7 @@ function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; s
   interface PRow {
     pKey: string; name: string; club: string; fed: string; escalao: string; hcp: number | null;
     results: Map<string, TStats | "dns">; jogos: number; bestSD: number | null; avgSD: number | null;
-    totalBird: number; totalPars: number; totalBog: number;
+    totalBird: number; totalPars: number; totalBog: number; totalPts: number;
   }
 
   // Build escalao lookup from Challenge tournament data
@@ -596,7 +665,7 @@ function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; s
           }
           map.set(pKey, { pKey, name: p.name, club: p.club, fed: p.fed || "", escalao: esc,
             hcp: p.hcpExact ?? null, results: new Map(), jogos: 0, bestSD: null, avgSD: null,
-            totalBird: 0, totalPars: 0, totalBog: 0 });
+            totalBird: 0, totalPars: 0, totalBog: 0, totalPts: 0 });
         }
         const row = map.get(pKey)!;
         if (p.hcpExact != null) row.hcp = p.hcpExact;
@@ -613,6 +682,12 @@ function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; s
               row.totalBird += st.birdies;
               row.totalPars += st.pars;
               row.totalBog += st.bogeys;
+            }
+            // Assign points: only for single-round events OR the "Total" of a multi-round event
+            // (not for individual R1/R2 entries)
+            const isRoundEntry = t._roundLabel && t._roundLabel !== "Total";
+            if (!isRoundEntry) {
+              row.totalPts += drivePoints(p.pos);
             }
           }
         }
@@ -642,6 +717,7 @@ function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; s
       if (sortKey === "club") return mult * a.club.localeCompare(b.club);
       if (sortKey === "hcp") return mult * ((a.hcp ?? INF) - (b.hcp ?? INF));
       if (sortKey === "jogos") return mult * (a.jogos - b.jogos);
+      if (sortKey === "totalPts") return mult * (a.totalPts - b.totalPts);
       if (sortKey === "bestSD") return mult * ((a.bestSD ?? INF) - (b.bestSD ?? INF));
       if (sortKey === "avgSD") return mult * ((a.avgSD ?? INF) - (b.avgSD ?? INF));
       if (sortKey === "totalBird") return mult * (a.totalBird - b.totalBird);
@@ -760,7 +836,8 @@ function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; s
                 </th>
               );
             })}
-            <th colSpan={6} style={{ ...hs, borderLeft: bG, textAlign: "center", background: "var(--bg-hover)", fontSize: 12, fontWeight: 800 }}>Temporada</th>
+            <th colSpan={7} style={{ ...hs, borderLeft: bG, textAlign: "center", background: "var(--bg-hover)", fontSize: 12, fontWeight: 800 }}>Temporada</th>
+            <th style={{ minWidth: 160, borderBottom: "none", background: "transparent" }}></th>
           </tr>
           {/* Row 2: Sub-column headers */}
           <tr>
@@ -791,17 +868,20 @@ function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; s
               );
             })}
             <SortTh sortKey="jogos" current={sortKey} dir={sortDir} onSort={handleSort} className="r" style={{ ...hs, width: 32, borderLeft: bG }}>Jogos</SortTh>
+            <SortTh sortKey="totalPts" current={sortKey} dir={sortDir} onSort={handleSort} className="r" style={{ ...hs, width: 44, borderLeft: bS, fontWeight: 800, color: "var(--color-warn-dark)" }}>Pts</SortTh>
             <SortTh sortKey="bestSD" current={sortKey} dir={sortDir} onSort={handleSort} className="r" style={{ ...hs, width: 50, borderLeft: bS }}>Best SD</SortTh>
             <SortTh sortKey="avgSD" current={sortKey} dir={sortDir} onSort={handleSort} className="r" style={{ ...hs, width: 50, borderLeft: bS }}>Avg SD</SortTh>
             <SortTh sortKey="totalBird" current={sortKey} dir={sortDir} onSort={handleSort} style={{ ...hs, width: 28, borderLeft: bS, textAlign: "center" }}>🐦</SortTh>
             <SortTh sortKey="totalPars" current={sortKey} dir={sortDir} onSort={handleSort} style={{ ...hs, width: 28, borderLeft: bS, textAlign: "center" }}>Par</SortTh>
             <SortTh sortKey="totalBog" current={sortKey} dir={sortDir} onSort={handleSort} style={{ ...hs, width: 28, borderLeft: bS, textAlign: "center" }}>■</SortTh>
+            <th style={{ minWidth: 160, background: "transparent", borderBottom: "none" }}></th>
           </tr>
         </thead>
         <tbody>
           {sortedRows.map((row, idx) => {
             const bg = isManuel(row) ? "var(--bg-success-subtle)" : undefined;
-            const cellBg = bg || stickyBg;
+            // Sticky cells need a fully opaque background — var(--bg-success-subtle) may be semi-transparent
+            const cellBg = isManuel(row) ? "#d1fae5" : stickyBg;
             const escCls = row.escalao ? "p p-sm p-" + row.escalao.toLowerCase().replace(/\s+/g, "") : "";
             return (
               <tr key={row.pKey} style={bg ? { background: bg } : undefined}>
@@ -834,11 +914,13 @@ function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; s
                   );
                 })}
                 <td className="r fw-700" style={{ borderLeft: bG, ...cs, fontSize: 13 }}>{row.jogos}</td>
+                <td className="r fw-800" style={{ borderLeft: bS, ...cs, fontSize: 13, color: row.totalPts > 0 ? "var(--color-warn-dark)" : "var(--text-muted)" }}>{row.totalPts > 0 ? row.totalPts : "–"}</td>
                 <td className="r" style={{ ...cs, borderLeft: bS }}>{row.bestSD != null ? <span className={"p p-sm p-" + sdClassByHcp(row.bestSD, row.hcp)}>{row.bestSD.toFixed(1)}</span> : "–"}</td>
                 <td className="r" style={{ ...cs, borderLeft: bS }}>{row.avgSD != null ? <span className={"p p-sm p-" + sdClassByHcp(row.avgSD, row.hcp)}>{row.avgSD.toFixed(1)}</span> : "–"}</td>
                 <td style={{ ...cs, borderLeft: bS, textAlign: "center" }}>{row.totalBird}</td>
                 <td style={{ ...cs, borderLeft: bS, textAlign: "center" }}>{row.totalPars}</td>
                 <td style={{ ...cs, borderLeft: bS, textAlign: "center" }}>{row.totalBog}</td>
+                <td style={{ minWidth: 160 }}></td>
               </tr>
             );
           })}
@@ -2167,7 +2249,7 @@ function DriveContent() {
             {/* RESUMO */}
             {selectedGroupKey === null && (
               <div style={{ padding: "0 12px 12px" }}>
-                <div className="card">
+                <div className="card card-scroll">
                   <div className="h-md fs-14">
                     📋 {series === "tour" ? "Drive Tour" : series === "challenge" ? "Drive Challenge" : "AQUAPOR"}
                     {regionFilter ? " " + (regionOf(regionFilter)?.label || "") : ""}
@@ -2178,6 +2260,11 @@ function DriveContent() {
                     {filteredT.filter(t => t._roundLabel !== "Total").reduce((a, t) => a + t.players.filter(p => !isDNS(p)).length, 0)} presenças
                   </div>
                   <ResumoTable tournaments={filteredT} playersDB={pdb} sdLookup={sdLookup} escLookup={escLookup} mergeByEvent={series === "challenge"} />
+                </div>
+
+                {/* Tabela de pontos */}
+                <div className="card mt-8">
+                  <DrivePointsTable />
                 </div>
               </div>
             )}
@@ -2206,7 +2293,7 @@ function DriveContent() {
                   </div>
                 )}
                 {curTournament && (
-                  <div className="card" style={{ marginTop: selectedGroup.isMulti ? 8 : 0 }}>
+                  <div className="card card-scroll" style={{ marginTop: selectedGroup.isMulti ? 8 : 0 }}>
                     <div className="h-md fs-14">
                       {selectedGroup.isMulti
                         ? <>{curTournament._roundLabel === "Total" ? "📊 Acumulado" : "🏌️ " + curTournament._roundLabel} — {selectedGroup.campo}</>
