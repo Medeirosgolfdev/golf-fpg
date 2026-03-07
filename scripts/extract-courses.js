@@ -2,7 +2,7 @@
 /**
  * extract-courses.js
  *
- * Percorre output/*/scorecards/*.json e extrai campos unicos.
+ * Percorre output/<fed>/scorecards/*.json e extrai campos unicos.
  * Compara com master-courses.json para separar PT de internacionais.
  * Gera public/data/away-courses.json para o React consumir.
  *

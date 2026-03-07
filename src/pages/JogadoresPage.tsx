@@ -25,7 +25,7 @@ import { loadPlayerStats, daysSince, type PlayerStatsDb } from "../data/playerSt
    ──────────────────────────────────────────────────────────────────────────────────── */
 
 
-type SortKey = "name" | "hcp" | "club" | "escalao" | "ranking";
+type SortKey = "name" | "hcp" | "club" | "escalao" | "ranking" | "rounds";
 type ViewKey = "by_course" | "by_course_analysis" | "by_date" | "by_tournament" | "analysis";
 type CourseSort = "last_desc" | "count_desc" | "name_asc";
 
@@ -194,16 +194,28 @@ function ByDateView({ data, search }: {
           </tr>
         </thead>
         <tbody>
-          {all.map(r => {
+          {all.map((r, idx) => {
             const isOpen = openScorecardId === r.scoreId;
             const toggle = () => setOpenScorecardId(isOpen ? null : r.scoreId);
             const holes = data.HOLES[String(r.scoreId)];
             const courseKey = norm(r.course);
             const teeKey = r.teeKey || normKey(r.tee || "");
             const ecEntry = data.ECDET?.[courseKey]?.[teeKey] || null;
+            const year = r.date ? r.date.slice(-4) : null;
+            const prevYear = idx > 0 && all[idx - 1].date ? all[idx - 1].date.slice(-4) : null;
+            const showYearBar = year && prevYear && year !== prevYear;
 
             return (
               <React.Fragment key={r.scoreId}>
+                {showYearBar && (
+                  <tr>
+                    <td colSpan={10} style={{ padding: 0, background: "var(--bg-header)", borderBottom: "2px solid var(--border)" }}>
+                      <div style={{ padding: "6px 12px", fontSize: 12, fontWeight: 700, color: "var(--text-2)", letterSpacing: "0.04em", textTransform: "uppercase" }}>
+                        {year}
+                      </div>
+                    </td>
+                  </tr>
+                )}
                 <tr className={`roundRow${isOpen ? " pa-row-open" : ""}`}
                   onClick={() => r.hasCard && toggle()}
                   style={{ cursor: r.hasCard ? "pointer" : "default" }}>
@@ -1460,7 +1472,7 @@ function AnalysisView({ data }: { data: PlayerPageData }) {
   }, [data]);
 
   const rounds18 = useMemo(() => allRoundsDesc.filter(r => r.holeCount === 18 || (r as RoundData & { hc?: number }).hc === 18), [allRoundsDesc]);
-  const rounds18g = useMemo(() => rounds18.filter(r => numSafe(r.gross) != null && Number(r.gross) > 50), [rounds18]);
+  const rounds18g = useMemo(() => rounds18.filter(r => numSafe(r.gross) != null && Number(r.gross) > 50 && Number(r.gross) < 200), [rounds18]);
 
   // KPIs
   const last5 = rounds18g.slice(0, 5);
@@ -1475,13 +1487,13 @@ function AnalysisView({ data }: { data: PlayerPageData }) {
 
   // Last 20 (non-training) for table
   const last20Table = useMemo(() =>
-    allRoundsDesc.filter(r => !r._isTreino).slice(0, 20),
+    allRoundsDesc.filter(r => !r._isTreino).slice(0, 25),
     [allRoundsDesc]
   );
 
   // Best 8 SD in last 20 — Map<index, rank (1-8)>
   const best8 = useMemo(() => {
-    const indexed = last20Table.map((r, i) => ({ idx: i, sd: numSafe(r.sd) }))
+    const indexed = last20Table.slice(0, 20).map((r, i) => ({ idx: i, sd: numSafe(r.sd) }))
       .filter(x => x.sd != null)
       .sort((a, b) => a.sd! - b.sd!);
     const map = new Map<number, number>();
@@ -1489,11 +1501,11 @@ function AnalysisView({ data }: { data: PlayerPageData }) {
     return map;
   }, [last20Table]);
 
-  // Period filter for analysis
+  // Period filter for analysis — only 18-hole rounds with valid gross (consistent with KPI cards)
   function filterByPeriod(months: number): (RoundData & { course: string })[] {
-    if (months <= 0) return allRoundsDesc;
+    if (months <= 0) return rounds18g;
     const cutoff = Date.now() - months * 30.44 * 24 * 3600 * 1000;
-    return allRoundsDesc.filter(r => r.dateSort >= cutoff);
+    return rounds18g.filter(r => r.dateSort >= cutoff);
   }
 
   return (
@@ -1563,8 +1575,7 @@ function HistogramCard({ rounds, period, setPeriod }: {
     const diffs: number[] = [];
     for (const r of rounds) {
       if (r.gross != null && r.par != null && Number(r.par) > 0) {
-        let diff = Number(r.gross) - Number(r.par);
-        if (r.holeCount === 9) diff *= 2;
+        const diff = Number(r.gross) - Number(r.par);
         diffs.push(diff);
       }
     }
@@ -1618,7 +1629,7 @@ function TrajectoryCard({ rounds, period, setPeriod }: {
     const grosses: number[] = [];
     for (const r of rounds) {
       if (r.gross != null) {
-        grosses.push(r.holeCount === 9 ? Number(r.gross) * 2 : Number(r.gross));
+        grosses.push(Number(r.gross));
       }
     }
     if (grosses.length < 3) return null;
@@ -1670,7 +1681,7 @@ function RecordsCard({ rounds, period, setPeriod }: {
   rounds: (RoundData & { course: string })[]; period: number; setPeriod: (n: number) => void;
 }) {
   const records = useMemo(() => {
-    const r18 = rounds.filter(r => r.holeCount === 18 && numSafe(r.gross) != null && Number(r.gross) > 50);
+    const r18 = rounds.filter(r => r.holeCount === 18 && numSafe(r.gross) != null && Number(r.gross) > 50 && Number(r.gross) < 200);
     if (r18.length === 0) return null;
     const byGross = [...r18].sort((a, b) => Number(a.gross) - Number(b.gross));
     const bySd = [...r18].filter(r => r.sd != null).sort((a, b) => Number(a.sd) - Number(b.sd));
@@ -1760,9 +1771,9 @@ function Last20Table({ data, last20Table, best8 }: {
 
   return (
     <div className="card">
-      <div className="h-xs">Últimas 20 rondas</div>
+      <div className="h-xs fs-18 mb-8">📋 Últimas 20 rondas</div>
       <div className="muted mb-8 fs-11">
-        Os 8 melhores SD das últimas 20 estão assinalados com ★ · <b>*</b> = Stableford normalizado 9B→18B (+17 pts WHS)
+        Os 8 melhores SD das últimas 20 estão assinalados com ★ · <b>*</b> = Stableford normalizado 9B→18B (+17 pts WHS) · <span style={{ opacity: 0.45 }}>Sombreado</span> = rondas a sair em breve
       </div>
       <div className="table-wrap">
         <table className="dtable">
@@ -1778,6 +1789,7 @@ function Last20Table({ data, last20Table, best8 }: {
             {last20Table.map((r, i) => {
               const rank = best8.get(i);
               const isBest8 = rank != null;
+              const isFading = i >= 20;
               const isOpen = openSc === r.scoreId;
               const holes = data.HOLES[String(r.scoreId)];
 
@@ -1788,7 +1800,11 @@ function Last20Table({ data, last20Table, best8 }: {
 
               return (
                 <React.Fragment key={r.scoreId}>
-                  <tr style={isBest8 ? { background: "var(--bg-success)" } : undefined}>
+                  <tr style={{
+                    ...(isBest8 ? { background: "var(--bg-success)" } : {}),
+                    ...(isFading ? { opacity: 0.4 } : {}),
+                    ...(i === 20 ? { borderTop: "3px solid var(--color-good)" } : {}),
+                  }}>
                     <td>
                       {holes ? (
                         <a href="#" className="dateLink" onClick={e => { e.preventDefault(); setOpenSc(isOpen ? null : r.scoreId); }}>
@@ -1934,16 +1950,31 @@ function CrossAnalysis({ data }: { data: PlayerPageData }) {
                 <tr key={p.fed} className={isCurrent ? "cross-current" : ""}>
                   <td className="r"><b>{i + 1}</b></td>
                   <td>
-                    {isCurrent ? <b>{p.name}</b> : p.name}
+                    <Link
+                      to={`/jogadores/${p.fed}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="courseLink"
+                      style={{ fontWeight: isCurrent ? 700 : undefined }}
+                      onClick={e => e.stopPropagation()}
+                    >
+                      {p.name}
+                    </Link>
                     {" "}<span className="muted fs-10">{p.fed}</span>
                     {p.birthYear && <span className="p p-sm p-birth ml-4">{p.birthYear}</span>}
                     {p.club && <span className="p p-sm p-club ml-4">{p.club}</span>}
                   </td>
                   <td className="r"><b>{p.currentHcp?.toFixed(1) ?? "–"}</b></td>
-                  <td className={`r ${p.lastSD != null && p.currentHcp != null ? sdClassByHcp(p.lastSD, p.currentHcp) : ""}`}>
-                    {p.lastSD?.toFixed(1) ?? "–"}
+                  <td className="r">
+                    {p.lastSD != null
+                      ? <span className={`p p-${sdClassByHcp(p.lastSD, p.currentHcp)}`}>{p.lastSD.toFixed(1)}</span>
+                      : "–"}
                   </td>
-                  <td className="r">{p.avgSD20?.toFixed(1) ?? "–"}</td>
+                  <td className="r">
+                    {p.avgSD20 != null
+                      ? <span className={`p p-${sdClassByHcp(p.avgSD20, p.currentHcp)}`}>{p.avgSD20.toFixed(1)}</span>
+                      : "–"}
+                  </td>
                   <td className="r">{p.numTournaments}</td>
                   <td className="r"><b>{p.numRounds ?? ""}</b></td>
                   {[curYear - 3, curYear - 2, curYear - 1, curYear].map((y, yi) => {
@@ -2158,7 +2189,18 @@ function CommonCourses({ players, currentFed, escName }: {
                       return (
                         <tr key={cp.fed} className={isCur ? "cross-current" : ""}>
                           <td><b>{bi + 1}</b></td>
-                          <td>{isCur ? <b>{cp.name}</b> : cp.name}</td>
+                          <td>
+                            <Link
+                              to={`/jogadores/${cp.fed}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="courseLink"
+                              style={{ fontWeight: isCur ? 700 : undefined }}
+                              onClick={e => e.stopPropagation()}
+                            >
+                              {cp.name}
+                            </Link>
+                          </td>
                           <td className="r">{cp.count}</td>
                           <td className="r cb-par-ok">{cp.best ?? "–"}</td>
                           <td className="r">{cp.avg.toFixed(1)}</td>
@@ -2783,7 +2825,17 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
       {/* Header: name + controls on same row, pills below */}
       <div className="detail-header">
         <div className="detail-header-top">
-          <h2 className="detail-title">{selected.name}</h2>
+          <h2 className="detail-title">
+            {selected.name}
+            <a
+              href={`https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=${selected.fed}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Ver ficha WHS no FPG"
+              style={{ marginLeft: 8, fontSize: 14, color: "var(--chart-2)", textDecoration: "none", verticalAlign: "middle" }}
+              onClick={e => e.stopPropagation()}
+            >🔗</a>
+          </h2>
           {data && (
             <div className="pa-controls-left">
               <input className="input" placeholder="Pesquisar campo…" value={courseSearch}
@@ -2984,6 +3036,11 @@ export default function JogadoresPage() {
         case "ranking": {
           return (a.hcp ?? 999) - (b.hcp ?? 999);
         }
+        case "rounds": {
+          const ra = statsDb[a.fed]?.roundsTotal ?? 0;
+          const rb = statsDb[b.fed]?.roundsTotal ?? 0;
+          return rb - ra;
+        }
         default: return 0;
       }
     });
@@ -3069,6 +3126,7 @@ export default function JogadoresPage() {
             <option value="name">Nome</option><option value="hcp">Handicap</option>
             <option value="club">Clube</option><option value="escalao">Escalão</option>
             <option value="ranking">🏆 Ranking</option>
+            <option value="rounds">Voltas</option>
           </select>
         </div>
         <div className="toolbar-right">

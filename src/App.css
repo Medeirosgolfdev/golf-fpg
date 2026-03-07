@@ -223,7 +223,6 @@ html, body, #root {
 .dtable-lg .tourn-pname.tourn-pname-link { color: var(--link-color); }
 
 .table-wrap { overflow-x: auto; }
-.bjgt-chart-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 
 /* ─── Notice / Alert Boxes ─── */
 .notice { margin: 12px 0; padding: 10px 14px; border-radius: var(--radius-lg); font-size: 12px; line-height: 1.5; }
@@ -835,7 +834,8 @@ html, body, #root {
 .score-delta.pos { color: var(--color-danger); }
 .score-delta.neg { color: var(--color-good); }
 .hb { font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: var(--radius-sm); }
-.hb9 { background: var(--bg-warn-strong); color: var(--color-warn-dark); }
+.hb9 { background: #d97706; color: #fff; }
+.hb18 { background: var(--badge-fed); color: #fff; }
 /* Pill badges (from melhorias.json) */
 
 a.dateLink { color: var(--text); text-decoration: none; cursor: pointer; }

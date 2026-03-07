@@ -66,6 +66,12 @@ const TOURNAMENTS = [
   { name: "1º Challenge Madeira Sub 14", ccode: "982", tcode: "10204", date: "2026-01-04", campo: "Palheiro Golf", circuit: "drive" },
   { name: "1º Challenge Madeira Sub 12", ccode: "982", tcode: "10203", date: "2026-01-04", campo: "Palheiro Golf", circuit: "drive" },
   { name: "1º Challenge Madeira Sub 10", ccode: "982", tcode: "10202", date: "2026-01-04", campo: "Palheiro Golf", circuit: "drive" },
+  { name: "3º Drive Tour Madeira - Palheiro Golf", ccode: "982", tcode: "10200", date: "2026-03-07", campo: "Palheiro Golf", circuit: "drive" },
+  { name: "3º Challenge Madeira Sub 18", ccode: "982", tcode: "10226", date: "2026-03-08", campo: "Santo da Serra", circuit: "drive" },
+  { name: "3º Challenge Madeira Sub 16", ccode: "982", tcode: "10224", date: "2026-03-08", campo: "Santo da Serra", circuit: "drive" },
+  { name: "3º Challenge Madeira Sub 14", ccode: "982", tcode: "10225", date: "2026-03-08", campo: "Santo da Serra", circuit: "drive" },
+  { name: "3º Challenge Madeira Sub 12", ccode: "982", tcode: "10223", date: "2026-03-08", campo: "Santo da Serra", circuit: "drive" },
+  { name: "3º Challenge Madeira Sub 10", ccode: "982", tcode: "10222", date: "2026-03-08", campo: "Santo da Serra", circuit: "drive" },
 
   // ── AQUAPOR ──
   // TODO: Encontrar ccode/tcode em scoring.datagolf.pt
