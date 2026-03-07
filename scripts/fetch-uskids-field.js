@@ -31,7 +31,7 @@ const KEYWORDS_EXCLUIR = [
   'girls invitational', 'girls championship', 'girls open', 'girl',
   'golf course', 'golf club', 'country club',
   'veteran', 'world golf village',
-  'thailand championship', 'korean championship',
+  'thailand championship', 'korean championship', 'malaysian championship', 'philippines championship',
   // state abbreviations removidos: 'invitational' já inclui e queremos ver state invitationals
 ];
 const FORCAR_INCLUIR = new Set([21080, 21133]); // 21080=Marco Simone 2026, 21133=Jekyll Island Cup
@@ -424,5 +424,6 @@ async function main() {
     await browser.close();
   }
 }
+
 
 main().catch(err => { console.error('Erro fatal:', err); process.exit(1); });
