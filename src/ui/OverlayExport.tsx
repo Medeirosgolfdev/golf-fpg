@@ -690,7 +690,7 @@ export default function OverlayExport({data,inline}:{data:OverlayData;inline?:bo
       {!allFilled&&!noHoleData&&!collapsed&&<div style={{fontSize:13,fontWeight:700,color:"#b45309",marginTop:4}}>⚠ Preenche todos os buracos para scores exactos. A pré-visualização usa o Par como placeholder.</div>}
     </div>}
     {inline&&!allFilled&&!noHoleData&&<div style={{fontSize:13,fontWeight:700,color:"#b45309",marginBottom:8}}>⚠ Preenche todos os buracos para scores exactos. A pré-visualização usa o Par como placeholder.</div>}
-    {!collapsed&&<><link href={FONT_LINK} rel="stylesheet"/>
+    {(inline||!collapsed)&&<><link href={FONT_LINK} rel="stylesheet"/>
       {/* ── Manual fields ── */}
       <div className="ov-fields">
         <div className="ov-field"><label>Jogador</label><input type="text" value={player} onChange={e=>setPlayer(e.target.value)} placeholder="Nome" className="input" style={{width:130}}/></div>
