@@ -792,10 +792,9 @@ export default function OverlayExport({data,inline}:{data:OverlayData;inline?:bo
     // 3. pequeno delay para garantir re-render após fontes
     await new Promise(r=>setTimeout(r,250));
     const h2c=(await import("html2canvas")).default;
-    // 4. fundo sólido: nunca null — usa a cor escolhida ou preto/branco conforme tema
-    const solidBg=bgHex||(theme==="light"?"#ffffff":"#000000");
+    // O wrapper já tem fundo sólido → null para não sobrepor
     return h2c(el,{
-      backgroundColor:solidBg,
+      backgroundColor:null,
       scale:3,
       useCORS:true,
       allowTaint:true,
@@ -936,10 +935,14 @@ export default function OverlayExport({data,inline}:{data:OverlayData;inline?:bo
             <span className="ov-card-label">{x.id}. {x.label}</span>
             <button className="ov-share-btn" onClick={()=>doExportOne(x.id)} title="Partilhar / Descarregar">📤</button>
           </div>
+          {/*
+            Preview: checkerboard mostra a transparência do fundo.
+            O div de captura NÃO tem fundo sólido — o design tem bg=bgColor (rgba com alpha).
+            html2canvas com backgroundColor:null → PNG com transparência correcta.
+            O texto usa cores hex sólidas (tc/tc2/tc3/tc4) → sempre legível.
+          */}
           <div className="ov-card-preview" style={checkerBg}>
-            {/* ▼ CAPTURE DIV — bg color behind design, visible through rgba backgrounds */}
-            <div ref={el=>{designRefs.current[x.id]=el;}}
-              style={{display:"inline-block"}}>
+            <div ref={el=>{designRefs.current[x.id]=el;}} style={{display:"inline-block"}}>
               <x.C d={dd} v={vis} s={stats} bg={bgColor} tc={tc} tc2={tc2} tc3={tc3} tc4={tc4}/>
             </div>
           </div>
