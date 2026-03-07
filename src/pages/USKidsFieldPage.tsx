@@ -772,18 +772,27 @@ function TabResultados({ data, selectedT }: {
       </div>
 
       {/* Escalões e rondas */}
-      {t.escaloes.map(e => {
-        const isManuelEscalao = e.is_manuel ||
-          (t.escalao_manuel ? e.age_group === t.escalao_manuel : e.nome === escalaoManuelParaData(t.date_inicio));
+      {sortEscaloes(t.escaloes).map(e => {
+        // ★ apenas se o Manuel efectivamente jogou neste escalão (is_manuel do scraper)
+        // ou se o escalão bate certo com a data do torneio (e não temos info manual)
+        const escalaoEsperado = escalaoManuelParaData(t.date_inicio);
+        const isManuelEscalao = t.escalao_manuel
+          ? e.age_group === t.escalao_manuel
+          : (e.is_manuel === true && e.nome === escalaoEsperado);
+        const teeInfo = TEES_LOOKUP[t.t]?.[e.age_group];
+        const distTotal = teeInfo?.metros?.length === 18
+          ? teeInfo.metros.reduce((a, b) => a + b, 0)
+          : null;
         const rondasComDados = e.rondas.filter(r => (r.leaderboard ?? r.jogadores ?? []).length > 0);
         if (!rondasComDados.length) return null;
         return (
           <div key={e.age_group} style={{ marginBottom:20 }}>
-            <div style={{ fontSize:12, fontWeight:700,
+            <div style={{ fontSize:12, fontWeight:700, display:"flex", alignItems:"center", gap:8,
               color: isManuelEscalao ? "var(--accent)" : "var(--text-3)",
               borderBottom:`1px solid ${isManuelEscalao ? "var(--accent)" : "var(--border)"}`,
               paddingBottom:5, marginBottom:8 }}>
-              {isManuelEscalao ? "★ " : ""}{e.nome}
+              <span>{isManuelEscalao ? "★ " : ""}{e.nome}</span>
+              {distTotal && <span style={{ fontWeight:400, fontSize:11, color:"var(--text-3)" }}>{distTotal}m</span>}
             </div>
             {rondasComDados.map(r => {
               const key = `${t.t}-${e.age_group}-${r.ronda}`;
