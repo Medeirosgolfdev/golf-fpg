@@ -22,6 +22,11 @@ const msDistGialli  = [362,388,371,133,302,295,169,421,450, 359,265,421,123,402,
 const msDistVerdi   = [336,365,342,113,266,258,152,375,420, 347,247,381,103,360,339,255,151,442]; // = Rossi
 const msDistArancio = [274,349,302,103,227,231,132,338,382, 307,219,356,91,310,292,225,133,404];
 
+// Distâncias USKids — fonte: "2026 Marco Simone Invitational - Meters" (PDF oficial)
+const msDistUKBoys12 = [274,349,302,113,266,258,152,375,382, 307,247,381,103,310,292,255,151,442]; // 4959m
+const msDistUKBoys11 = [274,299,272,103,227,231,132,338,352, 267,219,356,91,270,237,225,133,404]; // 4430m (= Boys 10)
+const msDistUKBoys9  = [240,262,238,103,200,201,127,298,308, 234,219,291,91,236,225,190,133,354]; // 3949m
+
 function msHoles(dist: number[]): Hole[] {
   return dist.map((d, i) => ({
     hole: i + 1,
@@ -131,9 +136,62 @@ const marcoSimone: Course = {
   },
 };
 
+/* Marco Simone — tees USKids (distâncias oficiais do torneio) */
+// CR/Slope: "US Kids 2025 Boys 9-11 & Girls 10-14" — ReportTabellaEgaWHS_us_kids.pdf
+// Gialli (CR 65.5 / SR 114) ≈ Boys 11/10; Verdi (CR 63.1 / SR 108) ≈ Boys 9
+const marcoSimoneUSKidsTees: Tee[] = [
+  {
+    teeId: "ms-uk-boys12",
+    sex: "M",
+    teeName: "USKids Boys 12",
+    scorecardMeta: { teeColor: "#f97316" }, // laranja (arancio)
+    ratings: {
+      holes18: { par: 72, courseRating: null, slopeRating: null }, // sem rating oficial para este tee
+    },
+    holes: msHoles(msDistUKBoys12),
+    distances: msDist(msDistUKBoys12),
+  },
+  {
+    teeId: "ms-uk-boys11",
+    sex: "M",
+    teeName: "USKids Boys 11/10",
+    scorecardMeta: { teeColor: "#fbbf24" }, // amarelo (gialli)
+    ratings: {
+      holes18: { par: 72, courseRating: 65.5, slopeRating: 114 },
+    },
+    holes: msHoles(msDistUKBoys11),
+    distances: msDist(msDistUKBoys11),
+  },
+  {
+    teeId: "ms-uk-boys9",
+    sex: "M",
+    teeName: "USKids Boys 9",
+    scorecardMeta: { teeColor: "#22c55e" }, // verde (verdi)
+    ratings: {
+      holes18: { par: 72, courseRating: 63.1, slopeRating: 108 },
+    },
+    holes: msHoles(msDistUKBoys9),
+    distances: msDist(msDistUKBoys9),
+  },
+];
+
+const marcoSimoneUSKids: Course = {
+  courseKey: "away-marco-simone-uskids",
+  master: {
+    courseId: "away-marco-simone-uskids",
+    name: "Marco Simone Golf & Country Club (USKids)",
+    country: "Itália",
+    links: {
+      fpg: null,
+      scorecards: "https://tournaments.uskidsgolf.com/node/514018",
+    },
+    tees: marcoSimoneUSKidsTees,
+  },
+};
+
 /* Exportação */
 
 /** Campos extra adicionados manualmente (ainda sem rondas no melhorias.json) */
 export function getExtraCourses(): Course[] {
-  return [marcoSimone];
+  return [marcoSimone, marcoSimoneUSKids];
 }

@@ -27,7 +27,6 @@ const KEYWORDS_INCLUIR = [
 ];
 const KEYWORDS_EXCLUIR = [
   'tour championship', 'parent/child', 'qualifier',
-  'state invitational', 'state championship',
   'teen series', 'teen van horn', 'teen championship', 'world teen',
   'girls invitational', 'girls championship', 'girls open', 'girl',
   'golf course', 'golf club', 'country club',

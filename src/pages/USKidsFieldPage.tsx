@@ -259,6 +259,30 @@ const TEES_LOOKUP: Record<number, Record<number, TeeInfo>> = {
       metros: [],
     },
   },
+  // ── Marco Simone Invitational 2026 (t=21080) ──────────────────────────────────────────
+  // Fonte: "2026 Marco Simone Invitational - Meters" (PDF oficial)
+  21080: {
+    2105: { // Boys 12
+      campo: "Marco Simone Golf & Country Club", tee: "Boys 12",
+      par:    [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5],
+      metros: [274,349,302,113,266,258,152,375,382, 307,247,381,103,310,292,255,151,442],
+    },
+    2104: { // Boys 11
+      campo: "Marco Simone Golf & Country Club", tee: "Boys 11",
+      par:    [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5],
+      metros: [274,299,272,103,227,231,132,338,352, 267,219,356,91,270,237,225,133,404],
+    },
+    2103: { // Boys 10
+      campo: "Marco Simone Golf & Country Club", tee: "Boys 10",
+      par:    [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5],
+      metros: [274,299,272,103,227,231,132,338,352, 267,219,356,91,270,237,225,133,404],
+    },
+    2102: { // Boys 9
+      campo: "Marco Simone Golf & Country Club", tee: "Boys 9",
+      par:    [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5],
+      metros: [240,262,238,103,200,201,127,298,308, 234,219,291,91,236,225,190,133,354],
+    },
+  },
 };
 
 /** Links adicionais por t-code (página oficial USKids, etc.) */
@@ -272,6 +296,12 @@ const LINKS_EXTRA: Record<number, { label: string; url: string }[]> = {
   19418: [
     { label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/515206/venice-open-2025/field" },
     { label: "📄 Distâncias", url: "https://tournaments.uskidsgolf.com/sites/default/files/venice_open_2025_tournament_distances_-_meters.pdf" },
+  ],
+  // Marco Simone Invitational 2026
+  21080: [
+    { label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516989/marco-simone-invitational-2026" },
+    { label: "📄 Distâncias", url: "https://drive.google.com/file/d/1AgicV6PnrYYc8AbA5CFPmttJOICzZVZm/view" },
+    { label: "🏌️ Campo", url: "https://tournaments.uskidsgolf.com/node/514018" },
   ],
 };
 
@@ -1006,7 +1036,6 @@ function TabRivais({ data, fieldData, intlData }: { data: ResultsData; fieldData
         const iso = isoDate(t.date_inicio);
         return iso >= new Date().toISOString().slice(0,10);
       })
-      .filter(t => t.escaloes.some(e => (e.jogadores?.length ?? 0) > 0))
       .sort((a,b) => isoDate(a.date_inicio).localeCompare(isoDate(b.date_inicio)));
   }, [fieldData]);
 
