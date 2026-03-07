@@ -21,6 +21,8 @@ const HISTORICOS = [
     age_groups: [2102, 2103, 2104, 2105],
     url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=2739&t=18438',
   },
+  {
+    t: 15573, name: 'Real Club de Golf El Prat 2023',
     date_inicio: '10/22/2023', date_fim: '10/22/2023', rondas: 1, ax: 2760,
     escalao_manuel: 2151,
     age_groups: [2150, 2151, 2152],
