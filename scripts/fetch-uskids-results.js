@@ -25,12 +25,12 @@ const HISTORICOS = [
   // Desert Shootout 2026 — FEB 21-22 — Phoenix, AZ
   { t: 20895, name: 'Sandestin Championship 2026',
     date_inicio: '1/17/2026', date_fim: '1/18/2026', rondas: 2, ax: 1129,
-    escalao_manuel: 2104, age_groups: [2102, 2103, 2104, 2105],
+    escalao_manuel: 7, age_groups: [4, 5, 6, 7],
     url_uskids: 'https://tournaments.uskidsgolf.com/tournaments/regional/find-tournament/516801/sandestin-championship-2026',
     url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=20895' },
   { t: 21004, name: 'Desert Shootout 2026',
     date_inicio: '2/21/2026', date_fim: '2/22/2026', rondas: 2, ax: 1129,
-    escalao_manuel: 2104, age_groups: [2102, 2103, 2104, 2105],
+    escalao_manuel: 7, age_groups: [4, 5, 6, 7],
     url_uskids: 'https://tournaments.uskidsgolf.com/tournaments/regional/find-tournament/516958/desert-shootout-2026',
     url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=21004' },
   {
@@ -219,6 +219,11 @@ async function processarTorneio(page, torneio) {
       flightsPorAG[ag] = { fid, nome, inscr: f.registered || 0 };
     }
   }
+
+  // Log de todos os age_groups disponíveis neste torneio
+  const agDisp = [...new Set(Object.values(flights).map(f => f.age_group))]
+    .map(ag => `${ag}=${ageGroups[ag]?.name ?? '?'}`).join(', ');
+  console.log(`  📋 age_groups disponíveis: ${agDisp}`);
 
   // Aviso se algum age_group configurado não foi encontrado
   if (agsFiltro) {
