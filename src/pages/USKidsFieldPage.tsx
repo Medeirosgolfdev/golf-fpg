@@ -160,6 +160,94 @@ const ESCALOES_DESTAQUE  = new Set(["Boys 10","Boys 11","Boys 12","Boys 13","Boy
 const ESCALAO_MANUEL     = "Boys 12";
 const MANUEL_FRAGMENT    = "medeiros";
 
+/**
+ * Dados de tee por torneio e escalão: campo, nome do tee, pares e metros por buraco.
+ * Fonte: scorecards oficiais USKids (PDF de distâncias) + melhorias.json.
+ * Chave: t-code → age_group → TeeInfo
+ * (todos os rounds de um mesmo torneio usam o mesmo tee por escalão)
+ */
+interface TeeInfo {
+  campo: string;
+  tee: string;
+  par: number[];
+  metros: number[];
+}
+const TEES_LOOKUP: Record<number, Record<number, TeeInfo>> = {
+  // ── Rome Classic 2025 – Terre Dei Consoli Golf Club (Championship Course) ───
+  // Fonte: PDF oficial "2025 Rome Classic - Meters" + melhorias.json › extra_rounds
+  // Todos os escalões têm o mesmo par [4,5,3,4,4,4,4,5,3,4,5,4,3,4,4,3,5,4] (Par 72)
+  // apenas os metros variam
+  20175: {
+    2105: { // Boys 12
+      campo: "Terre Dei Consoli Golf Club", tee: "Championship Course",
+      par:    [4,5,3,4,4,4,4,5,3, 4,5,4,3,4,4,3,5,4],
+      metros: [255,442,125,298,293,315,327,380,106, 263,390,239,110,284,301,134,380,333],
+    },
+    2104: { // Boys 11
+      campo: "Terre Dei Consoli Golf Club", tee: "Championship Course",
+      par:    [4,5,3,4,4,4,4,5,3, 4,5,4,3,4,4,3,5,4],
+      metros: [193,390,119,266,254,282,270,350,94, 263,350,229,110,284,224,134,350,260],
+    },
+    2103: { // Boys 10 — mesmos metros que Boys 11
+      campo: "Terre Dei Consoli Golf Club", tee: "Championship Course",
+      par:    [4,5,3,4,4,4,4,5,3, 4,5,4,3,4,4,3,5,4],
+      metros: [193,390,119,266,254,282,270,350,94, 263,350,229,110,284,224,134,350,260],
+    },
+    2102: { // Boys 9
+      campo: "Terre Dei Consoli Golf Club", tee: "Championship Course",
+      par:    [4,5,3,4,4,4,4,5,3, 4,5,4,3,4,4,3,5,4],
+      metros: [193,350,119,200,254,247,236,330,90, 200,330,229,91,249,224,114,330,260],
+    },
+  },
+  // ── Venice Open 2025 – Golf Della Montecchia ─────────────────────────────────
+  // Fonte: PDF oficial "U.S. Kids Golf Venice Open 2025 - Meters"
+  19418: {
+    2105: { // Boys 12 — White+Red
+      campo: "Golf Della Montecchia", tee: "White+Red",
+      par:    [5,3,4,4,4,4,3,4,5, 4,3,5,4,4,4,4,3,5],
+      metros: [401,145,300,310,280,330,128,290,390, 305,150,410,280,283,310,310,145,410],
+    },
+    2104: { // Boys 11 — White+Red
+      campo: "Golf Della Montecchia", tee: "White+Red",
+      par:    [5,3,4,4,4,4,3,4,5, 4,3,5,4,4,4,4,3,5],
+      metros: [389,145,262,266,280,289,128,290,350, 255,122,330,230,265,284,290,115,325],
+    },
+    2103: { // Boys 10 — Red+Green
+      campo: "Golf Della Montecchia", tee: "Red+Green",
+      par:    [4,3,5,4,4,4,4,3,5, 4,5,4,3,4,3,4,5,4],
+      metros: [255,122,330,230,265,284,290,115,325, 263,350,287,120,250,103,244,340,250],
+    },
+    2102: { // Boys 9 — Green+White
+      campo: "Golf Della Montecchia", tee: "Green+White",
+      par:    [4,5,4,3,4,3,4,5,4, 5,3,4,4,4,4,3,4,5],
+      metros: [220,300,240,100,210,90,210,300,230, 300,110,225,230,210,230,95,215,290],
+    },
+  },
+  // ── USKids Catalunya Local Tour – Real Club de Golf El Prat ─────────────────
+  // Fonte: melhorias.json › extra_rounds  (stableford, 9H)
+  15573: {
+    2102: { // Boys 9
+      campo: "Real Club de Golf El Prat", tee: "Boys 9",
+      par:    [4,3,4,5,4,3,4,4,5],
+      metros: [],
+    },
+  },
+};
+
+/** Links adicionais por t-code (página oficial USKids, etc.) */
+const LINKS_EXTRA: Record<number, { label: string; url: string }[]> = {
+  // Rome Classic 2025
+  20175: [
+    { label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516026/rome-classic-2025/registration" },
+    { label: "📄 Distâncias", url: "https://drive.google.com/file/d/14rQM4CQuN7d4VqWaYTewcrRAoSzCzrgv/view?usp=sharing" },
+  ],
+  // Venice Open 2025
+  19418: [
+    { label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/515206/venice-open-2025/field" },
+    { label: "📄 Distâncias", url: "https://tournaments.uskidsgolf.com/sites/default/files/venice_open_2025_tournament_distances_-_meters.pdf" },
+  ],
+};
+
 const FLAG: Record<string,string> = {
   PT:"🇵🇹",GB:"🇬🇧",IE:"🇮🇪",FR:"🇫🇷",ES:"🇪🇸",DE:"🇩🇪",IT:"🇮🇹",
   NL:"🇳🇱",SE:"🇸🇪",NO:"🇳🇴",DK:"🇩🇰",FI:"🇫🇮",US:"🇺🇸",CA:"🇨🇦",
@@ -209,72 +297,37 @@ function isManuel(nome: string) {
   return nome.toLowerCase().includes(MANUEL_FRAGMENT);
 }
 
-// Derivar par por buraco quando não está disponível nos dados:
-// usa o percentil 15 dos scores como âncora, ajusta para atingir o total_par exacto
-function deriveParsFromLeaderboard(lb: RondaJogador[], total_par: number, n_holes: number): number[] {
-  if (!lb.length || !n_holes || !total_par) return [];
-  // Calcular total_par real a partir dos jogadores se não vier do servidor
-  const computedTotal = lb.find(j => j.score && j.to_par != null)
-    ? (lb.find(j => j.score && j.to_par != null)!.score - lb.find(j => j.score && j.to_par != null)!.to_par!)
-    : total_par;
-  // Sanity check: par total deve ser plausível (entre n_holes*3 e n_holes*5)
-  if (computedTotal < n_holes * 3 || computedTotal > n_holes * 5) return [];
 
-  const parEst: { par: number; median: number }[] = [];
-  for (let h = 0; h < n_holes; h++) {
-    const scores = lb
-      .filter(j => Array.isArray(j.strokes) && j.strokes.length > h)
-      .map(j => j.strokes[h])
-      .filter(s => typeof s === 'number' && s > 0)
-      .sort((a, b) => a - b);
-    if (!scores.length) { parEst.push({ par: 4, median: 4 }); continue; }
-    const idx = Math.max(0, Math.floor(scores.length * 0.15));
-    const anchor = scores[idx];
-    const med = scores[Math.floor(scores.length / 2)];
-    const par = anchor <= 3 ? 3 : anchor >= 5 ? 5 : 4;
-    parEst.push({ par, median: med });
-  }
-
-  // Ajustar até bater computedTotal exacto
-  let diff = computedTotal - parEst.reduce((s, p) => s + p.par, 0);
-  if (diff > 0) {
-    // Elevar 4→5: prioridade para os com maior mediana
-    const fours = parEst
-      .map((p, i) => ({ ...p, i }))
-      .filter(p => p.par === 4)
-      .sort((a, b) => b.median - a.median);
-    for (const f of fours) { if (diff <= 0) break; parEst[f.i].par = 5; diff--; }
-  } else if (diff < 0) {
-    // Reduzir 5→4: prioridade para os com menor mediana
-    const fives = parEst
-      .map((p, i) => ({ ...p, i }))
-      .filter(p => p.par === 5)
-      .sort((a, b) => a.median - b.median);
-    for (const f of fives) { if (diff >= 0) break; parEst[f.i].par = 4; diff++; }
-  }
-  return parEst.map(p => p.par);
-}
 
 // ─────────────────────────────────────────────
 // SCORECARD
 // ─────────────────────────────────────────────
-function TabelaRonda({ ronda, expanded, onToggle }: { ronda: RondaResult; expanded: boolean; onToggle: () => void }) {
+function TabelaRonda({ ronda, torneioT, ageGroup, expanded, onToggle }: {
+  ronda: RondaResult; torneioT: number; ageGroup: number;
+  expanded: boolean; onToggle: () => void;
+}) {
   const jogadores = ronda.leaderboard ?? ronda.jogadores ?? [];
   const buracos   = ronda.buracos || 18;
   const has18     = buracos >= 18;
 
-  // Usar par do servidor se disponível, senão derivar a partir dos scores
+  // Par e metros por buraco: apenas dados reais (TEES_LOOKUP ou ronda.par do servidor).
+  // Se não houver dados, par fica undefined e ScoreCircle renderiza sem cor.
+  const teeInfo = TEES_LOOKUP[torneioT]?.[ageGroup];
   const par: number[] | undefined = (() => {
+    if (teeInfo?.par.length === buracos) return teeInfo.par;
     if (ronda.par?.length === buracos) return ronda.par;
-    const derived = deriveParsFromLeaderboard(jogadores, ronda.total_par ?? 0, buracos);
-    return derived.length === buracos ? derived : undefined;
+    return undefined;
   })();
+  const metros: number[] | undefined =
+    teeInfo?.metros && teeInfo.metros.length === buracos ? teeInfo.metros : undefined;
   const totalPar = par ? par.reduce((s, p) => s + p, 0) : ronda.total_par;
 
   // Totais out/in para cada jogador
   const getStrokes = (j: RondaJogador) => j.strokes?.length ? j.strokes : (j.rondas?.["1"]?.strokes ?? []);
-  const outPar = par?.slice(0,9).reduce((s,p)=>s+p,0);
-  const inPar  = par?.slice(9,18).reduce((s,p)=>s+p,0);
+  const outPar    = par?.slice(0,9).reduce((s,p)=>s+p,0);
+  const inPar     = par?.slice(9,18).reduce((s,p)=>s+p,0);
+  const outMetros = metros?.slice(0,9).reduce((s,m)=>s+m,0);
+  const inMetros  = metros?.slice(9,18).reduce((s,m)=>s+m,0);
 
   return (
     <div style={{marginBottom:8, border:"1px solid var(--border)", borderRadius:8, overflow:"hidden"}}>
@@ -306,6 +359,18 @@ function TabelaRonda({ ronda, expanded, onToggle }: { ronda: RondaResult; expand
         <div style={{overflowX:"auto"}}>
           <table className="tourn-scorecard" style={{width:"100%", minWidth:500}}>
             <thead>
+              {/* Linha metros */}
+              {metros && (
+                <tr>
+                  <td className="tourn-lbl" colSpan={3} style={{fontSize:9,color:"var(--text-3)"}}>M</td>
+                  {metros.slice(0,9).map((m,i) => <td key={i} className="tourn-hole-cell" style={{fontSize:9,color:"var(--text-3)"}}>{m}</td>)}
+                  {has18 && <td className="tourn-sum-col" style={{fontSize:9,color:"var(--text-3)"}}>{outMetros}</td>}
+                  {has18 && metros.slice(9,18).map((m,i) => <td key={i} className="tourn-hole-cell" style={{fontSize:9,color:"var(--text-3)"}}>{m}</td>)}
+                  {has18 && <td className="tourn-sum-col" style={{fontSize:9,color:"var(--text-3)"}}>{inMetros}</td>}
+                  <td className="tourn-sum-col" style={{fontSize:9,color:"var(--text-3)"}}>{(outMetros??0)+(inMetros??0)}</td>
+                  <td/><td/>
+                </tr>
+              )}
               {/* Linha par */}
               {par && (
                 <tr className="sc-par-row">
@@ -553,11 +618,16 @@ function TabResultados({ data, selectedT }: {
   );
 
   const manuelRows = t.escaloes.flatMap(e =>
-    e.rondas.flatMap(r =>
-      (r.leaderboard ?? r.jogadores ?? [])
-        .filter(j => isManuel(j.nome))
-        .map(j => ({ escalao:e.nome, ronda:r.ronda, ...j }))
-    )
+    e.rondas.flatMap(r => {
+      const lb = r.leaderboard ?? r.jogadores ?? [];
+      const manuel = lb.find(j => isManuel(j.nome));
+      if (!manuel) return [];
+      const lider = lb[0];
+      const diffLider = (lider && lider.score > 0 && manuel.score > 0)
+        ? manuel.score - lider.score
+        : null;
+      return [{ escalao: e.nome, ronda: r.ronda, ...manuel, diffLider }];
+    })
   );
 
   return (
@@ -575,15 +645,30 @@ function TabResultados({ data, selectedT }: {
               ver fonte ↗
             </a>
           )}
+          {(LINKS_EXTRA[t.t] ?? []).map((l, i) => (
+            <a key={i} href={l.url} target="_blank" rel="noopener noreferrer"
+              style={{ color:"var(--text-3)", fontSize:10, textDecoration:"none",
+                border:"1px solid var(--border)", borderRadius:5, padding:"1px 7px" }}>
+              {l.label}
+            </a>
+          ))}
         </div>
         {manuelRows.length > 0 && (
           <div style={{ marginTop:8, display:"flex", gap:6, flexWrap:"wrap" }}>
-            {manuelRows.map((m,i) => (
-              <span key={i} style={{ background:"var(--accent-light)", border:"1px solid var(--accent)",
-                color:"var(--accent)", padding:"2px 10px", borderRadius:8, fontSize:12, fontWeight:700 }}>
-                ★ {m.escalao} R{m.ronda}: {m.score} · {m.pontos} pts
-              </span>
-            ))}
+            {manuelRows.map((m,i) => {
+              const toPar = m.to_par != null
+                ? (m.to_par === 0 ? "E" : m.to_par > 0 ? `+${m.to_par}` : `${m.to_par}`)
+                : null;
+              const liderStr = m.diffLider === 0 ? "líder"
+                : m.diffLider != null ? `+${m.diffLider} do líder`
+                : null;
+              return (
+                <span key={i} style={{ background:"var(--accent-light)", border:"1px solid var(--accent)",
+                  color:"var(--accent)", padding:"2px 10px", borderRadius:8, fontSize:12, fontWeight:700 }}>
+                  Manuel ★ {m.escalao} · R{m.ronda} · {m.score}{toPar ? ` (${toPar})` : ""}{liderStr ? ` · ${liderStr}` : ""}
+                </span>
+              );
+            })}
           </div>
         )}
       </div>
@@ -606,6 +691,8 @@ function TabResultados({ data, selectedT }: {
               const key = `${t.t}-${e.age_group}-${r.ronda}`;
               return (
                 <TabelaRonda key={key} ronda={r}
+                  torneioT={t.t}
+                  ageGroup={e.age_group}
                   expanded={expandedRondas.has(key)}
                   onToggle={() => setExpandedRondas(prev => {
                     const s = new Set(prev); s.has(key) ? s.delete(key) : s.add(key); return s;

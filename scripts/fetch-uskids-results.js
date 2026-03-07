@@ -25,7 +25,7 @@ const HISTORICOS = [
     t: 19418, name: 'Venice Open 2025',
     date_inicio: '8/17/2025', date_fim: '8/17/2025', rondas: 3, ax: 1129,
     escalao_manuel: 2104,
-    age_groups: [2103, 2104],
+    age_groups: [2102, 2103, 2104, 2105],
     url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=19418',
   },
   {
@@ -280,12 +280,24 @@ async function main() {
     } catch {}
   }
 
-  // Históricos ainda não processados
+  // Históricos ainda não processados OU com age_groups desactualizados
   const outputActual = fs.existsSync(OUTPUT)
     ? JSON.parse(fs.readFileSync(OUTPUT, 'utf8'))
     : { resultados: [] };
-  const jaTemos = new Set((outputActual.resultados || []).map(r => r.t));
-  const historicosNovos = HISTORICOS.filter(h => !jaTemos.has(h.t));
+  const mapaActual = new Map((outputActual.resultados || []).map(r => [r.t, r]));
+  const historicosNovos = HISTORICOS.filter(h => {
+    const existente = mapaActual.get(h.t);
+    if (!existente) return true; // ainda não temos
+    // Re-processar se os age_groups configurados não estão todos no output
+    if (h.age_groups) {
+      const agsTemos = new Set((existente.escaloes || []).map(e => e.age_group));
+      if (h.age_groups.some(ag => !agsTemos.has(ag))) {
+        console.log(`  ♻️  ${h.name} — age_groups desactualizados, vai re-processar`);
+        return true;
+      }
+    }
+    return false;
+  });
 
   const aProcessar = [...emCurso, ...historicosNovos];
 
