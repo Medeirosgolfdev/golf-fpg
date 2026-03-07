@@ -528,6 +528,129 @@ function DS({d,v,s,bg,tc,tc2,tc3,tc4}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:st
   </div>;
 }
 
+/* ═══ T. TOUR TABLE ═══ */
+function DT({d,v,s,bg,tc,tc2,tc3,tc4}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string;tc2?:string;tc3?:string;tc4?:string}){
+  const is18=d.scores.length>=18;
+  const cellW=30;
+  const totalCols=is18?11:d.scores.length+1; // holes + Out/In/Total
+  const headerBg="rgba(0,0,0,0.55)";
+  const parBg="rgba(0,0,0,0.35)";
+  const scoreBg="rgba(0,0,0,0.22)";
+  const border="1px solid rgba(255,255,255,0.13)";
+  const labelW=52;
+  const Row=({label,cells,isBold,isScore}:{label:string;cells:(string|number)[];isBold?:boolean;isScore?:boolean})=>
+    <div style={{display:"flex",borderBottom:border}}>
+      <div style={{width:labelW,padding:"5px 7px",fontSize:11,fontWeight:isBold?800:600,color:tc2,borderRight:border,textTransform:"uppercase",letterSpacing:0.5,flexShrink:0}}>{label}</div>
+      {cells.map((c,i)=>{
+        const isSep=is18&&(i===9||i===19);
+        const isTotal=i===cells.length-1;
+        return<div key={i} style={{
+          width:cellW,flexShrink:0,textAlign:"center",padding:"5px 0",
+          fontSize:isBold?12:11,fontWeight:isTotal?900:isBold?700:500,
+          color:isTotal?tc:isBold?tc2:tc3,
+          borderRight:isSep?"2px solid rgba(255,255,255,0.35)":border,
+          background:isTotal?"rgba(255,255,255,0.08)":undefined,
+        }}>{c}</div>;})}
+    </div>;
+  // build hole numbers
+  const holeNums=is18?[...Array(9).keys()].map(i=>i+1).concat([...Array(9).keys()].map(i=>i+10)):Array.from({length:d.scores.length},(_,i)=>i+1);
+  const holeCells=is18?[...holeNums.slice(0,9),"OUT",...holeNums.slice(9),"IN","TOT"]:[...holeNums,"TOT"];
+  const parCells=is18?[...d.par.slice(0,9),s.pF,...d.par.slice(9),s.pB,s.pT]:[...d.par,s.pT];
+  // score row: individual SC components
+  const ScoreRow=()=>{
+    const cells18:React.ReactNode[]=[];
+    if(is18){
+      d.scores.slice(0,9).forEach((sc,i)=>cells18.push(<div key={i} style={{width:cellW,flexShrink:0,display:"flex",justifyContent:"center",padding:"3px 0",borderRight:border}}><SC score={sc} par={d.par[i]} size={24} fs={12}/></div>));
+      cells18.push(<div key="out" style={{width:cellW,flexShrink:0,textAlign:"center",padding:"5px 0",fontSize:13,fontWeight:900,color:tc,borderRight:"2px solid rgba(255,255,255,0.35)",background:"rgba(255,255,255,0.08)"}}>{s.sF}</div>);
+      d.scores.slice(9).forEach((sc,i)=>cells18.push(<div key={9+i} style={{width:cellW,flexShrink:0,display:"flex",justifyContent:"center",padding:"3px 0",borderRight:border}}><SC score={sc} par={d.par[9+i]} size={24} fs={12}/></div>));
+      cells18.push(<div key="in" style={{width:cellW,flexShrink:0,textAlign:"center",padding:"5px 0",fontSize:13,fontWeight:900,color:tc,borderRight:border,background:"rgba(255,255,255,0.08)"}}>{s.sB}</div>);
+      cells18.push(<div key="tot" style={{width:cellW,flexShrink:0,textAlign:"center",padding:"5px 0",fontSize:14,fontWeight:900,color:tc,background:"rgba(255,255,255,0.12)"}}>{s.sT}</div>);
+    } else {
+      d.scores.forEach((sc,i)=>cells18.push(<div key={i} style={{width:cellW,flexShrink:0,display:"flex",justifyContent:"center",padding:"3px 0",borderRight:border}}><SC score={sc} par={d.par[i]} size={24} fs={12}/></div>));
+      cells18.push(<div key="tot" style={{width:cellW,flexShrink:0,textAlign:"center",padding:"5px 0",fontSize:14,fontWeight:900,color:tc,background:"rgba(255,255,255,0.12)"}}>{s.sT}</div>);
+    }
+    return<div style={{display:"flex",borderBottom:border}}>
+      <div style={{width:labelW,padding:"5px 7px",fontSize:11,fontWeight:800,color:tc,borderRight:border,flexShrink:0,textTransform:"uppercase",letterSpacing:0.5}}>Score</div>
+      {cells18}
+    </div>;
+  };
+  return<div style={{fontFamily:II,display:"inline-block",color:tc||"#fff",background:bg||"rgba(12,20,35,0.92)",overflow:"hidden"}}>
+    {/* Header */}
+    <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",padding:"9px 12px 7px",background:"rgba(0,0,0,0.45)"}}>
+      <div>
+        {(v.event&&d.event||v.round)&&<div style={{fontSize:10,fontWeight:700,letterSpacing:2,color:tc3,textTransform:"uppercase"}}>
+          {[v.event&&d.event,v.round&&`Round ${d.round}`].filter(Boolean).join(" – ")}</div>}
+        {v.player&&d.player&&<div style={{fontSize:17,fontWeight:900,letterSpacing:0.5,marginTop:3}}>{d.player.toUpperCase()}</div>}
+      </div>
+      <div style={{textAlign:"right"}}>
+        {v.course&&d.course&&<div style={{fontSize:10,fontWeight:700,letterSpacing:1,color:tc2}}>{d.course.toUpperCase()}</div>}
+        {v.date&&d.date&&<div style={{fontSize:10,fontWeight:500,color:tc3,marginTop:2}}>{d.date}</div>}
+      </div>
+    </div>
+    <div style={{height:2,background:"#dc2626"}}/>
+    {/* Table */}
+    {v.holeScores&&<div style={{borderTop:border}}>
+      <Row label="Hole" cells={holeCells} isBold/>
+      <Row label="Par" cells={parCells}/>
+      <ScoreRow/>
+    </div>}
+    {/* Footer */}
+    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"7px 12px",background:"rgba(0,0,0,0.4)"}}>
+      <div style={{fontSize:12,fontWeight:900,letterSpacing:0.5}}>
+        {v.player&&d.player?d.player:""}{v.position&&d.position?<span style={{color:tc3,fontWeight:600}}>{" – "}{d.position}</span>:null}
+      </div>
+      <div style={{display:"flex",alignItems:"baseline",gap:5}}>
+        <span style={{fontSize:22,fontWeight:900}}>{s.sT}</span>
+        <span style={{fontSize:14,fontWeight:900,color:vpC(s.vpT)}}>{fvp(s.vpT)}</span>
+      </div>
+    </div>
+  </div>;
+}
+
+/* ═══ U. DP WORLD HERO ═══ */
+function DU({d,v,s,bg,tc,tc2,tc3,tc4}:{d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string;tc2?:string;tc3?:string;tc4?:string}){
+  const is18=d.scores.length>=18;
+  const vpColor=s.vpT<0?"#ef4444":s.vpT===0?"#aaa":"#4ade80";
+  const front=d.scores.slice(0,is18?9:d.scores.length);
+  const back=is18?d.scores.slice(9):[];
+  const frontPar=d.par.slice(0,is18?9:d.par.length);
+  const backPar=is18?d.par.slice(9):[];
+  const ColScores=({scores,pars,off}:{scores:number[];pars:number[];off:number})=>
+    <div style={{display:"flex",flexDirection:"column",gap:2,minWidth:44}}>
+      {scores.map((sc,i)=><div key={i} style={{display:"flex",justifyContent:"center"}}><LSC score={sc} par={pars[i]} size={34} fs={16}/></div>)}
+      <div style={{height:1,background:"rgba(255,255,255,0.15)",margin:"2px 0"}}/>
+      <div style={{fontSize:18,fontWeight:900,textAlign:"center",color:tc||"#fff"}}>{scores.reduce((a,b)=>a+b,0)}</div>
+    </div>;
+  return<div style={{fontFamily:II,display:"inline-block",color:tc||"#fff",background:bg||"rgba(30,40,55,0.88)",padding:"18px 18px 14px",minWidth:240}}>
+    {/* Top: player/event info */}
+    <div style={{marginBottom:12}}>
+      {v.player&&d.player&&<div style={{fontSize:13,fontWeight:900,letterSpacing:0.5}}>{d.player.toUpperCase()}</div>}
+      <div style={{fontSize:10,fontWeight:600,color:tc2,marginTop:2,lineHeight:1.5}}>
+        {v.position&&d.position&&<span>{d.position}</span>}
+        {v.position&&d.position&&(v.round||v.event)&&" · "}
+        {v.round&&<span>Round {d.round}</span>}
+        {v.round&&v.event&&d.event&&" · "}
+        {v.event&&d.event&&<span>{d.event}</span>}
+      </div>
+    </div>
+    {/* Giant score */}
+    <div style={{position:"relative",display:"inline-block",lineHeight:1,marginBottom:14}}>
+      <span style={{fontSize:96,fontWeight:900,letterSpacing:-4,lineHeight:1}}>{s.sT}</span>
+      <span style={{position:"absolute",top:0,right:-24,fontSize:28,fontWeight:900,color:vpColor,lineHeight:1}}>{fvp(s.vpT)}</span>
+    </div>
+    {/* Two columns of scores */}
+    {v.holeScores&&<div style={{display:"flex",gap:0,alignItems:"flex-start"}}>
+      <ColScores scores={front} pars={frontPar} off={0}/>
+      {is18&&<div style={{width:1,background:"rgba(255,255,255,0.25)",margin:"0 10px",alignSelf:"stretch"}}/>}
+      {is18&&<ColScores scores={back} pars={backPar} off={9}/>}
+    </div>}
+    {/* Course / date */}
+    {(v.course||v.date)&&<div style={{marginTop:10,fontSize:10,fontWeight:600,color:tc3}}>
+      {[v.course&&d.course,v.date&&d.date].filter(Boolean).join(" · ")}
+    </div>}
+  </div>;
+}
+
 /* ═══════ DESIGN REGISTRY ═══════ */
 type DP_ = {d:DD;v:Vis;s:Stats;bg?:string|null;tc?:string;tc2?:string;tc3?:string;tc4?:string};
 type DesignDef = { id:string; label:string; C:React.FC<DP_>; needsHoles:boolean };
@@ -551,6 +674,8 @@ const DESIGNS: DesignDef[] = [
   {id:"Q",label:"Ticket",C:DQ,needsHoles:true},
   {id:"R",label:"Horizontal Wide",C:DR,needsHoles:true},
   {id:"S",label:"Horizontal Table",C:DS,needsHoles:true},
+  {id:"T",label:"Tour Table",C:DT,needsHoles:true},
+  {id:"U",label:"DP World Hero",C:DU,needsHoles:true},
 ];
 
 /* ═══════ TOGGLES ═══════ */
