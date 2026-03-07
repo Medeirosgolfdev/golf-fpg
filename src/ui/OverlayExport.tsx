@@ -719,6 +719,16 @@ export default function OverlayExport({data,inline}:{data:OverlayData;inline?:bo
   const [manualScore,setManualScore]=useState<string>("");
   const designRefs=useRef<Record<string,HTMLDivElement|null>>({});
 
+  /* Injectar fontes no <head> imediatamente ao montar o componente */
+  React.useEffect(()=>{
+    const id="ov-font-link";
+    if(!document.getElementById(id)){
+      const l=document.createElement("link");
+      l.id=id;l.rel="stylesheet";l.href=FONT_LINK;
+      document.head.appendChild(l);
+    }
+  },[]);
+
   /* Build scores */
   const noHoleData=!data.hasHoles||data.scores.length===0;
   const allFilled=!noHoleData&&data.scores.every(s=>s!==null);
@@ -754,32 +764,59 @@ export default function OverlayExport({data,inline}:{data:OverlayData;inline?:bo
   const alpha=bgAlpha/100;
   /* The bg color with alpha applied, or null for transparent */
   const bgColor=bgHex?hexToRgba(bgHex,alpha):null;
-  /* Text color from theme */
-  const tc=theme==="light"?"#1a1a1a":"#fff";
-  const tc2=theme==="light"?"rgba(0,0,0,0.55)":"rgba(255,255,255,0.6)";
-  const tc3=theme==="light"?"rgba(0,0,0,0.35)":"rgba(255,255,255,0.4)";
-  const tc4=theme==="light"?"rgba(0,0,0,0.2)":"rgba(255,255,255,0.25)";
+  /* Text color from theme — SOLID hex, sem rgba, para html2canvas funcionar */
+  const tc =theme==="light"?"#1a1a1a":"#ffffff";
+  const tc2=theme==="light"?"#555555":"#aaaaaa";
+  const tc3=theme==="light"?"#888888":"#777777";
+  const tc4=theme==="light"?"#aaaaaa":"#555555";
 
   /* Checkerboard for preview area */
   const checkerBg:React.CSSProperties={
     backgroundImage:"linear-gradient(45deg,#ccc 25%,transparent 25%),linear-gradient(-45deg,#ccc 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#ccc 75%),linear-gradient(-45deg,transparent 75%,#ccc 75%)",
     backgroundSize:"12px 12px",backgroundPosition:"0 0,0 6px,6px -6px,-6px 0px",backgroundColor:"#fff"};
 
+  /* ── Captura com fontes garantidas ── */
+  const captureEl=useCallback(async(el:HTMLElement):Promise<HTMLCanvasElement>=>{
+    // 1. aguardar fontes do documento
+    if(document.fonts?.ready) await document.fonts.ready;
+    // 2. forçar load explícito das fontes usadas
+    try{
+      await Promise.all([
+        document.fonts.load('700 16px "Inter"'),
+        document.fonts.load('900 16px "Inter"'),
+        document.fonts.load('700 16px "Oswald"'),
+        document.fonts.load('400 16px "Bebas Neue"'),
+        document.fonts.load('700 16px "Space Grotesk"'),
+      ]);
+    }catch{}
+    // 3. pequeno delay para garantir re-render após fontes
+    await new Promise(r=>setTimeout(r,250));
+    const h2c=(await import("html2canvas")).default;
+    // 4. fundo sólido: nunca null — usa a cor escolhida ou preto/branco conforme tema
+    const solidBg=bgHex||(theme==="light"?"#ffffff":"#000000");
+    return h2c(el,{
+      backgroundColor:solidBg,
+      scale:3,
+      useCORS:true,
+      allowTaint:true,
+      logging:false,
+    });
+  },[bgHex,theme]);
+
   /* ── Export all ── */
   const doExportAll=useCallback(async()=>{
     setExporting(true);
     try{
-      const h2c=(await import("html2canvas")).default;
       const files:File[]=[];
       for(const design of available){
         const el=designRefs.current[design.id];if(!el)continue;
-        const canvas=await h2c(el,{backgroundColor:null,scale:3,useCORS:true,logging:false});
+        const canvas=await captureEl(el);
         const blob=await new Promise<Blob|null>(r=>canvas.toBlob(r,"image/png"));
         if(blob)files.push(new File([blob],`${design.label}.png`,{type:"image/png"}));
       }
       if(!files.length)return;
-      if(navigator.share&&navigator.canShare){
-        if(navigator.canShare({files})){try{await navigator.share({files,title:"Scorecards"});return;}catch{}}
+      if(navigator.share&&navigator.canShare&&navigator.canShare({files})){
+        try{await navigator.share({files,title:"Scorecards"});return;}catch{}
       }
       for(let i=0;i<files.length;i++){
         const url=URL.createObjectURL(files[i]);
@@ -789,22 +826,24 @@ export default function OverlayExport({data,inline}:{data:OverlayData;inline?:bo
       }
     }catch(err){console.error(err);alert("Erro ao exportar.");}
     finally{setExporting(false);}
-  },[available]);
+  },[available,captureEl]);
 
   /* ── Export one ── */
   const doExportOne=useCallback(async(designId:string)=>{
     const el=designRefs.current[designId];if(!el)return;
     try{
-      const h2c=(await import("html2canvas")).default;
-      const canvas=await h2c(el,{backgroundColor:null,scale:3,useCORS:true,logging:false});
-      canvas.toBlob(async(blob:Blob|null)=>{
-        if(!blob)return;
-        const file=new File([blob],`scorecard-${designId}.png`,{type:"image/png"});
-        if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],title:"Scorecard"});return;}catch{}}
-        const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download=file.name;a.click();URL.revokeObjectURL(url);
-      },"image/png");
+      const canvas=await captureEl(el);
+      const blob=await new Promise<Blob|null>(r=>canvas.toBlob(r,"image/png"));
+      if(!blob)return;
+      const file=new File([blob],`scorecard-${designId}.png`,{type:"image/png"});
+      if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
+        try{await navigator.share({files:[file],title:"Scorecard"});return;}catch{}
+      }
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement("a");a.href=url;a.download=file.name;a.click();
+      URL.revokeObjectURL(url);
     }catch(err){console.error(err);alert("Erro ao exportar");}
-  },[]);
+  },[captureEl]);
 
   /* ═══════════ RENDER ═══════════ */
   return <div className={inline?"ov-export-inline":"ov-export"}>
@@ -815,7 +854,7 @@ export default function OverlayExport({data,inline}:{data:OverlayData;inline?:bo
       {!allFilled&&!noHoleData&&!collapsed&&<div style={{fontSize:13,fontWeight:700,color:"#b45309",marginTop:4}}>⚠ Preenche todos os buracos para scores exactos. A pré-visualização usa o Par como placeholder.</div>}
     </div>}
     {inline&&!allFilled&&!noHoleData&&<div style={{fontSize:13,fontWeight:700,color:"#b45309",marginBottom:8}}>⚠ Preenche todos os buracos para scores exactos. A pré-visualização usa o Par como placeholder.</div>}
-    {(inline||!collapsed)&&<><link href={FONT_LINK} rel="stylesheet"/>
+    {(inline||!collapsed)&&<>
       {/* ── Manual fields ── */}
       <div className="ov-fields">
         <div className="ov-field"><label>Jogador</label><input type="text" value={player} onChange={e=>setPlayer(e.target.value)} placeholder="Nome" className="input" style={{width:130}}/></div>
