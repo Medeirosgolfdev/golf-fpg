@@ -332,6 +332,120 @@ const LINKS_EXTRA: Record<number, { label: string; url: string }[]> = {
     { label: "📄 Distâncias", url: "https://drive.google.com/file/d/1AgicV6PnrYYc8AbA5CFPmttJOICzZVZm/view" },
     { label: "🏌️ Campo", url: "https://tournaments.uskidsgolf.com/node/514018" },
   ],
+
+  // 2026 Mississippi State Invitational
+  21239: [
+    { label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/state/find-tournament/517160/2026-mississippi-state-invitational" },
+  ],
+  // 2026 Hawaii State Invitational
+  21471: [
+    { label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/state/find-tournament/517475/2026-hawaii-state-invitational" },
+  ],
+  // Jekyll Island Cup 2026
+  21133: [
+    { label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/regional/find-tournament/517061/jekyll-island-cup-2026" },
+  ],
+  // Texas Open 2026
+  21620: [
+    { label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/regional/find-tournament/517558/texas-open-2026" },
+  ],
+  // Palmer Kids Invitational 2026
+  22037: [
+    { label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/regional/find-tournament/517996/palmer-foundation-kids-invitational-2026" },
+  ],
+  // World Championship 2026
+  21610: [
+    { label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/world/find-tournament/517536/world-championship-2026" },
+  ],
+  // 2026 Tennessee - Spring State Invitational
+  21628: [
+    { label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/state/find-tournament/517562/2026-tennessee-spring-state-invitational" },
+  ],
+  // 2026 Wisconsin State Invitational
+  21629: [
+    { label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/state/find-tournament/517563/2026-wisconsin-state-invitational" },
+  ],
+  // 2026 Nevada State Invitational
+  21631: [
+    { label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/state/find-tournament/517628/2026-nevada-state-invitational" },
+  ],
+  // 2026 Northwest State Invitational
+  21650: [
+    { label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/state/find-tournament/517647/2026-northwest-state-invitational" },
+  ],
+  // 2026 Arkansas State Invitational
+  21722: [
+    { label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/state/find-tournament/517714/2026-arkansas-state-invitational" },
+  ],
+  // 2026 Florida - Spring State Invitational
+  21845: [
+    { label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/state/find-tournament/517776/2026-florida-spring-state-invitational" },
+  ],
+  // 2026 Northern California State Invitational
+  21846: [
+    { label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/state/find-tournament/517777/2026-northern-california-state-invitational" },
+  ],
+  // 2026 Arizona State Invitational
+  21847: [
+    { label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/state/find-tournament/517778/2026-arizona-state-invitational" },
+  ],
+  // 2026 North Carolina State Invitational
+  21848: [
+    { label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/state/find-tournament/517786/2026-north-carolina-state-invitational" },
+  ],
+  // 2026 Illinois State Invitational
+  22059: [
+    { label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/state/find-tournament/518025/2026-illinois-state-invitational" },
+  ],
+  // 2026 Georgia State Invitational
+  22062: [
+    { label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/state/find-tournament/518037/2026-georgia-state-invitational" },
+  ],
+  // 2026 Oklahoma State Invitational
+  22080: [
+    { label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/state/find-tournament/518039/2026-oklahoma-state-invitational" },
+  ],
+  // 2026 Ohio State Invitational
+  22088: [
+    { label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/state/find-tournament/518045/2026-ohio-state-invitational" },
+  ],
+  // 2026 Missouri State Invitational
+  22090: [
+    { label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/state/find-tournament/518043/2026-missouri-state-invitational" },
+  ],
+  // 2026 Texas - Spring State Invitational
+  22099: [
+    { label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/state/find-tournament/518057/2026-texas-spring-state-invitational" },
+  ],
+  // 2026 Washington State Invitational
+  22121: [
+    { label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/state/find-tournament/518093/2026-washington-state-invitational" },
+  ],
+  // 2026 Virginia State Invitational
+  22122: [
+    { label: "USKids ↗", url: "https://tournaments.uskidsgolf.com/tournaments/state/find-tournament/518092/2026-virginia-state-invitational" },
+  ],
+};
+
+// ─────────────────────────────────────────────
+// REGIONAL CHAMPIONSHIPS (invitation events)
+// ─────────────────────────────────────────────
+const REGIONAL_CHAMPIONSHIPS: Record<number, { shortName: string; location: string; urlUSKids?: string; past2026?: boolean }> = {
+  // ── Já realizados em 2026 (HISTORICOS) ──
+  20895: { shortName: "Sandestin Championship",      location: "Sandestin, FL",      urlUSKids: "https://tournaments.uskidsgolf.com/tournaments/regional/find-tournament/516801/sandestin-championship-2026", past2026: true },
+  21004: { shortName: "Desert Shootout",             location: "Phoenix, AZ",        urlUSKids: "https://tournaments.uskidsgolf.com/tournaments/regional/find-tournament/516958/desert-shootout-2026", past2026: true },
+  // ── Futuros 2026 ──
+  21133: { shortName: "Jekyll Island Cup",           location: "Jekyll Island, GA",  urlUSKids: "https://tournaments.uskidsgolf.com/tournaments/regional/find-tournament/517061/jekyll-island-cup-2026" },
+  21620: { shortName: "Texas Open",                  location: "Horseshoe Bay, TX",  urlUSKids: "https://tournaments.uskidsgolf.com/tournaments/regional/find-tournament/517558/texas-open-2026" },
+  22037: { shortName: "Palmer Kids Invitational",    location: "Latrobe, PA",        urlUSKids: "https://tournaments.uskidsgolf.com/tournaments/regional/find-tournament/517996/palmer-foundation-kids-invitational-2026" },
+  // t-code ainda não disponível (2026 não criado no USKids):
+  // Red White & Blue Invitational — JUL 4-5  — Pinehurst, NC   → ref 2025: find-tournament/514718/red-white-blue-invitational-2025
+  // Seaview Open                  — SEP 5-6  — Galloway, NJ    → ref 2025: find-tournament/515652/seaview-open-2025
+  // Palm Springs Open             — SEP 19-20 — Palm Springs   → ref 2025: find-tournament/515710/palm-springs-open-2025
+  // PGA Golf Club Invitational    — OCT 10-11 — Port St. Lucie → ref 2025: find-tournament/515055/pga-golf-club-invitational-2025
+  // Colonial Williamsburg Classic — NOV 7-8  — Williamsburg    → ref 2025: find-tournament/515903/colonial-williamsburg-classic-2025
+  // Monterey Challenge            — NOV 7-8  — Monterey, CA    → ref 2025: find-tournament/515902/monterey-challenge-2025
+  // Holiday Classic               — DEC 21-22 — Palm Beach Grd → ref 2025: find-tournament/516789/holiday-classic-2025
 };
 
 const FLAG: Record<string,string> = {
@@ -342,6 +456,31 @@ const FLAG: Record<string,string> = {
   RU:"🇷🇺",PH:"🇵🇭",SG:"🇸🇬",CZ:"🇨🇿",
 };
 const flag = (p: string) => FLAG[p?.toUpperCase()] ?? p;
+
+// ─────────────────────────────────────────────
+// LOCALIZAÇÃO
+// ─────────────────────────────────────────────
+const USA_KEYWORDS = [
+  'jekyll', 'state invitational', 'state championship', 'state open',
+  'tennessee', 'florida', 'texas', 'california', 'georgia', 'virginia',
+  'wisconsin', 'nevada', 'arkansas', 'ohio', 'oklahoma', 'missouri',
+  'mississippi', 'hawaii', 'illinois', 'north carolina', 'northwest',
+  'palmer foundation', 'van horn cup', 'world championship', 'world van horn',
+  'canadian invitational',
+];
+const EURO_KEYWORDS = [
+  'european championship', 'european van horn', 'europe',
+  'marco simone', 'venice', 'rome', 'terre dei consoli',
+  'irish open', 'paris invitational',
+  'nordic', 'al hamra',
+];
+
+function torneioRegiao(name: string): "USA" | "EURO" | null {
+  const n = name.toLowerCase();
+  if (EURO_KEYWORDS.some(k => n.includes(k))) return "EURO";
+  if (USA_KEYWORDS.some(k => n.includes(k))) return "USA";
+  return null;
+}
 
 // ─────────────────────────────────────────────
 // HELPERS
@@ -552,6 +691,13 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
       <div style={{ marginBottom:16 }}>
         <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:4, flexWrap:"wrap" }}>
           <span style={{ fontSize:18, fontWeight:700, color:"var(--text)" }}>{t.emoji} {t.name}</span>
+          {REGIONAL_CHAMPIONSHIPS[t.t] && (
+            <span style={{
+              fontSize:10, fontWeight:800, padding:"2px 9px", borderRadius:8,
+              background:"#fdf2f8", color:"#9c27b0", border:"1px solid #e1bee7",
+              letterSpacing:"0.04em",
+            }}>⭐ REGIONAL INVITATION</span>
+          )}
           {dias >= 0 && dias <= 14 && (
             <span style={{ background:"var(--chart-5)", color:"#fff", padding:"1px 7px", borderRadius:8, fontSize:10 }}>daqui a {dias}d</span>
           )}
@@ -565,6 +711,7 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
           {t.rondas ? ` · ${t.rondas}R` : ""}
           {t.campo   ? ` · ${t.campo}` : ""}
           {t.fee_18  ? ` · 💵 ${t.fee_18}` : ""}
+          {" · "}<span style={{ userSelect:"all", cursor:"text" }}>t={t.t}</span>
         </div>
 
         {t.sem_flights && (
@@ -588,6 +735,28 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
             })()}
           </div>
         )}
+        {/* Links */}
+        <div style={{ marginTop:8, display:"flex", gap:5, flexWrap:"wrap" }}>
+          <a href={`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${t.t}`}
+            target="_blank" rel="noopener noreferrer" style={{ fontSize:11, padding:"2px 9px", borderRadius:10,
+              background:"var(--bg-muted)", color:"var(--accent-text)", border:"1px solid var(--border)", textDecoration:"none" }}>
+            📋 Inscritos
+          </a>
+          {(t.url_uskids || (LINKS_EXTRA[t.t] ?? []).find(l => l.label === "USKids ↗")?.url) && (
+            <a href={t.url_uskids ?? (LINKS_EXTRA[t.t] ?? []).find(l => l.label === "USKids ↗")!.url}
+              target="_blank" rel="noopener noreferrer" style={{ fontSize:11, padding:"2px 9px", borderRadius:10,
+                background:"var(--bg-muted)", color:"var(--accent-text)", border:"1px solid var(--border)", textDecoration:"none" }}>
+              USKids ↗
+            </a>
+          )}
+          {(LINKS_EXTRA[t.t] ?? []).filter(l => l.label !== "USKids ↗").map((l, i) => (
+            <a key={i} href={l.url} target="_blank" rel="noopener noreferrer"
+              style={{ fontSize:11, padding:"2px 9px", borderRadius:10,
+                background:"var(--bg-muted)", color:"var(--accent-text)", border:"1px solid var(--border)", textDecoration:"none" }}>
+              {l.label}
+            </a>
+          ))}
+        </div>
       </div>
 
       {t.erro || t.sem_flights ? null : (
@@ -1008,10 +1177,10 @@ function TabelaConhecidos({
   );
 }
 
-function TabRivais({ data, fieldData, intlData }: { data: ResultsData; fieldData: FieldData | null; intlData: IntlData | null }) {
+function TabRivais({ data, fieldData, intlData, selectedT }: { data: ResultsData; fieldData: FieldData | null; intlData: IntlData | null; selectedT: number | null }) {
   const [filtro,          setFiltro]          = useState("");
   const [ordem,           setOrdem]           = useState<"encontros"|"pais"|"nome">("encontros");
-  const [historicoAberto, setHistoricoAberto] = useState(false);
+
 
   const matchIntl = useMemo(() => criarMatcherIntl(intlData), [intlData]);
 
@@ -1083,52 +1252,120 @@ function TabRivais({ data, fieldData, intlData }: { data: ResultsData; fieldData
     </div>
   );
 
+  // Torneio activo vem da sidebar (selectedT)
+  const torneioActivo = torneiosFuturos.find(t => t.t === selectedT) ?? null;
+
+  // Matriz reversa: rival → torneios futuros onde está inscrito
+  const matrizReversa = useMemo(() => {
+    if (!fieldData) return [];
+    const rivalMap = new Map(rivals.map(r => [r.nome.toLowerCase().trim(), r]));
+    // Para cada torneio futuro, ver quais rivais estão inscritos
+    const presencas = new Map<string, { torneioT: number; torneioNome: string; torneioData: string; escalao: string }[]>();
+    for (const t of torneiosFuturos) {
+      const escalaoAlvo = escalaoManuelParaData(t.date_inicio);
+      const esc = t.escaloes.find(e => e.nome === escalaoAlvo && (e.jogadores?.length ?? 0) > 0);
+      if (!esc) continue;
+      for (const j of (esc.jogadores ?? [])) {
+        if (isManuel(j.nome)) continue;
+        const key = j.nome.toLowerCase().trim();
+        if (!rivalMap.has(key)) continue;
+        if (!presencas.has(key)) presencas.set(key, []);
+        presencas.get(key)!.push({ torneioT: t.t, torneioNome: t.name, torneioData: t.date_inicio, escalao: esc.nome });
+      }
+    }
+    // Ordenar por número de presenças desc
+    return [...presencas.entries()]
+      .map(([key, torneios]) => ({ rival: rivalMap.get(key)!, torneios }))
+      .sort((a, b) => b.torneios.length - a.torneios.length);
+  }, [rivals, torneiosFuturos, fieldData]);
+
   return (
     <div>
-      {/* ── Torneios futuros ── */}
-      {torneiosFuturos.length > 0 && (
+      {/* ── Análise reversa: rivais nos próximos torneios ── */}
+      {matrizReversa.length > 0 && (
         <div style={{ marginBottom:24 }}>
-          <div style={{ fontSize:12, fontWeight:700, color:"var(--text-3)",
-            textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:12 }}>
-            Próximos torneios
+          <div style={{ fontSize:11, fontWeight:700, color:"var(--text-3)",
+            textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:10 }}>
+            Conhecidos nos próximos torneios
           </div>
-          {torneiosFuturos.map(t => {
-            // Usar sempre o escalão actual do Manuel; fallback para maior overlap
-            const escalaoAlvo = t.escaloes.find(e => e.nome === escalaoManuelParaData(t.date_inicio) && (e.jogadores?.length ?? 0) > 0);
-            const melhorEscalao = escalaoAlvo ?? t.escaloes
-              .filter(e => (e.jogadores?.length ?? 0) > 0)
-              .map(e => {
-                const rivalMap = new Map(rivals.map(r => [r.nome.toLowerCase().trim(), r]));
-                const overlap = (e.jogadores ?? []).filter(j => rivalMap.has(j.nome.toLowerCase().trim())).length;
-                return { nome: e.nome, overlap };
-              })
-              .sort((a,b) => b.overlap - a.overlap)[0];
-            return (
-              <TabelaConhecidos key={t.t}
-                torneioT={t.t} torneioNome={t.name}
-                torneioData={t.date_inicio}
-                escalaoManuel={melhorEscalao?.nome}
-                rivals={rivals} fieldData={fieldData}
-                intlData={intlData} matchIntl={matchIntl}
-              />
-            );
-          })}
+          <table className="dtable" style={{ width:"100%" }}>
+            <thead>
+              <tr>
+                <th style={{ textAlign:"left", width:160 }}>Rival</th>
+                <th style={{ width:30 }}></th>
+                <th style={{ textAlign:"left" }}>Torneios inscritos</th>
+                <th style={{ width:40, textAlign:"center" }}>#</th>
+              </tr>
+            </thead>
+            <tbody>
+              {matrizReversa.map(({ rival, torneios }, i) => (
+                <tr key={i} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)" }}>
+                  <td style={{ fontWeight:600, fontSize:12, padding:"6px 8px" }}>{rival.nome}</td>
+                  <td style={{ textAlign:"center", fontSize:13 }}>{flag(rival.pais)}</td>
+                  <td style={{ padding:"6px 8px" }}>
+                    <div style={{ display:"flex", gap:5, flexWrap:"wrap" }}>
+                      {torneios.map((t, j) => {
+                        const isAlvo = t.torneioT === selectedT;
+                        return (
+                          <span key={j} style={{
+                            fontSize:10, padding:"2px 8px", borderRadius:8, whiteSpace:"nowrap",
+                            background: isAlvo ? "var(--accent)" : "var(--bg-muted)",
+                            color: isAlvo ? "#fff" : "var(--text-2)",
+                            border: `1px solid ${isAlvo ? "var(--accent)" : "var(--border)"}`,
+                            fontWeight: isAlvo ? 700 : 400,
+                          }}>
+                            {t.torneioNome.replace(/\s*\d{4}$/, "")}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  </td>
+                  <td style={{ textAlign:"center", fontWeight:700, fontSize:12, color:"var(--accent)" }}>
+                    {torneios.length}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
 
-      {/* ── Histórico colapsável ── */}
-      <div style={{ borderTop:"1px solid var(--border)", paddingTop:16 }}>
-        <button onClick={() => setHistoricoAberto(v => !v)} style={{
-          background:"none", border:"none", cursor:"pointer", padding:0,
-          display:"flex", alignItems:"center", gap:8, marginBottom: historicoAberto ? 16 : 0,
-        }}>
-          <span style={{ fontSize:13, fontWeight:700, color:"var(--text-2)" }}>
-            Todos os adversários históricos ({rivals.length})
-          </span>
-          <span style={{ color:"var(--text-3)", fontSize:12 }}>{historicoAberto ? "▲" : "▼"}</span>
-        </button>
+      {/* ── Análise do torneio seleccionado ── */}
+      {torneioActivo ? (() => {
+        const t = torneioActivo;
+        const escalaoAlvo = t.escaloes.find(e => e.nome === escalaoManuelParaData(t.date_inicio) && (e.jogadores?.length ?? 0) > 0);
+        const melhorEscalao = escalaoAlvo ?? t.escaloes
+          .filter(e => (e.jogadores?.length ?? 0) > 0)
+          .map(e => {
+            const rMap = new Map(rivals.map(r => [r.nome.toLowerCase().trim(), r]));
+            const overlap = (e.jogadores ?? []).filter(j => rMap.has(j.nome.toLowerCase().trim())).length;
+            return { nome: e.nome, overlap };
+          })
+          .sort((a,b) => b.overlap - a.overlap)[0];
+        return (
+          <div style={{ marginBottom:24 }}>
+            <TabelaConhecidos
+              torneioT={t.t} torneioNome={t.name}
+              torneioData={t.date_inicio}
+              escalaoManuel={melhorEscalao?.nome}
+              rivals={rivals} fieldData={fieldData}
+              intlData={intlData} matchIntl={matchIntl}
+            />
+          </div>
+        );
+      })() : torneiosFuturos.length > 0 ? (
+        <div style={{ color:"var(--text-3)", fontSize:12, padding:"8px 0 20px",
+          borderBottom:"1px solid var(--border)", marginBottom:16 }}>
+          ← Selecciona um torneio na sidebar para ver a análise de rivais
+        </div>
+      ) : null}
 
-        {historicoAberto && (<>
+      {/* ── Histórico (aberto por defeito) ── */}
+      <div style={{ borderTop:"1px solid var(--border)", paddingTop:16 }}>
+        <div style={{ fontSize:13, fontWeight:700, color:"var(--text-2)", marginBottom:16 }}>
+          Todos os adversários históricos ({rivals.length})
+        </div>
+        <>
           <div style={{ display:"flex", gap:8, marginBottom:12, alignItems:"center", flexWrap:"wrap" }}>
             <input value={filtro} onChange={e=>setFiltro(e.target.value)}
               placeholder="Nome ou país…"
@@ -1229,7 +1466,7 @@ function TabRivais({ data, fieldData, intlData }: { data: ResultsData; fieldData
               })}
             </tbody>
           </table>
-        </>)}
+        </>
       </div>
     </div>
   );
@@ -1238,9 +1475,116 @@ function TabRivais({ data, fieldData, intlData }: { data: ResultsData; fieldData
 
 
 
+
+// ─────────────────────────────────────────────
+// TAB INSCRITOS
+// ─────────────────────────────────────────────
+function TabInscritos({ data, fieldData, selectedT }: {
+  data: ResultsData; fieldData: FieldData | null; selectedT: number | null;
+}) {
+  const rivals = useMemo<RivalInfo[]>(() => {
+    const mapa = new Map<string, RivalInfo>();
+    for (const t of data.resultados) {
+      for (const e of t.escaloes) {
+        const todasRondas = e.rondas.flatMap(r => r.leaderboard ?? r.jogadores ?? []);
+        if (!todasRondas.some(j => isManuel(j.nome))) continue;
+        for (const r of e.rondas)
+          for (const j of (r.leaderboard ?? r.jogadores ?? []))
+            if (!isManuel(j.nome)) {
+              const key = j.nome.toLowerCase().trim();
+              if (!mapa.has(key)) mapa.set(key, { nome: j.nome, pais: j.pais, cidade: j.cidade, encontros: [] });
+            }
+      }
+    }
+    return [...mapa.values()];
+  }, [data]);
+
+  const torneiosFuturos = useMemo(() => {
+    if (!fieldData) return [];
+    return fieldData.torneios
+      .filter(t => isoDate(t.date_inicio) >= new Date().toISOString().slice(0,10))
+      .sort((a,b) => isoDate(a.date_inicio).localeCompare(isoDate(b.date_inicio)));
+  }, [fieldData]);
+
+  const matriz = useMemo(() => {
+    const rivalMap = new Map(rivals.map(r => [r.nome.toLowerCase().trim(), r]));
+    const presencas = new Map<string, { torneioT: number; torneioNome: string; torneioData: string; escalao: string }[]>();
+    for (const t of torneiosFuturos) {
+      const escalaoAlvo = escalaoManuelParaData(t.date_inicio);
+      const esc = t.escaloes.find(e => e.nome === escalaoAlvo && (e.jogadores?.length ?? 0) > 0);
+      if (!esc) continue;
+      for (const j of (esc.jogadores ?? [])) {
+        if (isManuel(j.nome)) continue;
+        const key = j.nome.toLowerCase().trim();
+        if (!rivalMap.has(key)) continue;
+        if (!presencas.has(key)) presencas.set(key, []);
+        presencas.get(key)!.push({ torneioT: t.t, torneioNome: t.name, torneioData: t.date_inicio, escalao: esc.nome });
+      }
+    }
+    return [...presencas.entries()]
+      .map(([key, torneios]) => ({ rival: rivalMap.get(key)!, torneios }))
+      .sort((a, b) => b.torneios.length - a.torneios.length);
+  }, [rivals, torneiosFuturos]);
+
+  if (!matriz.length) return (
+    <div style={{ color:"var(--text-3)", padding:"32px 0", textAlign:"center", fontSize:13 }}>
+      Nenhum adversário conhecido inscrito em torneios futuros
+    </div>
+  );
+
+  return (
+    <div>
+      <div style={{ fontSize:11, fontWeight:700, color:"var(--text-3)",
+        textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:12 }}>
+        Conhecidos inscritos nos próximos torneios ({matriz.length})
+      </div>
+      <table className="dtable-lg" style={{ width:"100%" }}>
+        <thead>
+          <tr>
+            <th style={{ textAlign:"left" }}>Rival</th>
+            <th style={{ width:30 }}></th>
+            <th style={{ textAlign:"left" }}>Torneios</th>
+            <th style={{ width:40, textAlign:"center" }}>#</th>
+          </tr>
+        </thead>
+        <tbody>
+          {matriz.map(({ rival, torneios }, i) => (
+            <tr key={i} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)" }}>
+              <td style={{ fontWeight:600, fontSize:13, padding:"8px 10px" }}>{rival.nome}</td>
+              <td style={{ textAlign:"center", fontSize:14 }}>{flag(rival.pais)}</td>
+              <td style={{ padding:"8px 10px" }}>
+                <div style={{ display:"flex", gap:5, flexWrap:"wrap" }}>
+                  {torneios.map((t, j) => {
+                    const isAlvo = t.torneioT === selectedT;
+                    return (
+                      <span key={j} style={{
+                        fontSize:11, padding:"3px 10px", borderRadius:8, whiteSpace:"nowrap",
+                        background: isAlvo ? "var(--accent)" : "var(--bg-muted)",
+                        color: isAlvo ? "#fff" : "var(--text-2)",
+                        border: `1px solid ${isAlvo ? "var(--accent)" : "var(--border)"}`,
+                        fontWeight: isAlvo ? 700 : 400,
+                      }}>
+                        {t.torneioNome.replace(/\s*\d{4}$/, "")}
+                        <span style={{ opacity:0.7, marginLeft:4, fontSize:10 }}>{t.escalao}</span>
+                      </span>
+                    );
+                  })}
+                </div>
+              </td>
+              <td style={{ textAlign:"center", fontWeight:800, fontSize:13, color:"var(--accent)" }}>
+                {torneios.length}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 // COMPONENTE PRINCIPAL
 // ─────────────────────────────────────────────
-type Tab = "campo" | "resultados" | "rivais";
+type Tab = "campo" | "resultados" | "rivais" | "inscritos";
 
 export default function USKidsFieldPage() {
   const [fieldData,   setFieldData]   = useState<FieldData | null>(null);
@@ -1286,13 +1630,22 @@ export default function USKidsFieldPage() {
   const torneiosResultados = useMemo(() => resultsData?.resultados ?? [], [resultsData]);
 
   const allTorneios = useMemo(() => {
-    const map = new Map<number, { t: number; name: string; date: string; temResultados: boolean; temCampo: boolean }>();
+    const map = new Map<number, { t: number; name: string; date: string; temResultados: boolean; temCampo: boolean; inscritos?: number; maximo?: number; vagas?: number; escalaoManuel?: string; rondas?: number; fee?: number; campo?: string; totalInscritos?: number; totalMaximo?: number; urlResultados?: string }>();
     for (const t of torneiosCampo) {
-      map.set(t.t, { t: t.t, name: t.name, date: t.date_inicio, temResultados: false, temCampo: true });
+      const em = escalaoManuelParaData(t.date_inicio);
+      const esc = t.escaloes?.find((e: any) => e.nome === em);
+      map.set(t.t, { t: t.t, name: t.name, date: t.date_inicio, temResultados: false, temCampo: true,
+        inscritos: esc?.inscritos, maximo: esc?.maximo, vagas: esc?.vagas, escalaoManuel: em,
+        rondas: t.rondas ?? undefined,
+        fee: t.fee_18 ? parseFloat(t.fee_18) : undefined,
+        campo: t.campo ?? undefined,
+        totalInscritos: t.total_inscritos ?? undefined,
+        totalMaximo: t.total_maximo ?? undefined,
+      });
     }
     for (const t of torneiosResultados) {
-      if (map.has(t.t)) map.get(t.t)!.temResultados = true;
-      else map.set(t.t, { t: t.t, name: t.name, date: t.date_inicio, temResultados: true, temCampo: false });
+      if (map.has(t.t)) { map.get(t.t)!.temResultados = true; if (t.url_resultados) map.get(t.t)!.urlResultados = t.url_resultados; }
+      else map.set(t.t, { t: t.t, name: t.name, date: t.date_inicio, temResultados: true, temCampo: false, urlResultados: t.url_resultados });
     }
     return [...map.values()].sort((a, b) => isoDate(a.date).localeCompare(isoDate(b.date)));
   }, [torneiosCampo, torneiosResultados]);
@@ -1320,6 +1673,7 @@ export default function USKidsFieldPage() {
     { id:"campo",      label:"⛳ Torneios",   badge: fieldData.torneios.length },
     { id:"resultados", label:"🏆 Resultados", badge: nResultados },
     { id:"rivais",     label:"🤝 Rivais",     badge: nRivais },
+    { id:"inscritos",  label:"🗓️ Inscritos",  badge: 0 },
   ];
 
   const selectedFieldTorneio = fieldData.torneios.find(t => t.t === selectedT) ?? null;
@@ -1362,11 +1716,79 @@ export default function USKidsFieldPage() {
                 onClick={() => setSelectedT(t.t)}
                 className={`course-item${active ? " active" : ""}`}
                 style={{ opacity: temConteudo ? 1 : 0.45, width:"100%", textAlign:"left" }}>
-                <div style={{ fontWeight:600, fontSize:12 }}>{t.name.replace(/\s*\d{4}$/, "")}</div>
-                <div style={{ fontSize:10, color: active ? "var(--accent-light)" : "var(--text-muted)", marginTop:1 }}>
-                  {fmtDate(t.date)}
-                  {t.temResultados && <span style={{ marginLeft:4, opacity:0.8 }}>🏆</span>}
+                {/* Nome + localização pill */}
+                <div style={{ display:"flex", alignItems:"center", gap:6, flexWrap:"wrap" }}>
+                  <span style={{ fontWeight:700, fontSize:13, color:"var(--text)", lineHeight:1.3 }}>
+                    {t.name.replace(/\s*\d{4}$/, "")}
+                  </span>
+                  {(() => {
+                    const reg = torneioRegiao(t.name);
+                    if (!reg) return null;
+                    const isEuro = reg === "EURO";
+                    return (
+                      <span style={{
+                        fontSize:9, fontWeight:800, padding:"1px 6px", borderRadius:8,
+                        background: isEuro ? "var(--bg-info)" : "#fff3e0",
+                        color: isEuro ? "var(--color-info)" : "#e65100",
+                        border: `1px solid ${isEuro ? "var(--border-info)" : "#ffcc80"}`,
+                        whiteSpace:"nowrap", letterSpacing:"0.04em",
+                      }}>{reg}</span>
+                    );
+                  })()}
+                  {REGIONAL_CHAMPIONSHIPS[t.t] && (
+                    <span style={{
+                      fontSize:9, fontWeight:800, padding:"1px 6px", borderRadius:8,
+                      background:"#fdf2f8", color:"#9c27b0",
+                      border:"1px solid #e1bee7",
+                      whiteSpace:"nowrap", letterSpacing:"0.04em",
+                    }}>INVITATION</span>
+                  )}
                 </div>
+
+                {/* Data · escalão · rondas · 🏆 */}
+                <div style={{ fontSize:11, color:"var(--text-3)", marginTop:3, display:"flex", gap:4, flexWrap:"wrap", alignItems:"center" }}>
+                  <span>{fmtDate(t.date)}</span>
+                  {t.escalaoManuel && <span>· {t.escalaoManuel}</span>}
+                  {t.rondas && <span style={{ opacity:0.8 }}>· {t.rondas}R</span>}
+                  {t.temResultados && <span style={{ marginLeft:2 }}>🏆</span>}
+                </div>
+
+                {/* Campo (truncado) */}
+                {t.campo && (
+                  <div style={{ fontSize:11, marginTop:2, color:"var(--text-3)",
+                    whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis", maxWidth:"100%" }}>
+                    ⛳ {t.campo.split(',')[0]}
+                  </div>
+                )}
+
+                {/* Barra inscritos escalão Manuel */}
+                {t.temCampo && t.maximo != null && t.maximo > 0 && (
+                  <div style={{ fontSize:11, marginTop:5 }}>
+                    <div style={{ display:"flex", justifyContent:"space-between", marginBottom:3, color:"var(--text-2)" }}>
+                      <span style={{ fontWeight:600 }}>{t.escalaoManuel}</span>
+                      <span>{t.inscritos}/{t.maximo}
+                        {(t.vagas??0) > 0
+                          ? <span style={{ color:"var(--color-success)", marginLeft:4 }}>{t.vagas} vagas</span>
+                          : <span style={{ color:"var(--color-danger)", marginLeft:4 }}>cheio</span>}
+                      </span>
+                    </div>
+                    <div style={{ height:4, borderRadius:2, background:"var(--border)", overflow:"hidden" }}>
+                      <div style={{ height:"100%", borderRadius:2,
+                        width:`${Math.min(100,Math.round(((t.inscritos??0)/(t.maximo??1))*100))}%`,
+                        background:"var(--accent)" }} />
+                    </div>
+                  </div>
+                )}
+
+                {/* Total geral + fee */}
+                {t.temCampo && (t.totalMaximo ?? 0) > 0 && (
+                  <div style={{ fontSize:10, marginTop:4, color:"var(--text-3)",
+                    display:"flex", justifyContent:"space-between" }}>
+                    <span>Total: {t.totalInscritos}/{t.totalMaximo}</span>
+                    {t.fee && <span>${t.fee.toFixed(0)}</span>}
+                  </div>
+                )}
+
               </button>
             );
           })}
@@ -1397,9 +1819,16 @@ export default function USKidsFieldPage() {
         )}
 
         {tab === "rivais" && resultsData && (
-          <TabRivais data={resultsData} fieldData={fieldData} intlData={intlData} />
+          <TabRivais data={resultsData} fieldData={fieldData} intlData={intlData} selectedT={selectedT} />
         )}
         {tab === "rivais" && !resultsData && (
+          <div style={{color:"var(--text-3)",padding:"24px 0"}}>A carregar…</div>
+        )}
+
+        {tab === "inscritos" && resultsData && (
+          <TabInscritos data={resultsData} fieldData={fieldData} selectedT={selectedT} />
+        )}
+        {tab === "inscritos" && !resultsData && (
           <div style={{color:"var(--text-3)",padding:"24px 0"}}>A carregar…</div>
         )}
 

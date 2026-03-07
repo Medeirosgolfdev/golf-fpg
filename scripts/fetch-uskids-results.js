@@ -14,6 +14,25 @@ const { chromium } = require('playwright');
 
 // ── Torneios históricos do Manuel ─────────────
 const HISTORICOS = [
+  // ── Regionais 2026 já realizados ──
+  // Sandestin Championship 2026 — JAN 17-18 — Sandestin, FL
+  // { t: XXXXX, name: 'Sandestin Championship 2026',
+  //   date_inicio: '1/17/2026', date_fim: '1/18/2026', rondas: 2, ax: XXXXX,
+  //   escalao_manuel: null, age_groups: [],
+  //   url_uskids: 'https://tournaments.uskidsgolf.com/tournaments/regional/find-tournament/516801/sandestin-championship-2026',
+  //   url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=XXXXX&t=XXXXX' },
+  //
+  // Desert Shootout 2026 — FEB 21-22 — Phoenix, AZ
+  { t: 20895, name: 'Sandestin Championship 2026',
+    date_inicio: '1/17/2026', date_fim: '1/18/2026', rondas: 2, ax: 1129,
+    escalao_manuel: 2104, age_groups: [2102, 2103, 2104, 2105],
+    url_uskids: 'https://tournaments.uskidsgolf.com/tournaments/regional/find-tournament/516801/sandestin-championship-2026',
+    url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=20895' },
+  { t: 21004, name: 'Desert Shootout 2026',
+    date_inicio: '2/21/2026', date_fim: '2/22/2026', rondas: 2, ax: 1129,
+    escalao_manuel: 2104, age_groups: [2102, 2103, 2104, 2105],
+    url_uskids: 'https://tournaments.uskidsgolf.com/tournaments/regional/find-tournament/516958/desert-shootout-2026',
+    url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=21004' },
   {
     t: 18438, name: 'Marco Simone Invitational 2025',
     date_inicio: '3/15/2025', date_fim: '3/16/2025', rondas: 2, ax: 2739,
@@ -45,7 +64,7 @@ const HISTORICOS = [
 ];
 
 // Prefixos de escalão a capturar (apanha "Boys 12", "Boys 13-14", "Boys 13 & Under", etc.)
-const ESCALOES_PREFIXOS = ['boys 9', 'boys 10', 'boys 11', 'boys 12', 'boys 13'];
+const ESCALOES_PREFIXOS = ['boys 9', 'boys 10', 'boys 11', 'boys 12'];
 const escalaoApanhar = (nome) => ESCALOES_PREFIXOS.some(p => nome.toLowerCase().startsWith(p));
 
 const DELAY_MS   = 400;
@@ -181,9 +200,10 @@ async function processarTorneio(page, torneio) {
   const rondas    = meta.tournament?.rounds || torneio.rondas || 2;
 
   // Determinar quais age_groups apanhar
-  const agsFiltro = torneio.age_groups
-    ? new Set(torneio.age_groups)
-    : null; // null = usar filtro por nome
+  // Determinar quais age_groups apanhar
+  // Se o torneio tem age_groups definidos → filtrar por ID numérico
+  // Caso contrário → filtrar por nome (boys 9–12)
+  const agsFiltro = torneio.age_groups ? new Set(torneio.age_groups) : null;
 
   // Agrupar flights por age_group (primeiro flight de cada AG)
   const flightsPorAG = {};
@@ -197,6 +217,16 @@ async function processarTorneio(page, torneio) {
       : escalaoApanhar(nome);
     if (incluir && !flightsPorAG[ag]) {
       flightsPorAG[ag] = { fid, nome, inscr: f.registered || 0 };
+    }
+  }
+
+  // Aviso se algum age_group configurado não foi encontrado
+  if (agsFiltro) {
+    for (const ag of agsFiltro) {
+      if (!flightsPorAG[ag]) {
+        const agInfo = ageGroups[ag];
+        console.log(`  ⚠️  age_group ${ag} (${agInfo?.name ?? '?'}) não encontrado neste torneio`);
+      }
     }
   }
 

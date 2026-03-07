@@ -26,20 +26,27 @@ const KEYWORDS_INCLUIR = [
   'championship', 'invitational', 'masters', 'open',
 ];
 const KEYWORDS_EXCLUIR = [
-  'tour championship', 'parent/child', 'qualifier',
-  'teen series', 'teen van horn', 'teen championship', 'world teen',
+  'tour championship', 'parent/child', 'parent', 'qualifier',
+  'van horn', 'teen series', 'teen championship', 'world teen',
   'girls invitational', 'girls championship', 'girls open', 'girl',
   'golf course', 'golf club', 'country club',
-  'veteran', 'world golf village', 'texas open',
+  'veteran', 'world golf village',
   'thailand championship', 'korean championship',
-  '(ca)','(fl)','(tx)','(nv)','(or)','(wa)','(al)','(nh)','(mo)',
-  '(nj)','(ne)','(hi)','(id)','(ut)','(co)','(ga)','(sc)','(nc)',
-  '(va)','(oh)','(mi)','(in)','(il)','(wi)','(mn)','(ia)','(ks)',
-  '(ok)','(ar)','(la)','(ms)','(tn)','(ky)','(wv)','(md)','(de)',
-  '(pa)','(ny)','(ct)','(ri)','(ma)','(vt)','(me)','(az)',
+  // state abbreviations removidos: 'invitational' já inclui e queremos ver state invitationals
 ];
-const FORCAR_INCLUIR = new Set([21080, 21199, 21200, 21133]); // 21080=Marco Simone Invitational 2026
-const FORCAR_EXCLUIR  = new Set([21573]); // Marco Simone local tour
+const FORCAR_INCLUIR = new Set([21080, 21133]); // 21080=Marco Simone 2026, 21133=Jekyll Island Cup
+const FORCAR_EXCLUIR  = new Set([
+  21573, // Marco Simone local tour
+  21298, // International Teen Series at Al Hamra
+  21571, // Terre Dei Consoli Golf Club (local, não torneio)
+  21872, // Teen Van Horn Cup
+  22096, // World Championship Parent/Child - Girls
+  21502, // European Van Horn Cup 2026
+  21747, // World Van Horn Cup 2026
+  21510, // European Championship Parent/Child 2026
+  22095, // World Championship Parent/Child 2026 - Boys
+  21400, // Marco Simone Invitational Parent/Child 2026
+]);
 
 // Prefixos de escalão — apanha "Boys 12", "Boys 13-14", "Boys 13 & Under", etc.
 const ESCALOES_PREFIXOS = ['boys 9', 'boys 10', 'boys 11', 'boys 12', 'boys 13'];
@@ -50,7 +57,7 @@ const MISS_LIMIT   = 100;
 const DELAY_SCAN   = 120;
 const DELAY_FETCH  = 400;
 // Redescobrir se cache tiver mais de 3 dias
-const CACHE_MAX_DIAS = 3;
+const CACHE_MAX_DIAS = 0; // temporário: forçar redescoberta na próxima corrida
 
 const DIR        = path.join(__dirname, '..', 'public', 'data');
 const CACHE_PATH = path.join(DIR, 'uskids-discovery-cache.json');
@@ -68,8 +75,26 @@ const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
 function ehInternacional(name) {
   const n = name.toLowerCase();
-  return KEYWORDS_INCLUIR.some(k => n.includes(k)) &&
-        !KEYWORDS_EXCLUIR.some(k => n.includes(k));
+  // KEYWORDS_INCLUIR tem prioridade — se bater, inclui sempre (exceto FORCAR_EXCLUIR)
+  // KEYWORDS_EXCLUIR só actua quando nenhum keyword de include bate exactamente
+  const temInclude = KEYWORDS_INCLUIR.some(k => n.includes(k));
+  if (!temInclude) return false;
+  // Verificar se algum keyword de include é suficientemente específico
+  // (ex: 'state invitational', 'european championship') para ignorar o exclude
+  const INCLUIR_FORTE = [
+    'world championship', 'world van horn', 'van horn cup',
+    'european championship', 'european van horn',
+    'marco simone', 'venice open', 'venice classic', 'venezia',
+    'rome open', 'rome classic', 'terre dei consoli',
+    'irish open', 'paris invitational',
+    'andaluz', 'andalusia', 'sevilla', 'marbella', 'sotogrande', 'valderrama',
+    'panama', 'vallarta', 'jekyll', 'nordic', 'al hamra',
+    'fazenda boa vista',
+    'state invitational', 'state championship', 'state open',
+  ];
+  if (INCLUIR_FORTE.some(k => n.includes(k))) return true;
+  // Keywords genéricos (championship, open, invitational...) — KEYWORDS_EXCLUIR ainda actua
+  return !KEYWORDS_EXCLUIR.some(k => n.includes(k));
 }
 
 function parsearDataISO(s) {
@@ -134,13 +159,18 @@ async function pageJSON(page, url) {
 async function descobrirTorneios(page) {
   console.log('\n🔍 FASE 1 — Descoberta');
 
-  let cache = { ultimo_t: 21100, torneios: [], gerado_em: null };
+  let cache = { ultimo_t: 21079, torneios: [], gerado_em: null };
   if (fs.existsSync(CACHE_PATH)) {
     try { cache = JSON.parse(fs.readFileSync(CACHE_PATH, 'utf8')); } catch {}
   }
 
   const tInicio    = cache.ultimo_t + 1;
-  const conhecidos = new Map(cache.torneios.map(t => [t.t, t]));
+  // Filtrar logo à entrada: remove excluídos de runs anteriores
+  const conhecidos = new Map(
+    cache.torneios
+      .filter(t => !FORCAR_EXCLUIR.has(t.t) && (FORCAR_INCLUIR.has(t.t) || ehInternacional(t.name)))
+      .map(t => [t.t, t])
+  );
   let misses = 0, encontrados = 0;
 
   // Garantir que todos os FORCAR_INCLUIR estão na cache (mesmo que já passaram na varredura)
@@ -203,6 +233,20 @@ async function descobrirTorneios(page) {
 
   cache.torneios  = activos;
   cache.gerado_em = new Date().toISOString();
+
+  // Âncora: t mais baixo entre torneios com data >= hoje - 60 dias
+  // Assim na próxima varredura começa de um ponto sensato e não perde inserções tardias
+  const hoje = new Date().toISOString().slice(0, 10);
+  const dataAncora = new Date(Date.now() - 60 * 86400000).toISOString().slice(0, 10);
+  const tRelevantes = activos
+    .filter(t => (parsearDataISO(t.date_inicio) ?? '') >= dataAncora)
+    .map(t => t.t)
+    .filter(Boolean);
+  if (tRelevantes.length) {
+    cache.ultimo_t = Math.min(...tRelevantes) - 1;
+    console.log(`   📌 Âncora próxima corrida: t=${cache.ultimo_t + 1} (torneio mais antigo dos próximos 60d)`);
+  }
+
   fs.mkdirSync(DIR, { recursive: true });
   fs.writeFileSync(CACHE_PATH, JSON.stringify(cache, null, 2), 'utf8');
 
@@ -321,8 +365,27 @@ async function main() {
 
   let torneios;
   try {
-    // Fase 1: descoberta (só se cache tiver mais de 3 dias)
-    if (cacheDesactualizada()) {
+    // Fase 1: descoberta (só se cache tiver mais de 3 dias, ou --force-discovery)
+    const forceDiscovery = process.argv.includes('--force-discovery');
+    if (forceDiscovery || cacheDesactualizada()) {
+      if (forceDiscovery) {
+        console.log('\n🔄 --force-discovery activo');
+        // Recuar ultimo_t para apanhar torneios que foram excluídos em varreduras anteriores.
+        // Só recua UMA VEZ — controlado pelo flag rescanned_from_21238 na cache.
+        if (fs.existsSync(CACHE_PATH)) {
+          try {
+            const cache = JSON.parse(fs.readFileSync(CACHE_PATH, 'utf8'));
+            if (!cache.rescanned_from_21238 && (cache.ultimo_t || 0) > 21238) {
+              cache.ultimo_t = 21238;
+              cache.gerado_em = null;
+              fs.writeFileSync(CACHE_PATH, JSON.stringify(cache, null, 2), 'utf8');
+              console.log('   ↩️  ultimo_t recuado para 21238 (one-time)');
+            } else if (cache.rescanned_from_21238) {
+              console.log('   ✓ Rescan 21238 já feito — sem recuo');
+            }
+          } catch {}
+        }
+      }
       torneios = await descobrirTorneios(page);
     } else {
       const cache = JSON.parse(fs.readFileSync(CACHE_PATH, 'utf8'));
