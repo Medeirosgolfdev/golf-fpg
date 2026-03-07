@@ -15,7 +15,12 @@ const { chromium } = require('playwright');
 // ── Torneios históricos do Manuel ─────────────
 const HISTORICOS = [
   {
-    t: 15573, name: 'Real Club de Golf El Prat 2023',
+    t: 18438, name: 'Marco Simone Invitational 2025',
+    date_inicio: '3/15/2025', date_fim: '3/16/2025', rondas: 2, ax: 2739,
+    escalao_manuel: null,
+    age_groups: [2102, 2103, 2104, 2105],
+    url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=2739&t=18438',
+  },
     date_inicio: '10/22/2023', date_fim: '10/22/2023', rondas: 1, ax: 2760,
     escalao_manuel: 2151,
     age_groups: [2150, 2151, 2152],
