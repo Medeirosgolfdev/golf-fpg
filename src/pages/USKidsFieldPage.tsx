@@ -156,9 +156,36 @@ interface ResultsData { gerado_em: string; resultados: TorneioResult[]; }
 // ─────────────────────────────────────────────
 // CONSTANTES
 // ─────────────────────────────────────────────
-const ESCALOES_DESTAQUE  = new Set(["Boys 10","Boys 11","Boys 12","Boys 13","Boys 13-14"]);
-const ESCALAO_MANUEL     = "Boys 12";
+const ESCALOES_DESTAQUE  = new Set(["Boys 9","Boys 10","Boys 11","Boys 12","Boys 13","Boys 13-14"]);
+// Manuel nasceu a 29/4/2014 — escalao depende da data do torneio
+const MANUEL_BIRTHDAY_MONTH = 3; // Abril (0-indexed)
+const MANUEL_BIRTHDAY_DAY   = 29;
+const MANUEL_BIRTHDAY_YEAR  = 2014;
+function escalaoManuelParaData(dateStr: string): string {
+  const iso  = dateStr?.includes("-") ? dateStr : (() => {
+    const [m,d,y] = (dateStr||"").split("/");
+    return `${y}-${(m||"1").padStart(2,"0")}-${(d||"1").padStart(2,"0")}`;
+  })();
+  const data = new Date(iso);
+  const anoT = data.getFullYear();
+  const aniversarioNesse = new Date(anoT, MANUEL_BIRTHDAY_MONTH, MANUEL_BIRTHDAY_DAY);
+  const anos = anoT - MANUEL_BIRTHDAY_YEAR - (data < aniversarioNesse ? 1 : 0);
+  if (anos <= 9)  return "Boys 9";
+  if (anos <= 10) return "Boys 10";
+  if (anos <= 11) return "Boys 11";
+  return "Boys 12";
+}
 const MANUEL_FRAGMENT    = "medeiros";
+const ESCALAO_ORDER: Record<string, number> = {
+  "Boys 7 & Under":1,"Boys 7":2,"Boys 8":3,"Boys 9":4,"Boys 10":5,"Boys 11":6,"Boys 12":7,
+  "Boys 13":8,"Boys 13-14":9,"Boys 14":10,"Boys 15-18":11,
+  "Girls 7 & Under":20,"Girls 8 & Under":21,"Girls 8":22,"Girls 9":23,"Girls 9-10":24,
+  "Girls 10":25,"Girls 11":26,"Girls 11-12":27,"Girls 12":28,"Girls 13":29,"Girls 13-14":30,
+  "Girls 15-18":31,
+};
+function sortEscaloes<T extends { nome: string }>(arr: T[]): T[] {
+  return [...arr].sort((a,b) => (ESCALAO_ORDER[a.nome]??99) - (ESCALAO_ORDER[b.nome]??99));
+}
 
 /**
  * Dados de tee por torneio e escalão: campo, nome do tee, pares e metros por buraco.
@@ -454,7 +481,8 @@ function TabelaRonda({ ronda, torneioT, ageGroup, expanded, onToggle }: {
 // TAB CAMPO
 // ─────────────────────────────────────────────
 function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
-  const b12     = t.escaloes.find(e => e.nome === ESCALAO_MANUEL);
+  const escalaoM = escalaoManuelParaData(t.date_inicio);
+  const b12     = t.escaloes.find(e => e.nome === escalaoM);
   const ptTotal = t.escaloes.flatMap(e => e.jogadores ?? []).filter(j => j.pais === "PT");
   const dias    = diasAte(t.date_inicio);
   const urgente = b12 && b12.vagas <= 3 && b12.vagas > 0;
@@ -495,7 +523,7 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
               return bd ? (
                 <span style={{ background: urgente ? bd.bg : "var(--bg-hover)", color: urgente ? bd.cor : "var(--text-2)",
                   border:`1px solid ${bd.bg}`, padding:"2px 8px", borderRadius:8, fontSize:11, fontWeight:700 }}>
-                  ★ Boys 12: {b12.inscritos}/{b12.maximo} ({bd.label})
+                  ★ {escalaoM}: {b12.inscritos}/{b12.maximo} ({bd.label})
                 </span>
               ) : null;
             })()}
@@ -507,10 +535,10 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
         <>
           {/* Grid de escalões */}
           <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(210px,1fr))", gap:6, marginBottom:16 }}>
-            {t.escaloes.map(e => {
+            {sortEscaloes(t.escaloes).map(e => {
               const bd  = badgeVagas(e.vagas, e.maximo);
               const dst = ESCALOES_DESTAQUE.has(e.nome);
-              const man = e.nome === ESCALAO_MANUEL;
+              const man = e.nome === escalaoM;
               return (
                 <div key={e.age_group} style={{
                   background: man?"var(--accent-light)":dst?"var(--bg-detail)":"var(--bg)",
@@ -529,13 +557,24 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                   </div>
                   {e.jogadores && e.jogadores.length > 0 && (
                     <div style={{ borderTop:"1px solid var(--border)", paddingTop:4 }}>
-                      {e.jogadores.map((j,i) => (
-                        <div key={i} style={{ display:"flex", justifyContent:"space-between", fontSize:12, padding:"2px 0",
-                          color: j.pais==="PT" ? "var(--accent)" : "var(--text)" }}>
-                          <span>{j.nome}</span>
-                          <span title={j.cidade}>{flag(j.pais)}</span>
-                        </div>
-                      ))}
+                      {e.jogadores.map((j,i) => {
+                        const isM = isManuel(j.nome);
+                        return (
+                          <div key={i} style={{
+                            display:"flex", justifyContent:"space-between",
+                            fontSize: isM ? 13 : 12,
+                            fontWeight: isM ? 800 : 400,
+                            padding: isM ? "3px 6px" : "2px 0",
+                            margin: isM ? "3px -10px" : "0",
+                            borderRadius: isM ? 5 : 0,
+                            background: isM ? "var(--accent)" : "transparent",
+                            color: isM ? "#fff" : j.pais==="PT" ? "var(--accent)" : "var(--text)",
+                          }}>
+                            <span>{isM ? "★ " : ""}{j.nome}</span>
+                            <span title={j.cidade}>{flag(j.pais)}</span>
+                          </div>
+                        );
+                      })}
                     </div>
                   )}
                   {!e.jogadores && e.paises && e.paises.length > 0 && (
@@ -676,7 +715,7 @@ function TabResultados({ data, selectedT }: {
       {/* Escalões e rondas */}
       {t.escaloes.map(e => {
         const isManuelEscalao = e.is_manuel ||
-          (t.escalao_manuel ? e.age_group === t.escalao_manuel : e.nome === ESCALAO_MANUEL);
+          (t.escalao_manuel ? e.age_group === t.escalao_manuel : e.nome === escalaoManuelParaData(t.date_inicio));
         const rondasComDados = e.rondas.filter(r => (r.leaderboard ?? r.jogadores ?? []).length > 0);
         if (!rondasComDados.length) return null;
         return (
@@ -730,167 +769,205 @@ interface RivalInfo {
 }
 
 function TabelaConhecidos({
-  torneioT, torneioNome, rivals, fieldData, intlData, matchIntl,
+  torneioT, torneioNome, torneioData, escalaoManuel,
+  rivals, fieldData, intlData, matchIntl,
 }: {
-  torneioT: number; torneioNome: string;
+  torneioT: number; torneioNome: string; torneioData?: string; escalaoManuel?: string;
   rivals: RivalInfo[]; fieldData: FieldData | null; intlData: IntlData | null;
   matchIntl: (nome: string) => IntlJogador | null;
 }) {
+  const [expandidoNovos, setExpandidoNovos] = useState(false);
   const torneio = fieldData?.torneios.find(t => t.t === torneioT);
-  if (!torneio) return (
-    <div style={{ color:"var(--text-3)", fontSize:12 }}>Dados de inscritos não disponíveis para {torneioNome}</div>
-  );
 
-  const inscritos: { nome: string; pais: string; escalao: string }[] = [];
-  for (const e of torneio.escaloes) {
-    for (const j of (e.jogadores ?? [])) inscritos.push({ ...j, escalao: e.nome });
-  }
-
-  if (!inscritos.length) return (
-    <div style={{ color:"var(--text-3)", fontSize:12 }}>Sem inscritos ainda</div>
+  // Escalão relevante: usar escalaoManuel ou o primeiro com inscritos
+  const escalao = torneio?.escaloes.find(e =>
+    escalaoManuel ? e.nome === escalaoManuel : (e.jogadores?.length ?? 0) > 0
   );
+  const inscritos: { nome: string; pais: string; escalao: string }[] =
+    escalao ? (escalao.jogadores ?? []).map(j => ({ ...j, escalao: escalao.nome })) : [];
 
   const rivalMap = new Map(rivals.map(r => [r.nome.toLowerCase().trim(), r]));
-  const conhecidos    = inscritos.filter(j => rivalMap.has(j.nome.toLowerCase().trim()));
-  const desconhecidos = inscritos.filter(j => !rivalMap.has(j.nome.toLowerCase().trim()));
+  const conhecidos    = inscritos.filter(j => !isManuel(j.nome) && rivalMap.has(j.nome.toLowerCase().trim()));
+  const desconhecidos = inscritos.filter(j => !isManuel(j.nome) && !rivalMap.has(j.nome.toLowerCase().trim()));
+
+  const manuelIntl = intlData?.jogadores.find(jj => jj.isM);
 
   return (
-    <div>
-      <div style={{ fontWeight:700, fontSize:14, color:"var(--text)", marginBottom:4 }}>
-        {torneioNome}
-      </div>
-      <div style={{ fontSize:12, color:"var(--text-3)", marginBottom:12 }}>
-        <span style={{ color:"var(--color-good)", fontWeight:700 }}>{conhecidos.length} conhecidos</span>
-        {" · "}
-        {desconhecidos.length} ainda não cruzou
-        {" · "}
-        {inscritos.length} total inscritos
+    <div style={{ marginBottom:24, border:"1px solid var(--border)", borderRadius:10, overflow:"hidden" }}>
+      {/* Header do torneio */}
+      <div style={{ padding:"12px 16px", background:"var(--bg-header)",
+        borderBottom:"1px solid var(--border)" }}>
+        <div style={{ fontWeight:700, fontSize:15, color:"var(--text)", marginBottom:2 }}>
+          {torneioNome}
+        </div>
+        <div style={{ fontSize:11, color:"var(--text-3)", display:"flex", gap:10, flexWrap:"wrap" }}>
+          {torneioData && <span>📅 {fmtDate(torneioData)}</span>}
+          {escalao && <span>📋 {escalao.nome} · {inscritos.length} inscritos</span>}
+          {!torneio && <span style={{ color:"var(--color-warn)" }}>⚠️ Campo não disponível</span>}
+        </div>
       </div>
 
-      {conhecidos.length === 0 ? (
-        <div style={{ fontSize:13, color:"var(--text-3)", padding:"16px 0" }}>
-          Nenhum adversário conhecido ainda inscrito neste torneio.
+      <div style={{ padding:"12px 16px" }}>
+        {/* ── Já conhecidos ── */}
+        <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:10 }}>
+          <span style={{ fontSize:12, fontWeight:700, color:"var(--color-good)" }}>
+            ⚔️ Já conhecidos ({conhecidos.length})
+          </span>
+          {desconhecidos.length > 0 && (
+            <span style={{ fontSize:11, color:"var(--text-3)" }}>
+              · {desconhecidos.length} novos · {inscritos.length} total
+            </span>
+          )}
         </div>
-      ) : (
-        <table className="tourn-scorecard" style={{ width:"100%", marginBottom:16 }}>
-          <thead>
-            <tr>
-              <th className="tourn-lb-name-col">Jogador</th>
-              <th style={{ width:30 }}></th>
-              <th style={{ textAlign:"center", width:80, fontSize:11 }}>Escalão</th>
-              <th style={{ textAlign:"left", fontSize:11 }}>Encontros anteriores com o Manuel</th>
-            </tr>
-          </thead>
-          <tbody>
-            {conhecidos.map((j, i) => {
-              const rival = rivalMap.get(j.nome.toLowerCase().trim())!;
-              const torneiosUnicos = [...new Map(rival.encontros.map(e => [e.torneio_t, e])).values()];
-              const intlJog    = matchIntl(j.nome);
-              const intlTorns  = intlJog ? (intlData?.torneios ?? []).filter(t => intlJog.r[t.id] && t.circuito !== "uskids") : [];
-              const manuelIntl = intlData?.jogadores.find(jj => jj.isM);
-              return (
-                <tr key={i} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)" }}>
-                  <td className="tourn-lb-name-col">{j.nome}</td>
-                  <td style={{ textAlign:"center" }}>{flag(j.pais)}</td>
-                  <td style={{ textAlign:"center", fontSize:11, color:"var(--text-3)" }}>{j.escalao}</td>
-                  <td style={{ fontSize:11, padding:"5px 8px", lineHeight:1.8 }}>
-                    {/* USKids encontros */}
-                    {torneiosUnicos.map(enc => {
-                      const manMelhor = enc.man_pos < enc.rival_pos;
-                      const manPior   = enc.man_pos > enc.rival_pos;
-                      return (
-                        <span key={enc.torneio_t} style={{ marginRight:10, whiteSpace:"nowrap" }}>
-                          <span style={{ color:"var(--text-2)" }}>{enc.torneio_nome.replace(/\s\d{4}$/, "")}</span>
-                          <span style={{ marginLeft:4, fontWeight:700,
-                            color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
-                            {enc.man_pos}º vs {enc.rival_pos}º
+
+        {conhecidos.length === 0 ? (
+          <div style={{ fontSize:12, color:"var(--text-3)", padding:"8px 0 12px" }}>
+            Nenhum adversário conhecido inscrito ainda.
+          </div>
+        ) : (
+          <table className="tourn-scorecard" style={{ width:"100%", marginBottom:16 }}>
+            <thead>
+              <tr>
+                <th className="tourn-lb-name-col">Jogador</th>
+                <th style={{ width:30 }}></th>
+                <th style={{ textAlign:"left", fontSize:11, padding:"6px 8px" }}>Encontros com o Manuel</th>
+              </tr>
+            </thead>
+            <tbody>
+              {conhecidos.map((j, i) => {
+                const rival = rivalMap.get(j.nome.toLowerCase().trim())!;
+                const torneiosUnicos = [...new Map(rival.encontros.map(e => [e.torneio_t, e])).values()];
+                const intlJog   = matchIntl(j.nome);
+                const intlTorns = intlJog
+                  ? (intlData?.torneios ?? []).filter(t => intlJog.r[t.id] && t.circuito !== "uskids")
+                  : [];
+                // Badge de alerta: foi top 3 em algum encontro
+                const foiTop3 = rival.encontros.some(e => e.rival_pos <= 3);
+                return (
+                  <tr key={i} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)" }}>
+                    <td className="tourn-lb-name-col">
+                      <span style={{ display:"flex", alignItems:"center", gap:5 }}>
+                        {j.nome}
+                        {foiTop3 && (
+                          <span style={{ background:"var(--color-warn)", color:"#fff",
+                            fontSize:9, fontWeight:800, padding:"1px 5px", borderRadius:4,
+                            whiteSpace:"nowrap" }}>
+                            🏆 top 3
                           </span>
-                        </span>
-                      );
-                    })}
-                    {/* separador se tem ambos */}
-                    {torneiosUnicos.length > 0 && intlTorns.length > 0 && (
-                      <span style={{ color:"var(--border)", margin:"0 6px" }}>·</span>
-                    )}
-                    {/* BJGT/Intl encontros */}
-                    {intlTorns.map(t => {
-                      const res    = intlJog!.r[t.id];
-                      const manRes = manuelIntl?.r[t.id];
-                      const manMelhor = manRes ? manRes.p < res.p : false;
-                      const manPior   = manRes ? manRes.p > res.p : false;
-                      return (
-                        <span key={t.id} style={{ marginRight:8, whiteSpace:"nowrap" }}>
-                          <span style={{
-                            background:"var(--bg-info)", color:"var(--color-info)",
-                            fontSize:10, fontWeight:800, padding:"1px 5px", borderRadius:3,
-                            textTransform:"uppercase", marginRight:3, letterSpacing:"0.04em",
-                          }}>
-                            {t.circuito === "bjgt" ? "BJGT" : (t.circuito?.toUpperCase() ?? "INTL")}
-                          </span>
-                          <a href={t.url} target="_blank" rel="noopener noreferrer"
-                            style={{ color:"var(--text-2)", textDecoration:"none", fontWeight:600 }}>
-                            {t.short}
-                          </a>
-                          {manRes ? (
+                        )}
+                      </span>
+                    </td>
+                    <td style={{ textAlign:"center" }}>{flag(j.pais)}</td>
+                    <td style={{ fontSize:11, padding:"5px 8px", lineHeight:1.9 }}>
+                      {/* USKids */}
+                      {torneiosUnicos.map(enc => {
+                        const manMelhor = enc.man_pos < enc.rival_pos;
+                        const manPior   = enc.man_pos > enc.rival_pos;
+                        return (
+                          <span key={enc.torneio_t} style={{ marginRight:10, whiteSpace:"nowrap" }}>
+                            <span style={{ color:"var(--text-2)" }}>
+                              {enc.torneio_nome.replace(/\s\d{4}$/, "")}
+                            </span>
                             <span style={{ marginLeft:4, fontWeight:700,
                               color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
-                              {manRes.p}º vs {res.p}º
+                              {enc.man_pos}º vs {enc.rival_pos}º
                             </span>
-                          ) : (
-                            <span style={{ marginLeft:4, color:"var(--text-3)", fontSize:10 }}>
-                              {res.p}º (s/ Manuel)
+                          </span>
+                        );
+                      })}
+                      {/* BJGT/Intl */}
+                      {intlTorns.map(t => {
+                        const res    = intlJog!.r[t.id];
+                        const manRes = manuelIntl?.r[t.id];
+                        const manMelhor = manRes ? manRes.p < res.p : false;
+                        const manPior   = manRes ? manRes.p > res.p : false;
+                        return (
+                          <span key={t.id} style={{ marginRight:8, whiteSpace:"nowrap" }}>
+                            <span style={{
+                              background:"var(--bg-info)", color:"var(--color-info)",
+                              fontSize:10, fontWeight:800, padding:"1px 5px", borderRadius:3,
+                              textTransform:"uppercase", marginRight:3,
+                            }}>
+                              {t.circuito === "bjgt" ? "BJGT" : (t.circuito?.toUpperCase() ?? "INTL")}
                             </span>
-                          )}
-                        </span>
-                      );
-                    })}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      )}
+                            <a href={t.url} target="_blank" rel="noopener noreferrer"
+                              style={{ color:"var(--text-2)", textDecoration:"none", fontWeight:600 }}>
+                              {t.short}
+                            </a>
+                            {manRes ? (
+                              <span style={{ marginLeft:4, fontWeight:700,
+                                color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
+                                {manRes.p}º vs {res.p}º
+                              </span>
+                            ) : (
+                              <span style={{ marginLeft:4, color:"var(--text-3)", fontSize:10 }}>
+                                {res.p}º (s/ Manuel)
+                              </span>
+                            )}
+                          </span>
+                        );
+                      })}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )}
+
+        {/* ── Novos ── */}
+        {desconhecidos.length > 0 && (
+          <div>
+            <button onClick={() => setExpandidoNovos(v => !v)} style={{
+              background:"none", border:"none", cursor:"pointer",
+              color:"var(--text-3)", fontSize:12, padding:"0 0 8px", fontWeight:700,
+            }}>
+              🆕 Novos ({desconhecidos.length}) {expandidoNovos ? "▲" : "▼"}
+            </button>
+            {expandidoNovos && (
+              <div style={{ display:"flex", flexWrap:"wrap", gap:"6px 12px", paddingBottom:4 }}>
+                {desconhecidos.map((j, i) => (
+                  <span key={i} style={{ fontSize:12, color:"var(--text-2)" }}>
+                    {flag(j.pais)} {j.nome}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
 
 function TabRivais({ data, fieldData, intlData }: { data: ResultsData; fieldData: FieldData | null; intlData: IntlData | null }) {
-  const [filtro, setFiltro] = useState("");
-  const [ordem,  setOrdem]  = useState<"encontros"|"pais"|"nome">("encontros");
-  const [vista,  setVista]  = useState<"lista"|"marco"|"european">("lista");
+  const [filtro,          setFiltro]          = useState("");
+  const [ordem,           setOrdem]           = useState<"encontros"|"pais"|"nome">("encontros");
+  const [historicoAberto, setHistoricoAberto] = useState(false);
 
   const matchIntl = useMemo(() => criarMatcherIntl(intlData), [intlData]);
 
   const rivals = useMemo<RivalInfo[]>(() => {
     const mapa = new Map<string, RivalInfo>();
-
     for (const t of data.resultados) {
       for (const e of t.escaloes) {
         const todasRondas = e.rondas.flatMap(r => r.leaderboard ?? r.jogadores ?? []);
         const manuelJogs = todasRondas.filter(j => isManuel(j.nome));
         if (!manuelJogs.length) continue;
-
         const manuelJog = manuelJogs[0];
         const lb0 = e.rondas[0]?.leaderboard ?? e.rondas[0]?.jogadores ?? [];
         const manuelPos = lb0.findIndex(j => isManuel(j.nome)) + 1 || 99;
-
         const adversariosVistos = new Set<string>();
-        for (const r of e.rondas) {
-          for (const j of (r.leaderboard ?? r.jogadores ?? [])) {
+        for (const r of e.rondas)
+          for (const j of (r.leaderboard ?? r.jogadores ?? []))
             if (!isManuel(j.nome)) adversariosVistos.add(j.nome.trim());
-          }
-        }
-
         for (const nomeAdv of adversariosVistos) {
           const key = nomeAdv.toLowerCase().trim();
           const advJog = todasRondas.find(j => j.nome.trim() === nomeAdv);
           if (!advJog) continue;
           const advPos = lb0.findIndex(j => j.nome.trim() === nomeAdv) + 1 || 99;
-
-          if (!mapa.has(key)) {
+          if (!mapa.has(key))
             mapa.set(key, { nome: advJog.nome, pais: advJog.pais, cidade: advJog.cidade, encontros: [] });
-          }
           mapa.get(key)!.encontros.push({
             torneio_t:    t.t,
             torneio_nome: t.name,
@@ -921,6 +998,18 @@ function TabRivais({ data, fieldData, intlData }: { data: ResultsData; fieldData
     return lista;
   }, [rivals, filtro, ordem]);
 
+  // Torneios futuros relevantes (com inscritos disponíveis no fieldData)
+  const torneiosFuturos = useMemo(() => {
+    if (!fieldData) return [];
+    return fieldData.torneios
+      .filter(t => {
+        const iso = isoDate(t.date_inicio);
+        return iso >= new Date().toISOString().slice(0,10);
+      })
+      .filter(t => t.escaloes.some(e => (e.jogadores?.length ?? 0) > 0))
+      .sort((a,b) => isoDate(a.date_inicio).localeCompare(isoDate(b.date_inicio)));
+  }, [fieldData]);
+
   if (!rivals.length) return (
     <div style={{ color:"var(--text-3)", padding:"32px 0", textAlign:"center", fontSize:13 }}>
       Sem dados de rivais ainda — os scorecards aparecem após os torneios
@@ -929,136 +1018,158 @@ function TabRivais({ data, fieldData, intlData }: { data: ResultsData; fieldData
 
   return (
     <div>
-      {/* Sub-tabs */}
-      <div style={{ display:"flex", gap:6, marginBottom:16, borderBottom:"1px solid var(--border)", paddingBottom:8, flexWrap:"wrap" }}>
-        {([
-          { key:"lista",    label:`Todos os adversários (${rivals.length})` },
-          { key:"marco",    label:"Marco Simone — já conhece?" },
-          { key:"european", label:"European Championship — já conhece?" },
-        ] as const).map(v => (
-          <button key={v.key} onClick={() => setVista(v.key)}
-            className={`tourn-tab tourn-tab-sm${vista===v.key ? " active" : ""}`}>
-            {v.label}
-          </button>
-        ))}
-      </div>
-
-      {vista === "marco" && (
-        <TabelaConhecidos torneioT={21080} torneioNome="Marco Simone Invitational 2026"
-          rivals={rivals} fieldData={fieldData} intlData={intlData} matchIntl={matchIntl} />
-      )}
-      {vista === "european" && (
-        <TabelaConhecidos torneioT={21131} torneioNome="European Championship 2026"
-          rivals={rivals} fieldData={fieldData} intlData={intlData} matchIntl={matchIntl} />
-      )}
-
-      {vista === "lista" && (<>
-        <div style={{ display:"flex", gap:8, marginBottom:12, alignItems:"center", flexWrap:"wrap" }}>
-          <input value={filtro} onChange={e=>setFiltro(e.target.value)}
-            placeholder="Nome ou país…"
-            style={{ border:"1px solid var(--border)", borderRadius:7,
-              color:"var(--text)", background:"var(--bg-card)",
-              padding:"6px 11px", fontSize:12, width:180, outline:"none" }} />
-          {(["encontros","nome","pais"] as const).map(o => (
-            <button key={o} onClick={() => setOrdem(o)} style={{
-              background: ordem===o ? "var(--bg-active)" : "var(--bg-card)",
-              border:`1px solid ${ordem===o ? "var(--border-success)" : "var(--border)"}`,
-              color:"var(--text-2)", borderRadius:7, padding:"5px 10px",
-              fontSize:11, cursor:"pointer", fontWeight: ordem===o ? 700 : 400,
-            }}>
-              {o === "encontros" ? "Mais encontros" : o === "nome" ? "Nome" : "País"}
-            </button>
-          ))}
-          <span style={{ color:"var(--text-3)", fontSize:11 }}>{ordenados.length} jogadores</span>
+      {/* ── Torneios futuros ── */}
+      {torneiosFuturos.length > 0 && (
+        <div style={{ marginBottom:24 }}>
+          <div style={{ fontSize:12, fontWeight:700, color:"var(--text-3)",
+            textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:12 }}>
+            Próximos torneios
+          </div>
+          {torneiosFuturos.map(t => {
+            // Usar sempre o escalão actual do Manuel; fallback para maior overlap
+            const escalaoAlvo = t.escaloes.find(e => e.nome === escalaoManuelParaData(t.date_inicio) && (e.jogadores?.length ?? 0) > 0);
+            const melhorEscalao = escalaoAlvo ?? t.escaloes
+              .filter(e => (e.jogadores?.length ?? 0) > 0)
+              .map(e => {
+                const rivalMap = new Map(rivals.map(r => [r.nome.toLowerCase().trim(), r]));
+                const overlap = (e.jogadores ?? []).filter(j => rivalMap.has(j.nome.toLowerCase().trim())).length;
+                return { nome: e.nome, overlap };
+              })
+              .sort((a,b) => b.overlap - a.overlap)[0];
+            return (
+              <TabelaConhecidos key={t.t}
+                torneioT={t.t} torneioNome={t.name}
+                torneioData={t.date_inicio}
+                escalaoManuel={melhorEscalao?.nome}
+                rivals={rivals} fieldData={fieldData}
+                intlData={intlData} matchIntl={matchIntl}
+              />
+            );
+          })}
         </div>
+      )}
 
-        <table className="tourn-scorecard" style={{ width:"100%" }}>
-          <thead>
-            <tr>
-              <th className="tourn-pos-col">#</th>
-              <th className="tourn-lb-name-col">Jogador</th>
-              <th style={{ width:30 }}></th>
-              <th style={{ textAlign:"center", width:70, fontSize:10 }}>Torneios</th>
-              <th style={{ textAlign:"left", fontSize:10, padding:"6px 8px" }}>Historial</th>
-            </tr>
-          </thead>
-          <tbody>
-            {ordenados.map((r, i) => {
-              const torneiosUnicos = [...new Map(r.encontros.map(e => [e.torneio_t, e])).values()];
-              return (
-                <tr key={r.nome} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)" }}>
-                  <td className="tourn-pos-col" style={{ textAlign:"center" }}>
-                    <span className="tourn-pos">{i+1}</span>
-                  </td>
-                  <td className="tourn-lb-name-col">
-                    {r.nome}
-                    {r.cidade && <span style={{ color:"var(--text-3)", fontSize:10, marginLeft:6 }}>{r.cidade}</span>}
-                  </td>
-                  <td style={{ textAlign:"center", fontSize:14 }}>{flag(r.pais)}</td>
-                  <td style={{ textAlign:"center", fontWeight:700, color:"var(--text-2)" }}>
-                    {torneiosUnicos.length}
-                  </td>
-                  <td style={{ fontSize:11, color:"var(--text-3)", padding:"5px 8px" }}>
-                    {/* USKids */}
-                    {torneiosUnicos.map(enc => {
-                      const manMelhor = enc.man_pos < enc.rival_pos;
-                      const manPior   = enc.man_pos > enc.rival_pos;
-                      return (
-                        <span key={enc.torneio_t} style={{ marginRight:12, whiteSpace:"nowrap" }}>
-                          <span style={{ color:"var(--text-2)" }}>
-                            {enc.torneio_nome.replace(/\s\d{4}$/, "")}
-                          </span>
-                          <span style={{ marginLeft:5 }}>
-                            <span style={{ fontWeight:700, color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
-                              {enc.man_pos}º
-                            </span>
-                            <span style={{ color:"var(--text-3)" }}> vs </span>
-                            <span style={{ fontWeight:700, color:"var(--text-2)" }}>{enc.rival_pos}º</span>
-                          </span>
-                        </span>
-                      );
-                    })}
-                    {/* BJGT/Intl */}
-                    {(() => {
-                      const intlJog = matchIntl(r.nome);
-                      if (!intlJog) return null;
-                      const torns = (intlData?.torneios ?? []).filter(t => intlJog.r[t.id] && t.circuito !== "uskids");
-                      if (!torns.length) return null;
-                      return torns.map(t => {
-                        const res = intlJog.r[t.id];
-                        const manRes = intlData?.jogadores.find(j => j.isM)?.r[t.id];
-                        const manMelhor = manRes && res.p > manRes.p;
-                        const manPior   = manRes && res.p < manRes.p;
+      {/* ── Histórico colapsável ── */}
+      <div style={{ borderTop:"1px solid var(--border)", paddingTop:16 }}>
+        <button onClick={() => setHistoricoAberto(v => !v)} style={{
+          background:"none", border:"none", cursor:"pointer", padding:0,
+          display:"flex", alignItems:"center", gap:8, marginBottom: historicoAberto ? 16 : 0,
+        }}>
+          <span style={{ fontSize:13, fontWeight:700, color:"var(--text-2)" }}>
+            Todos os adversários históricos ({rivals.length})
+          </span>
+          <span style={{ color:"var(--text-3)", fontSize:12 }}>{historicoAberto ? "▲" : "▼"}</span>
+        </button>
+
+        {historicoAberto && (<>
+          <div style={{ display:"flex", gap:8, marginBottom:12, alignItems:"center", flexWrap:"wrap" }}>
+            <input value={filtro} onChange={e=>setFiltro(e.target.value)}
+              placeholder="Nome ou país…"
+              style={{ border:"1px solid var(--border)", borderRadius:7,
+                color:"var(--text)", background:"var(--bg-card)",
+                padding:"6px 11px", fontSize:12, width:180, outline:"none" }} />
+            {(["encontros","nome","pais"] as const).map(o => (
+              <button key={o} onClick={() => setOrdem(o)} style={{
+                background: ordem===o ? "var(--bg-active)" : "var(--bg-card)",
+                border:`1px solid ${ordem===o ? "var(--border-success)" : "var(--border)"}`,
+                color:"var(--text-2)", borderRadius:7, padding:"5px 10px",
+                fontSize:11, cursor:"pointer", fontWeight: ordem===o ? 700 : 400,
+              }}>
+                {o === "encontros" ? "Mais encontros" : o === "nome" ? "Nome" : "País"}
+              </button>
+            ))}
+            <span style={{ color:"var(--text-3)", fontSize:11 }}>{ordenados.length} jogadores</span>
+          </div>
+
+          <table className="tourn-scorecard" style={{ width:"100%" }}>
+            <thead>
+              <tr>
+                <th className="tourn-pos-col">#</th>
+                <th className="tourn-lb-name-col">Jogador</th>
+                <th style={{ width:30 }}></th>
+                <th style={{ textAlign:"center", width:70, fontSize:10 }}>Torneios</th>
+                <th style={{ textAlign:"left", fontSize:10, padding:"6px 8px" }}>Historial</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ordenados.map((r, i) => {
+                const torneiosUnicos = [...new Map(r.encontros.map(e => [e.torneio_t, e])).values()];
+                return (
+                  <tr key={r.nome} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)" }}>
+                    <td className="tourn-pos-col" style={{ textAlign:"center" }}>
+                      <span className="tourn-pos">{i+1}</span>
+                    </td>
+                    <td className="tourn-lb-name-col">
+                      {r.nome}
+                      {r.cidade && <span style={{ color:"var(--text-3)", fontSize:10, marginLeft:6 }}>{r.cidade}</span>}
+                    </td>
+                    <td style={{ textAlign:"center", fontSize:14 }}>{flag(r.pais)}</td>
+                    <td style={{ textAlign:"center", fontWeight:700, color:"var(--text-2)" }}>
+                      {torneiosUnicos.length}
+                    </td>
+                    <td style={{ fontSize:11, color:"var(--text-3)", padding:"5px 8px" }}>
+                      {torneiosUnicos.map(enc => {
+                        const manMelhor = enc.man_pos < enc.rival_pos;
+                        const manPior   = enc.man_pos > enc.rival_pos;
                         return (
-                          <span key={t.id} style={{ marginRight:12, whiteSpace:"nowrap" }}>
-                            <span style={{ color:"var(--color-info)", fontSize:10, fontWeight:700,
-                              border:"1px solid var(--border-info)", borderRadius:3,
-                              padding:"1px 5px", marginRight:3 }}>BJGT</span>
-                            <a href={t.url} target="_blank" rel="noopener noreferrer"
-                              style={{ color:"var(--text-2)", textDecoration:"none" }}>{t.short}</a>
-                            {manRes && (
-                              <span style={{ marginLeft:4 }}>
-                                <span style={{ fontWeight:700, color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
-                                  {manRes.p}º
-                                </span>
-                                <span style={{ color:"var(--text-3)" }}> vs </span>
-                                <span style={{ fontWeight:700, color:"var(--text-2)" }}>{res.p}º</span>
+                          <span key={enc.torneio_t} style={{ marginRight:12, whiteSpace:"nowrap" }}>
+                            <span style={{ color:"var(--text-2)" }}>
+                              {enc.torneio_nome.replace(/\s\d{4}$/, "")}
+                            </span>
+                            <span style={{ marginLeft:5 }}>
+                              <span style={{ fontWeight:700, color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
+                                {enc.man_pos}º
                               </span>
-                            )}
+                              <span style={{ color:"var(--text-3)" }}> vs </span>
+                              <span style={{ fontWeight:700, color:"var(--text-2)" }}>{enc.rival_pos}º</span>
+                            </span>
                           </span>
                         );
-                      });
-                    })()}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </>)}
+                      })}
+                      {(() => {
+                        const intlJog = matchIntl(r.nome);
+                        if (!intlJog) return null;
+                        const torns = (intlData?.torneios ?? []).filter(t => intlJog.r[t.id] && t.circuito !== "uskids");
+                        if (!torns.length) return null;
+                        return torns.map(t => {
+                          const res = intlJog.r[t.id];
+                          const manRes = intlData?.jogadores.find(j => j.isM)?.r[t.id];
+                          const manMelhor = manRes && res.p > manRes.p;
+                          const manPior   = manRes && res.p < manRes.p;
+                          return (
+                            <span key={t.id} style={{ marginRight:12, whiteSpace:"nowrap" }}>
+                              <span style={{ color:"var(--color-info)", fontSize:10, fontWeight:700,
+                                border:"1px solid var(--border-info)", borderRadius:3,
+                                padding:"1px 5px", marginRight:3 }}>BJGT</span>
+                              <a href={t.url} target="_blank" rel="noopener noreferrer"
+                                style={{ color:"var(--text-2)", textDecoration:"none" }}>{t.short}</a>
+                              {manRes && (
+                                <span style={{ marginLeft:4 }}>
+                                  <span style={{ fontWeight:700, color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
+                                    {manRes.p}º
+                                  </span>
+                                  <span style={{ color:"var(--text-3)" }}> vs </span>
+                                  <span style={{ fontWeight:700, color:"var(--text-2)" }}>{res.p}º</span>
+                                </span>
+                              )}
+                            </span>
+                          );
+                        });
+                      })()}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </>)}
+      </div>
     </div>
   );
 }
+
+
+
 
 // COMPONENTE PRINCIPAL
 // ─────────────────────────────────────────────
@@ -1139,7 +1250,7 @@ export default function USKidsFieldPage() {
   };
 
   const TABS: { id: Tab; label: string; badge: number }[] = [
-    { id:"campo",      label:"⛳ Campo",      badge: fieldData.torneios.length },
+    { id:"campo",      label:"⛳ Torneios",   badge: fieldData.torneios.length },
     { id:"resultados", label:"🏆 Resultados", badge: nResultados },
     { id:"rivais",     label:"🤝 Rivais",     badge: nRivais },
   ];
