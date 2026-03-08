@@ -88,7 +88,7 @@ function SDTable({
       netScore: number | null;
     }[] = [];
 
-    const playingHcp = hi !== null ? Math.round(calcPlayingHcp(hi, slope, cr, par)) : null;
+    const playingHcp = hi !== null ? Math.round(calcPlayingHcp(is9h ? hi / 2 : hi, slope, cr, par)) : null;
     const exp9 = hi !== null && is9h ? expectedSD9(hi) : null;
 
     const minDelta = is9h ? -4 : -8;
@@ -222,7 +222,7 @@ function MultiTeeSDTable({
         par = t.ratings?.holes18?.par ?? 72;
       }
       if (!cr || !slope) continue;
-      const phcp = hi !== null ? Math.round(calcPlayingHcp(hi, slope, cr, par, allowance / 100)) : null;
+      const phcp = hi !== null ? Math.round(calcPlayingHcp(is9h ? hi / 2 : hi, slope, cr, par, allowance / 100)) : null;
       const dist = is9h
         ? (holesMode === "front9" ? t.distances?.front9 : t.distances?.back9) ?? null
         : t.distances?.total ?? null;
@@ -530,10 +530,10 @@ function HcpStrip({
       if (is9h && hi !== null) {
         const exp9 = expectedSD9(hi);
         const score = calcScore(v - exp9, cr, slope, pcc);
-        return { value: String(Math.ceil(score)), detail: `SD 9h: ${(v - exp9).toFixed(1)}` };
+        return { value: String(Math.floor(score)), detail: `SD 9h: ${(v - exp9).toFixed(1)}` };
       }
       const score = calcScore(v, cr, slope, pcc);
-      return { value: String(Math.ceil(score)), detail: null };
+      return { value: String(Math.floor(score)), detail: null };
     }
   }, [calcInput, calcMode, cr, slope, pcc, hi, is9h]);
 
@@ -660,7 +660,7 @@ function AgsSection({
   const [customSIs, setCustomSIs] = useState<Record<number, string>>({});
   const isSynthetic = !holes?.length;
 
-  const courseHcp = hi !== null ? Math.round(calcCourseHcp(hi, slope, cr, par)) : null;
+  const courseHcp = hi !== null ? Math.round(calcCourseHcp(is9h ? hi / 2 : hi, slope, cr, par)) : null;
   const hasAgs = courseHcp !== null;
 
   const fieldHoles = useMemo(() => {
@@ -714,15 +714,22 @@ function AgsSection({
     const allFilled = filled.length === computed.length && filled.length > 0;
     const grossTotal = allFilled ? filled.reduce((s, h) => s + h.actual!, 0) : null;
     const agsTotal = allFilled && hasAgs ? filled.reduce((s, h) => s + h.adjusted!, 0) : null;
+    const sd9Gross = grossTotal !== null ? calcSD(grossTotal, cr, slope, pcc) : null;
+    const sd9Ags   = agsTotal  !== null ? calcSD(agsTotal,  cr, slope, pcc) : null;
+    // WHS 2024: para 9 buracos, SD_18h = SD_9h + Expected_9h(HI)
+    const exp9 = is9h && hi !== null ? expectedSD9(hi) : null;
     return {
       grossTotal,
       agsTotal,
-      sdGross: grossTotal !== null ? calcSD(grossTotal, cr, slope, pcc) : null,
-      sdAgs: agsTotal !== null ? calcSD(agsTotal, cr, slope, pcc) : null,
+      sdGross:  sd9Gross,
+      sdAgs:    sd9Ags,
+      sd18Gross: exp9 !== null && sd9Gross !== null ? sd9Gross + exp9 : sd9Gross,
+      sd18Ags:   exp9 !== null && sd9Ags   !== null ? sd9Ags   + exp9 : sd9Ags,
+      exp9,
       filled: filled.length,
       total: computed.length,
     };
-  }, [computed, cr, slope, pcc, hasAgs]);
+  }, [computed, cr, slope, pcc, hasAgs, is9h, hi]);
 
   const setScore = (hole: number, val: string) => setScores(prev => ({ ...prev, [hole]: val }));
   const setCustomPar = (hole: number, val: string) => setCustomPars(prev => ({ ...prev, [hole]: val }));
@@ -800,13 +807,31 @@ function AgsSection({
           <div className="sim-strip-cell">
             <span className="sim-strip-label">Gross</span>
             <span className="sim-strip-num">{totals.grossTotal}</span>
-            <span className="sim-strip-sub">SD {fmtSD(totals.sdGross!)}</span>
+            {is9h ? (
+              <>
+                <span className="sim-strip-sub">SD 9h {fmtSD(totals.sdGross!)}</span>
+                {totals.exp9 !== null && (
+                  <span className="sim-strip-sub sim-strip-sub-strong">SD 18h {fmtSD(totals.sd18Gross!)}</span>
+                )}
+              </>
+            ) : (
+              <span className="sim-strip-sub">SD {fmtSD(totals.sdGross!)}</span>
+            )}
           </div>
           {hasAgs && totals.agsTotal !== null && (
             <div className="sim-strip-cell sim-strip-cell-ags">
               <span className="sim-strip-label">Adjusted Gross (AGS)</span>
               <span className="sim-strip-num">{totals.agsTotal}</span>
-              <span className="sim-strip-sub">SD {fmtSD(totals.sdAgs!)}</span>
+              {is9h ? (
+                <>
+                  <span className="sim-strip-sub">SD 9h {fmtSD(totals.sdAgs!)}</span>
+                  {totals.exp9 !== null && (
+                    <span className="sim-strip-sub sim-strip-sub-strong">SD 18h {fmtSD(totals.sd18Ags!)}</span>
+                  )}
+                </>
+              ) : (
+                <span className="sim-strip-sub">SD {fmtSD(totals.sdAgs!)}</span>
+              )}
             </div>
           )}
           {hasAgs && totals.grossTotal !== null && totals.agsTotal !== null && totals.grossTotal > totals.agsTotal && (
@@ -814,6 +839,13 @@ function AgsSection({
               <span className="sim-strip-label">Cortadas</span>
               <span className="sim-strip-num">−{totals.grossTotal - totals.agsTotal}</span>
               <span className="sim-strip-sub">SD melhora {(totals.sdGross! - totals.sdAgs!).toFixed(1)}</span>
+            </div>
+          )}
+          {is9h && totals.exp9 !== null && (
+            <div className="sim-strip-cell sim-strip-cell-9h">
+              <span className="sim-strip-label">Expected SD 9h</span>
+              <span className="sim-strip-num">{totals.exp9.toFixed(1)}</span>
+              <span className="sim-strip-sub">HI {hi?.toFixed(1)}</span>
             </div>
           )}
         </div>
@@ -1042,7 +1074,7 @@ function AgsSection({
             </code>
             <div className="sim-note-alt">
               <div>① <strong>Handicap Index (HI)</strong> — número base do jogador.</div>
-              <div className="mt-3">② <strong>Course Handicap (CH)</strong> = HI × (Slope ÷ 113) + (CR − Par). Determina pancadas para o Net Double Bogey.</div>
+              <div className="mt-3">② <strong>Course Handicap (CH)</strong> = {is9h ? "(HI÷2)" : "HI"} × (Slope ÷ 113) + (CR − Par). Determina pancadas para o Net Double Bogey.{is9h ? " Para 9 buracos usa-se metade do HI." : ""}</div>
               <div className="mt-3">③ <strong>Playing Handicap</strong> = CH × % competição. Para Net Score, <strong>não</strong> para Net Double Bogey.</div>
             </div>
             {courseHcp !== null && (
@@ -1177,11 +1209,13 @@ export default function SimuladorPage() {
     return { cr, slope, par: par ?? 72 };
   }, [selectedTee, holesMode, is9h, isManual, manual18, manualF9, manualB9]);
 
-  /* Course Handicap (100%) — usado para Net Double Bogey / AGS */
+  /* Course Handicap (100%) — usado para Net Double Bogey / AGS
+   * WHS: para 9 buracos usa HI/2 na fórmula */
   const courseHcp = useMemo(() => {
     if (!teeData || hi === null) return null;
-    return calcCourseHcp(hi, teeData.slope, teeData.cr, teeData.par);
-  }, [teeData, hi]);
+    const effectiveHI = is9h ? hi / 2 : hi;
+    return calcCourseHcp(effectiveHI, teeData.slope, teeData.cr, teeData.par);
+  }, [teeData, hi, is9h]);
 
   /* Playing Handicap = CH × allowance% — usado para Net Score em competição */
   const playingHcp = useMemo(() => {
