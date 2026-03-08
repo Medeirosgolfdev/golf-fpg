@@ -20,10 +20,10 @@ const SimuladorPage = lazy(() => import("./pages/SimuladorPage"));
 const CalendarioPage = lazy(() => import("./pages/CalendarioPage"));
 const BJGTPage = lazy(() => import("./pages/BJGTPage"));
 const RivaisIntlPage = lazy(() => import("./pages/RivaisIntlPage"));
-const TorneioPage = lazy(() => import("./pages/TorneioPage"));
 const CompararPage = lazy(() => import("./pages/CompararPage"));
 const DrivePage = lazy(() => import("./pages/DrivePage"));
 const USKidsFieldPage = lazy(() => import("./pages/USKidsFieldPage"));
+const TorneiosAnalisePage = lazy(() => import("./pages/TorneiosAnalisePage"));
 
 type Status =
   | { kind: "loading" }
@@ -148,8 +148,8 @@ export default function App() {
                 <Route path="/drive" element={<DrivePage />} />
                 <Route path="/bjgt/:fed?" element={<BJGTPage />} />
                 <Route path="/rivais" element={<RivaisIntlPage />} />
-                <Route path="/torneio" element={<TorneioPage />} />
                 <Route path="/uskids" element={<USKidsFieldPage />} />
+                <Route path="/diversos" element={<TorneiosAnalisePage />} />
                 <Route path="*" element={<Navigate to="/jogadores/52884" replace />} />
               </Routes>
             </Suspense>

@@ -14,7 +14,7 @@ import golfBallSvg from "../assets/golf-ball.svg";
 
 type Tab =
   | "campos" | "jogadores" | "comparar" | "simulador" | "calendario"
-  | "drive" | "bjgt" | "torneio" | "rivais" | "uskids";
+  | "drive" | "bjgt" | "rivais" | "uskids" | "diversos";
 
 // ── Helpers ────────────────────────────────────────────────────────
 
@@ -28,11 +28,25 @@ function tabFromPath(pathname: string): Tab {
     drive: "drive",
     bjgt: "bjgt",
     rivais: "rivais",
-    torneio: "torneio",
     uskids: "uskids",
+    diversos: "diversos",
   };
   return map[seg] ?? "jogadores";
 }
+
+// ── Mapa de títulos por tab ────────────────────────────────────────
+const TAB_TITLES: Record<Tab, string> = {
+  jogadores:  "Golf Junior – Jogadores",
+  simulador:  "Golf Junior – Simulador",
+  calendario: "Golf Junior – Calendário",
+  drive:      "Golf Junior – DRIVE",
+  uskids:     "Golf Junior – USKids",
+  rivais:     "Golf Junior – Rivais Internacionais",
+  comparar:   "Golf Junior – Comparar",
+  campos:     "Golf Junior – Campos",
+  bjgt:       "Golf Junior – BJGT",
+  diversos:   "Golf Junior – Diversos",
+};
 
 // ── Componente ─────────────────────────────────────────────────────
 
@@ -41,6 +55,11 @@ export default function NavBar() {
   const navigate = useNavigate();
   const location = useLocation();
   const tab = tabFromPath(location.pathname);
+
+  // Actualiza o título da aba do browser com a página activa
+  useEffect(() => {
+    document.title = TAB_TITLES[tab] ?? "Golf Junior";
+  }, [tab]);
 
   const go = (path: string) => navigate(path);
 
@@ -134,8 +153,8 @@ export default function NavBar() {
           </button>
         )}
         {calUnlocked && (
-          <button className={`nav-btn ${tab === "torneio" ? "active" : ""}`} onClick={() => go("/torneio")}>
-            GG26
+          <button className={`nav-btn ${tab === "diversos" ? "active" : ""}`} onClick={() => go("/diversos")}>
+            Diversos
           </button>
         )}
       </nav>
