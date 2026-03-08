@@ -1485,21 +1485,39 @@ function AnalysisView({ data }: { data: PlayerPageData }) {
   const n20 = sorted.length ? Math.max(1, Math.floor(sorted.length * 0.2)) : 0;
   const best20 = n20 ? meanArr(sorted.slice(0, n20)) : null;
 
-  // Last 20 (non-training) for table
-  const last20Table = useMemo(() =>
-    allRoundsDesc.filter(r => !r._isTreino).slice(0, 25),
+  // whs20 = last 20 non-training rounds WITH a valid SD (real WHS window)
+  const whs20 = useMemo(() =>
+    allRoundsDesc.filter(r => numSafe(r.sd) != null).slice(0, 20),
     [allRoundsDesc]
   );
 
-  // Best 8 SD in last 20 — Map<scoreId, rank (1-8)>
+  // whsPosMap: scoreId → position 1-20 in the WHS window
+  const whsPosMap = useMemo(() => {
+    const m = new Map<string, number>();
+    whs20.forEach((r, i) => m.set(r.scoreId, i + 1));
+    return m;
+  }, [whs20]);
+
+  // Display table: all non-training rounds up to (and including) the 20th WHS round + a few extra
+  const last20Table = useMemo(() => {
+    const nonTraining = allRoundsDesc.filter(r => !r._isTreino);
+    // Find index of the 20th WHS round in the full list
+    const last20thId = whs20.length === 20 ? whs20[19].scoreId : null;
+    const cutoffIdx  = last20thId
+      ? nonTraining.findIndex(r => r.scoreId === last20thId)
+      : -1;
+    const showUntil = Math.max(25, cutoffIdx + 4);
+    return nonTraining.slice(0, showUntil);
+  }, [allRoundsDesc, whs20]);
+
+  // Best 8 SD in WHS window — Map<scoreId, rank (1-8)>
   const best8 = useMemo(() => {
-    const indexed = last20Table.slice(0, 20).map(r => ({ id: r.scoreId, sd: numSafe(r.sd) }))
-      .filter(x => x.sd != null)
-      .sort((a, b) => a.sd! - b.sd!);
+    const indexed = whs20.map(r => ({ id: r.scoreId, sd: numSafe(r.sd)! }))
+      .sort((a, b) => a.sd - b.sd);
     const map = new Map<string, number>();
     indexed.slice(0, 8).forEach((x, rank) => map.set(x.id, rank + 1));
     return map;
-  }, [last20Table]);
+  }, [whs20]);
 
   // Period filter for analysis — only 18-hole rounds with valid gross (consistent with KPI cards)
   function filterByPeriod(months: number): (RoundData & { course: string })[] {
@@ -1538,10 +1556,10 @@ function AnalysisView({ data }: { data: PlayerPageData }) {
         <WHSDetail hcp={data.HCP_INFO} />
 
         {/* SD Simulator */}
-        <SDSimulator hcp={data.HCP_INFO} last20Table={last20Table} />
+        <SDSimulator hcp={data.HCP_INFO} whs20={whs20} />
 
         {/* Last 20 Table */}
-        <Last20Table data={data} last20Table={last20Table} best8={best8} />
+        <Last20Table data={data} last20Table={last20Table} best8={best8} whsPosMap={whsPosMap} />
 
         {/* Cross Analysis */}
         <CrossAnalysis data={data} />
@@ -1777,9 +1795,9 @@ function whsQtyCalc(nSds: number): number {
   return 8;
 }
 
-function SDSimulator({ hcp, last20Table }: {
+function SDSimulator({ hcp, whs20 }: {
   hcp: HcpInfo;
-  last20Table: (RoundData & { course: string })[];
+  whs20: (RoundData & { course: string })[];  // últimas 20 rondas COM SD válido
 }) {
   type SimSortKey = "pos" | "date" | "course" | "hcp" | "sd" | "rank";
   const [sdInput, setSdInput] = useState("");
@@ -1789,18 +1807,16 @@ function SDSimulator({ hcp, last20Table }: {
   const currentHI = hcp.current;
   const adjustTotal = hcp.adjustTotal ?? 0;
 
-  // qtyScores = número real de SDs na janela (vem do servidor, é a fonte da verdade)
-  // qtyCalc   = quantos melhores entram no cálculo
-  const qtyScores = hcp.qtyScores ?? 0;
-  const qtyCalc   = hcp.qtyCalc   ?? whsQtyCalc(qtyScores);
+  // Janela WHS = whs20 (já filtrada para rondas com SD)
+  const window20 = whs20;
 
-  // Últimas 20 rondas (janela WHS)
-  const window20 = useMemo(() => last20Table.slice(0, 20), [last20Table]);
+  // qtyCalc actual = quantos melhores entram (calculado a partir da janela real)
+  const qtyCalc = whsQtyCalc(window20.length);
 
   // SDs actuais por scoreId
   const sdById = useMemo(() => {
     const m = new Map<string, number>();
-    window20.forEach(r => { const v = numSafe(r.sd); if (v != null) m.set(r.scoreId, v); });
+    window20.forEach(r => { const v = numSafe(r.sd); if (v != null) m.set(r.scoreId, Number(v)); });
     return m;
   }, [window20]);
 
@@ -1810,7 +1826,7 @@ function SDSimulator({ hcp, last20Table }: {
     return new Set(pairs.slice(0, qtyCalc).map(p => p[0]));
   }, [sdById, qtyCalc]);
 
-  // Ronda deslocada (índice 19, pode ou não ter SD)
+  // Ronda deslocada = a mais antiga da janela WHS (índice 19)
   const displacedRound = window20.length >= 20 ? window20[19] : null;
   const displacedSd    = displacedRound ? numSafe(displacedRound.sd) : null;
 
@@ -1850,9 +1866,10 @@ function SDSimulator({ hcp, last20Table }: {
     }
 
     // Top-N calculado directamente a partir das linhas activas (fonte da verdade)
+    // Forçar Number() — os SDs das rondas reais chegam do JSON como string
     const activeWithSd = rows
-      .filter(r => !r.isDisplaced && r.sd != null)
-      .map(r => ({ id: r.scoreId, sd: r.sd! }))
+      .filter(r => !r.isDisplaced && r.sd != null && !isNaN(Number(r.sd)))
+      .map(r => ({ id: r.scoreId, sd: Number(r.sd) }))
       .sort((a, b) => a.sd - b.sd);
 
     const newQtyScores = activeWithSd.length;
@@ -1960,18 +1977,7 @@ function SDSimulator({ hcp, last20Table }: {
             Limpar
           </button>
         )}
-        <div style={{ display: "flex", gap: 5, flexWrap: "wrap" }}>
-          {[16, 18, 20, 22, 24, 26, 28, 30, 32, 36].map(v => (
-            <button key={v} onClick={() => setSdInput(String(v))}
-              style={{
-                fontSize: 11, padding: "2px 7px", borderRadius: 4,
-                border: `1px solid ${sdInput === String(v) ? "var(--chart-2)" : "var(--line)"}`,
-                background: sdInput === String(v) ? "var(--chart-2)" : "transparent",
-                color: sdInput === String(v) ? "#fff" : "var(--text-2)",
-                cursor: "pointer",
-              }}>{v}</button>
-          ))}
-        </div>
+
       </div>
 
       {/* KPI summary */}
@@ -1979,7 +1985,7 @@ function SDSimulator({ hcp, last20Table }: {
         <div style={{ padding: "10px 16px", borderRadius: 8, background: "var(--bg-detail)", textAlign: "center", minWidth: 90 }}>
           <div className="muted fs-10">HCP ACTUAL</div>
           <div style={{ fontSize: 22, fontWeight: 800 }}>{currentHI.toFixed(1)}</div>
-          <div className="muted fs-10">{qtyCalc} melhores / {qtyScores} SDs</div>
+          <div className="muted fs-10">{qtyCalc} melhores / {window20.length} SDs</div>
         </div>
 
         {simulation ? <>
@@ -2013,7 +2019,7 @@ function SDSimulator({ hcp, last20Table }: {
                 </div>
               : displacedRound && <div className="muted">Ronda deslocada sem SD</div>
             }
-            <div>Novos {simulation.newQtyCalc} melhores SDs: <b>{simulation.bestNew.map(s => s.toFixed(1)).join(", ")}</b></div>
+            <div>Novos {simulation.newQtyCalc} melhores SDs: <b>{simulation.bestNew.map(s => Number(s).toFixed(1)).join(", ")}</b></div>
             <div>Média dos {simulation.newQtyCalc}: <b>{simulation.newAvg?.toFixed(2)}</b>
               {adjustTotal !== 0 && <span className="muted"> + ajuste {adjustTotal > 0 ? "+" : ""}{adjustTotal}</span>}
             </div>
@@ -2035,7 +2041,7 @@ function SDSimulator({ hcp, last20Table }: {
           <table className="dtable" style={{ fontSize: 12 }}>
             <thead>
               <tr>
-                <SimTh col="pos"    label="#"     cls="r" />
+                <SimTh col="pos"    label="WHS#"  cls="r" />
                 <SimTh col="date"   label="Data" />
                 <SimTh col="course" label="Campo" />
                 <SimTh col="hcp"    label="HCP"   cls="r" />
@@ -2062,8 +2068,9 @@ function SDSimulator({ hcp, last20Table }: {
                     opacity: row.isDisplaced ? 0.35 : 1,
                     borderTop: row.isDisplaced ? "2px dashed var(--line)" : undefined,
                   }}>
-                    <td className="r muted" style={{ fontSize: 10 }}>
-                      {row.isDisplaced ? "↗" : row.posLabel}
+                    <td className="r" style={{ fontSize: 11, fontWeight: 700,
+                      color: row.isDisplaced ? "var(--color-danger)" : "var(--text-2)" }}>
+                      {row.isDisplaced ? "out" : row.posLabel}
                     </td>
                     <td>
                       {row.isSimulated
@@ -2115,7 +2122,7 @@ function SDSimulator({ hcp, last20Table }: {
 }
 
 /* ─── Last 20 Table with scorecard expansion ─── */
-type L20SortKey = "date" | "course" | "event" | "holes" | "hcp" | "tee" | "meters" | "gross" | "stb" | "sd" | "rank";
+type L20SortKey = "whs" | "date" | "course" | "event" | "holes" | "hcp" | "tee" | "meters" | "gross" | "stb" | "sd" | "rank";
 
 function L20SortTh({ col, label, cur, dir, onSort, className }: {
   col: L20SortKey; label: string; cur: L20SortKey; dir: 1 | -1;
@@ -2134,21 +2141,27 @@ function L20SortTh({ col, label, cur, dir, onSort, className }: {
   );
 }
 
-function Last20Table({ data, last20Table, best8 }: {
+function Last20Table({ data, last20Table, best8, whsPosMap }: {
   data: PlayerPageData;
   last20Table: (RoundData & { course: string })[];
   best8: Map<string, number>;
+  whsPosMap: Map<string, number>;
 }) {
   const [openSc, setOpenSc] = useState<string | null>(null);
   const [sortKey, setSortKey] = useState<L20SortKey>("date");
   const [sortDir, setSortDir] = useState<1 | -1>(-1);
 
-  // Set of scoreIds that are >= position 20 (fading rows in natural order)
+  // Rows outside the WHS window (no whs pos) AND after the last WHS round → fade
   const fadingIds = useMemo(() => {
     const s = new Set<string>();
-    last20Table.slice(20).forEach(r => s.add(r.scoreId));
+    // Fade rows that are not in the WHS window and come after the last WHS round
+    let pastWindow = false;
+    for (const r of last20Table) {
+      if (whsPosMap.has(r.scoreId)) { if (whsPosMap.get(r.scoreId) === 20) pastWindow = true; }
+      else if (pastWindow) s.add(r.scoreId);
+    }
     return s;
-  }, [last20Table]);
+  }, [last20Table, whsPosMap]);
 
   function handleSort(col: L20SortKey) {
     if (col === sortKey) setSortDir(d => (d === -1 ? 1 : -1));
@@ -2160,6 +2173,7 @@ function Last20Table({ data, last20Table, best8 }: {
     arr.sort((a, b) => {
       let av: number, bv: number;
       switch (sortKey) {
+        case "whs": av = whsPosMap.get(a.scoreId) ?? 999; bv = whsPosMap.get(b.scoreId) ?? 999; break;
         case "date": av = a.dateSort; bv = b.dateSort; break;
         case "course": return sortDir * a.course.localeCompare(b.course, "pt");
         case "event": return sortDir * (a.eventName || "").localeCompare(b.eventName || "", "pt");
@@ -2176,20 +2190,22 @@ function Last20Table({ data, last20Table, best8 }: {
       return sortDir * (av - bv);
     });
     return arr;
-  }, [last20Table, sortKey, sortDir, best8]);
+  }, [last20Table, sortKey, sortDir, best8, whsPosMap]);
 
   const thProps = { cur: sortKey, dir: sortDir, onSort: handleSort };
+  const whsMax = whsPosMap.size;
 
   return (
     <div className="card">
       <div className="h-xs fs-18 mb-8">📋 Últimas 20 rondas</div>
       <div className="muted mb-8 fs-11">
-        Os 8 melhores SD das últimas 20 estão assinalados com ★ · <b>*</b> = Stableford normalizado 9B→18B (+17 pts WHS) · <span style={{ opacity: 0.45 }}>Sombreado</span> = rondas a sair em breve · Clica nos cabeçalhos para ordenar
+        <b>WHS#</b> = posição na janela WHS (só rondas com SD contam) · ★ = top-8 SDs · <b>*</b> = Stableford normalizado 9B→18B · <span style={{ opacity: 0.45 }}>Esbatido</span> = fora da janela · Clica nos cabeçalhos para ordenar
       </div>
       <div className="table-wrap">
         <table className="dtable">
           <thead>
             <tr>
+              <L20SortTh col="whs" label="WHS#" {...thProps} className="r" />
               <L20SortTh col="date" label="Data" {...thProps} />
               <L20SortTh col="course" label="Campo" {...thProps} />
               <L20SortTh col="event" label="Prova" {...thProps} />
@@ -2222,6 +2238,9 @@ function Last20Table({ data, last20Table, best8 }: {
                     ...(isBest8 ? { background: "var(--bg-success)" } : {}),
                     ...(isFading ? { opacity: 0.4 } : {}),
                   }}>
+                    <td className="r" style={{ fontSize: 11, fontWeight: 700, color: whsPosMap.get(r.scoreId) != null ? "var(--text-2)" : "var(--text-4, #ccc)" }}>
+                      {whsPosMap.get(r.scoreId) ?? "–"}
+                    </td>
                     <td>
                       {holes ? (
                         <a href="#" className="dateLink" onClick={e => { e.preventDefault(); setOpenSc(isOpen ? null : r.scoreId); }}>
@@ -2248,7 +2267,7 @@ function Last20Table({ data, last20Table, best8 }: {
                   </tr>
                   {isOpen && holes && (
                     <tr>
-                      <td colSpan={11} className="bg-page p-0">
+                      <td colSpan={12} className="bg-page p-0">
                         <div className="scHost" style={scHostStyle}>
                           <ScorecardTable
                             holes={holes}
