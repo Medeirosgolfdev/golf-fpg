@@ -3,14 +3,62 @@
 // ============================================================
 // Cola em: https://scoring.datagolf.pt/pt/tournaments.aspx
 //
-// Baseado no v6. Correcções:
-//   - BUG R2 CORRIGIDO: ClassifLST é chamado por ronda para
-//     obter score_id's correctos. No v6, usava o score_id da R1
-//     para pedir o scorecard da R2 → devolvia R1 duplicado.
-//   - grossTotal/toPar ao nível do player = totais (soma das rondas)
-//   - grossTotal/toPar de cada ronda ficam em roundScores[i]
+// ── HISTÓRICO ────────────────────────────────────────────────
 //
-// Formato de output inalterado (compatível com v6)
+// v6 → v7 (investigação 07/03/2026):
+//
+//   PROBLEMA ORIGINAL:
+//     Torneios de 2 rondas (ex: Vale Pisão 28/02, AQUAPOR Morgado)
+//     tinham R1 e R2 com scores idênticos no JSON de output.
+//     O v6 usava o score_id da R1 com classifround=2 →
+//     a API ignorava o parâmetro e devolvia sempre R1.
+//
+//   DIAGNÓSTICO (07/03/2026):
+//     1. A API scoring.datagolf.pt usa o mesmo score_id para
+//        R1 e R2 do mesmo jogador no mesmo torneio.
+//     2. O endpoint classif.aspx/ScoreCard ignora completamente
+//        o parâmetro classifround — devolve sempre o mesmo
+//        scorecard independentemente do valor passado.
+//     3. O website usa um endpoint DIFERENTE para torneios
+//        agregados: classifAgregate.aspx/ScoreCard
+//        com classifround="" (vazio).
+//     4. Este endpoint devolve um array de Records (1 por ronda),
+//        cada um com os 18 buracos correctos da sua ronda.
+//        Ex: score_id=4276 (Santiago Dias, Vale Pisão):
+//            Record[0]: gross=67, scores=[4,4,4,3,4,3,3,4,4,...] ← R1
+//            Record[1]: gross=77, scores=[10,5,3,3,4,5,4,5,4,...] ← R2
+//
+//   SOLUÇÃO IMPLEMENTADA:
+//     - Torneios nRounds > 1 → fetchScorecardAggregate()
+//       usa classifAgregate.aspx/ScoreCard com classifround=""
+//     - Torneios nRounds = 1 → fetchScorecard() como antes
+//       usa classif.aspx/ScoreCard com classifround=1
+//
+//   AUTO-DETECÇÃO DE 2 RONDAS:
+//     A API devolve rounds=null para alguns torneios de 2 dias
+//     (ex: Vale Pisão). O scraper faz um probe à ClassifLST
+//     com round=2 — se tiver registos, assume nRounds=2.
+//
+// ── ESTRUTURA DOS ENDPOINTS ──────────────────────────────────
+//
+//   ClassifLST (lista de jogadores por ronda):
+//     POST classif.aspx/ClassifLST
+//     Body: { tclub, tcode, round, classiftype, ... }
+//
+//   ScoreCard ronda única:
+//     POST classif.aspx/ScoreCard
+//     Body: { score_id, tclub, tcode, classifround: "1" }
+//     → Devolve 1 Record com gross_1..gross_18
+//
+//   ScoreCard multi-ronda (DESCOBERTO 07/03/2026):
+//     POST classifAgregate.aspx/ScoreCard
+//     Body: { score_id, tclub, tcode, classifround: "" }
+//     → Devolve N Records (1 por ronda), cada um com gross_1..gross_18
+//
+// ── FORMATO DE OUTPUT ────────────────────────────────────────
+//   grossTotal/toPar ao nível do player = totais (soma das rondas)
+//   grossTotal/toPar de cada ronda ficam em roundScores[i]
+//   Compatível com drive-data.json e aquapor-data.json (v6)
 // ============================================================
 
 (async () => {
@@ -181,6 +229,26 @@
     }
   }
 
+  // Para torneios multi-ronda: classifAgregate.aspx devolve todos os records (1 por ronda)
+  async function fetchScorecardAggregate(scoreId, tclub, tcode) {
+    const qs = "score_id=" + scoreId + "&tclub=" + tclub + "&tcode=" + tcode + "&scoringtype=1&classiftype=I&classifround=";
+    const body = { score_id: String(scoreId), tclub: String(tclub), tcode: String(tcode), scoringtype: "1", classiftype: "I", classifround: "" };
+    try {
+      const res = await fetch("classifAgregate.aspx/ScoreCard?" + qs, {
+        method: "POST",
+        headers: { "Content-Type": "application/json; charset=utf-8", "X-Requested-With": "XMLHttpRequest" },
+        body: JSON.stringify(body),
+      });
+      if (!res.ok) return null;
+      const json = await res.json();
+      const d = json.d || json;
+      if (d.Result === "OK" && d.Records && d.Records.length > 0) return d.Records;
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+
   function extractHoleData(rec, fromHole, toHole) {
     // fromHole/toHole são 1-based inclusivos. Default: 1 a nholes
     const n = rec.nholes || 18;
@@ -317,32 +385,9 @@
 
     ok(label + " " + t.name + " → " + t.playerCount + " jogadores" + (nRounds > 1 ? " (" + nRounds + "R)" : ""));
 
-    // ── v7 FIX: Para multi-ronda, buscar ClassifLST da R2+ ──
-    // No v6 usávamos o score_id da R1 com classifround=2 → devolvia R1 duplicado!
-    // Agora buscamos a classificação de cada ronda para obter os score_id correctos.
-    const roundScoreIdMap = new Map(); // round → Map<playerName, score_id>
-    if (nRounds > 1) {
-      for (let rd = 2; rd <= nRounds; rd++) {
-        info("  Buscar classificação R" + rd + "...");
-        await sleep(DELAY);
-        const r2 = await fetchClassif(t.ccode, t.tcode, rd);
-        if (r2.error) {
-          warn("  R" + rd + " classif erro: " + r2.error);
-          continue;
-        }
-        const map = new Map();
-        for (const rec of r2.records) {
-          const name = (rec.player_name || "").trim();
-          if (name && rec.score_id) map.set(name, String(rec.score_id));
-          // Guardar também por fed_code como fallback
-          if (rec.federated_code && rec.score_id) map.set("fed:" + rec.federated_code, String(rec.score_id));
-        }
-        roundScoreIdMap.set(rd, map);
-        info("  R" + rd + ": " + map.size + " score_id's obtidos");
-      }
-    }
-
     // ── Fase 2b: Scorecards ──
+    // Multi-ronda: classifAgregate.aspx devolve todos os records de uma vez (1 por ronda)
+    // Ronda única: classif.aspx/ScoreCard como antes
     let scOk = 0, scFail = 0, scSkip = 0;
 
     for (let pi = 0; pi < t.players.length; pi++) {
@@ -353,34 +398,49 @@
         continue;
       }
 
-      for (let rd = 1; rd <= nRounds; rd++) {
-        // Para R1: usar o score_id e classifround=1 normalmente.
-        // Para R2+: o score_id da ClassifLST da R2 já aponta para o registo correcto —
-        //   chamar SEMPRE com classifround=1, porque o score_id identifica a ronda.
-        //   Se não encontramos o score_id no map por nome, tentar por fed_code, senão skip.
-        let scoreIdForRound = p.scoreId;
-        let classifRoundForFetch = rd;
-
-        if (rd > 1 && roundScoreIdMap.has(rd)) {
-          const rdMap = roundScoreIdMap.get(rd);
-          // Tentar match por nome exacto
-          let sid = rdMap.get(p.name);
-          // Fallback: match por fedCode (segundo map guardado)
-          if (!sid && p.fedCode) sid = rdMap.get("fed:" + p.fedCode);
-          if (sid) {
-            scoreIdForRound = sid;
-            classifRoundForFetch = 1; // score_id já é da R2, pedir sempre round=1
-          } else {
-            // Sem score_id R2 → skip esta ronda para este jogador
-            info("  R" + rd + " " + p.name + " → score_id não encontrado, skip");
-            continue;
+      if (nRounds > 1) {
+        // ── Multi-ronda: usar classifAgregate ──
+        const records = await fetchScorecardAggregate(p.scoreId, t.ccode, t.tcode);
+        if (records && records.length > 0) {
+          // Preencher dados comuns do 1º record
+          const sc0 = records[0];
+          if (!p.fedCode && sc0.federated_code) {
+            p.fedCode = sc0.federated_code;
+            p.courseRating = sc0.course_rating;
+            p.slope = sc0.slope;
+            p.teeName = sc0.tee_name;
+            p.teeColorId = sc0.tee_color_id;
+            p.parTotal = sc0.par_total;
+            p.nholes = sc0.nholes;
+            p.course = sc0.course_description;
           }
+          records.forEach((sc, idx) => {
+            const hd = extractHoleData(sc);
+            p.roundScores.push({
+              round: idx + 1,
+              gross: sc.gross_total,
+              scores: hd.scores,
+              pars: hd.pars,
+              si: hd.si,
+              meters: hd.meters,
+              courseRating: sc.course_rating,
+              slope: sc.slope,
+              teeName: sc.tee_name,
+              teeColorId: sc.tee_color_id,
+            });
+          });
+          scOk++;
+          totalScorecards++;
+        } else {
+          scFail++;
         }
+        await sleep(DELAY);
 
-        const sc = await fetchScorecard(scoreIdForRound, t.ccode, t.tcode, classifRoundForFetch);
+      } else {
+        // ── Ronda única: classif.aspx ──
+        const sc = await fetchScorecard(p.scoreId, t.ccode, t.tcode, 1);
         if (sc) {
           const hd = extractHoleData(sc);
-          // Preencher dados comuns na primeira ronda que funcionar
           if (!p.fedCode && sc.federated_code) {
             p.fedCode = sc.federated_code;
             p.courseRating = sc.course_rating;
@@ -392,7 +452,7 @@
             p.course = sc.course_description;
           }
           p.roundScores.push({
-            round: rd,
+            round: 1,
             gross: sc.gross_total,
             scores: hd.scores,
             pars: hd.pars,

@@ -1250,8 +1250,8 @@ interface TournResult {
 interface Sub12Row {
   fed: string; name: string; club: string; region: string; sex: string; hcp: number | null;
   results: TournResult[];
-  avgGross: number | null; avgSD: number | null; bestGross: number | null; tourneiosPlayed: number;
-  totalBird: number; totalPars: number; totalBog: number;
+  avgGross: number | null; avgSD: number | null; bestGross: number | null; bestSD: number | null; tourneiosPlayed: number;
+  totalBird: number; totalPars: number; totalBog: number; totalPts: number;
 }
 type Sub12SeriesTab = "tour" | "challenge" | "aquapor";
 type Sub12ViewTab = "grid" | "ranking" | "evolucao";
@@ -1321,9 +1321,13 @@ function dateToSort(d: string): number {
   return new Date(d).getTime() || 0;
 }
 function buildSub12Data(tournaments: Tournament[], playersDB: PlayersDB, sdLookup: SDLookup, escLookup: EscLookup): Sub12Row[] {
-  const singleRound = tournaments.filter(t => !t._roundLabel || t._roundLabel !== "Total");
+  // Incluir apenas ronda única OU a entrada "Total" de torneios multi-ronda
+  // (nunca R1/R2 individuais — pontos são pela classificação do Total)
+  const validTournaments = tournaments.filter(t =>
+    !t._roundLabel || t._roundLabel === "Total"
+  );
   const playerMap = new Map<string, Sub12Row>();
-  for (const t of singleRound) {
+  for (const t of validTournaments) {
     for (const p of t.players) {
       if (isDNS(p)) continue;
       const esc = resolveEsc(p, escLookup);
@@ -1341,8 +1345,8 @@ function buildSub12Data(tournaments: Tournament[], playersDB: PlayersDB, sdLooku
           club: p.club || dbInfo?.club?.short || "",
           region: dbInfo?.region || t.region || "",
           sex: dbInfo?.sex || "", hcp: dbInfo?.hcp ?? p.hcpExact ?? null,
-          results: [], avgGross: null, avgSD: null, bestGross: null, tourneiosPlayed: 0,
-          totalBird: 0, totalPars: 0, totalBog: 0,
+          results: [], avgGross: null, avgSD: null, bestGross: null, bestSD: null, tourneiosPlayed: 0,
+          totalBird: 0, totalPars: 0, totalBog: 0, totalPts: 0,
         });
       }
       const row = playerMap.get(fed)!;
@@ -1359,6 +1363,7 @@ function buildSub12Data(tournaments: Tournament[], playersDB: PlayersDB, sdLooku
       row.totalBird += birdies;
       row.totalPars += parsCount;
       row.totalBog  += bogeys;
+      row.totalPts  += drivePoints(typeof p.pos === "number" ? p.pos : 0);
     }
   }
   for (const row of playerMap.values()) {
@@ -1369,8 +1374,9 @@ function buildSub12Data(tournaments: Tournament[], playersDB: PlayersDB, sdLooku
     row.avgGross = numAvg(grosses);
     row.avgSD = numAvg(sds);
     row.bestGross = grosses.length > 0 ? Math.min(...grosses) : null;
+    row.bestSD = sds.length > 0 ? Math.min(...sds) : null;
   }
-  return [...playerMap.values()].sort((a, b) => (a.avgSD ?? 999) - (b.avgSD ?? 999));
+  return [...playerMap.values()].sort((a, b) => b.totalPts - a.totalPts);
 }
 function filterBySub12Series(rows: Sub12Row[], series: Sub12SeriesTab): Sub12Row[] {
   return rows.map(p => {
@@ -1380,10 +1386,13 @@ function filterBySub12Series(rows: Sub12Row[], series: Sub12SeriesTab): Sub12Row
     const fS = fR.filter(r => r.sd != null).map(r => r.sd!);
     return {
       ...p, results: fR, tourneiosPlayed: fR.length,
-      avgGross: numAvg(fG), avgSD: numAvg(fS), bestGross: fG.length ? Math.min(...fG) : null,
+      avgGross: numAvg(fG), avgSD: numAvg(fS),
+      bestGross: fG.length ? Math.min(...fG) : null,
+      bestSD: fS.length ? Math.min(...fS) : null,
       totalBird: fR.reduce((s, r) => s + r.birdies, 0),
       totalPars: fR.reduce((s, r) => s + r.pars, 0),
       totalBog:  fR.reduce((s, r) => s + r.bogeys, 0),
+      totalPts:  fR.reduce((s, r) => s + drivePoints(typeof r.pos === "number" ? r.pos : 0), 0),
     };
   }).filter(Boolean) as Sub12Row[];
 }
@@ -1498,8 +1507,8 @@ function TournamentGrid({ rows, allTournaments, onPlayerClick, playersDB, escLoo
   escLookup?: EscLookup;
 }) {
   type S12SortKey = "name" | "fed" | "escalao" | "club" | "hcp" | "played" | "avgSD" | "avgGross" | string;
-  const [sortKey, setSortKey] = useState<S12SortKey>("avgSD");
-  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
+  const [sortKey, setSortKey] = useState<S12SortKey>("totalPts");
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
 
   const handleSort = useCallback((k: S12SortKey) => {
     if (k === sortKey) setSortDir(d => d === "asc" ? "desc" : "asc");
@@ -1523,7 +1532,9 @@ function TournamentGrid({ rows, allTournaments, onPlayerClick, playersDB, escLoo
         case "totalBird": return mult * (b.totalBird - a.totalBird);
         case "totalPars": return mult * (b.totalPars - a.totalPars);
         case "totalBog":  return mult * (a.totalBog  - b.totalBog);
+        case "totalPts":  return mult * (b.totalPts  - a.totalPts);
         case "avgSD":    return mult * ((a.avgSD ?? INF) - (b.avgSD ?? INF));
+        case "bestSD":   return mult * ((a.bestSD ?? INF) - (b.bestSD ?? INF));
         case "avgGross": return mult * ((a.avgGross ?? INF) - (b.avgGross ?? INF));
         default: {
           if (sortKey.startsWith("gross_")) {
@@ -1625,8 +1636,8 @@ function TournamentGrid({ rows, allTournaments, onPlayerClick, playersDB, escLoo
               </React.Fragment>
             ))}
             <SortTh sortKey="played"    current={sortKey} dir={sortDir} onSort={handleSort} className="r" style={{ ...hs, width: 36, borderLeft: bG }}>Jogos</SortTh>
-            <SortTh sortKey="avgGross"  current={sortKey} dir={sortDir} onSort={handleSort} className="r" style={{ ...hs, width: 44, borderLeft: bS }}>Avg</SortTh>
-            <SortTh sortKey="avgSD"     current={sortKey} dir={sortDir} onSort={handleSort} className="r" style={{ ...hs, width: 50, borderLeft: bS }}>Avg SD</SortTh>
+            <SortTh sortKey="totalPts"  current={sortKey} dir={sortDir} onSort={handleSort} className="r" style={{ ...hs, width: 44, borderLeft: bS, fontWeight: 800, color: "var(--color-warn-dark)" }}>Pts</SortTh>
+            <SortTh sortKey="bestSD"    current={sortKey} dir={sortDir} onSort={handleSort} className="r" style={{ ...hs, width: 50, borderLeft: bS }}>Best SD</SortTh>
             <SortTh sortKey="totalBird" current={sortKey} dir={sortDir} onSort={handleSort} style={{ ...hs, width: 28, borderLeft: bS, textAlign: "center" }}>🐦</SortTh>
             <SortTh sortKey="totalPars" current={sortKey} dir={sortDir} onSort={handleSort} style={{ ...hs, width: 28, borderLeft: bS, textAlign: "center" }}>Par</SortTh>
             <SortTh sortKey="totalBog"  current={sortKey} dir={sortDir} onSort={handleSort} style={{ ...hs, width: 28, borderLeft: bS, textAlign: "center" }}>■</SortTh>
@@ -1668,9 +1679,9 @@ function TournamentGrid({ rows, allTournaments, onPlayerClick, playersDB, escLoo
                   );
                 })}
                 <td className="r fw-700" style={{ borderLeft: bG, ...cs, fontSize: 13 }}>{p.tourneiosPlayed}</td>
-                <td className="r" style={{ ...cs, borderLeft: bS, fontFamily: "'JetBrains Mono', monospace" }}>{p.avgGross != null ? p.avgGross.toFixed(0) : "–"}</td>
+                <td className="r fw-800" style={{ borderLeft: bS, ...cs, fontSize: 13, color: p.totalPts > 0 ? "var(--color-warn-dark)" : "var(--text-muted)" }}>{p.totalPts > 0 ? p.totalPts : "–"}</td>
                 <td className="r" style={{ ...cs, borderLeft: bS }}>
-                  {p.avgSD != null ? <span className={"p p-sm p-" + sdClassByHcp(p.avgSD, p.hcp)}>{p.avgSD.toFixed(1)}</span> : "–"}
+                  {p.bestSD != null ? <span className={"p p-sm p-" + sdClassByHcp(p.bestSD, p.hcp)}>{p.bestSD.toFixed(1)}</span> : "–"}
                 </td>
                 <td style={{ ...cs, borderLeft: bS, textAlign: "center" }}>{p.totalBird}</td>
                 <td style={{ ...cs, borderLeft: bS, textAlign: "center" }}>{p.totalPars}</td>
@@ -1689,20 +1700,25 @@ function TournamentGrid({ rows, allTournaments, onPlayerClick, playersDB, escLoo
 
 
 function RankingView({ rows, onPlayerClick }: { rows: Sub12Row[]; onPlayerClick: (fed: string) => void }) {
-  const ranked = [...rows].filter(p => p.avgSD != null && p.tourneiosPlayed >= 2).sort((a,b) => (a.avgSD??999)-(b.avgSD??999));
+  const ranked = [...rows].filter(p => p.totalPts > 0).sort((a, b) => b.totalPts - a.totalPts);
+  const zeroPts = rows.filter(p => p.totalPts === 0);
   const medals = ["🥇","🥈","🥉"];
-  const oneTourney = rows.filter(p => p.tourneiosPlayed === 1);
   return (
     <div>
       {ranked.length === 0 ? (
-        <div className="card"><div className="muted">Nenhum jogador com ≥2 torneios para gerar ranking</div></div>
+        <div className="card"><div className="muted">Nenhum jogador com pontos ainda</div></div>
       ) : (
         <div className="bjgt-chart-scroll">
           <table className="dtable" style={{ fontSize: 12 }}>
             <thead><tr>
-              <th className="r" style={{ width: 36 }}>#</th><th style={{ textAlign: "left", paddingLeft: 6 }}>Jogador</th><th>Clube</th>
-              <th className="r">HCP</th><th className="r">T</th><th className="r">Avg Gross</th>
-              <th className="r">Avg SD</th><th className="r">Melhor</th>
+              <th className="r" style={{ width: 36 }}>#</th>
+              <th style={{ textAlign: "left", paddingLeft: 6 }}>Jogador</th>
+              <th>Clube</th>
+              <th className="r">HCP</th>
+              <th className="r">T</th>
+              <th className="r" style={{ fontWeight: 800, color: "var(--color-warn-dark)" }}>Pts</th>
+              <th className="r">Best SD</th>
+              <th className="r">Melhor</th>
             </tr></thead>
             <tbody>
               {ranked.map((p, i) => (
@@ -1717,8 +1733,8 @@ function RankingView({ rows, onPlayerClick }: { rows: Sub12Row[]; onPlayerClick:
                   <td className="c-muted fs-11">{p.club}</td>
                   <td className="r tourn-mono">{p.hcp != null ? p.hcp.toFixed(1) : "–"}</td>
                   <td className="r tourn-mono">{p.tourneiosPlayed}</td>
-                  <td className="r tourn-mono">{p.avgGross?.toFixed(0) ?? "–"}</td>
-                  <td className="r"><SdSpan sd={p.avgSD} hcp={p.hcp} /></td>
+                  <td className="r fw-800" style={{ color: "var(--color-warn-dark)" }}>{p.totalPts}</td>
+                  <td className="r"><SdSpan sd={p.bestSD} hcp={p.hcp} /></td>
                   <td className="r tourn-mono fw-700 c-good-dark">{p.bestGross ?? "–"}</td>
                 </tr>
               ))}
@@ -1726,11 +1742,11 @@ function RankingView({ rows, onPlayerClick }: { rows: Sub12Row[]; onPlayerClick:
           </table>
         </div>
       )}
-      {oneTourney.length > 0 && (
+      {zeroPts.length > 0 && (
         <div className="card mt-14">
-          <div className="h-xs">Com apenas 1 torneio ({oneTourney.length})</div>
+          <div className="h-xs">Sem pontos ({zeroPts.length})</div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 6 }}>
-            {oneTourney.map(p => {
+            {zeroPts.map(p => {
               const r = p.results[0];
               return (
                 <div key={p.fed} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "4px 8px", background: "var(--bg)", borderRadius: "var(--radius)", fontSize: 11, cursor: "pointer" }}
@@ -1793,8 +1809,8 @@ function PlayerDetail({ row, onClose }: { row: Sub12Row; onClose: () => void }) 
       </div>
       <div style={{ display: "flex", gap: 6, marginBottom: 10, flexWrap: "wrap" }}>
         <KpiCard label="Torneios"  value={String(row.tourneiosPlayed)} />
-        <KpiCard label="Avg Gross" value={row.avgGross?.toFixed(0) ?? "–"} />
-        <KpiCard label="Avg SD"    value={row.avgSD?.toFixed(1) ?? "–"} color={row.avgSD != null && row.avgSD <= 25 ? "var(--color-good)" : undefined} />
+        <KpiCard label="Pts"       value={row.totalPts > 0 ? String(row.totalPts) : "–"} color="var(--color-warn-dark)" />
+        <KpiCard label="Best SD"   value={row.bestSD?.toFixed(1) ?? "–"} color={row.bestSD != null && row.bestSD <= 25 ? "var(--color-good)" : undefined} />
         <KpiCard label="Melhor"    value={row.bestGross != null ? String(row.bestGross) : "–"} color="var(--color-good-dark)" />
       </div>
       <table className="dtable fs-11">
@@ -1923,7 +1939,7 @@ function DriveContent() {
 
   const sub12KpiPlayers  = sub12Filtered.length;
   const sub12KpiRounds   = sub12Filtered.reduce((s,p) => s + p.tourneiosPlayed, 0);
-  const sub12KpiAvgSD    = numAvg(sub12Filtered.filter(p => p.avgSD != null).map(p => p.avgSD!));
+  const sub12KpiBestSD   = numAvg(sub12Filtered.filter(p => p.bestSD != null).map(p => p.bestSD!));
   const sub12KpiBest     = sub12Filtered.reduce<number|null>((best,p) => p.bestGross != null && (best==null||p.bestGross<best) ? p.bestGross : best, null);
 
   const handleSub12PlayerClick = useCallback((fed: string) => {
@@ -2170,7 +2186,7 @@ function DriveContent() {
                 </div>
                 <div className="muted fs-11 mb-8">
                   {sub12KpiPlayers} jogadores · {sub12KpiRounds} rondas
-                  {sub12KpiAvgSD != null && <> · SD médio <span style={{ fontWeight: 700, color: sub12KpiAvgSD <= 25 ? "var(--color-good)" : "var(--text)" }}>{sub12KpiAvgSD.toFixed(1)}</span></>}
+                  {sub12KpiBestSD != null && <> · Best SD <span style={{ fontWeight: 700, color: sub12KpiBestSD <= 25 ? "var(--color-good)" : "var(--text)" }}>{sub12KpiBestSD.toFixed(1)}</span></>}
                   {sub12KpiBest != null && <> · Melhor gross <span style={{ fontWeight: 700, color: "var(--color-good-dark)" }}>{sub12KpiBest}</span></>}
                 </div>
 
