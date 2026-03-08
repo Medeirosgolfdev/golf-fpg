@@ -1491,13 +1491,13 @@ function AnalysisView({ data }: { data: PlayerPageData }) {
     [allRoundsDesc]
   );
 
-  // Best 8 SD in last 20 — Map<index, rank (1-8)>
+  // Best 8 SD in last 20 — Map<scoreId, rank (1-8)>
   const best8 = useMemo(() => {
-    const indexed = last20Table.slice(0, 20).map((r, i) => ({ idx: i, sd: numSafe(r.sd) }))
+    const indexed = last20Table.slice(0, 20).map(r => ({ id: r.scoreId, sd: numSafe(r.sd) }))
       .filter(x => x.sd != null)
       .sort((a, b) => a.sd! - b.sd!);
-    const map = new Map<number, number>();
-    indexed.slice(0, 8).forEach((x, rank) => map.set(x.idx, rank + 1));
+    const map = new Map<string, number>();
+    indexed.slice(0, 8).forEach((x, rank) => map.set(x.id, rank + 1));
     return map;
   }, [last20Table]);
 
@@ -1536,6 +1536,9 @@ function AnalysisView({ data }: { data: PlayerPageData }) {
 
         {/* WHS Detail */}
         <WHSDetail hcp={data.HCP_INFO} />
+
+        {/* SD Simulator */}
+        <SDSimulator hcp={data.HCP_INFO} last20Table={last20Table} />
 
         {/* Last 20 Table */}
         <Last20Table data={data} last20Table={last20Table} best8={best8} />
@@ -1761,35 +1764,450 @@ function WHSDetail({ hcp }: { hcp: HcpInfo }) {
   );
 }
 
+/* ─── SD Simulator ─── */
+function whsQtyCalc(nSds: number): number {
+  if (nSds < 3) return 0;
+  if (nSds <= 5) return 1;
+  if (nSds <= 8) return 2;
+  if (nSds <= 11) return 3;
+  if (nSds <= 14) return 4;
+  if (nSds <= 16) return 5;
+  if (nSds <= 18) return 6;
+  if (nSds === 19) return 7;
+  return 8;
+}
+
+function SDSimulator({ hcp, last20Table }: {
+  hcp: HcpInfo;
+  last20Table: (RoundData & { course: string })[];
+}) {
+  type SimSortKey = "pos" | "date" | "course" | "hcp" | "sd" | "rank";
+  const [sdInput, setSdInput] = useState("");
+  const [sortKey, setSortKey] = useState<SimSortKey>("pos");
+  const [sortDir, setSortDir] = useState<1 | -1>(1);
+
+  const currentHI = hcp.current;
+  const adjustTotal = hcp.adjustTotal ?? 0;
+
+  // qtyScores = número real de SDs na janela (vem do servidor, é a fonte da verdade)
+  // qtyCalc   = quantos melhores entram no cálculo
+  const qtyScores = hcp.qtyScores ?? 0;
+  const qtyCalc   = hcp.qtyCalc   ?? whsQtyCalc(qtyScores);
+
+  // Últimas 20 rondas (janela WHS)
+  const window20 = useMemo(() => last20Table.slice(0, 20), [last20Table]);
+
+  // SDs actuais por scoreId
+  const sdById = useMemo(() => {
+    const m = new Map<string, number>();
+    window20.forEach(r => { const v = numSafe(r.sd); if (v != null) m.set(r.scoreId, v); });
+    return m;
+  }, [window20]);
+
+  // IDs do top-N actual
+  const oldTopNIds = useMemo(() => {
+    const pairs = [...sdById.entries()].sort((a, b) => a[1] - b[1]);
+    return new Set(pairs.slice(0, qtyCalc).map(p => p[0]));
+  }, [sdById, qtyCalc]);
+
+  // Ronda deslocada (índice 19, pode ou não ter SD)
+  const displacedRound = window20.length >= 20 ? window20[19] : null;
+  const displacedSd    = displacedRound ? numSafe(displacedRound.sd) : null;
+
+  // Linhas da tabela simulada (construídas primeiro — são a fonte da verdade)
+  const SIM_ID = "__sim__";
+  type SimRow = {
+    scoreId: string; isSimulated: boolean; isDisplaced: boolean;
+    posLabel: number | string;
+    date: string; course: string;
+    hi: number | null; tee: string;
+    gross: number | null; par: number | null; stb: number | null; sd: number | null;
+    holeCount: number;
+  };
+
+  const simRows = useMemo(() => {
+    const newSdVal = parseFloat(sdInput.replace(",", "."));
+    if (isNaN(newSdVal) || currentHI == null) return null;
+
+    const rows: SimRow[] = [];
+
+    // Ronda simulada — posição 1
+    rows.push({
+      scoreId: SIM_ID, isSimulated: true, isDisplaced: false, posLabel: 1,
+      date: "—", course: "Ronda simulada",
+      hi: null, tee: "", gross: null, par: null, stb: null,
+      sd: newSdVal, holeCount: 18,
+    });
+
+    // Rondas 1-19 ficam (posições 2-20)
+    window20.slice(0, 19).forEach((r, i) => {
+      rows.push({ ...r, isSimulated: false, isDisplaced: false, posLabel: i + 2 });
+    });
+
+    // Ronda deslocada (posição 20 → sai)
+    if (displacedRound) {
+      rows.push({ ...displacedRound, isSimulated: false, isDisplaced: true, posLabel: 20 });
+    }
+
+    // Top-N calculado directamente a partir das linhas activas (fonte da verdade)
+    const activeWithSd = rows
+      .filter(r => !r.isDisplaced && r.sd != null)
+      .map(r => ({ id: r.scoreId, sd: r.sd! }))
+      .sort((a, b) => a.sd - b.sd);
+
+    const newQtyScores = activeWithSd.length;
+    const newQtyCalc   = whsQtyCalc(newQtyScores);
+
+    const bestNew = activeWithSd.slice(0, newQtyCalc).map(x => x.sd);
+    const newAvg  = meanArr(bestNew);
+    if (newAvg == null) return null;
+    const newHI = Math.round((newAvg + adjustTotal) * 10) / 10;
+
+    const newTopNMap = new Map<string, number>();
+    activeWithSd.slice(0, newQtyCalc).forEach((x, i) => newTopNMap.set(x.id, i + 1));
+
+    return {
+      rows, newTopNMap,
+      newSdVal, newHI,
+      delta: newHI - currentHI,
+      newQtyCalc, newQtyScores,
+      bestNew,
+      newAvg,
+    };
+  }, [sdInput, currentHI, window20, displacedRound, adjustTotal]);
+
+  // simulation é agora um alias de simRows para não ter de renomear o resto do JSX
+  const simulation = simRows;
+
+  // Ordenação da tabela simulada
+  const sortedSimRows = useMemo(() => {
+    if (!simRows) return null;
+    const arr = [...simRows.rows];
+    // Deslocada vai sempre para o fundo independentemente da ordenação
+    const active   = arr.filter(r => !r.isDisplaced);
+    const displaced = arr.filter(r => r.isDisplaced);
+
+    active.sort((a, b) => {
+      let av: number, bv: number;
+      switch (sortKey) {
+        case "pos":    av = typeof a.posLabel === "number" ? a.posLabel : 99; bv = typeof b.posLabel === "number" ? b.posLabel : 99; break;
+        case "date":   return sortDir * (a.isSimulated ? -1 : b.isSimulated ? 1 : a.date.localeCompare(b.date));
+        case "course": return sortDir * (a.isSimulated ? -1 : b.isSimulated ? 1 : a.course.localeCompare(b.course, "pt"));
+        case "hcp":    av = a.hi ?? 999; bv = b.hi ?? 999; break;
+        case "sd":     av = a.sd ?? 999; bv = b.sd ?? 999; break;
+        case "rank":   av = simRows.newTopNMap.get(a.scoreId) ?? 999; bv = simRows.newTopNMap.get(b.scoreId) ?? 999; break;
+        default:       av = typeof a.posLabel === "number" ? a.posLabel : 99; bv = typeof b.posLabel === "number" ? b.posLabel : 99;
+      }
+      return sortDir * (av - bv);
+    });
+
+    return [...active, ...displaced];
+  }, [simRows, sortKey, sortDir]);
+
+  function handleSimSort(col: SimSortKey) {
+    if (col === sortKey) setSortDir(d => d === 1 ? -1 : 1);
+    else { setSortKey(col); setSortDir(col === "sd" || col === "hcp" ? 1 : col === "pos" ? 1 : -1); }
+  }
+
+  if (currentHI == null) return null;
+
+  const deltaColor = simulation
+    ? simulation.delta < -0.05 ? "var(--color-good)" : simulation.delta > 0.05 ? "var(--color-danger)" : "var(--text-2)"
+    : "var(--text-2)";
+
+  function SimTh({ col, label, cls }: { col: SimSortKey; label: string; cls?: string }) {
+    const active = sortKey === col;
+    return (
+      <th className={cls}
+        style={{ cursor: "pointer", userSelect: "none", whiteSpace: "nowrap" }}
+        onClick={() => handleSimSort(col)}>
+        {label}
+        <span style={{ marginLeft: 3, opacity: active ? 1 : 0.25, fontSize: 10 }}>
+          {active ? (sortDir === 1 ? "↑" : "↓") : "↕"}
+        </span>
+      </th>
+    );
+  }
+
+  return (
+    <div className="card" style={{ marginBottom: 12 }}>
+      <div className="h-xs fs-18 mb-4">🎯 Simulador de Ronda</div>
+      <div className="muted fs-11 mb-12">
+        Introduz um SD para simular o impacto no Handicap Index.
+        A nova ronda entra no topo — a ronda 20 (mais antiga) é deslocada.
+      </div>
+
+      {/* Input + atalhos */}
+      <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", marginBottom: 14 }}>
+        <label style={{ display: "flex", alignItems: "center", gap: 8, fontWeight: 600, fontSize: 13 }}>
+          SD simulado:
+          <input
+            type="number" step="0.1" placeholder="ex: 28.5"
+            value={sdInput}
+            onChange={e => setSdInput(e.target.value)}
+            style={{
+              width: 90, padding: "4px 8px", borderRadius: 6,
+              border: "1px solid var(--line)", background: "var(--bg-card)",
+              color: "var(--text-1)", fontSize: 14, fontWeight: 700,
+            }}
+          />
+        </label>
+        {sdInput && (
+          <button onClick={() => setSdInput("")}
+            style={{ fontSize: 11, padding: "3px 8px", borderRadius: 4,
+              border: "1px solid var(--line)", background: "transparent",
+              cursor: "pointer", color: "var(--text-3)" }}>
+            Limpar
+          </button>
+        )}
+        <div style={{ display: "flex", gap: 5, flexWrap: "wrap" }}>
+          {[16, 18, 20, 22, 24, 26, 28, 30, 32, 36].map(v => (
+            <button key={v} onClick={() => setSdInput(String(v))}
+              style={{
+                fontSize: 11, padding: "2px 7px", borderRadius: 4,
+                border: `1px solid ${sdInput === String(v) ? "var(--chart-2)" : "var(--line)"}`,
+                background: sdInput === String(v) ? "var(--chart-2)" : "transparent",
+                color: sdInput === String(v) ? "#fff" : "var(--text-2)",
+                cursor: "pointer",
+              }}>{v}</button>
+          ))}
+        </div>
+      </div>
+
+      {/* KPI summary */}
+      <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "flex-start", marginBottom: 16 }}>
+        <div style={{ padding: "10px 16px", borderRadius: 8, background: "var(--bg-detail)", textAlign: "center", minWidth: 90 }}>
+          <div className="muted fs-10">HCP ACTUAL</div>
+          <div style={{ fontSize: 22, fontWeight: 800 }}>{currentHI.toFixed(1)}</div>
+          <div className="muted fs-10">{qtyCalc} melhores / {qtyScores} SDs</div>
+        </div>
+
+        {simulation ? <>
+          <div style={{ display: "flex", alignItems: "center", fontSize: 20, color: "var(--text-3)", paddingTop: 10 }}>→</div>
+
+          <div style={{ padding: "10px 16px", borderRadius: 8, background: "var(--bg-detail)", textAlign: "center", minWidth: 90,
+            outline: `2px solid ${deltaColor}` }}>
+            <div className="muted fs-10">HCP SIMULADO</div>
+            <div style={{ fontSize: 22, fontWeight: 800, color: deltaColor }}>{simulation.newHI.toFixed(1)}</div>
+            <div className="muted fs-10">{simulation.newQtyCalc} melhores / {simulation.newQtyScores} SDs</div>
+          </div>
+
+          <div style={{ padding: "10px 16px", borderRadius: 8, background: "var(--bg-detail)", textAlign: "center", minWidth: 80 }}>
+            <div className="muted fs-10">VARIAÇÃO</div>
+            <div style={{ fontSize: 20, fontWeight: 800, color: deltaColor }}>
+              {simulation.delta > 0 ? "+" : ""}{simulation.delta.toFixed(1)}
+            </div>
+            <div className="muted fs-10">
+              {Math.abs(simulation.delta) < 0.05 ? "sem alteração"
+                : simulation.delta < 0 ? "↓ melhoria" : "↑ agravamento"}
+            </div>
+          </div>
+
+          <div style={{ padding: "8px 12px", borderRadius: 8, background: "var(--bg-detail)", fontSize: 11,
+            color: "var(--text-2)", lineHeight: 1.8, flex: 1, minWidth: 200 }}>
+            <div>SD introduzido: <b>{simulation.newSdVal.toFixed(1)}</b></div>
+            {displacedSd != null
+              ? <div>SD que sai: <b style={{ color: "var(--color-danger)" }}>{displacedSd.toFixed(1)}</b>
+                  {oldTopNIds.has(displacedRound!.scoreId) &&
+                    <span style={{ color: "var(--color-danger)", marginLeft: 4 }}>⚠ era top-{qtyCalc}!</span>}
+                </div>
+              : displacedRound && <div className="muted">Ronda deslocada sem SD</div>
+            }
+            <div>Novos {simulation.newQtyCalc} melhores SDs: <b>{simulation.bestNew.map(s => s.toFixed(1)).join(", ")}</b></div>
+            <div>Média dos {simulation.newQtyCalc}: <b>{simulation.newAvg?.toFixed(2)}</b>
+              {adjustTotal !== 0 && <span className="muted"> + ajuste {adjustTotal > 0 ? "+" : ""}{adjustTotal}</span>}
+            </div>
+          </div>
+        </> : (
+          <div className="muted fs-11" style={{ paddingTop: 14 }}>← Introduz um SD para simular</div>
+        )}
+      </div>
+
+      {/* Tabela simulada */}
+      {sortedSimRows && simRows && (
+        <div className="table-wrap">
+          <div className="muted fs-11 mb-6">
+            ★ = top-{simulation!.newQtyCalc} SDs (entram no cálculo) ·{" "}
+            <span style={{ color: "var(--color-good)", fontWeight: 600 }}>Verde</span> = nova ronda ·{" "}
+            <span style={{ opacity: 0.45 }}>Esbatido</span> = ronda deslocada ·{" "}
+            🔄 = mudou status top-{simulation!.newQtyCalc} · Clica no cabeçalho para ordenar
+          </div>
+          <table className="dtable" style={{ fontSize: 12 }}>
+            <thead>
+              <tr>
+                <SimTh col="pos"    label="#"     cls="r" />
+                <SimTh col="date"   label="Data" />
+                <SimTh col="course" label="Campo" />
+                <SimTh col="hcp"    label="HCP"   cls="r" />
+                <th>Tee</th>
+                <th className="r">Gross</th>
+                <th className="r">Stb</th>
+                <SimTh col="sd"     label="SD"    cls="r" />
+                <SimTh col="rank"   label="Top"   cls="r" />
+              </tr>
+            </thead>
+            <tbody>
+              {sortedSimRows.map((row, i) => {
+                const newRank  = simRows.newTopNMap.get(row.scoreId);
+                const isTop    = newRank != null;
+                const wasTop   = oldTopNIds.has(row.scoreId);
+                const entered  = isTop && !wasTop && !row.isSimulated;
+                const exited   = !isTop && wasTop && !row.isDisplaced;
+
+                return (
+                  <tr key={row.scoreId + i} style={{
+                    background: row.isSimulated
+                      ? "var(--bg-success)"
+                      : isTop && !row.isDisplaced ? "var(--bg-success)" : undefined,
+                    opacity: row.isDisplaced ? 0.35 : 1,
+                    borderTop: row.isDisplaced ? "2px dashed var(--line)" : undefined,
+                  }}>
+                    <td className="r muted" style={{ fontSize: 10 }}>
+                      {row.isDisplaced ? "↗" : row.posLabel}
+                    </td>
+                    <td>
+                      {row.isSimulated
+                        ? <span style={{ color: "var(--color-good)", fontWeight: 700 }}>Nova ronda</span>
+                        : <TeeDate date={row.date} tee={row.tee || ""} />
+                      }
+                    </td>
+                    <td style={{ fontWeight: row.isSimulated ? 600 : undefined }}>
+                      {row.isSimulated ? "—" : <CourseLink name={row.course} />}
+                    </td>
+                    <td className="r">{row.hi ?? ""}</td>
+                    <td>{row.tee ? <TeePill name={row.tee} /> : ""}</td>
+                    <td className="r">{row.gross != null ? <GrossCell gross={row.gross} par={row.par} /> : "—"}</td>
+                    <td className="r">{row.stb != null ? fmtStb(row.stb, row.holeCount) : "—"}</td>
+                    <td className="r">
+                      {row.sd != null
+                        ? <span className={`p p-${sdClassByHcp(row.sd, row.hi)}`}
+                            style={row.isSimulated ? { fontWeight: 800, fontSize: 13 } : {}}>
+                            {Number(row.sd).toFixed(1)}
+                          </span>
+                        : "—"
+                      }
+                    </td>
+                    <td className="r">
+                      {row.isDisplaced
+                        ? wasTop
+                          ? <span style={{ color: "var(--color-danger)" }}>★ saiu</span>
+                          : <span className="muted">–</span>
+                        : isTop
+                        ? <>
+                            <span className="c-par-ok">★</span>{" "}
+                            <span className="fw-700">#{newRank}</span>
+                            {entered && <span style={{ color: "var(--color-good)", marginLeft: 3 }} title="Entrou no top">🔄</span>}
+                          </>
+                        : exited
+                        ? <span style={{ color: "var(--color-danger)" }} title="Saiu do top">🔄</span>
+                        : <span className="muted">–</span>
+                      }
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+}
+
 /* ─── Last 20 Table with scorecard expansion ─── */
+type L20SortKey = "date" | "course" | "event" | "holes" | "hcp" | "tee" | "meters" | "gross" | "stb" | "sd" | "rank";
+
+function L20SortTh({ col, label, cur, dir, onSort, className }: {
+  col: L20SortKey; label: string; cur: L20SortKey; dir: 1 | -1;
+  onSort: (c: L20SortKey) => void; className?: string;
+}) {
+  const active = cur === col;
+  return (
+    <th className={className}
+      style={{ cursor: "pointer", userSelect: "none", whiteSpace: "nowrap" }}
+      onClick={() => onSort(col)}>
+      {label}
+      <span style={{ marginLeft: 3, opacity: active ? 1 : 0.25, fontSize: 10 }}>
+        {active ? (dir === -1 ? "↓" : "↑") : "↕"}
+      </span>
+    </th>
+  );
+}
+
 function Last20Table({ data, last20Table, best8 }: {
   data: PlayerPageData;
   last20Table: (RoundData & { course: string })[];
-  best8: Map<number, number>;
+  best8: Map<string, number>;
 }) {
   const [openSc, setOpenSc] = useState<string | null>(null);
+  const [sortKey, setSortKey] = useState<L20SortKey>("date");
+  const [sortDir, setSortDir] = useState<1 | -1>(-1);
+
+  // Set of scoreIds that are >= position 20 (fading rows in natural order)
+  const fadingIds = useMemo(() => {
+    const s = new Set<string>();
+    last20Table.slice(20).forEach(r => s.add(r.scoreId));
+    return s;
+  }, [last20Table]);
+
+  function handleSort(col: L20SortKey) {
+    if (col === sortKey) setSortDir(d => (d === -1 ? 1 : -1));
+    else { setSortKey(col); setSortDir(col === "date" ? -1 : col === "gross" || col === "hcp" || col === "sd" ? 1 : -1); }
+  }
+
+  const sortedRows = useMemo(() => {
+    const arr = [...last20Table];
+    arr.sort((a, b) => {
+      let av: number, bv: number;
+      switch (sortKey) {
+        case "date": av = a.dateSort; bv = b.dateSort; break;
+        case "course": return sortDir * a.course.localeCompare(b.course, "pt");
+        case "event": return sortDir * (a.eventName || "").localeCompare(b.eventName || "", "pt");
+        case "holes": av = a.holeCount; bv = b.holeCount; break;
+        case "hcp": av = a.hi ?? 999; bv = b.hi ?? 999; break;
+        case "tee": return sortDir * (a.tee || "").localeCompare(b.tee || "");
+        case "meters": av = a.meters ?? 0; bv = b.meters ?? 0; break;
+        case "gross": av = a.gross ?? 999; bv = b.gross ?? 999; break;
+        case "stb": av = a.stb ?? -999; bv = b.stb ?? -999; break;
+        case "sd": av = a.sd ?? 999; bv = b.sd ?? 999; break;
+        case "rank": av = best8.get(a.scoreId) ?? 999; bv = best8.get(b.scoreId) ?? 999; break;
+        default: av = a.dateSort; bv = b.dateSort;
+      }
+      return sortDir * (av - bv);
+    });
+    return arr;
+  }, [last20Table, sortKey, sortDir, best8]);
+
+  const thProps = { cur: sortKey, dir: sortDir, onSort: handleSort };
 
   return (
     <div className="card">
       <div className="h-xs fs-18 mb-8">📋 Últimas 20 rondas</div>
       <div className="muted mb-8 fs-11">
-        Os 8 melhores SD das últimas 20 estão assinalados com ★ · <b>*</b> = Stableford normalizado 9B→18B (+17 pts WHS) · <span style={{ opacity: 0.45 }}>Sombreado</span> = rondas a sair em breve
+        Os 8 melhores SD das últimas 20 estão assinalados com ★ · <b>*</b> = Stableford normalizado 9B→18B (+17 pts WHS) · <span style={{ opacity: 0.45 }}>Sombreado</span> = rondas a sair em breve · Clica nos cabeçalhos para ordenar
       </div>
       <div className="table-wrap">
         <table className="dtable">
           <thead>
             <tr>
-              <th>Data</th><th>Campo</th><th>Prova</th>
-              <th className="r">Bur.</th><th className="r">HCP</th><th>Tee</th>
-              <th className="r">Dist.</th><th className="r">Gross</th><th className="r">Stb</th>
-              <th className="r">SD</th><th className="r">Top 8</th>
+              <L20SortTh col="date" label="Data" {...thProps} />
+              <L20SortTh col="course" label="Campo" {...thProps} />
+              <L20SortTh col="event" label="Prova" {...thProps} />
+              <L20SortTh col="holes" label="Bur." {...thProps} className="r" />
+              <L20SortTh col="hcp" label="HCP" {...thProps} className="r" />
+              <L20SortTh col="tee" label="Tee" {...thProps} />
+              <L20SortTh col="meters" label="Dist." {...thProps} className="r" />
+              <L20SortTh col="gross" label="Gross" {...thProps} className="r" />
+              <L20SortTh col="stb" label="Stb" {...thProps} className="r" />
+              <L20SortTh col="sd" label="SD" {...thProps} className="r" />
+              <L20SortTh col="rank" label="Top 8" {...thProps} className="r" />
             </tr>
           </thead>
           <tbody>
-            {last20Table.map((r, i) => {
-              const rank = best8.get(i);
+            {sortedRows.map((r) => {
+              const rank = best8.get(r.scoreId);
               const isBest8 = rank != null;
-              const isFading = i >= 20;
+              const isFading = fadingIds.has(r.scoreId);
               const isOpen = openSc === r.scoreId;
               const holes = data.HOLES[String(r.scoreId)];
 
@@ -1803,7 +2221,6 @@ function Last20Table({ data, last20Table, best8 }: {
                   <tr style={{
                     ...(isBest8 ? { background: "var(--bg-success)" } : {}),
                     ...(isFading ? { opacity: 0.4 } : {}),
-                    ...(i === 20 ? { borderTop: "3px solid var(--color-good)" } : {}),
                   }}>
                     <td>
                       {holes ? (
@@ -2815,6 +3232,15 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
   // Stats (safe even when data is null)
   const totalCourses = data?.DATA.length ?? 0;
   const totalRounds = data?.DATA.reduce((a, c) => a + c.count, 0) ?? 0;
+  const curYear = String(new Date().getFullYear());
+  const roundsThisYear = useMemo(() => {
+    if (!data) return 0;
+    let n = 0;
+    data.DATA.forEach(c => c.rounds.forEach(r => {
+      if (r.date && r.date.slice(-4) === curYear) n++;
+    }));
+    return n;
+  }, [data, curYear]);
 
   // Current HCP = post-round value from HCP_INFO (not pre-round r.hi)
   const latestHcp = data?.HCP_INFO?.current != null ? Number(data.HCP_INFO.current) : null;
@@ -2871,6 +3297,7 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
           ))}
           {totalCourses > 0 && <span className="p p-outline">{totalCourses} campos</span>}
           {totalRounds > 0 && <span className="p p-outline">{totalRounds} voltas</span>}
+          {roundsThisYear > 0 && <span className="p p-outline" title={`Rondas em ${curYear}`}>{roundsThisYear} em {curYear}</span>}
           {meta?.lastUpdate && <span className="muted fs-11">Últ. act.: {meta.lastUpdate}</span>}
         </div>
       </div>
