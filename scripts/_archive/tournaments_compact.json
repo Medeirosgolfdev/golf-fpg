@@ -1,0 +1,153 @@
+# Configuracao
+$jsonPath = "$env:USERPROFILE\Downloads\tournaments_compact.json"
+$outputDir = "$env:USERPROFILE\Downloads\uskids_batches"
+$startFrom = 0
+$endAt = 179
+$batchSize = 10
+$delayTorneio = 1000
+$delayFlight = 500
+
+# Criar pasta de output
+New-Item -ItemType Directory -Force -Path $outputDir | Out-Null
+
+# Carregar torneios
+$torneios = Get-Content $jsonPath -Raw | ConvertFrom-Json
+Write-Host "Carregados: $($torneios.Count) torneios. A processar $startFrom a $endAt" -ForegroundColor Green
+
+$base = "https://www.signupanytime.com/plugins/links/admin/LinksAJAX.aspx"
+$iframeBase = "https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t="
+
+$batch = @()
+$batchNum = [math]::Floor($startFrom / $batchSize)
+
+for ($i = $startFrom; $i -le [math]::Min($endAt, $torneios.Count - 1); $i++) {
+    $t = $torneios[$i]
+    $tId = if ($t.t) { $t.t } else { $t.signupanytime_t }
+    $tName = if ($t.n) { $t.n } else { $t.name }
+    $tCat = if ($t.c) { $t.c } else { $t.category }
+    
+    Write-Host "$($i+1)/$($endAt+1) [$tCat] $tName (t=$tId)" -ForegroundColor Cyan
+    
+    $tournamentData = @{
+        category = $tCat
+        name = $tName
+        signupanytime_t = $tId
+        flights = @()
+        meta = $null
+        error = $null
+        method = $null
+    }
+    
+    try {
+        # Metodo B: GetMeta
+        $metaUrl = "$base`?op=GetMeta&t=$tId"
+        $meta = Invoke-RestMethod -Uri $metaUrl -Method Get -TimeoutSec 30
+        
+        $flightList = @()
+        
+        if ($meta.flights -and ($meta.flights.PSObject.Properties | Measure-Object).Count -gt 0) {
+            $tournamentData.meta = @{
+                tournament = $meta.tournament
+                courses = $meta.courses
+                age_groups = $meta.age_groups
+            }
+            foreach ($fId in $meta.flights.PSObject.Properties.Name) {
+                $agId = $meta.flights.$fId.age_group.ToString()
+                $agName = if ($meta.age_groups.$agId) { $meta.age_groups.$agId.name } else { "Unknown" }
+                $flightList += @{ id = $fId; name = $agName; age_group_id = $agId }
+            }
+            $tournamentData.method = "meta"
+        }
+        
+        # Metodo A: HTML iframe (fallback)
+        if ($flightList.Count -eq 0) {
+            Write-Host "  GetMeta sem flights, a tentar HTML..." -ForegroundColor Yellow
+            Start-Sleep -Milliseconds 300
+            try {
+                $html = Invoke-WebRequest -Uri "$iframeBase$tId" -TimeoutSec 30 -UseBasicParsing
+                $pattern = '<option\s+value="(\d+)"[^>]*>([^<]+)</option>'
+                $matches2 = [regex]::Matches($html.Content, $pattern)
+                foreach ($m in $matches2) {
+                    if ($m.Groups[1].Value -ne "") {
+                        $flightList += @{ id = $m.Groups[1].Value; name = $m.Groups[2].Value.Trim(); age_group_id = $null }
+                    }
+                }
+                if ($flightList.Count -gt 0) { $tournamentData.method = "html" }
+            } catch {}
+        }
+        
+        if ($flightList.Count -eq 0) {
+            Write-Host "  Sem flights (ambos metodos)" -ForegroundColor Red
+            $tournamentData.error = "no_flights_both_methods"
+            $tournamentData.method = "none"
+        } else {
+            Write-Host "  $($flightList.Count) flights (via $($tournamentData.method))" -ForegroundColor Green
+            
+            foreach ($flight in $flightList) {
+                try {
+                    $url = "$base`?op=GetPlayerTeeTimes&f=$($flight.id)&r=2&p=1&t=0"
+                    $fData = Invoke-RestMethod -Uri $url -Method Get -TimeoutSec 30
+                    
+                    $playerCount = 0
+                    if ($fData.flight_players) {
+                        $playerCount = ($fData.flight_players.PSObject.Properties | Measure-Object).Count
+                    }
+                    
+                    if ($playerCount -eq 0) {
+                        $url = "$base`?op=GetPlayerTeeTimes&f=$($flight.id)&r=2&p=1&t=1"
+                        $fData = Invoke-RestMethod -Uri $url -Method Get -TimeoutSec 30
+                        if ($fData.flight_players) {
+                            $playerCount = ($fData.flight_players.PSObject.Properties | Measure-Object).Count
+                        }
+                    }
+                    
+                    $tournamentData.flights += @{
+                        flight_id = $flight.id
+                        flight_name = $flight.name
+                        age_group_id = $flight.age_group_id
+                        player_count = $playerCount
+                        data = $fData
+                    }
+                    
+                    if ($playerCount -gt 0) {
+                        Write-Host "    $($flight.name): $playerCount jogadores" -ForegroundColor Gray
+                    }
+                } catch {
+                    $tournamentData.flights += @{
+                        flight_id = $flight.id
+                        flight_name = $flight.name
+                        player_count = 0
+                        data = $null
+                        error = $_.Exception.Message
+                    }
+                }
+                Start-Sleep -Milliseconds $delayFlight
+            }
+        }
+    } catch {
+        $tournamentData.error = $_.Exception.Message
+        Write-Host "  ERRO: $($_.Exception.Message)" -ForegroundColor Red
+    }
+    
+    $batch += $tournamentData
+    
+    if ($batch.Count -ge $batchSize) {
+        $batchNum++
+        $fileName = "scorecards_v2_batch_{0:D3}.json" -f $batchNum
+        $batch | ConvertTo-Json -Depth 20 -Compress | Set-Content -Path "$outputDir\$fileName" -Encoding UTF8
+        Write-Host "Batch $batchNum guardado ($($batch.Count) torneios)" -ForegroundColor Magenta
+        $batch = @()
+    }
+    
+    Start-Sleep -Milliseconds $delayTorneio
+}
+
+# Guardar ultimo batch
+if ($batch.Count -gt 0) {
+    $batchNum++
+    $fileName = "scorecards_v2_batch_{0:D3}.json" -f $batchNum
+    $batch | ConvertTo-Json -Depth 20 -Compress | Set-Content -Path "$outputDir\$fileName" -Encoding UTF8
+    Write-Host "Batch $batchNum guardado ($($batch.Count) torneios)" -ForegroundColor Magenta
+}
+
+Write-Host "`nFEITO! $($batchNum) batches guardados em $outputDir" -ForegroundColor Green
