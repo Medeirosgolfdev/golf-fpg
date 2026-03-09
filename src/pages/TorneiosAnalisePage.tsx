@@ -15,9 +15,16 @@
  */
 import React, { useEffect, useState, useMemo } from "react";
 import { useAppContext } from "../context/AppContext";
-import { scClass, SC, sdClassByHcp } from "../utils/scoreDisplay";
-import { getTeeHex, teeBorder } from "../utils/teeColors";
+import { SC } from "../utils/scoreDisplay";
+import { getTeeHex } from "../utils/teeColors";
 import PillBadge from "../ui/PillBadge";
+import { ScorecardLeaderboard, type ScorecardRow } from "../ui/ScorecardLeaderboard";
+import { MultiRoundLeaderboard, type MultiRoundRow as MRRow } from "../ui/MultiRoundLeaderboard";
+import {
+  MANUEL_FED, isManuel, fmtTP,
+  EscPill, TeeDot, TournPName, ESC_STYLE, SDPill,
+  type PlayersDB,
+} from "../ui/tournamentPrimitives";
 
 /* ─────────────────────────────────────────────
    CONFIGURAÇÃO
@@ -103,18 +110,13 @@ interface FileMeta {
   lastUpdated?: string; source?: string; count: number;
 }
 
-/* fedCode → { escalao, club, name, hcp, sex } */
-interface PlayerInfo { escalao?: string; club?: { short?: string }; name?: string; hcpExact?: number; sex?: string }
-type PlayersDB = Record<string, PlayerInfo>;
+/* PlayersDB, MANUEL_FED importados de tournamentPrimitives */
 type EscLookup = Map<string, string>; // fedCode → escalão normalizado
-
-const MANUEL_FED = "52884";
 
 function buildEscLookup(playersDB: PlayersDB): EscLookup {
   const m = new Map<string, string>();
   for (const [fed, info] of Object.entries(playersDB)) {
     if (info.escalao) {
-      // Normaliza: "Sub-12" → "Sub 12"
       m.set(fed, info.escalao.replace("-", " ").replace(/sub(\d)/i, "Sub $1").trim());
     }
   }
@@ -267,11 +269,7 @@ function numGross(p: Player): number {
   return typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : (p.grossTotal as number) ?? 999;
 }
 
-function fmtTP(v: number | null): string {
-  if (v == null) return "–";
-  if (v === 0) return "E";
-  return v > 0 ? `+${v}` : `${v}`;
-}
+/* fmtTP importado de tournamentPrimitives */
 
 /* ─────────────────────────────────────────────
    AGRUPAMENTO AUTOMÁTICO DE RONDAS (Dia 1 / Dia 2 → torneio sintético)
@@ -476,264 +474,71 @@ function computeSD(p: Player): SDResult {
   }
   return { sd: null, source: null };
 }
-function sdClass(sd: number, hcp: number | null | undefined): string {
-  if (hcp == null) return "";
-  if (sd <= hcp) return "sd-excellent";
-  if (sd <= hcp + 3) return "sd-good";
-  return "sd-poor";
-}
-function SDCell({ sd, source, hcp, style }: { sd: number | null; source: string | null; hcp?: number | null; style?: React.CSSProperties }) {
-  if (sd == null) return <td className="r" style={style}>–</td>;
-  const cls = sdClass(sd, hcp);
-  const tip = source === "ags" ? "" : "≈";
-  return (
-    <td className="r" style={style}>
-      <span className={cls ? `p p-sm p-${cls}` : ""}>{sd.toFixed(1)}</span>
-      {tip && <span style={{ fontSize: 7, color: "var(--text-muted)", marginLeft: 1 }}>{tip}</span>}
-    </td>
-  );
-}
 
 
 /* ─────────────────────────────────────────────
-   FILTROS DE JOGADORES
+   FILTROS DE JOGADORES (ScorecardLB — usa Player[])
+   Nota: MultiRoundLeaderboard tem versão própria para MultiRoundRow[]
    ───────────────────────────────────────────── */
 interface PlayerFilter {
-  name: string;
-  escs: string[];
-  tees: string[];
-  club: string;
+  name: string; escs: string[]; tees: string[]; club: string;
 }
 const EMPTY_FILTER: PlayerFilter = { name: "", escs: [], tees: [], club: "" };
 
 function filterPlayers(players: Player[], f: PlayerFilter, escLookup: EscLookup, playersDB: PlayersDB): Player[] {
   let ps = players;
-  if (f.name) {
-    const q = f.name.toLowerCase();
-    ps = ps.filter(p => p.name.toLowerCase().includes(q) || (p.club || "").toLowerCase().includes(q));
-  }
+  if (f.name) { const q = f.name.toLowerCase(); ps = ps.filter(p => p.name.toLowerCase().includes(q) || (p.club || "").toLowerCase().includes(q)); }
   if (f.escs.length) ps = ps.filter(p => f.escs.includes(resolveEsc(p, escLookup)));
   if (f.tees.length) ps = ps.filter(p => p.teeName != null && f.tees.includes(p.teeName));
   if (f.club) ps = ps.filter(p => p.club === f.club);
   return ps;
 }
-
-function toggleArr(arr: string[], v: string): string[] {
-  return arr.includes(v) ? arr.filter(x => x !== v) : [...arr, v];
-}
-
-function PlayerFilterBar({
-  players, filter, onChange, escLookup, playersDB, total,
-}: {
-  players: Player[]; filter: PlayerFilter;
-  onChange: (f: PlayerFilter) => void;
+function toggleArr(arr: string[], v: string): string[] { return arr.includes(v) ? arr.filter(x => x !== v) : [...arr, v]; }
+function PlayerFilterBar({ players, filter, onChange, escLookup, playersDB, total }: {
+  players: Player[]; filter: PlayerFilter; onChange: (f: PlayerFilter) => void;
   escLookup: EscLookup; playersDB: PlayersDB; total: number;
 }) {
-  const availEsc = useMemo(() => {
-    const s = new Set<string>();
-    for (const p of players) { const e = resolveEsc(p, escLookup); if (e) s.add(e); }
-    return [...s].sort((a, b) => a.localeCompare(b));
-  }, [players, escLookup]);
-
-  const availTees = useMemo(() => {
-    const s = new Set<string>();
-    for (const p of players) if (p.teeName) s.add(p.teeName);
-    return [...s].sort();
-  }, [players]);
-
-  const availClubs = useMemo(() => {
-    const s = new Set<string>();
-    for (const p of players) if (p.club) s.add(p.club);
-    return [...s].sort((a, b) => a.localeCompare(b, "pt"));
-  }, [players]);
-
+  const availEsc   = useMemo(() => { const s = new Set<string>(); for (const p of players) { const e = resolveEsc(p, escLookup); if (e) s.add(e); } return [...s].sort((a,b) => a.localeCompare(b)); }, [players, escLookup]);
+  const availTees  = useMemo(() => { const s = new Set<string>(); for (const p of players) if (p.teeName) s.add(p.teeName); return [...s].sort(); }, [players]);
+  const availClubs = useMemo(() => { const s = new Set<string>(); for (const p of players) if (p.club) s.add(p.club); return [...s].sort((a,b) => a.localeCompare(b,"pt")); }, [players]);
   const isActive = filter.name || filter.escs.length || filter.tees.length || filter.club;
   const filtered = useMemo(() => filterPlayers(players, filter, escLookup, playersDB), [players, filter, escLookup, playersDB]);
-  const showing = filtered.length;
-  const hasMultipleOptions = availClubs.length > 1 || availEsc.length > 1 || availTees.length > 1;
-
+  const hasOpts = availClubs.length > 1 || availEsc.length > 1 || availTees.length > 1;
   if (total < 8 && !isActive) return null;
-
   const chip = (active: boolean, label: React.ReactNode, onClick: () => void, color?: string): React.ReactNode => (
-    <button key={String(label)} onClick={onClick} style={{
-      fontSize: 10, padding: "2px 8px", borderRadius: 20,
-      border: `1px solid ${active ? (color || "var(--accent,#2563eb)") : "var(--border)"}`,
-      background: active ? (color || "var(--accent,#2563eb)") : "var(--bg-hover)",
-      color: active ? "#fff" : "var(--text-muted)",
-      cursor: "pointer", whiteSpace: "nowrap", fontWeight: active ? 700 : 500,
-      transition: "all .12s",
-    }}>{label}</button>
+    <button key={String(label)} onClick={onClick} style={{ fontSize:10, padding:"2px 8px", borderRadius:20,
+      border:`1px solid ${active?(color||"var(--accent,#2563eb)"):"var(--border)"}`,
+      background:active?(color||"var(--accent,#2563eb)"):"var(--bg-hover)", color:active?"#fff":"var(--text-muted)",
+      cursor:"pointer", whiteSpace:"nowrap", fontWeight:active?700:500 }}>{label}</button>
   );
-
   return (
-    <div style={{
-      display: "flex", flexWrap: "wrap", alignItems: "center", gap: 6,
-      padding: "6px 0 8px", borderBottom: "1px solid var(--border)", marginBottom: 8,
-    }}>
-      {/* Pesquisa */}
-      <div style={{ position: "relative", flexShrink: 0 }}>
-        <span style={{ position: "absolute", left: 7, top: "50%", transform: "translateY(-50%)", fontSize: 11, color: "var(--text-muted)", pointerEvents: "none" }}>🔍</span>
-        <input
-          type="text"
-          placeholder="Nome ou clube…"
-          value={filter.name}
-          onChange={e => onChange({ ...filter, name: e.target.value })}
-          style={{
-            fontSize: 11, padding: "3px 8px 3px 22px", borderRadius: 6,
-            border: "1px solid var(--border)", background: "var(--bg-card,#fff)",
-            color: "var(--text)", width: 140, outline: "none",
-          }}
-        />
+    <div style={{ display:"flex", flexWrap:"wrap", alignItems:"center", gap:6, padding:"6px 0 8px", borderBottom:"1px solid var(--border)", marginBottom:8 }}>
+      <div style={{ position:"relative", flexShrink:0 }}>
+        <span style={{ position:"absolute", left:7, top:"50%", transform:"translateY(-50%)", fontSize:11, color:"var(--text-muted)", pointerEvents:"none" }}>🔍</span>
+        <input type="text" placeholder="Nome ou clube…" value={filter.name} onChange={e => onChange({ ...filter, name:e.target.value })}
+          style={{ fontSize:11, padding:"3px 8px 3px 22px", borderRadius:6, border:"1px solid var(--border)", background:"var(--bg-card,#fff)", color:"var(--text)", width:140, outline:"none" }} />
       </div>
-
-      {/* Separador */}
-      {hasMultipleOptions && <span style={{ color: "var(--border)", fontSize: 11 }}>|</span>}
-
-      {/* Escalão chips */}
-      {availEsc.length > 1 && availEsc.map(e => {
-        const key = e.toLowerCase().replace(/[\s-]/g, "");
-        const s = ESC_STYLE[key];
-        return chip(filter.escs.includes(e), e, () => onChange({ ...filter, escs: toggleArr(filter.escs, e) }), s?.bg);
-      })}
-
-      {/* Tee chips */}
-      {availTees.length > 1 && availTees.map(t => {
-        const hex = getTeeHex(t);
-        return chip(
-          filter.tees.includes(t),
-          <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
-            <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: 2, background: hex, border: "1px solid rgba(0,0,0,.18)" }} />
-            {t}
-          </span>,
-          () => onChange({ ...filter, tees: toggleArr(filter.tees, t) }),
-          hex,
-        );
-      })}
-
-      {/* Clube dropdown */}
-      {availClubs.length > 2 && (
-        <select
-          value={filter.club}
-          onChange={e => onChange({ ...filter, club: e.target.value })}
-          style={{
-            fontSize: 11, padding: "3px 6px", borderRadius: 6,
-            border: `1px solid ${filter.club ? "var(--accent,#2563eb)" : "var(--border)"}`,
-            background: "var(--bg-card,#fff)", color: "var(--text)", cursor: "pointer",
-            fontWeight: filter.club ? 700 : 400,
-          }}
-        >
-          <option value="">Todos os clubes</option>
-          {availClubs.map(c => <option key={c} value={c}>{c}</option>)}
-        </select>
-      )}
-
-      {/* Resultado + limpar */}
-      {isActive && (
-        <>
-          <span style={{ fontSize: 10, color: "var(--text-muted)", marginLeft: 2 }}>
-            {showing} de {total}
-          </span>
-          <button onClick={() => onChange(EMPTY_FILTER)} style={{
-            fontSize: 10, padding: "2px 8px", borderRadius: 20,
-            border: "1px solid var(--border)", background: "var(--bg-hover)",
-            color: "var(--text-muted)", cursor: "pointer",
-          }}>✕ limpar</button>
-        </>
-      )}
+      {hasOpts && <span style={{ color:"var(--border)", fontSize:11 }}>|</span>}
+      {availEsc.length > 1 && availEsc.map(e => { const k = e.toLowerCase().replace(/[\s-]/g,""); const s = ESC_STYLE[k]; return chip(filter.escs.includes(e), e, () => onChange({ ...filter, escs:toggleArr(filter.escs,e) }), s?.bg); })}
+      {availTees.length > 1 && availTees.map(t => { const hex = getTeeHex(t); return <React.Fragment key={t}>{chip(filter.tees.includes(t), <span style={{ display:"flex", alignItems:"center", gap:4 }}><span style={{ display:"inline-block", width:8, height:8, borderRadius:2, background:hex, border:"1px solid rgba(0,0,0,.18)" }} />{t}</span>, () => onChange({ ...filter, tees:toggleArr(filter.tees,t) }), hex)}</React.Fragment>; })}
+      {availClubs.length > 2 && <select value={filter.club} onChange={e => onChange({ ...filter, club:e.target.value })} style={{ fontSize:11, padding:"3px 6px", borderRadius:6, border:`1px solid ${filter.club?"var(--accent,#2563eb)":"var(--border)"}`, background:"var(--bg-card,#fff)", color:"var(--text)", cursor:"pointer", fontWeight:filter.club?700:400 }}><option value="">Todos os clubes</option>{availClubs.map(c => <option key={c} value={c}>{c}</option>)}</select>}
+      {isActive && <><span style={{ fontSize:10, color:"var(--text-muted)", marginLeft:2 }}>{filtered.length} de {total}</span><button onClick={() => onChange(EMPTY_FILTER)} style={{ fontSize:10, padding:"2px 8px", borderRadius:20, border:"1px solid var(--border)", background:"var(--bg-hover)", color:"var(--text-muted)", cursor:"pointer" }}>✕ limpar</button></>}
     </div>
   );
 }
 
-/* ─────────────────────────────────────────────
-   ESCALÃO PILL — cores idênticas ao Drive (inline para não depender do CSS)
-   Sub 10 → verde muito escuro  Sub 12 → verde escuro
-   Sub 14 → verde médio         Sub 16 → verde claro   Sub 18 → verde pálido
-   ───────────────────────────────────────────── */
-const ESC_STYLE: Record<string, { bg: string; color: string }> = {
-  "sub10":  { bg: "#2a5a18", color: "#fff" },
-  "sub12":  { bg: "#3a7a28", color: "#fff" },
-  "sub14":  { bg: "#5a9a40", color: "#fff" },
-  "sub16":  { bg: "#7aba60", color: "#1a3a10" },
-  "sub18":  { bg: "#a0d480", color: "#1a3a10" },
-};
-function EscPill({ esc }: { esc: string }) {
-  if (!esc) return null;
-  const key = esc.toLowerCase().replace(/[\s-]/g, "");
-  const s = ESC_STYLE[key] ?? { bg: "var(--bg-hover)", color: "var(--text-muted)" };
-  return (
-    <span className="p p-sm" style={{ background: s.bg, color: s.color, borderColor: "transparent" }}>
-      {esc}
-    </span>
-  );
-}
+/* EscPill, TeeDot, isManuel importados de tournamentPrimitives */
 
-/* ─────────────────────────────────────────────
-   TEE DOT — quadrado colorido com tooltip (usa getTeeHex do projecto)
-   ───────────────────────────────────────────── */
-function TeeDot({ teeName }: { teeName?: string }) {
-  if (!teeName) return <span className="muted">–</span>;
-  const hex = getTeeHex(teeName);
-  const border = teeBorder(hex) || "1px solid rgba(0,0,0,.18)";
-  return (
-    <span
-      title={teeName}
-      style={{
-        display: "inline-block", width: 12, height: 12,
-        borderRadius: 3, background: hex, border, verticalAlign: "middle",
-        cursor: "default", flexShrink: 0,
-      }}
-    />
-  );
-}
+/* PName — alias local */
+const PName = ({ name, fedCode, playersDB }: { name: string; fedCode?: string; playersDB: PlayersDB }) =>
+  <TournPName name={name} fedCode={fedCode} playersDB={playersDB} />;
 
-
-/* ─────────────────────────────────────────────
-   NOME DO JOGADOR — sublinhado + link se tiver perfil
-   ───────────────────────────────────────────── */
-const isManuel = (p: { name: string; fedCode?: string }) =>
-  p.fedCode === MANUEL_FED ||
-  (p.name.includes("Manuel") && (p.name.includes("Medeiros") || p.name.includes("Goulartt")));
-
-function PName({ name, fedCode, playersDB }: { name: string; fedCode?: string; playersDB: PlayersDB }) {
-  const hasProfile = !!(fedCode && playersDB[fedCode]);
-  const sex = fedCode ? playersDB[fedCode]?.sex : undefined;
-  const truncName = name.length > 28 ? name.substring(0, 26) + "…" : name;
-  return (
-    <span
-      className={"tourn-pname" + (hasProfile ? " tourn-pname-link" : "")}
-      style={{ fontSize: 12 }}
-      onClick={hasProfile ? () => window.open("/jogadores/" + fedCode, "_blank") : undefined}>
-      {truncName}
-      {sex === "M" && <span className="jog-sex-inline jog-sex-M" style={{ marginLeft: 4 }}>M</span>}
-      {sex === "F" && <span className="jog-sex-inline jog-sex-F" style={{ marginLeft: 4 }}>F</span>}
-      {(fedCode === MANUEL_FED) && <span style={{ marginLeft: 3, fontSize: 10 }}>⭐</span>}
-    </span>
-  );
-}
-
-/* ─────────────────────────────────────────────
-   SORTABLE HEADER
-   ───────────────────────────────────────────── */
+/* SortKey — usado pelo ScorecardLB */
 type SortKey = "pos" | "name" | "club" | "esc" | "hcp" | "gross" | "toPar" | "tee" | "sd";
-
-function SortTh({ children, sortKey, current, dir, onSort, style, className }: {
-  children: React.ReactNode; sortKey: SortKey; current: SortKey; dir: "asc" | "desc";
-  onSort: (k: SortKey) => void; style?: React.CSSProperties; className?: string;
-}) {
-  const active = current === sortKey;
-  return (
-    <th className={className}
-      style={{ ...style, cursor: "pointer", userSelect: "none", whiteSpace: "nowrap" }}
-      onClick={() => onSort(sortKey)}>
-      {children}
-      {active && <span style={{ marginLeft: 2, fontSize: 8 }}>{dir === "asc" ? "▲" : "▼"}</span>}
-    </th>
-  );
-}
 
 /* ─────────────────────────────────────────────
    LEADERBOARD PRINCIPAL (1 ronda)
-   Estilo Drive Tour: colunas FED · ESC · CLUBE · HCP · TEE + buraco-a-buraco
+   Colunas idênticas ao Drive: ESC · FED · CLUBE · HCP · TEE · Tot · ± · SD · 🐦 · Par · ■
    ───────────────────────────────────────────── */
 function ScorecardLB({ tournament, escLookup, playersDB }: { tournament: Tournament; escLookup: EscLookup; playersDB: PlayersDB }) {
   const [sortKey, setSortKey] = useState<SortKey>("pos");
@@ -751,9 +556,6 @@ function ScorecardLB({ tournament, escLookup, playersDB }: { tournament: Tournam
   const refP = rawPlayers[0];
   const par = refP.par || [];
   const nh = par.length;
-  const is9 = nh <= 9;
-  const parF9 = par.slice(0, 9).reduce((a, b) => a + b, 0);
-  const parB9 = !is9 ? par.slice(9, 18).reduce((a, b) => a + b, 0) : 0;
   const parTotal = par.reduce((a, b) => a + b, 0);
   const si = refP.si || [];
 
@@ -775,6 +577,7 @@ function ScorecardLB({ tournament, escLookup, playersDB }: { tournament: Tournam
     if (k === sortKey) setSortDir(d => d === "asc" ? "desc" : "asc");
     else { setSortKey(k); setSortDir("asc"); }
   }
+
   const sorted = useMemo(() => [...filteredPlayers].sort((a, b) => {
     let av: any, bv: any;
     switch (sortKey) {
@@ -793,135 +596,104 @@ function ScorecardLB({ tournament, escLookup, playersDB }: { tournament: Tournam
     return sortDir === "asc" ? av - bv : bv - av;
   }), [filteredPlayers, sortKey, sortDir, parTotal, escLookup]);
 
-  function SortableHH({ k, children, style }: { k: SortKey; children: React.ReactNode; style?: React.CSSProperties }) {
+  function SortableHdr({ k, children, className }: { k: SortKey; children: React.ReactNode; className?: string }) {
+    const active = sortKey === k;
     return (
-      <th className="hole-header" style={{ cursor: "pointer", userSelect: "none", ...style }}
+      <th className={"lb-sortable " + (className || "")}
         onClick={() => handleSort(k)}>
-        {children}{sortKey === k && <span style={{ marginLeft: 2, fontSize: 7 }}>{sortDir === "asc" ? "▲" : "▼"}</span>}
+        {children}{active && <span style={{ marginLeft: 2, fontSize: 7 }}>{sortDir === "asc" ? "▲" : "▼"}</span>}
       </th>
     );
   }
 
-  const bS = "1px solid var(--border-light, #e5e7eb)";
+  const rows: ScorecardRow[] = sorted.map((p, idx) => {
+    const gross = numGross(p);
+    const dp = (p as any)._pos;
+    const showPos = idx === 0 || dp !== (sorted[idx - 1] as any)._pos;
+    const medal = dp === 1 ? "🥇" : dp === 2 ? "🥈" : dp === 3 ? "🥉" : null;
+    const posDisplay = sortKey === "pos" ? (showPos ? (medal ?? dp) : "") : (medal ?? dp);
+    const esc = resolveEsc(p, escLookup) || tournament.escalao || "";
+    const { sd, source } = computeSD(p);
+    const rowBg = isManuel(p) ? "var(--bg-success-subtle)" : undefined;
+
+    // Birdies / pars / bogeys
+    const scores = p.scores || [];
+    let birds = 0, pars = 0, bogs = 0;
+    for (let i = 0; i < scores.length && i < par.length; i++) {
+      const d = scores[i] - par[i];
+      if (d <= -1) birds++;
+      else if (d === 0) pars++;
+      else bogs++;
+    }
+
+    return {
+      key: p.scoreId || idx,
+      pos: posDisplay,
+      gross,
+      toPar: gross - parTotal,
+      scores,
+      rowBg,
+      nameContent: <PName name={p.name} fedCode={p.fedCode} playersDB={playersDB} />,
+      prefixCells: <>
+        <td className="lb-esc">{esc ? <EscPill esc={esc} /> : <span className="muted">–</span>}</td>
+        <td className="lb-fed">{p.fedCode || "–"}</td>
+        <td className="lb-club">{p.club || "–"}</td>
+        <td className="lb-hcp">{p.hcpExact != null ? p.hcpExact.toFixed(1) : "–"}</td>
+        <td className="lb-tee"><TeeDot teeName={p.teeName} /></td>
+      </>,
+      postScorecardCells: <>
+        <td className="lb-sd">
+          {sd != null
+            ? <SDPill sd={sd} source={source} hcp={p.hcpExact ?? null} />
+            : <span className="muted">–</span>}
+        </td>
+        <td className="lb-bird">{birds || ""}</td>
+        <td className="lb-par-stat">{pars || ""}</td>
+        <td className="lb-bog">{bogs || ""}</td>
+      </>,
+    };
+  });
 
   return (
-    <div>
-      <div className="muted fs-11 mb-8 p-0-4px" style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+    <ScorecardLeaderboard
+      par={par}
+      si={si.length >= nh ? si : undefined}
+      rows={rows}
+      parLabelColSpan={5}
+      postTotalColCount={0}
+      showScorecard={showScorecard}
+      onToggleScorecard={() => setShowScorecard(v => !v)}
+      metaLine={<>
         <span>{rawPlayers.length} jog · Par {parTotal} · {nh}h</span>
         {avg > 0 && <span>· Média {avg.toFixed(1)} ({fmtTP(Math.round(avg - parTotal))})</span>}
         {refP.course && <span>· 📍 {refP.course}</span>}
         {refP.courseRating && <span>· CR {refP.courseRating}</span>}
         {refP.slope && <span>· Slope {refP.slope}</span>}
-        <button onClick={() => setShowScorecard(v => !v)} style={{
-          marginLeft: "auto", fontSize: 11, padding: "2px 8px", borderRadius: 4,
-          border: "1px solid var(--border)", background: "var(--bg-hover)", cursor: "pointer",
-        }}>
-          {showScorecard ? "Ocultar scorecard" : "Ver scorecard"}
-        </button>
-      </div>
-      <PlayerFilterBar
-        players={rawPlayers} filter={filter} onChange={setFilter}
-        escLookup={escLookup} playersDB={playersDB} total={rawPlayers.length}
-      />
-      <div className="bjgt-chart-scroll">
-        <table className="sc-table-modern" data-sc-table="1">
-          <thead>
-            {showScorecard && <>
-              {si.length >= nh && (
-                <tr className="meta-row">
-                  <td className="sticky-col-0" />
-                  <td className="row-label par-label sticky-col-1" colSpan={7}>S.I.</td>
-                  <td /><td />
-                  {si.slice(0, 9).map((v, i) => <td key={i}>{v}</td>)}
-                  <td className="col-out" />
-                  {!is9 && si.slice(9, 18).map((v, i) => <td key={i}>{v}</td>)}
-                  {!is9 && <td className="col-in" />}
-                </tr>
-              )}
-              <tr className="sep-row">
-                <td className="sticky-col-0" />
-                <td className="row-label par-label sticky-col-1" colSpan={7}>PAR</td>
-                <td className="col-total">{parTotal}</td>
-                <td />
-                {par.slice(0, 9).map((v, i) => <td key={i}>{v}</td>)}
-                <td className="col-out fw-600">{parF9}</td>
-                {!is9 && par.slice(9, 18).map((v, i) => <td key={i}>{v}</td>)}
-                {!is9 && <td className="col-in fw-600">{parB9}</td>}
-              </tr>
-            </>}
-            <tr>
-              <th className="hole-header" style={{ textAlign: "center", width: 26, position: "sticky", left: 0, zIndex: 5, background: "var(--bg-card,#fff)", cursor: "pointer" }} onClick={() => handleSort("pos")}>
-                #{sortKey === "pos" && <span style={{ marginLeft: 1, fontSize: 7 }}>{sortDir === "asc" ? "▲" : "▼"}</span>}
-              </th>
-              <th className="hole-header" style={{ textAlign: "left", paddingLeft: 6, position: "sticky", left: 26, zIndex: 5, background: "var(--bg-card,#fff)", boxShadow: "2px 0 4px rgba(0,0,0,0.06)", minWidth: 135, cursor: "pointer" }} onClick={() => handleSort("name")}>
-                Jogador{sortKey === "name" && <span style={{ marginLeft: 2, fontSize: 7 }}>{sortDir === "asc" ? "▲" : "▼"}</span>}
-              </th>
-              <SortableHH k="esc"  style={{ width: 52 }}>ESC.</SortableHH>
-              <th className="hole-header" style={{ width: 44, fontSize: 10 }}>FED</th>
-              <SortableHH k="club" style={{ width: 68, whiteSpace: "nowrap" }}>CLUBE</SortableHH>
-              <SortableHH k="hcp"  style={{ width: 34 }}>HCP</SortableHH>
-              <SortableHH k="tee"  style={{ width: 22 }}>TEE</SortableHH>
-              <th className="hole-header col-total" style={{ width: 30, borderLeft: bS }}>Tot</th>
-              <SortableHH k="toPar" style={{ width: 30 }}>±</SortableHH>
-              <SortableHH k="sd"    style={{ width: 38, borderLeft: bS }}>SD</SortableHH>
-              {showScorecard && <>
-                {Array.from({ length: Math.min(9, nh) }, (_, i) => <th key={i} className="hole-header" style={{ borderLeft: i === 0 ? bS : undefined }}>{i + 1}</th>)}
-                <th className="hole-header col-out fs-10">{is9 ? "Tot" : "Out"}</th>
-                {!is9 && Array.from({ length: Math.min(9, nh - 9) }, (_, i) => <th key={i + 9} className="hole-header">{i + 10}</th>)}
-                {!is9 && <th className="hole-header col-in fs-10">In</th>}
-              </>}
-            </tr>
-          </thead>
-          <tbody>
-            {sorted.map((p, idx) => {
-              const scores = p.scores!;
-              const gross = numGross(p);
-              const tp = gross - parTotal;
-              const f9 = scores.slice(0, 9).reduce((a, b) => a + b, 0);
-              const b9 = !is9 ? scores.slice(9, 18).reduce((a, b) => a + b, 0) : 0;
-              const dp = (p as any)._pos;
-              const showPos = idx === 0 || dp !== (sorted[idx - 1] as any)._pos;
-              const tpColor = tp < 0 ? SC.danger : tp === 0 ? SC.good : undefined;
-              const medal = dp === 1 ? "🥇" : dp === 2 ? "🥈" : dp === 3 ? "🥉" : null;
-              const esc = resolveEsc(p, escLookup) || tournament.escalao || "";
-              const { sd, source } = computeSD(p);
-              const rowBg = isManuel(p) ? "var(--bg-success-subtle)" : undefined;
-              const stickyBg = isManuel(p) ? "#d1fae5" : "var(--bg-card,#fff)";
-              return (
-                <tr key={p.scoreId || idx} style={rowBg ? { background: rowBg } : undefined}>
-                  <td className="fw-800 ta-center" style={{ color: "var(--text-3)", fontSize: 11, position: "sticky", left: 0, zIndex: 2, background: stickyBg }}>
-                    {sortKey === "pos" ? (showPos ? (medal ?? dp) : "") : (medal ?? dp)}
-                  </td>
-                  <td className="row-label tourn-lb-name-col" style={{ whiteSpace: "nowrap", paddingLeft: 6, position: "sticky", left: 26, zIndex: 2, background: stickyBg, boxShadow: "2px 0 4px rgba(0,0,0,.06)" }}>
-                    <PName name={p.name} fedCode={p.fedCode} playersDB={playersDB} />
-                  </td>
-                  <td style={{ fontSize: 11 }}>{esc ? <EscPill esc={esc} /> : <span className="muted">–</span>}</td>
-                  <td style={{ fontSize: 10, color: "var(--text-muted)" }}>{p.fedCode || "–"}</td>
-                  <td style={{ fontSize: 11, maxWidth: 70, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{p.club || "–"}</td>
-                  <td className="r" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: "var(--text-3)" }}>{p.hcpExact != null ? p.hcpExact.toFixed(1) : "–"}</td>
-                  <td className="ta-center"><TeeDot teeName={p.teeName} /></td>
-                  <td className="col-total fw-800" style={{ fontSize: 13, borderLeft: bS, fontFamily: "'JetBrains Mono',monospace" }}>{gross}</td>
-                  <td className="fw-700" style={{ color: tpColor, fontSize: 12, fontFamily: "'JetBrains Mono',monospace" }}>{fmtTP(tp)}</td>
-                  <td className="ta-center" style={{ borderLeft: bS }}>
-                    {sd != null ? <span className={"p p-sm p-" + sdClassByHcp(sd, p.hcpExact ?? null)}>{sd.toFixed(1)}{source !== "ags" && <span style={{ fontSize: 7 }}> ≈</span>}</span> : <span className="muted">–</span>}
-                  </td>
-                  {showScorecard && <>
-                    {scores.slice(0, 9).map((sc, i) => (
-                      <td key={i} style={{ borderLeft: i === 0 ? bS : undefined }}><span className={"sc-score " + scClass(sc, par[i])}>{sc || ""}</span></td>
-                    ))}
-                    <td className="col-out fw-600">{f9} <span className="fs-8 c-text-3">({fmtTP(f9 - parF9)})</span></td>
-                    {!is9 && scores.slice(9, 18).map((sc, i) => (
-                      <td key={i}><span className={"sc-score " + scClass(sc, par[9 + i])}>{sc || ""}</span></td>
-                    ))}
-                    {!is9 && <td className="col-in fw-600">{b9} <span className="fs-8 c-text-3">({fmtTP(b9 - parB9)})</span></td>}
-                  </>}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-    </div>
+      </>}
+      filterBar={
+        <PlayerFilterBar
+          players={rawPlayers} filter={filter} onChange={setFilter}
+          escLookup={escLookup} playersDB={playersDB} total={rawPlayers.length}
+        />
+      }
+      prefixHeaderCells={<>
+        <SortableHdr k="esc"  className="lb-esc">ESC.</SortableHdr>
+        <th className="lb-fed">FED</th>
+        <SortableHdr k="club" className="lb-club">CLUBE</SortableHdr>
+        <SortableHdr k="hcp"  className="lb-hcp">HCP</SortableHdr>
+        <SortableHdr k="tee"  className="lb-tee">TEE</SortableHdr>
+      </>}
+      postScorecardHeaderCells={<>
+        <SortableHdr k="sd" className="lb-sd">SD</SortableHdr>
+        <th className="lb-bird">🐦</th>
+        <th className="lb-par-stat">Par</th>
+        <th className="lb-bog">■</th>
+      </>}
+      activeSortKey={sortKey}
+      activeSortDir={sortDir}
+      onSortPos={() => handleSort("pos")}
+      onSortName={() => handleSort("name")}
+    />
   );
 }
 
@@ -929,166 +701,61 @@ function ScorecardLB({ tournament, escLookup, playersDB }: { tournament: Tournam
    LEADERBOARD ACUMULADO (multi-ronda)
    ───────────────────────────────────────────── */
 function AccumulatedLB({ tournament, nRounds, escLookup, playersDB }: { tournament: Tournament; nRounds: number; escLookup: EscLookup; playersDB: PlayersDB }) {
-  const [sortKey, setSortKey] = useState<SortKey>("pos");
-  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
-  const [filter, setFilter] = useState<PlayerFilter>(EMPTY_FILTER);
-
   const rawPlayers = tournament.players;
   if (!rawPlayers.length) return <div className="muted ta-center p-16">Sem resultados.</div>;
 
   const complete   = rawPlayers.filter(p => !(p as any)._incomplete);
   const incomplete = rawPlayers.filter(p =>  (p as any)._incomplete);
   const parPerRound = complete[0]?.parTotal ?? 72;
-  const parTotal = parPerRound * nRounds;
 
-  const byGross = [...complete].sort((a, b) => numGross(a) - numGross(b));
-  let posCounter = 1;
-  byGross.forEach((p, i) => {
-    if (i > 0 && numGross(p) !== numGross(byGross[i - 1])) posCounter = i + 1;
-    (p as any)._pos = posCounter;
-  });
-  incomplete.forEach(p => { (p as any)._pos = null; });
+  const rows: MRRow[] = useMemo(() => rawPlayers.map(p => {
+    const esc = resolveEsc(p, escLookup) || tournament.escalao || "";
+    const roundScores = p.roundScores || [];
+    const mappedRounds = roundScores.map(rs => {
+      const sdP: Player = { ...p, scores: rs.scores, par: rs.pars, si: rs.si,
+        courseRating: rs.courseRating, slope: rs.slope, nholes: rs.pars?.length };
+      const { sd } = computeSD(sdP);
+      let birdies = 0, pars = 0, bogeys = 0;
+      for (let i = 0; i < (rs.scores?.length ?? 0); i++) {
+        const d = (rs.scores[i] || 0) - (rs.pars[i] || 0);
+        if (d <= -1) birdies++; else if (d === 0) pars++; else bogeys++;
+      }
+      return {
+        gross: rs.gross,
+        parPerRound: rs.pars?.reduce((a, b) => a + b, 0) || parPerRound,
+        sd, sdSource: null as string | null,
+        birdies, pars, bogeys,
+      };
+    });
+    return {
+      key: p.scoreId || p.name,
+      name: p.name,
+      fed: p.fedCode,
+      club: p.club || "",
+      hcp: p.hcpExact ?? null,
+      esc: esc || undefined,
+      teeName: p.teeName,
+      gross: numGross(p),
+      parTotal: parPerRound * nRounds,
+      isIncomplete: !!(p as any)._incomplete,
+      isHighlighted: isManuel(p),
+      rounds: mappedRounds,
+    };
+  }), [rawPlayers, escLookup, nRounds, parPerRound]);
 
-  const filteredComplete   = useMemo(() => filterPlayers(complete,   filter, escLookup, playersDB), [complete,   filter, escLookup, playersDB]);
-  const filteredIncomplete = useMemo(() => filterPlayers(incomplete, filter, escLookup, playersDB), [incomplete, filter, escLookup, playersDB]);
-
-  function handleSort(k: SortKey) {
-    if (k === sortKey) setSortDir(d => d === "asc" ? "desc" : "asc");
-    else { setSortKey(k); setSortDir("asc"); }
-  }
-  function cmp(a: Player, b: Player): number {
-    let av: any, bv: any;
-    switch (sortKey) {
-      case "pos":   av = (a as any)._pos ?? 999; bv = (b as any)._pos ?? 999; break;
-      case "name":  av = a.name; bv = b.name; break;
-      case "club":  av = a.club || ""; bv = b.club || ""; break;
-      case "hcp":   av = a.hcpExact ?? 999; bv = b.hcpExact ?? 999; break;
-      case "gross": av = numGross(a); bv = numGross(b); break;
-      case "toPar": av = numGross(a) - parTotal; bv = numGross(b) - parTotal; break;
-      case "tee":   av = a.teeName || ""; bv = b.teeName || ""; break;
-      case "sd":    { const r0a = a.roundScores?.[0]; av = r0a ? (computeSD({ ...a, scores: r0a.scores, par: r0a.pars, si: r0a.si, courseRating: r0a.courseRating, slope: r0a.slope, nholes: r0a.pars?.length } as any).sd ?? 999) : 999; const r0b = b.roundScores?.[0]; bv = r0b ? (computeSD({ ...b, scores: r0b.scores, par: r0b.pars, si: r0b.si, courseRating: r0b.courseRating, slope: r0b.slope, nholes: r0b.pars?.length } as any).sd ?? 999) : 999; break; }
-      default:      av = 0; bv = 0;
-    }
-    if (typeof av === "string") return sortDir === "asc" ? av.localeCompare(bv) : bv.localeCompare(av);
-    return sortDir === "asc" ? av - bv : bv - av;
-  }
-  const sorted = useMemo(() => [...filteredComplete.sort(cmp), ...filteredIncomplete.sort(cmp)],
-    [rawPlayers, filter, sortKey, sortDir, parTotal, escLookup]);
-
-  function SortableHH({ k, children, style }: { k: SortKey; children: React.ReactNode; style?: React.CSSProperties }) {
-    return (
-      <th className="hole-header" style={{ cursor: "pointer", userSelect: "none", ...style }}
-        onClick={() => handleSort(k)}>
-        {children}{sortKey === k && <span style={{ marginLeft: 2, fontSize: 7 }}>{sortDir === "asc" ? "▲" : "▼"}</span>}
-      </th>
-    );
-  }
-
-  const hs: React.CSSProperties = { fontSize: 11, padding: "6px 5px" };
-  const cs: React.CSSProperties = { fontSize: 12, padding: "5px 6px", whiteSpace: "nowrap" };
-  const bS = "1px solid var(--border-light, #e5e7eb)";
+  const info = `${complete.length} classif.${incomplete.length > 0 ? ` · ${incomplete.length} inc.` : ""} · ${nRounds}R · Par ${parPerRound * nRounds}`;
 
   return (
     <div>
-      <div className="muted fs-11 mb-8 p-0-4px">
-        {complete.length} classif.{incomplete.length > 0 && <> · {incomplete.length} inc.</>} · {nRounds}R · Par {parTotal}
-      </div>
-      <PlayerFilterBar
-        players={rawPlayers} filter={filter} onChange={setFilter}
-        escLookup={escLookup} playersDB={playersDB} total={rawPlayers.length}
+      <div className="muted fs-11 mb-8 p-0-4px">{info}</div>
+      <MultiRoundLeaderboard
+        rows={rows}
+        nRounds={nRounds}
+        playersDB={playersDB}
+        showCols={{ esc: true, fed: true, tee: true }}
+        sortable
+        filterable
       />
-      <div className="bjgt-chart-scroll">
-        <table className="dtable tbl-compact">
-          <thead><tr>
-            <th style={{ ...hs, width: 28, textAlign: "center" }}>#</th>
-            <th style={{ ...hs, textAlign: "left", paddingLeft: 6, minWidth: 155 }}>Jogador</th>
-            <th style={{ ...hs, width: 52 }}>ESC.</th>
-            <th style={{ ...hs, width: 44, fontSize: 10 }}>FED</th>
-            <th style={{ ...hs, width: 68, whiteSpace: "nowrap" }}>CLUBE</th>
-            <th className="r" style={{ ...hs, width: 38 }}>HCP</th>
-            <th style={{ ...hs, width: 22, textAlign: "center" }}>TEE</th>
-            <th className="r fw-800" style={{ ...hs, width: 42, borderLeft: bS }}>Total</th>
-            <th className="r" style={{ ...hs, width: 36, borderLeft: bS }}>±Par</th>
-            {Array.from({ length: nRounds }, (_, r) => (
-              <React.Fragment key={r}>
-                <th className="r" style={{ ...hs, width: 36, borderLeft: bS, background: "var(--bg-hover)" }}>R{r + 1}</th>
-                <th className="r" style={{ ...hs, width: 32, background: "var(--bg-hover)" }}>±</th>
-              </React.Fragment>
-            ))}
-            <th className="r" style={{ ...hs, width: 40, borderLeft: bS }}>SD</th>
-            <th style={{ ...hs, width: 28, borderLeft: bS, textAlign: "center" }}>🐦</th>
-            <th style={{ ...hs, width: 28, textAlign: "center" }}>Par</th>
-            <th style={{ ...hs, width: 28, textAlign: "center" }}>■</th>
-          </tr></thead>
-          <tbody>
-            {sorted.map((p, idx) => {
-              const gross = numGross(p);
-              const tp = gross - parTotal;
-              const dp = (p as any)._pos;
-              const isInc = !!(p as any)._incomplete;
-              const tpColor = !isInc && (tp < 0 ? SC.danger : tp === 0 ? SC.good : undefined);
-              const medal = !isInc && (dp === 1 ? "🥇" : dp === 2 ? "🥈" : dp === 3 ? "🥉" : null);
-              const showPos = !isInc && (sortKey === "pos" ? (idx === 0 || dp !== (sorted[idx - 1] as any)._pos) : true);
-              const rounds = p.roundScores || [];
-              const ppt = p.parTotal || parPerRound;
-              const esc = resolveEsc(p, escLookup) || tournament.escalao || "";
-              const r0 = rounds[0];
-              const sdP = r0 ? { ...p, scores: r0.scores, par: r0.pars, si: r0.si, courseRating: r0.courseRating, slope: r0.slope, nholes: r0.pars?.length } as any : p;
-              const { sd } = computeSD(sdP);
-              let birds = 0, pars = 0, bogs = 0;
-              for (const rs of rounds) for (let i = 0; i < (rs.scores?.length ?? 0); i++) {
-                const d = (rs.scores[i] || 0) - (rs.pars[i] || 0);
-                if (d <= -1) birds++; else if (d === 0) pars++; else bogs++;
-              }
-              const rowBg = isManuel(p) ? "var(--bg-success-subtle)" : isInc ? "var(--bg-hover)" : undefined;
-              const stickyBg = isManuel(p) ? "#d1fae5" : isInc ? "var(--bg-hover)" : "var(--bg-card,#fff)";
-              return (
-                <tr key={p.scoreId || idx} style={rowBg ? { background: rowBg, opacity: isInc ? 0.7 : 1 } : undefined}>
-                  <td className="fw-700 ta-center" style={{ ...cs, color: "var(--text-3)", position: "sticky", left: 0, zIndex: 2, background: stickyBg }}>
-                    {isInc ? <span style={{ fontSize: 9, color: "#dc2626", fontStyle: "italic" }}>WD</span>
-                           : showPos ? (medal || dp) : ""}
-                  </td>
-                  <td style={{ ...cs, paddingLeft: 6, position: "sticky", left: 26, zIndex: 2, background: stickyBg, boxShadow: "2px 0 4px rgba(0,0,0,.06)" }}>
-                    <PName name={p.name} fedCode={p.fedCode} playersDB={playersDB} />
-                    {isInc && <span style={{ marginLeft: 4, fontSize: 9, color: "#dc2626", fontWeight: 700 }}>INC</span>}
-                  </td>
-                  <td style={{ ...cs }}>{esc ? <EscPill esc={esc} /> : <span className="muted">–</span>}</td>
-                  <td style={{ ...cs, fontSize: 10, color: "var(--text-muted)" }}>{p.fedCode || "–"}</td>
-                  <td style={{ ...cs, color: "var(--text-3)", maxWidth: 70, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{p.club || "–"}</td>
-                  <td className="r" style={{ ...cs, fontFamily: "'JetBrains Mono',monospace", color: "var(--text-3)" }}>
-                    {p.hcpExact != null ? p.hcpExact.toFixed(1) : "–"}
-                  </td>
-                  <td className="ta-center" style={{ ...cs }}><TeeDot teeName={p.teeName} /></td>
-                  <td className="r fw-800" style={{ ...cs, fontSize: 14, fontFamily: "'JetBrains Mono',monospace", borderLeft: bS, opacity: isInc ? 0.5 : 1 }}>
-                    {gross}
-                  </td>
-                  <td className="r fw-700" style={{ ...cs, fontFamily: "'JetBrains Mono',monospace", color: tpColor || undefined, borderLeft: bS, opacity: isInc ? 0.5 : 1 }}>
-                    {fmtTP(tp)}
-                  </td>
-                  {Array.from({ length: nRounds }, (_, r) => {
-                    const rs = rounds[r];
-                    if (!rs) return <React.Fragment key={r}><td style={{ ...cs, borderLeft: bS, background: "var(--bg-hover)" }} className="r muted">–</td><td style={{ ...cs, background: "var(--bg-hover)" }} className="r muted">–</td></React.Fragment>;
-                    const rtp = rs.gross - ppt;
-                    const rtpColor = rtp < 0 ? SC.danger : rtp === 0 ? SC.good : undefined;
-                    return (
-                      <React.Fragment key={r}>
-                        <td className="r fw-700" style={{ ...cs, borderLeft: bS, fontFamily: "'JetBrains Mono',monospace", background: "var(--bg-hover)" }}>{rs.gross}</td>
-                        <td className="r fw-600" style={{ ...cs, fontFamily: "'JetBrains Mono',monospace", color: rtpColor, background: "var(--bg-hover)" }}>{fmtTP(rtp)}</td>
-                      </React.Fragment>
-                    );
-                  })}
-                  <td className="r" style={{ ...cs, borderLeft: bS }}>
-                    {sd != null ? <span className={"p p-sm p-" + sdClassByHcp(sd, p.hcpExact ?? null)}>{sd.toFixed(1)}</span> : <span className="muted">–</span>}
-                  </td>
-                  <td className="ta-center" style={{ ...cs, borderLeft: bS }}>{birds || "–"}</td>
-                  <td className="ta-center" style={{ ...cs }}>{pars || "–"}</td>
-                  <td className="ta-center" style={{ ...cs }}>{bogs || "–"}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
     </div>
   );
 }

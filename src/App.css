@@ -156,6 +156,10 @@
  --border: #bcc5ad;
  --border-light: #d5dac9;
 
+ /* Multi-round leaderboard column group backgrounds */
+ --bg-rnd: #dde8d9;
+ --bg-rnd-stats: #f0f5ee;
+
 
  /* Sizes */
  --topbar-h: 56px;
@@ -993,10 +997,10 @@ tr.cross-current { background: var(--bg-success); }
 .sc-stat-score .sc-stat-value { font-size: 18px; }
 
 .sc-table-modern { border-collapse: collapse; font-size: 12px; }
-.sc-table-modern th, .sc-table-modern td { padding: 6px 2px; text-align: center; border: 1px solid var(--border); }
+.sc-table-modern th, .sc-table-modern td { padding: 6px 2px; text-align: center; border: none; border-bottom: 1px solid var(--border-light); }
 .sc-table-modern th { background: var(--bg-hover); font-weight: 800; font-size: 10px; color: var(--text-2); }
 .sc-table-modern .hole-header { background: var(--bg-hover); color: var(--text-2); font-weight: 700; font-size: 12px; border-bottom: 1px solid var(--border); }
-.sc-table-modern .row-label { text-align: left; padding-left: 8px; font-weight: 700; color: var(--text); min-width: 70px; border-right: 2px solid var(--border); }
+.sc-table-modern .row-label { text-align: left; padding-left: 8px; font-weight: 700; color: var(--text); min-width: 70px; }
 .sc-table-modern .col-out, .sc-table-modern .col-in { background: var(--bg-hover); border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
 .sc-table-modern .col-total { background: var(--accent-light); border-left: 1px solid var(--border); font-weight: 800; }
 .sc-table-modern .sep-row td { border-bottom: 2px solid var(--border); }
@@ -1564,7 +1568,7 @@ tr.cross-current { background: var(--bg-success); }
  border-collapse: collapse; 
 }
 .tourn-scorecard th, .tourn-scorecard td {
- padding: 5px 2px; text-align: center; border: 1px solid var(--border);
+ padding: 5px 2px; text-align: center; border: none; border-bottom: 1px solid var(--border-light);
 }
 .tourn-scorecard th {
  background: var(--bg-header); font-weight: 800; font-size: 11px; color: var(--text-2);
@@ -1574,7 +1578,7 @@ tr.cross-current { background: var(--bg-success); }
 
 /* Column widths — flexible */
 .tourn-pos-col { width: 32px; }
-.tourn-scorecard .tourn-lb-name-col { text-align: left; padding-left: 10px; border-right: 2px solid var(--border); white-space: nowrap; }
+.tourn-scorecard .tourn-lb-name-col { text-align: left; padding-left: 10px; white-space: nowrap; }
 .tourn-lb-pills { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
 .tourn-lb-pills .p { font-size: 10px; padding: 1px 7px; }
 .tourn-gross-col { width: 36px; }
@@ -1642,8 +1646,8 @@ tr.cross-current { background: var(--bg-success); }
 
 /* ─── Form Analysis Table ─── */
 .tourn-form-table { border-collapse: collapse; }
-.tourn-form-table th { background: var(--bg-header); font-weight: 700; font-size: 10px; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.04em; padding: 6px 8px; border: 1px solid var(--border); text-align: left; }
-.tourn-form-table td { padding: 6px 8px; border: 1px solid var(--border-light); font-size: 12px; vertical-align: middle; }
+.tourn-form-table th { background: var(--bg-header); font-weight: 700; font-size: 10px; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.04em; padding: 6px 8px; border: none; border-bottom: 2px solid var(--border); text-align: left; }
+.tourn-form-table td { padding: 6px 8px; border: none; border-bottom: 1px solid var(--border-light); font-size: 12px; vertical-align: middle; }
 .tourn-form-table tbody tr:hover { background: var(--bg-detail); }
 .tourn-form-table .tourn-pname { font-weight: 700; font-size: 12px; }
 .tourn-form-table .tourn-pname.tourn-pname-link { color: var(--link-color); }
@@ -1961,10 +1965,153 @@ tr.cross-current { background: var(--bg-success); }
 .flex-1-scroll    { flex: 1; overflow: auto; }
 .sticky-col-0     { position: sticky; left: 0; z-index: 2; background: var(--bg-card, #fff); }
 .sticky-col-1     { position: sticky; left: 26px; z-index: 2; background: var(--bg-card, #fff); box-shadow: 2px 0 4px rgba(0,0,0,0.06); }
+
+/* Em thead, as colunas sticky precisam de z-index superior ao dos rows do tbody */
+thead .sticky-col-0 { z-index: 5; }
+thead .sticky-col-1 { z-index: 5; }
+
+/* Contexto partilhado para scorecards (Drive, Diversos, BJGT) */
+.tourn-scorecard .sc-score { min-width: 22px; min-height: 22px; font-size: 11px; }
 .c-muted-fs10     { color: var(--text-muted); font-size: 10px; }
 .c-muted-fs10-fw5 { color: var(--text-muted); font-size: 10px; font-weight: 500; }
 .opacity-40       { opacity: 0.4; }
 .mt-24            { margin-top: 24px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   CS-TABLE — tabela temporada cruzada (jogadores × torneios)
+   Usada por: ResumoTable, TournamentGrid (Sub-12)
+   ═══════════════════════════════════════════════════════════════ */
+.cs-table { border-collapse: collapse; font-size: 12px; }
+.cs-table th,
+.cs-table td { padding: 5px 5px; text-align: center; border: none; border-bottom: 1px solid var(--border-light); white-space: nowrap; }
+.cs-table th { background: var(--bg-header); font-weight: 700; font-size: 11px; color: var(--text-2); }
+.cs-table th.cs-sortable { cursor: pointer; user-select: none; }
+.cs-table th.cs-sortable:hover { background: var(--bg-hover-subtle); }
+
+/* Linha 1 de grupo */
+.cs-table .cs-grp-row td,
+.cs-table .cs-grp-row th { background: var(--bg-hover); border-bottom: none; }
+.cs-table .cs-grp-spacer { border: none; background: transparent !important; }
+
+/* Separadores */
+.cs-table .cs-grp  { border-left: 3px solid var(--border) !important; }
+.cs-table .cs-col  { border-left: 1px solid var(--border-light, #e5e7eb) !important; }
+.cs-table .cs-id-end { border-right: 3px solid var(--border) !important; }
+
+/* Colunas de identidade (fixas à esquerda) */
+.cs-table .cs-pos  { width: 28px; font-weight: 800; font-size: 11px; color: var(--text-3); }
+.cs-table .cs-name { text-align: left; padding-left: 8px; min-width: 155px; }
+.cs-table .cs-name .tourn-pname { font-size: 12px; }
+.cs-table .cs-fed  { width: 52px; font-size: 10px; color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace; }
+.cs-table .cs-esc  { width: 52px; }
+.cs-table .cs-club { min-width: 80px; color: var(--text-3); }
+.cs-table .cs-hcp  { width: 42px; text-align: right;
+  font-family: 'JetBrains Mono', monospace; color: var(--text-3); }
+
+/* Colunas por torneio */
+.cs-table .cs-t-pos   { width: 28px; font-weight: 700; color: var(--text-3); }
+.cs-table .cs-t-gross { width: 40px; font-size: 13px; font-weight: 800;
+  font-family: 'JetBrains Mono', monospace; }
+.cs-table .cs-t-topar { width: 32px; font-weight: 700;
+  font-family: 'JetBrains Mono', monospace; }
+.cs-table .cs-t-sd  { width: 44px; }
+.cs-table .cs-t-stat { width: 28px; }  /* 🐦 / par / ■ */
+
+/* Colunas de resumo de temporada */
+.cs-table .cs-s-games { width: 36px; font-weight: 700; font-size: 13px; }
+.cs-table .cs-s-pts   { width: 48px; font-weight: 800; font-size: 13px;
+  color: var(--color-warn-dark); }
+.cs-table .cs-s-sd    { width: 50px; }
+.cs-table .cs-s-stat  { width: 28px; }
+
+/* Hover */
+.cs-table tbody tr:hover { background: var(--bg-detail); }
+.cs-table tbody tr.pointer { cursor: pointer; }
+.cs-table tbody tr:hover .sticky-col-0,
+.cs-table tbody tr:hover .sticky-col-1 { background: var(--bg-detail); }
+   Usado em: ScorecardLeaderboard, TotalLeaderboard, AccumulatedLB
+   ═══════════════════════════════════════════════════════════════ */
+.sc-lb { border-collapse: collapse; font-size: 12px; }
+.sc-lb th,
+.sc-lb td { padding: 4px 2px; text-align: center; border: none; border-bottom: 1px solid var(--border-light); }
+.sc-lb th { background: var(--bg-header); font-weight: 700; font-size: 10px; color: var(--text-2); }
+.sc-lb th.lb-sortable { cursor: pointer; user-select: none; }
+.sc-lb th.lb-sortable:hover { background: var(--bg-hover-subtle); }
+
+/* Coluna posição */
+.sc-lb .lb-pos { width: 28px; font-weight: 800; font-size: 11px; color: var(--text-3); }
+
+/* Coluna nome — shadow substitui border-right */
+.sc-lb .lb-name { text-align: left; padding-left: 8px; white-space: nowrap;
+  min-width: 130px; }
+.sc-lb .lb-name .tourn-pname { font-size: 12px; }
+
+/* Colunas de identidade */
+.sc-lb .lb-esc   { width: 52px; }
+.sc-lb .lb-fed   { width: 44px; font-size: 10px; color: var(--text-muted); }
+.sc-lb .lb-club  { width: 70px; font-size: 11px; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; }
+.sc-lb .lb-hcp   { width: 36px; text-align: right; font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: var(--text-3); }
+.sc-lb .lb-tee   { width: 24px; }
+
+/* Total + par — ±Par vem ANTES de Tot, separador visual à esquerda */
+.sc-lb .lb-topar { width: 34px; font-size: 12px; font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  border-left: 1px solid var(--border); }
+.sc-lb .lb-gross { width: 38px; font-size: 14px; font-weight: 800;
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--accent-light);
+  border-left: 1px solid var(--border-light); }
+
+/* Estatísticas pós-scorecard */
+.sc-lb .lb-sd       { width: 44px; border-left: 1px solid var(--border); }
+.sc-lb .lb-bird     { width: 26px; font-size: 11px; color: var(--color-good); font-weight: 700; }
+.sc-lb .lb-par-stat { width: 26px; font-size: 11px; color: var(--text-3); }
+.sc-lb .lb-bog      { width: 26px; font-size: 11px; color: var(--color-danger); }
+
+/* Colunas por ronda (MultiRoundLeaderboard) — separador no início de cada grupo */
+.sc-lb .lb-rnd    { width: 38px; background: var(--bg-rnd, #dde8d9);
+  font-weight: 700; font-family: 'JetBrains Mono', monospace;
+  border-left: 1px solid var(--border); }
+.sc-lb .lb-rnd-tp { width: 30px; background: var(--bg-rnd, #dde8d9); font-size: 11px;
+  font-family: 'JetBrains Mono', monospace; }
+.sc-lb .lb-rnd-sd   { width: 44px; background: var(--bg-rnd-stats, #f0f5ee); }
+.sc-lb .lb-rnd-bird { width: 22px; background: var(--bg-rnd-stats, #f0f5ee);
+  font-size: 11px; color: var(--color-good); font-weight: 700; }
+.sc-lb .lb-rnd-par  { width: 22px; background: var(--bg-rnd-stats, #f0f5ee);
+  font-size: 11px; color: var(--text-3); }
+.sc-lb .lb-rnd-bog  { width: 22px; background: var(--bg-rnd-stats, #f0f5ee);
+  font-size: 11px; color: var(--color-danger); }
+
+/* Buracos scorecard — SEM bordas entre buracos individuais, apenas separadores de grupo */
+.sc-lb .lb-hole       { width: 24px; }
+.sc-lb .lb-hole-first { border-left: 1px solid var(--border); }
+.sc-lb .lb-halftot    { width: 42px; background: var(--bg-hover);
+  font-weight: 600; font-size: 11px; font-family: 'JetBrains Mono', monospace;
+  border-left: 1px solid var(--border); }
+
+/* Linhas PAR / SI */
+.sc-lb .lb-par-row    { background: var(--bg-hover); }
+.sc-lb .lb-par-row td { border-bottom: 2px solid var(--border); background: var(--bg-hover); }
+.sc-lb .lb-par-row td.lb-gross { background: var(--accent-light); }
+.sc-lb .lb-si-row     { background: var(--bg); }
+.sc-lb .lb-si-row td  { font-size: 10px; color: var(--text-muted); background: var(--bg); }
+.sc-lb .lb-par-lbl    { text-align: left; padding-left: 8px; font-size: 11px;
+  font-weight: 600; color: var(--text-muted); }
+
+/* Círculos de score — 26×26, font 13px, igual ao mockup */
+.sc-lb .sc-score {
+  min-width: 26px; min-height: 26px;
+  width: 26px; height: 26px;
+  font-size: 13px; font-weight: 700;
+}
+
+/* Linha hover */
+.sc-lb tbody tr:hover { background: var(--bg-detail); }
+.sc-lb tbody tr:hover .sticky-col-0,
+.sc-lb tbody tr:hover .sticky-col-1 { background: var(--bg-detail); }
 
 /* ─── Empty / loading states ─── */
 .empty-state { text-align: center; padding: 30px 20px; }
