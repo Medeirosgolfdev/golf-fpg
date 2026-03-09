@@ -25,6 +25,39 @@ const DATA_EXT      = ".json";                  // extensão
 const DATA_DIGITS   = 3;                        // 000, 001, 002 ...
 const DATA_MAX      = 50;                       // segurança: parar após N ficheiros
 
+type TournPill = "REGIONAL" | "NACIONAL" | "INTL" | "PJA";
+
+/**
+ * Mapa tcode → pill de torneio.
+ * Adicionar aqui novos torneios conforme necessário.
+ */
+const TOURN_PILLS: Record<string, TournPill> = {
+  "10444": "PJA",   // AT&T PEBBLE BEACH PRO-AM BY TITLEIST
+  "10492": "PJA",   // Aroeira Master by Details
+  "10036": "PJA",   // Ribagolfe Oaks Masters 2025
+};
+
+const PILL_STYLE: Record<TournPill, { bg: string; color: string; label: string }> = {
+  PJA:      { bg: "#1e3a5f",           color: "#fff",     label: "PJA"         },
+  REGIONAL: { bg: "var(--bg-warn-strong)", color: "var(--color-warn-dark)", label: "REGIONAL" },
+  NACIONAL: { bg: "var(--bg-success-strong)", color: "var(--color-good-dark)", label: "🇵🇹 NACIONAL" },
+  INTL:     { bg: "var(--bg-info)",    color: "var(--color-info)",  label: "🌍 INTL"   },
+};
+
+function TournPillBadge({ tcode, dynamicPills }: { tcode?: string; dynamicPills?: Record<string, TournPill> }) {
+  if (!tcode) return null;
+  const tcodes = tcode.split("+");
+  const pill = tcodes.map(tc => TOURN_PILLS[tc] || dynamicPills?.[tc]).find(Boolean);
+  if (!pill) return null;
+  const s = PILL_STYLE[pill];
+  return (
+    <span style={{
+      fontSize: 9, fontWeight: 700, borderRadius: 20, padding: "1px 6px",
+      background: s.bg, color: s.color, whiteSpace: "nowrap",
+    }}>{s.label}</span>
+  );
+}
+
 /** Constrói o URL de um índice: 0 → /data/pull-torneios000.json */
 function dataUrl(idx: number): string {
   return DATA_BASE_URL + String(idx).padStart(DATA_DIGITS, "0") + DATA_EXT;
@@ -1245,6 +1278,7 @@ function Content() {
   const [sidebarMode, setSidebarMode] = useState<"month" | "circuit">("month");
   const [escLookup, setEscLookup] = useState<EscLookup>(new Map());
   const [playersDB, setPlayersDB] = useState<PlayersDB>({});
+  const [tcodePills, setTcodePills] = useState<Record<string, TournPill>>({});
 
   useEffect(() => {
     let alive = true;
@@ -1253,13 +1287,29 @@ function Content() {
       try {
         // Carregar players.json em paralelo com os torneios (para escalões)
         // Load players.json + tournament-links.json in parallel
-        const [pdbResp, linksResp] = await Promise.all([
+        const [pdbResp, linksResp, melhoriasResp] = await Promise.all([
           fetch("/data/players.json").catch(() => null),
           fetch("/data/tournament-links.json").catch(() => null),
+          fetch("/data/melhorias.json").catch(() => null),
         ]);
         if (pdbResp?.ok) {
           const pdb: PlayersDB = await pdbResp.json().catch(() => ({}));
           if (alive) { setEscLookup(buildEscLookup(pdb)); setPlayersDB(pdb); }
+        }
+        if (melhoriasResp?.ok) {
+          const mel = await melhoriasResp.json().catch(() => ({}));
+          const pills: Record<string, TournPill> = {};
+          for (const playerData of Object.values(mel)) {
+            if (typeof playerData !== "object" || !playerData) continue;
+            for (const entry of Object.values(playerData as Record<string, any>)) {
+              if (typeof entry !== "object" || !entry || Array.isArray(entry) || !entry.pill) continue;
+              for (const v of Object.values(entry.links || {})) {
+                const m = String(v).match(/tcode=(\d+)/);
+                if (m) { pills[m[1]] = entry.pill as TournPill; break; }
+              }
+            }
+          }
+          if (alive) setTcodePills(pills);
         }
         let externalLinks: Record<string, Record<string, string>> = {};
         if (linksResp?.ok) {
@@ -1430,6 +1480,7 @@ function Content() {
         <div className="course-item-meta">
           {t.campo && <span>{t.campo}</span>}
           <span style={{ marginLeft: 4 }}>{t.playerCount} jog · {nR}R · {nh}h</span>
+          <TournPillBadge tcode={t.tcode} dynamicPills={tcodePills} />
           {manuelPlayed && (
             <span title="Manuel participou neste torneio" style={{
               marginLeft: 6, fontSize: 9, fontWeight: 700,
