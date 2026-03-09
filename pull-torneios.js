@@ -28,24 +28,8 @@
 
     // ── batch 000 — JÁ DESCARREGADO (pull-torneios000.json) ─────
     // Inclui também os torneios PJA 2024 e PJA 2025.
-    // { tclub: "003", tcode: "10565" },
-    // { tclub: "003", tcode: "10564" },
-    // { tclub: "003", tcode: "10478" },
-    // { tclub: "003", tcode: "10477" },
-    // { tclub: "003", tcode: "10622" },
-    // { tclub: "003", tcode: "10612" },
-    // { tclub: "068", tcode: "10632" },
-    // { tclub: "004", tcode: "10563" },
-    // { tclub: "004", tcode: "10555" },
-    // { tclub: "095", tcode: "11538" },
-    // { tclub: "095", tcode: "11539" },
-    // { tclub: "935", tcode: "10294" },
-    // { tclub: "935", tcode: "10295" },
-    // { tclub: "935", tcode: "10296" },
-    // { tclub: "059", tcode: "10614" },
-    // { tclub: "059", tcode: "10613" },
+    // { tclub: "000", tcode: "10647" }, { tclub: "988", tcode: "10190" }, { tclub: "007", tcode: "10674" }, { tclub: "007", tcode: "10676" }, { tclub: "152", tcode: "10368" }, { tclub: "002", tcode: "11022" }, { tclub: "189", tcode: "10097" }, { tclub: "013", tcode: "10092" }, { tclub: "000", tcode: "10772" }, { tclub: "179", tcode: "10514" }, { tclub: "003", tcode: "10478" }, { tclub: "003", tcode: "10477" }, { tclub: "038", tcode: "10584" }, { tclub: "191", tcode: "10021" }, { tclub: "988", tcode: "10225" }, { tclub: "059", tcode: "10483" }, { tclub: "192", tcode: "10005" }, { tclub: "152", tcode: "10444" }, { tclub: "029", tcode: "10492" }, { tclub: "191", tcode: "10036" }, { tclub: "935", tcode: "10260" }, { tclub: "000", tcode: "10825" }, { tclub: "038", tcode: "10651" }, { tclub: "003", tcode: "10551" }, { tclub: "988", tcode: "10254" }, { tclub: "003", tcode: "10565" }, { tclub: "003", tcode: "10564" }, { tclub: "125", tcode: "10370" }, { tclub: "125", tcode: "10371" }, { tclub: "192", tcode: "10013" }, { tclub: "988", tcode: "10262" }, { tclub: "017", tcode: "10189" }, { tclub: "029", tcode: "10523" }, { tclub: "192", tcode: "10019" }, { tclub: "059", tcode: "10611" }, { tclub: "962", tcode: "10080" }, { tclub: "003", tcode: "10612" }, { tclub: "935", tcode: "10294" }, { tclub: "935", tcode: "10295" }, { tclub: "935", tcode: "10296" }, { tclub: "059", tcode: "10614" }, { tclub: "059", tcode: "10613" }, { tclub: "003", tcode: "10622" }, { tclub: "068", tcode: "10632" }, { tclub: "004", tcode: "10563" }, { tclub: "004", tcode: "10555" }, { tclub: "095", tcode: "11538" }, { tclub: "095", tcode: "11539" }, 
     // ─────────────────────────────────────────────────────────
-
     // Adiciona novos torneios escrevendo acima:
     // { tclub: "985", tcode: "12345" }, 
   ];
@@ -54,7 +38,7 @@
   // Descarrega todos os torneios dos YEARS cujo nome contenha
   // qualquer uma destas strings.
   const POR_NOME = [
-    "PJA",           
+               
     // PJA 2024 e 2025 já estão no batch 000
     // "Morgado",
     // "Vale Pisão",

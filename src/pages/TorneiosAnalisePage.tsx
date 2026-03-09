@@ -14,8 +14,10 @@
  *   • Suporte a 9H e 18H, 1 a N rondas
  */
 import React, { useEffect, useState, useMemo } from "react";
+import { useAppContext } from "../context/AppContext";
 import { scClass, SC, sdClassByHcp } from "../utils/scoreDisplay";
 import { getTeeHex, teeBorder } from "../utils/teeColors";
+import PillBadge from "../ui/PillBadge";
 
 /* ─────────────────────────────────────────────
    CONFIGURAÇÃO
@@ -35,27 +37,25 @@ const TOURN_PILLS: Record<string, TournPill> = {
   "10444": "PJA",   // AT&T PEBBLE BEACH PRO-AM BY TITLEIST
   "10492": "PJA",   // Aroeira Master by Details
   "10036": "PJA",   // Ribagolfe Oaks Masters 2025
+  "10019": "PJA",   // Race to Dunas G. Final
 };
 
-const PILL_STYLE: Record<TournPill, { bg: string; color: string; label: string }> = {
-  PJA:      { bg: "#1e3a5f",           color: "#fff",     label: "PJA"         },
-  REGIONAL: { bg: "var(--bg-warn-strong)", color: "var(--color-warn-dark)", label: "REGIONAL" },
-  NACIONAL: { bg: "var(--bg-success-strong)", color: "var(--color-good-dark)", label: "🇵🇹 NACIONAL" },
-  INTL:     { bg: "var(--bg-info)",    color: "var(--color-info)",  label: "🌍 INTL"   },
-};
+const PILL_STYLE_PJA = { bg: "#1e3a5f", color: "#fff" };
 
 function TournPillBadge({ tcode, dynamicPills }: { tcode?: string; dynamicPills?: Record<string, TournPill> }) {
   if (!tcode) return null;
   const tcodes = tcode.split("+");
   const pill = tcodes.map(tc => TOURN_PILLS[tc] || dynamicPills?.[tc]).find(Boolean);
   if (!pill) return null;
-  const s = PILL_STYLE[pill];
-  return (
-    <span style={{
-      fontSize: 9, fontWeight: 700, borderRadius: 20, padding: "1px 6px",
-      background: s.bg, color: s.color, whiteSpace: "nowrap",
-    }}>{s.label}</span>
-  );
+  if (pill === "PJA") {
+    return (
+      <span style={{
+        fontSize: 9, fontWeight: 700, borderRadius: 20, padding: "1px 6px",
+        background: PILL_STYLE_PJA.bg, color: PILL_STYLE_PJA.color, whiteSpace: "nowrap",
+      }}>PJA</span>
+    );
+  }
+  return <PillBadge pill={pill} />;
 }
 
 /** Constrói o URL de um índice: 0 → /data/pull-torneios000.json */
@@ -166,10 +166,31 @@ interface DriveData {
 /* ─────────────────────────────────────────────
    NORMALIZAÇÃO (como DrivePage)
    ───────────────────────────────────────────── */
+/** Converte "SOBRENOME,Nome" → "Nome Sobrenome" (capitalização título) */
+function formatPlayerName(raw: string): string {
+  if (!raw) return raw;
+  // Detectar formato "SOBRENOME,Nome" ou "SOBRENOME, Nome"
+  const commaIdx = raw.indexOf(",");
+  if (commaIdx > 0) {
+    const last  = raw.substring(0, commaIdx).trim();
+    const first = raw.substring(commaIdx + 1).trim();
+    // Capitalizar cada palavra (ex: "IVO DE CARVALHO" → "Ivo de Carvalho")
+    const cap = (s: string) => s.split(" ").map((w, i) => {
+      const lower = w.toLowerCase();
+      // Partículas que ficam minúsculas quando não são a primeira palavra
+      if (i > 0 && ["de","da","do","das","dos","e","van","von","de la"].includes(lower)) return lower;
+      return lower.charAt(0).toUpperCase() + lower.slice(1);
+    }).join(" ");
+    return `${cap(first)} ${cap(last)}`.trim();
+  }
+  return raw;
+}
+
 function normalizePlayer(p: any): Player {
   const r1: RoundScore | undefined = p.roundScores?.[0];
   return {
     ...p,
+    name: formatPlayerName(p.name),
     scores: p.scores || r1?.scores,
     par: p.par || r1?.pars,
     si: p.si || r1?.si,
@@ -258,10 +279,11 @@ function fmtTP(v: number | null): string {
 
 /** "PJA TOUR Vale Pisão - Dia 1" → "PJA TOUR Vale Pisão" */
 function extractBaseName(name: string): string {
-  return name.replace(/\s*[-–]\s*(?:dia|round|ronda|r)\s*\d+\s*$/i, "").trim();
+  // Suporta: "– Dia 2", "- Dia1", " Dia 2", " Dia1", "- Round 1", etc.
+  return name.replace(/\s*[-–]?\s*(?:dia|round|ronda)\s*\d+\s*$/i, "").trim();
 }
 function detectRoundNumber(name: string): number | null {
-  const m = name.match(/[-–]\s*(?:dia|round|ronda|r)\s*(\d+)\s*$/i);
+  const m = name.match(/[-–]?\s*(?:dia|round|ronda)\s*(\d+)\s*$/i);
   return m ? parseInt(m[1]) : null;
 }
 
@@ -356,17 +378,18 @@ function mergeTournamentRounds(rounds: Tournament[]): Tournament {
  * cria torneios sintéticos e esconde os originais da sidebar.
  */
 function buildDisplayList(tournaments: Tournament[]): Tournament[] {
-  // 1. Agrupar candidatos a fusão
+  // Agrupa apenas torneios com sufixo explícito "Dia N / Round N / Ronda N"
+  // (com ou sem travessão). Evita fusões acidentais de edições anuais do mesmo torneio.
   const candidates = new Map<string, Tournament[]>();
   for (const t of tournaments) {
     if (detectRoundNumber(t.name) == null) continue;
     const base = extractBaseName(t.name);
-    const key  = `${t.ccode || "?"}_${base.toLowerCase()}`;
+    // Usar ccode + baseName como chave para evitar fusão entre torneios homónimos de clubes diferentes
+    const key  = `${t.ccode || "?"}_${base.toLowerCase().trim()}`;
     if (!candidates.has(key)) candidates.set(key, []);
     candidates.get(key)!.push(t);
   }
 
-  // 2. Construir sintéticos (apenas grupos com ≥2 rondas)
   const hiddenTcodes = new Set<string>();
   const synthetics: Tournament[] = [];
   for (const group of candidates.values()) {
@@ -375,7 +398,6 @@ function buildDisplayList(tournaments: Tournament[]): Tournament[] {
     synthetics.push(mergeTournamentRounds(group));
   }
 
-  // 3. Lista final: standalone + sintéticos, por data desc
   const standalone = tournaments.filter(t => !hiddenTcodes.has(t.tcode));
   return [...standalone, ...synthetics].sort(
     (a, b) => (b.date || "").localeCompare(a.date || "")
@@ -668,6 +690,10 @@ function TeeDot({ teeName }: { teeName?: string }) {
 /* ─────────────────────────────────────────────
    NOME DO JOGADOR — sublinhado + link se tiver perfil
    ───────────────────────────────────────────── */
+const isManuel = (p: { name: string; fedCode?: string }) =>
+  p.fedCode === MANUEL_FED ||
+  (p.name.includes("Manuel") && (p.name.includes("Medeiros") || p.name.includes("Goulartt")));
+
 function PName({ name, fedCode, playersDB }: { name: string; fedCode?: string; playersDB: PlayersDB }) {
   const hasProfile = !!(fedCode && playersDB[fedCode]);
   const sex = fedCode ? playersDB[fedCode]?.sex : undefined;
@@ -680,6 +706,7 @@ function PName({ name, fedCode, playersDB }: { name: string; fedCode?: string; p
       {truncName}
       {sex === "M" && <span className="jog-sex-inline jog-sex-M" style={{ marginLeft: 4 }}>M</span>}
       {sex === "F" && <span className="jog-sex-inline jog-sex-F" style={{ marginLeft: 4 }}>F</span>}
+      {(fedCode === MANUEL_FED) && <span style={{ marginLeft: 3, fontSize: 10 }}>⭐</span>}
     </span>
   );
 }
@@ -775,6 +802,8 @@ function ScorecardLB({ tournament, escLookup, playersDB }: { tournament: Tournam
     );
   }
 
+  const bS = "1px solid var(--border-light, #e5e7eb)";
+
   return (
     <div>
       <div className="muted fs-11 mb-8 p-0-4px" style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
@@ -801,9 +830,8 @@ function ScorecardLB({ tournament, escLookup, playersDB }: { tournament: Tournam
               {si.length >= nh && (
                 <tr className="meta-row">
                   <td className="sticky-col-0" />
-                  <td className="row-label par-label sticky-col-1" style={{ borderRight: 0 }}>S.I.</td>
-                  <td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/>
-                  <td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/>
+                  <td className="row-label par-label sticky-col-1" colSpan={7}>S.I.</td>
+                  <td /><td />
                   {si.slice(0, 9).map((v, i) => <td key={i}>{v}</td>)}
                   <td className="col-out" />
                   {!is9 && si.slice(9, 18).map((v, i) => <td key={i}>{v}</td>)}
@@ -812,10 +840,9 @@ function ScorecardLB({ tournament, escLookup, playersDB }: { tournament: Tournam
               )}
               <tr className="sep-row">
                 <td className="sticky-col-0" />
-                <td className="row-label par-label sticky-col-1" style={{ borderRight: 0 }}>PAR</td>
-                <td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/>
+                <td className="row-label par-label sticky-col-1" colSpan={7}>PAR</td>
                 <td className="col-total">{parTotal}</td>
-                <td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/>
+                <td />
                 {par.slice(0, 9).map((v, i) => <td key={i}>{v}</td>)}
                 <td className="col-out fw-600">{parF9}</td>
                 {!is9 && par.slice(9, 18).map((v, i) => <td key={i}>{v}</td>)}
@@ -823,22 +850,22 @@ function ScorecardLB({ tournament, escLookup, playersDB }: { tournament: Tournam
               </tr>
             </>}
             <tr>
-              <th className="hole-header" style={{ width: 26, textAlign: "center", position: "sticky", left: 0, zIndex: 5, background: "var(--bg-card,#fff)", cursor: "pointer" }} onClick={() => handleSort("pos")}>
+              <th className="hole-header" style={{ textAlign: "center", width: 26, position: "sticky", left: 0, zIndex: 5, background: "var(--bg-card,#fff)", cursor: "pointer" }} onClick={() => handleSort("pos")}>
                 #{sortKey === "pos" && <span style={{ marginLeft: 1, fontSize: 7 }}>{sortDir === "asc" ? "▲" : "▼"}</span>}
               </th>
-              <th className="hole-header" style={{ textAlign: "left", paddingLeft: 6, position: "sticky", left: 26, zIndex: 5, background: "var(--bg-card,#fff)", boxShadow: "2px 0 4px rgba(0,0,0,.06)", minWidth: 135, cursor: "pointer" }} onClick={() => handleSort("name")}>
+              <th className="hole-header" style={{ textAlign: "left", paddingLeft: 6, position: "sticky", left: 26, zIndex: 5, background: "var(--bg-card,#fff)", boxShadow: "2px 0 4px rgba(0,0,0,0.06)", minWidth: 135, cursor: "pointer" }} onClick={() => handleSort("name")}>
                 Jogador{sortKey === "name" && <span style={{ marginLeft: 2, fontSize: 7 }}>{sortDir === "asc" ? "▲" : "▼"}</span>}
               </th>
-              <SortableHH k="esc"   style={{ width: 52, borderLeft: 0, borderRight: 0 }}>ESC.</SortableHH>
-              <th className="hole-header" style={{ width: 46, borderLeft: 0, borderRight: 0 }}>FED</th>
-              <SortableHH k="club"  style={{ width: 70, whiteSpace: "nowrap", borderLeft: 0, borderRight: 0 }}>CLUBE</SortableHH>
-              <SortableHH k="hcp"   style={{ width: 32, borderLeft: 0, borderRight: 0 }}>HCP</SortableHH>
-              <SortableHH k="tee"   style={{ width: 20, borderLeft: 0, borderRight: 0 }}>TEE</SortableHH>
-              <th className="hole-header col-total" style={{ width: 30 }}>Tot</th>
-              <SortableHH k="toPar" style={{ width: 30, borderLeft: 0, borderRight: 0 }}>±</SortableHH>
-              <SortableHH k="sd"    style={{ width: 38, borderLeft: 0, borderRight: 0 }}>SD</SortableHH>
+              <SortableHH k="esc"  style={{ width: 52 }}>ESC.</SortableHH>
+              <th className="hole-header" style={{ width: 44, fontSize: 10 }}>FED</th>
+              <SortableHH k="club" style={{ width: 68, whiteSpace: "nowrap" }}>CLUBE</SortableHH>
+              <SortableHH k="hcp"  style={{ width: 34 }}>HCP</SortableHH>
+              <SortableHH k="tee"  style={{ width: 22 }}>TEE</SortableHH>
+              <th className="hole-header col-total" style={{ width: 30, borderLeft: bS }}>Tot</th>
+              <SortableHH k="toPar" style={{ width: 30 }}>±</SortableHH>
+              <SortableHH k="sd"    style={{ width: 38, borderLeft: bS }}>SD</SortableHH>
               {showScorecard && <>
-                {Array.from({ length: Math.min(9, nh) }, (_, i) => <th key={i} className="hole-header">{i + 1}</th>)}
+                {Array.from({ length: Math.min(9, nh) }, (_, i) => <th key={i} className="hole-header" style={{ borderLeft: i === 0 ? bS : undefined }}>{i + 1}</th>)}
                 <th className="hole-header col-out fs-10">{is9 ? "Tot" : "Out"}</th>
                 {!is9 && Array.from({ length: Math.min(9, nh - 9) }, (_, i) => <th key={i + 9} className="hole-header">{i + 10}</th>)}
                 {!is9 && <th className="hole-header col-in fs-10">In</th>}
@@ -858,27 +885,29 @@ function ScorecardLB({ tournament, escLookup, playersDB }: { tournament: Tournam
               const medal = dp === 1 ? "🥇" : dp === 2 ? "🥈" : dp === 3 ? "🥉" : null;
               const esc = resolveEsc(p, escLookup) || tournament.escalao || "";
               const { sd, source } = computeSD(p);
+              const rowBg = isManuel(p) ? "var(--bg-success-subtle)" : undefined;
+              const stickyBg = isManuel(p) ? "#d1fae5" : "var(--bg-card,#fff)";
               return (
-                <tr key={p.scoreId || idx}>
-                  <td className="fw-800 ta-center" style={{ color: "var(--text-3)", fontSize: 11, position: "sticky", left: 0, zIndex: 2, background: "var(--bg-card,#fff)" }}>
+                <tr key={p.scoreId || idx} style={rowBg ? { background: rowBg } : undefined}>
+                  <td className="fw-800 ta-center" style={{ color: "var(--text-3)", fontSize: 11, position: "sticky", left: 0, zIndex: 2, background: stickyBg }}>
                     {sortKey === "pos" ? (showPos ? (medal ?? dp) : "") : (medal ?? dp)}
                   </td>
-                  <td className="row-label tourn-lb-name-col" style={{ whiteSpace: "nowrap", paddingLeft: 6, position: "sticky", left: 26, zIndex: 2, background: "var(--bg-card,#fff)", boxShadow: "2px 0 4px rgba(0,0,0,.06)", borderRight: 0 }}>
+                  <td className="row-label tourn-lb-name-col" style={{ whiteSpace: "nowrap", paddingLeft: 6, position: "sticky", left: 26, zIndex: 2, background: stickyBg, boxShadow: "2px 0 4px rgba(0,0,0,.06)" }}>
                     <PName name={p.name} fedCode={p.fedCode} playersDB={playersDB} />
                   </td>
-                  <td style={{ borderLeft: 0, borderRight: 0 }}>{esc ? <EscPill esc={esc} /> : <span className="muted">–</span>}</td>
-                  <td style={{ fontSize: 10, color: "var(--text-muted)", borderLeft: 0, borderRight: 0 }}>{p.fedCode || "–"}</td>
-                  <td style={{ borderLeft: 0, borderRight: 0, maxWidth: 70, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{p.club || "–"}</td>
-                  <td className="ta-center" style={{ borderLeft: 0, borderRight: 0 }}>{p.hcpExact != null ? p.hcpExact.toFixed(1) : "–"}</td>
-                  <td className="ta-center" style={{ borderLeft: 0, borderRight: 0 }}><TeeDot teeName={p.teeName} /></td>
-                  <td className="col-total fw-800" style={{ fontSize: 13 }}>{gross}</td>
-                  <td className="fw-700" style={{ color: tpColor, fontSize: 12, borderLeft: 0, borderRight: 0 }}>{fmtTP(tp)}</td>
-                  <td className="ta-center" style={{ borderLeft: 0, borderRight: 0 }}>
+                  <td style={{ fontSize: 11 }}>{esc ? <EscPill esc={esc} /> : <span className="muted">–</span>}</td>
+                  <td style={{ fontSize: 10, color: "var(--text-muted)" }}>{p.fedCode || "–"}</td>
+                  <td style={{ fontSize: 11, maxWidth: 70, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{p.club || "–"}</td>
+                  <td className="r" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: "var(--text-3)" }}>{p.hcpExact != null ? p.hcpExact.toFixed(1) : "–"}</td>
+                  <td className="ta-center"><TeeDot teeName={p.teeName} /></td>
+                  <td className="col-total fw-800" style={{ fontSize: 13, borderLeft: bS, fontFamily: "'JetBrains Mono',monospace" }}>{gross}</td>
+                  <td className="fw-700" style={{ color: tpColor, fontSize: 12, fontFamily: "'JetBrains Mono',monospace" }}>{fmtTP(tp)}</td>
+                  <td className="ta-center" style={{ borderLeft: bS }}>
                     {sd != null ? <span className={"p p-sm p-" + sdClassByHcp(sd, p.hcpExact ?? null)}>{sd.toFixed(1)}{source !== "ags" && <span style={{ fontSize: 7 }}> ≈</span>}</span> : <span className="muted">–</span>}
                   </td>
                   {showScorecard && <>
                     {scores.slice(0, 9).map((sc, i) => (
-                      <td key={i}><span className={"sc-score " + scClass(sc, par[i])}>{sc || ""}</span></td>
+                      <td key={i} style={{ borderLeft: i === 0 ? bS : undefined }}><span className={"sc-score " + scClass(sc, par[i])}>{sc || ""}</span></td>
                     ))}
                     <td className="col-out fw-600">{f9} <span className="fs-8 c-text-3">({fmtTP(f9 - parF9)})</span></td>
                     {!is9 && scores.slice(9, 18).map((sc, i) => (
@@ -955,6 +984,10 @@ function AccumulatedLB({ tournament, nRounds, escLookup, playersDB }: { tourname
     );
   }
 
+  const hs: React.CSSProperties = { fontSize: 11, padding: "6px 5px" };
+  const cs: React.CSSProperties = { fontSize: 12, padding: "5px 6px", whiteSpace: "nowrap" };
+  const bS = "1px solid var(--border-light, #e5e7eb)";
+
   return (
     <div>
       <div className="muted fs-11 mb-8 p-0-4px">
@@ -965,31 +998,27 @@ function AccumulatedLB({ tournament, nRounds, escLookup, playersDB }: { tourname
         escLookup={escLookup} playersDB={playersDB} total={rawPlayers.length}
       />
       <div className="bjgt-chart-scroll">
-        <table className="sc-table-modern" data-sc-table="1">
+        <table className="dtable tbl-compact">
           <thead><tr>
-            <th className="hole-header" style={{ width: 26, textAlign: "center", position: "sticky", left: 0, zIndex: 5, background: "var(--bg-card,#fff)", cursor: "pointer" }} onClick={() => handleSort("pos")}>
-              #{sortKey === "pos" && <span style={{ marginLeft: 1, fontSize: 7 }}>{sortDir === "asc" ? "▲" : "▼"}</span>}
-            </th>
-            <th className="hole-header" style={{ textAlign: "left", paddingLeft: 6, position: "sticky", left: 26, zIndex: 5, background: "var(--bg-card,#fff)", boxShadow: "2px 0 4px rgba(0,0,0,.06)", minWidth: 135, cursor: "pointer" }} onClick={() => handleSort("name")}>
-              Jogador{sortKey === "name" && <span style={{ marginLeft: 2, fontSize: 7 }}>{sortDir === "asc" ? "▲" : "▼"}</span>}
-            </th>
-            <SortableHH k="esc"   style={{ width: 52, borderLeft: 0, borderRight: 0 }}>ESC.</SortableHH>
-            <th className="hole-header" style={{ width: 46, borderLeft: 0, borderRight: 0 }}>FED</th>
-            <SortableHH k="club"  style={{ width: 70, whiteSpace: "nowrap", borderLeft: 0, borderRight: 0 }}>CLUBE</SortableHH>
-            <SortableHH k="hcp"   style={{ width: 32, borderLeft: 0, borderRight: 0 }}>HCP</SortableHH>
-            <SortableHH k="tee"   style={{ width: 20, borderLeft: 0, borderRight: 0 }}>TEE</SortableHH>
-            <th className="hole-header col-total" style={{ width: 38 }}>Total</th>
-            <SortableHH k="toPar" style={{ width: 30, borderLeft: 0, borderRight: 0 }}>±Par</SortableHH>
-            <SortableHH k="sd"    style={{ width: 38, borderLeft: 0, borderRight: 0 }}>SD</SortableHH>
+            <th style={{ ...hs, width: 28, textAlign: "center" }}>#</th>
+            <th style={{ ...hs, textAlign: "left", paddingLeft: 6, minWidth: 155 }}>Jogador</th>
+            <th style={{ ...hs, width: 52 }}>ESC.</th>
+            <th style={{ ...hs, width: 44, fontSize: 10 }}>FED</th>
+            <th style={{ ...hs, width: 68, whiteSpace: "nowrap" }}>CLUBE</th>
+            <th className="r" style={{ ...hs, width: 38 }}>HCP</th>
+            <th style={{ ...hs, width: 22, textAlign: "center" }}>TEE</th>
+            <th className="r fw-800" style={{ ...hs, width: 42, borderLeft: bS }}>Total</th>
+            <th className="r" style={{ ...hs, width: 36, borderLeft: bS }}>±Par</th>
             {Array.from({ length: nRounds }, (_, r) => (
               <React.Fragment key={r}>
-                <th className="hole-header col-out" style={{ width: 30 }}>R{r + 1}</th>
-                <th className="hole-header" style={{ width: 26 }}>±</th>
+                <th className="r" style={{ ...hs, width: 36, borderLeft: bS, background: "var(--bg-hover)" }}>R{r + 1}</th>
+                <th className="r" style={{ ...hs, width: 32, background: "var(--bg-hover)" }}>±</th>
               </React.Fragment>
             ))}
-            <th className="hole-header" style={{ width: 24 }}>🐦</th>
-            <th className="hole-header" style={{ width: 24 }}>Par</th>
-            <th className="hole-header" style={{ width: 24 }}>■</th>
+            <th className="r" style={{ ...hs, width: 40, borderLeft: bS }}>SD</th>
+            <th style={{ ...hs, width: 28, borderLeft: bS, textAlign: "center" }}>🐦</th>
+            <th style={{ ...hs, width: 28, textAlign: "center" }}>Par</th>
+            <th style={{ ...hs, width: 28, textAlign: "center" }}>■</th>
           </tr></thead>
           <tbody>
             {sorted.map((p, idx) => {
@@ -1005,46 +1034,55 @@ function AccumulatedLB({ tournament, nRounds, escLookup, playersDB }: { tourname
               const esc = resolveEsc(p, escLookup) || tournament.escalao || "";
               const r0 = rounds[0];
               const sdP = r0 ? { ...p, scores: r0.scores, par: r0.pars, si: r0.si, courseRating: r0.courseRating, slope: r0.slope, nholes: r0.pars?.length } as any : p;
-              const { sd, source } = computeSD(sdP);
+              const { sd } = computeSD(sdP);
               let birds = 0, pars = 0, bogs = 0;
               for (const rs of rounds) for (let i = 0; i < (rs.scores?.length ?? 0); i++) {
                 const d = (rs.scores[i] || 0) - (rs.pars[i] || 0);
                 if (d <= -1) birds++; else if (d === 0) pars++; else bogs++;
               }
+              const rowBg = isManuel(p) ? "var(--bg-success-subtle)" : isInc ? "var(--bg-hover)" : undefined;
+              const stickyBg = isManuel(p) ? "#d1fae5" : isInc ? "var(--bg-hover)" : "var(--bg-card,#fff)";
               return (
-                <tr key={p.scoreId || idx} style={isInc ? { background: "var(--bg-hover)", opacity: 0.7 } : undefined}>
-                  <td className="fw-800 ta-center" style={{ fontSize: 11, color: "var(--text-3)", position: "sticky", left: 0, zIndex: 2, background: isInc ? "var(--bg-hover)" : "var(--bg-card,#fff)" }}>
+                <tr key={p.scoreId || idx} style={rowBg ? { background: rowBg, opacity: isInc ? 0.7 : 1 } : undefined}>
+                  <td className="fw-700 ta-center" style={{ ...cs, color: "var(--text-3)", position: "sticky", left: 0, zIndex: 2, background: stickyBg }}>
                     {isInc ? <span style={{ fontSize: 9, color: "#dc2626", fontStyle: "italic" }}>WD</span>
-                            : showPos ? (medal || dp) : ""}
+                           : showPos ? (medal || dp) : ""}
                   </td>
-                  <td className="row-label tourn-lb-name-col" style={{ whiteSpace: "nowrap", paddingLeft: 6, position: "sticky", left: 26, zIndex: 2, background: isInc ? "var(--bg-hover)" : "var(--bg-card,#fff)", boxShadow: "2px 0 4px rgba(0,0,0,.06)", borderRight: 0 }}>
+                  <td style={{ ...cs, paddingLeft: 6, position: "sticky", left: 26, zIndex: 2, background: stickyBg, boxShadow: "2px 0 4px rgba(0,0,0,.06)" }}>
                     <PName name={p.name} fedCode={p.fedCode} playersDB={playersDB} />
+                    {isInc && <span style={{ marginLeft: 4, fontSize: 9, color: "#dc2626", fontWeight: 700 }}>INC</span>}
                   </td>
-                  <td style={{ borderLeft: 0, borderRight: 0 }}>{esc ? <EscPill esc={esc} /> : <span className="muted">–</span>}</td>
-                  <td style={{ fontSize: 10, color: "var(--text-muted)", borderLeft: 0, borderRight: 0 }}>{p.fedCode || "–"}</td>
-                  <td style={{ borderLeft: 0, borderRight: 0, maxWidth: 70, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{p.club || "–"}</td>
-                  <td className="ta-center" style={{ borderLeft: 0, borderRight: 0 }}>{p.hcpExact != null ? p.hcpExact.toFixed(1) : "–"}</td>
-                  <td className="ta-center" style={{ borderLeft: 0, borderRight: 0 }}><TeeDot teeName={p.teeName} /></td>
-                  <td className="col-total fw-800" style={{ fontSize: 13, opacity: isInc ? 0.5 : 1 }}>{gross}</td>
-                  <td className="fw-700" style={{ color: tpColor || undefined, fontSize: 12, opacity: isInc ? 0.5 : 1, borderLeft: 0, borderRight: 0 }}>{fmtTP(tp)}</td>
-                  <td className="ta-center" style={{ borderLeft: 0, borderRight: 0 }}>
-                    {sd != null ? <span className={"p p-sm p-" + sdClassByHcp(sd, p.hcpExact ?? null)}>{sd.toFixed(1)}</span> : <span className="muted">–</span>}
+                  <td style={{ ...cs }}>{esc ? <EscPill esc={esc} /> : <span className="muted">–</span>}</td>
+                  <td style={{ ...cs, fontSize: 10, color: "var(--text-muted)" }}>{p.fedCode || "–"}</td>
+                  <td style={{ ...cs, color: "var(--text-3)", maxWidth: 70, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{p.club || "–"}</td>
+                  <td className="r" style={{ ...cs, fontFamily: "'JetBrains Mono',monospace", color: "var(--text-3)" }}>
+                    {p.hcpExact != null ? p.hcpExact.toFixed(1) : "–"}
+                  </td>
+                  <td className="ta-center" style={{ ...cs }}><TeeDot teeName={p.teeName} /></td>
+                  <td className="r fw-800" style={{ ...cs, fontSize: 14, fontFamily: "'JetBrains Mono',monospace", borderLeft: bS, opacity: isInc ? 0.5 : 1 }}>
+                    {gross}
+                  </td>
+                  <td className="r fw-700" style={{ ...cs, fontFamily: "'JetBrains Mono',monospace", color: tpColor || undefined, borderLeft: bS, opacity: isInc ? 0.5 : 1 }}>
+                    {fmtTP(tp)}
                   </td>
                   {Array.from({ length: nRounds }, (_, r) => {
                     const rs = rounds[r];
-                    if (!rs) return <React.Fragment key={r}><td className="col-out muted ta-center">–</td><td className="muted ta-center">–</td></React.Fragment>;
+                    if (!rs) return <React.Fragment key={r}><td style={{ ...cs, borderLeft: bS, background: "var(--bg-hover)" }} className="r muted">–</td><td style={{ ...cs, background: "var(--bg-hover)" }} className="r muted">–</td></React.Fragment>;
                     const rtp = rs.gross - ppt;
                     const rtpColor = rtp < 0 ? SC.danger : rtp === 0 ? SC.good : undefined;
                     return (
                       <React.Fragment key={r}>
-                        <td className="col-out fw-700">{rs.gross}</td>
-                        <td className="fw-600" style={{ color: rtpColor }}>{fmtTP(rtp)}</td>
+                        <td className="r fw-700" style={{ ...cs, borderLeft: bS, fontFamily: "'JetBrains Mono',monospace", background: "var(--bg-hover)" }}>{rs.gross}</td>
+                        <td className="r fw-600" style={{ ...cs, fontFamily: "'JetBrains Mono',monospace", color: rtpColor, background: "var(--bg-hover)" }}>{fmtTP(rtp)}</td>
                       </React.Fragment>
                     );
                   })}
-                  <td className="ta-center">{birds || "–"}</td>
-                  <td className="ta-center">{pars || "–"}</td>
-                  <td className="ta-center">{bogs || "–"}</td>
+                  <td className="r" style={{ ...cs, borderLeft: bS }}>
+                    {sd != null ? <span className={"p p-sm p-" + sdClassByHcp(sd, p.hcpExact ?? null)}>{sd.toFixed(1)}</span> : <span className="muted">–</span>}
+                  </td>
+                  <td className="ta-center" style={{ ...cs, borderLeft: bS }}>{birds || "–"}</td>
+                  <td className="ta-center" style={{ ...cs }}>{pars || "–"}</td>
+                  <td className="ta-center" style={{ ...cs }}>{bogs || "–"}</td>
                 </tr>
               );
             })}
@@ -1281,38 +1319,37 @@ function Content() {
   const [filterManuel, setFilterManuel] = useState(false);
   const [escLookup, setEscLookup] = useState<EscLookup>(new Map());
   const [playersDB, setPlayersDB] = useState<PlayersDB>({});
-  const [tcodePills, setTcodePills] = useState<Record<string, TournPill>>({});
+
+  const { melhorias } = useAppContext();
+
+  const tcodePills = useMemo<Record<string, TournPill>>(() => {
+    const pills: Record<string, TournPill> = {};
+    for (const playerData of Object.values(melhorias)) {
+      if (typeof playerData !== "object" || !playerData) continue;
+      for (const entry of Object.values(playerData as Record<string, any>)) {
+        if (typeof entry !== "object" || !entry || Array.isArray(entry) || !entry.pill) continue;
+        // Extrair TODOS os tcodes dos links desta entrada (ex: classificacao_d1 + classificacao_d2)
+        for (const v of Object.values((entry as any).links || {})) {
+          const match = String(v).match(/tcode=(\d+)/);
+          if (match) pills[match[1]] = (entry as any).pill as TournPill;
+        }
+      }
+    }
+    return pills;
+  }, [melhorias]);
 
   useEffect(() => {
     let alive = true;
 
     async function load() {
       try {
-        // Carregar players.json em paralelo com os torneios (para escalões)
-        // Load players.json + tournament-links.json in parallel
-        const [pdbResp, linksResp, melhoriasResp] = await Promise.all([
+        const [pdbResp, linksResp] = await Promise.all([
           fetch("/data/players.json").catch(() => null),
           fetch("/data/tournament-links.json").catch(() => null),
-          fetch("/data/melhorias.json").catch(() => null),
         ]);
         if (pdbResp?.ok) {
           const pdb: PlayersDB = await pdbResp.json().catch(() => ({}));
           if (alive) { setEscLookup(buildEscLookup(pdb)); setPlayersDB(pdb); }
-        }
-        if (melhoriasResp?.ok) {
-          const mel = await melhoriasResp.json().catch(() => ({}));
-          const pills: Record<string, TournPill> = {};
-          for (const playerData of Object.values(mel)) {
-            if (typeof playerData !== "object" || !playerData) continue;
-            for (const entry of Object.values(playerData as Record<string, any>)) {
-              if (typeof entry !== "object" || !entry || Array.isArray(entry) || !entry.pill) continue;
-              for (const v of Object.values(entry.links || {})) {
-                const m = String(v).match(/tcode=(\d+)/);
-                if (m) { pills[m[1]] = entry.pill as TournPill; break; }
-              }
-            }
-          }
-          if (alive) setTcodePills(pills);
         }
         let externalLinks: Record<string, Record<string, string>> = {};
         if (linksResp?.ok) {
@@ -1522,33 +1559,32 @@ function Content() {
             {sidebarOpen ? "◀" : "▶"}
           </button>
           <span className="toolbar-title">🏌️ Torneios</span>
-          {/* Toggle modo */}
           {!loading && (
-            <div style={{ display: "flex", gap: 3, marginLeft: 12 }}>
-              {(["month", "circuit"] as const).map(mode => (
-                <button key={mode} onClick={() => { setSidebarMode(mode); if (mode === "circuit") setFilterManuel(false); }} style={{
-                  fontSize: 11, padding: "3px 10px", borderRadius: 5,
-                  border: "1px solid var(--border)",
-                  background: sidebarMode === mode ? "var(--accent)" : "var(--bg-hover)",
-                  color: sidebarMode === mode ? "#fff" : "var(--text-muted)",
-                  cursor: "pointer", fontWeight: sidebarMode === mode ? 700 : 400,
-                }}>
-                  {mode === "month" ? "Por data" : "PJA Tour"}
+            <>
+              <div className="toolbar-sep" />
+              <div className="escalao-pills">
+                <button
+                  className={"tourn-tab tourn-tab-sm" + (sidebarMode === "month" ? " active" : "")}
+                  onClick={() => setSidebarMode("month")}
+                  style={sidebarMode === "month" ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                  Por data
                 </button>
-              ))}
-            </div>
-          )}
-          {/* Filtro Manuel — só no modo Por data */}
-          {!loading && sidebarMode === "month" && (
-            <button onClick={() => setFilterManuel(v => !v)} style={{
-              marginLeft: 6, fontSize: 11, padding: "3px 10px", borderRadius: 5,
-              border: `1px solid ${filterManuel ? "var(--color-loading)" : "var(--border)"}`,
-              background: filterManuel ? "var(--color-loading)" : "var(--bg-hover)",
-              color: filterManuel ? "#1a1a1a" : "var(--text-muted)",
-              cursor: "pointer", fontWeight: filterManuel ? 700 : 400,
-            }}>
-              ★ Manuel
-            </button>
+                <button
+                  className={"tourn-tab tourn-tab-sm" + (sidebarMode === "circuit" ? " active" : "")}
+                  onClick={() => { setSidebarMode("circuit"); setFilterManuel(false); }}
+                  style={sidebarMode === "circuit" ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                  🏆 PJA Tour
+                </button>
+                {sidebarMode === "month" && (
+                  <button
+                    className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
+                    onClick={() => setFilterManuel(v => !v)}
+                    style={filterManuel ? { background: "var(--color-loading)", borderColor: "var(--color-loading)", color: "#1a1a1a" } : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                    ★ Manuel
+                  </button>
+                )}
+              </div>
+            </>
           )}
         </div>
         <div className="toolbar-right">
