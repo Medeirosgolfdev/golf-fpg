@@ -886,8 +886,11 @@ function TabResultados({ data, selectedT, greatgolfData }: {
   );
 
   if (!t) return (
-    <div style={{ color:"var(--text-3)", padding:"32px 0", textAlign:"center", fontSize:13 }}>
-      Selecciona um torneio na sidebar
+    <div>
+      <div style={{ color:"var(--text-3)", padding:"32px 0 16px", textAlign:"center", fontSize:13 }}>
+        Selecciona um torneio na sidebar
+      </div>
+      {greatgolfData && <SecaoGreatgolf data={greatgolfData} />}
     </div>
   );
 
@@ -1622,23 +1625,26 @@ function TabInscritos({ data, fieldData, selectedT: _selectedT }: {
         for (const j of (esc.jogadores ?? [])) {
           if (isManuel(j.nome)) continue;
           const key = j.nome.toLowerCase().trim();
-          const mesmoEscalao = escalaoComManuel.has(esc.nome);
-          // Só interessa registar se:
-          // - mesmo escalão que Manuel (vai cruzar/conhecer), OU
-          // - Manuel está no mesmo torneio mas noutro escalão (reencontro escalão diferente)
-          // Torneios onde Manuel não está inscrito são ignorados para todos os efeitos
-          if (!manuelInscrito) continue;
-          const entry: InscritoEntry = {
-            torneioT: t.t, torneioNome: t.name, torneioData: t.date_inicio,
-            escalao: esc.nome,
-            mesmoEscalao,
-          };
+          const mesmoEscalao = manuelInscrito && escalaoComManuel.has(esc.nome);
+          // Conhecidos: registamos EM TODOS os torneios futuros (para ver onde jogam mesmo sem o Manuel)
+          // Desconhecidos: só nos torneios onde o Manuel também está inscrito
           if (rivalMap.has(key)) {
+            const entry: InscritoEntry = {
+              torneioT: t.t, torneioNome: t.name, torneioData: t.date_inicio,
+              escalao: esc.nome,
+              mesmoEscalao,
+            };
             if (!conhecidosMap.has(key))
               conhecidosMap.set(key, { rival: rivalMap.get(key)!, torneios: [] });
             if (!conhecidosMap.get(key)!.torneios.some(p => p.torneioT === t.t))
               conhecidosMap.get(key)!.torneios.push(entry);
           } else {
+            if (!manuelInscrito) continue;
+            const entry: InscritoEntry = {
+              torneioT: t.t, torneioNome: t.name, torneioData: t.date_inicio,
+              escalao: esc.nome,
+              mesmoEscalao: true,
+            };
             if (!desconhecidosMap.has(key))
               desconhecidosMap.set(key, { nome: j.nome, pais: j.pais, torneios: [] });
             if (!desconhecidosMap.get(key)!.torneios.some(p => p.torneioT === t.t))
@@ -1724,7 +1730,7 @@ function TabInscritos({ data, fieldData, selectedT: _selectedT }: {
           border:     `1px solid ${t.mesmoEscalao ? "var(--border-success)" : "var(--border)"}`,
           fontWeight: t.mesmoEscalao ? 700 : 400,
         }}>
-          {t.torneioNome.replace(/\s*\d{4}$/, "")}
+          {t.mesmoEscalao && <span style={{ marginRight:3, fontSize:9 }}>★</span>}{t.torneioNome.replace(/\s*\d{4}$/, "")}
           <span style={{ opacity:0.7, marginLeft:4, fontSize:10 }}>{t.escalao}</span>
         </span>
       ))}
@@ -1749,58 +1755,107 @@ function TabInscritos({ data, fieldData, selectedT: _selectedT }: {
     );
   };
 
-  const TabelaConhecida = ({ rows, dimmed }: { rows: typeof vaiReencontrar; dimmed?: boolean }) => (
-    <table className="dtable-lg" style={{ width:"100%" }}>
-      <thead>
-        <tr>
-          <th style={{ textAlign:"left" }}>Jogador</th>
-          <th style={{ width:30 }}></th>
-          <th style={{ textAlign:"left" }}>Torneios</th>
-          <th style={{ width:40, textAlign:"center" }}>#</th>
-        </tr>
-      </thead>
-      <tbody>
-        {rows.map(({ rival, torneios }, i) => (
-          <tr key={i} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)", opacity: dimmed ? 0.75 : 1 }}>
-            <td style={{ fontWeight: dimmed?400:600, fontSize:13, padding:"8px 10px", color: dimmed?"var(--text-2)":"var(--text)" }}>
-              <div>{rival.nome}</div>
-              <HistorialLine rival={rival} />
-            </td>
-            <td style={{ textAlign:"center", fontSize:14 }}>{flag(rival.pais)}</td>
-            <td style={{ padding:"8px 10px" }}><TorneiosPills torneios={torneios} /></td>
-            <td style={{ textAlign:"center", fontWeight:800, fontSize:13, color: dimmed?"var(--text-3)":"var(--accent)" }}>
-              {torneios.length}
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+  type SortCol = "nome" | "pais" | "n";
+  type SortDir = "asc" | "desc";
+
+  const ThSort = ({ col, label, cur, dir, onSort, style }: {
+    col: SortCol; label: string; cur: SortCol; dir: SortDir;
+    onSort: (c: SortCol) => void; style?: React.CSSProperties;
+  }) => (
+    <th onClick={() => onSort(col)} style={{
+      cursor:"pointer", userSelect:"none", whiteSpace:"nowrap",
+      color: cur===col ? "var(--text)" : "var(--text-3)",
+      ...style,
+    }}>
+      {label}
+      <span style={{ marginLeft:4, fontSize:9, opacity: cur===col ? 1 : 0.4 }}>
+        {cur===col ? (dir==="asc" ? "▲" : "▼") : "⇅"}
+      </span>
+    </th>
   );
 
-  const TabelaDesconhecida = ({ rows }: { rows: typeof vaiConhecer }) => (
-    <table className="dtable-lg" style={{ width:"100%" }}>
-      <thead>
-        <tr>
-          <th style={{ textAlign:"left" }}>Jogador</th>
-          <th style={{ width:30 }}></th>
-          <th style={{ textAlign:"left" }}>Torneios</th>
-          <th style={{ width:40, textAlign:"center" }}>#</th>
-        </tr>
-      </thead>
-      <tbody>
-        {rows.map((entry, i) => (
-          <tr key={i} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)" }}>
-            <td style={{ fontWeight:400, fontSize:13, padding:"8px 10px", color:"var(--text-2)" }}>{entry.nome}</td>
-            <td style={{ textAlign:"center", fontSize:14 }}>{flag(entry.pais)}</td>
-            <td style={{ padding:"8px 10px" }}><TorneiosPills torneios={entry.torneios} /></td>
-            <td style={{ textAlign:"center", fontWeight:800, fontSize:13, color:"var(--text-3)" }}>
-              {entry.torneios.length}
-            </td>
+  const TabelaConhecida = ({ rows, dimmed }: { rows: typeof vaiReencontrar; dimmed?: boolean }) => {
+    const [sortCol, setSortCol] = useState<SortCol>("n");
+    const [sortDir, setSortDir] = useState<SortDir>("desc");
+    const handleSort = (col: SortCol) => {
+      if (col === sortCol) setSortDir(d => d === "asc" ? "desc" : "asc");
+      else { setSortCol(col); setSortDir(col === "n" ? "desc" : "asc"); }
+    };
+    const sorted = [...rows].sort((a, b) => {
+      let v = 0;
+      if (sortCol === "nome") v = a.rival.nome.localeCompare(b.rival.nome);
+      else if (sortCol === "pais") v = a.rival.pais.localeCompare(b.rival.pais);
+      else v = a.torneios.length - b.torneios.length;
+      return sortDir === "asc" ? v : -v;
+    });
+    return (
+      <table className="dtable-lg" style={{ width:"100%" }}>
+        <thead>
+          <tr>
+            <ThSort col="nome" label="Jogador" cur={sortCol} dir={sortDir} onSort={handleSort} style={{ textAlign:"left" }} />
+            <ThSort col="pais" label="🌍" cur={sortCol} dir={sortDir} onSort={handleSort} style={{ width:36, textAlign:"center" }} />
+            <th style={{ textAlign:"left" }}>Torneios</th>
+            <ThSort col="n" label="#" cur={sortCol} dir={sortDir} onSort={handleSort} style={{ width:40, textAlign:"center" }} />
           </tr>
-        ))}
-      </tbody>
-    </table>
-  );
+        </thead>
+        <tbody>
+          {sorted.map(({ rival, torneios }, i) => (
+            <tr key={rival.nome} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)", opacity: dimmed ? 0.75 : 1 }}>
+              <td style={{ fontWeight: dimmed?400:600, fontSize:13, padding:"8px 10px", color: dimmed?"var(--text-2)":"var(--text)" }}>
+                <div>{rival.nome}</div>
+                <HistorialLine rival={rival} />
+              </td>
+              <td style={{ textAlign:"center", fontSize:14 }}>{flag(rival.pais)}</td>
+              <td style={{ padding:"8px 10px" }}><TorneiosPills torneios={torneios} /></td>
+              <td style={{ textAlign:"center", fontWeight:800, fontSize:13, color: dimmed?"var(--text-3)":"var(--accent)" }}>
+                {torneios.length}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
+
+  const TabelaDesconhecida = ({ rows }: { rows: typeof vaiConhecer }) => {
+    const [sortCol, setSortCol] = useState<SortCol>("n");
+    const [sortDir, setSortDir] = useState<SortDir>("desc");
+    const handleSort = (col: SortCol) => {
+      if (col === sortCol) setSortDir(d => d === "asc" ? "desc" : "asc");
+      else { setSortCol(col); setSortDir(col === "n" ? "desc" : "asc"); }
+    };
+    const sorted = [...rows].sort((a, b) => {
+      let v = 0;
+      if (sortCol === "nome") v = a.nome.localeCompare(b.nome);
+      else if (sortCol === "pais") v = a.pais.localeCompare(b.pais);
+      else v = a.torneios.length - b.torneios.length;
+      return sortDir === "asc" ? v : -v;
+    });
+    return (
+      <table className="dtable-lg" style={{ width:"100%" }}>
+        <thead>
+          <tr>
+            <ThSort col="nome" label="Jogador" cur={sortCol} dir={sortDir} onSort={handleSort} style={{ textAlign:"left" }} />
+            <ThSort col="pais" label="🌍" cur={sortCol} dir={sortDir} onSort={handleSort} style={{ width:36, textAlign:"center" }} />
+            <th style={{ textAlign:"left" }}>Torneios</th>
+            <ThSort col="n" label="#" cur={sortCol} dir={sortDir} onSort={handleSort} style={{ width:40, textAlign:"center" }} />
+          </tr>
+        </thead>
+        <tbody>
+          {sorted.map((entry, i) => (
+            <tr key={entry.nome} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)" }}>
+              <td style={{ fontWeight:400, fontSize:13, padding:"8px 10px", color:"var(--text-2)" }}>{entry.nome}</td>
+              <td style={{ textAlign:"center", fontSize:14 }}>{flag(entry.pais)}</td>
+              <td style={{ padding:"8px 10px" }}><TorneiosPills torneios={entry.torneios} /></td>
+              <td style={{ textAlign:"center", fontWeight:800, fontSize:13, color:"var(--text-3)" }}>
+                {entry.torneios.length}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
 
   const vcR  = filtC(vaiReencontrar);
   const vcK  = filtD(vaiConhecer);

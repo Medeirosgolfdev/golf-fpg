@@ -466,21 +466,9 @@ function ScorecardLB({ tournament, escLookup, playersDB }: { tournament: Tournam
         <table className="sc-table-modern" data-sc-table="1">
           <thead>
             {showScorecard && <>
-              {si.length >= nh && (
-                <tr className="meta-row">
-                  <td className="sticky-col-0" />
-                  <td className="row-label par-label sticky-col-1" style={{ borderRight: 0 }}>S.I.</td>
-                  <td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/>
-                  <td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/>
-                  {si.slice(0, 9).map((v, i) => <td key={i}>{v}</td>)}
-                  <td className="col-out" />
-                  {!is9 && si.slice(9, 18).map((v, i) => <td key={i}>{v}</td>)}
-                  {!is9 && <td className="col-in" />}
-                </tr>
-              )}
               <tr className="sep-row">
                 <td className="sticky-col-0" />
-                <td className="row-label par-label sticky-col-1" style={{ borderRight: 0 }}>PAR</td>
+                <td className="row-label par-label sticky-col-1">PAR</td>
                 <td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/>
                 <td className="col-total">{parTotal}</td>
                 <td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/>
@@ -489,6 +477,18 @@ function ScorecardLB({ tournament, escLookup, playersDB }: { tournament: Tournam
                 {!is9 && par.slice(9, 18).map((v, i) => <td key={i}>{v}</td>)}
                 {!is9 && <td className="col-in fw-600">{parB9}</td>}
               </tr>
+              {si.length >= nh && (
+                <tr className="meta-row">
+                  <td className="sticky-col-0" />
+                  <td className="row-label par-label sticky-col-1">S.I.</td>
+                  <td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/>
+                  <td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/>
+                  {si.slice(0, 9).map((v, i) => <td key={i}>{v}</td>)}
+                  <td className="col-out" />
+                  {!is9 && si.slice(9, 18).map((v, i) => <td key={i}>{v}</td>)}
+                  {!is9 && <td className="col-in" />}
+                </tr>
+              )}
             </>}
             <tr>
               <th className="hole-header" style={{ width: 26, textAlign: "center", position: "sticky", left: 0, zIndex: 5, background: "var(--bg-card,#fff)", cursor: "pointer" }} onClick={() => handleSort("pos")}>
@@ -531,7 +531,7 @@ function ScorecardLB({ tournament, escLookup, playersDB }: { tournament: Tournam
                   <td className="fw-800 ta-center" style={{ color: "var(--text-3)", fontSize: 11, position: "sticky", left: 0, zIndex: 2, background: "var(--bg-card,#fff)" }}>
                     {sortKey === "pos" ? (showPos ? (medal ?? dp) : "") : (medal ?? dp)}
                   </td>
-                  <td className="row-label tourn-lb-name-col" style={{ whiteSpace: "nowrap", paddingLeft: 6, position: "sticky", left: 26, zIndex: 2, background: "var(--bg-card,#fff)", boxShadow: "2px 0 4px rgba(0,0,0,.06)", borderRight: 0 }}>
+                  <td className="row-label tourn-lb-name-col" style={{ whiteSpace: "nowrap", paddingLeft: 6, position: "sticky", left: 26, zIndex: 2, background: "var(--bg-card,#fff)", boxShadow: "2px 0 4px rgba(0,0,0,.06)" }}>
                     <PName name={p.name} fedCode={p.fedCode} playersDB={playersDB} />
                   </td>
                   <td style={{ borderLeft: 0, borderRight: 0 }}>{esc ? <EscPill esc={esc} /> : <span className="muted">–</span>}</td>
@@ -677,7 +677,7 @@ function AccumulatedLB({ tournament, nRounds, escLookup, playersDB }: { tourname
                     {isInc ? <span style={{ fontSize: 9, color: "#dc2626", fontStyle: "italic" }}>WD</span>
                             : showPos ? (medal || dp) : ""}
                   </td>
-                  <td className="row-label tourn-lb-name-col" style={{ whiteSpace: "nowrap", paddingLeft: 6, position: "sticky", left: 26, zIndex: 2, background: isInc ? "var(--bg-hover)" : "var(--bg-card,#fff)", boxShadow: "2px 0 4px rgba(0,0,0,.06)", borderRight: 0 }}>
+                  <td className="row-label tourn-lb-name-col" style={{ whiteSpace: "nowrap", paddingLeft: 6, position: "sticky", left: 26, zIndex: 2, background: isInc ? "var(--bg-hover)" : "var(--bg-card,#fff)", boxShadow: "2px 0 4px rgba(0,0,0,.06)" }}>
                     <PName name={p.name} fedCode={p.fedCode} playersDB={playersDB} />
                   </td>
                   <td style={{ borderLeft: 0, borderRight: 0 }}>{esc ? <EscPill esc={esc} /> : <span className="muted">–</span>}</td>
@@ -835,7 +835,49 @@ function TournamentDetail({ tournament, escLookup, playersDB }: { tournament: To
     <div>
       {/* Cabeçalho */}
       <div className="detail-header">
-        <h2 className="detail-title">{tournament.name}</h2>
+        <div style={{ display: "flex", alignItems: "baseline", flexWrap: "wrap", gap: 8 }}>
+          <h2 className="detail-title" style={{ margin: 0 }}>{tournament.name}</h2>
+          <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+            {tournament.ccode && (
+              <span title="tclub" style={{
+                fontFamily: "monospace", fontSize: 10, fontWeight: 600,
+                background: "var(--bg-hover,#f1f5f9)", color: "var(--text-muted)",
+                border: "1px solid var(--border,#e2e8f0)",
+                borderRadius: 4, padding: "1px 6px", letterSpacing: "0.02em",
+                userSelect: "all", cursor: "text",
+              }}>
+                {tournament.ccode}
+              </span>
+            )}
+            {tournament.tcode && (
+              <span title="tcode" style={{
+                fontFamily: "monospace", fontSize: 10, fontWeight: 700,
+                background: "var(--accent,#2563eb)", color: "#fff",
+                borderRadius: 4, padding: "1px 6px", letterSpacing: "0.02em",
+                userSelect: "all", cursor: "text",
+              }}>
+                {tournament.tcode}
+              </span>
+            )}
+            {tournament.ccode && tournament.tcode && (
+              <a
+                href={`https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=${tournament.ccode}&tcode=${tournament.tcode}`}
+                target="_blank" rel="noopener noreferrer"
+                title="Abrir classificação na Federação"
+                style={{
+                  fontSize: 10, fontWeight: 600,
+                  color: "var(--accent,#2563eb)",
+                  border: "1px solid var(--accent,#2563eb)",
+                  borderRadius: 4, padding: "1px 6px",
+                  textDecoration: "none", whiteSpace: "nowrap",
+                  lineHeight: 1.6,
+                }}
+              >
+                Link Federação ↗
+              </a>
+            )}
+          </div>
+        </div>
         <div className="detail-sub">
           {tournament.campo && <span className="muted">📍 {tournament.campo}</span>}
           <span className="muted" style={{ marginLeft: 8 }}>{fmtDate(tournament.date)}</span>
@@ -1027,7 +1069,39 @@ function Content() {
                   <button key={t.tcode + "_" + t.date}
                     className={`course-item ${selected === idx ? "active" : ""}`}
                     onClick={() => setSelected(idx)}>
-                    <div className="course-item-name">{t.name}</div>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: 5, flexWrap: "wrap" }}>
+                      <span className="course-item-name" style={{ flex: "none" }}>{t.name}</span>
+                      <div style={{ display: "flex", gap: 3 }}>
+                        {t.ccode && (
+                          <span title="tclub" style={{
+                            fontFamily: "monospace", fontSize: 9, fontWeight: 600,
+                            background: "rgba(0,0,0,0.08)", color: "var(--text-muted)",
+                            borderRadius: 3, padding: "0 4px", letterSpacing: "0.01em",
+                          }}>{t.ccode}</span>
+                        )}
+                        {t.tcode && (
+                          <span title="tcode" style={{
+                            fontFamily: "monospace", fontSize: 9, fontWeight: 700,
+                            background: "var(--accent,#2563eb)", color: "#fff",
+                            borderRadius: 3, padding: "0 4px", letterSpacing: "0.01em",
+                            opacity: selected === idx ? 1 : 0.7,
+                          }}>{t.tcode}</span>
+                        )}
+                        {t.ccode && t.tcode && (
+                          <span
+                            title="Abrir classificação na Federação"
+                            onClick={e => { e.stopPropagation(); window.open(`https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=${t.ccode}&tcode=${t.tcode}`, "_blank"); }}
+                            style={{
+                              fontSize: 9, fontWeight: 600, cursor: "pointer",
+                              color: "var(--accent,#2563eb)",
+                              border: "1px solid var(--accent,#2563eb)",
+                              borderRadius: 3, padding: "0 4px",
+                              whiteSpace: "nowrap", lineHeight: 1.6,
+                            }}
+                          >↗</span>
+                        )}
+                      </div>
+                    </div>
                     <div className="course-item-meta">
                       {t.campo && <span>{t.campo}</span>}
                       <span style={{ marginLeft: 4 }}>{t.playerCount} jog · {nR}R · {nh}h</span>
