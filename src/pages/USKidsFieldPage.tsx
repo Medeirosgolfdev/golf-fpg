@@ -1007,21 +1007,29 @@ interface RivalInfo {
 
 function TabelaConhecidos({
   torneioT, torneioNome, torneioData, escalaoManuel,
-  rivals, fieldData, intlData, matchIntl,
+  rivals, fieldData, intlData, matchIntl, defaultOpen,
 }: {
   torneioT: number; torneioNome: string; torneioData?: string; escalaoManuel?: string;
   rivals: RivalInfo[]; fieldData: FieldData | null; intlData: IntlData | null;
-  matchIntl: (nome: string) => IntlJogador | null;
+  matchIntl: (nome: string) => IntlJogador | null; defaultOpen?: boolean;
 }) {
+  const [open, setOpen] = useState(defaultOpen ?? false);
   const [expandidoNovos, setExpandidoNovos] = useState(false);
   const torneio = fieldData?.torneios.find(t => t.t === torneioT);
 
-  // Escalão relevante: usar escalaoManuel ou o primeiro com inscritos
+  // Guardar o escalão de referência apenas para o header (contagem)
   const escalao = torneio?.escaloes.find(e =>
     escalaoManuel ? e.nome === escalaoManuel : (e.jogadores?.length ?? 0) > 0
   );
-  const inscritos: { nome: string; pais: string; escalao: string }[] =
-    escalao ? (escalao.jogadores ?? []).map(j => ({ ...j, escalao: escalao.nome })) : [];
+  // Agregar inscritos de TODOS os escalões — um rival pode estar num escalão
+  // diferente do Manuel (ex: rival ainda em Boys 11 quando Manuel sobe para Boys 12)
+  const inscritos: { nome: string; pais: string; escalao: string }[] = torneio
+    ? torneio.escaloes.flatMap(e =>
+        (e.jogadores?.length ?? 0) > 0
+          ? (e.jogadores ?? []).map(j => ({ ...j, escalao: e.nome }))
+          : []
+      )
+    : [];
 
   const rivalMap = new Map(rivals.map(r => [r.nome.toLowerCase().trim(), r]));
   const conhecidos    = inscritos.filter(j => !isManuel(j.nome) && rivalMap.has(j.nome.toLowerCase().trim()));
@@ -1030,21 +1038,26 @@ function TabelaConhecidos({
   const manuelIntl = intlData?.jogadores.find(jj => jj.isM);
 
   return (
-    <div style={{ marginBottom:24, border:"1px solid var(--border)", borderRadius:10, overflow:"hidden" }}>
-      {/* Header do torneio */}
-      <div style={{ padding:"12px 16px", background:"var(--bg-header)",
-        borderBottom:"1px solid var(--border)" }}>
-        <div style={{ fontWeight:700, fontSize:15, color:"var(--text)", marginBottom:2 }}>
-          {torneioNome}
+    <div style={{ marginBottom:8, border:"1px solid var(--border)", borderRadius:10, overflow:"hidden" }}>
+      {/* Header do torneio — clicável para collapse */}
+      <div onClick={() => setOpen(v => !v)} style={{ padding:"12px 16px", background:"var(--bg-header)",
+        borderBottom: open ? "1px solid var(--border)" : "none",
+        cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+        <div>
+          <div style={{ fontWeight:700, fontSize:15, color:"var(--text)", marginBottom:2 }}>
+            {torneioNome}
+          </div>
+          <div style={{ fontSize:11, color:"var(--text-3)", display:"flex", gap:10, flexWrap:"wrap" }}>
+            {torneioData && <span>📅 {fmtDate(torneioData)}</span>}
+            {escalaoManuel && <span>🏌️ {escalaoManuel}</span>}
+            {torneio && <span>· {conhecidos.length} conhecidos · {desconhecidos.length} novos</span>}
+            {!torneio && <span style={{ color:"var(--color-warn)" }}>⚠️ Campo não disponível</span>}
+          </div>
         </div>
-        <div style={{ fontSize:11, color:"var(--text-3)", display:"flex", gap:10, flexWrap:"wrap" }}>
-          {torneioData && <span>📅 {fmtDate(torneioData)}</span>}
-          {escalao && <span>📋 {escalao.nome} · {inscritos.length} inscritos</span>}
-          {!torneio && <span style={{ color:"var(--color-warn)" }}>⚠️ Campo não disponível</span>}
-        </div>
+        <span style={{ color:"var(--text-3)", fontSize:13, marginLeft:12 }}>{open ? "▲" : "▼"}</span>
       </div>
 
-      <div style={{ padding:"12px 16px" }}>
+      {open && <div style={{ padding:"12px 16px" }}>
         {/* ── Já conhecidos ── */}
         <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:10 }}>
           <span style={{ fontSize:12, fontWeight:700, color:"var(--color-good)" }}>
@@ -1172,7 +1185,7 @@ function TabelaConhecidos({
             )}
           </div>
         )}
-      </div>
+      </div>}
     </div>
   );
 }
@@ -1235,13 +1248,17 @@ function TabRivais({ data, fieldData, intlData, selectedT }: { data: ResultsData
     return lista;
   }, [rivals, filtro, ordem]);
 
-  // Torneios futuros relevantes (com inscritos disponíveis no fieldData)
-  const torneiosFuturos = useMemo(() => {
+  // Torneios futuros onde o Manuel está inscrito (nome+PT)
+  const torneiosComManuel = useMemo(() => {
     if (!fieldData) return [];
     return fieldData.torneios
       .filter(t => {
         const iso = isoDate(t.date_inicio);
-        return iso >= new Date().toISOString().slice(0,10);
+        const futuro = iso >= new Date().toISOString().slice(0,10);
+        const temManuel = t.escaloes.some(e =>
+          (e.jogadores ?? []).some(j => isManuel(j.nome) && j.pais === "PT")
+        );
+        return futuro && temManuel;
       })
       .sort((a,b) => isoDate(a.date_inicio).localeCompare(isoDate(b.date_inicio)));
   }, [fieldData]);
@@ -1252,113 +1269,33 @@ function TabRivais({ data, fieldData, intlData, selectedT }: { data: ResultsData
     </div>
   );
 
-  // Torneio activo vem da sidebar (selectedT)
-  const torneioActivo = torneiosFuturos.find(t => t.t === selectedT) ?? null;
-
-  // Matriz reversa: rival → torneios futuros onde está inscrito
-  const matrizReversa = useMemo(() => {
-    if (!fieldData) return [];
-    const rivalMap = new Map(rivals.map(r => [r.nome.toLowerCase().trim(), r]));
-    // Para cada torneio futuro, ver quais rivais estão inscritos
-    const presencas = new Map<string, { torneioT: number; torneioNome: string; torneioData: string; escalao: string }[]>();
-    for (const t of torneiosFuturos) {
-      const escalaoAlvo = escalaoManuelParaData(t.date_inicio);
-      const esc = t.escaloes.find(e => e.nome === escalaoAlvo && (e.jogadores?.length ?? 0) > 0);
-      if (!esc) continue;
-      for (const j of (esc.jogadores ?? [])) {
-        if (isManuel(j.nome)) continue;
-        const key = j.nome.toLowerCase().trim();
-        if (!rivalMap.has(key)) continue;
-        if (!presencas.has(key)) presencas.set(key, []);
-        presencas.get(key)!.push({ torneioT: t.t, torneioNome: t.name, torneioData: t.date_inicio, escalao: esc.nome });
-      }
-    }
-    // Ordenar por número de presenças desc
-    return [...presencas.entries()]
-      .map(([key, torneios]) => ({ rival: rivalMap.get(key)!, torneios }))
-      .sort((a, b) => b.torneios.length - a.torneios.length);
-  }, [rivals, torneiosFuturos, fieldData]);
-
   return (
     <div>
-      {/* ── Análise reversa: rivais nos próximos torneios ── */}
-      {matrizReversa.length > 0 && (
-        <div style={{ marginBottom:24 }}>
-          <div style={{ fontSize:11, fontWeight:700, color:"var(--text-3)",
-            textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:10 }}>
-            Conhecidos nos próximos torneios
-          </div>
-          <table className="dtable" style={{ width:"100%" }}>
-            <thead>
-              <tr>
-                <th style={{ textAlign:"left", width:160 }}>Rival</th>
-                <th style={{ width:30 }}></th>
-                <th style={{ textAlign:"left" }}>Torneios inscritos</th>
-                <th style={{ width:40, textAlign:"center" }}>#</th>
-              </tr>
-            </thead>
-            <tbody>
-              {matrizReversa.map(({ rival, torneios }, i) => (
-                <tr key={i} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)" }}>
-                  <td style={{ fontWeight:600, fontSize:12, padding:"6px 8px" }}>{rival.nome}</td>
-                  <td style={{ textAlign:"center", fontSize:13 }}>{flag(rival.pais)}</td>
-                  <td style={{ padding:"6px 8px" }}>
-                    <div style={{ display:"flex", gap:5, flexWrap:"wrap" }}>
-                      {torneios.map((t, j) => {
-                        const isAlvo = t.torneioT === selectedT;
-                        return (
-                          <span key={j} style={{
-                            fontSize:10, padding:"2px 8px", borderRadius:8, whiteSpace:"nowrap",
-                            background: isAlvo ? "var(--accent)" : "var(--bg-muted)",
-                            color: isAlvo ? "#fff" : "var(--text-2)",
-                            border: `1px solid ${isAlvo ? "var(--accent)" : "var(--border)"}`,
-                            fontWeight: isAlvo ? 700 : 400,
-                          }}>
-                            {t.torneioNome.replace(/\s*\d{4}$/, "")}
-                          </span>
-                        );
-                      })}
-                    </div>
-                  </td>
-                  <td style={{ textAlign:"center", fontWeight:700, fontSize:12, color:"var(--accent)" }}>
-                    {torneios.length}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      {/* ── Uma tabela por torneio onde o Manuel está inscrito ── */}
+      {torneiosComManuel.length > 0 ? (
+        <div style={{ display:"flex", flexDirection:"column", gap:16, marginBottom:24 }}>
+          {torneiosComManuel.map(t => {
+            const escalaoManuelNesteTorneio = t.escaloes.find(e =>
+              (e.jogadores ?? []).some(j => isManuel(j.nome) && j.pais === "PT")
+            )?.nome;
+            return (
+              <TabelaConhecidos
+                key={t.t}
+                torneioT={t.t} torneioNome={t.name}
+                torneioData={t.date_inicio}
+                escalaoManuel={escalaoManuelNesteTorneio}
+                rivals={rivals} fieldData={fieldData}
+                intlData={intlData} matchIntl={matchIntl}
+              />
+            );
+          })}
         </div>
-      )}
-
-      {/* ── Análise do torneio seleccionado ── */}
-      {torneioActivo ? (() => {
-        const t = torneioActivo;
-        const escalaoAlvo = t.escaloes.find(e => e.nome === escalaoManuelParaData(t.date_inicio) && (e.jogadores?.length ?? 0) > 0);
-        const melhorEscalao = escalaoAlvo ?? t.escaloes
-          .filter(e => (e.jogadores?.length ?? 0) > 0)
-          .map(e => {
-            const rMap = new Map(rivals.map(r => [r.nome.toLowerCase().trim(), r]));
-            const overlap = (e.jogadores ?? []).filter(j => rMap.has(j.nome.toLowerCase().trim())).length;
-            return { nome: e.nome, overlap };
-          })
-          .sort((a,b) => b.overlap - a.overlap)[0];
-        return (
-          <div style={{ marginBottom:24 }}>
-            <TabelaConhecidos
-              torneioT={t.t} torneioNome={t.name}
-              torneioData={t.date_inicio}
-              escalaoManuel={melhorEscalao?.nome}
-              rivals={rivals} fieldData={fieldData}
-              intlData={intlData} matchIntl={matchIntl}
-            />
-          </div>
-        );
-      })() : torneiosFuturos.length > 0 ? (
+      ) : (
         <div style={{ color:"var(--text-3)", fontSize:12, padding:"8px 0 20px",
           borderBottom:"1px solid var(--border)", marginBottom:16 }}>
-          ← Selecciona um torneio na sidebar para ver a análise de rivais
+          Sem torneios futuros com inscrição do Manuel
         </div>
-      ) : null}
+      )}
 
       {/* ── Histórico (aberto por defeito) ── */}
       <div style={{ borderTop:"1px solid var(--border)", paddingTop:16 }}>
@@ -1479,21 +1416,72 @@ function TabRivais({ data, fieldData, intlData, selectedT }: { data: ResultsData
 // ─────────────────────────────────────────────
 // TAB INSCRITOS
 // ─────────────────────────────────────────────
-function TabInscritos({ data, fieldData, selectedT }: {
+function Secao({ titulo, sub, count, corTitulo, defaultOpen, children }: {
+  titulo: string; sub?: string; count: number; corTitulo?: string;
+  defaultOpen?: boolean; children: React.ReactNode;
+}) {
+  const [open, setOpen] = useState(defaultOpen ?? false);
+  if (!count) return null;
+  return (
+    <div>
+      <button onClick={() => setOpen(v => !v)} style={{
+        display:"flex", alignItems:"baseline", gap:8, background:"none", border:"none",
+        cursor:"pointer", padding:0, marginBottom: open ? 4 : 0, width:"100%", textAlign:"left",
+      }}>
+        <span style={{ fontSize:11, fontWeight:700, color: corTitulo ?? "var(--text-3)",
+          textTransform:"uppercase", letterSpacing:"0.06em" }}>
+          {titulo} ({count})
+        </span>
+        <span style={{ fontSize:11, color:"var(--text-3)", marginLeft:"auto" }}>{open ? "▲" : "▼"}</span>
+      </button>
+      {sub && open && (
+        <div style={{ fontSize:11, color:"var(--text-3)", marginBottom:8 }}>{sub}</div>
+      )}
+      {open && children}
+    </div>
+  );
+}
+
+function TabInscritos({ data, fieldData, selectedT: _selectedT }: {
   data: ResultsData; fieldData: FieldData | null; selectedT: number | null;
 }) {
+  const [search, setSearch] = useState("");
+
+  // Constrói rivals com encontros completos
   const rivals = useMemo<RivalInfo[]>(() => {
     const mapa = new Map<string, RivalInfo>();
     for (const t of data.resultados) {
       for (const e of t.escaloes) {
         const todasRondas = e.rondas.flatMap(r => r.leaderboard ?? r.jogadores ?? []);
-        if (!todasRondas.some(j => isManuel(j.nome))) continue;
+        const manuelJogs = todasRondas.filter(j => isManuel(j.nome));
+        if (!manuelJogs.length) continue;
+        const manuelJog = manuelJogs[0];
+        const lb0 = e.rondas[0]?.leaderboard ?? e.rondas[0]?.jogadores ?? [];
+        const manuelPos = lb0.findIndex(j => isManuel(j.nome)) + 1 || 99;
+        const adversariosVistos = new Set<string>();
         for (const r of e.rondas)
           for (const j of (r.leaderboard ?? r.jogadores ?? []))
-            if (!isManuel(j.nome)) {
-              const key = j.nome.toLowerCase().trim();
-              if (!mapa.has(key)) mapa.set(key, { nome: j.nome, pais: j.pais, cidade: j.cidade, encontros: [] });
-            }
+            if (!isManuel(j.nome)) adversariosVistos.add(j.nome.trim());
+        for (const nomeAdv of adversariosVistos) {
+          const key = nomeAdv.toLowerCase().trim();
+          const advJog = todasRondas.find(j => j.nome.trim() === nomeAdv);
+          if (!advJog) continue;
+          const advPos = lb0.findIndex(j => j.nome.trim() === nomeAdv) + 1 || 99;
+          if (!mapa.has(key))
+            mapa.set(key, { nome: advJog.nome, pais: advJog.pais, cidade: advJog.cidade, encontros: [] });
+          mapa.get(key)!.encontros.push({
+            torneio_t:    t.t,
+            torneio_nome: t.name,
+            torneio_data: t.date_inicio,
+            escalao:      e.nome,
+            man_score:    manuelJog.score || 0,
+            rival_score:  advJog.score || 0,
+            man_to_par:   manuelJog.to_par ?? null,
+            rival_to_par: advJog.to_par ?? null,
+            man_pos:      manuelPos,
+            rival_pos:    advPos,
+          });
+        }
       }
     }
     return [...mapa.values()];
@@ -1506,81 +1494,298 @@ function TabInscritos({ data, fieldData, selectedT }: {
       .sort((a,b) => isoDate(a.date_inicio).localeCompare(isoDate(b.date_inicio)));
   }, [fieldData]);
 
-  const matriz = useMemo(() => {
+  type InscritoEntry = { torneioT: number; torneioNome: string; torneioData: string; escalao: string; mesmoEscalao: boolean };
+
+  // Todos os jogadores inscritos nos torneios futuros (conhecidos e desconhecidos)
+  const { conhecidosMap, desconhecidosMap } = useMemo(() => {
     const rivalMap = new Map(rivals.map(r => [r.nome.toLowerCase().trim(), r]));
-    const presencas = new Map<string, { torneioT: number; torneioNome: string; torneioData: string; escalao: string }[]>();
+    const conhecidosMap  = new Map<string, { rival: RivalInfo; torneios: InscritoEntry[] }>();
+    const desconhecidosMap = new Map<string, { nome: string; pais: string; torneios: InscritoEntry[] }>();
+
     for (const t of torneiosFuturos) {
-      const escalaoAlvo = escalaoManuelParaData(t.date_inicio);
-      const esc = t.escaloes.find(e => e.nome === escalaoAlvo && (e.jogadores?.length ?? 0) > 0);
-      if (!esc) continue;
-      for (const j of (esc.jogadores ?? [])) {
-        if (isManuel(j.nome)) continue;
-        const key = j.nome.toLowerCase().trim();
-        if (!rivalMap.has(key)) continue;
-        if (!presencas.has(key)) presencas.set(key, []);
-        presencas.get(key)!.push({ torneioT: t.t, torneioNome: t.name, torneioData: t.date_inicio, escalao: esc.nome });
+      // Manuel presente neste torneio? (nome+PT)
+      const manuelInscrito = t.escaloes.some(e =>
+        (e.jogadores ?? []).some(j => isManuel(j.nome) && j.pais === "PT")
+      );
+      // Escalões onde o Manuel está inscrito (para mesmoEscalao)
+      const escalaoComManuel = new Set(
+        t.escaloes
+          .filter(e => (e.jogadores ?? []).some(j => isManuel(j.nome) && j.pais === "PT"))
+          .map(e => e.nome)
+      );
+      for (const esc of t.escaloes) {
+        if ((esc.jogadores?.length ?? 0) === 0) continue;
+        for (const j of (esc.jogadores ?? [])) {
+          if (isManuel(j.nome)) continue;
+          const key = j.nome.toLowerCase().trim();
+          const mesmoEscalao = escalaoComManuel.has(esc.nome);
+          // Só interessa registar se:
+          // - mesmo escalão que Manuel (vai cruzar/conhecer), OU
+          // - Manuel está no mesmo torneio mas noutro escalão (reencontro escalão diferente)
+          // Torneios onde Manuel não está inscrito são ignorados para todos os efeitos
+          if (!manuelInscrito) continue;
+          const entry: InscritoEntry = {
+            torneioT: t.t, torneioNome: t.name, torneioData: t.date_inicio,
+            escalao: esc.nome,
+            mesmoEscalao,
+          };
+          if (rivalMap.has(key)) {
+            if (!conhecidosMap.has(key))
+              conhecidosMap.set(key, { rival: rivalMap.get(key)!, torneios: [] });
+            if (!conhecidosMap.get(key)!.torneios.some(p => p.torneioT === t.t))
+              conhecidosMap.get(key)!.torneios.push(entry);
+          } else {
+            if (!desconhecidosMap.has(key))
+              desconhecidosMap.set(key, { nome: j.nome, pais: j.pais, torneios: [] });
+            if (!desconhecidosMap.get(key)!.torneios.some(p => p.torneioT === t.t))
+              desconhecidosMap.get(key)!.torneios.push(entry);
+          }
+        }
       }
     }
-    return [...presencas.entries()]
-      .map(([key, torneios]) => ({ rival: rivalMap.get(key)!, torneios }))
+    return { conhecidosMap, desconhecidosMap };
+  }, [rivals, torneiosFuturos]);
+
+  // SECÇÃO 1: Vai REENCONTRAR — conhecido + pelo menos 1 torneio no mesmo escalão
+  const vaiReencontrar = useMemo(() =>
+    [...conhecidosMap.values()]
+      .filter(e => e.torneios.some(t => t.mesmoEscalao))
+      .sort((a,b) => b.torneios.length - a.torneios.length)
+  , [conhecidosMap]);
+
+  // SECÇÃO 2: Vai CONHECER — desconhecido + pelo menos 1 torneio no mesmo escalão
+  const vaiConhecer = useMemo(() =>
+    [...desconhecidosMap.values()]
+      .filter(e => e.torneios.some(t => t.mesmoEscalao))
+      .sort((a,b) => b.torneios.length - a.torneios.length)
+  , [desconhecidosMap]);
+
+  // SECÇÃO 3: Reencontros de escalão diferente — conhecido + NENHUM torneio no mesmo escalão
+  const escalaoOutro = useMemo(() =>
+    [...conhecidosMap.values()]
+      .filter(e => !e.torneios.some(t => t.mesmoEscalao))
+      .sort((a,b) => b.torneios.length - a.torneios.length)
+  , [conhecidosMap]);
+
+  // SECÇÃO 4: Assíduos sem historial — desconhecido + nenhum mesmo escalão + 2+ torneios
+  const assiduos = useMemo(() =>
+    [...desconhecidosMap.values()]
+      .filter(e => !e.torneios.some(t => t.mesmoEscalao) && e.torneios.length >= 2)
+      .sort((a,b) => b.torneios.length - a.torneios.length)
+  , [desconhecidosMap]);
+
+  // SECÇÃO 5: Assíduos de todo o universo USKids (todos os torneios futuros, todos os escalões, 2+)
+  const assiduosTodos = useMemo(() => {
+    const conhecidosKeys = new Set(rivals.map(r => r.nome.toLowerCase().trim()));
+    const presencas = new Map<string, { nome: string; pais: string; torneios: { torneioT: number; torneioNome: string; escalao: string }[] }>();
+    for (const t of torneiosFuturos) {
+      for (const esc of t.escaloes) {
+        if ((esc.jogadores?.length ?? 0) === 0) continue;
+        for (const j of (esc.jogadores ?? [])) {
+          if (isManuel(j.nome)) continue;
+          const key = j.nome.toLowerCase().trim();
+          if (conhecidosKeys.has(key)) continue; // já aparece noutras secções
+          if (!presencas.has(key)) presencas.set(key, { nome: j.nome, pais: j.pais, torneios: [] });
+          if (!presencas.get(key)!.torneios.some(p => p.torneioT === t.t))
+            presencas.get(key)!.torneios.push({ torneioT: t.t, torneioNome: t.name, escalao: esc.nome });
+        }
+      }
+    }
+    return [...presencas.values()]
+      .filter(e => e.torneios.length >= 2)
       .sort((a, b) => b.torneios.length - a.torneios.length);
   }, [rivals, torneiosFuturos]);
 
-  if (!matriz.length) return (
+  const sq = search.trim().toLowerCase();
+  const filtC  = (arr: typeof vaiReencontrar) => !sq ? arr : arr.filter(e => e.rival.nome.toLowerCase().includes(sq));
+  const filtD  = (arr: typeof vaiConhecer)    => !sq ? arr : arr.filter(e => e.nome.toLowerCase().includes(sq));
+  const filtG  = (arr: typeof assiduosTodos)  => !sq ? arr : arr.filter(e => e.nome.toLowerCase().includes(sq));
+
+  const totalGeral = conhecidosMap.size + [...desconhecidosMap.values()].filter(e => e.torneios.some(t => t.mesmoEscalao) || e.torneios.length >= 2).length;
+
+  if (!totalGeral) return (
     <div style={{ color:"var(--text-3)", padding:"32px 0", textAlign:"center", fontSize:13 }}>
-      Nenhum adversário conhecido inscrito em torneios futuros
+      Nenhum adversário inscrito em torneios futuros
     </div>
   );
 
-  return (
-    <div>
-      <div style={{ fontSize:11, fontWeight:700, color:"var(--text-3)",
-        textTransform:"uppercase", letterSpacing:"0.06em", marginBottom:12 }}>
-        Conhecidos inscritos nos próximos torneios ({matriz.length})
+  // Pills sem destaque por torneio seleccionado — só destaca mesmo escalão
+  const TorneiosPills = ({ torneios }: { torneios: InscritoEntry[] }) => (
+    <div style={{ display:"flex", gap:5, flexWrap:"wrap" }}>
+      {torneios.map((t, j) => (
+        <span key={j} style={{
+          fontSize:11, padding:"3px 10px", borderRadius:8, whiteSpace:"nowrap",
+          background: t.mesmoEscalao ? "var(--bg-active)" : "var(--bg-muted)",
+          color:      t.mesmoEscalao ? "var(--text)"      : "var(--text-3)",
+          border:     `1px solid ${t.mesmoEscalao ? "var(--border-success)" : "var(--border)"}`,
+          fontWeight: t.mesmoEscalao ? 700 : 400,
+        }}>
+          {t.torneioNome.replace(/\s*\d{4}$/, "")}
+          <span style={{ opacity:0.7, marginLeft:4, fontSize:10 }}>{t.escalao}</span>
+        </span>
+      ))}
+    </div>
+  );
+
+  const HistorialLine = ({ rival }: { rival: RivalInfo }) => {
+    const unicos = [...new Map(rival.encontros.map(e => [e.torneio_t, e])).values()];
+    if (!unicos.length) return null;
+    return (
+      <div style={{ fontSize:10, color:"var(--text-3)", marginTop:2, display:"flex", flexWrap:"wrap", gap:"0 10px" }}>
+        {unicos.map(enc => (
+          <span key={enc.torneio_t}>
+            {enc.torneio_nome.replace(/\s*\d{4}$/, "")}
+            <span style={{ marginLeft:3, fontWeight:600,
+              color: enc.man_pos < enc.rival_pos ? "var(--color-good)" : enc.man_pos > enc.rival_pos ? "var(--color-danger)" : "var(--text-3)" }}>
+              {enc.man_pos}º vs {enc.rival_pos}º
+            </span>
+          </span>
+        ))}
       </div>
-      <table className="dtable-lg" style={{ width:"100%" }}>
-        <thead>
-          <tr>
-            <th style={{ textAlign:"left" }}>Rival</th>
-            <th style={{ width:30 }}></th>
-            <th style={{ textAlign:"left" }}>Torneios</th>
-            <th style={{ width:40, textAlign:"center" }}>#</th>
+    );
+  };
+
+  const TabelaConhecida = ({ rows, dimmed }: { rows: typeof vaiReencontrar; dimmed?: boolean }) => (
+    <table className="dtable-lg" style={{ width:"100%" }}>
+      <thead>
+        <tr>
+          <th style={{ textAlign:"left" }}>Jogador</th>
+          <th style={{ width:30 }}></th>
+          <th style={{ textAlign:"left" }}>Torneios</th>
+          <th style={{ width:40, textAlign:"center" }}>#</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map(({ rival, torneios }, i) => (
+          <tr key={i} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)", opacity: dimmed ? 0.75 : 1 }}>
+            <td style={{ fontWeight: dimmed?400:600, fontSize:13, padding:"8px 10px", color: dimmed?"var(--text-2)":"var(--text)" }}>
+              <div>{rival.nome}</div>
+              <HistorialLine rival={rival} />
+            </td>
+            <td style={{ textAlign:"center", fontSize:14 }}>{flag(rival.pais)}</td>
+            <td style={{ padding:"8px 10px" }}><TorneiosPills torneios={torneios} /></td>
+            <td style={{ textAlign:"center", fontWeight:800, fontSize:13, color: dimmed?"var(--text-3)":"var(--accent)" }}>
+              {torneios.length}
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          {matriz.map(({ rival, torneios }, i) => (
-            <tr key={i} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)" }}>
-              <td style={{ fontWeight:600, fontSize:13, padding:"8px 10px" }}>{rival.nome}</td>
-              <td style={{ textAlign:"center", fontSize:14 }}>{flag(rival.pais)}</td>
-              <td style={{ padding:"8px 10px" }}>
-                <div style={{ display:"flex", gap:5, flexWrap:"wrap" }}>
-                  {torneios.map((t, j) => {
-                    const isAlvo = t.torneioT === selectedT;
-                    return (
+        ))}
+      </tbody>
+    </table>
+  );
+
+  const TabelaDesconhecida = ({ rows }: { rows: typeof vaiConhecer }) => (
+    <table className="dtable-lg" style={{ width:"100%" }}>
+      <thead>
+        <tr>
+          <th style={{ textAlign:"left" }}>Jogador</th>
+          <th style={{ width:30 }}></th>
+          <th style={{ textAlign:"left" }}>Torneios</th>
+          <th style={{ width:40, textAlign:"center" }}>#</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((entry, i) => (
+          <tr key={i} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)" }}>
+            <td style={{ fontWeight:400, fontSize:13, padding:"8px 10px", color:"var(--text-2)" }}>{entry.nome}</td>
+            <td style={{ textAlign:"center", fontSize:14 }}>{flag(entry.pais)}</td>
+            <td style={{ padding:"8px 10px" }}><TorneiosPills torneios={entry.torneios} /></td>
+            <td style={{ textAlign:"center", fontWeight:800, fontSize:13, color:"var(--text-3)" }}>
+              {entry.torneios.length}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+
+  const vcR  = filtC(vaiReencontrar);
+  const vcK  = filtD(vaiConhecer);
+  const outF = filtC(escalaoOutro);
+  const assF = filtD(assiduos);
+
+  return (
+    <div style={{ display:"flex", flexDirection:"column", gap:24 }}>
+
+      {/* ── SEARCH ── */}
+      <div style={{ display:"flex", alignItems:"center", gap:10 }}>
+        <input value={search} onChange={e => setSearch(e.target.value)}
+          placeholder="🔎  Filtrar por nome…"
+          style={{ border:"1px solid var(--border)", borderRadius:8,
+            background:"var(--bg-card)", color:"var(--text)",
+            padding:"7px 13px", fontSize:13, width:230, outline:"none" }}
+        />
+        <span style={{ fontSize:11, color:"var(--text-3)" }}>{totalGeral} jogadores no total</span>
+      </div>
+
+      <Secao titulo="🤝 Vai REENCONTRAR com o Manuel" corTitulo="var(--color-good)"
+        sub="Já se cruzaram antes — mesmo escalão em pelo menos um torneio futuro"
+        count={vcR.length} defaultOpen={false}>
+        <TabelaConhecida rows={vcR} />
+      </Secao>
+
+      <Secao titulo="🆕 Vai CONHECER o Manuel" corTitulo="var(--color-info)"
+        sub="Primeiro encontro à vista — inscrito no mesmo escalão em pelo menos um torneio futuro"
+        count={vcK.length} defaultOpen={false}>
+        <TabelaDesconhecida rows={vcK} />
+      </Secao>
+
+      <Secao titulo="⚔️ Reencontros de escalão diferente" corTitulo="var(--text-3)"
+        sub="Cruzaram-se antes mas agora competem noutro escalão"
+        count={outF.length} defaultOpen={false}>
+        <TabelaConhecida rows={outF} />
+      </Secao>
+
+      <Secao titulo="🔍 Assíduos de outros escalões" corTitulo="var(--text-3)"
+        sub="Inscritos em 2+ torneios futuros com o Manuel, mas noutro escalão"
+        count={assF.length} defaultOpen={false}>
+        <TabelaDesconhecida rows={assF} />
+      </Secao>
+
+      <Secao titulo="📊 Participantes mais assíduos" corTitulo="var(--text-3)"
+        sub="Inscritos em 2+ torneios futuros — todo o universo USKids, sem cruzamento com o Manuel"
+        count={filtG(assiduosTodos).length} defaultOpen={false}>
+        <table className="dtable-lg" style={{ width:"100%" }}>
+          <thead>
+            <tr>
+              <th style={{ textAlign:"left" }}>Jogador</th>
+              <th style={{ width:30 }}></th>
+              <th style={{ textAlign:"left" }}>Torneios</th>
+              <th style={{ width:40, textAlign:"center" }}>#</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filtG(assiduosTodos).map((entry, i) => (
+              <tr key={i} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)" }}>
+                <td style={{ fontWeight:400, fontSize:13, padding:"8px 10px", color:"var(--text-2)" }}>{entry.nome}</td>
+                <td style={{ textAlign:"center", fontSize:14 }}>{flag(entry.pais)}</td>
+                <td style={{ padding:"8px 10px" }}>
+                  <div style={{ display:"flex", gap:5, flexWrap:"wrap" }}>
+                    {entry.torneios.map((t, j) => (
                       <span key={j} style={{
                         fontSize:11, padding:"3px 10px", borderRadius:8, whiteSpace:"nowrap",
-                        background: isAlvo ? "var(--accent)" : "var(--bg-muted)",
-                        color: isAlvo ? "#fff" : "var(--text-2)",
-                        border: `1px solid ${isAlvo ? "var(--accent)" : "var(--border)"}`,
-                        fontWeight: isAlvo ? 700 : 400,
+                        background:"var(--bg-muted)", color:"var(--text-3)",
+                        border:"1px solid var(--border)",
                       }}>
                         {t.torneioNome.replace(/\s*\d{4}$/, "")}
                         <span style={{ opacity:0.7, marginLeft:4, fontSize:10 }}>{t.escalao}</span>
                       </span>
-                    );
-                  })}
-                </div>
-              </td>
-              <td style={{ textAlign:"center", fontWeight:800, fontSize:13, color:"var(--accent)" }}>
-                {torneios.length}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                    ))}
+                  </div>
+                </td>
+                <td style={{ textAlign:"center", fontWeight:800, fontSize:13, color:"var(--text-3)" }}>
+                  {entry.torneios.length}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Secao>
+
     </div>
   );
 }
+
+
 
 // COMPONENTE PRINCIPAL
 // ─────────────────────────────────────────────

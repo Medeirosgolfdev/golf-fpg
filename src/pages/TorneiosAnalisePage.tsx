@@ -466,21 +466,10 @@ function ScorecardLB({ tournament, escLookup, playersDB }: { tournament: Tournam
         <table className="sc-table-modern" data-sc-table="1">
           <thead>
             {showScorecard && <>
-              <tr className="sep-row">
-                <td className="sticky-col-0" />
-                <td className="row-label par-label sticky-col-1">PAR</td>
-                <td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/>
-                <td className="col-total">{parTotal}</td>
-                <td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/>
-                {par.slice(0, 9).map((v, i) => <td key={i}>{v}</td>)}
-                <td className="col-out fw-600">{parF9}</td>
-                {!is9 && par.slice(9, 18).map((v, i) => <td key={i}>{v}</td>)}
-                {!is9 && <td className="col-in fw-600">{parB9}</td>}
-              </tr>
               {si.length >= nh && (
                 <tr className="meta-row">
                   <td className="sticky-col-0" />
-                  <td className="row-label par-label sticky-col-1">S.I.</td>
+                  <td className="row-label par-label sticky-col-1" style={{ borderRight: 0 }}>S.I.</td>
                   <td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/>
                   <td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/>
                   {si.slice(0, 9).map((v, i) => <td key={i}>{v}</td>)}
@@ -489,6 +478,17 @@ function ScorecardLB({ tournament, escLookup, playersDB }: { tournament: Tournam
                   {!is9 && <td className="col-in" />}
                 </tr>
               )}
+              <tr className="sep-row">
+                <td className="sticky-col-0" />
+                <td className="row-label par-label sticky-col-1" style={{ borderRight: 0 }}>PAR</td>
+                <td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/>
+                <td className="col-total">{parTotal}</td>
+                <td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/>
+                {par.slice(0, 9).map((v, i) => <td key={i}>{v}</td>)}
+                <td className="col-out fw-600">{parF9}</td>
+                {!is9 && par.slice(9, 18).map((v, i) => <td key={i}>{v}</td>)}
+                {!is9 && <td className="col-in fw-600">{parB9}</td>}
+              </tr>
             </>}
             <tr>
               <th className="hole-header" style={{ width: 26, textAlign: "center", position: "sticky", left: 0, zIndex: 5, background: "var(--bg-card,#fff)", cursor: "pointer" }} onClick={() => handleSort("pos")}>
@@ -531,7 +531,7 @@ function ScorecardLB({ tournament, escLookup, playersDB }: { tournament: Tournam
                   <td className="fw-800 ta-center" style={{ color: "var(--text-3)", fontSize: 11, position: "sticky", left: 0, zIndex: 2, background: "var(--bg-card,#fff)" }}>
                     {sortKey === "pos" ? (showPos ? (medal ?? dp) : "") : (medal ?? dp)}
                   </td>
-                  <td className="row-label tourn-lb-name-col" style={{ whiteSpace: "nowrap", paddingLeft: 6, position: "sticky", left: 26, zIndex: 2, background: "var(--bg-card,#fff)", boxShadow: "2px 0 4px rgba(0,0,0,.06)" }}>
+                  <td className="row-label tourn-lb-name-col" style={{ whiteSpace: "nowrap", paddingLeft: 6, position: "sticky", left: 26, zIndex: 2, background: "var(--bg-card,#fff)", boxShadow: "2px 0 4px rgba(0,0,0,.06)", borderRight: 0 }}>
                     <PName name={p.name} fedCode={p.fedCode} playersDB={playersDB} />
                   </td>
                   <td style={{ borderLeft: 0, borderRight: 0 }}>{esc ? <EscPill esc={esc} /> : <span className="muted">–</span>}</td>
@@ -677,7 +677,7 @@ function AccumulatedLB({ tournament, nRounds, escLookup, playersDB }: { tourname
                     {isInc ? <span style={{ fontSize: 9, color: "#dc2626", fontStyle: "italic" }}>WD</span>
                             : showPos ? (medal || dp) : ""}
                   </td>
-                  <td className="row-label tourn-lb-name-col" style={{ whiteSpace: "nowrap", paddingLeft: 6, position: "sticky", left: 26, zIndex: 2, background: isInc ? "var(--bg-hover)" : "var(--bg-card,#fff)", boxShadow: "2px 0 4px rgba(0,0,0,.06)" }}>
+                  <td className="row-label tourn-lb-name-col" style={{ whiteSpace: "nowrap", paddingLeft: 6, position: "sticky", left: 26, zIndex: 2, background: isInc ? "var(--bg-hover)" : "var(--bg-card,#fff)", boxShadow: "2px 0 4px rgba(0,0,0,.06)", borderRight: 0 }}>
                     <PName name={p.name} fedCode={p.fedCode} playersDB={playersDB} />
                   </td>
                   <td style={{ borderLeft: 0, borderRight: 0 }}>{esc ? <EscPill esc={esc} /> : <span className="muted">–</span>}</td>
