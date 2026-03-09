@@ -25,22 +25,46 @@
 
   // Opção A — Por tclub + tcode (directo, sem pesquisa):
   const POR_CODIGO = [
-    // { tclub: "985", tcode: "12345" },
-    // { tclub: "988", tcode: "67890", circuit: "aquapor" },
-    // circuit é opcional — se omitido é auto-detectado
+
+    // ── batch 000 — JÁ DESCARREGADO (pull-torneios000.json) ─────
+    // Inclui também os torneios PJA 2024 e PJA 2025.
+    // { tclub: "003", tcode: "10565" },
+    // { tclub: "003", tcode: "10564" },
+    // { tclub: "003", tcode: "10478" },
+    // { tclub: "003", tcode: "10477" },
+    // { tclub: "003", tcode: "10622" },
+    // { tclub: "003", tcode: "10612" },
+    // { tclub: "068", tcode: "10632" },
+    // { tclub: "004", tcode: "10563" },
+    // { tclub: "004", tcode: "10555" },
+    // { tclub: "095", tcode: "11538" },
+    // { tclub: "095", tcode: "11539" },
+    // { tclub: "935", tcode: "10294" },
+    // { tclub: "935", tcode: "10295" },
+    // { tclub: "935", tcode: "10296" },
+    // { tclub: "059", tcode: "10614" },
+    // { tclub: "059", tcode: "10613" },
+    // ─────────────────────────────────────────────────────────
+
+    // Adiciona novos torneios escrevendo acima:
+    // { tclub: "985", tcode: "12345" }, 
   ];
 
   // Opção B — Por nome (pesquisa parcial, case-insensitive):
-  // Descarrega todos os torneios do YEAR cujo nome contenha
+  // Descarrega todos os torneios dos YEARS cujo nome contenha
   // qualquer uma destas strings.
   const POR_NOME = [
+    "PJA",           
+    // PJA 2024 e 2025 já estão no batch 000
     // "Morgado",
     // "Vale Pisão",
     // "BJGT",
   ];
 
-  // Ano a considerar para a pesquisa por nome
-  const YEAR = 2026;
+  // Anos a considerar para a pesquisa por nome.
+  // Para voltar a descarregar anos anteriores, basta adicionar ao array:
+  // const YEARS = [2024, 2025, 2026];
+  const YEARS = [2026];
 
   // ▲▲▲  FIM DA LISTA  ▲▲▲
   // ════════════════════════════════════════════════════════════
@@ -59,7 +83,7 @@
 
   const isYear = r => {
     const ms = parseInt((r.started_at || "").match(/\d+/)?.[0] || "0");
-    return new Date(ms).getFullYear() === YEAR;
+    return YEARS.includes(new Date(ms).getFullYear());
   };
 
   const detectCircuit = raw => {

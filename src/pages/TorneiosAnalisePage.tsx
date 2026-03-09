@@ -87,6 +87,10 @@ function buildEscLookup(playersDB: PlayersDB): EscLookup {
 }
 
 function resolveEsc(p: Player, escLookup: EscLookup): string {
+  // Prioridade 1: escalão gravado no próprio registo do torneio (histórico)
+  const historic = (p as any).escalao || (p as any).ageCategory;
+  if (historic) return historic.replace("-", " ").replace(/sub(\d)/i, "Sub $1").trim();
+  // Prioridade 2: lookup atual (players.json) — só usado se não há dado histórico
   const fed = p.fedCode || (p as any).fed;
   if (fed && escLookup.has(fed)) return escLookup.get(fed)!;
   return "";
@@ -213,6 +217,136 @@ function fmtTP(v: number | null): string {
   return v > 0 ? `+${v}` : `${v}`;
 }
 
+/* ─────────────────────────────────────────────
+   AGRUPAMENTO AUTOMÁTICO DE RONDAS (Dia 1 / Dia 2 → torneio sintético)
+   ───────────────────────────────────────────── */
+
+/** "PJA TOUR Vale Pisão - Dia 1" → "PJA TOUR Vale Pisão" */
+function extractBaseName(name: string): string {
+  return name.replace(/\s*[-–]\s*(?:dia|round|ronda|r)\s*\d+\s*$/i, "").trim();
+}
+function detectRoundNumber(name: string): number | null {
+  const m = name.match(/[-–]\s*(?:dia|round|ronda|r)\s*(\d+)\s*$/i);
+  return m ? parseInt(m[1]) : null;
+}
+
+/** Detecta a série/circuito de um torneio */
+function detectSeries(t: Tournament): string {
+  if (t.circuit) return t.circuit;
+  if (t.series)  return t.series;
+  if (/PJA/i.test(t.name))  return "PJA Tour";
+  if (/^WAGR/i.test(t.name)) return "WAGR Tour";
+  if (/^WJGC/i.test(t.name)) return "WJGC";
+  if (/^BJGT/i.test(t.name)) return "BJGT";
+  return "Outros";
+}
+
+/** Funde N torneios (rondas separadas) num único torneio multi-ronda sintético */
+function mergeTournamentRounds(rounds: Tournament[]): Tournament {
+  // Ordenar por número da ronda, fallback por data
+  const sorted = [...rounds].sort((a, b) => {
+    const ra = detectRoundNumber(a.name) ?? 99;
+    const rb = detectRoundNumber(b.name) ?? 99;
+    if (ra !== rb) return ra - rb;
+    return (a.date || "").localeCompare(b.date || "");
+  });
+
+  const nRounds = sorted.length;
+  const byKey = new Map<string, { player: Player; rsArr: RoundScore[] }>();
+
+  sorted.forEach((t, ri) => {
+    for (const p of t.players) {
+      const key = p.fedCode || ("name:" + p.name.toLowerCase().trim());
+      const rs: RoundScore = {
+        round: ri + 1,
+        gross: numGross(p),
+        scores: p.scores || p.roundScores?.[0]?.scores || [],
+        pars: p.par || p.roundScores?.[0]?.pars || [],
+        si: p.si || p.roundScores?.[0]?.si || [],
+        meters: p.meters || p.roundScores?.[0]?.meters || [],
+        courseRating: p.courseRating ?? p.roundScores?.[0]?.courseRating,
+        slope: p.slope ?? p.roundScores?.[0]?.slope,
+        teeName: p.teeName ?? p.roundScores?.[0]?.teeName,
+      };
+      if (byKey.has(key)) {
+        byKey.get(key)!.rsArr.push(rs);
+      } else {
+        byKey.set(key, { player: p, rsArr: [rs] });
+      }
+    }
+  });
+
+  const refParTotal = sorted[0].players[0]?.parTotal
+    || sorted[0].players[0]?.par?.reduce((a, b) => a + b, 0)
+    || 72;
+
+  const players: Player[] = [];
+  for (const { player, rsArr } of byKey.values()) {
+    const grossTotal = rsArr.reduce((s, r) => s + r.gross, 0);
+    players.push({
+      ...player,
+      roundScores: rsArr,
+      grossTotal,
+      toPar: grossTotal - refParTotal * rsArr.length,
+      parTotal: refParTotal,
+      scores: rsArr[0]?.scores,
+      par:    rsArr[0]?.pars,
+      si:     rsArr[0]?.si,
+      meters: rsArr[0]?.meters,
+    });
+  }
+
+  const baseName  = extractBaseName(sorted[0].name);
+  const lastDate  = sorted[sorted.length - 1].date;
+  // Tcodes mostrados como "10370+10371"
+  const tcodeList = sorted.map(t => t.tcode).join("+");
+
+  return {
+    ...sorted[0],
+    name: baseName,
+    date: lastDate,
+    rounds: nRounds,
+    playerCount: players.length,
+    players,
+    tcode: tcodeList,
+    _sourceFile: sorted[0]._sourceFile,
+    _sourceIndex: sorted[0]._sourceIndex,
+    _isSynthetic: true,
+    _subRounds: sorted,
+  } as any;
+}
+
+/**
+ * Constrói a lista de display: detecta pares "Dia 1/Dia 2" com mesmo ccode+baseName,
+ * cria torneios sintéticos e esconde os originais da sidebar.
+ */
+function buildDisplayList(tournaments: Tournament[]): Tournament[] {
+  // 1. Agrupar candidatos a fusão
+  const candidates = new Map<string, Tournament[]>();
+  for (const t of tournaments) {
+    if (detectRoundNumber(t.name) == null) continue;
+    const base = extractBaseName(t.name);
+    const key  = `${t.ccode || "?"}_${base.toLowerCase()}`;
+    if (!candidates.has(key)) candidates.set(key, []);
+    candidates.get(key)!.push(t);
+  }
+
+  // 2. Construir sintéticos (apenas grupos com ≥2 rondas)
+  const hiddenTcodes = new Set<string>();
+  const synthetics: Tournament[] = [];
+  for (const group of candidates.values()) {
+    if (group.length < 2) continue;
+    group.forEach(t => hiddenTcodes.add(t.tcode));
+    synthetics.push(mergeTournamentRounds(group));
+  }
+
+  // 3. Lista final: standalone + sintéticos, por data desc
+  const standalone = tournaments.filter(t => !hiddenTcodes.has(t.tcode));
+  return [...standalone, ...synthetics].sort(
+    (a, b) => (b.date || "").localeCompare(a.date || "")
+  );
+}
+
 function fmtDate(d: string): string {
   if (!d) return "";
   // Suporta YYYY-MM-DD
@@ -305,6 +439,155 @@ function SDCell({ sd, source, hcp, style }: { sd: number | null; source: string 
 
 
 /* ─────────────────────────────────────────────
+   FILTROS DE JOGADORES
+   ───────────────────────────────────────────── */
+interface PlayerFilter {
+  name: string;
+  escs: string[];
+  tees: string[];
+  club: string;
+}
+const EMPTY_FILTER: PlayerFilter = { name: "", escs: [], tees: [], club: "" };
+
+function filterPlayers(players: Player[], f: PlayerFilter, escLookup: EscLookup, playersDB: PlayersDB): Player[] {
+  let ps = players;
+  if (f.name) {
+    const q = f.name.toLowerCase();
+    ps = ps.filter(p => p.name.toLowerCase().includes(q) || (p.club || "").toLowerCase().includes(q));
+  }
+  if (f.escs.length) ps = ps.filter(p => f.escs.includes(resolveEsc(p, escLookup)));
+  if (f.tees.length) ps = ps.filter(p => p.teeName != null && f.tees.includes(p.teeName));
+  if (f.club) ps = ps.filter(p => p.club === f.club);
+  return ps;
+}
+
+function toggleArr(arr: string[], v: string): string[] {
+  return arr.includes(v) ? arr.filter(x => x !== v) : [...arr, v];
+}
+
+function PlayerFilterBar({
+  players, filter, onChange, escLookup, playersDB, total,
+}: {
+  players: Player[]; filter: PlayerFilter;
+  onChange: (f: PlayerFilter) => void;
+  escLookup: EscLookup; playersDB: PlayersDB; total: number;
+}) {
+  const availEsc = useMemo(() => {
+    const s = new Set<string>();
+    for (const p of players) { const e = resolveEsc(p, escLookup); if (e) s.add(e); }
+    return [...s].sort((a, b) => a.localeCompare(b));
+  }, [players, escLookup]);
+
+  const availTees = useMemo(() => {
+    const s = new Set<string>();
+    for (const p of players) if (p.teeName) s.add(p.teeName);
+    return [...s].sort();
+  }, [players]);
+
+  const availClubs = useMemo(() => {
+    const s = new Set<string>();
+    for (const p of players) if (p.club) s.add(p.club);
+    return [...s].sort((a, b) => a.localeCompare(b, "pt"));
+  }, [players]);
+
+  const isActive = filter.name || filter.escs.length || filter.tees.length || filter.club;
+  const filtered = useMemo(() => filterPlayers(players, filter, escLookup, playersDB), [players, filter, escLookup, playersDB]);
+  const showing = filtered.length;
+  const hasMultipleOptions = availClubs.length > 1 || availEsc.length > 1 || availTees.length > 1;
+
+  if (total < 8 && !isActive) return null;
+
+  const chip = (active: boolean, label: React.ReactNode, onClick: () => void, color?: string): React.ReactNode => (
+    <button key={String(label)} onClick={onClick} style={{
+      fontSize: 10, padding: "2px 8px", borderRadius: 20,
+      border: `1px solid ${active ? (color || "var(--accent,#2563eb)") : "var(--border)"}`,
+      background: active ? (color || "var(--accent,#2563eb)") : "var(--bg-hover)",
+      color: active ? "#fff" : "var(--text-muted)",
+      cursor: "pointer", whiteSpace: "nowrap", fontWeight: active ? 700 : 500,
+      transition: "all .12s",
+    }}>{label}</button>
+  );
+
+  return (
+    <div style={{
+      display: "flex", flexWrap: "wrap", alignItems: "center", gap: 6,
+      padding: "6px 0 8px", borderBottom: "1px solid var(--border)", marginBottom: 8,
+    }}>
+      {/* Pesquisa */}
+      <div style={{ position: "relative", flexShrink: 0 }}>
+        <span style={{ position: "absolute", left: 7, top: "50%", transform: "translateY(-50%)", fontSize: 11, color: "var(--text-muted)", pointerEvents: "none" }}>🔍</span>
+        <input
+          type="text"
+          placeholder="Nome ou clube…"
+          value={filter.name}
+          onChange={e => onChange({ ...filter, name: e.target.value })}
+          style={{
+            fontSize: 11, padding: "3px 8px 3px 22px", borderRadius: 6,
+            border: "1px solid var(--border)", background: "var(--bg-card,#fff)",
+            color: "var(--text)", width: 140, outline: "none",
+          }}
+        />
+      </div>
+
+      {/* Separador */}
+      {hasMultipleOptions && <span style={{ color: "var(--border)", fontSize: 11 }}>|</span>}
+
+      {/* Escalão chips */}
+      {availEsc.length > 1 && availEsc.map(e => {
+        const key = e.toLowerCase().replace(/[\s-]/g, "");
+        const s = ESC_STYLE[key];
+        return chip(filter.escs.includes(e), e, () => onChange({ ...filter, escs: toggleArr(filter.escs, e) }), s?.bg);
+      })}
+
+      {/* Tee chips */}
+      {availTees.length > 1 && availTees.map(t => {
+        const hex = getTeeHex(t);
+        return chip(
+          filter.tees.includes(t),
+          <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
+            <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: 2, background: hex, border: "1px solid rgba(0,0,0,.18)" }} />
+            {t}
+          </span>,
+          () => onChange({ ...filter, tees: toggleArr(filter.tees, t) }),
+          hex,
+        );
+      })}
+
+      {/* Clube dropdown */}
+      {availClubs.length > 2 && (
+        <select
+          value={filter.club}
+          onChange={e => onChange({ ...filter, club: e.target.value })}
+          style={{
+            fontSize: 11, padding: "3px 6px", borderRadius: 6,
+            border: `1px solid ${filter.club ? "var(--accent,#2563eb)" : "var(--border)"}`,
+            background: "var(--bg-card,#fff)", color: "var(--text)", cursor: "pointer",
+            fontWeight: filter.club ? 700 : 400,
+          }}
+        >
+          <option value="">Todos os clubes</option>
+          {availClubs.map(c => <option key={c} value={c}>{c}</option>)}
+        </select>
+      )}
+
+      {/* Resultado + limpar */}
+      {isActive && (
+        <>
+          <span style={{ fontSize: 10, color: "var(--text-muted)", marginLeft: 2 }}>
+            {showing} de {total}
+          </span>
+          <button onClick={() => onChange(EMPTY_FILTER)} style={{
+            fontSize: 10, padding: "2px 8px", borderRadius: 20,
+            border: "1px solid var(--border)", background: "var(--bg-hover)",
+            color: "var(--text-muted)", cursor: "pointer",
+          }}>✕ limpar</button>
+        </>
+      )}
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────
    ESCALÃO PILL — cores idênticas ao Drive (inline para não depender do CSS)
    Sub 10 → verde muito escuro  Sub 12 → verde escuro
    Sub 14 → verde médio         Sub 16 → verde claro   Sub 18 → verde pálido
@@ -394,6 +677,11 @@ function ScorecardLB({ tournament, escLookup, playersDB }: { tournament: Tournam
   const [sortKey, setSortKey] = useState<SortKey>("pos");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
   const [showScorecard, setShowScorecard] = useState(true);
+  const [filter, setFilter] = useState<PlayerFilter>(EMPTY_FILTER);
+
+  // Reset filtros quando muda de torneio
+  const [lastTcode, setLastTcode] = useState(tournament.tcode);
+  if (tournament.tcode !== lastTcode) { setLastTcode(tournament.tcode); setFilter(EMPTY_FILTER); }
 
   const rawPlayers = tournament.players.filter(p => p.scores && p.scores.length > 0);
   if (!rawPlayers.length) return <div className="muted ta-center p-16">Scorecards não disponíveis.</div>;
@@ -416,11 +704,16 @@ function ScorecardLB({ tournament, escLookup, playersDB }: { tournament: Tournam
   const grosses = byGross.map(p => numGross(p)).filter(g => !isNaN(g));
   const avg = grosses.length ? grosses.reduce((a, b) => a + b, 0) / grosses.length : 0;
 
+  const filteredPlayers = useMemo(
+    () => filterPlayers(rawPlayers, filter, escLookup, playersDB),
+    [rawPlayers, filter, escLookup, playersDB]
+  );
+
   function handleSort(k: SortKey) {
     if (k === sortKey) setSortDir(d => d === "asc" ? "desc" : "asc");
     else { setSortKey(k); setSortDir("asc"); }
   }
-  const sorted = useMemo(() => [...rawPlayers].sort((a, b) => {
+  const sorted = useMemo(() => [...filteredPlayers].sort((a, b) => {
     let av: any, bv: any;
     switch (sortKey) {
       case "pos":   av = (a as any)._pos ?? 999; bv = (b as any)._pos ?? 999; break;
@@ -436,7 +729,7 @@ function ScorecardLB({ tournament, escLookup, playersDB }: { tournament: Tournam
     }
     if (typeof av === "string") return sortDir === "asc" ? av.localeCompare(bv) : bv.localeCompare(av);
     return sortDir === "asc" ? av - bv : bv - av;
-  }), [rawPlayers, sortKey, sortDir, parTotal, escLookup]);
+  }), [filteredPlayers, sortKey, sortDir, parTotal, escLookup]);
 
   function SortableHH({ k, children, style }: { k: SortKey; children: React.ReactNode; style?: React.CSSProperties }) {
     return (
@@ -462,25 +755,18 @@ function ScorecardLB({ tournament, escLookup, playersDB }: { tournament: Tournam
           {showScorecard ? "Ocultar scorecard" : "Ver scorecard"}
         </button>
       </div>
+      <PlayerFilterBar
+        players={rawPlayers} filter={filter} onChange={setFilter}
+        escLookup={escLookup} playersDB={playersDB} total={rawPlayers.length}
+      />
       <div className="bjgt-chart-scroll">
         <table className="sc-table-modern" data-sc-table="1">
           <thead>
             {showScorecard && <>
-              <tr className="sep-row">
-                <td className="sticky-col-0" />
-                <td className="row-label par-label sticky-col-1">PAR</td>
-                <td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/>
-                <td className="col-total">{parTotal}</td>
-                <td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/>
-                {par.slice(0, 9).map((v, i) => <td key={i}>{v}</td>)}
-                <td className="col-out fw-600">{parF9}</td>
-                {!is9 && par.slice(9, 18).map((v, i) => <td key={i}>{v}</td>)}
-                {!is9 && <td className="col-in fw-600">{parB9}</td>}
-              </tr>
               {si.length >= nh && (
                 <tr className="meta-row">
                   <td className="sticky-col-0" />
-                  <td className="row-label par-label sticky-col-1">S.I.</td>
+                  <td className="row-label par-label sticky-col-1" style={{ borderRight: 0 }}>S.I.</td>
                   <td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/>
                   <td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/>
                   {si.slice(0, 9).map((v, i) => <td key={i}>{v}</td>)}
@@ -489,6 +775,17 @@ function ScorecardLB({ tournament, escLookup, playersDB }: { tournament: Tournam
                   {!is9 && <td className="col-in" />}
                 </tr>
               )}
+              <tr className="sep-row">
+                <td className="sticky-col-0" />
+                <td className="row-label par-label sticky-col-1" style={{ borderRight: 0 }}>PAR</td>
+                <td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/>
+                <td className="col-total">{parTotal}</td>
+                <td style={{ borderLeft: 0, borderRight: 0 }}/><td style={{ borderLeft: 0, borderRight: 0 }}/>
+                {par.slice(0, 9).map((v, i) => <td key={i}>{v}</td>)}
+                <td className="col-out fw-600">{parF9}</td>
+                {!is9 && par.slice(9, 18).map((v, i) => <td key={i}>{v}</td>)}
+                {!is9 && <td className="col-in fw-600">{parB9}</td>}
+              </tr>
             </>}
             <tr>
               <th className="hole-header" style={{ width: 26, textAlign: "center", position: "sticky", left: 0, zIndex: 5, background: "var(--bg-card,#fff)", cursor: "pointer" }} onClick={() => handleSort("pos")}>
@@ -531,7 +828,7 @@ function ScorecardLB({ tournament, escLookup, playersDB }: { tournament: Tournam
                   <td className="fw-800 ta-center" style={{ color: "var(--text-3)", fontSize: 11, position: "sticky", left: 0, zIndex: 2, background: "var(--bg-card,#fff)" }}>
                     {sortKey === "pos" ? (showPos ? (medal ?? dp) : "") : (medal ?? dp)}
                   </td>
-                  <td className="row-label tourn-lb-name-col" style={{ whiteSpace: "nowrap", paddingLeft: 6, position: "sticky", left: 26, zIndex: 2, background: "var(--bg-card,#fff)", boxShadow: "2px 0 4px rgba(0,0,0,.06)" }}>
+                  <td className="row-label tourn-lb-name-col" style={{ whiteSpace: "nowrap", paddingLeft: 6, position: "sticky", left: 26, zIndex: 2, background: "var(--bg-card,#fff)", boxShadow: "2px 0 4px rgba(0,0,0,.06)", borderRight: 0 }}>
                     <PName name={p.name} fedCode={p.fedCode} playersDB={playersDB} />
                   </td>
                   <td style={{ borderLeft: 0, borderRight: 0 }}>{esc ? <EscPill esc={esc} /> : <span className="muted">–</span>}</td>
@@ -570,6 +867,7 @@ function ScorecardLB({ tournament, escLookup, playersDB }: { tournament: Tournam
 function AccumulatedLB({ tournament, nRounds, escLookup, playersDB }: { tournament: Tournament; nRounds: number; escLookup: EscLookup; playersDB: PlayersDB }) {
   const [sortKey, setSortKey] = useState<SortKey>("pos");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
+  const [filter, setFilter] = useState<PlayerFilter>(EMPTY_FILTER);
 
   const rawPlayers = tournament.players;
   if (!rawPlayers.length) return <div className="muted ta-center p-16">Sem resultados.</div>;
@@ -586,6 +884,9 @@ function AccumulatedLB({ tournament, nRounds, escLookup, playersDB }: { tourname
     (p as any)._pos = posCounter;
   });
   incomplete.forEach(p => { (p as any)._pos = null; });
+
+  const filteredComplete   = useMemo(() => filterPlayers(complete,   filter, escLookup, playersDB), [complete,   filter, escLookup, playersDB]);
+  const filteredIncomplete = useMemo(() => filterPlayers(incomplete, filter, escLookup, playersDB), [incomplete, filter, escLookup, playersDB]);
 
   function handleSort(k: SortKey) {
     if (k === sortKey) setSortDir(d => d === "asc" ? "desc" : "asc");
@@ -607,8 +908,8 @@ function AccumulatedLB({ tournament, nRounds, escLookup, playersDB }: { tourname
     if (typeof av === "string") return sortDir === "asc" ? av.localeCompare(bv) : bv.localeCompare(av);
     return sortDir === "asc" ? av - bv : bv - av;
   }
-  const sorted = useMemo(() => [...complete.sort(cmp), ...incomplete.sort(cmp)],
-    [rawPlayers, sortKey, sortDir, parTotal, escLookup]);
+  const sorted = useMemo(() => [...filteredComplete.sort(cmp), ...filteredIncomplete.sort(cmp)],
+    [rawPlayers, filter, sortKey, sortDir, parTotal, escLookup]);
 
   function SortableHH({ k, children, style }: { k: SortKey; children: React.ReactNode; style?: React.CSSProperties }) {
     return (
@@ -624,6 +925,10 @@ function AccumulatedLB({ tournament, nRounds, escLookup, playersDB }: { tourname
       <div className="muted fs-11 mb-8 p-0-4px">
         {complete.length} classif.{incomplete.length > 0 && <> · {incomplete.length} inc.</>} · {nRounds}R · Par {parTotal}
       </div>
+      <PlayerFilterBar
+        players={rawPlayers} filter={filter} onChange={setFilter}
+        escLookup={escLookup} playersDB={playersDB} total={rawPlayers.length}
+      />
       <div className="bjgt-chart-scroll">
         <table className="sc-table-modern" data-sc-table="1">
           <thead><tr>
@@ -677,7 +982,7 @@ function AccumulatedLB({ tournament, nRounds, escLookup, playersDB }: { tourname
                     {isInc ? <span style={{ fontSize: 9, color: "#dc2626", fontStyle: "italic" }}>WD</span>
                             : showPos ? (medal || dp) : ""}
                   </td>
-                  <td className="row-label tourn-lb-name-col" style={{ whiteSpace: "nowrap", paddingLeft: 6, position: "sticky", left: 26, zIndex: 2, background: isInc ? "var(--bg-hover)" : "var(--bg-card,#fff)", boxShadow: "2px 0 4px rgba(0,0,0,.06)" }}>
+                  <td className="row-label tourn-lb-name-col" style={{ whiteSpace: "nowrap", paddingLeft: 6, position: "sticky", left: 26, zIndex: 2, background: isInc ? "var(--bg-hover)" : "var(--bg-card,#fff)", boxShadow: "2px 0 4px rgba(0,0,0,.06)", borderRight: 0 }}>
                     <PName name={p.name} fedCode={p.fedCode} playersDB={playersDB} />
                   </td>
                   <td style={{ borderLeft: 0, borderRight: 0 }}>{esc ? <EscPill esc={esc} /> : <span className="muted">–</span>}</td>
@@ -859,23 +1164,42 @@ function TournamentDetail({ tournament, escLookup, playersDB }: { tournament: To
                 {tournament.tcode}
               </span>
             )}
-            {tournament.ccode && tournament.tcode && (
-              <a
-                href={`https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=${tournament.ccode}&tcode=${tournament.tcode}`}
-                target="_blank" rel="noopener noreferrer"
-                title="Abrir classificação na Federação"
-                style={{
-                  fontSize: 10, fontWeight: 600,
-                  color: "var(--accent,#2563eb)",
-                  border: "1px solid var(--accent,#2563eb)",
-                  borderRadius: 4, padding: "1px 6px",
-                  textDecoration: "none", whiteSpace: "nowrap",
-                  lineHeight: 1.6,
-                }}
-              >
-                Link Federação ↗
-              </a>
-            )}
+            {(tournament as any)._isSynthetic
+              ? ((tournament as any)._subRounds as Tournament[]).map((sr, i) => (
+                  sr.ccode && sr.tcode
+                    ? <a key={sr.tcode}
+                        href={`https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=${sr.ccode}&tcode=${sr.tcode}`}
+                        target="_blank" rel="noopener noreferrer"
+                        title={`Abrir Dia ${i + 1} na Federação (tcode ${sr.tcode})`}
+                        style={{
+                          fontSize: 10, fontWeight: 600,
+                          color: "var(--accent,#2563eb)",
+                          border: "1px solid var(--accent,#2563eb)",
+                          borderRadius: 4, padding: "1px 6px",
+                          textDecoration: "none", whiteSpace: "nowrap", lineHeight: 1.6,
+                        }}
+                      >
+                        Dia {i + 1} ↗
+                      </a>
+                    : null
+                ))
+              : tournament.ccode && tournament.tcode && (
+                  <a
+                    href={`https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=${tournament.ccode}&tcode=${tournament.tcode}`}
+                    target="_blank" rel="noopener noreferrer"
+                    title="Abrir classificação na Federação"
+                    style={{
+                      fontSize: 10, fontWeight: 600,
+                      color: "var(--accent,#2563eb)",
+                      border: "1px solid var(--accent,#2563eb)",
+                      borderRadius: 4, padding: "1px 6px",
+                      textDecoration: "none", whiteSpace: "nowrap", lineHeight: 1.6,
+                    }}
+                  >
+                    Link Federação ↗
+                  </a>
+                )
+            }
           </div>
         </div>
         <div className="detail-sub">
@@ -918,6 +1242,7 @@ function Content() {
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarMode, setSidebarMode] = useState<"month" | "circuit">("month");
   const [escLookup, setEscLookup] = useState<EscLookup>(new Map());
   const [playersDB, setPlayersDB] = useState<PlayersDB>({});
 
@@ -994,23 +1319,135 @@ function Content() {
     return () => { alive = false; };
   }, []);
 
-  const cur = tournaments[selected];
+  const displayList = useMemo(() => buildDisplayList(tournaments), [tournaments]);
+  const cur = displayList[selected];
 
-  const { groups, groupKeys } = useMemo(() => {
+  // Agrupamento por mês
+  const { groups: monthGroups, groupKeys: monthKeys } = useMemo(() => {
     const g: Record<string, Tournament[]> = {};
-    for (const t of tournaments) {
+    for (const t of displayList) {
+      if (/PJA/i.test(t.name)) continue; // PJA só aparecem no modo circuito
       const key = t.date ? t.date.substring(0, 7) : "?";
       if (!g[key]) g[key] = [];
       g[key].push(t);
     }
     return { groups: g, groupKeys: Object.keys(g).sort().reverse() };
-  }, [tournaments]);
+  }, [displayList]);
 
-  function groupLabel(key: string): string {
+  // Lista apenas PJA (para o modo circuito)
+  const pjaList = useMemo(
+    () => displayList.filter(t => /PJA/i.test(t.name)),
+    [displayList]
+  );
+
+  const pjaByYear = useMemo(() => {
+    const byYear: Record<string, Tournament[]> = {};
+    for (const t of pjaList) {
+      const yr = t.date ? t.date.substring(0, 4) : "?";
+      if (!byYear[yr]) byYear[yr] = [];
+      byYear[yr].push(t);
+    }
+    const years = Object.keys(byYear).sort().reverse();
+    return { byYear, years };
+  }, [pjaList]);
+
+  function monthLabel(key: string): string {
     if (key === "?") return "Data desconhecida";
     const [yr, mo] = key.split("-");
     const months = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
     return `${months[parseInt(mo) - 1] || mo} ${yr}`;
+  }
+
+  const MANUEL_FED = "52884";
+
+  function renderSidebarItem(t: Tournament) {
+    const idx = displayList.indexOf(t);
+    const isSynth = !!(t as any)._isSynthetic;
+    const subRounds: Tournament[] = (t as any)._subRounds || [];
+    const nR = t.rounds || 1;
+    const nh = t.players[0]?.nholes
+      || t.players[0]?.par?.length
+      || t.players[0]?.roundScores?.[0]?.pars?.length
+      || 18;
+    const manuelPlayed = t.players.some(p => p.fedCode === MANUEL_FED);
+    return (
+      <button key={(t as any)._isSynthetic ? "synth_" + t.tcode : t.tcode + "_" + t.date}
+        className={`course-item ${selected === idx ? "active" : ""}`}
+        onClick={() => setSelected(idx)}>
+        <div style={{ display: "flex", alignItems: "baseline", gap: 5, flexWrap: "wrap" }}>
+          <span className="course-item-name" style={{ flex: "none" }}>{t.name}</span>
+          <div style={{ display: "flex", gap: 3 }}>
+            {isSynth ? (
+              // Torneio sintético: badge "2R" + tcodes das rondas
+              <>
+                <span title="Torneio agrupado automaticamente" style={{
+                  fontFamily: "monospace", fontSize: 9, fontWeight: 700,
+                  background: "#7c3aed", color: "#fff",
+                  borderRadius: 3, padding: "0 4px", letterSpacing: "0.01em",
+                }}>{nR}R ⛳</span>
+                {subRounds.map((sr, i) => (
+                  <span key={sr.tcode} title={`Dia ${i+1}: ${sr.tcode}`} style={{
+                    fontFamily: "monospace", fontSize: 9, fontWeight: 600,
+                    background: "var(--accent,#2563eb)", color: "#fff",
+                    borderRadius: 3, padding: "0 4px", opacity: selected === idx ? 1 : 0.7,
+                  }}>{sr.tcode}</span>
+                ))}
+              </>
+            ) : (
+              <>
+                {t.ccode && (
+                  <span title="tclub" style={{
+                    fontFamily: "monospace", fontSize: 9, fontWeight: 600,
+                    background: "rgba(0,0,0,0.08)", color: "var(--text-muted)",
+                    borderRadius: 3, padding: "0 4px", letterSpacing: "0.01em",
+                  }}>{t.ccode}</span>
+                )}
+                {t.tcode && (
+                  <span title="tcode" style={{
+                    fontFamily: "monospace", fontSize: 9, fontWeight: 700,
+                    background: "var(--accent,#2563eb)", color: "#fff",
+                    borderRadius: 3, padding: "0 4px", letterSpacing: "0.01em",
+                    opacity: selected === idx ? 1 : 0.7,
+                  }}>{t.tcode}</span>
+                )}
+                {t.ccode && t.tcode && (
+                  <span
+                    title="Abrir classificação na Federação"
+                    onClick={e => { e.stopPropagation(); window.open(`https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=${t.ccode}&tcode=${t.tcode}`, "_blank"); }}
+                    style={{
+                      fontSize: 9, fontWeight: 600, cursor: "pointer",
+                      color: "var(--accent,#2563eb)",
+                      border: "1px solid var(--accent,#2563eb)",
+                      borderRadius: 3, padding: "0 4px",
+                      whiteSpace: "nowrap", lineHeight: 1.6,
+                    }}
+                  >↗</span>
+                )}
+              </>
+            )}
+          </div>
+        </div>
+        <div className="course-item-meta">
+          {t.campo && <span>{t.campo}</span>}
+          <span style={{ marginLeft: 4 }}>{t.playerCount} jog · {nR}R · {nh}h</span>
+          {manuelPlayed && (
+            <span title="Manuel participou neste torneio" style={{
+              marginLeft: 6, fontSize: 9, fontWeight: 700,
+              background: "var(--color-loading)", color: "#1a1a1a",
+              borderRadius: 20, padding: "1px 6px",
+            }}>★ Manuel</span>
+          )}
+        </div>
+        {t.escalao && (
+          <div style={{ fontSize: 10, color: "var(--text-muted)", marginTop: 2 }}>{t.escalao}</div>
+        )}
+        {!isSynth && t._sourceIndex !== undefined && (
+          <div style={{ fontSize: 9, color: "var(--text-muted)", marginTop: 1, opacity: 0.6 }}>
+            📄 pull-torneios{String(t._sourceIndex).padStart(DATA_DIGITS, "0")}.json
+          </div>
+        )}
+      </button>
+    );
   }
 
   const lastUpdated = fileMeta.length > 0 ? fileMeta[fileMeta.length - 1].lastUpdated : undefined;
@@ -1030,7 +1467,7 @@ function Content() {
           {loading
             ? <span className="muted fs-11" style={{ fontStyle: "italic" }}>{loadingMsg}</span>
             : <>
-                <span className="chip">{tournaments.length} torneios</span>
+                <span className="chip">{displayList.length} torneios</span>
                 <span className="chip" style={{ marginLeft: 4, background: "var(--bg-hover)" }}>
                   {fileMeta.length} ficheiro{fileMeta.length !== 1 ? "s" : ""}
                 </span>
@@ -1050,75 +1487,45 @@ function Content() {
       <div className="master-detail">
         {/* Sidebar */}
         <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`}>
-          {loading && tournaments.length === 0 && (
+          {/* Toggle modo de agrupamento */}
+          {!loading && displayList.length > 0 && (
+            <div style={{ display: "flex", gap: 4, padding: "8px 10px 4px", borderBottom: "1px solid var(--border)" }}>
+              {(["month", "circuit"] as const).map(mode => (
+                <button key={mode} onClick={() => setSidebarMode(mode)} style={{
+                  flex: 1, fontSize: 10, padding: "3px 0", borderRadius: 5,
+                  border: "1px solid var(--border)",
+                  background: sidebarMode === mode ? "var(--accent,#2563eb)" : "var(--bg-hover)",
+                  color: sidebarMode === mode ? "#fff" : "var(--text-muted)",
+                  cursor: "pointer", fontWeight: sidebarMode === mode ? 700 : 400,
+                }}>
+                  {mode === "month" ? "📅 Mês" : "🏆 PJA Tour"}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {loading && displayList.length === 0 && (
             <div className="muted fs-11" style={{ padding: "12px 16px", fontStyle: "italic" }}>
               A carregar...
             </div>
           )}
-          {groupKeys.map(gk => (
-            <React.Fragment key={gk}>
-              <div className="sidebar-section-title-dark">{groupLabel(gk)}</div>
-              {groups[gk].map(t => {
-                const idx = tournaments.indexOf(t);
-                const nR = t.rounds || 1;
-                const nh = t.players[0]?.nholes
-                  || t.players[0]?.par?.length
-                  || t.players[0]?.roundScores?.[0]?.pars?.length
-                  || 18;
-                return (
-                  <button key={t.tcode + "_" + t.date}
-                    className={`course-item ${selected === idx ? "active" : ""}`}
-                    onClick={() => setSelected(idx)}>
-                    <div style={{ display: "flex", alignItems: "baseline", gap: 5, flexWrap: "wrap" }}>
-                      <span className="course-item-name" style={{ flex: "none" }}>{t.name}</span>
-                      <div style={{ display: "flex", gap: 3 }}>
-                        {t.ccode && (
-                          <span title="tclub" style={{
-                            fontFamily: "monospace", fontSize: 9, fontWeight: 600,
-                            background: "rgba(0,0,0,0.08)", color: "var(--text-muted)",
-                            borderRadius: 3, padding: "0 4px", letterSpacing: "0.01em",
-                          }}>{t.ccode}</span>
-                        )}
-                        {t.tcode && (
-                          <span title="tcode" style={{
-                            fontFamily: "monospace", fontSize: 9, fontWeight: 700,
-                            background: "var(--accent,#2563eb)", color: "#fff",
-                            borderRadius: 3, padding: "0 4px", letterSpacing: "0.01em",
-                            opacity: selected === idx ? 1 : 0.7,
-                          }}>{t.tcode}</span>
-                        )}
-                        {t.ccode && t.tcode && (
-                          <span
-                            title="Abrir classificação na Federação"
-                            onClick={e => { e.stopPropagation(); window.open(`https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=${t.ccode}&tcode=${t.tcode}`, "_blank"); }}
-                            style={{
-                              fontSize: 9, fontWeight: 600, cursor: "pointer",
-                              color: "var(--accent,#2563eb)",
-                              border: "1px solid var(--accent,#2563eb)",
-                              borderRadius: 3, padding: "0 4px",
-                              whiteSpace: "nowrap", lineHeight: 1.6,
-                            }}
-                          >↗</span>
-                        )}
-                      </div>
-                    </div>
-                    <div className="course-item-meta">
-                      {t.campo && <span>{t.campo}</span>}
-                      <span style={{ marginLeft: 4 }}>{t.playerCount} jog · {nR}R · {nh}h</span>
-                    </div>
-                    {t.escalao && (
-                      <div style={{ fontSize: 10, color: "var(--text-muted)", marginTop: 2 }}>{t.escalao}</div>
-                    )}
-                    {t._sourceIndex !== undefined && (
-                      <div style={{ fontSize: 9, color: "var(--text-muted)", marginTop: 1, opacity: 0.6 }}>
-                        📄 pull-torneios{String(t._sourceIndex).padStart(DATA_DIGITS, "0")}.json
-                      </div>
-                    )}
-                  </button>
-                );
-              })}
-            </React.Fragment>
-          ))}
+
+          {sidebarMode === "month"
+            ? monthKeys.map(gk => (
+                <React.Fragment key={gk}>
+                  <div className="sidebar-section-title-dark">{monthLabel(gk)}</div>
+                  {monthGroups[gk].map(t => renderSidebarItem(t))}
+                </React.Fragment>
+              ))
+            : pjaByYear.years.length === 0
+              ? <div className="muted fs-11" style={{ padding: "12px 16px", fontStyle: "italic" }}>Sem torneios PJA</div>
+              : pjaByYear.years.map(yr => (
+                  <React.Fragment key={yr}>
+                    <div className="sidebar-section-title-dark">🏆 PJA Tour {yr}</div>
+                    {pjaByYear.byYear[yr].map(t => renderSidebarItem(t))}
+                  </React.Fragment>
+                ))
+          }
         </div>
 
         {/* Detail */}
