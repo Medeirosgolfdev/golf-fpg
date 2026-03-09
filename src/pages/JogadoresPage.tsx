@@ -19,6 +19,7 @@ import TeeDate from "../ui/TeeDate";
 import ScoreCircle from "../ui/ScoreCircle";
 import LoadingState from "../ui/LoadingState";
 import { loadPlayerStats, daysSince, type PlayerStatsDb } from "../data/playerStatsTypes";
+import { calcSD } from "../utils/whsCalc";
 
 /* ────────────────────────────────────────────────────────────────────────────────────
    Utility functions (port from client JS)
@@ -1526,55 +1527,153 @@ function AnalysisView({ data }: { data: PlayerPageData }) {
     return rounds18g.filter(r => r.dateSort >= cutoff);
   }
 
+  // ── Extra KPI calculations ──────────────────────────────────────────────────
+  // SD médio últimas 5 / últimas 20 (rondas com SD válido, 18 buracos)
+  const rounds18sd = useMemo(() =>
+    rounds18.filter(r => numSafe(r.sd) != null).slice(0, 20),
+    [rounds18]
+  );
+  const sdLast5  = useMemo(() => meanArr(rounds18sd.slice(0, 5).map(r => Number(r.sd))), [rounds18sd]);
+  const sdLast20 = useMemo(() => meanArr(rounds18sd.map(r => Number(r.sd))), [rounds18sd]);
+  const sdSigma  = useMemo(() => stdevArr(rounds18sd.map(r => Number(r.sd))), [rounds18sd]);
+  const bestSdRound = useMemo(() => {
+    const valid = rounds18.filter(r => numSafe(r.sd) != null);
+    if (!valid.length) return null;
+    return valid.reduce((best, r) => Number(r.sd) < Number(best.sd) ? r : best);
+  }, [rounds18]);
+  // HCP trend: HCP 6 months ago (use r.hi from oldest round within 6m)
+  // sdTrend: inclinação da regressão linear dos SDs das últimas 10 rondas (ordem cronológica)
+  // Negativo = SDs a descer (a melhorar); positivo = SDs a subir (a piorar)
+  // Completamente independente do tempo — baseia-se em rondas jogadas
+  const sdTrend = useMemo(() => {
+    const N = 10;
+    const recent = rounds18sd.slice(0, N);   // desc → reverse para ordem cronológica
+    if (recent.length < 3) return null;
+    const chronological = [...recent].reverse().map(r => Number(r.sd));
+    const slope = linearSlope(chronological);
+    return slope != null ? { slope, n: recent.length } : null;
+  }, [rounds18sd]);
+
   return (
-    <div className="card">
-      <div className="an-wrap">
-        {/* KPI Grid */}
-        <div className="an-grid">
-          <KPICard title="Média (últimas 5)" val={kpiGross5?.toFixed(1) ?? null}
-            sub={`Gross 18B (${last5.length} rondas)`}
-            tip="Média do gross das últimas 5 rondas de 18 buracos." />
-          <KPICard title="Média (últimas 20)" val={kpiGross20?.toFixed(1) ?? null}
-            sub={`Gross 18B (${last20.length} rondas)`}
-            tip="Média do gross das últimas 20 rondas de 18 buracos." />
-          <KPICard title="Best 20% (média)" val={best20?.toFixed(1) ?? null}
-            sub={`Gross 18B (${n20} de ${sorted.length})`}
-            tip="Média dos melhores 20% dos resultados gross." />
-          <KPICard title="Consistência (σ)" val={kpiSigma?.toFixed(2) ?? null}
-            sub={`Gross 18B (${sorted.length} rondas)`}
-            tip="Desvio padrão do gross. Menor = mais consistente." />
-        </div>
+    <div className="an-wrap">
 
-        {/* Row: Histogram + Trajectory + Records */}
-        <div className="an-grid3">
-          <HistogramCard rounds={filterByPeriod(histPeriod)} period={histPeriod} setPeriod={setHistPeriod} />
-          <TrajectoryCard rounds={filterByPeriod(trajPeriod)} period={trajPeriod} setPeriod={setTrajPeriod} />
-          <RecordsCard rounds={filterByPeriod(recPeriod)} period={recPeriod} setPeriod={setRecPeriod} />
-        </div>
+        {/* ── KPIs ── */}
+        <CollapseCard title="Indicadores" icon="📊" defaultOpen={true}>
+          <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+            <KPICard
+              title="SD Médio · Últ. 5"
+              val={sdLast5?.toFixed(1) ?? null}
+              delta={sdLast5 != null && sdLast20 != null ? sdLast5 - sdLast20 : null}
+              deltaLabel="vs últ. 20"
+              sub={`${Math.min(5, rounds18sd.length)} rondas com SD`}
+              tip="Média do Score Diferencial das últimas 5 rondas de 18B. Negativo = melhorando vs média longa."
+            />
+            <KPICard
+              title="SD Médio · Últ. 20"
+              val={sdLast20?.toFixed(1) ?? null}
+              sub={`${rounds18sd.length} rondas com SD`}
+              tip="Média dos Score Diferenciais das últimas 20 rondas de 18 buracos."
+            />
+            <KPICard
+              title="Consistência (σ SD)"
+              val={sdSigma?.toFixed(1) ?? null}
+              sub="Desvio padrão do SD"
+              tip="Desvio padrão do Score Diferencial. Menor = mais consistente."
+            />
+            <KPICard
+              title="Melhor SD (carreira)"
+              val={bestSdRound ? Number(bestSdRound.sd).toFixed(1) : null}
+              sub={bestSdRound ? `${shortDate(bestSdRound.date)} · ${(bestSdRound as any).course ?? ""}` : undefined}
+              accent="var(--color-good)"
+              tip="Melhor Score Diferencial de sempre."
+            />
+            <KPICard
+              title="Gross Médio · Últ. 5"
+              val={kpiGross5?.toFixed(1) ?? null}
+              delta={kpiGross5 != null && kpiGross20 != null ? kpiGross5 - kpiGross20 : null}
+              deltaLabel="vs últ. 20"
+              sub={`${last5.length} rondas 18B`}
+            />
+            <KPICard
+              title="Tendência SD (últ. 10)"
+              val={sdTrend != null
+                ? `${sdTrend.slope > 0 ? "+" : ""}${sdTrend.slope.toFixed(2)}`
+                : null}
+              sub={sdTrend ? `por ronda · ${sdTrend.n} rondas analisadas` : "mín. 3 rondas necessárias"}
+              accent={sdTrend != null
+                ? sdTrend.slope < -0.1 ? "var(--color-good)"
+                : sdTrend.slope > 0.1  ? "var(--color-danger)"
+                : "var(--text-3)"
+                : undefined}
+              tip="Inclinação da regressão linear dos SDs das últimas 10 rondas. Negativo = a melhorar por ronda jogada; positivo = a piorar. Independente do tempo."
+            />
+          </div>
+        </CollapseCard>
 
-        {/* WHS Detail */}
-        <WHSDetail hcp={data.HCP_INFO} />
+        {/* ── Histogram + Trajectory + Records ── */}
+        <CollapseCard title="Distribuição · Trajectória · Recordes" icon="📈" defaultOpen={true}>
+          <div className="an-grid3" style={{ marginBottom: 0 }}>
+            <HistogramCard rounds={filterByPeriod(histPeriod)} period={histPeriod} setPeriod={setHistPeriod} />
+            <TrajectoryCard rounds={filterByPeriod(trajPeriod)} period={trajPeriod} setPeriod={setTrajPeriod} />
+            <RecordsCard rounds={filterByPeriod(recPeriod)} period={recPeriod} setPeriod={setRecPeriod} />
+          </div>
+        </CollapseCard>
 
-        {/* SD Simulator */}
-        <SDSimulator hcp={data.HCP_INFO} whs20={whs20} />
+        {/* ── WHS Detail ── */}
+        <CollapseCard title="Handicap — Detalhe WHS" icon="🏌️" defaultOpen={true}>
+          <WHSDetail hcp={data.HCP_INFO} bare />
+        </CollapseCard>
 
-        {/* Last 20 Table */}
-        <Last20Table data={data} last20Table={last20Table} best8={best8} whsPosMap={whsPosMap} />
+        {/* ── SD Simulator ── */}
+        <CollapseCard title="Simulador de SD" icon="🎯" defaultOpen={true}>
+          <SDSimulator hcp={data.HCP_INFO} whs20={whs20} bare />
+        </CollapseCard>
 
-        {/* Cross Analysis */}
-        <CrossAnalysis data={data} />
-      </div>
+        {/* ── Next Round Simulator ── */}
+        <CollapseCard title="Próxima Ronda" icon="⛳" defaultOpen={true}>
+          <NextRoundSimulator hcp={data.HCP_INFO} whs20={whs20} playerData={data} bare />
+        </CollapseCard>
+
+        {/* ── Last 20 Table ── */}
+        <CollapseCard title="Janela WHS — Últimas Rondas" icon="📋" defaultOpen={true}>
+          <Last20Table data={data} last20Table={last20Table} best8={best8} whsPosMap={whsPosMap} bare />
+        </CollapseCard>
+
+        {/* ── Cross Analysis ── */}
+        <CollapseCard title="Análise por Campo" icon="🗺️" defaultOpen={false}>
+          <CrossAnalysis data={data} bare />
+        </CollapseCard>
+
     </div>
   );
 }
 
 /* ─── KPI Card ─── */
-function KPICard({ title, val, sub, tip }: { title: string; val: string | null; sub: string; tip?: string }) {
+function KPICard({ title, val, sub, delta, deltaLabel, tip, accent }: {
+  title: string; val: string | null; sub?: string;
+  delta?: number | null; deltaLabel?: string;
+  tip?: string; accent?: string;
+}) {
+  const dColor = delta == null ? undefined
+    : delta < -0.05 ? "var(--color-good)"
+    : delta > 0.05  ? "var(--color-danger)"
+    : "var(--text-3)";
   return (
-    <div className="card">
-      <div className="h-xs">{title}{tip && <span className="kpi-info" title={tip}>ℹ️</span>}</div>
-      <div className="an-k-val">{val ? <b>{val}</b> : <span className="muted">–</span>}</div>
-      {sub && <div className="an-k-sub muted">{sub}</div>}
+    <div style={{ padding: "12px 16px", borderRadius: 10, background: "var(--bg-detail)",
+      display: "flex", flexDirection: "column", gap: 3, minWidth: 120 }}>
+      <div style={{ fontSize: 10, fontWeight: 700, color: "var(--text-3)", letterSpacing: "0.06em",
+        textTransform: "uppercase" }}>
+        {title}{tip && <span className="kpi-info" title={tip} style={{ marginLeft: 4 }}>ℹ</span>}
+      </div>
+      <div style={{ fontSize: 26, fontWeight: 800, color: accent ?? "var(--text-1)", lineHeight: 1.1 }}>
+        {val ?? <span style={{ color: "var(--text-3)" }}>–</span>}
+      </div>
+      {delta != null && (
+        <div style={{ fontSize: 11, fontWeight: 700, color: dColor }}>
+          {delta > 0 ? "+" : ""}{delta.toFixed(1)} {deltaLabel ?? "vs média"}
+        </div>
+      )}
+      {sub && <div style={{ fontSize: 11, color: "var(--text-3)", marginTop: 2 }}>{sub}</div>}
     </div>
   );
 }
@@ -1745,13 +1844,37 @@ function RecordsCard({ rounds, period, setPeriod }: {
 }
 
 /* ─── WHS Detail ─── */
-function WHSDetail({ hcp }: { hcp: HcpInfo }) {
+/* ─── Reusable collapsible card wrapper ─── */
+function CollapseCard({ title, icon, defaultOpen = true, children, badge }: {
+  title: string; icon?: string; defaultOpen?: boolean;
+  children: React.ReactNode; badge?: React.ReactNode;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div className="card" style={{ marginBottom: 12 }}>
+      <div onClick={() => setOpen(o => !o)}
+        style={{ display: "flex", alignItems: "center", justifyContent: "space-between",
+          cursor: "pointer", userSelect: "none", marginBottom: open ? 12 : 0 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          {icon && <span style={{ fontSize: 16 }}>{icon}</span>}
+          <span className="h-xs" style={{ margin: 0 }}>{title}</span>
+          {badge}
+        </div>
+        <span style={{ fontSize: 16, color: "var(--text-3)", lineHeight: 1 }}>{open ? "▾" : "▸"}</span>
+      </div>
+      {open && children}
+    </div>
+  );
+}
+
+function WHSDetail({ hcp, bare }: { hcp: HcpInfo; bare?: boolean }) {
+  const Wrap = ({ children }: { children: React.ReactNode }) =>
+    bare ? <>{children}</> : <div className="card"><div className="h-xs">Handicap — Detalhe WHS</div>{children}</div>;
   if (hcp.current == null) {
-    return <div className="card"><div className="h-xs">Handicap — Detalhe WHS</div><div className="muted">Sem dados WHS disponíveis</div></div>;
+    return <Wrap><div className="muted">Sem dados WHS disponíveis</div></Wrap>;
   }
   return (
-    <div className="card">
-      <div className="h-xs">Handicap — Detalhe WHS</div>
+    <Wrap>
       <div className="jog-record-grid">
         <div className="card-stat-green">
           <div className="muted fs-10">MÍNIMO ATINGIDO</div>
@@ -1778,7 +1901,7 @@ function WHSDetail({ hcp }: { hcp: HcpInfo }) {
           </span>
         )}
       </div>
-    </div>
+    </Wrap>
   );
 }
 
@@ -1795,17 +1918,34 @@ function whsQtyCalc(nSds: number): number {
   return 8;
 }
 
-function SDSimulator({ hcp, whs20 }: {
+function SDSimulator({ hcp, whs20, bare }: {
   hcp: HcpInfo;
-  whs20: (RoundData & { course: string })[];  // últimas 20 rondas COM SD válido
+  whs20: (RoundData & { course: string })[];
+  bare?: boolean;
 }) {
   type SimSortKey = "pos" | "date" | "course" | "hcp" | "sd" | "rank";
   const [sdInput, setSdInput] = useState("");
   const [sortKey, setSortKey] = useState<SimSortKey>("pos");
   const [sortDir, setSortDir] = useState<1 | -1>(1);
 
-  const currentHI = hcp.current;
-  const adjustTotal = hcp.adjustTotal ?? 0;
+  const currentHI  = hcp.current;
+  // currentRawAvg = média bruta dos melhores N SDs da janela actual (calculada por nós, não do servidor)
+  // Não usamos hcp.scoreAvg porque pode já incluir ajustes (ESR, caps…).
+  // totalAdjustment = currentHI - currentRawAvg capta ESR + soft/hard cap + tudo o resto.
+  const currentRawAvg = useMemo(() => {
+    if (currentHI == null) return null;
+    const qty = whsQtyCalc(whs20.length);
+    if (qty === 0) return null;
+    const sorted = whs20
+      .map(r => numSafe(r.sd))
+      .filter((v): v is number => v != null)
+      .map(Number)
+      .sort((a, b) => a - b);
+    return meanArr(sorted.slice(0, qty)) ?? null;
+  }, [whs20, currentHI]);
+  const totalAdjustment = (currentHI != null && currentRawAvg != null)
+    ? currentHI - currentRawAvg
+    : (hcp.adjustTotal ?? 0);
 
   // Janela WHS = whs20 (já filtrada para rondas com SD)
   const window20 = whs20;
@@ -1878,7 +2018,9 @@ function SDSimulator({ hcp, whs20 }: {
     const bestNew = activeWithSd.slice(0, newQtyCalc).map(x => x.sd);
     const newAvg  = meanArr(bestNew);
     if (newAvg == null) return null;
-    const newHI = Math.round((newAvg + adjustTotal) * 10) / 10;
+    // newHI = média bruta nova + o mesmo ajuste total que o servidor aplicou
+    // (totalAdjustment capta ESR + soft/hard cap + tudo o resto)
+    const newHI = Math.round((newAvg + totalAdjustment) * 10) / 10;
 
     const newTopNMap = new Map<string, number>();
     activeWithSd.slice(0, newQtyCalc).forEach((x, i) => newTopNMap.set(x.id, i + 1));
@@ -1891,7 +2033,7 @@ function SDSimulator({ hcp, whs20 }: {
       bestNew,
       newAvg,
     };
-  }, [sdInput, currentHI, window20, displacedRound, adjustTotal]);
+  }, [sdInput, currentHI, totalAdjustment, window20, displacedRound]);
 
   // simulation é agora um alias de simRows para não ter de renomear o resto do JSX
   const simulation = simRows;
@@ -1946,9 +2088,8 @@ function SDSimulator({ hcp, whs20 }: {
     );
   }
 
-  return (
-    <div className="card" style={{ marginBottom: 12 }}>
-      <div className="h-xs fs-18 mb-4">🎯 Simulador de Ronda</div>
+  const sdCardInner = (
+    <div>
       <div className="muted fs-11 mb-12">
         Introduz um SD para simular o impacto no Handicap Index.
         A nova ronda entra no topo — a ronda 20 (mais antiga) é deslocada.
@@ -2009,23 +2150,75 @@ function SDSimulator({ hcp, whs20 }: {
             </div>
           </div>
 
-          <div style={{ padding: "8px 12px", borderRadius: 8, background: "var(--bg-detail)", fontSize: 11,
-            color: "var(--text-2)", lineHeight: 1.8, flex: 1, minWidth: 200 }}>
-            <div>SD introduzido: <b>{simulation.newSdVal.toFixed(1)}</b></div>
-            {displacedSd != null
-              ? <div>SD que sai: <b style={{ color: "var(--color-danger)" }}>{displacedSd.toFixed(1)}</b>
-                  {oldTopNIds.has(displacedRound!.scoreId) &&
-                    <span style={{ color: "var(--color-danger)", marginLeft: 4 }}>⚠ era top-{qtyCalc}!</span>}
+          {(() => {
+            // SD que entra no top / sai do top
+            const newTopIds  = new Set(simRows!.newTopNMap.keys());
+            const enteredTop = simulation.bestNew.filter(sd => {
+              // find scoreId for this sd value that is in newTopNMap but not oldTopNIds
+              const entry = [...simRows!.newTopNMap.entries()].find(([id]) => !oldTopNIds.has(id) && id !== SIM_ID);
+              return false; // placeholder — use sets below
+            });
+            // IDs que entraram no top (não eram antes, são agora, excluindo a simulada)
+            const enteredIds = [...newTopIds].filter(id => id !== SIM_ID && !oldTopNIds.has(id));
+            // IDs que saíram do top (eram antes, não são agora) — excluindo a deslocada (saiu por remoção)
+            const exitedIds  = [...oldTopNIds].filter(id => !newTopIds.has(id) && id !== displacedRound?.scoreId);
+            // SD da ronda deslocada (era top-N ou não)
+            const displacedWasTop = displacedRound && oldTopNIds.has(displacedRound.scoreId);
+
+            // Encontrar o SD da ronda que saiu do top por ser ultrapassada (exitedIds[0])
+            const exitedSd = exitedIds.length > 0
+              ? window20.find(r => r.scoreId === exitedIds[0])
+              : null;
+
+            return (
+              <div style={{ padding: "8px 12px", borderRadius: 8, background: "var(--bg-detail)", fontSize: 11,
+                color: "var(--text-2)", lineHeight: 2, flex: 1, minWidth: 220 }}>
+                {/* O que entrou */}
+                <div>
+                  <span style={{ color: "var(--color-good)", fontWeight: 700 }}>↓ Entra:</span>{" "}
+                  SD <b>{simulation.newSdVal.toFixed(1)}</b>
+                  {newTopIds.has(SIM_ID)
+                    ? <span style={{ color: "var(--color-good)" }}> → entra no top-{simulation.newQtyCalc} (#{simRows!.newTopNMap.get(SIM_ID)})</span>
+                    : <span className="muted"> → não entra no top-{simulation.newQtyCalc}</span>
+                  }
                 </div>
-              : displacedRound && <div className="muted">Ronda deslocada sem SD</div>
-            }
-            <div>Novos {simulation.newQtyCalc} melhores SDs: <b>{simulation.bestNew.map(s => Number(s).toFixed(1)).join(", ")}</b></div>
-            <div>Média dos {simulation.newQtyCalc}: <b>{simulation.newAvg?.toFixed(2)}</b>
-              {adjustTotal !== 0 && <span className="muted"> + ajuste {adjustTotal > 0 ? "+" : ""}{adjustTotal}</span>}
-            </div>
-          </div>
+
+                {/* O que saiu por deslocação (ronda 20) */}
+                {displacedRound && (
+                  <div>
+                    <span style={{ color: "var(--color-danger)", fontWeight: 700 }}>↑ Sai (ronda 20):</span>{" "}
+                    {displacedSd != null
+                      ? <>SD <b>{Number(displacedSd).toFixed(1)}</b>{displacedWasTop
+                          ? <span style={{ color: "var(--color-danger)" }}> — <b>era top-{qtyCalc}!</b></span>
+                          : <span className="muted"> — não era top-{qtyCalc}</span>}</>
+                      : <span className="muted">sem SD</span>
+                    }
+                  </div>
+                )}
+
+                {/* Rondas que saíram do top por serem ultrapassadas (não por deslocação) */}
+                {exitedIds.length > 0 && exitedSd && (
+                  <div>
+                    <span style={{ color: "var(--color-danger)", fontWeight: 700 }}>✕ Sai do top:</span>{" "}
+                    SD <b>{Number(exitedSd.sd).toFixed(1)}</b>
+                    <span className="muted"> ({exitedSd.date} · {exitedSd.course})</span>
+                  </div>
+                )}
+
+                {/* Novos top-N */}
+                <div style={{ marginTop: 2, borderTop: "1px solid var(--line)", paddingTop: 4 }}>
+                  Top-{simulation.newQtyCalc}: <b>{simulation.bestNew.map(s => Number(s).toFixed(1)).join(", ")}</b>
+                </div>
+                <div>
+                  Média: <b>{simulation.newAvg?.toFixed(2)}</b>
+                  {currentRawAvg != null && <span className="muted"> (actual: {currentRawAvg.toFixed(2)})</span>}
+                  {totalAdjustment !== 0 && <span className="muted"> · ajuste: {totalAdjustment > 0 ? "+" : ""}{totalAdjustment.toFixed(2)}</span>}
+                </div>
+              </div>
+            );
+          })()}
         </> : (
-          <div className="muted fs-11" style={{ paddingTop: 14 }}>← Introduz um SD para simular</div>
+          <div className="muted fs-11" style={{ paddingTop: 14 }}>↑ Introduz um SD acima para simular</div>
         )}
       </div>
 
@@ -2036,7 +2229,7 @@ function SDSimulator({ hcp, whs20 }: {
             ★ = top-{simulation!.newQtyCalc} SDs (entram no cálculo) ·{" "}
             <span style={{ color: "var(--color-good)", fontWeight: 600 }}>Verde</span> = nova ronda ·{" "}
             <span style={{ opacity: 0.45 }}>Esbatido</span> = ronda deslocada ·{" "}
-            🔄 = mudou status top-{simulation!.newQtyCalc} · Clica no cabeçalho para ordenar
+            ✕ = saiu do top · ↑ = entrou no top · Clica no cabeçalho para ordenar
           </div>
           <table className="dtable" style={{ fontSize: 12 }}>
             <thead>
@@ -2103,10 +2296,10 @@ function SDSimulator({ hcp, whs20 }: {
                         ? <>
                             <span className="c-par-ok">★</span>{" "}
                             <span className="fw-700">#{newRank}</span>
-                            {entered && <span style={{ color: "var(--color-good)", marginLeft: 3 }} title="Entrou no top">🔄</span>}
+                            {entered && <span style={{ color: "var(--color-good)", marginLeft: 3, fontWeight: 800 }} title="Entrou no top">↑</span>}
                           </>
                         : exited
-                        ? <span style={{ color: "var(--color-danger)" }} title="Saiu do top">🔄</span>
+                        ? <span style={{ color: "var(--color-danger)", fontWeight: 800, fontSize: 14 }} title="Saiu do top">✕</span>
                         : <span className="muted">–</span>
                       }
                     </td>
@@ -2117,6 +2310,326 @@ function SDSimulator({ hcp, whs20 }: {
           </table>
         </div>
       )}
+    </div>
+  );
+  return bare ? sdCardInner : <div className="card" style={{ marginBottom: 12 }}><div className="h-xs fs-18 mb-4">🎯 Simulador de Ronda</div>{sdCardInner}</div>;
+}
+
+/* ─── Next Round Simulator ─── */
+function NextRoundSimulator({ hcp, whs20, playerData, bare }: {
+  hcp: HcpInfo;
+  whs20: (RoundData & { course: string })[];
+  playerData: PlayerPageData;
+  bare?: boolean;
+}) {
+  const { simCourses: courses } = useAppContext();
+  const currentHI = hcp.current;
+
+  // Campos que o jogador já jogou (set de nomes normalizados)
+  const playedNormSet = useMemo(() => {
+    const s = new Set<string>();
+    playerData.DATA.forEach(c => s.add(norm(c.course)));
+    return s;
+  }, [playerData]);
+
+  // TODOS os campos com pelo menos um tee com CR+Slope válidos
+  // Campos já jogados aparecem primeiro, resto por ordem alfabética
+  const allRatedCourses = useMemo(() => {
+    if (!courses?.length) return [];
+    const valid = courses.filter(c =>
+      c.master.tees.some(t =>
+        t.ratings.holes18?.courseRating != null && t.ratings.holes18?.slopeRating != null
+      )
+    );
+    const played   = valid.filter(c => playedNormSet.has(norm(c.master.name)));
+    const unplayed = valid.filter(c => !playedNormSet.has(norm(c.master.name)));
+    unplayed.sort((a, b) => a.master.name.localeCompare(b.master.name));
+    return [...played, ...unplayed];
+  }, [courses, playedNormSet]);
+
+  const [selectedCourseKey, setSelectedCourseKey] = useState<string>("");
+  const [selectedTeeId, setSelectedTeeId]         = useState<string>("");
+
+  // Auto-select first course when list is ready
+  useEffect(() => {
+    if (allRatedCourses.length > 0 && !selectedCourseKey) {
+      setSelectedCourseKey(allRatedCourses[0].courseKey);
+    }
+  }, [allRatedCourses]);
+
+  // Reset tee when course changes
+  useEffect(() => { setSelectedTeeId(""); }, [selectedCourseKey]);
+
+  const selectedCourse = allRatedCourses.find(c => c.courseKey === selectedCourseKey) ?? null;
+  // keep selectedCourseName for display/narrative
+  const selectedCourseName = selectedCourse?.master.name ?? "";
+
+  // Tees with valid 18-hole ratings
+  const availableTees = useMemo(() => {
+    if (!selectedCourse) return [];
+    return selectedCourse.master.tees.filter(t =>
+      t.ratings.holes18?.courseRating != null && t.ratings.holes18?.slopeRating != null
+    );
+  }, [selectedCourse]);
+
+  // Auto-select first tee
+  useEffect(() => {
+    if (availableTees.length > 0 && !selectedTeeId) {
+      setSelectedTeeId(availableTees[0].teeId);
+    }
+  }, [availableTees]);
+
+  const selectedTee = availableTees.find(t => t.teeId === selectedTeeId) ?? availableTees[0] ?? null;
+  const ratings = selectedTee?.ratings.holes18 ?? null;
+  const cr    = ratings?.courseRating ?? null;
+  const slope = ratings?.slopeRating  ?? null;
+  const par   = ratings?.par          ?? 72;
+
+  // Current WHS state
+  const qtyCalc = whsQtyCalc(whs20.length);
+
+  const currentRawAvg = useMemo(() => {
+    const qty = whsQtyCalc(whs20.length);
+    if (qty === 0 || currentHI == null) return null;
+    const sorted = whs20.map(r => numSafe(r.sd)).filter((v): v is number => v != null)
+      .map(Number).sort((a, b) => a - b);
+    return meanArr(sorted.slice(0, qty)) ?? null;
+  }, [whs20, currentHI]);
+
+  const totalAdjustment = (currentHI != null && currentRawAvg != null)
+    ? currentHI - currentRawAvg : 0;
+
+  // The round that will exit on next play = whs20[19]
+  const nextToExit = whs20.length >= 20 ? whs20[19] : null;
+  const nextToExitSd = nextToExit ? numSafe(nextToExit.sd) : null;
+
+  // Current top-N ids
+  const currentTopIds = useMemo(() => {
+    const sorted = whs20
+      .map(r => ({ id: r.scoreId, sd: numSafe(r.sd) }))
+      .filter(x => x.sd != null)
+      .sort((a, b) => a.sd! - b.sd!);
+    return new Set(sorted.slice(0, qtyCalc).map(x => x.id));
+  }, [whs20, qtyCalc]);
+
+  const nextToExitIsTop = nextToExit ? currentTopIds.has(nextToExit.scoreId) : false;
+
+  // Build simulation table: range of gross scores
+  const simTable = useMemo(() => {
+    if (cr == null || slope == null || currentHI == null) return null;
+
+    // Range: par-10 to par+30, step 1
+    const rows = [];
+    for (let gross = par - 10; gross <= par + 35; gross++) {
+      const sd = Math.round(calcSD(gross, cr, slope) * 10) / 10;
+
+      // Build new pool (same logic as SDSimulator)
+      const keptSds = whs20.slice(0, 19)
+        .map(r => numSafe(r.sd))
+        .filter((v): v is number => v != null)
+        .map(Number);
+      const newPool = [sd, ...keptSds];
+      const activeWithSd = newPool.map((v, i) => ({ id: i === 0 ? '__new__' : whs20[i - 1]?.scoreId ?? `k${i}`, sd: v }))
+        .filter(x => !isNaN(x.sd))
+        .sort((a, b) => a.sd - b.sd);
+      const newQtyCalc = whsQtyCalc(activeWithSd.length);
+      const bestNew = activeWithSd.slice(0, newQtyCalc).map(x => x.sd);
+      const newAvg = meanArr(bestNew);
+      if (newAvg == null) continue;
+      const newHI = Math.round((newAvg + totalAdjustment) * 10) / 10;
+      const delta = newHI - currentHI;
+
+      // Does new SD enter top?
+      const newTopSorted = [...activeWithSd].slice(0, newQtyCalc);
+      const entersTop = newTopSorted.some(x => x.id === '__new__');
+
+      rows.push({ gross, sd, newHI, delta, entersTop, newAvg, toPar: gross - par });
+    }
+    return rows;
+  }, [cr, slope, par, currentHI, whs20, totalAdjustment]);
+
+  // Key thresholds
+  const thresholds = useMemo(() => {
+    if (!simTable || currentHI == null) return null;
+
+    // 1. Best gross that improves HCP
+    const improves = simTable.filter(r => r.delta < -0.05);
+    const maintains = simTable.filter(r => Math.abs(r.delta) <= 0.05);
+
+    // 2. Worst gross that enters top
+    const entersTop = simTable.filter(r => r.entersTop);
+    const maxEntersTopGross = entersTop.length ? entersTop[entersTop.length - 1].gross : null;
+
+    // 3. Current 8th-worst SD in top (the threshold to beat)
+    const currentTopSds = whs20
+      .map(r => numSafe(r.sd))
+      .filter((v): v is number => v != null)
+      .map(Number)
+      .sort((a, b) => a - b)
+      .slice(0, qtyCalc);
+    const currentWorstTop = currentTopSds.length ? currentTopSds[currentTopSds.length - 1] : null;
+
+    return { improves, maintains, maxEntersTopGross, currentWorstTop };
+  }, [simTable, currentHI, whs20, qtyCalc]);
+
+  if (currentHI == null) return null;
+  if (allRatedCourses.length === 0) return null;
+
+  const nrsInner = (
+    <div>
+      <div className="muted fs-11 mb-12">
+        Selecciona o campo e tee da próxima ronda — vê o impacto no HCP para cada resultado possível.
+      </div>
+
+      {/* Selectors */}
+      <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 14, alignItems: "center" }}>
+        <select className="select" value={selectedCourseKey}
+          onChange={e => setSelectedCourseKey(e.target.value)}
+          style={{ minWidth: 200, maxWidth: 380 }}>
+          {allRatedCourses.map(c => (
+            <option key={c.courseKey} value={c.courseKey}>
+              {playedNormSet.has(norm(c.master.name)) ? "★ " : ""}{c.master.name}
+            </option>
+          ))}
+        </select>
+
+        <select className="select" value={selectedTeeId}
+          onChange={e => setSelectedTeeId(e.target.value)}>
+          {availableTees.map(t => (
+            <option key={t.teeId} value={t.teeId}>
+              {t.teeName} — CR {t.ratings.holes18!.courseRating} / Slope {t.ratings.holes18!.slopeRating} / Par {t.ratings.holes18!.par ?? par}
+            </option>
+          ))}
+        </select>
+
+        {cr != null && slope != null && (
+          <span className="muted fs-11">
+            SD = (113 ÷ {slope}) × (Gross − {cr})
+          </span>
+        )}
+      </div>
+
+      {/* Narrative */}
+      {thresholds && simTable && cr != null && (
+        <div style={{ padding: "10px 14px", borderRadius: 8, background: "var(--bg-detail)",
+          fontSize: 12, lineHeight: 2, marginBottom: 14 }}>
+
+          {/* Next to exit warning */}
+          {nextToExit && (
+            <div style={{ marginBottom: 6, padding: "6px 10px", borderRadius: 6,
+              background: nextToExitIsTop ? "rgba(239,68,68,0.08)" : "rgba(0,0,0,0.04)",
+              borderLeft: `3px solid ${nextToExitIsTop ? "var(--color-danger)" : "var(--line)"}` }}>
+              {nextToExitIsTop
+                ? <>⚠️ <b>Atenção:</b> o resultado que sai da janela WHS ({nextToExit.date} · {nextToExit.course})
+                    {" "}tem SD <b>{Number(nextToExitSd).toFixed(1)}</b> e <b>é um dos teus top-{qtyCalc}</b>.
+                    {" "}Para não agravares o HCP precisas de SD ≤ <b>{Number(nextToExitSd).toFixed(1)}</b>
+                    {thresholds.currentWorstTop != null && nextToExitSd != null &&
+                      cr != null && slope != null && (() => {
+                        // What gross gives SD = nextToExitSd?
+                        const targetGross = Math.round(Number(nextToExitSd) * slope / 113 + cr);
+                        return <>, ou seja, grosso modo <b>≤ {targetGross} pancadas</b> em {selectedTee?.teeName ?? ""}.</>;
+                      })()
+                    }
+                  </>
+                : <>ℹ️ O resultado que sai ({nextToExit.date} · {nextToExit.course}) tem SD{" "}
+                    <b>{nextToExitSd != null ? Number(nextToExitSd).toFixed(1) : "sem SD"}</b>{" "}
+                    e não é top-{qtyCalc} — o teu HCP não fica em risco por essa saída.</>
+              }
+            </div>
+          )}
+
+          {/* Improvement threshold */}
+          {thresholds.improves.length > 0 && (() => {
+            const best = thresholds.improves[thresholds.improves.length - 1];
+            return (
+              <div>
+                🟢 Para <b>melhorar</b> o HCP: precisas de <b>≤ {best.gross} pancadas</b>{" "}
+                ({best.toPar >= 0 ? "+" : ""}{best.toPar} ao par) → SD <b>{best.sd.toFixed(1)}</b>{" "}
+                → HCP <b style={{ color: "var(--color-good)" }}>{best.newHI.toFixed(1)}</b>
+              </div>
+            );
+          })()}
+
+          {/* Top-8 threshold */}
+          {thresholds.maxEntersTopGross != null && (
+            <div>
+              ★ Para <b>entrar no top-{qtyCalc}</b>: precisas de <b>≤ {thresholds.maxEntersTopGross} pancadas</b>
+              {thresholds.currentWorstTop != null &&
+                <span className="muted"> (bate o SD actual mais fraco do top: {thresholds.currentWorstTop.toFixed(1)})</span>}
+            </div>
+          )}
+
+          {/* No impact zone */}
+          {(() => {
+            const noImpact = simTable.filter(r => !r.entersTop && Math.abs(r.delta) < 0.05);
+            if (noImpact.length === 0) return null;
+            const lo = noImpact[0].gross, hi = noImpact[noImpact.length - 1].gross;
+            return (
+              <div className="muted">
+                ➖ Entre {lo} e {hi} pancadas: SD não entra no top-{qtyCalc}, HCP mantém-se em {currentHI.toFixed(1)}
+              </div>
+            );
+          })()}
+        </div>
+      )}
+
+      {/* Table */}
+      {simTable && cr != null && (
+        <div className="table-wrap">
+          <table className="dtable" style={{ fontSize: 12 }}>
+            <thead>
+              <tr>
+                <th className="r">Pancadas</th>
+                <th className="r">Ao par</th>
+                <th className="r">SD</th>
+                <th className="r">HCP</th>
+                <th className="r">Variação</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              {simTable.map(row => {
+                const deltaColor = row.delta < -0.05 ? "var(--color-good)"
+                  : row.delta > 0.05 ? "var(--color-danger)" : "var(--text-3)";
+                return (
+                  <tr key={row.gross} style={{
+                    background: row.entersTop ? "var(--bg-success)" : undefined,
+                    opacity: row.delta > 0.5 ? 0.6 : 1,
+                  }}>
+                    <td className="r fw-700">{row.gross}</td>
+                    <td className="r muted">{row.toPar >= 0 ? "+" : ""}{row.toPar}</td>
+                    <td className="r">
+                      <span className={`p p-${sdClassByHcp(row.sd, currentHI)}`} style={{ fontSize: 11 }}>
+                        {row.sd.toFixed(1)}
+                      </span>
+                    </td>
+                    <td className="r fw-700" style={{ color: deltaColor }}>{row.newHI.toFixed(1)}</td>
+                    <td className="r fw-700" style={{ color: deltaColor }}>
+                      {row.delta > 0 ? "+" : ""}{row.delta.toFixed(1)}
+                    </td>
+                    <td style={{ fontSize: 11 }}>
+                      {row.entersTop
+                        ? <span className="c-par-ok fw-600">★ entra top-{qtyCalc}</span>
+                        : row.delta < -0.05
+                        ? <span style={{ color: "var(--color-good)" }}>↓ melhora</span>
+                        : row.delta > 0.05
+                        ? <span style={{ color: "var(--color-danger)" }}>↑ agrava</span>
+                        : <span className="muted">= sem impacto</span>
+                      }
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+  return bare ? nrsInner : (
+    <div className="card" style={{ marginBottom: 12 }}>
+      <div className="h-xs fs-18 mb-4">⛳ Próxima Ronda</div>
+      {nrsInner}
     </div>
   );
 }
@@ -2141,7 +2654,7 @@ function L20SortTh({ col, label, cur, dir, onSort, className }: {
   );
 }
 
-function Last20Table({ data, last20Table, best8, whsPosMap }: {
+function Last20Table({ data, last20Table, best8, whsPosMap, bare }: {
   data: PlayerPageData;
   last20Table: (RoundData & { course: string })[];
   best8: Map<string, number>;
@@ -2294,7 +2807,7 @@ function Last20Table({ data, last20Table, best8, whsPosMap }: {
 }
 
 /* ─── Cross Analysis ─── */
-function CrossAnalysis({ data }: { data: PlayerPageData }) {
+function CrossAnalysis({ data, bare }: { data: PlayerPageData; bare?: boolean }) {
   const keys = Object.keys(data.CROSS_DATA);
   const [activeEsc, setActiveEsc] = useState<string>("");
   const [sexFilter, setSexFilter] = useState("all");
@@ -2733,14 +3246,11 @@ function TournamentComparison({ rounds, holesData }: {
   const allSameTee = rounds.every(r => (r.tee || "") === tee);
   const teeLabel = allSameTee ? `Tee ${tee}` : "Tees variados";
 
-  // Detect multi-course tournament
-  const allSameCourse = rounds.every(r => norm(r.course) === norm(rounds[0].course));
-
-  // Per-round holes data (for own-par coloring when courses differ)
-  const perRoundHoles = rounds.map(r => holesData[String(r.scoreId)] || null);
-
   // Gather gross arrays per round
-  const roundGross: ((number | null)[] | null)[] = perRoundHoles.map(h => h?.g || null);
+  const roundGross: ((number | null)[] | null)[] = rounds.map(r => {
+    const h = holesData[String(r.scoreId)];
+    return h?.g || null;
+  });
 
   // Build header info
   const headerText = `Scorecard comparativo · HCP ${hcpLabel} · ${teeLabel}${totalDist && allSameTee ? ` · ${totalDist}m` : ""}`;
@@ -2748,7 +3258,7 @@ function TournamentComparison({ rounds, holesData }: {
   return (
     <div className="card mt-12">
       <div className="sc-bar-head">
-        <span>{headerText}{!allSameCourse && <span className="muted fs-10 ml-6">(campos diferentes — par/metros por ronda)</span>}</span>
+        <span>{headerText}</span>
         <span>Par {totalPar || ""}</span>
       </div>
       <div className="scroll-x">
@@ -2761,8 +3271,8 @@ function TournamentComparison({ rounds, holesData }: {
             />
           </thead>
           <tbody>
-            {/* Metros e Par: apenas se todos no mesmo campo */}
-            {allSameCourse && meters && meters.some(v => v != null && Number(v) > 0) && (
+            {/* Metros */}
+            {meters && meters.some(v => v != null && Number(v) > 0) && (
               <CompRow label="Metros" hc={hc} is9={is9} frontEnd={frontEnd}
                 cells={meters.slice(0, hc).map(v => v != null ? String(v) : "")}
                 outVal={String(sumArr(meters, 0, frontEnd))} outWeight={600}
@@ -2771,14 +3281,16 @@ function TournamentComparison({ rounds, holesData }: {
                 className="c-muted fs-10"
               />
             )}
-            {allSameCourse && si && si.some(v => v != null) && (
+            {/* S.I. */}
+            {si && si.some(v => v != null) && (
               <CompRow label="S.I." hc={hc} is9={is9} frontEnd={frontEnd}
                 cells={si.slice(0, hc).map(v => v != null ? String(v) : "")}
                 outVal="" inVal="" totalVal={is9 ? undefined : ""}
                 className="c-muted fs-10"
               />
             )}
-            {allSameCourse && par && par.some(v => v != null) && (
+            {/* Par */}
+            {par && par.some(v => v != null) && (
               <CompRow label="Par" hc={hc} is9={is9} frontEnd={frontEnd}
                 cells={par.slice(0, hc).map(v => v != null ? String(v) : "–")}
                 outVal={String(sumArr(par, 0, frontEnd))} outWeight={700}
@@ -2788,46 +3300,16 @@ function TournamentComparison({ rounds, holesData }: {
                 sepRow
               />
             )}
-            {/* Each round — quando campos diferem, metros/par aparecem uma vez por campo */}
+            {/* Each round */}
             {rounds.map((rd, ri) => {
               const gross = roundGross[ri];
               if (!gross) return null;
               const dateFmt = rd.date ? rd.date.substring(0, 5).replace("-", "/") : `V${ri + 1}`;
               const rdHx = getTeeHex(rd.tee || "");
               const rdFg = textOnColor(rdHx);
-              const ownPar = !allSameCourse ? (perRoundHoles[ri]?.p || null) : par;
-              const ownH = perRoundHoles[ri];
-              // Só mostrar cabeçalho de campo quando muda (evita duplicar Palheiro)
-              const prevCourse = ri > 0 ? norm(rounds[ri - 1].course) : null;
-              const showCourseHeader = !allSameCourse && ownH && norm(rd.course) !== prevCourse;
               return (
-                <React.Fragment key={rd.scoreId}>
-                  {showCourseHeader && (
-                    <>
-                      {ownH!.m && ownH!.m.some(v => v != null && Number(v) > 0) && (
-                        <CompRow label={`m (${rd.course.split(" ")[0]})`} hc={hc} is9={is9} frontEnd={frontEnd}
-                          cells={ownH!.m.slice(0, hc).map(v => v != null ? String(v) : "")}
-                          outVal={String(sumArr(ownH!.m, 0, frontEnd))} outWeight={600}
-                          inVal={String(is9 ? sumArr(ownH!.m, 0, hc) : sumArr(ownH!.m, backStart, hc))} inWeight={600}
-                          totalVal={is9 ? undefined : String(sumArr(ownH!.m, 0, hc))}
-                          className="c-muted fs-10"
-                        />
-                      )}
-                      {ownH!.p && ownH!.p.some(v => v != null) && (
-                        <CompRow label="Par" hc={hc} is9={is9} frontEnd={frontEnd}
-                          cells={ownH!.p.slice(0, hc).map(v => v != null ? String(v) : "–")}
-                          outVal={String(sumArr(ownH!.p, 0, frontEnd))} outWeight={700}
-                          inVal={String(is9 ? sumArr(ownH!.p, 0, hc) : sumArr(ownH!.p, backStart, hc))} inWeight={700}
-                          totalVal={is9 ? undefined : String(sumArr(ownH!.p, 0, hc))}
-                          className="fw-600 c-muted fs-11 bt-heavy"
-                          sepRow
-                        />
-                      )}
-                    </>
-                  )}
-                  <CompScoreRow label={dateFmt} labelBg={rdHx} labelFg={rdFg}
-                    gross={gross} par={ownPar} hc={hc} is9={is9} frontEnd={frontEnd} backStart={backStart} />
-                </React.Fragment>
+                <CompScoreRow key={rd.scoreId} label={dateFmt} labelBg={rdHx} labelFg={rdFg}
+                  gross={gross} par={par} hc={hc} is9={is9} frontEnd={frontEnd} backStart={backStart} />
               );
             })}
             {/* Delta row */}
@@ -3108,14 +3590,8 @@ function ByTournamentView({ data, search }: { data: PlayerPageData; search: stri
         const sameCourse = group.courses.some(gc => norm(gc) === norm(r.course));
         const bothAway = /away|internacional|international|tour|viagem|estrangeiro|abroad/i.test(r.eventName) &&
           /away|internacional|international|tour|viagem|estrangeiro|abroad/i.test(group.name);
-        // Impede fusão entre séries distintas (ex: Drive Tour vs Drive Challenge)
-        const isTour = /\btour\b/i.test(r.eventName);
-        const isChallenge = /\bchallenge\b/i.test(r.eventName);
-        const gIsTour = /\btour\b/i.test(group.name);
-        const gIsChallenge = /\bchallenge\b/i.test(group.name);
-        const crossSeries = (isTour && gIsChallenge) || (isChallenge && gIsTour);
-        if (!crossSeries && ((similarity >= 0.3 && minGap <= 2) ||
-          (sameCourse && minGap <= 2 && bothAway && group.rounds.length < 4))) {
+        if ((similarity >= 0.3 && minGap <= 2) ||
+          (sameCourse && minGap <= 2 && bothAway && group.rounds.length < 4)) {
           group.rounds.push(r);
           if (!group.courses.includes(r.course)) group.courses.push(r.course);
           found = true;
