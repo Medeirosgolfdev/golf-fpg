@@ -25,6 +25,12 @@ interface IntlTorneio { id: string; name: string; short: string; date: string; r
 interface IntlJogador { n: string; co: string; isM?: boolean; r: Record<string, { p: number; t: number; tp: number; rd: number[] }>; up: string[]; }
 interface IntlData { torneios: IntlTorneio[]; proximos: { id: string; name: string }[]; jogadores: IntlJogador[]; }
 
+interface GGEntry { pos: number | null; name: string; fed: string | null; club: string; toPar: number | null; gross: number | null; status: string; }
+interface GreatgolfData {
+  name: string; course: string; dates: string[];
+  results: { d1: GGEntry[]; sub14: GGEntry[]; sub12: GGEntry[] };
+}
+
 // ── Matching robusto USKids ↔ BJGT ──────────────────────────────
 function normNome(s: string): string {
   return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
@@ -847,9 +853,10 @@ function TabCampo({ data }: { data: FieldData }) {
 // ─────────────────────────────────────────────
 // TAB RESULTADOS
 // ─────────────────────────────────────────────
-function TabResultados({ data, selectedT }: {
+function TabResultados({ data, selectedT, greatgolfData }: {
   data: ResultsData;
   selectedT: number | null;
+  greatgolfData: GreatgolfData | null;
 }) {
   const t = data.resultados.find(r => r.t === selectedT) ?? null;
 
@@ -979,6 +986,103 @@ function TabResultados({ data, selectedT }: {
           </div>
         );
       })}
+
+      {/* ── Greatgolf Junior Open ── */}
+      {greatgolfData && <SecaoGreatgolf data={greatgolfData} />}
+    </div>
+  );
+}
+
+function SecaoGreatgolf({ data }: { data: GreatgolfData }) {
+  const [open, setOpen] = useState(false);
+  const [cat, setCat] = useState<"sub12"|"sub14"|"d1">("sub12");
+
+  const cats: { key: "sub12"|"sub14"|"d1"; label: string }[] = [
+    { key:"sub12",  label:"Sub-12" },
+    { key:"sub14",  label:"Sub-14" },
+    { key:"d1",     label:"WAGR / Open" },
+  ];
+
+  const rows = data.results[cat] ?? [];
+
+  const renderToPar = (v: number | null) => {
+    if (v == null) return <span style={{ color:"var(--text-3)" }}>—</span>;
+    if (v === 0)   return <span style={{ color:"var(--color-good)", fontWeight:700 }}>E</span>;
+    if (v < 0)     return <span style={{ color:"var(--color-good)", fontWeight:700 }}>{v}</span>;
+    return <span style={{ color:"var(--text-2)" }}>+{v}</span>;
+  };
+
+  return (
+    <div style={{ marginTop:24, border:"1px solid var(--border)", borderRadius:10, overflow:"hidden" }}>
+      {/* Header clicável */}
+      <div onClick={() => setOpen(v => !v)}
+        style={{ padding:"10px 16px", background:"var(--bg-header)", cursor:"pointer",
+          borderBottom: open ? "1px solid var(--border)" : "none",
+          display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+        <div>
+          <div style={{ fontWeight:700, fontSize:14, color:"var(--text)" }}>
+            🏆 {data.name}
+          </div>
+          <div style={{ fontSize:11, color:"var(--text-3)", marginTop:2 }}>
+            📅 {data.dates.map(d => fmtDate(d)).join(" · ")} · {data.course}
+          </div>
+        </div>
+        <span style={{ color:"var(--text-3)", fontSize:13 }}>{open ? "▲" : "▼"}</span>
+      </div>
+
+      {open && (
+        <div style={{ padding:"12px 16px" }}>
+          {/* Selector de categoria */}
+          <div style={{ display:"flex", gap:6, marginBottom:14 }}>
+            {cats.map(c => (
+              <button key={c.key} onClick={() => setCat(c.key)} style={{
+                background: cat===c.key ? "var(--bg-active)" : "var(--bg-card)",
+                border:`1px solid ${cat===c.key ? "var(--border-success)" : "var(--border)"}`,
+                color:"var(--text-2)", borderRadius:7, padding:"4px 12px",
+                fontSize:12, cursor:"pointer", fontWeight: cat===c.key ? 700 : 400,
+              }}>{c.label}</button>
+            ))}
+          </div>
+
+          <table className="tourn-scorecard" style={{ width:"100%" }}>
+            <thead>
+              <tr>
+                <th className="tourn-pos-col">#</th>
+                <th className="tourn-lb-name-col" style={{ textAlign:"left" }}>Jogador</th>
+                <th style={{ textAlign:"left", fontSize:11, color:"var(--text-3)" }}>Clube</th>
+                <th style={{ textAlign:"center", width:50 }}>To Par</th>
+                <th style={{ textAlign:"center", width:50 }}>Gross</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((r, i) => {
+                const manuelRow = isManuel(r.name);
+                return (
+                  <tr key={i} style={{
+                    background: manuelRow ? "var(--accent-light)" : i%2===0 ? "var(--bg-card)" : "var(--bg-detail)",
+                    border: manuelRow ? "1px solid var(--accent)" : undefined,
+                  }}>
+                    <td className="tourn-pos-col" style={{ textAlign:"center" }}>
+                      {r.pos != null
+                        ? <span className="tourn-pos">{r.pos}</span>
+                        : <span style={{ color:"var(--text-3)", fontSize:10 }}>{r.status}</span>}
+                    </td>
+                    <td style={{ fontWeight: manuelRow ? 800 : 500, fontSize:13, padding:"7px 10px",
+                      color: manuelRow ? "var(--accent)" : "var(--text)" }}>
+                      {manuelRow && "★ "}{r.name}
+                    </td>
+                    <td style={{ fontSize:11, color:"var(--text-3)", padding:"7px 8px" }}>{r.club}</td>
+                    <td style={{ textAlign:"center", fontSize:13 }}>{renderToPar(r.toPar)}</td>
+                    <td style={{ textAlign:"center", fontSize:13, color:"var(--text-2)", fontWeight: manuelRow ? 700 : 400 }}>
+                      {r.gross ?? "—"}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }
@@ -1795,6 +1899,7 @@ export default function USKidsFieldPage() {
   const [fieldData,   setFieldData]   = useState<FieldData | null>(null);
   const [resultsData, setResultsData] = useState<ResultsData | null>(null);
   const [intlData,    setIntlData]    = useState<IntlData | null>(null);
+  const [greatgolfData, setGreatgolfData] = useState<GreatgolfData | null>(null);
   const [tab,         setTab]         = useState<Tab>("campo");
   const [erro,        setErro]        = useState<string | null>(null);
   const [selectedT,   setSelectedT]   = useState<number | null>(null);
@@ -1815,6 +1920,10 @@ export default function USKidsFieldPage() {
     fetch("/data/rivals-intl.json")
       .then(r => r.ok ? r.json() : null)
       .then(setIntlData)
+      .catch(() => {});
+    fetch("/data/torneio-greatgolf.json")
+      .then(r => r.ok ? r.json() : null)
+      .then(setGreatgolfData)
       .catch(() => {});
   }, []);
 
@@ -2014,7 +2123,7 @@ export default function USKidsFieldPage() {
         )}
 
         {tab === "resultados" && resultsData && (
-          <TabResultados
+          <TabResultados greatgolfData={greatgolfData}
             data={resultsData}
             selectedT={selectedT}
           />
