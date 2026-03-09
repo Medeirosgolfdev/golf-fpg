@@ -1601,7 +1601,7 @@ function TabInscritos({ data, fieldData, selectedT: _selectedT }: {
   const filtD  = (arr: typeof vaiConhecer)    => !sq ? arr : arr.filter(e => e.nome.toLowerCase().includes(sq));
   const filtG  = (arr: typeof assiduosTodos)  => !sq ? arr : arr.filter(e => e.nome.toLowerCase().includes(sq));
 
-  const totalGeral = conhecidosMap.size + [...desconhecidosMap.values()].filter(e => e.torneios.some(t => t.mesmoEscalao) || e.torneios.length >= 2).length;
+  const totalGeral = conhecidosMap.size + [...desconhecidosMap.values()].filter(e => e.torneios.some(t => t.mesmoEscalao) || e.torneios.length >= 2).length + assiduosTodos.length;
 
   if (!totalGeral) return (
     <div style={{ color:"var(--text-3)", padding:"32px 0", textAlign:"center", fontSize:13 }}>
