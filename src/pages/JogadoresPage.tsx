@@ -3895,7 +3895,7 @@ export default function JogadoresPage() {
   };
 
   // Populate course key map for course links
-  useMemo(() => {
+  useEffect(() => {
     if (courses?.length) {
       _courseKeyMap = buildCourseKeyMap(courses);
     }

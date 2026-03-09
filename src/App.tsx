@@ -19,6 +19,7 @@ const JogadoresPage = lazy(() => import("./pages/JogadoresPage"));
 const SimuladorPage = lazy(() => import("./pages/SimuladorPage"));
 const CalendarioPage = lazy(() => import("./pages/CalendarioPage"));
 const BJGTPage = lazy(() => import("./pages/BJGTPage"));
+const BJGTAnalysisPage = lazy(() => import("./pages/BJGTAnalysisPage"));
 const RivaisIntlPage = lazy(() => import("./pages/RivaisIntlPage"));
 const CompararPage = lazy(() => import("./pages/CompararPage"));
 const DrivePage = lazy(() => import("./pages/DrivePage"));
@@ -147,6 +148,7 @@ export default function App() {
                 <Route path="/calendario" element={<CalendarioPage />} />
                 <Route path="/drive" element={<DrivePage />} />
                 <Route path="/bjgt/:fed?" element={<BJGTPage />} />
+                <Route path="/bjgt-analysis/:fed?" element={<BJGTAnalysisPage />} />
                 <Route path="/rivais" element={<RivaisIntlPage />} />
                 <Route path="/uskids" element={<USKidsFieldPage />} />
                 <Route path="/diversos" element={<TorneiosAnalisePage />} />
