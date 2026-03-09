@@ -108,6 +108,8 @@ interface PlayerInfo { escalao?: string; club?: { short?: string }; name?: strin
 type PlayersDB = Record<string, PlayerInfo>;
 type EscLookup = Map<string, string>; // fedCode → escalão normalizado
 
+const MANUEL_FED = "52884";
+
 function buildEscLookup(playersDB: PlayersDB): EscLookup {
   const m = new Map<string, string>();
   for (const [fed, info] of Object.entries(playersDB)) {
@@ -1276,6 +1278,7 @@ function Content() {
   const [selected, setSelected] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [sidebarMode, setSidebarMode] = useState<"month" | "circuit">("month");
+  const [filterManuel, setFilterManuel] = useState(false);
   const [escLookup, setEscLookup] = useState<EscLookup>(new Map());
   const [playersDB, setPlayersDB] = useState<PlayersDB>({});
   const [tcodePills, setTcodePills] = useState<Record<string, TournPill>>({});
@@ -1376,17 +1379,25 @@ function Content() {
   const { groups: monthGroups, groupKeys: monthKeys } = useMemo(() => {
     const g: Record<string, Tournament[]> = {};
     for (const t of displayList) {
-      if (/PJA/i.test(t.name)) continue; // PJA só aparecem no modo circuito
+      if (/PJA/i.test(t.name)) continue;
+      const tcodes = t.tcode?.split("+") || [];
+      if (tcodes.some(tc => TOURN_PILLS[tc] === "PJA")) continue;
+      if (filterManuel && !t.players.some(p => p.fedCode === MANUEL_FED)) continue;
       const key = t.date ? t.date.substring(0, 7) : "?";
       if (!g[key]) g[key] = [];
       g[key].push(t);
     }
     return { groups: g, groupKeys: Object.keys(g).sort().reverse() };
-  }, [displayList]);
+  }, [displayList, filterManuel]);
 
   // Lista apenas PJA (para o modo circuito)
   const pjaList = useMemo(
-    () => displayList.filter(t => /PJA/i.test(t.name)),
+    () => displayList.filter(t => {
+      if (/PJA/i.test(t.name)) return true;
+      // torneios com tcode definido como PJA no mapa estático
+      const tcodes = t.tcode?.split("+") || [];
+      return tcodes.some(tc => TOURN_PILLS[tc] === "PJA");
+    }),
     [displayList]
   );
 
@@ -1407,8 +1418,6 @@ function Content() {
     const months = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
     return `${months[parseInt(mo) - 1] || mo} ${yr}`;
   }
-
-  const MANUEL_FED = "52884";
 
   function renderSidebarItem(t: Tournament) {
     const idx = displayList.indexOf(t);
@@ -1513,6 +1522,34 @@ function Content() {
             {sidebarOpen ? "◀" : "▶"}
           </button>
           <span className="toolbar-title">🏌️ Torneios</span>
+          {/* Toggle modo */}
+          {!loading && (
+            <div style={{ display: "flex", gap: 3, marginLeft: 12 }}>
+              {(["month", "circuit"] as const).map(mode => (
+                <button key={mode} onClick={() => { setSidebarMode(mode); if (mode === "circuit") setFilterManuel(false); }} style={{
+                  fontSize: 11, padding: "3px 10px", borderRadius: 5,
+                  border: "1px solid var(--border)",
+                  background: sidebarMode === mode ? "var(--accent)" : "var(--bg-hover)",
+                  color: sidebarMode === mode ? "#fff" : "var(--text-muted)",
+                  cursor: "pointer", fontWeight: sidebarMode === mode ? 700 : 400,
+                }}>
+                  {mode === "month" ? "Por data" : "PJA Tour"}
+                </button>
+              ))}
+            </div>
+          )}
+          {/* Filtro Manuel — só no modo Por data */}
+          {!loading && sidebarMode === "month" && (
+            <button onClick={() => setFilterManuel(v => !v)} style={{
+              marginLeft: 6, fontSize: 11, padding: "3px 10px", borderRadius: 5,
+              border: `1px solid ${filterManuel ? "var(--color-loading)" : "var(--border)"}`,
+              background: filterManuel ? "var(--color-loading)" : "var(--bg-hover)",
+              color: filterManuel ? "#1a1a1a" : "var(--text-muted)",
+              cursor: "pointer", fontWeight: filterManuel ? 700 : 400,
+            }}>
+              ★ Manuel
+            </button>
+          )}
         </div>
         <div className="toolbar-right">
           {loading
@@ -1538,23 +1575,6 @@ function Content() {
       <div className="master-detail">
         {/* Sidebar */}
         <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`}>
-          {/* Toggle modo de agrupamento */}
-          {!loading && displayList.length > 0 && (
-            <div style={{ display: "flex", gap: 4, padding: "8px 10px 4px", borderBottom: "1px solid var(--border)" }}>
-              {(["month", "circuit"] as const).map(mode => (
-                <button key={mode} onClick={() => setSidebarMode(mode)} style={{
-                  flex: 1, fontSize: 10, padding: "3px 0", borderRadius: 5,
-                  border: "1px solid var(--border)",
-                  background: sidebarMode === mode ? "var(--accent,#2563eb)" : "var(--bg-hover)",
-                  color: sidebarMode === mode ? "#fff" : "var(--text-muted)",
-                  cursor: "pointer", fontWeight: sidebarMode === mode ? 700 : 400,
-                }}>
-                  {mode === "month" ? "📅 Mês" : "🏆 PJA Tour"}
-                </button>
-              ))}
-            </div>
-          )}
-
           {loading && displayList.length === 0 && (
             <div className="muted fs-11" style={{ padding: "12px 16px", fontStyle: "italic" }}>
               A carregar...
