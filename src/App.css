@@ -1,188 +1,15 @@
-/* ═══════════════════════════════════════════
+/* ═══════════════════════════════════════════
   Golf Portugal – Design System
-  ═══════════════════════════════════════════ */
+  ═══════════════════════════════════════════
+  Tokens de cor centralizados em tokens.css
+  ═══════════════════════════════════════════ */
 
+/* Tipografia */
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
 
-:root {
- /* Base */
- --bg: #f7f8f6;
- --bg-card: #ffffff;
- --bg-hover: #f0f2ec;
- --bg-hover-subtle: #dde5d4;
- --bg-active: #e6ead9;
- --bg-topbar: #1a2e1a;
- --bg-detail: #fafbf9;
- --bg-muted: #f0f2ec;
- --bg-header: #eef2e8;     /* table headers, bar headers */
- --bg-info: #eff6ff;      /* info banners */
- --bg-warn: #fffbeb;      /* warning banners */
- --bg-danger: #fef2f2;     /* error/danger areas */
- --bg-success: #f0fdf4;    /* success areas */
- --bg-success-subtle: #d1fae5;  /* Manuel highlight row */
- --bg-manuel-sticky: #c3f5dc;   /* Manuel highlight sticky cols (slightly darker) */
+/* Tokens de design (cores, raios, sombras, espaçamento) */
+@import './tokens.css';
 
- /* Text */
- --text: #1c2617;
- --text-2: #4a5940;
- --text-3: #7a8a6e;
- --text-inv: #e8eddf;
- --text-muted: #9aab8e;
- --text-dark: #3a4a2e;
- --grey-900: #111;
-
- --grey-500: #666;
- --grey-400: #888;
-
- --grey-200: #ddd;
- --text-label: #6b7a5e;    /* placeholders, disabled, meta */
-
- /* Accent */
- --accent: #2d6a30;
- --accent-light: #e0efdb;
- --accent-hover: #1e4d20;
-
- /* Semantic colours */
- --color-good: #16a34a;
- --color-warn: #d97706;
- --color-danger: #dc2626;
- --color-info: #1e40af;
- --color-warn-dark: #92400e;  /* warning text dark */
- --color-good-dark: #166534;  /* success text dark */
- --color-danger-dark: #991b1b; /* danger text dark */
- --color-info-alt: #0369a1;
- --color-navy: #1e3a5f;
- --color-loading: #e67e22;      /* orange — loading indicators, SD poor */
- --color-good-alpha: rgba(22, 163, 74, 0.12);
- --color-danger-alpha: rgba(220, 38, 38, 0.12);
- --color-warn-alpha: rgba(217, 119, 6, 0.12);
-
- --overlay-white-08: rgba(255,255,255,0.08);
- --overlay-white-14: rgba(255,255,255,0.14);
- --overlay-white-15: rgba(255,255,255,0.15);
- --overlay-white-30: rgba(255,255,255,0.3);
-
- --overlay-black-15: rgba(0,0,0,0.15);
- --overlay-black-25: rgba(0,0,0,0.25);
- --link-underline: rgba(46,125,50,.3);
- --link-underline-light: rgba(255,255,255,.4);
- --link-underline-dark: rgba(0,0,0,.3);
- --bg-code: rgba(59, 130, 246, 0.1);
- --bg-note-warn: rgba(146,64,14,0.05);
- --bg-note-warn-strong: rgba(146,64,14,0.08);
- --accent-alpha-10: rgba(45,106,48,0.1);
- --accent-alpha-20: rgba(45,106,48,0.2);
-
- --nav-text: rgba(232, 237, 223, 0.6);
- --accent-light-alpha: rgba(224, 239, 219, 0.3);
- --bg-success-strong: #dcfce7; /* success badges/pills */
- --bg-danger-strong: #fee2e2;  /* danger badges/pills */
- --bg-warn-strong: #fef3c7;
- --bg-warn-light: #fef9c3;   /* warn badges/pills */
- --bg-danger-subtle: #fecaca;
- --border-success: #bbf7d0;
- --border-warn: #fde68a;
- --color-amber: #f59e0b;
- --color-green-light: #4ade80;
- --sd-badge-good: #ffc107;
- --border-info: #bfdbfe;
- --border-danger: #fca5a5;
- --bg-info-strong: #dbeafe;
- --bg-current: #e0f7fa;
- --bg-female: #f0f4ff;
- --bg-female-hover: #e8eeff;
- --bg-purple: #f0edf5;
-
- --badge-birth-bg: #f0ece4;
- --badge-birth-text: #6b5c3e;
- --badge-club-bg: #e0efdb;
- --badge-club-text: #2d6a30;
- --badge-male: #6A93A8;
- --badge-female: #B87D8B;
- --badge-fed: #2d6a30;
- --pill-regional-bg: #263E78;   /* azul FPG regional */
- --pill-regional-fg: #FFD700;
- --pill-nacional-fg: #FFD700;
-
- --text-purple: #5c4a8a;
- --color-teal: #00838f;
- --border-current: #00bcd4;
- --text-current: #006064;
- --sc-par-bg: #eef5e6;
- --sc-par-border: #d4e6c4;
- --sc-hcp-bg: #f0ece4;
- --sc-hcp-border: #ddd6c8;  /* danger trend/spark */
- --accent-text: #2e5a10;
- --link-color: #2e7d32;
- --link-hover: #1b5e20;     /* clickable links */
- --color-hcp: #6b5c3e;          /* hcp row label brown */
-
- /* Score badge ramp (under → over par) */
- --score-hio: #10b981;    /* hole-in-one / albatross — emerald */
- --score-eagle: #f59e0b;   /* eagle — amber */
- --score-birdie: #dc2626;   /* birdie — red */
- --score-par-seg: #22c55e;   /* par segment bar — green */
- --score-bogey: #bfdbfe;   /* bogey bg — blue-200 */
- --score-bogey-fg: #1e3a8a;  /* bogey text — blue-800 */
- --score-bogey-border: #93c5fd; /* bogey border — blue-300 */
- --score-double: #60a5fa;   /* double — blue-400 */
- --score-triple: #2563eb;   /* triple — blue-600 */
- --score-quad: #1d4ed8;    /* quad — blue-700 */
- --score-quint: #172554;   /* quint — blue-950 */
- --score-worse: #0a0f1f;   /* 6+ over — near-black */
-
- /* Chart / data-viz palette (8 series) */
- --chart-1: #16a34a;     /* green — primary */
- --chart-2: #2563eb;     /* blue */
- --chart-3: #dc2626;     /* red */
- --chart-4: #d97706;     /* amber */
- --chart-5: #7c3aed;     /* purple */
- --chart-6: #0891b2;     /* cyan */
- --chart-7: #be185d;     /* rose */
- --chart-8: #65a30d;     /* lime */
- --chart-9: #c2410c;     /* rust */
- --chart-10: #6366f1;    /* indigo */
-
- /* Performance tier colours (gross vs par histogram) */
- --tier-exceptional: #0d9488; /* teal */
- --tier-good: #22c55e;     /* green */
- --tier-fair: #3b82f6;     /* blue */
- --tier-weak: #f97316;     /* orange */
- --tier-bad: #ef4444;      /* red */
-
- /* Highlight borders */
- --border-current-good: #16a34a;  /* current-player green */
- --border-best: #86efac;      /* best-round green-light */
-
- /* Borders */
- --border: #bcc5ad;
- --border-light: #d5dac9;
-
- /* Multi-round leaderboard column group backgrounds */
- --bg-rnd: #e8f2e4;
- --bg-rnd-stats: #f5f9f3;
-
-
- /* Sizes */
- --topbar-h: 56px;
- --sidebar-w: 280px;
- --radius-xs: 2px;
- --radius-sm: 4px;
- --radius: 6px;
- --radius-lg: 10px;
- --radius-xl: 12px;
- --radius-pill: 20px;
-
- /* Shadows */
- --shadow-sm: 0 1px 2px rgba(30, 50, 20, 0.06);
- --shadow: 0 2px 8px rgba(30, 50, 20, 0.08);
- --shadow-lg: 0 4px 16px rgba(30, 50, 20, 0.10);
-
- /* Spacing tokens */
- --space-section: 12px; /* gap between major sections (cards, blocks) */
- --space-inner: 14px;  /* padding inside cards/sections */
-
-}
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 input, button, select, textarea, table { font-family: inherit; }
@@ -618,7 +445,7 @@ html, body, #root {
  font-size: 12px;
  padding: 0 8px;
 }
-.detail-toolbar-sub { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 4px 12px; margin: 0; border-bottom: 1px solid var(--border-light); background: var(--bg-card); }
+
 
 /* Detail panel (shared) */
 
@@ -766,32 +593,39 @@ html, body, #root {
 
 /* HCP Badge — 2-line block next to name */
 
-/* Sidebar sex badge */
-
+/* ─── Sex Badge — dois tamanhos ───────────────────────────
+ * .sex-badge      → círculo pequeno (16px) para tabelas/listas
+ * .sex-badge-pill → pill rectangular para perfil/detalhe
+ * Variantes de cor: .sex-M  .sex-F
+ * Compatibilidade: .jog-sex-inline = alias de .sex-badge
+ * ─────────────────────────────────────────────────────── */
+.sex-badge,
 .jog-sex-inline {
- display: inline-block;
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
  font-size: 10px;
  font-weight: 700;
  width: 16px;
  height: 16px;
- line-height: 16px;
- text-align: center;
  border-radius: 50%;
- margin-left: 6px;
+ vertical-align: middle;
+ flex-shrink: 0;
+}
+.sex-badge-pill {
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
+ padding: 2px 8px;
+ font-size: 11px;
+ font-weight: 600;
+ border-radius: var(--radius);
+ border: 1.5px solid transparent;
+ white-space: nowrap;
  vertical-align: middle;
 }
-.jog-sex-M {
- background: var(--color-danger);
- color: #fff;
-}
-.jog-sex-M {
- background: var(--badge-male);
- color: #fff;
-}
-.jog-sex-F {
- background: var(--badge-female);
- color: #fff;
-}
+.sex-M, .jog-sex-M { background: var(--badge-male);   color: #fff; }
+.sex-F, .jog-sex-F { background: var(--badge-female); color: #fff; }
 
 /* SD pill colors (generated dynamically via sdClassByHcp) */
 .p-sd-excellent { background: var(--color-good); color: #fff; }
@@ -1048,7 +882,7 @@ tr.cross-current { background: var(--bg-success); }
 .sc-score.quint { background: var(--score-quint); color: #fff; border-radius: 0; }
 .sc-score.worse { background: var(--score-worse); color: #fff; border-radius: 0; }
 .sc-score.sc-empty { color: var(--border); font-weight: 400; background: none; }
-.sc-score.sc-nr { color: var(--border); font-weight: 400; font-size: 9px; background: none; }
+.sc-score.sc-nr { color: var(--border); font-weight: 400; font-size: 10px; background: none; }
 
 @media (max-width: 900px) {
  .sc-header { flex-direction: column; align-items: flex-start; gap: 8px; }
@@ -1316,16 +1150,6 @@ tr.cross-current { background: var(--bg-success); }
  transition: background 0.12s, color 0.12s;
 }
 
-.sim-strip-tab {
-  padding: 3px 10px;
-  font-size: 11px;
-  font-weight: 600;
-  border: 1.5px solid var(--border);
-  background: var(--bg-card);
-  cursor: pointer;
-  color: var(--text-2);
-  transition: all 0.15s;
-}
 .sim-strip-tab:first-child {
  border-radius: var(--radius) 0 0 var(--radius);
 }
@@ -1498,7 +1322,8 @@ tr.cross-current { background: var(--bg-success); }
 .toolbar-badge-link { padding: 3px 10px; border-radius: var(--radius); font-size: 11px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
 .toolbar-badge-link-accent { background: var(--accent); color: #fff; }
 .toolbar-badge-link-dark { background: var(--bg-topbar); color: #e8eddf; }
-.toolbar-badge-arrow { font-size: 9px; opacity: 0.7; }
+.toolbar-badge-arrow { font-size: 10px; opacity: 0.7; }
+.sort-arrow { font-size: 10px; margin-left: 2px; opacity: 0.65; }
 .tourn-ext-group { display: inline-flex; align-items: center; gap: 4px; }
 .tourn-ext-group-label { font-size: 10px; font-weight: 700; color: var(--text-label); margin-right: 2px; }
 .tourn-ext-link { display: inline-flex; align-items: center; font-size: 10px; font-weight: 600; color: var(--text-3); background: var(--bg); border: 1px solid var(--border-light); border-radius: var(--radius-lg); padding: 1px 8px; height: 22px; text-decoration: none; white-space: nowrap; transition: all 0.15s; }
@@ -1619,7 +1444,7 @@ tr.cross-current { background: var(--bg-success); }
 /* ─── Tournament Scorecard Cells ─── */
 .tourn-scorecard .tourn-hole-cell { padding: 3px 2px; text-align: center; vertical-align: middle; min-width: 33px; }
 
-.tourn-no-data { color: var(--border); font-weight: 400; text-align: center; }
+
 
 /* To-par */
 .tp-under { color: var(--color-good); }
@@ -1643,7 +1468,7 @@ tr.cross-current { background: var(--bg-success); }
 .kpi-lbl,
 .tourn-kpi-lbl { font-size: 10px; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: .04em; }
 .kpi-val,
-.tourn-kpi-val { font-size: 22px; font-weight: 900; color: var(--text); }
+.tourn-kpi-val { font-size: 22px; font-weight: 900; color: var(--text); line-height: 1.2; }
 .kpi-sub,
 .tourn-kpi-sub { font-size: 11px; color: var(--text-muted); }
 
@@ -1828,21 +1653,18 @@ tr.cross-current { background: var(--bg-success); }
 .ta-c { text-align: center; }
 .mono { font-family: 'JetBrains Mono', monospace; }
 .nowrap { white-space: nowrap; }
-.ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.text-ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 /* ─── Text colors ─── */
 .c-text        { color: var(--text); }
 .c-text-2      { color: var(--text-2); }
 .c-text-3      { color: var(--text-3); }
 .c-muted       { color: var(--text-muted); }
-.c-accent      { color: var(--accent); }
 .c-good        { color: var(--color-good); }
 .c-good-dark   { color: var(--color-good-dark); }
 .c-warn        { color: var(--color-warn); }
 .c-warn-dark   { color: var(--color-warn-dark); }
 .c-danger      { color: var(--color-danger); }
-.c-danger-dark { color: var(--color-danger-dark); }
-.c-info        { color: var(--color-info); }
 .c-purple      { color: var(--chart-5); }
 /* ─── Display / Flex ─── */
 .d-flex { display: flex; }
@@ -1932,10 +1754,10 @@ tr.cross-current { background: var(--bg-success); }
 .flex-center-gap6 { display: flex; align-items: center; gap: 6px; }
 .flex-center-gap8 { display: flex; align-items: center; gap: 8px; }
 .flex-center-gap10 { display: flex; align-items: center; gap: 10px; }
-.flex-between    { display: flex; align-items: center; justify-content: space-between; }
 .flex-between-mb6  { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
 .flex-wrap-gap8  { display: flex; flex-wrap: wrap; gap: 8px; }
 .flex-col-gap1 { display: flex; flex-direction: column; gap: 1px; }
+.flex-col-gap2 { display: flex; flex-direction: column; gap: 2px; }
 .flex-col-gap4 { display: flex; flex-direction: column; gap: 4px; }
 .flex-col-gap6 { display: flex; flex-direction: column; gap: 6px; }
 .flex-col-gap8 { display: flex; flex-direction: column; gap: 8px; }
@@ -1952,6 +1774,7 @@ tr.cross-current { background: var(--bg-success); }
 .mt-20 { margin-top: 20px; }
 .ml-4 { margin-left: 4px; }
 .ml-6 { margin-left: 6px; }
+.ml-auto { margin-left: auto; }
 /* ─── Opacity ─── */
 .op-4 { opacity: 0.4; }
 .op-6 { opacity: 0.6; }
@@ -1965,9 +1788,18 @@ tr.cross-current { background: var(--bg-success); }
 .p-24 { padding: 24px; }
 .p-40 { padding: 40px; }
 .p-0-4px { padding: 0 4px; }
+.p-4-8   { padding: 4px 8px; }
 .p-8-12  { padding: 8px 12px; }
+.p-8-10    { padding: 8px 10px; }
+.p-0-12-12 { padding: 0 12px 12px; }
+.ml-8      { margin-left: 8px; }
+.lh-13     { line-height: 1.3; }
 /* ─── Cursor ─── */
 .pointer { cursor: pointer; }
+/* ─── Table helpers ─── */
+.bc-collapse { border-collapse: collapse; }
+/* ─── Uppercase label (cabeçalhos compactos, sec headers) ─── */
+.label-caps { font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
 
 /* ─── Table / layout combos (DrivePage) ─── */
 .tbl-compact      { font-size: 12px; border-collapse: collapse; width: auto; }
@@ -2230,6 +2062,91 @@ tr.cross-current { background: var(--bg-success); }
 .cal-overlay { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); }
 .cal-no-select { user-select: none; }
 .cal-day-num { font-size: 15px; width: 22px; text-align: center; }
+
+/* ─── Calendar toggle group button ─── */
+.cal-toggle-btn {
+ display: flex; align-items: center; gap: 8px; width: 100%;
+ padding: 6px 4px; border: none; cursor: pointer; font-family: inherit;
+ background: transparent; border-bottom: 1px solid var(--border-light);
+ transition: background 0.15s;
+}
+.cal-toggle-btn:hover { background: var(--bg-hover); }
+.cal-toggle-check {
+ width: 16px; height: 16px; border-radius: var(--radius-sm);
+ border: 2px solid var(--accent); background: transparent;
+ display: flex; align-items: center; justify-content: center;
+ flex-shrink: 0; font-size: 10px; color: #fff; line-height: 1;
+ transition: all 0.15s;
+}
+.cal-toggle-check.on { background: var(--accent); }
+.cal-toggle-label {
+ font-size: 11px; font-weight: 700; color: var(--text);
+ flex: 1; text-align: left; text-transform: uppercase; letter-spacing: 0.04em;
+}
+
+/* ─── Calendar search result row ─── */
+.cal-search-result {
+ display: flex; align-items: center; gap: 8px; width: 100%;
+ padding: 7px 10px; border: none; cursor: pointer; font-family: inherit;
+ background: transparent; border-bottom: 1px solid var(--border-light);
+ transition: background 0.1s; text-align: left;
+}
+.cal-search-result:hover { background: var(--bg-hover); }
+.cal-search-dot {
+ width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0;
+}
+.cal-search-date {
+ font-size: 10px; font-family: 'JetBrains Mono', monospace;
+ color: var(--text-3); font-weight: 600; min-width: 32px; flex-shrink: 0;
+}
+.cal-search-title {
+ font-size: 11px; color: var(--text); flex: 1;
+ overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* ─── Calendar highlight animations ─── */
+@keyframes calPopIn {
+ from { transform: translateY(6px) scale(0.98); opacity: 0; }
+ to   { transform: none; opacity: 1; }
+}
+@keyframes hlShine {
+ 0%   { background-position: -200% center; }
+ 100% { background-position:  200% center; }
+}
+@keyframes hlGlowGreen {
+ 0%, 100% { box-shadow: 0 0  4px 1px rgba(57,255,20,0.4); }
+ 50%       { box-shadow: 0 0 14px 5px rgba(57,255,20,0.5); }
+}
+@keyframes hlGlowTeal {
+ 0%, 100% { box-shadow: 0 0  4px 1px rgba(16,185,129,0.4); }
+ 50%       { box-shadow: 0 0 14px 5px rgba(16,185,129,0.5); }
+}
+@keyframes hlGlowRed {
+ 0%, 100% { box-shadow: 0 0  4px 1px rgba(220,38,38,0.4); }
+ 50%       { box-shadow: 0 0 14px 5px rgba(220,38,38,0.5); }
+}
+.hl-cell {
+ border-radius: 4px; position: relative; overflow: hidden;
+}
+.hl-cell::after {
+ content: ''; position: absolute; inset: 0;
+ background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
+ background-size: 300% 100%;
+ animation: hlShine 3s linear infinite;
+ pointer-events: none; border-radius: 4px;
+}
+.hl-bar { position: relative; overflow: hidden; }
+.hl-bar::after {
+ content: ''; position: absolute; inset: 0;
+ background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.25) 50%, transparent 70%);
+ background-size: 300% 100%;
+ animation: hlShine 3s linear infinite;
+ pointer-events: none; border-radius: inherit;
+}
+.hl-green { animation: hlGlowGreen 2s ease-in-out infinite; }
+.hl-teal  { animation: hlGlowTeal  2s ease-in-out infinite; }
+.hl-red   { animation: hlGlowRed   2s ease-in-out infinite; }
+
 
 /* Comparar */
 .cmp-search-input { width: 100%; font-size: 14px; padding: 10px 14px; }
@@ -2603,7 +2520,6 @@ tr.cross-current { background: var(--bg-success); }
 .ta-left         { text-align: left; }
 .ta-right        { text-align: right; }
 .overflow-hidden { overflow: hidden; }
-.cursor-pointer  { cursor: pointer; }
 .uppercase { text-transform: uppercase; }
 .round { border-radius: 50%; }
 .c-border { color: var(--border); }
@@ -2636,7 +2552,6 @@ tr.cross-current { background: var(--bg-success); }
  color: var(--text-2);
 }
 .tourn-tab.active,
-.tourn-tab-sm
 .tourn-tab-sm.active {
  background: var(--text-dark);
  color: #fff;
@@ -2657,14 +2572,83 @@ tr.cross-current { background: var(--bg-success); }
 
 /* ─── Restored: fs combos e utilitários ─── */
 .fw-700-text2-mb8 { font-weight: 700; color: var(--text-2); margin-bottom: 8px; }
-.fw-700-text2 { font-weight: 700; color: var(--text-2); }
 .fw-700-dc { font-weight: 700; color: var(--color-danger); }
 .fs-11-lh16 { font-size: 11px; line-height: 1.6; }
 .stats { display: flex; gap: 8px; }
 .underline { text-decoration: underline; }
-.kpi-value { font-size: 22px; font-weight: 900; color: var(--text); line-height: 1.2; }
 .ai-center { align-items: center; }
 .progress-track { flex: 1; height: 14px; background: var(--bg); border-radius: var(--radius-sm); position: relative; }
 .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
 .c-white { color: #fff; }
+
+/* ═══════════════════════════════════════════
+   GLOBAL INLINE BADGES
+   Substituem estilos inline avulsos em todas as páginas.
+   Piso mínimo: 10px. Sem símbolos (♀ ♂).
+   ═══════════════════════════════════════════ */
+
+/* ─── Status de jogo ─── */
+.badge-wd  { font-size: 10px; color: var(--color-danger); font-style: italic; }
+.badge-inc { font-size: 10px; font-weight: 700; color: var(--color-danger); margin-left: 4px; }
+
+/* ─── Torneio / competição ─── */
+.badge-gf      { font-size: 10px; font-weight: 800; color: var(--color-amber); margin-left: 5px; }
+.badge-warn-sm { font-size: 10px; color: var(--color-warn); }
+.badge-next    { display: inline-block; font-size: 10px; font-weight: 700; color: #fff; padding: 0 4px; border-radius: var(--radius-sm); margin-left: 2px; }
+
+/* ─── Série de torneios (cor dinâmica via style) ─── */
+.badge-serie {
+ display: inline-flex; align-items: center;
+ font-size: 10px; font-weight: 600;
+ padding: 1px 6px;
+ border-radius: var(--radius-sm);
+ white-space: nowrap;
+ vertical-align: middle;
+}
+
+/* ─── Evolução de categoria (BJGT) ─── */
+.badge-evo-up  { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: var(--radius-sm); background: #dbeafe; color: #1e40af; white-space: nowrap; }
+.badge-evo-eq  { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: var(--radius-sm); background: #fef3c7; color: #92400e; white-space: nowrap; }
+.badge-evo-new { display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 5px; border-radius: var(--radius-sm); background: #f3f4f6; color: #9ca3af; white-space: nowrap; }
+
+/* ─── Meta sub-header de tabela (datas, rótulos compactos) ─── */
+.th-sub { font-size: 10px; font-weight: 400; color: var(--text-muted); display: block; line-height: 1.2; }
+
+/* ─── Indicador de ronda recente (ponto verde) ─── */
+.new-round-dot {
+ display: inline-block; width: 7px; height: 7px;
+ border-radius: 50%; background: var(--color-good);
+ margin-left: 4px; vertical-align: middle; flex-shrink: 0;
+}
+
+/* ─── Badge torneio agrupado (multi-ronda) ─── */
+.badge-grouped {
+ font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700;
+ background: var(--chart-5); color: #fff;
+ border-radius: var(--radius-sm); padding: 0 4px;
+}
+
+/* ─── Spacing em falta ─── */
+.ml-2  { margin-left: 2px; }
+.ml-3  { margin-left: 3px; }
+.ml-5  { margin-left: 5px; }
+.mt-2  { margin-top: 2px; }
+.mt-16 { margin-top: 16px; }
+.mb-2  { margin-bottom: 2px; }
+.mb-20 { margin-bottom: 20px; }
+.gap-3 { gap: 3px; }
+.gap-5 { gap: 5px; }
+.gap-6 { gap: 6px; }
+
+/* ─── Column widths para tabelas ─── */
+.w-26 { width: 26px; }
+.w-28 { width: 28px; }
+.w-30 { width: 30px; }
+.w-32 { width: 32px; }
+.w-34 { width: 34px; }
+.w-36 { width: 36px; }
+.w-38 { width: 38px; }
+.w-40 { width: 40px; }
+.w-46 { width: 46px; }
+.w-52 { width: 52px; }
 

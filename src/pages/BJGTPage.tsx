@@ -8,6 +8,7 @@ import { fmtToPar, fmtSign } from "../utils/format";
 import { isCalUnlocked } from "../utils/authConstants";
 import PasswordGate from "../ui/PasswordGate";
 import LoadingState from "../ui/LoadingState";
+import EmptyState from "../ui/EmptyState";
 
 /* ── Types ── */
 interface RoundData { day: number; scores: number[] | null; f9: number | null; b9: number | null; gross: number }
@@ -69,9 +70,9 @@ function AccLB({ data, evo, evoYear, roundDates }: { data: TData; evo?: Map<stri
           <th className="hole-header" style={{ textAlign: "left", paddingLeft: 6, paddingRight: 8 }}>Jogador</th>
           {Array.from({ length: nR }, (_, i) => (<React.Fragment key={i}>
             <th className="hole-header" style={{ width: roundDates?.[i] ? 52 : 30, textAlign: "center", padding: "0 1px" }}>
-              R{i + 1}{roundDates?.[i] ? <><br /><span style={{ fontSize: 9, fontWeight: 400, color: "var(--text-muted)" }}>{roundDates[i]}</span></> : ""}
+              R{i + 1}{roundDates?.[i] ? <><br /><span className="th-sub">{roundDates[i]}</span></> : ""}
             </th>
-            <th className="hole-header" style={{ width: 34, textAlign: "center", padding: "0 1px", color: "var(--text-muted)", fontWeight: 500, fontSize: 9 }}>±par</th>
+            <th className="hole-header c-muted fs-10 fw-500" style={{ width: 34, textAlign: "center", padding: "0 1px" }}>±par</th>
           </React.Fragment>))}
           <th className="hole-header col-total" style={{ width: 34, padding: "0 3px" }}>Tot</th>
           <th className="hole-header" style={{ width: 38, textAlign: "center", padding: "0 3px" }}>±Par</th>
@@ -115,13 +116,13 @@ function AccLB({ data, evo, evoYear, roundDates }: { data: TData; evo?: Map<stri
                   </td>
                   <td style={{ textAlign: "center", padding: "0 4px" }}>
                     {ev.pill === "UP"
-                      ? <span style={{ background: "#dbeafe", color: "#1e40af", fontSize: 9, padding: "1px 5px", borderRadius: 6, fontWeight: 700, whiteSpace: "nowrap" }}>⬆ {ev.from}→{ev.to}</span>
-                      : <span style={{ background: "#fef3c7", color: "#92400e", fontSize: 9, padding: "1px 5px", borderRadius: 6, fontWeight: 700, whiteSpace: "nowrap" }}>= {ev.from}</span>}
+                      ? <span className="badge-evo-up">⬆ {ev.from}→{ev.to}</span>
+                      : <span className="badge-evo-eq">= {ev.from}</span>}
                   </td>
                 </> : <>
                   <td style={{ textAlign: "center", fontSize: 11, padding: "0 3px", borderLeft: "2px solid var(--border)" }} className="c-muted">–</td>
                   <td className="c-muted" style={{ textAlign: "center", fontSize: 11, padding: "0 3px" }}>–</td>
-                  <td style={{ textAlign: "center", padding: "0 4px" }}><span style={{ background: "#f3f4f6", color: "#9ca3af", fontSize: 9, padding: "1px 5px", borderRadius: 6, fontWeight: 600, whiteSpace: "nowrap" }}>{evoYear === "2026" ? "não voltou" : "novo"}</span></td>
+                  <td style={{ textAlign: "center", padding: "0 4px" }}><span className="badge-evo-new">{evoYear === "2026" ? "não voltou" : "novo"}</span></td>
                 </>)}
               </tr>
             );
@@ -141,7 +142,7 @@ function SCTable({ data, ri }: { data: TData; ri: number }) {
   const sorted = [...ws].sort((a, b) => a.rounds[ri].gross - b.rounds[ri].gross);
   let pos = 1;
   sorted.forEach((p, i) => { if (i > 0 && p.rounds[ri].gross > sorted[i - 1].rounds[ri].gross) pos = i + 1; (p as any)._dp = pos; });
-  if (!sorted.length) return <div className="empty-state-sm">Scorecards buraco-a-buraco não disponíveis para esta ronda.</div>;
+if (!sorted.length) return <EmptyState size="sm" message="Scorecards buraco-a-buraco não disponíveis para esta ronda." />;
   return (
     <div className="bjgt-chart-scroll">
       <table className="sc-table-modern" data-sc-table="1">
@@ -409,7 +410,6 @@ function Content() {
 
   return (
     <div className="tourn-layout">
-      <style>{`.bjgt-chart-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; } .bjgt-chart-scroll > div, .bjgt-chart-scroll > table { min-width: 320px; }`}</style>
 
       {/* Toolbar */}
       <div className="toolbar">

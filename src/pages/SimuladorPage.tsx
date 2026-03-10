@@ -273,7 +273,7 @@ function MultiTeeSDTable({
         <thead>
           {/* Row 1: tee color headers — sticky top:0 */}
           <tr>
-            <th rowSpan={2} style={{
+            <th rowSpan={2} className="uppercase" style={{
               ...stickyBase,
               top: 0,
               verticalAlign: "bottom",
@@ -283,7 +283,6 @@ function MultiTeeSDTable({
               padding: "6px 8px",
               fontSize: 11,
               fontWeight: 600,
-              textTransform: "uppercase",
               letterSpacing: "0.04em",
               color: "var(--text-3)",
               textAlign: "center",
@@ -323,7 +322,6 @@ function MultiTeeSDTable({
                 padding: "4px 8px",
                 fontSize: 10,
                 fontWeight: 600,
-                textTransform: "uppercase",
                 letterSpacing: "0.04em",
                 color: "var(--text-3)",
                 textAlign: "right",
@@ -331,8 +329,8 @@ function MultiTeeSDTable({
               };
               return (
                 <React.Fragment key={i}>
-                  <th style={{ ...base, borderLeft: i > 0 ? "2px solid var(--border)" : undefined }}>Score</th>
-                  <th style={base}>{is9h ? (exp9 !== null ? "SD 18h" : "SD 9h") : "SD"}</th>
+                  <th className="uppercase" style={{ ...base, borderLeft: i > 0 ? "2px solid var(--border)" : undefined }}>Score</th>
+                  <th className="uppercase" style={base}>{is9h ? (exp9 !== null ? "SD 18h" : "SD 9h") : "SD"}</th>
                   {hasNet && <th style={base}>Net</th>}
                 </React.Fragment>
               );

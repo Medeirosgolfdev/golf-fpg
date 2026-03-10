@@ -100,7 +100,7 @@ export function ScorecardLeaderboard({
 
   function SortArrow({ col }: { col: string }) {
     if (activeSortKey !== col) return null;
-    return <span style={{ marginLeft: 2, fontSize: 7 }}>{activeSortDir === "asc" ? "▲" : "▼"}</span>;
+    return <span className="sort-arrow">{activeSortDir === "asc" ? "▲" : "▼"}</span>;
   }
 
   return (

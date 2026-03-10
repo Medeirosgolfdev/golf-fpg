@@ -1,0 +1,253 @@
+/* ═══════════════════════════════════════════════════════════════
+   Golf Portugal — Design Tokens
+   Ficheiro único para todas as cores e variáveis de design.
+
+   Para alterar a paleta da app, editar APENAS este ficheiro.
+
+   ESTRUTURA:
+     1. Base / Backgrounds
+     2. Text / Greyscale
+     3. Accent (verde FPG)
+     4. Semantic (good · warn · danger · info)
+     5. Overlays / Alphas
+     6. Badges & Pills
+     7. Score ramp (under/over par)
+     8. Charts / Data-viz
+     9. Performance tiers
+    10. Escalão (sub-10 … sub-18)
+    11. Medals (ouro · prata · bronze)
+    12. Borders
+    13. Aliases de retrocompatibilidade
+    14. Tamanhos, raios, sombras, espaçamento
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+
+  /* ── 1. Base / Backgrounds ─────────────────────────────────── */
+  --bg:               #f7f8f6;
+  --bg-card:          #ffffff;
+  --bg-detail:        #fafbf9;
+  --bg-muted:         #f0f2ec;
+  --bg-hover:         #f0f2ec;
+  --bg-hover-subtle:  #dde5d4;
+  --bg-active:        #e6ead9;
+  --bg-topbar:        #1a2e1a;
+  --bg-header:        #eef2e8;   /* cabeçalhos de tabela, barra de secção */
+
+  --bg-info:          #eff6ff;   /* banners informativos */
+  --bg-info-strong:   #dbeafe;
+  --bg-warn:          #fffbeb;   /* banners de aviso */
+  --bg-warn-subtle:   #fff8e6;
+  --bg-warn-strong:   #fef3c7;
+  --bg-warn-light:    #fef9c3;   /* pills de aviso */
+  --bg-danger:        #fef2f2;   /* áreas de erro */
+  --bg-danger-strong: #fee2e2;   /* pills de erro */
+  --bg-danger-subtle: #fecaca;
+  --bg-success:       #f0fdf4;   /* áreas de sucesso */
+  --bg-success-subtle:#d1fae5;   /* highlight row Manuel */
+  --bg-success-strong:#dcfce7;   /* pills de sucesso */
+  --bg-manuel-sticky: #c3f5dc;   /* sticky cols Manuel (ligeiramente mais escuro) */
+
+  --bg-current:       #e0f7fa;   /* jogador atual no leaderboard */
+  --bg-female:        #f0f4ff;   /* linha/card feminino */
+  --bg-female-hover:  #e8eeff;
+  --bg-purple:        #f0edf5;
+  --bg-pink:          #fdf2f8;  /* USKids — categoria especial / regional */
+  --bg-warn-orange:   #fff3e0;  /* USKids — aviso laranja suave */
+  --bg-code:          rgba(59, 130, 246, 0.10);
+  --bg-note-warn:     rgba(146, 64, 14, 0.05);
+  --bg-note-warn-strong: rgba(146, 64, 14, 0.08);
+
+  --bg-rnd:           #e8f2e4;   /* colunas de ronda no leaderboard multi-ronda */
+  --bg-rnd-stats:     #f5f9f3;
+
+
+  /* ── 2. Text / Greyscale ───────────────────────────────────── */
+  --text:       #1c2617;
+  --text-2:     #4a5940;
+  --text-3:     #7a8a6e;
+  --text-inv:   #e8eddf;         /* texto sobre fundo escuro */
+  --text-muted: #9aab8e;
+  --text-dark:  #3a4a2e;
+  --text-label: #6b7a5e;         /* placeholders, disabled, meta */
+
+  --grey-900:   #111;
+  --grey-700:   #374151;         /* texto cinza médio-escuro */
+  --grey-500:   #666;
+  --grey-400:   #888;
+  --grey-300:   #999;
+  --grey-200:   #ddd;
+
+
+  /* ── 3. Accent (verde FPG) ─────────────────────────────────── */
+  --accent:            #2d6a30;
+  --accent-light:      #e0efdb;
+  --accent-hover:      #1e4d20;
+  --accent-text:       #2e5a10;
+  --accent-alpha-10:   rgba(45, 106, 48, 0.10);
+  --accent-alpha-20:   rgba(45, 106, 48, 0.20);
+  --accent-light-alpha:rgba(224, 239, 219, 0.30);
+
+  --link-color:        #2e7d32;
+  --link-hover:        #1b5e20;
+  --link-underline:    rgba(46, 125, 50, 0.30);
+  --link-underline-light: rgba(255, 255, 255, 0.40);
+  --link-underline-dark:  rgba(0, 0, 0, 0.30);
+
+
+  /* ── 4. Semantic ───────────────────────────────────────────── */
+  --color-good:         #16a34a;
+  --color-good-dark:    #166534;
+  --color-warn:         #d97706;
+  --color-warn-dark:    #92400e;
+  --color-danger:       #dc2626;
+  --color-danger-dark:  #991b1b;
+  --color-info:         #1e40af;
+  --color-info-alt:     #0369a1;
+  --color-amber:        #f59e0b;
+  --color-green-light:  #4ade80;
+  --color-navy:         #1e3a5f;
+  --color-loading:      #e67e22;  /* laranja — loading, SD fraco */
+  --color-teal:         #00838f;
+  --color-purple:       #9c27b0;  /* USKids — categoria especial */
+  --color-orange-deep:  #e65100;  /* USKids — não-euro */
+  --color-hcp:          #6b5c3e;  /* label da linha de hcp */
+  --text-purple:        #5c4a8a;
+  --text-current:       #006064;
+
+  --color-good-alpha:   rgba(22, 163, 74, 0.12);
+  --color-danger-alpha: rgba(220, 38, 38, 0.12);
+  --color-warn-alpha:   rgba(217, 119, 6, 0.12);
+  --rgb-success:        22, 163, 74;   /* = #16a34a — para uso em rgba() */
+
+  --sd-badge-good:      #ffc107;   /* badge de SD bom */
+  --sc-par-bg:          #eef5e6;
+  --sc-par-border:      #d4e6c4;
+  --sc-hcp-bg:          #f0ece4;
+  --sc-hcp-border:      #ddd6c8;
+
+
+  /* ── 5. Overlays / Alphas ──────────────────────────────────── */
+  --overlay-white-08:  rgba(255, 255, 255, 0.08);
+  --overlay-white-14:  rgba(255, 255, 255, 0.14);
+  --overlay-white-15:  rgba(255, 255, 255, 0.15);
+  --overlay-white-30:  rgba(255, 255, 255, 0.30);
+  --overlay-black-15:  rgba(0, 0, 0, 0.15);
+  --overlay-black-25:  rgba(0, 0, 0, 0.25);
+  --nav-text:          rgba(232, 237, 223, 0.60);
+
+
+  /* ── 6. Badges & Pills ─────────────────────────────────────── */
+  --badge-birth-bg:    #f0ece4;
+  --badge-birth-text:  #6b5c3e;
+  --badge-club-bg:     #e0efdb;
+  --badge-club-text:   #2d6a30;
+  --badge-male:        #6A93A8;
+  --badge-female:      #B87D8B;
+  --badge-fed:         #2d6a30;
+
+  --pill-regional-bg:  #263E78;   /* azul FPG regional */
+  --pill-regional-fg:  #FFD700;
+  --pill-nacional-fg:  #FFD700;
+
+
+  /* ── 7. Score ramp (abaixo → acima do par) ─────────────────── */
+  --score-hio:          #10b981;   /* hole-in-one / albatros — esmeralda */
+  --score-eagle:        #f59e0b;   /* eagle — âmbar */
+  --score-birdie:       #dc2626;   /* birdie — vermelho */
+  --score-par-seg:      #22c55e;   /* barra de par — verde */
+  --score-bogey:        #bfdbfe;   /* bogey bg — azul-200 */
+  --score-bogey-fg:     #1e3a8a;   /* bogey texto — azul-800 */
+  --score-bogey-border: #93c5fd;   /* bogey borda — azul-300 */
+  --score-double:       #60a5fa;   /* duplo bogey — azul-400 */
+  --score-triple:       #2563eb;   /* triplo — azul-600 */
+  --score-quad:         #1d4ed8;   /* quádruplo — azul-700 */
+  --score-quint:        #172554;   /* quíntuplo — azul-950 */
+  --score-worse:        #0a0f1f;   /* 6+ acima — quase preto */
+
+
+  /* ── 8. Charts / Data-viz (10 séries) ─────────────────────── */
+  --chart-1:   #16a34a;   /* verde — primário */
+  --chart-2:   #2563eb;   /* azul */
+  --chart-3:   #dc2626;   /* vermelho */
+  --chart-4:   #d97706;   /* âmbar */
+  --chart-5:   #7c3aed;   /* roxo */
+  --chart-6:   #0891b2;   /* ciano */
+  --chart-7:   #be185d;   /* rosa */
+  --chart-8:   #65a30d;   /* lima */
+  --chart-9:   #c2410c;   /* ferrugem */
+  --chart-10:  #6366f1;   /* índigo */
+
+
+  /* ── 9. Performance tiers (histograma gross vs par) ────────── */
+  --tier-exceptional:  #0d9488;   /* teal */
+  --tier-good:         #22c55e;   /* verde */
+  --tier-fair:         #3b82f6;   /* azul */
+  --tier-weak:         #f97316;   /* laranja */
+  --tier-bad:          #ef4444;   /* vermelho */
+
+
+  /* ── 10. Escalão (sub-10 … sub-18) ────────────────────────── */
+  /* Fundo e texto para EscPill e tabelas de resultados.
+     Ramp: verde escuro (jovens) → verde claro (mais velhos) */
+  --esc-sub10-bg:   #2a5a18;
+  --esc-sub10-fg:   #ffffff;
+  --esc-sub12-bg:   #3a7a28;
+  --esc-sub12-fg:   #ffffff;
+  --esc-sub14-bg:   #5a9a40;
+  --esc-sub14-fg:   #ffffff;
+  --esc-sub16-bg:   #7aba60;
+  --esc-sub16-fg:   #1a3a10;
+  --esc-sub18-bg:   #a0d480;
+  --esc-sub18-fg:   #1a3a10;
+
+
+  /* ── 11. Medals ────────────────────────────────────────────── */
+  --medal-gold:   #f59e0b;   /* 1.º lugar */
+  --medal-silver: #94a3b8;   /* 2.º lugar */
+  --medal-bronze: #b45309;   /* 3.º lugar */
+
+
+  /* ── 12. Borders ───────────────────────────────────────────── */
+  --border:               #bcc5ad;
+  --border-light:         #d5dac9;
+  --border-subtle:        var(--border-light);
+  --border-success:       #bbf7d0;
+  --border-warn:          #fde68a;
+  --border-info:          #bfdbfe;
+  --border-danger:        #fca5a5;
+  --border-current:       #00bcd4;   /* jogador atual */
+  --border-current-good:  #16a34a;   /* jogador atual em destaque verde */
+  --border-best:          #86efac;   /* melhor ronda */
+
+
+  /* ── 13. Aliases de retrocompatibilidade ───────────────────── */
+  /* Mantidos para não quebrar código existente.
+     Usar sempre os tokens canónicos em código novo. */
+  --color-bad:     var(--color-danger);
+  --color-success: var(--color-good);
+  --danger:        var(--color-danger);
+  --good:          var(--color-good);
+  --good-dark:     var(--color-good-dark);
+  --line:          var(--border);
+
+
+  /* ── 14. Tamanhos · Raios · Sombras · Espaçamento ──────────── */
+  --topbar-h:    56px;
+  --sidebar-w:   280px;
+
+  --radius-xs:   2px;
+  --radius-sm:   4px;
+  --radius:      6px;
+  --radius-lg:   10px;
+  --radius-xl:   12px;
+  --radius-pill: 20px;
+
+  --shadow-sm: 0 1px 2px rgba(30, 50, 20, 0.06);
+  --shadow:    0 2px 8px rgba(30, 50, 20, 0.08);
+  --shadow-lg: 0 4px 16px rgba(30, 50, 20, 0.10);
+
+  --space-section: 12px;   /* gap entre secções principais */
+  --space-inner:   14px;   /* padding interior de cards */
+
+}

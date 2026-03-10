@@ -1,3 +1,6 @@
+import React from "react";
+import SexBadge from "./SexBadge";
+
 type Props = {
   label: string;
   colorHex?: string;
@@ -12,7 +15,7 @@ export default function TeeBadge({ label, colorHex = "#9CA3AF", suffix }: Props)
       <span className="tee-label">{label}</span>
       {suffix ? (
         isSex
-          ? <span className={`jog-sex-inline jog-sex-${suffix}`}>{suffix}</span>
+          ? <SexBadge sex={suffix as "M" | "F"} size="sm" />
           : <span className="tee-suffix">{suffix}</span>
       ) : null}
     </span>

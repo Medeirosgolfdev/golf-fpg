@@ -14,6 +14,7 @@ import {
 } from "../data/playerDataLoader";
 import { usePlayerData } from "../data/usePlayerData";
 import PillBadge from "../ui/PillBadge";
+import SexBadge from "../ui/SexBadge";
 import TeePill from "../ui/TeePill";
 import TeeDate from "../ui/TeeDate";
 import ScoreCircle from "../ui/ScoreCircle";
@@ -211,7 +212,7 @@ function ByDateView({ data, search }: {
                 {showYearBar && (
                   <tr>
                     <td colSpan={10} style={{ padding: 0, background: "var(--bg-header)", borderBottom: "2px solid var(--border)" }}>
-                      <div style={{ padding: "6px 12px", fontSize: 12, fontWeight: 700, color: "var(--text-2)", letterSpacing: "0.04em", textTransform: "uppercase" }}>
+                      <div className="uppercase" style={{ padding: "6px 12px", fontSize: 12, fontWeight: 700, color: "var(--text-2)", letterSpacing: "0.04em" }}>
                         {year}
                       </div>
                     </td>
@@ -1328,7 +1329,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
         <div className="card">
           <div className="sc-bar-head"><span>Detalhe Buraco a Buraco</span></div>
           <div className="scroll-x">
- <table className="w-full fs-11" style={{ borderCollapse: "collapse" }}>
+ <table className="w-full fs-11 bc-collapse">
               <tbody>
                 {/* Buraco row */}
                 <tr className="bg-detail">
@@ -1634,8 +1635,7 @@ function KPICard({ title, val, sub, delta, deltaLabel, tip, accent }: {
   return (
     <div style={{ padding: "12px 16px", borderRadius: 10, background: "var(--bg-detail)",
       display: "flex", flexDirection: "column", gap: 3, minWidth: 120 }}>
-      <div style={{ fontSize: 10, fontWeight: 700, color: "var(--text-3)", letterSpacing: "0.06em",
-        textTransform: "uppercase" }}>
+      <div className="uppercase" style={{ fontSize: 10, fontWeight: 700, color: "var(--text-3)", letterSpacing: "0.06em" }}>
         {title}{tip && <span className="kpi-info" title={tip} style={{ marginLeft: 4 }}>ℹ</span>}
       </div>
       <div style={{ fontSize: 26, fontWeight: 800, color: accent ?? "var(--text-1)", lineHeight: 1.1 }}>
@@ -1746,21 +1746,21 @@ function TrajectoryCard({ rounds, period, setPeriod }: {
         <div className="grid-3-tc">
           <div className="bg-detail br-lg jog-cross-pad">
             <div className="muted fs-10">ÚLTIMAS 5</div>
-            <div className="kpi-value">{stats.last5}</div>
+            <div className="kpi-val">{stats.last5}</div>
  <div className="fw-600 fs-11" style={{ color: sc3m(stats.diff5, 1, 1) }}>
               {fmtSign(stats.diff5, 1)}
             </div>
           </div>
           <div className="bg-detail br-lg jog-cross-pad">
             <div className="muted fs-10">ÚLTIMAS 10</div>
-            <div className="kpi-value">{stats.last10}</div>
+            <div className="kpi-val">{stats.last10}</div>
  <div className="fw-600 fs-11" style={{ color: sc3m(stats.diff10, 1, 1) }}>
               {fmtSign(stats.diff10, 1)}
             </div>
           </div>
           <div className="bg-detail br-lg jog-cross-pad">
             <div className="muted fs-10">CARREIRA</div>
-            <div className="kpi-value">{stats.overall}</div>
+            <div className="kpi-val">{stats.overall}</div>
             <div className="muted fs-10">{stats.n} rondas</div>
           </div>
         </div>
@@ -3211,7 +3211,7 @@ function TournamentComparison({ rounds, holesData }: {
         <span>Par {totalPar || ""}</span>
       </div>
       <div className="scroll-x">
- <table className="w-full fs-12" style={{ borderCollapse: "collapse" }}>
+ <table className="w-full fs-12 bc-collapse">
           <thead>
             <CompRow label="Buraco" hc={hc} is9={is9} frontEnd={frontEnd}
               cells={Array.from({ length: hc }, (_, i) => String(i + 1))}
@@ -3803,7 +3803,7 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
         <div className="jog-pills">
           <span className="p p-fed">#{selected.fed}</span>
           {latestHcp != null && <span className="p p-muted">HCP {hcpDisplay(latestHcp)}</span>}
-          <span className={`p ${selected.sex === "F" ? "p-female" : "p-male"}`}>{selected.sex === "M" ? "Masculino" : selected.sex === "F" ? "Feminino" : selected.sex}</span>
+          <SexBadge sex={selected.sex} size="md" />
           {selected.dob && <span className="p p-birth">{selected.dob.slice(0, 4)}</span>}
           {selected.escalao && <span className={`p p-${escCls(meta?.escalao || selected.escalao)}`}>{meta?.escalao || selected.escalao}</span>}
           {(meta?.club || clubLong(selected)) && <span className="p p-club">{meta?.club || clubLong(selected)}</span>}
@@ -4058,7 +4058,7 @@ export default function JogadoresPage() {
                 className={`p p-esc-filter p-novo${newFilter ? " active" : ""}`}
                 onClick={() => setNewFilter(v => !v)}
                 title={`${newCount} jogadores com rondas nos últimos ${NEW_DAYS} dias`}
-                style={{ background: newFilter ? "#16a34a" : undefined, color: newFilter ? "#fff" : undefined, borderColor: newFilter ? "#16a34a" : "#86efac", gap: 3 }}
+                style={{ background: newFilter ? "var(--color-good)" : undefined, color: newFilter ? "#fff" : undefined, borderColor: newFilter ? "var(--color-good)" : "var(--border-best)", gap: 3 }}
               >
                 🟢 Novos<span className="p-filter-count">{newCount}</span>
               </button>
@@ -4096,8 +4096,8 @@ export default function JogadoresPage() {
                   )}
                   <span className="flex-1">
                     {p.name}
-                    <span className={`jog-sex-inline jog-sex-${p.sex}`}>{p.sex}</span>
-                    {(() => { const d = daysSince(statsDb[p.fed]); return d != null && d <= NEW_DAYS ? <span style={{ display: "inline-block", width: 7, height: 7, borderRadius: "50%", background: "#22c55e", marginLeft: 4, verticalAlign: "middle", flexShrink: 0 }} title={`Ronda há ${d}d`} /> : null; })()}
+                    <SexBadge sex={p.sex} size="sm" />
+                    {(() => { const d = daysSince(statsDb[p.fed]); return d != null && d <= NEW_DAYS ? <span className="new-round-dot" title={`Ronda há ${d}d`} /> : null; })()}
                   </span>
                   {rankingMode && displayHcp != null && (
                     <span className={`sidebar-sd ${displayHcp <= 5 ? "sidebar-sd-good" : displayHcp <= 15 ? "sidebar-sd-ok" : "sidebar-sd-high"}`}>

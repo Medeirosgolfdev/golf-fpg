@@ -124,27 +124,17 @@ export default function NavBar() {
         )}
         {calUnlocked && (
           <button className={`nav-btn ${tab === "drive" ? "active" : ""}`} onClick={() => go("/drive")}>
-            🏁 DRIVE
+            🇵🇹 DRIVE
+          </button>
+        )}
+        {calUnlocked && (
+          <button className={`nav-btn ${tab === "diversos" ? "active" : ""}`} onClick={() => go("/diversos")}>
+            🇵🇹 FPG
           </button>
         )}
         {calUnlocked && (
           <button className={`nav-btn ${tab === "uskids" ? "active" : ""}`} onClick={() => go("/uskids")}>
-            ⛳ USKids
-          </button>
-        )}
-        {calUnlocked && (
-          <button className={`nav-btn ${tab === "rivais" ? "active" : ""}`} onClick={() => go("/rivais")}>
-            🌍 Riv Intl
-          </button>
-        )}
-        {calUnlocked && (
-          <button className={`nav-btn ${tab === "comparar" ? "active" : ""}`} onClick={() => go("/comparar")}>
-            Comparar
-          </button>
-        )}
-        {calUnlocked && (
-          <button className={`nav-btn ${tab === "campos" ? "active" : ""}`} onClick={() => go("/campos")}>
-            Campos
+            🇺🇸 USKids
           </button>
         )}
         {calUnlocked && (
@@ -153,8 +143,18 @@ export default function NavBar() {
           </button>
         )}
         {calUnlocked && (
-          <button className={`nav-btn ${tab === "diversos" ? "active" : ""}`} onClick={() => go("/diversos")}>
-            Diversos
+          <button className={`nav-btn ${tab === "campos" ? "active" : ""}`} onClick={() => go("/campos")}>
+            Campos
+          </button>
+        )}
+        {calUnlocked && (
+          <button className={`nav-btn ${tab === "comparar" ? "active" : ""}`} onClick={() => go("/comparar")}>
+            Comparar
+          </button>
+        )}
+        {calUnlocked && (
+          <button className={`nav-btn ${tab === "rivais" ? "active" : ""}`} onClick={() => go("/rivais")}>
+            🌍kids
           </button>
         )}
       </nav>

@@ -1,5 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import React from "react";
+import { C } from "../utils/colors";
+import EmptyState from "../ui/EmptyState";
 import {
   ScorecardLB, AccumulatedLB, expandMultiRound,
   type Tournament as TATournament,
@@ -497,11 +499,11 @@ function torneioRegiao(name: string): "USA" | "EURO" | null {
 // ─────────────────────────────────────────────
 function badgeVagas(vagas: number, maximo: number) {
   if (maximo === 0) return null;
-  if (vagas === 0)  return { bg:"#7f0000", cor:"#ffcdd2", label:"FULL" };
-  if (vagas <= 1)   return { bg:"#b71c1c", cor:"#ffcdd2", label:`+${vagas}` };
-  if (vagas <= 3)   return { bg:"var(--color-warn)", cor:"#ffe0b2", label:`+${vagas}` };
-  if (vagas <= 6)   return { bg:"#f57f17", cor:"#fff9c4", label:`+${vagas}` };
-  return               { bg:"#1b5e20", cor:"#c8e6c9", label:`+${vagas}` };
+  if (vagas === 0)  return { bg: C.vagas.full.bg,         cor: C.vagas.full.fg,         label: "FULL" };
+  if (vagas <= 1)   return { bg: C.vagas.almostFull.bg,   cor: C.vagas.almostFull.fg,   label: `+${vagas}` };
+  if (vagas <= 3)   return { bg: C.vagas.limited.bg,      cor: C.vagas.limited.fg,      label: `+${vagas}` };
+  if (vagas <= 6)   return { bg: C.vagas.available.bg,    cor: C.vagas.available.fg,    label: `+${vagas}` };
+  return                   { bg: C.vagas.open.bg,         cor: C.vagas.open.fg,         label: `+${vagas}` };
 }
 
 function isoDate(s: string): string {
@@ -613,7 +615,7 @@ function EscalaoSection({ escalao: e, torneio: t }: {
   torneio: TorneioResult;
 }) {
   const rondasComDados = e.rondas.filter(r => (r.leaderboard ?? r.jogadores ?? []).length > 0);
-  if (!rondasComDados.length) return <div style={{ color:"var(--text-3)", padding:"16px 0", textAlign:"center", fontSize:13 }}>Sem dados para este escalão.</div>;
+  if (!rondasComDados.length) return <EmptyState size="sm" message="Sem dados para este escalão." />;
 
   const hasAcumulado = rondasComDados.length >= 2;
   const defaultTab = (() => {
@@ -727,7 +729,7 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
           {REGIONAL_CHAMPIONSHIPS[t.t] && (
             <span style={{
               fontSize:10, fontWeight:800, padding:"2px 9px", borderRadius:8,
-              background:"#fdf2f8", color:"#9c27b0", border:"1px solid #e1bee7",
+              background:"var(--bg-pink)", color:"var(--color-purple)", border:"1px solid #e1bee7",
               letterSpacing:"0.04em",
             }}>⭐ REGIONAL INVITATION</span>
           )}
@@ -895,7 +897,7 @@ function TabResultados({ data, selectedT, greatgolfData }: {
       return v == null ? "–" : v === 0 ? "E" : v > 0 ? `+${v}` : `${v}`;
     }
     function tpColor(v: number | null | undefined) {
-      return v == null ? "#888" : v < 0 ? "#16a34a" : v === 0 ? "#444" : "#dc2626";
+      return v == null ? "var(--grey-400)" : v < 0 ? "var(--color-good)" : v === 0 ? "var(--grey-700)" : "var(--color-danger)";
     }
     function scClass(gross: number, par: number | null) {
       if (!par || !gross) return "";
@@ -935,7 +937,7 @@ function TabResultados({ data, selectedT, greatgolfData }: {
       .lb-hole-first { border-left: 1px solid #bcc5ad; }
       .lb-par-row td { background: #f0f2ec; font-weight: 600; border-bottom: 2px solid #bcc5ad; }
       .lb-par-row td.lb-topar, .lb-par-row td.lb-gross { background: #e0efdb; }
-      .lb-si-row td { background: #f7f8f6; font-size: 9px; color: #888; border-bottom: 1px solid #d5dac9; }
+      .lb-si-row td { background: #f7f8f6; font-size: 10px; color: #888; border-bottom: 1px solid #d5dac9; }
       .lb-par-lbl { text-align: left; padding-left: 8px; font-weight: 800; }
 
       .row-manuel td { background: #d1fae5 !important; }
@@ -2520,7 +2522,7 @@ export default function USKidsFieldPage() {
                           {isInvit && (
                             <span style={{
                               fontSize:10, fontWeight:800, padding:"1px 5px", borderRadius:4,
-                              background:"#fdf2f8", color:"#9c27b0", border:"1px solid #e1bee7",
+                              background:"var(--bg-pink)", color:"var(--color-purple)", border:"1px solid #e1bee7",
                               whiteSpace:"nowrap",
                             }}>INVIT</span>
                           )}

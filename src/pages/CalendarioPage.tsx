@@ -497,7 +497,7 @@ function ListView({ events, onSelect }: { events: CalEvent[]; onSelect: (e: CalE
     <div className="cal-page-inner">
       {grouped.map(([month, evts]) => (
         <div key={month}>
-          <div style={{ fontSize: 13, fontWeight: 700, color: "var(--accent)", textTransform: "uppercase",
+          <div className="uppercase" style={{ fontSize: 13, fontWeight: 700, color: "var(--accent)",
             letterSpacing: "0.04em", marginBottom: 8, paddingBottom: 4, borderBottom: "2px solid var(--accent-light)" }}>
             {monthLabel(month)} 2026
           </div>
@@ -523,8 +523,7 @@ function ListView({ events, onSelect }: { events: CalEvent[]; onSelect: (e: CalE
                   <div style={{ width: 4, alignSelf: "stretch", borderRadius: "var(--radius-xs)",
                     background: hl ? hl.bg : c, flexShrink: 0 }} />
                   <div className="flex-1" style={{ minWidth: 0 }}>
-                    <div style={{ fontSize: 13, fontWeight: 600, color: "var(--text)",
-                      overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                    <div className="text-ellipsis" style={{ fontSize: 13, fontWeight: 600, color: "var(--text)" }}>
                       {hl ? `${hl.icon} ` : ""}{e.title}
                     </div>
                     <div className="fs-11 c-text-3 mt-4" >
@@ -672,55 +671,6 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
 
   return (
     <div className="cal-page">
-      <style>{`
-        @keyframes calPopIn { from { transform: translateY(6px) scale(0.98); opacity: 0; } to { transform: none; opacity: 1; } }
-        @keyframes hlShine {
-          0% { background-position: -200% center; }
-          100% { background-position: 200% center; }
-        }
-        @keyframes hlGlowGreen {
-          0%, 100% { box-shadow: 0 0 4px 1px rgba(57,255,20,0.4); }
-          50% { box-shadow: 0 0 14px 5px rgba(57,255,20,0.5); }
-        }
-        @keyframes hlGlowTeal {
-          0%, 100% { box-shadow: 0 0 4px 1px rgba(16,185,129,0.4); }
-          50% { box-shadow: 0 0 14px 5px rgba(16,185,129,0.5); }
-        }
-        @keyframes hlGlowRed {
-          0%, 100% { box-shadow: 0 0 4px 1px rgba(220,38,38,0.4); }
-          50% { box-shadow: 0 0 14px 5px rgba(220,38,38,0.5); }
-        }
-        .hl-cell {
-          border-radius: 4px;
-          position: relative;
-          overflow: hidden;
-        }
-        .hl-cell::after {
-          content: '';
-          position: absolute; inset: 0;
-          background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
-          background-size: 300% 100%;
-          animation: hlShine 3s linear infinite;
-          pointer-events: none;
-          border-radius: 4px;
-        }
-        .hl-green  { animation: hlGlowGreen 2s ease-in-out infinite; }
-        .hl-teal   { animation: hlGlowTeal 2s ease-in-out infinite; }
-        .hl-red    { animation: hlGlowRed 2s ease-in-out infinite; }
-        .hl-bar {
-          position: relative;
-          overflow: hidden;
-        }
-        .hl-bar::after {
-          content: '';
-          position: absolute; inset: 0;
-          background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.25) 50%, transparent 70%);
-          background-size: 300% 100%;
-          animation: hlShine 3s linear infinite;
-          pointer-events: none;
-          border-radius: inherit;
-        }
-      `}</style>
 
       {/* ── Sidebar ── */}
       <div className={`sidebar cal-sidebar-main ${sidebarOpen ? "" : "sidebar-closed"}`}>
@@ -746,18 +696,11 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
             const allOn = cals.every(c => enabledCals.has(c.id));
             return (
               <div key={g}>
-                <button onClick={() => toggleGroup(g)} style={{
-                  display: "flex", alignItems: "center", gap: 8, width: "100%",
-                  padding: "6px 4px", border: "none", cursor: "pointer", fontFamily: "inherit",
-                  background: "transparent", borderBottom: "1px solid var(--border-light)",
-                }}>
-                  <span style={{ width: 16, height: 16, borderRadius: "var(--radius-sm)", border: "2px solid var(--accent)",
-                    background: allOn ? "var(--accent)" : "transparent", display: "flex", alignItems: "center",
-                    justifyContent: "center", flexShrink: 0, fontSize: 10, color: "#fff", lineHeight: 1, transition: "all 0.15s" }}>
+                <button onClick={() => toggleGroup(g)} className="cal-toggle-btn">
+                  <span className={`cal-toggle-check${allOn ? " on" : ""}`}>
                     {allOn ? "✓" : ""}
                   </span>
-                  <span style={{ fontSize: 11, fontWeight: 700, color: "var(--text)", flex: 1, textAlign: "left",
-                    textTransform: "uppercase", letterSpacing: "0.04em" }}>{GROUP_LABELS[g]}</span>
+                  <span className="cal-toggle-label">{GROUP_LABELS[g]}</span>
                   <span className="fs-10 c-text-3 mono">{groupCount}</span>
                 </button>
                 <div className="flex-col-gap1" style={{ paddingLeft: 8, marginTop: 2 }}>
@@ -787,10 +730,9 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                           }}
                             onMouseEnter={e => { if (!isExpanded) e.currentTarget.style.background = "var(--bg-hover)"; }}
                             onMouseLeave={e => { e.currentTarget.style.background = isExpanded ? "var(--accent-light)" : "transparent"; }}>
-                            <span style={{
+                            <span className="text-ellipsis" style={{
                               fontSize: 11, color: enabledCals.has(cal.id) ? "var(--text)" : "var(--text-3)",
                               flex: 1, textAlign: "left", fontWeight: isExpanded ? 600 : enabledCals.has(cal.id) ? 500 : 400,
-                              overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
                             }}>{cal.name}</span>
                             <span style={{ fontSize: 10, fontFamily: "'JetBrains Mono', monospace",
                               color: "var(--text-3)", flexShrink: 0 }}>{calEvts.length}</span>
@@ -820,8 +762,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                                   onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>
                                   <span style={{ fontSize: 10, fontFamily: "'JetBrains Mono', monospace",
                                     color: cal.color, fontWeight: 600, minWidth: 30, flexShrink: 0 }}>{dd}</span>
-                                  <span style={{ fontSize: 10, color: "var(--text-2)", flex: 1, textAlign: "left",
-                                    overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{ev.title}</span>
+                                  <span className="text-ellipsis" style={{ fontSize: 10, color: "var(--text-2)", flex: 1, textAlign: "left" }}>{ev.title}</span>
                                 </button>
                               );
                             })}
@@ -877,23 +818,13 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                   const d = ev.date;
                   const dd = `${d.getDate()}/${d.getMonth() + 1}`;
                   return (
-                    <button key={ev.id} onClick={() => goToEvent(ev)} style={{
-                      display: "flex", alignItems: "center", gap: 8, width: "100%",
-                      padding: "7px 10px", border: "none", cursor: "pointer", fontFamily: "inherit",
-                      background: "transparent", borderBottom: "1px solid var(--border-light)",
-                      transition: "background 0.1s", textAlign: "left",
-                    }}
-                      onMouseEnter={e => (e.currentTarget.style.background = "var(--bg-hover)")}
-                      onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>
-                      <span style={{
-                        width: 8, height: 8, borderRadius: 2, flexShrink: 0,
+                    <button key={ev.id} onClick={() => goToEvent(ev)} className="cal-search-result">
+                      <span className="cal-search-dot" style={{
                         background: cal?.color || "var(--text-3)",
                       }} />
-                      <span style={{ fontSize: 10, fontFamily: "'JetBrains Mono', monospace",
-                        color: "var(--text-3)", fontWeight: 600, minWidth: 32, flexShrink: 0 }}>{dd}</span>
-                      <span style={{ fontSize: 11, color: "var(--text)", flex: 1,
-                        overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{ev.title}</span>
-                      {ev.campo && <span style={{ fontSize: 9, color: "var(--text-muted)", flexShrink: 0 }}>{ev.campo}</span>}
+                      <span className="cal-search-date">{dd}</span>
+                      <span className="cal-search-title">{ev.title}</span>
+                      {ev.campo && <span className="c-muted fs-10 shrink-0">{ev.campo}</span>}
                     </button>
                   );
                 })}
@@ -951,8 +882,8 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
               <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)",
                 borderBottom: "1px solid var(--border-light)", marginBottom: 4 }}>
                 {DAYS_PT.map((d, i) => (
-                  <div key={i} style={{ textAlign: "center", padding: "8px 0", fontSize: 11,
-                    fontWeight: 600, color: "var(--text-3)", textTransform: "uppercase", letterSpacing: "0.04em" }}>{d}</div>
+                  <div key={i} className="uppercase" style={{ textAlign: "center", padding: "8px 0", fontSize: 11,
+                    fontWeight: 600, color: "var(--text-3)", letterSpacing: "0.04em" }}>{d}</div>
                 ))}
               </div>
               <div style={{ flex: 1, display: "grid", gridTemplateColumns: "repeat(7,1fr)", gridTemplateRows: `repeat(${gridRows},1fr)` }}>

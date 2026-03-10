@@ -69,7 +69,7 @@ export function SortTh({ k, s, d, on, className, colSpan, children }: SortThProp
       onClick={() => on(k)}
     >
       {children}
-      {active && <span style={{ marginLeft: 2, fontSize: 7 }}>{d === "asc" ? "▲" : "▼"}</span>}
+      {active && <span className="sort-arrow">{d === "asc" ? "▲" : "▼"}</span>}
     </th>
   );
 }

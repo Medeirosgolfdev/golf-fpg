@@ -21,9 +21,11 @@ import { linearSlopeXY } from "../utils/mathUtils";
 import { scClass, toParClass, sc2, sc2w, sc3, sc3m, diagLevel, scDark, SC } from "../utils/scoreDisplay";
 import { isCalUnlocked } from "../utils/authConstants";
 import PasswordGate from "../ui/PasswordGate";
+import { scClass, toParClass, sc2, sc2w, sc3, sc3m, diagLevel, scDark, SC, tpColorDark } from "../utils/scoreDisplay";
 import ScoreCircle from "../ui/ScoreCircle";
 import SectionErrorBoundary from "../ui/SectionErrorBoundary";
 import LoadingState from "../ui/LoadingState";
+import EmptyState from "../ui/EmptyState";
 
 /* ═══════════════════════════════════
    TYPES
@@ -854,7 +856,7 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
           return (
             <div key={t.id} className="kpi">
               <div className="kpi-lbl">{t.short}</div>
-              <div className="kpi-val" style={{ fontSize: 16, color: res.tp <= 0 ? "var(--color-good-dark)" : res.tp <= 20 ? "var(--color-warn-dark)" : "var(--color-danger-dark)" }}>
+              <div className="kpi-val" style={{ fontSize: 16, color: tpColorDark(res.tp) }}>
                 {fmtSign(res.tp)}
               </div>
               <div className="kpi-sub">#{res.p} · {res.rd.join("-")}</div>
@@ -1041,7 +1043,7 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
   if (!lbEntry && !rival) return (
     <div className="tourn-section">
       <button className="p p-filter active mb-8" onClick={onBack}>← Voltar</button>
-      <div className="empty-state-sm">Sem dados disponíveis para {playerName}</div>
+      <EmptyState size="sm" message={`Sem dados disponíveis para ${playerName}`} />
     </div>
   );
 
@@ -1261,11 +1263,11 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
                       {Array.from({ length: mx }, (_, j) => {
                         const rd = r.rounds[j]; if (rd == null) return <td key={j} />;
                         const rdTp = rd - r.par;
-                        const col = rdTp <= 0 ? "var(--color-good-dark)" : rdTp <= 5 ? "var(--color-warn-dark)" : "var(--color-danger-dark)";
+                        const col = tpColorDark(rdTp, 5);
                         return <td key={j} className="r tourn-mono fw-600" style={{ color: col }}>{rd}</td>;
                       })}
                       <td className="r tourn-mono fw-800">{r.total ?? "–"}</td>
-                      <td className="r fw-700" style={{ color: r.tp != null && r.tp <= 0 ? "var(--color-good-dark)" : r.tp != null && r.tp <= 15 ? "var(--color-warn-dark)" : "var(--color-danger-dark)" }}>{fmtToPar(r.tp)}</td>
+                      <td className="r fw-700" style={{ color: tpColorDark(r.tp, 15) }}>{fmtToPar(r.tp)}</td>
                     </tr>
                   );
                 })}
@@ -1954,10 +1956,6 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
   return (
     <div className="tourn-layout">
-      <style>{`
-        .bjgt-chart-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        .bjgt-chart-scroll > div { min-width: 320px; }
-      `}</style>
 
       {/* ── Toolbar ── */}
       <div className="toolbar">
@@ -2237,8 +2235,8 @@ function ContestLeaderboard({ contest, evo }: { contest: ContestData; evo?: EvoE
                       </td>
                       <td>
                         {e.pill === "UP"
-                          ? <span style={{background:"#dbeafe",color:"#1e40af",fontSize:9,padding:"1px 5px",borderRadius:6,fontWeight:700}}>⬆ {e.from}→{e.to}</span>
-                          : <span style={{background:"#fef3c7",color:"#92400e",fontSize:9,padding:"1px 5px",borderRadius:6,fontWeight:700}}>= {e.from}</span>
+                          ? <span className="badge-evo-up">⬆ {e.from}→{e.to}</span>
+                          : <span className="badge-evo-eq">= {e.from}</span>
                         }
                       </td>
                     </tr>

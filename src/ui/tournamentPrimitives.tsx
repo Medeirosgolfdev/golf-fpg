@@ -31,8 +31,10 @@
  */
 
 import React from "react";
+import SexBadge from "./SexBadge";
 import { getTeeHex, teeBorder } from "../utils/teeColors";
 import { sdClassByHcp } from "../utils/scoreDisplay";
+import { C } from "../utils/colors";
 
 /* ─── Constante do jogador especial ─── */
 export const MANUEL_FED = "52884";
@@ -60,11 +62,11 @@ export function tpColor(v: number | null | undefined): string | undefined {
 
 /* ─── Escalão pill ─── */
 export const ESC_STYLE: Record<string, { bg: string; color: string }> = {
-  "sub10": { bg: "#2a5a18", color: "#fff" },
-  "sub12": { bg: "#3a7a28", color: "#fff" },
-  "sub14": { bg: "#5a9a40", color: "#fff" },
-  "sub16": { bg: "#7aba60", color: "#1a3a10" },
-  "sub18": { bg: "#a0d480", color: "#1a3a10" },
+  "sub10": { bg: C.esc.sub10.bg, color: C.esc.sub10.fg },
+  "sub12": { bg: C.esc.sub12.bg, color: C.esc.sub12.fg },
+  "sub14": { bg: C.esc.sub14.bg, color: C.esc.sub14.fg },
+  "sub16": { bg: C.esc.sub16.bg, color: C.esc.sub16.fg },
+  "sub18": { bg: C.esc.sub18.bg, color: C.esc.sub18.fg },
 };
 
 export function EscPill({ esc }: { esc: string }) {
@@ -109,7 +111,7 @@ export function SDPill({
   return (
     <span className={"p p-sm p-" + cls}>
       {sd.toFixed(1)}
-      {tip && <span style={{ fontSize: 7 }}> {tip}</span>}
+      {tip && <span className="fs-10 op-6"> {tip}</span>}
     </span>
   );
 }
@@ -158,8 +160,7 @@ export function TournPName({
     >
       {truncName}
       {star && <span style={{ marginLeft: 3, fontSize: 10 }}>⭐</span>}
-      {sex === "M" && <span className="jog-sex-inline jog-sex-M" style={{ marginLeft: 4 }}>M</span>}
-      {sex === "F" && <span className="jog-sex-inline jog-sex-F" style={{ marginLeft: 4 }}>F</span>}
+      {sex && <SexBadge sex={sex} size="sm" className="ml-4" />}
     </span>
   );
 }

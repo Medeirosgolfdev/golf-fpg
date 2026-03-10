@@ -214,7 +214,7 @@ export function MultiRoundLeaderboard({
     const active = sortable && sortKey === k;
     return (
       <th className={(className || "") + (sortable ? " lb-sortable" : "")} onClick={() => handleSort(k)}>
-        {children}{active && <span style={{ marginLeft: 2, fontSize: 7 }}>{sortDir === "asc" ? "▲" : "▼"}</span>}
+        {children}{active && <span className="sort-arrow">{sortDir === "asc" ? "▲" : "▼"}</span>}
       </th>
     );
   }
@@ -284,12 +284,12 @@ export function MultiRoundLeaderboard({
                 <tr key={row.key} className={row.isHighlighted ? "row-manuel" : undefined} style={isInc ? { background: "var(--bg-hover)", opacity: 0.7 } : undefined}>
                   <td className="lb-pos sticky-col-0" style={row.isHighlighted ? undefined : { background: stickyBg }}>
                     {isInc
-                      ? <span style={{ fontSize: 9, color: "#dc2626", fontStyle: "italic" }}>WD</span>
+                      ? <span className="badge-wd">WD</span>
                       : showPos ? (medal || dp) : ""}
                   </td>
                   <td className="lb-name sticky-col-1" style={row.isHighlighted ? undefined : { background: stickyBg }}>
                     <TournPName name={row.name} fedCode={row.fed} playersDB={playersDB} />
-                    {isInc && <span style={{ marginLeft: 4, fontSize: 9, color: "#dc2626", fontWeight: 700 }}>INC</span>}
+                    {isInc && <span className="badge-inc">INC</span>}
                   </td>
                   {showEsc && <td className="lb-esc">{row.esc ? <EscPill esc={row.esc} /> : <span className="muted">–</span>}</td>}
                   {showFed && <td className="lb-fed">{row.fed || "–"}</td>}

@@ -814,7 +814,7 @@ function StatsTable({ slots, allAgg, statsDb }: { slots: Slot[]; allAgg: (AggSta
               <React.Fragment key={ri}>
                 {r.section && (
                   <tr>
-                    <td colSpan={loaded.length + 1} className="fw-700 fs-11 c-text-3" style={{ paddingTop: ri > 0 ? 12 : 6, paddingBottom: 2, borderBottom: "1px solid var(--border-light)", letterSpacing: "0.05em", textTransform: "uppercase" }}>
+                    <td colSpan={loaded.length + 1} className="fw-700 fs-11 c-text-3 uppercase" style={{ paddingTop: ri > 0 ? 12 : 6, paddingBottom: 2, borderBottom: "1px solid var(--border-light)", letterSpacing: "0.05em" }}>
                       {r.section}
                     </td>
                   </tr>
@@ -1079,7 +1079,7 @@ function SwotSection({ slots, allAgg, statsDb }: { slots: Slot[]; allAgg: (AggSt
                   const typeItems = items.filter(x => x.type === type);
                   return (
                     <div key={type} style={{ background: cfg.bg, borderTop: `1px solid ${cfg.border}`, borderRight: type === "S" || type === "O" ? `1px solid ${cfg.border}` : undefined, padding: "10px 12px" }}>
-                      <div style={{ color: cfg.color, fontWeight: 700, fontSize: 11, marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.05em" }}>{cfg.label}</div>
+                      <div className="uppercase" style={{ color: cfg.color, fontWeight: 700, fontSize: 11, marginBottom: 6, letterSpacing: "0.05em" }}>{cfg.label}</div>
                       <ul style={{ margin: 0, padding: "0 0 0 14px" }}>
                         {typeItems.map((item, j) => (
                           <li key={j} style={{ fontSize: 11, lineHeight: 1.5, color: "var(--text-2)", marginBottom: 3 }}>{item.text}</li>

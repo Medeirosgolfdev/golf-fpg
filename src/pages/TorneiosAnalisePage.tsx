@@ -18,6 +18,8 @@ import { useAppContext } from "../context/AppContext";
 import { SC } from "../utils/scoreDisplay";
 import { getTeeHex } from "../utils/teeColors";
 import PillBadge from "../ui/PillBadge";
+import SexBadge from "../ui/SexBadge";
+import { C } from "../utils/colors";
 import { ScorecardLeaderboard, type ScorecardRow } from "../ui/ScorecardLeaderboard";
 import { MultiRoundLeaderboard, type MultiRoundRow as MRRow } from "../ui/MultiRoundLeaderboard";
 import { CrossSeasonTable, SortTh as CSortTh } from "../ui/CrossSeasonTable";
@@ -48,7 +50,7 @@ const TOURN_PILLS: Record<string, TournPill> = {
   "10019": "PJA",   // Race to Dunas G. Final
 };
 
-const PILL_STYLE_PJA = { bg: "#1e3a5f", color: "#fff" };
+const PILL_STYLE_PJA = { bg: C.navy, color: C.white };
 
 function TournPillBadge({ tcode, dynamicPills }: { tcode?: string; dynamicPills?: Record<string, TournPill> }) {
   if (!tcode) return null;
@@ -602,7 +604,7 @@ export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabe
     return (
       <th className={"lb-sortable " + (className || "")}
         onClick={() => handleSort(k)}>
-        {children}{active && <span style={{ marginLeft: 2, fontSize: 7 }}>{sortDir === "asc" ? "▲" : "▼"}</span>}
+        {children}{active && <span className="sort-arrow">{sortDir === "asc" ? "▲" : "▼"}</span>}
       </th>
     );
   }
@@ -776,10 +778,10 @@ type LinkGroup = { label: string; color: string; items: { name: string; url: str
 
 function buildLinkGroups(links: Record<string, string>, escalao?: string | null): LinkGroup[] {
   const ESC_COLORS: Record<string, string> = {
-    wagr:  "var(--accent, #2563eb)",
-    sub16: "#2a5a18",
-    sub14: "#5a9a40",
-    sub12: "#2563eb",
+    wagr:  "var(--accent)",
+    sub16: C.esc.sub16.bg,
+    sub14: C.esc.sub14.bg,
+    sub12: C.chartBlue,
   };
   const LABELS: Record<string, string> = {
     draw_wagr_r1: "Draw R1", draw_wagr_r2: "Draw R2", draw_wagr_r3: "Draw R3",
@@ -825,7 +827,7 @@ function LinksBar({ links, escalao }: { links?: Record<string, string>; escalao?
       {groups.map((g, gi) => (
         <React.Fragment key={g.label}>
           {gi > 0 && <span style={{ color: "var(--border)", fontSize: 12 }}>·</span>}
-          <span style={{ fontSize: 10, color: "var(--text-muted)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em", marginRight: 2 }}>{g.label}</span>
+          <span className="label-caps c-muted" style={{ marginRight: 2 }}>{g.label}</span>
           {g.items.map(item => (
             <a key={item.name} href={item.url} target="_blank" rel="noopener noreferrer"
               className="tourn-ext-link"
@@ -1247,7 +1249,7 @@ function PJARankingView({
                 <th key={tc.tournKey} colSpan={tc.colSpan} className="cs-grp" style={{ lineHeight: 1.3 }}>
                   <div className="fw-800" style={{ fontSize: 12 }}>
                     {tc.name}
-                    {tc.isGF && <span style={{ marginLeft: 5, fontSize: 9, color: "#f59e0b", fontWeight: 800 }}>★ GF×1.5</span>}
+                    {tc.isGF && <span className="badge-gf">★ GF×1.5</span>}
                   </div>
                   <div className="c-muted-fs10-fw5">
                     {fmtDate(tc.date)}{tc.campo ? " · " + tc.campo : ""}{tc.rounds.length > 1 ? ` · ${tc.rounds.length}R` : ""}
@@ -1280,7 +1282,7 @@ function PJARankingView({
                   <td className="cs-pos sticky-col-0">{idx + 1}</td>
                   <td className="cs-name sticky-col-1">
                     <PName name={row.name} fedCode={row.fedCode} playersDB={playersDB} />
-                    {row.sex === "F" && <span style={{ marginLeft: 4, fontSize: 9, color: "#e879f9" }}>♀</span>}
+                    {row.sex === "F" && <SexBadge sex="F" className="ml-4" />}
                   </td>
                   <td className="cs-esc">
                     {row.escalao ? <span className={escCls + " fs-9"}>{row.escalao}</span> : <span className="muted">–</span>}
@@ -1315,7 +1317,7 @@ function PJARankingView({
 
                   <td className="cs-s-games cs-grp">
                     {row.voltas}
-                    {!row.eligible && <span title="< 14 rondas — não elegível para GF" style={{ marginLeft: 3, fontSize: 9, color: "#f59e0b" }}>⚠</span>}
+                    {!row.eligible && <span title="< 14 rondas — não elegível para GF" className="badge-warn-sm ml-3">⚠</span>}
                   </td>
                   <td className="cs-s-pts cs-col" style={{ fontWeight: 800, color: "var(--color-warn-dark)", fontVariantNumeric: "tabular-nums" }}>
                     {fmtPts(row.total)}
@@ -1504,10 +1506,7 @@ function Content() {
           <div style={{ display: "flex", gap: 2, flexShrink: 0, alignItems: "center" }}>
             {isSynth ? (
               <>
-                <span title="Torneio agrupado" style={{
-                  fontFamily: "monospace", fontSize: 10, fontWeight: 700,
-                  background: "#7c3aed", color: "#fff", borderRadius: 3, padding: "0 4px",
-                }}>{nR}R ⛳</span>
+                <span title="Torneio agrupado" className="badge-grouped">{nR}R ⛳</span>
                 {subRounds.map((sr, i) => (
                   <span key={sr.tcode} title={`Dia ${i+1}: ${sr.tcode}`} style={{
                     fontFamily: "monospace", fontSize: 10, fontWeight: 600,

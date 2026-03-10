@@ -7,14 +7,17 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from "recharts";
 import { SC, sdClassByHcp } from "../utils/scoreDisplay";
 import { isCalUnlocked } from "../utils/authConstants";
-import PasswordGate from "../ui/PasswordGate";
-import LoadingState from "../ui/LoadingState";
 import { resolveFedsInTournaments } from "../utils/playerUtils";
+import PasswordGate from "../ui/PasswordGate";
+import KpiCard from "../ui/KpiCard";
+import LoadingState from "../ui/LoadingState";
 import { ScorecardLeaderboard } from "../ui/ScorecardLeaderboard";
+import SexBadge from "../ui/SexBadge";
+import { C } from "../colors";
 import { CrossSeasonTable, SortTh as CSortTh } from "../ui/CrossSeasonTable";
 import { MultiRoundLeaderboard, type MultiRoundRow as MRRow } from "../ui/MultiRoundLeaderboard";
 import {
-  isManuel, fmtTP, tpColor as tpColorShared,
+  isManuel, fmtTP, tpColor,
   EscPill, TeeDot, SDPill, TournPName,
   type PlayersDB,
 } from "../ui/tournamentPrimitives";
@@ -254,7 +257,6 @@ function calcAGS(
 }
 
 /* ── Helpers ── */
-const tpColor = tpColorShared;
 const fmtDate = (d: string) => {
   if (!d) return "";
   const [, m, day] = d.split("-");
@@ -489,9 +491,9 @@ function DrivePointsTable() {
   const col2 = entries.slice(half);
 
   const medalColor = (pos: number) => {
-    if (pos === 1) return "#f59e0b";
-    if (pos === 2) return "#94a3b8";
-    if (pos === 3) return "#b45309";
+    if (pos === 1) return C.medalGold;
+    if (pos === 2) return C.medalSilver;
+    if (pos === 3) return C.medalBronze;
     return undefined;
   };
 
@@ -774,8 +776,8 @@ function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; s
                     className="btn"
                     style={{
                       fontSize: 11, fontWeight: 800, width: 20, height: 18, padding: 0,
-                      background: gh.isExpanded ? "#dcfce7" : undefined,
-                      color: gh.isExpanded ? "#16a34a" : "var(--text-muted)",
+                      background: gh.isExpanded ? "var(--bg-success-strong)" : undefined,
+                      color: gh.isExpanded ? "var(--color-good)" : "var(--text-muted)",
                       display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
                     }}
                     title={gh.isExpanded ? "Colapsar rondas" : "Expandir R1/R2"}
@@ -1148,12 +1150,12 @@ type Sub12SeriesTab = "tour" | "challenge" | "aquapor";
 type Sub12ViewTab = "grid" | "ranking" | "evolucao";
 
 const SUB12_SERIES_TABS: { key: Sub12SeriesTab; label: string; emoji: string; color: string; bg: string; holes: string }[] = [
-  { key: "tour",      label: "Tour",      emoji: "🏌️", color: "#059669", bg: "#d1fae5", holes: "18h" },
-  { key: "challenge", label: "Challenge", emoji: "⚡",  color: "#7c3aed", bg: "#ede9fe", holes: "9h"  },
+  { key: "tour",      label: "Tour",      emoji: "🏌️", color: "#059669", bg: C.bgSuccessSubtle, holes: "18h" },
+  { key: "challenge", label: "Challenge", emoji: "⚡",  color: C.chartPurple, bg: "#ede9fe", holes: "9h"  },
   { key: "aquapor",   label: "AQUAPOR",   emoji: "💧", color: "#4338ca", bg: "#e0e7ff", holes: "18h" },
 ];
-const CHART_COLORS = ["#2563eb","#dc2626","#16a34a","#d97706","#7c3aed","#0891b2","#be185d","#65a30d","#c2410c","#6366f1","#0d9488","#ea580c"];
-const SERIE_COLORS: Record<string, string> = { tour: "#059669", challenge: "#7c3aed", aquapor: "#4338ca" };
+const CHART_COLORS = C.charts;
+const SERIE_COLORS: Record<string, string> = { tour: "#059669", challenge: C.chartPurple, aquapor: "#4338ca" };
 const SERIE_LABELS: Record<string, string>  = { tour: "Tour",   challenge: "Challenge",  aquapor: "AQUAPOR" };
 const REGION_EMOJI: Record<string, string>  = { norte: "🔵", tejo: "🟡", sul: "🟢", madeira: "🟣", acores: "🔴", nacional: "⚪" };
 
@@ -1354,7 +1356,7 @@ function UpcomingSchedule({ series }: { series: Sub12SeriesTab }) {
               textDecoration: isPast ? "line-through" : "none", opacity: isPast ? 0.6 : 1,
             }}>
               {REGION_EMOJI[e.region] || ""} <span className="fw-700">{fmtCalDate(e.date, e.endDate)}</span> {e.name} <span className="c-muted">{e.campo}</span>
-              {isNext && <span style={{ fontSize: 8, background: col, color: "#fff", padding: "0 4px", borderRadius: 3, marginLeft: 2 }}>PRÓXIMO</span>}
+              {isNext && <span className="badge-next" style={{ background: col }}>PRÓXIMO</span>}
             </div>
           );
         })}
@@ -1363,15 +1365,7 @@ function UpcomingSchedule({ series }: { series: Sub12SeriesTab }) {
   );
 }
 
-function KpiCard({ label, value, sub, color }: { label: string; value: string; sub?: string; color?: string }) {
-  return (
-    <div className="kpi" style={{ flex: "1 1 120px", minWidth: 120 }}>
-      <div className="kpi-lbl">{label}</div>
-      <div className="kpi-val" style={color ? { color } : undefined}>{value}</div>
-      {sub && <div className="kpi-sub">{sub}</div>}
-    </div>
-  );
-}
+
 function SdSpan({ sd, hcp }: { sd: number | null; hcp?: number | null }) {
   if (sd == null) return <span className="c-muted">–</span>;
   return <span className={"p p-sm fs-11 p-" + sdClassByHcp(sd, hcp ?? null)}>{sd.toFixed(1)}</span>;
@@ -1599,8 +1593,7 @@ function RankingView({ rows, onPlayerClick }: { rows: Sub12Row[]; onPlayerClick:
                   <td>
                     <span className="fw-700" style={{ cursor: "pointer", textDecoration: "underline", textDecorationColor: "var(--border)", textUnderlineOffset: 2 }}
                       onClick={(e) => { e.stopPropagation(); window.open(`/jogadores/${p.fed}`, "_blank"); }}>{p.name}</span>
-                    {p.sex === "F" && <span className="jog-sex-inline jog-sex-F ml-4">F</span>}
-                    {p.sex === "M" && <span className="jog-sex-inline jog-sex-M ml-4">M</span>}
+                    <SexBadge sex={p.sex} size="sm" className="ml-4" />
                   </td>
                   <td className="c-muted fs-11">{p.club}</td>
                   <td className="r tourn-mono">{p.hcp != null ? p.hcp.toFixed(1) : "–"}</td>
@@ -1693,7 +1686,7 @@ function PlayerDetail({ row, onClose }: { row: Sub12Row; onClose: () => void }) 
               <td className="tourn-mono fs-10">{r.date}</td>
               <td>
                 <span className="fw-600">{r.tournName}</span>
-                <span className="p p-sm ml-4" style={{ fontSize: 8, background: (SERIE_COLORS[r.series]||"#999")+"22", color: SERIE_COLORS[r.series], border: `1px solid ${SERIE_COLORS[r.series]}44` }}>
+                <span className="badge-serie ml-4" style={{ background: (SERIE_COLORS[r.series]||"#999")+"22", color: SERIE_COLORS[r.series], border: `1px solid ${SERIE_COLORS[r.series]}44` }}>
                   {SERIE_LABELS[r.series]}
                 </span>
               </td>

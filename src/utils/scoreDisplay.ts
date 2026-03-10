@@ -69,18 +69,23 @@ export function fmtSdVal(r: RoundData): { text: string; cls: string } {
  *   color: val <= 3 ? "#16a34a" : val <= 5 ? "#d97706" : "#dc2626"
  * with:
  *   color: sc3(val, 3, 5)   →  "var(--color-good)" | "var(--color-warn)" | "var(--color-danger)"
+ *
+ * NOTA: O objecto C abaixo usa referências CSS var() para que as cores
+ * respondam ao tema em runtime. É diferente de src/utils/colors.ts que
+ * exporta valores hex brutos para uso em Recharts/D3/canvas onde var()
+ * não é suportado. Os dois ficheiros coexistem intencionalmente.
  */
 
 const C = {
-  good:     "var(--color-good)",     // #16a34a
-  warn:     "var(--color-warn)",     // #d97706
-  danger:   "var(--color-danger)",   // #dc2626
-  info:     "var(--color-info)",     // #1e40af
-  muted:    "var(--text-3)",         // #7a8a6e
-  goodDark: "var(--color-good-dark)",
+  good:      "var(--color-good)",
+  warn:      "var(--color-warn)",
+  danger:    "var(--color-danger)",
+  info:      "var(--color-info)",
+  muted:     "var(--text-3)",
+  goodDark:  "var(--color-good-dark)",
   dangerDark:"var(--color-danger-dark)",
-  warnDark: "var(--color-warn-dark)",
-  infoDark: "var(--color-navy)",
+  warnDark:  "var(--color-warn-dark)",
+  infoDark:  "var(--color-navy)",
 } as const;
 
 /** 3-level semantic color: good / warn / danger
@@ -127,4 +132,18 @@ export { C as SC };
 /** Classe CSS para to-par badge: "sc-topar-pos" | "sc-topar-neg" | "sc-topar-zero" */
 export function toParClass(tp: number): string {
   return tp > 0 ? "sc-topar-pos" : tp < 0 ? "sc-topar-neg" : "sc-topar-zero";
+}
+
+/** Cor CSS (variante dark) para to-par em KPIs e tabelas de resultados.
+ *  Ao contrário de tpColor() (que retorna undefined para valores positivos),
+ *  esta função devolve sempre uma cor explícita.
+ *  - tp <= 0         → good-dark  (verde)
+ *  - 0 < tp <= hi    → warn-dark  (âmbar)   [padrão hi = 20]
+ *  - tp > hi         → danger-dark (vermelho)
+ */
+export function tpColorDark(tp: number | null | undefined, hi = 20): string {
+  if (tp == null) return "var(--text)";
+  if (tp <= 0) return C.goodDark;
+  if (tp <= hi) return C.warnDark;
+  return C.dangerDark;
 }

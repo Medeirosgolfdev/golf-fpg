@@ -7,9 +7,10 @@
 import React, { useMemo, useState } from "react";
 import { fmtToPar, fmtSign } from "../utils/format";
 import { linearSlopeXY } from "../utils/mathUtils";
-import { scClass, toParClass, sc3m, SC } from "../utils/scoreDisplay";
+import { scClass, toParClass, sc3m, SC, tpColorDark } from "../utils/scoreDisplay";
 import { isCalUnlocked } from "../utils/authConstants";
 import PasswordGate from "../ui/PasswordGate";
+import EmptyState from "../ui/EmptyState";
 
 
 /* ═══════════════════════════════════
@@ -540,7 +541,7 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
           return (
             <div key={t.id} className="kpi">
               <div className="kpi-lbl">{t.short}</div>
-              <div className="kpi-val" style={{ fontSize: 16, color: res.tp <= 0 ? "var(--color-good-dark)" : res.tp <= 20 ? "var(--color-warn-dark)" : "var(--color-danger-dark)" }}>
+              <div className="kpi-val" style={{ fontSize: 16, color: tpColorDark(res.tp) }}>
                 {fmtSign(res.tp)}
               </div>
               <div className="kpi-sub">#{res.p} · {res.rd.join("-")}</div>
@@ -724,7 +725,7 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
   if (!lbEntry && !rival) return (
     <div className="tourn-section">
       <button className="p p-filter active mb-8" onClick={onBack}>← Voltar</button>
-      <div className="empty-state-sm">Sem dados disponíveis para {playerName}</div>
+      <EmptyState size="sm" message={`Sem dados disponíveis para ${playerName}`} />
     </div>
   );
 
@@ -944,11 +945,11 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
                       {Array.from({ length: mx }, (_, j) => {
                         const rd = r.rounds[j]; if (rd == null) return <td key={j} />;
                         const rdTp = rd - r.par;
-                        const col = rdTp <= 0 ? "var(--color-good-dark)" : rdTp <= 5 ? "var(--color-warn-dark)" : "var(--color-danger-dark)";
+                        const col = tpColorDark(rdTp, 5);
                         return <td key={j} className="r tourn-mono fw-600" style={{ color: col }}>{rd}</td>;
                       })}
                       <td className="r tourn-mono fw-800">{r.total ?? "–"}</td>
-                      <td className="r fw-700" style={{ color: r.tp != null && r.tp <= 0 ? "var(--color-good-dark)" : r.tp != null && r.tp <= 15 ? "var(--color-warn-dark)" : "var(--color-danger-dark)" }}>{fmtToPar(r.tp)}</td>
+                      <td className="r fw-700" style={{ color: tpColorDark(r.tp, 15) }}>{fmtToPar(r.tp)}</td>
                     </tr>
                   );
                 })}
