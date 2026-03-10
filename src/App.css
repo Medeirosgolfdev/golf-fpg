@@ -2385,6 +2385,42 @@ tr.cross-current { background: var(--bg-success); }
  border-radius: var(--radius);
  box-shadow: var(--shadow-sm);
 }
+
+/* ─── Jogadores por campo (CamposPage) ─── */
+.course-players-section {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-light);
+}
+.course-players-title {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin: 0 0 10px 0;
+}
+.course-players-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.course-player-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 0;
+  font-size: 13px;
+  border-bottom: 1px solid var(--border-light);
+}
+.course-player-row:last-child {
+  border-bottom: none;
+}
+.course-player-date {
+  font-size: 11px;
+  margin-left: auto;
+  white-space: nowrap;
+}
 .tee-badge {
  display: inline-flex;
  align-items: center;

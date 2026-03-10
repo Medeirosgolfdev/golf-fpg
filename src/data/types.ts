@@ -64,6 +64,8 @@ export type CourseMaster = {
   numbers?: Record<string, unknown>;
   links: CourseLinks;
   tees: Tee[];
+  /** Quem jogou e data mais recente — só nos away-courses gerados pelo pipeline */
+  _players?: Record<string, string | null>;
 };
 
 export type Course = {

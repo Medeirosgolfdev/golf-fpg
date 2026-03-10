@@ -4,6 +4,7 @@ import type { Course, Tee, SexFilter } from "../data/types";
 import { useAppContext } from "../context/AppContext";
 import TeeBadge from "../ui/TeeBadge";
 import PillBadge from "../ui/PillBadge";
+import PlayerLink from "../ui/PlayerLink";
 import { teeCanonicalLabel, teeGroupHex } from "../utils/teeColors";
 import { fmt, fmtCR, norm, titleCase, sumRange } from "../utils/format";
 import { fixMojibake } from "../utils/fixEncoding";
@@ -27,14 +28,22 @@ const KNOWN_AWAY: Record<string, { country: string; flag: string }> = {
 };
 
 const COUNTRY_FLAGS: Record<string, string> = {
-  "portugal": "\ud83c\uddf5\ud83c\uddf9", "espanha": "\ud83c\uddea\ud83c\uddf8",
-  "italia": "\ud83c\uddee\ud83c\uddf9", "franca": "\ud83c\uddeb\ud83c\uddf7",
-  "eua": "\ud83c\uddfa\ud83c\uddf8", "reino unido": "\ud83c\uddec\ud83c\udde7",
-  "irlanda": "\ud83c\uddee\ud83c\uddea", "alemanha": "\ud83c\udde9\ud83c\uddea",
-  "holanda": "\ud83c\uddf3\ud83c\uddf1", "suica": "\ud83c\udde8\ud83c\udded",
-  "belgica": "\ud83c\udde7\ud83c\uddea", "turquia": "\ud83c\uddf9\ud83c\uddf7",
-  "marrocos": "\ud83c\uddf2\ud83c\udde6", "brasil": "\ud83c\udde7\ud83c\uddf7",
-  "africa do sul": "\ud83c\uddff\ud83c\udde6", "grecia": "\ud83c\uddec\ud83c\uddf7",
+  "portugal": "🇵🇹", "espanha": "🇪🇸",
+  "italia": "🇮🇹", "franca": "🇫🇷",
+  "eua": "🇺🇸", "reino unido": "🇬🇧",
+  "inglaterra": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "escocia": "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "gales": "🏴󠁧󠁢󠁷󠁬󠁳󠁿",
+  "irlanda": "🇮🇪", "irlanda do norte": "🇬🇧",
+  "alemanha": "🇩🇪", "holanda": "🇳🇱", "suica": "🇨🇭",
+  "belgica": "🇧🇪", "turquia": "🇹🇷",
+  "marrocos": "🇲🇦", "brasil": "🇧🇷",
+  "africa do sul": "🇿🇦", "grecia": "🇬🇷",
+  "suecia": "🇸🇪", "noruega": "🇳🇴", "dinamarca": "🇩🇰",
+  "finlandia": "🇫🇮", "polonia": "🇵🇱",
+  "eslovaquia": "🇸🇰", "rep checa": "🇨🇿", "republica checa": "🇨🇿",
+  "hungria": "🇭🇺", "austria": "🇦🇹", "bulgaria": "🇧🇬",
+  "estonia": "🇪🇪", "ucrania": "🇺🇦", "islandia": "🇮🇸",
+  "canada": "🇨🇦", "porto rico": "🇵🇷",
+  "rep dominicana": "🇩🇴",
 };
 
 function normalizeCountryKey(raw: string): string {
@@ -217,17 +226,55 @@ function RatingsTable({ tees }: { tees: Tee[] }) {
     </div>
   );
 }
+/* ——— Componente: Quem jogou neste campo ——— */
 
-/* ——— Página Principal ——— */
+function CoursePlayersSection({ course, onSelectPlayer }: { course: Course; onSelectPlayer: (nfed: string) => void }) {
+  const { players } = useAppContext();
+
+  const entries = useMemo(() => {
+    const raw = course.master._players;
+    if (!raw || Object.keys(raw).length === 0) return [];
+    return Object.entries(raw)
+      .map(([nfed, d]) => {
+        const p = players[nfed];
+        const date: string | null = (d as string | null) ?? null;
+        return { nfed, name: p?.name ?? nfed, date };
+      })
+      .sort((a, b) => {
+        const da = a.date ? a.date.split("-").reverse().join("") : "0";
+        const db = b.date ? b.date.split("-").reverse().join("") : "0";
+        if (db !== da) return db.localeCompare(da);
+        return a.name.localeCompare(b.name, "pt");
+      });
+  }, [course, players]);
+
+  if (entries.length === 0) return null;
+
+  return (
+    <div className="course-players-section">
+      <h4 className="course-players-title">Jogadores ({entries.length})</h4>
+      <div className="course-players-list">
+        {entries.map(({ nfed, name, date }) => (
+          <div key={nfed} className="course-player-row">
+            <PlayerLink fed={nfed} name={name} onSelect={onSelectPlayer} />
+            {date && <span className="course-player-date muted">{date}</span>}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function CamposPage() {
-  const { simCourses: courses } = useAppContext();
+  const { simCourses: courses, players } = useAppContext();
   const { courseKey: urlCourseKey } = useParams<{ courseKey?: string }>();
   const navigate = useNavigate();
   const [q, setQ] = useState("");
+  const [playerQ, setPlayerQ] = useState("");
   const [sexFilter, setSexFilter] = useState<SexFilter>("ALL");
   const [teeFilter, setTeeFilter] = useState<string>("ALL");
   const [originFilter, setOriginFilter] = useState<OriginFilter>("ALL");
+  const [countryFilter, setCountryFilter] = useState<string>("ALL");
   const [selectedKey, setSelectedKey] = useState<string | null>(urlCourseKey ?? null);
   const [detailView, setDetailView] = useState<"scorecard" | "ratings">("scorecard");
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -248,6 +295,33 @@ export default function CamposPage() {
       navigate("/campos", { replace: true });
     }
   };
+
+  /* Lista de países únicos dos campos INTL */
+  const intlCountries = useMemo(() => {
+    const seen = new Map<string, string>(); // normKey → display
+    for (const c of courses) {
+      if (!c.courseKey.startsWith("away-")) continue;
+      const name = resolveCountryName(c);
+      if (!name) continue;
+      const key = normalizeCountryKey(name);
+      if (!seen.has(key)) seen.set(key, name);
+    }
+    return [...seen.entries()]
+      .map(([k, v]) => ({ key: k, label: v, flag: COUNTRY_FLAGS[k] ?? "🌍" }))
+      .sort((a, b) => a.label.localeCompare(b.label, "pt"));
+  }, [courses]);
+
+  /* Pesquisa por jogador — calcular nfeds que correspondem */
+  const playerNfeds = useMemo<Set<string> | null>(() => {
+    const pq = playerQ.trim();
+    if (!pq) return null;
+    const pqn = norm(pq);
+    const matched = new Set<string>();
+    for (const [nfed, p] of Object.entries(players)) {
+      if (norm(p.name ?? "").includes(pqn)) matched.add(nfed);
+    }
+    return matched;
+  }, [playerQ, players]);
 
   /* Unique tee color groups across all courses (for filter dropdown) */
   const uniqueTees = useMemo(() => {
@@ -283,13 +357,30 @@ export default function CamposPage() {
     } else if (originFilter === "INTL") {
       list = list.filter((c) => c.courseKey.startsWith("away-"));
     }
+    if (countryFilter !== "ALL") {
+      list = list.filter((c) => {
+        const cn = resolveCountryName(c);
+        return normalizeCountryKey(cn) === countryFilter;
+      });
+    }
     if (teeFilter !== "ALL") {
       list = list.filter((c) =>
         c.master.tees.some((t) => teeGroupHex(t.teeName, t.scorecardMeta?.teeColor) === teeFilter)
       );
     }
+    // Filtro por jogador — só campos onde o jogador jogou
+    if (playerNfeds && playerNfeds.size > 0) {
+      list = list.filter((c) => {
+        const p = c.master._players;
+        if (!p) return false;
+        return Object.keys(p).some((nfed) => playerNfeds.has(nfed));
+      });
+    } else if (playerQ.trim()) {
+      // Pesquisa activa mas sem jogador encontrado
+      list = [];
+    }
     return list;
-  }, [courses, q, originFilter, teeFilter]);
+  }, [courses, q, originFilter, countryFilter, teeFilter, playerNfeds, playerQ]);
 
   /* Campo selecionado */
   const selected = useMemo(() => {
@@ -299,7 +390,15 @@ export default function CamposPage() {
 
   const selectedTees = useMemo(() => {
     if (!selected) return [];
-    return sortTees(filterTees(selected.master.tees, sexFilter));
+    const tees = sortTees(filterTees(selected.master.tees, sexFilter));
+    // Ignorar tees sem qualquer dado útil (sem buracos e sem distância)
+    return tees.filter(t => {
+      const holes = t.distances?.holesCount ?? 0;
+      const dist = t.distances?.total ?? 0;
+      const cr = t.ratings?.holes18?.courseRating;
+      // Manter se tem buracos, ou distância, ou pelo menos CR válido
+      return holes > 0 || dist > 0 || (cr != null && cr > 0);
+    });
   }, [selected, sexFilter]);
 
   const scorecardLink = selected?.master.links?.scorecards;
@@ -324,18 +423,37 @@ export default function CamposPage() {
           <input
             className="input"
             value={q}
-            onChange={(e) => { setQ(e.target.value); selectCourse(null); }}
+            onChange={(e) => { setQ(e.target.value); setPlayerQ(""); selectCourse(null); }}
             placeholder="Nome do campo…"
+          />
+          <input
+            className="input"
+            value={playerQ}
+            onChange={(e) => { setPlayerQ(e.target.value); setQ(""); selectCourse(null); }}
+            placeholder="Jogador…"
+            title="Mostra os campos onde este jogador já jogou"
           />
           <select
             className="select"
             value={originFilter}
-            onChange={(e) => { setOriginFilter(e.target.value as OriginFilter); selectCourse(null); }}
+            onChange={(e) => { setOriginFilter(e.target.value as OriginFilter); setCountryFilter("ALL"); selectCourse(null); }}
           >
             <option value="ALL">Origem</option>
             <option value="PT">{"\ud83c\uddf5\ud83c\uddf9"} Portugal</option>
             <option value="INTL">{"\ud83c\udf0d"} Internacional</option>
           </select>
+          {(originFilter === "INTL" || originFilter === "ALL") && (
+            <select
+              className="select"
+              value={countryFilter}
+              onChange={(e) => { setCountryFilter(e.target.value); selectCourse(null); }}
+            >
+              <option value="ALL">País</option>
+              {intlCountries.map(({ key, label, flag }) => (
+                <option key={key} value={key}>{flag} {label}</option>
+              ))}
+            </select>
+          )}
           <select className="select" value={sexFilter} onChange={(e) => setSexFilter(e.target.value as SexFilter)}>
             <option value="ALL">Sexo</option>
             <option value="M">Masculino</option>
@@ -459,6 +577,12 @@ export default function CamposPage() {
               ) : (
                 <RatingsTable tees={selectedTees} />
               )}
+
+              {/* Jogadores que já jogaram aqui */}
+              <CoursePlayersSection
+                course={selected}
+                onSelectPlayer={(fed) => navigate(`/jogadores/${fed}`)}
+              />
             </>
           ) : (
             <div className="muted" style={{ padding: 24 }}>Seleciona um campo</div>
