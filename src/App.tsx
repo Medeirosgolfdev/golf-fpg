@@ -25,6 +25,7 @@ const CompararPage = lazy(() => import("./pages/CompararPage"));
 const DrivePage = lazy(() => import("./pages/DrivePage"));
 const USKidsFieldPage = lazy(() => import("./pages/USKidsFieldPage"));
 const TorneiosAnalisePage = lazy(() => import("./pages/TorneiosAnalisePage"));
+const FTMDoralPage = lazy(() => import("./pages/FTMDoralPage"));
 
 type Status =
   | { kind: "loading" }
@@ -248,6 +249,7 @@ export default function App() {
                 <Route path="/rivais" element={<RivaisIntlPage />} />
                 <Route path="/uskids" element={<USKidsFieldPage />} />
                 <Route path="/diversos" element={<TorneiosAnalisePage />} />
+                <Route path="/doral" element={<FTMDoralPage />} />
                 <Route path="*" element={<Navigate to="/jogadores/52884" replace />} />
               </Routes>
             </Suspense>

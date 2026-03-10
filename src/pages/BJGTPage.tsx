@@ -14,15 +14,23 @@ import EmptyState from "../ui/EmptyState";
 interface RoundData { day: number; scores: number[] | null; f9: number | null; b9: number | null; gross: number }
 interface PlayerData { name: string; country: string; pos: number | null; result: number | null; total: number | null; rounds: RoundData[] }
 interface TData { tournament: string; par: number[]; si?: number[]; parF9: number; parB9: number; parTotal: number; players: PlayerData[] }
-interface TDef { id: string; label: string; shortLabel: string; data: TData; manuelName: string; year: number; category: string; roundDates?: string[] }
+interface TDef { id: string; label: string; shortLabel: string; data: TData; manuelName: string; year: number; category: string; roundDates?: string[]; series: "bjgt" | "eowagr" }
 interface EvoEntry { otherTotal: number; delta: number; from: string; to: string; pill: string }
 
 /* ── Data URLs ── */
 const URLS = [
-  { id: "2025_b89",   url: "/data/wjgc_2025_b89.json",        label: "2025 // Boys 8-9",    shortLabel: "2025 Boys 8-9",    manuelName: "",                       year: 2025, category: "Boys 8-9",    roundDates: undefined,                              sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/28/leaderboard.htm" },
-  { id: "2025_b1011", url: "/data/bjgt_vp_field_2025.json",   label: "2025 // Boys 10-11",  shortLabel: "2025 Boys 10-11",  manuelName: "Manuel Medeiros",        year: 2025, category: "Boys 10-11", roundDates: undefined,                              sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/34/leaderboard.htm" },
-  { id: "2026_b1011", url: "/data/wjgc_2026_b1011_3r.json",   label: "2026 // Boys 10-11",  shortLabel: "2026 Boys 10-11",  manuelName: "Manuel Francisco Medeiros", year: 2026, category: "Boys 10-11", roundDates: ["25 Fev", "26 Fev", "27 Fev"] as string[],    sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/73/leaderboard.htm", reverseRounds: true },
-  { id: "2026_b1213", url: "/data/wjgc_2026_contest33.json",  label: "2026 // Boys 12-13",  shortLabel: "2026 Boys 12-13",  manuelName: "",                       year: 2026, category: "Boys 12-13", roundDates: ["25 Fev", "26 Fev", "27 Fev"] as string[],    sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/33/leaderboard.htm", reverseRounds: true },
+  /* ── BJGT (Villa Padierna) ── */
+  { id: "2025_b89",   url: "/data/wjgc_2025_b89.json",        label: "2025 // Boys 8-9",    shortLabel: "2025 Boys 8-9",    manuelName: "",                          year: 2025, category: "Boys 8-9",    roundDates: undefined,                                   series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/28/leaderboard.htm" },
+  { id: "2025_b1011", url: "/data/bjgt_vp_field_2025.json",   label: "2025 // Boys 10-11",  shortLabel: "2025 Boys 10-11",  manuelName: "Manuel Medeiros",           year: 2025, category: "Boys 10-11", roundDates: undefined,                                   series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/34/leaderboard.htm" },
+  { id: "2026_b1011", url: "/data/wjgc_2026_b1011_3r.json",   label: "2026 // Boys 10-11",  shortLabel: "2026 Boys 10-11",  manuelName: "Manuel Francisco Medeiros", year: 2026, category: "Boys 10-11", roundDates: ["25 Fev", "26 Fev", "27 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/73/leaderboard.htm", reverseRounds: true },
+  { id: "2026_b1213", url: "/data/wjgc_2026_contest33.json",  label: "2026 // Boys 12-13",  shortLabel: "2026 Boys 12-13",  manuelName: "",                          year: 2026, category: "Boys 12-13", roundDates: ["25 Fev", "26 Fev", "27 Fev"] as string[], series: "bjgt" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/33/leaderboard.htm", reverseRounds: true },
+  /* ── EOWAGR (European Open) ── */
+  /* ── EOWAGR (European Open) ── */
+  /* ── EOWAGR (European Open) ── */
+  { id: "eo25_b78",   url: "/data/eowagr25_contest121.json",  label: "2025 // Boys 7-8",    shortLabel: "2025 Boys 7-8",    manuelName: "",                          year: 2025, category: "Boys 7-8",   roundDates: ["11 Ago", "12 Ago", "13 Ago"] as string[], series: "eowagr" as const, sourceUrl: "https://brjgt.bluegolfw/brjgt25/event/brjgt2512/contest/121/leaderboard.htm" },
+  { id: "eo25_b910",  url: "/data/eowagr25_contest13.json",   label: "2025 // Boys 9-10",   shortLabel: "2025 Boys 9-10",   manuelName: "",                          year: 2025, category: "Boys 9-10",  roundDates: ["11 Ago", "12 Ago", "13 Ago"] as string[], series: "eowagr" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2515/contest/13/leaderboard.htm" },
+  { id: "eo25_b1112", url: "/data/eowagr25_scorecards.json",  label: "2025 // Boys 11-12",  shortLabel: "2025 Boys 11-12",  manuelName: "Manuel Medeiros",           year: 2025, category: "Boys 11-12", roundDates: ["11 Ago", "12 Ago", "13 Ago"] as string[], series: "eowagr" as const, sourceUrl: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2515/contest/121/leaderboard.htm" },
+  { id: "eo25_b1314", url: "/data/eowagr25_contest77.json",   label: "2025 // Boys 13-14",  shortLabel: "2025 Boys 13-14",  manuelName: "",                          year: 2025, category: "Boys 13-14", roundDates: ["11 Ago", "12 Ago", "13 Ago"] as string[], series: "eowagr" as const, sourceUrl: "https://brjgt.bluegolfw/brjgt25/event/brjgt2512/contest/77/leaderboard.htm" },
 ];
 
 /* ── Flags ── */
@@ -389,22 +397,20 @@ function buildEvo(cur: TDef, all: (TDef | null)[]): { evoMap?: Map<string, EvoEn
 
 function Content() {
   const [ti, setTi] = useState(2);
-  const [all, setAll] = useState<(TDef | null)[]>([null, null, null, null]);
+  const [all, setAll] = useState<(TDef | null)[]>(new Array(URLS.length).fill(null));
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   useEffect(() => {
     Promise.all(URLS.map(async (m) => {
       try { const res = await fetch(m.url); if (!res.ok) return null; const raw = await res.json();
-        return { id: m.id, label: m.label, shortLabel: m.shortLabel, data: loadT(raw, (m as any).reverseRounds), manuelName: m.manuelName, year: m.year, category: m.category, roundDates: m.roundDates } as TDef;
+        return { id: m.id, label: m.label, shortLabel: m.shortLabel, data: loadT(raw, (m as any).reverseRounds), manuelName: m.manuelName, year: m.year, category: m.category, roundDates: m.roundDates, series: m.series } as TDef;
       } catch { return null; }
     })).then(r => { setAll(r); setLoading(false); });
   }, []);
 
   const cur = all[ti];
   if (loading) return <LoadingState />;
-
-  const years = [...new Set(URLS.map(u => u.year))].sort();
 
   const { evoMap, evoYear, manuelEvo } = cur ? buildEvo(cur, all) : {};
 
@@ -418,8 +424,16 @@ function Content() {
             title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
             {sidebarOpen ? "◀" : "▶"}
           </button>
-          <span className="toolbar-title">🇪🇸 BJGT</span>
-          {cur && <span className="toolbar-meta">{cur.category === "Boys 12-13" ? "📍 Villa Padierna — Alferini" : "📍 Villa Padierna — Flamingos"}</span>}
+          {cur?.series === "eowagr"
+            ? <span className="toolbar-title">🌍 European Open</span>
+            : <span className="toolbar-title">🏌️ WJGC</span>}
+          {cur && <span className="toolbar-meta">{
+            cur.series === "eowagr"
+              ? "📍 Le Touquet GC — La Forêt"
+              : cur.category === "Boys 12-13"
+                ? "📍 Villa Padierna — Alferini"
+                : "📍 Villa Padierna — Flamingos"
+          }</span>}
         </div>
         <div className="toolbar-right">
           {cur && <span className="chip">{cur.data.players.filter(p => p.rounds.length === Math.max(...cur.data.players.map(q => q.rounds.length))).length} field · {Math.max(...cur.data.players.map(p => p.rounds.length))}R · {cur.category}</span>}
@@ -431,30 +445,59 @@ function Content() {
 
         {/* Sidebar */}
         <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`}>
-          {years.map(year => (
-            <React.Fragment key={year}>
-              <div className="sidebar-section-title-dark">{year}</div>
-              {URLS.filter(u => u.year === year).map((u, _, arr) => {
-                const idx = URLS.indexOf(u);
-                const t = all[idx];
-                const nR = t ? Math.max(...t.data.players.map(p => p.rounds.length), 0) : 0;
-                const nP = t ? t.data.players.filter(p => p.rounds.length === nR).length : 0;
-                return (
-                  <button key={u.id}
-                    className={`course-item ${ti === idx ? "active" : ""}`}
-                    onClick={() => setTi(idx)}>
-                    <div className="course-item-name">{u.category}</div>
-                    {t && <div className="course-item-meta">{nP} jog · {nR}R</div>}
-                    <a href={u.sourceUrl} target="_blank" rel="noopener noreferrer"
-                      className="tourn-ext-link" style={{ marginTop: 4 }}
-                      onClick={e => e.stopPropagation()}>
-                      🔗 Leaderboard oficial
-                    </a>
-                  </button>
-                );
-              })}
-            </React.Fragment>
-          ))}
+          {(["bjgt", "eowagr"] as const).map(series => {
+            const seriesUrls = URLS.filter(u => u.series === series);
+            if (!seriesUrls.length) return null;
+            const seriesYears = [...new Set(seriesUrls.map(u => u.year))].sort();
+            const isEowagr = series === "eowagr";
+            return (
+              <React.Fragment key={series}>
+                <div className="sidebar-section-title-dark" style={isEowagr ? {
+                  background: "var(--warning, #8a6200)",
+                  color: "#fff8e1",
+                  borderBottom: "1px solid #c17a00",
+                  letterSpacing: "0.08em",
+                } : {}}>
+                  {isEowagr ? "🌍 European Open" : "🏌️ World Junior Golf Championship"}
+                </div>
+                {seriesYears.map(year => (
+                  <React.Fragment key={year}>
+                    <div className="sidebar-year-label" style={{
+                      padding: "2px 10px",
+                      fontSize: 10,
+                      fontWeight: 700,
+                      letterSpacing: "0.05em",
+                      color: isEowagr ? "#fff8e1" : "#ffffff",
+                      textTransform: "uppercase",
+                      borderLeft: "none",
+                      marginTop: 4,
+                      background: isEowagr ? "#e09820" : "#4a9b6f",
+                    }}>{year}</div>
+                    {seriesUrls.filter(u => u.year === year).map((u) => {
+                      const idx = URLS.indexOf(u);
+                      const t = all[idx];
+                      const nR = t ? Math.max(...t.data.players.map(p => p.rounds.length), 0) : 0;
+                      const nP = t ? t.data.players.filter(p => p.rounds.length === nR).length : 0;
+                      return (
+                        <button key={u.id}
+                          className={`course-item ${ti === idx ? "active" : ""}`}
+                          style={isEowagr && ti === idx ? { borderLeft: "3px solid var(--warning, #c17a00)" } : isEowagr ? { borderLeft: "3px solid transparent" } : {}}
+                          onClick={() => setTi(idx)}>
+                          <div className="course-item-name">{u.category}</div>
+                          {t && <div className="course-item-meta">{nP} jog · {nR}R</div>}
+                          <a href={u.sourceUrl} target="_blank" rel="noopener noreferrer"
+                            className="tourn-ext-link" style={{ marginTop: 4 }}
+                            onClick={e => e.stopPropagation()}>
+                            🔗 Leaderboard oficial
+                          </a>
+                        </button>
+                      );
+                    })}
+                  </React.Fragment>
+                ))}
+              </React.Fragment>
+            );
+          })}
         </div>
 
         {/* Detail */}
@@ -463,7 +506,13 @@ function Content() {
             <div className="detail-header">
               <h2 className="detail-title">{cur.label}</h2>
               <div className="detail-sub">
-                <span className="muted">{cur.category === "Boys 12-13" ? "📍 Villa Padierna — Alferini" : "📍 Villa Padierna — Flamingos"}</span>
+                <span className="muted">{
+                  cur.series === "eowagr"
+                    ? "📍 Le Touquet GC — La Forêt"
+                    : cur.category === "Boys 12-13"
+                      ? "📍 Villa Padierna — Alferini"
+                      : "📍 Villa Padierna — Flamingos"
+                }</span>
                 <a href={URLS[ti].sourceUrl} target="_blank" rel="noopener noreferrer"
                   className="tourn-ext-link" style={{ marginLeft: 8 }}>
                   🔗 Leaderboard oficial

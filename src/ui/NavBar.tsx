@@ -14,7 +14,7 @@ import golfBallSvg from "../assets/golf-ball.svg";
 
 type Tab =
   | "campos" | "jogadores" | "comparar" | "simulador" | "calendario"
-  | "drive" | "bjgt" | "rivais" | "uskids" | "diversos";
+  | "drive" | "bjgt" | "rivais" | "uskids" | "diversos" | "doral";
 
 // ── Helpers ────────────────────────────────────────────────────────
 
@@ -30,6 +30,7 @@ function tabFromPath(pathname: string): Tab {
     rivais: "rivais",
     uskids: "uskids",
     diversos: "diversos",
+    doral: "doral",
   };
   return map[seg] ?? "jogadores";
 }
@@ -46,6 +47,7 @@ const TAB_TITLES: Record<Tab, string> = {
   campos:     "Golf Junior – Campos",
   bjgt:       "Golf Junior – BJGT",
   diversos:   "Golf Junior – Diversos",
+  doral:      "Golf Junior – Doral",
 };
 
 // ── Componente ─────────────────────────────────────────────────────
@@ -135,6 +137,11 @@ export default function NavBar() {
         {calUnlocked && (
           <button className={`nav-btn ${tab === "uskids" ? "active" : ""}`} onClick={() => go("/uskids")}>
             🇺🇸 USKids
+          </button>
+        )}
+        {calUnlocked && (
+          <button className={`nav-btn ${tab === "doral" ? "active" : ""}`} onClick={() => go("/doral")}>
+            🇺🇸 Doral
           </button>
         )}
         {calUnlocked && (
