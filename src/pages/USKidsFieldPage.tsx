@@ -608,18 +608,12 @@ function escalaoToTournament(e: EscalaoResult, t: TorneioResult): TATournament {
 // ESCALÃO SECTION — tabs R1 / R2 / Acumulado
 // usa ScorecardLB e AccumulatedLB de TorneiosAnalisePage
 // ─────────────────────────────────────────────
-function EscalaoSection({ escalao: e, torneio: t, isManuelEscalao }: {
+function EscalaoSection({ escalao: e, torneio: t }: {
   escalao: EscalaoResult;
   torneio: TorneioResult;
-  isManuelEscalao: boolean;
 }) {
-  const teeInfo = TEES_LOOKUP[t.t]?.[e.age_group];
-  const distTotal = teeInfo?.metros?.length === 18
-    ? teeInfo.metros.reduce((a, b) => a + b, 0)
-    : null;
-
   const rondasComDados = e.rondas.filter(r => (r.leaderboard ?? r.jogadores ?? []).length > 0);
-  if (!rondasComDados.length) return null;
+  if (!rondasComDados.length) return <div style={{ color:"var(--text-3)", padding:"16px 0", textAlign:"center", fontSize:13 }}>Sem dados para este escalão.</div>;
 
   const hasAcumulado = rondasComDados.length >= 2;
   const defaultTab = (() => {
@@ -647,17 +641,10 @@ function EscalaoSection({ escalao: e, torneio: t, isManuelEscalao }: {
   });
 
   return (
-    <div style={{ marginBottom: 24 }}>
-      <div style={{
-        display: "flex", alignItems: "center", gap: 8,
-        borderBottom: `1px solid ${isManuelEscalao ? "var(--accent)" : "var(--border)"}`,
-        paddingBottom: 4, marginBottom: 0,
-      }}>
-        <span style={{ fontSize: 12, fontWeight: 700, color: isManuelEscalao ? "var(--accent)" : "var(--text-3)" }}>
-          {isManuelEscalao ? "★ " : ""}{e.nome}
-        </span>
-        {distTotal && <span style={{ fontWeight: 400, fontSize: 11, color: "var(--text-3)" }}>{distTotal}m</span>}
-        <div style={{ display: "flex", gap: 0, marginLeft: 12, overflowX: "auto" }}>
+    <div>
+      {/* Sub-tabs R1 / R2 / Acumulado — só se houver mais de 1 ronda */}
+      {(rondasComDados.length > 1) && (
+        <div style={{ display: "flex", borderBottom: "1px solid var(--border)", marginBottom: 8 }}>
           {rondasComDados.map((_, i) => (
             <button key={i} style={tabStyle(i)} onClick={() => setTab(i)}>R{i + 1}</button>
           ))}
@@ -667,13 +654,55 @@ function EscalaoSection({ escalao: e, torneio: t, isManuelEscalao }: {
             </button>
           )}
         </div>
+      )}
+      {isAccTab
+        ? <AccumulatedLB tournament={curT} nRounds={rondasComDados.length} escLookup={new Map()} playersDB={{}} />
+        : <ScorecardLB tournament={curT} escLookup={new Map()} playersDB={{}} siLabel="m" parLabelColSpan={6} />
+      }
+    </div>
+  );
+}
+
+function EscalaoTabs({ escaloes, torneio: t, defaultIdx }: {
+  escaloes: EscalaoResult[];
+  torneio: TorneioResult;
+  defaultIdx: number;
+}) {
+  const [esc, setEsc] = useState(defaultIdx);
+  const escalaoEsperado = escalaoManuelParaData(t.date_inicio);
+
+  const escTabStyle = (i: number): React.CSSProperties => ({
+    padding: "7px 16px", fontSize: 13,
+    fontWeight: esc === i ? 700 : 500,
+    color: esc === i ? "var(--text)" : "var(--text-muted,#888)",
+    background: "transparent", border: "none",
+    borderBottom: esc === i ? "2px solid var(--accent,#2563eb)" : "2px solid transparent",
+    cursor: "pointer", whiteSpace: "nowrap" as const,
+  });
+
+  const e = escaloes[esc];
+
+  return (
+    <div>
+      {/* Barra de escalões */}
+      <div style={{ display: "flex", borderBottom: "1px solid var(--border)", marginBottom: 12, overflowX: "auto" }}>
+        {escaloes.map((es, i) => {
+          const isME = t.escalao_manuel
+            ? es.age_group === t.escalao_manuel
+            : (es.is_manuel === true && es.nome === escalaoEsperado);
+          const tInfo = TEES_LOOKUP[t.t]?.[es.age_group];
+          const dist = tInfo?.metros?.length === 18
+            ? tInfo.metros.reduce((a: number, b: number) => a + b, 0) : null;
+          return (
+            <button key={es.age_group} style={escTabStyle(i)} onClick={() => setEsc(i)}>
+              {isME ? "★ " : ""}{es.nome}
+              {dist ? <span style={{ marginLeft: 4, fontSize: 10, fontWeight: 400, opacity: 0.7 }}>{dist}m</span> : null}
+            </button>
+          );
+        })}
       </div>
-      <div style={{ paddingTop: 8 }}>
-        {isAccTab
-          ? <AccumulatedLB tournament={curT} nRounds={rondasComDados.length} escLookup={new Map()} playersDB={{}} />
-          : <ScorecardLB tournament={curT} escLookup={new Map()} playersDB={{}} siLabel="m" parLabelColSpan={6} />
-        }
-      </div>
+      {/* Conteúdo do escalão activo */}
+      {e && <EscalaoSection key={e.age_group} escalao={e} torneio={t} />}
     </div>
   );
 }
@@ -941,7 +970,7 @@ function TabResultados({ data, selectedT, greatgolfData }: {
       const teeInfo = TEES_LOOKUP[t.t]?.[e.age_group];
 
       const escalaoTitle = `<h2>${isManuelEscalao ? "★ " : ""}${e.nome}</h2>`;
-      return rondasComDados.map((r, ri) => {
+      const rondasHtml = rondasComDados.map((r, ri) => {
           const jogadores = r.leaderboard ?? r.jogadores ?? [];
           const buracos = r.buracos || 18;
           const has18 = buracos >= 18;
@@ -1026,6 +1055,70 @@ function TabResultados({ data, selectedT, greatgolfData }: {
             <tbody>${rows}</tbody>
           </table>`;
         }).join("");
+
+      // Tabela acumulada (só se ≥2 rondas)
+      let accHtml = "";
+      if (rondasComDados.length >= 2) {
+        const totaisMap = new Map<string, { nome: string; pais: string; scores: number[]; total: number }>();
+        for (const r of rondasComDados) {
+          const lb = r.leaderboard ?? r.jogadores ?? [];
+          for (const j of lb) {
+            const k = j.nome.toLowerCase().trim();
+            if (!totaisMap.has(k)) totaisMap.set(k, { nome: j.nome, pais: j.pais, scores: [], total: 0 });
+            const entry = totaisMap.get(k)!;
+            entry.scores.push(j.score || 0);
+            entry.total += j.score || 0;
+          }
+        }
+        const sorted = [...totaisMap.values()]
+          .filter(p => p.scores.length === rondasComDados.length)
+          .sort((a, b) => a.total - b.total);
+        const incomplete = [...totaisMap.values()]
+          .filter(p => p.scores.length < rondasComDados.length)
+          .sort((a, b) => a.total - b.total);
+        const allSorted = [...sorted, ...incomplete];
+
+        const totalParAcc = (() => {
+          const firstR = rondasComDados[0];
+          const p0 = (firstR.leaderboard ?? firstR.jogadores ?? [])[0];
+          const par0 = teeInfo?.par ?? p0?.par ?? [];
+          return par0.reduce((s: number, p: number) => s + p, 0) * rondasComDados.length;
+        })();
+
+        const rondaHeaders = rondasComDados.map((r, i) => `<th class="lb-gross">R${r.ronda}</th>`).join("");
+        const accRows = allSorted.map((p, idx) => {
+          const manuel = isManuel(p.nome);
+          const manCls = manuel ? "row-manuel" : "";
+          const isInc = p.scores.length < rondasComDados.length;
+          const tpRaw = totalParAcc > 0 ? p.total - totalParAcc : null;
+          const tpVal = tpStr(tpRaw);
+          const tpC   = tpColor(tpRaw);
+          const rondaCells = rondasComDados.map((_, i) =>
+            `<td class="lb-gross">${p.scores[i] ?? "–"}</td>`
+          ).join("");
+          return `<tr class="${manCls}">
+            <td class="pos">${isInc ? "–" : idx + 1}</td>
+            <td class="name">${manuel ? "★ " : ""}${p.nome}</td>
+            <td class="flag">${flag(p.pais)}</td>
+            <td class="lb-topar" style="color:${tpC}">${isInc ? "–" : tpVal}</td>
+            <td class="lb-gross" style="font-weight:700">${p.total || "–"}</td>
+            ${rondaCells}
+          </tr>`;
+        }).join("");
+
+        accHtml = `<div class="page-break"></div>${escalaoTitle}<h3>Acumulado · ${sorted.length} classificados · ${rondasComDados.length} rondas${totalParAcc ? ` · Par ${totalParAcc}` : ""}</h3>
+        <table>
+          <thead><tr>
+            <th class="pos">#</th><th class="name">Jogador</th><th class="flag"></th>
+            <th class="lb-topar">±Par</th><th class="lb-gross">Total</th>
+            ${rondaHeaders}
+          </tr></thead>
+          <tbody>${accRows}</tbody>
+        </table>`;
+        tableIndex++;
+      }
+
+      return rondasHtml + accHtml;
     }).join("");
 
     const html = `<!DOCTYPE html><html><head><meta charset="utf-8">
@@ -1124,16 +1217,19 @@ function TabResultados({ data, selectedT, greatgolfData }: {
         )}
       </div>
 
-      {/* Escalões e rondas */}
-      {sortEscaloes(t.escaloes).map(e => {
-        const escalaoEsperado = escalaoManuelParaData(t.date_inicio);
-        const isManuelEscalao = t.escalao_manuel
-          ? e.age_group === t.escalao_manuel
-          : (e.is_manuel === true && e.nome === escalaoEsperado);
-        return (
-          <EscalaoSection key={e.age_group} escalao={e} torneio={t} isManuelEscalao={isManuelEscalao} />
+      {/* Escalões — barra de tabs no topo */}
+      {(() => {
+        const escaloes = sortEscaloes(t.escaloes).filter(e =>
+          e.rondas.some(r => (r.leaderboard ?? r.jogadores ?? []).length > 0)
         );
-      })}
+        if (!escaloes.length) return null;
+        const escalaoEsperado = escalaoManuelParaData(t.date_inicio);
+        const manuelIdx = escaloes.findIndex(e =>
+          t.escalao_manuel ? e.age_group === t.escalao_manuel
+            : (e.is_manuel === true && e.nome === escalaoEsperado)
+        );
+        return <EscalaoTabs escaloes={escaloes} torneio={t} defaultIdx={manuelIdx >= 0 ? manuelIdx : 0} />;
+      })()}
 
       {/* ── Greatgolf Junior Open ── */}
       {greatgolfData && <SecaoGreatgolf data={greatgolfData} />}
