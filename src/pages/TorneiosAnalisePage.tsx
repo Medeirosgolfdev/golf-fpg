@@ -20,6 +20,7 @@ import { getTeeHex } from "../utils/teeColors";
 import PillBadge from "../ui/PillBadge";
 import { ScorecardLeaderboard, type ScorecardRow } from "../ui/ScorecardLeaderboard";
 import { MultiRoundLeaderboard, type MultiRoundRow as MRRow } from "../ui/MultiRoundLeaderboard";
+import { CrossSeasonTable, SortTh as CSortTh } from "../ui/CrossSeasonTable";
 import {
   MANUEL_FED, isManuel, fmtTP,
   EscPill, TeeDot, TournPName, ESC_STYLE, SDPill,
@@ -136,12 +137,12 @@ function resolveEsc(p: Player, escLookup: EscLookup): string {
 /* ─────────────────────────────────────────────
    TIPOS (subset do formato Drive)
    ───────────────────────────────────────────── */
-interface RoundScore {
+export interface RoundScore {
   round: number; gross: number;
   scores: number[]; pars: number[]; si: number[]; meters: number[];
   courseRating?: number; slope?: number; teeName?: string; teeColorId?: number;
 }
-interface Player {
+export interface Player {
   scoreId: string; pos: number | string | null; name: string; club: string;
   grossTotal: number | string | null; toPar: number | string | null;
   fedCode?: string; hcpExact?: number; hcpPlay?: number;
@@ -150,7 +151,7 @@ interface Player {
   scores?: number[]; par?: number[]; si?: number[]; meters?: number[];
   roundScores?: RoundScore[];
 }
-interface Tournament {
+export interface Tournament {
   name: string; ccode?: string; tcode: string; date: string;
   campo: string; clube?: string; circuit?: string; series?: string;
   region?: string; escalao?: string | null; num?: number;
@@ -188,7 +189,7 @@ function formatPlayerName(raw: string): string {
   return raw;
 }
 
-function normalizePlayer(p: any): Player {
+export function normalizePlayer(p: any): Player {
   const r1: RoundScore | undefined = p.roundScores?.[0];
   return {
     ...p,
@@ -204,7 +205,7 @@ function normalizePlayer(p: any): Player {
 }
 
 /** Expand multi-round: 1 torneio → R1 + R2 + ... + Total */
-function expandMultiRound(t: Tournament): Tournament[] {
+export function expandMultiRound(t: Tournament): Tournament[] {
   const nRounds = t.rounds || 1;
   const hasMulti = t.players.some(p => (p.roundScores?.length ?? 0) > 1);
   if (nRounds <= 1 || !hasMulti) return [t];
@@ -540,7 +541,7 @@ type SortKey = "pos" | "name" | "club" | "esc" | "hcp" | "gross" | "toPar" | "te
    LEADERBOARD PRINCIPAL (1 ronda)
    Colunas idênticas ao Drive: ESC · FED · CLUBE · HCP · TEE · Tot · ± · SD · 🐦 · Par · ■
    ───────────────────────────────────────────── */
-function ScorecardLB({ tournament, escLookup, playersDB }: { tournament: Tournament; escLookup: EscLookup; playersDB: PlayersDB }) {
+export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabelColSpan = 5 }: { tournament: Tournament; escLookup: EscLookup; playersDB: PlayersDB; siLabel?: string; parLabelColSpan?: number }) {
   const [sortKey, setSortKey] = useState<SortKey>("pos");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
   const [showScorecard, setShowScorecard] = useState(true);
@@ -661,8 +662,9 @@ function ScorecardLB({ tournament, escLookup, playersDB }: { tournament: Tournam
     <ScorecardLeaderboard
       par={par}
       si={si.length >= nh ? si : undefined}
+      siLabel={siLabel}
       rows={rows}
-      parLabelColSpan={5}
+      parLabelColSpan={parLabelColSpan}
       postTotalColCount={0}
       showScorecard={showScorecard}
       onToggleScorecard={() => setShowScorecard(v => !v)}
@@ -703,7 +705,7 @@ function ScorecardLB({ tournament, escLookup, playersDB }: { tournament: Tournam
 /* ─────────────────────────────────────────────
    LEADERBOARD ACUMULADO (multi-ronda)
    ───────────────────────────────────────────── */
-function AccumulatedLB({ tournament, nRounds, escLookup, playersDB }: { tournament: Tournament; nRounds: number; escLookup: EscLookup; playersDB: PlayersDB }) {
+export function AccumulatedLB({ tournament, nRounds, escLookup, playersDB }: { tournament: Tournament; nRounds: number; escLookup: EscLookup; playersDB: PlayersDB }) {
   const rawPlayers = tournament.players;
   if (!rawPlayers.length) return <div className="muted ta-center p-16">Sem resultados.</div>;
 
@@ -985,6 +987,46 @@ function TournamentDetail({ tournament, escLookup, playersDB }: { tournament: To
 function pjaPts(toPar: number, gf: boolean): number {
   return Math.max(0, 25 - toPar) * (gf ? 1.5 : 1);
 }
+function fmtPts(pts: number): string {
+  return pts % 1 === 0 ? String(pts) : pts.toFixed(1);
+}
+function isGFTournament(t: Tournament): boolean {
+  return /dunas/i.test(t.name) || /grande\s*final/i.test(t.name);
+}
+
+interface PJARound {
+  roundKey: string;
+  label: string;
+  date: string;
+}
+interface PJATournCol {
+  tournKey: string;
+  name: string;
+  date: string;
+  campo: string;
+  isGF: boolean;
+  rounds: PJARound[];
+  colSpan: number;
+}
+interface PJARoundResult {
+  toPar: number;
+  pts: number;
+  inTop14: boolean;
+}
+interface PJAPRow {
+  key: string;
+  name: string;
+  fedCode?: string;
+  club: string;
+  escalao: string;
+  sex: string;
+  hcp: number | null;
+  results: Map<string, PJARoundResult>;
+  allRounds: { roundKey: string; pts: number }[];
+  total: number;
+  voltas: number;
+  eligible: boolean;
+}
 
 function PJARankingView({
   pjaList, playersDB, loading,
@@ -1002,110 +1044,160 @@ function PJARankingView({
   const [activeYear, setActiveYear] = useState<string>("");
   const year = activeYear || years[0] || "";
 
-  const [sortKey, setSortKey] = useState<"total"|"name"|"club"|"voltas"|"esc">("total");
-  const [sortDir, setSortDir] = useState<"asc"|"desc">("desc");
+  const [sortKey, setSortKey] = useState("total");
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
   const [filterEsc, setFilterEsc] = useState<string[]>([]);
   const [filterName, setFilterName] = useState("");
 
-  function handleSort(k: typeof sortKey) {
+  function handleSort(k: string) {
     if (k === sortKey) setSortDir(d => d === "asc" ? "desc" : "asc");
-    else { setSortKey(k); setSortDir(k === "name" || k === "club" || k === "esc" ? "asc" : "desc"); }
+    else { setSortKey(k); setSortDir(k === "name" || k === "club" || k === "escalao" ? "asc" : "desc"); }
   }
-
-  type PRow = {
-    key: string; name: string; fedCode?: string; club: string;
-    escalao: string; sex: string; voltas: number; total: number; eligible: boolean;
-  };
-
-  const rows: PRow[] = useMemo(() => {
-    const tourns = pjaList.filter(t =>
-      (t.date || "").startsWith(year) && !(t as any)._isSynthetic
-    );
-    const map = new Map<string, { name: string; fedCode?: string; club: string; escalao: string; sex: string; pts: number[] }>();
-
-    for (const t of tourns) {
-      const gf = /dunas/i.test(t.name) || /grande\s*final/i.test(t.name);
-      for (const p of t.players) {
-        const tp = typeof p.toPar === "string" ? parseInt(p.toPar) : p.toPar as number;
-        if (tp == null || isNaN(tp)) continue;
-        const grossV = typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : p.grossTotal as number;
-        if (grossV == null || isNaN(grossV) || grossV >= 900) continue;
-
-        const key = p.fedCode || p.name.toLowerCase().trim();
-        if (!map.has(key)) {
-          const db = p.fedCode ? playersDB[p.fedCode] : null;
-          const clubRaw = db?.club;
-          const club = clubRaw ? (typeof clubRaw === "object" ? (clubRaw as any).short || "" : String(clubRaw)) : (p.club || "");
-          map.set(key, {
-            name: p.name, fedCode: p.fedCode,
-            club, escalao: db?.escalao || (p as any).escalao || "",
-            sex: db?.sex || "", pts: [],
-          });
-        }
-        map.get(key)!.pts.push(pjaPts(tp, gf));
-      }
-    }
-
-    return [...map.entries()].map(([key, r]) => {
-      const top14 = [...r.pts].sort((a, b) => b - a).slice(0, 14);
-      const total = top14.reduce((s, v) => s + v, 0);
-      return { key, name: r.name, fedCode: r.fedCode, club: r.club, escalao: r.escalao, sex: r.sex, voltas: r.pts.length, total, eligible: r.pts.length >= 14 };
-    }).filter(r => r.voltas > 0);
-  }, [pjaList, year, playersDB]);
-
-  const availEscs = useMemo(() => {
-    const s = new Set<string>();
-    for (const r of rows) if (r.escalao) s.add(r.escalao);
-    return [...s].sort((a, b) => a.localeCompare(b, "pt"));
-  }, [rows]);
-
-  const filtered = useMemo(() => {
-    let r = rows;
-    if (filterEsc.length) r = r.filter(p => filterEsc.includes(p.escalao));
-    if (filterName.trim()) {
-      const q = filterName.trim().toLowerCase();
-      r = r.filter(p => p.name.toLowerCase().includes(q) || p.club.toLowerCase().includes(q));
-    }
-    return r;
-  }, [rows, filterEsc, filterName]);
-
-  const sorted = useMemo(() => {
-    const mult = sortDir === "asc" ? 1 : -1;
-    return [...filtered].sort((a, b) => {
-      if (sortKey === "name")   return mult * a.name.localeCompare(b.name, "pt");
-      if (sortKey === "club")   return mult * a.club.localeCompare(b.club, "pt");
-      if (sortKey === "esc")    return mult * a.escalao.localeCompare(b.escalao, "pt");
-      if (sortKey === "voltas") return mult * (a.voltas - b.voltas);
-      return mult * (a.total - b.total); // "total"
-    });
-  }, [filtered, sortKey, sortDir]);
-
-  function SortTh({ k, className, children }: { k: typeof sortKey; className?: string; children: React.ReactNode }) {
-    const active = sortKey === k;
-    return (
-      <th className={"lb-sortable " + (className || "")} onClick={() => handleSort(k)} style={{ cursor: "pointer", userSelect: "none" }}>
-        {children}{active && <span style={{ marginLeft: 3, fontSize: 7 }}>{sortDir === "asc" ? "▲" : "▼"}</span>}
-      </th>
-    );
-  }
-
   function toggleEsc(e: string) {
     setFilterEsc(prev => prev.includes(e) ? prev.filter(x => x !== e) : [...prev, e]);
   }
 
-  if (loading && pjaList.length === 0) {
-    return <div className="muted fs-11" style={{ padding: 24 }}>A carregar…</div>;
-  }
-  if (!year) {
-    return <div className="muted fs-11" style={{ padding: 24 }}>Sem torneios PJA.</div>;
-  }
+  const yearTournaments: Tournament[] = useMemo(() =>
+    pjaList
+      .filter(t => (t.date || "").startsWith(year))
+      .sort((a, b) => (a.date || "").localeCompare(b.date || ""))
+  , [pjaList, year]);
+
+  const tournCols: PJATournCol[] = useMemo(() => {
+    const cols: PJATournCol[] = [];
+    for (const t of yearTournaments) {
+      const isSynth = !!(t as any)._isSynthetic;
+      const subRounds: Tournament[] = (t as any)._subRounds || [];
+      const isGF = isGFTournament(t);
+      const tournKey = t.tcode + "_" + t.date;
+
+      if (isSynth && subRounds.length > 1) {
+        const rounds: PJARound[] = subRounds.map((sr, i) => ({
+          roundKey: tournKey + "_r" + (i + 1),
+          label: "R" + (i + 1),
+          date: sr.date || t.date,
+        }));
+        cols.push({ tournKey, name: t.name, date: t.date || "", campo: t.campo || "", isGF, rounds, colSpan: rounds.length * 2 });
+      } else {
+        cols.push({ tournKey, name: t.name, date: t.date || "", campo: t.campo || "", isGF, rounds: [{ roundKey: tournKey + "_r1", label: "", date: t.date || "" }], colSpan: 2 });
+      }
+    }
+    return cols;
+  }, [yearTournaments]);
+
+  const allRows: PJAPRow[] = useMemo(() => {
+    const map = new Map<string, PJAPRow>();
+
+    for (const t of yearTournaments) {
+      const isSynth = !!(t as any)._isSynthetic;
+      const subRounds: Tournament[] = (t as any)._subRounds || [];
+      const isGF = isGFTournament(t);
+      const tournKey = t.tcode + "_" + t.date;
+
+      for (const p of t.players) {
+        const playerKey = p.fedCode || ("name:" + p.name.toLowerCase().trim());
+
+        if (!map.has(playerKey)) {
+          const db = p.fedCode ? playersDB[p.fedCode] : null;
+          const clubRaw = db?.club;
+          const club = clubRaw
+            ? (typeof clubRaw === "object" ? (clubRaw as any).short || "" : String(clubRaw))
+            : (p.club || "");
+          map.set(playerKey, {
+            key: playerKey, name: p.name, fedCode: p.fedCode,
+            club, escalao: db?.escalao || (p as any).escalao || "",
+            sex: db?.sex || "", hcp: p.hcpExact ?? null,
+            results: new Map(), allRounds: [], total: 0, voltas: 0, eligible: false,
+          });
+        }
+        const row = map.get(playerKey)!;
+        if (p.hcpExact != null) row.hcp = p.hcpExact;
+
+        if (isSynth && subRounds.length > 1 && p.roundScores && p.roundScores.length > 0) {
+          p.roundScores.forEach((rs: any, i: number) => {
+            const parR = (rs.pars || []).reduce((a: number, b: number) => a + b, 0);
+            if (!parR || !rs.gross) return;
+            const tp = rs.gross - parR;
+            const pts = pjaPts(tp, isGF);
+            const roundKey = tournKey + "_r" + (i + 1);
+            row.results.set(roundKey, { toPar: tp, pts, inTop14: false });
+            row.allRounds.push({ roundKey, pts });
+          });
+        } else {
+          const tp = typeof p.toPar === "string" ? parseInt(p.toPar) : p.toPar as number;
+          const gross = typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : p.grossTotal as number;
+          if (tp == null || isNaN(tp) || gross == null || isNaN(gross) || gross >= 900) continue;
+          const pts = pjaPts(tp, isGF);
+          const roundKey = tournKey + "_r1";
+          row.results.set(roundKey, { toPar: tp, pts, inTop14: false });
+          row.allRounds.push({ roundKey, pts });
+        }
+      }
+    }
+
+    for (const row of map.values()) {
+      const sorted = [...row.allRounds].sort((a, b) => b.pts - a.pts);
+      const top14Keys = new Set(sorted.slice(0, 14).map(r => r.roundKey));
+      for (const [rk, res] of row.results.entries()) {
+        res.inTop14 = top14Keys.has(rk);
+      }
+      row.total = sorted.slice(0, 14).reduce((s, r) => s + r.pts, 0);
+      row.voltas = row.allRounds.length;
+      row.eligible = row.voltas >= 14;
+    }
+
+    return [...map.values()].filter(r => r.voltas > 0);
+  }, [yearTournaments, playersDB]);
+
+  const availEscs = useMemo(() => {
+    const s = new Set<string>();
+    for (const r of allRows) if (r.escalao) s.add(r.escalao);
+    return [...s].sort((a, b) => a.localeCompare(b, "pt"));
+  }, [allRows]);
+
+  const sortedRows = useMemo(() => {
+    let rows = allRows;
+    if (filterEsc.length) rows = rows.filter(r => filterEsc.includes(r.escalao));
+    if (filterName.trim()) {
+      const q = filterName.trim().toLowerCase();
+      rows = rows.filter(r => r.name.toLowerCase().includes(q) || r.club.toLowerCase().includes(q));
+    }
+    const INF = 99999;
+    const mult = sortDir === "asc" ? 1 : -1;
+    return [...rows].sort((a, b) => {
+      if (sortKey === "name")    return mult * a.name.localeCompare(b.name, "pt");
+      if (sortKey === "club")    return mult * a.club.localeCompare(b.club, "pt");
+      if (sortKey === "escalao") return mult * a.escalao.localeCompare(b.escalao, "pt");
+      if (sortKey === "voltas")  return mult * (a.voltas - b.voltas);
+      if (sortKey.startsWith("toPar_")) {
+        const rk = sortKey.slice(6);
+        return mult * ((a.results.get(rk)?.toPar ?? INF) - (b.results.get(rk)?.toPar ?? INF));
+      }
+      if (sortKey.startsWith("pts_")) {
+        const rk = sortKey.slice(4);
+        return mult * ((a.results.get(rk)?.pts ?? -1) - (b.results.get(rk)?.pts ?? -1));
+      }
+      return mult * (a.total - b.total);
+    });
+  }, [allRows, filterEsc, filterName, sortKey, sortDir]);
+
+  const chip = (active: boolean, label: React.ReactNode, onClick: () => void, color?: string) => (
+    <button key={String(label)} onClick={onClick} style={{
+      fontSize: 10, padding: "2px 8px", borderRadius: 20,
+      border: `1px solid ${active ? (color || "var(--accent,#2563eb)") : "var(--border)"}`,
+      background: active ? (color || "var(--accent,#2563eb)") : "var(--bg-hover)",
+      color: active ? "#fff" : "var(--text-muted)",
+      cursor: "pointer", whiteSpace: "nowrap", fontWeight: active ? 700 : 500,
+    }}>{label}</button>
+  );
+
+  if (loading && pjaList.length === 0) return <div className="muted fs-11" style={{ padding: 24 }}>A carregar…</div>;
+  if (!year) return <div className="muted fs-11" style={{ padding: 24 }}>Sem torneios PJA.</div>;
 
   return (
-    <div style={{ padding: "16px 20px" }}>
-
-      {/* Cabeçalho: título + tabs de ano */}
-      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14, flexWrap: "wrap" }}>
-        <span style={{ fontWeight: 800, fontSize: 15 }}>Ranking PJA</span>
+    <div>
+      <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 16px 10px", flexWrap: "wrap", borderBottom: "1px solid var(--border)" }}>
+        <span style={{ fontWeight: 800, fontSize: 14 }}>Ranking PJA</span>
         <div style={{ display: "flex", gap: 6 }}>
           {years.map(yr => (
             <button key={yr}
@@ -1116,83 +1208,128 @@ function PJARankingView({
             </button>
           ))}
         </div>
+        <span className="muted fs-11" style={{ marginLeft: 4 }}>Par=25pts · top 14 rondas · GF×1,5</span>
       </div>
 
-      {/* Barra de filtros */}
-      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 6, marginBottom: 12, paddingBottom: 10, borderBottom: "1px solid var(--border)" }}>
+      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 6, padding: "8px 16px", borderBottom: "1px solid var(--border)" }}>
         <div style={{ position: "relative", flexShrink: 0 }}>
           <span style={{ position: "absolute", left: 7, top: "50%", transform: "translateY(-50%)", fontSize: 11, color: "var(--text-muted)", pointerEvents: "none" }}>🔍</span>
-          <input type="text" placeholder="Nome ou clube…" value={filterName} onChange={e => setFilterName(e.target.value)}
+          <input type="text" placeholder="Nome ou clube…" value={filterName}
+            onChange={e => setFilterName(e.target.value)}
             style={{ fontSize: 11, padding: "3px 8px 3px 22px", borderRadius: 6, border: "1px solid var(--border)", background: "var(--bg-card,#fff)", color: "var(--text)", width: 150, outline: "none" }} />
         </div>
-        {availEscs.length > 1 && <span style={{ color: "var(--border)", fontSize: 11 }}>|</span>}
+        {availEscs.length > 1 && <span style={{ color: "var(--border)" }}>|</span>}
         {availEscs.map(e => {
           const k = e.toLowerCase().replace(/[\s-]/g, "");
           const s = ESC_STYLE[k];
-          const active = filterEsc.includes(e);
-          return (
-            <button key={e} onClick={() => toggleEsc(e)} style={{
-              fontSize: 10, padding: "2px 8px", borderRadius: 20,
-              border: `1px solid ${active ? (s?.bg || "var(--accent,#2563eb)") : "var(--border)"}`,
-              background: active ? (s?.bg || "var(--accent,#2563eb)") : "var(--bg-hover)",
-              color: active ? "#fff" : "var(--text-muted)",
-              cursor: "pointer", whiteSpace: "nowrap", fontWeight: active ? 700 : 500,
-            }}>{e}</button>
-          );
+          return chip(filterEsc.includes(e), e, () => toggleEsc(e), s?.bg);
         })}
-        {(filterEsc.length > 0 || filterName) && (
-          <>
-            <span style={{ fontSize: 10, color: "var(--text-muted)", marginLeft: 4 }}>{sorted.length} de {rows.length}</span>
-            <button onClick={() => { setFilterEsc([]); setFilterName(""); }} style={{ fontSize: 10, padding: "2px 8px", borderRadius: 20, border: "1px solid var(--border)", background: "var(--bg-hover)", color: "var(--text-muted)", cursor: "pointer" }}>✕ limpar</button>
-          </>
-        )}
-        <span className="chip" style={{ marginLeft: "auto" }}>{rows.length} jogadores</span>
+        {(filterEsc.length > 0 || filterName) && <>
+          <span className="muted fs-10">{sortedRows.length} de {allRows.length}</span>
+          {chip(false, "✕ limpar", () => { setFilterEsc([]); setFilterName(""); })}
+        </>}
+        <span className="chip" style={{ marginLeft: "auto" }}>{allRows.length} jogadores · {tournCols.length} torneios</span>
       </div>
 
-      {/* Legenda */}
-      <div className="muted fs-11" style={{ marginBottom: 10 }}>
-        Par = 25 pts · ±1 pt/pancada · top 14 voltas por ano · Grande Final ×1,5
-      </div>
-
-      {sorted.length === 0 ? (
-        <div className="muted fs-11">Sem resultados.</div>
-      ) : (
-        <div style={{ overflowX: "auto" }}>
-          <table className="sc-lb" style={{ width: "100%" }}>
-            <thead>
-              <tr>
-                <th className="lb-pos">#</th>
-                <SortTh k="name" className="lb-name" style={{ textAlign: "left", paddingLeft: 8 }}>Jogador</SortTh>
-                <SortTh k="esc"  className="lb-esc">Esc.</SortTh>
-                <SortTh k="club" className="lb-club">Clube</SortTh>
-                <SortTh k="voltas" className="lb-hcp">Voltas</SortTh>
-                <SortTh k="total"  className="lb-gross">Pts</SortTh>
-              </tr>
-            </thead>
-            <tbody>
-              {sorted.map((row, idx) => (
-                <tr key={row.key}>
-                  <td className="lb-pos">{idx + 1}</td>
-                  <td className="lb-name" style={{ textAlign: "left", paddingLeft: 8 }}>
+      {sortedRows.length === 0
+        ? <div className="muted fs-11" style={{ padding: 16 }}>Sem dados para {year}.</div>
+        : (
+          <CrossSeasonTable
+            identityHeaders={<>
+              <CSortTh k="rank"    s={sortKey} d={sortDir} on={handleSort} className="cs-pos sticky-col-0">#</CSortTh>
+              <CSortTh k="name"    s={sortKey} d={sortDir} on={handleSort} className="cs-name sticky-col-1">Jogador</CSortTh>
+              <CSortTh k="escalao" s={sortKey} d={sortDir} on={handleSort} className="cs-esc">Esc.</CSortTh>
+              <CSortTh k="club"    s={sortKey} d={sortDir} on={handleSort} className="cs-club cs-id-end">Clube</CSortTh>
+            </>}
+            groups={tournCols.map(tc => ({
+              key: tc.tournKey,
+              headerTh: (
+                <th key={tc.tournKey} colSpan={tc.colSpan} className="cs-grp" style={{ lineHeight: 1.3 }}>
+                  <div className="fw-800" style={{ fontSize: 12 }}>
+                    {tc.name}
+                    {tc.isGF && <span style={{ marginLeft: 5, fontSize: 9, color: "#f59e0b", fontWeight: 800 }}>★ GF×1.5</span>}
+                  </div>
+                  <div className="c-muted-fs10-fw5">
+                    {fmtDate(tc.date)}{tc.campo ? " · " + tc.campo : ""}{tc.rounds.length > 1 ? ` · ${tc.rounds.length}R` : ""}
+                  </div>
+                </th>
+              ),
+              subHeaderThs: (
+                <>
+                  {tc.rounds.map(r => (
+                    <React.Fragment key={r.roundKey}>
+                      <CSortTh k={"toPar_" + r.roundKey} s={sortKey} d={sortDir} on={handleSort} className="cs-t-topar cs-grp">
+                        {r.label ? <span style={{ fontSize: 10, fontWeight: 800, color: "var(--color-good-dark)" }}>{r.label}</span> : "±Par"}
+                      </CSortTh>
+                      <CSortTh k={"pts_" + r.roundKey} s={sortKey} d={sortDir} on={handleSort} className="cs-t-gross cs-col" style={{ color: "var(--color-warn-dark)", fontWeight: 700 }}>Pts</CSortTh>
+                    </React.Fragment>
+                  ))}
+                </>
+              ),
+            }))}
+            summaryGroupTh={<th className="cs-grp" colSpan={2} style={{ fontWeight: 800, fontSize: 12 }}>Ranking</th>}
+            summarySubHeaders={<>
+              <CSortTh k="voltas" s={sortKey} d={sortDir} on={handleSort} className="cs-s-games cs-grp">Voltas</CSortTh>
+              <CSortTh k="total"  s={sortKey} d={sortDir} on={handleSort} className="cs-s-pts cs-col" style={{ color: "var(--color-warn-dark)", fontWeight: 800 }}>Total</CSortTh>
+            </>}
+          >
+            {sortedRows.map((row, idx) => {
+              const escCls = row.escalao ? "p p-sm p-" + row.escalao.toLowerCase().replace(/[\s-]/g, "") : "";
+              return (
+                <tr key={row.key} className={isManuel(row) ? "row-manuel" : undefined}>
+                  <td className="cs-pos sticky-col-0">{idx + 1}</td>
+                  <td className="cs-name sticky-col-1">
                     <PName name={row.name} fedCode={row.fedCode} playersDB={playersDB} />
-                    {row.sex === "F" && <span style={{ marginLeft: 5, fontSize: 9, color: "#e879f9", verticalAlign: "middle" }}>♀</span>}
-                    {!row.eligible && <span title="Menos de 14 voltas — não elegível para Grande Final" style={{ marginLeft: 5, fontSize: 9, color: "#f59e0b" }}>⚠</span>}
+                    {row.sex === "F" && <span style={{ marginLeft: 4, fontSize: 9, color: "#e879f9" }}>♀</span>}
                   </td>
-                  <td className="lb-esc">{row.escalao ? <EscPill esc={row.escalao} /> : <span className="muted">–</span>}</td>
-                  <td className="lb-club">{row.club || "–"}</td>
-                  <td className="lb-hcp" style={{ textAlign: "center" }}>{row.voltas}</td>
-                  <td className="lb-gross" style={{ fontWeight: 800, color: "var(--color-warn-dark)", fontVariantNumeric: "tabular-nums" }}>
-                    {row.total % 1 === 0 ? row.total : row.total.toFixed(1)}
+                  <td className="cs-esc">
+                    {row.escalao ? <span className={escCls + " fs-9"}>{row.escalao}</span> : <span className="muted">–</span>}
+                  </td>
+                  <td className="cs-club cs-id-end">{row.club || "–"}</td>
+
+                  {tournCols.map(tc => {
+                    const hasAny = tc.rounds.some(r => row.results.has(r.roundKey));
+                    if (!hasAny) return <td key={tc.tournKey} colSpan={tc.colSpan} className="cs-grp" />;
+                    return (
+                      <React.Fragment key={tc.tournKey}>
+                        {tc.rounds.map(r => {
+                          const res = row.results.get(r.roundKey);
+                          if (!res) return (
+                            <React.Fragment key={r.roundKey}>
+                              <td className="cs-t-topar cs-grp" />
+                              <td className="cs-t-gross cs-col" />
+                            </React.Fragment>
+                          );
+                          const tpStr = fmtTP(res.toPar);
+                          const tpCol = res.toPar < 0 ? "var(--color-good)" : res.toPar === 0 ? "var(--color-ok,#2563eb)" : "var(--color-bad)";
+                          return (
+                            <React.Fragment key={r.roundKey}>
+                              <td className="cs-t-topar cs-grp" style={{ color: tpCol }}>{tpStr}</td>
+                              <td className="cs-t-gross cs-col" style={{ color: "var(--color-warn-dark)" }}>{fmtPts(res.pts)}</td>
+                            </React.Fragment>
+                          );
+                        })}
+                      </React.Fragment>
+                    );
+                  })}
+
+                  <td className="cs-s-games cs-grp">
+                    {row.voltas}
+                    {!row.eligible && <span title="< 14 rondas — não elegível para GF" style={{ marginLeft: 3, fontSize: 9, color: "#f59e0b" }}>⚠</span>}
+                  </td>
+                  <td className="cs-s-pts cs-col" style={{ fontWeight: 800, color: "var(--color-warn-dark)", fontVariantNumeric: "tabular-nums" }}>
+                    {fmtPts(row.total)}
                   </td>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+              );
+            })}
+          </CrossSeasonTable>
+        )
+      }
     </div>
   );
 }
+
 
 /* ─────────────────────────────────────────────
    MAIN CONTENT

@@ -1,5 +1,9 @@
 import { useEffect, useState, useMemo } from "react";
-import ScoreCircle from "../ui/ScoreCircle";
+import React from "react";
+import {
+  ScorecardLB, AccumulatedLB, expandMultiRound,
+  type Tournament as TATournament,
+} from "./TorneiosAnalisePage";
 
 // ─────────────────────────────────────────────
 // TIPOS — CAMPO (inscritos)
@@ -529,166 +533,151 @@ function isManuel(nome: string) {
 }
 
 
+// ─────────────────────────────────────────────
+// ADAPTADOR: EscalaoResult → Tournament (para reutilizar ScorecardLB / AccumulatedLB)
+// ─────────────────────────────────────────────
+function escalaoToTournament(e: EscalaoResult, t: TorneioResult): TATournament {
+  const teeInfo = TEES_LOOKUP[t.t]?.[e.age_group];
+  const rondasComDados = e.rondas.filter(r => (r.leaderboard ?? r.jogadores ?? []).length > 0);
+
+  // Colectar todos os jogadores de todas as rondas
+  const playerMap = new Map<string, any>();
+
+  for (const r of rondasComDados) {
+    const lb = r.leaderboard ?? r.jogadores ?? [];
+    const buracos = r.buracos || 18;
+    const par: number[] =
+      teeInfo?.par.length === buracos ? teeInfo.par :
+      r.par?.length === buracos ? r.par :
+      Array(buracos).fill(4) as number[];
+    const si: number[] = r.si?.length === buracos ? r.si : [];
+    const meters: number[] = teeInfo?.metros?.length === buracos ? teeInfo.metros : Array(buracos).fill(0);
+    const hasSI = si.some(v => v > 0);
+    // Para USKids: se não há SI real, usar metros na linha que normalmente seria SI
+    const siForDisplay: number[] = hasSI ? si : meters;
+    const parPerRound = par.reduce((s, p) => s + p, 0);
+
+    for (const j of lb) {
+      const key = j.nome.toLowerCase().trim();
+      const strokes: number[] = j.strokes?.length ? j.strokes : (j.rondas?.["1"]?.strokes ?? []);
+      if (!playerMap.has(key)) {
+        playerMap.set(key, {
+          scoreId: j.nome,
+          pos: null,
+          name: j.nome,
+          club: flag(j.pais) + " " + j.pais,
+          grossTotal: 0,
+          toPar: null,
+          par, si: siForDisplay, meters,
+          parTotal: 0,
+          nholes: buracos,
+          roundScores: [],
+        });
+      }
+      const p = playerMap.get(key)!;
+      p.grossTotal += j.score || 0;
+      p.parTotal    = parPerRound;  // par de UMA ronda — expandMultiRound multiplica por nPlayed
+      p.roundScores.push({
+        round: r.ronda,
+        gross: j.score || 0,
+        scores: strokes,
+        pars: par,
+        si: siForDisplay,
+        meters,
+      });
+      // scores / par / si do primeiro round (para ScorecardLB de ronda única)
+      if (r.ronda === rondasComDados[0].ronda) {
+        p.scores = strokes;
+      }
+    }
+  }
+
+  const players = [...playerMap.values()];
+  return {
+    name: `${t.name} — ${e.nome}`,
+    tcode: `${t.t}-${e.age_group}`,
+    date: t.date_inicio,
+    campo: t.campo ?? "",
+    rounds: rondasComDados.length,
+    playerCount: players.length,
+    players,
+  };
+}
 
 // ─────────────────────────────────────────────
-// SCORECARD
+// ESCALÃO SECTION — tabs R1 / R2 / Acumulado
+// usa ScorecardLB e AccumulatedLB de TorneiosAnalisePage
 // ─────────────────────────────────────────────
-function TabelaRonda({ ronda, torneioT, ageGroup, expanded, onToggle }: {
-  ronda: RondaResult; torneioT: number; ageGroup: number;
-  expanded: boolean; onToggle: () => void;
+function EscalaoSection({ escalao: e, torneio: t, isManuelEscalao }: {
+  escalao: EscalaoResult;
+  torneio: TorneioResult;
+  isManuelEscalao: boolean;
 }) {
-  const jogadores = ronda.leaderboard ?? ronda.jogadores ?? [];
-  const buracos   = ronda.buracos || 18;
-  const has18     = buracos >= 18;
-  const hasPontos = jogadores.some(j => j.pontos > 0);
+  const teeInfo = TEES_LOOKUP[t.t]?.[e.age_group];
+  const distTotal = teeInfo?.metros?.length === 18
+    ? teeInfo.metros.reduce((a, b) => a + b, 0)
+    : null;
 
-  const teeInfo = TEES_LOOKUP[torneioT]?.[ageGroup];
-  const par: number[] | undefined = (() => {
-    if (teeInfo?.par.length === buracos) return teeInfo.par;
-    if (ronda.par?.length === buracos) return ronda.par;
-    return undefined;
+  const rondasComDados = e.rondas.filter(r => (r.leaderboard ?? r.jogadores ?? []).length > 0);
+  if (!rondasComDados.length) return null;
+
+  const hasAcumulado = rondasComDados.length >= 2;
+  const defaultTab = (() => {
+    for (let i = 0; i < rondasComDados.length; i++) {
+      const lb = rondasComDados[i].leaderboard ?? rondasComDados[i].jogadores ?? [];
+      if (lb.some(j => isManuel(j.nome))) return i;
+    }
+    return 0;
   })();
-  const metros: number[] | undefined =
-    teeInfo?.metros && teeInfo.metros.length === buracos ? teeInfo.metros : undefined;
-  const totalPar = par ? par.reduce((s, p) => s + p, 0) : ronda.total_par;
+  const [tab, setTab] = useState(defaultTab);
 
-  const getStrokes = (j: RondaJogador) => j.strokes?.length ? j.strokes : (j.rondas?.["1"]?.strokes ?? []);
-  const outPar    = par?.slice(0, 9).reduce((s, p) => s + p, 0);
-  const inPar     = par?.slice(9, 18).reduce((s, p) => s + p, 0);
-  const outMetros = metros?.slice(0, 9).reduce((s, m) => s + m, 0);
-  const inMetros  = metros?.slice(9, 18).reduce((s, m) => s + m, 0);
+  const tournament = useMemo(() => escalaoToTournament(e, t), [e, t]);
+  const expandedT = useMemo(() => expandMultiRound(tournament), [tournament]);
 
-  const holeCls = (i: number, first9 = true) =>
-    `lb-hole${(first9 && i === 0) || (!first9 && i === 0) ? " lb-hole-first" : ""}`;
+  const isAccTab = hasAcumulado && tab === rondasComDados.length;
+  const curT = isAccTab ? expandedT[expandedT.length - 1] : expandedT[tab] ?? tournament;
 
-  const tpStr = (v: number | null | undefined) =>
-    v == null ? "–" : v === 0 ? "E" : v > 0 ? `+${v}` : `${v}`;
-  const tpColor = (v: number | null | undefined) =>
-    v == null ? "var(--text-muted)" : v < 0 ? "var(--color-good)" : v === 0 ? "var(--text-2)" : "var(--color-danger)";
+  const tabStyle = (i: number): React.CSSProperties => ({
+    padding: "6px 14px", fontSize: 12,
+    fontWeight: tab === i ? 700 : 500,
+    color: tab === i ? "var(--text)" : "var(--text-muted,#888)",
+    background: "transparent", border: "none",
+    borderBottom: tab === i ? "2px solid var(--accent,#2563eb)" : "2px solid transparent",
+    cursor: "pointer", whiteSpace: "nowrap" as const,
+  });
 
   return (
-    <div style={{ marginBottom: 8, border: "1px solid var(--border)", borderRadius: 8, overflow: "hidden" }}>
-      {/* Header da ronda — clicável */}
-      <div onClick={onToggle} style={{
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-        padding: "8px 12px", cursor: "pointer",
-        background: expanded ? "var(--bg-header)" : "var(--bg-card)",
-        borderBottom: expanded ? "1px solid var(--border)" : "none",
+    <div style={{ marginBottom: 24 }}>
+      <div style={{
+        display: "flex", alignItems: "center", gap: 8,
+        borderBottom: `1px solid ${isManuelEscalao ? "var(--accent)" : "var(--border)"}`,
+        paddingBottom: 4, marginBottom: 0,
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <span style={{ fontWeight: 700, fontSize: 13, color: "var(--text)" }}>Ronda {ronda.ronda}</span>
-          {totalPar && <span style={{ fontSize: 11, color: "var(--text-3)" }}>Par {totalPar}</span>}
-          <span style={{ fontSize: 11, color: "var(--text-3)" }}>{jogadores.length} jogadores · {buracos}H</span>
+        <span style={{ fontSize: 12, fontWeight: 700, color: isManuelEscalao ? "var(--accent)" : "var(--text-3)" }}>
+          {isManuelEscalao ? "★ " : ""}{e.nome}
+        </span>
+        {distTotal && <span style={{ fontWeight: 400, fontSize: 11, color: "var(--text-3)" }}>{distTotal}m</span>}
+        <div style={{ display: "flex", gap: 0, marginLeft: 12, overflowX: "auto" }}>
+          {rondasComDados.map((_, i) => (
+            <button key={i} style={tabStyle(i)} onClick={() => setTab(i)}>R{i + 1}</button>
+          ))}
+          {hasAcumulado && (
+            <button style={tabStyle(rondasComDados.length)} onClick={() => setTab(rondasComDados.length)}>
+              Acumulado
+            </button>
+          )}
         </div>
-        {!expanded && (
-          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-            {jogadores.slice(0, 3).map((j, i) => (
-              <span key={i} style={{
-                fontSize: 11, color: isManuel(j.nome) ? "var(--accent)" : "var(--text-3)",
-                fontWeight: isManuel(j.nome) ? 700 : 400,
-              }}>
-                {i + 1}. {j.nome.split(" ")[0]} {tpStr(j.to_par)}
-              </span>
-            ))}
-          </div>
-        )}
-        <span style={{ color: "var(--text-3)", fontSize: 12 }}>{expanded ? "▲" : "▼"}</span>
       </div>
-
-      {expanded && (
-        <div className="bjgt-chart-scroll">
-          <table className="sc-lb sc-lb-with-sc" style={{ minWidth: 500 }}>
-            <thead>
-              {/* Metros — estilo SI row */}
-              {metros && (
-                <tr className="lb-si-row">
-                  <td className="sticky-col-0" />
-                  <td className="lb-par-lbl sticky-col-1" colSpan={2}>m</td>
-                  <td className="lb-topar" />
-                  <td className="lb-gross">{(outMetros ?? 0) + (inMetros ?? 0)}</td>
-                  {metros.slice(0, 9).map((m, i) => <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{m}</td>)}
-                  <td className="lb-halftot">{outMetros}</td>
-                  {has18 && metros.slice(9, 18).map((m, i) => <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{m}</td>)}
-                  {has18 && <td className="lb-halftot">{inMetros}</td>}
-                  {hasPontos && <td />}
-                </tr>
-              )}
-              {/* PAR row */}
-              {par && (
-                <tr className="lb-par-row">
-                  <td className="sticky-col-0" />
-                  <td className="lb-par-lbl sticky-col-1" colSpan={2}>PAR</td>
-                  <td className="lb-topar" />
-                  <td className="lb-gross">{totalPar}</td>
-                  {par.slice(0, 9).map((p, i) => <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{p}</td>)}
-                  <td className="lb-halftot">{outPar}</td>
-                  {has18 && par.slice(9, 18).map((p, i) => <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{p}</td>)}
-                  {has18 && <td className="lb-halftot">{inPar}</td>}
-                  {hasPontos && <td />}
-                </tr>
-              )}
-              {/* Cabeçalho sticky */}
-              <tr>
-                <th className="lb-pos sticky-col-0">#</th>
-                <th className="lb-name sticky-col-1">Jogador</th>
-                <th style={{ width: 28 }} />
-                <th className="lb-topar">±</th>
-                <th className="lb-gross">Tot</th>
-                {Array.from({ length: 9 }, (_, i) => (
-                  <th key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{i + 1}</th>
-                ))}
-                <th className="lb-halftot">{has18 ? "Out" : "Tot"}</th>
-                {has18 && Array.from({ length: 9 }, (_, i) => (
-                  <th key={i + 9} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{i + 10}</th>
-                ))}
-                {has18 && <th className="lb-halftot">In</th>}
-                {hasPontos && <th className="lb-sd">PTS</th>}
-              </tr>
-            </thead>
-            <tbody>
-              {jogadores.map((j, i) => {
-                const st = getStrokes(j);
-                const out9 = st.slice(0, 9).reduce((s, v) => s + (v || 0), 0);
-                const in9  = st.slice(9, 18).reduce((s, v) => s + (v || 0), 0);
-                const manuel = isManuel(j.nome);
-                const stickyBg = manuel ? "var(--bg-manuel-sticky)" : "var(--bg-card,#fff)";
-                return (
-                  <tr key={i} className={manuel ? "row-manuel" : undefined}>
-                    <td className="lb-pos sticky-col-0" style={{ background: stickyBg }}>{i + 1}</td>
-                    <td className="lb-name sticky-col-1" style={{ background: stickyBg, fontWeight: manuel ? 700 : 400 }}>
-                      {manuel && <span style={{ color: "var(--color-warn)", marginRight: 4 }}>★</span>}
-                      {j.nome}
-                    </td>
-                    <td style={{ textAlign: "center", fontSize: 13 }}>{flag(j.pais)}</td>
-                    <td className="lb-topar" style={{ color: tpColor(j.to_par) }}>{tpStr(j.to_par)}</td>
-                    <td className="lb-gross">{j.score || "–"}</td>
-                    {st.slice(0, 9).map((s, idx) => (
-                      <td key={idx} className={"lb-hole" + (idx === 0 ? " lb-hole-first" : "")}>
-                        <ScoreCircle gross={s || null} par={par?.[idx] ?? null} size="small" empty="dot" />
-                      </td>
-                    ))}
-                    <td className="lb-halftot">{out9 || "–"}</td>
-                    {has18 && st.slice(9, 18).map((s, idx) => (
-                      <td key={idx + 9} className={"lb-hole" + (idx === 0 ? " lb-hole-first" : "")}>
-                        <ScoreCircle gross={s || null} par={par?.[idx + 9] ?? null} size="small" empty="dot" />
-                      </td>
-                    ))}
-                    {has18 && <td className="lb-halftot">{in9 || "–"}</td>}
-                    {hasPontos && (
-                      <td className="lb-sd" style={{ color: "var(--color-amber)", fontWeight: 700 }}>
-                        {j.pontos > 0 ? j.pontos : "–"}
-                      </td>
-                    )}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      )}
+      <div style={{ paddingTop: 8 }}>
+        {isAccTab
+          ? <AccumulatedLB tournament={curT} nRounds={rondasComDados.length} escLookup={new Map()} playersDB={{}} />
+          : <ScorecardLB tournament={curT} escLookup={new Map()} playersDB={{}} siLabel="m" parLabelColSpan={6} />
+        }
+      </div>
     </div>
   );
 }
+
 
 // ─────────────────────────────────────────────
 // TAB CAMPO
@@ -868,24 +857,6 @@ function TabResultados({ data, selectedT, greatgolfData }: {
   greatgolfData: GreatgolfData | null;
 }) {
   const t = data.resultados.find(r => r.t === selectedT) ?? null;
-
-  const [expandedRondas, setExpandedRondas] = useState<Set<string>>(() => {
-    const s = new Set<string>();
-    for (const tr of data.resultados) {
-      const em = tr.escaloes.find(e => e.is_manuel);
-      if (em && em.rondas[0]) s.add(`${tr.t}-${em.age_group}-1`);
-    }
-    return s;
-  });
-
-  useEffect(() => {
-    if (!t) return;
-    const em = t.escaloes.find(e => e.is_manuel);
-    if (em && em.rondas[0]) {
-      const key = `${t.t}-${em.age_group}-1`;
-      setExpandedRondas(prev => { const s = new Set(prev); s.add(key); return s; });
-    }
-  }, [selectedT]);
 
   // ── PRINT ──────────────────────────────────────────────────────────────────
   function printRondas() {
@@ -1155,41 +1126,12 @@ function TabResultados({ data, selectedT, greatgolfData }: {
 
       {/* Escalões e rondas */}
       {sortEscaloes(t.escaloes).map(e => {
-        // ★ apenas se o Manuel efectivamente jogou neste escalão (is_manuel do scraper)
-        // ou se o escalão bate certo com a data do torneio (e não temos info manual)
         const escalaoEsperado = escalaoManuelParaData(t.date_inicio);
         const isManuelEscalao = t.escalao_manuel
           ? e.age_group === t.escalao_manuel
           : (e.is_manuel === true && e.nome === escalaoEsperado);
-        const teeInfo = TEES_LOOKUP[t.t]?.[e.age_group];
-        const distTotal = teeInfo?.metros?.length === 18
-          ? teeInfo.metros.reduce((a, b) => a + b, 0)
-          : null;
-        const rondasComDados = e.rondas.filter(r => (r.leaderboard ?? r.jogadores ?? []).length > 0);
-        if (!rondasComDados.length) return null;
         return (
-          <div key={e.age_group} style={{ marginBottom:20 }}>
-            <div style={{ fontSize:12, fontWeight:700, display:"flex", alignItems:"center", gap:8,
-              color: isManuelEscalao ? "var(--accent)" : "var(--text-3)",
-              borderBottom:`1px solid ${isManuelEscalao ? "var(--accent)" : "var(--border)"}`,
-              paddingBottom:5, marginBottom:8 }}>
-              <span>{isManuelEscalao ? "★ " : ""}{e.nome}</span>
-              {distTotal && <span style={{ fontWeight:400, fontSize:11, color:"var(--text-3)" }}>{distTotal}m</span>}
-            </div>
-            {rondasComDados.map(r => {
-              const key = `${t.t}-${e.age_group}-${r.ronda}`;
-              return (
-                <TabelaRonda key={key} ronda={r}
-                  torneioT={t.t}
-                  ageGroup={e.age_group}
-                  expanded={expandedRondas.has(key)}
-                  onToggle={() => setExpandedRondas(prev => {
-                    const s = new Set(prev); s.has(key) ? s.delete(key) : s.add(key); return s;
-                  })}
-                />
-              );
-            })}
-          </div>
+          <EscalaoSection key={e.age_group} escalao={e} torneio={t} isManuelEscalao={isManuelEscalao} />
         );
       })}
 
@@ -1374,14 +1316,36 @@ function TabelaConhecidos({
       const ageGrpAnterior = ageGrpActual > 0 ? ageGrpActual - 1 : 0;
       const escalaoAnt = tornAnterior.escaloes.find(e => e.age_group === ageGrpAnterior);
       if (!escalaoAnt) continue;
-      for (const r of escalaoAnt.rondas) {
-        const lb = r.leaderboard ?? r.jogadores ?? [];
-        const idx = lb.findIndex(j => j.nome.toLowerCase().trim() === insc.nome.toLowerCase().trim());
-        if (idx >= 0) {
-          const existing = map.get(insc.nome.toLowerCase().trim());
-          if (!existing || idx + 1 < existing.pos)
-            map.set(insc.nome.toLowerCase().trim(), { pos: idx + 1, escalao: escalaoAnt.nome, ronda: r.ronda });
+
+      const rondasAnt = escalaoAnt.rondas.filter(r => (r.leaderboard ?? r.jogadores ?? []).length > 0);
+      if (!rondasAnt.length) continue;
+
+      // Calcular posição final: acumular totais de todas as rondas e ordenar
+      if (rondasAnt.length >= 2) {
+        // Multi-ronda: somar scores de todas as rondas e calcular posição final
+        const totaisMap = new Map<string, number>();
+        for (const r of rondasAnt) {
+          const lb = r.leaderboard ?? r.jogadores ?? [];
+          for (const j of lb) {
+            const k = j.nome.toLowerCase().trim();
+            totaisMap.set(k, (totaisMap.get(k) ?? 0) + (j.score || 0));
+          }
         }
+        const sorted = [...totaisMap.entries()].sort((a, b) => a[1] - b[1]);
+        const idx = sorted.findIndex(([k]) => k === insc.nome.toLowerCase().trim());
+        if (idx >= 0) {
+          map.set(insc.nome.toLowerCase().trim(), {
+            pos: idx + 1,
+            escalao: escalaoAnt.nome,
+            ronda: rondasAnt.length,
+          });
+        }
+      } else {
+        // Ronda única: usar posição directamente do leaderboard
+        const lb = rondasAnt[0].leaderboard ?? rondasAnt[0].jogadores ?? [];
+        const idx = lb.findIndex(j => j.nome.toLowerCase().trim() === insc.nome.toLowerCase().trim());
+        if (idx >= 0)
+          map.set(insc.nome.toLowerCase().trim(), { pos: idx + 1, escalao: escalaoAnt.nome, ronda: 1 });
       }
     }
     return map;

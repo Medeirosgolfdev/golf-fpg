@@ -55,6 +55,8 @@ export interface ScorecardRow {
 interface ScorecardLeaderboardProps {
   par: number[];
   si?: number[];
+  /** Label da linha SI (default: "S.I."). Usar "m" para metros. */
+  siLabel?: string;
   rows: ScorecardRow[];
   prefixHeaderCells?: React.ReactNode;
   /** Headers após In (SD, 🐦, Par, ■) */
@@ -76,7 +78,7 @@ interface ScorecardLeaderboardProps {
 }
 
 export function ScorecardLeaderboard({
-  par, si, rows,
+  par, si, siLabel = "S.I.", rows,
   prefixHeaderCells,
   postScorecardHeaderCells, postTotalHeaderCells,
   parLabelColSpan = 1,
@@ -124,7 +126,7 @@ export function ScorecardLeaderboard({
             {showScorecard && hasSI && (
               <tr className="lb-si-row">
                 <td className="sticky-col-0" />
-                <td className="lb-par-lbl sticky-col-1" colSpan={parLabelColSpan + 1}>S.I.</td>
+                <td className="lb-par-lbl sticky-col-1" colSpan={parLabelColSpan + 1}>{siLabel}</td>
                 <td className="lb-gross" />
                 {Array.from({ length: postTotalColCount }, (_, i) => <td key={i} />)}
                 {si!.slice(0, 9).map((v, i) => (
