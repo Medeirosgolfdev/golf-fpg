@@ -1,4 +1,19 @@
 /**
+ *
+ * ═══════════════════════════════════════════════════════════════
+ * FAMÍLIA DE TABELAS — MANTER SEMPRE EM SINCRONIA
+ * ═══════════════════════════════════════════════════════════════
+ * Este ficheiro faz parte de uma família de componentes de tabela
+ * que partilham as mesmas regras visuais (App.css: .sc-lb):
+ *
+ *   • ScorecardLeaderboard.tsx   — leaderboard buraco-a-buraco
+ *   • MultiRoundLeaderboard.tsx  — leaderboard multi-ronda
+ *   • CrossSeasonTable.tsx       — tabela temporada cruzada
+ *   • tournamentPrimitives.tsx   — primitivas partilhadas
+ *
+ * Ao alterar qualquer um, verifica se os outros precisam de ser
+ * actualizados: fontes, padding, bordas, cores, larguras de colunas.
+ * ═══════════════════════════════════════════════════════════════
  * MultiRoundLeaderboard.tsx
  *
  * Leaderboard para torneios multi-ronda (2R, 3R, …).
@@ -214,7 +229,7 @@ export function MultiRoundLeaderboard({
         <PlayerFilterBar rows={withPos} filter={filter} onChange={setFilter} total={rows.length} />
       )}
       <div className="bjgt-chart-scroll">
-        <table className="sc-lb">
+        <table className="sc-lb sc-lb-lbd">
           <thead>
             <tr>
               <th className="lb-pos sticky-col-0">#</th>
@@ -263,16 +278,16 @@ export function MultiRoundLeaderboard({
                   : true
               );
               const rowBg = row.isHighlighted ? "var(--bg-success-subtle,#d1fae5)" : isInc ? "var(--bg-hover)" : undefined;
-              const stickyBg = row.isHighlighted ? "#d1fae5" : isInc ? "var(--bg-hover)" : "var(--bg-card,#fff)";
+              const stickyBg = row.isHighlighted ? "var(--bg-manuel-sticky,#c3f5dc)" : isInc ? "var(--bg-hover)" : "var(--bg-card,#fff)";
 
               return (
-                <tr key={row.key} style={rowBg ? { background: rowBg, opacity: isInc ? 0.7 : 1 } : undefined}>
-                  <td className="lb-pos sticky-col-0" style={{ background: stickyBg }}>
+                <tr key={row.key} className={row.isHighlighted ? "row-manuel" : undefined} style={isInc ? { background: "var(--bg-hover)", opacity: 0.7 } : undefined}>
+                  <td className="lb-pos sticky-col-0" style={row.isHighlighted ? undefined : { background: stickyBg }}>
                     {isInc
                       ? <span style={{ fontSize: 9, color: "#dc2626", fontStyle: "italic" }}>WD</span>
                       : showPos ? (medal || dp) : ""}
                   </td>
-                  <td className="lb-name sticky-col-1" style={{ background: stickyBg }}>
+                  <td className="lb-name sticky-col-1" style={row.isHighlighted ? undefined : { background: stickyBg }}>
                     <TournPName name={row.name} fedCode={row.fed} playersDB={playersDB} />
                     {isInc && <span style={{ marginLeft: 4, fontSize: 9, color: "#dc2626", fontWeight: 700 }}>INC</span>}
                   </td>

@@ -639,8 +639,8 @@ function TabelaRonda({ ronda, torneioT, ageGroup, expanded, onToggle }: {
                 const in9  = st.slice(9,18).reduce((s,v)=>s+(v||0),0);
                 const manuel = isManuel(j.nome);
                 return (
-                  <tr key={i} style={{
-                    background: manuel ? "var(--accent-light)" : i%2===0?"var(--bg-card)":"var(--bg-detail)",
+                  <tr key={i} className={manuel ? "row-manuel" : undefined} style={{
+                    background: manuel ? undefined : i%2===0?"var(--bg-card)":"var(--bg-detail)",
                     fontWeight: manuel ? 700 : 400,
                   }}>
                     <td className="tourn-pos-col" style={{textAlign:"center"}}>
@@ -1061,8 +1061,8 @@ function SecaoGreatgolf({ data }: { data: GreatgolfData }) {
               {rows.map((r, i) => {
                 const manuelRow = isManuel(r.name);
                 return (
-                  <tr key={i} style={{
-                    background: manuelRow ? "var(--accent-light)" : i%2===0 ? "var(--bg-card)" : "var(--bg-detail)",
+                  <tr key={i} className={manuelRow ? "row-manuel" : undefined} style={{
+                    background: manuelRow ? undefined : i%2===0 ? "var(--bg-card)" : "var(--bg-detail)",
                     border: manuelRow ? "1px solid var(--accent)" : undefined,
                   }}>
                     <td className="tourn-pos-col" style={{ textAlign:"center" }}>

@@ -57,7 +57,7 @@ function TournPillBadge({ tcode, dynamicPills }: { tcode?: string; dynamicPills?
   if (pill === "PJA") {
     return (
       <span style={{
-        fontSize: 9, fontWeight: 700, borderRadius: 20, padding: "1px 6px",
+        fontSize: 10, fontWeight: 700, borderRadius: 20, padding: "1px 6px",
         background: PILL_STYLE_PJA.bg, color: PILL_STYLE_PJA.color, whiteSpace: "nowrap",
       }}>PJA</span>
     );
@@ -614,7 +614,9 @@ function ScorecardLB({ tournament, escLookup, playersDB }: { tournament: Tournam
     const posDisplay = sortKey === "pos" ? (showPos ? (medal ?? dp) : "") : (medal ?? dp);
     const esc = resolveEsc(p, escLookup) || tournament.escalao || "";
     const { sd, source } = computeSD(p);
-    const rowBg = isManuel(p) ? "var(--bg-success-subtle)" : undefined;
+    const rowManuel = isManuel(p);
+    const rowBg = rowManuel ? "var(--bg-success-subtle)" : undefined;
+    const stickyBg = rowManuel ? "var(--bg-manuel-sticky)" : undefined;
 
     // Birdies / pars / bogeys
     const scores = p.scores || [];
@@ -633,7 +635,8 @@ function ScorecardLB({ tournament, escLookup, playersDB }: { tournament: Tournam
       toPar: gross - parTotal,
       scores,
       rowBg,
-      nameContent: <PName name={p.name} fedCode={p.fedCode} playersDB={playersDB} />,
+      stickyBg,
+      nameContent: <PName name={p.name} fedCode={p.fedCode} playersDB={playersDB} highlight={isManuel(p)} />,
       prefixCells: <>
         <td className="lb-esc">{esc ? <EscPill esc={esc} /> : <span className="muted">–</span>}</td>
         <td className="lb-fed">{p.fedCode || "–"}</td>
@@ -1137,20 +1140,20 @@ function Content() {
       <button key={(t as any)._isSynthetic ? "synth_" + t.tcode : t.tcode + "_" + t.date}
         className={`course-item ${selected === idx ? "active" : ""}`}
         onClick={() => setSelected(idx)}>
-        <div style={{ display: "flex", alignItems: "baseline", gap: 5, flexWrap: "wrap" }}>
-          <span className="course-item-name" style={{ flex: "none" }}>{t.name}</span>
-          <div style={{ display: "flex", gap: 3 }}>
+
+        {/* Linha 1: título + badges fixos à direita */}
+        <div style={{ display: "flex", alignItems: "baseline", gap: 4, marginBottom: 3 }}>
+          <span className="course-item-name" style={{ flex: 1, minWidth: 0 }}>{t.name}</span>
+          <div style={{ display: "flex", gap: 2, flexShrink: 0, alignItems: "center" }}>
             {isSynth ? (
-              // Torneio sintético: badge "2R" + tcodes das rondas
               <>
-                <span title="Torneio agrupado automaticamente" style={{
-                  fontFamily: "monospace", fontSize: 9, fontWeight: 700,
-                  background: "#7c3aed", color: "#fff",
-                  borderRadius: 3, padding: "0 4px", letterSpacing: "0.01em",
+                <span title="Torneio agrupado" style={{
+                  fontFamily: "monospace", fontSize: 10, fontWeight: 700,
+                  background: "#7c3aed", color: "#fff", borderRadius: 3, padding: "0 4px",
                 }}>{nR}R ⛳</span>
                 {subRounds.map((sr, i) => (
                   <span key={sr.tcode} title={`Dia ${i+1}: ${sr.tcode}`} style={{
-                    fontFamily: "monospace", fontSize: 9, fontWeight: 600,
+                    fontFamily: "monospace", fontSize: 10, fontWeight: 600,
                     background: "var(--accent,#2563eb)", color: "#fff",
                     borderRadius: 3, padding: "0 4px", opacity: selected === idx ? 1 : 0.7,
                   }}>{sr.tcode}</span>
@@ -1159,30 +1162,28 @@ function Content() {
             ) : (
               <>
                 {t.ccode && (
-                  <span title="tclub" style={{
-                    fontFamily: "monospace", fontSize: 9, fontWeight: 600,
+                  <span title="ccode" style={{
+                    fontFamily: "monospace", fontSize: 10, fontWeight: 600,
                     background: "rgba(0,0,0,0.08)", color: "var(--text-muted)",
-                    borderRadius: 3, padding: "0 4px", letterSpacing: "0.01em",
+                    borderRadius: 3, padding: "0 4px",
                   }}>{t.ccode}</span>
                 )}
                 {t.tcode && (
                   <span title="tcode" style={{
-                    fontFamily: "monospace", fontSize: 9, fontWeight: 700,
+                    fontFamily: "monospace", fontSize: 10, fontWeight: 700,
                     background: "var(--accent,#2563eb)", color: "#fff",
-                    borderRadius: 3, padding: "0 4px", letterSpacing: "0.01em",
-                    opacity: selected === idx ? 1 : 0.7,
+                    borderRadius: 3, padding: "0 4px",
+                    opacity: selected === idx ? 1 : 0.75,
                   }}>{t.tcode}</span>
                 )}
                 {t.ccode && t.tcode && (
                   <span
-                    title="Abrir classificação na Federação"
+                    title="Abrir na Federação"
                     onClick={e => { e.stopPropagation(); window.open(`https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=${t.ccode}&tcode=${t.tcode}`, "_blank"); }}
                     style={{
-                      fontSize: 9, fontWeight: 600, cursor: "pointer",
-                      color: "var(--accent,#2563eb)",
-                      border: "1px solid var(--accent,#2563eb)",
-                      borderRadius: 3, padding: "0 4px",
-                      whiteSpace: "nowrap", lineHeight: 1.6,
+                      fontSize: 10, fontWeight: 600, cursor: "pointer",
+                      color: "var(--accent,#2563eb)", border: "1px solid var(--accent,#2563eb)",
+                      borderRadius: 3, padding: "0 4px", lineHeight: 1.6,
                     }}
                   >↗</span>
                 )}
@@ -1190,23 +1191,29 @@ function Content() {
             )}
           </div>
         </div>
-        <div className="course-item-meta">
-          {t.campo && <span>{t.campo}</span>}
-          <span style={{ marginLeft: 4 }}>{t.playerCount} jog · {nR}R · {nh}h</span>
+
+        {/* Linha 2: campo · jog · R · h */}
+        <div style={{ fontSize: 10, color: "var(--text-muted)", marginBottom: 3 }}>
+          {t.campo && <span>{t.campo} · </span>}
+          <span>{t.playerCount} jog · {nR}R · {nh}h</span>
+        </div>
+
+        {/* Linha 3: escalão + pills + Manuel */}
+        <div style={{ display: "flex", gap: 4, flexWrap: "wrap", alignItems: "center" }}>
+          {t.escalao && <EscPill esc={t.escalao} />}
           <TournPillBadge tcode={t.tcode} dynamicPills={tcodePills} />
           {manuelPlayed && (
             <span title="Manuel participou neste torneio" style={{
-              marginLeft: 6, fontSize: 9, fontWeight: 700,
-              background: "var(--color-loading)", color: "#1a1a1a",
-              borderRadius: 20, padding: "1px 6px",
+              fontSize: 10, fontWeight: 700,
+              background: "var(--bg-success-subtle)", color: "var(--color-good-dark)",
+              borderRadius: 6, padding: "2px 8px",
+              border: "1px solid var(--color-good)",
             }}>★ Manuel</span>
           )}
         </div>
-        {t.escalao && (
-          <div style={{ fontSize: 10, color: "var(--text-muted)", marginTop: 2 }}>{t.escalao}</div>
-        )}
+
         {!isSynth && t._sourceIndex !== undefined && (
-          <div style={{ fontSize: 9, color: "var(--text-muted)", marginTop: 1, opacity: 0.6 }}>
+          <div style={{ fontSize: 10, color: "var(--text-muted)", marginTop: 2, opacity: 0.6 }}>
             📄 pull-torneios{String(t._sourceIndex).padStart(DATA_DIGITS, "0")}.json
           </div>
         )}
@@ -1246,7 +1253,7 @@ function Content() {
                   <button
                     className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
                     onClick={() => setFilterManuel(v => !v)}
-                    style={filterManuel ? { background: "var(--color-loading)", borderColor: "var(--color-loading)", color: "#1a1a1a" } : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                    style={filterManuel ? { background: "var(--bg-success-subtle)", borderColor: "var(--color-good)", color: "var(--color-good-dark)", whiteSpace: "nowrap" } : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)", whiteSpace: "nowrap" }}>
                     ★ Manuel
                   </button>
                 )}

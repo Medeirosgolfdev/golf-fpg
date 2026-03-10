@@ -198,11 +198,11 @@ type SortKey = string;
 
 /* ── Constants ── */
 const REGIONS = [
-  { id: "norte", label: "Norte", emoji: "🔵", color: "#2563eb", bg: "#dbeafe" },
-  { id: "tejo", label: "Tejo", emoji: "🟡", color: "#a16207", bg: "#fef3c7" },
-  { id: "sul", label: "Sul", emoji: "🟢", color: "#16a34a", bg: "#dcfce7" },
-  { id: "madeira", label: "Madeira", emoji: "🟣", color: "#7c3aed", bg: "#ede9fe" },
-  { id: "acores", label: "Açores", emoji: "🔴", color: "#dc2626", bg: "#fee2e2" },
+  { id: "norte",   label: "Norte",   emoji: "📍", color: "var(--accent)", bg: "var(--accent-light)" },
+  { id: "tejo",    label: "Tejo",    emoji: "📍", color: "var(--accent)", bg: "var(--accent-light)" },
+  { id: "sul",     label: "Sul",     emoji: "📍", color: "var(--accent)", bg: "var(--accent-light)" },
+  { id: "madeira", label: "Madeira", emoji: "📍", color: "var(--accent)", bg: "var(--accent-light)" },
+  { id: "acores",  label: "Açores",  emoji: "📍", color: "var(--accent)", bg: "var(--accent-light)" },
 ];
 const ESCALOES = ["Sub 10", "Sub 12", "Sub 14", "Sub 16", "Sub 18"];
 const regionOf = (id: string) => REGIONS.find((r) => r.id === id);
@@ -460,7 +460,7 @@ function SDCell(props: { sd: number | null; sdSource: string | null; hcp: number
   return (
     <td className="r" style={props.style}>
       <span className={"p p-sm p-" + cls}>{props.sd.toFixed(1)}</span>
-      {(is9 || tip) && <span style={{ fontSize: 7, color: "var(--text-muted)", marginLeft: 1 }}>{is9 && "*"}{tip}</span>}
+      {(is9 || tip) && <span style={{ fontSize: 10, color: "var(--text-muted)", marginLeft: 1 }}>{is9 && "*"}{tip}</span>}
     </td>
   );
 }
@@ -803,7 +803,7 @@ function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; s
                 return (
                   <React.Fragment key={tKey}>
                     <CSortTh k={"pos_"+tKey} s={sortKey} d={sortDir} on={handleSort} className="cs-t-pos cs-grp" style={bg ? { background: bg } : undefined}>
-                      {roundLabel ? <span style={{ fontSize: 9, fontWeight: 800, color: isTotalCol ? "var(--color-warn-dark)" : "var(--color-good-dark)" }}>{isTotalCol ? "Σ" : roundLabel}</span> : "#"}
+                      {roundLabel ? <span style={{ fontSize: 10, fontWeight: 800, color: isTotalCol ? "var(--color-warn-dark)" : "var(--color-good-dark)" }}>{isTotalCol ? "Σ" : roundLabel}</span> : "#"}
                     </CSortTh>
                     <CSortTh k={"gross_"+tKey} s={sortKey} d={sortDir} on={handleSort} className="cs-t-gross cs-col" style={bg ? { background: bg } : undefined}>Gross</CSortTh>
                     <CSortTh k={"toPar_"+tKey} s={sortKey} d={sortDir} on={handleSort} className="cs-t-topar cs-col" style={bg ? { background: bg } : undefined}>±Par</CSortTh>
@@ -830,13 +830,11 @@ function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; s
       </>}
     >
       {sortedRows.map((row, idx) => {
-        const rowBg = isManuel(row) ? "var(--bg-success-subtle)" : undefined;
-        const cellBg = isManuel(row) ? "#d1fae5" : "var(--bg-card,#fff)";
         const escCls = row.escalao ? "p p-sm p-" + row.escalao.toLowerCase().replace(/\s+/g, "") : "";
         return (
-          <tr key={row.pKey} style={rowBg ? { background: rowBg } : undefined}>
-            <td className="cs-pos sticky-col-0" style={{ background: cellBg }}>{idx + 1}</td>
-            <td className="cs-name sticky-col-1" style={{ background: cellBg }}>
+          <tr key={row.pKey} className={isManuel(row) ? "row-manuel" : undefined}>
+            <td className="cs-pos sticky-col-0">{idx + 1}</td>
+            <td className="cs-name sticky-col-1">
               <PName name={row.name} fed={row.fed || undefined} playersDB={playersDB} highlight={isManuel(row)} />
             </td>
             <td className="cs-fed">{row.fed || "–"}</td>
@@ -953,8 +951,9 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
       par={par}
       si={si.length >= nh ? si : undefined}
       rows={rows}
-      parLabelColSpan={4}
+      parLabelColSpan={5}
       postTotalColCount={0}
+      postScorecardColCount={4}
       showScorecard={showScorecard}
       onToggleScorecard={() => setShowScorecard(v => !v)}
       metaLine={<>
@@ -1528,10 +1527,10 @@ function TournamentGrid({ rows, allTournaments, onPlayerClick, playersDB, escLoo
         const escalao = dbInfo.escalao || "";
         const escCls = escalao ? "p p-sm p-" + escalao.toLowerCase().replace(/[\s-]/g, "") : "";
         return (
-          <tr key={p.fed} className="pointer" onClick={() => onPlayerClick(p.fed)}>
+          <tr key={p.fed} className={"pointer" + (isManuel(p) ? " row-manuel" : "")} onClick={() => onPlayerClick(p.fed)}>
             <td className="cs-pos sticky-col-0">{idx + 1}</td>
             <td className="cs-name sticky-col-1">
-              <PName name={p.name} fed={p.fed || undefined} playersDB={playersDB} />
+              <PName name={p.name} fed={p.fed || undefined} playersDB={playersDB} highlight={isManuel(p)} />
             </td>
             <td className="cs-fed">{p.fed || "–"}</td>
             <td className="cs-esc">{escalao ? <span className={escCls + " fs-9"}>{escalao}</span> : <span className="c-muted-fs10">–</span>}</td>
@@ -1868,6 +1867,61 @@ function DriveContent() {
     return `T${g.num}${isDup ? " · " + fmtDate(g.date) : ""}${g.escalao ? " · " + g.label + " · " + g.escalao : " · " + g.label}`;
   };
 
+  const renderDriveItem = (g: TournGroup, isActive: boolean, onClick: () => void) => {
+    const t0 = g.entries[0];
+    const nh = t0?.nholes || t0?.par?.length || 18;
+    const parTotal = t0?.par?.reduce((a: number, b: number) => a + b, 0) || 0;
+    const tcode = t0?.tcode?.replace(/_R\d+$|_Total$/, "") || "";
+    const manuelPlayed = g.entries.some(e => e.players?.some((p: any) => isManuel(p)));
+    const nJog = uniquePC(g.entries);
+    return (
+      <button key={g.key}
+        className={`course-item ${isActive ? "active" : ""}`}
+        onClick={onClick}>
+
+        {/* Linha 1: nome + tcode badge à direita */}
+        <div style={{ display: "flex", alignItems: "flex-start", gap: 4, marginBottom: 4 }}>
+          <span className="course-item-name" style={{ flex: 1, minWidth: 0, fontSize: 12, fontWeight: isActive ? 700 : 500, lineHeight: 1.3 }}>{sidebarItemLabel(g)}</span>
+          <div style={{ display: "flex", gap: 2, flexShrink: 0, alignItems: "center", paddingTop: 1 }}>
+            {g.isMulti && <span className="chip" style={{ fontSize: 10, padding: "0 5px" }}>{g.totalRounds}R</span>}
+            {tcode && <span style={{
+              fontFamily: "monospace", fontSize: 10, fontWeight: 700,
+              background: "var(--accent,#2563eb)", color: "#fff",
+              borderRadius: 3, padding: "1px 5px", opacity: isActive ? 1 : 0.75,
+            }}>{tcode}</span>}
+          </div>
+        </div>
+
+        {/* Linha 2: campo */}
+        {g.campo && (
+          <div style={{ fontSize: 12, color: "var(--text-2)", fontWeight: 500, marginBottom: 3 }}>
+            📍 {g.campo}
+          </div>
+        )}
+
+        {/* Linha 3: data · jog · buracos · par */}
+        <div style={{ fontSize: 12, color: "var(--text-muted)", marginBottom: 3 }}>
+          {fmtDate(g.date)} · {nJog} jog · {nh}h{parTotal > 0 ? ` · Par ${parTotal}` : ""}
+        </div>
+
+        {/* Linha 4: escalão + Manuel */}
+        {(g.escalao || manuelPlayed) && (
+          <div style={{ display: "flex", gap: 4, flexWrap: "wrap", alignItems: "center", marginTop: 2 }}>
+            {g.escalao && <span className={"p p-sm p-" + g.escalao.toLowerCase().replace(/\s+/g,"")}>{g.escalao}</span>}
+            {manuelPlayed && (
+              <span style={{
+                fontSize: 11, fontWeight: 700,
+                background: "var(--bg-success-subtle)", color: "var(--color-good-dark)",
+                borderRadius: 6, padding: "2px 8px",
+                border: "1px solid var(--color-good)",
+              }}>★ Manuel</span>
+            )}
+          </div>
+        )}
+      </button>
+    );
+  };
+
   if (loading) return <LoadingState />;
   if (error)   return <div className="jogadores-page"><div className="notice-error" style={{ margin: 16 }}>Erro: {error}</div></div>;
   if (!data)   return null;
@@ -2096,32 +2150,12 @@ function DriveContent() {
                     const regGroups = filteredGroups.filter(g => g.entries[0]?.region === reg.id);
                     return (
                       <React.Fragment key={reg.id}>
-                        <div className="sidebar-section-title">{reg.emoji} {reg.label}</div>
-                        {regGroups.map(g => (
-                          <button key={g.key}
-                            className={`course-item ${selectedGroupKey === g.key ? "active" : ""}`}
-                            onClick={() => { setSelectedGroupKey(g.key); setRoundIdx(0); }}>
-                            <div className="course-item-name">{sidebarItemLabel(g)}</div>
-                            <div className="course-item-sub">
-                              {fmtDate(g.date)} · {uniquePC(g.entries)} jog
-                              {g.isMulti && <span className="chip" style={{ marginLeft: 4, fontSize: 9, padding: "0 5px" }}>{g.totalRounds}R</span>}
-                            </div>
-                          </button>
-                        ))}
+                        <div className="sidebar-section-title-dark">{reg.emoji} {reg.label}</div>
+                        {regGroups.map(g => renderDriveItem(g, selectedGroupKey === g.key, () => { setSelectedGroupKey(g.key); setRoundIdx(0); }))}
                       </React.Fragment>
                     );
                   })
-              : filteredGroups.map(g => (
-                  <button key={g.key}
-                    className={`course-item ${selectedGroupKey === g.key ? "active" : ""}`}
-                    onClick={() => { setSelectedGroupKey(g.key); setRoundIdx(0); }}>
-                    <div className="course-item-name">{sidebarItemLabel(g)}</div>
-                    <div className="course-item-sub">
-                      {fmtDate(g.date)} · {uniquePC(g.entries)} jog
-                      {g.isMulti && <span className="chip" style={{ marginLeft: 4, fontSize: 9, padding: "0 5px" }}>{g.totalRounds}R</span>}
-                    </div>
-                  </button>
-                ))
+              : filteredGroups.map(g => renderDriveItem(g, selectedGroupKey === g.key, () => { setSelectedGroupKey(g.key); setRoundIdx(0); }))
             }
 
             {filteredGroups.length === 0 && (
@@ -2175,7 +2209,7 @@ function DriveContent() {
                             ? { background: "var(--bg-warn-strong)", color: "var(--color-warn-dark)", borderColor: "var(--bg-warn-strong)" }
                             : {}}>
                           {isTotal ? "📊" : "🏌️"} {lbl}
-                          <span style={{ fontSize: 9, marginLeft: 3, opacity: 0.7 }}>({activeCount} jog)</span>
+                          <span style={{ fontSize: 10, marginLeft: 3, opacity: 0.7 }}>({activeCount} jog)</span>
                         </button>
                       );
                     })}

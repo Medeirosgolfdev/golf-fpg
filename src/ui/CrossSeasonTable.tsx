@@ -1,4 +1,19 @@
 /**
+ *
+ * ═══════════════════════════════════════════════════════════════
+ * FAMÍLIA DE TABELAS — MANTER SEMPRE EM SINCRONIA
+ * ═══════════════════════════════════════════════════════════════
+ * Este ficheiro faz parte de uma família de componentes de tabela
+ * que partilham as mesmas regras visuais (App.css: .sc-lb):
+ *
+ *   • ScorecardLeaderboard.tsx   — leaderboard buraco-a-buraco
+ *   • MultiRoundLeaderboard.tsx  — leaderboard multi-ronda
+ *   • CrossSeasonTable.tsx       — tabela temporada cruzada
+ *   • tournamentPrimitives.tsx   — primitivas partilhadas
+ *
+ * Ao alterar qualquer um, verifica se os outros precisam de ser
+ * actualizados: fontes, padding, bordas, cores, larguras de colunas.
+ * ═══════════════════════════════════════════════════════════════
  * CrossSeasonTable.tsx — Tabela temporada cruzada: jogadores × torneios
  *
  * Utilizada por ResumoTable (Drive Tour/Challenge/Aquapor) e TournamentGrid (Sub-12).

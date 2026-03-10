@@ -19,6 +19,8 @@
  --bg-warn: #fffbeb;      /* warning banners */
  --bg-danger: #fef2f2;     /* error/danger areas */
  --bg-success: #f0fdf4;    /* success areas */
+ --bg-success-subtle: #d1fae5;  /* Manuel highlight row */
+ --bg-manuel-sticky: #c3f5dc;   /* Manuel highlight sticky cols (slightly darker) */
 
  /* Text */
  --text: #1c2617;
@@ -157,8 +159,8 @@
  --border-light: #d5dac9;
 
  /* Multi-round leaderboard column group backgrounds */
- --bg-rnd: #dde8d9;
- --bg-rnd-stats: #f0f5ee;
+ --bg-rnd: #e8f2e4;
+ --bg-rnd-stats: #f5f9f3;
 
 
  /* Sizes */
@@ -234,6 +236,7 @@ html, body, #root {
   -webkit-overflow-scrolling: touch;
   margin-left: calc(-1 * var(--space-inner));
   margin-right: calc(-1 * var(--space-inner));
+  padding-right: 600px;
 }
 .bjgt-chart-scroll > table {
   margin-left: var(--space-inner);
@@ -457,8 +460,10 @@ html, body, #root {
 .sidebar {
  width: var(--sidebar-w);
  min-width: var(--sidebar-w);
+ max-width: var(--sidebar-w);
  border-right: 1px solid var(--border-light);
  overflow-y: auto;
+ overflow-x: hidden;
  background: var(--bg-card);
  transition: width 0.2s ease, min-width 0.2s ease, opacity 0.2s ease;
 }
@@ -506,6 +511,8 @@ html, body, #root {
  display: flex;
  align-items: center;
  gap: 5px;
+ word-break: break-word;
+ overflow-wrap: anywhere;
 }
 
 /* Bandeira inline na sidebar */
@@ -996,13 +1003,14 @@ tr.cross-current { background: var(--bg-success); }
 .sc-stat-value { font-size: 18px; font-weight: 900; line-height: 1; }
 .sc-stat-score .sc-stat-value { font-size: 18px; }
 
-.sc-table-modern { border-collapse: collapse; font-size: 12px; }
-.sc-table-modern th, .sc-table-modern td { padding: 6px 2px; text-align: center; border: none; border-bottom: 1px solid var(--border-light); }
-.sc-table-modern th { background: var(--bg-hover); font-weight: 800; font-size: 10px; color: var(--text-2); }
-.sc-table-modern .hole-header { background: var(--bg-hover); color: var(--text-2); font-weight: 700; font-size: 12px; border-bottom: 1px solid var(--border); }
+.sc-table-modern { border-collapse: collapse; font-size: 12px; white-space: nowrap; }
+.sc-table-modern th, .sc-table-modern td { padding: 6px 5px; text-align: center; border: none; }
+.sc-table-modern th { background: var(--bg-header); font-weight: 600; font-size: 11px; color: var(--text-2); border-bottom: 1px solid var(--border); }
+.sc-table-modern tbody td { border-bottom: 1px solid var(--border-light); }
+.sc-table-modern .hole-header { background: var(--bg-header); color: var(--text-2); font-weight: 600; font-size: 11px; border-bottom: 1px solid var(--border); }
 .sc-table-modern .row-label { text-align: left; padding-left: 8px; font-weight: 700; color: var(--text); min-width: 70px; }
-.sc-table-modern .col-out, .sc-table-modern .col-in { background: var(--bg-hover); border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
-.sc-table-modern .col-total { background: var(--accent-light); border-left: 1px solid var(--border); font-weight: 800; }
+.sc-table-modern .col-out, .sc-table-modern .col-in { background: var(--bg-hover); border-left: 1px solid var(--border); font-weight: 600; font-size: 11px; font-family: 'JetBrains Mono', monospace; }
+.sc-table-modern .col-total { background: var(--accent-light); border-left: 1px solid var(--border); font-weight: 800; font-family: 'JetBrains Mono', monospace; }
 .sc-table-modern .sep-row td { border-bottom: 2px solid var(--border); }
 .sc-table-modern .meta-row td { color: var(--text-muted); font-size: 10px; }
 .sc-table-modern .par-label { color: var(--text-muted); font-weight: 600; font-size: 11px; }
@@ -1014,7 +1022,7 @@ tr.cross-current { background: var(--bg-success); }
 
 /* FRAG scorecard score circles — note: class name is .eagle not .sc-eagle */
 .sc-table-modern .sc-score, .scHost .sc-score {
- font-weight: 900; font-size: 13px; min-width: 26px; min-height: 26px;
+ font-weight: 700; font-size: 12px; min-width: 26px; min-height: 26px;
  display: inline-flex; align-items: center; justify-content: center;
 }
 /*
@@ -1045,9 +1053,9 @@ tr.cross-current { background: var(--bg-success); }
 @media (max-width: 900px) {
  .sc-header { flex-direction: column; align-items: flex-start; gap: 8px; }
  .sc-header-right { width: 100%; justify-content: space-around; }
- .sc-table-modern { font-size: 10px; }
- .sc-table-modern th, .sc-table-modern td { padding: 5px 1px; }
- .sc-table-modern .sc-score, .scHost .sc-score { min-width: 24px; min-height: 24px; font-size: 12px; }
+ .sc-table-modern { font-size: 11px; }
+ .sc-table-modern th, .sc-table-modern td { padding: 5px 3px; }
+ .sc-table-modern .sc-score, .scHost .sc-score { min-width: 24px; min-height: 24px; font-size: 11px; }
  .sc-title { font-size: 16px; }
  .sc-subtitle { font-size: 11px; }
  .sc-stat-label { font-size: 10px; }
@@ -1565,14 +1573,15 @@ tr.cross-current { background: var(--bg-success); }
 
 /* ─── LEADERBOARD / SCORECARD TABLE ─── */
 .tourn-scorecard {
- border-collapse: collapse; 
+ border-collapse: collapse; font-size: 12px; white-space: nowrap;
 }
 .tourn-scorecard th, .tourn-scorecard td {
- padding: 5px 2px; text-align: center; border: none; border-bottom: 1px solid var(--border-light);
+ padding: 6px 5px; text-align: center; border: none;
 }
 .tourn-scorecard th {
- background: var(--bg-header); font-weight: 800; font-size: 11px; color: var(--text-2);
+ background: var(--bg-header); font-weight: 600; font-size: 11px; color: var(--text-2); border-bottom: 1px solid var(--border);
 }
+.tourn-scorecard tbody td { border-bottom: 1px solid var(--border-light); }
 .tourn-scorecard th.sortable { cursor: pointer; user-select: none; }
 .tourn-scorecard th.sortable:hover { background: var(--bg-hover-subtle); }
 
@@ -1583,20 +1592,20 @@ tr.cross-current { background: var(--bg-success); }
 .tourn-lb-pills .p { font-size: 10px; padding: 1px 7px; }
 .tourn-gross-col { width: 36px; }
 .tourn-par-col { width: 44px; }
-.tourn-scorecard .tourn-sum-col { background: var(--bg-hover); white-space: nowrap; padding: 4px 3px; }
+.tourn-scorecard .tourn-sum-col { background: var(--bg-hover); white-space: nowrap; padding: 6px 5px; }
 
 /* Course info rows */
-.tourn-par-row td { font-size: 11px; font-weight: 800; color: var(--accent-text); background: var(--sc-par-bg); }
+.tourn-par-row td { font-size: 11px; font-weight: 600; color: var(--text-muted); background: var(--bg-hover); border-bottom: 2px solid var(--border); }
 .tourn-dist-row td { font-size: 10px; color: var(--text-muted); background: var(--bg-detail); }
-.tourn-si-row td { font-size: 10px; color: var(--text-muted); }
-.tourn-scorecard .tourn-in-border { border-left: 2.5px solid var(--border); }
+.tourn-si-row td { font-size: 10px; color: var(--text-muted); background: var(--bg); border-bottom: 1px solid var(--border-light); }
+.tourn-scorecard .tourn-in-border { border-left: 2px solid var(--border); }
 
 /* Player rows */
 .tourn-player-row td { font-size: 12px; }
 .tourn-player-row:hover { background: var(--bg-detail); }
-.tourn-pos { font-weight: 800; font-size: 13px; color: var(--text); }
+.tourn-pos { font-weight: 800; font-size: 12px; color: var(--text); }
 .tourn-sum-val { font-weight: 700; font-size: 12px; font-family: 'JetBrains Mono', monospace; white-space: nowrap; }
-.tourn-scorecard .tourn-sum-under { background: var(--bg-success-strong); }
+.tourn-scorecard .tourn-sum-under { background: var(--accent-light); }
 .tourn-sum-over { background: var(--bg-hover); }
 .tourn-lb-name-col .tourn-pname { font-weight: 700; font-size: 12px; white-space: nowrap; }
 .tourn-lb-name-col .tourn-pname.tourn-pname-link { color: var(--link-color); }
@@ -1608,7 +1617,7 @@ tr.cross-current { background: var(--bg-success); }
 /* Female tee pill */
 
 /* ─── Tournament Scorecard Cells ─── */
-.tourn-scorecard .tourn-hole-cell { padding: 2px 1px; text-align: center; vertical-align: middle; }
+.tourn-scorecard .tourn-hole-cell { padding: 3px 2px; text-align: center; vertical-align: middle; min-width: 33px; }
 
 .tourn-no-data { color: var(--border); font-weight: 400; text-align: center; }
 
@@ -1966,9 +1975,10 @@ tr.cross-current { background: var(--bg-success); }
 .sticky-col-0     { position: sticky; left: 0; z-index: 2; background: var(--bg-card, #fff); }
 .sticky-col-1     { position: sticky; left: 26px; z-index: 2; background: var(--bg-card, #fff); box-shadow: 2px 0 4px rgba(0,0,0,0.06); }
 
-/* Em thead, as colunas sticky precisam de z-index superior ao dos rows do tbody */
-thead .sticky-col-0 { z-index: 5; }
-thead .sticky-col-1 { z-index: 5; }
+/* Só o header de colunas fica sticky — SI e PAR fazem scroll */
+.sc-lb thead tr:last-child th { position: sticky; top: 0; z-index: 4; }
+.sc-lb thead tr:last-child .sticky-col-0 { z-index: 6; }
+.sc-lb thead tr:last-child .sticky-col-1 { z-index: 6; }
 
 /* Contexto partilhado para scorecards (Drive, Diversos, BJGT) */
 .tourn-scorecard .sc-score { min-width: 22px; min-height: 22px; font-size: 11px; }
@@ -1988,9 +1998,12 @@ thead .sticky-col-1 { z-index: 5; }
 .cs-table th.cs-sortable { cursor: pointer; user-select: none; }
 .cs-table th.cs-sortable:hover { background: var(--bg-hover-subtle); }
 
-/* Linha 1 de grupo */
+/* Só a última linha do header fica sticky — linha de grupos faz scroll */
+.cs-table thead tr:last-child th { position: sticky; top: 0; z-index: 4; }
+.cs-table thead tr:last-child .sticky-col-0 { z-index: 6; }
+.cs-table thead tr:last-child .sticky-col-1 { z-index: 6; }
 .cs-table .cs-grp-row td,
-.cs-table .cs-grp-row th { background: var(--bg-hover); border-bottom: none; }
+.cs-table .cs-grp-row th { position: static; background: var(--bg-hover); border-bottom: none; }
 .cs-table .cs-grp-spacer { border: none; background: transparent !important; }
 
 /* Separadores */
@@ -2030,12 +2043,19 @@ thead .sticky-col-1 { z-index: 5; }
 .cs-table tbody tr.pointer { cursor: pointer; }
 .cs-table tbody tr:hover .sticky-col-0,
 .cs-table tbody tr:hover .sticky-col-1 { background: var(--bg-detail); }
+/* ═══════════════════════════════════════════════════════════════
    Usado em: ScorecardLeaderboard, TotalLeaderboard, AccumulatedLB
    ═══════════════════════════════════════════════════════════════ */
 .sc-lb { border-collapse: collapse; font-size: 12px; }
+/* Regra base: sem bordas laterais; separador horizontal apenas */
 .sc-lb th,
-.sc-lb td { padding: 4px 2px; text-align: center; border: none; border-bottom: 1px solid var(--border-light); }
-.sc-lb th { background: var(--bg-header); font-weight: 700; font-size: 10px; color: var(--text-2); }
+.sc-lb td { padding: 6px 5px; text-align: center; border: none; white-space: nowrap; }
+/* th header: padding do mockup (7px 5px), font 11px/600 */
+.sc-lb th { background: var(--bg-header); font-weight: 600; font-size: 11px; color: var(--text-2);
+  padding: 7px 5px; border-bottom: 1px solid var(--border); }
+/* Linhas de dados: separador horizontal visível */
+.sc-lb tbody td { border-bottom: 1px solid var(--border-light); }
+/* Leaderboard (MultiRound): header th já tem border do bloco acima */
 .sc-lb th.lb-sortable { cursor: pointer; user-select: none; }
 .sc-lb th.lb-sortable:hover { background: var(--bg-hover-subtle); }
 
@@ -2049,7 +2069,7 @@ thead .sticky-col-1 { z-index: 5; }
 
 /* Colunas de identidade */
 .sc-lb .lb-esc   { width: 52px; }
-.sc-lb .lb-fed   { width: 44px; font-size: 10px; color: var(--text-muted); }
+.sc-lb .lb-fed   { width: 44px; font-size: 10px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
 .sc-lb .lb-club  { width: 70px; font-size: 11px; overflow: hidden;
   text-overflow: ellipsis; white-space: nowrap; }
 .sc-lb .lb-hcp   { width: 36px; text-align: right; font-family: 'JetBrains Mono', monospace;
@@ -2057,48 +2077,69 @@ thead .sticky-col-1 { z-index: 5; }
 .sc-lb .lb-tee   { width: 24px; }
 
 /* Total + par — ±Par vem ANTES de Tot, separador visual à esquerda */
-.sc-lb .lb-topar { width: 34px; font-size: 12px; font-weight: 700;
+.sc-lb .lb-topar { width: 34px; font-weight: 700;
   font-family: 'JetBrains Mono', monospace;
+  background: var(--accent-light);
   border-left: 1px solid var(--border); }
-.sc-lb .lb-gross { width: 38px; font-size: 14px; font-weight: 800;
+/* th usa 11px (herdado); td usa 13px como no mockup */
+.sc-lb td.lb-topar { font-size: 12px; }
+.sc-lb th.lb-topar { font-size: 11px; }
+.sc-lb .lb-gross { width: 38px; font-size: 12px; font-weight: 800;
   font-family: 'JetBrains Mono', monospace;
   background: var(--accent-light);
   border-left: 1px solid var(--border-light); }
 
-/* Estatísticas pós-scorecard */
-.sc-lb .lb-sd       { width: 44px; border-left: 1px solid var(--border); }
-.sc-lb .lb-bird     { width: 26px; font-size: 11px; color: var(--color-good); font-weight: 700; }
-.sc-lb .lb-par-stat { width: 26px; font-size: 11px; color: var(--text-3); }
-.sc-lb .lb-bog      { width: 26px; font-size: 11px; color: var(--color-danger); }
+/* Estatísticas pós-scorecard — separador forte após In */
+.sc-lb .lb-sd       { width: 48px; border-left: 2px solid var(--border); }
+.sc-lb .lb-bird     { width: 28px; font-size: 12px; color: var(--color-good); font-weight: 700; border-left: 1px solid var(--border-light); }
+.sc-lb .lb-par-stat { width: 28px; font-size: 12px; color: var(--text-3); border-left: 1px solid var(--border-light); }
+.sc-lb .lb-bog      { width: 28px; font-size: 12px; color: var(--color-danger); border-left: 1px solid var(--border-light); }
 
 /* Colunas por ronda (MultiRoundLeaderboard) — separador no início de cada grupo */
-.sc-lb .lb-rnd    { width: 38px; background: var(--bg-rnd, #dde8d9);
+.sc-lb .lb-rnd    { width: 38px; background: var(--bg-rnd, #e8f2e4);
   font-weight: 700; font-family: 'JetBrains Mono', monospace;
   border-left: 1px solid var(--border); }
-.sc-lb .lb-rnd-tp { width: 30px; background: var(--bg-rnd, #dde8d9); font-size: 11px;
+.sc-lb .lb-rnd-tp { width: 30px; background: var(--bg-rnd, #e8f2e4); font-size: 11px;
   font-family: 'JetBrains Mono', monospace; }
-.sc-lb .lb-rnd-sd   { width: 44px; background: var(--bg-rnd-stats, #f0f5ee); }
-.sc-lb .lb-rnd-bird { width: 22px; background: var(--bg-rnd-stats, #f0f5ee);
+.sc-lb .lb-rnd-sd   { width: 44px; background: var(--bg-rnd-stats, #f5f9f3); }
+.sc-lb .lb-rnd-bird { width: 22px; background: var(--bg-rnd-stats, #f5f9f3);
   font-size: 11px; color: var(--color-good); font-weight: 700; }
-.sc-lb .lb-rnd-par  { width: 22px; background: var(--bg-rnd-stats, #f0f5ee);
+.sc-lb .lb-rnd-par  { width: 22px; background: var(--bg-rnd-stats, #f5f9f3);
   font-size: 11px; color: var(--text-3); }
-.sc-lb .lb-rnd-bog  { width: 22px; background: var(--bg-rnd-stats, #f0f5ee);
+.sc-lb .lb-rnd-bog  { width: 22px; background: var(--bg-rnd-stats, #f5f9f3);
   font-size: 11px; color: var(--color-danger); }
+/* Headers usam a variante mais escura (mockup: #dde8d9 / #f0f5ee) */
+.sc-lb thead th.lb-rnd, .sc-lb thead th.lb-rnd-tp { background: #dde8d9; }
+.sc-lb thead th.lb-rnd-sd,
+.sc-lb thead th.lb-rnd-bird,
+.sc-lb thead th.lb-rnd-par,
+.sc-lb thead th.lb-rnd-bog  { background: #f0f5ee; }
 
-/* Buracos scorecard — SEM bordas entre buracos individuais, apenas separadores de grupo */
-.sc-lb .lb-hole       { width: 24px; }
+/* Buracos scorecard — sem width fixo (box-sizing:border-box distorce); bS entre todos, bM nos grupos */
+.sc-lb .lb-hole       { min-width: 33px; border-left: 1px solid var(--border-light); }
 .sc-lb .lb-hole-first { border-left: 1px solid var(--border); }
+/* Células de buraco em linhas de jogador: padding compacto */
+.sc-lb tbody tr:not(.lb-par-row):not(.lb-si-row) td.lb-hole { padding: 3px 2px; }
 .sc-lb .lb-halftot    { width: 42px; background: var(--bg-hover);
   font-weight: 600; font-size: 11px; font-family: 'JetBrains Mono', monospace;
   border-left: 1px solid var(--border); }
 
 /* Linhas PAR / SI */
-.sc-lb .lb-par-row    { background: var(--bg-hover); }
+.sc-lb .lb-si-row .sticky-col-0,
+.sc-lb .lb-si-row .sticky-col-1,
+.sc-lb .lb-par-row .sticky-col-0,
+.sc-lb .lb-par-row .sticky-col-1 { position: static; background: transparent; box-shadow: none; }
+.sc-lb .lb-si-row .sticky-col-0,
+.sc-lb .lb-si-row .sticky-col-1 { background: var(--bg); }
+.sc-lb .lb-par-row .sticky-col-0,
+.sc-lb .lb-par-row .sticky-col-1 { background: var(--bg-hover); }
 .sc-lb .lb-par-row td { border-bottom: 2px solid var(--border); background: var(--bg-hover); }
+.sc-lb .lb-par-row td.lb-topar { background: var(--accent-light); }
 .sc-lb .lb-par-row td.lb-gross { background: var(--accent-light); }
 .sc-lb .lb-si-row     { background: var(--bg); }
-.sc-lb .lb-si-row td  { font-size: 10px; color: var(--text-muted); background: var(--bg); }
-.sc-lb .lb-par-lbl    { text-align: left; padding-left: 8px; font-size: 11px;
+.sc-lb .lb-si-row td  { font-size: 10px; color: var(--text-muted); background: var(--bg);
+  border-bottom: 1px solid var(--border-light); }
+.sc-lb .lb-par-lbl    { text-align: right; padding-right: 8px; font-size: 11px;
   font-weight: 600; color: var(--text-muted); }
 
 /* Círculos de score — 26×26, font 13px, igual ao mockup */
@@ -2109,6 +2150,12 @@ thead .sticky-col-1 { z-index: 5; }
 }
 
 /* Linha hover */
+/* ─── Destaque Manuel — regra global, aplica a todas as tabelas ─── */
+.row-manuel { background: var(--bg-success-subtle) !important; }
+.row-manuel .sticky-col-0,
+.row-manuel .sticky-col-1 { background: var(--bg-manuel-sticky) !important; }
+.row-manuel:hover { background: var(--bg-success-subtle) !important; }
+
 .sc-lb tbody tr:hover { background: var(--bg-detail); }
 .sc-lb tbody tr:hover .sticky-col-0,
 .sc-lb tbody tr:hover .sticky-col-1 { background: var(--bg-detail); }

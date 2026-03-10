@@ -1,4 +1,19 @@
 /**
+ *
+ * ═══════════════════════════════════════════════════════════════
+ * FAMÍLIA DE TABELAS — MANTER SEMPRE EM SINCRONIA
+ * ═══════════════════════════════════════════════════════════════
+ * Este ficheiro faz parte de uma família de componentes de tabela
+ * que partilham as mesmas regras visuais (App.css: .sc-lb):
+ *
+ *   • ScorecardLeaderboard.tsx   — leaderboard buraco-a-buraco
+ *   • MultiRoundLeaderboard.tsx  — leaderboard multi-ronda
+ *   • CrossSeasonTable.tsx       — tabela temporada cruzada
+ *   • tournamentPrimitives.tsx   — primitivas partilhadas
+ *
+ * Ao alterar qualquer um, verifica se os outros precisam de ser
+ * actualizados: fontes, padding, bordas, cores, larguras de colunas.
+ * ═══════════════════════════════════════════════════════════════
  * ScorecardLeaderboard.tsx — Leaderboard scorecard buraco-a-buraco.
  *
  * Ordem de colunas (mockup final):
@@ -27,6 +42,7 @@ export interface ScorecardRow {
   toPar: number;
   scores?: number[];
   rowBg?: string;
+  stickyBg?: string;
   nameContent: React.ReactNode;
   /** <td> entre Jogador e ±Par — usar classes .lb-esc .lb-fed .lb-club .lb-hcp .lb-tee */
   prefixCells?: React.ReactNode;
@@ -47,6 +63,8 @@ interface ScorecardLeaderboardProps {
   postTotalHeaderCells?: React.ReactNode;
   parLabelColSpan?: number;
   postTotalColCount?: number;
+  /** Número de colunas após o scorecard (SD, 🐦, Par, ■) — para preencher SI/PAR rows */
+  postScorecardColCount?: number;
   showScorecard: boolean;
   onToggleScorecard?: () => void;
   metaLine?: React.ReactNode;
@@ -63,6 +81,7 @@ export function ScorecardLeaderboard({
   postScorecardHeaderCells, postTotalHeaderCells,
   parLabelColSpan = 1,
   postTotalColCount = 0,
+  postScorecardColCount = 0,
   showScorecard, onToggleScorecard,
   metaLine, filterBar,
   onSortPos, onSortName, activeSortKey, activeSortDir,
@@ -99,40 +118,47 @@ export function ScorecardLeaderboard({
       {filterBar}
 
       <div className="bjgt-chart-scroll">
-        <table className="sc-lb" data-sc-table="1">
+        <table className={"sc-lb" + (showScorecard ? " sc-lb-with-sc" : "")} data-sc-table="1">
           <thead>
-            {/* Linha S.I. */}
+            {/* Linha S.I. — primeiro, NÃO sticky */}
             {showScorecard && hasSI && (
               <tr className="lb-si-row">
                 <td className="sticky-col-0" />
-                <td className="lb-par-lbl sticky-col-1" colSpan={parLabelColSpan}>S.I.</td>
-                <td /><td />
+                <td className="lb-par-lbl sticky-col-1" colSpan={parLabelColSpan + 1}>S.I.</td>
+                <td className="lb-gross" />
                 {Array.from({ length: postTotalColCount }, (_, i) => <td key={i} />)}
-                {si!.slice(0, 9).map((v, i) => <td key={i}>{v}</td>)}
+                {si!.slice(0, 9).map((v, i) => (
+                  <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{v}</td>
+                ))}
                 <td className="lb-halftot" />
-                {!is9 && si!.slice(9, 18).map((v, i) => <td key={i}>{v}</td>)}
+                {!is9 && si!.slice(9, 18).map((v, i) => (
+                  <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{v}</td>
+                ))}
                 {!is9 && <td className="lb-halftot" />}
-                {hasPostScorecard && <td />}
+                {postScorecardColCount > 0 && Array.from({ length: postScorecardColCount }, (_, i) => <td key={i} />)}
               </tr>
             )}
 
-            {/* Linha PAR */}
+            {/* Linha PAR — segundo, NÃO sticky */}
             {showScorecard && (
               <tr className="lb-par-row">
                 <td className="sticky-col-0" />
-                <td className="lb-par-lbl sticky-col-1" colSpan={parLabelColSpan}>PAR</td>
-                <td className="lb-topar" />
+                <td className="lb-par-lbl sticky-col-1" colSpan={parLabelColSpan + 1}>PAR</td>
                 <td className="lb-gross">{parTotal}</td>
                 {Array.from({ length: postTotalColCount }, (_, i) => <td key={i} />)}
-                {par.slice(0, 9).map((v, i) => <td key={i}>{v}</td>)}
+                {par.slice(0, 9).map((v, i) => (
+                  <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{v}</td>
+                ))}
                 <td className="lb-halftot">{parF9}</td>
-                {!is9 && par.slice(9, 18).map((v, i) => <td key={i}>{v}</td>)}
+                {!is9 && par.slice(9, 18).map((v, i) => (
+                  <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{v}</td>
+                ))}
                 {!is9 && <td className="lb-halftot">{parB9}</td>}
-                {hasPostScorecard && <td />}
+                {postScorecardColCount > 0 && Array.from({ length: postScorecardColCount }, (_, i) => <td key={i} />)}
               </tr>
             )}
 
-            {/* Header principal */}
+            {/* Header principal — terceiro, sticky vertical */}
             <tr>
               <th className={"lb-pos sticky-col-0" + (onSortPos ? " lb-sortable" : "")} onClick={onSortPos}>
                 #<SortArrow col="pos" />
@@ -141,7 +167,6 @@ export function ScorecardLeaderboard({
                 Jogador<SortArrow col="name" />
               </th>
               {prefixHeaderCells}
-              {/* ±Par ANTES de Tot */}
               <th className="lb-topar">±</th>
               <th className="lb-gross">Tot</th>
               {showScorecard && <>
@@ -150,7 +175,7 @@ export function ScorecardLeaderboard({
                 ))}
                 <th className="lb-halftot">{is9 ? "Tot" : "Out"}</th>
                 {!is9 && Array.from({ length: Math.min(9, nh - 9) }, (_, i) => (
-                  <th key={i + 9} className="lb-hole">{i + 10}</th>
+                  <th key={i + 9} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{i + 10}</th>
                 ))}
                 {!is9 && <th className="lb-halftot">In</th>}
               </>}
@@ -159,13 +184,14 @@ export function ScorecardLeaderboard({
           </thead>
           <tbody>
             {rows.map(row => {
-              const sticky = row.rowBg || "var(--bg-card,#fff)";
+              const sticky = row.stickyBg || "var(--bg-card,#fff)";
+              const manuelCls = row.rowBg ? " row-manuel" : "";
               const scores = row.scores ?? [];
               const f9 = scores.slice(0, 9).reduce((a, b) => a + b, 0);
               const b9 = !is9 ? scores.slice(9, 18).reduce((a, b) => a + b, 0) : 0;
               const afterScorecard = row.postScorecardCells ?? row.postTotalCells;
               return (
-                <tr key={row.key} style={row.rowBg ? { background: row.rowBg } : undefined}>
+                <tr key={row.key} className={manuelCls.trim() || undefined}>
                   <td className="lb-pos sticky-col-0" style={{ background: sticky }}>{row.pos}</td>
                   <td className="lb-name sticky-col-1" style={{ background: sticky }}>{row.nameContent}</td>
                   {row.prefixCells}
@@ -181,7 +207,7 @@ export function ScorecardLeaderboard({
                       {f9} <span className="fs-8 c-text-3">({fmtToPar(f9 - parF9)})</span>
                     </td>
                     {!is9 && scores.slice(9, 18).map((sc, i) => (
-                      <td key={i} className="lb-hole">
+                      <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>
                         <span className={"sc-score " + scClass(sc, par[9 + i])}>{sc || ""}</span>
                       </td>
                     ))}

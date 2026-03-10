@@ -36,8 +36,7 @@ const _earlyData = Promise.all([
   loadMasterData(),
   loadPlayers(),
   loadAwayCourses(),
-  import("../melhorias.json").then(m => m.default as MelhoriasJson).catch(() => ({} as MelhoriasJson)),
-]);
+import("../melhorias.json").then(m => m.default as unknown as MelhoriasJson).catch(() => ({} as MelhoriasJson)),]);
 
 export default function App() {
   const [status, setStatus] = useState<Status>({ kind: "loading" });
