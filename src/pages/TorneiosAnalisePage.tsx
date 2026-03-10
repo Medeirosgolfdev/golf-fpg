@@ -975,6 +975,226 @@ function TournamentDetail({ tournament, escLookup, playersDB }: { tournament: To
 }
 
 /* ─────────────────────────────────────────────
+   RANKING PJA
+   Tabela simples de ranking: # · Jogador · Esc · Clube · Voltas · Pts
+   Filtros: escalão + pesquisa nome
+   Pontos: par=25, −1 por pancada acima, +1 abaixo (mín 0); GF×1.5
+   Top 14 voltas por ano contam para o total.
+   ───────────────────────────────────────────── */
+
+function pjaPts(toPar: number, gf: boolean): number {
+  return Math.max(0, 25 - toPar) * (gf ? 1.5 : 1);
+}
+
+function PJARankingView({
+  pjaList, playersDB, loading,
+}: {
+  pjaList: Tournament[];
+  playersDB: PlayersDB;
+  loading: boolean;
+}) {
+  const years = useMemo(() => {
+    const s = new Set<string>();
+    for (const t of pjaList) if (t.date) s.add(t.date.substring(0, 4));
+    return [...s].sort().reverse();
+  }, [pjaList]);
+
+  const [activeYear, setActiveYear] = useState<string>("");
+  const year = activeYear || years[0] || "";
+
+  const [sortKey, setSortKey] = useState<"total"|"name"|"club"|"voltas"|"esc">("total");
+  const [sortDir, setSortDir] = useState<"asc"|"desc">("desc");
+  const [filterEsc, setFilterEsc] = useState<string[]>([]);
+  const [filterName, setFilterName] = useState("");
+
+  function handleSort(k: typeof sortKey) {
+    if (k === sortKey) setSortDir(d => d === "asc" ? "desc" : "asc");
+    else { setSortKey(k); setSortDir(k === "name" || k === "club" || k === "esc" ? "asc" : "desc"); }
+  }
+
+  type PRow = {
+    key: string; name: string; fedCode?: string; club: string;
+    escalao: string; sex: string; voltas: number; total: number; eligible: boolean;
+  };
+
+  const rows: PRow[] = useMemo(() => {
+    const tourns = pjaList.filter(t =>
+      (t.date || "").startsWith(year) && !(t as any)._isSynthetic
+    );
+    const map = new Map<string, { name: string; fedCode?: string; club: string; escalao: string; sex: string; pts: number[] }>();
+
+    for (const t of tourns) {
+      const gf = /dunas/i.test(t.name) || /grande\s*final/i.test(t.name);
+      for (const p of t.players) {
+        const tp = typeof p.toPar === "string" ? parseInt(p.toPar) : p.toPar as number;
+        if (tp == null || isNaN(tp)) continue;
+        const grossV = typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : p.grossTotal as number;
+        if (grossV == null || isNaN(grossV) || grossV >= 900) continue;
+
+        const key = p.fedCode || p.name.toLowerCase().trim();
+        if (!map.has(key)) {
+          const db = p.fedCode ? playersDB[p.fedCode] : null;
+          const clubRaw = db?.club;
+          const club = clubRaw ? (typeof clubRaw === "object" ? (clubRaw as any).short || "" : String(clubRaw)) : (p.club || "");
+          map.set(key, {
+            name: p.name, fedCode: p.fedCode,
+            club, escalao: db?.escalao || (p as any).escalao || "",
+            sex: db?.sex || "", pts: [],
+          });
+        }
+        map.get(key)!.pts.push(pjaPts(tp, gf));
+      }
+    }
+
+    return [...map.entries()].map(([key, r]) => {
+      const top14 = [...r.pts].sort((a, b) => b - a).slice(0, 14);
+      const total = top14.reduce((s, v) => s + v, 0);
+      return { key, name: r.name, fedCode: r.fedCode, club: r.club, escalao: r.escalao, sex: r.sex, voltas: r.pts.length, total, eligible: r.pts.length >= 14 };
+    }).filter(r => r.voltas > 0);
+  }, [pjaList, year, playersDB]);
+
+  const availEscs = useMemo(() => {
+    const s = new Set<string>();
+    for (const r of rows) if (r.escalao) s.add(r.escalao);
+    return [...s].sort((a, b) => a.localeCompare(b, "pt"));
+  }, [rows]);
+
+  const filtered = useMemo(() => {
+    let r = rows;
+    if (filterEsc.length) r = r.filter(p => filterEsc.includes(p.escalao));
+    if (filterName.trim()) {
+      const q = filterName.trim().toLowerCase();
+      r = r.filter(p => p.name.toLowerCase().includes(q) || p.club.toLowerCase().includes(q));
+    }
+    return r;
+  }, [rows, filterEsc, filterName]);
+
+  const sorted = useMemo(() => {
+    const mult = sortDir === "asc" ? 1 : -1;
+    return [...filtered].sort((a, b) => {
+      if (sortKey === "name")   return mult * a.name.localeCompare(b.name, "pt");
+      if (sortKey === "club")   return mult * a.club.localeCompare(b.club, "pt");
+      if (sortKey === "esc")    return mult * a.escalao.localeCompare(b.escalao, "pt");
+      if (sortKey === "voltas") return mult * (a.voltas - b.voltas);
+      return mult * (a.total - b.total); // "total"
+    });
+  }, [filtered, sortKey, sortDir]);
+
+  function SortTh({ k, className, children }: { k: typeof sortKey; className?: string; children: React.ReactNode }) {
+    const active = sortKey === k;
+    return (
+      <th className={"lb-sortable " + (className || "")} onClick={() => handleSort(k)} style={{ cursor: "pointer", userSelect: "none" }}>
+        {children}{active && <span style={{ marginLeft: 3, fontSize: 7 }}>{sortDir === "asc" ? "▲" : "▼"}</span>}
+      </th>
+    );
+  }
+
+  function toggleEsc(e: string) {
+    setFilterEsc(prev => prev.includes(e) ? prev.filter(x => x !== e) : [...prev, e]);
+  }
+
+  if (loading && pjaList.length === 0) {
+    return <div className="muted fs-11" style={{ padding: 24 }}>A carregar…</div>;
+  }
+  if (!year) {
+    return <div className="muted fs-11" style={{ padding: 24 }}>Sem torneios PJA.</div>;
+  }
+
+  return (
+    <div style={{ padding: "16px 20px" }}>
+
+      {/* Cabeçalho: título + tabs de ano */}
+      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14, flexWrap: "wrap" }}>
+        <span style={{ fontWeight: 800, fontSize: 15 }}>Ranking PJA</span>
+        <div style={{ display: "flex", gap: 6 }}>
+          {years.map(yr => (
+            <button key={yr}
+              className={"tourn-tab tourn-tab-sm" + (yr === year ? " active" : "")}
+              onClick={() => { setActiveYear(yr); setFilterEsc([]); setFilterName(""); setSortKey("total"); setSortDir("desc"); }}
+              style={yr === year ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+              {yr}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Barra de filtros */}
+      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 6, marginBottom: 12, paddingBottom: 10, borderBottom: "1px solid var(--border)" }}>
+        <div style={{ position: "relative", flexShrink: 0 }}>
+          <span style={{ position: "absolute", left: 7, top: "50%", transform: "translateY(-50%)", fontSize: 11, color: "var(--text-muted)", pointerEvents: "none" }}>🔍</span>
+          <input type="text" placeholder="Nome ou clube…" value={filterName} onChange={e => setFilterName(e.target.value)}
+            style={{ fontSize: 11, padding: "3px 8px 3px 22px", borderRadius: 6, border: "1px solid var(--border)", background: "var(--bg-card,#fff)", color: "var(--text)", width: 150, outline: "none" }} />
+        </div>
+        {availEscs.length > 1 && <span style={{ color: "var(--border)", fontSize: 11 }}>|</span>}
+        {availEscs.map(e => {
+          const k = e.toLowerCase().replace(/[\s-]/g, "");
+          const s = ESC_STYLE[k];
+          const active = filterEsc.includes(e);
+          return (
+            <button key={e} onClick={() => toggleEsc(e)} style={{
+              fontSize: 10, padding: "2px 8px", borderRadius: 20,
+              border: `1px solid ${active ? (s?.bg || "var(--accent,#2563eb)") : "var(--border)"}`,
+              background: active ? (s?.bg || "var(--accent,#2563eb)") : "var(--bg-hover)",
+              color: active ? "#fff" : "var(--text-muted)",
+              cursor: "pointer", whiteSpace: "nowrap", fontWeight: active ? 700 : 500,
+            }}>{e}</button>
+          );
+        })}
+        {(filterEsc.length > 0 || filterName) && (
+          <>
+            <span style={{ fontSize: 10, color: "var(--text-muted)", marginLeft: 4 }}>{sorted.length} de {rows.length}</span>
+            <button onClick={() => { setFilterEsc([]); setFilterName(""); }} style={{ fontSize: 10, padding: "2px 8px", borderRadius: 20, border: "1px solid var(--border)", background: "var(--bg-hover)", color: "var(--text-muted)", cursor: "pointer" }}>✕ limpar</button>
+          </>
+        )}
+        <span className="chip" style={{ marginLeft: "auto" }}>{rows.length} jogadores</span>
+      </div>
+
+      {/* Legenda */}
+      <div className="muted fs-11" style={{ marginBottom: 10 }}>
+        Par = 25 pts · ±1 pt/pancada · top 14 voltas por ano · Grande Final ×1,5
+      </div>
+
+      {sorted.length === 0 ? (
+        <div className="muted fs-11">Sem resultados.</div>
+      ) : (
+        <div style={{ overflowX: "auto" }}>
+          <table className="sc-lb" style={{ width: "100%" }}>
+            <thead>
+              <tr>
+                <th className="lb-pos">#</th>
+                <SortTh k="name" className="lb-name" style={{ textAlign: "left", paddingLeft: 8 }}>Jogador</SortTh>
+                <SortTh k="esc"  className="lb-esc">Esc.</SortTh>
+                <SortTh k="club" className="lb-club">Clube</SortTh>
+                <SortTh k="voltas" className="lb-hcp">Voltas</SortTh>
+                <SortTh k="total"  className="lb-gross">Pts</SortTh>
+              </tr>
+            </thead>
+            <tbody>
+              {sorted.map((row, idx) => (
+                <tr key={row.key}>
+                  <td className="lb-pos">{idx + 1}</td>
+                  <td className="lb-name" style={{ textAlign: "left", paddingLeft: 8 }}>
+                    <PName name={row.name} fedCode={row.fedCode} playersDB={playersDB} />
+                    {row.sex === "F" && <span style={{ marginLeft: 5, fontSize: 9, color: "#e879f9", verticalAlign: "middle" }}>♀</span>}
+                    {!row.eligible && <span title="Menos de 14 voltas — não elegível para Grande Final" style={{ marginLeft: 5, fontSize: 9, color: "#f59e0b" }}>⚠</span>}
+                  </td>
+                  <td className="lb-esc">{row.escalao ? <EscPill esc={row.escalao} /> : <span className="muted">–</span>}</td>
+                  <td className="lb-club">{row.club || "–"}</td>
+                  <td className="lb-hcp" style={{ textAlign: "center" }}>{row.voltas}</td>
+                  <td className="lb-gross" style={{ fontWeight: 800, color: "var(--color-warn-dark)", fontVariantNumeric: "tabular-nums" }}>
+                    {row.total % 1 === 0 ? row.total : row.total.toFixed(1)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────
    MAIN CONTENT
    ───────────────────────────────────────────── */
 function Content() {
@@ -985,7 +1205,7 @@ function Content() {
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [sidebarMode, setSidebarMode] = useState<"month" | "circuit">("month");
+  const [sidebarMode, setSidebarMode] = useState<"month" | "circuit" | "pja-ranking">("month");
   const [filterManuel, setFilterManuel] = useState(false);
   const [escLookup, setEscLookup] = useState<EscLookup>(new Map());
   const [playersDB, setPlayersDB] = useState<PlayersDB>({});
@@ -1249,6 +1469,12 @@ function Content() {
                   style={sidebarMode === "circuit" ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
                   🏆 PJA Tour
                 </button>
+                <button
+                  className={"tourn-tab tourn-tab-sm" + (sidebarMode === "pja-ranking" ? " active" : "")}
+                  onClick={() => { setSidebarMode("pja-ranking"); setFilterManuel(false); }}
+                  style={sidebarMode === "pja-ranking" ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                  📊 Ranking
+                </button>
                 {sidebarMode === "month" && (
                   <button
                     className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
@@ -1281,7 +1507,8 @@ function Content() {
         </div>
       )}
 
-      {/* Master-detail */}
+      {/* Master-detail (modos "month" e "circuit") */}
+      {sidebarMode !== "pja-ranking" && (
       <div className="master-detail">
         {/* Sidebar */}
         <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`}>
@@ -1317,6 +1544,14 @@ function Content() {
           }
         </div>
       </div>
+      )}
+
+      {/* Ranking PJA */}
+      {sidebarMode === "pja-ranking" && (
+        <div style={{ flex: 1, overflow: "auto" }}>
+          <PJARankingView pjaList={pjaList} playersDB={playersDB} loading={loading} />
+        </div>
+      )}
     </div>
   );
 }

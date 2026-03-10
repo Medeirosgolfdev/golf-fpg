@@ -540,9 +540,8 @@ function TabelaRonda({ ronda, torneioT, ageGroup, expanded, onToggle }: {
   const jogadores = ronda.leaderboard ?? ronda.jogadores ?? [];
   const buracos   = ronda.buracos || 18;
   const has18     = buracos >= 18;
+  const hasPontos = jogadores.some(j => j.pontos > 0);
 
-  // Par e metros por buraco: apenas dados reais (TEES_LOOKUP ou ronda.par do servidor).
-  // Se não houver dados, par fica undefined e ScoreCircle renderiza sem cor.
   const teeInfo = TEES_LOOKUP[torneioT]?.[ageGroup];
   const par: number[] | undefined = (() => {
     if (teeInfo?.par.length === buracos) return teeInfo.par;
@@ -553,121 +552,131 @@ function TabelaRonda({ ronda, torneioT, ageGroup, expanded, onToggle }: {
     teeInfo?.metros && teeInfo.metros.length === buracos ? teeInfo.metros : undefined;
   const totalPar = par ? par.reduce((s, p) => s + p, 0) : ronda.total_par;
 
-  // Totais out/in para cada jogador
   const getStrokes = (j: RondaJogador) => j.strokes?.length ? j.strokes : (j.rondas?.["1"]?.strokes ?? []);
-  const outPar    = par?.slice(0,9).reduce((s,p)=>s+p,0);
-  const inPar     = par?.slice(9,18).reduce((s,p)=>s+p,0);
-  const outMetros = metros?.slice(0,9).reduce((s,m)=>s+m,0);
-  const inMetros  = metros?.slice(9,18).reduce((s,m)=>s+m,0);
+  const outPar    = par?.slice(0, 9).reduce((s, p) => s + p, 0);
+  const inPar     = par?.slice(9, 18).reduce((s, p) => s + p, 0);
+  const outMetros = metros?.slice(0, 9).reduce((s, m) => s + m, 0);
+  const inMetros  = metros?.slice(9, 18).reduce((s, m) => s + m, 0);
+
+  const holeCls = (i: number, first9 = true) =>
+    `lb-hole${(first9 && i === 0) || (!first9 && i === 0) ? " lb-hole-first" : ""}`;
+
+  const tpStr = (v: number | null | undefined) =>
+    v == null ? "–" : v === 0 ? "E" : v > 0 ? `+${v}` : `${v}`;
+  const tpColor = (v: number | null | undefined) =>
+    v == null ? "var(--text-muted)" : v < 0 ? "var(--color-good)" : v === 0 ? "var(--text-2)" : "var(--color-danger)";
 
   return (
-    <div style={{marginBottom:8, border:"1px solid var(--border)", borderRadius:8, overflow:"hidden"}}>
-      {/* Header da ronda */}
+    <div style={{ marginBottom: 8, border: "1px solid var(--border)", borderRadius: 8, overflow: "hidden" }}>
+      {/* Header da ronda — clicável */}
       <div onClick={onToggle} style={{
-        display:"flex", alignItems:"center", justifyContent:"space-between",
-        padding:"8px 12px", cursor:"pointer",
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        padding: "8px 12px", cursor: "pointer",
         background: expanded ? "var(--bg-header)" : "var(--bg-card)",
         borderBottom: expanded ? "1px solid var(--border)" : "none",
       }}>
-        <div style={{display:"flex", alignItems:"center", gap:10}}>
-          <span style={{fontWeight:700, fontSize:13, color:"var(--text)"}}>Ronda {ronda.ronda}</span>
-          {totalPar && <span style={{fontSize:11, color:"var(--text-3)"}}>Par {totalPar}</span>}
-          <span style={{fontSize:11, color:"var(--text-3)"}}>{jogadores.length} jogadores · {buracos}H</span>
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <span style={{ fontWeight: 700, fontSize: 13, color: "var(--text)" }}>Ronda {ronda.ronda}</span>
+          {totalPar && <span style={{ fontSize: 11, color: "var(--text-3)" }}>Par {totalPar}</span>}
+          <span style={{ fontSize: 11, color: "var(--text-3)" }}>{jogadores.length} jogadores · {buracos}H</span>
         </div>
-        {/* Mini resumo dos top 3 */}
-        {!expanded && jogadores.slice(0,3).map((j,i) => (
-          <span key={i} style={{
-            fontSize:10, color:isManuel(j.nome)?"var(--accent)":"var(--text-3)",
-            fontWeight:isManuel(j.nome)?700:400,
-          }}>
-            {i+1}. {j.nome.split(" ")[0]} {j.to_par!==null&&j.to_par!==undefined?(j.to_par===0?"E":j.to_par>0?"+"+j.to_par:j.to_par):"–"}
-          </span>
-        ))}
-        <span style={{color:"var(--text-3)", fontSize:12}}>{expanded?"▲":"▼"}</span>
+        {!expanded && (
+          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+            {jogadores.slice(0, 3).map((j, i) => (
+              <span key={i} style={{
+                fontSize: 11, color: isManuel(j.nome) ? "var(--accent)" : "var(--text-3)",
+                fontWeight: isManuel(j.nome) ? 700 : 400,
+              }}>
+                {i + 1}. {j.nome.split(" ")[0]} {tpStr(j.to_par)}
+              </span>
+            ))}
+          </div>
+        )}
+        <span style={{ color: "var(--text-3)", fontSize: 12 }}>{expanded ? "▲" : "▼"}</span>
       </div>
 
       {expanded && (
-        <div style={{overflowX:"auto"}}>
-          <table className="tourn-scorecard" style={{width:"100%", minWidth:500}}>
+        <div className="bjgt-chart-scroll">
+          <table className="sc-lb sc-lb-with-sc" style={{ minWidth: 500 }}>
             <thead>
-              {/* Linha metros */}
+              {/* Metros — estilo SI row */}
               {metros && (
-                <tr>
-                  <td className="tourn-lbl" colSpan={3} style={{fontSize:9,color:"var(--text-3)"}}>M</td>
-                  {metros.slice(0,9).map((m,i) => <td key={i} className="tourn-hole-cell" style={{fontSize:9,color:"var(--text-3)"}}>{m}</td>)}
-                  {has18 && <td className="tourn-sum-col" style={{fontSize:9,color:"var(--text-3)"}}>{outMetros}</td>}
-                  {has18 && metros.slice(9,18).map((m,i) => <td key={i} className="tourn-hole-cell" style={{fontSize:9,color:"var(--text-3)"}}>{m}</td>)}
-                  {has18 && <td className="tourn-sum-col" style={{fontSize:9,color:"var(--text-3)"}}>{inMetros}</td>}
-                  <td className="tourn-sum-col" style={{fontSize:9,color:"var(--text-3)"}}>{(outMetros??0)+(inMetros??0)}</td>
-                  <td/><td/>
+                <tr className="lb-si-row">
+                  <td className="sticky-col-0" />
+                  <td className="lb-par-lbl sticky-col-1" colSpan={2}>m</td>
+                  <td className="lb-topar" />
+                  <td className="lb-gross">{(outMetros ?? 0) + (inMetros ?? 0)}</td>
+                  {metros.slice(0, 9).map((m, i) => <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{m}</td>)}
+                  <td className="lb-halftot">{outMetros}</td>
+                  {has18 && metros.slice(9, 18).map((m, i) => <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{m}</td>)}
+                  {has18 && <td className="lb-halftot">{inMetros}</td>}
+                  {hasPontos && <td />}
                 </tr>
               )}
-              {/* Linha par */}
+              {/* PAR row */}
               {par && (
-                <tr className="sc-par-row">
-                  <td className="tourn-lbl" colSpan={3}>PAR</td>
-                  {par.slice(0,9).map((p,i) => <td key={i} className="tourn-hole-cell" style={{fontSize:10,fontWeight:600,color:"var(--text-2)"}}>{p}</td>)}
-                  {has18 && <td className="tourn-sum-col" style={{fontSize:10,fontWeight:600}}>{outPar}</td>}
-                  {has18 && par.slice(9,18).map((p,i) => <td key={i} className="tourn-hole-cell" style={{fontSize:10,fontWeight:600,color:"var(--text-2)"}}>{p}</td>)}
-                  {has18 && <td className="tourn-sum-col" style={{fontSize:10,fontWeight:600}}>{inPar}</td>}
-                  <td className="tourn-sum-col" style={{fontSize:10,fontWeight:600}}>{totalPar}</td>
-                  <td/><td/>
+                <tr className="lb-par-row">
+                  <td className="sticky-col-0" />
+                  <td className="lb-par-lbl sticky-col-1" colSpan={2}>PAR</td>
+                  <td className="lb-topar" />
+                  <td className="lb-gross">{totalPar}</td>
+                  {par.slice(0, 9).map((p, i) => <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{p}</td>)}
+                  <td className="lb-halftot">{outPar}</td>
+                  {has18 && par.slice(9, 18).map((p, i) => <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{p}</td>)}
+                  {has18 && <td className="lb-halftot">{inPar}</td>}
+                  {hasPontos && <td />}
                 </tr>
               )}
-              {/* Números dos buracos */}
-              <tr style={{background:"var(--bg-header)"}}>
-                <th className="tourn-pos-col">#</th>
-                <th className="tourn-lb-name-col">Jogador</th>
-                <th style={{width:28}}></th>
-                {Array.from({length:9},(_,i)=>(
-                  <th key={i} className="tourn-hole-cell" style={{fontSize:10,color:"var(--text-3)",fontWeight:400}}>{i+1}</th>
+              {/* Cabeçalho sticky */}
+              <tr>
+                <th className="lb-pos sticky-col-0">#</th>
+                <th className="lb-name sticky-col-1">Jogador</th>
+                <th style={{ width: 28 }} />
+                <th className="lb-topar">±</th>
+                <th className="lb-gross">Tot</th>
+                {Array.from({ length: 9 }, (_, i) => (
+                  <th key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{i + 1}</th>
                 ))}
-                {has18 && <th className="tourn-sum-col" style={{fontSize:10}}>OUT</th>}
-                {has18 && Array.from({length:9},(_,i)=>(
-                  <th key={i+9} className="tourn-hole-cell" style={{fontSize:10,color:"var(--text-3)",fontWeight:400}}>{i+10}</th>
+                <th className="lb-halftot">{has18 ? "Out" : "Tot"}</th>
+                {has18 && Array.from({ length: 9 }, (_, i) => (
+                  <th key={i + 9} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{i + 10}</th>
                 ))}
-                {has18 && <th className="tourn-sum-col" style={{fontSize:10}}>IN</th>}
-                <th className="tourn-sum-col" style={{fontSize:11}}>TOT</th>
-                <th className="tourn-sum-col" style={{fontSize:11}}>±</th>
-                {jogadores.some(j=>j.pontos>0) && <th className="tourn-sum-col" style={{fontSize:11}}>PTS</th>}
+                {has18 && <th className="lb-halftot">In</th>}
+                {hasPontos && <th className="lb-sd">PTS</th>}
               </tr>
             </thead>
             <tbody>
-              {jogadores.map((j,i) => {
+              {jogadores.map((j, i) => {
                 const st = getStrokes(j);
-                const out9 = st.slice(0,9).reduce((s,v)=>s+(v||0),0);
-                const in9  = st.slice(9,18).reduce((s,v)=>s+(v||0),0);
+                const out9 = st.slice(0, 9).reduce((s, v) => s + (v || 0), 0);
+                const in9  = st.slice(9, 18).reduce((s, v) => s + (v || 0), 0);
                 const manuel = isManuel(j.nome);
+                const stickyBg = manuel ? "var(--bg-manuel-sticky)" : "var(--bg-card,#fff)";
                 return (
-                  <tr key={i} className={manuel ? "row-manuel" : undefined} style={{
-                    background: manuel ? undefined : i%2===0?"var(--bg-card)":"var(--bg-detail)",
-                    fontWeight: manuel ? 700 : 400,
-                  }}>
-                    <td className="tourn-pos-col" style={{textAlign:"center"}}>
-                      <span className="tourn-pos">{i+1}</span>
-                    </td>
-                    <td className="tourn-lb-name-col">
-                      {manuel && <span style={{color:"var(--color-warn)",marginRight:4}}>★</span>}
+                  <tr key={i} className={manuel ? "row-manuel" : undefined}>
+                    <td className="lb-pos sticky-col-0" style={{ background: stickyBg }}>{i + 1}</td>
+                    <td className="lb-name sticky-col-1" style={{ background: stickyBg, fontWeight: manuel ? 700 : 400 }}>
+                      {manuel && <span style={{ color: "var(--color-warn)", marginRight: 4 }}>★</span>}
                       {j.nome}
                     </td>
-                    <td style={{textAlign:"center",fontSize:13}}>{flag(j.pais)}</td>
-                    {st.slice(0,9).map((s,idx) => <td key={idx} className="tourn-hole-cell"><ScoreCircle gross={s||null} par={par?.[idx]??null} size="small" empty="dot" /></td>)}
-                    {has18 && <td className="tourn-sum-col">{out9||"–"}</td>}
-                    {has18 && st.slice(9,18).map((s,idx) => <td key={idx+9} className="tourn-hole-cell"><ScoreCircle gross={s||null} par={par?.[idx+9]??null} size="small" empty="dot" /></td>)}
-                    {has18 && <td className="tourn-sum-col">{in9||"–"}</td>}
-                    <td className={`tourn-sum-col ${j.score && j.to_par!==null && j.to_par!==undefined && j.to_par<0?"tourn-sum-under":""}`}
-                      style={{fontWeight:700}}>
-                      {j.score||"–"}
-                    </td>
-                    <td className="tourn-sum-col" style={{
-                      fontWeight:700,
-                      color: (j.to_par===null||j.to_par===undefined)?"var(--text-3)":j.to_par<0?"var(--color-good)":j.to_par===0?"var(--text-2)":"var(--color-danger)",
-                    }}>
-                      {j.to_par===null||j.to_par===undefined?"–":j.to_par===0?"E":j.to_par>0?"+"+j.to_par:j.to_par}
-                    </td>
-                    {jogadores.some(jj=>jj.pontos>0) && (
-                      <td className="tourn-sum-col" style={{color:"var(--color-amber)",fontWeight:700}}>
-                        {j.pontos>0?j.pontos:"–"}
+                    <td style={{ textAlign: "center", fontSize: 13 }}>{flag(j.pais)}</td>
+                    <td className="lb-topar" style={{ color: tpColor(j.to_par) }}>{tpStr(j.to_par)}</td>
+                    <td className="lb-gross">{j.score || "–"}</td>
+                    {st.slice(0, 9).map((s, idx) => (
+                      <td key={idx} className={"lb-hole" + (idx === 0 ? " lb-hole-first" : "")}>
+                        <ScoreCircle gross={s || null} par={par?.[idx] ?? null} size="small" empty="dot" />
+                      </td>
+                    ))}
+                    <td className="lb-halftot">{out9 || "–"}</td>
+                    {has18 && st.slice(9, 18).map((s, idx) => (
+                      <td key={idx + 9} className={"lb-hole" + (idx === 0 ? " lb-hole-first" : "")}>
+                        <ScoreCircle gross={s || null} par={par?.[idx + 9] ?? null} size="small" empty="dot" />
+                      </td>
+                    ))}
+                    {has18 && <td className="lb-halftot">{in9 || "–"}</td>}
+                    {hasPontos && (
+                      <td className="lb-sd" style={{ color: "var(--color-amber)", fontWeight: 700 }}>
+                        {j.pontos > 0 ? j.pontos : "–"}
                       </td>
                     )}
                   </tr>
@@ -786,7 +795,7 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                     </span>
                     <div style={{ display:"flex", gap:4, alignItems:"center" }}>
                       <span style={{ fontSize:10, color:"var(--text-3)" }}>{e.inscritos}/{e.maximo}</span>
-                      {bd && <span style={{ background:bd.bg, color:bd.cor, padding:"1px 5px", borderRadius:5, fontSize:9, fontWeight:700 }}>{bd.label}</span>}
+                      {bd && <span style={{ background:bd.bg, color:bd.cor, padding:"1px 5px", borderRadius:5, fontSize:10, fontWeight:700 }}>{bd.label}</span>}
                     </div>
                   </div>
                   {e.jogadores && e.jogadores.length > 0 && (
@@ -869,7 +878,6 @@ function TabResultados({ data, selectedT, greatgolfData }: {
     return s;
   });
 
-  // Quando muda torneio, expandir automaticamente o escalão do Manuel
   useEffect(() => {
     if (!t) return;
     const em = t.escaloes.find(e => e.is_manuel);
@@ -878,6 +886,194 @@ function TabResultados({ data, selectedT, greatgolfData }: {
       setExpandedRondas(prev => { const s = new Set(prev); s.add(key); return s; });
     }
   }, [selectedT]);
+
+  // ── PRINT ──────────────────────────────────────────────────────────────────
+  function printRondas() {
+    if (!t) return;
+
+    function tpStr(v: number | null | undefined) {
+      return v == null ? "–" : v === 0 ? "E" : v > 0 ? `+${v}` : `${v}`;
+    }
+    function tpColor(v: number | null | undefined) {
+      return v == null ? "#888" : v < 0 ? "#16a34a" : v === 0 ? "#444" : "#dc2626";
+    }
+    function scClass(gross: number, par: number | null) {
+      if (!par || !gross) return "";
+      const d = gross - par;
+      if (d <= -3) return "eagle";
+      if (d === -2) return "eagle";
+      if (d === -1) return "birdie";
+      if (d === 0)  return "par";
+      if (d === 1)  return "bogey";
+      if (d === 2)  return "double";
+      if (d === 3)  return "triple";
+      return "quad";
+    }
+
+    const css = `
+      @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap');
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body { font-family: 'DM Sans', sans-serif; font-size: 11px; color: #1a2e0f; background: #fff; padding: 12px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      h1 { font-size: 15px; font-weight: 800; margin-bottom: 3px; }
+      h2 { font-size: 12px; font-weight: 700; color: #3a5a28; margin: 14px 0 6px; border-bottom: 1px solid #3a5a28; padding-bottom: 3px; }
+      h3 { font-size: 11px; font-weight: 700; color: #555; margin: 10px 0 4px; }
+      .meta { font-size: 10px; color: #666; margin-bottom: 8px; }
+      .page-break { page-break-before: always; }
+
+      table { border-collapse: collapse; font-size: 10px; width: 100%; }
+      th, td { padding: 4px 3px; text-align: center; border: none; white-space: nowrap; }
+      th { background: #eef2e8; font-weight: 600; font-size: 10px; color: #555; border-bottom: 1px solid #bcc5ad; }
+      tbody td { border-bottom: 1px solid #d5dac9; }
+      td.name { text-align: left; padding-left: 8px; min-width: 120px; }
+      td.pos { width: 24px; font-weight: 700; }
+      td.flag { width: 22px; }
+
+      .lb-topar { width: 32px; font-weight: 700; font-family: 'JetBrains Mono', monospace; background: #e0efdb; border-left: 1px solid #bcc5ad; }
+      .lb-gross { width: 36px; font-weight: 800; font-family: 'JetBrains Mono', monospace; background: #e0efdb; border-left: 1px solid #d5dac9; }
+      .lb-halftot { width: 40px; background: #f0f2ec; font-weight: 600; font-size: 10px; font-family: 'JetBrains Mono', monospace; border-left: 1px solid #bcc5ad; }
+      .lb-hole { min-width: 28px; border-left: 1px solid #d5dac9; }
+      .lb-hole-first { border-left: 1px solid #bcc5ad; }
+      .lb-par-row td { background: #f0f2ec; font-weight: 600; border-bottom: 2px solid #bcc5ad; }
+      .lb-par-row td.lb-topar, .lb-par-row td.lb-gross { background: #e0efdb; }
+      .lb-si-row td { background: #f7f8f6; font-size: 9px; color: #888; border-bottom: 1px solid #d5dac9; }
+      .lb-par-lbl { text-align: left; padding-left: 8px; font-weight: 800; }
+
+      .row-manuel td { background: #d1fae5 !important; }
+      .row-manuel td.lb-topar, .row-manuel td.lb-gross { background: #a7f3d0 !important; }
+
+      .sc-score { display: inline-flex; align-items: center; justify-content: center;
+        width: 22px; height: 22px; font-size: 10px; font-weight: 700; border-radius: 0; }
+      .sc-score.birdie { background: #dc2626; color: #fff; border-radius: 50%; }
+      .sc-score.eagle  { background: #f59e0b; color: #fff; border-radius: 50%; }
+      .sc-score.par    { background: transparent; color: #1a2e0f; }
+      .sc-score.bogey  { background: #bfdbfe; color: #1e3a8a; border: 1px solid #93c5fd; }
+      .sc-score.double { background: #60a5fa; color: #fff; }
+      .sc-score.triple { background: #2563eb; color: #fff; }
+      .sc-score.quad   { background: #1d4ed8; color: #fff; }
+      .sc-score.empty  { color: #ccc; }
+
+      @media print {
+        body { padding: 6px; }
+        @page { margin: 10mm; size: landscape; }
+      }
+    `;
+
+    const escalaoEsperado = escalaoManuelParaData(t.date_inicio);
+
+    let tableIndex = 0;
+    const tablesHtml = sortEscaloes(t.escaloes).map(e => {
+      const rondasComDados = e.rondas.filter(r => (r.leaderboard ?? r.jogadores ?? []).length > 0);
+      if (!rondasComDados.length) return "";
+      const isManuelEscalao = t.escalao_manuel
+        ? e.age_group === t.escalao_manuel
+        : (e.is_manuel === true && e.nome === escalaoEsperado);
+      const teeInfo = TEES_LOOKUP[t.t]?.[e.age_group];
+
+      const escalaoTitle = `<h2>${isManuelEscalao ? "★ " : ""}${e.nome}</h2>`;
+      return rondasComDados.map((r, ri) => {
+          const jogadores = r.leaderboard ?? r.jogadores ?? [];
+          const buracos = r.buracos || 18;
+          const has18 = buracos >= 18;
+          const hasPontos = jogadores.some((j: any) => j.pontos > 0);
+          const par: number[] | undefined = (() => {
+            if (teeInfo?.par.length === buracos) return teeInfo.par;
+            if (r.par?.length === buracos) return r.par;
+            return undefined;
+          })();
+          const metros: number[] | undefined =
+            teeInfo?.metros && teeInfo.metros.length === buracos ? teeInfo.metros : undefined;
+          const totalPar = par ? par.reduce((s: number, p: number) => s + p, 0) : r.total_par;
+          const outPar = par?.slice(0, 9).reduce((s: number, p: number) => s + p, 0);
+          const inPar  = par?.slice(9, 18).reduce((s: number, p: number) => s + p, 0);
+          const outM   = metros?.slice(0, 9).reduce((s: number, m: number) => s + m, 0);
+          const inM    = metros?.slice(9, 18).reduce((s: number, m: number) => s + m, 0);
+
+          const getStrokes = (j: any) => j.strokes?.length ? j.strokes : (j.rondas?.["1"]?.strokes ?? []);
+
+          const holeHeaders = Array.from({length: 9}, (_, i) => `<th class="lb-hole${i===0?" lb-hole-first":""}">${i+1}</th>`).join("") +
+            (has18 ? `<th class="lb-halftot">Out</th>` + Array.from({length:9}, (_,i) => `<th class="lb-hole${i===0?" lb-hole-first":""}">${i+10}</th>`).join("") + `<th class="lb-halftot">In</th>` : `<th class="lb-halftot">Tot</th>`);
+
+          const metrosRow = metros ? `<tr class="lb-si-row">
+            <td class="pos"></td><td class="name lb-par-lbl" colspan="2">m</td>
+            <td class="lb-topar"></td><td class="lb-gross">${(outM??0)+(inM??0)}</td>
+            ${metros.slice(0,9).map((m:number,i:number)=>`<td class="lb-hole${i===0?" lb-hole-first":""}">${m}</td>`).join("")}
+            <td class="lb-halftot">${outM}</td>
+            ${has18 ? metros.slice(9,18).map((m:number,i:number)=>`<td class="lb-hole${i===0?" lb-hole-first":""}">${m}</td>`).join("")+"<td class='lb-halftot'>"+inM+"</td>" : ""}
+            ${hasPontos?"<td></td>":""}
+          </tr>` : "";
+
+          const parRow = par ? `<tr class="lb-par-row">
+            <td class="pos"></td><td class="name lb-par-lbl" colspan="2">PAR</td>
+            <td class="lb-topar"></td><td class="lb-gross">${totalPar}</td>
+            ${par.slice(0,9).map((p:number,i:number)=>`<td class="lb-hole${i===0?" lb-hole-first":""}">${p}</td>`).join("")}
+            <td class="lb-halftot">${outPar}</td>
+            ${has18 ? par.slice(9,18).map((p:number,i:number)=>`<td class="lb-hole${i===0?" lb-hole-first":""}">${p}</td>`).join("")+"<td class='lb-halftot'>"+inPar+"</td>" : ""}
+            ${hasPontos?"<td></td>":""}
+          </tr>` : "";
+
+          const rows = jogadores.map((j: any, idx: number) => {
+            const st = getStrokes(j);
+            const out9 = st.slice(0,9).reduce((s:number,v:number)=>s+(v||0),0);
+            const in9  = st.slice(9,18).reduce((s:number,v:number)=>s+(v||0),0);
+            const manuel = isManuel(j.nome);
+            const manCls = manuel ? " row-manuel" : "";
+            const holes9 = st.slice(0,9).map((s:number, hi:number) => {
+              const cl = scClass(s, par?.[hi] ?? null);
+              return `<td class="lb-hole${hi===0?" lb-hole-first":""}"><span class="sc-score ${cl||"empty"}">${s||""}</span></td>`;
+            }).join("");
+            const holes9b = has18 ? st.slice(9,18).map((s:number, hi:number) => {
+              const cl = scClass(s, par?.[hi+9] ?? null);
+              return `<td class="lb-hole${hi===0?" lb-hole-first":""}"><span class="sc-score ${cl||"empty"}">${s||""}</span></td>`;
+            }).join("") : "";
+            const tpVal = tpStr(j.to_par);
+            const tpC   = tpColor(j.to_par);
+            return `<tr class="${manCls.trim()}">
+              <td class="pos">${idx+1}</td>
+              <td class="name">${manuel?"★ ":""}${j.nome}</td>
+              <td class="flag">${flag(j.pais)}</td>
+              <td class="lb-topar" style="color:${tpC}">${tpVal}</td>
+              <td class="lb-gross">${j.score||"–"}</td>
+              ${holes9}
+              <td class="lb-halftot">${out9||"–"}</td>
+              ${has18 ? holes9b + `<td class="lb-halftot">${in9||"–"}</td>` : ""}
+              ${hasPontos?`<td style="color:#d97706;font-weight:700">${j.pontos>0?j.pontos:"–"}</td>`:""}
+            </tr>`;
+          }).join("");
+
+          const pb = tableIndex++ > 0 ? '<div class="page-break"></div>' : '';
+          return `${pb}${escalaoTitle}<h3>Ronda ${r.ronda} · ${jogadores.length} jogadores · ${buracos}H${totalPar ? ` · Par ${totalPar}` : ""}</h3>
+          <table>
+            <thead>
+              ${metrosRow}${parRow}
+              <tr>
+                <th class="pos">#</th><th class="name">Jogador</th><th class="flag"></th>
+                <th class="lb-topar">±</th><th class="lb-gross">Tot</th>
+                ${holeHeaders}
+                ${hasPontos?"<th>PTS</th>":""}
+              </tr>
+            </thead>
+            <tbody>${rows}</tbody>
+          </table>`;
+        }).join("");
+    }).join("");
+
+    const html = `<!DOCTYPE html><html><head><meta charset="utf-8">
+      <title>${t.name}</title>
+      <style>${css}</style>
+    </head><body>
+      <h1>${t.name}</h1>
+      <div class="meta">📅 ${fmtDate(t.date_inicio)}${t.campo ? ` · ${t.campo}` : ""}</div>
+      ${tablesHtml}
+    </body></html>`;
+
+    const w = window.open("", "_blank");
+    if (!w) return;
+    w.document.write(html);
+    w.document.close();
+    w.focus();
+    setTimeout(() => w.print(), 600);
+  }
+  // ──────────────────────────────────────────────────────────────────────────
 
   if (!data.resultados.length) return (
     <div style={{ color:"var(--text-3)", padding:"32px 0", textAlign:"center", fontSize:13 }}>
@@ -929,6 +1125,13 @@ function TabResultados({ data, selectedT, greatgolfData }: {
               {l.label}
             </a>
           ))}
+          <button onClick={printRondas} style={{
+            marginLeft:"auto", fontSize:10, cursor:"pointer", background:"var(--bg-header)",
+            border:"1px solid var(--border)", borderRadius:5, padding:"2px 9px",
+            color:"var(--text-2)", fontFamily:"inherit", display:"flex", alignItems:"center", gap:4,
+          }}>
+            🖨️ Imprimir
+          </button>
         </div>
         {manuelRows.length > 0 && (
           <div style={{ marginTop:8, display:"flex", gap:6, flexWrap:"wrap" }}>
@@ -1047,38 +1250,34 @@ function SecaoGreatgolf({ data }: { data: GreatgolfData }) {
             ))}
           </div>
 
-          <table className="tourn-scorecard" style={{ width:"100%" }}>
+          <table className="sc-lb" style={{ width:"100%" }}>
             <thead>
               <tr>
-                <th className="tourn-pos-col">#</th>
-                <th className="tourn-lb-name-col" style={{ textAlign:"left" }}>Jogador</th>
-                <th style={{ textAlign:"left", fontSize:11, color:"var(--text-3)" }}>Clube</th>
-                <th style={{ textAlign:"center", width:50 }}>To Par</th>
-                <th style={{ textAlign:"center", width:50 }}>Gross</th>
+                <th className="sticky-col-0" style={{ width:26 }}>#</th>
+                <th className="sticky-col-1" style={{ textAlign:"left", paddingLeft:10 }}>Jogador</th>
+                <th style={{ textAlign:"left", fontSize:11 }}>Clube</th>
+                <th className="lb-topar">±</th>
+                <th className="lb-gross">TOT</th>
               </tr>
             </thead>
             <tbody>
               {rows.map((r, i) => {
                 const manuelRow = isManuel(r.name);
                 return (
-                  <tr key={i} className={manuelRow ? "row-manuel" : undefined} style={{
-                    background: manuelRow ? undefined : i%2===0 ? "var(--bg-card)" : "var(--bg-detail)",
-                    border: manuelRow ? "1px solid var(--accent)" : undefined,
-                  }}>
-                    <td className="tourn-pos-col" style={{ textAlign:"center" }}>
+                  <tr key={i} className={manuelRow ? "row-manuel" : undefined}>
+                    <td className={`sticky-col-0${manuelRow ? " row-manuel" : ""}`} style={{ textAlign:"center", fontWeight:700 }}>
                       {r.pos != null
-                        ? <span className="tourn-pos">{r.pos}</span>
-                        : <span style={{ color:"var(--text-3)", fontSize:10 }}>{r.status}</span>}
+                        ? r.pos
+                        : <span style={{ color:"var(--text-3)", fontSize:11 }}>{r.status}</span>}
                     </td>
-                    <td style={{ fontWeight: manuelRow ? 800 : 500, fontSize:13, padding:"7px 10px",
-                      color: manuelRow ? "var(--accent)" : "var(--text)" }}>
+                    <td className={`sticky-col-1${manuelRow ? " row-manuel" : ""}`} style={{ textAlign:"left", paddingLeft:10, fontWeight: manuelRow ? 800 : 500 }}>
                       {manuelRow && "★ "}{r.name}
                     </td>
-                    <td style={{ fontSize:11, color:"var(--text-3)", padding:"7px 8px" }}>{r.club}</td>
-                    <td style={{ textAlign:"center", fontSize:13 }}>{renderToPar(r.toPar)}</td>
-                    <td style={{ textAlign:"center", fontSize:13, color:"var(--text-2)", fontWeight: manuelRow ? 700 : 400 }}>
-                      {r.gross ?? "—"}
+                    <td style={{ fontSize:11, color:"var(--text-3)", padding:"6px 8px" }}>{r.club}</td>
+                    <td className="lb-topar" style={{ color: r.toPar == null ? "var(--text-muted)" : r.toPar < 0 ? "var(--color-good)" : r.toPar === 0 ? "var(--text-2)" : "var(--color-danger)" }}>
+                      {r.toPar == null ? "–" : r.toPar === 0 ? "E" : r.toPar > 0 ? `+${r.toPar}` : r.toPar}
                     </td>
+                    <td className="lb-gross">{r.gross ?? "—"}</td>
                   </tr>
                 );
               })}
@@ -1112,16 +1311,27 @@ interface RivalInfo {
   encontros: Encontro[];
 }
 
+// Normaliza nome de torneio para comparação cross-year (remove ano final)
+function torneioBaseName(name: string): string {
+  return name.replace(/\s+\d{4}$/, "").replace(/[^\w\s]/g, "").toLowerCase().trim();
+}
+
 function TabelaConhecidos({
   torneioT, torneioNome, torneioData, escalaoManuel,
-  rivals, fieldData, intlData, matchIntl, defaultOpen,
+  rivals, fieldData, intlData, matchIntl, resultados, defaultOpen,
 }: {
   torneioT: number; torneioNome: string; torneioData?: string; escalaoManuel?: string;
   rivals: RivalInfo[]; fieldData: FieldData | null; intlData: IntlData | null;
-  matchIntl: (nome: string) => IntlJogador | null; defaultOpen?: boolean;
+  matchIntl: (nome: string) => IntlJogador | null;
+  resultados: TorneioResult[];
+  defaultOpen?: boolean;
 }) {
   const [open, setOpen] = useState(defaultOpen ?? false);
   const [expandidoNovos, setExpandidoNovos] = useState(false);
+  type RepSort = "escalao" | "nome" | "pais" | "escalaoAnt" | "pos";
+  const [repSort, setRepSort] = useState<{ col: RepSort; dir: "asc"|"desc" }>({ col: "escalao", dir: "asc" });
+  const handleRepSort = (col: RepSort) =>
+    setRepSort(prev => prev.col === col ? { col, dir: prev.dir === "asc" ? "desc" : "asc" } : { col, dir: col === "pos" ? "asc" : "asc" });
   const torneio = fieldData?.torneios.find(t => t.t === torneioT);
 
   // Guardar o escalão de referência apenas para o header (contagem)
@@ -1142,6 +1352,42 @@ function TabelaConhecidos({
   const conhecidos    = inscritos.filter(j => !isManuel(j.nome) && rivalMap.has(j.nome.toLowerCase().trim()));
   const desconhecidos = inscritos.filter(j => !isManuel(j.nome) && !rivalMap.has(j.nome.toLowerCase().trim()));
 
+  // ── Jogaram este torneio no ano passado (escalão abaixo) ──────────────────
+  const anoPassadoMap = useMemo(() => {
+    const base = torneioBaseName(torneioNome);
+    const isoYear = (d: string) => {
+      if (!d) return 0;
+      if (d.includes("-")) return parseInt(d.substring(0, 4));
+      const parts = d.split("/"); return parseInt(parts[2] ?? "0");
+    };
+    const anoAtual = isoYear(torneioData ?? "");
+    const tornAnterior = resultados.find(r =>
+      torneioBaseName(r.name) === base && isoYear(r.date_inicio) === anoAtual - 1
+    );
+    const map = new Map<string, { pos: number; escalao: string; ronda: number }>();
+    if (!tornAnterior) return map;
+    for (const insc of inscritos) {
+      const escalaoActual = torneio?.escaloes.find(e =>
+        (e.jogadores ?? []).some(j => j.nome.toLowerCase().trim() === insc.nome.toLowerCase().trim())
+      );
+      const ageGrpActual = escalaoActual?.age_group ?? 0;
+      const ageGrpAnterior = ageGrpActual > 0 ? ageGrpActual - 1 : 0;
+      const escalaoAnt = tornAnterior.escaloes.find(e => e.age_group === ageGrpAnterior);
+      if (!escalaoAnt) continue;
+      for (const r of escalaoAnt.rondas) {
+        const lb = r.leaderboard ?? r.jogadores ?? [];
+        const idx = lb.findIndex(j => j.nome.toLowerCase().trim() === insc.nome.toLowerCase().trim());
+        if (idx >= 0) {
+          const existing = map.get(insc.nome.toLowerCase().trim());
+          if (!existing || idx + 1 < existing.pos)
+            map.set(insc.nome.toLowerCase().trim(), { pos: idx + 1, escalao: escalaoAnt.nome, ronda: r.ronda });
+        }
+      }
+    }
+    return map;
+  }, [torneioNome, torneioData, resultados, inscritos, torneio]);
+  // ─────────────────────────────────────────────────────────────────────────
+
   const manuelIntl = intlData?.jogadores.find(jj => jj.isM);
 
   return (
@@ -1157,7 +1403,12 @@ function TabelaConhecidos({
           <div style={{ fontSize:11, color:"var(--text-3)", display:"flex", gap:10, flexWrap:"wrap" }}>
             {torneioData && <span>📅 {fmtDate(torneioData)}</span>}
             {escalaoManuel && <span>🏌️ {escalaoManuel}</span>}
-            {torneio && <span>· {conhecidos.length} conhecidos · {desconhecidos.length} novos</span>}
+            {torneio && (
+              <span>
+                · {conhecidos.length} conhecidos · {desconhecidos.length} novos
+                {anoPassadoMap.size > 0 && <span style={{ marginLeft:6, fontWeight:700, color:"var(--text-2)" }}>· ↩ {anoPassadoMap.size} repetem</span>}
+              </span>
+            )}
             {!torneio && <span style={{ color:"var(--color-warn)" }}>⚠️ Campo não disponível</span>}
           </div>
         </div>
@@ -1165,6 +1416,78 @@ function TabelaConhecidos({
       </div>
 
       {open && <div style={{ padding:"12px 16px" }}>
+        {/* ── Repetentes: jogaram este torneio no ano passado ── */}
+        {anoPassadoMap.size > 0 && (() => {
+          const base = inscritos
+            .filter(j => anoPassadoMap.has(j.nome.toLowerCase().trim()))
+            .map(j => ({ ...j, ant: anoPassadoMap.get(j.nome.toLowerCase().trim())! }));
+          const repetentes = [...base].sort((a, b) => {
+            let v = 0;
+            if (repSort.col === "escalao")    v = a.escalao.localeCompare(b.escalao);
+            else if (repSort.col === "nome")  v = a.nome.localeCompare(b.nome);
+            else if (repSort.col === "pais")  v = a.pais.localeCompare(b.pais);
+            else if (repSort.col === "escalaoAnt") v = a.ant.escalao.localeCompare(b.ant.escalao);
+            else v = a.ant.pos - b.ant.pos;
+            return repSort.dir === "asc" ? v : -v;
+          });
+          const manuelRepete = repetentes.some(j => isManuel(j.nome));
+          const ThR = ({ col, label, style }: { col: typeof repSort.col; label: string; style?: React.CSSProperties }) => (
+            <th onClick={() => handleRepSort(col)} style={{
+              cursor:"pointer", userSelect:"none", whiteSpace:"nowrap",
+              color: repSort.col === col ? "var(--text)" : "var(--text-3)",
+              ...style,
+            }}>
+              {label}
+              <span style={{ marginLeft:4, fontSize:10, opacity: repSort.col === col ? 1 : 0.35 }}>
+                {repSort.col === col ? (repSort.dir === "asc" ? "▲" : "▼") : "⇅"}
+              </span>
+            </th>
+          );
+          return (
+            <div style={{ marginBottom:16, border:"1px solid var(--border)", borderRadius:8, overflow:"hidden" }}>
+              <div style={{ padding:"8px 12px", background:"var(--bg-header)", borderBottom:"1px solid var(--border)",
+                fontSize:12, fontWeight:700, color:"var(--text-2)", display:"flex", alignItems:"center", gap:8 }}>
+                ↩ Repetentes — já jogaram este torneio no ano passado ({repetentes.length})
+                {manuelRepete && <span style={{ fontSize:11, color:"var(--accent)", fontWeight:700 }}>incl. Manuel</span>}
+              </div>
+              <table className="sc-lb" style={{ width:"100%" }}>
+                <thead>
+                  <tr>
+                    <th className="lb-pos sticky-col-0">#</th>
+                    <ThR col="nome" label="Jogador" style={{ textAlign:"left", paddingLeft:10, minWidth:120 }} />
+                    <ThR col="pais" label="🌍" style={{ width:28, textAlign:"center" }} />
+                    <ThR col="escalao" label="Escalão actual" style={{ textAlign:"left", padding:"6px 8px", minWidth:90 }} />
+                    <ThR col="escalaoAnt" label="Ano passado" style={{ textAlign:"left", padding:"6px 8px", minWidth:90 }} />
+                    <ThR col="pos" label="Pos. ant." style={{ width:52, textAlign:"center" }} />
+                  </tr>
+                </thead>
+                <tbody>
+                  {repetentes.map((j, i) => {
+                    const manuel = isManuel(j.nome);
+                    const stickyBg = manuel ? "var(--bg-manuel-sticky)" : "var(--bg-card,#fff)";
+                    return (
+                      <tr key={i} className={manuel ? "row-manuel" : undefined}>
+                        <td className="lb-pos sticky-col-0" style={{ background: stickyBg }}>{i + 1}</td>
+                        <td className="lb-name sticky-col-1" style={{ textAlign:"left", paddingLeft:10, background: stickyBg, fontWeight: manuel ? 700 : 400 }}>
+                          {manuel && <span style={{ color:"var(--color-warn)", marginRight:4 }}>★</span>}
+                          {j.nome}
+                        </td>
+                        <td style={{ textAlign:"center" }}>{flag(j.pais)}</td>
+                        <td style={{ textAlign:"left", padding:"5px 8px", fontSize:11, color:"var(--text-2)" }}>{j.escalao}</td>
+                        <td style={{ textAlign:"left", padding:"5px 8px", fontSize:11, color:"var(--text-3)" }}>{j.ant.escalao}</td>
+                        <td style={{ textAlign:"center", fontWeight:700, fontFamily:"'JetBrains Mono',monospace",
+                          color: j.ant.pos <= 3 ? "var(--color-warn)" : "var(--text)" }}>
+                          {j.ant.pos <= 3 ? "🏆 " : ""}{j.ant.pos}º
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          );
+        })()}
+
         {/* ── Já conhecidos ── */}
         <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:10 }}>
           <span style={{ fontSize:12, fontWeight:700, color:"var(--color-good)" }}>
@@ -1182,12 +1505,12 @@ function TabelaConhecidos({
             Nenhum adversário conhecido inscrito ainda.
           </div>
         ) : (
-          <table className="tourn-scorecard" style={{ width:"100%", marginBottom:16 }}>
+          <table className="sc-lb" style={{ width:"100%", marginBottom:16 }}>
             <thead>
               <tr>
-                <th className="tourn-lb-name-col">Jogador</th>
-                <th style={{ width:30 }}></th>
-                <th style={{ textAlign:"left", fontSize:11, padding:"6px 8px" }}>Encontros com o Manuel</th>
+                <th className="sticky-col-0" style={{ textAlign:"left", paddingLeft:10 }}>Jogador</th>
+                <th style={{ width:30 }} />
+                <th style={{ textAlign:"left", padding:"6px 8px" }}>Encontros com o Manuel</th>
               </tr>
             </thead>
             <tbody>
@@ -1198,16 +1521,15 @@ function TabelaConhecidos({
                 const intlTorns = intlJog
                   ? (intlData?.torneios ?? []).filter(t => intlJog.r[t.id] && t.circuito !== "uskids")
                   : [];
-                // Badge de alerta: foi top 3 em algum encontro
                 const foiTop3 = rival.encontros.some(e => e.rival_pos <= 3);
                 return (
-                  <tr key={i} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)" }}>
-                    <td className="tourn-lb-name-col">
+                  <tr key={i}>
+                    <td className="sticky-col-0" style={{ textAlign:"left", paddingLeft:10 }}>
                       <span style={{ display:"flex", alignItems:"center", gap:5 }}>
                         {j.nome}
                         {foiTop3 && (
                           <span style={{ background:"var(--color-warn)", color:"#fff",
-                            fontSize:9, fontWeight:800, padding:"1px 5px", borderRadius:4,
+                            fontSize:10, fontWeight:800, padding:"1px 5px", borderRadius:4,
                             whiteSpace:"nowrap" }}>
                             🏆 top 3
                           </span>
@@ -1257,7 +1579,7 @@ function TabelaConhecidos({
                                 {manRes.p}º vs {res.p}º
                               </span>
                             ) : (
-                              <span style={{ marginLeft:4, color:"var(--text-3)", fontSize:10 }}>
+                              <span style={{ marginLeft:4, color:"var(--text-3)", fontSize:11 }}>
                                 {res.p}º (s/ Manuel)
                               </span>
                             )}
@@ -1393,6 +1715,7 @@ function TabRivais({ data, fieldData, intlData, selectedT }: { data: ResultsData
                 escalaoManuel={escalaoManuelNesteTorneio}
                 rivals={rivals} fieldData={fieldData}
                 intlData={intlData} matchIntl={matchIntl}
+                resultados={data.resultados}
               />
             );
           })}
@@ -1429,30 +1752,28 @@ function TabRivais({ data, fieldData, intlData, selectedT }: { data: ResultsData
             <span style={{ color:"var(--text-3)", fontSize:11 }}>{ordenados.length} jogadores</span>
           </div>
 
-          <table className="tourn-scorecard" style={{ width:"100%" }}>
+          <table className="sc-lb" style={{ width:"100%" }}>
             <thead>
               <tr>
-                <th className="tourn-pos-col">#</th>
-                <th className="tourn-lb-name-col">Jogador</th>
-                <th style={{ width:30 }}></th>
-                <th style={{ textAlign:"center", width:70, fontSize:10 }}>Torneios</th>
-                <th style={{ textAlign:"left", fontSize:10, padding:"6px 8px" }}>Historial</th>
+                <th className="sticky-col-0" style={{ width:26 }}>#</th>
+                <th className="sticky-col-1" style={{ textAlign:"left", paddingLeft:10 }}>Jogador</th>
+                <th style={{ width:30 }} />
+                <th className="lb-sd" style={{ textAlign:"center" }}>Torneios</th>
+                <th style={{ textAlign:"left", padding:"6px 8px" }}>Historial</th>
               </tr>
             </thead>
             <tbody>
               {ordenados.map((r, i) => {
                 const torneiosUnicos = [...new Map(r.encontros.map(e => [e.torneio_t, e])).values()];
                 return (
-                  <tr key={r.nome} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)" }}>
-                    <td className="tourn-pos-col" style={{ textAlign:"center" }}>
-                      <span className="tourn-pos">{i+1}</span>
-                    </td>
-                    <td className="tourn-lb-name-col">
+                  <tr key={r.nome}>
+                    <td className="sticky-col-0" style={{ textAlign:"center", fontWeight:700 }}>{i + 1}</td>
+                    <td className="sticky-col-1" style={{ textAlign:"left", paddingLeft:10 }}>
                       {r.nome}
-                      {r.cidade && <span style={{ color:"var(--text-3)", fontSize:10, marginLeft:6 }}>{r.cidade}</span>}
+                      {r.cidade && <span style={{ color:"var(--text-3)", fontSize:11, marginLeft:6 }}>{r.cidade}</span>}
                     </td>
                     <td style={{ textAlign:"center", fontSize:14 }}>{flag(r.pais)}</td>
-                    <td style={{ textAlign:"center", fontWeight:700, color:"var(--text-2)" }}>
+                    <td className="lb-sd" style={{ textAlign:"center", fontWeight:700, color:"var(--text-2)" }}>
                       {torneiosUnicos.length}
                     </td>
                     <td style={{ fontSize:11, color:"var(--text-3)", padding:"5px 8px" }}>
@@ -1730,7 +2051,7 @@ function TabInscritos({ data, fieldData, selectedT: _selectedT }: {
           border:     `1px solid ${t.mesmoEscalao ? "var(--border-success)" : "var(--border)"}`,
           fontWeight: t.mesmoEscalao ? 700 : 400,
         }}>
-          {t.mesmoEscalao && <span style={{ marginRight:3, fontSize:9 }}>★</span>}{t.torneioNome.replace(/\s*\d{4}$/, "")}
+          {t.mesmoEscalao && <span style={{ marginRight:3, fontSize:10 }}>★</span>}{t.torneioNome.replace(/\s*\d{4}$/, "")}
           <span style={{ opacity:0.7, marginLeft:4, fontSize:10 }}>{t.escalao}</span>
         </span>
       ))}
@@ -1768,7 +2089,7 @@ function TabInscritos({ data, fieldData, selectedT: _selectedT }: {
       ...style,
     }}>
       {label}
-      <span style={{ marginLeft:4, fontSize:9, opacity: cur===col ? 1 : 0.4 }}>
+      <span style={{ marginLeft:4, fontSize:10, opacity: cur===col ? 1 : 0.4 }}>
         {cur===col ? (dir==="asc" ? "▲" : "▼") : "⇅"}
       </span>
     </th>
@@ -2051,116 +2372,148 @@ export default function USKidsFieldPage() {
     <div className="master-detail" style={{ height:"calc(100vh - 52px)" }}>
 
       {/* ── SIDEBAR ── */}
-      <div className="sidebar" style={{ minWidth:220, maxWidth:260 }}>
-        <div style={{ padding:"12px 12px 4px", fontSize:13, fontWeight:700, color:"var(--text)" }}>
-          USKids Golf
-        </div>
+      <div className="sidebar" style={{ minWidth:230, maxWidth:270 }}>
 
         {/* Tabs na sidebar */}
-        <div style={{ display:"flex", flexDirection:"column", gap:2, padding:"4px 8px 8px", borderBottom:"1px solid var(--border-light)" }}>
-          {TABS.map(t => (
-            <button key={t.id} onClick={() => handleTabChange(t.id)}
-              className={`course-item${tab === t.id ? " active" : ""}`}
-              style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
-              <span>{t.label}</span>
-              {t.badge > 0 && (
-                <span style={{
-                  background: tab === t.id ? "var(--accent)" : "var(--bg-muted)",
-                  color: tab === t.id ? "#fff" : "var(--text-3)",
-                  borderRadius:10, padding:"0 6px", fontSize:10, fontWeight:700,
-                }}>{t.badge}</span>
-              )}
-            </button>
-          ))}
+        <div style={{ padding:"8px 8px 6px", borderBottom:"1px solid var(--border)" }}>
+          <div style={{ fontSize:12, fontWeight:800, color:"var(--text)", padding:"2px 4px 6px", letterSpacing:"0.02em" }}>
+            🏌️ USKids Golf
+          </div>
+          <div style={{ display:"flex", flexDirection:"column", gap:2 }}>
+            {TABS.map(tb => (
+              <button key={tb.id} onClick={() => handleTabChange(tb.id)}
+                className={`course-item${tab === tb.id ? " active" : ""}`}
+                style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"6px 10px" }}>
+                <span style={{ fontSize:12 }}>{tb.label}</span>
+                {tb.badge > 0 && (
+                  <span style={{
+                    background: tab === tb.id ? "var(--accent)" : "var(--bg-muted)",
+                    color: tab === tb.id ? "#fff" : "var(--text-3)",
+                    borderRadius:10, padding:"1px 7px", fontSize:11, fontWeight:700,
+                  }}>{tb.badge}</span>
+                )}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Lista de torneios */}
-        <div className="sidebar-section-title" style={{ marginTop:8 }}>Torneios</div>
+        {/* Lista de torneios agrupada por mês */}
         <div style={{ overflowY:"auto", flex:1 }}>
-          {allTorneios.map(t => {
-            const active = t.t === selectedT;
-            const temConteudo = tab === "resultados" ? t.temResultados : t.temCampo;
-            return (
-              <button key={t.t}
-                onClick={() => setSelectedT(t.t)}
-                className={`course-item${active ? " active" : ""}`}
-                style={{ opacity: temConteudo ? 1 : 0.45, width:"100%", textAlign:"left" }}>
-                {/* Nome + localização pill */}
-                <div style={{ display:"flex", alignItems:"center", gap:6, flexWrap:"wrap" }}>
-                  <span style={{ fontWeight:700, fontSize:13, color:"var(--text)", lineHeight:1.3 }}>
-                    {t.name.replace(/\s*\d{4}$/, "")}
-                  </span>
-                  {(() => {
-                    const reg = torneioRegiao(t.name);
-                    if (!reg) return null;
-                    const isEuro = reg === "EURO";
-                    return (
-                      <span style={{
-                        fontSize:9, fontWeight:800, padding:"1px 6px", borderRadius:8,
-                        background: isEuro ? "var(--bg-info)" : "#fff3e0",
-                        color: isEuro ? "var(--color-info)" : "#e65100",
-                        border: `1px solid ${isEuro ? "var(--border-info)" : "#ffcc80"}`,
-                        whiteSpace:"nowrap", letterSpacing:"0.04em",
-                      }}>{reg}</span>
-                    );
-                  })()}
-                  {REGIONAL_CHAMPIONSHIPS[t.t] && (
-                    <span style={{
-                      fontSize:9, fontWeight:800, padding:"1px 6px", borderRadius:8,
-                      background:"#fdf2f8", color:"#9c27b0",
-                      border:"1px solid #e1bee7",
-                      whiteSpace:"nowrap", letterSpacing:"0.04em",
-                    }}>INVITATION</span>
-                  )}
-                </div>
+          {(() => {
+            // agrupar por mês/ano
+            const monthMap: Record<string, typeof allTorneios> = {};
+            const currentYear = new Date().getFullYear().toString();
+            for (const t of allTorneios) {
+              const iso = isoDate(t.date);
+              const yr  = iso ? iso.substring(0, 4) : "?";
+              const mo  = iso ? iso.substring(0, 7) : "?";
+              // anos anteriores ao corrente → agrupar por ano; ano corrente → por mês
+              const key = (yr === currentYear || yr === "?") ? mo : yr;
+              if (!monthMap[key]) monthMap[key] = [];
+              monthMap[key].push(t);
+            }
+            const months = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+            const monthLabel = (key: string) => {
+              if (key === "?") return "Data desconhecida";
+              if (key.length === 4) return key; // ano
+              const [yr, mo] = key.split("-");
+              return `${months[parseInt(mo) - 1] || mo} ${yr}`;
+            };
+            const today = new Date().toISOString().substring(0, 7);
+            const allKeys = Object.keys(monthMap);
+            const futureKeys = allKeys.filter(k => k >= today || (k.length === 4 && k > currentYear)).sort();
+            const pastKeys   = allKeys.filter(k => k <  today && !(k.length === 4 && k > currentYear)).sort();
+            const sortedKeys = tab === "resultados"
+              ? [...pastKeys, ...futureKeys]   // resultados: passados primeiro (2023 → 2024 → …)
+              : [...futureKeys, ...pastKeys];  // campo/rivais: próximos primeiro
+            return sortedKeys.map(key => (
+              <div key={key}>
+                <div className="sidebar-section-title-dark">{monthLabel(key)}</div>
+                {monthMap[key].map(t => {
+                  const active = t.t === selectedT;
+                  const temConteudo = tab === "resultados" ? t.temResultados : t.temCampo;
+                  const reg = torneioRegiao(t.name);
+                  const isEuro = reg === "EURO";
+                  const isInvit = !!REGIONAL_CHAMPIONSHIPS[t.t];
+                  const pct = t.maximo ? Math.min(100, Math.round(((t.inscritos ?? 0) / t.maximo) * 100)) : 0;
+                  return (
+                    <button key={t.t}
+                      onClick={() => setSelectedT(t.t)}
+                      className={`course-item${active ? " active" : ""}`}
+                      style={{ opacity: temConteudo ? 1 : 0.45, width:"100%", textAlign:"left" }}>
 
-                {/* Data · escalão · rondas · 🏆 */}
-                <div style={{ fontSize:11, color:"var(--text-3)", marginTop:3, display:"flex", gap:4, flexWrap:"wrap", alignItems:"center" }}>
-                  <span>{fmtDate(t.date)}</span>
-                  {t.escalaoManuel && <span>· {t.escalaoManuel}</span>}
-                  {t.rondas && <span style={{ opacity:0.8 }}>· {t.rondas}R</span>}
-                  {t.temResultados && <span style={{ marginLeft:2 }}>🏆</span>}
-                </div>
+                      {/* Linha 1: nome + badges à direita */}
+                      <div style={{ display:"flex", alignItems:"flex-start", gap:4, marginBottom:3 }}>
+                        <span style={{ flex:1, minWidth:0, fontWeight: active ? 700 : 500, fontSize:12, lineHeight:1.3 }}>
+                          {t.name.replace(/\s*\d{4}$/, "")}
+                        </span>
+                        <div style={{ display:"flex", gap:2, flexShrink:0, paddingTop:1, flexWrap:"wrap", justifyContent:"flex-end" }}>
+                          {reg && (
+                            <span style={{
+                              fontSize:10, fontWeight:800, padding:"1px 5px", borderRadius:4,
+                              background: isEuro ? "var(--bg-info)" : "#fff3e0",
+                              color: isEuro ? "var(--color-info)" : "#e65100",
+                              border:`1px solid ${isEuro ? "var(--border-info)" : "#ffcc80"}`,
+                              whiteSpace:"nowrap",
+                            }}>{reg}</span>
+                          )}
+                          {isInvit && (
+                            <span style={{
+                              fontSize:10, fontWeight:800, padding:"1px 5px", borderRadius:4,
+                              background:"#fdf2f8", color:"#9c27b0", border:"1px solid #e1bee7",
+                              whiteSpace:"nowrap",
+                            }}>INVIT</span>
+                          )}
+                          {t.temResultados && <span style={{ fontSize:11 }}>🏆</span>}
+                        </div>
+                      </div>
 
-                {/* Campo (truncado) */}
-                {t.campo && (
-                  <div style={{ fontSize:11, marginTop:2, color:"var(--text-3)",
-                    whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis", maxWidth:"100%" }}>
-                    ⛳ {t.campo.split(',')[0]}
-                  </div>
-                )}
+                      {/* Linha 2: campo */}
+                      {t.campo && (
+                        <div style={{ fontSize:11, color:"var(--text-2)", fontWeight:500, marginBottom:3 }}>
+                          📍 {t.campo.split(',')[0]}
+                        </div>
+                      )}
 
-                {/* Barra inscritos escalão Manuel */}
-                {t.temCampo && t.maximo != null && t.maximo > 0 && (
-                  <div style={{ fontSize:11, marginTop:5 }}>
-                    <div style={{ display:"flex", justifyContent:"space-between", marginBottom:3, color:"var(--text-2)" }}>
-                      <span style={{ fontWeight:600 }}>{t.escalaoManuel}</span>
-                      <span>{t.inscritos}/{t.maximo}
-                        {(t.vagas??0) > 0
-                          ? <span style={{ color:"var(--color-success)", marginLeft:4 }}>{t.vagas} vagas</span>
-                          : <span style={{ color:"var(--color-danger)", marginLeft:4 }}>cheio</span>}
-                      </span>
-                    </div>
-                    <div style={{ height:4, borderRadius:2, background:"var(--border)", overflow:"hidden" }}>
-                      <div style={{ height:"100%", borderRadius:2,
-                        width:`${Math.min(100,Math.round(((t.inscritos??0)/(t.maximo??1))*100))}%`,
-                        background:"var(--accent)" }} />
-                    </div>
-                  </div>
-                )}
+                      {/* Linha 3: data · rondas · escalão */}
+                      <div style={{ fontSize:11, color:"var(--text-muted)", marginBottom:3, display:"flex", gap:4, flexWrap:"wrap" }}>
+                        <span>{fmtDate(t.date)}</span>
+                        {t.rondas && <span>· {t.rondas}R</span>}
+                        {t.escalaoManuel && <span>· {t.escalaoManuel}</span>}
+                      </div>
 
-                {/* Total geral + fee */}
-                {t.temCampo && (t.totalMaximo ?? 0) > 0 && (
-                  <div style={{ fontSize:10, marginTop:4, color:"var(--text-3)",
-                    display:"flex", justifyContent:"space-between" }}>
-                    <span>Total: {t.totalInscritos}/{t.totalMaximo}</span>
-                    {t.fee && <span>${t.fee.toFixed(0)}</span>}
-                  </div>
-                )}
+                      {/* Linha 4: barra de inscritos */}
+                      {t.temCampo && t.maximo != null && t.maximo > 0 && (
+                        <div style={{ marginTop:4 }}>
+                          <div style={{ display:"flex", justifyContent:"space-between", marginBottom:3, fontSize:11, color:"var(--text-2)" }}>
+                            <span style={{ fontWeight:600 }}>{t.escalaoManuel}</span>
+                            <span>
+                              {t.inscritos}/{t.maximo}
+                              {(t.vagas ?? 0) > 0
+                                ? <span style={{ color:"var(--color-success)", marginLeft:4 }}>{t.vagas} vagas</span>
+                                : <span style={{ color:"var(--color-danger)", marginLeft:4 }}>cheio</span>}
+                            </span>
+                          </div>
+                          <div style={{ height:4, borderRadius:2, background:"var(--border)", overflow:"hidden" }}>
+                            <div style={{ height:"100%", borderRadius:2, width:`${pct}%`, background:"var(--accent)" }} />
+                          </div>
+                        </div>
+                      )}
 
-              </button>
-            );
-          })}
+                      {/* Linha 5: total + fee */}
+                      {t.temCampo && (t.totalMaximo ?? 0) > 0 && (
+                        <div style={{ fontSize:11, marginTop:4, color:"var(--text-3)", display:"flex", justifyContent:"space-between" }}>
+                          <span>Total: {t.totalInscritos}/{t.totalMaximo}</span>
+                          {t.fee && <span>${t.fee.toFixed(0)}</span>}
+                        </div>
+                      )}
+
+                    </button>
+                  );
+                })}
+              </div>
+            ));
+          })()}
         </div>
 
         <div className="muted fs-10" style={{ padding:"8px 12px", borderTop:"1px solid var(--border-light)" }}>
