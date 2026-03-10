@@ -11,6 +11,7 @@ import { scClass, toParClass, sc3m, SC, tpColorDark } from "../utils/scoreDispla
 import { isCalUnlocked } from "../utils/authConstants";
 import PasswordGate from "../ui/PasswordGate";
 import EmptyState from "../ui/EmptyState";
+import { buildAutoRivals, normName } from "../rivaisDataLoader";
 
 
 /* ═══════════════════════════════════
@@ -21,13 +22,18 @@ interface RivalPlayer {
   n: string;
   co: string;
   isM?: boolean;
+  dob?: string;          // "DD/MM/YYYY" quando conhecida
   r: Record<string, TournResult>;
   up: string[];
 }
+
 interface TournDef {
   id: string; name: string; short: string; date: string;
   rounds: number; par: number; field: number; nations: number;
   intendedRounds?: number; url: string;
+  dateExact?: string;    // "YYYY-MM-DD" para cálculo de DOB
+  ageMin?: number;       // escalão: idade mínima
+  ageMax?: number;       // escalão: idade máxima
 }
 
 /** Shape of a single hole sample for distance-band analysis */
@@ -130,15 +136,15 @@ const FIELD_TOTAL = 35; // total de jogadores no torneio
 const FL={"Portugal":"🇵🇹","Spain":"🇪🇸","England":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","Russian Federation":"🇷🇺","Bulgaria":"🇧🇬","Switzerland":"🇨🇭","Italy":"🇮🇹","France":"🇫🇷","Ireland":"🇮🇪","Northern Ireland":"🇬🇧","Germany":"🇩🇪","Netherlands":"🇳🇱","Norway":"🇳🇴","Lithuania":"🇱🇹","Thailand":"🇹🇭","United States":"🇺🇸","United Kingdom":"🇬🇧","Sweden":"🇸🇪","Morocco":"🇲🇦","Wales":"🏴󠁧󠁢󠁷󠁬󠁳󠁿","Belgium":"🇧🇪","Slovenia":"🇸🇮","Ukraine":"🇺🇦","Romania":"🇷🇴","China":"🇨🇳","Philippines":"🇵🇭","Slovakia":"🇸🇰","United Arab Emirates":"🇦🇪","Turkey":"🇹🇷","India":"🇮🇳","Viet Nam":"🇻🇳","Kazakhstan":"🇰🇿","Hungary":"🇭🇺","South Africa":"🇿🇦","Singapore":"🇸🇬","Denmark":"🇩🇰","Mexico":"🇲🇽","Canada":"🇨🇦","Austria":"🇦🇹","Paraguay":"🇵🇾","Brazil":"🇧🇷","Jersey":"🇯🇪","Nigeria":"🇳🇬","Oman":"🇴🇲","Chile":"🇨🇱","Colombia":"🇨🇴","Puerto Rico":"🇵🇷","Costa Rica":"🇨🇷","Great Britain":"🇬🇧","Latvia":"🇱🇻","South Korea":"🇰🇷"};
 
 const T: TournDef[]=[
-  {id:"brjgt25",name:"WJGC 2025",short:"WJGC",date:"Fev 2025",rounds:3,par:71,field:40,nations:17,url:"https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/34/leaderboard.htm"},
-  {id:"eowagr25",name:"European Open",short:"EU Open",date:"Ago 2025",rounds:3,par:72,field:8,nations:3,url:"https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2512/contest/21/leaderboard.htm"},
-  {id:"venice25",name:"Venice Open 2025",short:"Venice",date:"Ago 2025",rounds:3,par:72,field:39,nations:12,url:"https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/515206/venice-open-2025/results"},
-  {id:"rome25",name:"Rome Classic 2025",short:"Rome",date:"Out 2025",rounds:2,par:72,field:14,nations:3,url:"https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516026/rome-classic-2025/results"},
-  {id:"doral25",name:"Doral Junior 2025",short:"Doral",date:"Dez 2025",rounds:2,par:71,field:35,nations:9,url:"https://www.golfgenius.com/v2tournaments/4222407?called_from=widgets%2Fcustomized_tournament_results&hide_totals=false&player_stats_for_portal=true"},
-  {id:"qdl25",name:"QDL Junior Open 2025",short:"QDL",date:"Nov 2025",rounds:1,par:72,field:12,nations:7,intendedRounds:3,url:"https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=962&tcode=10080&classif_order=2"},
-  {id:"gg26",name:"Greatgolf Junior Open",short:"GG",date:"Fev 2026",rounds:2,par:72,field:12,nations:4,url:"https://scoring-pt.datagolf.pt/scripts/classif.asp?tourn=10296&club=935&ack=OT342GH16T"},
-  {id:"wjgc26",name:"WJGC 2026",short:"WJGC26",date:"Fev 2026",rounds:2,intendedRounds:3,par:72,field:36,nations:19,url:"https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/73/leaderboard.htm"},
-  {id:"wjgc26_1213",name:"WJGC 2026 12-13",short:"WJGC↑",date:"Fev 2026",rounds:2,intendedRounds:3,par:73,field:36,nations:19,url:"https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/33/leaderboard.htm"},
+  {id:"brjgt25",name:"WJGC 2025",short:"WJGC",date:"Fev 2025",rounds:3,par:71,field:40,nations:17,dateExact:"2025-02-24",ageMin:10,ageMax:11,url:"https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/34/leaderboard.htm"},
+  {id:"eowagr25",name:"European Open",short:"EU Open",date:"Ago 2025",rounds:3,par:72,field:8,nations:3,dateExact:"2025-08-01",ageMin:10,ageMax:11,url:"https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2512/contest/21/leaderboard.htm"},
+  {id:"venice25",name:"Venice Open 2025",short:"Venice",date:"Ago 2025",rounds:3,par:72,field:39,nations:12,dateExact:"2025-08-07",ageMin:11,ageMax:11,url:"https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/515206/venice-open-2025/results"},
+  {id:"rome25",name:"Rome Classic 2025",short:"Rome",date:"Out 2025",rounds:2,par:72,field:14,nations:3,dateExact:"2025-10-09",ageMin:11,ageMax:11,url:"https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516026/rome-classic-2025/results"},
+  {id:"doral25",name:"Doral Junior 2025",short:"Doral",date:"Dez 2025",rounds:2,par:71,field:35,nations:9,dateExact:"2025-12-18",ageMin:11,ageMax:11,url:"https://www.golfgenius.com/v2tournaments/4222407?called_from=widgets%2Fcustomized_tournament_results&hide_totals=false&player_stats_for_portal=true"},
+  {id:"qdl25",name:"QDL Junior Open 2025",short:"QDL",date:"Nov 2025",rounds:1,par:72,field:12,nations:7,intendedRounds:3,dateExact:"2025-11-08",ageMin:10,ageMax:13,url:"https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=962&tcode=10080&classif_order=2"},
+  {id:"gg26",name:"Greatgolf Junior Open",short:"GG",date:"Fev 2026",rounds:2,par:72,field:12,nations:4,dateExact:"2026-02-08",ageMin:10,ageMax:12,url:"https://scoring-pt.datagolf.pt/scripts/classif.asp?tourn=10296&club=935&ack=OT342GH16T"},
+  {id:"wjgc26",name:"WJGC 2026",short:"WJGC26",date:"Fev 2026",rounds:3,par:72,field:36,nations:19,dateExact:"2026-02-24",ageMin:10,ageMax:11,url:"https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/73/leaderboard.htm"},
+  {id:"wjgc26_1213",name:"WJGC 2026 12-13",short:"WJGC↑",date:"Fev 2026",rounds:2,intendedRounds:3,par:73,field:36,nations:19,dateExact:"2026-02-24",ageMin:12,ageMax:13,url:"https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/33/leaderboard.htm"},
 ];
 
 // Tournament prestige weight: rounds (40%) + field size (35%) + internationality (25%)
@@ -157,22 +163,194 @@ const T_WEIGHTS: Record<string, number> = (() => {
   return w;
 })();
 
-const UP=[{id:"marco26",name:"Marco Simone Inv.",short:"M.SIMONE",url:"https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516989/marco-simone-invitational-2026/field"}];
+// Extended tournament names/display for auto-loaded tournaments
+const AUTO_TOURN_NAMES: Record<string, { name: string; short: string; date: string }> = {
+  wjgc25_b89:    { name: "WJGC 2025 B8-9",    short: "WJGC25↓",  date: "Fev 2025" },
+  wjgc25_b1011:  { name: "WJGC 2025 B10-11",  short: "WJGC25",   date: "Fev 2025" },
+  wjgc25_b1213:  { name: "WJGC 2025 B12-13",  short: "WJGC25↑",  date: "Fev 2025" },
+  wjgc26_b1213:  { name: "WJGC 2026 B12-13",  short: "WJGC26↑",  date: "Fev 2026" },
+  eowagr25_b78:  { name: "EU Open 2025 B7-8",  short: "EU25↓↓",   date: "Ago 2025" },
+  eowagr25_b910: { name: "EU Open 2025 B9-10", short: "EU25↓",    date: "Ago 2025" },
+  eowagr25_b1314:{ name: "EU Open 2025 B13-14",short: "EU25↑",    date: "Ago 2025" },
+  doral25_b89:   { name: "Doral 2025 B8-9",    short: "Doral↓",   date: "Dez 2025" },
+  doral25_b1011: { name: "Doral 2025 B10-11",  short: "Doral25",  date: "Dez 2025" },
+  doral25_b1213: { name: "Doral 2025 B12-13",  short: "Doral↑",   date: "Dez 2025" },
+  venice25_b9:   { name: "Venice Open B9",     short: "VCE↓",     date: "Ago 2025" },
+  venice25_b10:  { name: "Venice Open B10",    short: "VCE-B10",  date: "Ago 2025" },
+  venice25_b11:  { name: "Venice Open B11",    short: "VCE25",    date: "Ago 2025" },
+  venice25_b12:  { name: "Venice Open B12",    short: "VCE↑",     date: "Ago 2025" },
+  rome25_b10:    { name: "Rome Classic B10",   short: "ROM↓",     date: "Out 2025" },
+  rome25_b11:    { name: "Rome Classic B11",   short: "ROM25",    date: "Out 2025" },
+  rome25_b12:    { name: "Rome Classic B12",   short: "ROM↑",     date: "Out 2025" },
+  marco25_b10:   { name: "Marco Simone B10",   short: "MCS↓",     date: "Mar 2025" },
+  marco25_b11:   { name: "Marco Simone B11",   short: "MCS25",    date: "Mar 2025" },
+  marco25_b12:   { name: "Marco Simone B12",   short: "MCS↑",     date: "Mar 2025" },
+  desert26_b11:  { name: "Desert Shootout B11",short: "DES↓",     date: "Fev 2026" },
+  desert26_b12:  { name: "Desert Shootout B12",short: "DES26",    date: "Fev 2026" },
+  sandestin26_b11:{ name:"Sandestin B11",      short: "SAN↓",     date: "Jan 2026" },
+  sandestin26_b12:{ name:"Sandestin B12",      short: "SAN26",    date: "Jan 2026" },
+  msstate26_b11: { name: "MS State Inv. B11",  short: "MSS↓",     date: "Mar 2026" },
+  msstate26_b12: { name: "MS State Inv. B12",  short: "MSS26",    date: "Mar 2026" },
+};
+
+/** Lookup tournament display info by id (works for manual T and auto tourns) */
+function getTournInfo(tid: string): { name: string; short: string; date: string } {
+  const manual = T.find(t => t.id === tid);
+  if (manual) return { name: manual.name, short: manual.short, date: manual.date };
+  return AUTO_TOURN_NAMES[tid] ?? { name: tid, short: tid, date: "?" };
+}
+
+/* ═══════════════════════════════════
+   DOB DEDUCTION UTILITIES
+   ═══════════════════════════════════ */
+const MONTHS_PT = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+
+/** Parse "DD/MM/YYYY" → Date */
+function parseDob(s: string): Date {
+  const [d, m, y] = s.split("/").map(Number);
+  return new Date(y, m - 1, d);
+}
+
+/** Age at a given date */
+function ageAt(dob: Date, at: Date): number {
+  let age = at.getFullYear() - dob.getFullYear();
+  const m = at.getMonth() - dob.getMonth();
+  if (m < 0 || (m === 0 && at.getDate() < dob.getDate())) age--;
+  return age;
+}
+
+/** Format age string relative to today (Mar 2026) */
+function fmtAge(dob: Date): string {
+  const today = new Date(2026, 2, 10);
+  const a = ageAt(dob, today);
+  // Find next birthday
+  const nextBday = new Date(today.getFullYear(), dob.getMonth(), dob.getDate());
+  if (nextBday <= today) nextBday.setFullYear(nextBday.getFullYear() + 1);
+  const diffMs = nextBday.getTime() - today.getTime();
+  const diffDays = Math.ceil(diffMs / 86400000);
+  const diffMonths = Math.round(diffDays / 30.5);
+  if (diffDays <= 60) return `${a} anos · faz ${a+1} em ${diffDays}d`;
+  if (diffMonths <= 3) return `${a} anos · faz ${a+1} em ~${diffMonths}m`;
+  return `${a} anos`;
+}
+
+interface DobInfo {
+  exact: boolean;
+  dob?: Date;
+  dobStr?: string;       // "DD/MM/YYYY"
+  rangeMin?: Date;       // earliest possible
+  rangeMax?: Date;       // latest possible
+  rangeStr: string;      // e.g. "Mar–Dez 2014" or "2014–2015"
+  ageStr: string;        // e.g. "11 anos" or "~11 anos"
+}
+
+const T_MAP: Record<string, { dateExact?: string; ageMin?: number; ageMax?: number }> = {
+  ...Object.fromEntries(T.map(t => [t.id, t])),
+  // Auto tourns from rivaisDataLoader
+  wjgc25_b89:    { dateExact: "2025-02-24", ageMin: 8,  ageMax: 9  },
+  wjgc25_b1011:  { dateExact: "2025-02-24", ageMin: 10, ageMax: 11 },
+  wjgc25_b1213:  { dateExact: "2025-02-24", ageMin: 12, ageMax: 13 },
+  eowagr25_b78:  { dateExact: "2025-08-01", ageMin: 7,  ageMax: 8  },
+  eowagr25_b910: { dateExact: "2025-08-01", ageMin: 9,  ageMax: 10 },
+  eowagr25_b1314:{ dateExact: "2025-08-01", ageMin: 13, ageMax: 14 },
+  doral25_b89:   { dateExact: "2025-12-19", ageMin: 8,  ageMax: 9  },
+  doral25_b1011: { dateExact: "2025-12-19", ageMin: 10, ageMax: 11 },
+  doral25_b1213: { dateExact: "2025-12-19", ageMin: 12, ageMax: 13 },
+  venice25_b9:   { dateExact: "2025-08-07", ageMin: 9,  ageMax: 9  },
+  venice25_b10:  { dateExact: "2025-08-07", ageMin: 10, ageMax: 10 },
+  venice25_b11:  { dateExact: "2025-08-07", ageMin: 11, ageMax: 11 },
+  venice25_b12:  { dateExact: "2025-08-07", ageMin: 12, ageMax: 12 },
+  rome25_b10:    { dateExact: "2025-10-09", ageMin: 10, ageMax: 10 },
+  rome25_b11:    { dateExact: "2025-10-09", ageMin: 11, ageMax: 11 },
+  rome25_b12:    { dateExact: "2025-10-09", ageMin: 12, ageMax: 12 },
+  marco25_b9:    { dateExact: "2025-03-15", ageMin: 9,  ageMax: 9  },
+  marco25_b10:   { dateExact: "2025-03-15", ageMin: 10, ageMax: 10 },
+  marco25_b11:   { dateExact: "2025-03-15", ageMin: 11, ageMax: 11 },
+  marco25_b12:   { dateExact: "2025-03-15", ageMin: 12, ageMax: 12 },
+  desert26_b9:   { dateExact: "2026-02-21", ageMin: 9,  ageMax: 9  },
+  desert26_b10:  { dateExact: "2026-02-21", ageMin: 10, ageMax: 10 },
+  desert26_b11:  { dateExact: "2026-02-21", ageMin: 11, ageMax: 11 },
+  desert26_b12:  { dateExact: "2026-02-21", ageMin: 12, ageMax: 12 },
+  sandestin26_b9: { dateExact: "2026-01-17", ageMin: 9,  ageMax: 9  },
+  sandestin26_b10:{ dateExact: "2026-01-17", ageMin: 10, ageMax: 10 },
+  sandestin26_b11:{ dateExact: "2026-01-17", ageMin: 11, ageMax: 11 },
+  sandestin26_b12:{ dateExact: "2026-01-17", ageMin: 12, ageMax: 12 },
+  msstate26_b9:  { dateExact: "2026-03-09", ageMin: 9,  ageMax: 9  },
+  msstate26_b10: { dateExact: "2026-03-09", ageMin: 10, ageMax: 10 },
+  msstate26_b11: { dateExact: "2026-03-09", ageMin: 11, ageMax: 11 },
+  msstate26_b12: { dateExact: "2026-03-09", ageMin: 12, ageMax: 12 },
+};
+
+function computeDobInfo(p: RivalPlayer): DobInfo {
+  // If exact DOB known
+  if (p.dob) {
+    const d = parseDob(p.dob);
+    return { exact: true, dob: d, dobStr: p.dob, rangeStr: p.dob, ageStr: fmtAge(d) };
+  }
+
+  // Deduce from tournaments: each gives a DOB range
+  let rangeMin: Date | null = null;
+  let rangeMax: Date | null = null;
+
+  for (const tid of Object.keys(p.r)) {
+    const td = T_MAP[tid];
+    if (!td?.dateExact || td.ageMin == null || td.ageMax == null) continue;
+    const tDate = new Date(td.dateExact);
+    // Age at tournament must be in [ageMin, ageMax]
+    // Latest DOB (youngest allowed, age = ageMin): born exactly ageMin years before → tDate - ageMin years
+    const latestDob = new Date(tDate);
+    latestDob.setFullYear(latestDob.getFullYear() - td.ageMin);
+    // Earliest DOB (oldest allowed, age = ageMax): born just before ageMax+1 years ago
+    // i.e. if born 1 day earlier they'd be ageMax+1
+    const earliestDob = new Date(tDate);
+    earliestDob.setFullYear(earliestDob.getFullYear() - td.ageMax - 1);
+    earliestDob.setDate(earliestDob.getDate() + 1);
+
+    if (!rangeMin || earliestDob > rangeMin) rangeMin = earliestDob;
+    if (!rangeMax || latestDob < rangeMax) rangeMax = latestDob;
+  }
+
+  if (!rangeMin || !rangeMax || rangeMin > rangeMax) {
+    return { exact: false, rangeStr: "?", ageStr: "?" };
+  }
+
+  // Format range string
+  const minY = rangeMin.getFullYear(), maxY = rangeMax.getFullYear();
+  const minM = rangeMin.getMonth(), maxM = rangeMax.getMonth();
+  let rangeStr: string;
+  if (minY === maxY) {
+    if (minM === maxM) {
+      rangeStr = `${MONTHS_PT[minM]} ${minY}`;
+    } else {
+      rangeStr = `${MONTHS_PT[minM]}–${MONTHS_PT[maxM]} ${minY}`;
+    }
+  } else {
+    rangeStr = `${MONTHS_PT[minM]} ${minY} – ${MONTHS_PT[maxM]} ${maxY}`;
+  }
+
+  // Estimate age using midpoint
+  const midMs = (rangeMin.getTime() + rangeMax.getTime()) / 2;
+  const midDob = new Date(midMs);
+  const ageStr = "~" + fmtAge(midDob);
+
+  return { exact: false, rangeMin, rangeMax, rangeStr, ageStr };
+}
+
 
 
 const D: RivalPlayer[]=[
-  {n:"Manuel Medeiros",co:"Portugal",isM:true,r:{brjgt25:{p:26,t:265,tp:52,rd:[90,85,90]},eowagr25:{p:7,t:238,tp:22,rd:[85,77,76]},venice25:{p:28,t:237,tp:21,rd:[78,76,83]},rome25:{p:10,t:166,tp:22,rd:[89,77]},doral25:{p:29,t:177,tp:35,rd:[98,79]},qdl25:{p:11,t:90,tp:18,rd:[90]},gg26:{p:4,t:169,tp:25,rd:[87,82]},wjgc26:{p:5,t:153,tp:9,rd:[75,78]}},up:["marco26"]},
-  {n:"Dmitrii Elchaninov",co:"Russian Federation",r:{brjgt25:{p:1,t:205,tp:-8,rd:[69,68,68]},eowagr25:{p:2,t:218,tp:2,rd:[77,70,71]},venice25:{p:1,t:198,tp:-18,rd:[62,68,68]},qdl25:{p:1,t:71,tp:-1,rd:[71]},wjgc26:{p:1,t:141,tp:-3,rd:[72,69]}},up:[]},
-  {n:"Diego Gross Paneque",co:"Spain",r:{brjgt25:{p:16,t:249,tp:36,rd:[80,84,85]},wjgc26:{p:10,t:156,tp:12,rd:[81,75]}},up:[]},
-  {n:"Álex Carrón",co:"Spain",r:{brjgt25:{p:13,t:246,tp:33,rd:[82,84,80]},wjgc26:{p:16,t:165,tp:21,rd:[83,82]}},up:[]},
-  {n:"Henry Liechti",co:"Switzerland",r:{brjgt25:{p:17,t:250,tp:37,rd:[87,84,79]},wjgc26:{p:28,t:176,tp:32,rd:[89,87]}},up:[]},
-  {n:"Niko Alvarez Van Der Walt",co:"Spain",r:{brjgt25:{p:22,t:261,tp:48,rd:[89,83,89]},wjgc26:{p:18,t:168,tp:24,rd:[82,86]}},up:[]},
-  {n:"Miroslavs Bogdanovs",co:"Spain",r:{brjgt25:{p:24,t:263,tp:50,rd:[86,88,89]},venice25:{p:18,t:227,tp:11,rd:[76,74,77]},wjgc26:{p:25,t:174,tp:30,rd:[88,86]}},up:[]},
-  {n:"Christian Chepishev",co:"Bulgaria",r:{brjgt25:{p:29,t:270,tp:57,rd:[87,86,97]},wjgc26:{p:8,t:155,tp:11,rd:[79,76]}},up:["marco26"]},
-  {n:"James Doyle",co:"Ireland",r:{brjgt25:{p:32,t:277,tp:64,rd:[93,92,92]},wjgc26:{p:31,t:185,tp:41,rd:[98,87]}},up:[]},
-  {n:"Alexis Beringer",co:"Switzerland",r:{brjgt25:{p:33,t:290,tp:77,rd:[93,94,103]},wjgc26:{p:13,t:163,tp:19,rd:[81,82]}},up:[]},
-  {n:"Kevin Canton",co:"Italy",r:{brjgt25:{p:34,t:291,tp:78,rd:[98,96,97]},wjgc26:{p:34,t:188,tp:44,rd:[100,88]}},up:[]},
-  {n:"Leon Schneitter",co:"Switzerland",r:{brjgt25:{p:"WD",t:null,tp:null,rd:[]},wjgc26:{p:11,t:160,tp:16,rd:[80,80]}},up:[]},
+  {n:"Manuel Medeiros",co:"Portugal",isM:true,dob:"29/04/2014",r:{brjgt25:{p:26,t:265,tp:52,rd:[90,85,90]},eowagr25:{p:7,t:238,tp:22,rd:[85,77,76]},venice25:{p:28,t:237,tp:21,rd:[78,76,83]},rome25:{p:10,t:166,tp:22,rd:[89,77]},doral25:{p:29,t:177,tp:35,rd:[98,79]},qdl25:{p:11,t:90,tp:18,rd:[90]},gg26:{p:4,t:169,tp:25,rd:[87,82]},wjgc26:{p:9,t:232,tp:16,rd:[79,78,75]}},up:["marco26"]},
+  {n:"Dmitrii Elchaninov",co:"Russian Federation",dob:"13/05/2014",r:{brjgt25:{p:1,t:205,tp:-8,rd:[69,68,68]},eowagr25:{p:2,t:218,tp:2,rd:[77,70,71]},venice25:{p:1,t:198,tp:-18,rd:[62,68,68]},qdl25:{p:1,t:71,tp:-1,rd:[71]},wjgc26:{p:1,t:210,tp:-6,rd:[69,69,72]}},up:[]},
+  {n:"Diego Gross Paneque",co:"Spain",r:{brjgt25:{p:16,t:249,tp:36,rd:[80,84,85]},wjgc26:{p:9,t:232,tp:16,rd:[76,75,81]}},up:[]},
+  {n:"Álex Carrón",co:"Spain",r:{brjgt25:{p:13,t:246,tp:33,rd:[82,84,80]},wjgc26:{p:12,t:241,tp:25,rd:[76,82,83]}},up:[]},
+  {n:"Henry Liechti",co:"Switzerland",r:{brjgt25:{p:17,t:250,tp:37,rd:[87,84,79]},wjgc26:{p:23,t:255,tp:39,rd:[79,87,89]}},up:[]},
+  {n:"Niko Alvarez Van Der Walt",co:"Spain",r:{brjgt25:{p:22,t:261,tp:48,rd:[89,83,89]},wjgc26:{p:19,t:249,tp:33,rd:[81,86,82]}},up:[]},
+  {n:"Miroslavs Bogdanovs",co:"Spain",dob:"19/05/2014",r:{brjgt25:{p:24,t:263,tp:50,rd:[86,88,89]},venice25:{p:18,t:227,tp:11,rd:[76,74,77]},wjgc26:{p:20,t:252,tp:36,rd:[78,86,88]}},up:[]},
+  {n:"Christian Chepishev",co:"Bulgaria",r:{brjgt25:{p:29,t:270,tp:57,rd:[87,86,97]},wjgc26:{p:7,t:230,tp:14,rd:[75,76,79]}},up:["marco26"]},
+  {n:"James Doyle",co:"Ireland",r:{brjgt25:{p:32,t:277,tp:64,rd:[93,92,92]},wjgc26:{p:31,t:276,tp:60,rd:[91,87,98]}},up:[]},
+  {n:"Alexis Beringer",co:"Switzerland",r:{brjgt25:{p:33,t:290,tp:77,rd:[93,94,103]},wjgc26:{p:17,t:246,tp:30,rd:[83,82,81]}},up:[]},
+  {n:"Kevin Canton",co:"Italy",r:{brjgt25:{p:34,t:291,tp:78,rd:[98,96,97]},wjgc26:{p:30,t:273,tp:57,rd:[85,88,100]}},up:[]},
+  {n:"Leon Schneitter",co:"Switzerland",r:{brjgt25:{p:"WD",t:null,tp:null,rd:[]},wjgc26:{p:11,t:236,tp:20,rd:[76,80,80]}},up:[]},
   {n:"Victor Canot Januel",co:"France",r:{brjgt25:{p:30,t:274,tp:61,rd:[88,88,98]},venice25:{p:24,t:233,tp:17,rd:[76,82,75]}},up:[]},
   {n:"Theodore Dausse",co:"France",r:{brjgt25:{p:31,t:275,tp:62,rd:[96,90,89]},venice25:{p:30,t:244,tp:28,rd:[83,80,81]}},up:[]},
   {n:"Aronas Juodis",co:"Lithuania",r:{brjgt25:{p:8,t:232,tp:19,rd:[74,77,81]},eowagr25:{p:1,t:213,tp:-3,rd:[72,71,70]},qdl25:{p:4,t:75,tp:3,rd:[75]},wjgc26_1213:{p:22,t:163,tp:17,rd:[87,76]}},up:[]},
@@ -193,7 +371,7 @@ const D: RivalPlayer[]=[
   {n:"Edoardo Lemonnier",co:"Italy",r:{rome25:{p:3,t:143,tp:-1,rd:[69,74]}},up:["marco26"]},
   {n:"Haqvin Sylven",co:"Switzerland",r:{rome25:{p:8,t:160,tp:16,rd:[82,78]}},up:["marco26"]},
   {n:"Kimi Pulga",co:"Italy",r:{venice25:{p:26,t:234,tp:18,rd:[78,81,75]}},up:["marco26"]},
-  {n:"Hugo Strasser",co:"Switzerland",r:{wjgc26:{p:8,t:155,tp:11,rd:[82,73]}},up:["marco26"]},
+  {n:"Hugo Strasser",co:"Switzerland",r:{wjgc26:{p:6,t:228,tp:12,rd:[73,73,82]}},up:["marco26"]},
   {n:"Skyy Wilding",co:"Thailand",r:{brjgt25:{p:"WD",t:null,tp:null,rd:[]},venice25:{p:2,t:203,tp:-13,rd:[65,65,73]},wjgc26_1213:{p:5,t:146,tp:0,rd:[73,73]}},up:[]},
   {n:"Felipe Seferian",co:"Spain",r:{venice25:{p:4,t:209,tp:-7,rd:[67,70,72]}},up:[]},
   {n:"Nicolas Pape",co:"Thailand",r:{brjgt25:{p:6,t:231,tp:18,rd:[75,77,79]}},up:[]},
@@ -206,18 +384,18 @@ const D: RivalPlayer[]=[
   {n:"Jean Imperiali De Francavilla",co:"France",r:{brjgt25:{p:"WD",t:null,tp:null,rd:[]},venice25:{p:23,t:231,tp:15,rd:[77,75,79]},rome25:{p:5,t:152,tp:8,rd:[77,75]}},up:[]},
   {n:"Sebastiano Giacobbi",co:"Italy",r:{venice25:{p:37,t:267,tp:51,rd:[95,87,85]},rome25:{p:13,t:173,tp:29,rd:[87,86]}},up:["marco26"]},
   {n:"Leo Egozi",co:"United States",r:{venice25:{p:36,t:252,tp:36,rd:[83,84,85]},rome25:{p:11,t:167,tp:23,rd:[82,85]}},up:[]},
-  {n:"Joe Short",co:"Portugal",r:{gg26:{p:2,t:166,tp:22,rd:[79,87]},wjgc26:{p:23,t:173,tp:29,rd:[90,83]}},up:[]},
+  {n:"Joe Short",co:"Portugal",r:{gg26:{p:2,t:166,tp:22,rd:[79,87]},wjgc26:{p:28,t:266,tp:50,rd:[93,83,90]}},up:[]},
   {n:"Madalena Miguel Araújo",co:"Portugal",r:{},up:[]},
-  {n:"Elijah Gibbons",co:"England",r:{wjgc26:{p:21,t:170,tp:26,rd:[87,83]}},up:[]},
+  {n:"Elijah Gibbons",co:"England",r:{wjgc26:{p:22,t:253,tp:37,rd:[83,83,87]}},up:[]},
   {n:"Harley Botham",co:"Northern Ireland",r:{gg26:{p:11,t:191,tp:47,rd:[98,93]}},up:[]},
-  {n:"Benji Botham",co:"Northern Ireland",r:{gg26:{p:5,t:175,tp:31,rd:[88,87]},wjgc26:{p:13,t:163,tp:19,rd:[83,80]}},up:[]},
+  {n:"Benji Botham",co:"Northern Ireland",r:{gg26:{p:5,t:175,tp:31,rd:[88,87]},wjgc26:{p:13,t:244,tp:28,rd:[81,80,83]}},up:[]},
   {n:"Roman Hicks",co:"England",r:{},up:[]},
   {n:"Hanlin Wang",co:"England",r:{},up:[]},
   {n:"Mario Valiente Novella",co:"Spain",r:{},up:[]},
-  {n:"Aineon Hiram Jabonero",co:"Philippines",r:{wjgc26:{p:19,t:169,tp:25,rd:[82,87]}},up:[]},
+  {n:"Aineon Hiram Jabonero",co:"Philippines",r:{wjgc26:{p:25,t:257,tp:41,rd:[88,87,82]}},up:[]},
   {n:"David Dung Nguyen",co:"Viet Nam",r:{},up:[]},
   {n:"Maddox Tiemann",co:"Sweden",r:{wjgc26:{p:28,t:176,tp:32,rd:[87,89]}},up:[]},
-  {n:"William Harran",co:"Switzerland",r:{wjgc26:{p:2,t:146,tp:2,rd:[75,71]}},up:[]},
+  {n:"William Harran",co:"Switzerland",r:{wjgc26:{p:2,t:221,tp:5,rd:[75,71,75]}},up:[]},
   {n:"Louis Harran",co:"Switzerland",r:{},up:[]},
   {n:"Pietro Salvati",co:"Italy",r:{},up:[]},
   {n:"Erik Martel",co:"Spain",r:{brjgt25:{p:18,t:250,tp:37,rd:[83,79,88]}},up:[]},
@@ -292,23 +470,23 @@ const D: RivalPlayer[]=[
   {n:"Nikola Kitic",co:"United States",r:{doral25:{p:35,t:306,tp:164,rd:[144,162]}},up:[]},
   {n:"Oliver Smith",co:"United Kingdom",r:{qdl25:{p:2,t:72,tp:0,rd:[72]}},up:[]},
   // WJGC 2026 — jogadores em falta
-  {n:"Weilian Sun",co:"China",r:{wjgc26:{p:3,t:148,tp:4,rd:[75,73]}},up:[]},
-  {n:"Henry Bucys",co:"England",r:{wjgc26:{p:4,t:152,tp:8,rd:[76,76]}},up:[]},
-  {n:"Sean Wilding",co:"Thailand",r:{wjgc26:{p:5,t:153,tp:9,rd:[79,74]}},up:[]},
-  {n:"Philippe Xiao",co:"France",r:{wjgc26:{p:5,t:153,tp:9,rd:[80,73]}},up:[]},
-  {n:"Dylan Dedaj Ungureanu",co:"Spain",r:{wjgc26:{p:12,t:161,tp:17,rd:[80,81]}},up:[]},
-  {n:"Oscar Bunt",co:"England",r:{wjgc26:{p:13,t:163,tp:19,rd:[83,80]}},up:[]},
-  {n:"Myles Jones",co:"Wales",r:{wjgc26:{p:17,t:166,tp:22,rd:[78,88]}},up:[]},
-  {n:"Lukas Doherty",co:"Norway",r:{wjgc26:{p:19,t:169,tp:25,rd:[84,85]}},up:[]},
-  {n:"Hermes Stuart Cañizares Plaja",co:"Spain",r:{wjgc26:{p:22,t:171,tp:27,rd:[88,83]}},up:[]},
-  {n:"Buster Airey",co:"England",r:{wjgc26:{p:23,t:173,tp:29,rd:[88,85]}},up:[]},
-  {n:"Elias Didjurgis",co:"Germany",r:{wjgc26:{p:26,t:175,tp:31,rd:[86,89]}},up:[]},
-  {n:"Kai Russell",co:"England",r:{wjgc26:{p:26,t:175,tp:31,rd:[92,83]}},up:[]},
+  {n:"Weilian Sun",co:"China",r:{wjgc26:{p:4,t:225,tp:9,rd:[77,73,75]}},up:[]},
+  {n:"Henry Bucys",co:"England",r:{wjgc26:{p:8,t:231,tp:15,rd:[79,76,76]}},up:[]},
+  {n:"Sean Wilding",co:"Thailand",r:{wjgc26:{p:3,t:224,tp:8,rd:[71,74,79]}},up:[]},
+  {n:"Philippe Xiao",co:"France",r:{wjgc26:{p:5,t:227,tp:11,rd:[74,73,80]}},up:[]},
+  {n:"Dylan Dedaj Ungureanu",co:"Spain",r:{wjgc26:{p:14,t:245,tp:29,rd:[84,81,80]}},up:[]},
+  {n:"Oscar Bunt",co:"England",r:{wjgc26:{p:14,t:245,tp:29,rd:[82,80,83]}},up:[]},
+  {n:"Myles Jones",co:"Wales",r:{wjgc26:{p:14,t:245,tp:29,rd:[79,88,78]}},up:[]},
+  {n:"Lukas Doherty",co:"Norway",r:{wjgc26:{p:26,t:258,tp:42,rd:[89,85,84]}},up:[]},
+  {n:"Hermes Stuart Cañizares Plaja",co:"Spain",r:{wjgc26:{p:18,t:248,tp:32,rd:[77,83,88]}},up:[]},
+  {n:"Buster Airey",co:"England",r:{wjgc26:{p:20,t:252,tp:36,rd:[79,85,88]}},up:[]},
+  {n:"Elias Didjurgis",co:"Germany",r:{wjgc26:{p:27,t:259,tp:43,rd:[84,89,86]}},up:[]},
+  {n:"Kai Russell",co:"England",r:{wjgc26:{p:24,t:256,tp:40,rd:[81,83,92]}},up:[]},
   {n:"Aron Klinkenberg",co:"Netherlands",r:{wjgc26:{p:30,t:179,tp:35,rd:[88,91]}},up:[]},
-  {n:"Zeyn Lababedi",co:"England",r:{wjgc26:{p:31,t:185,tp:41,rd:[91,94]}},up:[]},
-  {n:"Rodrigo Palacios Bauer",co:"Spain",r:{wjgc26:{p:31,t:185,tp:41,rd:[92,93]}},up:[]},
-  {n:"Arthur Lamblin",co:"France",r:{wjgc26:{p:35,t:190,tp:46,rd:[92,98]}},up:[]},
-  {n:"Joseph Robinson",co:"England",r:{wjgc26:{p:36,t:192,tp:48,rd:[99,93]}},up:[]},
+  {n:"Zeyn Lababedi",co:"England",r:{wjgc26:{p:34,t:280,tp:64,rd:[95,94,91]}},up:[]},
+  {n:"Rodrigo Palacios Bauer",co:"Spain",r:{wjgc26:{p:29,t:267,tp:51,rd:[82,93,92]}},up:[]},
+  {n:"Arthur Lamblin",co:"France",r:{wjgc26:{p:33,t:279,tp:63,rd:[89,98,92]}},up:[]},
+  {n:"Joseph Robinson",co:"England",r:{wjgc26:{p:32,t:277,tp:61,rd:[85,93,99]}},up:[]},
   // WJGC 2026 12-13 — jogadores novos
   {n:"Marcus Latt",co:"Estonia",r:{wjgc26_1213:{p:1,t:142,tp:-4,rd:[71,71]}},up:[]},
   {n:"Freddie Buck",co:"England",r:{wjgc26_1213:{p:2,t:143,tp:-3,rd:[72,71]}},up:[]},
@@ -336,7 +514,7 @@ const D: RivalPlayer[]=[
   {n:"William Ottesen Wang",co:"Norway",r:{wjgc26_1213:{p:35,t:194,tp:48,rd:[97,97]}},up:[]},
   {n:"César Goossens",co:"Switzerland",r:{wjgc26_1213:{p:36,t:214,tp:68,rd:[103,111]}},up:[]},
   {n:"Afonso de Sousa Pinto",co:"Portugal",r:{qdl25:{p:7,t:78,tp:6,rd:[78]}},up:[]},
-  {n:"Marcos Ledesma",co:"Spain",r:{qdl25:{p:8,t:78,tp:6,rd:[78]}},up:[]},
+  {n:"Marcos Ledesma",co:"Spain",dob:"13/01/2013",r:{qdl25:{p:8,t:78,tp:6,rd:[78]}},up:[]},
   {n:"Francisco Carvalho",co:"Portugal",r:{qdl25:{p:9,t:80,tp:8,rd:[80]},wjgc26_1213:{p:29,t:173,tp:27,rd:[91,82]}},up:[]},
   {n:"Sabrina Ribeiro Crisóstomo",co:"Portugal",r:{qdl25:{p:10,t:88,tp:16,rd:[88]}},up:[]},
   {n:"George Campbell",co:"Ireland",r:{qdl25:{p:12,t:99,tp:27,rd:[99]},gg26:{p:8,t:186,tp:42,rd:[94,92]}},up:[]},
@@ -357,50 +535,86 @@ const D: RivalPlayer[]=[
   {n:"Alessandro Zhang",co:"Great Britain",r:{},up:["marco26"]},
 ];
 
+/* ═══════════════════════════════════
+   AUTO-MERGE: combina D manual com
+   todos os JSON de torneios
+   ═══════════════════════════════════ */
+const { players: AUTO_PLAYERS, extraTournDefs: EXTRA_TOURN_DEFS } = buildAutoRivals();
+
+// Index manual D por nome normalizado
+const D_NORM_MAP = new Map<string, RivalPlayer>(D.map(p => [normName(p.n), p]));
+
+// Merge: para cada jogador auto, se já existe em D manual, enriquece os resultados;
+// caso contrário, adiciona como novo jogador
+for (const ap of AUTO_PLAYERS) {
+  const key = normName(ap.n);
+  if (D_NORM_MAP.has(key)) {
+    // Enriquecer jogador manual com torneios auto que ainda não tem
+    const manual = D_NORM_MAP.get(key)!;
+    for (const [tid, res] of Object.entries(ap.r)) {
+      if (!manual.r[tid]) {
+        manual.r[tid] = res;
+      } else if (res.rd.length > manual.r[tid].rd.length) {
+        // Auto tem mais rondas para o mesmo torneio → usa auto
+        manual.r[tid] = res;
+      }
+    }
+  } else {
+    // Novo jogador — adicionar ao D
+    const newPlayer: RivalPlayer = {
+      n: ap.n,
+      co: ap.co,
+      r: ap.r,
+      up: [],
+    };
+    D.push(newPlayer);
+    D_NORM_MAP.set(key, newPlayer);
+  }
+}
+
 const manuel = D.find(x => x.isM)!;
 
 /* ═══════════════════════════════════
-   SCORECARD DATA — WJGC 2026
+   SCORECARD DATA — WJGC 2026 (3 rondas)
    ═══════════════════════════════════ */
 const WJGC26_PAR=[5,3,4,3,4,5,4,3,4,5,5,3,4,4,5,3,4,4] as const;
 const WJGC26_SI=[4,10,6,18,16,8,14,12,2,1,7,9,15,11,5,13,17,3] as const;
 const WJGC26_CARDS=[
-{n:"Dmitrii Elchaninov",pos:1,tp:-3,rds:[[5,3,5,4,3,5,4,3,3,4,4,3,5,4,5,2,3,4],[6,3,4,3,3,5,5,2,4,5,5,2,4,4,5,3,4,5]]},
-{n:"William Harran",pos:2,tp:2,rds:[[5,3,4,4,3,6,3,3,4,4,5,3,4,3,7,3,3,4],[4,3,4,3,5,4,4,4,4,5,6,2,5,4,5,3,5,5]]},
-{n:"Weilian Sun",pos:3,tp:4,rds:[[5,3,4,2,4,6,3,3,4,5,4,3,4,4,6,3,6,4],[8,3,3,4,4,4,5,2,4,5,5,3,4,3,7,3,3,5]]},
-{n:"Henry Bucys",pos:4,tp:8,rds:[[5,3,4,3,4,5,4,3,4,4,5,3,5,4,6,4,4,6],[4,3,4,3,3,4,4,4,4,6,5,5,5,4,6,4,4,4]]},
-{n:"Manuel Francisco Medeiros",pos:5,tp:9,rds:[[5,3,4,4,3,5,5,4,4,6,5,4,4,4,7,3,4,4],[5,3,3,3,4,7,3,3,4,4,6,3,5,4,6,4,4,4]]},
-{n:"Sean Wilding",pos:5,tp:9,rds:[[5,4,5,3,4,6,4,3,4,5,5,3,4,3,5,2,5,4],[6,4,5,3,3,5,5,2,4,5,5,4,6,4,6,3,5,4]]},
-{n:"Philippe Xiao",pos:5,tp:9,rds:[[6,4,4,3,3,5,3,3,4,5,6,2,4,4,5,4,4,4],[6,4,4,3,5,6,5,2,4,5,5,4,5,6,6,2,4,4]]},
-{n:"Christian Chepishev",pos:8,tp:11,rds:[[6,3,5,3,4,5,3,4,4,5,6,2,4,5,5,3,4,5],[5,4,4,3,4,5,6,4,3,6,5,3,5,6,5,3,4,4]]},
-{n:"Hugo Strasser",pos:8,tp:11,rds:[[6,3,4,3,4,4,4,3,6,5,5,3,5,3,4,3,4,4],[5,3,3,4,5,6,3,3,5,5,6,4,6,4,7,3,5,5]]},
-{n:"Diego Gross Paneque",pos:10,tp:12,rds:[[7,3,4,3,4,5,4,3,4,5,6,3,5,4,6,2,3,4],[5,3,5,5,5,4,5,4,5,5,5,4,4,4,5,3,5,5]]},
-{n:"Leon Schneitter",pos:11,tp:16,rds:[[8,4,4,5,4,4,4,2,4,6,5,4,6,4,5,3,4,4],[5,4,5,3,4,5,5,4,5,4,5,4,5,4,8,2,3,5]]},
-{n:"Dylan Dedaj Ungureanu",pos:12,tp:17,rds:[[6,2,5,4,4,5,5,3,6,5,5,3,5,5,6,3,5,4],[5,3,4,2,4,6,5,3,4,5,7,3,4,5,7,4,5,4]]},
-{n:"Alexis Beringer",pos:13,tp:19,rds:[[7,3,4,4,4,5,3,3,5,8,6,4,4,3,7,3,5,4],[4,5,5,4,4,5,7,4,3,5,5,3,5,4,5,3,5,5]]},
-{n:"Oscar Bunt",pos:13,tp:19,rds:[[5,3,5,4,5,5,3,3,4,4,5,5,6,4,5,4,5,5],[5,5,4,3,4,8,4,4,3,4,5,5,4,5,6,4,5,5]]},
-{n:"Benji Botham",pos:13,tp:19,rds:[[6,3,4,4,4,5,5,3,6,4,5,3,5,4,7,3,5,4],[6,3,4,4,5,5,4,3,7,5,6,4,5,4,6,3,5,4]]},
-{n:"Álex Carrón",pos:16,tp:21,rds:[[6,3,5,4,5,5,4,2,5,4,5,3,5,4,7,2,5,8],[5,3,4,3,4,6,4,4,4,7,7,4,5,4,6,3,5,5]]},
-{n:"Myles Jones",pos:17,tp:22,rds:[[5,3,4,3,4,5,4,3,5,6,6,3,7,6,8,4,6,6],[5,4,4,4,4,6,5,3,4,4,6,3,4,4,5,3,5,5]]},
-{n:"Niko Alvarez Van Der Walt",pos:18,tp:24,rds:[[5,7,5,3,3,6,3,3,3,4,5,4,5,4,9,3,5,9],[5,3,6,3,3,5,4,4,4,6,7,4,5,4,5,3,6,5]]},
-{n:"Aineon Hiram Jabonero",pos:19,tp:25,rds:[[6,4,5,4,5,6,4,2,5,6,5,4,6,4,6,4,5,6],[5,6,5,4,3,6,5,4,4,4,5,4,4,4,5,4,5,5]]},
-{n:"Lukas Doherty",pos:19,tp:25,rds:[[9,5,5,3,4,4,5,3,4,5,5,3,4,4,7,4,5,6],[6,4,5,3,4,5,5,3,4,5,6,4,5,4,7,3,6,5]]},
-{n:"Elijah Gibbons",pos:21,tp:26,rds:[[7,4,4,4,4,7,4,4,4,5,6,4,3,4,6,3,4,6],[6,4,4,3,5,6,3,4,4,9,5,4,6,3,7,5,4,5]]},
-{n:"Hermes Stuart Cañizares Plaja",pos:22,tp:27,rds:[[5,5,5,3,4,5,4,3,5,8,8,3,4,4,6,3,4,4],[5,4,5,2,5,5,4,4,8,4,6,3,10,3,7,3,5,5]]},
-{n:"Buster Airey",pos:23,tp:29,rds:[[7,4,5,5,4,5,4,4,5,6,5,3,6,5,5,4,4,4],[7,3,5,3,5,5,5,4,4,8,5,4,6,4,6,4,5,5]]},
-{n:"Joe Short",pos:23,tp:29,rds:[[6,3,3,3,6,7,3,4,6,6,4,5,5,4,7,2,3,6],[6,4,6,3,3,8,6,4,3,5,6,3,5,5,6,7,4,6]]},
-{n:"Miroslavs Bogdanovs",pos:25,tp:30,rds:[[4,4,4,3,4,5,3,3,11,6,5,4,6,5,6,3,4,6],[6,5,4,4,4,5,4,3,4,6,7,4,6,4,8,4,5,5]]},
-{n:"Elias Didjurgis",pos:26,tp:31,rds:[[5,3,5,4,4,5,4,4,5,5,6,5,6,4,9,4,5,6],[7,5,4,3,4,6,6,2,6,5,6,3,5,4,7,3,5,5]]},
-{n:"Kai Russell",pos:26,tp:31,rds:[[7,4,5,3,4,5,4,6,5,6,6,4,4,4,6,2,5,3],[6,4,5,6,4,5,3,4,4,11,5,3,5,5,9,3,6,4]]},
-{n:"Henry Liechti",pos:28,tp:32,rds:[[6,4,5,3,5,5,5,3,4,5,5,4,4,5,10,4,5,5],[7,6,5,4,4,6,4,4,4,7,5,4,4,5,7,3,6,4]]},
-{n:"Maddox Tiemann",pos:28,tp:32,rds:[[7,4,4,4,7,6,4,3,4,5,5,5,4,5,8,4,4,6],[5,3,6,3,4,6,5,3,4,7,5,3,6,4,7,3,5,8]]},
-{n:"Aron Klinkenberg",pos:30,tp:35,rds:[[5,3,5,4,8,5,4,3,6,6,6,3,5,6,7,4,5,6],[7,5,5,5,4,6,4,4,4,6,4,5,5,5,7,5,4,3]]},
-{n:"James Doyle",pos:31,tp:41,rds:[[5,4,4,4,4,7,5,3,5,5,7,4,6,5,6,3,5,5],[8,8,6,3,4,7,4,3,5,3,9,6,3,5,8,6,6,4]]},
-{n:"Zeyn Lababedi",pos:31,tp:41,rds:[[7,3,5,4,5,6,5,5,6,6,6,3,5,5,8,4,5,6],[8,5,5,3,4,6,5,3,4,6,7,4,5,5,9,3,4,5]]},
-{n:"Rodrigo Palacios Bauer",pos:31,tp:41,rds:[[5,3,5,4,4,6,5,3,7,10,6,4,5,5,7,4,5,5],[6,4,4,5,4,6,7,4,3,5,10,3,6,4,8,2,5,6]]},
-{n:"Kevin Canton",pos:34,tp:44,rds:[[6,3,5,3,4,6,4,4,6,6,5,6,5,4,7,3,4,7],[4,3,8,4,5,6,7,2,4,7,6,4,6,5,8,5,9,7]]},
-{n:"Arthur Lamblin",pos:35,tp:46,rds:[[6,4,4,4,4,6,5,6,6,6,6,4,6,5,10,6,5,5],[8,4,5,4,4,8,4,3,5,6,6,3,5,5,6,3,6,7]]},
-{n:"Joseph Robinson",pos:36,tp:48,rds:[[8,3,5,2,6,5,4,6,5,9,5,4,5,6,6,4,5,5],[8,6,4,4,4,8,7,3,5,5,6,4,6,4,4,4,12,5]]},
+{n:"Dmitrii Elchaninov",pos:1,tp:-6,rds:[[4,3,3,4,4,4,3,4,4,5,4,4,3,4,5,3,4,4],[5,3,5,4,3,5,4,3,3,4,4,3,5,4,5,2,3,4],[6,3,4,3,3,5,5,2,4,5,5,2,4,4,5,3,4,5]]},
+{n:"William Harran",pos:2,tp:5,rds:[[7,4,5,3,4,5,4,3,4,5,5,4,4,3,4,3,4,4],[5,3,4,4,3,6,3,3,4,4,5,3,4,3,7,3,3,4],[4,3,4,3,5,4,4,4,4,5,6,2,5,4,5,3,5,5]]},
+{n:"Sean Wilding",pos:3,tp:8,rds:[[5,3,4,4,4,5,2,3,4,5,5,3,3,4,5,3,4,5],[5,4,5,3,4,6,4,3,4,5,5,3,4,3,5,2,5,4],[6,4,5,3,3,5,5,2,4,5,5,4,6,4,6,3,5,4]]},
+{n:"Weilian Sun",pos:4,tp:9,rds:[[5,3,4,5,5,5,5,3,4,4,6,3,5,4,4,3,5,4],[5,3,4,2,4,6,3,3,4,5,4,3,4,4,6,3,6,4],[8,3,3,4,4,4,5,2,4,5,5,3,4,3,7,3,3,5]]},
+{n:"Philippe Xiao",pos:5,tp:11,rds:[[5,3,4,3,4,5,5,3,4,5,5,3,5,3,6,3,4,4],[6,4,4,3,3,5,3,3,4,5,6,2,4,4,5,4,4,4],[6,4,4,3,5,6,5,2,4,5,5,4,5,6,6,2,4,4]]},
+{n:"Hugo Strasser",pos:6,tp:12,rds:[[5,3,4,3,4,6,3,3,4,5,5,4,4,3,6,3,4,4],[6,3,4,3,4,4,4,3,6,5,5,3,5,3,4,3,4,4],[5,3,3,4,5,6,3,3,5,5,6,4,6,4,7,3,5,5]]},
+{n:"Christian Chepishev",pos:7,tp:14,rds:[[4,4,5,3,4,5,4,3,4,5,5,4,5,4,6,4,3,3],[6,3,5,3,4,5,3,4,4,5,6,2,4,5,5,3,4,5],[5,4,4,3,4,5,6,4,3,6,5,3,5,6,5,3,4,4]]},
+{n:"Henry Bucys",pos:8,tp:15,rds:[[6,3,5,4,4,5,4,4,5,5,5,4,4,4,5,3,4,5],[5,3,4,3,4,5,4,3,4,4,5,3,5,4,6,4,4,6],[4,3,4,3,3,4,4,4,4,6,5,5,5,4,6,4,4,4]]},
+{n:"Diego Gross Paneque",pos:9,tp:16,rds:[[6,3,4,3,4,5,5,3,5,5,5,4,4,3,5,4,3,5],[7,3,4,3,4,5,4,3,4,5,6,3,5,4,6,2,3,4],[5,3,5,5,5,4,5,4,5,5,5,4,4,4,5,3,5,5]]},
+{n:"Manuel Francisco Medeiros",pos:9,tp:16,rds:[[9,3,3,4,5,5,4,3,4,5,5,5,5,4,4,3,3,5],[5,3,4,4,3,5,5,4,4,6,5,4,4,4,7,3,4,4],[5,3,3,3,4,7,3,3,4,4,6,3,5,4,6,4,4,4]]},
+{n:"Leon Schneitter",pos:11,tp:20,rds:[[5,3,4,4,5,6,4,3,5,4,5,3,3,4,6,3,4,5],[8,4,4,5,4,4,4,2,4,6,5,4,6,4,5,3,4,4],[5,4,5,3,4,5,5,4,5,4,5,4,5,4,8,2,3,5]]},
+{n:"Álex Carrón",pos:12,tp:25,rds:[[5,3,4,3,4,5,4,3,4,8,5,4,4,4,4,3,4,5],[6,3,5,4,5,5,4,2,5,4,5,3,5,4,7,2,5,8],[5,3,4,3,4,6,4,4,4,7,7,4,5,4,6,3,5,5]]},
+{n:"Benji Botham",pos:13,tp:28,rds:[[5,3,3,3,5,6,4,3,4,8,6,5,5,4,4,4,4,5],[6,3,4,4,4,5,5,3,6,4,5,3,5,4,7,3,5,4],[6,3,4,4,5,5,4,3,7,5,6,4,5,4,6,3,5,4]]},
+{n:"Myles Jones",pos:14,tp:29,rds:[[7,4,5,3,4,6,4,3,4,5,6,3,4,4,5,3,4,5],[5,3,4,3,4,5,4,3,5,6,6,3,7,6,8,4,6,6],[5,4,4,4,4,6,5,3,4,4,6,3,4,4,5,3,5,5]]},
+{n:"Oscar Bunt",pos:14,tp:29,rds:[[9,3,4,4,4,5,4,3,5,4,5,3,3,4,6,3,5,8],[5,3,5,4,5,5,3,3,4,4,5,5,6,4,5,4,5,5],[5,5,4,3,4,8,4,4,3,4,5,5,4,5,6,4,5,5]]},
+{n:"Dylan Dedaj Ungureanu",pos:14,tp:29,rds:[[5,3,4,3,4,6,4,4,4,5,9,3,5,5,5,4,5,6],[6,2,5,4,4,5,5,3,6,5,5,3,5,5,6,3,5,4],[5,3,4,2,4,6,5,3,4,5,7,3,4,5,7,4,5,4]]},
+{n:"Alexis Beringer",pos:17,tp:30,rds:[[5,4,5,3,4,6,3,5,6,6,5,3,5,4,8,3,4,4],[7,3,4,4,4,5,3,3,5,8,6,4,4,3,7,3,5,4],[4,5,5,4,4,5,7,4,3,5,5,3,5,4,5,3,5,5]]},
+{n:"Hermes Stuart Cañizares Plaja",pos:18,tp:32,rds:[[7,4,3,4,4,5,4,3,4,4,5,3,4,4,7,3,4,5],[5,5,5,3,4,5,4,3,5,8,8,3,4,4,6,3,4,4],[5,4,5,2,5,5,4,4,8,4,6,3,10,3,7,3,5,5]]},
+{n:"Niko Alvarez Van Der Walt",pos:19,tp:33,rds:[[5,3,4,5,4,5,4,4,5,5,5,4,4,4,7,3,4,6],[5,7,5,3,3,6,3,3,3,4,5,4,5,4,9,3,5,9],[5,3,6,3,3,5,4,4,4,6,7,4,5,4,5,3,6,5]]},
+{n:"Miroslavs Bogdanovs",pos:20,tp:36,rds:[[5,3,5,3,4,4,4,2,5,5,5,3,5,4,9,4,4,4],[4,4,4,3,4,5,3,3,11,6,5,4,6,5,6,3,4,6],[6,5,4,4,4,5,4,3,4,6,7,4,6,4,8,4,5,5]]},
+{n:"Buster Airey",pos:20,tp:36,rds:[[6,3,4,3,4,5,4,3,4,7,4,4,5,5,6,3,4,5],[7,4,5,5,4,5,4,4,5,6,5,3,6,5,5,4,4,4],[7,3,5,3,5,5,5,4,4,8,5,4,6,4,6,4,5,5]]},
+{n:"Elijah Gibbons",pos:22,tp:37,rds:[[9,3,3,4,4,8,4,3,5,5,5,3,4,5,5,3,5,5],[7,4,4,4,4,7,4,4,4,5,6,4,3,4,6,3,4,6],[6,4,4,3,5,6,3,4,4,9,5,4,6,3,7,5,4,5]]},
+{n:"Henry Liechti",pos:23,tp:39,rds:[[6,3,5,3,4,4,5,3,4,5,5,4,5,4,5,3,6,5],[6,4,5,3,5,5,5,3,4,5,5,4,4,5,10,4,5,5],[7,6,5,4,4,6,4,4,4,7,5,4,4,5,7,3,6,4]]},
+{n:"Kai Russell",pos:24,tp:40,rds:[[7,6,3,3,4,5,4,4,5,5,6,4,3,4,6,3,5,4],[7,4,5,3,4,5,4,6,5,6,6,4,4,4,6,2,5,3],[6,4,5,6,4,5,3,4,4,11,5,3,5,5,9,3,6,4]]},
+{n:"Aineon Hiram Jabonero",pos:25,tp:41,rds:[[5,3,6,5,6,5,4,4,7,5,7,4,5,4,5,4,4,5],[6,4,5,4,5,6,4,2,5,6,5,4,6,4,6,4,5,6],[5,6,5,4,3,6,5,4,4,4,5,4,4,4,5,4,5,5]]},
+{n:"Lukas Doherty",pos:26,tp:42,rds:[[6,3,4,3,5,7,5,3,5,6,6,5,5,5,7,4,5,5],[9,5,5,3,4,4,5,3,4,5,5,3,4,4,7,4,5,6],[6,4,5,3,4,5,5,3,4,5,6,4,5,4,7,3,6,5]]},
+{n:"Elias Didjurgis",pos:27,tp:43,rds:[[6,3,5,3,5,6,5,4,5,6,5,3,5,5,5,4,3,6],[5,3,5,4,4,5,4,4,5,5,6,5,6,4,9,4,5,6],[7,5,4,3,4,6,6,2,6,5,6,3,5,4,7,3,5,5]]},
+{n:"Joe Short",pos:28,tp:50,rds:[[8,4,5,4,4,7,5,4,7,6,5,5,4,5,6,4,6,4],[6,3,3,3,6,7,3,4,6,6,4,5,5,4,7,2,3,6],[6,4,6,3,3,8,6,4,3,5,6,3,5,5,6,7,4,6]]},
+{n:"Rodrigo Palacios Bauer",pos:29,tp:51,rds:[[5,3,3,3,4,5,5,3,4,7,7,3,6,5,6,2,5,6],[5,3,5,4,4,6,5,3,7,10,6,4,5,5,7,4,5,5],[6,4,4,5,4,6,7,4,3,5,10,3,6,4,8,2,5,6]]},
+{n:"Kevin Canton",pos:30,tp:57,rds:[[5,2,5,3,6,7,5,4,4,6,5,2,4,5,8,3,5,6],[6,3,5,3,4,6,4,4,6,6,5,6,5,4,7,3,4,7],[4,3,8,4,5,6,7,2,4,7,6,4,6,5,8,5,9,7]]},
+{n:"James Doyle",pos:31,tp:60,rds:[[6,4,8,4,5,7,4,3,4,5,5,5,4,6,8,4,4,5],[5,4,4,4,4,7,5,3,5,5,7,4,6,5,6,3,5,5],[8,8,6,3,4,7,4,3,5,3,9,6,3,5,8,6,6,4]]},
+{n:"Joseph Robinson",pos:32,tp:61,rds:[[6,7,6,3,4,5,5,3,4,6,7,3,4,5,6,2,4,5],[8,3,5,2,6,5,4,6,5,9,5,4,5,6,6,4,5,5],[8,6,4,4,4,8,7,3,5,5,6,4,6,4,4,4,12,5]]},
+{n:"Arthur Lamblin",pos:33,tp:63,rds:[[7,3,5,3,5,7,4,4,4,7,6,3,6,5,5,5,5,5],[6,4,4,4,4,6,5,6,6,6,6,4,6,5,10,6,5,5],[8,4,5,4,4,8,4,3,5,6,6,3,5,5,6,3,6,7]]},
+{n:"Zeyn Lababedi",pos:34,tp:64,rds:[[6,3,5,5,7,7,4,5,5,5,6,5,6,5,6,4,5,6],[7,3,5,4,5,6,5,5,6,6,6,3,5,5,8,4,5,6],[8,5,5,3,4,6,5,3,4,6,7,4,5,5,9,3,4,5]]},
+{n:"Maddox Tiemann",pos:null,tp:32,rds:[[7,4,4,4,7,6,4,3,4,5,5,5,4,5,8,4,4,6],[5,3,6,3,4,6,5,3,4,7,5,3,6,4,7,3,5,8]]},
 ];
 
 /* ═══════════════════════════════════
@@ -948,6 +1162,50 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
 /* ═══════════════════════════════════
    SIDEBAR
    ═══════════════════════════════════ */
+/* ── DOB Pill ── */
+function DobPill({ player }: { player: RivalPlayer }) {
+  const info = computeDobInfo(player);
+  if (info.rangeStr === "?" && !info.exact) return null;
+
+  const exact = info.exact;
+  // Background: exact = birth blue-green, estimated = muted amber
+  const bg = exact
+    ? "rgba(45,106,48,0.18)"
+    : "rgba(180,130,0,0.13)";
+  const border = exact
+    ? "1px solid rgba(45,106,48,0.35)"
+    : "1px solid rgba(180,130,0,0.30)";
+  const textColor = exact
+    ? "var(--color-good-dark)"
+    : "var(--color-warn, #a07800)";
+
+  return (
+    <div style={{
+      marginTop: 5,
+      display: "flex",
+      alignItems: "center",
+      gap: 6,
+      background: bg,
+      border,
+      borderRadius: 7,
+      padding: "4px 8px",
+      width: "100%",
+      boxSizing: "border-box",
+    }}>
+      <span style={{ fontSize: 13 }}>{exact ? "🎂" : "📅"}</span>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ fontSize: 12, fontWeight: 700, color: textColor, letterSpacing: "0.01em" }}>
+          {exact ? info.dobStr : `~${info.rangeStr}`}
+          {!exact && <span style={{ fontWeight: 400, fontSize: 10, marginLeft: 4, opacity: 0.75 }}>est.</span>}
+        </div>
+        <div style={{ fontSize: 10, color: "var(--text-3)", fontWeight: 500, marginTop: 1 }}>
+          {info.ageStr}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function RivaisSidebar({ selected, onSelect }: { selected: string | null; onSelect: (n: string) => void }) {
   const [q, setQ] = useState("");
   const [showAll, setShowAll] = useState(false);
@@ -1006,6 +1264,7 @@ function RivaisSidebar({ selected, onSelect }: { selected: string | null; onSele
                 )}
                 {p.up.length > 0 && <span style={{ fontSize: 10, color: "var(--color-good-dark)", fontWeight: 700 }}>▲</span>}
               </div>
+              <DobPill player={p} />
             </button>
           );
         })}
@@ -1039,7 +1298,7 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
 
   if (!rival && !lbEntry) return (
     <div className="detail-header">
-      <div className="muted p-16">Sem dados para {playerName}</div>
+      <div className="muted">Sem dados para {playerName}</div>
     </div>
   );
 
@@ -1154,10 +1413,10 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
 
   return (
     <>
-      {/* ── Detail header — igual ao JogadoresPage ── */}
+      {/* ── Header ── */}
       <div className="detail-header">
         <div className="detail-header-top">
-          <div className="detail-title">
+          <h2 className="detail-title">
             <span>{flag}</span>
             <span>{playerName}</span>
             {rank != null && (
@@ -1165,29 +1424,24 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
                 #{rank}/{totalRanked}
               </span>
             )}
-            {tr && <span className="fw-700 fs-14" style={{ color: TR_I[tr].c }}>{TR_I[tr].i}</span>}
-            {isManuel && <span className="p p-outline">REF</span>}
-          </div>
-          <div className="toolbar-right">
-            <button className="p p-filter p-sm" onClick={onShowTable}>Tabela ↗</button>
-          </div>
+            {tr && <span className="fw-700 fs-13" style={{ color: TR_I[tr].c }}>{TR_I[tr].i}</span>}
+          </h2>
+          <button className="p p-filter p-sm" onClick={onShowTable}>Tabela ↗</button>
         </div>
-        <div className="jog-pills">
-          {rival && !isManuel && <span className="p p-muted">{FL[rival.co] || ""} {rival.co}</span>}
-          {played > 0 && <span className="p p-outline">{played} torneios</span>}
-          {played > 0 && <span className="p p-outline">{nRounds(rival!)} rondas</span>}
-          {bestTp != null && <span className="p p-outline" style={{ color: bestTp <= 0 ? "var(--color-good-dark)" : undefined }}>Melhor {fmtToPar(bestTp)}</span>}
-          {bestRd != null && <span className="p p-outline c-good-dark">↓ {bestRd}</span>}
-          {avgRd != null && <span className="p p-outline">Média {avgRd.toFixed(1)}</span>}
-          {bjgtCard && <span className="p p-outline">ECL {bjgtCard.eclTotal}</span>}
+        <div className="detail-sub">
+          {rival && !isManuel && <span className="muted">{rival.co}</span>}
+          {isManuel && <span className="p p-outline p-sm">REF</span>}
+          {played > 0 && <span className="muted"> · {played} torneios · {nRounds(rival!)} rondas</span>}
+          {bestTp != null && <span className="muted"> · Melhor <span style={{ color: tpColorDark(bestTp) }}>{fmtToPar(bestTp)}</span></span>}
+          {avgRd != null && <span className="muted"> · Média {avgRd.toFixed(1)}</span>}
           {rival?.up.map(u => {
             const up = UP.find(x => x.id === u);
-            return up ? <span key={u} className="p p-sm" style={{ background: "var(--bg-success-strong)", color: "var(--color-good-dark)" }}>▲ {up.short}</span> : null;
+            return up ? <span key={u} className="p p-sm ml-6" style={{ background: "var(--bg-success-strong)", color: "var(--color-good-dark)" }}>▲ {up.short}</span> : null;
           })}
         </div>
       </div>
 
-      {/* ── Scoring distribution ── */}
+      {/* ── Distribuição de scoring ── */}
       {allCardScores.length > 0 && (() => {
         let eagles=0,birdies=0,pars=0,bogeys=0,doubles=0,worse=0;
         for (let k=0;k<allCardScores.length;k++) {
@@ -1198,128 +1452,120 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
         if(!total) return null;
         const items=[{l:"Eagle+",v:eagles,c:"eagle"},{l:"Birdie",v:birdies,c:"birdie"},{l:"Par",v:pars,c:"par"},{l:"Bogey",v:bogeys,c:"bogey"},{l:"Duplo",v:doubles,c:"double"},{l:"Triple+",v:worse,c:"triple"}].filter(x=>x.v>0);
         return (
-          <div className="pa-controls">
-            <div className="pa-controls-left" style={{ flexWrap: "wrap", gap: 6 }}>
-              <span className="fs-10 fw-600 c-text-3">Distribuição ({total} buracos · {allCardScores.length} rondas):</span>
-              {items.map(s=>(
-                <span key={s.l} className="d-flex items-center gap-4">
-                  <span className={`sc-score ${s.c}`} style={{width:22,height:22,fontSize:10}}>{s.v}</span>
-                  <span className="fs-10 fw-600 c-text-3">{s.l} ({(s.v/total*100).toFixed(0)}%)</span>
-                </span>
-              ))}
-            </div>
+          <div className="d-flex items-center gap-8 mb-8" style={{ padding: "6px 0", flexWrap: "wrap" }}>
+            <span className="fs-10 c-text-3">{total} buracos · {allCardScores.length} rondas:</span>
+            {items.map(s=>(
+              <span key={s.l} className="d-flex items-center gap-4">
+                <span className={`sc-score ${s.c}`} style={{width:20,height:20,fontSize:10}}>{s.v}</span>
+                <span className="fs-10 c-text-3">{s.l} {(s.v/total*100).toFixed(0)}%</span>
+              </span>
+            ))}
           </div>
         );
       })()}
 
-      {/* ── Tournament cards ── */}
-      <div className="pa-content">
-        {tournResults.map(({ t, res, hasCard }) => {
-          const expanded = expandedTourns.has(t.id);
-          const wOrd = T_WEIGHTS[t.id];
-          const stars = wOrd >= 0.9 ? "★★★" : wOrd >= 0.6 ? "★★" : wOrd >= 0.4 ? "★" : "½";
-          const manuelRes = !isManuel ? manuel?.r[t.id] : null;
-          const vsM = manuelRes?.tp != null && res.tp != null ? res.tp - manuelRes.tp : null;
+      {/* ── Cards de torneio ── */}
+      {tournResults.map(({ t, res, hasCard }) => {
+        const expanded = expandedTourns.has(t.id);
+        const wOrd = T_WEIGHTS[t.id];
+        const stars = wOrd >= 0.9 ? "★★★" : wOrd >= 0.6 ? "★★" : wOrd >= 0.4 ? "★" : "½";
+        const manuelRes = !isManuel ? manuel?.r[t.id] : null;
+        const vsM = manuelRes?.tp != null && res.tp != null ? res.tp - manuelRes.tp : null;
 
-          return (
-            <div key={t.id} className="card mb-8" style={{ padding: 0, overflow: "hidden" }}>
-              {/* Card header */}
-              <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", borderBottom: "1px solid var(--border-light)", background: "var(--bg)" }}>
-                <div style={{ flex: 1 }}>
-                  <span className="fw-700 fs-13">
-                    {t.url ? <a href={t.url} target="_blank" rel="noopener noreferrer" className="rivais-link">{t.name}</a> : t.name}
-                  </span>
-                  <span className="fs-10 fw-500 op-7 ml-8">{t.date} · {stars} · {t.field} jog. · {t.nations} países</span>
-                </div>
-                {hasCard && (
-                  <button className="p p-filter p-sm" onClick={() => toggleExpand(t.id)} style={{ fontSize: 11 }}>
-                    {expanded ? "Fechar ▲" : "Scorecard ▼"}
-                  </button>
-                )}
+        return (
+          <div key={t.id} className="sc-modern">
+            <div className="sc-bar-head">
+              <div>
+                {t.url
+                  ? <a href={t.url} target="_blank" rel="noopener noreferrer" className="rivais-link">{t.name}</a>
+                  : <span>{t.name}</span>}
+                <span className="fs-10 c-text-3 ml-6">{t.date} · {stars} · {t.field} jog. · {t.nations} países</span>
               </div>
-              {/* Result row */}
-              <div style={{ padding: "10px 14px", display: "flex", gap: 20, alignItems: "center", flexWrap: "wrap" }}>
-                <div>
-                  <span className="fs-11 c-text-3">Posição </span>
-                  <span className="fw-800 fs-15">#{res.p}</span>
-                  <span className="fs-11 c-text-3"> / {t.field}</span>
-                </div>
-                <div>
-                  <span className="fs-11 c-text-3">Total </span>
-                  <span className="fw-700 fs-14 tourn-mono">{res.t}</span>
-                </div>
-                <div>
-                  <span className="fs-11 c-text-3">±Par </span>
-                  <span className="fw-700 fs-14" style={{ color: tpColorDark(res.tp) }}>{fmtToPar(res.tp)}</span>
-                </div>
-                <div className="d-flex gap-6">
-                  {res.rd.filter((r: number|null) => r != null).map((r: number, i: number) => (
-                    <span key={i} className="fs-12 fw-600 tourn-mono" style={{ color: tpColorDark(r - t.par, 5) }}>R{i+1}: {r}</span>
-                  ))}
-                </div>
-                {vsM != null && (
-                  <div>
-                    <span className="fs-11 c-text-3">vs Manuel </span>
-                    <span className="fw-700 fs-13" style={{ color: sc3m(vsM, 0, 0) }}>{fmtSign(vsM)}</span>
-                  </div>
-                )}
+              {hasCard && (
+                <button className="p p-filter p-sm" onClick={() => toggleExpand(t.id)}>
+                  {expanded ? "Fechar ▲" : "Scorecard ▼"}
+                </button>
+              )}
+            </div>
+            <div className="d-flex gap-16 items-center" style={{ padding: "10px 14px", flexWrap: "wrap" }}>
+              <div>
+                <span className="fs-11 c-text-3">Posição </span>
+                <span className="fw-800 fs-14">#{res.p}</span>
+                <span className="fs-11 c-text-3">/{t.field}</span>
               </div>
-
-              {/* Expanded scorecard */}
-              {expanded && hasCard && (
-                <div style={{ padding: "0 8px 12px", borderTop: "1px solid var(--border-light)" }}>
-                  {t.id === "brjgt25" && bjgtCard && (
-                    <div className="scroll-x mb-8">
-                      <table className="sc-table-modern" data-sc-table="1">
-                        <THead />
-                        <tbody>
-                          <FieldAvgRow />
-                          <ParRow sep />
-                          {bjgtCard.rounds.map((rd, i) => <GrossRow key={i} holes={rd} label={`R${i + 1}`} />)}
-                          <GrossRow holes={bjgtCard.ecl} label="ECL" />
-                          <VsFieldRow holes={bjgtCard.ecl} />
-                        </tbody>
-                      </table>
-                    </div>
-                  )}
-                  {t.id === "wjgc26" && wjgcCard && (
-                    <TournScorecard par={WJGC26_PAR} si={WJGC26_SI}
-                      rounds={wjgcCard.rds.map((sc, i) => ({ label: `R${i + 1}`, scores: [...sc] }))} />
-                  )}
-                  {t.id === "gg26" && ggCard && (
-                    <TournScorecard par={GG26_PAR} si={GG26_SI}
-                      rounds={ggCard.rds.map((sc, i) => ({ label: `R${i + 1}`, scores: [...sc] }))} />
-                  )}
-                  {t.id === "qdl25" && qdlCard && (
-                    <TournScorecard par={QDL25_PAR} si={QDL25_SI}
-                      rounds={qdlCard.rds.map((sc, i) => ({ label: `R${i + 1}`, scores: [...sc] }))} />
-                  )}
-                  {t.id === "eowagr25" && eowagr25Card && (
-                    <TournScorecard par={EOWAGR25_PAR} si={EOWAGR25_SI}
-                      rounds={eowagr25Card.rds.map((sc, i) => ({ label: `R${i + 1}`, scores: [...sc] }))} />
-                  )}
-                  {t.id === "wjgc26_1213" && wjgc26_1213Card && (
-                    <TournScorecard par={WJGC26_1213_PAR} si={WJGC26_1213_SI}
-                      rounds={wjgc26_1213Card.rds.map((sc, i) => ({ label: `R${i + 1}`, scores: [...sc] }))} />
-                  )}
+              <div>
+                <span className="fs-11 c-text-3">Total </span>
+                <span className="fw-700 fs-13">{res.t}</span>
+              </div>
+              <div>
+                <span className="fs-11 c-text-3">±Par </span>
+                <span className="fw-700 fs-13" style={{ color: tpColorDark(res.tp) }}>{fmtToPar(res.tp)}</span>
+              </div>
+              <div className="d-flex gap-6">
+                {res.rd.filter((r: number|null) => r != null).map((r: number, i: number) => (
+                  <span key={i} className="fs-12 fw-600" style={{ color: tpColorDark(r - t.par, 5) }}>R{i+1}: {r}</span>
+                ))}
+              </div>
+              {vsM != null && (
+                <div>
+                  <span className="fs-11 c-text-3">vs Manuel </span>
+                  <span className="fw-700 fs-12" style={{ color: sc3m(vsM, 0, 0) }}>{fmtSign(vsM)}</span>
                 </div>
               )}
             </div>
-          );
-        })}
 
-        {/* BJGT entry even without full rival record */}
-        {!rival && lbEntry && (
-          <div className="notice notice-info">
-            BJGT 2025: {lbEntry.rounds.join("-")} = {lbEntry.total} ({fmtToPar(lbEntry.result)})
-            {!bjgtCard && " — scorecard buraco-a-buraco não disponível"}
+            {expanded && hasCard && (
+              <div style={{ padding: "0 8px 12px", borderTop: "1px solid var(--border-light)" }}>
+                {t.id === "brjgt25" && bjgtCard && (
+                  <div className="bjgt-chart-scroll">
+                    <table className="sc-table-modern" data-sc-table="1">
+                      <THead />
+                      <tbody>
+                        <FieldAvgRow />
+                        <ParRow sep />
+                        {bjgtCard.rounds.map((rd, i) => <GrossRow key={i} holes={rd} label={`R${i + 1}`} />)}
+                        <GrossRow holes={bjgtCard.ecl} label="ECL" />
+                        <VsFieldRow holes={bjgtCard.ecl} />
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+                {t.id === "wjgc26" && wjgcCard && (
+                  <TournScorecard par={WJGC26_PAR} si={WJGC26_SI}
+                    rounds={wjgcCard.rds.map((sc, i) => ({ label: `R${i + 1}`, scores: [...sc] }))} />
+                )}
+                {t.id === "gg26" && ggCard && (
+                  <TournScorecard par={GG26_PAR} si={GG26_SI}
+                    rounds={ggCard.rds.map((sc, i) => ({ label: `R${i + 1}`, scores: [...sc] }))} />
+                )}
+                {t.id === "qdl25" && qdlCard && (
+                  <TournScorecard par={QDL25_PAR} si={QDL25_SI}
+                    rounds={qdlCard.rds.map((sc, i) => ({ label: `R${i + 1}`, scores: [...sc] }))} />
+                )}
+                {t.id === "eowagr25" && eowagr25Card && (
+                  <TournScorecard par={EOWAGR25_PAR} si={EOWAGR25_SI}
+                    rounds={eowagr25Card.rds.map((sc, i) => ({ label: `R${i + 1}`, scores: [...sc] }))} />
+                )}
+                {t.id === "wjgc26_1213" && wjgc26_1213Card && (
+                  <TournScorecard par={WJGC26_1213_PAR} si={WJGC26_1213_SI}
+                    rounds={wjgc26_1213Card.rds.map((sc, i) => ({ label: `R${i + 1}`, scores: [...sc] }))} />
+                )}
+              </div>
+            )}
           </div>
-        )}
+        );
+      })}
 
-        {played === 0 && !lbEntry && (
-          <EmptyState size="sm" message="Sem resultados registados ainda." />
-        )}
-      </div>
+      {!rival && lbEntry && (
+        <div className="notice notice-info mt-10">
+          BJGT 2025: {lbEntry.rounds.join("-")} = {lbEntry.total} ({fmtToPar(lbEntry.result)})
+          {!bjgtCard && " — scorecard buraco-a-buraco não disponível"}
+        </div>
+      )}
+
+      {played === 0 && !lbEntry && (
+        <EmptyState size="sm" message="Sem resultados registados ainda." />
+      )}
     </>
   );
 }
@@ -1464,8 +1710,24 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
   };
 
   // Collect tournament results from Rivais
-  const tournResults: { name: string; short: string; date: string; par: number; pos: number | string; total: number | null; tp: number | null; rounds: number[] }[] = [];
-  if (rival) { for (const t of T) { const res = rival.r[t.id]; if (res) tournResults.push({ name: t.name, short: t.short, date: t.date, par: t.par, pos: res.p, total: res.t, tp: res.tp, rounds: res.rd }); } }
+  const tournResults: { name: string; short: string; date: string; par: number; pos: number | string | null; total: number | null; tp: number | null; rounds: number[] }[] = [];
+  if (rival) {
+    // First: manual T array
+    for (const t of T) {
+      const res = rival.r[t.id];
+      if (res) tournResults.push({ name: t.name, short: t.short, date: t.date, par: t.par, pos: res.p, total: res.t, tp: res.tp, rounds: res.rd });
+    }
+    // Then: auto-loaded tourns not in manual T
+    const manualIds = new Set(T.map(t => t.id));
+    for (const [tid, res] of Object.entries(rival.r)) {
+      if (!manualIds.has(tid)) {
+        const info = getTournInfo(tid);
+        tournResults.push({ name: info.name, short: info.short, date: info.date, par: 72, pos: res.p, total: res.t, tp: res.tp, rounds: res.rd });
+      }
+    }
+    // Sort by date
+    tournResults.sort((a, b) => a.date.localeCompare(b.date));
+  }
 
   const completedResults = tournResults.filter(r => r.tp != null);
   const allRounds = completedResults.flatMap(r => r.rounds);
@@ -1627,39 +1889,37 @@ function RivaisIntlContent() {
   };
 
   return (
-    <div className="jogadores-page">
+    <div className="tourn-layout">
       {/* Toolbar */}
       <div className="toolbar">
         <div className="toolbar-left">
-          <button className="sidebar-toggle" onClick={() => setSidebarOpen(o => !o)} title="Toggle sidebar">
+          <button className="sidebar-toggle" onClick={() => setSidebarOpen(o => !o)}
+            title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
             {sidebarOpen ? "◀" : "▶"}
           </button>
-          <span className="fw-700 fs-13">🌍 Rivais Internacionais</span>
-          <span className="chip">Manuel · Sub-12</span>
+          <span className="toolbar-title">🌍 Rivais Internacionais</span>
+          <span className="toolbar-meta">Manuel · Sub-12</span>
         </div>
         <div className="toolbar-right">
           <button
             className={`p p-filter p-sm${showTable ? " active" : ""}`}
             onClick={() => setShowTable(t => !t)}
-            title="Ver tabela comparativa"
           >Tabela</button>
         </div>
       </div>
 
       {/* Master-detail */}
       <div className="master-detail">
-        <div className={`sidebar${sidebarOpen ? "" : " sidebar-closed"}`}>
+        <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`}>
           <RivaisSidebar selected={selectedPlayer} onSelect={handleSelectPlayer} />
         </div>
-        <div className="course-detail jog-detail">
+        <div className="course-detail">
           {showTable ? (
-            <div className="pa-content">
-              <RivaisDashboard onSelectPlayer={handleSelectPlayer} />
-            </div>
+            <RivaisDashboard onSelectPlayer={handleSelectPlayer} />
           ) : selectedPlayer ? (
             <RivalDetail playerName={selectedPlayer} onShowTable={() => setShowTable(true)} />
           ) : (
-            <div className="muted p-24">Selecciona um rival na lista à esquerda.</div>
+            <div className="muted p-16">Selecciona um rival na lista à esquerda.</div>
           )}
         </div>
       </div>

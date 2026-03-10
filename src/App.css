@@ -2646,6 +2646,7 @@ tr.cross-current { background: var(--bg-success); }
 .badge-evo-up  { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: var(--radius-sm); background: #dbeafe; color: #1e40af; white-space: nowrap; }
 .badge-evo-eq  { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: var(--radius-sm); background: #fef3c7; color: #92400e; white-space: nowrap; }
 .badge-evo-new { display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 5px; border-radius: var(--radius-sm); background: #f3f4f6; color: #9ca3af; white-space: nowrap; }
+.pill-birth { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: var(--radius-sm); background: #ede9fe; color: #5b21b6; white-space: nowrap; }
 
 /* ─── Meta sub-header de tabela (datas, rótulos compactos) ─── */
 .th-sub { font-size: 10px; font-weight: 400; color: var(--text-muted); display: block; line-height: 1.2; }
