@@ -13,7 +13,7 @@ import KpiCard from "../ui/KpiCard";
 import LoadingState from "../ui/LoadingState";
 import { ScorecardLeaderboard } from "../ui/ScorecardLeaderboard";
 import SexBadge from "../ui/SexBadge";
-import { C } from "../colors";
+import { C } from "../utils/colors";
 import { CrossSeasonTable, SortTh as CSortTh } from "../ui/CrossSeasonTable";
 import { MultiRoundLeaderboard, type MultiRoundRow as MRRow } from "../ui/MultiRoundLeaderboard";
 import {
