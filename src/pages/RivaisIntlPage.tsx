@@ -11,7 +11,7 @@ import { scClass, toParClass, sc3m, SC, tpColorDark } from "../utils/scoreDispla
 import { isCalUnlocked } from "../utils/authConstants";
 import PasswordGate from "../ui/PasswordGate";
 import EmptyState from "../ui/EmptyState";
-import { buildAutoRivals, normName } from "../rivaisDataLoader";
+import { buildAutoRivals, normName, getScorecards } from "./rivaisDataLoader";
 
 
 /* ═══════════════════════════════════
@@ -336,7 +336,9 @@ function computeDobInfo(p: RivalPlayer): DobInfo {
   return { exact: false, rangeMin, rangeMax, rangeStr, ageStr };
 }
 
-
+const UP = [
+  { id: "marco26", name: "Marco Simone Inv. 2026", short: "M.SIMONE", url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516989/marco-simone-invitational-2026/field" },
+];
 
 const D: RivalPlayer[]=[
   {n:"Manuel Medeiros",co:"Portugal",isM:true,dob:"29/04/2014",r:{brjgt25:{p:26,t:265,tp:52,rd:[90,85,90]},eowagr25:{p:7,t:238,tp:22,rd:[85,77,76]},venice25:{p:28,t:237,tp:21,rd:[78,76,83]},rome25:{p:10,t:166,tp:22,rd:[89,77]},doral25:{p:29,t:177,tp:35,rd:[98,79]},qdl25:{p:11,t:90,tp:18,rd:[90]},gg26:{p:4,t:169,tp:25,rd:[87,82]},wjgc26:{p:9,t:232,tp:16,rd:[79,78,75]}},up:["marco26"]},
@@ -536,43 +538,47 @@ const D: RivalPlayer[]=[
 ];
 
 /* ═══════════════════════════════════
-   AUTO-MERGE: combina D manual com
-   todos os JSON de torneios
+   D_BASE: array de jogadores base (manual)
+   Os rivais auto-loaded são merged via
+   useAutoRivals() hook abaixo
    ═══════════════════════════════════ */
-const { players: AUTO_PLAYERS, extraTournDefs: EXTRA_TOURN_DEFS } = buildAutoRivals();
+const D_BASE = D; // alias para clareza
 
-// Index manual D por nome normalizado
-const D_NORM_MAP = new Map<string, RivalPlayer>(D.map(p => [normName(p.n), p]));
+const manuel = D_BASE.find(x => x.isM)!;
 
-// Merge: para cada jogador auto, se já existe em D manual, enriquece os resultados;
-// caso contrário, adiciona como novo jogador
-for (const ap of AUTO_PLAYERS) {
-  const key = normName(ap.n);
-  if (D_NORM_MAP.has(key)) {
-    // Enriquecer jogador manual com torneios auto que ainda não tem
-    const manual = D_NORM_MAP.get(key)!;
-    for (const [tid, res] of Object.entries(ap.r)) {
-      if (!manual.r[tid]) {
-        manual.r[tid] = res;
-      } else if (res.rd.length > manual.r[tid].rd.length) {
-        // Auto tem mais rondas para o mesmo torneio → usa auto
-        manual.r[tid] = res;
+/** Hook: carrega todos os ficheiros JSON e faz merge com D_BASE */
+function useAutoRivals() {
+  const [merged, setMerged] = React.useState<RivalPlayer[]>(D_BASE);
+  const [loaded, setLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    buildAutoRivals().then(autoPlayers => {
+      // Trabalhar sobre uma cópia profunda do D_BASE
+      const map = new Map<string, RivalPlayer>(
+        D_BASE.map(p => [normName(p.n), { ...p, r: { ...p.r } }])
+      );
+      for (const ap of autoPlayers) {
+        const key = normName(ap.n);
+        if (map.has(key)) {
+          const ex = map.get(key)!;
+          for (const [tid, res] of Object.entries(ap.r)) {
+            if (!ex.r[tid] || res.rd.length > (ex.r[tid]?.rd.length ?? 0))
+              ex.r[tid] = res;
+          }
+        } else {
+          map.set(key, { n: ap.n, co: ap.co, r: ap.r, up: [] });
+        }
       }
-    }
-  } else {
-    // Novo jogador — adicionar ao D
-    const newPlayer: RivalPlayer = {
-      n: ap.n,
-      co: ap.co,
-      r: ap.r,
-      up: [],
-    };
-    D.push(newPlayer);
-    D_NORM_MAP.set(key, newPlayer);
-  }
-}
+      setMerged(Array.from(map.values()));
+      setLoaded(true);
+    }).catch(err => {
+      console.warn("rivaisDataLoader: erro ao carregar JSON", err);
+      setLoaded(true);
+    });
+  }, []);
 
-const manuel = D.find(x => x.isM)!;
+  return { rivals: merged, loaded };
+}
 
 /* ═══════════════════════════════════
    SCORECARD DATA — WJGC 2026 (3 rondas)
@@ -769,25 +775,38 @@ function getAvgZ(p) {
   // - Prestige weight: rounds, field size, internationality
   // - Par bonus: scoring well under par boosts that tournament's weight
   let totalW = 0, sumWZ = 0, effRd = 0;
-  for (const t of T) {
-    const res = p.r[t.id];
-    if (!res || !res.rd) continue;
+
+  // Todos os torneios com resultado (T manual + auto-loaded)
+  const allTids = Object.keys(p.r);
+
+  for (const tid of allTids) {
+    const res = p.r[tid];
+    if (!res || !res.rd || res.rd.length === 0) continue;
+
+    const tDef = T.find(t => t.id === tid);
+    const nRd = tDef ? (tDef.intendedRounds || tDef.rounds) : res.rd.length;
+    const w = T_WEIGHTS[tid] || 0.3; // peso baixo para torneios auto sem prestige definido
+
     const zs: number[] = [];
-    for (let i = 0; i < t.rounds; i++) {
+    for (let i = 0; i < res.rd.length; i++) {
       const sc = res.rd[i];
-      const stats = AVG_R[t.id] && AVG_R[t.id][i];
-      if (sc != null && stats && stats.s > 0) zs.push((sc - stats.m) / stats.s);
+      const stats = AVG_R[tid] && AVG_R[tid][i];
+      if (sc != null && sc > 0 && stats && stats.s > 0) {
+        zs.push((sc - stats.m) / stats.s);
+      } else if (sc != null && sc > 0) {
+        // Sem estatísticas de grupo: usar desvio relativo ao par (72 típico)
+        const parEst = 72;
+        const sdEst = 8; // desvio padrão estimado para torneios sem dados
+        zs.push((sc - parEst) / sdEst);
+      }
     }
     if (zs.length === 0) continue;
     const tournZ = zs.reduce((a, b) => a + b, 0) / zs.length;
-    const tpPerRd = res.tp != null ? res.tp / t.rounds : 0;
+    const tpPerRd = res.tp != null ? res.tp / nRd : 0;
     const parBonus = 1 + Math.max(0, -tpPerRd) * 0.15;
-    const w = (T_WEIGHTS[t.id] || 0.5) * parBonus;
-    sumWZ += tournZ * w;
-    totalW += w;
-    // Effective rounds: weighted by tournament prestige
-    // 2 rounds at GG(0.43) = 0.86 eff, 3 rounds at WJGC(1.0) = 3.0 eff
-    effRd += zs.length * (T_WEIGHTS[t.id] || 0.5);
+    sumWZ += tournZ * w * parBonus;
+    totalW += w * parBonus;
+    effRd += zs.length * w;
   }
   if (totalW === 0) return null;
   const weightedAvg = sumWZ / totalW;
@@ -813,18 +832,35 @@ function findCard<T extends { n: string }>(cards: T[], dName: string): T | undef
   return cards.find(c => matchName(dName, c.n));
 }
 
-/* ── Module-level rank map (used by sidebar + detail) ── */
-const rankMap: Record<string, number> = (() => {
-  const scored = D.map(p => ({ n: p.n, z: getAvgZ(p) })).filter(x => x.z != null) as { n: string; z: number }[];
+/* ══════════════════════════════════════════════════════
+   RIVALS CONTEXT — partilha o array de rivais (após
+   auto-merge async) por todos os sub-componentes
+   ══════════════════════════════════════════════════════ */
+const RivalsCtx = React.createContext<RivalPlayer[]>(D_BASE);
+function useRivals() { return React.useContext(RivalsCtx); }
+
+/* ── Rank map derivado do array de rivais ── */
+function buildRankMap(rivals: RivalPlayer[]): Record<string, number> {
+  const scored = rivals.map(p => ({ n: p.n, z: getAvgZ(p) })).filter(x => x.z != null) as { n: string; z: number }[];
   scored.sort((a, b) => a.z - b.z);
   const m: Record<string, number> = {};
   scored.forEach((s, i) => { m[s.n] = i + 1; });
   return m;
-})();
-const totalRanked = Object.keys(rankMap).length;
+}
 
-function nPlayed(p: RivalPlayer) { return T.filter(t => p.r[t.id] && p.r[t.id].tp != null).length; }
-function nRounds(p: RivalPlayer) { return T.reduce((acc, t) => { const res = p.r[t.id]; return acc + (res && res.rd ? res.rd.filter((x: number | null) => x != null).length : 0); }, 0); }
+// Inicializado com D_BASE; re-calculado quando RivalsCtx actualiza
+let rankMap: Record<string, number> = buildRankMap(D_BASE);
+let totalRanked = Object.keys(rankMap).length;
+
+// nPlayed e nRounds contam todos os torneios (T manual + auto-loaded)
+function nPlayed(p: RivalPlayer) {
+  return Object.values(p.r).filter(r => r && (r.tp != null || r.rd?.length > 0)).length;
+}
+function nRounds(p: RivalPlayer) {
+  return Object.values(p.r).reduce((acc, res) => {
+    return acc + (res?.rd ? res.rd.filter((x: number | null) => x != null && x > 0).length : 0);
+  }, 0);
+}
 function getVsAvg(p: RivalPlayer) {
   if (p.isM) return null;
   const ds: number[] = [];
@@ -925,6 +961,7 @@ function ScoringDist({ allScores, allPars }: { allScores: number[][]; allPars: r
 }
 
 function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) => void }) {
+  const rivals = useRivals();
   const [fTour, setFTour] = useState("all");
   const [fUp, setFUp] = useState("all");
   const [fCo, setFCo] = useState("all");
@@ -935,7 +972,7 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
   const [vsOn, setVsOn] = useState(true);
 
   const list = useMemo(() => {
-    let pl = [...D];
+    let pl = [...rivals];
     if (dOnly) pl = pl.filter(x => Object.values(x.r).some(r => r.tp != null));
     if (fTour !== "all") pl = pl.filter(x => x.r[fTour]);
     if (fUp !== "all") pl = pl.filter(x => x.up.includes(fUp));
@@ -1165,61 +1202,62 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
 /* ── DOB Pill ── */
 function DobPill({ player }: { player: RivalPlayer }) {
   const info = computeDobInfo(player);
-  if (info.rangeStr === "?" && !info.exact) return null;
-
-  const exact = info.exact;
-  // Background: exact = birth blue-green, estimated = muted amber
-  const bg = exact
-    ? "rgba(45,106,48,0.18)"
-    : "rgba(180,130,0,0.13)";
-  const border = exact
-    ? "1px solid rgba(45,106,48,0.35)"
-    : "1px solid rgba(180,130,0,0.30)";
-  const textColor = exact
-    ? "var(--color-good-dark)"
-    : "var(--color-warn, #a07800)";
-
+  if (!info.exact && info.rangeStr === "?") return null;
+  const text = info.exact ? info.dobStr! : `~${info.rangeStr}`;
+  const color = info.exact ? "var(--color-good-dark)" : "var(--text-3)";
   return (
-    <div style={{
-      marginTop: 5,
-      display: "flex",
-      alignItems: "center",
-      gap: 6,
-      background: bg,
-      border,
-      borderRadius: 7,
-      padding: "4px 8px",
-      width: "100%",
-      boxSizing: "border-box",
-    }}>
-      <span style={{ fontSize: 13 }}>{exact ? "🎂" : "📅"}</span>
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontSize: 12, fontWeight: 700, color: textColor, letterSpacing: "0.01em" }}>
-          {exact ? info.dobStr : `~${info.rangeStr}`}
-          {!exact && <span style={{ fontWeight: 400, fontSize: 10, marginLeft: 4, opacity: 0.75 }}>est.</span>}
-        </div>
-        <div style={{ fontSize: 10, color: "var(--text-3)", fontWeight: 500, marginTop: 1 }}>
-          {info.ageStr}
-        </div>
-      </div>
-    </div>
+    <span style={{ fontSize: 10, color, marginLeft: 4, fontWeight: info.exact ? 600 : 400 }}>
+      {info.exact ? "🎂" : "📅"} {text}
+    </span>
   );
+}
+
+// Grupos de torneios para o filtro da sidebar
+const SIDEBAR_FILTERS = [
+  { id: "all",       label: "Todos" },
+  { id: "wjgc",     label: "WJGC" },
+  { id: "uskids",   label: "US Kids" },
+  { id: "eowagr",   label: "EU Open" },
+  { id: "doral",    label: "Doral" },
+  { id: "bjgt",     label: "BJGT" },
+  { id: "outros",   label: "Outros" },
+];
+
+function playerMatchesFilter(p: RivalPlayer, fid: string): boolean {
+  if (fid === "all") return true;
+  const tids = Object.keys(p.r);
+  if (fid === "wjgc")   return tids.some(t => t.startsWith("wjgc"));
+  if (fid === "uskids") return tids.some(t =>
+    t.startsWith("venice25") || t.startsWith("rome25") || t.startsWith("marco25") ||
+    t.startsWith("desert26") || t.startsWith("sandestin26") || t.startsWith("msstate26") || t.startsWith("elprat23")
+  );
+  if (fid === "eowagr") return tids.some(t => t.startsWith("eowagr"));
+  if (fid === "doral")  return tids.some(t => t.startsWith("doral"));
+  if (fid === "bjgt")   return tids.some(t => t.startsWith("brjgt") || t.startsWith("gg26") || t.startsWith("qdl"));
+  if (fid === "outros") return !tids.some(t =>
+    t.startsWith("wjgc") || t.startsWith("venice25") || t.startsWith("rome25") ||
+    t.startsWith("marco25") || t.startsWith("desert26") || t.startsWith("sandestin26") ||
+    t.startsWith("msstate26") || t.startsWith("elprat23") || t.startsWith("eowagr") ||
+    t.startsWith("doral") || t.startsWith("brjgt") || t.startsWith("gg26") || t.startsWith("qdl")
+  );
+  return true;
 }
 
 function RivaisSidebar({ selected, onSelect }: { selected: string | null; onSelect: (n: string) => void }) {
   const [q, setQ] = useState("");
-  const [showAll, setShowAll] = useState(false);
+  const rivals = useRivals();
+  const [fid, setFid] = useState("all");
 
   const list = useMemo(() => {
-    const base = showAll ? D : D.filter(p => nPlayed(p) > 0 || p.isM);
-    let pl = base;
+    let pl = rivals.filter(p => nPlayed(p) > 0 || p.isM);
+    if (fid !== "all") pl = pl.filter(p => playerMatchesFilter(p, fid));
     if (q) { const ql = q.toLowerCase(); pl = pl.filter(p => p.n.toLowerCase().includes(ql) || p.co.toLowerCase().includes(ql)); }
     return [...pl].sort((a, b) => {
       if (a.isM) return -1; if (b.isM) return 1;
       const ra = rankMap[a.n] ?? 9999, rb = rankMap[b.n] ?? 9999;
       return ra - rb;
     });
-  }, [q, showAll]);
+  }, [q, fid, rivals]);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
@@ -1231,11 +1269,15 @@ function RivaisSidebar({ selected, onSelect }: { selected: string | null; onSele
           style={{ width: "100%", height: 28, fontSize: 12 }}
         />
       </div>
-      {/* Toggle todos */}
-      <div style={{ padding: "4px 10px", borderBottom: "1px solid var(--border-light)", flexShrink: 0 }}>
-        <label className="filter-checkbox" style={{ fontSize: 11 }}>
-          <input type="checkbox" checked={showAll} onChange={e => setShowAll(e.target.checked)} /> Mostrar sem dados
-        </label>
+      {/* Source filter pills */}
+      <div style={{ padding: "5px 8px", borderBottom: "1px solid var(--border-light)", flexShrink: 0, display: "flex", gap: 4, flexWrap: "wrap" }}>
+        {SIDEBAR_FILTERS.map(f => (
+          <button key={f.id}
+            className={`p p-sm p-filter${fid === f.id ? " active" : ""}`}
+            style={{ fontSize: 10, padding: "2px 7px" }}
+            onClick={() => setFid(f.id)}
+          >{f.label}</button>
+        ))}
       </div>
       {/* List */}
       <div style={{ flex: 1, overflowY: "auto" }}>
@@ -1246,6 +1288,8 @@ function RivaisSidebar({ selected, onSelect }: { selected: string | null; onSele
           const played = nPlayed(p);
           const isActive = selected === p.n;
           const rankCls = rank == null ? "" : rank <= 3 ? "sidebar-rank-top3" : rank <= 10 ? "sidebar-rank-top10" : "sidebar-rank-rest";
+          const dobInfo = computeDobInfo(p);
+          const hasDob = dobInfo.exact || dobInfo.rangeStr !== "?";
           return (
             <button key={p.n} className={`course-item${isActive ? " active" : ""}`} onClick={() => onSelect(p.n)}>
               <div className="course-item-name">
@@ -1254,9 +1298,10 @@ function RivaisSidebar({ selected, onSelect }: { selected: string | null; onSele
                 {p.isM && <span className="p p-sm p-outline ml-2">REF</span>}
                 {tr && <span style={{ fontSize: 11, color: TR_I[tr].c, marginLeft: "auto" }}>{TR_I[tr].i}</span>}
               </div>
-              <div style={{ display: "flex", gap: 5, marginTop: 3, alignItems: "center" }}>
+              <div style={{ display: "flex", gap: 5, marginTop: 3, alignItems: "center", flexWrap: "wrap" }}>
                 <span className="fs-10 c-text-3">{p.co}</span>
                 {played > 0 && <span className="fs-10 c-muted">· {played}T</span>}
+                {hasDob && <DobPill player={p} />}
                 {rank != null && (
                   <span className={`sidebar-rank ${rankCls}`} style={{ marginLeft: "auto" }}>
                     #{rank}
@@ -1264,7 +1309,6 @@ function RivaisSidebar({ selected, onSelect }: { selected: string | null; onSele
                 )}
                 {p.up.length > 0 && <span style={{ fontSize: 10, color: "var(--color-good-dark)", fontWeight: 700 }}>▲</span>}
               </div>
-              <DobPill player={p} />
             </button>
           );
         })}
@@ -1280,7 +1324,8 @@ function RivaisSidebar({ selected, onSelect }: { selected: string | null; onSele
    RIVAL DETAIL  (replaces FieldPlayerDetail)
    ═══════════════════════════════════ */
 function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTable: () => void }) {
-  const rival = D.find(d => d.n === playerName);
+  const rivals = useRivals();
+  const rival = rivals.find(d => d.n === playerName);
   const bjgtCard = FIELD_CARDS.find(c => c.name === playerName);
   const lbEntry = FIELD_2025.leaderboard.find(p => p.name === playerName);
   const wjgcCard = findCard(WJGC26_CARDS, playerName);
@@ -1308,21 +1353,58 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
   const played = rival ? nPlayed(rival) : 0;
   const isManuel = rival?.isM;
 
-  // Tournament results with scorecard lookup
-  const tournResults = rival ? T.filter(t => rival.r[t.id] && rival.r[t.id].tp != null).map(t => ({
-    t,
-    res: rival.r[t.id],
-    hasCard: t.id === "brjgt25" ? !!bjgtCard
-           : t.id === "wjgc26" ? !!wjgcCard
-           : t.id === "gg26" ? !!ggCard
-           : t.id === "qdl25" ? !!qdlCard
-           : t.id === "eowagr25" ? !!eowagr25Card
-           : t.id === "wjgc26_1213" ? !!wjgc26_1213Card
-           : false,
-  })) : [];
+  // Tournament results: T manual (com scorecard) + auto-loaded (sem scorecard)
+  const manualTournIds = new Set(T.map(t => t.id));
 
-  const allRds = tournResults.flatMap(x => x.res.rd.filter((r: number | null) => r != null));
-  const bestTp = tournResults.length ? Math.min(...tournResults.map(x => x.res.tp)) : null;
+  // Ids auto que são "cobertos" por um torneio manual equivalente
+  // Ex: venice25_b11 → coberto por venice25; doral25_b1011 → coberto por doral25
+  function autoIsCoveredByManual(tid: string): boolean {
+    // Remover sufixo _b\d+ e ver se o resultado está nos manuais
+    const base = tid.replace(/_b\d+$/, "");
+    if (manualTournIds.has(base)) return true;
+    // Casos especiais: wjgc26 é o mesmo id (já filtrado por manualTournIds.has)
+    return false;
+  }
+
+  const autoScorecards = rival ? getScorecards(rival.n) : [];
+
+  const tournResults = rival ? [
+    // 1. Torneios do array T manual com resultados
+    ...T.filter(t => rival.r[t.id] && rival.r[t.id].rd?.length > 0).map(t => ({
+      t,
+      res: rival.r[t.id],
+      hasCard: t.id === "brjgt25" ? !!bjgtCard
+             : t.id === "wjgc26" ? !!wjgcCard
+             : t.id === "gg26" ? !!ggCard
+             : t.id === "qdl25" ? !!qdlCard
+             : t.id === "eowagr25" ? !!eowagr25Card
+             : t.id === "wjgc26_1213" ? !!wjgc26_1213Card
+             : false,
+      autoCard: null as typeof autoScorecards[0] | null,
+      isAuto: false,
+    })),
+    // 2. Torneios auto-loaded não presentes em T e não cobertos por T
+    ...Object.entries(rival.r)
+      .filter(([tid, res]) =>
+        !manualTournIds.has(tid) &&
+        !autoIsCoveredByManual(tid) &&
+        res?.rd?.length > 0
+      )
+      .map(([tid, res]) => {
+        const info = getTournInfo(tid);
+        const fakeDef = {
+          id: tid, name: info.name, short: info.short, date: info.date,
+          rounds: res.rd.length, par: 72, field: 0, nations: 0,
+          intendedRounds: res.rd.length, url: undefined,
+        } as unknown as TournDef;
+        const autoCard = autoScorecards.find(sc => sc.tid === tid) || null;
+        return { t: fakeDef, res, hasCard: !!autoCard, autoCard, isAuto: true };
+      }),
+  ].sort((a, b) => a.t.date.localeCompare(b.t.date)) : [];
+
+  const allRds = tournResults.flatMap(x => x.res.rd.filter((r: number | null) => r != null && r > 0));
+  const completedResults = tournResults.filter(x => x.res.tp != null);
+  const bestTp = completedResults.length ? Math.min(...completedResults.map(x => x.res.tp!)) : null;
   const bestRd = allRds.length ? Math.min(...allRds) : null;
   const avgRd = allRds.length ? (allRds.reduce((a: number, b: number) => a + b, 0) / allRds.length) : null;
 
@@ -1465,12 +1547,14 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
       })()}
 
       {/* ── Cards de torneio ── */}
-      {tournResults.map(({ t, res, hasCard }) => {
+      {tournResults.map(({ t, res, hasCard, autoCard, isAuto }) => {
         const expanded = expandedTourns.has(t.id);
         const wOrd = T_WEIGHTS[t.id];
-        const stars = wOrd >= 0.9 ? "★★★" : wOrd >= 0.6 ? "★★" : wOrd >= 0.4 ? "★" : "½";
+        const stars = wOrd >= 0.9 ? "★★★" : wOrd >= 0.6 ? "★★" : wOrd >= 0.4 ? "★" : null;
         const manuelRes = !isManuel ? manuel?.r[t.id] : null;
         const vsM = manuelRes?.tp != null && res.tp != null ? res.tp - manuelRes.tp : null;
+        const tpDisplay = res.tp != null ? fmtToPar(res.tp) : null;
+        const totalRds = res.rd.reduce((a: number, b: number) => a + b, 0);
 
         return (
           <div key={t.id} className="sc-modern">
@@ -1479,7 +1563,12 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
                 {t.url
                   ? <a href={t.url} target="_blank" rel="noopener noreferrer" className="rivais-link">{t.name}</a>
                   : <span>{t.name}</span>}
-                <span className="fs-10 c-text-3 ml-6">{t.date} · {stars} · {t.field} jog. · {t.nations} países</span>
+                <span className="fs-10 c-text-3 ml-6">
+                  {t.date}
+                  {stars && ` · ${stars}`}
+                  {!isAuto && t.field > 0 && ` · ${t.field} jog. · ${t.nations} países`}
+                  {isAuto && res.ageGroup && ` · ${res.ageGroup}`}
+                </span>
               </div>
               {hasCard && (
                 <button className="p p-filter p-sm" onClick={() => toggleExpand(t.id)}>
@@ -1488,21 +1577,25 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
               )}
             </div>
             <div className="d-flex gap-16 items-center" style={{ padding: "10px 14px", flexWrap: "wrap" }}>
+              {res.p != null && (
               <div>
                 <span className="fs-11 c-text-3">Posição </span>
                 <span className="fw-800 fs-14">#{res.p}</span>
-                <span className="fs-11 c-text-3">/{t.field}</span>
+                {!isAuto && t.field > 0 && <span className="fs-11 c-text-3">/{t.field}</span>}
               </div>
+              )}
               <div>
                 <span className="fs-11 c-text-3">Total </span>
-                <span className="fw-700 fs-13">{res.t}</span>
+                <span className="fw-700 fs-13">{res.t ?? totalRds}</span>
               </div>
+              {tpDisplay && (
               <div>
                 <span className="fs-11 c-text-3">±Par </span>
-                <span className="fw-700 fs-13" style={{ color: tpColorDark(res.tp) }}>{fmtToPar(res.tp)}</span>
+                <span className="fw-700 fs-13" style={{ color: tpColorDark(res.tp) }}>{tpDisplay}</span>
               </div>
+              )}
               <div className="d-flex gap-6">
-                {res.rd.filter((r: number|null) => r != null).map((r: number, i: number) => (
+                {res.rd.filter((r: number|null) => r != null && r > 0).map((r: number, i: number) => (
                   <span key={i} className="fs-12 fw-600" style={{ color: tpColorDark(r - t.par, 5) }}>R{i+1}: {r}</span>
                 ))}
               </div>
@@ -1550,6 +1643,14 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
                   <TournScorecard par={WJGC26_1213_PAR} si={WJGC26_1213_SI}
                     rounds={wjgc26_1213Card.rds.map((sc, i) => ({ label: `R${i + 1}`, scores: [...sc] }))} />
                 )}
+                {/* Auto-loaded scorecard (WJGC 2025, etc.) */}
+                {isAuto && autoCard && (
+                  <TournScorecard
+                    par={autoCard.par as unknown as readonly number[]}
+                    si={autoCard.si.length > 0 ? autoCard.si as unknown as readonly number[] : undefined}
+                    rounds={autoCard.rounds.map((sc, i) => ({ label: `R${i + 1}`, scores: sc }))}
+                  />
+                )}
               </div>
             )}
           </div>
@@ -1573,7 +1674,8 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
 function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack: () => void }) {
   const card = FIELD_CARDS.find(c => c.name === playerName);
   const lbEntry = FIELD_2025.leaderboard.find(p => p.name === playerName);
-  const rival = D.find(d => d.n === playerName);
+  const rivals = useRivals();
+  const rival = rivals.find(d => d.n === playerName);
 
   if (!lbEntry && !rival) return (
     <div className="tourn-section">
@@ -1879,6 +1981,18 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
    PAGE COMPONENT
    ═══════════════════════════════════ */
 function RivaisIntlContent() {
+  const { rivals, loaded } = useAutoRivals();
+
+  // Actualizar rankMap quando os rivais carregam
+  React.useEffect(() => {
+    if (loaded) {
+      const newMap = buildRankMap(rivals);
+      Object.keys(rankMap).forEach(k => delete rankMap[k]);
+      Object.assign(rankMap, newMap);
+      totalRanked = Object.keys(rankMap).length;
+    }
+  }, [rivals, loaded]);
+
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>("Manuel Medeiros");
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [showTable, setShowTable] = useState(false);
@@ -1889,6 +2003,7 @@ function RivaisIntlContent() {
   };
 
   return (
+    <RivalsCtx.Provider value={rivals}>
     <div className="tourn-layout">
       {/* Toolbar */}
       <div className="toolbar">
@@ -1898,7 +2013,11 @@ function RivaisIntlContent() {
             {sidebarOpen ? "◀" : "▶"}
           </button>
           <span className="toolbar-title">🌍 Rivais Internacionais</span>
-          <span className="toolbar-meta">Manuel · Sub-12</span>
+          <span className="toolbar-meta">
+            Manuel · Sub-12
+            {!loaded && <span style={{ marginLeft: 8, fontSize: 10, color: "var(--text-muted)" }}>⏳ a carregar...</span>}
+            {loaded && <span style={{ marginLeft: 8, fontSize: 10, color: "var(--color-good-dark)" }}> · {rivals.length} rivais</span>}
+          </span>
         </div>
         <div className="toolbar-right">
           <button
@@ -1924,6 +2043,7 @@ function RivaisIntlContent() {
         </div>
       </div>
     </div>
+    </RivalsCtx.Provider>
   );
 }
 
