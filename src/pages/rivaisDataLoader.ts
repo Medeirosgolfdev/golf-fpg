@@ -18,11 +18,21 @@ const CC: Record<string, string> = {
   IE:"Ireland",CY:"Cyprus",OM:"Oman",LB:"Lebanon",
   AE:"United Arab Emirates",KZ:"Kazakhstan",VN:"Viet Nam",
   JE:"Jersey",NG:"Nigeria",CR:"Costa Rica",AR:"Argentina",
+  // Extra codes found in USKids completo files
+  UK:"United Kingdom",PHL:"Philippines",
+  AU:"Australia",JP:"Japan",NZ:"New Zealand",FI:"Finland",
+  TW:"Taiwan",HK:"Hong Kong",ID:"Indonesia",EE:"Estonia",
+  AM:"Armenia",BB:"Barbados",BS:"Bahamas",BO:"Bolivia",
+  DO:"Dominican Republic",DZ:"Algeria",EC:"Ecuador",
+  GT:"Guatemala",HN:"Honduras",KE:"Kenya",KH:"Cambodia",
+  MA:"Morocco",NI:"Nicaragua",PA:"Panama",PE:"Peru",
+  RE:"Réunion",SV:"El Salvador",TW:"Taiwan",UG:"Uganda",
+  UY:"Uruguay",VE:"Venezuela",
 };
 
 function co(raw: string): string {
   const t = (raw||"").trim();
-  return CC[t] || t;
+  return CC[t] || CC[t.toUpperCase()] || CC[t.toLowerCase()] || t;
 }
 
 export function normName(n: string): string {
@@ -61,6 +71,51 @@ export interface AutoScorecard {
 
 // Global scorecard store: key = normName(playerName), value = list of scorecards
 const _scorecards: Map<string, AutoScorecard[]> = new Map();
+
+// Manuel Medeiros DOB: 29/04/2014
+const MANUEL_BIRTH_YEAR = 2014;
+
+// t-codes dos 15 ficheiros USKids World Championship / major events
+const USKIDS_KNOWN_TCODES = new Set([
+  11604, 14029, 15807, 18124,
+  8300, 13568, 15704, 18242,
+  12229, 14302, 16428,
+  14218, 12093, 16705, 18719,
+]);
+
+// Nomes fixos para os t-codes conhecidos (fallback caso o JSON não seja parseable)
+const USKIDS_TCODE_META: Record<number, { name: string; short: string; dateExact: string }> = {
+  11604: { name: "World Championship 2022",           short: "WC 2022",  dateExact: "2022-08-04" },
+  14029: { name: "World Championship 2023",           short: "WC 2023",  dateExact: "2023-08-03" },
+  15807: { name: "World Championship 2024",           short: "WC 2024",  dateExact: "2024-08-01" },
+  18124: { name: "World Championship 2025",           short: "WC 2025",  dateExact: "2025-07-31" },
+   8300: { name: "European Championship 2022",        short: "EC 2022",  dateExact: "2022-05-31" },
+  13568: { name: "European Championship 2023",        short: "EC 2023",  dateExact: "2023-05-30" },
+  15704: { name: "European Championship 2024",        short: "EC 2024",  dateExact: "2024-05-28" },
+  18242: { name: "European Championship 2025",        short: "EC 2025",  dateExact: "2025-05-27" },
+  12229: { name: "Venice Open 2022",                  short: "Venice 22",dateExact: "2022-08-18" },
+  14302: { name: "Venice Open 2023",                  short: "Venice 23",dateExact: "2023-08-17" },
+  16428: { name: "Venice Open 2024",                  short: "Venice 24",dateExact: "2024-08-15" },
+  12093: { name: "Red White & Blue Inv. 2022",        short: "RWB 2022", dateExact: "2022-07-02" },
+  14218: { name: "Red White & Blue Inv. 2023",        short: "RWB 2023", dateExact: "2023-07-01" },
+  16705: { name: "Red White & Blue Inv. 2024",        short: "RWB 2024", dateExact: "2024-07-06" },
+  18719: { name: "Red White & Blue Inv. 2025",        short: "RWB 2025", dateExact: "2025-07-05" },
+};
+
+// USKids completo tournament names: key = tid prefix "usk{tcode}", value = {name, short, date}
+// Pre-populated with known names; updated from JSON during processUskidsCompleto
+export const uskTournNames: Map<string, { name: string; short: string; date: string; dateExact: string }> = (() => {
+  const MONTHS = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+  const m = new Map<string, { name: string; short: string; date: string; dateExact: string }>();
+  for (const [tcode, meta] of Object.entries(USKIDS_TCODE_META as Record<string, { name: string; short: string; dateExact: string }>)) {
+    const [yr, mo] = meta.dateExact.split("-").map(Number);
+    const date = `${MONTHS[mo - 1]} ${yr}`;
+    m.set(`usk${tcode}`, { name: meta.name, short: meta.short, date, dateExact: meta.dateExact });
+  }
+  return m;
+})();
+// Field sizes per tid: "usk{tcode}_b{n}" → number of players
+export const uskFieldSizes: Map<string, number> = new Map();
 
 function addScorecard(normN: string, sc: AutoScorecard) {
   if (!_scorecards.has(normN)) _scorecards.set(normN, []);
@@ -140,6 +195,10 @@ function processDoral(data: unknown): AutoRivalPlayer[] {
     const tid = divMap[div.name];
     if (!tid) continue;
     const divPar: number[] = div.par || [];
+
+    // Collect entries for this division
+    type DEntry = { name: string; co: string; rd: number[]; t: number; tp: number | null; holeRounds: number[][] };
+    const entries: DEntry[] = [];
     for (const p of div.players || []) {
       const name = p.name.includes(",")
         ? p.name.split(",").map(s=>s.trim()).reverse().join(" ")
@@ -147,13 +206,28 @@ function processDoral(data: unknown): AutoRivalPlayer[] {
       const rd = [p.r1Gross, p.r2Gross].filter(g => g > 0);
       if (!rd.length) continue;
       const holeRounds = (p.rounds || []).map(r => r.scores || []).filter(s => s.length === 18);
-      if (holeRounds.length > 0 && divPar.length === 18)
-        addScorecard(normName(name), { tid, playerName: name, par: divPar, si: [], rounds: holeRounds });
+      entries.push({ name, co: co(p.country), rd, t: rd.reduce((a,b)=>a+b,0), tp: p.toPar ?? null, holeRounds });
+    }
+
+    // Sort and assign positions
+    const maxRds = entries.length ? Math.max(...entries.map(e => e.rd.length)) : 0;
+    entries.sort((a, b) => b.rd.length - a.rd.length || a.t - b.t);
+    let pos = 1;
+    for (let i = 0; i < entries.length; i++) {
+      if (i > 0 && entries[i].rd.length === entries[i-1].rd.length && entries[i].t === entries[i-1].t) {
+        // empate — mantém pos anterior
+      } else { pos = i + 1; }
+      const e = entries[i];
+      if (e.holeRounds.length > 0 && divPar.length === 18)
+        addScorecard(normName(e.name), { tid, playerName: e.name, par: divPar, si: [], rounds: e.holeRounds });
       all.push({
-        n: name, co: co(p.country),
-        r: { [tid]: { p: p.pos, t: rd.reduce((a,b)=>a+b,0), tp: p.toPar ?? null, rd }},
+        n: e.name, co: e.co,
+        r: { [tid]: { p: e.rd.length < maxRds ? null : pos, t: e.t, tp: e.tp, rd: e.rd }},
       });
     }
+    // Store field size
+    const full = entries.filter(e => e.rd.length >= maxRds).length;
+    if (full > 0) uskFieldSizes.set(tid, full);
   }
   return all;
 }
@@ -251,32 +325,41 @@ function processUskids(data: unknown): AutoRivalPlayer[] {
         }
       }
 
+      // Pre-compute all entries for ranking
+      type UEntry = { origName: string; co: string; rd: number[]; t: number; tp: number | null; holeRounds: number[][] };
+      const entries: UEntry[] = [];
       for (const info of Object.values(pm)) {
         const rdEntries = Object.entries(info.scores).sort(([a],[b]) => Number(a)-Number(b));
         const rd = rdEntries.map(([,v]) => v);
         if (!rd.length) continue;
-
-        // tp = soma dos to_par por ronda (se disponível)
         const tpEntries = Object.entries(info.toParByRound).sort(([a],[b]) => Number(a)-Number(b));
         const tp = tpEntries.length === rdEntries.length
-          ? tpEntries.reduce((acc, [,v]) => acc + v, 0)
-          : null;
-
-        // Scorecard: guardar se tiver strokes buraco-a-buraco
-        // par pode estar vazio — o componente renderiza na mesma sem coloração por buraco
+          ? tpEntries.reduce((acc, [,v]) => acc + v, 0) : null;
         const holeRounds = Object.entries(info.holeScores)
           .sort(([a],[b]) => Number(a)-Number(b))
           .map(([,v]) => v)
           .filter(r => r.length === 18 && r.some(s => s > 0));
-        if (holeRounds.length > 0) {
-          addScorecard(normName(info.origName), { tid, playerName: info.origName, par: info.par, si: [], rounds: holeRounds });
-        }
-
+        entries.push({ origName: info.origName, co: info.co, rd, t: rd.reduce((a,b)=>a+b,0), tp, holeRounds });
+      }
+      // Sort by total, assign positions
+      const maxRds = entries.length ? Math.max(...entries.map(e => e.rd.length)) : 0;
+      entries.sort((a, b) => b.rd.length - a.rd.length || a.t - b.t);
+      let pos = 1;
+      for (let i = 0; i < entries.length; i++) {
+        if (i > 0 && entries[i].rd.length === entries[i-1].rd.length && entries[i].t === entries[i-1].t) {
+          // empate
+        } else { pos = i + 1; }
+        const e = entries[i];
+        if (e.holeRounds.length > 0)
+          addScorecard(normName(e.origName), { tid, playerName: e.origName, par: pm[normName(e.origName)]?.par ?? [], si: [], rounds: e.holeRounds });
         all.push({
-          n: info.origName, co: info.co,
-          r: { [tid]: { p: null, t: rd.reduce((a,b)=>a+b,0), tp, rd, ageGroup: esc.nome }},
+          n: e.origName, co: e.co,
+          r: { [tid]: { p: e.rd.length < maxRds ? null : pos, t: e.t, tp: e.tp, rd: e.rd, ageGroup: esc.nome }},
         });
       }
+      // Store field size
+      const fullField = entries.filter(e => e.rd.length >= maxRds).length;
+      if (fullField > 0) uskFieldSizes.set(tid, fullField);
     }
   }
   return all;
@@ -361,44 +444,279 @@ function processPullTorneios(d: unknown): AutoRivalPlayer[] {
   return all;
 }
 
-export async function buildAutoRivals(): Promise<AutoRivalPlayer[]> {
-  // Limpar scorecard store antes de reconstruir
+/**
+ * Processa ficheiros no formato "uskids_torneios_completos" (array de torneios).
+ * - Carrega escalões Boys ±1 do que Manuel teria jogado na altura (9H e 18H incluídos)
+ * - flight_name pode ser dict {age_group} ou string → lookup via meta.flights
+ * - tid gerado como "usk{tcode}_b{minAge}"
+ */
+function processUskidsCompleto(data: unknown): AutoRivalPlayer[] {
+  type FlightCourse = { pars: number[] };
+  type AgeGroup = { name: string; gender: string; min_age: number; holes_per_round: number };
+  type MetaFlight = { age_group: number };
+  type PlayerRoundData = { strokes: number[]; flight_round: string };
+  type FlightPlayer = {
+    first: string; last: string; country: string;
+    rounds: Record<string, PlayerRoundData>;
+  };
+  type RoundData = { flight_players: Record<string, FlightPlayer> };
+  type Flight = {
+    flight_id: number;
+    flight_name: { age_group: number } | string;
+    rounds_data: Record<string, RoundData>;
+  };
+  type Tournament = {
+    t: number;
+    meta: {
+      tournament: { name: string; start_date: string };
+      age_groups: Record<string, AgeGroup>;
+      flights: Record<string, MetaFlight>;
+      flight_courses: Record<string, FlightCourse>;
+    };
+    flights: Flight[];
+  };
+
+  const tournaments = data as Tournament[];
+  if (!Array.isArray(tournaments)) return [];
+
+  const all: AutoRivalPlayer[] = [];
+
+  for (const tourn of tournaments) {
+    if (!USKIDS_KNOWN_TCODES.has(tourn.t)) continue;
+
+    const meta = tourn.meta;
+    const tcode = tourn.t;
+
+    // Ano do torneio → idade do Manuel nessa época
+    const startParts = meta.tournament.start_date.split("/").map(Number);
+    const tournYear = startParts[2];
+    const manuelAge = tournYear - MANUEL_BIRTH_YEAR;
+
+    // Guardar nome/data do torneio para lookup no UI
+    if (!uskTournNames.has(`usk${tcode}`)) {
+      const rawName = meta.tournament.name; // ex: "World Championship 2022"
+      const mo = startParts[0]; // 1-12
+      const MONTHS = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+      const dateStr = `${MONTHS[(mo - 1) % 12]} ${tournYear}`;
+      // Short name: sigla extraída
+      const short = rawName
+        .replace(/World Championship/i, "WC")
+        .replace(/European Championship/i, "EC")
+        .replace(/\b(Invitational|Open|Classic|Championship|Junior|Tour)\b/gi, "")
+        .replace(/\s+/g, " ").trim()
+        .slice(0, 12);
+      const mo2 = String(mo).padStart(2,"0");
+      const da2 = String(startParts[1]).padStart(2,"0");
+      uskTournNames.set(`usk${tcode}`, { name: rawName, short, date: dateStr, dateExact: `${tournYear}-${mo2}-${da2}` });
+    }
+
+    // Escalões Boys únicos ordenados por min_age (desduplicar min_age repetidos)
+    const seenMinAge = new Set<number>();
+    const boysAgs = Object.entries(meta.age_groups)
+      .filter(([, ag]) => ag.gender === "Boys")
+      .sort((a, b) => a[1].min_age - b[1].min_age)
+      .reduce((acc, [id, ag]) => {
+        if (!seenMinAge.has(ag.min_age)) {
+          seenMinAge.add(ag.min_age);
+          acc.push({ id: Number(id), minAge: ag.min_age, holes: ag.holes_per_round, name: ag.name });
+        }
+        return acc;
+      }, [] as { id: number; minAge: number; holes: number; name: string }[]);
+
+    // Índice do escalão do Manuel (pelo min_age mais próximo)
+    const manuelIdx = boysAgs.findIndex(ag => ag.minAge === manuelAge);
+    // Se não existir exactamente, usar o mais próximo
+    const pivotIdx = manuelIdx >= 0
+      ? manuelIdx
+      : boysAgs.reduce((best, ag, i) =>
+          Math.abs(ag.minAge - manuelAge) < Math.abs(boysAgs[best].minAge - manuelAge) ? i : best, 0);
+
+    // Queremos ±1 escalão em torno do pivot
+    const wantedMinAges = new Set(
+      boysAgs.slice(Math.max(0, pivotIdx - 1), pivotIdx + 2).map(ag => ag.minAge)
+    );
+
+    // flight_round_id → par por buraco (sem zeros)
+    const frPars: Record<number, number[]> = {};
+    for (const [frid, fc] of Object.entries(meta.flight_courses)) {
+      frPars[Number(frid)] = (fc.pars || []).filter((p: number) => p > 0);
+    }
+
+    // ag_id → info (para lookup rápido)
+    const agById = new Map(boysAgs.map(ag => [ag.id, ag]));
+
+    // Track ag_ids já processados por torneio
+    const processedAgIds = new Set<number>();
+
+    for (const flight of tourn.flights) {
+      const fid = flight.flight_id;
+
+      // Resolver age_group: flight_name pode ser dict ou string
+      const fn = flight.flight_name;
+      const agId: number | undefined =
+        typeof fn === "object" && fn !== null && "age_group" in fn
+          ? (fn as { age_group: number }).age_group
+          : meta.flights[String(fid)]?.age_group;
+      if (agId == null) continue;
+      if (processedAgIds.has(agId)) continue;
+
+      const agInfo = agById.get(agId);
+      if (!agInfo || !wantedMinAges.has(agInfo.minAge)) continue;
+      processedAgIds.add(agId);
+
+      const holes = agInfo.holes;
+      const agLabel = agInfo.name;
+      const tid = `usk${tcode}_b${agInfo.minAge}`;
+
+      // Agregar jogadores por nome
+      const pm: Record<string, {
+        name: string; country: string;
+        rounds: Record<number, number[]>;
+        par: number[];
+      }> = {};
+
+      for (const roundData of Object.values(flight.rounds_data)) {
+        const fp = roundData.flight_players;
+        if (!fp || typeof fp !== "object") continue;
+        for (const p of Object.values(fp)) {
+          const fullName = `${p.first} ${p.last}`.trim();
+          const key = normName(fullName);
+          if (!pm[key]) pm[key] = { name: fullName, country: p.country, rounds: {}, par: [] };
+
+          for (const [rnumStr, rdata] of Object.entries(p.rounds)) {
+            const rnum = Number(rnumStr);
+            const strokes = rdata.strokes || [];
+            if (strokes.length === holes && strokes.some(s => s > 0)) {
+              if (!pm[key].rounds[rnum]) pm[key].rounds[rnum] = strokes;
+              if (!pm[key].par.length) {
+                const par = frPars[Number(rdata.flight_round)] || [];
+                if (par.length === holes) pm[key].par = par;
+              }
+            }
+          }
+        }
+      }
+
+      // Pré-calcular totais para ranking
+      type Computed = { name: string; country: string; rd: number[]; t: number; tp: number | null; par: number[]; rdRaw: number[][] };
+      const computed: Computed[] = [];
+      for (const info of Object.values(pm)) {
+        const rdEntries = Object.entries(info.rounds).sort(([a], [b]) => Number(a) - Number(b));
+        if (!rdEntries.length) continue;
+        const rdRaw = rdEntries.map(([, v]) => v);
+        const rd = rdRaw.map(v => v.reduce((a, b) => a + b, 0));
+        const t = rd.reduce((a, b) => a + b, 0);
+        const tp = info.par.length === holes
+          ? t - info.par.reduce((a, b) => a + b, 0) * rdEntries.length
+          : null;
+        computed.push({ name: info.name, country: info.country, rd, t, tp, par: info.par, rdRaw });
+      }
+
+      // Ordenar por total (quem jogou menos rondas fica no fim)
+      const maxRds = Math.max(...computed.map(c => c.rd.length), 0);
+      computed.sort((a, b) => {
+        if (a.rd.length !== b.rd.length) return b.rd.length - a.rd.length;
+        return a.t - b.t;
+      });
+
+      // Atribuir posição com empates
+      let pos = 1;
+      for (let i = 0; i < computed.length; i++) {
+        if (i > 0 && computed[i].rd.length === computed[i - 1].rd.length && computed[i].t === computed[i - 1].t) {
+          // empate — mesma posição
+        } else {
+          pos = i + 1;
+        }
+        const c = computed[i];
+        addScorecard(normName(c.name), {
+          tid, playerName: c.name, par: c.par, si: [],
+          rounds: c.rdRaw,
+        });
+        all.push({
+          n: c.name, co: co(c.country),
+          r: { [tid]: { p: c.rd.length < maxRds ? null : pos, t: c.t, tp: c.tp, rd: c.rd, ageGroup: agLabel } },
+        });
+      }
+      // Store full field size (only players who completed all rounds)
+      const fullField = computed.filter(c => c.rd.length >= maxRds).length;
+      if (fullField > 0) uskFieldSizes.set(tid, fullField);
+    }
+  }
+
+  return all;
+}
+
+export type LoadProgress = { done: number; total: number; label: string };
+
+export async function buildAutoRivals(
+  onProgress?: (p: LoadProgress) => void
+): Promise<AutoRivalPlayer[]> {
   _scorecards.clear();
+  // Re-populate from hardcoded meta (clear + refill)
+  uskTournNames.clear();
+  for (const [tcode, meta] of Object.entries(USKIDS_TCODE_META as Record<string, { name: string; short: string; dateExact: string }>)) {
+    const MONTHS = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+    const [yr, mo] = meta.dateExact.split("-").map(Number);
+    uskTournNames.set(`usk${tcode}`, { name: meta.name, short: meta.short, date: `${MONTHS[mo - 1]} ${yr}`, dateExact: meta.dateExact });
+  }
+  uskFieldSizes.clear();
 
   const base = "/data/";
-  const files = [
-    ["wjgc25_b89",    "wjgc_2025_b89.json"],
-    ["wjgc25_b1011",  "wjgc_2025_contest34.json"],
-    ["wjgc26",        "wjgc_2026_b1011_3r.json"],
-    ["wjgc26_1213",   "wjgc_2026_contest33.json"],
-    ["eowagr25_b78",  "eowagr25_contest121.json"],
-    ["eowagr25_b910", "eowagr25_contest13.json"],
-    ["eowagr25",      "eowagr25_scorecards.json"],
-    ["eowagr25_b1314","eowagr25_contest77.json"],
-  ] as const;
 
-  const results = await Promise.allSettled([
-    ...files.map(([,f]) => fetchJson(`${base}${f}`)),
-    fetchJson(`${base}ftm_doral_2025.json`),
-    fetchJson(`${base}uskids-results.json`),
-    fetchJson(`${base}pull-torneios000.json`),
-  ]);
+  // Todos os ficheiros a carregar, com label e processador
+  type FileTask =
+    | { kind: "wjgc"; tid: string; file: string }
+    | { kind: "doral" | "uskids" | "pull"; file: string }
+    | { kind: "completo"; file: string };
 
+  const tasks: FileTask[] = [
+    { kind: "wjgc", tid: "wjgc25_b89",    file: "wjgc_2025_b89.json" },
+    { kind: "wjgc", tid: "wjgc25_b1011",  file: "wjgc_2025_contest34.json" },
+    { kind: "wjgc", tid: "wjgc26",        file: "wjgc_2026_b1011_3r.json" },
+    { kind: "wjgc", tid: "wjgc26_1213",   file: "wjgc_2026_contest33.json" },
+    { kind: "wjgc", tid: "eowagr25_b78",  file: "eowagr25_contest121.json" },
+    { kind: "wjgc", tid: "eowagr25_b910", file: "eowagr25_contest13.json" },
+    { kind: "wjgc", tid: "eowagr25",      file: "eowagr25_scorecards.json" },
+    { kind: "wjgc", tid: "eowagr25_b1314",file: "eowagr25_contest77.json" },
+    { kind: "doral",  file: "ftm_doral_2025.json" },
+    { kind: "uskids", file: "uskids-results.json" },
+    { kind: "pull",   file: "pull-torneios000.json" },
+    ...Array.from({ length: 15 }, (_, i) =>
+      ({ kind: "completo" as const, file: `uskids_torneios_completos(${i + 1}).json` })
+    ),
+  ];
+
+  const total = tasks.length;
   const map = new Map<string, AutoRivalPlayer>();
-  const ok = (r: PromiseSettledResult<unknown>) =>
-    r.status === "fulfilled" ? r.value : null;
 
-  files.forEach(([tid], i) => {
-    const d = ok(results[i]);
-    if (d) mergeInto(map, processWjgc(d, tid));
-  });
+  // Labels amigáveis por ficheiro
+  const labelFor = (t: FileTask): string => {
+    if (t.kind === "wjgc") return t.tid.replace(/_/g," ").toUpperCase();
+    if (t.kind === "doral") return "Doral";
+    if (t.kind === "uskids") return "USKids Results";
+    if (t.kind === "pull") return "Torneios PT";
+    const m = t.file.match(/\((\d+)\)/);
+    return m ? `USKids #${m[1]}` : t.file;
+  };
 
-  const doral = ok(results[files.length]);
-  const uskids = ok(results[files.length + 1]);
-  const pull   = ok(results[files.length + 2]);
-  if (doral)  mergeInto(map, processDoral(doral));
-  if (uskids) mergeInto(map, processUskids(uskids));
-  if (pull)   mergeInto(map, processPullTorneios(pull));
+  // Carregar em paralelo mas reportar progresso à medida que cada um termina
+  let done = 0;
+  const report = (label: string) => {
+    done++;
+    onProgress?.({ done, total, label });
+  };
+
+  await Promise.all(tasks.map(async task => {
+    try {
+      const d = await fetchJson(`${base}${task.file}`);
+      if (task.kind === "wjgc")    mergeInto(map, processWjgc(d, task.tid));
+      if (task.kind === "doral")   mergeInto(map, processDoral(d));
+      if (task.kind === "uskids")  mergeInto(map, processUskids(d));
+      if (task.kind === "pull")    mergeInto(map, processPullTorneios(d));
+      if (task.kind === "completo") mergeInto(map, processUskidsCompleto(d));
+    } catch { /* ficheiro não existe ou erro — ignorar */ }
+    report(labelFor(task));
+  }));
 
   return Array.from(map.values());
 }
