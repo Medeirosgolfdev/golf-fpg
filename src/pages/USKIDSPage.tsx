@@ -154,7 +154,7 @@ interface RondaResult {
   leaderboard: RondaJogador[];  // nova estrutura
   jogadores?: RondaJogador[];   // legacy
 }
-interface EscalaoResult  { age_group: number; nome: string; holes: number; is_manuel: boolean; rondas: RondaResult[]; }
+interface EscalaoResult  { age_group: number; nome: string; holes: number; is_manuel: boolean; rondas: RondaResult[]; campo?: string; }
 interface TorneioResult  {
   t: number; name: string;
   date_inicio: string; date_fim?: string; campo: string | null;
@@ -624,7 +624,7 @@ function escalaoToTournament(e: EscalaoResult, t: TorneioResult): TATournament {
     name: `${t.name} — ${e.nome}`,
     tcode: `${t.t}-${e.age_group}`,
     date: t.date_inicio,
-    campo: t.campo ?? "",
+    campo: teeInfo?.campo ?? e.campo ?? t.campo ?? "",
     rounds: rondasComDados.length,
     playerCount: allPlayersRaw.filter(p => {
       const allScores: number[] = p.roundScores.flatMap((rs: any) => rs.scores ?? []);
@@ -671,8 +671,16 @@ function EscalaoSection({ escalao: e, torneio: t }: {
     cursor: "pointer", whiteSpace: "nowrap" as const,
   });
 
+  const campo = (curT as any).campo || tournament.campo || "";
+
   return (
     <div>
+      {/* Campo por escalão */}
+      {campo && (
+        <div style={{ fontSize: 11, color: "var(--text-3)", marginBottom: 6 }}>
+          📍 {campo}
+        </div>
+      )}
       {/* Sub-tabs R1 / R2 / Acumulado — só se houver mais de 1 ronda */}
       {(rondasComDados.length > 1) && (
         <div style={{ display: "flex", borderBottom: "1px solid var(--border)", marginBottom: 8 }}>
@@ -2405,6 +2413,7 @@ function converterTorneioCompleto(raw: any): TorneioResult | null {
       roundsMap: Map<number, RondaJogador[]>;
       parPorRonda: Map<number, number[]>;
       metrosPorRonda: Map<number, number[]>;
+      campo?: string;
     }>();
 
     const flightsDict: Record<string, any> = raw.flights ?? {};
@@ -2450,6 +2459,7 @@ function converterTorneioCompleto(raw: any): TorneioResult | null {
           const metros = holes_arr.map((h: any) => Math.round((h.yards ?? 0) * 0.9144)).filter(m => m > 0);
           if (metros.length > 0) esc.metrosPorRonda.set(rn, metros);
         }
+        if (!esc.campo && rInfo.courseName) esc.campo = rInfo.courseName;
       }
 
       // Players estão directamente em flight.flight_players (sem rounds_data)
@@ -2504,6 +2514,7 @@ function converterTorneioCompleto(raw: any): TorneioResult | null {
       escaloes.push({
         age_group: esc.age_group, nome: esc.nome,
         holes: esc.holes, is_manuel: false, rondas,
+        ...(esc.campo ? { campo: esc.campo } : {}),
       });
     }
 
