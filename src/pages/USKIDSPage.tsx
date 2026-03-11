@@ -5,7 +5,7 @@ import EmptyState from "../ui/EmptyState";
 import {
   ScorecardLB, AccumulatedLB, expandMultiRound,
   type Tournament as TATournament,
-} from "./TorneiosAnalisePage";
+} from "./FPGPage";
 
 // ─────────────────────────────────────────────
 // TIPOS — CAMPO (inscritos)
@@ -601,27 +601,32 @@ function escalaoToTournament(e: EscalaoResult, t: TorneioResult): TATournament {
     }
   }
 
-  // Separar WD (sem scorecard válido) — não vão ao ScorecardLB para não aparecerem como líderes
+  // WD players ficam no fundo da tabela (não separados)
   const allPlayersRaw = [...playerMap.values()];
-  const players = allPlayersRaw.filter(p => {
-    const allScores: number[] = p.roundScores.flatMap((rs: any) => rs.scores ?? []);
-    const totalGross: number = typeof p.grossTotal === 'number' ? p.grossTotal : 0;
-    return !isWD(totalGross, allScores);
-  });
-  const playersWD = allPlayersRaw.filter(p => {
-    const allScores: number[] = p.roundScores.flatMap((rs: any) => rs.scores ?? []);
-    const totalGross: number = typeof p.grossTotal === 'number' ? p.grossTotal : 0;
-    return isWD(totalGross, allScores);
-  }).map(p => ({ name: p.name, club: p.club }));
+  const players = [
+    ...allPlayersRaw.filter(p => {
+      const allScores: number[] = p.roundScores.flatMap((rs: any) => rs.scores ?? []);
+      const totalGross: number = typeof p.grossTotal === 'number' ? p.grossTotal : 0;
+      return !isWD(totalGross, allScores);
+    }),
+    ...allPlayersRaw.filter(p => {
+      const allScores: number[] = p.roundScores.flatMap((rs: any) => rs.scores ?? []);
+      const totalGross: number = typeof p.grossTotal === 'number' ? p.grossTotal : 0;
+      return isWD(totalGross, allScores);
+    }),
+  ];
   return {
     name: `${t.name} — ${e.nome}`,
     tcode: `${t.t}-${e.age_group}`,
     date: t.date_inicio,
     campo: t.campo ?? "",
     rounds: rondasComDados.length,
-    playerCount: players.length,
+    playerCount: allPlayersRaw.filter(p => {
+      const allScores: number[] = p.roundScores.flatMap((rs: any) => rs.scores ?? []);
+      const totalGross: number = typeof p.grossTotal === 'number' ? p.grossTotal : 0;
+      return !isWD(totalGross, allScores);
+    }).length,
     players,
-    _wdPlayers: playersWD,
   } as any;
 }
 
@@ -680,25 +685,7 @@ function EscalaoSection({ escalao: e, torneio: t }: {
         ? <AccumulatedLB tournament={curT} nRounds={rondasComDados.length} escLookup={new Map()} playersDB={{}} />
         : <ScorecardLB tournament={curT} escLookup={new Map()} playersDB={{}} siLabel="m" parLabelColSpan={6} />
       }
-      {/* Jogadores WD — sem scorecard, aparecem em baixo separados */}
-      {(tournament as any)._wdPlayers?.length > 0 && (
-        <div style={{ marginTop: 8, borderTop: "1px solid var(--border)", paddingTop: 6 }}>
-          {(tournament as any)._wdPlayers.map((p: any, i: number) => (
-            <div key={i} style={{
-              display: "flex", alignItems: "center", gap: 8,
-              padding: "4px 8px", fontSize: 12, color: "var(--text-3)",
-            }}>
-              <span style={{ minWidth: 24, textAlign: "right", color: "var(--text-muted)", fontSize: 11 }}>–</span>
-              <span style={{ flex: 1 }}>{p.name}</span>
-              <span style={{ fontSize: 11 }}>{p.club}</span>
-              <span style={{
-                fontSize: 10, fontWeight: 700, color: "#999",
-                border: "1px solid #ddd", borderRadius: 4, padding: "0 5px",
-              }}>WD</span>
-            </div>
-          ))}
-        </div>
-      )}
+
     </div>
   );
 }
@@ -2658,6 +2645,16 @@ export default function USKidsFieldPage() {
               </button>
             ))}
           </div>
+        </div>
+
+        {/* Link externo: histórico de resultados */}
+        <div style={{ padding:"6px 8px", borderBottom:"1px solid var(--border)" }}>
+          <a href="https://uskids-golf.vercel.app/" target="_blank" rel="noopener noreferrer"
+            style={{ display:"flex", alignItems:"center", gap:6, padding:"5px 10px", borderRadius:6,
+              fontSize:12, color:"var(--text-2)", textDecoration:"none",
+              background:"var(--bg-muted)", border:"1px solid var(--border)" }}>
+            🗄️ Histórico de resultados ↗
+          </a>
         </div>
 
         {/* Lista de torneios agrupada por mês */}
