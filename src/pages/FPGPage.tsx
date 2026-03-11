@@ -231,8 +231,13 @@ export function expandMultiRound(t: Tournament): Tournament[] {
         roundScores: [rs],
       }));
     }
-    // Sort by gross for this round
-    rdPlayers.sort((a, b) => numGross(a) - numGross(b));
+    // Sort by gross for this round — WD players sempre no fim
+    rdPlayers.sort((a, b) => {
+      const aWD = (a as any)._wd; const bWD = (b as any)._wd;
+      if (aWD && !bWD) return 1;
+      if (!aWD && bWD) return -1;
+      return numGross(a) - numGross(b);
+    });
     out.push({ ...t, players: rdPlayers, _roundLabel: `R${rd}` } as any);
   }
 
@@ -254,8 +259,9 @@ export function expandMultiRound(t: Tournament): Tournament[] {
     } as any));
   }
   // Completos ordenados por gross; incompletos no fim ordenados por gross
-  const complete   = totalPlayers.filter(p => !(p as any)._incomplete).sort((a, b) => numGross(a) - numGross(b));
-  const incomplete = totalPlayers.filter(p =>  (p as any)._incomplete).sort((a, b) => numGross(a) - numGross(b));
+  const complete   = totalPlayers.filter(p => !(p as any)._incomplete && !(p as any)._wd).sort((a, b) => numGross(a) - numGross(b));
+  const wdPlayers  = totalPlayers.filter(p => (p as any)._wd);
+  const incomplete = totalPlayers.filter(p =>  (p as any)._incomplete && !(p as any)._wd).sort((a, b) => numGross(a) - numGross(b));
   // Positions only for complete players
   let pos = 1;
   complete.forEach((p, i) => {
@@ -263,7 +269,7 @@ export function expandMultiRound(t: Tournament): Tournament[] {
     (p as any)._pos = pos;
   });
   incomplete.forEach(p => { (p as any)._pos = null; });
-  out.push({ ...t, players: [...complete, ...incomplete], _roundLabel: "Acumulado", _isTotal: true } as any);
+  out.push({ ...t, players: [...complete, ...incomplete, ...wdPlayers], _roundLabel: "Acumulado", _isTotal: true } as any);
 
   return out;
 }
@@ -562,12 +568,16 @@ export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabe
   const parTotal = par.reduce((a, b) => a + b, 0);
   const si = refP.si || [];
 
-  const byGross = [...rawPlayers].sort((a, b) => numGross(a) - numGross(b));
+  // WD players ficam fora do ranking — sorted depois dos demais, sem _pos
+  const nonWD = rawPlayers.filter(p => !(p as any)._wd);
+  const wdOnly = rawPlayers.filter(p => (p as any)._wd);
+  const byGross = [...nonWD].sort((a, b) => numGross(a) - numGross(b));
   let posCounter = 1;
   byGross.forEach((p, i) => {
     if (i > 0 && numGross(p) !== numGross(byGross[i - 1])) posCounter = i + 1;
     (p as any)._pos = posCounter;
   });
+  wdOnly.forEach(p => { (p as any)._pos = 9999; });
   const grosses = byGross.map(p => numGross(p)).filter(g => !isNaN(g));
   const avg = grosses.length ? grosses.reduce((a, b) => a + b, 0) / grosses.length : 0;
 
@@ -582,6 +592,10 @@ export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabe
   }
 
   const sorted = useMemo(() => [...filteredPlayers].sort((a, b) => {
+    // WD players sempre no fim, independentemente do sortKey
+    const aWD = (a as any)._wd; const bWD = (b as any)._wd;
+    if (aWD && !bWD) return 1;
+    if (!aWD && bWD) return -1;
     let av: any, bv: any;
     switch (sortKey) {
       case "pos":   av = (a as any)._pos ?? 999; bv = (b as any)._pos ?? 999; break;
@@ -610,11 +624,12 @@ export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabe
   }
 
   const rows: ScorecardRow[] = sorted.map((p, idx) => {
-    const gross = numGross(p);
+    const isWDPlayer = !!(p as any)._wd || p.grossTotal == null || numGross(p) >= 999;
+    const gross = isWDPlayer ? 0 : numGross(p);
     const dp = (p as any)._pos;
     const showPos = idx === 0 || dp !== (sorted[idx - 1] as any)._pos;
     const medal = dp === 1 ? "🥇" : dp === 2 ? "🥈" : dp === 3 ? "🥉" : null;
-    const posDisplay = sortKey === "pos" ? (showPos ? (medal ?? dp) : "") : (medal ?? dp);
+    const posDisplay = isWDPlayer ? "WD" : (sortKey === "pos" ? (showPos ? (medal ?? dp) : "") : (medal ?? dp));
     const esc = resolveEsc(p, escLookup) || tournament.escalao || "";
     const { sd, source } = computeSD(p);
     const rowManuel = isManuel(p);
@@ -635,7 +650,7 @@ export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabe
       key: p.scoreId || idx,
       pos: posDisplay,
       gross,
-      toPar: gross - parTotal,
+      toPar: isWDPlayer ? null : gross - parTotal,
       scores,
       rowBg,
       stickyBg,
@@ -744,7 +759,7 @@ export function AccumulatedLB({ tournament, nRounds, escLookup, playersDB }: { t
       teeName: p.teeName,
       gross: numGross(p),
       parTotal: parPerRound * nRounds,
-      isIncomplete: !!(p as any)._incomplete,
+      isIncomplete: !!(p as any)._incomplete || !!(p as any)._wd,
       isHighlighted: isManuel(p),
       rounds: mappedRounds,
     };

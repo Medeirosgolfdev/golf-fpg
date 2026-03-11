@@ -26,7 +26,7 @@ const CC: Record<string, string> = {
   DO:"Dominican Republic",DZ:"Algeria",EC:"Ecuador",
   GT:"Guatemala",HN:"Honduras",KE:"Kenya",KH:"Cambodia",
   MA:"Morocco",NI:"Nicaragua",PA:"Panama",PE:"Peru",
-  RE:"Réunion",SV:"El Salvador",UG:"Uganda",
+  RE:"Réunion",SV:"El Salvador",TW:"Taiwan",UG:"Uganda",
   UY:"Uruguay",VE:"Venezuela",
 };
 
@@ -124,18 +124,19 @@ function addScorecard(normN: string, sc: AutoScorecard) {
 
 export function getScorecards(playerName: string): AutoScorecard[] {
   const key = normName(playerName);
+  // Exact match first
+  const exact = _scorecards.get(key);
+  if (exact?.length) return exact;
+  // Fuzzy: match by first + last word (handles middle names like "Goulartt")
   const parts = key.split(" ").filter(Boolean);
-  if (parts.length < 2) return _scorecards.get(key) ?? [];
+  if (parts.length < 2) return [];
   const first = parts[0];
   const last  = parts[parts.length - 1];
-  // Recolher todos os matches (exacto + variantes com nome do meio)
-  // para que "Manuel Medeiros" e "Manuel Goulartt Medeiros" sejam agregados
-  const all: AutoScorecard[] = [];
   for (const [k, v] of _scorecards.entries()) {
     const kp = k.split(" ").filter(Boolean);
-    if (kp[0] === first && kp[kp.length - 1] === last) all.push(...v);
+    if (kp[0] === first && kp[kp.length - 1] === last) return v;
   }
-  return all;
+  return [];
 }
 
 function processWjgc(data: unknown, tid: string): AutoRivalPlayer[] {
@@ -152,12 +153,11 @@ function processWjgc(data: unknown, tid: string): AutoRivalPlayer[] {
   return (d.players || []).filter(p => p.rounds?.length > 0).map(p => {
     const rd = p.rounds.map(r => r.gross).filter(g => g > 0);
     const norm = normName(p.name.trim());
-    // Store hole-by-hole scorecard if available (suporta 9H e 18H)
-    const expectedHoles = par.length > 0 ? par.length : 18;
+    // Store hole-by-hole scorecard if available
     const holeRounds = p.rounds
       .map(r => r.scores || [])
-      .filter(s => s.length === expectedHoles);
-    if (holeRounds.length > 0 && par.length > 0) {
+      .filter(s => s.length === 18);
+    if (holeRounds.length > 0 && par.length === 18) {
       addScorecard(norm, { tid, playerName: p.name.trim(), par, si, rounds: holeRounds });
     }
     return {
@@ -260,12 +260,6 @@ const USKIDS_PAR: Record<string, number[]> = {
   "18438-2103": [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], // Boys 10
   "18438-2104": [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], // Boys 11
   "18438-2105": [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], // Boys 12
-  // El Prat 2023 (t=15573) — 9 buracos; par do Boys 9 confirmado via away-courses
-  "15573-2151": [4,3,4,5,4,3,4,4,5], // Boys 9
-  "15573-2150": [4,3,4,5,4,3,4,4,5], // Boys 8 (mesma rotação, tee diferente)
-  "15573-2152": [4,3,4,5,4,3,4,4,5], // Boys 10
-  // Mississippi 2026, Desert 2026, Sandestin 2026 — par total 72 mas sem dados por buraco
-  // Os scorecards são guardados (strokes=18H) mas tp por buraco não está disponível
 };
 
 function processUskids(data: unknown): AutoRivalPlayer[] {
@@ -316,18 +310,17 @@ function processUskids(data: unknown): AutoRivalPlayer[] {
         for (const jog of ronda.leaderboard || []) {
           const key = normName(jog.nome);
           if (!pm[key]) pm[key] = { co: co(jog.pais), scores: {}, origName: jog.nome.trim(), holeScores: {}, par: rPar, toParByRound: {} };
-          const expectedB = ronda.buracos || 18;
-          if (jog.score > 0 && jog.buracos === expectedB)
+          if (jog.score > 0 && jog.buracos === 18)
             pm[key].scores[ronda.ronda] = jog.score;
           // Guardar to_par por ronda para calcular tp total
           if (jog.to_par != null)
             pm[key].toParByRound[ronda.ronda] = jog.to_par;
-          // Strokes buraco-a-buraco (suporta 9H e 18H)
+          // Strokes buraco-a-buraco
           const strokes: number[] = jog.strokes?.length ? jog.strokes
             : (jog.rondas?.["1"]?.strokes ?? []);
-          if (strokes.length === expectedB)
+          if (strokes.length === 18)
             pm[key].holeScores[ronda.ronda] = strokes;
-          if (rPar.length === expectedB && pm[key].par.length !== expectedB)
+          if (rPar.length === 18 && pm[key].par.length !== 18)
             pm[key].par = rPar;
         }
       }
@@ -452,60 +445,144 @@ function processPullTorneios(d: unknown): AutoRivalPlayer[] {
 }
 
 /**
- * Processa ficheiros no formato "uskids_torneios_completos" (array de torneios).
+ * Processa ficheiros no formato "uskids_torneios_completos".
+ * Suporta dois formatos:
+ *   ANTIGO (v1): array [{t, meta:{tournament,age_groups,flight_courses,...}, flights:[...]}]
+ *   NOVO  (v2): objecto {signupanytime_t, name, start_date, age_groups, flights:{fid:{category,course_info,flight_players}}}
  * - Carrega escalões Boys ±1 do que Manuel teria jogado na altura (9H e 18H incluídos)
- * - flight_name pode ser dict {age_group} ou string → lookup via meta.flights
  * - tid gerado como "usk{tcode}_b{minAge}"
  */
 function processUskidsCompleto(data: unknown): AutoRivalPlayer[] {
-  type FlightCourse = { pars: number[] };
   type AgeGroup = { name: string; gender: string; min_age: number; holes_per_round: number };
-  type MetaFlight = { age_group: number };
-  type PlayerRoundData = { strokes: number[]; flight_round: string };
+  type PlayerRoundData = { strokes: number[]; flight_round?: string | number };
   type FlightPlayer = {
     first: string; last: string; country: string;
     rounds: Record<string, PlayerRoundData>;
   };
-  type RoundData = { flight_players: Record<string, FlightPlayer> };
-  type Flight = {
-    flight_id: number;
-    flight_name: { age_group: number } | string;
-    rounds_data: Record<string, RoundData>;
-  };
-  type Tournament = {
-    t: number;
-    meta: {
-      tournament: { name: string; start_date: string };
-      age_groups: Record<string, AgeGroup>;
-      flights: Record<string, MetaFlight>;
-      flight_courses: Record<string, FlightCourse>;
-    };
-    flights: Flight[];
+
+  // Normalizar para lista de torneios no formato canónico interno
+  type NormTourn = {
+    tcode: number;
+    name: string;
+    startDate: string; // "M/D/YYYY"
+    ageGroups: Record<string, AgeGroup>;
+    // fid → {agName, holes, parPorRonda: {rn→par[]}, players: Record<key, FP>}
+    flights: Record<string, {
+      agName: string; holes: number;
+      parPorRonda: Record<number, number[]>;
+      players: Record<string, FlightPlayer>;
+    }>;
   };
 
-  const tournaments = data as Tournament[];
-  if (!Array.isArray(tournaments)) return [];
+  function normalizar(raw: unknown): NormTourn[] {
+    if (!raw || typeof raw !== "object") return [];
+    const r = raw as Record<string, unknown>;
+
+    // ── NOVO FORMATO (v2): tem signupanytime_t ──────────────────────────────
+    if (r.signupanytime_t) {
+      const tcode = Number(r.signupanytime_t);
+      const ageGroups = (r.age_groups ?? {}) as Record<string, AgeGroup>;
+      const flightsRaw = (r.flights ?? {}) as Record<string, any>;
+      // Par do flight_courses (fallback se course_info não tiver par)
+      const fcPars: Record<string, number[]> = {};
+      for (const [, fc] of Object.entries((r.flight_courses ?? {}) as Record<string, any>)) {
+        if (fc.flightId && fc.pars?.length) {
+          const pars = (fc.pars as number[]).filter(p => p > 0);
+          if (pars.length) fcPars[String(fc.flightId)] = fcPars[String(fc.flightId)] ?? pars;
+        }
+      }
+      const flights: NormTourn["flights"] = {};
+      for (const [fid, flight] of Object.entries(flightsRaw)) {
+        const agName: string = flight.category ?? "";
+        if (!agName) continue;
+        const agEntry = Object.entries(ageGroups).find(([, v]) => v.name === agName);
+        const holes = agEntry ? agEntry[1].holes_per_round : 9;
+        const parPorRonda: Record<number, number[]> = {};
+        // course_info.R1.holes[].par  (fonte preferida)
+        for (const [rKey, rInfo] of Object.entries((flight.course_info ?? {}) as Record<string, any>)) {
+          const rn = parseInt(rKey.replace(/^R/, ""));
+          if (!isNaN(rn) && !parPorRonda[rn]) {
+            const par = ((rInfo.holes ?? []) as any[]).map((h: any) => h.par as number).filter(p => p > 0);
+            if (par.length) parPorRonda[rn] = par;
+          }
+        }
+        // fallback: flight_courses por flightId
+        if (!Object.keys(parPorRonda).length && fcPars[fid]) {
+          parPorRonda[1] = fcPars[fid];
+        }
+        flights[fid] = { agName, holes, parPorRonda, players: flight.flight_players ?? {} };
+      }
+      return [{ tcode, name: r.name as string, startDate: r.start_date as string, ageGroups, flights }];
+    }
+
+    // ── FORMATO ANTIGO (v1): array ──────────────────────────────────────────
+    if (Array.isArray(raw)) {
+      return (raw as any[]).map(tourn => {
+        const meta = tourn.meta ?? {};
+        const ageGroups = (meta.age_groups ?? {}) as Record<string, AgeGroup>;
+        const fcPars: Record<number, number[]> = {};
+        for (const [frid, fc] of Object.entries(meta.flight_courses ?? {})) {
+          const pars = ((fc as any).pars ?? []).filter((p: number) => p > 0);
+          if (pars.length) fcPars[Number(frid)] = pars;
+        }
+        const flights: NormTourn["flights"] = {};
+        for (const flight of (tourn.flights ?? []) as any[]) {
+          const fid = String(flight.flight_id);
+          const fn = flight.flight_name;
+          const agId: number | undefined =
+            typeof fn === "object" && fn !== null && "age_group" in fn
+              ? fn.age_group
+              : meta.flights?.[fid]?.age_group;
+          if (agId == null) continue;
+          const ag = ageGroups[String(agId)];
+          if (!ag) continue;
+          const holes = ag.holes_per_round ?? 9;
+          // Recolher players de todos os rounds_data (desduplicar por nome+ronda)
+          const players: Record<string, FlightPlayer> = {};
+          const parPorRonda: Record<number, number[]> = {};
+          for (const roundData of Object.values(flight.rounds_data ?? {}) as any[]) {
+            for (const [pid, p] of Object.entries(roundData.flight_players ?? {}) as [string, any][]) {
+              if (!players[pid]) players[pid] = { first: p.first, last: p.last, country: p.country, rounds: {} };
+              for (const [rnStr, rd] of Object.entries(p.rounds ?? {}) as [string, any][]) {
+                const rn = Number(rnStr);
+                if (!players[pid].rounds[rnStr]) players[pid].rounds[rnStr] = rd;
+                if (!parPorRonda[rn] && rd.flight_round) {
+                  const par = fcPars[Number(rd.flight_round)];
+                  if (par?.length) parPorRonda[rn] = par;
+                }
+              }
+            }
+          }
+          flights[fid] = { agName: ag.name, holes, parPorRonda, players };
+        }
+        return { tcode: tourn.t, name: meta.tournament?.name ?? "", startDate: meta.tournament?.start_date ?? "", ageGroups, flights };
+      });
+    }
+
+    return [];
+  }
+
+  const tournaments = normalizar(data);
+  if (!tournaments.length) return [];
 
   const all: AutoRivalPlayer[] = [];
 
   for (const tourn of tournaments) {
-    if (!USKIDS_KNOWN_TCODES.has(tourn.t)) continue;
+    if (!USKIDS_KNOWN_TCODES.has(tourn.tcode)) continue;
 
-    const meta = tourn.meta;
-    const tcode = tourn.t;
+    const tcode = tourn.tcode;
 
     // Ano do torneio → idade do Manuel nessa época
-    const startParts = meta.tournament.start_date.split("/").map(Number);
+    const startParts = tourn.startDate.split("/").map(Number);
     const tournYear = startParts[2];
     const manuelAge = tournYear - MANUEL_BIRTH_YEAR;
 
-    // Guardar nome/data do torneio para lookup no UI
+    // Guardar nome/data do torneio
     if (!uskTournNames.has(`usk${tcode}`)) {
-      const rawName = meta.tournament.name; // ex: "World Championship 2022"
-      const mo = startParts[0]; // 1-12
+      const rawName = tourn.name;
+      const mo = startParts[0];
       const MONTHS = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
       const dateStr = `${MONTHS[(mo - 1) % 12]} ${tournYear}`;
-      // Short name: sigla extraída
       const short = rawName
         .replace(/World Championship/i, "WC")
         .replace(/European Championship/i, "EC")
@@ -517,9 +594,9 @@ function processUskidsCompleto(data: unknown): AutoRivalPlayer[] {
       uskTournNames.set(`usk${tcode}`, { name: rawName, short, date: dateStr, dateExact: `${tournYear}-${mo2}-${da2}` });
     }
 
-    // Escalões Boys únicos ordenados por min_age (desduplicar min_age repetidos)
+    // Escalões Boys únicos por min_age
     const seenMinAge = new Set<number>();
-    const boysAgs = Object.entries(meta.age_groups)
+    const boysAgs = Object.entries(tourn.ageGroups)
       .filter(([, ag]) => ag.gender === "Boys")
       .sort((a, b) => a[1].min_age - b[1].min_age)
       .reduce((acc, [id, ag]) => {
@@ -530,48 +607,28 @@ function processUskidsCompleto(data: unknown): AutoRivalPlayer[] {
         return acc;
       }, [] as { id: number; minAge: number; holes: number; name: string }[]);
 
-    // Índice do escalão do Manuel (pelo min_age mais próximo)
     const manuelIdx = boysAgs.findIndex(ag => ag.minAge === manuelAge);
-    // Se não existir exactamente, usar o mais próximo
     const pivotIdx = manuelIdx >= 0
       ? manuelIdx
       : boysAgs.reduce((best, ag, i) =>
           Math.abs(ag.minAge - manuelAge) < Math.abs(boysAgs[best].minAge - manuelAge) ? i : best, 0);
 
-    // Queremos ±1 escalão em torno do pivot
     const wantedMinAges = new Set(
       boysAgs.slice(Math.max(0, pivotIdx - 1), pivotIdx + 2).map(ag => ag.minAge)
     );
 
-    // flight_round_id → par por buraco (sem zeros)
-    const frPars: Record<number, number[]> = {};
-    for (const [frid, fc] of Object.entries(meta.flight_courses)) {
-      frPars[Number(frid)] = (fc.pars || []).filter((p: number) => p > 0);
-    }
+    // Processar cada flight normalizado
+    const processedAgNames = new Set<string>();
 
-    // ag_id → info (para lookup rápido)
-    const agById = new Map(boysAgs.map(ag => [ag.id, ag]));
+    for (const flight of Object.values(tourn.flights)) {
+      const { agName, holes, parPorRonda, players } = flight;
 
-    // Track ag_ids já processados por torneio
-    const processedAgIds = new Set<number>();
-
-    for (const flight of tourn.flights) {
-      const fid = flight.flight_id;
-
-      // Resolver age_group: flight_name pode ser dict ou string
-      const fn = flight.flight_name;
-      const agId: number | undefined =
-        typeof fn === "object" && fn !== null && "age_group" in fn
-          ? (fn as { age_group: number }).age_group
-          : meta.flights[String(fid)]?.age_group;
-      if (agId == null) continue;
-      if (processedAgIds.has(agId)) continue;
-
-      const agInfo = agById.get(agId);
+      // Encontrar boysAg pelo nome
+      const agInfo = boysAgs.find(ag => ag.name === agName);
       if (!agInfo || !wantedMinAges.has(agInfo.minAge)) continue;
-      processedAgIds.add(agId);
+      if (processedAgNames.has(agName)) continue;
+      processedAgNames.add(agName);
 
-      const holes = agInfo.holes;
       const agLabel = agInfo.name;
       const tid = `usk${tcode}_b${agInfo.minAge}`;
 
@@ -582,23 +639,19 @@ function processUskidsCompleto(data: unknown): AutoRivalPlayer[] {
         par: number[];
       }> = {};
 
-      for (const roundData of Object.values(flight.rounds_data)) {
-        const fp = roundData.flight_players;
-        if (!fp || typeof fp !== "object") continue;
-        for (const p of Object.values(fp)) {
-          const fullName = `${p.first} ${p.last}`.trim();
-          const key = normName(fullName);
-          if (!pm[key]) pm[key] = { name: fullName, country: p.country, rounds: {}, par: [] };
+      for (const p of Object.values(players)) {
+        const fullName = `${p.first} ${p.last}`.trim();
+        const key = normName(fullName);
+        if (!pm[key]) pm[key] = { name: fullName, country: p.country, rounds: {}, par: [] };
 
-          for (const [rnumStr, rdata] of Object.entries(p.rounds)) {
-            const rnum = Number(rnumStr);
-            const strokes = rdata.strokes || [];
-            if (strokes.length === holes && strokes.some(s => s > 0)) {
-              if (!pm[key].rounds[rnum]) pm[key].rounds[rnum] = strokes;
-              if (!pm[key].par.length) {
-                const par = frPars[Number(rdata.flight_round)] || [];
-                if (par.length === holes) pm[key].par = par;
-              }
+        for (const [rnumStr, rdata] of Object.entries(p.rounds)) {
+          const rnum = Number(rnumStr);
+          const strokes = rdata.strokes || [];
+          if (strokes.length === holes && strokes.some(s => s > 0)) {
+            if (!pm[key].rounds[rnum]) pm[key].rounds[rnum] = strokes;
+            if (!pm[key].par.length) {
+              const par = parPorRonda[rnum] ?? parPorRonda[1] ?? [];
+              if (par.length === holes) pm[key].par = par;
             }
           }
         }

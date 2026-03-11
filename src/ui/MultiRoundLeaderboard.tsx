@@ -166,13 +166,13 @@ export function MultiRoundLeaderboard({
   const complete   = rows.filter(r => !r.isIncomplete);
   const incomplete = rows.filter(r =>  r.isIncomplete);
 
-  /* Posições */
+  /* Posições — WD (gross=0 com isIncomplete) excluídos do ranking */
   const withPos = useMemo(() => {
-    const byGross = [...complete].sort((a, b) => a.gross - b.gross);
+    const forRank = [...complete].sort((a, b) => a.gross - b.gross);
     let counter = 1;
     const posMap = new Map<string, number>();
-    byGross.forEach((r, i) => {
-      if (i > 0 && r.gross !== byGross[i - 1].gross) counter = i + 1;
+    forRank.forEach((r, i) => {
+      if (i > 0 && r.gross !== forRank[i - 1].gross) counter = i + 1;
       posMap.set(r.key, counter);
     });
     return rows.map(r => ({ ...r, _pos: r.isIncomplete ? null : (posMap.get(r.key) ?? null) }));
