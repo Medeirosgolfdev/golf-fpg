@@ -811,7 +811,7 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
         )}
         {/* Links */}
         <div style={{ marginTop:8, display:"flex", gap:5, flexWrap:"wrap" }}>
-          <a href={`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${t.t}`}
+          <a href={`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=field&fmt=nohead&ax=2739&t=${t.t}`}
             target="_blank" rel="noopener noreferrer" style={{ fontSize:11, padding:"2px 9px", borderRadius:10,
               background:"var(--bg-muted)", color:"var(--accent-text)", border:"1px solid var(--border)", textDecoration:"none" }}>
             📋 Inscritos
