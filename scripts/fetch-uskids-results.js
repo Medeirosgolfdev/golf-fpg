@@ -5,24 +5,20 @@
  * Corre às 16:00 UTC todos os dias.
  * Para torneios em curso: busca scorecards completos.
  * Para históricos: busca na primeira execução e guarda.
- * Output: uskids-results.json com leaderboard + strokes buraco-a-buraco + par/SI
+ * Output: uskids-results.json com leaderboard + strokes buraco-a-buraco + par/yards reais
+ *
+ * Fonte do PAR/YARDS:
+ *   GetMeta → flight_courses[flight_round_id].pars[]    = par real por buraco
+ *   GetMeta → flight_courses[flight_round_id].lengths[]  = yards por buraco
+ *   GetMeta → flight_rounds[flight_round_id]             = liga flight → course → round
  */
 
 const fs   = require('fs');
 const path = require('path');
 const { chromium } = require('playwright');
 
-// ── Torneios históricos do Manuel ─────────────
+// ── Torneios históricos ─────────────
 const HISTORICOS = [
-  // ── Regionais 2026 já realizados ──
-  // Sandestin Championship 2026 — JAN 17-18 — Sandestin, FL
-  // { t: XXXXX, name: 'Sandestin Championship 2026',
-  //   date_inicio: '1/17/2026', date_fim: '1/18/2026', rondas: 2, ax: XXXXX,
-  //   escalao_manuel: null, age_groups: [],
-  //   url_uskids: 'https://tournaments.uskidsgolf.com/tournaments/regional/find-tournament/516801/sandestin-championship-2026',
-  //   url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=XXXXX&t=XXXXX' },
-  //
-  // Desert Shootout 2026 — FEB 21-22 — Phoenix, AZ
   { t: 20895, name: 'Sandestin Championship 2026',
     date_inicio: '1/17/2026', date_fim: '1/18/2026', rondas: 2, ax: 1129,
     escalao_manuel: 7, age_groups: [4, 5, 6, 7],
@@ -33,37 +29,24 @@ const HISTORICOS = [
     escalao_manuel: 7, age_groups: [4, 5, 6, 7],
     url_uskids: 'https://tournaments.uskidsgolf.com/tournaments/regional/find-tournament/516958/desert-shootout-2026',
     url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=21004' },
-  {
-    t: 18438, name: 'Marco Simone Invitational 2025',
+  { t: 18438, name: 'Marco Simone Invitational 2025',
     date_inicio: '3/15/2025', date_fim: '3/16/2025', rondas: 2, ax: 2739,
-    escalao_manuel: null,
-    age_groups: [2102, 2103, 2104, 2105],
-    url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=2739&t=18438',
-  },
-  {
-    t: 15573, name: 'Real Club de Golf El Prat 2023',
+    escalao_manuel: null, age_groups: [2102, 2103, 2104, 2105],
+    url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=2739&t=18438' },
+  { t: 15573, name: 'Real Club de Golf El Prat 2023',
     date_inicio: '10/22/2023', date_fim: '10/22/2023', rondas: 1, ax: 2760,
-    escalao_manuel: 2151,
-    age_groups: [2150, 2151, 2152],
-    url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=2760&t=15573',
-  },
-  {
-    t: 19418, name: 'Venice Open 2025',
+    escalao_manuel: 2151, age_groups: [2150, 2151, 2152],
+    url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=2760&t=15573' },
+  { t: 19418, name: 'Venice Open 2025',
     date_inicio: '8/17/2025', date_fim: '8/17/2025', rondas: 3, ax: 1129,
-    escalao_manuel: 2104,
-    age_groups: [2102, 2103, 2104, 2105],
-    url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=19418',
-  },
-  {
-    t: 20175, name: 'Rome Classic 2025',
+    escalao_manuel: 2104, age_groups: [2102, 2103, 2104, 2105],
+    url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=19418' },
+  { t: 20175, name: 'Rome Classic 2025',
     date_inicio: '10/18/2025', date_fim: '10/18/2025', rondas: 2, ax: 1129,
-    escalao_manuel: 2104,
-    age_groups: [2103, 2104, 2105],
-    url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=20175',
-  },
+    escalao_manuel: 2104, age_groups: [2103, 2104, 2105],
+    url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=20175' },
 ];
 
-// Prefixos de escalão a capturar (apanha "Boys 12", "Boys 13-14", "Boys 13 & Under", etc.)
 const ESCALOES_PREFIXOS = ['boys 9', 'boys 10', 'boys 11', 'boys 12'];
 const escalaoApanhar = (nome) => ESCALOES_PREFIXOS.some(p => nome.toLowerCase().startsWith(p));
 
@@ -118,22 +101,86 @@ async function pageJSON(page, url) {
   }, url);
 }
 
-// Buscar par e SI do campo para um flight/ronda
-async function buscarParSI(page, fid, ronda) {
-  try {
-    const d = await pageJSON(page, `${API}?op=GetCourseHoles&f=${fid}&r=${ronda}`);
-    const holes = d?.holes ?? d?.course_holes ?? [];
-    if (!holes.length) return { par: [], si: [] };
-    return {
-      par: holes.map(h => h.par ?? 0),
-      si:  holes.map(h => h.stroke_index ?? h.si ?? 0),
+// ══════════════════════════════════════
+// Extrair PAR + YARDS de flight_courses (do GetMeta)
+// ══════════════════════════════════════
+// meta.flight_courses[flight_round_id] = { pars: [4,3,5,...], lengths: [168,75,...], course: 43 }
+// meta.flight_rounds[flight_round_id]  = { flight: 232783, round: 1, course: 43, ... }
+//
+// Construir mapa: flightId → roundNum → { par[], yards[], courseName, totalPar, totalYards }
+
+function construirMapaCursos(meta) {
+  const flightCourses = meta.flight_courses || {};
+  const flightRounds  = meta.flight_rounds  || {};
+  const coursesRaw    = meta.courses        || {};
+  const teeMarkersRaw = meta.teeMarkers     || {};
+
+  // flightId → { roundNum → courseInfo }
+  const mapa = {};
+
+  for (const [frId, fc] of Object.entries(flightCourses)) {
+    const fr = flightRounds[frId] || {};
+    const flightId = String(fr.flight || '');
+    const roundNum = fr.round || 1;
+    const courseId = fc.course || fr.course || null;
+    const courseName = courseId && coursesRaw[courseId] ? coursesRaw[courseId].name : '';
+
+    const pars    = fc.pars    || [];
+    const lengths = fc.lengths || [];
+
+    // Construir array de buracos (filtrar zeros = não jogados)
+    const holes = [];
+    for (let i = 0; i < pars.length; i++) {
+      if (pars[i] > 0 || lengths[i] > 0) {
+        holes.push({ number: i + 1, par: pars[i] || 0, yards: lengths[i] || 0 });
+      }
+    }
+
+    const totalPar   = holes.reduce((s, h) => s + h.par, 0);
+    const totalYards = holes.reduce((s, h) => s + h.yards, 0);
+
+    // Par array limpo (só buracos jogados) para compatibilidade com leaderboard
+    const parClean = holes.map(h => h.par);
+
+    if (!mapa[flightId]) mapa[flightId] = {};
+    mapa[flightId][roundNum] = {
+      flightRoundId: frId,
+      courseId:       courseId ? String(courseId) : null,
+      courseName,
+      startingHole:  fr.starting_hole || '1',
+      date:          fr.date || null,
+      numHoles:      holes.length,
+      totalPar,
+      totalYards,
+      par:           parClean,
+      yards:         holes.map(h => h.yards),
+      holes,
+      pars_raw:      pars,
+      lengths_raw:   lengths,
     };
-  } catch {
-    return { par: [], si: [] };
   }
+
+  return mapa;
 }
 
-// Parsear todos os jogadores com strokes completos, todas as páginas
+// Buscar par/yards para um flight e ronda a partir do mapa construído do GetMeta
+function buscarParDoMapa(mapaCursos, fid, ronda) {
+  const flightInfo = mapaCursos[fid];
+  if (!flightInfo) return { par: [], yards: [], courseName: '', totalPar: 0, totalYards: 0, numHoles: 0 };
+  const roundInfo = flightInfo[ronda];
+  if (!roundInfo) return { par: [], yards: [], courseName: '', totalPar: 0, totalYards: 0, numHoles: 0 };
+  return {
+    par:        roundInfo.par,
+    yards:      roundInfo.yards,
+    courseName: roundInfo.courseName,
+    totalPar:   roundInfo.totalPar,
+    totalYards: roundInfo.totalYards,
+    numHoles:   roundInfo.numHoles,
+    holes:      roundInfo.holes,
+  };
+}
+
+// Parsear jogadores com strokes completos, todas as páginas
 async function buscarJogadores(page, fid, ronda, total_inscritos) {
   const todos = [];
   const totalPags = Math.ceil((total_inscritos || 50) / 20) + 1;
@@ -164,7 +211,6 @@ async function buscarJogadores(page, fid, ronda, total_inscritos) {
       todos.push(...jogadores);
     } catch { break; }
   }
-  // Deduplicar
   const vistos = new Set();
   return todos.filter(j => { if (vistos.has(j.nome)) return false; vistos.add(j.nome); return true; });
 }
@@ -199,13 +245,16 @@ async function processarTorneio(page, torneio) {
   const flights   = meta.flights    || {};
   const rondas    = meta.tournament?.rounds || torneio.rondas || 2;
 
+  // ═══ Construir mapa de cursos com PAR/YARDS reais ═══
+  const mapaCursos = construirMapaCursos(meta);
+  const nFlightRounds = Object.keys(meta.flight_courses || {}).length;
+  const nComPar = Object.values(meta.flight_courses || {}).filter(fc => (fc.pars || []).some(p => p > 0)).length;
+  console.log(`  🏌️ ${nFlightRounds} flight_rounds, ${nComPar} com par/yards reais`);
+
   // Determinar quais age_groups apanhar
-  // Determinar quais age_groups apanhar
-  // Se o torneio tem age_groups definidos → filtrar por ID numérico
-  // Caso contrário → filtrar por nome (boys 9–12)
   const agsFiltro = torneio.age_groups ? new Set(torneio.age_groups) : null;
 
-  // Agrupar flights por age_group (primeiro flight de cada AG)
+  // Agrupar flights por age_group
   const flightsPorAG = {};
   for (const [fid, f] of Object.entries(flights)) {
     const ag = f.age_group;
@@ -220,17 +269,31 @@ async function processarTorneio(page, torneio) {
     }
   }
 
-  // Log de todos os age_groups disponíveis neste torneio
+  // Log age_groups disponíveis
   const agDisp = [...new Set(Object.values(flights).map(f => f.age_group))]
     .map(ag => `${ag}=${ageGroups[ag]?.name ?? '?'}`).join(', ');
-  console.log(`  📋 age_groups disponíveis: ${agDisp}`);
+  console.log(`  📋 age_groups: ${agDisp}`);
 
-  // Aviso se algum age_group configurado não foi encontrado
   if (agsFiltro) {
     for (const ag of agsFiltro) {
       if (!flightsPorAG[ag]) {
-        const agInfo = ageGroups[ag];
-        console.log(`  ⚠️  age_group ${ag} (${agInfo?.name ?? '?'}) não encontrado neste torneio`);
+        console.log(`  ⚠️  age_group ${ag} (${ageGroups[ag]?.name ?? '?'}) não encontrado`);
+      }
+    }
+  }
+
+  // Log cursos únicos encontrados
+  const cursosVistos = new Set();
+  for (const [fid] of Object.entries(flights)) {
+    const fi = mapaCursos[fid];
+    if (!fi) continue;
+    for (const [rn, ri] of Object.entries(fi)) {
+      if (ri.totalPar > 0) {
+        const ck = `${ri.courseName}_${ri.numHoles}h`;
+        if (!cursosVistos.has(ck)) {
+          cursosVistos.add(ck);
+          console.log(`  ⛳ ${ri.courseName || 'Course'}: ${ri.numHoles}h par ${ri.totalPar} | ${ri.totalYards}y`);
+        }
       }
     }
   }
@@ -247,8 +310,9 @@ async function processarTorneio(page, torneio) {
 
     const rondasData = [];
     for (let r = 1; r <= rondas; r++) {
-      // Par e SI
-      const { par, si } = await buscarParSI(page, fid, r);
+      // Par e yards do mapa (GetMeta.flight_courses)
+      const courseData = buscarParDoMapa(mapaCursos, fid, r);
+      const par = courseData.par;
       await sleep(DELAY_MS);
 
       // Jogadores
@@ -257,32 +321,40 @@ async function processarTorneio(page, torneio) {
 
       // Log portugueses
       const pt = leaderboard.filter(j => j.pais === 'PT');
-      if (pt.length) {
-        for (const j of pt)
-          console.log(`    🇵🇹 ${j.nome} — ${j.score} (${j.to_par >= 0 ? '+' : ''}${j.to_par}) ${j.pontos > 0 ? j.pontos + 'pts' : ''}`);
-      }
-      console.log(`    R${r}: ${leaderboard.length} jogadores`);
+      for (const j of pt)
+        console.log(`    🇵🇹 ${j.nome} — ${j.score} (${j.to_par >= 0 ? '+' : ''}${j.to_par}) ${j.pontos > 0 ? j.pontos + 'pts' : ''}`);
+
+      const parSource = par.length > 0 ? 'flight_courses' : 'estimated';
+      console.log(`    R${r}: ${leaderboard.length} jog | par ${courseData.totalPar || '?'} (${parSource}) | ${courseData.totalYards || '?'}y | ${courseData.courseName || '?'}`);
 
       rondasData.push({
-        ronda: r,
+        ronda:       r,
         par,
-        si,
-        buracos,
-        total_par: par.reduce((s,p) => s+p, 0) || null,
+        yards:       courseData.yards,
+        campo:       courseData.courseName || null,
+        holes:       courseData.holes || [],
+        buracos:     courseData.numHoles || buracos,
+        total_par:   courseData.totalPar || par.reduce((s, p) => s + p, 0) || null,
+        total_yards: courseData.totalYards || null,
+        par_source:  parSource,
         leaderboard,
       });
     }
+
+    // Tee marker deste escalão
+    const agTeeMarker = agInfo.tee_marker || null;
 
     escaloes.push({
       age_group:     parseInt(ag),
       nome,
       holes:         buracos,
+      tee_marker:    agTeeMarker,
       is_manuel:     isManuel,
       rondas:        rondasData,
     });
   }
 
-  // Ordenar: escalão do Manuel primeiro, depois por age_group
+  // Ordenar: escalão do Manuel primeiro
   escaloes.sort((a, b) => {
     if (a.is_manuel && !b.is_manuel) return -1;
     if (!a.is_manuel && b.is_manuel) return 1;
@@ -313,7 +385,6 @@ async function main() {
   console.log(`    ${new Date().toLocaleString('pt-PT')}`);
   console.log('══════════════════════════════════════');
 
-  // Torneios em curso da cache
   let emCurso = [];
   if (fs.existsSync(CACHE_PATH)) {
     try {
@@ -322,15 +393,13 @@ async function main() {
     } catch {}
   }
 
-  // Históricos ainda não processados OU com age_groups desactualizados
   const outputActual = fs.existsSync(OUTPUT)
     ? JSON.parse(fs.readFileSync(OUTPUT, 'utf8'))
     : { resultados: [] };
   const mapaActual = new Map((outputActual.resultados || []).map(r => [r.t, r]));
   const historicosNovos = HISTORICOS.filter(h => {
     const existente = mapaActual.get(h.t);
-    if (!existente) return true; // ainda não temos
-    // Re-processar se os age_groups configurados não estão todos no output
+    if (!existente) return true;
     if (h.age_groups) {
       const agsTemos = new Set((existente.escaloes || []).map(e => e.age_group));
       if (h.age_groups.some(ag => !agsTemos.has(ag))) {
@@ -338,11 +407,17 @@ async function main() {
         return true;
       }
     }
+    // Re-processar se não tem par/yards (versão antiga)
+    const temPar = (existente.escaloes || []).some(e =>
+      (e.rondas || []).some(r => r.par_source === 'flight_courses'));
+    if (!temPar) {
+      console.log(`  ♻️  ${h.name} — sem par/yards reais, vai re-processar`);
+      return true;
+    }
     return false;
   });
 
   const aProcessar = [...emCurso, ...historicosNovos];
-
   console.log(`\n   Em curso: ${emCurso.length} | Históricos novos: ${historicosNovos.length}`);
 
   if (!aProcessar.length) {
@@ -367,7 +442,6 @@ async function main() {
     await browser.close();
   }
 
-  // Merge com existentes
   const mapa = new Map((outputActual.resultados || []).map(r => [r.t, r]));
   for (const r of novos) mapa.set(r.t, r);
 
