@@ -1387,6 +1387,8 @@ function RivaisSidebar({ selected, onSelect }: { selected: string | null; onSele
 function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTable: () => void }) {
   const rivals = useRivals();
   const rival = rivals.find(d => d.n === playerName);
+  // Usar o Manuel do array merged (tem wjgc25_b1011 e outros tids auto)
+  const manuelMerged = rivals.find(d => d.isM) ?? manuel;
   const bjgtCard = FIELD_CARDS.find(c => c.name === playerName);
   const lbEntry = FIELD_2025.leaderboard.find(p => p.name === playerName);
   const wjgcCard = findCard(WJGC26_CARDS, playerName);
@@ -1711,7 +1713,7 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
         const expanded = expandedTourns.has(t.id);
         const wOrd = getTournWeight(t.id);
         const stars = wOrd >= 1.3 ? "★★★★★" : wOrd >= 1.1 ? "★★★★" : wOrd >= 0.9 ? "★★★" : wOrd >= 0.6 ? "★★" : wOrd >= 0.4 ? "★" : null;
-        const manuelRes = !isManuel ? manuel?.r[t.id] : null;
+        const manuelRes = !isManuel ? manuelMerged?.r[t.id] : null;
         const vsM = manuelRes?.tp != null && res.tp != null ? res.tp - manuelRes.tp : null;
         const tpDisplay = res.tp != null ? fmtToPar(res.tp) : null;
         const totalRds = res.rd.reduce((a: number, b: number) => a + b, 0);

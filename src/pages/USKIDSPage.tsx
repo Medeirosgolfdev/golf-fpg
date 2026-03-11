@@ -188,6 +188,7 @@ function escalaoManuelParaData(dateStr: string): string {
   return "Boys 12";
 }
 const MANUEL_FRAGMENT    = "medeiros";
+const MANUEL_FIRST       = "manuel";
 const ESCALAO_ORDER: Record<string, number> = {
   "Boys 7 & Under":1,"Boys 7":2,"Boys 8":3,"Boys 9":4,"Boys 10":5,"Boys 11":6,"Boys 12":7,
   "Boys 13":8,"Boys 13-14":9,"Boys 14":10,"Boys 15-18":11,
@@ -532,7 +533,8 @@ function diasAte(s: string) {
 }
 
 function isManuel(nome: string) {
-  return nome.toLowerCase().includes(MANUEL_FRAGMENT);
+  const n = nome.toLowerCase();
+  return n.includes(MANUEL_FRAGMENT) && n.includes(MANUEL_FIRST);
 }
 
 
@@ -555,16 +557,18 @@ function escalaoToTournament(e: EscalaoResult, t: TorneioResult): TATournament {
   for (const r of rondasComDados) {
     const lb = r.leaderboard ?? r.jogadores ?? [];
     const buracos = r.buracos || 18;
+    // par por buraco: só usar se tiver dados reais — nunca inventar
     const par: number[] =
       teeInfo?.par.length === buracos ? teeInfo.par :
       r.par?.length === buracos ? r.par :
-      Array(buracos).fill(4) as number[];
+      [];  // desconhecido → ScoreCircles sem cor vs par
+    const parKnown = par.length === buracos;
     const si: number[] = r.si?.length === buracos ? r.si : [];
     const meters: number[] = teeInfo?.metros?.length === buracos ? teeInfo.metros : Array(buracos).fill(0);
     const hasSI = si.some(v => v > 0);
     // Para USKids: se não há SI real, usar metros na linha que normalmente seria SI
     const siForDisplay: number[] = hasSI ? si : meters;
-    const parPerRound = par.reduce((s, p) => s + p, 0);
+    const parPerRound = parKnown ? par.reduce((s, p) => s + p, 0) : null;
 
     for (const j of lb) {
       const key = j.nome.toLowerCase().trim();
@@ -585,7 +589,7 @@ function escalaoToTournament(e: EscalaoResult, t: TorneioResult): TATournament {
       }
       const p = playerMap.get(key)!;
       p.grossTotal += j.score || 0;
-      p.parTotal    = parPerRound;  // par de UMA ronda — expandMultiRound multiplica por nPlayed
+      if (parPerRound !== null) p.parTotal = parPerRound;  // par de UMA ronda — expandMultiRound multiplica por nPlayed
       p.roundScores.push({
         round: r.ronda,
         gross: j.score || 0,
@@ -2566,7 +2570,7 @@ export default function USKidsFieldPage() {
   const torneiosResultados = useMemo(() => resultsData?.resultados ?? [], [resultsData]);
 
   const allTorneios = useMemo(() => {
-    const map = new Map<number, { t: number; name: string; date: string; temResultados: boolean; temCampo: boolean; inscritos?: number; maximo?: number; vagas?: number; escalaoManuel?: string; rondas?: number; fee?: number; campo?: string; totalInscritos?: number; totalMaximo?: number; urlResultados?: string }>();
+    const map = new Map<number, { t: number; name: string; date: string; temResultados: boolean; temCampo: boolean; inscritos?: number; maximo?: number; vagas?: number; escalaoManuel?: string; rondas?: number; fee?: number; campo?: string; totalInscritos?: number; totalMaximo?: number; urlResultados?: string; manuelJogou?: boolean }>();
     for (const t of torneiosCampo) {
       if (!t.t || !t.name) continue;
       const em = escalaoManuelParaData(t.date_inicio);
@@ -2582,8 +2586,21 @@ export default function USKidsFieldPage() {
     }
     for (const t of torneiosResultados) {
       if (!t.t || !t.name) continue;
-      if (map.has(t.t)) { map.get(t.t)!.temResultados = true; if (t.url_resultados) map.get(t.t)!.urlResultados = t.url_resultados; }
-      else map.set(t.t, { t: t.t, name: t.name, date: t.date_inicio, temResultados: true, temCampo: false, urlResultados: t.url_resultados });
+      // Determinar se o Manuel jogou: recalcular SEMPRE pelos nomes reais (não confiar
+      // em is_manuel do JSON — foi gerado pelo pipeline com a lógica antiga que só
+      // verificava "medeiros", podendo ter marcado outro jogador erroneamente)
+      const manuelJogou = t.escaloes?.some((e: EscalaoResult) =>
+        e.rondas?.some((r: RondaResult) =>
+          (r.leaderboard ?? r.jogadores ?? []).some((j: RondaJogador) => isManuel(j.nome))
+        )
+      ) ?? false;
+      if (map.has(t.t)) {
+        map.get(t.t)!.temResultados = true;
+        if (t.url_resultados) map.get(t.t)!.urlResultados = t.url_resultados;
+        if (manuelJogou) map.get(t.t)!.manuelJogou = true;
+      } else {
+        map.set(t.t, { t: t.t, name: t.name, date: t.date_inicio, temResultados: true, temCampo: false, urlResultados: t.url_resultados, manuelJogou });
+      }
     }
     return [...map.values()]
       .filter(t => t.name && t.date)
@@ -2741,6 +2758,17 @@ export default function USKidsFieldPage() {
                         {t.rondas && <span>· {t.rondas}R</span>}
                         {t.escalaoManuel && <span>· {t.escalaoManuel}</span>}
                       </div>
+
+                      {/* Linha 4b: pill Manuel jogou */}
+                      {t.manuelJogou && (
+                        <span title="Manuel participou neste torneio" style={{
+                          display:"inline-block", marginBottom:3,
+                          fontSize:10, fontWeight:700,
+                          background:"var(--bg-success-subtle)", color:"var(--color-good-dark)",
+                          borderRadius:6, padding:"2px 8px",
+                          border:"1px solid var(--color-good)",
+                        }}>★ Manuel</span>
+                      )}
 
                       {/* Linha 4: barra de inscritos */}
                       {t.temCampo && t.maximo != null && t.maximo > 0 && (
