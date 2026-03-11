@@ -20,12 +20,12 @@ const SimuladorPage = lazy(() => import("./pages/SimuladorPage"));
 const CalendarioPage = lazy(() => import("./pages/CalendarioPage"));
 const BJGTPage = lazy(() => import("./pages/BJGTPage"));
 const BJGTAnalysisPage = lazy(() => import("./pages/BJGTAnalysisPage"));
-const RivaisIntlPage = lazy(() => import("./pages/RivaisIntlPage"));
+const KIDSPage = lazy(() => import("./pages/KIDSPage"));
 const CompararPage = lazy(() => import("./pages/CompararPage"));
 const DrivePage = lazy(() => import("./pages/DrivePage"));
-const USKidsFieldPage = lazy(() => import("./pages/USKidsFieldPage"));
-const TorneiosAnalisePage = lazy(() => import("./pages/TorneiosAnalisePage"));
-const FTMDoralPage = lazy(() => import("./pages/FTMDoralPage"));
+const USKIDSPage = lazy(() => import("./pages/USKIDSPage"));
+const FPGPage = lazy(() => import("./pages/FPGPage"));
+const DORALPage = lazy(() => import("./pages/DORALPage"));
 
 type Status =
   | { kind: "loading" }
@@ -246,10 +246,10 @@ export default function App() {
                 <Route path="/drive" element={<DrivePage />} />
                 <Route path="/bjgt/:fed?" element={<BJGTPage />} />
                 <Route path="/bjgt-analysis/:fed?" element={<BJGTAnalysisPage />} />
-                <Route path="/rivais" element={<RivaisIntlPage />} />
-                <Route path="/uskids" element={<USKidsFieldPage />} />
-                <Route path="/diversos" element={<TorneiosAnalisePage />} />
-                <Route path="/doral" element={<FTMDoralPage />} />
+                <Route path="/kids" element={<KIDSPage />} />
+                <Route path="/uskids" element={<USKIDSPage />} />
+                <Route path="/diversos" element={<FPGPage />} />
+                <Route path="/doral" element={<DORALPage />} />
                 <Route path="*" element={<Navigate to="/jogadores/52884" replace />} />
               </Routes>
             </Suspense>

@@ -5,7 +5,7 @@ import EmptyState from "../ui/EmptyState";
 import {
   ScorecardLB, AccumulatedLB, expandMultiRound,
   type Tournament as TATournament,
-} from "./TorneiosAnalisePage";
+} from "./FPGPage";
 
 // ─────────────────────────────────────────────
 // TIPOS — CAMPO (inscritos)
@@ -488,6 +488,7 @@ const EURO_KEYWORDS = [
 ];
 
 function torneioRegiao(name: string): "USA" | "EURO" | null {
+  if (!name) return null;
   const n = name.toLowerCase();
   if (EURO_KEYWORDS.some(k => n.includes(k))) return "EURO";
   if (USA_KEYWORDS.some(k => n.includes(k))) return "USA";
@@ -536,6 +537,12 @@ function isManuel(nome: string) {
 
 
 // ─────────────────────────────────────────────
+/** Jogador sem scorecard: score=0 e todos os strokes são 0 ou ausentes */
+function isWD(score: number, strokes: number[]): boolean {
+  if (score > 0) return false;
+  return !strokes || strokes.every(s => !s || s === 0);
+}
+
 // ADAPTADOR: EscalaoResult → Tournament (para reutilizar ScorecardLB / AccumulatedLB)
 // ─────────────────────────────────────────────
 function escalaoToTournament(e: EscalaoResult, t: TorneioResult): TATournament {
@@ -594,16 +601,33 @@ function escalaoToTournament(e: EscalaoResult, t: TorneioResult): TATournament {
     }
   }
 
-  const players = [...playerMap.values()];
+  // WD players ficam no fundo da tabela (não separados)
+  const allPlayersRaw = [...playerMap.values()];
+  const players = [
+    ...allPlayersRaw.filter(p => {
+      const allScores: number[] = p.roundScores.flatMap((rs: any) => rs.scores ?? []);
+      const totalGross: number = typeof p.grossTotal === 'number' ? p.grossTotal : 0;
+      return !isWD(totalGross, allScores);
+    }),
+    ...allPlayersRaw.filter(p => {
+      const allScores: number[] = p.roundScores.flatMap((rs: any) => rs.scores ?? []);
+      const totalGross: number = typeof p.grossTotal === 'number' ? p.grossTotal : 0;
+      return isWD(totalGross, allScores);
+    }),
+  ];
   return {
     name: `${t.name} — ${e.nome}`,
     tcode: `${t.t}-${e.age_group}`,
     date: t.date_inicio,
     campo: t.campo ?? "",
     rounds: rondasComDados.length,
-    playerCount: players.length,
+    playerCount: allPlayersRaw.filter(p => {
+      const allScores: number[] = p.roundScores.flatMap((rs: any) => rs.scores ?? []);
+      const totalGross: number = typeof p.grossTotal === 'number' ? p.grossTotal : 0;
+      return !isWD(totalGross, allScores);
+    }).length,
     players,
-  };
+  } as any;
 }
 
 // ─────────────────────────────────────────────
@@ -661,6 +685,7 @@ function EscalaoSection({ escalao: e, torneio: t }: {
         ? <AccumulatedLB tournament={curT} nRounds={rondasComDados.length} escLookup={new Map()} playersDB={{}} />
         : <ScorecardLB tournament={curT} escLookup={new Map()} playersDB={{}} siLabel="m" parLabelColSpan={6} />
       }
+
     </div>
   );
 }
@@ -674,12 +699,13 @@ function EscalaoTabs({ escaloes, torneio: t, defaultIdx }: {
   const escalaoEsperado = escalaoManuelParaData(t.date_inicio);
 
   const escTabStyle = (i: number): React.CSSProperties => ({
-    padding: "7px 16px", fontSize: 13,
+    padding: "6px 12px", fontSize: 12,
     fontWeight: esc === i ? 700 : 500,
     color: esc === i ? "var(--text)" : "var(--text-muted,#888)",
     background: "transparent", border: "none",
     borderBottom: esc === i ? "2px solid var(--accent,#2563eb)" : "2px solid transparent",
     cursor: "pointer", whiteSpace: "nowrap" as const,
+    marginBottom: -1,
   });
 
   const e = escaloes[esc];
@@ -687,7 +713,7 @@ function EscalaoTabs({ escaloes, torneio: t, defaultIdx }: {
   return (
     <div>
       {/* Barra de escalões */}
-      <div style={{ display: "flex", borderBottom: "1px solid var(--border)", marginBottom: 12, overflowX: "auto" }}>
+      <div style={{ display: "flex", flexWrap: "wrap", borderBottom: "1px solid var(--border)", marginBottom: 12 }}>
         {escaloes.map((es, i) => {
           const isME = t.escalao_manuel
             ? es.age_group === t.escalao_manuel
@@ -776,6 +802,11 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
             target="_blank" rel="noopener noreferrer" style={{ fontSize:11, padding:"2px 9px", borderRadius:10,
               background:"var(--bg-muted)", color:"var(--accent-text)", border:"1px solid var(--border)", textDecoration:"none" }}>
             📋 Inscritos
+          </a>
+          <a href={`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${t.t}`}
+            target="_blank" rel="noopener noreferrer" style={{ fontSize:11, padding:"2px 9px", borderRadius:10,
+              background:"var(--bg-muted)", color:"var(--accent-text)", border:"1px solid var(--border)", textDecoration:"none" }}>
+            🏆 Resultados ↗
           </a>
           {(t.url_uskids || (LINKS_EXTRA[t.t] ?? []).find(l => l.label === "USKids ↗")?.url) && (
             <a href={t.url_uskids ?? (LINKS_EXTRA[t.t] ?? []).find(l => l.label === "USKids ↗")!.url}
@@ -953,6 +984,8 @@ function TabResultados({ data, selectedT, greatgolfData }: {
       .sc-score.triple { background: #2563eb; color: #fff; }
       .sc-score.quad   { background: #1d4ed8; color: #fff; }
       .sc-score.empty  { color: #ccc; }
+      .row-wd td { color: #bbb !important; }
+      .row-wd td.name { color: #bbb !important; }
 
       @media print {
         body { padding: 6px; }
@@ -1013,12 +1046,20 @@ function TabResultados({ data, selectedT, greatgolfData }: {
             ${hasPontos?"<td></td>":""}
           </tr>` : "";
 
-          const rows = jogadores.map((j: any, idx: number) => {
+          // Separar WD dos outros antes de renderizar (WD vai para o fundo)
+          const jogadoresOrdenados = [
+            ...jogadores.filter((j: any) => !isWD(j.score || 0, j.strokes?.length ? j.strokes : (j.rondas?.["1"]?.strokes ?? []))),
+            ...jogadores.filter((j: any) =>  isWD(j.score || 0, j.strokes?.length ? j.strokes : (j.rondas?.["1"]?.strokes ?? []))),
+          ];
+          let posCounter = 0;
+          const rows = jogadoresOrdenados.map((j: any) => {
             const st = getStrokes(j);
+            const wd = isWD(j.score || 0, st);
             const out9 = st.slice(0,9).reduce((s:number,v:number)=>s+(v||0),0);
             const in9  = st.slice(9,18).reduce((s:number,v:number)=>s+(v||0),0);
             const manuel = isManuel(j.nome);
-            const manCls = manuel ? " row-manuel" : "";
+            const manCls = manuel ? " row-manuel" : wd ? " row-wd" : "";
+            if (!wd) posCounter++;
             const holes9 = st.slice(0,9).map((s:number, hi:number) => {
               const cl = scClass(s, par?.[hi] ?? null);
               return `<td class="lb-hole${hi===0?" lb-hole-first":""}"><span class="sc-score ${cl||"empty"}">${s||""}</span></td>`;
@@ -1030,11 +1071,11 @@ function TabResultados({ data, selectedT, greatgolfData }: {
             const tpVal = tpStr(j.to_par);
             const tpC   = tpColor(j.to_par);
             return `<tr class="${manCls.trim()}">
-              <td class="pos">${idx+1}</td>
-              <td class="name">${manuel?"★ ":""}${j.nome}</td>
+              <td class="pos">${wd ? "" : posCounter}</td>
+              <td class="name">${manuel?"★ ":""}${j.nome}${wd?' <span style="color:#999;font-size:9px;font-weight:700">WD</span>':""}</td>
               <td class="flag">${flag(j.pais)}</td>
-              <td class="lb-topar" style="color:${tpC}">${tpVal}</td>
-              <td class="lb-gross">${j.score||"–"}</td>
+              <td class="lb-topar" style="color:${wd?"#bbb":tpC}">${wd?"WD":tpVal}</td>
+              <td class="lb-gross" style="${wd?"color:#bbb":""}">${wd?"–":j.score||"–"}</td>
               ${holes9}
               <td class="lb-halftot">${out9||"–"}</td>
               ${has18 ? holes9b + `<td class="lb-halftot">${in9||"–"}</td>` : ""}
@@ -1177,13 +1218,12 @@ function TabResultados({ data, selectedT, greatgolfData }: {
         <div style={{ fontSize:12, color:"var(--text-3)", display:"flex", gap:10, alignItems:"center", flexWrap:"wrap" }}>
           <span>📅 {fmtDate(t.date_inicio)}{t.campo ? ` · ${t.campo}` : ""}</span>
           <span>Actualizado {fmtTs(t.ultima_atualizacao)}</span>
-          {t.url_resultados && (
-            <a href={t.url_resultados} target="_blank" rel="noopener noreferrer"
-              style={{ color:"var(--text-3)", fontSize:10, textDecoration:"none",
-                border:"1px solid var(--border)", borderRadius:5, padding:"1px 7px" }}>
-              ver fonte ↗
-            </a>
-          )}
+          <a href={`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${t.t}`}
+            target="_blank" rel="noopener noreferrer"
+            style={{ color:"var(--text-3)", fontSize:10, textDecoration:"none",
+              border:"1px solid var(--border)", borderRadius:5, padding:"1px 7px" }}>
+            📋 Resultados ↗
+          </a>
           {(LINKS_EXTRA[t.t] ?? []).map((l, i) => (
             <a key={i} href={l.url} target="_blank" rel="noopener noreferrer"
               style={{ color:"var(--text-3)", fontSize:10, textDecoration:"none",
@@ -2329,6 +2369,102 @@ function TabInscritos({ data, fieldData, selectedT: _selectedT }: {
 
 
 
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CONVERSOR: formato raw signupanytime → TorneioResult
+// Os ficheiros uskids_torneios_completos(N).json têm estrutura {t, meta, flights}
+// completamente diferente do uskids-results.json {gerado_em, resultados:[...]}
+// ─────────────────────────────────────────────────────────────────────────────
+function converterTorneioCompleto(raw: any): TorneioResult | null {
+  if (!raw?.t || !raw?.meta?.tournament?.name) return null;
+  const meta   = raw.meta;
+  const tourn  = meta.tournament;
+  const ageGroups: Record<string, { name: string; holes_per_round: number }> = meta.age_groups ?? {};
+
+  // Agrupa flights pelo mesmo age_group (pode haver vários flights por escalão)
+  const escalaoMap = new Map<number, {
+    age_group: number; nome: string; holes: number;
+    roundsMap: Map<number, RondaJogador[]>;
+  }>();
+
+  for (const flight of (raw.flights ?? [])) {
+    const fn   = flight.flight_name;
+    const agId = fn?.age_group as number | undefined;
+    if (!agId) continue;
+    const ag = ageGroups[String(agId)];
+    if (!ag) continue;
+
+    if (!escalaoMap.has(agId)) {
+      escalaoMap.set(agId, {
+        age_group: agId, nome: ag.name,
+        holes: ag.holes_per_round ?? 9,
+        roundsMap: new Map(),
+      });
+    }
+    const esc = escalaoMap.get(agId)!;
+
+    // Cada r*_t0 tem os mesmos jogadores — basta a primeira entrada
+    const roundsData: Record<string, any> = flight.rounds_data ?? {};
+    const firstKey = Object.keys(roundsData)[0];
+    if (!firstKey) continue;
+    const fp: Record<string, any> = roundsData[firstKey].flight_players ?? {};
+
+    for (const player of Object.values(fp)) {
+      const nome = `${player.first ?? ''} ${player.last ?? ''}`.trim();
+      if (!nome) continue;
+      const pais   = (player.country ?? '').toUpperCase();
+      const cidade = player.place ?? '';
+      const tee    = player.teeMarkerName ?? '';
+
+      for (const [rnStr, rdRaw] of Object.entries(player.rounds ?? {})) {
+        const rn = parseInt(rnStr);
+        if (isNaN(rn)) continue;
+        const rd = rdRaw as any;
+        if (!esc.roundsMap.has(rn)) esc.roundsMap.set(rn, []);
+        esc.roundsMap.get(rn)!.push({
+          nome, pais, cidade, tee,
+          pontos:     0,
+          score:      rd.num_strokes ?? (rd.strokes ?? []).filter((s: number) => s > 0).reduce((a: number, b: number) => a + b, 0),
+          buracos:    rd.num_holes   ?? (rd.strokes ?? []).filter((s: number) => s > 0).length,
+          start_time: rd.start_time  ?? '',
+          grupo:      rd.group_number ?? 0,
+          strokes:    rd.strokes ?? [],
+          to_par:     null,
+        });
+      }
+    }
+  }
+
+  const escaloes: EscalaoResult[] = [];
+  for (const esc of escalaoMap.values()) {
+    const rondas: RondaResult[] = [];
+    for (const [rn, leaderboard] of esc.roundsMap) {
+      rondas.push({
+        ronda: rn, par: [], si: [],
+        buracos: esc.holes,
+        total_par: null,
+        leaderboard,
+      });
+    }
+    rondas.sort((a, b) => a.ronda - b.ronda);
+    escaloes.push({
+      age_group: esc.age_group, nome: esc.nome,
+      holes: esc.holes, is_manuel: false, rondas,
+    });
+  }
+
+  return {
+    t:          raw.t,
+    name:       tourn.name,
+    date_inicio: tourn.start_date  ?? '',
+    date_fim:   tourn.end_date,
+    campo:      tourn.courses ? String(tourn.courses).split(',')[0].trim() : null,
+    rondas_total: tourn.rounds ?? 1,
+    escaloes,
+    ultima_atualizacao: '',
+  };
+}
+
 // COMPONENTE PRINCIPAL
 // ─────────────────────────────────────────────
 type Tab = "campo" | "resultados" | "rivais" | "inscritos";
@@ -2351,10 +2487,58 @@ export default function USKidsFieldPage() {
       })
       .catch(e => setErro(e.message));
 
-    fetch("/data/uskids-results.json?v=" + Date.now())
-      .then(r => r.ok ? r.json() : { gerado_em:"", resultados:[] })
-      .then(setResultsData)
-      .catch(() => setResultsData({ gerado_em:"", resultados:[] }));
+    // ── Carregar resultados: 15 ficheiros históricos permanentes + ficheiro auto-gerado ──
+    // Os históricos têm prioridade; o auto-gerado apenas acrescenta torneios ainda não cobertos.
+    const TORNEIOS_COMPLETOS_COUNT = 15;
+    const historicosUrls = Array.from({ length: TORNEIOS_COMPLETOS_COUNT }, (_, i) =>
+      `/data/uskids_torneios_completos(${i + 1}).json`
+    );
+
+    Promise.all([
+      // ficheiro auto-gerado (carregado em paralelo com os históricos)
+      fetch("/data/uskids-results.json?v=" + Date.now())
+        .then(r => r.ok ? r.json() : { gerado_em: "", resultados: [] })
+        .catch((): ResultsData => ({ gerado_em: "", resultados: [] })),
+      // 15 ficheiros históricos permanentes
+      ...historicosUrls.map(url =>
+        fetch(url)
+          .then(r => r.ok ? r.json() : null)
+          .catch(() => null)
+      ),
+    ]).then(([autoGerado, ...historicos]) => {
+      const auto = autoGerado as ResultsData;
+
+      // 1. Construir lista a partir dos históricos permanentes (têm prioridade)
+      // Os ficheiros históricos têm formato raw {t, meta, flights} → converter primeiro
+      const historicosResultados: TorneioResult[] = [];
+      const tExistentes = new Set<number>();
+
+      for (const raw of historicos) {
+        if (!raw) continue;
+        // Pode ser array de entradas raw ou objecto único raw
+        const lista: any[] = Array.isArray(raw) ? raw : [raw];
+        for (const entrada of lista) {
+          if (!entrada?.t || tExistentes.has(entrada.t)) continue;
+          // Detectar formato: raw signupanytime tem {meta, flights}; já convertido tem {escaloes}
+          const tr: TorneioResult | null = entrada.escaloes
+            ? entrada as TorneioResult          // já no formato TorneioResult
+            : converterTorneioCompleto(entrada); // converter do formato raw
+          if (tr) {
+            historicosResultados.push(tr);
+            tExistentes.add(tr.t);
+          }
+        }
+      }
+
+      // 2. O auto-gerado apenas entra se o t-code ainda não está coberto pelos históricos
+      const autoExtras = auto.resultados.filter(r => !tExistentes.has(r.t));
+
+      setResultsData({
+        gerado_em: auto.gerado_em,
+        resultados: [...historicosResultados, ...autoExtras],
+      });
+    });
+
     fetch("/data/rivals-intl.json")
       .then(r => r.ok ? r.json() : null)
       .then(setIntlData)
@@ -2371,8 +2555,8 @@ export default function USKidsFieldPage() {
     if (!resultsData) return 0;
     const nomes = new Set<string>();
     for (const t of resultsData.resultados)
-      for (const e of t.escaloes)
-        for (const r of e.rondas)
+      for (const e of (t.escaloes ?? []))
+        for (const r of (e.rondas ?? []))
           for (const j of (r.leaderboard ?? r.jogadores ?? []))
             if (!isManuel(j.nome)) nomes.add(j.nome.toLowerCase().trim());
     return nomes.size;
@@ -2384,6 +2568,7 @@ export default function USKidsFieldPage() {
   const allTorneios = useMemo(() => {
     const map = new Map<number, { t: number; name: string; date: string; temResultados: boolean; temCampo: boolean; inscritos?: number; maximo?: number; vagas?: number; escalaoManuel?: string; rondas?: number; fee?: number; campo?: string; totalInscritos?: number; totalMaximo?: number; urlResultados?: string }>();
     for (const t of torneiosCampo) {
+      if (!t.t || !t.name) continue;
       const em = escalaoManuelParaData(t.date_inicio);
       const esc = t.escaloes?.find((e: any) => e.nome === em);
       map.set(t.t, { t: t.t, name: t.name, date: t.date_inicio, temResultados: false, temCampo: true,
@@ -2396,10 +2581,13 @@ export default function USKidsFieldPage() {
       });
     }
     for (const t of torneiosResultados) {
+      if (!t.t || !t.name) continue;
       if (map.has(t.t)) { map.get(t.t)!.temResultados = true; if (t.url_resultados) map.get(t.t)!.urlResultados = t.url_resultados; }
       else map.set(t.t, { t: t.t, name: t.name, date: t.date_inicio, temResultados: true, temCampo: false, urlResultados: t.url_resultados });
     }
-    return [...map.values()].sort((a, b) => isoDate(a.date).localeCompare(isoDate(b.date)));
+    return [...map.values()]
+      .filter(t => t.name && t.date)
+      .sort((a, b) => isoDate(a.date).localeCompare(isoDate(b.date)));
   }, [torneiosCampo, torneiosResultados]);
 
   if (erro) return (
@@ -2457,6 +2645,16 @@ export default function USKidsFieldPage() {
               </button>
             ))}
           </div>
+        </div>
+
+        {/* Link externo: histórico de resultados */}
+        <div style={{ padding:"6px 8px", borderBottom:"1px solid var(--border)" }}>
+          <a href="https://uskids-golf.vercel.app/" target="_blank" rel="noopener noreferrer"
+            style={{ display:"flex", alignItems:"center", gap:6, padding:"5px 10px", borderRadius:6,
+              fontSize:12, color:"var(--text-2)", textDecoration:"none",
+              background:"var(--bg-muted)", border:"1px solid var(--border)" }}>
+            🗄️ Histórico de resultados ↗
+          </a>
         </div>
 
         {/* Lista de torneios agrupada por mês */}

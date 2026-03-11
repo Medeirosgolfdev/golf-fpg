@@ -11,7 +11,8 @@ import { scClass, toParClass, sc3m, SC, tpColorDark } from "../utils/scoreDispla
 import { isCalUnlocked } from "../utils/authConstants";
 import PasswordGate from "../ui/PasswordGate";
 import EmptyState from "../ui/EmptyState";
-import { buildAutoRivals, normName, getScorecards } from "./rivaisDataLoader";
+import KpiCard from "../ui/KpiCard";
+import { buildAutoRivals, normName, getScorecards, uskTournNames, uskFieldSizes } from "./KIDSdataLoader";
 
 
 /* ═══════════════════════════════════
@@ -141,7 +142,7 @@ const FIELD_CARDS = [
 const MANUEL_POS = 26; // 26º de 35 no torneio real
 const FIELD_TOTAL = 35; // total de jogadores no torneio
 
-const FL={"Portugal":"🇵🇹","Spain":"🇪🇸","England":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","Russian Federation":"🇷🇺","Bulgaria":"🇧🇬","Switzerland":"🇨🇭","Italy":"🇮🇹","France":"🇫🇷","Ireland":"🇮🇪","Northern Ireland":"🇬🇧","Germany":"🇩🇪","Netherlands":"🇳🇱","Norway":"🇳🇴","Lithuania":"🇱🇹","Thailand":"🇹🇭","United States":"🇺🇸","United Kingdom":"🇬🇧","Sweden":"🇸🇪","Morocco":"🇲🇦","Wales":"🏴󠁧󠁢󠁷󠁬󠁳󠁿","Belgium":"🇧🇪","Slovenia":"🇸🇮","Ukraine":"🇺🇦","Romania":"🇷🇴","China":"🇨🇳","Philippines":"🇵🇭","Slovakia":"🇸🇰","United Arab Emirates":"🇦🇪","Turkey":"🇹🇷","India":"🇮🇳","Viet Nam":"🇻🇳","Kazakhstan":"🇰🇿","Hungary":"🇭🇺","South Africa":"🇿🇦","Singapore":"🇸🇬","Denmark":"🇩🇰","Mexico":"🇲🇽","Canada":"🇨🇦","Austria":"🇦🇹","Paraguay":"🇵🇾","Brazil":"🇧🇷","Jersey":"🇯🇪","Nigeria":"🇳🇬","Oman":"🇴🇲","Chile":"🇨🇱","Colombia":"🇨🇴","Puerto Rico":"🇵🇷","Costa Rica":"🇨🇷","Great Britain":"🇬🇧","Latvia":"🇱🇻","South Korea":"🇰🇷"};
+const FL: Record<string,string> = {"Portugal":"🇵🇹","Spain":"🇪🇸","England":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","Russian Federation":"🇷🇺","Bulgaria":"🇧🇬","Switzerland":"🇨🇭","Italy":"🇮🇹","France":"🇫🇷","Ireland":"🇮🇪","Northern Ireland":"🇬🇧","Germany":"🇩🇪","Netherlands":"🇳🇱","Norway":"🇳🇴","Lithuania":"🇱🇹","Thailand":"🇹🇭","United States":"🇺🇸","United Kingdom":"🇬🇧","Sweden":"🇸🇪","Morocco":"🇲🇦","Wales":"🏴󠁧󠁢󠁷󠁬󠁳󠁿","Belgium":"🇧🇪","Slovenia":"🇸🇮","Ukraine":"🇺🇦","Romania":"🇷🇴","China":"🇨🇳","Philippines":"🇵🇭","Slovakia":"🇸🇰","United Arab Emirates":"🇦🇪","Turkey":"🇹🇷","India":"🇮🇳","Viet Nam":"🇻🇳","Kazakhstan":"🇰🇿","Hungary":"🇭🇺","South Africa":"🇿🇦","Singapore":"🇸🇬","Denmark":"🇩🇰","Mexico":"🇲🇽","Canada":"🇨🇦","Austria":"🇦🇹","Paraguay":"🇵🇾","Brazil":"🇧🇷","Jersey":"🇯🇪","Nigeria":"🇳🇬","Oman":"🇴🇲","Chile":"🇨🇱","Colombia":"🇨🇴","Puerto Rico":"🇵🇷","Costa Rica":"🇨🇷","Great Britain":"🇬🇧","Latvia":"🇱🇻","South Korea":"🇰🇷","Australia":"🇦🇺","Japan":"🇯🇵","New Zealand":"🇳🇿","Finland":"🇫🇮","Taiwan":"🇹🇼","Hong Kong":"🇭🇰","Indonesia":"🇮🇩","Estonia":"🇪🇪","Armenia":"🇦🇲","Barbados":"🇧🇧","Bahamas":"🇧🇸","Bolivia":"🇧🇴","Dominican Republic":"🇩🇴","Algeria":"🇩🇿","Ecuador":"🇪🇨","Guatemala":"🇬🇹","Honduras":"🇭🇳","Kenya":"🇰🇪","Cambodia":"🇰🇭","Nicaragua":"🇳🇮","Panama":"🇵🇦","Peru":"🇵🇪","El Salvador":"🇸🇻","Uganda":"🇺🇬","Uruguay":"🇺🇾","Venezuela":"🇻🇪","Czech Republic":"🇨🇿","Poland":"🇵🇱","Argentina":"🇦🇷","Cyprus":"🇨🇾","Lebanon":"🇱🇧"};
 
 const T: TournDef[]=[
   {id:"brjgt25",name:"WJGC 2025",short:"WJGC",date:"Fev 2025",rounds:3,par:71,field:40,nations:17,dateExact:"2025-02-24",ageMin:10,ageMax:11,url:"https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/34/leaderboard.htm"},
@@ -157,7 +158,23 @@ const T: TournDef[]=[
 
 // Tournament prestige weight: rounds (40%) + field size (35%) + internationality (25%)
 // Uses intendedRounds when available (e.g. QDL reduced by weather)
-const T_WEIGHTS: Record<string, number> = (() => {
+function getTournWeight(tid: string): number {
+  // Overrides explícitos — têm prioridade sobre T_WEIGHTS_BASE
+  if (tid.startsWith("brjgt") || tid.startsWith("wjgc"))  return 1.2;  // BJGT/WJGC → ★★★★
+  if (tid.startsWith("venice") || tid.startsWith("doral")) return 1.2; // Venice/Doral → ★★★★
+  if (tid in T_WEIGHTS_BASE) return T_WEIGHTS_BASE[tid];
+  if (/^usk\d+_b\d+$/.test(tid)) {
+    const base = tid.replace(/_b\d+$/, "");
+    const name = (uskTournNames.get(base)?.name ?? "").toLowerCase();
+    if (name.includes("world")) return 1.4;       // World Championship → ★★★★★
+    if (name.includes("european")) return 1.2;    // European Championship → ★★★★
+    if (name.includes("venice")) return 1.2;      // Venice Open → ★★★★
+    return 1.0;                                    // Red White & Blue, outros USKids → ★★★
+  }
+  return 0.3;
+}
+
+const T_WEIGHTS_BASE: Record<string, number> = (() => {
   const maxR = Math.max(...T.map(t => t.intendedRounds || t.rounds));
   const maxF = Math.max(...T.map(t => t.field));
   const maxN = Math.max(...T.map(t => t.nations));
@@ -170,6 +187,9 @@ const T_WEIGHTS: Record<string, number> = (() => {
   }
   return w;
 })();
+
+// Keep T_WEIGHTS as alias for backwards compat in ranking code
+const T_WEIGHTS = T_WEIGHTS_BASE;
 
 // Extended tournament names/display for auto-loaded tournaments
 // Metadados completos para auto tids que substituem entradas manuais (field, nations, par, url)
@@ -217,10 +237,19 @@ const AUTO_TOURN_NAMES: Record<string, { name: string; short: string; date: stri
 };
 
 /** Lookup tournament display info by id (works for manual T and auto tourns) */
-function getTournInfo(tid: string): { name: string; short: string; date: string } {
+function getTournInfo(tid: string): { name: string; short: string; date: string; dateExact: string } {
   const manual = T.find(t => t.id === tid);
-  if (manual) return { name: manual.name, short: manual.short, date: manual.date };
-  return AUTO_TOURN_NAMES[tid] ?? { name: tid, short: tid, date: "?" };
+  if (manual) return { name: manual.name, short: manual.short, date: manual.date, dateExact: manual.dateExact ?? manual.date };
+  const autoName = AUTO_TOURN_NAMES[tid];
+  const autoMap = T_MAP[tid];
+  if (autoName) return { ...autoName, dateExact: autoMap?.dateExact ?? autoName.date };
+  // USKids completo: "usk{tcode}_b{n}" → lookup via uskTournNames
+  const uskMatch = tid.match(/^(usk\d+)_b(\d+)$/);
+  if (uskMatch) {
+    const base = uskTournNames.get(uskMatch[1]);
+    if (base) return { name: base.name, short: base.short, date: base.date, dateExact: base.dateExact };
+  }
+  return { name: tid, short: tid, date: "?", dateExact: "9999" };
 }
 
 /* ═══════════════════════════════════
@@ -319,7 +348,16 @@ function computeDobInfo(p: RivalPlayer): DobInfo {
   let rangeMax: Date | null = null;
 
   for (const tid of Object.keys(p.r)) {
-    const td = T_MAP[tid];
+    let td: { dateExact?: string; ageMin?: number; ageMax?: number } | undefined = T_MAP[tid];
+    // USKids completo tids: "usk{tcode}_b{n}" → dateExact from uskTournNames, age from suffix
+    if (!td) {
+      const m = tid.match(/^(usk\d+)_b(\d+)$/);
+      if (m) {
+        const base = uskTournNames.get(m[1]);
+        const age = Number(m[2]);
+        if (base) td = { dateExact: base.dateExact, ageMin: age, ageMax: age };
+      }
+    }
     if (!td?.dateExact || td.ageMin == null || td.ageMax == null) continue;
     const tDate = new Date(td.dateExact);
     // Age at tournament must be in [ageMin, ageMax]
@@ -576,9 +614,10 @@ const manuel = D_BASE.find(x => x.isM)!;
 function useAutoRivals() {
   const [merged, setMerged] = React.useState<RivalPlayer[]>(D_BASE);
   const [loaded, setLoaded] = React.useState(false);
+  const [progress, setProgress] = React.useState<{ done: number; total: number; label: string } | null>(null);
 
   React.useEffect(() => {
-    buildAutoRivals().then(autoPlayers => {
+    buildAutoRivals((p) => setProgress({ ...p })).then(autoPlayers => {
       // Trabalhar sobre uma cópia profunda do D_BASE
       const map = new Map<string, RivalPlayer>(
         D_BASE.map(p => [normName(p.n), { ...p, r: { ...p.r } }])
@@ -603,7 +642,7 @@ function useAutoRivals() {
     });
   }, []);
 
-  return { rivals: merged, loaded };
+  return { rivals: merged, loaded, progress };
 }
 
 /* ═══════════════════════════════════
@@ -783,7 +822,7 @@ function getAvgZ(p) {
 
     const tDef = T.find(t => t.id === tid);
     const nRd = tDef ? (tDef.intendedRounds || tDef.rounds) : res.rd.length;
-    const w = T_WEIGHTS[tid] || 0.3; // peso baixo para torneios auto sem prestige definido
+    const w = getTournWeight(tid);
 
     const zs: number[] = [];
     for (let i = 0; i < res.rd.length; i++) {
@@ -846,9 +885,9 @@ function buildRankMap(rivals: RivalPlayer[]): Record<string, number> {
   return m;
 }
 
-// Inicializado com D_BASE; re-calculado quando RivalsCtx actualiza
-let rankMap: Record<string, number> = buildRankMap(D_BASE);
-let totalRanked = Object.keys(rankMap).length;
+// Inicializado vazio — populado só depois de loaded=true
+let rankMap: Record<string, number> = {};
+let totalRanked = 0;
 
 // nPlayed e nRounds contam todos os torneios (T manual + auto-loaded)
 // Tids que ficam ocultos no detalhe (deduplicação)
@@ -1090,8 +1129,8 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
                 <th className="rivais-th-name pointer" onClick={() => doSort("name")}>Jogador{sortIcon("name")}</th>
                 <th className="rivais-th pointer ta-center" onClick={() => doSort("zrank")} title="Torneios jogados">#T</th>
                 {T.map(t => {
-                  const w = T_WEIGHTS[t.id];
-                  const stars = w >= 0.9 ? "★★★" : w >= 0.6 ? "★★" : w >= 0.4 ? "★" : "½";
+                  const w = getTournWeight(t.id);
+                  const stars = w >= 1.3 ? "★★★★★" : w >= 1.1 ? "★★★★" : w >= 0.9 ? "★★★" : w >= 0.6 ? "★★" : w >= 0.4 ? "★" : "½";
                   return (
                   <th key={t.id} className="rivais-th pointer ta-center" style={{ minWidth: 56 }} onClick={() => doSort("t:" + t.id)}>
                     {t.url ? <a href={t.url} target="_blank" rel="noopener noreferrer" className="rivais-link" onClick={e => e.stopPropagation()}>{t.short}</a> : t.short}
@@ -1212,7 +1251,7 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
       </div>
 
       <div className="section-subtitle ta-c mt-10">
-        Clica num jogador para ver detalhe · Rank ponderado por prestígio: ★★★ peso máximo, ½ peso mínimo · ({totalRanked} jogadores com dados)
+        Clica num jogador para ver detalhe · Rank ponderado por prestígio: ★★★★★ USKids World · ★★★★ European/BJGT/Venice · ★★★ outros top · ½ peso mínimo · ({totalRanked} jogadores com dados)
       </div>
     </div>
   );
@@ -1462,11 +1501,12 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
         const info = getTournInfo(tid);
         const autoMeta = AUTO_TOURN_META[tid];
         const tmap = T_MAP[tid];
+        const uskField = uskFieldSizes.get(tid) ?? 0;
         const fakeDef = {
           id: tid, name: info.name, short: info.short, date: info.date,
-          dateExact: tmap?.dateExact ?? info.date,
+          dateExact: tmap?.dateExact ?? info.dateExact,
           rounds: res.rd.length, par: autoMeta?.par ?? 72,
-          field: autoMeta?.field ?? 0, nations: autoMeta?.nations ?? 0,
+          field: autoMeta?.field ?? uskField, nations: autoMeta?.nations ?? 0,
           intendedRounds: res.rd.length, url: autoMeta?.url,
         } as unknown as TournDef;
         const autoCard = autoScorecards.find(sc => sc.tid === tid) || null;
@@ -1498,9 +1538,21 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
   const allCardPars: number[][] = [];
   if (bjgtCard) { allCardScores.push(...bjgtCard.rounds); bjgtCard.rounds.forEach(() => allCardPars.push([...VP_PAR])); }
   if (wjgcCard) { allCardScores.push(...wjgcCard.rds); wjgcCard.rds.forEach(() => allCardPars.push([...WJGC26_PAR])); }
-
   if (eowagr25Card) { allCardScores.push(...eowagr25Card.rds); eowagr25Card.rds.forEach(() => allCardPars.push([...EOWAGR25_PAR])); }
   if (wjgc26_1213Card) { allCardScores.push(...wjgc26_1213Card.rds); wjgc26_1213Card.rds.forEach(() => allCardPars.push([...WJGC26_1213_PAR])); }
+  // Todos os auto-scorecards com par por buraco (evitar duplicar os que já foram incluídos acima)
+  const dedupAutoTids = new Set(["brjgt25","wjgc26","eowagr25","wjgc26_1213"]);
+  for (const sc of autoScorecards) {
+    if (dedupAutoTids.has(sc.tid)) continue;  // já incluído via card dedicado
+    dedupAutoTids.add(sc.tid);
+    if (!sc.par || sc.par.length !== 18) continue;  // sem par por buraco → não conta para birdie %
+    for (const rd of sc.rounds) {
+      if (rd.length === 18 && rd.some(s => s > 0)) {
+        allCardScores.push(rd);
+        allCardPars.push(sc.par);
+      }
+    }
+  }
 
   // BJGT 2025 special rendering (with field stats)
   const par = VP_PAR;
@@ -1597,9 +1649,6 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
         <div className="detail-sub">
           {rival && !isManuel && <span className="muted">{rival.co}</span>}
           {isManuel && <span className="p p-outline p-sm">REF</span>}
-          {playedDedup > 0 && <span className="muted"> · {playedDedup} torneios · {roundsDedup} rondas</span>}
-          {bestTp != null && <span className="muted"> · Melhor <span style={{ color: tpColorDark(bestTp) }}>{fmtToPar(bestTp)}</span></span>}
-          {avgRd != null && <span className="muted"> · Média {avgRd.toFixed(1)}</span>}
           {rival?.up.map(u => {
             const up = UP.find(x => x.id === u);
             return up ? <span key={u} className="p p-sm ml-6" style={{ background: "var(--bg-success-strong)", color: "var(--color-good-dark)" }}>▲ {up.short}</span> : null;
@@ -1607,34 +1656,61 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
         </div>
       </div>
 
-      {/* ── Distribuição de scoring ── */}
-      {allCardScores.length > 0 && (() => {
+      {/* ── KPIs + Distribuição de scoring ── */}
+      {(() => {
         let eagles=0,birdies=0,pars=0,bogeys=0,doubles=0,worse=0;
         for (let k=0;k<allCardScores.length;k++) {
           const sc=allCardScores[k], pp=allCardPars[k];
           for (let i=0;i<18;i++) { const d=sc[i]-pp[i]; if(d<=-2)eagles++; else if(d===-1)birdies++; else if(d===0)pars++; else if(d===1)bogeys++; else if(d===2)doubles++; else worse++; }
         }
-        const total=allCardScores.length*18;
-        if(!total) return null;
-        const items=[{l:"Eagle+",v:eagles,c:"eagle"},{l:"Birdie",v:birdies,c:"birdie"},{l:"Par",v:pars,c:"par"},{l:"Bogey",v:bogeys,c:"bogey"},{l:"Duplo",v:doubles,c:"double"},{l:"Triple+",v:worse,c:"triple"}].filter(x=>x.v>0);
+        const holeTotal = allCardScores.length * 18;
+        const pct = (v: number) => holeTotal ? (v/holeTotal*100).toFixed(0)+"%" : "—";
+        const hasScoring = holeTotal > 0;
+        const kpis: { label: string; value: React.ReactNode; sub?: React.ReactNode; color?: string }[] = [];
+        if (playedDedup > 0) kpis.push({ label: "Torneios", value: playedDedup, sub: `${roundsDedup} rondas` });
+        if (bestTp != null) kpis.push({ label: "Melhor ±Par", value: fmtToPar(bestTp), color: tpColorDark(bestTp) });
+        if (avgRd != null) kpis.push({ label: "Média Ronda", value: avgRd.toFixed(1) });
+        if (hasScoring) {
+          if (eagles > 0) kpis.push({ label: "Eagle+", value: pct(eagles), sub: eagles, color: "var(--score-eagle-text, #7c3aed)" });
+          kpis.push({ label: "Birdie", value: pct(birdies), sub: birdies, color: "var(--color-good-dark)" });
+          kpis.push({ label: "Par", value: pct(pars), sub: pars });
+          kpis.push({ label: "Bogey", value: pct(bogeys), sub: bogeys, color: "var(--color-warn, #d97706)" });
+          if (doubles > 0) kpis.push({ label: "Duplo", value: pct(doubles), sub: doubles, color: "var(--color-bad, #dc2626)" });
+          if (worse > 0) kpis.push({ label: "Triple+", value: pct(worse), sub: worse, color: "var(--color-bad, #dc2626)" });
+        }
+        if (!kpis.length) return null;
+        const scoringItems = kpis.filter(k => ["Eagle+","Birdie","Par","Bogey","Duplo","Triple+"].includes(k.label));
+        const statItems = kpis.filter(k => !["Eagle+","Birdie","Par","Bogey","Duplo","Triple+"].includes(k.label));
+        const scoreClsMap: Record<string,string> = {"Eagle+":"eagle","Birdie":"birdie","Par":"par","Bogey":"bogey","Duplo":"double","Triple+":"triple"};
         return (
-          <div className="d-flex items-center gap-8 mb-8" style={{ padding: "6px 0", flexWrap: "wrap" }}>
-            <span className="fs-10 c-text-3">{total} buracos · {allCardScores.length} rondas:</span>
-            {items.map(s=>(
-              <span key={s.l} className="d-flex items-center gap-4">
-                <span className={`sc-score ${s.c}`} style={{width:20,height:20,fontSize:10}}>{s.v}</span>
-                <span className="fs-10 c-text-3">{s.l} {(s.v/total*100).toFixed(0)}%</span>
-              </span>
-            ))}
-          </div>
+          <>
+            {statItems.length > 0 && (
+              <div className="kpis mb-8" style={{ gridTemplateColumns: `repeat(${Math.min(statItems.length, 5)}, 1fr)` }}>
+                {statItems.map(k => (
+                  <KpiCard key={k.label} label={k.label} value={k.value} sub={k.sub} color={k.color} size="sm" />
+                ))}
+              </div>
+            )}
+            {scoringItems.length > 0 && (
+              <div className="d-flex gap-8 mb-12" style={{ flexWrap: "wrap", alignItems: "stretch" }}>
+                {scoringItems.map(k => (
+                  <div key={k.label} className="kpi" style={{ flex: "1 1 80px", minWidth: 72, display: "flex", flexDirection: "column", alignItems: "center", gap: 4, padding: "8px 6px" }}>
+                    <span className="kpi-lbl">{k.label}</span>
+                    <span className={`sc-score ${scoreClsMap[k.label] ?? ""}`} style={{ width: 36, height: 36, fontSize: 14, fontWeight: 900 }}>{k.value}</span>
+                    <span className="kpi-sub">{k.sub}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
         );
       })()}
 
       {/* ── Cards de torneio ── */}
       {tournResults.map(({ t, res, hasCard, autoCard, ageGroup, isAuto }) => {
         const expanded = expandedTourns.has(t.id);
-        const wOrd = T_WEIGHTS[t.id];
-        const stars = wOrd >= 0.9 ? "★★★" : wOrd >= 0.6 ? "★★" : wOrd >= 0.4 ? "★" : null;
+        const wOrd = getTournWeight(t.id);
+        const stars = wOrd >= 1.3 ? "★★★★★" : wOrd >= 1.1 ? "★★★★" : wOrd >= 0.9 ? "★★★" : wOrd >= 0.6 ? "★★" : wOrd >= 0.4 ? "★" : null;
         const manuelRes = !isManuel ? manuel?.r[t.id] : null;
         const vsM = manuelRes?.tp != null && res.tp != null ? res.tp - manuelRes.tp : null;
         const tpDisplay = res.tp != null ? fmtToPar(res.tp) : null;
@@ -1670,41 +1746,42 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
                 </button>
               )}
             </div>
-            <div className="d-flex gap-16 items-center" style={{ padding: "10px 14px", flexWrap: "wrap" }}>
-              {res.p != null && (() => {
-                const pos = typeof res.p === "number" ? res.p : null;
-                const fieldSize = t.field;
-                const bigField = fieldSize >= 20;
-                const medal = pos === 1 ? "🥇" : pos === 2 ? "🥈" : pos === 3 ? "🥉" : null;
-                const isTop10 = pos != null && pos <= 10 && pos > 3;
-                return (
-                  <div className="d-flex items-center gap-6">
-                    {medal ? (
-                      <span style={{ fontSize: 22, lineHeight: 1 }}>{medal}</span>
-                    ) : (bigField && isTop10) ? (
-                      <span className="sidebar-rank sidebar-rank-top10" style={{ fontSize: 11, padding: "2px 7px", borderRadius: 12 }}>
-                        Top 10
-                      </span>
-                    ) : null}
-                    <div>
-                      <span className="fs-11 c-text-3">Posição </span>
-                      <span className="fw-800 fs-14">#{res.p}</span>
-                      {fieldSize > 0 && <span className="fs-11 c-text-3">/{fieldSize}</span>}
+            <div style={{ display: "grid", gridTemplateColumns: "140px 90px 80px 1fr auto", alignItems: "center", padding: "10px 14px", gap: 0 }}>
+              {/* Col 1: Posição */}
+              <div className="d-flex items-center gap-6">
+                {res.p != null && (() => {
+                  const pos = typeof res.p === "number" ? res.p : null;
+                  const fieldSize = t.field;
+                  const medal = pos === 1 ? "🥇" : pos === 2 ? "🥈" : pos === 3 ? "🥉" : null;
+                  const isTop10 = pos != null && pos <= 10 && pos > 3 && fieldSize >= 20;
+                  return (
+                    <div className="d-flex items-center gap-6">
+                      {medal ? <span style={{ fontSize: 20, lineHeight: 1 }}>{medal}</span>
+                        : isTop10 ? <span className="sidebar-rank sidebar-rank-top10" style={{ fontSize: 10, padding: "2px 6px", borderRadius: 10 }}>Top 10</span>
+                        : null}
+                      <div>
+                        <span className="fs-11 c-text-3">Posição </span>
+                        <span className="fw-800 fs-14">#{res.p}</span>
+                        {fieldSize > 0 && <span className="fs-11 c-text-3">/{fieldSize}</span>}
+                      </div>
                     </div>
-                  </div>
-                );
-              })()}
+                  );
+                })()}
+                {res.p == null && <span className="fs-11 c-text-3">—</span>}
+              </div>
+              {/* Col 2: Total */}
               <div>
                 <span className="fs-11 c-text-3">Total </span>
                 <span className="fw-700 fs-13">{res.t ?? totalRds}</span>
               </div>
-              {tpDisplay && (
+              {/* Col 3: ±Par */}
               <div>
-                <span className="fs-11 c-text-3">±Par </span>
-                <span className="fw-700 fs-13" style={{ color: tpColorDark(res.tp) }}>{tpDisplay}</span>
+                {tpDisplay
+                  ? <><span className="fs-11 c-text-3">±Par </span><span className="fw-700 fs-13" style={{ color: tpColorDark(res.tp) }}>{tpDisplay}</span></>
+                  : <span className="fs-11 c-text-3">—</span>}
               </div>
-              )}
-              <div className="d-flex gap-6">
+              {/* Col 4: Rondas */}
+              <div className="d-flex gap-8" style={{ flexWrap: "wrap" }}>
                 {res.rd.filter((r: number|null) => r != null && r > 0).map((r: number, i: number) => (
                   <span key={i} className="fs-12 fw-600" style={{ color: tpColorDark(r - t.par, 5) }}>R{i+1}: {r}</span>
                 ))}
@@ -1915,23 +1992,23 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
   };
 
   // Collect tournament results from Rivais
-  const tournResults: { name: string; short: string; date: string; par: number; pos: number | string | null; total: number | null; tp: number | null; rounds: number[] }[] = [];
+  const tournResults: { name: string; short: string; date: string; dateExact: string; par: number; pos: number | string | null; total: number | null; tp: number | null; rounds: number[] }[] = [];
   if (rival) {
     // First: manual T array
     for (const t of T) {
       const res = rival.r[t.id];
-      if (res) tournResults.push({ name: t.name, short: t.short, date: t.date, par: t.par, pos: res.p, total: res.t, tp: res.tp, rounds: res.rd });
+      if (res) tournResults.push({ name: t.name, short: t.short, date: t.date, dateExact: t.dateExact ?? t.date, par: t.par, pos: res.p, total: res.t, tp: res.tp, rounds: res.rd });
     }
     // Then: auto-loaded tourns not in manual T
     const manualIds = new Set(T.map(t => t.id));
     for (const [tid, res] of Object.entries(rival.r)) {
       if (!manualIds.has(tid)) {
         const info = getTournInfo(tid);
-        tournResults.push({ name: info.name, short: info.short, date: info.date, par: 72, pos: res.p, total: res.t, tp: res.tp, rounds: res.rd });
+        tournResults.push({ name: info.name, short: info.short, date: info.date, dateExact: info.dateExact, par: 72, pos: res.p, total: res.t, tp: res.tp, rounds: res.rd });
       }
     }
     // Sort by date
-    tournResults.sort((a, b) => a.date.localeCompare(b.date));
+    tournResults.sort((a, b) => a.dateExact.localeCompare(b.dateExact));
   }
 
   const completedResults = tournResults.filter(r => r.tp != null);
@@ -2084,15 +2161,17 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
    PAGE COMPONENT
    ═══════════════════════════════════ */
 function RivaisIntlContent() {
-  const { rivals, loaded } = useAutoRivals();
+  const { rivals, loaded, progress } = useAutoRivals();
 
-  // Actualizar rankMap quando os rivais carregam
+  // Actualizar rankMap quando os rivais carregam e forçar re-render
+  const [rankVersion, setRankVersion] = React.useState(0);
   React.useEffect(() => {
     if (loaded) {
       const newMap = buildRankMap(rivals);
       Object.keys(rankMap).forEach(k => delete rankMap[k]);
       Object.assign(rankMap, newMap);
       totalRanked = Object.keys(rankMap).length;
+      setRankVersion(v => v + 1);
     }
   }, [rivals, loaded]);
 
@@ -2118,8 +2197,16 @@ function RivaisIntlContent() {
           <span className="toolbar-title">🌍 Rivais Internacionais</span>
           <span className="toolbar-meta">
             Manuel · Sub-12
-            {!loaded && <span style={{ marginLeft: 8, fontSize: 10, color: "var(--text-muted)" }}>⏳ a carregar...</span>}
-            {loaded && <span style={{ marginLeft: 8, fontSize: 10, color: "var(--color-good-dark)" }}> · {rivals.length} rivais</span>}
+            {loaded
+              ? <span style={{ marginLeft: 8, fontSize: 10, color: "var(--color-good-dark)", fontWeight: 700 }}> · {rivals.length} rivais · ✓ TUDO CARREGADO</span>
+              : progress
+                ? <span style={{ marginLeft: 8, fontSize: 10, color: "var(--text-muted)" }}>
+                    · {rivals.length} rivais · <span style={{ color: "var(--text-2)" }}>{progress.done}/{progress.total}</span> <span style={{ color: "var(--text-3)" }}>{progress.label}</span>
+                    <span style={{ display: "inline-block", marginLeft: 6, width: 60, height: 4, background: "var(--border)", borderRadius: 2, verticalAlign: "middle", position: "relative", overflow: "hidden" }}>
+                      <span style={{ position: "absolute", left: 0, top: 0, height: "100%", width: `${Math.round(progress.done / progress.total * 100)}%`, background: "var(--color-good-dark)", borderRadius: 2, transition: "width .3s" }} />
+                    </span>
+                  </span>
+                : <span style={{ marginLeft: 8, fontSize: 10, color: "var(--text-muted)" }}>⏳ a iniciar...</span>}
           </span>
         </div>
         <div className="toolbar-right">
