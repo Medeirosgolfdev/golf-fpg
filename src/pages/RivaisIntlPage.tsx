@@ -36,6 +36,14 @@ interface TournDef {
   ageMax?: number;       // escalão: idade máxima
 }
 
+/** Deriva label de escalão a partir de ageMin/ageMax */
+function ageLabel(ageMin?: number, ageMax?: number): string | null {
+  if (ageMin == null && ageMax != null) return `Sub-${ageMax}`;
+  if (ageMin == null || ageMax == null) return null;
+  if (ageMin === ageMax) return `Boys ${ageMin}`;
+  return `Boys ${ageMin}-${ageMax}`;
+}
+
 /** Shape of a single hole sample for distance-band analysis */
 interface HoleSample { ds: number; par: number; meters: number | null; gross: number }
 
@@ -137,14 +145,14 @@ const FL={"Portugal":"🇵🇹","Spain":"🇪🇸","England":"🏴󠁧󠁢󠁥�
 
 const T: TournDef[]=[
   {id:"brjgt25",name:"WJGC 2025",short:"WJGC",date:"Fev 2025",rounds:3,par:71,field:40,nations:17,dateExact:"2025-02-24",ageMin:10,ageMax:11,url:"https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/34/leaderboard.htm"},
-  {id:"eowagr25",name:"European Open",short:"EU Open",date:"Ago 2025",rounds:3,par:72,field:8,nations:3,dateExact:"2025-08-01",ageMin:10,ageMax:11,url:"https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2512/contest/21/leaderboard.htm"},
-  {id:"venice25",name:"Venice Open 2025",short:"Venice",date:"Ago 2025",rounds:3,par:72,field:39,nations:12,dateExact:"2025-08-07",ageMin:11,ageMax:11,url:"https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/515206/venice-open-2025/results"},
-  {id:"rome25",name:"Rome Classic 2025",short:"Rome",date:"Out 2025",rounds:2,par:72,field:14,nations:3,dateExact:"2025-10-09",ageMin:11,ageMax:11,url:"https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516026/rome-classic-2025/results"},
-  {id:"doral25",name:"Doral Junior 2025",short:"Doral",date:"Dez 2025",rounds:2,par:71,field:35,nations:9,dateExact:"2025-12-18",ageMin:11,ageMax:11,url:"https://www.golfgenius.com/v2tournaments/4222407?called_from=widgets%2Fcustomized_tournament_results&hide_totals=false&player_stats_for_portal=true"},
-  {id:"qdl25",name:"QDL Junior Open 2025",short:"QDL",date:"Nov 2025",rounds:1,par:72,field:12,nations:7,intendedRounds:3,dateExact:"2025-11-08",ageMin:10,ageMax:13,url:"https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=962&tcode=10080&classif_order=2"},
-  {id:"gg26",name:"Greatgolf Junior Open",short:"GG",date:"Fev 2026",rounds:2,par:72,field:12,nations:4,dateExact:"2026-02-08",ageMin:10,ageMax:12,url:"https://scoring-pt.datagolf.pt/scripts/classif.asp?tourn=10296&club=935&ack=OT342GH16T"},
-  {id:"wjgc26",name:"WJGC 2026",short:"WJGC26",date:"Fev 2026",rounds:3,par:72,field:36,nations:19,dateExact:"2026-02-24",ageMin:10,ageMax:11,url:"https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/73/leaderboard.htm"},
-  {id:"wjgc26_1213",name:"WJGC 2026 12-13",short:"WJGC↑",date:"Fev 2026",rounds:2,intendedRounds:3,par:73,field:36,nations:19,dateExact:"2026-02-24",ageMin:12,ageMax:13,url:"https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/33/leaderboard.htm"},
+  {id:"eowagr25",name:"European Open",short:"EU Open",date:"Ago 2025",rounds:3,par:72,field:8,nations:6,dateExact:"2025-08-01",ageMin:11,ageMax:12,url:"https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2512/contest/21/leaderboard.htm"},
+  {id:"venice25",name:"Venice Open 2025",short:"Venice",date:"Ago 2025",rounds:3,par:72,field:39,nations:16,dateExact:"2025-08-07",ageMin:11,ageMax:11,url:"https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/515206/venice-open-2025/results"},
+  {id:"rome25",name:"Rome Classic 2025",short:"Rome",date:"Out 2025",rounds:2,par:72,field:14,nations:6,dateExact:"2025-10-18",ageMin:11,ageMax:11,url:"https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516026/rome-classic-2025/results"},
+  {id:"doral25",name:"Doral Junior 2025",short:"Doral",date:"Dez 2025",rounds:2,par:71,field:35,nations:13,dateExact:"2025-12-18",ageMin:11,ageMax:11,url:"https://www.golfgenius.com/v2tournaments/4222407?called_from=widgets%2Fcustomized_tournament_results&hide_totals=false&player_stats_for_portal=true"},
+  {id:"qdl25",name:"QDL Junior Open 2025",short:"QDL",date:"Nov 2025",rounds:1,par:72,field:12,nations:7,intendedRounds:3,dateExact:"2025-11-08",ageMax:12,url:"https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=962&tcode=10080&classif_order=2"},
+  {id:"gg26",name:"Greatgolf Junior Open",short:"GG",date:"Fev 2026",rounds:2,par:72,field:12,nations:4,dateExact:"2026-02-08",ageMax:12,url:"https://scoring-pt.datagolf.pt/scripts/classif.asp?tourn=10296&club=935&ack=OT342GH16T"},
+  {id:"wjgc26",name:"WJGC 2026",short:"WJGC26",date:"Fev 2026",rounds:3,par:72,field:38,nations:18,dateExact:"2026-02-24",ageMin:10,ageMax:11,url:"https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/73/leaderboard.htm"},
+  {id:"wjgc26_1213",name:"WJGC 2026",short:"WJGC26↑",date:"Fev 2026",rounds:2,intendedRounds:3,par:73,field:39,nations:17,dateExact:"2026-02-24",ageMin:12,ageMax:13,url:"https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/33/leaderboard.htm"},
 ];
 
 // Tournament prestige weight: rounds (40%) + field size (35%) + internationality (25%)
@@ -164,33 +172,48 @@ const T_WEIGHTS: Record<string, number> = (() => {
 })();
 
 // Extended tournament names/display for auto-loaded tournaments
+// Metadados completos para auto tids que substituem entradas manuais (field, nations, par, url)
+const AUTO_TOURN_META: Record<string, { field: number; nations: number; par: number; url?: string }> = {
+  wjgc25_b1011: { field: 40, nations: 17, par: 71, url: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/34/leaderboard.htm" },
+};
+
 const AUTO_TOURN_NAMES: Record<string, { name: string; short: string; date: string }> = {
-  wjgc25_b89:    { name: "WJGC 2025 B8-9",    short: "WJGC25↓",  date: "Fev 2025" },
-  wjgc25_b1011:  { name: "WJGC 2025 B10-11",  short: "WJGC25",   date: "Fev 2025" },
-  wjgc25_b1213:  { name: "WJGC 2025 B12-13",  short: "WJGC25↑",  date: "Fev 2025" },
-  wjgc26_b1213:  { name: "WJGC 2026 B12-13",  short: "WJGC26↑",  date: "Fev 2026" },
-  eowagr25_b78:  { name: "EU Open 2025 B7-8",  short: "EU25↓↓",   date: "Ago 2025" },
-  eowagr25_b910: { name: "EU Open 2025 B9-10", short: "EU25↓",    date: "Ago 2025" },
-  eowagr25_b1314:{ name: "EU Open 2025 B13-14",short: "EU25↑",    date: "Ago 2025" },
-  doral25_b89:   { name: "Doral 2025 B8-9",    short: "Doral↓",   date: "Dez 2025" },
-  doral25_b1011: { name: "Doral 2025 B10-11",  short: "Doral25",  date: "Dez 2025" },
-  doral25_b1213: { name: "Doral 2025 B12-13",  short: "Doral↑",   date: "Dez 2025" },
-  venice25_b9:   { name: "Venice Open B9",     short: "VCE↓",     date: "Ago 2025" },
-  venice25_b10:  { name: "Venice Open B10",    short: "VCE-B10",  date: "Ago 2025" },
-  venice25_b11:  { name: "Venice Open B11",    short: "VCE25",    date: "Ago 2025" },
-  venice25_b12:  { name: "Venice Open B12",    short: "VCE↑",     date: "Ago 2025" },
-  rome25_b10:    { name: "Rome Classic B10",   short: "ROM↓",     date: "Out 2025" },
-  rome25_b11:    { name: "Rome Classic B11",   short: "ROM25",    date: "Out 2025" },
-  rome25_b12:    { name: "Rome Classic B12",   short: "ROM↑",     date: "Out 2025" },
-  marco25_b10:   { name: "Marco Simone B10",   short: "MCS↓",     date: "Mar 2025" },
-  marco25_b11:   { name: "Marco Simone B11",   short: "MCS25",    date: "Mar 2025" },
-  marco25_b12:   { name: "Marco Simone B12",   short: "MCS↑",     date: "Mar 2025" },
-  desert26_b11:  { name: "Desert Shootout B11",short: "DES↓",     date: "Fev 2026" },
-  desert26_b12:  { name: "Desert Shootout B12",short: "DES26",    date: "Fev 2026" },
-  sandestin26_b11:{ name:"Sandestin B11",      short: "SAN↓",     date: "Jan 2026" },
-  sandestin26_b12:{ name:"Sandestin B12",      short: "SAN26",    date: "Jan 2026" },
-  msstate26_b11: { name: "MS State Inv. B11",  short: "MSS↓",     date: "Mar 2026" },
-  msstate26_b12: { name: "MS State Inv. B12",  short: "MSS26",    date: "Mar 2026" },
+  wjgc25_b89:     { name: "WJGC 2025",         short: "WJGC25",   date: "Fev 2025" },
+  wjgc25_b1011:   { name: "WJGC 2025",         short: "WJGC25",   date: "Fev 2025" },
+  wjgc25_b1213:   { name: "WJGC 2025",         short: "WJGC25",   date: "Fev 2025" },
+  wjgc26_b1213:   { name: "WJGC 2026",         short: "WJGC26",   date: "Fev 2026" },
+  eowagr25_b78:   { name: "European Open",      short: "EU Open",  date: "Ago 2025" },
+  eowagr25_b910:  { name: "European Open",      short: "EU Open",  date: "Ago 2025" },
+  eowagr25_b1314: { name: "European Open",      short: "EU Open",  date: "Ago 2025" },
+  doral25_b89:    { name: "Doral Junior 2025",  short: "Doral",    date: "Dez 2025" },
+  doral25_b1011:  { name: "Doral Junior 2025",  short: "Doral",    date: "Dez 2025" },
+  doral25_b1213:  { name: "Doral Junior 2025",  short: "Doral",    date: "Dez 2025" },
+  venice25_b9:    { name: "Venice Open 2025",   short: "Venice",   date: "Ago 2025" },
+  venice25_b10:   { name: "Venice Open 2025",   short: "Venice",   date: "Ago 2025" },
+  venice25_b11:   { name: "Venice Open 2025",   short: "Venice",   date: "Ago 2025" },
+  venice25_b12:   { name: "Venice Open 2025",   short: "Venice",   date: "Ago 2025" },
+  rome25_b10:     { name: "Rome Classic 2025",  short: "Rome",     date: "Out 2025" },
+  rome25_b11:     { name: "Rome Classic 2025",  short: "Rome",     date: "Out 2025" },
+  rome25_b12:     { name: "Rome Classic 2025",  short: "Rome",     date: "Out 2025" },
+  marco25_b9:     { name: "Marco Simone Inv.",   short: "Marco",    date: "Mar 2025" },
+  marco25_b10:    { name: "Marco Simone Inv.",   short: "Marco",    date: "Mar 2025" },
+  marco25_b11:    { name: "Marco Simone Inv.",   short: "Marco",    date: "Mar 2025" },
+  marco25_b12:    { name: "Marco Simone Inv.",   short: "Marco",    date: "Mar 2025" },
+  desert26_b9:    { name: "Desert Shootout",    short: "Desert",   date: "Fev 2026" },
+  desert26_b10:   { name: "Desert Shootout",    short: "Desert",   date: "Fev 2026" },
+  desert26_b11:   { name: "Desert Shootout",    short: "Desert",   date: "Fev 2026" },
+  desert26_b12:   { name: "Desert Shootout",    short: "Desert",   date: "Fev 2026" },
+  sandestin26_b9: { name: "Sandestin Champ.",   short: "Sandest",  date: "Jan 2026" },
+  sandestin26_b10:{ name: "Sandestin Champ.",   short: "Sandest",  date: "Jan 2026" },
+  sandestin26_b11:{ name: "Sandestin Champ.",   short: "Sandest",  date: "Jan 2026" },
+  sandestin26_b12:{ name: "Sandestin Champ.",   short: "Sandest",  date: "Jan 2026" },
+  msstate26_b9:   { name: "MS State Inv. 2026", short: "MS State", date: "Mar 2026" },
+  msstate26_b10:  { name: "MS State Inv. 2026", short: "MS State", date: "Mar 2026" },
+  msstate26_b11:  { name: "MS State Inv. 2026", short: "MS State", date: "Mar 2026" },
+  msstate26_b12:  { name: "MS State Inv. 2026", short: "MS State", date: "Mar 2026" },
+  elprat23_b8:    { name: "El Prat 2023",       short: "El Prat",  date: "Out 2023" },
+  elprat23_b9:    { name: "El Prat 2023",       short: "El Prat",  date: "Out 2023" },
+  elprat23_b10:   { name: "El Prat 2023",       short: "El Prat",  date: "Out 2023" },
 };
 
 /** Lookup tournament display info by id (works for manual T and auto tourns) */
@@ -279,6 +302,9 @@ const T_MAP: Record<string, { dateExact?: string; ageMin?: number; ageMax?: numb
   msstate26_b10: { dateExact: "2026-03-09", ageMin: 10, ageMax: 10 },
   msstate26_b11: { dateExact: "2026-03-09", ageMin: 11, ageMax: 11 },
   msstate26_b12: { dateExact: "2026-03-09", ageMin: 12, ageMax: 12 },
+  elprat23_b8:   { dateExact: "2023-10-22", ageMin: 8,  ageMax: 8  },
+  elprat23_b9:   { dateExact: "2023-10-22", ageMin: 9,  ageMax: 9  },
+  elprat23_b10:  { dateExact: "2023-10-22", ageMin: 10, ageMax: 10 },
 };
 
 function computeDobInfo(p: RivalPlayer): DobInfo {
@@ -627,37 +653,9 @@ const WJGC26_CARDS=[
    SCORECARD DATA — GG 2026 U12
    (Vilamoura - Laguna, 2 rounds, par 72)
    ═══════════════════════════════════ */
-const GG26_PAR=[5,3,4,3,4,4,4,5,4,5,4,3,4,4,5,4,3,4] as const;
-const GG26_SI=[16,12,4,6,8,18,10,14,2,17,7,5,1,3,13,15,11,9] as const;
-const GG26_CARDS=[
-{n:"Ricardo Castro Ferreira",pos:1,tp:10,rds:[[5,3,4,3,5,5,4,5,4,4,5,3,5,6,5,4,2,5],[5,3,4,3,5,4,4,5,5,5,5,3,5,4,5,4,4,4]]},
-{n:"Joe Short",pos:2,tp:22,rds:[[5,3,7,3,3,3,5,5,5,5,4,3,4,4,6,5,4,5],[6,4,5,4,5,4,5,5,5,7,4,5,6,5,7,3,3,4]]},
-{n:"Guo Ziyang",pos:3,tp:23,rds:[[7,3,5,4,4,4,5,6,4,6,5,4,5,4,6,5,3,5],[6,2,4,3,4,4,4,7,5,6,4,3,7,5,6,5,3,4]]},
-{n:"Manuel Goulartt Medeiros",pos:4,tp:25,rds:[[6,4,4,3,6,3,3,6,5,7,5,4,6,4,8,5,5,3],[6,4,5,3,4,4,5,5,4,5,5,4,4,5,6,4,4,5]]},
-{n:"Benji Botham",pos:5,tp:31,rds:[[5,4,5,5,5,4,4,5,5,7,5,3,5,6,7,6,3,4],[5,3,4,5,5,5,5,6,4,6,6,3,5,5,7,4,4,5]]},
-{n:"Marek Pejas",pos:6,tp:45,rds:[[6,4,6,4,6,4,4,6,5,6,5,4,6,4,6,7,3,6],[7,3,7,3,8,5,5,6,5,6,5,4,6,6,7,5,4,5]]},
-{n:"Miguel Santos Pereira",pos:7,tp:37,rds:[[6,3,5,4,5,4,5,5,5,6,6,4,4,6,9,6,3,7],[7,4,6,3,5,4,4,5,5,5,6,3,5,3,7,5,4,7]]},
-{n:"Harry Seabrook",pos:8,tp:41,rds:[[6,5,4,3,6,7,4,6,7,6,5,5,5,7,6,6,6,4],[5,3,5,2,5,5,3,6,5,7,6,5,6,4,6,4,4,6]]},
-{n:"Harley Botham",pos:9,tp:47,rds:[[6,3,7,4,5,5,5,7,6,6,5,3,4,7,10,7,3,5],[7,2,5,4,4,4,6,6,5,6,6,5,5,6,7,6,3,6]]},
-{n:"Gabriel Costa",pos:10,tp:46,rds:[[6,4,5,4,5,5,7,7,8,6,5,4,4,3,9,6,6,5],[7,4,4,4,6,4,6,3,5,7,5,3,4,7,5,5,5,7]]},
-{n:"Yeonjin Seo",pos:11,tp:59,rds:[[5,3,7,5,7,4,4,7,7,6,7,4,6,8,8,7,7,5],[5,4,6,4,5,5,6,6,7,7,5,5,5,5,6,5,4,6]]},
-];
+/* GG26 scorecards: lidos de pull-torneios000.json via loader */
 
-/* ═══════════════════════════════════
-   SCORECARD DATA — QDL 2025
-   (Quinta do Lago Laranjal, 1 round, par 72)
-   ═══════════════════════════════════ */
-const QDL25_PAR=[4,3,4,4,4,3,5,3,5,4,4,3,5,4,5,3,4,5] as const;
-const QDL25_SI=[15,11,5,9,3,17,1,13,7,6,18,10,16,4,8,2,14,12] as const;
-const QDL25_CARDS=[
-{n:"Dmitrii Elchaninov",pos:1,tp:-1,rds:[[5,3,3,4,5,3,5,3,4,3,4,3,5,5,4,3,4,5]]},
-{n:"Oliver Smith",pos:2,tp:0,rds:[[4,2,3,4,5,3,6,4,6,5,3,3,4,4,5,3,4,4]]},
-{n:"Marcus Karim",pos:3,tp:0,rds:[[5,3,4,3,4,3,5,4,4,4,4,3,4,4,5,4,3,6]]},
-{n:"Aronas Juodis",pos:4,tp:3,rds:[[4,4,4,4,4,3,6,3,5,5,4,3,4,5,5,3,4,5]]},
-{n:"Emile Cuanalo",pos:5,tp:3,rds:[[4,4,5,3,4,3,4,3,6,4,4,2,6,5,5,3,4,6]]},
-{n:"Harrison Barnett",pos:6,tp:6,rds:[[5,3,4,5,6,4,6,2,6,5,4,3,4,4,5,4,4,4]]},
-{n:"Manuel Goulartt Medeiros",pos:11,tp:18,rds:[[5,2,4,4,5,4,6,4,5,5,6,6,5,6,5,3,5,10]]},
-];
+/* QDL25 scorecards: lidos de pull-torneios000.json via loader */
 
 /* ═══════════════════════════════════
    SCORECARD DATA — European Open WAGR 2025
@@ -853,11 +851,35 @@ let rankMap: Record<string, number> = buildRankMap(D_BASE);
 let totalRanked = Object.keys(rankMap).length;
 
 // nPlayed e nRounds contam todos os torneios (T manual + auto-loaded)
+// Tids que ficam ocultos no detalhe (deduplicação)
+// Regra simples: contar quantos estão escondidos e subtrair ao total
+const HIDDEN_WHEN_PRESENT: Array<[string, string]> = [
+  // [tid oculto, tid que o substitui]
+  ["brjgt25",    "wjgc25_b1011"],
+  ["venice25_b11","venice25"], ["venice25_b12","venice25"],
+  ["venice25_b9", "venice25"], ["venice25_b10","venice25"],
+  ["rome25_b11",  "rome25"],   ["rome25_b12",  "rome25"],
+  ["rome25_b9",   "rome25"],   ["rome25_b10",  "rome25"],
+  ["doral25_b1011","doral25"], ["doral25_b89", "doral25"], ["doral25_b1213","doral25"],
+];
+
+function hiddenTids(p: RivalPlayer): Set<string> {
+  const hidden = new Set<string>();
+  for (const [toHide, whenPresent] of HIDDEN_WHEN_PRESENT) {
+    if (p.r[toHide]?.rd?.length > 0 && p.r[whenPresent]?.rd?.length > 0)
+      hidden.add(toHide);
+  }
+  return hidden;
+}
+
 function nPlayed(p: RivalPlayer) {
-  return Object.values(p.r).filter(r => r && (r.tp != null || r.rd?.length > 0)).length;
+  const total = Object.values(p.r).filter(r => r && (r.tp != null || r.rd?.length > 0)).length;
+  return total - hiddenTids(p).size;
 }
 function nRounds(p: RivalPlayer) {
-  return Object.values(p.r).reduce((acc, res) => {
+  const hidden = hiddenTids(p);
+  return Object.entries(p.r).reduce((acc, [tid, res]) => {
+    if (hidden.has(tid)) return acc;
     return acc + (res?.rd ? res.rd.filter((x: number | null) => x != null && x > 0).length : 0);
   }, 0);
 }
@@ -1329,8 +1351,7 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
   const bjgtCard = FIELD_CARDS.find(c => c.name === playerName);
   const lbEntry = FIELD_2025.leaderboard.find(p => p.name === playerName);
   const wjgcCard = findCard(WJGC26_CARDS, playerName);
-  const ggCard = findCard(GG26_CARDS, playerName);
-  const qdlCard = findCard(QDL25_CARDS, playerName);
+
   const eowagr25Card = findCard(EOWAGR25_CARDS, playerName);
   const wjgc26_1213Card = findCard(WJGC26_1213_CARDS, playerName);
 
@@ -1356,13 +1377,37 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
   // Tournament results: T manual (com scorecard) + auto-loaded (sem scorecard)
   const manualTournIds = new Set(T.map(t => t.id));
 
-  // Ids auto que são "cobertos" por um torneio manual equivalente
-  // Ex: venice25_b11 → coberto por venice25; doral25_b1011 → coberto por doral25
+  // Mapa explícito: auto tid → manual T id que o cobre
+  // Necessário quando o id manual não deriva trivialmente do auto tid
+  const AUTO_COVERED_BY: Record<string,string> = {
+    "venice25_b11":  "venice25",
+    "venice25_b12":  "venice25",
+    "venice25_b9":   "venice25",
+    "venice25_b10":  "venice25",
+    "rome25_b11":    "rome25",
+    "rome25_b12":    "rome25",
+    "rome25_b9":     "rome25",
+    "rome25_b10":    "rome25",
+    "doral25_b1011": "doral25",
+    "doral25_b89":   "doral25",
+    "doral25_b1213": "doral25",
+  };
+  // Mapa inverso: manual T id → lista de auto tids equivalentes (para buscar scorecards)
+  const MANUAL_AUTO_TIDS: Record<string,string[]> = {};
+  for (const [autoTid, manTid] of Object.entries(AUTO_COVERED_BY)) {
+    if (!MANUAL_AUTO_TIDS[manTid]) MANUAL_AUTO_TIDS[manTid] = [];
+    MANUAL_AUTO_TIDS[manTid].push(autoTid);
+  }
+
   function autoIsCoveredByManual(tid: string): boolean {
-    // Remover sufixo _b\d+ e ver se o resultado está nos manuais
+    // Só ocultar se o torneio manual substituto realmente existe em rival.r
+    if (tid in AUTO_COVERED_BY) {
+      const manualTid = AUTO_COVERED_BY[tid];
+      return !!(rival?.r[manualTid]?.rd?.length > 0);
+    }
+    // Fallback genérico: strip _b\d+ suffix
     const base = tid.replace(/_b\d+$/, "");
-    if (manualTournIds.has(base)) return true;
-    // Casos especiais: wjgc26 é o mesmo id (já filtrado por manualTournIds.has)
+    if (manualTournIds.has(base)) return !!(rival?.r[base]?.rd?.length > 0);
     return false;
   }
 
@@ -1370,17 +1415,40 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
 
   const tournResults = rival ? [
     // 1. Torneios do array T manual com resultados
-    ...T.filter(t => rival.r[t.id] && rival.r[t.id].rd?.length > 0).map(t => ({
+    ...T.filter(t => rival.r[t.id] && rival.r[t.id].rd?.length > 0
+      // Ocultar brjgt25 se wjgc25_b1011 existir (o JSON tem info completa)
+      && !(t.id === "brjgt25" && rival.r["wjgc25_b1011"]?.rd?.length > 0)
+    ).map(t => ({
       t,
       res: rival.r[t.id],
-      hasCard: t.id === "brjgt25" ? !!bjgtCard
-             : t.id === "wjgc26" ? !!wjgcCard
-             : t.id === "gg26" ? !!ggCard
-             : t.id === "qdl25" ? !!qdlCard
-             : t.id === "eowagr25" ? !!eowagr25Card
-             : t.id === "wjgc26_1213" ? !!wjgc26_1213Card
-             : false,
-      autoCard: null as typeof autoScorecards[0] | null,
+      // Auto-scorecard: para tourns com card dedicado usa-o; caso contrário (ou se não existe para este jogador) usa auto
+      autoCard: (() => {
+        // Torneios com render especial próprio — só usar auto se o dedicado não existir para este jogador
+        const dedicatedMissing =
+          (t.id === "brjgt25" && !bjgtCard) ||
+          (t.id === "wjgc26" && !wjgcCard) ||
+          (t.id === "eowagr25" && !eowagr25Card) ||
+          (t.id === "wjgc26_1213" && !wjgc26_1213Card);
+        const isKnownDedicated = ["brjgt25","wjgc26","eowagr25","wjgc26_1213"].includes(t.id);
+        if (isKnownDedicated && !dedicatedMissing) return null; // tem card dedicado → não precisar auto
+        // Procurar via tids equivalentes OU pelo próprio tid (ex: gg26, qdl25 vêm directamente do loader)
+        return (MANUAL_AUTO_TIDS[t.id] || []).reduce((found: typeof autoScorecards[0] | null, atid) =>
+          found || autoScorecards.find(sc => sc.tid === atid) || null, null)
+          ?? autoScorecards.find(sc => sc.tid === t.id) ?? null;
+      })(),
+      hasCard: (() => {
+        if (t.id === "brjgt25") return !!bjgtCard || !!(MANUAL_AUTO_TIDS["brjgt25"] || []).some(atid => autoScorecards.find(sc => sc.tid === atid));
+        if (t.id === "wjgc26") return !!wjgcCard || !!(MANUAL_AUTO_TIDS["wjgc26"] || []).some(atid => autoScorecards.find(sc => sc.tid === atid));
+        if (t.id === "eowagr25") return !!eowagr25Card || !!(MANUAL_AUTO_TIDS["eowagr25"] || []).some(atid => autoScorecards.find(sc => sc.tid === atid));
+        if (t.id === "wjgc26_1213") return !!wjgc26_1213Card;
+        // Verificar tids equivalentes E o próprio tid
+        return !!(MANUAL_AUTO_TIDS[t.id] || []).some(atid => autoScorecards.find(sc => sc.tid === atid))
+          || !!autoScorecards.find(sc => sc.tid === t.id);
+      })(),
+      // For manual T tourns: prefer ageGroup from auto tid, fallback to ageMin/ageMax
+      ageGroup: ((MANUAL_AUTO_TIDS[t.id] || []).reduce((found: string | null, atid) =>
+        found || (rival.r[atid]?.ageGroup ?? null), null)
+        ?? ageLabel(t.ageMin, t.ageMax)) as string | null,
       isAuto: false,
     })),
     // 2. Torneios auto-loaded não presentes em T e não cobertos por T
@@ -1392,15 +1460,32 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
       )
       .map(([tid, res]) => {
         const info = getTournInfo(tid);
+        const autoMeta = AUTO_TOURN_META[tid];
+        const tmap = T_MAP[tid];
         const fakeDef = {
           id: tid, name: info.name, short: info.short, date: info.date,
-          rounds: res.rd.length, par: 72, field: 0, nations: 0,
-          intendedRounds: res.rd.length, url: undefined,
+          dateExact: tmap?.dateExact ?? info.date,
+          rounds: res.rd.length, par: autoMeta?.par ?? 72,
+          field: autoMeta?.field ?? 0, nations: autoMeta?.nations ?? 0,
+          intendedRounds: res.rd.length, url: autoMeta?.url,
         } as unknown as TournDef;
         const autoCard = autoScorecards.find(sc => sc.tid === tid) || null;
-        return { t: fakeDef, res, hasCard: !!autoCard, autoCard, isAuto: true };
+        return { t: fakeDef, res, hasCard: !!autoCard, autoCard, ageGroup: (res.ageGroup ?? null) as string | null, isAuto: true };
       }),
-  ].sort((a, b) => a.t.date.localeCompare(b.t.date)) : [];
+  ].sort((a, b) => {
+    const da = a.t.dateExact ?? a.t.date;
+    const db = b.t.dateExact ?? b.t.date;
+    return db.localeCompare(da);  // mais recente primeiro
+  }) : [];
+
+  // Contadores baseados em tournResults (deduplicados) — fonte de verdade para o detalhe
+  const playedDedup = tournResults.length;
+  const roundsDedup = tournResults.reduce((acc, x) =>
+    acc + x.res.rd.filter((r: number | null) => r != null && r > 0).length, 0);
+  // Double-check: nPlayed(rival) deve bater com playedDedup
+  if (rival && process.env.NODE_ENV !== "production" && nPlayed(rival) !== playedDedup) {
+    console.warn(`[RivaisIntl] count mismatch for ${rival.n}: nPlayed=${nPlayed(rival)} vs tournResults=${playedDedup}`);
+  }
 
   const allRds = tournResults.flatMap(x => x.res.rd.filter((r: number | null) => r != null && r > 0));
   const completedResults = tournResults.filter(x => x.res.tp != null);
@@ -1413,8 +1498,7 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
   const allCardPars: number[][] = [];
   if (bjgtCard) { allCardScores.push(...bjgtCard.rounds); bjgtCard.rounds.forEach(() => allCardPars.push([...VP_PAR])); }
   if (wjgcCard) { allCardScores.push(...wjgcCard.rds); wjgcCard.rds.forEach(() => allCardPars.push([...WJGC26_PAR])); }
-  if (ggCard) { allCardScores.push(...ggCard.rds); ggCard.rds.forEach(() => allCardPars.push([...GG26_PAR])); }
-  if (qdlCard) { allCardScores.push(...qdlCard.rds); qdlCard.rds.forEach(() => allCardPars.push([...QDL25_PAR])); }
+
   if (eowagr25Card) { allCardScores.push(...eowagr25Card.rds); eowagr25Card.rds.forEach(() => allCardPars.push([...EOWAGR25_PAR])); }
   if (wjgc26_1213Card) { allCardScores.push(...wjgc26_1213Card.rds); wjgc26_1213Card.rds.forEach(() => allCardPars.push([...WJGC26_1213_PAR])); }
 
@@ -1513,7 +1597,7 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
         <div className="detail-sub">
           {rival && !isManuel && <span className="muted">{rival.co}</span>}
           {isManuel && <span className="p p-outline p-sm">REF</span>}
-          {played > 0 && <span className="muted"> · {played} torneios · {nRounds(rival!)} rondas</span>}
+          {playedDedup > 0 && <span className="muted"> · {playedDedup} torneios · {roundsDedup} rondas</span>}
           {bestTp != null && <span className="muted"> · Melhor <span style={{ color: tpColorDark(bestTp) }}>{fmtToPar(bestTp)}</span></span>}
           {avgRd != null && <span className="muted"> · Média {avgRd.toFixed(1)}</span>}
           {rival?.up.map(u => {
@@ -1547,7 +1631,7 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
       })()}
 
       {/* ── Cards de torneio ── */}
-      {tournResults.map(({ t, res, hasCard, autoCard, isAuto }) => {
+      {tournResults.map(({ t, res, hasCard, autoCard, ageGroup, isAuto }) => {
         const expanded = expandedTourns.has(t.id);
         const wOrd = T_WEIGHTS[t.id];
         const stars = wOrd >= 0.9 ? "★★★" : wOrd >= 0.6 ? "★★" : wOrd >= 0.4 ? "★" : null;
@@ -1566,9 +1650,19 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
                 <span className="fs-10 c-text-3 ml-6">
                   {t.date}
                   {stars && ` · ${stars}`}
-                  {!isAuto && t.field > 0 && ` · ${t.field} jog. · ${t.nations} países`}
-                  {isAuto && res.ageGroup && ` · ${res.ageGroup}`}
+                  {t.field > 0 && ` · ${t.field} jog. · ${t.nations} países`}
                 </span>
+                {ageGroup && (
+                  <span style={{
+                    display: "inline-flex", alignItems: "center",
+                    background: "var(--bg-info-subtle, #e0f2fe)",
+                    color: "var(--color-info-dark, #0369a1)",
+                    border: "1px solid var(--color-info-light, #7dd3fc)",
+                    borderRadius: 10, padding: "1px 7px",
+                    fontSize: 10, fontWeight: 700, marginLeft: 6,
+                    letterSpacing: "0.02em",
+                  }}>{ageGroup}</span>
+                )}
               </div>
               {hasCard && (
                 <button className="p p-filter p-sm" onClick={() => toggleExpand(t.id)}>
@@ -1577,13 +1671,29 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
               )}
             </div>
             <div className="d-flex gap-16 items-center" style={{ padding: "10px 14px", flexWrap: "wrap" }}>
-              {res.p != null && (
-              <div>
-                <span className="fs-11 c-text-3">Posição </span>
-                <span className="fw-800 fs-14">#{res.p}</span>
-                {!isAuto && t.field > 0 && <span className="fs-11 c-text-3">/{t.field}</span>}
-              </div>
-              )}
+              {res.p != null && (() => {
+                const pos = typeof res.p === "number" ? res.p : null;
+                const fieldSize = t.field;
+                const bigField = fieldSize >= 20;
+                const medal = pos === 1 ? "🥇" : pos === 2 ? "🥈" : pos === 3 ? "🥉" : null;
+                const isTop10 = pos != null && pos <= 10 && pos > 3;
+                return (
+                  <div className="d-flex items-center gap-6">
+                    {medal ? (
+                      <span style={{ fontSize: 22, lineHeight: 1 }}>{medal}</span>
+                    ) : (bigField && isTop10) ? (
+                      <span className="sidebar-rank sidebar-rank-top10" style={{ fontSize: 11, padding: "2px 7px", borderRadius: 12 }}>
+                        Top 10
+                      </span>
+                    ) : null}
+                    <div>
+                      <span className="fs-11 c-text-3">Posição </span>
+                      <span className="fw-800 fs-14">#{res.p}</span>
+                      {fieldSize > 0 && <span className="fs-11 c-text-3">/{fieldSize}</span>}
+                    </div>
+                  </div>
+                );
+              })()}
               <div>
                 <span className="fs-11 c-text-3">Total </span>
                 <span className="fw-700 fs-13">{res.t ?? totalRds}</span>
@@ -1627,14 +1737,7 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
                   <TournScorecard par={WJGC26_PAR} si={WJGC26_SI}
                     rounds={wjgcCard.rds.map((sc, i) => ({ label: `R${i + 1}`, scores: [...sc] }))} />
                 )}
-                {t.id === "gg26" && ggCard && (
-                  <TournScorecard par={GG26_PAR} si={GG26_SI}
-                    rounds={ggCard.rds.map((sc, i) => ({ label: `R${i + 1}`, scores: [...sc] }))} />
-                )}
-                {t.id === "qdl25" && qdlCard && (
-                  <TournScorecard par={QDL25_PAR} si={QDL25_SI}
-                    rounds={qdlCard.rds.map((sc, i) => ({ label: `R${i + 1}`, scores: [...sc] }))} />
-                )}
+
                 {t.id === "eowagr25" && eowagr25Card && (
                   <TournScorecard par={EOWAGR25_PAR} si={EOWAGR25_SI}
                     rounds={eowagr25Card.rds.map((sc, i) => ({ label: `R${i + 1}`, scores: [...sc] }))} />
@@ -1643,8 +1746,8 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
                   <TournScorecard par={WJGC26_1213_PAR} si={WJGC26_1213_SI}
                     rounds={wjgc26_1213Card.rds.map((sc, i) => ({ label: `R${i + 1}`, scores: [...sc] }))} />
                 )}
-                {/* Auto-loaded scorecard (WJGC 2025, etc.) */}
-                {isAuto && autoCard && (
+                {/* Auto-loaded scorecard — torneios auto E torneios manuais sem card dedicado (Venice, Rome, Doral…) */}
+                {autoCard && (
                   <TournScorecard
                     par={autoCard.par as unknown as readonly number[]}
                     si={autoCard.si.length > 0 ? autoCard.si as unknown as readonly number[] : undefined}

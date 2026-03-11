@@ -917,7 +917,7 @@ function TournamentDetail({ tournament, escLookup, playersDB }: { tournament: To
                     ? <a key={sr.tcode}
                         href={`https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=${sr.ccode}&tcode=${sr.tcode}`}
                         target="_blank" rel="noopener noreferrer"
-                        title={`Abrir Dia ${i + 1} na Federação (tcode ${sr.tcode})`}
+                        title={`Abre a classificação do Dia ${i + 1} na Federação — abre primeiro a página FPG Torneios (tcode ${sr.tcode})`}
                         style={{
                           fontSize: 10, fontWeight: 600,
                           color: "var(--accent,#2563eb)",
@@ -934,7 +934,7 @@ function TournamentDetail({ tournament, escLookup, playersDB }: { tournament: To
                   <a
                     href={`https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=${tournament.ccode}&tcode=${tournament.tcode}`}
                     target="_blank" rel="noopener noreferrer"
-                    title="Abrir classificação na Federação"
+                    title="Abre a classificação na Federação — abre primeiro a página FPG Torneios"
                     style={{
                       fontSize: 10, fontWeight: 600,
                       color: "var(--accent,#2563eb)",
@@ -1534,7 +1534,7 @@ function Content() {
                 )}
                 {t.ccode && t.tcode && (
                   <span
-                    title="Abrir na Federação"
+                    title="Abre a classificação na Federação — abre primeiro a página FPG Torneios"
                     onClick={e => { e.stopPropagation(); window.open(`https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=${t.ccode}&tcode=${t.tcode}`, "_blank"); }}
                     style={{
                       fontSize: 10, fontWeight: 600, cursor: "pointer",
@@ -1624,6 +1624,20 @@ function Content() {
           )}
         </div>
         <div className="toolbar-right">
+          <a
+            href="https://scoring.datagolf.pt/pt/tournaments.aspx"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              fontSize: 11, fontWeight: 600, cursor: "pointer",
+              color: "var(--accent,#2563eb)", border: "1px solid var(--accent,#2563eb)",
+              borderRadius: 5, padding: "3px 8px", lineHeight: 1.6,
+              textDecoration: "none", whiteSpace: "nowrap",
+              display: "inline-flex", alignItems: "center", gap: 3,
+            }}
+          >
+            FPG Torneios ↗
+          </a>
           {loading
             ? <span className="muted fs-11" style={{ fontStyle: "italic" }}>{loadingMsg}</span>
             : <>
