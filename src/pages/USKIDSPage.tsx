@@ -125,6 +125,30 @@ function criarMatcherIntl(intlData: IntlData | null) {
   };
 }
 // ─────────────────────────────────────────────────────────────────
+/** Cria um lookup fuzzy sobre a lista de rivais USKids.
+ *  Exact match primeiro; depois fuzzy por apelidos (scoreMatch >= 0.7).
+ */
+function criarMatcherRivals(rivals: { nome: string; pais: string; cidade: string; encontros: any[] }[]) {
+  const byNorm = new Map<string, typeof rivals[0]>();
+  for (const r of rivals) byNorm.set(normNome(r.nome), r);
+
+  return (nomeInscrito: string): typeof rivals[0] | null => {
+    const nNorm = normNome(nomeInscrito);
+    // 1. Exact match normalizado
+    const exact = byNorm.get(nNorm);
+    if (exact) return exact;
+    // 2. Fuzzy por apelidos
+    let melhorScore = 0;
+    let melhorRival: typeof rivals[0] | null = null;
+    for (const r of rivals) {
+      const s = scoreMatch(nomeInscrito, r.nome);
+      if (s > melhorScore) { melhorScore = s; melhorRival = r; }
+    }
+    return melhorScore >= 0.7 ? melhorRival : null;
+  };
+}
+// ─────────────────────────────────────────────────────────────────
+
 
 interface FieldData { gerado_em: string; torneios: Torneio[]; }
 
@@ -1441,9 +1465,13 @@ function TabelaConhecidos({
       )
     : [];
 
-  const rivalMap = new Map(rivals.map(r => [r.nome.toLowerCase().trim(), r]));
-  const conhecidos    = inscritos.filter(j => !isManuel(j.nome) && rivalMap.has(j.nome.toLowerCase().trim()));
-  const desconhecidos = inscritos.filter(j => !isManuel(j.nome) && !rivalMap.has(j.nome.toLowerCase().trim()));
+  const matchRival = criarMatcherRivals(rivals);
+  // Pré-computar o rival correspondente a cada inscrito (exact ou fuzzy)
+  const inscritoRivalCache = new Map<string, RivalInfo | null>(
+    inscritos.map(j => [j.nome, matchRival(j.nome)])
+  );
+  const conhecidos    = inscritos.filter(j => !isManuel(j.nome) && !!inscritoRivalCache.get(j.nome));
+  const desconhecidos = inscritos.filter(j => !isManuel(j.nome) && !inscritoRivalCache.get(j.nome));
 
   // ── Jogaram este torneio no ano passado (escalão abaixo) ──────────────────
   const anoPassadoMap = useMemo(() => {
@@ -1630,7 +1658,7 @@ function TabelaConhecidos({
             </thead>
             <tbody>
               {conhecidos.map((j, i) => {
-                const rival = rivalMap.get(j.nome.toLowerCase().trim())!;
+                const rival = inscritoRivalCache.get(j.nome)!;
                 const torneiosUnicos = [...new Map(rival.encontros.map(e => [e.torneio_t, e])).values()];
                 const intlJog   = matchIntl(j.nome);
                 const intlTorns = intlJog
@@ -1777,8 +1805,33 @@ function TabRivais({ data, fieldData, intlData, selectedT }: { data: ResultsData
         }
       }
     }
+
+    // ── 2. BJGT / outros circuitos: jogadores que partilharam torneios com o Manuel ──
+    if (intlData) {
+      const manuelIntlJog = intlData.jogadores.find(j => j.isM);
+      if (manuelIntlJog) {
+        // IDs de torneios não-USKids onde o Manuel participou
+        const torneiosComManuel = new Set(
+          Object.keys(manuelIntlJog.r).filter(tid => {
+            const torn = intlData.torneios.find(t => t.id === tid);
+            return torn && torn.circuito !== "uskids";
+          })
+        );
+        for (const j of intlData.jogadores) {
+          if (j.isM) continue;
+          const partilhados = Object.keys(j.r).filter(tid => torneiosComManuel.has(tid));
+          if (!partilhados.length) continue;
+          const key = j.n.toLowerCase().trim();
+          // Adicionar ao mapa se ainda não existe (pode já ter vindo de USKids)
+          if (!mapa.has(key)) {
+            mapa.set(key, { nome: j.n, pais: j.co ?? "", cidade: "", encontros: [] });
+          }
+        }
+      }
+    }
+
     return [...mapa.values()];
-  }, [data]);
+  }, [data, intlData]);
 
   const ordenados = useMemo(() => {
     let lista = filtro.trim()
@@ -2041,7 +2094,7 @@ function TabInscritos({ data, fieldData, selectedT: _selectedT }: {
 
   // Todos os jogadores inscritos nos torneios futuros (conhecidos e desconhecidos)
   const { conhecidosMap, desconhecidosMap } = useMemo(() => {
-    const rivalMap = new Map(rivals.map(r => [r.nome.toLowerCase().trim(), r]));
+    const matchRivalI = criarMatcherRivals(rivals);
     const conhecidosMap  = new Map<string, { rival: RivalInfo; torneios: InscritoEntry[] }>();
     const desconhecidosMap = new Map<string, { nome: string; pais: string; torneios: InscritoEntry[] }>();
 
@@ -2064,14 +2117,15 @@ function TabInscritos({ data, fieldData, selectedT: _selectedT }: {
           const mesmoEscalao = manuelInscrito && escalaoComManuel.has(esc.nome);
           // Conhecidos: registamos EM TODOS os torneios futuros (para ver onde jogam mesmo sem o Manuel)
           // Desconhecidos: só nos torneios onde o Manuel também está inscrito
-          if (rivalMap.has(key)) {
+          const rivalMatch = matchRivalI(j.nome);
+          if (rivalMatch) {
             const entry: InscritoEntry = {
               torneioT: t.t, torneioNome: t.name, torneioData: t.date_inicio,
               escalao: esc.nome,
               mesmoEscalao,
             };
             if (!conhecidosMap.has(key))
-              conhecidosMap.set(key, { rival: rivalMap.get(key)!, torneios: [] });
+              conhecidosMap.set(key, { rival: rivalMatch, torneios: [] });
             if (!conhecidosMap.get(key)!.torneios.some(p => p.torneioT === t.t))
               conhecidosMap.get(key)!.torneios.push(entry);
           } else {
