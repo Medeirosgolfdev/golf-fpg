@@ -6,6 +6,7 @@ import {
   ScorecardLB, AccumulatedLB, expandMultiRound,
   type Tournament as TATournament,
 } from "./FPGPage";
+import { buildAutoRivals, normName as normNameAuto, type AutoRivalPlayer } from "./KIDSdataLoader";
 
 // ─────────────────────────────────────────────
 // TIPOS — CAMPO (inscritos)
@@ -43,6 +44,75 @@ function normNome(s: string): string {
     .toLowerCase().replace(/\s+/g, ' ').trim();
 }
 
+/** Normaliza nomes ALL CAPS para Title Case e limpa espaços duplos.
+ *  "GREGORIO VITOLO" → "Gregorio Vitolo"
+ *  "LORENZO MARIA TRIOLO" → "Lorenzo Maria Triolo"
+ *  "Jean Imperiali De Francavilla" → "Jean Imperiali de Francavilla"
+ */
+const PARTICLES = new Set(['de','da','do','dos','das','di','del','van','von','den','der','ter','le','la','el','al','y','e']);
+function displayName(s: string): string {
+  const clean = s.replace(/\s+/g, ' ').trim();
+  if (!clean) return clean;
+  // Detectar se é ALL CAPS (>80% maiúsculas nas letras)
+  const letters = clean.replace(/[^a-zA-ZÀ-ÿ]/g, '');
+  const upper = letters.replace(/[^A-ZÀ-Ý]/g, '');
+  const isAllCaps = letters.length > 2 && upper.length / letters.length > 0.45;
+  if (!isAllCaps) {
+    // Não é all caps, só corrigir partículas e espaços
+    return clean.split(' ').map((w, i) =>
+      i > 0 && PARTICLES.has(w.toLowerCase()) ? w.toLowerCase() : w
+    ).join(' ');
+  }
+  // Converter para Title Case
+  return clean.toLowerCase().split(' ').map((w, i) => {
+    if (i > 0 && PARTICLES.has(w)) return w;
+    return w.charAt(0).toUpperCase() + w.slice(1);
+  }).join(' ');
+}
+
+/** Encurta nome de torneio com sufixo de ano: "Rome Classic 2025" → "Rome Classic '25"
+ *  "WJGC '26" → "WJGC '26" (já tem), "European Open" → "European Open" */
+function shortTornName(s: string): string {
+  return s.replace(/\s(\d{4})$/, (_, y) => ` '${y.slice(2)}`);
+}
+
+/** Canónico de torneio para dedup. Mapeia variantes para série+ano.
+ *  "Venice Open 2025" = "VENICE '25" → "venice-25"
+ *  "WJGC '26" = "BJGT 2026" → "wjgc-26"   */
+function tornCanon(s: string): string {
+  const low = s.toLowerCase().replace(/['']/g, "").trim();
+  const y2 = low.match(/\b20(\d{2})\b/)?.[1] || low.match(/(?:^|\s)(\d{2})$/)?.[1] || "";
+  if (/venice/i.test(low))                        return `venice-${y2}`;
+  if (/rome|roma/i.test(low))                     return `rome-${y2}`;
+  if (/marco\s*simone/i.test(low))                return `marco-${y2}`;
+  if (/wjgc|bjgt|world.*junior.*golf/i.test(low)) return `wjgc-${y2}`;
+  if (/eu\s*open|european\s*open|eowagr/i.test(low)) return `euopen-${y2}`;
+  if (/doral/i.test(low))                         return `doral-${y2}`;
+  if (/great\s*golf/i.test(low))                  return `gg-${y2}`;
+  if (/quinta.*lago|qdl/i.test(low))              return `qdl-${y2}`;
+  if (/desert/i.test(low))                        return `desert-${y2}`;
+  if (/sandestin/i.test(low))                     return `sandestin-${y2}`;
+  if (/mississippi|msstate/i.test(low))           return `msstate-${y2}`;
+  if (/el\s*prat/i.test(low))                     return `elprat-${y2}`;
+  return low.replace(/[^a-z0-9]/g, "") + (y2 ? `-${y2}` : "");
+}
+
+/** Verifica se um torneio já existe num set de tornCanon keys.
+ *  Faz match exacto primeiro, depois match por série (sem ano) se o torneio não tem ano. */
+function hasCanon(set: Set<string>, name: string, short?: string): boolean {
+  const cn = tornCanon(name);
+  const cs = short ? tornCanon(short) : "";
+  if (set.has(cn) || (cs && set.has(cs))) return true;
+  // Se não tem ano (termina em "-"), verificar se existe algum com a mesma série
+  const series = cn.split("-")[0];
+  if (cn.endsWith("-") && series) {
+    for (const k of set) {
+      if (k.startsWith(series + "-") && k !== cn) return true;
+    }
+  }
+  return false;
+}
+
 function apelidos(nome: string): string[] {
   const ignorar = new Set(['de','da','do','dos','das','van','von','le','la','el','al','del','and','jr','ii','iii']);
   const partes = normNome(nome).split(' ');
@@ -50,6 +120,8 @@ function apelidos(nome: string): string[] {
 }
 
 function scoreMatch(n1: string, n2: string): number {
+  const p1 = normNome(n1).split(' ').filter(Boolean);
+  const p2 = normNome(n2).split(' ').filter(Boolean);
   const ap1 = new Set(apelidos(n1));
   const ap2 = new Set(apelidos(n2));
   if (!ap1.size || !ap2.size) return 0;
@@ -57,13 +129,26 @@ function scoreMatch(n1: string, n2: string): number {
   if (!comuns.length) return 0;
   // Exige pelo menos 1 apelido com >5 letras
   if (!comuns.some(c => c.length > 5) && comuns.length < 2) return 0;
+  // Se os apelidos são iguais mas os primeiros nomes são completamente
+  // diferentes, reduzir drasticamente (previne siblings: Nikita vs Dmitrii)
+  const f1 = p1[0] || "";
+  const f2 = p2[0] || "";
+  if (f1 && f2 && f1 !== f2) {
+    // Primeiro nome diferente: só aceitar se partilham ≥3 chars iniciais
+    const prefixLen = Math.min(f1.length, f2.length, 3);
+    if (f1.slice(0, prefixLen) !== f2.slice(0, prefixLen)) {
+      // Nomes completamente diferentes — penalizar pesado
+      const base = comuns.length / Math.min(ap1.size, ap2.size);
+      return Math.min(0.5, base * 0.4); // abaixo do threshold de 0.7
+    }
+  }
   const base = comuns.length / Math.min(ap1.size, ap2.size);
   const bonus = comuns.filter(c => c.length > 7).length * 0.15;
   return Math.min(1.0, base + bonus);
 }
 
 function criarMatcherIntl(intlData: IntlData | null) {
-  if (!intlData) return (_: string) => null;
+  if (!intlData) return (_: string, _p?: string) => null;
 
   // Mapa canonical → jogador
   const byNorm = new Map<string, IntlJogador>();
@@ -90,9 +175,31 @@ function criarMatcherIntl(intlData: IntlData | null) {
     }
   }
 
+  // Índice por "primeiro último" normalizado
+  const byFirstLast = new Map<string, IntlJogador | null>();
+  for (const j of intlData.jogadores) {
+    const parts = normNome(j.n).split(' ').filter(Boolean);
+    if (parts.length >= 2) {
+      const key = `${parts[0]} ${parts[parts.length - 1]}`;
+      if (!byFirstLast.has(key)) byFirstLast.set(key, j);
+      else byFirstLast.set(key, null); // colisão
+    }
+  }
+
+  // Índice por "país:último_apelido" normalizado
+  const byCountryLast = new Map<string, IntlJogador | null>();
+  for (const j of intlData.jogadores) {
+    const parts = normNome(j.n).split(' ').filter(Boolean);
+    if (parts.length >= 1 && j.co) {
+      const key = `${normCountry(j.co)}:${parts[parts.length - 1]}`;
+      if (!byCountryLast.has(key)) byCountryLast.set(key, j);
+      else byCountryLast.set(key, null);
+    }
+  }
+
   const bjgtNomes = intlData.jogadores.filter(j => !j.isM).map(j => j.n);
 
-  return (nomeUskids: string): IntlJogador | null => {
+  return (nomeUskids: string, paisUskids?: string): IntlJogador | null => {
     const nNorm = normNome(nomeUskids);
 
     // 1. Alias directo
@@ -106,7 +213,28 @@ function criarMatcherIntl(intlData: IntlData | null) {
     const exact = byNorm.get(nNorm);
     if (exact) return exact;
 
-    // 3. Fuzzy por apelidos
+    // 3. First+Last token match
+    const partsInsc = nNorm.split(' ').filter(Boolean);
+    if (partsInsc.length >= 2) {
+      const flKey = `${partsInsc[0]} ${partsInsc[partsInsc.length - 1]}`;
+      const fl = byFirstLast.get(flKey);
+      if (fl) return fl;
+    }
+
+    // 4. País + último apelido (com verificação de primeiro nome)
+    if (paisUskids && partsInsc.length >= 1) {
+      const clKey = `${normCountry(paisUskids || "")}:${partsInsc[partsInsc.length - 1]}`;
+      const cl = byCountryLast.get(clKey);
+      if (cl) {
+        // Verificar que primeiro nome é compatível (previne irmãos: Nikita ≠ Dmitrii)
+        const clFirst = normNome(cl.n).split(' ')[0] || "";
+        const inFirst = partsInsc[0] || "";
+        const prefix = Math.min(clFirst.length, inFirst.length, 3);
+        if (prefix === 0 || clFirst.slice(0, prefix) === inFirst.slice(0, prefix)) return cl;
+      }
+    }
+
+    // 5. Fuzzy por apelidos
     let melhorScore = 0;
     let melhorNome: string | null = null;
     for (const nb of bjgtNomes) {
@@ -114,7 +242,7 @@ function criarMatcherIntl(intlData: IntlData | null) {
       if (s > melhorScore) { melhorScore = s; melhorNome = nb; }
     }
 
-    if (melhorScore >= 0.8 && melhorNome) {
+    if (melhorScore >= 0.7 && melhorNome) {
       // Verificar não-confundir
       const chave = [nNorm, normNome(melhorNome)].sort().join('|');
       if (naoConfundir.has(chave)) return null;
@@ -126,18 +254,61 @@ function criarMatcherIntl(intlData: IntlData | null) {
 }
 // ─────────────────────────────────────────────────────────────────
 /** Cria um lookup fuzzy sobre a lista de rivais USKids.
- *  Exact match primeiro; depois fuzzy por apelidos (scoreMatch >= 0.7).
+ *  Exact match primeiro; depois first+last token; depois país+último apelido; depois fuzzy (scoreMatch >= 0.7).
  */
 function criarMatcherRivals(rivals: { nome: string; pais: string; cidade: string; encontros: any[] }[]) {
   const byNorm = new Map<string, typeof rivals[0]>();
   for (const r of rivals) byNorm.set(normNome(r.nome), r);
 
-  return (nomeInscrito: string): typeof rivals[0] | null => {
+  // Índice por "primeiro último" normalizado — apanha diferenças em middle names
+  const byFirstLast = new Map<string, typeof rivals[0] | null>();
+  for (const r of rivals) {
+    const parts = normNome(r.nome).split(' ').filter(Boolean);
+    if (parts.length >= 2) {
+      const key = `${parts[0]} ${parts[parts.length - 1]}`;
+      if (!byFirstLast.has(key)) byFirstLast.set(key, r);
+      else byFirstLast.set(key, null); // colisão → marca como inválido
+    }
+  }
+
+  // Índice por "país_normalizado:último_apelido" — forte para juniores
+  const byCountryLast = new Map<string, typeof rivals[0] | null>();
+  for (const r of rivals) {
+    const parts = normNome(r.nome).split(' ').filter(Boolean);
+    if (parts.length >= 1 && r.pais) {
+      const last = parts[parts.length - 1];
+      const key = `${normCountry(r.pais)}:${last}`;
+      if (!byCountryLast.has(key)) byCountryLast.set(key, r);
+      else byCountryLast.set(key, null); // colisão → ignorar
+    }
+  }
+
+  return (nomeInscrito: string, paisInscrito?: string): typeof rivals[0] | null => {
     const nNorm = normNome(nomeInscrito);
     // 1. Exact match normalizado
     const exact = byNorm.get(nNorm);
     if (exact) return exact;
-    // 2. Fuzzy por apelidos
+    // 2. First+Last token match (apanha "João Silva" vs "João Pedro Silva")
+    const partsInsc = nNorm.split(' ').filter(Boolean);
+    if (partsInsc.length >= 2) {
+      const flKey = `${partsInsc[0]} ${partsInsc[partsInsc.length - 1]}`;
+      const fl = byFirstLast.get(flKey);
+      if (fl) return fl;
+    }
+    // 3. País + último apelido (com verificação de primeiro nome)
+    if (paisInscrito && partsInsc.length >= 1) {
+      const lastInsc = partsInsc[partsInsc.length - 1];
+      const clKey = `${normCountry(paisInscrito || "")}:${lastInsc}`;
+      const cl = byCountryLast.get(clKey);
+      if (cl) {
+        // Verificar primeiro nome (previne irmãos)
+        const clFirst = normNome(cl.nome).split(' ')[0] || "";
+        const inFirst = partsInsc[0] || "";
+        const prefix = Math.min(clFirst.length, inFirst.length, 3);
+        if (prefix === 0 || clFirst.slice(0, prefix) === inFirst.slice(0, prefix)) return cl;
+      }
+    }
+    // 4. Fuzzy por apelidos
     let melhorScore = 0;
     let melhorRival: typeof rivals[0] | null = null;
     for (const r of rivals) {
@@ -492,8 +663,79 @@ const FLAG: Record<string,string> = {
   AU:"🇦🇺",ZA:"🇿🇦",MX:"🇲🇽",JP:"🇯🇵",KR:"🇰🇷",CH:"🇨🇭",CN:"🇨🇳",
   IN:"🇮🇳",BR:"🇧🇷",AR:"🇦🇷",BE:"🇧🇪",PL:"🇵🇱",SK:"🇸🇰",HU:"🇭🇺",
   RU:"🇷🇺",PH:"🇵🇭",SG:"🇸🇬",CZ:"🇨🇿",
+  TH:"🇹🇭",RO:"🇷🇴",UA:"🇺🇦",SI:"🇸🇮",BG:"🇧🇬",LT:"🇱🇹",LV:"🇱🇻",
+  EE:"🇪🇪",TR:"🇹🇷",MA:"🇲🇦",AE:"🇦🇪",KZ:"🇰🇿",VN:"🇻🇳",AT:"🇦🇹",
+  PY:"🇵🇾",NG:"🇳🇬",OM:"🇴🇲",PR:"🇵🇷",CR:"🇨🇷",JE:"🇯🇪",CY:"🇨🇾",
+  LB:"🇱🇧",ID:"🇮🇩",HK:"🇭🇰",TW:"🇹🇼",NZ:"🇳🇿",AM:"🇦🇲",CO:"🇨🇴",
+  CL:"🇨🇱",BB:"🇧🇧",BS:"🇧🇸",BO:"🇧🇴",DO:"🇩🇴",DZ:"🇩🇿",EC:"🇪🇨",
+  GT:"🇬🇹",HN:"🇭🇳",KE:"🇰🇪",KH:"🇰🇭",NI:"🇳🇮",PA:"🇵🇦",PE:"🇵🇪",
+  SV:"🇸🇻",UG:"🇺🇬",UY:"🇺🇾",VE:"🇻🇪",GR:"🇬🇷",IL:"🇮🇱",HR:"🇭🇷",
+  RS:"🇷🇸",LU:"🇱🇺",IS:"🇮🇸",MY:"🇲🇾",
 };
-const flag = (p: string) => FLAG[p?.toUpperCase()] ?? p;
+/** Converte qualquer formato de país (código, nome EN, nome PT) para emoji de bandeira */
+const flag = (p: string): string => {
+  if (!p) return "🏳️";
+  const upper = p.trim().toUpperCase();
+  // 1. Directo por código
+  if (FLAG[upper]) return FLAG[upper];
+  // 2. Via normCountry (nome completo → código)
+  const code = normCountry(p).toUpperCase();
+  if (FLAG[code]) return FLAG[code];
+  return "🏳️";
+};
+
+/** Normaliza país para código de 2 letras (ou lowercase do nome completo).
+ *  Aceita "PT", "Portugal", "England", "GB", "United Kingdom", etc. */
+const COUNTRY_TO_CODE: Record<string, string> = {
+  // English
+  portugal:"pt",england:"gb",spain:"es",france:"fr",germany:"de",italy:"it",
+  netherlands:"nl",sweden:"se",norway:"no",denmark:"dk",finland:"fi",
+  "united states":"us",canada:"ca",australia:"au","south africa":"za",mexico:"mx",
+  japan:"jp","south korea":"kr",switzerland:"ch",china:"cn",india:"in",
+  brazil:"br",argentina:"ar",belgium:"be",poland:"pl",slovakia:"sk",hungary:"hu",
+  "russian federation":"ru",russia:"ru",philippines:"ph",singapore:"sg",
+  "czech republic":"cz",ireland:"ie","great britain":"gb","united kingdom":"gb",
+  wales:"gb",scotland:"gb","northern ireland":"gb",colombia:"co",chile:"cl",
+  thailand:"th",romania:"ro",ukraine:"ua",slovenia:"si",bulgaria:"bg",
+  lithuania:"lt",latvia:"lv",estonia:"ee",turkey:"tr",morocco:"ma",
+  "united arab emirates":"ae",kazakhstan:"kz","viet nam":"vn",vietnam:"vn",
+  austria:"at",paraguay:"py",nigeria:"ng",oman:"om","puerto rico":"pr",
+  "costa rica":"cr",jersey:"je",cyprus:"cy",lebanon:"lb",indonesia:"id",
+  "hong kong":"hk",taiwan:"tw","new zealand":"nz",armenia:"am",
+  barbados:"bb",bahamas:"bs",bolivia:"bo","dominican republic":"do",
+  algeria:"dz",ecuador:"ec",guatemala:"gt",honduras:"hn",kenya:"ke",
+  cambodia:"kh",nicaragua:"ni",panama:"pa",peru:"pe","el salvador":"sv",
+  uganda:"ug",uruguay:"uy",venezuela:"ve",greece:"gr",israel:"il",
+  croatia:"hr",serbia:"rs",luxembourg:"lu",iceland:"is",malaysia:"my",
+  // Português
+  espanha:"es",frança:"fr",alemanha:"de",itália:"it","países baixos":"nl",
+  holanda:"nl",suécia:"se",noruega:"no",dinamarca:"dk",finlândia:"fi",
+  "estados unidos":"us",canadá:"ca",austrália:"au","áfrica do sul":"za",
+  méxico:"mx",japão:"jp","coreia do sul":"kr",suíça:"ch",índia:"in",
+  brasil:"br",bélgica:"be",polónia:"pl",eslováquia:"sk",hungria:"hu",
+  "federação russa":"ru",rússia:"ru",filipinas:"ph",singapura:"sg",
+  "república checa":"cz",irlanda:"ie","reino unido":"gb",
+  inglaterra:"gb",escócia:"gb","irlanda do norte":"gb",gales:"gb",
+  colômbia:"co",tailândia:"th",roménia:"ro",ucrânia:"ua",
+  eslovénia:"si",bulgária:"bg",lituânia:"lt",letónia:"lv",
+  estónia:"ee",turquia:"tr",marrocos:"ma",
+  "emirados árabes unidos":"ae",cazaquistão:"kz",vietname:"vn",
+  áustria:"at",paraguai:"py",nigéria:"ng",omã:"om","porto rico":"pr",
+  "costa rica":"cr",chipre:"cy",líbano:"lb",indonésia:"id",
+  "nova zelândia":"nz",arménia:"am",barbados:"bb",bahamas:"bs",
+  bolívia:"bo","república dominicana":"do",argélia:"dz",equador:"ec",
+  guatemala:"gt",honduras:"hn",quénia:"ke",camboja:"kh",
+  nicarágua:"ni",panamá:"pa",peru:"pe","el salvador":"sv",
+  uganda:"ug",uruguai:"uy",venezuela:"ve",grécia:"gr",israel:"il",
+  croácia:"hr",sérvia:"rs",luxemburgo:"lu",islândia:"is",malásia:"my",
+};
+function normCountry(raw: string): string {
+  if (!raw) return "";
+  const lower = raw.toLowerCase().trim();
+  // Already a 2-letter code?
+  if (lower.length === 2) return lower;
+  return COUNTRY_TO_CODE[lower] || lower;
+}
 
 // ─────────────────────────────────────────────
 // LOCALIZAÇÃO
@@ -901,7 +1143,7 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                             background: isM ? "var(--accent)" : "transparent",
                             color: isM ? "#fff" : j.pais==="PT" ? "var(--accent)" : "var(--text)",
                           }}>
-                            <span>{isM ? "★ " : ""}{j.nome}</span>
+                            <span>{isM ? "★ " : ""}{displayName(j.nome)}</span>
                             <span title={j.cidade}>{flag(j.pais)}</span>
                           </div>
                         );
@@ -927,7 +1169,7 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                   <div style={{ color:"var(--accent)", fontSize:10, marginBottom:1 }}>{e.nome}</div>
                   {e.jogadores!.filter(j=>j.pais==="PT").map((j,i)=>(
                     <div key={i} style={{ color:"var(--text)", fontSize:12, paddingLeft:8 }}>
-                      {j.nome} <span style={{ color:"var(--text-3)", fontSize:11 }}>{j.cidade}</span>
+                      {displayName(j.nome)} <span style={{ color:"var(--text-3)", fontSize:11 }}>{j.cidade}</span>
                     </div>
                   ))}
                 </div>
@@ -1109,7 +1351,7 @@ function TabResultados({ data, selectedT, greatgolfData }: {
             const tpC   = tpColor(j.to_par);
             return `<tr class="${manCls.trim()}">
               <td class="pos">${wd ? "" : posCounter}</td>
-              <td class="name">${manuel?"★ ":""}${j.nome}${wd?' <span style="color:#999;font-size:9px;font-weight:700">WD</span>':""}</td>
+              <td class="name">${manuel?"★ ":""}${displayName(j.nome)}${wd?' <span style="color:#999;font-size:9px;font-weight:700">WD</span>':""}</td>
               <td class="flag">${flag(j.pais)}</td>
               <td class="lb-topar" style="color:${wd?"#bbb":tpC}">${wd?"WD":tpVal}</td>
               <td class="lb-gross" style="${wd?"color:#bbb":""}">${wd?"–":j.score||"–"}</td>
@@ -1178,7 +1420,7 @@ function TabResultados({ data, selectedT, greatgolfData }: {
           ).join("");
           return `<tr class="${manCls}">
             <td class="pos">${isInc ? "–" : idx + 1}</td>
-            <td class="name">${manuel ? "★ " : ""}${p.nome}</td>
+            <td class="name">${manuel ? "★ " : ""}${displayName(p.nome)}</td>
             <td class="flag">${flag(p.pais)}</td>
             <td class="lb-topar" style="color:${tpC}">${isInc ? "–" : tpVal}</td>
             <td class="lb-gross" style="font-weight:700">${p.total || "–"}</td>
@@ -1421,6 +1663,7 @@ interface Encontro {
   rival_to_par: number | null;
   man_pos: number;
   rival_pos: number;
+  adjacente?: boolean;  // true = jogador de escalão vizinho (±1), não jogou directamente com o Manuel
 }
 
 interface RivalInfo {
@@ -1439,16 +1682,11 @@ function TabelaConhecidos({
 }: {
   torneioT: number; torneioNome: string; torneioData?: string; escalaoManuel?: string;
   rivals: RivalInfo[]; fieldData: FieldData | null; intlData: IntlData | null;
-  matchIntl: (nome: string) => IntlJogador | null;
+  matchIntl: (nome: string, pais?: string) => IntlJogador | null;
   resultados: TorneioResult[];
   defaultOpen?: boolean;
 }) {
   const [open, setOpen] = useState(defaultOpen ?? false);
-  const [expandidoNovos, setExpandidoNovos] = useState(false);
-  type RepSort = "escalao" | "nome" | "pais" | "escalaoAnt" | "pos";
-  const [repSort, setRepSort] = useState<{ col: RepSort; dir: "asc"|"desc" }>({ col: "escalao", dir: "asc" });
-  const handleRepSort = (col: RepSort) =>
-    setRepSort(prev => prev.col === col ? { col, dir: prev.dir === "asc" ? "desc" : "asc" } : { col, dir: col === "pos" ? "asc" : "asc" });
   const torneio = fieldData?.torneios.find(t => t.t === torneioT);
 
   // Guardar o escalão de referência apenas para o header (contagem)
@@ -1466,12 +1704,43 @@ function TabelaConhecidos({
     : [];
 
   const matchRival = criarMatcherRivals(rivals);
-  // Pré-computar o rival correspondente a cada inscrito (exact ou fuzzy)
+  const manuelIntl = intlData?.jogadores.find(jj => jj.isM);
+  const manuelIntlTids = manuelIntl ? new Set(Object.keys(manuelIntl.r)) : new Set<string>();
+
+  // Pré-computar o rival correspondente a cada inscrito:
+  // 1. criarMatcherRivals (USKids + intl encounters já merged com autoRivals correctos)
+  // 2. Fallback: matchIntl → encontrar o nome intl → procurar nos rivals por esse nome
+  //    Isto apanha jogadores cujo nome no campo difere dos resultados mas que estão
+  //    nos rivals com dados correctos dos autoRivals.
   const inscritoRivalCache = new Map<string, RivalInfo | null>(
-    inscritos.map(j => [j.nome, matchRival(j.nome)])
+    inscritos.map(j => {
+      // 1. Match via rivals list (já tem autoRivals correctos)
+      const rivalMatch = matchRival(j.nome, j.pais);
+      if (rivalMatch) return [j.nome, rivalMatch];
+
+      // 2. Fallback: matchIntl → obter o nome canónico → procurar nos rivals
+      const intlJog = matchIntl(j.nome, j.pais);
+      if (intlJog && !intlJog.isM) {
+        // Tentar encontrar nos rivals pelo nome intl (que pode ser diferente do nome inscrito)
+        const rivalByIntlName = matchRival(intlJog.n, intlJog.co);
+        if (rivalByIntlName) return [j.nome, rivalByIntlName];
+
+        // Último recurso: lookup directo no mapa de rivals por nome normalizado
+        const intlKey = intlJog.n.toLowerCase().trim();
+        const rivalDirect = rivals.find(r => r.nome.toLowerCase().trim() === intlKey);
+        if (rivalDirect) return [j.nome, rivalDirect];
+
+        // Se partilha torneios com o Manuel mas não está nos rivals,
+        // criar RivalInfo vazio — allRows adicionará encontros do intlData
+        const sharedTids = Object.keys(intlJog.r).filter(tid => manuelIntlTids.has(tid));
+        if (sharedTids.length > 0) {
+          return [j.nome, { nome: intlJog.n, pais: intlJog.co ?? j.pais, cidade: "", encontros: [] }];
+        }
+      }
+
+      return [j.nome, null];
+    })
   );
-  const conhecidos    = inscritos.filter(j => !isManuel(j.nome) && !!inscritoRivalCache.get(j.nome));
-  const desconhecidos = inscritos.filter(j => !isManuel(j.nome) && !inscritoRivalCache.get(j.nome));
 
   // ── Jogaram este torneio no ano passado (escalão abaixo) ──────────────────
   const anoPassadoMap = useMemo(() => {
@@ -1531,8 +1800,6 @@ function TabelaConhecidos({
   }, [torneioNome, torneioData, resultados, inscritos, torneio]);
   // ─────────────────────────────────────────────────────────────────────────
 
-  const manuelIntl = intlData?.jogadores.find(jj => jj.isM);
-
   return (
     <div style={{ marginBottom:8, border:"1px solid var(--border)", borderRadius:10, overflow:"hidden" }}>
       {/* Header do torneio — clicável para collapse */}
@@ -1548,7 +1815,7 @@ function TabelaConhecidos({
             {escalaoManuel && <span>🏌️ {escalaoManuel}</span>}
             {torneio && (
               <span>
-                · {conhecidos.length} conhecidos · {desconhecidos.length} novos
+                · {inscritos.filter(jj => !isManuel(jj.nome)).length} inscritos
                 {anoPassadoMap.size > 0 && <span style={{ marginLeft:6, fontWeight:700, color:"var(--text-2)" }}>· ↩ {anoPassadoMap.size} repetem</span>}
               </span>
             )}
@@ -1559,291 +1826,560 @@ function TabelaConhecidos({
       </div>
 
       {open && <div style={{ padding:"12px 16px" }}>
-        {/* ── Repetentes: jogaram este torneio no ano passado ── */}
-        {anoPassadoMap.size > 0 && (() => {
-          const base = inscritos
-            .filter(j => anoPassadoMap.has(j.nome.toLowerCase().trim()))
-            .map(j => ({ ...j, ant: anoPassadoMap.get(j.nome.toLowerCase().trim())! }));
-          const repetentes = [...base].sort((a, b) => {
-            let v = 0;
-            if (repSort.col === "escalao")    v = a.escalao.localeCompare(b.escalao);
-            else if (repSort.col === "nome")  v = a.nome.localeCompare(b.nome);
-            else if (repSort.col === "pais")  v = a.pais.localeCompare(b.pais);
-            else if (repSort.col === "escalaoAnt") v = a.ant.escalao.localeCompare(b.ant.escalao);
-            else v = a.ant.pos - b.ant.pos;
-            return repSort.dir === "asc" ? v : -v;
-          });
-          const manuelRepete = repetentes.some(j => isManuel(j.nome));
-          const ThR = ({ col, label, style }: { col: typeof repSort.col; label: string; style?: React.CSSProperties }) => (
-            <th onClick={() => handleRepSort(col)} style={{
-              cursor:"pointer", userSelect:"none", whiteSpace:"nowrap",
-              color: repSort.col === col ? "var(--text)" : "var(--text-3)",
-              ...style,
-            }}>
-              {label}
-              <span style={{ marginLeft:4, fontSize:10, opacity: repSort.col === col ? 1 : 0.35 }}>
-                {repSort.col === col ? (repSort.dir === "asc" ? "▲" : "▼") : "⇅"}
-              </span>
-            </th>
-          );
-          return (
-            <div style={{ marginBottom:16, border:"1px solid var(--border)", borderRadius:8, overflow:"hidden" }}>
-              <div style={{ padding:"8px 12px", background:"var(--bg-header)", borderBottom:"1px solid var(--border)",
-                fontSize:12, fontWeight:700, color:"var(--text-2)", display:"flex", alignItems:"center", gap:8 }}>
-                ↩ Repetentes — já jogaram este torneio no ano passado ({repetentes.length})
-                {manuelRepete && <span style={{ fontSize:11, color:"var(--accent)", fontWeight:700 }}>incl. Manuel</span>}
-              </div>
-              <table className="sc-lb" style={{ width:"100%" }}>
-                <thead>
-                  <tr>
-                    <th className="lb-pos sticky-col-0">#</th>
-                    <ThR col="nome" label="Jogador" style={{ textAlign:"left", paddingLeft:10, minWidth:120 }} />
-                    <ThR col="pais" label="🌍" style={{ width:28, textAlign:"center" }} />
-                    <ThR col="escalao" label="Escalão actual" style={{ textAlign:"left", padding:"6px 8px", minWidth:90 }} />
-                    <ThR col="escalaoAnt" label="Ano passado" style={{ textAlign:"left", padding:"6px 8px", minWidth:90 }} />
-                    <ThR col="pos" label="Pos. ant." style={{ width:52, textAlign:"center" }} />
-                  </tr>
-                </thead>
-                <tbody>
-                  {repetentes.map((j, i) => {
-                    const manuel = isManuel(j.nome);
-                    const stickyBg = manuel ? "var(--bg-manuel-sticky)" : "var(--bg-card,#fff)";
-                    return (
-                      <tr key={i} className={manuel ? "row-manuel" : undefined}>
-                        <td className="lb-pos sticky-col-0" style={{ background: stickyBg }}>{i + 1}</td>
-                        <td className="lb-name sticky-col-1" style={{ textAlign:"left", paddingLeft:10, background: stickyBg, fontWeight: manuel ? 700 : 400 }}>
-                          {manuel && <span style={{ color:"var(--color-warn)", marginRight:4 }}>★</span>}
-                          {j.nome}
-                        </td>
-                        <td style={{ textAlign:"center" }}>{flag(j.pais)}</td>
-                        <td style={{ textAlign:"left", padding:"5px 8px", fontSize:11, color:"var(--text-2)" }}>{j.escalao}</td>
-                        <td style={{ textAlign:"left", padding:"5px 8px", fontSize:11, color:"var(--text-3)" }}>{j.ant.escalao}</td>
-                        <td style={{ textAlign:"center", fontWeight:700, fontFamily:"'JetBrains Mono',monospace",
-                          color: j.ant.pos <= 3 ? "var(--color-warn)" : "var(--text)" }}>
-                          {j.ant.pos <= 3 ? "🏆 " : ""}{j.ant.pos}º
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          );
-        })()}
-
-        {/* ── Já conhecidos ── */}
-        <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:10 }}>
-          <span style={{ fontSize:12, fontWeight:700, color:"var(--color-good)" }}>
-            ⚔️ Já conhecidos ({conhecidos.length})
-          </span>
-          {desconhecidos.length > 0 && (
-            <span style={{ fontSize:11, color:"var(--text-3)" }}>
-              · {desconhecidos.length} novos · {inscritos.length} total
-            </span>
-          )}
-        </div>
-
-        {conhecidos.length === 0 ? (
-          <div style={{ fontSize:12, color:"var(--text-3)", padding:"8px 0 12px" }}>
-            Nenhum adversário conhecido inscrito ainda.
-          </div>
-        ) : (
-          <table className="sc-lb" style={{ width:"100%", marginBottom:16 }}>
-            <thead>
-              <tr>
-                <th className="sticky-col-0" style={{ textAlign:"left", paddingLeft:10 }}>Jogador</th>
-                <th style={{ width:30 }} />
-                <th style={{ textAlign:"left", padding:"6px 8px" }}>Encontros com o Manuel</th>
-              </tr>
-            </thead>
-            <tbody>
-              {conhecidos.map((j, i) => {
-                const rival = inscritoRivalCache.get(j.nome)!;
-                const torneiosUnicos = [...new Map(rival.encontros.map(e => [e.torneio_t, e])).values()];
-                const intlJog   = matchIntl(j.nome);
-                const intlTorns = intlJog
-                  ? (intlData?.torneios ?? []).filter(t => intlJog.r[t.id] && t.circuito !== "uskids")
-                  : [];
-                const foiTop3 = rival.encontros.some(e => e.rival_pos <= 3);
-                return (
-                  <tr key={i}>
-                    <td className="sticky-col-0" style={{ textAlign:"left", paddingLeft:10 }}>
-                      <span style={{ display:"flex", alignItems:"center", gap:5 }}>
-                        {j.nome}
-                        {foiTop3 && (
-                          <span style={{ background:"var(--color-warn)", color:"#fff",
-                            fontSize:10, fontWeight:800, padding:"1px 5px", borderRadius:4,
-                            whiteSpace:"nowrap" }}>
-                            🏆 top 3
-                          </span>
-                        )}
-                      </span>
-                    </td>
-                    <td style={{ textAlign:"center" }}>{flag(j.pais)}</td>
-                    <td style={{ fontSize:11, padding:"5px 8px", lineHeight:1.9 }}>
-                      {/* USKids */}
-                      {torneiosUnicos.map(enc => {
-                        const manMelhor = enc.man_pos < enc.rival_pos;
-                        const manPior   = enc.man_pos > enc.rival_pos;
-                        return (
-                          <span key={enc.torneio_t} style={{ marginRight:10, whiteSpace:"nowrap" }}>
-                            <span style={{ color:"var(--text-2)" }}>
-                              {enc.torneio_nome.replace(/\s\d{4}$/, "")}
-                            </span>
-                            <span style={{ marginLeft:4, fontWeight:700,
-                              color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
-                              {enc.man_pos}º vs {enc.rival_pos}º
-                            </span>
-                          </span>
-                        );
-                      })}
-                      {/* BJGT/Intl */}
-                      {intlTorns.map(t => {
-                        const res    = intlJog!.r[t.id];
-                        const manRes = manuelIntl?.r[t.id];
-                        const manMelhor = manRes ? manRes.p < res.p : false;
-                        const manPior   = manRes ? manRes.p > res.p : false;
-                        return (
-                          <span key={t.id} style={{ marginRight:8, whiteSpace:"nowrap" }}>
-                            <span style={{
-                              background:"var(--bg-info)", color:"var(--color-info)",
-                              fontSize:10, fontWeight:800, padding:"1px 5px", borderRadius:3,
-                              textTransform:"uppercase", marginRight:3,
-                            }}>
-                              {t.circuito === "bjgt" ? "BJGT" : (t.circuito?.toUpperCase() ?? "INTL")}
-                            </span>
-                            <a href={t.url} target="_blank" rel="noopener noreferrer"
-                              style={{ color:"var(--text-2)", textDecoration:"none", fontWeight:600 }}>
-                              {t.short}
-                            </a>
-                            {manRes ? (
-                              <span style={{ marginLeft:4, fontWeight:700,
-                                color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
-                                {manRes.p}º vs {res.p}º
-                              </span>
-                            ) : (
-                              <span style={{ marginLeft:4, color:"var(--text-3)", fontSize:11 }}>
-                                {res.p}º (s/ Manuel)
-                              </span>
-                            )}
-                          </span>
-                        );
-                      })}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        )}
-
-        {/* ── Novos ── */}
-        {desconhecidos.length > 0 && (
-          <div>
-            <button onClick={() => setExpandidoNovos(v => !v)} style={{
-              background:"none", border:"none", cursor:"pointer",
-              color:"var(--text-3)", fontSize:12, padding:"0 0 8px", fontWeight:700,
-            }}>
-              🆕 Novos ({desconhecidos.length}) {expandidoNovos ? "▲" : "▼"}
-            </button>
-            {expandidoNovos && (
-              <div style={{ display:"flex", flexWrap:"wrap", gap:"6px 12px", paddingBottom:4 }}>
-                {desconhecidos.map((j, i) => (
-                  <span key={i} style={{ fontSize:12, color:"var(--text-2)" }}>
-                    {flag(j.pais)} {j.nome}
-                  </span>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
+        {/* ── Todos os inscritos (conhecidos + novos) ── */}
+        <InscritosTable
+          inscritos={inscritos}
+          inscritoRivalCache={inscritoRivalCache}
+          matchIntl={matchIntl}
+          intlData={intlData}
+          manuelIntl={manuelIntl}
+          anoPassadoMap={anoPassadoMap}
+          escalaoManuel={escalaoManuel}
+        />
       </div>}
     </div>
   );
 }
 
-function TabRivais({ data, fieldData, intlData, selectedT }: { data: ResultsData; fieldData: FieldData | null; intlData: IntlData | null; selectedT: number | null }) {
-  const [filtro,          setFiltro]          = useState("");
-  const [ordem,           setOrdem]           = useState<"encontros"|"pais"|"nome">("encontros");
+/* ── Tabela unificada de inscritos com filtros e ordenação ── */
+type InscSortCol = "nome" | "pais" | "escalao" | "antEsc" | "antPos" | "encontros";
+type InscSortDir = "asc" | "desc";
+// Filtros fixos + dinâmicos por escalão (prefixo "esc:" para escalões)
+type InscFilter = string;
 
+function InscritosTable({
+  inscritos, inscritoRivalCache, matchIntl,
+  intlData, manuelIntl, anoPassadoMap, escalaoManuel,
+}: {
+  inscritos: { nome: string; pais: string; escalao: string }[];
+  inscritoRivalCache: Map<string, RivalInfo | null>;
+  matchIntl: (nome: string, pais?: string) => IntlJogador | null;
+  intlData: IntlData | null;
+  manuelIntl: IntlJogador | undefined;
+  anoPassadoMap: Map<string, { pos: number; escalao: string; ronda: number }>;
+  escalaoManuel?: string;
+}) {
+  const [filtro, setFiltro] = useState<InscFilter>("todos");
+  const [sortCol, setSortCol] = useState<InscSortCol>("encontros");
+  const [sortDir, setSortDir] = useState<InscSortDir>("desc");
 
+  const toggleSort = (col: InscSortCol) => {
+    if (sortCol === col) setSortDir(d => d === "asc" ? "desc" : "asc");
+    else { setSortCol(col); setSortDir(col === "nome" || col === "pais" || col === "escalao" || col === "antEsc" ? "asc" : "desc"); }
+  };
+
+  const hasAnt = anoPassadoMap.size > 0;
+
+  // Build enriched rows
+  type Row = {
+    nome: string; pais: string; escalao: string;
+    isKnown: boolean;
+    ant: { pos: number; escalao: string } | undefined;
+    isManuelEsc: boolean; nEncontros: number;
+    allEncontros: Encontro[];   // merged: rival.encontros + intlData
+    foiTop3: boolean;
+  };
+
+  const allRows = useMemo<Row[]>(() => {
+    const manuelIntlTids = manuelIntl ? Object.keys(manuelIntl.r) : [];
+    const todos = inscritos.filter(j => !isManuel(j.nome));
+    return todos.map(j => {
+      const rival = inscritoRivalCache.get(j.nome) ?? null;
+
+      // ── 1. Encontros do rival (USKids + já merged intl/autoRivals) ──
+      const rivalEncs: Encontro[] = rival ? [...rival.encontros] : [];
+
+      // ── 2. Encontros do intlData para torneios NOVOS (que não existem nos rivals) ──
+      // intlData pode ter posições stale; só adiciona torneios não cobertos.
+      const intlJog = matchIntl(j.nome, j.pais);
+      if (intlJog && !intlJog.isM && manuelIntl) {
+        const existCanons = new Set(rivalEncs.map(e => tornCanon(e.torneio_nome)));
+        for (const tid of manuelIntlTids) {
+          const rivalRes = intlJog.r[tid];
+          if (!rivalRes) continue;
+          const torn = intlData?.torneios.find(t => t.id === tid);
+          if (!torn) continue;
+          // Skip se este torneio já existe por tornCanon
+          if (hasCanon(existCanons, torn.name, torn.short)) continue;
+          const manRes = manuelIntl.r[tid];
+          rivalEncs.push({
+            torneio_t: 0, torneio_nome: torn.name, torneio_data: torn.date || "",
+            escalao: torn.short || torn.name,
+            man_score: 0, rival_score: 0,
+            man_to_par: manRes?.tp ?? null, rival_to_par: rivalRes.tp ?? null,
+            man_pos: manRes?.p ?? 0, rival_pos: rivalRes.p ?? 0,
+            adjacente: false,
+          });
+        }
+      }
+
+      // Dedup by tornCanon + escalão (keep first = autoRivals/USKids, correct data)
+      const allEncontros = [...new Map(
+        rivalEncs.map(e => [`${tornCanon(e.torneio_nome)}-${e.escalao}`, e])
+      ).values()];
+
+      const isKnown = allEncontros.length > 0;
+      const ant = anoPassadoMap.get(j.nome.toLowerCase().trim());
+      const foiTop3 = allEncontros.some(e => e.rival_pos > 0 && e.rival_pos <= 3)
+                    || (ant != null && ant.pos <= 3);
+      const isManuelEsc = j.escalao === escalaoManuel;
+      const nEncontros = allEncontros.length;
+      return { nome: j.nome, pais: j.pais, escalao: j.escalao, isKnown, ant, isManuelEsc, nEncontros, allEncontros, foiTop3 };
+    });
+  }, [inscritos, inscritoRivalCache, matchIntl, intlData, manuelIntl, anoPassadoMap, escalaoManuel]);
+
+  // Filter
+  const filtered = useMemo(() => {
+    let rows = allRows;
+    if (filtro === "mesmo_esc") rows = rows.filter(r => r.isManuelEsc);
+    else if (filtro === "conhecidos") rows = rows.filter(r => r.isKnown);
+    else if (filtro === "repetentes") rows = rows.filter(r => !!r.ant);
+    else if (filtro === "novos") rows = rows.filter(r => !r.isKnown);
+    else if (filtro.startsWith("esc:")) {
+      const escNome = filtro.slice(4);
+      rows = rows.filter(r => r.escalao === escNome);
+    }
+    return rows;
+  }, [allRows, filtro]);
+
+  // Sort
+  const sorted = useMemo(() => {
+    const dir = sortDir === "asc" ? 1 : -1;
+    return [...filtered].sort((a, b) => {
+      let v = 0;
+      if (sortCol === "nome") v = a.nome.localeCompare(b.nome);
+      else if (sortCol === "pais") v = a.pais.localeCompare(b.pais);
+      else if (sortCol === "escalao") v = (ESCALAO_ORDER[a.escalao] ?? 99) - (ESCALAO_ORDER[b.escalao] ?? 99);
+      else if (sortCol === "antEsc") v = (a.ant?.escalao ?? "zzz").localeCompare(b.ant?.escalao ?? "zzz");
+      else if (sortCol === "antPos") v = (a.ant?.pos ?? 999) - (b.ant?.pos ?? 999);
+      else if (sortCol === "encontros") {
+        // Known first, then by nEncontros desc
+        if (a.isKnown !== b.isKnown) return a.isKnown ? -1 : 1;
+        v = a.nEncontros - b.nEncontros;
+      }
+      return v * dir;
+    });
+  }, [filtered, sortCol, sortDir]);
+
+  // Filter pill counts
+  const nConhecidos = allRows.filter(r => r.isKnown).length;
+  const nRepetentes = allRows.filter(r => !!r.ant).length;
+  const nNovos = allRows.filter(r => !r.isKnown).length;
+
+  // Escalões disponíveis (ordenados), excluindo o do Manuel (que já tem pill próprio)
+  const escalaosDisponiveis = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const r of allRows) {
+      counts.set(r.escalao, (counts.get(r.escalao) ?? 0) + 1);
+    }
+    return [...counts.entries()]
+      .sort(([a], [b]) => (ESCALAO_ORDER[a] ?? 99) - (ESCALAO_ORDER[b] ?? 99));
+  }, [allRows]);
+
+  // Escalão do Manuel separado (com contagem)
+  const nMesmoEsc = allRows.filter(r => r.isManuelEsc).length;
+
+  const filters: { id: string; label: string; n: number; sep?: boolean }[] = [
+    { id: "todos",      label: "Todos",        n: allRows.length },
+    ...(escalaoManuel ? [{ id: "mesmo_esc", label: `★ ${escalaoManuel}`, n: nMesmoEsc }] : []),
+    // Escalões individuais (incluindo o do Manuel, mas como filtro de escalão genérico)
+    ...escalaosDisponiveis
+      .filter(([esc]) => esc !== escalaoManuel) // já temos o ★ pill
+      .map(([esc, n], i) => ({ id: `esc:${esc}`, label: esc, n, sep: i === 0 })),
+    { id: "conhecidos", label: "Conhecidos",   n: nConhecidos, sep: true },
+    ...(nRepetentes > 0 ? [{ id: "repetentes", label: "↩ Repetem", n: nRepetentes }] : []),
+    { id: "novos",      label: "Novos",        n: nNovos },
+  ];
+
+  const ThSort = ({ col, label, style }: { col: InscSortCol; label: string; style?: React.CSSProperties }) => (
+    <th onClick={() => toggleSort(col)} style={{
+      cursor:"pointer", userSelect:"none", whiteSpace:"nowrap",
+      color: sortCol === col ? "var(--text)" : "var(--text-3)",
+      ...style,
+    }}>
+      {label}
+      <span style={{ marginLeft:3, fontSize:9, opacity: sortCol === col ? 1 : 0.3 }}>
+        {sortCol === col ? (sortDir === "asc" ? "▲" : "▼") : "⇅"}
+      </span>
+    </th>
+  );
+
+  return (
+    <div>
+      {/* Filter pills */}
+      <div style={{ display:"flex", gap:5, marginBottom:12, flexWrap:"wrap", alignItems:"center" }}>
+        {filters.map(f => (
+          <React.Fragment key={f.id}>
+            {f.sep && <span style={{ width:1, height:18, background:"var(--border)", margin:"0 2px", flexShrink:0 }} />}
+            <button onClick={() => setFiltro(f.id)} style={{
+              background: filtro === f.id ? "var(--bg-active)" : "var(--bg-card)",
+              border: `1px solid ${filtro === f.id ? "var(--border-success)" : "var(--border)"}`,
+              color: filtro === f.id ? "var(--text)" : "var(--text-3)",
+              borderRadius: 7, padding: "4px 9px", fontSize: 11, cursor: "pointer",
+              fontWeight: filtro === f.id ? 700 : 400,
+            }}>
+              {f.label} <span style={{ fontWeight:700, marginLeft:2, opacity:0.7 }}>{f.n}</span>
+            </button>
+          </React.Fragment>
+        ))}
+      </div>
+
+      {sorted.length === 0 ? (
+        <div style={{ fontSize:12, color:"var(--text-3)", padding:"8px 0 12px" }}>
+          Nenhum jogador neste filtro.
+        </div>
+      ) : (
+        <table className="sc-lb" style={{ width:"100%", marginBottom:16 }}>
+          <thead>
+            <tr>
+              <ThSort col="nome" label="Jogador" style={{ textAlign:"left", paddingLeft:10, minWidth:130 }} />
+              <ThSort col="pais" label="🌍" style={{ width:30, textAlign:"center" }} />
+              <ThSort col="escalao" label="Escalão" style={{ width:75, textAlign:"center", fontSize:10 }} />
+              {hasAnt && <>
+                <ThSort col="antEsc" label="Ano ant." style={{ width:75, textAlign:"center", fontSize:10 }} />
+                <ThSort col="antPos" label="Pos." style={{ width:42, textAlign:"center", fontSize:10 }} />
+              </>}
+              <ThSort col="encontros" label="Encontros com o Manuel" style={{ textAlign:"left", padding:"6px 8px", minWidth:280 }} />
+            </tr>
+          </thead>
+          <tbody>
+            {sorted.map((r, i) => (
+              <tr key={i} style={!r.isKnown ? { opacity: 0.55 } : undefined}>
+                <td className="sticky-col-0" style={{ textAlign:"left", paddingLeft:10 }}>
+                  <span style={{ display:"flex", alignItems:"center", gap:5 }}>
+                    {displayName(r.nome)}
+                    {r.foiTop3 && (
+                      <span style={{ background:"var(--color-warn)", color:"#fff",
+                        fontSize:10, fontWeight:800, padding:"1px 5px", borderRadius:4, whiteSpace:"nowrap" }}>
+                        🏆 top 3
+                      </span>
+                    )}
+                    {!r.isKnown && (
+                      <span style={{ background:"var(--bg-muted)", color:"var(--text-3)",
+                        fontSize:9, fontWeight:700, padding:"1px 5px", borderRadius:3,
+                        border:"1px solid var(--border)", whiteSpace:"nowrap" }}>
+                        NOVO
+                      </span>
+                    )}
+                    {r.ant && (
+                      <span style={{ background:"var(--bg-info)", color:"var(--color-info)",
+                        fontSize:9, fontWeight:700, padding:"1px 5px", borderRadius:3, whiteSpace:"nowrap" }}>
+                        ↩
+                      </span>
+                    )}
+                  </span>
+                </td>
+                <td style={{ textAlign:"center" }}>{flag(r.pais)}</td>
+                <td style={{ textAlign:"center" }}>
+                  <span style={{
+                    fontSize:10, fontWeight:600, padding:"1px 6px", borderRadius:3,
+                    background: r.isManuelEsc ? "var(--bg-success-subtle,rgba(0,128,0,0.06))" : "var(--bg-muted)",
+                    color: r.isManuelEsc ? "var(--color-good)" : "var(--text-3)",
+                    border: `1px solid ${r.isManuelEsc ? "var(--border-success,var(--border))" : "var(--border)"}`,
+                  }}>{r.escalao}</span>
+                </td>
+                {hasAnt && <>
+                  <td style={{ textAlign:"center", fontSize:10, color:"var(--text-3)" }}>
+                    {r.ant ? r.ant.escalao : "—"}
+                  </td>
+                  <td style={{ textAlign:"center", fontWeight: r.ant ? 700 : 400, fontSize:11,
+                    fontFamily:"'JetBrains Mono',monospace",
+                    color: r.ant ? (r.ant.pos <= 3 ? "var(--color-warn)" : "var(--text)") : "var(--text-3)" }}>
+                    {r.ant ? <>{r.ant.pos <= 3 ? "🏆" : ""}{r.ant.pos}º</> : "—"}
+                  </td>
+                </>}
+                <td style={{ fontSize:11, padding:"5px 8px", lineHeight:1.9, textAlign:"left" }}>
+                  {r.allEncontros.length > 0 ? (
+                    <div style={{ display:"flex", flexWrap:"wrap", gap:"4px 10px" }}>
+                      {r.allEncontros.map(enc => {
+                        const isAdj = enc.adjacente;
+                        const manMelhor = !isAdj && enc.man_pos > 0 && enc.man_pos < enc.rival_pos;
+                        const manPior   = !isAdj && enc.man_pos > 0 && enc.man_pos > enc.rival_pos;
+                        const hasVs = !isAdj && enc.man_pos > 0;
+                        return (
+                          <span key={`${enc.torneio_nome}-${enc.escalao}`} style={{ whiteSpace:"nowrap" }}>
+                            <span style={{ color:"var(--text-2)" }}>
+                              {shortTornName(enc.torneio_nome)}
+                            </span>
+                            <span style={{
+                              marginLeft:4, fontSize:10, fontWeight:600, padding:"1px 5px", borderRadius:3,
+                              background: isAdj ? "var(--bg-muted)" : "var(--bg-success-subtle,rgba(0,128,0,0.06))",
+                              color: isAdj ? "var(--text-3)" : "var(--text-2)",
+                              border: `1px solid ${isAdj ? "var(--border)" : "var(--border-success,var(--border))"}`,
+                            }}>
+                              {enc.escalao}:{" "}
+                              {hasVs ? (
+                                <>
+                                  <span style={{ fontWeight:700, color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
+                                    {enc.man_pos}º
+                                  </span>
+                                  <span style={{ color:"var(--text-3)" }}> vs </span>
+                                  <span style={{ fontWeight:700 }}>{enc.rival_pos}º</span>
+                                </>
+                              ) : (
+                                <>{enc.rival_pos}º</>
+                              )}
+                            </span>
+                          </span>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <span style={{ color:"var(--text-3)", fontSize:10, fontStyle:"italic" }}>sem historial</span>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
+}
+
+/** Constrói a lista de rivais a partir dos resultados USKids.
+ *  Inclui jogadores do escalão do Manuel E dos escalões adjacentes (±1 age_group),
+ *  porque nos torneios os miúdos de escalões vizinhos convivem e por vezes
+ *  jogam no mesmo draw. Encontros de escalão adjacente ficam marcados
+ *  com `adjacente: true`.
+ *
+ *  Usa o campo numérico `age_group` (ex: 2102, 2103…) em vez de nomes de
+ *  escalão, porque os nomes variam entre torneios ("Boys 9", "Boys 9-10", etc.)
+ *  mas os age_group codes são sequenciais e consistentes.
+ */
+function buildRivalsFromResultados(resultados: TorneioResult[]): RivalInfo[] {
+  const mapa = new Map<string, RivalInfo>();
+  for (const t of resultados) {
+    // 1. Encontrar o escalão do Manuel via escalao_manuel, is_manuel, ou busca directa
+    const escalaoEsperado = escalaoManuelParaData(t.date_inicio);
+    let manuelEsc: EscalaoResult | null = null;
+    let manuelJog: RondaJogador | null = null;
+    let manuelPos = 99;
+
+    // Prioridade: escalao_manuel (numérico, injectado pelo pipeline)
+    if (t.escalao_manuel) {
+      manuelEsc = t.escaloes.find(e => e.age_group === t.escalao_manuel) ?? null;
+    }
+    // Fallback: is_manuel flag + nome esperado
+    if (!manuelEsc) {
+      manuelEsc = t.escaloes.find(e => e.is_manuel && e.nome === escalaoEsperado) ?? null;
+    }
+    // Último recurso: procurar o Manuel directamente nos jogadores
+    if (!manuelEsc) {
+      for (const e of t.escaloes) {
+        const todasRondas = e.rondas.flatMap(r => r.leaderboard ?? r.jogadores ?? []);
+        if (todasRondas.some(j => isManuel(j.nome))) { manuelEsc = e; break; }
+      }
+    }
+    if (!manuelEsc) continue;
+
+    // Obter dados do Manuel no seu escalão
+    const manuelRondas = manuelEsc.rondas.flatMap(r => r.leaderboard ?? r.jogadores ?? []);
+    manuelJog = manuelRondas.find(j => isManuel(j.nome)) ?? null;
+    if (manuelJog) {
+      const lb0 = manuelEsc.rondas[0]?.leaderboard ?? manuelEsc.rondas[0]?.jogadores ?? [];
+      manuelPos = lb0.findIndex(j => isManuel(j.nome)) + 1 || 99;
+    }
+
+    // 2. Escalões adjacentes: age_group ± 1 (método numérico, funciona para
+    //    qualquer formato de nome: "Boys 9", "Boys 9-10", etc.)
+    const manuelAg = manuelEsc.age_group;
+    const adjacentAgs = new Set([manuelAg - 1, manuelAg, manuelAg + 1]);
+
+    // 3. Processar todos os escalões adjacentes (incluindo o do Manuel)
+    for (const e of t.escaloes) {
+      if (!adjacentAgs.has(e.age_group)) continue;
+
+      const isManuelsEscalao = (e.age_group === manuelAg);
+      const todasRondas = e.rondas.flatMap(r => r.leaderboard ?? r.jogadores ?? []);
+      const lb0 = e.rondas[0]?.leaderboard ?? e.rondas[0]?.jogadores ?? [];
+
+      const adversariosVistos = new Set<string>();
+      for (const r of e.rondas)
+        for (const j of (r.leaderboard ?? r.jogadores ?? []))
+          if (!isManuel(j.nome)) adversariosVistos.add(j.nome.trim());
+
+      for (const nomeAdv of adversariosVistos) {
+        const key = nomeAdv.toLowerCase().trim();
+        const advJog = todasRondas.find(j => j.nome.trim() === nomeAdv);
+        if (!advJog) continue;
+        const advPos = lb0.findIndex(j => j.nome.trim() === nomeAdv) + 1 || 99;
+
+        if (!mapa.has(key))
+          mapa.set(key, { nome: advJog.nome, pais: advJog.pais, cidade: advJog.cidade ?? "", encontros: [] });
+
+        mapa.get(key)!.encontros.push({
+          torneio_t:    t.t,
+          torneio_nome: t.name,
+          torneio_data: t.date_inicio,
+          escalao:      e.nome,
+          man_score:    isManuelsEscalao && manuelJog ? (manuelJog.score || 0) : 0,
+          rival_score:  advJog.score || 0,
+          man_to_par:   isManuelsEscalao && manuelJog ? (manuelJog.to_par ?? null) : null,
+          rival_to_par: advJog.to_par ?? null,
+          man_pos:      isManuelsEscalao ? manuelPos : 0,
+          rival_pos:    advPos,
+          adjacente:    !isManuelsEscalao,
+        });
+      }
+    }
+  }
+  return [...mapa.values()];
+}
+
+/** Extrai base do tid (remove sufixo de escalão) para agrupar por torneio físico */
+function tidBase(tid: string): string {
+  // eowagr25_b910 → eowagr25, wjgc26_1213 → wjgc26, doral25_b89 → doral25,
+  // gg26_u14 → gg26, gg26_open → gg26, usk18124_b10 → usk18124
+  return tid.replace(/_(?:b?\d+|u\d+|open)$/, "");
+}
+
+function TabRivais({ data, fieldData, intlData, autoRivals, selectedT }: {
+  data: ResultsData; fieldData: FieldData | null; intlData: IntlData | null;
+  autoRivals: AutoRivalPlayer[]; selectedT: number | null;
+}) {
   const matchIntl = useMemo(() => criarMatcherIntl(intlData), [intlData]);
 
   const rivals = useMemo<RivalInfo[]>(() => {
-    const mapa = new Map<string, RivalInfo>();
-    for (const t of data.resultados) {
-      for (const e of t.escaloes) {
-        const todasRondas = e.rondas.flatMap(r => r.leaderboard ?? r.jogadores ?? []);
-        const manuelJogs = todasRondas.filter(j => isManuel(j.nome));
-        if (!manuelJogs.length) continue;
-        const manuelJog = manuelJogs[0];
-        const lb0 = e.rondas[0]?.leaderboard ?? e.rondas[0]?.jogadores ?? [];
-        const manuelPos = lb0.findIndex(j => isManuel(j.nome)) + 1 || 99;
-        const adversariosVistos = new Set<string>();
-        for (const r of e.rondas)
-          for (const j of (r.leaderboard ?? r.jogadores ?? []))
-            if (!isManuel(j.nome)) adversariosVistos.add(j.nome.trim());
-        for (const nomeAdv of adversariosVistos) {
-          const key = nomeAdv.toLowerCase().trim();
-          const advJog = todasRondas.find(j => j.nome.trim() === nomeAdv);
-          if (!advJog) continue;
-          const advPos = lb0.findIndex(j => j.nome.trim() === nomeAdv) + 1 || 99;
-          if (!mapa.has(key))
-            mapa.set(key, { nome: advJog.nome, pais: advJog.pais, cidade: advJog.cidade, encontros: [] });
-          mapa.get(key)!.encontros.push({
-            torneio_t:    t.t,
-            torneio_nome: t.name,
-            torneio_data: t.date_inicio,
-            escalao:      e.nome,
-            man_score:    manuelJog.score || 0,
-            rival_score:  advJog.score || 0,
-            man_to_par:   manuelJog.to_par ?? null,
-            rival_to_par: advJog.to_par ?? null,
-            man_pos:      manuelPos,
-            rival_pos:    advPos,
-          });
+    const base = buildRivalsFromResultados(data.resultados);
+    const mapa = new Map<string, RivalInfo>(base.map(r => [r.nome.toLowerCase().trim(), r]));
+
+    // ── 2. AutoRivals (KIDSdataLoader): dados dos JSONs brutos (AUTORITATIVOS) ──
+    // Processados PRIMEIRO porque os JSONs têm dados completos e actualizados.
+    // O rivals-intl.json pode ter dados stale (ex: apenas 2 de 3 rondas).
+    if (autoRivals.length > 0) {
+      const manuelAuto = autoRivals.find(p =>
+        normNameAuto(p.n).includes("medeiros") && normNameAuto(p.n).includes("manuel")
+      );
+      if (manuelAuto) {
+        const manuelBases = new Map<string, { tid: string; res: typeof manuelAuto.r[string] }>();
+        for (const [tid, res] of Object.entries(manuelAuto.r)) {
+          const b = tidBase(tid);
+          if (!manuelBases.has(b)) manuelBases.set(b, { tid, res });
+        }
+
+        for (const ap of autoRivals) {
+          if (ap === manuelAuto) continue;
+          const key = ap.n.toLowerCase().trim();
+
+          for (const [apTid, apRes] of Object.entries(ap.r)) {
+            const b = tidBase(apTid);
+            const manuelEntry = manuelBases.get(b);
+            if (!manuelEntry) continue;
+
+            const isSameTid = (apTid === manuelEntry.tid);
+            const existing = mapa.get(key);
+
+            // Extract year from tidBase: "wjgc26" → "'26", "eowagr25" → "'25"
+            const yearMatch = b.match(/(\d{2})$/);
+            const yearSuffix = yearMatch ? `'${yearMatch[1]}` : "";
+
+            const tornLabel = (() => {
+              const bl = b.toLowerCase();
+              if (bl.startsWith("eowagr")) return `EU Open ${yearSuffix}`.trim();
+              if (bl.startsWith("wjgc") || bl.startsWith("brjgt")) return `WJGC ${yearSuffix}`.trim();
+              if (bl.startsWith("doral")) return `Doral ${yearSuffix}`.trim();
+              if (bl.startsWith("gg")) return `Great Golf ${yearSuffix}`.trim();
+              if (bl.startsWith("qdl")) return `QDL ${yearSuffix}`.trim();
+              return b.replace(/\d+$/, "").replace(/_/g, " ").toUpperCase().trim() + (yearSuffix ? ` ${yearSuffix}` : "") || b;
+            })();
+            const ageLabel = apRes.ageGroup || (() => {
+              const suffix = apTid.replace(b, "").replace(/^_/, "");
+              if (!suffix) return "";
+              const digits = suffix.replace(/^b/, "");
+              const n = Number(digits);
+              if (n >= 7 && n <= 18) return `Boys ${n}`;
+              for (let i = 1; i < digits.length; i++) {
+                const a = Number(digits.slice(0, i));
+                const bb = Number(digits.slice(i));
+                if (a >= 7 && a <= 17 && bb >= 8 && bb <= 18 && bb === a + 1) {
+                  return `Boys ${a}-${bb}`;
+                }
+              }
+              return suffix;
+            })();
+
+            // Dedup: skip se já temos um encontro com este tornCanon (wjgc25 ≠ wjgc26)
+            if (existing) {
+              const existKeys = new Set(existing.encontros.map(e => tornCanon(e.torneio_nome)));
+              if (hasCanon(existKeys, tornLabel)) continue;
+            }
+
+            if (!mapa.has(key))
+              mapa.set(key, { nome: ap.n, pais: ap.co ?? "", cidade: "", encontros: [] });
+
+            mapa.get(key)!.encontros.push({
+              torneio_t:    0,
+              torneio_nome: tornLabel,
+              torneio_data: "",
+              escalao:      ageLabel || tornLabel,
+              man_score:    0,
+              rival_score:  0,
+              man_to_par:   manuelEntry.res.tp ?? null,
+              rival_to_par: apRes.tp ?? null,
+              man_pos:      manuelEntry.res.p ?? 0,
+              rival_pos:    apRes.p ?? 0,
+              adjacente:    !isSameTid,
+            });
+          }
         }
       }
     }
 
-    // ── 2. BJGT / outros circuitos: jogadores que partilharam torneios com o Manuel ──
+    // ── 3. intlData (rivals-intl.json): FALLBACK para jogadores sem encontros ──
+    // Só adiciona encontros para jogadores que NÃO foram cobertos pelos passos 1+2.
+    // O intlData pode ter posições stale; autoRivals (passo 2) é autoritativo.
     if (intlData) {
       const manuelIntlJog = intlData.jogadores.find(j => j.isM);
       if (manuelIntlJog) {
-        // IDs de torneios não-USKids onde o Manuel participou
-        const torneiosComManuel = new Set(
-          Object.keys(manuelIntlJog.r).filter(tid => {
-            const torn = intlData.torneios.find(t => t.id === tid);
-            return torn && torn.circuito !== "uskids";
-          })
-        );
+        const torneiosComManuel = new Map<string, IntlTorneio>();
+        for (const tid of Object.keys(manuelIntlJog.r)) {
+          const torn = intlData.torneios.find(t => t.id === tid);
+          if (torn && torn.circuito !== "uskids") torneiosComManuel.set(tid, torn);
+        }
+
         for (const j of intlData.jogadores) {
           if (j.isM) continue;
-          const partilhados = Object.keys(j.r).filter(tid => torneiosComManuel.has(tid));
-          if (!partilhados.length) continue;
           const key = j.n.toLowerCase().trim();
-          // Adicionar ao mapa se ainda não existe (pode já ter vindo de USKids)
-          if (!mapa.has(key)) {
+
+          if (!mapa.has(key))
             mapa.set(key, { nome: j.n, pais: j.co ?? "", cidade: "", encontros: [] });
+
+          const existing = mapa.get(key)!;
+          const existCanons = new Set(existing.encontros.map(e => tornCanon(e.torneio_nome)));
+
+          for (const [tid, torn] of torneiosComManuel) {
+            const rivalRes = j.r[tid];
+            if (!rivalRes) continue;
+            const manRes = manuelIntlJog.r[tid];
+            if (!manRes) continue;
+            // Skip se este torneio já existe por tornCanon
+            if (hasCanon(existCanons, torn.name, torn.short)) continue;
+
+            const ym = tid.match(/(\d{2})(?:_|$)/);
+            const ys = ym ? `'${ym[1]}` : "";
+            const catLabel = `${torn.short || torn.name} ${ys}`.trim();
+
+            mapa.get(key)!.encontros.push({
+              torneio_t:    0,
+              torneio_nome: torn.name,
+              torneio_data: torn.date || "",
+              escalao:      catLabel,
+              man_score:    0,
+              rival_score:  0,
+              man_to_par:   manRes.tp ?? null,
+              rival_to_par: rivalRes.tp ?? null,
+              man_pos:      manRes.p ?? 0,
+              rival_pos:    rivalRes.p ?? 0,
+              adjacente:    false,
+            });
           }
         }
       }
     }
 
     return [...mapa.values()];
-  }, [data, intlData]);
-
-  const ordenados = useMemo(() => {
-    let lista = filtro.trim()
-      ? rivals.filter(r =>
-          r.nome.toLowerCase().includes(filtro.toLowerCase()) ||
-          r.pais.toLowerCase().includes(filtro.toLowerCase()))
-      : [...rivals];
-    if (ordem === "encontros") lista.sort((a,b) => b.encontros.length - a.encontros.length);
-    else if (ordem === "pais")  lista.sort((a,b) => a.pais.localeCompare(b.pais));
-    else lista.sort((a,b) => a.nome.localeCompare(b.nome));
-    return lista;
-  }, [rivals, filtro, ordem]);
+  }, [data, intlData, autoRivals]);
 
   // Torneios futuros onde o Manuel está inscrito (nome+PT)
   const torneiosComManuel = useMemo(() => {
@@ -1895,112 +2431,274 @@ function TabRivais({ data, fieldData, intlData, selectedT }: { data: ResultsData
         </div>
       )}
 
-      {/* ── Histórico (aberto por defeito) ── */}
+      {/* ── Histórico completo ── */}
       <div style={{ borderTop:"1px solid var(--border)", paddingTop:16 }}>
-        <div style={{ fontSize:13, fontWeight:700, color:"var(--text-2)", marginBottom:16 }}>
-          Todos os adversários históricos ({rivals.length})
-        </div>
-        <>
-          <div style={{ display:"flex", gap:8, marginBottom:12, alignItems:"center", flexWrap:"wrap" }}>
-            <input value={filtro} onChange={e=>setFiltro(e.target.value)}
-              placeholder="Nome ou país…"
-              style={{ border:"1px solid var(--border)", borderRadius:7,
-                color:"var(--text)", background:"var(--bg-card)",
-                padding:"6px 11px", fontSize:12, width:180, outline:"none" }} />
-            {(["encontros","nome","pais"] as const).map(o => (
-              <button key={o} onClick={() => setOrdem(o)} style={{
-                background: ordem===o ? "var(--bg-active)" : "var(--bg-card)",
-                border:`1px solid ${ordem===o ? "var(--border-success)" : "var(--border)"}`,
-                color:"var(--text-2)", borderRadius:7, padding:"5px 10px",
-                fontSize:11, cursor:"pointer", fontWeight: ordem===o ? 700 : 400,
-              }}>
-                {o === "encontros" ? "Mais encontros" : o === "nome" ? "Nome" : "País"}
-              </button>
-            ))}
-            <span style={{ color:"var(--text-3)", fontSize:11 }}>{ordenados.length} jogadores</span>
-          </div>
-
-          <table className="sc-lb" style={{ width:"100%" }}>
-            <thead>
-              <tr>
-                <th className="sticky-col-0" style={{ width:26 }}>#</th>
-                <th className="sticky-col-1" style={{ textAlign:"left", paddingLeft:10 }}>Jogador</th>
-                <th style={{ width:30 }} />
-                <th className="lb-sd" style={{ textAlign:"center" }}>Torneios</th>
-                <th style={{ textAlign:"left", padding:"6px 8px" }}>Historial</th>
-              </tr>
-            </thead>
-            <tbody>
-              {ordenados.map((r, i) => {
-                const torneiosUnicos = [...new Map(r.encontros.map(e => [e.torneio_t, e])).values()];
-                return (
-                  <tr key={r.nome}>
-                    <td className="sticky-col-0" style={{ textAlign:"center", fontWeight:700 }}>{i + 1}</td>
-                    <td className="sticky-col-1" style={{ textAlign:"left", paddingLeft:10 }}>
-                      {r.nome}
-                      {r.cidade && <span style={{ color:"var(--text-3)", fontSize:11, marginLeft:6 }}>{r.cidade}</span>}
-                    </td>
-                    <td style={{ textAlign:"center", fontSize:14 }}>{flag(r.pais)}</td>
-                    <td className="lb-sd" style={{ textAlign:"center", fontWeight:700, color:"var(--text-2)" }}>
-                      {torneiosUnicos.length}
-                    </td>
-                    <td style={{ fontSize:11, color:"var(--text-3)", padding:"5px 8px" }}>
-                      {torneiosUnicos.map(enc => {
-                        const manMelhor = enc.man_pos < enc.rival_pos;
-                        const manPior   = enc.man_pos > enc.rival_pos;
-                        return (
-                          <span key={enc.torneio_t} style={{ marginRight:12, whiteSpace:"nowrap" }}>
-                            <span style={{ color:"var(--text-2)" }}>
-                              {enc.torneio_nome.replace(/\s\d{4}$/, "")}
-                            </span>
-                            <span style={{ marginLeft:5 }}>
-                              <span style={{ fontWeight:700, color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
-                                {enc.man_pos}º
-                              </span>
-                              <span style={{ color:"var(--text-3)" }}> vs </span>
-                              <span style={{ fontWeight:700, color:"var(--text-2)" }}>{enc.rival_pos}º</span>
-                            </span>
-                          </span>
-                        );
-                      })}
-                      {(() => {
-                        const intlJog = matchIntl(r.nome);
-                        if (!intlJog) return null;
-                        const torns = (intlData?.torneios ?? []).filter(t => intlJog.r[t.id] && t.circuito !== "uskids");
-                        if (!torns.length) return null;
-                        return torns.map(t => {
-                          const res = intlJog.r[t.id];
-                          const manRes = intlData?.jogadores.find(j => j.isM)?.r[t.id];
-                          const manMelhor = manRes && res.p > manRes.p;
-                          const manPior   = manRes && res.p < manRes.p;
-                          return (
-                            <span key={t.id} style={{ marginRight:12, whiteSpace:"nowrap" }}>
-                              <span style={{ color:"var(--color-info)", fontSize:10, fontWeight:700,
-                                border:"1px solid var(--border-info)", borderRadius:3,
-                                padding:"1px 5px", marginRight:3 }}>BJGT</span>
-                              <a href={t.url} target="_blank" rel="noopener noreferrer"
-                                style={{ color:"var(--text-2)", textDecoration:"none" }}>{t.short}</a>
-                              {manRes && (
-                                <span style={{ marginLeft:4 }}>
-                                  <span style={{ fontWeight:700, color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
-                                    {manRes.p}º
-                                  </span>
-                                  <span style={{ color:"var(--text-3)" }}> vs </span>
-                                  <span style={{ fontWeight:700, color:"var(--text-2)" }}>{res.p}º</span>
-                                </span>
-                              )}
-                            </span>
-                          );
-                        });
-                      })()}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </>
+        <HistoricoTable rivals={rivals} matchIntl={matchIntl} intlData={intlData} />
       </div>
+    </div>
+  );
+}
+
+/* ════════════════════════════════════════════════════════════════
+   HistoricoTable — tabela de todos os rivais históricos
+   Filtros, ordenação por cabeçalho, encontros flex-wrap, contagem correcta
+   ════════════════════════════════════════════════════════════════ */
+type HistSortCol = "nome" | "pais" | "torneios" | "encontros";
+type HistFilter = string; // "todos" | "top3" | "mesmo_esc" | "adj" | circuit prefixes
+
+function HistoricoTable({ rivals, matchIntl, intlData }: {
+  rivals: RivalInfo[];
+  matchIntl: (nome: string, pais?: string) => IntlJogador | null;
+  intlData: IntlData | null;
+}) {
+  const [filtro, setFiltro] = useState<HistFilter>("todos");
+  const [search, setSearch] = useState("");
+  const [sortCol, setSortCol] = useState<HistSortCol>("encontros");
+  const [sortDir, setSortDir] = useState<"asc"|"desc">("desc");
+
+  const toggleSort = (col: HistSortCol) => {
+    if (sortCol === col) setSortDir(d => d === "asc" ? "desc" : "asc");
+    else { setSortCol(col); setSortDir(col === "nome" || col === "pais" ? "asc" : "desc"); }
+  };
+
+  // Enrich rivals
+  type HRow = {
+    nome: string; pais: string; cidade: string;
+    allEncontros: Encontro[];
+    nTorneios: number;
+    foiTop3: boolean;
+    hasAdj: boolean;       // tem encontro de escalão adjacente
+    circuits: Set<string>; // "uskids", "bjgt", "eowagr", etc.
+  };
+
+  const allRows = useMemo<HRow[]>(() => {
+    const manuelIntl = intlData?.jogadores.find(j => j.isM);
+    return rivals.map(r => {
+      const encs: Encontro[] = [...r.encontros];
+
+      // Add intl encounters for tournaments NOT already present
+      if (manuelIntl) {
+        const intlJog = matchIntl(r.nome, r.pais);
+        if (intlJog && !intlJog.isM) {
+          const existCanons = new Set(encs.map(e => tornCanon(e.torneio_nome)));
+          for (const tid of Object.keys(manuelIntl.r)) {
+            const rivalRes = intlJog.r[tid];
+            if (!rivalRes) continue;
+            const torn = intlData?.torneios.find(t => t.id === tid);
+            if (!torn) continue;
+            if (hasCanon(existCanons, torn.name, torn.short)) continue;
+            const manRes = manuelIntl.r[tid];
+            encs.push({
+              torneio_t: 0, torneio_nome: torn.name, torneio_data: torn.date || "",
+              escalao: torn.short || torn.name,
+              man_score: 0, rival_score: 0,
+              man_to_par: manRes?.tp ?? null, rival_to_par: rivalRes.tp ?? null,
+              man_pos: manRes?.p ?? 0, rival_pos: rivalRes.p ?? 0,
+              adjacente: false,
+            });
+          }
+        }
+      }
+
+      // Dedup by tornCanon + escalão (keep first = autoRivals)
+      const allEncontros = [...new Map(
+        encs.map(e => [`${tornCanon(e.torneio_nome)}-${e.escalao}`, e])
+      ).values()];
+
+      // Count unique tournaments
+      const nTorneios = new Set(allEncontros.map(e => tornCanon(e.torneio_nome))).size;
+
+      const foiTop3 = allEncontros.some(e => e.rival_pos > 0 && e.rival_pos <= 3);
+      const hasAdj = allEncontros.some(e => !!e.adjacente);
+
+      // Determine circuits
+      const circuits = new Set<string>();
+      for (const e of allEncontros) {
+        const n = e.torneio_nome.toLowerCase();
+        if (n.includes("eu open") || n.includes("european")) circuits.add("eowagr");
+        else if (n.includes("wjgc") || n.includes("bjgt")) circuits.add("bjgt");
+        else if (n.includes("doral")) circuits.add("doral");
+        else if (n.includes("great golf") || n.includes("gg")) circuits.add("outros");
+        else if (n.includes("qdl") || n.includes("quinta do lago")) circuits.add("outros");
+        else if (e.torneio_t > 0) circuits.add("uskids");
+        else circuits.add("outros");
+      }
+
+      return { nome: r.nome, pais: r.pais, cidade: r.cidade, allEncontros, nTorneios, foiTop3, hasAdj, circuits };
+    });
+  }, [rivals, matchIntl, intlData]);
+
+  // Filter
+  const filtered = useMemo(() => {
+    let rows = allRows;
+    // Search
+    if (search.trim()) {
+      const q = search.toLowerCase();
+      rows = rows.filter(r => r.nome.toLowerCase().includes(q) || r.pais.toLowerCase().includes(q));
+    }
+    // Pill filter
+    if (filtro === "top3") rows = rows.filter(r => r.foiTop3);
+    else if (filtro === "adj") rows = rows.filter(r => r.hasAdj);
+    else if (filtro === "mesmo_esc") rows = rows.filter(r => r.allEncontros.some(e => !e.adjacente));
+    else if (filtro.startsWith("circ:")) {
+      const circ = filtro.slice(5);
+      rows = rows.filter(r => r.circuits.has(circ));
+    }
+    return rows;
+  }, [allRows, filtro, search]);
+
+  // Sort
+  const sorted = useMemo(() => {
+    const dir = sortDir === "asc" ? 1 : -1;
+    return [...filtered].sort((a, b) => {
+      let v = 0;
+      if (sortCol === "nome") v = a.nome.localeCompare(b.nome);
+      else if (sortCol === "pais") v = a.pais.localeCompare(b.pais);
+      else if (sortCol === "torneios") v = a.nTorneios - b.nTorneios;
+      else if (sortCol === "encontros") v = a.allEncontros.length - b.allEncontros.length;
+      return v * dir;
+    });
+  }, [filtered, sortCol, sortDir]);
+
+  // Filter pills
+  const nTop3 = allRows.filter(r => r.foiTop3).length;
+  const nMesmoEsc = allRows.filter(r => r.allEncontros.some(e => !e.adjacente)).length;
+  const nAdj = allRows.filter(r => r.hasAdj).length;
+  const circuitCounts = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const r of allRows) for (const c of r.circuits) m.set(c, (m.get(c) ?? 0) + 1);
+    return m;
+  }, [allRows]);
+
+  const circuitLabels: Record<string, string> = {
+    uskids: "USKids", bjgt: "BJGT/WJGC", eowagr: "EU Open", doral: "Doral", outros: "Outros",
+  };
+
+  const filters: { id: string; label: string; n: number; sep?: boolean }[] = [
+    { id: "todos",     label: "Todos",       n: allRows.length },
+    { id: "mesmo_esc", label: "Mesmo escalão", n: nMesmoEsc },
+    ...(nAdj > 0 ? [{ id: "adj", label: "Esc. adjacente", n: nAdj }] : []),
+    { id: "top3",      label: "🏆 Top 3",    n: nTop3 },
+    ...["uskids","bjgt","eowagr","doral","outros"]
+      .filter(c => (circuitCounts.get(c) ?? 0) > 0)
+      .map((c, i) => ({ id: `circ:${c}`, label: circuitLabels[c] || c, n: circuitCounts.get(c)!, sep: i === 0 })),
+  ];
+
+  const ThSort = ({ col, label, style }: { col: HistSortCol; label: string; style?: React.CSSProperties }) => (
+    <th onClick={() => toggleSort(col)} style={{
+      cursor:"pointer", userSelect:"none", whiteSpace:"nowrap",
+      color: sortCol === col ? "var(--text)" : "var(--text-3)",
+      ...style,
+    }}>
+      {label}
+      <span style={{ marginLeft:3, fontSize:9, opacity: sortCol === col ? 1 : 0.3 }}>
+        {sortCol === col ? (sortDir === "asc" ? "▲" : "▼") : "⇅"}
+      </span>
+    </th>
+  );
+
+  return (
+    <div>
+      <div style={{ fontSize:13, fontWeight:700, color:"var(--text-2)", marginBottom:12 }}>
+        Todos os adversários históricos ({allRows.length})
+      </div>
+
+      {/* Search + filter pills */}
+      <div style={{ display:"flex", gap:5, marginBottom:12, flexWrap:"wrap", alignItems:"center" }}>
+        <input value={search} onChange={e => setSearch(e.target.value)}
+          placeholder="Nome ou país…"
+          style={{ border:"1px solid var(--border)", borderRadius:7,
+            color:"var(--text)", background:"var(--bg-card)",
+            padding:"5px 10px", fontSize:11, width:160, outline:"none", marginRight:4 }} />
+        {filters.map(f => (
+          <React.Fragment key={f.id}>
+            {f.sep && <span style={{ width:1, height:18, background:"var(--border)", margin:"0 2px", flexShrink:0 }} />}
+            <button onClick={() => setFiltro(prev => prev === f.id ? "todos" : f.id)} style={{
+              background: filtro === f.id ? "var(--bg-active)" : "var(--bg-card)",
+              border: `1px solid ${filtro === f.id ? "var(--border-success)" : "var(--border)"}`,
+              color: filtro === f.id ? "var(--text)" : "var(--text-3)",
+              borderRadius: 7, padding: "4px 9px", fontSize: 11, cursor: "pointer",
+              fontWeight: filtro === f.id ? 700 : 400,
+            }}>
+              {f.label} <span style={{ fontWeight:700, marginLeft:2, opacity:0.7 }}>{f.n}</span>
+            </button>
+          </React.Fragment>
+        ))}
+        <span style={{ color:"var(--text-3)", fontSize:11, marginLeft:4 }}>{sorted.length} jogadores</span>
+      </div>
+
+      {sorted.length === 0 ? (
+        <div style={{ fontSize:12, color:"var(--text-3)", padding:"8px 0 12px" }}>Nenhum jogador neste filtro.</div>
+      ) : (
+        <table className="sc-lb" style={{ width:"100%" }}>
+          <thead>
+            <tr>
+              <th className="sticky-col-0" style={{ width:26 }}>#</th>
+              <ThSort col="nome" label="Jogador" style={{ textAlign:"left", paddingLeft:10, minWidth:130 }} />
+              <ThSort col="pais" label="🌍" style={{ width:30, textAlign:"center" }} />
+              <ThSort col="torneios" label="Torn." style={{ width:42, textAlign:"center" }} />
+              <ThSort col="encontros" label="Encontros com o Manuel" style={{ textAlign:"left", padding:"6px 8px", minWidth:280 }} />
+            </tr>
+          </thead>
+          <tbody>
+            {sorted.map((r, i) => (
+              <tr key={r.nome}>
+                <td className="sticky-col-0" style={{ textAlign:"center", fontWeight:700, color:"var(--text-3)", fontSize:11 }}>{i + 1}</td>
+                <td style={{ textAlign:"left", paddingLeft:10 }}>
+                  <span style={{ display:"flex", alignItems:"center", gap:5 }}>
+                    {displayName(r.nome)}
+                    {r.foiTop3 && (
+                      <span style={{ background:"var(--color-warn)", color:"#fff",
+                        fontSize:10, fontWeight:800, padding:"1px 5px", borderRadius:4, whiteSpace:"nowrap" }}>
+                        🏆 top 3
+                      </span>
+                    )}
+                    {r.cidade && <span style={{ color:"var(--text-3)", fontSize:10, marginLeft:2 }}>{r.cidade}</span>}
+                  </span>
+                </td>
+                <td style={{ textAlign:"center", fontSize:14 }}>{flag(r.pais)}</td>
+                <td style={{ textAlign:"center", fontWeight:700, color:"var(--text-2)", fontSize:12 }}>{r.nTorneios}</td>
+                <td style={{ fontSize:11, padding:"5px 8px", lineHeight:1.9, textAlign:"left" }}>
+                  <div style={{ display:"flex", flexWrap:"wrap", gap:"4px 10px" }}>
+                    {r.allEncontros.map(enc => {
+                      const isAdj = enc.adjacente;
+                      const hasVs = !isAdj && enc.man_pos > 0;
+                      const manMelhor = hasVs && enc.man_pos < enc.rival_pos;
+                      const manPior   = hasVs && enc.man_pos > enc.rival_pos;
+                      return (
+                        <span key={`${enc.torneio_nome}-${enc.escalao}`} style={{ whiteSpace:"nowrap" }}>
+                          <span style={{ color:"var(--text-2)" }}>
+                            {shortTornName(enc.torneio_nome)}
+                          </span>
+                          <span style={{
+                            marginLeft:4, fontSize:10, fontWeight:600, padding:"1px 5px", borderRadius:3,
+                            background: isAdj ? "var(--bg-muted)" : "var(--bg-success-subtle,rgba(0,128,0,0.06))",
+                            color: isAdj ? "var(--text-3)" : "var(--text-2)",
+                            border: `1px solid ${isAdj ? "var(--border)" : "var(--border-success,var(--border))"}`,
+                          }}>
+                            {enc.escalao}:{" "}
+                            {hasVs ? (
+                              <>
+                                <span style={{ fontWeight:700, color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
+                                  {enc.man_pos}º
+                                </span>
+                                <span style={{ color:"var(--text-3)" }}> vs </span>
+                                <span style={{ fontWeight:700 }}>{enc.rival_pos}º</span>
+                              </>
+                            ) : (
+                              <>{enc.rival_pos}º</>
+                            )}
+                          </span>
+                        </span>
+                      );
+                    })}
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }
@@ -2043,45 +2741,8 @@ function TabInscritos({ data, fieldData, selectedT: _selectedT }: {
 }) {
   const [search, setSearch] = useState("");
 
-  // Constrói rivals com encontros completos
-  const rivals = useMemo<RivalInfo[]>(() => {
-    const mapa = new Map<string, RivalInfo>();
-    for (const t of data.resultados) {
-      for (const e of t.escaloes) {
-        const todasRondas = e.rondas.flatMap(r => r.leaderboard ?? r.jogadores ?? []);
-        const manuelJogs = todasRondas.filter(j => isManuel(j.nome));
-        if (!manuelJogs.length) continue;
-        const manuelJog = manuelJogs[0];
-        const lb0 = e.rondas[0]?.leaderboard ?? e.rondas[0]?.jogadores ?? [];
-        const manuelPos = lb0.findIndex(j => isManuel(j.nome)) + 1 || 99;
-        const adversariosVistos = new Set<string>();
-        for (const r of e.rondas)
-          for (const j of (r.leaderboard ?? r.jogadores ?? []))
-            if (!isManuel(j.nome)) adversariosVistos.add(j.nome.trim());
-        for (const nomeAdv of adversariosVistos) {
-          const key = nomeAdv.toLowerCase().trim();
-          const advJog = todasRondas.find(j => j.nome.trim() === nomeAdv);
-          if (!advJog) continue;
-          const advPos = lb0.findIndex(j => j.nome.trim() === nomeAdv) + 1 || 99;
-          if (!mapa.has(key))
-            mapa.set(key, { nome: advJog.nome, pais: advJog.pais, cidade: advJog.cidade, encontros: [] });
-          mapa.get(key)!.encontros.push({
-            torneio_t:    t.t,
-            torneio_nome: t.name,
-            torneio_data: t.date_inicio,
-            escalao:      e.nome,
-            man_score:    manuelJog.score || 0,
-            rival_score:  advJog.score || 0,
-            man_to_par:   manuelJog.to_par ?? null,
-            rival_to_par: advJog.to_par ?? null,
-            man_pos:      manuelPos,
-            rival_pos:    advPos,
-          });
-        }
-      }
-    }
-    return [...mapa.values()];
-  }, [data]);
+  // Constrói rivals com encontros completos (inclui escalões adjacentes ±1)
+  const rivals = useMemo<RivalInfo[]>(() => buildRivalsFromResultados(data.resultados), [data]);
 
   const torneiosFuturos = useMemo(() => {
     if (!fieldData) return [];
@@ -2117,7 +2778,7 @@ function TabInscritos({ data, fieldData, selectedT: _selectedT }: {
           const mesmoEscalao = manuelInscrito && escalaoComManuel.has(esc.nome);
           // Conhecidos: registamos EM TODOS os torneios futuros (para ver onde jogam mesmo sem o Manuel)
           // Desconhecidos: só nos torneios onde o Manuel também está inscrito
-          const rivalMatch = matchRivalI(j.nome);
+          const rivalMatch = matchRivalI(j.nome, j.pais);
           if (rivalMatch) {
             const entry: InscritoEntry = {
               torneioT: t.t, torneioNome: t.name, torneioData: t.date_inicio,
@@ -2233,8 +2894,8 @@ function TabInscritos({ data, fieldData, selectedT: _selectedT }: {
     return (
       <div style={{ fontSize:10, color:"var(--text-3)", marginTop:2, display:"flex", flexWrap:"wrap", gap:"0 10px" }}>
         {unicos.map(enc => (
-          <span key={enc.torneio_t}>
-            {enc.torneio_nome.replace(/\s*\d{4}$/, "")}
+          <span key={`${enc.torneio_nome}-${enc.escalao}`}>
+            {shortTornName(enc.torneio_nome)}
             <span style={{ marginLeft:3, fontWeight:600,
               color: enc.man_pos < enc.rival_pos ? "var(--color-good)" : enc.man_pos > enc.rival_pos ? "var(--color-danger)" : "var(--text-3)" }}>
               {enc.man_pos}º vs {enc.rival_pos}º
@@ -2292,7 +2953,7 @@ function TabInscritos({ data, fieldData, selectedT: _selectedT }: {
           {sorted.map(({ rival, torneios }, i) => (
             <tr key={rival.nome} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)", opacity: dimmed ? 0.75 : 1 }}>
               <td style={{ fontWeight: dimmed?400:600, fontSize:13, padding:"8px 10px", color: dimmed?"var(--text-2)":"var(--text)" }}>
-                <div>{rival.nome}</div>
+                <div>{displayName(rival.nome)}</div>
                 <HistorialLine rival={rival} />
               </td>
               <td style={{ textAlign:"center", fontSize:14 }}>{flag(rival.pais)}</td>
@@ -2334,7 +2995,7 @@ function TabInscritos({ data, fieldData, selectedT: _selectedT }: {
         <tbody>
           {sorted.map((entry, i) => (
             <tr key={entry.nome} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)" }}>
-              <td style={{ fontWeight:400, fontSize:13, padding:"8px 10px", color:"var(--text-2)" }}>{entry.nome}</td>
+              <td style={{ fontWeight:400, fontSize:13, padding:"8px 10px", color:"var(--text-2)" }}>{displayName(entry.nome)}</td>
               <td style={{ textAlign:"center", fontSize:14 }}>{flag(entry.pais)}</td>
               <td style={{ padding:"8px 10px" }}><TorneiosPills torneios={entry.torneios} /></td>
               <td style={{ textAlign:"center", fontWeight:800, fontSize:13, color:"var(--text-3)" }}>
@@ -2405,7 +3066,7 @@ function TabInscritos({ data, fieldData, selectedT: _selectedT }: {
           <tbody>
             {filtG(assiduosTodos).map((entry, i) => (
               <tr key={i} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)" }}>
-                <td style={{ fontWeight:400, fontSize:13, padding:"8px 10px", color:"var(--text-2)" }}>{entry.nome}</td>
+                <td style={{ fontWeight:400, fontSize:13, padding:"8px 10px", color:"var(--text-2)" }}>{displayName(entry.nome)}</td>
                 <td style={{ textAlign:"center", fontSize:14 }}>{flag(entry.pais)}</td>
                 <td style={{ padding:"8px 10px" }}>
                   <div style={{ display:"flex", gap:5, flexWrap:"wrap" }}>
@@ -2700,6 +3361,7 @@ export default function USKidsFieldPage() {
   const [fieldData,   setFieldData]   = useState<FieldData | null>(null);
   const [resultsData, setResultsData] = useState<ResultsData | null>(null);
   const [intlData,    setIntlData]    = useState<IntlData | null>(null);
+  const [autoRivals,  setAutoRivals]  = useState<AutoRivalPlayer[]>([]);
   const [greatgolfData, setGreatgolfData] = useState<GreatgolfData | null>(null);
   const [tab,         setTab]         = useState<Tab>("campo");
   const [erro,        setErro]        = useState<string | null>(null);
@@ -2772,6 +3434,8 @@ export default function USKidsFieldPage() {
       .then(r => r.ok ? r.json() : null)
       .then(setIntlData)
       .catch(() => {});
+    // Carregar auto-rivals (BJGT/EOWAGR/Doral — todos os escalões adjacentes)
+    buildAutoRivals().then(setAutoRivals).catch(() => {});
     fetch("/data/torneio-greatgolf.json")
       .then(r => r.ok ? r.json() : null)
       .then(setGreatgolfData)
@@ -3054,7 +3718,7 @@ export default function USKidsFieldPage() {
         )}
 
         {tab === "rivais" && resultsData && (
-          <TabRivais data={resultsData} fieldData={fieldData} intlData={intlData} selectedT={selectedT} />
+          <TabRivais data={resultsData} fieldData={fieldData} intlData={intlData} autoRivals={autoRivals} selectedT={selectedT} />
         )}
         {tab === "rivais" && !resultsData && (
           <div style={{color:"var(--text-3)",padding:"24px 0"}}>A carregar…</div>
