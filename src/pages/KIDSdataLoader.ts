@@ -26,7 +26,7 @@ const CC: Record<string, string> = {
   DO:"Dominican Republic",DZ:"Algeria",EC:"Ecuador",
   GT:"Guatemala",HN:"Honduras",KE:"Kenya",KH:"Cambodia",
   MA:"Morocco",NI:"Nicaragua",PA:"Panama",PE:"Peru",
-  RE:"Réunion",SV:"El Salvador",TW:"Taiwan",UG:"Uganda",
+  RE:"Réunion",SV:"El Salvador",UG:"Uganda",
   UY:"Uruguay",VE:"Venezuela",
 };
 
@@ -81,6 +81,7 @@ const USKIDS_KNOWN_TCODES = new Set([
   8300, 13568, 15704, 18242,
   12229, 14302, 16428,
   14218, 12093, 16705, 18719,
+  18438, 15573, 21239,
 ]);
 
 // Nomes fixos para os t-codes conhecidos (fallback caso o JSON não seja parseable)
@@ -100,6 +101,9 @@ const USKIDS_TCODE_META: Record<number, { name: string; short: string; dateExact
   14218: { name: "Red White & Blue Inv. 2023",        short: "RWB 2023", dateExact: "2023-07-01" },
   16705: { name: "Red White & Blue Inv. 2024",        short: "RWB 2024", dateExact: "2024-07-06" },
   18719: { name: "Red White & Blue Inv. 2025",        short: "RWB 2025", dateExact: "2025-07-05" },
+  18438: { name: "Marco Simone Invitational 2025",    short: "Marco 25", dateExact: "2025-03-15" },
+  15573: { name: "Real Club de Golf El Prat",          short: "El Prat",  dateExact: "2023-10-01" },
+  21239: { name: "Mississippi State Invitational 2026",short: "MS State 26", dateExact: "2026-03-01" },
 };
 
 // USKids completo tournament names: key = tid prefix "usk{tcode}", value = {name, short, date}
@@ -175,6 +179,7 @@ function processWjgc(data: unknown, tid: string): AutoRivalPlayer[] {
 
 function processDoral(data: unknown): AutoRivalPlayer[] {
   const d = data as {
+    year?: number;
     divisions: Array<{
       name: string; par?: number[];
       players: Array<{
@@ -185,10 +190,11 @@ function processDoral(data: unknown): AutoRivalPlayer[] {
       }>;
     }>;
   };
+  const yr = String(d.year ?? 2025).slice(2); // "25", "24", etc.
   const divMap: Record<string,string> = {
-    "Boys 8 & 9 Division":   "doral25_b89",
-    "Boys 10 & 11 Division": "doral25_b1011",
-    "Boys 12 & 13 Division": "doral25_b1213",
+    "Boys 8 & 9 Division":   `doral${yr}_b89`,
+    "Boys 10 & 11 Division": `doral${yr}_b1011`,
+    "Boys 12 & 13 Division": `doral${yr}_b1213`,
   };
   const all: AutoRivalPlayer[] = [];
   for (const div of d.divisions || []) {
@@ -383,10 +389,11 @@ function mergeInto(map: Map<string, AutoRivalPlayer>, players: AutoRivalPlayer[]
 // Mapeamento tcode (pull-torneios000.json) → tid interno
 // Inclui apenas torneios relevantes para rivais internacionais
 const PULL_TCODE_TO_TID: Record<string, string> = {
-  "10080": "qdl25",    // Quinta do Lago Junior Open 2025 - U12
-  "10296": "gg26",     // Greatgolf Junior Open 2026 - U12
-  "10295": "gg26_u14", // Greatgolf Junior Open 2026 - U14
-  "10294": "gg26_open",// Greatgolf Junior Open 2026 - open (todos escalões)
+  "10260": "gg25",      // Greatgolf Junior Open 2025 - Open
+  "10080": "qdl25",     // Quinta do Lago Junior Open 2025 - U12
+  "10296": "gg26",      // Greatgolf Junior Open 2026 - U12
+  "10295": "gg26_u14",  // Greatgolf Junior Open 2026 - U14
+  "10294": "gg26_open", // Greatgolf Junior Open 2026 - open (todos escalões)
 };
 
 function processPullTorneios(d: unknown): AutoRivalPlayer[] {
@@ -739,9 +746,10 @@ export async function buildAutoRivals(
     { kind: "wjgc", tid: "eowagr25",      file: "eowagr25_scorecards.json" },
     { kind: "wjgc", tid: "eowagr25_b1314",file: "eowagr25_contest77.json" },
     { kind: "doral",  file: "ftm_doral_2025.json" },
+    { kind: "doral",  file: "ftm_doral_2024.json" },
     { kind: "uskids", file: "uskids-results.json" },
     { kind: "pull",   file: "pull-torneios000.json" },
-    ...Array.from({ length: 15 }, (_, i) =>
+    ...Array.from({ length: 19 }, (_, i) =>
       ({ kind: "completo" as const, file: `uskids_torneios_completos(${i + 1}).json` })
     ),
   ];

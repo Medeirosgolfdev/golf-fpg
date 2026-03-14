@@ -721,12 +721,12 @@ const COUNTRY_TO_CODE: Record<string, string> = {
   estónia:"ee",turquia:"tr",marrocos:"ma",
   "emirados árabes unidos":"ae",cazaquistão:"kz",vietname:"vn",
   áustria:"at",paraguai:"py",nigéria:"ng",omã:"om","porto rico":"pr",
-  "costa rica":"cr",chipre:"cy",líbano:"lb",indonésia:"id",
-  "nova zelândia":"nz",arménia:"am",barbados:"bb",bahamas:"bs",
+  chipre:"cy",líbano:"lb",indonésia:"id",
+  "nova zelândia":"nz",arménia:"am",
   bolívia:"bo","república dominicana":"do",argélia:"dz",equador:"ec",
-  guatemala:"gt",honduras:"hn",quénia:"ke",camboja:"kh",
-  nicarágua:"ni",panamá:"pa",peru:"pe","el salvador":"sv",
-  uganda:"ug",uruguai:"uy",venezuela:"ve",grécia:"gr",israel:"il",
+  quénia:"ke",camboja:"kh",
+  nicarágua:"ni",panamá:"pa",
+  uruguai:"uy",grécia:"gr",
   croácia:"hr",sérvia:"rs",luxemburgo:"lu",islândia:"is",malásia:"my",
 };
 function normCountry(raw: string): string {
@@ -761,6 +761,17 @@ function torneioRegiao(name: string): "USA" | "EURO" | null {
   if (EURO_KEYWORDS.some(k => n.includes(k))) return "EURO";
   if (USA_KEYWORDS.some(k => n.includes(k))) return "USA";
   return null;
+}
+
+// Torneios hospedados no signupanytime mas que NÃO são USKids
+const NON_USKIDS_KEYWORDS = [
+  'greatgolf', 'great golf', 'quinta do lago', 'qdl', 'figo',
+  'doral', 'wjgc', 'bjgt', 'daily mail',
+];
+function isUSKidsTorneio(name: string): boolean {
+  if (!name) return false;
+  const n = name.toLowerCase();
+  return !NON_USKIDS_KEYWORDS.some(k => n.includes(k));
 }
 
 // ─────────────────────────────────────────────
@@ -846,7 +857,7 @@ function escalaoToTournament(e: EscalaoResult, t: TorneioResult): TATournament {
         playerMap.set(key, {
           scoreId: j.nome,
           pos: null,
-          name: j.nome,
+          name: displayName(j.nome),
           club: flag(j.pais) + " " + j.pais,
           grossTotal: 0,
           toPar: null,
@@ -2248,18 +2259,25 @@ function TabRivais({ data, fieldData, intlData, autoRivals, selectedT }: {
     // Processados PRIMEIRO porque os JSONs têm dados completos e actualizados.
     // O rivals-intl.json pode ter dados stale (ex: apenas 2 de 3 rondas).
     if (autoRivals.length > 0) {
-      const manuelAuto = autoRivals.find(p =>
+      // Manuel aparece com nomes diferentes em ficheiros diferentes
+      // ("Manuel Medeiros", "Manuel Francisco Medeiros", "Manuel Goulartt Medeiros")
+      // → encontrar TODAS as entradas e mergir todos os torneios
+      const manuelEntries = autoRivals.filter(p =>
         normNameAuto(p.n).includes("medeiros") && normNameAuto(p.n).includes("manuel")
       );
-      if (manuelAuto) {
-        const manuelBases = new Map<string, { tid: string; res: typeof manuelAuto.r[string] }>();
-        for (const [tid, res] of Object.entries(manuelAuto.r)) {
+      const manuelBases = new Map<string, { tid: string; res: (typeof autoRivals)[0]["r"][string] }>();
+      for (const me of manuelEntries) {
+        for (const [tid, res] of Object.entries(me.r)) {
           const b = tidBase(tid);
-          if (!manuelBases.has(b)) manuelBases.set(b, { tid, res });
+          if (!manuelBases.has(b) || res.rd.length > (manuelBases.get(b)!.res.rd?.length ?? 0))
+            manuelBases.set(b, { tid, res });
         }
+      }
+      if (manuelBases.size > 0) {
+        const manuelKeys = new Set(manuelEntries.map(me => normNameAuto(me.n)));
 
         for (const ap of autoRivals) {
-          if (ap === manuelAuto) continue;
+          if (manuelKeys.has(normNameAuto(ap.n))) continue;
           const key = ap.n.toLowerCase().trim();
 
           for (const [apTid, apRes] of Object.entries(ap.r)) {
@@ -3378,7 +3396,7 @@ export default function USKidsFieldPage() {
 
     // ── Carregar resultados: 15 ficheiros históricos permanentes + ficheiro auto-gerado ──
     // Os históricos têm prioridade; o auto-gerado apenas acrescenta torneios ainda não cobertos.
-    const TORNEIOS_COMPLETOS_COUNT = 15;
+    const TORNEIOS_COMPLETOS_COUNT = 19;
     const historicosUrls = Array.from({ length: TORNEIOS_COMPLETOS_COUNT }, (_, i) =>
       `/data/uskids_torneios_completos(${i + 1}).json`
     );
@@ -3430,16 +3448,8 @@ export default function USKidsFieldPage() {
       });
     });
 
-    fetch("/data/rivals-intl.json")
-      .then(r => r.ok ? r.json() : null)
-      .then(setIntlData)
-      .catch(() => {});
     // Carregar auto-rivals (BJGT/EOWAGR/Doral — todos os escalões adjacentes)
     buildAutoRivals().then(setAutoRivals).catch(() => {});
-    fetch("/data/torneio-greatgolf.json")
-      .then(r => r.ok ? r.json() : null)
-      .then(setGreatgolfData)
-      .catch(() => {});
   }, []);
 
   const nResultados = resultsData?.resultados?.length ?? 0;
@@ -3462,6 +3472,7 @@ export default function USKidsFieldPage() {
     const map = new Map<number, { t: number; name: string; date: string; temResultados: boolean; temCampo: boolean; inscritos?: number; maximo?: number; vagas?: number; escalaoManuel?: string; rondas?: number; fee?: number; campo?: string; totalInscritos?: number; totalMaximo?: number; urlResultados?: string; manuelJogou?: boolean }>();
     for (const t of torneiosCampo) {
       if (!t.t || !t.name) continue;
+      if (!isUSKidsTorneio(t.name)) continue; // Filtrar torneios não-USKids
       const em = escalaoManuelParaData(t.date_inicio);
       const esc = t.escaloes?.find((e: any) => e.nome === em);
       map.set(t.t, { t: t.t, name: t.name, date: t.date_inicio, temResultados: false, temCampo: true,
@@ -3475,6 +3486,7 @@ export default function USKidsFieldPage() {
     }
     for (const t of torneiosResultados) {
       if (!t.t || !t.name) continue;
+      if (!isUSKidsTorneio(t.name)) continue; // Filtrar torneios não-USKids
       // Determinar se o Manuel jogou: recalcular SEMPRE pelos nomes reais (não confiar
       // em is_manuel do JSON — foi gerado pelo pipeline com a lógica antiga que só
       // verificava "medeiros", podendo ter marcado outro jogador erroneamente)
