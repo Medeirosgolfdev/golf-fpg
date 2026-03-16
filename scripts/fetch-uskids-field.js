@@ -46,6 +46,7 @@ const FORCAR_EXCLUIR  = new Set([
   21510, // European Championship Parent/Child 2026
   22095, // World Championship Parent/Child 2026 - Boys
   21400, // Marco Simone Invitational Parent/Child 2026
+  22140, // OPEN.9 Golf Eichenried (local tour)
 ]);
 
 // Prefixos de escalão — apanha "Boys 12", "Boys 13-14", "Boys 13 & Under", etc.

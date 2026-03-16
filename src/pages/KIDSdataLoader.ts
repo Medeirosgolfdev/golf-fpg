@@ -242,9 +242,11 @@ const USKIDS_ID: Record<string,string> = {
   "Venice Open 2025":                    "venice25",
   "Rome Classic 2025":                   "rome25",
   "Marco Simone Invitational 2025":      "marco25",
+  "Marco Simone Invitational 2026":      "marco26",
   "Desert Shootout 2026":                "desert26",
   "Sandestin Championship 2026":         "sandestin26",
   "2026 Mississippi State Invitational": "msstate26",
+  "2026 South Carolina State Invitational": "scstate26",
   "Real Club de Golf El Prat":           "elprat23",
 };
 
@@ -266,7 +268,60 @@ const USKIDS_PAR: Record<string, number[]> = {
   "18438-2103": [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], // Boys 10
   "18438-2104": [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], // Boys 11
   "18438-2105": [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], // Boys 12
+  // Marco Simone Invitational 2026 (t=21080) — par 72 todos os escalões
+  "21080-2104": [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], // Boys 11
+  "21080-2105": [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], // Boys 12
+  // 2026 South Carolina State Invitational (t=21237) — par 72
+  "21237-87":  [4,4,4,3,3,4,4,5,5, 4,4,4,3,4,5,3,4,5], // Boys 11
+  "21237-88":  [4,4,4,3,3,4,4,5,5, 4,4,4,3,4,5,3,4,5], // Boys 12
 };
+
+// ── Manual overrides for players excluded by scraper (IE/WD status) ──
+// These entries are injected after processUskids runs, so they survive
+// auto-regeneration of uskids-results.json.
+const MANUEL_OVERRIDES: Array<{
+  tid: string;
+  name: string;
+  country: string;
+  rounds: { score: number; strokes: number[] }[];
+  par: number[];
+  ageGroup: string;
+}> = [
+  {
+    // Marco Simone 2026 – Manuel was marked IE (Ineligible) due to scorecard signing error.
+    // Official scores: R1=86 (hole 5 penalty removed: real stroke 5), R2=79
+    tid: "marco26_b11",
+    name: "Manuel Medeiros",
+    country: "PT",
+    rounds: [
+      { score: 86, strokes: [5,5,4,3,5,4,4,9,5, 6,4,5,3,4,4,5,6,5] },
+      { score: 79, strokes: [4,5,4,3,3,5,4,4,5, 4,4,5,4,4,5,5,5,6] },
+    ],
+    par: [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5],
+    ageGroup: "Boys 11",
+  },
+];
+
+function processManuelOverrides(): AutoRivalPlayer[] {
+  const all: AutoRivalPlayer[] = [];
+  for (const ov of MANUEL_OVERRIDES) {
+    const rd = ov.rounds.map(r => r.score);
+    const t = rd.reduce((a, b) => a + b, 0);
+    const parTotal = ov.par.reduce((a, b) => a + b, 0);
+    const tp = t - parTotal * ov.rounds.length;
+    const holeRounds = ov.rounds.map(r => r.strokes).filter(s => s.length === 18);
+    if (holeRounds.length > 0) {
+      addScorecard(normName(ov.name), {
+        tid: ov.tid, playerName: ov.name, par: ov.par, si: [], rounds: holeRounds,
+      });
+    }
+    all.push({
+      n: ov.name, co: co(ov.country),
+      r: { [ov.tid]: { p: null, t, tp, rd, ageGroup: ov.ageGroup } },
+    });
+  }
+  return all;
+}
 
 function processUskids(data: unknown): AutoRivalPlayer[] {
   const d = data as {
@@ -785,6 +840,9 @@ export async function buildAutoRivals(
     } catch { /* ficheiro não existe ou erro — ignorar */ }
     report(labelFor(task));
   }));
+
+  // Inject manual overrides (IE/WD players excluded by scraper)
+  mergeInto(map, processManuelOverrides());
 
   return Array.from(map.values());
 }
