@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import React from "react";
 import { C } from "../utils/colors";
 import EmptyState from "../ui/EmptyState";
@@ -1800,11 +1800,12 @@ function torneioBaseName(name: string): string {
 
 function TabelaConhecidos({
   torneioT, torneioNome, torneioData, escalaoManuel,
-  rivals, fieldData, intlData, matchIntl, resultados, defaultOpen, memberHist,
+  rivals, fieldData, intlData, matchIntl, matchRival, resultados, defaultOpen, memberHist,
 }: {
   torneioT: number; torneioNome: string; torneioData?: string; escalaoManuel?: string;
   rivals: RivalInfo[]; fieldData: FieldData | null; intlData: IntlData | null;
   matchIntl: (nome: string, pais?: string) => IntlJogador | null;
+  matchRival: (nome: string, pais?: string) => RivalInfo | null;
   resultados: TorneioResult[];
   defaultOpen?: boolean;
   memberHist: MemberHistData | null;
@@ -1846,7 +1847,6 @@ function TabelaConhecidos({
     return fromResults;
   }, [torneio, resultados, torneioT]);
 
-  const matchRival = criarMatcherRivals(rivals);
   const manuelIntl = intlData?.jogadores.find(jj => jj.isM);
   const manuelIntlTids = manuelIntl ? new Set(Object.keys(manuelIntl.r)) : new Set<string>();
 
@@ -1962,7 +1962,9 @@ function TabelaConhecidos({
                 {anoPassadoMap.size > 0 && <span style={{ marginLeft:6, fontWeight:700, color:"var(--text-2)" }}>· ↩ {anoPassadoMap.size} repetem</span>}
               </span>
             )}
-            {!torneio && <span style={{ color:"var(--color-warn)" }}>⚠️ Campo não disponível</span>}
+            {!torneio && inscritos.length > 0 && (
+              <span>· {inscritos.filter(jj => !isManuel(jj.nome)).length} jogadores</span>
+            )}
           </div>
         </div>
         <span style={{ color:"var(--text-3)", fontSize:13, marginLeft:12 }}>{open ? "▲" : "▼"}</span>
@@ -2400,10 +2402,17 @@ function tidBase(tid: string): string {
   return tid.replace(/_(?:b?\d+|u\d+|open)$/, "");
 }
 
-function TabRivais({ data, fieldData, intlData, autoRivals, selectedT, memberHist }: {
+function TabRivais({ data, fieldData, intlData, autoRivals, selectedT, memberHist,
+  subTab, setSubTab, selectedRival, setSelectedRival, greatgolfData,
+  onRivalsReady,
+}: {
   data: ResultsData; fieldData: FieldData | null; intlData: IntlData | null;
   autoRivals: AutoRivalPlayer[]; selectedT: number | null;
   memberHist: MemberHistData | null;
+  subTab: RivaisSubTab; setSubTab: (t: RivaisSubTab) => void;
+  selectedRival: string | null; setSelectedRival: (r: string | null) => void;
+  greatgolfData: GreatgolfData | null;
+  onRivalsReady?: (list: { nome: string; pais: string; nEnc: number }[]) => void;
 }) {
   const matchIntl = useMemo(() => criarMatcherIntl(intlData), [intlData]);
 
@@ -2563,6 +2572,21 @@ function TabRivais({ data, fieldData, intlData, autoRivals, selectedT, memberHis
     return [...mapa.values()];
   }, [data, intlData, autoRivals]);
 
+  // Notify parent of sidebar-ready rivals list (avoids duplicate computation)
+  useEffect(() => {
+    if (onRivalsReady && rivals.length > 0) {
+      onRivalsReady(
+        rivals.map(r => {
+          const nTorn = new Set(r.encontros.map(e => tornCanon(e.torneio_nome))).size;
+          return { nome: r.nome, pais: r.pais, nEnc: nTorn };
+        }).sort((a, b) => b.nEnc - a.nEnc)
+      );
+    }
+  }, [rivals, onRivalsReady]);
+
+  // Memoized matcher — criado UMA vez, reutilizado por SubTabPorTorneio e TabelaConhecidos
+  const matchRival = useMemo(() => criarMatcherRivals(rivals), [rivals]);
+
   // Torneios futuros onde o Manuel está inscrito (nome+PT)
   const torneiosComManuel = useMemo(() => {
     const map = new Map<number, { t: number; name: string; date_inicio: string; escalaoManuel?: string; source: "field" | "results" }>();
@@ -2601,18 +2625,236 @@ function TabRivais({ data, fieldData, intlData, autoRivals, selectedT, memberHis
       .sort((a, b) => isoDate(b.date_inicio).localeCompare(isoDate(a.date_inicio)));  // mais recentes primeiro
   }, [fieldData, data]);
 
+  // Navigate to rival profile
+  const goToProfile = (nome: string) => {
+    setSelectedRival(nome);
+  };
+  const goBack = () => {
+    setSelectedRival(null);
+  };
+
   if (!rivals.length) return (
     <div style={{ color:"var(--text-3)", padding:"32px 0", textAlign:"center", fontSize:13 }}>
       Sem dados de rivais ainda — os scorecards aparecem após os torneios
     </div>
   );
 
+  // ── MODO PERFIL: rival seleccionado ──
+  if (selectedRival) {
+    return (
+      <div>
+        <button onClick={goBack} style={{
+          background:"none", border:"none", cursor:"pointer", padding:"4px 0", marginBottom:12,
+          fontSize:12, fontWeight:600, color:"var(--accent)", display:"flex", alignItems:"center", gap:4,
+        }}>
+          ◀ Voltar ao ranking
+        </button>
+        <PerfilDoRival
+          nome={selectedRival} rivals={rivals} matchIntl={matchIntl}
+          intlData={intlData} memberHist={memberHist} autoRivals={autoRivals}
+          goToProfile={goToProfile}
+        />
+      </div>
+    );
+  }
+
+  // ── MODO LISTA: 2 sub-tabs ──
   return (
     <div>
-      {/* ── Uma tabela por torneio onde o Manuel está inscrito ── */}
-      {torneiosComManuel.length > 0 ? (
-        <div style={{ display:"flex", flexDirection:"column", gap:16, marginBottom:24 }}>
-          {torneiosComManuel.map(t => (
+      <div style={{ display:"flex", gap:0, marginBottom:16 }}>
+        {([
+          { id: "proximos" as const, label: "Próximos torneios" },
+          { id: "ranking" as const,  label: "Todos os rivais" },
+        ]).map(st => (
+          <button key={st.id}
+            onClick={() => setSubTab(st.id)}
+            className={`tourn-tab${subTab === st.id ? " tourn-tab-active" : ""}`}>
+            {st.label}
+          </button>
+        ))}
+      </div>
+
+      {subTab === "proximos" && (
+        <SubTabPorTorneio
+          torneiosComManuel={torneiosComManuel}
+          rivals={rivals} fieldData={fieldData} intlData={intlData}
+          matchIntl={matchIntl} matchRival={matchRival} resultados={data.resultados}
+          memberHist={memberHist} goToProfile={goToProfile}
+        />
+      )}
+
+      {subTab === "ranking" && (
+        <HistoricoTable rivals={rivals} matchIntl={matchIntl} intlData={intlData}
+          memberHist={memberHist} goToProfile={goToProfile} />
+      )}
+    </div>
+  );
+}
+
+/* ════════════════════════════════════════════════════════════════
+   SubTabPorTorneio — Vista por torneio (rivais + inscritos unificados)
+   Mostra TabelaConhecidos per tournament + secções de inscritos futuros
+   ════════════════════════════════════════════════════════════════ */
+function SubTabPorTorneio({
+  torneiosComManuel, rivals, fieldData, intlData, matchIntl, matchRival, resultados, memberHist, goToProfile,
+}: {
+  torneiosComManuel: { t: number; name: string; date_inicio: string; escalaoManuel?: string; source: "field" | "results" }[];
+  rivals: RivalInfo[]; fieldData: FieldData | null; intlData: IntlData | null;
+  matchIntl: (nome: string, pais?: string) => IntlJogador | null;
+  matchRival: (nome: string, pais?: string) => RivalInfo | null;
+  resultados: TorneioResult[];
+  memberHist: MemberHistData | null;
+  goToProfile: (nome: string) => void;
+}) {
+  // ── Inscritos: torneios futuros ──
+  const torneiosFuturos = useMemo(() => {
+    if (!fieldData) return [];
+    return fieldData.torneios
+      .filter(t => isoDate(t.date_inicio) >= new Date().toISOString().slice(0,10))
+      .sort((a,b) => isoDate(a.date_inicio).localeCompare(isoDate(b.date_inicio)));
+  }, [fieldData]);
+
+  type InscritoEntry = { torneioT: number; torneioNome: string; torneioData: string; escalao: string; mesmoEscalao: boolean };
+  const { conhecidosMap, desconhecidosMap } = useMemo(() => {
+    const conhecidosMap  = new Map<string, { rival: RivalInfo; torneios: InscritoEntry[] }>();
+    const desconhecidosMap = new Map<string, { nome: string; pais: string; torneios: InscritoEntry[] }>();
+    for (const t of torneiosFuturos) {
+      const manuelInscrito = t.escaloes.some(e => (e.jogadores ?? []).some(j => isManuel(j.nome) && j.pais === "PT"));
+      const escalaoComManuel = new Set(
+        t.escaloes.filter(e => (e.jogadores ?? []).some(j => isManuel(j.nome) && j.pais === "PT")).map(e => e.nome)
+      );
+      for (const esc of t.escaloes) {
+        if ((esc.jogadores?.length ?? 0) === 0) continue;
+        for (const j of (esc.jogadores ?? [])) {
+          if (isManuel(j.nome)) continue;
+          const key = j.nome.toLowerCase().trim();
+          const mesmoEscalao = manuelInscrito && escalaoComManuel.has(esc.nome);
+          const rivalMatch = matchRival(j.nome, j.pais);
+          if (rivalMatch) {
+            const entry: InscritoEntry = { torneioT: t.t, torneioNome: t.name, torneioData: t.date_inicio, escalao: esc.nome, mesmoEscalao };
+            if (!conhecidosMap.has(key)) conhecidosMap.set(key, { rival: rivalMatch, torneios: [] });
+            if (!conhecidosMap.get(key)!.torneios.some(p => p.torneioT === t.t)) conhecidosMap.get(key)!.torneios.push(entry);
+          } else {
+            if (!manuelInscrito) continue;
+            const entry: InscritoEntry = { torneioT: t.t, torneioNome: t.name, torneioData: t.date_inicio, escalao: esc.nome, mesmoEscalao: true };
+            if (!desconhecidosMap.has(key)) desconhecidosMap.set(key, { nome: j.nome, pais: j.pais, torneios: [] });
+            if (!desconhecidosMap.get(key)!.torneios.some(p => p.torneioT === t.t)) desconhecidosMap.get(key)!.torneios.push(entry);
+          }
+        }
+      }
+    }
+    return { conhecidosMap, desconhecidosMap };
+  }, [matchRival, torneiosFuturos]);
+
+  const vaiReencontrar = useMemo(() =>
+    [...conhecidosMap.values()].filter(e => e.torneios.some(t => t.mesmoEscalao)).sort((a,b) => b.torneios.length - a.torneios.length)
+  , [conhecidosMap]);
+  const vaiConhecer = useMemo(() =>
+    [...desconhecidosMap.values()].filter(e => e.torneios.some(t => t.mesmoEscalao)).sort((a,b) => b.torneios.length - a.torneios.length)
+  , [desconhecidosMap]);
+  const escalaoOutro = useMemo(() =>
+    [...conhecidosMap.values()].filter(e => !e.torneios.some(t => t.mesmoEscalao)).sort((a,b) => b.torneios.length - a.torneios.length)
+  , [conhecidosMap]);
+  const assiduos = useMemo(() =>
+    [...desconhecidosMap.values()]
+      .filter(e => !e.torneios.some(t => t.mesmoEscalao) && e.torneios.length >= 2)
+      .sort((a,b) => b.torneios.length - a.torneios.length)
+  , [desconhecidosMap]);
+  const assiduosTodos = useMemo(() => {
+    const conhecidosKeys = new Set(rivals.map(r => r.nome.toLowerCase().trim()));
+    const presencas = new Map<string, { nome: string; pais: string; torneios: { torneioT: number; torneioNome: string; escalao: string }[] }>();
+    for (const t of torneiosFuturos) {
+      for (const esc of t.escaloes) {
+        if ((esc.jogadores?.length ?? 0) === 0) continue;
+        for (const j of (esc.jogadores ?? [])) {
+          if (isManuel(j.nome)) continue;
+          const key = j.nome.toLowerCase().trim();
+          if (conhecidosKeys.has(key)) continue;
+          if (!presencas.has(key)) presencas.set(key, { nome: j.nome, pais: j.pais, torneios: [] });
+          if (!presencas.get(key)!.torneios.some(p => p.torneioT === t.t))
+            presencas.get(key)!.torneios.push({ torneioT: t.t, torneioNome: t.name, escalao: esc.nome });
+        }
+      }
+    }
+    return [...presencas.values()].filter(e => e.torneios.length >= 2).sort((a, b) => b.torneios.length - a.torneios.length);
+  }, [rivals, torneiosFuturos]);
+
+  const TorneiosPills = ({ torneios }: { torneios: InscritoEntry[] }) => (
+    <div style={{ display:"flex", gap:4, flexWrap:"wrap" }}>
+      {torneios.map((t, j) => (
+        <span key={j} style={{
+          fontSize:11, padding:"2px 8px", borderRadius:6, whiteSpace:"nowrap",
+          background: t.mesmoEscalao ? "var(--bg-active)" : "var(--bg-muted)",
+          color: t.mesmoEscalao ? "var(--text)" : "var(--text-3)",
+          border: `1px solid ${t.mesmoEscalao ? "var(--border-success)" : "var(--border)"}`,
+          fontWeight: t.mesmoEscalao ? 600 : 400,
+        }}>
+          {t.mesmoEscalao && <span style={{ marginRight:2 }}>★</span>}{t.torneioNome.replace(/\s*\d{4}$/, "")}
+          <span style={{ opacity:0.6, marginLeft:3, fontSize:10 }}>{t.escalao}</span>
+        </span>
+      ))}
+    </div>
+  );
+
+  const HistorialLine = ({ rival }: { rival: RivalInfo }) => {
+    const unicos = [...new Map(rival.encontros.map(e => [e.torneio_t, e])).values()];
+    if (!unicos.length) return null;
+    return (
+      <div style={{ fontSize:10, color:"var(--text-3)", marginTop:2, display:"flex", flexWrap:"wrap", gap:"0 8px" }}>
+        {unicos.map(enc => (
+          <span key={`${enc.torneio_nome}-${enc.escalao}`}>
+            {shortTornName(enc.torneio_nome)}
+            <span style={{ marginLeft:2, fontWeight:600,
+              color: enc.man_pos < enc.rival_pos ? "var(--color-good)" : enc.man_pos > enc.rival_pos ? "var(--color-danger)" : "var(--text-3)" }}>
+              {enc.man_pos}º vs {enc.rival_pos}º
+            </span>
+          </span>
+        ))}
+      </div>
+    );
+  };
+
+  // Tabela genérica para secções de inscritos
+  const InscTable = ({ rows, showHist }: { rows: { nome: string; pais: string; rival?: RivalInfo; torneios: InscritoEntry[] }[]; showHist?: boolean }) => (
+    <table className="dtable-lg" style={{ width:"100%" }}>
+      <thead><tr>
+        <th style={{ textAlign:"left" }}>Jogador</th>
+        <th style={{ width:30, textAlign:"center" }}>🌍</th>
+        <th style={{ textAlign:"left" }}>Torneios</th>
+        <th style={{ width:36, textAlign:"center" }}>#</th>
+      </tr></thead>
+      <tbody>
+        {rows.map((r, i) => (
+          <tr key={r.nome} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)" }}>
+            <td style={{ padding:"6px 10px" }}>
+              {r.rival ? (
+                <span style={{ cursor:"pointer", color:"var(--accent)", fontWeight:600 }} onClick={() => goToProfile(r.nome)}>
+                  {displayName(r.nome)}
+                </span>
+              ) : (
+                <span style={{ color:"var(--text-2)" }}>{displayName(r.nome)}</span>
+              )}
+              {showHist && r.rival && <HistorialLine rival={r.rival} />}
+            </td>
+            <td style={{ textAlign:"center", fontSize:14 }}>{flag(r.pais)}</td>
+            <td style={{ padding:"6px 10px" }}><TorneiosPills torneios={r.torneios} /></td>
+            <td style={{ textAlign:"center", fontWeight:700, fontSize:12, color:"var(--text-2)" }}>{r.torneios.length}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+
+  return (
+    <div style={{ display:"flex", flexDirection:"column", gap:20 }}>
+      {/* ── 1. Torneios com o Manuel (cards colapsáveis) ── */}
+      {torneiosComManuel.length > 0 && (
+        <div>
+          <div className="h-sm" style={{ marginBottom:8, color:"var(--text-2)" }}>
+            Resultados por torneio ({torneiosComManuel.length})
+          </div>
+          <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
+            {torneiosComManuel.map(t => (
               <TabelaConhecidos
                 key={t.t}
                 torneioT={t.t} torneioNome={t.name}
@@ -2620,25 +2862,364 @@ function TabRivais({ data, fieldData, intlData, autoRivals, selectedT, memberHis
                 escalaoManuel={t.escalaoManuel}
                 rivals={rivals} fieldData={fieldData}
                 intlData={intlData} matchIntl={matchIntl}
-                resultados={data.resultados}
+                matchRival={matchRival}
+                resultados={resultados}
                 memberHist={memberHist}
               />
-          ))}
-        </div>
-      ) : (
-        <div style={{ color:"var(--text-3)", fontSize:12, padding:"8px 0 20px",
-          borderBottom:"1px solid var(--border)", marginBottom:16 }}>
-          Sem torneios com inscrição do Manuel
+            ))}
+          </div>
         </div>
       )}
 
-      {/* ── Histórico completo ── */}
-      <div style={{ borderTop:"1px solid var(--border)", paddingTop:16 }}>
-        <HistoricoTable rivals={rivals} matchIntl={matchIntl} intlData={intlData} memberHist={memberHist} />
-      </div>
+      {/* ── 2. Inscritos futuros ── */}
+      {(vaiReencontrar.length > 0 || vaiConhecer.length > 0) && (
+        <div>
+          <div className="h-sm" style={{ marginBottom:8, color:"var(--text-2)" }}>
+            Inscrições em torneios futuros
+          </div>
+
+          {vaiReencontrar.length > 0 && (
+            <Secao titulo="🤝 Vai reencontrar" corTitulo="var(--color-good)"
+              sub="Já se cruzaram — inscrito no mesmo escalão"
+              count={vaiReencontrar.length} defaultOpen={true}>
+              <InscTable rows={vaiReencontrar.map(e => ({ nome: e.rival.nome, pais: e.rival.pais, rival: e.rival, torneios: e.torneios }))} showHist />
+            </Secao>
+          )}
+
+          {vaiConhecer.length > 0 && (
+            <Secao titulo="🆕 Vai conhecer" corTitulo="var(--color-info)"
+              sub="Primeiro encontro — inscrito no mesmo escalão"
+              count={vaiConhecer.length} defaultOpen={false}>
+              <InscTable rows={vaiConhecer.map(e => ({ nome: e.nome, pais: e.pais, torneios: e.torneios }))} />
+            </Secao>
+          )}
+
+          {escalaoOutro.length > 0 && (
+            <Secao titulo="⚔️ Noutro escalão" corTitulo="var(--text-3)"
+              sub="Já se cruzaram mas agora competem noutro escalão"
+              count={escalaoOutro.length} defaultOpen={false}>
+              <InscTable rows={escalaoOutro.map(e => ({ nome: e.rival.nome, pais: e.rival.pais, rival: e.rival, torneios: e.torneios }))} showHist />
+            </Secao>
+          )}
+
+          {assiduos.length > 0 && (
+            <Secao titulo="🔍 Assíduos noutro escalão" corTitulo="var(--text-3)"
+              sub="2+ torneios futuros, sem cruzamento directo"
+              count={assiduos.length} defaultOpen={false}>
+              <InscTable rows={assiduos.map(e => ({ nome: e.nome, pais: e.pais, torneios: e.torneios }))} />
+            </Secao>
+          )}
+
+          {assiduosTodos.length > 0 && (
+            <Secao titulo="📊 Mais assíduos" corTitulo="var(--text-3)"
+              sub="2+ torneios futuros — todo o universo USKids"
+              count={assiduosTodos.length} defaultOpen={false}>
+              <table className="dtable-lg" style={{ width:"100%" }}>
+                <thead><tr><th style={{ textAlign:"left" }}>Jogador</th><th style={{ width:30 }}></th><th style={{ textAlign:"left" }}>Torneios</th><th style={{ width:36, textAlign:"center" }}>#</th></tr></thead>
+                <tbody>
+                  {assiduosTodos.map((entry, i) => (
+                    <tr key={i} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)" }}>
+                      <td style={{ padding:"6px 10px", color:"var(--text-2)" }}>{displayName(entry.nome)}</td>
+                      <td style={{ textAlign:"center", fontSize:14 }}>{flag(entry.pais)}</td>
+                      <td style={{ padding:"6px 10px" }}>
+                        <div style={{ display:"flex", gap:4, flexWrap:"wrap" }}>
+                          {entry.torneios.map((t, j) => (
+                            <span key={j} style={{ fontSize:11, padding:"2px 8px", borderRadius:6, background:"var(--bg-muted)", color:"var(--text-3)", border:"1px solid var(--border)" }}>
+                              {t.torneioNome.replace(/\s*\d{4}$/, "")} <span style={{ opacity:0.6, fontSize:10 }}>{t.escalao}</span>
+                            </span>
+                          ))}
+                        </div>
+                      </td>
+                      <td style={{ textAlign:"center", fontWeight:700, fontSize:12, color:"var(--text-3)" }}>{entry.torneios.length}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </Secao>
+          )}
+        </div>
+      )}
+
+      {/* ── Vazio ── */}
+      {torneiosComManuel.length === 0 && vaiReencontrar.length === 0 && vaiConhecer.length === 0 && (
+        <div style={{ color:"var(--text-3)", fontSize:12, padding:"24px 0", textAlign:"center" }}>
+          Sem torneios ou inscrições com o Manuel
+        </div>
+      )}
     </div>
   );
 }
+
+
+/* ════════════════════════════════════════════════════════════════
+   PerfilDoRival — vista detalhada de um rival individual
+   Mostra todos os encontros, member history, estatísticas
+   ════════════════════════════════════════════════════════════════ */
+function PerfilDoRival({
+  nome, rivals, matchIntl, intlData, memberHist, autoRivals, goToProfile,
+}: {
+  nome: string; rivals: RivalInfo[];
+  matchIntl: (nome: string, pais?: string) => IntlJogador | null;
+  intlData: IntlData | null; memberHist: MemberHistData | null;
+  autoRivals: AutoRivalPlayer[]; goToProfile: (nome: string) => void;
+}) {
+  const rival = useMemo(() => {
+    const key = nome.toLowerCase().trim().replace(/\s+/g, " ");
+    return rivals.find(r => r.nome.toLowerCase().trim().replace(/\s+/g, " ") === key);
+  }, [nome, rivals]);
+
+  // Enriched encounters (same logic as HistoricoTable allRows)
+  const enrichedEncontros = useMemo<Encontro[]>(() => {
+    if (!rival) return [];
+    const encs: Encontro[] = [...rival.encontros];
+    const manuelIntl = intlData?.jogadores.find(j => j.isM);
+    if (manuelIntl) {
+      const intlJog = matchIntl(rival.nome, rival.pais);
+      if (intlJog && !intlJog.isM) {
+        const existCanons = new Set(encs.map(e => tornCanon(e.torneio_nome)));
+        for (const tid of Object.keys(manuelIntl.r)) {
+          const rivalRes = intlJog.r[tid];
+          if (!rivalRes) continue;
+          const torn = intlData?.torneios.find(t => t.id === tid);
+          if (!torn) continue;
+          if (hasCanon(existCanons, torn.name, torn.short)) continue;
+          const manRes = manuelIntl.r[tid];
+          encs.push({
+            torneio_t: 0, torneio_nome: torn.name, torneio_data: torn.date || "",
+            escalao: torn.short || torn.name,
+            man_score: 0, rival_score: 0,
+            man_to_par: manRes?.tp ?? null, rival_to_par: rivalRes.tp ?? null,
+            man_pos: manRes?.p ?? 0, rival_pos: rivalRes.p ?? 0,
+            adjacente: false,
+          });
+        }
+      }
+    }
+    return [...new Map(encs.map(e => [`${tornCanon(e.torneio_nome)}-${e.escalao}`, e])).values()];
+  }, [rival, matchIntl, intlData]);
+
+  // Member history
+  const mhPlayer = useMemo<MemberHistPlayer | null>(() => {
+    if (!memberHist) return null;
+    for (const mh of Object.values(memberHist.jogadores)) {
+      if (mh.name && mh.name.toLowerCase().trim() === nome.toLowerCase().trim()) return mh;
+    }
+    return null;
+  }, [memberHist, nome]);
+
+  const mhTorneios = useMemo(() => {
+    if (!mhPlayer) return [];
+    return Object.entries(mhPlayer.torneios)
+      .map(([tid, t]) => ({ tid, ...t }))
+      .filter(t => t.rounds && Object.keys(t.rounds).length > 0)
+      .sort((a, b) => {
+        const da = a.startDate || ""; const db = b.startDate || "";
+        const pa = da.includes("-") ? da : da.split("/").length===3 ? `${da.split("/")[2]}-${da.split("/")[0].padStart(2,"0")}-${da.split("/")[1].padStart(2,"0")}` : "";
+        const pb = db.includes("-") ? db : db.split("/").length===3 ? `${db.split("/")[2]}-${db.split("/")[0].padStart(2,"0")}-${db.split("/")[1].padStart(2,"0")}` : "";
+        return pb.localeCompare(pa);
+      });
+  }, [mhPlayer]);
+
+  // Stats
+  const nTorneios = new Set(enrichedEncontros.map(e => tornCanon(e.torneio_nome))).size;
+  const manuelWins = enrichedEncontros.filter(e => !e.adjacente && e.man_pos > 0 && e.man_pos < e.rival_pos).length;
+  const rivalWins  = enrichedEncontros.filter(e => !e.adjacente && e.man_pos > 0 && e.man_pos > e.rival_pos).length;
+  const draws      = enrichedEncontros.filter(e => !e.adjacente && e.man_pos > 0 && e.man_pos === e.rival_pos).length;
+  const bestRivalPos = Math.min(...enrichedEncontros.filter(e => e.rival_pos > 0).map(e => e.rival_pos), 999);
+
+  if (!rival) return (
+    <div style={{ textAlign:"center", padding:"32px 0", color:"var(--text-3)", fontSize:13 }}>
+      Rival não encontrado: "{nome}"
+    </div>
+  );
+
+  return (
+    <div>
+      {/* ── Header do rival ── */}
+      <div className="card" style={{
+        display:"flex", alignItems:"center", gap:16, padding:"14px 20px", marginBottom:16,
+      }}>
+        <div style={{ fontSize:32 }}>{flag(rival.pais)}</div>
+        <div style={{ flex:1 }}>
+          <div style={{ fontSize:18, fontWeight:800, color:"var(--text)", marginBottom:2 }}>
+            {displayName(rival.nome)}
+          </div>
+          <div style={{ fontSize:12, color:"var(--text-3)", display:"flex", gap:10, flexWrap:"wrap" }}>
+            {rival.pais && <span>{rival.pais}</span>}
+            {rival.cidade && <span>· {rival.cidade}</span>}
+            {mhPlayer && <span>· USKids ID: {mhPlayer.memberId}</span>}
+          </div>
+        </div>
+        <div style={{ display:"flex", gap:16, flexShrink:0 }}>
+          <div className="tourn-kpi">
+            <div className="tourn-kpi-val">{nTorneios}</div>
+            <div className="tourn-kpi-lbl">Torneios</div>
+          </div>
+          {bestRivalPos < 999 && (
+            <div className="tourn-kpi">
+              <div className="tourn-kpi-val" style={{ color: bestRivalPos <= 3 ? "var(--color-warn)" : undefined }}>
+                {bestRivalPos}º
+              </div>
+              <div className="tourn-kpi-lbl">Melhor</div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* ── KPIs: Manuel vs Rival ── */}
+      {(manuelWins + rivalWins + draws) > 0 && (
+        <div style={{ display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:10, marginBottom:16 }}>
+          <div className="card-success" style={{ textAlign:"center", padding:"10px 8px" }}>
+            <div style={{ fontSize:22, fontWeight:900, color:"var(--color-good)" }}>{manuelWins}</div>
+            <div style={{ fontSize:10, fontWeight:700, color:"var(--color-good-dark)" }}>VITÓRIAS MANUEL</div>
+          </div>
+          <div className="card" style={{ textAlign:"center", padding:"10px 8px" }}>
+            <div style={{ fontSize:22, fontWeight:900, color:"var(--text-3)" }}>{draws}</div>
+            <div style={{ fontSize:10, fontWeight:700, color:"var(--text-3)" }}>EMPATES</div>
+          </div>
+          <div className="card-danger" style={{ textAlign:"center", padding:"10px 8px" }}>
+            <div style={{ fontSize:22, fontWeight:900, color:"var(--color-danger)" }}>{rivalWins}</div>
+            <div style={{ fontSize:10, fontWeight:700, color:"var(--color-danger-dark)" }}>VITÓRIAS {displayName(rival.nome).split(" ").pop()?.toUpperCase()}</div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Todos os encontros ── */}
+      {enrichedEncontros.length > 0 && (
+        <div style={{ marginBottom:20 }}>
+          <div className="h-md" style={{ marginBottom:8 }}>
+            Encontros ({enrichedEncontros.length})
+          </div>
+          <table className="dtable-lg" style={{ width:"100%" }}>
+            <thead>
+              <tr>
+                <th style={{ textAlign:"left" }}>Torneio</th>
+                <th style={{ textAlign:"center", width:90 }}>Escalão</th>
+                <th style={{ textAlign:"center", width:60 }}>Manuel</th>
+                <th style={{ textAlign:"center", width:60 }}>{displayName(rival.nome).split(" ").pop()}</th>
+                <th style={{ textAlign:"center", width:50 }}></th>
+              </tr>
+            </thead>
+            <tbody>
+              {enrichedEncontros.map((enc, i) => {
+                const isAdj = enc.adjacente;
+                const hasVs = !isAdj && enc.man_pos > 0;
+                const manMelhor = hasVs && enc.man_pos < enc.rival_pos;
+                const manPior   = hasVs && enc.man_pos > enc.rival_pos;
+                return (
+                  <tr key={i} style={{
+                    background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)",
+                    opacity: isAdj ? 0.7 : 1,
+                  }}>
+                    <td style={{ fontWeight:500, padding:"6px 10px" }}>
+                      {shortTornName(enc.torneio_nome)}
+                      {enc.torneio_data && <span style={{ fontSize:10, color:"var(--text-3)", marginLeft:6 }}>{fmtDate(enc.torneio_data)}</span>}
+                    </td>
+                    <td style={{ textAlign:"center" }}>
+                      <span style={{
+                        fontSize:10, fontWeight:600, padding:"1px 6px", borderRadius:3,
+                        background: isAdj ? "var(--bg-muted)" : "var(--bg-success-subtle,rgba(0,128,0,0.06))",
+                        color: isAdj ? "var(--text-3)" : "var(--text-2)",
+                        border: `1px solid ${isAdj ? "var(--border)" : "var(--border-success,var(--border))"}`,
+                      }}>
+                        {enc.escalao} {isAdj && <span style={{ fontSize:8 }}>(adj)</span>}
+                      </span>
+                    </td>
+                    <td style={{
+                      textAlign:"center", fontWeight:700, fontSize:13,
+                      color: hasVs ? (manMelhor ? "var(--color-good)" : manPior ? "var(--color-danger)" : "var(--text-3)") : "var(--text-3)",
+                    }}>
+                      {enc.man_pos > 0 ? `${enc.man_pos}º` : "—"}
+                      {enc.man_to_par != null && enc.man_to_par !== 0 && (
+                        <span style={{ fontSize:10, fontWeight:400, marginLeft:3 }}>
+                          ({enc.man_to_par > 0 ? `+${enc.man_to_par}` : enc.man_to_par})
+                        </span>
+                      )}
+                    </td>
+                    <td style={{
+                      textAlign:"center", fontWeight:700, fontSize:13,
+                      color: hasVs ? (manPior ? "var(--color-good)" : manMelhor ? "var(--color-danger)" : "var(--text-3)") : "var(--text-2)",
+                    }}>
+                      {enc.rival_pos > 0 ? `${enc.rival_pos}º` : "—"}
+                      {enc.rival_to_par != null && enc.rival_to_par !== 0 && (
+                        <span style={{ fontSize:10, fontWeight:400, marginLeft:3 }}>
+                          ({enc.rival_to_par > 0 ? `+${enc.rival_to_par}` : enc.rival_to_par})
+                        </span>
+                      )}
+                    </td>
+                    <td style={{ textAlign:"center" }}>
+                      {hasVs && (
+                        <span style={{
+                          fontSize:11, fontWeight:800,
+                          color: manMelhor ? "var(--color-good)" : manPior ? "var(--color-danger)" : "var(--text-muted)",
+                        }}>
+                          {manMelhor ? "✓" : manPior ? "✗" : "="}
+                        </span>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* ── Member History (USKids) ── */}
+      {mhTorneios.length > 0 && (
+        <div>
+          <div className="h-md" style={{ marginBottom:8 }}>
+            📊 Histórico USKids ({mhTorneios.length} torneios)
+          </div>
+          <table className="dtable" style={{ width:"100%" }}>
+            <thead>
+              <tr>
+                <th style={{ textAlign:"left" }}>Torneio</th>
+                <th style={{ textAlign:"center", width:60 }}>Escalão</th>
+                <th style={{ textAlign:"center", width:40 }}>Pos</th>
+                <th style={{ textAlign:"center", width:55 }}>Total</th>
+                <th style={{ textAlign:"center", width:65 }}>Rondas</th>
+                <th style={{ textAlign:"left", width:70 }}>Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              {mhTorneios.map(t => {
+                const nRounds = Object.keys(t.rounds || {}).length;
+                const rdGross = Object.values(t.rounds || {}).map(rd => rd.gross).filter(g => g > 0);
+                const parTotal = (t.par || []).reduce((a: number, b: number) => a + b, 0);
+                const tp = t.totalStrokes && parTotal ? t.totalStrokes - parTotal * nRounds : null;
+                const tpStr = tp != null ? (tp > 0 ? `+${tp}` : tp === 0 ? "E" : String(tp)) : "";
+                const dateStr = t.startDate || "";
+                const isoD = dateStr.includes("-") ? dateStr : dateStr.split("/").length===3 ? `${dateStr.split("/")[2]}-${dateStr.split("/")[0].padStart(2,"0")}-${dateStr.split("/")[1].padStart(2,"0")}` : "";
+                const fmtD = isoD ? new Date(isoD).toLocaleDateString("pt-PT",{month:"short",year:"numeric"}) : dateStr;
+                return (
+                  <tr key={t.tid}>
+                    <td style={{ padding:"3px 6px" }}>{t.name}</td>
+                    <td style={{ textAlign:"center", fontSize:10, color:"var(--text-2)" }}>{t.ageGroup}</td>
+                    <td style={{ textAlign:"center", fontWeight:700,
+                      color: t.place <= 3 && t.place > 0 ? "var(--color-good)" : "var(--text-2)" }}>
+                      {t.place > 0 ? `${t.place}º` : "—"}
+                    </td>
+                    <td style={{ textAlign:"center" }}>
+                      {t.totalStrokes > 0 ? (
+                        <><span style={{ fontWeight:600 }}>{t.totalStrokes}</span>{tpStr && <span style={{ color: tp != null && tp < 0 ? "var(--color-good)" : "var(--text-3)", marginLeft:2, fontSize:10 }}>({tpStr})</span>}</>
+                      ) : "—"}
+                    </td>
+                    <td style={{ textAlign:"center", fontSize:10, color:"var(--text-3)" }}>
+                      {rdGross.length > 0 ? rdGross.join(" + ") : "—"}
+                    </td>
+                    <td style={{ fontSize:10, color:"var(--text-3)" }}>{fmtD}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+}
+
 
 /* ════════════════════════════════════════════════════════════════
    HistoricoTable — tabela de todos os rivais históricos
@@ -2647,11 +3228,12 @@ function TabRivais({ data, fieldData, intlData, autoRivals, selectedT, memberHis
 type HistSortCol = "nome" | "pais" | "torneios" | "encontros" | "hist";
 type HistFilter = string; // "todos" | "top3" | "mesmo_esc" | "adj" | circuit prefixes
 
-function HistoricoTable({ rivals, matchIntl, intlData, memberHist }: {
+function HistoricoTable({ rivals, matchIntl, intlData, memberHist, goToProfile }: {
   rivals: RivalInfo[];
   matchIntl: (nome: string, pais?: string) => IntlJogador | null;
   intlData: IntlData | null;
   memberHist: MemberHistData | null;
+  goToProfile?: (nome: string) => void;
 }) {
   const [filtro, setFiltro] = useState<HistFilter>("todos");
   const [search, setSearch] = useState("");
@@ -2881,7 +3463,10 @@ function HistoricoTable({ rivals, matchIntl, intlData, memberHist }: {
                 <td className="sticky-col-0" style={{ textAlign:"center", fontWeight:700, color:"var(--text-3)", fontSize:11 }}>{i + 1}</td>
                 <td style={{ textAlign:"left", paddingLeft:10 }}>
                   <span style={{ display:"flex", alignItems:"center", gap:5 }}>
-                    {displayName(r.nome)}
+                    <span style={{ cursor: goToProfile ? "pointer" : "default", color: goToProfile ? "var(--accent)" : "var(--text)" }}
+                      onClick={() => goToProfile?.(r.nome)}>
+                      {displayName(r.nome)}
+                    </span>
                     {r.foiTop3 && (
                       <span style={{ background:"var(--color-warn)", color:"#fff",
                         fontSize:10, fontWeight:800, padding:"1px 5px", borderRadius:4, whiteSpace:"nowrap" }}>
@@ -3034,368 +3619,6 @@ function Secao({ titulo, sub, count, corTitulo, defaultOpen, children }: {
     </div>
   );
 }
-
-function TabInscritos({ data, fieldData, selectedT: _selectedT }: {
-  data: ResultsData; fieldData: FieldData | null; selectedT: number | null;
-}) {
-  const [search, setSearch] = useState("");
-
-  // Constrói rivals com encontros completos (inclui escalões adjacentes ±1)
-  const rivals = useMemo<RivalInfo[]>(() => buildRivalsFromResultados(data.resultados), [data]);
-
-  const torneiosFuturos = useMemo(() => {
-    if (!fieldData) return [];
-    return fieldData.torneios
-      .filter(t => isoDate(t.date_inicio) >= new Date().toISOString().slice(0,10))
-      .sort((a,b) => isoDate(a.date_inicio).localeCompare(isoDate(b.date_inicio)));
-  }, [fieldData]);
-
-  type InscritoEntry = { torneioT: number; torneioNome: string; torneioData: string; escalao: string; mesmoEscalao: boolean };
-
-  // Todos os jogadores inscritos nos torneios futuros (conhecidos e desconhecidos)
-  const { conhecidosMap, desconhecidosMap } = useMemo(() => {
-    const matchRivalI = criarMatcherRivals(rivals);
-    const conhecidosMap  = new Map<string, { rival: RivalInfo; torneios: InscritoEntry[] }>();
-    const desconhecidosMap = new Map<string, { nome: string; pais: string; torneios: InscritoEntry[] }>();
-
-    for (const t of torneiosFuturos) {
-      // Manuel presente neste torneio? (nome+PT)
-      const manuelInscrito = t.escaloes.some(e =>
-        (e.jogadores ?? []).some(j => isManuel(j.nome) && j.pais === "PT")
-      );
-      // Escalões onde o Manuel está inscrito (para mesmoEscalao)
-      const escalaoComManuel = new Set(
-        t.escaloes
-          .filter(e => (e.jogadores ?? []).some(j => isManuel(j.nome) && j.pais === "PT"))
-          .map(e => e.nome)
-      );
-      for (const esc of t.escaloes) {
-        if ((esc.jogadores?.length ?? 0) === 0) continue;
-        for (const j of (esc.jogadores ?? [])) {
-          if (isManuel(j.nome)) continue;
-          const key = j.nome.toLowerCase().trim();
-          const mesmoEscalao = manuelInscrito && escalaoComManuel.has(esc.nome);
-          // Conhecidos: registamos EM TODOS os torneios futuros (para ver onde jogam mesmo sem o Manuel)
-          // Desconhecidos: só nos torneios onde o Manuel também está inscrito
-          const rivalMatch = matchRivalI(j.nome, j.pais);
-          if (rivalMatch) {
-            const entry: InscritoEntry = {
-              torneioT: t.t, torneioNome: t.name, torneioData: t.date_inicio,
-              escalao: esc.nome,
-              mesmoEscalao,
-            };
-            if (!conhecidosMap.has(key))
-              conhecidosMap.set(key, { rival: rivalMatch, torneios: [] });
-            if (!conhecidosMap.get(key)!.torneios.some(p => p.torneioT === t.t))
-              conhecidosMap.get(key)!.torneios.push(entry);
-          } else {
-            if (!manuelInscrito) continue;
-            const entry: InscritoEntry = {
-              torneioT: t.t, torneioNome: t.name, torneioData: t.date_inicio,
-              escalao: esc.nome,
-              mesmoEscalao: true,
-            };
-            if (!desconhecidosMap.has(key))
-              desconhecidosMap.set(key, { nome: j.nome, pais: j.pais, torneios: [] });
-            if (!desconhecidosMap.get(key)!.torneios.some(p => p.torneioT === t.t))
-              desconhecidosMap.get(key)!.torneios.push(entry);
-          }
-        }
-      }
-    }
-    return { conhecidosMap, desconhecidosMap };
-  }, [rivals, torneiosFuturos]);
-
-  // SECÇÃO 1: Vai REENCONTRAR — conhecido + pelo menos 1 torneio no mesmo escalão
-  const vaiReencontrar = useMemo(() =>
-    [...conhecidosMap.values()]
-      .filter(e => e.torneios.some(t => t.mesmoEscalao))
-      .sort((a,b) => b.torneios.length - a.torneios.length)
-  , [conhecidosMap]);
-
-  // SECÇÃO 2: Vai CONHECER — desconhecido + pelo menos 1 torneio no mesmo escalão
-  const vaiConhecer = useMemo(() =>
-    [...desconhecidosMap.values()]
-      .filter(e => e.torneios.some(t => t.mesmoEscalao))
-      .sort((a,b) => b.torneios.length - a.torneios.length)
-  , [desconhecidosMap]);
-
-  // SECÇÃO 3: Reencontros de escalão diferente — conhecido + NENHUM torneio no mesmo escalão
-  const escalaoOutro = useMemo(() =>
-    [...conhecidosMap.values()]
-      .filter(e => !e.torneios.some(t => t.mesmoEscalao))
-      .sort((a,b) => b.torneios.length - a.torneios.length)
-  , [conhecidosMap]);
-
-  // SECÇÃO 4: Assíduos sem historial — desconhecido + nenhum mesmo escalão + 2+ torneios
-  const assiduos = useMemo(() =>
-    [...desconhecidosMap.values()]
-      .filter(e => !e.torneios.some(t => t.mesmoEscalao) && e.torneios.length >= 2)
-      .sort((a,b) => b.torneios.length - a.torneios.length)
-  , [desconhecidosMap]);
-
-  // SECÇÃO 5: Assíduos de todo o universo USKids (todos os torneios futuros, todos os escalões, 2+)
-  const assiduosTodos = useMemo(() => {
-    const conhecidosKeys = new Set(rivals.map(r => r.nome.toLowerCase().trim()));
-    const presencas = new Map<string, { nome: string; pais: string; torneios: { torneioT: number; torneioNome: string; escalao: string }[] }>();
-    for (const t of torneiosFuturos) {
-      for (const esc of t.escaloes) {
-        if ((esc.jogadores?.length ?? 0) === 0) continue;
-        for (const j of (esc.jogadores ?? [])) {
-          if (isManuel(j.nome)) continue;
-          const key = j.nome.toLowerCase().trim();
-          if (conhecidosKeys.has(key)) continue; // já aparece noutras secções
-          if (!presencas.has(key)) presencas.set(key, { nome: j.nome, pais: j.pais, torneios: [] });
-          if (!presencas.get(key)!.torneios.some(p => p.torneioT === t.t))
-            presencas.get(key)!.torneios.push({ torneioT: t.t, torneioNome: t.name, escalao: esc.nome });
-        }
-      }
-    }
-    return [...presencas.values()]
-      .filter(e => e.torneios.length >= 2)
-      .sort((a, b) => b.torneios.length - a.torneios.length);
-  }, [rivals, torneiosFuturos]);
-
-  const sq = search.trim().toLowerCase();
-  const filtC  = (arr: typeof vaiReencontrar) => !sq ? arr : arr.filter(e => e.rival.nome.toLowerCase().includes(sq));
-  const filtD  = (arr: typeof vaiConhecer)    => !sq ? arr : arr.filter(e => e.nome.toLowerCase().includes(sq));
-  const filtG  = (arr: typeof assiduosTodos)  => !sq ? arr : arr.filter(e => e.nome.toLowerCase().includes(sq));
-
-  const totalGeral = conhecidosMap.size + [...desconhecidosMap.values()].filter(e => e.torneios.some(t => t.mesmoEscalao) || e.torneios.length >= 2).length + assiduosTodos.length;
-
-  if (!totalGeral) return (
-    <div style={{ color:"var(--text-3)", padding:"32px 0", textAlign:"center", fontSize:13 }}>
-      Nenhum adversário inscrito em torneios futuros
-    </div>
-  );
-
-  // Pills sem destaque por torneio seleccionado — só destaca mesmo escalão
-  const TorneiosPills = ({ torneios }: { torneios: InscritoEntry[] }) => (
-    <div style={{ display:"flex", gap:5, flexWrap:"wrap" }}>
-      {torneios.map((t, j) => (
-        <span key={j} style={{
-          fontSize:11, padding:"3px 10px", borderRadius:8, whiteSpace:"nowrap",
-          background: t.mesmoEscalao ? "var(--bg-active)" : "var(--bg-muted)",
-          color:      t.mesmoEscalao ? "var(--text)"      : "var(--text-3)",
-          border:     `1px solid ${t.mesmoEscalao ? "var(--border-success)" : "var(--border)"}`,
-          fontWeight: t.mesmoEscalao ? 700 : 400,
-        }}>
-          {t.mesmoEscalao && <span style={{ marginRight:3, fontSize:10 }}>★</span>}{t.torneioNome.replace(/\s*\d{4}$/, "")}
-          <span style={{ opacity:0.7, marginLeft:4, fontSize:10 }}>{t.escalao}</span>
-        </span>
-      ))}
-    </div>
-  );
-
-  const HistorialLine = ({ rival }: { rival: RivalInfo }) => {
-    const unicos = [...new Map(rival.encontros.map(e => [e.torneio_t, e])).values()];
-    if (!unicos.length) return null;
-    return (
-      <div style={{ fontSize:10, color:"var(--text-3)", marginTop:2, display:"flex", flexWrap:"wrap", gap:"0 10px" }}>
-        {unicos.map(enc => (
-          <span key={`${enc.torneio_nome}-${enc.escalao}`}>
-            {shortTornName(enc.torneio_nome)}
-            <span style={{ marginLeft:3, fontWeight:600,
-              color: enc.man_pos < enc.rival_pos ? "var(--color-good)" : enc.man_pos > enc.rival_pos ? "var(--color-danger)" : "var(--text-3)" }}>
-              {enc.man_pos}º vs {enc.rival_pos}º
-            </span>
-          </span>
-        ))}
-      </div>
-    );
-  };
-
-  type SortCol = "nome" | "pais" | "n";
-  type SortDir = "asc" | "desc";
-
-  const ThSort = ({ col, label, cur, dir, onSort, style }: {
-    col: SortCol; label: string; cur: SortCol; dir: SortDir;
-    onSort: (c: SortCol) => void; style?: React.CSSProperties;
-  }) => (
-    <th onClick={() => onSort(col)} style={{
-      cursor:"pointer", userSelect:"none", whiteSpace:"nowrap",
-      color: cur===col ? "var(--text)" : "var(--text-3)",
-      ...style,
-    }}>
-      {label}
-      <span style={{ marginLeft:4, fontSize:10, opacity: cur===col ? 1 : 0.4 }}>
-        {cur===col ? (dir==="asc" ? "▲" : "▼") : "⇅"}
-      </span>
-    </th>
-  );
-
-  const TabelaConhecida = ({ rows, dimmed }: { rows: typeof vaiReencontrar; dimmed?: boolean }) => {
-    const [sortCol, setSortCol] = useState<SortCol>("n");
-    const [sortDir, setSortDir] = useState<SortDir>("desc");
-    const handleSort = (col: SortCol) => {
-      if (col === sortCol) setSortDir(d => d === "asc" ? "desc" : "asc");
-      else { setSortCol(col); setSortDir(col === "n" ? "desc" : "asc"); }
-    };
-    const sorted = [...rows].sort((a, b) => {
-      let v = 0;
-      if (sortCol === "nome") v = a.rival.nome.localeCompare(b.rival.nome);
-      else if (sortCol === "pais") v = a.rival.pais.localeCompare(b.rival.pais);
-      else v = a.torneios.length - b.torneios.length;
-      return sortDir === "asc" ? v : -v;
-    });
-    return (
-      <table className="dtable-lg" style={{ width:"100%" }}>
-        <thead>
-          <tr>
-            <ThSort col="nome" label="Jogador" cur={sortCol} dir={sortDir} onSort={handleSort} style={{ textAlign:"left" }} />
-            <ThSort col="pais" label="🌍" cur={sortCol} dir={sortDir} onSort={handleSort} style={{ width:36, textAlign:"center" }} />
-            <th style={{ textAlign:"left" }}>Torneios</th>
-            <ThSort col="n" label="#" cur={sortCol} dir={sortDir} onSort={handleSort} style={{ width:40, textAlign:"center" }} />
-          </tr>
-        </thead>
-        <tbody>
-          {sorted.map(({ rival, torneios }, i) => (
-            <tr key={rival.nome} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)", opacity: dimmed ? 0.75 : 1 }}>
-              <td style={{ fontWeight: dimmed?400:600, fontSize:13, padding:"8px 10px", color: dimmed?"var(--text-2)":"var(--text)" }}>
-                <div>{displayName(rival.nome)}</div>
-                <HistorialLine rival={rival} />
-              </td>
-              <td style={{ textAlign:"center", fontSize:14 }}>{flag(rival.pais)}</td>
-              <td style={{ padding:"8px 10px" }}><TorneiosPills torneios={torneios} /></td>
-              <td style={{ textAlign:"center", fontWeight:800, fontSize:13, color: dimmed?"var(--text-3)":"var(--accent)" }}>
-                {torneios.length}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    );
-  };
-
-  const TabelaDesconhecida = ({ rows }: { rows: typeof vaiConhecer }) => {
-    const [sortCol, setSortCol] = useState<SortCol>("n");
-    const [sortDir, setSortDir] = useState<SortDir>("desc");
-    const handleSort = (col: SortCol) => {
-      if (col === sortCol) setSortDir(d => d === "asc" ? "desc" : "asc");
-      else { setSortCol(col); setSortDir(col === "n" ? "desc" : "asc"); }
-    };
-    const sorted = [...rows].sort((a, b) => {
-      let v = 0;
-      if (sortCol === "nome") v = a.nome.localeCompare(b.nome);
-      else if (sortCol === "pais") v = a.pais.localeCompare(b.pais);
-      else v = a.torneios.length - b.torneios.length;
-      return sortDir === "asc" ? v : -v;
-    });
-    return (
-      <table className="dtable-lg" style={{ width:"100%" }}>
-        <thead>
-          <tr>
-            <ThSort col="nome" label="Jogador" cur={sortCol} dir={sortDir} onSort={handleSort} style={{ textAlign:"left" }} />
-            <ThSort col="pais" label="🌍" cur={sortCol} dir={sortDir} onSort={handleSort} style={{ width:36, textAlign:"center" }} />
-            <th style={{ textAlign:"left" }}>Torneios</th>
-            <ThSort col="n" label="#" cur={sortCol} dir={sortDir} onSort={handleSort} style={{ width:40, textAlign:"center" }} />
-          </tr>
-        </thead>
-        <tbody>
-          {sorted.map((entry, i) => (
-            <tr key={entry.nome} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)" }}>
-              <td style={{ fontWeight:400, fontSize:13, padding:"8px 10px", color:"var(--text-2)" }}>{displayName(entry.nome)}</td>
-              <td style={{ textAlign:"center", fontSize:14 }}>{flag(entry.pais)}</td>
-              <td style={{ padding:"8px 10px" }}><TorneiosPills torneios={entry.torneios} /></td>
-              <td style={{ textAlign:"center", fontWeight:800, fontSize:13, color:"var(--text-3)" }}>
-                {entry.torneios.length}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    );
-  };
-
-  const vcR  = filtC(vaiReencontrar);
-  const vcK  = filtD(vaiConhecer);
-  const outF = filtC(escalaoOutro);
-  const assF = filtD(assiduos);
-
-  return (
-    <div style={{ display:"flex", flexDirection:"column", gap:24 }}>
-
-      {/* ── SEARCH ── */}
-      <div style={{ display:"flex", alignItems:"center", gap:10 }}>
-        <input value={search} onChange={e => setSearch(e.target.value)}
-          placeholder="🔎  Filtrar por nome…"
-          style={{ border:"1px solid var(--border)", borderRadius:8,
-            background:"var(--bg-card)", color:"var(--text)",
-            padding:"7px 13px", fontSize:13, width:230, outline:"none" }}
-        />
-        <span style={{ fontSize:11, color:"var(--text-3)" }}>{totalGeral} jogadores no total</span>
-      </div>
-
-      <Secao titulo="🤝 Vai REENCONTRAR com o Manuel" corTitulo="var(--color-good)"
-        sub="Já se cruzaram antes — mesmo escalão em pelo menos um torneio futuro"
-        count={vcR.length} defaultOpen={false}>
-        <TabelaConhecida rows={vcR} />
-      </Secao>
-
-      <Secao titulo="🆕 Vai CONHECER o Manuel" corTitulo="var(--color-info)"
-        sub="Primeiro encontro à vista — inscrito no mesmo escalão em pelo menos um torneio futuro"
-        count={vcK.length} defaultOpen={false}>
-        <TabelaDesconhecida rows={vcK} />
-      </Secao>
-
-      <Secao titulo="⚔️ Reencontros de escalão diferente" corTitulo="var(--text-3)"
-        sub="Cruzaram-se antes mas agora competem noutro escalão"
-        count={outF.length} defaultOpen={false}>
-        <TabelaConhecida rows={outF} />
-      </Secao>
-
-      <Secao titulo="🔍 Assíduos de outros escalões" corTitulo="var(--text-3)"
-        sub="Inscritos em 2+ torneios futuros com o Manuel, mas noutro escalão"
-        count={assF.length} defaultOpen={false}>
-        <TabelaDesconhecida rows={assF} />
-      </Secao>
-
-      <Secao titulo="📊 Participantes mais assíduos" corTitulo="var(--text-3)"
-        sub="Inscritos em 2+ torneios futuros — todo o universo USKids, sem cruzamento com o Manuel"
-        count={filtG(assiduosTodos).length} defaultOpen={false}>
-        <table className="dtable-lg" style={{ width:"100%" }}>
-          <thead>
-            <tr>
-              <th style={{ textAlign:"left" }}>Jogador</th>
-              <th style={{ width:30 }}></th>
-              <th style={{ textAlign:"left" }}>Torneios</th>
-              <th style={{ width:40, textAlign:"center" }}>#</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtG(assiduosTodos).map((entry, i) => (
-              <tr key={i} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)" }}>
-                <td style={{ fontWeight:400, fontSize:13, padding:"8px 10px", color:"var(--text-2)" }}>{displayName(entry.nome)}</td>
-                <td style={{ textAlign:"center", fontSize:14 }}>{flag(entry.pais)}</td>
-                <td style={{ padding:"8px 10px" }}>
-                  <div style={{ display:"flex", gap:5, flexWrap:"wrap" }}>
-                    {entry.torneios.map((t, j) => (
-                      <span key={j} style={{
-                        fontSize:11, padding:"3px 10px", borderRadius:8, whiteSpace:"nowrap",
-                        background:"var(--bg-muted)", color:"var(--text-3)",
-                        border:"1px solid var(--border)",
-                      }}>
-                        {t.torneioNome.replace(/\s*\d{4}$/, "")}
-                        <span style={{ opacity:0.7, marginLeft:4, fontSize:10 }}>{t.escalao}</span>
-                      </span>
-                    ))}
-                  </div>
-                </td>
-                <td style={{ textAlign:"center", fontWeight:800, fontSize:13, color:"var(--text-3)" }}>
-                  {entry.torneios.length}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </Secao>
-
-    </div>
-  );
-}
-
-
-
 
 // ─────────────────────────────────────────────────────────────────────────────
 // CONVERSOR: formato raw signupanytime → TorneioResult
@@ -3654,7 +3877,8 @@ function converterTorneioCompleto(raw: any): TorneioResult | null {
 
 // COMPONENTE PRINCIPAL
 // ─────────────────────────────────────────────
-type Tab = "campo" | "resultados" | "rivais" | "inscritos";
+type Tab = "campo" | "resultados" | "rivais";
+type RivaisSubTab = "proximos" | "ranking";
 
 export default function USKidsFieldPage() {
   const [fieldData,   setFieldData]   = useState<FieldData | null>(null);
@@ -3664,6 +3888,10 @@ export default function USKidsFieldPage() {
   const [greatgolfData, setGreatgolfData] = useState<GreatgolfData | null>(null);
   const [memberHist,   setMemberHist]   = useState<MemberHistData | null>(null);
   const [tab,         setTab]         = useState<Tab>("campo");
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [rivaisSubTab, setRivaisSubTab] = useState<RivaisSubTab>("proximos");
+  const [selectedRival, setSelectedRival] = useState<string | null>(null);
+  const [sidebarRivalSearch, setSidebarRivalSearch] = useState("");
   const [erro,        setErro]        = useState<string | null>(null);
   const [selectedT,   setSelectedT]   = useState<number | null>(null);
 
@@ -3757,16 +3985,20 @@ export default function USKidsFieldPage() {
 
   const nResultados = resultsData?.resultados?.length ?? 0;
 
-  const nRivais = useMemo(() => {
-    if (!resultsData) return 0;
-    const nomes = new Set<string>();
-    for (const t of resultsData.resultados)
-      for (const e of (t.escaloes ?? []))
-        for (const r of (e.rondas ?? []))
-          for (const j of (r.leaderboard ?? r.jogadores ?? []))
-            if (!isManuel(j.nome)) nomes.add(j.nome.toLowerCase().trim());
-    return nomes.size;
-  }, [resultsData]);
+  // Sidebar rivals — populated by TabRivais via callback (avoids duplicate buildRivalsFromResultados)
+  const [sidebarRivals, setSidebarRivals] = useState<{ nome: string; pais: string; nEnc: number }[]>([]);
+  const onRivalsReady = useCallback((list: { nome: string; pais: string; nEnc: number }[]) => {
+    setSidebarRivals(list);
+  }, []);
+
+  // nRivais: contagem rápida para badge (sem buildRivalsFromResultados pesado)
+  // Usa sidebarRivals se já foram calculados, senão conta autoRivals como estimativa
+  const nRivais = sidebarRivals.length > 0
+    ? sidebarRivals.length
+    : autoRivals.filter(p => {
+        const n = p.n.toLowerCase();
+        return !(n.includes("medeiros") && n.includes("manuel"));
+      }).length;
 
   const torneiosCampo = useMemo(() => fieldData?.torneios ?? [], [fieldData]);
   const torneiosResultados = useMemo(() => resultsData?.resultados ?? [], [resultsData]);
@@ -3839,53 +4071,109 @@ export default function USKidsFieldPage() {
     { id:"campo",      label:"⛳ Torneios",   badge: fieldData.torneios.length },
     { id:"resultados", label:"🏆 Resultados", badge: nResultados },
     { id:"rivais",     label:"🤝 Rivais",     badge: nRivais },
-    { id:"inscritos",  label:"🗓️ Inscritos",  badge: 0 },
   ];
 
   const selectedFieldTorneio = fieldData.torneios.find(t => t.t === selectedT) ?? null;
 
   return (
-    <div className="master-detail" style={{ height:"calc(100vh - 52px)" }}>
+    <div className="tourn-layout" style={{ height:"calc(100vh - 52px)" }}>
 
-      {/* ── SIDEBAR ── */}
-      <div className="sidebar" style={{ minWidth:230, maxWidth:270 }}>
-
-        {/* Tabs na sidebar */}
-        <div style={{ padding:"8px 8px 6px", borderBottom:"1px solid var(--border)" }}>
-          <div style={{ fontSize:12, fontWeight:800, color:"var(--text)", padding:"2px 4px 6px", letterSpacing:"0.02em" }}>
-            🏌️ USKids Golf
-          </div>
-          <div style={{ display:"flex", flexDirection:"column", gap:2 }}>
+      {/* ── TOOLBAR ── */}
+      <div className="toolbar">
+        <div className="toolbar-left">
+          <button className="sidebar-toggle" onClick={() => setSidebarOpen(v => !v)}
+            title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
+            {sidebarOpen ? "◀" : "▶"}
+          </button>
+          <span className="toolbar-title">🏌️ USKids Golf</span>
+          <div className="toolbar-sep" />
+          <div className="escalao-pills">
             {TABS.map(tb => (
-              <button key={tb.id} onClick={() => handleTabChange(tb.id)}
-                className={`course-item${tab === tb.id ? " active" : ""}`}
-                style={{ display:"flex", justifyContent:"space-between", alignItems:"center", padding:"6px 10px" }}>
-                <span style={{ fontSize:12 }}>{tb.label}</span>
+              <button key={tb.id}
+                onClick={() => handleTabChange(tb.id)}
+                className={`tourn-tab tourn-tab-sm${tab === tb.id ? " active" : ""}`}
+                style={tab === tb.id ? {} : { background:"var(--bg-muted)", color:"var(--text-2)", borderColor:"var(--border)" }}>
+                {tb.label}
                 {tb.badge > 0 && (
                   <span style={{
-                    background: tab === tb.id ? "var(--accent)" : "var(--bg-muted)",
+                    marginLeft:5, fontSize:10, fontWeight:700, padding:"0 5px", borderRadius:8,
+                    background: tab === tb.id ? "rgba(255,255,255,0.25)" : "var(--bg-hover)",
                     color: tab === tb.id ? "#fff" : "var(--text-3)",
-                    borderRadius:10, padding:"1px 7px", fontSize:11, fontWeight:700,
                   }}>{tb.badge}</span>
                 )}
               </button>
             ))}
           </div>
         </div>
-
-        {/* Link externo: histórico de resultados */}
-        <div style={{ padding:"6px 8px", borderBottom:"1px solid var(--border)" }}>
+        <div className="toolbar-right">
           <a href="https://uskids-golf.vercel.app/" target="_blank" rel="noopener noreferrer"
-            style={{ display:"flex", alignItems:"center", gap:6, padding:"5px 10px", borderRadius:6,
-              fontSize:12, color:"var(--text-2)", textDecoration:"none",
-              background:"var(--bg-muted)", border:"1px solid var(--border)" }}>
-            🗄️ Histórico de resultados ↗
+            style={{
+              fontSize:11, fontWeight:600, cursor:"pointer",
+              color:"var(--accent)", border:"1px solid var(--accent)",
+              borderRadius:5, padding:"3px 8px", lineHeight:1.6,
+              textDecoration:"none", whiteSpace:"nowrap",
+              display:"inline-flex", alignItems:"center", gap:3,
+            }}>
+            Histórico ↗
           </a>
         </div>
+      </div>
 
-        {/* Lista de torneios agrupada por mês */}
+      {/* ── MASTER-DETAIL ── */}
+      <div className="master-detail">
+
+        {/* ── SIDEBAR ── */}
+        <div className={`sidebar${sidebarOpen ? "" : " sidebar-closed"}`} style={{ minWidth:230, maxWidth:270 }}>
+
+        {/* Lista de torneios agrupada por mês — OU lista de rivais */}
         <div style={{ overflowY:"auto", flex:1 }}>
-          {(() => {
+
+          {/* ── Sidebar: RIVAIS (quando no tab rivais) ── */}
+          {tab === "rivais" ? (
+            <div>
+              <div style={{ padding:"6px 8px", borderBottom:"1px solid var(--border-light)" }}>
+                <input value={sidebarRivalSearch} onChange={e => setSidebarRivalSearch(e.target.value)}
+                  placeholder="🔎 Pesquisar rival…"
+                  style={{ width:"100%", border:"1px solid var(--border)", borderRadius:6,
+                    background:"var(--bg-card)", color:"var(--text)",
+                    padding:"5px 8px", fontSize:11, outline:"none", boxSizing:"border-box" }} />
+              </div>
+              {(() => {
+                const q = sidebarRivalSearch.toLowerCase().trim();
+                const filtered = q
+                  ? sidebarRivals.filter(r => r.nome.toLowerCase().includes(q) || r.pais.toLowerCase().includes(q))
+                  : sidebarRivals;
+                return filtered.map(r => {
+                  const active = selectedRival === r.nome;
+                  return (
+                    <button key={r.nome}
+                      onClick={() => setSelectedRival(prev => prev === r.nome ? null : r.nome)}
+                      className={`course-item${active ? " active" : ""}`}
+                      style={{ width:"100%", textAlign:"left", padding:"5px 10px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+                      <span style={{ display:"flex", alignItems:"center", gap:5, minWidth:0, overflow:"hidden" }}>
+                        <span style={{ fontSize:13, flexShrink:0 }}>{flag(r.pais)}</span>
+                        <span style={{ fontSize:12, fontWeight: active ? 700 : 500, whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis" }}>
+                          {displayName(r.nome)}
+                        </span>
+                      </span>
+                      <span style={{
+                        flexShrink:0, fontSize:10, fontWeight:700, padding:"1px 6px", borderRadius:8,
+                        background: active ? "var(--accent)" : "var(--bg-muted)",
+                        color: active ? "#fff" : "var(--text-3)",
+                      }}>{r.nEnc}</span>
+                    </button>
+                  );
+                });
+              })()}
+              {sidebarRivals.length === 0 && (
+                <div style={{ padding:"16px 12px", fontSize:11, color:"var(--text-3)", textAlign:"center" }}>
+                  Sem rivais encontrados
+                </div>
+              )}
+            </div>
+          ) : (
+          /* ── Sidebar: TORNEIOS (default) ── */
+          (() => {
             // Filtrar: no tab "campo", separar terminados dos activos
             const activeList = tab === "campo"
               ? allTorneios.filter(t => !t.terminado)
@@ -4050,7 +4338,8 @@ export default function USKidsFieldPage() {
                 </>
               )}
             </>;
-          })()}
+          })()
+          )}
         </div>
 
         <div className="muted fs-10" style={{ padding:"8px 12px", borderTop:"1px solid var(--border-light)" }}>
@@ -4078,20 +4367,22 @@ export default function USKidsFieldPage() {
         )}
 
         {tab === "rivais" && resultsData && (
-          <TabRivais data={resultsData} fieldData={fieldData} intlData={intlData} autoRivals={autoRivals} selectedT={selectedT} memberHist={memberHist} />
+          <TabRivais data={resultsData} fieldData={fieldData} intlData={intlData}
+            autoRivals={autoRivals} selectedT={selectedT} memberHist={memberHist}
+            subTab={rivaisSubTab} setSubTab={setRivaisSubTab}
+            selectedRival={selectedRival} setSelectedRival={setSelectedRival}
+            greatgolfData={greatgolfData}
+            onRivalsReady={onRivalsReady}
+          />
         )}
         {tab === "rivais" && !resultsData && (
           <div style={{color:"var(--text-3)",padding:"24px 0"}}>A carregar…</div>
         )}
 
-        {tab === "inscritos" && resultsData && (
-          <TabInscritos data={resultsData} fieldData={fieldData} selectedT={selectedT} />
-        )}
-        {tab === "inscritos" && !resultsData && (
-          <div style={{color:"var(--text-3)",padding:"24px 0"}}>A carregar…</div>
-        )}
-
       </div>
+      {/* ← fecha master-detail */}
+      </div>
+    {/* ← fecha tourn-layout */}
     </div>
   );
 }
