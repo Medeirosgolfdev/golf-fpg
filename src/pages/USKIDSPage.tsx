@@ -1850,12 +1850,10 @@ function TabelaConhecidos({
   const manuelIntl = intlData?.jogadores.find(jj => jj.isM);
   const manuelIntlTids = manuelIntl ? new Set(Object.keys(manuelIntl.r)) : new Set<string>();
 
-  // Pré-computar o rival correspondente a cada inscrito:
-  // 1. criarMatcherRivals (USKids + intl encounters já merged com autoRivals correctos)
-  // 2. Fallback: matchIntl → encontrar o nome intl → procurar nos rivals por esse nome
-  //    Isto apanha jogadores cujo nome no campo difere dos resultados mas que estão
-  //    nos rivals com dados correctos dos autoRivals.
-  const inscritoRivalCache = new Map<string, RivalInfo | null>(
+  // inscritoRivalCache: LAZY — só computa quando o card está aberto
+  const inscritoRivalCache = useMemo(() => {
+    if (!open) return new Map<string, RivalInfo | null>();
+    return new Map<string, RivalInfo | null>(
     inscritos.map(j => {
       // 1. Match via rivals list (já tem autoRivals correctos)
       const rivalMatch = matchRival(j.nome, j.pais);
@@ -1883,10 +1881,12 @@ function TabelaConhecidos({
 
       return [j.nome, null];
     })
-  );
+    );
+  }, [open, inscritos, matchRival, matchIntl, intlData, manuelIntl, manuelIntlTids, rivals]);
 
-  // ── Jogaram este torneio no ano passado (escalão abaixo) ──────────────────
+  // ── Jogaram este torneio no ano passado (escalão abaixo) — LAZY ──
   const anoPassadoMap = useMemo(() => {
+    if (!open) return new Map<string, { pos: number; escalao: string; ronda: number }>();
     const base = torneioBaseName(torneioNome);
     const isoYear = (d: string) => {
       if (!d) return 0;
@@ -1940,7 +1940,7 @@ function TabelaConhecidos({
       }
     }
     return map;
-  }, [torneioNome, torneioData, resultados, inscritos, torneio]);
+  }, [open, torneioNome, torneioData, resultados, inscritos, torneio]);
   // ─────────────────────────────────────────────────────────────────────────
 
   return (
@@ -2706,16 +2706,22 @@ function SubTabPorTorneio({
   memberHist: MemberHistData | null;
   goToProfile: (nome: string) => void;
 }) {
-  // ── Inscritos: torneios futuros ──
+  const [showInscritos, setShowInscritos] = useState(false);
+
+  // ── Inscritos: LAZY — só computa quando showInscritos === true ──
   const torneiosFuturos = useMemo(() => {
-    if (!fieldData) return [];
+    if (!fieldData || !showInscritos) return [];
     return fieldData.torneios
       .filter(t => isoDate(t.date_inicio) >= new Date().toISOString().slice(0,10))
       .sort((a,b) => isoDate(a.date_inicio).localeCompare(isoDate(b.date_inicio)));
-  }, [fieldData]);
+  }, [fieldData, showInscritos]);
 
   type InscritoEntry = { torneioT: number; torneioNome: string; torneioData: string; escalao: string; mesmoEscalao: boolean };
   const { conhecidosMap, desconhecidosMap } = useMemo(() => {
+    if (!showInscritos) return {
+      conhecidosMap: new Map<string, { rival: RivalInfo; torneios: InscritoEntry[] }>(),
+      desconhecidosMap: new Map<string, { nome: string; pais: string; torneios: InscritoEntry[] }>(),
+    };
     const conhecidosMap  = new Map<string, { rival: RivalInfo; torneios: InscritoEntry[] }>();
     const desconhecidosMap = new Map<string, { nome: string; pais: string; torneios: InscritoEntry[] }>();
     for (const t of torneiosFuturos) {
@@ -2744,7 +2750,7 @@ function SubTabPorTorneio({
       }
     }
     return { conhecidosMap, desconhecidosMap };
-  }, [matchRival, torneiosFuturos]);
+  }, [showInscritos, matchRival, torneiosFuturos]);
 
   const vaiReencontrar = useMemo(() =>
     [...conhecidosMap.values()].filter(e => e.torneios.some(t => t.mesmoEscalao)).sort((a,b) => b.torneios.length - a.torneios.length)
@@ -2871,8 +2877,14 @@ function SubTabPorTorneio({
         </div>
       )}
 
-      {/* ── 2. Inscritos futuros ── */}
-      {(vaiReencontrar.length > 0 || vaiConhecer.length > 0) && (
+      {/* ── 2. Inscritos futuros (LAZY — só carrega quando pedido) ── */}
+      {!showInscritos ? (
+        <button onClick={() => setShowInscritos(true)} className="btn" style={{
+          display:"flex", alignItems:"center", gap:6, fontSize:12, padding:"8px 16px",
+        }}>
+          🗓️ Carregar inscrições futuras
+        </button>
+      ) : (vaiReencontrar.length > 0 || vaiConhecer.length > 0) ? (
         <div>
           <div className="h-sm" style={{ marginBottom:8, color:"var(--text-2)" }}>
             Inscrições em torneios futuros
@@ -2938,12 +2950,16 @@ function SubTabPorTorneio({
             </Secao>
           )}
         </div>
+      ) : showInscritos && (
+        <div style={{ color:"var(--text-3)", fontSize:12, padding:"8px 0" }}>
+          Nenhum adversário inscrito em torneios futuros
+        </div>
       )}
 
       {/* ── Vazio ── */}
-      {torneiosComManuel.length === 0 && vaiReencontrar.length === 0 && vaiConhecer.length === 0 && (
+      {torneiosComManuel.length === 0 && !showInscritos && (
         <div style={{ color:"var(--text-3)", fontSize:12, padding:"24px 0", textAlign:"center" }}>
-          Sem torneios ou inscrições com o Manuel
+          Sem torneios com o Manuel
         </div>
       )}
     </div>
