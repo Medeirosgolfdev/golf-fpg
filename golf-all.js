@@ -301,18 +301,11 @@ async function downloadWHS(page, fedCode, outDir) {
     return true;
   }
 
-  // Garantir sessão activa em scoring.fpg.pt
-  await page.goto(
-    `https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=${fedCode}`,
-    { waitUntil: "domcontentloaded", timeout: 25000 }
-  );
-  await page.waitForLoadState("networkidle", { timeout: 10000 }).catch(() => {});
-  logInfo(`URL da página antes do fetch WHS: ${page.url()}`);
-
-  if (page.url().toLowerCase().includes("login")) {
-    logErr(`[${fedCode}] Sessão expirou — redirecionado para login.`);
-    return false;
-  }
+  // Aquecer SSO
+  await page.goto("https://my.fpg.pt/Home/Results.aspx", { waitUntil: "domcontentloaded" });
+  await page.waitForTimeout(800);
+  await page.goto(`https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=${fedCode}`, { waitUntil: "domcontentloaded" });
+  await page.waitForTimeout(800);
 
   const pageSize = 100;
   let startIndex = 0;
@@ -322,11 +315,10 @@ async function downloadWHS(page, fedCode, outDir) {
     const jtStartIndex = String(startIndex);
     const jtPageSize = String(pageSize);
 
-    // URL ABSOLUTA — evita resolução errada se a página foi redirecionada
+    // URL absoluta — evita resolução errada se a página foi redirecionada
     const url = `https://scoring.fpg.pt/lists/PlayerWHS.aspx/HCPWhsFederLST`;
 
     const result = await page.evaluate(async ({ url, FED_CODE, jtStartIndex, jtPageSize }) => {
-      const pageUrl = window.location.href;
       const res = await fetch(url, {
         method: "POST",
         headers: {
@@ -341,14 +333,13 @@ async function downloadWHS(page, fedCode, outDir) {
         })
       });
       const text = await res.text();
-      return { status: res.status, text, pageUrl };
+      return { status: res.status, text, pageUrl: window.location.href };
     }, { url, FED_CODE: fedCode, jtStartIndex, jtPageSize });
-
-    logInfo(`[WHS fetch] página: ${result.pageUrl} | status: ${result.status}`);
 
     if (result.status !== 200) {
       fs.writeFileSync(path.join(outDir, "whs-list-raw.txt"), result.text, "utf-8");
-      logErr(`HTTP ${result.status} — ver ${outDir}/whs-list-raw.txt`);
+      logErr(`HTTP ${result.status} | página: ${result.pageUrl}`);
+      logErr(`Resposta: ${result.text.slice(0, 800)}`);
       return false;
     }
 
