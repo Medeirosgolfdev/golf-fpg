@@ -226,30 +226,26 @@ async function doAutoLogin(username, password) {
       await passField.press("Enter");
     }
 
-    // Esperar que o SSO complete os redirects pós-login
-    // domcontentloaded não falha em redirects; waitForLoadState depois garante estabilidade
+    // Esperar que os redirects SSO pós-login terminem
     await page.waitForLoadState("domcontentloaded", { timeout: 15000 }).catch(() => {});
     await page.waitForTimeout(2000);
 
-    // Aquecer scoring.fpg.pt com um fed code real para estabelecer os cookies de API
-    // NÃO usar my.fpg.pt — causa ERR_ABORTED com networkidle durante redirects SSO
+    // Aquecer scoring.fpg.pt com fed code real
+    // NÃO usar my.fpg.pt antes — causa ERR_ABORTED durante redirects SSO
     const warmFed = fedCodes[0] || "52884";
     logInfo(`SSO: scoring.fpg.pt (fed=${warmFed})...`);
     await page.goto(
       `https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=${warmFed}`,
       { waitUntil: "domcontentloaded", timeout: 25000 }
     );
-    // Aguardar rede estabilizar (separado do goto para não falhar em redirects)
     await page.waitForLoadState("networkidle", { timeout: 10000 }).catch(() => {});
+    logInfo(`URL final login: ${page.url()}`);
 
-    // Verificar que não ficámos na página de login
-    const finalUrl = page.url();
-    if (finalUrl.includes("login") || finalUrl.includes("Login")) {
-      logErr("Sessão inválida após login — a página redirecionou para login.");
+    if (page.url().toLowerCase().includes("login")) {
+      logErr("Sessão inválida após login — redirecionado para login.");
       await browser.close();
       process.exit(1);
     }
-    logInfo(`URL final: ${finalUrl}`);
 
     await context.storageState({ path: "session.json" });
     logOK("Login automático concluído — sessão guardada");
@@ -305,16 +301,16 @@ async function downloadWHS(page, fedCode, outDir) {
     return true;
   }
 
-  // Garantir que a sessão está activa em scoring.fpg.pt
+  // Garantir sessão activa em scoring.fpg.pt
   await page.goto(
     `https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=${fedCode}`,
     { waitUntil: "domcontentloaded", timeout: 25000 }
   );
   await page.waitForLoadState("networkidle", { timeout: 10000 }).catch(() => {});
+  logInfo(`URL da página antes do fetch WHS: ${page.url()}`);
 
-  // Verificar que não fomos redirecionados para login
-  if (page.url().includes("login") || page.url().includes("Login")) {
-    logErr(`[${fedCode}] Sessão expirou — redirecionado para login. Re-corre com --login.`);
+  if (page.url().toLowerCase().includes("login")) {
+    logErr(`[${fedCode}] Sessão expirou — redirecionado para login.`);
     return false;
   }
 
@@ -326,11 +322,11 @@ async function downloadWHS(page, fedCode, outDir) {
     const jtStartIndex = String(startIndex);
     const jtPageSize = String(pageSize);
 
-    const url =
-      `PlayerWHS.aspx/HCPWhsFederLST?fed_code=${fedCode}` +
-      `&jtStartIndex=${jtStartIndex}&jtPageSize=${jtPageSize}`;
+    // URL ABSOLUTA — evita resolução errada se a página foi redirecionada
+    const url = `https://scoring.fpg.pt/lists/PlayerWHS.aspx/HCPWhsFederLST`;
 
     const result = await page.evaluate(async ({ url, FED_CODE, jtStartIndex, jtPageSize }) => {
+      const pageUrl = window.location.href;
       const res = await fetch(url, {
         method: "POST",
         headers: {
@@ -345,8 +341,10 @@ async function downloadWHS(page, fedCode, outDir) {
         })
       });
       const text = await res.text();
-      return { status: res.status, text };
+      return { status: res.status, text, pageUrl };
     }, { url, FED_CODE: fedCode, jtStartIndex, jtPageSize });
+
+    logInfo(`[WHS fetch] página: ${result.pageUrl} | status: ${result.status}`);
 
     if (result.status !== 200) {
       fs.writeFileSync(path.join(outDir, "whs-list-raw.txt"), result.text, "utf-8");
