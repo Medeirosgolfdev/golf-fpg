@@ -1,7 +1,6 @@
 name: Atualizar Dados Golf FPG
 
 on:
-  # Botão manual "Run workflow" no GitHub
   workflow_dispatch:
     inputs:
       fed_codes:
@@ -18,10 +17,12 @@ on:
           - '--force'
           - '--skip-download'
 
-  # Atualização automática diária às 7h (hora de Lisboa)
-  # Descomenta a linha abaixo quando quiseres ativar:
   # schedule:
   #   - cron: '0 7 * * *'
+
+# ── Permissão de escrita no repositório ──────────────────────────
+permissions:
+  contents: write
 
 jobs:
   update:
@@ -49,7 +50,6 @@ jobs:
           if [ -n "${{ github.event.inputs.fed_codes }}" ]; then
             echo "codes=${{ github.event.inputs.fed_codes }}" >> $GITHUB_OUTPUT
           else
-            # Ler todos os federados do players.json
             codes=$(node -e "
               const p = require('./players.json');
               console.log(Object.keys(p).join(' '));
