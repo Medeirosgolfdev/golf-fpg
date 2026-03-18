@@ -24,6 +24,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const https = require("https");
 const { execSync } = require("child_process");
 const { chromium } = require("playwright");
 
@@ -230,7 +231,7 @@ async function doAutoLogin(username, password) {
     await page.waitForLoadState("domcontentloaded", { timeout: 15000 }).catch(() => {});
     await page.waitForTimeout(2000);
 
-    // Aquecer scoring.fpg.pt com fed code real
+    // Aquecer scoring.fpg.pt com fed code real para estabelecer cookies de sessão
     // NÃO usar my.fpg.pt antes — causa ERR_ABORTED durante redirects SSO
     const warmFed = fedCodes[0] || "52884";
     logInfo(`SSO: scoring.fpg.pt (fed=${warmFed})...`);
@@ -290,6 +291,8 @@ async function doManualLogin() {
 }
 
 // ===== PASSO 2: DOWNLOAD WHS LIST =====
+// Usa HTTPS directo em Node.js (não page.evaluate) para evitar problemas
+// de headers/CORS/ScriptManager quando o fetch corre dentro do Playwright.
 async function downloadWHS(page, fedCode, outDir) {
   logStep("📋", `[${fedCode}] Descarregar lista WHS`);
 
@@ -301,54 +304,90 @@ async function downloadWHS(page, fedCode, outDir) {
     return true;
   }
 
-  // Aquecer SSO
-  await page.goto("https://my.fpg.pt/Home/Results.aspx", { waitUntil: "domcontentloaded" });
-  await page.waitForTimeout(800);
-  await page.goto(`https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=${fedCode}`, { waitUntil: "domcontentloaded" });
-  await page.waitForTimeout(800);
+  // Ler cookies da sessão guardada
+  const sessionPath = path.join(process.cwd(), "session.json");
+  let cookieHeader = "";
+  try {
+    const session = readJSON(sessionPath);
+    const cookies = session.cookies || [];
+    // Filtrar cookies relevantes para scoring.fpg.pt
+    const relevant = cookies.filter(c =>
+      c.domain && (c.domain.includes("scoring.fpg.pt") || c.domain.includes("fpg.pt"))
+    );
+    cookieHeader = relevant.map(c => `${c.name}=${c.value}`).join("; ");
+    logInfo(`Cookies para scoring.fpg.pt: ${relevant.length} cookie(s)`);
+  } catch (e) {
+    logErr(`Erro ao ler session.json: ${e.message}`);
+    return false;
+  }
+
+  if (!cookieHeader) {
+    logErr("Nenhum cookie para scoring.fpg.pt encontrado na sessão.");
+    return false;
+  }
+
+  // Fetch HTTPS directo — sem browser, sem page.evaluate
+  function httpsPost(body) {
+    return new Promise((resolve, reject) => {
+      const bodyStr = JSON.stringify(body);
+      const req = https.request({
+        hostname: "scoring.fpg.pt",
+        path: `/lists/PlayerWHS.aspx/HCPWhsFederLST`,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          "Content-Length": Buffer.byteLength(bodyStr),
+          "X-Requested-With": "XMLHttpRequest",
+          "Accept": "application/json, text/javascript, */*; q=0.01",
+          "Referer": `https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=${fedCode}`,
+          "Origin": "https://scoring.fpg.pt",
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+          "Cookie": cookieHeader,
+        }
+      }, (res) => {
+        let data = "";
+        res.on("data", chunk => data += chunk);
+        res.on("end", () => resolve({ status: res.statusCode, text: data }));
+      });
+      req.on("error", reject);
+      req.write(bodyStr);
+      req.end();
+    });
+  }
 
   const pageSize = 100;
   let startIndex = 0;
   const all = [];
 
   while (true) {
-    const jtStartIndex = String(startIndex);
-    const jtPageSize = String(pageSize);
+    const result = await httpsPost({
+      fed_code: String(fedCode),
+      jtStartIndex: String(startIndex),
+      jtPageSize: String(pageSize)
+    });
 
-    // URL absoluta — evita resolução errada se a página foi redirecionada
-    const url = `https://scoring.fpg.pt/lists/PlayerWHS.aspx/HCPWhsFederLST`;
-
-    const result = await page.evaluate(async ({ url, FED_CODE, jtStartIndex, jtPageSize }) => {
-      const res = await fetch(url, {
-        method: "POST",
-        headers: {
-          "x-requested-with": "XMLHttpRequest",
-          "accept": "application/json, text/javascript, */*; q=0.01",
-          "content-type": "application/json; charset=utf-8"
-        },
-        body: JSON.stringify({
-          fed_code: String(FED_CODE),
-          jtStartIndex: String(jtStartIndex),
-          jtPageSize: String(jtPageSize)
-        })
-      });
-      const text = await res.text();
-      return { status: res.status, text, pageUrl: window.location.href };
-    }, { url, FED_CODE: fedCode, jtStartIndex, jtPageSize });
+    logInfo(`[WHS] status: ${result.status} | startIndex: ${startIndex}`);
 
     if (result.status !== 200) {
       fs.writeFileSync(path.join(outDir, "whs-list-raw.txt"), result.text, "utf-8");
-      logErr(`HTTP ${result.status} | página: ${result.pageUrl}`);
+      logErr(`HTTP ${result.status}`);
       logErr(`Resposta: ${result.text.slice(0, 800)}`);
       return false;
     }
 
-    const json = JSON.parse(result.text);
-    const payload = json?.d ?? json;
+    let payload;
+    try {
+      const json = JSON.parse(result.text);
+      payload = json?.d ?? json;
+    } catch (e) {
+      logErr(`Erro a parsear resposta: ${e.message}`);
+      logErr(`Resposta: ${result.text.slice(0, 400)}`);
+      return false;
+    }
 
     if (payload?.Result !== "OK") {
       fs.writeFileSync(path.join(outDir, "whs-list-debug.json"), JSON.stringify(payload, null, 2), "utf-8");
-      logErr(`Resposta inesperada — ver ${outDir}/whs-list-debug.json`);
+      logErr(`Resposta inesperada: ${JSON.stringify(payload).slice(0, 400)}`);
       return false;
     }
 
@@ -699,7 +738,7 @@ ${BOLD}╚═══════════════════════�
       const outDir = path.join(process.cwd(), "output", fed);
       fs.mkdirSync(outDir, { recursive: true });
 
-      // Aquecer sessão (uma vez por federado)
+      // Aquecer sessão (uma vez por federado) — só necessário para downloadScorecards
       await page.goto(
         `https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=${fed}`,
         { waitUntil: "domcontentloaded", timeout: 25000 }
