@@ -226,29 +226,30 @@ async function doAutoLogin(username, password) {
       await passField.press("Enter");
     }
 
-    // Esperar navegação pós-login — networkidle garante que todos os redirects SSO completam
-    await page.waitForLoadState("networkidle", { timeout: 15000 }).catch(() => {});
+    // Esperar que o SSO complete os redirects pós-login
+    // domcontentloaded não falha em redirects; waitForLoadState depois garante estabilidade
+    await page.waitForLoadState("domcontentloaded", { timeout: 15000 }).catch(() => {});
+    await page.waitForTimeout(2000);
 
-    // Aquecer SSO — navegar pelos domínios necessários por ordem
-    logInfo("SSO: my.fpg.pt...");
-    await page.goto("https://my.fpg.pt/Home/Results.aspx", { waitUntil: "networkidle", timeout: 20000 });
-
-    // Usar um fed code real para forçar o SSO completo em scoring.fpg.pt
-    // (sem ?no= a página não estabelece os cookies de API necessários)
+    // Aquecer scoring.fpg.pt com um fed code real para estabelecer os cookies de API
+    // NÃO usar my.fpg.pt — causa ERR_ABORTED com networkidle durante redirects SSO
     const warmFed = fedCodes[0] || "52884";
     logInfo(`SSO: scoring.fpg.pt (fed=${warmFed})...`);
     await page.goto(
       `https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=${warmFed}`,
-      { waitUntil: "networkidle", timeout: 20000 }
+      { waitUntil: "domcontentloaded", timeout: 25000 }
     );
+    // Aguardar rede estabilizar (separado do goto para não falhar em redirects)
+    await page.waitForLoadState("networkidle", { timeout: 10000 }).catch(() => {});
 
-    // Verificar que a sessão está autenticada (página não redirecionou para login)
+    // Verificar que não ficámos na página de login
     const finalUrl = page.url();
     if (finalUrl.includes("login") || finalUrl.includes("Login")) {
       logErr("Sessão inválida após login — a página redirecionou para login.");
       await browser.close();
       process.exit(1);
     }
+    logInfo(`URL final: ${finalUrl}`);
 
     await context.storageState({ path: "session.json" });
     logOK("Login automático concluído — sessão guardada");
@@ -307,8 +308,9 @@ async function downloadWHS(page, fedCode, outDir) {
   // Garantir que a sessão está activa em scoring.fpg.pt
   await page.goto(
     `https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=${fedCode}`,
-    { waitUntil: "networkidle", timeout: 20000 }
+    { waitUntil: "domcontentloaded", timeout: 25000 }
   );
+  await page.waitForLoadState("networkidle", { timeout: 10000 }).catch(() => {});
 
   // Verificar que não fomos redirecionados para login
   if (page.url().includes("login") || page.url().includes("Login")) {
@@ -708,11 +710,12 @@ ${BOLD}╚═══════════════════════�
       const outDir = path.join(process.cwd(), "output", fed);
       fs.mkdirSync(outDir, { recursive: true });
 
-      // Aquecer sessão (uma vez por federado) — networkidle garante SSO completo
+      // Aquecer sessão (uma vez por federado)
       await page.goto(
         `https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=${fed}`,
-        { waitUntil: "networkidle", timeout: 20000 }
+        { waitUntil: "domcontentloaded", timeout: 25000 }
       );
+      await page.waitForLoadState("networkidle", { timeout: 10000 }).catch(() => {});
 
       const whsOk = await downloadWHS(page, fed, outDir);
       if (!whsOk) {
