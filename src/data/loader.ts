@@ -1,54 +1,54 @@
 import type { MasterData, PlayersDb, AwayCoursesData, Course } from "./types";
-
-let _cache: Promise<MasterData> | null = null;
-
-export async function loadMasterData(opts?: { force?: boolean }): Promise<MasterData> {
-  if (!opts?.force && _cache) return _cache;
-
-  _cache = (async () => {
-    const res = await fetch("/data/master-courses.json");
-    if (!res.ok) throw new Error(`Falha a carregar master-courses.json (${res.status})`);
-    return (await res.json()) as MasterData;
-  })();
-
-  return _cache;
-}
-
-let _playersCache: Promise<PlayersDb> | null = null;
-
-export async function loadPlayers(opts?: { force?: boolean }): Promise<PlayersDb> {
-  if (!opts?.force && _playersCache) return _playersCache;
-
-  _playersCache = (async () => {
-    const res = await fetch("/data/players.json");
-    if (!res.ok) throw new Error(`Falha a carregar players.json (${res.status})`);
-    return (await res.json()) as PlayersDb;
-  })();
-
-  return _playersCache;
-}
-
-let _awayCache: Promise<Course[]> | null = null;
+import { cachedFetchJson } from "./fetchCache";
 
 /**
- * Carrega campos internacionais extraidos dos scorecards de todos os jogadores.
+ * Carrega master-courses.json.
+ * A cache é gerida pelo fetchCache — um único fetch por sessão,
+ * mesmo que seja chamado de App.tsx e de outra página em simultâneo.
+ * force:true invalida a Promise em cache e refaz o fetch.
+ */
+export async function loadMasterData(opts?: { force?: boolean }): Promise<MasterData> {
+  const url = "/data/master-courses.json";
+  if (opts?.force) {
+    const { invalidateCache } = await import("./fetchCache");
+    invalidateCache(url);
+  }
+  const data = await cachedFetchJson<MasterData>(url);
+  if (!data) throw new Error("Falha a carregar master-courses.json (404)");
+  return data;
+}
+
+/**
+ * Carrega players.json.
+ * Usado em App.tsx, FPGPage e DrivePage — fetchCache garante 1 único fetch.
+ */
+export async function loadPlayers(opts?: { force?: boolean }): Promise<PlayersDb> {
+  const url = "/data/players.json";
+  if (opts?.force) {
+    const { invalidateCache } = await import("./fetchCache");
+    invalidateCache(url);
+  }
+  const data = await cachedFetchJson<PlayersDb>(url);
+  if (!data) throw new Error("Falha a carregar players.json (404)");
+  return data;
+}
+
+/**
+ * Carrega away-courses.json.
  * Gerado pelo extract-courses.js no pipeline.
- * Retorna [] se o ficheiro nao existir (graceful fallback).
+ * Retorna [] se o ficheiro não existir (graceful fallback).
  */
 export async function loadAwayCourses(opts?: { force?: boolean }): Promise<Course[]> {
-  if (!opts?.force && _awayCache) return _awayCache;
-
-  _awayCache = (async () => {
-    try {
-      const res = await fetch("/data/away-courses.json");
-      if (!res.ok) return [];
-      const data = (await res.json()) as AwayCoursesData;
-      return data.courses || [];
-    } catch {
-      // Ficheiro ainda nao gerado pelo pipeline — nao bloquear a app
-      return [];
-    }
-  })();
-
-  return _awayCache;
+  const url = "/data/away-courses.json";
+  if (opts?.force) {
+    const { invalidateCache } = await import("./fetchCache");
+    invalidateCache(url);
+  }
+  try {
+    const data = await cachedFetchJson<AwayCoursesData>(url);
+    return data?.courses ?? [];
+  } catch {
+    // Ficheiro ainda não gerado pelo pipeline — não bloquear a app
+    return [];
+  }
 }

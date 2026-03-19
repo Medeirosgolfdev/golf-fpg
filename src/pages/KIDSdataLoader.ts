@@ -35,6 +35,9 @@ function co(raw: string): string {
   return CC[t] || CC[t.toUpperCase()] || CC[t.toLowerCase()] || t;
 }
 
+import { MONTHS_PT } from "../utils/format";
+import { cachedFetchJson } from "../data/fetchCache";
+
 export function normName(n: string): string {
   return n.trim().toLowerCase()
     .replace(/\s+/g," ")
@@ -56,9 +59,11 @@ export interface AutoRivalPlayer {
 }
 
 async function fetchJson(path: string): Promise<unknown> {
-  const res = await fetch(path);
-  if (!res.ok) throw new Error(`Failed to fetch ${path}: ${res.status}`);
-  return res.json();
+  // Usa cachedFetchJson: URLs sem "?" são cached globalmente entre páginas.
+  // URLs com "?" (ex: ?v=timestamp) contornam a cache automaticamente.
+  const data = await cachedFetchJson(path);
+  if (data === null) throw new Error(`Ficheiro não encontrado: ${path}`);
+  return data;
 }
 
 export interface AutoScorecard {
@@ -66,6 +71,7 @@ export interface AutoScorecard {
   playerName: string;
   par: number[];
   si: number[];
+  meters: number[];   // distâncias em metros por buraco (0 se não disponível)
   rounds: number[][];  // each round = 18 hole scores
 }
 
@@ -109,11 +115,10 @@ const USKIDS_TCODE_META: Record<number, { name: string; short: string; dateExact
 // USKids completo tournament names: key = tid prefix "usk{tcode}", value = {name, short, date}
 // Pre-populated with known names; updated from JSON during processUskidsCompleto
 export const uskTournNames: Map<string, { name: string; short: string; date: string; dateExact: string }> = (() => {
-  const MONTHS = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
   const m = new Map<string, { name: string; short: string; date: string; dateExact: string }>();
   for (const [tcode, meta] of Object.entries(USKIDS_TCODE_META as Record<string, { name: string; short: string; dateExact: string }>)) {
     const [yr, mo] = meta.dateExact.split("-").map(Number);
-    const date = `${MONTHS[mo - 1]} ${yr}`;
+    const date = `${MONTHS_PT[mo - 1]} ${yr}`;
     m.set(`usk${tcode}`, { name: meta.name, short: meta.short, date, dateExact: meta.dateExact });
   }
   return m;
@@ -162,7 +167,7 @@ function processWjgc(data: unknown, tid: string): AutoRivalPlayer[] {
       .map(r => r.scores || [])
       .filter(s => s.length === 18);
     if (holeRounds.length > 0 && par.length === 18) {
-      addScorecard(norm, { tid, playerName: p.name.trim(), par, si, rounds: holeRounds });
+      addScorecard(norm, { tid, playerName: p.name.trim(), par, si, meters: [], rounds: holeRounds });
     }
     return {
       n: p.name.trim(),
@@ -225,7 +230,7 @@ function processDoral(data: unknown): AutoRivalPlayer[] {
       } else { pos = i + 1; }
       const e = entries[i];
       if (e.holeRounds.length > 0 && divPar.length === 18)
-        addScorecard(normName(e.name), { tid, playerName: e.name, par: divPar, si: [], rounds: e.holeRounds });
+        addScorecard(normName(e.name), { tid, playerName: e.name, par: divPar, si: [], meters: [], rounds: e.holeRounds });
       all.push({
         n: e.name, co: e.co,
         r: { [tid]: { p: e.rd.length < maxRds ? null : pos, t: e.t, tp: e.tp, rd: e.rd }},
@@ -312,7 +317,7 @@ function processManuelOverrides(): AutoRivalPlayer[] {
     const holeRounds = ov.rounds.map(r => r.strokes).filter(s => s.length === 18);
     if (holeRounds.length > 0) {
       addScorecard(normName(ov.name), {
-        tid: ov.tid, playerName: ov.name, par: ov.par, si: [], rounds: holeRounds,
+        tid: ov.tid, playerName: ov.name, par: ov.par, si: [], meters: [], rounds: holeRounds,
       });
     }
     all.push({
@@ -412,7 +417,7 @@ function processUskids(data: unknown): AutoRivalPlayer[] {
         } else { pos = i + 1; }
         const e = entries[i];
         if (e.holeRounds.length > 0)
-          addScorecard(normName(e.origName), { tid, playerName: e.origName, par: pm[normName(e.origName)]?.par ?? [], si: [], rounds: e.holeRounds });
+          addScorecard(normName(e.origName), { tid, playerName: e.origName, par: pm[normName(e.origName)]?.par ?? [], si: [], meters: [], rounds: e.holeRounds });
         all.push({
           n: e.origName, co: e.co,
           r: { [tid]: { p: e.rd.length < maxRds ? null : pos, t: e.t, tp: e.tp, rd: e.rd, ageGroup: esc.nome }},
@@ -460,7 +465,7 @@ function processPullTorneios(d: unknown): AutoRivalPlayer[] {
         grossTotal?: number; toPar?: number;
         roundScores: Array<{
           round: number; gross: number;
-          scores: number[]; pars: number[]; si: number[];
+          scores: number[]; pars: number[]; si: number[]; meters?: number[];
         }>;
       }>;
     }>;
@@ -483,15 +488,17 @@ function processPullTorneios(d: unknown): AutoRivalPlayer[] {
       const t  = player.grossTotal ?? (rd.reduce((a, b) => a + b, 0) || null);
       const p  = player.pos ?? null;
 
-      // Scorecard: use pars/si from first round (consistent across rounds on same course)
+      // Scorecard: use pars/si/meters from first round (consistent across rounds on same course)
       const par = validRounds[0].pars;
       const si  = validRounds[0].si;
+      const meters = validRounds[0].meters ?? [];
       if (par.length === 18) {
         addScorecard(normName(player.name), {
           tid,
           playerName: player.name,
           par,
           si,
+          meters,
           rounds: validRounds.map(rs => rs.scores),
         });
       }
@@ -643,8 +650,7 @@ function processUskidsCompleto(data: unknown): AutoRivalPlayer[] {
     if (!uskTournNames.has(`usk${tcode}`)) {
       const rawName = tourn.name;
       const mo = startParts[0];
-      const MONTHS = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
-      const dateStr = `${MONTHS[(mo - 1) % 12]} ${tournYear}`;
+      const dateStr = `${MONTHS_PT[(mo - 1) % 12]} ${tournYear}`;
       const short = rawName
         .replace(/World Championship/i, "WC")
         .replace(/European Championship/i, "EC")
@@ -751,7 +757,7 @@ function processUskidsCompleto(data: unknown): AutoRivalPlayer[] {
         }
         const c = computed[i];
         addScorecard(normName(c.name), {
-          tid, playerName: c.name, par: c.par, si: [],
+          tid, playerName: c.name, par: c.par, si: [], meters: [],
           rounds: c.rdRaw,
         });
         all.push({
@@ -770,16 +776,39 @@ function processUskidsCompleto(data: unknown): AutoRivalPlayer[] {
 
 export type LoadProgress = { done: number; total: number; label: string };
 
+// Cache da Promise de buildAutoRivals — garante que USKIDSPage e KIDSPage
+// partilham exactamente o mesmo resultado sem re-processar os ~32 ficheiros.
+// Invalidada se buildAutoRivals for chamado com force:true.
+let _autoRivalsCache: Promise<AutoRivalPlayer[]> | null = null;
+
+/** Invalida a cache de rivals (ex: após novo ficheiro copiado para /data/) */
+export function invalidateAutoRivalsCache(): void {
+  _autoRivalsCache = null;
+}
+
 export async function buildAutoRivals(
+  onProgress?: (p: LoadProgress) => void,
+  opts?: { force?: boolean }
+): Promise<AutoRivalPlayer[]> {
+  // Retornar da cache se já foi processado e não há progresso a reportar
+  // (com onProgress o chamador quer acompanhar — recalcula sempre; mas partilha fetches via fetchCache)
+  if (!opts?.force && !onProgress && _autoRivalsCache) {
+    return _autoRivalsCache;
+  }
+
+  _autoRivalsCache = _buildAutoRivalsInternal(onProgress);
+  return _autoRivalsCache;
+}
+
+async function _buildAutoRivalsInternal(
   onProgress?: (p: LoadProgress) => void
 ): Promise<AutoRivalPlayer[]> {
   _scorecards.clear();
   // Re-populate from hardcoded meta (clear + refill)
   uskTournNames.clear();
   for (const [tcode, meta] of Object.entries(USKIDS_TCODE_META as Record<string, { name: string; short: string; dateExact: string }>)) {
-    const MONTHS = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
     const [yr, mo] = meta.dateExact.split("-").map(Number);
-    uskTournNames.set(`usk${tcode}`, { name: meta.name, short: meta.short, date: `${MONTHS[mo - 1]} ${yr}`, dateExact: meta.dateExact });
+    uskTournNames.set(`usk${tcode}`, { name: meta.name, short: meta.short, date: `${MONTHS_PT[mo - 1]} ${yr}`, dateExact: meta.dateExact });
   }
   uskFieldSizes.clear();
 

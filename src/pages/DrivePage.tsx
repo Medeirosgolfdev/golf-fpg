@@ -4,17 +4,23 @@
  *      + multi-round support (R1/R2/Total tabs)
  */
 import React, { useEffect, useState, useMemo, useCallback } from "react";
+import { loadPlayers } from "../data/loader";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from "recharts";
 import { SC, sdClassByHcp } from "../utils/scoreDisplay";
+import { isManuel as _isManuelPrim } from "../ui/tournamentPrimitives";
+import { calcAGS, expectedSD9 } from "../utils/whsCalc";
+import { fmtToPar } from "../utils/format";
 import { isCalUnlocked } from "../utils/authConstants";
-import { resolveFedsInTournaments } from "../utils/playerUtils";
+import { resolveFedsInTournaments , buildEscLookup, resolveEscFromLookup } from "../utils/playerUtils";
 import PasswordGate from "../ui/PasswordGate";
 import KpiCard from "../ui/KpiCard";
 import LoadingState from "../ui/LoadingState";
 import { ScorecardLeaderboard } from "../ui/ScorecardLeaderboard";
 import SexBadge from "../ui/SexBadge";
 import { C } from "../utils/colors";
-import { CrossSeasonTable, SortTh as CSortTh } from "../ui/CrossSeasonTable";
+import { CrossSeasonTable, SortTh as _CSortTh } from "../ui/CrossSeasonTable";
+// Wrapper que aceita style (não incluído nos props originais de SortTh)
+const CSortTh = _CSortTh as React.ComponentType<React.ComponentProps<typeof _CSortTh> & { style?: React.CSSProperties }>;
 import { MultiRoundLeaderboard, type MultiRoundRow as MRRow } from "../ui/MultiRoundLeaderboard";
 import {
   isManuel, fmtTP, tpColor,
@@ -43,6 +49,7 @@ interface Tournament {
   name: string; ccode: string; tcode: string; date: string; campo: string; clube: string;
   series: "tour" | "challenge" | "aquapor"; region: string; escalao: string | null; num: number;
   playerCount: number; players: Player[]; rounds?: number;
+  nholes?: number; par?: number[];
   /** Multi-round grouping metadata (added by expandMultiRound) */
   _multiGroup?: string;       // parent tcode (shared by R1/R2/Total)
   _roundLabel?: string;       // "R1", "R2", "Total"
@@ -211,50 +218,6 @@ const ESCALOES = ["Sub 10", "Sub 12", "Sub 14", "Sub 16", "Sub 18"];
 const regionOf = (id: string) => REGIONS.find((r) => r.id === id);
 
 /* ── WHS Expected 9h SD table ── */
-const EXP9: Record<number, number> = {
-  0:1.2,1:1.7,2:2.2,3:2.8,4:3.3,5:3.8,6:4.3,7:4.8,8:5.4,9:5.9,
-  10:6.4,11:6.9,12:7.4,13:8.0,14:8.5,15:9.0,16:9.5,17:10.0,18:10.6,
-  19:11.1,20:11.6,21:12.2,22:12.7,23:13.2,24:13.7,25:14.2,26:14.8,
-  27:15.3,28:15.8,29:16.3,30:16.8,31:17.4,32:17.9,33:18.4,34:18.9,
-  35:19.4,36:20.0,37:20.5,38:21.0,39:21.5,40:22.0,41:22.6,42:23.1,
-  43:23.6,44:24.1,45:24.6,46:25.2,47:25.7,48:26.2,49:26.7,50:27.2,
-  51:27.8,52:28.3,53:28.8,54:29.3,
-};
-function expectedSD9(hi: number): number {
-  const c = Math.min(54, Math.max(0, hi));
-  const lo = Math.floor(c);
-  const loV = EXP9[lo] ?? (lo * 0.52 + 1.2);
-  const hiV = EXP9[Math.min(lo + 1, 54)] ?? ((lo + 1) * 0.52 + 1.2);
-  return loV + (c - lo) * (hiV - loV);
-}
-
-/* ── AGS: Adjusted Gross Score (Net Double Bogey cap per hole) ── */
-function calcAGS(
-  scores: number[], parArr: number[], si: number[],
-  cr: number, slope: number, hcp: number, nholes: number
-): number {
-  if (!scores.length || !parArr.length || !si.length || scores.length < nholes) {
-    return scores.reduce((a, b) => a + b, 0);
-  }
-  const parT = parArr.reduce((a, b) => a + b, 0);
-  const ch = Math.round(hcp * (slope / 113) + (cr - parT));
-  const siOrder = Array.from({ length: nholes }, (_, i) => i).sort((a, b) => si[a] - si[b]);
-  const strokes = new Array(nholes).fill(0);
-  let rem = Math.max(0, ch);
-  while (rem > 0) {
-    for (const idx of siOrder) {
-      if (rem <= 0) break;
-      strokes[idx]++;
-      rem--;
-    }
-  }
-  let adj = 0;
-  for (let i = 0; i < nholes; i++) {
-    const ndb = parArr[i] + 2 + strokes[i];
-    adj += Math.min(scores[i], ndb);
-  }
-  return adj;
-}
 
 /* ── Helpers ── */
 const fmtDate = (d: string) => {
@@ -356,32 +319,9 @@ function countEvents(ts: Tournament[]): number {
 type EscLookup = Map<string, string>; // fedCode → normalized escalão ("Sub 12")
 
 /** Build global escalão lookup: playersDB → Challenge tournament data */
-function buildEscLookup(playersDB: PlayersDB, allTournaments: Tournament[]): EscLookup {
-  const m = new Map<string, string>();
-  // 1) From playersDB
-  for (const [fed, info] of Object.entries(playersDB)) {
-    if (info.escalao) {
-      m.set(fed, info.escalao.startsWith("Sub") ? info.escalao.replace("-", " ") : info.escalao);
-    }
-  }
-  // 2) From Challenge tournaments (fill gaps)
-  for (const t of allTournaments) {
-    if (t.escalao) {
-      for (const p of t.players) {
-        const fed = p.fed || p.fedCode;
-        if (fed && !m.has(fed)) m.set(fed, t.escalao);
-      }
-    }
-  }
-  return m;
-}
 
-/** Resolve a player's escalão */
-function resolveEsc(p: Player, escLookup: EscLookup): string {
-  const fed = p.fed || p.fedCode;
-  if (fed && escLookup.has(fed)) return escLookup.get(fed)!;
-  return "";
-}
+
+const resolveEsc = (p: Player, escLookup: EscLookup): string => resolveEscFromLookup(p, escLookup);
 
 /** Get available escalões from a set of tournaments (sorted by ESCALOES order) */
 function availEscaloes(tournaments: Tournament[], escLookup: EscLookup): string[] {
@@ -435,7 +375,7 @@ function filterTournByEsc(tournaments: Tournament[], escs: string[], escLookup: 
 }
 
 /** Count unique players matching an escalão across tournaments */
-function uniqueEscPC(ts: Tournament[], esc: string, escLookup: EscLookup): number {
+function _uniqueEscPC(ts: Tournament[], esc: string, escLookup: EscLookup): number {
   const s = new Set<string>();
   for (const t of ts) {
     for (const p of t.players) {
@@ -912,7 +852,7 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
   const grosses = sorted.map((p) => typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : (p.grossTotal as number)).filter((g) => !isNaN(g));
   const avg = grosses.length ? grosses.reduce((a, b) => a + b, 0) / grosses.length : 0;
 
-  const bS = "1px solid var(--border-light, #e5e7eb)";
+  const _bS = "1px solid var(--border-light, #e5e7eb)";
 
   const rows: import("../ui/ScorecardLeaderboard").ScorecardRow[] = sorted.map((p, idx) => {
     const gross = typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : (p.grossTotal as number);
@@ -1166,7 +1106,7 @@ function isSub12(esc: string): boolean {
   const n = esc.toLowerCase().replace(/[\s-]/g, "");
   return n === "sub10" || n === "sub12";
 }
-function computeSDWithSource(p: Player, sdLookup: SDLookup): { sd: number | null; source: "fpg" | "ags" | "raw" | null } {
+function _computeSDWithSource(p: Player, sdLookup: SDLookup): { sd: number | null; source: "fpg" | "ags" | "raw" | null } {
   const fed = p.fed || p.fedCode;
   if (fed && sdLookup[fed] != null) return { sd: sdLookup[fed], source: "fpg" };
   const scores = p.scores || [];
@@ -1372,19 +1312,18 @@ function SdSpan({ sd, hcp }: { sd: number | null; hcp?: number | null }) {
 }
 function ToParSpan({ tp }: { tp: number | null }) {
   if (tp == null) return <span className="c-muted">–</span>;
-  const color = tp < 0 ? SC.danger : tp === 0 ? SC.good : undefined;
-  const s = tp === 0 ? "E" : tp > 0 ? "+" + tp : "" + tp;
-  return <span style={{ fontWeight: 700, fontSize: 11, color }}>{s}</span>;
+  const color = tpColor(tp);
+  return <span style={{ fontWeight: 700, fontSize: 11, color }}>{fmtToPar(tp)}</span>;
 }
 
-const STICKY_NAME_W = 170;
-const STICKY_HCP_W  = 48;
+const _STICKY_NAME_W = 170;
+const _STICKY_HCP_W  = 48;
 const STICKY_BG      = "var(--bg-card)";
 const STICKY_BG_HEAD = "var(--bg-topbar)";
-const stickyBase     = (left: number, isLast?: boolean): React.CSSProperties => ({ position: "sticky", left, zIndex: 2, background: STICKY_BG, ...(isLast ? { borderRight: "2px solid var(--border)", boxShadow: "2px 0 4px rgba(0,0,0,0.06)" } : {}) });
-const stickyHeadBase = (left: number, isLast?: boolean): React.CSSProperties => ({ position: "sticky", left, zIndex: 3, background: STICKY_BG_HEAD, ...(isLast ? { borderRight: "2px solid var(--border)", boxShadow: "2px 0 4px rgba(0,0,0,0.06)" } : {}) });
+const _stickyBase     = (left: number, isLast?: boolean): React.CSSProperties => ({ position: "sticky", left, zIndex: 2, background: STICKY_BG, ...(isLast ? { borderRight: "2px solid var(--border)", boxShadow: "2px 0 4px rgba(0,0,0,0.06)" } : {}) });
+const _stickyHeadBase = (left: number, isLast?: boolean): React.CSSProperties => ({ position: "sticky", left, zIndex: 3, background: STICKY_BG_HEAD, ...(isLast ? { borderRight: "2px solid var(--border)", boxShadow: "2px 0 4px rgba(0,0,0,0.06)" } : {}) });
 
-function TournamentGrid({ rows, allTournaments, onPlayerClick, playersDB, escLookup }: {
+function TournamentGrid({ rows, allTournaments, onPlayerClick, playersDB, escLookup: _escLookup }: {
   rows: Sub12Row[];
   allTournaments: { key: string; short: string; date: string; series: string; campo?: string; nholes?: number }[];
   onPlayerClick: (fed: string) => void;
@@ -1650,7 +1589,7 @@ function EvolutionChart({ rows }: { rows: Sub12Row[] }) {
             <XAxis dataKey="date" tick={{ fontSize: 10 }} />
             <YAxis tick={{ fontSize: 10 }} domain={["dataMin - 2", "dataMax + 2"]} />
             <Tooltip contentStyle={{ background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 6, fontSize: 11 }}
-              formatter={(value: number, name: string) => { const p = top.find(x => x.fed===name); return [value?.toFixed(1), p?.name||name]; }} />
+              formatter={(value: number | undefined, name: string) => { const p = top.find(x => x.fed===name); return [value != null ? value.toFixed(1) : "", p?.name||name]; }} />
             <Legend formatter={(value: string) => { const p = top.find(x => x.fed===value); return <span style={{ fontSize: 10 }}>{p?.name||value}</span>; }} />
             <ReferenceLine y={36} stroke="var(--color-danger)" strokeDasharray="4 4" strokeWidth={1} />
             {top.map((p, i) => (
@@ -1732,7 +1671,7 @@ function DriveContent() {
   useEffect(() => {
     Promise.all([
       fetch("/data/drive-data.json").then(r => { if (!r.ok) throw new Error("drive " + r.status); return r.json(); }),
-      fetch("/data/players.json").then(r => r.ok ? r.json() : {}).catch(() => ({})),
+      loadPlayers().catch(() => ({})),  // fetchCache: partilhado com App.tsx e FPGPage
       fetch("/data/drive-sd-lookup.json").then(r => r.ok ? r.json() : {}).catch(() => ({})),
       fetch("/data/aquapor-data.json").then(r => r.ok ? r.json() : null).catch(() => null),
     ]).then(([dd, pp, sd, aq]) => {
@@ -1758,7 +1697,7 @@ function DriveContent() {
   const tourT    = useMemo(() => data?.tournaments.filter(t => t.series === "tour")      ?? [], [data]);
   const challT   = useMemo(() => data?.tournaments.filter(t => t.series === "challenge") ?? [], [data]);
   const aquaporT = useMemo(() => data?.tournaments.filter(t => t.series === "aquapor")   ?? [], [data]);
-  const escLookup = useMemo(() => buildEscLookup(pdb, data?.tournaments ?? []), [pdb, data]);
+  const escLookup = useMemo(() => buildEscLookup(pdb, (data?.tournaments ?? []) as any), [pdb, data]);
 
   // Sub-12: só calcular quando a tab é activada pela primeira vez
   const [sub12Ready, setSub12Ready] = useState(false);

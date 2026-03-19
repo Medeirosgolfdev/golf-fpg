@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useRef, useCallback } from "react";
+import { MONTHS_PT, fmtSD, fmtToPar } from "../utils/format";
 
 /* ═══════ TYPES ═══════ */
 export type OverlayData = {
@@ -36,8 +37,6 @@ function scBg(d: number): string | null {
   if (d >= 3)   return "#1B4570";
   return null;
 }
-const fvp  = (v: number) => v === 0 ? "E" : v > 0 ? `+${v}` : `${v}`;
-const fSD  = (v: number) => (v > 0 ? "+" : "") + v.toFixed(1);
 const vpC  = (v: number) => { if (v <= -2) return "#d4a017"; if (v === -1) return "#ef4444"; if (v === 0) return "#a3a3a3"; if (v === 1) return "#7eb8e8"; return "#22c55e"; };
 const vpCd = (v: number) => { if (v < 0) return "#16a34a"; if (v === 0) return "#888"; return "#dc2626"; };
 
@@ -130,7 +129,7 @@ function metaStr(d: DD, flags: Partial<Record<string, boolean>>): string {
 function hiChStr(d: DD, v: Vis, _s: Stats): string {
   const p: string[] = [];
   if (v.hiCh && d.hi !== null)   { p.push(`HI ${d.hi.toFixed(1)}`); if (d.courseHcp !== null) p.push(`CH ${d.courseHcp}`); }
-  if (v.sd   && d.sd !== null)   p.push(`SD ${fSD(d.sd)}`);
+  if (v.sd   && d.sd !== null)   p.push(`SD ${fmtSD(d.sd)}`);
   return p.join(" · ");
 }
 
@@ -157,7 +156,7 @@ type P = { d:DD; v:Vis; s:Stats; bg?:string|null; tc?:string; tc2?:string; tc3?:
 function V1({ d, v, s, bg, tc="white", tc2, tc3 }: P) {
   return (
     <div style={{ fontFamily:II, display:"inline-flex", alignItems:"center", gap:8, padding:"6px 12px", borderRadius:20, background:bg||"rgba(0,0,0,.75)", color:tc }}>
-      <span style={{ fontFamily:OS, fontSize:22, fontWeight:900, color:vpC(s.vpT) }}>{fvp(s.vpT)}</span>
+      <span style={{ fontFamily:OS, fontSize:22, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
       <span style={{ fontFamily:OS, fontSize:22, fontWeight:700 }}>{s.sT}</span>
       {v.player&&d.player && <span style={{ fontSize:13, fontWeight:700, color:tc2 }}>{d.player}</span>}
       {(v.course||v.date||v.round) && <span style={{ fontSize:11, color:tc3 }}>{metaStr(d,{course:v.course,date:v.date,round:v.round})}</span>}
@@ -177,7 +176,7 @@ function V2({ d, v, s, bg, tc="white", tc2, tc3 }: P) {
       <div style={{ width:1, background:"rgba(255,255,255,.15)", alignSelf:"stretch" }} />
       <div style={{ display:"flex", alignItems:"baseline", gap:5, flexShrink:0 }}>
         <span style={{ fontFamily:OS, fontSize:34, fontWeight:900, lineHeight:1 }}>{s.sT}</span>
-        <span style={{ fontSize:20, fontWeight:900, color:vpC(s.vpT) }}>{fvp(s.vpT)}</span>
+        <span style={{ fontSize:20, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
       </div>
     </div>
   );
@@ -190,7 +189,7 @@ function V3({ d, v, s, bg, tc="white", tc2, tc3 }: P) {
     <div style={{ display:"flex", alignItems:"center", padding:"5px 12px", gap:8 }}>
       <span style={{ fontSize:10, fontWeight:700, letterSpacing:1, color:tc3, minWidth:40 }}>{lbl}</span>
       <span style={{ fontFamily:OS, fontSize:28, fontWeight:900, lineHeight:1, color:tc, flex:1 }}>{score}</span>
-      <span style={{ fontSize:15, fontWeight:900, color:vpC(vpar) }}>{fvp(vpar)}</span>
+      <span style={{ fontSize:15, fontWeight:900, color:vpC(vpar) }}>{fmtToPar(vpar)}</span>
     </div>
   );
   return (
@@ -211,7 +210,7 @@ function V3({ d, v, s, bg, tc="white", tc2, tc3 }: P) {
       <div style={{ display:"flex", alignItems:"center", padding:"6px 12px", gap:8, background:"rgba(255,255,255,.07)" }}>
         <span style={{ fontSize:10, fontWeight:700, letterSpacing:1, color:tc2, minWidth:40 }}>TOTAL</span>
         <span style={{ fontFamily:OS, fontSize:32, fontWeight:900, lineHeight:1, color:tc, flex:1 }}>{s.sT}</span>
-        <span style={{ fontSize:18, fontWeight:900, color:vpC(s.vpT) }}>{fvp(s.vpT)}</span>
+        <span style={{ fontSize:18, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
       </div>
       {v.stats && <div style={{ padding:"4px 12px", borderTop:"1px solid rgba(255,255,255,.08)" }}><StatsRow st={s.st} tc3={tc3} gap={6} fs={10} /></div>}
     </div>
@@ -226,7 +225,7 @@ function V4({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
       {v.player&&d.player && <div style={{ fontFamily:OS, fontSize:14, fontWeight:700, marginTop:2 }}>{d.player.toUpperCase()}</div>}
       <div style={{ margin:"6px auto", width:90, height:90, borderRadius:"50%", border:`3px solid ${vpC(s.vpT)}`, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center" }}>
         <div style={{ fontFamily:OS, fontSize:34, fontWeight:900, lineHeight:1, letterSpacing:-1 }}>{s.sT}</div>
-        <div style={{ fontSize:16, fontWeight:900, color:vpC(s.vpT) }}>{fvp(s.vpT)}</div>
+        <div style={{ fontSize:16, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</div>
       </div>
       {v.stats && <div style={{ display:"flex", justifyContent:"center", marginTop:4 }}><StatsRow st={s.st} tc3={tc3} gap={8} fs={11} /></div>}
       {(v.date||v.round) && <div style={{ fontSize:10, fontWeight:600, color:tc4, marginTop:4 }}>{metaStr(d,{date:v.date,round:v.round})}</div>}
@@ -247,7 +246,7 @@ function V5({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
       )}
       <div style={{ textAlign:"center", marginBottom:4 }}>
         <div style={{ fontFamily:II, fontSize:48, fontWeight:900, lineHeight:1, letterSpacing:-2 }}>{s.sT}</div>
-        <div style={{ fontFamily:II, fontSize:22, fontWeight:900, color:vpC(s.vpT) }}>{fvp(s.vpT)}</div>
+        <div style={{ fontFamily:II, fontSize:22, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</div>
       </div>
       {v.holeScores && <Grid2 d={d} sz={28} gap={3} nc="#666" />}
       <div style={{ borderTop:"1px dashed rgba(255,255,255,0.2)", paddingTop:6, marginTop:6, fontFamily:II }}>
@@ -272,7 +271,7 @@ function V6({ d, v, s, bg, tc="white", tc2, tc3, tc4 }: P) {
         </div>
         <div style={{ textAlign:"right", flexShrink:0 }}>
           <div style={{ fontFamily:OS, fontSize:36, fontWeight:900, lineHeight:1, letterSpacing:-1 }}>{s.sT}</div>
-          <div style={{ fontSize:18, fontWeight:900, color:vpC(s.vpT) }}>{fvp(s.vpT)}</div>
+          <div style={{ fontSize:18, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</div>
           {v.position&&d.position && <div style={{ fontSize:11, fontWeight:700, color:tc3 }}>{d.position}</div>}
         </div>
       </div>
@@ -303,7 +302,7 @@ function V7({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
       <div style={{ display:"flex", alignItems:"flex-start", gap:8, marginBottom:5 }}>
         <div style={{ display:"flex", alignItems:"baseline", gap:4, flexShrink:0 }}>
           <span style={{ fontFamily:OS, fontSize:36, fontWeight:900, lineHeight:1, letterSpacing:-1 }}>{s.sT}</span>
-          <span style={{ fontSize:20, fontWeight:900, color:vpC(s.vpT) }}>{fvp(s.vpT)}</span>
+          <span style={{ fontSize:20, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
         </div>
         <div style={{ display:"flex", flexDirection:"column", gap:2 }}>
           {v.player&&d.player && <div style={{ fontFamily:OS, fontSize:14, fontWeight:700 }}>{d.player}</div>}
@@ -348,7 +347,7 @@ function V8({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
         </div>
         <div style={{ display:"flex", alignItems:"baseline", gap:5, flexShrink:0 }}>
           <span style={{ fontFamily:OS, fontSize:36, fontWeight:900 }}>{s.sT}</span>
-          <span style={{ fontSize:20, fontWeight:900, color:vpC(s.vpT) }}>{fvp(s.vpT)}</span>
+          <span style={{ fontSize:20, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
         </div>
       </div>
       {v.holeScores && (is18 ? [[0,9],[9,9]] as [number,number][] : [[0,d.scores.length] as [number,number]]).map(([off,len]) => (
@@ -387,7 +386,7 @@ function V9({ d, v, s, bg, tc="white", tc2, tc3, tc4 }: P) {
       </div>
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", background:"rgba(255,255,255,.07)", borderRadius:6, padding:"5px 10px", marginBottom:5 }}>
         <span style={{ fontSize:11, fontWeight:700, color:tc2 }}>To Par</span>
-        <span style={{ fontFamily:OS, fontSize:26, fontWeight:900, color:vpC(s.vpT) }}>{fvp(s.vpT)}</span>
+        <span style={{ fontFamily:OS, fontSize:26, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
       </div>
       {v.holeScores && (is18 ? [[0,9,s.sF],[9,9,s.sB]] as [number,number,number][] : [[0,d.scores.length,s.sT] as [number,number,number]]).map(([off,len,sub]) => (
         <div key={off} style={{ display:"flex", alignItems:"center", marginBottom:2 }}>
@@ -418,7 +417,7 @@ function V10({ d, v, s, bg, tc="white", tc2, tc3, tc4 }: P) {
   return (
     <div style={{ fontFamily:II, width:360, color:tc, background:bg||"rgba(0,0,0,.78)", borderRadius:10, padding:"10px 14px", textAlign:"center" }}>
       <div style={{ fontSize:9, fontWeight:700, letterSpacing:3, color:tc3 }}>TO PAR</div>
-      <div style={{ fontFamily:OS, fontSize:64, fontWeight:900, lineHeight:.9, letterSpacing:-3, margin:"2px 0", color:vpC(s.vpT) }}>{fvp(s.vpT)}</div>
+      <div style={{ fontFamily:OS, fontSize:64, fontWeight:900, lineHeight:.9, letterSpacing:-3, margin:"2px 0", color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</div>
       <div style={{ fontSize:14, fontWeight:700, color:tc2 }}>Gross <span style={{ fontWeight:900, color:tc, fontSize:22 }}>{s.sT}</span></div>
       <div style={{ height:1, background:"rgba(255,255,255,.12)", margin:"6px 0" }} />
       {v.player&&d.player && <div style={{ fontSize:15, fontWeight:900, marginBottom:2 }}>{d.player}</div>}
@@ -441,7 +440,7 @@ function V11({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
         {(v.course||v.tee) && <div style={{ fontFamily:II, fontSize:10, fontWeight:600, color:tc3 }}>{[v.course&&d.course,v.tee&&d.tee].filter(Boolean).join(" · ")}</div>}
         <div style={{ display:"flex", alignItems:"baseline", justifyContent:"center", gap:6, margin:"6px 0 4px" }}>
           <span style={{ fontSize:72, lineHeight:.85, letterSpacing:-3, fontWeight:700 }}>{s.sT}</span>
-          <span style={{ fontSize:32, fontWeight:700, color:vpC(s.vpT) }}>{fvp(s.vpT)}</span>
+          <span style={{ fontSize:32, fontWeight:700, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
         </div>
         <div style={{ fontFamily:II, fontSize:10, fontWeight:700, color:tc3, marginBottom:6 }}>Par {s.pT}{v.date&&d.date?` · ${d.date}`:""}</div>
         {v.holeScores && <div style={{ display:"flex", justifyContent:"center" }}><Grid2 d={d} sz={30} gap={3} nc={tc4} /></div>}
@@ -466,7 +465,7 @@ function V12({ d, v, s, bg, tc="white", tc2, tc3, tc4 }: P) {
         </div>
         <div style={{ textAlign:"right", flexShrink:0 }}>
           <div style={{ fontFamily:OS, fontSize:36, fontWeight:900, lineHeight:1, letterSpacing:-1 }}>{s.sT}</div>
-          <div style={{ fontSize:20, fontWeight:900, color:vpC(s.vpT), marginTop:-1 }}>{fvp(s.vpT)}</div>
+          <div style={{ fontSize:20, fontWeight:900, color:vpC(s.vpT), marginTop:-1 }}>{fmtToPar(s.vpT)}</div>
           {v.position&&d.position && <div style={{ fontSize:11, fontWeight:700, color:tc3 }}>{d.position}</div>}
         </div>
       </div>
@@ -494,7 +493,7 @@ function V13({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
         </div>
       )}
       <div style={{ display:"flex", gap:5, marginBottom:5 }}>
-        <Bx val={s.sT} label="SCORE" big /><Bx val={fvp(s.vpT)} label="VS PAR" c={vpC(s.vpT)} big />
+        <Bx val={s.sT} label="SCORE" big /><Bx val={fmtToPar(s.vpT)} label="VS PAR" c={vpC(s.vpT)} big />
       </div>
       {v.stats && (
         <div style={{ display:"flex", gap:5, marginBottom:5 }}>
@@ -514,7 +513,7 @@ function V14({ d, v, s, bg, tc="white", tc2, tc3, tc4 }: P) {
     <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg, padding:"8px 8px", borderRadius:8 }}>
       <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:5, flexWrap:"wrap" }}>
         <span style={{ fontFamily:OS, fontSize:26, fontWeight:700, lineHeight:1 }}>{s.sT}</span>
-        <span style={{ fontSize:16, fontWeight:900, color:vpC(s.vpT) }}>{fvp(s.vpT)}</span>
+        <span style={{ fontSize:16, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
         {(v.player||v.round) && <span style={{ fontSize:12, fontWeight:700, color:tc2, marginLeft:4 }}>{[v.player&&d.player,v.round&&`R${d.round}`].filter(Boolean).join(" · ")}</span>}
       </div>
       {(v.course||v.date||v.tee) && <div style={{ fontSize:10, fontWeight:600, color:tc3, marginBottom:4 }}>{metaStr(d,{course:v.course,date:v.date,tee:v.tee})}</div>}
@@ -555,7 +554,7 @@ function V15({ d, v, s }: P) {
         </div>
         <div style={{ display:"flex", flexDirection:"column", alignItems:"flex-end", flexShrink:0 }}>
           <div style={{ fontFamily:OS, fontSize:28, fontWeight:700, color:"#fff", lineHeight:1 }}>{s.sT}</div>
-          <div style={{ fontSize:15, fontWeight:900, color:vpC(s.vpT) }}>{fvp(s.vpT)}</div>
+          <div style={{ fontSize:15, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</div>
         </div>
       </div>
       {v.holeScores && (is18 ? [[0,9,s.sF,s.pF,"Out"],[9,9,s.sB,s.pB,"In"]] as [number,number,number,number,string][] : [[0,d.scores.length,s.sT,s.pT,"Tot"] as [number,number,number,number,string]]).map(([off,len,sub,subP,lbl],ri) => (
@@ -625,7 +624,7 @@ function V16({ d, v, s }: P) {
         {v.player&&d.player ? <div style={{ fontSize:14, fontWeight:900, color:"#111" }}>{d.player}</div> : <div />}
         <div style={{ display:"flex", alignItems:"baseline", gap:4 }}>
           <span style={{ fontFamily:OS, fontSize:28, fontWeight:900, color:"#111" }}>{s.sT}</span>
-          <span style={{ fontSize:18, fontWeight:900, color:vpCd(s.vpT) }}>{fvp(s.vpT)}</span>
+          <span style={{ fontSize:18, fontWeight:900, color:vpCd(s.vpT) }}>{fmtToPar(s.vpT)}</span>
         </div>
       </div>
     </div>
@@ -674,7 +673,7 @@ function V17({ d, v, s, bg, tc="white", tc2, tc3, tc4 }: P) {
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginTop:6, padding:"4px 8px", background:"rgba(255,255,255,.07)", borderRadius:8, gap:8 }}>
         <div style={{ display:"flex", alignItems:"baseline", gap:5, flexShrink:0 }}>
           <span style={{ fontFamily:OS, fontSize:28, fontWeight:900, letterSpacing:-1 }}>{s.sT}</span>
-          <span style={{ fontSize:16, fontWeight:900, color:vpC(s.vpT) }}>{fvp(s.vpT)}</span>
+          <span style={{ fontSize:16, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
         </div>
         <div style={{ display:"flex", flexDirection:"column", alignItems:"flex-end", gap:2 }}>
           {v.player&&d.player && <div style={{ fontSize:13, fontWeight:900 }}>{d.player}</div>}
@@ -701,7 +700,7 @@ function V18({ d, v, s, bg, tc="white", tc2, tc3, tc4 }: P) {
         </div>
         <div style={{ display:"flex", alignItems:"baseline", gap:4, flexShrink:0 }}>
           <span style={{ fontFamily:OS, fontSize:30, fontWeight:900 }}>{s.sT}</span>
-          <span style={{ fontSize:18, fontWeight:900, color:vpC(s.vpT) }}>{fvp(s.vpT)}</span>
+          <span style={{ fontSize:18, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
         </div>
       </div>
       {v.holeScores && (is18 ? [[0,"Out",s.sF,s.pF],[9,"In",s.sB,s.pB]] as [number,string,number,number][] : [[0,"Tot",s.sT,s.pT] as [number,string,number,number]]).map(([off,label,sub,subP],ri) => {
@@ -762,7 +761,7 @@ function V19({ d, v, s, bg, tc="white", tc3 }: P) {
       )}
       <div style={{ background:"rgba(255,255,255,.95)", padding:"5px 10px", textAlign:"center" }}>
         <div style={{ fontFamily:OS, fontSize:38, fontWeight:700, lineHeight:1, color:"#0d1e38" }}>{s.sT}</div>
-        <div style={{ fontFamily:II, fontSize:20, fontWeight:900, color:vpCd(s.vpT), marginTop:-2 }}>{fvp(s.vpT)}</div>
+        <div style={{ fontFamily:II, fontSize:20, fontWeight:900, color:vpCd(s.vpT), marginTop:-2 }}>{fmtToPar(s.vpT)}</div>
       </div>
       {(v.course||v.tee||v.date) && (
         <div style={{ fontFamily:II, padding:"4px 10px 8px", fontSize:10, fontWeight:600, color:tc3, textAlign:"center", lineHeight:1.8 }}>
@@ -801,7 +800,7 @@ function V20({ d, v, s, bg, tc="white", tc3 }: P) {
       <div style={{ background:"rgba(255,255,255,.07)", padding:"5px 10px", textAlign:"center" }}>
         <div style={{ display:"flex", alignItems:"baseline", justifyContent:"center", gap:5 }}>
           <span style={{ fontSize:30, lineHeight:1 }}>{s.sT}</span>
-          <span style={{ fontFamily:II, fontSize:16, fontWeight:900, color:vpC(s.vpT) }}>{fvp(s.vpT)}</span>
+          <span style={{ fontFamily:II, fontSize:16, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
         </div>
         {v.stats && <div style={{ display:"flex", justifyContent:"center", marginTop:4 }}><StatsRow st={s.st} tc3={tc3} gap={8} fs={11} /></div>}
       </div>
@@ -830,7 +829,7 @@ function V21({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
       )}
       <div style={{ position:"relative", display:"inline-block", margin:"4px 0" }}>
         <div style={{ fontFamily:OS, fontSize:88, fontWeight:900, letterSpacing:-4, lineHeight:1, color:tc }}>{s.sT}</div>
-        <div style={{ fontFamily:II, position:"absolute", top:4, right:-36, fontSize:28, fontWeight:900, color:vpC(s.vpT) }}>{fvp(s.vpT)}</div>
+        <div style={{ fontFamily:II, position:"absolute", top:4, right:-36, fontSize:28, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</div>
       </div>
       {v.holeScores && (
         <div style={{ display:"flex", alignItems:"flex-start" }}>
@@ -907,8 +906,7 @@ export default function OverlayExport({ data, inline }: { data: OverlayData; inl
   const [date,        setDate]        = useState(() => {
     if (data.date) return data.date;
     const n = new Date();
-    const m = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
-    return `${n.getDate()} ${m[n.getMonth()]} ${n.getFullYear()}`;
+    return `${n.getDate()} ${MONTHS_PT[n.getMonth()]} ${n.getFullYear()}`;
   });
   const [position,    setPosition]    = useState(data.position || "");
   const [vis,         setVis]         = useState<Vis>(defaultVis);

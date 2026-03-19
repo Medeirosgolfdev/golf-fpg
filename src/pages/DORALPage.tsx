@@ -4,8 +4,12 @@
  * Boys 8-9: 9 buracos (H10-H18) · Boys 10-11 / 12-13: 18 buracos
  */
 import React, { useEffect, useState } from "react";
+import { cachedFetch } from "../data/fetchCache";
 import { scClass, SC } from "../utils/scoreDisplay";
-import { fmtToPar } from "../utils/format";
+import { tpColor, isManuel } from "../ui/tournamentPrimitives";
+import { gf } from "../utils/flagUtils";
+const isM = (name: string) => isManuel({ name });
+import { fmtToPar, norm } from "../utils/format";
 import { isCalUnlocked } from "../utils/authConstants";
 import PasswordGate from "../ui/PasswordGate";
 import LoadingState from "../ui/LoadingState";
@@ -86,29 +90,6 @@ const DATA_FILES: { url: string; sourceUrl: string }[] = [
   },
 ];
 
-/* ── Flags ──────────────────────────────────────────────────── */
-const FL: Record<string, string> = {
-  Portugal:"🇵🇹",England:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",Inglaterra:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",France:"🇫🇷",França:"🇫🇷",
-  Spain:"🇪🇸",Espanha:"🇪🇸",Germany:"🇩🇪",Alemanha:"🇩🇪",Italy:"🇮🇹",Itália:"🇮🇹",
-  "United States":"🇺🇸","Estados Unidos":"🇺🇸",Canada:"🇨🇦",Canadá:"🇨🇦",
-  Brazil:"🇧🇷",Brasil:"🇧🇷","Colombia":"🇨🇴","Colômbia":"🇨🇴","Mexico":"🇲🇽","México":"🇲🇽",
-  "Puerto Rico":"🇵🇷","Porto Rico":"🇵🇷","Costa Rica":"🇨🇷",Chile:"🇨🇱",Peru:"🇵🇪",
-  Argentina:"🇦🇷","Dominican Republic":"🇩🇴",Venezuela:"🇻🇪",Panama:"🇵🇦",
-  China:"🇨🇳",Japan:"🇯🇵",Japão:"🇯🇵",Korea:"🇰🇷","South Korea":"🇰🇷",Thailand:"🇹🇭",
-  Tailândia:"🇹🇭",Vietnam:"🇻🇳","Viet Nam":"🇻🇳",Philippines:"🇵🇭",Filipinas:"🇵🇭",
-  India:"🇮🇳",Índia:"🇮🇳",Singapore:"🇸🇬",Singapura:"🇸🇬","Hong Kong":"🇭🇰",
-  Australia:"🇦🇺",Austrália:"🇦🇺","New Zealand":"🇳🇿","Nova Zelândia":"🇳🇿",
-  Sweden:"🇸🇪",Suécia:"🇸🇪",Norway:"🇳🇴",Noruega:"🇳🇴",Denmark:"🇩🇰",Dinamarca:"🇩🇰",
-  Netherlands:"🇳🇱",Holanda:"🇳🇱",Belgium:"🇧🇪",Bélgica:"🇧🇪",Switzerland:"🇨🇭",Suíça:"🇨🇭",
-  Austria:"🇦🇹",Áustria:"🇦🇹",Poland:"🇵🇱",Polónia:"🇵🇱","Czech Republic":"🇨🇿",
-  "República Checa":"🇨🇿",Hungary:"🇭🇺",Hungria:"🇭🇺",Romania:"🇷🇴",Roménia:"🇷🇴",
-  Scotland:"🏴󠁧󠁢󠁳󠁣󠁴󠁿",Escócia:"🏴󠁧󠁢󠁳󠁣󠁴󠁿",Wales:"🏴󠁧󠁢󠁷󠁬󠁳󠁿",Gales:"🏴󠁧󠁢󠁷󠁬󠁳󠁿",
-  Ireland:"🇮🇪",Irlanda:"🇮🇪","South Africa":"🇿🇦","África do Sul":"🇿🇦",
-  Morocco:"🇲🇦",Marrocos:"🇲🇦",Nigeria:"🇳🇬",Nigéria:"🇳🇬",
-  "United Arab Emirates":"🇦🇪","Emirados Árabes":"🇦🇪",Turkey:"🇹🇷",Turquia:"🇹🇷",
-  Russia:"🇷🇺","Russian Federation":"🇷🇺","Federação Russa":"🇷🇺",Ukraine:"🇺🇦",Ucrânia:"🇺🇦",
-};
-const gf = (co: string) => FL[co] ?? "🏳️";
 
 /* ── Metadados por divisão: campo, CR/Slope, metros por buraco ── */
 interface DivMeta { course: string; cr?: number; slope?: number; metres: number[]; metresF9?: number; metresB9?: number; metresTotal: number }
@@ -144,10 +125,6 @@ function normalizeName(raw: string): string {
 }
 
 /** Manuel Medeiros — mesmo critério que BJGTPage */
-const isM = (n: string) =>
-  n.toLowerCase().includes("manuel") &&
-  (n.toLowerCase().includes("medeiros") || n.toLowerCase().includes("francisco"));
-
 /** Ano de graduação → ano de nascimento real (graduação aos 18 anos) */
 const gradToBirth = (gradYear: number) => gradYear - 18;
 
@@ -216,8 +193,6 @@ function buildEvo(cur: Entry, all: Entry[]): Map<string, EvoEntry> {
   const prevEntries = all.filter(e => e.year === prevYear);
   if (!prevEntries.length) return evo;
 
-  const norm = (n: string) => n.toLowerCase().replace(/\s+/g, " ").trim();
-
   for (const p of cur.players) {
     if (!p.total) continue;
     for (const prev of prevEntries) {
@@ -225,7 +200,7 @@ function buildEvo(cur: Entry, all: Entry[]): Map<string, EvoEntry> {
         const n1 = norm(p.name), n2 = norm(q.name);
         return n1 === n2 ||
           (n1.split(" ")[0] === n2.split(" ")[0] &&
-           n1.split(" ").at(-1) === n2.split(" ").at(-1));
+           n1.split(" ")[n1.split(" ").length - 1] === n2.split(" ")[n2.split(" ").length - 1]);
       });
       if (!match?.total) continue;
       const nR = Math.max(...prev.players.map(q => q.rounds.length));
@@ -311,7 +286,7 @@ function AccLB({ entry, evo }: { entry: Entry; evo?: Map<string, EvoEntry> }) {
                     <td style={{ textAlign:"center", fontSize:10, padding:"0 1px" }} className="c-muted">–</td>
                   </React.Fragment>);
                   const rdTp = parTotal > 0 ? r.gross - parTotal : null;
-                  const c = rdTp != null ? (rdTp < 0 ? SC.danger : rdTp === 0 ? SC.good : "var(--text-3)") : "var(--text-3)";
+                  const c = tpColor(rdTp);
                   return (<React.Fragment key={i}>
                     <td style={{ textAlign:"center", fontSize:12, fontWeight:600, padding:"0 1px" }}>{r.gross}</td>
                     <td style={{ textAlign:"center", fontSize:10, fontWeight:600, padding:"0 1px", color: c }}>
@@ -322,7 +297,7 @@ function AccLB({ entry, evo }: { entry: Entry; evo?: Map<string, EvoEntry> }) {
                 <td className="col-total fw-800" style={{ fontSize:13, padding:"0 3px" }}>{p.total ?? "–"}</td>
                 <td className="fw-700" style={{
                   textAlign:"center", fontSize:12, padding:"0 3px",
-                  color: tp != null && tp < 0 ? SC.danger : tp === 0 ? SC.good : "var(--text-3)",
+                  color: tpColor(tp),
                 }}>
                   {tp != null ? fmtToPar(tp) : "–"}
                 </td>
@@ -404,7 +379,7 @@ function SCTable9H({ entry, ri }: { entry: Entry; ri: number }) {
                   {gf(p.country)} {p.name.length > 22 ? p.name.substring(0,20)+"…" : p.name}
                 </td>
                 <td className="col-total fw-700">{r.gross}</td>
-                <td className="fw-700" style={{ fontSize:11, color: tp != null && tp < 0 ? SC.danger : tp === 0 ? SC.good : "var(--text-3)" }}>
+                <td className="fw-700" style={{ fontSize:11, color: tpColor(tp) }}>
                   {tp != null ? fmtToPar(tp) : "–"}
                 </td>
                 {r.scores.map((sc, i) => (
@@ -485,7 +460,7 @@ function SCTable18H({ entry, ri }: { entry: Entry; ri: number }) {
                   {gf(p.country)} {p.name.length > 22 ? p.name.substring(0,20)+"…" : p.name}
                 </td>
                 <td className="col-total fw-700">{r.gross}</td>
-                <td className="fw-700" style={{ fontSize:11, color: tp != null && tp < 0 ? SC.danger : tp === 0 ? SC.good : "var(--text-3)" }}>
+                <td className="fw-700" style={{ fontSize:11, color: tpColor(tp) }}>
                   {tp != null ? fmtToPar(tp) : "–"}
                 </td>
                 {r.scores.slice(0,9).map((sc,i) => (
@@ -594,7 +569,7 @@ function Content() {
     Promise.all(
       DATA_FILES.map(async ({ url, sourceUrl }) => {
         try {
-          const res = await fetch(url);
+          const res = await cachedFetch(url);  // fetchCache: partilhado com KIDSdataLoader
           if (!res.ok) return [] as Entry[];
           const raw: RawGG = await res.json();
           return normalizeFile(raw, sourceUrl);

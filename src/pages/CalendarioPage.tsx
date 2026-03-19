@@ -19,6 +19,7 @@ import { useAppContext } from "../context/AppContext";
 import { isCalUnlocked } from "../utils/authConstants";
 import { clickableA11y } from "../utils/a11y";
 import { norm } from "../utils/format";
+import { MONTHS_PT as MONTHS_SHORT } from "../utils/format";
 import PasswordGate from "../ui/PasswordGate";
 
 /* ═══ Types ═══ */
@@ -322,7 +323,6 @@ const MONTHS_PT = [
   "Janeiro","Fevereiro","Março","Abril","Maio","Junho",
   "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro",
 ];
-const MONTHS_SHORT = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
 function monthLabel(m: number) { return `${MONTHS_PT[m]} (${String(m + 1).padStart(2, "0")})`; }
 const DAYS_SHORT = ["S","T","Q","Q","S","S","D"];
 const DAYS_PT = ["Seg","Ter","Qua","Qui","Sex","Sáb","Dom"];

@@ -35,6 +35,7 @@ import SexBadge from "./SexBadge";
 import { getTeeHex, teeBorder } from "../utils/teeColors";
 import { sdClassByHcp } from "../utils/scoreDisplay";
 import { C } from "../utils/colors";
+import { fmtToPar } from "../utils/format";
 
 /* ─── Constante do jogador especial ─── */
 export const MANUEL_FED = "52884";
@@ -47,17 +48,14 @@ export function isManuel(p: { name?: string; fed?: string; fedCode?: string }): 
 }
 
 /* ─── Formatação to-par ─── */
-export function fmtTP(v: number | null | undefined): string {
-  if (v == null || !Number.isFinite(v)) return "–";
-  if (v === 0) return "E";
-  return v > 0 ? `+${v}` : `${v}`;
-}
+/** @deprecated Usa fmtToPar de utils/format. Mantido por compatibilidade. */
+export const fmtTP = (v: number | null | undefined): string => fmtToPar(v, "–");
 
 export function tpColor(v: number | null | undefined): string | undefined {
   if (v == null) return undefined;
-  if (v < 0) return "var(--color-danger)";
-  if (v === 0) return "var(--color-good)";
-  return undefined;
+  if (v < 0) return "var(--color-good)";   // abaixo do par → bom
+  if (v > 0) return "var(--color-danger)"; // acima do par → mau
+  return undefined;                         // par (E) → neutro
 }
 
 /* ─── Escalão pill ─── */

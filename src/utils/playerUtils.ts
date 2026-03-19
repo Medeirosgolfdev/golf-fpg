@@ -133,3 +133,41 @@ export function resolveFedsInTournaments(
   if (resolved > 0) console.log(`[resolveFedsInTournaments] Resolved ${resolved} feds by name`);
   return resolved;
 }
+
+/* ── Escalão lookup ── */
+
+export type EscLookup = Map<string, string>;
+
+/** Constrói mapa fed → escalão a partir de playersDB e opcionalmente de torneios */
+export function buildEscLookup(
+  playersDB: Record<string, { escalao?: string }>,
+  allTournaments?: { escalao?: string; players: { fed?: string; fedCode?: string }[] }[]
+): EscLookup {
+  const m: EscLookup = new Map();
+  for (const [fed, info] of Object.entries(playersDB)) {
+    if (info.escalao) {
+      m.set(fed, info.escalao.startsWith("Sub") ? info.escalao.replace("-", " ") : info.escalao);
+    }
+  }
+  if (allTournaments) {
+    for (const t of allTournaments) {
+      if (t.escalao) {
+        for (const p of t.players) {
+          const fed = p.fed || p.fedCode;
+          if (fed && !m.has(fed)) m.set(fed, t.escalao);
+        }
+      }
+    }
+  }
+  return m;
+}
+
+/** Resolve escalão de um jogador via lookup */
+export function resolveEscFromLookup(
+  p: { fed?: string; fedCode?: string },
+  escLookup: EscLookup
+): string {
+  const fed = (p as any).fed || (p as any).fedCode;
+  if (fed && escLookup.has(fed)) return escLookup.get(fed)!;
+  return "";
+}

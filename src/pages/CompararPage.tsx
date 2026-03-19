@@ -29,7 +29,7 @@ import { clubShort, hcpDisplay } from "../utils/playerUtils";
 import { deepFixMojibake } from "../utils/fixEncoding";
 import { sc3m, sc3, SC } from "../utils/scoreDisplay";
 import { isTournamentRound } from "../utils/roundFilters";
-import { calcCourseHcp, calcPlayingHcp } from "../utils/whsCalc";
+import { calcCourseHcp, calcPlayingHcp , expectedSD9, calcStrokesPerHole, get9hRatings } from "../utils/whsCalc";
 import { sortTees, teeHexFromTee } from "../utils/teeUtils";
 import { textOnColor } from "../utils/teeColors";
 import SectionErrorBoundary from "../ui/SectionErrorBoundary";
@@ -361,42 +361,8 @@ function PlayerSearch({ players, slots, statsDb, onAdd, onRemove }: {
 /* ═══════════════════ § 0 PREPARAR RONDA ═══════════════════ */
 
 /** WHS 2024 — Expected 9h Score Differential (igual ao SimuladorPage) */
-function expectedSD9(hi: number): number {
-  const table: Record<number, number> = {
-    0: 1.2, 1: 1.7, 2: 2.2, 3: 2.8, 4: 3.3, 5: 3.8,
-    6: 4.3, 7: 4.8, 8: 5.4, 9: 5.9, 10: 6.4, 11: 6.9,
-    12: 7.4, 13: 8.0, 14: 8.5, 15: 9.0, 16: 9.5, 17: 10.0,
-    18: 10.6, 19: 11.1, 20: 11.6, 21: 12.2, 22: 12.7, 23: 13.2,
-    24: 13.7, 25: 14.2, 26: 14.8, 27: 15.3, 28: 15.8, 29: 16.3,
-    30: 16.8, 31: 17.4, 32: 17.9, 33: 18.4, 34: 18.9, 35: 19.4,
-    36: 20.0, 37: 20.5, 38: 21.0, 39: 21.5, 40: 22.0,
-  };
-  const clamped = Math.min(40, Math.max(0, hi));
-  const lo = Math.floor(clamped);
-  const loVal = table[lo] ?? (lo * 0.52 + 1.2);
-  const hiVal = table[Math.min(lo + 1, 40)] ?? ((lo + 1) * 0.52 + 1.2);
-  return loVal + (clamped - lo) * (hiVal - loVal);
-}
 
-/** Replicação exacta de calcStrokesPerHole do SimuladorPage */
-function calcStrokesPerHole(holes: { hole: number; par: number; si: number }[], ch: number) {
-  return holes.map(h => {
-    const si = h.si;
-    let strokes = 0;
-    if (si <= Math.min(ch, 18)) strokes++;
-    if (ch > 18 && si <= Math.min(ch - 18, 18)) strokes++;
-    if (ch > 36 && si <= Math.min(ch - 36, 18)) strokes++;
-    return { ...h, strokes, maxScore: h.par + 2 + strokes };
-  });
-}
 
-/** Extrai ratings de 9 buracos do tee — igual ao get9hRatings do SimuladorPage */
-function get9hRatings(tee: Tee, nine: "front9" | "back9") {
-  const key = nine === "front9" ? "holes9Front" : "holes9Back";
-  const r = tee.ratings?.[key];
-  if (!r?.courseRating || !r?.slopeRating) return null;
-  return { cr: r.courseRating, slope: r.slopeRating, par: r.par ?? 36 };
-}
 
 function RoundPrepSection({ slots }: { slots: Slot[] }) {
   const { simCourses } = useAppContext();

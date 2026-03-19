@@ -81,3 +81,62 @@ export function linearSlopeXY(pts: { x: number; y: number }[]): number | null {
   const d = n * sxx - sx * sx;
   return d === 0 ? null : (n * sxy - sx * sy) / d;
 }
+
+/** Classifica score numa escala de performance relativa (z-score vs stats do grupo) */
+export function zTier(
+  score: number | null | undefined,
+  stats: { m: number; s: number } | null | undefined
+): "elite" | "strong" | "solid" | "developing" | "beginner" | null {
+  if (score == null || !stats || stats.s === 0) return null;
+  const z = (score - stats.m) / (stats.s || 1);
+  if (z <= -1.2) return "elite";
+  if (z <= -0.4) return "strong";
+  if (z <= 0.4) return "solid";
+  if (z <= 1.2) return "developing";
+  return "beginner";
+}
+
+/** Classifica tendência de resultados (slope da regressão linear) */
+export function getTrend(
+  p: { r: Record<string, { rd: number[] }> }
+): "up" | "down" | "stable" {
+  const rounds: number[] = [];
+  for (const res of Object.values(p.r)) {
+    for (const rd of res.rd) if (rd > 0) rounds.push(rd);
+  }
+  if (rounds.length < 3) return "stable";
+  const n = rounds.length;
+  let sx = 0, sy = 0, sxy = 0, sx2 = 0;
+  for (let i = 0; i < n; i++) { sx += i; sy += rounds[i]; sxy += i * rounds[i]; sx2 += i * i; }
+  const d = n * sx2 - sx * sx;
+  const slope = d === 0 ? 0 : (n * sxy - sx * sy) / d;
+  if (slope < -0.3) return "up";
+  if (slope > 0.3) return "down";
+  return "stable";
+}
+
+/** Média z-score de todos os resultados de um jogador */
+export function getAvgZ(
+  p: { r: Record<string, { rd: number[]; t?: number | null }> },
+  stats: { m: number; s: number } | null | undefined
+): number | null {
+  if (!stats || stats.s === 0) return null;
+  const zs: number[] = [];
+  for (const res of Object.values(p.r)) {
+    for (const rd of res.rd) {
+      if (rd > 0) zs.push((rd - stats.m) / stats.s);
+    }
+  }
+  return zs.length ? zs.reduce((a, b) => a + b, 0) / zs.length : null;
+}
+
+/** Toggle de valor num array — adiciona se ausente, remove se presente */
+export function toggleArr<T>(arr: T[], v: T): T[] {
+  return arr.includes(v) ? arr.filter(x => x !== v) : [...arr, v];
+}
+
+/** Formata percentagem: 0.752 → "75%"  ou  count/total → "75%" */
+export function pct(v: number, total?: number): string {
+  const val = total != null ? (v / total) * 100 : v * 100;
+  return val.toFixed(0) + "%";
+}

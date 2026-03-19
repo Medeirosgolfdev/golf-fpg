@@ -5,20 +5,22 @@
  * em torneios internacionais.
  */
 import React, { useMemo, useState } from "react";
-import { fmtToPar, fmtSign } from "../utils/format";
-import { linearSlopeXY } from "../utils/mathUtils";
+import { useNavigate, useLocation } from "react-router-dom";
+import { fmtToPar, fmtSign, MONTHS_PT } from "../utils/format";
+import { FL } from "../utils/flagUtils";
+import { zTier, getTrend, getAvgZ } from "../utils/mathUtils";
 import { scClass, toParClass, sc3m, SC, tpColorDark } from "../utils/scoreDisplay";
 import { isCalUnlocked } from "../utils/authConstants";
 import PasswordGate from "../ui/PasswordGate";
 import EmptyState from "../ui/EmptyState";
-import KpiCard from "../ui/KpiCard";
 import { buildAutoRivals, normName, getScorecards, uskTournNames, uskFieldSizes } from "./KIDSdataLoader";
+import { FIELD_2025, VP_PAR, VP_SI, VP_M, VP_WJGC26_PAR, VP_WJGC26_SI, VP_WJGC26_M, VP_ALFERINI_PAR, VP_ALFERINI_SI, VP_ALFERINI_M, LT_FORET_PAR, LT_FORET_SI, LT_FORET_M, VENICE_M, MS_USKIDS_M_B1011, MS_USKIDS_M_B12, DORAL_GP_M_B1011, DORAL_SF_M_B1213, TIER, FIELD_CARDS } from "../data/rivalData";
 
 
 /* ═══════════════════════════════════
    TYPES
    ═══════════════════════════════════ */
-interface TournResult { p: number; t: number; tp: number; rd: number[] }
+interface TournResult { p: number | "WD"; t: number | null; tp: number | null; rd: (number | null)[] }
 interface RivalPlayer {
   n: string;
   co: string;
@@ -45,104 +47,23 @@ function ageLabel(ageMin?: number, ageMax?: number): string | null {
   return `Boys ${ageMin}-${ageMax}`;
 }
 
-/** Shape of a single hole sample for distance-band analysis */
-interface HoleSample { ds: number; par: number; meters: number | null; gross: number }
-
-/** Shape of a distance band definition */
-interface BandDef { par: number; minM: number; maxM: number; label: string }
-
-/** Filtered band result */
-interface FilteredBand { label: string; n: number; avg: number; pob: number; dbl: number; allAvg?: number; allN?: number; col?: string }
-
-/** Monthly stats entry */
-interface MonthStat {
-  key: string; label: string; avgGross: number; n: number;
-  grossStdDev: number; avgSD?: number; parOrBetter: number; doubleOrWorse: number;
-  bounceRate: number | null; bestRound?: number;
-  birdieRate?: number; bestStreak?: number;
-  first3VsPar?: number; last3VsPar?: number;
-  last3Avg?: number;
-}
-
-/** Coach monthly entry */
-interface CoachMonth { key: string; label: string; avgGross: number; n: number; grossStdDev: number }
-
 /** Round average entry */
 type RoundAvg = { m: number; s: number } | null;
+
+/* ── Member History (USKids) types ── */
+interface MHTournRound { gross: number }
+interface MHTournament {
+  name: string; ageGroup: string; place: number;
+  totalStrokes: number; rounds: Record<string, MHTournRound>;
+  par?: number[]; startDate?: string;
+}
+interface MHPlayer { memberId: string; name: string; torneios: Record<string, MHTournament & { tid?: string }> }
+interface MHData { jogadores: Record<string, MHPlayer> }
 
 /* ═══════════════════════════════════
    CONFIG
    ═══════════════════════════════════ */
-const PLAYER_FED = "52884";
-const PLAYER_NAME = "Manuel";
-const COURSE_KEYWORDS = ["villa padierna", "flamingos"];
-const TOURN = {
-  name: "Daily Mail World Junior Golf Championship",
-  dates: "24–27 Fev 2026",
-  days: 3,
-  location: "Villa Padierna — Flamingos Golf Club",
-  city: "Málaga, Espanha",
-};
 
-const FIELD_2025 = {
-  nPlayers: 12, nRounds: 36, fieldAvg: 78.3, top5Avg: 73.0, top10Avg: 75.5,
-  winner: { name: "Dmitrii Elchaninov", total: 205, result: -8 },
-  holes: [
-    { h:1,  par:5, fAvg:5.81, t5:5.33, fDbl:25.0, t5Dbl:13.3, fPob:44.4, t5Pob:66.7 },
-    { h:2,  par:3, fAvg:3.11, t5:2.87, fDbl:0.0,  t5Dbl:0.0,  fPob:72.2, t5Pob:93.3 },
-    { h:3,  par:4, fAvg:4.39, t5:4.00, fDbl:13.9, t5Dbl:0.0,  fPob:63.9, t5Pob:73.3 },
-    { h:4,  par:3, fAvg:3.44, t5:3.53, fDbl:5.6,  t5Dbl:6.7,  fPob:52.8, t5Pob:46.7 },
-    { h:5,  par:4, fAvg:4.17, t5:3.87, fDbl:8.3,  t5Dbl:0.0,  fPob:72.2, t5Pob:86.7 },
-    { h:6,  par:5, fAvg:5.28, t5:5.00, fDbl:8.3,  t5Dbl:0.0,  fPob:66.7, t5Pob:73.3 },
-    { h:7,  par:4, fAvg:4.14, t5:3.87, fDbl:5.6,  t5Dbl:0.0,  fPob:77.8, t5Pob:93.3 },
-    { h:8,  par:3, fAvg:3.39, t5:3.00, fDbl:13.9, t5Dbl:0.0,  fPob:66.7, t5Pob:86.7 },
-    { h:9,  par:4, fAvg:4.44, t5:4.20, fDbl:11.1, t5Dbl:6.7,  fPob:63.9, t5Pob:80.0 },
-    { h:10, par:4, fAvg:4.89, t5:4.53, fDbl:25.0, t5Dbl:6.7,  fPob:44.4, t5Pob:66.7 },
-    { h:11, par:5, fAvg:5.42, t5:5.20, fDbl:5.6,  t5Dbl:0.0,  fPob:52.8, t5Pob:60.0 },
-    { h:12, par:3, fAvg:3.44, t5:3.27, fDbl:5.6,  t5Dbl:0.0,  fPob:58.3, t5Pob:66.7 },
-    { h:13, par:4, fAvg:4.47, t5:4.27, fDbl:13.9, t5Dbl:6.7,  fPob:52.8, t5Pob:60.0 },
-    { h:14, par:4, fAvg:4.22, t5:3.93, fDbl:11.1, t5Dbl:6.7,  fPob:69.4, t5Pob:86.7 },
-    { h:15, par:5, fAvg:5.50, t5:5.07, fDbl:13.9, t5Dbl:6.7,  fPob:61.1, t5Pob:80.0 },
-    { h:16, par:3, fAvg:3.28, t5:3.13, fDbl:11.1, t5Dbl:13.3, fPob:72.2, t5Pob:86.7 },
-    { h:17, par:4, fAvg:4.19, t5:3.67, fDbl:5.6,  t5Dbl:0.0,  fPob:72.2, t5Pob:86.7 },
-    { h:18, par:4, fAvg:4.69, t5:4.27, fDbl:16.7, t5Dbl:6.7,  fPob:41.7, t5Pob:60.0 },
-  ],
-  /* Difficulty rank: hardest first */
-  diffRank: [10,1,18,15,13,9,4,12,11,8,3,6,16,14,17,5,7,2],
-  leaderboard: [
-    { name:"Dmitrii Elchaninov", pos:1, country:"🇷🇺", total:205, result:-8, rounds:[68,69,68], best:68 },
-    { name:"Marcus Karim", pos:2, country:"🏴󠁧󠁢󠁥󠁮󠁧󠁿", total:218, result:5, rounds:[74,73,71], best:71 },
-    { name:"Harrison Barnett", pos:3, country:"🏴󠁧󠁢󠁥󠁮󠁧󠁿", total:220, result:7, rounds:[77,71,72], best:71 },
-    { name:"Julian Sepulveda", pos:4, country:"🇺🇸", total:223, result:10, rounds:[73,77,73], best:73 },
-    { name:"Mihir Pasura", pos:5, country:"🇬🇧", total:229, result:16, rounds:[82,74,73], best:73 },
-    { name:"Nicolas Pape", pos:6, country:"🇹🇭", total:231, result:18, rounds:[75,77,79], best:75 },
-    { name:"Harry-James Odell", pos:7, country:"🏴󠁧󠁢󠁥󠁮󠁧󠁿", total:231, result:18, rounds:[77,74,80], best:74 },
-    { name:"Aronas Juodis", pos:8, country:"🇱🇹", total:232, result:19, rounds:[74,77,81], best:74 },
-    { name:"Hugo Luque Reina", pos:9, country:"🇪🇸", total:237, result:24, rounds:[78,77,82], best:77 },
-    { name:"Maxime Vervaet", pos:10, country:"🇪🇸", total:239, result:26, rounds:[83,77,79], best:77 },
-    { name:"Miroslavs Bogdanovs", pos:24, country:"🇪🇸", total:263, result:50, rounds:[86,88,89], best:86 },
-    { name:"Alexis Beringer", pos:33, country:"🇨🇭", total:290, result:77, rounds:[93,94,103], best:93 },
-  ],
-};
-const VP_PAR = [5,3,4,3,4,5,4,3,4,4,5,3,4,4,5,3,4,4]; // par 71
-const FIELD_CARDS = [
-  { name:"Dmitrii Elchaninov", pos:1, rounds:[[4,3,5,4,4,5,4,2,4,4,5,3,4,3,5,2,4,3],[5,3,5,3,4,5,3,3,4,4,4,3,4,3,5,3,4,4],[5,2,3,4,3,5,4,3,4,4,6,3,4,3,5,3,3,4]], ecl:[4,2,3,3,3,5,3,2,4,4,4,3,4,3,5,2,3,3], eclTotal:60 },
-  { name:"Marcus Karim", pos:2, rounds:[[7,3,4,3,4,4,4,3,3,4,4,4,5,4,6,3,4,5],[4,3,4,2,4,4,4,3,4,9,6,3,3,4,5,3,3,5],[7,2,4,3,4,4,4,3,5,4,5,2,5,3,5,3,3,5]], ecl:[4,2,4,2,4,4,4,3,3,4,4,2,3,3,5,3,3,5], eclTotal:62 },
-  { name:"Harrison Barnett", pos:3, rounds:[[5,3,4,3,4,5,3,3,4,5,6,4,4,7,4,5,3,5],[5,3,3,4,4,5,4,3,4,5,6,3,3,4,5,3,3,4],[5,3,5,4,3,5,4,3,4,4,5,3,5,3,6,3,4,3]], ecl:[5,3,3,3,3,5,3,3,4,4,5,3,3,3,4,3,3,3], eclTotal:63 },
-  { name:"Julian Sepulveda", pos:4, rounds:[[5,4,4,4,3,4,4,3,4,3,5,3,6,4,5,3,5,4],[6,3,5,3,3,6,5,3,4,5,6,4,4,4,5,3,4,4],[5,2,3,5,5,6,4,4,5,4,4,4,3,4,4,5,3,3]], ecl:[5,2,3,3,3,4,4,3,4,3,4,3,3,4,4,3,3,3], eclTotal:61 },
-  { name:"Mihir Pasura", pos:5, rounds:[[6,3,3,4,5,6,3,4,4,4,6,4,5,4,7,3,5,6],[5,3,4,3,4,6,4,3,6,4,5,3,5,4,4,2,4,5],[6,3,4,4,4,5,4,2,4,5,5,3,4,5,5,3,3,4]], ecl:[5,3,3,3,4,5,3,2,4,4,5,3,4,4,4,2,3,4], eclTotal:65 },
-  { name:"Nicolas Pape", pos:6, rounds:[[5,3,4,2,4,5,4,6,4,6,5,3,3,5,5,3,4,4],[5,4,4,3,4,6,4,3,4,5,6,4,5,4,5,2,4,5],[7,2,4,4,3,4,4,3,4,5,5,3,5,4,8,3,5,6]], ecl:[5,2,4,2,3,4,4,3,4,5,5,3,3,4,5,2,4,4], eclTotal:66 },
-  { name:"Harry-James Odell", pos:7, rounds:[[7,4,4,3,4,5,3,4,3,4,5,3,4,5,6,3,5,5],[6,4,6,3,4,5,3,3,5,6,5,2,3,3,5,3,4,4],[6,2,4,4,3,5,5,4,5,3,6,3,6,3,5,2,8,6]], ecl:[6,2,4,3,3,5,3,3,3,3,5,2,3,3,5,2,4,4], eclTotal:63 },
-  { name:"Aronas Juodis", pos:8, rounds:[[6,4,4,2,3,5,4,3,4,5,6,3,4,3,5,3,4,6],[5,3,4,4,4,5,4,3,5,5,4,3,4,5,6,3,4,6],[5,3,5,5,5,6,4,3,6,3,6,4,3,4,5,4,5,5]], ecl:[5,3,4,2,3,5,4,3,4,3,4,3,3,3,5,3,4,5], eclTotal:66 },
-  { name:"Hugo Luque Reina", pos:9, rounds:[[6,2,4,3,5,6,4,3,4,7,5,4,5,3,5,3,4,5],[5,4,4,3,6,5,4,4,4,4,5,3,4,5,5,3,5,4],[7,3,4,3,4,5,5,4,5,4,5,4,5,4,8,3,4,5]], ecl:[5,2,4,3,4,5,4,3,4,4,5,3,4,3,5,3,4,4], eclTotal:69 },
-  { name:"Maxime Vervaet", pos:10, rounds:[[6,4,6,4,4,7,4,3,4,5,5,5,5,5,4,3,4,5],[6,4,4,3,4,5,4,2,5,7,6,4,4,3,5,2,4,5],[5,3,5,3,4,4,4,5,6,5,6,3,4,4,6,4,4,4]], ecl:[5,3,4,3,4,4,4,2,4,5,5,3,4,3,4,2,4,4], eclTotal:67 },
-  { name:"Miroslavs Bogdanovs", pos:24, rounds:[[8,3,5,3,4,5,4,3,5,7,6,7,5,3,6,4,4,4],[6,3,4,4,5,5,5,5,8,6,5,2,4,7,7,4,4,4],[6,3,6,4,5,6,6,2,5,4,6,4,5,5,8,5,4,5]], ecl:[6,3,4,3,4,5,4,2,5,4,5,2,4,3,6,4,4,4], eclTotal:72 },
-  { name:"Alexis Beringer", pos:33, rounds:[[8,4,6,4,6,7,5,4,3,6,6,4,6,4,6,4,5,5],[7,3,5,3,6,6,5,5,4,5,7,3,6,8,6,4,6,5],[7,4,6,4,5,8,6,5,4,6,7,4,7,6,6,6,5,7]], ecl:[7,3,5,3,5,6,5,4,3,5,6,3,6,4,6,4,5,5], eclTotal:85 },
-];
-const MANUEL_POS = 26; // 26º de 35 no torneio real
-const FIELD_TOTAL = 35; // total de jogadores no torneio
-
-const FL: Record<string,string> = {"Portugal":"🇵🇹","Spain":"🇪🇸","England":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","Russian Federation":"🇷🇺","Bulgaria":"🇧🇬","Switzerland":"🇨🇭","Italy":"🇮🇹","France":"🇫🇷","Ireland":"🇮🇪","Northern Ireland":"🇬🇧","Germany":"🇩🇪","Netherlands":"🇳🇱","Norway":"🇳🇴","Lithuania":"🇱🇹","Thailand":"🇹🇭","United States":"🇺🇸","United Kingdom":"🇬🇧","Sweden":"🇸🇪","Morocco":"🇲🇦","Wales":"🏴󠁧󠁢󠁷󠁬󠁳󠁿","Belgium":"🇧🇪","Slovenia":"🇸🇮","Ukraine":"🇺🇦","Romania":"🇷🇴","China":"🇨🇳","Philippines":"🇵🇭","Slovakia":"🇸🇰","United Arab Emirates":"🇦🇪","Turkey":"🇹🇷","India":"🇮🇳","Viet Nam":"🇻🇳","Kazakhstan":"🇰🇿","Hungary":"🇭🇺","South Africa":"🇿🇦","Singapore":"🇸🇬","Denmark":"🇩🇰","Mexico":"🇲🇽","Canada":"🇨🇦","Austria":"🇦🇹","Paraguay":"🇵🇾","Brazil":"🇧🇷","Jersey":"🇯🇪","Nigeria":"🇳🇬","Oman":"🇴🇲","Chile":"🇨🇱","Colombia":"🇨🇴","Puerto Rico":"🇵🇷","Costa Rica":"🇨🇷","Great Britain":"🇬🇧","Latvia":"🇱🇻","South Korea":"🇰🇷","Australia":"🇦🇺","Japan":"🇯🇵","New Zealand":"🇳🇿","Finland":"🇫🇮","Taiwan":"🇹🇼","Hong Kong":"🇭🇰","Indonesia":"🇮🇩","Estonia":"🇪🇪","Armenia":"🇦🇲","Barbados":"🇧🇧","Bahamas":"🇧🇸","Bolivia":"🇧🇴","Dominican Republic":"🇩🇴","Algeria":"🇩🇿","Ecuador":"🇪🇨","Guatemala":"🇬🇹","Honduras":"🇭🇳","Kenya":"🇰🇪","Cambodia":"🇰🇭","Nicaragua":"🇳🇮","Panama":"🇵🇦","Peru":"🇵🇪","El Salvador":"🇸🇻","Uganda":"🇺🇬","Uruguay":"🇺🇾","Venezuela":"🇻🇪","Czech Republic":"🇨🇿","Poland":"🇵🇱","Argentina":"🇦🇷","Cyprus":"🇨🇾","Lebanon":"🇱🇧"};
 
 const T: TournDef[]=[
   {id:"brjgt25",name:"WJGC 2025",short:"WJGC",date:"Fev 2025",rounds:3,par:71,field:40,nations:17,dateExact:"2025-02-24",ageMin:10,ageMax:11,url:"https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/34/leaderboard.htm"},
@@ -188,13 +109,36 @@ const T_WEIGHTS_BASE: Record<string, number> = (() => {
   return w;
 })();
 
-// Keep T_WEIGHTS as alias for backwards compat in ranking code
-const T_WEIGHTS = T_WEIGHTS_BASE;
+
 
 // Extended tournament names/display for auto-loaded tournaments
 // Metadados completos para auto tids que substituem entradas manuais (field, nations, par, url)
 const AUTO_TOURN_META: Record<string, { field: number; nations: number; par: number; url?: string }> = {
-  wjgc25_b1011: { field: 40, nations: 17, par: 71, url: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/34/leaderboard.htm" },
+  // WJGC 2025
+  wjgc25_b89:    { field: 37, nations: 15, par: 71, url: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/34/leaderboard.htm" },
+  wjgc25_b1011:  { field: 40, nations: 17, par: 71, url: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/34/leaderboard.htm" },
+  wjgc25_b1213:  { field: 38, nations: 16, par: 71, url: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/34/leaderboard.htm" },
+  // WJGC 2026 B12-13 (auto tid)
+  wjgc26_b1213:  { field: 39, nations: 17, par: 73, url: "https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/33/leaderboard.htm" },
+  // Marco Simone 2026
+  marco26_b9:    { field: 17, nations: 8,  par: 72, url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516989/marco-simone-invitational-2026/results" },
+  marco26_b10:   { field: 17, nations: 8,  par: 72, url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516989/marco-simone-invitational-2026/results" },
+  marco26_b11:   { field: 17, nations: 8,  par: 72, url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516989/marco-simone-invitational-2026/results" },
+  marco26_b12:   { field: 17, nations: 8,  par: 72, url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516989/marco-simone-invitational-2026/results" },
+  // Doral 2025
+  doral25_b89:   { field: 30, nations: 12, par: 71, url: "https://www.golfgenius.com/v2tournaments/4222407?called_from=widgets%2Fcustomized_tournament_results&hide_totals=false&player_stats_for_portal=true" },
+  doral25_b1011: { field: 35, nations: 13, par: 71, url: "https://www.golfgenius.com/v2tournaments/4222407?called_from=widgets%2Fcustomized_tournament_results&hide_totals=false&player_stats_for_portal=true" },
+  doral25_b1213: { field: 32, nations: 11, par: 71, url: "https://www.golfgenius.com/v2tournaments/4222407?called_from=widgets%2Fcustomized_tournament_results&hide_totals=false&player_stats_for_portal=true" },
+  // Venice 2025
+  venice25_b9:   { field: 35, nations: 14, par: 72, url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/515206/venice-open-2025/results" },
+  venice25_b10:  { field: 38, nations: 15, par: 72, url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/515206/venice-open-2025/results" },
+  venice25_b11:  { field: 39, nations: 16, par: 72, url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/515206/venice-open-2025/results" },
+  venice25_b12:  { field: 36, nations: 14, par: 72, url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/515206/venice-open-2025/results" },
+  // Rome 2025
+  rome25_b9:     { field: 12, nations: 5,  par: 72, url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516026/rome-classic-2025/results" },
+  rome25_b10:    { field: 14, nations: 6,  par: 72, url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516026/rome-classic-2025/results" },
+  rome25_b11:    { field: 14, nations: 6,  par: 72, url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516026/rome-classic-2025/results" },
+  rome25_b12:    { field: 12, nations: 5,  par: 72, url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516026/rome-classic-2025/results" },
 };
 
 const AUTO_TOURN_NAMES: Record<string, { name: string; short: string; date: string }> = {
@@ -215,10 +159,14 @@ const AUTO_TOURN_NAMES: Record<string, { name: string; short: string; date: stri
   rome25_b10:     { name: "Rome Classic 2025",  short: "Rome",     date: "Out 2025" },
   rome25_b11:     { name: "Rome Classic 2025",  short: "Rome",     date: "Out 2025" },
   rome25_b12:     { name: "Rome Classic 2025",  short: "Rome",     date: "Out 2025" },
-  marco25_b9:     { name: "Marco Simone Inv.",   short: "Marco",    date: "Mar 2025" },
-  marco25_b10:    { name: "Marco Simone Inv.",   short: "Marco",    date: "Mar 2025" },
-  marco25_b11:    { name: "Marco Simone Inv.",   short: "Marco",    date: "Mar 2025" },
-  marco25_b12:    { name: "Marco Simone Inv.",   short: "Marco",    date: "Mar 2025" },
+  marco25_b9:     { name: "Marco Simone Inv.",   short: "Marco25",  date: "Mar 2025" },
+  marco25_b10:    { name: "Marco Simone Inv.",   short: "Marco25",  date: "Mar 2025" },
+  marco25_b11:    { name: "Marco Simone Inv.",   short: "Marco25",  date: "Mar 2025" },
+  marco25_b12:    { name: "Marco Simone Inv.",   short: "Marco25",  date: "Mar 2025" },
+  marco26_b9:     { name: "Marco Simone Inv. 2026", short: "Marco26", date: "Mar 2026" },
+  marco26_b10:    { name: "Marco Simone Inv. 2026", short: "Marco26", date: "Mar 2026" },
+  marco26_b11:    { name: "Marco Simone Inv. 2026", short: "Marco26", date: "Mar 2026" },
+  marco26_b12:    { name: "Marco Simone Inv. 2026", short: "Marco26", date: "Mar 2026" },
   desert26_b9:    { name: "Desert Shootout",    short: "Desert",   date: "Fev 2026" },
   desert26_b10:   { name: "Desert Shootout",    short: "Desert",   date: "Fev 2026" },
   desert26_b11:   { name: "Desert Shootout",    short: "Desert",   date: "Fev 2026" },
@@ -234,6 +182,14 @@ const AUTO_TOURN_NAMES: Record<string, { name: string; short: string; date: stri
   elprat23_b8:    { name: "El Prat 2023",       short: "El Prat",  date: "Out 2023" },
   elprat23_b9:    { name: "El Prat 2023",       short: "El Prat",  date: "Out 2023" },
   elprat23_b10:   { name: "El Prat 2023",       short: "El Prat",  date: "Out 2023" },
+  // Doral 2024
+  doral24_b89:    { name: "Doral Junior 2024",  short: "Doral24",  date: "Dez 2024" },
+  doral24_b1011:  { name: "Doral Junior 2024",  short: "Doral24",  date: "Dez 2024" },
+  doral24_b1213:  { name: "Doral Junior 2024",  short: "Doral24",  date: "Dez 2024" },
+  // Greatgolf
+  gg25:           { name: "Greatgolf Open 2025", short: "GG25",    date: "Fev 2025" },
+  gg26_u14:       { name: "Greatgolf U14 2026",  short: "GG U14",  date: "Fev 2026" },
+  gg26_open:      { name: "Greatgolf Open 2026", short: "GG Open", date: "Fev 2026" },
 };
 
 /** Lookup tournament display info by id (works for manual T and auto tourns) */
@@ -255,8 +211,6 @@ function getTournInfo(tid: string): { name: string; short: string; date: string;
 /* ═══════════════════════════════════
    DOB DEDUCTION UTILITIES
    ═══════════════════════════════════ */
-const MONTHS_PT = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
-
 /** Parse "DD/MM/YYYY" → Date */
 function parseDob(s: string): Date {
   const [d, m, y] = s.split("/").map(Number);
@@ -271,11 +225,10 @@ function ageAt(dob: Date, at: Date): number {
   return age;
 }
 
-/** Format age string relative to today (Mar 2026) */
+/** Format age string for an EXACT DOB — includes countdown to next birthday */
 function fmtAge(dob: Date): string {
-  const today = new Date(2026, 2, 10);
+  const today = new Date();
   const a = ageAt(dob, today);
-  // Find next birthday
   const nextBday = new Date(today.getFullYear(), dob.getMonth(), dob.getDate());
   if (nextBday <= today) nextBday.setFullYear(nextBday.getFullYear() + 1);
   const diffMs = nextBday.getTime() - today.getTime();
@@ -284,6 +237,11 @@ function fmtAge(dob: Date): string {
   if (diffDays <= 60) return `${a} anos · faz ${a+1} em ${diffDays}d`;
   if (diffMonths <= 3) return `${a} anos · faz ${a+1} em ~${diffMonths}m`;
   return `${a} anos`;
+}
+
+/** Format age string for an ESTIMATED DOB (midpoint) — no countdown */
+function fmtAgeEstimated(dob: Date): string {
+  return `~${ageAt(dob, new Date())} anos`;
 }
 
 interface DobInfo {
@@ -319,6 +277,10 @@ const T_MAP: Record<string, { dateExact?: string; ageMin?: number; ageMax?: numb
   marco25_b10:   { dateExact: "2025-03-15", ageMin: 10, ageMax: 10 },
   marco25_b11:   { dateExact: "2025-03-15", ageMin: 11, ageMax: 11 },
   marco25_b12:   { dateExact: "2025-03-15", ageMin: 12, ageMax: 12 },
+  marco26_b9:    { dateExact: "2026-03-13", ageMin: 9,  ageMax: 9  },
+  marco26_b10:   { dateExact: "2026-03-13", ageMin: 10, ageMax: 10 },
+  marco26_b11:   { dateExact: "2026-03-13", ageMin: 11, ageMax: 11 },
+  marco26_b12:   { dateExact: "2026-03-13", ageMin: 12, ageMax: 12 },
   desert26_b9:   { dateExact: "2026-02-21", ageMin: 9,  ageMax: 9  },
   desert26_b10:  { dateExact: "2026-02-21", ageMin: 10, ageMax: 10 },
   desert26_b11:  { dateExact: "2026-02-21", ageMin: 11, ageMax: 11 },
@@ -334,22 +296,51 @@ const T_MAP: Record<string, { dateExact?: string; ageMin?: number; ageMax?: numb
   elprat23_b8:   { dateExact: "2023-10-22", ageMin: 8,  ageMax: 8  },
   elprat23_b9:   { dateExact: "2023-10-22", ageMin: 9,  ageMax: 9  },
   elprat23_b10:  { dateExact: "2023-10-22", ageMin: 10, ageMax: 10 },
+  // Doral 2024
+  doral24_b89:   { dateExact: "2024-12-19", ageMin: 8,  ageMax: 9  },
+  doral24_b1011: { dateExact: "2024-12-19", ageMin: 10, ageMax: 11 },
+  doral24_b1213: { dateExact: "2024-12-19", ageMin: 12, ageMax: 13 },
+  // Greatgolf
+  gg25:          { dateExact: "2025-02-08", ageMax: 12 },
+  gg26_u14:      { dateExact: "2026-02-08", ageMin: 13, ageMax: 14 },
+  gg26_open:     { dateExact: "2026-02-08" },
 };
 
-function computeDobInfo(p: RivalPlayer): DobInfo {
+/** Parse "Boys 11" / "Boys 10-11" / "Boys 10 & 11" → exact age or null */
+function parseExactAge(agStr: string): number | null {
+  if (!agStr) return null;
+  // "Boys 11" — single age, no range
+  const single = agStr.match(/[Bb]oys\s+(\d+)$/);
+  if (single) return Number(single[1]);
+  // "Boys 10" with trailing spaces / punctuation
+  const clean = agStr.match(/[Bb]oys\s+(\d+)\s*$/);
+  if (clean) return Number(clean[1]);
+  return null; // range like "Boys 10-11" or "Boys 10 & 11" → can't pin exact age
+}
+
+interface DobConstraint {
+  dateExact: string;   // tournament date
+  ageMin: number;      // minimum age bracket
+  ageMax: number;      // maximum age bracket (same as min when exact)
+  tid: string;
+}
+
+function computeDobInfo(p: RivalPlayer, mhPlayer?: MHPlayer | null): DobInfo {
   // If exact DOB known
   if (p.dob) {
     const d = parseDob(p.dob);
     return { exact: true, dob: d, dobStr: p.dob, rangeStr: p.dob, ageStr: fmtAge(d) };
   }
 
-  // Deduce from tournaments: each gives a DOB range
-  let rangeMin: Date | null = null;
-  let rangeMax: Date | null = null;
+  // ── Step 1: collect constraints from p.r tournaments ──────────────────────
+  const constraints: DobConstraint[] = [];
+  const hidden = hiddenTids(p); // skip dedup'd tids to avoid contradictory constraints
 
-  for (const tid of Object.keys(p.r)) {
+  for (const [tid, res] of Object.entries(p.r)) {
+    if (hidden.has(tid)) continue; // skip duplicates that could create contradictions
     let td: { dateExact?: string; ageMin?: number; ageMax?: number } | undefined = T_MAP[tid];
-    // USKids completo tids: "usk{tcode}_b{n}" → dateExact from uskTournNames, age from suffix
+
+    // USKids completo tids "usk{tcode}_b{n}" → dateExact from name map, age from suffix
     if (!td) {
       const m = tid.match(/^(usk\d+)_b(\d+)$/);
       if (m) {
@@ -358,31 +349,117 @@ function computeDobInfo(p: RivalPlayer): DobInfo {
         if (base) td = { dateExact: base.dateExact, ageMin: age, ageMax: age };
       }
     }
-    if (!td?.dateExact || td.ageMin == null || td.ageMax == null) continue;
-    const tDate = new Date(td.dateExact);
-    // Age at tournament must be in [ageMin, ageMax]
-    // Latest DOB (youngest allowed, age = ageMin): born exactly ageMin years before → tDate - ageMin years
-    const latestDob = new Date(tDate);
-    latestDob.setFullYear(latestDob.getFullYear() - td.ageMin);
-    // Earliest DOB (oldest allowed, age = ageMax): born just before ageMax+1 years ago
-    // i.e. if born 1 day earlier they'd be ageMax+1
-    const earliestDob = new Date(tDate);
-    earliestDob.setFullYear(earliestDob.getFullYear() - td.ageMax - 1);
-    earliestDob.setDate(earliestDob.getDate() + 1);
+    if (!td?.dateExact) continue;
 
-    if (!rangeMin || earliestDob > rangeMin) rangeMin = earliestDob;
-    if (!rangeMax || latestDob < rangeMax) rangeMax = latestDob;
+    let ageMin = td.ageMin ?? null;
+    let ageMax = td.ageMax ?? null;
+
+    // Refine using the actual ageGroup string stored on this result
+    const agStr = (res as any).ageGroup as string | undefined;
+    if (agStr) {
+      const exact = parseExactAge(agStr);
+      if (exact != null) {
+        ageMin = (ageMin == null) ? exact : Math.max(ageMin, exact);
+        ageMax = (ageMax == null) ? exact : Math.min(ageMax, exact);
+      }
+    }
+
+    if (ageMin == null || ageMax == null) continue;
+    constraints.push({ dateExact: td.dateExact, ageMin, ageMax, tid });
+  }
+
+  // ── Step 1b: member history — precise single-age USKids data points ────────
+  // Each entry gives an exact age on a specific date → very tight constraint
+  // Multiple consecutive entries with a step-up reveal the birthday window precisely
+  if (mhPlayer) {
+    for (const [mhTid, t] of Object.entries(mhPlayer.torneios)) {
+      if (!t.startDate || !t.ageGroup) continue;
+      const isoD = isoDate(t.startDate);
+      if (!isoD) continue;
+      const exact = parseExactAge(t.ageGroup);
+      if (exact == null) continue; // range label like "Boys 10-11" → skip
+      constraints.push({ dateExact: isoD, ageMin: exact, ageMax: exact, tid: `mh_${mhTid}` });
+    }
+  }
+
+  if (constraints.length === 0) {
+    return { exact: false, rangeStr: "?", ageStr: "?" };
+  }
+
+  // ── Step 2: intersect all per-tournament DOB windows ───────────────────────
+  // "Age A on date D" → birthday ∈ (D − (A+1) years, D − A years]
+  // Apply each constraint only if it doesn't make the range impossible.
+  // Bad constraints (e.g. from a name collision in auto-loaded data) are skipped.
+  let rangeMin: Date | null = null;
+  let rangeMax: Date | null = null;
+
+  for (const c of constraints) {
+    const tDate = new Date(c.dateExact);
+    const latest = new Date(tDate);
+    latest.setFullYear(latest.getFullYear() - c.ageMin);
+    const earliest = new Date(tDate);
+    earliest.setFullYear(earliest.getFullYear() - c.ageMax - 1);
+    earliest.setDate(earliest.getDate() + 1);
+
+    // Try applying — only commit if the result is still a valid window
+    const newMin: Date = (!rangeMin || earliest > rangeMin) ? earliest : rangeMin;
+    const newMax: Date = (!rangeMax || latest  < rangeMax)  ? latest   : rangeMax;
+    if (newMin <= newMax) {
+      rangeMin = newMin;
+      rangeMax = newMax;
+    }
+    // else: this constraint conflicts with what we know — skip it silently
   }
 
   if (!rangeMin || !rangeMax || rangeMin > rangeMax) {
     return { exact: false, rangeStr: "?", ageStr: "?" };
   }
 
-  // Format range string
-  const minY = rangeMin.getFullYear(), maxY = rangeMax.getFullYear();
-  const minM = rangeMin.getMonth(), maxM = rangeMax.getMonth();
+  // ── Step 3: tighten using age-group transitions ─────────────────────────────
+  // If player was age A at T1 and A+1 at T2 (T2 > T1), their (A+1)-th birthday
+  // falls strictly between T1 and T2 → birthday ∈ (T1 − (A+1) years, T2 − (A+1) years]
+  // This same window is already captured by the intersection above, but the
+  // transition check lets us tighten when we only have the later tournament:
+  //   if we know birthday > T1 (because they were still A at T1), we can set
+  //   a lower bound on birthday of (T1 - (A+1) years + 1 day).
+  // So the main benefit is detecting the transition to add this lower bound constraint.
+
+  const sorted = [...constraints].sort((a, b) => a.dateExact.localeCompare(b.dateExact));
+  for (let i = 0; i < sorted.length - 1; i++) {
+    const c1 = sorted[i], c2 = sorted[i + 1];
+    // Is this a clear step-up? (c2's minimum age > c1's maximum age, difference = 1)
+    if (c2.ageMin - c1.ageMax === 1) {
+      // Birthday is the (c1.ageMax + 1)th birthday, which happened between T1 and T2
+      // → birthday ∈ (T1 − (c1.ageMax+1) years, T2 − (c1.ageMax+1) years]
+      const transA = c1.ageMax + 1;
+      const transLate = new Date(c2.dateExact);
+      transLate.setFullYear(transLate.getFullYear() - transA);
+      const transEarly = new Date(c1.dateExact);
+      transEarly.setFullYear(transEarly.getFullYear() - transA);
+      transEarly.setDate(transEarly.getDate() + 1);
+
+      // Apply transition tightening only if it keeps the range valid
+      const tMin: Date = transEarly > rangeMin! ? transEarly : rangeMin!;
+      const tMax: Date = transLate  < rangeMax! ? transLate  : rangeMax!;
+      if (tMin <= tMax) { rangeMin = tMin; rangeMax = tMax; }
+    }
+  }
+
+  if (rangeMin! > rangeMax!) {
+    return { exact: false, rangeStr: "?", ageStr: "?" };
+  }
+
+  // ── Step 4: format output ───────────────────────────────────────────────────
+  const minY = rangeMin!.getFullYear(), maxY = rangeMax!.getFullYear();
+  const minM = rangeMin!.getMonth(),    maxM = rangeMax!.getMonth();
+  const spanDays = Math.round((rangeMax!.getTime() - rangeMin!.getTime()) / 86400000);
+
   let rangeStr: string;
-  if (minY === maxY) {
+  if (spanDays <= 1) {
+    // Single day — essentially exact
+    const d = rangeMin!;
+    rangeStr = `${String(d.getDate()).padStart(2,"0")}/${String(d.getMonth()+1).padStart(2,"0")}/${d.getFullYear()}`;
+  } else if (minY === maxY) {
     if (minM === maxM) {
       rangeStr = `${MONTHS_PT[minM]} ${minY}`;
     } else {
@@ -392,12 +469,13 @@ function computeDobInfo(p: RivalPlayer): DobInfo {
     rangeStr = `${MONTHS_PT[minM]} ${minY} – ${MONTHS_PT[maxM]} ${maxY}`;
   }
 
-  // Estimate age using midpoint
-  const midMs = (rangeMin.getTime() + rangeMax.getTime()) / 2;
+  // Estimate age: use midpoint of the DOB range
+  const midMs  = (rangeMin!.getTime() + rangeMax!.getTime()) / 2;
   const midDob = new Date(midMs);
-  const ageStr = "~" + fmtAge(midDob);
+  // Never show countdown for estimated DOBs — midpoint is not the real birthday
+  const ageStr = fmtAgeEstimated(midDob);
 
-  return { exact: false, rangeMin, rangeMax, rangeStr, ageStr };
+  return { exact: false, rangeMin: rangeMin ?? undefined, rangeMax: rangeMax ?? undefined, rangeStr, ageStr };
 }
 
 const UP = [
@@ -601,26 +679,19 @@ const D: RivalPlayer[]=[
   {n:"Alessandro Zhang",co:"Great Britain",r:{},up:["marco26"]},
 ];
 
-/* ═══════════════════════════════════
-   D_BASE: array de jogadores base (manual)
-   Os rivais auto-loaded são merged via
-   useAutoRivals() hook abaixo
-   ═══════════════════════════════════ */
-const D_BASE = D; // alias para clareza
+const manuel = D.find(x => x.isM)!;
 
-const manuel = D_BASE.find(x => x.isM)!;
-
-/** Hook: carrega todos os ficheiros JSON e faz merge com D_BASE */
+/** Hook: carrega todos os ficheiros JSON e faz merge com D */
 function useAutoRivals() {
-  const [merged, setMerged] = React.useState<RivalPlayer[]>(D_BASE);
+  const [merged, setMerged] = React.useState<RivalPlayer[]>(D);
   const [loaded, setLoaded] = React.useState(false);
   const [progress, setProgress] = React.useState<{ done: number; total: number; label: string } | null>(null);
 
   React.useEffect(() => {
     buildAutoRivals((p) => setProgress({ ...p })).then(autoPlayers => {
-      // Trabalhar sobre uma cópia profunda do D_BASE
+      // Trabalhar sobre uma cópia profunda de D
       const map = new Map<string, RivalPlayer>(
-        D_BASE.map(p => [normName(p.n), { ...p, r: { ...p.r } }])
+        D.map(p => [normName(p.n), { ...p, r: { ...p.r } }])
       );
       for (const ap of autoPlayers) {
         const key = normName(ap.n);
@@ -628,10 +699,13 @@ function useAutoRivals() {
           const ex = map.get(key)!;
           for (const [tid, res] of Object.entries(ap.r)) {
             if (!ex.r[tid] || res.rd.length > (ex.r[tid]?.rd.length ?? 0))
-              ex.r[tid] = res;
+              ex.r[tid] = { ...res, p: res.p ?? "WD" } as TournResult;
           }
         } else {
-          map.set(key, { n: ap.n, co: ap.co, r: ap.r, up: [] });
+          const convertedR: Record<string, TournResult> = Object.fromEntries(
+            Object.entries(ap.r).map(([k, v]) => [k, { ...v, p: v.p ?? "WD" } as TournResult])
+          );
+          map.set(key, { n: ap.n, co: ap.co, r: convertedR, up: [] });
         }
       }
       setMerged(Array.from(map.values()));
@@ -645,11 +719,39 @@ function useAutoRivals() {
   return { rivals: merged, loaded, progress };
 }
 
+/** Hook: carrega uskids-member-history.json */
+function useMemberHist() {
+  const [mh, setMh] = React.useState<MHData | null>(null);
+  React.useEffect(() => {
+    fetch("/data/uskids-member-history.json").then(r => r.json()).then(setMh).catch(() => {});
+  }, []);
+  return mh;
+}
+
+/** Parse data "MM/DD/YYYY" ou "YYYY-MM-DD" → "YYYY-MM-DD" para sort/display */
+function isoDate(s: string): string {
+  if (!s) return "";
+  if (/^\d{4}-\d{2}-\d{2}/.test(s)) return s;
+  const p = s.split("/");
+  if (p.length === 3) return `${p[2]}-${p[0].padStart(2,"0")}-${p[1].padStart(2,"0")}`;
+  return "";
+}
+
+/** ±par color (dark theme friendly) */
+function tpColorMH(tp: number | null): string {
+  if (tp == null) return "var(--text-3)";
+  if (tp < 0) return "var(--color-good-dark, #15803d)";
+  if (tp === 0) return "var(--text-2)";
+  return "var(--color-danger, #dc2626)";
+}
+
 /* ═══════════════════════════════════
    SCORECARD DATA — WJGC 2026 (3 rondas)
    ═══════════════════════════════════ */
-const WJGC26_PAR=[5,3,4,3,4,5,4,3,4,5,5,3,4,4,5,3,4,4] as const;
-const WJGC26_SI=[4,10,6,18,16,8,14,12,2,1,7,9,15,11,5,13,17,3] as const;
+// Villa Padierna Flamingos — tee WJGC 2026 (away-villa-padierna-flamingos-espanha-2)
+const WJGC26_PAR = VP_WJGC26_PAR as unknown as readonly number[];
+const WJGC26_SI  = VP_WJGC26_SI  as unknown as readonly number[];
+const WJGC26_M   = VP_WJGC26_M   as unknown as readonly number[];
 const WJGC26_CARDS=[
 {n:"Dmitrii Elchaninov",pos:1,tp:-6,rds:[[4,3,3,4,4,4,3,4,4,5,4,4,3,4,5,3,4,4],[5,3,5,4,3,5,4,3,3,4,4,3,5,4,5,2,3,4],[6,3,4,3,3,5,5,2,4,5,5,2,4,4,5,3,4,5]]},
 {n:"William Harran",pos:2,tp:5,rds:[[7,4,5,3,4,5,4,3,4,5,5,4,4,3,4,3,4,4],[5,3,4,4,3,6,3,3,4,4,5,3,4,3,7,3,3,4],[4,3,4,3,5,4,4,4,4,5,6,2,5,4,5,3,5,5]]},
@@ -700,8 +802,11 @@ const WJGC26_CARDS=[
    SCORECARD DATA — European Open WAGR 2025
    (par 72, 3 rondas, 8 jogadores)
    ═══════════════════════════════════ */
-const EOWAGR25_PAR=[5,4,4,4,5,3,4,3,4,4,5,3,4,4,3,5,4,4] as const;
-const EOWAGR25_SI=[9,11,13,5,7,17,3,15,1,12,6,8,2,16,14,10,4,18] as const;
+// Golf du Touquet La Forêt — EOWAGR 2025 (away-golf-du-touquet-la-foret-0)
+// Le Touquet La Forêt — EOWAGR 2025
+const EOWAGR25_PAR = LT_FORET_PAR as unknown as readonly number[];
+const EOWAGR25_SI  = LT_FORET_SI  as unknown as readonly number[];
+const EOWAGR25_M   = LT_FORET_M   as unknown as readonly number[];
 const EOWAGR25_CARDS=[
 {n:"Aronas Juodis",pos:1,tp:-3,rds:[[4,4,3,6,5,3,4,3,4,4,4,2,5,4,3,4,4,4],[4,6,4,4,5,4,4,2,5,3,4,3,5,3,3,4,4,4],[5,4,3,4,6,3,4,3,4,4,5,3,4,5,3,4,4,4]]},
 {n:"Dmitrii Elchaninov",pos:2,tp:2,rds:[[5,4,4,4,5,3,4,3,4,4,4,3,4,4,3,5,4,4],[5,3,4,3,4,2,4,3,4,4,4,3,7,4,3,4,5,4],[5,4,4,4,5,3,4,4,4,4,6,3,4,5,3,5,6,4]]},
@@ -717,8 +822,10 @@ const EOWAGR25_CARDS=[
    SCORECARD DATA — WJGC 2026 Boys 12-13
    (contest 33, par 73, 3 rondas)
    ═══════════════════════════════════ */
-const WJGC26_1213_PAR=[4,4,3,5,4,4,5,3,4,4,4,5,5,3,4,5,3,4] as const;
-const WJGC26_1213_SI=[5,1,15,13,7,17,11,3,9,16,6,18,14,12,4,2,10,8] as const;
+// Villa Padierna Alferini — WJGC 2026 Boys 12-13
+const WJGC26_1213_PAR = VP_ALFERINI_PAR as unknown as readonly number[];
+const WJGC26_1213_SI  = VP_ALFERINI_SI  as unknown as readonly number[];
+const WJGC26_1213_M   = VP_ALFERINI_M   as unknown as readonly number[];
 const WJGC26_1213_CARDS=[
 {n:"Marcus Latt",pos:1,tp:-8,rds:[[4,3,2,4,4,4,6,3,4,3,3,5,4,3,5,4,3,5],[4,5,3,4,4,4,5,3,5,3,3,5,4,4,4,5,3,3],[4,4,2,5,4,3,5,3,4,3,7,4,4,3,5,5,3,3]]},
 {n:"Skyy Wilding",pos:5,tp:0,rds:[[4,4,3,3,3,4,4,3,4,3,5,5,4,3,3,6,4,5],[6,6,3,5,4,4,5,3,4,4,4,4,4,3,4,4,2,4],[4,5,3,4,4,3,5,3,4,4,5,5,4,3,4,6,3,4]]},
@@ -744,119 +851,23 @@ const WJGC26_1213_CARDS=[
 {n:"Rafael Devic Frugier",pos:29,tp:37,rds:[[4,4,4,5,5,5,6,4,7,4,4,4,4,3,5,7,4,4],[5,4,4,4,4,5,5,4,4,5,6,7,5,4,4,6,2,6],[7,5,4,4,6,4,6,3,7,4,9,4,4,4,4,6,4,4]]},
 ];
 
-// Compute field averages per round and per total
-const AVG_R = {};
-const AVG_T = {};
+// Compute field averages per round (used for tier coloring in dashboard)
+const AVG_R: Record<string, Array<{ m: number; s: number } | null>> = {};
 for (const t of T) {
   AVG_R[t.id] = [];
   for (let i = 0; i < t.rounds; i++) {
-    const vals = D.filter(p => p.r[t.id] && p.r[t.id].rd && p.r[t.id].rd[i] != null).map(p => p.r[t.id].rd[i]);
+    const vals = D.filter(p => p.r[t.id]?.rd?.[i] != null).map(p => p.r[t.id].rd[i]).filter((v): v is number => v != null);
     if (vals.length > 1) {
       const m = vals.reduce((a, b) => a + b, 0) / vals.length;
       const s = Math.sqrt(vals.reduce((a, b) => a + (b - m) ** 2, 0) / vals.length);
       AVG_R[t.id][i] = { m, s };
     }
   }
-  const vals = D.filter(p => p.r[t.id] && p.r[t.id].t != null).map(p => p.r[t.id].t);
-  if (vals.length > 1) {
-    const m = vals.reduce((a, b) => a + b, 0) / vals.length;
-    const s = Math.sqrt(vals.reduce((a, b) => a + (b - m) ** 2, 0) / vals.length);
-    AVG_T[t.id] = { m, s };
-  }
 }
 
-function zTier(score, stats) {
-  if (score == null || !stats || stats.s === 0) return null;
-  const z = (score - stats.m) / (stats.s || 1);
-  if (z <= -1.2) return "elite";
-  if (z <= -0.4) return "strong";
-  if (z <= 0.4) return "solid";
-  if (z <= 1.2) return "developing";
-  return "beginner";
-}
-
-const TIER = {
-  elite: { bg: "var(--bg-success-strong)", c: "var(--color-good-dark)" },
-  strong: { bg: "var(--bg-current)", c: "var(--text-current)" },
-  solid: { bg: "var(--bg-warn-light)", c: "var(--color-warn-dark)" },
-  developing: { bg: "var(--bg-warn-strong)", c: "var(--color-warn-dark)" },
-  beginner: { bg: "var(--bg-danger-subtle)", c: "var(--color-danger-dark)" },
-};
 const TIER_L = { elite: "Elite", strong: "Forte", solid: "Sólido", developing: "Em Desenv.", beginner: "Iniciante" };
 
-function getTrend(p) {
-  const order = ["brjgt25", "eowagr25", "venice25", "rome25", "doral25", "qdl25", "gg26", "wjgc26"];
-  const pts: { x: number; y: number }[] = [];
-  for (let xi = 0; xi < order.length; xi++) {
-    const res = p.r[order[xi]];
-    if (res && res.tp != null) {
-      const t = T.find(x => x.id === order[xi]);
-      if (t) pts.push({ x: xi, y: res.tp / t.rounds });
-    }
-  }
-  if (pts.length < 2) return null;
-  const slope = linearSlopeXY(pts);
-  if (slope == null) return null;
-  if (slope <= -1.5) return "up2";
-  if (slope < -0.3) return "up";
-  if (slope >= 1.5) return "down2";
-  if (slope > 0.3) return "down";
-  return "stable";
-}
-
 const TR_I = { up2: { i: "▲▲", c: SC.good }, up: { i: "▲", c: "var(--score-par-seg)" }, stable: { i: "●", c: "var(--text-muted)" }, down: { i: "▼", c: SC.warn }, down2: { i: "▼▼", c: SC.danger } };
-
-// Average z-score across all rounds played
-function getAvgZ(p) {
-  // Weighted z-score per tournament, with par-bonus:
-  // - Prestige weight: rounds, field size, internationality
-  // - Par bonus: scoring well under par boosts that tournament's weight
-  let totalW = 0, sumWZ = 0, effRd = 0;
-
-  // Todos os torneios com resultado (T manual + auto-loaded)
-  const allTids = Object.keys(p.r);
-
-  for (const tid of allTids) {
-    const res = p.r[tid];
-    if (!res || !res.rd || res.rd.length === 0) continue;
-
-    const tDef = T.find(t => t.id === tid);
-    const nRd = tDef ? (tDef.intendedRounds || tDef.rounds) : res.rd.length;
-    const w = getTournWeight(tid);
-
-    const zs: number[] = [];
-    for (let i = 0; i < res.rd.length; i++) {
-      const sc = res.rd[i];
-      const stats = AVG_R[tid] && AVG_R[tid][i];
-      if (sc != null && sc > 0 && stats && stats.s > 0) {
-        zs.push((sc - stats.m) / stats.s);
-      } else if (sc != null && sc > 0) {
-        // Sem estatísticas de grupo: usar desvio relativo ao par (72 típico)
-        const parEst = 72;
-        const sdEst = 8; // desvio padrão estimado para torneios sem dados
-        zs.push((sc - parEst) / sdEst);
-      }
-    }
-    if (zs.length === 0) continue;
-    const tournZ = zs.reduce((a, b) => a + b, 0) / zs.length;
-    const tpPerRd = res.tp != null ? res.tp / nRd : 0;
-    const parBonus = 1 + Math.max(0, -tpPerRd) * 0.15;
-    sumWZ += tournZ * w * parBonus;
-    totalW += w * parBonus;
-    effRd += zs.length * w;
-  }
-  if (totalW === 0) return null;
-  const weightedAvg = sumWZ / totalW;
-  // Bayesian shrinkage toward PRIOR (+1.5 = assume below average until proven)
-  // With few effective rounds → pulled heavily toward prior (mediocre)
-  // With many effective rounds → trust the data
-  const prior = 1.5;
-  const k = 12;
-  const alpha = effRd / (effRd + k);
-  return weightedAvg * alpha + prior * (1 - alpha);
-}
-
-const allCountries = [...new Set(D.map(p => p.co))].sort();
 
 /* ── Name matching: "Manuel Medeiros" <→ "Manuel Francisco Medeiros" ── */
 function matchName(dName: string, cardName: string): boolean {
@@ -873,12 +884,15 @@ function findCard<T extends { n: string }>(cards: T[], dName: string): T | undef
    RIVALS CONTEXT — partilha o array de rivais (após
    auto-merge async) por todos os sub-componentes
    ══════════════════════════════════════════════════════ */
-const RivalsCtx = React.createContext<RivalPlayer[]>(D_BASE);
+const RivalsCtx = React.createContext<RivalPlayer[]>(D);
 function useRivals() { return React.useContext(RivalsCtx); }
+
+const MemberHistCtx = React.createContext<MHData | null>(null);
+function useMH() { return React.useContext(MemberHistCtx); }
 
 /* ── Rank map derivado do array de rivais ── */
 function buildRankMap(rivals: RivalPlayer[]): Record<string, number> {
-  const scored = rivals.map(p => ({ n: p.n, z: getAvgZ(p) })).filter(x => x.z != null) as { n: string; z: number }[];
+  const scored = rivals.map(p => ({ n: p.n, z: (getAvgZ as unknown as (p: RivalPlayer) => number | null)(p) })).filter(x => x.z != null) as { n: string; z: number }[];
   scored.sort((a, b) => a.z - b.z);
   const m: Record<string, number> = {};
   scored.forEach((s, i) => { m[s.n] = i + 1; });
@@ -894,11 +908,16 @@ let totalRanked = 0;
 // Regra simples: contar quantos estão escondidos e subtrair ao total
 const HIDDEN_WHEN_PRESENT: Array<[string, string]> = [
   // [tid oculto, tid que o substitui]
-  ["brjgt25",    "wjgc25_b1011"],
+  ["brjgt25",       "wjgc25_b1011"],
+  // WJGC 2026 — auto tid vs manual entry
+  ["wjgc26_b1213",  "wjgc26_1213"],
+  // Venice 2025 escalões vs manual entry
   ["venice25_b11","venice25"], ["venice25_b12","venice25"],
   ["venice25_b9", "venice25"], ["venice25_b10","venice25"],
+  // Rome 2025
   ["rome25_b11",  "rome25"],   ["rome25_b12",  "rome25"],
   ["rome25_b9",   "rome25"],   ["rome25_b10",  "rome25"],
+  // Doral 2025
   ["doral25_b1011","doral25"], ["doral25_b89", "doral25"], ["doral25_b1213","doral25"],
 ];
 
@@ -922,12 +941,13 @@ function nRounds(p: RivalPlayer) {
     return acc + (res?.rd ? res.rd.filter((x: number | null) => x != null && x > 0).length : 0);
   }, 0);
 }
-function getVsAvg(p: RivalPlayer) {
+function getVsAvg(p: RivalPlayer, manuelRef?: RivalPlayer | null) {
+  const m = manuelRef ?? manuel;
   if (p.isM) return null;
   const ds: number[] = [];
   Object.keys(p.r).forEach(tid => {
-    const m = manuel!.r[tid];
-    if (m && p.r[tid].tp != null && m.tp != null) ds.push(p.r[tid].tp - m.tp);
+    const mr = m?.r[tid];
+    if (mr && p.r[tid].tp != null && mr.tp != null) ds.push(p.r[tid].tp - mr.tp);
   });
   return ds.length ? Math.round(ds.reduce((a, b) => a + b, 0) / ds.length) : null;
 }
@@ -936,10 +956,13 @@ function getVsAvg(p: RivalPlayer) {
    Generic scorecard table (WJGC26, GG26, QDL25)
    ───────────────────────────────────────────────────────────── */
 interface ScRound { label: string; scores: number[] }
-function TournScorecard({ par, si, rounds }: { par: readonly number[]; si?: readonly number[]; rounds: ScRound[] }) {
+function TournScorecard({ par, si, meters, rounds }: { par: readonly number[]; si?: readonly number[]; meters?: readonly number[]; rounds: ScRound[] }) {
   const frontPar = par.slice(0, 9).reduce((a, b) => a + b, 0);
   const backPar = par.slice(9).reduce((a, b) => a + b, 0);
   const totalPar = frontPar + backPar;
+  const frontM = meters ? meters.slice(0, 9).reduce((a, b) => a + b, 0) : 0;
+  const backM  = meters ? meters.slice(9).reduce((a, b) => a + b, 0) : 0;
+  const totalM = frontM + backM;
   const Sub = ({ gross, base, cls }: { gross: number; base: number; cls: string }) => {
     const tp = gross - base;
     return <td className={`${cls} fw-700`}>{gross}<span className={`sc-topar ${toParClass(tp)}`}>{fmtSign(tp)}</span></td>;
@@ -956,9 +979,19 @@ function TournScorecard({ par, si, rounds }: { par: readonly number[]; si?: read
           <th className="hole-header col-total">TOT</th>
         </tr></thead>
         <tbody>
+          {meters && (
+            <tr className="meta-row">
+              <td className="row-label fs-10 c-text-3">m</td>
+              {meters.slice(0, 9).map((m, i) => <td key={i} className="fs-10 c-text-3">{m}</td>)}
+              <td className="col-out fs-10 c-text-3">{frontM}</td>
+              {meters.slice(9).map((m, i) => <td key={i + 9} className="fs-10 c-text-3">{m}</td>)}
+              <td className="col-in fs-10 c-text-3">{backM}</td>
+              <td className="col-total fs-10 c-text-3">{totalM}</td>
+            </tr>
+          )}
           {si && (
             <tr className="meta-row">
-              <td className="row-label">SI</td>
+              <td className="row-label fs-10">SI</td>
               {si.slice(0, 9).map((s, i) => <td key={i}>{s}</td>)}
               <td className="col-out" />
               {si.slice(9).map((s, i) => <td key={i + 9}>{s}</td>)}
@@ -995,34 +1028,23 @@ function TournScorecard({ par, si, rounds }: { par: readonly number[]; si?: read
 }
 
 /* ── Scoring distribution pills ── */
-function ScoringDist({ allScores, allPars }: { allScores: number[][]; allPars: readonly number[] }) {
-  let eagles = 0, birdies = 0, pars = 0, bogeys = 0, doubles = 0, worse = 0;
-  for (const sc of allScores) for (let i = 0; i < 18; i++) {
-    const d = sc[i] - allPars[i];
-    if (d <= -2) eagles++; else if (d === -1) birdies++; else if (d === 0) pars++; else if (d === 1) bogeys++; else if (d === 2) doubles++; else worse++;
-  }
-  const total = allScores.length * 18;
-  if (total === 0) return null;
-  const items = [
-    { label: "Eagle+", val: eagles, cls: "eagle" }, { label: "Birdie", val: birdies, cls: "birdie" },
-    { label: "Par", val: pars, cls: "par" }, { label: "Bogey", val: bogeys, cls: "bogey" },
-    { label: "Duplo", val: doubles, cls: "double" }, { label: "Triple+", val: worse, cls: "triple" },
-  ].filter(s => s.val > 0);
-  return (
-    <div className="d-flex items-center gap-8 mb-12 flex-wrap">
-      <span className="fs-10 fw-600 c-text-3">Distribuição ({total} buracos):</span>
-      {items.map(s => (
-        <span key={s.label} className="d-flex items-center gap-4">
-          <span className={`sc-score ${s.cls}`} style={{ width: 22, height: 22, fontSize: 10 }}>{s.val}</span>
-          <span className="fs-10 fw-600 c-text-3">{s.label} ({(s.val / total * 100).toFixed(0)}%)</span>
-        </span>
-      ))}
-    </div>
-  );
-}
-
 function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) => void }) {
   const rivals = useRivals();
+  const memberHist = useMH();
+
+  // Mapa nome (lowercase, normalizado) → nº de torneios USKids com resultados
+  const mhCountMap = useMemo<Map<string, number>>(() => {
+    const m = new Map<string, number>();
+    if (!memberHist) return m;
+    for (const mh of Object.values(memberHist.jogadores)) {
+      if (!mh.name || mh.name === "?" || mh.name.startsWith("[unknown")) continue;
+      const key = mh.name.toLowerCase().trim().replace(/\s+/g, " ");
+      const cnt = Object.values(mh.torneios).filter(t => t.rounds && Object.keys(t.rounds).length > 0).length;
+      if (cnt > 0) m.set(key, cnt);
+    }
+    return m;
+  }, [memberHist]);
+
   const [fTour, setFTour] = useState("all");
   const [fUp, setFUp] = useState("all");
   const [fCo, setFCo] = useState("all");
@@ -1031,6 +1053,15 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
   const [dir, setDir] = useState<"asc"|"desc">("asc");
   const [dOnly, setDOnly] = useState(false);
   const [vsOn, setVsOn] = useState(true);
+  // New filters
+  const [fJuntos, setFJuntos]   = useState("all");   // torneios jogados juntos com Manuel
+  const [fPerf, setFPerf]       = useState("all");   // performance (melhor ±par)
+  const [fTrend, setFTrend]     = useState("all");   // tendência
+  const [fUsk, setFUsk]         = useState("all");   // USKids histórico
+  const [fH2H, setFH2H]         = useState("all");   // H2H vs Manuel (ganhou/perdeu/equilibrado)
+  const [showFilters, setShowFilters] = useState(false); // toggle painel de filtros extra
+
+  const manuelMergedDash = useMemo(() => rivals.find(p => p.isM) ?? manuel, [rivals]);
 
   const list = useMemo(() => {
     let pl = [...rivals];
@@ -1039,14 +1070,92 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
     if (fUp !== "all") pl = pl.filter(x => x.up.includes(fUp));
     if (fCo !== "all") pl = pl.filter(x => x.co === fCo);
     if (q) { const ql = q.toLowerCase(); pl = pl.filter(x => x.n.toLowerCase().includes(ql)); }
+
+    // Torneios juntos com Manuel
+    if (fJuntos !== "all" && manuelMergedDash) {
+      pl = pl.filter(x => {
+        if (x.isM) return true;
+        const hidden = hiddenTids(x), mHidden = hiddenTids(manuelMergedDash);
+        const shared = Object.keys(x.r).filter(tid =>
+          !hidden.has(tid) && !mHidden.has(tid) &&
+          typeof manuelMergedDash.r[tid]?.p === "number" && typeof x.r[tid]?.p === "number"
+        ).length;
+        if (fJuntos === "0")  return shared === 0;
+        if (fJuntos === "1")  return shared === 1;
+        if (fJuntos === "2+") return shared >= 2;
+        if (fJuntos === "3+") return shared >= 3;
+        return true;
+      });
+    }
+
+    // Performance (melhor ±par total)
+    if (fPerf !== "all") {
+      pl = pl.filter(x => {
+        if (x.isM) return true;
+        const tps = Object.values(x.r).filter(r => r?.tp != null).map(r => r!.tp as number);
+        if (tps.length === 0) return fPerf === "nodata";
+        const best = Math.min(...tps);
+        if (fPerf === "elite") return best <= 0;
+        if (fPerf === "strong") return best > 0 && best <= 15;
+        if (fPerf === "mid") return best > 15 && best <= 30;
+        if (fPerf === "dev") return best > 30;
+        return true;
+      });
+    }
+
+    // Tendência
+    if (fTrend !== "all") {
+      pl = pl.filter(x => {
+        if (x.isM) return true;
+        const tr = (getTrend as (p: RivalPlayer) => string | null)(x);
+        if (fTrend === "up")     return tr === "up" || tr === "up2";
+        if (fTrend === "down")   return tr === "down" || tr === "down2";
+        if (fTrend === "stable") return tr === "stable" || tr == null;
+        return true;
+      });
+    }
+
+    // USKids histórico
+    if (fUsk !== "all") {
+      pl = pl.filter(x => {
+        if (x.isM) return true;
+        const key = x.n.toLowerCase().trim().replace(/\s+/g, " ");
+        const cnt = mhCountMap.get(key) ?? 0;
+        if (fUsk === "yes") return cnt > 0;
+        if (fUsk === "no")  return cnt === 0;
+        if (fUsk === "3+")  return cnt >= 3;
+        return true;
+      });
+    }
+
+    // H2H vs Manuel
+    if (fH2H !== "all" && manuelMergedDash) {
+      pl = pl.filter(x => {
+        if (x.isM) return true;
+        const hidden = hiddenTids(x), mHidden = hiddenTids(manuelMergedDash);
+        const shared = Object.keys(x.r).filter(tid =>
+          !hidden.has(tid) && !mHidden.has(tid) &&
+          typeof manuelMergedDash.r[tid]?.p === "number" && typeof x.r[tid]?.p === "number"
+        );
+        if (shared.length === 0) return fH2H === "none";
+        const wins = shared.filter(t => (manuelMergedDash.r[t].p as number) < (x.r[t].p as number)).length;
+        const losses = shared.filter(t => (manuelMergedDash.r[t].p as number) > (x.r[t].p as number)).length;
+        if (fH2H === "manuel_wins") return wins > losses;
+        if (fH2H === "rival_wins")  return losses > wins;
+        if (fH2H === "balanced")    return wins === losses;
+        if (fH2H === "none")        return shared.length === 0;
+        return true;
+      });
+    }
+
     pl.sort((a, b) => {
       let cmp = 0;
       if (sort === "name") cmp = a.n.localeCompare(b.n);
-      else if (sort === "zrank") { cmp = (getAvgZ(a) ?? 99) - (getAvgZ(b) ?? 99); }
-      else if (sort === "vsManuel") { cmp = (getVsAvg(a) ?? 999) - (getVsAvg(b) ?? 999); }
+      else if (sort === "zrank") { cmp = ((getAvgZ as unknown as (p: RivalPlayer) => number | null)(a) ?? 99) - ((getAvgZ as unknown as (p: RivalPlayer) => number | null)(b) ?? 99); }
+      else if (sort === "vsManuel") { cmp = (getVsAvg(a, manuelMergedDash) ?? 999) - (getVsAvg(b, manuelMergedDash) ?? 999); }
       else if (sort.startsWith("t:")) {
         const tid = sort.slice(2);
-        const posOf = (x: RivalPlayer) => { const r = x.r[tid]; if (!r || r.tp == null) return 9999; return typeof r.p === "number" ? r.p : 9998; };
+        const posOf = (x: RivalPlayer) => { const r = x.r[tid]; if (!r || (r.tp == null && (r.p as any) !== "WD")) return 9999; return typeof r.p === "number" ? r.p : 9998; };
         cmp = posOf(a) - posOf(b);
       }
       else if (sort.startsWith("up:")) {
@@ -1057,7 +1166,7 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
       return dir === "desc" ? -cmp : cmp;
     });
     return pl;
-  }, [fTour, fUp, fCo, q, sort, dir, dOnly]);
+  }, [fTour, fUp, fCo, q, sort, dir, dOnly, fJuntos, fPerf, fTrend, fUsk, fH2H, rivals, manuelMergedDash]);
 
   const doSort = (c: string) => { if (sort === c) setDir(d => d === "asc" ? "desc" : "asc"); else { setSort(c); setDir("asc"); } };
   const sortIcon = (c: string) => sort === c ? (dir === "asc" ? " ↑" : " ↓") : "";
@@ -1066,53 +1175,211 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
   const nPlayedLocal = (p: RivalPlayer) => nPlayed(p);
   const nRoundsLocal = (p: RivalPlayer) => nRounds(p);
 
+  // Countries from merged rivals (includes auto-loaded players)
+  const allCountries = useMemo(() => [...new Set(rivals.map(p => p.co))].sort(), [rivals]);
+
+  // Build dynamic list of auto-loaded tournaments that actually appear in the data
+  // Sorted by: most players first, then by date
+  const autoTournCols = useMemo(() => {
+    const tFixed = new Set(T.map(t => t.id));
+    const hidden = new Set<string>();
+    for (const p of rivals) for (const h of hiddenTids(p)) hidden.add(h);
+    const counts = new Map<string, number>();
+    for (const p of rivals) {
+      for (const [tid, res] of Object.entries(p.r)) {
+        if (tFixed.has(tid) || hidden.has(tid)) continue;
+        if (!res || (res.tp == null && !(res as any).p)) continue;
+        counts.set(tid, (counts.get(tid) ?? 0) + 1);
+      }
+    }
+    return [...counts.entries()]
+      .filter(([, n]) => n >= 2) // at least 2 players → worth a column
+      .sort((a, b) => {
+        const infoA = getTournInfo(a[0]), infoB = getTournInfo(b[0]);
+        // Sort: most recent first, then by player count
+        const dateA = infoA.dateExact || infoA.date;
+        const dateB = infoB.dateExact || infoB.date;
+        const dateCmp = dateB.localeCompare(dateA);
+        return dateCmp !== 0 ? dateCmp : b[1] - a[1];
+      })
+      .slice(0, 12) // cap at 12 extra columns
+      .map(([tid]) => ({ tid, info: getTournInfo(tid), weight: getTournWeight(tid) }));
+  }, [rivals]);
+
+  const allTournCols = useMemo(() => [
+    ...T.map(t => ({ tid: t.id, info: { name: t.name, short: t.short, date: t.date, dateExact: t.dateExact ?? t.date }, weight: getTournWeight(t.id), url: t.url, isFixed: true })),
+    ...autoTournCols.map(c => ({ ...c, url: undefined, isFixed: false })),
+  ], [autoTournCols]);
+
   return (
     <div>
-      {/* Manuel KPIs */}
-      <div className="kpis" style={{ gridTemplateColumns: `repeat(${T.length}, 1fr)` }}>
-        {T.map(t => {
-          const res = manuel.r[t.id];
-          if (!res) return (
-            <div key={t.id} className="kpi op-4">
-              <div className="kpi-lbl">{t.short}</div>
-              <div className="kpi-val fs-16">–</div>
-            </div>
-          );
-          return (
-            <div key={t.id} className="kpi">
-              <div className="kpi-lbl">{t.short}</div>
-              <div className="kpi-val" style={{ fontSize: 16, color: tpColorDark(res.tp) }}>
-                {fmtSign(res.tp)}
+      {/* Manuel KPIs — por torneio + resumo global */}
+      {(() => {
+        // Global stats for Manuel
+        const manuelRivals = rivals.find(d => d.isM) ?? manuel;
+        const allManuelRds = Object.values(manuelRivals.r).flatMap((r: any) => r.rd?.filter((x: number) => x > 0) ?? []) as number[];
+        const manuelAvg = allManuelRds.length ? allManuelRds.reduce((a,b)=>a+b,0)/allManuelRds.length : null;
+        const manuelBest = allManuelRds.length ? Math.min(...allManuelRds) : null;
+        const manuelTorneios = nPlayed(manuelRivals);
+        const manuelRondas = nRounds(manuelRivals);
+        return (
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 12, alignItems: "stretch" }}>
+            {/* Global summary */}
+            <div className="kpi" style={{ flex: "0 0 auto", padding: "8px 14px", background: "var(--bg-info-subtle,#e0f2fe)", borderLeft: "3px solid var(--accent,#2563eb)" }}>
+              <div className="kpi-lbl" style={{ color: "var(--color-info-dark,#0369a1)" }}>Manuel — Total</div>
+              <div style={{ display: "flex", gap: 16, alignItems: "baseline", marginTop: 4 }}>
+                <span><span className="fw-800 fs-16">{manuelTorneios}</span><span className="fs-10 c-text-3 ml-4">torneios</span></span>
+                <span><span className="fw-800 fs-16">{manuelRondas}</span><span className="fs-10 c-text-3 ml-4">rondas</span></span>
+                {manuelAvg != null && <span><span className="fw-700 fs-14">{manuelAvg.toFixed(1)}</span><span className="fs-10 c-text-3 ml-4">média</span></span>}
+                {manuelBest != null && <span><span className="fw-700 fs-14" style={{ color: "var(--color-good-dark)" }}>{manuelBest}</span><span className="fs-10 c-text-3 ml-4">melhor</span></span>}
               </div>
-              <div className="kpi-sub">#{res.p} · {res.rd.join("-")}</div>
             </div>
-          );
-        })}
-      </div>
+            {/* Per-tournament */}
+            {T.map(t => {
+              const res = manuelRivals.r[t.id];
+              if (!res) return (
+                <div key={t.id} className="kpi op-4" style={{ padding: "8px 10px", flex: "1 1 80px", minWidth: 80 }}>
+                  <div className="kpi-lbl">{t.short}</div>
+                  <div className="kpi-val fs-16">–</div>
+                </div>
+              );
+              return (
+                <div key={t.id} className="kpi" style={{ padding: "8px 10px", flex: "1 1 80px", minWidth: 80 }}>
+                  <div className="kpi-lbl">{t.short}</div>
+                  <div className="kpi-val" style={{ fontSize: 18, color: tpColorDark(res.tp) }}>
+                    {fmtSign(res.tp!)}
+                  </div>
+                  <div className="kpi-sub">
+                    #{res.p as number}
+                    {res.rd?.length > 0 && <span style={{ marginLeft: 4, opacity: 0.7 }}>{res.rd.join("-")}</span>}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        );
+      })()}
 
       {/* Filters */}
-      <div className="detail-toolbar">
-        <input type="text" placeholder="Pesquisar..." value={q} onChange={e => setQ(e.target.value)} className="input" style={{ maxWidth: 140 }} />
-        <select value={fTour} onChange={e => setFTour(e.target.value)} className="select">
-          <option value="all">Todos Torneios</option>
-          {T.map(t => <option key={t.id} value={t.id}>{t.short}</option>)}
-        </select>
-        <select value={fUp} onChange={e => setFUp(e.target.value)} className="select">
-          <option value="all">Próximos: Todos</option>
-          {UP.map(u => <option key={u.id} value={u.id}>{u.name}</option>)}
-        </select>
-        <select value={fCo} onChange={e => setFCo(e.target.value)} className="select">
-          <option value="all">🌍 País</option>
-          {allCountries.map(c => <option key={c} value={c}>{FL[c] || ""} {c}</option>)}
-        </select>
-        <label className="filter-checkbox"><input type="checkbox" checked={dOnly} onChange={e => setDOnly(e.target.checked)} /> Só com dados</label>
-        <label className="filter-checkbox"><input type="checkbox" checked={vsOn} onChange={e => setVsOn(e.target.checked)} /> vs Manuel</label>
-        <div className="chip">{list.length} jogadores</div>
-      </div>
+      {/* ── Toolbar + filtros ── */}
+      {(() => {
+        const activeCount = [fTour, fUp, fCo, fJuntos, fPerf, fTrend, fUsk, fH2H].filter(v => v !== "all").length
+          + (dOnly ? 1 : 0) + (q ? 1 : 0);
+        const resetAll = () => { setFTour("all"); setFUp("all"); setFCo("all"); setFJuntos("all"); setFPerf("all"); setFTrend("all"); setFUsk("all"); setFH2H("all"); setDOnly(false); setQ(""); };
+        return (
+          <div style={{ marginBottom: 8 }}>
+            {/* Row 1: search + main filters + toggle */}
+            <div className="detail-toolbar" style={{ flexWrap: "wrap" }}>
+              <input type="text" placeholder="Pesquisar..." value={q} onChange={e => setQ(e.target.value)} className="input" style={{ maxWidth: 140 }} />
+              <select value={fTour} onChange={e => setFTour(e.target.value)} className="select">
+                <option value="all">Todos Torneios</option>
+                {allTournCols.map(({ tid, info }) => <option key={tid} value={tid}>{info.short} {info.date}</option>)}
+              </select>
+              <select value={fCo} onChange={e => setFCo(e.target.value)} className="select">
+                <option value="all">🌍 País</option>
+                {allCountries.map(c => <option key={c} value={c}>{FL[c] || ""} {c}</option>)}
+              </select>
+              <label className="filter-checkbox"><input type="checkbox" checked={vsOn} onChange={e => setVsOn(e.target.checked)} /> vs M</label>
+              <button
+                className={`p p-filter p-sm${showFilters ? " active" : ""}`}
+                onClick={() => setShowFilters(s => !s)}
+                style={{ position: "relative" }}
+              >
+                Filtros {showFilters ? "▲" : "▼"}
+                {activeCount > 0 && (
+                  <span style={{ position: "absolute", top: -4, right: -4, background: "var(--accent,#2563eb)", color: "#fff", borderRadius: "50%", width: 16, height: 16, fontSize: 10, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    {activeCount}
+                  </span>
+                )}
+              </button>
+              {activeCount > 0 && (
+                <button className="p p-filter p-sm" onClick={resetAll} style={{ color: "var(--color-danger)" }}>✕ Limpar</button>
+              )}
+              <div className="chip" style={{ marginLeft: "auto" }}>{list.length} jogadores</div>
+            </div>
+
+            {/* Row 2: extra filters (collapsible) */}
+            {showFilters && (
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap", padding: "8px 0 4px", borderTop: "1px solid var(--border-light)", marginTop: 6 }}>
+
+                {/* Torneios juntos com Manuel */}
+                <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+                  <span style={{ fontSize: 10, fontWeight: 600, color: "var(--text-3)" }}>🤝 Juntos</span>
+                  <div style={{ display: "flex", gap: 3 }}>
+                    {[["all","Todos"],["0","0"],["1","1"],["2+","2+"],["3+","3+"]].map(([v,l]) => (
+                      <button key={v} className={`p p-filter p-sm${fJuntos===v?" active":""}`} onClick={() => setFJuntos(v)}>{l}</button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Performance */}
+                <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+                  <span style={{ fontSize: 10, fontWeight: 600, color: "var(--text-3)" }}>⛳ Melhor ±Par</span>
+                  <div style={{ display: "flex", gap: 3 }}>
+                    {[["all","Todos"],["elite","≤ E"],["strong","0–15"],["mid","16–30"],["dev",">30"],["nodata","S/d"]].map(([v,l]) => (
+                      <button key={v} className={`p p-filter p-sm${fPerf===v?" active":""}`} onClick={() => setFPerf(v)}>{l}</button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Tendência */}
+                <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+                  <span style={{ fontSize: 10, fontWeight: 600, color: "var(--text-3)" }}>📈 Tendência</span>
+                  <div style={{ display: "flex", gap: 3 }}>
+                    {[["all","Todos"],["up","▲ A subir"],["stable","● Estável"],["down","▼ A descer"]].map(([v,l]) => (
+                      <button key={v} className={`p p-filter p-sm${fTrend===v?" active":""}`} onClick={() => setFTrend(v)}>{l}</button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* H2H vs Manuel */}
+                <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+                  <span style={{ fontSize: 10, fontWeight: 600, color: "var(--text-3)" }}>⚔️ H2H vs Manuel</span>
+                  <div style={{ display: "flex", gap: 3 }}>
+                    {[["all","Todos"],["manuel_wins","Manuel ganhou"],["rival_wins","Rival ganhou"],["balanced","Equilibrado"],["none","Sem encontros"]].map(([v,l]) => (
+                      <button key={v} className={`p p-filter p-sm${fH2H===v?" active":""}`} onClick={() => setFH2H(v)}>{l}</button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* USKids histórico */}
+                <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+                  <span style={{ fontSize: 10, fontWeight: 600, color: "var(--text-3)" }}>📊 USKids histórico</span>
+                  <div style={{ display: "flex", gap: 3 }}>
+                    {[["all","Todos"],["yes","Tem"],["3+","3+ torn."],["no","Sem"]].map(([v,l]) => (
+                      <button key={v} className={`p p-filter p-sm${fUsk===v?" active":""}`} onClick={() => setFUsk(v)}>{l}</button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Próximos torneios */}
+                {UP.length > 0 && (
+                  <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+                    <span style={{ fontSize: 10, fontWeight: 600, color: "var(--text-3)" }}>▲ Próximos</span>
+                    <div style={{ display: "flex", gap: 3 }}>
+                      <button className={`p p-filter p-sm${fUp==="all"?" active":""}`} onClick={() => setFUp("all")}>Todos</button>
+                      {UP.map(u => (
+                        <button key={u.id} className={`p p-filter p-sm${fUp===u.id?" active":""}`} onClick={() => setFUp(u.id)}>{u.short}</button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Checkbox: só com dados */}
+                <div style={{ display: "flex", flexDirection: "column", gap: 3, justifyContent: "flex-end" }}>
+                  <label className="filter-checkbox" style={{ fontSize: 11 }}>
+                    <input type="checkbox" checked={dOnly} onChange={e => setDOnly(e.target.checked)} /> Só com dados
+                  </label>
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      })()}
 
       {/* Legend */}
       <div className="legend-row">
-        {Object.keys(TIER).map(k => (
+        {(Object.keys(TIER) as Array<keyof typeof TIER>).map(k => (
           <span key={k} className="legend-item">
             <span className="legend-dot" style={{ background: TIER[k].bg }} />
             <span style={{ color: TIER[k].c, fontSize: 10 }}>{TIER_L[k]}</span>
@@ -1128,15 +1395,16 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
               <tr className="rivais-group-header">
                 <th className="rivais-th-name pointer" onClick={() => doSort("name")}>Jogador{sortIcon("name")}</th>
                 <th className="rivais-th pointer ta-center" onClick={() => doSort("zrank")} title="Torneios jogados">#T</th>
-                {T.map(t => {
-                  const w = getTournWeight(t.id);
-                  const stars = w >= 1.3 ? "★★★★★" : w >= 1.1 ? "★★★★" : w >= 0.9 ? "★★★" : w >= 0.6 ? "★★" : w >= 0.4 ? "★" : "½";
+                {allTournCols.map(({ tid, info, weight, url, isFixed }) => {
+                  const stars = weight >= 1.3 ? "★★★★★" : weight >= 1.1 ? "★★★★" : weight >= 0.9 ? "★★★" : weight >= 0.6 ? "★★" : weight >= 0.4 ? "★" : "½";
                   return (
-                  <th key={t.id} className="rivais-th pointer ta-center" style={{ minWidth: 56 }} onClick={() => doSort("t:" + t.id)}>
-                    {t.url ? <a href={t.url} target="_blank" rel="noopener noreferrer" className="rivais-link" onClick={e => e.stopPropagation()}>{t.short}</a> : t.short}
-                    {sortIcon("t:" + t.id)}
-                    <div className="fs-9 fw-500 op-6 mt-1">{stars}</div>
-                  </th>
+                    <th key={tid} className="rivais-th pointer ta-center"
+                      style={{ minWidth: 56, opacity: isFixed ? 1 : 0.85 }}
+                      onClick={() => doSort("t:" + tid)}>
+                      {url ? <a href={url} target="_blank" rel="noopener noreferrer" className="rivais-link" onClick={e => e.stopPropagation()}>{info.short}</a> : info.short}
+                      {sortIcon("t:" + tid)}
+                      <div className="fs-9 fw-500 op-6 mt-1">{stars} {info.date}</div>
+                    </th>
                   );
                 })}
                 <th className="rivais-th pointer ta-center" style={{ borderLeft: "3px solid var(--text-muted)", minWidth: 56 }} onClick={() => doSort("zrank")}>Rank{sortIcon("zrank")}</th>
@@ -1148,14 +1416,15 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
                   </th>
                 ))}
                 {vsOn && <th className="rivais-th pointer ta-center" onClick={() => doSort("vsManuel")}>vs M{sortIcon("vsManuel")}</th>}
+                <th className="rivais-th ta-center" title="Torneios USKids no histórico oficial">📊</th>
               </tr>
             </thead>
             <tbody>
               {list.map(p => {
                 const isM = p.isM;
-                const tr = getTrend(p);
+                const tr = (getTrend as (p: RivalPlayer) => string | null)(p);
                 const flag = FL[p.co] || "🏳️";
-                const vsAvg = vsOn ? getVsAvg(p) : null;
+                const vsAvg = vsOn ? getVsAvg(p, manuelMergedDash) : null;
                 const played = nPlayedLocal(p);
 
                 return (
@@ -1177,34 +1446,35 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
                     <td className="ta-center fs-12 fw-600 c-text-3">{played || ""}</td>
 
                     {/* One cell per tournament: ±par colored + position */}
-                    {T.map(t => {
-                      const res = p.r[t.id];
-                      if (!res || (res.tp == null && res.p !== "WD")) return <td key={t.id} />;
-                      if (res.p === "WD") return <td key={t.id} className="ta-center fs-11 c-muted">WD</td>;
+                    {allTournCols.map(({ tid, info: _info }) => {
+                      const res = p.r[tid];
+                      if (!res || (res.tp == null && res.p !== "WD")) return <td key={tid} />;
+                      if (res.p === "WD") return <td key={tid} className="ta-center fs-11 c-muted">WD</td>;
 
-                      // Tier color
-                      const playerAvg = res.t / t.rounds;
-                      const roundAvgs = AVG_R[t.id];
+                      const tDef = T.find(t => t.id === tid);
+                      const rounds = tDef?.rounds ?? res.rd?.length ?? 1;
+                      const playerAvg = res.t != null ? res.t / rounds : 0;
+                      const roundAvgs = AVG_R[tid];
                       let fieldAvg: number | null = null, fieldStd: number | null = null;
                       if (roundAvgs && roundAvgs.length > 0) {
-                        const ms = roundAvgs.filter((x: RoundAvg): x is { m: number; s: number } => x != null).map(x => x.m);
-                        const ss = roundAvgs.filter((x: RoundAvg): x is { m: number; s: number } => x != null).map(x => x.s);
+                        const ms = roundAvgs.filter((x: RoundAvg): x is { m: number; s: number } => x != null).map((x: { m: number }) => x.m);
+                        const ss = roundAvgs.filter((x: RoundAvg): x is { m: number; s: number } => x != null).map((x: { s: number }) => x.s);
                         if (ms.length > 0) { fieldAvg = ms.reduce((a: number, b: number) => a + b, 0) / ms.length; fieldStd = ss.reduce((a: number, b: number) => a + b, 0) / ss.length; }
                       }
-                      const ti = fieldAvg != null ? zTier(playerAvg, { m: fieldAvg, s: fieldStd }) : null;
-                      const st = ti ? TIER[ti] : {};
-                      const tpStr = fmtSign(res.tp);
+                      const ti = fieldAvg != null ? zTier(playerAvg, { m: fieldAvg, s: fieldStd ?? 0 }) : null;
+                      const st = (ti ? TIER[ti as keyof typeof TIER] : null) as { bg: string; c: string } | null;
+                      const tpStr = res.tp != null ? fmtSign(res.tp) : "—";
 
-                      // vs Manuel delta
                       let vsM: number | null = null;
-                      if (vsOn && !isM && manuel.r[t.id] && manuel.r[t.id].tp != null) {
-                        vsM = res.tp - manuel.r[t.id].tp;
+                      if (vsOn && !isM) {
+                        const mRes = manuelMergedDash.r[tid];
+                        if (mRes?.tp != null && res.tp != null) vsM = res.tp - mRes.tp;
                       }
 
                       return (
-                        <td key={t.id} className="ta-center" style={{ background: st.bg || "transparent", padding: "5px 4px" }}>
-                          <div className="fw-700 fs-13" style={{ color: st.c || "var(--text-3)" }}>{tpStr}</div>
-                          <div className="fs-10 fw-600 c-text-3">#{res.p}</div>
+                        <td key={tid} className="ta-center" style={{ background: st?.bg || "transparent", padding: "5px 4px" }}>
+                          <div className="fw-700 fs-13" style={{ color: st?.c || "var(--text-3)" }}>{tpStr}</div>
+                          {res.p != null && <div className="fs-10 fw-600 c-text-3">#{res.p}</div>}
                           {vsM != null && <div className="fs-10 fw-600" style={{ color: sc3m(vsM, 0, 0) }}>{fmtSign(vsM)}</div>}
                         </td>
                       );
@@ -1213,7 +1483,7 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
                     {/* Rank */}
                     <td className="ta-center" style={{ borderLeft: "3px solid var(--border-light)", padding: "4px 6px" }}>
                       {rankMap[p.n] != null ? (
-                        <div title={`z-score: ${(getAvgZ(p) ?? 0).toFixed(2)} · ${nRounds(p)} rondas`}>
+                        <div title={`z-score: ${((getAvgZ as unknown as (p: RivalPlayer) => number | null)(p) ?? 0).toFixed(2)} · ${nRounds(p)} rondas`}>
                           <div className="fw-800 fs-13" style={{ color: rankMap[p.n] <= 10 ? "var(--color-good-dark)" : rankMap[p.n] <= 30 ? "var(--text)" : "var(--text-3)" }}>
                             {rankMap[p.n]}º
                           </div>
@@ -1224,7 +1494,7 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
 
                     {/* Trend */}
                     <td className="ta-center">
-                      {tr ? <span className="fw-700 fs-13" style={{ color: TR_I[tr].c }}>{TR_I[tr].i}</span> : <span className="c-border">—</span>}
+                      {tr ? <span className="fw-700 fs-13" style={{ color: TR_I[tr as keyof typeof TR_I].c }}>{TR_I[tr as keyof typeof TR_I].i}</span> : <span className="c-border">—</span>}
                     </td>
 
                     {/* Upcoming tournaments */}
@@ -1242,6 +1512,20 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
                         <span className="fs-10 c-border">—</span>}
                       </td>
                     )}
+
+                    {/* 📊 Member history count */}
+                    {(() => {
+                      const key = p.n.toLowerCase().trim().replace(/\s+/g, " ");
+                      const cnt = mhCountMap.get(key) ?? 0;
+                      return (
+                        <td className="ta-center">
+                          {cnt > 0
+                            ? <span className="fs-11 fw-700" style={{ color: "var(--accent,#2563eb)", cursor: onSelectPlayer ? "pointer" : "default" }}
+                                onClick={() => onSelectPlayer?.(p.n)}>{cnt}</span>
+                            : <span className="fs-10 c-border">—</span>}
+                        </td>
+                      );
+                    })()}
                   </tr>
                 );
               })}
@@ -1262,44 +1546,77 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
    ═══════════════════════════════════ */
 /* ── DOB Pill ── */
 function DobPill({ player }: { player: RivalPlayer }) {
-  const info = computeDobInfo(player);
+  const mh = useMH();
+  const mhPlayer = React.useMemo(() => {
+    if (!mh) return null;
+    const key = player.n.toLowerCase().trim().replace(/\s+/g, " ");
+    return (Object.values(mh.jogadores) as MHPlayer[]).find(
+      m => m.name && m.name.toLowerCase().trim().replace(/\s+/g, " ") === key
+    ) ?? null;
+  }, [mh, player.n]);
+
+  const info = computeDobInfo(player, mhPlayer);
   if (!info.exact && info.rangeStr === "?") return null;
-  const text = info.exact ? info.dobStr! : `~${info.rangeStr}`;
-  const color = info.exact ? "var(--color-good-dark)" : "var(--text-3)";
+
+  if (info.exact) {
+    return (
+      <span style={{ fontSize: 10, color: "var(--color-good-dark)", marginLeft: 4, fontWeight: 600 }}
+        title={`Nasceu em ${info.dobStr}`}>
+        🎂 {info.dobStr}
+      </span>
+    );
+  }
+
+  const spanDays = info.rangeMin && info.rangeMax
+    ? Math.round((info.rangeMax.getTime() - info.rangeMin.getTime()) / 86400000) : 999;
+  const color = spanDays <= 60  ? "var(--color-good-dark)"
+              : spanDays <= 180 ? "var(--text-2)"
+              : "var(--text-3)";
+  const fw = spanDays <= 180 ? 600 : 400;
+  const icon = spanDays <= 60 ? "🎯" : "📅";
+  const tooltip = `Estimativa: ${info.rangeStr} · janela de ${spanDays}d`;
+
   return (
-    <span style={{ fontSize: 10, color, marginLeft: 4, fontWeight: info.exact ? 600 : 400 }}>
-      {info.exact ? "🎂" : "📅"} {text}
+    <span style={{ fontSize: 10, color, marginLeft: 4, fontWeight: fw }} title={tooltip}>
+      {icon} ~{info.rangeStr}
     </span>
   );
 }
 
 // Grupos de torneios para o filtro da sidebar
 const SIDEBAR_FILTERS = [
-  { id: "all",       label: "Todos" },
-  { id: "wjgc",     label: "WJGC" },
-  { id: "uskids",   label: "US Kids" },
-  { id: "eowagr",   label: "EU Open" },
-  { id: "doral",    label: "Doral" },
-  { id: "bjgt",     label: "BJGT" },
-  { id: "outros",   label: "Outros" },
+  { id: "all",     label: "Todos" },
+  { id: "wjgc",   label: "WJGC/BJGT" },
+  { id: "uskids", label: "US Kids" },
+  { id: "eowagr", label: "EU Open" },
+  { id: "doral",  label: "Doral" },
+  { id: "pt",     label: "Nacional" },
+  { id: "outros", label: "Outros" },
 ];
 
 function playerMatchesFilter(p: RivalPlayer, fid: string): boolean {
   if (fid === "all") return true;
   const tids = Object.keys(p.r);
-  if (fid === "wjgc")   return tids.some(t => t.startsWith("wjgc"));
+  if (fid === "wjgc")   return tids.some(t => t.startsWith("wjgc") || t.startsWith("brjgt"));
   if (fid === "uskids") return tids.some(t =>
-    t.startsWith("venice25") || t.startsWith("rome25") || t.startsWith("marco25") ||
-    t.startsWith("desert26") || t.startsWith("sandestin26") || t.startsWith("msstate26") || t.startsWith("elprat23")
+    t.startsWith("usk") ||           // auto-loaded USKids completo tids
+    t.startsWith("venice") || t.startsWith("rome") ||
+    t.startsWith("marco") || t.startsWith("desert") ||
+    t.startsWith("sandestin") || t.startsWith("msstate") ||
+    t.startsWith("elprat")
+    // Doral não é USKids — tem tab próprio
   );
   if (fid === "eowagr") return tids.some(t => t.startsWith("eowagr"));
   if (fid === "doral")  return tids.some(t => t.startsWith("doral"));
-  if (fid === "bjgt")   return tids.some(t => t.startsWith("brjgt") || t.startsWith("gg26") || t.startsWith("qdl"));
+  if (fid === "pt")     return tids.some(t =>
+    t.startsWith("gg") || t.startsWith("qdl")
+  );
   if (fid === "outros") return !tids.some(t =>
-    t.startsWith("wjgc") || t.startsWith("venice25") || t.startsWith("rome25") ||
-    t.startsWith("marco25") || t.startsWith("desert26") || t.startsWith("sandestin26") ||
-    t.startsWith("msstate26") || t.startsWith("elprat23") || t.startsWith("eowagr") ||
-    t.startsWith("doral") || t.startsWith("brjgt") || t.startsWith("gg26") || t.startsWith("qdl")
+    t.startsWith("wjgc") || t.startsWith("brjgt") ||
+    t.startsWith("usk") || t.startsWith("venice") || t.startsWith("rome") ||
+    t.startsWith("marco") || t.startsWith("desert") || t.startsWith("sandestin") ||
+    t.startsWith("msstate") || t.startsWith("elprat") || t.startsWith("doral") ||
+    t.startsWith("eowagr") || t.startsWith("gg") || t.startsWith("qdl")
   );
   return true;
 }
@@ -1307,7 +1624,54 @@ function playerMatchesFilter(p: RivalPlayer, fid: string): boolean {
 function RivaisSidebar({ selected, onSelect }: { selected: string | null; onSelect: (n: string) => void }) {
   const [q, setQ] = useState("");
   const rivals = useRivals();
+  const memberHist = useMH();
   const [fid, setFid] = useState("all");
+
+  // Mapa nome → nº torneios USKids no histórico
+  const mhCountSidebar = useMemo<Map<string, number>>(() => {
+    const m = new Map<string, number>();
+    if (!memberHist) return m;
+    for (const mh of Object.values(memberHist.jogadores) as MHPlayer[]) {
+      if (!mh.name || mh.name === "?" || mh.name.startsWith("[unknown")) continue;
+      const key = mh.name.toLowerCase().trim().replace(/\s+/g, " ");
+      const cnt = Object.values(mh.torneios).filter(t => t.rounds && Object.keys(t.rounds).length > 0).length;
+      if (cnt > 0) m.set(key, cnt);
+    }
+    return m;
+  }, [memberHist]);
+
+  // Mapa nome → USKids member ID
+  const mhIdSidebar = useMemo<Map<string, string>>(() => {
+    const m = new Map<string, string>();
+    if (!memberHist) return m;
+    for (const mh of Object.values(memberHist.jogadores) as MHPlayer[]) {
+      if (!mh.name || !mh.memberId) continue;
+      m.set(mh.name.toLowerCase().trim().replace(/\s+/g, " "), mh.memberId);
+    }
+    return m;
+  }, [memberHist]);
+
+  // Pré-computar H2H para todos os rivais vs Manuel
+  const manuelMerged = rivals.find(d => d.isM);
+  const h2hMap = useMemo<Map<string, { w: number; l: number; d: number }>>(() => {
+    const m = new Map<string, { w: number; l: number; d: number }>();
+    if (!manuelMerged) return m;
+    for (const p of rivals) {
+      if (p.isM) continue;
+      const hidden = hiddenTids(p);
+      const mHidden = hiddenTids(manuelMerged);
+      const shared = Object.keys(p.r).filter(tid => {
+        if (hidden.has(tid) || mHidden.has(tid)) return false;
+        const mp = manuelMerged.r[tid]; const rp = p.r[tid];
+        return typeof mp?.p === "number" && typeof rp?.p === "number";
+      });
+      if (shared.length === 0) continue;
+      const w = shared.filter(tid => (manuelMerged.r[tid].p as number) < (p.r[tid].p as number)).length;
+      const l = shared.filter(tid => (manuelMerged.r[tid].p as number) > (p.r[tid].p as number)).length;
+      m.set(p.n, { w, l, d: shared.length - w - l });
+    }
+    return m;
+  }, [rivals, manuelMerged]);
 
   const list = useMemo(() => {
     let pl = rivals.filter(p => nPlayed(p) > 0 || p.isM);
@@ -1343,32 +1707,62 @@ function RivaisSidebar({ selected, onSelect }: { selected: string | null; onSele
       {/* List */}
       <div style={{ flex: 1, overflowY: "auto" }}>
         {list.map(p => {
-          const flag = FL[p.co] || "🏳️";
+          const flagEmoji = FL[p.co] || "🏳️";
           const rank = rankMap[p.n];
-          const tr = getTrend(p);
+          const tr = (getTrend as (p: RivalPlayer) => string | null)(p);
           const played = nPlayed(p);
           const isActive = selected === p.n;
           const rankCls = rank == null ? "" : rank <= 3 ? "sidebar-rank-top3" : rank <= 10 ? "sidebar-rank-top10" : "sidebar-rank-rest";
-          const dobInfo = computeDobInfo(p);
-          const hasDob = dobInfo.exact || dobInfo.rangeStr !== "?";
+          const mhKey = p.n.toLowerCase().trim().replace(/\s+/g, " ");
+          const mhCnt = mhCountSidebar.get(mhKey) ?? 0;
+          const mhId  = mhIdSidebar.get(mhKey) ?? null;
+          const h2h = h2hMap.get(p.n);
+          const togetherCount = h2h ? h2h.w + h2h.l + h2h.d : 0;
+
+          // Best position across all tournaments (dedup-aware)
+          const hidden = hiddenTids(p);
+          const positions = Object.entries(p.r)
+            .filter(([tid, r]) => !hidden.has(tid) && typeof r?.p === "number" && (r.p as number) > 0)
+            .map(([, r]) => r.p as number);
+          const bestPos = positions.length ? Math.min(...positions) : null;
+          const hasTop3 = bestPos != null && bestPos <= 3;
+          const bestTpVal = Object.entries(p.r)
+            .filter(([tid, r]) => !hidden.has(tid) && r?.tp != null)
+            .map(([, r]) => r.tp as number);
+          const bestTp = bestTpVal.length ? Math.min(...bestTpVal) : null;
           return (
             <button key={p.n} className={`course-item${isActive ? " active" : ""}`} onClick={() => onSelect(p.n)}>
               <div className="course-item-name">
-                <span>{flag}</span>
+                <span>{flagEmoji}</span>
                 <span className={p.isM ? "fw-800" : ""}>{p.n}</span>
                 {p.isM && <span className="p p-sm p-outline ml-2">REF</span>}
-                {tr && <span style={{ fontSize: 11, color: TR_I[tr].c, marginLeft: "auto" }}>{TR_I[tr].i}</span>}
+                {hasTop3 && <span style={{ fontSize: 13, marginLeft: 4 }}>{bestPos === 1 ? "🥇" : bestPos === 2 ? "🥈" : "🥉"}</span>}
+                {tr && <span style={{ fontSize: 11, color: TR_I[tr as keyof typeof TR_I].c, marginLeft: "auto" }}>{TR_I[tr as keyof typeof TR_I].i}</span>}
               </div>
-              <div style={{ display: "flex", gap: 5, marginTop: 3, alignItems: "center", flexWrap: "wrap" }}>
-                <span className="fs-10 c-text-3">{p.co}</span>
-                {played > 0 && <span className="fs-10 c-muted">· {played}T</span>}
-                {hasDob && <DobPill player={p} />}
-                {rank != null && (
-                  <span className={`sidebar-rank ${rankCls}`} style={{ marginLeft: "auto" }}>
-                    #{rank}
+              <div style={{ display: "flex", gap: 6, marginTop: 3, alignItems: "center", flexWrap: "wrap", fontSize: 11 }}>
+                <span style={{ color: "var(--text-3)" }}>{p.co}</span>
+                {played > 0 && <span style={{ color: "var(--text-2)", fontWeight: 600 }}>· {played}T</span>}
+                {!hasTop3 && bestPos != null && <span style={{ color: "var(--text-3)" }}>· #{bestPos}</span>}
+                {bestTp != null && <span style={{ fontWeight: 600, color: tpColorDark(bestTp) }}>{fmtToPar(bestTp)}</span>}
+                <DobPill player={p} />
+                {/* Torneios juntos — destaque principal */}
+                {togetherCount > 0 && (
+                  <span style={{ fontWeight: 700, color: "var(--text-2)" }} title={`${togetherCount} torneios juntos com Manuel`}>
+                    🤝 {togetherCount}
                   </span>
                 )}
-                {p.up.length > 0 && <span style={{ fontSize: 10, color: "var(--color-good-dark)", fontWeight: 700 }}>▲</span>}
+                {/* USKids: nº torneios histórico + ID */}
+                {mhCnt > 0 && (
+                  <span style={{ color: "var(--accent,#2563eb)", fontWeight: 600 }}
+                    title={`USKids: ${mhCnt} torneios · ID ${mhId ?? "?"}`}>
+                    📊{mhCnt}
+                    {mhId && <span style={{ opacity: 0.65, fontSize: 10 }}> #{mhId}</span>}
+                  </span>
+                )}
+                {rank != null && (
+                  <span className={`sidebar-rank ${rankCls}`} style={{ marginLeft: "auto" }}>#{rank}</span>
+                )}
+                {p.up.length > 0 && <span style={{ color: "var(--color-good-dark)", fontWeight: 700 }}>▲</span>}
               </div>
             </button>
           );
@@ -1382,13 +1776,122 @@ function RivaisSidebar({ selected, onSelect }: { selected: string | null; onSele
 }
 
 /* ═══════════════════════════════════
-   RIVAL DETAIL  (replaces FieldPlayerDetail)
+   MEMBER HISTORY TABLE — sortable
    ═══════════════════════════════════ */
-function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTable: () => void }) {
+type MHSortCol = "date" | "pos" | "total" | "name";
+
+function MemberHistTable({ mhTorneios, memberId }: {
+  mhTorneios: Array<MHTournament & { tid: string }>;
+  memberId: string;
+}) {
+  const [sortCol, setSortCol] = useState<MHSortCol>("date");
+  const [sortDir, setSortDir] = useState<"asc"|"desc">("desc");
+
+  const doSort = (col: MHSortCol) => {
+    if (sortCol === col) setSortDir(d => d === "asc" ? "desc" : "asc");
+    else { setSortCol(col); setSortDir(col === "name" ? "asc" : "desc"); }
+  };
+  const sortIcon = (col: MHSortCol) => sortCol === col ? (sortDir === "asc" ? " ↑" : " ↓") : "";
+
+  const sorted = useMemo(() => {
+    return [...mhTorneios].sort((a, b) => {
+      let cmp = 0;
+      if (sortCol === "date") {
+        const pa = isoDate(a.startDate || ""), pb = isoDate(b.startDate || "");
+        cmp = pa.localeCompare(pb);
+      } else if (sortCol === "pos") {
+        cmp = (a.place || 999) - (b.place || 999);
+      } else if (sortCol === "total") {
+        cmp = (a.totalStrokes || 999) - (b.totalStrokes || 999);
+      } else if (sortCol === "name") {
+        cmp = (a.name || "").localeCompare(b.name || "");
+      }
+      return sortDir === "desc" ? -cmp : cmp;
+    });
+  }, [mhTorneios, sortCol, sortDir]);
+
+  const ThS = ({ col, label, style }: { col: MHSortCol; label: string; style?: React.CSSProperties }) => (
+    <th onClick={() => doSort(col)} style={{ cursor: "pointer", userSelect: "none", ...style }}>
+      {label}{sortIcon(col)}
+    </th>
+  );
+
+  return (
+    <div style={{ marginTop: 24, marginBottom: 16 }}>
+      <div className="h-sm mb-8" style={{ color: "var(--text-2)", display: "flex", alignItems: "center", gap: 8 }}>
+        <span>📊 Histórico USKids · {mhTorneios.length} torneios</span>
+        <span style={{ fontSize: 10, color: "var(--text-3)", fontWeight: 400 }}>ID: {memberId}</span>
+      </div>
+      <div className="scroll-x">
+        <table className="dtable" style={{ width: "100%", fontSize: 12 }}>
+          <thead>
+            <tr>
+              <ThS col="name"  label="Torneio"  style={{ textAlign: "left", padding: "4px 8px" }} />
+              <th style={{ textAlign: "center", width: 60 }}>Escalão</th>
+              <ThS col="pos"   label="Pos"   style={{ textAlign: "center", width: 42 }} />
+              <ThS col="total" label="Total" style={{ textAlign: "center", width: 60 }} />
+              <th style={{ textAlign: "center", width: 70 }}>Rondas</th>
+              <ThS col="date"  label="Data"  style={{ textAlign: "left", width: 70 }} />
+            </tr>
+          </thead>
+          <tbody>
+            {sorted.map(t => {
+              const nRds = Object.keys(t.rounds || {}).length;
+              const rdGross = Object.values(t.rounds || {}).map((rd: MHTournRound) => rd.gross).filter(g => g > 0);
+              const parTotal = (t.par || []).reduce((a: number, b: number) => a + b, 0);
+              const tp = t.totalStrokes && parTotal ? t.totalStrokes - parTotal * nRds : null;
+              const tpStr = fmtToPar(tp, "");
+              const isoD = isoDate(t.startDate || "");
+              const fmtD = isoD ? new Date(isoD + "T12:00:00").toLocaleDateString("pt-PT", { month: "short", year: "numeric" }) : (t.startDate || "");
+              return (
+                <tr key={t.tid} style={{ borderBottom: "1px solid var(--border-light)" }}>
+                  <td style={{ padding: "4px 8px", fontWeight: 500 }}>{t.name}</td>
+                  <td style={{ textAlign: "center", fontSize: 10, color: "var(--text-2)" }}>{t.ageGroup}</td>
+                  <td style={{ textAlign: "center", fontWeight: 700,
+                    color: t.place <= 3 && t.place > 0 ? "var(--color-good-dark)" : "var(--text-2)" }}>
+                    {t.place > 0 ? `${t.place}º` : "—"}
+                  </td>
+                  <td style={{ textAlign: "center" }}>
+                    {t.totalStrokes > 0 ? (
+                      <>
+                        <span style={{ fontWeight: 600 }}>{t.totalStrokes}</span>
+                        {tpStr && <span style={{ color: tpColorMH(tp), marginLeft: 3, fontSize: 10 }}>({tpStr})</span>}
+                      </>
+                    ) : "—"}
+                  </td>
+                  <td style={{ textAlign: "center", fontSize: 10, color: "var(--text-3)" }}>
+                    {rdGross.length > 0 ? rdGross.join(" + ") : "—"}
+                  </td>
+                  <td style={{ fontSize: 10, color: "var(--text-3)" }}>{fmtD}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════
+   RIVAL DETAIL
+   ═══════════════════════════════════ */
+function RivalDetail({ playerName }: { playerName: string }) {
   const rivals = useRivals();
+  const memberHist = useMH();
+  const navigate = useNavigate();
   const rival = rivals.find(d => d.n === playerName);
   // Usar o Manuel do array merged (tem wjgc25_b1011 e outros tids auto)
   const manuelMerged = rivals.find(d => d.isM) ?? manuel;
+
+  // Member history lookup for this player (used for DOB estimation + history table)
+  const mhPlayer = React.useMemo(() => {
+    if (!memberHist) return null;
+    const key = playerName.toLowerCase().trim().replace(/\s+/g, " ");
+    return (Object.values(memberHist.jogadores) as MHPlayer[]).find(
+      m => m.name && m.name.toLowerCase().trim().replace(/\s+/g, " ") === key
+    ) ?? null;
+  }, [memberHist, playerName]);
   const bjgtCard = FIELD_CARDS.find(c => c.name === playerName);
   const lbEntry = FIELD_2025.leaderboard.find(p => p.name === playerName);
   const wjgcCard = findCard(WJGC26_CARDS, playerName);
@@ -1397,6 +1900,12 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
   const wjgc26_1213Card = findCard(WJGC26_1213_CARDS, playerName);
 
   const [expandedTourns, setExpandedTourns] = useState<Set<string>>(() => new Set());
+
+  // Reset expanded state whenever player changes
+  React.useEffect(() => {
+    setExpandedTourns(new Set());
+  }, [playerName]);
+
   const toggleExpand = (id: string) => setExpandedTourns(prev => {
     const next = new Set(prev);
     next.has(id) ? next.delete(id) : next.add(id);
@@ -1411,7 +1920,7 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
 
   const flag = rival ? (FL[rival.co] || "🏳️") : "";
   const rank = rankMap[playerName];
-  const tr = rival ? getTrend(rival) : null;
+  const tr = rival ? (getTrend as (p: RivalPlayer) => string | null)(rival) : null;
   const played = rival ? nPlayed(rival) : 0;
   const isManuel = rival?.isM;
 
@@ -1421,14 +1930,23 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
   // Mapa explícito: auto tid → manual T id que o cobre
   // Necessário quando o id manual não deriva trivialmente do auto tid
   const AUTO_COVERED_BY: Record<string,string> = {
+    // brjgt25 (manual) é coberto pelo tid específico do escalão
+    "wjgc25_b89":    "brjgt25",
+    "wjgc25_b1011":  "brjgt25",
+    "wjgc25_b1213":  "brjgt25",
+    // wjgc26_1213 (manual) é coberto pelo auto tid
+    "wjgc26_b1213":  "wjgc26_1213",
+    // Venice 2025
     "venice25_b11":  "venice25",
     "venice25_b12":  "venice25",
     "venice25_b9":   "venice25",
     "venice25_b10":  "venice25",
+    // Rome 2025
     "rome25_b11":    "rome25",
     "rome25_b12":    "rome25",
     "rome25_b9":     "rome25",
     "rome25_b10":    "rome25",
+    // Doral 2025
     "doral25_b1011": "doral25",
     "doral25_b89":   "doral25",
     "doral25_b1213": "doral25",
@@ -1444,11 +1962,11 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
     // Só ocultar se o torneio manual substituto realmente existe em rival.r
     if (tid in AUTO_COVERED_BY) {
       const manualTid = AUTO_COVERED_BY[tid];
-      return !!(rival?.r[manualTid]?.rd?.length > 0);
+      return !!((rival?.r[manualTid]?.rd?.length ?? 0) > 0);
     }
     // Fallback genérico: strip _b\d+ suffix
     const base = tid.replace(/_b\d+$/, "");
-    if (manualTournIds.has(base)) return !!(rival?.r[base]?.rd?.length > 0);
+    if (manualTournIds.has(base)) return !!((rival?.r[base]?.rd?.length ?? 0) > 0);
     return false;
   }
 
@@ -1488,7 +2006,7 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
       })(),
       // For manual T tourns: prefer ageGroup from auto tid, fallback to ageMin/ageMax
       ageGroup: ((MANUAL_AUTO_TIDS[t.id] || []).reduce((found: string | null, atid) =>
-        found || (rival.r[atid]?.ageGroup ?? null), null)
+        found || ((rival.r[atid] as any)?.ageGroup ?? null), null)
         ?? ageLabel(t.ageMin, t.ageMax)) as string | null,
       isAuto: false,
     })),
@@ -1512,7 +2030,7 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
           intendedRounds: res.rd.length, url: autoMeta?.url,
         } as unknown as TournDef;
         const autoCard = autoScorecards.find(sc => sc.tid === tid) || null;
-        return { t: fakeDef, res, hasCard: !!autoCard, autoCard, ageGroup: (res.ageGroup ?? null) as string | null, isAuto: true };
+        return { t: fakeDef, res, hasCard: !!autoCard, autoCard, ageGroup: ((res as any).ageGroup ?? null) as string | null, isAuto: true };
       }),
   ].sort((a, b) => {
     const da = a.t.dateExact ?? a.t.date;
@@ -1524,15 +2042,18 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
   const playedDedup = tournResults.length;
   const roundsDedup = tournResults.reduce((acc, x) =>
     acc + x.res.rd.filter((r: number | null) => r != null && r > 0).length, 0);
+
+  // All scorecards start closed — user expands manually
   // Double-check: nPlayed(rival) deve bater com playedDedup
-  if (rival && process.env.NODE_ENV !== "production" && nPlayed(rival) !== playedDedup) {
+  if (rival && import.meta.env.DEV && nPlayed(rival) !== playedDedup) {
     console.warn(`[RivaisIntl] count mismatch for ${rival.n}: nPlayed=${nPlayed(rival)} vs tournResults=${playedDedup}`);
   }
 
-  const allRds = tournResults.flatMap(x => x.res.rd.filter((r: number | null) => r != null && r > 0));
+  const allRds = tournResults.flatMap(x => x.res.rd.filter((r): r is number => r != null && r > 0));
   const completedResults = tournResults.filter(x => x.res.tp != null);
   const bestTp = completedResults.length ? Math.min(...completedResults.map(x => x.res.tp!)) : null;
-  const bestRd = allRds.length ? Math.min(...allRds) : null;
+  const _bestRd = allRds.length ? Math.min(...allRds) : null;
+  void _bestRd;
   const avgRd = allRds.length ? (allRds.reduce((a: number, b: number) => a + b, 0) / allRds.length) : null;
 
   // Collect all scores from any tournament with full scorecards for distribution
@@ -1562,12 +2083,16 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
   const frontPar = par.slice(0, 9).reduce((a, b) => a + b, 0);
   const backPar = par.slice(9).reduce((a, b) => a + b, 0);
   const totalPar = frontPar + backPar;
-  const sm = (arr: number[], f: number, t: number) => arr.slice(f, t).reduce((a, b) => a + b, 0);
+  const sm = (arr: readonly number[], f: number, t: number) => arr.slice(f, t).reduce((a, b) => a + b, 0);
 
   const SubCell = ({ gross, parVal, cls }: { gross: number; parVal: number; cls: string }) => {
     const tp = gross - parVal;
     return <td className={`${cls} fw-700`}>{gross}<span className={`sc-topar ${toParClass(tp)}`}>{fmtSign(tp)}</span></td>;
   };
+  const vpFrontM = VP_M.slice(0, 9).reduce((a, b) => a + b, 0);
+  const vpBackM  = VP_M.slice(9).reduce((a, b) => a + b, 0);
+  const vpTotalM = vpFrontM + vpBackM;
+
   const THead = () => (
     <thead><tr>
       <th className="hole-header" style={{ textAlign: "left", paddingLeft: 8, minWidth: 50 }}>Buraco</th>
@@ -1577,6 +2102,25 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
       <th className="hole-header col-in fs-10">In</th>
       <th className="hole-header col-total">TOTAL</th>
     </tr></thead>
+  );
+  const MetrosRow = () => (
+    <tr className="meta-row">
+      <td className="row-label fs-10 c-text-3">m</td>
+      {VP_M.slice(0, 9).map((m, i) => <td key={i} className="fs-10 c-text-3">{m}</td>)}
+      <td className="col-out fs-10 c-text-3">{vpFrontM}</td>
+      {VP_M.slice(9).map((m, i) => <td key={i + 9} className="fs-10 c-text-3">{m}</td>)}
+      <td className="col-in fs-10 c-text-3">{vpBackM}</td>
+      <td className="col-total fs-10 c-text-3">{vpTotalM}</td>
+    </tr>
+  );
+  const SIRow = () => (
+    <tr className="meta-row">
+      <td className="row-label fs-10">SI</td>
+      {VP_SI.slice(0, 9).map((s, i) => <td key={i}>{s}</td>)}
+      <td className="col-out" />
+      {VP_SI.slice(9).map((s, i) => <td key={i + 9}>{s}</td>)}
+      <td className="col-in" /><td className="col-total" />
+    </tr>
   );
   const ParRow = ({ sep }: { sep?: boolean }) => (
     <tr className={sep ? "sep-row" : "meta-row"}>
@@ -1634,89 +2178,384 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
   return (
     <>
       {/* ── Header ── */}
-      <div className="detail-header">
-        <div className="detail-header-top">
-          <h2 className="detail-title">
-            <span>{flag}</span>
-            <span>{playerName}</span>
-            {rank != null && (
-              <span className={`sidebar-rank ${rank <= 3 ? "sidebar-rank-top3" : rank <= 10 ? "sidebar-rank-top10" : "sidebar-rank-rest"}`}>
-                #{rank}/{totalRanked}
-              </span>
-            )}
-            {tr && <span className="fw-700 fs-13" style={{ color: TR_I[tr].c }}>{TR_I[tr].i}</span>}
-          </h2>
-          <button className="p p-filter p-sm" onClick={onShowTable}>Tabela ↗</button>
-        </div>
-        <div className="detail-sub">
-          {rival && !isManuel && <span className="muted">{rival.co}</span>}
-          {isManuel && <span className="p p-outline p-sm">REF</span>}
+      <div style={{ marginBottom: 20 }}>
+        {/* Row 1: name + rank + trend */}
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6, flexWrap: "wrap" }}>
+          <span style={{ fontSize: 22 }}>{flag}</span>
+          <h2 style={{ fontSize: 22, fontWeight: 800, margin: 0, color: "var(--text)" }}>{playerName}</h2>
+          {rank != null && (
+            <span className={`sidebar-rank ${rank <= 3 ? "sidebar-rank-top3" : rank <= 10 ? "sidebar-rank-top10" : "sidebar-rank-rest"}`}
+              style={{ fontSize: 12, padding: "2px 8px" }}>
+              #{rank}/{totalRanked}
+            </span>
+          )}
+          {tr && <span style={{ fontSize: 15, fontWeight: 700, color: TR_I[tr as keyof typeof TR_I].c }}>{TR_I[tr as keyof typeof TR_I].i}</span>}
           {rival?.up.map(u => {
             const up = UP.find(x => x.id === u);
-            return up ? <span key={u} className="p p-sm ml-6" style={{ background: "var(--bg-success-strong)", color: "var(--color-good-dark)" }}>▲ {up.short}</span> : null;
+            return up ? <span key={u} className="p p-sm" style={{ background: "var(--bg-success-strong)", color: "var(--color-good-dark)", fontSize: 11 }}>▲ {up.short}</span> : null;
           })}
+          {/* USKids link — far right */}
+          {!isManuel && (
+            <button
+              onClick={() => navigate("/uskids", { state: { rival: playerName } })}
+              className="p p-filter p-sm"
+              style={{ marginLeft: "auto", fontSize: 11 }}
+              title="Ver encontros e histórico USKids"
+            >
+              🏌️ USKids →
+            </button>
+          )}
+        </div>
+
+        {/* Row 2: country · dob · stats — spread across full width */}
+        <div style={{ display: "flex", gap: 20, alignItems: "center", flexWrap: "wrap", fontSize: 13, color: "var(--text-2)" }}>
+          {rival && !isManuel && (
+            <span style={{ fontWeight: 500 }}>{rival.co}</span>
+          )}
+          {isManuel && <span className="p p-outline p-sm">REF</span>}
+
+          {/* DOB */}
+          {rival && (() => {
+            const d = computeDobInfo(rival, mhPlayer);
+            if (!d.exact && d.rangeStr === "?") return null;
+            if (d.exact) {
+              return (
+                <span style={{ color: "var(--color-good-dark)", fontWeight: 600 }}
+                  title={`Data de nascimento exacta: ${d.dobStr}`}>
+                  🎂 {d.ageStr} · {d.dobStr}
+                </span>
+              );
+            }
+            const spanDays = d.rangeMin && d.rangeMax
+              ? Math.round((d.rangeMax.getTime() - d.rangeMin.getTime()) / 86400000) : 999;
+            const col = spanDays <= 60  ? "var(--color-good-dark)"
+                      : spanDays <= 180 ? "var(--text-2)" : "var(--text-3)";
+            const icon = spanDays <= 60 ? "🎯" : "📅";
+            return (
+              <span style={{ color: col }} title={`Estimativa · janela ${spanDays}d`}>
+                {icon} {d.ageStr} · ~{d.rangeStr}
+              </span>
+            );
+          })()}
+
+          {/* Stats pills */}
+          {played > 0 && <>
+            <span style={{ color: "var(--text-3)" }}>·</span>
+            <span><strong style={{ fontWeight: 700, color: "var(--text)", fontSize: 14 }}>{played}</strong> torneios</span>
+            <span><strong style={{ fontWeight: 700, color: "var(--text)", fontSize: 14 }}>{roundsDedup}</strong> rondas</span>
+          </>}
+          {bestTp != null && <>
+            <span style={{ color: "var(--text-3)" }}>·</span>
+            <span>melhor
+              <strong style={{ fontWeight: 700, color: tpColorDark(bestTp), fontSize: 14, marginLeft: 4 }}>{fmtToPar(bestTp)}</strong>
+            </span>
+          </>}
+          {avgRd != null && (
+            <span>avg
+              <strong style={{ fontWeight: 700, color: "var(--text)", fontSize: 14, marginLeft: 4 }}>{avgRd.toFixed(1)}</strong>
+            </span>
+          )}
         </div>
       </div>
 
-      {/* ── KPIs + Distribuição de scoring ── */}
+      {/* ── H2H vs Manuel ── */}
       {(() => {
-        let eagles=0,birdies=0,pars=0,bogeys=0,doubles=0,worse=0;
-        for (let k=0;k<allCardScores.length;k++) {
-          const sc=allCardScores[k], pp=allCardPars[k];
-          for (let i=0;i<18;i++) { const d=sc[i]-pp[i]; if(d<=-2)eagles++; else if(d===-1)birdies++; else if(d===0)pars++; else if(d===1)bogeys++; else if(d===2)doubles++; else worse++; }
-        }
-        const holeTotal = allCardScores.length * 18;
-        const pct = (v: number) => holeTotal ? (v/holeTotal*100).toFixed(0)+"%" : "—";
-        const hasScoring = holeTotal > 0;
-        const kpis: { label: string; value: React.ReactNode; sub?: React.ReactNode; color?: string }[] = [];
-        if (playedDedup > 0) kpis.push({ label: "Torneios", value: playedDedup, sub: `${roundsDedup} rondas` });
-        if (bestTp != null) kpis.push({ label: "Melhor ±Par", value: fmtToPar(bestTp), color: tpColorDark(bestTp) });
-        if (avgRd != null) kpis.push({ label: "Média Ronda", value: avgRd.toFixed(1) });
-        if (hasScoring) {
-          if (eagles > 0) kpis.push({ label: "Eagle+", value: pct(eagles), sub: eagles, color: "var(--score-eagle-text, #7c3aed)" });
-          kpis.push({ label: "Birdie", value: pct(birdies), sub: birdies, color: "var(--color-good-dark)" });
-          kpis.push({ label: "Par", value: pct(pars), sub: pars });
-          kpis.push({ label: "Bogey", value: pct(bogeys), sub: bogeys, color: "var(--color-warn, #d97706)" });
-          if (doubles > 0) kpis.push({ label: "Duplo", value: pct(doubles), sub: doubles, color: "var(--color-bad, #dc2626)" });
-          if (worse > 0) kpis.push({ label: "Triple+", value: pct(worse), sub: worse, color: "var(--color-bad, #dc2626)" });
-        }
-        if (!kpis.length) return null;
-        const scoringItems = kpis.filter(k => ["Eagle+","Birdie","Par","Bogey","Duplo","Triple+"].includes(k.label));
-        const statItems = kpis.filter(k => !["Eagle+","Birdie","Par","Bogey","Duplo","Triple+"].includes(k.label));
-        const scoreClsMap: Record<string,string> = {"Eagle+":"eagle","Birdie":"birdie","Par":"par","Bogey":"bogey","Duplo":"double","Triple+":"triple"};
+        if (!rival || isManuel) return null;
+        const rivalHidden = hiddenTids(rival);
+        const manuelHidden = hiddenTids(manuelMerged);
+        const sharedTids = Object.keys(rival.r).filter(tid => {
+          if (rivalHidden.has(tid) || manuelHidden.has(tid)) return false;
+          const m = manuelMerged?.r[tid];
+          const r = rival.r[tid];
+          return typeof m?.p === "number" && typeof r?.p === "number";
+        });
+        if (sharedTids.length === 0) return null;
+        const wins = sharedTids.filter(tid => (manuelMerged.r[tid].p as number) < (rival.r[tid].p as number)).length;
+        const losses = sharedTids.filter(tid => (manuelMerged.r[tid].p as number) > (rival.r[tid].p as number)).length;
+        const draws = sharedTids.length - wins - losses;
+        const rivalShortName = playerName.split(" ").slice(-1)[0];
         return (
           <>
-            {statItems.length > 0 && (
-              <div className="kpis mb-8" style={{ gridTemplateColumns: `repeat(${Math.min(statItems.length, 5)}, 1fr)` }}>
-                {statItems.map(k => (
-                  <KpiCard key={k.label} label={k.label} value={k.value} sub={k.sub} color={k.color} size="sm" />
-                ))}
-              </div>
-            )}
-            {scoringItems.length > 0 && (
-              <div className="d-flex gap-8 mb-12" style={{ flexWrap: "wrap", alignItems: "stretch" }}>
-                {scoringItems.map(k => (
-                  <div key={k.label} className="kpi" style={{ flex: "1 1 80px", minWidth: 72, display: "flex", flexDirection: "column", alignItems: "center", gap: 4, padding: "8px 6px" }}>
-                    <span className="kpi-lbl">{k.label}</span>
-                    <span className={`sc-score ${scoreClsMap[k.label] ?? ""}`} style={{ width: 36, height: 36, fontSize: 14, fontWeight: 900 }}>{k.value}</span>
-                    <span className="kpi-sub">{k.sub}</span>
-                  </div>
-                ))}
-              </div>
-            )}
+          <div style={{ marginBottom: 20 }}>
+            <div style={{ fontSize: 12, fontWeight: 600, color: "var(--text-2)", marginBottom: 8 }}>
+              Head-to-Head · {sharedTids.length} torneios juntos
+            </div>
+            {/* Bar */}
+            <div style={{ display: "flex", height: 18, borderRadius: 4, overflow: "hidden", gap: 2, marginBottom: 8 }}>
+              {wins  > 0 && <div style={{ flex: wins,  background: "var(--color-good-dark,#15803d)" }} title={`Manuel ganhou: ${wins}`} />}
+              {draws > 0 && <div style={{ flex: draws, background: "var(--border,#d1d5db)" }}          title={`Empates: ${draws}`} />}
+              {losses> 0 && <div style={{ flex: losses,background: "var(--color-danger,#dc2626)" }}    title={`${rivalShortName} ganhou: ${losses}`} />}
+            </div>
+            {/* Legend */}
+            <div style={{ display: "flex", gap: 16, fontSize: 12, flexWrap: "wrap" }}>
+              <span style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                <span style={{ width: 10, height: 10, borderRadius: 2, background: "var(--color-good-dark,#15803d)", display: "inline-block" }} />
+                <strong style={{ color: "var(--color-good-dark)", fontWeight: 700, fontSize: 14 }}>{wins}</strong>
+                <span style={{ color: "var(--text-3)" }}>Vitórias Manuel</span>
+              </span>
+              <span style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                <span style={{ width: 10, height: 10, borderRadius: 2, background: "var(--border)", display: "inline-block" }} />
+                <strong style={{ color: "var(--text-2)", fontWeight: 700, fontSize: 14 }}>{draws}</strong>
+                <span style={{ color: "var(--text-3)" }}>Empates</span>
+              </span>
+              <span style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                <span style={{ width: 10, height: 10, borderRadius: 2, background: "var(--color-danger,#dc2626)", display: "inline-block" }} />
+                <strong style={{ color: "var(--color-danger)", fontWeight: 700, fontSize: 14 }}>{losses}</strong>
+                <span style={{ color: "var(--text-3)" }}>Vitórias {rivalShortName}</span>
+              </span>
+            </div>
+          </div>
+            {/* Tabela de encontros */}
+            <div className="scroll-x mt-10">
+              <table className="dtable" style={{ width: "100%", fontSize: 12 }}>
+                <thead>
+                  <tr>
+                    <th style={{ textAlign: "left", padding: "4px 8px" }}>Torneio</th>
+                    <th style={{ textAlign: "center", width: 70 }}>Escalão</th>
+                    <th style={{ textAlign: "center", width: 80 }}>Manuel</th>
+                    <th style={{ textAlign: "center", width: 80 }}>{rivalShortName}</th>
+                    <th style={{ textAlign: "center", width: 40 }}></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {sharedTids
+                    .map(tid => {
+                      const info = getTournInfo(tid);
+                      const mRes = manuelMerged.r[tid];
+                      const rRes = rival.r[tid];
+                      const mPos = mRes.p as number, rPos = rRes.p as number;
+                      const manWon = mPos < rPos, rivalWon = rPos < mPos;
+                      return { tid, info, mRes, rRes, mPos, rPos, manWon, rivalWon };
+                    })
+                    .sort((a, b) => (b.info.dateExact ?? b.info.date).localeCompare(a.info.dateExact ?? a.info.date))
+                    .map(({ tid, info, mRes, rRes, mPos, rPos, manWon, rivalWon }) => {
+                      const ageGrp = (rRes as any).ageGroup ?? null;
+                      return (
+                        <tr key={tid} style={{ borderBottom: "1px solid var(--border-light)" }}>
+                          <td style={{ padding: "5px 8px", fontWeight: 500 }}>
+                            {info.name}
+                            <span style={{ fontSize: 10, color: "var(--text-3)", marginLeft: 6 }}>{info.date}</span>
+                          </td>
+                          <td style={{ textAlign: "center" }}>
+                            {ageGrp && (
+                              <span style={{ fontSize: 10, fontWeight: 600, padding: "1px 6px", borderRadius: 3,
+                                background: "var(--bg-info-subtle,#e0f2fe)", color: "var(--color-info-dark,#0369a1)",
+                                border: "1px solid var(--color-info-light,#7dd3fc)" }}>
+                                {ageGrp}
+                              </span>
+                            )}
+                          </td>
+                          <td style={{ textAlign: "center", fontWeight: 700, fontSize: 13,
+                            color: manWon ? "var(--color-good-dark)" : rivalWon ? "var(--color-danger)" : "var(--text-3)" }}>
+                            #{mPos}
+                            {mRes.tp != null && <span style={{ fontSize: 10, fontWeight: 400, marginLeft: 3 }}>({fmtToPar(mRes.tp)})</span>}
+                          </td>
+                          <td style={{ textAlign: "center", fontWeight: 700, fontSize: 13,
+                            color: rivalWon ? "var(--color-good-dark)" : manWon ? "var(--color-danger)" : "var(--text-3)" }}>
+                            #{rPos}
+                            {rRes.tp != null && <span style={{ fontSize: 10, fontWeight: 400, marginLeft: 3 }}>({fmtToPar(rRes.tp)})</span>}
+                          </td>
+                          <td style={{ textAlign: "center", fontSize: 14, fontWeight: 800,
+                            color: manWon ? "var(--color-good-dark)" : rivalWon ? "var(--color-danger)" : "var(--text-3)" }}>
+                            {manWon ? "✓" : rivalWon ? "✗" : "="}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </table>
+            </div>
           </>
         );
       })()}
 
+      {/* ── KPIs + Distribuição de scoring ── */}
+      {(() => {
+        // ── Scoring distribution from scorecards ──
+        let eagles=0,birdies=0,pars=0,bogeys=0,doubles=0,worse=0;
+        // Par-type breakdown
+        const byPar: Record<3|4|5, { sum: number; n: number; under: number }> = {
+          3: {sum:0,n:0,under:0}, 4: {sum:0,n:0,under:0}, 5: {sum:0,n:0,under:0}
+        };
+        for (let k=0;k<allCardScores.length;k++) {
+          const sc=allCardScores[k], pp=allCardPars[k];
+          for (let i=0;i<18;i++) {
+            const d=sc[i]-pp[i];
+            if(d<=-2)eagles++; else if(d===-1)birdies++; else if(d===0)pars++; else if(d===1)bogeys++; else if(d===2)doubles++; else worse++;
+            const p3 = pp[i] as 3|4|5;
+            if (p3 === 3 || p3 === 4 || p3 === 5) {
+              byPar[p3].sum += sc[i]; byPar[p3].n++;
+              if (d < 0) byPar[p3].under++;
+            }
+          }
+        }
+        const holeTotal = allCardScores.length * 18;
+        const hasScoring = holeTotal > 0;
+
+        // ── Round stats ──
+        const rdSorted = [...allRds].sort((a,b)=>a-b);
+        const bestRd = rdSorted[0] ?? null;
+        const worstRd = rdSorted[rdSorted.length-1] ?? null;
+        const rdMean = avgRd;
+        const rdStdDev = allRds.length > 1
+          ? Math.sqrt(allRds.reduce((s,r) => s + (r - rdMean!)*(r - rdMean!), 0) / (allRds.length - 1))
+          : null;
+        const _subParRds = allRds.length > 0
+          ? allRds.filter((_r) => {
+              // need par per round — approximate with avg par from scorecards
+              return false; // will use scorecard pars below
+            }).length : 0;
+        void _subParRds;
+        // Rounds under par from scorecards (more accurate)
+        let underParRounds = 0, overParRounds = 0;
+        for (let k=0;k<allCardScores.length;k++) {
+          const total = allCardScores[k].reduce((a,b)=>a+b,0);
+          const parTotal = allCardPars[k].reduce((a,b)=>a+b,0);
+          if (total < parTotal) underParRounds++;
+          else if (total > parTotal) overParRounds++;
+        }
+
+        // ── vs Manuel ──
+        const vsManuelDeltas: number[] = [];
+        if (!isManuel && rival && manuelMerged) {
+          for (const tid of Object.keys(rival.r)) {
+            const rr = rival.r[tid]; const mm = manuelMerged.r[tid];
+            if (rr?.tp != null && mm?.tp != null) vsManuelDeltas.push(rr.tp - mm.tp);
+          }
+        }
+        const vsManuelAvg = vsManuelDeltas.length
+          ? vsManuelDeltas.reduce((a,b)=>a+b,0) / vsManuelDeltas.length : null;
+
+        if (playedDedup === 0 && !hasScoring) return null;
+
+        return (
+          <div style={{ marginBottom: 16 }}>
+            {/* ── Stat KPIs ── */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(90px, 1fr))", gap: 8, marginBottom: 12 }}>
+              {playedDedup > 0 && (
+                <div className="kpi" style={{ padding: "8px 10px" }}>
+                  <div className="kpi-lbl">Torneios</div>
+                  <div className="kpi-val" style={{ fontSize: 22 }}>{playedDedup}</div>
+                  <div className="kpi-sub">{roundsDedup} rondas</div>
+                </div>
+              )}
+              {bestTp != null && (
+                <div className="kpi" style={{ padding: "8px 10px" }}>
+                  <div className="kpi-lbl">Melhor ±Par</div>
+                  <div className="kpi-val" style={{ fontSize: 22, color: tpColorDark(bestTp) }}>{fmtToPar(bestTp)}</div>
+                  <div className="kpi-sub">torneio</div>
+                </div>
+              )}
+              {rdMean != null && (
+                <div className="kpi" style={{ padding: "8px 10px" }}>
+                  <div className="kpi-lbl">Média Ronda</div>
+                  <div className="kpi-val" style={{ fontSize: 22 }}>{rdMean.toFixed(1)}</div>
+                  {rdStdDev != null && <div className="kpi-sub">σ {rdStdDev.toFixed(1)}</div>}
+                </div>
+              )}
+              {bestRd != null && (
+                <div className="kpi" style={{ padding: "8px 10px" }}>
+                  <div className="kpi-lbl">Melhor Ronda</div>
+                  <div className="kpi-val" style={{ fontSize: 22, color: "var(--color-good-dark)" }}>{bestRd}</div>
+                  {worstRd != null && worstRd !== bestRd && <div className="kpi-sub">pior {worstRd}</div>}
+                </div>
+              )}
+              {allCardScores.length > 0 && (
+                <div className="kpi" style={{ padding: "8px 10px" }}>
+                  <div className="kpi-lbl">Sub-Par</div>
+                  <div className="kpi-val" style={{ fontSize: 22, color: underParRounds > 0 ? "var(--color-good-dark)" : "var(--text-3)" }}>
+                    {allCardScores.length > 0 ? `${Math.round(underParRounds/allCardScores.length*100)}%` : "—"}
+                  </div>
+                  <div className="kpi-sub">{underParRounds}/{allCardScores.length} rondas</div>
+                </div>
+              )}
+              {vsManuelAvg != null && (
+                <div className="kpi" style={{ padding: "8px 10px" }}>
+                  <div className="kpi-lbl">vs Manuel</div>
+                  <div className="kpi-val" style={{ fontSize: 22, color: vsManuelAvg > 0 ? "var(--color-good-dark)" : vsManuelAvg < 0 ? "var(--color-danger)" : "var(--text-3)" }}>
+                    {fmtSign(Math.round(vsManuelAvg))}
+                  </div>
+                  <div className="kpi-sub">{vsManuelDeltas.length} torneios</div>
+                </div>
+              )}
+            </div>
+
+            {/* ── Scoring distribution — horizontal bar ── */}
+            {hasScoring && (() => {
+              const segs = [
+                { key:"eagle",  n:eagles,  cls:"seg-eagle",  label:"Eagle+" },
+                { key:"birdie", n:birdies, cls:"seg-birdie", label:"Birdie" },
+                { key:"par",    n:pars,    cls:"seg-par",    label:"Par" },
+                { key:"bogey",  n:bogeys,  cls:"seg-bogey",  label:"Bogey" },
+                { key:"double", n:doubles, cls:"seg-double", label:"Duplo" },
+                { key:"triple", n:worse,   cls:"seg-triple", label:"Triple+" },
+              ].filter(s => s.n > 0);
+              return (
+                <div style={{ marginBottom: 12 }}>
+                  <div style={{ fontSize: 10, fontWeight: 600, color: "var(--text-3)", marginBottom: 5 }}>
+                    Distribuição de scoring · {holeTotal} buracos
+                  </div>
+                  {/* Bar — uses same seg-* classes as scorecard segments */}
+                  <div style={{ display: "flex", height: 16, borderRadius: 4, overflow: "hidden", gap: 1, marginBottom: 6 }}>
+                    {segs.map(s => (
+                      <div key={s.key} className={s.cls}
+                        style={{ flex: s.n, minWidth: 2 }}
+                        title={`${s.label}: ${s.n} (${(s.n/holeTotal*100).toFixed(0)}%)`} />
+                    ))}
+                  </div>
+                  {/* Legend */}
+                  <div style={{ display: "flex", gap: "6px 12px", flexWrap: "wrap" }}>
+                    {segs.map(s => (
+                      <span key={s.key} style={{ fontSize: 10, color: "var(--text-2)", display: "flex", alignItems: "center", gap: 4 }}>
+                        <span className={s.cls} style={{ width: 8, height: 8, borderRadius: 2, display: "inline-block", flexShrink: 0 }} />
+                        {s.label} {(s.n/holeTotal*100).toFixed(0)}%
+                        <span style={{ color: "var(--text-3)", fontSize: 9 }}>({s.n})</span>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
+
+            {/* ── Par-type breakdown ── */}
+            {hasScoring && (byPar[3].n > 0 || byPar[4].n > 0 || byPar[5].n > 0) && (() => {
+              const parAvgs = ([3,4,5] as const).map(p => ({
+                p, avg: byPar[p].n ? byPar[p].sum / byPar[p].n : null,
+                n: byPar[p].n, under: byPar[p].under,
+              })).filter(x => x.n > 0);
+              return (
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                  {parAvgs.map(({ p, avg, n, under }) => {
+                    const diff = avg != null ? avg - p : null;
+                    const col = diff == null ? "var(--text-3)"
+                              : diff < 0 ? "var(--color-good-dark)"
+                              : diff < 0.3 ? "var(--text-2)" : "var(--color-warn,#d97706)";
+                    return (
+                      <div key={p} className="kpi" style={{ flex: "1 1 80px", padding: "6px 10px", minWidth: 72 }}>
+                        <div className="kpi-lbl">Par {p}</div>
+                        <div className="kpi-val" style={{ fontSize: 18, color: col }}>
+                          {avg != null ? avg.toFixed(2) : "—"}
+                        </div>
+                        <div className="kpi-sub">{Math.round(under/n*100)}% sub-par</div>
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })()}
+          </div>
+        );
+      })()}
+
       {/* ── Cards de torneio ── */}
-      {tournResults.map(({ t, res, hasCard, autoCard, ageGroup, isAuto }) => {
+      {tournResults.map(({ t, res, hasCard, autoCard, ageGroup, isAuto: _isAuto }) => {
         const expanded = expandedTourns.has(t.id);
         const wOrd = getTournWeight(t.id);
         const stars = wOrd >= 1.3 ? "★★★★★" : wOrd >= 1.1 ? "★★★★" : wOrd >= 0.9 ? "★★★" : wOrd >= 0.6 ? "★★" : wOrd >= 0.4 ? "★" : null;
         const manuelRes = !isManuel ? manuelMerged?.r[t.id] : null;
         const vsM = manuelRes?.tp != null && res.tp != null ? res.tp - manuelRes.tp : null;
         const tpDisplay = res.tp != null ? fmtToPar(res.tp) : null;
-        const totalRds = res.rd.reduce((a: number, b: number) => a + b, 0);
+        const totalRds = (res.rd.filter((r): r is number => r != null) as number[]).reduce((a: number, b: number) => a + b, 0);
 
         return (
           <div key={t.id} className="sc-modern">
@@ -1782,11 +2621,32 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
                   ? <><span className="fs-11 c-text-3">±Par </span><span className="fw-700 fs-13" style={{ color: tpColorDark(res.tp) }}>{tpDisplay}</span></>
                   : <span className="fs-11 c-text-3">—</span>}
               </div>
-              {/* Col 4: Rondas */}
-              <div className="d-flex gap-8" style={{ flexWrap: "wrap" }}>
-                {res.rd.filter((r: number|null) => r != null && r > 0).map((r: number, i: number) => (
-                  <span key={i} className="fs-12 fw-600" style={{ color: tpColorDark(r - t.par, 5) }}>R{i+1}: {r}</span>
-                ))}
+              {/* Col 4: Rondas com trend */}
+              <div className="d-flex gap-8" style={{ flexWrap: "wrap", alignItems: "center" }}>
+                {(() => {
+                  const rds = res.rd.filter((r: number|null) => r != null && r > 0) as number[];
+                  // Trend arrow: compare last vs first round
+                  const trend = rds.length >= 2 ? rds[rds.length-1] - rds[0] : null;
+                  return (
+                    <>
+                      {rds.map((r: number, i: number) => (
+                        <span key={i} className="fs-12 fw-600" style={{ color: tpColorDark(r - t.par, 5) }}>
+                          R{i+1}: {r}
+                        </span>
+                      ))}
+                      {trend != null && rds.length >= 2 && (
+                        <span style={{
+                          fontSize: 10, fontWeight: 700, marginLeft: 2,
+                          color: trend < -1 ? "var(--color-good-dark)"
+                               : trend > 1  ? "var(--color-danger)"
+                               : "var(--text-3)",
+                        }} title={`${trend > 0 ? "+" : ""}${trend} pancadas da R1 para a última ronda`}>
+                          {trend < -1 ? "▲" : trend > 1 ? "▼" : "●"}
+                        </span>
+                      )}
+                    </>
+                  );
+                })()}
               </div>
               {vsM != null && (
                 <div>
@@ -1803,36 +2663,73 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
                     <table className="sc-table-modern" data-sc-table="1">
                       <THead />
                       <tbody>
+                        <MetrosRow />
+                        <SIRow />
                         <FieldAvgRow />
                         <ParRow sep />
-                        {bjgtCard.rounds.map((rd, i) => <GrossRow key={i} holes={rd} label={`R${i + 1}`} />)}
-                        <GrossRow holes={bjgtCard.ecl} label="ECL" />
-                        <VsFieldRow holes={bjgtCard.ecl} />
+                        {bjgtCard.rounds.map((rd, i) => <GrossRow key={i} holes={rd as number[]} label={`R${i + 1}`} />)}
+                        <GrossRow holes={bjgtCard.ecl as number[]} label="ECL" />
+                        <VsFieldRow holes={bjgtCard.ecl as number[]} />
                       </tbody>
                     </table>
                   </div>
                 )}
+                {/* WJGC 2025: se não tem bjgtCard usa o autoCard (wjgc25_b1011) com dados VP */}
+                {t.id === "brjgt25" && !bjgtCard && autoCard && (
+                  <TournScorecard
+                    par={autoCard.par.length === 18 ? autoCard.par as unknown as readonly number[] : VP_PAR as unknown as readonly number[]}
+                    si={autoCard.si.length > 0 ? autoCard.si as unknown as readonly number[] : VP_SI as unknown as readonly number[]}
+                    meters={autoCard.meters.length > 0 ? autoCard.meters as unknown as readonly number[] : VP_M as unknown as readonly number[]}
+                    rounds={autoCard.rounds.map((sc, i) => ({ label: `R${i + 1}`, scores: sc }))}
+                  />
+                )}
                 {t.id === "wjgc26" && wjgcCard && (
-                  <TournScorecard par={WJGC26_PAR} si={WJGC26_SI}
+                  <TournScorecard par={WJGC26_PAR} si={WJGC26_SI} meters={WJGC26_M}
                     rounds={wjgcCard.rds.map((sc, i) => ({ label: `R${i + 1}`, scores: [...sc] }))} />
                 )}
 
                 {t.id === "eowagr25" && eowagr25Card && (
-                  <TournScorecard par={EOWAGR25_PAR} si={EOWAGR25_SI}
+                  <TournScorecard par={EOWAGR25_PAR} si={EOWAGR25_SI} meters={EOWAGR25_M}
                     rounds={eowagr25Card.rds.map((sc, i) => ({ label: `R${i + 1}`, scores: [...sc] }))} />
                 )}
                 {t.id === "wjgc26_1213" && wjgc26_1213Card && (
-                  <TournScorecard par={WJGC26_1213_PAR} si={WJGC26_1213_SI}
+                  <TournScorecard par={WJGC26_1213_PAR} si={WJGC26_1213_SI} meters={WJGC26_1213_M}
                     rounds={wjgc26_1213Card.rds.map((sc, i) => ({ label: `R${i + 1}`, scores: [...sc] }))} />
                 )}
                 {/* Auto-loaded scorecard — torneios auto E torneios manuais sem card dedicado (Venice, Rome, Doral…) */}
-                {autoCard && (
-                  <TournScorecard
-                    par={autoCard.par as unknown as readonly number[]}
-                    si={autoCard.si.length > 0 ? autoCard.si as unknown as readonly number[] : undefined}
-                    rounds={autoCard.rounds.map((sc, i) => ({ label: `R${i + 1}`, scores: sc }))}
-                  />
-                )}
+                {autoCard && (() => {
+                  // Fallback metros por tid quando o JSON não os inclui
+                  const METERS_FALLBACK: Record<string, readonly number[]> = {
+                    // Venice — Frassanelle tee AMARELAS
+                    venice25: VENICE_M, venice25_b9: VENICE_M, venice25_b10: VENICE_M,
+                    venice25_b11: VENICE_M, venice25_b12: VENICE_M,
+                    // EOWAGR — Le Touquet La Forêt
+                    eowagr25: LT_FORET_M,
+                    eowagr25_b78: LT_FORET_M, eowagr25_b910: LT_FORET_M, eowagr25_b1314: LT_FORET_M,
+                    // Marco Simone — tees USKids (B11 como default, B12 para escalão 12)
+                    marco26_b9: MS_USKIDS_M_B1011, marco26_b10: MS_USKIDS_M_B1011,
+                    marco26_b11: MS_USKIDS_M_B1011, marco26_b12: MS_USKIDS_M_B12,
+                    marco25_b9: MS_USKIDS_M_B1011, marco25_b10: MS_USKIDS_M_B1011,
+                    marco25_b11: MS_USKIDS_M_B1011, marco25_b12: MS_USKIDS_M_B12,
+                    // Doral — Golden Palm B10-11, Silver Fox B12-13
+                    doral25_b1011: DORAL_GP_M_B1011, doral25_b89: DORAL_GP_M_B1011,
+                    doral25_b1213: DORAL_SF_M_B1213,
+                    doral24_b1011: DORAL_GP_M_B1011, doral24_b89: DORAL_GP_M_B1011,
+                    doral24_b1213: DORAL_SF_M_B1213,
+                  };
+                  const fallbackM = METERS_FALLBACK[t.id];
+                  const meters = autoCard.meters.length > 0
+                    ? autoCard.meters as unknown as readonly number[]
+                    : fallbackM;
+                  return (
+                    <TournScorecard
+                      par={autoCard.par as unknown as readonly number[]}
+                      si={autoCard.si.length > 0 ? autoCard.si as unknown as readonly number[] : undefined}
+                      meters={meters}
+                      rounds={autoCard.rounds.map((sc, i) => ({ label: `R${i + 1}`, scores: sc }))}
+                    />
+                  );
+                })()}
               </div>
             )}
           </div>
@@ -1846,6 +2743,15 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
         </div>
       )}
 
+      {/* ── Histórico USKids completo (member history) ── */}
+      {(() => {
+        if (!mhPlayer) return null;
+        const mhTorneiosAll = Object.entries(mhPlayer.torneios)
+          .map(([tid, t]) => ({ tid, ...(t as MHTournament) }))
+          .filter(t => t.rounds && Object.keys(t.rounds).length > 0);
+        if (mhTorneiosAll.length === 0) return null;
+        return <MemberHistTable mhTorneios={mhTorneiosAll} memberId={mhPlayer.memberId} />;
+      })()}
       {played === 0 && !lbEntry && (
         <EmptyState size="sm" message="Sem resultados registados ainda." />
       )}
@@ -1853,310 +2759,6 @@ function RivalDetail({ playerName, onShowTable }: { playerName: string; onShowTa
   );
 }
 
-function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack: () => void }) {
-  const card = FIELD_CARDS.find(c => c.name === playerName);
-  const lbEntry = FIELD_2025.leaderboard.find(p => p.name === playerName);
-  const rivals = useRivals();
-  const rival = rivals.find(d => d.n === playerName);
-
-  if (!lbEntry && !rival) return (
-    <div className="tourn-section">
-      <button className="p p-filter active mb-8" onClick={onBack}>← Voltar</button>
-      <EmptyState size="sm" message={`Sem dados disponíveis para ${playerName}`} />
-    </div>
-  );
-
-  const par = VP_PAR;
-  const FH = FIELD_2025.holes;
-  const frontPar = par.slice(0, 9).reduce((a, b) => a + b, 0);
-  const backPar = par.slice(9).reduce((a, b) => a + b, 0);
-  const totalPar = frontPar + backPar;
-  const sm = (arr: number[], f: number, t: number) => arr.slice(f, t).reduce((a, b) => a + b, 0);
-
-  /* ── Sub-total cell with ±par annotation ── */
-  const SubCell = ({ gross, parVal, cls }: { gross: number; parVal: number; cls: string }) => {
-    const tp = gross - parVal;
-    return <td className={`${cls} fw-700`}>{gross}<span className={`sc-topar ${toParClass(tp)}`}>{fmtSign(tp)}</span></td>;
-  };
-
-  /* ── Shared table header ── */
-  const THead = () => (
-    <thead><tr>
-      <th className="hole-header" style={{ textAlign: "left", paddingLeft: 8, minWidth: 50 }}>Buraco</th>
-      {par.slice(0, 9).map((_, i) => <th key={i} className="hole-header">{i + 1}</th>)}
-      <th className="hole-header col-out fs-10">Out</th>
-      {par.slice(9).map((_, i) => <th key={i + 9} className="hole-header">{i + 10}</th>)}
-      <th className="hole-header col-in fs-10">In</th>
-      <th className="hole-header col-total">TOTAL</th>
-    </tr></thead>
-  );
-
-  /* ── Par row ── */
-  const ParRow = ({ sep }: { sep?: boolean }) => (
-    <tr className={sep ? "sep-row" : "meta-row"}>
-      <td className="row-label par-label">Par</td>
-      {par.slice(0, 9).map((p, i) => <td key={i}>{p}</td>)}
-      <td className="col-out fw-600">{frontPar}</td>
-      {par.slice(9).map((p, i) => <td key={i + 9}>{p}</td>)}
-      <td className="col-in fw-600">{backPar}</td>
-      <td className="col-total">{totalPar}</td>
-    </tr>
-  );
-
-  /* ── Gross row with sc-score circles + ±par subtotals ── */
-  const GrossRow = ({ holes, label }: { holes: number[]; label: string }) => {
-    const front = sm(holes, 0, 9), back = sm(holes, 9, 18), total = front + back;
-    return (
-      <tr>
-        <td className="row-label fw-700">{label}</td>
-        {holes.slice(0, 9).map((g, i) => <td key={i}><span className={`sc-score ${scClass(g, par[i])}`}>{g}</span></td>)}
-        <SubCell gross={front} parVal={frontPar} cls="col-out" />
-        {holes.slice(9).map((g, i) => <td key={i + 9}><span className={`sc-score ${scClass(g, par[i + 9])}`}>{g}</span></td>)}
-        <SubCell gross={back} parVal={backPar} cls="col-in" />
-        <SubCell gross={total} parVal={totalPar} cls="col-total" />
-      </tr>
-    );
-  };
-
-  /* ── vs Field row ── */
-  const VsFieldRow = ({ holes }: { holes: number[] }) => (
-    <tr className="meta-row">
-      <td className="row-label c-muted fs-10 fw-400">vs Field</td>
-      {holes.map((g, i) => {
-        const diff = g - FH[i].fAvg;
-        const col = diff <= -0.5 ? "var(--color-good)" : diff >= 0.5 ? "var(--color-danger)" : "var(--text-muted)";
-        return (
-          <React.Fragment key={i}>
-            <td className="fs-10 fw-600" style={{ color: col }}>{fmtSign(diff, 1)}</td>
-            {i === 8 && <td className="col-out" />}
-          </React.Fragment>
-        );
-      })}
-      <td className="col-in" />
-      <td className="col-total" />
-    </tr>
-  );
-
-  /* ── Difficulty rank row ── */
-  const DiffRow = () => (
-    <tr className="meta-row">
-      <td className="row-label c-muted fs-10 fw-400">Dific.</td>
-      {par.map((_, i) => {
-        const rank = FIELD_2025.diffRank.indexOf(i + 1) + 1;
-        const col = rank <= 3 ? "var(--color-danger)" : rank >= 16 ? "var(--color-good)" : "var(--text-muted)";
-        return (
-          <React.Fragment key={i}>
-            <td className="fs-9 fw-600" style={{ color: col }}>{rank}</td>
-            {i === 8 && <td className="col-out" />}
-          </React.Fragment>
-        );
-      })}
-      <td className="col-in" />
-      <td className="col-total" />
-    </tr>
-  );
-
-  /* ── Field Average row ── */
-  const FieldAvgRow = () => (
-    <tr className="meta-row">
-      <td className="row-label c-muted fs-10 fw-400">Avg Field</td>
-      {FH.map((h, i) => (
-        <React.Fragment key={i}>
-          <td className="fs-10 c-muted">{h.fAvg.toFixed(1)}</td>
-          {i === 8 && <td className="col-out fs-10 c-muted">{FH.slice(0, 9).reduce((a, x) => a + x.fAvg, 0).toFixed(1)}</td>}
-        </React.Fragment>
-      ))}
-      <td className="col-in fs-10 c-muted">{FH.slice(9).reduce((a, x) => a + x.fAvg, 0).toFixed(1)}</td>
-      <td className="col-total fs-10 c-muted">{FH.reduce((a, x) => a + x.fAvg, 0).toFixed(1)}</td>
-    </tr>
-  );
-
-  /* ── Single round scorecard ── */
-  const renderScorecard = (holes: number[], label: string, idx: number) => {
-    const total = sm(holes, 0, 18), tp = total - totalPar;
-    return (
-      <div key={idx} className="mb-12">
-        <div className="tourn-meta fw-700 mb-4">{label} — {total} ({fmtToPar(tp)})</div>
-        <div className="scroll-x">
-          <table className="sc-table-modern" data-sc-table="1">
-            <THead />
-            <tbody>
-              <DiffRow />
-              <FieldAvgRow />
-              <ParRow sep />
-              <GrossRow holes={holes} label={label} />
-              <VsFieldRow holes={holes} />
-            </tbody>
-          </table>
-        </div>
-      </div>
-    );
-  };
-
-  // Collect tournament results from Rivais
-  const tournResults: { name: string; short: string; date: string; dateExact: string; par: number; pos: number | string | null; total: number | null; tp: number | null; rounds: number[] }[] = [];
-  if (rival) {
-    // First: manual T array
-    for (const t of T) {
-      const res = rival.r[t.id];
-      if (res) tournResults.push({ name: t.name, short: t.short, date: t.date, dateExact: t.dateExact ?? t.date, par: t.par, pos: res.p, total: res.t, tp: res.tp, rounds: res.rd });
-    }
-    // Then: auto-loaded tourns not in manual T
-    const manualIds = new Set(T.map(t => t.id));
-    for (const [tid, res] of Object.entries(rival.r)) {
-      if (!manualIds.has(tid)) {
-        const info = getTournInfo(tid);
-        tournResults.push({ name: info.name, short: info.short, date: info.date, dateExact: info.dateExact, par: 72, pos: res.p, total: res.t, tp: res.tp, rounds: res.rd });
-      }
-    }
-    // Sort by date
-    tournResults.sort((a, b) => a.dateExact.localeCompare(b.dateExact));
-  }
-
-  const completedResults = tournResults.filter(r => r.tp != null);
-  const allRounds = completedResults.flatMap(r => r.rounds);
-  const bestTp = completedResults.length ? Math.min(...completedResults.map(r => r.tp!)) : null;
-  const bestRound = allRounds.length ? Math.min(...allRounds) : null;
-  const avgRound = allRounds.length ? allRounds.reduce((a, b) => a + b, 0) / allRounds.length : null;
-
-  // Player avg per hole (across BJGT rounds)
-  const playerHoleAvg = card ? par.map((_, i) => {
-    const scores = card.rounds.map(rd => rd[i]);
-    return scores.reduce((a, b) => a + b, 0) / scores.length;
-  }) : null;
-
-  // Scoring distribution
-  const scoringStats = card ? (() => {
-    let eagles = 0, birdies = 0, pars = 0, bogeys = 0, doubles = 0, worse = 0;
-    for (const rd of card.rounds) for (let i = 0; i < 18; i++) {
-      const d = rd[i] - par[i];
-      if (d <= -2) eagles++; else if (d === -1) birdies++; else if (d === 0) pars++; else if (d === 1) bogeys++; else if (d === 2) doubles++; else worse++;
-    }
-    return { eagles, birdies, pars, bogeys, doubles, worse, total: card.rounds.length * 18 };
-  })() : null;
-
-  return (
-    <div className="tourn-section">
-      <button className="p p-filter mb-12" onClick={onBack}>← Análise</button>
-
-      <div className="d-flex items-center gap-8 mb-12">
-        <span className="fw-800 fs-15">{lbEntry?.country || (rival ? (FL as Record<string, string>)[rival.co] || "" : "")} {playerName}</span>
-        {lbEntry && <span className="p p-outline">BJGT #{lbEntry.pos}</span>}
-        <span className="p p-sub12">Sub-12</span>
-        {rival?.co && <span className="p p-outline">{rival.co}</span>}
-      </div>
-
-      {/* KPIs */}
-      <div className="kpis" style={{ gridTemplateColumns: `repeat(${card ? 5 : 4}, 1fr)`, marginBottom: 16 }}>
-        {lbEntry && <div className="kpi"><div className="kpi-lbl">BJGT Total</div><div className="kpi-val">{lbEntry.total}</div><div className="kpi-sub">{fmtToPar(lbEntry.result)} · #{lbEntry.pos}</div></div>}
-        {bestTp != null && <div className="kpi"><div className="kpi-lbl">Melhor ±Par</div><div className="kpi-val" style={{ color: bestTp <= 0 ? "var(--color-good-dark)" : "var(--text)" }}>{fmtToPar(bestTp)}</div></div>}
-        {bestRound != null && <div className="kpi"><div className="kpi-lbl">Melhor Ronda</div><div className="kpi-val c-good-dark">{bestRound}</div></div>}
-        {avgRound != null && <div className="kpi"><div className="kpi-lbl">Média Ronda</div><div className="kpi-val">{avgRound.toFixed(1)}</div></div>}
-        {card && <div className="kpi"><div className="kpi-lbl">Eclético BJGT</div><div className="kpi-val c-good-dark">{card.eclTotal}</div><div className="kpi-sub">{fmtToPar(card.eclTotal - totalPar)}</div></div>}
-      </div>
-
-      {/* ── Scoring distribution ── */}
-      {scoringStats && (
-        <div className="d-flex items-center gap-8 mb-16 flex-wrap">
-          <span className="fs-10 fw-600 c-text-3">Distribuição ({scoringStats.total} buracos):</span>
-          {[
-            { label: "Eagle+", val: scoringStats.eagles, cls: "eagle" },
-            { label: "Birdie", val: scoringStats.birdies, cls: "birdie" },
-            { label: "Par", val: scoringStats.pars, cls: "par" },
-            { label: "Bogey", val: scoringStats.bogeys, cls: "bogey" },
-            { label: "Double", val: scoringStats.doubles, cls: "double" },
-            { label: "Triple+", val: scoringStats.worse, cls: "triple" },
-          ].filter(s => s.val > 0).map(s => (
-            <span key={s.label} className="d-flex items-center gap-4">
-              <span className={`sc-score ${s.cls}`} style={{ width: 22, height: 22, fontSize: 10 }}>{s.val}</span>
-              <span className="fs-10 fw-600 c-text-3">{s.label} ({(s.val / scoringStats.total * 100).toFixed(0)}%)</span>
-            </span>
-          ))}
-        </div>
-      )}
-
-      {/* ── Tournament history ── */}
-      {tournResults.length > 0 && (
-        <div className="mb-16">
-          <div className="tourn-meta fw-700 mb-6">Historial de Torneios</div>
-          <div className="tourn-scroll">
-            <table className="tourn-form-table">
-              <thead><tr>
-                <th>Torneio</th><th>Data</th><th className="r">Par</th><th className="r">Pos</th>
-                {Array.from({ length: Math.max(...tournResults.map(r => r.rounds.length)) }, (_, i) => <th key={i} className="r">R{i + 1}</th>)}
-                <th className="r">Total</th><th className="r">±Par</th>
-              </tr></thead>
-              <tbody>
-                {tournResults.map((r, i) => {
-                  const mx = Math.max(...tournResults.map(x => x.rounds.length));
-                  return (
-                    <tr key={i}>
-                      <td className="fw-700 fs-12">{r.short}</td>
-                      <td className="fs-11 c-text-3">{r.date}</td>
-                      <td className="r tourn-mono">{r.par}</td>
-                      <td className="r tourn-mono fw-700">{typeof r.pos === "number" ? `#${r.pos}` : r.pos}</td>
-                      {Array.from({ length: mx }, (_, j) => {
-                        const rd = r.rounds[j]; if (rd == null) return <td key={j} />;
-                        const rdTp = rd - r.par;
-                        const col = tpColorDark(rdTp, 5);
-                        return <td key={j} className="r tourn-mono fw-600" style={{ color: col }}>{rd}</td>;
-                      })}
-                      <td className="r tourn-mono fw-800">{r.total ?? "–"}</td>
-                      <td className="r fw-700" style={{ color: tpColorDark(r.tp, 15) }}>{fmtToPar(r.tp)}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
-
-      {/* ── BJGT Comparative scorecard ── */}
-      {card && <>
-        <div className="tourn-meta fw-700 mb-6">BJGT 2025 — Scorecard Comparativo</div>
-        <div className="scroll-x mb-16">
-          <table className="sc-table-modern" data-sc-table="1">
-            <THead />
-            <tbody>
-              <DiffRow />
-              <FieldAvgRow />
-              <ParRow sep />
-              {card.rounds.map((rd, i) => <GrossRow key={i} holes={rd} label={`R${i + 1}`} />)}
-              <GrossRow holes={card.ecl} label="ECL" />
-              {playerHoleAvg && (
-                <tr className="meta-row">
-                  <td className="row-label c-muted fs-10 fw-600">Média</td>
-                  {playerHoleAvg.map((avg, i) => {
-                    const diff = avg - par[i];
-                    const col = diff <= -0.3 ? "var(--color-good)" : diff >= 0.5 ? "var(--color-danger)" : "var(--text-muted)";
-                    return (
-                      <React.Fragment key={i}>
-                        <td className="fs-10 fw-600" style={{ color: col }}>{avg.toFixed(1)}</td>
-                        {i === 8 && <td className="col-out fs-10 fw-600">{playerHoleAvg.slice(0, 9).reduce((a, b) => a + b, 0).toFixed(1)}</td>}
-                      </React.Fragment>
-                    );
-                  })}
-                  <td className="col-in fs-10 fw-600">{playerHoleAvg.slice(9).reduce((a, b) => a + b, 0).toFixed(1)}</td>
-                  <td className="col-total fs-10 fw-700">{playerHoleAvg.reduce((a, b) => a + b, 0).toFixed(1)}</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-
-        <div className="tourn-meta fw-700 mb-6">Rondas Individuais</div>
-        {card.rounds.map((rd, i) => renderScorecard(rd, `R${i + 1}`, i))}
-      </>}
-
-      {!card && lbEntry && (
-        <div className="tourn-meta mb-12">
-          BJGT 2025: {lbEntry.rounds.join("-")} = {lbEntry.total} ({fmtToPar(lbEntry.result)}) — scorecard buraco-a-buraco não disponível
-        </div>
-      )}
-    </div>
-  );
-}
 
 
 /* ═══════════════════════════════════
@@ -2164,9 +2766,10 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
    ═══════════════════════════════════ */
 function RivaisIntlContent() {
   const { rivals, loaded, progress } = useAutoRivals();
+  const memberHist = useMemberHist();
 
   // Actualizar rankMap quando os rivais carregam e forçar re-render
-  const [rankVersion, setRankVersion] = React.useState(0);
+  const [_rankVersion, setRankVersion] = React.useState(0);
   React.useEffect(() => {
     if (loaded) {
       const newMap = buildRankMap(rivals);
@@ -2177,7 +2780,12 @@ function RivaisIntlContent() {
     }
   }, [rivals, loaded]);
 
-  const [selectedPlayer, setSelectedPlayer] = useState<string | null>("Manuel Medeiros");
+  const location = useLocation();
+  const locationPlayer = (location.state as any)?.player as string | undefined;
+
+  const [selectedPlayer, setSelectedPlayer] = useState<string | null>(
+    locationPlayer ?? "Manuel Medeiros"
+  );
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [showTable, setShowTable] = useState(false);
 
@@ -2188,6 +2796,7 @@ function RivaisIntlContent() {
 
   return (
     <RivalsCtx.Provider value={rivals}>
+    <MemberHistCtx.Provider value={memberHist}>
     <div className="tourn-layout">
       {/* Toolbar */}
       <div className="toolbar">
@@ -2228,13 +2837,14 @@ function RivaisIntlContent() {
           {showTable ? (
             <RivaisDashboard onSelectPlayer={handleSelectPlayer} />
           ) : selectedPlayer ? (
-            <RivalDetail playerName={selectedPlayer} onShowTable={() => setShowTable(true)} />
+            <RivalDetail playerName={selectedPlayer} />
           ) : (
             <div className="muted p-16">Selecciona um rival na lista à esquerda.</div>
           )}
         </div>
       </div>
     </div>
+    </MemberHistCtx.Provider>
     </RivalsCtx.Provider>
   );
 }

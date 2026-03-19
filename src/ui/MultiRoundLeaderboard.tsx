@@ -34,10 +34,11 @@
 import React, { useState, useMemo } from "react";
 import { getTeeHex } from "../utils/teeColors";
 import {
-  isManuel, fmtTP, EscPill, TeeDot, TournPName,
+  isManuel, fmtTP, tpColor, EscPill, TeeDot, TournPName,
   ESC_STYLE, SDPill,
   type PlayersDB,
 } from "./tournamentPrimitives";
+import { toggleArr } from "../utils/mathUtils";
 
 /* ══════════════════════════════════════════════════════════════
    TIPOS PÚBLICOS
@@ -88,9 +89,6 @@ function filterRows(rows: MultiRoundRow[], f: PlayerFilter): MultiRoundRow[] {
   if (f.tees.length) ps = ps.filter(r => r.teeName != null && f.tees.includes(r.teeName));
   if (f.club) ps = ps.filter(r => r.club === f.club);
   return ps;
-}
-function toggleArr(arr: string[], v: string): string[] {
-  return arr.includes(v) ? arr.filter(x => x !== v) : [...arr, v];
 }
 
 function PlayerFilterBar({ rows, filter, onChange, total }: {
@@ -219,7 +217,6 @@ export function MultiRoundLeaderboard({
     );
   }
 
-  const tpColor = (v: number) => v < 0 ? "var(--color-danger)" : v === 0 ? "var(--color-good)" : undefined;
   const medals = ["🥇", "🥈", "🥉"];
   const isMulti = nRounds >= 2;
 

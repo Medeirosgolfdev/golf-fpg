@@ -1,12 +1,20 @@
-import { useEffect, useState, useMemo, useCallback } from "react";
+import { useEffect, useState, useMemo, useCallback, useTransition } from "react";
 import React from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { C } from "../utils/colors";
+import { scClass } from "../utils/scoreDisplay";
+import { MONTHS_PT, isoDate, fmtDate, fmtToPar } from "../utils/format";
+import { flag, normCountry } from "../utils/flagUtils";
 import EmptyState from "../ui/EmptyState";
+import { tpColor, isManuel as _isManuel } from "../ui/tournamentPrimitives";
+/** Wrapper: isManuel para contexto USKids onde o identificador é o nome (string) */
+const isManuel = (nome: string): boolean => _isManuel({ name: nome });
 import {
   ScorecardLB, AccumulatedLB, expandMultiRound,
   type Tournament as TATournament,
 } from "./FPGPage";
 import { buildAutoRivals, normName as normNameAuto, type AutoRivalPlayer } from "./KIDSdataLoader";
+import { cachedFetchJson } from "../data/fetchCache";
 
 // ─────────────────────────────────────────────
 // TIPOS — CAMPO (inscritos)
@@ -27,10 +35,17 @@ interface Torneio {
   escaloes: Escalao[];
   ultima_atualizacao: string;
   sem_flights?: boolean; erro?: string;
+  url_uskids?: string | null;
 }
 interface IntlTorneio { id: string; name: string; short: string; date: string; rounds: number; par: number; url: string; circuito?: string; }
 interface IntlJogador { n: string; co: string; isM?: boolean; r: Record<string, { p: number; t: number; tp: number; rd: number[] }>; up: string[]; }
-interface IntlData { torneios: IntlTorneio[]; proximos: { id: string; name: string }[]; jogadores: IntlJogador[]; }
+interface IntlData {
+  torneios: IntlTorneio[];
+  proximos: { id: string; name: string }[];
+  jogadores: IntlJogador[];
+  aliases?: { canonical: string; also: string[] }[];
+  nao_confundir?: { nomes: string[] }[];
+}
 
 // ── Member History (uskids-member-history.json) ──
 interface MemberHistRound {
@@ -61,10 +76,6 @@ interface GreatgolfData {
 }
 
 // ── Matching robusto USKids ↔ BJGT ──────────────────────────────
-function normNome(s: string): string {
-  return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase().replace(/\s+/g, ' ').trim();
-}
 
 /** Normaliza nomes ALL CAPS para Title Case e limpa espaços duplos.
  *  "GREGORIO VITOLO" → "Gregorio Vitolo"
@@ -138,13 +149,13 @@ function hasCanon(set: Set<string>, name: string, short?: string): boolean {
 
 function apelidos(nome: string): string[] {
   const ignorar = new Set(['de','da','do','dos','das','van','von','le','la','el','al','del','and','jr','ii','iii']);
-  const partes = normNome(nome).split(' ');
+  const partes = normNameAuto(nome).split(' ');
   return partes.slice(1).filter(p => !ignorar.has(p) && p.length > 2);
 }
 
 function scoreMatch(n1: string, n2: string): number {
-  const p1 = normNome(n1).split(' ').filter(Boolean);
-  const p2 = normNome(n2).split(' ').filter(Boolean);
+  const p1 = normNameAuto(n1).split(' ').filter(Boolean);
+  const p2 = normNameAuto(n2).split(' ').filter(Boolean);
   const ap1 = new Set(apelidos(n1));
   const ap2 = new Set(apelidos(n2));
   if (!ap1.size || !ap2.size) return 0;
@@ -176,14 +187,14 @@ function criarMatcherIntl(intlData: IntlData | null) {
   // Mapa canonical → jogador
   const byNorm = new Map<string, IntlJogador>();
   for (const j of intlData.jogadores) {
-    byNorm.set(normNome(j.n), j);
+    byNorm.set(normNameAuto(j.n), j);
   }
 
   // Aliases: also → canonical
   const aliasMap = new Map<string, string>();
   for (const a of (intlData.aliases ?? [])) {
     for (const also of a.also) {
-      aliasMap.set(normNome(also), a.canonical);
+      aliasMap.set(normNameAuto(also), a.canonical);
     }
   }
 
@@ -192,7 +203,7 @@ function criarMatcherIntl(intlData: IntlData | null) {
   for (const grupo of (intlData.nao_confundir ?? [])) {
     for (let i = 0; i < grupo.nomes.length; i++) {
       for (let j = i + 1; j < grupo.nomes.length; j++) {
-        const chave = [normNome(grupo.nomes[i]), normNome(grupo.nomes[j])].sort().join('|');
+        const chave = [normNameAuto(grupo.nomes[i]), normNameAuto(grupo.nomes[j])].sort().join('|');
         naoConfundir.add(chave);
       }
     }
@@ -201,7 +212,7 @@ function criarMatcherIntl(intlData: IntlData | null) {
   // Índice por "primeiro último" normalizado
   const byFirstLast = new Map<string, IntlJogador | null>();
   for (const j of intlData.jogadores) {
-    const parts = normNome(j.n).split(' ').filter(Boolean);
+    const parts = normNameAuto(j.n).split(' ').filter(Boolean);
     if (parts.length >= 2) {
       const key = `${parts[0]} ${parts[parts.length - 1]}`;
       if (!byFirstLast.has(key)) byFirstLast.set(key, j);
@@ -212,7 +223,7 @@ function criarMatcherIntl(intlData: IntlData | null) {
   // Índice por "país:último_apelido" normalizado
   const byCountryLast = new Map<string, IntlJogador | null>();
   for (const j of intlData.jogadores) {
-    const parts = normNome(j.n).split(' ').filter(Boolean);
+    const parts = normNameAuto(j.n).split(' ').filter(Boolean);
     if (parts.length >= 1 && j.co) {
       const key = `${normCountry(j.co)}:${parts[parts.length - 1]}`;
       if (!byCountryLast.has(key)) byCountryLast.set(key, j);
@@ -223,12 +234,12 @@ function criarMatcherIntl(intlData: IntlData | null) {
   const bjgtNomes = intlData.jogadores.filter(j => !j.isM).map(j => j.n);
 
   return (nomeUskids: string, paisUskids?: string): IntlJogador | null => {
-    const nNorm = normNome(nomeUskids);
+    const nNorm = normNameAuto(nomeUskids);
 
     // 1. Alias directo
     const canonical = aliasMap.get(nNorm);
     if (canonical) {
-      const jog = byNorm.get(normNome(canonical));
+      const jog = byNorm.get(normNameAuto(canonical));
       if (jog) return jog;
     }
 
@@ -250,7 +261,7 @@ function criarMatcherIntl(intlData: IntlData | null) {
       const cl = byCountryLast.get(clKey);
       if (cl) {
         // Verificar que primeiro nome é compatível (previne irmãos: Nikita ≠ Dmitrii)
-        const clFirst = normNome(cl.n).split(' ')[0] || "";
+        const clFirst = normNameAuto(cl.n).split(' ')[0] || "";
         const inFirst = partsInsc[0] || "";
         const prefix = Math.min(clFirst.length, inFirst.length, 3);
         if (prefix === 0 || clFirst.slice(0, prefix) === inFirst.slice(0, prefix)) return cl;
@@ -267,9 +278,9 @@ function criarMatcherIntl(intlData: IntlData | null) {
 
     if (melhorScore >= 0.7 && melhorNome) {
       // Verificar não-confundir
-      const chave = [nNorm, normNome(melhorNome)].sort().join('|');
+      const chave = [nNorm, normNameAuto(melhorNome)].sort().join('|');
       if (naoConfundir.has(chave)) return null;
-      return byNorm.get(normNome(melhorNome)) ?? null;
+      return byNorm.get(normNameAuto(melhorNome)) ?? null;
     }
 
     return null;
@@ -281,12 +292,12 @@ function criarMatcherIntl(intlData: IntlData | null) {
  */
 function criarMatcherRivals(rivals: { nome: string; pais: string; cidade: string; encontros: any[] }[]) {
   const byNorm = new Map<string, typeof rivals[0]>();
-  for (const r of rivals) byNorm.set(normNome(r.nome), r);
+  for (const r of rivals) byNorm.set(normNameAuto(r.nome), r);
 
   // Índice por "primeiro último" normalizado — apanha diferenças em middle names
   const byFirstLast = new Map<string, typeof rivals[0] | null>();
   for (const r of rivals) {
-    const parts = normNome(r.nome).split(' ').filter(Boolean);
+    const parts = normNameAuto(r.nome).split(' ').filter(Boolean);
     if (parts.length >= 2) {
       const key = `${parts[0]} ${parts[parts.length - 1]}`;
       if (!byFirstLast.has(key)) byFirstLast.set(key, r);
@@ -297,7 +308,7 @@ function criarMatcherRivals(rivals: { nome: string; pais: string; cidade: string
   // Índice por "país_normalizado:último_apelido" — forte para juniores
   const byCountryLast = new Map<string, typeof rivals[0] | null>();
   for (const r of rivals) {
-    const parts = normNome(r.nome).split(' ').filter(Boolean);
+    const parts = normNameAuto(r.nome).split(' ').filter(Boolean);
     if (parts.length >= 1 && r.pais) {
       const last = parts[parts.length - 1];
       const key = `${normCountry(r.pais)}:${last}`;
@@ -307,7 +318,7 @@ function criarMatcherRivals(rivals: { nome: string; pais: string; cidade: string
   }
 
   return (nomeInscrito: string, paisInscrito?: string): typeof rivals[0] | null => {
-    const nNorm = normNome(nomeInscrito);
+    const nNorm = normNameAuto(nomeInscrito);
     // 1. Exact match normalizado
     const exact = byNorm.get(nNorm);
     if (exact) return exact;
@@ -325,7 +336,7 @@ function criarMatcherRivals(rivals: { nome: string; pais: string; cidade: string
       const cl = byCountryLast.get(clKey);
       if (cl) {
         // Verificar primeiro nome (previne irmãos)
-        const clFirst = normNome(cl.nome).split(' ')[0] || "";
+        const clFirst = normNameAuto(cl.nome).split(' ')[0] || "";
         const inFirst = partsInsc[0] || "";
         const prefix = Math.min(clFirst.length, inFirst.length, 3);
         if (prefix === 0 || clFirst.slice(0, prefix) === inFirst.slice(0, prefix)) return cl;
@@ -406,8 +417,6 @@ function escalaoManuelParaData(dateStr: string): string {
   if (anos <= 11) return "Boys 11";
   return "Boys 12";
 }
-const MANUEL_FRAGMENT    = "medeiros";
-const MANUEL_FIRST       = "manuel";
 const ESCALAO_ORDER: Record<string, number> = {
   "Boys 7 & Under":1,"Boys 7":2,"Boys 8":3,"Boys 9":4,"Boys 10":5,"Boys 11":6,"Boys 12":7,
   "Boys 13":8,"Boys 13-14":9,"Boys 14":10,"Boys 15-18":11,
@@ -757,86 +766,6 @@ const REGIONAL_CHAMPIONSHIPS: Record<number, { shortName: string; location: stri
   // Holiday Classic               — DEC 21-22 — Palm Beach Grd → ref 2025: find-tournament/516789/holiday-classic-2025
 };
 
-const FLAG: Record<string,string> = {
-  PT:"🇵🇹",GB:"🇬🇧",IE:"🇮🇪",FR:"🇫🇷",ES:"🇪🇸",DE:"🇩🇪",IT:"🇮🇹",
-  NL:"🇳🇱",SE:"🇸🇪",NO:"🇳🇴",DK:"🇩🇰",FI:"🇫🇮",US:"🇺🇸",CA:"🇨🇦",
-  AU:"🇦🇺",ZA:"🇿🇦",MX:"🇲🇽",JP:"🇯🇵",KR:"🇰🇷",CH:"🇨🇭",CN:"🇨🇳",
-  IN:"🇮🇳",BR:"🇧🇷",AR:"🇦🇷",BE:"🇧🇪",PL:"🇵🇱",SK:"🇸🇰",HU:"🇭🇺",
-  RU:"🇷🇺",PH:"🇵🇭",SG:"🇸🇬",CZ:"🇨🇿",
-  TH:"🇹🇭",RO:"🇷🇴",UA:"🇺🇦",SI:"🇸🇮",BG:"🇧🇬",LT:"🇱🇹",LV:"🇱🇻",
-  EE:"🇪🇪",TR:"🇹🇷",MA:"🇲🇦",AE:"🇦🇪",KZ:"🇰🇿",VN:"🇻🇳",AT:"🇦🇹",
-  PY:"🇵🇾",NG:"🇳🇬",OM:"🇴🇲",PR:"🇵🇷",CR:"🇨🇷",JE:"🇯🇪",CY:"🇨🇾",
-  LB:"🇱🇧",ID:"🇮🇩",HK:"🇭🇰",TW:"🇹🇼",NZ:"🇳🇿",AM:"🇦🇲",CO:"🇨🇴",
-  CL:"🇨🇱",BB:"🇧🇧",BS:"🇧🇸",BO:"🇧🇴",DO:"🇩🇴",DZ:"🇩🇿",EC:"🇪🇨",
-  GT:"🇬🇹",HN:"🇭🇳",KE:"🇰🇪",KH:"🇰🇭",NI:"🇳🇮",PA:"🇵🇦",PE:"🇵🇪",
-  SV:"🇸🇻",UG:"🇺🇬",UY:"🇺🇾",VE:"🇻🇪",GR:"🇬🇷",IL:"🇮🇱",HR:"🇭🇷",
-  RS:"🇷🇸",LU:"🇱🇺",IS:"🇮🇸",MY:"🇲🇾",
-};
-/** Converte qualquer formato de país (código, nome EN, nome PT) para emoji de bandeira */
-const flag = (p: string): string => {
-  if (!p) return "🏳️";
-  const upper = p.trim().toUpperCase();
-  // 1. Directo por código
-  if (FLAG[upper]) return FLAG[upper];
-  // 2. Via normCountry (nome completo → código)
-  const code = normCountry(p).toUpperCase();
-  if (FLAG[code]) return FLAG[code];
-  return "🏳️";
-};
-
-/** Normaliza país para código de 2 letras (ou lowercase do nome completo).
- *  Aceita "PT", "Portugal", "England", "GB", "United Kingdom", etc. */
-const COUNTRY_TO_CODE: Record<string, string> = {
-  // English
-  portugal:"pt",england:"gb",spain:"es",france:"fr",germany:"de",italy:"it",
-  netherlands:"nl",sweden:"se",norway:"no",denmark:"dk",finland:"fi",
-  "united states":"us",canada:"ca",australia:"au","south africa":"za",mexico:"mx",
-  japan:"jp","south korea":"kr",switzerland:"ch",china:"cn",india:"in",
-  brazil:"br",argentina:"ar",belgium:"be",poland:"pl",slovakia:"sk",hungary:"hu",
-  "russian federation":"ru",russia:"ru",philippines:"ph",singapore:"sg",
-  "czech republic":"cz",ireland:"ie","great britain":"gb","united kingdom":"gb",
-  wales:"gb",scotland:"gb","northern ireland":"gb",colombia:"co",chile:"cl",
-  thailand:"th",romania:"ro",ukraine:"ua",slovenia:"si",bulgaria:"bg",
-  lithuania:"lt",latvia:"lv",estonia:"ee",turkey:"tr",morocco:"ma",
-  "united arab emirates":"ae",kazakhstan:"kz","viet nam":"vn",vietnam:"vn",
-  austria:"at",paraguay:"py",nigeria:"ng",oman:"om","puerto rico":"pr",
-  "costa rica":"cr",jersey:"je",cyprus:"cy",lebanon:"lb",indonesia:"id",
-  "hong kong":"hk",taiwan:"tw","new zealand":"nz",armenia:"am",
-  barbados:"bb",bahamas:"bs",bolivia:"bo","dominican republic":"do",
-  algeria:"dz",ecuador:"ec",guatemala:"gt",honduras:"hn",kenya:"ke",
-  cambodia:"kh",nicaragua:"ni",panama:"pa",peru:"pe","el salvador":"sv",
-  uganda:"ug",uruguay:"uy",venezuela:"ve",greece:"gr",israel:"il",
-  croatia:"hr",serbia:"rs",luxembourg:"lu",iceland:"is",malaysia:"my",
-  // Português
-  espanha:"es",frança:"fr",alemanha:"de",itália:"it","países baixos":"nl",
-  holanda:"nl",suécia:"se",noruega:"no",dinamarca:"dk",finlândia:"fi",
-  "estados unidos":"us",canadá:"ca",austrália:"au","áfrica do sul":"za",
-  méxico:"mx",japão:"jp","coreia do sul":"kr",suíça:"ch",índia:"in",
-  brasil:"br",bélgica:"be",polónia:"pl",eslováquia:"sk",hungria:"hu",
-  "federação russa":"ru",rússia:"ru",filipinas:"ph",singapura:"sg",
-  "república checa":"cz",irlanda:"ie","reino unido":"gb",
-  inglaterra:"gb",escócia:"gb","irlanda do norte":"gb",gales:"gb",
-  colômbia:"co",tailândia:"th",roménia:"ro",ucrânia:"ua",
-  eslovénia:"si",bulgária:"bg",lituânia:"lt",letónia:"lv",
-  estónia:"ee",turquia:"tr",marrocos:"ma",
-  "emirados árabes unidos":"ae",cazaquistão:"kz",vietname:"vn",
-  áustria:"at",paraguai:"py",nigéria:"ng",omã:"om","porto rico":"pr",
-  chipre:"cy",líbano:"lb",indonésia:"id",
-  "nova zelândia":"nz",arménia:"am",
-  bolívia:"bo","república dominicana":"do",argélia:"dz",equador:"ec",
-  quénia:"ke",camboja:"kh",
-  nicarágua:"ni",panamá:"pa",
-  uruguai:"uy",grécia:"gr",
-  croácia:"hr",sérvia:"rs",luxemburgo:"lu",islândia:"is",malásia:"my",
-};
-function normCountry(raw: string): string {
-  if (!raw) return "";
-  const lower = raw.toLowerCase().trim();
-  // Already a 2-letter code?
-  if (lower.length === 2) return lower;
-  return COUNTRY_TO_CODE[lower] || lower;
-}
-
 // ─────────────────────────────────────────────
 // LOCALIZAÇÃO
 // ─────────────────────────────────────────────
@@ -886,18 +815,7 @@ function badgeVagas(vagas: number, maximo: number) {
   return                   { bg: C.vagas.open.bg,         cor: C.vagas.open.fg,         label: `+${vagas}` };
 }
 
-function isoDate(s: string): string {
-  if (!s) return "";
-  if (s.includes("-")) return s;
-  const [m,d,y] = s.split("/");
-  return `${y}-${m.padStart(2,"0")}-${d.padStart(2,"0")}`;
-}
 
-function fmtDate(s: string) {
-  const iso = isoDate(s);
-  if (!iso) return s;
-  return new Date(iso).toLocaleDateString("pt-PT",{day:"2-digit",month:"short",year:"numeric"});
-}
 
 function fmtTs(iso: string) {
   if (!iso) return "";
@@ -921,10 +839,6 @@ function isTerminado(dateFim: string | undefined, dateInicio?: string): boolean 
   return Date.now() > endTime;
 }
 
-function isManuel(nome: string) {
-  const n = nome.toLowerCase();
-  return n.includes(MANUEL_FRAGMENT) && n.includes(MANUEL_FIRST);
-}
 
 
 // ─────────────────────────────────────────────
@@ -1306,7 +1220,7 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
 }
 
 // manter TabCampo para compatibilidade (não é usada directamente mas pode existir)
-function TabCampo({ data }: { data: FieldData }) {
+function _TabCampo({ data }: { data: FieldData }) {
   return <div>{data.torneios.map(t => <TabCampoDetalhe key={t.t} torneio={t} />)}</div>;
 }
 
@@ -1325,24 +1239,6 @@ function TabResultados({ data, selectedT, greatgolfData }: {
   function printRondas() {
     if (!t) return;
 
-    function tpStr(v: number | null | undefined) {
-      return v == null ? "–" : v === 0 ? "E" : v > 0 ? `+${v}` : `${v}`;
-    }
-    function tpColor(v: number | null | undefined) {
-      return v == null ? "var(--grey-400)" : v < 0 ? "var(--color-good)" : v === 0 ? "var(--grey-700)" : "var(--color-danger)";
-    }
-    function scClass(gross: number, par: number | null) {
-      if (!par || !gross) return "";
-      const d = gross - par;
-      if (d <= -3) return "eagle";
-      if (d === -2) return "eagle";
-      if (d === -1) return "birdie";
-      if (d === 0)  return "par";
-      if (d === 1)  return "bogey";
-      if (d === 2)  return "double";
-      if (d === 3)  return "triple";
-      return "quad";
-    }
 
     const css = `
       @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap');
@@ -1406,7 +1302,7 @@ function TabResultados({ data, selectedT, greatgolfData }: {
       const teeInfo = TEES_LOOKUP[t.t]?.[e.age_group];
 
       const escalaoTitle = `<h2>${isManuelEscalao ? "★ " : ""}${e.nome}</h2>`;
-      const rondasHtml = rondasComDados.map((r, ri) => {
+      const rondasHtml = rondasComDados.map((r, _ri) => {
           const jogadores = r.leaderboard ?? r.jogadores ?? [];
           const buracos = r.buracos || 18;
           const has18 = buracos >= 18;
@@ -1469,7 +1365,7 @@ function TabResultados({ data, selectedT, greatgolfData }: {
               const cl = scClass(s, par?.[hi+9] ?? null);
               return `<td class="lb-hole${hi===0?" lb-hole-first":""}"><span class="sc-score ${cl||"empty"}">${s||""}</span></td>`;
             }).join("") : "";
-            const tpVal = tpStr(j.to_par);
+            const tpVal = fmtToPar(j.to_par, "–");
             const tpC   = tpColor(j.to_par);
             return `<tr class="${manCls.trim()}">
               <td class="pos">${wd ? "" : posCounter}</td>
@@ -1525,17 +1421,17 @@ function TabResultados({ data, selectedT, greatgolfData }: {
         const totalParAcc = (() => {
           const firstR = rondasComDados[0];
           const p0 = (firstR.leaderboard ?? firstR.jogadores ?? [])[0];
-          const par0 = teeInfo?.par ?? p0?.par ?? [];
+          const par0 = teeInfo?.par ?? (p0 as any)?.par ?? [];
           return par0.reduce((s: number, p: number) => s + p, 0) * rondasComDados.length;
         })();
 
-        const rondaHeaders = rondasComDados.map((r, i) => `<th class="lb-gross">R${r.ronda}</th>`).join("");
+        const rondaHeaders = rondasComDados.map((r, _i) => `<th class="lb-gross">R${r.ronda}</th>`).join("");
         const accRows = allSorted.map((p, idx) => {
           const manuel = isManuel(p.nome);
           const manCls = manuel ? "row-manuel" : "";
           const isInc = p.scores.length < rondasComDados.length;
           const tpRaw = totalParAcc > 0 ? p.total - totalParAcc : null;
-          const tpVal = tpStr(tpRaw);
+          const tpVal = fmtToPar(tpRaw, "–");
           const tpC   = tpColor(tpRaw);
           const rondaCells = rondasComDados.map((_, i) =>
             `<td class="lb-gross">${p.scores[i] ?? "–"}</td>`
@@ -1692,11 +1588,11 @@ function SecaoGreatgolf({ data }: { data: GreatgolfData }) {
 
   const rows = data.results[cat] ?? [];
 
-  const renderToPar = (v: number | null) => {
+  const _renderToPar = (v: number | null) => {
     if (v == null) return <span style={{ color:"var(--text-3)" }}>—</span>;
-    if (v === 0)   return <span style={{ color:"var(--color-good)", fontWeight:700 }}>E</span>;
+    if (v === 0)   return <span style={{ color:"var(--text-2)", fontWeight:700 }}>E</span>;
     if (v < 0)     return <span style={{ color:"var(--color-good)", fontWeight:700 }}>{v}</span>;
-    return <span style={{ color:"var(--text-2)" }}>+{v}</span>;
+    return <span style={{ color:"var(--color-danger)", fontWeight:700 }}>+{v}</span>;
   };
 
   return (
@@ -1755,7 +1651,7 @@ function SecaoGreatgolf({ data }: { data: GreatgolfData }) {
                       {manuelRow && "★ "}{r.name}
                     </td>
                     <td style={{ fontSize:11, color:"var(--text-3)", padding:"6px 8px" }}>{r.club}</td>
-                    <td className="lb-topar" style={{ color: r.toPar == null ? "var(--text-muted)" : r.toPar < 0 ? "var(--color-good)" : r.toPar === 0 ? "var(--text-2)" : "var(--color-danger)" }}>
+                    <td className="lb-topar" style={{ color: tpColor(r.toPar) }}>
                       {r.toPar == null ? "–" : r.toPar === 0 ? "E" : r.toPar > 0 ? `+${r.toPar}` : r.toPar}
                     </td>
                     <td className="lb-gross">{r.gross ?? "—"}</td>
@@ -1814,7 +1710,7 @@ function TabelaConhecidos({
   const torneio = fieldData?.torneios.find(t => t.t === torneioT);
 
   // Guardar o escalão de referência apenas para o header (contagem)
-  const escalao = torneio?.escaloes.find(e =>
+  const _escalao = torneio?.escaloes.find(e =>
     escalaoManuel ? e.nome === escalaoManuel : (e.jogadores?.length ?? 0) > 0
   );
   // Agregar inscritos de TODOS os escalões — um rival pode estar num escalão
@@ -2402,23 +2298,33 @@ function tidBase(tid: string): string {
   return tid.replace(/_(?:b?\d+|u\d+|open)$/, "");
 }
 
-function TabRivais({ data, fieldData, intlData, autoRivals, selectedT, memberHist,
-  subTab, setSubTab, selectedRival, setSelectedRival, greatgolfData,
+function TabRivais({ data, fieldData, intlData, autoRivals, selectedT: _selectedT, memberHist,
+  selectedRival, setSelectedRival, greatgolfData: _greatgolfData,
   onRivalsReady,
 }: {
   data: ResultsData; fieldData: FieldData | null; intlData: IntlData | null;
   autoRivals: AutoRivalPlayer[]; selectedT: number | null;
   memberHist: MemberHistData | null;
-  subTab: RivaisSubTab; setSubTab: (t: RivaisSubTab) => void;
   selectedRival: string | null; setSelectedRival: (r: string | null) => void;
   greatgolfData: GreatgolfData | null;
   onRivalsReady?: (list: { nome: string; pais: string; nEnc: number }[]) => void;
 }) {
   const matchIntl = useMemo(() => criarMatcherIntl(intlData), [intlData]);
 
+  // ── PASSO 1: Base de rivais a partir dos resultados USKids ──────────────────
+  // Dependência apenas em [data] — NÃO recalcula quando autoRivals chega.
+  // buildRivalsFromResultados é a operação mais pesada: itera todos os torneios
+  // × escalões × jogadores. Separá-la evita que corra 2× por sessão.
+  const baseRivals = useMemo<RivalInfo[]>(
+    () => buildRivalsFromResultados(data.resultados),
+    [data]
+  );
+
+  // ── PASSO 2: Merge com autoRivals (internacionais) e intlData (fallback) ─
+  // Este memo é muito mais leve — só faz lookups e pushes num Map já construído.
+  // Corre quando baseRivals, autoRivals ou intlData mudam.
   const rivals = useMemo<RivalInfo[]>(() => {
-    const base = buildRivalsFromResultados(data.resultados);
-    const mapa = new Map<string, RivalInfo>(base.map(r => [r.nome.toLowerCase().trim().replace(/\s+/g, " "), r]));
+    const mapa = new Map<string, RivalInfo>(baseRivals.map(r => [r.nome.toLowerCase().trim().replace(/\s+/g, " "), r]));
 
     // ── 2. AutoRivals (KIDSdataLoader): dados dos JSONs brutos (AUTORITATIVOS) ──
     // Processados PRIMEIRO porque os JSONs têm dados completos e actualizados.
@@ -2570,7 +2476,7 @@ function TabRivais({ data, fieldData, intlData, autoRivals, selectedT, memberHis
     }
 
     return [...mapa.values()];
-  }, [data, intlData, autoRivals]);
+  }, [baseRivals, intlData, autoRivals]);
 
   // Notify parent of sidebar-ready rivals list (avoids duplicate computation)
   useEffect(() => {
@@ -2658,36 +2564,14 @@ function TabRivais({ data, fieldData, intlData, autoRivals, selectedT, memberHis
     );
   }
 
-  // ── MODO LISTA: 2 sub-tabs ──
+  // ── Vista por torneio (directa, sem sub-tabs) ──
   return (
-    <div>
-      <div style={{ display:"flex", gap:0, marginBottom:16 }}>
-        {([
-          { id: "proximos" as const, label: "Próximos torneios" },
-          { id: "ranking" as const,  label: "Todos os rivais" },
-        ]).map(st => (
-          <button key={st.id}
-            onClick={() => setSubTab(st.id)}
-            className={`tourn-tab${subTab === st.id ? " tourn-tab-active" : ""}`}>
-            {st.label}
-          </button>
-        ))}
-      </div>
-
-      {subTab === "proximos" && (
-        <SubTabPorTorneio
-          torneiosComManuel={torneiosComManuel}
-          rivals={rivals} fieldData={fieldData} intlData={intlData}
-          matchIntl={matchIntl} matchRival={matchRival} resultados={data.resultados}
-          memberHist={memberHist} goToProfile={goToProfile}
-        />
-      )}
-
-      {subTab === "ranking" && (
-        <HistoricoTable rivals={rivals} matchIntl={matchIntl} intlData={intlData}
-          memberHist={memberHist} goToProfile={goToProfile} />
-      )}
-    </div>
+    <SubTabPorTorneio
+      torneiosComManuel={torneiosComManuel}
+      rivals={rivals} fieldData={fieldData} intlData={intlData}
+      matchIntl={matchIntl} matchRival={matchRival} resultados={data.resultados}
+      memberHist={memberHist} goToProfile={goToProfile}
+    />
   );
 }
 
@@ -2972,19 +2856,20 @@ function SubTabPorTorneio({
    Mostra todos os encontros, member history, estatísticas
    ════════════════════════════════════════════════════════════════ */
 function PerfilDoRival({
-  nome, rivals, matchIntl, intlData, memberHist, autoRivals, goToProfile,
+  nome, rivals, matchIntl, intlData, memberHist, autoRivals: _autoRivals, goToProfile: _goToProfile,
 }: {
   nome: string; rivals: RivalInfo[];
   matchIntl: (nome: string, pais?: string) => IntlJogador | null;
   intlData: IntlData | null; memberHist: MemberHistData | null;
   autoRivals: AutoRivalPlayer[]; goToProfile: (nome: string) => void;
 }) {
+  const navigate = useNavigate();
   const rival = useMemo(() => {
     const key = nome.toLowerCase().trim().replace(/\s+/g, " ");
     return rivals.find(r => r.nome.toLowerCase().trim().replace(/\s+/g, " ") === key);
   }, [nome, rivals]);
 
-  // Enriched encounters (same logic as HistoricoTable allRows)
+  // Enriched encounters (merge from results + intl data)
   const enrichedEncontros = useMemo<Encontro[]>(() => {
     if (!rival) return [];
     const encs: Encontro[] = [...rival.encontros];
@@ -3026,7 +2911,7 @@ function PerfilDoRival({
   const mhTorneios = useMemo(() => {
     if (!mhPlayer) return [];
     return Object.entries(mhPlayer.torneios)
-      .map(([tid, t]) => ({ tid, ...t }))
+      .map(([tid, t]) => ({ tid, ...(t as MemberHistTorneio) }))
       .filter(t => t.rounds && Object.keys(t.rounds).length > 0)
       .sort((a, b) => {
         const da = a.startDate || ""; const db = b.startDate || "";
@@ -3066,7 +2951,7 @@ function PerfilDoRival({
             {mhPlayer && <span>· USKids ID: {mhPlayer.memberId}</span>}
           </div>
         </div>
-        <div style={{ display:"flex", gap:16, flexShrink:0 }}>
+        <div style={{ display:"flex", gap:16, flexShrink:0, alignItems:"center" }}>
           <div className="tourn-kpi">
             <div className="tourn-kpi-val">{nTorneios}</div>
             <div className="tourn-kpi-lbl">Torneios</div>
@@ -3079,6 +2964,14 @@ function PerfilDoRival({
               <div className="tourn-kpi-lbl">Melhor</div>
             </div>
           )}
+          <button
+            onClick={() => navigate("/kids", { state: { player: nome } })}
+            className="p p-filter p-sm"
+            style={{ fontSize: 10 }}
+            title="Ver perfil completo com torneios internacionais"
+          >
+            🌍 Intl →
+          </button>
         </div>
       </div>
 
@@ -3204,9 +3097,9 @@ function PerfilDoRival({
                 const rdGross = Object.values(t.rounds || {}).map(rd => rd.gross).filter(g => g > 0);
                 const parTotal = (t.par || []).reduce((a: number, b: number) => a + b, 0);
                 const tp = t.totalStrokes && parTotal ? t.totalStrokes - parTotal * nRounds : null;
-                const tpStr = tp != null ? (tp > 0 ? `+${tp}` : tp === 0 ? "E" : String(tp)) : "";
+                const tpStr = fmtToPar(tp, "");
                 const dateStr = t.startDate || "";
-                const isoD = dateStr.includes("-") ? dateStr : dateStr.split("/").length===3 ? `${dateStr.split("/")[2]}-${dateStr.split("/")[0].padStart(2,"0")}-${dateStr.split("/")[1].padStart(2,"0")}` : "";
+                const isoD = isoDate(dateStr);
                 const fmtD = isoD ? new Date(isoD).toLocaleDateString("pt-PT",{month:"short",year:"numeric"}) : dateStr;
                 return (
                   <tr key={t.tid}>
@@ -3218,7 +3111,7 @@ function PerfilDoRival({
                     </td>
                     <td style={{ textAlign:"center" }}>
                       {t.totalStrokes > 0 ? (
-                        <><span style={{ fontWeight:600 }}>{t.totalStrokes}</span>{tpStr && <span style={{ color: tp != null && tp < 0 ? "var(--color-good)" : "var(--text-3)", marginLeft:2, fontSize:10 }}>({tpStr})</span>}</>
+                        <><span style={{ fontWeight:600 }}>{t.totalStrokes}</span>{tpStr && <span style={{ color: tpColor(tp), marginLeft:2, fontSize:10 }}>({tpStr})</span>}</>
                       ) : "—"}
                     </td>
                     <td style={{ textAlign:"center", fontSize:10, color:"var(--text-3)" }}>
@@ -3235,376 +3128,6 @@ function PerfilDoRival({
     </div>
   );
 }
-
-
-/* ════════════════════════════════════════════════════════════════
-   HistoricoTable — tabela de todos os rivais históricos
-   Filtros, ordenação por cabeçalho, encontros flex-wrap, contagem correcta
-   ════════════════════════════════════════════════════════════════ */
-type HistSortCol = "nome" | "pais" | "torneios" | "encontros" | "hist";
-type HistFilter = string; // "todos" | "top3" | "mesmo_esc" | "adj" | circuit prefixes
-
-function HistoricoTable({ rivals, matchIntl, intlData, memberHist, goToProfile }: {
-  rivals: RivalInfo[];
-  matchIntl: (nome: string, pais?: string) => IntlJogador | null;
-  intlData: IntlData | null;
-  memberHist: MemberHistData | null;
-  goToProfile?: (nome: string) => void;
-}) {
-  const [filtro, setFiltro] = useState<HistFilter>("todos");
-  const [search, setSearch] = useState("");
-  const [sortCol, setSortCol] = useState<HistSortCol>("encontros");
-  const [sortDir, setSortDir] = useState<"asc"|"desc">("desc");
-  const [expandedPlayer, setExpandedPlayer] = useState<string | null>(null);
-
-  const toggleSort = (col: HistSortCol) => {
-    if (sortCol === col) setSortDir(d => d === "asc" ? "desc" : "asc");
-    else { setSortCol(col); setSortDir(col === "nome" || col === "pais" ? "asc" : "desc"); }
-  };
-
-  // Enrich rivals
-  type HRow = {
-    nome: string; pais: string; cidade: string;
-    allEncontros: Encontro[];
-    nTorneios: number;
-    foiTop3: boolean;
-    hasAdj: boolean;       // tem encontro de escalão adjacente
-    circuits: Set<string>; // "uskids", "bjgt", "eowagr", etc.
-    mhTorneios: number;    // total de torneios no member history (0 = sem dados)
-    mhPlayer: MemberHistPlayer | null; // dados completos do member history
-  };
-
-  const allRows = useMemo<HRow[]>(() => {
-    const manuelIntl = intlData?.jogadores.find(j => j.isM);
-
-    // Build name-based lookup from memberHist
-    const mhByName = new Map<string, MemberHistPlayer>();
-    if (memberHist) {
-      for (const mh of Object.values(memberHist.jogadores)) {
-        if (mh.name && mh.name !== '?' && !mh.name.startsWith('[unknown')) {
-          mhByName.set(mh.name.toLowerCase().trim(), mh);
-        }
-      }
-    }
-
-    return rivals.map(r => {
-      const encs: Encontro[] = [...r.encontros];
-
-      // Add intl encounters for tournaments NOT already present
-      if (manuelIntl) {
-        const intlJog = matchIntl(r.nome, r.pais);
-        if (intlJog && !intlJog.isM) {
-          const existCanons = new Set(encs.map(e => tornCanon(e.torneio_nome)));
-          for (const tid of Object.keys(manuelIntl.r)) {
-            const rivalRes = intlJog.r[tid];
-            if (!rivalRes) continue;
-            const torn = intlData?.torneios.find(t => t.id === tid);
-            if (!torn) continue;
-            if (hasCanon(existCanons, torn.name, torn.short)) continue;
-            const manRes = manuelIntl.r[tid];
-            encs.push({
-              torneio_t: 0, torneio_nome: torn.name, torneio_data: torn.date || "",
-              escalao: torn.short || torn.name,
-              man_score: 0, rival_score: 0,
-              man_to_par: manRes?.tp ?? null, rival_to_par: rivalRes.tp ?? null,
-              man_pos: manRes?.p ?? 0, rival_pos: rivalRes.p ?? 0,
-              adjacente: false,
-            });
-          }
-        }
-      }
-
-      // Dedup by tornCanon + escalão (keep first = autoRivals)
-      const allEncontros = [...new Map(
-        encs.map(e => [`${tornCanon(e.torneio_nome)}-${e.escalao}`, e])
-      ).values()];
-
-      // Count unique tournaments
-      const nTorneios = new Set(allEncontros.map(e => tornCanon(e.torneio_nome))).size;
-
-      const foiTop3 = allEncontros.some(e => e.rival_pos > 0 && e.rival_pos <= 3);
-      const hasAdj = allEncontros.some(e => !!e.adjacente);
-
-      // Determine circuits
-      const circuits = new Set<string>();
-      for (const e of allEncontros) {
-        const n = e.torneio_nome.toLowerCase();
-        if (n.includes("eu open") || n.includes("european")) circuits.add("eowagr");
-        else if (n.includes("wjgc") || n.includes("bjgt")) circuits.add("bjgt");
-        else if (n.includes("doral")) circuits.add("doral");
-        else if (n.includes("great golf") || n.includes("gg")) circuits.add("outros");
-        else if (n.includes("qdl") || n.includes("quinta do lago")) circuits.add("outros");
-        else if (e.torneio_t > 0) circuits.add("uskids");
-        else circuits.add("outros");
-      }
-
-      // Match member history by name
-      const mhPlayer = mhByName.get(r.nome.toLowerCase().trim()) ?? null;
-      const mhTorneios = mhPlayer?.totalTorneios ?? 0;
-
-      return { nome: r.nome, pais: r.pais, cidade: r.cidade, allEncontros, nTorneios, foiTop3, hasAdj, circuits, mhTorneios, mhPlayer };
-    });
-  }, [rivals, matchIntl, intlData, memberHist]);
-
-  // Filter
-  const filtered = useMemo(() => {
-    let rows = allRows;
-    // Search
-    if (search.trim()) {
-      const q = search.toLowerCase();
-      rows = rows.filter(r => r.nome.toLowerCase().includes(q) || r.pais.toLowerCase().includes(q));
-    }
-    // Pill filter
-    if (filtro === "top3") rows = rows.filter(r => r.foiTop3);
-    else if (filtro === "adj") rows = rows.filter(r => r.hasAdj);
-    else if (filtro === "mesmo_esc") rows = rows.filter(r => r.allEncontros.some(e => !e.adjacente));
-    else if (filtro.startsWith("circ:")) {
-      const circ = filtro.slice(5);
-      rows = rows.filter(r => r.circuits.has(circ));
-    }
-    return rows;
-  }, [allRows, filtro, search]);
-
-  // Sort
-  const sorted = useMemo(() => {
-    const dir = sortDir === "asc" ? 1 : -1;
-    return [...filtered].sort((a, b) => {
-      let v = 0;
-      if (sortCol === "nome") v = a.nome.localeCompare(b.nome);
-      else if (sortCol === "pais") v = a.pais.localeCompare(b.pais);
-      else if (sortCol === "torneios") v = a.nTorneios - b.nTorneios;
-      else if (sortCol === "encontros") v = a.allEncontros.length - b.allEncontros.length;
-      else if (sortCol === "hist") v = a.mhTorneios - b.mhTorneios;
-      return v * dir;
-    });
-  }, [filtered, sortCol, sortDir]);
-
-  // Filter pills
-  const nTop3 = allRows.filter(r => r.foiTop3).length;
-  const nMesmoEsc = allRows.filter(r => r.allEncontros.some(e => !e.adjacente)).length;
-  const nAdj = allRows.filter(r => r.hasAdj).length;
-  const circuitCounts = useMemo(() => {
-    const m = new Map<string, number>();
-    for (const r of allRows) for (const c of r.circuits) m.set(c, (m.get(c) ?? 0) + 1);
-    return m;
-  }, [allRows]);
-
-  const circuitLabels: Record<string, string> = {
-    uskids: "USKids", bjgt: "BJGT/WJGC", eowagr: "EU Open", doral: "Doral", outros: "Outros",
-  };
-
-  const filters: { id: string; label: string; n: number; sep?: boolean }[] = [
-    { id: "todos",     label: "Todos",       n: allRows.length },
-    { id: "mesmo_esc", label: "Mesmo escalão", n: nMesmoEsc },
-    ...(nAdj > 0 ? [{ id: "adj", label: "Esc. adjacente", n: nAdj }] : []),
-    { id: "top3",      label: "🏆 Top 3",    n: nTop3 },
-    ...["uskids","bjgt","eowagr","doral","outros"]
-      .filter(c => (circuitCounts.get(c) ?? 0) > 0)
-      .map((c, i) => ({ id: `circ:${c}`, label: circuitLabels[c] || c, n: circuitCounts.get(c)!, sep: i === 0 })),
-  ];
-
-  const ThSort = ({ col, label, style }: { col: HistSortCol; label: string; style?: React.CSSProperties }) => (
-    <th onClick={() => toggleSort(col)} style={{
-      cursor:"pointer", userSelect:"none", whiteSpace:"nowrap",
-      color: sortCol === col ? "var(--text)" : "var(--text-3)",
-      ...style,
-    }}>
-      {label}
-      <span style={{ marginLeft:3, fontSize:9, opacity: sortCol === col ? 1 : 0.3 }}>
-        {sortCol === col ? (sortDir === "asc" ? "▲" : "▼") : "⇅"}
-      </span>
-    </th>
-  );
-
-  return (
-    <div>
-      <div style={{ fontSize:13, fontWeight:700, color:"var(--text-2)", marginBottom:12 }}>
-        Todos os adversários históricos ({allRows.length})
-      </div>
-
-      {/* Search + filter pills */}
-      <div style={{ display:"flex", gap:5, marginBottom:12, flexWrap:"wrap", alignItems:"center" }}>
-        <input value={search} onChange={e => setSearch(e.target.value)}
-          placeholder="Nome ou país…"
-          style={{ border:"1px solid var(--border)", borderRadius:7,
-            color:"var(--text)", background:"var(--bg-card)",
-            padding:"5px 10px", fontSize:11, width:160, outline:"none", marginRight:4 }} />
-        {filters.map(f => (
-          <React.Fragment key={f.id}>
-            {f.sep && <span style={{ width:1, height:18, background:"var(--border)", margin:"0 2px", flexShrink:0 }} />}
-            <button onClick={() => setFiltro(prev => prev === f.id ? "todos" : f.id)} style={{
-              background: filtro === f.id ? "var(--bg-active)" : "var(--bg-card)",
-              border: `1px solid ${filtro === f.id ? "var(--border-success)" : "var(--border)"}`,
-              color: filtro === f.id ? "var(--text)" : "var(--text-3)",
-              borderRadius: 7, padding: "4px 9px", fontSize: 11, cursor: "pointer",
-              fontWeight: filtro === f.id ? 700 : 400,
-            }}>
-              {f.label} <span style={{ fontWeight:700, marginLeft:2, opacity:0.7 }}>{f.n}</span>
-            </button>
-          </React.Fragment>
-        ))}
-        <span style={{ color:"var(--text-3)", fontSize:11, marginLeft:4 }}>{sorted.length} jogadores</span>
-      </div>
-
-      {sorted.length === 0 ? (
-        <div style={{ fontSize:12, color:"var(--text-3)", padding:"8px 0 12px" }}>Nenhum jogador neste filtro.</div>
-      ) : (
-        <table className="sc-lb" style={{ width:"100%" }}>
-          <thead>
-            <tr>
-              <th className="sticky-col-0" style={{ width:26 }}>#</th>
-              <ThSort col="nome" label="Jogador" style={{ textAlign:"left", paddingLeft:10, minWidth:130 }} />
-              <ThSort col="pais" label="🌍" style={{ width:30, textAlign:"center" }} />
-              <ThSort col="hist" label="📊" style={{ width:36, textAlign:"center" }} />
-              <ThSort col="torneios" label="Torn." style={{ width:42, textAlign:"center" }} />
-              <ThSort col="encontros" label="Encontros com o Manuel" style={{ textAlign:"left", padding:"6px 8px", minWidth:280 }} />
-            </tr>
-          </thead>
-          <tbody>
-            {sorted.map((r, i) => {
-              const mh = r.mhPlayer;
-              const mhTorneios = mh ? Object.entries(mh.torneios)
-                .map(([tid, t]) => ({ tid, ...t }))
-                .filter(t => t.rounds && Object.keys(t.rounds).length > 0)
-                .sort((a, b) => {
-                  const da = a.startDate || ""; const db = b.startDate || "";
-                  const pa = da.includes("-") ? da : da.split("/").length===3 ? `${da.split("/")[2]}-${da.split("/")[0].padStart(2,"0")}-${da.split("/")[1].padStart(2,"0")}` : "";
-                  const pb = db.includes("-") ? db : db.split("/").length===3 ? `${db.split("/")[2]}-${db.split("/")[0].padStart(2,"0")}-${db.split("/")[1].padStart(2,"0")}` : "";
-                  return pb.localeCompare(pa);
-                }) : [];
-
-              return (
-              <React.Fragment key={r.nome}>
-              <tr>
-                <td className="sticky-col-0" style={{ textAlign:"center", fontWeight:700, color:"var(--text-3)", fontSize:11 }}>{i + 1}</td>
-                <td style={{ textAlign:"left", paddingLeft:10 }}>
-                  <span style={{ display:"flex", alignItems:"center", gap:5 }}>
-                    <span style={{ cursor: goToProfile ? "pointer" : "default", color: goToProfile ? "var(--accent)" : "var(--text)" }}
-                      onClick={() => goToProfile?.(r.nome)}>
-                      {displayName(r.nome)}
-                    </span>
-                    {r.foiTop3 && (
-                      <span style={{ background:"var(--color-warn)", color:"#fff",
-                        fontSize:10, fontWeight:800, padding:"1px 5px", borderRadius:4, whiteSpace:"nowrap" }}>
-                        🏆 top 3
-                      </span>
-                    )}
-                    {r.cidade && <span style={{ color:"var(--text-3)", fontSize:10, marginLeft:2 }}>{r.cidade}</span>}
-                  </span>
-                </td>
-                <td style={{ textAlign:"center", fontSize:14 }}>{flag(r.pais)}</td>
-                <td style={{ textAlign:"center", fontSize:11, cursor: mhTorneios.length > 0 ? "pointer" : "default",
-                  color: r.mhTorneios > 0 ? "var(--accent,#2563eb)" : "var(--text-3)",
-                  fontWeight: r.mhTorneios > 0 ? 700 : 400, textDecoration: r.mhTorneios > 0 ? "underline" : "none" }}
-                  title={r.mhTorneios > 0 ? `Clica para ver ${r.mhTorneios} torneios` : "Sem dados de histórico"}
-                  onClick={() => { if (mhTorneios.length > 0) setExpandedPlayer(prev => prev === r.nome ? null : r.nome); }}>
-                  {r.mhTorneios > 0 ? r.mhTorneios : "—"}
-                </td>
-                <td style={{ textAlign:"center", fontWeight:700, color:"var(--text-2)", fontSize:12 }}>{r.nTorneios}</td>
-                <td style={{ fontSize:11, padding:"5px 8px", lineHeight:1.9, textAlign:"left" }}>
-                  <div style={{ display:"flex", flexWrap:"wrap", gap:"4px 10px" }}>
-                    {r.allEncontros.map(enc => {
-                      const isAdj = enc.adjacente;
-                      const hasVs = !isAdj && enc.man_pos > 0;
-                      const manMelhor = hasVs && enc.man_pos < enc.rival_pos;
-                      const manPior   = hasVs && enc.man_pos > enc.rival_pos;
-                      return (
-                        <span key={`${enc.torneio_nome}-${enc.escalao}`} style={{ whiteSpace:"nowrap" }}>
-                          <span style={{ color:"var(--text-2)" }}>
-                            {shortTornName(enc.torneio_nome)}
-                          </span>
-                          <span style={{
-                            marginLeft:4, fontSize:10, fontWeight:600, padding:"1px 5px", borderRadius:3,
-                            background: isAdj ? "var(--bg-muted)" : "var(--bg-success-subtle,rgba(0,128,0,0.06))",
-                            color: isAdj ? "var(--text-3)" : "var(--text-2)",
-                            border: `1px solid ${isAdj ? "var(--border)" : "var(--border-success,var(--border))"}`,
-                          }}>
-                            {enc.escalao}:{" "}
-                            {hasVs ? (
-                              <>
-                                <span style={{ fontWeight:700, color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
-                                  {enc.man_pos}º
-                                </span>
-                                <span style={{ color:"var(--text-3)" }}> vs </span>
-                                <span style={{ fontWeight:700 }}>{enc.rival_pos}º</span>
-                              </>
-                            ) : (
-                              <>{enc.rival_pos}º</>
-                            )}
-                          </span>
-                        </span>
-                      );
-                    })}
-                  </div>
-                </td>
-              </tr>
-              {/* ── Expanded member history row ── */}
-              {expandedPlayer === r.nome && mhTorneios.length > 0 && (
-                <tr>
-                  <td colSpan={6} style={{ padding:0, background:"var(--bg-muted,#f8f8f8)" }}>
-                    <div style={{ padding:"8px 16px 12px 40px", maxHeight:320, overflowY:"auto" }}>
-                      <div style={{ fontSize:11, fontWeight:700, color:"var(--text-2)", marginBottom:6 }}>
-                        📊 Histórico USKids de {displayName(r.nome)} — {mhTorneios.length} torneios com resultados
-                      </div>
-                      <table style={{ width:"100%", fontSize:11, borderCollapse:"collapse" }}>
-                        <thead>
-                          <tr style={{ borderBottom:"1px solid var(--border)", color:"var(--text-3)" }}>
-                            <th style={{ textAlign:"left", padding:"3px 6px", fontWeight:600 }}>Torneio</th>
-                            <th style={{ textAlign:"center", padding:"3px 6px", fontWeight:600, width:60 }}>Escalão</th>
-                            <th style={{ textAlign:"center", padding:"3px 6px", fontWeight:600, width:40 }}>Pos</th>
-                            <th style={{ textAlign:"center", padding:"3px 6px", fontWeight:600, width:50 }}>Total</th>
-                            <th style={{ textAlign:"center", padding:"3px 6px", fontWeight:600, width:60 }}>Rondas</th>
-                            <th style={{ textAlign:"left", padding:"3px 6px", fontWeight:600 }}>Data</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {mhTorneios.map(t => {
-                            const nRounds = Object.keys(t.rounds || {}).length;
-                            const rdGross = Object.values(t.rounds || {}).map(rd => rd.gross).filter(g => g > 0);
-                            const parTotal = (t.par || []).reduce((a: number, b: number) => a + b, 0);
-                            const tp = t.totalStrokes && parTotal ? t.totalStrokes - parTotal * nRounds : null;
-                            const tpStr = tp != null ? (tp > 0 ? `+${tp}` : tp === 0 ? "E" : String(tp)) : "";
-                            const dateStr = t.startDate || "";
-                            const isoD = dateStr.includes("-") ? dateStr : dateStr.split("/").length===3 ? `${dateStr.split("/")[2]}-${dateStr.split("/")[0].padStart(2,"0")}-${dateStr.split("/")[1].padStart(2,"0")}` : "";
-                            const fmtD = isoD ? new Date(isoD).toLocaleDateString("pt-PT",{month:"short",year:"numeric"}) : dateStr;
-                            return (
-                              <tr key={t.tid} style={{ borderBottom:"1px solid var(--border-light,#eee)" }}>
-                                <td style={{ padding:"3px 6px", color:"var(--text)" }}>{t.name}</td>
-                                <td style={{ padding:"3px 6px", textAlign:"center", color:"var(--text-2)", fontSize:10 }}>{t.ageGroup}</td>
-                                <td style={{ padding:"3px 6px", textAlign:"center", fontWeight:700,
-                                  color: t.place <= 3 && t.place > 0 ? "var(--color-good)" : "var(--text-2)" }}>
-                                  {t.place > 0 ? `${t.place}º` : "—"}
-                                </td>
-                                <td style={{ padding:"3px 6px", textAlign:"center" }}>
-                                  {t.totalStrokes > 0 ? (
-                                    <><span style={{ fontWeight:600 }}>{t.totalStrokes}</span>{tpStr && <span style={{ color: tp != null && tp < 0 ? "var(--color-good)" : "var(--text-3)", marginLeft:2, fontSize:10 }}>({tpStr})</span>}</>
-                                  ) : "—"}
-                                </td>
-                                <td style={{ padding:"3px 6px", textAlign:"center", fontSize:10, color:"var(--text-3)" }}>
-                                  {rdGross.length > 0 ? rdGross.join(" + ") : "—"}
-                                </td>
-                                <td style={{ padding:"3px 6px", color:"var(--text-3)", fontSize:10 }}>{fmtD}</td>
-                              </tr>
-                            );
-                          })}
-                        </tbody>
-                      </table>
-                    </div>
-                  </td>
-                </tr>
-              )}
-              </React.Fragment>
-              );
-            })}
-          </tbody>
-        </table>
-      )}
-    </div>
-  );
-}
-
-
-
 
 
 // ─────────────────────────────────────────────
@@ -3655,7 +3178,7 @@ function converterTorneioCompleto(raw: any): TorneioResult | null {
 
     // par por buraco por flight: fid → ronda → par[]
     // Fonte: flight.course_info['R1'].holes[].par  (mais fiável — por escalão)
-    const flightRoundPar = new Map<string, number[]>(); // key: `${fid}_R${rn}`
+    const _flightRoundPar = new Map<string, number[]>(); // key: `${fid}_R${rn}`
 
     // Agrupa flights pelo nome do escalão (category)
     // Usar índice numérico sintético para manter compatibilidade com age_group int
@@ -3670,7 +3193,7 @@ function converterTorneioCompleto(raw: any): TorneioResult | null {
     }>();
 
     const flightsDict: Record<string, any> = raw.flights ?? {};
-    for (const [fidStr, flight] of Object.entries(flightsDict)) {
+    for (const [_fidStr, flight] of Object.entries(flightsDict)) {
       const category: string = flight.category ?? '';
       if (!category) continue;
 
@@ -3894,22 +3417,27 @@ function converterTorneioCompleto(raw: any): TorneioResult | null {
 // COMPONENTE PRINCIPAL
 // ─────────────────────────────────────────────
 type Tab = "campo" | "resultados" | "rivais";
-type RivaisSubTab = "proximos" | "ranking";
 
 export default function USKidsFieldPage() {
+  const location = useLocation();
+  const locationRival = (location.state as any)?.rival as string | undefined;
+
   const [fieldData,   setFieldData]   = useState<FieldData | null>(null);
   const [resultsData, setResultsData] = useState<ResultsData | null>(null);
-  const [intlData,    setIntlData]    = useState<IntlData | null>(null);
+  const [intlData,    setIntlData]    = useState<IntlData | null>(null); void setIntlData;
   const [autoRivals,  setAutoRivals]  = useState<AutoRivalPlayer[]>([]);
-  const [greatgolfData, setGreatgolfData] = useState<GreatgolfData | null>(null);
+  const [greatgolfData, setGreatgolfData] = useState<GreatgolfData | null>(null); void setGreatgolfData;
   const [memberHist,   setMemberHist]   = useState<MemberHistData | null>(null);
-  const [tab,         setTab]         = useState<Tab>("campo");
+  const [tab,         setTab]         = useState<Tab>(locationRival ? "rivais" : "campo");
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [rivaisSubTab, setRivaisSubTab] = useState<RivaisSubTab>("proximos");
-  const [selectedRival, setSelectedRival] = useState<string | null>(null);
+  const [selectedRival, setSelectedRival] = useState<string | null>(locationRival ?? null);
   const [sidebarRivalSearch, setSidebarRivalSearch] = useState("");
   const [erro,        setErro]        = useState<string | null>(null);
   const [selectedT,   setSelectedT]   = useState<number | null>(null);
+
+  // Declarado ANTES do useEffect que o usa — regra de React: hooks antes de qualquer uso.
+  // Marca setAutoRivals como actualização não-urgente para não bloquear o render inicial.
+  const [, startRivalsTransition] = useTransition();
 
   useEffect(() => {
     fetch("/data/uskids-field.json?v=" + Date.now())
@@ -3933,11 +3461,9 @@ export default function USKidsFieldPage() {
         .then(r => r.ok ? r.json() : { gerado_em: "", resultados: [] })
         .catch((): ResultsData => ({ gerado_em: "", resultados: [] })),
       // 15 ficheiros históricos permanentes
-      ...historicosUrls.map(url =>
-        fetch(url)
-          .then(r => r.ok ? r.json() : null)
-          .catch(() => null)
-      ),
+      // cachedFetchJson: os 19 ficheiros são cached — não re-fetched quando KIDSPage
+      // ou KIDSdataLoader os pedem em simultâneo ou sequência.
+      ...historicosUrls.map(url => cachedFetchJson(url).catch(() => null)),
     ]).then(([autoGerado, ...historicos]) => {
       const auto = autoGerado as ResultsData;
 
@@ -3990,7 +3516,8 @@ export default function USKidsFieldPage() {
     });
 
     // Carregar auto-rivals (BJGT/EOWAGR/Doral — todos os escalões adjacentes)
-    buildAutoRivals().then(setAutoRivals).catch(() => {});
+    // startTransition: React sabe que é actualização não-urgente — não bloqueia o render inicial
+    buildAutoRivals().then(rivals => startRivalsTransition(() => setAutoRivals(rivals))).catch(() => {});
 
     // Carregar member history (histórico completo dos rivais USKids)
     fetch("/data/uskids-member-history.json?v=" + Date.now())
@@ -4216,12 +3743,11 @@ export default function USKidsFieldPage() {
             const monthMap = buildMonthMap(activeList);
             const endedMap = buildMonthMap(endedList);
 
-            const months = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
-            const monthLabel = (key: string) => {
+                        const monthLabel = (key: string) => {
               if (key === "?") return "Data desconhecida";
               if (key.length === 4) return key; // ano
               const [yr, mo] = key.split("-");
-              return `${months[parseInt(mo) - 1] || mo} ${yr}`;
+              return `${MONTHS_PT[parseInt(mo) - 1] || mo} ${yr}`;
             };
             const today = new Date().toISOString().substring(0, 7);
             const currentYear = new Date().getFullYear().toString();
@@ -4385,7 +3911,6 @@ export default function USKidsFieldPage() {
         {tab === "rivais" && resultsData && (
           <TabRivais data={resultsData} fieldData={fieldData} intlData={intlData}
             autoRivals={autoRivals} selectedT={selectedT} memberHist={memberHist}
-            subTab={rivaisSubTab} setSubTab={setRivaisSubTab}
             selectedRival={selectedRival} setSelectedRival={setSelectedRival}
             greatgolfData={greatgolfData}
             onRivalsReady={onRivalsReady}

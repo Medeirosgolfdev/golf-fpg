@@ -5,7 +5,7 @@ import TeeBadge from "../ui/TeeBadge";
 import { textOnColor } from "../utils/teeColors";
 import { sortTees, filterTees, teeHexFromTee as teeHex } from "../utils/teeUtils";
 import { fmt, fmtCR, fmtSD, norm, titleCase } from "../utils/format";
-import { calcSD, calcScore, calcCourseHcp, calcPlayingHcp } from "../utils/whsCalc";
+import { calcSD, calcScore, calcCourseHcp, calcPlayingHcp , expectedSD9, calcStrokesPerHole, get9hRatings } from "../utils/whsCalc";
 import { SC } from "../utils/scoreDisplay";
 import OverlayExport from "../ui/OverlayExport";
 import type { OverlayData } from "../ui/OverlayExport";
@@ -29,39 +29,6 @@ type HolesMode = "18" | "front9" | "back9";
  *
  * Verificação: HI=14, SD_9h=7.2 → SD_18h = 7.2 + 8.5 = 15.7 ✓ (exemplo USGA)
  */
-function expectedSD9(hi: number): number {
-  // Tabela extraída dos dados oficiais com interpolação linear para HI fracionários
-  const table: Record<number, number> = {
-    0: 1.2, 1: 1.7, 2: 2.2, 3: 2.8, 4: 3.3, 5: 3.8,
-    6: 4.3, 7: 4.8, 8: 5.4, 9: 5.9, 10: 6.4, 11: 6.9,
-    12: 7.4, 13: 8.0, 14: 8.5, 15: 9.0, 16: 9.5, 17: 10.0,
-    18: 10.6, 19: 11.1, 20: 11.6, 21: 12.2, 22: 12.7, 23: 13.2,
-    24: 13.7, 25: 14.2, 26: 14.8, 27: 15.3, 28: 15.8, 29: 16.3,
-    30: 16.8, 31: 17.4, 32: 17.9, 33: 18.4, 34: 18.9, 35: 19.4,
-    36: 20.0, 37: 20.5, 38: 21.0, 39: 21.5, 40: 22.0,
-    41: 22.6, 42: 23.1, 43: 23.6, 44: 24.1, 45: 24.6,
-    46: 25.2, 47: 25.7, 48: 26.2, 49: 26.7, 50: 27.2,
-    51: 27.8, 52: 28.3, 53: 28.8, 54: 29.3,
-  };
-
-  const clamped = Math.min(54, Math.max(0, hi));
-  const lo = Math.floor(clamped);
-  const loVal = table[lo] ?? (lo * 0.52 + 1.2);
-  const hiKey = Math.min(lo + 1, 54);
-  const hiVal = table[hiKey] ?? (hiKey * 0.52 + 1.2);
-  const frac = clamped - lo;
-  return loVal + frac * (hiVal - loVal);
-}
-
-/** Extrai ratings de 9 buracos do tee */
-function get9hRatings(tee: Tee, nine: "front9" | "back9") {
-  const key = nine === "front9" ? "holes9Front" : "holes9Back";
-  const r = tee.ratings?.[key];
-  if (!r?.courseRating || !r?.slopeRating) return null;
-  return { cr: r.courseRating, slope: r.slopeRating, par: r.par ?? null };
-}
-
-/* ─── Componente: Tabela de SD por Score (18h e 9h) ─── */
 
 function SDTable({
   cr,
@@ -623,21 +590,6 @@ function HcpStrip({
 
 const USGA_NDB_LINK = "https://www.usga.org/content/usga/home-page/handicapping/world-handicap-system/topics/net-double-bogey.html";
 
-function calcStrokesPerHole(holes: Hole[], ch: number) {
-  return holes
-    .filter(h => h.par != null && h.si != null)
-    .map(h => {
-      const si = h.si!;
-      let strokes = 0;
-      if (si <= Math.min(ch, 18)) strokes++;
-      if (ch > 18 && si <= Math.min(ch - 18, 18)) strokes++;
-      if (ch > 36 && si <= Math.min(ch - 36, 18)) strokes++;
-      return { hole: h.hole, par: h.par!, si, strokes, maxScore: h.par! + 2 + strokes };
-    })
-    .sort((a, b) => a.hole - b.hole);
-}
-
-type OverlayHoleData = { par: number[]; scores: (number | null)[]; si: number[] };
 
 function AgsSection({
   hi, holes, cr, slope, par, pcc, is9h, holesMode, onOverlayData,

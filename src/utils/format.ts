@@ -72,7 +72,28 @@ export function shortName(name: string): string {
   return (name || "").split(" ").slice(0, 2).join(" ");
 }
 
-/* ── Golf format helpers ── */
+/** Meses abreviados em português */
+export const MONTHS_PT = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"] as const;
+
+/** Normaliza uma string de data para ISO (YYYY-MM-DD).
+ *  Aceita "YYYY-MM-DD" (passa), "MM/DD/YYYY" (US), "DD-MM-YYYY" */
+export function isoDate(s: string): string {
+  if (!s) return "";
+  if (/^\d{4}-\d{2}-\d{2}/.test(s)) return s.slice(0, 10);
+  const parts = s.split("/");
+  if (parts.length === 3 && parts[2].length === 4)
+    return `${parts[2]}-${parts[0].padStart(2,"0")}-${parts[1].padStart(2,"0")}`;
+  return s;
+}
+
+/** Formata data para exibição: "17 mar. 2026"
+ *  Aceita ISO, MM/DD/YYYY ou DD-MM-YYYY */
+export function fmtDate(s: string): string {
+  if (!s) return "";
+  const iso = isoDate(s);
+  if (!iso) return s;
+  return new Date(iso).toLocaleDateString("pt-PT", { day: "2-digit", month: "short", year: "numeric" });
+}
 
 /** Formata to-par: +5, -2, E */
 export function fmtToPar(tp: number | null | undefined, placeholder = "—"): string {
@@ -98,4 +119,10 @@ export function fmtSD(sd: number | null | undefined, placeholder = "—"): strin
 export function fmtSign(n: number, decimals?: number): string {
   const s = decimals != null ? n.toFixed(decimals) : String(n);
   return n > 0 ? `+${s}` : s;
+}
+
+/** Número com sinal e parênteses: "(E)" / "(+3)" / "(-2)". Usado para subtotais F9/B9. */
+export function fmtSignParen(n: number): string {
+  if (n === 0) return "(E)";
+  return n > 0 ? `(+${n})` : `(${n})`;
 }

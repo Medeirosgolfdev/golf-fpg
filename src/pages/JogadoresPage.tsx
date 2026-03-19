@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo, useState, type ReactNode } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import type { Player, PlayersDb, Course, SexFilter } from "../data/types";
+import type { Player, Course, SexFilter } from "../data/types";
 import { useAppContext } from "../context/AppContext";
 import { norm, shortDate, fD, fD2, firstName, fmtSign, fmtToPar } from "../utils/format";
 import { getTeeHex, textOnColor, normKey, teeBorder } from "../utils/teeColors";
@@ -1132,9 +1132,9 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
   const parOrBetterPct = td?.total ? parOrBetter / td.total * 100 : 0;
   const dblOrWorsePct = td?.total ? dblOrWorse / td.total * 100 : 0;
 
-  const slColor = sc3(stats.totalStrokesLost, 5, 12);
-  const pobCol = sc3(parOrBetterPct, 40, 60, "desc");
-  const dowCol = sc3(dblOrWorsePct, 5, 15);
+  const slColor = sc3m(stats.totalStrokesLost, 5, 12);
+  const pobCol = sc3m(parOrBetterPct, 40, 60, "desc");
+  const dowCol = sc3m(dblOrWorsePct, 5, 15);
 
   // By par type
   const parTypes = [3, 4, 5].filter(p => stats.byParType[p]);
@@ -1214,7 +1214,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
               const g = stats.byParType[pt];
               const isWorst = pt === worstPT && (g.avgVsPar ?? 0) > 0.3;
               const distTotal = g.dist.eagle + g.dist.birdie + g.dist.par + g.dist.bogey + g.dist.double + g.dist.triple;
-              const vpCol = sc3(g.avgVsPar ?? 0, 0, 0.4);
+              const vpCol = sc3m(g.avgVsPar ?? 0, 0, 0.4);
               const segs = [
                 { n: g.dist.eagle + g.dist.birdie, cls: "seg-birdie", label: "Birdie+" },
                 { n: g.dist.par, cls: "seg-par", label: "Par" },
@@ -1482,10 +1482,10 @@ function AnalysisView({ data }: { data: PlayerPageData }) {
   const grossAll = rounds18g.map(r => Number(r.gross));
   const kpiGross5 = meanArr(last5.map(r => r.gross));
   const kpiGross20 = meanArr(last20.map(r => r.gross));
-  const kpiSigma = stdevArr(grossAll);
+  const _kpiSigma = stdevArr(grossAll);
   const sorted = [...grossAll].sort((a, b) => a - b);
   const n20 = sorted.length ? Math.max(1, Math.floor(sorted.length * 0.2)) : 0;
-  const best20 = n20 ? meanArr(sorted.slice(0, n20)) : null;
+  const _best20 = n20 ? meanArr(sorted.slice(0, n20)) : null;
 
   // whs20 = last 20 rounds WITH a valid SD (real WHS window — treino rounds count too)
   const whs20 = useMemo(() =>
@@ -2119,7 +2119,7 @@ function SDSimulator({ hcp, whs20, bare }: {
 
           {(() => {
             const newTopIds  = new Set(simRows!.newTopNMap.keys());
-            const enteredIds = [...newTopIds].filter(id => id !== SIM_ID && !oldTopNIds.has(id));
+            const _enteredIds = [...newTopIds].filter(id => id !== SIM_ID && !oldTopNIds.has(id));
             const exitedIds  = [...oldTopNIds].filter(id => !newTopIds.has(id) && id !== displacedRound?.scoreId);
             const displacedWasTop = displacedRound && oldTopNIds.has(displacedRound.scoreId);
             const exitedSd = exitedIds.length > 0 ? window20.find(r => r.scoreId === exitedIds[0]) : null;
@@ -2308,7 +2308,7 @@ function NextRoundSimulator({ hcp, whs20, playerData, bare }: {
 
   const selectedCourse = allRatedCourses.find(c => c.courseKey === selectedCourseKey) ?? null;
   // keep selectedCourseName for display/narrative
-  const selectedCourseName = selectedCourse?.master.name ?? "";
+  const _selectedCourseName = selectedCourse?.master.name ?? "";
 
   // Tees with valid 18-hole ratings
   const availableTees = useMemo(() => {
@@ -2600,11 +2600,12 @@ function L20SortTh({ col, label, cur, dir, onSort, className }: {
   );
 }
 
-function Last20Table({ data, last20Table, best8, whsPosMap, bare }: {
+function Last20Table({ data, last20Table, best8, whsPosMap, bare: _bare }: {
   data: PlayerPageData;
   last20Table: (RoundData & { course: string })[];
   best8: Map<string, number>;
   whsPosMap: Map<string, number>;
+  bare?: boolean;
 }) {
   const [openSc, setOpenSc] = useState<string | null>(null);
   const [sortKey, setSortKey] = useState<L20SortKey>("date");
@@ -2652,7 +2653,7 @@ function Last20Table({ data, last20Table, best8, whsPosMap, bare }: {
   }, [last20Table, sortKey, sortDir, best8, whsPosMap]);
 
   const thProps = { cur: sortKey, dir: sortDir, onSort: handleSort };
-  const whsMax = whsPosMap.size;
+  const _whsMax = whsPosMap.size;
 
   return (
     <div className="card">
@@ -2753,7 +2754,7 @@ function Last20Table({ data, last20Table, best8, whsPosMap, bare }: {
 }
 
 /* ─── Cross Analysis ─── */
-function CrossAnalysis({ data, bare }: { data: PlayerPageData; bare?: boolean }) {
+function CrossAnalysis({ data, bare: _bare }: { data: PlayerPageData; bare?: boolean }) {
   const keys = Object.keys(data.CROSS_DATA);
   const [activeEsc, setActiveEsc] = useState<string>("");
   const [sexFilter, setSexFilter] = useState("all");
@@ -3017,7 +3018,7 @@ function CommonCourses({ players, currentFed, escName }: {
         if (!map[ctk]) map[ctk] = { course: ct.course, tee: ct.tee || "?", players: [] };
         map[ctk].players.push({
           name: p.name, fed: p.fed, best: ct.best, avg: ct.avg,
-          worst: ct.worst, count: ct.count, rounds: ct.rounds || []
+          worst: ct.worst, count: ct.count, rounds: (ct.rounds || []) as RoundData[]
         });
       }
     }
@@ -3129,7 +3130,7 @@ function CommonCourses({ players, currentFed, escName }: {
                           return (
                             <div key={ri} style={{ padding: "3px 8px", borderRadius: "var(--radius)", fontSize: 11, background: isBest ? "var(--bg-success-strong)" : "var(--bg-card)", border: `1px solid ${isBest ? "var(--border-best)" : "var(--border-light)"}`, display: "flex", gap: 6, alignItems: "center" }}>
                               <span className="c-text-3">{rd.date || "–"}</span>
-                              <span className="fw-700">{rd.gross}{rd.par ? <span className={`score-delta ${(rd.gross - rd.par) > 0 ? "pos" : (rd.gross - rd.par) < 0 ? "neg" : ""} fs-9`} style={{ marginLeft: 2 }}>{fmtSign(rd.gross - rd.par)}</span> : null}</span>
+                              <span className="fw-700">{rd.gross}{rd.par ? <span className={`score-delta ${(rd.gross! - rd.par) > 0 ? "pos" : (rd.gross! - rd.par) < 0 ? "neg" : ""} fs-9`} style={{ marginLeft: 2 }}>{fmtSign(rd.gross! - rd.par)}</span> : null}</span>
                               {rd.sd != null && <span className="c-text-3">SD {rd.sd}</span>}
                               {isBest && <span>★</span>}
                             </div>
@@ -3185,7 +3186,7 @@ function TournamentComparison({ rounds, holesData }: {
   const si = refData.si;
   const tee = rounds[0]?.tee || "";
   const hx = getTeeHex(tee);
-  const fgT = textOnColor(hx);
+  const _fgT = textOnColor(hx);
   const totalPar = par ? sumArr(par, 0, hc) : null;
   const totalDist = meters ? sumArr(meters, 0, hc) : null;
   const hcpLabel = rounds[0]?.hi ?? "";
@@ -3302,10 +3303,11 @@ function TournamentComparison({ rounds, holesData }: {
 }
 
 /* Comparison table helper: generic row */
-function CompRow({ label, hc, is9, frontEnd, cells, outVal, inVal, totalVal, style, sepRow, outWeight, inWeight }: {
+function CompRow({ label, hc: _hc, is9, frontEnd, cells, outVal, inVal, totalVal, style, sepRow, outWeight, inWeight, className }: {
   label: string; hc: number; is9: boolean; frontEnd: number;
   cells: string[]; outVal?: string; inVal?: string; totalVal?: string;
   style?: React.CSSProperties; sepRow?: boolean; outWeight?: number; inWeight?: number;
+  className?: string;
 }) {
   const cs: React.CSSProperties = { padding: "4px 6px", textAlign: "center", fontSize: 12, borderBottom: "1px solid var(--bg-hover)", ...style };
   const colLabel: React.CSSProperties = { ...cs, textAlign: "left", paddingLeft: 8, borderRight: "2px solid var(--border-light)" };
@@ -3314,7 +3316,7 @@ function CompRow({ label, hc, is9, frontEnd, cells, outVal, inVal, totalVal, sty
   const colTot: React.CSSProperties = { ...cs, background: "var(--bg-muted)", borderLeft: "1px solid var(--border-light)", fontWeight: 800 };
   if (sepRow) { cs.borderBottom = "2px solid var(--border)"; colLabel.borderBottom = "2px solid var(--border)"; colOut.borderBottom = "2px solid var(--border)"; colIn.borderBottom = "2px solid var(--border)"; colTot.borderBottom = "2px solid var(--border)"; }
   return (
-    <tr>
+    <tr className={className}>
       <td style={colLabel}>{label}</td>
       {cells.map((c, i) => (
         <React.Fragment key={i}>
@@ -3436,7 +3438,7 @@ function CompDeltaRow({ first, last, hc, is9, frontEnd, backStart }: {
 }
 
 /* ─── Tournament Round Row (with expandable scorecard + eclectic injection) ─── */
-function TournRoundRow({ r, idx, data }: {
+function TournRoundRow({ r, idx: _idx, data }: {
   r: RoundData & { course: string }; idx: number; data: PlayerPageData;
 }) {
   const [scOpen, setScOpen] = useState(false);

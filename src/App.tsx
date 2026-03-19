@@ -8,6 +8,7 @@ import { getExtraCourses } from "./data/extraCourses";
 import type { Course, MasterData, PlayersDb } from "./data/types";
 import { deepFixMojibake } from "./utils/fixEncoding";
 import { isCalUnlocked, CAL_UNLOCK_EVENT } from "./utils/authConstants";
+import { norm } from "./utils/format";
 import type { MelhoriasJson } from "./data/melhoriasTypes";
 import { AppContext } from "./context/AppContext";
 import NavBar from "./ui/NavBar";
@@ -153,19 +154,14 @@ export default function App() {
     }
 
     // ── dedup campos por nome display (mesmo nome = merge) ────────────────
-    // Normalizar: lowercase sem acentos
-    function normName(s: string): string {
-      return s.trim().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/\s+/g, " ");
-    }
-
-    const byName = new Map<string, string>(); // normName → courseKey canónico
+    const byName = new Map<string, string>(); // norm → courseKey canónico
     const finalMap = new Map<string, Course>();
 
     // Ordenar: campos com mais tees ganham — iterar por ordem de inserção
     const ordered = [...map.values()].sort((a, b) => b.master.tees.length - a.master.tees.length);
 
     for (const c of ordered) {
-      const nn = normName(c.master.name);
+      const nn = norm(c.master.name);
       const canonical = byName.get(nn);
       if (canonical) {
         // Já existe um campo com este nome — fazer merge

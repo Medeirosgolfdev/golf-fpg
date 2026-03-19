@@ -15,16 +15,21 @@
  */
 import React, { useEffect, useState, useMemo } from "react";
 import { useAppContext } from "../context/AppContext";
+import { loadPlayers } from "../data/loader";
 import { SC } from "../utils/scoreDisplay";
+import { buildEscLookup, type EscLookup } from "../utils/playerUtils";
 import { getTeeHex } from "../utils/teeColors";
 import PillBadge from "../ui/PillBadge";
 import SexBadge from "../ui/SexBadge";
 import { C } from "../utils/colors";
+import { fmtDate, MONTHS_PT } from "../utils/format";
+import { toggleArr } from "../utils/mathUtils";
+import { calcAGS, EXP9, expectedSD9 } from "../utils/whsCalc";
 import { ScorecardLeaderboard, type ScorecardRow } from "../ui/ScorecardLeaderboard";
-import { MultiRoundLeaderboard, type MultiRoundRow as MRRow } from "../ui/MultiRoundLeaderboard";
+import { MultiRoundLeaderboard, EMPTY_FILTER, type MultiRoundRow as MRRow } from "../ui/MultiRoundLeaderboard";
 import { CrossSeasonTable, SortTh as CSortTh } from "../ui/CrossSeasonTable";
 import {
-  MANUEL_FED, isManuel, fmtTP,
+  MANUEL_FED, isManuel, fmtTP, tpColor,
   EscPill, TeeDot, TournPName, ESC_STYLE, SDPill,
   type PlayersDB,
 } from "../ui/tournamentPrimitives";
@@ -116,15 +121,6 @@ interface FileMeta {
 /* PlayersDB, MANUEL_FED importados de tournamentPrimitives */
 type EscLookup = Map<string, string>; // fedCode → escalão normalizado
 
-function buildEscLookup(playersDB: PlayersDB): EscLookup {
-  const m = new Map<string, string>();
-  for (const [fed, info] of Object.entries(playersDB)) {
-    if (info.escalao) {
-      m.set(fed, info.escalao.replace("-", " ").replace(/sub(\d)/i, "Sub $1").trim());
-    }
-  }
-  return m;
-}
 
 function resolveEsc(p: Player, escLookup: EscLookup): string {
   // Prioridade 1: escalão gravado no próprio registo do torneio (histórico)
@@ -411,49 +407,9 @@ function buildDisplayList(tournaments: Tournament[]): Tournament[] {
   );
 }
 
-function fmtDate(d: string): string {
-  if (!d) return "";
-  // Suporta YYYY-MM-DD
-  const parts = d.split("-");
-  if (parts.length === 3 && parts[0].length === 4) {
-    const months = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
-    const m = parseInt(parts[1]) - 1;
-    return `${parseInt(parts[2])} ${months[m] || parts[1]} ${parts[0]}`;
-  }
-  return d;
-}
-
 /* ─────────────────────────────────────────────
    CÁLCULO SD (replicado do DrivePage)
    ───────────────────────────────────────────── */
-const EXP9: Record<number, number> = {
-  0:1.2,1:1.7,2:2.2,3:2.8,4:3.3,5:3.8,6:4.3,7:4.8,8:5.4,9:5.9,
-  10:6.4,11:6.9,12:7.4,13:8.0,14:8.5,15:9.0,16:9.5,17:10.0,18:10.6,
-  19:11.1,20:11.6,21:12.2,22:12.7,23:13.2,24:13.7,25:14.2,26:14.8,
-  27:15.3,28:15.8,29:16.3,30:16.8,31:17.4,32:17.9,33:18.4,34:18.9,
-  35:19.4,36:20.0,37:20.5,38:21.0,39:21.5,40:22.0,41:22.6,42:23.1,
-  43:23.6,44:24.1,45:24.6,46:25.2,47:25.7,48:26.2,49:26.7,50:27.2,
-  51:27.8,52:28.3,53:28.8,54:29.3,
-};
-function expectedSD9(hi: number): number {
-  const c = Math.min(54, Math.max(0, hi));
-  const lo = Math.floor(c);
-  const loV = EXP9[lo] ?? (lo * 0.52 + 1.2);
-  const hiV = EXP9[Math.min(lo + 1, 54)] ?? ((lo + 1) * 0.52 + 1.2);
-  return loV + (c - lo) * (hiV - loV);
-}
-function calcAGS(scores: number[], parArr: number[], si: number[], cr: number, slope: number, hcp: number, nholes: number): number {
-  if (!scores.length || !parArr.length || !si.length || scores.length < nholes) return scores.reduce((a, b) => a + b, 0);
-  const parT = parArr.reduce((a, b) => a + b, 0);
-  const ch = Math.round(hcp * (slope / 113) + (cr - parT));
-  const siOrder = Array.from({ length: nholes }, (_, i) => i).sort((a, b) => si[a] - si[b]);
-  const strokes = new Array(nholes).fill(0);
-  let rem = Math.max(0, ch);
-  while (rem > 0) { for (const idx of siOrder) { if (rem <= 0) break; strokes[idx]++; rem--; } }
-  let adj = 0;
-  for (let i = 0; i < nholes; i++) adj += Math.min(scores[i], parArr[i] + 2 + strokes[i]);
-  return adj;
-}
 interface SDResult { sd: number | null; source: "ags" | "raw" | null }
 function computeSD(p: Player): SDResult {
   const scores = p.scores || [];
@@ -492,7 +448,6 @@ function computeSD(p: Player): SDResult {
 interface PlayerFilter {
   name: string; escs: string[]; tees: string[]; club: string;
 }
-const EMPTY_FILTER: PlayerFilter = { name: "", escs: [], tees: [], club: "" };
 
 function filterPlayers(players: Player[], f: PlayerFilter, escLookup: EscLookup, playersDB: PlayersDB): Player[] {
   let ps = players;
@@ -502,7 +457,6 @@ function filterPlayers(players: Player[], f: PlayerFilter, escLookup: EscLookup,
   if (f.club) ps = ps.filter(p => p.club === f.club);
   return ps;
 }
-function toggleArr(arr: string[], v: string): string[] { return arr.includes(v) ? arr.filter(x => x !== v) : [...arr, v]; }
 function PlayerFilterBar({ players, filter, onChange, escLookup, playersDB, total }: {
   players: Player[]; filter: PlayerFilter; onChange: (f: PlayerFilter) => void;
   escLookup: EscLookup; playersDB: PlayersDB; total: number;
@@ -1318,7 +1272,7 @@ function PJARankingView({
                             </React.Fragment>
                           );
                           const tpStr = fmtTP(res.toPar);
-                          const tpCol = res.toPar < 0 ? "var(--color-good)" : res.toPar === 0 ? "var(--color-ok,#2563eb)" : "var(--color-bad)";
+                          const tpCol = tpColor(res.toPar);
                           return (
                             <React.Fragment key={r.roundKey}>
                               <td className="cs-t-topar cs-grp" style={{ color: tpCol }}>{tpStr}</td>
@@ -1387,14 +1341,13 @@ function Content() {
 
     async function load() {
       try {
-        const [pdbResp, linksResp] = await Promise.all([
-          fetch("/data/players.json").catch(() => null),
+        // loadPlayers() usa fetchCache — 1 único fetch por sessão mesmo que FPGPage,
+        // DrivePage e App.tsx o peçam em simultâneo.
+        const [pdb, linksResp] = await Promise.all([
+          loadPlayers().catch(() => ({} as PlayersDB)),
           fetch("/data/tournament-links.json").catch(() => null),
         ]);
-        if (pdbResp?.ok) {
-          const pdb: PlayersDB = await pdbResp.json().catch(() => ({}));
-          if (alive) { setEscLookup(buildEscLookup(pdb)); setPlayersDB(pdb); }
-        }
+        if (alive) { setEscLookup(buildEscLookup(pdb)); setPlayersDB(pdb); }
         let externalLinks: Record<string, Record<string, string>> = {};
         if (linksResp?.ok) {
           externalLinks = await linksResp.json().catch(() => ({}));
@@ -1496,8 +1449,7 @@ function Content() {
   function monthLabel(key: string): string {
     if (key === "?") return "Data desconhecida";
     const [yr, mo] = key.split("-");
-    const months = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
-    return `${months[parseInt(mo) - 1] || mo} ${yr}`;
+    return `${MONTHS_PT[parseInt(mo) - 1] || mo} ${yr}`;
   }
 
   function renderSidebarItem(t: Tournament) {

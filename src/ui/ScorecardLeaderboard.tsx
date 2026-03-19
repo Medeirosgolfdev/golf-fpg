@@ -28,12 +28,7 @@
 import React from "react";
 import { scClass } from "../utils/scoreDisplay";
 import { fmtToPar } from "../utils/format";
-
-function tpColor(v: number): string | undefined {
-  if (v < 0) return "var(--color-danger)";
-  if (v === 0) return "var(--color-good)";
-  return undefined;
-}
+import { tpColor } from "./tournamentPrimitives";
 
 export interface ScorecardRow {
   key: string | number;

@@ -3,8 +3,12 @@
  * 3 tournaments · day sub-tabs (Acumulado, R1, R2, R3)
  */
 import React, { useEffect, useState } from "react";
+import { cachedFetch } from "../data/fetchCache";
 import { scClass, SC } from "../utils/scoreDisplay";
-import { fmtToPar, fmtSign } from "../utils/format";
+import { tpColor, isManuel } from "../ui/tournamentPrimitives";
+import { gf } from "../utils/flagUtils";
+const isM = (name: string) => isManuel({ name });
+import { fmtToPar, fmtSign, fmtSignParen as fmtSub } from "../utils/format";
 import { isCalUnlocked } from "../utils/authConstants";
 import PasswordGate from "../ui/PasswordGate";
 import LoadingState from "../ui/LoadingState";
@@ -34,8 +38,6 @@ const URLS = [
 ];
 
 /* ── Flags ── */
-const FL: Record<string, string> = {"Portugal":"🇵🇹","Inglaterra":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","England":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","Federação Russa":"🇷🇺","Russian Federation":"🇷🇺","Suíça":"🇨🇭","Switzerland":"🇨🇭","China":"🇨🇳","Tailândia":"🇹🇭","Thailand":"🇹🇭","França":"🇫🇷","France":"🇫🇷","Espanha":"🇪🇸","Spain":"🇪🇸","Bulgária":"🇧🇬","Bulgaria":"🇧🇬","Gales":"🏴󠁧󠁢󠁷󠁬󠁳󠁿","Wales":"🏴󠁧󠁢󠁷󠁬󠁳󠁿","Alemanha":"🇩🇪","Germany":"🇩🇪","Holanda":"🇳🇱","Netherlands":"🇳🇱","Noruega":"🇳🇴","Norway":"🇳🇴","Lituânia":"🇱🇹","Lithuania":"🇱🇹","Estônia":"🇪🇪","Estonia":"🇪🇪","Estados Unidos":"🇺🇸","United States":"🇺🇸","Irlanda":"🇮🇪","Ireland":"🇮🇪","Irlanda do Norte":"🇬🇧","Northern Ireland":"🇬🇧","Itália":"🇮🇹","Italy":"🇮🇹","Escócia":"🏴󠁧󠁢󠁳󠁣󠁴󠁿","Scotland":"🏴󠁧󠁢󠁳󠁣󠁴󠁿","Filipinas":"🇵🇭","Philippines":"🇵🇭","Suécia":"🇸🇪","Sweden":"🇸🇪","Reino Unido":"🇬🇧","United Kingdom":"🇬🇧","Great Britain":"🇬🇧","Polônia":"🇵🇱","Poland":"🇵🇱","República Checa":"🇨🇿","Czech Republic":"🇨🇿","Colômbia":"🇨🇴","Colombia":"🇨🇴","México":"🇲🇽","Mexico":"🇲🇽","Marrocos":"🇲🇦","Morocco":"🇲🇦","Bélgica":"🇧🇪","Belgium":"🇧🇪","Eslovénia":"🇸🇮","Slovenia":"🇸🇮","Ucrânia":"🇺🇦","Ukraine":"🇺🇦","Roménia":"🇷🇴","Romania":"🇷🇴","Eslováquia":"🇸🇰","Slovakia":"🇸🇰","Emirados Árabes Unidos":"🇦🇪","United Arab Emirates":"🇦🇪","Turquia":"🇹🇷","Turkey":"🇹🇷","Índia":"🇮🇳","India":"🇮🇳","Vietname":"🇻🇳","Viet Nam":"🇻🇳","Cazaquistão":"🇰🇿","Kazakhstan":"🇰🇿","Hungria":"🇭🇺","Hungary":"🇭🇺","África do Sul":"🇿🇦","South Africa":"🇿🇦","Singapura":"🇸🇬","Singapore":"🇸🇬","Dinamarca":"🇩🇰","Denmark":"🇩🇰","Canadá":"🇨🇦","Canada":"🇨🇦","Áustria":"🇦🇹","Austria":"🇦🇹","Paraguai":"🇵🇾","Paraguay":"🇵🇾","Brasil":"🇧🇷","Brazil":"🇧🇷","Jersey":"🇯🇪","Nigéria":"🇳🇬","Nigeria":"🇳🇬","Omã":"🇴🇲","Oman":"🇴🇲","Chile":"🇨🇱","Porto Rico":"🇵🇷","Puerto Rico":"🇵🇷","Costa Rica":"🇨🇷","Letónia":"🇱🇻","Latvia":"🇱🇻","Coreia do Sul":"🇰🇷","South Korea":"🇰🇷"};
-const gf = (co: string) => FL[co] || "🏳️";
 
 function loadT(raw: any, reverseRounds?: boolean): TData {
   const d = raw as TData;
@@ -54,14 +56,12 @@ function loadT(raw: any, reverseRounds?: boolean): TData {
   let pos = 1;
   players.forEach((p: any, i: number) => {
     if (p.rounds.length < maxR) { p.pos = null; return; }
-    if (i > 0 && p.total > players[i - 1].total && players[i - 1].rounds.length === maxR) pos = i + 1;
+    if (i > 0 && p.total > players[i - 1]!.total && players[i - 1]!.rounds.length === maxR) pos = i + 1;
     p.pos = pos;
   });
   return { ...d, players };
 }
 
-const fmtSub = (v: number) => v === 0 ? "(E)" : v > 0 ? `(+${v})` : `(${v})`;
-const isM = (n: string) => n.includes("Manuel") && (n.includes("Medeiros") || n.includes("Francisco"));
 
 /* ═══════════════════════════════════════════════════════════════
    ACCUMULATED LEADERBOARD — compact, ±par per round
@@ -107,14 +107,14 @@ function AccLB({ data, evo, evoYear, roundDates }: { data: TData; evo?: Map<stri
                   const r = p.rounds[i];
                   if (!r) return (<React.Fragment key={i}><td style={{ textAlign: "center", fontSize: 12, padding: "0 1px" }} className="c-muted">–</td><td style={{ textAlign: "center", fontSize: 10, padding: "0 1px" }} className="c-muted">–</td></React.Fragment>);
                   const rdTp = r.gross - parTotal;
-                  const c = rdTp < 0 ? SC.danger : rdTp === 0 ? SC.good : "var(--text-3)";
+                  const c = tpColor(rdTp);
                   return (<React.Fragment key={i}>
                     <td style={{ textAlign: "center", fontSize: 12, fontWeight: 600, padding: "0 1px" }}>{r.gross}</td>
                     <td style={{ textAlign: "center", fontSize: 10, fontWeight: 600, padding: "0 1px", color: c }}>{fmtToPar(rdTp)}</td>
                   </React.Fragment>);
                 })}
                 <td className="col-total fw-800" style={{ fontSize: 13, padding: "0 3px" }}>{p.total}</td>
-                <td className="fw-700" style={{ textAlign: "center", fontSize: 12, padding: "0 3px", color: tp != null && tp < 0 ? SC.danger : tp === 0 ? SC.good : "var(--text-3)" }}>
+                <td className="fw-700" style={{ textAlign: "center", fontSize: 12, padding: "0 3px", color: tpColor(tp) }}>
                   {tp != null ? fmtToPar(tp) : "–"}
                 </td>
                 {hasEvo && (ev ? <>
@@ -181,7 +181,7 @@ if (!sorted.length) return <EmptyState size="sm" message="Scorecards buraco-a-bu
                 <td className="fw-800 ta-center" style={{ color: "var(--text-3)", fontSize: 11 }}>{showP ? dp : ""}</td>
                 <td className="row-label fw-700" style={{ whiteSpace: "nowrap", fontSize: 11 }}>{gf(p.country)} {p.name.length > 22 ? p.name.substring(0, 20) + "…" : p.name}</td>
                 <td className="col-total">{r.gross}</td>
-                <td className="fw-700" style={{ color: tp < 0 ? SC.danger : tp === 0 ? SC.good : "var(--text-3)", fontSize: 11 }}>{fmtToPar(tp)}</td>
+                <td className="fw-700" style={{ color: tpColor(tp), fontSize: 11 }}>{fmtToPar(tp)}</td>
                 {r.scores.slice(0,9).map((sc,i) => <td key={i}><span className={`sc-score ${scClass(sc, par[i])}`}>{sc}</span></td>)}
                 <td className="col-out fw-600">{f9} <span className="fs-8 c-text-3">{fmtSub(f9 - parF9)}</span></td>
                 {r.scores.slice(9,18).map((sc,i) => <td key={i}><span className={`sc-score ${scClass(sc, par[9+i])}`}>{sc}</span></td>)}
@@ -270,9 +270,9 @@ function ManuelDay({ data, ri }: { data: TData; ri: number }) {
       <div className="h-md fs-14">🇵🇹 Análise Manuel — R{ri + 1}</div>
       <div className="muted fs-10 mb-8">Gross: {r.gross} ({fmtToPar(r.gross-parTotal)}) · F9: {r.f9} {fmtSub(r.f9!-parF9)} · B9: {r.b9} {fmtSub(r.b9!-parB9)} · Média field: {fieldAvg.toFixed(1)}</div>
       <div className="grid-auto-fill mb-8" style={{ gap: 6 }}>
-        {eagles.length > 0 && <div className="card-detail br-default" style={{ padding: "4px 8px" }}><span className="fw-800" style={{ color: SC.danger }}>🦅 {eagles.length}</span><span className="fs-10 c-text-3"> {eagles.map(h => "H"+h.h).join(", ")}</span></div>}
-        <div className="card-detail br-default" style={{ padding: "4px 8px" }}><span className="fw-800" style={{ color: SC.danger }}>🐦 {birdies.length}</span><span className="fs-10 c-text-3"> {birdies.map(h => "H"+h.h).join(", ")}</span></div>
-        <div className="card-detail br-default" style={{ padding: "4px 8px" }}><span className="fw-800" style={{ color: SC.good }}>⛳ {pars.length} pars</span></div>
+        {eagles.length > 0 && <div className="card-detail br-default" style={{ padding: "4px 8px" }}><span className="fw-800" style={{ color: SC.good }}>🦅 {eagles.length}</span><span className="fs-10 c-text-3"> {eagles.map(h => "H"+h.h).join(", ")}</span></div>}
+        <div className="card-detail br-default" style={{ padding: "4px 8px" }}><span className="fw-800" style={{ color: SC.good }}>🐦 {birdies.length}</span><span className="fs-10 c-text-3"> {birdies.map(h => "H"+h.h).join(", ")}</span></div>
+        <div className="card-detail br-default" style={{ padding: "4px 8px" }}><span className="fw-800 c-text-2">⛳ {pars.length} pars</span></div>
         <div className="card-detail br-default" style={{ padding: "4px 8px" }}><span className="fw-800 c-text-2">📦 {bogeys.length}</span><span className="fs-10 c-text-3"> {bogeys.map(h => "H"+h.h).join(", ")}</span></div>
         {doubles.length > 0 && <div className="card-detail br-default" style={{ padding: "4px 8px" }}><span className="fw-800 c-warn-dark">💥 {doubles.length} dbl</span><span className="fs-10 c-text-3"> {doubles.map(h => "H"+h.h).join(", ")}</span></div>}
         {worse.length > 0 && <div className="card-detail br-default" style={{ padding: "4px 8px" }}><span className="fw-800 c-warn-dark">🔥 {worse.length} triple+</span><span className="fs-10 c-text-3"> {worse.map(h => "H"+h.h+"(+"+h.diff+")").join(", ")}</span></div>}
@@ -282,7 +282,7 @@ function ManuelDay({ data, ri }: { data: TData; ri: number }) {
         {[{ label: "Par 3", d: p3 },{ label: "Par 4", d: p4 },{ label: "Par 5", d: p5 }].map(({ label, d }) => (
           <div key={label} className="card-detail br-default" style={{ padding: "4px 8px" }}>
             <div className="fw-700 fs-11">{label} ({d.n})</div>
-            <div className="fs-10">{d.scores.join(", ")} → <span className="fw-700" style={{ color: d.total < 0 ? SC.danger : d.total === 0 ? SC.good : "var(--text-2)" }}>{d.total > 0 ? "+"+d.total : d.total === 0 ? "E" : d.total}</span><span className="c-text-3"> (avg {d.avg > 0 ? "+" : ""}{d.avg.toFixed(2)})</span></div>
+            <div className="fs-10">{d.scores.join(", ")} → <span className="fw-700" style={{ color: d.total < 0 ? SC.good : d.total > 0 ? SC.danger : undefined }}>{d.total > 0 ? "+"+d.total : d.total === 0 ? "E" : d.total}</span><span className="c-text-3"> (avg {d.avg > 0 ? "+" : ""}{d.avg.toFixed(2)})</span></div>
           </div>
         ))}
       </div>
@@ -290,7 +290,7 @@ function ManuelDay({ data, ri }: { data: TData; ri: number }) {
         <div className="muted fs-10 mb-4 fw-700">vs R{ri} (anterior: {prevR.gross})</div>
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
           {worseVP.length > 0 && <div className="fs-10"><span className="fw-700 c-warn-dark">Pior (+{worseVP.reduce((s,h) => s+h.delta, 0)}):</span> {worseVP.map(h => `H${h.h} ${h.prev}→${h.gross}`).join(", ")}</div>}
-          {betterVP.length > 0 && <div className="fs-10"><span className="fw-700" style={{ color: SC.danger }}>Melhor ({betterVP.reduce((s,h) => s+h.delta, 0)}):</span> {betterVP.map(h => `H${h.h} ${h.prev}→${h.gross}`).join(", ")}</div>}
+          {betterVP.length > 0 && <div className="fs-10"><span className="fw-700" style={{ color: SC.good }}>Melhor ({betterVP.reduce((s,h) => s+h.delta, 0)}):</span> {betterVP.map(h => `H${h.h} ${h.prev}→${h.gross}`).join(", ")}</div>}
         </div>
       </>}
     </div>
@@ -403,7 +403,7 @@ function Content() {
 
   useEffect(() => {
     Promise.all(URLS.map(async (m) => {
-      try { const res = await fetch(m.url); if (!res.ok) return null; const raw = await res.json();
+      try { const res = await cachedFetch(m.url); if (!res.ok) return null; const raw = await res.json();
         return { id: m.id, label: m.label, shortLabel: m.shortLabel, data: loadT(raw, (m as any).reverseRounds), manuelName: m.manuelName, year: m.year, category: m.category, roundDates: m.roundDates, series: m.series } as TDef;
       } catch { return null; }
     })).then(r => { setAll(r); setLoading(false); });
