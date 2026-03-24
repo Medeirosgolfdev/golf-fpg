@@ -8,7 +8,6 @@
 import React, { useMemo, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
-  type PlayerPageData,
   type RoundData,
   type HoleScores,
   type HoleStatsData,
@@ -18,17 +17,15 @@ import {
 import { usePlayerData } from "../data/usePlayerData";
 import { norm, fmtToPar, firstName, fmtSign, MONTHS_PT } from "../utils/format";
 import { FL } from "../utils/flagUtils";
-import { linearSlopeXY, zTier, getTrend, getAvgZ } from "../utils/mathUtils";
-import { meanArr, stdevArr } from "../utils/mathUtils";
-import { scClass, toParClass, sc2, sc2w, sc3, sc3m, diagLevel, scDark, SC, tpColorDark } from "../utils/scoreDisplay";
+import { zTier, getTrend, getAvgZ } from "../utils/mathUtils";
+import { meanArr } from "../utils/mathUtils";
+import { scClass, toParClass, sc3m, SC, tpColorDark } from "../utils/scoreDisplay";
 import { isCalUnlocked } from "../utils/authConstants";
 import PasswordGate from "../ui/PasswordGate";
 import { tpColor , MANUEL_FED } from "../ui/tournamentPrimitives";
-import ScoreCircle from "../ui/ScoreCircle";
-import SectionErrorBoundary from "../ui/SectionErrorBoundary";
 import LoadingState from "../ui/LoadingState";
 import EmptyState from "../ui/EmptyState";
-import { COURSE_KEYWORDS, TOURN, FIELD_2025, VP_PAR, MANUEL_POS, TIER, FIELD_CARDS } from "../data/rivalData";
+import { COURSE_KEYWORDS, TOURN, FIELD_2025, VP_PAR, TIER, FIELD_CARDS } from "../data/rivalData";
 
 /* ═══════════════════════════════════
    TYPES
@@ -54,7 +51,7 @@ interface HoleSample { ds: number; par: number; meters: number | null; gross: nu
 interface BandDef { par: number; minM: number; maxM: number; label: string }
 
 /** Filtered band result */
-interface FilteredBand { label: string; n: number; avg: number; pob: number; dbl: number; allAvg?: number; allN?: number; col?: string }
+interface FilteredBand { key?: string; label: string; n: number; avg: number; pob: number; dbl: number; pobPct?: number; dblPct?: number; par?: number; minM?: number; maxM?: number; samples?: HoleSample[]; allAvg?: number; allN?: number; col?: string }
 
 /** Monthly stats entry */
 interface MonthStat {
@@ -78,12 +75,12 @@ type RoundAvg = { m: number; s: number } | null;
 const PLAYER_NAME = "Manuel";
 
 /* Field data from 2025 BJGT VP Flamingos — 12 players × 3 days = 36 scorecards */
-const FIELD_TOTAL = 35; // total de jogadores no torneio
+const _FIELD_TOTAL = 35; // total de jogadores no torneio
 
 /* ═══ WJGC 2026 — R1 data (Villa Padierna Flamingos, par 72) ═══ */
-const VP26_PAR = [5,3,4,3,4,5,4,3,4, 5,5,3,4,4,5,3,4,4];
-const VP26_SI  = [4,10,6,18,16,8,14,12,2, 1,7,9,15,11,5,13,17,3];
-const VP26_PAR_F = 35, VP26_PAR_B = 37, VP26_PAR_T = 72;
+const _VP26_PAR = [5,3,4,3,4,5,4,3,4, 5,5,3,4,4,5,3,4,4];
+const _VP26_SI  = [4,10,6,18,16,8,14,12,2, 1,7,9,15,11,5,13,17,3];
+const _VP26_PAR_F = 35, _VP26_PAR_B = 37, VP26_PAR_T = 72;
 interface VP26Player { n:string; co:string; flag:string; s:number[]|null; f9:number; b9:number; gross:number; tp:number; pos:number|string }
 const VP26_RAW: {n:string;co:string;flag:string;s:number[]|null}[] = [
   {n:"Dmitrii Elchaninov",co:"Russian Federation",flag:"🇷🇺",s:[6,3,4,3,3,5,5,2,4,5,5,2,4,4,5,3,4,5]},
@@ -125,7 +122,7 @@ const VP26_RAW: {n:string;co:string;flag:string;s:number[]|null}[] = [
   {n:"Isaac Cawrey",co:"England",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",s:null},
   {n:"Travis Reaves",co:"United States",flag:"🇺🇸",s:null},
 ];
-const VP26_PLAYERS: VP26Player[] = (() => {
+const _VP26_PLAYERS: VP26Player[] = (() => {
   const valid = VP26_RAW.filter(p => p.s).map(p => {
     const f9 = p.s!.slice(0,9).reduce((a,b)=>a+b,0);
     const b9 = p.s!.slice(9,18).reduce((a,b)=>a+b,0);
@@ -166,7 +163,7 @@ const EVOLUTION: EvoEntry[] = [
   {n:"Elijah Gibbons",co:"Inglaterra",from:"8-9",to:"10-11",y25:233,y26:253,delta:20,pill:"UP"},
 ];
 
-const AGE_GROUP_26: Record<string, "ex89"|"ex1011"|"new"> = {
+const _AGE_GROUP_26: Record<string, "ex89"|"ex1011"|"new"> = {
   "Dmitrii Elchaninov":"ex1011","William Harran":"new","Sean Wilding":"new","Weilian Sun":"new",
   "Philippe Xiao":"new","Hugo Strasser":"new","Christian Chepishev":"ex1011","Henry Bucys":"new",
   "Manuel Medeiros":"ex1011","Diego Gross Paneque":"ex1011","Leon Schneitter":"new",
@@ -182,7 +179,7 @@ const AGE_GROUP_26: Record<string, "ex89"|"ex1011"|"new"> = {
 
 /* ═══ WJGC 2026 — Final Leaderboard (3R) ═══ */
 interface VP26Final { n:string; co:string; flag:string; p:number|string; t:number; tp:number; rd:number[]; ag?:string }
-const VP26_FINAL: VP26Final[] = [
+const _VP26_FINAL: VP26Final[] = [
   {n:"Dmitrii Elchaninov",co:"Fed. Russa",flag:"🇷🇺",p:1,t:210,tp:-6,rd:[69,69,72],ag:"ex1011"},
   {n:"William Harran",co:"Suíça",flag:"🇨🇭",p:2,t:221,tp:5,rd:[75,71,75],ag:"new"},
   {n:"Sean Wilding",co:"Tailândia",flag:"🇹🇭",p:3,t:224,tp:8,rd:[71,74,79],ag:"new"},
@@ -220,8 +217,8 @@ const VP26_FINAL: VP26Final[] = [
   {n:"Maddox Tiemann",co:"Suécia",flag:"🇸🇪",p:"WD",t:176,tp:32,rd:[89,87],ag:"ex89"},
   {n:"Aron Klinkenberg",co:"Holanda",flag:"🇳🇱",p:"WD",t:179,tp:35,rd:[91,88],ag:"new"},
 ];
-const MANUEL_POS_26 = 9;
-const FIELD_TOTAL_26 = 36;
+const _MANUEL_POS_26 = 9;
+const _FIELD_TOTAL_26 = 36;
 /* ═══ ALL CONTEST DATA (4 age groups) ═══ */
 interface RdData { g:number; s:number[] }
 interface ContestPlayer { n:string; co:string; fl:string; p:number|string; t:number; tp:number; rd:RdData[]; isM?:boolean }
@@ -398,7 +395,7 @@ const C26_1213: ContestData = {
   ]
 };
 
-const ALL_CONTESTS: ContestData[] = [C25_89, C25_1011, C26_1011, C26_1213];
+const _ALL_CONTESTS: ContestData[] = [C25_89, C25_1011, C26_1011, C26_1213];
 const CONTEST_KEYS = ["25_89","25_1011","26_1011","26_1213"] as const;
 type ContestKey = typeof CONTEST_KEYS[number];
 const CONTEST_MAP: Record<ContestKey, ContestData> = {"25_89":C25_89,"25_1011":C25_1011,"26_1011":C26_1011,"26_1213":C26_1213};
@@ -609,27 +606,27 @@ const D: RivalPlayer[]=[
   {n:"Alessandro Zhang",co:"Great Britain",r:{},up:["marco26"]},
 ];
 
-const manuel = D.find(x => x.isM);
+const manuel = D.find(x => x.isM)!;
 
 
 
 // Compute field averages per round and per total
-const AVG_R = {};
-const AVG_T = {};
+const AVG_R: Record<string, Array<RoundAvg>> = {};
+const AVG_T: Record<string, RoundAvg> = {};
 for (const t of T) {
   AVG_R[t.id] = [];
   for (let i = 0; i < t.rounds; i++) {
-    const vals = D.filter(p => p.r[t.id] && p.r[t.id].rd && p.r[t.id].rd[i] != null).map(p => p.r[t.id].rd[i]);
+    const vals = D.filter(p => p.r[t.id] && p.r[t.id].rd && p.r[t.id].rd[i] != null).map(p => p.r[t.id].rd[i]).filter((v): v is number => v != null);
     if (vals.length > 1) {
       const m = meanArr(vals) ?? 0;
       const s = Math.sqrt(vals.reduce((a, b) => a + (b - m) ** 2, 0) / vals.length);
       AVG_R[t.id][i] = { m, s };
     }
   }
-  const vals = D.filter(p => p.r[t.id] && p.r[t.id].t != null).map(p => p.r[t.id].t);
-  if (vals.length > 1) {
-    const m = meanArr(vals) ?? 0;
-    const s = Math.sqrt(vals.reduce((a, b) => a + (b - m) ** 2, 0) / vals.length);
+  const tVals = D.filter(p => p.r[t.id] && p.r[t.id].t != null).map(p => p.r[t.id].t).filter((v): v is number => v != null);
+  if (tVals.length > 1) {
+    const m = meanArr(tVals) ?? 0;
+    const s = Math.sqrt(tVals.reduce((a, b) => a + (b - m) ** 2, 0) / tVals.length);
     AVG_T[t.id] = { m, s };
   }
 }
@@ -641,7 +638,7 @@ const TR_I = { up2: { i: "▲▲", c: SC.good }, up: { i: "▲", c: "var(--score
 // Average z-score across all rounds played
 const allCountries = [...new Set(D.map(p => p.co))].sort();
 
-function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) => void }) {
+function _RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) => void }) {
   const [fTour, setFTour] = useState("all");
   const [fUp, setFUp] = useState("all");
   const [fCo, setFCo] = useState("all");
@@ -661,7 +658,7 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
     pl.sort((a, b) => {
       let cmp = 0;
       if (sort === "name") cmp = a.n.localeCompare(b.n);
-      else if (sort === "zrank") { cmp = (getAvgZ(a) ?? 99) - (getAvgZ(b) ?? 99); }
+      else if (sort === "zrank") { cmp = (( getAvgZ as unknown as (p: RivalPlayer) => number | null)(a) ?? 99) - (( getAvgZ as unknown as (p: RivalPlayer) => number | null)(b) ?? 99); }
       else if (sort === "vsManuel") { cmp = (getVsAvg(a) ?? 999) - (getVsAvg(b) ?? 999); }
       else if (sort.startsWith("t:")) {
         const tid = sort.slice(2);
@@ -683,7 +680,7 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
 
   // Compute global ordinal rankings from z-score (across ALL players, not just filtered)
   const rankMap = useMemo(() => {
-    const scored = D.map(p => ({ n: p.n, z: getAvgZ(p) })).filter(x => x.z != null) as { n: string; z: number }[];
+    const scored = D.map(p => ({ n: p.n, z: ( getAvgZ as unknown as (p: RivalPlayer) => number | null)(p) })).filter(x => x.z != null) as { n: string; z: number }[];
     scored.sort((a, b) => a.z - b.z); // lower z = better
     const map: Record<string, number> = {};
     scored.forEach((s, i) => { map[s.n] = i + 1; });
@@ -721,7 +718,7 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
             <div key={t.id} className="kpi">
               <div className="kpi-lbl">{t.short}</div>
               <div className="kpi-val" style={{ fontSize: 16, color: tpColorDark(res.tp) }}>
-                {fmtSign(res.tp)}
+                {fmtSign(res.tp!)}
               </div>
               <div className="kpi-sub">#{res.p} · {res.rd.join("-")}</div>
             </div>
@@ -751,7 +748,7 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
 
       {/* Legend */}
       <div className="legend-row">
-        {Object.keys(TIER).map(k => (
+        {(Object.keys(TIER) as Array<keyof typeof TIER>).map(k => (
           <span key={k} className="legend-item">
             <span className="legend-dot" style={{ background: TIER[k].bg }} />
             <span style={{ color: TIER[k].c, fontSize: 10 }}>{TIER_L[k]}</span>
@@ -822,27 +819,27 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
                       if (res.p === "WD") return <td key={t.id} className="ta-center fs-11 c-muted">WD</td>;
 
                       // Tier color
-                      const playerAvg = res.t / t.rounds;
-                      const roundAvgs = AVG_R[t.id];
+                      const playerAvg = res.t! / t.rounds;
+                      const roundAvgs = AVG_R[t.id] as RoundAvg[] | undefined;
                       let fieldAvg: number | null = null, fieldStd: number | null = null;
                       if (roundAvgs && roundAvgs.length > 0) {
                         const ms = roundAvgs.filter((x: RoundAvg): x is { m: number; s: number } => x != null).map(x => x.m);
                         const ss = roundAvgs.filter((x: RoundAvg): x is { m: number; s: number } => x != null).map(x => x.s);
                         if (ms.length > 0) { fieldAvg = ms.reduce((a: number, b: number) => a + b, 0) / ms.length; fieldStd = ss.reduce((a: number, b: number) => a + b, 0) / ss.length; }
                       }
-                      const ti = fieldAvg != null ? zTier(playerAvg, { m: fieldAvg, s: fieldStd }) : null;
-                      const st = ti ? TIER[ti] : {};
+                      const ti = fieldAvg != null ? zTier(playerAvg, { m: fieldAvg, s: fieldStd ?? 0 }) : null;
+                      const st = (ti ? TIER[ti as keyof typeof TIER] : null) as { bg: string; c: string } | null;
                       const tpStr = fmtSign(res.tp);
 
                       // vs Manuel delta
                       let vsM: number | null = null;
-                      if (vsOn && !isM && manuel.r[t.id] && manuel.r[t.id].tp != null) {
-                        vsM = res.tp - manuel.r[t.id].tp;
+                      if (vsOn && !isM && manuel?.r[t.id] && manuel.r[t.id].tp != null) {
+                        vsM = res.tp! - manuel.r[t.id].tp!;
                       }
 
                       return (
-                        <td key={t.id} className="ta-center" style={{ background: st.bg || "transparent", padding: "5px 4px" }}>
-                          <div className="fw-700 fs-13" style={{ color: st.c || "var(--text-3)" }}>{tpStr}</div>
+                        <td key={t.id} className="ta-center" style={{ background: st?.bg || "transparent", padding: "5px 4px" }}>
+                          <div className="fw-700 fs-13" style={{ color: st?.c || "var(--text-3)" }}>{tpStr}</div>
                           <div className="fs-10 fw-600 c-text-3">#{res.p}</div>
                           {vsM != null && <div className="fs-10 fw-600" style={{ color: sc3m(vsM, 0, 0) }}>{fmtSign(vsM)}</div>}
                         </td>
@@ -852,7 +849,7 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
                     {/* Rank */}
                     <td className="ta-center" style={{ borderLeft: "3px solid var(--border-light)", padding: "4px 6px" }}>
                       {rankMap[p.n] != null ? (
-                        <div title={`z-score: ${(getAvgZ(p) ?? 0).toFixed(2)} · ${nRounds(p)} rondas`}>
+                        <div title={`z-score: ${(( getAvgZ as unknown as (p: RivalPlayer) => number | null)(p) ?? 0).toFixed(2)} · ${nRounds(p)} rondas`}>
                           <div className="fw-800 fs-13" style={{ color: rankMap[p.n] <= 10 ? "var(--color-good-dark)" : rankMap[p.n] <= 30 ? "var(--text)" : "var(--text-3)" }}>
                             {rankMap[p.n]}º
                           </div>
@@ -1202,8 +1199,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
   const fed = urlFed || playerFed || MANUEL_FED;
   const { data, loading, error } = usePlayerData(fed);
   const [tab, setTab] = useState<ContestKey>("26_1011");
-  const [distPeriod, setDistPeriod] = useState<number>(12); // months: 3,6,9,12,0=all
-  const [expandedPlayers, setExpandedPlayers] = useState<Set<number>>(new Set());
+  const [distPeriod, setDistPeriod] = useState<number>(12); void setDistPeriod;
+  const [expandedPlayers, setExpandedPlayers] = useState<Set<number>>(new Set()); void expandedPlayers; void setExpandedPlayers;
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
 
@@ -1259,21 +1256,21 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
     // 3) Find HOLE_STATS for this course (try each VP course name as key)
     let hs: HoleStatsData | null = null;
-    let hsKey = "";
+    let _hsKey = "";
     for (const c of vpCourses) {
       // HOLE_STATS is keyed by course name → tee key
       const courseStats = data.HOLE_STATS?.[c.course];
       if (courseStats) {
         // Pick first tee with data
         const firstTee = Object.values(courseStats)[0];
-        if (firstTee) { hs = firstTee; hsKey = c.course; break; }
+        if (firstTee) { hs = firstTee; _hsKey = c.course; break; }
       }
       // Try normalized key too
       const nk = norm(c.course);
       for (const [k, v] of Object.entries(data.HOLE_STATS || {})) {
         if (norm(k) === nk || norm(k).includes("villa padierna") || norm(k).includes("flamingos")) {
           const firstTee = Object.values(v)[0];
-          if (firstTee) { hs = firstTee; hsKey = k; break; }
+          if (firstTee) { hs = firstTee; _hsKey = k; break; }
         }
       }
       if (hs) break;
@@ -1727,7 +1724,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
   /* ── Filtered distance bands by period (must be before early returns!) ── */
   const filteredBandsResult = useMemo(() => {
     if (!A || "err" in A) return { filteredBands: [] as FilteredBand[], filteredN: 0, periodLabel: "all-time" };
-    const { allHoleSamples: ahs, bandDefs: bd, bands: b } = A as { allHoleSamples: HoleSample[]; bandDefs: BandDef[]; bands: FilteredBand[] };
+    const { allHoleSamples: ahs, bandDefs: bd, bands: b } = (A as unknown) as { allHoleSamples: HoleSample[]; bandDefs: BandDef[]; bands: FilteredBand[] };
     if (!ahs || !bd) return { filteredBands: [] as FilteredBand[], filteredN: 0, periodLabel: "all-time" };
     if (distPeriod === 0) return { filteredBands: b, filteredN: ahs.length, periodLabel: "all-time" };
     const now = new Date();
@@ -1746,17 +1743,17 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
   }, [A, distPeriod]);
 
   /* ── Period-filtered monthly & coach data (must be before early returns!) ── */
-  const filteredMonthly = useMemo(() => {
+  const _filteredMonthly = useMemo(() => {
     if (!A || "err" in A) return [];
-    const ms = (A as { monthlyStats: MonthStat[] }).monthlyStats;
+    const ms = ((A as unknown) as { monthlyStats: MonthStat[] }).monthlyStats;
     if (!ms) return [];
     if (distPeriod === 0) return ms;
     return ms.slice(-distPeriod);
   }, [A, distPeriod]);
 
-  const filteredCoach = useMemo(() => {
+  const _filteredCoach = useMemo(() => {
     if (!A || "err" in A) return [];
-    const cm = (A as { coachMonthly: CoachMonth[] }).coachMonthly;
+    const cm = ((A as unknown) as { coachMonthly: CoachMonth[] }).coachMonthly;
     if (!cm) return [];
     if (distPeriod === 0) return cm;
     return cm.slice(-distPeriod);
@@ -1804,15 +1801,15 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
     );
   }
 
-  const { stats, cards, ecl, allR, hcp, holePatterns, trapHoles, strongHoles, volatileHoles, daySummaries, bestDay, worstDay, f9avg, b9avg, f9par, b9par, recoveryRate, goodRecovery, badRecovery, totalRecovery, vpCards, nH, parArr, vpHoleProfiles, bands, bandDefs, distEvolution, metersGrowing, metersDiff, avgGrossShort, avgGrossLong, medianMeters, allHoleSamples, monthlyStats, roundDetails, coachMonthly, coachRounds } = A;
+  const { stats, cards: _cards, ecl: _ecl, allR: _allR, hcp: _hcp, holePatterns: _holePatterns, trapHoles: _trapHoles, strongHoles: _strongHoles, volatileHoles: _volatileHoles, daySummaries: _daySummaries, bestDay: _bestDay, worstDay: _worstDay, f9avg: _f9avg, b9avg: _b9avg, f9par: _f9par, b9par: _b9par, recoveryRate: _recoveryRate, goodRecovery: _goodRecovery, badRecovery: _badRecovery, totalRecovery: _totalRecovery, vpCards: _vpCards, nH: _nH, parArr: _parArr, vpHoleProfiles: _vpHoleProfiles, bands: _bands, bandDefs: _bandDefs, distEvolution: _distEvolution, metersGrowing: _metersGrowing, metersDiff: _metersDiff, avgGrossShort: _avgGrossShort, avgGrossLong: _avgGrossLong, medianMeters: _medianMeters, allHoleSamples: _allHoleSamples, monthlyStats: _monthlyStats, roundDetails: _roundDetails, coachMonthly: _coachMonthly, coachRounds: _coachRounds } = A;
   const S = stats;
-  const tp = S.totalPar;
+  const _tp = S.totalPar; void _tp;
   const pobN = S.totalDist.eagle + S.totalDist.birdie + S.totalDist.par;
   const dowN = S.totalDist.double + S.totalDist.triple;
   const totN = S.totalDist.total || (pobN + S.totalDist.bogey + dowN);
-  const pobP = totN > 0 ? pobN / totN * 100 : 0;
-  const dowP = totN > 0 ? dowN / totN * 100 : 0;
-  const worstPT = Object.values(S.byParType).length > 1
+  const _pobP = totN > 0 ? pobN / totN * 100 : 0;
+  const _dowP = totN > 0 ? dowN / totN * 100 : 0;
+  const _worstPT = Object.values(S.byParType).length > 1
     ? Object.values(S.byParType).reduce((a, b) => (b.avgVsPar ?? 0) > (a.avgVsPar ?? 0) ? b : a) : null;
 
   const { filteredBands: _fb, filteredN: _fn } = filteredBandsResult;
@@ -2114,7 +2111,7 @@ function ContestLeaderboard({ contest, evo }: { contest: ContestData; evo?: EvoE
   );
 }
 
-function MiniBar({ d }: { d: { eagle: number; birdie: number; par: number; bogey: number; double: number; triple: number } }) {
+function _MiniBar({ d }: { d: { eagle: number; birdie: number; par: number; bogey: number; double: number; triple: number } }) {
   const tot = Object.values(d).reduce((a, b) => a + b, 0);
   if (!tot) return <span className="muted">–</span>;
   const segs = [
