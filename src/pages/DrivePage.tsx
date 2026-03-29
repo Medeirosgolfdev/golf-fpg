@@ -908,6 +908,13 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
   const { tournament, playersDB, escLookup, sdLookup, temporalEscLookup } = props;
   const tournYear = tournament.date?.split("-")[0];
   const [showScorecard, setShowScorecard] = React.useState(true);
+  const [sortKey, setSortKey] = React.useState<"pos"|"esc"|"tee"|"hcp"|"sd">("pos");
+  const [sortDir, setSortDir] = React.useState<"asc"|"desc">("asc");
+
+  const handleSort = (k: "pos"|"esc"|"tee"|"hcp"|"sd") => {
+    if (k === sortKey) setSortDir(d => d === "asc" ? "desc" : "asc");
+    else { setSortKey(k); setSortDir(k === "pos" ? "asc" : "asc"); }
+  };
 
   const players = tournament.players.filter((p) => !isDNS(p) && p.scores && p.scores.length > 0);
   if (!players.length) return <div className="muted ta-center p-16">Scorecards não disponíveis.</div>;
@@ -918,22 +925,62 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
   const parTotal = par.reduce((a, b) => a + b, 0);
   const si = refP.si || [];
 
-  const sorted = [...players].sort((a, b) => {
+  // Ordenar por pos (gross) primeiro para calcular _dp
+  const byGross = [...players].sort((a, b) => {
     const ag = typeof a.grossTotal === "string" ? parseInt(a.grossTotal) : (a.grossTotal as number ?? 999);
     const bg = typeof b.grossTotal === "string" ? parseInt(b.grossTotal) : (b.grossTotal as number ?? 999);
     return ag - bg;
   });
   let posCounter = 1;
-  sorted.forEach((p, i) => {
+  byGross.forEach((p, i) => {
     if (i > 0) {
-      const prev = typeof sorted[i - 1].grossTotal === "string" ? parseInt(sorted[i - 1].grossTotal as string) : sorted[i - 1].grossTotal;
+      const prev = typeof byGross[i - 1].grossTotal === "string" ? parseInt(byGross[i - 1].grossTotal as string) : byGross[i - 1].grossTotal;
       const cur = typeof p.grossTotal === "string" ? parseInt(p.grossTotal as string) : p.grossTotal;
       if (cur !== prev) posCounter = i + 1;
     }
     (p as any)._dp = posCounter;
   });
-  const grosses = sorted.map((p) => typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : (p.grossTotal as number)).filter((g) => !isNaN(g));
+  const grosses = byGross.map((p) => typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : (p.grossTotal as number)).filter((g) => !isNaN(g));
   const avg = grosses.length ? grosses.reduce((a, b) => a + b, 0) / grosses.length : 0;
+
+  // Resolver escalão e stats por jogador antes de ordenar
+  const ESC_ORDER = ["Sub 10","Sub 12","Sub 14","Sub 16","Sub 18"];
+  const escOf = (p: Player) => (temporalEscLookup
+    ? resolveEscTemporal(p, tournYear, temporalEscLookup, escLookup)
+    : resolveEsc(p, escLookup)) || tournament.escalao || "";
+  const sdOf = (p: Player) => computeStats(p, sdLookup)?.sd18 ?? null;
+
+  const mult = sortDir === "asc" ? 1 : -1;
+  const INF = 9999;
+  const sorted = [...byGross].sort((a, b) => {
+    if (sortKey === "pos") {
+      return mult * (((a as any)._dp ?? INF) - ((b as any)._dp ?? INF));
+    }
+    if (sortKey === "esc") {
+      const ai = ESC_ORDER.indexOf(escOf(a)); const bi = ESC_ORDER.indexOf(escOf(b));
+      const av = ai >= 0 ? ai : INF; const bv = bi >= 0 ? bi : INF;
+      if (av !== bv) return mult * (av - bv);
+      // secundário: pos
+      return ((a as any)._dp ?? INF) - ((b as any)._dp ?? INF);
+    }
+    if (sortKey === "tee") {
+      const av = a.teeName || ""; const bv = b.teeName || "";
+      const cmp = av.localeCompare(bv);
+      if (cmp !== 0) return mult * cmp;
+      return ((a as any)._dp ?? INF) - ((b as any)._dp ?? INF);
+    }
+    if (sortKey === "hcp") {
+      const av = a.hcpExact ?? INF; const bv = b.hcpExact ?? INF;
+      if (av !== bv) return mult * (av - bv);
+      return ((a as any)._dp ?? INF) - ((b as any)._dp ?? INF);
+    }
+    if (sortKey === "sd") {
+      const av = sdOf(a) ?? INF; const bv = sdOf(b) ?? INF;
+      if (av !== bv) return mult * (av - bv);
+      return ((a as any)._dp ?? INF) - ((b as any)._dp ?? INF);
+    }
+    return 0;
+  });
 
   const _bS = "1px solid var(--border-light, #e5e7eb)";
 
@@ -990,19 +1037,31 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
         {refP.slope && <> · Slope {refP.slope}</>}
       </>}
       prefixHeaderCells={<>
-        <th className="lb-esc lb-sortable">ESC.</th>
+        <th className={"lb-esc lb-sortable" + (sortKey==="esc" ? " lb-sort-active" : "")}
+          onClick={() => handleSort("esc")} style={{cursor:"pointer"}}>
+          ESC.{sortKey==="esc" ? (sortDir==="asc"?" ▲":" ▼") : ""}
+        </th>
         <th className="lb-club">CLUBE</th>
-        <th className="lb-hcp">HCP</th>
-        <th className="lb-tee">TEE</th>
+        <th className={"lb-hcp lb-sortable" + (sortKey==="hcp" ? " lb-sort-active" : "")}
+          onClick={() => handleSort("hcp")} style={{cursor:"pointer"}}>
+          HCP{sortKey==="hcp" ? (sortDir==="asc"?" ▲":" ▼") : ""}
+        </th>
+        <th className={"lb-tee lb-sortable" + (sortKey==="tee" ? " lb-sort-active" : "")}
+          onClick={() => handleSort("tee")} style={{cursor:"pointer"}}>
+          TEE{sortKey==="tee" ? (sortDir==="asc"?" ▲":" ▼") : ""}
+        </th>
       </>}
       postScorecardHeaderCells={<>
-        <th className="lb-sd">SD</th>
+        <th className={"lb-sd lb-sortable" + (sortKey==="sd" ? " lb-sort-active" : "")}
+          onClick={() => handleSort("sd")} style={{cursor:"pointer"}}>
+          SD{sortKey==="sd" ? (sortDir==="asc"?" ▲":" ▼") : ""}
+        </th>
         <th className="lb-bird">🐦</th>
         <th className="lb-par-stat">Par</th>
         <th className="lb-bog">■</th>
       </>}
-      activeSortKey="pos"
-      activeSortDir="asc"
+      activeSortKey={sortKey === "pos" ? "pos" : ""}
+      activeSortDir={sortDir}
     />
   );
 }
@@ -1916,13 +1975,14 @@ function DriveContent() {
     if (regionFilter) ts = ts.filter(t => t.region === regionFilter);
     if (escFilter.length > 0 && series === "challenge") ts = filterTournByEsc(ts, escFilter, escLookup, temporalEscLookup);
     return ts;
-  }, [series, seriesT, regionFilter, escFilter, escLookup]);
+  }, [series, seriesT, regionFilter, escFilter, escLookup, temporalEscLookup]);
 
   const filteredGroups = useMemo(() => series === "sub12" ? [] : buildGroups(filteredT), [series, filteredT]);
   const regionT = useMemo(() => regionFilter ? seriesT.filter(t => t.region === regionFilter) : seriesT, [seriesT, regionFilter]);
   const availEscs = useMemo(() => series === "challenge" ? availEscaloes(regionT, escLookup, temporalEscLookup) : [], [series, regionT, escLookup, temporalEscLookup]);
 
   useEffect(() => { setRegionFilter(null); setEscFilter([]); setSelectedGroupKey(null); setRoundIdx(0); }, [series]);
+  useEffect(() => { setRegionFilter(null); setEscFilter([]); setSelectedGroupKey(null); setRoundIdx(0); }, [activeYear]);
   useEffect(() => { setEscFilter([]); setSelectedGroupKey(null); setRoundIdx(0); }, [regionFilter]);
   useEffect(() => { setSub12Player(null); }, [sub12Series]);
 
