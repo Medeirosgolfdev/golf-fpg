@@ -92,7 +92,7 @@ function expandMultiRound(tournaments: Tournament[]): Tournament[] {
       out.push(t);
       continue;
     }
-    const groupId = t.tcode;  // shared identifier for all entries in this group
+    const groupId = t.tcode + "_" + t.date;  // inclui data para ser único entre anos
 
     // Generate a per-round entry for each round
     for (let rd = 1; rd <= nRounds; rd++) {
@@ -587,7 +587,7 @@ function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; s
   const mkKey = (t: Tournament) =>
     mergeByEvent
       ? String(t.num) + "|" + String(t.region) + "|" + String(t.date)
-      : (t.ccode + "-" + t.tcode);
+      : (t.ccode + "-" + t.tcode + "-" + t.date);
 
   // Torneios visíveis (colunas da tabela)
   const visibleSorted = useMemo(() => {
@@ -1019,7 +1019,15 @@ function TotalLeaderboard(props: { tournament: Tournament; playersDB: PlayersDB;
 
   const complete = players.filter(p => !p._incomplete);
   const refP = complete[0] || players[0];
-  const parPerRound = refP.parTotal || 72;
+  // parPerRound: derivado dos roundScores da R1 (pars reais do buraco),
+  // NÃO de parTotal que já foi acumulado em expandMultiRound (combinedPar = R1+R2)
+  const parPerRound = (() => {
+    const r1 = refP.roundScores?.find(r => r.round === 1);
+    if (r1?.pars && r1.pars.length > 0) return r1.pars.reduce((a, b) => a + b, 0);
+    // fallback: dividir parTotal pelo número de rondas
+    const pt = refP.parTotal || 0;
+    return pt > 0 ? Math.round(pt / nRounds) : 72;
+  })();
 
   const rows: MRRow[] = useMemo(() => players.map(p => {
     const gross = typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : (p.grossTotal as number) || 0;
@@ -1034,9 +1042,9 @@ function TotalLeaderboard(props: { tournament: Tournament; playersDB: PlayersDB;
         const nh = rs.pars?.length || 18;
         if (p.hcpExact != null && (rs.si?.length ?? 0) >= nh && (rs.scores?.length ?? 0) >= nh && (rs.pars?.length ?? 0) >= nh) {
           const ags = calcAGS(rs.scores, rs.pars!, rs.si!, cr, slope, p.hcpExact, nh);
-          sd = Math.max(0, Math.round((113 / slope) * (ags - cr) * 10) / 10);
+          sd = Math.round((113 / slope) * (ags - cr) * 10) / 10;
         } else {
-          sd = Math.max(0, Math.round((113 / slope) * (rs.gross - cr) * 10) / 10);
+          sd = Math.round((113 / slope) * (rs.gross - cr) * 10) / 10;
         }
       }
       // Stats por ronda
@@ -1134,7 +1142,7 @@ function buildGroups(tournaments: Tournament[]): TournGroup[] {
       });
     } else {
       groups.push({
-        key: t.tcode,
+        key: t.tcode + "_" + t.date,
         label: shortCampo(t.campo),
         campo: t.campo,
         num: t.num,
@@ -1206,15 +1214,18 @@ function _computeSDWithSource(p: Player, sdLookup: SDLookup): { sd: number | nul
   const hcp = p.hcpExact;
   if (cr && slope && hcp != null && scores.length >= nholes && parArr.length >= nholes && si.length >= nholes) {
     const ags = calcAGS(scores, parArr, si, cr, slope, hcp, nholes);
-    const sd18 = nholes <= 9
-      ? Math.abs(ags - parT) / (slope / 113) * (18 / nholes) + (cr - parT * (18 / nholes))
-      : (ags - cr) * 113 / slope + (cr - (cr / (nholes / 18) * (nholes / 18)));
-    const sd = Math.max(0, Math.round(sd18 * 10) / 10);
-    return { sd, source: "ags" };
+    // Fórmula WHS 2024 — idêntica a computeStats:
+    // 18h: SD = (113/slope) × (AGS − CR)
+    // 9h:  SD = rawSD + expectedSD9(hcp)  (regra 2024: SD dos 9h + expected dos restantes 9h)
+    const rawSD = (113 / slope) * (ags - cr);
+    const sd18 = nholes <= 9 ? rawSD + expectedSD9(hcp) : rawSD;
+    return { sd: Math.round(sd18 * 10) / 10, source: "ags" };
   }
-  if (hcp != null) {
-    const exp = nholes <= 9 ? expectedSD9(Math.abs(hcp)) : Math.abs(hcp) * 1.06 + 1;
-    return { sd: Math.round(exp * 10) / 10, source: "raw" };
+  // Fallback sem SI: raw gross (sem clip — SD pode ser negativo para jogadores de elite)
+  if (cr && slope) {
+    const rawSD = (113 / slope) * (gross - cr);
+    const sd18 = nholes <= 9 && hcp != null ? rawSD + expectedSD9(hcp) : rawSD;
+    return { sd: Math.round(sd18 * 10) / 10, source: "raw" };
   }
   return { sd: null, source: null };
 }
@@ -2297,7 +2308,7 @@ function DriveContent() {
                       const isTotal = lbl === "Total";
                       const activeCount = entry.players.filter(p => !isDNS(p)).length;
                       return (
-                        <button key={entry.tcode}
+                        <button key={entry.tcode + "_" + entry.date}
                           className={"tourn-tab tourn-tab-sm" + (roundIdx === ri ? " active" : "")}
                           onClick={() => setRoundIdx(ri)}
                           style={roundIdx === ri ? {} : isTotal
