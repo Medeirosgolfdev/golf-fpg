@@ -42,7 +42,7 @@ const DATA_EXT      = ".json";                  // extensão
 const DATA_DIGITS   = 3;                        // 000, 001, 002 ...
 const DATA_MAX      = 50;                       // segurança: parar após N ficheiros
 
-type TournPill = "REGIONAL" | "NACIONAL" | "INTL" | "PJA";
+type TournPill = "REGIONAL" | "NACIONAL" | "INTL" | "PJA" | "SSERRA";
 
 /**
  * Mapa tcode → pill de torneio.
@@ -55,7 +55,10 @@ const TOURN_PILLS: Record<string, TournPill> = {
   "10019": "PJA",   // Race to Dunas G. Final
 };
 
-const PILL_STYLE_PJA = { bg: C.navy, color: C.white };
+const PILL_STYLE_PJA    = { bg: C.navy,    color: C.white };
+const PILL_STYLE_SSERRA = { bg: "#15803d", color: "#fff"  };
+
+const SSERRA_CCODE = "007";
 
 function TournPillBadge({ tcode, dynamicPills }: { tcode?: string; dynamicPills?: Record<string, TournPill> }) {
   if (!tcode) return null;
@@ -68,6 +71,14 @@ function TournPillBadge({ tcode, dynamicPills }: { tcode?: string; dynamicPills?
         fontSize: 10, fontWeight: 700, borderRadius: 20, padding: "1px 6px",
         background: PILL_STYLE_PJA.bg, color: PILL_STYLE_PJA.color, whiteSpace: "nowrap",
       }}>PJA</span>
+    );
+  }
+  if (pill === "SSERRA") {
+    return (
+      <span style={{
+        fontSize: 10, fontWeight: 700, borderRadius: 20, padding: "1px 6px",
+        background: PILL_STYLE_SSERRA.bg, color: PILL_STYLE_SSERRA.color, whiteSpace: "nowrap",
+      }}>SSerra</span>
     );
   }
   return <PillBadge pill={pill} />;
@@ -1313,7 +1324,7 @@ function Content() {
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [sidebarMode, setSidebarMode] = useState<"month" | "circuit" | "pja-ranking">("month");
+  const [sidebarMode, setSidebarMode] = useState<"month" | "circuit" | "pja-ranking" | "santo">("month");
   const [filterManuel, setFilterManuel] = useState(false);
   const [escLookup, setEscLookup] = useState<EscLookup>(new Map());
   const [playersDB, setPlayersDB] = useState<PlayersDB>({});
@@ -1409,13 +1420,10 @@ function Content() {
   const displayList = useMemo(() => buildDisplayList(tournaments), [tournaments]);
   const cur = displayList[selected];
 
-  // Agrupamento por mês
+  // Agrupamento por mês — mostra TODOS os torneios sem excepção
   const { groups: monthGroups, groupKeys: monthKeys } = useMemo(() => {
     const g: Record<string, Tournament[]> = {};
     for (const t of displayList) {
-      if (/PJA/i.test(t.name)) continue;
-      const tcodes = t.tcode?.split("+") || [];
-      if (tcodes.some(tc => TOURN_PILLS[tc] === "PJA")) continue;
       if (filterManuel && !t.players.some(p => p.fedCode === MANUEL_FED)) continue;
       const key = t.date ? t.date.substring(0, 7) : "?";
       if (!g[key]) g[key] = [];
@@ -1424,11 +1432,11 @@ function Content() {
     return { groups: g, groupKeys: Object.keys(g).sort().reverse() };
   }, [displayList, filterManuel]);
 
-  // Lista apenas PJA (para o modo circuito)
+  // Lista apenas PJA (para o modo circuito) — exclui explicitamente SSerra
   const pjaList = useMemo(
     () => displayList.filter(t => {
+      if (t.ccode === SSERRA_CCODE) return false;  // SSerra tem tab próprio
       if (/PJA/i.test(t.name)) return true;
-      // torneios com tcode definido como PJA no mapa estático
       const tcodes = t.tcode?.split("+") || [];
       return tcodes.some(tc => TOURN_PILLS[tc] === "PJA");
     }),
@@ -1445,6 +1453,22 @@ function Content() {
     const years = Object.keys(byYear).sort().reverse();
     return { byYear, years };
   }, [pjaList]);
+
+  // ── Santo da Serra ──
+  const santoList = useMemo(
+    () => displayList.filter(t => t.ccode === SSERRA_CCODE),
+    [displayList]
+  );
+  const santoByYear = useMemo(() => {
+    const byYear: Record<string, Tournament[]> = {};
+    for (const t of santoList) {
+      const yr = t.date ? t.date.substring(0, 4) : "?";
+      if (!byYear[yr]) byYear[yr] = [];
+      byYear[yr].push(t);
+    }
+    const years = Object.keys(byYear).sort().reverse();
+    return { byYear, years };
+  }, [santoList]);
 
   function monthLabel(key: string): string {
     if (key === "?") return "Data desconhecida";
@@ -1525,6 +1549,12 @@ function Content() {
         <div style={{ display: "flex", gap: 4, flexWrap: "wrap", alignItems: "center" }}>
           {t.escalao && <EscPill esc={t.escalao} />}
           <TournPillBadge tcode={t.tcode} dynamicPills={tcodePills} />
+          {t.ccode === SSERRA_CCODE && (
+            <span style={{
+              fontSize: 10, fontWeight: 700, borderRadius: 20, padding: "1px 6px",
+              background: PILL_STYLE_SSERRA.bg, color: PILL_STYLE_SSERRA.color, whiteSpace: "nowrap",
+            }}>SSerra</span>
+          )}
           {manuelPlayed && (
             <span title="Manuel participou neste torneio" style={{
               fontSize: 10, fontWeight: 700,
@@ -1573,12 +1603,20 @@ function Content() {
                   🏆 PJA Tour
                 </button>
                 <button
+                  className={"tourn-tab tourn-tab-sm" + (sidebarMode === "santo" ? " active" : "")}
+                  onClick={() => { setSidebarMode("santo"); setFilterManuel(false); }}
+                  style={sidebarMode === "santo"
+                    ? { background: PILL_STYLE_SSERRA.bg, borderColor: PILL_STYLE_SSERRA.bg, color: PILL_STYLE_SSERRA.color }
+                    : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                  ⛳ Santo da Serra
+                </button>
+                <button
                   className={"tourn-tab tourn-tab-sm" + (sidebarMode === "pja-ranking" ? " active" : "")}
                   onClick={() => { setSidebarMode("pja-ranking"); setFilterManuel(false); }}
                   style={sidebarMode === "pja-ranking" ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
                   📊 Ranking
                 </button>
-                {sidebarMode === "month" && (
+                {(sidebarMode === "month" || sidebarMode === "santo") && (
                   <button
                     className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
                     onClick={() => setFilterManuel(v => !v)}
@@ -1608,10 +1646,18 @@ function Content() {
           {loading
             ? <span className="muted fs-11" style={{ fontStyle: "italic" }}>{loadingMsg}</span>
             : <>
-                <span className="chip">{displayList.length} torneios</span>
-                <span className="chip" style={{ marginLeft: 4, background: "var(--bg-hover)" }}>
-                  {fileMeta.length} ficheiro{fileMeta.length !== 1 ? "s" : ""}
+                <span className="chip">
+                  {sidebarMode === "santo"
+                    ? santoList.length
+                    : sidebarMode === "circuit"
+                    ? pjaList.length
+                    : displayList.length} torneios
                 </span>
+                {sidebarMode !== "santo" && (
+                  <span className="chip" style={{ marginLeft: 4, background: "var(--bg-hover)" }}>
+                    {fileMeta.length} ficheiro{fileMeta.length !== 1 ? "s" : ""}
+                  </span>
+                )}
                 {lastUpdated && <span className="muted fs-11" style={{ marginLeft: 8 }}>atualizado {lastUpdated}</span>}
               </>
           }
@@ -1642,14 +1688,29 @@ function Content() {
                   {monthGroups[gk].map(t => renderSidebarItem(t))}
                 </React.Fragment>
               ))
-            : pjaByYear.years.length === 0
-              ? <div className="muted fs-11" style={{ padding: "12px 16px", fontStyle: "italic" }}>Sem torneios PJA</div>
-              : pjaByYear.years.map(yr => (
-                  <React.Fragment key={yr}>
-                    <div className="sidebar-section-title-dark">🏆 PJA Tour {yr}</div>
-                    {pjaByYear.byYear[yr].map(t => renderSidebarItem(t))}
-                  </React.Fragment>
-                ))
+            : sidebarMode === "santo"
+              ? santoByYear.years.length === 0
+                ? <div className="muted fs-11" style={{ padding: "12px 16px", fontStyle: "italic" }}>Sem torneios Santo da Serra</div>
+                : santoByYear.years.map(yr => {
+                    const items = santoByYear.byYear[yr].filter(t =>
+                      !filterManuel || t.players.some(p => p.fedCode === MANUEL_FED)
+                    );
+                    if (items.length === 0) return null;
+                    return (
+                      <React.Fragment key={yr}>
+                        <div className="sidebar-section-title-dark" style={{ color: PILL_STYLE_SSERRA.bg }}>⛳ Santo da Serra {yr}</div>
+                        {items.map(t => renderSidebarItem(t))}
+                      </React.Fragment>
+                    );
+                  })
+              : pjaByYear.years.length === 0
+                ? <div className="muted fs-11" style={{ padding: "12px 16px", fontStyle: "italic" }}>Sem torneios PJA</div>
+                : pjaByYear.years.map(yr => (
+                    <React.Fragment key={yr}>
+                      <div className="sidebar-section-title-dark">🏆 PJA Tour {yr}</div>
+                      {pjaByYear.byYear[yr].map(t => renderSidebarItem(t))}
+                    </React.Fragment>
+                  ))
           }
         </div>
 

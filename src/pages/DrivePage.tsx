@@ -226,6 +226,13 @@ const fmtDate = (d: string) => {
   return day + "/" + m;
 };
 
+/** URL público do torneio em scoring.datagolf.pt */
+const tournFpgUrl = (ccode: string, tcode: string) => {
+  const cc = String(ccode || "").padStart(3, "0");
+  const tc = String(tcode || "").replace(/_R\d+$|_Total$/, "");
+  return `https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=${cc}&tcode=${tc}`;
+};
+
 function isDNS(p: Player): boolean {
   const g = typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : p.grossTotal;
   if (g != null && g >= 900) return true;
@@ -321,19 +328,85 @@ type EscLookup = Map<string, string>; // fedCode → normalized escalão ("Sub 1
 /** Build global escalão lookup: playersDB → Challenge tournament data */
 
 
+/**
+ * Temporal escalão lookup: fedCode → Map<year, escalão>
+ * Construído a partir dos torneios Challenge (que têm t.escalao explícito).
+ * Permite saber o escalão de um jogador NUM ANO ESPECÍFICO, não apenas o actual.
+ */
+function buildTemporalEscLookup(tournaments: Tournament[]): Map<string, Map<string, string>> {
+  const map = new Map<string, Map<string, string>>();
+  for (const t of tournaments) {
+    if (t.series !== "challenge" || !t.escalao) continue;
+    // Ignorar rondas expandidas (R1/R2) — só o torneio base ou Total
+    if (t._roundLabel && t._roundLabel !== "Total") continue;
+    const year = t.date?.split("-")[0];
+    if (!year) continue;
+    for (const p of t.players) {
+      const fed = p.fed || p.fedCode || "";
+      if (!fed) continue;
+      if (!map.has(fed)) map.set(fed, new Map());
+      // Não sobrescrever se já existe para este ano (primeiro torneio encontrado ganha)
+      if (!map.get(fed)!.has(year)) map.get(fed)!.set(year, t.escalao!);
+    }
+  }
+  return map;
+}
+
+/**
+ * Resolve o escalão de um jogador para um ANO específico:
+ * 1) Procura no temporalEscLookup pelo ano do torneio
+ * 2) Fallback para o escLookup global (atual)
+ */
+function resolveEscTemporal(
+  p: Player,
+  year: string | null | undefined,
+  temporalLookup: Map<string, Map<string, string>>,
+  fallback: EscLookup
+): string {
+  const fed = p.fed || p.fedCode || "";
+  if (fed && year) {
+    const y = temporalLookup.get(fed)?.get(year);
+    if (y) return y;
+  }
+  return resolveEscFromLookup(p, fallback);
+}
+
 const resolveEsc = (p: Player, escLookup: EscLookup): string => resolveEscFromLookup(p, escLookup);
 
 /** Get available escalões from a set of tournaments (sorted by ESCALOES order) */
-function availEscaloes(tournaments: Tournament[], escLookup: EscLookup): string[] {
+/**
+ * Resolve o escalão de um jogador PARA EFEITOS DE FILTRO (não para o pill visual):
+ * 1. Se o torneio tem t.escalao definido (Drive Challenge) → usa-o directamente
+ *    (todos os jogadores desse torneio competiram nesse escalão)
+ * 2. Senão → procura no temporalLookup pelo ano do torneio
+ * 3. Fallback → escLookup global (actual)
+ */
+function resolveEscFilter(
+  p: Player,
+  t: Tournament,
+  temporalLookup: Map<string, Map<string, string>>,
+  escLookup: EscLookup
+): string {
+  if (t.escalao) return t.escalao;
+  const year = t.date?.split("-")[0];
+  return resolveEscTemporal(p, year, temporalLookup, escLookup);
+}
+
+function availEscaloes(
+  tournaments: Tournament[],
+  escLookup: EscLookup,
+  temporalLookup?: Map<string, Map<string, string>>
+): string[] {
   const s = new Set<string>();
   for (const t of tournaments) {
     for (const p of t.players) {
       if (isDNS(p)) continue;
-      const e = resolveEsc(p, escLookup);
+      const e = temporalLookup
+        ? resolveEscFilter(p, t, temporalLookup, escLookup)
+        : resolveEsc(p, escLookup);
       if (e) s.add(e);
     }
   }
-  // Sort by ESCALOES order, then any extras alphabetically
   const ordered = ESCALOES.filter(e => s.has(e));
   for (const e of s) {
     if (!ordered.includes(e)) ordered.push(e);
@@ -342,11 +415,20 @@ function availEscaloes(tournaments: Tournament[], escLookup: EscLookup): string[
 }
 
 /** Filter tournaments keeping only players of a given escalão; recalculate positions */
-function filterTournByEsc(tournaments: Tournament[], escs: string[], escLookup: EscLookup): Tournament[] {
+function filterTournByEsc(
+  tournaments: Tournament[],
+  escs: string[],
+  escLookup: EscLookup,
+  temporalLookup?: Map<string, Map<string, string>>
+): Tournament[] {
   return tournaments.map(t => {
     const filtered = t.players.filter(p => {
       if (isDNS(p)) return false;
-      return escs.includes(resolveEsc(p, escLookup));
+      // Usar resolveEscFilter: t.escalao tem prioridade (Challenge já está separado por escalão)
+      const esc = temporalLookup
+        ? resolveEscFilter(p, t, temporalLookup, escLookup)
+        : resolveEsc(p, escLookup);
+      return escs.includes(esc);
     });
     if (!filtered.length) return null;
     // Recalculate positions
@@ -650,9 +732,7 @@ function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; s
     });
   }, [rows, sortKey, sortDir]);
 
-  if (!sorted.length) return <div className="muted ta-center p-24">Sem torneios.</div>;
-
-  // Build group headers for CrossSeasonTable
+  // Build group headers for CrossSeasonTable — DEVE ficar antes de qualquer return (regra dos hooks)
   interface GroupHeader { key: string; label: string; colSpan: number; isMulti: boolean; groupId?: string; tournament: Tournament; isExpanded: boolean }
   const groupHeaders = useMemo(() => {
     const headers: GroupHeader[] = [];
@@ -685,6 +765,8 @@ function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; s
     }
     return headers;
   }, [visibleSorted, expandedGroups]);
+
+  if (!sorted.length) return <div className="muted ta-center p-24">Sem torneios.</div>;
 
   return (
     <CrossSeasonTable
@@ -822,8 +904,9 @@ function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; s
    SCORECARD LEADERBOARD
    Colunas idênticas ao Diversos: ESC · CLUBE · HCP · TEE · Tot · ± · SD · 🐦 · Par · ■
    ═══════════════════════════════════════════════════════ */
-function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escLookup: EscLookup; sdLookup: SDLookup }) {
-  const { tournament, playersDB, escLookup, sdLookup } = props;
+function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escLookup: EscLookup; sdLookup: SDLookup; temporalEscLookup?: Map<string, Map<string, string>> }) {
+  const { tournament, playersDB, escLookup, sdLookup, temporalEscLookup } = props;
+  const tournYear = tournament.date?.split("-")[0];
   const [showScorecard, setShowScorecard] = React.useState(true);
 
   const players = tournament.players.filter((p) => !isDNS(p) && p.scores && p.scores.length > 0);
@@ -859,7 +942,9 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
     const dp = (p as any)._dp;
     const showP = idx === 0 || dp !== (sorted[idx - 1] as any)._dp;
     const rowBg = isManuel(p) ? "var(--bg-success-subtle)" : undefined;
-    const esc = resolveEsc(p, escLookup) || tournament.escalao || "";
+    const esc = (temporalEscLookup
+      ? resolveEscTemporal(p, tournYear, temporalEscLookup, escLookup)
+      : resolveEsc(p, escLookup)) || tournament.escalao || "";
     const stats = computeStats(p, sdLookup);
     return {
       key: p.scoreId || idx,
@@ -1660,6 +1745,9 @@ function DriveContent() {
   const [selectedGroupKey, setSelectedGroupKey] = useState<string | null>(null);
   const [roundIdx, setRoundIdx]                 = useState(0);
 
+  // Filtro de ano (null = todos)
+  const [yearFilter, setYearFilter]             = useState<string | null>(null);
+
   // Estado específico Sub-12
   const [sub12Series, setSub12Series]   = useState<Sub12SeriesTab>("tour");
   const [sub12View, setSub12View]       = useState<Sub12ViewTab>("grid");
@@ -1668,44 +1756,96 @@ function DriveContent() {
   const [sub12Search, setSub12Search]   = useState("");
   const [sub12Player, setSub12Player]   = useState<Sub12Row | null>(null);
 
+  // Carrega todos os ficheiros mensais: {prefix}-YYYY-MM.json
+  // Itera 2022 → ano corrente, todos os meses; ignora silenciosamente os que não existem (404)
+  async function loadAllFiles(prefix: string, forceAqapor = false): Promise<Tournament[]> {
+    const all: Tournament[] = [];
+    const now = new Date();
+    const curYear  = now.getFullYear();
+    const curMonth = now.getMonth() + 1;
+    for (let year = 2022; year <= curYear; year++) {
+      for (let month = 1; month <= 12; month++) {
+        if (year === curYear && month > curMonth) break;
+        const mm  = String(month).padStart(2, "0");
+        const url = `/data/${prefix}-${year}-${mm}.json`;
+        try {
+          const r = await fetch(url);
+          if (!r.ok) continue;   // mês sem ficheiro → saltar
+          const d = await r.json();
+          const tourns: Tournament[] = (d.tournaments || []).map((t: any) =>
+            normalizeTournament(forceAqapor ? { ...t, series: "aquapor" as const } : t)
+          );
+          all.push(...tourns);
+        } catch {
+          continue;
+        }
+      }
+    }
+    return all;
+  }
+
   useEffect(() => {
     Promise.all([
-      fetch("/data/drive-data.json").then(r => { if (!r.ok) throw new Error("drive " + r.status); return r.json(); }),
-      loadPlayers().catch(() => ({})),  // fetchCache: partilhado com App.tsx e FPGPage
+      loadAllFiles("drive-data"),
+      loadAllFiles("aquapor-data", true),
+      loadPlayers().catch(() => ({})),
       fetch("/data/drive-sd-lookup.json").then(r => r.ok ? r.json() : {}).catch(() => ({})),
-      fetch("/data/aquapor-data.json").then(r => r.ok ? r.json() : null).catch(() => null),
-    ]).then(([dd, pp, sd, aq]) => {
-      const driveData = dd as DriveData;
-      driveData.tournaments = driveData.tournaments.map(normalizeTournament);
-      if (aq?.tournaments) {
-        const aqT = (aq.tournaments as Tournament[]).map(t => normalizeTournament({ ...t, series: "aquapor" as const }));
-        driveData.tournaments = [...driveData.tournaments, ...aqT];
-        driveData.totalTournaments += aqT.length;
-        driveData.totalPlayers += aqT.reduce((s, t) => s + t.playerCount, 0);
-      }
-      driveData.tournaments = expandMultiRound(driveData.tournaments);
-      // Mostrar dados imediatamente; resolver feds em background
+    ]).then(([driveTourns, aqTourns, pp, sd]) => {
+      const allTourns = expandMultiRound([...driveTourns, ...aqTourns]);
+      const driveData: DriveData = {
+        lastUpdated: "",
+        source: "scoring.datagolf.pt",
+        totalTournaments: allTourns.length,
+        totalPlayers: allTourns.reduce((s, t) => s + t.playerCount, 0),
+        totalScorecards: 0,
+        tournaments: allTourns,
+      };
       setData(driveData); setPdb(pp as PlayersDB); setSdLookup(sd as SDLookup); setLoading(false);
       setTimeout(() => {
         resolveFedsInTournaments(driveData.tournaments, pp as PlayersDB);
-        // Forçar re-render para aplicar feds resolvidos
         setData({ ...driveData });
       }, 0);
     }).catch(e => { setError(e.message); setLoading(false); });
   }, []);
 
-  const tourT    = useMemo(() => data?.tournaments.filter(t => t.series === "tour")      ?? [], [data]);
-  const challT   = useMemo(() => data?.tournaments.filter(t => t.series === "challenge") ?? [], [data]);
-  const aquaporT = useMemo(() => data?.tournaments.filter(t => t.series === "aquapor")   ?? [], [data]);
+  // Anos disponíveis (derivados das datas dos torneios), ordenados desc
+  const availYears = useMemo(() => {
+    const s = new Set<string>();
+    for (const t of data?.tournaments ?? []) {
+      const y = t.date?.split("-")[0];
+      if (y) s.add(y);
+    }
+    return [...s].sort((a, b) => b.localeCompare(a));
+  }, [data]);
+
+  // Ano activo: por omissão o mais recente disponível
+  const activeYear = yearFilter ?? availYears[0] ?? null;
+  const inYear = (t: Tournament) => !activeYear || t.date?.startsWith(activeYear);
+
+  const tourT    = useMemo(() => data?.tournaments.filter(t => t.series === "tour"      && inYear(t)) ?? [], [data, activeYear]);
+  const challT   = useMemo(() => data?.tournaments.filter(t => t.series === "challenge" && inYear(t)) ?? [], [data, activeYear]);
+  const aquaporT = useMemo(() => data?.tournaments.filter(t => t.series === "aquapor"   && inYear(t)) ?? [], [data, activeYear]);
   const escLookup = useMemo(() => buildEscLookup(pdb, (data?.tournaments ?? []) as any), [pdb, data]);
+
+  // Lookup temporal: fedCode → Map<year, escalão> — construído dos torneios Challenge históricos
+  const temporalEscLookup = useMemo(
+    () => buildTemporalEscLookup(data?.tournaments ?? []),
+    [data]
+  );
+
+
 
   // Sub-12: só calcular quando a tab é activada pela primeira vez
   const [sub12Ready, setSub12Ready] = useState(false);
   useEffect(() => { if (series === "sub12" && !sub12Ready) setSub12Ready(true); }, [series, sub12Ready]);
 
-  const sub12Data = useMemo(() =>
-    sub12Ready && data ? buildSub12Data(data.tournaments, pdb, sdLookup, escLookup) : []
-  , [sub12Ready, data, pdb, sdLookup, escLookup]);
+  const sub12Data = useMemo(() => {
+    if (!sub12Ready || !data) return [];
+    const tourns = activeYear
+      ? data.tournaments.filter(t => t.date?.startsWith(activeYear))
+      : data.tournaments;
+    return buildSub12Data(tourns, pdb, sdLookup, escLookup);
+  }, [sub12Ready, data, pdb, sdLookup, escLookup, activeYear]);
 
   const sub12SeriesRows = useMemo(() => filterBySub12Series(sub12Data, sub12Series), [sub12Data, sub12Series]);
   const sub12Tourns = useMemo(() => {
@@ -1763,13 +1903,13 @@ function DriveContent() {
     if (series === "sub12") return [];
     let ts = seriesT;
     if (regionFilter) ts = ts.filter(t => t.region === regionFilter);
-    if (escFilter.length > 0 && series === "challenge") ts = filterTournByEsc(ts, escFilter, escLookup);
+    if (escFilter.length > 0 && series === "challenge") ts = filterTournByEsc(ts, escFilter, escLookup, temporalEscLookup);
     return ts;
   }, [series, seriesT, regionFilter, escFilter, escLookup]);
 
   const filteredGroups = useMemo(() => series === "sub12" ? [] : buildGroups(filteredT), [series, filteredT]);
   const regionT = useMemo(() => regionFilter ? seriesT.filter(t => t.region === regionFilter) : seriesT, [seriesT, regionFilter]);
-  const availEscs = useMemo(() => series === "challenge" ? availEscaloes(regionT, escLookup) : [], [series, regionT, escLookup]);
+  const availEscs = useMemo(() => series === "challenge" ? availEscaloes(regionT, escLookup, temporalEscLookup) : [], [series, regionT, escLookup, temporalEscLookup]);
 
   useEffect(() => { setRegionFilter(null); setEscFilter([]); setSelectedGroupKey(null); setRoundIdx(0); }, [series]);
   useEffect(() => { setEscFilter([]); setSelectedGroupKey(null); setRoundIdx(0); }, [regionFilter]);
@@ -1811,7 +1951,7 @@ function DriveContent() {
         className={`course-item ${isActive ? "active" : ""}`}
         onClick={onClick}>
 
-        {/* Linha 1: nome + tcode badge à direita */}
+        {/* Linha 1: nome + tcode badge + link FPG à direita */}
         <div style={{ display: "flex", alignItems: "flex-start", gap: 4, marginBottom: 4 }}>
           <span className="course-item-name" style={{ flex: 1, minWidth: 0, fontSize: 12, fontWeight: isActive ? 700 : 500, lineHeight: 1.3 }}>{sidebarItemLabel(g)}</span>
           <div style={{ display: "flex", gap: 2, flexShrink: 0, alignItems: "center", paddingTop: 1 }}>
@@ -1821,6 +1961,15 @@ function DriveContent() {
               background: "var(--accent,#2563eb)", color: "#fff",
               borderRadius: 3, padding: "1px 5px", opacity: isActive ? 1 : 0.75,
             }}>{tcode}</span>}
+            {tcode && t0 && (
+              <a href={tournFpgUrl(t0.ccode, tcode)}
+                target="_blank" rel="noopener noreferrer"
+                onClick={e => e.stopPropagation()}
+                title="Ver no site da Federação"
+                style={{ fontSize: 13, color: "var(--accent)", textDecoration: "none", opacity: isActive ? 1 : 0.55, lineHeight: 1 }}>
+                🔗
+              </a>
+            )}
           </div>
         </div>
 
@@ -1874,11 +2023,25 @@ function DriveContent() {
             </button>
           )}
           <span className="toolbar-title">
-            {isSub12Mode ? "Sub-12 DRIVE" : series === "aquapor" ? "💧 AQUAPOR" : "🏁 DRIVE"} 2026
+            {isSub12Mode ? "Sub-12 DRIVE" : series === "aquapor" ? "💧 AQUAPOR" : "🏁 DRIVE"} {activeYear ?? ""}
           </span>
           <span className="toolbar-meta">
             {isSub12Mode ? "Sub-10 + Sub-12" : series === "aquapor" ? "Circuito Nacional" : "Circuito Regional Juvenil"}
           </span>
+          <div className="toolbar-sep" />
+          {/* Pills de ano */}
+          {availYears.length > 1 && !isSub12Mode && (
+            <div className="escalao-pills" style={{ gap: 3 }}>
+              {availYears.map(y => (
+                <button key={y}
+                  className={"tourn-tab tourn-tab-sm" + (activeYear === y ? " active" : "")}
+                  onClick={() => { setYearFilter(y === activeYear && availYears.length > 1 ? null : y); setSelectedGroupKey(null); setRoundIdx(0); }}
+                  style={activeYear === y ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                  {y}
+                </button>
+              ))}
+            </div>
+          )}
           <div className="toolbar-sep" />
           <div className="escalao-pills">
             <button className={"tourn-tab tourn-tab-sm" + (series === "tour" ? " active" : "")}
@@ -2041,7 +2204,7 @@ function DriveContent() {
                 <div className="h-md fs-14">
                   {sub12View === "grid" ? "📊" : sub12View === "ranking" ? "🏆" : "📈"}{" "}
                   {sub12View === "grid" ? "Tabela" : sub12View === "ranking" ? "Ranking" : "Evolução SD"}{" "}
-                  — Sub-12 {SUB12_SERIES_TABS.find(s => s.key === sub12Series)?.label} 2026
+                  — Sub-12 {SUB12_SERIES_TABS.find(s => s.key === sub12Series)?.label} {activeYear ?? ""}
                 </div>
                 <div className="muted fs-11 mb-8">
                   {sub12KpiPlayers} jogadores · {sub12KpiRounds} rondas
@@ -2108,7 +2271,7 @@ function DriveContent() {
                   <div className="h-md fs-14">
                     📋 {series === "tour" ? "Drive Tour" : series === "challenge" ? "Drive Challenge" : "AQUAPOR"}
                     {regionFilter ? " " + (regionOf(regionFilter)?.label || "") : ""}
-                    {escFilter.length > 0 ? " — " + escFilter.join(", ") : ""} — Temporada 2026
+                    {escFilter.length > 0 ? " — " + escFilter.join(", ") : ""} — Temporada {activeYear ?? "Todos"}
                   </div>
                   <div className="muted fs-11 mb-8">
                     {filteredGroups.length} torneios · {uniquePC(filteredT)} jogadores ·{" "}
@@ -2149,10 +2312,18 @@ function DriveContent() {
                 )}
                 {curTournament && (
                   <div className="card card-scroll" style={{ marginTop: selectedGroup.isMulti ? 8 : 0 }}>
-                    <div className="h-md fs-14">
-                      {selectedGroup.isMulti
-                        ? <>{curTournament._roundLabel === "Total" ? "📊 Acumulado" : "🏌️ " + curTournament._roundLabel} — {selectedGroup.campo}</>
-                        : <>🏆 Scorecard — {selectedGroup.label}</>}
+                    <div className="h-md fs-14" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+                      <span>
+                        {selectedGroup.isMulti
+                          ? <>{curTournament._roundLabel === "Total" ? "📊 Acumulado" : "🏌️ " + curTournament._roundLabel} — {selectedGroup.campo}</>
+                          : <>🏆 Scorecard — {selectedGroup.label}</>}
+                      </span>
+                      <a href={tournFpgUrl(curTournament.ccode, curTournament.tcode)}
+                        target="_blank" rel="noopener noreferrer"
+                        style={{ fontSize: 11, fontWeight: 600, color: "var(--accent)", textDecoration: "none", whiteSpace: "nowrap", flexShrink: 0 }}
+                        title="Ver no site da Federação">
+                        🔗 FPG
+                      </a>
                     </div>
                     <div className="muted fs-11 mb-4">
                       T{curTournament.num} · 📍 {curTournament.campo} · 📅 {fmtDate(curTournament.date)}
