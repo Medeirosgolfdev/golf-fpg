@@ -106,10 +106,21 @@ export default function App() {
       );
     }
 
-    /** Merge de dois campos: mantém o melhor de cada um */
+    /** Merge de dois campos: mantém o melhor de cada um.
+     *  Se o base é um campo FPG (master-courses, key não começa por "away-"),
+     *  os tees FPG são autoritativos — não fundir tees de scorecards (away).
+     *  Só se fundem os tees quando ambos têm a mesma origem. */
     function mergeCourses(base: Course, other: Course): Course {
-      const allTees = [...base.master.tees, ...other.master.tees];
-      const mergedTees = dedupTees(allTees);
+      const isBaseFPG  = !base.courseKey.startsWith("away-");
+      const isOtherFPG = !other.courseKey.startsWith("away-");
+
+      // Campo FPG + fonte away → manter só tees FPG (dados oficiais)
+      // Campo away + away, ou FPG + FPG → fundir normalmente
+      const combinedTees = (isBaseFPG && !isOtherFPG)
+        ? base.master.tees
+        : [...base.master.tees, ...other.master.tees];
+
+      const mergedTees = dedupTees(combinedTees);
       const players = { ...(other.master._players ?? {}), ...(base.master._players ?? {}) };
       return {
         ...base,

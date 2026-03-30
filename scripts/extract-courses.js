@@ -2,8 +2,9 @@
 /**
  * extract-courses.js
  *
- * Percorre os scorecards de cada jogador em output/ e extrai campos unicos.
+ * Percorre output/<fed>/scorecards/*.json e extrai campos unicos.
  * Compara com master-courses.json para separar PT de internacionais.
+ * Aplica course-aliases.json para deduplicar e excluir variantes PT.
  * Gera public/data/away-courses.json para o React consumir.
  *
  * Uso:
@@ -12,6 +13,7 @@
  * Requer:
  *   - output/  com pastas de jogadores (geradas por golf-all.js)
  *   - public/data/master-courses.json (catalogo FPG)
+ *   - course-aliases.json (aliases, ptVariants, nameOverrides)
  *   - melhorias.json (para pais dos campos away)
  */
 
@@ -28,6 +30,7 @@ function readJSON(fpath) {
 const outputRoot = path.join(process.cwd(), "output");
 const masterPath = path.join(process.cwd(), "public", "data", "master-courses.json");
 const melhoriasPath = path.join(process.cwd(), "melhorias.json");
+const aliasPath = path.join(process.cwd(), "course-aliases.json");
 const outPath = path.join(process.cwd(), "public", "data", "away-courses.json");
 
 /* ── Helpers ── */
@@ -42,6 +45,20 @@ function toNum(v) {
   if (typeof v === "number") return v;
   if (typeof v === "string") { const n = Number(v); return isNaN(n) ? null : n; }
   return null;
+}
+
+/** Converte nomes em MAIÚSCULAS para Title Case */
+function titleCase(s) {
+  if (!s || s.length <= 4) return s;
+  // Só actua se o nome estiver todo em maiúsculas (sem minúsculas)
+  if (s !== s.toUpperCase()) return s;
+  const stop = new Set([
+    "de","da","do","dos","das","del","el","la","los","las",
+    "the","of","and","e","y","i","a","por","con","sur","em",
+  ]);
+  return s.toLowerCase().split(/\s+/).map((w, i) =>
+    (i === 0 || !stop.has(w)) ? w.charAt(0).toUpperCase() + w.slice(1) : w
+  ).join(" ");
 }
 
 /* ── 1. Carregar master-courses para identificar campos PT ── */
@@ -59,7 +76,55 @@ if (fs.existsSync(masterPath)) {
   }
 }
 
-/* ── 2. Carregar melhorias.json para pais ── */
+/* ── 2. Carregar course-aliases.json (aliases, ptVariants, nameOverrides) ── */
+
+let aliasMap = {}, nameOverridesMap = {};
+
+if (fs.existsSync(aliasPath)) {
+  try {
+    const ad = readJSON(aliasPath);
+    aliasMap = ad.aliases || {};
+    nameOverridesMap = ad.nameOverrides || {};
+
+    // Adicionar as chaves de ptVariants ao conjunto de campos PT a ignorar
+    const ptv = ad.ptVariants || {};
+    let ptCount = 0;
+    for (const [k] of Object.entries(ptv)) {
+      if (k !== "_note") { masterNames.add(k); ptCount++; }
+    }
+    const aliasCount = Object.keys(aliasMap).filter(k => !k.startsWith("_comment")).length;
+    console.log(`  Aliases: ${aliasCount} · PT variants: ${ptCount} · nameOverrides: ${Object.keys(nameOverridesMap).length}`);
+  } catch (e) {
+    console.warn("  Aviso: nao consegui ler course-aliases.json:", e.message);
+  }
+} else {
+  console.warn("  Aviso: course-aliases.json nao encontrado");
+}
+
+/**
+ * Resolve um nome normalizado seguindo a cadeia de aliases.
+ * Devolve o canonical norm (o ultimo da cadeia).
+ */
+function resolveAlias(n, maxHops = 8) {
+  let cur = n;
+  for (let i = 0; i < maxHops; i++) {
+    const next = aliasMap[cur];
+    if (!next || next === cur) break;
+    cur = next;
+  }
+  return cur;
+}
+
+/**
+ * Devolve true se o campo (ou o seu canonical) e um campo PT a excluir.
+ */
+function isPT(courseNorm) {
+  if (masterNames.has(courseNorm)) return true;
+  const canonical = resolveAlias(courseNorm);
+  return masterNames.has(canonical);
+}
+
+/* ── 3. Carregar melhorias.json para pais ── */
 
 const countryMap = {}; // norm(courseName) -> pais
 if (fs.existsSync(melhoriasPath)) {
@@ -98,9 +163,10 @@ if (fs.existsSync(melhoriasPath)) {
   }
 }
 
-/* ── 3. Percorrer TODOS os scorecards ── */
+/* ── 4. Percorrer TODOS os scorecards ── */
 
-// courseMap: normKey -> { name, tees: Map<teeKey, teeData> }
+// courseMap: courseKey -> { name, tees: Map<teeKey, teeData> }
+// courseKey = "away-" + canonicalNorm (com espacos substituidos por "-")
 const courseMap = new Map();
 
 let totalFiles = 0;
@@ -131,26 +197,30 @@ if (fs.existsSync(outputRoot)) {
 
           const courseNorm = norm(courseName);
 
-          // Saltar campos que estao no master (PT)
-          if (masterNames.has(courseNorm)) continue;
+          // Excluir campos PT (master + ptVariants + canonicals PT)
+          if (isPT(courseNorm)) continue;
 
-          // Chave de agrupamento
-          const courseKey = `away-${courseName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-+$/, "")}`;
+          // Canonical norm para deduplicacao
+          const canonicalNorm = resolveAlias(courseNorm);
+          if (masterNames.has(canonicalNorm)) continue; // canonical tambem e PT
+
+          // courseKey estavél baseado no canonical norm
+          const courseKey = `away-${canonicalNorm.replace(/\s+/g, "-")}`;
+
           const teeKey = `${teeName}|${cr}|${slope}`;
 
           if (!courseMap.has(courseKey)) {
-            courseMap.set(courseKey, {
-              name: courseName,
-              country: countryMap[courseNorm] || "",
-              tees: new Map(),
-            });
+            // Nome: nameOverride > titleCase > nome original
+            const displayName = nameOverridesMap[courseKey] || titleCase(courseName) || courseName;
+            const country = countryMap[canonicalNorm] || countryMap[courseNorm] || "";
+            courseMap.set(courseKey, { name: displayName, country, tees: new Map() });
             totalCourses++;
           }
 
           const entry = courseMap.get(courseKey);
           // Actualizar pais se necessario
-          if (!entry.country && countryMap[courseNorm]) {
-            entry.country = countryMap[courseNorm];
+          if (!entry.country) {
+            entry.country = countryMap[canonicalNorm] || countryMap[courseNorm] || "";
           }
 
           // Extrair tee data
@@ -182,7 +252,7 @@ if (fs.existsSync(outputRoot)) {
 console.log(`  Scorecards processados: ${totalFiles}`);
 console.log(`  Campos internacionais encontrados: ${totalCourses}`);
 
-/* ── 4. Tambem incluir extra_rounds do melhorias.json ── */
+/* ── 5. Tambem incluir extra_rounds do melhorias.json ── */
 
 if (fs.existsSync(melhoriasPath)) {
   try {
@@ -196,10 +266,18 @@ if (fs.existsSync(melhoriasPath)) {
         const campo = round.campo.trim();
         const categoria = round.categoria || "Default";
         const pais = round.pais || "";
-        const courseKey = `away-${campo.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-+$/, "")}`;
+
+        const campoNorm = norm(campo);
+        if (isPT(campoNorm)) continue;
+
+        const canonicalNorm = resolveAlias(campoNorm);
+        if (masterNames.has(canonicalNorm)) continue;
+
+        const courseKey = `away-${canonicalNorm.replace(/\s+/g, "-")}`;
 
         if (!courseMap.has(courseKey)) {
-          courseMap.set(courseKey, { name: campo, country: pais, tees: new Map() });
+          const displayName = nameOverridesMap[courseKey] || titleCase(campo) || campo;
+          courseMap.set(courseKey, { name: displayName, country: pais || countryMap[canonicalNorm] || "", tees: new Map() });
           totalCourses++;
         }
         const entry = courseMap.get(courseKey);
@@ -240,7 +318,7 @@ if (fs.existsSync(melhoriasPath)) {
   } catch {}
 }
 
-/* ── 5. Converter para formato Course[] e gravar ── */
+/* ── 6. Converter para formato Course[] e gravar ── */
 
 function sumHoles(holes, start, end, field) {
   let total = 0, any = false;
