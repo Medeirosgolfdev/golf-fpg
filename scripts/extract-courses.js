@@ -2,22 +2,27 @@
 /**
  * extract-courses.js
  *
- * Percorre output/<fed>/scorecards/*.json e extrai campos unicos.
+ * Percorre output/<fed>/scorecards/*.json e extrai campos únicos.
  * Compara com master-courses.json para separar PT de internacionais.
  * Aplica course-aliases.json para deduplicar e excluir variantes PT.
  * Gera public/data/away-courses.json para o React consumir.
+ *
+ * NOVIDADES v2:
+ *  - Suporte a `blacklist` em course-aliases.json (ex: "NONE", "Internacional")
+ *  - Popula `_players` em cada campo: quem jogou e a data mais recente
+ *    (lê output/<nfed>/analysis/data.json, gerado pelo make-scorecards-ui.js)
  *
  * Uso:
  *   node extract-courses.js
  *
  * Requer:
  *   - output/  com pastas de jogadores (geradas por golf-all.js)
- *   - public/data/master-courses.json (catalogo FPG)
- *   - course-aliases.json (aliases, ptVariants, nameOverrides)
- *   - melhorias.json (para pais dos campos away)
+ *   - public/data/master-courses.json (catálogo FPG)
+ *   - course-aliases.json (aliases, ptVariants, blacklist, nameOverrides)
+ *   - melhorias.json (para país dos campos away)
  */
 
-const fs = require("fs");
+const fs   = require("fs");
 const path = require("path");
 
 /** Ler JSON de ficheiro, removendo BOM se existir */
@@ -27,11 +32,11 @@ function readJSON(fpath) {
   return JSON.parse(txt);
 }
 
-const outputRoot = path.join(process.cwd(), "output");
-const masterPath = path.join(process.cwd(), "public", "data", "master-courses.json");
+const outputRoot    = path.join(process.cwd(), "output");
+const masterPath    = path.join(process.cwd(), "public", "data", "master-courses.json");
 const melhoriasPath = path.join(process.cwd(), "melhorias.json");
-const aliasPath = path.join(process.cwd(), "course-aliases.json");
-const outPath = path.join(process.cwd(), "public", "data", "away-courses.json");
+const aliasPath     = path.join(process.cwd(), "course-aliases.json");
+const outPath       = path.join(process.cwd(), "public", "data", "away-courses.json");
 
 /* ── Helpers ── */
 
@@ -50,7 +55,6 @@ function toNum(v) {
 /** Converte nomes em MAIÚSCULAS para Title Case */
 function titleCase(s) {
   if (!s || s.length <= 4) return s;
-  // Só actua se o nome estiver todo em maiúsculas (sem minúsculas)
   if (s !== s.toUpperCase()) return s;
   const stop = new Set([
     "de","da","do","dos","das","del","el","la","los","las",
@@ -76,24 +80,33 @@ if (fs.existsSync(masterPath)) {
   }
 }
 
-/* ── 2. Carregar course-aliases.json (aliases, ptVariants, nameOverrides) ── */
+/* ── 2. Carregar course-aliases.json ── */
 
-let aliasMap = {}, nameOverridesMap = {};
+let aliasMap = {}, nameOverridesMap = {}, blackSet = new Set(), courseKeyCountryMap = {};
 
 if (fs.existsSync(aliasPath)) {
   try {
     const ad = readJSON(aliasPath);
-    aliasMap = ad.aliases || {};
+    aliasMap         = ad.aliases       || {};
     nameOverridesMap = ad.nameOverrides || {};
 
-    // Adicionar as chaves de ptVariants ao conjunto de campos PT a ignorar
+    // ptVariants: nomes alternativos de campos PT → excluir dos away
     const ptv = ad.ptVariants || {};
     let ptCount = 0;
     for (const [k] of Object.entries(ptv)) {
       if (k !== "_note") { masterNames.add(k); ptCount++; }
     }
+
+    // blacklist: nomes de lixo/inválidos
+    for (const name of (ad.blacklist || [])) {
+      blackSet.add(norm(name));
+    }
+
+    // countryMap: courseKey → país (pesquisado e mantido manualmente)
+    courseKeyCountryMap = ad.countryMap || {};
+
     const aliasCount = Object.keys(aliasMap).filter(k => !k.startsWith("_comment")).length;
-    console.log(`  Aliases: ${aliasCount} · PT variants: ${ptCount} · nameOverrides: ${Object.keys(nameOverridesMap).length}`);
+    console.log(`  Aliases: ${aliasCount} · PT variants: ${ptCount} · Blacklist: ${blackSet.size} · nameOverrides: ${Object.keys(nameOverridesMap).length}`);
   } catch (e) {
     console.warn("  Aviso: nao consegui ler course-aliases.json:", e.message);
   }
@@ -103,7 +116,7 @@ if (fs.existsSync(aliasPath)) {
 
 /**
  * Resolve um nome normalizado seguindo a cadeia de aliases.
- * Devolve o canonical norm (o ultimo da cadeia).
+ * Devolve o canonical norm (o último da cadeia).
  */
 function resolveAlias(n, maxHops = 8) {
   let cur = n;
@@ -116,17 +129,22 @@ function resolveAlias(n, maxHops = 8) {
 }
 
 /**
- * Devolve true se o campo (ou o seu canonical) e um campo PT a excluir.
+ * Devolve true se o campo deve ser excluído:
+ *   - está na blacklist (nome inválido/lixo)
+ *   - é campo PT (master + ptVariants)
+ * Verifica tanto o norm original como o canonical depois de resolver aliases.
  */
-function isPT(courseNorm) {
+function shouldExclude(courseNorm) {
+  if (blackSet.has(courseNorm)) return true;
   if (masterNames.has(courseNorm)) return true;
   const canonical = resolveAlias(courseNorm);
+  if (blackSet.has(canonical)) return true;
   return masterNames.has(canonical);
 }
 
-/* ── 3. Carregar melhorias.json para pais ── */
+/* ── 3. Carregar melhorias.json para país ── */
 
-const countryMap = {}; // norm(courseName) -> pais
+const countryMap = {}; // norm(courseName) -> país
 if (fs.existsSync(melhoriasPath)) {
   try {
     const melhorias = readJSON(melhoriasPath);
@@ -157,7 +175,7 @@ if (fs.existsSync(melhoriasPath)) {
         }
       }
     }
-    console.log(`  Melhorias: ${Object.keys(countryMap).length} campos com pais`);
+    console.log(`  Melhorias: ${Object.keys(countryMap).length} campos com país`);
   } catch (e) {
     console.warn("  Aviso: nao consegui ler melhorias.json:", e.message);
   }
@@ -165,11 +183,11 @@ if (fs.existsSync(melhoriasPath)) {
 
 /* ── 4. Percorrer TODOS os scorecards ── */
 
-// courseMap: courseKey -> { name, tees: Map<teeKey, teeData> }
-// courseKey = "away-" + canonicalNorm (com espacos substituidos por "-")
+// courseMap: courseKey -> { name, country, tees: Map<teeKey, teeData> }
+// teeKey = "teeName|courseRating|slope"  — garante unicidade real por configuração
 const courseMap = new Map();
 
-let totalFiles = 0;
+let totalFiles   = 0;
 let totalCourses = 0;
 
 if (fs.existsSync(outputRoot)) {
@@ -186,55 +204,47 @@ if (fs.existsSync(outputRoot)) {
     for (const f of files) {
       totalFiles++;
       try {
-        const raw = readJSON(path.join(scDir, f));
+        const raw  = readJSON(path.join(scDir, f));
         const recs = raw.Records || (Array.isArray(raw) ? raw : []);
         for (const rec of recs) {
           const courseName = (rec.course_description || "").trim();
-          const teeName = (rec.tee_name || "").trim();
-          const cr = toNum(rec.course_rating);
-          const slope = toNum(rec.slope);
+          const teeName    = (rec.tee_name || "").trim();
+          const cr         = toNum(rec.course_rating);
+          const slope      = toNum(rec.slope);
           if (!courseName || !cr || !slope) continue;
 
           const courseNorm = norm(courseName);
+          if (shouldExclude(courseNorm)) continue;
 
-          // Excluir campos PT (master + ptVariants + canonicals PT)
-          if (isPT(courseNorm)) continue;
-
-          // Canonical norm para deduplicacao
           const canonicalNorm = resolveAlias(courseNorm);
-          if (masterNames.has(canonicalNorm)) continue; // canonical tambem e PT
+          if (shouldExclude(canonicalNorm)) continue;
 
-          // courseKey estavél baseado no canonical norm
           const courseKey = `away-${canonicalNorm.replace(/\s+/g, "-")}`;
-
+          // teeKey único por configuração real (nome + ratings)
           const teeKey = `${teeName}|${cr}|${slope}`;
 
           if (!courseMap.has(courseKey)) {
-            // Nome: nameOverride > titleCase > nome original
             const displayName = nameOverridesMap[courseKey] || titleCase(courseName) || courseName;
-            const country = countryMap[canonicalNorm] || countryMap[courseNorm] || "";
+            const country = courseKeyCountryMap[courseKey] || countryMap[canonicalNorm] || countryMap[courseNorm] || "";
             courseMap.set(courseKey, { name: displayName, country, tees: new Map() });
             totalCourses++;
           }
 
           const entry = courseMap.get(courseKey);
-          // Actualizar pais se necessario
           if (!entry.country) {
             entry.country = countryMap[canonicalNorm] || countryMap[courseNorm] || "";
           }
 
-          // Extrair tee data
           if (!entry.tees.has(teeKey)) {
             const holes = [];
             for (let i = 1; i <= 18; i++) {
-              const par = toNum(rec[`par_${i}`]);
-              const si = toNum(rec[`stroke_index_${i}`]);
+              const par    = toNum(rec[`par_${i}`]);
+              const si     = toNum(rec[`stroke_index_${i}`]);
               const meters = toNum(rec[`meters_${i}`]);
               if (par || meters) {
                 holes.push({ hole: i, par, si, distance: meters });
               }
             }
-
             entry.tees.set(teeKey, {
               teeName,
               cr,
@@ -252,7 +262,14 @@ if (fs.existsSync(outputRoot)) {
 console.log(`  Scorecards processados: ${totalFiles}`);
 console.log(`  Campos internacionais encontrados: ${totalCourses}`);
 
-/* ── 5. Tambem incluir extra_rounds do melhorias.json ── */
+// Aplicar países do courseKeyCountryMap a entradas já criadas
+for (const [courseKey, entry] of courseMap) {
+  if (courseKeyCountryMap[courseKey]) {
+    entry.country = courseKeyCountryMap[courseKey];
+  }
+}
+
+/* ── 5. Incluir extra_rounds do melhorias.json ── */
 
 if (fs.existsSync(melhoriasPath)) {
   try {
@@ -263,15 +280,15 @@ if (fs.existsSync(melhoriasPath)) {
       if (!Array.isArray(extraRounds)) continue;
       for (const round of extraRounds) {
         if (!round || !round.campo || !round.dias) continue;
-        const campo = round.campo.trim();
+        const campo     = round.campo.trim();
         const categoria = round.categoria || "Default";
-        const pais = round.pais || "";
+        const pais      = round.pais || "";
 
         const campoNorm = norm(campo);
-        if (isPT(campoNorm)) continue;
+        if (shouldExclude(campoNorm)) continue;
 
         const canonicalNorm = resolveAlias(campoNorm);
-        if (masterNames.has(canonicalNorm)) continue;
+        if (shouldExclude(canonicalNorm)) continue;
 
         const courseKey = `away-${canonicalNorm.replace(/\s+/g, "-")}`;
 
@@ -283,10 +300,9 @@ if (fs.existsSync(melhoriasPath)) {
         const entry = courseMap.get(courseKey);
         if (!entry.country && pais) entry.country = pais;
 
-        // Usar o melhor dia
         const dias = round.dias || [];
         const best = dias.reduce((prev, d) => {
-          const ph = Array.isArray(d.par_holes) ? d.par_holes.length : 0;
+          const ph    = Array.isArray(d.par_holes) ? d.par_holes.length : 0;
           const prevH = prev && Array.isArray(prev.par_holes) ? prev.par_holes.length : 0;
           return ph > prevH ? d : prev;
         }, null);
@@ -300,15 +316,15 @@ if (fs.existsSync(melhoriasPath)) {
             if (m) holeStart = parseInt(m[1], 10);
           }
           const holes = best.par_holes.map((p, i) => ({
-            hole: holeStart + i,
-            par: p,
-            si: best.stroke_index_holes ? best.stroke_index_holes[i] || null : null,
+            hole:     holeStart + i,
+            par:      p,
+            si:       best.stroke_index_holes ? best.stroke_index_holes[i] || null : null,
             distance: best.meters_holes ? best.meters_holes[i] || null : null,
           }));
           entry.tees.set(teeKey, {
-            teeName: categoria,
-            cr: null,
-            slope: null,
+            teeName:    categoria,
+            cr:         null,
+            slope:      null,
             holes,
             teeColorId: null,
           });
@@ -318,6 +334,81 @@ if (fs.existsSync(melhoriasPath)) {
   } catch {}
 }
 
+/* ── 5.5. Construir _players: quem jogou em cada campo away ──────────────
+ *
+ * Lê output/<nfed>/analysis/data.json (gerado pelo make-scorecards-ui.js,
+ * passo 2 do pipeline — corre ANTES deste script).
+ *
+ * Para cada round com scoreOrigin "Intern" ou "Extra" regista o nfed e
+ * a data mais recente em que jogou nesse campo.
+ *
+ * Formato relevante em data.json:
+ *   DATA[].rounds[].{ course, scoreOrigin, date: "DD-MM-YYYY" }
+ */
+
+/** "DD-MM-YYYY" → "YYYY-MM-DD" (comparável lexicograficamente) */
+function toIsoDate(d) {
+  if (!d || !/^\d{2}-\d{2}-\d{4}$/.test(d)) return null;
+  const [dd, mm, yyyy] = d.split("-");
+  return `${yyyy}-${mm}-${dd}`;
+}
+
+// playersMap: courseKey → Map<nfed, latestIsoDate | null>
+const playersMap = new Map();
+
+if (fs.existsSync(outputRoot)) {
+  const dirs = fs.readdirSync(outputRoot).filter(d => {
+    const full = path.join(outputRoot, d);
+    return fs.statSync(full).isDirectory() && /^\d+$/.test(d);
+  });
+
+  let scanned = 0;
+
+  for (const fedDir of dirs) {
+    const dataPath = path.join(outputRoot, fedDir, "analysis", "data.json");
+    if (!fs.existsSync(dataPath)) continue;
+
+    try {
+      const data    = readJSON(dataPath);
+      const nfed    = String(data.CURRENT_FED || fedDir);
+      const entries = data.DATA || [];
+      scanned++;
+
+      for (const entry of entries) {
+        for (const r of (entry.rounds || [])) {
+          // Apenas rounds internacionais
+          if (r.scoreOrigin !== "Intern" && r.scoreOrigin !== "Extra") continue;
+
+          const courseName = (r.course || entry.course || "").trim();
+          if (!courseName) continue;
+
+          const courseNorm = norm(courseName);
+          if (shouldExclude(courseNorm)) continue;
+
+          const canonicalNorm = resolveAlias(courseNorm);
+          if (shouldExclude(canonicalNorm)) continue;
+
+          const courseKey = `away-${canonicalNorm.replace(/\s+/g, "-")}`;
+          const isoDate   = toIsoDate(r.date);
+
+          if (!playersMap.has(courseKey)) playersMap.set(courseKey, new Map());
+          const pm       = playersMap.get(courseKey);
+          const existing = pm.get(nfed);
+          // Guardar apenas a data mais recente por jogador
+          if (!existing || (isoDate && isoDate > existing)) {
+            pm.set(nfed, isoDate);
+          }
+        }
+      }
+    } catch {}
+  }
+
+  const withPlayers = [...playersMap.values()].filter(m => m.size > 0).length;
+  const totalLinks  = [...playersMap.values()].reduce((s, m) => s + m.size, 0);
+  console.log(`  Jogadores escaneados para _players: ${scanned}`);
+  console.log(`  _players: ${totalLinks} ligações jogador↔campo em ${withPlayers} campos`);
+}
+
 /* ── 6. Converter para formato Course[] e gravar ── */
 
 function sumHoles(holes, start, end, field) {
@@ -325,40 +416,43 @@ function sumHoles(holes, start, end, field) {
   for (const h of holes) {
     if (h.hole >= start && h.hole <= end && h[field] != null) {
       total += h[field];
-      any = true;
+      any    = true;
     }
   }
   return any ? total : null;
 }
 
 const courses = [];
+let coursesWithPlayers = 0;
+
 for (const [courseKey, { name, country, tees }] of courseMap) {
   const teeArr = [];
   let idx = 0;
+
   for (const [, t] of tees) {
-    const n = t.holes.length;
-    const is18 = n === 18;
-    const parTotal = sumHoles(t.holes, 1, 18, "par");
-    const parFront = sumHoles(t.holes, 1, 9, "par");
-    const parBack = sumHoles(t.holes, 10, 18, "par");
-    const distTotal = sumHoles(t.holes, 1, 18, "distance");
-    const distFront = sumHoles(t.holes, 1, 9, "distance");
-    const distBack = sumHoles(t.holes, 10, 18, "distance");
+    const n         = t.holes.length;
+    const is18      = n === 18;
+    const parTotal  = sumHoles(t.holes, 1,  18, "par");
+    const parFront  = sumHoles(t.holes, 1,   9, "par");
+    const parBack   = sumHoles(t.holes, 10, 18, "par");
+    const distTotal = sumHoles(t.holes, 1,  18, "distance");
+    const distFront = sumHoles(t.holes, 1,   9, "distance");
+    const distBack  = sumHoles(t.holes, 10, 18, "distance");
 
     teeArr.push({
-      teeId: `${courseKey}-${idx++}`,
-      sex: "U",
+      teeId:   `${courseKey}-${idx++}`,
+      sex:     "U",
       teeName: t.teeName,
       ratings: {
         holes18: { par: is18 ? parTotal : null, courseRating: t.cr, slopeRating: t.slope },
         ...(parFront != null ? { holes9Front: { par: parFront, courseRating: t.cr ? +(t.cr / 2).toFixed(1) : null, slopeRating: t.slope } } : {}),
-        ...(parBack != null ? { holes9Back: { par: parBack, courseRating: t.cr ? +(t.cr / 2).toFixed(1) : null, slopeRating: t.slope } } : {}),
+        ...(parBack  != null ? { holes9Back:  { par: parBack,  courseRating: t.cr ? +(t.cr / 2).toFixed(1) : null, slopeRating: t.slope } } : {}),
       },
       holes: t.holes,
       distances: {
-        total: distTotal,
-        front9: distFront,
-        back9: distBack,
+        total:      distTotal,
+        front9:     distFront,
+        back9:      distBack,
         holesCount: n,
         complete18: is18,
       },
@@ -367,14 +461,20 @@ for (const [courseKey, { name, country, tees }] of courseMap) {
 
   if (teeArr.length === 0) continue;
 
+  // _players: nfed → data mais recente ISO em que jogou aqui
+  const pm       = playersMap.get(courseKey);
+  const _players = pm && pm.size > 0 ? Object.fromEntries(pm) : undefined;
+  if (_players) coursesWithPlayers++;
+
   courses.push({
     courseKey,
     master: {
       courseId: courseKey,
       name,
-      country: country || undefined,
+      ...(country  ? { country }  : {}),
       links: { fpg: null, scorecards: null },
       tees: teeArr,
+      ...(_players ? { _players } : {}),
     },
   });
 }
@@ -388,4 +488,5 @@ fs.writeFileSync(outPath, JSON.stringify({ courses }, null, 2), "utf-8");
 
 console.log(`\n  Gravado: ${outPath}`);
 console.log(`  ${courses.length} campos, ${courses.reduce((n, c) => n + c.master.tees.length, 0)} tees`);
-console.log(`  Campos com pais: ${courses.filter(c => c.master.country).length}/${courses.length}`);
+console.log(`  Campos com país: ${courses.filter(c => c.master.country).length}/${courses.length}`);
+console.log(`  Campos com _players: ${coursesWithPlayers}/${courses.length}`);

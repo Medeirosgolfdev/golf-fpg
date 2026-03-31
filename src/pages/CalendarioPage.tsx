@@ -16,6 +16,7 @@
 import { useState, useRef, useEffect, useMemo } from "react";
 import type { PlayersDb } from "../data/types";
 import { useAppContext } from "../context/AppContext";
+import { useIsMobile } from "../hooks/useIsMobile";
 import { isCalUnlocked } from "../utils/authConstants";
 import { clickableA11y } from "../utils/a11y";
 import { norm } from "../utils/format";
@@ -572,6 +573,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
   const [enabledCals, setEnabledCals] = useState<Set<string>>(() => new Set(CALENDARS.map(c => c.id)));
   const [expandedCal, setExpandedCal] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const isMobile = useIsMobile();
   const [searchQ, setSearchQ] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
@@ -877,6 +879,12 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
         </div>
 
         <div className="flex-1 scroll-y scroll-y">
+          {/* Botão voltar — só em mobile quando a sidebar está fechada */}
+          {!sidebarOpen && isMobile && (
+            <button className="mobile-back-btn" onClick={() => setSidebarOpen(true)}>
+              ◀ Filtros
+            </button>
+          )}
           {viewMode === "month" ? (
             <div className="cal-content">
               <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)",
