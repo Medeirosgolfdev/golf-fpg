@@ -389,7 +389,7 @@ interface HoleBucket {
 type HoleProfile = Map<string, HoleBucket>; // key: "par|bkt" ou "par|all"
 
 /** Constrói perfil de desempenho por par+distância a partir de todos os torneios */
-function buildHoleProfile(data: PlayerPageData, simCourses: Course[]): HoleProfile {
+function buildHoleProfile(data: PlayerPageData, simCourses: Course[], cutoffMs?: number): HoleProfile {
   const map: HoleProfile = new Map();
   const getB = (key: string): HoleBucket => {
     if (!map.has(key)) map.set(key, { n:0,sumDiff:0,eagle:0,birdie:0,parScore:0,bogey:0,double:0,triple:0 });
@@ -404,20 +404,63 @@ function buildHoleProfile(data: PlayerPageData, simCourses: Course[]): HoleProfi
     else if (diff === 2) b.double++;
     else b.triple++;
   };
-  // Lookup rápido de campos por nome normalizado
+  // Três índices de lookup para máxima cobertura
   const courseByNorm = new Map<string, Course>();
-  for (const c of simCourses) courseByNorm.set(norm(c.master.name), c);
+  const byCourseKey  = new Map<string, Course>();
+  for (const c of simCourses) {
+    courseByNorm.set(norm(c.master.name), c);
+    byCourseKey.set(c.courseKey, c);
+  }
+
+  /** Verifica se um campo tem pelo menos um tee com dados de distância */
+  function hasDist(c: Course): boolean {
+    return c.master.tees.some(t => (t.holes ?? []).some(h => (h.distance ?? 0) > 0));
+  }
+
+  function findCourse(courseName: string): Course | undefined {
+    const n = norm(courseName);
+
+    // 1. Exacto por nome normalizado
+    const exact = courseByNorm.get(n);
+    if (exact) return exact;
+
+    // 2. Por courseKey derivado: "away-" + n com espaços → hífens
+    //    Ex: "Villa Padierna Flamingos" → "away-villa-padierna-flamingos"
+    //    Apanha "away-villa-padierna-flamingos-espanha" por prefixo
+    const derivedKey = "away-" + n.replace(/ /g, "-");
+    for (const [ck, c] of byCourseKey) {
+      if (ck.startsWith(derivedKey) || derivedKey.startsWith(ck)) {
+        if (hasDist(c)) return c;
+      }
+    }
+
+    // 3. Partial por nome — só se a chave for substantiva (≥12 chars) e houver distâncias
+    for (const [key, c] of courseByNorm) {
+      if (key.length >= 12 && (key.includes(n) || (n.includes(key)))) {
+        if (hasDist(c)) return c;
+      }
+    }
+
+    return undefined;
+  }
 
   for (const cd of data.DATA) {
-    const courseMatch = courseByNorm.get(norm(cd.course));
+    const courseMatch = findCourse(cd.course);
     for (const r of cd.rounds) {
       if (!isTournamentRound(r) || r._isTeamEvent) continue;
+      if (cutoffMs != null && r.dateSort < cutoffMs) continue;
       const hd = data.HOLES[r.scoreId];
       if (!hd?.g || hd.g.length < 18) continue;
 
-      // Tentar obter distâncias por buraco a partir do campo/tee histórico
+      // Distâncias: usar hd.m se tiver valores reais (>0).
+      // Alguns scorecards internacionais têm hd.m=[0,0,...] — tratar como sem dados.
       const distByHole: (number | null)[] = Array(18).fill(null);
-      if (courseMatch) {
+      const hasRealMeters = hd.m != null && hd.m.some(v => v != null && v > 0);
+      if (hasRealMeters) {
+        for (let hi = 0; hi < 18; hi++) {
+          distByHole[hi] = (hd.m![hi] ?? 0) > 0 ? hd.m![hi] : null;
+        }
+      } else if (courseMatch) {
         const teeNorm = norm(r.tee || "");
         const tee = courseMatch.master.tees.find(t => norm(t.teeName) === teeNorm)
           ?? courseMatch.master.tees[0];
@@ -519,32 +562,32 @@ function BucketCell({ bucket, bold = false }: {
         }}>{avgStr}</span>
         <span style={{ fontSize:11, color:"var(--text-muted)" }}>vs par · {bucket.n} buracos</span>
       </div>
-      {/* Barra + labels alinhados: uma coluna por segmento, label por baixo do seu segmento */}
-      <div style={{ display:"flex", alignItems:"flex-start" }}>
+      {/* Barra proporcional (visual) — só colorida */}
+      <div style={{ display:"flex", height:13, borderRadius:6, overflow:"hidden", marginBottom:10 }}>
+        {segs.map((seg, i) => seg.pct >= 1
+          ? <div key={i} style={{ width:`${seg.pct}%`, background:seg.bg }}
+              title={`${seg.label}: ${seg.n} (${seg.pct.toFixed(0)}%)`} />
+          : null
+        )}
+      </div>
+      {/* Stats em row livre — espaço fixo mínimo por item, sem interferência da barra */}
+      <div style={{ display:"flex", gap:0, width:"100%" }}>
         {segs.map((seg, i) => {
-          if (seg.pct < 1) return null;
-          const isFirst  = i === 0 || segs.slice(0,i).every(s => s.pct < 1);
-          const isLast   = i === segs.length-1 || segs.slice(i+1).every(s => s.pct < 1);
+          if (seg.n === 0) return null;
           const tc = seg.bg === PAR_COLOR ? "var(--text-2)" : seg.bg;
+          // Ponto colorido que liga ao segmento da barra acima
           return (
-            <div key={i} style={{ width:`${seg.pct}%`, flexShrink:0 }}>
-              {/* Segmento da barra */}
-              <div
-                style={{
-                  height:13, background:seg.bg, width:"100%",
-                  borderRadius: isFirst && isLast ? 6 : isFirst ? "6px 0 0 6px" : isLast ? "0 6px 6px 0" : 0,
-                }}
-                title={`${seg.label}: ${seg.n} (${seg.pct.toFixed(0)}%)`}
-              />
-              {/* Label por baixo — overflow visível para segmentos estreitos */}
-              <div style={{ marginTop:5, overflow:"visible", whiteSpace:"nowrap" }}>
-                <div style={{ fontSize:13, fontWeight:700, color:tc, lineHeight:1.2 }}>
-                  {seg.n}
-                  <span style={{ fontSize:11, fontWeight:500, marginLeft:3, opacity:0.85 }}>
-                    ({seg.pct.toFixed(0)}%)
-                  </span>
-                </div>
-                <div style={{ fontSize:10, color:"var(--text-muted)", marginTop:1 }}>{seg.label}</div>
+            <div key={i} style={{ flex:"1 1 0", minWidth:52, paddingRight:6 }}>
+              {/* Indicador de cor */}
+              <div style={{ width:10, height:10, borderRadius:3, background:seg.bg, marginBottom:3 }} />
+              <div style={{ fontSize:13, fontWeight:700, color:tc, lineHeight:1.2, whiteSpace:"nowrap" }}>
+                {seg.n}
+                <span style={{ fontSize:11, fontWeight:500, marginLeft:3, opacity:0.85 }}>
+                  ({seg.pct.toFixed(0)}%)
+                </span>
+              </div>
+              <div style={{ fontSize:10, color:"var(--text-muted)", marginTop:1, whiteSpace:"nowrap" }}>
+                {seg.label}
               </div>
             </div>
           );
@@ -554,6 +597,51 @@ function BucketCell({ bucket, bold = false }: {
   );
 }
 
+/** Soma todos os baldes de distância de um dado par para obter o total coerente */
+function sumParBuckets(profile: HoleProfile | null, par: number): HoleBucket | null {
+  if (!profile) return null;
+  const buckets = PAR_BUCKETS[par] ?? [];
+  const total: HoleBucket = { n:0,sumDiff:0,eagle:0,birdie:0,parScore:0,bogey:0,double:0,triple:0 };
+  for (const bkt of buckets) {
+    const b = profile.get(`${par}|${bkt}`);
+    if (!b || b.n === 0) continue;
+    total.n        += b.n;
+    total.sumDiff  += b.sumDiff;
+    total.eagle    += b.eagle;
+    total.birdie   += b.birdie;
+    total.parScore += b.parScore;
+    total.bogey    += b.bogey;
+    total.double   += b.double;
+    total.triple   += b.triple;
+  }
+  return total.n > 0 ? total : null;
+}
+
+type PeriodKey = "all" | "2y" | "1y" | "6m" | "20r" | "10r";
+
+const PERIOD_OPTIONS: { key: PeriodKey; label: string }[] = [
+  { key: "all",  label: "Todos os jogos" },
+  { key: "2y",   label: "Últimos 2 anos" },
+  { key: "1y",   label: "Último ano" },
+  { key: "6m",   label: "Últimos 6 meses" },
+  { key: "20r",  label: "Últimas 20 rondas" },
+  { key: "10r",  label: "Últimas 10 rondas" },
+];
+
+function periodCutoff(key: PeriodKey, allRounds: { dateSort: number }[]): number | undefined {
+  const now = Date.now();
+  if (key === "2y")  return now - 2 * 365.25 * 86400000;
+  if (key === "1y")  return now - 365.25 * 86400000;
+  if (key === "6m")  return now - 182.5 * 86400000;
+  if (key === "20r" || key === "10r") {
+    const n = key === "20r" ? 20 : 10;
+    const sorted = [...allRounds].sort((a, b) => b.dateSort - a.dateSort);
+    if (sorted.length <= n) return undefined;
+    return sorted[n - 1].dateSort;
+  }
+  return undefined;
+}
+
 function HoleProfileSection({ slots, refTee, holesMode }: {
   slots: Slot[];
   refTee: Tee | null;
@@ -561,38 +649,202 @@ function HoleProfileSection({ slots, refTee, holesMode }: {
 }) {
   const { simCourses } = useAppContext();
   const loaded = slots.filter(s => s.player);
+  const [period, setPeriod] = useState<PeriodKey>("all");
+
   const teeHex = refTee ? getTeeHex(refTee.teeName, refTee.scorecardMeta?.teeColor) : BOGEY_COLOR;
   const teeTextColor = textOnColor(teeHex);
 
-  const profiles = useMemo(
-    () => loaded.map(s => s.data ? buildHoleProfile(s.data, simCourses) : null),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [slots, simCourses],
-  );
+  const profiles = useMemo(() => {
+    return loaded.map(s => {
+      if (!s.data) return null;
+      const allTourneyRounds = s.data.DATA.flatMap(cd =>
+        cd.rounds.filter(r => isTournamentRound(r) && !r._isTeamEvent)
+      );
+      const cutoff = periodCutoff(period, allTourneyRounds);
+      return buildHoleProfile(s.data, simCourses, cutoff);
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slots, simCourses, period]);
 
   const holes = useMemo(() => {
-    if (!refTee) return [];
-    const all = [...(refTee.holes ?? [])].filter(h => h.par != null).sort((a, b) => a.hole - b.hole);
+    if (!refTee?.holes) return [];
+    const all = [...refTee.holes].filter(h => h.par != null).sort((a, b) => a.hole - b.hole);
     if (holesMode === "front9") return all.filter(h => h.hole <= 9);
     if (holesMode === "back9") return all.filter(h => h.hole > 9);
     return all;
   }, [refTee, holesMode]);
 
-  if (!refTee || holes.length === 0 || loaded.every(s => !s.data)) return null;
+  if (loaded.every(s => !s.data)) return null;
 
-  const hasDistances = holes.some(h => (h.distance ?? 0) > 0);
-  const parTypes = ([3, 4, 5] as const).filter(p => holes.some(h => h.par === p));
+  const hasCourse    = !!refTee;
+  const hasDistances = hasCourse && holes.some(h => (h.distance ?? 0) > 0);
+  // Sem campo seleccionado: mostrar sempre os 3 tipos de par (o perfil existe independentemente)
+  const parTypes: (3 | 4 | 5)[] = hasCourse
+    ? ([3, 4, 5] as const).filter(p => holes.some(h => h.par === p))
+    : [3, 4, 5];
 
-  const parColor = (p: number) =>
-    p === 3 ? "var(--color-success)" : p === 4 ? "var(--color-info)" : "var(--color-warn)";
+
 
   return (
     <div style={{ marginTop: 20 }}>
-      <div className="h-md mb-4">🔍 Perfil Histórico por Tipo de Buraco</div>
-      <div className="muted fs-11 mb-16">
-        Como cada jogador se comporta em torneios, agrupado por par e distância.
-        As linhas em destaque correspondem às distâncias dos buracos deste campo.
+      <div className="flex-wrap-gap10 mb-14" style={{ alignItems:"center" }}>
+        <span className="h-md">🔍 Perfil Histórico por Tipo de Buraco</span>
+        <div style={{ marginLeft:"auto", display:"flex", alignItems:"center", gap:8 }}>
+          <span className="muted fs-11">Período:</span>
+          <select className="select select-sm" value={period} onChange={e => setPeriod(e.target.value as PeriodKey)}>
+            {PERIOD_OPTIONS.map(o => <option key={o.key} value={o.key}>{o.label}</option>)}
+          </select>
+        </div>
       </div>
+      <div className="muted fs-11 mb-10">
+        {hasCourse
+          ? "Desempenho em torneios por par e distância — linhas destacadas = buracos deste campo."
+          : "Desempenho histórico em torneios, por tipo de buraco. Selecciona um campo para ver os buracos específicos e comparar por distância."}
+      </div>
+
+      {/* ── Tabela resumo do período seleccionado ── */}
+      {(() => {
+        // Calcular resumo por jogador: rondas e buracos por par
+        const summary = loaded.map((s, i) => {
+          if (!s.data) return { name: s.player.name, nRondasTorneio: 0, nRondas9h: 0, nEDS: 0, nTreino: 0, nRondas: 0, nHolesTotal: 0, holesWithCard: 0, parTotals: { 3:0, 4:0, 5:0 } };
+
+          // Calcular cutoff uma vez
+          const allTR = s.data.DATA.flatMap(cd =>
+            cd.rounds.filter(r => isTournamentRound(r) && !r._isTeamEvent)
+          );
+          const cutoff = period !== "all" ? periodCutoff(period, allTR) : undefined;
+
+          let nRondasTorneio = 0; // torneio 18h (entra na análise)
+          let nRondas9h = 0;       // 9 buracos (Drive Challenge, etc.)
+          let nEDS = 0;            // EDS
+          let nTreino = 0;         // Treinos / individuais
+          let nHolesTotal = 0;
+          const parTotals: Record<number, number> = { 3:0, 4:0, 5:0 };
+          let holesWithCard = 0;
+
+          for (const cd of s.data.DATA) {
+            for (const r of cd.rounds) {
+              if (cutoff != null && r.dateSort < cutoff) continue;
+              const origin = (r.scoreOrigin || "").trim();
+              const hc = r.holeCount ?? 18;
+
+              // Classificar a ronda
+              if (origin === "EDS") {
+                nEDS++;
+              } else if (r._isTreino || origin === "Indiv" || origin === "Treino") {
+                nTreino++;
+              } else if (hc === 9) {
+                nRondas9h++;
+              } else if (isTournamentRound(r) && !r._isTeamEvent) {
+                nRondasTorneio++;
+                nHolesTotal += hc;
+                const hd = s.data.HOLES[r.scoreId];
+                if (hd?.p && hd.p.length > 0) {
+                  const validP = hd.p.filter((p): p is number => p != null);
+                  holesWithCard += validP.length;
+                  for (const p of validP) {
+                    if (p === 3 || p === 4 || p === 5) parTotals[p]++;
+                  }
+                }
+              } else {
+                nTreino++; // outros (equipas, etc.)
+              }
+            }
+          }
+          const nRondas = nRondasTorneio;
+
+          return { name: s.player.name, nRondasTorneio, nRondas9h, nEDS, nTreino, nRondas, nHolesTotal, holesWithCard, parTotals };
+        });
+
+        return (
+          <div style={{
+            border: "1px solid var(--border-light)", borderRadius: "var(--radius)",
+            marginBottom: 18, overflow: "hidden",
+          }}>
+            {/* Cabeçalho */}
+            <div style={{
+              background: "var(--bg-header)", padding: "7px 14px",
+              display: "flex", alignItems: "center", gap: 8,
+              borderBottom: "1px solid var(--border-light)",
+            }}>
+              <span className="fs-12 fw-700">📋 Dados incluídos</span>
+              <span className="muted fs-11">
+                {period === "all"
+                  ? "todos os torneios"
+                  : PERIOD_OPTIONS.find(o => o.key === period)?.label}
+              </span>
+            </div>
+            <div className="table-wrap">
+              <table className="dtable-lg fs-12" style={{ width:"100%" }}>
+                <thead>
+                  <tr>
+                    <th>Jogador</th>
+                    <th className="r" title="Rondas de 9 buracos (Drive Challenge, etc.)">9h</th>
+                    <th className="r" title="Rondas EDS (Equalized Differential Score)">EDS</th>
+                    <th className="r" title="Treinos, individuais e outras rondas não competitivas">Outros</th>
+                    <th className="r" title="Rondas de torneio 18 buracos — usadas na análise abaixo"
+                      style={{ background:"var(--bg-info-subtle,rgba(59,130,246,.08))", borderLeft:"2px solid var(--color-info,#3b82f6)" }}>
+                      Torneio 18h ↓
+                    </th>
+                    <th className="r" style={{ background:"var(--bg-info-subtle,rgba(59,130,246,.08))" }}>Buracos</th>
+                    <th className="r" style={{ background:"var(--bg-info-subtle,rgba(59,130,246,.08))" }}
+                      title="Buracos na análise (c/distância) / totais do scorecard">Par 3</th>
+                    <th className="r" style={{ background:"var(--bg-info-subtle,rgba(59,130,246,.08))" }}
+                      title="Buracos na análise (c/distância) / totais do scorecard">Par 4</th>
+                    <th className="r" style={{ background:"var(--bg-info-subtle,rgba(59,130,246,.08))" }}
+                      title="Buracos na análise (c/distância) / totais do scorecard">Par 5</th>
+                    <th className="r" style={{ background:"var(--bg-info-subtle,rgba(59,130,246,.08))" }}>Com scorecard</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {summary.map((s, i) => {
+                    return (
+                      <tr key={i}>
+                        <td>
+                          <span className="round flex-shrink-0" style={{
+                            width:8, height:8, background:COLORS[i],
+                            display:"inline-block", marginRight:7, verticalAlign:"middle",
+                          }} />
+                          <span className="fw-600">{s.name}</span>
+                        </td>
+                        <td className="r mono">{s.nRondas9h > 0 ? s.nRondas9h : "–"}</td>
+                        <td className="r mono">{s.nEDS > 0 ? s.nEDS : "–"}</td>
+                        <td className="r mono">{s.nTreino > 0 ? s.nTreino : "–"}</td>
+                        <td className="r mono fw-800"
+                          style={{ background:"var(--bg-info-subtle,rgba(59,130,246,.08))", borderLeft:"2px solid var(--color-info,#3b82f6)" }}>
+                          {s.nRondasTorneio}
+                        </td>
+                        <td className="r mono fw-600" style={{ background:"var(--bg-info-subtle,rgba(59,130,246,.08))" }}>{s.nHolesTotal}</td>
+                        {([3, 4, 5] as const).map(par => {
+                          const analyzed = sumParBuckets(profiles[i], par)?.n ?? 0;
+                          const total    = s.parTotals[par] ?? 0;
+                          const mismatch = analyzed < total;
+                          return (
+                            <td key={par} className="r mono" style={{ background:"var(--bg-info-subtle,rgba(59,130,246,.08))" }}>
+                              {mismatch
+                                ? <span title={`${analyzed} com distância / ${total} totais`}>
+                                    <span style={{ fontWeight:700 }}>{analyzed}</span>
+                                    <span className="muted fs-10" style={{ marginLeft:2 }}>/{total}</span>
+                                  </span>
+                                : <span style={{ fontWeight:600 }}>{total}</span>
+                              }
+                            </td>
+                          );
+                        })}
+                        <td className="r mono" style={{ background:"var(--bg-info-subtle,rgba(59,130,246,.08))", color: s.holesWithCard < s.nHolesTotal ? "var(--color-warn)" : undefined }}>
+                          {s.holesWithCard < s.nHolesTotal
+                            ? `${s.holesWithCard} / ${s.nHolesTotal}`
+                            : s.holesWithCard}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        );
+      })()}
 
       {/* ── Uma tabela por par ── */}
       {parTypes.map(par => {
@@ -614,18 +866,35 @@ function HoleProfileSection({ slots, refTee, holesMode }: {
           }}>
             {/* Cabeçalho do par */}
             <div style={{
-              background: "var(--bg-header)", padding: "8px 14px",
-              display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap",
+              background: "var(--bg-header)", padding: "10px 16px",
+              display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap",
+              borderBottom: "1px solid var(--border)",
             }}>
-              <span className="fs-13 fw-700" style={{ color: parColor(par) }}>
-                Par {par}
-              </span>
-              <span className="muted fs-11">
+              <span style={{ fontSize:15, fontWeight:800, letterSpacing:"-0.3px" }}>Par {par}</span>
+              <span className="muted fs-12">
                 {parHoles.length} buraco{parHoles.length !== 1 ? "s" : ""} neste campo
               </span>
-              {hasDistances && parHoles.length > 0 && (
-                <span className="muted fs-11">
-                  ({parHoles.map(h => `B${h.hole}${h.distance ? ` ${h.distance}m` : ""}`).join("  ·  ")})
+              {hasCourse && hasDistances && parHoles.length > 0 && (
+                <div style={{ display:"flex", flexWrap:"wrap", gap:6, marginLeft:4 }}>
+                  {parHoles.map(h => (
+                    <span key={h.hole} style={{ display:"inline-flex", alignItems:"center", gap:5 }}>
+                      <span style={{
+                        padding:"2px 9px", borderRadius:20,
+                        background:teeHex, color:teeTextColor,
+                        fontSize:12, fontWeight:800,
+                      }}>B{h.hole}</span>
+                      {h.distance && (
+                        <span style={{ fontSize:12, fontWeight:600, color:"var(--text-2)" }}>
+                          {h.distance}m
+                        </span>
+                      )}
+                    </span>
+                  ))}
+                </div>
+              )}
+              {!hasCourse && (
+                <span className="muted fs-11" style={{ fontStyle:"italic" }}>
+                  selecciona um campo para ver os buracos específicos
                 </span>
               )}
             </div>
@@ -655,12 +924,12 @@ function HoleProfileSection({ slots, refTee, holesMode }: {
 
                     return (
                       <tr key={bkt} style={{
-                        background: isUsed ? "var(--bg-info-subtle, rgba(59,130,246,.06))" : undefined,
+                        background: (hasCourse && isUsed) ? "var(--bg-info-subtle, rgba(59,130,246,.06))" : undefined,
                       }}>
                         <td style={{ padding:"12px 14px" }}>
                           <span style={{ fontSize:14, fontWeight:700 }}>{bktLabel(bkt)}</span>
                           {isUsed && (
-                            <div style={{ marginTop:5, display:"flex", flexWrap:"wrap", gap:4 }}>
+                            <div style={{ marginTop:6, display:"flex", flexWrap:"wrap", gap:6 }}>
                               {holesInBkt.map(h => (
                                 <span key={h.hole} style={{ display:"inline-flex", alignItems:"center", gap:5 }}>
                                   <span style={{
@@ -688,13 +957,13 @@ function HoleProfileSection({ slots, refTee, holesMode }: {
                     );
                   })}
 
-                  {/* Linha total */}
+                  {/* Linha total = soma dos baldes (coerente com as linhas acima) */}
                   <tr style={{ borderTop:"2px solid var(--border)", background:"var(--bg-header)" }}>
                     <td className="fw-700 fs-11 c-text-3">Todos Par {par}</td>
                     {loaded.map((_, i) => (
                       <BucketCell
                         key={i}
-                        bucket={profiles[i]?.get(`${par}|all`) ?? null}
+                        bucket={sumParBuckets(profiles[i], par)}
                         bold
                       />
                     ))}
@@ -706,8 +975,8 @@ function HoleProfileSection({ slots, refTee, holesMode }: {
         );
       })}
 
-      {/* ── Tabela buraco a buraco (só se tiver distâncias) ── */}
-      {hasDistances && (
+      {/* ── Tabela buraco a buraco — só quando há campo seleccionado com distâncias ── */}
+      {hasCourse && hasDistances && (
         <>
           <div className="fs-12 fw-600 c-text-2 mb-8 mt-4">⛳ Buraco a Buraco — grupo de distância aplicado</div>
           <div className="table-wrap">
@@ -735,7 +1004,7 @@ function HoleProfileSection({ slots, refTee, holesMode }: {
                   return (
                     <tr key={hole.hole}>
                       <td className="r fw-700">{hole.hole}</td>
-                      <td className="fw-600" style={{ color: parColor(hole.par!) }}>P{hole.par}</td>
+                      <td className="fw-600">P{hole.par}</td>
                       <td className="fs-11">
                         {dist ? `${dist}m` : "–"}
                         {bkt && (
@@ -1146,11 +1415,11 @@ function RoundPrepSection({ slots }: { slots: Slot[] }) {
         </>
       )}
 
-      {/* ── Perfil histórico por tipo de buraco ── */}
-      {selectedCourse && refTee && loaded.some(s => s.data) && (
+      {/* ── Perfil histórico por tipo de buraco — aparece sempre que há dados ── */}
+      {loaded.some(s => s.data) && (
         <HoleProfileSection
           slots={slots}
-          refTee={refTee}
+          refTee={refTee ?? null}
           holesMode={holesMode}
         />
       )}
