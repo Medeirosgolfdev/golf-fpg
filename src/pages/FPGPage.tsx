@@ -44,6 +44,433 @@ const DATA_MAX      = 50;                       // segurança: parar após N fic
 
 type TournPill = "REGIONAL" | "NACIONAL" | "INTL" | "PJA" | "SSERRA";
 
+/* ─────────────────────────────────────────────
+   TIPOS + DADOS — Campeonato Nacional de Clubes
+   ───────────────────────────────────────────── */
+interface GrupoJogador { nome: string; fed: string | null; hcp: number | string; }
+interface GrupoEntry   { grupo: string; clube: string; jogadores: GrupoJogador[]; }
+
+/** Quantos scores por ronda contam para o total de equipa */
+const CLUBES_BEST_N = 3;
+/** Score máximo por buraco (regra do torneio) */
+const MAX_HOLE_SCORE = 10;
+
+const CLUBES_GRUPOS: Record<"sub14" | "sub18", GrupoEntry[]> = {
+  sub14: [
+    { grupo: "A", clube: "Club de Golf de Miramar", jogadores: [
+      { nome: "Tomás Rente",           fed: "46311", hcp: 6.9 },
+      { nome: "Margarida Silva Pinto", fed: "46310", hcp: 4.1 },
+      { nome: "Francisco Nunes (jr)",  fed: "46299", hcp: 5.4 },
+      { nome: "Henrique Pereira",      fed: "53646", hcp: 12.5 },
+    ]},
+    { grupo: "B", clube: "Clube de Golfe Citynorte", jogadores: [
+      { nome: "Gil Ribeiro",           fed: "47810", hcp: 22.9 },
+      { nome: "Madalena Policarpo",    fed: "45608", hcp: 15.7 },
+      { nome: "João Pedro Frade",      fed: "45424", hcp: 18.5 },
+      { nome: "Pedro Luís Fernandes",  fed: "52168", hcp: 17.0 },
+    ]},
+    { grupo: "C", clube: "Clube de Golf do Estoril", jogadores: [
+      { nome: "João Rocha",              fed: "48297", hcp: 6.1 },
+      { nome: "Ruiqi Li",                fed: "49076", hcp: 3.8 },
+      { nome: "Nuno Palmares Jr.",       fed: "49124", hcp: 3.9 },
+      { nome: "Ricardo Castro Ferreira", fed: "49085", hcp: 7.4 },
+    ]},
+    { grupo: "D", clube: "Clube de Golfe de Vilamoura", jogadores: [
+      { nome: "Catarina Valério",           fed: "46873", hcp: 18.1 },
+      { nome: "Catarina Sousa Conceição",   fed: "48794", hcp: 10.7 },
+      { nome: "Tomás Lima Pinto",           fed: "46037", hcp: 8.9  },
+      { nome: "Sabrina Ribeiro Crisóstomo", fed: "48971", hcp: 8.0  },
+    ]},
+    { grupo: "E", clube: "Oporto Golf Clube A", jogadores: [
+      { nome: "Sebastião Soares",      fed: "47341", hcp: 15.3 },
+      { nome: "Afonso de Sousa Pinto", fed: "46480", hcp: 10.3 },
+      { nome: "Francisco Saraiva",     fed: "39097", hcp: 7.9  },
+      { nome: "Santiago Dias",         fed: "42908", hcp: 1.0  },
+    ]},
+    { grupo: "F", clube: "Clube de Golf da Quinta do Peru", jogadores: [
+      { nome: "David Filip Jr",     fed: "51949", hcp: 9.7  },
+      { nome: "Mário Novaes Moura", fed: "53939", hcp: 38.3 },
+      { nome: "Beatriz Mendes",     fed: "46026", hcp: 36.0 },
+      { nome: "William Gao",        fed: "51524", hcp: 9.5  },
+    ]},
+    { grupo: "G", clube: "Oporto Golf Clube B", jogadores: [
+      { nome: "Catarina Loureiro", fed: "49328", hcp: 20.1 },
+      { nome: "Maksim Mutalapov",  fed: "54475", hcp: 32.1 },
+      { nome: "Ricardo Ferreira",  fed: "45366", hcp: 23.1 },
+      { nome: "Diogo Guilherme",   fed: "56632", hcp: 19.0 },
+    ]},
+    { grupo: "H", clube: "Lisbon Sports Club", jogadores: [
+      { nome: "Filipe Delicado",             fed: "53124", hcp: 36.6 },
+      { nome: "Guilherme Pereira",           fed: "47658", hcp: 37.2 },
+      { nome: "David Stocksreiter Ferreira", fed: "48164", hcp: 35.4 },
+      { nome: "Diogo Vaz Pinto Jr.",         fed: "51432", hcp: 32.9 },
+    ]},
+    { grupo: "I", clube: "Clube de Golfe Citynorte A", jogadores: [
+      { nome: "Marc Costa",               fed: "46308", hcp: 13.7 },
+      { nome: "Tomás Sarmento de Beires", fed: "48046", hcp: 16.2 },
+      { nome: "Afonso Paiva Gonçalves",   fed: "47819", hcp: 14.5 },
+      { nome: "Diogo Lima",               fed: "49717", hcp: 12.0 },
+    ]},
+    { grupo: "J", clube: "Club de Golf de Miramar B", jogadores: [
+      { nome: "José Maria Pereira",     fed: "53645", hcp: 20.7 },
+      { nome: "Eduardo Rocha Ferreira", fed: "51182", hcp: 22.4 },
+      { nome: "Ricardo Rocha Ferreira", fed: "51180", hcp: 17.3 },
+      { nome: "João Balixa",            fed: "46038", hcp: 9.5  },
+    ]},
+    { grupo: "K", clube: "Quinta das Lágrimas Clube de Golfe", jogadores: [
+      { nome: "Guido Martins Gonçalves", fed: "46414", hcp: 14.6 },
+      { nome: "Gil Martins Gonçalves",   fed: "46415", hcp: 18.7 },
+      { nome: "Miguel Silva",            fed: "45661", hcp: 36.9 },
+      { nome: "Valentin Iria",           fed: "57233", hcp: 31.8 },
+      { nome: "Vicente Poeira",          fed: "50885", hcp: 39.7 },
+    ]},
+  ],
+  sub18: [
+    { grupo: "A", clube: "CG Vilamoura", jogadores: [
+      { nome: "Rodrigo Sousa Correia", fed: "44934", hcp: 3.4     },
+      { nome: "Francisco Reis",        fed: "40534", hcp: 0.3     },
+      { nome: "Martim Pinto Johansen", fed: "40115", hcp: "+0.8"  },
+      { nome: "Jack Murtagh",          fed: "41593", hcp: 8.4     },
+    ]},
+    { grupo: "B", clube: "Clube de Golf da Quinta do Peru", jogadores: [
+      { nome: "Salvador Paulo Rodrigues", fed: "58051", hcp: 29.3 },
+      { nome: "Angelina Gao",             fed: "51523", hcp: 3.9  },
+      { nome: "Diogo Sequeira",           fed: "56654", hcp: 3.6  },
+      { nome: "João Setúbal",             fed: "43732", hcp: 0.2  },
+    ]},
+    { grupo: "C", clube: "Club de Golf de Miramar", jogadores: [
+      { nome: "Afonso Silva Pinto",          fed: "46309", hcp: 5.4    },
+      { nome: "Gaspard Maes",                fed: "51074", hcp: 1.8    },
+      { nome: "Camila Pazos",                fed: "46297", hcp: 2.9    },
+      { nome: "Francisca Ferreira Da Costa", fed: "40981", hcp: "+1.8" },
+    ]},
+    { grupo: "D", clube: "Clube Palheiro Golfe", jogadores: [
+      { nome: "André Gonçalves",    fed: "41121", hcp: 6.7 },
+      { nome: "Maria Cunha",        fed: "46482", hcp: 4.6 },
+      { nome: "Salvador Rodrigues", fed: "39465", hcp: 6.2 },
+      { nome: "José Pedro Miranda", fed: "38976", hcp: 7.0 },
+    ]},
+    { grupo: "E", clube: "Estela Golf Club", jogadores: [
+      { nome: "Gabriel Marques Guerreiro", fed: "43053", hcp: 4.4  },
+      { nome: "André Von Hafe",            fed: "40473", hcp: 15.4 },
+      { nome: "Manuel Rouco Castro",       fed: "47576", hcp: 16.3 },
+      { nome: "Afonso Poiarez",            fed: "46079", hcp: 16.2 },
+    ]},
+    { grupo: "F", clube: "Oporto Golf Club A", jogadores: [
+      { nome: "Eva Silva",                fed: "46437", hcp: 1.4    },
+      { nome: "Pedro Ferreira",           fed: "43810", hcp: 0.7    },
+      { nome: "Guilherme Grabner Moreira",fed: "42205", hcp: 0.6    },
+      { nome: "Luis António Silva",       fed: "42845", hcp: "+3.0" },
+      { nome: "Henrique Montenegro",      fed: "39552", hcp: 2.2    },
+    ]},
+    { grupo: "G", clube: "Clube de Golf da Ilha Terceira", jogadores: [
+      { nome: "João Lucas Fagundes",           fed: "44677", hcp: 17.8 },
+      { nome: "Madalena Alexandra Van Zeller", fed: "47078", hcp: 8.0  },
+      { nome: "Maria Fonseca Azevedo",         fed: "44019", hcp: 14.9 },
+      { nome: "Rafael Ourique Azevedo",        fed: "44018", hcp: 27.0 },
+      { nome: "Tomás Valadão",                 fed: "36625", hcp: 0    },
+    ]},
+    { grupo: "H", clube: "Clube de Golfe de Belas", jogadores: [
+      { nome: "Clara Trindade",           fed: "45812", hcp: 8.2 },
+      { nome: "Henrique Almeida da Silva",fed: "41612", hcp: 6.4 },
+      { nome: "Ryan Dantas",              fed: "45439", hcp: 6.9 },
+      { nome: "Filipe Pinheiro",          fed: "46591", hcp: 3.1 },
+    ]},
+    { grupo: "I", clube: "Oporto Golf Clube B", jogadores: [
+      { nome: "Teresa Ferreira",          fed: "46589", hcp: 6.7 },
+      { nome: "Jorge Xavier Graça Silva", fed: "48705", hcp: 8.0 },
+      { nome: "Maria Francisca Santos",   fed: "46853", hcp: 4.6 },
+      { nome: "Maria Loureiro",           fed: "46489", hcp: 5.8 },
+    ]},
+    { grupo: "J", clube: "P.G.C. - Paredes Golfe Clube", jogadores: [
+      { nome: "Rafael Nogueira", fed: null, hcp: 15.5 },
+      { nome: "João Oliveira",   fed: null, hcp: 29.3 },
+      { nome: "Gustavo Castro",  fed: null, hcp: 16.7 },
+      { nome: "Elisa Garcez",    fed: null, hcp: 4.9  },
+    ]},
+    { grupo: "K", clube: "Clube de Golf do Estoril", jogadores: [
+      { nome: "Paul Devillers",             fed: "49770", hcp: 2.5    },
+      { nome: "João Maria Ivo de Carvalho", fed: "38334", hcp: "+1.8" },
+      { nome: "Duarte Soares Franco",       fed: "48531", hcp: 8.1    },
+      { nome: "Pedro Costa Alemão",         fed: "46706", hcp: 4.0    },
+      { nome: "Reuben Thapa",               fed: "47552", hcp: 3.6    },
+    ]},
+    { grupo: "L", clube: "Lisbon Sports Club", jogadores: [
+      { nome: "Francisca Vilela", fed: "36700", hcp: 16.3 },
+      { nome: "Manuel Vaz Pinto", fed: "51430", hcp: 17.8 },
+      { nome: "João Gomes",       fed: "53715", hcp: 10.5 },
+      { nome: "Ana Bianchi",      fed: "36861", hcp: 13.9 },
+    ]},
+  ],
+};
+
+/* ── Grupos 2025 ─────────────────────────────────────────────────────────── */
+const CLUBES_GRUPOS_2025: Record<"sub14" | "sub18", GrupoEntry[]> = {
+  sub18: [
+    { grupo: "A", clube: "CG Vilamoura", jogadores: [
+      { nome: "João Crasi Alves",           fed: "39701", hcp: 0 },
+      { nome: "João Maria Ivo de Carvalho", fed: "38334", hcp: 0 },
+      { nome: "Francisco Reis",             fed: "40534", hcp: 0 },
+      { nome: "Martim Pinto Johansen",      fed: "40115", hcp: 0 },
+    ]},
+    { grupo: "B", clube: "Oporto Golf Clube A", jogadores: [
+      { nome: "Guilherme Grabner Moreira",  fed: "42205", hcp: 0 },
+      { nome: "Luis António Silva",         fed: "42845", hcp: 0 },
+      { nome: "Henrique Montenegro",        fed: "39552", hcp: 0 },
+      { nome: "Pedro Ferreira",             fed: "43810", hcp: 0 },
+    ]},
+    { grupo: "C", clube: "Club de Golf de Miramar", jogadores: [
+      { nome: "Tomás Afonso Araujo",        fed: "35849", hcp: 0 },
+      { nome: "Francisca Ferreira Da Costa",fed: "40981", hcp: 0 },
+      { nome: "João Alvim",                 fed: "45340", hcp: 0 },
+      { nome: "Margarida Alves",            fed: "45499",    hcp: 0 },
+      { nome: "Henrique Ferreira da Costa", fed: "41080", hcp: 0 },
+    ]},
+    { grupo: "D", clube: "Clube de Golf do Estoril", jogadores: [
+      { nome: "Reuben Thapa",              fed: "47552", hcp: 0 },
+      { nome: "Gino Vassily Sganzerla",    fed: "41461", hcp: 0 },
+      { nome: "Eleonora Savanovich",       fed: "51319", hcp: 0 },
+      { nome: "Paul Devillers",            fed: "49770",    hcp: 0 },
+    ]},
+    { grupo: "E", clube: "Clube Palheiro Golfe", jogadores: [
+      { nome: "André Gonçalves",           fed: "41121", hcp: 0 },
+      { nome: "José Pedro Miranda",        fed: "38976", hcp: 0 },
+      { nome: "Maria Cunha",               fed: "46482", hcp: 0 },
+      { nome: "Salvador Rodrigues",        fed: "39465", hcp: 0 },
+    ]},
+    { grupo: "F", clube: "Oporto Golf Clube B", jogadores: [
+      { nome: "Sebastiao Sardinha Saraiva",fed: "46195", hcp: 0 },
+      { nome: "Eva Silva",                 fed: "46437", hcp: 0 },
+      { nome: "Maria Loureiro",            fed: "46489", hcp: 0 },
+      { nome: "Teresa Ferreira",           fed: "46589", hcp: 0 },
+      { nome: "Gonçalo Maia",              fed: "46395",    hcp: 0 },
+    ]},
+    { grupo: "G", clube: "Clube de Golfe de Belas", jogadores: [
+      { nome: "Henrique Almeida da Silva", fed: "41612", hcp: 0 },
+      { nome: "Martim Sousa de Morais",    fed: "41609", hcp: 0 },
+      { nome: "Callum Ferguson",           fed: "55697", hcp: 0 },
+      { nome: "Carolina Gaspar",           fed: "44581", hcp: 0 },
+      { nome: "Luís Pinheiro Jr.",         fed: "46590",    hcp: 0 },
+    ]},
+    { grupo: "H", clube: "Lisbon Sports Club", jogadores: [
+      { nome: "Francisco Anahory Assis",      fed: "46009", hcp: 0 },
+      { nome: "Lourenço de Castro Fernandes", fed: "37633", hcp: 0 },
+      { nome: "Ana Bianchi",                  fed: "36861",    hcp: 0 },
+      { nome: "João Gomes",                   fed: "53715", hcp: 0 },
+      { nome: "Francisca Vilela",             fed: "36700", hcp: 0 },
+    ]},
+    { grupo: "I", clube: "CityGolf", jogadores: [
+      { nome: "Diogo Afonso",             fed: "45343", hcp: 0 },
+      { nome: "Francisco Costa Mendes",   fed: "40318", hcp: 0 },
+      { nome: "Pedro Aires",              fed: "42068", hcp: 0 },
+    ]},
+    { grupo: "J", clube: "Clube de Golf da Ilha Terceira", jogadores: [
+      { nome: "Bia Sampaio Mesquita",              fed: "51937", hcp: 0 },
+      { nome: "Madalena Alexandra Van Zeller",     fed: "47078", hcp: 0 },
+      { nome: "João Lucas Fagundes",               fed: "44677", hcp: 0 },
+      { nome: "Maria Fonseca Azevedo",             fed: "44019", hcp: 0 },
+    ]},
+  ],
+  sub14: [
+    { grupo: "A", clube: "Club de Golf de Miramar", jogadores: [
+      { nome: "Santiago Dias",             fed: "42908", hcp: 0 },
+      { nome: "Gaspard Maes",              fed: "51074", hcp: 0 },
+      { nome: "Afonso Silva Pinto",        fed: "46309", hcp: 0 },
+      { nome: "Maria Francisca Santos",    fed: "46853",    hcp: 0 },
+      { nome: "Camila Pazos",              fed: "46297", hcp: 0 },
+    ]},
+    { grupo: "B", clube: "CG Vilamoura", jogadores: [
+      { nome: "Rodrigo Sousa Correia",     fed: "44934", hcp: 0 },
+      { nome: "João Setúbal",              fed: "43732", hcp: 0 },
+      { nome: "Grace Gordon",              fed: "55270", hcp: 0 },
+      { nome: "Salvador Ivo de Carvalho",  fed: "43968", hcp: 0 },
+    ]},
+    { grupo: "C", clube: "Clube de Golfe de Belas", jogadores: [
+      { nome: "Filipe Pinheiro",           fed: "46591", hcp: 0 },
+      { nome: "Frederico Almeida da Silva",fed: "41613", hcp: 0 },
+      { nome: "Clara Trindade",            fed: "45812", hcp: 0 },
+      { nome: "Ryan Dantas",               fed: "45439", hcp: 0 },
+      { nome: "Martim Moreira",            fed: "42985", hcp: 0 },
+    ]},
+    { grupo: "D", clube: "Clube de Golf do Estoril", jogadores: [
+      { nome: "Pedro Costa Alemão",        fed: "46706", hcp: 0 },
+      { nome: "Ruiqi Li",                  fed: "49076", hcp: 0 },
+      { nome: "Nuno Palmares Jr.",         fed: "49124", hcp: 0 },
+      { nome: "Ricardo Castro Ferreira",   fed: "49085",    hcp: 0 },
+      { nome: "João Rocha",                fed: "48297", hcp: 0 },
+    ]},
+    { grupo: "E", clube: "Club de Golf de Miramar B", jogadores: [
+      { nome: "Tomás Rente",               fed: "46311", hcp: 0 },
+      { nome: "Margarida Silva Pinto",     fed: "46310", hcp: 0 },
+      { nome: "Francisco Nunes (jr)",      fed: "46299", hcp: 0 },
+      { nome: "Raul Pazos (jr)",           fed: "46296",    hcp: 0 },
+      { nome: "João Balixa",               fed: "46038", hcp: 0 },
+    ]},
+    { grupo: "F", clube: "CG Vilamoura B", jogadores: [
+      { nome: "Finn Gordon",               fed: "55269", hcp: 0 },
+      { nome: "Catarina Sousa Conceição",  fed: "48794", hcp: 0 },
+      { nome: "Tomás Lima Pinto",          fed: "46037", hcp: 0 },
+      { nome: "Sabrina Ribeiro Crisóstomo",fed: "48971", hcp: 0 },
+    ]},
+    { grupo: "G", clube: "CityGolf", jogadores: [
+      { nome: "João Araújo",               fed: "49012", hcp: 0 },
+      { nome: "Marc Costa",                fed: "46308", hcp: 0 },
+      { nome: "Afonso Paiva Gonçalves",    fed: "47819", hcp: 0 },
+      { nome: "João Pedro Frade",          fed: "45424", hcp: 0 },
+      { nome: "Diogo Lima",                fed: "49717", hcp: 0 },
+    ]},
+    { grupo: "H", clube: "Oporto Golf Clube", jogadores: [
+      { nome: "Dinis Seabra",              fed: "44821", hcp: 0 },
+      { nome: "Diogo Guilherme",           fed: "56632", hcp: 0 },
+      { nome: "Sebastião Soares",          fed: "47341", hcp: 0 },
+      { nome: "Francisco Saraiva",         fed: "39097", hcp: 0 },
+      { nome: "Afonso de Sousa Pinto",     fed: "46480", hcp: 0 },
+    ]},
+    { grupo: "I", clube: "Estela Golf Club", jogadores: [
+      { nome: "Afonso Poiarez",                              fed: "46079", hcp: 0 },
+      { nome: "António R. P. Monteiro",                      fed: "55094", hcp: 0 },
+      { nome: "Afonso Polery",                               fed: "55093", hcp: 0 },
+      { nome: "Julio Brito",                                 fed: "55092", hcp: 0 },
+    ]},
+    { grupo: "J", clube: "Santo Serra Golf Club", jogadores: [
+      { nome: "Manuel Goulartt Medeiros",  fed: "52884", hcp: 0 },
+      { nome: "Mateus Penucho",            fed: "52393", hcp: 0 },
+      { nome: "Gonçalo Gouveia",           fed: "50398", hcp: 0 },
+    ]},
+    { grupo: "K", clube: "Lisbon Sports Club", jogadores: [
+      { nome: "David Stocksreiter Ferreira",fed: "48164", hcp: 0 },
+      { nome: "Francisco Trinité",          fed: "52044", hcp: 0 },
+      { nome: "David Filip",                fed: "51949",    hcp: 0 },
+      { nome: "Filipe Delicado",            fed: "53124", hcp: 0 },
+      { nome: "Diogo Vaz Pinto Jr.",        fed: "51432", hcp: 0 },
+    ]},
+  ],
+};
+
+/** Lookup de grupos por ano — adicionar anos futuros aqui */
+const CLUBES_GRUPOS_BY_YEAR: Record<string, Record<"sub14" | "sub18", GrupoEntry[]>> = {
+  "2026": CLUBES_GRUPOS,
+  "2025": CLUBES_GRUPOS_2025,
+  "2024": {
+    sub14: [
+      { grupo: "A", clube: "CG Vilamoura A", jogadores: [
+        { nome: "Martim Pinto Johansen",       fed: "40115", hcp: 0 },
+        { nome: "Francisco Reis",              fed: "40534", hcp: 0 },
+        { nome: "Brooks Barker",               fed: "43359", hcp: 0 },
+        { nome: "Rodrigo Sousa Correia",       fed: "44934", hcp: 0 },
+      ]},
+      { grupo: "B", clube: "Club de Golf de Miramar Azul", jogadores: [
+        { nome: "João Alvim",                  fed: "45340", hcp: 0 },
+        { nome: "Santiago Dias",               fed: "42908", hcp: 0 },
+        { nome: "Francisca Ferreira da Costa", fed: "40981", hcp: 0 },
+        { nome: "Gaspard Maes",                fed: "51074",    hcp: 0 },
+        { nome: "Henrique Ferreira da Costa",  fed: "41080", hcp: 0 },
+      ]},
+      { grupo: "C", clube: "CG Vilamoura B", jogadores: [
+        { nome: "Grace Gordon",                fed: "55270", hcp: 0 },
+        { nome: "Finn Gordon",                 fed: "55269", hcp: 0 },
+        { nome: "Salvador Ivo de Carvalho",    fed: "43968", hcp: 0 },
+        { nome: "Tomás Lima Pinto",            fed: "46037", hcp: 0 },
+      ]},
+      { grupo: "D", clube: "Club de Golf de Miramar Branco", jogadores: [
+        { nome: "Margarida Alves",             fed: "45499", hcp: 0 },
+        { nome: "Camila Pazos",                fed: "46297", hcp: 0 },
+        { nome: "Maria Francisca Santos",      fed: "46853", hcp: 0 },
+        { nome: "Raul Pazos (jr)",             fed: "46296",    hcp: 0 },
+        { nome: "Francisco Nunes (jr)",        fed: "46299", hcp: 0 },
+      ]},
+      { grupo: "E", clube: "Clube de Golfe Citynorte", jogadores: [
+        { nome: "Afonso Silva Pinto",          fed: "46309", hcp: 0 },
+        { nome: "Francisco Saraiva",           fed: "39097", hcp: 0 },
+        { nome: "Tomás Rente",                 fed: "46311", hcp: 0 },
+        { nome: "Margarida Silva Pinto",       fed: "46310", hcp: 0 },
+      ]},
+      { grupo: "F", clube: "Clube de Golfe de Belas", jogadores: [
+        { nome: "Filipe Pinheiro",             fed: "46591", hcp: 0 },
+        { nome: "Frederico Almeida da Silva",  fed: "41613", hcp: 0 },
+        { nome: "Martim Moreira",              fed: "42985", hcp: 0 },
+        { nome: "João Rocha",                  fed: "48297", hcp: 0 },
+      ]},
+      { grupo: "G", clube: "Oporto Golf Clube", jogadores: [
+        { nome: "Eva Silva",                   fed: "46437", hcp: 0 },
+        { nome: "Gonçalo Maia",                fed: "46395", hcp: 0 },
+        { nome: "Afonso de Sousa Pinto",       fed: "46480", hcp: 0 },
+        { nome: "Dinis Seabra",                fed: "44821", hcp: 0 },
+      ]},
+    ],
+    sub18: [
+      { grupo: "A", clube: "Aroeira Golf Club", jogadores: [
+        { nome: "Inês Belchior",               fed: "38424", hcp: 0 },
+        { nome: "Rodrigo Marques Santos",      fed: "37152", hcp: 0 },
+        { nome: "António Teixeira e Costa",    fed: "37680", hcp: 0 },
+        { nome: "Pedro Santos Pereira",        fed: "46577", hcp: 0 },
+      ]},
+      { grupo: "B", clube: "Oporto Golf Clube A", jogadores: [
+        { nome: "Francisca Rocha",             fed: "40958", hcp: 0 },
+        { nome: "Luis António Silva",          fed: "42845", hcp: 0 },
+        { nome: "Henrique Montenegro",         fed: "39552", hcp: 0 },
+        { nome: "André Neto Lopes",            fed: "41173",    hcp: 0 },
+        { nome: "Guilherme Grabner Moreira",   fed: "42205", hcp: 0 },
+      ]},
+      { grupo: "C", clube: "Club de Golf de Miramar", jogadores: [
+        { nome: "Diogo Silva Pinto Rocha",     fed: "34186", hcp: 0 },
+        { nome: "Bernardo Costa Pinheiro",     fed: "40682", hcp: 0 },
+        { nome: "Miguel Silveira",             fed: "35404", hcp: 0 },
+        { nome: "Tomás Afonso Araujo",         fed: "35849",    hcp: 0 },
+        { nome: "Duarte Gonçalves",            fed: "35814", hcp: 0 },
+      ]},
+      { grupo: "D", clube: "Clube de Golf do Estoril", jogadores: [
+        { nome: "Konstantin Mikirtumov",       fed: "34238", hcp: 0 },
+        { nome: "José Miguel Franco de Sousa", fed: "40112", hcp: 0 },
+        { nome: "Leonardo Miguel Tilly Alves", fed: "44453", hcp: 0 },
+        { nome: "Reuben Thapa",                fed: "47552", hcp: 0 },
+      ]},
+      { grupo: "E", clube: "CG Vilamoura", jogadores: [
+        { nome: "Tiago Abrantes",              fed: "38315", hcp: 0 },
+        { nome: "João Crasi Alves",            fed: "39701", hcp: 0 },
+        { nome: "Dinis Silva Rebelo",          fed: "36678", hcp: 0 },
+        { nome: "João Maria Ivo de Carvalho",  fed: "38334", hcp: 0 },
+      ]},
+      { grupo: "F", clube: "Oporto Golf Clube B", jogadores: [
+        { nome: "Pedro Ferreira",              fed: "43810", hcp: 0 },
+        { nome: "Miguel Dinis Ferreira",       fed: "41744", hcp: 0 },
+        { nome: "Simão Oliveira",              fed: "47002", hcp: 0 },
+        { nome: "Teresa Ferreira",             fed: "46589", hcp: 0 },
+      ]},
+      { grupo: "G", clube: "Clube de Golfe Citynorte", jogadores: [
+        { nome: "Diogo Marques Lopes",         fed: "35874", hcp: 0 },
+        { nome: "Pedro Aires",                 fed: "42068", hcp: 0 },
+        { nome: "Diogo Afonso",                fed: "45343", hcp: 0 },
+        { nome: "Diogo Vieira",                fed: "45475", hcp: 0 },
+      ]},
+      { grupo: "H", clube: "Clube de Golfe de Belas", jogadores: [
+        { nome: "Sebastião Cadete",            fed: "43972", hcp: 0 },
+        { nome: "Ricardo Morna",               fed: "39899", hcp: 0 },
+        { nome: "Pedro Castro Mendes",         fed: "44561", hcp: 0 },
+        { nome: "Henrique Almeida da Silva",   fed: "41612", hcp: 0 },
+      ]},
+      { grupo: "I", clube: "Vale de Janelas Golf Club", jogadores: [
+        { nome: "Francisca Salgado",           fed: "43832", hcp: 0 },
+        { nome: "Mafalda Bandeira",            fed: "46646", hcp: 0 },
+        { nome: "Marie Pinto da Cunha",        fed: "48049", hcp: 0 },
+        { nome: "Maximilian Hermelin",         fed: "46434", hcp: 0 },
+      ]},
+      { grupo: "J", clube: "Lisbon Sports Club", jogadores: [
+        { nome: "Lourenço de Castro Fernandes",fed: "37633", hcp: 0 },
+        { nome: "Vasco Dias Agudo",            fed: "36810", hcp: 0 },
+        { nome: "Ana Bianchi",                 fed: "36861", hcp: 0 },
+        { nome: "Joaquim Gomes",               fed: "53714", hcp: 0 },
+      ]},
+      { grupo: "K", clube: "Clube de Golf da Ilha Terceira", jogadores: [
+        { nome: "Bia Sampaio Mesquita",              fed: "51937", hcp: 0 },
+        { nome: "Madalena Alexandra Van Zeller",     fed: "47078", hcp: 0 },
+        { nome: "Maria Fonseca Azevedo",             fed: "44019", hcp: 0 },
+        { nome: "João Lucas Fagundes",               fed: "44677", hcp: 0 },
+      ]},
+    ],
+  },
+};
+
 /**
  * Mapa tcode → pill de torneio.
  * Adicionar aqui novos torneios conforme necessário.
@@ -698,7 +1125,12 @@ export function AccumulatedLB({ tournament, nRounds, escLookup, playersDB }: { t
   const rows: MRRow[] = useMemo(() => rawPlayers.map(p => {
     const esc = resolveEsc(p, escLookup) || tournament.escalao || "";
     const roundScores = p.roundScores || [];
-    const mappedRounds = roundScores.map(rs => {
+    // Posicionar cada ronda pelo seu número real (rounds[0]=R1, rounds[1]=R2, ...)
+    // para que jogadores parciais mostrem "–" nas rondas que não jogaram
+    const mappedRounds = Array.from({ length: nRounds }, (_, i) => {
+      const rdNum = i + 1;
+      const rs = roundScores.find(r => r.round === rdNum);
+      if (!rs) return undefined;
       const sdP: Player = { ...p, scores: rs.scores, par: rs.pars, si: rs.si,
         courseRating: rs.courseRating, slope: rs.slope, nholes: rs.pars?.length };
       const { sd } = computeSD(sdP);
@@ -713,7 +1145,7 @@ export function AccumulatedLB({ tournament, nRounds, escLookup, playersDB }: { t
         sd, sdSource: null as string | null,
         birdies, pars, bogeys,
       };
-    });
+    }) as MRRound[];
     return {
       key: p.scoreId || p.name,
       name: p.name,
@@ -821,7 +1253,7 @@ function LinksBar({ links, escalao }: { links?: Record<string, string>; escalao?
   );
 }
 
-function TournamentDetail({ tournament, escLookup, playersDB }: { tournament: Tournament; escLookup: EscLookup; playersDB: PlayersDB }) {
+export function TournamentDetail({ tournament, escLookup, playersDB }: { tournament: Tournament; escLookup: EscLookup; playersDB: PlayersDB }) {
   const isMulti = (tournament.rounds || 1) > 1 && tournament.players.some(p => (p.roundScores?.length ?? 0) > 1);
   const nRounds = tournament.rounds || 1;
 
@@ -1314,6 +1746,511 @@ function PJARankingView({
 
 
 /* ─────────────────────────────────────────────
+   CLUBES GRUPOS VIEW
+   Grelha de cards por equipa com scores cruzados com o torneio.
+   Mostra por ronda o gross de cada jogador e o total de equipa
+   calculado como soma dos melhores CLUBES_BEST_N scores.
+   ───────────────────────────────────────────── */
+
+/** Gross de um jogador para uma dada ronda, com cap por buraco aplicado */
+/** Abrevia nomes muito longos: mantém primeiro nome + iniciais do meio + último apelido */
+function abreviarNome(nome: string, maxLen = 25): string {
+  if (!nome || nome.length <= maxLen) return nome;
+  const parts = nome.trim().split(/\s+/);
+  if (parts.length <= 2) return nome; // só 2 partes, não abrevia
+  const primeiro = parts[0];
+  const ultimo = parts[parts.length - 1];
+  const meios = parts.slice(1, -1).map(p => p[0] + ".").join(" ");
+  const abrev = primeiro + " " + meios + " " + ultimo;
+  return abrev.length < nome.length ? abrev : nome;
+}
+
+
+function grossForRound(p: Player, rd: number): number | null {
+  const rs = p.roundScores?.find(r => r.round === rd);
+  if (rs) {
+    // aplicar cap por buraco se tivermos scores individuais
+    if (rs.scores?.length) {
+      return rs.scores.reduce((sum, s) => sum + Math.min(s, MAX_HOLE_SCORE), 0);
+    }
+    return rs.gross;
+  }
+  // fallback: só para torneios de 1 ronda sem roundScores explícitos
+  // Em multi-ronda, grossTotal é a soma de todas as rondas — não deve aparecer como R1
+  if (rd === 1 && p.grossTotal != null && (!p.roundScores || p.roundScores.length === 0)) {
+    const g = typeof p.grossTotal === "number" ? p.grossTotal : parseInt(String(p.grossTotal));
+    return isNaN(g) ? null : g;
+  }
+  return null;
+}
+
+/** Melhor N de uma lista de números (sem nulos) */
+function bestN(scores: number[], n: number): number {
+  if (!scores.length) return 0;
+  return [...scores].sort((a, b) => a - b).slice(0, n).reduce((s, v) => s + v, 0);
+}
+
+// Cores para clubes com 2+ equipas — atribuídas por ordem alfabética do clube
+const MULTI_ACCENTS = ["#b45309", "#7c3aed", "#0891b2", "#db2777", "#65a30d", "#0369a1"];
+// Cor neutra para clubes com apenas 1 equipa — verde escuro
+const SINGLE_COLOR = "#166534";
+
+type SortCol = "grupo" | "total" | number; // number = ronda (1-based)
+
+function ClubesGruposView({
+  grupos, tournament,
+}: {
+  grupos: GrupoEntry[];
+  tournament: Tournament | null;
+  escKey: "sub14" | "sub18";
+}) {
+  const [sortCol, setSortCol] = useState<SortCol>("total");
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
+  // ordenação dos jogadores dentro de cada card
+  const [playerSort, setPlayerSort] = useState<"nome" | "hcp" | number>("nome");
+  const [playerSortDir, setPlayerSortDir] = useState<"asc" | "desc">("asc");
+
+  function toggleSort(col: SortCol) {
+    if (sortCol === col) setSortDir(d => d === "asc" ? "desc" : "asc");
+    else { setSortCol(col); setSortDir("asc"); }
+  }
+  function togglePlayerSort(col: "nome" | "hcp" | number) {
+    if (playerSort === col) setPlayerSortDir(d => d === "asc" ? "desc" : "asc");
+    else { setPlayerSort(col); setPlayerSortDir(col === "nome" ? "asc" : "asc"); }
+  }
+
+  /** BPB acumulado de todas as rondas jogadas */
+  function calcAllBPB(p: Player) {
+    let bir = 0, par = 0, bog = 0, hasData = false;
+    for (const rs of p.roundScores || []) {
+      const b = calcBPB(p, rs.round);
+      if (b) { bir += b.bir; par += b.par; bog += b.bog; hasData = true; }
+    }
+    return hasData ? { bir, par, bog } : null;
+  }
+  const byFed = useMemo(() => {
+    const m = new Map<string, Player>();
+    if (!tournament) return m;
+    for (const p of tournament.players) if (p.fedCode) m.set(p.fedCode, p);
+    return m;
+  }, [tournament]);
+
+  const nRounds      = tournament?.rounds ?? 1;
+  const playedRounds = tournament
+    ? Math.max(0, ...tournament.players.map(p => p.roundScores?.length ?? 0))
+    : 0;
+  const rdCols = Array.from({ length: playedRounds }, (_, i) => i + 1);
+  const viewRd: number | null = typeof sortCol === "number" ? sortCol as number : null;
+  const showGroupBPB = sortCol === "grupo" && rdCols.length > 1;
+  // Grupo: sem colunas de ronda (só BPB acumulado)
+  // R1/R2/R3: só essa ronda
+  // Total: todas as rondas
+  const viewCols = showGroupBPB ? [] : viewRd != null ? rdCols.filter(rd => rd === viewRd) : rdCols;
+
+  /** Birdie / Par / Bogey+ para um jogador numa ronda específica */
+  function calcBPB(p: Player, rd: number) {
+    const rs = p.roundScores?.find(r => r.round === rd);
+    if (!rs?.scores?.length || !rs?.pars?.length) return null;
+    let bir = 0, par = 0, bog = 0;
+    rs.scores.forEach((s, h) => {
+      const diff = Math.min(s, MAX_HOLE_SCORE) - (rs.pars[h] || 0);
+      if (diff <= -1) bir++; else if (diff === 0) par++; else bog++;
+    });
+    return { bir, par, bog };
+  }
+
+  const parTotal = useMemo(() =>
+    tournament?.players[0]?.parTotal
+    || tournament?.players[0]?.par?.reduce((a, b) => a + b, 0)
+    || tournament?.players[0]?.roundScores?.[0]?.pars.reduce((a, b) => a + b, 0)
+    || 0,
+  [tournament]);
+
+  /* detectar clubes com 2+ equipas e atribuir cor */
+  const { clubColorMap, clubCount, clubTeamOrder } = useMemo(() => {
+    const counts = new Map<string, number>();
+    const order  = new Map<string, string[]>();
+    for (const g of grupos) {
+      counts.set(g.clube, (counts.get(g.clube) || 0) + 1);
+      if (!order.has(g.clube)) order.set(g.clube, []);
+      order.get(g.clube)!.push(g.grupo);
+    }
+    const multiClubs = [...counts.entries()]
+      .filter(([, n]) => n > 1).map(([name]) => name).sort((a, b) => a.localeCompare(b, "pt"));
+    const colorMap = new Map<string, string>();
+    multiClubs.forEach((name, i) => colorMap.set(name, MULTI_ACCENTS[i % MULTI_ACCENTS.length]));
+    return { clubColorMap: colorMap, clubCount: counts, clubTeamOrder: order };
+  }, [grupos]);
+
+  /* pré-computar dados de cada equipa */
+  interface JRow { j: GrupoJogador; p: Player | undefined; rds: (number | null)[]; total: number | null; }
+  interface TeamData {
+    g: GrupoEntry; color: string; isMulti: boolean; teamIdx: number;
+    jRows: JRow[]; rdTeam: (number | null)[]; teamTotal: number | null;
+  }
+
+  const teamDataList: TeamData[] = useMemo(() => grupos.map(g => {
+    const color   = clubColorMap.get(g.clube) ?? SINGLE_COLOR;
+    const isMulti = (clubCount.get(g.clube) ?? 1) > 1;
+    const teamIdx = (clubTeamOrder.get(g.clube) ?? []).indexOf(g.grupo);
+
+    const jRows: JRow[] = g.jogadores.map(j => {
+      const p   = j.fed ? byFed.get(j.fed) : undefined;
+      const rds = rdCols.map(rd => p ? grossForRound(p, rd) : null);
+      const played = rds.filter(v => v != null) as number[];
+      return { j, p, rds, total: played.length ? played.reduce((s, v) => s + v, 0) : null };
+    });
+
+    const rdTeam = rdCols.map((_, ri) => {
+      const scores = jRows.map(r => r.rds[ri]).filter(v => v != null) as number[];
+      return scores.length ? bestN(scores, CLUBES_BEST_N) : null;
+    });
+    const playedTeamRds = rdTeam.filter(v => v != null) as number[];
+    const teamTotal = playedTeamRds.length ? playedTeamRds.reduce((s, v) => s + v, 0) : null;
+
+    return { g, color, isMulti, teamIdx, jRows, rdTeam, teamTotal };
+  }), [grupos, byFed, rdCols, clubColorMap, clubCount, clubTeamOrder]);
+
+  /* ranking por total (crescente) */
+  const rankMap = useMemo(() => {
+    const withT = [...teamDataList]
+      .filter(td => td.teamTotal != null)
+      .sort((a, b) => a.teamTotal! - b.teamTotal!);
+    const m = new Map<string, number>();
+    let pos = 1;
+    withT.forEach((td, i) => {
+      if (i > 0 && td.teamTotal !== withT[i - 1].teamTotal) pos = i + 1;
+      m.set(td.g.grupo, pos);
+    });
+    return m;
+  }, [teamDataList]);
+
+  /* ordenação */
+  const sorted = useMemo(() => [...teamDataList].sort((a, b) => {
+    const INF = sortDir === "asc" ? Infinity : -Infinity;
+    let av: number | string, bv: number | string;
+    if (sortCol === "grupo")      { av = a.g.grupo;          bv = b.g.grupo; }
+    else if (sortCol === "total") { av = a.teamTotal ?? INF;  bv = b.teamTotal ?? INF; }
+    else { const ri = (sortCol as number) - 1; av = a.rdTeam[ri] ?? INF; bv = b.rdTeam[ri] ?? INF; }
+    if (typeof av === "string")
+      return sortDir === "asc" ? av.localeCompare(bv as string) : (bv as string).localeCompare(av);
+    return sortDir === "asc" ? (av as number) - (bv as number) : (bv as number) - (av as number);
+  }), [teamDataList, sortCol, sortDir]);
+
+  /* estilos base */
+  const tdC: React.CSSProperties = { padding: "5px 6px", fontSize: 12, textAlign: "center", borderBottom: "1px solid var(--border)" };
+  const tdL: React.CSSProperties = { ...tdC, textAlign: "left" };
+  const thC: React.CSSProperties = { ...tdC, fontWeight: 700, fontSize: 11, color: "var(--text-muted)", background: "var(--bg-muted,#f1f5f9)", textTransform: "uppercase", letterSpacing: "0.04em" };
+
+  function fmtHcp(h: number | string) { return typeof h === "string" ? h : h % 1 === 0 ? String(h) : h.toFixed(1); }
+
+  function SortBtn({ label, col }: { label: string; col: SortCol }) {
+    const active = sortCol === col;
+    return (
+      <button onClick={() => toggleSort(col)} style={{
+        fontSize: 11, fontWeight: active ? 700 : 500, padding: "3px 9px", borderRadius: 4,
+        border: `1px solid ${active ? "var(--accent,#2563eb)" : "var(--border)"}`,
+        background: active ? "var(--accent,#2563eb)" : "var(--bg-hover)",
+        color: active ? "#fff" : "var(--text-muted)", cursor: "pointer",
+      }}>{label}{active ? (sortDir === "asc" ? " ▲" : " ▼") : ""}</button>
+    );
+  }
+
+  const multiEntries = [...clubCount.entries()]
+    .filter(([, n]) => n > 1)
+    .sort(([a], [b]) => a.localeCompare(b, "pt"));
+
+  return (
+    <div style={{ padding: "12px 16px 24px" }}>
+
+      {/* Barra de ordenação */}
+      <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 10, flexWrap: "wrap" }}>
+        <span style={{ fontSize: 10, color: "var(--text-muted)" }}>Ordenar:</span>
+        <SortBtn label="Grupo" col="grupo" />
+        {rdCols.map(rd => <SortBtn key={rd} label={`R${rd}`} col={rd} />)}
+        <SortBtn label="Total" col="total" />
+        <span style={{ marginLeft: "auto", fontSize: 14, color: "var(--text-muted)", marginTop: 4 }}>
+          Melhores {CLUBES_BEST_N} de 4 · Máximo {MAX_HOLE_SCORE} pancadas por buraco
+          {nRounds > 1 && (
+            <span style={{ marginLeft: 8, fontWeight: 600,
+              color: playedRounds >= nRounds ? "var(--color-good,#16a34a)" : "var(--color-warn,#d97706)" }}>
+              · R{playedRounds}/{nRounds}
+            </span>
+          )}
+        </span>
+      </div>
+
+      {/* Legenda clubes com 2 equipas */}
+      {multiEntries.length > 0 && (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 12 }}>
+          {multiEntries.map(([clube]) => {
+            const color = clubColorMap.get(clube)!;
+            const teams = (clubTeamOrder.get(clube) ?? []).sort().join(" + ");
+            return (
+              <span key={clube} style={{
+                fontSize: 10, display: "inline-flex", alignItems: "center", gap: 5,
+                border: `1px solid ${color}`, borderRadius: 4, padding: "2px 8px",
+                background: `${color}12`,
+              }}>
+                <span style={{ width: 9, height: 9, borderRadius: 2, background: color, flexShrink: 0, display: "inline-block" }} />
+                <strong style={{ color }}>{teams}</strong>
+                <span style={{ color: "var(--text-muted)" }}>— {clube}</span>
+              </span>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Grelha */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(310px, 1fr))", gap: 10 }}>
+        {sorted.map(({ g, color, isMulti, teamIdx, jRows, rdTeam, teamTotal }) => {
+          const pos   = rankMap.get(g.grupo);
+          const medal = pos === 1 ? "🥇" : pos === 2 ? "🥈" : pos === 3 ? "🥉" : null;
+          const teamPar = parTotal > 0 && playedRounds > 0 ? parTotal * CLUBES_BEST_N * playedRounds : 0;
+          const teamTP  = teamTotal != null && teamPar > 0 ? teamTotal - teamPar : null;
+
+          return (
+            <div key={g.grupo} style={{
+              background: "var(--bg-card,#fff)",
+              border: `1px solid ${isMulti ? color + "80" : "var(--border)"}`,
+              borderRadius: 8, overflow: "hidden",
+              boxShadow: "0 1px 3px rgba(0,0,0,.06)",
+            }}>
+              {/* Header do card */}
+              <div style={{ background: color, color: "#fff", padding: "8px 12px", display: "flex", alignItems: "center", gap: 10 }}>
+                {/* Letra do grupo em caixa */}
+                <div style={{
+                  width: 34, height: 34, flexShrink: 0,
+                  background: "rgba(255,255,255,0.18)", borderRadius: 6,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: 20, fontWeight: 900, lineHeight: 1,
+                }}>
+                  {g.grupo}
+                </div>
+
+                {/* Nome do clube */}
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: 12, fontWeight: 700, lineHeight: 1.3, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                    {g.clube}
+                  </div>
+                  {isMulti && (
+                    <div style={{ fontSize: 9, fontWeight: 600, opacity: 0.8, marginTop: 1 }}>equipa {teamIdx + 1}</div>
+                  )}
+                </div>
+
+                {/* Posição + total ou score da ronda seleccionada */}
+                {pos != null && (viewRd != null ? rdTeam[viewRd - 1] != null : teamTotal != null) && (() => {
+                  const dispScore = viewRd != null ? rdTeam[viewRd - 1]! : teamTotal!;
+                  const dispTP = viewRd != null
+                    ? (parTotal > 0 ? dispScore - parTotal * CLUBES_BEST_N : null)
+                    : teamTP;
+                  return (
+                    <div style={{ flexShrink: 0, textAlign: "right" }}>
+                      <div style={{ fontSize: 10, opacity: 0.85, lineHeight: 1, marginBottom: 2 }}>
+                        {viewRd != null ? `R${viewRd}` : (medal ?? `#${pos}`)}
+                      </div>
+                      <div style={{ fontSize: 20, fontWeight: 900, lineHeight: 1 }}>{dispScore}</div>
+                      {dispTP != null && (
+                        <div style={{ fontSize: 10, opacity: 0.85, lineHeight: 1, marginTop: 1 }}>
+                          ({dispTP >= 0 ? `+${dispTP}` : dispTP})
+                        </div>
+                      )}
+                    </div>
+                  );
+                })()}
+              </div>
+
+              {/* Tabela jogadores */}
+              <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                <thead>
+                  <tr>
+                    {(() => {
+                      function PHdr({ label, col, style }: { label: string; col: "nome" | "hcp" | number; style?: React.CSSProperties }) {
+                        const active = playerSort === col;
+                        return (
+                          <th onClick={() => togglePlayerSort(col)} style={{
+                            ...thC, cursor: "pointer", userSelect: "none",
+                            color: active ? color : "var(--text-muted)",
+                            ...style,
+                          }}>
+                            {label}{active ? (playerSortDir === "asc" ? "▲" : "▼") : ""}
+                          </th>
+                        );
+                      }
+                      return (<>
+                        <PHdr label="Jogador" col="nome" style={{ textAlign: "left", paddingLeft: 10 }} />
+                        <PHdr label="HCP" col="hcp" />
+                        {viewCols.map(rd => <PHdr key={rd} label={`R${rd}`} col={rd} />)}
+                        {viewRd != null ? (<>
+                          <th style={{ ...thC, color: "var(--color-good)", borderLeft: "1px solid var(--border)" }}>🐦</th>
+                          <th style={{ ...thC, color: "var(--text-3)", borderLeft: "1px solid var(--border-light)" }}>○</th>
+                          <th style={{ ...thC, color: "var(--color-danger)", borderLeft: "1px solid var(--border-light)" }}>■</th>
+                        </>) : showGroupBPB ? (<>
+                          <th style={{ ...thC, color: "var(--color-good)", borderLeft: "1px solid var(--border)" }}>🐦</th>
+                          <th style={{ ...thC, color: "var(--text-3)", borderLeft: "1px solid var(--border-light)" }}>○</th>
+                          <th style={{ ...thC, color: "var(--color-danger)", borderLeft: "1px solid var(--border-light)" }}>■</th>
+                        </>) : (
+                          viewCols.length > 1 && <th style={thC}>Tot.</th>
+                        )}
+                      </>);
+                    })()}
+                  </tr>
+                </thead>
+                <tbody>
+                  {(() => {
+                    const sortedJRows = [...jRows].sort((a, b) => {
+                      let av: number | string, bv: number | string;
+                      if (playerSort === "nome") { av = a.j.nome; bv = b.j.nome; }
+                      else if (playerSort === "hcp") {
+                        av = typeof a.j.hcp === "string" ? parseFloat(a.j.hcp.replace("+","")) * (a.j.hcp.startsWith("+") ? -1 : 1) : (a.j.hcp as number);
+                        bv = typeof b.j.hcp === "string" ? parseFloat(b.j.hcp.replace("+","")) * (b.j.hcp.startsWith("+") ? -1 : 1) : (b.j.hcp as number);
+                      } else {
+                        const ri = (playerSort as number) - 1;
+                        av = a.rds[ri] ?? (playerSortDir === "asc" ? Infinity : -Infinity);
+                        bv = b.rds[ri] ?? (playerSortDir === "asc" ? Infinity : -Infinity);
+                      }
+                      if (typeof av === "string") return playerSortDir === "asc" ? av.localeCompare(bv as string, "pt") : (bv as string).localeCompare(av, "pt");
+                      return playerSortDir === "asc" ? (av as number) - (bv as number) : (bv as number) - (av as number);
+                    });
+
+                    return sortedJRows.map(({ j, p, rds, total }, ji) => {
+                      const counts = viewCols.map((rd) => {
+                        const ri = rdCols.indexOf(rd);
+                        const allS = jRows.map(r => r.rds[ri]).filter(v => v != null) as number[];
+                        const threshold = [...allS].sort((a, b) => a - b)[CLUBES_BEST_N - 1];
+                        const mine = rds[ri];
+                        return mine != null && threshold != null && mine <= threshold;
+                      });
+                      // Fade apenas se o jogador não tem NENHUM score (suplente que não jogou)
+                      const hasAnyScore = rds.some(v => v != null);
+                      const bpb = viewRd != null && p ? calcBPB(p, viewRd) : null;
+                      const allBpb = showGroupBPB && p ? calcAllBPB(p) : null;
+                      return (
+                        <tr key={j.fed ?? j.nome}>
+                          <td style={{ ...tdL, paddingLeft: 10, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
+                            color: hasAnyScore ? "var(--text)" : "var(--text-muted)",
+                            fontWeight: hasAnyScore ? 500 : 400,
+                            opacity: hasAnyScore ? 1 : 0.55 }}>
+                            {p && j.fed
+                              ? <a href={`/jogadores/${j.fed}`}
+                                  target="_blank" rel="noopener noreferrer"
+                                  style={{ color: "inherit", textDecoration: "none" }}
+                                  onClick={e => e.stopPropagation()}>{abreviarNome(j.nome)}</a>
+                              : abreviarNome(j.nome)}
+                          </td>
+                          <td style={{ ...tdC, color: "var(--text-muted)", opacity: hasAnyScore ? 1 : 0.55 }}>
+                            {p?.hcpExact != null ? fmtHcp(p.hcpExact) : j.hcp > 0 ? fmtHcp(j.hcp) : "–"}
+                          </td>
+                          {viewCols.map((rd, ci) => {
+                            const ri = rdCols.indexOf(rd);
+                            const score = rds[ri];
+                            const c = counts[ci];
+                            const tp = score != null && parTotal > 0 ? score - parTotal : null;
+                            return (
+                              <td key={ri} style={{
+                                ...tdC,
+                                fontWeight: c ? 700 : 400,
+                                color: c ? color : score != null ? "var(--text)" : "var(--text-muted)",
+                                padding: "4px 4px",
+                                verticalAlign: "middle",
+                              }}>
+                                {score != null ? (
+                                  <div style={{ lineHeight: 1.2 }}>
+                                    <div style={{ fontWeight: c ? 700 : 400 }}>{score}</div>
+                                    {tp != null && (
+                                      <div style={{
+                                        fontSize: 9, lineHeight: 1,
+                                        color: c ? color : "var(--text-muted)",
+                                        opacity: c ? 0.85 : 0.65,
+                                      }}>
+                                        ({tp >= 0 ? `+${tp}` : tp})
+                                      </div>
+                                    )}
+                                  </div>
+                                ) : <span style={{ color: "var(--text-muted)", opacity: 0.4 }}>–</span>}
+                              </td>
+                            );
+                          })}
+                          {viewRd != null ? (<>
+                            <td style={{ ...tdC, color: "var(--color-good)", fontWeight: 600, borderLeft: "1px solid var(--border)" }}>{bpb ? (bpb.bir || "") : "–"}</td>
+                            <td style={{ ...tdC, color: "var(--text-3)", borderLeft: "1px solid var(--border-light)" }}>{bpb ? (bpb.par || "") : "–"}</td>
+                            <td style={{ ...tdC, color: "var(--color-danger)", borderLeft: "1px solid var(--border-light)" }}>{bpb ? (bpb.bog || "") : "–"}</td>
+                          </>) : showGroupBPB ? (<>
+                            <td style={{ ...tdC, color: "var(--color-good)", fontWeight: 600, borderLeft: "1px solid var(--border)" }}>{allBpb ? (allBpb.bir || "") : "–"}</td>
+                            <td style={{ ...tdC, color: "var(--text-3)", borderLeft: "1px solid var(--border-light)" }}>{allBpb ? (allBpb.par || "") : "–"}</td>
+                            <td style={{ ...tdC, color: "var(--color-danger)", borderLeft: "1px solid var(--border-light)" }}>{allBpb ? (allBpb.bog || "") : "–"}</td>
+                          </>) : (
+                            viewCols.length > 1 && (
+                              <td style={{ ...tdC, fontWeight: hasAnyScore ? 500 : 400, color: hasAnyScore ? "var(--text)" : "var(--text-muted)", opacity: hasAnyScore ? 1 : 0.55 }}>
+                                {total != null ? total : "–"}
+                              </td>
+                            )
+                          )}
+                        </tr>
+                      );
+                    });
+                  })()}
+                </tbody>
+                {/* Rodapé: apenas total dos 4 jogadores */}
+                <tfoot>
+                  <tr style={{ background: color }}>
+                    <td colSpan={2} style={{ ...tdL, paddingLeft: 10, fontWeight: 600, fontSize: 10, color: "rgba(255,255,255,0.85)", textTransform: "uppercase", letterSpacing: "0.04em" }}>
+                      Total {g.jogadores.length} Jogadores
+                    </td>
+                    {viewCols.map((rd) => {
+                      const ri = rdCols.indexOf(rd);
+                      const allS = jRows.map(r => r.rds[ri]).filter(v => v != null) as number[];
+                      const tot = allS.length ? allS.reduce((s, v) => s + v, 0) : null;
+                      return <td key={ri} style={{ ...tdC, color: "#fff", fontWeight: 600, borderBottom: "none" }}>{tot != null ? tot : "–"}</td>;
+                    })}
+                    {viewRd != null ? (() => {
+                      // BPB totais do grupo para esta ronda
+                      let tb = 0, tp2 = 0, tbo = 0, hasData = false;
+                      jRows.forEach(({ p }) => {
+                        if (!p) return;
+                        const b = calcBPB(p, viewRd);
+                        if (b) { tb += b.bir; tp2 += b.par; tbo += b.bog; hasData = true; }
+                      });
+                      return (<>
+                        <td style={{ ...tdC, color: "#fff", fontWeight: 600, borderBottom: "none", borderLeft: "1px solid rgba(255,255,255,0.3)", opacity: 0.9 }}>{hasData ? (tb || "") : "–"}</td>
+                        <td style={{ ...tdC, color: "#fff", fontWeight: 400, borderBottom: "none", borderLeft: "1px solid rgba(255,255,255,0.2)", opacity: 0.8 }}>{hasData ? (tp2 || "") : "–"}</td>
+                        <td style={{ ...tdC, color: "#fff", fontWeight: 400, borderBottom: "none", borderLeft: "1px solid rgba(255,255,255,0.2)", opacity: 0.8 }}>{hasData ? (tbo || "") : "–"}</td>
+                      </>);
+                    })() : showGroupBPB ? (() => {
+                      // BPB acumulado de todas as rondas
+                      let tb = 0, tp2 = 0, tbo = 0, hasData = false;
+                      jRows.forEach(({ p }) => {
+                        if (!p) return;
+                        const b = calcAllBPB(p);
+                        if (b) { tb += b.bir; tp2 += b.par; tbo += b.bog; hasData = true; }
+                      });
+                      return (<>
+                        <td style={{ ...tdC, color: "#fff", fontWeight: 600, borderBottom: "none", borderLeft: "1px solid rgba(255,255,255,0.3)", opacity: 0.9 }}>{hasData ? (tb || "") : "–"}</td>
+                        <td style={{ ...tdC, color: "#fff", fontWeight: 400, borderBottom: "none", borderLeft: "1px solid rgba(255,255,255,0.2)", opacity: 0.8 }}>{hasData ? (tp2 || "") : "–"}</td>
+                        <td style={{ ...tdC, color: "#fff", fontWeight: 400, borderBottom: "none", borderLeft: "1px solid rgba(255,255,255,0.2)", opacity: 0.8 }}>{hasData ? (tbo || "") : "–"}</td>
+                      </>);
+                    })() : (
+                      viewCols.length > 1 && (() => {
+                        const allRdTotals = viewCols.map(rd => {
+                          const ri = rdCols.indexOf(rd);
+                          const allS = jRows.map(r => r.rds[ri]).filter(v => v != null) as number[];
+                          return allS.length ? allS.reduce((s, v) => s + v, 0) : null;
+                        });
+                        const grand = allRdTotals.every(v => v != null) ? (allRdTotals as number[]).reduce((s, v) => s + v, 0) : null;
+                        return <td style={{ ...tdC, color: "#fff", fontWeight: 700, borderBottom: "none" }}>{grand != null ? grand : "–"}</td>;
+                      })()
+                    )}
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+/* ─────────────────────────────────────────────
    MAIN CONTENT
    ───────────────────────────────────────────── */
 function Content() {
@@ -1324,10 +2261,18 @@ function Content() {
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [sidebarMode, setSidebarMode] = useState<"month" | "circuit" | "pja-ranking" | "santo">("month");
+  const [sidebarMode, setSidebarMode] = useState<"month" | "circuit" | "pja-ranking" | "santo" | "clubes">("month");
   const [filterManuel, setFilterManuel] = useState(false);
   const [escLookup, setEscLookup] = useState<EscLookup>(new Map());
   const [playersDB, setPlayersDB] = useState<PlayersDB>({});
+
+  // ── Estado Clubes ─────────────────────────────────────────────────────────
+  const [clubesTournaments, setClubesTournaments] = useState<Tournament[]>([]);
+  const [clubesLoading, setClubesLoading]         = useState(false);
+  const [clubesLoaded, setClubesLoaded]           = useState(false);
+  const [clubesSelected, setClubesSelected]       = useState<number>(0);
+  const [clubesEsc, setClubesEsc]                 = useState<string>("sub14"); // "sub14" | "sub18"
+  const [clubesView, setClubesView]               = useState<"individual" | "grupos">("grupos");
 
   const { melhorias } = useAppContext();
 
@@ -1416,6 +2361,82 @@ function Content() {
     load();
     return () => { alive = false; };
   }, []);
+
+  // ── Loader Clubes (lazy — só quando o tab é activado) ────────────────────
+  useEffect(() => {
+    if (sidebarMode !== "clubes" || clubesLoaded) return;
+    let alive = true;
+    setClubesLoading(true);
+
+    // Ficheiros combinados (sub14 + sub18 no mesmo JSON) — escalão lido de t.escalao
+    // Ficheiros D1 têm só um escalão (determinado pelo nome)
+    const CLUBES_FILES: { url: string; escFallback: string | null; year: string }[] = [
+      { url: "/data/clubes_sub_14_D1.json",    escFallback: "sub14", year: "2026" },
+      { url: "/data/clubes_sub_18_D1.json",    escFallback: "sub18", year: "2026" },
+      { url: "/data/clubes_sub_14&18_2026.json", escFallback: null,  year: "2026" },
+      { url: "/data/clubes_sub_14&18_2025.json", escFallback: null,  year: "2025" },
+      { url: "/data/clubes_sub_14&18_2024.json", escFallback: null,  year: "2024" },
+    ];
+
+    function resolveEscKey(escalao: string | undefined | null, fallback: string | null): string {
+      if (escalao && /14/i.test(escalao)) return "sub14";
+      if (escalao && /18/i.test(escalao)) return "sub18";
+      return fallback ?? "sub14";
+    }
+
+    Promise.all(
+      CLUBES_FILES.map(async ({ url, escFallback, year }) => {
+        try {
+          const r = await fetch(url);
+          if (!r.ok) return [];
+          const d: DriveData = await r.json();
+          return (d.tournaments || []).map(t => ({
+            ...t,
+            _clubesEsc: resolveEscKey((t as any).escalao, escFallback),
+            _clubesYear: year,
+            _sourceFile: url,
+            players: t.players.map(normalizePlayer),
+          }));
+        } catch { return []; }
+      })
+    ).then(results => {
+      if (!alive) return;
+      // Deduplicar por tcode — se o ficheiro D1 e o combined 2026 tiverem o mesmo torneio, fica o combined
+      const seen = new Map<string, Tournament>();
+      for (const t of results.flat()) {
+        const key = (t as any).tcode;
+        const existing = seen.get(key);
+        // Preferir o combined (escFallback null) sobre D1 (escFallback não null)
+        if (!existing || (existing as any)._sourceFile?.includes("D1")) {
+          seen.set(key, t as Tournament);
+        }
+      }
+      setClubesTournaments([...seen.values()] as Tournament[]);
+      setClubesLoaded(true);
+      setClubesLoading(false);
+    });
+    return () => { alive = false; };
+  }, [sidebarMode, clubesLoaded]); // clubesLoading fora das deps — evita cleanup prematuro
+
+  // Lista filtrada por escalão dentro de Clubes, agrupada por ano
+  const clubesList = useMemo(
+    () => clubesTournaments
+      .filter(t => (t as any)._clubesEsc === clubesEsc)
+      .sort((a, b) => (b as any)._clubesYear?.localeCompare((a as any)._clubesYear) || 0),
+    [clubesTournaments, clubesEsc]
+  );
+  const clubesByYear = useMemo(() => {
+    const m: Record<string, Tournament[]> = {};
+    for (const t of clubesList) {
+      const yr = (t as any)._clubesYear ?? t.date?.substring(0, 4) ?? "?";
+      if (!m[yr]) m[yr] = [];
+      m[yr].push(t);
+    }
+    return m;
+  }, [clubesList]);
+  const clubesYears = useMemo(() => Object.keys(clubesByYear).sort().reverse(), [clubesByYear]);
+  const curClubes = clubesList[clubesSelected] ?? null;
+  const curClubesYear: string = (curClubes as any)?._clubesYear ?? curClubes?.date?.substring(0, 4) ?? "";
 
   const displayList = useMemo(() => buildDisplayList(tournaments), [tournaments]);
   const cur = displayList[selected];
@@ -1616,6 +2637,14 @@ function Content() {
                   style={sidebarMode === "pja-ranking" ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
                   📊 Ranking
                 </button>
+                <button
+                  className={"tourn-tab tourn-tab-sm" + (sidebarMode === "clubes" ? " active" : "")}
+                  onClick={() => { setSidebarMode("clubes"); setFilterManuel(false); }}
+                  style={sidebarMode === "clubes"
+                    ? { background: "var(--accent,#2563eb)", borderColor: "var(--accent,#2563eb)", color: "#fff" }
+                    : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                  🏆 Clubes
+                </button>
                 {(sidebarMode === "month" || sidebarMode === "santo") && (
                   <button
                     className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
@@ -1671,7 +2700,7 @@ function Content() {
       )}
 
       {/* Master-detail (modos "month" e "circuit") */}
-      {sidebarMode !== "pja-ranking" && (
+      {sidebarMode !== "pja-ranking" && sidebarMode !== "clubes" && (
       <div className="master-detail">
         {/* Sidebar */}
         <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`}>
@@ -1722,6 +2751,143 @@ function Content() {
           }
         </div>
       </div>
+      )}
+
+      {/* ── Clubes ─────────────────────────────────────────────────────── */}
+      {sidebarMode === "clubes" && (
+        <div className="master-detail">
+          {/* Sidebar Clubes */}
+          <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`}>
+            {/* Pills Sub 14 / Sub 18 */}
+            <div style={{ padding: "10px 12px 6px", display: "flex", gap: 6, borderBottom: "1px solid var(--border)" }}>
+              {(["sub14", "sub18"] as const).map(esc => {
+                const label = esc === "sub14" ? "Sub 14" : "Sub 18";
+                const active = clubesEsc === esc;
+                return (
+                  <button key={esc} onClick={() => { setClubesEsc(esc); setClubesSelected(0); }}
+                    style={{
+                      fontSize: 11, fontWeight: active ? 700 : 500, padding: "3px 10px",
+                      borderRadius: 20, border: `1px solid ${active ? "var(--accent,#2563eb)" : "var(--border)"}`,
+                      background: active ? "var(--accent,#2563eb)" : "var(--bg-muted)",
+                      color: active ? "#fff" : "var(--text-2)", cursor: "pointer",
+                    }}>{label}</button>
+                );
+              })}
+            </div>
+
+            {clubesLoading && (
+              <div className="muted fs-11" style={{ padding: "12px 16px", fontStyle: "italic" }}>A carregar...</div>
+            )}
+            {clubesLoaded && clubesList.length === 0 && !clubesLoading && (
+              <div className="muted fs-11" style={{ padding: "12px 16px", fontStyle: "italic" }}>
+                Ficheiro não encontrado (ainda)
+              </div>
+            )}
+            {clubesYears.map(yr => (
+              <React.Fragment key={yr}>
+                <div className="sidebar-section-title-dark">🏆 Clubes {yr}</div>
+                {clubesByYear[yr].map((t, _) => {
+                  const idx = clubesList.indexOf(t);
+                  const nR = t.rounds || 1;
+                  const nh = t.players[0]?.nholes || t.players[0]?.par?.length
+                    || t.players[0]?.roundScores?.[0]?.pars?.length || 18;
+                  const playedR = Math.max(0, ...t.players.map(p => p.roundScores?.length ?? 0));
+                  return (
+                    <button key={t.tcode + "_" + t.date}
+                      className={`course-item ${clubesSelected === idx ? "active" : ""}`}
+                      onClick={() => setClubesSelected(idx)}>
+                      <div style={{ fontWeight: 600, fontSize: 12, marginBottom: 3 }}>{t.name}</div>
+                      <div style={{ fontSize: 10, color: "var(--text-muted)", marginBottom: 3 }}>
+                        {t.campo && <span>📍 {t.campo} · </span>}
+                        {t.date}
+                      </div>
+                      <div style={{ fontSize: 10, color: "var(--text-muted)" }}>
+                        {t.playerCount} jog · {nR}R · {nh}h
+                        {nR > 1 && (
+                          <span style={{ marginLeft: 4, color: playedR >= nR ? "var(--color-good,#16a34a)" : "var(--color-warn,#d97706)", fontWeight: 600 }}>
+                            · R{playedR}/{nR}
+                          </span>
+                        )}
+                      </div>
+                      {t.tcode && (
+                        <div style={{ marginTop: 3 }}>
+                          <span style={{
+                            fontFamily: "monospace", fontSize: 10, fontWeight: 700,
+                            background: "var(--accent,#2563eb)", color: "#fff",
+                            borderRadius: 3, padding: "0 4px",
+                          }}>{t.tcode}</span>
+                          {t.ccode && t.tcode && (
+                            <span
+                              title="Abre na Federação"
+                              onClick={e => { e.stopPropagation(); window.open(`https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=${t.ccode}&tcode=${t.tcode}`, "_blank"); }}
+                              style={{
+                                marginLeft: 4, fontSize: 10, fontWeight: 600, cursor: "pointer",
+                                color: "var(--accent,#2563eb)", border: "1px solid var(--accent,#2563eb)",
+                                borderRadius: 3, padding: "0 4px", lineHeight: 1.6,
+                              }}>↗</span>
+                          )}
+                        </div>
+                      )}
+                    </button>
+                  );
+                })}
+              </React.Fragment>
+            ))}
+          </div>
+
+          {/* Detail Clubes */}
+          <div className="course-detail">
+            {/* Tabs Individual / Grupos */}
+            <div style={{
+              display: "flex", borderBottom: "1px solid var(--border)",
+              background: "var(--bg-card,#fff)", position: "sticky", top: 0, zIndex: 10,
+            }}>
+              {(["grupos", "individual"] as const).map(v => {
+                const label = v === "grupos" ? "🏅 Grupos" : "📋 Individual";
+                const active = clubesView === v;
+                return (
+                  <button key={v} onClick={() => setClubesView(v)} style={{
+                    padding: "8px 16px", fontSize: 12, fontWeight: active ? 700 : 500,
+                    color: active ? "var(--text)" : "var(--text-muted)",
+                    background: "transparent", border: "none",
+                    borderBottom: active ? "2px solid var(--accent,#2563eb)" : "2px solid transparent",
+                    cursor: "pointer", transition: "all .15s",
+                  }}>{label}</button>
+                );
+              })}
+            </div>
+
+            {clubesView === "individual"
+              ? curClubes
+                  ? <TournamentDetail tournament={curClubes} escLookup={escLookup} playersDB={playersDB} />
+                  : !clubesLoading && (
+                      <div className="center-msg muted">
+                        {clubesLoaded ? "Selecciona um torneio" : "A carregar…"}
+                      </div>
+                    )
+              : (() => {
+                  const gruposData = curClubesYear ? CLUBES_GRUPOS_BY_YEAR[curClubesYear] : null;
+                  if (gruposData) {
+                    return <ClubesGruposView
+                      grupos={gruposData[clubesEsc as "sub14" | "sub18"] ?? []}
+                      tournament={curClubes}
+                      escKey={clubesEsc as "sub14" | "sub18"}
+                    />;
+                  }
+                  if (!curClubes && !clubesLoading) {
+                    return <div className="center-msg muted">Selecciona um torneio</div>;
+                  }
+                  return (
+                    <div style={{ padding: "32px 24px", textAlign: "center", color: "var(--text-muted)", fontSize: 13 }}>
+                      <div style={{ fontSize: 32, marginBottom: 12 }}>📋</div>
+                      <div style={{ fontWeight: 600, marginBottom: 6 }}>Vista de grupos não disponível para {curClubesYear}</div>
+                      <div style={{ fontSize: 12 }}>Os dados de composição de grupos desta edição não estão carregados.<br/>Use o tab <strong>Individual</strong> para ver os resultados.</div>
+                    </div>
+                  );
+                })()
+            }
+          </div>
+        </div>
       )}
 
       {/* Ranking PJA */}

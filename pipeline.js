@@ -95,9 +95,12 @@ let playersDb = {};
 try { playersDb = readJSON(playersPath); } catch {}
 
 if (allFlag && fedCodes.length === 0) {
-  fedCodes.push(...Object.keys(playersDb));
+  for (const [k, v] of Object.entries(playersDb)) {
+    if (v.frozen) continue; // jogadores frozen não são reprocessados
+    fedCodes.push(k);
+  }
   skipImport = true; // --all implica que já temos dados
-  console.log(`--all: ${fedCodes.length} federados`);
+  console.log(`--all: ${fedCodes.length} federados (frozen ignorados)`);
 }
 
 if (priorityFlag && fedCodes.length === 0) {

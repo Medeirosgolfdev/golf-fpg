@@ -126,6 +126,7 @@ export function ScorecardLeaderboard({
               <tr className="lb-si-row">
                 <td className="sticky-col-0" />
                 <td className="lb-par-lbl sticky-col-1" colSpan={parLabelColSpan + 1}>{siLabel}</td>
+                <td className="lb-topar" />
                 <td className="lb-gross">{siTotal > 0 ? siTotal : ""}</td>
                 {Array.from({ length: postTotalColCount }, (_, i) => <td key={i} />)}
                 {siArr.slice(0, 9).map((v, i) => (
@@ -145,6 +146,7 @@ export function ScorecardLeaderboard({
               <tr className="lb-par-row">
                 <td className="sticky-col-0" />
                 <td className="lb-par-lbl sticky-col-1" colSpan={parLabelColSpan + 1}>PAR</td>
+                <td className="lb-topar" />
                 <td className="lb-gross">{parTotal}</td>
                 {Array.from({ length: postTotalColCount }, (_, i) => <td key={i} />)}
                 {par.slice(0, 9).map((v, i) => (
