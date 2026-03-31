@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import type { Player, Course, SexFilter } from "../data/types";
 import { useAppContext } from "../context/AppContext";
+import { useIsMobile } from "../hooks/useIsMobile";
 import { norm, shortDate, fD, fD2, firstName, fmtSign, fmtToPar } from "../utils/format";
 import { getTeeHex, textOnColor, normKey, teeBorder } from "../utils/teeColors";
 import { clubShort, clubLong, hcpDisplay } from "../utils/playerUtils";
@@ -3862,6 +3863,7 @@ export default function JogadoresPage() {
   const [sortKey, setSortKey] = useState<SortKey>("name");
   const [selectedFed, setSelectedFed] = useState<string | null>(urlFed ?? null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const isMobile = useIsMobile();
   const [playerMeta, setPlayerMeta] = useState<PlayerPageData["META"] | null>(null);
   const rankingMode = sortKey === "ranking";
   const [statsDb, setStatsDb] = useState<PlayerStatsDb>({});
@@ -3888,6 +3890,7 @@ export default function JogadoresPage() {
   /* Helper: select player and update URL */
   const selectPlayer = (fed: string | null) => {
     setSelectedFed(fed);
+    if (fed && isMobile) setSidebarOpen(false); // mobile: fecha lista ao selecionar
     if (fed) {
       internalNav.current = true;
       navigate(`/jogadores/${fed}`, { replace: true });
@@ -4118,6 +4121,12 @@ export default function JogadoresPage() {
         </div>
 
         <div className="course-detail jog-detail">
+          {/* Botão voltar — só em mobile quando a sidebar está fechada */}
+          {!sidebarOpen && (
+            <button className="mobile-back-btn" onClick={() => setSidebarOpen(true)}>
+              ◀ Jogadores
+            </button>
+          )}
           {selected ? (
               <PlayerDetail key={selected.fed} fedId={selected.fed} selected={selected} onMetaLoaded={setPlayerMeta} />
           ) : (

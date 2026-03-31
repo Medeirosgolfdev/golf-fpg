@@ -3,6 +3,7 @@
  * 3 tournaments · day sub-tabs (Acumulado, R1, R2, R3)
  */
 import React, { useEffect, useState } from "react";
+import { useIsMobile } from "../hooks/useIsMobile";
 import { cachedFetch } from "../data/fetchCache";
 import { scClass, SC } from "../utils/scoreDisplay";
 import { tpColor, isManuel } from "../ui/tournamentPrimitives";
@@ -400,6 +401,7 @@ function Content() {
   const [all, setAll] = useState<(TDef | null)[]>(new Array(URLS.length).fill(null));
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     Promise.all(URLS.map(async (m) => {
@@ -482,7 +484,7 @@ function Content() {
                         <button key={u.id}
                           className={`course-item ${ti === idx ? "active" : ""}`}
                           style={isEowagr && ti === idx ? { borderLeft: "3px solid var(--warning, #c17a00)" } : isEowagr ? { borderLeft: "3px solid transparent" } : {}}
-                          onClick={() => setTi(idx)}>
+                          onClick={() => { setTi(idx); if (isMobile) setSidebarOpen(false); }}>
                           <div className="course-item-name">{u.category}</div>
                           {t && <div className="course-item-meta">{nP} jog · {nR}R</div>}
                           <a href={u.sourceUrl} target="_blank" rel="noopener noreferrer"
@@ -502,6 +504,12 @@ function Content() {
 
         {/* Detail */}
         <div className="course-detail">
+            {/* Botão voltar — só em mobile */}
+            {!sidebarOpen && (
+              <button className="mobile-back-btn" onClick={() => setSidebarOpen(true)}>
+                ◀ Lista
+              </button>
+            )}
           {cur ? (<>
             <div className="detail-header">
               <h2 className="detail-title">{cur.label}</h2>

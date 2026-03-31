@@ -5,6 +5,7 @@
  * em torneios internacionais.
  */
 import React, { useMemo, useState } from "react";
+import { useIsMobile } from "../hooks/useIsMobile";
 import { useNavigate, useLocation } from "react-router-dom";
 import { fmtToPar, fmtSign, MONTHS_PT } from "../utils/format";
 import { FL } from "../utils/flagUtils";
@@ -2787,11 +2788,13 @@ function RivaisIntlContent() {
     locationPlayer ?? "Manuel Medeiros"
   );
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const isMobile = useIsMobile();
   const [showTable, setShowTable] = useState(false);
 
   const handleSelectPlayer = (name: string) => {
     setSelectedPlayer(name);
     setShowTable(false);
+    if (isMobile) setSidebarOpen(false);
   };
 
   return (
@@ -2834,6 +2837,12 @@ function RivaisIntlContent() {
           <RivaisSidebar selected={selectedPlayer} onSelect={handleSelectPlayer} />
         </div>
         <div className="course-detail">
+            {/* Botão voltar — só em mobile */}
+            {!sidebarOpen && (
+              <button className="mobile-back-btn" onClick={() => setSidebarOpen(true)}>
+                ◀ Lista
+              </button>
+            )}
           {showTable ? (
             <RivaisDashboard onSelectPlayer={handleSelectPlayer} />
           ) : selectedPlayer ? (

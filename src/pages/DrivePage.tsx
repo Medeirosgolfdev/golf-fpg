@@ -5,6 +5,7 @@
  */
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { loadPlayers } from "../data/loader";
+import { useIsMobile } from "../hooks/useIsMobile";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from "recharts";
 import { SC, sdClassByHcp } from "../utils/scoreDisplay";
 import { isManuel as _isManuelPrim } from "../ui/tournamentPrimitives";
@@ -1810,6 +1811,7 @@ function DriveContent() {
   // Série principal (inclui sub12 como 4ª tab)
   const [series, setSeries]                     = useState<"tour"|"challenge"|"aquapor"|"sub12">("tour");
   const [sidebarOpen, setSidebarOpen]           = useState(true);
+  const isMobile = useIsMobile();
   const [regionFilter, setRegionFilter]         = useState<string | null>(null);
   const [escFilter, setEscFilter]               = useState<string[]>([]);
   const [selectedGroupKey, setSelectedGroupKey] = useState<string | null>(null);
@@ -2317,11 +2319,11 @@ function DriveContent() {
                     return (
                       <React.Fragment key={reg.id}>
                         <div className="sidebar-section-title-dark">{reg.emoji} {reg.label}</div>
-                        {regGroups.map(g => renderDriveItem(g, selectedGroupKey === g.key, () => { setSelectedGroupKey(g.key); setRoundIdx(0); }))}
+                        {regGroups.map(g => renderDriveItem(g, selectedGroupKey === g.key, () => { setSelectedGroupKey(g.key); setRoundIdx(0); if (isMobile) setSidebarOpen(false); }))}
                       </React.Fragment>
                     );
                   })
-              : filteredGroups.map(g => renderDriveItem(g, selectedGroupKey === g.key, () => { setSelectedGroupKey(g.key); setRoundIdx(0); }))
+              : filteredGroups.map(g => renderDriveItem(g, selectedGroupKey === g.key, () => { setSelectedGroupKey(g.key); setRoundIdx(0); if (isMobile) setSidebarOpen(false); }))
             }
 
             {filteredGroups.length === 0 && (
@@ -2334,6 +2336,13 @@ function DriveContent() {
 
           {/* Conteúdo principal */}
           <div className="flex-1-scroll">
+
+            {/* Botão voltar — só em mobile quando a sidebar está fechada */}
+            {!sidebarOpen && (
+              <button className="mobile-back-btn" onClick={() => setSidebarOpen(true)}>
+                ◀ Torneios
+              </button>
+            )}
 
             {/* RESUMO */}
             {selectedGroupKey === null && (

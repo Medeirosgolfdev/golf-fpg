@@ -2,6 +2,7 @@ import { useMemo, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import type { Course, Tee, SexFilter } from "../data/types";
 import { useAppContext } from "../context/AppContext";
+import { useIsMobile } from "../hooks/useIsMobile";
 import TeeBadge from "../ui/TeeBadge";
 import PillBadge from "../ui/PillBadge";
 import PlayerLink from "../ui/PlayerLink";
@@ -278,6 +279,7 @@ export default function CamposPage() {
   const [selectedKey, setSelectedKey] = useState<string | null>(urlCourseKey ?? null);
   const [detailView, setDetailView] = useState<"scorecard" | "ratings">("scorecard");
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const isMobile = useIsMobile();
 
   /* Sync URL param → selectedKey */
   useEffect(() => {
@@ -289,6 +291,7 @@ export default function CamposPage() {
   /* Helper: select course and update URL */
   const selectCourse = (key: string | null) => {
     setSelectedKey(key);
+    if (key && isMobile) setSidebarOpen(false); // mobile: fecha lista ao selecionar
     if (key) {
       navigate(`/campos/${key}`, { replace: true });
     } else {
@@ -509,6 +512,12 @@ export default function CamposPage() {
 
         {/* Detalhe */}
         <div className="course-detail">
+          {/* Botão voltar — só em mobile quando a sidebar está fechada */}
+          {!sidebarOpen && (
+            <button className="mobile-back-btn" onClick={() => setSidebarOpen(true)}>
+              ◀ Campos
+            </button>
+          )}
           {selected ? (
             <>
               <div className="detail-header">

@@ -4,6 +4,7 @@
  * Boys 8-9: 9 buracos (H10-H18) · Boys 10-11 / 12-13: 18 buracos
  */
 import React, { useEffect, useState } from "react";
+import { useIsMobile } from "../hooks/useIsMobile";
 import { cachedFetch } from "../data/fetchCache";
 import { scClass, SC } from "../utils/scoreDisplay";
 import { tpColor, isManuel } from "../ui/tournamentPrimitives";
@@ -564,6 +565,7 @@ function Content() {
   const [loading, setLoading] = useState(true);
   const [ti, setTi] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     Promise.all(
@@ -661,7 +663,7 @@ function Content() {
                   return (
                     <button key={entry.id}
                       className={`course-item ${safeIdx === idx ? "active" : ""}`}
-                      onClick={() => setTi(idx)}>
+                      onClick={() => { setTi(idx); if (isMobile) setSidebarOpen(false); }}>
                       <div className="course-item-name">{entry.category}</div>
                       {entry.course && (
                         <div className="course-item-meta" style={{ fontWeight:600, color:"var(--text-2)" }}>
@@ -701,6 +703,12 @@ function Content() {
 
         {/* Detail */}
         <div className="course-detail">
+            {/* Botão voltar — só em mobile */}
+            {!sidebarOpen && (
+              <button className="mobile-back-btn" onClick={() => setSidebarOpen(true)}>
+                ◀ Lista
+              </button>
+            )}
           {cur ? (
             <>
               <div className="detail-header">

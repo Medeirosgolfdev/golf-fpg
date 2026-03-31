@@ -15,6 +15,7 @@
  */
 import React, { useEffect, useState, useMemo } from "react";
 import { useAppContext } from "../context/AppContext";
+import { useIsMobile } from "../hooks/useIsMobile";
 import { loadPlayers } from "../data/loader";
 import { SC } from "../utils/scoreDisplay";
 import { buildEscLookup, type EscLookup } from "../utils/playerUtils";
@@ -2261,6 +2262,7 @@ function Content() {
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const isMobile = useIsMobile();
   const [sidebarMode, setSidebarMode] = useState<"month" | "circuit" | "pja-ranking" | "santo" | "clubes">("month");
   const [filterManuel, setFilterManuel] = useState(false);
   const [escLookup, setEscLookup] = useState<EscLookup>(new Map());
@@ -2510,7 +2512,7 @@ function Content() {
     return (
       <button key={(t as any)._isSynthetic ? "synth_" + t.tcode : t.tcode + "_" + t.date}
         className={`course-item ${selected === idx ? "active" : ""}`}
-        onClick={() => setSelected(idx)}>
+        onClick={() => { setSelected(idx); if (isMobile) setSidebarOpen(false); }}>
 
         {/* Linha 1: título + badges fixos à direita */}
         <div style={{ display: "flex", alignItems: "baseline", gap: 4, marginBottom: 3 }}>
@@ -2745,6 +2747,12 @@ function Content() {
 
         {/* Detail */}
         <div className="course-detail">
+            {/* Botão voltar — só em mobile */}
+            {!sidebarOpen && (
+              <button className="mobile-back-btn" onClick={() => setSidebarOpen(true)}>
+                ◀ Lista
+              </button>
+            )}
           {cur
             ? <TournamentDetail tournament={cur} escLookup={escLookup} playersDB={playersDB} />
             : !loading && <div className="center-msg muted">Selecciona um torneio</div>

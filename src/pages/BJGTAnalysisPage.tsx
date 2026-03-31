@@ -6,6 +6,7 @@
  * Inclui secção de rivais internacionais.
  */
 import React, { useMemo, useState } from "react";
+import { useIsMobile } from "../hooks/useIsMobile";
 import { useParams, Link } from "react-router-dom";
 import {
   type RoundData,
@@ -1202,6 +1203,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
   const [distPeriod, setDistPeriod] = useState<number>(12); void setDistPeriod;
   const [expandedPlayers, setExpandedPlayers] = useState<Set<number>>(new Set()); void expandedPlayers; void setExpandedPlayers;
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const isMobile = useIsMobile();
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
 
   /* ── Analysis ── */
@@ -1772,6 +1774,12 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
     <div className="tourn-layout">
       <div className="toolbar"><div className="toolbar-left"><span className="toolbar-title">🇪🇸 BJGT</span></div></div>
       <div className="master-detail"><div className="course-detail">
+            {/* Botão voltar — só em mobile */}
+            {!sidebarOpen && (
+              <button className="mobile-back-btn" onClick={() => setSidebarOpen(true)}>
+                ◀ Lista
+              </button>
+            )}
         <div className="card empty-state"><div className="empty-icon">⚠️</div><div className="fw-700-dc">Erro: {error}</div></div>
       </div></div>
     </div>

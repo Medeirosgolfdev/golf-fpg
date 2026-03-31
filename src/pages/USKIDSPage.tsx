@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo, useCallback, useTransition } from "react";
 import React from "react";
+import { useIsMobile } from "../hooks/useIsMobile";
 import { useNavigate, useLocation } from "react-router-dom";
 import { C } from "../utils/colors";
 import { scClass } from "../utils/scoreDisplay";
@@ -3430,6 +3431,7 @@ export default function USKidsFieldPage() {
   const [memberHist,   setMemberHist]   = useState<MemberHistData | null>(null);
   const [tab,         setTab]         = useState<Tab>(locationRival ? "rivais" : "campo");
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const isMobile = useIsMobile();
   const [selectedRival, setSelectedRival] = useState<string | null>(locationRival ?? null);
   const [sidebarRivalSearch, setSidebarRivalSearch] = useState("");
   const [erro,        setErro]        = useState<string | null>(null);
@@ -3781,6 +3783,7 @@ export default function USKidsFieldPage() {
                     <button key={t.t}
                       onClick={() => {
                         setSelectedT(t.t);
+                        if (isMobile) setSidebarOpen(false);
                         // Torneio terminado com resultados → mudar para tab resultados
                         if (dimmed && t.temResultados && tab === "campo") handleTabChange("resultados");
                       }}
@@ -3891,6 +3894,12 @@ export default function USKidsFieldPage() {
 
       {/* ── CONTEÚDO ── */}
       <div style={{ flex:1, overflow:"auto", padding:"16px 20px" }}>
+        {/* Botão voltar — só em mobile quando a sidebar está fechada */}
+        {!sidebarOpen && (
+          <button className="mobile-back-btn" onClick={() => setSidebarOpen(true)}>
+            ◀ Lista
+          </button>
+        )}
 
         {tab === "campo" && (
           selectedFieldTorneio
