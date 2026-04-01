@@ -900,7 +900,7 @@ const BG_OPTIONS: { id:string; label:string; hex:string|null }[] = [
 
 /* ═══════ MAIN ═══════ */
 export default function OverlayExport({ data, inline }: { data: OverlayData; inline?: boolean }) {
-  const [player,      setPlayer]      = useState(data.player || "Manuel");
+  const [player,      setPlayer]      = useState(data.player || "");
   const [event,       setEvent]       = useState(data.event  || "");
   const [round,       setRound]       = useState(data.round  || 1);
   const [date,        setDate]        = useState(() => {
@@ -921,7 +921,10 @@ export default function OverlayExport({ data, inline }: { data: OverlayData; inl
 
   const noHoleData   = !data.hasHoles || data.scores.length === 0;
   const allFilled    = !noHoleData && data.scores.every(s => s !== null);
-  const filledScores: number[] = noHoleData ? [] : data.scores.map((s,i) => s !== null ? s : (data.par[i] ?? 4));
+  const filledScores = useMemo<number[]>(
+    () => noHoleData ? [] : data.scores.map((s, i) => s !== null ? s : (data.par[i] ?? 4)),
+    [noHoleData, data.scores, data.par],
+  );
   const manualTotal  = noHoleData ? parseInt(manualScore) || null : null;
   const manualPar    = data.is9h ? 36 : 72;
   const manualSD     = manualTotal !== null && data.slope > 0 ? (113/data.slope)*(manualTotal - data.cr) : null;
@@ -946,7 +949,10 @@ export default function OverlayExport({ data, inline }: { data: OverlayData; inl
   }, [dd, noHoleData, manualTotal, manualPar, manualSD]);
 
   const toggle = (key: string) => setVis(prev => ({ ...prev, [key]: !prev[key] }));
-  const available = DESIGNS.filter(x => !x.needsHoles || data.hasHoles);
+  const available = useMemo(
+    () => DESIGNS.filter(x => !x.needsHoles || data.hasHoles),
+    [data.hasHoles],
+  );
 
   const bgOpt   = BG_OPTIONS.find(b => b.id === bgId);
   const bgHex   = bgId === "custom" ? customBg : (bgOpt?.hex ?? null);

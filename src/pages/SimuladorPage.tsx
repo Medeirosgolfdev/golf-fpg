@@ -592,6 +592,12 @@ function HcpStrip({
 
 const USGA_NDB_LINK = "https://www.usga.org/content/usga/home-page/handicapping/world-handicap-system/topics/net-double-bogey.html";
 
+/* Dados de buracos enviados pelo AgsSection ao pai para o OverlayExport */
+type OverlayHoleData = {
+  par: number[];
+  scores: (number | null)[];
+  si: number[];
+};
 
 function AgsSection({
   hi, holes, cr, slope, par, pcc, is9h, holesMode, onOverlayData,
@@ -697,6 +703,7 @@ function AgsSection({
       scores: computed.map(h => h.actual),
       si: computed.map(h => h.si),
     });
+    return () => onOverlayData(null); // limpar ao desmontar (ex: trocar modo campo↔manual)
   }, [computed, onOverlayData]);
 
   /* No hole data → info only */
@@ -1068,7 +1075,7 @@ export default function SimuladorPage() {
   const [holesMode, setHolesMode] = useState<HolesMode>("18");
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
   const [selectedTeeIdx, setSelectedTeeIdx] = useState<number | null>(null);
-    const md = useMasterDetail();
+  const md = useMasterDetail();
   const [pcc, setPcc] = useState(0);
   const [hiInput, setHiInput] = useState("");
   const [allowance, setAllowance] = useState(100);
@@ -1185,16 +1192,15 @@ export default function SimuladorPage() {
 
   /* Overlay export data — disponível sempre que há contexto mínimo */
   const overlayData: OverlayData | null = useMemo(() => {
-    // Disponível com campo selecionado OU em modo manual (mesmo sem CR/Slope)
-    if (!isManual && !teeData) return null;
+    // Requer sempre teeData (em modo manual: CR e Slope preenchidos; em campo: tee com ratings)
+    if (!teeData) return null;
 
     const courseName = isManual ? "Manual" : (selected?.master.name ?? "");
     const teeName = isManual ? "" : (selectedTee ? titleCase(selectedTee.teeName) : "");
     const teeDist = isManual ? null : (selectedTee?.distances?.total ?? null);
 
-    const cr = teeData?.cr ?? 0;
-    const slope = teeData?.slope ?? 113;
-    const tdPar = teeData?.par ?? (is9h ? 36 : 72);
+    const cr = teeData.cr;
+    const slope = teeData.slope;
 
     // Scores completos para cálculo de SD
     const holeScores = overlayHoleData?.scores ?? null;
@@ -1375,7 +1381,7 @@ export default function SimuladorPage() {
                     </div>
                   </details>
                 </>
-              )}\n
+              )}
               {/* Partilhar Scorecard — colapsável */}
               {overlayData && (
                 <details className="mt-14">
