@@ -362,10 +362,10 @@ function SCTable9H({ entry, ri }: { entry: Entry; ri: number }) {
           {metres.length > 0 && (
             <tr className="sep-row" style={{ opacity:0.6 }}>
               <td></td>
-              <td className="row-label" style={{ fontSize:9, color:"var(--text-3)" }}>m</td>
+              <td className="row-label u-fs9-muted">m</td>
               <td className="col-total" style={{ fontSize:9 }}>{metresTotal}</td>
               <td></td>
-              {metres.map((m, i) => <td key={i} style={{ fontSize:9, color:"var(--text-3)" }}>{m}</td>)}
+              {metres.map((m, i) => <td key={i} className="u-fs9-muted">{m}</td>)}
             </tr>
           )}
           {sorted.map((p, idx) => {
@@ -438,13 +438,13 @@ function SCTable18H({ entry, ri }: { entry: Entry; ri: number }) {
           {hasMetres && (
             <tr className="sep-row" style={{ opacity:0.6 }}>
               <td></td>
-              <td className="row-label" style={{ fontSize:9, color:"var(--text-3)" }}>m</td>
+              <td className="row-label u-fs9-muted">m</td>
               <td className="col-total" style={{ fontSize:9 }}>{metresTotal}</td>
               <td></td>
-              {metres.slice(0,9).map((m,i) => <td key={i} style={{ fontSize:9, color:"var(--text-3)" }}>{m}</td>)}
-              <td className="col-out" style={{ fontSize:9, color:"var(--text-3)" }}>{metresF9}</td>
-              {metres.slice(9,18).map((m,i) => <td key={i} style={{ fontSize:9, color:"var(--text-3)" }}>{m}</td>)}
-              <td className="col-in" style={{ fontSize:9, color:"var(--text-3)" }}>{metresB9}</td>
+              {metres.slice(0,9).map((m,i) => <td key={i} className="u-fs9-muted">{m}</td>)}
+              <td className="col-out u-fs9-muted">{metresF9}</td>
+              {metres.slice(9,18).map((m,i) => <td key={i} className="u-fs9-muted">{m}</td>)}
+              <td className="col-in u-fs9-muted">{metresB9}</td>
             </tr>
           )}
           {sorted.map((p, idx) => {

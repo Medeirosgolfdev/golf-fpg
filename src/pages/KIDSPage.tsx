@@ -1295,7 +1295,7 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
                 )}
               </button>
               {activeCount > 0 && (
-                <button className="p p-filter p-sm" onClick={resetAll} style={{ color: "var(--color-danger)" }}>✕ Limpar</button>
+                <button className="p p-filter p-sm" onClick={resetAll} title="Limpar filtros" style={{ color: "var(--color-danger)" }}>✕ Limpar</button>
               )}
               <div className="chip" style={{ marginLeft: "auto" }}>{list.length} jogadores</div>
             </div>
@@ -1305,9 +1305,9 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
               <div style={{ display: "flex", gap: 8, flexWrap: "wrap", padding: "8px 0 4px", borderTop: "1px solid var(--border-light)", marginTop: 6 }}>
 
                 {/* Torneios juntos com Manuel */}
-                <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                  <span style={{ fontSize: 10, fontWeight: 600, color: "var(--text-3)" }}>🤝 Juntos</span>
-                  <div style={{ display: "flex", gap: 3 }}>
+                <div className="u-col-flex3">
+                  <span className="u-fs10-fw6-mut">🤝 Juntos</span>
+                  <div className="u-flex-gap3">
                     {[["all","Todos"],["0","0"],["1","1"],["2+","2+"],["3+","3+"]].map(([v,l]) => (
                       <button key={v} className={`p p-filter p-sm${fJuntos===v?" active":""}`} onClick={() => setFJuntos(v)}>{l}</button>
                     ))}
@@ -1315,9 +1315,9 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
                 </div>
 
                 {/* Performance */}
-                <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                  <span style={{ fontSize: 10, fontWeight: 600, color: "var(--text-3)" }}>⛳ Melhor ±Par</span>
-                  <div style={{ display: "flex", gap: 3 }}>
+                <div className="u-col-flex3">
+                  <span className="u-fs10-fw6-mut">⛳ Melhor ±Par</span>
+                  <div className="u-flex-gap3">
                     {[["all","Todos"],["elite","≤ E"],["strong","0–15"],["mid","16–30"],["dev",">30"],["nodata","S/d"]].map(([v,l]) => (
                       <button key={v} className={`p p-filter p-sm${fPerf===v?" active":""}`} onClick={() => setFPerf(v)}>{l}</button>
                     ))}
@@ -1325,9 +1325,9 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
                 </div>
 
                 {/* Tendência */}
-                <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                  <span style={{ fontSize: 10, fontWeight: 600, color: "var(--text-3)" }}>📈 Tendência</span>
-                  <div style={{ display: "flex", gap: 3 }}>
+                <div className="u-col-flex3">
+                  <span className="u-fs10-fw6-mut">📈 Tendência</span>
+                  <div className="u-flex-gap3">
                     {[["all","Todos"],["up","▲ A subir"],["stable","● Estável"],["down","▼ A descer"]].map(([v,l]) => (
                       <button key={v} className={`p p-filter p-sm${fTrend===v?" active":""}`} onClick={() => setFTrend(v)}>{l}</button>
                     ))}
@@ -1335,9 +1335,9 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
                 </div>
 
                 {/* H2H vs Manuel */}
-                <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                  <span style={{ fontSize: 10, fontWeight: 600, color: "var(--text-3)" }}>⚔️ H2H vs Manuel</span>
-                  <div style={{ display: "flex", gap: 3 }}>
+                <div className="u-col-flex3">
+                  <span className="u-fs10-fw6-mut">⚔️ H2H vs Manuel</span>
+                  <div className="u-flex-gap3">
                     {[["all","Todos"],["manuel_wins","Manuel ganhou"],["rival_wins","Rival ganhou"],["balanced","Equilibrado"],["none","Sem encontros"]].map(([v,l]) => (
                       <button key={v} className={`p p-filter p-sm${fH2H===v?" active":""}`} onClick={() => setFH2H(v)}>{l}</button>
                     ))}
@@ -1345,9 +1345,9 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
                 </div>
 
                 {/* USKids histórico */}
-                <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                  <span style={{ fontSize: 10, fontWeight: 600, color: "var(--text-3)" }}>📊 USKids histórico</span>
-                  <div style={{ display: "flex", gap: 3 }}>
+                <div className="u-col-flex3">
+                  <span className="u-fs10-fw6-mut">📊 USKids histórico</span>
+                  <div className="u-flex-gap3">
                     {[["all","Todos"],["yes","Tem"],["3+","3+ torn."],["no","Sem"]].map(([v,l]) => (
                       <button key={v} className={`p p-filter p-sm${fUsk===v?" active":""}`} onClick={() => setFUsk(v)}>{l}</button>
                     ))}
@@ -1356,9 +1356,9 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
 
                 {/* Próximos torneios */}
                 {UP.length > 0 && (
-                  <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                    <span style={{ fontSize: 10, fontWeight: 600, color: "var(--text-3)" }}>▲ Próximos</span>
-                    <div style={{ display: "flex", gap: 3 }}>
+                  <div className="u-col-flex3">
+                    <span className="u-fs10-fw6-mut">▲ Próximos</span>
+                    <div className="u-flex-gap3">
                       <button className={`p p-filter p-sm${fUp==="all"?" active":""}`} onClick={() => setFUp("all")}>Todos</button>
                       {UP.map(u => (
                         <button key={u.id} className={`p p-filter p-sm${fUp===u.id?" active":""}`} onClick={() => setFUp(u.id)}>{u.short}</button>
@@ -2290,17 +2290,17 @@ function RivalDetail({ playerName }: { playerName: string }) {
             </div>
             {/* Legend */}
             <div style={{ display: "flex", gap: 16, fontSize: 12, flexWrap: "wrap" }}>
-              <span style={{ display: "flex", alignItems: "center", gap: 5 }}>
+              <span className="u-flex-gap5">
                 <span style={{ width: 10, height: 10, borderRadius: 2, background: "var(--color-good-dark,#15803d)", display: "inline-block" }} />
                 <strong style={{ color: "var(--color-good-dark)", fontWeight: 700, fontSize: 14 }}>{wins}</strong>
                 <span style={{ color: "var(--text-3)" }}>Vitórias Manuel</span>
               </span>
-              <span style={{ display: "flex", alignItems: "center", gap: 5 }}>
+              <span className="u-flex-gap5">
                 <span style={{ width: 10, height: 10, borderRadius: 2, background: "var(--border)", display: "inline-block" }} />
                 <strong style={{ color: "var(--text-2)", fontWeight: 700, fontSize: 14 }}>{draws}</strong>
                 <span style={{ color: "var(--text-3)" }}>Empates</span>
               </span>
-              <span style={{ display: "flex", alignItems: "center", gap: 5 }}>
+              <span className="u-flex-gap5">
                 <span style={{ width: 10, height: 10, borderRadius: 2, background: "var(--color-danger,#dc2626)", display: "inline-block" }} />
                 <strong style={{ color: "var(--color-danger)", fontWeight: 700, fontSize: 14 }}>{losses}</strong>
                 <span style={{ color: "var(--text-3)" }}>Vitórias {rivalShortName}</span>

@@ -1384,6 +1384,7 @@ function TabResultados({ data, selectedT, greatgolfData }: {
 
           const pb = tableIndex++ > 0 ? '<div class="page-break"></div>' : '';
           return `${pb}${escalaoTitle}<h3>Ronda ${r.ronda} · ${jogadores.length} jogadores · ${buracos}H${totalPar ? ` · Par ${totalPar}` : ""}</h3>
+          <div className="table-wrap">
           <table>
             <thead>
               ${metrosRow}${parRow}
@@ -1395,7 +1396,8 @@ function TabResultados({ data, selectedT, greatgolfData }: {
               </tr>
             </thead>
             <tbody>${rows}</tbody>
-          </table>`;
+          </table>
+          </div>`;
         }).join("");
 
       // Tabela acumulada (só se ≥2 rondas)
@@ -1449,6 +1451,7 @@ function TabResultados({ data, selectedT, greatgolfData }: {
         }).join("");
 
         accHtml = `<div class="page-break"></div>${escalaoTitle}<h3>Acumulado · ${sorted.length} classificados · ${rondasComDados.length} rondas${totalParAcc ? ` · Par ${totalParAcc}` : ""}</h3>
+        <div className="table-wrap">
         <table>
           <thead><tr>
             <th class="pos">#</th><th class="name">Jogador</th><th class="flag"></th>
@@ -1456,7 +1459,8 @@ function TabResultados({ data, selectedT, greatgolfData }: {
             ${rondaHeaders}
           </tr></thead>
           <tbody>${accRows}</tbody>
-        </table>`;
+        </table>
+        </div>`;
         tableIndex++;
       }
 
@@ -1629,6 +1633,7 @@ function SecaoGreatgolf({ data }: { data: GreatgolfData }) {
             ))}
           </div>
 
+          <div className="table-wrap">
           <table className="sc-lb" style={{ width:"100%" }}>
             <thead>
               <tr>
@@ -1662,6 +1667,7 @@ function SecaoGreatgolf({ data }: { data: GreatgolfData }) {
               })}
             </tbody>
           </table>
+          </div>
         </div>
       )}
     </div>
@@ -2089,6 +2095,7 @@ function InscritosTable({
           Nenhum jogador neste filtro.
         </div>
       ) : (
+        <div className="table-wrap">
         <table className="sc-lb" style={{ width:"100%", marginBottom:16 }}>
           <thead>
             <tr>
@@ -2198,6 +2205,7 @@ function InscritosTable({
             ))}
           </tbody>
         </table>
+        </div>
       )}
     </div>
   );
@@ -2708,6 +2716,7 @@ function SubTabPorTorneio({
 
   // Tabela genérica para secções de inscritos
   const InscTable = ({ rows, showHist }: { rows: { nome: string; pais: string; rival?: RivalInfo; torneios: InscritoEntry[] }[]; showHist?: boolean }) => (
+    <div className="table-wrap">
     <table className="dtable-lg" style={{ width:"100%" }}>
       <thead><tr>
         <th style={{ textAlign:"left" }}>Jogador</th>
@@ -2735,6 +2744,7 @@ function SubTabPorTorneio({
         ))}
       </tbody>
     </table>
+    </div>
   );
 
   return (
@@ -2812,6 +2822,7 @@ function SubTabPorTorneio({
             <Secao titulo="📊 Mais assíduos" corTitulo="var(--text-3)"
               sub="2+ torneios futuros — todo o universo USKids"
               count={assiduosTodos.length} defaultOpen={false}>
+              <div className="table-wrap">
               <table className="dtable-lg" style={{ width:"100%" }}>
                 <thead><tr><th style={{ textAlign:"left" }}>Jogador</th><th style={{ width:30 }}></th><th style={{ textAlign:"left" }}>Torneios</th><th style={{ width:36, textAlign:"center" }}>#</th></tr></thead>
                 <tbody>
@@ -2833,6 +2844,7 @@ function SubTabPorTorneio({
                   ))}
                 </tbody>
               </table>
+              </div>
             </Secao>
           )}
         </div>
@@ -3001,6 +3013,7 @@ function PerfilDoRival({
           <div className="h-md" style={{ marginBottom:8 }}>
             Encontros ({enrichedEncontros.length})
           </div>
+          <div className="table-wrap">
           <table className="dtable-lg" style={{ width:"100%" }}>
             <thead>
               <tr>
@@ -3073,6 +3086,7 @@ function PerfilDoRival({
               })}
             </tbody>
           </table>
+          </div>
         </div>
       )}
 

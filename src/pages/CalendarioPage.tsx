@@ -463,7 +463,7 @@ function EventPopup({ event, onClose }: { event: CalEvent; onClose: () => void }
  <span className="uppercase fw-600 fs-12" style={{ color: hl ? hl.text : "#fff", letterSpacing: "0.04em" }}>
             {calName}
           </span>
-          <button onClick={onClose} style={{ background: hl ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.2)", border: "none",
+          <button onClick={onClose} title="Fechar" aria-label="Fechar" style={{ background: hl ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.2)", border: "none",
             color: hl ? hl.text : "#fff",
             width: 26, height: 26, borderRadius: "50%", cursor: "pointer", fontSize: 14,
             display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
@@ -800,7 +800,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
               {sidebarOpen ? "◀" : "▶"}
             </button>
             <h2 className="cal-month-title" style={{ fontSize: 14, margin: 0, whiteSpace: "nowrap" }}>Calendário 2026</h2>
-            <button onClick={goToday} className="p p-filter" style={{ opacity: 1, flexShrink: 0 }}>Hoje</button>
+            <button onClick={goToday} className="p p-filter" title="Ir para hoje" style={{ opacity: 1, flexShrink: 0 }}>Hoje</button>
             <div ref={searchRef} style={{ position: "relative", flex: "1 1 120px", minWidth: 100, maxWidth: 220 }}>
               <input value={searchQ} onChange={e => { setSearchQ(e.target.value); setSearchOpen(true); }}
                 onFocus={() => searchQ.length >= 2 && setSearchOpen(true)}
@@ -850,7 +850,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
           </div>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between",
             padding: "4px 12px 8px", gap: 8 }}>
-            <button onClick={() => setCurrentMonth(m => Math.max(0, m-1))} disabled={currentMonth <= 0}
+            <button onClick={() = title="Mês anterior"> setCurrentMonth(m => Math.max(0, m-1))} disabled={currentMonth <= 0}
               style={{ width: 32, height: 32, borderRadius: "50%", border: "1px solid var(--border)",
                 background: "var(--bg-card)", cursor: currentMonth <= 0 ? "default" : "pointer",
                 display: "flex", alignItems: "center", justifyContent: "center",
@@ -860,7 +860,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
               {monthLabel(currentMonth)} 2026
             </span>
             <span className="fs-11 c-text-3 mono" style={{ flexShrink: 0 }}>{visibleEvents.length} provas</span>
-            <button onClick={() => setCurrentMonth(m => Math.min(11, m+1))} disabled={currentMonth >= 11}
+            <button onClick={() = title="Mês seguinte"> setCurrentMonth(m => Math.min(11, m+1))} disabled={currentMonth >= 11}
               style={{ width: 32, height: 32, borderRadius: "50%", border: "1px solid var(--border)",
                 background: "var(--bg-card)", cursor: currentMonth >= 11 ? "default" : "pointer",
                 display: "flex", alignItems: "center", justifyContent: "center",

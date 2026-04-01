@@ -905,7 +905,7 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
 
   if (!lbEntry && !rival) return (
     <div className="tourn-section">
-      <button className="p p-filter active mb-8" onClick={onBack}>← Voltar</button>
+      <button className="p p-filter active mb-8" onClick={onBack} title="Voltar à lista">← Voltar</button>
       <EmptyState size="sm" message={`Sem dados disponíveis para ${playerName}`} />
     </div>
   );

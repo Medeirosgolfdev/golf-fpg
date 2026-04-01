@@ -844,7 +844,7 @@ function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; s
           ),
         };
       })}
-      summaryGroupTh={<th className="cs-grp" colSpan={7} style={{ fontWeight: 800, fontSize: 12 }}>Temporada</th>}
+      summaryGroupTh={<th className="cs-grp" colSpan={7} className="u-fw8-fs12">Temporada</th>}
       summarySubHeaders={<>
         <CSortTh k="jogos"     s={sortKey} d={sortDir} on={handleSort} className="cs-s-games cs-grp">Jogos</CSortTh>
         <CSortTh k="totalPts"  s={sortKey} d={sortDir} on={handleSort} className="cs-s-pts cs-col" style={{ color: "var(--color-warn-dark)" }}>Pts</CSortTh>
@@ -1602,7 +1602,7 @@ function TournamentGrid({ rows, allTournaments, onPlayerClick, playersDB, escLoo
           </React.Fragment>
         ),
       }))}
-      summaryGroupTh={<th className="cs-grp" colSpan={6} style={{ fontWeight: 800, fontSize: 12 }}>Temporada</th>}
+      summaryGroupTh={<th className="cs-grp" colSpan={6} className="u-fw8-fs12">Temporada</th>}
       summarySubHeaders={<>
         <CSortTh k="played"    s={sortKey} d={sortDir} on={handleSort} className="cs-s-games cs-grp">Jogos</CSortTh>
         <CSortTh k="totalPts"  s={sortKey} d={sortDir} on={handleSort} className="cs-s-pts cs-col" style={{ color: "var(--color-warn-dark)" }}>Pts</CSortTh>
@@ -1762,7 +1762,7 @@ function EvolutionChart({ rows }: { rows: Sub12Row[] }) {
 function PlayerDetail({ row, onClose }: { row: Sub12Row; onClose: () => void }) {
   return (
     <div className="card" style={{ border: "2px solid var(--accent)", position: "relative" }}>
-      <button onClick={onClose} style={{ position: "absolute", top: 8, right: 10, background: "none", border: "none", cursor: "pointer", fontSize: 18, color: "var(--text-3)" }}>✕</button>
+      <button onClick={onClose} title="Fechar" aria-label="Fechar" style={{ position: "absolute", top: 8, right: 10, background: "none", border: "none", cursor: "pointer", fontSize: 18, color: "var(--text-3)" }}>✕</button>
       <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 8 }}>
         <span style={{ fontSize: 16, fontWeight: 800 }}>{row.name}</span>
         <span className="muted fs-11">{row.club} · {row.region} · HCP {row.hcp != null ? row.hcp.toFixed(1) : "–"}</span>

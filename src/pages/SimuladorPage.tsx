@@ -749,7 +749,7 @@ function AgsSection({
           Scorecard {hasAgs ? "— Net Double Bogey / AGS" : ""}
         </h3>
         {Object.keys(scores).length > 0 && (
-          <button className="select pointer fs-12" onClick={clearAll}>Limpar</button>
+          <button className="select pointer fs-12" onClick={clearAll} title="Limpar selecção">Limpar</button>
         )}
       </div>
 

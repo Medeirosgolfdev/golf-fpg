@@ -1683,7 +1683,7 @@ function PJARankingView({
                 </>
               ),
             }))}
-            summaryGroupTh={<th className="cs-grp" colSpan={2} style={{ fontWeight: 800, fontSize: 12 }}>Ranking</th>}
+            summaryGroupTh={<th className="cs-grp" colSpan={2} className="u-fw8-fs12">Ranking</th>}
             summarySubHeaders={<>
               <CSortTh k="voltas" s={sortKey} d={sortDir} on={handleSort} className="cs-s-games cs-grp">Voltas</CSortTh>
               <CSortTh k="total"  s={sortKey} d={sortDir} on={handleSort} className="cs-s-pts cs-col" style={{ color: "var(--color-warn-dark)", fontWeight: 800 }}>Total</CSortTh>
@@ -2741,7 +2741,7 @@ function Content() {
         {/* Sidebar */}
         <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
           {loading && displayList.length === 0 && (
-            <div className="muted fs-11" style={{ padding: "12px 16px", fontStyle: "italic" }}>
+            <div className="muted fs-11 u-pad-italic">
               A carregar...
             </div>
           )}
@@ -2755,7 +2755,7 @@ function Content() {
               ))
             : sidebarMode === "santo"
               ? santoByYear.years.length === 0
-                ? <div className="muted fs-11" style={{ padding: "12px 16px", fontStyle: "italic" }}>Sem torneios Santo da Serra</div>
+                ? <div className="muted fs-11 u-pad-italic">Sem torneios Santo da Serra</div>
                 : santoByYear.years.map(yr => {
                     const items = santoByYear.byYear[yr].filter(t =>
                       !filterManuel || t.players.some(p => p.fedCode === MANUEL_FED)
@@ -2769,7 +2769,7 @@ function Content() {
                     );
                   })
               : pjaByYear.years.length === 0
-                ? <div className="muted fs-11" style={{ padding: "12px 16px", fontStyle: "italic" }}>Sem torneios PJA</div>
+                ? <div className="muted fs-11 u-pad-italic">Sem torneios PJA</div>
                 : pjaByYear.years.map(yr => (
                     <React.Fragment key={yr}>
                       <div className="sidebar-section-title-dark">🏆 PJA Tour {yr}</div>
@@ -2812,10 +2812,10 @@ function Content() {
             </div>
 
             {clubesLoading && (
-              <div className="muted fs-11" style={{ padding: "12px 16px", fontStyle: "italic" }}>A carregar...</div>
+              <div className="muted fs-11 u-pad-italic">A carregar...</div>
             )}
             {clubesLoaded && clubesList.length === 0 && !clubesLoading && (
-              <div className="muted fs-11" style={{ padding: "12px 16px", fontStyle: "italic" }}>
+              <div className="muted fs-11 u-pad-italic">
                 Ficheiro não encontrado (ainda)
               </div>
             )}
