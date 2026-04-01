@@ -1,7 +1,8 @@
 import React, { useCallback, useMemo, useState } from "react";
 import type { Course, Tee, Hole, SexFilter } from "../data/types";
 import { useAppContext } from "../context/AppContext";
-import { useIsMobile } from "../hooks/useIsMobile";
+import SidebarToggle from "../ui/SidebarToggle";
+import { useMasterDetail } from "../hooks/useMasterDetail";
 import TeeBadge from "../ui/TeeBadge";
 import { textOnColor } from "../utils/teeColors";
 import { sortTees, filterTees, teeHexFromTee as teeHex } from "../utils/teeUtils";
@@ -1067,8 +1068,7 @@ export default function SimuladorPage() {
   const [holesMode, setHolesMode] = useState<HolesMode>("18");
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
   const [selectedTeeIdx, setSelectedTeeIdx] = useState<number | null>(null);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-  const isMobile = useIsMobile();
+  const md = useMasterDetail();
   const [pcc, setPcc] = useState(0);
   const [hiInput, setHiInput] = useState("");
   const [allowance, setAllowance] = useState(100);
@@ -1217,13 +1217,7 @@ export default function SimuladorPage() {
       {/* Toolbar */}
       <div className="toolbar">
         <div className="toolbar-left">
-          <button
-            className="sidebar-toggle"
-            onClick={() => setSidebarOpen((v) => !v)}
-            title={sidebarOpen ? "Fechar painel" : "Abrir painel"}
-          >
-            {sidebarOpen ? "◀" : "▶"}
-          </button>
+          <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Campos" />
           <input
             className="input"
             value={q}
@@ -1286,11 +1280,11 @@ export default function SimuladorPage() {
       {/* Master-detail */}
       <div className="master-detail">
         {/* Sidebar: lista de campos */}
-        <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`}>
+        <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
           {/* Opção manual — sempre visível */}
           <button
             className={`course-item ${isManual ? "active" : ""}`}
-            onClick={() => { setSelectedKey(MANUAL_KEY); setSelectedTeeIdx(null); if (isMobile) setSidebarOpen(false); }}
+            onClick={() => { setSelectedKey(MANUAL_KEY); setSelectedTeeIdx(null); }}
           >
             <div className="course-item-name">✎ Sem campo (manual)</div>
             <div className="course-item-meta">Introduzir CR/Slope</div>
@@ -1307,7 +1301,7 @@ export default function SimuladorPage() {
               <button
                 key={c.courseKey}
                 className={`course-item ${active ? "active" : ""}`}
-                onClick={() => { setSelectedKey(c.courseKey); setSelectedTeeIdx(null); if (isMobile) setSidebarOpen(false); }}
+                onClick={() => { setSelectedKey(c.courseKey); setSelectedTeeIdx(null); }}
               >
                 <div className="course-item-name">{c.master.name}</div>
                 <div className="course-item-meta">
@@ -1323,12 +1317,6 @@ export default function SimuladorPage() {
 
         {/* Detalhe */}
         <div className="course-detail">
-            {/* Botão voltar — só em mobile */}
-            {!sidebarOpen && (
-              <button className="mobile-back-btn" onClick={() => setSidebarOpen(true)}>
-                ◀ Lista
-              </button>
-            )}
           {isManual ? (
             <>
               <div className="detail-header">

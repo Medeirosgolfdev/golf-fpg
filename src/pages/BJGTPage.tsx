@@ -3,7 +3,6 @@
  * 3 tournaments · day sub-tabs (Acumulado, R1, R2, R3)
  */
 import React, { useEffect, useState } from "react";
-import { useIsMobile } from "../hooks/useIsMobile";
 import { cachedFetch } from "../data/fetchCache";
 import { scClass, SC } from "../utils/scoreDisplay";
 import { tpColor, isManuel } from "../ui/tournamentPrimitives";
@@ -12,6 +11,8 @@ const isM = (name: string) => isManuel({ name });
 import { fmtToPar, fmtSign, fmtSignParen as fmtSub } from "../utils/format";
 import { isCalUnlocked } from "../utils/authConstants";
 import PasswordGate from "../ui/PasswordGate";
+import SidebarToggle from "../ui/SidebarToggle";
+import { useMasterDetail } from "../hooks/useMasterDetail";
 import LoadingState from "../ui/LoadingState";
 import EmptyState from "../ui/EmptyState";
 
@@ -400,8 +401,7 @@ function Content() {
   const [ti, setTi] = useState(2);
   const [all, setAll] = useState<(TDef | null)[]>(new Array(URLS.length).fill(null));
   const [loading, setLoading] = useState(true);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-  const isMobile = useIsMobile();
+  const md = useMasterDetail();
 
   useEffect(() => {
     Promise.all(URLS.map(async (m) => {
@@ -422,10 +422,7 @@ function Content() {
       {/* Toolbar */}
       <div className="toolbar">
         <div className="toolbar-left">
-          <button className="sidebar-toggle" onClick={() => setSidebarOpen(v => !v)}
-            title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
-            {sidebarOpen ? "◀" : "▶"}
-          </button>
+          <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
           {cur?.series === "eowagr"
             ? <span className="toolbar-title">🌍 European Open</span>
             : <span className="toolbar-title">🏌️ WJGC</span>}
@@ -446,7 +443,7 @@ function Content() {
       <div className="master-detail">
 
         {/* Sidebar */}
-        <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`}>
+        <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
           {(["bjgt", "eowagr"] as const).map(series => {
             const seriesUrls = URLS.filter(u => u.series === series);
             if (!seriesUrls.length) return null;
@@ -484,7 +481,7 @@ function Content() {
                         <button key={u.id}
                           className={`course-item ${ti === idx ? "active" : ""}`}
                           style={isEowagr && ti === idx ? { borderLeft: "3px solid var(--warning, #c17a00)" } : isEowagr ? { borderLeft: "3px solid transparent" } : {}}
-                          onClick={() => { setTi(idx); if (isMobile) setSidebarOpen(false); }}>
+                          onClick={() => setTi(idx)}>
                           <div className="course-item-name">{u.category}</div>
                           {t && <div className="course-item-meta">{nP} jog · {nR}R</div>}
                           <a href={u.sourceUrl} target="_blank" rel="noopener noreferrer"
@@ -504,12 +501,6 @@ function Content() {
 
         {/* Detail */}
         <div className="course-detail">
-            {/* Botão voltar — só em mobile */}
-            {!sidebarOpen && (
-              <button className="mobile-back-btn" onClick={() => setSidebarOpen(true)}>
-                ◀ Lista
-              </button>
-            )}
           {cur ? (<>
             <div className="detail-header">
               <h2 className="detail-title">{cur.label}</h2>

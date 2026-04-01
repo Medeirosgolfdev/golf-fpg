@@ -96,7 +96,6 @@ html, body, #root {
  display: flex;
  flex-direction: column;
  height: 100vh;
- height: 100dvh; /* mobile: exclui barra de endereço do browser */
  overflow: hidden;
 }
 
@@ -1284,27 +1283,27 @@ tr.cross-current { background: var(--bg-success); }
  font-family: 'JetBrains Mono', monospace;
 }
 
-/* ─── Botão Voltar Mobile (escondido em desktop) ─── */
+/* ─── Sidebar Back Button (toolbar) — desktop escondido ─── */
 
-.mobile-back-btn {
- display: none;
+.sidebar-back-btn {
+ display: none; /* visível apenas em mobile via media query */
  align-items: center;
- gap: 5px;
+ gap: 6px;
  padding: 4px 10px;
- background: none;
+ background: var(--bg-hover);
  border: 1px solid var(--border);
  border-radius: var(--radius);
  font-size: 12px;
  font-weight: 600;
  color: var(--text-2);
  cursor: pointer;
- flex-shrink: 0;
  white-space: nowrap;
- transition: all 0.15s;
+ transition: background 0.15s, color 0.15s;
+ flex-shrink: 0;
 }
-.mobile-back-btn:hover { background: var(--bg-hover); color: var(--text); }
+.sidebar-back-btn:hover { background: var(--bg-hover-subtle); color: var(--text); }
 
-/* Mobile utilities — base (desktop) */
+/* Mobile utilities */
 .mobile-hide { display: initial; }
 .mobile-only { display: none; }
 
@@ -1314,76 +1313,61 @@ tr.cross-current { background: var(--bg-success); }
 
 @media (max-width: 768px) {
 
- /* ── 1. TOPBAR ────────────────────────────────────────────────── */
+ /* ── 1. TOPBAR ── */
  .topbar      { gap: 6px; padding: 0 8px; height: 44px; }
- .top-stats   { display: none; }   /* ganha espaço para a nav */
+ .top-stats   { display: none; }
  .brand-icon  { width: 22px; height: 22px; }
  .brand-title { font-size: 13px; }
  .nav         { margin-left: 4px; }
  .nav-btn     { font-size: 11px; padding: 4px 8px; }
 
- /* ── 2. TOOLBAR ───────────────────────────────────────────────── */
+ /* ── 2. TOOLBAR ── */
  .toolbar       { flex-wrap: wrap; padding: 5px 8px; gap: 5px;
-                  align-items: flex-start; min-height: 0; }
+                  align-items: center; min-height: 0; }
  .toolbar-left  { flex-wrap: wrap; gap: 5px; align-items: center; }
  .toolbar-right { flex-wrap: wrap; gap: 4px; align-items: center; }
  .toolbar-sep   { display: none; }
  .toolbar-meta  { display: none; }
  .toolbar-title { font-size: 12px; }
- .campos-page .toolbar,
- .jogadores-page .toolbar,
- .tourn-layout .toolbar { padding: 4px 8px; gap: 4px; }
 
- /* ── 3. INPUTS / SELECTS ──────────────────────────────────────── */
+ /* ── 3. SIDEBAR BACK BUTTON (na toolbar, em mobile) ── */
+ .sidebar-back-btn { display: flex; }
+
+ /* ── 4. INPUTS / SELECTS ── */
  .input  { width: 120px; height: 28px; font-size: 11px; padding: 0 7px; }
  .select { min-width: 70px; max-width: 130px; height: 28px;
            font-size: 11px; padding: 0 4px; }
  .jogadores-page .toolbar .input  { width: 140px; }
  .jogadores-page .toolbar .select { min-width: 70px; }
 
- /* ── 4. MASTER-DETAIL ─────────────────────────────────────────── */
- .master-detail  { flex-direction: column; }
-
- /* Sidebar: altura fixa via flex-basis para colapso correcto */
+ /* ── 5. MASTER-DETAIL: flex-basis para colapso correcto ── */
+ .master-detail { flex-direction: column; }
  .sidebar {
-  width: 100% !important;
-  min-width: 0 !important;
-  max-width: 100% !important;
-  flex: 0 0 38vh;          /* não cresce, não encolhe, ocupa 38vh */
-  height: 38vh;
-  max-height: 38vh;
-  border-right: none;
-  border-bottom: 1px solid var(--border);
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+  width: 100% !important; min-width: 0 !important; max-width: 100% !important;
+  flex: 0 0 38vh; height: 38vh; max-height: 38vh;
+  border-right: none; border-bottom: 1px solid var(--border);
+  overflow-y: auto; -webkit-overflow-scrolling: touch;
   transition: flex-basis 0.2s ease, height 0.2s ease;
  }
- /* Fechado: flex-basis 0 liberta o espaço no layout em coluna */
  .sidebar-closed {
-  flex: 0 0 0 !important;
-  height: 0 !important;
-  max-height: 0 !important;
-  min-height: 0 !important;
-  overflow: hidden !important;
-  border-bottom: none !important;
+  flex: 0 0 0 !important; height: 0 !important;
+  max-height: 0 !important; min-height: 0 !important;
+  overflow: hidden !important; border-bottom: none !important;
   padding: 0 !important;
  }
- /* O detalhe expande para preencher o espaço quando sidebar fecha */
+ /* Detalhe expande para preencher o espaço */
  .master-detail > .course-detail,
  .master-detail > .flex-1-scroll,
  .master-detail > .flex-1 { flex: 1 1 0 !important; min-height: 0; }
 
- /* Padding dos conteúdos de detalhe (torneios, etc.) */
- .uskids-content { padding: 8px 10px !important; }
-
- /* ── 5. DETALHE ───────────────────────────────────────────────── */
+ /* ── 6. DETALHE ── */
  .course-detail      { overflow-x: hidden; padding: 8px; flex: 1 1 0; min-height: 0; }
  .detail-header      { flex-direction: column; }
  .detail-header-top  { flex-direction: column; align-items: flex-start; }
  .detail-title       { font-size: 17px; }
  .detail-actions     { flex-wrap: wrap; gap: 4px; }
 
- /* ── 6. PLAYER DETAIL ─────────────────────────────────────────── */
+ /* ── 7. PLAYER DETAIL ── */
  .pa-page            { min-height: 0; }
  .pa-controls        { flex-direction: column; align-items: flex-start; gap: 5px; }
  .pa-controls-left   { flex-wrap: wrap; gap: 4px; }
@@ -1391,34 +1375,27 @@ tr.cross-current { background: var(--bg-success); }
  .jog-pills          { gap: 4px; }
  .jog-record-grid    { grid-template-columns: 1fr 1fr; gap: 4px; }
 
- /* ── 7. CALENDÁRIO ────────────────────────────────────────────── */
+ /* ── 8. CALENDÁRIO ── */
  .cal-page        { flex-direction: column; }
  .cal-sidebar,
  .cal-sidebar-main {
-  width: 100% !important;
-  flex: 0 0 38vh;
-  height: 38vh;
-  max-height: 38vh;
+  width: 100% !important; flex: 0 0 38vh; height: 38vh; max-height: 38vh;
   overflow-y: auto; border-right: none;
   border-bottom: 1px solid var(--border); padding: 8px 10px;
   transition: flex-basis 0.2s ease, height 0.2s ease;
  }
 
- /* ── 8. TABELAS — overflow scroll horizontal ──────────────────── */
- .table-wrap,
- .tourn-scroll,
- .sc-modern,
- .scHost,
- .card-scroll    { overflow-x: auto; -webkit-overflow-scrolling: touch; }
- /* dtable: fonte e padding compactos */
- .dtable         { font-size: 11px; }
- .dtable th      { padding: 4px 6px; font-size: 9px; }
- .dtable td      { padding: 4px 6px; }
- .dtable-lg      { font-size: 11px; }
- .dtable-lg th   { padding: 5px 6px; font-size: 9px; }
- .dtable-lg td   { padding: 4px 6px; }
+ /* ── 9. TABELAS ── */
+ .table-wrap, .tourn-scroll, .sc-modern,
+ .scHost, .card-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+ .dtable       { font-size: 11px; }
+ .dtable th    { padding: 4px 6px; font-size: 9px; }
+ .dtable td    { padding: 4px 6px; }
+ .dtable-lg    { font-size: 11px; }
+ .dtable-lg th { padding: 5px 6px; font-size: 9px; }
+ .dtable-lg td { padding: 4px 6px; }
 
- /* ── 9. SCORECARD ─────────────────────────────────────────────── */
+ /* ── 10. SCORECARD ── */
  .sc-h                          { min-width: 28px; }
  .sc-table-modern               { font-size: 10px; }
  .sc-table-modern th,
@@ -1426,95 +1403,69 @@ tr.cross-current { background: var(--bg-success); }
  .sc-table-modern .sc-score,
  .scHost .sc-score              { min-width: 20px; min-height: 20px; font-size: 9px; }
  .sc-table-modern .row-label    { min-width: 52px; font-size: 10px; padding-left: 4px; }
- /* Scorecard moderno (sc-modern) */
  .sc-header                     { flex-direction: column; gap: 6px; padding: 10px 12px; }
  .sc-header-right               { width: 100%; justify-content: space-around; }
  .sc-title                      { font-size: 14px; }
- .sc-subtitle                   { font-size: 10px; }
- .sc-stat                       { min-width: 44px; }
  .sc-stat-value                 { font-size: 16px; }
- .sc-stat-score .sc-stat-value  { font-size: 18px; }
- .sc-stat-label                 { font-size: 9px; }
 
- /* ── 10. TORNEIO LEADERBOARD ──────────────────────────────────── */
+ /* ── 11. LEADERBOARD TORNEIO ── */
  .tourn-scorecard th,
- .tourn-scorecard td            { padding: 4px 4px; font-size: 11px; }
- .tourn-lb-name-col             { min-width: 110px !important; }
- .tourn-player-row td           { font-size: 11px; }
- .tourn-hole-cell               { min-width: 24px !important; padding: 2px 1px !important; font-size: 10px; }
- .tourn-lb-pills .p             { font-size: 9px; padding: 1px 4px; }
+ .tourn-scorecard td  { padding: 4px 4px; font-size: 11px; }
+ .tourn-lb-name-col   { min-width: 110px !important; }
+ .tourn-player-row td { font-size: 11px; }
+ .tourn-hole-cell     { min-width: 24px !important; padding: 2px 1px !important; font-size: 10px; }
+ .tourn-lb-pills .p   { font-size: 9px; padding: 1px 4px; }
 
- /* ── 11. ANÁLISE / KPIs ───────────────────────────────────────── */
- .an-grid   { grid-template-columns: repeat(2, 1fr); gap: 8px; }
- .an-grid3  { grid-template-columns: repeat(2, 1fr); gap: 8px; }
- .kpis,
- .tourn-kpis { grid-template-columns: repeat(3, 1fr); gap: 5px; }
- .kpi, .tourn-kpi { padding: 8px 6px; }
- .kpi-val, .tourn-kpi-val  { font-size: 18px; }
- .kpi-lbl, .tourn-kpi-lbl  { font-size: 9px; }
- .kpi-card  { padding: 8px 10px; }
- .haDiag    { grid-template-columns: repeat(2, 1fr); }
- .haParGrid { grid-template-columns: repeat(2, 1fr); }
- .haTopWrap { grid-template-columns: 1fr; }
+ /* ── 12. ANÁLISE / KPIs / GRIDS ── */
+ .an-grid  { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+ .an-grid3 { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+ .kpis, .tourn-kpis     { grid-template-columns: repeat(3, 1fr); gap: 5px; }
+ .kpi, .tourn-kpi       { padding: 8px 6px; }
+ .kpi-val, .tourn-kpi-val { font-size: 18px; }
+ .kpi-lbl, .tourn-kpi-lbl { font-size: 9px; }
+ .kpi-card              { padding: 8px 10px; }
+ .haDiag                { grid-template-columns: repeat(2, 1fr); }
+ .haParGrid             { grid-template-columns: repeat(2, 1fr); }
+ .haTopWrap             { grid-template-columns: 1fr; }
+ .grid-3, .grid-3-tc    { grid-template-columns: 1fr 1fr; gap: 5px; }
 
- /* ── 12. CARDS ────────────────────────────────────────────────── */
- .card          { padding: 10px; margin: 6px 0; }
- .grid-3,
- .grid-3-tc     { grid-template-columns: 1fr 1fr; gap: 5px; }
+ /* ── 13. CARDS / PILLS / TABS ── */
+ .card         { padding: 10px; margin: 6px 0; }
+ .escalao-pills  { gap: 2px; flex-wrap: wrap; }
+ .p-esc-filter   { font-size: 10px; padding: 1px 5px; }
+ .tourn-tab      { font-size: 11px; padding: 3px 7px; }
+ .tourn-tab-sm   { font-size: 10px; padding: 2px 5px; }
+ .chip           { font-size: 10px; padding: 2px 6px; }
 
- /* ── 13. PILLS / TABS ─────────────────────────────────────────── */
- .escalao-pills   { gap: 2px; flex-wrap: wrap; }
- .p-esc-filter    { font-size: 10px; padding: 1px 5px; }
- .tourn-tab       { font-size: 11px; padding: 3px 7px; }
- .tourn-tab-sm    { font-size: 10px; padding: 2px 5px; }
- .chip            { font-size: 10px; padding: 2px 6px; }
-
- /* ── 14. PAGE-FULL (Comparar) ─────────────────────────────────── */
- .page-full          { padding: 8px; }
- .cmp-radar-wrap     { max-width: 100%; }
- .cmp-search-input   { font-size: 12px; padding: 7px 10px; }
-
- /* ── 15. BOTÃO VOLTAR / TOGGLE ────────────────────────────────── */
- .mobile-back-btn { display: flex; margin: 6px 8px 4px; }
+ /* ── 14. UTILITÁRIOS ── */
+ .page-full       { padding: 8px; }
+ .cmp-radar-wrap  { max-width: 100%; }
+ .mobile-hide     { display: none; }
+ .mobile-only     { display: initial; }
  .sidebar-toggle  { width: 30px; height: 30px; font-size: 12px; }
-
- /* ── 16. UTILITÁRIOS MOBILE ───────────────────────────────────── */
- .mobile-hide      { display: none; }
- .mobile-only      { display: initial; }
 }
 
 /* ════════════════════════════════════════════════════════════════
-   MOBILE — 480 px (telemóveis pequenos)
+   MOBILE — 480 px
    ════════════════════════════════════════════════════════════════ */
 
 @media (max-width: 480px) {
- /* Topbar: só ícone, sem texto */
- .brand-title    { display: none; }
- .topbar         { gap: 4px; padding: 0 6px; height: 40px; }
- .nav-btn        { font-size: 10px; padding: 3px 6px; }
-
- /* Toolbar */
- .toolbar        { padding: 4px 6px; gap: 4px; }
- .input          { width: 100px; }
- .select         { min-width: 60px; max-width: 110px; }
-
- /* Sidebar */
- .sidebar        { max-height: 32vh; }
-
- /* Grids: 1 coluna */
+ .brand-title  { display: none; }
+ .topbar       { gap: 4px; padding: 0 6px; height: 40px; }
+ .nav-btn      { font-size: 10px; padding: 3px 6px; }
+ .toolbar      { padding: 4px 6px; gap: 4px; }
+ .input        { width: 100px; }
+ .select       { min-width: 60px; max-width: 110px; }
+ .sidebar      { flex: 0 0 32vh; height: 32vh; max-height: 32vh; }
  .grid-3, .grid-3-tc,
- .jog-record-grid             { grid-template-columns: 1fr; }
- .an-grid, .an-grid3          { grid-template-columns: 1fr; }
- .haDiag, .haParGrid          { grid-template-columns: 1fr; }
- .kpis, .tourn-kpis           { grid-template-columns: repeat(2, 1fr); }
-
- /* Análise */
- .pa-content                  { padding: 6px; }
-
- /* Tabs */
- .tourn-tab      { font-size: 10px; padding: 2px 5px; }
- .tourn-tab-sm   { font-size: 9px;  padding: 1px 4px; }
- .detail-title   { font-size: 15px; }
+ .jog-record-grid   { grid-template-columns: 1fr; }
+ .an-grid, .an-grid3 { grid-template-columns: 1fr; }
+ .haDiag, .haParGrid { grid-template-columns: 1fr; }
+ .kpis, .tourn-kpis  { grid-template-columns: repeat(2, 1fr); }
+ .pa-content         { padding: 6px; }
+ .tourn-tab    { font-size: 10px; padding: 2px 5px; }
+ .tourn-tab-sm { font-size: 9px;  padding: 1px 4px; }
+ .detail-title { font-size: 15px; }
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -1671,6 +1622,7 @@ tr.cross-current { background: var(--bg-success); }
 /* ─── ANALYSIS ─── */
 .kpis,
 .tourn-kpis { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-section); margin-bottom: var(--space-section); }
+@media (max-width: 768px) { .kpis, .tourn-kpis { grid-template-columns: repeat(3, 1fr); } }
 .kpi,
 .tourn-kpi { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-inner); text-align: center; }
 .kpi-lbl,

@@ -8,6 +8,8 @@ import { teeCanonicalLabel, teeGroupHex } from "../utils/teeColors";
 import { fmt, fmtCR, norm, titleCase, sumRange } from "../utils/format";
 import { fixMojibake } from "../utils/fixEncoding";
 import { sortTees, filterTees, teeHexFromTee } from "../utils/teeUtils";
+import SidebarToggle from "../ui/SidebarToggle";
+import { useMasterDetail } from "../hooks/useMasterDetail";
 
 
 
@@ -289,7 +291,7 @@ export default function CamposPage() {
   const [countryFilter, setCountryFilter] = useState<string>("ALL");
   const [selectedKey, setSelectedKey] = useState<string | null>(urlCourseKey ?? null);
   const [detailView, setDetailView] = useState<"scorecard" | "ratings">("scorecard");
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const md = useMasterDetail();
 
   /* Sync URL param → selectedKey */
   useEffect(() => {
@@ -302,6 +304,7 @@ export default function CamposPage() {
   const selectCourse = (key: string | null) => {
     setSelectedKey(key);
     if (key) {
+      md.onSelect(); // fecha sidebar em mobile ao seleccionar campo
       navigate(`/campos/${key}`, { replace: true });
     } else {
       navigate("/campos", { replace: true });
@@ -432,13 +435,7 @@ export default function CamposPage() {
       {/* Toolbar */}
       <div className="toolbar">
         <div className="toolbar-left">
-          <button
-            className="sidebar-toggle"
-            onClick={() => setSidebarOpen((v) => !v)}
-            title={sidebarOpen ? "Fechar painel" : "Abrir painel"}
-          >
-            {sidebarOpen ? "◀" : "▶"}
-          </button>
+          <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Campos" />
           <input
             className="input"
             value={q}
@@ -499,7 +496,7 @@ export default function CamposPage() {
       {/* Master-detail */}
       <div className="master-detail">
         {/* Lista de campos */}
-        <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`}>
+        <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
           {filtered.map((c) => {
             const active = selected?.courseKey === c.courseKey;
             const tees = filterTees(c.master.tees, sexFilter);

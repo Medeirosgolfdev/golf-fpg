@@ -5,7 +5,6 @@
  * em torneios internacionais.
  */
 import React, { useMemo, useState } from "react";
-import { useIsMobile } from "../hooks/useIsMobile";
 import { useNavigate, useLocation } from "react-router-dom";
 import { fmtToPar, fmtSign, MONTHS_PT } from "../utils/format";
 import { FL } from "../utils/flagUtils";
@@ -13,6 +12,8 @@ import { zTier, getTrend, getAvgZ } from "../utils/mathUtils";
 import { scClass, toParClass, sc3m, SC, tpColorDark } from "../utils/scoreDisplay";
 import { isCalUnlocked } from "../utils/authConstants";
 import PasswordGate from "../ui/PasswordGate";
+import SidebarToggle from "../ui/SidebarToggle";
+import { useMasterDetail } from "../hooks/useMasterDetail";
 import EmptyState from "../ui/EmptyState";
 import { buildAutoRivals, normName, getScorecards, uskTournNames, uskFieldSizes } from "./KIDSdataLoader";
 import { FIELD_2025, VP_PAR, VP_SI, VP_M, VP_WJGC26_PAR, VP_WJGC26_SI, VP_WJGC26_M, VP_ALFERINI_PAR, VP_ALFERINI_SI, VP_ALFERINI_M, LT_FORET_PAR, LT_FORET_SI, LT_FORET_M, VENICE_M, MS_USKIDS_M_B1011, MS_USKIDS_M_B12, DORAL_GP_M_B1011, DORAL_SF_M_B1213, TIER, FIELD_CARDS } from "../data/rivalData";
@@ -2787,14 +2788,12 @@ function RivaisIntlContent() {
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(
     locationPlayer ?? "Manuel Medeiros"
   );
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-  const isMobile = useIsMobile();
+  const md = useMasterDetail();
   const [showTable, setShowTable] = useState(false);
 
   const handleSelectPlayer = (name: string) => {
     setSelectedPlayer(name);
     setShowTable(false);
-    if (isMobile) setSidebarOpen(false);
   };
 
   return (
@@ -2804,10 +2803,7 @@ function RivaisIntlContent() {
       {/* Toolbar */}
       <div className="toolbar">
         <div className="toolbar-left">
-          <button className="sidebar-toggle" onClick={() => setSidebarOpen(o => !o)}
-            title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
-            {sidebarOpen ? "◀" : "▶"}
-          </button>
+          <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
           <span className="toolbar-title">🌍 Rivais Internacionais</span>
           <span className="toolbar-meta">
             Manuel · Sub-12
@@ -2833,16 +2829,10 @@ function RivaisIntlContent() {
 
       {/* Master-detail */}
       <div className="master-detail">
-        <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`}>
+        <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
           <RivaisSidebar selected={selectedPlayer} onSelect={handleSelectPlayer} />
         </div>
         <div className="course-detail">
-            {/* Botão voltar — só em mobile */}
-            {!sidebarOpen && (
-              <button className="mobile-back-btn" onClick={() => setSidebarOpen(true)}>
-                ◀ Lista
-              </button>
-            )}
           {showTable ? (
             <RivaisDashboard onSelectPlayer={handleSelectPlayer} />
           ) : selectedPlayer ? (

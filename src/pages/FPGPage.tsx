@@ -15,13 +15,14 @@
  */
 import React, { useEffect, useState, useMemo } from "react";
 import { useAppContext } from "../context/AppContext";
-import { useIsMobile } from "../hooks/useIsMobile";
 import { loadPlayers } from "../data/loader";
 import { SC } from "../utils/scoreDisplay";
 import { buildEscLookup, type EscLookup } from "../utils/playerUtils";
 import { getTeeHex } from "../utils/teeColors";
 import PillBadge from "../ui/PillBadge";
 import SexBadge from "../ui/SexBadge";
+import SidebarToggle from "../ui/SidebarToggle";
+import { useMasterDetail } from "../hooks/useMasterDetail";
 import { C } from "../utils/colors";
 import { fmtDate, MONTHS_PT } from "../utils/format";
 import { toggleArr } from "../utils/mathUtils";
@@ -2261,8 +2262,7 @@ function Content() {
   const [loadingMsg, setLoadingMsg] = useState("A carregar ficheiros...");
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState(0);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-  const isMobile = useIsMobile();
+  const md = useMasterDetail();
   const [sidebarMode, setSidebarMode] = useState<"month" | "circuit" | "pja-ranking" | "santo" | "clubes">("month");
   const [filterManuel, setFilterManuel] = useState(false);
   const [escLookup, setEscLookup] = useState<EscLookup>(new Map());
@@ -2512,7 +2512,7 @@ function Content() {
     return (
       <button key={(t as any)._isSynthetic ? "synth_" + t.tcode : t.tcode + "_" + t.date}
         className={`course-item ${selected === idx ? "active" : ""}`}
-        onClick={() => { setSelected(idx); if (isMobile) setSidebarOpen(false); }}>
+        onClick={() => setSelected(idx)}>
 
         {/* Linha 1: título + badges fixos à direita */}
         <div style={{ display: "flex", alignItems: "baseline", gap: 4, marginBottom: 3 }}>
@@ -2604,10 +2604,7 @@ function Content() {
       {/* Toolbar */}
       <div className="toolbar">
         <div className="toolbar-left">
-          <button className="sidebar-toggle" onClick={() => setSidebarOpen(v => !v)}
-            title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
-            {sidebarOpen ? "◀" : "▶"}
-          </button>
+          <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />
           <span className="toolbar-title">🏌️ Torneios</span>
           {!loading && (
             <>
@@ -2705,7 +2702,7 @@ function Content() {
       {sidebarMode !== "pja-ranking" && sidebarMode !== "clubes" && (
       <div className="master-detail">
         {/* Sidebar */}
-        <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`}>
+        <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
           {loading && displayList.length === 0 && (
             <div className="muted fs-11" style={{ padding: "12px 16px", fontStyle: "italic" }}>
               A carregar...
@@ -2747,12 +2744,6 @@ function Content() {
 
         {/* Detail */}
         <div className="course-detail">
-            {/* Botão voltar — só em mobile */}
-            {!sidebarOpen && (
-              <button className="mobile-back-btn" onClick={() => setSidebarOpen(true)}>
-                ◀ Lista
-              </button>
-            )}
           {cur
             ? <TournamentDetail tournament={cur} escLookup={escLookup} playersDB={playersDB} />
             : !loading && <div className="center-msg muted">Selecciona um torneio</div>
@@ -2765,7 +2756,7 @@ function Content() {
       {sidebarMode === "clubes" && (
         <div className="master-detail">
           {/* Sidebar Clubes */}
-          <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`}>
+          <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
             {/* Pills Sub 14 / Sub 18 */}
             <div style={{ padding: "10px 12px 6px", display: "flex", gap: 6, borderBottom: "1px solid var(--border)" }}>
               {(["sub14", "sub18"] as const).map(esc => {

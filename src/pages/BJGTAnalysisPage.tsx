@@ -6,7 +6,6 @@
  * Inclui secção de rivais internacionais.
  */
 import React, { useMemo, useState } from "react";
-import { useIsMobile } from "../hooks/useIsMobile";
 import { useParams, Link } from "react-router-dom";
 import {
   type RoundData,
@@ -23,6 +22,8 @@ import { meanArr } from "../utils/mathUtils";
 import { scClass, toParClass, sc3m, SC, tpColorDark } from "../utils/scoreDisplay";
 import { isCalUnlocked } from "../utils/authConstants";
 import PasswordGate from "../ui/PasswordGate";
+import SidebarToggle from "../ui/SidebarToggle";
+import { useMasterDetail } from "../hooks/useMasterDetail";
 import { tpColor , MANUEL_FED } from "../ui/tournamentPrimitives";
 import LoadingState from "../ui/LoadingState";
 import EmptyState from "../ui/EmptyState";
@@ -1202,8 +1203,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
   const [tab, setTab] = useState<ContestKey>("26_1011");
   const [distPeriod, setDistPeriod] = useState<number>(12); void setDistPeriod;
   const [expandedPlayers, setExpandedPlayers] = useState<Set<number>>(new Set()); void expandedPlayers; void setExpandedPlayers;
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-  const isMobile = useIsMobile();
+  const md = useMasterDetail();
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
 
   /* ── Analysis ── */
@@ -1774,12 +1774,6 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
     <div className="tourn-layout">
       <div className="toolbar"><div className="toolbar-left"><span className="toolbar-title">🇪🇸 BJGT</span></div></div>
       <div className="master-detail"><div className="course-detail">
-            {/* Botão voltar — só em mobile */}
-            {!sidebarOpen && (
-              <button className="mobile-back-btn" onClick={() => setSidebarOpen(true)}>
-                ◀ Lista
-              </button>
-            )}
         <div className="card empty-state"><div className="empty-icon">⚠️</div><div className="fw-700-dc">Erro: {error}</div></div>
       </div></div>
     </div>
@@ -1828,9 +1822,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
       {/* ── Toolbar ── */}
       <div className="toolbar">
         <div className="toolbar-left">
-          <button className="sidebar-toggle" onClick={() => setSidebarOpen(v => !v)} title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
-            {sidebarOpen ? "◀" : "▶"}
-          </button>
+          <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
           <span className="toolbar-title">🇪🇸 BJGT</span>
           <span className="toolbar-meta">📍 {TOURN.location}</span>
           <span className="toolbar-meta">📅 {TOURN.dates}</span>
@@ -1853,7 +1845,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
       {/* ── Master-detail ── */}
       <div className="master-detail">
         {/* Sidebar: Contest players */}
-        <div className={`sidebar${sidebarOpen ? "" : " sidebar-closed"}`}>
+        <div className={`sidebar${md.open ? "" : " sidebar-closed"}`}>
           <div className="sidebar-section-title">
             {CONTEST_LABELS[tab]}
           </div>

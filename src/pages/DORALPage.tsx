@@ -4,7 +4,6 @@
  * Boys 8-9: 9 buracos (H10-H18) · Boys 10-11 / 12-13: 18 buracos
  */
 import React, { useEffect, useState } from "react";
-import { useIsMobile } from "../hooks/useIsMobile";
 import { cachedFetch } from "../data/fetchCache";
 import { scClass, SC } from "../utils/scoreDisplay";
 import { tpColor, isManuel } from "../ui/tournamentPrimitives";
@@ -13,6 +12,8 @@ const isM = (name: string) => isManuel({ name });
 import { fmtToPar, norm } from "../utils/format";
 import { isCalUnlocked } from "../utils/authConstants";
 import PasswordGate from "../ui/PasswordGate";
+import SidebarToggle from "../ui/SidebarToggle";
+import { useMasterDetail } from "../hooks/useMasterDetail";
 import LoadingState from "../ui/LoadingState";
 import EmptyState from "../ui/EmptyState";
 
@@ -564,8 +565,7 @@ function Content() {
   const [entries, setEntries] = useState<Entry[]>([]);
   const [loading, setLoading] = useState(true);
   const [ti, setTi] = useState(0);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-  const isMobile = useIsMobile();
+  const md = useMasterDetail();
 
   useEffect(() => {
     Promise.all(
@@ -608,10 +608,7 @@ function Content() {
       {/* Toolbar */}
       <div className="toolbar">
         <div className="toolbar-left">
-          <button className="sidebar-toggle" onClick={() => setSidebarOpen(v => !v)}
-            title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
-            {sidebarOpen ? "◀" : "▶"}
-          </button>
+          <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
           <span className="toolbar-title">🇺🇸 Doral</span>
           {cur && <span className="toolbar-meta">📍 Doral Golf Resort</span>}
         </div>
@@ -630,7 +627,7 @@ function Content() {
       <div className="master-detail">
 
         {/* Sidebar */}
-        <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`}>
+        <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
           {years.map(year => {
             const yearEntries = entries.filter(e => e.year === year);
             return (
@@ -663,7 +660,7 @@ function Content() {
                   return (
                     <button key={entry.id}
                       className={`course-item ${safeIdx === idx ? "active" : ""}`}
-                      onClick={() => { setTi(idx); if (isMobile) setSidebarOpen(false); }}>
+                      onClick={() => setTi(idx)}>
                       <div className="course-item-name">{entry.category}</div>
                       {entry.course && (
                         <div className="course-item-meta" style={{ fontWeight:600, color:"var(--text-2)" }}>
@@ -703,12 +700,6 @@ function Content() {
 
         {/* Detail */}
         <div className="course-detail">
-            {/* Botão voltar — só em mobile */}
-            {!sidebarOpen && (
-              <button className="mobile-back-btn" onClick={() => setSidebarOpen(true)}>
-                ◀ Lista
-              </button>
-            )}
           {cur ? (
             <>
               <div className="detail-header">

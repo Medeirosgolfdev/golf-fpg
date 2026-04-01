@@ -5,7 +5,6 @@
  */
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { loadPlayers } from "../data/loader";
-import { useIsMobile } from "../hooks/useIsMobile";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from "recharts";
 import { SC, sdClassByHcp } from "../utils/scoreDisplay";
 import { isManuel as _isManuelPrim } from "../ui/tournamentPrimitives";
@@ -14,6 +13,8 @@ import { fmtToPar } from "../utils/format";
 import { isCalUnlocked } from "../utils/authConstants";
 import { resolveFedsInTournaments , buildEscLookup, resolveEscFromLookup } from "../utils/playerUtils";
 import PasswordGate from "../ui/PasswordGate";
+import SidebarToggle from "../ui/SidebarToggle";
+import { useMasterDetail } from "../hooks/useMasterDetail";
 import KpiCard from "../ui/KpiCard";
 import LoadingState from "../ui/LoadingState";
 import { ScorecardLeaderboard } from "../ui/ScorecardLeaderboard";
@@ -1810,8 +1811,7 @@ function DriveContent() {
 
   // Série principal (inclui sub12 como 4ª tab)
   const [series, setSeries]                     = useState<"tour"|"challenge"|"aquapor"|"sub12">("tour");
-  const [sidebarOpen, setSidebarOpen]           = useState(true);
-  const isMobile = useIsMobile();
+  const md = useMasterDetail();
   const [regionFilter, setRegionFilter]         = useState<string | null>(null);
   const [escFilter, setEscFilter]               = useState<string[]>([]);
   const [selectedGroupKey, setSelectedGroupKey] = useState<string | null>(null);
@@ -2090,10 +2090,7 @@ function DriveContent() {
       <div className="toolbar">
         <div className="toolbar-left">
           {(
-            <button className="sidebar-toggle" onClick={() => setSidebarOpen(v => !v)}
-              title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
-              {sidebarOpen ? "◀" : "▶"}
-            </button>
+            <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />
           )}
           <span className="toolbar-title">
             {isSub12Mode ? "Sub-12 DRIVE" : series === "aquapor" ? "💧 AQUAPOR" : "🏁 DRIVE"} {activeYear ?? ""}
@@ -2120,17 +2117,17 @@ function DriveContent() {
             <button className={"tourn-tab tourn-tab-sm" + (series === "tour" ? " active" : "")}
               onClick={() => setSeries("tour")}
               style={series === "tour" ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
-              🏌️ Tour<span className="mobile-hide"> ({countEvents(tourT)})</span>
+              🏌️ Tour ({countEvents(tourT)})
             </button>
             <button className={"tourn-tab tourn-tab-sm" + (series === "challenge" ? " active" : "")}
               onClick={() => setSeries("challenge")}
               style={series === "challenge" ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
-              ⚡ Chall<span className="mobile-hide">enge ({countEvents(challT)})</span>
+              ⚡ Challenge ({countEvents(challT)})
             </button>
             <button className={"tourn-tab tourn-tab-sm" + (series === "aquapor" ? " active" : "")}
               onClick={() => setSeries("aquapor")}
               style={series === "aquapor" ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
-              💧 AQUAPOR<span className="mobile-hide"> ({countEvents(aquaporT)})</span>
+              💧 AQUAPOR ({countEvents(aquaporT)})
             </button>
             <button className={"tourn-tab tourn-tab-sm" + (series === "sub12" ? " active" : "")}
               onClick={() => setSeries("sub12")}
@@ -2203,7 +2200,7 @@ function DriveContent() {
         <div className="master-detail">
 
           {/* Sidebar Sub-12 */}
-          <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`}>
+          <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
             {/* Séries */}
             <div className="sidebar-section-title">Série</div>
             {SUB12_SERIES_TABS.map(s => {
@@ -2303,7 +2300,7 @@ function DriveContent() {
         <div className="master-detail">
 
           {/* Sidebar */}
-          <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`}>
+          <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
             <button
               className={`course-item ${selectedGroupKey === null ? "active" : ""}`}
               onClick={() => { setSelectedGroupKey(null); setRoundIdx(0); }}>
@@ -2319,11 +2316,11 @@ function DriveContent() {
                     return (
                       <React.Fragment key={reg.id}>
                         <div className="sidebar-section-title-dark">{reg.emoji} {reg.label}</div>
-                        {regGroups.map(g => renderDriveItem(g, selectedGroupKey === g.key, () => { setSelectedGroupKey(g.key); setRoundIdx(0); if (isMobile) setSidebarOpen(false); }))}
+                        {regGroups.map(g => renderDriveItem(g, selectedGroupKey === g.key, () => { setSelectedGroupKey(g.key); setRoundIdx(0); }))}
                       </React.Fragment>
                     );
                   })
-              : filteredGroups.map(g => renderDriveItem(g, selectedGroupKey === g.key, () => { setSelectedGroupKey(g.key); setRoundIdx(0); if (isMobile) setSidebarOpen(false); }))
+              : filteredGroups.map(g => renderDriveItem(g, selectedGroupKey === g.key, () => { setSelectedGroupKey(g.key); setRoundIdx(0); }))
             }
 
             {filteredGroups.length === 0 && (
@@ -2336,13 +2333,6 @@ function DriveContent() {
 
           {/* Conteúdo principal */}
           <div className="flex-1-scroll">
-
-            {/* Botão voltar — só em mobile quando a sidebar está fechada */}
-            {!sidebarOpen && (
-              <button className="mobile-back-btn" onClick={() => setSidebarOpen(true)}>
-                ◀ Torneios
-              </button>
-            )}
 
             {/* RESUMO */}
             {selectedGroupKey === null && (
