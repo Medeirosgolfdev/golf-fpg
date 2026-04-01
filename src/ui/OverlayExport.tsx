@@ -30,11 +30,11 @@ const LO = "'Lora',serif";
 
 /* ═══════ HELPERS ═══════ */
 function scBg(d: number): string | null {
-  if (d <= -2) return "#d4a017";
-  if (d === -1) return "#dc2626";
-  if (d === 1)  return "#5BADE6";
-  if (d === 2)  return "#2B6EA0";
-  if (d >= 3)   return "#1B4570";
+  if (d <= -2) return "#d4a017"; // eagle+ — ouro
+  if (d === -1) return "#dc2626"; // birdie — vermelho
+  if (d === 1)  return "#3b82f6"; // bogey — azul médio (era #5BADE6)
+  if (d === 2)  return "#1e6ab0"; // double — azul mais visível (era #2B6EA0)
+  if (d >= 3)   return "#1e4480"; // triple+ — navy mais visível (era #1B4570)
   return null;
 }
 const vpC  = (v: number) => { if (v <= -2) return "#d4a017"; if (v === -1) return "#ef4444"; if (v === 0) return "#a3a3a3"; if (v === 1) return "#7eb8e8"; return "#22c55e"; };
@@ -52,7 +52,7 @@ function SC({ sc, par, sz = 32 }: { sc: number; par: number; sz?: number }) {
   const fs = Math.round(sz * 0.52);
   const base: React.CSSProperties = { width: sz, height: sz, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: fs, lineHeight: 1, flexShrink: 0 };
   const bg = scBg(d);
-  if (!bg) return <div style={base}>{sc}</div>;
+  if (!bg) return <div style={{ ...base, color: "#ffffff" }}>{sc}</div>;
   return <div style={{ ...base, background: bg, color: "#fff", borderRadius: d <= -1 ? "50%" : 0 }}>{sc}</div>;
 }
 /* light bg variant */
@@ -476,15 +476,19 @@ function V12({ d, v, s, bg, tc="white", tc2, tc3, tc4 }: P) {
   );
 }
 
-/* V13 · DASHBOARD */
-function V13({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
-  const hcl = hiChStr(d,v,s);
-  const Bx = ({ val, label, c, big }: { val:string|number; label:string; c?:string; big?:boolean }) => (
+/* V13 · DASHBOARD — Bx extraído para evitar recriação em cada render */
+function V13Bx({ val, label, c, big, tc, tc3 }: { val:string|number; label:string; c?:string; big?:boolean; tc:string; tc3:string }) {
+  return (
     <div style={{ flex:1, background:"rgba(255,255,255,.07)", borderRadius:6, padding:big?"8px 8px":"5px 8px", textAlign:"center" }}>
       <div style={{ fontSize:big?30:20, fontWeight:900, color:c||tc }}>{val}</div>
       <div style={{ fontSize:9, fontWeight:700, color:tc3, letterSpacing:1, marginTop:1 }}>{label}</div>
     </div>
   );
+}
+
+/* V13 · DASHBOARD */
+function V13({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
+  const hcl = hiChStr(d,v,s);
   return (
     <div style={{ fontFamily:II, width:360, color:tc, background:bg||"rgba(15,25,45,.85)", borderRadius:8, padding:"6px 8px" }}>
       {(v.player||v.course) && (
@@ -494,11 +498,11 @@ function V13({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
         </div>
       )}
       <div style={{ display:"flex", gap:5, marginBottom:5 }}>
-        <Bx val={s.sT} label="SCORE" big /><Bx val={fmtToPar(s.vpT)} label="VS PAR" c={vpC(s.vpT)} big />
+        <V13Bx val={s.sT} label="SCORE" big tc={tc} tc3={tc3} /><V13Bx val={fmtToPar(s.vpT)} label="VS PAR" c={vpC(s.vpT)} big tc={tc} tc3={tc3} />
       </div>
       {v.stats && (
         <div style={{ display:"flex", gap:5, marginBottom:5 }}>
-          <Bx val={s.st.birdies} label="BIRDIE" c="#dc2626" /><Bx val={s.st.pars} label="PAR" /><Bx val={s.st.bogeys} label="BOGEY" c="#5BADE6" />
+          <V13Bx val={s.st.birdies} label="BIRDIE" c="#dc2626" tc={tc} tc3={tc3} /><V13Bx val={s.st.pars} label="PAR" tc={tc} tc3={tc3} /><V13Bx val={s.st.bogeys} label="BOGEY" c="#5BADE6" tc={tc} tc3={tc3} />
         </div>
       )}
       {v.holeScores && <div className="u-flex-jc"><Grid2 d={d} sz={30} gap={3} nc={tc4} /></div>}
@@ -825,16 +829,20 @@ function V20({ d, v, s, bg, tc="white", tc3 }: P) {
   );
 }
 
-/* V21 · DP WORLD COLUMNS */
-function V21({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
-  const is18 = d.scores.length >= 18;
-  const Col = ({ scores, pars }: { scores:number[]; pars:number[] }) => (
-    <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:3 }}>
+/* V21 · DP WORLD COLUMNS — Col extraído para evitar recriação em cada render */
+function V21Col({ scores, pars, tc }: { scores:number[]; pars:number[]; tc:string }) {
+  return (
+    <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:3, color:tc }}>
       {scores.map((sc,i) => <SC key={i} sc={sc} par={pars[i]} sz={32} />)}
       <div style={{ height:1, background:"rgba(255,255,255,.2)", margin:"2px 0", alignSelf:"stretch" }} />
       <div style={{ fontFamily:OS, fontSize:16, fontWeight:700, color:tc, textAlign:"center" }}>{scores.reduce((a,x)=>a+x,0)}</div>
     </div>
   );
+}
+
+/* V21 · DP WORLD COLUMNS */
+function V21({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
+  const is18 = d.scores.length >= 18;
   return (
     <div style={{ fontFamily:II, display:"inline-flex", flexDirection:"column", alignItems:"center", color:tc, background:bg, padding:"10px 12px", borderRadius:10 }}>
       {(v.player||v.position||v.event||v.round) && (
@@ -844,16 +852,16 @@ function V21({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
           {v.round && <div style={{ fontSize:10, fontWeight:600, color:tc3 }}>Round {d.round}</div>}
         </div>
       )}
-      <div style={{ position:"relative", display:"inline-block", margin:"4px 0" }}>
+      <div style={{ display:"flex", alignItems:"flex-start", gap:6, margin:"4px 0" }}>
         <div style={{ fontFamily:OS, fontSize:88, fontWeight:900, letterSpacing:-4, lineHeight:1, color:tc }}>{s.sT}</div>
-        <div style={{ fontFamily:II, position:"absolute", top:4, right:-36, fontSize:28, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</div>
+        <div style={{ fontFamily:II, fontSize:28, fontWeight:900, color:vpC(s.vpT), paddingTop:8 }}>{fmtToPar(s.vpT)}</div>
       </div>
       {v.holeScores && (
         <div style={{ display:"flex", alignItems:"flex-start" }}>
-          <Col scores={d.scores.slice(0,is18?9:d.scores.length)} pars={d.par.slice(0,is18?9:d.par.length)} />
+          <V21Col scores={d.scores.slice(0,is18?9:d.scores.length)} pars={d.par.slice(0,is18?9:d.par.length)} tc={tc} />
           {is18 && <>
             <div style={{ width:1, background:"rgba(255,255,255,.2)", margin:"0 8px", alignSelf:"stretch" }} />
-            <Col scores={d.scores.slice(9)} pars={d.par.slice(9)} />
+            <V21Col scores={d.scores.slice(9)} pars={d.par.slice(9)} tc={tc} />
           </>}
         </div>
       )}
@@ -916,9 +924,11 @@ const BG_OPTIONS: { id:string; label:string; hex:string|null }[] = [
 ];
 
 /* ═══════ MAIN ═══════ */
-export default function OverlayExport({ data, inline }: { data: OverlayData; inline?: boolean }) {
-  const [player,      setPlayer]      = useState(data.player || "");
-  const [event,       setEvent]       = useState(data.event  || "");
+export default function OverlayExport({ data, inline, nextEvent }: { data: OverlayData; inline?: boolean; nextEvent?: string }) {
+  const [player,      setPlayer]      = useState(() => {
+    try { return localStorage.getItem("ov_player") || "Manuel"; } catch { return "Manuel"; }
+  });
+  const [event,       setEvent]       = useState(data.event || nextEvent || "");
   const [round,       setRound]       = useState(data.round  || 1);
   const [date,        setDate]        = useState(() => {
     if (data.date) return data.date;
@@ -935,6 +945,11 @@ export default function OverlayExport({ data, inline }: { data: OverlayData; inl
   const [collapsed,   setCollapsed]   = useState(true);
   const [manualScore, setManualScore] = useState("");
   const designRefs = useRef<Record<string, HTMLDivElement|null>>({});
+
+  /* Persistir nome do jogador entre sessões */
+  React.useEffect(() => {
+    try { localStorage.setItem("ov_player", player); } catch { /* ignore */ }
+  }, [player]);
 
   const noHoleData   = !data.hasHoles || data.scores.length === 0;
   const allFilled    = !noHoleData && data.scores.every(s => s !== null);
@@ -1037,12 +1052,12 @@ export default function OverlayExport({ data, inline }: { data: OverlayData; inl
             <span style={{ fontSize:13, fontWeight:600, marginLeft:8, color:"#888" }}>{collapsed ? "▸ expandir" : "▾"}</span>
           </h3>
           {!allFilled && !noHoleData && !collapsed && (
-            <div style={{ fontSize:13, fontWeight:700, color:"#b45309", marginTop:4 }}>⚠ Preenche todos os buracos para scores exactos.</div>
+            <div style={{ fontSize:12, color:"#999", marginTop:4 }}>Buracos em branco assumidos como Par.</div>
           )}
         </div>
       )}
       {inline && !allFilled && !noHoleData && (
-        <div style={{ fontSize:13, fontWeight:700, color:"#b45309", marginBottom:8 }}>⚠ Preenche todos os buracos para scores exactos.</div>
+        <div style={{ fontSize:12, color:"#888", marginBottom:6 }}>Buracos em branco assumidos como Par.</div>
       )}
 
       {(inline || !collapsed) && <>

@@ -11,6 +11,7 @@ import { calcSD, calcScore, calcCourseHcp, calcPlayingHcp , expectedSD9, calcStr
 import { SC } from "../utils/scoreDisplay";
 import OverlayExport from "../ui/OverlayExport";
 import type { OverlayData } from "../ui/OverlayExport";
+import { getNextCalendarEvent } from "../utils/calendarData";
 
 
 
@@ -599,6 +600,33 @@ type OverlayHoleData = {
   si: number[];
 };
 
+/* Tipo de cada buraco computado no scorecard */
+type ComputedHole = {
+  hole: number; par: number; si: number; strokes: number; maxScore: number;
+  actual: number | null; adjusted: number | null; vsPar: number | null;
+};
+
+/* ── Funções puras para os totais do scorecard (extraídas do render) ── */
+function scSumPar(slice: ComputedHole[]): number {
+  return slice.reduce((s, h) => s + h.par, 0);
+}
+function scSumGross(slice: ComputedHole[]): number | null {
+  const f = slice.filter(h => h.actual !== null);
+  return f.length === slice.length ? f.reduce((s, h) => s + h.actual!, 0) : null;
+}
+function scSumAdj(slice: ComputedHole[]): number | null {
+  const f = slice.filter(h => h.adjusted !== null);
+  return f.length === slice.length ? f.reduce((s, h) => s + h.adjusted!, 0) : null;
+}
+function scSumMax(slice: ComputedHole[]): number {
+  return slice.reduce((s, h) => s + h.maxScore, 0);
+}
+function scFmtVsPar(gross: number | null, p: number): string {
+  if (gross === null) return "–";
+  const d = gross - p;
+  return d === 0 ? "E" : d > 0 ? `+${d}` : String(d);
+}
+
 function AgsSection({
   hi, holes, cr, slope, par, pcc, is9h, holesMode, onOverlayData,
 }: {
@@ -657,7 +685,6 @@ function AgsSection({
 
   /* Computed values per hole */
   const computed = useMemo(() => {
-    if (!holeData) return null;
     return holeData.map(h => {
       const val = parseInt(scores[h.hole] || "", 10);
       const actual = !isNaN(val) && val > 0 ? val : null;
@@ -696,7 +723,7 @@ function AgsSection({
   const setCustomSI = useCallback((hole: number, val: string) => setCustomSIs(prev => ({ ...prev, [hole]: val })), []);
   const clearAll = useCallback(() => { setScores({}); if (isSynthetic) { setCustomPars({}); setCustomSIs({}); } }, [isSynthetic]);
 
-  /* Always report overlay data (par/si/current scores) */
+  /* Report overlay data whenever computed changes */
   React.useEffect(() => {
     if (!onOverlayData) return;
     if (!computed) { onOverlayData(null); return; }
@@ -705,11 +732,15 @@ function AgsSection({
       scores: computed.map(h => h.actual),
       si: computed.map(h => h.si),
     });
-    return () => onOverlayData(null); // limpar ao desmontar (ex: trocar modo campo↔manual)
   }, [computed, onOverlayData]);
 
+  /* Limpar apenas no unmount — onOverlayData é estável (useCallback com []) */
+  React.useEffect(() => {
+    return () => onOverlayData?.(null);
+  }, [onOverlayData]);
+
   /* No hole data → info only */
-  if (!fieldHoles || !computed) {
+  if (!fieldHoles) {
     return (
       <div className="m-14-0">
         <div className="notice notice-warn">
@@ -727,28 +758,12 @@ function AgsSection({
   const front = is18 ? computed.slice(0, 9) : computed;
   const back = is18 ? computed.slice(9, 18) : [];
 
-  const sumPar = (slice: typeof computed) => slice.reduce((s, h) => s + h.par, 0);
-  const sumGross = (slice: typeof computed) => {
-    const f = slice.filter(h => h.actual !== null);
-    return f.length === slice.length ? f.reduce((s, h) => s + h.actual!, 0) : null;
-  };
-  const sumAdj = (slice: typeof computed) => {
-    const f = slice.filter(h => h.adjusted !== null);
-    return f.length === slice.length ? f.reduce((s, h) => s + h.adjusted!, 0) : null;
-  };
-  const sumMax = (slice: typeof computed) => slice.reduce((s, h) => s + h.maxScore, 0);
-  const fmtVsPar = (gross: number | null, p: number) => {
-    if (gross === null) return "–";
-    const d = gross - p;
-    return d === 0 ? "E" : d > 0 ? `+${d}` : String(d);
-  };
-
-  const totalParAll = sumPar(computed);
-  const grossOut = sumGross(front);
-  const grossIn = is18 ? sumGross(back) : null;
+  const totalParAll = scSumPar(computed);
+  const grossOut = scSumGross(front);
+  const grossIn = is18 ? scSumGross(back) : null;
   const grossTotal = totals?.grossTotal ?? null;
-  const adjOut = hasAgs ? sumAdj(front) : null;
-  const adjIn = hasAgs && is18 ? sumAdj(back) : null;
+  const adjOut = hasAgs ? scSumAdj(front) : null;
+  const adjIn = hasAgs && is18 ? scSumAdj(back) : null;
   const adjTotal = totals?.agsTotal ?? null;
 
   return (
@@ -848,7 +863,7 @@ function AgsSection({
                       className="sim-input-accent"
                     />
                   ) : h.par}</td>
-                  {is18 && i === 8 && <td className="col-out fw-700">{sumPar(front)}</td>}
+                  {is18 && i === 8 && <td className="col-out fw-700">{scSumPar(front)}</td>}
                 </React.Fragment>
               ))}
               {is18 && back.map((h) => <td key={h.hole}>{isSynthetic ? (
@@ -858,7 +873,7 @@ function AgsSection({
                   className="sim-input-accent"
                 />
               ) : h.par}</td>)}
-              <td className={`col-${is18 ? "in" : "total"} fw-700`}>{is18 ? sumPar(back) : totalParAll}</td>
+              <td className={`col-${is18 ? "in" : "total"} fw-700`}>{is18 ? scSumPar(back) : totalParAll}</td>
               {is18 && <td className="col-total fw-700">{totalParAll}</td>}
             </tr>
 
@@ -927,8 +942,8 @@ function AgsSection({
                     {h.vsPar != null ? (h.vsPar === 0 ? "E" : h.vsPar > 0 ? `+${h.vsPar}` : h.vsPar) : ""}
                   </td>
                   {is18 && i === 8 && (
- <td className="col-out fw-600" style={{ color: grossOut != null ? (grossOut - sumPar(front) <= 0 ? SC.good : SC.warn) : "var(--border)" }}>
-                      {fmtVsPar(grossOut, sumPar(front))}
+ <td className="col-out fw-600" style={{ color: grossOut != null ? (grossOut - scSumPar(front) <= 0 ? SC.good : SC.warn) : "var(--border)" }}>
+                      {scFmtVsPar(grossOut, scSumPar(front))}
                     </td>
                   )}
                 </React.Fragment>
@@ -939,9 +954,9 @@ function AgsSection({
                 </td>
               ))}
               <td className={`col-${is18 ? "in" : "total"} fw-600`}>
-                {is18 ? fmtVsPar(grossIn, sumPar(back)) : fmtVsPar(grossTotal, totalParAll)}
+                {is18 ? scFmtVsPar(grossIn, scSumPar(back)) : scFmtVsPar(grossTotal, totalParAll)}
               </td>
-              {is18 && <td className="col-total fw-700">{fmtVsPar(grossTotal, totalParAll)}</td>}
+              {is18 && <td className="col-total fw-700">{scFmtVsPar(grossTotal, totalParAll)}</td>}
             </tr>
 
             {/* ── AGS rows (only when HI filled) ── */}
@@ -973,14 +988,14 @@ function AgsSection({
                   {front.map((h, i) => (
                     <React.Fragment key={h.hole}>
                       <td className="cb-amber">{h.maxScore}</td>
-                      {is18 && i === 8 && <td className="col-out cb-amber">{sumMax(front)}</td>}
+                      {is18 && i === 8 && <td className="col-out cb-amber">{scSumMax(front)}</td>}
                     </React.Fragment>
                   ))}
                   {is18 && back.map((h) => (
                     <td key={h.hole} className="cb-amber">{h.maxScore}</td>
                   ))}
-                  <td className={`col-${is18 ? "in" : "total"} cb-amber`}>{is18 ? sumMax(back) : sumMax(computed)}</td>
-                  {is18 && <td className="col-total fw-900 c-amber">{sumMax(computed)}</td>}
+                  <td className={`col-${is18 ? "in" : "total"} cb-amber`}>{is18 ? scSumMax(back) : scSumMax(computed)}</td>
+                  {is18 && <td className="col-total fw-900 c-amber">{scSumMax(computed)}</td>}
                 </tr>
 
                 {/* Ajustado */}
@@ -1192,6 +1207,12 @@ export default function SimuladorPage() {
 
   const holesLabel = holesMode === "front9" ? "Front 9" : holesMode === "back9" ? "Back 9" : "18 buracos";
 
+  /* Próximo evento do calendário — para pré-preencher o campo "Torneio" */
+  const nextEventName = useMemo(() => {
+    const ev = getNextCalendarEvent();
+    return ev ? ev.title : "";
+  }, []);
+
   /* Overlay export data — disponível sempre que há contexto mínimo */
   const overlayData: OverlayData | null = useMemo(() => {
     // Requer sempre teeData (em modo manual: CR e Slope preenchidos; em campo: tee com ratings)
@@ -1391,7 +1412,7 @@ export default function SimuladorPage() {
                     Partilhar Scorecard
                   </summary>
                   <div className="mt-8">
-                    <OverlayExport data={overlayData} inline />
+                    <OverlayExport data={overlayData} inline nextEvent={nextEventName} />
                   </div>
                 </details>
               )}
@@ -1469,7 +1490,7 @@ export default function SimuladorPage() {
                     Partilhar Scorecard
                   </summary>
                   <div className="mt-8">
-                    <OverlayExport data={overlayData} inline />
+                    <OverlayExport data={overlayData} inline nextEvent={nextEventName} />
                   </div>
                 </details>
               )}
