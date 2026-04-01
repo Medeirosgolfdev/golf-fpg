@@ -52,7 +52,7 @@ function SC({ sc, par, sz = 32 }: { sc: number; par: number; sz?: number }) {
   const fs = Math.round(sz * 0.52);
   const base: React.CSSProperties = { width: sz, height: sz, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: fs, lineHeight: 1, flexShrink: 0 };
   const bg = scBg(d);
-  if (!bg) return <div style={{ ...base, color: "#ffffff" }}>{sc}</div>;
+  if (!bg) return <div style={base}>{sc}</div>;
   return <div style={{ ...base, background: bg, color: "#fff", borderRadius: d <= -1 ? "50%" : 0 }}>{sc}</div>;
 }
 /* light bg variant */
@@ -595,43 +595,44 @@ function V15({ d, v, s }: P) {
 function V16({ d, v, s }: P) {
   const is18 = d.scores.length >= 18; const W = 22;
   return (
-    <div style={{ fontFamily:II, width:340, background:"#fff", borderRadius:8, padding:"3px 5px", color:"#222", border:"1px solid rgba(0,0,0,.08)" }}>
-      <div style={{ borderBottom:"2px solid #e5e7eb", paddingBottom:6, marginBottom:4 }}>
-        {v.course&&d.course && <div style={{ fontSize:16, fontWeight:900, color:"#111" }}>{d.course}</div>}
-        {(v.date||v.tee||v.round) && <div style={{ fontSize:10, fontWeight:600, color:"#999", marginTop:2 }}>{metaStr(d,{date:v.date,tee:v.tee,round:v.round})}</div>}
+    <div style={{ fontFamily:II, display:"inline-block", background:"#fff", borderRadius:8, padding:"3px 5px", color:"#222", border:"1px solid rgba(0,0,0,.08)" }}>
+      {/* Header: campo + total inline */}
+      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", gap:12, borderBottom:"1px solid #e5e7eb", paddingBottom:3, marginBottom:3 }}>
+        <div>
+          {v.course&&d.course && <div style={{ fontSize:13, fontWeight:900, color:"#111" }}>{d.course}</div>}
+          {(v.date||v.tee||v.round) && <div style={{ fontSize:9, fontWeight:600, color:"#999" }}>{metaStr(d,{date:v.date,tee:v.tee,round:v.round})}</div>}
+        </div>
+        <div style={{ display:"flex", alignItems:"baseline", gap:3, flexShrink:0 }}>
+          <span style={{ fontFamily:OS, fontSize:22, fontWeight:900, color:"#111" }}>{s.sT}</span>
+          <span style={{ fontSize:13, fontWeight:900, color:vpCd(s.vpT) }}>{fmtToPar(s.vpT)}</span>
+        </div>
       </div>
       {v.holeScores && (is18 ? [[0,9],[9,9]] as [number,number][] : [[0,d.scores.length] as [number,number]]).map(([off,len],ri) => {
         const subP = d.par.slice(off,off+len).reduce((a,b)=>a+b,0);
         const subS = d.scores.slice(off,off+len).reduce((a,b)=>a+b,0);
         return (
           <div key={off}>
-            <div style={{ display:"flex", background:"#1e3a2f", borderRadius:ri===0?"6px 6px 0 0":0, padding:"3px 0" }}>
-              <div style={{ width:40, padding:"0 5px", fontSize:10, fontWeight:800, color:"#aaaaaa", display:"flex", alignItems:"center" }}>Hole</div>
-              {Array.from({length:len},(_,i) => <div key={i} style={{width:W,textAlign:"center",fontSize:11,fontWeight:800,color:"#fff"}}>{off+i+1}</div>)}
-              <div style={{ width:34, textAlign:"center", fontSize:10, fontWeight:800, color:"#aaaaaa" }}>{is18?(ri===0?"Out":"In"):"Tot"}</div>
+            <div style={{ display:"flex", background:"#1e3a2f", borderRadius:ri===0?"5px 5px 0 0":0, padding:"2px 0" }}>
+              <div style={{ width:36, padding:"0 4px", fontSize:9, fontWeight:800, color:"#aaaaaa", display:"flex", alignItems:"center" }}>Hole</div>
+              {Array.from({length:len},(_,i) => <div key={i} style={{width:W,textAlign:"center",fontSize:10,fontWeight:800,color:"#fff"}}>{off+i+1}</div>)}
+              <div style={{ width:28, textAlign:"center", fontSize:9, fontWeight:800, color:"#aaaaaa" }}>{is18?(ri===0?"Out":"In"):"Tot"}</div>
             </div>
             {v.holePar && (
-              <div style={{ display:"flex", background:"#e8f5e9", padding:"2px 0" }}>
-                <div style={{ width:40, padding:"0 5px", fontSize:11, fontWeight:700, color:"#2e7d32", display:"flex", alignItems:"center" }}>Par</div>
-                {d.par.slice(off,off+len).map((p,i) => <div key={i} style={{width:W,textAlign:"center",fontSize:11,color:"#2e7d32",fontWeight:700}}>{p}</div>)}
-                <div style={{ width:34, textAlign:"center", fontSize:12, fontWeight:800, color:"#2e7d32" }}>{subP}</div>
+              <div style={{ display:"flex", background:"#e8f5e9", padding:"1px 0" }}>
+                <div style={{ width:36, padding:"0 4px", fontSize:10, fontWeight:700, color:"#2e7d32", display:"flex", alignItems:"center" }}>Par</div>
+                {d.par.slice(off,off+len).map((p,i) => <div key={i} style={{width:W,textAlign:"center",fontSize:10,color:"#2e7d32",fontWeight:700}}>{p}</div>)}
+                <div style={{ width:28, textAlign:"center", fontSize:11, fontWeight:800, color:"#2e7d32" }}>{subP}</div>
               </div>
             )}
-            <div style={{ display:"flex", padding:"3px 0", marginBottom:ri===0&&is18?5:0 }}>
-              <div style={{ width:40, padding:"0 5px", fontSize:11, fontWeight:900, color:"#333", display:"flex", alignItems:"center" }}>Score</div>
-              {d.scores.slice(off,off+len).map((sc,i) => <div key={i} style={{width:W,display:"flex",justifyContent:"center"}}><SCL sc={sc} par={d.par[off+i]} sz={22} /></div>)}
-              <div style={{ width:34, textAlign:"center", fontSize:16, fontWeight:900, color:"#333", display:"flex", alignItems:"center", justifyContent:"center" }}>{subS}</div>
+            <div style={{ display:"flex", padding:"2px 0", marginBottom:ri===0&&is18?3:0 }}>
+              <div style={{ width:36, padding:"0 4px", fontSize:10, fontWeight:900, color:"#333", display:"flex", alignItems:"center" }}>Score</div>
+              {d.scores.slice(off,off+len).map((sc,i) => <div key={i} style={{width:W,display:"flex",justifyContent:"center"}}><SCL sc={sc} par={d.par[off+i]} sz={20} /></div>)}
+              <div style={{ width:28, textAlign:"center", fontSize:14, fontWeight:900, color:"#333", display:"flex", alignItems:"center", justifyContent:"center" }}>{subS}</div>
             </div>
           </div>
         );
       })}
-      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginTop:3, padding:"2px 5px", background:"#f3f4f6", borderRadius:6 }}>
-        {v.player&&d.player ? <div style={{ fontSize:14, fontWeight:900, color:"#111" }}>{d.player}</div> : <div />}
-        <div style={{ display:"flex", alignItems:"baseline", gap:4 }}>
-          <span style={{ fontFamily:OS, fontSize:28, fontWeight:900, color:"#111" }}>{s.sT}</span>
-          <span style={{ fontSize:18, fontWeight:900, color:vpCd(s.vpT) }}>{fmtToPar(s.vpT)}</span>
-        </div>
-      </div>
+      {v.stats && <div style={{ marginTop:2 }}><StatsRow st={s.st} tc3="#94a3b8" gap={5} fs={9} /></div>}
     </div>
   );
 }
