@@ -3665,7 +3665,7 @@ export default function USKidsFieldPage() {
       <div className="master-detail">
 
         {/* ── SIDEBAR ── */}
-        <div className={`sidebar${md.open ? "" : " sidebar-closed"}`>
+        <div className={`sidebar${md.open ? "" : " sidebar-closed"}`}>
 
         {/* Lista de torneios agrupada por mês — OU lista de rivais */}
         <div style={{ overflowY:"auto", flex:1 }}>
