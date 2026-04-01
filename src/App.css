@@ -895,9 +895,6 @@ tr.cross-current { background: var(--bg-success); }
  .sc-stat-label { font-size: 10px; }
  .sc-stat-value { font-size: 18px; }
  .sc-stat-score .sc-stat-value { font-size: 20px; }
-}
-
-@media (max-width: 900px) {
  .an-grid { grid-template-columns: repeat(2, 1fr); }
  .an-grid3 { grid-template-columns: 1fr; }
  .pa-controls { flex-direction: column; align-items: flex-start; }
@@ -1316,7 +1313,6 @@ tr.cross-current { background: var(--bg-success); }
 
 @media (max-width: 768px) {
  .topbar      { gap: 6px; padding: 0 8px; height: 44px; }
- .top-stats   { display: none; }
  .brand-icon  { width: 22px; height: 22px; }
  .brand-title { font-size: 13px; }
  .nav         { margin-left: 4px; }
@@ -1433,6 +1429,9 @@ tr.cross-current { background: var(--bg-success); }
  .mobile-hide     { display: none; }
  .mobile-only     { display: initial; }
  .sidebar-toggle  { width: 30px; height: 30px; font-size: 12px; }
+}
+
+ .rivais-player-name { min-width: 130px; font-size: 11px; }
 }
 
 @media (max-width: 480px) {
@@ -1589,7 +1588,6 @@ tr.cross-current { background: var(--bg-success); }
 
 /* ─── Tournament Scorecard Cells ─── */
 .tourn-scorecard .tourn-hole-cell { padding: 3px 2px; text-align: center; vertical-align: middle; min-width: 33px; }
-
 
 
 /* To-par */
@@ -1753,12 +1751,6 @@ tr.cross-current { background: var(--bg-success); }
 .cal-sidebar { padding: 16px 18px; border-right: 1px solid var(--border-light); overflow-y: auto; background: var(--bg-card); display: flex; flex-direction: column; gap: 6px; }
 .cal-sidebar-main { padding: 12px 14px; display: flex; flex-direction: column; gap: 12px; flex-shrink: 0; }
 
-/* Calendar modal */
-
-/* ─── Responsive additions ─── */
-@media (max-width: 768px) {
- .rivais-player-name { min-width: 130px; font-size: 11px; }
-}
 
 /* ═══════════════════════════════════════════
   Utility Classes
@@ -2447,6 +2439,7 @@ tr.cross-current { background: var(--bg-success); }
  gap: 16px;
  flex-shrink: 0; /* nunca comprimir as estatísticas */
 }
+@media (max-width: 768px) { .top-stats { display: none; } }
 .top-stat {
  text-align: center;
 }
