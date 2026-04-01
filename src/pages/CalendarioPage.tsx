@@ -850,7 +850,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
           </div>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between",
             padding: "4px 12px 8px", gap: 8 }}>
-            <button onClick={() = title="Mês anterior"> setCurrentMonth(m => Math.max(0, m-1))} disabled={currentMonth <= 0}
+            <button onClick={() => setCurrentMonth(m => Math.max(0, m-1))} title="Mês anterior" disabled={currentMonth <= 0}
               style={{ width: 32, height: 32, borderRadius: "50%", border: "1px solid var(--border)",
                 background: "var(--bg-card)", cursor: currentMonth <= 0 ? "default" : "pointer",
                 display: "flex", alignItems: "center", justifyContent: "center",
@@ -860,7 +860,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
               {monthLabel(currentMonth)} 2026
             </span>
             <span className="fs-11 c-text-3 mono" style={{ flexShrink: 0 }}>{visibleEvents.length} provas</span>
-            <button onClick={() = title="Mês seguinte"> setCurrentMonth(m => Math.min(11, m+1))} disabled={currentMonth >= 11}
+            <button onClick={() => setCurrentMonth(m => Math.min(11, m+1))} title="Mês seguinte" disabled={currentMonth >= 11}
               style={{ width: 32, height: 32, borderRadius: "50%", border: "1px solid var(--border)",
                 background: "var(--bg-card)", cursor: currentMonth >= 11 ? "default" : "pointer",
                 display: "flex", alignItems: "center", justifyContent: "center",
