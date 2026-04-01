@@ -550,7 +550,7 @@ function V15({ d, v, s }: P) {
       <div style={{ background:"#1a2744", padding:"5px 10px", display:"flex", justifyContent:"space-between", alignItems:"center", gap:8 }}>
         <div>
           {v.player&&d.player && <div style={{ fontFamily:OS, fontSize:16, fontWeight:700, color:"#fff" }}>{d.player.toUpperCase()}</div>}
-          {(v.event||v.round||v.position) && <div style={{ fontSize:10, fontWeight:700, color:"rgba(255,255,255,.55)", letterSpacing:.5 }}>{[v.event&&d.event,v.round&&`R${d.round}`,v.position&&d.position].filter(Boolean).join(" · ")}</div>}
+          {(v.event||v.round||v.position) && <div style={{ fontSize:10, fontWeight:700, color:"#aaaaaa", letterSpacing:.5 }}>{[v.event&&d.event,v.round&&`R${d.round}`,v.position&&d.position].filter(Boolean).join(" · ")}</div>}
         </div>
         <div style={{ display:"flex", flexDirection:"column", alignItems:"flex-end", flexShrink:0 }}>
           <div style={{ fontFamily:OS, fontSize:28, fontWeight:700, color:"#fff", lineHeight:1 }}>{s.sT}</div>
@@ -601,9 +601,9 @@ function V16({ d, v, s }: P) {
         return (
           <div key={off}>
             <div style={{ display:"flex", background:"#1e3a2f", borderRadius:ri===0?"6px 6px 0 0":0, padding:"3px 0" }}>
-              <div style={{ width:40, padding:"0 5px", fontSize:10, fontWeight:800, color:"rgba(255,255,255,.6)", display:"flex", alignItems:"center" }}>Hole</div>
+              <div style={{ width:40, padding:"0 5px", fontSize:10, fontWeight:800, color:"#aaaaaa", display:"flex", alignItems:"center" }}>Hole</div>
               {Array.from({length:len},(_,i) => <div key={i} style={{width:W,textAlign:"center",fontSize:11,fontWeight:800,color:"#fff"}}>{off+i+1}</div>)}
-              <div style={{ width:34, textAlign:"center", fontSize:10, fontWeight:800, color:"rgba(255,255,255,.6)" }}>{is18?(ri===0?"Out":"In"):"Tot"}</div>
+              <div style={{ width:34, textAlign:"center", fontSize:10, fontWeight:800, color:"#aaaaaa" }}>{is18?(ri===0?"Out":"In"):"Tot"}</div>
             </div>
             {v.holePar && (
               <div style={{ display:"flex", background:"#e8f5e9", padding:"2px 0" }}>
@@ -948,7 +948,7 @@ export default function OverlayExport({ data, inline }: { data: OverlayData; inl
       st:{ eagles:0, birdies:0, pars:0, bogeys:0, doubles:0, triples:0 } };
   }, [dd, noHoleData, manualTotal, manualPar, manualSD]);
 
-  const toggle = (key: string) => setVis(prev => ({ ...prev, [key]: !prev[key] }));
+  const toggle = useCallback((key: string) => setVis(prev => ({ ...prev, [key]: !prev[key] })), []);
   const available = useMemo(
     () => DESIGNS.filter(x => !x.needsHoles || data.hasHoles),
     [data.hasHoles],
@@ -958,10 +958,10 @@ export default function OverlayExport({ data, inline }: { data: OverlayData; inl
   const bgHex   = bgId === "custom" ? customBg : (bgOpt?.hex ?? null);
   const bgColor = bgHex ? hexToRgba(bgHex, bgAlpha/100) : null;
 
-  const tc  = theme === "light" ? "#111"               : "#fff";
-  const tc2 = theme === "light" ? "rgba(0,0,0,0.55)"   : "rgba(255,255,255,0.6)";
-  const tc3 = theme === "light" ? "rgba(0,0,0,0.35)"   : "rgba(255,255,255,0.4)";
-  const tc4 = theme === "light" ? "rgba(0,0,0,0.2)"    : "rgba(255,255,255,0.25)";
+  const tc  = theme === "light" ? "#111111" : "#ffffff";
+  const tc2 = theme === "light" ? "#737373" : "#aaaaaa"; // era rgba(0,0,0,0.55) / rgba(255,255,255,0.6)
+  const tc3 = theme === "light" ? "#a0a0a0" : "#808080"; // era rgba(0,0,0,0.35) / rgba(255,255,255,0.4)
+  const tc4 = theme === "light" ? "#c0c0c0" : "#707070"; // era rgba(0,0,0,0.2)  / rgba(255,255,255,0.25)
 
   const checkerBg: React.CSSProperties = {
     backgroundImage:"linear-gradient(45deg,#ccc 25%,transparent 25%),linear-gradient(-45deg,#ccc 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#ccc 75%),linear-gradient(-45deg,transparent 75%,#ccc 75%)",

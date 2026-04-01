@@ -104,7 +104,7 @@ function SDTable({
           {rows.map((r) => {
             const isEven = r.vsPar === 0;
             const isBogey = r.vsPar === Math.round(
-              hi !== null ? calcPlayingHcp(hi, slope, cr, par) : 999
+              hi !== null ? calcPlayingHcp(is9h ? hi / 2 : hi, slope, cr, par) : 999
             );
             return (
               <tr
