@@ -382,14 +382,14 @@ html, body, #root {
 .p-club { background: var(--badge-club-bg); color: var(--badge-club-text); }
 
 /* ── Escalão ramp ── */
-.p-sub12 { background: #3a7a28; color: #fff; }
+.p-sub12 { background: var(--accent); color: #fff; }
 
 /* ── Tournament (3px radius — rectângular) ── */
 .p-tourn { border-radius: 3px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; }
 .p-regional { background: var(--pill-regional-bg); color: var(--pill-regional-fg); }
-.p-nacional { background: #046A38; color: var(--pill-nacional-fg); }
+.p-nacional { background: var(--color-good-dark); color: var(--pill-nacional-fg); }
 .p-intl { background: #00FF00; color: var(--pill-regional-bg); }
-.p-pja { background: #dc2626; color: #fff; }
+.p-pja { background: var(--color-danger); color: #fff; }
 
 /* Origin (score_origin) — same rectangular form */
 .p-origin { border-radius: 3px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; }
@@ -693,7 +693,7 @@ html, body, #root {
 .score-delta.pos { color: var(--color-danger); }
 .score-delta.neg { color: var(--color-good); }
 .hb { font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: var(--radius-sm); }
-.hb9 { background: #d97706; color: #fff; }
+.hb9 { background: var(--color-amber); color: #fff; }
 .hb18 { background: var(--badge-fed); color: #fff; }
 /* Pill badges (from melhorias.json) */
 
@@ -1429,8 +1429,6 @@ tr.cross-current { background: var(--bg-success); }
  .mobile-hide     { display: none; }
  .mobile-only     { display: initial; }
  .sidebar-toggle  { width: 30px; height: 30px; font-size: 12px; }
-}
-
  .rivais-player-name { min-width: 130px; font-size: 11px; }
 }
 
@@ -1533,8 +1531,8 @@ tr.cross-current { background: var(--bg-success); }
 .cat-badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: var(--radius); line-height: 1.5; }
 
 /* RivaisDashboard column patterns */
-.rivais-link { color: #1a5c2a; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 2px; font-weight: 700; }
-.rivais-link:hover { color: #0d3a18; }
+.rivais-link { color: var(--accent); text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 2px; font-weight: 700; }
+.rivais-link:hover { color: var(--accent-hover); }
 .rivais-row-ref { border-bottom: 2px solid var(--color-info-alt) !important; }
 .rivais-row-ref .rivais-player-name { border-right-color: var(--color-info-alt); }
 
@@ -2781,9 +2779,9 @@ tr.cross-current { background: var(--bg-success); }
 }
 
 /* ─── Evolução de categoria (BJGT) ─── */
-.badge-evo-up  { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: var(--radius-sm); background: #dbeafe; color: #1e40af; white-space: nowrap; }
-.badge-evo-eq  { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: var(--radius-sm); background: #fef3c7; color: #92400e; white-space: nowrap; }
-.badge-evo-new { display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 5px; border-radius: var(--radius-sm); background: #f3f4f6; color: #9ca3af; white-space: nowrap; }
+.badge-evo-up  { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: var(--radius-sm); background: var(--bg-info-strong); color: var(--color-info-dark, #1e40af); white-space: nowrap; }
+.badge-evo-eq  { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: var(--radius-sm); background: var(--bg-warn-strong); color: var(--color-warn-dark); white-space: nowrap; }
+.badge-evo-new { display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 5px; border-radius: var(--radius-sm); background: var(--bg-muted); color: var(--text-muted); white-space: nowrap; }
 .pill-birth { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: var(--radius-sm); background: #ede9fe; color: #5b21b6; white-space: nowrap; }
 
 /* ─── Meta sub-header de tabela (datas, rótulos compactos) ─── */
