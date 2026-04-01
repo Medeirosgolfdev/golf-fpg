@@ -2821,7 +2821,9 @@ function Content() {
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState(0);
     const md = useMasterDetail();
-  const [sidebarMode, setSidebarMode] = useState<"month" | "circuit" | "pja-ranking" | "santo" | "clubes">("month");
+  const [navMode, setNavMode]         = useState<"torneios" | "ranking-pja" | "ranking-sub12">("torneios");
+  const [seriesFilter, setSeriesFilter] = useState<"" | "circuit" | "santo" | "clubes">(""); // filtro de série dentro de Torneios
+  const [yearFilter, setYearFilter]    = useState<string | null>(null);
   const [filterManuel, setFilterManuel] = useState(false);
   const [escLookup, setEscLookup] = useState<EscLookup>(new Map());
   const [playersDB, setPlayersDB] = useState<PlayersDB>({});
@@ -2924,7 +2926,7 @@ function Content() {
 
   // ── Loader Clubes (lazy — só quando o tab é activado) ────────────────────
   useEffect(() => {
-    if (sidebarMode !== "clubes" || clubesLoaded) return;
+    if (!(navMode === "torneios" && seriesFilter === "clubes") || clubesLoaded) return;
     let alive = true;
     setClubesLoading(true);
 
@@ -2976,7 +2978,7 @@ function Content() {
       setClubesLoading(false);
     });
     return () => { alive = false; };
-  }, [sidebarMode, clubesLoaded]); // clubesLoading fora das deps — evita cleanup prematuro
+  }, [navMode, seriesFilter, clubesLoaded]); // clubesLoading fora das deps — evita cleanup prematuro
 
   // Lista filtrada por escalão dentro de Clubes, agrupada por ano
   const clubesList = useMemo(
@@ -3001,17 +3003,28 @@ function Content() {
   const displayList = useMemo(() => buildDisplayList(tournaments), [tournaments]);
   const cur = displayList[selected];
 
+  // Anos disponíveis no modo Torneios
+  const availYears = useMemo(() => {
+    const s = new Set<string>();
+    for (const t of displayList) if (t.date) s.add(t.date.substring(0, 4));
+    return [...s].sort().reverse();
+  }, [displayList]);
+  const activeYear = yearFilter ?? null;
+  const inYear = (t: Tournament) => !activeYear || (t.date || "").startsWith(activeYear);
+
   // Agrupamento por mês — mostra TODOS os torneios sem excepção
   const { groups: monthGroups, groupKeys: monthKeys } = useMemo(() => {
     const g: Record<string, Tournament[]> = {};
     for (const t of displayList) {
+      if (!inYear(t)) continue;
       if (filterManuel && !t.players.some(p => p.fedCode === MANUEL_FED)) continue;
+      if (seriesFilter === "clubes") continue; // clubes tem sidebar própria
       const key = t.date ? t.date.substring(0, 7) : "?";
       if (!g[key]) g[key] = [];
       g[key].push(t);
     }
     return { groups: g, groupKeys: Object.keys(g).sort().reverse() };
-  }, [displayList, filterManuel]);
+  }, [displayList, filterManuel, activeYear, seriesFilter]);
 
   // Lista apenas PJA (para o modo circuito) — exclui explicitamente SSerra
   const pjaList = useMemo(
@@ -3027,13 +3040,15 @@ function Content() {
   const pjaByYear = useMemo(() => {
     const byYear: Record<string, Tournament[]> = {};
     for (const t of pjaList) {
+      if (!inYear(t)) continue;
+      if (filterManuel && !t.players.some(p => p.fedCode === MANUEL_FED)) continue;
       const yr = t.date ? t.date.substring(0, 4) : "?";
       if (!byYear[yr]) byYear[yr] = [];
       byYear[yr].push(t);
     }
     const years = Object.keys(byYear).sort().reverse();
     return { byYear, years };
-  }, [pjaList]);
+  }, [pjaList, activeYear, filterManuel]);
 
   // ── Santo da Serra ──
   const santoList = useMemo(
@@ -3043,13 +3058,15 @@ function Content() {
   const santoByYear = useMemo(() => {
     const byYear: Record<string, Tournament[]> = {};
     for (const t of santoList) {
+      if (!inYear(t)) continue;
+      if (filterManuel && !t.players.some(p => p.fedCode === MANUEL_FED)) continue;
       const yr = t.date ? t.date.substring(0, 4) : "?";
       if (!byYear[yr]) byYear[yr] = [];
       byYear[yr].push(t);
     }
     const years = Object.keys(byYear).sort().reverse();
     return { byYear, years };
-  }, [santoList]);
+  }, [santoList, activeYear, filterManuel]);
 
   function monthLabel(key: string): string {
     if (key === "?") return "Data desconhecida";
@@ -3159,87 +3176,106 @@ function Content() {
 
   return (
     <div className="tourn-layout">
-      {/* Toolbar */}
+      {/* ── Toolbar linha 1: nav principal ── */}
       <div className="toolbar">
         <div className="toolbar-left">
           <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />
-          <span className="toolbar-title">🏌️ Torneios</span>
+          <span className="toolbar-title">🏌️ FPG</span>
           {!loading && (
             <>
               <div className="toolbar-sep" />
+              {/* Nav principal */}
               <div className="escalao-pills">
-                <button
-                  className={"tourn-tab tourn-tab-sm" + (sidebarMode === "month" ? " active" : "")}
-                  onClick={() => setSidebarMode("month")}
-                  style={sidebarMode === "month" ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
-                  Por data
-                </button>
-                <button
-                  className={"tourn-tab tourn-tab-sm" + (sidebarMode === "circuit" ? " active" : "")}
-                  onClick={() => { setSidebarMode("circuit"); setFilterManuel(false); }}
-                  style={sidebarMode === "circuit" ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
-                  🏆 PJA Tour
-                </button>
-                <button
-                  className={"tourn-tab tourn-tab-sm" + (sidebarMode === "santo" ? " active" : "")}
-                  onClick={() => { setSidebarMode("santo"); setFilterManuel(false); }}
-                  style={sidebarMode === "santo"
-                    ? { background: PILL_STYLE_SSERRA.bg, borderColor: PILL_STYLE_SSERRA.bg, color: PILL_STYLE_SSERRA.color }
-                    : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
-                  ⛳ Santo da Serra
-                </button>
-                <button
-                  className={"tourn-tab tourn-tab-sm" + (sidebarMode === "pja-ranking" ? " active" : "")}
-                  onClick={() => { setSidebarMode("pja-ranking"); setFilterManuel(false); }}
-                  style={sidebarMode === "pja-ranking" ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
-                  📊 Ranking
-                </button>
-                <button
-                  className={"tourn-tab tourn-tab-sm" + (sidebarMode === "clubes" ? " active" : "")}
-                  onClick={() => { setSidebarMode("clubes"); setFilterManuel(false); }}
-                  style={sidebarMode === "clubes"
-                    ? { background: "var(--accent,#2563eb)", borderColor: "var(--accent,#2563eb)", color: "#fff" }
-                    : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
-                  🏆 Clubes
-                </button>
-                {(sidebarMode === "month" || sidebarMode === "santo") && (
+                {([ 
+                  { key: "torneios",     label: "Torneios" },
+                  { key: "ranking-pja",  label: "📊 Ranking PJA" },
+                  { key: "ranking-sub12",label: "🏅 Ranking Sub-12" },
+                ] as const).map(({ key, label }) => (
+                  <button key={key}
+                    className={"tourn-tab tourn-tab-sm" + (navMode === key ? " active" : "")}
+                    onClick={() => { setNavMode(key); setSeriesFilter(""); setFilterManuel(false); setYearFilter(null); }}
+                    style={navMode === key ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                    {label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Série (só em Torneios) */}
+              {navMode === "torneios" && (
+                <>
+                  <div className="toolbar-sep" />
+                  <div className="escalao-pills">
+                    {([
+                      { key: "",        label: "Todos" },
+                      { key: "circuit", label: "🏆 PJA Tour" },
+                      { key: "santo",   label: "⛳ Santo da Serra" },
+                      { key: "clubes",  label: "🏅 Clubes" },
+                    ] as const).map(({ key, label }) => {
+                      const active = seriesFilter === key;
+                      const style = active
+                        ? key === "santo" ? { background: PILL_STYLE_SSERRA.bg, borderColor: PILL_STYLE_SSERRA.bg, color: PILL_STYLE_SSERRA.color }
+                        : key === "clubes" ? { background: "var(--accent,#2563eb)", borderColor: "var(--accent,#2563eb)", color: "#fff" }
+                        : {}
+                        : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" };
+                      return (
+                        <button key={key}
+                          className={"tourn-tab tourn-tab-sm" + (active ? " active" : "")}
+                          onClick={() => { setSeriesFilter(key); setFilterManuel(false); }}
+                          style={style}>
+                          {label}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Anos */}
+                  {availYears.length > 1 && (
+                    <>
+                      <div className="toolbar-sep" />
+                      <div className="escalao-pills" style={{ gap: 3 }}>
+                        {availYears.map(y => (
+                          <button key={y}
+                            className={"tourn-tab tourn-tab-sm" + (activeYear === y ? " active" : "")}
+                            onClick={() => setYearFilter(activeYear === y ? null : y)}
+                            style={activeYear === y ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                            {y}
+                          </button>
+                        ))}
+                      </div>
+                    </>
+                  )}
+
+                  {/* Manuel */}
+                  <div className="toolbar-sep" />
                   <button
                     className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
                     onClick={() => setFilterManuel(v => !v)}
-                    style={filterManuel ? { background: "var(--bg-success-subtle)", borderColor: "var(--color-good)", color: "var(--color-good-dark)", whiteSpace: "nowrap" } : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)", whiteSpace: "nowrap" }}>
+                    style={filterManuel
+                      ? { background: "var(--bg-success-subtle)", borderColor: "var(--color-good)", color: "var(--color-good-dark)", whiteSpace: "nowrap" }
+                      : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)", whiteSpace: "nowrap" }}>
                     ★ Manuel
                   </button>
-                )}
-              </div>
+                </>
+              )}
             </>
           )}
         </div>
         <div className="toolbar-right">
-          <a
-            href="https://scoring.datagolf.pt/pt/tournaments.aspx"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              fontSize: 11, fontWeight: 600, cursor: "pointer",
-              color: "var(--accent,#2563eb)", border: "1px solid var(--accent,#2563eb)",
-              borderRadius: 5, padding: "3px 8px", lineHeight: 1.6,
-              textDecoration: "none", whiteSpace: "nowrap",
-              display: "inline-flex", alignItems: "center", gap: 3,
-            }}
-          >
+          <a href="https://scoring.datagolf.pt/pt/tournaments.aspx" target="_blank" rel="noopener noreferrer"
+            style={{ fontSize: 11, fontWeight: 600, cursor: "pointer", color: "var(--accent,#2563eb)", border: "1px solid var(--accent,#2563eb)", borderRadius: 5, padding: "3px 8px", lineHeight: 1.6, textDecoration: "none", whiteSpace: "nowrap", display: "inline-flex", alignItems: "center", gap: 3 }}>
             FPG Torneios ↗
           </a>
           {loading
             ? <span className="muted fs-11" style={{ fontStyle: "italic" }}>{loadingMsg}</span>
             : <>
-                <span className="chip">
-                  {sidebarMode === "santo"
-                    ? santoList.length
-                    : sidebarMode === "circuit"
-                    ? pjaList.length
-                    : displayList.length} torneios
-                </span>
-                {sidebarMode !== "santo" && (
+                {navMode === "torneios" && (
+                  <span className="chip">
+                    {seriesFilter === "santo" ? santoList.length
+                      : seriesFilter === "circuit" ? pjaList.length
+                      : displayList.length} torneios
+                  </span>
+                )}
+                {seriesFilter !== "santo" && navMode === "torneios" && (
                   <span className="chip" style={{ marginLeft: 4, background: "var(--bg-hover)" }}>
                     {fileMeta.length} ficheiro{fileMeta.length !== 1 ? "s" : ""}
                   </span>
@@ -3256,8 +3292,8 @@ function Content() {
         </div>
       )}
 
-      {/* Master-detail (modos "month" e "circuit") */}
-      {sidebarMode !== "pja-ranking" && sidebarMode !== "clubes" && (
+      {/* Master-detail — Torneios normais (todas as séries excepto Clubes) */}
+      {navMode === "torneios" && seriesFilter !== "clubes" && (
       <div className="master-detail">
         {/* Sidebar */}
         <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
@@ -3267,36 +3303,38 @@ function Content() {
             </div>
           )}
 
-          {sidebarMode === "month"
-            ? monthKeys.map(gk => (
-                <React.Fragment key={gk}>
-                  <div className="sidebar-section-title-dark">{monthLabel(gk)}</div>
-                  {monthGroups[gk].map(t => renderSidebarItem(t))}
-                </React.Fragment>
-              ))
-            : sidebarMode === "santo"
-              ? santoByYear.years.length === 0
-                ? <div className="muted fs-11 u-pad-italic">Sem torneios Santo da Serra</div>
-                : santoByYear.years.map(yr => {
-                    const items = santoByYear.byYear[yr].filter(t =>
-                      !filterManuel || t.players.some(p => p.fedCode === MANUEL_FED)
-                    );
-                    if (items.length === 0) return null;
-                    return (
+          {seriesFilter !== "clubes"
+            ? seriesFilter === ""
+              ? monthKeys.map(gk => (
+                  <React.Fragment key={gk}>
+                    <div className="sidebar-section-title-dark">{monthLabel(gk)}</div>
+                    {monthGroups[gk].map(t => renderSidebarItem(t))}
+                  </React.Fragment>
+                ))
+              : seriesFilter === "santo"
+                ? santoByYear.years.length === 0
+                  ? <div className="muted fs-11 u-pad-italic">Sem torneios Santo da Serra</div>
+                  : santoByYear.years.map(yr => {
+                      const items = santoByYear.byYear[yr].filter(t =>
+                        !filterManuel || t.players.some(p => p.fedCode === MANUEL_FED)
+                      );
+                      if (items.length === 0) return null;
+                      return (
+                        <React.Fragment key={yr}>
+                          <div className="sidebar-section-title-dark" style={{ color: PILL_STYLE_SSERRA.bg }}>⛳ Santo da Serra {yr}</div>
+                          {items.map(t => renderSidebarItem(t))}
+                        </React.Fragment>
+                      );
+                    })
+                : pjaByYear.years.length === 0
+                  ? <div className="muted fs-11 u-pad-italic">Sem torneios PJA</div>
+                  : pjaByYear.years.map(yr => (
                       <React.Fragment key={yr}>
-                        <div className="sidebar-section-title-dark" style={{ color: PILL_STYLE_SSERRA.bg }}>⛳ Santo da Serra {yr}</div>
-                        {items.map(t => renderSidebarItem(t))}
+                        <div className="sidebar-section-title-dark">🏆 PJA Tour {yr}</div>
+                        {pjaByYear.byYear[yr].map(t => renderSidebarItem(t))}
                       </React.Fragment>
-                    );
-                  })
-              : pjaByYear.years.length === 0
-                ? <div className="muted fs-11 u-pad-italic">Sem torneios PJA</div>
-                : pjaByYear.years.map(yr => (
-                    <React.Fragment key={yr}>
-                      <div className="sidebar-section-title-dark">🏆 PJA Tour {yr}</div>
-                      {pjaByYear.byYear[yr].map(t => renderSidebarItem(t))}
-                    </React.Fragment>
-                  ))
+                    ))
+            : null
           }
         </div>
 
@@ -3311,7 +3349,7 @@ function Content() {
       )}
 
       {/* ── Clubes ─────────────────────────────────────────────────────── */}
-      {sidebarMode === "clubes" && (
+      {navMode === "torneios" && seriesFilter === "clubes" && (
         <div className="master-detail">
           {/* Sidebar Clubes */}
           <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
@@ -3448,9 +3486,18 @@ function Content() {
       )}
 
       {/* Ranking PJA */}
-      {sidebarMode === "pja-ranking" && (
+      {navMode === "ranking-pja" && (
         <div style={{ flex: 1, overflow: "auto" }}>
           <PJARankingView pjaList={pjaList} playersDB={playersDB} loading={loading} />
+        </div>
+      )}
+
+      {/* Ranking Sub-12 — placeholder (em desenvolvimento) */}
+      {navMode === "ranking-sub12" && (
+        <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 12, color: "var(--text-muted)", padding: 40 }}>
+          <div style={{ fontSize: 40 }}>🏅</div>
+          <div style={{ fontSize: 16, fontWeight: 700, color: "var(--text)" }}>Ranking Sub-12</div>
+          <div style={{ fontSize: 13, textAlign: "center", maxWidth: 320 }}>Em desenvolvimento — os dados dos atletas Sub-12 nos torneios FPG serão agregados aqui.</div>
         </div>
       )}
     </div>

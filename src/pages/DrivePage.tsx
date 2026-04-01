@@ -577,6 +577,16 @@ function DrivePointsTable() {
         </div>
       )}
     </div>
+
+      {/* Ranking PJA — placeholder */}
+      {navMode === "ranking-pja" && (
+        <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 12, color: "var(--text-muted)", padding: 40 }}>
+          <div style={{ fontSize: 40 }}>📊</div>
+          <div style={{ fontSize: 16, fontWeight: 700, color: "var(--text)" }}>Ranking PJA</div>
+          <div style={{ fontSize: 13, textAlign: "center", maxWidth: 320 }}>Em desenvolvimento — pontuação acumulada dos atletas PJA nos torneios Drive.</div>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -2180,8 +2190,9 @@ function DriveContent() {
   const [loading, setLoading]     = useState(true);
   const [error, setError]         = useState<string | null>(null);
 
-  // Série principal (inclui sub12 como 4ª tab)
-  const [series, setSeries]                     = useState<"tour"|"challenge"|"aquapor"|"sub12">("tour");
+  const [navMode, setNavMode]   = useState<"torneios"|"ranking-pja"|"ranking-sub12">("torneios");
+  const [series, setSeries]     = useState<"all"|"tour"|"challenge"|"aquapor">("all");
+  const [filterManuel, setFilterManuel] = useState(false);
     const md = useMasterDetail();
   const [regionFilter, setRegionFilter]         = useState<string | null>(null);
   const [escFilter, setEscFilter]               = useState<string[]>([]);
@@ -2266,6 +2277,7 @@ function DriveContent() {
   const inYear = (t: Tournament) => !activeYear || t.date?.startsWith(activeYear);
 
   const tourT    = useMemo(() => data?.tournaments.filter(t => t.series === "tour"      && inYear(t)) ?? [], [data, activeYear]);
+  const allT     = useMemo(() => data?.tournaments.filter(t => inYear(t)) ?? [], [data, activeYear]);
   const challT   = useMemo(() => data?.tournaments.filter(t => t.series === "challenge" && inYear(t)) ?? [], [data, activeYear]);
   const aquaporT = useMemo(() => data?.tournaments.filter(t => t.series === "aquapor"   && inYear(t)) ?? [], [data, activeYear]);
   const escLookup = useMemo(() => buildEscLookup(pdb, (data?.tournaments ?? []) as any /* tipo local diferente do playerUtils */), [pdb, data]);
@@ -2280,7 +2292,7 @@ function DriveContent() {
 
   // Sub-12: só calcular quando a tab é activada pela primeira vez
   const [sub12Ready, setSub12Ready] = useState(false);
-  useEffect(() => { if (series === "sub12" && !sub12Ready) setSub12Ready(true); }, [series, sub12Ready]);
+  useEffect(() => { if (navMode === "ranking-sub12" && !sub12Ready) setSub12Ready(true); }, [navMode, sub12Ready]);
 
   const sub12Data = useMemo(() => {
     if (!sub12Ready || !data) return [];
@@ -2335,27 +2347,26 @@ function DriveContent() {
   }, [sub12SeriesRows]);
 
   // Série normal (tour/challenge/aquapor)
-  const seriesT = series === "tour" ? tourT : series === "challenge" ? challT : aquaporT;
+  const seriesT = series === "all" ? allT : series === "tour" ? tourT : series === "challenge" ? challT : aquaporT;
   const availRegions = useMemo(() => {
-    if (series === "sub12") return [];
     const s = new Set(seriesT.map(t => t.region));
     return REGIONS.filter(r => s.has(r.id));
   }, [series, seriesT]);
 
   const filteredT = useMemo(() => {
-    if (series === "sub12") return [];
     let ts = seriesT;
     if (regionFilter) ts = ts.filter(t => t.region === regionFilter);
     if (escFilter.length > 0 && series === "challenge") ts = filterTournByEsc(ts, escFilter, escLookup, temporalEscLookup);
+    if (filterManuel) ts = ts.filter(t => t.players.some(p => isManuel(p)));
     return ts;
-  }, [series, seriesT, regionFilter, escFilter, escLookup, temporalEscLookup]);
+  }, [series, seriesT, regionFilter, escFilter, escLookup, temporalEscLookup, filterManuel]);
 
-  const filteredGroups = useMemo(() => series === "sub12" ? [] : buildGroups(filteredT), [series, filteredT]);
+  const filteredGroups = useMemo(() => buildGroups(filteredT), [filteredT]);
   const regionT = useMemo(() => regionFilter ? seriesT.filter(t => t.region === regionFilter) : seriesT, [seriesT, regionFilter]);
   const availEscs = useMemo(() => series === "challenge" ? availEscaloes(regionT, escLookup, temporalEscLookup) : [], [series, regionT, escLookup, temporalEscLookup]);
 
   useEffect(() => { setRegionFilter(null); setEscFilter([]); setSelectedGroupKey(null); setRoundIdx(0); }, [series]);
-  useEffect(() => { setRegionFilter(null); setEscFilter([]); setSelectedGroupKey(null); setRoundIdx(0); }, [activeYear]);
+  useEffect(() => { setRegionFilter(null); setEscFilter([]); setSelectedGroupKey(null); setRoundIdx(0); }, [activeYear, series]);
   useEffect(() => { setEscFilter([]); setSelectedGroupKey(null); setRoundIdx(0); }, [regionFilter]);
   useEffect(() => { setSub12Player(null); }, [sub12Series]);
 
@@ -2452,7 +2463,7 @@ function DriveContent() {
   if (!data)   return null;
 
   const sdCount = Object.keys(sdLookup).length;
-  const isSub12Mode = series === "sub12";
+  const isSub12Mode = navMode === "ranking-sub12";
 
   return (
     <div className="jogadores-page">
@@ -2460,55 +2471,78 @@ function DriveContent() {
       {/* ── Toolbar ── */}
       <div className="toolbar">
         <div className="toolbar-left">
-          {(
-            <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />
-          )}
-          <span className="toolbar-title">
-            {isSub12Mode ? "Sub-12 DRIVE" : series === "aquapor" ? "💧 AQUAPOR" : "🏁 DRIVE"} {activeYear ?? ""}
-          </span>
-          <span className="toolbar-meta">
-            {isSub12Mode ? "Sub-10 + Sub-12" : series === "aquapor" ? "Circuito Nacional" : "Circuito Regional Juvenil"}
-          </span>
+          <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />
+          <span className="toolbar-title">🏁 DRIVE</span>
           <div className="toolbar-sep" />
-          {/* Pills de ano */}
-          {availYears.length > 1 && !isSub12Mode && (
-            <div className="escalao-pills" style={{ gap: 3 }}>
-              {availYears.map(y => (
-                <button key={y}
-                  className={"tourn-tab tourn-tab-sm" + (activeYear === y ? " active" : "")}
-                  onClick={() => { setYearFilter(y === activeYear && availYears.length > 1 ? null : y); setSelectedGroupKey(null); setRoundIdx(0); }}
-                  style={activeYear === y ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
-                  {y}
-                </button>
-              ))}
-            </div>
-          )}
-          <div className="toolbar-sep" />
+
+          {/* Nav principal */}
           <div className="escalao-pills">
-            <button className={"tourn-tab tourn-tab-sm" + (series === "tour" ? " active" : "")}
-              onClick={() => setSeries("tour")}
-              style={series === "tour" ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
-              🏌️ Tour ({countEvents(tourT)})
-            </button>
-            <button className={"tourn-tab tourn-tab-sm" + (series === "challenge" ? " active" : "")}
-              onClick={() => setSeries("challenge")}
-              style={series === "challenge" ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
-              ⚡ Challenge ({countEvents(challT)})
-            </button>
-            <button className={"tourn-tab tourn-tab-sm" + (series === "aquapor" ? " active" : "")}
-              onClick={() => setSeries("aquapor")}
-              style={series === "aquapor" ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
-              💧 AQUAPOR ({countEvents(aquaporT)})
-            </button>
-            <button className={"tourn-tab tourn-tab-sm" + (series === "sub12" ? " active" : "")}
-              onClick={() => setSeries("sub12")}
-              style={series === "sub12" ? {} : { background: "var(--bg-warn-strong)", color: "var(--color-warn-dark)", borderColor: "var(--bg-warn-strong)", fontWeight: 700 }}>
-              Sub-12
-            </button>
+            {([
+              { key: "torneios",      label: "Torneios" },
+              { key: "ranking-pja",   label: "📊 Ranking PJA" },
+              { key: "ranking-sub12", label: "🏅 Ranking Sub-12" },
+            ] as const).map(({ key, label }) => (
+              <button key={key}
+                className={"tourn-tab tourn-tab-sm" + (navMode === key ? " active" : "")}
+                onClick={() => { setNavMode(key); setSeries("all"); setFilterManuel(false); setYearFilter(null); setSelectedGroupKey(null); setRoundIdx(0); }}
+                style={navMode === key ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                {label}
+              </button>
+            ))}
           </div>
+
+          {/* Série (só em Torneios) */}
+          {navMode === "torneios" && (
+            <>
+              <div className="toolbar-sep" />
+              <div className="escalao-pills">
+                {([
+                  { key: "all",       label: "Todos" },
+                  { key: "tour",      label: "🏌️ Tour" },
+                  { key: "challenge", label: "⚡ Challenge" },
+                  { key: "aquapor",   label: "💧 AQUAPOR" },
+                ] as const).map(({ key, label }) => (
+                  <button key={key}
+                    className={"tourn-tab tourn-tab-sm" + (series === key ? " active" : "")}
+                    onClick={() => { setSeries(key); setRegionFilter(null); setEscFilter([]); setSelectedGroupKey(null); setRoundIdx(0); }}
+                    style={series === key ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                    {label}{key !== "all" ? ` (${countEvents(key === "tour" ? tourT : key === "challenge" ? challT : aquaporT)})` : ""}
+                  </button>
+                ))}
+              </div>
+
+              {/* Anos */}
+              {availYears.length > 1 && (
+                <>
+                  <div className="toolbar-sep" />
+                  <div className="escalao-pills" style={{ gap: 3 }}>
+                    {availYears.map(y => (
+                      <button key={y}
+                        className={"tourn-tab tourn-tab-sm" + (activeYear === y ? " active" : "")}
+                        onClick={() => { setYearFilter(y === activeYear && availYears.length > 1 ? null : y); setSelectedGroupKey(null); setRoundIdx(0); }}
+                        style={activeYear === y ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                        {y}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
+
+              {/* Manuel */}
+              <div className="toolbar-sep" />
+              <button
+                className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
+                onClick={() => setFilterManuel(v => !v)}
+                style={filterManuel
+                  ? { background: "var(--bg-success-subtle)", borderColor: "var(--color-good)", color: "var(--color-good-dark)", whiteSpace: "nowrap" }
+                  : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)", whiteSpace: "nowrap" }}>
+                ★ Manuel
+              </button>
+            </>
+          )}
         </div>
         <div className="toolbar-right">
-          {!isSub12Mode && data.totalScorecards > 0 && (
+          {navMode === "torneios" && data.totalScorecards > 0 && (
             <span className="chip" style={{ background: "var(--bg-success-strong)", color: "var(--color-good-dark)" }}>
               📊 {data.totalScorecards} sc
             </span>
@@ -2517,8 +2551,8 @@ function DriveContent() {
         </div>
       </div>
 
-      {/* ── Toolbar linha 2: filtros de série normal ── */}
-      {!isSub12Mode && (availRegions.length > 1 || (series === "challenge" && availEscs.length > 1)) && (
+      {/* ── Toolbar linha 2: filtros de região/escalão (só em Torneios) ── */}
+      {navMode === "torneios" && (availRegions.length > 1 || (series === "challenge" && availEscs.length > 1)) && (
         <div className="toolbar" style={{ minHeight: 0, padding: "4px 12px", borderTop: "1px solid var(--border-light)", gap: 6, flexWrap: "wrap" }}>
           {availRegions.length > 1 && (
             <div className="escalao-pills gap-4">
@@ -2567,7 +2601,7 @@ function DriveContent() {
       {/* ══════════════════════════════════════════
           MODO SUB-12
           ══════════════════════════════════════════ */}
-      {isSub12Mode && (
+      {navMode === "ranking-sub12" && (
         <div className="master-detail">
 
           {/* Sidebar Sub-12 */}
@@ -2667,7 +2701,7 @@ function DriveContent() {
       {/* ══════════════════════════════════════════
           MODO NORMAL (Tour / Challenge / AQUAPOR)
           ══════════════════════════════════════════ */}
-      {!isSub12Mode && (
+      {navMode === "torneios" && (
         <div className="master-detail">
 
           {/* Sidebar */}
