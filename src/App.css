@@ -1350,9 +1350,12 @@ tr.cross-current { background: var(--bg-success); }
   transition: max-height 0.25s ease;
  }
  .sidebar-closed {
-  max-height: 0;
-  overflow: hidden;
+  max-height: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
   border-bottom: none;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
  }
 
  /* ── Cal-page sidebar ── */
@@ -1370,7 +1373,7 @@ tr.cross-current { background: var(--bg-success); }
  /* ── Course / Player detail ── */
  .detail-header     { flex-direction: column; }
  .detail-header-top { flex-direction: column; align-items: flex-start; }
- .course-detail     { overflow-x: hidden; }
+ .course-detail     { overflow-x: hidden; padding: 8px; }
 
  /* ── Conteúdo: tabelas scrolláveis horizontalmente ── */
  .tourn-scroll,
@@ -1399,6 +1402,15 @@ tr.cross-current { background: var(--bg-success); }
  /* ── page-full (Comparar, etc.) ── */
  .page-full { padding: 8px; }
 
+ /* ── Grids: 1 coluna em mobile ── */
+ .grid-3, .grid-3-tc, .jog-record-grid { grid-template-columns: 1fr 1fr; gap: 6px; }
+ .an-grid  { grid-template-columns: repeat(2, 1fr); }
+ .an-grid3 { grid-template-columns: 1fr 1fr; }
+
+ /* ── Comparar: radar mais pequeno, tabelas scrolláveis ── */
+ .cmp-radar-wrap    { max-width: 100%; }
+ .cmp-search-input  { font-size: 12px; padding: 7px 10px; }
+
  /* ── Botão voltar ── */
  .mobile-back-btn { display: flex; margin: 6px 8px 2px; }
 
@@ -1421,6 +1433,10 @@ tr.cross-current { background: var(--bg-success); }
 
  /* Sidebar ocupa menos altura, mais espaço para conteúdo */
  .sidebar        { max-height: 32vh; }
+
+ /* Grids: 1 coluna */
+ .grid-3, .grid-3-tc, .jog-record-grid { grid-template-columns: 1fr; }
+ .an-grid, .an-grid3 { grid-template-columns: 1fr; }
 
  /* Tabs de torneio */
  .tourn-tab      { font-size: 10px; padding: 2px 5px; }
