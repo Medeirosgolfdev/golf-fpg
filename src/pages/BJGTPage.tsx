@@ -401,8 +401,7 @@ function Content() {
   const [ti, setTi] = useState(2);
   const [all, setAll] = useState<(TDef | null)[]>(new Array(URLS.length).fill(null));
   const [loading, setLoading] = useState(true);
-  const md = useMasterDetail();
-
+    const md = useMasterDetail();
   useEffect(() => {
     Promise.all(URLS.map(async (m) => {
       try { const res = await cachedFetch(m.url); if (!res.ok) return null; const raw = await res.json();
@@ -481,7 +480,7 @@ function Content() {
                         <button key={u.id}
                           className={`course-item ${ti === idx ? "active" : ""}`}
                           style={isEowagr && ti === idx ? { borderLeft: "3px solid var(--warning, #c17a00)" } : isEowagr ? { borderLeft: "3px solid transparent" } : {}}
-                          onClick={() => setTi(idx)}>
+                          onClick={() => { setTi(idx); md.onSelect(); }}>
                           <div className="course-item-name">{u.category}</div>
                           {t && <div className="course-item-meta">{nP} jog · {nR}R</div>}
                           <a href={u.sourceUrl} target="_blank" rel="noopener noreferrer"
@@ -500,7 +499,7 @@ function Content() {
         </div>
 
         {/* Detail */}
-        <div className="course-detail">
+        <div className="course-detail" ref={md.detailRef}>
           {cur ? (<>
             <div className="detail-header">
               <h2 className="detail-title">{cur.label}</h2>

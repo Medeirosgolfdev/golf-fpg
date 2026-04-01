@@ -13,6 +13,8 @@ import { fmtToPar } from "../utils/format";
 import { isCalUnlocked } from "../utils/authConstants";
 import { resolveFedsInTournaments , buildEscLookup, resolveEscFromLookup } from "../utils/playerUtils";
 import PasswordGate from "../ui/PasswordGate";
+import SidebarToggle from "../ui/SidebarToggle";
+import { useMasterDetail } from "../hooks/useMasterDetail";
 import KpiCard from "../ui/KpiCard";
 import LoadingState from "../ui/LoadingState";
 import { ScorecardLeaderboard } from "../ui/ScorecardLeaderboard";
@@ -1809,7 +1811,7 @@ function DriveContent() {
 
   // Série principal (inclui sub12 como 4ª tab)
   const [series, setSeries]                     = useState<"tour"|"challenge"|"aquapor"|"sub12">("tour");
-  const [sidebarOpen, setSidebarOpen]           = useState(true);
+    const md = useMasterDetail();
   const [regionFilter, setRegionFilter]         = useState<string | null>(null);
   const [escFilter, setEscFilter]               = useState<string[]>([]);
   const [selectedGroupKey, setSelectedGroupKey] = useState<string | null>(null);
@@ -2088,10 +2090,7 @@ function DriveContent() {
       <div className="toolbar">
         <div className="toolbar-left">
           {(
-            <button className="sidebar-toggle" onClick={() => setSidebarOpen(v => !v)}
-              title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
-              {sidebarOpen ? "◀" : "▶"}
-            </button>
+            <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />
           )}
           <span className="toolbar-title">
             {isSub12Mode ? "Sub-12 DRIVE" : series === "aquapor" ? "💧 AQUAPOR" : "🏁 DRIVE"} {activeYear ?? ""}
@@ -2143,11 +2142,7 @@ function DriveContent() {
               📊 {data.totalScorecards} sc
             </span>
           )}
-          {data.lastUpdated && (
-            <span className="muted fs-10" title={`Actualizado: ${data.lastUpdated}`} style={{ whiteSpace: "nowrap" }}>
-              {data.lastUpdated}
-            </span>
-          )}
+          <span className="chip">📅 {data.lastUpdated}</span>
         </div>
       </div>
 
@@ -2205,7 +2200,7 @@ function DriveContent() {
         <div className="master-detail">
 
           {/* Sidebar Sub-12 */}
-          <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`}>
+          <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
             {/* Séries */}
             <div className="sidebar-section-title">Série</div>
             {SUB12_SERIES_TABS.map(s => {
@@ -2259,7 +2254,7 @@ function DriveContent() {
           </div>
 
           {/* Conteúdo principal */}
-          <div className="flex-1-scroll">
+          <div className="flex-1-scroll" ref={md.detailRef}>
             <div style={{ padding: "0 12px 12px" }}>
 
               {/* Detalhe jogador (se aberto) */}
@@ -2305,7 +2300,7 @@ function DriveContent() {
         <div className="master-detail">
 
           {/* Sidebar */}
-          <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`}>
+          <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
             <button
               className={`course-item ${selectedGroupKey === null ? "active" : ""}`}
               onClick={() => { setSelectedGroupKey(null); setRoundIdx(0); }}>
@@ -2321,11 +2316,11 @@ function DriveContent() {
                     return (
                       <React.Fragment key={reg.id}>
                         <div className="sidebar-section-title-dark">{reg.emoji} {reg.label}</div>
-                        {regGroups.map(g => renderDriveItem(g, selectedGroupKey === g.key, () => { setSelectedGroupKey(g.key); setRoundIdx(0); }))}
+                        {regGroups.map(g => renderDriveItem(g, selectedGroupKey === g.key, () => { setSelectedGroupKey(g.key); setRoundIdx(0); md.onSelect(); }))}
                       </React.Fragment>
                     );
                   })
-              : filteredGroups.map(g => renderDriveItem(g, selectedGroupKey === g.key, () => { setSelectedGroupKey(g.key); setRoundIdx(0); }))
+              : filteredGroups.map(g => renderDriveItem(g, selectedGroupKey === g.key, () => { setSelectedGroupKey(g.key); setRoundIdx(0); md.onSelect(); }))
             }
 
             {filteredGroups.length === 0 && (

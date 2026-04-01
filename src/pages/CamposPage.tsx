@@ -1,4 +1,6 @@
 import { useMemo, useState, useEffect } from "react";
+import SidebarToggle from "../ui/SidebarToggle";
+import { useMasterDetail } from "../hooks/useMasterDetail";
 import { useParams, useNavigate } from "react-router-dom";
 import type { Course, Tee, SexFilter } from "../data/types";
 import { useAppContext } from "../context/AppContext";
@@ -8,8 +10,6 @@ import { teeCanonicalLabel, teeGroupHex } from "../utils/teeColors";
 import { fmt, fmtCR, norm, titleCase, sumRange } from "../utils/format";
 import { fixMojibake } from "../utils/fixEncoding";
 import { sortTees, filterTees, teeHexFromTee } from "../utils/teeUtils";
-import SidebarToggle from "../ui/SidebarToggle";
-import { useMasterDetail } from "../hooks/useMasterDetail";
 
 
 
@@ -291,8 +291,8 @@ export default function CamposPage() {
   const [countryFilter, setCountryFilter] = useState<string>("ALL");
   const [selectedKey, setSelectedKey] = useState<string | null>(urlCourseKey ?? null);
   const [detailView, setDetailView] = useState<"scorecard" | "ratings">("scorecard");
-  const md = useMasterDetail();
-
+    const isMobileInit = typeof window !== "undefined" && window.innerWidth <= 768;
+  const md = useMasterDetail(!(isMobileInit && urlCourseKey));
   /* Sync URL param → selectedKey */
   useEffect(() => {
     if (urlCourseKey && courses.some(c => c.courseKey === urlCourseKey)) {
@@ -304,7 +304,6 @@ export default function CamposPage() {
   const selectCourse = (key: string | null) => {
     setSelectedKey(key);
     if (key) {
-      md.onSelect(); // fecha sidebar em mobile ao seleccionar campo
       navigate(`/campos/${key}`, { replace: true });
     } else {
       navigate("/campos", { replace: true });
@@ -505,7 +504,7 @@ export default function CamposPage() {
               <button
                 key={c.courseKey}
                 className={`course-item ${active ? "active" : ""}`}
-                onClick={() => selectCourse(c.courseKey)}
+                onClick={() => { selectCourse(c.courseKey); md.onSelect(); }}
               >
                 <div className="course-item-name">
                   {flag && <span className="course-flag">{flag}</span>}
@@ -524,7 +523,7 @@ export default function CamposPage() {
         </div>
 
         {/* Detalhe */}
-        <div className="course-detail">
+        <div className="course-detail" ref={md.detailRef}>
           {selected ? (
             <>
               <div className="detail-header">

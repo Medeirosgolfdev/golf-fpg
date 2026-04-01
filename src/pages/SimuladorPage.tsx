@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo, useState } from "react";
-import type { Course, Tee, Hole, SexFilter } from "../data/types";
-import { useAppContext } from "../context/AppContext";
 import SidebarToggle from "../ui/SidebarToggle";
 import { useMasterDetail } from "../hooks/useMasterDetail";
+import type { Course, Tee, Hole, SexFilter } from "../data/types";
+import { useAppContext } from "../context/AppContext";
 import TeeBadge from "../ui/TeeBadge";
 import { textOnColor } from "../utils/teeColors";
 import { sortTees, filterTees, teeHexFromTee as teeHex } from "../utils/teeUtils";
@@ -1068,7 +1068,7 @@ export default function SimuladorPage() {
   const [holesMode, setHolesMode] = useState<HolesMode>("18");
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
   const [selectedTeeIdx, setSelectedTeeIdx] = useState<number | null>(null);
-  const md = useMasterDetail();
+    const md = useMasterDetail();
   const [pcc, setPcc] = useState(0);
   const [hiInput, setHiInput] = useState("");
   const [allowance, setAllowance] = useState(100);
@@ -1284,7 +1284,7 @@ export default function SimuladorPage() {
           {/* Opção manual — sempre visível */}
           <button
             className={`course-item ${isManual ? "active" : ""}`}
-            onClick={() => { setSelectedKey(MANUAL_KEY); setSelectedTeeIdx(null); }}
+            onClick={() => { setSelectedKey(MANUAL_KEY); setSelectedTeeIdx(null); md.onSelect(); }}
           >
             <div className="course-item-name">✎ Sem campo (manual)</div>
             <div className="course-item-meta">Introduzir CR/Slope</div>
@@ -1301,7 +1301,7 @@ export default function SimuladorPage() {
               <button
                 key={c.courseKey}
                 className={`course-item ${active ? "active" : ""}`}
-                onClick={() => { setSelectedKey(c.courseKey); setSelectedTeeIdx(null); }}
+                onClick={() => { setSelectedKey(c.courseKey); setSelectedTeeIdx(null); md.onSelect(); }}
               >
                 <div className="course-item-name">{c.master.name}</div>
                 <div className="course-item-meta">
@@ -1316,7 +1316,7 @@ export default function SimuladorPage() {
         </div>
 
         {/* Detalhe */}
-        <div className="course-detail">
+        <div className="course-detail" ref={md.detailRef}>
           {isManual ? (
             <>
               <div className="detail-header">

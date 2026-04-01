@@ -1203,7 +1203,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
   const [tab, setTab] = useState<ContestKey>("26_1011");
   const [distPeriod, setDistPeriod] = useState<number>(12); void setDistPeriod;
   const [expandedPlayers, setExpandedPlayers] = useState<Set<number>>(new Set()); void expandedPlayers; void setExpandedPlayers;
-  const md = useMasterDetail();
+    const md = useMasterDetail();
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
 
   /* ── Analysis ── */
@@ -1773,7 +1773,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
   if (error) return (
     <div className="tourn-layout">
       <div className="toolbar"><div className="toolbar-left"><span className="toolbar-title">🇪🇸 BJGT</span></div></div>
-      <div className="master-detail"><div className="course-detail">
+      <div className="master-detail"><div className="course-detail" ref={md.detailRef}>
         <div className="card empty-state"><div className="empty-icon">⚠️</div><div className="fw-700-dc">Erro: {error}</div></div>
       </div></div>
     </div>

@@ -2262,7 +2262,7 @@ function Content() {
   const [loadingMsg, setLoadingMsg] = useState("A carregar ficheiros...");
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState(0);
-  const md = useMasterDetail();
+    const md = useMasterDetail();
   const [sidebarMode, setSidebarMode] = useState<"month" | "circuit" | "pja-ranking" | "santo" | "clubes">("month");
   const [filterManuel, setFilterManuel] = useState(false);
   const [escLookup, setEscLookup] = useState<EscLookup>(new Map());
@@ -2512,7 +2512,7 @@ function Content() {
     return (
       <button key={(t as any)._isSynthetic ? "synth_" + t.tcode : t.tcode + "_" + t.date}
         className={`course-item ${selected === idx ? "active" : ""}`}
-        onClick={() => setSelected(idx)}>
+        onClick={() => { setSelected(idx); md.onSelect(); }}>
 
         {/* Linha 1: título + badges fixos à direita */}
         <div style={{ display: "flex", alignItems: "baseline", gap: 4, marginBottom: 3 }}>
@@ -2743,7 +2743,7 @@ function Content() {
         </div>
 
         {/* Detail */}
-        <div className="course-detail">
+        <div className="course-detail" ref={md.detailRef}>
           {cur
             ? <TournamentDetail tournament={cur} escLookup={escLookup} playersDB={playersDB} />
             : !loading && <div className="center-msg muted">Selecciona um torneio</div>

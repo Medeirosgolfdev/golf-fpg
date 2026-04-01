@@ -565,8 +565,7 @@ function Content() {
   const [entries, setEntries] = useState<Entry[]>([]);
   const [loading, setLoading] = useState(true);
   const [ti, setTi] = useState(0);
-  const md = useMasterDetail();
-
+    const md = useMasterDetail();
   useEffect(() => {
     Promise.all(
       DATA_FILES.map(async ({ url, sourceUrl }) => {
@@ -660,7 +659,7 @@ function Content() {
                   return (
                     <button key={entry.id}
                       className={`course-item ${safeIdx === idx ? "active" : ""}`}
-                      onClick={() => setTi(idx)}>
+                      onClick={() => { setTi(idx); md.onSelect(); }}>
                       <div className="course-item-name">{entry.category}</div>
                       {entry.course && (
                         <div className="course-item-meta" style={{ fontWeight:600, color:"var(--text-2)" }}>
@@ -699,7 +698,7 @@ function Content() {
         </div>
 
         {/* Detail */}
-        <div className="course-detail">
+        <div className="course-detail" ref={md.detailRef}>
           {cur ? (
             <>
               <div className="detail-header">

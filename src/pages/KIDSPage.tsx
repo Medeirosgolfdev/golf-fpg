@@ -2788,12 +2788,13 @@ function RivaisIntlContent() {
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(
     locationPlayer ?? "Manuel Medeiros"
   );
-  const md = useMasterDetail();
+    const md = useMasterDetail();
   const [showTable, setShowTable] = useState(false);
 
   const handleSelectPlayer = (name: string) => {
     setSelectedPlayer(name);
     setShowTable(false);
+    md.onSelect();
   };
 
   return (
@@ -2832,7 +2833,7 @@ function RivaisIntlContent() {
         <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
           <RivaisSidebar selected={selectedPlayer} onSelect={handleSelectPlayer} />
         </div>
-        <div className="course-detail">
+        <div className="course-detail" ref={md.detailRef}>
           {showTable ? (
             <RivaisDashboard onSelectPlayer={handleSelectPlayer} />
           ) : selectedPlayer ? (

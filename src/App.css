@@ -1303,7 +1303,7 @@ tr.cross-current { background: var(--bg-success); }
 }
 .sidebar-back-btn:hover { background: var(--bg-hover-subtle); color: var(--text); }
 
-/* Mobile utilities */
+/* Mobile utilities (desktop defaults) */
 .mobile-hide { display: initial; }
 .mobile-only { display: none; }
 
@@ -1315,35 +1315,27 @@ tr.cross-current { background: var(--bg-success); }
    ════════════════════════════════════════════════════════════════ */
 
 @media (max-width: 768px) {
-
- /* ── 1. TOPBAR ── */
  .topbar      { gap: 6px; padding: 0 8px; height: 44px; }
- .top-stats   { display: none; }   /* contadores só em desktop */
+ .top-stats   { display: none; }
  .brand-icon  { width: 22px; height: 22px; }
  .brand-title { font-size: 13px; }
  .nav         { margin-left: 4px; }
  .nav-btn     { font-size: 11px; padding: 4px 8px; }
 
- /* ── 2. TOOLBAR ── */
- .toolbar       { flex-wrap: wrap; padding: 5px 8px; gap: 5px;
-                  align-items: center; min-height: 0; }
+ .toolbar       { flex-wrap: wrap; padding: 5px 8px; gap: 5px; align-items: center; min-height: 0; }
  .toolbar-left  { flex-wrap: wrap; gap: 5px; align-items: center; }
  .toolbar-right { flex-wrap: wrap; gap: 4px; align-items: center; }
  .toolbar-sep   { display: none; }
  .toolbar-meta  { display: none; }
  .toolbar-title { font-size: 12px; }
 
- /* ── 3. SIDEBAR BACK BUTTON ── */
  .sidebar-back-btn { display: flex; }
 
- /* ── 4. INPUTS / SELECTS ── */
  .input  { width: 120px; height: 28px; font-size: 11px; padding: 0 7px; }
- .select { min-width: 70px; max-width: 130px; height: 28px;
-           font-size: 11px; padding: 0 4px; }
+ .select { min-width: 70px; max-width: 130px; height: 28px; font-size: 11px; padding: 0 4px; }
  .jogadores-page .toolbar .input  { width: 140px; }
  .jogadores-page .toolbar .select { min-width: 70px; }
 
- /* ── 5. MASTER-DETAIL: flex-basis para colapso correcto ── */
  .master-detail { flex-direction: column; }
  .sidebar {
   width: 100% !important; min-width: 0 !important; max-width: 100% !important;
@@ -1358,19 +1350,16 @@ tr.cross-current { background: var(--bg-success); }
   overflow: hidden !important; border-bottom: none !important;
   padding: 0 !important;
  }
- /* Detalhe expande para preencher espaço */
  .master-detail > .course-detail,
  .master-detail > .flex-1-scroll,
  .master-detail > .flex-1 { flex: 1 1 0 !important; min-height: 0; }
 
- /* ── 6. DETALHE ── */
  .course-detail      { overflow-x: hidden; padding: 8px; flex: 1 1 0; min-height: 0; }
  .detail-header      { flex-direction: column; }
  .detail-header-top  { flex-direction: column; align-items: flex-start; }
  .detail-title       { font-size: 17px; }
  .detail-actions     { flex-wrap: wrap; gap: 4px; }
 
- /* ── 7. PLAYER DETAIL ── */
  .pa-page            { min-height: 0; }
  .pa-controls        { flex-direction: column; align-items: flex-start; gap: 5px; }
  .pa-controls-left   { flex-wrap: wrap; gap: 4px; }
@@ -1378,7 +1367,6 @@ tr.cross-current { background: var(--bg-success); }
  .jog-pills          { gap: 4px; }
  .jog-record-grid    { grid-template-columns: 1fr 1fr; gap: 4px; }
 
- /* ── 8. CALENDÁRIO ── */
  .cal-page        { flex-direction: column; }
  .cal-sidebar,
  .cal-sidebar-main {
@@ -1388,7 +1376,6 @@ tr.cross-current { background: var(--bg-success); }
   transition: flex-basis 0.2s ease, height 0.2s ease;
  }
 
- /* ── 9. TABELAS ── */
  .table-wrap, .tourn-scroll, .sc-modern,
  .scHost, .card-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
  .dtable       { font-size: 11px; }
@@ -1398,7 +1385,6 @@ tr.cross-current { background: var(--bg-success); }
  .dtable-lg th { padding: 5px 6px; font-size: 9px; }
  .dtable-lg td { padding: 4px 6px; }
 
- /* ── 10. SCORECARD ── */
  .sc-h                          { min-width: 28px; }
  .sc-table-modern               { font-size: 10px; }
  .sc-table-modern th,
@@ -1411,7 +1397,6 @@ tr.cross-current { background: var(--bg-success); }
  .sc-title                      { font-size: 14px; }
  .sc-stat-value                 { font-size: 16px; }
 
- /* ── 11. LEADERBOARD TORNEIO ── */
  .tourn-scorecard th,
  .tourn-scorecard td  { padding: 4px 4px; font-size: 11px; }
  .tourn-lb-name-col   { min-width: 110px !important; }
@@ -1419,7 +1404,6 @@ tr.cross-current { background: var(--bg-success); }
  .tourn-hole-cell     { min-width: 24px !important; padding: 2px 1px !important; font-size: 10px; }
  .tourn-lb-pills .p   { font-size: 9px; padding: 1px 4px; }
 
- /* ── 12. ANÁLISE / KPIs / GRIDS ── */
  .an-grid  { grid-template-columns: repeat(2, 1fr); gap: 8px; }
  .an-grid3 { grid-template-columns: repeat(2, 1fr); gap: 8px; }
  .kpis, .tourn-kpis     { grid-template-columns: repeat(3, 1fr); gap: 5px; }
@@ -1432,7 +1416,6 @@ tr.cross-current { background: var(--bg-success); }
  .haTopWrap             { grid-template-columns: 1fr; }
  .grid-3, .grid-3-tc    { grid-template-columns: 1fr 1fr; gap: 5px; }
 
- /* ── 13. CARDS / PILLS / TABS ── */
  .card         { padding: 10px; margin: 6px 0; }
  .escalao-pills  { gap: 2px; flex-wrap: wrap; }
  .p-esc-filter   { font-size: 10px; padding: 1px 5px; }
@@ -1440,7 +1423,6 @@ tr.cross-current { background: var(--bg-success); }
  .tourn-tab-sm   { font-size: 10px; padding: 2px 5px; }
  .chip           { font-size: 10px; padding: 2px 6px; }
 
- /* ── 14. COMPARAR ── */
  .page-full         { padding: 8px; }
  .cmp-radar-wrap    { max-width: 100%; }
  .cmp-search-input  { width: 100% !important; font-size: 13px; }
@@ -1448,15 +1430,10 @@ tr.cross-current { background: var(--bg-success); }
  .cmp-search-row .cmp-search-wrap { width: 100%; }
  .cmp-chip          { align-self: flex-start; }
 
- /* ── 15. UTILITÁRIOS ── */
  .mobile-hide     { display: none; }
  .mobile-only     { display: initial; }
  .sidebar-toggle  { width: 30px; height: 30px; font-size: 12px; }
 }
-
-/* ════════════════════════════════════════════════════════════════
-   MOBILE — 480 px
-   ════════════════════════════════════════════════════════════════ */
 
 @media (max-width: 480px) {
  .brand-title  { display: none; }
@@ -1631,7 +1608,7 @@ tr.cross-current { background: var(--bg-success); }
 /* ─── ANALYSIS ─── */
 .kpis,
 .tourn-kpis { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-section); margin-bottom: var(--space-section); }
-
+@media (max-width: 768px) { .kpis, .tourn-kpis { grid-template-columns: repeat(3, 1fr); } }
 .kpi,
 .tourn-kpi { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-inner); text-align: center; }
 .kpi-lbl,

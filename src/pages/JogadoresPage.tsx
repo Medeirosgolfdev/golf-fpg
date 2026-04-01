@@ -19,6 +19,8 @@ import TeePill from "../ui/TeePill";
 import TeeDate from "../ui/TeeDate";
 import ScoreCircle from "../ui/ScoreCircle";
 import LoadingState from "../ui/LoadingState";
+import SidebarToggle from "../ui/SidebarToggle";
+import { useMasterDetail } from "../hooks/useMasterDetail";
 import { loadPlayerStats, daysSince, type PlayerStatsDb } from "../data/playerStatsTypes";
 import { calcSD } from "../utils/whsCalc";
 
@@ -1822,15 +1824,20 @@ function CollapseCard({ title, icon, defaultOpen = true, children, badge }: {
   title: string; icon?: string; defaultOpen?: boolean;
   children: React.ReactNode; badge?: React.ReactNode;
 }) {
-  // Sempre expandido — sem colapso
+  const [open, setOpen] = useState(defaultOpen);
   return (
     <div className="card" style={{ marginBottom: 12 }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-        {icon && <span style={{ fontSize: 16 }}>{icon}</span>}
-        <span className="h-xs" style={{ margin: 0 }}>{title}</span>
-        {badge}
+      <div onClick={() => setOpen(o => !o)}
+        style={{ display: "flex", alignItems: "center", justifyContent: "space-between",
+          cursor: "pointer", userSelect: "none", marginBottom: open ? 12 : 0 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          {icon && <span style={{ fontSize: 16 }}>{icon}</span>}
+          <span className="h-xs" style={{ margin: 0 }}>{title}</span>
+          {badge}
+        </div>
+        <span style={{ fontSize: 16, color: "var(--text-3)", lineHeight: 1 }}>{open ? "▾" : "▸"}</span>
       </div>
-      {children}
+      {open && children}
     </div>
   );
 }
@@ -3856,7 +3863,8 @@ export default function JogadoresPage() {
   const [regionFilter, setRegionFilter] = useState<string>("ALL");
   const [sortKey, setSortKey] = useState<SortKey>("name");
   const [selectedFed, setSelectedFed] = useState<string | null>(urlFed ?? null);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+    const isMobileInit = typeof window !== "undefined" && window.innerWidth <= 768;
+  const md = useMasterDetail(!(isMobileInit && urlFed));
   const [playerMeta, setPlayerMeta] = useState<PlayerPageData["META"] | null>(null);
   const rankingMode = sortKey === "ranking";
   const [statsDb, setStatsDb] = useState<PlayerStatsDb>({});
@@ -4014,9 +4022,7 @@ export default function JogadoresPage() {
     <div className="jogadores-page">
       <div className="toolbar">
         <div className="toolbar-left">
-          <button className="sidebar-toggle" onClick={() => setSidebarOpen(v => !v)} title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
-            {sidebarOpen ? "◀" : "▶"}
-          </button>
+          <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Jogadores" />
           <input className="input" value={q} onChange={e => { setQ(e.target.value); setSelectedFed(null); }}
             placeholder="Nome, clube, n.º federado…" />
           <select className="select" value={sexFilter} onChange={e => setSexFilter(e.target.value as SexFilter)}>
@@ -4074,7 +4080,7 @@ export default function JogadoresPage() {
       </div>
 
       <div className="master-detail">
-        <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`}>
+        <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
           {filtered.map(p => {
             const isActive = selected?.fed === p.fed;
             const displayClub = (isActive && playerMeta?.club) ? playerMeta.club : clubShort(p);
@@ -4084,7 +4090,7 @@ export default function JogadoresPage() {
 
             return (
               <button key={p.fed} className={`course-item ${isActive ? "active" : ""}`}
-                onClick={() => selectPlayer(p.fed)}>
+                onClick={() => { selectPlayer(p.fed); md.onSelect(); }}>
                 <div className="course-item-name flex-center">
                   {rankingMode && rank != null && (
                     <span className={`sidebar-rank ${rank <= 3 ? "sidebar-rank-top3" : rank <= 10 ? "sidebar-rank-top10" : "sidebar-rank-rest"}`}>
@@ -4112,7 +4118,7 @@ export default function JogadoresPage() {
           {filtered.length === 0 && <div className="muted p-16">Nenhum jogador encontrado</div>}
         </div>
 
-        <div className="course-detail jog-detail">
+        <div className="course-detail jog-detail" ref={md.detailRef}>
           {selected ? (
               <PlayerDetail key={selected.fed} fedId={selected.fed} selected={selected} onMetaLoaded={setPlayerMeta} />
           ) : (

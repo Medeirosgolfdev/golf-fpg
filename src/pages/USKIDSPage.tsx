@@ -1,4 +1,6 @@
 import { useEffect, useState, useMemo, useCallback, useTransition } from "react";
+import SidebarToggle from "../ui/SidebarToggle";
+import { useMasterDetail } from "../hooks/useMasterDetail";
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { C } from "../utils/colors";
@@ -3429,7 +3431,7 @@ export default function USKidsFieldPage() {
   const [greatgolfData, setGreatgolfData] = useState<GreatgolfData | null>(null); void setGreatgolfData;
   const [memberHist,   setMemberHist]   = useState<MemberHistData | null>(null);
   const [tab,         setTab]         = useState<Tab>(locationRival ? "rivais" : "campo");
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+    const md = useMasterDetail();
   const [selectedRival, setSelectedRival] = useState<string | null>(locationRival ?? null);
   const [sidebarRivalSearch, setSidebarRivalSearch] = useState("");
   const [erro,        setErro]        = useState<string | null>(null);
@@ -3624,10 +3626,7 @@ export default function USKidsFieldPage() {
       {/* ── TOOLBAR ── */}
       <div className="toolbar">
         <div className="toolbar-left">
-          <button className="sidebar-toggle" onClick={() => setSidebarOpen(v => !v)}
-            title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
-            {sidebarOpen ? "◀" : "▶"}
-          </button>
+          <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
           <span className="toolbar-title">🏌️ USKids Golf</span>
           <div className="toolbar-sep" />
           <div className="escalao-pills">
@@ -3666,7 +3665,7 @@ export default function USKidsFieldPage() {
       <div className="master-detail">
 
         {/* ── SIDEBAR ── */}
-        <div className={`sidebar${sidebarOpen ? "" : " sidebar-closed"}`>
+        <div className={`sidebar${md.open ? "" : " sidebar-closed"}`} style={{ minWidth:230, maxWidth:270 }}>
 
         {/* Lista de torneios agrupada por mês — OU lista de rivais */}
         <div style={{ overflowY:"auto", flex:1 }}>
