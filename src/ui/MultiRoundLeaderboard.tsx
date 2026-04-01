@@ -67,7 +67,8 @@ export interface MultiRoundRow {
   teeName?: string;
   gross: number;
   parTotal: number;
-  isIncomplete: boolean;
+  isIncomplete: boolean;  // jogou menos rondas que o máximo disponível (ainda pode jogar)
+  isWD?: boolean;         // desistiu — exclui do ranking, mostra "WD"
   isHighlighted?: boolean;
   /** Uma entrada por ronda, em ordem (rounds[0] = R1, rounds[1] = R2, …) */
   rounds: MRRound[];
@@ -161,10 +162,12 @@ export function MultiRoundLeaderboard({
 
   if (!rows.length) return <div className="muted ta-center p-16">Sem resultados.</div>;
 
-  const complete   = rows.filter(r => !r.isIncomplete);
-  const incomplete = rows.filter(r =>  r.isIncomplete);
+  // WD = desistiu; incomplete = ainda não jogou todas as rondas disponíveis
+  const complete   = rows.filter(r => !r.isIncomplete && !r.isWD);
+  const incomplete = rows.filter(r =>  r.isIncomplete && !r.isWD);
+  const wdRows     = rows.filter(r =>  r.isWD);
 
-  /* Posições — WD (gross=0 com isIncomplete) excluídos do ranking */
+  /* Posições — apenas jogadores completos e não-WD */
   const withPos = useMemo(() => {
     const forRank = [...complete].sort((a, b) => a.gross - b.gross);
     let counter = 1;
@@ -173,12 +176,16 @@ export function MultiRoundLeaderboard({
       if (i > 0 && r.gross !== forRank[i - 1].gross) counter = i + 1;
       posMap.set(r.key, counter);
     });
-    return rows.map(r => ({ ...r, _pos: r.isIncomplete ? null : (posMap.get(r.key) ?? null) }));
+    return rows.map(r => ({
+      ...r,
+      _pos: (r.isIncomplete || r.isWD) ? null : (posMap.get(r.key) ?? null),
+    }));
   }, [rows]);
 
   /* Filtro */
-  const filteredComplete   = useMemo(() => filterRows(withPos.filter(r => !r.isIncomplete), filter), [withPos, filter]);
-  const filteredIncomplete = useMemo(() => filterRows(withPos.filter(r =>  r.isIncomplete), filter), [withPos, filter]);
+  const filteredComplete   = useMemo(() => filterRows(withPos.filter(r => !r.isIncomplete && !r.isWD), filter), [withPos, filter]);
+  const filteredIncomplete = useMemo(() => filterRows(withPos.filter(r =>  r.isIncomplete && !r.isWD), filter), [withPos, filter]);
+  const filteredWD         = useMemo(() => filterRows(withPos.filter(r =>  r.isWD), filter),                   [withPos, filter]);
 
   /* Sort */
   function handleSort(k: MRSortKey) {
@@ -204,9 +211,9 @@ export function MultiRoundLeaderboard({
   }
 
   const sorted = useMemo(() => {
-    if (!sortable) return [...filteredComplete, ...filteredIncomplete];
-    return [...filteredComplete.sort(cmp), ...filteredIncomplete.sort(cmp)];
-  }, [filteredComplete, filteredIncomplete, sortKey, sortDir, sortable]);
+    if (!sortable) return [...filteredComplete, ...filteredIncomplete, ...filteredWD];
+    return [...filteredComplete.sort(cmp), ...filteredIncomplete.sort(cmp), ...filteredWD.sort(cmp)];
+  }, [filteredComplete, filteredIncomplete, filteredWD, sortKey, sortDir, sortable]);
 
   function SHdr({ k, children, className }: { k: MRSortKey; children: React.ReactNode; className?: string }) {
     const active = sortable && sortKey === k;
@@ -265,24 +272,34 @@ export function MultiRoundLeaderboard({
           <tbody>
             {sorted.map((row, idx) => {
               const tp = row.gross - row.parTotal;
-              const isInc = row.isIncomplete;
+              const isInc = row.isIncomplete && !row.isWD;  // ronda ainda por jogar
+              const isWD  = !!row.isWD;                     // desistiu
               const dp = row._pos;
-              const tpCol = !isInc ? tpColor(tp) : undefined;
-              const medal = !isInc && dp != null && dp <= 3 ? medals[dp - 1] : null;
-              const showPos = !isInc && (
+              const tpCol = (!isInc && !isWD) ? tpColor(tp) : undefined;
+              const medal = !isInc && !isWD && dp != null && dp <= 3 ? medals[dp - 1] : null;
+              const showPos = !isInc && !isWD && (
                 sortable && sortKey === "pos"
                   ? (idx === 0 || dp !== sorted[idx - 1]._pos)
                   : true
               );
-              const rowBg = row.isHighlighted ? "var(--bg-success-subtle,#d1fae5)" : isInc ? "var(--bg-hover)" : undefined;
-              const stickyBg = row.isHighlighted ? "var(--bg-manuel-sticky,#c3f5dc)" : isInc ? "var(--bg-hover)" : "var(--bg-card,#fff)";
+              const rowBg = row.isHighlighted ? "var(--bg-success-subtle,#d1fae5)"
+                : isWD  ? "var(--bg-hover)"
+                : isInc ? "var(--bg-hover)"
+                : undefined;
+              const stickyBg = row.isHighlighted ? "var(--bg-manuel-sticky,#c3f5dc)"
+                : (isInc || isWD) ? "var(--bg-hover)"
+                : "var(--bg-card,#fff)";
 
               return (
-                <tr key={row.key} className={row.isHighlighted ? "row-manuel" : undefined} style={isInc ? { background: "var(--bg-hover)", opacity: 0.7 } : undefined}>
+                <tr key={row.key}
+                  className={row.isHighlighted ? "row-manuel" : undefined}
+                  style={(isInc || isWD) ? { background: rowBg, opacity: isWD ? 0.55 : 0.7 } : undefined}>
                   <td className="lb-pos sticky-col-0" style={row.isHighlighted ? undefined : { background: stickyBg }}>
-                    {isInc
+                    {isWD
                       ? <span className="badge-wd">WD</span>
-                      : showPos ? (medal || dp) : ""}
+                      : isInc
+                        ? ""
+                        : showPos ? (medal || dp) : ""}
                   </td>
                   <td className="lb-name sticky-col-1" style={row.isHighlighted ? undefined : { background: stickyBg }}>
                     <TournPName name={row.name} fedCode={row.fed} playersDB={playersDB} />
@@ -295,8 +312,8 @@ export function MultiRoundLeaderboard({
                   {showTee && <td className="lb-tee"><TeeDot teeName={row.teeName} /></td>}
 
                   {/* ±Par ANTES de Total */}
-                  <td className="lb-topar" style={{ color: tpCol, opacity: isInc ? 0.5 : 1 }}>{fmtTP(tp)}</td>
-                  <td className="lb-gross" style={{ opacity: isInc ? 0.5 : 1 }}>{row.gross}</td>
+                  <td className="lb-topar" style={{ color: tpCol, opacity: (isInc || isWD) ? 0.5 : 1 }}>{fmtTP(tp)}</td>
+                  <td className="lb-gross" style={{ opacity: (isInc || isWD) ? 0.5 : 1 }}>{row.gross > 0 ? row.gross : "–"}</td>
 
                   {/* Colunas por ronda */}
                   {isMulti

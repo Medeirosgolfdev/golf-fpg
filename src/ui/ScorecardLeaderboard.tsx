@@ -34,7 +34,7 @@ export interface ScorecardRow {
   key: string | number;
   pos: React.ReactNode;
   gross: number;
-  toPar: number;
+  toPar: number | null;   // null para jogadores WD/DNS
   scores?: number[];
   rowBg?: string;
   stickyBg?: string;
@@ -199,7 +199,7 @@ export function ScorecardLeaderboard({
                   <td className="lb-name sticky-col-1" style={{ background: sticky }}>{row.nameContent}</td>
                   {row.prefixCells}
                   <td className="lb-topar" style={{ color: tpColor(row.toPar) }}>{fmtToPar(row.toPar)}</td>
-                  <td className="lb-gross">{row.gross > 0 ? row.gross : "–"}</td>
+                  <td className="lb-gross">{row.gross > 0 && row.toPar != null ? row.gross : "–"}</td>
                   {showScorecard && <>
                     {scores.slice(0, 9).map((sc, i) => (
                       <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>

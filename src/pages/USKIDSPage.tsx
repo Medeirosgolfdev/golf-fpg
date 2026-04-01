@@ -12,7 +12,7 @@ import { tpColor, isManuel as _isManuel } from "../ui/tournamentPrimitives";
 /** Wrapper: isManuel para contexto USKids onde o identificador é o nome (string) */
 const isManuel = (nome: string): boolean => _isManuel({ name: nome });
 import {
-  ScorecardLB, AccumulatedLB, expandMultiRound,
+  ScorecardLB, AccumulatedLB, AllRoundsScorecardLB, expandMultiRound,
   type Tournament as TATournament,
 } from "./FPGPage";
 import { buildAutoRivals, normName as normNameAuto, type AutoRivalPlayer } from "./KIDSdataLoader";
@@ -951,6 +951,7 @@ function EscalaoSection({ escalao: e, torneio: t }: {
   if (!rondasComDados.length) return <EmptyState size="sm" message="Sem dados para este escalão." />;
 
   const hasAcumulado = rondasComDados.length >= 2;
+  const SCORECARD_TAB = rondasComDados.length + 1; // índice do novo tab
   const defaultTab = (() => {
     for (let i = 0; i < rondasComDados.length; i++) {
       const lb = rondasComDados[i].leaderboard ?? rondasComDados[i].jogadores ?? [];
@@ -963,8 +964,11 @@ function EscalaoSection({ escalao: e, torneio: t }: {
   const tournament = useMemo(() => escalaoToTournament(e, t), [e, t]);
   const expandedT = useMemo(() => expandMultiRound(tournament), [tournament]);
 
-  const isAccTab = hasAcumulado && tab === rondasComDados.length;
-  const curT = isAccTab ? expandedT[expandedT.length - 1] : expandedT[tab] ?? tournament;
+  const isAccTab       = hasAcumulado && tab === rondasComDados.length;
+  const isScorecardTab = hasAcumulado && tab === SCORECARD_TAB;
+  const curT = (isAccTab || isScorecardTab)
+    ? expandedT[expandedT.length - 1]
+    : expandedT[tab] ?? tournament;
 
   const tabStyle = (i: number): React.CSSProperties => ({
     padding: "6px 14px", fontSize: 12,
@@ -985,7 +989,7 @@ function EscalaoSection({ escalao: e, torneio: t }: {
           📍 {campo}
         </div>
       )}
-      {/* Sub-tabs R1 / R2 / Acumulado — só se houver mais de 1 ronda */}
+      {/* Sub-tabs R1 / R2 / Acumulado / Scorecards — só se houver mais de 1 ronda */}
       {(rondasComDados.length > 1) && (
         <div style={{ display: "flex", borderBottom: "1px solid var(--border)", marginBottom: 8 }}>
           {rondasComDados.map((_, i) => (
@@ -996,11 +1000,18 @@ function EscalaoSection({ escalao: e, torneio: t }: {
               Acumulado
             </button>
           )}
+          {hasAcumulado && (
+            <button style={tabStyle(SCORECARD_TAB)} onClick={() => setTab(SCORECARD_TAB)}>
+              📋 Scorecards
+            </button>
+          )}
         </div>
       )}
-      {isAccTab
-        ? <AccumulatedLB tournament={curT} nRounds={rondasComDados.length} escLookup={new Map()} playersDB={{}} />
-        : <ScorecardLB tournament={curT} escLookup={new Map()} playersDB={{}} siLabel="m" parLabelColSpan={6} />
+      {isScorecardTab
+        ? <AllRoundsScorecardLB tournament={tournament} escLookup={new Map()} playersDB={{}} />
+        : isAccTab
+          ? <AccumulatedLB tournament={curT} nRounds={rondasComDados.length} escLookup={new Map()} playersDB={{}} />
+          : <ScorecardLB tournament={curT} escLookup={new Map()} playersDB={{}} siLabel="m" parLabelColSpan={6} />
       }
 
     </div>

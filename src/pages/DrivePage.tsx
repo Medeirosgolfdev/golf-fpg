@@ -139,47 +139,65 @@ function expandMultiRound(tournaments: Tournament[]): Tournament[] {
     }
 
     // Also keep the original combined entry — but fix player ranking
+    // playedRoundsMax = máximo de rondas VÁLIDAS jogadas por qualquer jogador
+    // (evita marcar todos como incompletos quando ainda faltam rondas futuras)
+    const playedRoundsMax = Math.max(0, ...t.players.map(p =>
+      (p.roundScores?.filter(rs =>
+        rs.gross < 999 && !(rs.scores?.length && rs.scores.every((s: number) => s === 0))
+      ).length ?? 0)
+    ));
+
     const totalPlayers = t.players.map(p => {
-      const playedRounds = p.roundScores?.filter(r => r.scores && r.scores.length > 0).length || 0;
-      const incomplete = playedRounds < nRounds;
-      // Calculate combined parTotal across played rounds
+      // Rondas válidas: excluir WD (gross>=999 ou scorecard todo zeros)
+      const validRounds = (p.roundScores || []).filter(rs =>
+        rs.gross < 999 && !(rs.scores?.length && rs.scores.every((s: number) => s === 0))
+      );
+      const playedRounds2 = validRounds.length;
+      const isWD = playedRounds2 < (p.roundScores?.length || 0);
+      // "incompleto" = menos rondas válidas que o máximo disponível, sem ser WD
+      const incomplete = !isWD && playedRounds2 < playedRoundsMax;
+
       let combinedPar = 0;
-      for (const rs of (p.roundScores || [])) {
-        if (rs.pars && rs.pars.length > 0) {
-          combinedPar += rs.pars.reduce((a, b) => a + b, 0);
-        }
+      for (const rs of validRounds) {
+        if (rs.pars && rs.pars.length > 0) combinedPar += rs.pars.reduce((a: number, b: number) => a + b, 0);
       }
-      if (combinedPar === 0) combinedPar = (p.parTotal || 72) * playedRounds;
+      if (combinedPar === 0) combinedPar = (p.parTotal || 72) * playedRounds2;
+
+      const gross = validRounds.reduce((s: number, rs: RoundScore) => s + rs.gross, 0);
+
       return {
         ...p,
+        grossTotal: gross,
         _incomplete: incomplete,
-        _roundsPlayed: playedRounds,
+        _wd: isWD,
+        _roundsPlayed: playedRounds2,
         parTotal: combinedPar,
-        nholes: (p.nholes || 18) * playedRounds,
-        // Keep toPar from original data (already correct for complete players)
-        toPar: p.toPar,
+        nholes: (p.nholes || 18) * playedRounds2,
+        toPar: gross - combinedPar,
       };
     });
 
-    // Sort: complete players by grossTotal, then incomplete at bottom
+    // Sort: completos por gross → incompletos → WD no fim
     totalPlayers.sort((a, b) => {
-      // Incomplete players go to the bottom
+      if ((a as any)._wd && !(b as any)._wd) return 1;
+      if (!(a as any)._wd && (b as any)._wd) return -1;
       if (a._incomplete && !b._incomplete) return 1;
       if (!a._incomplete && b._incomplete) return -1;
-      // Among same group, sort by grossTotal
       const ag = typeof a.grossTotal === "string" ? parseInt(a.grossTotal) : (a.grossTotal as number ?? 999);
       const bg = typeof b.grossTotal === "string" ? parseInt(b.grossTotal) : (b.grossTotal as number ?? 999);
       return ag - bg;
     });
-    // Assign positions (only complete players get real positions)
+    // Posições só para jogadores completos e não-WD
     let pos = 1;
     totalPlayers.forEach((p, i) => {
-      if (p._incomplete || isDNS(p)) {
+      if ((p as any)._wd) {
+        p.pos = "WD";
+      } else if (p._incomplete || isDNS(p)) {
         p.pos = p._incomplete ? "INC" : (p.pos || "NS");
       } else {
         if (i > 0) {
           const prev = totalPlayers[i - 1];
-          if (!prev._incomplete && !isDNS(prev)) {
+          if (!prev._incomplete && !isDNS(prev) && !(prev as any)._wd) {
             const ag = typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : (p.grossTotal as number ?? 999);
             const bg = typeof prev.grossTotal === "string" ? parseInt(prev.grossTotal) : (prev.grossTotal as number ?? 999);
             if (ag !== bg) pos = i + 1;
@@ -1065,6 +1083,344 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
       activeSortKey={sortKey === "pos" ? "pos" : ""}
       activeSortDir={sortDir}
     />
+  );
+}
+
+/* ═══════════════════════════════════════════════════════
+   SCORECARD COMBINADO — mesmo aspecto R1/R2, dias empilhados
+   ═══════════════════════════════════════════════════════ */
+const DRIVE_MAX_HOLE = 10;
+
+function driveScClass(score: number, par: number): string {
+  if (!score || !par) return "";
+  const d = score - par;
+  if (score === 1) return "holeinone";
+  if (d <= -2) return "eagle";
+  if (d === -1) return "birdie";
+  if (d ===  0) return "par";
+  if (d ===  1) return "bogey";
+  if (d ===  2) return "double";
+  if (d ===  3) return "triple";
+  return "worse";
+}
+
+function driveFmtTP(tp: number): string {
+  if (tp === 0) return "E";
+  return tp > 0 ? `+${tp}` : String(tp);
+}
+
+function DriveAllRoundsScorecardLB({
+  totalTournament, playersDB, sdLookup,
+}: {
+  totalTournament: Tournament;   // entrada "Total" com roundScores completos
+  playersDB: PlayersDB;
+  sdLookup: SDLookup;
+}) {
+  const [nameQ,   setNameQ]   = useState("");
+  const [clubQ,   setClubQ]   = useState("");
+  const [showSC,  setShowSC]  = useState(true);
+  const [sortKey, setSortKey] = useState<"pos"|"name"|"club"|"hcp">("pos");
+  const [sortDir, setSortDir] = useState<"asc"|"desc">("asc");
+
+  const nRounds = totalTournament._totalRounds || 2;
+
+  // Par/SI de referência por ronda (assume mesmo campo)
+  const roundRefs = useMemo(() =>
+    Array.from({ length: nRounds }, (_, ri) => {
+      const rdNum = ri + 1;
+      for (const p of totalTournament.players) {
+        const rs = p.roundScores?.find(r => r.round === rdNum);
+        if (rs?.pars?.length) return { pars: rs.pars, si: rs.si || [], cr: rs.courseRating, slope: rs.slope };
+      }
+      return { pars: [] as number[], si: [] as number[], cr: undefined as number|undefined, slope: undefined as number|undefined };
+    }),
+  [totalTournament, nRounds]);
+
+  // Usa sempre a referência R1 para os headers PAR/SI
+  const ref0   = roundRefs[0] ?? { pars: [], si: [] };
+  const par    = ref0.pars;
+  const si     = ref0.si;
+  const nh     = par.length || 18;
+  const is9    = nh <= 9;
+  const parF9  = par.slice(0, 9).reduce((a, b) => a + b, 0);
+  const parB9  = !is9 ? par.slice(9).reduce((a, b) => a + b, 0) : 0;
+  const parTot = par.reduce((a, b) => a + b, 0);
+  const hasSI  = si.length >= nh;
+
+  interface RdData {
+    scores: number[]; gross: number; toPar: number;
+    sd: number | null; birds: number; pars2: number; bogs: number;
+  }
+  interface PRow {
+    key: string; name: string; club: string; hcp: number | null; fed?: string;
+    rds: (RdData | null)[]; total: number | null; totalTP: number | null;
+    isWD: boolean; pos: number | null;
+  }
+
+  function buildRd(p: Player, rdNum: number, ref: typeof roundRefs[0]): RdData | null {
+    const rs = p.roundScores?.find(r => r.round === rdNum);
+    if (!rs) return null;
+    if (rs.gross >= 999 || (rs.scores?.length > 0 && rs.scores.every((s: number) => s === 0))) return null;
+    const capped = rs.scores?.map((s: number) => Math.min(s, DRIVE_MAX_HOLE)) ?? [];
+    const gross  = capped.length ? capped.reduce((a: number, b: number) => a + b, 0) : rs.gross;
+    const rdPar  = (rs.pars ?? ref.pars)?.reduce((a: number, b: number) => a + b, 0) || parTot;
+    let birds = 0, pars2 = 0, bogs = 0;
+    capped.forEach((s: number, h: number) => {
+      const d = s - (rs.pars?.[h] ?? ref.pars[h] ?? 0);
+      if (d <= -1) birds++; else if (d === 0) pars2++; else bogs++;
+    });
+    // SD desta ronda
+    let sd: number | null = null;
+    const cr = rs.courseRating; const slope = rs.slope;
+    if (cr && slope && p.hcpExact != null && rs.si?.length >= nh && capped.length >= nh && rs.pars?.length >= nh) {
+      const ags = calcAGS(capped, rs.pars, rs.si, cr, slope, p.hcpExact, nh);
+      sd = Math.max(0, Math.round((113 / slope) * (ags - cr) * 10) / 10);
+    } else if (cr && slope) {
+      sd = Math.max(0, Math.round((113 / slope) * (gross - cr) * 10) / 10);
+    }
+    return { scores: capped, gross, toPar: gross - rdPar, sd, birds, pars2, bogs };
+  }
+
+  const rows: PRow[] = useMemo(() =>
+    totalTournament.players.filter(p => !isDNS(p)).map(p => {
+      const rds = roundRefs.map((ref, ri) => buildRd(p, ri + 1, ref));
+      const validRds = rds.filter(r => r != null) as RdData[];
+      const anyWD = rds.some((r, ri) => r == null && !!p.roundScores?.find(rs => rs.round === ri + 1));
+      const total   = validRds.length ? validRds.reduce((s, r) => s + r.gross, 0) : null;
+      const totalTP = validRds.length ? validRds.reduce((s, r) => s + r.toPar, 0) : null;
+      return { key: p.scoreId || p.name, name: p.name, club: p.club || "",
+        hcp: p.hcpExact ?? null, fed: p.fed || p.fedCode,
+        rds, total, totalTP, isWD: anyWD, pos: null };
+    }),
+  [totalTournament, roundRefs]);
+
+  const ranked = useMemo(() => {
+    const valid = [...rows.filter(r => r.total != null && !r.isWD)].sort((a, b) => a.total! - b.total!);
+    let cnt = 1;
+    const pm = new Map<string, number>();
+    valid.forEach((r, i) => {
+      if (i > 0 && r.total !== valid[i - 1].total) cnt = i + 1;
+      pm.set(r.key, cnt);
+    });
+    return rows.map(r => ({ ...r, pos: pm.get(r.key) ?? null }));
+  }, [rows]);
+
+  function toggleSort(k: typeof sortKey) {
+    if (sortKey === k) setSortDir(d => d === "asc" ? "desc" : "asc");
+    else { setSortKey(k); setSortDir("asc"); }
+  }
+
+  const sorted = useMemo(() => {
+    const INF = 9999;
+    function cmp(a: typeof ranked[0], b: typeof ranked[0]) {
+      switch (sortKey) {
+        case "pos":  return sortDir==="asc" ? (a.pos??INF)-(b.pos??INF) : (b.pos??INF)-(a.pos??INF);
+        case "name": return sortDir==="asc" ? a.name.localeCompare(b.name,"pt") : b.name.localeCompare(a.name,"pt");
+        case "club": return sortDir==="asc" ? a.club.localeCompare(b.club,"pt") : b.club.localeCompare(a.club,"pt");
+        case "hcp":  return sortDir==="asc" ? (a.hcp??INF)-(b.hcp??INF) : (b.hcp??INF)-(a.hcp??INF);
+        default: return 0;
+      }
+    }
+    return [
+      ...ranked.filter(r => r.total!=null && !r.isWD).sort(cmp),
+      ...ranked.filter(r => r.total==null && !r.isWD).sort(cmp),
+      ...ranked.filter(r => r.isWD),
+    ];
+  }, [ranked, sortKey, sortDir]);
+
+  const displayed = sorted.filter(r => {
+    const q = nameQ.toLowerCase();
+    return (!q || r.name.toLowerCase().includes(q) || r.club.toLowerCase().includes(q))
+        && (!clubQ || r.club === clubQ);
+  });
+
+  const availClubs = useMemo(() => {
+    const s = new Set<string>(); for (const r of sorted) if (r.club) s.add(r.club);
+    return [...s].sort((a, b) => a.localeCompare(b,"pt"));
+  }, [sorted]);
+
+  const medals = ["🥇","🥈","🥉"];
+  const RD_LABELS = ["R1","R2","R3","R4"];
+  const cell: React.CSSProperties = { padding: "3px 4px" };
+
+  /* Células de score buraco-a-buraco com os círculos CSS */
+  function ScoreCells({ scores, rdPars }: { scores: number[]; rdPars: number[] }) {
+    const f9 = scores.slice(0,9).reduce((a,b)=>a+b,0);
+    const b9 = !is9 ? scores.slice(9,18).reduce((a,b)=>a+b,0) : 0;
+    return (<>
+      {scores.slice(0,9).map((sc, i) => (
+        <td key={i} className={"lb-hole"+(i===0?" lb-hole-first":"")}>
+          <span className={"sc-score "+driveScClass(sc, rdPars[i]??par[i])}>{sc||""}</span>
+        </td>
+      ))}
+      <td className="lb-halftot">{f9} <span className="fs-8 c-text-3">({driveFmtTP(f9-parF9)})</span></td>
+      {!is9 && (<>
+        {scores.slice(9,18).map((sc, i) => (
+          <td key={i} className={"lb-hole"+(i===0?" lb-hole-first":"")}>
+            <span className={"sc-score "+driveScClass(sc, rdPars[9+i]??par[9+i])}>{sc||""}</span>
+          </td>
+        ))}
+        <td className="lb-halftot">{b9} <span className="fs-8 c-text-3">({driveFmtTP(b9-parB9)})</span></td>
+      </>)}
+    </>);
+  }
+
+  function SHdr({ k, children, className }: { k: typeof sortKey; children: React.ReactNode; className?: string }) {
+    const active = sortKey === k;
+    return (
+      <th className={"lb-sortable "+(className||"")} onClick={() => toggleSort(k)}>
+        {children}{active && <span className="sort-arrow">{sortDir==="asc"?"▲":"▼"}</span>}
+      </th>
+    );
+  }
+
+  const colsPerRound = is9 ? 10 : 20;
+  const postCols = 4; // SD 🐦 Par ■
+
+  return (
+    <div>
+      <div className="muted fs-11 mb-8 p-0-4px" style={{ display:"flex", alignItems:"center", gap:10, flexWrap:"wrap" }}>
+        <span>{displayed.length} jogadores · {nRounds}R · Par {parTot}</span>
+        <button onClick={() => setShowSC(v => !v)} className="btn" style={{ marginLeft:"auto" }}>
+          {showSC ? "Ocultar scorecard" : "Ver scorecard"}
+        </button>
+      </div>
+
+      {/* Filtros */}
+      <div style={{ display:"flex", flexWrap:"wrap", gap:6, paddingBottom:8, borderBottom:"1px solid var(--border)", marginBottom:8 }}>
+        <div style={{ position:"relative" }}>
+          <span style={{ position:"absolute", left:7, top:"50%", transform:"translateY(-50%)", fontSize:11, color:"var(--text-muted)", pointerEvents:"none" }}>🔍</span>
+          <input type="text" placeholder="Nome ou clube…" value={nameQ} onChange={e=>setNameQ(e.target.value)}
+            style={{ fontSize:11, padding:"3px 8px 3px 22px", borderRadius:6, border:"1px solid var(--border)", background:"var(--bg-card,#fff)", color:"var(--text)", width:150, outline:"none" }} />
+        </div>
+        {availClubs.length > 2 && (
+          <select value={clubQ} onChange={e=>setClubQ(e.target.value)}
+            style={{ fontSize:11, padding:"3px 6px", borderRadius:6, border:`1px solid ${clubQ?"var(--accent,#2563eb)":"var(--border)"}`, background:"var(--bg-card,#fff)", color:"var(--text)", cursor:"pointer" }}>
+            <option value="">Todos os clubes</option>
+            {availClubs.map(c=><option key={c} value={c}>{c}</option>)}
+          </select>
+        )}
+        {(nameQ||clubQ) && (
+          <button onClick={()=>{setNameQ("");setClubQ("");}}
+            style={{ fontSize:10, padding:"2px 8px", borderRadius:20, border:"1px solid var(--border)", background:"var(--bg-hover)", color:"var(--text-muted)", cursor:"pointer" }}>✕ limpar</button>
+        )}
+      </div>
+
+      <div className="bjgt-chart-scroll">
+        <table className={"sc-lb"+(showSC?" sc-lb-with-sc":"")} data-sc-table="1">
+          <thead>
+            {showSC && hasSI && (
+              <tr className="lb-si-row">
+                <td className="sticky-col-0"/><td className="lb-par-lbl sticky-col-1" colSpan={4}>S.I.</td>
+                <td className="lb-topar"/><td className="lb-gross">{si.reduce((a,b)=>a+b,0)||""}</td>
+                {si.slice(0,9).map((v,i)=><td key={i} className={"lb-hole"+(i===0?" lb-hole-first":"")}>{v||""}</td>)}
+                <td className="lb-halftot">{si.slice(0,9).reduce((a,b)=>a+b,0)||""}</td>
+                {!is9 && si.slice(9,18).map((v,i)=><td key={i} className={"lb-hole"+(i===0?" lb-hole-first":"")}>{v||""}</td>)}
+                {!is9 && <td className="lb-halftot">{si.slice(9).reduce((a,b)=>a+b,0)||""}</td>}
+                {Array.from({length:postCols},(_,i)=><td key={i}/>)}
+              </tr>
+            )}
+            {showSC && (
+              <tr className="lb-par-row">
+                <td className="sticky-col-0"/><td className="lb-par-lbl sticky-col-1" colSpan={4}>PAR</td>
+                <td className="lb-topar"/><td className="lb-gross">{parTot}</td>
+                {par.slice(0,9).map((v,i)=><td key={i} className={"lb-hole"+(i===0?" lb-hole-first":"")}>{v}</td>)}
+                <td className="lb-halftot">{parF9}</td>
+                {!is9 && par.slice(9,18).map((v,i)=><td key={i} className={"lb-hole"+(i===0?" lb-hole-first":"")}>{v}</td>)}
+                {!is9 && <td className="lb-halftot">{parB9}</td>}
+                {Array.from({length:postCols},(_,i)=><td key={i}/>)}
+              </tr>
+            )}
+            <tr>
+              <th className="lb-pos sticky-col-0">#</th>
+              <SHdr k="name" className="lb-name sticky-col-1">Jogador</SHdr>
+              <SHdr k="club" className="lb-club">Clube</SHdr>
+              <SHdr k="hcp"  className="lb-hcp">HCP</SHdr>
+              <th className="lb-tee" style={{ fontSize:10, fontWeight:600, color:"var(--text-muted)" }}>Rnd</th>
+              <th className="lb-topar">±</th>
+              <th className="lb-gross">Tot</th>
+              {showSC && (<>
+                {Array.from({length:9},(_,i)=><th key={i} className={"lb-hole"+(i===0?" lb-hole-first":"")}>{i+1}</th>)}
+                <th className="lb-halftot">{is9?"Tot":"Out"}</th>
+                {!is9 && Array.from({length:9},(_,i)=><th key={i+9} className={"lb-hole"+(i===0?" lb-hole-first":"")}>{i+10}</th>)}
+                {!is9 && <th className="lb-halftot">In</th>}
+              </>)}
+              <th className="lb-sd">SD</th>
+              <th className="lb-bird">🐦</th>
+              <th className="lb-par-stat">Par</th>
+              <th className="lb-bog">■</th>
+            </tr>
+          </thead>
+          <tbody>
+            {displayed.map((row, playerIdx) => {
+              const prevPos = playerIdx > 0 ? displayed[playerIdx-1].pos : undefined;
+              const showPos = row.pos !== prevPos || row.isWD;
+              const medal   = row.pos!=null && row.pos<=3 ? medals[row.pos-1] : null;
+              const posStr  = row.isWD ? "WD" : row.pos!=null ? (medal??String(row.pos)) : "–";
+              const isFirst = playerIdx === 0;
+              const playerBg = playerIdx%2===0 ? undefined : "var(--bg-muted,#f8fafc)";
+
+              return (
+                <React.Fragment key={row.key}>
+                  {row.rds.map((rd, ri) => {
+                    const isFirstRd = ri === 0;
+                    const rdRef = roundRefs[ri] ?? { pars: par };
+                    const rdBg = isFirstRd ? playerBg
+                      : playerBg ? "color-mix(in srgb, var(--bg-muted) 60%, transparent)"
+                      : "var(--bg-muted-alt,rgba(0,0,0,0.02))";
+                    const bTop = isFirstRd && !isFirst ? "2px solid var(--border)" : undefined;
+                    return (
+                      <tr key={ri} style={{ background:rdBg, borderTop:bTop }}>
+                        <td className="lb-pos sticky-col-0" style={{ background:rdBg, borderTop:bTop }}>
+                          {isFirstRd ? (showPos ? posStr : "") : ""}
+                        </td>
+                        <td className="lb-name sticky-col-1" style={{ background:rdBg, fontWeight:isFirstRd?600:400, borderTop:bTop }}>
+                          {isFirstRd ? (<>
+                            {row.fed ? <a href={`/jogadores/${row.fed}`} target="_blank" rel="noopener noreferrer"
+                                 style={{ color:"inherit", textDecoration:"none" }}>{row.name}</a> : row.name}
+                            {row.total != null && row.rds.filter(r => r != null).length >= 2 && (
+                              <div style={{ display:"flex", alignItems:"baseline", gap:4, marginTop:2, lineHeight:1 }}>
+                                <span style={{ fontSize:12, fontWeight:700, color:"var(--text)" }}>{row.total}</span>
+                                <span style={{ fontSize:10, color:"var(--text-muted)", fontWeight:500 }}>
+                                  ({row.totalTP!=null ? driveFmtTP(row.totalTP) : "–"})
+                                </span>
+                              </div>
+                            )}
+                          </>) : <span className="muted fs-10" style={{ paddingLeft:8 }}>↳</span>}
+                        </td>
+                        <td className="lb-club" style={{ borderTop:bTop }}>{isFirstRd ? row.club||"–" : ""}</td>
+                        <td className="lb-hcp" style={{ borderTop:bTop }}>{isFirstRd ? (row.hcp!=null?row.hcp.toFixed(1):"–") : ""}</td>
+                        <td className="lb-tee" style={{ fontWeight:600, fontSize:10, color:"var(--text-muted)", borderTop:bTop }}>
+                          {RD_LABELS[ri]??`R${ri+1}`}
+                        </td>
+                        {rd ? (<>
+                          <td className="lb-topar" style={{ color:rd.toPar<0?"var(--color-good,#16a34a)":rd.toPar>0?"var(--color-danger,#dc2626)":"var(--text)", borderTop:bTop }}>
+                            {driveFmtTP(rd.toPar)}
+                          </td>
+                          <td className="lb-gross" style={{ borderTop:bTop }}>{rd.gross}</td>
+                          {showSC && <ScoreCells scores={rd.scores} rdPars={rdRef.pars} />}
+                          <td className="lb-sd" style={{ borderTop:bTop }}>
+                            {rd.sd!=null ? <SDPill sd={rd.sd} source={null} hcp={row.hcp} /> : <span className="muted">–</span>}
+                          </td>
+                          <td className="lb-bird" style={{ borderTop:bTop }}>{rd.birds||""}</td>
+                          <td className="lb-par-stat" style={{ borderTop:bTop }}>{rd.pars2||""}</td>
+                          <td className="lb-bog" style={{ borderTop:bTop }}>{rd.bogs||""}</td>
+                        </>) : (<>
+                          <td className="lb-topar muted" style={{ borderTop:bTop }}>–</td>
+                          <td className="lb-gross muted" style={{ borderTop:bTop }}>–</td>
+                          {showSC && Array.from({length:colsPerRound},(_,i)=><td key={i} className="lb-hole"/>)}
+                          {Array.from({length:postCols},(_,i)=><td key={i}/>)}
+                        </>)}
+                      </tr>
+                    );
+                  })}
+                </React.Fragment>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 }
 
@@ -2378,6 +2734,14 @@ function DriveContent() {
                         </button>
                       );
                     })}
+                    {/* Tab extra: Scorecards combinado */}
+                    {selectedGroup.entries.some(e => e._roundLabel === "Total") && (
+                      <button
+                        className={"tourn-tab tourn-tab-sm" + (roundIdx === selectedGroup.entries.length ? " active" : "")}
+                        onClick={() => setRoundIdx(selectedGroup.entries.length)}>
+                        📋 Scorecards
+                      </button>
+                    )}
                   </div>
                 )}
                 {curTournament && (
@@ -2406,7 +2770,14 @@ function DriveContent() {
                     </div>
                     {curTournament._roundLabel === "Total"
                       ? <TotalLeaderboard tournament={curTournament} playersDB={pdb} sdLookup={sdLookup} />
-                      : <ScorecardLB tournament={curTournament} playersDB={pdb} escLookup={escLookup} sdLookup={sdLookup} />}
+                      : roundIdx === selectedGroup.entries.length
+                        ? (() => {
+                            const totalT = selectedGroup.entries.find(e => e._roundLabel === "Total");
+                            return totalT
+                              ? <DriveAllRoundsScorecardLB totalTournament={totalT} playersDB={pdb} sdLookup={sdLookup} />
+                              : <div className="muted ta-center p-16">Dados insuficientes</div>;
+                          })()
+                        : <ScorecardLB tournament={curTournament} playersDB={pdb} escLookup={escLookup} sdLookup={sdLookup} />}
                   </div>
                 )}
               </div>
