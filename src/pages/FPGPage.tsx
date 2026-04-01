@@ -50,7 +50,7 @@ type TournPill = "REGIONAL" | "NACIONAL" | "INTL" | "PJA" | "SSERRA";
    TIPOS + DADOS — Campeonato Nacional de Clubes
    ───────────────────────────────────────────── */
 interface GrupoJogador { nome: string; fed: string | null; hcp: number | string; }
-interface GrupoEntry   { grupo: string; clube: string; jogadores: GrupoJogador[]; }
+interface GrupoEntry   { grupo: string; clube: string; jogadores: GrupoJogador[]; suplente?: string; capitao?: string; }
 
 /** Quantos scores por ronda contam para o total de equipa */
 const CLUBES_BEST_N = 3;
@@ -59,67 +59,67 @@ const MAX_HOLE_SCORE = 10;
 
 const CLUBES_GRUPOS: Record<"sub14" | "sub18", GrupoEntry[]> = {
   sub14: [
-    { grupo: "A", clube: "Club de Golf de Miramar", jogadores: [
+    { grupo: "A", clube: "Club de Golf de Miramar", suplente: "Raul Pazos", capitao: "Sérgio Ribeiro", jogadores: [
       { nome: "Tomás Rente",           fed: "46311", hcp: 6.9 },
       { nome: "Margarida Silva Pinto", fed: "46310", hcp: 4.1 },
       { nome: "Francisco Nunes (jr)",  fed: "46299", hcp: 5.4 },
       { nome: "Henrique Pereira",      fed: "53646", hcp: 12.5 },
     ]},
-    { grupo: "B", clube: "Clube de Golfe Citynorte", jogadores: [
+    { grupo: "B", clube: "Clube de Golfe Citynorte", capitao: "Cândida Santos", jogadores: [
       { nome: "Gil Ribeiro",           fed: "47810", hcp: 22.9 },
       { nome: "Madalena Policarpo",    fed: "45608", hcp: 15.7 },
       { nome: "João Pedro Frade",      fed: "45424", hcp: 18.5 },
       { nome: "Pedro Luís Fernandes",  fed: "52168", hcp: 17.0 },
     ]},
-    { grupo: "C", clube: "Clube de Golf do Estoril", jogadores: [
+    { grupo: "C", clube: "Clube de Golf do Estoril", suplente: "Salvador Ivo de Carvalho", capitao: "Tiago Cruz", jogadores: [
       { nome: "João Rocha",              fed: "48297", hcp: 6.1 },
       { nome: "Ruiqi Li",                fed: "49076", hcp: 3.8 },
       { nome: "Nuno Palmares Jr.",       fed: "49124", hcp: 3.9 },
       { nome: "Ricardo Castro Ferreira", fed: "49085", hcp: 7.4 },
     ]},
-    { grupo: "D", clube: "Clube de Golfe de Vilamoura", jogadores: [
+    { grupo: "D", clube: "Clube de Golfe de Vilamoura", suplente: "Tomás Valério", capitao: "Hugo Santos", jogadores: [
       { nome: "Catarina Valério",           fed: "46873", hcp: 18.1 },
       { nome: "Catarina Sousa Conceição",   fed: "48794", hcp: 10.7 },
       { nome: "Tomás Lima Pinto",           fed: "46037", hcp: 8.9  },
       { nome: "Sabrina Ribeiro Crisóstomo", fed: "48971", hcp: 8.0  },
     ]},
-    { grupo: "E", clube: "Oporto Golf Clube A", jogadores: [
+    { grupo: "E", clube: "Oporto Golf Clube A", suplente: "Lucas Amorim", capitao: "Miguel Valença", jogadores: [
       { nome: "Sebastião Soares",      fed: "47341", hcp: 15.3 },
       { nome: "Afonso de Sousa Pinto", fed: "46480", hcp: 10.3 },
       { nome: "Francisco Saraiva",     fed: "39097", hcp: 7.9  },
       { nome: "Santiago Dias",         fed: "42908", hcp: 1.0  },
     ]},
-    { grupo: "F", clube: "Clube de Golf da Quinta do Peru", jogadores: [
+    { grupo: "F", clube: "Clube de Golf da Quinta do Peru", capitao: "Cláudia Dantas", jogadores: [
       { nome: "David Filip Jr",     fed: "51949", hcp: 9.7  },
       { nome: "Mário Novaes Moura", fed: "53939", hcp: 38.3 },
       { nome: "Beatriz Mendes",     fed: "46026", hcp: 36.0 },
       { nome: "William Gao",        fed: "51524", hcp: 9.5  },
     ]},
-    { grupo: "G", clube: "Oporto Golf Clube B", jogadores: [
+    { grupo: "G", clube: "Oporto Golf Clube B", capitao: "Ricardo Garcia", jogadores: [
       { nome: "Catarina Loureiro", fed: "49328", hcp: 20.1 },
       { nome: "Maksim Mutalapov",  fed: "54475", hcp: 32.1 },
       { nome: "Ricardo Ferreira",  fed: "45366", hcp: 23.1 },
       { nome: "Diogo Guilherme",   fed: "56632", hcp: 19.0 },
     ]},
-    { grupo: "H", clube: "Lisbon Sports Club", jogadores: [
+    { grupo: "H", clube: "Lisbon Sports Club", capitao: "Catarina Inocentes", jogadores: [
       { nome: "Filipe Delicado",             fed: "53124", hcp: 36.6 },
       { nome: "Guilherme Pereira",           fed: "47658", hcp: 37.2 },
       { nome: "David Stocksreiter Ferreira", fed: "48164", hcp: 35.4 },
       { nome: "Diogo Vaz Pinto Jr.",         fed: "51432", hcp: 32.9 },
     ]},
-    { grupo: "I", clube: "Clube de Golfe Citynorte A", jogadores: [
+    { grupo: "I", clube: "Clube de Golfe Citynorte A", suplente: "Tomás Araújo", capitao: "Cândida Santos", jogadores: [
       { nome: "Marc Costa",               fed: "46308", hcp: 13.7 },
       { nome: "Tomás Sarmento de Beires", fed: "48046", hcp: 16.2 },
       { nome: "Afonso Paiva Gonçalves",   fed: "47819", hcp: 14.5 },
       { nome: "Diogo Lima",               fed: "49717", hcp: 12.0 },
     ]},
-    { grupo: "J", clube: "Club de Golf de Miramar B", jogadores: [
+    { grupo: "J", clube: "Club de Golf de Miramar B", capitao: "Sérgio Ribeiro", jogadores: [
       { nome: "José Maria Pereira",     fed: "53645", hcp: 20.7 },
       { nome: "Eduardo Rocha Ferreira", fed: "51182", hcp: 22.4 },
       { nome: "Ricardo Rocha Ferreira", fed: "51180", hcp: 17.3 },
       { nome: "João Balixa",            fed: "46038", hcp: 9.5  },
     ]},
-    { grupo: "K", clube: "Quinta das Lágrimas Clube de Golfe", jogadores: [
+    { grupo: "K", clube: "Quinta das Lágrimas Clube de Golfe", suplente: "Vicente Poeira", jogadores: [
       { nome: "Guido Martins Gonçalves", fed: "46414", hcp: 14.6 },
       { nome: "Gil Martins Gonçalves",   fed: "46415", hcp: 18.7 },
       { nome: "Miguel Silva",            fed: "45661", hcp: 36.9 },
@@ -128,76 +128,76 @@ const CLUBES_GRUPOS: Record<"sub14" | "sub18", GrupoEntry[]> = {
     ]},
   ],
   sub18: [
-    { grupo: "A", clube: "CG Vilamoura", jogadores: [
+    { grupo: "A", clube: "CG Vilamoura", suplente: "Igor Kostyn", capitao: "Hugo Santos", jogadores: [
       { nome: "Rodrigo Sousa Correia", fed: "44934", hcp: 3.4     },
       { nome: "Francisco Reis",        fed: "40534", hcp: 0.3     },
       { nome: "Martim Pinto Johansen", fed: "40115", hcp: "+0.8"  },
       { nome: "Jack Murtagh",          fed: "41593", hcp: 8.4     },
     ]},
-    { grupo: "B", clube: "Clube de Golf da Quinta do Peru", jogadores: [
+    { grupo: "B", clube: "Clube de Golf da Quinta do Peru", capitao: "Cláudia Dantas", jogadores: [
       { nome: "Salvador Paulo Rodrigues", fed: "58051", hcp: 29.3 },
       { nome: "Angelina Gao",             fed: "51523", hcp: 3.9  },
       { nome: "Diogo Sequeira",           fed: "56654", hcp: 3.6  },
       { nome: "João Setúbal",             fed: "43732", hcp: 0.2  },
     ]},
-    { grupo: "C", clube: "Club de Golf de Miramar", jogadores: [
+    { grupo: "C", clube: "Club de Golf de Miramar", suplente: "Margarida Alves", capitao: "Sérgio Ribeiro", jogadores: [
       { nome: "Afonso Silva Pinto",          fed: "46309", hcp: 5.4    },
       { nome: "Gaspard Maes",                fed: "51074", hcp: 1.8    },
       { nome: "Camila Pazos",                fed: "46297", hcp: 2.9    },
       { nome: "Francisca Ferreira Da Costa", fed: "40981", hcp: "+1.8" },
     ]},
-    { grupo: "D", clube: "Clube Palheiro Golfe", jogadores: [
+    { grupo: "D", clube: "Clube Palheiro Golfe", capitao: "Edgar Rodrigues", jogadores: [
       { nome: "André Gonçalves",    fed: "41121", hcp: 6.7 },
       { nome: "Maria Cunha",        fed: "46482", hcp: 4.6 },
       { nome: "Salvador Rodrigues", fed: "39465", hcp: 6.2 },
       { nome: "José Pedro Miranda", fed: "38976", hcp: 7.0 },
     ]},
-    { grupo: "E", clube: "Estela Golf Club", jogadores: [
+    { grupo: "E", clube: "Estela Golf Club", suplente: "Afonso Polery", capitao: "Luís Cameira", jogadores: [
       { nome: "Gabriel Marques Guerreiro", fed: "43053", hcp: 4.4  },
       { nome: "André Von Hafe",            fed: "40473", hcp: 15.4 },
       { nome: "Manuel Rouco Castro",       fed: "47576", hcp: 16.3 },
       { nome: "Afonso Poiarez",            fed: "46079", hcp: 16.2 },
     ]},
-    { grupo: "F", clube: "Oporto Golf Club A", jogadores: [
+    { grupo: "F", clube: "Oporto Golf Club A", suplente: "Henrique Montenegro", capitao: "Miguel Valença", jogadores: [
       { nome: "Eva Silva",                fed: "46437", hcp: 1.4    },
       { nome: "Pedro Ferreira",           fed: "43810", hcp: 0.7    },
       { nome: "Guilherme Grabner Moreira",fed: "42205", hcp: 0.6    },
       { nome: "Luis António Silva",       fed: "42845", hcp: "+3.0" },
       { nome: "Henrique Montenegro",      fed: "39552", hcp: 2.2    },
     ]},
-    { grupo: "G", clube: "Clube de Golf da Ilha Terceira", jogadores: [
+    { grupo: "G", clube: "Clube de Golf da Ilha Terceira", suplente: "Tomás Valadão", capitao: "Michael Duarte", jogadores: [
       { nome: "João Lucas Fagundes",           fed: "44677", hcp: 17.8 },
       { nome: "Madalena Alexandra Van Zeller", fed: "47078", hcp: 8.0  },
       { nome: "Maria Fonseca Azevedo",         fed: "44019", hcp: 14.9 },
       { nome: "Rafael Ourique Azevedo",        fed: "44018", hcp: 27.0 },
       { nome: "Tomás Valadão",                 fed: "36625", hcp: 0    },
     ]},
-    { grupo: "H", clube: "Clube de Golfe de Belas", jogadores: [
+    { grupo: "H", clube: "Clube de Golfe de Belas", suplente: "Frederico Almeida da Silva", capitao: "José Augusto", jogadores: [
       { nome: "Clara Trindade",           fed: "45812", hcp: 8.2 },
       { nome: "Henrique Almeida da Silva",fed: "41612", hcp: 6.4 },
       { nome: "Ryan Dantas",              fed: "45439", hcp: 6.9 },
       { nome: "Filipe Pinheiro",          fed: "46591", hcp: 3.1 },
     ]},
-    { grupo: "I", clube: "Oporto Golf Clube B", jogadores: [
+    { grupo: "I", clube: "Oporto Golf Clube B", suplente: "Gonçalo Maia", capitao: "Miguel Montenegro", jogadores: [
       { nome: "Teresa Ferreira",          fed: "46589", hcp: 6.7 },
       { nome: "Jorge Xavier Graça Silva", fed: "48705", hcp: 8.0 },
       { nome: "Maria Francisca Santos",   fed: "46853", hcp: 4.6 },
       { nome: "Maria Loureiro",           fed: "46489", hcp: 5.8 },
     ]},
-    { grupo: "J", clube: "P.G.C. - Paredes Golfe Clube", jogadores: [
+    { grupo: "J", clube: "P.G.C. - Paredes Golfe Clube", suplente: "Guilherme Alves", capitao: "Tomás Ribeiro", jogadores: [
       { nome: "Rafael Nogueira", fed: null, hcp: 15.5 },
       { nome: "João Oliveira",   fed: null, hcp: 29.3 },
       { nome: "Gustavo Castro",  fed: null, hcp: 16.7 },
       { nome: "Elisa Garcez",    fed: null, hcp: 4.9  },
     ]},
-    { grupo: "K", clube: "Clube de Golf do Estoril", jogadores: [
+    { grupo: "K", clube: "Clube de Golf do Estoril", suplente: "Reuben Thapa", capitao: "Miguel Nunes Pedro", jogadores: [
       { nome: "Paul Devillers",             fed: "49770", hcp: 2.5    },
       { nome: "João Maria Ivo de Carvalho", fed: "38334", hcp: "+1.8" },
       { nome: "Duarte Soares Franco",       fed: "48531", hcp: 8.1    },
       { nome: "Pedro Costa Alemão",         fed: "46706", hcp: 4.0    },
       { nome: "Reuben Thapa",               fed: "47552", hcp: 3.6    },
     ]},
-    { grupo: "L", clube: "Lisbon Sports Club", jogadores: [
+    { grupo: "L", clube: "Lisbon Sports Club", capitao: "Rita Nunes", jogadores: [
       { nome: "Francisca Vilela", fed: "36700", hcp: 16.3 },
       { nome: "Manuel Vaz Pinto", fed: "51430", hcp: 17.8 },
       { nome: "João Gomes",       fed: "53715", hcp: 10.5 },
@@ -2245,6 +2245,43 @@ function ClubesGruposView({
                   </tr>
                 </tfoot>
               </table>
+
+              {/* Capitão e Suplente */}
+              {(g.capitao || g.suplente) && (
+                <div style={{
+                  display: "flex", gap: 0,
+                  borderTop: "1px solid var(--border)",
+                  fontSize: 11,
+                }}>
+                  {g.capitao && (
+                    <div style={{
+                      flex: 1, padding: "5px 10px",
+                      display: "flex", alignItems: "center", gap: 5,
+                      borderRight: g.suplente ? "1px solid var(--border)" : "none",
+                      color: "var(--text-2)",
+                    }}>
+                      <span style={{ fontSize: 13 }}>🎖️</span>
+                      <span>
+                        <span style={{ fontSize: 9, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--text-muted)", display: "block", lineHeight: 1 }}>Capitão</span>
+                        <span style={{ fontWeight: 600, color: "var(--text)" }}>{g.capitao}</span>
+                      </span>
+                    </div>
+                  )}
+                  {g.suplente && (
+                    <div style={{
+                      flex: 1, padding: "5px 10px",
+                      display: "flex", alignItems: "center", gap: 5,
+                      color: "var(--text-2)",
+                    }}>
+                      <span style={{ fontSize: 13 }}>🔄</span>
+                      <span>
+                        <span style={{ fontSize: 9, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--text-muted)", display: "block", lineHeight: 1 }}>Suplente</span>
+                        <span style={{ fontWeight: 600, color: "var(--text)" }}>{g.suplente}</span>
+                      </span>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           );
         })}
