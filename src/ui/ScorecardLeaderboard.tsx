@@ -1,3 +1,4 @@
+// @refresh reset
 /**
  *
  * ═══════════════════════════════════════════════════════════════
@@ -95,7 +96,6 @@ export function ScorecardLeaderboard({
   const siTotal = siArr.reduce((a, b) => a + b, 0);
 
   const afterScorecardHeaders = postScorecardHeaderCells ?? postTotalHeaderCells;
-  const hasPostScorecard = !!afterScorecardHeaders;
 
   function SortArrow({ col }: { col: string }) {
     if (activeSortKey !== col) return null;

@@ -1,3 +1,4 @@
+// @refresh reset
 /**
  * DrivePage.tsx — DRIVE Tour & Challenge + AQUAPOR Results 2026
  * v10: Reads scraper v7 format directly (fedCode, roundScores)
@@ -864,7 +865,7 @@ function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; s
           ),
         };
       })}
-      summaryGroupTh={<th className="cs-grp" colSpan={7} className="u-fw8-fs12">Temporada</th>}
+      summaryGroupTh={<th className="cs-grp u-fw8-fs12" colSpan={7}>Temporada</th>}
       summarySubHeaders={<>
         <CSortTh k="jogos"     s={sortKey} d={sortDir} on={handleSort} className="cs-s-games cs-grp">Jogos</CSortTh>
         <CSortTh k="totalPts"  s={sortKey} d={sortDir} on={handleSort} className="cs-s-pts cs-col" style={{ color: "var(--color-warn-dark)" }}>Pts</CSortTh>
@@ -1336,7 +1337,6 @@ function DriveAllRoundsScorecardLB({
     );
   }
 
-  const colsPerRound = is9 ? 10 : 20;
   const postCols = 4;
 
   return (
@@ -1518,10 +1518,11 @@ interface TournGroup {
   campo: string;
   num: number;
   date: string;
-  escalao: string | null; // para Challenge: "Sub 10", "Sub 12", etc.
-  isMulti: boolean;
+  escalao: string | null; // para Challenge single-escalão ou null quando evento agrupa vários
+  isMulti: boolean;    // multi-ronda (R1/R2/Total)
+  isEvent: boolean;    // Challenge: vários escalões no mesmo dia/campo → tabs por escalão
   totalRounds: number;
-  entries: Tournament[];  // 1 for single, N+1 for multi (R1, R2, ..., Total)
+  entries: Tournament[];  // 1 para single, N+1 para multi-ronda, N escalões para isEvent
 }
 
 function buildGroups(tournaments: Tournament[]): TournGroup[] {
@@ -1535,27 +1536,30 @@ function buildGroups(tournaments: Tournament[]): TournGroup[] {
     return escIdx(a.escalao) - escIdx(b.escalao);
   });
   const groups: TournGroup[] = [];
-  const multiMap = new Map<string, Tournament[]>();
+  const multiMap   = new Map<string, Tournament[]>();
+  const eventMap   = new Map<string, Tournament[]>(); // Challenge: date+ccode → escalões
   const singles: Tournament[] = [];
 
   for (const t of sorted) {
     if (t._multiGroup) {
       if (!multiMap.has(t._multiGroup)) multiMap.set(t._multiGroup, []);
       multiMap.get(t._multiGroup)!.push(t);
+    } else if (t.series === "challenge" && t.escalao && !t._roundLabel) {
+      // Challenge: agrupar por data + campo (ccode) — vários escalões no mesmo evento
+      const eventKey = "ev-" + t.date + "-" + (t.ccode || t.campo);
+      if (!eventMap.has(eventKey)) eventMap.set(eventKey, []);
+      eventMap.get(eventKey)!.push(t);
     } else {
       singles.push(t);
     }
   }
 
-  // Build groups in date order
-  const allEntries = [...sorted];
   const seen = new Set<string>();
-  for (const t of allEntries) {
+  for (const t of sorted) {
     if (t._multiGroup) {
       if (seen.has(t._multiGroup)) continue;
       seen.add(t._multiGroup);
       const entries = multiMap.get(t._multiGroup)!;
-      // Sort: R1, R2, ..., Total last
       entries.sort((a, b) => {
         if (a._roundLabel === "Resumo") return 1;
         if (b._roundLabel === "Resumo") return -1;
@@ -1569,7 +1573,26 @@ function buildGroups(tournaments: Tournament[]): TournGroup[] {
         date: t.date,
         escalao: t.escalao ?? null,
         isMulti: true,
+        isEvent: false,
         totalRounds: t._totalRounds || 2,
+        entries,
+      });
+    } else if (t.series === "challenge" && t.escalao && !t._roundLabel) {
+      const eventKey = "ev-" + t.date + "-" + (t.ccode || t.campo);
+      if (seen.has(eventKey)) continue;
+      seen.add(eventKey);
+      const entries = (eventMap.get(eventKey) || []).sort((a, b) => escIdx(a.escalao) - escIdx(b.escalao));
+      const nEscs = entries.length;
+      groups.push({
+        key: eventKey,
+        label: shortCampo(t.campo),
+        campo: t.campo,
+        num: t.num,
+        date: t.date,
+        escalao: nEscs === 1 ? entries[0].escalao : null, // null quando tem vários escalões
+        isMulti: false,
+        isEvent: nEscs > 1,
+        totalRounds: 1,
         entries,
       });
     } else {
@@ -1581,6 +1604,7 @@ function buildGroups(tournaments: Tournament[]): TournGroup[] {
         date: t.date,
         escalao: t.escalao ?? null,
         isMulti: false,
+        isEvent: false,
         totalRounds: 1,
         entries: [t],
       });
@@ -1973,7 +1997,7 @@ function TournamentGrid({ rows, allTournaments, onPlayerClick, playersDB, escLoo
           </React.Fragment>
         ),
       }))}
-      summaryGroupTh={<th className="cs-grp" colSpan={6} className="u-fw8-fs12">Temporada</th>}
+      summaryGroupTh={<th className="cs-grp u-fw8-fs12" colSpan={6}>Temporada</th>}
       summarySubHeaders={<>
         <CSortTh k="played"    s={sortKey} d={sortDir} on={handleSort} className="cs-s-games cs-grp">Jogos</CSortTh>
         <CSortTh k="totalPts"  s={sortKey} d={sortDir} on={handleSort} className="cs-s-pts cs-col" style={{ color: "var(--color-warn-dark)" }}>Pts</CSortTh>
@@ -2181,7 +2205,7 @@ function DriveContent() {
   const [error, setError]         = useState<string | null>(null);
 
   const [navMode, setNavMode]   = useState<"torneios"|"ranking-pja"|"ranking-sub12">("torneios");
-  const [series, setSeries]     = useState<"all"|"tour"|"challenge"|"aquapor">("all");
+  const [series, setSeries]     = useState<"all"|"tour"|"challenge"|"aquapor">("tour");
   const [filterManuel, setFilterManuel] = useState(false);
     const md = useMasterDetail();
   const [regionFilter, setRegionFilter]         = useState<string | null>(null);
@@ -2252,15 +2276,17 @@ function DriveContent() {
     }).catch(e => { setError(e.message); setLoading(false); });
   }, []);
 
-  // Anos disponíveis (derivados das datas dos torneios), ordenados desc
+  // Anos disponíveis — só os que têm torneios reais na série activa (exclui sub-rondas expandidas)
   const availYears = useMemo(() => {
     const s = new Set<string>();
     for (const t of data?.tournaments ?? []) {
-      const y = t.date?.split("-")[0];
-      if (y) s.add(y);
+      if ((series === "all" || t.series === series) && (!t._roundLabel || t._roundLabel === "Resumo")) {
+        const y = t.date?.split("-")[0];
+        if (y) s.add(y);
+      }
     }
     return [...s].sort((a, b) => b.localeCompare(a));
-  }, [data]);
+  }, [data, series]);
 
   // Ano activo: por omissão o mais recente disponível
   const activeYear = yearFilter ?? availYears[0] ?? null;
@@ -2343,20 +2369,71 @@ function DriveContent() {
     return REGIONS.filter(r => s.has(r.id));
   }, [series, seriesT]);
 
+  // Para series="all": aplicar filtros a cada série e combinar os grupos
+  // Mais eficiente que um único buildGroups(allT) com centenas de entries
   const filteredT = useMemo(() => {
     let ts = seriesT;
     if (regionFilter) ts = ts.filter(t => t.region === regionFilter);
-    if (escFilter.length > 0 && series === "challenge") ts = filterTournByEsc(ts, escFilter, escLookup, temporalEscLookup);
+    // Para Challenge (isEvent), NÃO filtrar por escalão aqui — o grupo agrupa todos os escalões
+    // O escFilter é aplicado ao nível dos entries do grupo em filteredGroups
+    if (escFilter.length > 0 && series !== "challenge") ts = filterTournByEsc(ts, escFilter, escLookup, temporalEscLookup);
     if (filterManuel) ts = ts.filter(t => t.players.some(p => isManuel(p)));
     return ts;
   }, [series, seriesT, regionFilter, escFilter, escLookup, temporalEscLookup, filterManuel]);
 
-  const filteredGroups = useMemo(() => buildGroups(filteredT), [filteredT]);
+  const filteredGroups = useMemo(() => {
+    const applyFilters = (ts: Tournament[]) => {
+      let r = ts;
+      if (regionFilter) r = r.filter(t => t.region === regionFilter);
+      if (escFilter.length > 0 && series !== "challenge") r = filterTournByEsc(r, escFilter, escLookup, temporalEscLookup);
+      if (filterManuel) r = r.filter(t => t.players.some(p => isManuel(p)));
+      return r;
+    };
+
+    let groups: TournGroup[];
+    if (series === "all") {
+      groups = [
+        ...buildGroups(applyFilters(tourT)),
+        ...buildGroups(applyFilters(challT)),
+        ...buildGroups(applyFilters(aquaporT)),
+      ];
+    } else {
+      groups = buildGroups(filteredT);
+    }
+
+    // Para isEvent (Challenge agrupado): filtrar entries pelo escFilter
+    // O evento continua visível se tiver pelo menos 1 escalão que corresponde
+    if (escFilter.length > 0) {
+      groups = groups.map(g => {
+        if (!g.isEvent) return g;
+        const matchEntries = g.entries.filter(e => e.escalao && escFilter.includes(e.escalao));
+        if (matchEntries.length === 0) return null;
+        return { ...g, entries: matchEntries, escalao: matchEntries.length === 1 ? matchEntries[0].escalao : null };
+      }).filter(Boolean) as TournGroup[];
+    }
+
+    return groups;
+  }, [series, filteredT, tourT, challT, aquaporT, regionFilter, escFilter, filterManuel, escLookup, temporalEscLookup]);
+
   const regionT = useMemo(() => regionFilter ? seriesT.filter(t => t.region === regionFilter) : seriesT, [seriesT, regionFilter]);
-  const availEscs = useMemo(() => series === "challenge" ? availEscaloes(regionT, escLookup, temporalEscLookup) : [], [series, regionT, escLookup, temporalEscLookup]);
+  const uniquePCFiltered  = useMemo(() => uniquePC(filteredT), [filteredT]);
+  const uniquePCRegion    = useMemo(() => uniquePC(regionT), [regionT]);
+  const countTour         = useMemo(() => countEvents(tourT), [tourT]);
+  const countChall        = useMemo(() => countEvents(challT), [challT]);
+  const countAquapor      = useMemo(() => countEvents(aquaporT), [aquaporT]);
+  const countSeries       = useMemo(() => countEvents(seriesT), [seriesT]);
+
+  // Para series="all" mostramos sempre todos os escalões (fixo) — evita iterar todos os jogadores
+  const availEscs = useMemo(() => {
+    if (series === "all") return ["Sub 10","Sub 12","Sub 14","Sub 16","Sub 18","Absoluto","Sénior"];
+    return availEscaloes(regionT, escLookup, temporalEscLookup);
+  }, [series, regionT, escLookup, temporalEscLookup]);
 
   useEffect(() => { setRegionFilter(null); setEscFilter([]); setSelectedGroupKey(null); setRoundIdx(0); }, [series]);
-  useEffect(() => { setRegionFilter(null); setEscFilter([]); setSelectedGroupKey(null); setRoundIdx(0); }, [activeYear, series]);
+  // Se o ano activo não existe na nova série, resetar para o mais recente disponível
+  useEffect(() => {
+    if (yearFilter && !availYears.includes(yearFilter)) setYearFilter(null);
+  }, [availYears]);
   useEffect(() => { setEscFilter([]); setSelectedGroupKey(null); setRoundIdx(0); }, [regionFilter]);
   useEffect(() => { setSub12Player(null); }, [sub12Series]);
 
@@ -2381,7 +2458,10 @@ function DriveContent() {
   const sidebarItemLabel = (g: TournGroup) => {
     const region = g.entries[0]?.region || "";
     const isDup = (sidebarNumCount.get(region)?.get(g.num) || 0) > 1;
-    return `T${g.num}${isDup ? " · " + fmtDate(g.date) : ""}${g.escalao ? " · " + g.label + " · " + g.escalao : " · " + g.label}`;
+    const base = `T${g.num}${isDup ? " · " + fmtDate(g.date) : ""} · ${g.label}`;
+    if (g.isEvent) return base; // Challenge evento — escalões mostrados como sub-badges
+    if (g.escalao) return base + " · " + g.escalao;
+    return base;
   };
 
   const renderDriveItem = (g: TournGroup, isActive: boolean, onClick: () => void) => {
@@ -2396,26 +2476,28 @@ function DriveContent() {
         className={`course-item ${isActive ? "active" : ""}`}
         onClick={onClick}>
 
-        {/* Linha 1: nome + tcode badge + link FPG à direita */}
+        {/* Linha 1: nome + tcode/link (evento: só nome; outros: tcode + link) */}
         <div style={{ display: "flex", alignItems: "flex-start", gap: 4, marginBottom: 4 }}>
           <span className="course-item-name" style={{ flex: 1, minWidth: 0, fontSize: 12, fontWeight: isActive ? 700 : 500, lineHeight: 1.3 }}>{sidebarItemLabel(g)}</span>
-          <div style={{ display: "flex", gap: 2, flexShrink: 0, alignItems: "center", paddingTop: 1 }}>
-            {g.isMulti && <span className="chip" style={{ fontSize: 10, padding: "0 5px" }}>{g.totalRounds}R</span>}
-            {tcode && <span style={{
-              fontFamily: "monospace", fontSize: 10, fontWeight: 700,
-              background: "var(--accent,#2563eb)", color: "#fff",
-              borderRadius: 3, padding: "1px 5px", opacity: isActive ? 1 : 0.75,
-            }}>{tcode}</span>}
-            {tcode && t0 && (
-              <a href={tournFpgUrl(t0.ccode, tcode)}
-                target="_blank" rel="noopener noreferrer"
-                onClick={e => e.stopPropagation()}
-                title="Ver no site da Federação"
-                style={{ fontSize: 13, color: "var(--accent)", textDecoration: "none", opacity: isActive ? 1 : 0.55, lineHeight: 1 }}>
-                🔗
-              </a>
-            )}
-          </div>
+          {!g.isEvent && (
+            <div style={{ display: "flex", gap: 2, flexShrink: 0, alignItems: "center", paddingTop: 1 }}>
+              {g.isMulti && <span className="chip" style={{ fontSize: 10, padding: "0 5px" }}>{g.totalRounds}R</span>}
+              {tcode && <span style={{
+                fontFamily: "monospace", fontSize: 10, fontWeight: 700,
+                background: "var(--accent,#2563eb)", color: "#fff",
+                borderRadius: 3, padding: "1px 5px", opacity: isActive ? 1 : 0.75,
+              }}>{tcode}</span>}
+              {tcode && t0 && (
+                <button type="button"
+                  onClick={e => { e.stopPropagation(); window.open(tournFpgUrl(t0.ccode, tcode), "_blank", "noopener,noreferrer"); }}
+                  title="Ver no site da Federação"
+                  style={{ background: "none", border: "none", padding: 0, cursor: "pointer",
+                    fontSize: 13, color: "var(--accent)", opacity: isActive ? 1 : 0.55, lineHeight: 1 }}>
+                  🔗
+                </button>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Linha 2: campo */}
@@ -2430,10 +2512,35 @@ function DriveContent() {
           {fmtDate(g.date)} · {nJog} jog · {nh}h{parTotal > 0 ? ` · Par ${parTotal}` : ""}
         </div>
 
-        {/* Linha 4: escalão + Manuel */}
-        {(g.escalao || manuelPlayed) && (
+        {/* Linha 4: escalão(ões) com tcode + link por escalão (isEvent) | escalão simples (outros) */}
+        {(g.escalao || g.isEvent || manuelPlayed) && (
           <div style={{ display: "flex", gap: 4, flexWrap: "wrap", alignItems: "center", marginTop: 2 }}>
-            {g.escalao && <span className={"p p-sm p-" + g.escalao.toLowerCase().replace(/\s+/g,"")}>{g.escalao}</span>}
+            {g.isEvent
+              ? g.entries.map(e => {
+                  const esc = e.escalao;
+                  const tc = e.tcode?.replace(/_R\d+$|_Total$/, "") || "";
+                  const url = (tc && e.ccode) ? tournFpgUrl(e.ccode, tc) : "";
+                  return esc && (
+                    <span key={esc} style={{ display: "inline-flex", alignItems: "center", gap: 2 }}>
+                      <span className={"p p-sm p-" + esc.toLowerCase().replace(/\s+/g,"")}>{esc}</span>
+                      {tc && <span style={{
+                        fontFamily: "monospace", fontSize: 9, fontWeight: 700,
+                        background: "var(--bg-muted)", color: "var(--text-2)",
+                        borderRadius: 3, padding: "1px 4px", border: "1px solid var(--border)",
+                        opacity: isActive ? 1 : 0.8,
+                      }}>{tc}</span>}
+                      {url && <button type="button"
+                        onClick={ev => { ev.stopPropagation(); window.open(url, "_blank", "noopener,noreferrer"); }}
+                        title={`Ver ${esc} no site da Federação`}
+                        style={{ background: "none", border: "none", padding: 0, cursor: "pointer",
+                          fontSize: 11, color: "var(--accent)", opacity: isActive ? 1 : 0.55, lineHeight: 1 }}>
+                        🔗
+                      </button>}
+                    </span>
+                  );
+                })
+              : g.escalao && <span className={"p p-sm p-" + g.escalao.toLowerCase().replace(/\s+/g,"")}>{g.escalao}</span>
+            }
             {manuelPlayed && (
               <span style={{
                 fontSize: 11, fontWeight: 700,
@@ -2453,18 +2560,20 @@ function DriveContent() {
   if (!data)   return null;
 
   const sdCount = Object.keys(sdLookup).length;
-  const isSub12Mode = navMode === "ranking-sub12";
-
   return (
     <div className="jogadores-page">
 
-      {/* ── Toolbar ── */}
-      <div className="toolbar">
-        <div className="toolbar-left">
+      {/* ── Toolbar: grid 3 colunas partilhadas pelas 2 linhas para alinhamento perfeito ── */}
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "1fr auto auto",
+        borderBottom: "1px solid var(--border-light)",
+      }}>
+        {/* ── LINHA 1, col 1: sidebar + nav + série ── */}
+        <div className="toolbar-left" style={{ borderBottom: "none" }}>
           <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />
           <span className="toolbar-title">🏁 DRIVE</span>
           <div className="toolbar-sep" />
-
           {/* Nav principal */}
           <div className="escalao-pills">
             {([
@@ -2474,14 +2583,12 @@ function DriveContent() {
             ] as const).map(({ key, label }) => (
               <button key={key}
                 className={"tourn-tab tourn-tab-sm" + (navMode === key ? " active" : "")}
-                onClick={() => { setNavMode(key); setSeries("all"); setFilterManuel(false); setYearFilter(null); setSelectedGroupKey(null); setRoundIdx(0); }}
+                onClick={() => { setNavMode(key); setSeries("tour"); setFilterManuel(false); setYearFilter(null); setSelectedGroupKey(null); setRoundIdx(0); }}
                 style={navMode === key ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
                 {label}
               </button>
             ))}
           </div>
-
-          {/* Série (só em Torneios) */}
           {navMode === "torneios" && (
             <>
               <div className="toolbar-sep" />
@@ -2494,44 +2601,44 @@ function DriveContent() {
                 ] as const).map(({ key, label }) => (
                   <button key={key}
                     className={"tourn-tab tourn-tab-sm" + (series === key ? " active" : "")}
-                    onClick={() => { setSeries(key); setRegionFilter(null); setEscFilter([]); setSelectedGroupKey(null); setRoundIdx(0); }}
+                    onClick={() => { setSeries(key); setRegionFilter(null); setEscFilter([]); setSelectedGroupKey(null); setRoundIdx(0); if (key === "all" && !yearFilter) setYearFilter(availYears[0] ?? null); }}
                     style={series === key ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
-                    {label}{key !== "all" ? ` (${countEvents(key === "tour" ? tourT : key === "challenge" ? challT : aquaporT)})` : ""}
+                    {label}{key !== "all" ? ` (${key === "tour" ? countTour : key === "challenge" ? countChall : countAquapor})` : ""}
                   </button>
                 ))}
               </div>
-
-              {/* Anos */}
-              {availYears.length > 1 && (
-                <>
-                  <div className="toolbar-sep" />
-                  <div className="escalao-pills" style={{ gap: 3 }}>
-                    {availYears.map(y => (
-                      <button key={y}
-                        className={"tourn-tab tourn-tab-sm" + (activeYear === y ? " active" : "")}
-                        onClick={() => { setYearFilter(y === activeYear && availYears.length > 1 ? null : y); setSelectedGroupKey(null); setRoundIdx(0); }}
-                        style={activeYear === y ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
-                        {y}
-                      </button>
-                    ))}
-                  </div>
-                </>
-              )}
-
-              {/* Manuel */}
-              <div className="toolbar-sep" />
-              <button
-                className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
-                onClick={() => setFilterManuel(v => !v)}
-                style={filterManuel
-                  ? { background: "var(--bg-success-subtle)", borderColor: "var(--color-good)", color: "var(--color-good-dark)", whiteSpace: "nowrap" }
-                  : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)", whiteSpace: "nowrap" }}>
-                ★ Manuel
-              </button>
             </>
           )}
         </div>
-        <div className="toolbar-right">
+
+        {/* ── LINHA 1, col 2: sep + anos + sep + Manuel ── */}
+        <div style={{ display: "flex", alignItems: "center", gap: 4, padding: "6px 0" }}>
+          {navMode === "torneios" && availYears.length > 1 && (<>
+            <div className="toolbar-sep" />
+            <div className="escalao-pills" style={{ gap: 3 }}>
+              {availYears.map(y => (
+                <button key={y}
+                  className={"tourn-tab tourn-tab-sm" + (activeYear === y ? " active" : "")}
+                  onClick={() => { setYearFilter(y === activeYear && availYears.length > 1 ? null : y); setSelectedGroupKey(null); setRoundIdx(0); }}
+                  style={activeYear === y ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                  {y}
+                </button>
+              ))}
+            </div>
+            <div className="toolbar-sep" />
+            <button
+              className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
+              onClick={() => setFilterManuel(v => !v)}
+              style={filterManuel
+                ? { background: "var(--bg-success-subtle)", borderColor: "var(--color-good)", color: "var(--color-good-dark)", whiteSpace: "nowrap" }
+                : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)", whiteSpace: "nowrap" }}>
+              ★ Manuel
+            </button>
+          </>)}
+        </div>
+
+        {/* ── LINHA 1, col 3: sc + lastUpdated ── */}
+        <div className="toolbar-right" style={{ borderBottom: "none" }}>
           {navMode === "torneios" && data.totalScorecards > 0 && (
             <span className="chip" style={{ background: "var(--bg-success-strong)", color: "var(--color-good-dark)" }}>
               📊 {data.totalScorecards} sc
@@ -2539,54 +2646,68 @@ function DriveContent() {
           )}
           {data.lastUpdated && <span className="muted fs-10" style={{ whiteSpace:"nowrap" }}>{data.lastUpdated}</span>}
         </div>
-      </div>
 
-      {/* ── Toolbar linha 2: filtros de região/escalão (só em Torneios) ── */}
-      {navMode === "torneios" && (availRegions.length > 1 || (series === "challenge" && availEscs.length > 1)) && (
-        <div className="toolbar" style={{ minHeight: 0, padding: "4px 12px", borderTop: "1px solid var(--border-light)", gap: 6, flexWrap: "wrap" }}>
-          {availRegions.length > 1 && (
-            <div className="escalao-pills gap-4">
-              <button className={"tourn-tab tourn-tab-sm" + (regionFilter === null ? " active" : "")}
-                onClick={() => setRegionFilter(null)}>
-                Todas ({countEvents(seriesT)})
-              </button>
-              {availRegions.map(reg => {
-                const rt = seriesT.filter(t => t.region === reg.id);
-                return (
-                  <button key={reg.id}
-                    className={"tourn-tab tourn-tab-sm" + (regionFilter === reg.id ? " active" : "")}
-                    onClick={() => setRegionFilter(reg.id)}
-                    style={regionFilter === reg.id ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
-                    {reg.emoji} {reg.label} ({countEvents(rt)}T · {uniquePC(rt)} jog)
-                  </button>
-                );
-              })}
-            </div>
-          )}
-          {series === "challenge" && availEscs.length > 1 && (
-            <>
-              {availRegions.length > 1 && <div className="toolbar-sep" />}
+        {/* ── LINHA 2, col 1: regiões (só em Torneios) ── */}
+        {navMode === "torneios" && (availRegions.length > 1 || availEscs.length > 0) && (
+          <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", padding: "4px 12px", borderTop: "1px solid var(--border-light)" }}>
+            {availRegions.length > 1 && (
               <div className="escalao-pills gap-4">
-                <button className={"tourn-tab tourn-tab-sm" + (escFilter.length === 0 ? " active" : "")}
-                  onClick={() => setEscFilter([])}>
-                  Todos ({uniquePC(regionT)} jog)
+                <button className={"tourn-tab tourn-tab-sm" + (regionFilter === null ? " active" : "")}
+                  onClick={() => setRegionFilter(null)}>
+                  Todas ({countEvents(seriesT)})
                 </button>
-                {availEscs.map(e => {
-                  const on = escFilter.includes(e);
+                {availRegions.map(reg => {
+                  const rt = seriesT.filter(t => t.region === reg.id);
                   return (
-                    <button key={e}
-                      className={"tourn-tab tourn-tab-sm" + (on ? " active" : "")}
-                      onClick={() => setEscFilter(prev => on ? prev.filter(x => x !== e) : [...prev, e])}
-                      style={on ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
-                      {e}
+                    <button key={reg.id}
+                      className={"tourn-tab tourn-tab-sm" + (regionFilter === reg.id ? " active" : "")}
+                      onClick={() => setRegionFilter(reg.id)}
+                      style={regionFilter === reg.id ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                      {reg.emoji} {reg.label} ({countEvents(rt)}T · {uniquePC(rt)} jog)
                     </button>
                   );
                 })}
               </div>
-            </>
-          )}
-        </div>
-      )}
+            )}
+          </div>
+        )}
+
+        {/* ── LINHA 2, col 2: sep + escalões — alinha exactamente com os anos acima ── */}
+        {navMode === "torneios" && (availRegions.length > 1 || availEscs.length > 0) && (
+          <div style={{ display: "flex", alignItems: "center", gap: 4, padding: "4px 0", borderTop: "1px solid var(--border-light)" }}>
+            <div className="toolbar-sep" />
+            <div className="escalao-pills gap-4" style={{ flexWrap: "nowrap" }}>
+              <button className={"tourn-tab tourn-tab-sm" + (escFilter.length === 0 ? " active" : "")}
+                onClick={() => setEscFilter([])}>
+                Todos ({uniquePCRegion} jog)
+              </button>
+              {(["Sub 10","Sub 12","Sub 14","Sub 16","Sub 18","Absoluto","Sénior"] as const).map(e => {
+                const available = availEscs.includes(e);
+                const on = escFilter.includes(e);
+                if (!available) return (
+                  <span key={e} className="tourn-tab tourn-tab-sm"
+                    style={{ background: "var(--bg-muted)", color: "var(--text-muted)", borderColor: "var(--border)", opacity: 0.35, cursor: "default", pointerEvents: "none" }}>
+                    {e}
+                  </span>
+                );
+                return (
+                  <button key={e}
+                    className={"tourn-tab tourn-tab-sm" + (on ? " active" : "")}
+                    onClick={() => setEscFilter(prev => on ? prev.filter(x => x !== e) : [...prev, e])}
+                    style={on ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                    {e}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* ── LINHA 2, col 3: espaço vazio para manter alinhamento ── */}
+        {navMode === "torneios" && (availRegions.length > 1 || availEscs.length > 0) && (
+          <div style={{ borderTop: "1px solid var(--border-light)" }} />
+        )}
+      </div>
 
       {/* ══════════════════════════════════════════
           MODO SUB-12
@@ -2700,7 +2821,7 @@ function DriveContent() {
               className={`course-item ${selectedGroupKey === null ? "active" : ""}`}
               onClick={() => { setSelectedGroupKey(null); setRoundIdx(0); }}>
               <div className="course-item-name">📋 Resumo temporada</div>
-              <div className="course-item-sub">{filteredGroups.length} torneios · {uniquePC(filteredT)} jog</div>
+              <div className="course-item-sub">{filteredGroups.length} torneios · {uniquePCFiltered} jog</div>
             </button>
 
             {availRegions.length > 1 && !regionFilter
@@ -2734,15 +2855,15 @@ function DriveContent() {
               <div style={{ padding: "0 12px 12px" }}>
                 <div className="card card-scroll">
                   <div className="h-md fs-14">
-                    📋 {series === "tour" ? "Drive Tour" : series === "challenge" ? "Drive Challenge" : "AQUAPOR"}
+                    📋 {series === "tour" ? "Drive Tour" : series === "challenge" ? "Drive Challenge" : series === "aquapor" ? "AQUAPOR" : "DRIVE"}
                     {regionFilter ? " " + (regionOf(regionFilter)?.label || "") : ""}
                     {escFilter.length > 0 ? " — " + escFilter.join(", ") : ""} — Temporada {activeYear ?? "Todos"}
                   </div>
                   <div className="muted fs-11 mb-8">
-                    {filteredGroups.length} torneios · {uniquePC(filteredT)} jogadores ·{" "}
-                    {filteredT.filter(t => t._roundLabel !== "Resumo").reduce((a, t) => a + t.players.filter(p => !isDNS(p)).length, 0)} presenças
+                    {filteredGroups.length} torneios · {uniquePCFiltered} jogadores ·{" "}
+                    {filteredGroups.reduce((a, g) => a + g.entries.filter(e => !e._roundLabel || e._roundLabel === "Resumo").reduce((s, t) => s + t.players.filter(p => !isDNS(p)).length, 0), 0)} presenças
                   </div>
-                  <ResumoTable tournaments={filteredT} playersDB={pdb} sdLookup={sdLookup} escLookup={escLookup} mergeByEvent={series === "challenge"} />
+                  <ResumoTable tournaments={filteredT.filter(t => !t._roundLabel || t._roundLabel === "Resumo")} playersDB={pdb} sdLookup={sdLookup} escLookup={escLookup} mergeByEvent={series === "challenge"} />
                 </div>
 
                 {/* Tabela de pontos */}
@@ -2755,26 +2876,29 @@ function DriveContent() {
             {/* DETALHE DE TORNEIO */}
             {selectedGroupKey !== null && selectedGroup && (
               <div style={{ padding: "0 12px 12px" }}>
-                {selectedGroup.isMulti && (
+                {/* Tabs: rondas (isMulti) ou escalões (isEvent) */}
+                {(selectedGroup.isMulti || selectedGroup.isEvent) && (
                   <div className="escalao-pills" style={{ gap: 3, flexWrap: "wrap", padding: "8px 0 0" }}>
                     {selectedGroup.entries.map((entry, ri) => {
-                      const lbl = entry._roundLabel || ("R" + (ri + 1));
+                      const lbl = selectedGroup.isEvent
+                        ? (entry.escalao || ("E" + (ri + 1)))
+                        : (entry._roundLabel || ("R" + (ri + 1)));
                       const isResumo = lbl === "Resumo";
                       const activeCount = entry.players.filter(p => !isDNS(p)).length;
                       return (
-                        <button key={entry.tcode + "_" + entry.date}
+                        <button key={entry.tcode + "_" + ri}
                           className={"tourn-tab tourn-tab-sm" + (roundIdx === ri ? " active" : "")}
                           onClick={() => setRoundIdx(ri)}
                           style={roundIdx === ri ? {} : isResumo
                             ? { background: "var(--bg-warn-strong)", color: "var(--color-warn-dark)", borderColor: "var(--bg-warn-strong)" }
                             : {}}>
-                          {isResumo ? "📊" : "🏌️"} {lbl}
+                          {isResumo ? "📊" : selectedGroup.isEvent ? "⚡" : "🏌️"} {lbl}
                           <span style={{ fontSize: 10, marginLeft: 3, opacity: 0.7 }}>({activeCount} jog)</span>
                         </button>
                       );
                     })}
-                    {/* Tab extra: Scorecards combinados buraco-a-buraco */}
-                    {selectedGroup.entries.some(e => e._roundLabel === "Resumo") && (
+                    {/* Tab Scorecards combinados — só para multi-ronda */}
+                    {selectedGroup.isMulti && selectedGroup.entries.some(e => e._roundLabel === "Resumo") && (
                       <button
                         className={"tourn-tab tourn-tab-sm" + (roundIdx === selectedGroup.entries.length ? " active" : "")}
                         onClick={() => setRoundIdx(selectedGroup.entries.length)}>
@@ -2784,12 +2908,14 @@ function DriveContent() {
                   </div>
                 )}
                 {curTournament && (
-                  <div className="card card-scroll" style={{ marginTop: selectedGroup.isMulti ? 8 : 0 }}>
+                  <div className="card card-scroll" style={{ marginTop: (selectedGroup.isMulti || selectedGroup.isEvent) ? 8 : 0 }}>
                     <div className="h-md fs-14" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
                       <span>
-                        {selectedGroup.isMulti
-                          ? <>{curTournament._roundLabel === "Resumo" ? "📊 Acumulado" : "🏌️ " + curTournament._roundLabel} — {selectedGroup.campo}</>
-                          : <>🏆 Scorecard — {selectedGroup.label}</>}
+                        {selectedGroup.isEvent
+                          ? <>⚡ {curTournament.escalao} — {selectedGroup.campo}</>
+                          : selectedGroup.isMulti
+                            ? <>{curTournament._roundLabel === "Resumo" ? "📊 Acumulado" : "🏌️ " + curTournament._roundLabel} — {selectedGroup.campo}</>
+                            : <>🏆 Scorecard — {selectedGroup.label}</>}
                       </span>
                       <a href={tournFpgUrl(curTournament.ccode, curTournament.tcode)}
                         target="_blank" rel="noopener noreferrer"
@@ -2801,13 +2927,13 @@ function DriveContent() {
                     <div className="muted fs-11 mb-4">
                       T{curTournament.num} · 📍 {curTournament.campo} · 📅 {fmtDate(curTournament.date)}
                       {selectedGroup.isMulti && <> · {selectedGroup.totalRounds} rondas</>}
+                      {selectedGroup.isEvent && <> · {selectedGroup.entries.length} escalões</>}
                       {" · "}{curTournament.players.filter(p => !isDNS(p) && !p._incomplete).length} jog
                       {curTournament._roundLabel === "Resumo" && curTournament.players.some(p => p._incomplete) && (
                         <> + {curTournament.players.filter(p => p._incomplete).length} inc</>
                       )}
                       {" · "}{curTournament.players[0]?.nholes || 18}h
                     </div>
-                    {/* Resumo → TotalLeaderboard  |  📋 Scorecards → DriveAllRoundsScorecardLB */}
                     {roundIdx === selectedGroup.entries.length
                       ? (() => {
                           const totalT = selectedGroup.entries.find(e => e._roundLabel === "Resumo");

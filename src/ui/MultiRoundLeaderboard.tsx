@@ -166,7 +166,6 @@ export function MultiRoundLeaderboard({
   // WD = desistiu; incomplete = ainda não jogou todas as rondas disponíveis
   const complete   = rows.filter(r => !r.isIncomplete && !r.isWD);
   const incomplete = rows.filter(r =>  r.isIncomplete && !r.isWD);
-  const wdRows     = rows.filter(r =>  r.isWD);
 
   /* Posições — apenas jogadores completos e não-WD */
   const withPos = useMemo(() => {

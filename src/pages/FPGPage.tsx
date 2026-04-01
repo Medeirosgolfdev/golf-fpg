@@ -1523,7 +1523,6 @@ export function AllRoundsScorecardLB({
   }, [sorted]);
 
   const medals = ["🥇","🥈","🥉"];
-  const RD_LABELS = ["R1","R2","R3","R4"];
 
   /* Renderizar células de score buraco-a-buraco */
   function ScoreCells({ scores, pars }: { scores: number[]; pars: number[] }) {
@@ -1550,18 +1549,6 @@ export function AllRoundsScorecardLB({
       </>)}
     </>);
   }
-
-  /* Células vazias para rondas sem dados */
-  function EmptyCells() {
-    return (<>
-      {Array.from({ length: 9 + (is9 ? 0 : 1) + (is9 ? 0 : 9 + 1) }, (_, i) => (
-        <td key={i} className="lb-hole"><span className="muted">–</span></td>
-      ))}
-    </>);
-  }
-
-  const colsPerRound = (is9 ? 10 : 20); // 9 holes + Out [+ 9 holes + In]
-  const postCols = 4; // SD 🐦 Par ■
 
   function SHdr({ k, children, className, style }: { k: string; children: React.ReactNode; className?: string; style?: React.CSSProperties }) {
     const active = sortKey === k;
@@ -3176,7 +3163,7 @@ function Content() {
 
   return (
     <div className="tourn-layout">
-      {/* ── Toolbar linha 1: nav principal ── */}
+      {/* ── Toolbar linha 1: nav principal + link + contadores ── */}
       <div className="toolbar">
         <div className="toolbar-left">
           <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />
@@ -3186,10 +3173,10 @@ function Content() {
               <div className="toolbar-sep" />
               {/* Nav principal */}
               <div className="escalao-pills">
-                {([ 
-                  { key: "torneios",     label: "Torneios" },
-                  { key: "ranking-pja",  label: "📊 Ranking PJA" },
-                  { key: "ranking-sub12",label: "🏅 Ranking Sub-12" },
+                {([
+                  { key: "torneios",      label: "Torneios" },
+                  { key: "ranking-pja",   label: "📊 Ranking PJA" },
+                  { key: "ranking-sub12", label: "🏅 Ranking Sub-12" },
                 ] as const).map(({ key, label }) => (
                   <button key={key}
                     className={"tourn-tab tourn-tab-sm" + (navMode === key ? " active" : "")}
@@ -3199,64 +3186,6 @@ function Content() {
                   </button>
                 ))}
               </div>
-
-              {/* Série (só em Torneios) */}
-              {navMode === "torneios" && (
-                <>
-                  <div className="toolbar-sep" />
-                  <div className="escalao-pills">
-                    {([
-                      { key: "",        label: "Todos" },
-                      { key: "circuit", label: "🏆 PJA Tour" },
-                      { key: "santo",   label: "⛳ Santo da Serra" },
-                      { key: "clubes",  label: "🏅 Clubes" },
-                    ] as const).map(({ key, label }) => {
-                      const active = seriesFilter === key;
-                      const style = active
-                        ? key === "santo" ? { background: PILL_STYLE_SSERRA.bg, borderColor: PILL_STYLE_SSERRA.bg, color: PILL_STYLE_SSERRA.color }
-                        : key === "clubes" ? { background: "var(--accent,#2563eb)", borderColor: "var(--accent,#2563eb)", color: "#fff" }
-                        : {}
-                        : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" };
-                      return (
-                        <button key={key}
-                          className={"tourn-tab tourn-tab-sm" + (active ? " active" : "")}
-                          onClick={() => { setSeriesFilter(key); setFilterManuel(false); }}
-                          style={style}>
-                          {label}
-                        </button>
-                      );
-                    })}
-                  </div>
-
-                  {/* Anos */}
-                  {availYears.length > 1 && (
-                    <>
-                      <div className="toolbar-sep" />
-                      <div className="escalao-pills" style={{ gap: 3 }}>
-                        {availYears.map(y => (
-                          <button key={y}
-                            className={"tourn-tab tourn-tab-sm" + (activeYear === y ? " active" : "")}
-                            onClick={() => setYearFilter(activeYear === y ? null : y)}
-                            style={activeYear === y ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
-                            {y}
-                          </button>
-                        ))}
-                      </div>
-                    </>
-                  )}
-
-                  {/* Manuel */}
-                  <div className="toolbar-sep" />
-                  <button
-                    className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
-                    onClick={() => setFilterManuel(v => !v)}
-                    style={filterManuel
-                      ? { background: "var(--bg-success-subtle)", borderColor: "var(--color-good)", color: "var(--color-good-dark)", whiteSpace: "nowrap" }
-                      : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)", whiteSpace: "nowrap" }}>
-                    ★ Manuel
-                  </button>
-                </>
-              )}
             </>
           )}
         </div>
@@ -3268,14 +3197,16 @@ function Content() {
           {loading
             ? <span className="muted fs-11" style={{ fontStyle: "italic" }}>{loadingMsg}</span>
             : <>
-                {navMode === "torneios" && (
-                  <span className="chip">
-                    {seriesFilter === "santo" ? santoList.length
-                      : seriesFilter === "circuit" ? pjaList.length
-                      : displayList.length} torneios
-                  </span>
-                )}
-                {seriesFilter !== "santo" && navMode === "torneios" && (
+                {navMode === "torneios" && (() => {
+                  const count = seriesFilter === "santo"   ? santoByYear.years.reduce((s, y) => s + (santoByYear.byYear[y]?.length ?? 0), 0)
+                              : seriesFilter === "circuit" ? pjaByYear.years.reduce((s, y) => s + (pjaByYear.byYear[y]?.length ?? 0), 0)
+                              : seriesFilter === "clubes"  ? clubesList.length
+                              : activeYear
+                                ? displayList.filter(t => (t.date || "").startsWith(activeYear)).length
+                                : displayList.length;
+                  return <span className="chip">{count} torneios</span>;
+                })()}
+                {seriesFilter !== "santo" && seriesFilter !== "clubes" && navMode === "torneios" && (
                   <span className="chip" style={{ marginLeft: 4, background: "var(--bg-hover)" }}>
                     {fileMeta.length} ficheiro{fileMeta.length !== 1 ? "s" : ""}
                   </span>
@@ -3285,6 +3216,60 @@ function Content() {
           }
         </div>
       </div>
+
+      {/* ── Toolbar linha 2: série + anos + Manuel (só em Torneios) ── */}
+      {!loading && navMode === "torneios" && (
+        <div className="toolbar" style={{ minHeight: 0, padding: "4px 12px", borderTop: "1px solid var(--border-light)", gap: 6, flexWrap: "wrap" }}>
+          {/* Série */}
+          <div className="escalao-pills gap-4">
+            {([
+              { key: "",        label: "Todos" },
+              { key: "circuit", label: "🏆 PJA Tour" },
+              { key: "santo",   label: "⛳ Santo da Serra" },
+              { key: "clubes",  label: "🏅 Clubes" },
+            ] as const).map(({ key, label }) => {
+              const active = seriesFilter === key;
+              const style = active
+                ? key === "santo"  ? { background: PILL_STYLE_SSERRA.bg, borderColor: PILL_STYLE_SSERRA.bg, color: PILL_STYLE_SSERRA.color }
+                : key === "clubes" ? { background: "var(--accent,#2563eb)", borderColor: "var(--accent,#2563eb)", color: "#fff" }
+                : {}
+                : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" };
+              return (
+                <button key={key}
+                  className={"tourn-tab tourn-tab-sm" + (active ? " active" : "")}
+                  onClick={() => { setSeriesFilter(key); setFilterManuel(false); }}
+                  style={style}>
+                  {label}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Anos */}
+          {availYears.length > 1 && (
+            <div className="escalao-pills gap-4">
+              {availYears.map(y => (
+                <button key={y}
+                  className={"tourn-tab tourn-tab-sm" + (activeYear === y ? " active" : "")}
+                  onClick={() => setYearFilter(activeYear === y ? null : y)}
+                  style={activeYear === y ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                  {y}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* Manuel */}
+          <button
+            className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
+            onClick={() => setFilterManuel(v => !v)}
+            style={filterManuel
+              ? { background: "var(--bg-success-subtle)", borderColor: "var(--color-good)", color: "var(--color-good-dark)", whiteSpace: "nowrap" }
+              : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)", whiteSpace: "nowrap" }}>
+            ★ Manuel
+          </button>
+        </div>
+      )}
 
       {error && (
         <div style={{ padding: "16px 20px", color: "var(--danger)", fontWeight: 600, fontSize: 13 }}>
