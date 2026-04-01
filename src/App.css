@@ -1283,7 +1283,7 @@ tr.cross-current { background: var(--bg-success); }
  font-family: 'JetBrains Mono', monospace;
 }
 
-/* ─── Sidebar Back Button (toolbar) — escondido em desktop ─── */
+/* ─── Sidebar Back Button — escondido em desktop ─── */
 
 .sidebar-back-btn {
  display: none;
@@ -1303,11 +1303,11 @@ tr.cross-current { background: var(--bg-success); }
 }
 .sidebar-back-btn:hover { background: var(--bg-hover-subtle); color: var(--text); }
 
-/* Mobile utilities (desktop defaults) */
+/* Mobile utilities */
 .mobile-hide { display: initial; }
 .mobile-only { display: none; }
 
-/* CompararPage: search row */
+/* CompararPage search row */
 .cmp-search-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
 /* ════════════════════════════════════════════════════════════════
@@ -1608,7 +1608,6 @@ tr.cross-current { background: var(--bg-success); }
 /* ─── ANALYSIS ─── */
 .kpis,
 .tourn-kpis { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-section); margin-bottom: var(--space-section); }
-@media (max-width: 768px) { .kpis, .tourn-kpis { grid-template-columns: repeat(3, 1fr); } }
 .kpi,
 .tourn-kpi { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-inner); text-align: center; }
 .kpi-lbl,

@@ -3665,7 +3665,7 @@ export default function USKidsFieldPage() {
       <div className="master-detail">
 
         {/* ── SIDEBAR ── */}
-        <div className={`sidebar${md.open ? "" : " sidebar-closed"}`} style={{ minWidth:230, maxWidth:270 }}>
+        <div className={`sidebar${md.open ? "" : " sidebar-closed"}`>
 
         {/* Lista de torneios agrupada por mês — OU lista de rivais */}
         <div style={{ overflowY:"auto", flex:1 }}>
@@ -3779,7 +3779,7 @@ export default function USKidsFieldPage() {
                   return (
                     <button key={t.t}
                       onClick={() => {
-                        setSelectedT(t.t);
+                        setSelectedT(t.t); md.onSelect();
                         // Torneio terminado com resultados → mudar para tab resultados
                         if (dimmed && t.temResultados && tab === "campo") handleTabChange("resultados");
                       }}

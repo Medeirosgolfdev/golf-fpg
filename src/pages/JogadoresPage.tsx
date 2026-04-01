@@ -1824,20 +1824,14 @@ function CollapseCard({ title, icon, defaultOpen = true, children, badge }: {
   title: string; icon?: string; defaultOpen?: boolean;
   children: React.ReactNode; badge?: React.ReactNode;
 }) {
-  const [open, setOpen] = useState(defaultOpen);
   return (
     <div className="card" style={{ marginBottom: 12 }}>
-      <div onClick={() => setOpen(o => !o)}
-        style={{ display: "flex", alignItems: "center", justifyContent: "space-between",
-          cursor: "pointer", userSelect: "none", marginBottom: open ? 12 : 0 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          {icon && <span style={{ fontSize: 16 }}>{icon}</span>}
-          <span className="h-xs" style={{ margin: 0 }}>{title}</span>
-          {badge}
-        </div>
-        <span style={{ fontSize: 16, color: "var(--text-3)", lineHeight: 1 }}>{open ? "▾" : "▸"}</span>
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
+        {icon && <span style={{ fontSize: 16 }}>{icon}</span>}
+        <span className="h-xs" style={{ margin: 0 }}>{title}</span>
+        {badge}
       </div>
-      {open && children}
+      {children}
     </div>
   );
 }

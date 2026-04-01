@@ -2142,7 +2142,7 @@ function DriveContent() {
               📊 {data.totalScorecards} sc
             </span>
           )}
-          <span className="chip">📅 {data.lastUpdated}</span>
+          {data.lastUpdated && <span className="muted fs-10" style={{ whiteSpace:"nowrap" }}>{data.lastUpdated}</span>}
         </div>
       </div>
 
