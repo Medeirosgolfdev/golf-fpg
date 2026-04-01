@@ -1304,143 +1304,194 @@ tr.cross-current { background: var(--bg-success); }
 }
 .mobile-back-btn:hover { background: var(--bg-hover); color: var(--text); }
 
-/* ─── Responsive — 768 px ─── */
+/* Mobile utilities — base (desktop) */
+.mobile-hide { display: initial; }
+.mobile-only { display: none; }
+
+/* ════════════════════════════════════════════════════════════════
+   MOBILE — 768 px
+   ════════════════════════════════════════════════════════════════ */
 
 @media (max-width: 768px) {
 
- /* ── Topbar: compacto, sem contadores ── */
- .topbar         { gap: 6px; padding: 0 8px; }
- .top-stats      { display: none; }
- .brand-icon     { width: 22px; height: 22px; }
- .brand-title    { font-size: 13px; }
- .nav            { margin-left: 6px; }
- .nav-btn        { font-size: 11px; padding: 4px 8px; }
+ /* ── 1. TOPBAR ────────────────────────────────────────────────── */
+ .topbar      { gap: 6px; padding: 0 8px; height: 44px; }
+ .top-stats   { display: none; }   /* ganha espaço para a nav */
+ .brand-icon  { width: 22px; height: 22px; }
+ .brand-title { font-size: 13px; }
+ .nav         { margin-left: 4px; }
+ .nav-btn     { font-size: 11px; padding: 4px 8px; }
 
- /* ── Toolbar: compacta, wraps automático ── */
- .toolbar        { flex-wrap: wrap; padding: 5px 8px; gap: 5px; align-items: flex-start; min-height: 0; }
- .toolbar-left   { flex-wrap: wrap; gap: 5px; align-items: center; }
- .toolbar-right  { flex-wrap: wrap; gap: 4px; }
- .toolbar-sep    { display: none; }
- .toolbar-meta   { display: none; }
- .toolbar-title  { font-size: 12px; }
-
- /* Torneio compact toolbars */
+ /* ── 2. TOOLBAR ───────────────────────────────────────────────── */
+ .toolbar       { flex-wrap: wrap; padding: 5px 8px; gap: 5px;
+                  align-items: flex-start; min-height: 0; }
+ .toolbar-left  { flex-wrap: wrap; gap: 5px; align-items: center; }
+ .toolbar-right { flex-wrap: wrap; gap: 4px; align-items: center; }
+ .toolbar-sep   { display: none; }
+ .toolbar-meta  { display: none; }
+ .toolbar-title { font-size: 12px; }
  .campos-page .toolbar,
  .jogadores-page .toolbar,
  .tourn-layout .toolbar { padding: 4px 8px; gap: 4px; }
 
- /* ── Inputs e selects: muito mais compactos ── */
+ /* ── 3. INPUTS / SELECTS ──────────────────────────────────────── */
  .input  { width: 120px; height: 28px; font-size: 11px; padding: 0 7px; }
- .select { min-width: 70px; max-width: 130px; height: 28px; font-size: 11px; padding: 0 4px; }
-
- /* Input de pesquisa de jogadores */
+ .select { min-width: 70px; max-width: 130px; height: 28px;
+           font-size: 11px; padding: 0 4px; }
  .jogadores-page .toolbar .input  { width: 140px; }
  .jogadores-page .toolbar .select { min-width: 70px; }
 
- /* ── Sidebar: ocupa ~40% da altura em mobile ── */
+ /* ── 4. MASTER-DETAIL ─────────────────────────────────────────── */
  .master-detail { flex-direction: column; }
  .sidebar {
-  width: 100% !important;
-  min-width: unset !important;
+  width: 100% !important; min-width: unset !important;
   max-height: 38vh;
-  border-right: none;
-  border-bottom: 1px solid var(--border);
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+  border-right: none; border-bottom: 1px solid var(--border);
+  overflow-y: auto; -webkit-overflow-scrolling: touch;
   transition: max-height 0.25s ease;
  }
  .sidebar-closed {
-  max-height: 0 !important;
-  min-height: 0 !important;
+  max-height: 0 !important; min-height: 0 !important;
   overflow: hidden !important;
   border-bottom: none;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
+  padding-top: 0 !important; padding-bottom: 0 !important;
  }
 
- /* ── Cal-page sidebar ── */
+ /* ── 5. DETALHE ───────────────────────────────────────────────── */
+ .course-detail      { overflow-x: hidden; padding: 8px; }
+ .detail-header      { flex-direction: column; }
+ .detail-header-top  { flex-direction: column; align-items: flex-start; }
+ .detail-title       { font-size: 17px; }
+ .detail-actions     { flex-wrap: wrap; gap: 4px; }
+
+ /* ── 6. PLAYER DETAIL ─────────────────────────────────────────── */
+ .pa-page            { min-height: 0; }
+ .pa-controls        { flex-direction: column; align-items: flex-start; gap: 5px; }
+ .pa-controls-left   { flex-wrap: wrap; gap: 4px; }
+ .pa-content         { padding: 8px; }
+ .jog-pills          { gap: 4px; }
+ .jog-record-grid    { grid-template-columns: 1fr 1fr; gap: 4px; }
+
+ /* ── 7. CALENDÁRIO ────────────────────────────────────────────── */
  .cal-page        { flex-direction: column; }
  .cal-sidebar,
  .cal-sidebar-main {
-  width: 100% !important;
-  max-height: 40vh;
-  overflow-y: auto;
-  border-right: none;
-  border-bottom: 1px solid var(--border);
-  padding: 8px 12px;
+  width: 100% !important; max-height: 38vh;
+  overflow-y: auto; border-right: none;
+  border-bottom: 1px solid var(--border); padding: 8px 10px;
  }
 
- /* ── Course / Player detail ── */
- .detail-header     { flex-direction: column; }
- .detail-header-top { flex-direction: column; align-items: flex-start; }
- .course-detail     { overflow-x: hidden; padding: 8px; }
-
- /* ── Conteúdo: tabelas scrolláveis horizontalmente ── */
- .tourn-scroll,
+ /* ── 8. TABELAS — overflow scroll horizontal ──────────────────── */
  .table-wrap,
+ .tourn-scroll,
  .sc-modern,
  .scHost,
- .card-scroll,
- .flex-1-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+ .card-scroll    { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+ /* dtable: fonte e padding compactos */
+ .dtable         { font-size: 11px; }
+ .dtable th      { padding: 4px 6px; font-size: 9px; }
+ .dtable td      { padding: 4px 6px; }
+ .dtable-lg      { font-size: 11px; }
+ .dtable-lg th   { padding: 5px 6px; font-size: 9px; }
+ .dtable-lg td   { padding: 4px 6px; }
 
- /* ── Scorecard: colunas mais estreitas ── */
- .sc-h                { min-width: 30px; }
+ /* ── 9. SCORECARD ─────────────────────────────────────────────── */
+ .sc-h                          { min-width: 28px; }
+ .sc-table-modern               { font-size: 10px; }
+ .sc-table-modern th,
+ .sc-table-modern td            { padding: 3px 2px; }
  .sc-table-modern .sc-score,
- .scHost .sc-score    { min-width: 22px; min-height: 22px; font-size: 10px; }
+ .scHost .sc-score              { min-width: 20px; min-height: 20px; font-size: 9px; }
+ .sc-table-modern .row-label    { min-width: 52px; font-size: 10px; padding-left: 4px; }
+ /* Scorecard moderno (sc-modern) */
+ .sc-header                     { flex-direction: column; gap: 6px; padding: 10px 12px; }
+ .sc-header-right               { width: 100%; justify-content: space-around; }
+ .sc-title                      { font-size: 14px; }
+ .sc-subtitle                   { font-size: 10px; }
+ .sc-stat                       { min-width: 44px; }
+ .sc-stat-value                 { font-size: 16px; }
+ .sc-stat-score .sc-stat-value  { font-size: 18px; }
+ .sc-stat-label                 { font-size: 9px; }
 
- /* ── Pills ── */
- .escalao-pills       { gap: 2px; flex-wrap: wrap; }
- .p-esc-filter        { font-size: 10px; padding: 1px 5px; }
- .tourn-tab           { font-size: 11px; padding: 3px 7px; }
- .tourn-tab-sm        { font-size: 10px; padding: 2px 5px; }
+ /* ── 10. TORNEIO LEADERBOARD ──────────────────────────────────── */
+ .tourn-scorecard th,
+ .tourn-scorecard td            { padding: 4px 4px; font-size: 11px; }
+ .tourn-lb-name-col             { min-width: 110px !important; }
+ .tourn-player-row td           { font-size: 11px; }
+ .tourn-hole-cell               { min-width: 24px !important; padding: 2px 1px !important; font-size: 10px; }
+ .tourn-lb-pills .p             { font-size: 9px; padding: 1px 4px; }
 
- /* ── Chips / KPIs ── */
- .chip                { font-size: 10px; padding: 2px 7px; }
- .kpis, .tourn-kpis  { grid-template-columns: repeat(3, 1fr); gap: 6px; }
- .kpi-card            { padding: 8px 10px; }
+ /* ── 11. ANÁLISE / KPIs ───────────────────────────────────────── */
+ .an-grid   { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+ .an-grid3  { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+ .kpis,
+ .tourn-kpis { grid-template-columns: repeat(3, 1fr); gap: 5px; }
+ .kpi, .tourn-kpi { padding: 8px 6px; }
+ .kpi-val, .tourn-kpi-val  { font-size: 18px; }
+ .kpi-lbl, .tourn-kpi-lbl  { font-size: 9px; }
+ .kpi-card  { padding: 8px 10px; }
+ .haDiag    { grid-template-columns: repeat(2, 1fr); }
+ .haParGrid { grid-template-columns: repeat(2, 1fr); }
+ .haTopWrap { grid-template-columns: 1fr; }
 
- /* ── page-full (Comparar, etc.) ── */
- .page-full { padding: 8px; }
+ /* ── 12. CARDS ────────────────────────────────────────────────── */
+ .card          { padding: 10px; margin: 6px 0; }
+ .grid-3,
+ .grid-3-tc     { grid-template-columns: 1fr 1fr; gap: 5px; }
 
- /* ── Grids: 1 coluna em mobile ── */
- .grid-3, .grid-3-tc, .jog-record-grid { grid-template-columns: 1fr 1fr; gap: 6px; }
- .an-grid  { grid-template-columns: repeat(2, 1fr); }
- .an-grid3 { grid-template-columns: 1fr 1fr; }
+ /* ── 13. PILLS / TABS ─────────────────────────────────────────── */
+ .escalao-pills   { gap: 2px; flex-wrap: wrap; }
+ .p-esc-filter    { font-size: 10px; padding: 1px 5px; }
+ .tourn-tab       { font-size: 11px; padding: 3px 7px; }
+ .tourn-tab-sm    { font-size: 10px; padding: 2px 5px; }
+ .chip            { font-size: 10px; padding: 2px 6px; }
 
- /* ── Comparar: radar mais pequeno, tabelas scrolláveis ── */
- .cmp-radar-wrap    { max-width: 100%; }
- .cmp-search-input  { font-size: 12px; padding: 7px 10px; }
+ /* ── 14. PAGE-FULL (Comparar) ─────────────────────────────────── */
+ .page-full          { padding: 8px; }
+ .cmp-radar-wrap     { max-width: 100%; }
+ .cmp-search-input   { font-size: 12px; padding: 7px 10px; }
 
- /* ── Botão voltar ── */
- .mobile-back-btn { display: flex; margin: 6px 8px 2px; }
+ /* ── 15. BOTÃO VOLTAR / TOGGLE ────────────────────────────────── */
+ .mobile-back-btn { display: flex; margin: 6px 8px 4px; }
+ .sidebar-toggle  { width: 30px; height: 30px; font-size: 12px; }
 
- /* ── Sidebar toggle mais visível ── */
- .sidebar-toggle { width: 30px; height: 30px; font-size: 12px; }
+ /* ── 16. UTILITÁRIOS MOBILE ───────────────────────────────────── */
+ .mobile-hide      { display: none; }
+ .mobile-only      { display: initial; }
 }
 
-/* ─── Responsive — 480 px (telemoveis pequenos) ─── */
+/* ════════════════════════════════════════════════════════════════
+   MOBILE — 480 px (telemóveis pequenos)
+   ════════════════════════════════════════════════════════════════ */
 
 @media (max-width: 480px) {
- /* Esconde brand text, fica só ícone */
+ /* Topbar: só ícone, sem texto */
  .brand-title    { display: none; }
- .topbar         { gap: 4px; padding: 0 6px; }
+ .topbar         { gap: 4px; padding: 0 6px; height: 40px; }
  .nav-btn        { font-size: 10px; padding: 3px 6px; }
 
- /* Toolbar ainda mais compacta */
+ /* Toolbar */
  .toolbar        { padding: 4px 6px; gap: 4px; }
  .input          { width: 100px; }
  .select         { min-width: 60px; max-width: 110px; }
 
- /* Sidebar ocupa menos altura, mais espaço para conteúdo */
+ /* Sidebar */
  .sidebar        { max-height: 32vh; }
 
  /* Grids: 1 coluna */
- .grid-3, .grid-3-tc, .jog-record-grid { grid-template-columns: 1fr; }
- .an-grid, .an-grid3 { grid-template-columns: 1fr; }
+ .grid-3, .grid-3-tc,
+ .jog-record-grid             { grid-template-columns: 1fr; }
+ .an-grid, .an-grid3          { grid-template-columns: 1fr; }
+ .haDiag, .haParGrid          { grid-template-columns: 1fr; }
+ .kpis, .tourn-kpis           { grid-template-columns: repeat(2, 1fr); }
 
- /* Tabs de torneio */
+ /* Análise */
+ .pa-content                  { padding: 6px; }
+
+ /* Tabs */
  .tourn-tab      { font-size: 10px; padding: 2px 5px; }
  .tourn-tab-sm   { font-size: 9px;  padding: 1px 4px; }
+ .detail-title   { font-size: 15px; }
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -1597,7 +1648,6 @@ tr.cross-current { background: var(--bg-success); }
 /* ─── ANALYSIS ─── */
 .kpis,
 .tourn-kpis { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-section); margin-bottom: var(--space-section); }
-@media (max-width: 768px) { .kpis, .tourn-kpis { grid-template-columns: repeat(3, 1fr); } }
 .kpi,
 .tourn-kpi { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-inner); text-align: center; }
 .kpi-lbl,

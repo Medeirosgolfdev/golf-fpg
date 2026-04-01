@@ -2120,17 +2120,17 @@ function DriveContent() {
             <button className={"tourn-tab tourn-tab-sm" + (series === "tour" ? " active" : "")}
               onClick={() => setSeries("tour")}
               style={series === "tour" ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
-              🏌️ Tour ({countEvents(tourT)})
+              🏌️ Tour<span className="mobile-hide"> ({countEvents(tourT)})</span>
             </button>
             <button className={"tourn-tab tourn-tab-sm" + (series === "challenge" ? " active" : "")}
               onClick={() => setSeries("challenge")}
               style={series === "challenge" ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
-              ⚡ Challenge ({countEvents(challT)})
+              ⚡ Chall<span className="mobile-hide">enge ({countEvents(challT)})</span>
             </button>
             <button className={"tourn-tab tourn-tab-sm" + (series === "aquapor" ? " active" : "")}
               onClick={() => setSeries("aquapor")}
               style={series === "aquapor" ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
-              💧 AQUAPOR ({countEvents(aquaporT)})
+              💧 AQUAPOR<span className="mobile-hide"> ({countEvents(aquaporT)})</span>
             </button>
             <button className={"tourn-tab tourn-tab-sm" + (series === "sub12" ? " active" : "")}
               onClick={() => setSeries("sub12")}
