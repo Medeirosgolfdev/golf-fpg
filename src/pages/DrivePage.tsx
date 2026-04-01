@@ -13,8 +13,6 @@ import { fmtToPar } from "../utils/format";
 import { isCalUnlocked } from "../utils/authConstants";
 import { resolveFedsInTournaments , buildEscLookup, resolveEscFromLookup } from "../utils/playerUtils";
 import PasswordGate from "../ui/PasswordGate";
-import SidebarToggle from "../ui/SidebarToggle";
-import { useMasterDetail } from "../hooks/useMasterDetail";
 import KpiCard from "../ui/KpiCard";
 import LoadingState from "../ui/LoadingState";
 import { ScorecardLeaderboard } from "../ui/ScorecardLeaderboard";
@@ -1811,7 +1809,7 @@ function DriveContent() {
 
   // Série principal (inclui sub12 como 4ª tab)
   const [series, setSeries]                     = useState<"tour"|"challenge"|"aquapor"|"sub12">("tour");
-  const md = useMasterDetail();
+  const [sidebarOpen, setSidebarOpen]           = useState(true);
   const [regionFilter, setRegionFilter]         = useState<string | null>(null);
   const [escFilter, setEscFilter]               = useState<string[]>([]);
   const [selectedGroupKey, setSelectedGroupKey] = useState<string | null>(null);
@@ -2090,7 +2088,10 @@ function DriveContent() {
       <div className="toolbar">
         <div className="toolbar-left">
           {(
-            <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />
+            <button className="sidebar-toggle" onClick={() => setSidebarOpen(v => !v)}
+              title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
+              {sidebarOpen ? "◀" : "▶"}
+            </button>
           )}
           <span className="toolbar-title">
             {isSub12Mode ? "Sub-12 DRIVE" : series === "aquapor" ? "💧 AQUAPOR" : "🏁 DRIVE"} {activeYear ?? ""}
@@ -2142,7 +2143,11 @@ function DriveContent() {
               📊 {data.totalScorecards} sc
             </span>
           )}
-          <span className="chip">📅 {data.lastUpdated}</span>
+          {data.lastUpdated && (
+            <span className="muted fs-10" title={`Actualizado: ${data.lastUpdated}`} style={{ whiteSpace: "nowrap" }}>
+              {data.lastUpdated}
+            </span>
+          )}
         </div>
       </div>
 
@@ -2200,7 +2205,7 @@ function DriveContent() {
         <div className="master-detail">
 
           {/* Sidebar Sub-12 */}
-          <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
+          <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`}>
             {/* Séries */}
             <div className="sidebar-section-title">Série</div>
             {SUB12_SERIES_TABS.map(s => {
@@ -2300,7 +2305,7 @@ function DriveContent() {
         <div className="master-detail">
 
           {/* Sidebar */}
-          <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
+          <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`}>
             <button
               className={`course-item ${selectedGroupKey === null ? "active" : ""}`}
               onClick={() => { setSelectedGroupKey(null); setRoundIdx(0); }}>

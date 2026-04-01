@@ -1283,10 +1283,10 @@ tr.cross-current { background: var(--bg-success); }
  font-family: 'JetBrains Mono', monospace;
 }
 
-/* ─── Sidebar Back Button (toolbar) — desktop escondido ─── */
+/* ─── Sidebar Back Button (toolbar) — escondido em desktop ─── */
 
 .sidebar-back-btn {
- display: none; /* visível apenas em mobile via media query */
+ display: none;
  align-items: center;
  gap: 6px;
  padding: 4px 10px;
@@ -1298,7 +1298,7 @@ tr.cross-current { background: var(--bg-success); }
  color: var(--text-2);
  cursor: pointer;
  white-space: nowrap;
- transition: background 0.15s, color 0.15s;
+ transition: background 0.15s;
  flex-shrink: 0;
 }
 .sidebar-back-btn:hover { background: var(--bg-hover-subtle); color: var(--text); }
@@ -1306,6 +1306,9 @@ tr.cross-current { background: var(--bg-success); }
 /* Mobile utilities */
 .mobile-hide { display: initial; }
 .mobile-only { display: none; }
+
+/* CompararPage: search row */
+.cmp-search-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
 /* ════════════════════════════════════════════════════════════════
    MOBILE — 768 px
@@ -1315,7 +1318,7 @@ tr.cross-current { background: var(--bg-success); }
 
  /* ── 1. TOPBAR ── */
  .topbar      { gap: 6px; padding: 0 8px; height: 44px; }
- .top-stats   { display: none; }
+ .top-stats   { display: none; }   /* contadores só em desktop */
  .brand-icon  { width: 22px; height: 22px; }
  .brand-title { font-size: 13px; }
  .nav         { margin-left: 4px; }
@@ -1330,7 +1333,7 @@ tr.cross-current { background: var(--bg-success); }
  .toolbar-meta  { display: none; }
  .toolbar-title { font-size: 12px; }
 
- /* ── 3. SIDEBAR BACK BUTTON (na toolbar, em mobile) ── */
+ /* ── 3. SIDEBAR BACK BUTTON ── */
  .sidebar-back-btn { display: flex; }
 
  /* ── 4. INPUTS / SELECTS ── */
@@ -1355,7 +1358,7 @@ tr.cross-current { background: var(--bg-success); }
   overflow: hidden !important; border-bottom: none !important;
   padding: 0 !important;
  }
- /* Detalhe expande para preencher o espaço */
+ /* Detalhe expande para preencher espaço */
  .master-detail > .course-detail,
  .master-detail > .flex-1-scroll,
  .master-detail > .flex-1 { flex: 1 1 0 !important; min-height: 0; }
@@ -1437,9 +1440,15 @@ tr.cross-current { background: var(--bg-success); }
  .tourn-tab-sm   { font-size: 10px; padding: 2px 5px; }
  .chip           { font-size: 10px; padding: 2px 6px; }
 
- /* ── 14. UTILITÁRIOS ── */
- .page-full       { padding: 8px; }
- .cmp-radar-wrap  { max-width: 100%; }
+ /* ── 14. COMPARAR ── */
+ .page-full         { padding: 8px; }
+ .cmp-radar-wrap    { max-width: 100%; }
+ .cmp-search-input  { width: 100% !important; font-size: 13px; }
+ .cmp-search-row    { flex-direction: column; align-items: stretch; gap: 6px; }
+ .cmp-search-row .cmp-search-wrap { width: 100%; }
+ .cmp-chip          { align-self: flex-start; }
+
+ /* ── 15. UTILITÁRIOS ── */
  .mobile-hide     { display: none; }
  .mobile-only     { display: initial; }
  .sidebar-toggle  { width: 30px; height: 30px; font-size: 12px; }
@@ -1458,11 +1467,11 @@ tr.cross-current { background: var(--bg-success); }
  .select       { min-width: 60px; max-width: 110px; }
  .sidebar      { flex: 0 0 32vh; height: 32vh; max-height: 32vh; }
  .grid-3, .grid-3-tc,
- .jog-record-grid   { grid-template-columns: 1fr; }
- .an-grid, .an-grid3 { grid-template-columns: 1fr; }
- .haDiag, .haParGrid { grid-template-columns: 1fr; }
- .kpis, .tourn-kpis  { grid-template-columns: repeat(2, 1fr); }
- .pa-content         { padding: 6px; }
+ .jog-record-grid            { grid-template-columns: 1fr; }
+ .an-grid, .an-grid3         { grid-template-columns: 1fr; }
+ .haDiag, .haParGrid         { grid-template-columns: 1fr; }
+ .kpis, .tourn-kpis          { grid-template-columns: repeat(2, 1fr); }
+ .pa-content                 { padding: 6px; }
  .tourn-tab    { font-size: 10px; padding: 2px 5px; }
  .tourn-tab-sm { font-size: 9px;  padding: 1px 4px; }
  .detail-title { font-size: 15px; }
@@ -1622,7 +1631,7 @@ tr.cross-current { background: var(--bg-success); }
 /* ─── ANALYSIS ─── */
 .kpis,
 .tourn-kpis { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-section); margin-bottom: var(--space-section); }
-@media (max-width: 768px) { .kpis, .tourn-kpis { grid-template-columns: repeat(3, 1fr); } }
+
 .kpi,
 .tourn-kpi { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-inner); text-align: center; }
 .kpi-lbl,

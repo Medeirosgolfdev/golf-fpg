@@ -310,7 +310,7 @@ function PlayerSearch({ players, slots, statsDb, onAdd, onRemove }: {
 
   return (
     <div className="mb-18">
-      <div className="flex-center-gap8 mb-10" ref={ref}>
+      <div className="cmp-search-row mb-10" ref={ref}>
         <div className="cmp-search-wrap">
           <input className="input cmp-search-input" value={q} onChange={e => { setQ(e.target.value); setOpen(true); }} onFocus={() => q.trim() && setOpen(true)}
             placeholder="Pesquisar jogador…" disabled={slots.length >= 4} />

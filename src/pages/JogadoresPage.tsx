@@ -19,8 +19,6 @@ import TeePill from "../ui/TeePill";
 import TeeDate from "../ui/TeeDate";
 import ScoreCircle from "../ui/ScoreCircle";
 import LoadingState from "../ui/LoadingState";
-import SidebarToggle from "../ui/SidebarToggle";
-import { useMasterDetail } from "../hooks/useMasterDetail";
 import { loadPlayerStats, daysSince, type PlayerStatsDb } from "../data/playerStatsTypes";
 import { calcSD } from "../utils/whsCalc";
 
@@ -1824,20 +1822,15 @@ function CollapseCard({ title, icon, defaultOpen = true, children, badge }: {
   title: string; icon?: string; defaultOpen?: boolean;
   children: React.ReactNode; badge?: React.ReactNode;
 }) {
-  const [open, setOpen] = useState(defaultOpen);
+  // Sempre expandido — sem colapso
   return (
     <div className="card" style={{ marginBottom: 12 }}>
-      <div onClick={() => setOpen(o => !o)}
-        style={{ display: "flex", alignItems: "center", justifyContent: "space-between",
-          cursor: "pointer", userSelect: "none", marginBottom: open ? 12 : 0 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          {icon && <span style={{ fontSize: 16 }}>{icon}</span>}
-          <span className="h-xs" style={{ margin: 0 }}>{title}</span>
-          {badge}
-        </div>
-        <span style={{ fontSize: 16, color: "var(--text-3)", lineHeight: 1 }}>{open ? "▾" : "▸"}</span>
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
+        {icon && <span style={{ fontSize: 16 }}>{icon}</span>}
+        <span className="h-xs" style={{ margin: 0 }}>{title}</span>
+        {badge}
       </div>
-      {open && children}
+      {children}
     </div>
   );
 }
@@ -3863,7 +3856,7 @@ export default function JogadoresPage() {
   const [regionFilter, setRegionFilter] = useState<string>("ALL");
   const [sortKey, setSortKey] = useState<SortKey>("name");
   const [selectedFed, setSelectedFed] = useState<string | null>(urlFed ?? null);
-  const md = useMasterDetail();
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [playerMeta, setPlayerMeta] = useState<PlayerPageData["META"] | null>(null);
   const rankingMode = sortKey === "ranking";
   const [statsDb, setStatsDb] = useState<PlayerStatsDb>({});
@@ -4021,7 +4014,9 @@ export default function JogadoresPage() {
     <div className="jogadores-page">
       <div className="toolbar">
         <div className="toolbar-left">
-          <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Jogadores" />
+          <button className="sidebar-toggle" onClick={() => setSidebarOpen(v => !v)} title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
+            {sidebarOpen ? "◀" : "▶"}
+          </button>
           <input className="input" value={q} onChange={e => { setQ(e.target.value); setSelectedFed(null); }}
             placeholder="Nome, clube, n.º federado…" />
           <select className="select" value={sexFilter} onChange={e => setSexFilter(e.target.value as SexFilter)}>
@@ -4079,7 +4074,7 @@ export default function JogadoresPage() {
       </div>
 
       <div className="master-detail">
-        <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
+        <div className={`sidebar ${sidebarOpen ? "" : "sidebar-closed"}`}>
           {filtered.map(p => {
             const isActive = selected?.fed === p.fed;
             const displayClub = (isActive && playerMeta?.club) ? playerMeta.club : clubShort(p);
