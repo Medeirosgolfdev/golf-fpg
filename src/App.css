@@ -1342,23 +1342,42 @@ tr.cross-current { background: var(--bg-success); }
  .jogadores-page .toolbar .select { min-width: 70px; }
 
  /* ── 4. MASTER-DETAIL ─────────────────────────────────────────── */
- .master-detail { flex-direction: column; }
+ .master-detail  { flex-direction: column; }
+
+ /* Sidebar: altura fixa via flex-basis para colapso correcto */
  .sidebar {
-  width: 100% !important; min-width: unset !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  flex: 0 0 38vh;          /* não cresce, não encolhe, ocupa 38vh */
+  height: 38vh;
   max-height: 38vh;
-  border-right: none; border-bottom: 1px solid var(--border);
-  overflow-y: auto; -webkit-overflow-scrolling: touch;
-  transition: max-height 0.25s ease;
+  border-right: none;
+  border-bottom: 1px solid var(--border);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  transition: flex-basis 0.2s ease, height 0.2s ease;
  }
+ /* Fechado: flex-basis 0 liberta o espaço no layout em coluna */
  .sidebar-closed {
-  max-height: 0 !important; min-height: 0 !important;
+  flex: 0 0 0 !important;
+  height: 0 !important;
+  max-height: 0 !important;
+  min-height: 0 !important;
   overflow: hidden !important;
-  border-bottom: none;
-  padding-top: 0 !important; padding-bottom: 0 !important;
+  border-bottom: none !important;
+  padding: 0 !important;
  }
+ /* O detalhe expande para preencher o espaço quando sidebar fecha */
+ .master-detail > .course-detail,
+ .master-detail > .flex-1-scroll,
+ .master-detail > .flex-1 { flex: 1 1 0 !important; min-height: 0; }
+
+ /* Padding dos conteúdos de detalhe (torneios, etc.) */
+ .uskids-content { padding: 8px 10px !important; }
 
  /* ── 5. DETALHE ───────────────────────────────────────────────── */
- .course-detail      { overflow-x: hidden; padding: 8px; }
+ .course-detail      { overflow-x: hidden; padding: 8px; flex: 1 1 0; min-height: 0; }
  .detail-header      { flex-direction: column; }
  .detail-header-top  { flex-direction: column; align-items: flex-start; }
  .detail-title       { font-size: 17px; }
@@ -1376,9 +1395,13 @@ tr.cross-current { background: var(--bg-success); }
  .cal-page        { flex-direction: column; }
  .cal-sidebar,
  .cal-sidebar-main {
-  width: 100% !important; max-height: 38vh;
+  width: 100% !important;
+  flex: 0 0 38vh;
+  height: 38vh;
+  max-height: 38vh;
   overflow-y: auto; border-right: none;
   border-bottom: 1px solid var(--border); padding: 8px 10px;
+  transition: flex-basis 0.2s ease, height 0.2s ease;
  }
 
  /* ── 8. TABELAS — overflow scroll horizontal ──────────────────── */

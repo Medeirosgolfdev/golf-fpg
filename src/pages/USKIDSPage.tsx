@@ -3893,7 +3893,7 @@ export default function USKidsFieldPage() {
       </div>
 
       {/* ── CONTEÚDO ── */}
-      <div style={{ flex:1, overflow:"auto", padding:"16px 20px" }}>
+      <div className="uskids-content" style={{ flex:1, overflow:"auto", padding:"16px 20px" }}>
         {/* Botão voltar — só em mobile quando a sidebar está fechada */}
         {!sidebarOpen && (
           <button className="mobile-back-btn" onClick={() => setSidebarOpen(true)}>
