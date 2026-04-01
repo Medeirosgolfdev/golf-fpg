@@ -951,7 +951,7 @@ function EscalaoSection({ escalao: e, torneio: t }: {
   if (!rondasComDados.length) return <EmptyState size="sm" message="Sem dados para este escalão." />;
 
   const hasAcumulado = rondasComDados.length >= 2;
-  const SCORECARD_TAB = rondasComDados.length + 1; // índice do novo tab
+  const SCORECARD_TAB = rondasComDados.length + 1;
   const defaultTab = (() => {
     for (let i = 0; i < rondasComDados.length; i++) {
       const lb = rondasComDados[i].leaderboard ?? rondasComDados[i].jogadores ?? [];
@@ -983,13 +983,12 @@ function EscalaoSection({ escalao: e, torneio: t }: {
 
   return (
     <div>
-      {/* Campo por escalão */}
       {campo && (
         <div style={{ fontSize: 11, color: "var(--text-3)", marginBottom: 6 }}>
           📍 {campo}
         </div>
       )}
-      {/* Sub-tabs R1 / R2 / Acumulado / Scorecards — só se houver mais de 1 ronda */}
+      {/* Sub-tabs R1 / R2 / Resumo / 📋 Scorecards */}
       {(rondasComDados.length > 1) && (
         <div style={{ display: "flex", borderBottom: "1px solid var(--border)", marginBottom: 8 }}>
           {rondasComDados.map((_, i) => (
@@ -997,7 +996,7 @@ function EscalaoSection({ escalao: e, torneio: t }: {
           ))}
           {hasAcumulado && (
             <button style={tabStyle(rondasComDados.length)} onClick={() => setTab(rondasComDados.length)}>
-              Acumulado
+              Resumo
             </button>
           )}
           {hasAcumulado && (

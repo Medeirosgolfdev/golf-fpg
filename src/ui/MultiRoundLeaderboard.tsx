@@ -1,3 +1,4 @@
+// @refresh reset
 /**
  *
  * ═══════════════════════════════════════════════════════════════
@@ -150,11 +151,11 @@ export interface MultiRoundLBProps {
 
 export function MultiRoundLeaderboard({
   rows, nRounds, playersDB,
-  showCols = {},
+  showCols = { esc: true, fed: true, tee: true },  // default: mostrar tudo como nas tabs individuais
   sortable = false,
   filterable = false,
 }: MultiRoundLBProps) {
-  const { esc: showEsc = false, fed: showFed = false, tee: showTee = false } = showCols;
+  const { esc: showEsc = true, fed: showFed = true, tee: showTee = true } = showCols;
 
   const [sortKey, setSortKey] = useState<MRSortKey>("pos");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");

@@ -1,3 +1,4 @@
+// @refresh reset
 /**
  * TorneiosAnalisePage.tsx — Análise Genérica de Torneios
  *
@@ -16,7 +17,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useAppContext } from "../context/AppContext";
 import { loadPlayers } from "../data/loader";
-import { SC, scClass } from "../utils/scoreDisplay";
+import { scClass } from "../utils/scoreDisplay";
 import { buildEscLookup, type EscLookup } from "../utils/playerUtils";
 import { getTeeHex } from "../utils/teeColors";
 import PillBadge from "../ui/PillBadge";
@@ -26,7 +27,7 @@ import { useMasterDetail } from "../hooks/useMasterDetail";
 import { C } from "../utils/colors";
 import { fmtDate, fmtToPar, MONTHS_PT } from "../utils/format";
 import { toggleArr } from "../utils/mathUtils";
-import { calcAGS, EXP9, expectedSD9 } from "../utils/whsCalc";
+import { calcAGS, expectedSD9 } from "../utils/whsCalc";
 import { ScorecardLeaderboard, type ScorecardRow } from "../ui/ScorecardLeaderboard";
 import { MultiRoundLeaderboard, EMPTY_FILTER, type MultiRoundRow as MRRow } from "../ui/MultiRoundLeaderboard";
 import { CrossSeasonTable, SortTh as CSortTh } from "../ui/CrossSeasonTable";
@@ -564,8 +565,6 @@ interface FileMeta {
 }
 
 /* PlayersDB, MANUEL_FED importados de tournamentPrimitives */
-type EscLookup = Map<string, string>; // fedCode → escalão normalizado
-
 
 function resolveEsc(p: Player, escLookup: EscLookup): string {
   // Prioridade 1: escalão gravado no próprio registo do torneio (histórico)
@@ -593,6 +592,10 @@ export interface Player {
   nholes?: number; parTotal?: number;
   scores?: number[]; par?: number[]; si?: number[]; meters?: number[];
   roundScores?: RoundScore[];
+  // flags internas de multi-ronda (não vêm do JSON — atribuídas por expandMultiRound)
+  _wd?: boolean;          // desistiu em ≥1 ronda
+  _incomplete?: boolean;  // jogou menos rondas que o máximo disponível
+  _roundsPlayed?: number; // rondas válidas jogadas
 }
 export interface Tournament {
   name: string; ccode?: string; tcode: string; date: string;
@@ -674,7 +677,7 @@ export function expandMultiRound(t: Tournament): Tournament[] {
     }
     // Sort by gross for this round — WD players sempre no fim
     rdPlayers.sort((a, b) => {
-      const aWD = (a as any)._wd; const bWD = (b as any)._wd;
+      const aWD = a._wd; const bWD = b._wd;
       if (aWD && !bWD) return 1;
       if (!aWD && bWD) return -1;
       return numGross(a) - numGross(b);
@@ -715,9 +718,9 @@ export function expandMultiRound(t: Tournament): Tournament[] {
     } as any));
   }
   // Completos ordenados por gross; incompletos no fim; WD no fim de tudo
-  const complete   = totalPlayers.filter(p => !(p as any)._incomplete && !(p as any)._wd).sort((a, b) => numGross(a) - numGross(b));
-  const wdPlayers  = totalPlayers.filter(p => (p as any)._wd);
-  const incomplete = totalPlayers.filter(p =>  (p as any)._incomplete && !(p as any)._wd).sort((a, b) => numGross(a) - numGross(b));
+  const complete   = totalPlayers.filter(p => !p._incomplete && !p._wd).sort((a, b) => numGross(a) - numGross(b));
+  const wdPlayers  = totalPlayers.filter(p => p._wd);
+  const incomplete = totalPlayers.filter(p =>  p._incomplete && !p._wd).sort((a, b) => numGross(a) - numGross(b));
   // Positions only for complete players
   let pos = 1;
   complete.forEach((p, i) => {
@@ -725,8 +728,8 @@ export function expandMultiRound(t: Tournament): Tournament[] {
     (p as any)._pos = pos;
   });
   incomplete.forEach(p => { (p as any)._pos = null; });
-  // Label do acumulado indica progresso se o torneio ainda não terminou
-  const accumLabel = playedRounds < nRounds ? `Acum. R1–R${playedRounds}` : "Acumulado";
+  // Label do tab: "Resumo" quando terminou, "Resumo R1–R2" quando ainda faltam rondas
+  const accumLabel = playedRounds < nRounds ? `Resumo R1–R${playedRounds}` : "Resumo";
   out.push({ ...t, players: [...complete, ...incomplete, ...wdPlayers], _roundLabel: accumLabel, _isTotal: true } as any);
 
   return out;
@@ -753,16 +756,6 @@ function detectRoundNumber(name: string): number | null {
 }
 
 /** Detecta a série/circuito de um torneio */
-function detectSeries(t: Tournament): string {
-  if (t.circuit) return t.circuit;
-  if (t.series)  return t.series;
-  if (/PJA/i.test(t.name))  return "PJA Tour";
-  if (/^WAGR/i.test(t.name)) return "WAGR Tour";
-  if (/^WJGC/i.test(t.name)) return "WJGC";
-  if (/^BJGT/i.test(t.name)) return "BJGT";
-  return "Outros";
-}
-
 /** Funde N torneios (rondas separadas) num único torneio multi-ronda sintético */
 function mergeTournamentRounds(rounds: Tournament[]): Tournament {
   // Ordenar por número da ronda, fallback por data
@@ -985,8 +978,8 @@ export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabe
   const parTotal = par.reduce((a, b) => a + b, 0);
   const si      = refP?.si || [];
 
-  const nonWD   = rawPlayers.filter(p => !(p as any)._wd);
-  const wdOnly  = rawPlayers.filter(p =>  (p as any)._wd);
+  const nonWD   = rawPlayers.filter(p => !p._wd);
+  const wdOnly  = rawPlayers.filter(p =>  p._wd);
   const byGross = [...nonWD].sort((a, b) => numGross(a) - numGross(b));
   let posCounter = 1;
   byGross.forEach((p, i) => {
@@ -1010,7 +1003,7 @@ export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabe
 
   const sorted = useMemo(() => [...filteredPlayers].sort((a, b) => {
     // WD players sempre no fim, independentemente do sortKey
-    const aWD = (a as any)._wd; const bWD = (b as any)._wd;
+    const aWD = a._wd; const bWD = b._wd;
     if (aWD && !bWD) return 1;
     if (!aWD && bWD) return -1;
     let av: any, bv: any;
@@ -1044,7 +1037,7 @@ export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabe
   if (!rawPlayers.length) return <div className="muted ta-center p-16">Scorecards não disponíveis.</div>;
 
   const rows: ScorecardRow[] = sorted.map((p, idx) => {
-    const isWDPlayer = !!(p as any)._wd || p.grossTotal == null || numGross(p) >= 999;
+    const isWDPlayer = !!p._wd || p.grossTotal == null || numGross(p) >= 999;
     const gross = isWDPlayer ? 0 : numGross(p);
     const dp = (p as any)._pos;
     const showPos = idx === 0 || dp !== (sorted[idx - 1] as any)._pos;
@@ -1145,8 +1138,8 @@ export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabe
 export function AccumulatedLB({ tournament, nRounds, escLookup, playersDB }: { tournament: Tournament; nRounds: number; escLookup: EscLookup; playersDB: PlayersDB }) {
   const rawPlayers = tournament.players;
 
-  const complete   = rawPlayers.filter(p => !(p as any)._incomplete);
-  const incomplete = rawPlayers.filter(p =>  (p as any)._incomplete);
+  const complete   = rawPlayers.filter(p => !p._incomplete);
+  const incomplete = rawPlayers.filter(p =>  p._incomplete);
   const parPerRound = complete[0]?.parTotal ?? incomplete[0]?.parTotal ?? 72;
 
   // useMemo ANTES do early return — regra dos hooks React
@@ -1184,14 +1177,32 @@ export function AccumulatedLB({ tournament, nRounds, escLookup, playersDB }: { t
       teeName: p.teeName,
       gross: numGross(p),
       parTotal: parPerRound * nRounds,
-      isIncomplete: !!(p as any)._incomplete,
-      isWD: !!(p as any)._wd,
+      isIncomplete: !!p._incomplete,
+      isWD: !!p._wd,
       isHighlighted: isManuel(p),
       rounds: mappedRounds,
     };
   }), [rawPlayers, escLookup, nRounds, parPerRound]);
 
-  const info = `${complete.length} classif.${incomplete.length > 0 ? ` · ${incomplete.length} inc.` : ""} · ${nRounds}R · Par ${parPerRound * nRounds}`;
+  // Referência para meta-informação do campo (mesmo que ScorecardLB)
+  const refP0     = complete[0] ?? rawPlayers[0];
+  const refRS     = refP0?.roundScores?.find(rs => rs.round === 1);
+  const cr        = refRS?.courseRating ?? refP0?.courseRating;
+  const slope     = refRS?.slope       ?? refP0?.slope;
+  const campo     = tournament.campo || "";
+  const grosses   = complete.map(p => numGross(p)).filter(g => !isNaN(g) && g > 0);
+  const avgGross  = grosses.length ? grosses.reduce((a, b) => a + b, 0) / grosses.length : null;
+
+  const info = [
+    `${complete.length} classif.`,
+    incomplete.length > 0 ? `${incomplete.length} inc.` : null,
+    `${nRounds}R`,
+    `Par ${parPerRound * nRounds}`,
+    avgGross != null ? `Média ${avgGross.toFixed(1)} (${avgGross - parPerRound * nRounds >= 0 ? "+" : ""}${(avgGross - parPerRound * nRounds).toFixed(1)})` : null,
+    campo ? `📍 ${campo}` : null,
+    cr    ? `CR ${cr}`    : null,
+    slope ? `Slope ${slope}` : null,
+  ].filter(Boolean).join(" · ");
 
   // Early return seguro — useMemo já foi chamado acima
   if (!rawPlayers.length) return <div className="muted ta-center p-16">Sem resultados.</div>;
@@ -1305,9 +1316,10 @@ export function AllRoundsScorecardLB({
   playersDB: PlayersDB;
 }) {
   const [filter, setFilter]   = useState<PlayerFilter>(EMPTY_FILTER);
-  const [sortKey, setSortKey] = useState<"pos" | "name" | "club" | "hcp">("pos");
+  const [sortKey, setSortKey] = useState<string>("pos");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
   const [showSC, setShowSC]   = useState(true);
+  const [groupMode, setGroupMode] = useState(true); // true = agrupado por jogador; false = linha por ronda
 
   // Quantas rondas foram efectivamente jogadas
   const playedRounds = useMemo(() =>
@@ -1370,52 +1382,102 @@ export function AllRoundsScorecardLB({
     return { scores: capped, gross, toPar: gross - rdPar, sd, birds, pars: pars2, bogs };
   }
 
-  const rows: PRow[] = useMemo(() => tournament.players.map(p => {
-    const rds: (RdData | null)[] = Array.from({ length: playedRounds }, (_, ri) =>
-      buildRdData(p, ri + 1)
-    );
+  /* ── Estrutura agrupada: um PRow por jogador com array de rondas ── */
+  interface PRow {
+    key: string; name: string; club: string; fed?: string;
+    hcp: number | null; esc: string;
+    rds: (RdData | null)[];
+    total: number | null; totalTP: number | null;
+    isWD: boolean; pos: number | null;
+    _rdCount: number; _fullCount: number;
+  }
+
+  const groupedRows: PRow[] = useMemo(() => tournament.players.map(p => {
+    const rds = Array.from({ length: playedRounds }, (_, ri) => buildRdData(p, ri + 1));
     const validRds = rds.filter(r => r != null) as RdData[];
-    const anyWD    = rds.some((r, ri) => r == null && !!p.roundScores?.find(rs => rs.round === ri + 1));
-    const total    = validRds.length ? validRds.reduce((s, r) => s + r.gross, 0) : null;
-    const totalTP  = validRds.length ? validRds.reduce((s, r) => s + r.toPar, 0) : null;
+    const anyWD = rds.some((r, ri) => r == null && !!p.roundScores?.find(rs => rs.round === ri + 1));
+    const total   = validRds.length ? validRds.reduce((s, r) => s + r.gross, 0) : null;
+    const totalTP = validRds.length ? validRds.reduce((s, r) => s + r.toPar, 0) : null;
     return {
       key: p.scoreId || p.name, name: p.name, club: p.club || "",
       fed: p.fedCode, hcp: p.hcpExact ?? null,
       esc: resolveEsc(p, escLookup) || tournament.escalao || "",
-      teeName: p.teeName,
       rds, total, totalTP, isWD: anyWD, pos: null,
+      _rdCount: validRds.length, _fullCount: 0,
     };
   }), [tournament, playedRounds, escLookup]);
 
-  // Ranking por total — só jogadores com TODAS as rondas disponíveis
-  const ranked = useMemo(() => {
-    // "completo" = tem dados em todas as rondas disponíveis
-    const fullCount = Math.max(0, ...rows.map(r => r.rds.filter(d => d != null).length));
+  const rankedGrouped = useMemo(() => {
+    const fullCount = Math.max(0, ...groupedRows.map(r => r._rdCount));
     const pm = new Map<string, number>();
-    const complete = rows
-      .filter(r => r.rds.filter(d => d != null).length === fullCount && r.total != null && !r.isWD)
+    const complete = groupedRows.filter(r => r._rdCount === fullCount && r.total != null && !r.isWD)
       .sort((a, b) => a.total! - b.total!);
     let cnt = 1;
     complete.forEach((r, i) => {
       if (i > 0 && r.total !== complete[i - 1].total) cnt = i + 1;
       pm.set(r.key, cnt);
     });
-    return rows.map(r => ({
-      ...r,
-      pos: pm.get(r.key) ?? null,
-      _fullCount: fullCount,
-      _rdCount: r.rds.filter(d => d != null).length,
-    }));
-  }, [rows]);
+    return groupedRows.map(r => ({ ...r, pos: pm.get(r.key) ?? null, _fullCount: fullCount }));
+  }, [groupedRows]);
 
-  function toggleSort(k: typeof sortKey) {
+  /* ── Estrutura achata: uma linha por (jogador, ronda) ── */
+  interface FlatRow {
+    key: string; playerKey: string;
+    name: string; club: string; fed?: string;
+    hcp: number | null; esc: string; teeName?: string;
+    rd: RdData; ri: number; rdLabel: string;
+    isWD: boolean; pos: number | null;
+  }
+
+  const flatRows: FlatRow[] = useMemo(() => {
+    const out: FlatRow[] = [];
+    for (const p of tournament.players) {
+      const isWD = !!p._wd;
+      for (let ri = 0; ri < playedRounds; ri++) {
+        const rd = buildRdData(p, ri + 1);
+        if (rd == null) continue; // não jogou esta ronda
+        out.push({
+          key: `${p.scoreId || p.name}_${ri}`,
+          playerKey: p.scoreId || p.name,
+          name: p.name, club: p.club || "",
+          fed: p.fedCode, hcp: p.hcpExact ?? null,
+          esc: resolveEsc(p, escLookup) || tournament.escalao || "",
+          teeName: p.teeName,
+          rd, ri, rdLabel: `R${ri + 1}`,
+          isWD, pos: null,
+        });
+      }
+    }
+    return out;
+  }, [tournament, playedRounds, escLookup]);
+
+  // Ranking por gross de cada linha individual
+  const rankedFlat = useMemo(() => {
+    const valid = [...flatRows.filter(r => !r.isWD)].sort((a, b) => a.rd.gross - b.rd.gross);
+    const pm = new Map<string, number>();
+    let cnt = 1;
+    valid.forEach((r, i) => {
+      if (i > 0 && r.rd.gross !== valid[i - 1].rd.gross) cnt = i + 1;
+      pm.set(r.key, cnt);
+    });
+    return flatRows.map(r => ({ ...r, pos: pm.get(r.key) ?? null }));
+  }, [flatRows]);
+
+  function toggleSort(k: string) {
     if (sortKey === k) setSortDir(d => d === "asc" ? "desc" : "asc");
     else { setSortKey(k); setSortDir("asc"); }
   }
 
   const sorted = useMemo(() => {
     const INF = 9999;
-    function cmp(a: typeof ranked[0], b: typeof ranked[0]) {
+    function cmp(a: FlatRow, b: FlatRow) {
+      if (sortKey === "topar")  { const d = (a.rd.toPar ?? INF) - (b.rd.toPar ?? INF); return sortDir === "asc" ? d : -d; }
+      if (sortKey === "gross")  { const d = (a.rd.gross ?? INF) - (b.rd.gross ?? INF); return sortDir === "asc" ? d : -d; }
+      if (sortKey.startsWith("h")) {
+        const h = parseInt(sortKey.slice(1));
+        const d = (a.rd.scores?.[h] ?? INF) - (b.rd.scores?.[h] ?? INF);
+        return sortDir === "asc" ? d : -d;
+      }
       switch (sortKey) {
         case "pos":  return sortDir === "asc" ? (a.pos ?? INF) - (b.pos ?? INF) : (b.pos ?? INF) - (a.pos ?? INF);
         case "name": return sortDir === "asc" ? a.name.localeCompare(b.name,"pt") : b.name.localeCompare(a.name,"pt");
@@ -1424,28 +1486,35 @@ export function AllRoundsScorecardLB({
         default: return 0;
       }
     }
-    // Completos (todas as rondas) → parciais (só algumas) → WD
-    const fullCount = ranked[0]?._fullCount ?? 0;
-    const complete  = ranked.filter(r => r._rdCount === fullCount && !r.isWD);
-    const partial   = ranked.filter(r => r._rdCount  <  fullCount && !r.isWD && r.total != null);
-    const noData    = ranked.filter(r => r.total == null && !r.isWD);
-    const wd        = ranked.filter(r => r.isWD);
-    return [...complete.sort(cmp), ...partial.sort(cmp), ...noData, ...wd];
-  }, [ranked, sortKey, sortDir]);
+    const normal = rankedFlat.filter(r => !r.isWD).sort(cmp);
+    const wd     = rankedFlat.filter(r => r.isWD);
+    return [...normal, ...wd];
+  }, [rankedFlat, sortKey, sortDir]);
 
-  // Filtro (reutiliza PlayerFilter existente)
-  const filteredKeys = useMemo(() => {
+  // Filtro — lista achata para modo independente
+  const displayed = useMemo(() => {
     const q = filter.name.toLowerCase();
-    return new Set(
-      sorted
-        .filter(r =>
-          (!q || r.name.toLowerCase().includes(q) || r.club.toLowerCase().includes(q)) &&
-          (!filter.club || r.club === filter.club)
-        )
-        .map(r => r.key)
+    return sorted.filter(r =>
+      (!q || r.name.toLowerCase().includes(q) || r.club.toLowerCase().includes(q)) &&
+      (!filter.club || r.club === filter.club)
     );
   }, [sorted, filter]);
-  const displayed = sorted.filter(r => filteredKeys.has(r.key));
+
+  // Lista agrupada filtrada para modo agrupado (contagem correcta de jogadores)
+  const gDisplayed = useMemo(() => {
+    const INF = 9999;
+    const q = filter.name.toLowerCase();
+    return [...rankedGrouped]
+      .sort((a, b) => {
+        if (a.isWD && !b.isWD) return 1;
+        if (!a.isWD && b.isWD) return -1;
+        return (a.pos ?? INF) - (b.pos ?? INF);
+      })
+      .filter(r =>
+        (!q || r.name.toLowerCase().includes(q) || r.club.toLowerCase().includes(q)) &&
+        (!filter.club || r.club === filter.club)
+      );
+  }, [rankedGrouped, filter]);
 
   const availClubs = useMemo(() => {
     const s = new Set<string>();
@@ -1494,20 +1563,37 @@ export function AllRoundsScorecardLB({
   const colsPerRound = (is9 ? 10 : 20); // 9 holes + Out [+ 9 holes + In]
   const postCols = 4; // SD 🐦 Par ■
 
-  function SHdr({ k, children, className }: { k: typeof sortKey; children: React.ReactNode; className?: string }) {
+  function SHdr({ k, children, className, style }: { k: string; children: React.ReactNode; className?: string; style?: React.CSSProperties }) {
     const active = sortKey === k;
     return (
-      <th className={"lb-sortable " + (className || "")} onClick={() => toggleSort(k)}>
-        {children}{active && <span className="sort-arrow">{sortDir === "asc" ? "▲" : "▼"}</span>}
+      <th className={"lb-sortable " + (className || "")}
+          style={{ ...style, color: active ? "var(--accent,#2563eb)" : undefined, fontWeight: active ? 700 : undefined }}
+          title={active ? (sortDir === "asc" ? "Ordenado crescente" : "Ordenado decrescente") : "Clique para ordenar"}
+          onClick={() => toggleSort(k)}>
+        {children}{active && <span style={{ fontSize: 8, marginLeft: 2 }}>{sortDir === "asc" ? "▲" : "▼"}</span>}
       </th>
     );
   }
 
   return (
     <div>
-      {/* Info + filtro */}
-      <div className="muted fs-11 mb-8 p-0-4px" style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-        <span>{displayed.length} jogadores · {playedRounds}R jogadas · Par {parTot}</span>
+      {/* Info + toggles */}
+      <div className="muted fs-11 mb-8 p-0-4px" style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+        <span>{groupMode ? gDisplayed.length : displayed.length} {groupMode ? "jogadores" : "scorecards"} · {playedRounds}R · Par {parTot}</span>
+        {/* Toggle modo */}
+        <span style={{ display: "flex", gap: 2, marginLeft: 4, border: "1px solid var(--border)", borderRadius: 8, overflow: "hidden" }}>
+          {([true, false] as const).map(g => (
+            <button key={String(g)} onClick={() => setGroupMode(g)}
+              style={{
+                fontSize: 10, padding: "2px 9px", border: "none", cursor: "pointer",
+                background: groupMode === g ? "var(--accent,#2563eb)" : "transparent",
+                color: groupMode === g ? "#fff" : "var(--text-muted)",
+                fontWeight: groupMode === g ? 700 : 400,
+              }}>
+              {g ? "Agrupado" : "Independente"}
+            </button>
+          ))}
+        </span>
         <button onClick={() => setShowSC(v => !v)} className="btn" style={{ marginLeft: "auto" }}>
           {showSC ? "Ocultar scorecard" : "Ver scorecard"}
         </button>
@@ -1565,19 +1651,27 @@ export function AllRoundsScorecardLB({
                 {Array.from({ length: postCols }, (_, i) => <td key={i} />)}
               </tr>
             )}
-            {/* Headers */}
+            {/* Headers — ± Tot e buracos clicáveis (melhor ronda de cada jogador) */}
             <tr>
               <th className="lb-pos sticky-col-0">#</th>
               <SHdr k="name" className="lb-name sticky-col-1">Jogador</SHdr>
               <SHdr k="club" className="lb-club">Clube</SHdr>
               <SHdr k="hcp"  className="lb-hcp">HCP</SHdr>
               <th className="lb-tee" style={{ fontSize: 10, color: "var(--text-muted)", fontWeight: 600 }}>Rnd</th>
-              <th className="lb-topar">±</th>
-              <th className="lb-gross">Tot</th>
+              <SHdr k="topar" className="lb-topar">±</SHdr>
+              <SHdr k="gross" className="lb-gross">Tot</SHdr>
               {showSC && (<>
-                {Array.from({ length: 9 }, (_, i) => <th key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{i + 1}</th>)}
+                {Array.from({ length: 9 }, (_, h) => (
+                  <SHdr key={h} k={`h${h}`} className={"lb-hole" + (h === 0 ? " lb-hole-first" : "")} style={{ fontSize: 10 }}>
+                    {h + 1}
+                  </SHdr>
+                ))}
                 <th className="lb-halftot">{is9 ? "Tot" : "Out"}</th>
-                {!is9 && Array.from({ length: 9 }, (_, i) => <th key={i+9} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{i + 10}</th>)}
+                {!is9 && Array.from({ length: 9 }, (_, h) => (
+                  <SHdr key={h + 9} k={`h${h + 9}`} className={"lb-hole" + (h === 0 ? " lb-hole-first" : "")} style={{ fontSize: 10 }}>
+                    {h + 10}
+                  </SHdr>
+                ))}
                 {!is9 && <th className="lb-halftot">In</th>}
               </>)}
               <th className="lb-sd">SD</th>
@@ -1587,104 +1681,86 @@ export function AllRoundsScorecardLB({
             </tr>
           </thead>
           <tbody>
-            {displayed.map((row, playerIdx) => {
-              const prevPos = playerIdx > 0 ? displayed[playerIdx - 1].pos : undefined;
-              const showPos = row.pos !== prevPos || row.isWD;
-              const medal   = row.pos != null && row.pos <= 3 ? medals[row.pos - 1] : null;
-              const posStr  = row.isWD ? "WD" : row.pos != null ? (medal ?? String(row.pos)) : "–";
-              // Separador visual entre jogadores (linha tênue)
-              const isFirst = playerIdx === 0;
-              const playerBg = playerIdx % 2 === 0 ? undefined : "var(--bg-muted, #f8fafc)";
-
-              return (
-                <React.Fragment key={row.key}>
-                  {/* Uma linha por ronda */}
-                  {row.rds.map((rd, ri) => {
-                    const isFirstRd  = ri === 0;
-                    const isLastRd   = ri === row.rds.length - 1;
-                    const rdLabel    = RD_LABELS[ri] ?? `R${ri + 1}`;
-                    const rdBg       = isFirstRd ? playerBg : playerBg
-                      ? "color-mix(in srgb, var(--bg-muted) 60%, transparent)"
-                      : "var(--bg-muted-alt, rgba(0,0,0,0.02))";
-                    const borderTop  = isFirstRd && !isFirst
-                      ? "2px solid var(--border)"
-                      : undefined;
-
+            {groupMode
+              /* ── MODO AGRUPADO: R1+R2 do mesmo jogador juntos ── */
+              ? gDisplayed.map((row, playerIdx) => {
+                  const prevPos = playerIdx > 0 ? gDisplayed[playerIdx - 1].pos : undefined;
+                    const showPos = row.pos !== prevPos || row.isWD;
+                    const medal   = row.pos != null && row.pos <= 3 ? medals[row.pos - 1] : null;
+                    const posStr  = row.isWD ? "WD" : row.pos != null ? (medal ?? String(row.pos)) : "–";
+                    const playerBg = playerIdx % 2 === 0 ? undefined : "var(--bg-muted,#f8fafc)";
+                    const isFirst  = playerIdx === 0;
                     return (
-                      <tr key={ri} style={{
-                        background: rdBg,
-                        borderTop,
-                      }}>
-                        {/* # — só na primeira ronda */}
-                        <td className="lb-pos sticky-col-0" style={{ background: rdBg, borderTop }}>
-                          {isFirstRd ? (showPos ? posStr : "") : ""}
-                        </td>
-                        {/* Nome — só na primeira ronda; total acumulado por baixo */}
-                        <td className="lb-name sticky-col-1" style={{ background: rdBg, fontWeight: isFirstRd ? 600 : 400, borderTop }}>
-                          {isFirstRd ? (<>
-                            {row.fed
-                              ? <a href={`/jogadores/${row.fed}`} target="_blank" rel="noopener noreferrer"
-                                   style={{ color: "inherit", textDecoration: "none" }}>{abreviarNome(row.name)}</a>
-                              : abreviarNome(row.name)}
-                            {/* Total acumulado: gross em destaque, ±par em muted — só se ≥2 rondas */}
-                            {row.total != null && row.rds.filter(r => r != null).length >= 2 && (
-                              <div style={{ display: "flex", alignItems: "baseline", gap: 4, marginTop: 2, lineHeight: 1 }}>
-                                <span style={{ fontSize: 12, fontWeight: 700, color: "var(--text)" }}>
-                                  {row.total}
-                                </span>
-                                <span style={{ fontSize: 10, color: "var(--text-muted)", fontWeight: 500 }}>
-                                  ({row.totalTP != null ? fmtToPar(row.totalTP) : "–"})
-                                </span>
-                              </div>
-                            )}
-                          </>) : <span className="muted fs-10" style={{ paddingLeft: 8 }}>↳</span>
-                          }
-                        </td>
-                        {/* Clube — só na primeira ronda */}
-                        <td className="lb-club" style={{ borderTop }}>
-                          {isFirstRd ? (row.club || "–") : ""}
-                        </td>
-                        {/* HCP — só na primeira ronda */}
-                        <td className="lb-hcp" style={{ borderTop }}>
-                          {isFirstRd ? (row.hcp != null ? row.hcp.toFixed(1) : "–") : ""}
-                        </td>
-                        {/* Label da ronda */}
-                        <td className="lb-tee" style={{ fontWeight: 600, fontSize: 10, color: "var(--text-muted)", borderTop }}>
-                          {rdLabel}
-                        </td>
-                        {/* ±Par e Total */}
-                        {rd ? (<>
-                          <td className="lb-topar" style={{ color: rd.toPar < 0 ? "var(--color-good,#16a34a)" : rd.toPar > 0 ? "var(--color-danger,#dc2626)" : "var(--text)", borderTop }}>
-                            {fmtToPar(rd.toPar)}
-                          </td>
-                          <td className="lb-gross" style={{ borderTop }}>{rd.gross}</td>
-                          {showSC
-                            ? <ScoreCells scores={rd.scores} pars={par} />
-                            : null}
-                          <td className="lb-sd" style={{ borderTop }}>
-                            {rd.sd != null
-                              ? <SDPill sd={rd.sd} source={null} hcp={row.hcp} />
-                              : <span className="muted">–</span>}
-                          </td>
-                          <td className="lb-bird" style={{ borderTop }}>{rd.birds || ""}</td>
-                          <td className="lb-par-stat" style={{ borderTop }}>{rd.pars || ""}</td>
-                          <td className="lb-bog" style={{ borderTop }}>{rd.bogs || ""}</td>
-                        </>) : (<>
-                          <td className="lb-topar muted" style={{ borderTop }}>–</td>
-                          <td className="lb-gross muted" style={{ borderTop }}>–</td>
-                          {showSC ? <EmptyCells /> : null}
-                          <td className="lb-sd" style={{ borderTop }} />
-                          <td className="lb-bird" style={{ borderTop }} />
-                          <td className="lb-par-stat" style={{ borderTop }} />
-                          <td className="lb-bog" style={{ borderTop }} />
-                        </>)}
-                      </tr>
+                      <React.Fragment key={row.key}>
+                        {row.rds.map((rd, ri) => {
+                          if (rd == null) return null;
+                          const firstRi = row.rds.findIndex(r => r != null);
+                          const isFirstRd = ri === firstRi;
+                          const rdBg = isFirstRd ? playerBg
+                            : playerBg ? "color-mix(in srgb,var(--bg-muted) 60%,transparent)"
+                            : "var(--bg-muted-alt,rgba(0,0,0,.02))";
+                          const bTop = isFirstRd && !isFirst ? "2px solid var(--border)" : undefined;
+                          return (
+                            <tr key={ri} style={{ background: rdBg, borderTop: bTop }}>
+                              <td className="lb-pos sticky-col-0" style={{ background: rdBg, borderTop: bTop }}>
+                                {isFirstRd ? (showPos ? posStr : "") : ""}
+                              </td>
+                              <td className="lb-name sticky-col-1" style={{ background: rdBg, fontWeight: isFirstRd ? 600 : 400, borderTop: bTop }}>
+                                {isFirstRd
+                                  ? (row.fed
+                                      ? <a href={`/jogadores/${row.fed}`} target="_blank" rel="noopener noreferrer"
+                                           style={{ color:"inherit", textDecoration:"none" }}>{abreviarNome(row.name)}</a>
+                                      : abreviarNome(row.name))
+                                  : <span className="muted fs-10" style={{ paddingLeft: 8 }}>↳</span>}
+                              </td>
+                              <td className="lb-club" style={{ borderTop: bTop, color: isFirstRd ? undefined : "var(--text-muted)", fontSize: isFirstRd ? undefined : 11 }}>{row.club || "–"}</td>
+                              <td className="lb-hcp" style={{ borderTop: bTop, color: isFirstRd ? undefined : "var(--text-muted)" }}>{row.hcp != null ? row.hcp.toFixed(1) : "–"}</td>
+                              <td className="lb-tee" style={{ fontWeight:600, fontSize:10, color:"var(--text-muted)", borderTop: bTop }}>{`R${ri+1}`}</td>
+                              <td className="lb-topar" style={{ color: rd.toPar<0?"var(--color-good,#16a34a)":rd.toPar>0?"var(--color-danger,#dc2626)":"var(--text)", borderTop: bTop }}>{fmtToPar(rd.toPar)}</td>
+                              <td className="lb-gross" style={{ borderTop: bTop }}>{rd.gross}</td>
+                              {showSC && <ScoreCells scores={rd.scores} pars={par} />}
+                              <td className="lb-sd" style={{ borderTop: bTop }}>{rd.sd!=null?<SDPill sd={rd.sd} source={null} hcp={row.hcp}/>:<span className="muted">–</span>}</td>
+                              <td className="lb-bird" style={{ borderTop: bTop }}>{rd.birds||""}</td>
+                              <td className="lb-par-stat" style={{ borderTop: bTop }}>{rd.pars||""}</td>
+                              <td className="lb-bog" style={{ borderTop: bTop }}>{rd.bogs||""}</td>
+                            </tr>
+                          );
+                        })}
+                      </React.Fragment>
                     );
-                  })}
-
-                </React.Fragment>
-              );
-            })}
+                  })
+              /* ── MODO INDEPENDENTE: uma linha por ronda, ordenável ── */
+              : displayed.map((row, idx) => {
+                  const prevPos = idx > 0 ? displayed[idx - 1].pos : undefined;
+                  const showPos = row.pos !== prevPos || row.isWD;
+                  const medal   = row.pos != null && row.pos <= 3 ? medals[row.pos - 1] : null;
+                  const posStr  = row.isWD ? "WD" : row.pos != null ? (medal ?? String(row.pos)) : "–";
+                  const bg      = idx % 2 === 0 ? undefined : "var(--bg-muted,#f8fafc)";
+                  const bTop    = idx > 0 ? "1px solid var(--border-light,#f1f5f9)" : undefined;
+                  const rd      = row.rd;
+                  return (
+                    <tr key={row.key} style={{ background: bg, borderTop: bTop }}>
+                      <td className="lb-pos sticky-col-0" style={{ background: bg }}>{showPos ? posStr : ""}</td>
+                      <td className="lb-name sticky-col-1" style={{ background: bg, fontWeight: 600 }}>
+                        {row.fed
+                          ? <a href={`/jogadores/${row.fed}`} target="_blank" rel="noopener noreferrer"
+                               style={{ color:"inherit", textDecoration:"none" }}>{abreviarNome(row.name)}</a>
+                          : abreviarNome(row.name)}
+                      </td>
+                      <td className="lb-club">{row.club || "–"}</td>
+                      <td className="lb-hcp">{row.hcp != null ? row.hcp.toFixed(1) : "–"}</td>
+                      <td className="lb-tee" style={{ fontWeight:600, fontSize:10, color:"var(--text-muted)" }}>{row.rdLabel}</td>
+                      <td className="lb-topar" style={{ color: rd.toPar<0?"var(--color-good,#16a34a)":rd.toPar>0?"var(--color-danger,#dc2626)":"var(--text)" }}>{fmtToPar(rd.toPar)}</td>
+                      <td className="lb-gross">{rd.gross}</td>
+                      {showSC && <ScoreCells scores={rd.scores} pars={par} />}
+                      <td className="lb-sd">{rd.sd!=null?<SDPill sd={rd.sd} source={null} hcp={row.hcp}/>:<span className="muted">–</span>}</td>
+                      <td className="lb-bird">{rd.birds||""}</td>
+                      <td className="lb-par-stat">{rd.pars||""}</td>
+                      <td className="lb-bog">{rd.bogs||""}</td>
+                    </tr>
+                  );
+                })
+            }
           </tbody>
         </table>
       </div>
@@ -1697,10 +1773,10 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
   const isMulti = (tournament.rounds || 1) > 1 && tournament.players.some(p => (p.roundScores?.length ?? 0) > 1);
   const nRounds = tournament.rounds || 1;
 
-  // Expanded list: R1, R2, ..., Acumulado
+  // Expanded list: R1, R2, ..., Resumo
   const expanded = useMemo(() => expandMultiRound(tournament), [tournament]);
 
-  // Tab labels
+  // Tab labels: R1 · R2 · R3 · Resumo · 📋 Scorecards
   const COMBINED_TAB = "📋 Scorecards";
   const tabs = useMemo(() => {
     if (!isMulti) return ["Scorecard"];
@@ -1715,10 +1791,9 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
     setTab(0);
   }
 
-  const curT = isMulti ? expanded[Math.min(tab, expanded.length - 1)] : tournament;
-  const curLabel: string = isMulti ? tabs[tab] : "Scorecard";
-  const isAcc      = isMulti && (curT as any)?._isTotal;
-  const isCombined = isMulti && curLabel === COMBINED_TAB;
+  const curT       = isMulti ? expanded[Math.min(tab, expanded.length - 1)] : tournament;
+  const isAcc      = isMulti && !!(curT as any)?._isTotal;
+  const isCombined = isMulti && tabs[tab] === COMBINED_TAB;
 
   // Info about tournament
   const refPlayer = tournament.players[0];
@@ -2125,7 +2200,7 @@ function PJARankingView({
                 </>
               ),
             }))}
-            summaryGroupTh={<th className="cs-grp" colSpan={2} className="u-fw8-fs12">Ranking</th>}
+            summaryGroupTh={<th className="cs-grp u-fw8-fs12" colSpan={2}>Ranking</th>}
             summarySubHeaders={<>
               <CSortTh k="voltas" s={sortKey} d={sortDir} on={handleSort} className="cs-s-games cs-grp">Voltas</CSortTh>
               <CSortTh k="total"  s={sortKey} d={sortDir} on={handleSort} className="cs-s-pts cs-col" style={{ color: "var(--color-warn-dark)", fontWeight: 800 }}>Total</CSortTh>
