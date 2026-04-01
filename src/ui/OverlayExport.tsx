@@ -41,7 +41,8 @@ const vpC  = (v: number) => { if (v <= -2) return "#d4a017"; if (v === -1) retur
 const vpCd = (v: number) => { if (v < 0) return "#16a34a"; if (v === 0) return "#888"; return "#dc2626"; };
 
 function hexToRgba(hex: string, a: number) {
-  const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+  const safe = /^#[0-9a-fA-F]{6}$/.test(hex) ? hex : "#000000";
+  const r = parseInt(safe.slice(1,3),16), g = parseInt(safe.slice(3,5),16), b = parseInt(safe.slice(5,7),16);
   return `rgba(${r},${g},${b},${a})`;
 }
 
@@ -748,15 +749,23 @@ function V19({ d, v, s, bg, tc="white", tc3 }: P) {
           {v.round && <div style={{ fontFamily:II, fontSize:9, fontWeight:700, letterSpacing:2, color:tc3 }}>ROUND {d.round}</div>}
         </div>
       )}
-      {v.holeScores && is18 && (
+      {v.holeScores && (
         <div style={{ display:"flex", justifyContent:"center", padding:"4px 8px 6px" }}>
-          {[{off:0,l:"FRONT",sc:s.sF},{off:9,l:"BACK",sc:s.sB}].map(({off,l,sc:sc_},ci) => (
-            <div key={off} style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:3, borderRight:ci===0?"2px solid rgba(220,38,38,.35)":"none", paddingRight:ci===0?8:0, paddingLeft:ci===1?8:0 }}>
-              {d.scores.slice(off,off+9).map((sc,i) => <SC key={i} sc={sc} par={d.par[off+i]} sz={32} />)}
-              <div style={{ fontFamily:II, fontSize:9, fontWeight:700, letterSpacing:2, color:tc3, marginTop:4 }}>{l}</div>
-              <div style={{ fontSize:22, fontWeight:700 }}>{sc_}</div>
+          {is18 ? (
+            [{off:0,l:"FRONT",sc:s.sF},{off:9,l:"BACK",sc:s.sB}].map(({off,l,sc:sc_},ci) => (
+              <div key={off} style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:3, borderRight:ci===0?"2px solid rgba(220,38,38,.35)":"none", paddingRight:ci===0?8:0, paddingLeft:ci===1?8:0 }}>
+                {d.scores.slice(off,off+9).map((sc,i) => <SC key={i} sc={sc} par={d.par[off+i]} sz={32} />)}
+                <div style={{ fontFamily:II, fontSize:9, fontWeight:700, letterSpacing:2, color:tc3, marginTop:4 }}>{l}</div>
+                <div style={{ fontSize:22, fontWeight:700 }}>{sc_}</div>
+              </div>
+            ))
+          ) : (
+            <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:3 }}>
+              {d.scores.map((sc,i) => <SC key={i} sc={sc} par={d.par[i]} sz={32} />)}
+              <div style={{ fontFamily:II, fontSize:9, fontWeight:700, letterSpacing:2, color:tc3, marginTop:4 }}>9H</div>
+              <div style={{ fontSize:22, fontWeight:700 }}>{s.sT}</div>
             </div>
-          ))}
+          )}
         </div>
       )}
       <div style={{ background:"rgba(255,255,255,.95)", padding:"5px 10px", textAlign:"center" }}>
@@ -786,15 +795,23 @@ function V20({ d, v, s, bg, tc="white", tc3 }: P) {
           {v.course&&d.course && <div style={{ fontFamily:II, fontSize:10, fontWeight:500, color:tc3 }}>{d.course}</div>}
         </div>
       )}
-      {v.holeScores && is18 && (
+      {v.holeScores && (
         <div style={{ display:"flex", justifyContent:"center", padding:"4px 8px 8px" }}>
-          {[{off:0,l:"FRONT",sc:s.sF},{off:9,l:"BACK",sc:s.sB}].map(({off,l,sc:sc_},ci) => (
-            <div key={off} style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:2, borderRight:ci===0?"2px solid rgba(74,222,128,.25)":"none", paddingRight:ci===0?8:0, paddingLeft:ci===1?8:0 }}>
-              {d.scores.slice(off,off+9).map((sc,i) => <SC key={i} sc={sc} par={d.par[off+i]} sz={30} />)}
-              <div style={{ fontFamily:II, fontSize:9, fontWeight:700, letterSpacing:2, color:"#4ade80", marginTop:5 }}>{l}</div>
-              <div style={{ fontSize:24, lineHeight:1 }}>{sc_}</div>
+          {is18 ? (
+            [{off:0,l:"FRONT",sc:s.sF},{off:9,l:"BACK",sc:s.sB}].map(({off,l,sc:sc_},ci) => (
+              <div key={off} style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:2, borderRight:ci===0?"2px solid rgba(74,222,128,.25)":"none", paddingRight:ci===0?8:0, paddingLeft:ci===1?8:0 }}>
+                {d.scores.slice(off,off+9).map((sc,i) => <SC key={i} sc={sc} par={d.par[off+i]} sz={30} />)}
+                <div style={{ fontFamily:II, fontSize:9, fontWeight:700, letterSpacing:2, color:"#4ade80", marginTop:5 }}>{l}</div>
+                <div style={{ fontSize:24, lineHeight:1 }}>{sc_}</div>
+              </div>
+            ))
+          ) : (
+            <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:2 }}>
+              {d.scores.map((sc,i) => <SC key={i} sc={sc} par={d.par[i]} sz={30} />)}
+              <div style={{ fontFamily:II, fontSize:9, fontWeight:700, letterSpacing:2, color:"#4ade80", marginTop:5 }}>9H</div>
+              <div style={{ fontSize:24, lineHeight:1 }}>{s.sT}</div>
             </div>
-          ))}
+          )}
         </div>
       )}
       <div style={{ background:"rgba(255,255,255,.07)", padding:"5px 10px", textAlign:"center" }}>

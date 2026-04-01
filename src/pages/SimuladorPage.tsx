@@ -618,7 +618,10 @@ function AgsSection({
   const [customSIs, setCustomSIs] = useState<Record<number, string>>({});
   const isSynthetic = !holes?.length;
 
-  const courseHcp = hi !== null ? Math.round(calcCourseHcp(is9h ? hi / 2 : hi, slope, cr, par)) : null;
+  const courseHcp = useMemo(
+    () => hi !== null ? Math.round(calcCourseHcp(is9h ? hi / 2 : hi, slope, cr, par)) : null,
+    [hi, is9h, slope, cr, par],
+  );
   const hasAgs = courseHcp !== null;
 
   const fieldHoles = useMemo(() => {
@@ -648,7 +651,6 @@ function AgsSection({
   }, [holes, is9h, holesMode, nHoles, par, customPars, customSIs]);
 
   const holeData = useMemo(() => {
-    if (!fieldHoles) return null;
     if (hasAgs) return calcStrokesPerHole(fieldHoles, courseHcp!);
     return fieldHoles.map(h => ({ hole: h.hole, par: h.par!, si: h.si!, strokes: 0, maxScore: 0 }));
   }, [fieldHoles, courseHcp, hasAgs]);
@@ -689,10 +691,10 @@ function AgsSection({
     };
   }, [computed, cr, slope, pcc, hasAgs, is9h, hi]);
 
-  const setScore = (hole: number, val: string) => setScores(prev => ({ ...prev, [hole]: val }));
-  const setCustomPar = (hole: number, val: string) => setCustomPars(prev => ({ ...prev, [hole]: val }));
-  const setCustomSI = (hole: number, val: string) => setCustomSIs(prev => ({ ...prev, [hole]: val }));
-  const clearAll = () => { setScores({}); if (isSynthetic) { setCustomPars({}); setCustomSIs({}); } };
+  const setScore = useCallback((hole: number, val: string) => setScores(prev => ({ ...prev, [hole]: val })), []);
+  const setCustomPar = useCallback((hole: number, val: string) => setCustomPars(prev => ({ ...prev, [hole]: val })), []);
+  const setCustomSI = useCallback((hole: number, val: string) => setCustomSIs(prev => ({ ...prev, [hole]: val })), []);
+  const clearAll = useCallback(() => { setScores({}); if (isSynthetic) { setCustomPars({}); setCustomSIs({}); } }, [isSynthetic]);
 
   /* Always report overlay data (par/si/current scores) */
   React.useEffect(() => {
