@@ -122,20 +122,6 @@ const marcoSimoneTees: Tee[] = [
   },
 ];
 
-const marcoSimone: Course = {
-  courseKey: "away-marco-simone",
-  master: {
-    courseId: "away-marco-simone",
-    name: "Marco Simone Golf & Country Club",
-    country: "Itália",
-    links: {
-      fpg: null,
-      scorecards: "https://golfmarcosimone.com/the-holes/",
-    },
-    tees: marcoSimoneTees,
-  },
-};
-
 /* Marco Simone — tees USKids (distâncias oficiais do torneio) */
 // CR/Slope: "US Kids 2025 Boys 9-11 & Girls 10-14" — ReportTabellaEgaWHS_us_kids.pdf
 // Gialli (CR 65.5 / SR 114) ≈ Boys 11/10; Verdi (CR 63.1 / SR 108) ≈ Boys 9
@@ -175,19 +161,27 @@ const marcoSimoneUSKidsTees: Tee[] = [
   },
 ];
 
-const marcoSimoneUSKids: Course = {
-  courseKey: "away-marco-simone-uskids",
+const marcoSimone: Course = {
+  courseKey: "away-marco-simone",
   master: {
-    courseId: "away-marco-simone-uskids",
-    name: "Marco Simone Golf & Country Club (USKids)",
+    courseId: "away-marco-simone",
+    name: "Marco Simone Golf & Country Club",
     country: "Itália",
     links: {
       fpg: null,
-      scorecards: "https://tournaments.uskidsgolf.com/node/514018",
+      scorecards: "https://golfmarcosimone.com/the-holes/",
+      extra: [
+        {
+          label: "US Kids Golf – Resultados",
+          url: "https://tournaments.uskidsgolf.com/node/514018",
+        },
+      ],
     },
-    tees: marcoSimoneUSKidsTees,
+    tees: [...marcoSimoneTees, ...marcoSimoneUSKidsTees],
   },
 };
+
+
 
 /* ─────────────────────────────────────────────────────────────────────────
    Doral Junior Golf Classic — First Tee Miami (ftm_doral_*.json)
@@ -449,7 +443,6 @@ const leToquet_LaMer: Course = {
 export function getExtraCourses(): Course[] {
   return [
     marcoSimone,
-    marcoSimoneUSKids,
     doralRedTiger,
     doralGoldenPalm,
     doralSilverFox,

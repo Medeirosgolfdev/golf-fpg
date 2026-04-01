@@ -4,7 +4,6 @@ import type { Course, Tee, SexFilter } from "../data/types";
 import { useAppContext } from "../context/AppContext";
 import TeeBadge from "../ui/TeeBadge";
 import PillBadge from "../ui/PillBadge";
-import PlayerLink from "../ui/PlayerLink";
 import { teeCanonicalLabel, teeGroupHex } from "../utils/teeColors";
 import { fmt, fmtCR, norm, titleCase, sumRange } from "../utils/format";
 import { fixMojibake } from "../utils/fixEncoding";
@@ -43,12 +42,18 @@ const COUNTRY_FLAGS: Record<string, string> = {
   "hungria": "🇭🇺", "austria": "🇦🇹", "bulgaria": "🇧🇬",
   "estonia": "🇪🇪", "ucrania": "🇺🇦", "islandia": "🇮🇸",
   "canada": "🇨🇦", "porto rico": "🇵🇷",
+  "pais de gales": "🏴󠁧󠁢󠁷󠁬󠁳󠁿",
   "rep dominicana": "🇩🇴",
 };
 
 function normalizeCountryKey(raw: string): string {
   const s = fixMojibake(raw);
-  return s.trim().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  return s.trim().normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function resolveFlag(c: Course): string {
@@ -228,7 +233,7 @@ function RatingsTable({ tees }: { tees: Tee[] }) {
 }
 /* ——— Componente: Quem jogou neste campo ——— */
 
-function CoursePlayersSection({ course, onSelectPlayer }: { course: Course; onSelectPlayer: (nfed: string) => void }) {
+function CoursePlayersSection({ course }: { course: Course }) {
   const { players } = useAppContext();
 
   const entries = useMemo(() => {
@@ -256,7 +261,14 @@ function CoursePlayersSection({ course, onSelectPlayer }: { course: Course; onSe
       <div className="course-players-list">
         {entries.map(({ nfed, name, date }) => (
           <div key={nfed} className="course-player-row">
-            <PlayerLink fed={nfed} name={name} onSelect={onSelectPlayer} />
+            <a
+              href={`/jogadores/${nfed}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="tourn-pname tourn-pname-link"
+            >
+              {name}
+            </a>
             {date && <span className="course-player-date muted">{date}</span>}
           </div>
         ))}
@@ -540,6 +552,14 @@ export default function CamposPage() {
                         </a>
                       </>
                     )}
+                    {selected.master.links?.extra?.map((lnk) => (
+                      <span key={lnk.url}>
+                        {" · "}
+                        <a href={lnk.url} target="_blank" rel="noreferrer" className="detail-link">
+                          {lnk.label} ↗
+                        </a>
+                      </span>
+                    ))}
                   </div>
                 </div>
                 <div className="detail-actions">

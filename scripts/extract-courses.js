@@ -82,7 +82,7 @@ if (fs.existsSync(masterPath)) {
 
 /* ── 2. Carregar course-aliases.json ── */
 
-let aliasMap = {}, nameOverridesMap = {}, blackSet = new Set(), courseKeyCountryMap = {};
+let aliasMap = {}, nameOverridesMap = {}, blackSet = new Set(), courseKeyCountryMap = {}, extraLinksMap = {};
 
 if (fs.existsSync(aliasPath)) {
   try {
@@ -105,6 +105,9 @@ if (fs.existsSync(aliasPath)) {
     // countryMap: courseKey → país (pesquisado e mantido manualmente)
     courseKeyCountryMap = ad.countryMap || {};
 
+    // extraLinks: courseKey → [{label, url}] — links adicionais configurados manualmente
+    extraLinksMap = ad.extraLinks || {};
+
     const aliasCount = Object.keys(aliasMap).filter(k => !k.startsWith("_comment")).length;
     console.log(`  Aliases: ${aliasCount} · PT variants: ${ptCount} · Blacklist: ${blackSet.size} · nameOverrides: ${Object.keys(nameOverridesMap).length}`);
   } catch (e) {
@@ -124,6 +127,11 @@ function resolveAlias(n, maxHops = 8) {
     const next = aliasMap[cur];
     if (!next || next === cur) break;
     cur = next;
+  }
+  // Se não resolveu, tentar sem anos (ex: "marco simone invitational 2026" → "marco simone invitational")
+  if (cur === n) {
+    const stripped = n.replace(/\b20\d{2}\b/g, "").replace(/\s+/g, " ").trim();
+    if (stripped !== n) return resolveAlias(stripped, maxHops);
   }
   return cur;
 }
@@ -472,7 +480,11 @@ for (const [courseKey, { name, country, tees }] of courseMap) {
       courseId: courseKey,
       name,
       ...(country  ? { country }  : {}),
-      links: { fpg: null, scorecards: null },
+      links: {
+        fpg: null,
+        scorecards: null,
+        ...(extraLinksMap[courseKey]?.length ? { extra: extraLinksMap[courseKey] } : {}),
+      },
       tees: teeArr,
       ...(_players ? { _players } : {}),
     },

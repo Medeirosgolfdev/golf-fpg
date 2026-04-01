@@ -52,9 +52,15 @@ export type Tee = {
   distances: Distances;
 };
 
+export type ExtraLink = {
+  label: string;
+  url: string;
+};
+
 export type CourseLinks = {
   fpg: string | null;
   scorecards: string | null;
+  extra?: ExtraLink[];   // links adicionais (ex: página USKIDS, resultados, etc.)
 };
 
 export type CourseMaster = {
