@@ -577,16 +577,6 @@ function DrivePointsTable() {
         </div>
       )}
     </div>
-
-      {/* Ranking PJA — placeholder */}
-      {navMode === "ranking-pja" && (
-        <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 12, color: "var(--text-muted)", padding: 40 }}>
-          <div style={{ fontSize: 40 }}>📊</div>
-          <div style={{ fontSize: 16, fontWeight: 700, color: "var(--text)" }}>Ranking PJA</div>
-          <div style={{ fontSize: 13, textAlign: "center", maxWidth: 320 }}>Em desenvolvimento — pontuação acumulada dos atletas PJA nos torneios Drive.</div>
-        </div>
-      )}
-    </div>
   );
 }
 
@@ -2834,6 +2824,15 @@ function DriveContent() {
             )}
 
           </div>
+        </div>
+      )}
+
+      {/* Ranking PJA — placeholder */}
+      {navMode === "ranking-pja" && (
+        <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 12, color: "var(--text-muted)", padding: 40 }}>
+          <div style={{ fontSize: 40 }}>📊</div>
+          <div style={{ fontSize: 16, fontWeight: 700, color: "var(--text)" }}>Ranking PJA</div>
+          <div style={{ fontSize: 13, textAlign: "center", maxWidth: 320 }}>Em desenvolvimento — pontuação acumulada dos atletas PJA nos torneios Drive.</div>
         </div>
       )}
 
