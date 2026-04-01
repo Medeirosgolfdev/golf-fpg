@@ -63,6 +63,21 @@ export default function NavBar() {
     document.title = TAB_TITLES[tab] ?? "Golf Junior";
   }, [tab]);
 
+  // ── Auto-scroll para a tab activa (importante em mobile) ─────────
+  useEffect(() => {
+    const nav = navRef.current;
+    if (!nav) return;
+    const active = nav.querySelector<HTMLElement>(".nav-btn.active");
+    if (!active) return;
+    // Centrar a tab activa no scroll da nav
+    const navLeft = nav.scrollLeft;
+    const navWidth = nav.offsetWidth;
+    const btnLeft = active.offsetLeft;
+    const btnWidth = active.offsetWidth;
+    const target = btnLeft - navWidth / 2 + btnWidth / 2;
+    nav.scrollTo({ left: target, behavior: "smooth" });
+  }, [tab]);
+
   const go = (path: string) => navigate(path);
 
   // ── Drag-to-scroll na nav ──────────────────────────────────────

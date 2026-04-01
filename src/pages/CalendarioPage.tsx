@@ -16,8 +16,8 @@
 import { useState, useRef, useEffect, useMemo } from "react";
 import type { PlayersDb } from "../data/types";
 import { useAppContext } from "../context/AppContext";
-import { useIsMobile } from "../hooks/useIsMobile";
 import { isCalUnlocked } from "../utils/authConstants";
+import { useIsMobile } from "../hooks/useIsMobile";
 import { clickableA11y } from "../utils/a11y";
 import { norm } from "../utils/format";
 import { MONTHS_PT as MONTHS_SHORT } from "../utils/format";
@@ -494,7 +494,6 @@ function ListView({ events, onSelect }: { events: CalEvent[]; onSelect: (e: CalE
   const grouped = useMemo(() => {
     const m = new Map<number, CalEvent[]>();
     for (const e of events) { const k = e.date.getMonth(); if (!m.has(k)) m.set(k, []); m.get(k)!.push(e); }
-    // Começa no mês actual (ou próximo futuro), passados no fim
     const allEntries = [...m.entries()].sort((a, b) => a[0] - b[0]);
     const curMonth = today.getMonth();
     const future = allEntries.filter(([k]) => k >= curMonth);
@@ -502,7 +501,6 @@ function ListView({ events, onSelect }: { events: CalEvent[]; onSelect: (e: CalE
     return [...future, ...past];
   }, [events]);
 
-  // Scroll automático para o mês actual quando a vista abre
   useEffect(() => {
     todayMonthRef.current?.scrollIntoView({ behavior: "instant", block: "start" });
   }, []);
@@ -533,8 +531,8 @@ function ListView({ events, onSelect }: { events: CalEvent[]; onSelect: (e: CalE
                   onMouseEnter={ev => (ev.currentTarget.style.background = hl ? `${hl.bg}30` : "var(--bg-hover)")}
                   onMouseLeave={ev => (ev.currentTarget.style.background = hl ? `${hl.bg}18` : "transparent")}>
                   <div className="col-w42 ta-c flex-shrink-0">
-                    <div className="uppercase fw-500 fs-10" style={{ color: hl ? hl.border : "var(--text-3)" }}>{DAY_NAMES[e.date.getDay()]}</div>
-                    <div className="fw-600 fs-18" style={{ color: hl ? hl.border : "var(--text)", lineHeight: 1.2 }}>{e.date.getDate()}</div>
+ <div className="uppercase fw-500 fs-10" style={{ color: hl ? hl.border : "var(--text-3)" }}>{DAY_NAMES[e.date.getDay()]}</div>
+ <div className="fw-600 fs-18" style={{ color: hl ? hl.border : "var(--text)", lineHeight: 1.2 }}>{e.date.getDate()}</div>
                   </div>
                   <div style={{ width: 4, alignSelf: "stretch", borderRadius: "var(--radius-xs)",
                     background: hl ? hl.bg : c, flexShrink: 0 }} />
@@ -586,13 +584,11 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
   const [selectedEvent, setSelectedEvent] = useState<CalEvent | null>(null);
   const [viewMode, setViewMode] = useState<ViewMode>("month");
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-
-  // Por defeito: todos os calendários activos EXCEPTO aniversários não-PJA
+  // Por defeito: todos activos EXCEPTO aniversários não-PJA
   const BDAY_IDS_OFF = ["bday_sub10","bday_sub12","bday_sub14","bday_sub16","bday_sub18","bday_outros"];
   const [enabledCals, setEnabledCals] = useState<Set<string>>(
     () => new Set(CALENDARS.map(c => c.id).filter(id => !BDAY_IDS_OFF.includes(id)))
   );
-
   const [expandedCal, setExpandedCal] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const isMobile = useIsMobile();
@@ -804,6 +800,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
 
       {/* ── Main ── */}
  <div className="flex-1 d-flex flex-col overflow-hidden">
+        {/* Cabeçalho em 2 linhas para mobile */}
         <div style={{ borderBottom: "1px solid var(--border-light)", flexShrink: 0 }}>
           {/* Linha 1: toggle + título + Hoje + pesquisa + Mês/Lista */}
           <div style={{ display: "flex", alignItems: "center", padding: "8px 12px", gap: 8, flexWrap: "wrap" }}>
@@ -814,55 +811,57 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
             <button onClick={goToday} className="p p-filter" style={{ opacity: 1, flexShrink: 0 }}>
               Hoje
             </button>
-            {/* Search */}
-            <div ref={searchRef} style={{ position: "relative", flex: "1 1 120px", minWidth: 100, maxWidth: 220 }}>
-              <input
-                value={searchQ}
-                onChange={e => { setSearchQ(e.target.value); setSearchOpen(true); }}
-                onFocus={() => searchQ.length >= 2 && setSearchOpen(true)}
-                placeholder="Pesquisar…"
-                style={{
-                  width: "100%", padding: "5px 8px 5px 26px", border: "1px solid var(--border)",
-                  borderRadius: "var(--radius)", fontSize: 11, fontFamily: "inherit",
-                  background: "var(--bg-card)", color: "var(--text)", outline: "none",
-                }}
-                onKeyDown={e => { if (e.key === "Escape") { setSearchOpen(false); setSearchQ(""); } }}
-              />
-              <span style={{ position: "absolute", left: 8, top: "50%", transform: "translateY(-50%)",
-                fontSize: 12, color: "var(--text-muted)", pointerEvents: "none" }}>🔍</span>
-              {searchOpen && searchResults.length > 0 && (
-                <div style={{
-                  position: "absolute", top: "100%", left: 0, right: 0, marginTop: 4,
-                  background: "var(--bg-card)", border: "1px solid var(--border-light)",
-                  borderRadius: "var(--radius-lg)", boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
-                  maxHeight: 320, overflowY: "auto", zIndex: 100,
-                }}>
-                  {searchResults.map(ev => {
-                    const cal = CAL_MAP.get(ev.calId);
-                    const d = ev.date;
-                    const dd = `${d.getDate()}/${d.getMonth() + 1}`;
-                    return (
-                      <button key={ev.id} onClick={() => goToEvent(ev)} className="cal-search-result">
-                        <span className="cal-search-dot" style={{ background: cal?.color || "var(--text-3)" }} />
-                        <span className="cal-search-date">{dd}</span>
-                        <span className="cal-search-title">{ev.title}</span>
-                        {ev.campo && <span className="c-muted fs-10 shrink-0">{ev.campo}</span>}
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
-              {searchOpen && searchQ.length >= 2 && searchResults.length === 0 && (
-                <div style={{
-                  position: "absolute", top: "100%", left: 0, right: 0, marginTop: 4,
-                  background: "var(--bg-card)", border: "1px solid var(--border-light)",
-                  borderRadius: "var(--radius-lg)", boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
-                  padding: "12px 14px", fontSize: 11, color: "var(--text-3)", textAlign: "center",
-                }}>
-                  Nenhum evento encontrado
-                </div>
-              )}
-            </div>
+          {/* Search */}
+          <div ref={searchRef} style={{ position: "relative", flex: "0 1 220px", minWidth: 120 }}>
+            <input
+              value={searchQ}
+              onChange={e => { setSearchQ(e.target.value); setSearchOpen(true); }}
+              onFocus={() => searchQ.length >= 2 && setSearchOpen(true)}
+              placeholder="Pesquisar evento…"
+              style={{
+                width: "100%", padding: "5px 8px 5px 26px", border: "1px solid var(--border)",
+                borderRadius: "var(--radius)", fontSize: 11, fontFamily: "inherit",
+                background: "var(--bg-card)", color: "var(--text)", outline: "none",
+              }}
+              onKeyDown={e => { if (e.key === "Escape") { setSearchOpen(false); setSearchQ(""); } }}
+            />
+            <span style={{ position: "absolute", left: 8, top: "50%", transform: "translateY(-50%)",
+              fontSize: 12, color: "var(--text-muted)", pointerEvents: "none" }}>🔍</span>
+            {searchOpen && searchResults.length > 0 && (
+              <div style={{
+                position: "absolute", top: "100%", left: 0, right: 0, marginTop: 4,
+                background: "var(--bg-card)", border: "1px solid var(--border-light)",
+                borderRadius: "var(--radius-lg)", boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
+                maxHeight: 320, overflowY: "auto", zIndex: 100,
+              }}>
+                {searchResults.map(ev => {
+                  const cal = CAL_MAP.get(ev.calId);
+                  const d = ev.date;
+                  const dd = `${d.getDate()}/${d.getMonth() + 1}`;
+                  return (
+                    <button key={ev.id} onClick={() => goToEvent(ev)} className="cal-search-result">
+                      <span className="cal-search-dot" style={{
+                        background: cal?.color || "var(--text-3)",
+                      }} />
+                      <span className="cal-search-date">{dd}</span>
+                      <span className="cal-search-title">{ev.title}</span>
+                      {ev.campo && <span className="c-muted fs-10 shrink-0">{ev.campo}</span>}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+            {searchOpen && searchQ.length >= 2 && searchResults.length === 0 && (
+              <div style={{
+                position: "absolute", top: "100%", left: 0, right: 0, marginTop: 4,
+                background: "var(--bg-card)", border: "1px solid var(--border-light)",
+                borderRadius: "var(--radius-lg)", boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
+                padding: "12px 14px", fontSize: 11, color: "var(--text-3)", textAlign: "center",
+              }}>
+                Nenhum evento encontrado
+              </div>
+            )}
+          </div>
             <div className="escalao-pills" style={{ marginLeft: "auto", flexShrink: 0 }}>
               {(["month", "list"] as ViewMode[]).map(v => (
                 <button key={v} onClick={() => setViewMode(v)}
@@ -871,7 +870,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
               ))}
             </div>
           </div>
-          {/* Linha 2: navegação de mês (sempre visível, não se corta) */}
+          {/* Linha 2: ‹ Mês Ano › — sempre visível, nunca se corta */}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between",
             padding: "4px 12px 8px", gap: 8 }}>
             <button onClick={() => setCurrentMonth(m => Math.max(0, m - 1))} disabled={currentMonth <= 0}
@@ -900,6 +899,12 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
         </div>
 
         <div className="flex-1 scroll-y scroll-y">
+          {/* Botão voltar sidebar — só em mobile quando fechada */}
+          {!sidebarOpen && isMobile && (
+            <button className="sidebar-back-btn" onClick={() => setSidebarOpen(true)}>
+              ▶ Filtros
+            </button>
+          )}
           {viewMode === "month" ? (
             <div className="cal-content">
               <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)",
