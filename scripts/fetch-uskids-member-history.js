@@ -25,7 +25,28 @@ const { chromium } = require('playwright');
 
 // ── Config ───────────────────────────────────
 const DIR          = path.join(__dirname, '..', 'public', 'data');
-const RESULTS_PATH = path.join(DIR, 'uskids-results.json');
+const RESULTS_PATH   = path.join(DIR, 'uskids-results.json');
+const FLIGHTS_CACHE  = path.join(DIR, 'uskids-flights-cache.json');
+const FLIGHTS_MAX_DIAS = 3; // re-descobrir flights após 3 dias
+
+function flightsCacheValida() {
+  if (!fs.existsSync(FLIGHTS_CACHE)) return false;
+  try {
+    const d = JSON.parse(fs.readFileSync(FLIGHTS_CACHE, 'utf8'));
+    if (!d.gerado_em) return false;
+    const dias = (Date.now() - new Date(d.gerado_em).getTime()) / 86400000;
+    return dias < FLIGHTS_MAX_DIAS;
+  } catch { return false; }
+}
+
+function loadFlightsCache() {
+  try { return JSON.parse(fs.readFileSync(FLIGHTS_CACHE, 'utf8')); } catch { return null; }
+}
+
+function saveFlightsCache(data) {
+  fs.mkdirSync(DIR, { recursive: true });
+  fs.writeFileSync(FLIGHTS_CACHE, JSON.stringify({ ...data, gerado_em: new Date().toISOString() }, null, 2), 'utf8');
+}
 const PART_SIZE    = 75;   // jogadores por ficheiro
 const PART_PREFIX  = 'uskids-member-history-';
 
@@ -186,6 +207,17 @@ function strokesKey(arr) {
   return arr.join(',');
 }
 
+// Valida se um array de strokes é suficientemente rico para ser fingerprint fiável.
+// Rejeita: < 18 buracos, maioria zeros, todos iguais (padrão repetido).
+function strokedValid(arr) {
+  if (!arr || arr.length < 18) return false;
+  const nonZero = arr.filter(s => s > 0);
+  if (nonZero.length < 14) return false; // mais de 4 zeros → suspeito
+  const unique = new Set(arr).size;
+  if (unique <= 3) return false; // demasiado uniforme (ex: todos 4s)
+  return true;
+}
+
 function parseDate(s) {
   if (!s) return '';
   if (s.includes('-')) return s;
@@ -194,59 +226,112 @@ function parseDate(s) {
 }
 
 /**
- * Constrói fingerprints a partir do uskids-results.json.
+ * Constrói fingerprints a partir de:
+ *   1. uskids-results.json (leaderboards com strokes)
+ *   2. uskids_torneios_completos(1-19).json (scorecards completos)
+ * Chave: "{tcode}:R{ronda}:{strokes}" → { name, country, place }
  */
 function buildResultsFingerprints() {
   const fp = new Map();
-  if (!fs.existsSync(RESULTS_PATH)) return fp;
-  try {
-    const data = JSON.parse(fs.readFileSync(RESULTS_PATH, 'utf8'));
-    for (const tourn of data.resultados || []) {
-      const tcode = String(tourn.t);
-      for (const esc of tourn.escaloes || []) {
-        for (const ronda of esc.rondas || []) {
-          const rn = ronda.ronda;
-          for (const j of ronda.leaderboard || []) {
-            const sk = strokesKey(j.strokes);
-            if (sk) fp.set(`${tcode}:R${rn}:${sk}`, {
-              name: j.nome, country: j.pais, place: j.cidade || '',
-            });
+
+  // ── 1. uskids-results.json ──
+  if (fs.existsSync(RESULTS_PATH)) {
+    try {
+      const data = JSON.parse(fs.readFileSync(RESULTS_PATH, 'utf8'));
+      for (const tourn of data.resultados || []) {
+        const tcode = String(tourn.t);
+        for (const esc of tourn.escaloes || []) {
+          for (const ronda of esc.rondas || []) {
+            const rn = ronda.ronda;
+            for (const j of ronda.leaderboard || []) {
+              const sk = strokesKey(j.strokes);
+              if (sk && strokedValid(j.strokes)) fp.set(`${tcode}:R${rn}:${sk}`, {
+                name: j.nome, country: j.pais, place: j.cidade || '',
+              });
+            }
           }
         }
       }
-    }
-  } catch {}
+    } catch {}
+  }
+
+  // ── 2. uskids_torneios_completos(1-N).json ──
+  for (let i = 1; i <= 30; i++) {
+    const p = path.join(DIR, `uskids_torneios_completos(${i}).json`);
+    if (!fs.existsSync(p)) continue;
+    try {
+      const data = JSON.parse(fs.readFileSync(p, 'utf8'));
+      const tcode = String(data.signupanytime_t || '');
+      if (!tcode) continue;
+      for (const flight of Object.values(data.flights || {})) {
+        for (const pl of Object.values(flight.flight_players || {})) {
+          const name = `${(pl.first || '').trim()} ${(pl.last || '').trim()}`.trim();
+          if (!name) continue;
+          const info = { name, country: (pl.country || '').toUpperCase(), place: pl.place || '' };
+          for (const [rn, rd] of Object.entries(pl.rounds || {})) {
+            const sk = strokesKey(rd.strokes);
+            if (sk && strokedValid(rd.strokes)) fp.set(`${tcode}:R${rn}:${sk}`, info);
+          }
+        }
+      }
+    } catch {}
+  }
+
   return fp;
 }
 
 /**
  * Tenta identificar um jogador pelos strokes.
+ * Exige pelo menos 2 matches independentes do mesmo nome para confirmar.
+ * Um "match independente" = ronda diferente ou torneio diferente.
+ * Isto evita falsos positivos por colisão de fingerprint.
  */
 function matchPlayer(memberData, apiFingerprints, resultsFP, memberFlights) {
-  // 1. API fingerprints (torneio fonte)
+  // Acumular votos: normName → { info, count, sources }
+  const votos = new Map(); // key: nome normalizado → { info, count }
+
+  function addVoto(info) {
+    if (!info?.name || info.name === '?') return;
+    const key = info.name.toLowerCase().trim();
+    if (!votos.has(key)) votos.set(key, { info, count: 0 });
+    votos.get(key).count++;
+  }
+
+  // 1. API fingerprints (torneios fonte)
   for (const { tcode, fid } of memberFlights) {
     const fpMap = apiFingerprints.get(`${tcode}:${fid}`);
     if (!fpMap) continue;
     const tournData = memberData[String(tcode)];
     if (!tournData || !tournData.p_rounds) continue;
     for (const [rn, rd] of Object.entries(tournData.p_rounds)) {
+      if (!strokedValid(rd.strokes)) continue;
       const sk = strokesKey(rd.strokes);
       if (!sk) continue;
       const match = fpMap.get(`R${rn}:${sk}`);
-      if (match) return match;
+      if (match) addVoto(match);
     }
   }
-  // 2. Fallback: uskids-results.json
+
+  // 2. uskids-results.json + torneios_completos
   for (const [tid, t] of Object.entries(memberData)) {
     if (!t.p_rounds) continue;
     for (const [rn, rd] of Object.entries(t.p_rounds)) {
+      if (!strokedValid(rd.strokes)) continue;
       const sk = strokesKey(rd.strokes);
       if (!sk) continue;
       const match = resultsFP.get(`${tid}:R${rn}:${sk}`);
-      if (match) return match;
+      if (match) addVoto(match);
     }
   }
-  return null;
+
+  // Só aceitar se o mesmo nome apareceu em 2+ rondas independentes
+  let melhor = null;
+  for (const { info, count } of votos.values()) {
+    if (count >= 2) {
+      if (!melhor || count > melhor.count) melhor = { info, count };
+    }
+  }
+  return melhor?.info ?? null;
 }
 
 // ── Re-match offline (--clean) ───────────────
@@ -262,14 +347,32 @@ function cleanAndRematch() {
   let matched = 0, already = 0, agFixed = 0;
 
   for (const j of Object.values(cache.jogadores)) {
-    if (!j.name || j.name === '?' || j.name === null || String(j.name).startsWith('[unknown')) {
+    const semNome = !j.name || j.name === '?' || j.name === null || String(j.name).startsWith('[unknown');
+
+    if (semNome) {
+      // Acumular votos com dupla verificação
+      const votos = new Map();
       for (const [tid, t] of Object.entries(j.torneios || {})) {
-        if (j.name && j.name !== '?' && j.name !== null) break;
         for (const [rn, rd] of Object.entries(t.rounds || {})) {
-          if (!rd.strokes || !rd.strokes.length) continue;
+          if (!strokedValid(rd.strokes)) continue;
           const m = resultsFP.get(`${tid}:R${rn}:${strokesKey(rd.strokes)}`);
-          if (m) { j.name = m.name; j.country = m.country; j.place = m.place; matched++; break; }
+          if (m?.name) {
+            const key = m.name.toLowerCase().trim();
+            if (!votos.has(key)) votos.set(key, { info: m, count: 0 });
+            votos.get(key).count++;
+          }
         }
+      }
+      // Só aceitar com 2+ votos
+      let melhor = null;
+      for (const { info, count } of votos.values()) {
+        if (count >= 2 && (!melhor || count > melhor.count)) melhor = { info, count };
+      }
+      if (melhor) {
+        j.name = melhor.info.name;
+        j.country = melhor.info.country;
+        j.place = melhor.info.place;
+        matched++;
       }
     } else { already++; }
 
@@ -350,7 +453,7 @@ async function main() {
 
   // Fingerprints do uskids-results.json
   const resultsFP = buildResultsFingerprints();
-  console.log(`  📄 ${resultsFP.size} fingerprints do uskids-results.json`);
+  console.log(`  📄 ${resultsFP.size} fingerprints (results.json + torneios_completos)`);
 
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext({
@@ -372,94 +475,122 @@ async function main() {
 
   let matched = 0, unmatched = 0, skipped = 0;
 
+  const forceFlights = process.argv.includes('--refresh-flights');
+
   try {
     // ══════════════════════════════════════════════
-    // FASE 1: Nomes directos + Fingerprints + member IDs
+    // FASE 1: Member IDs + Fingerprints por flight
+    // Cache em uskids-flights-cache.json (válida 3 dias)
+    // Forçar actualização: --refresh-flights
     // ══════════════════════════════════════════════
 
-    for (const tcode of tcodes) {
-      await initPage(page, tcode);
+    if (!forceFlights && flightsCacheValida()) {
+      // ── Carregar da cache ──
+      const fc = loadFlightsCache();
+      console.log(`\n⚡ Fase 1 em cache (${fc.gerado_em?.slice(0,10)}) — a saltar`);
 
-      // Usar flights manuais se existirem, senão auto-descobrir via GetMeta
-      let flights = FLIGHTS_MANUAL[tcode];
-      if (!flights || flights.length === 0) {
-        flights = await descobrirFlights(page, tcode);
-        await sleep(DELAY_MS);
+      for (const [midStr, flts] of Object.entries(fc.memberFlights || {})) {
+        const mid = parseInt(midStr);
+        allMemberIds.add(mid);
+        memberFlights.set(mid, flts);
       }
+      for (const [fpKey, entries] of Object.entries(fc.apiFingerprints || {})) {
+        apiFingerprints.set(fpKey, new Map(entries));
+      }
+      for (const [tcode, info] of Object.entries(fc.torneios || {})) {
+        if (!cache.torneios[tcode]?.name) cache.torneios[tcode] = info;
+      }
+      console.log(`   ${allMemberIds.size} membros | ${apiFingerprints.size} flights com fingerprints`);
 
-      const tournLabel = cache.torneios[tcode]?.name || `t=${tcode}`;
-      console.log(`\n▶ ${tournLabel} (${flights.length} flights)`);
+    } else {
+      // ── Descobrir da API ──
+      if (forceFlights) console.log('\n🔄 --refresh-flights: a re-descobrir Fase 1...');
+      else console.log('\n🔍 Fase 1: a descobrir member IDs e fingerprints...');
 
-      for (const { fid, ag } of flights) {
-        console.log(`  ⛳ ${ag} (flight ${fid})`);
+      for (const tcode of tcodes) {
+        await initPage(page, tcode);
 
-        // Member IDs via GetTournamentPlayers
-        let memberIds = [];
-        try {
-          const tp = await pageJSON(page, `${API}?op=GetTournamentPlayers&t=${tcode}&f=${fid}`);
-          memberIds = tp.PlayerNodeId || [];
-        } catch (err) {
-          console.warn(`    ⚠️ GetTournamentPlayers falhou: ${err.message}`);
-          continue;
+        let flights = FLIGHTS_MANUAL[tcode];
+        if (!flights || flights.length === 0) {
+          flights = await descobrirFlights(page, tcode);
+          await sleep(DELAY_MS);
         }
-        await sleep(DELAY_MS);
 
-        // GetPlayerTeeTimes — extrai nomes directos E fingerprints de strokes
-        const fpKey = `${tcode}:${fid}`;
-        const fpMap = new Map();
+        const tournLabel = cache.torneios[tcode]?.name || `t=${tcode}`;
+        console.log(`\n▶ ${tournLabel} (${flights.length} flights)`);
 
-        try {
-          const totalPages = Math.ceil((memberIds.length || 20) / 20);
-          for (let p = 1; p <= totalPages; p++) {
-            const d = await pageJSON(page, `${API}?op=GetPlayerTeeTimes&f=${fid}&r=1&p=${p}&t=0`);
+        for (const { fid, ag } of flights) {
+          console.log(`  ⛳ ${ag} (flight ${fid})`);
 
-            for (const [, pl] of Object.entries(d.flight_players || {})) {
-              const name    = `${(pl.first || '').trim()} ${(pl.last || '').trim()}`.trim();
-              const country = (pl.country || '').toUpperCase();
-              const place   = pl.place || '';
-              const info    = { name, country, place };
-
-              if (!name) continue;
-
-              // Nota: GetPlayerTeeTimes não expõe node_id — mapeamento directo impossível.
-              // Nomes são resolvidos via GetMemberProfile na Fase 2.
-
-              // Fingerprint de strokes (usado para torneios com scores disponíveis)
-              for (const [rn, rd] of Object.entries(pl.rounds || {})) {
-                const sk = strokesKey(rd.strokes);
-                if (sk) fpMap.set(`R${rn}:${sk}`, info);
-              }
-            }
-            await sleep(DELAY_MS);
+          let memberIds = [];
+          try {
+            const tp = await pageJSON(page, `${API}?op=GetTournamentPlayers&t=${tcode}&f=${fid}`);
+            memberIds = tp.PlayerNodeId || [];
+          } catch (err) {
+            console.warn(`    ⚠️ GetTournamentPlayers falhou: ${err.message}`);
+            continue;
           }
-        } catch (err) {
-          console.warn(`    ⚠️ GetPlayerTeeTimes falhou: ${err.message}`);
+          await sleep(DELAY_MS);
+
+          const fpKey = `${tcode}:${fid}`;
+          const fpMap = new Map();
+
+          try {
+            const totalPages = Math.ceil((memberIds.length || 20) / 20);
+            for (let p = 1; p <= totalPages; p++) {
+              const d = await pageJSON(page, `${API}?op=GetPlayerTeeTimes&f=${fid}&r=1&p=${p}&t=0`);
+              for (const [, pl] of Object.entries(d.flight_players || {})) {
+                const name    = `${(pl.first || '').trim()} ${(pl.last || '').trim()}`.trim();
+                const country = (pl.country || '').toUpperCase();
+                const place   = pl.place || '';
+                const info    = { name, country, place };
+                if (!name) continue;
+                for (const [rn, rd] of Object.entries(pl.rounds || {})) {
+                  const sk = strokesKey(rd.strokes);
+                  if (sk && strokedValid(rd.strokes)) fpMap.set(`R${rn}:${sk}`, info);
+                }
+              }
+              await sleep(DELAY_MS);
+            }
+          } catch (err) {
+            console.warn(`    ⚠️ GetPlayerTeeTimes falhou: ${err.message}`);
+          }
+
+          apiFingerprints.set(fpKey, fpMap);
+
+          for (const mid of memberIds) {
+            allMemberIds.add(mid);
+            if (!memberFlights.has(mid)) memberFlights.set(mid, []);
+            memberFlights.get(mid).push({ tcode, fid, ageGroup: ag });
+          }
+
+          console.log(`    → ${memberIds.length} membros | ${fpMap.size} fingerprints`);
         }
 
-        apiFingerprints.set(fpKey, fpMap);
-
-        for (const mid of memberIds) {
-          allMemberIds.add(mid);
-          if (!memberFlights.has(mid)) memberFlights.set(mid, []);
-          memberFlights.get(mid).push({ tcode, fid, ageGroup: ag });
+        if (!cache.torneios[tcode]?.name) {
+          try {
+            const meta = await pageJSON(page, `${API}?op=GetMeta&t=${tcode}`);
+            cache.torneios[tcode] = { name: meta?.tournament?.name || `t=${tcode}` };
+          } catch {
+            cache.torneios[tcode] = { name: `t=${tcode}` };
+          }
+          await sleep(DELAY_MS);
         }
-
-        console.log(`    → ${memberIds.length} membros | ${fpMap.size} fingerprints`);
       }
 
-      if (!cache.torneios[tcode] || !cache.torneios[tcode].name) {
-        // Tentar obter nome do torneio do GetMeta
-        try {
-          const meta = await pageJSON(page, `${API}?op=GetMeta&t=${tcode}`);
-          cache.torneios[tcode] = { name: meta?.tournament?.name || `t=${tcode}` };
-        } catch {
-          cache.torneios[tcode] = { name: `t=${tcode}` };
-        }
-        await sleep(DELAY_MS);
-      }
+      // Guardar cache de flights (serializar Maps → arrays)
+      const fcData = {
+        memberFlights: Object.fromEntries(
+          [...memberFlights.entries()].map(([mid, flts]) => [String(mid), flts])
+        ),
+        apiFingerprints: Object.fromEntries(
+          [...apiFingerprints.entries()].map(([k, m]) => [k, [...m.entries()]])
+        ),
+        torneios: cache.torneios,
+      };
+      saveFlightsCache(fcData);
+      console.log(`\n  💾 uskids-flights-cache.json — ${allMemberIds.size} membros guardados`);
     }
-
-    console.log(`\n  🗺️  Nomes directos por node_id: ${memberNameMap.size}/${allMemberIds.size}`);
 
     // ══════════════════════════════════════════════
     // FASE 2: Histórico + matching

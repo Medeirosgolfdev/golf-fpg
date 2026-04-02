@@ -906,35 +906,29 @@ function processMemberHistory(data: unknown): AutoRivalPlayer[] {
 
 export type LoadProgress = { done: number; total: number; label: string };
 
-// Cache da Promise de buildAutoRivals — garante que USKIDSPage e KIDSPage
-// partilham exactamente o mesmo resultado sem re-processar os ~32 ficheiros.
-// Invalidada se buildAutoRivals for chamado com force:true.
+// Cache da Promise de buildAutoRivals
 let _autoRivalsCache: Promise<AutoRivalPlayer[]> | null = null;
 
-/** Invalida a cache de rivals (ex: após novo ficheiro copiado para /data/) */
 export function invalidateAutoRivalsCache(): void {
   _autoRivalsCache = null;
 }
 
 export async function buildAutoRivals(
   onProgress?: (p: LoadProgress) => void,
-  opts?: { force?: boolean }
+  opts?: { force?: boolean; onUpdate?: (players: AutoRivalPlayer[]) => void }
 ): Promise<AutoRivalPlayer[]> {
-  // Retornar da cache se já foi processado e não há progresso a reportar
-  // (com onProgress o chamador quer acompanhar — recalcula sempre; mas partilha fetches via fetchCache)
-  if (!opts?.force && !onProgress && _autoRivalsCache) {
+  if (!opts?.force && !onProgress && !opts?.onUpdate && _autoRivalsCache) {
     return _autoRivalsCache;
   }
-
-  _autoRivalsCache = _buildAutoRivalsInternal(onProgress);
+  _autoRivalsCache = _buildAutoRivalsInternal(onProgress, opts?.onUpdate);
   return _autoRivalsCache;
 }
 
 async function _buildAutoRivalsInternal(
-  onProgress?: (p: LoadProgress) => void
+  onProgress?: (p: LoadProgress) => void,
+  onUpdate?: (players: AutoRivalPlayer[]) => void
 ): Promise<AutoRivalPlayer[]> {
   _scorecards.clear();
-  // Re-populate from hardcoded meta (clear + refill)
   uskTournNames.clear();
   for (const [tcode, meta] of Object.entries(USKIDS_TCODE_META as Record<string, { name: string; short: string; dateExact: string }>)) {
     const [yr, mo] = meta.dateExact.split("-").map(Number);
@@ -944,13 +938,13 @@ async function _buildAutoRivalsInternal(
 
   const base = "/data/";
 
-  // Todos os ficheiros a carregar, com label e processador
   type FileTask =
     | { kind: "wjgc"; tid: string; file: string }
     | { kind: "doral" | "uskids" | "pull" | "memberHist"; file: string }
     | { kind: "completo"; file: string };
 
-  const tasks: FileTask[] = [
+  // ── FASE 1: ficheiros essenciais (carregam em paralelo) ──
+  const coreTasks: FileTask[] = [
     { kind: "wjgc", tid: "wjgc25_b89",    file: "wjgc_2025_b89.json" },
     { kind: "wjgc", tid: "wjgc25_b1011",  file: "wjgc_2025_contest34.json" },
     { kind: "wjgc", tid: "wjgc26",        file: "wjgc_2026_b1011_3r.json" },
@@ -959,23 +953,27 @@ async function _buildAutoRivalsInternal(
     { kind: "wjgc", tid: "eowagr25_b910", file: "eowagr25_contest13.json" },
     { kind: "wjgc", tid: "eowagr25",      file: "eowagr25_scorecards.json" },
     { kind: "wjgc", tid: "eowagr25_b1314",file: "eowagr25_contest77.json" },
-    { kind: "doral",      file: "ftm_doral_2025.json" },
-    { kind: "doral",      file: "ftm_doral_2024.json" },
-    { kind: "uskids",     file: "uskids-results.json" },
-    { kind: "pull",       file: "pull-torneios000.json" },
-    // member history: carrega uskids-member-history-001.json até -NNN.json
-    ...Array.from({ length: 30 }, (_, i) =>
-      ({ kind: "memberHist" as const, file: `uskids-member-history-${String(i+1).padStart(3,'0')}.json` })
-    ),
+    { kind: "doral",  file: "ftm_doral_2025.json" },
+    { kind: "doral",  file: "ftm_doral_2024.json" },
+    { kind: "uskids", file: "uskids-results.json" },
+    { kind: "pull",   file: "pull-torneios000.json" },
     ...Array.from({ length: 19 }, (_, i) =>
       ({ kind: "completo" as const, file: `uskids_torneios_completos(${i + 1}).json` })
     ),
   ];
 
-  const total = tasks.length;
-  const map = new Map<string, AutoRivalPlayer>();
+  // ── FASE 2: member history (carregam sequencialmente em background) ──
+  const memberHistFiles = Array.from({ length: 30 }, (_, i) =>
+    `uskids-member-history-${String(i+1).padStart(3,'0')}.json`
+  );
 
-  // Labels amigáveis por ficheiro
+  const totalTasks = coreTasks.length + memberHistFiles.length;
+  let done = 0;
+  const report = (label: string) => {
+    done++;
+    onProgress?.({ done, total: totalTasks, label });
+  };
+
   const labelFor = (t: FileTask): string => {
     if (t.kind === "wjgc") return t.tid.replace(/_/g," ").toUpperCase();
     if (t.kind === "doral") return "Doral";
@@ -986,28 +984,50 @@ async function _buildAutoRivalsInternal(
     return m ? `USKids #${m[1]}` : t.file;
   };
 
-  // Carregar em paralelo mas reportar progresso à medida que cada um termina
-  let done = 0;
-  const report = (label: string) => {
-    done++;
-    onProgress?.({ done, total, label });
-  };
+  const map = new Map<string, AutoRivalPlayer>();
 
-  await Promise.all(tasks.map(async task => {
+  // ── Fase 1: paralelo ──
+  await Promise.all(coreTasks.map(async task => {
     try {
       const d = await fetchJson(`${base}${task.file}`);
-      if (task.kind === "wjgc")       mergeInto(map, processWjgc(d, task.tid));
-      if (task.kind === "doral")      mergeInto(map, processDoral(d));
-      if (task.kind === "uskids")     mergeInto(map, processUskids(d));
-      if (task.kind === "pull")       mergeInto(map, processPullTorneios(d));
-      if (task.kind === "completo")   mergeInto(map, processUskidsCompleto(d));
-      if (task.kind === "memberHist") mergeInto(map, processMemberHistory(d));
-    } catch { /* ficheiro não existe ou erro — ignorar */ }
+      if (task.kind === "wjgc")     mergeInto(map, processWjgc(d, task.tid));
+      if (task.kind === "doral")    mergeInto(map, processDoral(d));
+      if (task.kind === "uskids")   mergeInto(map, processUskids(d));
+      if (task.kind === "pull")     mergeInto(map, processPullTorneios(d));
+      if (task.kind === "completo") mergeInto(map, processUskidsCompleto(d));
+    } catch { /* ignorar */ }
     report(labelFor(task));
   }));
 
-  // Inject manual overrides (IE/WD players excluded by scraper)
   mergeInto(map, processManuelOverrides());
+
+  // Notificar com resultado inicial (sem member history) — a página já pode mostrar dados
+  onUpdate?.(Array.from(map.values()));
+
+  // ── Fase 2: member history sequencial em background ──
+  // Não bloqueia o retorno — corre em segundo plano
+  (async () => {
+    let loaded = 0;
+    for (const file of memberHistFiles) {
+      try {
+        const d = await fetchJson(`${base}${file}`);
+        mergeInto(map, processMemberHistory(d));
+        loaded++;
+        report("Member History");
+        // Notificar a cada 3 ficheiros ou no último
+        if (loaded % 3 === 0 || file === memberHistFiles[memberHistFiles.length - 1]) {
+          onUpdate?.(Array.from(map.values()));
+        }
+      } catch {
+        report("Member History");
+        // Se falhar (404), parar — não há mais ficheiros
+        if (loaded === 0 && !file.endsWith('-001.json')) break;
+        if (loaded > 0) break; // após o primeiro sucesso, o primeiro 404 significa fim
+      }
+    }
+    // Notificação final com todos os dados
+    if (loaded > 0) onUpdate?.(Array.from(map.values()));
+  })();
 
   return Array.from(map.values());
 }
