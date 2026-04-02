@@ -3137,122 +3137,115 @@ function Content() {
 
   return (
     <div className="tourn-layout">
-            {/* ── Toolbar: grid 3 colunas partilhadas pelas 2 linhas ── */}
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "1fr auto auto",
-        borderBottom: "1px solid var(--border-light)",
-      }}>
-        {/* ── LINHA 1, col 1: sidebar + nav principal ── */}
-        <div className="toolbar-left" style={{ borderBottom: "none", padding: "6px 0" }}>
+
+      {/* ── Toolbar mobile-first: scroll horizontal em vez de grid ── */}
+      <div style={{ borderBottom: "1px solid var(--border-light)" }}>
+
+        {/* Linha 1: toda numa linha scrollável */}
+        <div style={{
+          display: "flex", alignItems: "center", gap: 6,
+          padding: "6px 10px", overflowX: "auto", flexWrap: "nowrap",
+          scrollbarWidth: "none", WebkitOverflowScrolling: "touch",
+        }}>
           <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />
-          <span className="toolbar-title">🏌️ FPG</span>
-          {!loading && (
-            <>
-              <div className="toolbar-sep" />
-              <div className="escalao-pills">
-                {([
-                  { key: "torneios",      label: "Torneios" },
-                  { key: "ranking-pja",   label: "📊 Ranking PJA" },
-                  { key: "ranking-sub12", label: "🏅 Ranking Sub-12" },
-                ] as const).map(({ key, label }) => (
-                  <button key={key}
-                    className={"tourn-tab tourn-tab-sm" + (navMode === key ? " active" : "")}
-                    onClick={() => { setNavMode(key); setSeriesFilter(""); setYearFilter(null); }}
-                    style={navMode === key ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
-                    {label}
-                  </button>
-                ))}
-              </div>
-              {!loading && navMode === "torneios" && availYears.length > 1 && (<>
-                <div className="toolbar-sep" />
-                <div className="escalao-pills gap-4">
-                  {availYears.map(y => (
-                    <button key={y}
-                      className={"tourn-tab tourn-tab-sm" + (activeYear === y ? " active" : "")}
-                      onClick={() => setYearFilter(activeYear === y ? null : y)}
-                      style={activeYear === y ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
-                      {y}
-                    </button>
-                  ))}
-                </div>
-                <div className="toolbar-sep" />
-                <button
-                  className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
-                  onClick={() => setFilterManuel(v => !v)}
-                  style={filterManuel
-                    ? { background: "var(--bg-success-subtle)", borderColor: "var(--color-good)", color: "var(--color-good-dark)", whiteSpace: "nowrap" }
-                    : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)", whiteSpace: "nowrap" }}>
-                  ★ Manuel
+          <span className="toolbar-title" style={{ flexShrink: 0 }}>🏌️ FPG</span>
+          {!loading && (<>
+            <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+            {([
+              { key: "torneios",      label: "Torneios" },
+              { key: "ranking-pja",   label: "📊 Ranking PJA" },
+              { key: "ranking-sub12", label: "🏅 Ranking Sub-12" },
+            ] as const).map(({ key, label }) => (
+              <button key={key}
+                className={"tourn-tab tourn-tab-sm" + (navMode === key ? " active" : "")}
+                onClick={() => { setNavMode(key); setSeriesFilter(""); setYearFilter(null); }}
+                style={navMode === key
+                  ? { flexShrink: 0 }
+                  : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                {label}
+              </button>
+            ))}
+            {navMode === "torneios" && availYears.length > 1 && (<>
+              <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+              {availYears.map(y => (
+                <button key={y}
+                  className={"tourn-tab tourn-tab-sm" + (activeYear === y ? " active" : "")}
+                  onClick={() => setYearFilter(activeYear === y ? null : y)}
+                  style={activeYear === y
+                    ? { flexShrink: 0 }
+                    : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                  {y}
                 </button>
-              </>)}
-            </>
-          )}
+              ))}
+              <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+              <button
+                className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
+                onClick={() => setFilterManuel(v => !v)}
+                style={filterManuel
+                  ? { flexShrink: 0, background: "var(--bg-success-subtle)", borderColor: "var(--color-good)", color: "var(--color-good-dark)", whiteSpace: "nowrap" }
+                  : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)", whiteSpace: "nowrap" }}>
+                ★ Manuel
+              </button>
+            </>)}
+            <div style={{ flex: 1, minWidth: 8 }} />
+            {/* Contadores à direita */}
+            <a href="https://scoring.datagolf.pt/pt/tournaments.aspx" target="_blank" rel="noopener noreferrer"
+              style={{ flexShrink: 0, fontSize: 11, fontWeight: 600, cursor: "pointer", color: "var(--accent,#2563eb)", border: "1px solid var(--accent,#2563eb)", borderRadius: 5, padding: "3px 8px", lineHeight: 1.6, textDecoration: "none", whiteSpace: "nowrap", display: "inline-flex", alignItems: "center", gap: 3 }}>
+              FPG Torneios ↗
+            </a>
+            {loading
+              ? <span className="muted fs-11" style={{ fontStyle: "italic", flexShrink: 0 }}>{loadingMsg}</span>
+              : <>
+                  {navMode === "torneios" && (() => {
+                    const count = seriesFilter === "santo"   ? santoByYear.years.reduce((s, y) => s + (santoByYear.byYear[y]?.length ?? 0), 0)
+                                : seriesFilter === "circuit" ? pjaByYear.years.reduce((s, y) => s + (pjaByYear.byYear[y]?.length ?? 0), 0)
+                                : seriesFilter === "clubes"  ? clubesList.length
+                                : activeYear
+                                  ? displayList.filter(t => (t.date || "").startsWith(activeYear)).length
+                                  : displayList.length;
+                    return <span className="chip" style={{ flexShrink: 0 }}>{count} torneios</span>;
+                  })()}
+                  {seriesFilter !== "santo" && seriesFilter !== "clubes" && navMode === "torneios" && (
+                    <span className="chip" style={{ flexShrink: 0, marginLeft: 4, background: "var(--bg-hover)" }}>
+                      {fileMeta.length} ficheiro{fileMeta.length !== 1 ? "s" : ""}
+                    </span>
+                  )}
+                </>
+            }
+          </>)}
         </div>
 
-        {/* ── LINHA 1, col 2: vazio — mantém altura da barra ── */}
-        <div style={{ padding: "6px 0" }} />
-
-        {/* ── LINHA 1, col 3: FPG link + contadores ── */}
-        <div className="toolbar-right" style={{ borderBottom: "none" }}>
-          <a href="https://scoring.datagolf.pt/pt/tournaments.aspx" target="_blank" rel="noopener noreferrer"
-            style={{ fontSize: 11, fontWeight: 600, cursor: "pointer", color: "var(--accent,#2563eb)", border: "1px solid var(--accent,#2563eb)", borderRadius: 5, padding: "3px 8px", lineHeight: 1.6, textDecoration: "none", whiteSpace: "nowrap", display: "inline-flex", alignItems: "center", gap: 3 }}>
-            FPG Torneios ↗
-          </a>
-          {loading
-            ? <span className="muted fs-11" style={{ fontStyle: "italic" }}>{loadingMsg}</span>
-            : <>
-                {navMode === "torneios" && (() => {
-                  const count = seriesFilter === "santo"   ? santoByYear.years.reduce((s, y) => s + (santoByYear.byYear[y]?.length ?? 0), 0)
-                              : seriesFilter === "circuit" ? pjaByYear.years.reduce((s, y) => s + (pjaByYear.byYear[y]?.length ?? 0), 0)
-                              : seriesFilter === "clubes"  ? clubesList.length
-                              : activeYear
-                                ? displayList.filter(t => (t.date || "").startsWith(activeYear)).length
-                                : displayList.length;
-                  return <span className="chip">{count} torneios</span>;
-                })()}
-                {seriesFilter !== "santo" && seriesFilter !== "clubes" && navMode === "torneios" && (
-                  <span className="chip" style={{ marginLeft: 4, background: "var(--bg-hover)" }}>
-                    {fileMeta.length} ficheiro{fileMeta.length !== 1 ? "s" : ""}
-                  </span>
-                )}
-              </>
-          }
-        </div>
-
-        {/* ── LINHA 2, col 1: filtros de série ── */}
+        {/* Linha 2: filtros de série */}
         {!loading && navMode === "torneios" && (
-          <div style={{ display: "flex", alignItems: "center", gap: 6, padding: "4px 12px", borderTop: "1px solid var(--border-light)" }}>
-            <div className="escalao-pills gap-4" style={{ flexWrap: "wrap" }}>
-              {([
-                { key: "",        label: "Todos" },
-                { key: "circuit", label: "🏆 PJA Tour" },
-                { key: "santo",   label: "⛳ Santo da Serra" },
-                { key: "clubes",  label: "🏅 Clubes" },
-              ] as const).map(({ key, label }) => {
-                const active = seriesFilter === key;
-                const style = active
-                  ? key === "santo"  ? { ...PILL_SSERRA, borderColor: PILL_SSERRA.background as string }
-                  : key === "clubes" ? { background: "var(--accent,#2563eb)", borderColor: "var(--accent,#2563eb)", color: "#fff" }
-                  : {}
-                  : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" };
-                return (
-                  <button key={key}
-                    className={"tourn-tab tourn-tab-sm" + (active ? " active" : "")}
-                    onClick={() => { setSeriesFilter(key); }}
-                    style={style}>
-                    {label}
-                  </button>
-                );
-              })}
-            </div>
-
+          <div style={{
+            display: "flex", alignItems: "center", gap: 6,
+            padding: "4px 10px 6px", overflowX: "auto", flexWrap: "nowrap",
+            scrollbarWidth: "none", WebkitOverflowScrolling: "touch",
+            borderTop: "1px solid var(--border-light)",
+          }}>
+            {([
+              { key: "",        label: "Todos" },
+              { key: "circuit", label: "🏆 PJA Tour" },
+              { key: "santo",   label: "⛳ Santo da Serra" },
+              { key: "clubes",  label: "🏅 Clubes" },
+            ] as const).map(({ key, label }) => {
+              const active = seriesFilter === key;
+              const st = active
+                ? key === "santo"  ? { flexShrink: 0, ...PILL_SSERRA, borderColor: PILL_SSERRA.background as string }
+                : key === "clubes" ? { flexShrink: 0, background: "var(--accent,#2563eb)", borderColor: "var(--accent,#2563eb)", color: "#fff" }
+                : { flexShrink: 0 }
+                : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" };
+              return (
+                <button key={key}
+                  className={"tourn-tab tourn-tab-sm" + (active ? " active" : "")}
+                  onClick={() => { setSeriesFilter(key); }}
+                  style={st}>
+                  {label}
+                </button>
+              );
+            })}
           </div>
         )}
-
-        {/* ── LINHA 2, col 2+3: espaços vazios ── */}
-        {!loading && navMode === "torneios" && <div style={{ borderTop: "1px solid var(--border-light)" }} />}
-        {!loading && navMode === "torneios" && <div style={{ borderTop: "1px solid var(--border-light)" }} />}
       </div>
 
       {error && (

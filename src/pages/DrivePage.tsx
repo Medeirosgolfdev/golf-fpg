@@ -2540,151 +2540,138 @@ function DriveContent() {
   return (
     <div className="jogadores-page">
 
-      {/* ── Toolbar: grid 3 colunas partilhadas pelas 2 linhas para alinhamento perfeito ── */}
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "1fr auto auto",
-        borderBottom: "1px solid var(--border-light)",
-      }}>
-        {/* ── LINHA 1, col 1: sidebar + nav + série ── */}
-        <div className="toolbar-left" style={{ borderBottom: "none" }}>
+      {/* ── Toolbar mobile-first: scroll horizontal ── */}
+      <div style={{ borderBottom: "1px solid var(--border-light)" }}>
+
+        {/* Linha 1: tudo numa linha scrollável */}
+        <div style={{
+          display: "flex", alignItems: "center", gap: 6,
+          padding: "6px 10px", overflowX: "auto", flexWrap: "nowrap",
+          scrollbarWidth: "none", WebkitOverflowScrolling: "touch",
+        }}>
           <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />
-          <span className="toolbar-title">🏁 DRIVE</span>
-          <div className="toolbar-sep" />
-          {/* Nav principal */}
-          <div className="escalao-pills">
+          <span className="toolbar-title" style={{ flexShrink: 0 }}>🏁 DRIVE</span>
+          <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+          {([
+            { key: "torneios",      label: "Torneios" },
+            { key: "ranking-pja",   label: "📊 Ranking PJA" },
+            { key: "ranking-sub12", label: "🏅 Ranking Sub-12" },
+          ] as const).map(({ key, label }) => (
+            <button key={key}
+              className={"tourn-tab tourn-tab-sm" + (navMode === key ? " active" : "")}
+              onClick={() => { setNavMode(key); setSeries("tour"); setYearFilter(null); setSelectedGroupKey(null); setRoundIdx(0); }}
+              style={navMode === key
+                ? { flexShrink: 0 }
+                : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+              {label}
+            </button>
+          ))}
+          {navMode === "torneios" && (<>
+            <div className="toolbar-sep" style={{ flexShrink: 0 }} />
             {([
-              { key: "torneios",      label: "Torneios" },
-              { key: "ranking-pja",   label: "📊 Ranking PJA" },
-              { key: "ranking-sub12", label: "🏅 Ranking Sub-12" },
+              { key: "all",       label: "Todos" },
+              { key: "tour",      label: "🏌️ Tour" },
+              { key: "challenge", label: "⚡ Challenge" },
+              { key: "aquapor",   label: "💧 AQUAPOR" },
             ] as const).map(({ key, label }) => (
               <button key={key}
-                className={"tourn-tab tourn-tab-sm" + (navMode === key ? " active" : "")}
-                onClick={() => { setNavMode(key); setSeries("tour"); setYearFilter(null); setSelectedGroupKey(null); setRoundIdx(0); }}
-                style={navMode === key ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
-                {label}
+                className={"tourn-tab tourn-tab-sm" + (series === key ? " active" : "")}
+                onClick={() => { setSeries(key); setRegionFilter(null); setEscFilter([]); setSelectedGroupKey(null); setRoundIdx(0); if (key === "all" && !yearFilter) setYearFilter(availYears[0] ?? null); }}
+                style={series === key
+                  ? { flexShrink: 0 }
+                  : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                {label}{key !== "all" ? ` (${key === "tour" ? countTour : key === "challenge" ? countChall : countAquapor})` : ""}
               </button>
             ))}
-          </div>
-          {navMode === "torneios" && (
-            <>
-              <div className="toolbar-sep" />
-              <div className="escalao-pills">
-                {([
-                  { key: "all",       label: "Todos" },
-                  { key: "tour",      label: "🏌️ Tour" },
-                  { key: "challenge", label: "⚡ Challenge" },
-                  { key: "aquapor",   label: "💧 AQUAPOR" },
-                ] as const).map(({ key, label }) => (
-                  <button key={key}
-                    className={"tourn-tab tourn-tab-sm" + (series === key ? " active" : "")}
-                    onClick={() => { setSeries(key); setRegionFilter(null); setEscFilter([]); setSelectedGroupKey(null); setRoundIdx(0); if (key === "all" && !yearFilter) setYearFilter(availYears[0] ?? null); }}
-                    style={series === key ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
-                    {label}{key !== "all" ? ` (${key === "tour" ? countTour : key === "challenge" ? countChall : countAquapor})` : ""}
-                  </button>
-                ))}
-              </div>
-            </>
-          )}
-        </div>
-
-        {/* ── LINHA 1, col 2: sep + anos + sep + Manuel ── */}
-        <div style={{ display: "flex", alignItems: "center", gap: 4, padding: "6px 0" }}>
-          {navMode === "torneios" && availYears.length > 1 && (<>
-            <div className="toolbar-sep" />
-            <div className="escalao-pills" style={{ gap: 3 }}>
+            {availYears.length > 1 && (<>
+              <div className="toolbar-sep" style={{ flexShrink: 0 }} />
               {availYears.map(y => (
                 <button key={y}
                   className={"tourn-tab tourn-tab-sm" + (activeYear === y ? " active" : "")}
                   onClick={() => { setYearFilter(y === activeYear && availYears.length > 1 ? null : y); setSelectedGroupKey(null); setRoundIdx(0); }}
-                  style={activeYear === y ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                  style={activeYear === y
+                    ? { flexShrink: 0 }
+                    : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
                   {y}
                 </button>
               ))}
-            </div>
-            <div className="toolbar-sep" />
-            <button
-              className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
-              onClick={() => setFilterManuel(v => !v)}
-              style={filterManuel
-                ? { background: "var(--bg-success-subtle)", borderColor: "var(--color-good)", color: "var(--color-good-dark)", whiteSpace: "nowrap" }
-                : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)", whiteSpace: "nowrap" }}>
-              ★ Manuel
-            </button>
+              <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+              <button
+                className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
+                onClick={() => setFilterManuel(v => !v)}
+                style={filterManuel
+                  ? { flexShrink: 0, background: "var(--bg-success-subtle)", borderColor: "var(--color-good)", color: "var(--color-good-dark)", whiteSpace: "nowrap" }
+                  : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)", whiteSpace: "nowrap" }}>
+                ★ Manuel
+              </button>
+            </>)}
           </>)}
-        </div>
-
-        {/* ── LINHA 1, col 3: sc + lastUpdated ── */}
-        <div className="toolbar-right" style={{ borderBottom: "none" }}>
+          <div style={{ flex: 1, minWidth: 8 }} />
+          {/* Contadores à direita */}
           {navMode === "torneios" && data.totalScorecards > 0 && (
-            <span className="chip" style={{ background: "var(--bg-success-strong)", color: "var(--color-good-dark)" }}>
+            <span className="chip" style={{ flexShrink: 0, background: "var(--bg-success-strong)", color: "var(--color-good-dark)" }}>
               📊 {data.totalScorecards} sc
             </span>
           )}
-          {data.lastUpdated && <span className="muted fs-10" style={{ whiteSpace:"nowrap" }}>{data.lastUpdated}</span>}
+          {data.lastUpdated && <span className="muted fs-10" style={{ whiteSpace: "nowrap", flexShrink: 0 }}>{data.lastUpdated}</span>}
         </div>
 
-        {/* ── LINHA 2, col 1: regiões (só em Torneios) ── */}
+        {/* Linha 2: regiões + escalões — scroll horizontal */}
         {navMode === "torneios" && (availRegions.length > 1 || availEscs.length > 0) && (
-          <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", padding: "4px 12px", borderTop: "1px solid var(--border-light)" }}>
-            {availRegions.length > 1 && (
-              <div className="escalao-pills gap-4">
-                <button className={"tourn-tab tourn-tab-sm" + (regionFilter === null ? " active" : "")}
-                  onClick={() => setRegionFilter(null)}>
-                  Todas ({countEvents(seriesT)})
-                </button>
-                {availRegions.map(reg => {
-                  const rt = seriesT.filter(t => t.region === reg.id);
-                  return (
-                    <button key={reg.id}
-                      className={"tourn-tab tourn-tab-sm" + (regionFilter === reg.id ? " active" : "")}
-                      onClick={() => setRegionFilter(reg.id)}
-                      style={regionFilter === reg.id ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
-                      {reg.emoji} {reg.label} ({countEvents(rt)}T · {uniquePC(rt)} jog)
-                    </button>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* ── LINHA 2, col 2: sep + escalões — alinha exactamente com os anos acima ── */}
-        {navMode === "torneios" && (availRegions.length > 1 || availEscs.length > 0) && (
-          <div style={{ display: "flex", alignItems: "center", gap: 4, padding: "4px 0", borderTop: "1px solid var(--border-light)" }}>
-            <div className="toolbar-sep" />
-            <div className="escalao-pills gap-4" style={{ flexWrap: "nowrap" }}>
-              <button className={"tourn-tab tourn-tab-sm" + (escFilter.length === 0 ? " active" : "")}
-                onClick={() => setEscFilter([])}>
-                Todos ({uniquePCRegion} jog)
+          <div style={{
+            display: "flex", alignItems: "center", gap: 6,
+            padding: "4px 10px 6px", overflowX: "auto", flexWrap: "nowrap",
+            scrollbarWidth: "none", WebkitOverflowScrolling: "touch",
+            borderTop: "1px solid var(--border-light)",
+          }}>
+            {availRegions.length > 1 && (<>
+              <button className={"tourn-tab tourn-tab-sm" + (regionFilter === null ? " active" : "")}
+                onClick={() => setRegionFilter(null)} style={{ flexShrink: 0 }}>
+                Todas ({countEvents(seriesT)})
               </button>
-              {(["Sub 10","Sub 12","Sub 14","Sub 16","Sub 18","Absoluto","Sénior"] as const).map(e => {
-                const available = availEscs.includes(e);
-                const on = escFilter.includes(e);
-                if (!available) return (
-                  <span key={e} className="tourn-tab tourn-tab-sm"
-                    style={{ background: "var(--bg-muted)", color: "var(--text-muted)", borderColor: "var(--border)", opacity: 0.35, cursor: "default", pointerEvents: "none" }}>
-                    {e}
-                  </span>
-                );
+              {availRegions.map(reg => {
+                const rt = seriesT.filter(t => t.region === reg.id);
                 return (
-                  <button key={e}
-                    className={"tourn-tab tourn-tab-sm" + (on ? " active" : "")}
-                    onClick={() => setEscFilter(prev => on ? prev.filter(x => x !== e) : [...prev, e])}
-                    style={on ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
-                    {e}
+                  <button key={reg.id}
+                    className={"tourn-tab tourn-tab-sm" + (regionFilter === reg.id ? " active" : "")}
+                    onClick={() => setRegionFilter(reg.id)}
+                    style={regionFilter === reg.id
+                      ? { flexShrink: 0 }
+                      : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                    {reg.emoji} {reg.label} ({countEvents(rt)}T · {uniquePC(rt)} jog)
                   </button>
                 );
               })}
-            </div>
+              <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+            </>)}
+            <button className={"tourn-tab tourn-tab-sm" + (escFilter.length === 0 ? " active" : "")}
+              onClick={() => setEscFilter([])} style={{ flexShrink: 0 }}>
+              Todos ({uniquePCRegion} jog)
+            </button>
+            {(["Sub 10","Sub 12","Sub 14","Sub 16","Sub 18","Absoluto","Sénior"] as const).map(e => {
+              const available = availEscs.includes(e);
+              const on = escFilter.includes(e);
+              if (!available) return (
+                <span key={e} className="tourn-tab tourn-tab-sm"
+                  style={{ flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-muted)", borderColor: "var(--border)", opacity: 0.35, cursor: "default", pointerEvents: "none" }}>
+                  {e}
+                </span>
+              );
+              return (
+                <button key={e}
+                  className={"tourn-tab tourn-tab-sm" + (on ? " active" : "")}
+                  onClick={() => setEscFilter(prev => on ? prev.filter(x => x !== e) : [...prev, e])}
+                  style={on
+                    ? { flexShrink: 0 }
+                    : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                  {e}
+                </button>
+              );
+            })}
           </div>
         )}
-
-        {/* ── LINHA 2, col 3: espaço vazio para manter alinhamento ── */}
-        {navMode === "torneios" && (availRegions.length > 1 || availEscs.length > 0) && (
-          <div style={{ borderTop: "1px solid var(--border-light)" }} />
-        )}
       </div>
+
 
       {/* ══════════════════════════════════════════
           MODO SUB-12
