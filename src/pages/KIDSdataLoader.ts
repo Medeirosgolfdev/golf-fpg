@@ -774,6 +774,136 @@ function processUskidsCompleto(data: unknown): AutoRivalPlayer[] {
   return all;
 }
 
+// ── Abreviatura de nome de torneio USKids ─────────────────────────
+function shortenTournName(name: string): string {
+  const n = name.trim();
+  // World Championship
+  if (/world championship/i.test(n)) { const y = n.match(/\d{4}/)?.[0]; return y ? `WC ${y.slice(2)}` : "WC"; }
+  // European Championship
+  if (/european championship/i.test(n)) { const y = n.match(/\d{4}/)?.[0]; return y ? `EC ${y.slice(2)}` : "EC"; }
+  // Venice Open
+  if (/venice/i.test(n)) { const y = n.match(/\d{4}/)?.[0]; return y ? `Venice ${y.slice(2)}` : "Venice"; }
+  // Marco Simone
+  if (/marco simone/i.test(n)) { const y = n.match(/\d{4}/)?.[0]; return y ? `Marco ${y.slice(2)}` : "Marco"; }
+  // Rome
+  if (/rome/i.test(n)) { const y = n.match(/\d{4}/)?.[0]; return y ? `Rome ${y.slice(2)}` : "Rome"; }
+  // Red White Blue
+  if (/red white/i.test(n)) { const y = n.match(/\d{4}/)?.[0]; return y ? `RWB ${y.slice(2)}` : "RWB"; }
+  // El Prat
+  if (/prat/i.test(n)) return "El Prat";
+  // Genérico: primeiras 10 letras + ano se houver
+  const y = n.match(/\d{4}/)?.[0];
+  const base = n.replace(/\d{4}/g,"").trim().slice(0, 10).trim();
+  return y ? `${base} ${y.slice(2)}` : base;
+}
+
+// ── processMemberHistory ──────────────────────────────────────────
+// Converte uskids-member-history.json em AutoRivalPlayer[].
+// Cada jogador × torneio gera uma entrada com tid = usk{tcode}_b{minAge}.
+// Usado como fonte complementar: fornece torneios não cobertos pelos
+// ficheiros uskids_torneios_completos ou uskids-results.json.
+function processMemberHistory(data: unknown): AutoRivalPlayer[] {
+  const d = data as {
+    gerado_em: string;
+    torneios: Record<string, { name: string }>;
+    jogadores: Record<string, {
+      name: string; country: string; place: string; ageGroup: string;
+      torneios: Record<string, {
+        name: string; startDate: string; endDate: string;
+        totalRounds: number; holesPerRound: number;
+        par: number[] | null; yards: number[] | null;
+        ageGroup: string; status: number;
+        place: number; totalStrokes: number; points: number;
+        rounds: Record<string, { strokes: number[]; gross: number; holes: number }>;
+      }>;
+    }>;
+  };
+
+  const all: AutoRivalPlayer[] = [];
+
+  for (const player of Object.values(d.jogadores || {})) {
+    // Ignorar jogadores sem nome identificado
+    if (!player.name || player.name === "?" || player.name === null) continue;
+
+    const r: Record<string, AutoTournResult> = {};
+
+    for (const [tcodeStr, tourn] of Object.entries(player.torneios || {})) {
+      // Extrair idade mínima do escalão: "Boys 12" → 12, "Boys 13-14" → 13
+      const agMatch = (tourn.ageGroup || "").match(/boys\s+(\d+)/i);
+      if (!agMatch) continue;
+      const minAge = parseInt(agMatch[1]);
+      // Apenas Boys 9-13 (foco do tracker)
+      if (minAge < 9 || minAge > 13) continue;
+
+      const tcode = parseInt(tcodeStr);
+      if (isNaN(tcode)) continue;
+
+      const tid = `usk${tcode}_b${minAge}`;
+
+      // Registar nome do torneio em uskTournNames (se ainda não conhecido)
+      if (!uskTournNames.has(`usk${tcode}`)) {
+        const ds = tourn.startDate || "";
+        const dp = ds.split("/");
+        let dateExact = "";
+        let dateLabel = "";
+        if (dp.length === 3) {
+          dateExact = `${dp[2]}-${dp[0].padStart(2,"0")}-${dp[1].padStart(2,"0")}`;
+          const yr = parseInt(dp[2]);
+          const mo = parseInt(dp[0]);
+          if (yr > 0 && mo >= 1 && mo <= 12)
+            dateLabel = `${MONTHS_PT[mo - 1]} ${yr}`;
+        }
+        const tname = tourn.name || `t=${tcode}`;
+        uskTournNames.set(`usk${tcode}`, {
+          name: tname,
+          short: shortenTournName(tname),
+          date: dateLabel,
+          dateExact,
+        });
+      }
+
+      // Construir rd[] a partir dos grosses por ronda
+      const rdEntries = Object.entries(tourn.rounds || {})
+        .sort(([a], [b]) => Number(a) - Number(b));
+      const rd = rdEntries.map(([, rnd]) => rnd.gross).filter(g => g > 0);
+      if (!rd.length) continue;
+
+      const t = rd.reduce((a, b) => a + b, 0);
+
+      // Calcular to-par a partir do par[] por buraco
+      let tp: number | null = null;
+      const parArr = Array.isArray(tourn.par) ? tourn.par : [];
+      if (parArr.length > 0) {
+        const parPerRound = parArr.reduce((a, b) => a + b, 0);
+        if (parPerRound > 0) tp = t - parPerRound * rd.length;
+      }
+
+      // Posição (place=0 ou negativo = sem posição / WD)
+      const p = (tourn.place != null && tourn.place > 0) ? tourn.place : null;
+
+      // Scorecards buraco-a-buraco (se disponíveis e par conhecido)
+      if (parArr.length > 0) {
+        const holeRounds = rdEntries
+          .map(([, rnd]) => rnd.strokes || [])
+          .filter(s => s.length === (tourn.holesPerRound || 18) && s.some(v => v > 0));
+        if (holeRounds.length > 0) {
+          addScorecard(normName(player.name), {
+            tid, playerName: player.name, par: parArr, si: [], meters: [], rounds: holeRounds,
+          });
+        }
+      }
+
+      r[tid] = { p, t, tp, rd, ageGroup: tourn.ageGroup };
+    }
+
+    if (Object.keys(r).length === 0) continue;
+
+    all.push({ n: player.name, co: co(player.country || ""), r });
+  }
+
+  return all;
+}
+
 export type LoadProgress = { done: number; total: number; label: string };
 
 // Cache da Promise de buildAutoRivals — garante que USKIDSPage e KIDSPage
@@ -817,7 +947,7 @@ async function _buildAutoRivalsInternal(
   // Todos os ficheiros a carregar, com label e processador
   type FileTask =
     | { kind: "wjgc"; tid: string; file: string }
-    | { kind: "doral" | "uskids" | "pull"; file: string }
+    | { kind: "doral" | "uskids" | "pull" | "memberHist"; file: string }
     | { kind: "completo"; file: string };
 
   const tasks: FileTask[] = [
@@ -829,10 +959,14 @@ async function _buildAutoRivalsInternal(
     { kind: "wjgc", tid: "eowagr25_b910", file: "eowagr25_contest13.json" },
     { kind: "wjgc", tid: "eowagr25",      file: "eowagr25_scorecards.json" },
     { kind: "wjgc", tid: "eowagr25_b1314",file: "eowagr25_contest77.json" },
-    { kind: "doral",  file: "ftm_doral_2025.json" },
-    { kind: "doral",  file: "ftm_doral_2024.json" },
-    { kind: "uskids", file: "uskids-results.json" },
-    { kind: "pull",   file: "pull-torneios000.json" },
+    { kind: "doral",      file: "ftm_doral_2025.json" },
+    { kind: "doral",      file: "ftm_doral_2024.json" },
+    { kind: "uskids",     file: "uskids-results.json" },
+    { kind: "pull",       file: "pull-torneios000.json" },
+    // member history: carrega uskids-member-history-001.json até -NNN.json
+    ...Array.from({ length: 30 }, (_, i) =>
+      ({ kind: "memberHist" as const, file: `uskids-member-history-${String(i+1).padStart(3,'0')}.json` })
+    ),
     ...Array.from({ length: 19 }, (_, i) =>
       ({ kind: "completo" as const, file: `uskids_torneios_completos(${i + 1}).json` })
     ),
@@ -847,6 +981,7 @@ async function _buildAutoRivalsInternal(
     if (t.kind === "doral") return "Doral";
     if (t.kind === "uskids") return "USKids Results";
     if (t.kind === "pull") return "Torneios PT";
+    if (t.kind === "memberHist") return "Member History";
     const m = t.file.match(/\((\d+)\)/);
     return m ? `USKids #${m[1]}` : t.file;
   };
@@ -861,11 +996,12 @@ async function _buildAutoRivalsInternal(
   await Promise.all(tasks.map(async task => {
     try {
       const d = await fetchJson(`${base}${task.file}`);
-      if (task.kind === "wjgc")    mergeInto(map, processWjgc(d, task.tid));
-      if (task.kind === "doral")   mergeInto(map, processDoral(d));
-      if (task.kind === "uskids")  mergeInto(map, processUskids(d));
-      if (task.kind === "pull")    mergeInto(map, processPullTorneios(d));
-      if (task.kind === "completo") mergeInto(map, processUskidsCompleto(d));
+      if (task.kind === "wjgc")       mergeInto(map, processWjgc(d, task.tid));
+      if (task.kind === "doral")      mergeInto(map, processDoral(d));
+      if (task.kind === "uskids")     mergeInto(map, processUskids(d));
+      if (task.kind === "pull")       mergeInto(map, processPullTorneios(d));
+      if (task.kind === "completo")   mergeInto(map, processUskidsCompleto(d));
+      if (task.kind === "memberHist") mergeInto(map, processMemberHistory(d));
     } catch { /* ficheiro não existe ou erro — ignorar */ }
     report(labelFor(task));
   }));
