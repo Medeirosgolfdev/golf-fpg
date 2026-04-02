@@ -8,15 +8,12 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { loadPlayers } from "../data/loader";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from "recharts";
 import { SC, sdClassByHcp, scClass } from "../utils/scoreDisplay";
-import {
-  isManuel as _isManuelPrim,
-} from "../ui/tournamentPrimitives";
 import { calcAGS, expectedSD9 } from "../utils/whsCalc";
 import { fmtToPar } from "../utils/format";
 import { isCalUnlocked } from "../utils/authConstants";
 import { resolveFedsInTournaments , buildEscLookup, resolveEscFromLookup } from "../utils/playerUtils";
 import PasswordGate from "../ui/PasswordGate";
-import { TournSidebarItem, type SidebarItemTournament, SSERRA_CCODE as _SSERRA } from "../ui/TournSidebarItem";
+import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
 import { PILL_TCODE, EscPill, SIDEBAR_ACCENT } from "../ui/PillBadge";
 import SidebarToggle from "../ui/SidebarToggle";
 import { useMasterDetail } from "../hooks/useMasterDetail";
@@ -28,7 +25,7 @@ import { C } from "../utils/colors";
 import { CrossSeasonTable, SortTh as _CSortTh } from "../ui/CrossSeasonTable";
 // Wrapper que aceita style (não incluído nos props originais de SortTh)
 const CSortTh = _CSortTh as React.ComponentType<React.ComponentProps<typeof _CSortTh> & { style?: React.CSSProperties }>;
-import { MultiRoundLeaderboard, type MultiRoundRow as MRRow } from "../ui/MultiRoundLeaderboard";
+import { MultiRoundLeaderboard } from "../ui/MultiRoundLeaderboard";
 import {
   isManuel,
   fmtTP,
@@ -1876,7 +1873,6 @@ function ToParSpan({ tp }: { tp: number | null }) {
   return <span style={{ fontWeight: 700, fontSize: 11, color }}>{fmtToPar(tp)}</span>;
 }
 
-const _STICKY_NAME_W = 170;
 const _STICKY_HCP_W  = 48;
 const STICKY_BG      = "var(--bg-card)";
 const STICKY_BG_HEAD = "var(--bg-topbar)";

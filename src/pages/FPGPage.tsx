@@ -20,7 +20,7 @@ import { loadPlayers } from "../data/loader";
 import { scClass } from "../utils/scoreDisplay";
 import { buildEscLookup, type EscLookup } from "../utils/playerUtils";
 import { getTeeHex } from "../utils/teeColors";
-import { PILL_SSERRA, PILL_ROUND, SIDEBAR_ACCENT, EscPill, ESC_STYLE, PillBadge } from "../ui/PillBadge";
+import { PILL_SSERRA, SIDEBAR_ACCENT, EscPill, ESC_STYLE, PillBadge } from "../ui/PillBadge";
 import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
 import SexBadge from "../ui/SexBadge";
 import SidebarToggle from "../ui/SidebarToggle";
@@ -642,7 +642,7 @@ function normalizePlayer(p: any): Player {
 }
 
 /** Expand multi-round: 1 torneio → R1 + R2 + ... + Total */
-function expandMultiRound(t: Tournament): Tournament[] {
+export function expandMultiRound(t: Tournament): Tournament[] {
   const nRounds = t.rounds || 1;
   const hasMulti = t.players.some(p => (p.roundScores?.length ?? 0) > 1);
   if (nRounds <= 1 || !hasMulti) return [t];
