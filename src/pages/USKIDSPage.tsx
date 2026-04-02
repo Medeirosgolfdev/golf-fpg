@@ -1,3 +1,4 @@
+// @refresh reset
 import { useEffect, useState, useMemo, useCallback, useTransition } from "react";
 import SidebarToggle from "../ui/SidebarToggle";
 import { useMasterDetail } from "../hooks/useMasterDetail";
@@ -9,6 +10,8 @@ import { MONTHS_PT, isoDate, fmtDate, fmtToPar } from "../utils/format";
 import { flag, normCountry } from "../utils/flagUtils";
 import EmptyState from "../ui/EmptyState";
 import { tpColor, isManuel as _isManuel } from "../ui/tournamentPrimitives";
+import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
+import { SIDEBAR_ACCENT, ManuelPill } from "../ui/PillBadge";
 /** Wrapper: isManuel para contexto USKids onde o identificador é o nome (string) */
 const isManuel = (nome: string): boolean => _isManuel({ name: nome });
 import {
@@ -3457,6 +3460,7 @@ export default function USKidsFieldPage() {
   const [tab,         setTab]         = useState<Tab>(locationRival ? "rivais" : "campo");
     const md = useMasterDetail();
   const [selectedRival, setSelectedRival] = useState<string | null>(locationRival ?? null);
+  const [filterManuel, setFilterManuel] = useState(true);
   const [sidebarRivalSearch, setSidebarRivalSearch] = useState("");
   const [erro,        setErro]        = useState<string | null>(null);
   const [selectedT,   setSelectedT]   = useState<number | null>(null);
@@ -3580,6 +3584,8 @@ export default function USKidsFieldPage() {
       const em = escalaoManuelParaData(t.date_inicio);
       const esc = t.escaloes?.find((e: any) => e.nome === em);
       const ended = isTerminado(t.date_fim, t.date_inicio);
+      // Verificar se Manuel está inscrito na lista de jogadores do escalão
+      const manuelInscrito = esc?.jogadores?.some((j: any) => isManuel(j.nome)) ?? false;
       map.set(t.t, { t: t.t, name: t.name, date: t.date_inicio, dateFim: t.date_fim ?? undefined, temResultados: false, temCampo: true,
         inscritos: esc?.inscritos, maximo: esc?.maximo, vagas: esc?.vagas, escalaoManuel: em,
         rondas: t.rondas ?? undefined,
@@ -3588,28 +3594,66 @@ export default function USKidsFieldPage() {
         totalInscritos: t.total_inscritos ?? undefined,
         totalMaximo: t.total_maximo ?? undefined,
         terminado: ended,
+        manuelJogou: manuelInscrito,
       });
     }
     for (const t of torneiosResultados) {
       if (!t.t || !t.name) continue;
-      if (!isUSKidsTorneio(t.name)) continue; // Filtrar torneios não-USKids
-      // Determinar se o Manuel jogou: recalcular SEMPRE pelos nomes reais (não confiar
-      // em is_manuel do JSON — foi gerado pelo pipeline com a lógica antiga que só
-      // verificava "medeiros", podendo ter marcado outro jogador erroneamente)
+      if (!isUSKidsTorneio(t.name)) continue;
       const manuelJogou = t.escaloes?.some((e: EscalaoResult) =>
         e.rondas?.some((r: RondaResult) =>
           (r.leaderboard ?? r.jogadores ?? []).some((j: RondaJogador) => isManuel(j.nome))
         )
       ) ?? false;
+      // Posição e score do Manuel (última ronda do seu escalão)
+      let manuelPos: number | null = null;
+      let manuelScore: number | null = null;
+      if (manuelJogou) {
+        const escalaoM = t.escaloes?.find((e: EscalaoResult) =>
+          e.rondas?.some((r: RondaResult) =>
+            (r.leaderboard ?? r.jogadores ?? []).some((j: RondaJogador) => isManuel(j.nome))
+          )
+        );
+        const lastRonda = escalaoM?.rondas?.[escalaoM.rondas.length - 1];
+        const lb = lastRonda?.leaderboard ?? lastRonda?.jogadores ?? [];
+        const sorted = [...lb].sort((a, b) => b.pontos - a.pontos || a.score - b.score);
+        const mIdx = sorted.findIndex(j => isManuel(j.nome));
+        if (mIdx >= 0) { manuelPos = mIdx + 1; manuelScore = sorted[mIdx].score; }
+      }
       const ended = isTerminado(t.date_fim, t.date_inicio);
+      const rondasTotal = t.rondas_total ?? (t.escaloes?.[0]?.rondas?.length ?? 1);
+      // Total de jogadores: soma dos participantes na última ronda de cada escalão
+      const totalJogadores = t.escaloes?.reduce((sum: number, e: EscalaoResult) => {
+        const lastR = e.rondas?.[e.rondas.length - 1];
+        return sum + ((lastR?.leaderboard ?? lastR?.jogadores ?? []).length);
+      }, 0) ?? 0;
+      // Países únicos
+      const paises = new Set<string>();
+      t.escaloes?.forEach((e: EscalaoResult) => {
+        const lastR = e.rondas?.[e.rondas.length - 1];
+        (lastR?.leaderboard ?? lastR?.jogadores ?? []).forEach((j: RondaJogador) => { if (j.pais) paises.add(j.pais); });
+      });
       if (map.has(t.t)) {
-        map.get(t.t)!.temResultados = true;
-        if (t.url_resultados) map.get(t.t)!.urlResultados = t.url_resultados;
-        if (manuelJogou) map.get(t.t)!.manuelJogou = true;
-        if (!map.get(t.t)!.dateFim && t.date_fim) map.get(t.t)!.dateFim = t.date_fim;
-        if (ended) map.get(t.t)!.terminado = true;
+        const entry = map.get(t.t)!;
+        entry.temResultados = true;
+        if (t.url_resultados) entry.urlResultados = t.url_resultados;
+        if (manuelJogou) { entry.manuelJogou = true; (entry as any).manuelPos = manuelPos; (entry as any).manuelScore = manuelScore; }
+        if (!entry.dateFim && t.date_fim) entry.dateFim = t.date_fim;
+        if (ended) entry.terminado = true;
+        if (!entry.rondas) entry.rondas = rondasTotal;
+        if (!entry.campo && t.campo) entry.campo = t.campo;
+        if (totalJogadores > 0) entry.totalInscritos = totalJogadores;
+        (entry as any).nPaises = paises.size;
       } else {
-        map.set(t.t, { t: t.t, name: t.name, date: t.date_inicio, dateFim: t.date_fim ?? undefined, temResultados: true, temCampo: false, urlResultados: t.url_resultados, manuelJogou, terminado: ended });
+        map.set(t.t, {
+          t: t.t, name: t.name, date: t.date_inicio, dateFim: t.date_fim ?? undefined,
+          temResultados: true, temCampo: false, urlResultados: t.url_resultados, manuelJogou,
+          terminado: ended, rondas: rondasTotal,
+          campo: t.campo ?? undefined,
+          totalInscritos: totalJogadores || undefined,
+          ...(manuelJogou ? { manuelPos, manuelScore } as any : {}),
+          nPaises: paises.size,
+        } as any);
       }
     }
     return [...map.values()]
@@ -3647,11 +3691,16 @@ export default function USKidsFieldPage() {
   return (
     <div className="tourn-layout" style={{ height:"calc(100vh - 52px)" }}>
 
-      {/* ── TOOLBAR ── */}
-      <div className="toolbar">
-        <div className="toolbar-left">
+      {/* ── TOOLBAR: grid 2 colunas idêntico ao FPG/Drive ── */}
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "1fr auto",
+        borderBottom: "1px solid var(--border-light)",
+      }}>
+        {/* col 1: sidebar + nav */}
+        <div className="toolbar-left" style={{ borderBottom: "none", padding: "6px 0" }}>
           <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
-          <span className="toolbar-title">🏌️ USKids Golf</span>
+          <span className="toolbar-title">🏌️ USKids</span>
           <div className="toolbar-sep" />
           <div className="escalao-pills">
             {TABS.map(tb => (
@@ -3662,7 +3711,7 @@ export default function USKidsFieldPage() {
                 {tb.label}
                 {tb.badge > 0 && (
                   <span style={{
-                    marginLeft:5, fontSize:10, fontWeight:700, padding:"0 5px", borderRadius:8,
+                    marginLeft:4, fontSize:10, fontWeight:700, padding:"0 5px", borderRadius:8,
                     background: tab === tb.id ? "rgba(255,255,255,0.25)" : "var(--bg-hover)",
                     color: tab === tb.id ? "#fff" : "var(--text-3)",
                   }}>{tb.badge}</span>
@@ -3670,8 +3719,20 @@ export default function USKidsFieldPage() {
               </button>
             ))}
           </div>
+          {(<>
+            <div className="toolbar-sep" />
+            <button
+              className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
+              onClick={() => setFilterManuel(v => !v)}
+              style={filterManuel
+                ? { background:"var(--bg-success-subtle)", borderColor:"var(--color-good)", color:"var(--color-good-dark)", whiteSpace:"nowrap" }
+                : { background:"var(--bg-muted)", color:"var(--text-2)", borderColor:"var(--border)", whiteSpace:"nowrap" }}>
+              ★ Manuel
+            </button>
+          </>)}
         </div>
-        <div className="toolbar-right">
+        {/* col 2: link externo + contador */}
+        <div className="toolbar-right" style={{ borderBottom: "none" }}>
           <a href="https://uskids-golf.vercel.app/" target="_blank" rel="noopener noreferrer"
             style={{
               fontSize:11, fontWeight:600, cursor:"pointer",
@@ -3682,6 +3743,7 @@ export default function USKidsFieldPage() {
             }}>
             Histórico ↗
           </a>
+          <span className="chip">{allTorneios.length} torneios</span>
         </div>
       </div>
 
@@ -3740,13 +3802,12 @@ export default function USKidsFieldPage() {
           ) : (
           /* ── Sidebar: TORNEIOS (default) ── */
           (() => {
-            // Filtrar: no tab "campo", separar terminados dos activos
+            // No tab "campo": só torneios activos/futuros (terminados → só em Resultados)
+            const manuelFilter = (t: typeof allTorneios[0]) =>
+              !filterManuel || t.manuelJogou;
             const activeList = tab === "campo"
-              ? allTorneios.filter(t => !t.terminado)
-              : allTorneios;
-            const endedList = tab === "campo"
-              ? allTorneios.filter(t => t.terminado)
-              : [];
+              ? allTorneios.filter(t => !t.terminado && manuelFilter(t))
+              : allTorneios.filter(manuelFilter);
 
             // agrupar por mês/ano
             const buildMonthMap = (list: typeof allTorneios) => {
@@ -3764,9 +3825,8 @@ export default function USKidsFieldPage() {
               return monthMap;
             };
             const monthMap = buildMonthMap(activeList);
-            const endedMap = buildMonthMap(endedList);
 
-                        const monthLabel = (key: string) => {
+            const monthLabel = (key: string) => {
               if (key === "?") return "Data desconhecida";
               if (key.length === 4) return key; // ano
               const [yr, mo] = key.split("-");
@@ -3784,125 +3844,107 @@ export default function USKidsFieldPage() {
             };
 
             const mainKeys = tab === "resultados"
-              ? sortKeys(monthMap, true)   // resultados: passados primeiro (2023 → 2024 → …)
-              : sortKeys(monthMap);        // campo/rivais: próximos primeiro
-            // Terminados: cronológico inverso (mais recentes primeiro)
-            const endedKeys = sortKeys(endedMap, true);
+              ? sortKeys(monthMap, true)
+              : sortKeys(monthMap);
 
-            const renderGroup = (gmap: Record<string, typeof allTorneios>, keys: string[], dimmed?: boolean) =>
-              keys.map(key => (
-              <div key={key + (dimmed ? "_ended" : "")}>
-                <div className="sidebar-section-title-dark">{monthLabel(key)}</div>
-                {gmap[key].map(t => {
+            const renderItem = (t: typeof allTorneios[0], dimmed?: boolean) => {
                   const active = t.t === selectedT;
                   const temConteudo = tab === "resultados" ? t.temResultados : t.temCampo;
                   const reg = torneioRegiao(t.name);
                   const isEuro = reg === "EURO";
                   const isInvit = !!REGIONAL_CHAMPIONSHIPS[t.t];
                   const pct = t.maximo ? Math.min(100, Math.round(((t.inscritos ?? 0) / t.maximo) * 100)) : 0;
+                  const manuelPos: number | null = (t as any).manuelPos ?? null;
+                  const manuelScore: number | null = (t as any).manuelScore ?? null;
+                  const nPaises: number = (t as any).nPaises ?? 0;
+                  const extraPills = (<>
+                    {reg && (
+                      <span className="p p-sm p-tourn" style={{
+                        background: isEuro ? "var(--bg-info)" : "#fff3e0",
+                        color: isEuro ? "var(--color-info)" : "#e65100",
+                        borderColor: isEuro ? "var(--border-info)" : "#ffcc80",
+                      }}>{reg}</span>
+                    )}
+                    {isInvit && (
+                      <span className="p p-sm p-tourn" style={{
+                        background:"var(--bg-pink)", color:"var(--color-purple)", borderColor:"#e1bee7",
+                      }}>INVIT</span>
+                    )}
+                    {t.escalaoManuel && <span className="p p-sm p-muted">{t.escalaoManuel}</span>}
+                    {nPaises > 1 && <span className="p p-sm p-muted">{nPaises} países</span>}
+                    {t.manuelJogou && <ManuelPill />}
+                    {t.manuelJogou && manuelPos != null && (
+                      <span className="p p-sm p-tourn" style={{
+                        background: manuelPos === 1 ? "#fef3c7" : manuelPos <= 3 ? "#e6f1fb" : "var(--bg-muted)",
+                        color: manuelPos === 1 ? "#92400e" : manuelPos <= 3 ? "#0c447c" : "var(--text-2)",
+                        borderColor: "transparent",
+                      }}>
+                        {manuelPos === 1 ? "🥇" : manuelPos === 2 ? "🥈" : manuelPos === 3 ? "🥉" : `#${manuelPos}`}
+                        {manuelScore != null && ` (${manuelScore > 0 ? "+" : ""}${manuelScore === 0 ? "E" : manuelScore})`}
+                      </span>
+                    )}
+                    {t.urlResultados && (
+                      <a href={t.urlResultados} target="_blank" rel="noopener noreferrer"
+                        onClick={e => e.stopPropagation()}
+                        className="p p-sm p-muted" style={{ textDecoration:"none" }}>
+                        Resultados ↗
+                      </a>
+                    )}
+                  </>);
+                  const tData: SidebarItemTournament = {
+                    name: t.name.replace(/\s*\d{4}$/, ""),
+                    campo: t.campo ? t.campo.split(",")[0] : undefined,
+                    date: isoDate(t.date) || t.date,
+                    playerCount: t.totalInscritos ?? t.inscritos,
+                    rounds: t.rondas,
+                    players: [],
+                    series: "tour",
+                  };
+                  const uskidsFooter = (!dimmed && t.temCampo) ? (<>
+                    {t.maximo != null && t.maximo > 0 && (
+                      <div style={{ marginBottom: 4 }}>
+                        <div style={{ display:"flex", justifyContent:"space-between", marginBottom:3, fontSize:11, color:"var(--text-2)" }}>
+                          <span style={{ fontWeight:600 }}>{t.escalaoManuel}</span>
+                          <span>
+                            {t.inscritos}/{t.maximo}
+                            {(t.vagas ?? 0) > 0
+                              ? <span style={{ color:"var(--color-success)", marginLeft:4 }}>{t.vagas} vagas</span>
+                              : <span style={{ color:"var(--color-danger)", marginLeft:4 }}>cheio</span>}
+                          </span>
+                        </div>
+                        <div style={{ height:4, borderRadius:2, background:"var(--border)", overflow:"hidden" }}>
+                          <div style={{ height:"100%", borderRadius:2, width:`${pct}%`, background:"var(--accent)" }} />
+                        </div>
+                      </div>
+                    )}
+                    {(t.totalMaximo ?? 0) > 0 && (
+                      <div style={{ fontSize:11, color:"var(--text-3)", display:"flex", justifyContent:"space-between", marginBottom:3 }}>
+                        <span>Total: {t.totalInscritos}/{t.totalMaximo}</span>
+                        {t.fee && <span>${t.fee.toFixed(0)}</span>}
+                      </div>
+                    )}
+                  </>) : null;
                   return (
-                    <button key={t.t}
-                      onClick={() => {
-                        setSelectedT(t.t); md.onSelect();
-                        // Torneio terminado com resultados → mudar para tab resultados
-                        if (dimmed && t.temResultados && tab === "campo") handleTabChange("resultados");
-                      }}
-                      className={`course-item${active ? " active" : ""}`}
-                      style={{ opacity: dimmed ? 0.55 : (temConteudo ? 1 : 0.45), width:"100%", textAlign:"left" }}>
-
-                      {/* Linha 1: nome + badges à direita */}
-                      <div style={{ display:"flex", alignItems:"flex-start", gap:4, marginBottom:3 }}>
-                        <span style={{ flex:1, minWidth:0, fontWeight: active ? 700 : 500, fontSize:12, lineHeight:1.3 }}>
-                          {t.name.replace(/\s*\d{4}$/, "")}
-                        </span>
-                        <div style={{ display:"flex", gap:2, flexShrink:0, paddingTop:1, flexWrap:"wrap", justifyContent:"flex-end" }}>
-                          {reg && (
-                            <span style={{
-                              fontSize:10, fontWeight:800, padding:"1px 5px", borderRadius:4,
-                              background: isEuro ? "var(--bg-info)" : "#fff3e0",
-                              color: isEuro ? "var(--color-info)" : "#e65100",
-                              border:`1px solid ${isEuro ? "var(--border-info)" : "#ffcc80"}`,
-                              whiteSpace:"nowrap",
-                            }}>{reg}</span>
-                          )}
-                          {isInvit && (
-                            <span style={{
-                              fontSize:10, fontWeight:800, padding:"1px 5px", borderRadius:4,
-                              background:"var(--bg-pink)", color:"var(--color-purple)", border:"1px solid #e1bee7",
-                              whiteSpace:"nowrap",
-                            }}>INVIT</span>
-                          )}
-                          {t.temResultados && <span style={{ fontSize:11 }}>🏆</span>}
-                        </div>
-                      </div>
-
-                      {/* Linha 2: campo */}
-                      {t.campo && (
-                        <div style={{ fontSize:11, color:"var(--text-2)", fontWeight:500, marginBottom:3 }}>
-                          📍 {t.campo.split(',')[0]}
-                        </div>
-                      )}
-
-                      {/* Linha 3: data · rondas · escalão */}
-                      <div style={{ fontSize:11, color:"var(--text-muted)", marginBottom:3, display:"flex", gap:4, flexWrap:"wrap" }}>
-                        <span>{fmtDate(t.date)}</span>
-                        {t.rondas && <span>· {t.rondas}R</span>}
-                        {t.escalaoManuel && <span>· {t.escalaoManuel}</span>}
-                      </div>
-
-                      {/* Linha 4b: pill Manuel jogou */}
-                      {t.manuelJogou && (
-                        <span title="Manuel participou neste torneio" style={{
-                          display:"inline-block", marginBottom:3,
-                          fontSize:10, fontWeight:700,
-                          background:"var(--bg-success-subtle)", color:"var(--color-good-dark)",
-                          borderRadius:6, padding:"2px 8px",
-                          border:"1px solid var(--color-good)",
-                        }}>★ Manuel</span>
-                      )}
-
-                      {/* Linha 4: barra de inscritos */}
-                      {!dimmed && t.temCampo && t.maximo != null && t.maximo > 0 && (
-                        <div style={{ marginTop:4 }}>
-                          <div style={{ display:"flex", justifyContent:"space-between", marginBottom:3, fontSize:11, color:"var(--text-2)" }}>
-                            <span style={{ fontWeight:600 }}>{t.escalaoManuel}</span>
-                            <span>
-                              {t.inscritos}/{t.maximo}
-                              {(t.vagas ?? 0) > 0
-                                ? <span style={{ color:"var(--color-success)", marginLeft:4 }}>{t.vagas} vagas</span>
-                                : <span style={{ color:"var(--color-danger)", marginLeft:4 }}>cheio</span>}
-                            </span>
-                          </div>
-                          <div style={{ height:4, borderRadius:2, background:"var(--border)", overflow:"hidden" }}>
-                            <div style={{ height:"100%", borderRadius:2, width:`${pct}%`, background:"var(--accent)" }} />
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Linha 5: total + fee */}
-                      {!dimmed && t.temCampo && (t.totalMaximo ?? 0) > 0 && (
-                        <div style={{ fontSize:11, marginTop:4, color:"var(--text-3)", display:"flex", justifyContent:"space-between" }}>
-                          <span>Total: {t.totalInscritos}/{t.totalMaximo}</span>
-                          {t.fee && <span>${t.fee.toFixed(0)}</span>}
-                        </div>
-                      )}
-
-                    </button>
+                    <div key={t.t} style={{ opacity: dimmed ? 0.55 : (temConteudo ? 1 : 0.45) }}>
+                      <TournSidebarItem
+                        t={tData}
+                        isActive={active}
+                        onClick={() => { setSelectedT(t.t); md.onSelect(); }}
+                        accentColor={t.manuelJogou ? SIDEBAR_ACCENT.pja : SIDEBAR_ACCENT.tour}
+                        extraPills={extraPills}
+                        footer={uskidsFooter}
+                      />
+                    </div>
                   );
-                })}
-              </div>
-            ));
-            return <>
-              {renderGroup(monthMap, mainKeys)}
-              {endedKeys.length > 0 && (
-                <>
-                  <div className="sidebar-section-title-dark" style={{ color:"var(--text-muted)", fontStyle:"italic", borderTop:"2px solid var(--border)" }}>
-                    Terminados
-                  </div>
-                  {renderGroup(endedMap, endedKeys, true)}
-                </>
-              )}
-            </>;
+            };
+            const renderGroup = (gmap: Record<string, typeof allTorneios>, keys: string[], dimmed?: boolean) =>
+              keys.map(key => (
+                <div key={key}>
+                  <div className="sidebar-section-title-dark">{monthLabel(key)}</div>
+                  {gmap[key].map(t => renderItem(t, dimmed))}
+                </div>
+              ));
+            return <>{renderGroup(monthMap, mainKeys)}</>;
           })()
           )}
         </div>

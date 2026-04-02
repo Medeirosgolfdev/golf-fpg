@@ -58,11 +58,13 @@ export interface TournSidebarItemProps {
   onClick: () => void;
   accentColor?: string;
   extraPills?: React.ReactNode;
+  /** Conteúdo extra a mostrar dentro do card, entre os pills e a linha de data/jog */
+  footer?: React.ReactNode;
 }
 
 const Sep = () => <div style={{ height: "0.5px", background: "var(--border-light,rgba(0,0,0,.08))", margin: "4px 0" }} />;
 
-export function TournSidebarItem({ t, isActive, onClick, accentColor, extraPills }: TournSidebarItemProps) {
+export function TournSidebarItem({ t, isActive, onClick, accentColor, extraPills, footer }: TournSidebarItemProps) {
   const nR       = t.rounds || 1;
   const nh       = t.nholes ?? (t.players[0] as any)?.nholes ?? (t.players[0] as any)?.par?.length ?? 18;
   const is9h     = nh <= 9;
@@ -132,6 +134,9 @@ export function TournSidebarItem({ t, isActive, onClick, accentColor, extraPills
       </div>
 
       <Sep />
+
+      {/* Footer extra (conteúdo específico de cada página, ex: barra de inscritos USKids) */}
+      {footer}
 
       {/* Linha 4: data + nº jog */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
