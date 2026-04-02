@@ -20,7 +20,8 @@ import { loadPlayers } from "../data/loader";
 import { scClass } from "../utils/scoreDisplay";
 import { buildEscLookup, type EscLookup } from "../utils/playerUtils";
 import { getTeeHex } from "../utils/teeColors";
-import PillBadge from "../ui/PillBadge";
+import { PILL_SSERRA, PILL_ROUND, SIDEBAR_ACCENT, EscPill, ESC_STYLE, PillBadge } from "../ui/PillBadge";
+import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
 import SexBadge from "../ui/SexBadge";
 import SidebarToggle from "../ui/SidebarToggle";
 import { useMasterDetail } from "../hooks/useMasterDetail";
@@ -29,11 +30,17 @@ import { fmtDate, fmtToPar, MONTHS_PT } from "../utils/format";
 import { toggleArr } from "../utils/mathUtils";
 import { calcAGS, expectedSD9 } from "../utils/whsCalc";
 import { ScorecardLeaderboard, type ScorecardRow } from "../ui/ScorecardLeaderboard";
-import { MultiRoundLeaderboard, EMPTY_FILTER, type MultiRoundRow as MRRow } from "../ui/MultiRoundLeaderboard";
+import { MultiRoundLeaderboard } from "../ui/MultiRoundLeaderboard";
+import { EMPTY_FILTER, type MultiRoundRow as MRRow } from "../ui/multiRoundTypes";
 import { CrossSeasonTable, SortTh as CSortTh } from "../ui/CrossSeasonTable";
 import {
-  MANUEL_FED, isManuel, fmtTP, tpColor,
-  EscPill, TeeDot, TournPName, ESC_STYLE, SDPill,
+  MANUEL_FED,
+  isManuel,
+  fmtTP,
+  tpColor,
+  TeeDot,
+  TournPName,
+  SDPill,
   type PlayersDB,
 } from "../ui/tournamentPrimitives";
 
@@ -490,8 +497,6 @@ const TOURN_PILLS: Record<string, TournPill> = {
   "10019": "PJA",   // Race to Dunas G. Final
 };
 
-const PILL_STYLE_PJA    = { bg: C.navy,    color: C.white };
-const PILL_STYLE_SSERRA = { bg: "#15803d", color: "#fff"  };
 
 const SSERRA_CCODE = "007";
 
@@ -500,22 +505,8 @@ function TournPillBadge({ tcode, dynamicPills }: { tcode?: string; dynamicPills?
   const tcodes = tcode.split("+");
   const pill = tcodes.map(tc => TOURN_PILLS[tc] || dynamicPills?.[tc]).find(Boolean);
   if (!pill) return null;
-  if (pill === "PJA") {
-    return (
-      <span style={{
-        fontSize: 10, fontWeight: 700, borderRadius: 20, padding: "1px 6px",
-        background: PILL_STYLE_PJA.bg, color: PILL_STYLE_PJA.color, whiteSpace: "nowrap",
-      }}>PJA</span>
-    );
-  }
-  if (pill === "SSERRA") {
-    return (
-      <span style={{
-        fontSize: 10, fontWeight: 700, borderRadius: 20, padding: "1px 6px",
-        background: PILL_STYLE_SSERRA.bg, color: PILL_STYLE_SSERRA.color, whiteSpace: "nowrap",
-      }}>SSerra</span>
-    );
-  }
+  if (pill === "PJA")    return <span className="p p-sm p-tourn p-pja">PJA</span>;
+  if (pill === "SSERRA") return <span className="p p-sm p-tourn" style={PILL_SSERRA}>SSerra</span>;
   return <PillBadge pill={pill} />;
 }
 
@@ -635,7 +626,7 @@ function formatPlayerName(raw: string): string {
   return raw;
 }
 
-export function normalizePlayer(p: any): Player {
+function normalizePlayer(p: any): Player {
   const r1: RoundScore | undefined = p.roundScores?.[0];
   return {
     ...p,
@@ -651,7 +642,7 @@ export function normalizePlayer(p: any): Player {
 }
 
 /** Expand multi-round: 1 torneio → R1 + R2 + ... + Total */
-export function expandMultiRound(t: Tournament): Tournament[] {
+function expandMultiRound(t: Tournament): Tournament[] {
   const nRounds = t.rounds || 1;
   const hasMulti = t.players.some(p => (p.roundScores?.length ?? 0) > 1);
   if (nRounds <= 1 || !hasMulti) return [t];
@@ -1561,6 +1552,8 @@ export function AllRoundsScorecardLB({
       </th>
     );
   }
+
+  const postCols = 4; // SD 🐦 Par ■
 
   return (
     <div>
@@ -2811,7 +2804,7 @@ function Content() {
   const [navMode, setNavMode]         = useState<"torneios" | "ranking-pja" | "ranking-sub12">("torneios");
   const [seriesFilter, setSeriesFilter] = useState<"" | "circuit" | "santo" | "clubes">(""); // filtro de série dentro de Torneios
   const [yearFilter, setYearFilter]    = useState<string | null>(null);
-  const [filterManuel, setFilterManuel] = useState(false);
+  const [filterManuel, setFilterManuel] = useState(true);
   const [escLookup, setEscLookup] = useState<EscLookup>(new Map());
   const [playersDB, setPlayersDB] = useState<PlayersDB>({});
 
@@ -2899,6 +2892,44 @@ function Content() {
           if (allT.length === 0) {
             setError(`Ficheiro não encontrado: ${dataUrl(0)}`);
           }
+
+          // Carregar os 3 ficheiros de Clubes em paralelo com o loader principal
+          const CLUBES_FILES_MAIN = [
+            { url: "/data/clubes_sub_14&18_2026.json", year: "2026" },
+            { url: "/data/clubes_sub_14&18_2025.json", year: "2025" },
+            { url: "/data/clubes_sub_14&18_2024.json", year: "2024" },
+          ];
+          const resolveEscKeyMain = (escalao: string | null | undefined): string => {
+            if (escalao && /14/i.test(escalao)) return "sub14";
+            if (escalao && /18/i.test(escalao)) return "sub18";
+            return "sub14";
+          };
+          const clubesResults = await Promise.all(CLUBES_FILES_MAIN.map(async ({ url, year }) => {
+            try {
+              const r = await fetch(url);
+              if (!r.ok) return [];
+              const d: DriveData = await r.json();
+              return (d.tournaments || []).map(t => ({
+                ...t,
+                series: "clubes" as const,
+                _clubesEsc: resolveEscKeyMain((t as any).escalao),
+                _clubesYear: year,
+                players: t.players.map(normalizePlayer),
+              }));
+            } catch { return []; }
+          }));
+          const clubesFlat = clubesResults.flat();
+          // Deduplicar por tcode
+          const seen = new Map<string, Tournament>();
+          for (const t of clubesFlat) seen.set(String(t.tcode), t as Tournament);
+          if (alive) {
+            const uniqueClubes = [...seen.values()];
+            setClubesTournaments(uniqueClubes);
+            setClubesLoaded(true);
+            // Adicionar ao allT para aparecerem em Todos
+            setTournaments([...allT, ...uniqueClubes]);
+          }
+
           setLoading(false);
         }
       } catch {
@@ -2911,9 +2942,9 @@ function Content() {
     return () => { alive = false; };
   }, []);
 
-  // ── Loader Clubes (lazy — só quando o tab é activado) ────────────────────
+  // ── Loader Clubes (D1 — só quando activado, para dados parciais de 2026) ────
   useEffect(() => {
-    if (!(navMode === "torneios" && seriesFilter === "clubes") || clubesLoaded) return;
+    if (!(navMode === "torneios" && (seriesFilter === "clubes" || seriesFilter === "")) || clubesLoaded) return;
     let alive = true;
     setClubesLoading(true);
 
@@ -2965,14 +2996,19 @@ function Content() {
       setClubesLoading(false);
     });
     return () => { alive = false; };
-  }, [navMode, seriesFilter, clubesLoaded]); // clubesLoading fora das deps — evita cleanup prematuro
+  }, [navMode, seriesFilter, clubesLoaded]);
 
   // Lista filtrada por escalão dentro de Clubes, agrupada por ano
   const clubesList = useMemo(
     () => clubesTournaments
-      .filter(t => (t as any)._clubesEsc === clubesEsc)
-      .sort((a, b) => (b as any)._clubesYear?.localeCompare((a as any)._clubesYear) || 0),
-    [clubesTournaments, clubesEsc]
+      .filter(t => !filterManuel || t.players.some(p => isManuel(p)))
+      // Ordenar: ano desc, depois escalão (Sub 14 antes de Sub 18)
+      .sort((a, b) => {
+        const yCmp = ((b as any)._clubesYear ?? "").localeCompare((a as any)._clubesYear ?? "");
+        if (yCmp !== 0) return yCmp;
+        return ((a as any)._clubesEsc ?? "").localeCompare((b as any)._clubesEsc ?? "");
+      }),
+    [clubesTournaments, filterManuel]
   );
   const clubesByYear = useMemo(() => {
     const m: Record<string, Tournament[]> = {};
@@ -2999,12 +3035,12 @@ function Content() {
   const activeYear = yearFilter ?? null;
   const inYear = (t: Tournament) => !activeYear || (t.date || "").startsWith(activeYear);
 
-  // Agrupamento por mês — mostra TODOS os torneios sem excepção
+  // Agrupamento por mês — todos os torneios incluindo Clubes (usados em seriesFilter === "")
   const { groups: monthGroups, groupKeys: monthKeys } = useMemo(() => {
     const g: Record<string, Tournament[]> = {};
     for (const t of displayList) {
       if (!inYear(t)) continue;
-      if (filterManuel && !t.players.some(p => p.fedCode === MANUEL_FED)) continue;
+      if (filterManuel && !t.players.some(p => isManuel(p))) continue;
       if (seriesFilter === "clubes") continue; // clubes tem sidebar própria
       const key = t.date ? t.date.substring(0, 7) : "?";
       if (!g[key]) g[key] = [];
@@ -3028,7 +3064,7 @@ function Content() {
     const byYear: Record<string, Tournament[]> = {};
     for (const t of pjaList) {
       if (!inYear(t)) continue;
-      if (filterManuel && !t.players.some(p => p.fedCode === MANUEL_FED)) continue;
+      if (filterManuel && !t.players.some(p => isManuel(p))) continue;
       const yr = t.date ? t.date.substring(0, 4) : "?";
       if (!byYear[yr]) byYear[yr] = [];
       byYear[yr].push(t);
@@ -3046,7 +3082,7 @@ function Content() {
     const byYear: Record<string, Tournament[]> = {};
     for (const t of santoList) {
       if (!inYear(t)) continue;
-      if (filterManuel && !t.players.some(p => p.fedCode === MANUEL_FED)) continue;
+      if (filterManuel && !t.players.some(p => isManuel(p))) continue;
       const yr = t.date ? t.date.substring(0, 4) : "?";
       if (!byYear[yr]) byYear[yr] = [];
       byYear[yr].push(t);
@@ -3062,116 +3098,58 @@ function Content() {
   }
 
   function renderSidebarItem(t: Tournament) {
-    const idx = displayList.indexOf(t);
-    const isSynth = !!(t as any)._isSynthetic;
-    const subRounds: Tournament[] = (t as any)._subRounds || [];
-    const nR = t.rounds || 1;
-    const nh = t.players[0]?.nholes
-      || t.players[0]?.par?.length
-      || t.players[0]?.roundScores?.[0]?.pars?.length
-      || 18;
-    const manuelPlayed = t.players.some(p => p.fedCode === MANUEL_FED);
+    const isClubesItem = (t as any)._clubesEsc !== undefined;
+    const idx = isClubesItem ? -1 : displayList.indexOf(t);
+    const clubesIdx = isClubesItem ? clubesList.indexOf(t) : -1;
+    const isActive = isClubesItem ? clubesSelected === clubesIdx && seriesFilter === "clubes" : selected === idx;
+    const handleClick = () => {
+      if (isClubesItem) {
+        setSeriesFilter("clubes");
+        if (clubesIdx >= 0) setClubesSelected(clubesIdx);
+      } else {
+        setSelected(idx);
+      }
+      md.onSelect();
+    };
+    // Determinar pill dinâmico (REGIONAL, NACIONAL, etc.)
+    const tcodes = (t.tcode || "").split("+");
+    const pillVal = tcodes.map(tc => TOURN_PILLS[tc] || tcodePills?.[tc]).find(Boolean);
+    const extraPills = pillVal && pillVal !== "PJA" && pillVal !== "SSERRA"
+      ? <span className={`p p-sm p-tourn p-${pillVal.toLowerCase()}`}>{pillVal}</span>
+      : null;
+    // Número de jogadores
+    const nJog = t.playerCount || t.players.filter(p => !isDNS(p)).length;
+    const tData: SidebarItemTournament = {
+      ...(t as any),
+      playerCount: nJog,
+      pill: pillVal,
+    };
     return (
-      <button key={(t as any)._isSynthetic ? "synth_" + t.tcode : t.tcode + "_" + t.date}
-        className={`course-item ${selected === idx ? "active" : ""}`}
-        onClick={() => { setSelected(idx); md.onSelect(); }}>
-
-        {/* Linha 1: título + badges fixos à direita */}
-        <div style={{ display: "flex", alignItems: "baseline", gap: 4, marginBottom: 3 }}>
-          <span className="course-item-name" style={{ flex: 1, minWidth: 0 }}>{t.name}</span>
-          <div style={{ display: "flex", gap: 2, flexShrink: 0, alignItems: "center" }}>
-            {isSynth ? (
-              <>
-                <span title="Torneio agrupado" className="badge-grouped">{nR}R ⛳</span>
-                {subRounds.map((sr, i) => (
-                  <span key={sr.tcode} title={`Dia ${i+1}: ${sr.tcode}`} style={{
-                    fontFamily: "monospace", fontSize: 10, fontWeight: 600,
-                    background: "var(--accent,#2563eb)", color: "#fff",
-                    borderRadius: 3, padding: "0 4px", opacity: selected === idx ? 1 : 0.7,
-                  }}>{sr.tcode}</span>
-                ))}
-              </>
-            ) : (
-              <>
-                {t.ccode && (
-                  <span title="ccode" style={{
-                    fontFamily: "monospace", fontSize: 10, fontWeight: 600,
-                    background: "rgba(0,0,0,0.08)", color: "var(--text-muted)",
-                    borderRadius: 3, padding: "0 4px",
-                  }}>{t.ccode}</span>
-                )}
-                {t.tcode && (
-                  <span title="tcode" style={{
-                    fontFamily: "monospace", fontSize: 10, fontWeight: 700,
-                    background: "var(--accent,#2563eb)", color: "#fff",
-                    borderRadius: 3, padding: "0 4px",
-                    opacity: selected === idx ? 1 : 0.75,
-                  }}>{t.tcode}</span>
-                )}
-                {t.ccode && t.tcode && (
-                  <span
-                    title="Abre a classificação na Federação — abre primeiro a página FPG Torneios"
-                    onClick={e => { e.stopPropagation(); window.open(`https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=${t.ccode}&tcode=${t.tcode}`, "_blank"); }}
-                    style={{
-                      fontSize: 10, fontWeight: 600, cursor: "pointer",
-                      color: "var(--accent,#2563eb)", border: "1px solid var(--accent,#2563eb)",
-                      borderRadius: 3, padding: "0 4px", lineHeight: 1.6,
-                    }}
-                  >↗</span>
-                )}
-              </>
-            )}
-          </div>
-        </div>
-
-        {/* Linha 2: campo · jog · R · h */}
-        <div style={{ fontSize: 10, color: "var(--text-muted)", marginBottom: 3 }}>
-          {t.campo && <span>{t.campo} · </span>}
-          <span>{t.playerCount} jog · {nR}R · {nh}h</span>
-        </div>
-
-        {/* Linha 3: escalão + pills + Manuel */}
-        <div style={{ display: "flex", gap: 4, flexWrap: "wrap", alignItems: "center" }}>
-          {t.escalao && <EscPill esc={t.escalao} />}
-          <TournPillBadge tcode={t.tcode} dynamicPills={tcodePills} />
-          {t.ccode === SSERRA_CCODE && (
-            <span style={{
-              fontSize: 10, fontWeight: 700, borderRadius: 20, padding: "1px 6px",
-              background: PILL_STYLE_SSERRA.bg, color: PILL_STYLE_SSERRA.color, whiteSpace: "nowrap",
-            }}>SSerra</span>
-          )}
-          {manuelPlayed && (
-            <span title="Manuel participou neste torneio" style={{
-              fontSize: 10, fontWeight: 700,
-              background: "var(--bg-success-subtle)", color: "var(--color-good-dark)",
-              borderRadius: 6, padding: "2px 8px",
-              border: "1px solid var(--color-good)",
-            }}>★ Manuel</span>
-          )}
-        </div>
-
-        {!isSynth && t._sourceIndex !== undefined && (
-          <div style={{ fontSize: 10, color: "var(--text-muted)", marginTop: 2, opacity: 0.6 }}>
-            📄 pull-torneios{String(t._sourceIndex).padStart(DATA_DIGITS, "0")}.json
-          </div>
-        )}
-      </button>
+      <TournSidebarItem
+        key={(t as any)._isSynthetic ? "synth_" + t.tcode : (isClubesItem ? "clubes_" : "") + t.tcode + "_" + t.date}
+        t={tData}
+        isActive={isActive}
+        onClick={handleClick}
+        extraPills={extraPills}
+      />
     );
   }
 
-  const lastUpdated = fileMeta.length > 0 ? fileMeta[fileMeta.length - 1].lastUpdated : undefined;
-
   return (
     <div className="tourn-layout">
-      {/* ── Toolbar linha 1: nav principal + link + contadores ── */}
-      <div className="toolbar">
-        <div className="toolbar-left">
+            {/* ── Toolbar: grid 3 colunas partilhadas pelas 2 linhas ── */}
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "1fr auto auto",
+        borderBottom: "1px solid var(--border-light)",
+      }}>
+        {/* ── LINHA 1, col 1: sidebar + nav principal ── */}
+        <div className="toolbar-left" style={{ borderBottom: "none", padding: "6px 0" }}>
           <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />
           <span className="toolbar-title">🏌️ FPG</span>
           {!loading && (
             <>
               <div className="toolbar-sep" />
-              {/* Nav principal */}
               <div className="escalao-pills">
                 {([
                   { key: "torneios",      label: "Torneios" },
@@ -3180,16 +3158,43 @@ function Content() {
                 ] as const).map(({ key, label }) => (
                   <button key={key}
                     className={"tourn-tab tourn-tab-sm" + (navMode === key ? " active" : "")}
-                    onClick={() => { setNavMode(key); setSeriesFilter(""); setFilterManuel(false); setYearFilter(null); }}
+                    onClick={() => { setNavMode(key); setSeriesFilter(""); setYearFilter(null); }}
                     style={navMode === key ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
                     {label}
                   </button>
                 ))}
               </div>
+              {!loading && navMode === "torneios" && availYears.length > 1 && (<>
+                <div className="toolbar-sep" />
+                <div className="escalao-pills gap-4">
+                  {availYears.map(y => (
+                    <button key={y}
+                      className={"tourn-tab tourn-tab-sm" + (activeYear === y ? " active" : "")}
+                      onClick={() => setYearFilter(activeYear === y ? null : y)}
+                      style={activeYear === y ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                      {y}
+                    </button>
+                  ))}
+                </div>
+                <div className="toolbar-sep" />
+                <button
+                  className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
+                  onClick={() => setFilterManuel(v => !v)}
+                  style={filterManuel
+                    ? { background: "var(--bg-success-subtle)", borderColor: "var(--color-good)", color: "var(--color-good-dark)", whiteSpace: "nowrap" }
+                    : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)", whiteSpace: "nowrap" }}>
+                  ★ Manuel
+                </button>
+              </>)}
             </>
           )}
         </div>
-        <div className="toolbar-right">
+
+        {/* ── LINHA 1, col 2: vazio — mantém altura da barra ── */}
+        <div style={{ padding: "6px 0" }} />
+
+        {/* ── LINHA 1, col 3: FPG link + contadores ── */}
+        <div className="toolbar-right" style={{ borderBottom: "none" }}>
           <a href="https://scoring.datagolf.pt/pt/tournaments.aspx" target="_blank" rel="noopener noreferrer"
             style={{ fontSize: 11, fontWeight: 600, cursor: "pointer", color: "var(--accent,#2563eb)", border: "1px solid var(--accent,#2563eb)", borderRadius: 5, padding: "3px 8px", lineHeight: 1.6, textDecoration: "none", whiteSpace: "nowrap", display: "inline-flex", alignItems: "center", gap: 3 }}>
             FPG Torneios ↗
@@ -3211,65 +3216,44 @@ function Content() {
                     {fileMeta.length} ficheiro{fileMeta.length !== 1 ? "s" : ""}
                   </span>
                 )}
-                {lastUpdated && <span className="muted fs-11" style={{ marginLeft: 8 }}>atualizado {lastUpdated}</span>}
               </>
           }
         </div>
-      </div>
 
-      {/* ── Toolbar linha 2: série + anos + Manuel (só em Torneios) ── */}
-      {!loading && navMode === "torneios" && (
-        <div className="toolbar" style={{ minHeight: 0, padding: "4px 12px", borderTop: "1px solid var(--border-light)", gap: 6, flexWrap: "wrap" }}>
-          {/* Série */}
-          <div className="escalao-pills gap-4">
-            {([
-              { key: "",        label: "Todos" },
-              { key: "circuit", label: "🏆 PJA Tour" },
-              { key: "santo",   label: "⛳ Santo da Serra" },
-              { key: "clubes",  label: "🏅 Clubes" },
-            ] as const).map(({ key, label }) => {
-              const active = seriesFilter === key;
-              const style = active
-                ? key === "santo"  ? { background: PILL_STYLE_SSERRA.bg, borderColor: PILL_STYLE_SSERRA.bg, color: PILL_STYLE_SSERRA.color }
-                : key === "clubes" ? { background: "var(--accent,#2563eb)", borderColor: "var(--accent,#2563eb)", color: "#fff" }
-                : {}
-                : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" };
-              return (
-                <button key={key}
-                  className={"tourn-tab tourn-tab-sm" + (active ? " active" : "")}
-                  onClick={() => { setSeriesFilter(key); setFilterManuel(false); }}
-                  style={style}>
-                  {label}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Anos */}
-          {availYears.length > 1 && (
-            <div className="escalao-pills gap-4">
-              {availYears.map(y => (
-                <button key={y}
-                  className={"tourn-tab tourn-tab-sm" + (activeYear === y ? " active" : "")}
-                  onClick={() => setYearFilter(activeYear === y ? null : y)}
-                  style={activeYear === y ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
-                  {y}
-                </button>
-              ))}
+        {/* ── LINHA 2, col 1: filtros de série ── */}
+        {!loading && navMode === "torneios" && (
+          <div style={{ display: "flex", alignItems: "center", gap: 6, padding: "4px 12px", borderTop: "1px solid var(--border-light)" }}>
+            <div className="escalao-pills gap-4" style={{ flexWrap: "wrap" }}>
+              {([
+                { key: "",        label: "Todos" },
+                { key: "circuit", label: "🏆 PJA Tour" },
+                { key: "santo",   label: "⛳ Santo da Serra" },
+                { key: "clubes",  label: "🏅 Clubes" },
+              ] as const).map(({ key, label }) => {
+                const active = seriesFilter === key;
+                const style = active
+                  ? key === "santo"  ? { ...PILL_SSERRA, borderColor: PILL_SSERRA.background as string }
+                  : key === "clubes" ? { background: "var(--accent,#2563eb)", borderColor: "var(--accent,#2563eb)", color: "#fff" }
+                  : {}
+                  : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" };
+                return (
+                  <button key={key}
+                    className={"tourn-tab tourn-tab-sm" + (active ? " active" : "")}
+                    onClick={() => { setSeriesFilter(key); }}
+                    style={style}>
+                    {label}
+                  </button>
+                );
+              })}
             </div>
-          )}
 
-          {/* Manuel */}
-          <button
-            className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
-            onClick={() => setFilterManuel(v => !v)}
-            style={filterManuel
-              ? { background: "var(--bg-success-subtle)", borderColor: "var(--color-good)", color: "var(--color-good-dark)", whiteSpace: "nowrap" }
-              : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)", whiteSpace: "nowrap" }}>
-            ★ Manuel
-          </button>
-        </div>
-      )}
+          </div>
+        )}
+
+        {/* ── LINHA 2, col 2+3: espaços vazios ── */}
+        {!loading && navMode === "torneios" && <div style={{ borderTop: "1px solid var(--border-light)" }} />}
+        {!loading && navMode === "torneios" && <div style={{ borderTop: "1px solid var(--border-light)" }} />}
+      </div>
 
       {error && (
         <div style={{ padding: "16px 20px", color: "var(--danger)", fontWeight: 600, fontSize: 13 }}>
@@ -3277,7 +3261,7 @@ function Content() {
         </div>
       )}
 
-      {/* Master-detail — Torneios normais (todas as séries excepto Clubes) */}
+      {/* Master-detail (modos "month" e "circuit") */}
       {navMode === "torneios" && seriesFilter !== "clubes" && (
       <div className="master-detail">
         {/* Sidebar */}
@@ -3288,38 +3272,36 @@ function Content() {
             </div>
           )}
 
-          {seriesFilter !== "clubes"
-            ? seriesFilter === ""
-              ? monthKeys.map(gk => (
-                  <React.Fragment key={gk}>
-                    <div className="sidebar-section-title-dark">{monthLabel(gk)}</div>
-                    {monthGroups[gk].map(t => renderSidebarItem(t))}
-                  </React.Fragment>
-                ))
-              : seriesFilter === "santo"
-                ? santoByYear.years.length === 0
-                  ? <div className="muted fs-11 u-pad-italic">Sem torneios Santo da Serra</div>
-                  : santoByYear.years.map(yr => {
-                      const items = santoByYear.byYear[yr].filter(t =>
-                        !filterManuel || t.players.some(p => p.fedCode === MANUEL_FED)
-                      );
-                      if (items.length === 0) return null;
-                      return (
-                        <React.Fragment key={yr}>
-                          <div className="sidebar-section-title-dark" style={{ color: PILL_STYLE_SSERRA.bg }}>⛳ Santo da Serra {yr}</div>
-                          {items.map(t => renderSidebarItem(t))}
-                        </React.Fragment>
-                      );
-                    })
-                : pjaByYear.years.length === 0
-                  ? <div className="muted fs-11 u-pad-italic">Sem torneios PJA</div>
-                  : pjaByYear.years.map(yr => (
+          {seriesFilter === ""
+            ? monthKeys.map(gk => (
+                <React.Fragment key={gk}>
+                  <div className="sidebar-section-title-dark">{monthLabel(gk)}</div>
+                  {monthGroups[gk].map(t => renderSidebarItem(t))}
+                </React.Fragment>
+              ))
+            : seriesFilter === "santo"
+              ? santoByYear.years.length === 0
+                ? <div className="muted fs-11 u-pad-italic">Sem torneios Santo da Serra</div>
+                : santoByYear.years.map(yr => {
+                    const items = santoByYear.byYear[yr].filter(t =>
+                      !filterManuel || t.players.some(p => isManuel(p))
+                    );
+                    if (items.length === 0) return null;
+                    return (
                       <React.Fragment key={yr}>
-                        <div className="sidebar-section-title-dark">🏆 PJA Tour {yr}</div>
-                        {pjaByYear.byYear[yr].map(t => renderSidebarItem(t))}
+                        <div className="sidebar-section-title-dark">⛳ Santo da Serra {yr}</div>
+                        {items.map(t => renderSidebarItem(t))}
                       </React.Fragment>
-                    ))
-            : null
+                    );
+                  })
+              : pjaByYear.years.length === 0
+                ? <div className="muted fs-11 u-pad-italic">Sem torneios PJA</div>
+                : pjaByYear.years.map(yr => (
+                    <React.Fragment key={yr}>
+                      <div className="sidebar-section-title-dark">🏆 {yr}</div>
+                      {pjaByYear.byYear[yr].map(t => renderSidebarItem(t))}
+                    </React.Fragment>
+                  ))
           }
         </div>
 
@@ -3338,23 +3320,6 @@ function Content() {
         <div className="master-detail">
           {/* Sidebar Clubes */}
           <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
-            {/* Pills Sub 14 / Sub 18 */}
-            <div style={{ padding: "10px 12px 6px", display: "flex", gap: 6, borderBottom: "1px solid var(--border)" }}>
-              {(["sub14", "sub18"] as const).map(esc => {
-                const label = esc === "sub14" ? "Sub 14" : "Sub 18";
-                const active = clubesEsc === esc;
-                return (
-                  <button key={esc} onClick={() => { setClubesEsc(esc); setClubesSelected(0); }}
-                    style={{
-                      fontSize: 11, fontWeight: active ? 700 : 500, padding: "3px 10px",
-                      borderRadius: 20, border: `1px solid ${active ? "var(--accent,#2563eb)" : "var(--border)"}`,
-                      background: active ? "var(--accent,#2563eb)" : "var(--bg-muted)",
-                      color: active ? "#fff" : "var(--text-2)", cursor: "pointer",
-                    }}>{label}</button>
-                );
-              })}
-            </div>
-
             {clubesLoading && (
               <div className="muted fs-11 u-pad-italic">A carregar...</div>
             )}
@@ -3365,50 +3330,27 @@ function Content() {
             )}
             {clubesYears.map(yr => (
               <React.Fragment key={yr}>
-                <div className="sidebar-section-title-dark">🏆 Clubes {yr}</div>
-                {clubesByYear[yr].map((t, _) => {
+                <div className="sidebar-section-title-dark">🏅 {yr}</div>
+                {clubesByYear[yr].map(t => {
                   const idx = clubesList.indexOf(t);
-                  const nR = t.rounds || 1;
-                  const nh = t.players[0]?.nholes || t.players[0]?.par?.length
-                    || t.players[0]?.roundScores?.[0]?.pars?.length || 18;
                   const playedR = Math.max(0, ...t.players.map(p => p.roundScores?.length ?? 0));
+                  const nR = t.rounds || 1;
+                  // Sufixo de progresso: "R2/3" no campo quando torneio incompleto
+                  const progressSuffix = nR > 1 && playedR > 0 && playedR < nR
+                    ? ` · R${playedR}/${nR}` : "";
+                  const tWithProgress = {
+                    ...(t as any),
+                    playerCount: t.playerCount || t.players.length,
+                    campo: (t.campo || "Oporto") + progressSuffix,
+                  } as SidebarItemTournament;
                   return (
-                    <button key={t.tcode + "_" + t.date}
-                      className={`course-item ${clubesSelected === idx ? "active" : ""}`}
-                      onClick={() => setClubesSelected(idx)}>
-                      <div style={{ fontWeight: 600, fontSize: 12, marginBottom: 3 }}>{t.name}</div>
-                      <div style={{ fontSize: 10, color: "var(--text-muted)", marginBottom: 3 }}>
-                        {t.campo && <span>📍 {t.campo} · </span>}
-                        {t.date}
-                      </div>
-                      <div style={{ fontSize: 10, color: "var(--text-muted)" }}>
-                        {t.playerCount} jog · {nR}R · {nh}h
-                        {nR > 1 && (
-                          <span style={{ marginLeft: 4, color: playedR >= nR ? "var(--color-good,#16a34a)" : "var(--color-warn,#d97706)", fontWeight: 600 }}>
-                            · R{playedR}/{nR}
-                          </span>
-                        )}
-                      </div>
-                      {t.tcode && (
-                        <div style={{ marginTop: 3 }}>
-                          <span style={{
-                            fontFamily: "monospace", fontSize: 10, fontWeight: 700,
-                            background: "var(--accent,#2563eb)", color: "#fff",
-                            borderRadius: 3, padding: "0 4px",
-                          }}>{t.tcode}</span>
-                          {t.ccode && t.tcode && (
-                            <span
-                              title="Abre na Federação"
-                              onClick={e => { e.stopPropagation(); window.open(`https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=${t.ccode}&tcode=${t.tcode}`, "_blank"); }}
-                              style={{
-                                marginLeft: 4, fontSize: 10, fontWeight: 600, cursor: "pointer",
-                                color: "var(--accent,#2563eb)", border: "1px solid var(--accent,#2563eb)",
-                                borderRadius: 3, padding: "0 4px", lineHeight: 1.6,
-                              }}>↗</span>
-                          )}
-                        </div>
-                      )}
-                    </button>
+                    <TournSidebarItem
+                      key={t.tcode + "_" + t.date}
+                      t={tWithProgress}
+                      isActive={clubesSelected === idx}
+                      onClick={() => { setClubesSelected(idx); md.onSelect(); }}
+                      accentColor={SIDEBAR_ACCENT.clubes}
+                    />
                   );
                 })}
               </React.Fragment>
@@ -3449,9 +3391,9 @@ function Content() {
                   const gruposData = curClubesYear ? CLUBES_GRUPOS_BY_YEAR[curClubesYear] : null;
                   if (gruposData) {
                     return <ClubesGruposView
-                      grupos={gruposData[clubesEsc as "sub14" | "sub18"] ?? []}
+                      grupos={gruposData[(curClubes as any)?._clubesEsc as "sub14" | "sub18"] ?? gruposData[clubesEsc as "sub14" | "sub18"] ?? []}
                       tournament={curClubes}
-                      escKey={clubesEsc as "sub14" | "sub18"}
+                      escKey={((curClubes as any)?._clubesEsc ?? clubesEsc) as "sub14" | "sub18"}
                     />;
                   }
                   if (!curClubes && !clubesLoading) {
@@ -3474,15 +3416,6 @@ function Content() {
       {navMode === "ranking-pja" && (
         <div style={{ flex: 1, overflow: "auto" }}>
           <PJARankingView pjaList={pjaList} playersDB={playersDB} loading={loading} />
-        </div>
-      )}
-
-      {/* Ranking Sub-12 — placeholder (em desenvolvimento) */}
-      {navMode === "ranking-sub12" && (
-        <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 12, color: "var(--text-muted)", padding: 40 }}>
-          <div style={{ fontSize: 40 }}>🏅</div>
-          <div style={{ fontSize: 16, fontWeight: 700, color: "var(--text)" }}>Ranking Sub-12</div>
-          <div style={{ fontSize: 13, textAlign: "center", maxWidth: 320 }}>Em desenvolvimento — os dados dos atletas Sub-12 nos torneios FPG serão agregados aqui.</div>
         </div>
       )}
     </div>

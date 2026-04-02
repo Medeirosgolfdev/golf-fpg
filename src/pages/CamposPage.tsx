@@ -5,11 +5,11 @@ import { useParams, useNavigate } from "react-router-dom";
 import type { Course, Tee, SexFilter } from "../data/types";
 import { useAppContext } from "../context/AppContext";
 import TeeBadge from "../ui/TeeBadge";
-import PillBadge from "../ui/PillBadge";
 import { teeCanonicalLabel, teeGroupHex } from "../utils/teeColors";
 import { fmt, fmtCR, norm, titleCase, sumRange } from "../utils/format";
 import { fixMojibake } from "../utils/fixEncoding";
 import { sortTees, filterTees, teeHexFromTee } from "../utils/teeUtils";
+import { PillBadge } from "../ui/PillBadge";
 
 
 

@@ -1,4 +1,5 @@
 // @refresh reset
+import { MRRound, MultiRoundRow, PlayerFilter, EMPTY_FILTER } from "./multiRoundTypes";
 /**
  *
  * ═══════════════════════════════════════════════════════════════
@@ -35,54 +36,26 @@
 import React, { useState, useMemo } from "react";
 import { getTeeHex } from "../utils/teeColors";
 import {
-  isManuel, fmtTP, tpColor, EscPill, TeeDot, TournPName,
-  ESC_STYLE, SDPill,
+  isManuel,
+  fmtTP,
+  tpColor,
+  TeeDot,
+  TournPName,
+  SDPill,
   type PlayersDB,
 } from "./tournamentPrimitives";
 import { toggleArr } from "../utils/mathUtils";
+import { EscPill, ESC_STYLE } from "../ui/PillBadge";
 
 /* ══════════════════════════════════════════════════════════════
    TIPOS PÚBLICOS
    ══════════════════════════════════════════════════════════════ */
 
 /** Ronda individual normalizada, com stats próprias */
-export interface MRRound {
-  gross: number;
-  parPerRound: number;
-  /** SD desta ronda (null = não disponível) */
-  sd?: number | null;
-  sdSource?: string | null;
-  birdies?: number;
-  pars?: number;
-  bogeys?: number;
-}
-
 /** Linha normalizada para MultiRoundLeaderboard */
-export interface MultiRoundRow {
-  key: string;
-  name: string;
-  fed?: string;
-  club: string;
-  hcp: number | null;
-  esc?: string;
-  teeName?: string;
-  gross: number;
-  parTotal: number;
-  isIncomplete: boolean;  // jogou menos rondas que o máximo disponível (ainda pode jogar)
-  isWD?: boolean;         // desistiu — exclui do ranking, mostra "WD"
-  isHighlighted?: boolean;
-  /** Uma entrada por ronda, em ordem (rounds[0] = R1, rounds[1] = R2, …) */
-  rounds: MRRound[];
-}
-
 /* ══════════════════════════════════════════════════════════════
    FILTRO
    ══════════════════════════════════════════════════════════════ */
-
-export interface PlayerFilter {
-  name: string; escs: string[]; tees: string[]; club: string;
-}
-export const EMPTY_FILTER: PlayerFilter = { name: "", escs: [], tees: [], club: "" };
 
 function filterRows(rows: MultiRoundRow[], f: PlayerFilter): MultiRoundRow[] {
   let ps = rows;
@@ -140,7 +113,7 @@ type MRSortKey = "pos" | "name" | "club" | "esc" | "hcp" | "gross" | "toPar" | "
    COMPONENTE PRINCIPAL
    ══════════════════════════════════════════════════════════════ */
 
-export interface MultiRoundLBProps {
+interface MultiRoundLBProps {
   rows: MultiRoundRow[];
   nRounds: number;
   playersDB: PlayersDB;
@@ -166,6 +139,7 @@ export function MultiRoundLeaderboard({
   // WD = desistiu; incomplete = ainda não jogou todas as rondas disponíveis
   const complete   = rows.filter(r => !r.isIncomplete && !r.isWD);
   const incomplete = rows.filter(r =>  r.isIncomplete && !r.isWD);
+  const wdRows     = rows.filter(r =>  r.isWD);
 
   /* Posições — apenas jogadores completos e não-WD */
   const withPos = useMemo(() => {

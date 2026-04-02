@@ -13,7 +13,6 @@ import {
   type CrossPlayerData, type HcpInfo, type HoleScores,
 } from "../data/playerDataLoader";
 import { usePlayerData } from "../data/usePlayerData";
-import PillBadge from "../ui/PillBadge";
 import SexBadge from "../ui/SexBadge";
 import TeePill from "../ui/TeePill";
 import TeeDate from "../ui/TeeDate";
@@ -23,6 +22,7 @@ import SidebarToggle from "../ui/SidebarToggle";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { loadPlayerStats, daysSince, type PlayerStatsDb } from "../data/playerStatsTypes";
 import { calcSD } from "../utils/whsCalc";
+import { PillBadge } from "../ui/PillBadge";
 
 /* ────────────────────────────────────────────────────────────────────────────────────
    Utility functions (port from client JS)

@@ -8,12 +8,16 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { loadPlayers } from "../data/loader";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from "recharts";
 import { SC, sdClassByHcp, scClass } from "../utils/scoreDisplay";
-import { isManuel as _isManuelPrim } from "../ui/tournamentPrimitives";
+import {
+  isManuel as _isManuelPrim,
+} from "../ui/tournamentPrimitives";
 import { calcAGS, expectedSD9 } from "../utils/whsCalc";
 import { fmtToPar } from "../utils/format";
 import { isCalUnlocked } from "../utils/authConstants";
 import { resolveFedsInTournaments , buildEscLookup, resolveEscFromLookup } from "../utils/playerUtils";
 import PasswordGate from "../ui/PasswordGate";
+import { TournSidebarItem, type SidebarItemTournament, SSERRA_CCODE as _SSERRA } from "../ui/TournSidebarItem";
+import { PILL_TCODE, EscPill, SIDEBAR_ACCENT } from "../ui/PillBadge";
 import SidebarToggle from "../ui/SidebarToggle";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import KpiCard from "../ui/KpiCard";
@@ -26,8 +30,12 @@ import { CrossSeasonTable, SortTh as _CSortTh } from "../ui/CrossSeasonTable";
 const CSortTh = _CSortTh as React.ComponentType<React.ComponentProps<typeof _CSortTh> & { style?: React.CSSProperties }>;
 import { MultiRoundLeaderboard, type MultiRoundRow as MRRow } from "../ui/MultiRoundLeaderboard";
 import {
-  isManuel, fmtTP, tpColor,
-  EscPill, TeeDot, SDPill, TournPName,
+  isManuel,
+  fmtTP,
+  tpColor,
+  TeeDot,
+  SDPill,
+  TournPName,
   type PlayersDB,
 } from "../ui/tournamentPrimitives";
 
@@ -2206,7 +2214,7 @@ function DriveContent() {
 
   const [navMode, setNavMode]   = useState<"torneios"|"ranking-pja"|"ranking-sub12">("torneios");
   const [series, setSeries]     = useState<"all"|"tour"|"challenge"|"aquapor">("tour");
-  const [filterManuel, setFilterManuel] = useState(false);
+  const [filterManuel, setFilterManuel] = useState(true);
     const md = useMasterDetail();
   const [regionFilter, setRegionFilter]         = useState<string | null>(null);
   const [escFilter, setEscFilter]               = useState<string[]>([]);
@@ -2466,95 +2474,68 @@ function DriveContent() {
 
   const renderDriveItem = (g: TournGroup, isActive: boolean, onClick: () => void) => {
     const t0 = g.entries[0];
-    const nh = t0?.nholes || t0?.par?.length || 18;
-    const parTotal = t0?.par?.reduce((a: number, b: number) => a + b, 0) || 0;
-    const tcode = t0?.tcode?.replace(/_R\d+$|_Total$/, "") || "";
-    const manuelPlayed = g.entries.some(e => e.players?.some((p: any) => isManuel(p)));
     const nJog = uniquePC(g.entries);
+    // Para isEvent (Challenge agrupado): mostrar pills de escalão por entry
+    const extraPills = g.isEvent
+      ? (<>
+          {g.entries.map(e => {
+            const esc = e.escalao;
+            const tc = e.tcode?.replace(/_R\d+$|_Total$/, "") || "";
+            const url = (tc && e.ccode) ? `https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=${String(e.ccode).padStart(3,"0")}&tcode=${tc}` : "";
+            return esc && (
+              <span key={esc} style={{ display: "inline-flex", alignItems: "center", gap: 2 }}>
+                <span className={`p p-sm p-${esc.toLowerCase().replace(/\s+/g,"")}`}>{esc}</span>
+                {tc && (
+                  <span className="p p-sm p-tourn" style={PILL_TCODE}>{tc}</span>
+                )}
+                {url && <button type="button" onClick={ev => { ev.stopPropagation(); window.open(url, "_blank", "noopener,noreferrer"); }}
+                  style={{ background: "none", border: "none", padding: "0 1px", cursor: "pointer", fontSize: 11, color: "var(--accent)", opacity: isActive ? 1 : 0.55, lineHeight: 1, display: "inline-flex", alignItems: "center", verticalAlign: "middle" }}>🔗</button>}
+              </span>
+            );
+          })}
+        </>)
+      : null;
+
+    // Determinar série e accent explicitamente (não confiar em t0.series que pode ser null)
+    const grpSeries = (t0 as any)?.series as string | undefined;
+    const grpAccent = grpSeries === "aquapor"   ? SIDEBAR_ACCENT.aquapor
+                    : grpSeries === "challenge"  ? SIDEBAR_ACCENT.challenge
+                    : SIDEBAR_ACCENT.tour; // drive/tour/undefined → verde
+
+    // Campo: mostrar região (Norte/Tejo/Sul) quando campo=label para consistência visual
+    const region = (t0 as any)?.region as string | undefined;
+    const regionLabel = region
+      ? REGIONS.find(r => r.id === region)?.label ?? null
+      : null;
+    const campoDisplay = g.campo !== g.label ? g.campo
+      : regionLabel ?? undefined;
+
+    const tData: SidebarItemTournament = {
+      tcode:       g.isEvent ? undefined : (t0?.tcode?.replace(/_R\d+$|_Total$/, "") || undefined),
+      ccode:       t0?.ccode,
+      name:        sidebarItemLabel(g),
+      campo:       campoDisplay,
+      clube:       (t0 as any)?.clube ?? null,
+      date:        g.date,
+      playerCount: nJog,
+      rounds:      g.isMulti ? g.totalRounds : 1,
+      nholes:      t0?.nholes || t0?.par?.length || 18,
+      series:      grpSeries,
+      escalao:     (!g.isEvent && !g.isMulti) ? g.escalao : null,
+      players:     g.entries.flatMap(e => e.players),
+    };
+
     return (
-      <button key={g.key}
-        className={`course-item ${isActive ? "active" : ""}`}
-        onClick={onClick}>
-
-        {/* Linha 1: nome + tcode/link (evento: só nome; outros: tcode + link) */}
-        <div style={{ display: "flex", alignItems: "flex-start", gap: 4, marginBottom: 4 }}>
-          <span className="course-item-name" style={{ flex: 1, minWidth: 0, fontSize: 12, fontWeight: isActive ? 700 : 500, lineHeight: 1.3 }}>{sidebarItemLabel(g)}</span>
-          {!g.isEvent && (
-            <div style={{ display: "flex", gap: 2, flexShrink: 0, alignItems: "center", paddingTop: 1 }}>
-              {g.isMulti && <span className="chip" style={{ fontSize: 10, padding: "0 5px" }}>{g.totalRounds}R</span>}
-              {tcode && <span style={{
-                fontFamily: "monospace", fontSize: 10, fontWeight: 700,
-                background: "var(--accent,#2563eb)", color: "#fff",
-                borderRadius: 3, padding: "1px 5px", opacity: isActive ? 1 : 0.75,
-              }}>{tcode}</span>}
-              {tcode && t0 && (
-                <button type="button"
-                  onClick={e => { e.stopPropagation(); window.open(tournFpgUrl(t0.ccode, tcode), "_blank", "noopener,noreferrer"); }}
-                  title="Ver no site da Federação"
-                  style={{ background: "none", border: "none", padding: 0, cursor: "pointer",
-                    fontSize: 13, color: "var(--accent)", opacity: isActive ? 1 : 0.55, lineHeight: 1 }}>
-                  🔗
-                </button>
-              )}
-            </div>
-          )}
-        </div>
-
-        {/* Linha 2: campo */}
-        {g.campo && (
-          <div style={{ fontSize: 12, color: "var(--text-2)", fontWeight: 500, marginBottom: 3 }}>
-            📍 {g.campo}
-          </div>
-        )}
-
-        {/* Linha 3: data · jog · buracos · par */}
-        <div style={{ fontSize: 12, color: "var(--text-muted)", marginBottom: 3 }}>
-          {fmtDate(g.date)} · {nJog} jog · {nh}h{parTotal > 0 ? ` · Par ${parTotal}` : ""}
-        </div>
-
-        {/* Linha 4: escalão(ões) com tcode + link por escalão (isEvent) | escalão simples (outros) */}
-        {(g.escalao || g.isEvent || manuelPlayed) && (
-          <div style={{ display: "flex", gap: 4, flexWrap: "wrap", alignItems: "center", marginTop: 2 }}>
-            {g.isEvent
-              ? g.entries.map(e => {
-                  const esc = e.escalao;
-                  const tc = e.tcode?.replace(/_R\d+$|_Total$/, "") || "";
-                  const url = (tc && e.ccode) ? tournFpgUrl(e.ccode, tc) : "";
-                  return esc && (
-                    <span key={esc} style={{ display: "inline-flex", alignItems: "center", gap: 2 }}>
-                      <span className={"p p-sm p-" + esc.toLowerCase().replace(/\s+/g,"")}>{esc}</span>
-                      {tc && <span style={{
-                        fontFamily: "monospace", fontSize: 9, fontWeight: 700,
-                        background: "var(--bg-muted)", color: "var(--text-2)",
-                        borderRadius: 3, padding: "1px 4px", border: "1px solid var(--border)",
-                        opacity: isActive ? 1 : 0.8,
-                      }}>{tc}</span>}
-                      {url && <button type="button"
-                        onClick={ev => { ev.stopPropagation(); window.open(url, "_blank", "noopener,noreferrer"); }}
-                        title={`Ver ${esc} no site da Federação`}
-                        style={{ background: "none", border: "none", padding: 0, cursor: "pointer",
-                          fontSize: 11, color: "var(--accent)", opacity: isActive ? 1 : 0.55, lineHeight: 1 }}>
-                        🔗
-                      </button>}
-                    </span>
-                  );
-                })
-              : g.escalao && <span className={"p p-sm p-" + g.escalao.toLowerCase().replace(/\s+/g,"")}>{g.escalao}</span>
-            }
-            {manuelPlayed && (
-              <span style={{
-                fontSize: 11, fontWeight: 700,
-                background: "var(--bg-success-subtle)", color: "var(--color-good-dark)",
-                borderRadius: 6, padding: "2px 8px",
-                border: "1px solid var(--color-good)",
-              }}>★ Manuel</span>
-            )}
-          </div>
-        )}
-      </button>
+      <TournSidebarItem
+        key={g.key}
+        t={tData}
+        isActive={isActive}
+        onClick={onClick}
+        accentColor={grpAccent}
+        extraPills={extraPills}
+      />
     );
   };
-
   if (loading) return <LoadingState />;
   if (error)   return <div className="jogadores-page"><div className="notice-error" style={{ margin: 16 }}>Erro: {error}</div></div>;
   if (!data)   return null;
@@ -2583,7 +2564,7 @@ function DriveContent() {
             ] as const).map(({ key, label }) => (
               <button key={key}
                 className={"tourn-tab tourn-tab-sm" + (navMode === key ? " active" : "")}
-                onClick={() => { setNavMode(key); setSeries("tour"); setFilterManuel(false); setYearFilter(null); setSelectedGroupKey(null); setRoundIdx(0); }}
+                onClick={() => { setNavMode(key); setSeries("tour"); setYearFilter(null); setSelectedGroupKey(null); setRoundIdx(0); }}
                 style={navMode === key ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
                 {label}
               </button>
