@@ -3,6 +3,8 @@ import { useEffect, useState, useMemo, useCallback, useTransition } from "react"
 import SidebarToggle from "../ui/SidebarToggle";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import React from "react";
+import SectionErrorBoundary from "../ui/SectionErrorBoundary";
+import LoadingState from "../ui/LoadingState";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { C } from "../utils/colors";
 import { scClass } from "../utils/scoreDisplay";
@@ -1082,76 +1084,97 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
 
   return (
     <div>
-      {/* Header */}
-      <div style={{ marginBottom:16 }}>
-        <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:4, flexWrap:"wrap" }}>
-          <span style={{ fontSize:18, fontWeight:700, color:"var(--text)" }}>{t.emoji} {t.name}</span>
-          {REGIONAL_CHAMPIONSHIPS[t.t] && (
-            <span style={{
-              fontSize:10, fontWeight:800, padding:"2px 9px", borderRadius:8,
-              background:"var(--bg-pink)", color:"var(--color-purple)", border:"1px solid var(--border-purple)",
-              letterSpacing:"0.04em",
-            }}>⭐ REGIONAL INVITATION</span>
-          )}
-          {dias >= 0 && dias <= 14 && (
-            <span style={{ background:"var(--chart-5)", color:"#fff", padding:"1px 7px", borderRadius:8, fontSize:10 }}>daqui a {dias}d</span>
-          )}
-          {dias < 0 && !isTerminado(t.date_fim, t.date_inicio) && (
-            <span style={{ background:"var(--color-good)", color:"#fff", padding:"1px 7px", borderRadius:8, fontSize:10 }}>em curso</span>
-          )}
-        </div>
-        <div style={{ fontSize:12, color:"var(--text-3)" }}>
-          📅 {fmtDate(t.date_inicio)}
-          {t.date_fim && t.date_fim !== t.date_inicio ? ` → ${fmtDate(t.date_fim)}` : ""}
-          {t.rondas ? ` · ${t.rondas}R` : ""}
-          {t.campo   ? ` · ${t.campo}` : ""}
-          {t.fee_18  ? ` · 💵 ${t.fee_18}` : ""}
-          {" · "}<span style={{ userSelect:"all", cursor:"text" }}>t={t.t}</span>
+      {/* ── Header — padrão detail-header idêntico a FPGPage/DrivePage ── */}
+      <div className="detail-header">
+        <div className="detail-header-top">
+          <h2 className="detail-title">
+            {t.emoji && <span style={{ marginRight: 6 }}>{t.emoji}</span>}
+            {t.name}
+          </h2>
+          <div style={{ display:"flex", gap:6, alignItems:"center", flexWrap:"wrap" }}>
+            {REGIONAL_CHAMPIONSHIPS[t.t] && (
+              <span className="p p-sm" style={{
+                background:"var(--bg-pink)", color:"var(--color-purple)", borderColor:"var(--border-purple)",
+                fontWeight:800, letterSpacing:"0.04em",
+              }}>⭐ REGIONAL INVITATION</span>
+            )}
+            {dias >= 0 && dias <= 14 && (
+              <span className="p p-sm" style={{ background:"var(--chart-5)", color:"#fff", borderColor:"var(--chart-5)" }}>
+                daqui a {dias}d
+              </span>
+            )}
+            {dias < 0 && !isTerminado(t.date_fim, t.date_inicio) && (
+              <span className="p p-sm" style={{ background:"var(--color-good)", color:"#fff", borderColor:"var(--color-good)" }}>
+                ▶ em curso
+              </span>
+            )}
+          </div>
         </div>
 
-        {t.sem_flights && (
-          <div style={{ color:"var(--text-3)", fontSize:11, marginTop:6 }}>⏳ Flights ainda não publicados</div>
-        )}
-        {t.erro && <div style={{ color:"var(--color-danger)", fontSize:11, marginTop:6 }}>⚠️ {t.erro}</div>}
+        {/* Sub-linha: data · campo · rondas · fee · tcode */}
+        <div className="detail-sub">
+          <span className="muted">
+            📅 {fmtDate(t.date_inicio)}{t.date_fim && t.date_fim !== t.date_inicio ? ` → ${fmtDate(t.date_fim)}` : ""}
+          </span>
+          {t.campo && <span className="muted">📍 {t.campo}</span>}
+          {t.rondas && <span className="chip">{t.rondas} rondas</span>}
+          {t.fee_18 && <span className="chip">💵 {t.fee_18}</span>}
+          <span className="muted fs-11" style={{ userSelect:"all", cursor:"text", opacity:.6 }}>t={t.t}</span>
+        </div>
 
+        {/* KPIs de inscrição */}
         {!t.erro && !t.sem_flights && (
-          <div style={{ marginTop:10, display:"flex", gap:6, flexWrap:"wrap", alignItems:"center" }}>
-            <span style={{ background:"var(--color-good-dark)", color:"#fff", padding:"2px 8px", borderRadius:8, fontSize:11 }}>
+          <div style={{ display:"flex", gap:8, flexWrap:"wrap", marginTop:8 }}>
+            <span className="chip" style={{ background:"var(--color-good-dark)", color:"#fff", fontWeight:700, fontSize:13, padding:"3px 12px" }}>
               {t.total_inscritos}/{t.total_maximo} inscritos
             </span>
             {b12 && (() => {
               const bd = badgeVagas(b12.vagas, b12.maximo);
               return bd ? (
-                <span style={{ background: urgente ? bd.bg : "var(--bg-hover)", color: urgente ? bd.cor : "var(--text-2)",
-                  border:`1px solid ${bd.bg}`, padding:"2px 8px", borderRadius:8, fontSize:11, fontWeight:700 }}>
-                  ★ {escalaoM}: {b12.inscritos}/{b12.maximo} ({bd.label})
+                <span className="chip" style={{
+                  background: urgente ? bd.bg : "var(--bg-hover)",
+                  color: urgente ? bd.cor : "var(--text-2)",
+                  border:`1px solid ${bd.bg}`, fontWeight:700, fontSize:13, padding:"3px 12px",
+                }}>
+                  ★ {escalaoM}: {b12.inscritos}/{b12.maximo}
+                  <span style={{ marginLeft:5, opacity:.8 }}>({bd.label})</span>
                 </span>
               ) : null;
             })()}
           </div>
         )}
+
+        {/* Alertas */}
+        {t.sem_flights && (
+          <div className="notice" style={{ marginTop:10 }}>⏳ Flights ainda não publicados</div>
+        )}
+        {t.erro && (
+          <div className="notice-error" style={{ marginTop:10 }}>⚠️ {t.erro}</div>
+        )}
+
         {/* Links */}
-        <div style={{ marginTop:8, display:"flex", gap:5, flexWrap:"wrap" }}>
-          <a href={`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=field&fmt=nohead&ax=2739&t=${t.t}`}
-            target="_blank" rel="noopener noreferrer" style={{ fontSize:11, padding:"2px 9px", borderRadius:10,
-              background:"var(--bg-muted)", color:"var(--accent-text)", border:"1px solid var(--border)", textDecoration:"none" }}>
-            📋 Inscritos
-          </a>
-          <a href={`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${t.t}`}
-            target="_blank" rel="noopener noreferrer" style={{ fontSize:11, padding:"2px 9px", borderRadius:10,
-              background:"var(--bg-muted)", color:"var(--accent-text)", border:"1px solid var(--border)", textDecoration:"none" }}>
-            🏆 Resultados ↗
-          </a>
+        <div style={{ display:"flex", gap:6, flexWrap:"wrap", marginTop:10 }}>
+          {[
+            { href:`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=field&fmt=nohead&ax=2739&t=${t.t}`, label:"📋 Inscritos" },
+            { href:`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${t.t}`, label:"🏆 Resultados ↗" },
+          ].map(l => (
+            <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer"
+              style={{ fontSize:12, padding:"3px 10px", borderRadius:6, fontWeight:600,
+                background:"var(--bg-muted)", color:"var(--accent-text)", border:"1px solid var(--border)", textDecoration:"none" }}>
+              {l.label}
+            </a>
+          ))}
           {(t.url_uskids || (LINKS_EXTRA[t.t] ?? []).find(l => l.label === "USKids ↗")?.url) && (
             <a href={t.url_uskids ?? (LINKS_EXTRA[t.t] ?? []).find(l => l.label === "USKids ↗")!.url}
-              target="_blank" rel="noopener noreferrer" style={{ fontSize:11, padding:"2px 9px", borderRadius:10,
+              target="_blank" rel="noopener noreferrer"
+              style={{ fontSize:12, padding:"3px 10px", borderRadius:6, fontWeight:600,
                 background:"var(--bg-muted)", color:"var(--accent-text)", border:"1px solid var(--border)", textDecoration:"none" }}>
               USKids ↗
             </a>
           )}
           {(LINKS_EXTRA[t.t] ?? []).filter(l => l.label !== "USKids ↗").map((l, i) => (
             <a key={i} href={l.url} target="_blank" rel="noopener noreferrer"
-              style={{ fontSize:11, padding:"2px 9px", borderRadius:10,
+              style={{ fontSize:12, padding:"3px 10px", borderRadius:6, fontWeight:600,
                 background:"var(--bg-muted)", color:"var(--accent-text)", border:"1px solid var(--border)", textDecoration:"none" }}>
               {l.label}
             </a>
@@ -1161,42 +1184,58 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
 
       {t.erro || t.sem_flights ? null : (
         <>
-          {/* Grid de escalões */}
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(210px,1fr))", gap:6, marginBottom:16 }}>
+          {/* ── Grid de escalões ── */}
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(230px,1fr))", gap:10, marginBottom:20 }}>
             {sortEscaloes(t.escaloes).map(e => {
               const bd  = badgeVagas(e.vagas, e.maximo);
               const dst = ESCALOES_DESTAQUE.has(e.nome);
               const man = e.nome === escalaoM;
               return (
-                <div key={e.age_group} style={{
-                  background: man?"var(--accent-light)":dst?"var(--bg-detail)":"var(--bg)",
-                  border:`1px solid ${man?"var(--accent)":dst?"var(--border)":"transparent"}`,
-                  borderRadius:6, padding:"7px 10px",
+                <div key={e.age_group} className="card" style={{
+                  background: man ? "var(--accent-light)" : dst ? "var(--bg-card)" : "var(--bg-card)",
+                  border: `1.5px solid ${man ? "var(--accent)" : dst ? "var(--border)" : "var(--border-light)"}`,
+                  padding:"12px 14px",
+                  boxShadow: man ? "0 0 0 2px var(--accent-alpha-10)" : undefined,
                 }}>
-                  <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom: e.jogadores?.length ? 5 : 0 }}>
-                    <span style={{ fontSize:11, color:man?"var(--accent)":dst?"var(--text-2)":"var(--text-3)" }}>
-                      {man?"★ ":""}{e.nome}
-                      <span style={{ color:"var(--text-3)", fontSize:10, marginLeft:3 }}>({e.holes}H)</span>
-                    </span>
-                    <div style={{ display:"flex", gap:4, alignItems:"center" }}>
-                      <span style={{ fontSize:10, color:"var(--text-3)" }}>{e.inscritos}/{e.maximo}</span>
-                      {bd && <span style={{ background:bd.bg, color:bd.cor, padding:"1px 5px", borderRadius:5, fontSize:10, fontWeight:700 }}>{bd.label}</span>}
+                  {/* Cabeçalho do card */}
+                  <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:8 }}>
+                    <div>
+                      <div style={{ fontSize:13, fontWeight:700, color: man ? "var(--accent)" : dst ? "var(--text)" : "var(--text-2)" }}>
+                        {man && <span style={{ marginRight:4 }}>★</span>}{e.nome}
+                      </div>
+                      <div style={{ fontSize:11, color:"var(--text-3)", marginTop:1 }}>{e.holes} buracos</div>
+                    </div>
+                    <div style={{ textAlign:"right" }}>
+                      <div style={{ fontSize:15, fontWeight:800, color: man ? "var(--accent)" : "var(--text)" }}>
+                        {e.inscritos}<span style={{ fontSize:11, fontWeight:400, color:"var(--text-3)" }}>/{e.maximo}</span>
+                      </div>
+                      {bd && (
+                        <span style={{ background:bd.bg, color:bd.cor, padding:"1px 6px", borderRadius:5, fontSize:11, fontWeight:700 }}>
+                          {bd.label}
+                        </span>
+                      )}
                     </div>
                   </div>
+                  {/* Barra de preenchimento */}
+                  {e.maximo > 0 && (
+                    <div style={{ height:4, borderRadius:2, background:"var(--border)", overflow:"hidden", marginBottom: e.jogadores?.length ? 8 : 0 }}>
+                      <div style={{ height:"100%", borderRadius:2, background: man ? "var(--accent)" : "var(--color-good)", width:`${Math.min(100, Math.round((e.inscritos/e.maximo)*100))}%`, transition:"width .3s" }} />
+                    </div>
+                  )}
+                  {/* Lista de jogadores */}
                   {e.jogadores && e.jogadores.length > 0 && (
-                    <div style={{ borderTop:"1px solid var(--border)", paddingTop:4 }}>
-                      {e.jogadores.map((j,i) => {
+                    <div style={{ borderTop:"1px solid var(--border-light)", paddingTop:6, display:"flex", flexDirection:"column", gap:2 }}>
+                      {e.jogadores.map((j, i) => {
                         const isM = isManuel(j.nome);
                         return (
                           <div key={i} style={{
-                            display:"flex", justifyContent:"space-between",
-                            fontSize: isM ? 13 : 12,
-                            fontWeight: isM ? 800 : 400,
-                            padding: isM ? "3px 6px" : "2px 0",
-                            margin: isM ? "3px -10px" : "0",
+                            display:"flex", justifyContent:"space-between", alignItems:"center",
+                            fontSize: isM ? 13 : 12, fontWeight: isM ? 800 : 400,
+                            padding: isM ? "4px 8px" : "1px 0",
+                            margin: isM ? "2px -14px" : "0",
                             borderRadius: isM ? 5 : 0,
                             background: isM ? "var(--accent)" : "transparent",
-                            color: isM ? "#fff" : j.pais==="PT" ? "var(--accent)" : "var(--text)",
+                            color: isM ? "#fff" : j.pais === "PT" ? "var(--accent)" : "var(--text)",
                           }}>
                             <span>{isM ? "★ " : ""}{displayName(j.nome)}</span>
                             <span title={j.cidade}>{flag(j.pais)}</span>
@@ -1206,8 +1245,8 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                     </div>
                   )}
                   {!e.jogadores && e.paises && e.paises.length > 0 && (
-                    <div style={{ fontSize:10, color:"var(--text-3)", marginTop:3 }}>
-                      {e.paises.slice(0,5).map(p=>`${flag(p.pais)}${p.n}`).join(" ")}
+                    <div style={{ fontSize:12, color:"var(--text-3)", marginTop:4, lineHeight:1.6 }}>
+                      {e.paises.slice(0, 8).map(p => `${flag(p.pais)} ${p.n}`).join("  ")}
                     </div>
                   )}
                 </div>
@@ -1215,23 +1254,25 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
             })}
           </div>
 
-          {/* Portugueses */}
+          {/* ── Portugueses inscritos ── */}
           {ptTotal.length > 0 && (
-            <div style={{ background:"var(--accent-light)", border:"1px solid var(--accent)", borderRadius:8, padding:"10px 14px", marginBottom:8 }}>
-              <div style={{ color:"var(--accent)", fontWeight:700, fontSize:12, marginBottom:6 }}>🇵🇹 Portugueses inscritos</div>
-              {t.escaloes.filter(e=>e.jogadores?.some(j=>j.pais==="PT")).map(e=>(
-                <div key={e.age_group} style={{ marginBottom:4 }}>
-                  <div style={{ color:"var(--accent)", fontSize:10, marginBottom:1 }}>{e.nome}</div>
-                  {e.jogadores!.filter(j=>j.pais==="PT").map((j,i)=>(
-                    <div key={i} style={{ color:"var(--text)", fontSize:12, paddingLeft:8 }}>
-                      {displayName(j.nome)} <span style={{ color:"var(--text-3)", fontSize:11 }}>{j.cidade}</span>
+            <div className="card" style={{ background:"var(--accent-light)", border:"1.5px solid var(--accent)", marginBottom:12 }}>
+              <div className="h-sm" style={{ color:"var(--accent)", marginBottom:10 }}>🇵🇹 Portugueses inscritos</div>
+              {t.escaloes.filter(e => e.jogadores?.some(j => j.pais === "PT")).map(e => (
+                <div key={e.age_group} style={{ marginBottom:8 }}>
+                  <div className="h-xs" style={{ color:"var(--accent-text)", marginBottom:4 }}>{e.nome}</div>
+                  {e.jogadores!.filter(j => j.pais === "PT").map((j, i) => (
+                    <div key={i} style={{ display:"flex", justifyContent:"space-between", fontSize:13, padding:"3px 8px", borderRadius:4, background:"rgba(255,255,255,.5)", marginBottom:2 }}>
+                      <span style={{ fontWeight:600 }}>{displayName(j.nome)}</span>
+                      <span style={{ color:"var(--text-3)", fontSize:12 }}>{j.cidade}</span>
                     </div>
                   ))}
                 </div>
               ))}
             </div>
           )}
-          <div style={{ textAlign:"right", color:"var(--text-3)", fontSize:10 }}>{fmtTs(t.ultima_atualizacao)}</div>
+
+          <div className="muted fs-11" style={{ textAlign:"right" }}>{fmtTs(t.ultima_atualizacao)}</div>
         </>
       )}
     </div>
@@ -1524,36 +1565,35 @@ function TabResultados({ data, selectedT, greatgolfData }: {
 
   return (
     <div>
-      {/* Header torneio */}
-      <div style={{ marginBottom:16 }}>
-        <div style={{ fontSize:17, fontWeight:700, color:"var(--text)", marginBottom:4 }}>{t.name}</div>
-        <div style={{ fontSize:12, color:"var(--text-3)", display:"flex", gap:10, alignItems:"center", flexWrap:"wrap" }}>
-          <span>📅 {fmtDate(t.date_inicio)}{t.campo ? ` · ${t.campo}` : ""}</span>
-          <span>Actualizado {fmtTs(t.ultima_atualizacao)}</span>
+      {/* ── Header — padrão detail-header ── */}
+      <div className="detail-header">
+        <div className="detail-header-top">
+          <h2 className="detail-title">{t.name}</h2>
+          <button onClick={printRondas} className="btn" style={{ fontSize:12, display:"flex", alignItems:"center", gap:5 }}>
+            🖨️ Imprimir
+          </button>
+        </div>
+        <div className="detail-sub">
+          <span className="muted">📅 {fmtDate(t.date_inicio)}{t.campo ? ` · ${t.campo}` : ""}</span>
+          <span className="muted fs-11">actualizado {fmtTs(t.ultima_atualizacao)}</span>
           <a href={`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${t.t}`}
             target="_blank" rel="noopener noreferrer"
-            style={{ color:"var(--text-3)", fontSize:10, textDecoration:"none",
-              border:"1px solid var(--border)", borderRadius:5, padding:"1px 7px" }}>
+            style={{ fontSize:12, fontWeight:600, textDecoration:"none", color:"var(--accent-text)",
+              border:"1px solid var(--border)", borderRadius:5, padding:"1px 8px" }}>
             📋 Resultados ↗
           </a>
           {(LINKS_EXTRA[t.t] ?? []).map((l, i) => (
             <a key={i} href={l.url} target="_blank" rel="noopener noreferrer"
-              style={{ color:"var(--text-3)", fontSize:10, textDecoration:"none",
-                border:"1px solid var(--border)", borderRadius:5, padding:"1px 7px" }}>
+              style={{ fontSize:12, fontWeight:600, textDecoration:"none", color:"var(--accent-text)",
+                border:"1px solid var(--border)", borderRadius:5, padding:"1px 8px" }}>
               {l.label}
             </a>
           ))}
-          <button onClick={printRondas} style={{
-            marginLeft:"auto", fontSize:10, cursor:"pointer", background:"var(--bg-header)",
-            border:"1px solid var(--border)", borderRadius:5, padding:"2px 9px",
-            color:"var(--text-2)", fontFamily:"inherit", display:"flex", alignItems:"center", gap:4,
-          }}>
-            🖨️ Imprimir
-          </button>
         </div>
+        {/* Resultados do Manuel em destaque */}
         {manuelRows.length > 0 && (
-          <div style={{ marginTop:8, display:"flex", gap:6, flexWrap:"wrap" }}>
-            {manuelRows.map((m,i) => {
+          <div style={{ display:"flex", gap:8, flexWrap:"wrap", marginTop:10 }}>
+            {manuelRows.map((m, i) => {
               const toPar = m.to_par != null
                 ? (m.to_par === 0 ? "E" : m.to_par > 0 ? `+${m.to_par}` : `${m.to_par}`)
                 : null;
@@ -1561,9 +1601,14 @@ function TabResultados({ data, selectedT, greatgolfData }: {
                 : m.diffLider != null ? `+${m.diffLider} do líder`
                 : null;
               return (
-                <span key={i} style={{ background:"var(--accent-light)", border:"1px solid var(--accent)",
-                  color:"var(--accent)", padding:"2px 10px", borderRadius:8, fontSize:12, fontWeight:700 }}>
-                  Manuel ★ {m.escalao} · R{m.ronda} · {m.score}{toPar ? ` (${toPar})` : ""}{liderStr ? ` · ${liderStr}` : ""}
+                <span key={i} style={{
+                  background:"var(--accent)", color:"#fff",
+                  padding:"5px 14px", borderRadius:8, fontSize:13, fontWeight:700,
+                  display:"inline-flex", alignItems:"center", gap:6,
+                }}>
+                  <span style={{ opacity:.8 }}>★</span>
+                  <span>{m.escalao} · R{m.ronda} · {m.score}{toPar ? ` (${toPar})` : ""}</span>
+                  {liderStr && <span style={{ opacity:.8, fontSize:11 }}>{liderStr}</span>}
                 </span>
               );
             })}
@@ -2343,7 +2388,7 @@ function TabRivais({ data, fieldData, intlData, autoRivals, selectedT: _selected
   data: ResultsData; fieldData: FieldData | null; intlData: IntlData | null;
   autoRivals: AutoRivalPlayer[]; selectedT: number | null;
   memberHist: MemberHistData | null;
-  selectedRival: string | null; setSelectedRival: (r: string | null) => void;
+  selectedRival: string | null; setSelectedRival: (r: string | null | ((prev: string | null) => string | null)) => void;
   greatgolfData: GreatgolfData | null;
   onRivalsReady?: (list: {
     nome: string; pais: string; nEnc: number;
@@ -4020,6 +4065,17 @@ function converterTorneioCompleto(raw: any): TorneioResult | null {
 // ─────────────────────────────────────────────
 type Tab = "campo" | "resultados" | "rivais";
 
+// Tipo explícito para entradas do mapa allTorneios — elimina os (as any) casts
+type TorneioEntry = {
+  t: number; name: string; date: string; dateFim?: string;
+  temResultados: boolean; temCampo: boolean;
+  inscritos?: number; maximo?: number; vagas?: number;
+  escalaoManuel?: string; rondas?: number; fee?: number;
+  campo?: string; totalInscritos?: number; totalMaximo?: number;
+  urlResultados?: string; manuelJogou?: boolean; terminado?: boolean;
+  manuelPos?: number | null; manuelScore?: number | null; nPaises?: number;
+};
+
 export default function USKidsFieldPage() {
   const location = useLocation();
   const locationRival = (location.state as any)?.rival as string | undefined;
@@ -4047,6 +4103,7 @@ export default function USKidsFieldPage() {
   const [selectedRival, setSelectedRival] = useState<string | null>(locationRival ?? null);
   const [filterManuel, setFilterManuel] = useState(true);
   const [sidebarRivalSearch, setSidebarRivalSearch] = useState("");
+  const [rivaisFiltersOpen, setRivaisFiltersOpen] = useState(false);
   const [rivalFilters, setRivalFilters] = useState<{
     pais: string;          // "" = todos
     escalao: string;       // "" = todos, "9","10","11","12","13"
@@ -4057,7 +4114,22 @@ export default function USKidsFieldPage() {
     minNascimento: number; // 0 = sem filtro (ano mínimo = jogador mais velho)
   }>({ pais: "", escalao: "", apenasCruzaram: false, apenasProximoTourn: false, minTorneios: 0, maxNascimento: 0, minNascimento: 0 });
   const [erro,        setErro]        = useState<string | null>(null);
-  const [selectedT,   setSelectedT]   = useState<number | null>(null);
+
+  // selectedT e selectedRival sincronizados com URL params (?t=&rival=)
+  const paramT = searchParams.get("t");
+  const paramRival = searchParams.get("rival");
+  const [selectedT,     setSelectedTState]    = useState<number | null>(paramT ? (parseInt(paramT) || null) : null);
+  const [selectedRival, setSelectedRivalState] = useState<string | null>(locationRival ?? paramRival ?? null);
+
+  const setSelectedT = (t: number | null) => {
+    setSelectedTState(t);
+    setSearchParams(prev => { const n = new URLSearchParams(prev); if (t != null) n.set("t", String(t)); else n.delete("t"); return n; }, { replace: true });
+  };
+  const setSelectedRival = (r: string | null | ((prev: string | null) => string | null)) => {
+    const next = typeof r === "function" ? r(selectedRival) : r;
+    setSelectedRivalState(next);
+    setSearchParams(prev => { const n = new URLSearchParams(prev); if (next) n.set("rival", next); else n.delete("rival"); return n; }, { replace: true });
+  };
 
   // Declarado ANTES do useEffect que o usa — regra de React: hooks antes de qualquer uso.
   // Marca setAutoRivals como actualização não-urgente para não bloquear o render inicial.
@@ -4068,7 +4140,7 @@ export default function USKidsFieldPage() {
       .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
       .then((d: FieldData) => {
         setFieldData(d);
-        if (d.torneios.length) setSelectedT(d.torneios[0].t);
+        if (d.torneios.length) setSelectedTState(prev => prev !== null ? prev : d.torneios[0].t);
       })
       .catch(e => setErro(e.message));
 
@@ -4189,7 +4261,7 @@ export default function USKidsFieldPage() {
   const torneiosResultados = useMemo(() => resultsData?.resultados ?? [], [resultsData]);
 
   const allTorneios = useMemo(() => {
-    const map = new Map<number, { t: number; name: string; date: string; dateFim?: string; temResultados: boolean; temCampo: boolean; inscritos?: number; maximo?: number; vagas?: number; escalaoManuel?: string; rondas?: number; fee?: number; campo?: string; totalInscritos?: number; totalMaximo?: number; urlResultados?: string; manuelJogou?: boolean; terminado?: boolean }>();
+    const map = new Map<number, TorneioEntry>();
     for (const t of torneiosCampo) {
       if (!t.t || !t.name) continue;
       if (!isUSKidsTorneio(t.name)) continue; // Filtrar torneios não-USKids
@@ -4249,13 +4321,13 @@ export default function USKidsFieldPage() {
         const entry = map.get(t.t)!;
         entry.temResultados = true;
         if (t.url_resultados) entry.urlResultados = t.url_resultados;
-        if (manuelJogou) { entry.manuelJogou = true; (entry as any).manuelPos = manuelPos; (entry as any).manuelScore = manuelScore; }
+        if (manuelJogou) { entry.manuelJogou = true; entry.manuelPos = manuelPos; entry.manuelScore = manuelScore; }
         if (!entry.dateFim && t.date_fim) entry.dateFim = t.date_fim;
         if (ended) entry.terminado = true;
         if (!entry.rondas) entry.rondas = rondasTotal;
         if (!entry.campo && t.campo) entry.campo = t.campo;
         if (totalJogadores > 0) entry.totalInscritos = totalJogadores;
-        (entry as any).nPaises = paises.size;
+        entry.nPaises = paises.size;
       } else {
         map.set(t.t, {
           t: t.t, name: t.name, date: t.date_inicio, dateFim: t.date_fim ?? undefined,
@@ -4263,9 +4335,10 @@ export default function USKidsFieldPage() {
           terminado: ended, rondas: rondasTotal,
           campo: t.campo ?? undefined,
           totalInscritos: totalJogadores || undefined,
-          ...(manuelJogou ? { manuelPos, manuelScore } as any : {}),
+          manuelPos: manuelJogou ? manuelPos : undefined,
+          manuelScore: manuelJogou ? manuelScore : undefined,
           nPaises: paises.size,
-        } as any);
+        });
       }
     }
     return [...map.values()]
@@ -4274,13 +4347,15 @@ export default function USKidsFieldPage() {
   }, [torneiosCampo, torneiosResultados]);
 
   if (erro) return (
-    <div style={{ padding:32, color:"var(--color-danger)", fontFamily:"monospace", fontSize:13 }}>
-      ⚠️ {erro}
+    <div style={{ padding: 32 }}>
+      <div className="notice-error">
+        <div className="fw-700 c-danger mb-4">Erro ao carregar dados USKids</div>
+        <div className="muted fs-11 mono">{erro}</div>
+        <button className="btn mt-8" onClick={() => window.location.reload()}>Recarregar</button>
+      </div>
     </div>
   );
-  if (!fieldData) return (
-    <div style={{ padding:32, color:"var(--text-3)", fontSize:13 }}>A carregar…</div>
-  );
+  if (!fieldData) return <LoadingState message="A carregar dados USKids…" size="lg" icon="🏌️" />;
 
   // Quando muda de tab, verificar se o torneio seleccionado existe nessa tab
   const handleTabChange = (newTab: Tab) => {
@@ -4299,6 +4374,213 @@ export default function USKidsFieldPage() {
   ];
 
   const selectedFieldTorneio = fieldData.torneios.find(t => t.t === selectedT) ?? null;
+
+  // ── Render functions para o sidebar — extraídas dos IIFEs para melhor legibilidade ──
+
+  const renderSidebarRivais = () => {
+    const q = sidebarRivalSearch.toLowerCase().trim();
+    const filtered = sidebarRivals.filter(r => {
+      if (q && !r.nome.toLowerCase().includes(q) && !r.pais.toLowerCase().includes(q)) return false;
+      if (rivalFilters.pais && r.pais !== rivalFilters.pais) return false;
+      if (rivalFilters.escalao) {
+        const arR = autoRivals.find(a => normNameAuto(a.n) === normNameAuto(r.nome));
+        if (!arR || !Object.keys(arR.r).some(tid => tid.includes(`_b${rivalFilters.escalao}`))) return false;
+      }
+      if (rivalFilters.minTorneios > 0 && r.totalTournaments < rivalFilters.minTorneios) return false;
+      if (rivalFilters.apenasCruzaram && r.nEnc === 0) return false;
+      if (rivalFilters.apenasProximoTourn && !r.nextIsCommon) return false;
+      return true;
+    });
+    return (
+      <>
+        <div className="sidebar-section-title">
+          {filtered.length} rival{filtered.length !== 1 ? "s" : ""}
+          {filtered.length < sidebarRivals.length ? ` (de ${sidebarRivals.length})` : ""}
+        </div>
+        {filtered.map(r => {
+          const active = selectedRival === r.nome;
+          const accentColor = r.vitorias > r.derrotas ? "var(--color-teal)" : r.derrotas > r.vitorias ? "var(--color-danger)" : "var(--border)";
+          const recordLabel = [r.vitorias > 0 ? `${r.vitorias}V` : "", r.empates > 0 ? `${r.empates}E` : "", r.derrotas > 0 ? `${r.derrotas}D` : ""].filter(Boolean).join(" ");
+          return (
+            <button key={r.nome}
+              className={`course-item${active ? " active" : ""}`}
+              style={active ? { borderLeftColor: accentColor } : undefined}
+              onClick={() => setSelectedRival(prev => prev === r.nome ? null : r.nome)}>
+              <div className="course-item-name">
+                <span>{flag(r.pais)}</span>
+                <span style={{ flex:1, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{displayName(r.nome)}</span>
+                {recordLabel && (
+                  <span className="p p-sm" style={{
+                    flexShrink: 0,
+                    background: r.vitorias > r.derrotas ? "var(--bg-success-subtle)" : r.derrotas > r.vitorias ? "var(--bg-danger-strong)" : "var(--bg-muted)",
+                    color: r.vitorias > r.derrotas ? "var(--color-good-dark)" : r.derrotas > r.vitorias ? "var(--color-danger-dark)" : "var(--text-3)",
+                  }}>{recordLabel}</span>
+                )}
+              </div>
+              <div className="course-item-meta">
+                {[r.nEnc > 0 ? `${r.nEnc} enc.` : "", r.totalTournaments > 0 ? `${r.totalTournaments} torn.` : "", r.firstYear ? `desde ${r.firstYear}` : ""].filter(Boolean).join(" · ")}
+              </div>
+              {r.nextTournName && (
+                <div className="course-item-meta" style={{ display:"flex", gap:4 }}>
+                  <span style={{ overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", flex:1 }}>
+                    {r.nextTournName}{r.daysToNext != null && ` · ${r.daysToNext === 0 ? "hoje" : `${r.daysToNext}d`}`}
+                  </span>
+                  {r.nextIsCommon && <span className="p p-sm" style={{ flexShrink:0, background:"var(--bg-success-subtle)", color:"var(--color-good-dark)" }}>∩</span>}
+                </div>
+              )}
+            </button>
+          );
+        })}
+        {filtered.length === 0 && <div className="muted" style={{ padding:"16px 12px", fontSize:12 }}>Sem rivais com estes filtros</div>}
+      </>
+    );
+  };
+
+  const renderSidebarTorneios = () => {
+    const manuelFilter = (t: TorneioEntry) => !filterManuel || t.manuelJogou;
+    const activeList = tab === "campo"
+      ? allTorneios.filter(t => !t.terminado && manuelFilter(t))
+      : allTorneios.filter(manuelFilter);
+
+    const buildMonthMap = (list: TorneioEntry[]) => {
+      const monthMap: Record<string, TorneioEntry[]> = {};
+      const currentYear = new Date().getFullYear().toString();
+      for (const t of list) {
+        const iso = isoDate(t.date);
+        const yr = iso ? iso.substring(0, 4) : "?";
+        const mo = iso ? iso.substring(0, 7) : "?";
+        const key = (yr === currentYear || yr === "?") ? mo : yr;
+        if (!monthMap[key]) monthMap[key] = [];
+        monthMap[key].push(t);
+      }
+      return monthMap;
+    };
+    const monthMap = buildMonthMap(activeList);
+
+    const monthLabel = (key: string) => {
+      if (key === "?") return "Data desconhecida";
+      if (key.length === 4) return key;
+      const [yr, mo] = key.split("-");
+      return `${MONTHS_PT[parseInt(mo) - 1] || mo} ${yr}`;
+    };
+    const today = new Date().toISOString().substring(0, 7);
+    const currentYear = new Date().getFullYear().toString();
+
+    const sortKeys = (map: Record<string, TorneioEntry[]>, reverse?: boolean) => {
+      const allKeys = Object.keys(map);
+      const futureKeys = allKeys.filter(k => k >= today || (k.length === 4 && k > currentYear)).sort();
+      const pastKeys   = allKeys.filter(k => k <  today && !(k.length === 4 && k > currentYear)).sort();
+      if (reverse) return [...pastKeys, ...futureKeys];
+      return [...futureKeys, ...pastKeys];
+    };
+
+    const mainKeys = tab === "resultados" ? sortKeys(monthMap, true) : sortKeys(monthMap);
+
+    const renderItem = (t: TorneioEntry, dimmed?: boolean) => {
+      const active = t.t === selectedT;
+      const temConteudo = tab === "resultados" ? t.temResultados : t.temCampo;
+      const reg = torneioRegiao(t.name);
+      const isEuro = reg === "EURO";
+      const isInvit = !!REGIONAL_CHAMPIONSHIPS[t.t];
+      const pct = t.maximo ? Math.min(100, Math.round(((t.inscritos ?? 0) / t.maximo) * 100)) : 0;
+      const manuelPos: number | null = t.manuelPos ?? null;
+      const manuelScore: number | null = t.manuelScore ?? null;
+      const nPaises: number = t.nPaises ?? 0;
+      const extraPills = (
+        <>
+          {reg && (
+            <span className="p p-sm p-tourn" style={{
+              background: isEuro ? "var(--bg-info)" : "var(--bg-warn-orange)",
+              color: isEuro ? "var(--color-info)" : "var(--color-orange-deep)",
+              borderColor: isEuro ? "var(--border-info)" : "var(--color-amber)",
+            }}>{reg}</span>
+          )}
+          {isInvit && (
+            <span className="p p-sm p-tourn" style={{
+              background:"var(--bg-pink)", color:"var(--color-purple)", borderColor:"var(--border-purple)",
+            }}>INVIT</span>
+          )}
+          {t.escalaoManuel && <span className="p p-sm p-muted">{t.escalaoManuel}</span>}
+          {nPaises > 1 && <span className="p p-sm p-muted">{nPaises} países</span>}
+          {t.manuelJogou && <ManuelPill />}
+          {t.manuelJogou && manuelPos != null && (
+            <span className="p p-sm p-tourn" style={{
+              background: manuelPos === 1 ? "var(--bg-warn-strong)" : manuelPos <= 3 ? "var(--bg-info-strong)" : "var(--bg-muted)",
+              color: manuelPos === 1 ? "var(--color-warn-dark)" : manuelPos <= 3 ? "var(--color-navy)" : "var(--text-2)",
+              borderColor: "transparent",
+            }}>
+              {manuelPos === 1 ? "🥇" : manuelPos === 2 ? "🥈" : manuelPos === 3 ? "🥉" : `#${manuelPos}`}
+              {manuelScore != null && ` (${manuelScore > 0 ? "+" : ""}${manuelScore === 0 ? "E" : manuelScore})`}
+            </span>
+          )}
+          {t.urlResultados && (
+            <a href={t.urlResultados} target="_blank" rel="noopener noreferrer"
+              onClick={e => e.stopPropagation()}
+              className="p p-sm p-muted" style={{ textDecoration:"none" }}>
+              Resultados ↗
+            </a>
+          )}
+        </>
+      );
+      const tData: SidebarItemTournament = {
+        name: t.name.replace(/\s*\d{4}$/, ""),
+        campo: t.campo ? t.campo.split(",")[0] : undefined,
+        date: isoDate(t.date) || t.date,
+        playerCount: t.totalInscritos ?? t.inscritos,
+        rounds: t.rondas,
+        players: [],
+        series: "tour",
+      };
+      const uskidsFooter = (!dimmed && t.temCampo) ? (
+        <>
+          {t.maximo != null && t.maximo > 0 && (
+            <div style={{ marginBottom: 4 }}>
+              <div style={{ display:"flex", justifyContent:"space-between", marginBottom:3, fontSize:11, color:"var(--text-2)" }}>
+                <span style={{ fontWeight:600 }}>{t.escalaoManuel}</span>
+                <span>
+                  {t.inscritos}/{t.maximo}
+                  {(t.vagas ?? 0) > 0
+                    ? <span style={{ color:"var(--color-success)", marginLeft:4 }}>{t.vagas} vagas</span>
+                    : <span style={{ color:"var(--color-danger)", marginLeft:4 }}>cheio</span>}
+                </span>
+              </div>
+              <div style={{ height:4, borderRadius:2, background:"var(--border)", overflow:"hidden" }}>
+                <div style={{ height:"100%", borderRadius:2, width:`${pct}%`, background:"var(--accent)" }} />
+              </div>
+            </div>
+          )}
+          {(t.totalMaximo ?? 0) > 0 && (
+            <div style={{ fontSize:11, color:"var(--text-3)", display:"flex", justifyContent:"space-between", marginBottom:3 }}>
+              <span>Total: {t.totalInscritos}/{t.totalMaximo}</span>
+              {t.fee && <span>${t.fee.toFixed(0)}</span>}
+            </div>
+          )}
+        </>
+      ) : null;
+      return (
+        <div key={t.t} style={{ opacity: dimmed ? 0.55 : (temConteudo ? 1 : 0.45) }}>
+          <TournSidebarItem
+            t={tData}
+            isActive={active}
+            onClick={() => { setSelectedT(t.t); md.onSelect(); }}
+            accentColor={t.manuelJogou ? SIDEBAR_ACCENT.pja : SIDEBAR_ACCENT.tour}
+            extraPills={extraPills}
+            footer={uskidsFooter}
+          />
+        </div>
+      );
+    };
+
+    const renderGroup = (gmap: Record<string, TorneioEntry[]>, keys: string[], dimmed?: boolean) =>
+      keys.map(key => (
+        <div key={key}>
+          <div className="sidebar-section-title-dark">{monthLabel(key)}</div>
+          {gmap[key].map(t => renderItem(t, dimmed))}
+        </div>
+      ));
+
+    return <>{renderGroup(monthMap, mainKeys)}</>;
+  };
 
   return (
     <div className="tourn-layout" style={{ height:"calc(100vh - 52px)" }}>
@@ -4348,42 +4630,64 @@ export default function USKidsFieldPage() {
               onChange={e => setSidebarRivalSearch(e.target.value)}
               placeholder="🔎 rival…"
               style={{ width:110 }} />
+            {/* Botão "Filtros" — colapsa/expande em mobile */}
             <div className="toolbar-sep" />
-            {(["9","10","11","12","13"] as const).map(n => (
-              <button key={n}
-                className={`tourn-tab tourn-tab-sm${rivalFilters.escalao===n?" active":""}`}
-                style={rivalFilters.escalao===n?{}:{background:"var(--bg-muted)",color:"var(--text-2)",borderColor:"var(--border)"}}
-                onClick={() => setRivalFilters(f=>({...f, escalao:f.escalao===n?"":n}))}>
-                B{n}
-              </button>
-            ))}
-            <div className="toolbar-sep" />
-            {[...new Set(sidebarRivals.map(r=>r.pais).filter(Boolean))]
-              .map(p=>({p,n:sidebarRivals.filter(r=>r.pais===p).length}))
-              .sort((a,b)=>b.n-a.n).slice(0,5)
-              .map(({p}) => (
-                <button key={p}
-                  className={`tourn-tab tourn-tab-sm${rivalFilters.pais===p?" active":""}`}
-                  style={rivalFilters.pais===p?{}:{background:"var(--bg-muted)",color:"var(--text-2)",borderColor:"var(--border)"}}
-                  onClick={() => setRivalFilters(f=>({...f, pais:f.pais===p?"":p}))}>
-                  {flag(p)}
+            <button
+              className={`tourn-tab tourn-tab-sm${rivaisFiltersOpen ? " active" : ""}`}
+              style={rivaisFiltersOpen ? {} : { background:"var(--bg-muted)", color:"var(--text-2)", borderColor:"var(--border)" }}
+              onClick={() => setRivaisFiltersOpen(v => !v)}
+              title="Mostrar/ocultar filtros">
+              Filtros {rivaisFiltersOpen ? "▲" : "▼"}
+            </button>
+            {/* Filtros — visíveis sempre em desktop, colapsáveis em mobile */}
+            <div className="rivals-filters" style={{ display: rivaisFiltersOpen ? "contents" : undefined }}>
+              <div className="toolbar-sep rivals-filters-sep" />
+              {/* Escalão */}
+              {(["9","10","11","12","13"] as const).map(n => (
+                <button key={n}
+                  className={`tourn-tab tourn-tab-sm${rivalFilters.escalao===n?" active":""}`}
+                  style={rivalFilters.escalao===n?{}:{background:"var(--bg-muted)",color:"var(--text-2)",borderColor:"var(--border)"}}
+                  title={`Filtrar escalão Boys ${n}`}
+                  onClick={() => setRivalFilters(f=>({...f, escalao:f.escalao===n?"":n}))}>
+                  B{n}
                 </button>
               ))}
-            <div className="toolbar-sep" />
-            {([5,10,20] as const).map(n => (
-              <button key={n}
-                className={`tourn-tab tourn-tab-sm${rivalFilters.minTorneios===n?" active":""}`}
-                style={rivalFilters.minTorneios===n?{}:{background:"var(--bg-muted)",color:"var(--text-2)",borderColor:"var(--border)"}}
-                onClick={() => setRivalFilters(f=>({...f, minTorneios:f.minTorneios===n?0:n}))}>
-                {n}+
+              <div className="toolbar-sep rivals-filters-sep" />
+              {/* País — select com todos os países disponíveis */}
+              <select
+                className="select"
+                value={rivalFilters.pais}
+                style={{ height:26, fontSize:11, minWidth:64, maxWidth:90 }}
+                onChange={e => setRivalFilters(f => ({ ...f, pais: e.target.value }))}>
+                <option value="">🌍 País</option>
+                {[...new Set(sidebarRivals.map(r => r.pais).filter(Boolean))]
+                  .map(p => ({ p, n: sidebarRivals.filter(r => r.pais === p).length }))
+                  .sort((a, b) => b.n - a.n)
+                  .map(({ p, n }) => (
+                    <option key={p} value={p}>{flag(p)} {p} ({n})</option>
+                  ))}
+              </select>
+              <div className="toolbar-sep rivals-filters-sep" />
+              {/* Nº mínimo de torneios */}
+              {([5,10,20] as const).map(n => (
+                <button key={n}
+                  className={`tourn-tab tourn-tab-sm${rivalFilters.minTorneios===n?" active":""}`}
+                  style={rivalFilters.minTorneios===n?{}:{background:"var(--bg-muted)",color:"var(--text-2)",borderColor:"var(--border)"}}
+                  title={`Mínimo ${n} torneios`}
+                  onClick={() => setRivalFilters(f=>({...f, minTorneios:f.minTorneios===n?0:n}))}>
+                  {n}+
+                </button>
+              ))}
+              <div className="toolbar-sep rivals-filters-sep" />
+              {/* Cruzamentos com Manuel */}
+              <button
+                className={`tourn-tab tourn-tab-sm${rivalFilters.apenasCruzaram?" active":""}`}
+                style={rivalFilters.apenasCruzaram?{}:{background:"var(--bg-muted)",color:"var(--text-2)",borderColor:"var(--border)"}}
+                title="Apenas rivais que já cruzaram com Manuel"
+                onClick={() => setRivalFilters(f=>({...f, apenasCruzaram:!f.apenasCruzaram}))}>
+                Só ∩M
               </button>
-            ))}
-            <button
-              className={`tourn-tab tourn-tab-sm${rivalFilters.apenasCruzaram?" active":""}`}
-              style={rivalFilters.apenasCruzaram?{}:{background:"var(--bg-muted)",color:"var(--text-2)",borderColor:"var(--border)"}}
-              onClick={() => setRivalFilters(f=>({...f, apenasCruzaram:!f.apenasCruzaram}))}>
-              ∩M
-            </button>
+            </div>
           </>)}
         </div>
         {/* col 2: link externo + contador */}
@@ -4410,208 +4714,7 @@ export default function USKidsFieldPage() {
 
         {/* Lista de torneios agrupada por mês — OU lista de rivais */}
         <div style={{ overflowY:"auto", flex:1 }}>
-
-          {/* ── Sidebar: RIVAIS ── */}
-          {tab === "rivais" ? (<>
-            {(()=>{
-              const q = sidebarRivalSearch.toLowerCase().trim();
-              const filtered = sidebarRivals.filter(r => {
-                if (q && !r.nome.toLowerCase().includes(q) && !r.pais.toLowerCase().includes(q)) return false;
-                if (rivalFilters.pais && r.pais !== rivalFilters.pais) return false;
-                if (rivalFilters.escalao) {
-                  const arR = autoRivals.find(a=>normNameAuto(a.n)===normNameAuto(r.nome));
-                  if (!arR || !Object.keys(arR.r).some(tid=>tid.includes(`_b${rivalFilters.escalao}`))) return false;
-                }
-                if (rivalFilters.minTorneios > 0 && r.totalTournaments < rivalFilters.minTorneios) return false;
-                if (rivalFilters.apenasCruzaram && r.nEnc === 0) return false;
-                if (rivalFilters.apenasProximoTourn && !r.nextIsCommon) return false;
-                return true;
-              });
-              return (<>
-                <div className="sidebar-section-title">
-                  {filtered.length} rival{filtered.length!==1?"s":""}
-                  {filtered.length < sidebarRivals.length ? ` (de ${sidebarRivals.length})` : ""}
-                </div>
-                {filtered.map(r => {
-                  const active = selectedRival === r.nome;
-                  const accentColor = r.vitorias>r.derrotas ? "var(--color-teal)" : r.derrotas>r.vitorias ? "var(--color-danger)" : "var(--border)";
-                  const recordLabel = [r.vitorias>0?`${r.vitorias}V`:"", r.empates>0?`${r.empates}E`:"", r.derrotas>0?`${r.derrotas}D`:""].filter(Boolean).join(" ");
-                  return (
-                    <button key={r.nome}
-                      className={`course-item${active?" active":""}`}
-                      style={active ? {borderLeftColor:accentColor} : undefined}
-                      onClick={() => setSelectedRival(prev => prev===r.nome?null:r.nome)}>
-                      <div className="course-item-name">
-                        <span>{flag(r.pais)}</span>
-                        <span style={{flex:1,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{displayName(r.nome)}</span>
-                        {recordLabel && <span className="p p-sm" style={{flexShrink:0,background:r.vitorias>r.derrotas?"var(--bg-success-subtle)":r.derrotas>r.vitorias?"var(--bg-danger-strong)":"var(--bg-muted)",color:r.vitorias>r.derrotas?"var(--color-good-dark)":r.derrotas>r.vitorias?"var(--color-danger-dark)":"var(--text-3)"}}>{recordLabel}</span>}
-                      </div>
-                      <div className="course-item-meta">
-                        {[r.nEnc>0?`${r.nEnc} enc.`:"", r.totalTournaments>0?`${r.totalTournaments} torn.`:"", r.firstYear?`desde ${r.firstYear}`:""].filter(Boolean).join(" · ")}
-                      </div>
-                      {r.nextTournName && (
-                        <div className="course-item-meta" style={{display:"flex",gap:4}}>
-                          <span style={{overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",flex:1}}>
-                            {r.nextTournName}{r.daysToNext!=null&&` · ${r.daysToNext===0?"hoje":`${r.daysToNext}d`}`}
-                          </span>
-                          {r.nextIsCommon&&<span className="p p-sm" style={{flexShrink:0,background:"var(--bg-success-subtle)",color:"var(--color-good-dark)"}}>∩</span>}
-                        </div>
-                      )}
-                    </button>
-                  );
-                })}
-                {filtered.length===0&&<div className="muted" style={{padding:"16px 12px",fontSize:12}}>Sem rivais com estes filtros</div>}
-              </>);
-            })()}
-          </>
-          ) : (
-          /* ── Sidebar: TORNEIOS (default) ── */
-          (() => {
-            // No tab "campo": só torneios activos/futuros (terminados → só em Resultados)
-            const manuelFilter = (t: typeof allTorneios[0]) =>
-              !filterManuel || t.manuelJogou;
-            const activeList = tab === "campo"
-              ? allTorneios.filter(t => !t.terminado && manuelFilter(t))
-              : allTorneios.filter(manuelFilter);
-
-            // agrupar por mês/ano
-            const buildMonthMap = (list: typeof allTorneios) => {
-              const monthMap: Record<string, typeof allTorneios> = {};
-              const currentYear = new Date().getFullYear().toString();
-              for (const t of list) {
-                const iso = isoDate(t.date);
-                const yr  = iso ? iso.substring(0, 4) : "?";
-                const mo  = iso ? iso.substring(0, 7) : "?";
-                // anos anteriores ao corrente → agrupar por ano; ano corrente → por mês
-                const key = (yr === currentYear || yr === "?") ? mo : yr;
-                if (!monthMap[key]) monthMap[key] = [];
-                monthMap[key].push(t);
-              }
-              return monthMap;
-            };
-            const monthMap = buildMonthMap(activeList);
-
-            const monthLabel = (key: string) => {
-              if (key === "?") return "Data desconhecida";
-              if (key.length === 4) return key; // ano
-              const [yr, mo] = key.split("-");
-              return `${MONTHS_PT[parseInt(mo) - 1] || mo} ${yr}`;
-            };
-            const today = new Date().toISOString().substring(0, 7);
-            const currentYear = new Date().getFullYear().toString();
-
-            const sortKeys = (map: Record<string, typeof allTorneios>, reverse?: boolean) => {
-              const allKeys = Object.keys(map);
-              const futureKeys = allKeys.filter(k => k >= today || (k.length === 4 && k > currentYear)).sort();
-              const pastKeys   = allKeys.filter(k => k <  today && !(k.length === 4 && k > currentYear)).sort();
-              if (reverse) return [...pastKeys, ...futureKeys];
-              return [...futureKeys, ...pastKeys];
-            };
-
-            const mainKeys = tab === "resultados"
-              ? sortKeys(monthMap, true)
-              : sortKeys(monthMap);
-
-            const renderItem = (t: typeof allTorneios[0], dimmed?: boolean) => {
-                  const active = t.t === selectedT;
-                  const temConteudo = tab === "resultados" ? t.temResultados : t.temCampo;
-                  const reg = torneioRegiao(t.name);
-                  const isEuro = reg === "EURO";
-                  const isInvit = !!REGIONAL_CHAMPIONSHIPS[t.t];
-                  const pct = t.maximo ? Math.min(100, Math.round(((t.inscritos ?? 0) / t.maximo) * 100)) : 0;
-                  const manuelPos: number | null = (t as any).manuelPos ?? null;
-                  const manuelScore: number | null = (t as any).manuelScore ?? null;
-                  const nPaises: number = (t as any).nPaises ?? 0;
-                  const extraPills = (<>
-                    {reg && (
-                      <span className="p p-sm p-tourn" style={{
-                        background: isEuro ? "var(--bg-info)" : "var(--bg-warn-orange)",
-                        color: isEuro ? "var(--color-info)" : "var(--color-orange-deep)",
-                        borderColor: isEuro ? "var(--border-info)" : "var(--color-amber)",
-                      }}>{reg}</span>
-                    )}
-                    {isInvit && (
-                      <span className="p p-sm p-tourn" style={{
-                        background:"var(--bg-pink)", color:"var(--color-purple)", borderColor:"var(--border-purple)",
-                      }}>INVIT</span>
-                    )}
-                    {t.escalaoManuel && <span className="p p-sm p-muted">{t.escalaoManuel}</span>}
-                    {nPaises > 1 && <span className="p p-sm p-muted">{nPaises} países</span>}
-                    {t.manuelJogou && <ManuelPill />}
-                    {t.manuelJogou && manuelPos != null && (
-                      <span className="p p-sm p-tourn" style={{
-                        background: manuelPos === 1 ? "var(--bg-warn-strong)" : manuelPos <= 3 ? "var(--bg-info-strong)" : "var(--bg-muted)",
-                        color: manuelPos === 1 ? "var(--color-warn-dark)" : manuelPos <= 3 ? "var(--color-navy)" : "var(--text-2)",
-                        borderColor: "transparent",
-                      }}>
-                        {manuelPos === 1 ? "🥇" : manuelPos === 2 ? "🥈" : manuelPos === 3 ? "🥉" : `#${manuelPos}`}
-                        {manuelScore != null && ` (${manuelScore > 0 ? "+" : ""}${manuelScore === 0 ? "E" : manuelScore})`}
-                      </span>
-                    )}
-                    {t.urlResultados && (
-                      <a href={t.urlResultados} target="_blank" rel="noopener noreferrer"
-                        onClick={e => e.stopPropagation()}
-                        className="p p-sm p-muted" style={{ textDecoration:"none" }}>
-                        Resultados ↗
-                      </a>
-                    )}
-                  </>);
-                  const tData: SidebarItemTournament = {
-                    name: t.name.replace(/\s*\d{4}$/, ""),
-                    campo: t.campo ? t.campo.split(",")[0] : undefined,
-                    date: isoDate(t.date) || t.date,
-                    playerCount: t.totalInscritos ?? t.inscritos,
-                    rounds: t.rondas,
-                    players: [],
-                    series: "tour",
-                  };
-                  const uskidsFooter = (!dimmed && t.temCampo) ? (<>
-                    {t.maximo != null && t.maximo > 0 && (
-                      <div style={{ marginBottom: 4 }}>
-                        <div style={{ display:"flex", justifyContent:"space-between", marginBottom:3, fontSize:11, color:"var(--text-2)" }}>
-                          <span style={{ fontWeight:600 }}>{t.escalaoManuel}</span>
-                          <span>
-                            {t.inscritos}/{t.maximo}
-                            {(t.vagas ?? 0) > 0
-                              ? <span style={{ color:"var(--color-success)", marginLeft:4 }}>{t.vagas} vagas</span>
-                              : <span style={{ color:"var(--color-danger)", marginLeft:4 }}>cheio</span>}
-                          </span>
-                        </div>
-                        <div style={{ height:4, borderRadius:2, background:"var(--border)", overflow:"hidden" }}>
-                          <div style={{ height:"100%", borderRadius:2, width:`${pct}%`, background:"var(--accent)" }} />
-                        </div>
-                      </div>
-                    )}
-                    {(t.totalMaximo ?? 0) > 0 && (
-                      <div style={{ fontSize:11, color:"var(--text-3)", display:"flex", justifyContent:"space-between", marginBottom:3 }}>
-                        <span>Total: {t.totalInscritos}/{t.totalMaximo}</span>
-                        {t.fee && <span>${t.fee.toFixed(0)}</span>}
-                      </div>
-                    )}
-                  </>) : null;
-                  return (
-                    <div key={t.t} style={{ opacity: dimmed ? 0.55 : (temConteudo ? 1 : 0.45) }}>
-                      <TournSidebarItem
-                        t={tData}
-                        isActive={active}
-                        onClick={() => { setSelectedT(t.t); md.onSelect(); }}
-                        accentColor={t.manuelJogou ? SIDEBAR_ACCENT.pja : SIDEBAR_ACCENT.tour}
-                        extraPills={extraPills}
-                        footer={uskidsFooter}
-                      />
-                    </div>
-                  );
-            };
-            const renderGroup = (gmap: Record<string, typeof allTorneios>, keys: string[], dimmed?: boolean) =>
-              keys.map(key => (
-                <div key={key}>
-                  <div className="sidebar-section-title-dark">{monthLabel(key)}</div>
-                  {gmap[key].map(t => renderItem(t, dimmed))}
-                </div>
-              ));
-            return <>{renderGroup(monthMap, mainKeys)}</>;
-          })()
-          )}
+          {tab === "rivais" ? renderSidebarRivais() : renderSidebarTorneios()}
         </div>
 
         <div className="muted fs-10" style={{ padding:"8px 12px", borderTop:"1px solid var(--border-light)" }}>
@@ -4635,22 +4738,24 @@ export default function USKidsFieldPage() {
           />
         )}
         {tab === "resultados" && !resultsData && (
-          <div style={{color:"var(--text-3)",padding:"24px 0"}}>A carregar resultados…</div>
+          <LoadingState message="A carregar resultados…" size="md" icon="🏆" />
         )}
 
         {tab === "rivais" && !resultsData && (
-          <div style={{color:"var(--text-3)",padding:"24px 0"}}>A carregar…</div>
+          <LoadingState message="A carregar rivais…" size="md" icon="🤝" />
         )}
         {/* TabRivais renderizado sempre quando resultsData existe — pré-calcula em background */}
         {resultsData && (
-          <div style={{ display: tab === "rivais" ? "block" : "none" }}>
-            <TabRivais data={resultsData} fieldData={fieldData} intlData={intlData}
-              autoRivals={autoRivals} selectedT={selectedT} memberHist={memberHist}
-              selectedRival={selectedRival} setSelectedRival={setSelectedRival}
-              greatgolfData={greatgolfData}
-              onRivalsReady={onRivalsReady}
-            />
-          </div>
+          <SectionErrorBoundary label="TabRivais">
+            <div style={{ display: tab === "rivais" ? "block" : "none" }}>
+              <TabRivais data={resultsData} fieldData={fieldData} intlData={intlData}
+                autoRivals={autoRivals} selectedT={selectedT} memberHist={memberHist}
+                selectedRival={selectedRival} setSelectedRival={setSelectedRival}
+                greatgolfData={greatgolfData}
+                onRivalsReady={onRivalsReady}
+              />
+            </div>
+          </SectionErrorBoundary>
         )}
 
       </div>

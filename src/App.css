@@ -1669,9 +1669,18 @@ tr.cross-current { background: var(--bg-success); }
  .ov-gallery { gap: 10px; }
 }
 
-/* ═══════════════════════════════════════════
-  Unified Component System
-  ═══════════════════════════════════════════ */
+/* ─── Filtros Rivais — colapsáveis em mobile, sempre visíveis em desktop ─── */
+/* Em desktop: sempre visíveis via display:contents (os filhos ficam inline no flex pai) */
+/* Em mobile: ocultos por defeito; o inline style display:contents aplica-se quando rivaisFiltersOpen=true */
+.rivals-filters { display: contents; }
+.rivals-filters-sep { display: inline-block; }
+
+@media (max-width: 768px) {
+  .rivals-filters { display: none; }
+  /* O botão "Filtros ▼" injeta display:contents via inline style → override do display:none */
+}
+
+/* ─── Unified Component System ─── */
 
 /* ─── Page Wrapper ─── */
 
