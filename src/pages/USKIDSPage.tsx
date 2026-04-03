@@ -3,7 +3,7 @@ import { useEffect, useState, useMemo, useCallback, useTransition } from "react"
 import SidebarToggle from "../ui/SidebarToggle";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import React from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { C } from "../utils/colors";
 import { scClass } from "../utils/scoreDisplay";
 import { MONTHS_PT, isoDate, fmtDate, fmtToPar } from "../utils/format";
@@ -4023,6 +4023,10 @@ type Tab = "campo" | "resultados" | "rivais";
 export default function USKidsFieldPage() {
   const location = useLocation();
   const locationRival = (location.state as any)?.rival as string | undefined;
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const VALID_TABS: Tab[] = ["campo", "resultados", "rivais"];
+  const paramTab = searchParams.get("tab") as Tab | null;
 
   const [fieldData,   setFieldData]   = useState<FieldData | null>(null);
   const [resultsData, setResultsData] = useState<ResultsData | null>(null);
@@ -4030,7 +4034,15 @@ export default function USKidsFieldPage() {
   const [autoRivals,  setAutoRivals]  = useState<AutoRivalPlayer[]>([]);
   const [greatgolfData, setGreatgolfData] = useState<GreatgolfData | null>(null); void setGreatgolfData;
   const [memberHist,   setMemberHist]   = useState<MemberHistData | null>(null);
-  const [tab,         setTab]         = useState<Tab>(locationRival ? "rivais" : "campo");
+  const [tab, setTabState] = useState<Tab>(() => {
+    if (paramTab && VALID_TABS.includes(paramTab)) return paramTab;
+    if (locationRival) return "rivais";
+    return "campo";
+  });
+  const setTab = (t: Tab) => {
+    setTabState(t);
+    setSearchParams(prev => { const n = new URLSearchParams(prev); n.set("tab", t); return n; }, { replace: true });
+  };
     const md = useMasterDetail();
   const [selectedRival, setSelectedRival] = useState<string | null>(locationRival ?? null);
   const [filterManuel, setFilterManuel] = useState(true);

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams, Link } from "react-router-dom";
 import type { Player, Course, SexFilter } from "../data/types";
 import { useAppContext } from "../context/AppContext";
 import { norm, shortDate, fD, fD2, firstName, fmtSign, fmtToPar } from "../utils/format";
@@ -145,14 +145,15 @@ function EventInfo({ name, origin, pill, links }: {
   );
 }
 
-/* ─── Course name link → /campos/:courseKey ─── */
+/* ─── Course name link → /campos/:courseKey (abre em nova janela) ─── */
 function CourseLink({ name }: { name: string }) {
   const key = findCourseKey(name);
   if (!key) return <>{name}</>;
   return (
-    <Link to={`/campos/${key}`} className="courseLink" title={`Ver campo: ${name}`} onClick={e => e.stopPropagation()}>
+    <a href={`/campos/${key}`} className="courseLink" title={`Ver campo: ${name}`}
+       target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}>
       {name}
-    </Link>
+    </a>
   );
 }
 
@@ -363,7 +364,7 @@ function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId 
           <div className="rowHead">
             <div className="count" style={{ background: lastHex, color: textOnColor(lastHex), border: teeBorder(lastHex) }}>{course.count}</div>
             <button type="button" className="courseBtn" onClick={() => setOpen(v => !v)}>{course.course}</button>
- {courseLinkKey && <Link to={`/campos/${courseLinkKey}`} className="courseLink fs-10 ml-4" title="Ver campo" onClick={e => e.stopPropagation()}>↗</Link>}
+ {courseLinkKey && <a href={`/campos/${courseLinkKey}`} className="courseLink fs-10 ml-4" title="Ver campo" target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}>↗</a>}
             <PillBadge pill={course.rounds.map(r => effectivePill(r, course.course)).find(Boolean) || ""} />
           </div>
         </td>
@@ -3732,13 +3733,27 @@ function ByTournamentView({ data, search }: { data: PlayerPageData; search: stri
 
 function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; selected: { fed: string } & Player; onMetaLoaded?: (meta: PlayerPageData["META"]) => void }) {
   const { data, loading, error } = usePlayerData(fedId);
-  const [view, setView] = useState<ViewKey>("by_course");
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const VALID_VIEWS: ViewKey[] = ["by_course", "by_course_analysis", "by_date", "by_tournament", "analysis"];
+  const paramView = searchParams.get("view") as ViewKey | null;
+
+  const [view, setViewState] = useState<ViewKey>(
+    paramView && VALID_VIEWS.includes(paramView) ? paramView : "by_course"
+  );
+  const setView = (v: ViewKey) => {
+    setViewState(v);
+    setSearchParams(prev => { const n = new URLSearchParams(prev); n.set("view", v); return n; }, { replace: true });
+  };
+
   const [courseSearch, setCourseSearch] = useState("");
   const [courseSort, setCourseSort] = useState<CourseSort>("last_desc");
 
-  // Reset search + notify parent when player data loads
+  // Reset search + view quando muda de jogador; notify parent when player data loads
   useEffect(() => {
     setCourseSearch("");
+    const pv = searchParams.get("view") as ViewKey | null;
+    setViewState(pv && VALID_VIEWS.includes(pv) ? pv : "by_course");
     if (data?.META) onMetaLoaded?.(data.META);
   }, [data]);
 

@@ -14,6 +14,17 @@ import { AppContext } from "./context/AppContext";
 import NavBar from "./ui/NavBar";
 import PasswordGate from "./ui/PasswordGate";
 
+/* ── Cabeçalho mínimo — usado nos estados loading/error/gate ── */
+function MinimalHeader() {
+  return (
+    <header className="topbar">
+      <div className="brand">
+        <div className="brand-title">Golf</div>
+      </div>
+    </header>
+  );
+}
+
 /* ── Lazy-loaded pages (code-split per route) ── */
 const CamposPage = lazy(() => import("./pages/CamposPage"));
 const JogadoresPage = lazy(() => import("./pages/JogadoresPage"));
@@ -206,14 +217,14 @@ export default function App() {
       {/* Estados de carregamento/erro (sem contexto disponível) */}
       {status.kind === "loading" && (
         <>
-          <header className="topbar"><div className="brand"><div className="brand-title">Golf</div></div></header>
+          <MinimalHeader />
           <main className="content"><div className="center-msg">A carregar…</div></main>
         </>
       )}
 
       {status.kind === "error" && (
         <>
-          <header className="topbar"><div className="brand"><div className="brand-title">Golf</div></div></header>
+          <MinimalHeader />
           <main className="content">
             <div className="center-msg error-box">
               <div className="error-title">Erro</div>
@@ -226,11 +237,7 @@ export default function App() {
       {/* Dados prontos mas password não introduzida — gate global */}
       {status.kind === "ready" && ctxValue && !calUnlocked && (
         <AppContext.Provider value={ctxValue}>
-          <header className="topbar">
-            <div className="brand">
-              <div className="brand-title">Golf</div>
-            </div>
-          </header>
+          <MinimalHeader />
           <main className="content">
             <PasswordGate onUnlock={() => setCalUnlocked(true)} />
           </main>

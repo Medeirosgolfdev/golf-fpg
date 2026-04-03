@@ -16,6 +16,21 @@ type Tab =
   | "campos" | "jogadores" | "comparar" | "simulador" | "calendario"
   | "drive" | "bjgt" | "kids" | "uskids" | "diversos" | "doral";
 
+// ── Lista de itens de navegação — editar aqui para adicionar/reordenar ──
+const NAV_ITEMS: { tab: Tab; label: string; path: string }[] = [
+  { tab: "jogadores",  label: "Jogadores",    path: "/jogadores"  },
+  { tab: "simulador",  label: "Simulador",    path: "/simulador"  },
+  { tab: "calendario", label: "Calendário",   path: "/calendario" },
+  { tab: "drive",      label: "🇵🇹 DRIVE",   path: "/drive"      },
+  { tab: "diversos",   label: "🇵🇹 FPG",     path: "/diversos"   },
+  { tab: "uskids",     label: "🇺🇸 USKids",  path: "/uskids"     },
+  { tab: "doral",      label: "🇺🇸 Doral",   path: "/doral"      },
+  { tab: "bjgt",       label: "🇪🇸 BJGT",    path: "/bjgt"       },
+  { tab: "campos",     label: "Campos",       path: "/campos"     },
+  { tab: "comparar",   label: "Comparar",     path: "/comparar"   },
+  { tab: "kids",       label: "🌍 Kids",      path: "/kids"       },
+];
+
 // ── Helpers ────────────────────────────────────────────────────────
 
 function tabFromPath(pathname: string): Tab {
@@ -120,62 +135,15 @@ export default function NavBar() {
 
       {/* Nav */}
       <nav ref={navRef} className="nav nav-scroll">
-        {/* Todas as páginas protegidas por password */}
-        {calUnlocked && (
-          <button className={`nav-btn ${tab === "jogadores" ? "active" : ""}`} onClick={() => go("/jogadores")}>
-            Jogadores
+        {calUnlocked && NAV_ITEMS.map(({ tab: t, label, path }) => (
+          <button
+            key={t}
+            className={`nav-btn${tab === t ? " active" : ""}`}
+            onClick={() => go(path)}
+          >
+            {label}
           </button>
-        )}
-        {calUnlocked && (
-          <button className={`nav-btn ${tab === "simulador" ? "active" : ""}`} onClick={() => go("/simulador")}>
-            Simulador
-          </button>
-        )}
-        {calUnlocked && (
-          <button className={`nav-btn ${tab === "calendario" ? "active" : ""}`} onClick={() => go("/calendario")}>
-            Calendário
-          </button>
-        )}
-        {calUnlocked && (
-          <button className={`nav-btn ${tab === "drive" ? "active" : ""}`} onClick={() => go("/drive")}>
-            🇵🇹 DRIVE
-          </button>
-        )}
-        {calUnlocked && (
-          <button className={`nav-btn ${tab === "diversos" ? "active" : ""}`} onClick={() => go("/diversos")}>
-            🇵🇹 FPG
-          </button>
-        )}
-        {calUnlocked && (
-          <button className={`nav-btn ${tab === "uskids" ? "active" : ""}`} onClick={() => go("/uskids")}>
-            🇺🇸 USKids
-          </button>
-        )}
-        {calUnlocked && (
-          <button className={`nav-btn ${tab === "doral" ? "active" : ""}`} onClick={() => go("/doral")}>
-            🇺🇸 Doral
-          </button>
-        )}
-        {calUnlocked && (
-          <button className={`nav-btn ${tab === "bjgt" ? "active" : ""}`} onClick={() => go("/bjgt")}>
-            🇪🇸 BJGT
-          </button>
-        )}
-        {calUnlocked && (
-          <button className={`nav-btn ${tab === "campos" ? "active" : ""}`} onClick={() => go("/campos")}>
-            Campos
-          </button>
-        )}
-        {calUnlocked && (
-          <button className={`nav-btn ${tab === "comparar" ? "active" : ""}`} onClick={() => go("/comparar")}>
-            Comparar
-          </button>
-        )}
-        {calUnlocked && (
-          <button className={`nav-btn ${tab === "kids" ? "active" : ""}`} onClick={() => go("/kids")}>
-            🌍kids
-          </button>
-        )}
+        ))}
       </nav>
 
       {/* Estatísticas de topo */}
