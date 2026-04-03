@@ -3,188 +3,156 @@
 /**
  * fetch-uskids-field-sizes.js
  *
- * Lê todos os ficheiros uskids-member-history-*.json, extrai os t-codes únicos,
- * e para cada torneio vai buscar ao signupanytime:
- *   - nome do torneio
- *   - por escalão: número de jogadores inscritos e número que completou resultados
+ * Usa Playwright (como os outros scripts USKids) para ir buscar
+ * ao signupanytime os inscritos por escalão dos torneios relevantes.
  *
- * Output: public/data/uskids-field-sizes.json
- *
- * Correr em Node.js (não precisa de browser/Playwright):
+ * Uso:
  *   node scripts/fetch-uskids-field-sizes.js
- *   node scripts/fetch-uskids-field-sizes.js --force   # re-fetch tudo
+ *   node scripts/fetch-uskids-field-sizes.js --min=5
+ *   node scripts/fetch-uskids-field-sizes.js --force
  */
 
 const fs   = require('fs');
 const path = require('path');
-const https = require('https');
+const { chromium } = require('playwright');
 
 const DIR    = path.join(__dirname, '..', 'public', 'data');
 const OUTPUT = path.join(DIR, 'uskids-field-sizes.json');
 const API    = 'https://www.signupanytime.com/plugins/links/admin/LinksAJAX.aspx';
-const DELAY  = 250;
+const IFRAME = 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=';
+const DELAY  = 150;
 const FORCE  = process.argv.includes('--force');
+const MIN_ARG = process.argv.find(a => a.startsWith('--min='));
+const MIN     = MIN_ARG ? parseInt(MIN_ARG.split('=')[1]) : 3;
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-function safeGet(url, timeoutMs = 8000) {
-  return new Promise((resolve) => {
-    const timer = setTimeout(() => resolve(null), timeoutMs);
-    https.get(url, { headers: { 'User-Agent': 'Mozilla/5.0' } }, res => {
-      let data = '';
-      res.on('data', c => data += c);
-      res.on('end', () => {
-        clearTimeout(timer);
-        try { resolve(JSON.parse(data)); }
-        catch { resolve(null); }
-      });
-    }).on('error', () => { clearTimeout(timer); resolve(null); });
-  });
+async function pageJSON(page, url) {
+  return page.evaluate(async (u) => {
+    const r = await fetch(u, { credentials: 'include' });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  }, url);
 }
 
-// ── 1. Carregar todos os ficheiros de member history ──────────────
 function loadMemberHistory() {
-  const torneios = {};
   const jogadores = {};
   let n = 1;
   while (true) {
     const p = path.join(DIR, `uskids-member-history-${String(n).padStart(3,'0')}.json`);
     if (!fs.existsSync(p)) break;
-    try {
-      const d = JSON.parse(fs.readFileSync(p, 'utf8'));
-      Object.assign(torneios, d.torneios || {});
-      Object.assign(jogadores, d.jogadores || {});
-    } catch {}
+    try { Object.assign(jogadores, JSON.parse(fs.readFileSync(p, 'utf8')).jogadores || {}); } catch {}
     n++;
   }
-  // Fallback: ficheiro legado
   const legacy = path.join(DIR, 'uskids-member-history.json');
   if (n === 1 && fs.existsSync(legacy)) {
-    try {
-      const d = JSON.parse(fs.readFileSync(legacy, 'utf8'));
-      Object.assign(torneios, d.torneios || {});
-      Object.assign(jogadores, d.jogadores || {});
-    } catch {}
+    try { Object.assign(jogadores, JSON.parse(fs.readFileSync(legacy, 'utf8')).jogadores || {}); } catch {}
   }
-  return { torneios, jogadores };
+  return jogadores;
 }
 
-// ── 2. Extrair t-codes únicos do histórico ────────────────────────
-function extractTcodes(jogadores) {
-  const tcodes = new Set();
-  for (const j of Object.values(jogadores)) {
-    for (const tcode of Object.keys(j.torneios || {})) {
-      tcodes.add(parseInt(tcode));
-    }
-  }
-  return [...tcodes].filter(t => !isNaN(t)).sort((a,b) => a-b);
-}
-
-// ── 3. Fetch GetMeta para um torneio ─────────────────────────────
-async function fetchMeta(tcode) {
-  const url = `${API}?op=GetMeta&t=${tcode}`;
-  return safeGet(url);
-}
-
-// ── 4. Fetch GetTournamentPlayers para um flight ──────────────────
-async function fetchFlightCount(tcode, fid) {
-  const url = `${API}?op=GetTournamentPlayers&t=${tcode}&f=${fid}`;
-  const d = await safeGet(url);
-  if (!d) return 0;
-  return (d.PlayerNodeId || []).length;
-}
-
-// ── Main ──────────────────────────────────────────────────────────
 async function main() {
-  console.log('══════════════════════════════════════');
   console.log('⛳  USKids Field Sizes');
-  console.log(`    ${new Date().toLocaleString('pt-PT')}`);
-  console.log('══════════════════════════════════════\n');
+  console.log(`    ${new Date().toLocaleString('pt-PT')}\n`);
 
-  // Carregar output existente
+  // Contar popularidade dos t-codes no histórico
+  const jogadores = loadMemberHistory();
+  const counts = new Map();
+  for (const j of Object.values(jogadores)) {
+    for (const t of Object.keys(j.torneios || {})) {
+      const n = parseInt(t);
+      if (!isNaN(n)) counts.set(n, (counts.get(n) || 0) + 1);
+    }
+  }
+
+  const toProcess = [...counts.entries()]
+    .filter(([t, c]) => c >= MIN && t >= 7000)
+    .sort(([a], [b]) => a - b)
+    .map(([t]) => t);
+
   let output = {};
-  if (fs.existsSync(OUTPUT) && !FORCE) {
+  if (fs.existsSync(OUTPUT) && !FORCE)
     try { output = JSON.parse(fs.readFileSync(OUTPUT, 'utf8')); } catch {}
-  }
-  const existingTcodes = new Set(Object.keys(output).map(Number));
+  const existing = new Set(Object.keys(output).filter(k => k !== '_gerado_em').map(Number));
+  const toFetch  = FORCE ? toProcess : toProcess.filter(t => !existing.has(t));
 
-  const { torneios: mhTorneios, jogadores } = loadMemberHistory();
-  const allTcodes = extractTcodes(jogadores);
+  console.log(`Histórico: ${Object.keys(jogadores).length} jogadores`);
+  console.log(`T-codes >= 7000 com >= ${MIN} jogadores: ${toProcess.length}`);
+  console.log(`Em cache: ${existing.size} | A buscar: ${toFetch.length}\n`);
 
-  // Adicionar tcodes do header do member history
-  for (const t of Object.keys(mhTorneios)) {
-    allTcodes.push(parseInt(t));
-  }
-  const uniqueTcodes = [...new Set(allTcodes)].sort((a,b)=>a-b);
+  if (!toFetch.length) { console.log('Nada a fazer.'); return; }
 
-  const toFetch = FORCE
-    ? uniqueTcodes
-    : uniqueTcodes.filter(t => !existingTcodes.has(t));
+  const browser = await chromium.launch({ headless: true });
+  const context = await browser.newContext({
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+  });
+  const page = await context.newPage();
 
-  console.log(`Total t-codes: ${uniqueTcodes.length} | Já em cache: ${existingTcodes.size} | A buscar: ${toFetch.length}\n`);
+  // Inicializar sessão navegando para um torneio conhecido
+  await page.goto(IFRAME + '18242', { waitUntil: 'domcontentloaded', timeout: 15000 });
+  await sleep(1000);
+  console.log('Sessão inicializada\n');
 
-  let fetched = 0, skipped = 0;
+  let fetched = 0, semDados = 0;
+  const t0 = Date.now();
 
-  for (const tcode of toFetch) {
-    const meta = await fetchMeta(tcode);
-    if (!meta) { skipped++; await sleep(DELAY); continue; }
+  try {
+    for (let i = 0; i < toFetch.length; i++) {
+      const tcode   = toFetch[i];
+      const nJog    = counts.get(tcode);
+      const elapsed = Math.round((Date.now() - t0) / 1000);
+      const eta     = i > 0 ? Math.round((Date.now()-t0)/i*(toFetch.length-i)/1000) : '?';
 
-    const tn = meta.tournament || {};
-    const flights   = meta.flights    || {};
-    const ageGroups = meta.age_groups || {};
+      process.stdout.write(`[${i+1}/${toFetch.length}] t=${tcode} (${nJog}jog) ${elapsed}s ETA ${eta}s ... `);
 
-    const escaloes = {};
-    for (const [fid, fl] of Object.entries(flights)) {
-      const agId   = fl.age_group;
-      const agName = ageGroups[agId]?.name || fl.name || `flight ${fid}`;
-      // Ignorar Girls e escalões não relevantes
-      if (/girl/i.test(agName)) continue;
+      let meta;
+      try { meta = await pageJSON(page, `${API}?op=GetMeta&t=${tcode}`); }
+      catch { semDados++; process.stdout.write('erro\n'); await sleep(DELAY); continue; }
 
-      // Número de inscritos
-      await sleep(DELAY);
-      const count = await fetchFlightCount(tcode, parseInt(fid));
+      if (!meta?.tournament?.name) {
+        semDados++;
+        process.stdout.write('sem dados\n');
+        await sleep(DELAY);
+        continue;
+      }
 
-      escaloes[agName] = {
-        fid: parseInt(fid),
-        inscritos: count,
+      const tn        = meta.tournament;
+      const flights   = meta.flights    || {};
+      const ageGroups = meta.age_groups || {};
+
+      const escaloes = {};
+      for (const [fid, fl] of Object.entries(flights)) {
+        const agName = ageGroups[fl.age_group]?.name || fl.name || `flight ${fid}`;
+        if (/girl/i.test(agName)) continue;
+        // registered já vem no GetMeta — sem chamada extra
+        const count = fl.registered || fl.players || 0;
+        if (count > 0) escaloes[agName] = { fid: parseInt(fid), inscritos: count };
+      }
+
+      output[tcode] = {
+        name: tn.name, start_date: tn.start_date || null,
+        end_date: tn.end_date || null, rounds: tn.rounds || null,
+        escaloes,
       };
-    }
 
-    output[tcode] = {
-      name:        tn.name || `t=${tcode}`,
-      start_date:  tn.start_date || null,
-      end_date:    tn.end_date   || null,
-      rounds:      tn.rounds     || null,
-      escaloes,
-    };
+      const resumo = Object.keys(escaloes).length
+        ? Object.entries(escaloes).map(([ag,v]) => `${ag}: ${v.inscritos}`).join(', ')
+        : '—';
+      process.stdout.write(`${tn.name.slice(0,45)} [${resumo}]\n`);
 
-    fetched++;
-    const nEsc = Object.keys(escaloes).length;
-    console.log(`  ✅ [${fetched}/${toFetch.length}] t=${tcode} | ${output[tcode].name} | ${nEsc} escalões`);
-    for (const [ag, info] of Object.entries(escaloes)) {
-      console.log(`     ${ag}: ${info.inscritos} jog.`);
-    }
-
-    // Gravar checkpoint a cada 50
-    if (fetched % 50 === 0) {
       output._gerado_em = new Date().toISOString();
+      fs.mkdirSync(DIR, { recursive: true });
       fs.writeFileSync(OUTPUT, JSON.stringify(output, null, 2), 'utf8');
-      console.log(`  💾 Checkpoint: ${fetched} torneios processados`);
-    }
+      fetched++;
 
-    await sleep(DELAY);
+      await sleep(DELAY);
+    }
+  } finally {
+    await browser.close();
   }
 
-  // Gravar final
-  output._gerado_em = new Date().toISOString();
-  fs.mkdirSync(DIR, { recursive: true });
-  fs.writeFileSync(OUTPUT, JSON.stringify(output, null, 2), 'utf8');
-
-  console.log('\n══════════════════════════════════════');
-  console.log(`✅  uskids-field-sizes.json`);
-  console.log(`    ${Object.keys(output).filter(k => k !== '_gerado_em').length} torneios`);
-  console.log(`    ${fetched} novos | ${skipped} sem dados`);
-  console.log('══════════════════════════════════════');
+  const total = Object.keys(output).filter(k => k !== '_gerado_em').length;
+  console.log(`\n✅  ${total} torneios | ${fetched} novos | ${semDados} sem dados | ${((Date.now()-t0)/60000).toFixed(1)} min`);
 }
 
-main().catch(err => { console.error('Erro fatal:', err); process.exit(1); });
+main().catch(err => { console.error(err); process.exit(1); });

@@ -244,10 +244,7 @@ function processDoral(data: unknown): AutoRivalPlayer[] {
 }
 
 const USKIDS_ID: Record<string,string> = {
-  "Venice Open 2025":                    "venice25",
-  "Rome Classic 2025":                   "rome25",
-  "Marco Simone Invitational 2025":      "marco25",
-  "Marco Simone Invitational 2026":      "marco26",
+  // Venice 2025, Rome 2025, Marco 2025, Marco 2026 removidos — têm ficheiros completos próprios
   "Desert Shootout 2026":                "desert26",
   "Sandestin Championship 2026":         "sandestin26",
   "2026 Mississippi State Invitational": "msstate26",
@@ -924,6 +921,40 @@ export async function buildAutoRivals(
   return _autoRivalsCache;
 }
 
+/** Carrega uskids-field-sizes.json e popula uskFieldSizes.
+ *  Formato: { [tcode]: { escaloes: { "Boys 10": { inscritos: N }, ... } } }
+ *  Para grupos com range ("Boys 9-10"), popula TODAS as idades do range:
+ *    usk{tcode}_b9 e usk{tcode}_b10 → ambos com o mesmo inscritos
+ */
+function processFieldSizes(data: unknown): void {
+  const d = data as Record<string, {
+    escaloes?: Record<string, { inscritos?: number }>;
+  }>;
+  for (const [tcodeStr, entry] of Object.entries(d)) {
+    if (tcodeStr === "_gerado_em") continue;
+    const tcode = parseInt(tcodeStr);
+    if (isNaN(tcode)) continue;
+    for (const [agName, info] of Object.entries(entry.escaloes ?? {})) {
+      const inscritos = info?.inscritos;
+      if (!inscritos || inscritos <= 0) continue;
+      // Extrair todos os números do nome ("Boys 9-10" → [9,10], "Boys 13-14" → [13,14], "Boys 11" → [11])
+      const nums = [...agName.matchAll(/(\d+)/g)]
+        .map(m => parseInt(m[1]))
+        .filter(n => n >= 7 && n <= 18);
+      if (!nums.length) continue;
+      const minAge = Math.min(...nums);
+      const maxAge = Math.max(...nums);
+      // Popular todas as idades do range — assim _b9 e _b10 ficam ambos cobertos
+      for (let age = minAge; age <= maxAge; age++) {
+        const tid = `usk${tcode}_b${age}`;
+        if (!uskFieldSizes.has(tid)) {
+          uskFieldSizes.set(tid, inscritos);
+        }
+      }
+    }
+  }
+}
+
 async function _buildAutoRivalsInternal(
   onProgress?: (p: LoadProgress) => void,
   onUpdate?: (players: AutoRivalPlayer[]) => void
@@ -940,7 +971,7 @@ async function _buildAutoRivalsInternal(
 
   type FileTask =
     | { kind: "wjgc"; tid: string; file: string }
-    | { kind: "doral" | "uskids" | "pull" | "memberHist"; file: string }
+    | { kind: "doral" | "uskids" | "pull" | "memberHist" | "fieldSizes"; file: string }
     | { kind: "completo"; file: string };
 
   // ── FASE 1: ficheiros essenciais (carregam em paralelo) ──
@@ -953,11 +984,12 @@ async function _buildAutoRivalsInternal(
     { kind: "wjgc", tid: "eowagr25_b910", file: "eowagr25_contest13.json" },
     { kind: "wjgc", tid: "eowagr25",      file: "eowagr25_scorecards.json" },
     { kind: "wjgc", tid: "eowagr25_b1314",file: "eowagr25_contest77.json" },
-    { kind: "doral",  file: "ftm_doral_2025.json" },
-    { kind: "doral",  file: "ftm_doral_2024.json" },
-    { kind: "uskids", file: "uskids-results.json" },
-    { kind: "pull",   file: "pull-torneios000.json" },
-    ...Array.from({ length: 19 }, (_, i) =>
+    { kind: "doral",      file: "ftm_doral_2025.json" },
+    { kind: "doral",      file: "ftm_doral_2024.json" },
+    { kind: "uskids",     file: "uskids-results.json" },
+    { kind: "pull",       file: "pull-torneios000.json" },
+    { kind: "fieldSizes", file: "uskids-field-sizes.json" },
+    ...Array.from({ length: 30 }, (_, i) =>
       ({ kind: "completo" as const, file: `uskids_torneios_completos(${i + 1}).json` })
     ),
   ];
@@ -980,6 +1012,7 @@ async function _buildAutoRivalsInternal(
     if (t.kind === "uskids") return "USKids Results";
     if (t.kind === "pull") return "Torneios PT";
     if (t.kind === "memberHist") return "Member History";
+    if (t.kind === "fieldSizes") return "Field Sizes";
     const m = t.file.match(/\((\d+)\)/);
     return m ? `USKids #${m[1]}` : t.file;
   };
@@ -990,11 +1023,12 @@ async function _buildAutoRivalsInternal(
   await Promise.all(coreTasks.map(async task => {
     try {
       const d = await fetchJson(`${base}${task.file}`);
-      if (task.kind === "wjgc")     mergeInto(map, processWjgc(d, task.tid));
-      if (task.kind === "doral")    mergeInto(map, processDoral(d));
-      if (task.kind === "uskids")   mergeInto(map, processUskids(d));
-      if (task.kind === "pull")     mergeInto(map, processPullTorneios(d));
-      if (task.kind === "completo") mergeInto(map, processUskidsCompleto(d));
+      if (task.kind === "wjgc")       mergeInto(map, processWjgc(d, task.tid));
+      if (task.kind === "doral")      mergeInto(map, processDoral(d));
+      if (task.kind === "uskids")     mergeInto(map, processUskids(d));
+      if (task.kind === "pull")       mergeInto(map, processPullTorneios(d));
+      if (task.kind === "completo")   mergeInto(map, processUskidsCompleto(d));
+      if (task.kind === "fieldSizes") processFieldSizes(d);
     } catch { /* ignorar */ }
     report(labelFor(task));
   }));

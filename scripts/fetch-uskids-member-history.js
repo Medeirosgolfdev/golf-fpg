@@ -489,6 +489,12 @@ async function main() {
       const fc = loadFlightsCache();
       console.log(`\n⚡ Fase 1 em cache (${fc.gerado_em?.slice(0,10)}) — a saltar`);
 
+      // Mesmo com cache, inicializar sessão no browser antes da Fase 2
+      // (sem isto, page fica em about:blank e todos os fetch() falham)
+      const tcodeInicio = tcodes[0] || ALL_TCODES[0];
+      await initPage(page, tcodeInicio);
+      console.log(`   Sessão inicializada (t=${tcodeInicio})`);
+
       for (const [midStr, flts] of Object.entries(fc.memberFlights || {})) {
         const mid = parseInt(midStr);
         allMemberIds.add(mid);
@@ -627,6 +633,7 @@ async function main() {
     console.log(`══════════════════════════════════════\n`);
 
     let processed = 0;
+    let consecutiveErrors = 0;
 
     for (const { mid, isNew } of toProcess) {
       processed++;
@@ -634,6 +641,7 @@ async function main() {
 
       try {
         const data = await pageJSON(page, `${API}?op=GetMemberTournamentResults&m=${mid}`);
+        consecutiveErrors = 0; // reset ao primeiro sucesso
         const tids = Object.keys(data);
 
         if (tids.length === 0) { continue; }
@@ -726,7 +734,22 @@ async function main() {
         console.log(`  ${label} [${processed}/${toProcess.length}][${tag}] ${playerName} | ${ag} | ${nTorns} torneios`);
 
       } catch (err) {
+        consecutiveErrors++;
         console.warn(`  ❌ [${processed}/${toProcess.length}] m=${mid}: ${err.message}`);
+
+        // Após 5 erros consecutivos → sessão provavelmente perdida → reconectar
+        if (consecutiveErrors >= 5) {
+          console.log(`  🔄 ${consecutiveErrors} erros seguidos — a reconectar sessão...`);
+          try {
+            const tcodeRec = tcodes[0] || ALL_TCODES[0];
+            await initPage(page, tcodeRec);
+            console.log(`  ✅ Sessão reestabelecida`);
+            consecutiveErrors = 0;
+          } catch (reconnErr) {
+            console.error(`  ❌ Falha na reconexão: ${reconnErr.message}`);
+          }
+          await sleep(2000);
+        }
       }
 
       await sleep(DELAY_HIST);

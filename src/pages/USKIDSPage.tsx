@@ -18,7 +18,7 @@ import {
   ScorecardLB, AccumulatedLB, AllRoundsScorecardLB, expandMultiRound,
   type Tournament as TATournament,
 } from "./FPGPage";
-import { buildAutoRivals, normName as normNameAuto, type AutoRivalPlayer, uskTournNames } from "./KIDSdataLoader";
+import { buildAutoRivals, normName as normNameAuto, type AutoRivalPlayer, uskTournNames, uskFieldSizes } from "./KIDSdataLoader";
 import { cachedFetchJson } from "../data/fetchCache";
 
 // ─────────────────────────────────────────────
@@ -122,7 +122,10 @@ function tornCanon(s: string): string {
   const y2 = low.match(/\b20(\d{2})\b/)?.[1] || low.match(/(?:^|\s)(\d{2})$/)?.[1] || "";
   if (/venice/i.test(low))                        return `venice-${y2}`;
   if (/rome|roma/i.test(low))                     return `rome-${y2}`;
-  if (/marco\s*simone/i.test(low))                return `marco-${y2}`;
+  if (/marco\s*simone/i.test(low)) {
+    const pc = /parent.child/i.test(low) ? "pc" : "";
+    return `marco${pc}-${y2}`;
+  }
   if (/wjgc|bjgt|world.*junior.*golf/i.test(low)) return `wjgc-${y2}`;
   if (/eu\s*open|european\s*open|eowagr/i.test(low)) return `euopen-${y2}`;
   if (/doral/i.test(low))                         return `doral-${y2}`;
@@ -2555,10 +2558,10 @@ function TabRivais({ data, fieldData, intlData, autoRivals, selectedT: _selected
     });
 
     // ── Adicionar autoRivals Boys 9-14 que ainda não estão na lista ──
+    // E enriquecer rivais já existentes com totalTournaments real do member history
     const nomesNaLista = new Set(lista.map(r => normNameAuto(r.nome)));
     for (const ap of autoRivals) {
       if (normNameAuto(ap.n).includes("medeiros") && normNameAuto(ap.n).includes("manuel")) continue;
-      if (nomesNaLista.has(normNameAuto(ap.n))) continue;
 
       // Verificar se tem pelo menos uma entrada Boys 9-14
       const temBoysRelevante = Object.entries(ap.r).some(([tid]) => {
@@ -2569,18 +2572,36 @@ function TabRivais({ data, fieldData, intlData, autoRivals, selectedT: _selected
       });
       if (!temBoysRelevante) continue;
 
-      // Calcular firstYear e totalTournaments
-      const anos = Object.keys(ap.r).map(tid => {
+      // Anos e totalTournaments do member history
+      const tids = Object.keys(ap.r);
+      const anos = tids.map(tid => {
+        const uskM = tid.match(/^usk(\d+)/);
+        if (uskM) { const meta = uskTournNames.get(`usk${uskM[1]}`); if (meta?.dateExact) return parseInt(meta.dateExact.slice(0,4)); }
         const b = tidBase(tid); const m = b.match(/(\d{2})$/);
         if (!m) return 0; const n = parseInt(m[1]);
         return (n >= 20 && n <= 35) ? 2000 + n : 0;
       }).filter(Boolean);
-      const firstYear = anos.length ? Math.min(...anos) : null;
+      const firstYearAr = anos.length ? Math.min(...anos) : null;
+      const totalTournAr = tids.length;
 
-      // País
+      if (nomesNaLista.has(normNameAuto(ap.n))) {
+        // Rival já na lista (tem encontros) → actualizar totalTournaments e firstYear
+        const idx = lista.findIndex(r => normNameAuto(r.nome) === normNameAuto(ap.n));
+        if (idx >= 0) {
+          lista[idx] = {
+            ...lista[idx],
+            totalTournaments: Math.max(lista[idx].totalTournaments, totalTournAr),
+            firstYear: firstYearAr != null
+              ? (lista[idx].firstYear != null ? Math.min(lista[idx].firstYear, firstYearAr) : firstYearAr)
+              : lista[idx].firstYear,
+          };
+        }
+        continue;
+      }
+
       const pais = ap.co || "";
 
-      // Próximo torneio inscrito (mesmo lógica dos rivais com encontros)
+      // Próximo torneio inscrito
       let nextTournName: string | null = null;
       let daysToNext: number | null = null;
       let nextIsCommon = false;
@@ -2606,8 +2627,8 @@ function TabRivais({ data, fieldData, intlData, autoRivals, selectedT: _selected
       lista.push({
         nome: ap.n, pais, nEnc: 0,
         vitorias: 0, derrotas: 0, empates: 0,
-        totalTournaments: Object.keys(ap.r).length,
-        firstYear, nextTournName, daysToNext, nextIsCommon,
+        totalTournaments: totalTournAr,
+        firstYear: firstYearAr, nextTournName, daysToNext, nextIsCommon,
       });
       nomesNaLista.add(normNameAuto(ap.n));
     }
@@ -3063,14 +3084,13 @@ function PerfilRivalNovo({
         : undefined;
       const isDirectConfronto = enc != null;
 
-      // Dados de contexto do campo (via resultados)
+      // Dados de contexto do campo (via resultados → fallback: uskids-field-sizes.json)
       let fieldSize: number | null = null;
       let winnerTp: number | null = null;
       let medianTp: number | null = null;
       let percentile: number | null = null;
 
       if (torn && res.ageGroup) {
-        // Encontrar o escalão correcto
         const esc = torn.escaloes?.find(e => e.nome === res.ageGroup)
           ?? torn.escaloes?.find(e => e.nome.includes(res.ageGroup ?? ""));
         if (esc) {
@@ -3078,17 +3098,24 @@ function PerfilRivalNovo({
           const lb = [...(lastRd?.leaderboard ?? lastRd?.jogadores ?? [])];
           if (lb.length > 0) {
             fieldSize = lb.length;
-            // Ordenar por to_par (menor = melhor) para obter vencedor e mediana
             const sorted = [...lb].filter(j => j.to_par != null).sort((a, b) => (a.to_par ?? 0) - (b.to_par ?? 0));
             if (sorted.length > 0) {
               winnerTp = sorted[0].to_par ?? null;
               medianTp = sorted[Math.floor(sorted.length / 2)].to_par ?? null;
             }
-            if (res.p != null && fieldSize > 0) {
-              percentile = Math.round((res.p / fieldSize) * 100);
-            }
           }
         }
+      }
+      // Fallback: uskids-field-sizes.json (inscritos por escalão)
+      if (fieldSize == null) {
+        fieldSize = uskFieldSizes.get(tid) ?? null;
+      }
+      // Percentil: só calcular com o field real (leaderboard), não com inscritos
+      if (res.p != null && fieldSize != null && !winnerTp && !medianTp) {
+        // field-sizes dá inscritos, não to-par — apenas percentil de posição
+        percentile = Math.round((res.p / fieldSize) * 100);
+      } else if (res.p != null && fieldSize != null && fieldSize > 0 && winnerTp != null) {
+        percentile = Math.round((res.p / fieldSize) * 100);
       }
 
       entries.push({
@@ -3100,7 +3127,9 @@ function PerfilRivalNovo({
         fieldSize, winnerTp, medianTp, percentile,
       });
     }
-    return entries.sort((a, b) => b.year !== a.year ? b.year - a.year : isoDate(b.date).localeCompare(isoDate(a.date)));
+    return entries.sort((a, b) =>
+      b.year !== a.year ? b.year - a.year : isoDate(b.date).localeCompare(isoDate(a.date))
+    );
   }, [ar, rival, resultados]);
 
   const byYear = useMemo(() => {
@@ -3153,107 +3182,110 @@ function PerfilRivalNovo({
     };
   }, [wallOfFame]);
 
-  // ── DOB melhorado: detecta transições de escalão para estimar mês ──
+  // ── DOB: mesmo algoritmo do computeDobInfo (KIDSPage.tsx) ────────────────
+  // Usa ar.r directamente: o sufixo _b{n} do tid dá a idade exacta, e o
+  // ageGroup refina para grupos de idade simples ("Boys 10" → exact=10).
+  // Intersecta todas as janelas e aperta com transições de escalão.
   const { dobLabel, ageGroupRange } = useMemo(() => {
     const MESES = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
 
-    function extractMaxAge(ag: string): number | null {
-      const nums = [...ag.matchAll(/(\d+)/g)].map(m=>parseInt(m[1])).filter(n=>n>=7&&n<=18);
-      return nums.length ? Math.max(...nums) : null;
+    // parseExactAge: só grupos de 1 número ("Boys 10" → 10; "Boys 9-10" → null)
+    function parseExactAge(ag: string): number | null {
+      const m = ag.match(/boys\s+(\d+)$/i);
+      return m ? parseInt(m[1]) : null;
     }
 
-    // Ordenar entradas por data
-    const sorted = wallOfFame
-      .filter(e => e.date && e.ageGroup)
-      .sort((a,b) => isoDate(a.date).localeCompare(isoDate(b.date)));
+    if (!ar) return { dobLabel: null, ageGroupRange: null };
 
-    // Procurar transição mais forte: par onde a idade máxima sobe exactamente 1
-    // (pode ser mesmo ano ou cross-year)
-    let bestBirthYear: number | null = null;
-    let bestMonthLabel: string | null = null;
-    let bestConfidence = 0; // quanto mais próximas as datas, maior a confiança
+    // ── Step 1: construir constraints a partir de ar.r ──
+    const constraints: Array<{ dateExact: string; ageMin: number; ageMax: number }> = [];
 
-    for (let i = 0; i < sorted.length; i++) {
-      const e1 = sorted[i];
-      const age1 = extractMaxAge(e1.ageGroup);
-      if (age1 == null) continue;
+    for (const [tid, res] of Object.entries(ar.r)) {
+      // Tentar obter data e idade base a partir do sufixo do tid
+      const uskMatch = tid.match(/^(usk\d+)_b(\d+)$/);
+      if (!uskMatch) continue; // ignorar tids sem sufixo _b{n} (ex: wjgc25, doral25)
 
-      for (let j = i+1; j < sorted.length; j++) {
-        const e2 = sorted[j];
-        const age2 = extractMaxAge(e2.ageGroup);
-        if (age2 == null) continue;
-        if (age2 !== age1 + 1) continue; // só transições de +1
+      const base = uskTournNames.get(uskMatch[1]);
+      if (!base?.dateExact) continue;
 
-        // Encontrada transição!
-        // Birth year: o aniversário ocorreu entre e1 e e2 → player turned age2 between these dates
-        const birthYear = e2.year - age2;
+      const ageFromTid = parseInt(uskMatch[2]);
+      let ageMin = ageFromTid;
+      let ageMax = ageFromTid;
 
-        // Proximidade das datas (dias): menor = maior confiança
-        const d1 = new Date(isoDate(e1.date));
-        const d2 = new Date(isoDate(e2.date));
-        const daysDiff = Math.abs((d2.getTime() - d1.getTime()) / 86400000);
-        const confidence = 1000 - daysDiff; // maior confiança para datas mais próximas
+      // Refinar com ageGroup string se for exacto ("Boys 10" → 10)
+      const exact = res.ageGroup ? parseExactAge(res.ageGroup) : null;
+      if (exact != null) {
+        ageMin = Math.max(ageMin, exact);
+        ageMax = Math.min(ageMax, exact);
+      }
+      if (ageMin > ageMax || ageMin < 7 || ageMax > 18) continue;
 
-        if (confidence > bestConfidence) {
-          bestConfidence = confidence;
-          bestBirthYear = birthYear;
+      constraints.push({ dateExact: base.dateExact, ageMin, ageMax });
+    }
 
-          // Mês de nascimento: entre m1 e m2 (excluindo os próprios meses dos torneios)
-          // O aniversário é estritamente DEPOIS de d1 e ANTES ou em d2
-          const m1 = parseInt(isoDate(e1.date).slice(5,7));
-          const m2 = parseInt(isoDate(e2.date).slice(5,7));
-          const yr1 = e1.year, yr2 = e2.year;
+    if (!constraints.length) return { dobLabel: null, ageGroupRange: null };
 
-          if (yr1 === yr2) {
-            // Same-year transition: born between month m1 and m2 of birthYear
-            if (m2 > m1 + 1) {
-              bestMonthLabel = `${MESES[m1]}-${MESES[m2-2]}`; // month after d1 to month before d2
-            } else if (m2 === m1 + 1) {
-              bestMonthLabel = MESES[m1]; // exactly the month between
-            } else {
-              bestMonthLabel = null;
-            }
-          } else {
-            // Cross-year: born after m1 of yr1 OR before m2 of yr2
-            // Since birthYear = yr2 - age2, if yr2 = birthYear + age2:
-            // e.g. Boys 9 in Oct 2022 → Boys 10 in Mar 2023: born Oct-Mar in 2013
-            if (m1 < m2) {
-              // e.g. Jan → Mar same calendar position: probably same birth month period
-              bestMonthLabel = `${MESES[m1-1]}-${MESES[m2-1]}`;
-            } else {
-              // e.g. Oct → Mar (cross-year): born after Oct of one year, before Mar of next
-              bestMonthLabel = `${MESES[m1-1]}-${MESES[m2-1]}`;
-            }
-          }
-        }
-        break; // first j found for this i is enough
+    // ── Step 2: intersectar todas as janelas ──
+    // "Idade A no dia D" → birthday ∈ (D − (A+1) anos + 1 dia, D − A anos]
+    let rangeMin: Date | null = null;
+    let rangeMax: Date | null = null;
+
+    for (const c of constraints) {
+      const tDate = new Date(c.dateExact);
+      const latest = new Date(tDate);
+      latest.setFullYear(latest.getFullYear() - c.ageMin);
+      const earliest = new Date(tDate);
+      earliest.setFullYear(earliest.getFullYear() - c.ageMax - 1);
+      earliest.setDate(earliest.getDate() + 1);
+
+      const newMin = (!rangeMin || earliest > rangeMin) ? earliest : rangeMin;
+      const newMax = (!rangeMax || latest  < rangeMax)  ? latest   : rangeMax;
+      if (newMin <= newMax) { rangeMin = newMin; rangeMax = newMax; }
+      // else: constraint conflituoso (provavelmente outro jogador com mesmo nome) — ignorar
+    }
+
+    if (!rangeMin || !rangeMax || rangeMin > rangeMax)
+      return { dobLabel: null, ageGroupRange: null };
+
+    // ── Step 3: apertar com transições de escalão ──
+    const sorted = [...constraints].sort((a,b) => a.dateExact.localeCompare(b.dateExact));
+    for (let i = 0; i < sorted.length - 1; i++) {
+      const c1 = sorted[i], c2 = sorted[i+1];
+      if (c2.ageMin - c1.ageMax === 1) {
+        const transA = c1.ageMax + 1;
+        const transLate = new Date(c2.dateExact);
+        transLate.setFullYear(transLate.getFullYear() - transA);
+        const transEarly = new Date(c1.dateExact);
+        transEarly.setFullYear(transEarly.getFullYear() - transA);
+        transEarly.setDate(transEarly.getDate() + 1);
+        const tMin = transEarly > rangeMin ? transEarly : rangeMin;
+        const tMax = transLate  < rangeMax ? transLate  : rangeMax;
+        if (tMin <= tMax) { rangeMin = tMin; rangeMax = tMax; }
       }
     }
 
-    // Fallback: se não há transição clara, usar modal simples
-    if (bestBirthYear == null) {
-      const freq: Record<number,number> = {};
-      for (const e of sorted) {
-        const age = extractMaxAge(e.ageGroup);
-        if (age == null) continue;
-        const by = e.year - age;
-        freq[by] = (freq[by]||0) + 1;
-      }
-      const entries = Object.entries(freq).sort((a,b)=>b[1]-a[1]);
-      bestBirthYear = entries.length ? parseInt(entries[0][0]) : null;
+    // ── Step 4: formatar ──
+    const minY = rangeMin.getFullYear(), maxY = rangeMax.getFullYear();
+    const minM = rangeMin.getMonth(),    maxM = rangeMax.getMonth();
+    const spanDays = Math.round((rangeMax.getTime() - rangeMin.getTime()) / 86400000);
+
+    let dobLabel: string;
+    if (spanDays <= 1) {
+      dobLabel = `n. ${String(rangeMin.getDate()).padStart(2,"0")}/${String(rangeMin.getMonth()+1).padStart(2,"0")}/${rangeMin.getFullYear()}`;
+    } else if (minY === maxY) {
+      dobLabel = minM === maxM
+        ? `n. ${MESES[minM]} ${minY}`
+        : `n. ${MESES[minM]}–${MESES[maxM]} ${minY}`;
+    } else {
+      dobLabel = `n. ${MESES[minM]} ${minY} – ${MESES[maxM]} ${maxY}`;
     }
 
-    const dobLabel = bestBirthYear
-      ? (bestMonthLabel ? `n. ${bestMonthLabel} ${bestBirthYear}` : `n. ${bestBirthYear}`)
-      : null;
-
-    // Range de escalões (mín → máx)
-    const allAges: number[] = [];
-    for (const e of wallOfFame) {
-      if (!e.ageGroup) continue;
-      const age = extractMaxAge(e.ageGroup);
-      if (age) allAges.push(age);
-    }
+    // Range de escalões (mín → máx idade dos tids _b{n})
+    const allAges = Object.keys(ar.r)
+      .map(tid => tid.match(/^usk\d+_b(\d+)$/)?.[1])
+      .filter(Boolean)
+      .map(Number)
+      .filter(n => n >= 7 && n <= 18);
     const minAg = allAges.length ? Math.min(...allAges) : null;
     const maxAg = allAges.length ? Math.max(...allAges) : null;
     const ageGroupRange = minAg && maxAg && minAg < maxAg
@@ -3261,7 +3293,7 @@ function PerfilRivalNovo({
       : minAg ? `Boys ${minAg}` : null;
 
     return { dobLabel, ageGroupRange };
-  }, [wallOfFame]);
+  }, [ar]);
 
   // ── Regularidade ──
   const { torneiosPorAno, anosActivo, anosComParticipacao, hiatos } = useMemo(() => {
@@ -3281,12 +3313,23 @@ function PerfilRivalNovo({
   const torneiosRecorrentes = useMemo(() => {
     const map = new Map<string, typeof wallOfFame>();
     for (const e of wallOfFame) {
-      const canon = tornCanon(e.nome);
+      // Chave SEM ano — para agrupar Marco Simone 2025 + Marco Simone 2026 juntos
+      const canon = tornCanon(e.nome).replace(/-\d{2}$/, "");
       if (!map.has(canon)) map.set(canon, []);
       map.get(canon)!.push(e);
     }
     return [...map.entries()]
-      .map(([canon, es]) => ({ canon, entries: es.sort((a,b)=>a.year-b.year) }))
+      .map(([canon, es]) => {
+        // Deduplicar: mesmo torneio (mesmo nome + mesmo ano) → manter só a melhor entrada
+        const dedupMap = new Map<string, typeof wallOfFame[0]>();
+        for (const e of es) {
+          const key = `${tornCanon(e.nome)}|${e.year}|${e.ageGroup}`;
+          const ex = dedupMap.get(key);
+          if (!ex || e.rondas > ex.rondas || (e.rondas === ex.rondas && e.tp != null && ex.tp == null))
+            dedupMap.set(key, e);
+        }
+        return { canon, entries: [...dedupMap.values()].sort((a,b) => a.year - b.year || isoDate(a.date).localeCompare(isoDate(b.date))) };
+      })
       .filter(g => g.entries.length >= 2)
       .sort((a,b) => b.entries.length - a.entries.length);
   }, [wallOfFame]);
@@ -3570,7 +3613,22 @@ function PerfilRivalNovo({
                       </div>
                       {/* Nome + contexto */}
                       <div style={{minWidth:0}}>
-                        <div style={{fontSize:13,fontWeight:700,color:"var(--text)",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{e.nome.replace(/\s*\d{4}$/,"")}</div>
+                        <div style={{fontSize:13,fontWeight:700,color:"var(--text)",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:4}}>
+                          <span style={{overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{e.nome.replace(/\s*\d{4}$/,"")}</span>
+                          {(() => {
+                            const m = e.tid.match(/^usk(\d+)/);
+                            if (!m) return null;
+                            const url = `https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${m[1]}`;
+                            return (
+                              <a href={url} target="_blank" rel="noopener noreferrer"
+                                onClick={ev => ev.stopPropagation()}
+                                style={{flexShrink:0,fontSize:10,color:"var(--accent)",opacity:.6,textDecoration:"none",lineHeight:1}}
+                                title="Ver resultados no signupanytime">
+                                ↗
+                              </a>
+                            );
+                          })()}
+                        </div>
                         <div style={{fontSize:10,color:"var(--text-3)",marginTop:1}}>
                           {e.fieldSize!=null
                             ? `${e.fieldSize} jogadores`
@@ -3957,6 +4015,15 @@ export default function USKidsFieldPage() {
   const [selectedRival, setSelectedRival] = useState<string | null>(locationRival ?? null);
   const [filterManuel, setFilterManuel] = useState(true);
   const [sidebarRivalSearch, setSidebarRivalSearch] = useState("");
+  const [rivalFilters, setRivalFilters] = useState<{
+    pais: string;          // "" = todos
+    escalao: string;       // "" = todos, "9","10","11","12","13"
+    apenasCruzaram: boolean;
+    apenasProximoTourn: boolean;
+    minTorneios: number;   // 0 = sem filtro
+    maxNascimento: number; // 0 = sem filtro (ano máximo = jogador mais novo)
+    minNascimento: number; // 0 = sem filtro (ano mínimo = jogador mais velho)
+  }>({ pais: "", escalao: "", apenasCruzaram: false, apenasProximoTourn: false, minTorneios: 0, maxNascimento: 0, minNascimento: 0 });
   const [erro,        setErro]        = useState<string | null>(null);
   const [selectedT,   setSelectedT]   = useState<number | null>(null);
 
@@ -3975,7 +4042,7 @@ export default function USKidsFieldPage() {
 
     // ── Carregar resultados: 15 ficheiros históricos permanentes + ficheiro auto-gerado ──
     // Os históricos têm prioridade; o auto-gerado apenas acrescenta torneios ainda não cobertos.
-    const TORNEIOS_COMPLETOS_COUNT = 19;
+    const TORNEIOS_COMPLETOS_COUNT = 30;
     const historicosUrls = Array.from({ length: TORNEIOS_COMPLETOS_COUNT }, (_, i) =>
       `/data/uskids_torneios_completos(${i + 1}).json`
     );
@@ -4242,7 +4309,7 @@ export default function USKidsFieldPage() {
               </button>
             ))}
           </div>
-          {(<>
+          {tab !== "rivais" && (<>
             <div className="toolbar-sep" />
             <button
               className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
@@ -4251,6 +4318,49 @@ export default function USKidsFieldPage() {
                 ? { background:"var(--bg-success-subtle)", borderColor:"var(--color-good)", color:"var(--color-good-dark)", whiteSpace:"nowrap" }
                 : { background:"var(--bg-muted)", color:"var(--text-2)", borderColor:"var(--border)", whiteSpace:"nowrap" }}>
               ★ Manuel
+            </button>
+          </>)}
+          {tab === "rivais" && (<>
+            <div className="toolbar-sep" />
+            <input className="input" value={sidebarRivalSearch}
+              onChange={e => setSidebarRivalSearch(e.target.value)}
+              placeholder="🔎 rival…"
+              style={{ width:110 }} />
+            <div className="toolbar-sep" />
+            {(["9","10","11","12","13"] as const).map(n => (
+              <button key={n}
+                className={`tourn-tab tourn-tab-sm${rivalFilters.escalao===n?" active":""}`}
+                style={rivalFilters.escalao===n?{}:{background:"var(--bg-muted)",color:"var(--text-2)",borderColor:"var(--border)"}}
+                onClick={() => setRivalFilters(f=>({...f, escalao:f.escalao===n?"":n}))}>
+                B{n}
+              </button>
+            ))}
+            <div className="toolbar-sep" />
+            {[...new Set(sidebarRivals.map(r=>r.pais).filter(Boolean))]
+              .map(p=>({p,n:sidebarRivals.filter(r=>r.pais===p).length}))
+              .sort((a,b)=>b.n-a.n).slice(0,5)
+              .map(({p}) => (
+                <button key={p}
+                  className={`tourn-tab tourn-tab-sm${rivalFilters.pais===p?" active":""}`}
+                  style={rivalFilters.pais===p?{}:{background:"var(--bg-muted)",color:"var(--text-2)",borderColor:"var(--border)"}}
+                  onClick={() => setRivalFilters(f=>({...f, pais:f.pais===p?"":p}))}>
+                  {flag(p)}
+                </button>
+              ))}
+            <div className="toolbar-sep" />
+            {([5,10,20] as const).map(n => (
+              <button key={n}
+                className={`tourn-tab tourn-tab-sm${rivalFilters.minTorneios===n?" active":""}`}
+                style={rivalFilters.minTorneios===n?{}:{background:"var(--bg-muted)",color:"var(--text-2)",borderColor:"var(--border)"}}
+                onClick={() => setRivalFilters(f=>({...f, minTorneios:f.minTorneios===n?0:n}))}>
+                {n}+
+              </button>
+            ))}
+            <button
+              className={`tourn-tab tourn-tab-sm${rivalFilters.apenasCruzaram?" active":""}`}
+              style={rivalFilters.apenasCruzaram?{}:{background:"var(--bg-muted)",color:"var(--text-2)",borderColor:"var(--border)"}}
+              onClick={() => setRivalFilters(f=>({...f, apenasCruzaram:!f.apenasCruzaram}))}>
+              ∩M
             </button>
           </>)}
         </div>
@@ -4279,94 +4389,59 @@ export default function USKidsFieldPage() {
         {/* Lista de torneios agrupada por mês — OU lista de rivais */}
         <div style={{ overflowY:"auto", flex:1 }}>
 
-          {/* ── Sidebar: RIVAIS (quando no tab rivais) ── */}
-          {tab === "rivais" ? (
-            <div>
-              <div style={{ padding:"6px 8px", borderBottom:"1px solid var(--border-light)" }}>
-                <input value={sidebarRivalSearch} onChange={e => setSidebarRivalSearch(e.target.value)}
-                  placeholder="🔎 Pesquisar rival…"
-                  style={{ width:"100%", border:"1px solid var(--border)", borderRadius:6,
-                    background:"var(--bg-card)", color:"var(--text)",
-                    padding:"5px 8px", fontSize:11, outline:"none", boxSizing:"border-box" }} />
-              </div>
-              {(() => {
-                const q = sidebarRivalSearch.toLowerCase().trim();
-                const filtered = q
-                  ? sidebarRivals.filter(r => r.nome.toLowerCase().includes(q) || r.pais.toLowerCase().includes(q))
-                  : sidebarRivals;
-                return filtered.map(r => {
+          {/* ── Sidebar: RIVAIS ── */}
+          {tab === "rivais" ? (<>
+            {(()=>{
+              const q = sidebarRivalSearch.toLowerCase().trim();
+              const filtered = sidebarRivals.filter(r => {
+                if (q && !r.nome.toLowerCase().includes(q) && !r.pais.toLowerCase().includes(q)) return false;
+                if (rivalFilters.pais && r.pais !== rivalFilters.pais) return false;
+                if (rivalFilters.escalao) {
+                  const arR = autoRivals.find(a=>normNameAuto(a.n)===normNameAuto(r.nome));
+                  if (!arR || !Object.keys(arR.r).some(tid=>tid.includes(`_b${rivalFilters.escalao}`))) return false;
+                }
+                if (rivalFilters.minTorneios > 0 && r.totalTournaments < rivalFilters.minTorneios) return false;
+                if (rivalFilters.apenasCruzaram && r.nEnc === 0) return false;
+                if (rivalFilters.apenasProximoTourn && !r.nextIsCommon) return false;
+                return true;
+              });
+              return (<>
+                <div className="sidebar-section-title">
+                  {filtered.length} rival{filtered.length!==1?"s":""}
+                  {filtered.length < sidebarRivals.length ? ` (de ${sidebarRivals.length})` : ""}
+                </div>
+                {filtered.map(r => {
                   const active = selectedRival === r.nome;
-                  const accentColor = r.vitorias > r.derrotas ? "#1D9E75" : r.derrotas > r.vitorias ? "#dc2626" : "var(--border)";
-                  const recordLabel = [
-                    r.vitorias > 0 ? `${r.vitorias}V` : "",
-                    r.empates > 0 ? `${r.empates}E` : "",
-                    r.derrotas > 0 ? `${r.derrotas}D` : "",
-                  ].filter(Boolean).join(" ");
+                  const accentColor = r.vitorias>r.derrotas ? "#1D9E75" : r.derrotas>r.vitorias ? "#dc2626" : "var(--border)";
+                  const recordLabel = [r.vitorias>0?`${r.vitorias}V`:"", r.empates>0?`${r.empates}E`:"", r.derrotas>0?`${r.derrotas}D`:""].filter(Boolean).join(" ");
                   return (
-                    <div key={r.nome}
-                      onClick={() => setSelectedRival(prev => prev === r.nome ? null : r.nome)}
-                      style={{
-                        padding: "8px 10px", cursor: "pointer",
-                        borderBottom: "1px solid var(--border-light)",
-                        borderLeft: `3px solid ${active ? accentColor : "transparent"}`,
-                        background: active ? "var(--bg-muted)" : "transparent",
-                      }}>
-                      {/* Linha 1: flag + nome + record */}
-                      <div style={{ display:"flex", alignItems:"center", gap:5, marginBottom:4 }}>
-                        <span style={{ fontSize:13, flexShrink:0 }}>{flag(r.pais)}</span>
-                        <span style={{ fontSize:12, fontWeight: active ? 700 : 500, flex:1, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", color:"var(--text)" }}>
-                          {displayName(r.nome)}
-                        </span>
-                        {recordLabel && (
-                          <span style={{
-                            fontSize:9, fontWeight:700, padding:"1px 5px", borderRadius:4, flexShrink:0,
-                            background: r.vitorias > r.derrotas ? "var(--bg-success-subtle)" : r.derrotas > r.vitorias ? "#fee2e2" : "var(--bg-muted)",
-                            color: r.vitorias > r.derrotas ? "var(--color-good-dark)" : r.derrotas > r.vitorias ? "#991b1b" : "var(--text-3)",
-                          }}>{recordLabel}</span>
-                        )}
+                    <button key={r.nome}
+                      className={`course-item${active?" active":""}`}
+                      style={active ? {borderLeftColor:accentColor} : undefined}
+                      onClick={() => setSelectedRival(prev => prev===r.nome?null:r.nome)}>
+                      <div className="course-item-name">
+                        <span>{flag(r.pais)}</span>
+                        <span style={{flex:1,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{displayName(r.nome)}</span>
+                        {recordLabel && <span className="p p-sm" style={{flexShrink:0,background:r.vitorias>r.derrotas?"var(--bg-success-subtle)":r.derrotas>r.vitorias?"#fee2e2":"var(--bg-muted)",color:r.vitorias>r.derrotas?"var(--color-good-dark)":r.derrotas>r.vitorias?"#991b1b":"var(--text-3)"}}>{recordLabel}</span>}
                       </div>
-                      {/* Linha 2: enc + total torneios */}
-                      <div style={{ display:"flex", gap:4, flexWrap:"wrap", marginBottom: r.nextTournName ? 3 : 0 }}>
-                        <span style={{ fontSize:10, padding:"1px 5px", borderRadius:4, background:"var(--bg-info)", color:"var(--color-info-dark)", fontWeight:600 }}>
-                          {r.nEnc} enc.
-                        </span>
-                        {r.totalTournaments > 0 && (
-                          <span style={{ fontSize:10, padding:"1px 5px", borderRadius:4, background:"var(--bg-muted)", color:"var(--text-3)" }}>
-                            {r.totalTournaments} torn.
-                          </span>
-                        )}
-                        {r.firstYear && (
-                          <span style={{ fontSize:10, padding:"1px 5px", borderRadius:4, background:"var(--bg-muted)", color:"var(--text-3)" }}>
-                            desde {r.firstYear}
-                          </span>
-                        )}
+                      <div className="course-item-meta">
+                        {[r.nEnc>0?`${r.nEnc} enc.`:"", r.totalTournaments>0?`${r.totalTournaments} torn.`:"", r.firstYear?`desde ${r.firstYear}`:""].filter(Boolean).join(" · ")}
                       </div>
-                      {/* Linha 3: próximo torneio */}
                       {r.nextTournName && (
-                        <div style={{ display:"flex", alignItems:"center", gap:4 }}>
-                          <span style={{ fontSize:10, color:"var(--text-muted)", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", flex:1 }}>
-                            Próx: {r.nextTournName}
-                            {r.daysToNext != null && (
-                              <span style={{ marginLeft:4, color: r.daysToNext <= 7 ? "var(--color-good-dark)" : "var(--text-muted)" }}>
-                                · em {r.daysToNext === 0 ? "hoje" : `${r.daysToNext}d`}
-                              </span>
-                            )}
+                        <div className="course-item-meta" style={{display:"flex",gap:4}}>
+                          <span style={{overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",flex:1}}>
+                            {r.nextTournName}{r.daysToNext!=null&&` · ${r.daysToNext===0?"hoje":`${r.daysToNext}d`}`}
                           </span>
-                          {r.nextIsCommon && (
-                            <span style={{ fontSize:9, fontWeight:700, padding:"1px 5px", borderRadius:4, background:"var(--bg-success-subtle)", color:"var(--color-good-dark)", flexShrink:0 }}>∩</span>
-                          )}
+                          {r.nextIsCommon&&<span className="p p-sm" style={{flexShrink:0,background:"var(--bg-success-subtle)",color:"var(--color-good-dark)"}}>∩</span>}
                         </div>
                       )}
-                    </div>
+                    </button>
                   );
-                });
-              })()}
-              {sidebarRivals.length === 0 && (
-                <div style={{ padding:"16px 12px", fontSize:11, color:"var(--text-3)", textAlign:"center" }}>
-                  Sem rivais encontrados
-                </div>
-              )}
-            </div>
+                })}
+                {filtered.length===0&&<div className="muted" style={{padding:"16px 12px",fontSize:12}}>Sem rivais com estes filtros</div>}
+              </>);
+            })()}
+          </>
           ) : (
           /* ── Sidebar: TORNEIOS (default) ── */
           (() => {
