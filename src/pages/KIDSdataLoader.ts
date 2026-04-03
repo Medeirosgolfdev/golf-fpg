@@ -923,12 +923,12 @@ export function invalidateAutoRivalsCache(): void {
 
 export async function buildAutoRivals(
   onProgress?: (p: LoadProgress) => void,
-  opts?: { force?: boolean; onUpdate?: (players: AutoRivalPlayer[]) => void }
+  opts?: { force?: boolean; onUpdate?: (players: AutoRivalPlayer[]) => void; ageGroups?: string[] }
 ): Promise<AutoRivalPlayer[]> {
   if (!opts?.force && !onProgress && !opts?.onUpdate && _autoRivalsCache) {
     return _autoRivalsCache;
   }
-  _autoRivalsCache = _buildAutoRivalsInternal(onProgress, opts?.onUpdate);
+  _autoRivalsCache = _buildAutoRivalsInternal(onProgress, opts?.onUpdate, opts);
   return _autoRivalsCache;
 }
 
@@ -997,7 +997,8 @@ function processTournMeta(data: unknown): void {
 
 async function _buildAutoRivalsInternal(
   onProgress?: (p: LoadProgress) => void,
-  onUpdate?: (players: AutoRivalPlayer[]) => void
+  onUpdate?: (players: AutoRivalPlayer[]) => void,
+  options?: { ageGroups?: string[] }
 ): Promise<AutoRivalPlayer[]> {
   _scorecards.clear();
   uskTournNames.clear();
@@ -1035,10 +1036,24 @@ async function _buildAutoRivalsInternal(
     ),
   ];
 
-  // ── FASE 2: member history (carregam sequencialmente em background) ──
-  const memberHistFiles = Array.from({ length: 30 }, (_, i) =>
-    `uskids-member-history-${String(i+1).padStart(3,'0')}.json`
-  );
+  // ── FASE 2: member history por escalão (carregam sequencialmente em background) ──
+  // Por defeito: b9b10 (14 ficheiros) + b11b12 (9 ficheiros)
+  // Opcionais via ageGroups: b6b8 (14), b13 (5), b14plus (2)
+  const wantedAgeGroups = options?.ageGroups ?? ["b9b10", "b11b12"];
+  const AG_FILES: Record<string, { count: number; label: string }> = {
+    b6b8:    { count: 14, label: "Boys 6-8"   },
+    b9b10:   { count: 14, label: "Boys 9-10"  },
+    b11b12:  { count:  9, label: "Boys 11-12" },
+    b13:     { count:  5, label: "Boys 13"    },
+    b14plus: { count:  2, label: "Boys 14+"   },
+  };
+  const memberHistFiles = wantedAgeGroups.flatMap(ag => {
+    const info = AG_FILES[ag];
+    if (!info) return [];
+    return Array.from({ length: info.count }, (_, i) =>
+      `uskids-player-history-${ag}-${String(i+1).padStart(3,'0')}.json`
+    );
+  });
 
   const totalTasks = coreTasks.length + memberHistFiles.length;
   let done = 0;
