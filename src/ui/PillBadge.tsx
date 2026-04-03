@@ -26,45 +26,45 @@ import { C } from "../utils/colors";
 
 /** Rondas — só mostrar se nR > 1. Cores chamativas para chamar atenção. */
 export const PILL_ROUND: Record<number, CSSProperties> = {
-  2: { background: "#0891b2", color: "#fff", borderColor: "transparent" }, // cyan
-  3: { background: "#dc2626", color: "#fff", borderColor: "transparent" }, // vermelho
-  4: { background: "#7c3aed", color: "#fff", borderColor: "transparent" }, // violeta
+  2: { background: C.chartCyan,   color: "#fff", borderColor: "transparent" }, // cyan
+  3: { background: C.chartRed,    color: "#fff", borderColor: "transparent" }, // vermelho
+  4: { background: C.chartPurple, color: "#fff", borderColor: "transparent" }, // violeta
 };
 
 /** IDs de torneio (tcode) */
 export const PILL_TCODE: CSSProperties = {
-  background: "#374151", color: "#e5e7eb", letterSpacing: "0.06em", borderColor: "transparent",
+  background: C.grey700,  color: C.grey200,  letterSpacing: "0.06em", borderColor: "transparent",
 };
 
 /** 9 buracos — só mostrar se nholes ≤ 9 */
 export const PILL_9H: CSSProperties = {
-  background: "#d97706", color: "#fff", borderColor: "transparent",
+  background: C.warn, color: "#fff", borderColor: "transparent",
 };
 
 /** Santo da Serra */
 export const PILL_SSERRA: CSSProperties = {
-  background: "#15803d", color: "#fff", borderColor: "transparent",
+  background: C.goodDark, color: "#fff", borderColor: "transparent",
 };
 
 /** Torneios Junior (auto-detectado pelo nome) */
 export const PILL_JUNIOR: CSSProperties = {
-  background: "#b45309", color: "#fef3c7", borderColor: "transparent",
+  background: C.pillJuniorBg, color: C.pillJuniorFg, borderColor: "transparent",
 };
 
 /** Jogador especial Manuel */
 export const PILL_MANUEL: CSSProperties = {
-  background: "#dcfce7", color: "#166534", borderColor: "#16a34a",
+  background: C.pillManuelBg, color: C.pillManuelFg, borderColor: C.pillManuelBd,
 };
 
 /** Accent lateral da sidebar por série/tipo */
 export const SIDEBAR_ACCENT: Record<string, string> = {
-  sserra:    "#534AB7",
-  pja:       "#dc2626",
-  clubes:    "#1D9E75",
-  tour:      "#1D9E75",
-  challenge: "#639922",
-  aquapor:   "#185FA5",
-  default:   "#888780",
+  sserra:    C.sidebarSserra,
+  pja:       C.danger,
+  clubes:    C.sidebarTour,
+  tour:      C.sidebarTour,
+  challenge: C.sidebarChallenge,
+  aquapor:   C.sidebarAquapor,
+  default:   C.sidebarDefault,
 };
 
 /** Escalão pill styles — espelha C.esc.* e as classes .p-sub* do App.css */

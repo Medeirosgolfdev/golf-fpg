@@ -51,7 +51,7 @@ function escCls(esc: string): string {
   return esc.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "");
 }
 
-const scHostStyle: React.CSSProperties = { margin: "6px 8px", border: "1px solid var(--line, #d5dac9)", borderRadius: "var(--radius-xl)", background: "var(--bg-card)", padding: 10, overflow: "hidden" };
+const scHostStyle: React.CSSProperties = { margin: "6px 8px", border: "1px solid var(--border)", borderRadius: "var(--radius-xl)", background: "var(--bg-card)", padding: 10, overflow: "hidden" };
 
 /* ────────────────────────────────────────────────────────────────────────────────────────
    Micro-components
@@ -2694,7 +2694,7 @@ function Last20Table({ data, last20Table, best8, whsPosMap, bare: _bare }: {
                     ...(isBest8 ? { background: "var(--bg-success)" } : {}),
                     ...(isFading ? { opacity: 0.4 } : {}),
                   }}>
-                    <td className="r" style={{ fontSize: 11, fontWeight: 700, color: whsPosMap.get(r.scoreId) != null ? "var(--text-2)" : "var(--text-4, #ccc)" }}>
+                    <td className="r" style={{ fontSize: 11, fontWeight: 700, color: whsPosMap.get(r.scoreId) != null ? "var(--text-2)" : "var(--text-4)" }}>
                       {whsPosMap.get(r.scoreId) ?? "–"}
                     </td>
                     <td>

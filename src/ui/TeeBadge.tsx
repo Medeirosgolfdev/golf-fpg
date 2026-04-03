@@ -1,4 +1,5 @@
 import React from "react";
+import { C } from "../utils/colors";
 import SexBadge from "./SexBadge";
 
 type Props = {
@@ -7,7 +8,7 @@ type Props = {
   suffix?: string | null;
 };
 
-export default function TeeBadge({ label, colorHex = "#9CA3AF", suffix }: Props) {
+export default function TeeBadge({ label, colorHex = C.medalSilver, suffix }: Props) {
   const isSex = suffix === "M" || suffix === "F";
   return (
     <span className="tee-badge">

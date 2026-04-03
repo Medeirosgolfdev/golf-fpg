@@ -907,7 +907,7 @@ function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; s
                   <td className="cs-t-gross cs-col" style={colBg ? { background: colBg } : undefined}>{rv.gross}</td>
                   <td className="cs-t-topar cs-col" style={{ color: tpColor(rv.toPar), ...(colBg ? { background: colBg } : {}) }}>{fmtTP(rv.toPar)}</td>
                   <SDCell sd={rv.sd18} sdSource={rv.sdSource} hcp={row.hcp} nholes={rv.nholes}
-                    style={{ ...(colBg ? { background: colBg } : {}), borderLeft: "1px solid var(--border-light,#e5e7eb)" }} />
+                    style={{ ...(colBg ? { background: colBg } : {}), borderLeft: "1px solid var(--border-light)" }} />
                   <td className="cs-t-stat cs-col" style={colBg ? { background: colBg } : undefined}>{rv.birdies}</td>
                   <td className="cs-t-stat cs-col" style={colBg ? { background: colBg } : undefined}>{rv.pars}</td>
                   <td className="cs-t-stat cs-col" style={colBg ? { background: colBg } : undefined}>{rv.bogeys}</td>
@@ -1010,7 +1010,7 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
     return 0;
   });
 
-  const _bS = "1px solid var(--border-light, #e5e7eb)";
+  const _bS = "1px solid var(--border-light)";
 
   const rows: import("../ui/ScorecardLeaderboard").ScorecardRow[] = sorted.map((p, idx) => {
     const gross = typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : (p.grossTotal as number);
@@ -1334,7 +1334,7 @@ function DriveAllRoundsScorecardLB({
     const active = sortKey === k;
     return (
       <th className={"lb-sortable "+(className||"")}
-          style={{ ...style, color: active ? "var(--accent,#2563eb)" : undefined, fontWeight: active ? 700 : undefined }}
+          style={{ ...style, color: active ? "var(--accent)" : undefined, fontWeight: active ? 700 : undefined }}
           title={active ? (sortDir==="asc" ? "Ordenado crescente" : "Ordenado decrescente") : "Clique para ordenar"}
           onClick={() => toggleSort(k)}>
         {children}{active && <span style={{ fontSize:8, marginLeft:2 }}>{sortDir==="asc"?"▲":"▼"}</span>}
@@ -1353,7 +1353,7 @@ function DriveAllRoundsScorecardLB({
             <button key={String(g)} onClick={()=>setGroupMode(g)}
               style={{
                 fontSize:10, padding:"2px 9px", border:"none", cursor:"pointer",
-                background:groupMode===g?"var(--accent,#2563eb)":"transparent",
+                background:groupMode===g?"var(--accent)":"transparent",
                 color:groupMode===g?"#fff":"var(--text-muted)",
                 fontWeight:groupMode===g?700:400,
               }}>{g?"Agrupado":"Independente"}</button>
@@ -1373,7 +1373,7 @@ function DriveAllRoundsScorecardLB({
         </div>
         {availClubs.length > 2 && (
           <select value={clubQ} onChange={e=>setClubQ(e.target.value)}
-            style={{ fontSize:11, padding:"3px 6px", borderRadius:6, border:`1px solid ${clubQ?"var(--accent,#2563eb)":"var(--border)"}`, background:"var(--bg-card,#fff)", color:"var(--text)", cursor:"pointer" }}>
+            style={{ fontSize:11, padding:"3px 6px", borderRadius:6, border:`1px solid ${clubQ?"var(--accent)":"var(--border)"}`, background:"var(--bg-card,#fff)", color:"var(--text)", cursor:"pointer" }}>
             <option value="">Todos os clubes</option>
             {availClubs.map(c=><option key={c} value={c}>{c}</option>)}
           </select>
@@ -1443,7 +1443,7 @@ function DriveAllRoundsScorecardLB({
                   const medal   = row.pos!=null && row.pos<=3 ? medals[row.pos-1] : null;
                   const posStr  = row.isWD ? "WD" : row.pos!=null ? (medal??String(row.pos)) : "–";
                   const isFirst = playerIdx === 0;
-                  const playerBg = playerIdx%2===0 ? undefined : "var(--bg-muted,#f8fafc)";
+                  const playerBg = playerIdx%2===0 ? undefined : "var(--bg-muted)";
                   return (
                     <React.Fragment key={row.key}>
                       {row.rds.map((rd, ri) => {
@@ -1466,7 +1466,7 @@ function DriveAllRoundsScorecardLB({
                             <td className="lb-club" style={{ borderTop:bTop, color:isFirstRd?undefined:"var(--text-muted)", fontSize:isFirstRd?undefined:11 }}>{row.club||"–"}</td>
                             <td className="lb-hcp" style={{ borderTop:bTop, color:isFirstRd?undefined:"var(--text-muted)" }}>{row.hcp!=null?row.hcp.toFixed(1):"–"}</td>
                             <td className="lb-tee" style={{ fontWeight:600, fontSize:10, color:"var(--text-muted)", borderTop:bTop }}>{RD_LABELS[ri]??`R${ri+1}`}</td>
-                            <td className="lb-topar" style={{ color:rd.toPar<0?"var(--color-good,#16a34a)":rd.toPar>0?"var(--color-danger,#dc2626)":"var(--text)", borderTop:bTop }}>{fmtToPar(rd.toPar)}</td>
+                            <td className="lb-topar" style={{ color:rd.toPar<0?"var(--color-good)":rd.toPar>0?"var(--color-danger)":"var(--text)", borderTop:bTop }}>{fmtToPar(rd.toPar)}</td>
                             <td className="lb-gross" style={{ borderTop:bTop }}>{rd.gross}</td>
                             {showSC && <ScoreCells scores={rd.scores} rdPars={rdRef.pars} />}
                             <td className="lb-sd" style={{ borderTop:bTop }}>{rd.sd!=null?<SDPill sd={rd.sd} source={null} hcp={row.hcp}/>:<span className="muted">–</span>}</td>
@@ -1485,8 +1485,8 @@ function DriveAllRoundsScorecardLB({
                   const showPos = row.pos !== prevPos || row.isWD;
                   const medal   = row.pos!=null && row.pos<=3 ? medals[row.pos-1] : null;
                   const posStr  = row.isWD ? "WD" : row.pos!=null ? (medal??String(row.pos)) : "–";
-                  const bg      = idx%2===0 ? undefined : "var(--bg-muted,#f8fafc)";
-                  const bTop    = idx>0 ? "1px solid var(--border-light,#f1f5f9)" : undefined;
+                  const bg      = idx%2===0 ? undefined : "var(--bg-muted)";
+                  const bTop    = idx>0 ? "1px solid var(--border-light)" : undefined;
                   const rdRef   = roundRefs[row.ri] ?? { pars: par };
                   return (
                     <tr key={row.key} style={{ background:bg, borderTop:bTop }}>
@@ -1497,7 +1497,7 @@ function DriveAllRoundsScorecardLB({
                       <td className="lb-club">{row.club||"–"}</td>
                       <td className="lb-hcp">{row.hcp!=null?row.hcp.toFixed(1):"–"}</td>
                       <td className="lb-tee" style={{ fontWeight:600, fontSize:10, color:"var(--text-muted)" }}>{row.rdLabel}</td>
-                      <td className="lb-topar" style={{ color:row.rd.toPar<0?"var(--color-good,#16a34a)":row.rd.toPar>0?"var(--color-danger,#dc2626)":"var(--text)" }}>{fmtToPar(row.rd.toPar)}</td>
+                      <td className="lb-topar" style={{ color:row.rd.toPar<0?"var(--color-good)":row.rd.toPar>0?"var(--color-danger)":"var(--text)" }}>{fmtToPar(row.rd.toPar)}</td>
                       <td className="lb-gross">{row.rd.gross}</td>
                       {showSC && <ScoreCells scores={row.rd.scores} rdPars={rdRef.pars} />}
                       <td className="lb-sd">{row.rd.sd!=null?<SDPill sd={row.rd.sd} source={null} hcp={row.hcp}/>:<span className="muted">–</span>}</td>
@@ -1644,12 +1644,12 @@ type Sub12SeriesTab = "tour" | "challenge" | "aquapor";
 type Sub12ViewTab = "grid" | "ranking" | "evolucao";
 
 const SUB12_SERIES_TABS: { key: Sub12SeriesTab; label: string; emoji: string; color: string; bg: string; holes: string }[] = [
-  { key: "tour",      label: "Tour",      emoji: "🏌️", color: "#059669", bg: C.bgSuccessSubtle, holes: "18h" },
-  { key: "challenge", label: "Challenge", emoji: "⚡",  color: C.chartPurple, bg: "#ede9fe", holes: "9h"  },
-  { key: "aquapor",   label: "AQUAPOR",   emoji: "💧", color: "#4338ca", bg: "#e0e7ff", holes: "18h" },
+  { key: "tour",      label: "Tour",      emoji: "🏌️", color: "var(--color-teal)", bg: C.bgSuccessSubtle, holes: "18h" },
+  { key: "challenge", label: "Challenge", emoji: "⚡",  color: C.chartPurple, bg: "var(--bg-purple)", holes: "9h"  },
+  { key: "aquapor",   label: "AQUAPOR",   emoji: "💧", color: "var(--chart-5)", bg: "var(--bg-info-strong)", holes: "18h" },
 ];
 const CHART_COLORS = C.charts;
-const SERIE_COLORS: Record<string, string> = { tour: "#059669", challenge: C.chartPurple, aquapor: "#4338ca" };
+const SERIE_COLORS: Record<string, string> = { tour: "var(--color-teal)", challenge: C.chartPurple, aquapor: "var(--chart-5)" };
 const SERIE_LABELS: Record<string, string>  = { tour: "Tour",   challenge: "Challenge",  aquapor: "AQUAPOR" };
 const REGION_EMOJI: Record<string, string>  = { norte: "🔵", tejo: "🟡", sul: "🟢", madeira: "🟣", acores: "🔴", nacional: "⚪" };
 
@@ -2034,7 +2034,7 @@ function TournamentGrid({ rows, allTournaments, onPlayerClick, playersDB, escLoo
                   <td className="cs-t-gross cs-col">{res.gross}</td>
                   <td className="cs-t-topar cs-col" style={{ color: tpColor2(res.toPar) }}>{fmtTP2(res.toPar)}</td>
                   <SDCell sd={res.sd} sdSource={res.sdSource} hcp={p.hcp} nholes={res.nholes}
-                    style={{ borderLeft: "1px solid var(--border-light,#e5e7eb)" }} />
+                    style={{ borderLeft: "1px solid var(--border-light)" }} />
                   <td className="cs-t-stat cs-col">{res.birdies}</td>
                   <td className="cs-t-stat cs-col">{res.pars}</td>
                   <td className="cs-t-stat cs-col">{res.bogeys}</td>
@@ -2181,7 +2181,7 @@ function PlayerDetail({ row, onClose }: { row: Sub12Row; onClose: () => void }) 
               <td className="tourn-mono fs-10">{r.date}</td>
               <td>
                 <span className="fw-600">{r.tournName}</span>
-                <span className="badge-serie ml-4" style={{ background: (SERIE_COLORS[r.series]||"#999")+"22", color: SERIE_COLORS[r.series], border: `1px solid ${SERIE_COLORS[r.series]}44` }}>
+                <span className="badge-serie ml-4" style={{ background: (SERIE_COLORS[r.series]||"var(--text-muted)")+"22", color: SERIE_COLORS[r.series], border: `1px solid ${SERIE_COLORS[r.series]}44` }}>
                   {SERIE_LABELS[r.series]}
                 </span>
               </td>

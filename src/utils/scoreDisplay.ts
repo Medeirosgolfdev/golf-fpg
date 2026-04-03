@@ -66,7 +66,7 @@ export function fmtSdVal(r: RoundData): { text: string; cls: string } {
 
 /* ═══ Semantic Color Utilities ═══
  * Replace inline ternaries like:
- *   color: val <= 3 ? "#16a34a" : val <= 5 ? "#d97706" : "#dc2626"
+ *   color: val <= 3 ? C.good : val <= 5 ? C.warn : C.danger  (use C from colors.ts)
  * with:
  *   color: sc3(val, 3, 5)   →  "var(--color-good)" | "var(--color-warn)" | "var(--color-danger)"
  *

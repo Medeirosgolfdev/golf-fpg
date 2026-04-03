@@ -521,8 +521,8 @@ function bktLabel(bkt: string): string {
 /* Cores de score alinhadas com ScoreCircle: verde=sub-par, azul=sobre-par */
 const BIRDIE_COLOR = SC.good;
 const PAR_COLOR    = "var(--border-medium)";
-const BOGEY_COLOR  = "#3b82f6";
-const DBL_COLOR    = "#1e40af";
+const BOGEY_COLOR  = "var(--color-info)";
+const DBL_COLOR    = "var(--color-info)";
 
 /* Célula de balde redesenhada */
 function BucketCell({ bucket, bold = false }: {
@@ -783,17 +783,17 @@ function HoleProfileSection({ slots, refTee, holesMode }: {
                     <th className="r" title="Rondas EDS (Equalized Differential Score)">EDS</th>
                     <th className="r" title="Treinos, individuais e outras rondas não competitivas">Outros</th>
                     <th className="r" title="Rondas de torneio 18 buracos — usadas na análise abaixo"
-                      style={{ background:"var(--bg-info-subtle,rgba(59,130,246,.08))", borderLeft:"2px solid var(--color-info,#3b82f6)" }}>
+                      style={{ background:"var(--bg-info-subtle)", borderLeft:"2px solid var(--color-info)" }}>
                       Torneio 18h ↓
                     </th>
-                    <th className="r" style={{ background:"var(--bg-info-subtle,rgba(59,130,246,.08))" }}>Buracos</th>
-                    <th className="r" style={{ background:"var(--bg-info-subtle,rgba(59,130,246,.08))" }}
+                    <th className="r" style={{ background:"var(--bg-info-subtle)" }}>Buracos</th>
+                    <th className="r" style={{ background:"var(--bg-info-subtle)" }}
                       title="Buracos na análise (c/distância) / totais do scorecard">Par 3</th>
-                    <th className="r" style={{ background:"var(--bg-info-subtle,rgba(59,130,246,.08))" }}
+                    <th className="r" style={{ background:"var(--bg-info-subtle)" }}
                       title="Buracos na análise (c/distância) / totais do scorecard">Par 4</th>
-                    <th className="r" style={{ background:"var(--bg-info-subtle,rgba(59,130,246,.08))" }}
+                    <th className="r" style={{ background:"var(--bg-info-subtle)" }}
                       title="Buracos na análise (c/distância) / totais do scorecard">Par 5</th>
-                    <th className="r" style={{ background:"var(--bg-info-subtle,rgba(59,130,246,.08))" }}>Com scorecard</th>
+                    <th className="r" style={{ background:"var(--bg-info-subtle)" }}>Com scorecard</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -811,16 +811,16 @@ function HoleProfileSection({ slots, refTee, holesMode }: {
                         <td className="r mono">{s.nEDS > 0 ? s.nEDS : "–"}</td>
                         <td className="r mono">{s.nTreino > 0 ? s.nTreino : "–"}</td>
                         <td className="r mono fw-800"
-                          style={{ background:"var(--bg-info-subtle,rgba(59,130,246,.08))", borderLeft:"2px solid var(--color-info,#3b82f6)" }}>
+                          style={{ background:"var(--bg-info-subtle)", borderLeft:"2px solid var(--color-info)" }}>
                           {s.nRondasTorneio}
                         </td>
-                        <td className="r mono fw-600" style={{ background:"var(--bg-info-subtle,rgba(59,130,246,.08))" }}>{s.nHolesTotal}</td>
+                        <td className="r mono fw-600" style={{ background:"var(--bg-info-subtle)" }}>{s.nHolesTotal}</td>
                         {([3, 4, 5] as const).map(par => {
                           const analyzed = sumParBuckets(profiles[i], par)?.n ?? 0;
                           const total    = s.parTotals[par] ?? 0;
                           const mismatch = analyzed < total;
                           return (
-                            <td key={par} className="r mono" style={{ background:"var(--bg-info-subtle,rgba(59,130,246,.08))" }}>
+                            <td key={par} className="r mono" style={{ background:"var(--bg-info-subtle)" }}>
                               {mismatch
                                 ? <span title={`${analyzed} com distância / ${total} totais`}>
                                     <span style={{ fontWeight:700 }}>{analyzed}</span>
@@ -831,7 +831,7 @@ function HoleProfileSection({ slots, refTee, holesMode }: {
                             </td>
                           );
                         })}
-                        <td className="r mono" style={{ background:"var(--bg-info-subtle,rgba(59,130,246,.08))", color: s.holesWithCard < s.nHolesTotal ? "var(--color-warn)" : undefined }}>
+                        <td className="r mono" style={{ background:"var(--bg-info-subtle)", color: s.holesWithCard < s.nHolesTotal ? "var(--color-warn)" : undefined }}>
                           {s.holesWithCard < s.nHolesTotal
                             ? `${s.holesWithCard} / ${s.nHolesTotal}`
                             : s.holesWithCard}
@@ -1300,7 +1300,7 @@ function RoundPrepSection({ slots }: { slots: Slot[] }) {
             </thead>
             <tbody>
               {playerCalcs.map((pc, i) => {
-                const teeHex = pc.tee ? getTeeHex(pc.tee.teeName, pc.tee.scorecardMeta?.teeColor) : "#888";
+                const teeHex = pc.tee ? getTeeHex(pc.tee.teeName, pc.tee.scorecardMeta?.teeColor) : "var(--text-muted)";
                 const teeOptions = availableTees;
                 if (pc.hi == null || !pc.ratings) {
                   return (

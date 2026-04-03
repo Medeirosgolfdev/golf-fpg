@@ -980,9 +980,9 @@ function EscalaoSection({ escalao: e, torneio: t }: {
   const tabStyle = (i: number): React.CSSProperties => ({
     padding: "6px 14px", fontSize: 12,
     fontWeight: tab === i ? 700 : 500,
-    color: tab === i ? "var(--text)" : "var(--text-muted,#888)",
+    color: tab === i ? "var(--text)" : "var(--text-muted)",
     background: "transparent", border: "none",
-    borderBottom: tab === i ? "2px solid var(--accent,#2563eb)" : "2px solid transparent",
+    borderBottom: tab === i ? "2px solid var(--accent)" : "2px solid transparent",
     cursor: "pointer", whiteSpace: "nowrap" as const,
   });
 
@@ -1035,9 +1035,9 @@ function EscalaoTabs({ escaloes, torneio: t, defaultIdx }: {
   const escTabStyle = (i: number): React.CSSProperties => ({
     padding: "6px 12px", fontSize: 12,
     fontWeight: esc === i ? 700 : 500,
-    color: esc === i ? "var(--text)" : "var(--text-muted,#888)",
+    color: esc === i ? "var(--text)" : "var(--text-muted)",
     background: "transparent", border: "none",
-    borderBottom: esc === i ? "2px solid var(--accent,#2563eb)" : "2px solid transparent",
+    borderBottom: esc === i ? "2px solid var(--accent)" : "2px solid transparent",
     cursor: "pointer", whiteSpace: "nowrap" as const,
     marginBottom: -1,
   });
@@ -1089,7 +1089,7 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
           {REGIONAL_CHAMPIONSHIPS[t.t] && (
             <span style={{
               fontSize:10, fontWeight:800, padding:"2px 9px", borderRadius:8,
-              background:"var(--bg-pink)", color:"var(--color-purple)", border:"1px solid #e1bee7",
+              background:"var(--bg-pink)", color:"var(--color-purple)", border:"1px solid var(--border-purple)",
               letterSpacing:"0.04em",
             }}>⭐ REGIONAL INVITATION</span>
           )}
@@ -1254,46 +1254,46 @@ function TabResultados({ data, selectedT, greatgolfData }: {
     const css = `
       @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap');
       * { box-sizing: border-box; margin: 0; padding: 0; }
-      body { font-family: 'DM Sans', sans-serif; font-size: 11px; color: #1a2e0f; background: #fff; padding: 12px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      body { font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--text); background: #fff; padding: 12px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       h1 { font-size: 15px; font-weight: 800; margin-bottom: 3px; }
-      h2 { font-size: 12px; font-weight: 700; color: #3a5a28; margin: 14px 0 6px; border-bottom: 1px solid #3a5a28; padding-bottom: 3px; }
-      h3 { font-size: 11px; font-weight: 700; color: #555; margin: 10px 0 4px; }
-      .meta { font-size: 10px; color: #666; margin-bottom: 8px; }
+      h2 { font-size: 12px; font-weight: 700; color: var(--text-dark); margin: 14px 0 6px; border-bottom: 1px solid var(--text-dark); padding-bottom: 3px; }
+      h3 { font-size: 11px; font-weight: 700; color: var(--text-3); margin: 10px 0 4px; }
+      .meta { font-size: 10px; color: var(--text-3); margin-bottom: 8px; }
       .page-break { page-break-before: always; }
 
       table { border-collapse: collapse; font-size: 10px; width: 100%; }
       th, td { padding: 4px 3px; text-align: center; border: none; white-space: nowrap; }
-      th { background: #eef2e8; font-weight: 600; font-size: 10px; color: #555; border-bottom: 1px solid #bcc5ad; }
-      tbody td { border-bottom: 1px solid #d5dac9; }
+      th { background: var(--bg-header); font-weight: 600; font-size: 10px; color: var(--text-3); border-bottom: 1px solid var(--border); }
+      tbody td { border-bottom:1px solid var(--border-light); }
       td.name { text-align: left; padding-left: 8px; min-width: 120px; }
       td.pos { width: 24px; font-weight: 700; }
       td.flag { width: 22px; }
 
-      .lb-topar { width: 32px; font-weight: 700; font-family: 'JetBrains Mono', monospace; background: #e0efdb; border-left: 1px solid #bcc5ad; }
-      .lb-gross { width: 36px; font-weight: 800; font-family: 'JetBrains Mono', monospace; background: #e0efdb; border-left: 1px solid #d5dac9; }
-      .lb-halftot { width: 40px; background: #f0f2ec; font-weight: 600; font-size: 10px; font-family: 'JetBrains Mono', monospace; border-left: 1px solid #bcc5ad; }
-      .lb-hole { min-width: 28px; border-left: 1px solid #d5dac9; }
-      .lb-hole-first { border-left: 1px solid #bcc5ad; }
-      .lb-par-row td { background: #f0f2ec; font-weight: 600; border-bottom: 2px solid #bcc5ad; }
-      .lb-par-row td.lb-topar, .lb-par-row td.lb-gross { background: #e0efdb; }
-      .lb-si-row td { background: #f7f8f6; font-size: 10px; color: #888; border-bottom: 1px solid #d5dac9; }
+      .lb-topar { width: 32px; font-weight: 700; font-family: 'JetBrains Mono', monospace; background: var(--accent-light); border-left: 1px solid var(--border); }
+      .lb-gross { width: 36px; font-weight: 800; font-family: 'JetBrains Mono', monospace; background: var(--accent-light); border-left: 1px solid var(--border-light); }
+      .lb-halftot { width: 40px; background: var(--bg-muted); font-weight: 600; font-size: 10px; font-family: 'JetBrains Mono', monospace; border-left: 1px solid var(--border); }
+      .lb-hole { min-width: 28px; border-left: 1px solid var(--border-light); }
+      .lb-hole-first { border-left: 1px solid var(--border); }
+      .lb-par-row td { background: var(--bg-muted); font-weight: 600; border-bottom: 2px solid var(--border); }
+      .lb-par-row td.lb-topar, .lb-par-row td.lb-gross { background: var(--accent-light); }
+      .lb-si-row td { background:var(--bg); font-size: 10px; color:var(--text-muted); border-bottom:1px solid var(--border-light); }
       .lb-par-lbl { text-align: left; padding-left: 8px; font-weight: 800; }
 
-      .row-manuel td { background: #d1fae5 !important; }
-      .row-manuel td.lb-topar, .row-manuel td.lb-gross { background: #a7f3d0 !important; }
+      .row-manuel td { background: var(--bg-success-subtle) !important; }
+      .row-manuel td.lb-topar, .row-manuel td.lb-gross { background: var(--bg-manuel-gross) !important; }
 
       .sc-score { display: inline-flex; align-items: center; justify-content: center;
         width: 22px; height: 22px; font-size: 10px; font-weight: 700; border-radius: 0; }
-      .sc-score.birdie { background: #dc2626; color: #fff; border-radius: 50%; }
-      .sc-score.eagle  { background: #f59e0b; color: #fff; border-radius: 50%; }
-      .sc-score.par    { background: transparent; color: #1a2e0f; }
-      .sc-score.bogey  { background: #bfdbfe; color: #1e3a8a; border: 1px solid #93c5fd; }
-      .sc-score.double { background: #60a5fa; color: #fff; }
-      .sc-score.triple { background: #2563eb; color: #fff; }
-      .sc-score.quad   { background: #1d4ed8; color: #fff; }
-      .sc-score.empty  { color: #ccc; }
-      .row-wd td { color: #bbb !important; }
-      .row-wd td.name { color: #bbb !important; }
+      .sc-score.birdie { background:var(--color-danger); color: #fff; border-radius: 50%; }
+      .sc-score.eagle  { background: var(--score-eagle); color: #fff; border-radius: 50%; }
+      .sc-score.par    { background: transparent; color: var(--text); }
+      .sc-score.bogey  { background: var(--score-bogey); color: var(--score-bogey-fg); border: 1px solid var(--score-bogey-border); }
+      .sc-score.double { background: var(--score-double); color: #fff; }
+      .sc-score.triple { background:var(--score-triple); color: #fff; }
+      .sc-score.quad   { background: var(--score-quad); color: #fff; }
+      .sc-score.empty  { color:var(--text-4); }
+      .row-wd td { color: var(--text-muted) !important; }
+      .row-wd td.name { color: var(--text-muted) !important; }
 
       @media print {
         body { padding: 6px; }
@@ -1380,14 +1380,14 @@ function TabResultados({ data, selectedT, greatgolfData }: {
             const tpC   = tpColor(j.to_par);
             return `<tr class="${manCls.trim()}">
               <td class="pos">${wd ? "" : posCounter}</td>
-              <td class="name">${manuel?"★ ":""}${displayName(j.nome)}${wd?' <span style="color:#999;font-size:9px;font-weight:700">WD</span>':""}</td>
+              <td class="name">${manuel?"★ ":""}${displayName(j.nome)}${wd?' <span style="color:var(--text-3);font-size:9px;font-weight:700">WD</span>':""}</td>
               <td class="flag">${flag(j.pais)}</td>
-              <td class="lb-topar" style="color:${wd?"#bbb":tpC}">${wd?"WD":tpVal}</td>
-              <td class="lb-gross" style="${wd?"color:#bbb":""}">${wd?"–":j.score||"–"}</td>
+              <td class="lb-topar" style="color:${wd?"var(--text-muted)":tpC}">${wd?"WD":tpVal}</td>
+              <td class="lb-gross" style="${wd?"color:var(--text-muted)":""}">${wd?"–":j.score||"–"}</td>
               ${holes9}
               <td class="lb-halftot">${out9||"–"}</td>
               ${has18 ? holes9b + `<td class="lb-halftot">${in9||"–"}</td>` : ""}
-              ${hasPontos?`<td style="color:#d97706;font-weight:700">${j.pontos>0?j.pontos:"–"}</td>`:""}
+              ${hasPontos?`<td style="color:var(--color-warn);font-weight:700">${j.pontos>0?j.pontos:"–"}</td>`:""}
             </tr>`;
           }).join("");
 
@@ -3425,8 +3425,8 @@ function PerfilRivalNovo({
               {ageGroupRange && <Pill cls="p-muted" style={{fontWeight:600}}>{ageGroupRange}</Pill>}
               {firstYear && <Pill cls="p-muted">estreia {firstYear}</Pill>}
               {anosActivo>1 && <Pill cls="p-muted">{anosActivo} anos activo</Pill>}
-              {hiatos.length>0 && <Pill style={{background:"var(--bg-warn)",color:"#92400e"}}>pausa {hiatos.join(", ")}</Pill>}
-              {trend && <Pill style={{background:trend==="melhora"?"var(--bg-success-subtle)":"#fee2e2",color:trend==="melhora"?"var(--color-good-dark)":"#b91c1c",fontWeight:700}}>{trend==="melhora"?"↑ a melhorar":"↓ a piorar"}</Pill>}
+              {hiatos.length>0 && <Pill style={{background:"var(--bg-warn)",color:"var(--color-warn-dark)"}}>pausa {hiatos.join(", ")}</Pill>}
+              {trend && <Pill style={{background:trend==="melhora"?"var(--bg-success-subtle)":"var(--bg-danger-strong)",color:trend==="melhora"?"var(--color-good-dark)":"var(--color-danger-vivid)",fontWeight:700}}>{trend==="melhora"?"↑ a melhorar":"↓ a piorar"}</Pill>}
             </div>
           </div>
           {/* V/E/D */}
@@ -3435,7 +3435,7 @@ function PerfilRivalNovo({
               {([
                 {n:vitorias, bg:"var(--bg-success-strong)", co:"var(--color-good-dark)"},
                 {n:empates,  bg:"var(--bg-muted)",          co:"var(--text-2)"},
-                {n:derrotas, bg:"#fee2e2",                   co:"#b91c1c"},
+                {n:derrotas, bg:"var(--bg-danger-strong)",                   co:"var(--color-danger-vivid)"},
               ] as const).map(({n,bg,co},i)=>(
                 <div key={i} style={{textAlign:"center",minWidth:48,padding:"10px 8px",background:bg,borderRadius:10}}>
                   <div style={{fontSize:26,fontWeight:900,color:co,lineHeight:1}}>{n}</div>
@@ -3445,7 +3445,7 @@ function PerfilRivalNovo({
             <div style={{fontSize:11,color:"var(--text-2)",lineHeight:1.4,maxWidth:160}}>
               {vitorias>0&&<><strong style={{color:"var(--color-good-dark)"}}>{vitorias}V</strong>{" "}</>}
               {empates>0&&<><strong style={{color:"var(--text-2)"}}>{empates}E</strong>{" "}</>}
-              {derrotas>0&&<><strong style={{color:"#b91c1c"}}>{derrotas}D</strong>{" "}</>}
+              {derrotas>0&&<><strong style={{color:"var(--color-danger-vivid)"}}>{derrotas}D</strong>{" "}</>}
               {directEnc.length===0
                 ? <span style={{color:"var(--text-3)"}}>sem confrontos</span>
                 : <span style={{color:"var(--text-3)"}}>
@@ -3488,10 +3488,10 @@ function PerfilRivalNovo({
         {/* Linha de contexto dos confrontos directos */}
         {directEnc.length>0&&(
           <div style={{padding:"9px 18px",background:"rgba(55,138,221,.05)",borderTop:"1px solid var(--border-light)",display:"flex",gap:20,flexWrap:"wrap",fontSize:12,color:"var(--text-2)"}}>
-            <span>Confrontos directos ({directEnc.length}): {firstName} <strong style={{color:vitorias>derrotas?"var(--color-good-dark)":"#b91c1c"}}>{(directEnc.reduce((s,e)=>s+e.rival_pos,0)/directEnc.length).toFixed(1)}º</strong> · Manuel <strong style={{color:"var(--text)"}}>{(directEnc.reduce((s,e)=>s+e.man_pos,0)/directEnc.length).toFixed(1)}º</strong></span>
+            <span>Confrontos directos ({directEnc.length}): {firstName} <strong style={{color:vitorias>derrotas?"var(--color-good-dark)":"var(--color-danger-vivid)"}}>{(directEnc.reduce((s,e)=>s+e.rival_pos,0)/directEnc.length).toFixed(1)}º</strong> · Manuel <strong style={{color:"var(--text)"}}>{(directEnc.reduce((s,e)=>s+e.man_pos,0)/directEnc.length).toFixed(1)}º</strong></span>
             {stats&&<span>Top-3: <strong style={{color:"var(--text)"}}>{stats.top3}/{stats.total}</strong></span>}
             {anosComParticipacao>0&&<span>Participou em <strong style={{color:"var(--text)"}}>{anosComParticipacao}/{anosActivo}</strong> anos</span>}
-            {(()=>{const difs=directEnc.filter(e=>e.man_to_par!=null&&e.rival_to_par!=null).map(e=>(e.rival_to_par??0)-(e.man_to_par??0));if(!difs.length)return null;const avg=difs.reduce((s,d)=>s+d,0)/difs.length;return<span>Dif. to-par: <strong style={{color:avg>0?"var(--color-good-dark)":"#b91c1c"}}>{avg>0?"+":""}{avg.toFixed(1)}</strong></span>;})()}
+            {(()=>{const difs=directEnc.filter(e=>e.man_to_par!=null&&e.rival_to_par!=null).map(e=>(e.rival_to_par??0)-(e.man_to_par??0));if(!difs.length)return null;const avg=difs.reduce((s,d)=>s+d,0)/difs.length;return<span>Dif. to-par: <strong style={{color:avg>0?"var(--color-good-dark)":"var(--color-danger-vivid)"}}>{avg>0?"+":""}{avg.toFixed(1)}</strong></span>;})()}
           </div>
         )}
       </div>
@@ -3517,7 +3517,7 @@ function PerfilRivalNovo({
                       return(
                         <React.Fragment key={e.tid}>
                           {i>0&&(
-                            <span style={{fontSize:13,fontWeight:800,color:delta!=null&&delta<0?"var(--color-good-dark)":delta!=null&&delta>0?"#b91c1c":"var(--text-3)"}}>
+                            <span style={{fontSize:13,fontWeight:800,color:delta!=null&&delta<0?"var(--color-good-dark)":delta!=null&&delta>0?"var(--color-danger-vivid)":"var(--text-3)"}}>
                               {delta!=null&&delta<0?"↑":delta!=null&&delta>0?"↓":"="}
                             </span>
                           )}
@@ -3527,7 +3527,7 @@ function PerfilRivalNovo({
                               {e.pos!=null?`#${e.pos}`:"—"}
                             </span>
                             {e.tp!=null&&<span style={{fontSize:11,color:"var(--text-3)"}}>({e.tp>0?"+":""}{e.tp})</span>}
-                            {e.withManuel&&<span style={{fontSize:9,fontWeight:700,padding:"1px 3px",borderRadius:3,background:"rgba(55,138,221,.15)",color:"var(--color-info-alt,#0369a1)",marginLeft:1}}>∩M</span>}
+                            {e.withManuel&&<span style={{fontSize:9,fontWeight:700,padding:"1px 3px",borderRadius:3,background:"rgba(55,138,221,.15)",color:"var(--color-info-alt)",marginLeft:1}}>∩M</span>}
                           </span>
                         </React.Fragment>
                       );
@@ -3549,7 +3549,7 @@ function PerfilRivalNovo({
           <div style={{border:"1px solid var(--border-light)",borderRadius:10,overflow:"hidden"}}>
             {inscricoesFuturas.map((t,i)=>(
               <div key={t.t} style={{display:"flex",alignItems:"center",gap:10,padding:"9px 14px",borderBottom:i<inscricoesFuturas.length-1?"1px solid var(--border-light)":"none",background:t.isCommon?"var(--bg-success)":"transparent"}}>
-                <Pill style={{background:t.daysAway===0?"var(--bg-success-strong)":t.daysAway<=7?"var(--bg-warn-strong)":"var(--bg-muted)",color:t.daysAway===0?"var(--color-good-dark)":t.daysAway<=7?"#92400e":"var(--text-3)",minWidth:60,justifyContent:"center"}}>
+                <Pill style={{background:t.daysAway===0?"var(--bg-success-strong)":t.daysAway<=7?"var(--bg-warn-strong)":"var(--bg-muted)",color:t.daysAway===0?"var(--color-good-dark)":t.daysAway<=7?"var(--color-warn-dark)":"var(--text-3)",minWidth:60,justifyContent:"center"}}>
                   {t.daysAway===0?"hoje":`em ${t.daysAway}d`}
                 </Pill>
                 <span style={{flex:1,fontSize:13,fontWeight:t.isCommon?700:500,color:"var(--text)"}}>{t.name.replace(/\s*\d{4}$/,"")}</span>
@@ -3588,15 +3588,15 @@ function PerfilRivalNovo({
                   <div style={{display:"flex",alignItems:"center",gap:10}}>
                     <span style={{fontSize:16,fontWeight:800,color:"var(--text)"}}>{yr}</span>
                     {ageGrp&&<span style={{fontSize:12,color:"var(--text-2)"}}>{ageGrp}</span>}
-                    {firstYear===yr&&<Pill style={{background:"var(--bg-warn-strong)",color:"#92400e"}}>estreia</Pill>}
+                    {firstYear===yr&&<Pill style={{background:"var(--bg-warn-strong)",color:"var(--color-warn-dark)"}}>estreia</Pill>}
                     {yr===new Date().getFullYear()&&<Pill style={{background:"var(--bg-success-strong)",color:"var(--color-good-dark)"}}>em curso</Pill>}
                   </div>
                   <div style={{display:"flex",gap:6,alignItems:"center"}}>
-                    <Pill style={{background:n>=7?"var(--bg-info)":n>=4?"var(--bg-warn-strong)":"var(--bg-muted)",color:n>=7?"var(--color-info)":n>=4?"#92400e":"var(--text-3)"}}>{n} torn.</Pill>
+                    <Pill style={{background:n>=7?"var(--bg-info)":n>=4?"var(--bg-warn-strong)":"var(--bg-muted)",color:n>=7?"var(--color-info)":n>=4?"var(--color-warn-dark)":"var(--text-3)"}}>{n} torn.</Pill>
                     {yrBest!=null&&<Pill style={{background:"var(--bg-success-subtle)",color:"var(--color-good-dark)"}}>melhor: {posLabel(yrBest)}</Pill>}
                     {yrAvgPos!=null&&<span style={{fontSize:11,color:"var(--text-3)"}}>avg {yrAvgPos}º</span>}
                     {yrAvgTp!=null&&<span style={{fontSize:12,fontWeight:700,color:yrAvgTp<=0?"var(--color-good-dark)":"var(--text-3)"}}>{yrAvgTp>0?"+":""}{yrAvgTp}</span>}
-                    {improving!=null&&<span style={{fontSize:15,fontWeight:800,color:improving?"var(--color-good-dark)":"#b91c1c"}}>{improving?"↑":"↓"}</span>}
+                    {improving!=null&&<span style={{fontSize:15,fontWeight:800,color:improving?"var(--color-good-dark)":"var(--color-danger-vivid)"}}>{improving?"↑":"↓"}</span>}
                   </div>
                 </div>
                 {/* Coluna header (só no primeiro ano) */}
@@ -3617,7 +3617,7 @@ function PerfilRivalNovo({
                   const vsMedian=e.tp!=null&&e.medianTp!=null?e.tp-e.medianTp:null;
                   const dateStr = e.date ? fmtDate(e.date) : null;
                   return(
-                    <div key={e.tid} style={{display:"grid",gridTemplateColumns:"38px 82px 1fr 70px 22px 64px 56px",alignItems:"center",padding:"8px 14px",borderBottom:ei<entries.length-1?".5px solid var(--border-light)":"none",background:e.withManuel?"rgba(55,138,221,.06)":"transparent",borderLeft:e.isDirectConfronto?"3px solid var(--color-info-alt,#0369a1)":e.withManuel?"3px solid rgba(55,138,221,.3)":"3px solid transparent",opacity:opac}}>
+                    <div key={e.tid} style={{display:"grid",gridTemplateColumns:"38px 82px 1fr 70px 22px 64px 56px",alignItems:"center",padding:"8px 14px",borderBottom:ei<entries.length-1?".5px solid var(--border-light)":"none",background:e.withManuel?"rgba(55,138,221,.06)":"transparent",borderLeft:e.isDirectConfronto?"3px solid var(--color-info-alt)":e.withManuel?"3px solid rgba(55,138,221,.3)":"3px solid transparent",opacity:opac}}>
                       {/* Pos */}
                       <div style={{textAlign:"center"}}>
                         {isTop3?<span style={{fontSize:20}}>{e.pos===1?"🥇":e.pos===2?"🥈":"🥉"}</span>:<span style={{fontSize:12,fontWeight:600,color:"var(--text-3)"}}>#{e.pos??""}</span>}
@@ -3654,8 +3654,8 @@ function PerfilRivalNovo({
                             ? `${e.fieldSize} jogadores`
                             : <span style={{opacity:.4}}>campo desconhecido</span>}
                         </div>
-                        {e.withManuel&&!e.isDirectConfronto&&<div style={{fontSize:10,color:"var(--color-info-alt,#0369a1)",opacity:.7,marginTop:1}}>∩ Manuel jogou neste torneio</div>}
-                        {e.isDirectConfronto&&e.manPos!=null&&e.rivalPos!=null&&<div style={{fontSize:11,color:"var(--color-info-alt,#0369a1)",fontWeight:600,marginTop:1}}>∩ Manuel {e.manPos}º · {firstName} {e.rivalPos}º</div>}
+                        {e.withManuel&&!e.isDirectConfronto&&<div style={{fontSize:10,color:"var(--color-info-alt)",opacity:.7,marginTop:1}}>∩ Manuel jogou neste torneio</div>}
+                        {e.isDirectConfronto&&e.manPos!=null&&e.rivalPos!=null&&<div style={{fontSize:11,color:"var(--color-info-alt)",fontWeight:600,marginTop:1}}>∩ Manuel {e.manPos}º · {firstName} {e.rivalPos}º</div>}
                       </div>
                       {/* Escalão */}
                       <div style={{textAlign:"center"}}><Pill cls="p-muted" style={{fontSize:10}}>{e.ageGroup||"—"}</Pill></div>
@@ -3669,7 +3669,7 @@ function PerfilRivalNovo({
                       {/* vs campo */}
                       <div style={{textAlign:"center",fontSize:10,color:"var(--text-3)"}}>
                         {vsWinner!=null&&<div style={{color:vsWinner===0?"var(--color-good-dark)":"var(--text-3)"}}>W: {vsWinner===0?"=":(vsWinner>0?"+":"")+vsWinner}</div>}
-                        {vsMedian!=null&&<div style={{color:vsMedian<0?"var(--color-good-dark)":vsMedian>0?"#b91c1c":"var(--text-3)"}}>Med: {vsMedian===0?"=":(vsMedian>0?"+":"")+vsMedian}</div>}
+                        {vsMedian!=null&&<div style={{color:vsMedian<0?"var(--color-good-dark)":vsMedian>0?"var(--color-danger-vivid)":"var(--text-3)"}}>Med: {vsMedian===0?"=":(vsMedian>0?"+":"")+vsMedian}</div>}
                       </div>
                     </div>
                   );
@@ -3687,8 +3687,8 @@ function PerfilRivalNovo({
             Head-to-head
             <span style={{fontSize:12,fontWeight:400,color:"var(--text-3)"}}>
               {directEnc.length} confronto{directEnc.length!==1?"s":""} · Manuel{" "}
-              <span style={{color:vitorias>=derrotas?"var(--color-good-dark)":"#b91c1c",fontWeight:700}}>{vitorias}V</span>{" · "}{empates}E{" · "}
-              <span style={{color:derrotas>vitorias?"#b91c1c":"var(--text-3)",fontWeight:700}}>{derrotas}D</span>
+              <span style={{color:vitorias>=derrotas?"var(--color-good-dark)":"var(--color-danger-vivid)",fontWeight:700}}>{vitorias}V</span>{" · "}{empates}E{" · "}
+              <span style={{color:derrotas>vitorias?"var(--color-danger-vivid)":"var(--text-3)",fontWeight:700}}>{derrotas}D</span>
             </span>
           </div>
           <div style={{border:"1px solid var(--border-light)",borderRadius:10,overflow:"hidden"}}>
@@ -3714,15 +3714,15 @@ function PerfilRivalNovo({
                     {e.man_to_par!=null&&<span style={{fontSize:11,color:"var(--text-3)",marginLeft:3}}>{tpFmt(e.man_to_par)}</span>}
                   </div>
                   <div style={{textAlign:"center"}}>
-                    <span style={{fontWeight:700,fontSize:13,color:!win&&!draw?"#b91c1c":"var(--text-2)"}}>{e.rival_pos}º</span>
+                    <span style={{fontWeight:700,fontSize:13,color:!win&&!draw?"var(--color-danger-vivid)":"var(--text-2)"}}>{e.rival_pos}º</span>
                     {e.rival_to_par!=null&&<span style={{fontSize:11,color:"var(--text-3)",marginLeft:3}}>{tpFmt(e.rival_to_par)}</span>}
                   </div>
-                  <div style={{textAlign:"center",fontWeight:800,fontSize:14,color:dif==null?"var(--text-3)":dif>0?"var(--color-good-dark)":dif<0?"#b91c1c":"var(--text-3)"}}>{dif==null?"—":dif>0?"+"+dif:dif===0?"=":dif}</div>
+                  <div style={{textAlign:"center",fontWeight:800,fontSize:14,color:dif==null?"var(--text-3)":dif>0?"var(--color-good-dark)":dif<0?"var(--color-danger-vivid)":"var(--text-3)"}}>{dif==null?"—":dif>0?"+"+dif:dif===0?"=":dif}</div>
                   <div style={{textAlign:"right"}}>
                     {isNext?<Pill style={{background:"var(--bg-info)",color:"var(--color-info)"}}>inscrito</Pill>
                     :win?<Pill style={{background:"var(--bg-success-strong)",color:"var(--color-good-dark)"}}>vitória</Pill>
                     :draw?<Pill cls="p-muted">empate</Pill>
-                    :<Pill style={{background:"#fee2e2",color:"#b91c1c"}}>derrota</Pill>}
+                    :<Pill style={{background:"var(--bg-danger-strong)",color:"var(--color-danger-vivid)"}}>derrota</Pill>}
                   </div>
                 </div>
               );
@@ -4422,7 +4422,7 @@ export default function USKidsFieldPage() {
                 </div>
                 {filtered.map(r => {
                   const active = selectedRival === r.nome;
-                  const accentColor = r.vitorias>r.derrotas ? "#1D9E75" : r.derrotas>r.vitorias ? "#dc2626" : "var(--border)";
+                  const accentColor = r.vitorias>r.derrotas ? "var(--color-teal)" : r.derrotas>r.vitorias ? "var(--color-danger)" : "var(--border)";
                   const recordLabel = [r.vitorias>0?`${r.vitorias}V`:"", r.empates>0?`${r.empates}E`:"", r.derrotas>0?`${r.derrotas}D`:""].filter(Boolean).join(" ");
                   return (
                     <button key={r.nome}
@@ -4432,7 +4432,7 @@ export default function USKidsFieldPage() {
                       <div className="course-item-name">
                         <span>{flag(r.pais)}</span>
                         <span style={{flex:1,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{displayName(r.nome)}</span>
-                        {recordLabel && <span className="p p-sm" style={{flexShrink:0,background:r.vitorias>r.derrotas?"var(--bg-success-subtle)":r.derrotas>r.vitorias?"#fee2e2":"var(--bg-muted)",color:r.vitorias>r.derrotas?"var(--color-good-dark)":r.derrotas>r.vitorias?"#991b1b":"var(--text-3)"}}>{recordLabel}</span>}
+                        {recordLabel && <span className="p p-sm" style={{flexShrink:0,background:r.vitorias>r.derrotas?"var(--bg-success-subtle)":r.derrotas>r.vitorias?"var(--bg-danger-strong)":"var(--bg-muted)",color:r.vitorias>r.derrotas?"var(--color-good-dark)":r.derrotas>r.vitorias?"var(--color-danger-dark)":"var(--text-3)"}}>{recordLabel}</span>}
                       </div>
                       <div className="course-item-meta">
                         {[r.nEnc>0?`${r.nEnc} enc.`:"", r.totalTournaments>0?`${r.totalTournaments} torn.`:"", r.firstYear?`desde ${r.firstYear}`:""].filter(Boolean).join(" · ")}
@@ -4513,14 +4513,14 @@ export default function USKidsFieldPage() {
                   const extraPills = (<>
                     {reg && (
                       <span className="p p-sm p-tourn" style={{
-                        background: isEuro ? "var(--bg-info)" : "#fff3e0",
-                        color: isEuro ? "var(--color-info)" : "#e65100",
-                        borderColor: isEuro ? "var(--border-info)" : "#ffcc80",
+                        background: isEuro ? "var(--bg-info)" : "var(--bg-warn-orange)",
+                        color: isEuro ? "var(--color-info)" : "var(--color-orange-deep)",
+                        borderColor: isEuro ? "var(--border-info)" : "var(--color-amber)",
                       }}>{reg}</span>
                     )}
                     {isInvit && (
                       <span className="p p-sm p-tourn" style={{
-                        background:"var(--bg-pink)", color:"var(--color-purple)", borderColor:"#e1bee7",
+                        background:"var(--bg-pink)", color:"var(--color-purple)", borderColor:"var(--border-purple)",
                       }}>INVIT</span>
                     )}
                     {t.escalaoManuel && <span className="p p-sm p-muted">{t.escalaoManuel}</span>}
@@ -4528,8 +4528,8 @@ export default function USKidsFieldPage() {
                     {t.manuelJogou && <ManuelPill />}
                     {t.manuelJogou && manuelPos != null && (
                       <span className="p p-sm p-tourn" style={{
-                        background: manuelPos === 1 ? "#fef3c7" : manuelPos <= 3 ? "#e6f1fb" : "var(--bg-muted)",
-                        color: manuelPos === 1 ? "#92400e" : manuelPos <= 3 ? "#0c447c" : "var(--text-2)",
+                        background: manuelPos === 1 ? "var(--bg-warn-strong)" : manuelPos <= 3 ? "var(--bg-info-strong)" : "var(--bg-muted)",
+                        color: manuelPos === 1 ? "var(--color-warn-dark)" : manuelPos <= 3 ? "var(--color-navy)" : "var(--text-2)",
                         borderColor: "transparent",
                       }}>
                         {manuelPos === 1 ? "🥇" : manuelPos === 2 ? "🥈" : manuelPos === 3 ? "🥉" : `#${manuelPos}`}

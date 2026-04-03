@@ -25,14 +25,30 @@ export const C = {
   goodDark:     "#166534",
   warn:         "#d97706",
   warnDark:     "#92400e",
+  warnVivid:    "#c17a00",  // âmbar médio — EOWAGR sidebar
   danger:       "#dc2626",
   dangerDark:   "#991b1b",
+  dangerVivid:  "#b91c1c",  // red-700 — rivalidades/confrontos (USKidsPage)
   amber:        "#f59e0b",
   info:         "#1e40af",
   navy:         "#1e3a5f",
   teal:         "#00838f",
+  // Circuit brand
+  eowagr:        { dark: "#8a6200", mid: "#e09820", text: "#fff8e1" },
+  bjgt:          { mid: "#4a9b6f" },
+  doral:         { dark: "#1a5276", mid: "#2980b9", text: "#d6eaf8" },
+  // Sidebar accent — por série/circuito (PillBadge.tsx SIDEBAR_ACCENT)
+  sidebarSserra:    "#534AB7",   // violeta CGSS St Leon-Rot
+  sidebarTour:      "#1D9E75",   // teal Drive Tour / Clubes
+  sidebarChallenge: "#639922",   // verde lima Drive Challenge
+  sidebarAquapor:   "#185FA5",   // azul AQUAPOR
+  sidebarDefault:   "#888780",   // cinza neutro
   purple:       "#9c27b0",  // USKids — categoria especial
   orangeDeep:   "#e65100",  // USKids — não-euro
+
+  // Neutral/muted (scoreDisplay.ts sc3m, scDark)
+  muted:        "#888",      // cor neutra — meio termo em sc3m (C.muted)
+  infoDark:     "#0369a1",   // azul escuro info — scDark("info")  (= color-info-alt)
 
   // Greyscale
   grey900: "#111",
@@ -54,6 +70,7 @@ export const C = {
   bgSuccessSubtle:  "#d1fae5",
   bgDanger:         "#fef2f2",
   bgWarn:           "#fffbeb",
+  bgInfoSubtle:     "#e0f2fe",  // cards info suaves
   bgPurple:         "#f0edf5",
   bgFemale:         "#f0f4ff",
   bgWarnOrange:     "#fff3e0",  // USKids — aviso laranja
@@ -62,6 +79,13 @@ export const C = {
   // Text over coloured bg
   white:   "#ffffff",
   onDark:  "#1a3a10",  // texto escuro sobre fundos claros (sub-16/18)
+  rivaisLink:      "#1a5c2a",  // links de rivais
+  pillJuniorBg:    "#b45309",   // PILL_JUNIOR background
+  pillJuniorFg:    "#fef3c7",   // PILL_JUNIOR text
+  pillManuelBg:    "#dcfce7",   // PILL_MANUEL background
+  pillManuelFg:    "#166534",   // PILL_MANUEL text
+  pillManuelBd:    "#16a34a",   // PILL_MANUEL border
+  rivaisLinkHover: "#0d3a18",
 
   // ── Charts / data-viz ───────────────────────────────────────────────────────
   // Palette de 10 séries para Recharts / D3
@@ -133,6 +157,57 @@ export const C = {
     limited: { bg: "var(--color-warn)",    fg: "#ffe0b2" },
     available: { bg: "#f57f17",            fg: "#fff9c4" },
     open:   { bg: "#1b5e20",               fg: "#c8e6c9" },
+  },
+
+
+  // ── Calendário — cores de categoria (CalendarioPage.tsx) ─────────────────────
+  // Editar aqui para mudar as cores do calendário; CalendarioPage importa C.cal
+  cal: {
+    // CGSS
+    cgss_major:     "#1e3a8a",   /* azul marinho — Majors */
+    cgss_om_c:      "#60a5fa",   /* azul médio — O.M. Nível C */
+    cgss_pares:     "#0891b2",   /* ciano — Camp. Pares */
+    cgss_ouro:      "#0ea5e9",   /* azul claro — Ranking Ouro */
+    cgss_regional:  "#0284c7",   /* azul — Regional */
+    cgss_fpg:       "#4338ca",   /* índigo — FPG Nacional */
+    // Junior
+    jr_cgss:        "#f59e0b",   /* âmbar — CGSS Jr */
+    jr_regional:    "#0d9488",   /* teal — Regional Jr */
+    jr_fpg:         "#e11d48",   /* rosa-vermelho — FPG Jr */
+    // Drive
+    drive_chall:    "#8b5cf6",   /* violeta — Drive Challenge */
+    drive_tour:     "#16a34a",   /* verde — Drive Tour */
+    drive_tour_mad: "#059669",   /* esmeralda — Drive Tour Madeira */
+    // FPG
+    fpg_aquapor:    "#6366f1",   /* índigo — Circuito AQUAPOR */
+    fpg_torneios:   "#a855f7",   /* roxo — Torneios FPG */
+    // Destaque
+    dest_intl:      "#dc2626",   /* vermelho — Internacionais */
+    dest_nac_jr:    "#dc2626",   /* vermelho — Nacional Sub14&18 */
+    dest_uskids:    "#e11d48",   /* rosa-vermelho — US Kids */
+    dest_bjgt:      "#be123c",   /* carmesim — BJGT */
+    dest_pja:       "#d946ef",   /* fúcsia — PJA Tour */
+    pessoal:        "#39ff14",   /* neon verde — pessoal (intencional) */
+    ferias:         "#a3e635",   /* lima — Férias */
+    treino:         "#10b981",   /* esmeralda — Campo / Treino */
+    // Viagens
+    viag_alg_fev:   "#f59e0b",
+    viag_malaga:    "#f97316",
+    viag_roma:      "#ef4444",
+    viag_alg_mar:   "#eab308",
+    viag_edinb:     "#06b6d4",
+    // Aniversários (ramp rosa)
+    bday_sub10:     "#f9a8d4",
+    bday_sub12:     "#f472b6",
+    bday_sub14:     "#ec4899",
+    bday_sub16:     "#db2777",
+    bday_sub18:     "#be185d",
+    bday_pja:       "#d946ef",
+    bday_outros:    "#a78bfa",
+    // Highlight full-cell (pessoal)
+    hl_pessoal_bg:     "#39ff14",
+    hl_pessoal_border: "#2ecc40",
+    hl_pessoal_text:   "#1a1a1a",
   },
 
 } as const;

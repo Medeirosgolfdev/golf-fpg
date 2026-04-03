@@ -14,6 +14,7 @@
  * quando duplicam a mesma prova no calendário FPG.
  */
 import { useState, useRef, useEffect, useMemo } from "react";
+import { C } from "../utils/colors";
 import type { PlayersDb } from "../data/types";
 import { useAppContext } from "../context/AppContext";
 import { isCalUnlocked } from "../utils/authConstants";
@@ -44,55 +45,55 @@ interface CalendarSource {
 /* ═══ Calendar Sources ═══ */
 const CALENDARS: CalendarSource[] = [
   // ── CGSS Santo da Serra — azuis ──
-  { id: "cgss_major",     name: "Majors (A)",         color: "#1e3a8a", group: "CGSS" },
+  { id: "cgss_major",     name: "Majors (A)",         color: C.cal.cgss_major, group: "CGSS" },
   { id: "cgss_om_b",      name: "O.M. Nível B",       color: "var(--chart-2)", group: "CGSS" },
-  { id: "cgss_om_c",      name: "O.M. Nível C",       color: "#60a5fa", group: "CGSS" },
-  { id: "cgss_pares",     name: "Camp. Pares",        color: "#0891b2", group: "CGSS" },
-  { id: "cgss_ouro",      name: "Ranking Ouro",       color: "#0ea5e9", group: "CGSS" },
+  { id: "cgss_om_c",      name: "O.M. Nível C",       color: C.cal.cgss_om_c, group: "CGSS" },
+  { id: "cgss_pares",     name: "Camp. Pares",        color: C.cal.cgss_pares, group: "CGSS" },
+  { id: "cgss_ouro",      name: "Ranking Ouro",       color: C.cal.cgss_ouro, group: "CGSS" },
   { id: "cgss_patrocin",  name: "Patrocinador",       color: "var(--text-3)", group: "CGSS" },
-  { id: "cgss_regional",  name: "Regional",           color: "#0284c7", group: "CGSS" },
-  { id: "cgss_fpg",       name: "FPG Nacional",       color: "#4338ca", group: "CGSS" },
+  { id: "cgss_regional",  name: "Regional",           color: C.cal.cgss_regional, group: "CGSS" },
+  { id: "cgss_fpg",       name: "FPG Nacional",       color: C.cal.cgss_fpg, group: "CGSS" },
 
   // ── Junior CGSS — Academia ──
-  { id: "jr_cgss",        name: "CGSS Jr",             color: "#f59e0b", group: "JUNIOR" },
-  { id: "jr_regional",    name: "Regional Jr",         color: "#0d9488", group: "JUNIOR" },
-  { id: "jr_fpg",         name: "FPG Jr",              color: "#e11d48", group: "JUNIOR" },
+  { id: "jr_cgss",        name: "CGSS Jr",             color: C.cal.jr_cgss, group: "JUNIOR" },
+  { id: "jr_regional",    name: "Regional Jr",         color: C.cal.jr_regional, group: "JUNIOR" },
+  { id: "jr_fpg",         name: "FPG Jr",              color: C.cal.dest_uskids, group: "JUNIOR" },
 
   // ── Drive — violeta / verde ──
-  { id: "drive_chall",    name: "Drive Challenge",     color: "#8b5cf6", group: "DRIVE" },
-  { id: "drive_tour",     name: "Drive Tour",          color: "#16a34a", group: "DRIVE" },
-  { id: "drive_tour_mad", name: "Drive Tour Madeira",  color: "#059669", group: "DRIVE" },
+  { id: "drive_chall",    name: "Drive Challenge",     color: C.cal.drive_chall, group: "DRIVE" },
+  { id: "drive_tour",     name: "Drive Tour",          color: C.cal.drive_tour, group: "DRIVE" },
+  { id: "drive_tour_mad", name: "Drive Tour Madeira",  color: C.cal.drive_tour_mad, group: "DRIVE" },
 
   // ── FPG ──
-  { id: "fpg_aquapor",    name: "Circuito AQUAPOR",    color: "#6366f1", group: "FPG" },
-  { id: "fpg_torneios",   name: "Torneios FPG",        color: "#a855f7", group: "FPG" },
+  { id: "fpg_aquapor",    name: "Circuito AQUAPOR",    color: C.cal.fpg_aquapor, group: "FPG" },
+  { id: "fpg_torneios",   name: "Torneios FPG",        color: C.cal.fpg_torneios, group: "FPG" },
 
   // ── Destaque — vermelho / laranja ──
-  { id: "dest_intl",      name: "Internacionais",      color: "#dc2626", group: "DESTAQUE" },
-  { id: "dest_nac_jr",    name: "Nacional Sub14&18",    color: "#dc2626", group: "DESTAQUE" },
-  { id: "dest_uskids",    name: "US Kids International",color: "#e11d48", group: "DESTAQUE" },
+  { id: "dest_intl",      name: "Internacionais",      color: C.cal.dest_intl, group: "DESTAQUE" },
+  { id: "dest_nac_jr",    name: "Nacional Sub14&18",    color: C.cal.dest_intl, group: "DESTAQUE" },
+  { id: "dest_uskids",    name: "US Kids International",color: C.cal.dest_uskids, group: "DESTAQUE" },
   { id: "dest_uskids_tbc",name: "US Kids (a confirmar)",color: "var(--text-muted)", group: "DESTAQUE" },
-  { id: "dest_bjgt",      name: "BJGT",                color: "#be123c", group: "DESTAQUE" },
-  { id: "dest_pja",       name: "PJA Tour",            color: "#d946ef", group: "DESTAQUE" },
-  { id: "pessoal",        name: "🎂 Pessoal",          color: "#39ff14", group: "DESTAQUE" },
+  { id: "dest_bjgt",      name: "BJGT",                color: C.cal.dest_bjgt, group: "DESTAQUE" },
+  { id: "dest_pja",       name: "PJA Tour",            color: C.cal.dest_pja, group: "DESTAQUE" },
+  { id: "pessoal",        name: "🎂 Pessoal",          color: C.cal.pessoal, group: "DESTAQUE" },
 
   // ── Aniversários por escalão ──
-  { id: "bday_sub10",     name: "🎂 Sub-10",            color: "#f9a8d4", group: "ANIVER" },
-  { id: "bday_sub12",     name: "🎂 Sub-12",            color: "#f472b6", group: "ANIVER" },
-  { id: "bday_sub14",     name: "🎂 Sub-14",            color: "#ec4899", group: "ANIVER" },
-  { id: "bday_sub16",     name: "🎂 Sub-16",            color: "#db2777", group: "ANIVER" },
-  { id: "bday_sub18",     name: "🎂 Sub-18",            color: "#be185d", group: "ANIVER" },
-  { id: "bday_pja",       name: "🎂 PJA",               color: "#d946ef", group: "ANIVER" },
-  { id: "bday_outros",    name: "🎂 Outros",            color: "#a78bfa", group: "ANIVER" },
-  { id: "ferias",         name: "🏖 Férias",            color: "#a3e635", group: "DESTAQUE" },
-  { id: "treino",         name: "⛳ Campo / Treino",    color: "#10b981", group: "DESTAQUE" },
+  { id: "bday_sub10",     name: "🎂 Sub-10",            color: C.cal.bday_sub10, group: "ANIVER" },
+  { id: "bday_sub12",     name: "🎂 Sub-12",            color: C.cal.bday_sub12, group: "ANIVER" },
+  { id: "bday_sub14",     name: "🎂 Sub-14",            color: C.cal.bday_sub14, group: "ANIVER" },
+  { id: "bday_sub16",     name: "🎂 Sub-16",            color: C.cal.bday_sub16, group: "ANIVER" },
+  { id: "bday_sub18",     name: "🎂 Sub-18",            color: C.cal.bday_sub18, group: "ANIVER" },
+  { id: "bday_pja",       name: "🎂 PJA",               color: C.cal.dest_pja, group: "ANIVER" },
+  { id: "bday_outros",    name: "🎂 Outros",            color: C.cal.bday_outros, group: "ANIVER" },
+  { id: "ferias",         name: "🏖 Férias",            color: C.cal.ferias, group: "DESTAQUE" },
+  { id: "treino",         name: "⛳ Campo / Treino",    color: C.cal.treino, group: "DESTAQUE" },
 
   // ── Viagens — laranja / âmbar ──
-  { id: "viag_alg_fev",   name: "✈ Algarve (Fev)",      color: "#f59e0b", group: "VIAGENS" },
-  { id: "viag_malaga",    name: "✈ Málaga (Fev)",        color: "#f97316", group: "VIAGENS" },
-  { id: "viag_roma",      name: "✈ Roma (Mar)",          color: "#ef4444", group: "VIAGENS" },
-  { id: "viag_alg_mar",   name: "✈ Algarve (Mar/Abr)",  color: "#eab308", group: "VIAGENS" },
-  { id: "viag_edinb",     name: "✈ Edimburgo (Mai)",     color: "#06b6d4", group: "VIAGENS" },
+  { id: "viag_alg_fev",   name: "✈ Algarve (Fev)",      color: C.cal.jr_cgss, group: "VIAGENS" },
+  { id: "viag_malaga",    name: "✈ Málaga (Fev)",        color: C.cal.viag_malaga, group: "VIAGENS" },
+  { id: "viag_roma",      name: "✈ Roma (Mar)",          color: C.cal.viag_roma, group: "VIAGENS" },
+  { id: "viag_alg_mar",   name: "✈ Algarve (Mar/Abr)",  color: C.cal.viag_alg_mar, group: "VIAGENS" },
+  { id: "viag_edinb",     name: "✈ Edimburgo (Mai)",     color: C.cal.viag_edinb, group: "VIAGENS" },
 ];
 
 const CAL_MAP = new Map(CALENDARS.map(c => [c.id, c]));
@@ -371,7 +372,7 @@ function calColor(e: CalEvent): string { return CAL_MAP.get(e.calId)?.color ?? "
 
 /* Highlighted "full-cell" events */
 const HIGHLIGHT: Record<string, { bg: string; border: string; text: string; icon: string; cls: string }> = {
-  pessoal:       { bg: "#39ff14", border: "#2ecc40", text: "#1a1a1a", icon: "🎂", cls: "hl-green" },
+  pessoal:       { bg: C.cal.hl_pessoal_bg, border: C.cal.hl_pessoal_border, text: C.cal.hl_pessoal_text, icon: "🎂", cls: "hl-green" },
 };
 /* Events that get animated bars (pulse/glow/shine) but NOT full-cell */
 const HL_BAR: Record<string, string> = {

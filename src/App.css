@@ -383,19 +383,19 @@ html, body, #root {
 .p-club { background: var(--badge-club-bg); color: var(--badge-club-text); }
 
 /* ── Escalão ramp ── */
-.p-sub12 { background: #3a7a28; color: #fff; }
+.p-sub12 { background: var(--esc-sub12-bg); color: var(--esc-sub12-fg); }
 
 /* ── Tournament (3px radius — rectângular) ── */
 .p-tourn { border-radius: 3px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; }
 .p-regional { background: var(--pill-regional-bg); color: var(--pill-regional-fg); }
-.p-nacional { background: #046A38; color: var(--pill-nacional-fg); }
-.p-intl { background: #00FF00; color: var(--pill-regional-bg); }
-.p-pja { background: #dc2626; color: #fff; }
+.p-nacional { background: var(--pill-nacional-bg); color: var(--pill-nacional-fg); }
+.p-intl { background: var(--pill-intl-bg); color: var(--pill-regional-bg); }
+.p-pja { background: var(--pill-pja-bg); color: #fff; }
 
 /* Origin (score_origin) — same rectangular form */
 .p-origin { border-radius: 3px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; }
 .p-eds { background: var(--color-amber); color: #fff; }
-.p-import { background: #8b5cf6; color: #fff; }
+.p-import { background: var(--pill-import-bg); color: #fff; }
 .p-indiv { background: var(--color-amber); color: #fff; }
 .p-treino { background: var(--color-amber); color: #fff; }
 .p-extra { background: var(--color-amber); color: #fff; }
@@ -694,7 +694,7 @@ html, body, #root {
 .score-delta.pos { color: var(--color-danger); }
 .score-delta.neg { color: var(--color-good); }
 .hb { font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: var(--radius-sm); }
-.hb9 { background: #d97706; color: #fff; }
+.hb9 { background: var(--color-warn); color: #fff; }
 .hb18 { background: var(--badge-fed); color: #fff; }
 /* Pill badges (from melhorias.json) */
 
@@ -1468,7 +1468,7 @@ tr.cross-current { background: var(--bg-success); }
 .toolbar-sep   { width: 1px; height: 20px; background: var(--border-light); flex-shrink: 0; }
 .toolbar-badge-link { padding: 3px 10px; border-radius: var(--radius); font-size: 11px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
 .toolbar-badge-link-accent { background: var(--accent); color: #fff; }
-.toolbar-badge-link-dark { background: var(--bg-topbar); color: #e8eddf; }
+.toolbar-badge-link-dark { background: var(--bg-topbar); color: var(--text-inv); }
 .toolbar-badge-arrow { font-size: 10px; opacity: 0.7; }
 .sort-arrow { font-size: 10px; margin-left: 2px; opacity: 0.65; }
 .tourn-ext-group { display: inline-flex; align-items: center; gap: 4px; }
@@ -1535,8 +1535,8 @@ tr.cross-current { background: var(--bg-success); }
 .cat-badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: var(--radius); line-height: 1.5; }
 
 /* RivaisDashboard column patterns */
-.rivais-link { color: #1a5c2a; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 2px; font-weight: 700; }
-.rivais-link:hover { color: #0d3a18; }
+.rivais-link { color: var(--rivais-link); text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 2px; font-weight: 700; }
+.rivais-link:hover { color: var(--rivais-link-hover); }
 .rivais-row-ref { border-bottom: 2px solid var(--color-info-alt) !important; }
 .rivais-row-ref .rivais-player-name { border-right-color: var(--color-info-alt); }
 
@@ -2087,11 +2087,11 @@ tr.cross-current { background: var(--bg-success); }
 .sc-lb .lb-rnd-bog  { width: 22px; background: var(--bg-rnd-stats, #f5f9f3);
   font-size: 11px; color: var(--color-danger); }
 /* Headers usam a variante mais escura (mockup: #dde8d9 / #f0f5ee) */
-.sc-lb thead th.lb-rnd, .sc-lb thead th.lb-rnd-tp { background: #dde8d9; }
+.sc-lb thead th.lb-rnd, .sc-lb thead th.lb-rnd-tp { background: var(--bg-rnd-header); }
 .sc-lb thead th.lb-rnd-sd,
 .sc-lb thead th.lb-rnd-bird,
 .sc-lb thead th.lb-rnd-par,
-.sc-lb thead th.lb-rnd-bog  { background: #f0f5ee; }
+.sc-lb thead th.lb-rnd-bog  { background: var(--bg-rnd-stats-header); }
 
 /* Buracos scorecard — sem width fixo (box-sizing:border-box distorce); bS entre todos, bM nos grupos */
 .sc-lb .lb-hole       { min-width: 33px; border-left: 1px solid var(--border-light); }
@@ -2745,12 +2745,12 @@ tr.cross-current { background: var(--bg-success); }
 }
 
 /* ─── Restored: escalão pills (gerados dinamicamente via escCls/esc.toLowerCase) ─── */
-.p-sub10 { background: #2a5a18; color: #fff; }
-.p-sub14 { background: #5a9a40; color: #fff; }
-.p-sub16 { background: #7aba60; color: #1a3a10; }
-.p-sub18 { background: #a0d480; color: #1a3a10; }
-.p-absoluto { background: #c8d8b4; color: #2a4a18; }
-.p-senior { background: #d8dcc8; color: #3a4a28; }
+.p-sub10 { background: var(--esc-sub10-bg); color: var(--esc-sub10-fg); }
+.p-sub14 { background: var(--esc-sub14-bg); color: var(--esc-sub14-fg); }
+.p-sub16 { background: var(--esc-sub16-bg); color: var(--esc-sub16-fg); }
+.p-sub18 { background: var(--esc-sub18-bg); color: var(--esc-sub18-fg); }
+.p-absoluto { background: var(--pill-absoluto-bg); color: var(--pill-absoluto-fg); }
+.p-senior   { background: var(--pill-senior-bg);   color: var(--pill-senior-fg); }
 
 /* ─── Restored: fs combos e utilitários ─── */
 .fw-700-text2-mb8 { font-weight: 700; color: var(--text-2); margin-bottom: 8px; }
@@ -2789,10 +2789,10 @@ tr.cross-current { background: var(--bg-success); }
 }
 
 /* ─── Evolução de categoria (BJGT) ─── */
-.badge-evo-up  { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: var(--radius-sm); background: #dbeafe; color: #1e40af; white-space: nowrap; }
-.badge-evo-eq  { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: var(--radius-sm); background: #fef3c7; color: #92400e; white-space: nowrap; }
-.badge-evo-new { display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 5px; border-radius: var(--radius-sm); background: #f3f4f6; color: #9ca3af; white-space: nowrap; }
-.pill-birth { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: var(--radius-sm); background: #ede9fe; color: #5b21b6; white-space: nowrap; }
+.badge-evo-up  { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: var(--radius-sm); background: var(--badge-evo-up-bg);  color: var(--badge-evo-up-fg);  white-space: nowrap; }
+.badge-evo-eq  { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: var(--radius-sm); background: var(--badge-evo-eq-bg);  color: var(--badge-evo-eq-fg);  white-space: nowrap; }
+.badge-evo-new { display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 5px; border-radius: var(--radius-sm); background: var(--badge-evo-new-bg); color: var(--badge-evo-new-fg); white-space: nowrap; }
+.pill-birth { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: var(--radius-sm); background: var(--pill-birth-vio-bg); color: var(--pill-birth-vio-fg); white-space: nowrap; }
 
 /* ─── Meta sub-header de tabela (datas, rótulos compactos) ─── */
 .th-sub { font-size: 10px; font-weight: 400; color: var(--text-muted); display: block; line-height: 1.2; }

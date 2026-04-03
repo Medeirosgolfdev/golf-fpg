@@ -916,8 +916,8 @@ function PlayerFilterBar({ players, filter, onChange, escLookup, playersDB, tota
   if (total < 8 && !isActive) return null;
   const chip = (active: boolean, label: React.ReactNode, onClick: () => void, color?: string): React.ReactNode => (
     <button key={String(label)} onClick={onClick} style={{ fontSize:10, padding:"2px 8px", borderRadius:20,
-      border:`1px solid ${active?(color||"var(--accent,#2563eb)"):"var(--border)"}`,
-      background:active?(color||"var(--accent,#2563eb)"):"var(--bg-hover)", color:active?"#fff":"var(--text-muted)",
+      border:`1px solid ${active?(color||"var(--accent)"):"var(--border)"}`,
+      background:active?(color||"var(--accent)"):"var(--bg-hover)", color:active?"#fff":"var(--text-muted)",
       cursor:"pointer", whiteSpace:"nowrap", fontWeight:active?700:500 }}>{label}</button>
   );
   return (
@@ -930,7 +930,7 @@ function PlayerFilterBar({ players, filter, onChange, escLookup, playersDB, tota
       {hasOpts && <span style={{ color:"var(--border)", fontSize:11 }}>|</span>}
       {availEsc.length > 1 && availEsc.map(e => { const k = e.toLowerCase().replace(/[\s-]/g,""); const s = ESC_STYLE[k]; return chip(filter.escs.includes(e), e, () => onChange({ ...filter, escs:toggleArr(filter.escs,e) }), s?.bg); })}
       {availTees.length > 1 && availTees.map(t => { const hex = getTeeHex(t); return <React.Fragment key={t}>{chip(filter.tees.includes(t), <span style={{ display:"flex", alignItems:"center", gap:4 }}><span style={{ display:"inline-block", width:8, height:8, borderRadius:2, background:hex, border:"1px solid rgba(0,0,0,.18)" }} />{t}</span>, () => onChange({ ...filter, tees:toggleArr(filter.tees,t) }), hex)}</React.Fragment>; })}
-      {availClubs.length > 2 && <select value={filter.club} onChange={e => onChange({ ...filter, club:e.target.value })} style={{ fontSize:11, padding:"3px 6px", borderRadius:6, border:`1px solid ${filter.club?"var(--accent,#2563eb)":"var(--border)"}`, background:"var(--bg-card,#fff)", color:"var(--text)", cursor:"pointer", fontWeight:filter.club?700:400 }}><option value="">Todos os clubes</option>{availClubs.map(c => <option key={c} value={c}>{c}</option>)}</select>}
+      {availClubs.length > 2 && <select value={filter.club} onChange={e => onChange({ ...filter, club:e.target.value })} style={{ fontSize:11, padding:"3px 6px", borderRadius:6, border:`1px solid ${filter.club?"var(--accent)":"var(--border)"}`, background:"var(--bg-card,#fff)", color:"var(--text)", cursor:"pointer", fontWeight:filter.club?700:400 }}><option value="">Todos os clubes</option>{availClubs.map(c => <option key={c} value={c}>{c}</option>)}</select>}
       {isActive && <><span style={{ fontSize:10, color:"var(--text-muted)", marginLeft:2 }}>{filtered.length} de {total}</span><button onClick={() => onChange(EMPTY_FILTER)} style={{ fontSize:10, padding:"2px 8px", borderRadius:20, border:"1px solid var(--border)", background:"var(--bg-hover)", color:"var(--text-muted)", cursor:"pointer" }}>✕ limpar</button></>}
     </div>
   );
@@ -1545,7 +1545,7 @@ export function AllRoundsScorecardLB({
     const active = sortKey === k;
     return (
       <th className={"lb-sortable " + (className || "")}
-          style={{ ...style, color: active ? "var(--accent,#2563eb)" : undefined, fontWeight: active ? 700 : undefined }}
+          style={{ ...style, color: active ? "var(--accent)" : undefined, fontWeight: active ? 700 : undefined }}
           title={active ? (sortDir === "asc" ? "Ordenado crescente" : "Ordenado decrescente") : "Clique para ordenar"}
           onClick={() => toggleSort(k)}>
         {children}{active && <span style={{ fontSize: 8, marginLeft: 2 }}>{sortDir === "asc" ? "▲" : "▼"}</span>}
@@ -1566,7 +1566,7 @@ export function AllRoundsScorecardLB({
             <button key={String(g)} onClick={() => setGroupMode(g)}
               style={{
                 fontSize: 10, padding: "2px 9px", border: "none", cursor: "pointer",
-                background: groupMode === g ? "var(--accent,#2563eb)" : "transparent",
+                background: groupMode === g ? "var(--accent)" : "transparent",
                 color: groupMode === g ? "#fff" : "var(--text-muted)",
                 fontWeight: groupMode === g ? 700 : 400,
               }}>
@@ -1589,7 +1589,7 @@ export function AllRoundsScorecardLB({
         </div>
         {availClubs.length > 2 && (
           <select value={filter.club} onChange={e => setFilter({ ...filter, club: e.target.value })}
-            style={{ fontSize: 11, padding: "3px 6px", borderRadius: 6, border: `1px solid ${filter.club ? "var(--accent,#2563eb)" : "var(--border)"}`, background: "var(--bg-card,#fff)", color: "var(--text)", cursor: "pointer" }}>
+            style={{ fontSize: 11, padding: "3px 6px", borderRadius: 6, border: `1px solid ${filter.club ? "var(--accent)" : "var(--border)"}`, background: "var(--bg-card,#fff)", color: "var(--text)", cursor: "pointer" }}>
             <option value="">Todos os clubes</option>
             {availClubs.map(c => <option key={c} value={c}>{c}</option>)}
           </select>
@@ -1668,7 +1668,7 @@ export function AllRoundsScorecardLB({
                     const showPos = row.pos !== prevPos || row.isWD;
                     const medal   = row.pos != null && row.pos <= 3 ? medals[row.pos - 1] : null;
                     const posStr  = row.isWD ? "WD" : row.pos != null ? (medal ?? String(row.pos)) : "–";
-                    const playerBg = playerIdx % 2 === 0 ? undefined : "var(--bg-muted,#f8fafc)";
+                    const playerBg = playerIdx % 2 === 0 ? undefined : "var(--bg-muted)";
                     const isFirst  = playerIdx === 0;
                     return (
                       <React.Fragment key={row.key}>
@@ -1696,7 +1696,7 @@ export function AllRoundsScorecardLB({
                               <td className="lb-club" style={{ borderTop: bTop, color: isFirstRd ? undefined : "var(--text-muted)", fontSize: isFirstRd ? undefined : 11 }}>{row.club || "–"}</td>
                               <td className="lb-hcp" style={{ borderTop: bTop, color: isFirstRd ? undefined : "var(--text-muted)" }}>{row.hcp != null ? row.hcp.toFixed(1) : "–"}</td>
                               <td className="lb-tee" style={{ fontWeight:600, fontSize:10, color:"var(--text-muted)", borderTop: bTop }}>{`R${ri+1}`}</td>
-                              <td className="lb-topar" style={{ color: rd.toPar<0?"var(--color-good,#16a34a)":rd.toPar>0?"var(--color-danger,#dc2626)":"var(--text)", borderTop: bTop }}>{fmtToPar(rd.toPar)}</td>
+                              <td className="lb-topar" style={{ color: rd.toPar<0?"var(--color-good)":rd.toPar>0?"var(--color-danger)":"var(--text)", borderTop: bTop }}>{fmtToPar(rd.toPar)}</td>
                               <td className="lb-gross" style={{ borderTop: bTop }}>{rd.gross}</td>
                               {showSC && <ScoreCells scores={rd.scores} pars={par} />}
                               <td className="lb-sd" style={{ borderTop: bTop }}>{rd.sd!=null?<SDPill sd={rd.sd} source={null} hcp={row.hcp}/>:<span className="muted">–</span>}</td>
@@ -1715,8 +1715,8 @@ export function AllRoundsScorecardLB({
                   const showPos = row.pos !== prevPos || row.isWD;
                   const medal   = row.pos != null && row.pos <= 3 ? medals[row.pos - 1] : null;
                   const posStr  = row.isWD ? "WD" : row.pos != null ? (medal ?? String(row.pos)) : "–";
-                  const bg      = idx % 2 === 0 ? undefined : "var(--bg-muted,#f8fafc)";
-                  const bTop    = idx > 0 ? "1px solid var(--border-light,#f1f5f9)" : undefined;
+                  const bg      = idx % 2 === 0 ? undefined : "var(--bg-muted)";
+                  const bTop    = idx > 0 ? "1px solid var(--border-light)" : undefined;
                   const rd      = row.rd;
                   return (
                     <tr key={row.key} style={{ background: bg, borderTop: bTop }}>
@@ -1730,7 +1730,7 @@ export function AllRoundsScorecardLB({
                       <td className="lb-club">{row.club || "–"}</td>
                       <td className="lb-hcp">{row.hcp != null ? row.hcp.toFixed(1) : "–"}</td>
                       <td className="lb-tee" style={{ fontWeight:600, fontSize:10, color:"var(--text-muted)" }}>{row.rdLabel}</td>
-                      <td className="lb-topar" style={{ color: rd.toPar<0?"var(--color-good,#16a34a)":rd.toPar>0?"var(--color-danger,#dc2626)":"var(--text)" }}>{fmtToPar(rd.toPar)}</td>
+                      <td className="lb-topar" style={{ color: rd.toPar<0?"var(--color-good)":rd.toPar>0?"var(--color-danger)":"var(--text)" }}>{fmtToPar(rd.toPar)}</td>
                       <td className="lb-gross">{rd.gross}</td>
                       {showSC && <ScoreCells scores={rd.scores} pars={par} />}
                       <td className="lb-sd">{rd.sd!=null?<SDPill sd={rd.sd} source={null} hcp={row.hcp}/>:<span className="muted">–</span>}</td>
@@ -1787,7 +1787,7 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
     color: tab === i ? "var(--text)" : "var(--text-muted)",
     background: tab === i ? "var(--bg-card,#fff)" : "transparent",
     border: "none",
-    borderBottom: tab === i ? "2px solid var(--accent, #2563eb)" : "2px solid transparent",
+    borderBottom: tab === i ? "2px solid var(--accent)" : "2px solid transparent",
     cursor: "pointer",
     transition: "all .15s",
   });
@@ -1802,8 +1802,8 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
             {tournament.ccode && (
               <span title="tclub" style={{
                 fontFamily: "monospace", fontSize: 10, fontWeight: 600,
-                background: "var(--bg-hover,#f1f5f9)", color: "var(--text-muted)",
-                border: "1px solid var(--border,#e2e8f0)",
+                background: "var(--bg-hover)", color: "var(--text-muted)",
+                border: "1px solid var(--border)",
                 borderRadius: 4, padding: "1px 6px", letterSpacing: "0.02em",
                 userSelect: "all", cursor: "text",
               }}>
@@ -1813,7 +1813,7 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
             {tournament.tcode && (
               <span title="tcode" style={{
                 fontFamily: "monospace", fontSize: 10, fontWeight: 700,
-                background: "var(--accent,#2563eb)", color: "#fff",
+                background: "var(--accent)", color: "#fff",
                 borderRadius: 4, padding: "1px 6px", letterSpacing: "0.02em",
                 userSelect: "all", cursor: "text",
               }}>
@@ -1829,8 +1829,8 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
                         title={`Abre a classificação do Dia ${i + 1} na Federação — abre primeiro a página FPG Torneios (tcode ${sr.tcode})`}
                         style={{
                           fontSize: 10, fontWeight: 600,
-                          color: "var(--accent,#2563eb)",
-                          border: "1px solid var(--accent,#2563eb)",
+                          color: "var(--accent)",
+                          border: "1px solid var(--accent)",
                           borderRadius: 4, padding: "1px 6px",
                           textDecoration: "none", whiteSpace: "nowrap", lineHeight: 1.6,
                         }}
@@ -1846,8 +1846,8 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
                     title="Abre a classificação na Federação — abre primeiro a página FPG Torneios"
                     style={{
                       fontSize: 10, fontWeight: 600,
-                      color: "var(--accent,#2563eb)",
-                      border: "1px solid var(--accent,#2563eb)",
+                      color: "var(--accent)",
+                      border: "1px solid var(--accent)",
                       borderRadius: 4, padding: "1px 6px",
                       textDecoration: "none", whiteSpace: "nowrap", lineHeight: 1.6,
                     }}
@@ -2097,8 +2097,8 @@ function PJARankingView({
   const chip = (active: boolean, label: React.ReactNode, onClick: () => void, color?: string) => (
     <button key={String(label)} onClick={onClick} style={{
       fontSize: 10, padding: "2px 8px", borderRadius: 20,
-      border: `1px solid ${active ? (color || "var(--accent,#2563eb)") : "var(--border)"}`,
-      background: active ? (color || "var(--accent,#2563eb)") : "var(--bg-hover)",
+      border: `1px solid ${active ? (color || "var(--accent)") : "var(--border)"}`,
+      background: active ? (color || "var(--accent)") : "var(--bg-hover)",
       color: active ? "#fff" : "var(--text-muted)",
       cursor: "pointer", whiteSpace: "nowrap", fontWeight: active ? 700 : 500,
     }}>{label}</button>
@@ -2294,9 +2294,11 @@ function bestN(scores: number[], n: number): number {
 }
 
 // Cores para clubes com 2+ equipas — atribuídas por ordem alfabética do clube
-const MULTI_ACCENTS = ["#b45309", "#7c3aed", "#0891b2", "#db2777", "#65a30d", "#0369a1"];
+// Cores de séries de dados — mapeiam para C.charts[8..] de colors.ts
+import { C as _C } from "../utils/colors";
+const MULTI_ACCENTS = [_C.chartRust, _C.chartPurple, _C.chartCyan, _C.chartRose, _C.chartLime, _C.chartBlue];
 // Cor neutra para clubes com apenas 1 equipa — verde escuro
-const SINGLE_COLOR = "#166534";
+const SINGLE_COLOR = "var(--color-good-dark)";
 
 type SortCol = "grupo" | "total" | number; // number = ronda (1-based)
 
@@ -2443,7 +2445,7 @@ function ClubesGruposView({
   /* estilos base */
   const tdC: React.CSSProperties = { padding: "5px 6px", fontSize: 12, textAlign: "center", borderBottom: "1px solid var(--border)" };
   const tdL: React.CSSProperties = { ...tdC, textAlign: "left" };
-  const thC: React.CSSProperties = { ...tdC, fontWeight: 700, fontSize: 11, color: "var(--text-muted)", background: "var(--bg-muted,#f1f5f9)", textTransform: "uppercase", letterSpacing: "0.04em" };
+  const thC: React.CSSProperties = { ...tdC, fontWeight: 700, fontSize: 11, color: "var(--text-muted)", background: "var(--bg-muted)", textTransform: "uppercase", letterSpacing: "0.04em" };
 
   function fmtHcp(h: number | string) { return typeof h === "string" ? h : h % 1 === 0 ? String(h) : h.toFixed(1); }
 
@@ -2452,8 +2454,8 @@ function ClubesGruposView({
     return (
       <button onClick={() => toggleSort(col)} style={{
         fontSize: 11, fontWeight: active ? 700 : 500, padding: "3px 9px", borderRadius: 4,
-        border: `1px solid ${active ? "var(--accent,#2563eb)" : "var(--border)"}`,
-        background: active ? "var(--accent,#2563eb)" : "var(--bg-hover)",
+        border: `1px solid ${active ? "var(--accent)" : "var(--border)"}`,
+        background: active ? "var(--accent)" : "var(--bg-hover)",
         color: active ? "#fff" : "var(--text-muted)", cursor: "pointer",
       }}>{label}{active ? (sortDir === "asc" ? " ▲" : " ▼") : ""}</button>
     );
@@ -2476,7 +2478,7 @@ function ClubesGruposView({
           Melhores {CLUBES_BEST_N} de 4 · Máximo {MAX_HOLE_SCORE} pancadas por buraco
           {nRounds > 1 && (
             <span style={{ marginLeft: 8, fontWeight: 600,
-              color: playedRounds >= nRounds ? "var(--color-good,#16a34a)" : "var(--color-warn,#d97706)" }}>
+              color: playedRounds >= nRounds ? "var(--color-good)" : "var(--color-warn)" }}>
               · R{playedRounds}/{nRounds}
             </span>
           )}
@@ -3190,7 +3192,7 @@ function Content() {
             <div style={{ flex: 1, minWidth: 8 }} />
             {/* Contadores à direita */}
             <a href="https://scoring.datagolf.pt/pt/tournaments.aspx" target="_blank" rel="noopener noreferrer"
-              style={{ flexShrink: 0, fontSize: 11, fontWeight: 600, cursor: "pointer", color: "var(--accent,#2563eb)", border: "1px solid var(--accent,#2563eb)", borderRadius: 5, padding: "3px 8px", lineHeight: 1.6, textDecoration: "none", whiteSpace: "nowrap", display: "inline-flex", alignItems: "center", gap: 3 }}>
+              style={{ flexShrink: 0, fontSize: 11, fontWeight: 600, cursor: "pointer", color: "var(--accent)", border: "1px solid var(--accent)", borderRadius: 5, padding: "3px 8px", lineHeight: 1.6, textDecoration: "none", whiteSpace: "nowrap", display: "inline-flex", alignItems: "center", gap: 3 }}>
               FPG Torneios ↗
             </a>
             {loading
@@ -3232,7 +3234,7 @@ function Content() {
               const active = seriesFilter === key;
               const st = active
                 ? key === "santo"  ? { flexShrink: 0, ...PILL_SSERRA, borderColor: PILL_SSERRA.background as string }
-                : key === "clubes" ? { flexShrink: 0, background: "var(--accent,#2563eb)", borderColor: "var(--accent,#2563eb)", color: "#fff" }
+                : key === "clubes" ? { flexShrink: 0, background: "var(--accent)", borderColor: "var(--accent)", color: "#fff" }
                 : { flexShrink: 0 }
                 : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" };
               return (
@@ -3365,7 +3367,7 @@ function Content() {
                     padding: "8px 16px", fontSize: 12, fontWeight: active ? 700 : 500,
                     color: active ? "var(--text)" : "var(--text-muted)",
                     background: "transparent", border: "none",
-                    borderBottom: active ? "2px solid var(--accent,#2563eb)" : "2px solid transparent",
+                    borderBottom: active ? "2px solid var(--accent)" : "2px solid transparent",
                     cursor: "pointer", transition: "all .15s",
                   }}>{label}</button>
                 );

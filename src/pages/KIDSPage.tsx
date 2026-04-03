@@ -742,9 +742,9 @@ function isoDate(s: string): string {
 /** ±par color (dark theme friendly) */
 function tpColorMH(tp: number | null): string {
   if (tp == null) return "var(--text-3)";
-  if (tp < 0) return "var(--color-good-dark, #15803d)";
+  if (tp < 0) return "var(--color-good-dark)";
   if (tp === 0) return "var(--text-2)";
-  return "var(--color-danger, #dc2626)";
+  return "var(--color-danger)";
 }
 
 /* ═══════════════════════════════════
@@ -1227,8 +1227,8 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
         return (
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 12, alignItems: "stretch" }}>
             {/* Global summary */}
-            <div className="kpi" style={{ flex: "0 0 auto", padding: "8px 14px", background: "var(--bg-info-subtle,#e0f2fe)", borderLeft: "3px solid var(--accent,#2563eb)" }}>
-              <div className="kpi-lbl" style={{ color: "var(--color-info-dark,#0369a1)" }}>Manuel — Total</div>
+            <div className="kpi" style={{ flex: "0 0 auto", padding: "8px 14px", background: "var(--bg-info-subtle)", borderLeft: "3px solid var(--accent)" }}>
+              <div className="kpi-lbl" style={{ color: "var(--color-info-alt)" }}>Manuel — Total</div>
               <div style={{ display: "flex", gap: 16, alignItems: "baseline", marginTop: 4 }}>
                 <span><span className="fw-800 fs-16">{manuelTorneios}</span><span className="fs-10 c-text-3 ml-4">torneios</span></span>
                 <span><span className="fw-800 fs-16">{manuelRondas}</span><span className="fs-10 c-text-3 ml-4">rondas</span></span>
@@ -1289,7 +1289,7 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
               >
                 Filtros {showFilters ? "▲" : "▼"}
                 {activeCount > 0 && (
-                  <span style={{ position: "absolute", top: -4, right: -4, background: "var(--accent,#2563eb)", color: "#fff", borderRadius: "50%", width: 16, height: 16, fontSize: 10, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <span style={{ position: "absolute", top: -4, right: -4, background: "var(--accent)", color: "#fff", borderRadius: "50%", width: 16, height: 16, fontSize: 10, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center" }}>
                     {activeCount}
                   </span>
                 )}
@@ -1522,7 +1522,7 @@ function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) =
                       return (
                         <td className="ta-center">
                           {cnt > 0
-                            ? <span className="fs-11 fw-700" style={{ color: "var(--accent,#2563eb)", cursor: onSelectPlayer ? "pointer" : "default" }}
+                            ? <span className="fs-11 fw-700" style={{ color: "var(--accent)", cursor: onSelectPlayer ? "pointer" : "default" }}
                                 onClick={() => onSelectPlayer?.(p.n)}>{cnt}</span>
                             : <span className="fs-10 c-border">—</span>}
                         </td>
@@ -1755,7 +1755,7 @@ function RivaisSidebar({ selected, onSelect }: { selected: string | null; onSele
                 )}
                 {/* USKids: nº torneios histórico + ID */}
                 {mhCnt > 0 && (
-                  <span style={{ color: "var(--accent,#2563eb)", fontWeight: 600 }}
+                  <span style={{ color: "var(--accent)", fontWeight: 600 }}
                     title={`USKids: ${mhCnt} torneios · ID ${mhId ?? "?"}`}>
                     📊{mhCnt}
                     {mhId && <span style={{ opacity: 0.65, fontSize: 10 }}> #{mhId}</span>}
@@ -2284,14 +2284,14 @@ function RivalDetail({ playerName }: { playerName: string }) {
             </div>
             {/* Bar */}
             <div style={{ display: "flex", height: 18, borderRadius: 4, overflow: "hidden", gap: 2, marginBottom: 8 }}>
-              {wins  > 0 && <div style={{ flex: wins,  background: "var(--color-good-dark,#15803d)" }} title={`Manuel ganhou: ${wins}`} />}
-              {draws > 0 && <div style={{ flex: draws, background: "var(--border,#d1d5db)" }}          title={`Empates: ${draws}`} />}
-              {losses> 0 && <div style={{ flex: losses,background: "var(--color-danger,#dc2626)" }}    title={`${rivalShortName} ganhou: ${losses}`} />}
+              {wins  > 0 && <div style={{ flex: wins,  background: "var(--color-good-dark)" }} title={`Manuel ganhou: ${wins}`} />}
+              {draws > 0 && <div style={{ flex: draws, background: "var(--border-light)" }}          title={`Empates: ${draws}`} />}
+              {losses> 0 && <div style={{ flex: losses,background: "var(--color-danger)" }}    title={`${rivalShortName} ganhou: ${losses}`} />}
             </div>
             {/* Legend */}
             <div style={{ display: "flex", gap: 16, fontSize: 12, flexWrap: "wrap" }}>
               <span className="u-flex-gap5">
-                <span style={{ width: 10, height: 10, borderRadius: 2, background: "var(--color-good-dark,#15803d)", display: "inline-block" }} />
+                <span style={{ width: 10, height: 10, borderRadius: 2, background: "var(--color-good-dark)", display: "inline-block" }} />
                 <strong style={{ color: "var(--color-good-dark)", fontWeight: 700, fontSize: 14 }}>{wins}</strong>
                 <span style={{ color: "var(--text-3)" }}>Vitórias Manuel</span>
               </span>
@@ -2301,7 +2301,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
                 <span style={{ color: "var(--text-3)" }}>Empates</span>
               </span>
               <span className="u-flex-gap5">
-                <span style={{ width: 10, height: 10, borderRadius: 2, background: "var(--color-danger,#dc2626)", display: "inline-block" }} />
+                <span style={{ width: 10, height: 10, borderRadius: 2, background: "var(--color-danger)", display: "inline-block" }} />
                 <strong style={{ color: "var(--color-danger)", fontWeight: 700, fontSize: 14 }}>{losses}</strong>
                 <span style={{ color: "var(--text-3)" }}>Vitórias {rivalShortName}</span>
               </span>
@@ -2341,8 +2341,8 @@ function RivalDetail({ playerName }: { playerName: string }) {
                           <td style={{ textAlign: "center" }}>
                             {ageGrp && (
                               <span style={{ fontSize: 10, fontWeight: 600, padding: "1px 6px", borderRadius: 3,
-                                background: "var(--bg-info-subtle,#e0f2fe)", color: "var(--color-info-dark,#0369a1)",
-                                border: "1px solid var(--color-info-light,#7dd3fc)" }}>
+                                background: "var(--bg-info-subtle)", color: "var(--color-info-alt)",
+                                border: "1px solid var(--color-info-light)" }}>
                                 {ageGrp}
                               </span>
                             )}
@@ -2531,7 +2531,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
                     const diff = avg != null ? avg - p : null;
                     const col = diff == null ? "var(--text-3)"
                               : diff < 0 ? "var(--color-good-dark)"
-                              : diff < 0.3 ? "var(--text-2)" : "var(--color-warn,#d97706)";
+                              : diff < 0.3 ? "var(--text-2)" : "var(--color-warn)";
                     return (
                       <div key={p} className="kpi" style={{ flex: "1 1 80px", padding: "6px 10px", minWidth: 72 }}>
                         <div className="kpi-lbl">Par {p}</div>
@@ -2574,9 +2574,9 @@ function RivalDetail({ playerName }: { playerName: string }) {
                 {ageGroup && (
                   <span style={{
                     display: "inline-flex", alignItems: "center",
-                    background: "var(--bg-info-subtle, #e0f2fe)",
-                    color: "var(--color-info-dark, #0369a1)",
-                    border: "1px solid var(--color-info-light, #7dd3fc)",
+                    background: "var(--bg-info-subtle)",
+                    color: "var(--color-info-alt)",
+                    border: "1px solid var(--color-info-light)",
                     borderRadius: 10, padding: "1px 7px",
                     fontSize: 10, fontWeight: 700, marginLeft: 6,
                     letterSpacing: "0.02em",

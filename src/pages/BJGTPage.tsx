@@ -451,9 +451,9 @@ function Content() {
             return (
               <React.Fragment key={series}>
                 <div className="sidebar-section-title-dark" style={isEowagr ? {
-                  background: "var(--warning, #8a6200)",
-                  color: "#fff8e1",
-                  borderBottom: "1px solid #c17a00",
+                  background: "var(--color-eowagr-dark)",
+                  color: "var(--color-eowagr-text)",
+                  borderBottom: "1px solid var(--color-warn-vivid)",
                   letterSpacing: "0.08em",
                 } : {}}>
                   {isEowagr ? "🌍 European Open" : "🏌️ World Junior Golf Championship"}
@@ -465,11 +465,11 @@ function Content() {
                       fontSize: 10,
                       fontWeight: 700,
                       letterSpacing: "0.05em",
-                      color: isEowagr ? "#fff8e1" : "#ffffff",
+                      color: isEowagr ? "var(--color-eowagr-text)" : "#ffffff",
                       textTransform: "uppercase",
                       borderLeft: "none",
                       marginTop: 4,
-                      background: isEowagr ? "#e09820" : "#4a9b6f",
+                      background: isEowagr ? "var(--color-eowagr-mid)" : "var(--color-bjgt-mid)",
                     }}>{year}</div>
                     {seriesUrls.filter(u => u.year === year).map((u) => {
                       const idx = URLS.indexOf(u);
@@ -479,7 +479,7 @@ function Content() {
                       return (
                         <button key={u.id}
                           className={`course-item ${ti === idx ? "active" : ""}`}
-                          style={isEowagr && ti === idx ? { borderLeft: "3px solid var(--warning, #c17a00)" } : isEowagr ? { borderLeft: "3px solid transparent" } : {}}
+                          style={isEowagr && ti === idx ? { borderLeft: "3px solid var(--color-warn-vivid)" } : isEowagr ? { borderLeft: "3px solid transparent" } : {}}
                           onClick={() => { setTi(idx); md.onSelect(); }}>
                           <div className="course-item-name">{u.category}</div>
                           {t && <div className="course-item-meta">{nP} jog · {nR}R</div>}

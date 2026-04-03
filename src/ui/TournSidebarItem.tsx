@@ -35,7 +35,7 @@ function LinkBtn({ ccode, tcode, active }: { ccode?: string; tcode?: string; act
       onClick={e => { e.stopPropagation(); openFpg(ccode, tcode); }}
       style={{
         background: "none", border: "none", padding: "0 1px",
-        cursor: "pointer", color: "var(--accent,#2563eb)",
+        cursor: "pointer", color: "var(--accent)",
         opacity: active ? 1 : 0.5,
         fontSize: 11, lineHeight: 1,
         display: "inline-flex", alignItems: "center", verticalAlign: "middle",

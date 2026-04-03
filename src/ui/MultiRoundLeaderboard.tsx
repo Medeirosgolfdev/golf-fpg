@@ -78,8 +78,8 @@ function PlayerFilterBar({ rows, filter, onChange, total }: {
   if (total < 8 && !isActive) return null;
   const chip = (active: boolean, label: React.ReactNode, onClick: () => void, color?: string): React.ReactNode => (
     <button key={String(label)} onClick={onClick} style={{ fontSize:10, padding:"2px 8px", borderRadius:20,
-      border:`1px solid ${active?(color||"var(--accent,#2563eb)"):"var(--border)"}`,
-      background:active?(color||"var(--accent,#2563eb)"):"var(--bg-hover)", color:active?"#fff":"var(--text-muted)",
+      border:`1px solid ${active?(color||"var(--accent)"):"var(--border)"}`,
+      background:active?(color||"var(--accent)"):"var(--bg-hover)", color:active?"#fff":"var(--text-muted)",
       cursor:"pointer", whiteSpace:"nowrap", fontWeight:active?700:500 }}>{label}</button>
   );
   return (
@@ -98,7 +98,7 @@ function PlayerFilterBar({ rows, filter, onChange, total }: {
           </span>,
           () => onChange({ ...filter, tees:toggleArr(filter.tees,t) }), hex)}</React.Fragment>
       ); })}
-      {availClubs.length > 2 && <select value={filter.club} onChange={e => onChange({ ...filter, club:e.target.value })} style={{ fontSize:11, padding:"3px 6px", borderRadius:6, border:`1px solid ${filter.club?"var(--accent,#2563eb)":"var(--border)"}`, background:"var(--bg-card,#fff)", color:"var(--text)", cursor:"pointer", fontWeight:filter.club?700:400 }}><option value="">Todos os clubes</option>{availClubs.map(c => <option key={c} value={c}>{c}</option>)}</select>}
+      {availClubs.length > 2 && <select value={filter.club} onChange={e => onChange({ ...filter, club:e.target.value })} style={{ fontSize:11, padding:"3px 6px", borderRadius:6, border:`1px solid ${filter.club?"var(--accent)":"var(--border)"}`, background:"var(--bg-card,#fff)", color:"var(--text)", cursor:"pointer", fontWeight:filter.club?700:400 }}><option value="">Todos os clubes</option>{availClubs.map(c => <option key={c} value={c}>{c}</option>)}</select>}
       {isActive && <><span style={{ fontSize:10, color:"var(--text-muted)", marginLeft:2 }}>{filtered.length} de {total}</span><button onClick={() => onChange(EMPTY_FILTER)} style={{ fontSize:10, padding:"2px 8px", borderRadius:20, border:"1px solid var(--border)", background:"var(--bg-hover)", color:"var(--text-muted)", cursor:"pointer" }}>✕ limpar</button></>}
     </div>
   );
@@ -256,11 +256,11 @@ export function MultiRoundLeaderboard({
                   ? (idx === 0 || dp !== sorted[idx - 1]._pos)
                   : true
               );
-              const rowBg = row.isHighlighted ? "var(--bg-success-subtle,#d1fae5)"
+              const rowBg = row.isHighlighted ? "var(--bg-success-subtle)"
                 : isWD  ? "var(--bg-hover)"
                 : isInc ? "var(--bg-hover)"
                 : undefined;
-              const stickyBg = row.isHighlighted ? "var(--bg-manuel-sticky,#c3f5dc)"
+              const stickyBg = row.isHighlighted ? "var(--bg-manuel-sticky)"
                 : (isInc || isWD) ? "var(--bg-hover)"
                 : "var(--bg-card,#fff)";
 

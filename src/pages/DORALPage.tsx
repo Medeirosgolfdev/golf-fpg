@@ -632,9 +632,9 @@ function Content() {
             return (
               <React.Fragment key={year}>
                 <div className="sidebar-section-title-dark" style={{
-                  background: "#1a5276",
-                  color: "#d6eaf8",
-                  borderBottom: "1px solid #2980b9",
+                  background: "var(--color-doral-dark)",
+                  color: "var(--color-doral-text)",
+                  borderBottom: "1px solid var(--color-doral-mid)",
                   letterSpacing: "0.08em",
                 }}>
                   🇺🇸 First Tee Miami Doral Jr. Classic
@@ -647,7 +647,7 @@ function Content() {
                   color: "#ffffff",
                   textTransform: "uppercase",
                   marginTop: 4,
-                  background: "#1a5276",
+                  background: "var(--color-doral-dark)",
                 }}>
                   {year}
                 </div>

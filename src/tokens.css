@@ -36,6 +36,7 @@
 
   --bg-info:          #eff6ff;   /* banners informativos */
   --bg-info-strong:   #dbeafe;
+  --bg-info-subtle:   #e0f2fe;   /* cards info suaves (KIDSPage, CompararPage) */
   --bg-warn:          #fffbeb;   /* banners de aviso */
   --bg-warn-subtle:   #fff8e6;
   --bg-warn-strong:   #fef3c7;
@@ -60,6 +61,8 @@
 
   --bg-rnd:           #e8f2e4;   /* colunas de ronda no leaderboard multi-ronda */
   --bg-rnd-stats:     #f5f9f3;
+  --bg-rnd-header:    #dde8d9;   /* header de th das colunas de ronda (mais escuro) */
+  --bg-rnd-stats-header: #f0f5ee; /* header de th das colunas de stats de ronda */
 
 
   /* ── 2. Text / Greyscale ───────────────────────────────────── */
@@ -96,14 +99,27 @@
 
 
   /* ── 4. Semantic ───────────────────────────────────────────── */
-  --color-good:         #16a34a;
-  --color-good-dark:    #166534;
-  --color-warn:         #d97706;
-  --color-warn-dark:    #92400e;
-  --color-danger:       #dc2626;
-  --color-danger-dark:  #991b1b;
-  --color-info:         #1e40af;
-  --color-info-alt:     #0369a1;
+  --color-good:          #16a34a;
+  --color-good-dark:     #166534;
+  --color-warn:          #d97706;
+  --color-warn-dark:     #92400e;
+  --color-warn-vivid:    #c17a00;  /* âmbar médio — EOWAGR sidebar, avisos de média intensidade */
+  --color-danger:        #dc2626;
+  --color-danger-dark:   #991b1b;
+  --color-danger-vivid:  #b91c1c;  /* vermelho médio — rivalidades/confrontos USKids */
+  --color-info:          #1e40af;
+  --color-info-alt:      #0369a1;
+  --color-info-dark:     #0369a1;  /* alias de info-alt — usar indistintamente */
+  --color-info-light:    #7dd3fc;  /* azul claro — bordas de cards info (KIDSPage) */
+
+  /* ── Cores de circuito ───────────────────────────────────── */
+  --color-eowagr-dark:   #8a6200;   /* EOWAGR sidebar header background */
+  --color-eowagr-mid:    #e09820;   /* EOWAGR year label background */
+  --color-eowagr-text:   #fff8e1;   /* EOWAGR text (claro sobre âmbar escuro) */
+  --color-bjgt-mid:      #4a9b6f;   /* BJGT year label background */
+  --color-doral-dark:    #1a5276;   /* Doral/FTM Miami sidebar header */
+  --color-doral-mid:     #2980b9;   /* Doral border accent */
+  --color-doral-text:    #d6eaf8;   /* Doral text (claro sobre azul escuro) */
   --color-amber:        #f59e0b;
   --color-green-light:  #4ade80;
   --color-navy:         #1e3a5f;
@@ -114,6 +130,7 @@
   --color-hcp:          #6b5c3e;  /* label da linha de hcp */
   --text-purple:        #5c4a8a;
   --text-current:       #006064;
+  --text-4:             #cccccc;   /* placeholder, disabled muito muted */
 
   --color-good-alpha:   rgba(22, 163, 74, 0.12);
   --color-danger-alpha: rgba(220, 38, 38, 0.12);
@@ -148,7 +165,28 @@
 
   --pill-regional-bg:  #263E78;   /* azul FPG regional */
   --pill-regional-fg:  #FFD700;
+  --pill-nacional-bg:  #046A38;   /* verde nacional FPG */
   --pill-nacional-fg:  #FFD700;
+  --pill-intl-bg:      #00FF00;   /* neon verde — INTENCIONAL, não alterar */
+  --pill-pja-bg:       #dc2626;   /* vermelho PJA = danger */
+  --pill-import-bg:    #8b5cf6;   /* violeta para rondas importadas */
+  --pill-absoluto-bg:  #c8d8b4;   /* verde claro — escalão Absoluto */
+  --pill-absoluto-fg:  #2a4a18;
+  --pill-senior-bg:    #d8dcc8;   /* cinza-verde — escalão Sénior */
+  --pill-senior-fg:    #3a4a28;
+  --border-purple:     #e1bee7;   /* borda para pills/cards de categoria especial USKids */
+  --badge-evo-up-bg:   #dbeafe;   /* badge-evo-up  — background (= bg-info-strong) */
+  --badge-evo-up-fg:   #1e40af;   /* badge-evo-up  — texto     (= color-info) */
+  --badge-evo-eq-bg:   #fef3c7;   /* badge-evo-eq  — background (= bg-warn-strong) */
+  --badge-evo-eq-fg:   #92400e;   /* badge-evo-eq  — texto     (= color-warn-dark) */
+  --badge-evo-new-bg:  #f3f4f6;   /* badge-evo-new — background (cinza neutro) */
+  --badge-evo-new-fg:  #9ca3af;   /* badge-evo-new — texto     (cinza médio) */
+  --pill-birth-vio-bg: #ede9fe;   /* pill-birth BJGT — fundo violeta claro */
+  --pill-birth-vio-fg: #5b21b6;   /* pill-birth BJGT — texto violeta escuro */
+  --bg-manuel-gross:   #a7f3d0;   /* fundo do lb-topar/gross do Manuel em print */
+
+  --rivais-link:       #1a5c2a;   /* verde escuro para links de rivais */
+  --rivais-link-hover: #0d3a18;
 
 
   /* ── 7. Score ramp (abaixo → acima do par) ─────────────────── */

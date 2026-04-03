@@ -1,6 +1,22 @@
 import React, { useState, useMemo, useRef, useCallback } from "react";
 import { MONTHS_PT, fmtSD, fmtToPar } from "../utils/format";
 
+/*
+ * ╔══════════════════════════════════════════════════════════════════════════╗
+ * ║  NOTA — CORES HARDCODED INTENCIONAIS                                    ║
+ * ║                                                                          ║
+ * ║  Este ficheiro gera scorecards visuais via html2canvas.                  ║
+ * ║  O html2canvas NÃO suporta CSS custom properties (var(--token)).         ║
+ * ║  Por isso, todas as cores nos templates de renderização (funções         ║
+ * ║  ScTemplate e DkTemplate) estão hardcoded.                              ║
+ * ║                                                                          ║
+ * ║  Para alterar as cores dos scorecards exportados, editar:                ║
+ * ║    1. Os valores hardcoded neste ficheiro                                ║
+ * ║    2. Os tokens correspondentes em tokens.css (para manter consistência) ║
+ * ╚══════════════════════════════════════════════════════════════════════════╝
+ */
+
+
 /* ═══════ TYPES ═══════ */
 export type OverlayData = {
   courseName: string; teeName: string; teeDist: number | null;
