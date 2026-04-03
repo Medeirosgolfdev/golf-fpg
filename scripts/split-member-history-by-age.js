@@ -39,15 +39,23 @@ function minAgeFromGroup(ag) {
   return m ? parseInt(m[1]) : null;
 }
 
-/** Escalão dominante de um jogador (mais frequente nos seus torneios) */
+/** Grupo de um jogador = idade MÁXIMA ≥9 que jogou (para não perder jogadores
+ *  que jogaram muitos torneios novos mas depois subiram de escalão).
+ *  Se nunca jogou ≥9, usa a idade dominante (mais frequente). */
 function dominantMinAge(jogador) {
-  const counts = {};
+  const idades = {};
   for (const t of Object.values(jogador.torneios || {})) {
     const age = minAgeFromGroup(t.ageGroup);
-    if (age != null) counts[age] = (counts[age] || 0) + 1;
+    if (age != null) idades[age] = (idades[age] || 0) + 1;
   }
-  const entries = Object.entries(counts);
+  const entries = Object.entries(idades);
   if (!entries.length) return null;
+  // Preferir idade máxima entre 9-13
+  const relevant = entries.filter(([a]) => parseInt(a) >= 9 && parseInt(a) <= 13);
+  if (relevant.length) {
+    return parseInt(relevant.sort((a,b) => parseInt(b[0])-parseInt(a[0]))[0][0]);
+  }
+  // Fallback: dominante (para quem nunca jogou ≥9)
   return parseInt(entries.sort((a,b) => b[1]-a[1])[0][0]);
 }
 

@@ -4134,34 +4134,24 @@ export default function USKidsFieldPage() {
       onUpdate: (rivals) => startRivalsTransition(() => setAutoRivals(rivals)),
     }).catch(() => {});
 
-    // Carregar member history (novo formato multi-ficheiro)
-    // Tenta carregar todos os ficheiros disponíveis e merge
+    // Carregar member history (formato multi-ficheiro)
     (async () => {
       let merged: MemberHistData = { gerado_em: "", torneios: {}, jogadores: {} };
       let found = 0;
-      for (let i = 1; i <= 30; i++) {
+      for (let i = 1; i <= 50; i++) {
         const file = `/data/uskids-member-history-${String(i).padStart(3,'0')}.json?v=${Date.now()}`;
         try {
           const r = await fetch(file);
-          if (!r.ok) break; // primeiro 404 = não há mais ficheiros
+          if (!r.ok) break;
           const d = await r.json() as MemberHistData;
           Object.assign(merged.torneios, d.torneios || {});
           Object.assign(merged.jogadores, d.jogadores || {});
           merged.gerado_em = d.gerado_em || merged.gerado_em;
           found++;
-          // Actualizar estado progressivamente a cada 5 ficheiros
           if (found % 5 === 0) setMemberHist({ ...merged });
         } catch { break; }
       }
-      // Fallback: tentar ficheiro único legado
-      if (found === 0) {
-        try {
-          const r = await fetch(`/data/uskids-member-history.json?v=${Date.now()}`);
-          if (r.ok) { const d = await r.json(); setMemberHist(d as MemberHistData); }
-        } catch {}
-      } else {
-        setMemberHist({ ...merged });
-      }
+      if (found > 0) setMemberHist({ ...merged });
     })();
   }, []);
 
@@ -4636,16 +4626,19 @@ export default function USKidsFieldPage() {
           <div style={{color:"var(--text-3)",padding:"24px 0"}}>A carregar resultados…</div>
         )}
 
-        {tab === "rivais" && resultsData && (
-          <TabRivais data={resultsData} fieldData={fieldData} intlData={intlData}
-            autoRivals={autoRivals} selectedT={selectedT} memberHist={memberHist}
-            selectedRival={selectedRival} setSelectedRival={setSelectedRival}
-            greatgolfData={greatgolfData}
-            onRivalsReady={onRivalsReady}
-          />
-        )}
         {tab === "rivais" && !resultsData && (
           <div style={{color:"var(--text-3)",padding:"24px 0"}}>A carregar…</div>
+        )}
+        {/* TabRivais renderizado sempre quando resultsData existe — pré-calcula em background */}
+        {resultsData && (
+          <div style={{ display: tab === "rivais" ? "block" : "none" }}>
+            <TabRivais data={resultsData} fieldData={fieldData} intlData={intlData}
+              autoRivals={autoRivals} selectedT={selectedT} memberHist={memberHist}
+              selectedRival={selectedRival} setSelectedRival={setSelectedRival}
+              greatgolfData={greatgolfData}
+              onRivalsReady={onRivalsReady}
+            />
+          </div>
         )}
 
       </div>
