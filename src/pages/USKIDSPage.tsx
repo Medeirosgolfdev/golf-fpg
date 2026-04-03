@@ -120,23 +120,24 @@ function shortTornName(s: string): string {
 function tornCanon(s: string): string {
   const low = s.toLowerCase().replace(/['']/g, "").trim();
   const y2 = low.match(/\b20(\d{2})\b/)?.[1] || low.match(/(?:^|\s)(\d{2})$/)?.[1] || "";
-  if (/venice/i.test(low))                        return `venice-${y2}`;
-  if (/rome|roma/i.test(low))                     return `rome-${y2}`;
-  if (/marco\s*simone/i.test(low)) {
-    const pc = /parent.child/i.test(low) ? "pc" : "";
-    return `marco${pc}-${y2}`;
-  }
-  if (/wjgc|bjgt|world.*junior.*golf/i.test(low)) return `wjgc-${y2}`;
-  if (/eu\s*open|european\s*open|eowagr/i.test(low)) return `euopen-${y2}`;
-  if (/doral/i.test(low))                         return `doral-${y2}`;
-  if (/great\s*golf/i.test(low))                  return `gg-${y2}`;
-  if (/quinta.*lago|qdl/i.test(low))              return `qdl-${y2}`;
-  if (/desert/i.test(low))                        return `desert-${y2}`;
-  if (/sandestin/i.test(low))                     return `sandestin-${y2}`;
-  if (/mississippi|msstate/i.test(low))           return `msstate-${y2}`;
-  if (/south\s*carolina|scstate/i.test(low))      return `scstate-${y2}`;
-  if (/el\s*prat/i.test(low))                     return `elprat-${y2}`;
-  return low.replace(/[^a-z0-9]/g, "") + (y2 ? `-${y2}` : "");
+  const pc = /parent.child/i.test(low) ? "pc" : ""; // Parent/Child = evento separado
+  if (/venice/i.test(low))                           return `venice${pc}-${y2}`;
+  if (/rome|roma/i.test(low))                        return `rome${pc}-${y2}`;
+  if (/marco\s*simone/i.test(low))                   return `marco${pc}-${y2}`;
+  if (/wjgc|bjgt|world.*junior.*golf/i.test(low))    return `wjgc${pc}-${y2}`;
+  if (/eu\s*open|european\s*open|eowagr/i.test(low)) return `euopen${pc}-${y2}`;
+  if (/world\s*champ/i.test(low))                    return `wc${pc}-${y2}`;
+  if (/european\s*champ/i.test(low))                 return `ec${pc}-${y2}`;
+  if (/red.*white.*blue|rwb/i.test(low))             return `rwb${pc}-${y2}`;
+  if (/doral/i.test(low))                            return `doral${pc}-${y2}`;
+  if (/great\s*golf/i.test(low))                     return `gg${pc}-${y2}`;
+  if (/quinta.*lago|qdl/i.test(low))                 return `qdl${pc}-${y2}`;
+  if (/desert/i.test(low))                           return `desert${pc}-${y2}`;
+  if (/sandestin/i.test(low))                        return `sandestin${pc}-${y2}`;
+  if (/mississippi|msstate/i.test(low))              return `msstate${pc}-${y2}`;
+  if (/south\s*carolina|scstate/i.test(low))         return `scstate${pc}-${y2}`;
+  if (/el\s*prat/i.test(low))                        return `elprat${pc}-${y2}`;
+  return low.replace(/[^a-z0-9]/g, "") + (y2 ? `-${y2}` : "") + pc;
 }
 
 /** Verifica se um torneio já existe num set de tornCanon keys.
@@ -2255,26 +2256,45 @@ function buildRivalsFromResultados(resultados: TorneioResult[]): RivalInfo[] {
     }
     if (!manuelEsc) continue;
 
-    // Obter dados do Manuel no seu escalão
+    // Obter dados do Manuel no seu escalão (posição calculada dentro do loop onde posMap existe)
     const manuelRondas = manuelEsc.rondas.flatMap(r => r.leaderboard ?? r.jogadores ?? []);
     manuelJog = manuelRondas.find(j => isManuel(j.nome)) ?? null;
-    if (manuelJog) {
-      const lb0 = manuelEsc.rondas[0]?.leaderboard ?? manuelEsc.rondas[0]?.jogadores ?? [];
-      manuelPos = lb0.findIndex(j => isManuel(j.nome)) + 1 || 99;
-    }
 
-    // 2. Escalões adjacentes: age_group ± 1 (método numérico, funciona para
-    //    qualquer formato de nome: "Boys 9", "Boys 9-10", etc.)
     const manuelAg = manuelEsc.age_group;
     const adjacentAgs = new Set([manuelAg - 1, manuelAg, manuelAg + 1]);
 
-    // 3. Processar todos os escalões adjacentes (incluindo o do Manuel)
     for (const e of t.escaloes) {
       if (!adjacentAgs.has(e.age_group)) continue;
 
       const isManuelsEscalao = (e.age_group === manuelAg);
       const todasRondas = e.rondas.flatMap(r => r.leaderboard ?? r.jogadores ?? []);
-      const lb0 = e.rondas[0]?.leaderboard ?? e.rondas[0]?.jogadores ?? [];
+
+      // Calcular posições correctas por total acumulado de todas as rondas
+      const totais = new Map<string, { score: number; rondas: number }>();
+      for (const ronda of e.rondas) {
+        for (const j of (ronda.leaderboard ?? ronda.jogadores ?? [])) {
+          if (!j.nome || j.buracos < 9) continue;
+          const k = j.nome.trim();
+          const c = totais.get(k) ?? { score: 0, rondas: 0 };
+          totais.set(k, { score: c.score + j.score, rondas: c.rondas + 1 });
+        }
+      }
+      const maxRds2 = totais.size ? Math.max(...[...totais.values()].map(v => v.rondas)) : 0;
+      const rankSorted = [...totais.entries()]
+        .filter(([, v]) => v.rondas >= maxRds2)
+        .sort((a, b) => a[1].score - b[1].score);
+      const posMap = new Map<string, number>();
+      let rankPos = 1;
+      for (let ri = 0; ri < rankSorted.length; ri++) {
+        if (ri > 0 && rankSorted[ri][1].score === rankSorted[ri-1][1].score) { /* empate */ }
+        else rankPos = ri + 1;
+        posMap.set(rankSorted[ri][0], rankPos);
+      }
+
+      // manuelPos calculado aqui onde posMap está disponível
+      if (isManuelsEscalao && manuelJog) {
+        manuelPos = posMap.get(manuelJog.nome.trim()) ?? 99;
+      }
 
       const adversariosVistos = new Set<string>();
       for (const r of e.rondas)
@@ -2285,7 +2305,7 @@ function buildRivalsFromResultados(resultados: TorneioResult[]): RivalInfo[] {
         const key = nomeAdv.toLowerCase().trim().replace(/\s+/g, " ");
         const advJog = todasRondas.find(j => j.nome.trim() === nomeAdv);
         if (!advJog) continue;
-        const advPos = lb0.findIndex(j => j.nome.trim() === nomeAdv) + 1 || 99;
+        const advPos = posMap.get(nomeAdv) ?? 99;
 
         if (!mapa.has(key))
           mapa.set(key, { nome: advJog.nome, pais: advJog.pais, cidade: advJog.cidade ?? "", encontros: [] });
@@ -3120,7 +3140,7 @@ function PerfilRivalNovo({
 
       entries.push({
         tid, nome: tornNome, date: tornDate, year,
-        pos: (isDirectConfronto && enc?.rival_pos) ? enc.rival_pos : (res.p ?? null),
+        pos: res.p ?? null,
         tp: res.tp, rondas: res.rd?.length ?? 1,
         ageGroup: res.ageGroup ?? "", withManuel, isDirectConfronto,
         manPos: enc?.man_pos, rivalPos: enc?.rival_pos,

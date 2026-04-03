@@ -85,9 +85,10 @@ const MANUEL_BIRTH_YEAR = 2014;
 const USKIDS_KNOWN_TCODES = new Set([
   11604, 14029, 15807, 18124,
   8300, 13568, 15704, 18242,
-  12229, 14302, 16428,
+  12229, 14302, 16428, 19418,  // Venice +2025
   14218, 12093, 16705, 18719,
   18438, 15573, 21239,
+  20175, 21080, 21004, 20895,  // Rome 2025, Marco 2026, Desert 2026, Sandestin 2026
 ]);
 
 // Nomes fixos para os t-codes conhecidos (fallback caso o JSON não seja parseable)
@@ -103,6 +104,9 @@ const USKIDS_TCODE_META: Record<number, { name: string; short: string; dateExact
   12229: { name: "Venice Open 2022",                  short: "Venice 22",dateExact: "2022-08-18" },
   14302: { name: "Venice Open 2023",                  short: "Venice 23",dateExact: "2023-08-17" },
   16428: { name: "Venice Open 2024",                  short: "Venice 24",dateExact: "2024-08-15" },
+  19418: { name: "Venice Open 2025",                  short: "Venice 25",dateExact: "2025-08-14" },
+  20175: { name: "Rome Classic 2025",                 short: "Rome 25",  dateExact: "2025-10-18" },
+  21080: { name: "Marco Simone Invitational 2026",    short: "Marco 26", dateExact: "2026-03-14" },
   12093: { name: "Red White & Blue Inv. 2022",        short: "RWB 2022", dateExact: "2022-07-02" },
   14218: { name: "Red White & Blue Inv. 2023",        short: "RWB 2023", dateExact: "2023-07-01" },
   16705: { name: "Red White & Blue Inv. 2024",        short: "RWB 2024", dateExact: "2024-07-06" },
@@ -634,7 +638,7 @@ function processUskidsCompleto(data: unknown): AutoRivalPlayer[] {
   const all: AutoRivalPlayer[] = [];
 
   for (const tourn of tournaments) {
-    if (!USKIDS_KNOWN_TCODES.has(tourn.tcode)) continue;
+    // Aceitar qualquer tcode dos ficheiros completos (são curados manualmente)
 
     const tcode = tourn.tcode;
 
@@ -878,6 +882,13 @@ function processMemberHistory(data: unknown): AutoRivalPlayer[] {
       // Posição (place=0 ou negativo = sem posição / WD)
       const p = (tourn.place != null && tourn.place > 0) ? tourn.place : null;
 
+      // Actualizar uskFieldSizes com o máximo de posições conhecidas (limite inferior do campo)
+      // Só quando não há dados mais precisos (do field-sizes.json ou torneios_completos)
+      if (p != null) {
+        const current = uskFieldSizes.get(tid) ?? 0;
+        if (p > current) uskFieldSizes.set(tid, p);
+      }
+
       // Scorecards buraco-a-buraco (se disponíveis e par conhecido)
       if (parArr.length > 0) {
         const holeRounds = rdEntries
@@ -955,6 +966,35 @@ function processFieldSizes(data: unknown): void {
   }
 }
 
+/** Carrega t_de_tournaments_do_uskids.json e popula uskTournNames com nomes e datas.
+ *  Formato: [{ t: 14200, name: "...", date: "M/D/YYYY" }, ...]
+ *  Só adiciona entradas que ainda não existam (os hardcoded têm prioridade).
+ */
+function processTournMeta(data: unknown): void {
+  const entries = data as Array<{ t: number; name: string; date: string }>;
+  if (!Array.isArray(entries)) return;
+  for (const e of entries) {
+    const tcode = e.t;
+    if (!tcode || typeof tcode !== "number") continue;
+    const key = `usk${tcode}`;
+    if (uskTournNames.has(key)) continue; // já definido (hardcoded tem prioridade)
+    const name = (e.name || "").trim();
+    if (!name) continue;
+    // Converter data "M/D/YYYY" → "YYYY-MM-DD"
+    const parts = (e.date || "").split("/");
+    let dateExact = "";
+    let date = "";
+    if (parts.length === 3) {
+      dateExact = `${parts[2]}-${parts[0].padStart(2,"0")}-${parts[1].padStart(2,"0")}`;
+      const mo = parseInt(parts[0]);
+      const yr = parseInt(parts[2]);
+      if (mo >= 1 && mo <= 12 && yr > 2000) date = `${MONTHS_PT[mo - 1]} ${yr}`;
+    }
+    const short = shortenTournName(name).slice(0, 12);
+    uskTournNames.set(key, { name, short, date, dateExact });
+  }
+}
+
 async function _buildAutoRivalsInternal(
   onProgress?: (p: LoadProgress) => void,
   onUpdate?: (players: AutoRivalPlayer[]) => void
@@ -971,7 +1011,7 @@ async function _buildAutoRivalsInternal(
 
   type FileTask =
     | { kind: "wjgc"; tid: string; file: string }
-    | { kind: "doral" | "uskids" | "pull" | "memberHist" | "fieldSizes"; file: string }
+    | { kind: "doral" | "uskids" | "pull" | "memberHist" | "fieldSizes" | "tournMeta"; file: string }
     | { kind: "completo"; file: string };
 
   // ── FASE 1: ficheiros essenciais (carregam em paralelo) ──
@@ -989,6 +1029,7 @@ async function _buildAutoRivalsInternal(
     { kind: "uskids",     file: "uskids-results.json" },
     { kind: "pull",       file: "pull-torneios000.json" },
     { kind: "fieldSizes", file: "uskids-field-sizes.json" },
+    { kind: "tournMeta",  file: "t_de_tournaments_do_uskids.json" },
     ...Array.from({ length: 30 }, (_, i) =>
       ({ kind: "completo" as const, file: `uskids_torneios_completos(${i + 1}).json` })
     ),
@@ -1013,6 +1054,7 @@ async function _buildAutoRivalsInternal(
     if (t.kind === "pull") return "Torneios PT";
     if (t.kind === "memberHist") return "Member History";
     if (t.kind === "fieldSizes") return "Field Sizes";
+    if (t.kind === "tournMeta")  return "Tourn Meta";
     const m = t.file.match(/\((\d+)\)/);
     return m ? `USKids #${m[1]}` : t.file;
   };
@@ -1029,6 +1071,7 @@ async function _buildAutoRivalsInternal(
       if (task.kind === "pull")       mergeInto(map, processPullTorneios(d));
       if (task.kind === "completo")   mergeInto(map, processUskidsCompleto(d));
       if (task.kind === "fieldSizes") processFieldSizes(d);
+      if (task.kind === "tournMeta")  processTournMeta(d);
     } catch { /* ignorar */ }
     report(labelFor(task));
   }));
