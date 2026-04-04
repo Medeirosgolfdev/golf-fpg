@@ -1657,7 +1657,6 @@ function RivaisSidebar({ selected, onSelect }: { selected: string | null; onSele
   const memberHist = useMH();
   const [fid, setFid] = useState("all");
 
-  // Mapa nome → nº torneios USKids no histórico
   const mhCountSidebar = useMemo<Map<string, number>>(() => {
     const m = new Map<string, number>();
     if (!memberHist) return m;
@@ -1670,38 +1669,51 @@ function RivaisSidebar({ selected, onSelect }: { selected: string | null; onSele
     return m;
   }, [memberHist]);
 
-  // Mapa nome → USKids member ID
-  const mhIdSidebar = useMemo<Map<string, string>>(() => {
-    const m = new Map<string, string>();
-    if (!memberHist) return m;
-    for (const mh of Object.values(memberHist.jogadores) as MHPlayer[]) {
-      if (!mh.name || !mh.memberId) continue;
-      m.set(mh.name.toLowerCase().trim().replace(/\s+/g, " "), mh.memberId);
-    }
-    return m;
-  }, [memberHist]);
-
-  // Pré-computar H2H para todos os rivais vs Manuel
   const manuelMerged = rivals.find(d => d.isM);
+
   const h2hMap = useMemo<Map<string, { w: number; l: number; d: number }>>(() => {
     const m = new Map<string, { w: number; l: number; d: number }>();
     if (!manuelMerged) return m;
     for (const p of rivals) {
       if (p.isM) continue;
-      const hidden = hiddenTids(p);
-      const mHidden = hiddenTids(manuelMerged);
+      const hidden = hiddenTids(p), mHidden = hiddenTids(manuelMerged);
       const shared = Object.keys(p.r).filter(tid => {
         if (hidden.has(tid) || mHidden.has(tid)) return false;
-        const mp = manuelMerged.r[tid]; const rp = p.r[tid];
-        return typeof mp?.p === "number" && typeof rp?.p === "number";
+        return typeof manuelMerged.r[tid]?.p === "number" && typeof p.r[tid]?.p === "number";
       });
-      if (shared.length === 0) continue;
+      if (!shared.length) continue;
       const w = shared.filter(tid => (manuelMerged.r[tid].p as number) < (p.r[tid].p as number)).length;
       const l = shared.filter(tid => (manuelMerged.r[tid].p as number) > (p.r[tid].p as number)).length;
       m.set(p.n, { w, l, d: shared.length - w - l });
     }
     return m;
   }, [rivals, manuelMerged]);
+
+  // Primeiro e último ano activo por rival
+  const activityMap = useMemo<Map<string, { first: number; last: number; best: number | null }>>(() => {
+    const m = new Map<string, { first: number; last: number; best: number | null }>();
+    for (const p of rivals) {
+      if (p.isM) continue;
+      const hidden = hiddenTids(p);
+      const years: number[] = [];
+      const positions: number[] = [];
+      for (const [tid, res] of Object.entries(p.r)) {
+        if (hidden.has(tid) || !res?.rd?.length) continue;
+        const dateStr = (getTournInfo(tid).dateExact ?? getTournInfo(tid).date);
+        const yr = parseInt(dateStr?.slice(0, 4) ?? "0");
+        if (yr > 2010) years.push(yr);
+        if (typeof res.p === "number" && res.p > 0) positions.push(res.p);
+      }
+      if (years.length) {
+        m.set(p.n, {
+          first: Math.min(...years),
+          last: Math.max(...years),
+          best: positions.length ? Math.min(...positions) : null,
+        });
+      }
+    }
+    return m;
+  }, [rivals]);
 
   const list = useMemo(() => {
     let pl = rivals.filter(p => nPlayed(p) > 0 || p.isM);
@@ -1714,88 +1726,142 @@ function RivaisSidebar({ selected, onSelect }: { selected: string | null; onSele
     });
   }, [q, fid, rivals]);
 
+  const maxTorn = useMemo(() => Math.max(1, ...list.map(p => nPlayed(p))), [list]);
+
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
       {/* Search */}
       <div style={{ padding: "8px 10px", borderBottom: "1px solid var(--border-light)", flexShrink: 0 }}>
-        <input
-          type="text" value={q} onChange={e => setQ(e.target.value)}
-          placeholder="Pesquisar rival…" className="input"
-          style={{ width: "100%", height: 28, fontSize: 12 }}
-        />
+        <input type="text" value={q} onChange={e => setQ(e.target.value)}
+          placeholder="🔎 Pesquisar rival…" className="input"
+          style={{ width: "100%", height: 28, fontSize: 12 }} />
       </div>
-      {/* Source filter pills */}
+      {/* Filtros */}
       <div style={{ padding: "5px 8px", borderBottom: "1px solid var(--border-light)", flexShrink: 0, display: "flex", gap: 4, flexWrap: "wrap" }}>
         {SIDEBAR_FILTERS.map(f => (
-          <button key={f.id}
-            className={`p p-sm p-filter${fid === f.id ? " active" : ""}`}
-            style={{ fontSize: 10, padding: "2px 7px" }}
-            onClick={() => setFid(f.id)}
-          >{f.label}</button>
+          <button key={f.id} className={`p p-sm p-filter${fid === f.id ? " active" : ""}`}
+            style={{ fontSize: 10, padding: "2px 7px" }} onClick={() => setFid(f.id)}>{f.label}</button>
         ))}
       </div>
-      {/* List */}
+      {/* Lista */}
       <div style={{ flex: 1, overflowY: "auto" }}>
-        {list.map(p => {
+        {list.map((p, idx) => {
           const flagEmoji = FL[p.co] || "🏳️";
           const rank = rankMap[p.n];
           const tr = (getTrend as (p: RivalPlayer) => string | null)(p);
           const played = nPlayed(p);
           const isActive = selected === p.n;
-          const rankCls = rank == null ? "" : rank <= 3 ? "sidebar-rank-top3" : rank <= 10 ? "sidebar-rank-top10" : "sidebar-rank-rest";
+          const h2h = h2hMap.get(p.n);
+          const act = activityMap.get(p.n);
           const mhKey = p.n.toLowerCase().trim().replace(/\s+/g, " ");
           const mhCnt = mhCountSidebar.get(mhKey) ?? 0;
-          const mhId  = mhIdSidebar.get(mhKey) ?? null;
-          const h2h = h2hMap.get(p.n);
-          const togetherCount = h2h ? h2h.w + h2h.l + h2h.d : 0;
 
-          // Best position across all tournaments (dedup-aware)
+          // Record string e cor
+          const recordStr = h2h && (h2h.w + h2h.l + h2h.d) > 0
+            ? [h2h.w > 0 ? `${h2h.w}V` : "", h2h.d > 0 ? `${h2h.d}E` : "", h2h.l > 0 ? `${h2h.l}D` : ""].filter(Boolean).join(" ")
+            : null;
+          const recordBg = h2h
+            ? h2h.w > h2h.l ? "var(--bg-success-subtle)"
+            : h2h.l > h2h.w ? "var(--bg-danger-strong)"
+            : "var(--bg-muted)" : "var(--bg-muted)";
+          const recordCo = h2h
+            ? h2h.w > h2h.l ? "var(--color-good-dark)"
+            : h2h.l > h2h.w ? "var(--color-danger-dark)"
+            : "var(--text-3)" : "var(--text-3)";
+
+          // Cor do border-left
+          const accentColor = h2h
+            ? h2h.w > h2h.l ? "var(--color-teal)"
+            : h2h.l > h2h.w ? "var(--color-danger)"
+            : h2h.w + h2h.l + h2h.d > 0 ? "var(--accent)"
+            : "var(--border)" : "var(--border)";
+
+          // Barra de actividade
+          const pct = Math.max(8, Math.round((played / maxTorn) * 100));
+
+          // Tier emoji (compacto, sem texto)
+          const tierEmoji = (() => {
+            const positions = Object.entries(p.r)
+              .filter(([tid, r]) => !hiddenTids(p).has(tid) && typeof r?.p === "number")
+              .map(([, r]) => r.p as number);
+            const wins = positions.filter(p => p === 1).length;
+            const avg = positions.length ? positions.reduce((a, b) => a + b, 0) / positions.length : null;
+            if (wins >= 3 && avg != null && avg <= 4) return "🏆";
+            if (wins >= 1 && avg != null && avg <= 5) return "⭐";
+            if (avg != null && avg <= 8 && played >= 5) return "🎯";
+            if (played >= 20) return "🔁";
+            return null;
+          })();
+
+          // Escalão mais recente (do mhCountSidebar ou positions)
           const hidden = hiddenTids(p);
-          const positions = Object.entries(p.r)
-            .filter(([tid, r]) => !hidden.has(tid) && typeof r?.p === "number" && (r.p as number) > 0)
-            .map(([, r]) => r.p as number);
-          const bestPos = positions.length ? Math.min(...positions) : null;
-          const hasTop3 = bestPos != null && bestPos <= 3;
           const bestTpVal = Object.entries(p.r)
             .filter(([tid, r]) => !hidden.has(tid) && r?.tp != null)
             .map(([, r]) => r.tp as number);
           const bestTp = bestTpVal.length ? Math.min(...bestTpVal) : null;
+
           return (
-            <button key={p.n} className={`course-item${isActive ? " active" : ""}`} onClick={() => onSelect(p.n)}>
-              <div className="course-item-name">
-                <span>{flagEmoji}</span>
-                <span className={p.isM ? "fw-800" : ""}>{p.n}</span>
-                {p.isM && <span className="p p-sm p-outline ml-2">REF</span>}
-                {hasTop3 && <span style={{ fontSize: 13, marginLeft: 4 }}>{bestPos === 1 ? "🥇" : bestPos === 2 ? "🥈" : "🥉"}</span>}
-                {tr && <span style={{ fontSize: 11, color: TR_I[tr as keyof typeof TR_I].c, marginLeft: "auto" }}>{TR_I[tr as keyof typeof TR_I].i}</span>}
+            <button key={p.n} className={`course-item${isActive ? " active" : ""}`}
+              style={{ borderLeftColor: isActive ? accentColor : undefined, padding: "9px 10px 9px 12px" }}
+              onClick={() => onSelect(p.n)}>
+
+              {/* Linha 1: rank + flag + nome + nº torneios */}
+              <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+                {rank != null ? (
+                  <span style={{ flexShrink: 0, fontSize: 10, minWidth: 20, height: 20, borderRadius: 4,
+                    background: rank <= 3 ? "var(--bg-topbar)" : "var(--bg-muted)",
+                    color: rank <= 3 ? "var(--text-inv)" : "var(--text-3)",
+                    display: "inline-flex", alignItems: "center", justifyContent: "center", fontWeight: 700 }}>
+                    {rank}
+                  </span>
+                ) : <span style={{ width: 20 }} />}
+                <span style={{ fontSize: 14, flexShrink: 0 }}>{flagEmoji}</span>
+                <span style={{ flex: 1, fontSize: 13, fontWeight: isActive ? 700 : 600, color: "var(--text)",
+                  overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                  {p.n}
+                  {p.isM && <span className="p p-sm p-outline" style={{ marginLeft: 5 }}>REF</span>}
+                </span>
+                <span style={{ flexShrink: 0, textAlign: "right" }}>
+                  <span style={{ fontSize: 17, fontWeight: 900, color: isActive ? "var(--accent)" : "var(--text-2)", lineHeight: 1 }}>
+                    {played}
+                  </span>
+                  <span style={{ fontSize: 9, color: "var(--text-muted)", display: "block", lineHeight: 1, textAlign: "center" }}>torn.</span>
+                </span>
               </div>
-              <div style={{ display: "flex", gap: 6, marginTop: 3, alignItems: "center", flexWrap: "wrap", fontSize: 11 }}>
-                <span style={{ color: "var(--text-3)" }}>{p.co}</span>
-                {played > 0 && <span style={{ color: "var(--text-2)", fontWeight: 600 }}>· {played}T</span>}
-                {!hasTop3 && bestPos != null && <span style={{ color: "var(--text-3)" }}>· #{bestPos}</span>}
-                {bestTp != null && <span style={{ fontWeight: 600, color: tpColorDark(bestTp) }}>{fmtToPar(bestTp)}</span>}
-                <DobPill player={p} />
-                {/* Torneios juntos — destaque principal */}
-                {togetherCount > 0 && (
-                  <span style={{ fontWeight: 700, color: "var(--text-2)" }} title={`${togetherCount} torneios juntos com Manuel`}>
-                    🤝 {togetherCount}
+
+              {/* Barra de actividade */}
+              <div style={{ height: 3, borderRadius: 2, background: "var(--border-light)", overflow: "hidden", marginBottom: 5 }}>
+                <div style={{ height: "100%", width: `${pct}%`, borderRadius: 2,
+                  background: (h2h && h2h.w + h2h.l + h2h.d > 0) ? accentColor : "var(--border)" }} />
+              </div>
+
+              {/* Linha 2: record + trend + firstYear + tier + mhCnt + bestTp */}
+              <div style={{ display: "flex", alignItems: "center", gap: 5, flexWrap: "wrap", fontSize: 11 }}>
+                {recordStr && (
+                  <span className="p p-sm" style={{ background: recordBg, color: recordCo, fontSize: 10, padding: "1px 5px" }}>
+                    {recordStr}
                   </span>
                 )}
-                {/* USKids: nº torneios histórico + ID */}
+                {tr && <span style={{ fontSize: 12, fontWeight: 700, color: TR_I[tr as keyof typeof TR_I].c }}>{TR_I[tr as keyof typeof TR_I].i}</span>}
+                {act?.first && (
+                  <span style={{ fontSize: 11, color: "var(--text-3)" }}>{act.first}{act.last > act.first ? `–${act.last}` : ""}</span>
+                )}
+                {tierEmoji && (
+                  <span style={{ fontSize: 11 }}>{tierEmoji}</span>
+                )}
                 {mhCnt > 0 && (
-                  <span style={{ color: "var(--accent)", fontWeight: 600 }}
-                    title={`USKids: ${mhCnt} torneios · ID ${mhId ?? "?"}`}>
-                    📊{mhCnt}
-                    {mhId && <span style={{ opacity: 0.65, fontSize: 10 }}> #{mhId}</span>}
-                  </span>
+                  <span style={{ fontSize: 10, color: "var(--accent)", fontWeight: 600 }}>📊{mhCnt}</span>
                 )}
-                {rank != null && (
-                  <span className={`sidebar-rank ${rankCls}`} style={{ marginLeft: "auto" }}>#{rank}</span>
+                {bestTp != null && (
+                  <span style={{ fontWeight: 600, fontSize: 11, color: tpColorDark(bestTp), marginLeft: "auto" }}>
+                    {fmtToPar(bestTp)}
+                  </span>
                 )}
                 {p.up.length > 0 && <span style={{ color: "var(--color-good-dark)", fontWeight: 700 }}>▲</span>}
               </div>
             </button>
           );
+          void idx;
         })}
       </div>
       <div style={{ padding: "6px 10px", borderTop: "1px solid var(--border-light)", fontSize: 10, color: "var(--text-muted)", flexShrink: 0 }}>
@@ -1804,6 +1870,8 @@ function RivaisSidebar({ selected, onSelect }: { selected: string | null; onSele
     </div>
   );
 }
+
+
 
 /* ═══════════════════════════════════
    MEMBER HISTORY TABLE — sortable
@@ -2302,96 +2370,140 @@ function RivalDetail({ playerName }: { playerName: string }) {
   return (
     <>
       {/* ══ HERO CARD ══ */}
-      <div className="card" style={{ marginBottom: 12, padding: 0, overflow: "hidden" }}>
-        <div style={{ padding: "16px 18px 0", display: "flex", gap: 14, alignItems: "flex-start" }}>
-          <span style={{ fontSize: 46, lineHeight: 1, flexShrink: 0 }}>{flag}</span>
+      <div className="card" style={{ marginBottom: 12, padding: 0, overflow: "hidden", border: "1.5px solid var(--border-light)" }}>
+
+        {/* Faixa de identidade */}
+        <div style={{ display: "flex", gap: 16, alignItems: "flex-start", padding: "20px 22px 16px", borderBottom: "1px solid var(--border-light)" }}>
+
+          {/* Flag grande */}
+          <div style={{ fontSize: 56, lineHeight: 1, flexShrink: 0, marginTop: 2 }}>{flag}</div>
+
+          {/* Nome + pills + palmarès inline */}
           <div style={{ flex: 1, minWidth: 0 }}>
-            {/* Linha 1: nome + rank + trend + USKids */}
-            <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", marginBottom: 8 }}>
-              <h2 style={{ fontSize: 20, fontWeight: 700, margin: 0 }}>{playerName}</h2>
-              {rank != null && (
-                <span className={`sidebar-rank ${rank <= 3 ? "sidebar-rank-top3" : rank <= 10 ? "sidebar-rank-top10" : "sidebar-rank-rest"}`}
-                  style={{ fontSize: 11, padding: "2px 7px" }}>#{rank}/{totalRanked}</span>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 8 }}>
+              <div style={{ fontSize: 26, fontWeight: 900, color: "var(--text)", lineHeight: 1.1, letterSpacing: "-0.02em" }}>
+                {playerName}
+              </div>
+              {tierBadge && (
+                <span style={{ fontSize: 12, fontWeight: 800, padding: "3px 10px", borderRadius: 20,
+                  background: tierBadge.cls === "seg-eagle" ? "var(--score-eagle)"
+                    : tierBadge.cls === "seg-birdie" ? "var(--medal-gold)"
+                    : tierBadge.cls === "seg-par" ? "var(--color-good-dark)"
+                    : "var(--text-dark)",
+                  color: "#fff", letterSpacing: "0.02em", flexShrink: 0 }}>
+                  {tierBadge.icon} {tierBadge.label}
+                </span>
               )}
-              {tr && <span style={{ fontSize: 14, fontWeight: 700, color: TR_I[tr as keyof typeof TR_I].c }}>{TR_I[tr as keyof typeof TR_I].i}</span>}
-              {rival?.up.map(u => { const up = UP.find(x => x.id === u); return up ? <span key={u} className="p p-sm" style={{ background: "var(--bg-success-strong)", color: "var(--color-good-dark)", fontSize: 11 }}>▲ {up.short}</span> : null; })}
               {!isManuel && (
                 <button onClick={() => navigate("/uskids", { state: { rival: playerName } })}
                   className="p p-filter p-sm" style={{ marginLeft: "auto", fontSize: 11 }}>🏌️ USKids →</button>
               )}
             </div>
-            {/* Linha 2: país · tier · DOB */}
-            <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", fontSize: 12, color: "var(--text-2)", marginBottom: 14 }}>
-              {rival && !isManuel && <span style={{ fontWeight: 600 }}>{rival.co}</span>}
+
+            {/* Pills: país · trend · DOB · rank · ano activo */}
+            <div style={{ display: "flex", gap: 5, flexWrap: "wrap", alignItems: "center", marginBottom: 8 }}>
+              {rival && !isManuel && <span className="p p-sm p-muted" style={{ fontSize: 12 }}>{rival.co}</span>}
               {isManuel && <span className="p p-outline p-sm">REF</span>}
-              {tierBadge && <span className={`p p-sm ${tierBadge.cls}`} style={{ fontSize: 11 }}>{tierBadge.icon} {tierBadge.label}</span>}
+              {rank != null && (
+                <span className={`sidebar-rank ${rank <= 3 ? "sidebar-rank-top3" : rank <= 10 ? "sidebar-rank-top10" : "sidebar-rank-rest"}`}
+                  style={{ fontSize: 11, padding: "2px 7px" }}>#{rank}/{totalRanked}</span>
+              )}
+              {tr && <span style={{ fontSize: 13, fontWeight: 700, color: TR_I[tr as keyof typeof TR_I].c }}>{TR_I[tr as keyof typeof TR_I].i}</span>}
+              {rival?.up.map(u => { const up = UP.find(x => x.id === u); return up ? <span key={u} className="p p-sm" style={{ background: "var(--bg-success-strong)", color: "var(--color-good-dark)", fontSize: 11 }}>▲ {up.short}</span> : null; })}
               {dobInfo && (() => {
                 if (!dobInfo.exact && dobInfo.rangeStr === "?") return null;
-                if (dobInfo.exact) return <span style={{ color: "var(--color-good-dark)", fontWeight: 600 }}>🎂 {dobInfo.ageStr} · {dobInfo.dobStr}</span>;
-                const days = dobInfo.rangeMin && dobInfo.rangeMax ? Math.round((dobInfo.rangeMax.getTime()-dobInfo.rangeMin.getTime())/86400000) : 999;
-                return <span style={{ color: days<=60?"var(--color-good-dark)":days<=180?"var(--text-2)":"var(--text-3)" }}>{days<=60?"🎯":"📅"} {dobInfo.ageStr} · ~{dobInfo.rangeStr}</span>;
+                if (dobInfo.exact) return <span className="p p-sm" style={{ background: "var(--bg-info)", color: "var(--color-info)", fontWeight: 700, fontSize: 12 }}>🎂 {dobInfo.ageStr} · {dobInfo.dobStr}</span>;
+                const days = dobInfo.rangeMin && dobInfo.rangeMax ? Math.round((dobInfo.rangeMax.getTime() - dobInfo.rangeMin.getTime()) / 86400000) : 999;
+                return <span className="p p-sm" style={{ background: "var(--bg-info)", color: "var(--color-info)", fontWeight: 700, fontSize: 12 }}>
+                  {days <= 60 ? "🎯" : "📅"} {dobInfo.ageStr} · ~{dobInfo.rangeStr}
+                </span>;
               })()}
             </div>
+
+            {/* Palmarès compacto inline */}
+            {palmares.length > 0 && (
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 4, flexWrap: "wrap" }}>
+                {palmares.slice(0, 5).map(({ t, res }) => {
+                  const ag = (res as any).ageGroup as string | null;
+                  const medal = res.p === 1 ? "🥇" : res.p === 2 ? "🥈" : "🥉";
+                  const bg = res.p === 1 ? "#fffbea" : res.p === 2 ? "#f0f4ff" : "#fff4f0";
+                  const border = res.p === 1 ? "var(--medal-gold)" : res.p === 2 ? "var(--medal-silver)" : "var(--medal-bronze)";
+                  const shortName = t.name.replace(/\s*\d{4}$/, "").replace(/\s*'\d{2}$/, "");
+                  return (
+                    <div key={t.id} title={`${t.name} ${yearOf(t.dateExact, t.date)}`}
+                      style={{ display: "inline-flex", alignItems: "center", gap: 4, padding: "3px 7px",
+                        borderRadius: 6, background: bg, border: `1px solid ${border}`, flexShrink: 0 }}>
+                      <span style={{ fontSize: 13 }}>{medal}</span>
+                      <div style={{ lineHeight: 1.2 }}>
+                        <div style={{ fontSize: 10, fontWeight: 700, color: "var(--color-warn-dark)", maxWidth: 90,
+                          overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{shortName}</div>
+                        <div style={{ fontSize: 9, color: "var(--text-3)" }}>
+                          {yearOf(t.dateExact, t.date)}{ag ? ` · ${ag}` : ""}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+                {palmares.length > 5 && (
+                  <div style={{ display: "inline-flex", alignItems: "center", gap: 3, padding: "3px 8px",
+                    borderRadius: 6, background: "var(--bg-warn-strong)", border: "1px solid var(--medal-gold)" }}>
+                    <span style={{ fontSize: 11, fontWeight: 800, color: "var(--color-warn-dark)" }}>+{palmares.length - 5}</span>
+                    <span style={{ fontSize: 11 }}>🏆</span>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
-          {/* H2H summary box */}
+
+          {/* V/E/D vs Manuel — caixas coloridas */}
           {h2hData && !isManuel && (
-            <div style={{ flexShrink: 0, background: "var(--bg-muted)", borderRadius: 10, padding: "10px 14px", textAlign: "center", minWidth: 100 }}>
-              <div style={{ fontSize: 10, color: "var(--text-3)", marginBottom: 6, textTransform: "uppercase", letterSpacing: ".04em" }}>vs Manuel</div>
-              <div style={{ display: "flex", gap: 8, justifyContent: "center", marginBottom: 7 }}>
-                <div><div style={{ fontSize: 22, fontWeight: 700, color: "var(--color-good-dark)" }}>{h2hData.wins}</div><div style={{ fontSize: 10, color: "var(--text-2)" }}>V</div></div>
-                <div><div style={{ fontSize: 22, fontWeight: 700, color: "var(--text-3)" }}>{h2hData.draws}</div><div style={{ fontSize: 10, color: "var(--text-2)" }}>E</div></div>
-                <div><div style={{ fontSize: 22, fontWeight: 700, color: "var(--color-danger)" }}>{h2hData.losses}</div><div style={{ fontSize: 10, color: "var(--text-2)" }}>D</div></div>
+            <div style={{ flexShrink: 0, textAlign: "center" }}>
+              <div style={{ fontSize: 11, fontWeight: 700, color: "var(--text-3)", marginBottom: 6,
+                textTransform: "uppercase", letterSpacing: "0.06em" }}>vs Manuel</div>
+              <div style={{ display: "flex", gap: 5, marginBottom: 5 }}>
+                {([
+                  { n: h2hData.wins,   bg: "var(--bg-success-strong)", co: "var(--color-good-dark)", l: "V" },
+                  { n: h2hData.draws,  bg: "var(--bg-muted)",          co: "var(--text-2)",          l: "E" },
+                  { n: h2hData.losses, bg: "var(--bg-danger-strong)",  co: "var(--color-danger-vivid)", l: "D" },
+                ] as const).map(({ n, bg, co, l }) => (
+                  <div key={l} style={{ textAlign: "center", minWidth: 46, padding: "10px 6px",
+                    background: bg, borderRadius: 10 }}>
+                    <div style={{ fontSize: 28, fontWeight: 900, color: co, lineHeight: 1 }}>{n}</div>
+                    <div style={{ fontSize: 11, fontWeight: 700, color: co, marginTop: 2, opacity: .75 }}>{l}</div>
+                  </div>
+                ))}
               </div>
-              <div style={{ height: 5, borderRadius: 3, overflow: "hidden", display: "flex", gap: 1 }}>
-                {h2hData.wins>0   && <div style={{ flex: h2hData.wins,   background: "var(--color-good-dark)" }} />}
-                {h2hData.draws>0  && <div style={{ flex: h2hData.draws,  background: "var(--border-light)" }} />}
-                {h2hData.losses>0 && <div style={{ flex: h2hData.losses, background: "var(--color-danger)" }} />}
+              <div style={{ fontSize: 11, color: "var(--text-3)" }}>
+                {h2hData.tids.length} confronto{h2hData.tids.length !== 1 ? "s" : ""}
               </div>
-              <div style={{ fontSize: 10, color: "var(--text-3)", marginTop: 4 }}>{h2hData.tids.length} confrontos</div>
             </div>
           )}
         </div>
 
-        {/* KPI grid */}
-        <div style={{ padding: "0 14px 14px", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(86px,1fr))", gap: 7 }}>
-          {playedDedup > 0 && (
-            <div className="kpi" style={{ padding: "8px 10px" }}>
-              <div className="kpi-lbl">Torneios</div>
-              <div className="kpi-val" style={{ fontSize: 22 }}>{playedDedup}</div>
-              <div className="kpi-sub">{roundsDedup} rondas</div>
-            </div>
-          )}
-          {palmares.length > 0 && (
-            <div className="kpi" style={{ padding: "8px 10px" }}>
-              <div className="kpi-lbl">Vitórias</div>
-              <div className="kpi-val" style={{ fontSize: 22, color: "var(--medal-gold,#d97706)" }}>🥇×{palmares.length}</div>
-            </div>
-          )}
-          {bestTp != null && (
-            <div className="kpi" style={{ padding: "8px 10px" }}>
-              <div className="kpi-lbl">Melhor ±Par</div>
-              <div className="kpi-val" style={{ fontSize: 22, color: tpColorDark(bestTp) }}>{fmtToPar(bestTp)}</div>
-              <div className="kpi-sub">torneio</div>
-            </div>
-          )}
-          {avgRd != null && (
-            <div className="kpi" style={{ padding: "8px 10px" }}>
-              <div className="kpi-lbl">Média Ronda</div>
-              <div className="kpi-val" style={{ fontSize: 22 }}>{avgRd.toFixed(1)}</div>
-              {rdStdDev != null && <div className="kpi-sub">σ {rdStdDev.toFixed(1)}</div>}
-            </div>
-          )}
-          {scoringBlock.n > 0 && (
-            <div className="kpi" style={{ padding: "8px 10px" }}>
-              <div className="kpi-lbl">Sub-par</div>
-              <div className="kpi-val" style={{ fontSize: 22, color: scoringBlock.upr>0?"var(--color-good-dark)":"var(--text-3)" }}>
-                {Math.round(scoringBlock.upr/scoringBlock.n*100)}%
+        {/* KPI grid — separados por bordas, sem rounded cards */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(110px, 1fr))" }}>
+          {[
+            { v: String(playedDedup),                                                      l: "torneios",      accent: false,                           sub: roundsDedup > 0 ? `${roundsDedup} rondas` : null },
+            palmares.length > 0 ? { v: `${palmares.length}`, l: "vitórias 🥇",            accent: true,                                                sub: null } : null,
+            bestTp != null ? { v: fmtToPar(bestTp),           l: "melhor ±par",            accent: bestTp < 0,  sub: null } : null,
+            avgRd != null  ? { v: avgRd.toFixed(1),            l: "média ronda",            accent: false,       sub: rdStdDev != null ? `σ ${rdStdDev.toFixed(1)}` : null } : null,
+            scoringBlock.n > 0 ? { v: `${Math.round(scoringBlock.upr / scoringBlock.n * 100)}%`, l: "sub-par rondas", accent: scoringBlock.upr / scoringBlock.n > 0.3, sub: `${scoringBlock.upr}/${scoringBlock.n}` } : null,
+          ].filter(Boolean).map((item, i, arr) => {
+            const { v, l, accent, sub } = item!;
+            return (
+              <div key={l} style={{ padding: "14px 10px", textAlign: "center",
+                borderRight: i < arr.length - 1 ? "1px solid var(--border-light)" : "none",
+                borderTop: "1px solid var(--border-light)" }}>
+                <div style={{ fontSize: 24, fontWeight: 900, lineHeight: 1,
+                  color: accent ? "var(--color-good-dark)" : "var(--text)" }}>{v}</div>
+                {sub && <div style={{ fontSize: 11, color: "var(--text-3)", marginTop: 2 }}>{sub}</div>}
+                <div style={{ fontSize: 12, color: "var(--text-3)", marginTop: 5, fontWeight: 500 }}>{l}</div>
               </div>
-              <div className="kpi-sub">{scoringBlock.upr}/{scoringBlock.n} rondas</div>
-            </div>
-          )}
+            );
+          })}
         </div>
       </div>
+
 
       {/* ══ PALMARÈS ══ */}
       {palmares.length > 0 && (
