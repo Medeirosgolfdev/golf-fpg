@@ -9,7 +9,7 @@ import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { C } from "../utils/colors";
 import { scClass } from "../utils/scoreDisplay";
 import { MONTHS_PT, isoDate, fmtDate, fmtToPar } from "../utils/format";
-import { flag, normCountry } from "../utils/flagUtils";
+import { flag, normCountry, normPaisDisplay } from "../utils/flagUtils";
 import EmptyState from "../ui/EmptyState";
 import { tpColor, isManuel as _isManuel } from "../ui/tournamentPrimitives";
 import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
@@ -55,24 +55,13 @@ interface IntlData {
 }
 
 // ── Member History (uskids-member-history.json) ──
-interface MemberHistRound {
-  strokes: number[]; course: string; startHole: number;
-  startTime: string; group: number; gross: number; holes: number;
-}
-interface MemberHistTorneio {
-  name: string; type: string; startDate: string; endDate: string;
-  totalRounds: number; holesPerRound: number; par: number[]; yards: number[];
-  ageGroup: string; status: number; place: number; totalStrokes: number;
-  points: number; rounds: Record<string, MemberHistRound>;
-}
-interface MemberHistPlayer {
-  memberId: number; name: string; country: string; place: string;
-  ageGroup: string; totalTorneios: number;
-  torneios: Record<string, MemberHistTorneio>;
-}
+interface MemberHistRound { gross: number; strokes: number[]; }
+interface MemberHistTorneio { ageGroup: string; place: number | null; rounds: Record<string, MemberHistRound>; }
+interface MemberHistSharedTorneio { name: string; startDate: string; holesPerRound: number; par: number[] | null; yards: number[] | null; }
+interface MemberHistPlayer { name: string; country: string; ageGroup: string; torneios: Record<string, MemberHistTorneio>; }
 interface MemberHistData {
   gerado_em: string;
-  torneios: Record<string, { name: string; start_date: string; end_date: string; rounds: number }>;
+  torneios: Record<string, MemberHistSharedTorneio>;
   jogadores: Record<string, MemberHistPlayer>;
 }
 
@@ -1641,86 +1630,88 @@ function SecaoGreatgolf({ data }: { data: GreatgolfData }) {
   const [cat, setCat] = useState<"sub12"|"sub14"|"d1">("sub12");
 
   const cats: { key: "sub12"|"sub14"|"d1"; label: string }[] = [
-    { key:"sub12",  label:"Sub-12" },
-    { key:"sub14",  label:"Sub-14" },
-    { key:"d1",     label:"WAGR / Open" },
+    { key:"sub12", label:"Sub-12" },
+    { key:"sub14", label:"Sub-14" },
+    { key:"d1",    label:"WAGR / Open" },
   ];
 
   const rows = data.results[cat] ?? [];
 
   const _renderToPar = (v: number | null) => {
-    if (v == null) return <span style={{ color:"var(--text-3)" }}>—</span>;
+    if (v == null) return <span className="muted">—</span>;
     if (v === 0)   return <span style={{ color:"var(--text-2)", fontWeight:700 }}>E</span>;
     if (v < 0)     return <span style={{ color:"var(--color-good)", fontWeight:700 }}>{v}</span>;
     return <span style={{ color:"var(--color-danger)", fontWeight:700 }}>+{v}</span>;
   };
 
   return (
-    <div style={{ marginTop:24, border:"1px solid var(--border)", borderRadius:10, overflow:"hidden" }}>
+    <div className="card" style={{ marginTop:20, padding:0, overflow:"hidden" }}>
       {/* Header clicável */}
-      <div onClick={() => setOpen(v => !v)}
-        style={{ padding:"10px 16px", background:"var(--bg-header)", cursor:"pointer",
-          borderBottom: open ? "1px solid var(--border)" : "none",
-          display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+      <div onClick={() => setOpen(v => !v)} style={{
+        padding:"12px 16px",
+        background: open ? "var(--bg-header)" : "var(--bg-card)",
+        borderBottom: open ? "1px solid var(--border)" : "none",
+        cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"space-between",
+      }}>
         <div>
-          <div style={{ fontWeight:700, fontSize:14, color:"var(--text)" }}>
-            🏆 {data.name}
-          </div>
-          <div style={{ fontSize:11, color:"var(--text-3)", marginTop:2 }}>
-            📅 {data.dates.map(d => fmtDate(d)).join(" · ")} · {data.course}
+          <div className="h-md" style={{ marginBottom:3 }}>🏆 {data.name}</div>
+          <div className="detail-sub" style={{ marginTop:0 }}>
+            <span className="muted">📅 {data.dates.map(d => fmtDate(d)).join(" · ")}</span>
+            <span className="muted">📍 {data.course}</span>
           </div>
         </div>
         <span style={{ color:"var(--text-3)", fontSize:13 }}>{open ? "▲" : "▼"}</span>
       </div>
 
       {open && (
-        <div style={{ padding:"12px 16px" }}>
-          {/* Selector de categoria */}
+        <div style={{ padding:"14px 16px" }}>
+          {/* Selector de categoria — usa tourn-tab */}
           <div style={{ display:"flex", gap:6, marginBottom:14 }}>
             {cats.map(c => (
-              <button key={c.key} onClick={() => setCat(c.key)} style={{
-                background: cat===c.key ? "var(--bg-active)" : "var(--bg-card)",
-                border:`1px solid ${cat===c.key ? "var(--border-success)" : "var(--border)"}`,
-                color:"var(--text-2)", borderRadius:7, padding:"4px 12px",
-                fontSize:12, cursor:"pointer", fontWeight: cat===c.key ? 700 : 400,
-              }}>{c.label}</button>
+              <button key={c.key}
+                className={`tourn-tab tourn-tab-sm${cat === c.key ? " active" : ""}`}
+                style={cat !== c.key ? { background:"var(--bg-muted)", color:"var(--text-2)", borderColor:"var(--border)" } : {}}
+                onClick={() => setCat(c.key)}>
+                {c.label}
+              </button>
             ))}
           </div>
 
           <div className="table-wrap">
-          <table className="sc-lb" style={{ width:"100%" }}>
-            <thead>
-              <tr>
-                <th className="sticky-col-0" style={{ width:26 }}>#</th>
-                <th className="sticky-col-1" style={{ textAlign:"left", paddingLeft:10 }}>Jogador</th>
-                <th style={{ textAlign:"left", fontSize:11 }}>Clube</th>
-                <th className="lb-topar">±</th>
-                <th className="lb-gross">TOT</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((r, i) => {
-                const manuelRow = isManuel(r.name);
-                return (
-                  <tr key={i} className={manuelRow ? "row-manuel" : undefined}>
-                    <td className={`sticky-col-0${manuelRow ? " row-manuel" : ""}`} style={{ textAlign:"center", fontWeight:700 }}>
-                      {r.pos != null
-                        ? r.pos
-                        : <span style={{ color:"var(--text-3)", fontSize:11 }}>{r.status}</span>}
-                    </td>
-                    <td className={`sticky-col-1${manuelRow ? " row-manuel" : ""}`} style={{ textAlign:"left", paddingLeft:10, fontWeight: manuelRow ? 800 : 500 }}>
-                      {manuelRow && "★ "}{r.name}
-                    </td>
-                    <td style={{ fontSize:11, color:"var(--text-3)", padding:"6px 8px" }}>{r.club}</td>
-                    <td className="lb-topar" style={{ color: tpColor(r.toPar) }}>
-                      {r.toPar == null ? "–" : r.toPar === 0 ? "E" : r.toPar > 0 ? `+${r.toPar}` : r.toPar}
-                    </td>
-                    <td className="lb-gross">{r.gross ?? "—"}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+            <table className="sc-lb" style={{ width:"100%" }}>
+              <thead>
+                <tr>
+                  <th className="sticky-col-0" style={{ width:26 }}>#</th>
+                  <th className="sticky-col-1" style={{ textAlign:"left", paddingLeft:10 }}>Jogador</th>
+                  <th style={{ textAlign:"left" }}>Clube</th>
+                  <th className="lb-topar">±</th>
+                  <th className="lb-gross">TOT</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((r, i) => {
+                  const manuelRow = isManuel(r.name);
+                  return (
+                    <tr key={i} className={manuelRow ? "row-manuel" : undefined}>
+                      <td className={`sticky-col-0${manuelRow ? " row-manuel" : ""}`} style={{ textAlign:"center", fontWeight:700 }}>
+                        {r.pos != null
+                          ? r.pos
+                          : <span className="muted fs-11">{r.status}</span>}
+                      </td>
+                      <td className={`sticky-col-1${manuelRow ? " row-manuel" : ""}`}
+                          style={{ textAlign:"left", paddingLeft:10, fontWeight: manuelRow ? 800 : 500 }}>
+                        {manuelRow && "★ "}{r.name}
+                      </td>
+                      <td className="muted fs-11" style={{ padding:"6px 8px" }}>{r.club}</td>
+                      <td className="lb-topar" style={{ color: tpColor(r.toPar) }}>
+                        {r.toPar == null ? "–" : r.toPar === 0 ? "E" : r.toPar > 0 ? `+${r.toPar}` : r.toPar}
+                      </td>
+                      <td className="lb-gross">{r.gross ?? "—"}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
         </div>
       )}
@@ -1758,7 +1749,7 @@ function torneioBaseName(name: string): string {
 
 function TabelaConhecidos({
   torneioT, torneioNome, torneioData, escalaoManuel,
-  rivals, fieldData, intlData, matchIntl, matchRival, resultados, defaultOpen, memberHist,
+  rivals, fieldData, intlData, matchIntl, matchRival, resultados, defaultOpen, mhCountMap,
 }: {
   torneioT: number; torneioNome: string; torneioData?: string; escalaoManuel?: string;
   rivals: RivalInfo[]; fieldData: FieldData | null; intlData: IntlData | null;
@@ -1766,7 +1757,7 @@ function TabelaConhecidos({
   matchRival: (nome: string, pais?: string) => RivalInfo | null;
   resultados: TorneioResult[];
   defaultOpen?: boolean;
-  memberHist: MemberHistData | null;
+  mhCountMap: Map<string, number>;
 }) {
   const [open, setOpen] = useState(defaultOpen ?? false);
   const torneio = fieldData?.torneios.find(t => t.t === torneioT);
@@ -1902,30 +1893,33 @@ function TabelaConhecidos({
   // ─────────────────────────────────────────────────────────────────────────
 
   return (
-    <div style={{ marginBottom:8, border:"1px solid var(--border)", borderRadius:10, overflow:"hidden" }}>
+    <div style={{ marginBottom:10, border:"1px solid var(--border-light)", borderRadius:10, overflow:"hidden" }}>
       {/* Header do torneio — clicável para collapse */}
-      <div onClick={() => setOpen(v => !v)} style={{ padding:"12px 16px", background:"var(--bg-header)",
+      <div onClick={() => setOpen(v => !v)} style={{
+        padding:"12px 16px", background:"var(--bg-header)",
         borderBottom: open ? "1px solid var(--border)" : "none",
-        cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-        <div>
-          <div style={{ fontWeight:700, fontSize:15, color:"var(--text)", marginBottom:2 }}>
+        cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"space-between",
+        gap:12,
+      }}>
+        <div style={{ minWidth:0, flex:1 }}>
+          <div className="h-md" style={{ marginBottom:3, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
             {torneioNome}
           </div>
-          <div style={{ fontSize:11, color:"var(--text-3)", display:"flex", gap:10, flexWrap:"wrap" }}>
-            {torneioData && <span>📅 {fmtDate(torneioData)}</span>}
-            {escalaoManuel && <span>🏌️ {escalaoManuel}</span>}
+          <div className="detail-sub" style={{ marginTop:0 }}>
+            {torneioData && <span className="muted">📅 {fmtDate(torneioData)}</span>}
+            {escalaoManuel && <span className="chip">🏌️ {escalaoManuel}</span>}
             {torneio && (
-              <span>
-                · {inscritos.filter(jj => !isManuel(jj.nome)).length} inscritos
-                {anoPassadoMap.size > 0 && <span style={{ marginLeft:6, fontWeight:700, color:"var(--text-2)" }}>· ↩ {anoPassadoMap.size} repetem</span>}
+              <span className="muted">
+                {inscritos.filter(jj => !isManuel(jj.nome)).length} inscritos
+                {anoPassadoMap.size > 0 && <strong style={{ color:"var(--text-2)", marginLeft:6 }}>· ↩ {anoPassadoMap.size} repetem</strong>}
               </span>
             )}
             {!torneio && inscritos.length > 0 && (
-              <span>· {inscritos.filter(jj => !isManuel(jj.nome)).length} jogadores</span>
+              <span className="muted">{inscritos.filter(jj => !isManuel(jj.nome)).length} jogadores</span>
             )}
           </div>
         </div>
-        <span style={{ color:"var(--text-3)", fontSize:13, marginLeft:12 }}>{open ? "▲" : "▼"}</span>
+        <span style={{ color:"var(--text-3)", fontSize:13, flexShrink:0 }}>{open ? "▲" : "▼"}</span>
       </div>
 
       {open && <div style={{ padding:"12px 16px" }}>
@@ -1938,7 +1932,7 @@ function TabelaConhecidos({
           manuelIntl={manuelIntl}
           anoPassadoMap={anoPassadoMap}
           escalaoManuel={escalaoManuel}
-          memberHist={memberHist}
+          mhCountMap={mhCountMap}
         />
       </div>}
     </div>
@@ -1953,7 +1947,7 @@ type InscFilter = string;
 
 function InscritosTable({
   inscritos, inscritoRivalCache, matchIntl,
-  intlData, manuelIntl, anoPassadoMap, escalaoManuel, memberHist,
+  intlData, manuelIntl, anoPassadoMap, escalaoManuel, mhCountMap,
 }: {
   inscritos: { nome: string; pais: string; escalao: string }[];
   inscritoRivalCache: Map<string, RivalInfo | null>;
@@ -1962,7 +1956,7 @@ function InscritosTable({
   manuelIntl: IntlJogador | undefined;
   anoPassadoMap: Map<string, { pos: number; escalao: string; ronda: number }>;
   escalaoManuel?: string;
-  memberHist: MemberHistData | null;
+  mhCountMap: Map<string, number>;
 }) {
   const [filtro, setFiltro] = useState<InscFilter>("todos");
   const [sortCol, setSortCol] = useState<InscSortCol>("encontros");
@@ -1991,14 +1985,7 @@ function InscritosTable({
     const todos = inscritos.filter(j => !isManuel(j.nome));
 
     // Member history name lookup
-    const mhByName = new Map<string, MemberHistPlayer>();
-    if (memberHist) {
-      for (const mh of Object.values(memberHist.jogadores)) {
-        if (mh.name && mh.name !== '?' && mh.name !== null && !String(mh.name).startsWith('[unknown')) {
-          mhByName.set(mh.name.toLowerCase().trim(), mh);
-        }
-      }
-    }
+    // mhCountMap pré-calculado no pai
 
     return todos.map(j => {
       const rival = inscritoRivalCache.get(j.nome) ?? null;
@@ -2041,11 +2028,10 @@ function InscritosTable({
                     || (ant != null && ant.pos <= 3);
       const isManuelEsc = j.escalao === escalaoManuel;
       const nEncontros = allEncontros.length;
-      const mhPlayer = mhByName.get(j.nome.toLowerCase().trim());
-      const mhTorneios = mhPlayer?.totalTorneios ?? 0;
+      const mhTorneios = mhCountMap.get(j.nome.toLowerCase().trim()) ?? 0;
       return { nome: j.nome, pais: j.pais, escalao: j.escalao, isKnown, ant, isManuelEsc, nEncontros, allEncontros, foiTop3, mhTorneios };
     });
-  }, [inscritos, inscritoRivalCache, matchIntl, intlData, manuelIntl, anoPassadoMap, escalaoManuel, memberHist]);
+  }, [inscritos, inscritoRivalCache, matchIntl, intlData, manuelIntl, anoPassadoMap, escalaoManuel, mhCountMap]);
 
   // Filter
   const filtered = useMemo(() => {
@@ -2381,13 +2367,13 @@ function tidBase(tid: string): string {
   return tid.replace(/_(?:b?\d+|u\d+|open)$/, "");
 }
 
-function TabRivais({ data, fieldData, intlData, autoRivals, selectedT: _selectedT, memberHist,
+function TabRivais({ data, fieldData, intlData, autoRivals, selectedT: _selectedT, mhCountMap,
   selectedRival, setSelectedRival, greatgolfData: _greatgolfData,
   onRivalsReady,
 }: {
   data: ResultsData; fieldData: FieldData | null; intlData: IntlData | null;
   autoRivals: AutoRivalPlayer[]; selectedT: number | null;
-  memberHist: MemberHistData | null;
+  mhCountMap: Map<string, number>;
   selectedRival: string | null; setSelectedRival: (r: string | null | ((prev: string | null) => string | null)) => void;
   greatgolfData: GreatgolfData | null;
   onRivalsReady?: (list: {
@@ -2698,7 +2684,64 @@ function TabRivais({ data, fieldData, intlData, autoRivals, selectedT: _selected
       nomesNaLista.add(normNameAuto(ap.n));
     }
 
-    onRivalsReady(lista.sort((a, b) => b.nEnc - a.nEnc || b.totalTournaments - a.totalTournaments));
+    // ── Calcular playerTier e normalizar país ──────────────────────────────
+    // Quick tier a partir dos dados disponíveis no member history / encounters
+    // Só faz sentido para rivais que podem disputar directamente com o Manuel (escalão ±2)
+    // Manuel está actualmente em Boys 12 (nascido 2012) — escalões relevantes: 10, 11, 12, 13, 14
+    const MANUEL_CURRENT_AGE = new Date().getFullYear() - MANUEL_BIRTHDAY_YEAR;
+    const RELEVANT_AGES = new Set([
+      MANUEL_CURRENT_AGE - 2, MANUEL_CURRENT_AGE - 1, MANUEL_CURRENT_AGE,
+      MANUEL_CURRENT_AGE + 1, MANUEL_CURRENT_AGE + 2,
+    ].map(String));
+
+    function computeQuickTier(
+      r: { nEnc: number; vitorias: number; derrotas: number; totalTournaments: number; firstYear: number | null },
+      ar: AutoRivalPlayer | undefined,
+    ): SidebarRival["playerTier"] {
+      // Verificar se tem escalões relevantes (±2 do Manuel)
+      if (ar) {
+        const ages = Object.keys(ar.r)
+          .map(tid => tid.match(/_b(\d+)$/)?.[1])
+          .filter((a): a is string => a != null);
+        const temEscalaoRelevante = ages.some(a => RELEVANT_AGES.has(a));
+        if (!temEscalaoRelevante) return null;
+      } else if (r.nEnc === 0) {
+        // Sem autoRivals e sem encontros — não classificar
+        return null;
+      }
+
+      // avgPos aproximada a partir dos resultados do rival
+      let avgPos: number | null = null;
+      let wins = 0;
+      if (ar) {
+        const ps = Object.values(ar.r).map(v => v.p).filter((p): p is number => p != null && p > 0);
+        if (ps.length >= 3) avgPos = ps.reduce((s, p) => s + p, 0) / ps.length;
+        wins = Object.values(ar.r).filter(v => v.p === 1).length;
+      }
+      const curYear = new Date().getFullYear();
+      const anosActivo = r.firstYear ? curYear - r.firstYear + 1 : 0;
+      const tot = r.totalTournaments;
+
+      if (wins >= 3 && avgPos != null && avgPos <= 4)       return "elite";
+      if (wins >= 1 && avgPos != null && avgPos <= 5)        return "contender";
+      if (avgPos != null && avgPos <= 8 && tot >= 10)        return "forte";
+      if (anosActivo <= 3 && tot >= 10)                      return "subindo";
+      if (tot >= 20 && anosActivo >= 4)                      return "assiduo";
+      if (avgPos != null && avgPos <= 12 && tot >= 8)        return "consistente";
+      return null;
+    }
+
+    // Normalizar país e adicionar tier
+    const listaFinal: SidebarRival[] = lista.map(r => {
+      const ar = autoRivals.find(a => normNameAuto(a.n) === normNameAuto(r.nome));
+      return {
+        ...r,
+        pais: normPaisDisplay(r.pais),
+        playerTier: computeQuickTier(r, ar),
+      };
+    });
+
+    onRivalsReady(listaFinal.sort((a, b) => b.nEnc - a.nEnc || b.totalTournaments - a.totalTournaments));
   }, [rivals, onRivalsReady, autoRivals, fieldData]);
 
   // Memoized matcher — criado UMA vez, reutilizado por SubTabPorTorneio e TabelaConhecidos
@@ -2778,7 +2821,7 @@ function TabRivais({ data, fieldData, intlData, autoRivals, selectedT: _selected
       torneiosComManuel={torneiosComManuel}
       rivals={rivals} fieldData={fieldData} intlData={intlData}
       matchIntl={matchIntl} matchRival={matchRival} resultados={data.resultados}
-      memberHist={memberHist} goToProfile={goToProfile}
+      mhCountMap={mhCountMap} goToProfile={goToProfile}
     />
   );
 }
@@ -2788,14 +2831,14 @@ function TabRivais({ data, fieldData, intlData, autoRivals, selectedT: _selected
    Mostra TabelaConhecidos per tournament + secções de inscritos futuros
    ════════════════════════════════════════════════════════════════ */
 function SubTabPorTorneio({
-  torneiosComManuel, rivals, fieldData, intlData, matchIntl, matchRival, resultados, memberHist, goToProfile,
+  torneiosComManuel, rivals, fieldData, intlData, matchIntl, matchRival, resultados, mhCountMap, goToProfile,
 }: {
   torneiosComManuel: { t: number; name: string; date_inicio: string; escalaoManuel?: string; source: "field" | "results" }[];
   rivals: RivalInfo[]; fieldData: FieldData | null; intlData: IntlData | null;
   matchIntl: (nome: string, pais?: string) => IntlJogador | null;
   matchRival: (nome: string, pais?: string) => RivalInfo | null;
   resultados: TorneioResult[];
-  memberHist: MemberHistData | null;
+  mhCountMap: Map<string, number>;
   goToProfile: (nome: string) => void;
 }) {
   const [showInscritos, setShowInscritos] = useState(false);
@@ -2964,7 +3007,7 @@ function SubTabPorTorneio({
                 intlData={intlData} matchIntl={matchIntl}
                 matchRival={matchRival}
                 resultados={resultados}
-                memberHist={memberHist}
+                mhCountMap={mhCountMap}
               />
             ))}
           </div>
@@ -3448,135 +3491,284 @@ function PerfilRivalNovo({
     <span className={`p p-sm${cls?" "+cls:""}`} style={st}>{children}</span>
   );
 
+  // ── Palmarès: pódio (pos 1/2/3) com contexto ──────────────────
+  const palmares = useMemo(() =>
+    wallOfFame
+      .filter(e => e.pos != null && e.pos <= 3)
+      .sort((a, b) => (a.pos ?? 9) - (b.pos ?? 9) || b.year - a.year || isoDate(b.date).localeCompare(isoDate(a.date))),
+  [wallOfFame]);
+
+  // ── Tipo de jogador (classificação automática) ────────────────
+  const playerType = useMemo(() => {
+    if (!stats) return null;
+  const wins = palmares.filter(e => e.pos === 1).length;
+    const avg  = stats.avgPos;
+    const pct  = stats.avgPct;
+    const tot  = stats.total;
+    if (wins >= 3 && avg <= 4)                        return { label: "🏆 Elite",               bg: "var(--score-eagle)",       fg: "#fff" };
+    if (wins >= 1 && avg <= 5)                        return { label: "⭐ Top Contender",        bg: "var(--medal-gold)",        fg: "#fff" };
+    if (avg <= 8 && (pct == null || pct <= 25))       return { label: "🎯 Forte Competidor",    bg: "var(--color-good-dark)",   fg: "#fff" };
+    if (trend === "melhora" && anosActivo <= 3)       return { label: "📈 Em Ascensão",          bg: "var(--color-info)",        fg: "#fff" };
+    if (tot >= 20 && anosActivo >= 4)                 return { label: "🔁 Assíduo do Circuito", bg: "var(--text-dark)",         fg: "#fff" };
+    if (avg <= 12 && tot >= 10)                       return { label: "✅ Consistente",          bg: "var(--accent)",            fg: "#fff" };
+    return null;
+  }, [stats, palmares, trend, anosActivo]);
+
   return (
-    <div style={{maxWidth:900,paddingBottom:24}}>
+    <div style={{maxWidth:920, paddingBottom:32}}>
 
       {/* Voltar */}
-      <button onClick={goBack} style={{background:"none",border:"none",cursor:"pointer",padding:"0 0 14px",fontSize:12,fontWeight:600,color:"var(--accent)",display:"flex",alignItems:"center",gap:4}}>
+      <button onClick={goBack} className="btn" style={{
+        display:"flex", alignItems:"center", gap:6,
+        marginBottom:16, fontSize:13, fontWeight:600,
+        color:"var(--accent)", background:"transparent", border:"none",
+        padding:"6px 0", cursor:"pointer",
+      }}>
         ◀ Todos os rivais
       </button>
 
-      {/* ══ HEADER REDESENHADO ══ */}
-      <div style={{marginBottom:16,background:"var(--bg-card)",border:"1px solid var(--border-light)",borderRadius:12,overflow:"hidden"}}>
+      {/* ══ HERO CARD ══ */}
+      <div className="card" style={{marginBottom:16, padding:0, overflow:"hidden", border:"1.5px solid var(--border-light)"}}>
 
-        {/* Faixa superior: identidade */}
-        <div style={{display:"flex",gap:14,alignItems:"center",padding:"16px 18px",borderBottom:"1px solid var(--border-light)"}}>
-          <div style={{fontSize:42,lineHeight:1,flexShrink:0}}>{flag(rival?.pais??ar?.co??"")}</div>
-          <div style={{flex:1,minWidth:0}}>
-            <div style={{fontSize:22,fontWeight:800,color:"var(--text)",lineHeight:1.1,marginBottom:6}}>{displayName(nome)}</div>
-            <div style={{display:"flex",gap:5,flexWrap:"wrap",alignItems:"center"}}>
-              {(rival?.pais||ar?.co) && <Pill cls="p-muted">{rival?.pais||ar?.co}</Pill>}
-              {dobLabel && <Pill style={{background:"var(--bg-info)",color:"var(--color-info)",fontWeight:700}}>{dobLabel}</Pill>}
-              {ageGroupRange && <Pill cls="p-muted" style={{fontWeight:600}}>{ageGroupRange}</Pill>}
-              {firstYear && <Pill cls="p-muted">estreia {firstYear}</Pill>}
-              {anosActivo>1 && <Pill cls="p-muted">{anosActivo} anos activo</Pill>}
-              {hiatos.length>0 && <Pill style={{background:"var(--bg-warn)",color:"var(--color-warn-dark)"}}>pausa {hiatos.join(", ")}</Pill>}
-              {trend && <Pill style={{background:trend==="melhora"?"var(--bg-success-subtle)":"var(--bg-danger-strong)",color:trend==="melhora"?"var(--color-good-dark)":"var(--color-danger-vivid)",fontWeight:700}}>{trend==="melhora"?"↑ a melhorar":"↓ a piorar"}</Pill>}
+        {/* Faixa de identidade */}
+        <div style={{
+          display:"flex", gap:16, alignItems:"flex-start",
+          padding:"20px 22px 16px",
+          background: playerType ? "linear-gradient(135deg, var(--bg-card) 60%, rgba(0,0,0,.03))" : "var(--bg-card)",
+          borderBottom:"1px solid var(--border-light)",
+        }}>
+          {/* Flag grande */}
+          <div style={{fontSize:56, lineHeight:1, flexShrink:0, marginTop:2}}>{flag(rival?.pais??ar?.co??"")}</div>
+
+          {/* Nome + pills */}
+          <div style={{flex:1, minWidth:0}}>
+            <div style={{display:"flex", alignItems:"center", gap:10, flexWrap:"wrap", marginBottom:8}}>
+              <div style={{fontSize:26, fontWeight:900, color:"var(--text)", lineHeight:1.1, letterSpacing:"-0.02em"}}>
+                {displayName(nome)}
+              </div>
+              {playerType && (
+                <span style={{
+                  fontSize:12, fontWeight:800, padding:"3px 10px", borderRadius:20,
+                  background:playerType.bg, color:playerType.fg,
+                  letterSpacing:"0.02em", flexShrink:0,
+                }}>
+                  {playerType.label}
+                </span>
+              )}
             </div>
+            <div style={{display:"flex", gap:5, flexWrap:"wrap", alignItems:"center"}}>
+              {(rival?.pais||ar?.co) && <Pill cls="p-muted" style={{fontSize:12}}>{normPaisDisplay(rival?.pais||ar?.co||"")}</Pill>}
+              {dobLabel && <Pill style={{background:"var(--bg-info)", color:"var(--color-info)", fontWeight:700, fontSize:12}}>{dobLabel}</Pill>}
+              {/* Escalão actual: pill com o grupo mais recente detectado */}
+              {ageGroupRange && (
+                <Pill style={{
+                  background:"var(--bg-topbar)", color:"var(--text-inv)", fontWeight:700, fontSize:12,
+                }}>
+                  {ageGroupRange}
+                </Pill>
+              )}
+              {firstYear && <Pill cls="p-muted" style={{fontSize:12}}>desde {firstYear}</Pill>}
+              {anosActivo>1 && <Pill cls="p-muted" style={{fontSize:12}}>{anosActivo} anos activo</Pill>}
+              {hiatos.length>0 && <Pill style={{background:"var(--bg-warn)", color:"var(--color-warn-dark)", fontSize:12}}>pausa {hiatos.join(", ")}</Pill>}
+              {trend && <Pill style={{background:trend==="melhora"?"var(--bg-success-subtle)":"var(--bg-danger-strong)", color:trend==="melhora"?"var(--color-good-dark)":"var(--color-danger-vivid)", fontWeight:800, fontSize:12}}>{trend==="melhora"?"↑ a melhorar":"↓ a piorar"}</Pill>}
+            </div>
+            {/* Palmarès compacto inline — top-3, com nome do torneio */}
+            {palmares.length > 0 && (
+              <div style={{display:"flex", alignItems:"flex-start", gap:4, marginTop:8, flexWrap:"wrap"}}>
+                {palmares.slice(0, 5).map((e, i) => {
+                  const tornNome = e.nome.replace(/\s*\d{4}$/, "").replace(/\s*'\d{2}$/, "");
+                  const medal = e.pos===1?"🥇":e.pos===2?"🥈":"🥉";
+                  const bg = e.pos===1?"#fffbea":e.pos===2?"#f0f4ff":"#fff4f0";
+                  const border = e.pos===1?"var(--medal-gold)":e.pos===2?"var(--medal-silver)":"var(--medal-bronze)";
+                  return (
+                    <div key={i} title={`${tornNome} ${e.year}`} style={{
+                      display:"inline-flex", alignItems:"center", gap:4,
+                      padding:"3px 7px", borderRadius:6,
+                      background:bg, border:`1px solid ${border}`, flexShrink:0,
+                    }}>
+                      <span style={{fontSize:13}}>{medal}</span>
+                      <div style={{lineHeight:1.2}}>
+                        <div style={{fontSize:10, fontWeight:700, color:"var(--color-warn-dark)", maxWidth:90, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap"}}>{tornNome}</div>
+                        <div style={{fontSize:9, color:"var(--text-3)"}}>{e.year}</div>
+                      </div>
+                    </div>
+                  );
+                })}
+                {palmares.length > 5 && (
+                  <div style={{display:"inline-flex", alignItems:"center", gap:3, padding:"3px 8px", borderRadius:6, background:"var(--bg-warn-strong)", border:"1px solid var(--medal-gold)"}}>
+                    <span style={{fontSize:11, fontWeight:800, color:"var(--color-warn-dark)"}}>+{palmares.length - 5}</span>
+                    <span style={{fontSize:11}}>🏆</span>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
-          {/* V/E/D */}
-          <div style={{flexShrink:0,textAlign:"center"}}>
-            <div style={{display:"flex",gap:6,marginBottom:6}}>
+
+          {/* V/E/D vs Manuel */}
+          <div style={{flexShrink:0, textAlign:"center"}}>
+            <div style={{fontSize:11, fontWeight:700, color:"var(--text-3)", marginBottom:6, textTransform:"uppercase", letterSpacing:"0.06em"}}>vs Manuel</div>
+            <div style={{display:"flex", gap:5, marginBottom:5}}>
               {([
-                {n:vitorias, bg:"var(--bg-success-strong)", co:"var(--color-good-dark)"},
-                {n:empates,  bg:"var(--bg-muted)",          co:"var(--text-2)"},
-                {n:derrotas, bg:"var(--bg-danger-strong)",                   co:"var(--color-danger-vivid)"},
-              ] as const).map(({n,bg,co},i)=>(
-                <div key={i} style={{textAlign:"center",minWidth:48,padding:"10px 8px",background:bg,borderRadius:10}}>
-                  <div style={{fontSize:26,fontWeight:900,color:co,lineHeight:1}}>{n}</div>
+                {n:vitorias, bg:"var(--bg-success-strong)", co:"var(--color-good-dark)", l:"V"},
+                {n:empates,  bg:"var(--bg-muted)",          co:"var(--text-2)",           l:"E"},
+                {n:derrotas, bg:"var(--bg-danger-strong)",  co:"var(--color-danger-vivid)", l:"D"},
+              ] as const).map(({n,bg,co,l})=>(
+                <div key={l} style={{textAlign:"center", minWidth:46, padding:"10px 6px", background:bg, borderRadius:10}}>
+                  <div style={{fontSize:28, fontWeight:900, color:co, lineHeight:1}}>{n}</div>
+                  <div style={{fontSize:11, fontWeight:700, color:co, marginTop:2, opacity:.75}}>{l}</div>
                 </div>
               ))}
             </div>
-            <div style={{fontSize:11,color:"var(--text-2)",lineHeight:1.4,maxWidth:160}}>
-              {vitorias>0&&<><strong style={{color:"var(--color-good-dark)"}}>{vitorias}V</strong>{" "}</>}
-              {empates>0&&<><strong style={{color:"var(--text-2)"}}>{empates}E</strong>{" "}</>}
-              {derrotas>0&&<><strong style={{color:"var(--color-danger-vivid)"}}>{derrotas}D</strong>{" "}</>}
-              {directEnc.length===0
-                ? <span style={{color:"var(--text-3)"}}>sem confrontos</span>
-                : <span style={{color:"var(--text-3)"}}>
-                    vs Manuel{vitorias>0?` · ${vitorias} vitória${vitorias>1?"s":""}`:""}{derrotas>0?` · ${derrotas} derrota${derrotas>1?"s":""}`:""}{empates>0?` · ${empates} empate${empates>1?"s":""}` :""}
-                  </span>
-              }
-            </div>
+            {directEnc.length > 0 && (
+              <div style={{fontSize:11, color:"var(--text-3)"}}>
+                {directEnc.length} confronto{directEnc.length!==1?"s":""}
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Faixa inferior: KPIs */}
-        <div style={{display:"grid",gridTemplateColumns:"repeat(7,1fr)"}}>
+        {/* KPI grid — números grandes */}
+        <div style={{display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(110px, 1fr))"}}>
           {[
-            {v:String(stats?.total??wallOfFame.length), l:"torneios", accent:false},
-            {v:String(byYear.reduce((s,[,e])=>s+e.filter(x=>x.pos===1).length,0)), l:"vitórias 🥇", accent:false},
-            {v:stats?.best!=null?posLabel(stats.best):"—", l:"melhor resultado", accent:stats?.best!=null&&stats.best<=3},
-            {
-              v: stats ? `${stats.avgPos.toFixed(1)}º` : "—",
-              sub: stats?.avgFieldSize!=null ? `/ ~${stats.avgFieldSize} jog.` : null,
-              l:"pos. média", accent:false
-            },
-            {v:stats?.avgPct!=null?`top ${stats.avgPct}%`:"—", l:"percentil médio", accent:stats?.avgPct!=null&&stats.avgPct<=20},
-            {
-              v: stats?.vsFieldTrimmed!=null
-                ? (stats.vsFieldTrimmed>0?"+":"")+stats.vsFieldTrimmed
-                : "—",
-              l:"vs campo (mediana)", accent:stats?.vsFieldTrimmed!=null&&stats.vsFieldTrimmed<0,
-              tip:"Média aparada (10%) de: score do jogador menos mediana do field"
-            },
-            {v:torneiosPorAno>0?torneiosPorAno.toFixed(1):"—", l:"torn./ano", accent:false},
-          ].map(({v,l,accent,sub,tip}:{v:string,l:string,accent:boolean,sub?:string|null,tip?:string},i)=>(
-            <div key={l} title={tip} style={{padding:"12px 10px",textAlign:"center",borderRight:i<6?"1px solid var(--border-light)":"none",background:"var(--bg-card)",cursor:tip?"help":"default"}}>
-              <div style={{fontSize:18,fontWeight:800,color:accent?"var(--color-good-dark)":"var(--text)",lineHeight:1}}>{v}</div>
-              {sub&&<div style={{fontSize:10,color:"var(--text-3)",marginTop:1}}>{sub}</div>}
-              <div style={{fontSize:10,color:"var(--text-3)",marginTop:4}}>{l}</div>
+            {v: String(stats?.total ?? wallOfFame.length),               l:"torneios",           accent:false},
+            {v: String(palmares.filter(e => e.pos === 1).length || "0"),          l:"vitórias 🥇",       accent: palmares.some(e => e.pos === 1)},
+            {v: stats?.best!=null ? posLabel(stats.best) : "—",          l:"melhor resultado",   accent:stats?.best!=null && stats.best<=3},
+            {v: stats ? `${Math.round(stats.avgPos)}º` : "—",
+             sub: stats?.avgFieldSize!=null ? `em ~${stats.avgFieldSize}` : null,
+             l:"posição média",    accent:false},
+            {v: stats?.avgPct!=null ? `top ${stats.avgPct}%` : "—",      l:"percentil médio",    accent:stats?.avgPct!=null && stats.avgPct<=25},
+            {v: torneiosPorAno>0 ? torneiosPorAno.toFixed(1) : "—",      l:"torn./ano",          accent:false},
+            {v: stats?.vsFieldTrimmed!=null ? (stats.vsFieldTrimmed>0?"+":"")+stats.vsFieldTrimmed : "—",
+             l:"vs campo",         accent:stats?.vsFieldTrimmed!=null && stats.vsFieldTrimmed<-1,
+             tip:"Score médio comparado com a mediana do field (aparado 10%)"},
+          ].map(({v,l,accent,sub,tip}:{v:string,l:string,accent:boolean,sub?:string|null,tip?:string}, i, arr)=>(
+            <div key={l} title={tip} style={{
+              padding:"14px 10px", textAlign:"center",
+              borderRight: i<arr.length-1 ? "1px solid var(--border-light)" : "none",
+              borderTop:"1px solid var(--border-light)",
+              background:"var(--bg-card)",
+              cursor:tip?"help":"default",
+            }}>
+              <div style={{fontSize:24, fontWeight:900, color:accent?"var(--color-good-dark)":"var(--text)", lineHeight:1}}>{v}</div>
+              {sub && <div style={{fontSize:11, color:"var(--text-3)", marginTop:2}}>{sub}</div>}
+              <div style={{fontSize:12, color:"var(--text-3)", marginTop:5, fontWeight:500}}>{l}</div>
             </div>
           ))}
         </div>
 
-        {/* Linha de contexto dos confrontos directos */}
-        {directEnc.length>0&&(
-          <div style={{padding:"9px 18px",background:"rgba(55,138,221,.05)",borderTop:"1px solid var(--border-light)",display:"flex",gap:20,flexWrap:"wrap",fontSize:12,color:"var(--text-2)"}}>
-            <span>Confrontos directos ({directEnc.length}): {firstName} <strong style={{color:vitorias>derrotas?"var(--color-good-dark)":"var(--color-danger-vivid)"}}>{(directEnc.reduce((s,e)=>s+e.rival_pos,0)/directEnc.length).toFixed(1)}º</strong> · Manuel <strong style={{color:"var(--text)"}}>{(directEnc.reduce((s,e)=>s+e.man_pos,0)/directEnc.length).toFixed(1)}º</strong></span>
-            {stats&&<span>Top-3: <strong style={{color:"var(--text)"}}>{stats.top3}/{stats.total}</strong></span>}
-            {anosComParticipacao>0&&<span>Participou em <strong style={{color:"var(--text)"}}>{anosComParticipacao}/{anosActivo}</strong> anos</span>}
-            {(()=>{const difs=directEnc.filter(e=>e.man_to_par!=null&&e.rival_to_par!=null).map(e=>(e.rival_to_par??0)-(e.man_to_par??0));if(!difs.length)return null;const avg=difs.reduce((s,d)=>s+d,0)/difs.length;return<span>Dif. to-par: <strong style={{color:avg>0?"var(--color-good-dark)":"var(--color-danger-vivid)"}}>{avg>0?"+":""}{avg.toFixed(1)}</strong></span>;})()}
+        {/* Confrontos directos — linha de contexto */}
+        {directEnc.length>0 && (
+          <div style={{padding:"10px 20px", background:"var(--accent-light)", borderTop:"1px solid var(--accent-alpha-20)", display:"flex", gap:20, flexWrap:"wrap", fontSize:13, color:"var(--text-2)"}}>
+            <span>
+              Confrontos directos ({directEnc.length}): &nbsp;
+              <strong style={{color:"var(--text)"}}>{firstName}</strong> média <strong style={{color:vitorias>derrotas?"var(--color-good-dark)":"var(--color-danger-vivid)"}}>{Math.round(directEnc.reduce((s,e)=>s+e.rival_pos,0)/directEnc.length)}º</strong>
+              &nbsp;·&nbsp;
+              <strong style={{color:"var(--text)"}}>Manuel</strong> média <strong>{Math.round(directEnc.reduce((s,e)=>s+e.man_pos,0)/directEnc.length)}º</strong>
+            </span>
+            {stats && <span>Top-3: <strong style={{color:"var(--text)"}}>{stats.top3}/{stats.total}</strong></span>}
+            {anosComParticipacao>0 && <span>Activo em <strong style={{color:"var(--text)"}}>{anosComParticipacao}/{anosActivo}</strong> anos</span>}
+            {(()=>{
+              const difs=directEnc.filter(e=>e.man_to_par!=null&&e.rival_to_par!=null).map(e=>(e.rival_to_par??0)-(e.man_to_par??0));
+              if(!difs.length) return null;
+              const avg=difs.reduce((s,d)=>s+d,0)/difs.length;
+              return <span>Dif. to-par: <strong style={{color:avg>0?"var(--color-good-dark)":"var(--color-danger-vivid)"}}>{avg>0?"+":""}{avg.toFixed(1)}</strong></span>;
+            })()}
           </div>
         )}
       </div>
 
-      {/* ══ TORNEIOS RECORRENTES ══ */}
-      {torneiosRecorrentes.length>0&&(
-        <div style={{marginBottom:20}}>
-          <div style={{fontSize:14,fontWeight:700,color:"var(--text)",marginBottom:8}}>
-            Evolução por torneio
-            <span style={{fontSize:11,fontWeight:400,color:"var(--text-3)",marginLeft:8}}>torneios com 2+ participações</span>
+      {/* ══ PALMARÈS ══ */}
+      {palmares.length > 0 && (
+        <div className="card" style={{marginBottom:16, padding:"14px 16px"}}>
+          <div className="h-md" style={{marginBottom:12, display:"flex", alignItems:"center", gap:10}}>
+            🏆 Palmarès
+            <span style={{fontSize:13, fontWeight:400, color:"var(--text-3)"}}>
+              {palmares.filter(e=>e.pos===1).length} 🥇
+              {palmares.filter(e=>e.pos===2).length > 0 && ` · ${palmares.filter(e=>e.pos===2).length} 🥈`}
+              {palmares.filter(e=>e.pos===3).length > 0 && ` · ${palmares.filter(e=>e.pos===3).length} 🥉`}
+            </span>
           </div>
-          <div style={{display:"flex",flexDirection:"column",gap:4}}>
+          <div style={{display:"flex", flexWrap:"wrap", gap:5}}>
+            {palmares.map((e, i) => {
+              const tornNome = e.nome.replace(/\s*\d{4}$/, "").replace(/\s*'\d{2}$/, "");
+              const tpStr = e.tp != null ? (e.tp === 0 ? "E" : e.tp > 0 ? `+${e.tp}` : `${e.tp}`) : null;
+              const medal = e.pos===1?"🥇":e.pos===2?"🥈":"🥉";
+              const bg = e.pos===1?(e.isDirectConfronto?"var(--bg-warn-strong)":"#fffbea"):e.pos===2?"#f0f4ff":"#fff4f0";
+              const border = e.pos===1?(e.isDirectConfronto?"var(--color-amber)":"var(--medal-gold)"):e.pos===2?"var(--medal-silver)":"var(--medal-bronze)";
+              const textColor = e.pos===1?"var(--color-warn-dark)":e.pos===2?"var(--color-info)":"var(--medal-bronze)";
+              return (
+                <div key={i} style={{
+                  display:"flex", alignItems:"center", gap:6,
+                  padding:"6px 10px", borderRadius:7,
+                  background:bg, border:`1px solid ${border}`,
+                  minWidth:110, maxWidth:175,
+                }}>
+                  <div style={{fontSize:20, lineHeight:1, flexShrink:0}}>{medal}</div>
+                  <div style={{minWidth:0}}>
+                    <div style={{fontSize:11, fontWeight:700, color:textColor, marginBottom:1, lineHeight:1.2, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap"}}>
+                      {tornNome}
+                    </div>
+                    <div style={{fontSize:10, color:"var(--text-2)", fontWeight:500}}>
+                      {e.year}
+                      {e.ageGroup && <span style={{marginLeft:4, color:"var(--text-3)", fontWeight:400}}>{e.ageGroup}</span>}
+                      {tpStr && <span style={{marginLeft:4, color:"var(--color-good-dark)", fontWeight:700}}>{tpStr}</span>}
+                    </div>
+                    {e.isDirectConfronto && e.pos === 1 && <div style={{fontSize:9, color:"var(--color-warn-vivid)", fontWeight:700}}>⚔️ vs Manuel</div>}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* ══ TORNEIOS RECORRENTES ══ */}
+      {torneiosRecorrentes.length>0 && (
+        <div style={{marginBottom:16}}>
+          <div className="h-md" style={{marginBottom:10}}>
+            Evolução por torneio
+            <span className="muted fs-11 fw-400" style={{marginLeft:8}}>torneios com 2+ participações</span>
+          </div>
+          <div style={{display:"grid", gridTemplateColumns:"repeat(auto-fill, minmax(260px,1fr))", gap:6}}>
             {torneiosRecorrentes.map(({canon,entries:es})=>{
               const nomeBase = es[0].nome.replace(/\s*'\d\d$/,"").replace(/\s*\d{4}$/,"");
+              const hasPodium = es.some(e => e.pos != null && e.pos <= 3);
+              const podiumBorder = es.some(e=>e.pos===1)?"var(--medal-gold)":es.some(e=>e.pos===2)?"var(--medal-silver)":es.some(e=>e.pos===3)?"var(--medal-bronze)":undefined;
+              const manyEntries = es.length > 5;
               return(
-                <div key={canon} style={{padding:"9px 14px",background:"var(--bg-card)",border:"1px solid var(--border-light)",borderRadius:8}}>
-                  <div style={{fontSize:12,fontWeight:700,color:"var(--text)",marginBottom:5}}>{nomeBase}</div>
-                  <div style={{display:"flex",gap:6,flexWrap:"wrap",alignItems:"center"}}>
-                    {es.map((e,i)=>{
-                      const prev=es[i-1];
-                      const delta=prev&&e.pos!=null&&prev.pos!=null?e.pos-prev.pos:null;
-                      const posColor=e.pos!=null&&e.pos<=3?"var(--color-good-dark)":e.pos!=null&&e.pos<=8?"var(--text)":"var(--text-3)";
-                      return(
-                        <React.Fragment key={e.tid}>
-                          {i>0&&(
-                            <span style={{fontSize:13,fontWeight:800,color:delta!=null&&delta<0?"var(--color-good-dark)":delta!=null&&delta>0?"var(--color-danger-vivid)":"var(--text-3)"}}>
-                              {delta!=null&&delta<0?"↑":delta!=null&&delta>0?"↓":"="}
-                            </span>
-                          )}
-                          <span style={{display:"inline-flex",alignItems:"baseline",gap:3}}>
-                            <span style={{fontSize:11,color:"var(--text-3)",fontWeight:500}}>{e.year}</span>
-                            <span style={{fontSize:13,fontWeight:800,color:posColor}}>
-                              {e.pos!=null?`#${e.pos}`:"—"}
-                            </span>
-                            {e.tp!=null&&<span style={{fontSize:11,color:"var(--text-3)"}}>({e.tp>0?"+":""}{e.tp})</span>}
-                            {e.withManuel&&<span style={{fontSize:9,fontWeight:700,padding:"1px 3px",borderRadius:3,background:"rgba(55,138,221,.15)",color:"var(--color-info-alt)",marginLeft:1}}>∩M</span>}
-                          </span>
-                        </React.Fragment>
-                      );
-                    })}
+                <div key={canon} className="card" style={{padding:"8px 12px", borderLeft: podiumBorder ? `3px solid ${podiumBorder}` : undefined, margin:0}}>
+                  <div style={{fontSize:12, fontWeight:700, color:"var(--text)", marginBottom:5, display:"flex", alignItems:"center", gap:4}}>
+                    {hasPodium && <span style={{fontSize:12}}>{es.find(e=>e.pos===1)?"🏆":es.find(e=>e.pos===2)?"🥈":"🥉"}</span>}
+                    <span style={{overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",flex:1}}>{nomeBase}</span>
+                    <span className="muted fs-10 fw-400" style={{flexShrink:0}}>{es.length}×</span>
+                  </div>
+                  <div style={{overflowX:"auto", paddingBottom:1}}>
+                    <div style={{display:"flex", gap:3, flexWrap:"nowrap", alignItems:"center"}}>
+                      {es.map((e,i)=>{
+                        const prev=es[i-1];
+                        const delta=prev&&e.pos!=null&&prev.pos!=null?e.pos-prev.pos:null;
+                        const medal = e.pos===1?"🥇":e.pos===2?"🥈":e.pos===3?"🥉":null;
+                        const posColor = e.pos===1?"var(--color-warn-dark)":e.pos!=null&&e.pos<=3?"var(--medal-silver)":e.pos!=null&&e.pos<=8?"var(--text)":"var(--text-3)";
+                        const posBg = e.pos===1?"#fffbea":e.pos===2?"#f0f4ff":e.pos===3?"#fff4f0":"var(--bg-detail)";
+                        const borderColor = e.pos===1?"var(--medal-gold)":e.pos===2?"var(--medal-silver)":e.pos===3?"var(--medal-bronze)":"var(--border-light)";
+                        return(
+                          <React.Fragment key={e.tid}>
+                            {i>0 && (
+                              <span style={{fontSize:10, fontWeight:800, color:delta!=null&&delta<0?"var(--color-good-dark)":delta!=null&&delta>0?"var(--color-danger-vivid)":"var(--text-3)", flexShrink:0}}>
+                                {delta!=null&&delta<0?"↑":delta!=null&&delta>0?"↓":"="}
+                              </span>
+                            )}
+                            <div style={{display:"flex", flexDirection:"column", alignItems:"center", gap:0, padding:"3px 5px", borderRadius:4, background:posBg, border:`1px solid ${borderColor}`, flexShrink:0}}>
+                              <span style={{fontSize:9, color:"var(--text-3)", fontWeight:500, lineHeight:1.3}}>{e.year}</span>
+                              <span style={{fontSize:medal?13:11, fontWeight:900, color:posColor, lineHeight:1}}>
+                                {medal ?? (e.pos!=null?`#${e.pos}`:"—")}
+                              </span>
+                              {e.tp!=null && <span style={{fontSize:9, color:e.tp<=0?"var(--color-good-dark)":"var(--text-3)", fontWeight:600, lineHeight:1.3}}>{e.tp>0?"+":""}{e.tp}</span>}
+                            </div>
+                          </React.Fragment>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               );
@@ -3586,20 +3778,20 @@ function PerfilRivalNovo({
       )}
 
       {/* ══ INSCRIÇÕES FUTURAS ══ */}
-      {inscricoesFuturas.length>0&&(
-        <div style={{marginBottom:20}}>
-          <div style={{fontSize:14,fontWeight:700,color:"var(--text)",marginBottom:8}}>
-            Inscrições futuras <Pill cls="p-muted" style={{fontWeight:400,marginLeft:4}}>{inscricoesFuturas.length} torneios</Pill>
+      {inscricoesFuturas.length>0 && (
+        <div style={{marginBottom:16}}>
+          <div className="h-md" style={{marginBottom:10}}>
+            Inscrições futuras <Pill cls="p-muted" style={{fontWeight:400,marginLeft:4}}>{inscricoesFuturas.length}</Pill>
           </div>
-          <div style={{border:"1px solid var(--border-light)",borderRadius:10,overflow:"hidden"}}>
+          <div className="card" style={{padding:0, overflow:"hidden"}}>
             {inscricoesFuturas.map((t,i)=>(
-              <div key={t.t} style={{display:"flex",alignItems:"center",gap:10,padding:"9px 14px",borderBottom:i<inscricoesFuturas.length-1?"1px solid var(--border-light)":"none",background:t.isCommon?"var(--bg-success)":"transparent"}}>
-                <Pill style={{background:t.daysAway===0?"var(--bg-success-strong)":t.daysAway<=7?"var(--bg-warn-strong)":"var(--bg-muted)",color:t.daysAway===0?"var(--color-good-dark)":t.daysAway<=7?"var(--color-warn-dark)":"var(--text-3)",minWidth:60,justifyContent:"center"}}>
+              <div key={t.t} style={{display:"flex", alignItems:"center", gap:12, padding:"12px 16px", borderBottom:i<inscricoesFuturas.length-1?"1px solid var(--border-light)":"none", background:t.isCommon?"var(--bg-success)":"transparent"}}>
+                <Pill style={{background:t.daysAway===0?"var(--bg-success-strong)":t.daysAway<=7?"var(--bg-warn-strong)":"var(--bg-muted)", color:t.daysAway===0?"var(--color-good-dark)":t.daysAway<=7?"var(--color-warn-dark)":"var(--text-3)", minWidth:64, justifyContent:"center", fontSize:12, fontWeight:700}}>
                   {t.daysAway===0?"hoje":`em ${t.daysAway}d`}
                 </Pill>
-                <span style={{flex:1,fontSize:13,fontWeight:t.isCommon?700:500,color:"var(--text)"}}>{t.name.replace(/\s*\d{4}$/,"")}</span>
-                <Pill cls="p-muted">{t.escalao}</Pill>
-                {t.isCommon&&<Pill cls="p-tourn" style={{background:"var(--color-good)",color:"#fff"}}>∩ Manuel</Pill>}
+                <span style={{flex:1, fontSize:14, fontWeight:t.isCommon?700:500, color:"var(--text)"}}>{t.name.replace(/\s*\d{4}$/,"")}</span>
+                <Pill cls="p-muted" style={{fontSize:12}}>{t.escalao}</Pill>
+                {t.isCommon && <Pill style={{background:"var(--color-good)", color:"#fff", fontSize:12, fontWeight:700}}>∩ Manuel</Pill>}
               </div>
             ))}
           </div>
@@ -3608,10 +3800,10 @@ function PerfilRivalNovo({
 
       {/* ══ WALL OF FAME ══ */}
       <div style={{marginBottom:20}}>
-        <div style={{fontSize:14,fontWeight:700,color:"var(--text)",marginBottom:8,display:"flex",alignItems:"baseline",gap:8}}>
-          Wall of fame
+        <div className="h-md" style={{marginBottom:10, display:"flex", alignItems:"baseline", gap:8}}>
+          Histórico completo
           <Pill cls="p-muted" style={{fontWeight:400}}>{wallOfFame.length} torneios{firstYear&&lastYear?` · ${lastYear}→${firstYear}`:""}</Pill>
-          <span style={{fontSize:11,fontWeight:400,color:"var(--text-3)"}}>borda azul = encontro com Manuel</span>
+          <span className="muted fs-11 fw-400">borda azul = encontrou o Manuel</span>
         </div>
         <div style={{border:"1px solid var(--border-light)",borderRadius:10,overflow:"hidden"}}>
           {byYear.length===0&&<div style={{padding:"24px",color:"var(--text-3)",fontSize:13,textAlign:"center"}}>Sem dados</div>}
@@ -3662,7 +3854,10 @@ function PerfilRivalNovo({
                   const vsMedian=e.tp!=null&&e.medianTp!=null?e.tp-e.medianTp:null;
                   const dateStr = e.date ? fmtDate(e.date) : null;
                   return(
-                    <div key={e.tid} style={{display:"grid",gridTemplateColumns:"38px 82px 1fr 70px 22px 64px 56px",alignItems:"center",padding:"8px 14px",borderBottom:ei<entries.length-1?".5px solid var(--border-light)":"none",background:e.withManuel?"rgba(55,138,221,.06)":"transparent",borderLeft:e.isDirectConfronto?"3px solid var(--color-info-alt)":e.withManuel?"3px solid rgba(55,138,221,.3)":"3px solid transparent",opacity:opac}}>
+                    <div key={e.tid} style={{display:"grid",gridTemplateColumns:"38px 82px 1fr 70px 22px 64px 56px",alignItems:"center",padding:"8px 14px",borderBottom:ei<entries.length-1?".5px solid var(--border-light)":"none",
+                      background:e.isDirectConfronto?"var(--accent-alpha-10)":e.withManuel?"var(--accent-alpha-10)":"transparent",
+                      borderLeft:e.isDirectConfronto?"3px solid var(--accent)":e.withManuel?"3px solid var(--accent-alpha-20)":"3px solid transparent",
+                      opacity:opac}}>
                       {/* Pos */}
                       <div style={{textAlign:"center"}}>
                         {isTop3?<span style={{fontSize:20}}>{e.pos===1?"🥇":e.pos===2?"🥈":"🥉"}</span>:<span style={{fontSize:12,fontWeight:600,color:"var(--text-3)"}}>#{e.pos??""}</span>}
@@ -3671,14 +3866,14 @@ function PerfilRivalNovo({
                       <div style={{fontSize:11,color:"var(--text-3)",lineHeight:1.3}}>
                         {dateStr
                           ? (() => {
-                              const parts = dateStr.split(" "); // ["14", "nov.", "2025"]
+                              const parts = dateStr.split(" ");
                               return <><span style={{fontWeight:600,color:"var(--text-2)"}}>{parts[0]}</span> {parts[1]}</>;
                             })()
                           : <span style={{opacity:.4}}>—</span>}
                       </div>
                       {/* Nome + contexto */}
                       <div style={{minWidth:0}}>
-                        <div style={{fontSize:13,fontWeight:700,color:"var(--text)",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:4}}>
+                        <div style={{fontSize:13,fontWeight: (e.fieldSize??0)>=15 ? 800 : 700,color:"var(--text)",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:4}}>
                           <span style={{overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{e.nome.replace(/\s*\d{4}$/,"")}</span>
                           {(() => {
                             const m = e.tid.match(/^usk(\d+)/);
@@ -3694,13 +3889,18 @@ function PerfilRivalNovo({
                             );
                           })()}
                         </div>
-                        <div style={{fontSize:10,color:"var(--text-3)",marginTop:1}}>
+                        <div style={{fontSize:10,marginTop:1,display:"flex",alignItems:"center",gap:4}}>
                           {e.fieldSize!=null
-                            ? `${e.fieldSize} jogadores`
-                            : <span style={{opacity:.4}}>campo desconhecido</span>}
+                            ? <span style={{
+                                color: (e.fieldSize)>=15 ? "var(--accent)" : "var(--text-3)",
+                                fontWeight: (e.fieldSize)>=15 ? 700 : 400,
+                              }}>
+                                {(e.fieldSize)>=15 && "⭐ "}{e.fieldSize} jog.
+                              </span>
+                            : <span style={{opacity:.4,color:"var(--text-3)"}}>campo desconhecido</span>}
                         </div>
-                        {e.withManuel&&!e.isDirectConfronto&&<div style={{fontSize:10,color:"var(--color-info-alt)",opacity:.7,marginTop:1}}>∩ Manuel jogou neste torneio</div>}
-                        {e.isDirectConfronto&&e.manPos!=null&&e.rivalPos!=null&&<div style={{fontSize:11,color:"var(--color-info-alt)",fontWeight:600,marginTop:1}}>∩ Manuel {e.manPos}º · {firstName} {e.rivalPos}º</div>}
+                        {e.withManuel&&!e.isDirectConfronto&&<div style={{fontSize:10,color:"var(--accent)",opacity:.7,marginTop:1}}>∩ Manuel jogou neste torneio</div>}
+                        {e.isDirectConfronto&&e.manPos!=null&&e.rivalPos!=null&&<div style={{fontSize:11,color:"var(--accent)",fontWeight:600,marginTop:1}}>∩ Manuel {e.manPos}º · {firstName} {e.rivalPos}º</div>}
                       </div>
                       {/* Escalão */}
                       <div style={{textAlign:"center"}}><Pill cls="p-muted" style={{fontSize:10}}>{e.ageGroup||"—"}</Pill></div>
@@ -3728,46 +3928,59 @@ function PerfilRivalNovo({
       {/* ══ HEAD-TO-HEAD ══ */}
       {directEnc.length>0&&(
         <div>
-          <div style={{fontSize:14,fontWeight:700,color:"var(--text)",marginBottom:8,display:"flex",alignItems:"baseline",gap:8}}>
+          <div className="h-md" style={{marginBottom:8,display:"flex",alignItems:"baseline",gap:8}}>
             Head-to-head
             <span style={{fontSize:12,fontWeight:400,color:"var(--text-3)"}}>
-              {directEnc.length} confronto{directEnc.length!==1?"s":""} · Manuel{" "}
-              <span style={{color:vitorias>=derrotas?"var(--color-good-dark)":"var(--color-danger-vivid)",fontWeight:700}}>{vitorias}V</span>{" · "}{empates}E{" · "}
-              <span style={{color:derrotas>vitorias?"var(--color-danger-vivid)":"var(--text-3)",fontWeight:700}}>{derrotas}D</span>
+              {directEnc.length} confronto{directEnc.length!==1?"s":""}
+            </span>
+            {/* Score explícito: X vitórias de cada lado */}
+            <span style={{fontSize:13,fontWeight:700,display:"flex",gap:6,alignItems:"center"}}>
+              <span style={{color:vitorias>derrotas?"var(--color-good-dark)":"var(--text-3)"}}>{firstName} {vitorias}×</span>
+              <span style={{color:"var(--text-3)",fontWeight:400}}>vs</span>
+              <span style={{color:derrotas>vitorias?"var(--color-good-dark)":"var(--text-3)"}}>Manuel {derrotas}×</span>
             </span>
           </div>
           <div style={{border:"1px solid var(--border-light)",borderRadius:10,overflow:"hidden"}}>
-            <div style={{display:"grid",gridTemplateColumns:"1fr 56px 72px 72px 44px 72px",fontSize:11,fontWeight:600,color:"var(--text-3)",background:"var(--bg-muted)",padding:"7px 14px",borderBottom:"1px solid var(--border-light)"}}>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 56px 72px 72px 44px 96px",fontSize:11,fontWeight:600,color:"var(--text-3)",background:"var(--bg-muted)",padding:"7px 14px",borderBottom:"1px solid var(--border-light)"}}>
               <span>Torneio</span><span style={{textAlign:"center"}}>Escalão</span>
               <span style={{textAlign:"center"}}>Manuel</span><span style={{textAlign:"center"}}>{firstName}</span>
-              <span style={{textAlign:"center"}}>Dif.</span><span style={{textAlign:"right"}}>Resultado</span>
+              <span style={{textAlign:"center"}}>Dif.</span><span style={{textAlign:"right"}}>Vencedor</span>
             </div>
             {directEnc.map((e,i)=>{
-              const win=e.man_pos<e.rival_pos;
-              const draw=e.man_pos===e.rival_pos;
-              const dif=e.man_to_par!=null&&e.rival_to_par!=null?e.rival_to_par-e.man_to_par:null;
-              const isNext=torneiosComManuel.some(t=>tornCanon(t.name)===tornCanon(e.torneio_nome)&&isoDate(t.date_inicio)>=today);
+              const rivalWon = e.rival_pos < e.man_pos;
+              const draw = e.man_pos === e.rival_pos;
+              const dif = e.man_to_par!=null&&e.rival_to_par!=null ? e.man_to_par - e.rival_to_par : null;
+              const isNext = torneiosComManuel.some(t=>tornCanon(t.name)===tornCanon(e.torneio_nome)&&isoDate(t.date_inicio)>=today);
               return(
-                <div key={i} style={{display:"grid",gridTemplateColumns:"1fr 56px 72px 72px 44px 72px",alignItems:"center",padding:"8px 14px",fontSize:12,borderBottom:i<directEnc.length-1?".5px solid var(--border-light)":"none",background:win?"rgba(22,163,74,.04)":isNext?"rgba(59,130,246,.04)":i%2===1?"rgba(0,0,0,.013)":"transparent"}}>
+                <div key={i} style={{display:"grid",gridTemplateColumns:"1fr 56px 72px 72px 44px 96px",alignItems:"center",padding:"9px 14px",fontSize:12,borderBottom:i<directEnc.length-1?".5px solid var(--border-light)":"none",
+                  background:rivalWon?"rgba(22,163,74,.04)":isNext?"rgba(59,130,246,.04)":i%2===1?"rgba(0,0,0,.013)":"transparent"}}>
                   <div style={{overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>
-                    <span style={{color:"var(--text)",fontWeight:win?700:500}}>{e.torneio_nome.replace(/\s*\d{4}$/,"")}{e.torneio_data?` '${isoDate(e.torneio_data).slice(2,4)}`:""}</span>
+                    <span style={{color:"var(--text)",fontWeight:500}}>{e.torneio_nome.replace(/\s*\d{4}$/,"")}{e.torneio_data?` '${isoDate(e.torneio_data).slice(2,4)}`:""}</span>
                     {isNext&&<Pill cls="" style={{marginLeft:6,background:"var(--bg-info)",color:"var(--color-info)"}}>próx.</Pill>}
                   </div>
                   <div style={{textAlign:"center"}}><Pill cls="p-muted" style={{fontSize:10}}>{e.escalao?.replace(/Boys /,"B").replace(/Girls /,"G")??"—"}</Pill></div>
+                  {/* Manuel: verde quando Manuel ganhou */}
                   <div style={{textAlign:"center"}}>
-                    <span style={{fontWeight:700,fontSize:13,color:win?"var(--color-good-dark)":"var(--text-2)"}}>{e.man_pos}º</span>
+                    <span style={{fontWeight:700,fontSize:13,color:!rivalWon&&!draw?"var(--color-good-dark)":"var(--text-2)"}}>{e.man_pos}º</span>
                     {e.man_to_par!=null&&<span style={{fontSize:11,color:"var(--text-3)",marginLeft:3}}>{tpFmt(e.man_to_par)}</span>}
                   </div>
+                  {/* Rival: verde quando rival ganhou */}
                   <div style={{textAlign:"center"}}>
-                    <span style={{fontWeight:700,fontSize:13,color:!win&&!draw?"var(--color-danger-vivid)":"var(--text-2)"}}>{e.rival_pos}º</span>
+                    <span style={{fontWeight:700,fontSize:13,color:rivalWon?"var(--color-good-dark)":"var(--text-2)"}}>{e.rival_pos}º</span>
                     {e.rival_to_par!=null&&<span style={{fontSize:11,color:"var(--text-3)",marginLeft:3}}>{tpFmt(e.rival_to_par)}</span>}
                   </div>
+                  {/* Dif: positivo = rival melhor */}
                   <div style={{textAlign:"center",fontWeight:800,fontSize:14,color:dif==null?"var(--text-3)":dif>0?"var(--color-good-dark)":dif<0?"var(--color-danger-vivid)":"var(--text-3)"}}>{dif==null?"—":dif>0?"+"+dif:dif===0?"=":dif}</div>
+                  {/* Vencedor — explícito, sem ambiguidade */}
                   <div style={{textAlign:"right"}}>
-                    {isNext?<Pill style={{background:"var(--bg-info)",color:"var(--color-info)"}}>inscrito</Pill>
-                    :win?<Pill style={{background:"var(--bg-success-strong)",color:"var(--color-good-dark)"}}>vitória</Pill>
-                    :draw?<Pill cls="p-muted">empate</Pill>
-                    :<Pill style={{background:"var(--bg-danger-strong)",color:"var(--color-danger-vivid)"}}>derrota</Pill>}
+                    {isNext
+                      ? <Pill style={{background:"var(--bg-info)",color:"var(--color-info)"}}>inscrito</Pill>
+                      : rivalWon
+                        ? <Pill style={{background:"var(--bg-success-strong)",color:"var(--color-good-dark)",fontWeight:700}}>✓ {firstName}</Pill>
+                        : draw
+                          ? <Pill cls="p-muted">empate</Pill>
+                          : <Pill style={{background:"var(--bg-danger-strong)",color:"var(--color-danger-vivid)",fontWeight:700}}>✓ Manuel</Pill>
+                    }
                   </div>
                 </div>
               );
@@ -4090,6 +4303,17 @@ export default function USKidsFieldPage() {
   const [autoRivals,  setAutoRivals]  = useState<AutoRivalPlayer[]>([]);
   const [greatgolfData, setGreatgolfData] = useState<GreatgolfData | null>(null); void setGreatgolfData;
   const [memberHist,   setMemberHist]   = useState<MemberHistData | null>(null);
+
+  // Mapa leve nome→nTorneios — substitui memberHist nas props
+  const mhCountMap = useMemo<Map<string, number>>(() => {
+    const m = new Map<string, number>();
+    if (!memberHist) return m;
+    for (const mh of Object.values(memberHist.jogadores)) {
+      if (!mh.name || mh.name === '?' || String(mh.name).startsWith('[unknown')) continue;
+      m.set(mh.name.toLowerCase().trim(), Object.keys(mh.torneios).length);
+    }
+    return m;
+  }, [memberHist]);
   const [tab, setTabState] = useState<Tab>(() => {
     if (paramTab && VALID_TABS.includes(paramTab)) return paramTab;
     if (locationRival) return "rivais";
@@ -4100,19 +4324,19 @@ export default function USKidsFieldPage() {
     setSearchParams(prev => { const n = new URLSearchParams(prev); n.set("tab", t); return n; }, { replace: true });
   };
     const md = useMasterDetail();
-  const [selectedRival, setSelectedRival] = useState<string | null>(locationRival ?? null);
   const [filterManuel, setFilterManuel] = useState(true);
   const [sidebarRivalSearch, setSidebarRivalSearch] = useState("");
-  const [rivaisFiltersOpen, setRivaisFiltersOpen] = useState(false);
+  const [sidebarRivalSort, setSidebarRivalSort] = useState<"torn" | "enc" | "name">("torn");
+  const [sidebarRivalTier, setSidebarRivalTier] = useState<string>("");
   const [rivalFilters, setRivalFilters] = useState<{
-    pais: string;          // "" = todos
-    escalao: string;       // "" = todos, "9","10","11","12","13"
+    pais: string;
+    escaloes: Set<string>;   // multi-select: "9","10","11","12","13"
     apenasCruzaram: boolean;
     apenasProximoTourn: boolean;
-    minTorneios: number;   // 0 = sem filtro
-    maxNascimento: number; // 0 = sem filtro (ano máximo = jogador mais novo)
-    minNascimento: number; // 0 = sem filtro (ano mínimo = jogador mais velho)
-  }>({ pais: "", escalao: "", apenasCruzaram: false, apenasProximoTourn: false, minTorneios: 0, maxNascimento: 0, minNascimento: 0 });
+    minTorneios: number;
+    maxNascimento: number;
+    minNascimento: number;
+  }>({ pais: "", escaloes: new Set(), apenasCruzaram: false, apenasProximoTourn: false, minTorneios: 0, maxNascimento: 0, minNascimento: 0 });
   const [erro,        setErro]        = useState<string | null>(null);
 
   // selectedT e selectedRival sincronizados com URL params (?t=&rival=)
@@ -4136,7 +4360,10 @@ export default function USKidsFieldPage() {
   const [, startRivalsTransition] = useTransition();
 
   useEffect(() => {
-    fetch("/data/uskids-field.json?v=" + Date.now())
+    // Cache diário: só re-faz fetch uma vez por dia (usa HTTP cache nos restantes pedidos da sessão)
+    const daily = new Date().toISOString().slice(0, 10); // "2026-04-03"
+
+    fetch(`/data/uskids-field.json?v=${daily}`)
       .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
       .then((d: FieldData) => {
         setFieldData(d);
@@ -4152,13 +4379,11 @@ export default function USKidsFieldPage() {
     );
 
     Promise.all([
-      // ficheiro auto-gerado (carregado em paralelo com os históricos)
-      fetch("/data/uskids-results.json?v=" + Date.now())
+      // ficheiro auto-gerado — cache diária para não re-buscar em cada refresh
+      fetch(`/data/uskids-results.json?v=${daily}`)
         .then(r => r.ok ? r.json() : { gerado_em: "", resultados: [] })
         .catch((): ResultsData => ({ gerado_em: "", resultados: [] })),
-      // 15 ficheiros históricos permanentes
-      // cachedFetchJson: os 19 ficheiros são cached — não re-fetched quando KIDSPage
-      // ou KIDSdataLoader os pedem em simultâneo ou sequência.
+      // ficheiros históricos permanentes (usam cachedFetchJson — cached em memória na sessão)
       ...historicosUrls.map(url => cachedFetchJson(url).catch(() => null)),
     ]).then(([autoGerado, ...historicos]) => {
       const auto = autoGerado as ResultsData;
@@ -4218,25 +4443,10 @@ export default function USKidsFieldPage() {
       onUpdate: (rivals) => startRivalsTransition(() => setAutoRivals(rivals)),
     }).catch(() => {});
 
-    // Carregar member history (formato multi-ficheiro)
-    (async () => {
-      let merged: MemberHistData = { gerado_em: "", torneios: {}, jogadores: {} };
-      let found = 0;
-      for (let i = 1; i <= 50; i++) {
-        const file = `/data/uskids-member-history-${String(i).padStart(3,'0')}.json?v=${Date.now()}`;
-        try {
-          const r = await fetch(file);
-          if (!r.ok) break;
-          const d = await r.json() as MemberHistData;
-          Object.assign(merged.torneios, d.torneios || {});
-          Object.assign(merged.jogadores, d.jogadores || {});
-          merged.gerado_em = d.gerado_em || merged.gerado_em;
-          found++;
-          if (found % 5 === 0) setMemberHist({ ...merged });
-        } catch { break; }
-      }
-      if (found > 0) setMemberHist({ ...merged });
-    })();
+    // Carregar member history (slim — cachedFetchJson partilha cache com KIDSdataLoader)
+    cachedFetchJson("/data/uskids-member-history-slim.json")
+      .then(d => setMemberHist(d as MemberHistData))
+      .catch(() => {});
   }, []);
 
   const nResultados = resultsData?.resultados?.length ?? 0;
@@ -4247,6 +4457,7 @@ export default function USKidsFieldPage() {
     vitorias: number; derrotas: number; empates: number;
     totalTournaments: number; firstYear: number | null;
     nextTournName: string | null; daysToNext: number | null; nextIsCommon: boolean;
+    playerTier?: "elite" | "contender" | "forte" | "subindo" | "assiduo" | "consistente" | null;
   };
   const [sidebarRivals, setSidebarRivals] = useState<SidebarRival[]>([]);
   const onRivalsReady = useCallback((list: SidebarRival[]) => {
@@ -4346,6 +4557,18 @@ export default function USKidsFieldPage() {
       .sort((a, b) => isoDate(a.date).localeCompare(isoDate(b.date)));
   }, [torneiosCampo, torneiosResultados]);
 
+  // Pré-computar escalão máximo por rival — evita autoRivals.find() dentro de renderItem (era O(n²))
+  const escalaoMap = useMemo<Map<string, number | null>>(() => {
+    const m = new Map<string, number | null>();
+    for (const a of autoRivals) {
+      const ages = Object.keys(a.r)
+        .map(tid => tid.match(/^usk\d+_b(\d+)$/)?.[1])
+        .filter(Boolean).map(Number);
+      m.set(normNameAuto(a.n), ages.length ? Math.max(...ages) : null);
+    }
+    return m;
+  }, [autoRivals]);
+
   if (erro) return (
     <div style={{ padding: 32 }}>
       <div className="notice-error">
@@ -4381,57 +4604,312 @@ export default function USKidsFieldPage() {
     const q = sidebarRivalSearch.toLowerCase().trim();
     const filtered = sidebarRivals.filter(r => {
       if (q && !r.nome.toLowerCase().includes(q) && !r.pais.toLowerCase().includes(q)) return false;
-      if (rivalFilters.pais && r.pais !== rivalFilters.pais) return false;
-      if (rivalFilters.escalao) {
+      if (rivalFilters.pais && normPaisDisplay(r.pais) !== rivalFilters.pais) return false;
+      if (sidebarRivalTier && r.playerTier !== sidebarRivalTier) return false;
+      if (rivalFilters.escaloes.size > 0) {
         const arR = autoRivals.find(a => normNameAuto(a.n) === normNameAuto(r.nome));
-        if (!arR || !Object.keys(arR.r).some(tid => tid.includes(`_b${rivalFilters.escalao}`))) return false;
+        if (!arR || !Object.keys(arR.r).some(tid =>
+          [...rivalFilters.escaloes].some(n => tid.includes(`_b${n}`))
+        )) return false;
       }
       if (rivalFilters.minTorneios > 0 && r.totalTournaments < rivalFilters.minTorneios) return false;
       if (rivalFilters.apenasCruzaram && r.nEnc === 0) return false;
       if (rivalFilters.apenasProximoTourn && !r.nextIsCommon) return false;
       return true;
     });
+
+    // Ordenar
+    const sorted = [...filtered].sort((a, b) => {
+      if (sidebarRivalSort === "torn") return b.totalTournaments - a.totalTournaments || b.nEnc - a.nEnc;
+      if (sidebarRivalSort === "enc")  return b.nEnc - a.nEnc || b.totalTournaments - a.totalTournaments;
+      return displayName(a.nome).localeCompare(displayName(b.nome), "pt");
+    });
+
+    // Separar em grupos
+    const directos  = sorted.filter(r => r.nEnc > 0);
+    const circuito  = sorted.filter(r => r.nEnc === 0);
+
+    const maxTorn = sorted[0]?.totalTournaments ?? 1;
+
+    const renderItem = (r: typeof sorted[0], rank: number) => {
+      const active = selectedRival === r.nome;
+      const accentColor = r.vitorias > r.derrotas
+        ? "var(--color-teal)"
+        : r.derrotas > r.vitorias ? "var(--color-danger)"
+        : r.nEnc > 0 ? "var(--accent)"
+        : "var(--border)";
+
+      const recordStr = r.nEnc > 0
+        ? [r.vitorias > 0 ? `${r.vitorias}V` : "", r.empates > 0 ? `${r.empates}E` : "", r.derrotas > 0 ? `${r.derrotas}D` : ""].filter(Boolean).join(" ")
+        : null;
+      const recordBg = r.vitorias > r.derrotas ? "var(--bg-success-subtle)"
+        : r.derrotas > r.vitorias ? "var(--bg-danger-strong)"
+        : "var(--bg-muted)";
+      const recordCo = r.vitorias > r.derrotas ? "var(--color-good-dark)"
+        : r.derrotas > r.vitorias ? "var(--color-danger-dark)"
+        : "var(--text-3)";
+
+      // Barra de actividade relativa
+      const pct = Math.max(8, Math.round((r.totalTournaments / maxTorn) * 100));
+
+      return (
+        <button key={r.nome}
+          className={`course-item${active ? " active" : ""}`}
+          style={{ borderLeftColor: active ? accentColor : undefined, padding: "9px 10px 9px 12px" }}
+          onClick={() => setSelectedRival(prev => prev === r.nome ? null : r.nome)}>
+
+          {/* Linha 1: rank + flag + nome + nº torneios */}
+          <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:4 }}>
+            {/* Rank */}
+            <span className="sidebar-rank" style={{ flexShrink:0, fontSize:10, minWidth:20, height:20, borderRadius:4,
+              background: rank <= 3 ? "var(--bg-topbar)" : "var(--bg-muted)",
+              color: rank <= 3 ? "var(--text-inv)" : "var(--text-3)",
+              display:"inline-flex", alignItems:"center", justifyContent:"center", fontWeight:700,
+            }}>
+              {rank}
+            </span>
+            {/* Flag + nome */}
+            <span style={{ fontSize:14, flexShrink:0 }}>{flag(r.pais)}</span>
+            <span style={{ flex:1, fontSize:13, fontWeight: active ? 700 : 600, color:"var(--text)",
+              overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
+              {displayName(r.nome)}
+            </span>
+            {/* Total torneios — número em destaque */}
+            <span style={{ flexShrink:0, textAlign:"right" }}>
+              <span style={{ fontSize:17, fontWeight:900, color: active ? "var(--accent)" : "var(--text-2)", lineHeight:1 }}>
+                {r.totalTournaments}
+              </span>
+              <span style={{ fontSize:9, color:"var(--text-muted)", display:"block", lineHeight:1, textAlign:"center" }}>
+                torn.
+              </span>
+            </span>
+          </div>
+
+          {/* Barra de actividade */}
+          <div style={{ height:3, borderRadius:2, background:"var(--border-light)", overflow:"hidden", marginBottom:5 }}>
+            <div style={{ height:"100%", width:`${pct}%`, borderRadius:2,
+              background: r.nEnc > 0 ? accentColor : "var(--border)" }} />
+          </div>
+
+          {/* Linha 2: encontros + record + desde + escalão actual */}
+          <div style={{ display:"flex", alignItems:"center", gap:5, flexWrap:"wrap" }}>
+            {r.nEnc > 0 && (
+              <span style={{ fontSize:11, fontWeight:700, color:"var(--text-2)" }}>
+                {r.nEnc} enc.
+              </span>
+            )}
+            {recordStr && (
+              <span className="p p-sm" style={{ background:recordBg, color:recordCo, fontSize:10, padding:"1px 5px" }}>
+                {recordStr}
+              </span>
+            )}
+            {r.firstYear && (
+              <span style={{ fontSize:11, color:"var(--text-3)" }}>
+                {r.firstYear}–
+              </span>
+            )}
+            {/* Tier pill compacta */}
+            {r.playerTier && (
+              <span style={{ fontSize:9, padding:"1px 5px", borderRadius:10, fontWeight:700, flexShrink:0,
+                background: r.playerTier==="elite"?"var(--score-eagle)":r.playerTier==="contender"?"var(--medal-gold)":r.playerTier==="forte"?"var(--color-good-dark)":r.playerTier==="subindo"?"var(--color-info)":r.playerTier==="assiduo"?"var(--text-dark)":"var(--accent)",
+                color:"#fff",
+              }}>
+                {r.playerTier==="elite"?"🏆":r.playerTier==="contender"?"⭐":r.playerTier==="forte"?"🎯":r.playerTier==="subindo"?"📈":r.playerTier==="assiduo"?"🔁":"✅"}
+              </span>
+            )}
+            {/* Escalão actual: pré-computado no escalaoMap (O(1) em vez de O(n)) */}
+            {(() => {
+              const maxAge = escalaoMap.get(normNameAuto(r.nome)) ?? null;
+              if (!maxAge) return null;
+              const cls = maxAge <= 10 ? "p-sub10" : maxAge <= 12 ? "p-sub12" : "p-sub14";
+              return <span className={`p p-sm ${cls}`} style={{fontSize:9, padding:"1px 5px"}}>Boys {maxAge}</span>;
+            })()}
+          </div>
+
+          {/* Linha 3: próximo torneio */}
+          {r.nextTournName && (
+            <div style={{ display:"flex", alignItems:"center", gap:4, marginTop:4 }}>
+              <span style={{ fontSize:10, color:"var(--text-3)", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", flex:1 }}>
+                🗓 {r.nextTournName}
+                {r.daysToNext != null && (
+                  <span style={{ marginLeft:4, fontWeight:700,
+                    color: r.daysToNext === 0 ? "var(--color-good)" : r.daysToNext <= 14 ? "var(--color-warn-vivid)" : "var(--text-3)" }}>
+                    {r.daysToNext === 0 ? "hoje" : `${r.daysToNext}d`}
+                  </span>
+                )}
+              </span>
+              {r.nextIsCommon && (
+                <span className="p p-sm" style={{ flexShrink:0, background:"var(--bg-success-subtle)", color:"var(--color-good-dark)", fontSize:9, padding:"1px 4px" }}>∩</span>
+              )}
+            </div>
+          )}
+        </button>
+      );
+    };
+
     return (
       <>
-        <div className="sidebar-section-title">
-          {filtered.length} rival{filtered.length !== 1 ? "s" : ""}
-          {filtered.length < sidebarRivals.length ? ` (de ${sidebarRivals.length})` : ""}
-        </div>
-        {filtered.map(r => {
-          const active = selectedRival === r.nome;
-          const accentColor = r.vitorias > r.derrotas ? "var(--color-teal)" : r.derrotas > r.vitorias ? "var(--color-danger)" : "var(--border)";
-          const recordLabel = [r.vitorias > 0 ? `${r.vitorias}V` : "", r.empates > 0 ? `${r.empates}E` : "", r.derrotas > 0 ? `${r.derrotas}D` : ""].filter(Boolean).join(" ");
-          return (
-            <button key={r.nome}
-              className={`course-item${active ? " active" : ""}`}
-              style={active ? { borderLeftColor: accentColor } : undefined}
-              onClick={() => setSelectedRival(prev => prev === r.nome ? null : r.nome)}>
-              <div className="course-item-name">
-                <span>{flag(r.pais)}</span>
-                <span style={{ flex:1, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{displayName(r.nome)}</span>
-                {recordLabel && (
-                  <span className="p p-sm" style={{
-                    flexShrink: 0,
-                    background: r.vitorias > r.derrotas ? "var(--bg-success-subtle)" : r.derrotas > r.vitorias ? "var(--bg-danger-strong)" : "var(--bg-muted)",
-                    color: r.vitorias > r.derrotas ? "var(--color-good-dark)" : r.derrotas > r.vitorias ? "var(--color-danger-dark)" : "var(--text-3)",
-                  }}>{recordLabel}</span>
-                )}
-              </div>
-              <div className="course-item-meta">
-                {[r.nEnc > 0 ? `${r.nEnc} enc.` : "", r.totalTournaments > 0 ? `${r.totalTournaments} torn.` : "", r.firstYear ? `desde ${r.firstYear}` : ""].filter(Boolean).join(" · ")}
-              </div>
-              {r.nextTournName && (
-                <div className="course-item-meta" style={{ display:"flex", gap:4 }}>
-                  <span style={{ overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", flex:1 }}>
-                    {r.nextTournName}{r.daysToNext != null && ` · ${r.daysToNext === 0 ? "hoje" : `${r.daysToNext}d`}`}
-                  </span>
-                  {r.nextIsCommon && <span className="p p-sm" style={{ flexShrink:0, background:"var(--bg-success-subtle)", color:"var(--color-good-dark)" }}>∩</span>}
-                </div>
-              )}
+        {/* ── Painel de filtros (estilo DrivePage) ── */}
+        <div style={{ borderBottom:"1px solid var(--border-light)", background:"var(--bg-card)" }}>
+
+          {/* Pesquisa + Ordenar */}
+          <div style={{ padding:"8px 10px", display:"flex", flexDirection:"column", gap:5 }}>
+            <input className="input" value={sidebarRivalSearch}
+              onChange={e => setSidebarRivalSearch(e.target.value)}
+              placeholder="🔎 Pesquisar rival…"
+              style={{ width:"100%", fontSize:12, boxSizing:"border-box" }} />
+            <select className="select" value={sidebarRivalSort}
+              onChange={e => setSidebarRivalSort(e.target.value as "torn" | "enc" | "name")}
+              style={{ width:"100%", fontSize:12 }}>
+              <option value="torn">↓ Ordenar por: mais presenças</option>
+              <option value="enc">↓ Ordenar por: mais encontros</option>
+              <option value="name">↓ Ordenar por: nome A–Z</option>
+            </select>
+          </div>
+
+          {/* Escalão — multi-select com cores */}
+          <div className="sidebar-section-title" style={{ paddingTop:2, paddingBottom:2 }}>Escalão (multi-select)</div>
+          <div style={{ padding:"4px 10px 8px", display:"flex", gap:4, flexWrap:"wrap" }}>
+            {([
+              { n:"9",  cls:"p-sub10", bg:"var(--esc-sub10-bg)", fg:"var(--esc-sub10-fg)" },
+              { n:"10", cls:"p-sub10", bg:"var(--esc-sub10-bg)", fg:"var(--esc-sub10-fg)" },
+              { n:"11", cls:"p-sub12", bg:"var(--esc-sub12-bg)", fg:"var(--esc-sub12-fg)" },
+              { n:"12", cls:"p-sub14", bg:"var(--esc-sub14-bg)", fg:"var(--esc-sub14-fg)" },
+              { n:"13", cls:"p-sub14", bg:"var(--esc-sub14-bg)", fg:"var(--esc-sub14-fg)" },
+            ] as const).map(({ n, bg, fg }) => {
+              const active = rivalFilters.escaloes.has(n);
+              return (
+                <button key={n}
+                  className="p p-sm"
+                  style={{
+                    background: active ? bg : "var(--bg-muted)",
+                    color: active ? fg : "var(--text-2)",
+                    border: active ? "none" : "1px solid var(--border)",
+                    cursor:"pointer", fontWeight: active ? 700 : 500,
+                    boxShadow: active ? "0 1px 3px rgba(0,0,0,.2)" : "none",
+                    opacity: active ? 1 : 0.7,
+                  }}
+                  onClick={() => setRivalFilters(f => {
+                    const next = new Set(f.escaloes);
+                    next.has(n) ? next.delete(n) : next.add(n);
+                    return { ...f, escaloes: next };
+                  })}>
+                  Boys {n}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* País */}
+          <div className="sidebar-section-title" style={{ paddingTop:2, paddingBottom:2 }}>País</div>
+          <div style={{ padding:"4px 10px 8px" }}>
+            <select className="select" value={rivalFilters.pais}
+              onChange={e => setRivalFilters(f => ({ ...f, pais: e.target.value }))}
+              style={{ width:"100%", fontSize:12 }}>
+              <option value="">Todos os países</option>
+              {[...new Set(sidebarRivals.map(r => normPaisDisplay(r.pais)).filter(Boolean))]
+                .map(p => ({ p, n: sidebarRivals.filter(r => normPaisDisplay(r.pais) === p).length }))
+                .sort((a, b) => b.n - a.n)
+                .map(({ p, n }) => (
+                  <option key={p} value={p}>{flag(p)} {p} ({n})</option>
+                ))}
+            </select>
+          </div>
+
+          {/* Tipo de jogador */}
+          <div className="sidebar-section-title" style={{ paddingTop:2, paddingBottom:2 }}>Tipo de jogador</div>
+          <div style={{ padding:"4px 10px 8px", display:"flex", gap:4, flexWrap:"wrap" }}>
+            {([
+              { key:"elite",      label:"🏆 Elite",            bg:"var(--score-eagle)",    fg:"#fff" },
+              { key:"contender",  label:"⭐ Top Contender",    bg:"var(--medal-gold)",     fg:"#fff" },
+              { key:"forte",      label:"🎯 Forte Competidor", bg:"var(--color-good-dark)",fg:"#fff" },
+              { key:"subindo",    label:"📈 Em Ascensão",      bg:"var(--color-info)",     fg:"#fff" },
+              { key:"assiduo",    label:"🔁 Assíduo",          bg:"var(--text-dark)",      fg:"#fff" },
+              { key:"consistente",label:"✅ Consistente",      bg:"var(--accent)",         fg:"#fff" },
+            ] as const).map(({ key, label, bg, fg }) => {
+              const count = sidebarRivals.filter(r => r.playerTier === key).length;
+              if (count === 0) return null;
+              const active = sidebarRivalTier === key;
+              return (
+                <button key={key}
+                  onClick={() => setSidebarRivalTier(active ? "" : key)}
+                  style={{
+                    display:"flex", alignItems:"center", gap:4,
+                    padding:"3px 8px", borderRadius:20, border:"none", cursor:"pointer",
+                    background: active ? bg : "var(--bg-muted)",
+                    color: active ? fg : "var(--text-2)",
+                    fontSize:11, fontWeight:active?700:500,
+                    boxShadow: active ? "0 1px 3px rgba(0,0,0,.15)" : "none",
+                  }}>
+                  {label}
+                  <span style={{ fontSize:10, opacity:.8 }}>{count}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Mínimo de torneios */}
+          <div className="sidebar-section-title" style={{ paddingTop:2, paddingBottom:2 }}>Presenças mínimas</div>
+          <div style={{ padding:"4px 10px 8px", display:"flex", gap:4, flexWrap:"wrap" }}>
+            {([0, 5, 10, 20] as const).map(n => (
+              <button key={n}
+                className={`tourn-tab tourn-tab-sm${rivalFilters.minTorneios===n?" active":""}`}
+                style={rivalFilters.minTorneios===n?{}:{ background:"var(--bg-muted)", color:"var(--text-2)", borderColor:"var(--border)" }}
+                onClick={() => setRivalFilters(f=>({...f, minTorneios:n}))}>
+                {n===0 ? "Todos" : `${n}+`}
+              </button>
+            ))}
+          </div>
+
+          {/* Tipo */}
+          <div className="sidebar-section-title" style={{ paddingTop:2, paddingBottom:2 }}>Tipo</div>
+          <div style={{ padding:"4px 10px 10px", display:"flex", gap:4, flexWrap:"wrap" }}>
+            <button
+              className={`tourn-tab tourn-tab-sm${rivalFilters.apenasCruzaram?" active":""}`}
+              style={rivalFilters.apenasCruzaram?{ background:"var(--bg-success-subtle)", borderColor:"var(--color-good)", color:"var(--color-good-dark)" }:{ background:"var(--bg-muted)", color:"var(--text-2)", borderColor:"var(--border)" }}
+              onClick={() => setRivalFilters(f=>({...f, apenasCruzaram:!f.apenasCruzaram}))}>
+              ⚔️ Só directos
             </button>
-          );
-        })}
-        {filtered.length === 0 && <div className="muted" style={{ padding:"16px 12px", fontSize:12 }}>Sem rivais com estes filtros</div>}
+            {/* Limpar filtros */}
+            {(rivalFilters.pais || rivalFilters.escaloes.size > 0 || rivalFilters.minTorneios > 0 || rivalFilters.apenasCruzaram || sidebarRivalTier) && (
+              <button className="tourn-tab tourn-tab-sm" style={{ background:"var(--bg-danger)", color:"var(--color-danger)", borderColor:"var(--border-danger)" }}
+                onClick={() => { setRivalFilters({ pais:"", escaloes: new Set(), apenasCruzaram:false, apenasProximoTourn:false, minTorneios:0, maxNascimento:0, minNascimento:0 }); setSidebarRivalTier(""); }}>
+                ✕ Limpar
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Cabeçalho com contagem */}
+        <div className="sidebar-section-title" style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+          <span>{filtered.length} rival{filtered.length !== 1 ? "s" : ""}
+            {filtered.length < sidebarRivals.length ? ` (de ${sidebarRivals.length})` : ""}
+          </span>
+        </div>
+
+        {/* Grupo 1: Confrontos directos */}
+        {directos.length > 0 && (
+          <>
+            <div className="sidebar-section-title-dark" style={{ fontSize:10, letterSpacing:"0.06em", textTransform:"uppercase" }}>
+              ⚔️ Directos ({directos.length})
+            </div>
+            {directos.map((r, i) => renderItem(r, i + 1))}
+          </>
+        )}
+
+        {/* Grupo 2: Mesmo circuito */}
+        {circuito.length > 0 && (
+          <>
+            <div className="sidebar-section-title-dark" style={{ fontSize:10, letterSpacing:"0.06em", textTransform:"uppercase" }}>
+              🌍 Circuito ({circuito.length})
+            </div>
+            {circuito.map((r, i) => renderItem(r, directos.length + i + 1))}
+          </>
+        )}
+
+        {filtered.length === 0 && (
+          <div className="muted" style={{ padding:"16px 12px", fontSize:12 }}>Sem rivais com estes filtros</div>
+        )}
       </>
     );
   };
@@ -4585,125 +5063,42 @@ export default function USKidsFieldPage() {
   return (
     <div className="tourn-layout" style={{ height:"calc(100vh - 52px)" }}>
 
-      {/* ── TOOLBAR: grid 2 colunas idêntico ao FPG/Drive ── */}
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "1fr auto",
-        borderBottom: "1px solid var(--border-light)",
-      }}>
-        {/* col 1: sidebar + nav */}
-        <div className="toolbar-left" style={{ borderBottom: "none", padding: "6px 0" }}>
-          <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
-          <span className="toolbar-title">🏌️ USKids</span>
-          <div className="toolbar-sep" />
-          <div className="escalao-pills">
-            {TABS.map(tb => (
-              <button key={tb.id}
-                onClick={() => handleTabChange(tb.id)}
-                className={`tourn-tab tourn-tab-sm${tab === tb.id ? " active" : ""}`}
-                style={tab === tb.id ? {} : { background:"var(--bg-muted)", color:"var(--text-2)", borderColor:"var(--border)" }}>
-                {tb.label}
-                {tb.badge > 0 && (
-                  <span style={{
-                    marginLeft:4, fontSize:10, fontWeight:700, padding:"0 5px", borderRadius:8,
-                    background: tab === tb.id ? "rgba(255,255,255,0.25)" : "var(--bg-hover)",
-                    color: tab === tb.id ? "#fff" : "var(--text-3)",
-                  }}>{tb.badge}</span>
-                )}
-              </button>
-            ))}
-          </div>
-          {tab !== "rivais" && (<>
-            <div className="toolbar-sep" />
-            <button
-              className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
-              onClick={() => setFilterManuel(v => !v)}
-              style={filterManuel
-                ? { background:"var(--bg-success-subtle)", borderColor:"var(--color-good)", color:"var(--color-good-dark)", whiteSpace:"nowrap" }
-                : { background:"var(--bg-muted)", color:"var(--text-2)", borderColor:"var(--border)", whiteSpace:"nowrap" }}>
-              ★ Manuel
-            </button>
-          </>)}
-          {tab === "rivais" && (<>
-            <div className="toolbar-sep" />
-            <input className="input" value={sidebarRivalSearch}
-              onChange={e => setSidebarRivalSearch(e.target.value)}
-              placeholder="🔎 rival…"
-              style={{ width:110 }} />
-            {/* Botão "Filtros" — colapsa/expande em mobile */}
-            <div className="toolbar-sep" />
-            <button
-              className={`tourn-tab tourn-tab-sm${rivaisFiltersOpen ? " active" : ""}`}
-              style={rivaisFiltersOpen ? {} : { background:"var(--bg-muted)", color:"var(--text-2)", borderColor:"var(--border)" }}
-              onClick={() => setRivaisFiltersOpen(v => !v)}
-              title="Mostrar/ocultar filtros">
-              Filtros {rivaisFiltersOpen ? "▲" : "▼"}
-            </button>
-            {/* Filtros — visíveis sempre em desktop, colapsáveis em mobile */}
-            <div className="rivals-filters" style={{ display: rivaisFiltersOpen ? "contents" : undefined }}>
-              <div className="toolbar-sep rivals-filters-sep" />
-              {/* Escalão */}
-              {(["9","10","11","12","13"] as const).map(n => (
-                <button key={n}
-                  className={`tourn-tab tourn-tab-sm${rivalFilters.escalao===n?" active":""}`}
-                  style={rivalFilters.escalao===n?{}:{background:"var(--bg-muted)",color:"var(--text-2)",borderColor:"var(--border)"}}
-                  title={`Filtrar escalão Boys ${n}`}
-                  onClick={() => setRivalFilters(f=>({...f, escalao:f.escalao===n?"":n}))}>
-                  B{n}
-                </button>
-              ))}
-              <div className="toolbar-sep rivals-filters-sep" />
-              {/* País — select com todos os países disponíveis */}
-              <select
-                className="select"
-                value={rivalFilters.pais}
-                style={{ height:26, fontSize:11, minWidth:64, maxWidth:90 }}
-                onChange={e => setRivalFilters(f => ({ ...f, pais: e.target.value }))}>
-                <option value="">🌍 País</option>
-                {[...new Set(sidebarRivals.map(r => r.pais).filter(Boolean))]
-                  .map(p => ({ p, n: sidebarRivals.filter(r => r.pais === p).length }))
-                  .sort((a, b) => b.n - a.n)
-                  .map(({ p, n }) => (
-                    <option key={p} value={p}>{flag(p)} {p} ({n})</option>
-                  ))}
-              </select>
-              <div className="toolbar-sep rivals-filters-sep" />
-              {/* Nº mínimo de torneios */}
-              {([5,10,20] as const).map(n => (
-                <button key={n}
-                  className={`tourn-tab tourn-tab-sm${rivalFilters.minTorneios===n?" active":""}`}
-                  style={rivalFilters.minTorneios===n?{}:{background:"var(--bg-muted)",color:"var(--text-2)",borderColor:"var(--border)"}}
-                  title={`Mínimo ${n} torneios`}
-                  onClick={() => setRivalFilters(f=>({...f, minTorneios:f.minTorneios===n?0:n}))}>
-                  {n}+
-                </button>
-              ))}
-              <div className="toolbar-sep rivals-filters-sep" />
-              {/* Cruzamentos com Manuel */}
-              <button
-                className={`tourn-tab tourn-tab-sm${rivalFilters.apenasCruzaram?" active":""}`}
-                style={rivalFilters.apenasCruzaram?{}:{background:"var(--bg-muted)",color:"var(--text-2)",borderColor:"var(--border)"}}
-                title="Apenas rivais que já cruzaram com Manuel"
-                onClick={() => setRivalFilters(f=>({...f, apenasCruzaram:!f.apenasCruzaram}))}>
-                Só ∩M
-              </button>
-            </div>
-          </>)}
-        </div>
-        {/* col 2: link externo + contador */}
-        <div className="toolbar-right" style={{ borderBottom: "none" }}>
-          <a href="https://uskids-golf.vercel.app/" target="_blank" rel="noopener noreferrer"
-            style={{
-              fontSize:11, fontWeight:600, cursor:"pointer",
-              color:"var(--accent)", border:"1px solid var(--accent)",
-              borderRadius:5, padding:"3px 8px", lineHeight:1.6,
-              textDecoration:"none", whiteSpace:"nowrap",
-              display:"inline-flex", alignItems:"center", gap:3,
-            }}>
-            Histórico ↗
-          </a>
-          <span className="chip">{allTorneios.length} torneios</span>
-        </div>
+      {/* ── TOOLBAR ── */}
+      <div style={{ display:"flex", alignItems:"center", gap:6, padding:"6px 10px", overflowX:"auto", flexWrap:"nowrap", borderBottom:"1px solid var(--border-light)", scrollbarWidth:"none" }}>
+        <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
+        <span className="toolbar-title" style={{ flexShrink:0 }}>🏌️ USKids</span>
+        <div className="toolbar-sep" style={{ flexShrink:0 }} />
+        {TABS.map(tb => (
+          <button key={tb.id}
+            onClick={() => handleTabChange(tb.id)}
+            className={`tourn-tab tourn-tab-sm${tab === tb.id ? " active" : ""}`}
+            style={tab === tb.id ? { flexShrink:0 } : { flexShrink:0, background:"var(--bg-muted)", color:"var(--text-2)", borderColor:"var(--border)" }}>
+            {tb.label}
+            {tb.badge > 0 && (
+              <span style={{ marginLeft:4, fontSize:10, fontWeight:700, padding:"0 5px", borderRadius:8,
+                background: tab === tb.id ? "rgba(255,255,255,0.25)" : "var(--bg-hover)",
+                color: tab === tb.id ? "#fff" : "var(--text-3)",
+              }}>{tb.badge}</span>
+            )}
+          </button>
+        ))}
+        {tab !== "rivais" && (<>
+          <div className="toolbar-sep" style={{ flexShrink:0 }} />
+          <button
+            className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
+            onClick={() => setFilterManuel(v => !v)}
+            style={filterManuel
+              ? { flexShrink:0, background:"var(--bg-success-subtle)", borderColor:"var(--color-good)", color:"var(--color-good-dark)" }
+              : { flexShrink:0, background:"var(--bg-muted)", color:"var(--text-2)", borderColor:"var(--border)" }}>
+            ★ Manuel
+          </button>
+        </>)}
+        <div style={{ flex:1, minWidth:8 }} />
+        <a href="https://uskids-golf.vercel.app/" target="_blank" rel="noopener noreferrer"
+          style={{ fontSize:11, fontWeight:600, flexShrink:0, color:"var(--accent)", border:"1px solid var(--accent)", borderRadius:5, padding:"3px 8px", textDecoration:"none", whiteSpace:"nowrap", display:"inline-flex", alignItems:"center", gap:3 }}>
+          Histórico ↗
+        </a>
+        <span className="chip" style={{ flexShrink:0 }}>{allTorneios.length} torn.</span>
       </div>
 
       {/* ── MASTER-DETAIL ── */}
@@ -4728,7 +5123,7 @@ export default function USKidsFieldPage() {
         {tab === "campo" && (
           selectedFieldTorneio
             ? <TabCampoDetalhe torneio={selectedFieldTorneio} />
-            : <div className="muted" style={{ padding:32, textAlign:"center" }}>Selecciona um torneio</div>
+            : <EmptyState message="Selecciona um torneio na barra lateral" icon="⛳" />
         )}
 
         {tab === "resultados" && resultsData && (
@@ -4749,7 +5144,7 @@ export default function USKidsFieldPage() {
           <SectionErrorBoundary label="TabRivais">
             <div style={{ display: tab === "rivais" ? "block" : "none" }}>
               <TabRivais data={resultsData} fieldData={fieldData} intlData={intlData}
-                autoRivals={autoRivals} selectedT={selectedT} memberHist={memberHist}
+                autoRivals={autoRivals} selectedT={selectedT} mhCountMap={mhCountMap}
                 selectedRival={selectedRival} setSelectedRival={setSelectedRival}
                 greatgolfData={greatgolfData}
                 onRivalsReady={onRivalsReady}

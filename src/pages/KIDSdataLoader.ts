@@ -799,23 +799,27 @@ function shortenTournName(name: string): string {
 }
 
 // ── processMemberHistory ──────────────────────────────────────────
-// Converte uskids-member-history.json em AutoRivalPlayer[].
+// Converte uskids-member-history-slim.json em AutoRivalPlayer[].
 // Cada jogador × torneio gera uma entrada com tid = usk{tcode}_b{minAge}.
 // Usado como fonte complementar: fornece torneios não cobertos pelos
 // ficheiros uskids_torneios_completos ou uskids-results.json.
+//
+// Formato slim: par[], yards[], name e startDate estão em d.torneios[tcode]
+// (partilhados por todos os jogadores), não em cada jogador×torneio.
 function processMemberHistory(data: unknown): AutoRivalPlayer[] {
   const d = data as {
     gerado_em: string;
-    torneios: Record<string, { name: string }>;
+    // Dados partilhados do torneio (uma entrada por tcode)
+    torneios: Record<string, {
+      name: string; startDate: string; holesPerRound: number;
+      par: number[] | null; yards: number[] | null;
+    }>;
     jogadores: Record<string, {
-      name: string; country: string; place: string; ageGroup: string;
+      name: string; country: string; ageGroup: string;
       torneios: Record<string, {
-        name: string; startDate: string; endDate: string;
-        totalRounds: number; holesPerRound: number;
-        par: number[] | null; yards: number[] | null;
-        ageGroup: string; status: number;
-        place: number; totalStrokes: number; points: number;
-        rounds: Record<string, { strokes: number[]; gross: number; holes: number }>;
+        ageGroup: string;
+        place: number | null;
+        rounds: Record<string, { gross: number; strokes: number[] }>;
       }>;
     }>;
   };
@@ -841,9 +845,12 @@ function processMemberHistory(data: unknown): AutoRivalPlayer[] {
 
       const tid = `usk${tcode}_b${minAge}`;
 
+      // Dados partilhados do torneio (name, startDate, par, yards)
+      const shared = d.torneios?.[tcodeStr];
+
       // Registar nome do torneio em uskTournNames (se ainda não conhecido)
-      if (!uskTournNames.has(`usk${tcode}`)) {
-        const ds = tourn.startDate || "";
+      if (!uskTournNames.has(`usk${tcode}`) && shared) {
+        const ds = shared.startDate || "";
         const dp = ds.split("/");
         let dateExact = "";
         let dateLabel = "";
@@ -854,7 +861,7 @@ function processMemberHistory(data: unknown): AutoRivalPlayer[] {
           if (yr > 0 && mo >= 1 && mo <= 12)
             dateLabel = `${MONTHS_PT[mo - 1]} ${yr}`;
         }
-        const tname = tourn.name || `t=${tcode}`;
+        const tname = shared.name || `t=${tcode}`;
         uskTournNames.set(`usk${tcode}`, {
           name: tname,
           short: shortenTournName(tname),
@@ -871,15 +878,15 @@ function processMemberHistory(data: unknown): AutoRivalPlayer[] {
 
       const t = rd.reduce((a, b) => a + b, 0);
 
-      // Calcular to-par a partir do par[] por buraco
+      // Calcular to-par a partir do par[] partilhado
       let tp: number | null = null;
-      const parArr = Array.isArray(tourn.par) ? tourn.par : [];
+      const parArr = Array.isArray(shared?.par) ? shared!.par! : [];
       if (parArr.length > 0) {
         const parPerRound = parArr.reduce((a, b) => a + b, 0);
         if (parPerRound > 0) tp = t - parPerRound * rd.length;
       }
 
-      // Posição (place=0 ou negativo = sem posição / WD)
+      // Posição (place=0, null ou negativo = sem posição / WD)
       const p = (tourn.place != null && tourn.place > 0) ? tourn.place : null;
 
       // Actualizar uskFieldSizes com o máximo de posições conhecidas (limite inferior do campo)
@@ -890,10 +897,11 @@ function processMemberHistory(data: unknown): AutoRivalPlayer[] {
       }
 
       // Scorecards buraco-a-buraco (se disponíveis e par conhecido)
+      const holesPerRound = shared?.holesPerRound || 18;
       if (parArr.length > 0) {
         const holeRounds = rdEntries
           .map(([, rnd]) => rnd.strokes || [])
-          .filter(s => s.length === (tourn.holesPerRound || 18) && s.some(v => v > 0));
+          .filter(s => s.length === holesPerRound && s.some(v => v > 0));
         if (holeRounds.length > 0) {
           addScorecard(normName(player.name), {
             tid, playerName: player.name, par: parArr, si: [], meters: [], rounds: holeRounds,
@@ -1036,12 +1044,10 @@ async function _buildAutoRivalsInternal(
     ),
   ];
 
-  // ── FASE 2: member history (carregam sequencialmente em background) ──
-  const memberHistFiles = Array.from({ length: 46 }, (_, i) =>
-    `uskids-member-history-${String(i+1).padStart(3,'0')}.json`
-  );
+  // ── FASE 2: member history (ficheiro slim único em vez de 46 ficheiros) ──
+  const MEMBER_HIST_SLIM = "uskids-member-history-slim.json";
 
-  const totalTasks = coreTasks.length + memberHistFiles.length;
+  const totalTasks = coreTasks.length + 1; // +1 para o member history slim
   let done = 0;
   const report = (label: string) => {
     done++;
@@ -1062,6 +1068,10 @@ async function _buildAutoRivalsInternal(
 
   const map = new Map<string, AutoRivalPlayer>();
 
+  // ── Arrancar o fetch do slim IMEDIATAMENTE — descarrega em paralelo com a Fase 1 ──
+  // Quando a Fase 1 terminar, o slim já está (quase) descarregado → espera mínima
+  const slimPromise = fetchJson(`${base}${MEMBER_HIST_SLIM}`).catch(() => null);
+
   // ── Fase 1: paralelo ──
   await Promise.all(coreTasks.map(async task => {
     try {
@@ -1079,33 +1089,16 @@ async function _buildAutoRivalsInternal(
 
   mergeInto(map, processManuelOverrides());
 
-  // Notificar com resultado inicial (sem member history) — a página já pode mostrar dados
-  onUpdate?.(Array.from(map.values()));
-
-  // ── Fase 2: member history sequencial em background ──
-  // Não bloqueia o retorno — corre em segundo plano
-  (async () => {
-    let loaded = 0;
-    for (const file of memberHistFiles) {
-      try {
-        const d = await fetchJson(`${base}${file}`);
-        mergeInto(map, processMemberHistory(d));
-        loaded++;
-        report("Member History");
-        // Notificar a cada 3 ficheiros ou no último
-        if (loaded % 3 === 0 || file === memberHistFiles[memberHistFiles.length - 1]) {
-          onUpdate?.(Array.from(map.values()));
-        }
-      } catch {
-        report("Member History");
-        // Se falhar (404), parar — não há mais ficheiros
-        if (loaded === 0 && !file.endsWith('-001.json')) break;
-        if (loaded > 0) break; // após o primeiro sucesso, o primeiro 404 significa fim
-      }
+  // ── Fase 2: aguardar o slim (já estava a descarregar em paralelo) ──
+  // Só notifica quando tudo estiver pronto — sem render intermédio
+  try {
+    const d = await slimPromise;
+    if (d) {
+      mergeInto(map, processMemberHistory(d));
     }
-    // Notificação final com todos os dados
-    if (loaded > 0) onUpdate?.(Array.from(map.values()));
-  })();
+  } catch { /* ignorar */ }
+  report("Member History");
+  onUpdate?.(Array.from(map.values()));
 
   return Array.from(map.values());
 }

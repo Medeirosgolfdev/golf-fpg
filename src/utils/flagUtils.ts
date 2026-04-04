@@ -76,6 +76,38 @@ export function normCountry(raw: string): string {
   return COUNTRY_TO_CODE[lower] || lower;
 }
 
+/** Mapa ISO-2 → nome canónico para display */
+const CODE_TO_DISPLAY: Record<string, string> = {
+  pt:"Portugal", gb:"United Kingdom", ie:"Ireland", fr:"France", es:"Spain",
+  de:"Germany", it:"Italy", nl:"Netherlands", se:"Sweden", no:"Norway",
+  dk:"Denmark", fi:"Finland", us:"United States", ca:"Canada", au:"Australia",
+  za:"South Africa", mx:"Mexico", jp:"Japan", kr:"South Korea", ch:"Switzerland",
+  cn:"China", in:"India", br:"Brazil", ar:"Argentina", be:"Belgium", pl:"Poland",
+  sk:"Slovakia", hu:"Hungary", ru:"Russia", ph:"Philippines", sg:"Singapore",
+  cz:"Czech Republic", th:"Thailand", ro:"Romania", ua:"Ukraine", si:"Slovenia",
+  bg:"Bulgaria", lt:"Lithuania", lv:"Latvia", ee:"Estonia", tr:"Turkey",
+  ma:"Morocco", ae:"UAE", kz:"Kazakhstan", vn:"Vietnam", at:"Austria",
+  py:"Paraguay", ng:"Nigeria", om:"Oman", pr:"Puerto Rico", cr:"Costa Rica",
+  je:"Jersey", cy:"Cyprus", lb:"Lebanon", id:"Indonesia", hk:"Hong Kong",
+  tw:"Taiwan", nz:"New Zealand", am:"Armenia", co:"Colombia", cl:"Chile",
+  bb:"Barbados", bs:"Bahamas", bo:"Bolivia", do:"Dominican Rep.",
+  dz:"Algeria", ec:"Ecuador", gt:"Guatemala", hn:"Honduras", ke:"Kenya",
+  kh:"Cambodia", ni:"Nicaragua", pa:"Panama", pe:"Peru", sv:"El Salvador",
+  ug:"Uganda", uy:"Uruguay", ve:"Venezuela", gr:"Greece", il:"Israel",
+  hr:"Croatia", rs:"Serbia", lu:"Luxembourg", is:"Iceland", my:"Malaysia",
+  sc:"Scotland",
+};
+
+/** Converte qualquer formato de país para nome canónico de display.
+ *  "US" → "United States", "Russian Federation" → "Russia", "england" → "United Kingdom" */
+export function normPaisDisplay(raw: string): string {
+  if (!raw) return "";
+  const code = normCountry(raw); // → "us", "ru", "gb", etc.
+  if (code.length === 2) return CODE_TO_DISPLAY[code] ?? raw;
+  // normCountry didn't resolve → devolve o original capitalizado
+  return raw.trim();
+}
+
 /** Converte qualquer formato de país para emoji de bandeira.
  *  Aceita código ISO-2 ("PT"), nome EN ("Portugal"), nome PT ("Portugal") */
 export function flag(p: string): string {

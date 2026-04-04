@@ -730,6 +730,31 @@ function useMemberHist() {
   return mh;
 }
 
+// ── Scoring stats (pré-calculadas de uskids-player-scoring-stats.json) ──
+interface ScoringStatsBp {
+  avg: number; n: number; under: number;
+}
+interface ScoringStatsEntry {
+  name: string;
+  e: number; b: number; p: number; bo: number; d: number; w: number;
+  tot: number; n: number; avg: number | null; best: number | null; upr: number;
+  bp?: Record<string, ScoringStatsBp>;
+}
+interface ScoringStatsData {
+  gerado_em: string;
+  jogadores: Record<string, ScoringStatsEntry>;
+}
+
+/** Hook: carrega uskids-player-scoring-stats.json */
+function useScoringStats() {
+  const [stats, setStats] = React.useState<ScoringStatsData | null>(null);
+  React.useEffect(() => {
+    fetch("/data/uskids-player-scoring-stats.json")
+      .then(r => r.json()).then(setStats).catch(() => {});
+  }, []);
+  return stats;
+}
+
 /** Parse data "MM/DD/YYYY" ou "YYYY-MM-DD" → "YYYY-MM-DD" para sort/display */
 function isoDate(s: string): string {
   if (!s) return "";
@@ -891,6 +916,9 @@ function useRivals() { return React.useContext(RivalsCtx); }
 
 const MemberHistCtx = React.createContext<MHData | null>(null);
 function useMH() { return React.useContext(MemberHistCtx); }
+
+const ScoringStatsCtx = React.createContext<ScoringStatsData | null>(null);
+function useScoringStatsCtx() { return React.useContext(ScoringStatsCtx); }
 
 /* ── Rank map derivado do array de rivais ── */
 function buildRankMap(rivals: RivalPlayer[]): Record<string, number> {
@@ -1881,10 +1909,18 @@ function MemberHistTable({ mhTorneios, memberId }: {
 function RivalDetail({ playerName }: { playerName: string }) {
   const rivals = useRivals();
   const memberHist = useMH();
+  const scoringStats = useScoringStatsCtx();
   const navigate = useNavigate();
   const rival = rivals.find(d => d.n === playerName);
   // Usar o Manuel do array merged (tem wjgc25_b1011 e outros tids auto)
   const manuelMerged = rivals.find(d => d.isM) ?? manuel;
+
+  // Scoring stats pré-calculadas para este jogador (do slim.json)
+  const playerScoringStats = React.useMemo(() => {
+    if (!scoringStats) return null;
+    const key = normName(playerName);
+    return scoringStats.jogadores[key] ?? null;
+  }, [scoringStats, playerName]);
 
   // Member history lookup for this player (used for DOB estimation + history table)
   const mhPlayer = React.useMemo(() => {
@@ -2177,584 +2213,460 @@ function RivalDetail({ playerName }: { playerName: string }) {
     </tr>
   );
 
+
+  // ── Helpers de data ──────────────────────────────────────────────
+  const MONTHS_PT_FULL = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
+
+  const fmtDM = (dateExact?: string, fallback?: string): string => {
+    if (dateExact) {
+      const d = new Date(dateExact + "T12:00:00");
+      return `${d.getDate()} ${MONTHS_PT_FULL[d.getMonth()]}`;
+    }
+    return fallback?.replace(/\s+\d{4}$/, "") ?? "";
+  };
+
+  const yearOf = (dateExact?: string, fallback?: string): number => {
+    if (dateExact) return parseInt(dateExact.slice(0, 4));
+    return parseInt(fallback?.match(/(\d{4})/)?.[1] ?? "0");
+  };
+
+  // ── Palmarès ─────────────────────────────────────────────────────
+  const palmares = React.useMemo(() =>
+    tournResults.filter(x => x.res.p === 1)
+      .sort((a, b) => (b.t.dateExact ?? b.t.date).localeCompare(a.t.dateExact ?? a.t.date)),
+  [tournResults]);
+
+  // ── Tier badge ───────────────────────────────────────────────────
+  const tierBadge = React.useMemo(() => {
+    if (!rival || isManuel || played === 0) return null;
+    const wins = palmares.length;
+    const ps = tournResults.filter(x => typeof x.res.p === "number").map(x => x.res.p as number);
+    const avgPos = ps.length ? ps.reduce((a, b) => a + b, 0) / ps.length : null;
+    if (wins >= 3 && avgPos != null && avgPos <= 4)  return { label: "Elite",         icon: "🏆", cls: "seg-eagle"  };
+    if (wins >= 1 && avgPos != null && avgPos <= 5)  return { label: "Top Contender", icon: "⭐", cls: "seg-birdie" };
+    if (avgPos != null && avgPos <= 8 && played >= 5) return { label: "Forte",        icon: "🎯", cls: "seg-par"   };
+    if (played >= 20)                                return { label: "Assíduo",       icon: "🔁", cls: "seg-bogey" };
+    return null;
+  }, [rival, isManuel, played, palmares, tournResults]);
+
+  // ── H2H data ─────────────────────────────────────────────────────
+  const h2hData = React.useMemo(() => {
+    if (!rival || isManuel) return null;
+    const rH = hiddenTids(rival), mH = hiddenTids(manuelMerged);
+    const tids = Object.keys(rival.r).filter(tid => {
+      if (rH.has(tid) || mH.has(tid)) return false;
+      return typeof manuelMerged?.r[tid]?.p === "number" && typeof rival.r[tid]?.p === "number";
+    });
+    if (!tids.length) return null;
+    const w = tids.filter(t => (manuelMerged.r[t].p as number) < (rival.r[t].p as number)).length;
+    const l = tids.filter(t => (manuelMerged.r[t].p as number) > (rival.r[t].p as number)).length;
+    return { tids, wins: w, losses: l, draws: tids.length - w - l };
+  }, [rival, isManuel, manuelMerged]);
+
+  // ── Scoring block ─────────────────────────────────────────────────
+  const scoringBlock = React.useMemo(() => {
+    let e=0,b=0,p=0,bo=0,d=0,w=0,tot=0,upr=0;
+    const bp: Record<number,{sum:number;n:number;under:number}> = {3:{sum:0,n:0,under:0},4:{sum:0,n:0,under:0},5:{sum:0,n:0,under:0}};
+    const ps = playerScoringStats;
+    if (ps) {
+      e=ps.e; b=ps.b; p=ps.p; bo=ps.bo; d=ps.d; w=ps.w; tot=ps.tot; upr=ps.upr;
+      for (const pp of [3,4,5] as const) {
+        const bpe = ps.bp?.[pp];
+        if (bpe) bp[pp] = { sum: bpe.avg*bpe.n, n: bpe.n, under: bpe.under };
+      }
+    } else {
+      for (let k=0;k<allCardScores.length;k++) {
+        const sc=allCardScores[k], par=allCardPars[k];
+        for (let i=0;i<18;i++) {
+          const dv=sc[i]-par[i];
+          if(dv<=-2)e++; else if(dv===-1)b++; else if(dv===0)p++; else if(dv===1)bo++; else if(dv===2)d++; else w++;
+          const pp=par[i] as 3|4|5;
+          if(pp===3||pp===4||pp===5){bp[pp].sum+=sc[i];bp[pp].n++;if(dv<0)bp[pp].under++;}
+        }
+        const gt=sc.reduce((a,v)=>a+v,0),pt=par.reduce((a,v)=>a+v,0);
+        if(gt<pt)upr++;
+      }
+      tot=allCardScores.length*18;
+    }
+    return { e,b,p,bo,d,w,tot,upr,n:ps?.n??allCardScores.length,bp };
+  }, [playerScoringStats, allCardScores, allCardPars]);
+
+  // ── Std dev rondas ───────────────────────────────────────────────
+  const rdStdDev = allRds.length > 1
+    ? Math.sqrt(allRds.reduce((s,r)=>s+(r-avgRd!)*(r-avgRd!),0)/(allRds.length-1))
+    : null;
+
+  // ── DOB ──────────────────────────────────────────────────────────
+  const dobInfo = React.useMemo(() => rival ? computeDobInfo(rival, mhPlayer) : null, [rival, mhPlayer]);
+
   return (
     <>
-      {/* ── Header ── */}
-      <div style={{ marginBottom: 20 }}>
-        {/* Row 1: name + rank + trend */}
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6, flexWrap: "wrap" }}>
-          <span style={{ fontSize: 22 }}>{flag}</span>
-          <h2 style={{ fontSize: 22, fontWeight: 800, margin: 0, color: "var(--text)" }}>{playerName}</h2>
-          {rank != null && (
-            <span className={`sidebar-rank ${rank <= 3 ? "sidebar-rank-top3" : rank <= 10 ? "sidebar-rank-top10" : "sidebar-rank-rest"}`}
-              style={{ fontSize: 12, padding: "2px 8px" }}>
-              #{rank}/{totalRanked}
-            </span>
-          )}
-          {tr && <span style={{ fontSize: 15, fontWeight: 700, color: TR_I[tr as keyof typeof TR_I].c }}>{TR_I[tr as keyof typeof TR_I].i}</span>}
-          {rival?.up.map(u => {
-            const up = UP.find(x => x.id === u);
-            return up ? <span key={u} className="p p-sm" style={{ background: "var(--bg-success-strong)", color: "var(--color-good-dark)", fontSize: 11 }}>▲ {up.short}</span> : null;
-          })}
-          {/* USKids link — far right */}
-          {!isManuel && (
-            <button
-              onClick={() => navigate("/uskids", { state: { rival: playerName } })}
-              className="p p-filter p-sm"
-              style={{ marginLeft: "auto", fontSize: 11 }}
-              title="Ver encontros e histórico USKids"
-            >
-              🏌️ USKids →
-            </button>
+      {/* ══ HERO CARD ══ */}
+      <div className="card" style={{ marginBottom: 12, padding: 0, overflow: "hidden" }}>
+        <div style={{ padding: "16px 18px 0", display: "flex", gap: 14, alignItems: "flex-start" }}>
+          <span style={{ fontSize: 46, lineHeight: 1, flexShrink: 0 }}>{flag}</span>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            {/* Linha 1: nome + rank + trend + USKids */}
+            <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", marginBottom: 8 }}>
+              <h2 style={{ fontSize: 20, fontWeight: 700, margin: 0 }}>{playerName}</h2>
+              {rank != null && (
+                <span className={`sidebar-rank ${rank <= 3 ? "sidebar-rank-top3" : rank <= 10 ? "sidebar-rank-top10" : "sidebar-rank-rest"}`}
+                  style={{ fontSize: 11, padding: "2px 7px" }}>#{rank}/{totalRanked}</span>
+              )}
+              {tr && <span style={{ fontSize: 14, fontWeight: 700, color: TR_I[tr as keyof typeof TR_I].c }}>{TR_I[tr as keyof typeof TR_I].i}</span>}
+              {rival?.up.map(u => { const up = UP.find(x => x.id === u); return up ? <span key={u} className="p p-sm" style={{ background: "var(--bg-success-strong)", color: "var(--color-good-dark)", fontSize: 11 }}>▲ {up.short}</span> : null; })}
+              {!isManuel && (
+                <button onClick={() => navigate("/uskids", { state: { rival: playerName } })}
+                  className="p p-filter p-sm" style={{ marginLeft: "auto", fontSize: 11 }}>🏌️ USKids →</button>
+              )}
+            </div>
+            {/* Linha 2: país · tier · DOB */}
+            <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", fontSize: 12, color: "var(--text-2)", marginBottom: 14 }}>
+              {rival && !isManuel && <span style={{ fontWeight: 600 }}>{rival.co}</span>}
+              {isManuel && <span className="p p-outline p-sm">REF</span>}
+              {tierBadge && <span className={`p p-sm ${tierBadge.cls}`} style={{ fontSize: 11 }}>{tierBadge.icon} {tierBadge.label}</span>}
+              {dobInfo && (() => {
+                if (!dobInfo.exact && dobInfo.rangeStr === "?") return null;
+                if (dobInfo.exact) return <span style={{ color: "var(--color-good-dark)", fontWeight: 600 }}>🎂 {dobInfo.ageStr} · {dobInfo.dobStr}</span>;
+                const days = dobInfo.rangeMin && dobInfo.rangeMax ? Math.round((dobInfo.rangeMax.getTime()-dobInfo.rangeMin.getTime())/86400000) : 999;
+                return <span style={{ color: days<=60?"var(--color-good-dark)":days<=180?"var(--text-2)":"var(--text-3)" }}>{days<=60?"🎯":"📅"} {dobInfo.ageStr} · ~{dobInfo.rangeStr}</span>;
+              })()}
+            </div>
+          </div>
+          {/* H2H summary box */}
+          {h2hData && !isManuel && (
+            <div style={{ flexShrink: 0, background: "var(--bg-muted)", borderRadius: 10, padding: "10px 14px", textAlign: "center", minWidth: 100 }}>
+              <div style={{ fontSize: 10, color: "var(--text-3)", marginBottom: 6, textTransform: "uppercase", letterSpacing: ".04em" }}>vs Manuel</div>
+              <div style={{ display: "flex", gap: 8, justifyContent: "center", marginBottom: 7 }}>
+                <div><div style={{ fontSize: 22, fontWeight: 700, color: "var(--color-good-dark)" }}>{h2hData.wins}</div><div style={{ fontSize: 10, color: "var(--text-2)" }}>V</div></div>
+                <div><div style={{ fontSize: 22, fontWeight: 700, color: "var(--text-3)" }}>{h2hData.draws}</div><div style={{ fontSize: 10, color: "var(--text-2)" }}>E</div></div>
+                <div><div style={{ fontSize: 22, fontWeight: 700, color: "var(--color-danger)" }}>{h2hData.losses}</div><div style={{ fontSize: 10, color: "var(--text-2)" }}>D</div></div>
+              </div>
+              <div style={{ height: 5, borderRadius: 3, overflow: "hidden", display: "flex", gap: 1 }}>
+                {h2hData.wins>0   && <div style={{ flex: h2hData.wins,   background: "var(--color-good-dark)" }} />}
+                {h2hData.draws>0  && <div style={{ flex: h2hData.draws,  background: "var(--border-light)" }} />}
+                {h2hData.losses>0 && <div style={{ flex: h2hData.losses, background: "var(--color-danger)" }} />}
+              </div>
+              <div style={{ fontSize: 10, color: "var(--text-3)", marginTop: 4 }}>{h2hData.tids.length} confrontos</div>
+            </div>
           )}
         </div>
 
-        {/* Row 2: country · dob · stats — spread across full width */}
-        <div style={{ display: "flex", gap: 20, alignItems: "center", flexWrap: "wrap", fontSize: 13, color: "var(--text-2)" }}>
-          {rival && !isManuel && (
-            <span style={{ fontWeight: 500 }}>{rival.co}</span>
+        {/* KPI grid */}
+        <div style={{ padding: "0 14px 14px", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(86px,1fr))", gap: 7 }}>
+          {playedDedup > 0 && (
+            <div className="kpi" style={{ padding: "8px 10px" }}>
+              <div className="kpi-lbl">Torneios</div>
+              <div className="kpi-val" style={{ fontSize: 22 }}>{playedDedup}</div>
+              <div className="kpi-sub">{roundsDedup} rondas</div>
+            </div>
           )}
-          {isManuel && <span className="p p-outline p-sm">REF</span>}
-
-          {/* DOB */}
-          {rival && (() => {
-            const d = computeDobInfo(rival, mhPlayer);
-            if (!d.exact && d.rangeStr === "?") return null;
-            if (d.exact) {
-              return (
-                <span style={{ color: "var(--color-good-dark)", fontWeight: 600 }}
-                  title={`Data de nascimento exacta: ${d.dobStr}`}>
-                  🎂 {d.ageStr} · {d.dobStr}
-                </span>
-              );
-            }
-            const spanDays = d.rangeMin && d.rangeMax
-              ? Math.round((d.rangeMax.getTime() - d.rangeMin.getTime()) / 86400000) : 999;
-            const col = spanDays <= 60  ? "var(--color-good-dark)"
-                      : spanDays <= 180 ? "var(--text-2)" : "var(--text-3)";
-            const icon = spanDays <= 60 ? "🎯" : "📅";
-            return (
-              <span style={{ color: col }} title={`Estimativa · janela ${spanDays}d`}>
-                {icon} {d.ageStr} · ~{d.rangeStr}
-              </span>
-            );
-          })()}
-
-          {/* Stats pills */}
-          {played > 0 && <>
-            <span style={{ color: "var(--text-3)" }}>·</span>
-            <span><strong style={{ fontWeight: 700, color: "var(--text)", fontSize: 14 }}>{played}</strong> torneios</span>
-            <span><strong style={{ fontWeight: 700, color: "var(--text)", fontSize: 14 }}>{roundsDedup}</strong> rondas</span>
-          </>}
-          {bestTp != null && <>
-            <span style={{ color: "var(--text-3)" }}>·</span>
-            <span>melhor
-              <strong style={{ fontWeight: 700, color: tpColorDark(bestTp), fontSize: 14, marginLeft: 4 }}>{fmtToPar(bestTp)}</strong>
-            </span>
-          </>}
+          {palmares.length > 0 && (
+            <div className="kpi" style={{ padding: "8px 10px" }}>
+              <div className="kpi-lbl">Vitórias</div>
+              <div className="kpi-val" style={{ fontSize: 22, color: "var(--medal-gold,#d97706)" }}>🥇×{palmares.length}</div>
+            </div>
+          )}
+          {bestTp != null && (
+            <div className="kpi" style={{ padding: "8px 10px" }}>
+              <div className="kpi-lbl">Melhor ±Par</div>
+              <div className="kpi-val" style={{ fontSize: 22, color: tpColorDark(bestTp) }}>{fmtToPar(bestTp)}</div>
+              <div className="kpi-sub">torneio</div>
+            </div>
+          )}
           {avgRd != null && (
-            <span>avg
-              <strong style={{ fontWeight: 700, color: "var(--text)", fontSize: 14, marginLeft: 4 }}>{avgRd.toFixed(1)}</strong>
-            </span>
+            <div className="kpi" style={{ padding: "8px 10px" }}>
+              <div className="kpi-lbl">Média Ronda</div>
+              <div className="kpi-val" style={{ fontSize: 22 }}>{avgRd.toFixed(1)}</div>
+              {rdStdDev != null && <div className="kpi-sub">σ {rdStdDev.toFixed(1)}</div>}
+            </div>
+          )}
+          {scoringBlock.n > 0 && (
+            <div className="kpi" style={{ padding: "8px 10px" }}>
+              <div className="kpi-lbl">Sub-par</div>
+              <div className="kpi-val" style={{ fontSize: 22, color: scoringBlock.upr>0?"var(--color-good-dark)":"var(--text-3)" }}>
+                {Math.round(scoringBlock.upr/scoringBlock.n*100)}%
+              </div>
+              <div className="kpi-sub">{scoringBlock.upr}/{scoringBlock.n} rondas</div>
+            </div>
           )}
         </div>
       </div>
 
-      {/* ── H2H vs Manuel ── */}
-      {(() => {
-        if (!rival || isManuel) return null;
-        const rivalHidden = hiddenTids(rival);
-        const manuelHidden = hiddenTids(manuelMerged);
-        const sharedTids = Object.keys(rival.r).filter(tid => {
-          if (rivalHidden.has(tid) || manuelHidden.has(tid)) return false;
-          const m = manuelMerged?.r[tid];
-          const r = rival.r[tid];
-          return typeof m?.p === "number" && typeof r?.p === "number";
-        });
-        if (sharedTids.length === 0) return null;
-        const wins = sharedTids.filter(tid => (manuelMerged.r[tid].p as number) < (rival.r[tid].p as number)).length;
-        const losses = sharedTids.filter(tid => (manuelMerged.r[tid].p as number) > (rival.r[tid].p as number)).length;
-        const draws = sharedTids.length - wins - losses;
-        const rivalShortName = playerName.split(" ").slice(-1)[0];
-        return (
-          <>
-          <div style={{ marginBottom: 20 }}>
-            <div style={{ fontSize: 12, fontWeight: 600, color: "var(--text-2)", marginBottom: 8 }}>
-              Head-to-Head · {sharedTids.length} torneios juntos
-            </div>
-            {/* Bar */}
-            <div style={{ display: "flex", height: 18, borderRadius: 4, overflow: "hidden", gap: 2, marginBottom: 8 }}>
-              {wins  > 0 && <div style={{ flex: wins,  background: "var(--color-good-dark)" }} title={`Manuel ganhou: ${wins}`} />}
-              {draws > 0 && <div style={{ flex: draws, background: "var(--border-light)" }}          title={`Empates: ${draws}`} />}
-              {losses> 0 && <div style={{ flex: losses,background: "var(--color-danger)" }}    title={`${rivalShortName} ganhou: ${losses}`} />}
-            </div>
-            {/* Legend */}
-            <div style={{ display: "flex", gap: 16, fontSize: 12, flexWrap: "wrap" }}>
-              <span className="u-flex-gap5">
-                <span style={{ width: 10, height: 10, borderRadius: 2, background: "var(--color-good-dark)", display: "inline-block" }} />
-                <strong style={{ color: "var(--color-good-dark)", fontWeight: 700, fontSize: 14 }}>{wins}</strong>
-                <span style={{ color: "var(--text-3)" }}>Vitórias Manuel</span>
-              </span>
-              <span className="u-flex-gap5">
-                <span style={{ width: 10, height: 10, borderRadius: 2, background: "var(--border)", display: "inline-block" }} />
-                <strong style={{ color: "var(--text-2)", fontWeight: 700, fontSize: 14 }}>{draws}</strong>
-                <span style={{ color: "var(--text-3)" }}>Empates</span>
-              </span>
-              <span className="u-flex-gap5">
-                <span style={{ width: 10, height: 10, borderRadius: 2, background: "var(--color-danger)", display: "inline-block" }} />
-                <strong style={{ color: "var(--color-danger)", fontWeight: 700, fontSize: 14 }}>{losses}</strong>
-                <span style={{ color: "var(--text-3)" }}>Vitórias {rivalShortName}</span>
-              </span>
-            </div>
-          </div>
-            {/* Tabela de encontros */}
-            <div className="scroll-x mt-10">
-              <table className="dtable" style={{ width: "100%", fontSize: 12 }}>
-                <thead>
-                  <tr>
-                    <th style={{ textAlign: "left", padding: "4px 8px" }}>Torneio</th>
-                    <th style={{ textAlign: "center", width: 70 }}>Escalão</th>
-                    <th style={{ textAlign: "center", width: 80 }}>Manuel</th>
-                    <th style={{ textAlign: "center", width: 80 }}>{rivalShortName}</th>
-                    <th style={{ textAlign: "center", width: 40 }}></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {sharedTids
-                    .map(tid => {
-                      const info = getTournInfo(tid);
-                      const mRes = manuelMerged.r[tid];
-                      const rRes = rival.r[tid];
-                      const mPos = mRes.p as number, rPos = rRes.p as number;
-                      const manWon = mPos < rPos, rivalWon = rPos < mPos;
-                      return { tid, info, mRes, rRes, mPos, rPos, manWon, rivalWon };
-                    })
-                    .sort((a, b) => (b.info.dateExact ?? b.info.date).localeCompare(a.info.dateExact ?? a.info.date))
-                    .map(({ tid, info, mRes, rRes, mPos, rPos, manWon, rivalWon }) => {
-                      const ageGrp = (rRes as any).ageGroup ?? null;
-                      return (
-                        <tr key={tid} style={{ borderBottom: "1px solid var(--border-light)" }}>
-                          <td style={{ padding: "5px 8px", fontWeight: 500 }}>
-                            {info.name}
-                            <span style={{ fontSize: 10, color: "var(--text-3)", marginLeft: 6 }}>{info.date}</span>
-                          </td>
-                          <td style={{ textAlign: "center" }}>
-                            {ageGrp && (
-                              <span style={{ fontSize: 10, fontWeight: 600, padding: "1px 6px", borderRadius: 3,
-                                background: "var(--bg-info-subtle)", color: "var(--color-info-alt)",
-                                border: "1px solid var(--color-info-light)" }}>
-                                {ageGrp}
-                              </span>
-                            )}
-                          </td>
-                          <td style={{ textAlign: "center", fontWeight: 700, fontSize: 13,
-                            color: manWon ? "var(--color-good-dark)" : rivalWon ? "var(--color-danger)" : "var(--text-3)" }}>
-                            #{mPos}
-                            {mRes.tp != null && <span style={{ fontSize: 10, fontWeight: 400, marginLeft: 3 }}>({fmtToPar(mRes.tp)})</span>}
-                          </td>
-                          <td style={{ textAlign: "center", fontWeight: 700, fontSize: 13,
-                            color: rivalWon ? "var(--color-good-dark)" : manWon ? "var(--color-danger)" : "var(--text-3)" }}>
-                            #{rPos}
-                            {rRes.tp != null && <span style={{ fontSize: 10, fontWeight: 400, marginLeft: 3 }}>({fmtToPar(rRes.tp)})</span>}
-                          </td>
-                          <td style={{ textAlign: "center", fontSize: 14, fontWeight: 800,
-                            color: manWon ? "var(--color-good-dark)" : rivalWon ? "var(--color-danger)" : "var(--text-3)" }}>
-                            {manWon ? "✓" : rivalWon ? "✗" : "="}
-                          </td>
-                        </tr>
-                      );
-                    })}
-                </tbody>
-              </table>
-            </div>
-          </>
-        );
-      })()}
-
-      {/* ── KPIs + Distribuição de scoring ── */}
-      {(() => {
-        // ── Scoring distribution from scorecards ──
-        let eagles=0,birdies=0,pars=0,bogeys=0,doubles=0,worse=0;
-        // Par-type breakdown
-        const byPar: Record<3|4|5, { sum: number; n: number; under: number }> = {
-          3: {sum:0,n:0,under:0}, 4: {sum:0,n:0,under:0}, 5: {sum:0,n:0,under:0}
-        };
-        for (let k=0;k<allCardScores.length;k++) {
-          const sc=allCardScores[k], pp=allCardPars[k];
-          for (let i=0;i<18;i++) {
-            const d=sc[i]-pp[i];
-            if(d<=-2)eagles++; else if(d===-1)birdies++; else if(d===0)pars++; else if(d===1)bogeys++; else if(d===2)doubles++; else worse++;
-            const p3 = pp[i] as 3|4|5;
-            if (p3 === 3 || p3 === 4 || p3 === 5) {
-              byPar[p3].sum += sc[i]; byPar[p3].n++;
-              if (d < 0) byPar[p3].under++;
-            }
-          }
-        }
-        const holeTotal = allCardScores.length * 18;
-        const hasScoring = holeTotal > 0;
-
-        // ── Round stats ──
-        const rdSorted = [...allRds].sort((a,b)=>a-b);
-        const bestRd = rdSorted[0] ?? null;
-        const worstRd = rdSorted[rdSorted.length-1] ?? null;
-        const rdMean = avgRd;
-        const rdStdDev = allRds.length > 1
-          ? Math.sqrt(allRds.reduce((s,r) => s + (r - rdMean!)*(r - rdMean!), 0) / (allRds.length - 1))
-          : null;
-        const _subParRds = allRds.length > 0
-          ? allRds.filter((_r) => {
-              // need par per round — approximate with avg par from scorecards
-              return false; // will use scorecard pars below
-            }).length : 0;
-        void _subParRds;
-        // Rounds under par from scorecards (more accurate)
-        let underParRounds = 0, overParRounds = 0;
-        for (let k=0;k<allCardScores.length;k++) {
-          const total = allCardScores[k].reduce((a,b)=>a+b,0);
-          const parTotal = allCardPars[k].reduce((a,b)=>a+b,0);
-          if (total < parTotal) underParRounds++;
-          else if (total > parTotal) overParRounds++;
-        }
-
-        // ── vs Manuel ──
-        const vsManuelDeltas: number[] = [];
-        if (!isManuel && rival && manuelMerged) {
-          for (const tid of Object.keys(rival.r)) {
-            const rr = rival.r[tid]; const mm = manuelMerged.r[tid];
-            if (rr?.tp != null && mm?.tp != null) vsManuelDeltas.push(rr.tp - mm.tp);
-          }
-        }
-        const vsManuelAvg = vsManuelDeltas.length
-          ? vsManuelDeltas.reduce((a,b)=>a+b,0) / vsManuelDeltas.length : null;
-
-        if (playedDedup === 0 && !hasScoring) return null;
-
-        return (
-          <div style={{ marginBottom: 16 }}>
-            {/* ── Stat KPIs ── */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(90px, 1fr))", gap: 8, marginBottom: 12 }}>
-              {playedDedup > 0 && (
-                <div className="kpi" style={{ padding: "8px 10px" }}>
-                  <div className="kpi-lbl">Torneios</div>
-                  <div className="kpi-val" style={{ fontSize: 22 }}>{playedDedup}</div>
-                  <div className="kpi-sub">{roundsDedup} rondas</div>
-                </div>
-              )}
-              {bestTp != null && (
-                <div className="kpi" style={{ padding: "8px 10px" }}>
-                  <div className="kpi-lbl">Melhor ±Par</div>
-                  <div className="kpi-val" style={{ fontSize: 22, color: tpColorDark(bestTp) }}>{fmtToPar(bestTp)}</div>
-                  <div className="kpi-sub">torneio</div>
-                </div>
-              )}
-              {rdMean != null && (
-                <div className="kpi" style={{ padding: "8px 10px" }}>
-                  <div className="kpi-lbl">Média Ronda</div>
-                  <div className="kpi-val" style={{ fontSize: 22 }}>{rdMean.toFixed(1)}</div>
-                  {rdStdDev != null && <div className="kpi-sub">σ {rdStdDev.toFixed(1)}</div>}
-                </div>
-              )}
-              {bestRd != null && (
-                <div className="kpi" style={{ padding: "8px 10px" }}>
-                  <div className="kpi-lbl">Melhor Ronda</div>
-                  <div className="kpi-val" style={{ fontSize: 22, color: "var(--color-good-dark)" }}>{bestRd}</div>
-                  {worstRd != null && worstRd !== bestRd && <div className="kpi-sub">pior {worstRd}</div>}
-                </div>
-              )}
-              {allCardScores.length > 0 && (
-                <div className="kpi" style={{ padding: "8px 10px" }}>
-                  <div className="kpi-lbl">Sub-Par</div>
-                  <div className="kpi-val" style={{ fontSize: 22, color: underParRounds > 0 ? "var(--color-good-dark)" : "var(--text-3)" }}>
-                    {allCardScores.length > 0 ? `${Math.round(underParRounds/allCardScores.length*100)}%` : "—"}
-                  </div>
-                  <div className="kpi-sub">{underParRounds}/{allCardScores.length} rondas</div>
-                </div>
-              )}
-              {vsManuelAvg != null && (
-                <div className="kpi" style={{ padding: "8px 10px" }}>
-                  <div className="kpi-lbl">vs Manuel</div>
-                  <div className="kpi-val" style={{ fontSize: 22, color: vsManuelAvg > 0 ? "var(--color-good-dark)" : vsManuelAvg < 0 ? "var(--color-danger)" : "var(--text-3)" }}>
-                    {fmtSign(Math.round(vsManuelAvg))}
-                  </div>
-                  <div className="kpi-sub">{vsManuelDeltas.length} torneios</div>
-                </div>
-              )}
-            </div>
-
-            {/* ── Scoring distribution — horizontal bar ── */}
-            {hasScoring && (() => {
-              const segs = [
-                { key:"eagle",  n:eagles,  cls:"seg-eagle",  label:"Eagle+" },
-                { key:"birdie", n:birdies, cls:"seg-birdie", label:"Birdie" },
-                { key:"par",    n:pars,    cls:"seg-par",    label:"Par" },
-                { key:"bogey",  n:bogeys,  cls:"seg-bogey",  label:"Bogey" },
-                { key:"double", n:doubles, cls:"seg-double", label:"Duplo" },
-                { key:"triple", n:worse,   cls:"seg-triple", label:"Triple+" },
-              ].filter(s => s.n > 0);
+      {/* ══ PALMARÈS ══ */}
+      {palmares.length > 0 && (
+        <div className="card" style={{ marginBottom: 12, padding: "12px 16px" }}>
+          <div className="h-sm mb-8" style={{ color: "var(--text-2)" }}>🥇 Palmarès · {palmares.length} {palmares.length===1?"vitória":"vitórias"}</div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(210px,1fr))", gap: 8 }}>
+            {palmares.map(({ t, res }) => {
+              const mPos = manuelMerged?.r[t.id]?.p;
+              const bateuManuel = mPos!=null && typeof mPos==="number" && typeof res.p==="number" && res.p < mPos;
+              const ag = (res as any).ageGroup as string|null;
+              const agNum = parseInt((ag?.match(/\d+/)??[])[0]??"0");
+              const agCls = agNum<=10?"p-sub10":agNum<=12?"p-sub12":agNum<=14?"p-sub14":"p-sub18";
               return (
-                <div style={{ marginBottom: 12 }}>
-                  <div style={{ fontSize: 10, fontWeight: 600, color: "var(--text-3)", marginBottom: 5 }}>
-                    Distribuição de scoring · {holeTotal} buracos
-                  </div>
-                  {/* Bar — uses same seg-* classes as scorecard segments */}
-                  <div style={{ display: "flex", height: 16, borderRadius: 4, overflow: "hidden", gap: 1, marginBottom: 6 }}>
-                    {segs.map(s => (
-                      <div key={s.key} className={s.cls}
-                        style={{ flex: s.n, minWidth: 2 }}
-                        title={`${s.label}: ${s.n} (${(s.n/holeTotal*100).toFixed(0)}%)`} />
-                    ))}
-                  </div>
-                  {/* Legend */}
-                  <div style={{ display: "flex", gap: "6px 12px", flexWrap: "wrap" }}>
-                    {segs.map(s => (
-                      <span key={s.key} style={{ fontSize: 10, color: "var(--text-2)", display: "flex", alignItems: "center", gap: 4 }}>
-                        <span className={s.cls} style={{ width: 8, height: 8, borderRadius: 2, display: "inline-block", flexShrink: 0 }} />
-                        {s.label} {(s.n/holeTotal*100).toFixed(0)}%
-                        <span style={{ color: "var(--text-3)", fontSize: 9 }}>({s.n})</span>
-                      </span>
-                    ))}
+                <div key={t.id} style={{ border: "1.5px solid var(--medal-gold,#d97706)", borderRadius: 8, padding: "10px 12px", display: "flex", gap: 10, alignItems: "center" }}>
+                  <span style={{ fontSize: 32, lineHeight: 1, flexShrink: 0 }}>🥇</span>
+                  <div>
+                    <div style={{ fontSize: 13, fontWeight: 600 }}>{t.name}</div>
+                    <div style={{ fontSize: 11, color: "var(--text-2)", marginTop: 2 }}>
+                      {fmtDM(t.dateExact, t.date)}
+                      {ag && <span className={`p p-sm ${agCls}`} style={{ marginLeft: 5 }}>{ag}</span>}
+                      {t.field>0 && <span style={{ marginLeft: 5, color: "var(--text-3)" }}>· {t.field>15?"⭐ ":""}{t.field} jog.</span>}
+                    </div>
+                    {res.tp!=null && <div style={{ fontSize: 12, fontWeight: 600, color: "var(--color-good-dark)", marginTop: 2 }}>{fmtToPar(res.tp)} ±par</div>}
+                    {bateuManuel && <div style={{ fontSize: 10, color: "var(--medal-gold,#d97706)", marginTop: 2 }}>⚔️ ganhou ao Manuel (#{mPos})</div>}
                   </div>
                 </div>
               );
-            })()}
-
-            {/* ── Par-type breakdown ── */}
-            {hasScoring && (byPar[3].n > 0 || byPar[4].n > 0 || byPar[5].n > 0) && (() => {
-              const parAvgs = ([3,4,5] as const).map(p => ({
-                p, avg: byPar[p].n ? byPar[p].sum / byPar[p].n : null,
-                n: byPar[p].n, under: byPar[p].under,
-              })).filter(x => x.n > 0);
-              return (
-                <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                  {parAvgs.map(({ p, avg, n, under }) => {
-                    const diff = avg != null ? avg - p : null;
-                    const col = diff == null ? "var(--text-3)"
-                              : diff < 0 ? "var(--color-good-dark)"
-                              : diff < 0.3 ? "var(--text-2)" : "var(--color-warn)";
-                    return (
-                      <div key={p} className="kpi" style={{ flex: "1 1 80px", padding: "6px 10px", minWidth: 72 }}>
-                        <div className="kpi-lbl">Par {p}</div>
-                        <div className="kpi-val" style={{ fontSize: 18, color: col }}>
-                          {avg != null ? avg.toFixed(2) : "—"}
-                        </div>
-                        <div className="kpi-sub">{Math.round(under/n*100)}% sub-par</div>
-                      </div>
-                    );
-                  })}
-                </div>
-              );
-            })()}
+            })}
           </div>
-        );
-      })()}
+        </div>
+      )}
 
-      {/* ── Cards de torneio ── */}
-      {tournResults.map(({ t, res, hasCard, autoCard, ageGroup, isAuto: _isAuto }) => {
-        const expanded = expandedTourns.has(t.id);
-        const wOrd = getTournWeight(t.id);
-        const stars = wOrd >= 1.3 ? "★★★★★" : wOrd >= 1.1 ? "★★★★" : wOrd >= 0.9 ? "★★★" : wOrd >= 0.6 ? "★★" : wOrd >= 0.4 ? "★" : null;
-        const manuelRes = !isManuel ? manuelMerged?.r[t.id] : null;
-        const vsM = manuelRes?.tp != null && res.tp != null ? res.tp - manuelRes.tp : null;
-        const tpDisplay = res.tp != null ? fmtToPar(res.tp) : null;
-        const totalRds = (res.rd.filter((r): r is number => r != null) as number[]).reduce((a: number, b: number) => a + b, 0);
-
+      {/* ══ SCORING DISTRIBUTION ══ */}
+      {scoringBlock.tot > 0 && (() => {
+        const segs = [
+          { key:"eagle",  n:scoringBlock.e,  cls:"seg-eagle",  label:"Eagle+", circle:true  },
+          { key:"birdie", n:scoringBlock.b,  cls:"seg-birdie", label:"Birdie",  circle:true  },
+          { key:"par",    n:scoringBlock.p,  cls:"seg-par",    label:"Par",     circle:false },
+          { key:"bogey",  n:scoringBlock.bo, cls:"seg-bogey",  label:"Bogey",   circle:false },
+          { key:"double", n:scoringBlock.d,  cls:"seg-double", label:"Duplo",   circle:false },
+          { key:"triple", n:scoringBlock.w,  cls:"seg-triple", label:"Triple+", circle:false },
+        ].filter(s=>s.n>0);
+        const tot = scoringBlock.tot;
+        const parAvgs = ([3,4,5] as const).map(pp=>({
+          pp, n:scoringBlock.bp[pp].n,
+          avg:scoringBlock.bp[pp].n?scoringBlock.bp[pp].sum/scoringBlock.bp[pp].n:null,
+          under:scoringBlock.bp[pp].under,
+        })).filter(x=>x.n>0);
         return (
-          <div key={t.id} className="sc-modern">
-            <div className="sc-bar-head">
-              <div>
-                {t.url
-                  ? <a href={t.url} target="_blank" rel="noopener noreferrer" className="rivais-link">{t.name}</a>
-                  : <span>{t.name}</span>}
-                <span className="fs-10 c-text-3 ml-6">
-                  {t.date}
-                  {stars && ` · ${stars}`}
-                  {t.field > 0 && ` · ${t.field} jog. · ${t.nations} países`}
+          <div className="card" style={{ marginBottom: 12, padding: "12px 16px" }}>
+            <div style={{ fontSize: 10, fontWeight: 600, color: "var(--text-3)", marginBottom: 6 }}>
+              Distribuição de scoring · {tot} buracos
+            </div>
+            {/* Barra — par é branco/transparente */}
+            <div style={{ display: "flex", height: 16, borderRadius: 4, overflow: "hidden", gap: 1, marginBottom: 6, background: "var(--bg)" }}>
+              {segs.map(s => (
+                <div key={s.key} className={s.key==="par"?"":""+s.cls}
+                  style={{ flex: s.n, minWidth: 2, background: s.key==="par"?"#fff":undefined }}
+                  title={`${s.label}: ${(s.n/tot*100).toFixed(0)}%`} />
+              ))}
+            </div>
+            {/* Legenda */}
+            <div style={{ display: "flex", gap: "5px 12px", flexWrap: "wrap", marginBottom: parAvgs.length>0?10:0 }}>
+              {segs.map(s => (
+                <span key={s.key} style={{ fontSize: 10, color: "var(--text-2)", display: "flex", alignItems: "center", gap: 4 }}>
+                  <span className={s.key==="par"?"":s.cls}
+                    style={{ width:8, height:8, display:"inline-block", flexShrink:0,
+                      borderRadius: s.circle?"50%":2,
+                      background: s.key==="par"?"#fff":undefined,
+                      border: s.key==="par"?"1px solid var(--border)":undefined }} />
+                  {s.label} {(s.n/tot*100).toFixed(0)}%
+                  <span style={{ color:"var(--text-3)", fontSize:9 }}>({s.n})</span>
                 </span>
-                {ageGroup && (
-                  <span style={{
-                    display: "inline-flex", alignItems: "center",
-                    background: "var(--bg-info-subtle)",
-                    color: "var(--color-info-alt)",
-                    border: "1px solid var(--color-info-light)",
-                    borderRadius: 10, padding: "1px 7px",
-                    fontSize: 10, fontWeight: 700, marginLeft: 6,
-                    letterSpacing: "0.02em",
-                  }}>{ageGroup}</span>
-                )}
-              </div>
-              {hasCard && (
-                <button className="p p-filter p-sm" onClick={() => toggleExpand(t.id)}>
-                  {expanded ? "Fechar ▲" : "Scorecard ▼"}
-                </button>
-              )}
+              ))}
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "140px 90px 80px 1fr auto", alignItems: "center", padding: "10px 14px", gap: 0 }}>
-              {/* Col 1: Posição */}
-              <div className="d-flex items-center gap-6">
-                {res.p != null && (() => {
-                  const pos = typeof res.p === "number" ? res.p : null;
-                  const fieldSize = t.field;
-                  const medal = pos === 1 ? "🥇" : pos === 2 ? "🥈" : pos === 3 ? "🥉" : null;
-                  const isTop10 = pos != null && pos <= 10 && pos > 3 && fieldSize >= 20;
+            {/* Par 3 / 4 / 5 */}
+            {parAvgs.length>0 && (
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                {parAvgs.map(({ pp, avg, n, under }) => {
+                  const diff = avg!=null?avg-pp:null;
+                  const col = diff==null?"var(--text-3)":diff<0?"var(--color-good-dark)":diff<0.3?"var(--text-2)":"var(--color-warn)";
                   return (
-                    <div className="d-flex items-center gap-6">
-                      {medal ? <span style={{ fontSize: 20, lineHeight: 1 }}>{medal}</span>
-                        : isTop10 ? <span className="sidebar-rank sidebar-rank-top10" style={{ fontSize: 10, padding: "2px 6px", borderRadius: 10 }}>Top 10</span>
-                        : null}
-                      <div>
-                        <span className="fs-11 c-text-3">Posição </span>
-                        <span className="fw-800 fs-14">#{res.p}</span>
-                        {fieldSize > 0 && <span className="fs-11 c-text-3">/{fieldSize}</span>}
-                      </div>
+                    <div key={pp} className="kpi" style={{ flex:"1 1 80px", padding:"6px 10px", minWidth:72 }}>
+                      <div className="kpi-lbl">Par {pp}</div>
+                      <div className="kpi-val" style={{ fontSize:18, color:col }}>{avg!=null?avg.toFixed(2):"—"}</div>
+                      <div className="kpi-sub">{Math.round(under/n*100)}% sub-par</div>
                     </div>
                   );
-                })()}
-                {res.p == null && <span className="fs-11 c-text-3">—</span>}
-              </div>
-              {/* Col 2: Total */}
-              <div>
-                <span className="fs-11 c-text-3">Total </span>
-                <span className="fw-700 fs-13">{res.t ?? totalRds}</span>
-              </div>
-              {/* Col 3: ±Par */}
-              <div>
-                {tpDisplay
-                  ? <><span className="fs-11 c-text-3">±Par </span><span className="fw-700 fs-13" style={{ color: tpColorDark(res.tp) }}>{tpDisplay}</span></>
-                  : <span className="fs-11 c-text-3">—</span>}
-              </div>
-              {/* Col 4: Rondas com trend */}
-              <div className="d-flex gap-8" style={{ flexWrap: "wrap", alignItems: "center" }}>
-                {(() => {
-                  const rds = res.rd.filter((r: number|null) => r != null && r > 0) as number[];
-                  // Trend arrow: compare last vs first round
-                  const trend = rds.length >= 2 ? rds[rds.length-1] - rds[0] : null;
-                  return (
-                    <>
-                      {rds.map((r: number, i: number) => (
-                        <span key={i} className="fs-12 fw-600" style={{ color: tpColorDark(r - t.par, 5) }}>
-                          R{i+1}: {r}
-                        </span>
-                      ))}
-                      {trend != null && rds.length >= 2 && (
-                        <span style={{
-                          fontSize: 10, fontWeight: 700, marginLeft: 2,
-                          color: trend < -1 ? "var(--color-good-dark)"
-                               : trend > 1  ? "var(--color-danger)"
-                               : "var(--text-3)",
-                        }} title={`${trend > 0 ? "+" : ""}${trend} pancadas da R1 para a última ronda`}>
-                          {trend < -1 ? "▲" : trend > 1 ? "▼" : "●"}
-                        </span>
-                      )}
-                    </>
-                  );
-                })()}
-              </div>
-              {vsM != null && (
-                <div>
-                  <span className="fs-11 c-text-3">vs Manuel </span>
-                  <span className="fw-700 fs-12" style={{ color: sc3m(vsM, 0, 0) }}>{fmtSign(vsM)}</span>
-                </div>
-              )}
-            </div>
-
-            {expanded && hasCard && (
-              <div style={{ padding: "0 8px 12px", borderTop: "1px solid var(--border-light)" }}>
-                {t.id === "brjgt25" && bjgtCard && (
-                  <div className="bjgt-chart-scroll">
-                    <table className="sc-table-modern" data-sc-table="1">
-                      <THead />
-                      <tbody>
-                        <MetrosRow />
-                        <SIRow />
-                        <FieldAvgRow />
-                        <ParRow sep />
-                        {bjgtCard.rounds.map((rd, i) => <GrossRow key={i} holes={rd as number[]} label={`R${i + 1}`} />)}
-                        <GrossRow holes={bjgtCard.ecl as number[]} label="ECL" />
-                        <VsFieldRow holes={bjgtCard.ecl as number[]} />
-                      </tbody>
-                    </table>
-                  </div>
-                )}
-                {/* WJGC 2025: se não tem bjgtCard usa o autoCard (wjgc25_b1011) com dados VP */}
-                {t.id === "brjgt25" && !bjgtCard && autoCard && (
-                  <TournScorecard
-                    par={autoCard.par.length === 18 ? autoCard.par as unknown as readonly number[] : VP_PAR as unknown as readonly number[]}
-                    si={autoCard.si.length > 0 ? autoCard.si as unknown as readonly number[] : VP_SI as unknown as readonly number[]}
-                    meters={autoCard.meters.length > 0 ? autoCard.meters as unknown as readonly number[] : VP_M as unknown as readonly number[]}
-                    rounds={autoCard.rounds.map((sc, i) => ({ label: `R${i + 1}`, scores: sc }))}
-                  />
-                )}
-                {t.id === "wjgc26" && wjgcCard && (
-                  <TournScorecard par={WJGC26_PAR} si={WJGC26_SI} meters={WJGC26_M}
-                    rounds={wjgcCard.rds.map((sc, i) => ({ label: `R${i + 1}`, scores: [...sc] }))} />
-                )}
-
-                {t.id === "eowagr25" && eowagr25Card && (
-                  <TournScorecard par={EOWAGR25_PAR} si={EOWAGR25_SI} meters={EOWAGR25_M}
-                    rounds={eowagr25Card.rds.map((sc, i) => ({ label: `R${i + 1}`, scores: [...sc] }))} />
-                )}
-                {t.id === "wjgc26_1213" && wjgc26_1213Card && (
-                  <TournScorecard par={WJGC26_1213_PAR} si={WJGC26_1213_SI} meters={WJGC26_1213_M}
-                    rounds={wjgc26_1213Card.rds.map((sc, i) => ({ label: `R${i + 1}`, scores: [...sc] }))} />
-                )}
-                {/* Auto-loaded scorecard — torneios auto E torneios manuais sem card dedicado (Venice, Rome, Doral…) */}
-                {autoCard && (() => {
-                  // Fallback metros por tid quando o JSON não os inclui
-                  const METERS_FALLBACK: Record<string, readonly number[]> = {
-                    // Venice — Frassanelle tee AMARELAS
-                    venice25: VENICE_M, venice25_b9: VENICE_M, venice25_b10: VENICE_M,
-                    venice25_b11: VENICE_M, venice25_b12: VENICE_M,
-                    // EOWAGR — Le Touquet La Forêt
-                    eowagr25: LT_FORET_M,
-                    eowagr25_b78: LT_FORET_M, eowagr25_b910: LT_FORET_M, eowagr25_b1314: LT_FORET_M,
-                    // Marco Simone — tees USKids (B11 como default, B12 para escalão 12)
-                    marco26_b9: MS_USKIDS_M_B1011, marco26_b10: MS_USKIDS_M_B1011,
-                    marco26_b11: MS_USKIDS_M_B1011, marco26_b12: MS_USKIDS_M_B12,
-                    marco25_b9: MS_USKIDS_M_B1011, marco25_b10: MS_USKIDS_M_B1011,
-                    marco25_b11: MS_USKIDS_M_B1011, marco25_b12: MS_USKIDS_M_B12,
-                    // Doral — Golden Palm B10-11, Silver Fox B12-13
-                    doral25_b1011: DORAL_GP_M_B1011, doral25_b89: DORAL_GP_M_B1011,
-                    doral25_b1213: DORAL_SF_M_B1213,
-                    doral24_b1011: DORAL_GP_M_B1011, doral24_b89: DORAL_GP_M_B1011,
-                    doral24_b1213: DORAL_SF_M_B1213,
-                  };
-                  const fallbackM = METERS_FALLBACK[t.id];
-                  const meters = autoCard.meters.length > 0
-                    ? autoCard.meters as unknown as readonly number[]
-                    : fallbackM;
-                  return (
-                    <TournScorecard
-                      par={autoCard.par as unknown as readonly number[]}
-                      si={autoCard.si.length > 0 ? autoCard.si as unknown as readonly number[] : undefined}
-                      meters={meters}
-                      rounds={autoCard.rounds.map((sc, i) => ({ label: `R${i + 1}`, scores: sc }))}
-                    />
-                  );
-                })()}
+                })}
               </div>
             )}
           </div>
         );
-      })}
+      })()}
 
-      {!rival && lbEntry && (
-        <div className="notice notice-info mt-10">
-          BJGT 2025: {lbEntry.rounds.join("-")} = {lbEntry.total} ({fmtToPar(lbEntry.result)})
-          {!bjgtCard && " — scorecard buraco-a-buraco não disponível"}
-        </div>
-      )}
+      {/* ══ LISTA DE TORNEIOS ══ */}
+      {tournResults.length > 0 && (() => {
+        let lastYear = 0;
+        return (
+          <div className="card" style={{ marginBottom: 12, overflow: "hidden" }}>
+            {tournResults.map(({ t, res, hasCard, autoCard, ageGroup }) => {
+              const expanded    = expandedTourns.has(t.id);
+              const pos         = typeof res.p==="number" ? res.p : null;
+              const medal       = pos===1?"🥇":pos===2?"🥈":pos===3?"🥉":null;
+              const tpDisplay   = res.tp!=null ? fmtToPar(res.tp) : null;
+              const topPct      = pos!=null && t.field>0 ? Math.round(pos/t.field*100) : null;
+              const manuelRes   = !isManuel ? manuelMerged?.r[t.id] : null;
+              const manuelEsteve = manuelRes!=null;
+              const manuelPos   = typeof manuelRes?.p==="number" ? manuelRes.p : null;
+              const isLarge     = t.field>15;
+              const thisYear    = yearOf(t.dateExact, t.date);
+              const showYrSep   = thisYear>0 && thisYear!==lastYear;
+              if (thisYear>0) lastYear = thisYear;
+              const agNum = parseInt((ageGroup?.match(/\d+/)??[])[0]??"0");
+              const agCls = agNum<=10?"p-sub10":agNum<=12?"p-sub12":agNum<=14?"p-sub14":"p-sub18";
+              const wOrd  = getTournWeight(t.id);
+              const stars = wOrd>=1.3?"★★★★★":wOrd>=1.1?"★★★★":wOrd>=0.9?"★★★":wOrd>=0.6?"★★":wOrd>=0.4?"★":null;
+              const rds   = res.rd.filter((r:number|null):r is number => r!=null && r>0);
+              const trend = rds.length>=2 ? rds[rds.length-1]-rds[0] : null;
 
-      {/* ── Histórico USKids completo (member history) ── */}
+              return (
+                <React.Fragment key={t.id}>
+                  {/* Separador de ano */}
+                  {showYrSep && (
+                    <div style={{ padding:"4px 14px", fontSize:11, fontWeight:600, color:"var(--text-2)",
+                      background:"var(--bg-muted)", borderBottom:"1px solid var(--border-light)",
+                      borderTop: lastYear>0?"1px solid var(--border-light)":undefined }}>
+                      {thisYear}
+                    </div>
+                  )}
+
+                  {/* Linha do torneio */}
+                  <div style={{ display:"grid", gridTemplateColumns:"40px 1fr auto auto auto auto",
+                    alignItems:"center", gap:10, padding:"8px 14px",
+                    borderBottom:expanded?"none":"1px solid var(--border-light)" }}>
+
+                    {/* Col 1: medalha ou posição */}
+                    <div style={{ textAlign:"center" }}>
+                      {medal
+                        ? <span style={{ fontSize:18, lineHeight:1 }}>{medal}</span>
+                        : pos!=null
+                          ? <span style={{ fontSize:13, fontWeight:700, color:"var(--text-2)" }}>#{pos}</span>
+                          : <span style={{ fontSize:12, color:"var(--text-3)" }}>—</span>}
+                    </div>
+
+                    {/* Col 2: nome + pills + meta */}
+                    <div>
+                      <div style={{ display:"flex", alignItems:"center", gap:5, flexWrap:"wrap" }}>
+                        {t.url
+                          ? <a href={t.url} target="_blank" rel="noopener noreferrer"
+                              style={{ color:"var(--text)", fontWeight:600, fontSize:13, textDecoration:"none" }}
+                              onMouseOver={e=>(e.currentTarget.style.textDecoration="underline")}
+                              onMouseOut={e=>(e.currentTarget.style.textDecoration="none")}>
+                              {t.name}
+                            </a>
+                          : <span style={{ fontWeight:600, fontSize:13 }}>{t.name}</span>}
+                        {manuelEsteve && !isManuel && (
+                          <span style={{ background:"#d1fae5", color:"#065f46", border:"1px solid #6ee7b7",
+                            fontSize:9, padding:"1px 5px", borderRadius:4, fontWeight:600 }}>★ M{manuelPos!=null?` #${manuelPos}`:""}</span>
+                        )}
+                      </div>
+                      <div style={{ fontSize:11, color:"var(--text-2)", marginTop:1 }}>
+                        {fmtDM(t.dateExact, t.date)}
+                        {stars && ` · ${stars}`}
+                        {t.field>0 && <> · {isLarge && "⭐ "}{t.field} jogadores</>}
+                        {ageGroup && <></>}
+                      </div>
+                    </div>
+
+                    {/* Col 3: escalão pill */}
+                    <div>
+                      {ageGroup && <span className={`p p-sm ${agCls}`}>{ageGroup}</span>}
+                    </div>
+
+                    {/* Col 4: ±par */}
+                    <div style={{ textAlign:"right", minWidth:36, fontSize:14, fontWeight:700,
+                      color: tpDisplay ? tpColorDark(res.tp) : "var(--text-3)" }}>
+                      {tpDisplay ?? "—"}
+                    </div>
+
+                    {/* Col 5: top % */}
+                    <div style={{ textAlign:"right", minWidth:52, fontSize:12, fontWeight:500,
+                      color: topPct!=null && topPct<=15 ? "var(--color-good-dark)" : "var(--text-3)" }}>
+                      {topPct!=null ? `top ${topPct}%` : ""}
+                    </div>
+
+                    {/* Col 6: Scorecard ▼ — span sem bordo, sem fundo */}
+                    <div>
+                      {hasCard && (
+                        <span onClick={() => toggleExpand(t.id)}
+                          style={{ fontSize:8, color:"var(--text-3)", cursor:"pointer", userSelect:"none" }}>
+                          {expanded ? "Scorecard ▲" : "Scorecard ▼"}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Scorecard expandido */}
+                  {expanded && hasCard && (
+                    <div style={{ padding:"0 8px 12px", borderBottom:"1px solid var(--border-light)", background:"var(--bg)" }}>
+                      {t.id==="brjgt25" && bjgtCard && (
+                        <div className="bjgt-chart-scroll">
+                          <table className="sc-table-modern" data-sc-table="1">
+                            <THead /><tbody>
+                              <MetrosRow /><SIRow /><FieldAvgRow /><ParRow sep />
+                              {bjgtCard.rounds.map((rd,i) => <GrossRow key={i} holes={rd as number[]} label={`R${i+1}`} />)}
+                              <GrossRow holes={bjgtCard.ecl as number[]} label="ECL" />
+                              <VsFieldRow holes={bjgtCard.ecl as number[]} />
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
+                      {t.id==="brjgt25" && !bjgtCard && autoCard && (
+                        <TournScorecard
+                          par={autoCard.par.length===18?autoCard.par as unknown as readonly number[]:VP_PAR as unknown as readonly number[]}
+                          si={autoCard.si.length>0?autoCard.si as unknown as readonly number[]:VP_SI as unknown as readonly number[]}
+                          meters={autoCard.meters.length>0?autoCard.meters as unknown as readonly number[]:VP_M as unknown as readonly number[]}
+                          rounds={autoCard.rounds.map((sc,i)=>({label:`R${i+1}`,scores:sc}))} />
+                      )}
+                      {t.id==="wjgc26" && wjgcCard && (
+                        <TournScorecard par={WJGC26_PAR} si={WJGC26_SI} meters={WJGC26_M}
+                          rounds={wjgcCard.rds.map((sc,i)=>({label:`R${i+1}`,scores:[...sc]}))} />
+                      )}
+                      {t.id==="eowagr25" && eowagr25Card && (
+                        <TournScorecard par={EOWAGR25_PAR} si={EOWAGR25_SI} meters={EOWAGR25_M}
+                          rounds={eowagr25Card.rds.map((sc,i)=>({label:`R${i+1}`,scores:[...sc]}))} />
+                      )}
+                      {t.id==="wjgc26_1213" && wjgc26_1213Card && (
+                        <TournScorecard par={WJGC26_1213_PAR} si={WJGC26_1213_SI} meters={WJGC26_1213_M}
+                          rounds={wjgc26_1213Card.rds.map((sc,i)=>({label:`R${i+1}`,scores:[...sc]}))} />
+                      )}
+                      {autoCard && (() => {
+                        const METERS_FALLBACK: Record<string,readonly number[]> = {
+                          "usk20175_b11":MS_USKIDS_M_B1011,"usk20175_b10":MS_USKIDS_M_B1011,
+                          "usk21080_b11":MS_USKIDS_M_B1011,"usk21080_b10":MS_USKIDS_M_B1011,
+                          "usk21080_b12":MS_USKIDS_M_B12,"usk21080_b9":MS_USKIDS_M_B1011,
+                          "usk20175_b12":MS_USKIDS_M_B12,
+                          "doral25_b1011":DORAL_GP_M_B1011,"doral25_b89":DORAL_GP_M_B1011,
+                          "doral25_b1213":DORAL_SF_M_B1213,
+                          "doral24_b1011":DORAL_GP_M_B1011,"doral24_b89":DORAL_GP_M_B1011,
+                          "doral24_b1213":DORAL_SF_M_B1213,
+                        };
+                        const dedicated = ["brjgt25","wjgc26","eowagr25","wjgc26_1213"];
+                        if (dedicated.includes(t.id) && (bjgtCard||wjgcCard||eowagr25Card||wjgc26_1213Card)) return null;
+                        if (!autoCard.par||autoCard.par.length<9) return <div className="fs-11 c-text-3 p-10">— scorecard buraco-a-buraco não disponível</div>;
+                        return (
+                          <TournScorecard
+                            par={autoCard.par as unknown as readonly number[]}
+                            si={autoCard.si as unknown as readonly number[]}
+                            meters={(METERS_FALLBACK[t.id]??autoCard.meters??[]) as unknown as readonly number[]}
+                            rounds={autoCard.rounds.map((sc,i)=>({label:`R${i+1}`,scores:sc}))}
+                            siLabel="m" />
+                        );
+                      })()}
+                    </div>
+                  )}
+                </React.Fragment>
+              );
+            })}
+          </div>
+        );
+      })()}
+
+      {/* ══ HISTÓRICO USKIDS ══ */}
       {(() => {
         if (!mhPlayer) return null;
         const mhTorneiosAll = Object.entries(mhPlayer.torneios)
-          .map(([tid, t]) => ({ tid, ...(t as MHTournament) }))
-          .filter(t => t.rounds && Object.keys(t.rounds).length > 0);
-        if (mhTorneiosAll.length === 0) return null;
+          .map(([tid,t]) => ({ tid, ...(t as MHTournament) }))
+          .filter(t => Object.keys(t.rounds||{}).length>0)
+          .sort((a,b) => (isoDate(b.startDate||"")||"").localeCompare(isoDate(a.startDate||"")||""));
+        if (mhTorneiosAll.length===0) return null;
         return <MemberHistTable mhTorneios={mhTorneiosAll} memberId={mhPlayer.memberId} />;
       })()}
-      {played === 0 && !lbEntry && (
+
+      {played===0 && !lbEntry && (
         <EmptyState size="sm" message="Sem resultados registados ainda." />
       )}
     </>
@@ -2769,6 +2681,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
 function RivaisIntlContent() {
   const { rivals, loaded, progress } = useAutoRivals();
   const memberHist = useMemberHist();
+  const scoringStats = useScoringStats();
 
   // Actualizar rankMap quando os rivais carregam e forçar re-render
   const [_rankVersion, setRankVersion] = React.useState(0);
@@ -2800,6 +2713,7 @@ function RivaisIntlContent() {
   return (
     <RivalsCtx.Provider value={rivals}>
     <MemberHistCtx.Provider value={memberHist}>
+    <ScoringStatsCtx.Provider value={scoringStats}>
     <div className="tourn-layout">
       {/* Toolbar */}
       <div className="toolbar">
@@ -2844,6 +2758,7 @@ function RivaisIntlContent() {
         </div>
       </div>
     </div>
+    </ScoringStatsCtx.Provider>
     </MemberHistCtx.Provider>
     </RivalsCtx.Provider>
   );
