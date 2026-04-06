@@ -75,7 +75,7 @@
 // ============================================================
 
 (async () => {
-  const YEAR_FROM = 2022;
+  const YEAR_FROM = 2024;
   const YEAR_TO   = new Date().getFullYear(); // 2026
   const DELAY = 150;
   const sleep = ms => new Promise(r => setTimeout(r, ms));

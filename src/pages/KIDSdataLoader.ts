@@ -50,12 +50,15 @@ export interface AutoTournResult {
   tp: number | null;
   rd: number[];
   ageGroup?: string;
+  nholes?: number;   // 9 ou 18 — definido por holes_per_round do age group
 }
 
 export interface AutoRivalPlayer {
   n: string;
   co: string;
   r: Record<string, AutoTournResult>;
+  fpgClub?: string;   // clube FPG quando o jogador está na base de dados portuguesa
+  dob?: string;       // data de nascimento (YYYY-MM-DD) da base de dados FPG
 }
 
 async function fetchJson(path: string): Promise<unknown> {
@@ -432,13 +435,13 @@ function processUskids(data: unknown): AutoRivalPlayer[] {
   return all;
 }
 
-function mergeInto(map: Map<string, AutoRivalPlayer>, players: AutoRivalPlayer[]) {
+function mergeInto(map: Map<string, AutoRivalPlayer>, players: AutoRivalPlayer[], forceTids?: ReadonlySet<string>) {
   for (const p of players) {
     const key = normName(p.n);
     if (map.has(key)) {
       const ex = map.get(key)!;
       for (const [tid, res] of Object.entries(p.r)) {
-        if (!ex.r[tid] || res.rd.length > ex.r[tid].rd.length)
+        if (forceTids?.has(tid) || !ex.r[tid] || res.rd.length > ex.r[tid].rd.length)
           ex.r[tid] = res;
       }
     } else {
@@ -716,7 +719,10 @@ function processUskidsCompleto(data: unknown): AutoRivalPlayer[] {
         for (const [rnumStr, rdata] of Object.entries(p.rounds)) {
           const rnum = Number(rnumStr);
           const strokes = rdata.strokes || [];
-          if (strokes.length === holes && strokes.some(s => s > 0)) {
+          const grossStrokes = strokes.reduce((a: number, b: number) => a + b, 0);
+          // Só aceitar rondas em que o gross >= nholes (mínimo 1 pancada por buraco)
+          // Evita arrays com zeros (buracos sem dados) que produzem tp absurdamente negativos
+          if (strokes.length === holes && grossStrokes >= holes) {
             if (!pm[key].rounds[rnum]) pm[key].rounds[rnum] = strokes;
             if (!pm[key].par.length) {
               const par = parPorRonda[rnum] ?? parPorRonda[1] ?? [];
@@ -763,7 +769,7 @@ function processUskidsCompleto(data: unknown): AutoRivalPlayer[] {
         });
         all.push({
           n: c.name, co: co(c.country),
-          r: { [tid]: { p: c.rd.length < maxRds ? null : pos, t: c.t, tp: c.tp, rd: c.rd, ageGroup: agLabel } },
+          r: { [tid]: { p: c.rd.length < maxRds ? null : pos, t: c.t, tp: c.tp, rd: c.rd, ageGroup: agLabel, nholes: holes } },
         });
       }
       // Store full field size (only players who completed all rounds)
@@ -878,38 +884,39 @@ function processMemberHistory(data: unknown): AutoRivalPlayer[] {
 
       const t = rd.reduce((a, b) => a + b, 0);
 
-      // Calcular to-par a partir do par[] partilhado
-      let tp: number | null = null;
+      const holesPerRound: number = shared?.holesPerRound || 18;
       const parArr = Array.isArray(shared?.par) ? shared!.par! : [];
-      if (parArr.length > 0) {
-        const parPerRound = parArr.reduce((a, b) => a + b, 0);
+
+      // tp só é calculado se temos o scorecard por buraco completo e consistente.
+      // Sem scorecard (só gross total), não sabemos se é 9H ou 18H → tp = null.
+      const holeRounds = rdEntries
+        .map(([, rnd]) => rnd.strokes || [])
+        .filter(s => s.length === holesPerRound && s.every((v: number) => v > 0));
+
+      let tp: number | null = null;
+      if (holeRounds.length === rdEntries.length && holeRounds.length > 0 && parArr.length > 0) {
+        const parSliced = parArr.slice(0, holesPerRound);
+        const parPerRound = parSliced.reduce((a, b) => a + b, 0);
         if (parPerRound > 0) tp = t - parPerRound * rd.length;
       }
 
       // Posição (place=0, null ou negativo = sem posição / WD)
       const p = (tourn.place != null && tourn.place > 0) ? tourn.place : null;
 
-      // Actualizar uskFieldSizes com o máximo de posições conhecidas (limite inferior do campo)
-      // Só quando não há dados mais precisos (do field-sizes.json ou torneios_completos)
+      // Actualizar uskFieldSizes com o máximo de posições conhecidas
       if (p != null) {
         const current = uskFieldSizes.get(tid) ?? 0;
         if (p > current) uskFieldSizes.set(tid, p);
       }
 
-      // Scorecards buraco-a-buraco (se disponíveis e par conhecido)
-      const holesPerRound = shared?.holesPerRound || 18;
-      if (parArr.length > 0) {
-        const holeRounds = rdEntries
-          .map(([, rnd]) => rnd.strokes || [])
-          .filter(s => s.length === holesPerRound && s.some(v => v > 0));
-        if (holeRounds.length > 0) {
-          addScorecard(normName(player.name), {
-            tid, playerName: player.name, par: parArr, si: [], meters: [], rounds: holeRounds,
-          });
-        }
+      // Scorecards buraco-a-buraco (guardar se válidos)
+      if (holeRounds.length > 0 && parArr.length > 0) {
+        addScorecard(normName(player.name), {
+          tid, playerName: player.name, par: parArr.slice(0, holesPerRound), si: [], meters: [], rounds: holeRounds,
+        });
       }
 
-      r[tid] = { p, t, tp, rd, ageGroup: tourn.ageGroup };
+      r[tid] = { p, t, tp, rd, ageGroup: tourn.ageGroup, nholes: holesPerRound };
     }
 
     if (Object.keys(r).length === 0) continue;
@@ -1020,10 +1027,13 @@ async function _buildAutoRivalsInternal(
 
   type FileTask =
     | { kind: "wjgc"; tid: string; file: string }
-    | { kind: "doral" | "uskids" | "pull" | "memberHist" | "fieldSizes" | "tournMeta"; file: string }
+    | { kind: "doral" | "uskids" | "memberHist" | "fieldSizes" | "tournMeta"; file: string }
     | { kind: "completo"; file: string };
 
-  // ── FASE 1: ficheiros essenciais (carregam em paralelo) ──
+  // Tids autoritativos do pull-torneios — nunca devem ser sobrescritos por outras fontes
+  const PULL_TIDS = new Set(Object.values(PULL_TCODE_TO_TID));
+
+  // ── FASE 1: ficheiros essenciais (carregam em paralelo, excl. pull) ──
   const coreTasks: FileTask[] = [
     { kind: "wjgc", tid: "wjgc25_b89",    file: "wjgc_2025_b89.json" },
     { kind: "wjgc", tid: "wjgc25_b1011",  file: "wjgc_2025_contest34.json" },
@@ -1036,7 +1046,6 @@ async function _buildAutoRivalsInternal(
     { kind: "doral",      file: "ftm_doral_2025.json" },
     { kind: "doral",      file: "ftm_doral_2024.json" },
     { kind: "uskids",     file: "uskids-results.json" },
-    { kind: "pull",       file: "pull-torneios000.json" },
     { kind: "fieldSizes", file: "uskids-field-sizes.json" },
     { kind: "tournMeta",  file: "t_de_tournaments_do_uskids.json" },
     ...Array.from({ length: 30 }, (_, i) =>
@@ -1047,18 +1056,20 @@ async function _buildAutoRivalsInternal(
   // ── FASE 2: member history (ficheiro slim único em vez de 46 ficheiros) ──
   const MEMBER_HIST_SLIM = "uskids-member-history-slim.json";
 
-  const totalTasks = coreTasks.length + 1; // +1 para o member history slim
+  const totalTasks = coreTasks.length + 2; // +1 slim +1 pull
   let done = 0;
   const report = (label: string) => {
     done++;
     onProgress?.({ done, total: totalTasks, label });
   };
 
+  // Arrancar players.json em paralelo (base de dados FPG para enriquecimento)
+  const playersJsonPromise = fetchJson(`${base}players.json`).catch(() => null);
+
   const labelFor = (t: FileTask): string => {
     if (t.kind === "wjgc") return t.tid.replace(/_/g," ").toUpperCase();
     if (t.kind === "doral") return "Doral";
     if (t.kind === "uskids") return "USKids Results";
-    if (t.kind === "pull") return "Torneios PT";
     if (t.kind === "memberHist") return "Member History";
     if (t.kind === "fieldSizes") return "Field Sizes";
     if (t.kind === "tournMeta")  return "Tourn Meta";
@@ -1069,17 +1080,15 @@ async function _buildAutoRivalsInternal(
   const map = new Map<string, AutoRivalPlayer>();
 
   // ── Arrancar o fetch do slim IMEDIATAMENTE — descarrega em paralelo com a Fase 1 ──
-  // Quando a Fase 1 terminar, o slim já está (quase) descarregado → espera mínima
   const slimPromise = fetchJson(`${base}${MEMBER_HIST_SLIM}`).catch(() => null);
 
-  // ── Fase 1: paralelo ──
+  // ── Fase 1: paralelo (sem pull-torneios — este corre na Fase 3 autoritativa) ──
   await Promise.all(coreTasks.map(async task => {
     try {
       const d = await fetchJson(`${base}${task.file}`);
       if (task.kind === "wjgc")       mergeInto(map, processWjgc(d, task.tid));
       if (task.kind === "doral")      mergeInto(map, processDoral(d));
       if (task.kind === "uskids")     mergeInto(map, processUskids(d));
-      if (task.kind === "pull")       mergeInto(map, processPullTorneios(d));
       if (task.kind === "completo")   mergeInto(map, processUskidsCompleto(d));
       if (task.kind === "fieldSizes") processFieldSizes(d);
       if (task.kind === "tournMeta")  processTournMeta(d);
@@ -1090,15 +1099,43 @@ async function _buildAutoRivalsInternal(
   mergeInto(map, processManuelOverrides());
 
   // ── Fase 2: aguardar o slim (já estava a descarregar em paralelo) ──
-  // Só notifica quando tudo estiver pronto — sem render intermédio
   try {
     const d = await slimPromise;
-    if (d) {
-      mergeInto(map, processMemberHistory(d));
-    }
+    if (d) mergeInto(map, processMemberHistory(d));
   } catch { /* ignorar */ }
   report("Member History");
-  onUpdate?.(Array.from(map.values()));
 
+  // ── Fase 3: pull-torneios (autoritativo — sobrescreve dados incompletos de outras fontes) ──
+  // GG25, QDL25, GG26, etc. vêm SEMPRE daqui; completos e member history podem ter versões parciais.
+  try {
+    const d = await fetchJson(`${base}pull-torneios000.json`);
+    mergeInto(map, processPullTorneios(d), PULL_TIDS);
+  } catch { /* ignorar — se não existir, usar o que já foi carregado */ }
+  report("Torneios PT");
+
+  // ── Enriquecimento FPG: players.json → corrigir co + adicionar fpgClub e dob ──
+  // Jogadores portugueses no USKids podem ter o nome do clube como país.
+  // Cruzamos por nome e sobrescrevemos co="Portugal", fpgClub e dob.
+  try {
+    const playersRaw = await playersJsonPromise;
+    if (playersRaw) {
+      type FpgPlayer = { name: string; dob: string; club: { short: string }; co?: string };
+      const fpg = playersRaw as Record<string, FpgPlayer>;
+      // Mapa nome_normalizado → dados FPG
+      const fpgByName = new Map<string, FpgPlayer>();
+      for (const p of Object.values(fpg)) {
+        if (p.name) fpgByName.set(normName(p.name), p);
+      }
+      for (const rival of map.values()) {
+        const match = fpgByName.get(normName(rival.n));
+        if (!match) continue;
+        rival.co = "Portugal";
+        rival.fpgClub = match.club?.short ?? undefined;
+        if (!rival.dob && match.dob) rival.dob = match.dob;
+      }
+    }
+  } catch { /* ignorar */ }
+
+  onUpdate?.(Array.from(map.values()));
   return Array.from(map.values());
 }
