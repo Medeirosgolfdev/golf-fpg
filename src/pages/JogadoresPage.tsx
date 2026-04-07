@@ -1952,12 +1952,18 @@ function SDSimulator({ hcp, whs20, bare }: {
     date: string; course: string;
     hi: number | null; tee: string;
     gross: number | null; par: number | null; stb: number | null; sd: number | null;
+    sdAdj: number | null; // SD após redução excepcional (= sd quando não há redução)
     holeCount: number;
   };
 
   const simRows = useMemo(() => {
     const newSdVal = parseFloat(sdInput.replace(",", "."));
     if (isNaN(newSdVal) || currentHI == null) return null;
+
+    // Exceptional Score (Rule 5.9) — calculado primeiro, antes de construir as linhas
+    // O ajuste é aplicado a CADA um dos 20 SDs da janela activa
+    const exceptionalDiff = currentHI - newSdVal; // positivo = SD melhor que HI
+    const exceptionalAdj  = exceptionalDiff >= 10.0 ? -2 : exceptionalDiff >= 7.0 ? -1 : 0;
 
     const rows: SimRow[] = [];
 
@@ -1966,38 +1972,49 @@ function SDSimulator({ hcp, whs20, bare }: {
       scoreId: SIM_ID, isSimulated: true, isDisplaced: false, posLabel: 1,
       date: "—", course: "Ronda simulada",
       hi: null, tee: "", gross: null, par: null, stb: null,
-      sd: newSdVal, holeCount: 18,
+      sd: newSdVal,
+      sdAdj: newSdVal + exceptionalAdj,
+      holeCount: 18,
     });
 
-    // Rondas 1-19 ficam (posições 2-20)
+    // Rondas 1-19 ficam (posições 2-20) — cada uma recebe o ajuste excepcional
     window20.slice(0, 19).forEach((r, i) => {
-      rows.push({ ...r, isSimulated: false, isDisplaced: false, posLabel: i + 2 });
+      const sdOrig = r.sd != null ? numSafe(r.sd) : null;
+      rows.push({
+        ...r, isSimulated: false, isDisplaced: false, posLabel: i + 2,
+        sdAdj: sdOrig != null ? sdOrig + exceptionalAdj : null,
+      });
     });
 
-    // Ronda deslocada (posição 20 → sai)
+    // Ronda deslocada (posição 20 → sai) — não recebe ajuste (já não conta)
     if (displacedRound) {
-      rows.push({ ...displacedRound, isSimulated: false, isDisplaced: true, posLabel: 20 });
+      const sdOrig = displacedRound.sd != null ? numSafe(displacedRound.sd) : null;
+      rows.push({
+        ...displacedRound, isSimulated: false, isDisplaced: true, posLabel: 20,
+        sdAdj: sdOrig, // sem ajuste — está a sair da janela
+      });
     }
 
-    // Top-N calculado directamente a partir das linhas activas (fonte da verdade)
-    // Forçar Number() — os SDs das rondas reais chegam do JSON como string
+    // Top-N calculado a partir dos SDs AJUSTADOS (sdAdj) das linhas activas
+    // (a ordem relativa não muda pois o ajuste é uniforme, mas os valores mudam)
     const activeWithSd = rows
-      .filter(r => !r.isDisplaced && r.sd != null && !isNaN(Number(r.sd)))
-      .map(r => ({ id: r.scoreId, sd: Number(r.sd) }))
+      .filter(r => !r.isDisplaced && r.sdAdj != null && !isNaN(Number(r.sdAdj)))
+      .map(r => ({ id: r.scoreId, sd: Number(r.sdAdj) }))
       .sort((a, b) => a.sd - b.sd);
 
     const newQtyScores = activeWithSd.length;
     const newQtyCalc   = whsQtyCalc(newQtyScores);
 
+    // bestNew = os melhores SDs AJUSTADOS (estes entram no cálculo do HI)
     const bestNew = activeWithSd.slice(0, newQtyCalc).map(x => x.sd);
     const newAvg  = meanArr(bestNew);
     if (newAvg == null) return null;
-    const baseHI = Math.round((newAvg + totalAdjustment) * 10) / 10;
+    const newHI = Math.round((newAvg + totalAdjustment) * 10) / 10;
 
-    // Exceptional Score reduction (Rule 5.9, Rules of Handicapping)
-    const exceptionalDiff = currentHI - newSdVal; // positivo = SD melhor que HI
-    const exceptionalAdj  = exceptionalDiff >= 10.0 ? -2 : exceptionalDiff >= 7.0 ? -1 : 0;
-    const newHI = Math.round((baseHI + exceptionalAdj) * 10) / 10;
+    // baseHI = HI que resultaria sem a redução excepcional (para mostrar o delta)
+    const baseHI = exceptionalAdj !== 0
+      ? Math.round((newAvg - exceptionalAdj + totalAdjustment) * 10) / 10
+      : newHI;
 
     const newTopNMap = new Map<string, number>();
     activeWithSd.slice(0, newQtyCalc).forEach((x, i) => newTopNMap.set(x.id, i + 1));
@@ -2172,12 +2189,13 @@ function SDSimulator({ hcp, whs20, bare }: {
                   </div>
                 )}
                 <div style={{ marginTop: 2, borderTop: "1px solid var(--line)", paddingTop: 4 }}>
-                  Top-{simulation.newQtyCalc}: <b>{simulation.bestNew.map(s => Number(s).toFixed(1)).join(", ")}</b>
+                  Top-{simulation.newQtyCalc} (SD ajustado): <b>{simulation.bestNew.map(s => Number(s).toFixed(1)).join(", ")}</b>
                 </div>
                 <div>
-                  Média: <b>{simulation.newAvg?.toFixed(2)}</b>
-                  {currentRawAvg != null && <span className="muted"> (actual: {currentRawAvg.toFixed(2)})</span>}
-                  {totalAdjustment !== 0 && <span className="muted"> · ajuste: {totalAdjustment > 0 ? "+" : ""}{totalAdjustment.toFixed(2)}</span>}
+                  Média ajustada: <b>{simulation.newAvg?.toFixed(2)}</b>
+                  {simulation.exceptionalAdj !== 0 && <span className="muted"> (sem exc.: {simulation.baseHI != null ? (simulation.baseHI - totalAdjustment).toFixed(2) : "–"})</span>}
+                  {currentRawAvg != null && <span className="muted"> · actual: {currentRawAvg.toFixed(2)}</span>}
+                  {totalAdjustment !== 0 && <span className="muted"> · ajuste fixo: {totalAdjustment > 0 ? "+" : ""}{totalAdjustment.toFixed(2)}</span>}
                 </div>
               </div>
             );
@@ -2278,13 +2296,24 @@ function SDSimulator({ hcp, whs20, bare }: {
                     <td className="r">{row.gross != null ? <GrossCell gross={row.gross} par={row.par} /> : "—"}</td>
                     <td className="r">{row.stb != null ? fmtStb(row.stb, row.holeCount) : "—"}</td>
                     <td className="r">
-                      {row.sd != null
-                        ? <span className={`p p-${sdClassByHcp(row.sd, row.hi)}`}
-                            style={row.isSimulated ? { fontWeight: 800, fontSize: 13 } : {}}>
-                            {Number(row.sd).toFixed(1)}
+                      {row.sd != null ? (() => {
+                        const rawSd   = Number(row.sd);
+                        const adj     = (!row.isDisplaced && simRows!.exceptionalAdj !== 0) ? simRows!.exceptionalAdj : 0;
+                        const dispSd  = rawSd + adj;
+                        return (
+                          <span style={{ display: "inline-flex", flexDirection: "column", alignItems: "flex-end", gap: 1 }}>
+                            <span className={`p p-${sdClassByHcp(dispSd, row.hi)}`}
+                              style={row.isSimulated ? { fontWeight: 800, fontSize: 13 } : {}}>
+                              {dispSd.toFixed(1)}
+                            </span>
+                            {adj !== 0 && (
+                              <span style={{ fontSize: 9, color: "var(--text-3)", textDecoration: "line-through" }}>
+                                {rawSd.toFixed(1)}
+                              </span>
+                            )}
                           </span>
-                        : "—"
-                      }
+                        );
+                      })() : "—"}
                     </td>
                     <td className="r">
                       {row.isDisplaced
