@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useParams, useNavigate, useSearchParams, Link } from "react-router-dom";
 import type { Player, Course, SexFilter } from "../data/types";
 import { useAppContext } from "../context/AppContext";
@@ -1601,14 +1601,9 @@ function AnalysisView({ data }: { data: PlayerPageData }) {
         <WHSDetail hcp={data.HCP_INFO} bare />
       </CollapseCard>
 
-      {/* ── SD Simulator ── */}
-      <CollapseCard title="Simulador de SD" icon="🎯" defaultOpen={false}>
-        <SDSimulator hcp={data.HCP_INFO} whs20={whs20} bare />
-      </CollapseCard>
-
-      {/* ── Next Round Simulator ── */}
-      <CollapseCard title="Próxima Ronda" icon="⛳" defaultOpen={false}>
-        <NextRoundSimulator hcp={data.HCP_INFO} whs20={whs20} playerData={data} bare />
+      {/* ── Round Simulator (SD + Próxima Ronda combinados) ── */}
+      <CollapseCard title="Simulador de Rondas" icon="🎯" defaultOpen={false}>
+        <RoundSimulator hcp={data.HCP_INFO} whs20={whs20} playerData={data} bare />
       </CollapseCard>
 
       {/* ── Last 20 Table ── */}
@@ -1896,472 +1891,50 @@ function whsQtyCalc(nSds: number): number {
   return 8;
 }
 
-function SDSimulator({ hcp, whs20, bare }: {
-  hcp: HcpInfo;
-  whs20: (RoundData & { course: string })[];
-  bare?: boolean;
-}) {
-  type SimSortKey = "pos" | "date" | "course" | "hcp" | "sd" | "rank";
-  const [sdInput, setSdInput] = useState("");
-  const [sortKey, setSortKey] = useState<SimSortKey>("pos");
-  const [sortDir, setSortDir] = useState<1 | -1>(1);
-
-  const currentHI  = hcp.current;
-  const currentRawAvg = useMemo(() => {
-    if (currentHI == null) return null;
-    const qty = whsQtyCalc(whs20.length);
-    if (qty === 0) return null;
-    const sorted = whs20
-      .map(r => numSafe(r.sd))
-      .filter((v): v is number => v != null)
-      .map(Number)
-      .sort((a, b) => a - b);
-    return meanArr(sorted.slice(0, qty)) ?? null;
-  }, [whs20, currentHI]);
-  const totalAdjustment = (currentHI != null && currentRawAvg != null)
-    ? currentHI - currentRawAvg : (hcp.adjustTotal ?? 0);
-
-  // Janela WHS = whs20 (já filtrada para rondas com SD)
-  const window20 = whs20;
-
-  // qtyCalc actual = quantos melhores entram (calculado a partir da janela real)
-  const qtyCalc = whsQtyCalc(window20.length);
-
-  // SDs actuais por scoreId
-  const sdById = useMemo(() => {
-    const m = new Map<string, number>();
-    window20.forEach(r => { const v = numSafe(r.sd); if (v != null) m.set(r.scoreId, Number(v)); });
-    return m;
-  }, [window20]);
-
-  // IDs do top-N actual
-  const oldTopNIds = useMemo(() => {
-    const pairs = [...sdById.entries()].sort((a, b) => a[1] - b[1]);
-    return new Set(pairs.slice(0, qtyCalc).map(p => p[0]));
-  }, [sdById, qtyCalc]);
-
-  // Ronda deslocada = a mais antiga da janela WHS (índice 19)
-  const displacedRound = window20.length >= 20 ? window20[19] : null;
-  const displacedSd    = displacedRound ? numSafe(displacedRound.sd) : null;
-
-  // Linhas da tabela simulada (construídas primeiro — são a fonte da verdade)
-  const SIM_ID = "__sim__";
-  type SimRow = {
-    scoreId: string; isSimulated: boolean; isDisplaced: boolean;
-    posLabel: number | string;
-    date: string; course: string;
-    hi: number | null; tee: string;
-    gross: number | null; par: number | null; stb: number | null; sd: number | null;
-    sdAdj: number | null; // SD após redução excepcional (= sd quando não há redução)
-    holeCount: number;
-  };
-
-  const simRows = useMemo(() => {
-    const newSdVal = parseFloat(sdInput.replace(",", "."));
-    if (isNaN(newSdVal) || currentHI == null) return null;
-
-    // Exceptional Score (Rule 5.9) — calculado primeiro, antes de construir as linhas
-    // O ajuste é aplicado a CADA um dos 20 SDs da janela activa
-    const exceptionalDiff = currentHI - newSdVal; // positivo = SD melhor que HI
-    const exceptionalAdj  = exceptionalDiff >= 10.0 ? -2 : exceptionalDiff >= 7.0 ? -1 : 0;
-
-    const rows: SimRow[] = [];
-
-    // Ronda simulada — posição 1
-    rows.push({
-      scoreId: SIM_ID, isSimulated: true, isDisplaced: false, posLabel: 1,
-      date: "—", course: "Ronda simulada",
-      hi: null, tee: "", gross: null, par: null, stb: null,
-      sd: newSdVal,
-      sdAdj: newSdVal + exceptionalAdj,
-      holeCount: 18,
-    });
-
-    // Rondas 1-19 ficam (posições 2-20) — cada uma recebe o ajuste excepcional
-    window20.slice(0, 19).forEach((r, i) => {
-      const sdOrig = r.sd != null ? numSafe(r.sd) : null;
-      rows.push({
-        ...r, isSimulated: false, isDisplaced: false, posLabel: i + 2,
-        sdAdj: sdOrig != null ? sdOrig + exceptionalAdj : null,
-      });
-    });
-
-    // Ronda deslocada (posição 20 → sai) — não recebe ajuste (já não conta)
-    if (displacedRound) {
-      const sdOrig = displacedRound.sd != null ? numSafe(displacedRound.sd) : null;
-      rows.push({
-        ...displacedRound, isSimulated: false, isDisplaced: true, posLabel: 20,
-        sdAdj: sdOrig, // sem ajuste — está a sair da janela
-      });
-    }
-
-    // Top-N calculado a partir dos SDs AJUSTADOS (sdAdj) das linhas activas
-    // (a ordem relativa não muda pois o ajuste é uniforme, mas os valores mudam)
-    const activeWithSd = rows
-      .filter(r => !r.isDisplaced && r.sdAdj != null && !isNaN(Number(r.sdAdj)))
-      .map(r => ({ id: r.scoreId, sd: Number(r.sdAdj) }))
-      .sort((a, b) => a.sd - b.sd);
-
-    const newQtyScores = activeWithSd.length;
-    const newQtyCalc   = whsQtyCalc(newQtyScores);
-
-    // bestNew = os melhores SDs AJUSTADOS (estes entram no cálculo do HI)
-    const bestNew = activeWithSd.slice(0, newQtyCalc).map(x => x.sd);
-    const newAvg  = meanArr(bestNew);
-    if (newAvg == null) return null;
-    const newHI = Math.round((newAvg + totalAdjustment) * 10) / 10;
-
-    // baseHI = HI que resultaria sem a redução excepcional (para mostrar o delta)
-    const baseHI = exceptionalAdj !== 0
-      ? Math.round((newAvg - exceptionalAdj + totalAdjustment) * 10) / 10
-      : newHI;
-
-    const newTopNMap = new Map<string, number>();
-    activeWithSd.slice(0, newQtyCalc).forEach((x, i) => newTopNMap.set(x.id, i + 1));
-
-    return {
-      rows, newTopNMap,
-      newSdVal, newHI, baseHI,
-      delta: newHI - currentHI,
-      newQtyCalc, newQtyScores,
-      bestNew,
-      newAvg,
-      exceptionalDiff,
-      exceptionalAdj,
-    };
-  }, [sdInput, currentHI, totalAdjustment, window20, displacedRound]);
-
-  // simulation é agora um alias de simRows para não ter de renomear o resto do JSX
-  const simulation = simRows;
-
-  // Ordenação da tabela simulada
-  const sortedSimRows = useMemo(() => {
-    if (!simRows) return null;
-    const arr = [...simRows.rows];
-    // Deslocada vai sempre para o fundo independentemente da ordenação
-    const active   = arr.filter(r => !r.isDisplaced);
-    const displaced = arr.filter(r => r.isDisplaced);
-
-    active.sort((a, b) => {
-      let av: number, bv: number;
-      switch (sortKey) {
-        case "pos":    av = typeof a.posLabel === "number" ? a.posLabel : 99; bv = typeof b.posLabel === "number" ? b.posLabel : 99; break;
-        case "date":   return sortDir * (a.isSimulated ? -1 : b.isSimulated ? 1 : a.date.localeCompare(b.date));
-        case "course": return sortDir * (a.isSimulated ? -1 : b.isSimulated ? 1 : a.course.localeCompare(b.course, "pt"));
-        case "hcp":    av = a.hi ?? 999; bv = b.hi ?? 999; break;
-        case "sd":     av = a.sd ?? 999; bv = b.sd ?? 999; break;
-        case "rank":   av = simRows.newTopNMap.get(a.scoreId) ?? 999; bv = simRows.newTopNMap.get(b.scoreId) ?? 999; break;
-        default:       av = typeof a.posLabel === "number" ? a.posLabel : 99; bv = typeof b.posLabel === "number" ? b.posLabel : 99;
-      }
-      return sortDir * (av - bv);
-    });
-
-    return [...active, ...displaced];
-  }, [simRows, sortKey, sortDir]);
-
-  function handleSimSort(col: SimSortKey) {
-    if (col === sortKey) setSortDir(d => d === 1 ? -1 : 1);
-    else { setSortKey(col); setSortDir(col === "sd" || col === "hcp" ? 1 : col === "pos" ? 1 : -1); }
-  }
-
-  if (currentHI == null) return null;
-
-  const deltaColor = simulation
-    ? simulation.delta < -0.05 ? "var(--color-good)" : simulation.delta > 0.05 ? "var(--color-danger)" : "var(--text-2)"
-    : "var(--text-2)";
-
-  function SimTh({ col, label, cls }: { col: SimSortKey; label: string; cls?: string }) {
-    const active = sortKey === col;
-    return (
-      <th className={cls}
-        style={{ cursor: "pointer", userSelect: "none", whiteSpace: "nowrap" }}
-        onClick={() => handleSimSort(col)}>
-        {label}
-        <span style={{ marginLeft: 3, opacity: active ? 1 : 0.25, fontSize: 10 }}>
-          {active ? (sortDir === 1 ? "↑" : "↓") : "↕"}
-        </span>
-      </th>
-    );
-  }
-
-  const sdCardInner = (
-    <div>
-      <div className="muted fs-11 mb-12">
-        Introduz um SD para simular o impacto no Handicap Index.
-        A nova ronda entra no topo — a ronda 20 (mais antiga) é deslocada.
-      </div>
-
-      {/* Input + atalhos */}
-      <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", marginBottom: 14 }}>
-        <label style={{ display: "flex", alignItems: "center", gap: 8, fontWeight: 600, fontSize: 13 }}>
-          SD simulado:
-          <input
-            type="number" step="0.1" placeholder="ex: 28.5"
-            value={sdInput}
-            onChange={e => setSdInput(e.target.value)}
-            style={{
-              width: 90, padding: "4px 8px", borderRadius: 6,
-              border: "1px solid var(--line)", background: "var(--bg-card)",
-              color: "var(--text-1)", fontSize: 14, fontWeight: 700,
-            }}
-          />
-        </label>
-        {sdInput && (
-          <button onClick={() => setSdInput("")}
-            style={{ fontSize: 11, padding: "3px 8px", borderRadius: 4,
-              border: "1px solid var(--line)", background: "transparent",
-              cursor: "pointer", color: "var(--text-3)" }}>
-            Limpar
-          </button>
-        )}
-
-      </div>
-
-      {/* KPI summary */}
-      <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "flex-start", marginBottom: 16 }}>
-        <div style={{ padding: "10px 16px", borderRadius: 8, background: "var(--bg-detail)", textAlign: "center", minWidth: 90 }}>
-          <div className="muted fs-10">HCP ACTUAL</div>
-          <div style={{ fontSize: 22, fontWeight: 800 }}>{currentHI.toFixed(1)}</div>
-          <div className="muted fs-10">{qtyCalc} melhores / {window20.length} SDs</div>
-        </div>
-
-        {simulation ? <>
-          <div style={{ display: "flex", alignItems: "center", fontSize: 20, color: "var(--text-3)", paddingTop: 10 }}>→</div>
-
-          <div style={{ padding: "10px 16px", borderRadius: 8, background: "var(--bg-detail)", textAlign: "center", minWidth: 90,
-            outline: `2px solid ${deltaColor}` }}>
-            <div className="muted fs-10">HCP SIMULADO</div>
-            <div style={{ fontSize: 22, fontWeight: 800, color: deltaColor }}>{simulation.newHI.toFixed(1)}</div>
-            <div className="muted fs-10">{simulation.newQtyCalc} melhores / {simulation.newQtyScores} SDs</div>
-            {simulation.exceptionalAdj !== 0 && (
-              <div style={{ marginTop: 4, fontSize: 10, fontWeight: 700,
-                color: "#fff", background: simulation.exceptionalAdj === -2 ? "var(--color-danger)" : "var(--color-warn, #e07b00)",
-                borderRadius: 4, padding: "2px 5px", display: "inline-block" }}>
-                {simulation.exceptionalAdj === -2 ? "⚡ Exc. −2" : "⚡ Exc. −1"}
-              </div>
-            )}
-          </div>
-
-          <div style={{ padding: "10px 16px", borderRadius: 8, background: "var(--bg-detail)", textAlign: "center", minWidth: 80 }}>
-            <div className="muted fs-10">VARIAÇÃO</div>
-            <div style={{ fontSize: 20, fontWeight: 800, color: deltaColor }}>
-              {simulation.delta > 0 ? "+" : ""}{simulation.delta.toFixed(1)}
-            </div>
-            <div className="muted fs-10">
-              {Math.abs(simulation.delta) < 0.05 ? "sem alteração"
-                : simulation.delta < 0 ? "↓ melhoria" : "↑ agravamento"}
-            </div>
-          </div>
-
-          {(() => {
-            const newTopIds  = new Set(simRows!.newTopNMap.keys());
-            const _enteredIds = [...newTopIds].filter(id => id !== SIM_ID && !oldTopNIds.has(id));
-            const exitedIds  = [...oldTopNIds].filter(id => !newTopIds.has(id) && id !== displacedRound?.scoreId);
-            const displacedWasTop = displacedRound && oldTopNIds.has(displacedRound.scoreId);
-            const exitedSd = exitedIds.length > 0 ? window20.find(r => r.scoreId === exitedIds[0]) : null;
-            return (
-              <div style={{ padding: "8px 12px", borderRadius: 8, background: "var(--bg-detail)", fontSize: 11,
-                color: "var(--text-2)", lineHeight: 2, flex: 1, minWidth: 220 }}>
-                <div>
-                  <span style={{ color: "var(--color-good)", fontWeight: 700 }}>↓ Entra:</span>{" "}
-                  SD <b>{simulation.newSdVal.toFixed(1)}</b>
-                  {newTopIds.has(SIM_ID)
-                    ? <span style={{ color: "var(--color-good)" }}> → entra no top-{simulation.newQtyCalc} (#{simRows!.newTopNMap.get(SIM_ID)})</span>
-                    : <span className="muted"> → não entra no top-{simulation.newQtyCalc}</span>
-                  }
-                </div>
-                {displacedRound && (
-                  <div>
-                    <span style={{ color: "var(--color-danger)", fontWeight: 700 }}>↑ Sai (ronda 20):</span>{" "}
-                    {displacedSd != null
-                      ? <>SD <b>{Number(displacedSd).toFixed(1)}</b>{displacedWasTop
-                          ? <span style={{ color: "var(--color-danger)" }}> — <b>era top-{qtyCalc}!</b></span>
-                          : <span className="muted"> — não era top-{qtyCalc}</span>}</>
-                      : <span className="muted">sem SD</span>
-                    }
-                  </div>
-                )}
-                {exitedIds.length > 0 && exitedSd && (
-                  <div>
-                    <span style={{ color: "var(--color-danger)", fontWeight: 700 }}>✕ Sai do top:</span>{" "}
-                    SD <b>{Number(exitedSd.sd).toFixed(1)}</b>
-                    <span className="muted"> ({exitedSd.date} · {exitedSd.course})</span>
-                  </div>
-                )}
-                <div style={{ marginTop: 2, borderTop: "1px solid var(--line)", paddingTop: 4 }}>
-                  Top-{simulation.newQtyCalc} (SD ajustado): <b>{simulation.bestNew.map(s => Number(s).toFixed(1)).join(", ")}</b>
-                </div>
-                <div>
-                  Média ajustada: <b>{simulation.newAvg?.toFixed(2)}</b>
-                  {simulation.exceptionalAdj !== 0 && <span className="muted"> (sem exc.: {simulation.baseHI != null ? (simulation.baseHI - totalAdjustment).toFixed(2) : "–"})</span>}
-                  {currentRawAvg != null && <span className="muted"> · actual: {currentRawAvg.toFixed(2)}</span>}
-                  {totalAdjustment !== 0 && <span className="muted"> · ajuste fixo: {totalAdjustment > 0 ? "+" : ""}{totalAdjustment.toFixed(2)}</span>}
-                </div>
-              </div>
-            );
-          })()}
-        </> : (
-          <div className="muted fs-11" style={{ paddingTop: 14 }}>↑ Introduz um SD acima para simular</div>
-        )}
-      </div>
-
-      {/* Exceptional Score notice */}
-      {simulation && simulation.exceptionalAdj !== 0 && (
-        <div style={{
-          margin: "0 0 14px", padding: "10px 14px", borderRadius: 8,
-          background: "var(--bg-warn, rgba(224,123,0,0.08))",
-          border: simulation.exceptionalAdj === -2
-            ? "1px solid var(--color-danger)"
-            : "1px solid var(--color-warn, #e07b00)",
-          fontSize: 12, lineHeight: 1.7,
-        }}>
-          <div style={{ fontWeight: 700, marginBottom: 4,
-            color: simulation.exceptionalAdj === -2 ? "var(--color-danger)" : "var(--color-warn, #e07b00)" }}>
-            ⚡ Exceptional Score — Redução automática de HI
-          </div>
-          <div>
-            SD simulado <b>{simulation.newSdVal.toFixed(1)}</b> é{" "}
-            <b>{simulation.exceptionalDiff.toFixed(1)} pancadas</b> melhor que o HI actual{" "}
-            <b>{currentHI.toFixed(1)}</b>
-            {" "}→ aplica-se redução de{" "}
-            <b style={{ color: simulation.exceptionalAdj === -2 ? "var(--color-danger)" : "var(--color-warn, #e07b00)" }}>
-              {simulation.exceptionalAdj} ao HI
-            </b>
-            {" "}<span className="muted">(sem ajuste ao SD, apenas ao índice final)</span>
-          </div>
-          <div className="muted" style={{ marginTop: 2 }}>
-            HI sem redução: <b>{simulation.baseHI.toFixed(1)}</b>{" · "}
-            HI com redução excepcional: <b>{simulation.newHI.toFixed(1)}</b>{" · "}
-            {simulation.exceptionalAdj === -2
-              ? "SD ≥ 10 pancadas abaixo do HI → redução −2 (Regra 5.9)"
-              : "SD entre 7.0–9.9 pancadas abaixo do HI → redução −1 (Regra 5.9)"}
-          </div>
-        </div>
-      )}
-
-      {/* Tabela simulada */}
-      {sortedSimRows && simRows && (
-        <div className="table-wrap">
-          <div className="muted fs-11 mb-6">
-            ★ = top-{simulation!.newQtyCalc} SDs (entram no cálculo) ·{" "}
-            <span style={{ color: "var(--color-good)", fontWeight: 600 }}>Verde</span> = nova ronda ·{" "}
-            <span style={{ opacity: 0.45 }}>Esbatido</span> = ronda deslocada ·{" "}
-            ✕ = saiu do top · ↑ = entrou no top · Clica no cabeçalho para ordenar
-          </div>
-          <table className="dtable" style={{ fontSize: 12 }}>
-            <thead>
-              <tr>
-                <SimTh col="pos"    label="WHS#"  cls="r" />
-                <SimTh col="date"   label="Data" />
-                <SimTh col="course" label="Campo" />
-                <SimTh col="hcp"    label="HCP"   cls="r" />
-                <th>Tee</th>
-                <th className="r">Gross</th>
-                <th className="r">Stb</th>
-                <SimTh col="sd"     label="SD"    cls="r" />
-                <SimTh col="rank"   label="Top"   cls="r" />
-              </tr>
-            </thead>
-            <tbody>
-              {sortedSimRows.map((row, i) => {
-                const newRank  = simRows.newTopNMap.get(row.scoreId);
-                const isTop    = newRank != null;
-                const wasTop   = oldTopNIds.has(row.scoreId);
-                const entered  = isTop && !wasTop && !row.isSimulated;
-                const exited   = !isTop && wasTop && !row.isDisplaced;
-
-                return (
-                  <tr key={row.scoreId + i} style={{
-                    background: row.isSimulated
-                      ? "var(--bg-success)"
-                      : isTop && !row.isDisplaced ? "var(--bg-success)" : undefined,
-                    opacity: row.isDisplaced ? 0.35 : 1,
-                    borderTop: row.isDisplaced ? "2px dashed var(--line)" : undefined,
-                  }}>
-                    <td className="r" style={{ fontSize: 11, fontWeight: 700,
-                      color: row.isDisplaced ? "var(--color-danger)" : "var(--text-2)" }}>
-                      {row.isDisplaced ? "out" : row.posLabel}
-                    </td>
-                    <td>
-                      {row.isSimulated
-                        ? <span style={{ color: "var(--color-good)", fontWeight: 700 }}>Nova ronda</span>
-                        : <TeeDate date={row.date} tee={row.tee || ""} />
-                      }
-                    </td>
-                    <td style={{ fontWeight: row.isSimulated ? 600 : undefined }}>
-                      {row.isSimulated ? "—" : <CourseLink name={row.course} />}
-                    </td>
-                    <td className="r">{row.hi ?? ""}</td>
-                    <td>{row.tee ? <TeePill name={row.tee} /> : ""}</td>
-                    <td className="r">{row.gross != null ? <GrossCell gross={row.gross} par={row.par} /> : "—"}</td>
-                    <td className="r">{row.stb != null ? fmtStb(row.stb, row.holeCount) : "—"}</td>
-                    <td className="r">
-                      {row.sd != null ? (() => {
-                        const rawSd   = Number(row.sd);
-                        const adj     = (!row.isDisplaced && simRows!.exceptionalAdj !== 0) ? simRows!.exceptionalAdj : 0;
-                        const dispSd  = rawSd + adj;
-                        return (
-                          <span style={{ display: "inline-flex", flexDirection: "column", alignItems: "flex-end", gap: 1 }}>
-                            <span className={`p p-${sdClassByHcp(dispSd, row.hi)}`}
-                              style={row.isSimulated ? { fontWeight: 800, fontSize: 13 } : {}}>
-                              {dispSd.toFixed(1)}
-                            </span>
-                            {adj !== 0 && (
-                              <span style={{ fontSize: 9, color: "var(--text-3)", textDecoration: "line-through" }}>
-                                {rawSd.toFixed(1)}
-                              </span>
-                            )}
-                          </span>
-                        );
-                      })() : "—"}
-                    </td>
-                    <td className="r">
-                      {row.isDisplaced
-                        ? wasTop
-                          ? <span style={{ color: "var(--color-danger)" }}>★ saiu</span>
-                          : <span className="muted">–</span>
-                        : isTop
-                        ? <>
-                            <span className="c-par-ok">★</span>{" "}
-                            <span className="fw-700">#{newRank}</span>
-                            {entered && <span style={{ color: "var(--color-good)", marginLeft: 3, fontWeight: 800 }} title="Entrou no top">↑</span>}
-                          </>
-                        : exited
-                        ? <span style={{ color: "var(--color-danger)", fontWeight: 800, fontSize: 14 }} title="Saiu do top">✕</span>
-                        : <span className="muted">–</span>
-                      }
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </div>
-  );
-  return bare ? sdCardInner : <div className="card" style={{ marginBottom: 12 }}><div className="h-xs fs-18 mb-4">🎯 Simulador de Ronda</div>{sdCardInner}</div>;
-}
-
-/* ─── Next Round Simulator ─── */
-function NextRoundSimulator({ hcp, whs20, playerData, bare }: {
+/* ─── Round Simulator: SD directo ou Campo+Tee+Gross, múltiplas rondas sequenciais ─── */
+function RoundSimulator({ hcp, whs20, playerData, bare }: {
   hcp: HcpInfo;
   whs20: (RoundData & { course: string })[];
   playerData: PlayerPageData;
   bare?: boolean;
 }) {
-  const { simCourses: courses } = useAppContext();
-  const currentHI = hcp.current;
+  type SimRound = {
+    id: string; mode: 'sd' | 'course';
+    sdInput: string; courseKey: string; teeId: string; grossInput: string;
+  };
+  type PoolEntry = {
+    eid: string; sd: number; adj: number;
+    isSimulated: boolean; roundIdx: number;
+    origRound?: RoundData & { course: string };
+  };
+  type RoundResult = {
+    roundId: string; roundIdx: number;
+    sd: number | null; sdInPool: number | null;
+    exceptionalAdj: number; exceptionalDiff: number;
+    hiBeforeRound: number; hiAfterRound: number; delta: number;
+    entersTop: boolean; topRank: number | null;
+    poolBefore: PoolEntry[]; poolAfter: PoolEntry[];
+    displaced: PoolEntry | null;
+    courseName: string; teeLabel: string;
+    cr: number | null; slope: number | null; par: number | null;
+    gross: number | null; valid: boolean;
+  };
 
-  // Campos que o jogador já jogou (set de nomes normalizados)
+  const { simCourses: courses } = useAppContext();
+  const { fedId: urlFedId }     = useParams<{ fedId?: string }>();
+  const currentHI               = hcp.current;
+  const nextIdRef               = useRef(1);
+  const newId                   = () => `sr_${nextIdRef.current++}`;
+  const storageKey              = urlFedId ? `sim_rounds_v2_${urlFedId}` : null;
+  const [savedTs, setSavedTs]   = useState<number | null>(null);
+
+  // ── Dados de campos ──
   const playedNormSet = useMemo(() => {
     const s = new Set<string>();
     playerData.DATA.forEach(c => s.add(norm(c.course)));
     return s;
   }, [playerData]);
 
-  // TODOS os campos com pelo menos um tee com CR+Slope válidos
-  // Campos já jogados aparecem primeiro, resto por ordem alfabética
   const allRatedCourses = useMemo(() => {
     if (!courses?.length) return [];
     const valid = courses.filter(c =>
@@ -2375,47 +1948,30 @@ function NextRoundSimulator({ hcp, whs20, playerData, bare }: {
     return [...played, ...unplayed];
   }, [courses, playedNormSet]);
 
-  const [selectedCourseKey, setSelectedCourseKey] = useState<string>("");
-  const [selectedTeeId, setSelectedTeeId]         = useState<string>("");
+  const defaultCourseKey = allRatedCourses[0]?.courseKey ?? '';
 
-  // Auto-select first course when list is ready
-  useEffect(() => {
-    if (allRatedCourses.length > 0 && !selectedCourseKey) {
-      setSelectedCourseKey(allRatedCourses[0].courseKey);
+  // ── Estado das rondas — carregado do localStorage se existir ──
+  const [rounds, setRounds] = useState<SimRound[]>(() => {
+    if (storageKey) {
+      try {
+        const saved = localStorage.getItem(storageKey);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        }
+      } catch {}
     }
-  }, [allRatedCourses]);
+    return [{ id: 'sr_0', mode: 'sd', sdInput: '', courseKey: '', teeId: '', grossInput: '' }];
+  });
 
-  // Reset tee when course changes
-  useEffect(() => { setSelectedTeeId(""); }, [selectedCourseKey]);
-
-  const selectedCourse = allRatedCourses.find(c => c.courseKey === selectedCourseKey) ?? null;
-  // keep selectedCourseName for display/narrative
-  const _selectedCourseName = selectedCourse?.master.name ?? "";
-
-  // Tees with valid 18-hole ratings
-  const availableTees = useMemo(() => {
-    if (!selectedCourse) return [];
-    return selectedCourse.master.tees.filter(t =>
-      t.ratings.holes18?.courseRating != null && t.ratings.holes18?.slopeRating != null
-    );
-  }, [selectedCourse]);
-
-  // Auto-select first tee
+  // Actualizar courseKey default quando cursos carregam
   useEffect(() => {
-    if (availableTees.length > 0 && !selectedTeeId) {
-      setSelectedTeeId(availableTees[0].teeId);
+    if (defaultCourseKey) {
+      setRounds(prev => prev.map(r => r.courseKey ? r : { ...r, courseKey: defaultCourseKey }));
     }
-  }, [availableTees]);
+  }, [defaultCourseKey]);
 
-  const selectedTee = availableTees.find(t => t.teeId === selectedTeeId) ?? availableTees[0] ?? null;
-  const ratings = selectedTee?.ratings.holes18 ?? null;
-  const cr    = ratings?.courseRating ?? null;
-  const slope = ratings?.slopeRating  ?? null;
-  const par   = ratings?.par          ?? 72;
-
-  // Current WHS state
-  const qtyCalc = whsQtyCalc(whs20.length);
-
+  // ── Ajuste sistema ──
   const currentRawAvg = useMemo(() => {
     const qty = whsQtyCalc(whs20.length);
     if (qty === 0 || currentHI == null) return null;
@@ -2423,241 +1979,910 @@ function NextRoundSimulator({ hcp, whs20, playerData, bare }: {
       .map(Number).sort((a, b) => a - b);
     return meanArr(sorted.slice(0, qty)) ?? null;
   }, [whs20, currentHI]);
+  const totalAdjustment = (currentHI != null && currentRawAvg != null) ? currentHI - currentRawAvg : 0;
 
-  const totalAdjustment = (currentHI != null && currentRawAvg != null)
-    ? currentHI - currentRawAvg : 0;
+  // ── Pool inicial ──
+  const initialPool = useMemo((): PoolEntry[] =>
+    whs20.map(r => ({
+      eid: r.scoreId, sd: numSafe(r.sd) ?? 0, adj: 0,
+      isSimulated: false, roundIdx: -1, origRound: r,
+    })).filter(e => !isNaN(e.sd)),
+  [whs20]);
 
-  // The round that will exit on next play = whs20[19]
-  const nextToExit = whs20.length >= 20 ? whs20[19] : null;
-  const nextToExitSd = nextToExit ? numSafe(nextToExit.sd) : null;
+  // ── Helpers campos/tees ──
+  function getValidTees(courseKey: string) {
+    const c = allRatedCourses.find(x => x.courseKey === courseKey);
+    if (!c) return [];
+    return c.master.tees.filter(t =>
+      t.ratings.holes18?.courseRating != null && t.ratings.holes18?.slopeRating != null
+    );
+  }
+  function getEffectiveTeeId(r: SimRound) {
+    return r.teeId || getValidTees(r.courseKey)[0]?.teeId || '';
+  }
+  function getTeeRatings(courseKey: string, teeId: string) {
+    const c    = allRatedCourses.find(x => x.courseKey === courseKey);
+    const tees = getValidTees(courseKey);
+    const tee  = tees.find(t => t.teeId === teeId) ?? tees[0] ?? null;
+    return {
+      cr: tee?.ratings.holes18?.courseRating ?? null,
+      slope: tee?.ratings.holes18?.slopeRating ?? null,
+      par: tee?.ratings.holes18?.par ?? 72,
+      teeName: tee?.teeName ?? '',
+      courseName: c?.master.name ?? '',
+    };
+  }
 
-  // Current top-N ids
-  const currentTopIds = useMemo(() => {
-    const sorted = whs20
-      .map(r => ({ id: r.scoreId, sd: numSafe(r.sd) }))
-      .filter(x => x.sd != null)
-      .sort((a, b) => a.sd! - b.sd!);
-    return new Set(sorted.slice(0, qtyCalc).map(x => x.id));
-  }, [whs20, qtyCalc]);
+  // ── Mutações de rondas ──
+  function addRound() {
+    const last = rounds[rounds.length - 1];
+    setRounds(prev => [...prev, {
+      id: newId(), mode: last?.mode ?? 'sd', sdInput: '',
+      courseKey: last?.courseKey || defaultCourseKey,
+      teeId: '', grossInput: '',
+    }]);
+  }
+  function removeRound(id: string) {
+    setRounds(prev => prev.length > 1 ? prev.filter(r => r.id !== id) : prev);
+  }
+  function updateRound(id: string, patch: Partial<SimRound>) {
+    setRounds(prev => prev.map(r =>
+      r.id === id
+        ? { ...r, ...patch, ...(patch.courseKey && patch.courseKey !== r.courseKey ? { teeId: '' } : {}) }
+        : r
+    ));
+  }
+  function clearAll() {
+    setRounds([{ id: newId(), mode: 'sd', sdInput: '', courseKey: defaultCourseKey, teeId: '', grossInput: '' }]);
+    if (storageKey) localStorage.removeItem(storageKey);
+    setSavedTs(null);
+  }
 
-  const nextToExitIsTop = nextToExit ? currentTopIds.has(nextToExit.scoreId) : false;
+  // ── Persistência ──
+  function saveNow() {
+    if (!storageKey) return;
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(rounds));
+      setSavedTs(Date.now());
+    } catch {}
+  }
+  function loadSaved() {
+    if (!storageKey) return;
+    try {
+      const saved = localStorage.getItem(storageKey);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) setRounds(parsed);
+      }
+    } catch {}
+  }
+  const hasSaved = !!storageKey && (() => {
+    try { return !!localStorage.getItem(storageKey); } catch { return false; }
+  })();
 
-  // Build simulation table: range of gross scores
-  const simTable = useMemo(() => {
-    if (cr == null || slope == null || currentHI == null) return null;
+  // ── Simulação sequencial ──
+  const simResults = useMemo(() => {
+    if (currentHI == null || initialPool.length === 0) return null;
+    const initSorted = [...initialPool].sort((a, b) => (a.sd + a.adj) - (b.sd + b.adj));
+    const initQty    = whsQtyCalc(initialPool.length);
+    const oldTopIds  = new Set(initSorted.slice(0, initQty).map(e => e.eid));
+    let pool: PoolEntry[] = [...initialPool];
+    let curHI = currentHI;
+    const results: RoundResult[] = [];
 
-    // Range: par-10 to par+30, step 1
-    const rows = [];
-    for (let gross = par - 10; gross <= par + 35; gross++) {
-      const sd = Math.round(calcSD(gross, cr, slope) * 10) / 10;
+    for (let i = 0; i < rounds.length; i++) {
+      const round = rounds[i];
+      let sd: number | null = null;
+      let cr: number | null = null, slope: number | null = null, par: number | null = null;
+      let gross: number | null = null;
+      let courseName = '', teeLabel = '';
 
-      // Build new pool (same logic as SDSimulator)
-      const keptSds = whs20.slice(0, 19)
-        .map(r => numSafe(r.sd))
-        .filter((v): v is number => v != null)
-        .map(Number);
-      const newPool = [sd, ...keptSds];
-      const activeWithSd = newPool.map((v, i) => ({ id: i === 0 ? '__new__' : whs20[i - 1]?.scoreId ?? `k${i}`, sd: v }))
-        .filter(x => !isNaN(x.sd))
-        .sort((a, b) => a.sd - b.sd);
-      const newQtyCalc = whsQtyCalc(activeWithSd.length);
-      const bestNew = activeWithSd.slice(0, newQtyCalc).map(x => x.sd);
-      const newAvg = meanArr(bestNew);
-      if (newAvg == null) continue;
-      const newHI = Math.round((newAvg + totalAdjustment) * 10) / 10;
-      const delta = newHI - currentHI;
+      if (round.mode === 'sd') {
+        const v = parseFloat(round.sdInput.replace(',', '.'));
+        if (!isNaN(v)) sd = v;
+        courseName = 'Ronda simulada';
+      } else {
+        const teeId = getEffectiveTeeId(round);
+        const rat   = getTeeRatings(round.courseKey, teeId);
+        cr = rat.cr; slope = rat.slope; par = rat.par;
+        courseName = rat.courseName; teeLabel = rat.teeName;
+        const g = parseInt(round.grossInput);
+        if (!isNaN(g) && cr != null && slope != null) {
+          gross = g; sd = Math.round(calcSD(g, cr, slope) * 10) / 10;
+        }
+      }
 
-      // Does new SD enter top?
-      const newTopSorted = [...activeWithSd].slice(0, newQtyCalc);
-      const entersTop = newTopSorted.some(x => x.id === '__new__');
+      const poolBefore = [...pool];
+      if (sd == null) {
+        results.push({
+          roundId: round.id, roundIdx: i, sd: null, sdInPool: null,
+          exceptionalAdj: 0, exceptionalDiff: 0,
+          hiBeforeRound: curHI, hiAfterRound: curHI, delta: 0,
+          entersTop: false, topRank: null,
+          poolBefore, poolAfter: pool, displaced: null,
+          courseName, teeLabel, cr, slope, par, gross, valid: false,
+        });
+        break;
+      }
 
-      rows.push({ gross, sd, newHI, delta, entersTop, newAvg, toPar: gross - par });
+      const exceptionalDiff = curHI - sd;
+      const exceptionalAdj  = exceptionalDiff >= 10 ? -2 : exceptionalDiff >= 7 ? -1 : 0;
+      const newEntry: PoolEntry = { eid: round.id, sd, adj: exceptionalAdj, isSimulated: true, roundIdx: i };
+      const kept     = pool.slice(0, 19).map(e => ({ ...e, adj: e.adj + exceptionalAdj }));
+      const displaced = pool.length >= 20 ? { ...pool[19], adj: pool[19].adj + exceptionalAdj } : null;
+      const newPool: PoolEntry[] = [newEntry, ...kept];
+
+      const adjEntries = newPool.map(e => ({ eid: e.eid, adjSd: e.sd + e.adj }))
+        .filter(x => !isNaN(x.adjSd)).sort((a, b) => a.adjSd - b.adjSd);
+      const qty       = whsQtyCalc(newPool.length);
+      const topSlice  = adjEntries.slice(0, qty);
+      const entersTop = topSlice.some(x => x.eid === round.id);
+      const topRank   = entersTop ? topSlice.findIndex(x => x.eid === round.id) + 1 : null;
+      const avg       = meanArr(topSlice.map(x => x.adjSd));
+      const newHI     = avg != null ? Math.round((avg + totalAdjustment) * 10) / 10 : curHI;
+
+      results.push({
+        roundId: round.id, roundIdx: i, sd, sdInPool: sd + exceptionalAdj,
+        exceptionalAdj, exceptionalDiff,
+        hiBeforeRound: curHI, hiAfterRound: newHI, delta: newHI - curHI,
+        entersTop, topRank,
+        poolBefore, poolAfter: newPool, displaced,
+        courseName, teeLabel, cr, slope, par, gross, valid: true,
+      });
+      pool = newPool; curHI = newHI;
     }
-    return rows;
-  }, [cr, slope, par, currentHI, whs20, totalAdjustment]);
+    return { results, finalPool: pool, finalHI: curHI, oldTopIds };
+  }, [rounds, initialPool, currentHI, totalAdjustment, allRatedCourses]);
 
-  // Key thresholds
-  const thresholds = useMemo(() => {
-    if (!simTable || currentHI == null) return null;
+  // ── Top-N do pool final ──
+  const { finalTopIds, finalTopRanks } = useMemo(() => {
+    if (!simResults) return { finalTopIds: new Set<string>(), finalTopRanks: new Map<string, number>() };
+    const sorted = [...simResults.finalPool]
+      .map(e => ({ eid: e.eid, adjSd: e.sd + e.adj }))
+      .sort((a, b) => a.adjSd - b.adjSd);
+    const qty = whsQtyCalc(simResults.finalPool.length);
+    const topIds   = new Set(sorted.slice(0, qty).map(x => x.eid));
+    const topRanks = new Map<string, number>();
+    sorted.slice(0, qty).forEach((x, i) => topRanks.set(x.eid, i + 1));
+    return { finalTopIds: topIds, finalTopRanks: topRanks };
+  }, [simResults]);
 
-    // 1. Best gross that improves HCP
-    const improves = simTable.filter(r => r.delta < -0.05);
-    const maintains = simTable.filter(r => Math.abs(r.delta) <= 0.05);
+  // ── Tabela gross→HCP (última ronda em modo Campo válida) ──
+  const grossTable = useMemo(() => {
+    if (!simResults) return null;
+    const validRes = simResults.results.filter(r => r.valid);
+    if (!validRes.length) return null;
+    const last = validRes[validRes.length - 1];
+    if (last.cr == null || last.slope == null) return null;
+    const { cr, slope, par = 72, poolBefore, hiBeforeRound, roundIdx, gross: enteredGross } = last;
+    const rows: { gross: number; sd: number; newHI: number; delta: number; entersTop: boolean; toPar: number; exceptionalAdj: number; isEntered: boolean }[] = [];
+    for (let g = par - 10; g <= par + 35; g++) {
+      const sd      = Math.round(calcSD(g, cr!, slope!) * 10) / 10;
+      const excDiff = hiBeforeRound - sd;
+      const excAdj  = excDiff >= 10 ? -2 : excDiff >= 7 ? -1 : 0;
+      const newEntry = { eid: '__gt__', sd, adj: excAdj, isSimulated: true, roundIdx: -1 };
+      const kept     = poolBefore.slice(0, 19).map(e => ({ ...e, adj: e.adj + excAdj }));
+      const newPool  = [newEntry, ...kept];
+      const adjE     = newPool.map(e => ({ eid: e.eid, adjSd: e.sd + e.adj })).filter(x => !isNaN(x.adjSd)).sort((a, b) => a.adjSd - b.adjSd);
+      const qty      = whsQtyCalc(newPool.length);
+      const entersTop = adjE.slice(0, qty).some(x => x.eid === '__gt__');
+      const avg      = meanArr(adjE.slice(0, qty).map(x => x.adjSd));
+      if (avg == null) continue;
+      const newHI = Math.round((avg + totalAdjustment) * 10) / 10;
+      rows.push({ gross: g, sd, newHI, delta: newHI - hiBeforeRound, entersTop, toPar: g - par!, exceptionalAdj: excAdj, isEntered: g === enteredGross });
+    }
+    return { rows, par, cr, slope, roundIdx };
+  }, [simResults, totalAdjustment]);
 
-    // 2. Worst gross that enters top
-    const entersTop = simTable.filter(r => r.entersTop);
-    const maxEntersTopGross = entersTop.length ? entersTop[entersTop.length - 1].gross : null;
+  // ── Rondas deslocadas ──
+  const displacedEntries = useMemo(() =>
+    simResults?.results.filter(r => r.valid && r.displaced).map(r => r.displaced!) ?? [],
+  [simResults]);
 
-    // 3. Current 8th-worst SD in top (the threshold to beat)
-    const currentTopSds = whs20
-      .map(r => numSafe(r.sd))
-      .filter((v): v is number => v != null)
-      .map(Number)
-      .sort((a, b) => a - b)
-      .slice(0, qtyCalc);
-    const currentWorstTop = currentTopSds.length ? currentTopSds[currentTopSds.length - 1] : null;
+  // ── Exportar PDF ──
+  function exportPDF() {
+    if (!simResults) return;
+    const validRes   = simResults.results.filter(r => r.valid);
+    const finalHIv   = simResults.finalHI;
+    const finalDelta = finalHIv - (currentHI ?? 0);
+    const playerName = (playerData as any)?.META?.name ?? '';
+    const fedNum     = (playerData as any)?.META?.fed ?? urlFedId ?? '';
+    const dateStr    = new Date().toLocaleDateString('pt-PT');
+    const timeStr    = new Date().toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
 
-    return { improves, maintains, maxEntersTopGross, currentWorstTop };
-  }, [simTable, currentHI, whs20, qtyCalc]);
+    // Cores das pills de SD — replicam exactamente .p-sd-excellent / .p-sd-good / .p-sd-poor
+    const SD_EXCELLENT = { bg: '#22c55e', fg: '#fff' };   // sd ≤ HI
+    const SD_GOOD      = { bg: '#fef08a', fg: '#713f12' }; // sd ≤ HI+3
+    const SD_POOR      = { bg: '#ef4444', fg: '#fff' };   // sd > HI+3
+
+    function sdColor(sd: number, hi: number | null) {
+      if (hi == null || !isFinite(sd)) return { bg: '#e5e7eb', fg: '#6b7280' };
+      if (sd <= hi)     return SD_EXCELLENT;
+      if (sd <= hi + 3) return SD_GOOD;
+      return SD_POOR;
+    }
+    function sdPill(sd: number, hi: number | null, adj = 0) {
+      const displaySd = sd + adj;
+      const c = sdColor(displaySd, hi);
+      const adjNote = adj !== 0 ? `<span style="font-size:9px;opacity:.8;margin-left:3px">(${adj > 0 ? '+' : ''}${adj})</span>` : '';
+      return `<span style="background:${c.bg};color:${c.fg};border-radius:6px;padding:2px 7px;font-size:11px;font-weight:700;display:inline-block;white-space:nowrap">${displaySd.toFixed(1)}${adjNote}</span>`;
+    }
+
+    const goodClr    = '#16a34a';
+    const badClr     = '#dc2626';
+    const excClr     = '#b45309';
+    const neutralClr = '#374151';
+    const mutedClr   = '#9ca3af';
+
+    function deltaColor(d: number) { return d < -0.05 ? goodClr : d > 0.05 ? badClr : neutralClr; }
+    function deltaBg(d: number)    { return d < -0.05 ? '#f0fdf4' : d > 0.05 ? '#fef2f2' : '#f9fafb'; }
+    function deltaBorder(d: number){ return d < -0.05 ? '#86efac' : d > 0.05 ? '#fca5a5' : '#e5e7eb'; }
+
+    // ── Timeline ─────────────────────────────────────────────────────────
+    const tlItems = [
+      `<div class="tl-box tl-start">
+        <div class="tl-lbl">Actual</div>
+        <div class="tl-hi" style="color:${neutralClr}">${currentHI!.toFixed(1)}</div>
+        <div class="tl-sub">${whsQtyCalc(initialPool.length)} mel./${initialPool.length}</div>
+      </div>`,
+    ];
+    validRes.forEach((r, i) => {
+      tlItems.push(
+        `<div class="tl-arrow">→</div>
+        <div class="tl-box" style="background:${deltaBg(r.delta)};border-color:${deltaBorder(r.delta)}">
+          <div class="tl-lbl">R${i + 1}${r.exceptionalAdj !== 0 ? ' ⚡' : ''}</div>
+          <div class="tl-hi" style="color:${deltaColor(r.delta)}">${r.hiAfterRound.toFixed(1)}</div>
+          <div class="tl-sub" style="color:${deltaColor(r.delta)}">${r.delta > 0 ? '+' : ''}${r.delta.toFixed(1)}</div>
+        </div>`
+      );
+    });
+    if (validRes.length > 1) {
+      tlItems.push(
+        `<div class="tl-arrow" style="font-weight:700">═</div>
+        <div class="tl-box tl-final" style="background:${deltaBg(finalDelta)};border:2px solid ${deltaBorder(finalDelta)}">
+          <div class="tl-lbl">Final</div>
+          <div class="tl-hi" style="color:${deltaColor(finalDelta)};font-size:26px">${finalHIv.toFixed(1)}</div>
+          <div class="tl-sub" style="color:${deltaColor(finalDelta)}">${finalDelta > 0 ? '+' : ''}${finalDelta.toFixed(1)} total</div>
+        </div>`
+      );
+    }
+
+    // ── Cards de ronda ────────────────────────────────────────────────────
+    const roundCards = validRes.map((r, i) => {
+      const clr = deltaColor(r.delta);
+      const brd = r.exceptionalAdj !== 0 ? excClr : r.delta < -0.05 ? goodClr : r.delta > 0.05 ? badClr : '#d1d5db';
+      const modeLabel = r.cr != null
+        ? `⛳ <b>${r.courseName}</b>${r.teeLabel ? ` — ${r.teeLabel}` : ''} <span style="color:${mutedClr};font-size:10px">CR ${r.cr} / Slope ${r.slope} / Par ${r.par}</span>`
+        : `📊 SD directo`;
+      const inputLine = r.gross != null
+        ? `Gross: <b>${r.gross}</b> pancadas`
+        : `SD introduzido: <b>${r.sd!.toFixed(1)}</b>`;
+      const topBadge = r.entersTop
+        ? `<span style="background:#16a34a;color:#fff;border-radius:4px;padding:2px 8px;font-size:11px;font-weight:700">★ top-${r.topRank ?? ''}</span> `
+        : '';
+      const excBadge = r.exceptionalAdj !== 0
+        ? `<span style="background:${excClr};color:#fff;border-radius:4px;padding:2px 8px;font-size:11px;font-weight:700">⚡ Exceptional ${r.exceptionalAdj === -2 ? '−2' : '−1'}</span>`
+        : '';
+
+      return `
+      <div style="border:1px solid ${brd};border-left:5px solid ${brd};border-radius:8px;background:${deltaBg(r.delta)};padding:12px 16px;margin-bottom:10px;page-break-inside:avoid">
+        <!-- Cabeçalho da ronda -->
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+          <span style="background:${brd};color:#fff;border-radius:50%;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0">${i + 1}</span>
+          <span style="font-size:13px;color:${neutralClr}">${modeLabel}</span>
+          <span style="margin-left:auto">${topBadge}${excBadge}</span>
+        </div>
+        <!-- Dados -->
+        <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap">
+          <!-- Input + SD pill -->
+          <div>
+            <div style="font-size:10px;color:${mutedClr};text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px">Input → SD</div>
+            <div style="font-size:12px;display:flex;align-items:center;gap:8px">
+              ${inputLine} &nbsp;→&nbsp; ${sdPill(r.sd!, r.hiBeforeRound)}
+            </div>
+          </div>
+          <!-- HCP antes -->
+          <div style="text-align:center">
+            <div style="font-size:10px;color:${mutedClr};text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px">HCP antes</div>
+            <div style="font-size:20px;font-weight:700;color:${neutralClr}">${r.hiBeforeRound.toFixed(1)}</div>
+          </div>
+          <div style="font-size:18px;color:${mutedClr}">→</div>
+          <!-- HCP depois -->
+          <div style="text-align:center">
+            <div style="font-size:10px;color:${mutedClr};text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px">HCP depois</div>
+            <div style="font-size:28px;font-weight:900;color:${clr};line-height:1">${r.hiAfterRound.toFixed(1)}</div>
+          </div>
+          <!-- Variação -->
+          <div style="text-align:center">
+            <div style="font-size:10px;color:${mutedClr};text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px">Δ HCP</div>
+            <div style="font-size:20px;font-weight:800;color:${clr}">${r.delta > 0 ? '+' : ''}${r.delta.toFixed(1)}</div>
+          </div>
+          ${r.exceptionalAdj !== 0 ? `
+          <div style="background:rgba(180,83,9,.08);border:1px solid ${excClr};border-radius:6px;padding:7px 11px;font-size:11px;color:${excClr};max-width:280px;line-height:1.5">
+            <b>Exceptional Score (Regra 5.9):</b> SD ${r.sd!.toFixed(1)} está ${r.exceptionalDiff.toFixed(1)} pancadas abaixo do HI ${r.hiBeforeRound.toFixed(1)}.
+            Redução de <b>${r.exceptionalAdj}</b> aplicada a todos os ${r.poolAfter.length} SDs.
+          </div>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+
+    // ── Tabela WHS final ──────────────────────────────────────────────────
+    const poolQty  = whsQtyCalc(simResults.finalPool.length);
+    const poolRows = simResults.finalPool.map((e, i) => {
+      const r      = e.origRound;
+      const isTop  = finalTopIds.has(e.eid);
+      const rank   = finalTopRanks.get(e.eid);
+      const hasAdj = e.adj !== 0;
+      const res    = e.isSimulated ? validRes.find(x => x.roundId === e.eid) : null;
+      const rowBg  = e.isSimulated ? '#eff6ff' : isTop ? '#f0fdf4' : i % 2 === 0 ? '#fff' : '#fafafa';
+      const lBorder = e.isSimulated ? '#93c5fd' : isTop ? '#86efac' : 'transparent';
+      const dateLabel   = e.isSimulated ? `<b style="color:#2563eb">▶ Nova ${(res?.roundIdx ?? 0) + 1}</b>` : (r?.date ?? '—');
+      const courseLabel = e.isSimulated ? (res?.courseName ?? '—') : (r?.course ?? '—');
+      const hiRef       = e.isSimulated ? (res?.hiBeforeRound ?? currentHI!) : (r?.hi ?? currentHI!);
+      const sdOrigPill  = sdPill(e.sd, hiRef ?? currentHI!);
+      const sdAdjPill   = hasAdj ? sdPill(e.sd, hiRef ?? currentHI!, e.adj) : '—';
+      return `<tr style="background:${rowBg};border-left:3px solid ${lBorder}">
+        <td style="padding:5px 8px;color:${mutedClr};font-size:11px;font-weight:700">${i + 1}</td>
+        <td style="padding:5px 8px;font-size:11px">${dateLabel}</td>
+        <td style="padding:5px 8px;font-size:11px">${courseLabel}${res?.teeLabel ? ` <span style="color:${mutedClr}">— ${res.teeLabel}</span>` : ''}</td>
+        <td style="padding:5px 8px;font-size:11px;text-align:right">${r?.hi ?? ''}</td>
+        <td style="padding:5px 8px;text-align:right">${sdOrigPill}</td>
+        <td style="padding:5px 8px;text-align:right">${sdAdjPill}</td>
+        <td style="padding:5px 8px;text-align:center;font-size:11px;font-weight:700;color:${isTop ? goodClr : mutedClr}">${isTop ? `★ #${rank}` : '–'}</td>
+      </tr>`;
+    }).join('');
+
+    const hasDisplaced = displacedEntries.length > 0;
+    const displRows = displacedEntries.map(e => {
+      const r = e.origRound;
+      const wasTop = simResults.oldTopIds.has(e.eid);
+      return `<tr style="opacity:.4">
+        <td style="padding:5px 8px;color:${badClr};font-size:11px;font-weight:700">out</td>
+        <td style="padding:5px 8px;font-size:11px">${r?.date ?? '—'}</td>
+        <td style="padding:5px 8px;font-size:11px">${r?.course ?? '—'}</td>
+        <td style="padding:5px 8px;font-size:11px;text-align:right">${r?.hi ?? ''}</td>
+        <td style="padding:5px 8px;text-align:right">${sdPill(e.sd, currentHI!)}</td>
+        <td style="padding:5px 8px;text-align:right;color:${mutedClr}">—</td>
+        <td style="padding:5px 8px;text-align:center;color:${wasTop ? badClr : mutedClr};font-size:11px">${wasTop ? '★ saiu' : '–'}</td>
+      </tr>`;
+    }).join('');
+
+    const html = `<!DOCTYPE html>
+<html lang="pt"><head>
+<meta charset="utf-8">
+<title>Simulação WHS${playerName ? ' — ' + playerName : ''}</title>
+<style>
+  *{box-sizing:border-box}
+  body{font-family:system-ui,-apple-system,sans-serif;font-size:13px;color:#111827;margin:0;padding:32px 28px;background:#fff}
+  h1{font-size:21px;font-weight:900;margin:0 0 3px;letter-spacing:-.3px;color:#111827}
+  .meta{font-size:12px;color:${mutedClr};margin:0 0 18px}
+  /* KPIs topo */
+  .kpis{display:flex;gap:12px;margin-bottom:22px;flex-wrap:wrap}
+  .kpi{border:1px solid #e5e7eb;border-radius:8px;padding:10px 18px;text-align:center;min-width:90px}
+  .kpi-lbl{font-size:10px;color:${mutedClr};text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}
+  .kpi-val{font-size:26px;font-weight:900;line-height:1}
+  /* Timeline */
+  .timeline{display:flex;align-items:stretch;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;margin-bottom:22px}
+  .tl-box{padding:10px 14px;text-align:center;min-width:82px;display:flex;flex-direction:column;justify-content:center;background:#f9fafb;border:1px solid #e5e7eb}
+  .tl-box.tl-start{background:#f3f4f6;border:none}
+  .tl-box.tl-final{min-width:90px}
+  .tl-lbl{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:${mutedClr};font-weight:600;margin-bottom:2px}
+  .tl-hi{font-size:21px;font-weight:900;line-height:1}
+  .tl-sub{font-size:11px;font-weight:700;margin-top:2px}
+  .tl-arrow{display:flex;align-items:center;padding:0 5px;background:#f3f4f6;color:${mutedClr};font-size:15px}
+  /* Secções */
+  .sec{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:${mutedClr};margin:20px 0 8px;padding-bottom:5px;border-bottom:1.5px solid #e5e7eb}
+  /* Tabela */
+  table{width:100%;border-collapse:collapse}
+  thead tr{background:#f3f4f6}
+  thead th{padding:6px 8px;font-size:10px;text-transform:uppercase;letter-spacing:.05em;font-weight:700;color:#6b7280;text-align:left;border-bottom:2px solid #e5e7eb}
+  thead th.r{text-align:right} thead th.c{text-align:center}
+  tbody tr{border-bottom:1px solid #f3f4f6}
+  .legend{display:flex;gap:14px;margin-bottom:8px;font-size:11px;color:#6b7280;flex-wrap:wrap}
+  .dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:middle}
+  footer{margin-top:24px;font-size:10px;color:${mutedClr};border-top:1px solid #f3f4f6;padding-top:10px}
+  @media print{body{padding:16px 14px}tr{page-break-inside:avoid}.sec{margin-top:14px}}
+</style></head>
+<body>
+  <h1>Simulação WHS${playerName ? ' — ' + playerName : ''}</h1>
+  <p class="meta">${fedNum ? 'Federado #' + fedNum + ' · ' : ''}${dateStr} às ${timeStr} · ${validRes.length} ronda${validRes.length !== 1 ? 's' : ''} simulada${validRes.length !== 1 ? 's' : ''}${validRes.some(r => r.exceptionalAdj !== 0) ? ' · ⚡ Exceptional Score' : ''}</p>
+
+  <!-- KPIs -->
+  <div class="kpis">
+    <div class="kpi">
+      <div class="kpi-lbl">HCP Actual</div>
+      <div class="kpi-val" style="color:${neutralClr}">${currentHI!.toFixed(1)}</div>
+    </div>
+    <div class="kpi" style="border-color:${deltaBorder(finalDelta)}">
+      <div class="kpi-lbl">HCP Final</div>
+      <div class="kpi-val" style="color:${deltaColor(finalDelta)}">${finalHIv.toFixed(1)}</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Variação Total</div>
+      <div class="kpi-val" style="color:${deltaColor(finalDelta)}">${finalDelta > 0 ? '+' : ''}${finalDelta.toFixed(1)}</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Janela WHS</div>
+      <div class="kpi-val" style="color:${neutralClr}">${whsQtyCalc(simResults.finalPool.length)}/${simResults.finalPool.length}</div>
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="sec">Evolução do Handicap Index</div>
+  <div class="timeline">${tlItems.join('')}</div>
+
+  <!-- Rondas -->
+  <div class="sec">Detalhe das rondas simuladas</div>
+  ${roundCards}
+
+  <!-- Tabela WHS -->
+  <div class="sec">Janela WHS final — ${simResults.finalPool.length} rondas (top-${poolQty} entram no cálculo)</div>
+  <div class="legend">
+    <span><span class="dot" style="background:#bfdbfe"></span>Ronda simulada</span>
+    <span><span class="dot" style="background:#bbf7d0"></span>Entra no top-${poolQty}</span>
+    <span>${sdPill(currentHI! - 1, currentHI!)} SD ≤ HI (excelente)</span>
+    <span>${sdPill(currentHI! + 1, currentHI!)} SD ≤ HI+3 (bom)</span>
+    <span>${sdPill(currentHI! + 5, currentHI!)} SD > HI+3 (fraco)</span>
+  </div>
+  <table>
+    <thead><tr>
+      <th>#</th><th>Data</th><th>Campo</th>
+      <th class="r">HCP</th><th class="r">SD orig.</th><th class="r">SD adj.</th><th class="c">Top</th>
+    </tr></thead>
+    <tbody>
+      ${poolRows}
+      ${hasDisplaced ? `<tr><td colspan="7" style="padding:4px 8px;background:#f3f4f6;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:${mutedClr}">Deslocadas — saíram da janela</td></tr>${displRows}` : ''}
+    </tbody>
+  </table>
+
+  <div class="footer">Simulação WHS · SD colorizados: verde = SD ≤ HI (excelente), amarelo = SD ≤ HI+3 (bom), vermelho = SD &gt; HI+3 (fraco) · ⚡ Exceptional Score conforme Regra 5.9 · Os valores são estimativas.</div>
+</body></html>`;
+
+    const win = window.open('', '_blank', 'width=960,height=750');
+    if (!win) return;
+    win.document.write(html);
+    win.document.close();
+    setTimeout(() => { win.focus(); win.print(); }, 500);
+  }
 
   if (currentHI == null) return null;
-  if (allRatedCourses.length === 0) return null;
 
-  const nrsInner = (
+  const validResults = simResults?.results.filter(r => r.valid) ?? [];
+  const finalHI      = simResults?.finalHI ?? currentHI;
+  const finalDelta   = finalHI - currentHI;
+  const finalDColor  = finalDelta < -0.05 ? 'var(--color-good)' : finalDelta > 0.05 ? 'var(--color-danger)' : 'var(--text-2)';
+  const qtyCalcCur   = whsQtyCalc(initialPool.length);
+
+  // Cor da borda esquerda do card de ronda
+  function roundBorderColor(result?: RoundResult): string {
+    if (!result?.valid) return 'var(--border)';
+    if (result.exceptionalAdj !== 0) return 'var(--color-warn, #e07b00)';
+    if (result.delta < -0.05) return 'var(--color-good)';
+    if (result.delta >  0.05) return 'var(--color-danger)';
+    return 'var(--border)';
+  }
+
+  const inner = (
     <div>
-      <div className="muted fs-11 mb-12">
-        Selecciona o campo e tee da próxima ronda — vê o impacto no HCP para cada resultado possível.
+      {/* ── Toolbar: guardar / carregar / PDF / limpar ── */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14, flexWrap: 'wrap' }}>
+        <span className="muted fs-11">
+          Simula rondas sequencialmente — SD directo ou Campo+Tee+Gross.
+        </span>
+        <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 6 }}>
+          {savedTs && (
+            <span style={{ fontSize: 10, color: 'var(--color-good)', fontWeight: 600 }}>
+              ✓ guardado
+            </span>
+          )}
+          {storageKey && (
+            <button onClick={saveNow}
+              style={{ fontSize: 11, padding: '3px 10px', borderRadius: 6, border: '1px solid var(--line)',
+                background: 'transparent', cursor: 'pointer', color: 'var(--text-2)', fontWeight: 600 }}>
+              💾 Guardar
+            </button>
+          )}
+          {storageKey && hasSaved && (
+            <button onClick={loadSaved}
+              style={{ fontSize: 11, padding: '3px 10px', borderRadius: 6, border: '1px solid var(--line)',
+                background: 'transparent', cursor: 'pointer', color: 'var(--text-2)' }}>
+              📂 Repor
+            </button>
+          )}
+          {validResults.length > 0 && (
+            <button onClick={exportPDF}
+              style={{ fontSize: 11, padding: '3px 10px', borderRadius: 6, border: '1px solid var(--line)',
+                background: 'transparent', cursor: 'pointer', color: 'var(--chart-2)', fontWeight: 600 }}>
+              📄 PDF
+            </button>
+          )}
+          <button onClick={clearAll}
+            style={{ fontSize: 11, padding: '3px 10px', borderRadius: 6, border: '1px solid var(--line)',
+              background: 'transparent', cursor: 'pointer', color: 'var(--text-3)' }}>
+            ✕ Limpar
+          </button>
+        </div>
       </div>
 
-      {/* Selectors */}
-      <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 14, alignItems: "center" }}>
-        <select className="select" value={selectedCourseKey}
-          onChange={e => setSelectedCourseKey(e.target.value)}
-          style={{ minWidth: 200, maxWidth: 380 }}>
-          {allRatedCourses.map(c => (
-            <option key={c.courseKey} value={c.courseKey}>
-              {playedNormSet.has(norm(c.master.name)) ? "★ " : ""}{c.master.name}
-            </option>
-          ))}
-        </select>
+      {/* ── Cards das rondas ── */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 16 }}>
+        {rounds.map((round, idx) => {
+          const teeId      = getEffectiveTeeId(round);
+          const validTees  = getValidTees(round.courseKey);
+          const ratings    = getTeeRatings(round.courseKey, teeId);
+          const grossNum   = parseInt(round.grossInput);
+          const computedSd = round.mode === 'course' && !isNaN(grossNum) && ratings.cr != null && ratings.slope != null
+            ? Math.round(calcSD(grossNum, ratings.cr!, ratings.slope!) * 10) / 10 : null;
+          const result     = simResults?.results[idx];
+          const hiRef      = result?.hiBeforeRound ?? currentHI;
+          const borderClr  = roundBorderColor(result);
 
-        <select className="select" value={selectedTeeId}
-          onChange={e => setSelectedTeeId(e.target.value)}>
-          {availableTees.map(t => (
-            <option key={t.teeId} value={t.teeId}>
-              {t.teeName} — CR {t.ratings.holes18!.courseRating} / Slope {t.ratings.holes18!.slopeRating} / Par {t.ratings.holes18!.par ?? par}
-            </option>
-          ))}
-        </select>
+          return (
+            <div key={round.id} style={{
+              border: '1px solid var(--border)',
+              borderLeft: `4px solid ${borderClr}`,
+              borderRadius: 'var(--radius-xl)',
+              background: 'var(--bg-card)',
+              padding: '10px 14px',
+              transition: 'border-color .15s',
+            }}>
+              {/* Cabeçalho */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
+                {/* Número */}
+                <span style={{
+                  background: borderClr === 'var(--border)' ? 'var(--bg-detail)' : borderClr,
+                  color: borderClr === 'var(--border)' ? 'var(--text-2)' : '#fff',
+                  borderRadius: '50%', width: 22, height: 22,
+                  display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                  fontSize: 11, fontWeight: 800, flexShrink: 0,
+                }}>{idx + 1}</span>
 
-        {cr != null && slope != null && (
-          <span className="muted fs-11">
-            SD = (113 ÷ {slope}) × (Gross − {cr})
-          </span>
-        )}
-      </div>
+                {/* Toggle SD / Campo */}
+                <div style={{ display: 'flex', borderRadius: 6, overflow: 'hidden', border: '1px solid var(--line)', fontSize: 11 }}>
+                  {(['sd', 'course'] as const).map(m => (
+                    <button key={m} onClick={() => updateRound(round.id, { mode: m })}
+                      style={{
+                        padding: '3px 10px', border: 'none', cursor: 'pointer',
+                        background: round.mode === m ? 'var(--chart-2)' : 'transparent',
+                        color: round.mode === m ? '#fff' : 'var(--text-2)',
+                        fontWeight: round.mode === m ? 700 : 400,
+                      }}>
+                      {m === 'sd' ? '📊 SD' : '⛳ Campo'}
+                    </button>
+                  ))}
+                </div>
 
-      {/* Narrative */}
-      {thresholds && simTable && cr != null && (
-        <div style={{ padding: "10px 14px", borderRadius: 8, background: "var(--bg-detail)",
-          fontSize: 12, lineHeight: 2, marginBottom: 14 }}>
+                {/* Resultado inline */}
+                {result?.valid && (
+                  <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 6 }}>
+                    {result.exceptionalAdj !== 0 && (
+                      <span style={{
+                        fontSize: 10, fontWeight: 700, color: '#fff', borderRadius: 4, padding: '2px 6px',
+                        background: result.exceptionalAdj === -2 ? 'var(--color-danger)' : 'var(--color-warn, #e07b00)',
+                      }}>⚡ {result.exceptionalAdj === -2 ? '−2' : '−1'}</span>
+                    )}
+                    {result.entersTop && (
+                      <span style={{ fontSize: 10, fontWeight: 700, color: 'var(--color-good)' }}>★ top-{finalTopRanks.get(round.id) ? `#${finalTopRanks.get(round.id)}` : ''}</span>
+                    )}
+                    <span style={{ fontSize: 11, color: 'var(--text-3)' }}>HCP</span>
+                    <span style={{
+                      fontSize: 18, fontWeight: 800, lineHeight: 1,
+                      color: result.delta < -0.05 ? 'var(--color-good)' : result.delta > 0.05 ? 'var(--color-danger)' : 'var(--text-1)',
+                    }}>{result.hiAfterRound.toFixed(1)}</span>
+                    <span style={{
+                      fontSize: 12, fontWeight: 700,
+                      color: result.delta < -0.05 ? 'var(--color-good)' : result.delta > 0.05 ? 'var(--color-danger)' : 'var(--text-3)',
+                    }}>({result.delta > 0 ? '+' : ''}{result.delta.toFixed(1)})</span>
+                  </div>
+                )}
 
-          {/* Next to exit warning */}
-          {nextToExit && (
-            <div style={{ marginBottom: 6, padding: "6px 10px", borderRadius: 6,
-              background: nextToExitIsTop ? "rgba(239,68,68,0.08)" : "rgba(0,0,0,0.04)",
-              borderLeft: `3px solid ${nextToExitIsTop ? "var(--color-danger)" : "var(--line)"}` }}>
-              {nextToExitIsTop
-                ? <>⚠️ <b>Atenção:</b> o resultado que sai da janela WHS ({nextToExit.date} · {nextToExit.course})
-                    {" "}tem SD <b>{Number(nextToExitSd).toFixed(1)}</b> e <b>é um dos teus top-{qtyCalc}</b>.
-                    {" "}Para não agravares o HCP precisas de SD ≤ <b>{Number(nextToExitSd).toFixed(1)}</b>
-                    {thresholds.currentWorstTop != null && nextToExitSd != null &&
-                      cr != null && slope != null && (() => {
-                        // What gross gives SD = nextToExitSd?
-                        const targetGross = Math.round(Number(nextToExitSd) * slope / 113 + cr);
-                        return <>, ou seja, grosso modo <b>≤ {targetGross} pancadas</b> em {selectedTee?.teeName ?? ""}.</>;
-                      })()
-                    }
+                {/* Remover */}
+                {rounds.length > 1 && (
+                  <button onClick={() => removeRound(round.id)} title="Remover"
+                    style={{ border: 'none', background: 'transparent', cursor: 'pointer',
+                      color: 'var(--text-3)', fontSize: 18, padding: '0 2px', lineHeight: 1, marginLeft: result?.valid ? 0 : 'auto' }}>
+                    ×
+                  </button>
+                )}
+              </div>
+
+              {/* Inputs */}
+              <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
+                {round.mode === 'sd' ? (
+                  <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, fontWeight: 600 }}>
+                    SD:
+                    <input type="number" step="0.1" placeholder="ex: 28.5"
+                      value={round.sdInput}
+                      onChange={e => updateRound(round.id, { sdInput: e.target.value })}
+                      style={{ width: 90, padding: '4px 8px', borderRadius: 6, border: '1px solid var(--line)',
+                        background: 'var(--bg-card)', color: 'var(--text-1)', fontSize: 14, fontWeight: 700 }}
+                    />
+                  </label>
+                ) : (
+                  <>
+                    <select className="select" value={round.courseKey}
+                      onChange={e => updateRound(round.id, { courseKey: e.target.value })}
+                      style={{ minWidth: 180, maxWidth: 320 }}>
+                      {allRatedCourses.map(c => (
+                        <option key={c.courseKey} value={c.courseKey}>
+                          {playedNormSet.has(norm(c.master.name)) ? '★ ' : ''}{c.master.name}
+                        </option>
+                      ))}
+                    </select>
+                    <select className="select" value={teeId}
+                      onChange={e => updateRound(round.id, { teeId: e.target.value })}>
+                      {validTees.map(t => (
+                        <option key={t.teeId} value={t.teeId}>
+                          {t.teeName} — CR {t.ratings.holes18!.courseRating} / Slope {t.ratings.holes18!.slopeRating}
+                        </option>
+                      ))}
+                    </select>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, fontWeight: 600 }}>
+                      Gross:
+                      <input type="number" step="1" placeholder="ex: 85"
+                        value={round.grossInput}
+                        onChange={e => updateRound(round.id, { grossInput: e.target.value })}
+                        style={{ width: 80, padding: '4px 8px', borderRadius: 6, border: '1px solid var(--line)',
+                          background: 'var(--bg-card)', color: 'var(--text-1)', fontSize: 14, fontWeight: 700 }}
+                      />
+                    </label>
+                    {computedSd != null && (
+                      <span className={`p p-${sdClassByHcp(computedSd, hiRef)}`} style={{ fontSize: 13, fontWeight: 800 }}>
+                        SD {computedSd.toFixed(1)}
+                      </span>
+                    )}
+                    {ratings.cr != null && (
+                      <span className="muted fs-11">CR {ratings.cr} / Slope {ratings.slope} / Par {ratings.par}</span>
+                    )}
                   </>
-                : <>ℹ️ O resultado que sai ({nextToExit.date} · {nextToExit.course}) tem SD{" "}
-                    <b>{nextToExitSd != null ? Number(nextToExitSd).toFixed(1) : "sem SD"}</b>{" "}
-                    e não é top-{qtyCalc} — o teu HCP não fica em risco por essa saída.</>
-              }
-            </div>
-          )}
-
-          {/* Improvement threshold */}
-          {thresholds.improves.length > 0 && (() => {
-            const best = thresholds.improves[thresholds.improves.length - 1];
-            return (
-              <div>
-                🟢 Para <b>melhorar</b> o HCP: precisas de <b>≤ {best.gross} pancadas</b>{" "}
-                ({best.toPar >= 0 ? "+" : ""}{best.toPar} ao par) → SD <b>{best.sd.toFixed(1)}</b>{" "}
-                → HCP <b style={{ color: "var(--color-good)" }}>{best.newHI.toFixed(1)}</b>
+                )}
               </div>
-            );
-          })()}
 
-          {/* Top-8 threshold */}
-          {thresholds.maxEntersTopGross != null && (
-            <div>
-              ★ Para <b>entrar no top-{qtyCalc}</b>: precisas de <b>≤ {thresholds.maxEntersTopGross} pancadas</b>
-              {thresholds.currentWorstTop != null &&
-                <span className="muted"> (bate o SD actual mais fraco do top: {thresholds.currentWorstTop.toFixed(1)})</span>}
+              {/* Exceptional score notice */}
+              {result?.valid && result.exceptionalAdj !== 0 && (
+                <div style={{
+                  marginTop: 8, padding: '6px 10px', borderRadius: 6, fontSize: 11, lineHeight: 1.6,
+                  background: 'var(--bg-warn, rgba(224,123,0,0.08))',
+                  border: `1px solid ${result.exceptionalAdj === -2 ? 'var(--color-danger)' : 'var(--color-warn, #e07b00)'}`,
+                  color: result.exceptionalAdj === -2 ? 'var(--color-danger)' : 'var(--color-warn, #e07b00)',
+                }}>
+                  ⚡ <b>Exceptional Score:</b> SD {result.sd!.toFixed(1)} é <b>{result.exceptionalDiff.toFixed(1)} pancadas</b> abaixo do HI {result.hiBeforeRound.toFixed(1)}
+                  {' '}→ redução de <b>{result.exceptionalAdj}</b> aplicada a todos os {result.poolAfter.length} SDs da janela (Regra 5.9)
+                </div>
+              )}
             </div>
-          )}
+          );
+        })}
 
-          {/* No impact zone */}
-          {(() => {
-            const noImpact = simTable.filter(r => !r.entersTop && Math.abs(r.delta) < 0.05);
-            if (noImpact.length === 0) return null;
-            const lo = noImpact[0].gross, hi = noImpact[noImpact.length - 1].gross;
-            return (
-              <div className="muted">
-                ➖ Entre {lo} e {hi} pancadas: SD não entra no top-{qtyCalc}, HCP mantém-se em {currentHI.toFixed(1)}
+        {/* Adicionar ronda */}
+        <button onClick={addRound}
+          style={{
+            border: '1px dashed var(--line)', borderRadius: 'var(--radius-xl)',
+            background: 'transparent', cursor: 'pointer',
+            padding: '8px 16px', color: 'var(--text-3)', fontSize: 13,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+          }}>
+          + Adicionar ronda
+        </button>
+      </div>
+
+      {/* ── Timeline ── */}
+      {validResults.length > 0 && (
+        <div style={{
+          display: 'flex', alignItems: 'stretch', gap: 0,
+          marginBottom: 16, borderRadius: 10, overflow: 'hidden',
+          border: '1px solid var(--border)',
+        }}>
+          {/* HCP actual */}
+          <div style={{ padding: '12px 16px', background: 'var(--bg-detail)', textAlign: 'center', minWidth: 80, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <div style={{ fontSize: 10, color: 'var(--text-3)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.05em', marginBottom: 2 }}>Actual</div>
+            <div style={{ fontSize: 22, fontWeight: 900, lineHeight: 1 }}>{currentHI.toFixed(1)}</div>
+            <div style={{ fontSize: 10, color: 'var(--text-3)', marginTop: 2 }}>{qtyCalcCur} mel./{initialPool.length}</div>
+          </div>
+
+          {validResults.map((r, i) => (
+            <React.Fragment key={r.roundId}>
+              {/* Seta */}
+              <div style={{ display: 'flex', alignItems: 'center', padding: '0 4px', background: 'var(--bg-detail)', color: 'var(--text-3)' }}>→</div>
+              {/* Ronda */}
+              <div style={{
+                padding: '10px 14px', textAlign: 'center', minWidth: 90,
+                background: r.delta < -0.05 ? 'rgba(34,197,94,0.08)' : r.delta > 0.05 ? 'rgba(239,68,68,0.08)' : 'var(--bg-card)',
+                borderLeft: '1px solid var(--border)',
+                display: 'flex', flexDirection: 'column', justifyContent: 'center',
+              }}>
+                <div style={{ fontSize: 10, color: 'var(--text-3)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.05em', marginBottom: 2 }}>
+                  Ronda {i + 1}{r.exceptionalAdj !== 0 ? ' ⚡' : ''}
+                </div>
+                <div style={{ fontSize: 20, fontWeight: 900, lineHeight: 1, color: r.delta < -0.05 ? 'var(--color-good)' : r.delta > 0.05 ? 'var(--color-danger)' : 'var(--text-1)' }}>
+                  {r.hiAfterRound.toFixed(1)}
+                </div>
+                <div style={{ fontSize: 11, fontWeight: 700, color: r.delta < -0.05 ? 'var(--color-good)' : r.delta > 0.05 ? 'var(--color-danger)' : 'var(--text-3)', marginTop: 2 }}>
+                  {r.delta > 0 ? '+' : ''}{r.delta.toFixed(1)}
+                </div>
               </div>
-            );
-          })()}
+            </React.Fragment>
+          ))}
+
+          {/* HCP final (se >1 ronda) */}
+          {validResults.length > 1 && (
+            <>
+              <div style={{ display: 'flex', alignItems: 'center', padding: '0 4px', background: 'var(--bg-detail)', color: 'var(--text-3)', fontWeight: 700 }}>═</div>
+              <div style={{
+                padding: '10px 16px', textAlign: 'center', minWidth: 90,
+                background: 'var(--bg-detail)', borderLeft: `3px solid ${finalDColor}`,
+                display: 'flex', flexDirection: 'column', justifyContent: 'center',
+              }}>
+                <div style={{ fontSize: 10, color: 'var(--text-3)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.05em', marginBottom: 2 }}>Final</div>
+                <div style={{ fontSize: 24, fontWeight: 900, lineHeight: 1, color: finalDColor }}>{finalHI.toFixed(1)}</div>
+                <div style={{ fontSize: 11, fontWeight: 700, color: finalDColor, marginTop: 2 }}>
+                  {finalDelta > 0 ? '+' : ''}{finalDelta.toFixed(1)} total
+                </div>
+              </div>
+            </>
+          )}
         </div>
       )}
 
-      {/* Table */}
-      {simTable && cr != null && (
+      {/* ── Tabela Gross→HCP ── */}
+      {grossTable && (
+        <div style={{ marginBottom: 16 }}>
+          <div className="muted fs-11 mb-6">
+            Tabela de impacto — ronda {grossTable.roundIdx + 1}
+            {grossTable.roundIdx > 0 && <span> (após {grossTable.roundIdx} ronda{grossTable.roundIdx > 1 ? 's' : ''} já simulada{grossTable.roundIdx > 1 ? 's' : ''})</span>}
+            {' — '}CR {grossTable.cr} / Slope {grossTable.slope} / Par {grossTable.par}
+          </div>
+          <div className="table-wrap">
+            <table className="dtable" style={{ fontSize: 12 }}>
+              <thead>
+                <tr>
+                  <th className="r">Pancadas</th><th className="r">Ao par</th>
+                  <th className="r">SD</th><th className="r">HCP</th>
+                  <th className="r">Δ</th><th>Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                {grossTable.rows.map(row => {
+                  const dc    = row.delta < -0.05 ? 'var(--color-good)' : row.delta > 0.05 ? 'var(--color-danger)' : 'var(--text-3)';
+                  const hiRef = simResults!.results[grossTable.roundIdx]?.hiBeforeRound ?? currentHI;
+                  return (
+                    <tr key={row.gross} style={{
+                      background: row.isEntered
+                        ? 'var(--bg-active, rgba(59,130,246,0.10))'
+                        : row.entersTop ? 'var(--bg-success)' : undefined,
+                      opacity: row.delta > 0.7 ? 0.55 : 1,
+                      outline: row.isEntered ? '2px solid var(--chart-2)' : undefined,
+                    }}>
+                      <td className="r fw-700">{row.gross}{row.isEntered && <span style={{ marginLeft: 4, fontSize: 10, color: 'var(--chart-2)', fontWeight: 700 }}>◀</span>}</td>
+                      <td className="r muted">{row.toPar >= 0 ? '+' : ''}{row.toPar}</td>
+                      <td className="r">
+                        <span className={`p p-${sdClassByHcp(row.sd, hiRef)}`} style={{ fontSize: 11 }}>{row.sd.toFixed(1)}</span>
+                        {row.exceptionalAdj !== 0 && <span style={{ fontSize: 9, marginLeft: 3, color: 'var(--color-warn, #e07b00)', fontWeight: 700 }}>⚡{row.exceptionalAdj}</span>}
+                      </td>
+                      <td className="r fw-700" style={{ color: dc }}>{row.newHI.toFixed(1)}</td>
+                      <td className="r fw-700" style={{ color: dc }}>{row.delta > 0 ? '+' : ''}{row.delta.toFixed(1)}</td>
+                      <td style={{ fontSize: 11 }}>
+                        {row.entersTop ? <span className="c-par-ok fw-600">★ top-{whsQtyCalc(simResults!.finalPool.length)}</span>
+                          : row.delta < -0.05 ? <span style={{ color: 'var(--color-good)' }}>↓ melhora</span>
+                          : row.delta > 0.05 ? <span style={{ color: 'var(--color-danger)' }}>↑ agrava</span>
+                          : <span className="muted">= sem impacto</span>}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {/* ── Janela WHS final ── */}
+      {simResults && validResults.length > 0 && (
         <div className="table-wrap">
+          <div className="muted fs-11 mb-6">
+            Janela WHS após simulação — ★ = top-{whsQtyCalc(simResults.finalPool.length)} SDs ·{' '}
+            <span style={{ color: 'var(--color-good)', fontWeight: 600 }}>Verde</span> = ronda simulada ·{' '}
+            SD adj. = valor após redução excepcional
+          </div>
           <table className="dtable" style={{ fontSize: 12 }}>
             <thead>
               <tr>
-                <th className="r">Pancadas</th>
-                <th className="r">Ao par</th>
-                <th className="r">SD</th>
-                <th className="r">HCP</th>
-                <th className="r">Variação</th>
-                <th>Estado</th>
+                <th className="r">WHS#</th><th>Data</th><th>Campo</th>
+                <th className="r">HCP</th><th>Tee</th><th className="r">Gross</th>
+                <th className="r">SD</th><th className="r">SD adj.</th><th className="r">Top</th>
               </tr>
             </thead>
             <tbody>
-              {simTable.map(row => {
-                const deltaColor = row.delta < -0.05 ? "var(--color-good)"
-                  : row.delta > 0.05 ? "var(--color-danger)" : "var(--text-3)";
+              {simResults.finalPool.map((entry, i) => {
+                const r      = entry.origRound;
+                const adjSd  = entry.sd + entry.adj;
+                const isTop  = finalTopIds.has(entry.eid);
+                const wasTop = simResults.oldTopIds.has(entry.eid);
+                const entered = isTop && !wasTop && !entry.isSimulated;
+                const exited  = !isTop && wasTop;
+                const hasAdj  = entry.adj !== 0;
+                const res     = entry.isSimulated ? validResults.find(x => x.roundId === entry.eid) : null;
                 return (
-                  <tr key={row.gross} style={{
-                    background: row.entersTop ? "var(--bg-success)" : undefined,
-                    opacity: row.delta > 0.5 ? 0.6 : 1,
+                  <tr key={entry.eid + i} style={{
+                    background: entry.isSimulated ? 'var(--bg-success)' : undefined,
+                    fontWeight: entry.isSimulated ? 600 : undefined,
                   }}>
-                    <td className="r fw-700">{row.gross}</td>
-                    <td className="r muted">{row.toPar >= 0 ? "+" : ""}{row.toPar}</td>
+                    <td className="r" style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-2)' }}>{i + 1}</td>
+                    <td>
+                      {entry.isSimulated
+                        ? <span style={{ color: 'var(--color-good)', fontWeight: 700 }}>Nova {res ? res.roundIdx + 1 : ''}</span>
+                        : r ? <TeeDate date={r.date} tee={r.tee || ''} /> : '—'}
+                    </td>
+                    <td>
+                      {entry.isSimulated
+                        ? <span className="muted">{res?.courseName ?? '—'}</span>
+                        : r ? <CourseLink name={r.course} /> : '—'}
+                    </td>
+                    <td className="r">{r?.hi ?? ''}</td>
+                    <td>{r?.tee ? <TeePill name={r.tee} /> : ''}</td>
+                    <td className="r">{r?.gross != null ? <GrossCell gross={r.gross} par={r.par} /> : '—'}</td>
                     <td className="r">
-                      <span className={`p p-${sdClassByHcp(row.sd, currentHI)}`} style={{ fontSize: 11 }}>
-                        {row.sd.toFixed(1)}
+                      <span className={`p p-${sdClassByHcp(entry.sd, currentHI)}`} style={{ fontSize: 11 }}>
+                        {entry.sd.toFixed(1)}
                       </span>
                     </td>
-                    <td className="r fw-700" style={{ color: deltaColor }}>{row.newHI.toFixed(1)}</td>
-                    <td className="r fw-700" style={{ color: deltaColor }}>
-                      {row.delta > 0 ? "+" : ""}{row.delta.toFixed(1)}
+                    <td className="r">
+                      {hasAdj ? (
+                        <span style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'flex-end', gap: 1 }}>
+                          <span className={`p p-${sdClassByHcp(adjSd, currentHI)}`} style={{ fontSize: 11, fontWeight: 700 }}>
+                            {adjSd.toFixed(1)}
+                          </span>
+                          <span style={{ fontSize: 9, color: 'var(--text-3)', textDecoration: 'line-through' }}>
+                            {entry.sd.toFixed(1)}
+                          </span>
+                        </span>
+                      ) : <span className="muted">—</span>}
                     </td>
-                    <td style={{ fontSize: 11 }}>
-                      {row.entersTop
-                        ? <span className="c-par-ok fw-600">★ entra top-{qtyCalc}</span>
-                        : row.delta < -0.05
-                        ? <span style={{ color: "var(--color-good)" }}>↓ melhora</span>
-                        : row.delta > 0.05
-                        ? <span style={{ color: "var(--color-danger)" }}>↑ agrava</span>
-                        : <span className="muted">= sem impacto</span>
-                      }
+                    <td className="r">
+                      {isTop
+                        ? <><span className="c-par-ok">★</span>{' '}<span className="fw-700">#{finalTopRanks.get(entry.eid)}</span>
+                            {entered && <span style={{ color: 'var(--color-good)', marginLeft: 3, fontWeight: 800 }}>↑</span>}</>
+                        : exited ? <span style={{ color: 'var(--color-danger)', fontWeight: 800 }}>✕</span>
+                        : <span className="muted">–</span>}
                     </td>
                   </tr>
                 );
               })}
+              {displacedEntries.length > 0 && <>
+                <tr>
+                  <td colSpan={9} style={{ padding: '4px 8px', background: 'var(--bg-header)', fontSize: 10, color: 'var(--text-3)', fontWeight: 700, letterSpacing: '.05em' }}>
+                    DESLOCADAS — saíram da janela
+                  </td>
+                </tr>
+                {displacedEntries.map((entry, i) => {
+                  const r = entry.origRound;
+                  const wasTop = simResults.oldTopIds.has(entry.eid);
+                  return (
+                    <tr key={entry.eid + '_out_' + i} style={{ opacity: 0.38 }}>
+                      <td className="r" style={{ fontSize: 11, color: 'var(--color-danger)', fontWeight: 700 }}>out</td>
+                      <td>{r ? <TeeDate date={r.date} tee={r.tee || ''} /> : '—'}</td>
+                      <td>{r ? <CourseLink name={r.course} /> : '—'}</td>
+                      <td className="r">{r?.hi ?? ''}</td>
+                      <td>{r?.tee ? <TeePill name={r.tee} /> : ''}</td>
+                      <td className="r">{r?.gross != null ? <GrossCell gross={r.gross} par={r.par} /> : '—'}</td>
+                      <td className="r"><span className={`p p-${sdClassByHcp(entry.sd, currentHI)}`} style={{ fontSize: 11 }}>{entry.sd.toFixed(1)}</span></td>
+                      <td className="r"><span className="muted">—</span></td>
+                      <td className="r">{wasTop ? <span style={{ color: 'var(--color-danger)' }}>★ saiu</span> : <span className="muted">–</span>}</td>
+                    </tr>
+                  );
+                })}
+              </>}
             </tbody>
           </table>
         </div>
       )}
     </div>
   );
-  return bare ? nrsInner : (
+
+  return bare ? inner : (
     <div className="card" style={{ marginBottom: 12 }}>
-      <div className="h-xs fs-18 mb-4">⛳ Próxima Ronda</div>
-      {nrsInner}
+      <div className="h-xs fs-18 mb-4">🎯 Simulador de Rondas</div>
+      {inner}
     </div>
   );
 }
