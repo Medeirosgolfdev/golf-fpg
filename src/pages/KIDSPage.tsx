@@ -3359,9 +3359,11 @@ function RivaisIntlContent() {
 
   const location = useLocation();
   const locationPlayer = (location.state as any)?.player as string | undefined;
+  // Suporte a /kids#NomeJogador (abre em nova janela desde USKIDSPage)
+  const hashPlayer = location.hash ? decodeURIComponent(location.hash.slice(1)) : undefined;
 
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(
-    locationPlayer ?? "Manuel Medeiros"
+    locationPlayer ?? hashPlayer ?? "Manuel Medeiros"
   );
   const md = useMasterDetail();
   const [showTable, setShowTable] = useState(false);

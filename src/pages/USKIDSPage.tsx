@@ -1749,7 +1749,7 @@ function torneioBaseName(name: string): string {
 
 function TabelaConhecidos({
   torneioT, torneioNome, torneioData, escalaoManuel,
-  rivals, fieldData, intlData, matchIntl, matchRival, resultados, defaultOpen, mhCountMap,
+  rivals, fieldData, intlData, matchIntl, matchRival, resultados, defaultOpen, mhCountMap, autoRivals,
 }: {
   torneioT: number; torneioNome: string; torneioData?: string; escalaoManuel?: string;
   rivals: RivalInfo[]; fieldData: FieldData | null; intlData: IntlData | null;
@@ -1758,6 +1758,7 @@ function TabelaConhecidos({
   resultados: TorneioResult[];
   defaultOpen?: boolean;
   mhCountMap: Map<string, number>;
+  autoRivals: AutoRivalPlayer[];
 }) {
   const [open, setOpen] = useState(defaultOpen ?? false);
   const torneio = fieldData?.torneios.find(t => t.t === torneioT);
@@ -1933,6 +1934,7 @@ function TabelaConhecidos({
           anoPassadoMap={anoPassadoMap}
           escalaoManuel={escalaoManuel}
           mhCountMap={mhCountMap}
+          autoRivals={autoRivals}
         />
       </div>}
     </div>
@@ -1947,7 +1949,7 @@ type InscFilter = string;
 
 function InscritosTable({
   inscritos, inscritoRivalCache, matchIntl,
-  intlData, manuelIntl, anoPassadoMap, escalaoManuel, mhCountMap,
+  intlData, manuelIntl, anoPassadoMap, escalaoManuel, mhCountMap, autoRivals,
 }: {
   inscritos: { nome: string; pais: string; escalao: string }[];
   inscritoRivalCache: Map<string, RivalInfo | null>;
@@ -1957,10 +1959,18 @@ function InscritosTable({
   anoPassadoMap: Map<string, { pos: number; escalao: string; ronda: number }>;
   escalaoManuel?: string;
   mhCountMap: Map<string, number>;
+  autoRivals: AutoRivalPlayer[];
 }) {
   const [filtro, setFiltro] = useState<InscFilter>("todos");
   const [sortCol, setSortCol] = useState<InscSortCol>("encontros");
   const [sortDir, setSortDir] = useState<InscSortDir>("desc");
+
+  // Mapa nome normalizado → nome canónico no KIDSPage
+  const kidsRivalMap = useMemo(() => {
+    const m = new Map<string, string>();
+    for (const r of autoRivals) m.set(normNameAuto(r.n), r.n);
+    return m;
+  }, [autoRivals]);
 
   const toggleSort = (col: InscSortCol) => {
     if (sortCol === col) setSortDir(d => d === "asc" ? "desc" : "asc");
@@ -2175,6 +2185,21 @@ function InscritosTable({
                         ↩
                       </span>
                     )}
+                    {(() => {
+                      const kidsName = kidsRivalMap.get(normNameAuto(r.nome));
+                      if (!kidsName) return null;
+                      return (
+                        <a href="/kids"
+                          onClick={e => { e.preventDefault(); window.open(`/kids#${encodeURIComponent(kidsName)}`, "_blank"); }}
+                          title="Ver perfil completo em Kids"
+                          style={{ fontSize:9, fontWeight:700, padding:"1px 6px", borderRadius:4,
+                            background:"var(--bg-success-subtle)", color:"var(--color-good-dark)",
+                            border:"1px solid var(--border-success,var(--color-good))",
+                            textDecoration:"none", whiteSpace:"nowrap", flexShrink:0 }}>
+                          ↗ Kids
+                        </a>
+                      );
+                    })()}
                   </span>
                 </td>
                 <td style={{ textAlign:"center" }}>{flag(r.pais)}</td>
@@ -2793,6 +2818,13 @@ function TabRivais({ data, fieldData, intlData, autoRivals, selectedT: _selected
     setSelectedRival(null);
   };
 
+  // Mapa nome normalizado → nome canónico para link ↗ Kids (abre nova janela)
+  const kidsRivalMap = useMemo(() => {
+    const m = new Map<string, string>();
+    for (const r of autoRivals) m.set(normNameAuto(r.n), r.n);
+    return m;
+  }, [autoRivals]);
+
   if (!rivals.length) return (
     <div style={{ color:"var(--text-3)", padding:"32px 0", textAlign:"center", fontSize:13 }}>
       Sem dados de rivais ainda — os scorecards aparecem após os torneios
@@ -2822,6 +2854,7 @@ function TabRivais({ data, fieldData, intlData, autoRivals, selectedT: _selected
       rivals={rivals} fieldData={fieldData} intlData={intlData}
       matchIntl={matchIntl} matchRival={matchRival} resultados={data.resultados}
       mhCountMap={mhCountMap} goToProfile={goToProfile}
+      kidsRivalMap={kidsRivalMap}
     />
   );
 }
@@ -2831,7 +2864,7 @@ function TabRivais({ data, fieldData, intlData, autoRivals, selectedT: _selected
    Mostra TabelaConhecidos per tournament + secções de inscritos futuros
    ════════════════════════════════════════════════════════════════ */
 function SubTabPorTorneio({
-  torneiosComManuel, rivals, fieldData, intlData, matchIntl, matchRival, resultados, mhCountMap, goToProfile,
+  torneiosComManuel, rivals, fieldData, intlData, matchIntl, matchRival, resultados, mhCountMap, goToProfile, kidsRivalMap,
 }: {
   torneiosComManuel: { t: number; name: string; date_inicio: string; escalaoManuel?: string; source: "field" | "results" }[];
   rivals: RivalInfo[]; fieldData: FieldData | null; intlData: IntlData | null;
@@ -2840,6 +2873,7 @@ function SubTabPorTorneio({
   resultados: TorneioResult[];
   mhCountMap: Map<string, number>;
   goToProfile: (nome: string) => void;
+  kidsRivalMap: Map<string, string>;
 }) {
   const [showInscritos, setShowInscritos] = useState(false);
 
@@ -2966,23 +3000,39 @@ function SubTabPorTorneio({
         <th style={{ width:36, textAlign:"center" }}>#</th>
       </tr></thead>
       <tbody>
-        {rows.map((r, i) => (
-          <tr key={r.nome} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)" }}>
-            <td style={{ padding:"6px 10px" }}>
-              {r.rival ? (
-                <span style={{ cursor:"pointer", color:"var(--accent)", fontWeight:600 }} onClick={() => goToProfile(r.nome)}>
-                  {displayName(r.nome)}
+        {rows.map((r, i) => {
+          const kidsName = kidsRivalMap.get(normNameAuto(r.nome));
+          return (
+            <tr key={r.nome} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)" }}>
+              <td style={{ padding:"6px 10px" }}>
+                <span style={{ display:"flex", alignItems:"center", gap:5, flexWrap:"wrap" }}>
+                  {r.rival ? (
+                    <span style={{ cursor:"pointer", color:"var(--accent)", fontWeight:600 }} onClick={() => goToProfile(r.nome)}>
+                      {displayName(r.nome)}
+                    </span>
+                  ) : (
+                    <span style={{ color:"var(--text-2)" }}>{displayName(r.nome)}</span>
+                  )}
+                  {kidsName && (
+                    <a href={`/kids`}
+                      onClick={e => { e.preventDefault(); window.open(`/kids#${encodeURIComponent(kidsName)}`, "_blank"); }}
+                      title="Ver perfil completo em Kids"
+                      style={{ fontSize:9, fontWeight:700, padding:"1px 6px", borderRadius:4,
+                        background:"var(--bg-success-subtle)", color:"var(--color-good-dark)",
+                        border:"1px solid var(--border-success,var(--color-good))",
+                        textDecoration:"none", whiteSpace:"nowrap", flexShrink:0 }}>
+                      ↗ Kids
+                    </a>
+                  )}
                 </span>
-              ) : (
-                <span style={{ color:"var(--text-2)" }}>{displayName(r.nome)}</span>
-              )}
-              {showHist && r.rival && <HistorialLine rival={r.rival} />}
-            </td>
-            <td style={{ textAlign:"center", fontSize:14 }}>{flag(r.pais)}</td>
-            <td style={{ padding:"6px 10px" }}><TorneiosPills torneios={r.torneios} /></td>
-            <td style={{ textAlign:"center", fontWeight:700, fontSize:12, color:"var(--text-2)" }}>{r.torneios.length}</td>
-          </tr>
-        ))}
+                {showHist && r.rival && <HistorialLine rival={r.rival} />}
+              </td>
+              <td style={{ textAlign:"center", fontSize:14 }}>{flag(r.pais)}</td>
+              <td style={{ padding:"6px 10px" }}><TorneiosPills torneios={r.torneios} /></td>
+              <td style={{ textAlign:"center", fontWeight:700, fontSize:12, color:"var(--text-2)" }}>{r.torneios.length}</td>
+            </tr>
+          );
+        })}
       </tbody>
     </table>
     </div>
@@ -3008,6 +3058,7 @@ function SubTabPorTorneio({
                 matchRival={matchRival}
                 resultados={resultados}
                 mhCountMap={mhCountMap}
+                autoRivals={autoRivals}
               />
             ))}
           </div>
@@ -3554,6 +3605,16 @@ function PerfilRivalNovo({
                 }}>
                   {playerType.label}
                 </span>
+              )}
+              {ar && (
+                <a href="/kids"
+                  onClick={e => { e.preventDefault(); window.open(`/kids#${encodeURIComponent(ar.n)}`, "_blank"); }}
+                  title="Ver perfil completo em Kids"
+                  style={{ fontSize:11, fontWeight:700, padding:"3px 10px", borderRadius:20,
+                    background:"var(--bg-success-subtle)", color:"var(--color-good-dark)",
+                    border:"1px solid var(--color-good)", textDecoration:"none", flexShrink:0 }}>
+                  ↗ Kids
+                </a>
               )}
             </div>
             <div style={{display:"flex", gap:5, flexWrap:"wrap", alignItems:"center"}}>

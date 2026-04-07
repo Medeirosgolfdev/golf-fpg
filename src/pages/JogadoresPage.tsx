@@ -1554,7 +1554,7 @@ function AnalysisView({ data }: { data: PlayerPageData }) {
     <div className="an-wrap">
 
       {/* ── KPIs ── */}
-      <CollapseCard title="Indicadores" icon="📊" defaultOpen={true}>
+      <CollapseCard title="Indicadores" icon="📊" defaultOpen={false}>
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
           <KPICard title="SD Médio · Últ. 5" val={sdLast5?.toFixed(1) ?? null}
             delta={sdLast5 != null && sdLast20 != null ? sdLast5 - sdLast20 : null}
@@ -1588,7 +1588,7 @@ function AnalysisView({ data }: { data: PlayerPageData }) {
       </CollapseCard>
 
       {/* ── Histogram + Trajectory + Records ── */}
-      <CollapseCard title="Distribuição · Trajectória · Recordes" icon="📈" defaultOpen={true}>
+      <CollapseCard title="Distribuição · Trajectória · Recordes" icon="📈" defaultOpen={false}>
         <div className="an-grid3" style={{ marginBottom: 0 }}>
           <HistogramCard rounds={filterByPeriod(histPeriod)} period={histPeriod} setPeriod={setHistPeriod} />
           <TrajectoryCard rounds={filterByPeriod(trajPeriod)} period={trajPeriod} setPeriod={setTrajPeriod} />
@@ -1597,22 +1597,22 @@ function AnalysisView({ data }: { data: PlayerPageData }) {
       </CollapseCard>
 
       {/* ── WHS Detail ── */}
-      <CollapseCard title="Handicap — Detalhe WHS" icon="🏌️" defaultOpen={true}>
+      <CollapseCard title="Handicap — Detalhe WHS" icon="🏌️" defaultOpen={false}>
         <WHSDetail hcp={data.HCP_INFO} bare />
       </CollapseCard>
 
       {/* ── SD Simulator ── */}
-      <CollapseCard title="Simulador de SD" icon="🎯" defaultOpen={true}>
+      <CollapseCard title="Simulador de SD" icon="🎯" defaultOpen={false}>
         <SDSimulator hcp={data.HCP_INFO} whs20={whs20} bare />
       </CollapseCard>
 
       {/* ── Next Round Simulator ── */}
-      <CollapseCard title="Próxima Ronda" icon="⛳" defaultOpen={true}>
+      <CollapseCard title="Próxima Ronda" icon="⛳" defaultOpen={false}>
         <NextRoundSimulator hcp={data.HCP_INFO} whs20={whs20} playerData={data} bare />
       </CollapseCard>
 
       {/* ── Last 20 Table ── */}
-      <CollapseCard title="Janela WHS — Últimas Rondas" icon="📋" defaultOpen={true}>
+      <CollapseCard title="Janela WHS — Últimas Rondas" icon="📋" defaultOpen={false}>
         <Last20Table data={data} last20Table={last20Table} best8={best8} whsPosMap={whsPosMap} bare />
       </CollapseCard>
 
@@ -1821,18 +1821,26 @@ function RecordsCard({ rounds, period, setPeriod }: {
 
 /* ─── WHS Detail ─── */
 /* ─── Reusable collapsible card wrapper ─── */
-function CollapseCard({ title, icon, defaultOpen = true, children, badge }: {
+function CollapseCard({ title, icon, defaultOpen = false, children, badge }: {
   title: string; icon?: string; defaultOpen?: boolean;
   children: React.ReactNode; badge?: React.ReactNode;
 }) {
+  const [open, setOpen] = useState(defaultOpen);
   return (
     <div className="card" style={{ marginBottom: 12 }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={() => setOpen(v => !v)}
+        onKeyDown={e => (e.key === "Enter" || e.key === " ") && setOpen(v => !v)}
+        style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer", userSelect: "none", marginBottom: open ? 12 : 0 }}
+      >
         {icon && <span style={{ fontSize: 16 }}>{icon}</span>}
-        <span className="h-xs" style={{ margin: 0 }}>{title}</span>
+        <span className="h-xs" style={{ margin: 0, flex: 1 }}>{title}</span>
         {badge}
+        <span style={{ fontSize: 12, color: "var(--text-3)", marginLeft: 4 }}>{open ? "▲" : "▼"}</span>
       </div>
-      {children}
+      {open && children}
     </div>
   );
 }
@@ -1984,18 +1992,25 @@ function SDSimulator({ hcp, whs20, bare }: {
     const bestNew = activeWithSd.slice(0, newQtyCalc).map(x => x.sd);
     const newAvg  = meanArr(bestNew);
     if (newAvg == null) return null;
-    const newHI = Math.round((newAvg + totalAdjustment) * 10) / 10;
+    const baseHI = Math.round((newAvg + totalAdjustment) * 10) / 10;
+
+    // Exceptional Score reduction (Rule 5.9, Rules of Handicapping)
+    const exceptionalDiff = currentHI - newSdVal; // positivo = SD melhor que HI
+    const exceptionalAdj  = exceptionalDiff >= 10.0 ? -2 : exceptionalDiff >= 7.0 ? -1 : 0;
+    const newHI = Math.round((baseHI + exceptionalAdj) * 10) / 10;
 
     const newTopNMap = new Map<string, number>();
     activeWithSd.slice(0, newQtyCalc).forEach((x, i) => newTopNMap.set(x.id, i + 1));
 
     return {
       rows, newTopNMap,
-      newSdVal, newHI,
+      newSdVal, newHI, baseHI,
       delta: newHI - currentHI,
       newQtyCalc, newQtyScores,
       bestNew,
       newAvg,
+      exceptionalDiff,
+      exceptionalAdj,
     };
   }, [sdInput, currentHI, totalAdjustment, window20, displacedRound]);
 
@@ -2101,6 +2116,13 @@ function SDSimulator({ hcp, whs20, bare }: {
             <div className="muted fs-10">HCP SIMULADO</div>
             <div style={{ fontSize: 22, fontWeight: 800, color: deltaColor }}>{simulation.newHI.toFixed(1)}</div>
             <div className="muted fs-10">{simulation.newQtyCalc} melhores / {simulation.newQtyScores} SDs</div>
+            {simulation.exceptionalAdj !== 0 && (
+              <div style={{ marginTop: 4, fontSize: 10, fontWeight: 700,
+                color: "#fff", background: simulation.exceptionalAdj === -2 ? "var(--color-danger)" : "var(--color-warn, #e07b00)",
+                borderRadius: 4, padding: "2px 5px", display: "inline-block" }}>
+                {simulation.exceptionalAdj === -2 ? "⚡ Exc. −2" : "⚡ Exc. −1"}
+              </div>
+            )}
           </div>
 
           <div style={{ padding: "10px 16px", borderRadius: 8, background: "var(--bg-detail)", textAlign: "center", minWidth: 80 }}>
@@ -2164,6 +2186,40 @@ function SDSimulator({ hcp, whs20, bare }: {
           <div className="muted fs-11" style={{ paddingTop: 14 }}>↑ Introduz um SD acima para simular</div>
         )}
       </div>
+
+      {/* Exceptional Score notice */}
+      {simulation && simulation.exceptionalAdj !== 0 && (
+        <div style={{
+          margin: "0 0 14px", padding: "10px 14px", borderRadius: 8,
+          background: "var(--bg-warn, rgba(224,123,0,0.08))",
+          border: simulation.exceptionalAdj === -2
+            ? "1px solid var(--color-danger)"
+            : "1px solid var(--color-warn, #e07b00)",
+          fontSize: 12, lineHeight: 1.7,
+        }}>
+          <div style={{ fontWeight: 700, marginBottom: 4,
+            color: simulation.exceptionalAdj === -2 ? "var(--color-danger)" : "var(--color-warn, #e07b00)" }}>
+            ⚡ Exceptional Score — Redução automática de HI
+          </div>
+          <div>
+            SD simulado <b>{simulation.newSdVal.toFixed(1)}</b> é{" "}
+            <b>{simulation.exceptionalDiff.toFixed(1)} pancadas</b> melhor que o HI actual{" "}
+            <b>{currentHI.toFixed(1)}</b>
+            {" "}→ aplica-se redução de{" "}
+            <b style={{ color: simulation.exceptionalAdj === -2 ? "var(--color-danger)" : "var(--color-warn, #e07b00)" }}>
+              {simulation.exceptionalAdj} ao HI
+            </b>
+            {" "}<span className="muted">(sem ajuste ao SD, apenas ao índice final)</span>
+          </div>
+          <div className="muted" style={{ marginTop: 2 }}>
+            HI sem redução: <b>{simulation.baseHI.toFixed(1)}</b>{" · "}
+            HI com redução excepcional: <b>{simulation.newHI.toFixed(1)}</b>{" · "}
+            {simulation.exceptionalAdj === -2
+              ? "SD ≥ 10 pancadas abaixo do HI → redução −2 (Regra 5.9)"
+              : "SD entre 7.0–9.9 pancadas abaixo do HI → redução −1 (Regra 5.9)"}
+          </div>
+        </div>
+      )}
 
       {/* Tabela simulada */}
       {sortedSimRows && simRows && (
@@ -3785,8 +3841,16 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
               href={`https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=${selected.fed}`}
               target="_blank"
               rel="noopener noreferrer"
-              title="Ver ficha WHS no FPG"
+              title="Ver ficha WHS no FPG Scoring"
               style={{ marginLeft: 8, fontSize: 14, color: "var(--chart-2)", textDecoration: "none", verticalAlign: "middle" }}
+              onClick={e => e.stopPropagation()}
+            >🔗</a>
+            <a
+              href={`https://my.fpg.pt/Home/PlayerWHS.aspx?no=${selected.fed}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Ver ficha WHS no My FPG"
+              style={{ marginLeft: 4, fontSize: 14, color: "var(--chart-2)", textDecoration: "none", verticalAlign: "middle" }}
               onClick={e => e.stopPropagation()}
             >🔗</a>
           </h2>

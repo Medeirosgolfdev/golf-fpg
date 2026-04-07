@@ -1,12 +1,10 @@
 /**
  * fpg-download-whs-only.js — Fase 1: descarregar SÓ as listas WHS (sem scorecards)
- * v4 — detecta automaticamente o site (scoring.fpg.pt ou my.fpg.pt)
+ * v3 — 10 pedidos em paralelo · my.fpg.pt (requer pp=N)
  *
  * FLUXO COMPLETO DE ACTUALIZAÇÃO:
  *
- *   1. Abre um destes URLs (qualquer um que funcione):
- *        https://my.fpg.pt/Home/PlayerWHS.aspx?no=52884
- *        https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=52884
+ *   1. Abre: https://my.fpg.pt/Home/PlayerWHS.aspx?no=52884
  *   2. F12 → Console → cola ESTE script → ENTER
  *   3. Espera o download de fpg-whs-all.json (~2-5 min)
  *   4. Corre: node pipeline.js --update
@@ -21,11 +19,6 @@
  */
 
 (async () => {
-  // Detecta o site e configura os parâmetros adequados
-  const IS_MY_FPG = window.location.hostname === "my.fpg.pt";
-  const SITE = IS_MY_FPG ? "my.fpg.pt" : "scoring.fpg.pt";
-  console.log(`%c[FPG] Site detectado: ${SITE}`, "color:purple;font-weight:bold;font-size:12px");
-
   const ALL_FEDS = [
     "2195", "2217", "6437", "8334", "9572", "20292", "20877", "27849", "28845", "28894",
     "30970", "31550", "31745", "31830", "31831", "31899", "32252", "32263", "32437", "32543",
@@ -79,17 +72,13 @@
     let startIndex = 0;
     while (true) {
       try {
-        const urlParams = IS_MY_FPG
-          ? `PlayerWHS.aspx/HCPWhsFederLST?fed_code=${FED}&pp=N&jtStartIndex=${startIndex}&jtPageSize=${PAGE_SIZE}`
-          : `PlayerWHS.aspx/HCPWhsFederLST?fed_code=${FED}&jtStartIndex=${startIndex}&jtPageSize=${PAGE_SIZE}`;
-        const bodyParams = IS_MY_FPG
-          ? { fed_code: FED, pp: "N", jtStartIndex: String(startIndex), jtPageSize: String(PAGE_SIZE) }
-          : { fed_code: FED, jtStartIndex: String(startIndex), jtPageSize: String(PAGE_SIZE) };
-
-        const res = await fetch(urlParams, {
-          method: "POST", headers,
-          body: JSON.stringify(bodyParams)
-        });
+        const res = await fetch(
+          `PlayerWHS.aspx/HCPWhsFederLST?fed_code=${FED}&pp=N&jtStartIndex=${startIndex}&jtPageSize=${PAGE_SIZE}`,
+          {
+            method: "POST", headers,
+            body: JSON.stringify({ fed_code: FED, pp: "N", jtStartIndex: String(startIndex), jtPageSize: String(PAGE_SIZE) })
+          }
+        );
         if (res.status !== 200) return null;
         const payload = (await res.json())?.d;
         if (payload?.Result !== "OK") return null;

@@ -314,13 +314,20 @@ if (updateFlag) {
  * ${totalMissing} scorecards em falta de ${fedsWithMissing} jogadores.
  *
  * COMO USAR:
- * 1. Abre: https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=52884
+ * 1. Abre um destes URLs (o que funcionar hoje):
+ *      https://my.fpg.pt/Home/PlayerWHS.aspx?no=52884
+ *      https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=52884
  * 2. F12 → Console → cola este código → ENTER
  * 3. Espera — descarrega 1 ficheiro: fpg-batch-missing.json
  * 4. Corre: node pipeline.js --update
  *    (agora vai detectar o ficheiro e processar tudo)
  */
 (async () => {
+  // Detecta o site e configura os parâmetros adequados
+  const IS_MY_FPG = window.location.hostname === "my.fpg.pt";
+  const SITE = IS_MY_FPG ? "my.fpg.pt" : "scoring.fpg.pt";
+  console.log(\`%c[FPG] Site detectado: \${SITE}\`, "color:purple;font-weight:bold;font-size:12px");
+
   const MISSING = [
 ${missingEntries.join(",\n")}
   ];
@@ -339,13 +346,17 @@ ${missingEntries.join(",\n")}
   for (let i = 0; i < MISSING.length; i++) {
     const m = MISSING[i];
     try {
-      const res = await fetch(
-        \`PlayerWHS.aspx/ScoreCard?score_id=\${m.s}&scoringtype=\${m.st}&competitiontype=\${m.ct}\`,
-        {
-          method: "POST", headers,
-          body: JSON.stringify({ score_id: m.s, scoringtype: m.st, competitiontype: m.ct })
-        }
-      );
+      const urlParams = IS_MY_FPG
+        ? \`PlayerWHS.aspx/ScoreCard?score_id=\${m.s}&pp=N&scoringtype=\${m.st}&competitiontype=\${m.ct}\`
+        : \`PlayerWHS.aspx/ScoreCard?score_id=\${m.s}&scoringtype=\${m.st}&competitiontype=\${m.ct}\`;
+      const bodyParams = IS_MY_FPG
+        ? { score_id: m.s, pp: "N", scoringtype: m.st, competitiontype: m.ct }
+        : { score_id: m.s, scoringtype: m.st, competitiontype: m.ct };
+
+      const res = await fetch(urlParams, {
+        method: "POST", headers,
+        body: JSON.stringify(bodyParams)
+      });
       if (res.status !== 200) { fail++; continue; }
       const payload = (await res.json())?.d;
       if (payload?.Result === "OK") {
@@ -415,9 +426,10 @@ ${B}╠════════════════════════�
 ${B}║${R}                                                        ${B}║${R}
 ${B}║${R}  Uso: node pipeline.js <federados...> [opções]         ${B}║${R}
 ${B}║${R}                                                        ${B}║${R}
-${B}║${R}  1. Descarrega no browser:                             ${B}║${R}
+${B}║${R}  1. Descarrega no browser (o que funcionar hoje):       ${B}║${R}
+${B}║${R}     my.fpg.pt/Home/PlayerWHS.aspx?no=52884             ${B}║${R}
 ${B}║${R}     scoring.fpg.pt/lists/PlayerWHS.aspx?no=52884       ${B}║${R}
-${B}║${R}     F12 → Console → cola fpg-download.js               ${B}║${R}
+${B}║${R}     F12 → Console → cola fpg-download-whs-only.js      ${B}║${R}
 ${B}║${R}                                                        ${B}║${R}
 ${B}║${R}  2. Corre: node pipeline.js 52884                      ${B}║${R}
 ${B}║${R}     ou:   node pipeline.js --batch                     ${B}║${R}
@@ -480,7 +492,7 @@ if (!skipImport) {
 
     if (!whsSrc) {
       fail(`[${fed}] Não encontrei whs-list-${fed}.json em ${downloadsDir}`);
-      warn(`  Abre scoring.fpg.pt/lists/PlayerWHS.aspx?no=${fed} e corre o script na consola.`);
+      warn(`  Abre my.fpg.pt/Home/PlayerWHS.aspx?no=${fed} (ou scoring.fpg.pt/lists/...) e corre o script na consola.`);
       continue;
     }
 
@@ -630,7 +642,22 @@ function syncPlayersJson(fedList) {
     const whsPath = path.join(outDir, "whs-list.json");
 
     let entry = db[fed];
-    if (!entry) continue;
+    if (!entry) {
+      // Fed novo — criar entrada mínima e tentar extrair nome do whs-list
+      let name = fed;
+      if (fs.existsSync(whsPath)) {
+        try {
+          const rows = readJSON(whsPath)?.Records || [];
+          if (rows.length > 0) {
+            const r = rows[0];
+            const n = r.player_name || r.name || r.full_name || "";
+            if (n) name = n;
+          }
+        } catch {}
+      }
+      entry = { name };
+      info(`[sync] ${fed}: entrada nova criada (${name})`);
+    }
     if (typeof entry === "string") entry = { name: entry };
 
     let changed = false;
