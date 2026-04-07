@@ -59,19 +59,32 @@ function stripHtml(html: string): string {
   return html.replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&#\d+;/g, '').replace(/\s+/g, ' ').trim()
 }
 
-// Formato: {seq} {fed} {nome clube} {hcp} {score} {YYYY/MM/DD} {HH:MM}
+// Formato: {seq} {fed} {nome+clube} {hcp} {vac} {YYYY/MM/DD} {HH:MM}
 // Exemplo: "1 46311 Tomas Rente Miramar 6.9 77.6 2026/04/04 08:46"
-function parseAdmissionsTable(html: string) {
+type Jogador = { fed: string | null; nome: string; clube: string; hcp: number | null; vac: number | null; dataInscricao: string | null }
+
+function parseAdmissionsTable(html: string): Jogador[] {
   const text = stripHtml(html)
 
-const re = /\b(\d+)\s+(\d{4,6})\s+([\wÀ-ú][^0-9\r\n]+?)\s+(\d{1,3}\.\d)\s+[\d.]+\s+\d{4}\/\d{2}\/\d{2}/g  const jogadores: { fed: string | null; nome: string; clube: string; hcp: number | null }[] = []
+  const reEntry = /\b(\d{1,3})\s+(\d{4,6})\s+([A-Za-z\u00C0-\u017F][A-Za-z\u00C0-\u017F\s,.'()\-]*?)\s+(\d{1,3}\.\d)\s+([\d.]+)\s+(\d{4}\/\d{2}\/\d{2})\s+(\d{2}:\d{2})/g
+
+  const jogadores: Jogador[] = []
   let m: RegExpExecArray | null
 
-  while ((m = re.exec(text)) !== null) {
-    const fed  = m[2]
-    const nome = m[3].trim()
-    const hcp  = parseFloat(m[4])
-    jogadores.push({ fed, nome, clube: '', hcp: isNaN(hcp) ? null : hcp })
+  while ((m = reEntry.exec(text)) !== null) {
+    const fed           = m[2]
+    const nome          = m[3].trim()
+    const hcp           = parseFloat(m[4])
+    const vac           = parseFloat(m[5])
+    const dataInscricao = m[6] + ' ' + m[7]
+    jogadores.push({
+      fed,
+      nome,
+      clube: '',
+      hcp: isNaN(hcp) ? null : hcp,
+      vac: isNaN(vac) ? null : vac,
+      dataInscricao,
+    })
   }
 
   if (jogadores.length === 0) {
@@ -79,11 +92,12 @@ const re = /\b(\d+)\s+(\d{4,6})\s+([\wÀ-ú][^0-9\r\n]+?)\s+(\d{1,3}\.\d)\s+[\d.
     const feds = new Set<string>()
     let fm: RegExpExecArray | null
     while ((fm = fedRe.exec(text)) !== null) feds.add(fm[1])
-    for (const fed of feds) jogadores.push({ fed, nome: '', clube: '', hcp: null })
+    for (const fed of feds) jogadores.push({ fed, nome: '', clube: '', hcp: null, vac: null, dataInscricao: null })
   }
 
   return jogadores
 }
+
 export default defineConfig({
   plugins: [
     react(),
