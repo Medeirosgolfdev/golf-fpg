@@ -64,9 +64,7 @@ function stripHtml(html: string): string {
 function parseAdmissionsTable(html: string) {
   const text = stripHtml(html)
 
-  const re = /\b(\d+)\s+(\d{4,6})\s+([A-Za-z][\s\S]+?)\s+(\d{1,2}\.\d)\s+[\d.]+\s+\d{4}\/\d{2}\/\d{2}/g
-
-  const jogadores: { fed: string | null; nome: string; clube: string; hcp: number | null }[] = []
+const re = /\b(\d+)\s+(\d{4,6})\s+([\wÀ-ú][^0-9\r\n]+?)\s+(\d{1,3}\.\d)\s+[\d.]+\s+\d{4}\/\d{2}\/\d{2}/g  const jogadores: { fed: string | null; nome: string; clube: string; hcp: number | null }[] = []
   let m: RegExpExecArray | null
 
   while ((m = re.exec(text)) !== null) {

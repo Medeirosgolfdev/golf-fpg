@@ -272,13 +272,14 @@ export default function NacionaisPage() {
   const inFlight = useRef(new Set<string>());
 
   const nossosByFed = useMemo(() => {
-    const m = new Map<string, { name: string; escalao: string; sex: string; fed: string }>();
-    const lista = Array.isArray(players) ? players : Object.values(players ?? {});
-    for (const p of lista) {
-      if (p.fed) m.set(String(p.fed), { name: p.name, escalao: p.escalao, sex: p.sex, fed: String(p.fed) });
-    }
-    return m;
-  }, [players]);
+  const m = new Map<string, { name: string; escalao: string; sex: string; fed: string }>();
+  const lista = Array.isArray(players) ? players : Object.values(players ?? {});
+  for (const p of lista) {
+    const fed = String(p.nfed ?? p.fed ?? "").trim();
+    if (fed) m.set(fed, { name: p.name, escalao: p.escalao, sex: p.sex, fed });
+  }
+  return m;
+}, [players]);
 
   const nossosFedSet = useMemo(() => new Set(nossosByFed.keys()), [nossosByFed]);
 
