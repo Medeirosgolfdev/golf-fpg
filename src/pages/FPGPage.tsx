@@ -2795,6 +2795,43 @@ function ClubesGruposView({
 /* ─────────────────────────────────────────────
    MAIN CONTENT
    ───────────────────────────────────────────── */
+
+/* ═══════════════════════════════════════════════════════════════
+   JOVENS — agrupamento por evento (date + ccode)
+   ═══════════════════════════════════════════════════════════════ */
+interface JovensGroup {
+  key: string; date: string; campo: string; name: string;
+  year: string; entries: Tournament[];
+}
+
+const ESC_ORDER_JOV = ["Sub 10","Sub 12","Sub 14","Sub 16","Sub 18","Sub 24"];
+
+function buildJovensGroups(tournaments: Tournament[]): JovensGroup[] {
+  const escIdx = (esc: string | null | undefined) => {
+    const i = ESC_ORDER_JOV.indexOf(esc || "");
+    return i >= 0 ? i : 99;
+  };
+  const map = new Map<string, Tournament[]>();
+  for (const t of tournaments) {
+    const key = t.date + "-" + (t.ccode || t.campo || "?");
+    if (!map.has(key)) map.set(key, []);
+    map.get(key)!.push(t);
+  }
+  return [...map.entries()].map(([key, entries]) => {
+    entries.sort((a, b) => escIdx(a.escalao) - escIdx(b.escalao));
+    const t0 = entries[0];
+    const baseName = (t0.name || "").replace(/\s*Sub[\s-]*\d+\s*[HMS]?\s*$/i, "").replace(/[\s\-–]+$/, "").trim();
+    return {
+      key,
+      date:    t0.date,
+      campo:   t0.campo,
+      name:    baseName || t0.name,
+      year:    (t0 as any)._jovensYear ?? t0.date?.substring(0, 4) ?? "?",
+      entries,
+    };
+  }).sort((a, b) => b.date.localeCompare(a.date));
+}
+
 function Content() {
   const [tournaments, setTournaments] = useState<Tournament[]>([]);
   const [fileMeta, setFileMeta] = useState<FileMeta[]>([]);
@@ -2804,7 +2841,7 @@ function Content() {
   const [selected, setSelected] = useState(0);
     const md = useMasterDetail();
   const [navMode, setNavMode]         = useState<"torneios" | "ranking-pja" | "ranking-sub12">("torneios");
-  const [seriesFilter, setSeriesFilter] = useState<"" | "circuit" | "santo" | "clubes">(""); // filtro de série dentro de Torneios
+  const [seriesFilter, setSeriesFilter] = useState<"" | "circuit" | "santo" | "clubes" | "jovens">(""); // filtro de série dentro de Torneios
   const [yearFilter, setYearFilter]    = useState<string | null>(null);
   const [filterManuel, setFilterManuel] = useState(true);
   const [escLookup, setEscLookup] = useState<EscLookup>(new Map());
@@ -2817,6 +2854,13 @@ function Content() {
   const [clubesSelected, setClubesSelected]       = useState<number>(0);
   const [clubesEsc, setClubesEsc]                 = useState<string>("sub14"); // "sub14" | "sub18"
   const [clubesView, setClubesView]               = useState<"individual" | "grupos">("grupos");
+
+  // ── Estado Jovens ─────────────────────────────────────────────────────────
+  const [jovensTournaments, setJovensTournaments] = useState<Tournament[]>([]);
+  const [jovensLoading, setJovensLoading]         = useState(false);
+  const [jovensLoaded, setJovensLoaded]           = useState(false);
+  const [jovensGroupKey, setJovensGroupKey]        = useState<string | null>(null);
+  const [jovensEscIdx, setJovensEscIdx]            = useState<number>(0);
 
   const { melhorias } = useAppContext();
 
@@ -3000,17 +3044,52 @@ function Content() {
     return () => { alive = false; };
   }, [navMode, seriesFilter, clubesLoaded]);
 
+  // ── Loader Jovens (lazy — só quando activado) ─────────────────────────────
+  useEffect(() => {
+    if (!(navMode === "torneios" && seriesFilter === "jovens") || jovensLoaded) return;
+    let alive = true;
+    setJovensLoading(true);
+    const JOVENS_FILES = [
+      { url: "/data/jovens_2026.json", year: "2026" },
+      { url: "/data/jovens_2025.json", year: "2025" },
+      { url: "/data/jovens_2024.json", year: "2024" },
+      { url: "/data/jovens_2023.json", year: "2023" },
+      { url: "/data/jovens_2022.json", year: "2022" },
+    ];
+    Promise.all(
+      JOVENS_FILES.map(async ({ url, year }) => {
+        try {
+          const r = await fetch(url);
+          if (!r.ok) return [];
+          const d: DriveData = await r.json();
+          return (d.tournaments || []).map(t => ({
+            ...t, _jovensYear: year, _sourceFile: url,
+            players: t.players.map(normalizePlayer),
+          }));
+        } catch { return []; }
+      })
+    ).then(results => {
+      if (!alive) return;
+      const seen = new Map<string, Tournament>();
+      for (const t of results.flat()) seen.set(t.ccode + "/" + String((t as any).tcode), t as Tournament);
+      setJovensTournaments([...seen.values()] as Tournament[]);
+      setJovensLoaded(true);
+      setJovensLoading(false);
+    });
+    return () => { alive = false; };
+  }, [navMode, seriesFilter, jovensLoaded]);
+
   // Lista filtrada por escalão dentro de Clubes, agrupada por ano
   const clubesList = useMemo(
     () => clubesTournaments
       .filter(t => !filterManuel || t.players.some(p => isManuel(p)))
-      // Ordenar: ano desc, depois escalão (Sub 14 antes de Sub 18)
+      .filter(t => !yearFilter || ((t as any)._clubesYear ?? t.date?.substring(0, 4)) === yearFilter)
       .sort((a, b) => {
         const yCmp = ((b as any)._clubesYear ?? "").localeCompare((a as any)._clubesYear ?? "");
         if (yCmp !== 0) return yCmp;
         return ((a as any)._clubesEsc ?? "").localeCompare((b as any)._clubesEsc ?? "");
       }),
-    [clubesTournaments, filterManuel]
+    [clubesTournaments, filterManuel, yearFilter]
   );
   const clubesByYear = useMemo(() => {
     const m: Record<string, Tournament[]> = {};
@@ -3024,6 +3103,25 @@ function Content() {
   const clubesYears = useMemo(() => Object.keys(clubesByYear).sort().reverse(), [clubesByYear]);
   const curClubes = clubesList[clubesSelected] ?? null;
   const curClubesYear: string = (curClubes as any)?._clubesYear ?? curClubes?.date?.substring(0, 4) ?? "";
+
+  const jovensGroups = useMemo(() => {
+    const filtered = jovensTournaments
+      .filter(t => !filterManuel || t.players.some(p => isManuel(p)))
+      .filter(t => !yearFilter || ((t as any)._jovensYear ?? t.date?.substring(0, 4)) === yearFilter);
+    return buildJovensGroups(filtered);
+  }, [jovensTournaments, filterManuel, yearFilter]);
+
+  const jovensByYear = useMemo(() => {
+    const m: Record<string, JovensGroup[]> = {};
+    for (const g of jovensGroups) {
+      if (!m[g.year]) m[g.year] = [];
+      m[g.year].push(g);
+    }
+    return m;
+  }, [jovensGroups]);
+  const jovensYears = useMemo(() => Object.keys(jovensByYear).sort().reverse(), [jovensByYear]);
+  const curJovensGroup = jovensGroups.find(g => g.key === jovensGroupKey) ?? jovensGroups[0] ?? null;
+  const curJovens = curJovensGroup?.entries[jovensEscIdx] ?? curJovensGroup?.entries[0] ?? null;
 
   const displayList = useMemo(() => buildDisplayList(tournaments), [tournaments]);
   const cur = displayList[selected];
@@ -3044,6 +3142,7 @@ function Content() {
       if (!inYear(t)) continue;
       if (filterManuel && !t.players.some(p => isManuel(p))) continue;
       if (seriesFilter === "clubes") continue; // clubes tem sidebar própria
+      if (seriesFilter === "jovens") continue; // jovens tem sidebar própria
       const key = t.date ? t.date.substring(0, 7) : "?";
       if (!g[key]) g[key] = [];
       g[key].push(t);
@@ -3202,12 +3301,13 @@ function Content() {
                     const count = seriesFilter === "santo"   ? santoByYear.years.reduce((s, y) => s + (santoByYear.byYear[y]?.length ?? 0), 0)
                                 : seriesFilter === "circuit" ? pjaByYear.years.reduce((s, y) => s + (pjaByYear.byYear[y]?.length ?? 0), 0)
                                 : seriesFilter === "clubes"  ? clubesList.length
+                                : seriesFilter === "jovens"  ? jovensGroups.length
                                 : activeYear
                                   ? displayList.filter(t => (t.date || "").startsWith(activeYear)).length
                                   : displayList.length;
                     return <span className="chip" style={{ flexShrink: 0 }}>{count} torneios</span>;
                   })()}
-                  {seriesFilter !== "santo" && seriesFilter !== "clubes" && navMode === "torneios" && (
+                  {seriesFilter !== "santo" && seriesFilter !== "clubes" && seriesFilter !== "jovens" && navMode === "torneios" && (
                     <span className="chip" style={{ flexShrink: 0, marginLeft: 4, background: "var(--bg-hover)" }}>
                       {fileMeta.length} ficheiro{fileMeta.length !== 1 ? "s" : ""}
                     </span>
@@ -3230,11 +3330,13 @@ function Content() {
               { key: "circuit", label: "🏆 PJA Tour" },
               { key: "santo",   label: "⛳ Santo da Serra" },
               { key: "clubes",  label: "🏅 Clubes" },
+              { key: "jovens",  label: "🏆 Jovens" },
             ] as const).map(({ key, label }) => {
               const active = seriesFilter === key;
               const st = active
                 ? key === "santo"  ? { flexShrink: 0, ...PILL_SSERRA, borderColor: PILL_SSERRA.background as string }
                 : key === "clubes" ? { flexShrink: 0, background: "var(--accent)", borderColor: "var(--accent)", color: "#fff" }
+                : key === "jovens" ? { flexShrink: 0, background: "var(--chart-2)", borderColor: "var(--chart-2)", color: "#fff" }
                 : { flexShrink: 0 }
                 : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" };
               return (
@@ -3257,7 +3359,7 @@ function Content() {
       )}
 
       {/* Master-detail (modos "month" e "circuit") */}
-      {navMode === "torneios" && seriesFilter !== "clubes" && (
+      {navMode === "torneios" && seriesFilter !== "clubes" && seriesFilter !== "jovens" && (
       <div className="master-detail">
         {/* Sidebar */}
         <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
@@ -3403,6 +3505,79 @@ function Content() {
                   );
                 })()
             }
+          </div>
+        </div>
+      )}
+
+      {/* Master-detail Jovens */}
+      {navMode === "torneios" && seriesFilter === "jovens" && (
+        <div className="master-detail">
+          <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
+            {jovensLoading && <div className="muted fs-11 u-pad-italic">A carregar...</div>}
+            {jovensLoaded && jovensGroups.length === 0 && !jovensLoading && (
+              <div className="muted fs-11 u-pad-italic">Ficheiro não encontrado (ainda)</div>
+            )}
+            {jovensYears.map(yr => (
+              <React.Fragment key={yr}>
+                <div className="sidebar-section-title-dark">🏆 {yr}</div>
+                {jovensByYear[yr].map(g => {
+                  const totalJog = g.entries.reduce((s, e) => s + (e.playerCount || e.players.length), 0);
+                  const t0 = g.entries[0];
+                  const sidebarT: SidebarItemTournament = {
+                    ...(t0 as any),
+                    name: g.name,
+                    playerCount: totalJog,
+                    escalao: null,
+                    tcode: g.key,
+                  };
+                  return (
+                    <TournSidebarItem
+                      key={g.key}
+                      t={sidebarT}
+                      isActive={jovensGroupKey === g.key}
+                      onClick={() => { setJovensGroupKey(g.key); setJovensEscIdx(0); md.onSelect(); }}
+                      accentColor={SIDEBAR_ACCENT.tour}
+                      extraPills={
+                        <span style={{ display: "inline-flex", gap: 3, flexWrap: "wrap", marginTop: 2 }}>
+                          {g.entries.map(e => (
+                            <EscPill key={e.tcode} escalao={e.escalao ?? ""} size="xs" />
+                          ))}
+                        </span>
+                      }
+                    />
+                  );
+                })}
+              </React.Fragment>
+            ))}
+          </div>
+          <div className="course-detail">
+            {curJovensGroup ? (
+              <>
+                {/* Tabs por escalão */}
+                {curJovensGroup.entries.length > 1 && (
+                  <div style={{ display: "flex", gap: 4, padding: "8px 12px 0", flexWrap: "wrap",
+                    borderBottom: "1px solid var(--border-light)", background: "var(--bg-card)" }}>
+                    {curJovensGroup.entries.map((e, ri) => (
+                      <button key={e.tcode + "_" + ri}
+                        className={"tourn-tab tourn-tab-sm" + (jovensEscIdx === ri ? " active" : "")}
+                        onClick={() => setJovensEscIdx(ri)}
+                        style={jovensEscIdx === ri ? { marginBottom: 6 } : { marginBottom: 6, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                        {e.escalao ?? "Esc " + (ri + 1)}
+                        <span style={{ fontSize: 10, marginLeft: 3, opacity: 0.7 }}>
+                          ({(e.playerCount || e.players.length)} jog)
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+                {curJovens
+                  ? <TournamentDetail tournament={curJovens} escLookup={escLookup} playersDB={playersDB} />
+                  : <div className="center-msg muted">Selecciona um torneio</div>
+                }
+              </>
+            ) : (
+              !jovensLoading && <div className="center-msg muted">{jovensLoaded ? "Selecciona um torneio" : "A carregar…"}</div>
+            )}
           </div>
         </div>
       )}

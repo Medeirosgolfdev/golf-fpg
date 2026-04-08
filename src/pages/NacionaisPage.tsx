@@ -533,6 +533,8 @@ type PlayerLoad = {
 };
 
 // Janela temporal configurável
+type AggWindow = { months: number } | { year: number };
+
 function makeCutoff(months: number): number {
   const d = new Date(); d.setMonth(d.getMonth() - months);
   return parseInt(d.toISOString().slice(0, 10).replace(/-/g, ""));
@@ -540,9 +542,10 @@ function makeCutoff(months: number): number {
 
 function computeAgg(
   data: import("../data/playerDataLoader").PlayerPageData,
-  monthsBack = 12
+  window: AggWindow = { months: 12 }
 ): AggStats | null {
-  const cutoff = makeCutoff(monthsBack);
+  const fromDate = "year" in window ? window.year * 10000 + 101  : makeCutoff(window.months);
+  const toDate   = "year" in window ? window.year * 10000 + 1231 : 99999999;
   const dist = { eagle: 0, birdie: 0, par: 0, bogey: 0, double: 0, triple: 0, total: 0 };
   const parAcc: Record<number, { diff: number; n: number; under: number }> = {};
   let grossSum = 0, nRounds = 0, nCard = 0, bestGross: number | null = null;
@@ -557,8 +560,8 @@ function computeAgg(
   for (const cd of data.DATA) {
     const isAroeira = /aroeira/i.test(cd.course);
     for (const r of cd.rounds) {
-      // Filtro de data — se dateSort existe e é anterior ao cutoff, ignorar
-      if (r.dateSort && Number(r.dateSort) < cutoff) continue;
+      // Filtro de data — janela configurável (meses rolantes ou ano de calendário)
+      if (r.dateSort && (Number(r.dateSort) < fromDate || Number(r.dateSort) > toDate)) continue;
 
       // Aceitar rondas de torneio (18h) e Drive Challenge válidas (9h)
       const nH: number = r.holeCount ?? 18;
@@ -1117,7 +1120,7 @@ function AnaliseView({ t, nossosByFed, statsDb }: {
   const [playerLoads, setPlayerLoads] = useState<PlayerLoad[]>([]);
   const loadingRef = useRef(new Set<string>());
   const [sortKey, setSortKey]     = useState<"fit"|"vac"|"par5"|"blowup"|"form">("fit");
-  const [monthsBack, setMonthsBack] = useState<number>(12);
+  const [window, setWindow] = useState<AggWindow>({ months: 12 });
 
   useEffect(() => {
     if (t._status !== "ok") return;
@@ -1125,7 +1128,7 @@ function AnaliseView({ t, nossosByFed, statsDb }: {
       fed: j.fed!, nome: j.nome, hcp: j.hcp, vac: j.vac, status: "idle", agg: null,
     }));
     setPlayerLoads(loads); loadingRef.current.clear();
-  }, [t.tcode, t._status, t.totalInscritos, monthsBack]);
+  }, [t.tcode, t._status, t.totalInscritos, window]);
 
   useEffect(() => {
     if (!playerLoads.length) return;
@@ -1137,7 +1140,7 @@ function AnaliseView({ t, nossosByFed, statsDb }: {
       setPlayerLoads(prev => prev.map(p => p.fed === pl.fed ? { ...p, status: "loading" } : p));
       import("../data/playerDataLoader")
         .then(m => m.loadPlayerData(pl.fed))
-        .then(data => { const agg = computeAgg(data, monthsBack); setPlayerLoads(prev => prev.map(p => p.fed === pl.fed ? { ...p, status: agg ? "ok" : "nodata", agg } : p)); })
+        .then(data => { const agg = computeAgg(data, window); setPlayerLoads(prev => prev.map(p => p.fed === pl.fed ? { ...p, status: agg ? "ok" : "nodata", agg } : p)); })
         .catch(() => setPlayerLoads(prev => prev.map(p => p.fed === pl.fed ? { ...p, status: "nodata" } : p)))
         .finally(() => loadingRef.current.delete(pl.fed));
     });
@@ -1261,16 +1264,32 @@ function AnaliseView({ t, nossosByFed, statsDb }: {
           {sorted.length >= 0 && (
             <div style={{ marginLeft:"auto", display:"flex", gap:6, flexWrap:"wrap", alignItems:"center" }}>
               <span style={{ fontSize:10, color:"var(--text-3)" }}>Período:</span>
-              {([3,6,12,24] as const).map(m => (
-                <button key={m} onClick={() => setMonthsBack(m)}
-                  style={{ fontSize:10, padding:"2px 7px", borderRadius:4, cursor:"pointer",
-                    background: monthsBack===m ? "var(--chart-2)" : "var(--bg-card)",
-                    color: monthsBack===m ? "#fff" : "var(--text-2)",
-                    border:`1px solid ${monthsBack===m?"var(--chart-2)":"var(--border)"}`,
-                    fontWeight: monthsBack===m?700:400 }}>
-                  {m}m
-                </button>
-              ))}
+              {([3,6,12,24] as const).map(m => {
+                const active = "months" in window && window.months === m;
+                return (
+                  <button key={m} onClick={() => setWindow({ months: m })}
+                    style={{ fontSize:10, padding:"2px 7px", borderRadius:4, cursor:"pointer",
+                      background: active ? "var(--chart-2)" : "var(--bg-card)",
+                      color: active ? "#fff" : "var(--text-2)",
+                      border:`1px solid ${active?"var(--chart-2)":"var(--border)"}`,
+                      fontWeight: active?700:400 }}>
+                    {m}m
+                  </button>
+                );
+              })}
+              {([2025,2024,2023] as const).map(y => {
+                const active = "year" in window && window.year === y;
+                return (
+                  <button key={y} onClick={() => setWindow({ year: y })}
+                    style={{ fontSize:10, padding:"2px 7px", borderRadius:4, cursor:"pointer",
+                      background: active ? "var(--accent)" : "var(--bg-card)",
+                      color: active ? "#fff" : "var(--text-2)",
+                      border:`1px solid ${active?"var(--accent)":"var(--border)"}`,
+                      fontWeight: active?700:400 }}>
+                    {y}
+                  </button>
+                );
+              })}
               <div style={{ width:1, height:14, background:"var(--border)", margin:"0 2px" }} />
               <span style={{ fontSize:10, color:"var(--text-3)" }}>Ordenar:</span>
               {([["fit","Course Fit"],["vac","VAC"],["par5","Par-5"],["blowup","Duplos−"],["form","Forma"]] as const).map(([k,l])=>(
@@ -1298,6 +1317,195 @@ function AnaliseView({ t, nossosByFed, statsDb }: {
   );
 }
 
+
+
+/* ═══════════════════════════════════════════════════════
+   RESULTADOS — nacional do ano anterior para os inscritos
+   Filtra rondas com eventName ∋ "nacional" no ano passado
+   ═══════════════════════════════════════════════════════ */
+
+
+
+/* ═══════════════════════════════════════════════════════
+   RESULTADOS — nacional do ano anterior
+   Fonte: ficheiros /data/pull-torneios*.json (mesma fonte que FPGPage)
+   Filtra torneios com pill="NACIONAL" e escalão correspondente
+   ═══════════════════════════════════════════════════════ */
+type TournPlayer = { name: string; fedCode?: string; grossTotal: number | string | null; roundScores?: { grossTotal?: number | string | null }[] };
+type TournEntry  = { name: string; tcode: string; date: string; campo: string; escalao?: string | null; rounds?: number; players: TournPlayer[] };
+type DriveFile   = { tournaments: TournEntry[] };
+
+const DATA_BASE = "/data/pull-torneios";
+const DATA_EXT  = ".json";
+const DATA_MAX  = 50;
+
+async function fetchNacionalTourns(
+  melhorias: import("../data/melhoriasTypes").MelhoriasJson,
+  escalao: string,
+  anoPassado: number
+): Promise<TournEntry[]> {
+  // 1. Descobrir tcodes com pill="NACIONAL" a partir do melhorias
+  const nacTcodes = new Set<string>();
+  for (const playerPatches of Object.values(melhorias)) {
+    if (typeof playerPatches !== "object" || !playerPatches) continue;
+    for (const entry of Object.values(playerPatches as Record<string, any>)) {
+      if (typeof entry !== "object" || !entry || !entry.pill || entry.pill !== "NACIONAL") continue;
+      for (const v of Object.values((entry as any).links || {})) {
+        const m = String(v).match(/tcode=(\d+)/);
+        if (m) nacTcodes.add(m[1]);
+      }
+    }
+  }
+
+  // 2. Percorrer ficheiros de torneios até 404
+  const found: TournEntry[] = [];
+  for (let i = 0; i < DATA_MAX; i++) {
+    let resp: Response;
+    try { resp = await fetch(DATA_BASE + String(i).padStart(3, "0") + DATA_EXT); }
+    catch { break; }
+    if (!resp.ok) break;
+    const d: DriveFile = await resp.json().catch(() => ({ tournaments: [] }));
+    for (const t of d.tournaments || []) {
+      const dateYear = parseInt((t.date || "").slice(0, 4));
+      if (dateYear !== anoPassado) continue;
+      if (!nacTcodes.has(t.tcode)) continue;
+      // Verificar escalão: t.escalao pode ser "Sub-12" ou similar
+      const tEsc = (t.escalao || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+      const wantEsc = escalao.toLowerCase().replace(/[^a-z0-9]/g, "");
+      if (tEsc && !tEsc.includes(wantEsc) && !wantEsc.includes(tEsc)) continue;
+      found.push(t);
+    }
+  }
+  return found;
+}
+
+function ResultadosView({ t, nossosByFed }: {
+  t: TorneioData; nossosByFed: Map<string, BdPlayer>;
+}) {
+  const { melhorias } = useAppContext();
+  const anoPassado = new Date().getFullYear() - 1;
+
+  type Status = "idle" | "loading" | "ok" | "empty" | "error";
+  const [status, setStatus]   = useState<Status>("idle");
+  const [tourns, setTourns]   = useState<TournEntry[]>([]);
+
+  useEffect(() => {
+    if (t._status !== "ok") return;
+    setStatus("loading");
+    fetchNacionalTourns(melhorias, t.escalao, anoPassado)
+      .then(found => { setTourns(found); setStatus(found.length ? "ok" : "empty"); })
+      .catch(() => setStatus("error"));
+  }, [t.tcode, t._status, t.escalao, melhorias, anoPassado]);
+
+  if (t._status !== "ok") return <div className="muted p-16">Carrega o torneio primeiro.</div>;
+
+  // Consolidar rondas: pode haver múltiplos TournEntry (R1, R2, R3...)
+  // Cada entrada pode ter rounds > 1 com roundScores por jogador
+  const rounds = tourns.length;
+  const inscFeds = new Set(t.jogadores.map(j => j.fed).filter(Boolean));
+
+  // Construir leaderboard: chave = fedCode ou nome normalizado
+  type Row = { key: string; nome: string; fed: string | null; inBD: boolean; grossByRound: (number | null)[]; total: number | null };
+  const rowMap = new Map<string, Row>();
+
+  for (let ri = 0; ri < tourns.length; ri++) {
+    const tourn = tourns[ri];
+    const nRoundsInFile = tourn.rounds && tourn.rounds > 1 ? tourn.rounds : 1;
+    for (const p of tourn.players) {
+      const key  = p.fedCode || p.name;
+      const fed  = p.fedCode || null;
+      const nome = nossosByFed.get(fed ?? "")?.name ?? p.name;
+      if (!rowMap.has(key)) {
+        rowMap.set(key, { key, nome, fed, inBD: fed ? inscFeds.has(fed) : false, grossByRound: [], total: null });
+      }
+      const row = rowMap.get(key)!;
+      if (nRoundsInFile > 1 && p.roundScores?.length) {
+        // torneio multi-ronda num único ficheiro
+        p.roundScores.forEach((rs, idx) => {
+          const g = rs.grossTotal != null ? Number(rs.grossTotal) : null;
+          row.grossByRound[idx] = g;
+        });
+      } else {
+        // ronda individual
+        const g = p.grossTotal != null ? Number(p.grossTotal) : null;
+        row.grossByRound[ri] = g;
+      }
+    }
+  }
+
+  // Calcular total e ordenar
+  const board = [...rowMap.values()].map(row => ({
+    ...row,
+    total: row.grossByRound.every(g => g == null) ? null
+      : row.grossByRound.reduce<number>((s, g) => s + (g ?? 0), 0),
+  })).sort((a, b) => (a.total ?? 9999) - (b.total ?? 9999));
+
+  const maxR = board.reduce((m, r) => Math.max(m, r.grossByRound.length), 0) || rounds || 1;
+
+  // Link de classificação a partir do primeiro torneio com links
+  const classifUrl = (tourns[0] as any)?.links?.classificacao
+    ?? (tourns[0] as any)?.links?.fpg_scoring
+    ?? `https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=988&tcode=${tourns[0]?.tcode ?? ""}`;
+
+  return (
+    <div style={{ paddingTop: 8 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12, flexWrap: "wrap" }}>
+        <span style={{ fontWeight: 800, fontSize: 13 }}>
+          🏅 Resultados {anoPassado} — {t.nome}
+        </span>
+        {status === "loading" && <span className="muted" style={{ fontSize: 11 }}>A carregar…</span>}
+        {status === "ok" && tourns.length > 0 && (
+          <a href={classifUrl} target="_blank" rel="noopener noreferrer"
+             style={{ fontSize: 11, color: "var(--chart-2)", marginLeft: "auto" }}>
+            classificação oficial ↗
+          </a>
+        )}
+      </div>
+
+      {status === "empty" && (
+        <div className="muted" style={{ fontSize: 12, padding: "20px 0" }}>
+          Não foram encontrados resultados do Campeonato Nacional {t.escalao} de {anoPassado}.
+        </div>
+      )}
+      {status === "error" && (
+        <div className="muted" style={{ fontSize: 12 }}>Erro ao carregar ficheiros de torneios.</div>
+      )}
+
+      {status === "ok" && board.length > 0 && (
+        <div className="table-wrap">
+          <table className="dtable-lg" style={{ width: "100%" }}>
+            <thead>
+              <tr>
+                <th style={{ width: 32 }}>#</th>
+                <th>Nome</th>
+                {Array.from({ length: maxR }, (_, i) => (
+                  <th key={i} className="r" style={{ width: 52 }}>R{i + 1}</th>
+                ))}
+                <th className="r" style={{ width: 64 }}>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {board.map((row, i) => (
+                <tr key={row.key} className={row.inBD ? "row-match" : ""}>
+                  <td className="muted r" style={{ fontSize: 11 }}>{i + 1}</td>
+                  <td style={{ fontWeight: row.inBD ? 700 : 400 }}>{row.nome}</td>
+                  {Array.from({ length: maxR }, (_, ri) => (
+                    <td key={ri} className="r" style={{ fontSize: 13 }}>
+                      {row.grossByRound[ri] != null ? row.grossByRound[ri] : <span className="muted">–</span>}
+                    </td>
+                  ))}
+                  <td className="r" style={{ fontWeight: 800, fontSize: 14 }}>
+                    {row.total != null ? row.total : <span className="muted">–</span>}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+}
 
 
 /* ═══════════════════════════════════════════════════════
@@ -1401,47 +1609,49 @@ export default function NacionaisPage() {
 
   return (
     <div className="jogadores-page">
-      <div className="toolbar">
-        <div className="toolbar-left" style={{ flexWrap: "wrap", gap: 4 }}>
-          <span style={{ fontWeight: 700, fontSize: 13, flexShrink: 0 }}>🏆 Nacionais Jovens</span>
-          <div className="toolbar-sep" style={{ flexShrink: 0 }} />
-          {([
-            { key: "inscricoes", label: "Inscrições" },
-            { key: "analise",    label: "📊 Análise" },
-            { key: "resultados", label: "🏅 Resultados", disabled: true },
-          ] as const).map(({ key, label, disabled }) => (
-            <button key={key}
-              className={"tourn-tab tourn-tab-sm" + (view === key ? " active" : "")}
-              onClick={() => !disabled && setView(key as PageView)}
-              title={disabled ? "Disponivel quando o torneio decorrer" : undefined}
-              style={view === key
-                ? { flexShrink: 0 }
-                : { flexShrink: 0, background: "var(--bg-muted)", color: disabled ? "var(--text-3)" : "var(--text-2)", borderColor: "var(--border)", cursor: disabled ? "not-allowed" : "pointer", opacity: disabled ? 0.5 : 1 }}>
-              {label}
-            </button>
-          ))}
-          <div className="toolbar-sep" style={{ flexShrink: 0 }} />
-          <button className="tourn-tab tourn-tab-sm" onClick={refreshAll}
-            style={{ flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}
-            title="Ir buscar inscrições actualizadas à FPG para todos os escalões">
-            ↺ Actualizar
+      {/* ── Toolbar: scroll horizontal ── */}
+      <div style={{
+        display: "flex", alignItems: "center", gap: 6,
+        padding: "6px 10px", overflowX: "auto", flexWrap: "nowrap",
+        scrollbarWidth: "none", WebkitOverflowScrolling: "touch",
+        borderBottom: "1px solid var(--border-light)",
+      }}>
+        <span className="toolbar-title" style={{ flexShrink: 0 }}>🏆 Nacionais Jovens</span>
+        <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+        {([
+          { key: "inscricoes", label: "Inscrições" },
+          { key: "analise",    label: "📊 Análise" },
+          { key: "resultados", label: "🏅 Resultados" },
+        ] as const).map(({ key, label }) => (
+          <button key={key}
+            className={"tourn-tab tourn-tab-sm" + (view === key ? " active" : "")}
+            onClick={() => setView(key as PageView)}
+            style={view === key
+              ? { flexShrink: 0 }
+              : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+            {label}
           </button>
-          <div className="toolbar-sep" style={{ flexShrink: 0 }} />
-          {torneios.map(t => (
-            <TorneioCard key={t.tcode} t={t}
-              active={activeTcode === t.tcode}
-              onClick={() => setActiveTcode(t.tcode)} />
-          ))}
-        </div>
-        <div className="toolbar-right">
-          {totalNossosInscritos > 0 && (
-            <div className="chip">{totalNossosInscritos} na BD</div>
-          )}
-        </div>
+        ))}
+        <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+        <button className="tourn-tab tourn-tab-sm" onClick={refreshAll}
+          style={{ flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}
+          title="Ir buscar inscrições actualizadas à FPG para todos os escalões">
+          ↺ Actualizar
+        </button>
+        <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+        {torneios.map(t => (
+          <TorneioCard key={t.tcode} t={t}
+            active={activeTcode === t.tcode}
+            onClick={() => setActiveTcode(t.tcode)} />
+        ))}
+        <div style={{ flex: 1, minWidth: 8 }} />
+        {totalNossosInscritos > 0 && (
+          <span className="chip" style={{ flexShrink: 0 }}>{totalNossosInscritos} na BD</span>
+        )}
       </div>
 
       <PainelResumo torneios={torneios} nossosByFed={nossosByFed} />
-      <div className="pa-content">
+      <div className="course-detail">
         <div style={{ display: "flex", alignItems: "baseline", gap: 12, padding: "12px 0 8px", borderBottom: "1px solid var(--border)", marginBottom: 8, flexWrap: "wrap" }}>
           <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700 }}>
             Campeonato Nacional de Jovens — {torneioActivo.nome}
@@ -1460,8 +1670,10 @@ export default function NacionaisPage() {
           </div>
         </div>
         {view === "inscricoes"
-          ? <InscricoesView t={torneioActivo} nossosFedSet={nossosFedSet} nossosByFed={nossosByFed} statsDb={statsDb} />
-          : <AnaliseView    t={torneioActivo} nossosByFed={nossosByFed} statsDb={statsDb} />
+          ? <InscricoesView  t={torneioActivo} nossosFedSet={nossosFedSet} nossosByFed={nossosByFed} statsDb={statsDb} />
+          : view === "analise"
+          ? <AnaliseView     t={torneioActivo} nossosByFed={nossosByFed} statsDb={statsDb} />
+          : <ResultadosView  t={torneioActivo} nossosByFed={nossosByFed} />
         }
       </div>
     </div>
