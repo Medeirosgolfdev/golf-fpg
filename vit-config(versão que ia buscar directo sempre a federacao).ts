@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { join, extname } from 'path'
-import { existsSync, statSync, createReadStream, readFileSync, writeFileSync, mkdirSync } from 'fs'
+import { existsSync, statSync, createReadStream, readFileSync } from 'fs'
 
 function loadEnvLocal() {
   const p = join(process.cwd(), '.env.local')
@@ -98,48 +98,6 @@ function parseAdmissionsTable(html: string): Jogador[] {
   return jogadores
 }
 
-
-/* -- Cache de inscricoes em data/inscricoes_nacionais.json ------------- */
-const CACHE_FILE = join(process.cwd(), 'data', 'inscricoes_nacionais.json')
-
-type CacheEntry = {
-  tcode: string; nome: string; escalao: string; sex: string;
-  totalInscritos: number; jogadores: { fed: string | null; nome: string; clube: string; hcp: number | null; vac: number | null; dataInscricao: string | null }[];
-  lastFetched: string; lastChanged: string; fpgUrl: string;
-}
-type CacheFile = Record<string, CacheEntry>
-
-function readCache(): CacheFile {
-  try {
-    if (existsSync(CACHE_FILE)) return JSON.parse(readFileSync(CACHE_FILE, 'utf8'))
-  } catch {}
-  return {}
-}
-
-function writeCache(data: CacheFile) {
-  try {
-    const dir = join(process.cwd(), 'data')
-    if (!existsSync(dir)) mkdirSync(dir, { recursive: true })
-    writeFileSync(CACHE_FILE, JSON.stringify(data, null, 2), 'utf8')
-  } catch (e) {
-    console.warn('[inscricoes] Nao foi possivel gravar cache:', e)
-  }
-}
-
-function diffJogadores(
-  prev: CacheEntry['jogadores'],
-  next: CacheEntry['jogadores']
-): { added: string[]; removed: string[] } {
-  const prevFeds = new Set(prev.map(j => j.fed).filter(Boolean) as string[])
-  const nextFeds = new Set(next.map(j => j.fed).filter(Boolean) as string[])
-  const added   = [...nextFeds].filter(f => !prevFeds.has(f))
-  const removed = [...prevFeds].filter(f => !nextFeds.has(f))
-  // Nomes dos adicionados/removidos para o log
-  const addedNomes  = added.map(f  => next.find(j => j.fed === f)?.nome  ?? f)
-  const removedNomes = removed.map(f => prev.find(j => j.fed === f)?.nome ?? f)
-  return { added: addedNomes, removed: removedNomes }
-}
-
 export default defineConfig({
   plugins: [
     react(),
@@ -150,11 +108,10 @@ export default defineConfig({
         server.middlewares.use(async (req, res, next) => {
           if (!req.url?.startsWith('/api/inscricoes')) return next()
 
-          const url     = new URL(req.url, 'http://localhost')
-          const tcode   = url.searchParams.get('tcode') ?? ''
-          const raw     = url.searchParams.get('raw') === '1'
-          const refresh = url.searchParams.get('refresh') === '1'
-          const meta    = TORNEIOS[tcode]
+          const url   = new URL(req.url, 'http://localhost')
+          const tcode = url.searchParams.get('tcode') ?? ''
+          const raw   = url.searchParams.get('raw') === '1'
+          const meta  = TORNEIOS[tcode]
 
           if (!tcode || !meta) {
             res.writeHead(400, { 'Content-Type': 'application/json' })
@@ -162,22 +119,11 @@ export default defineConfig({
             return
           }
 
-          const fpgUrl = 'https://scoring.datagolf.pt/pt/tournAdmissions.aspx?ccode=000&tcode=' + tcode
-          const cache  = readCache()
-          const cached = cache[tcode]
-
-          // Servir cache se existir e nao for pedido de refresh
-          if (cached && !refresh && !raw) {
-            console.log('[inscricoes] tcode=' + tcode + ' -> CACHE (' + cached.totalInscritos + ' inscritos, ' + cached.lastFetched + ')')
-            res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-cache' })
-            res.end(JSON.stringify({ ...cached, fromCache: true, diff: null }))
-            return
-          }
-
           const cookie = process.env.DATAGOLF_SESSION ?? ''
           if (!cookie) console.warn('[inscricoes] DATAGOLF_SESSION em falta no .env.local !')
-          console.log('[inscricoes] tcode=' + tcode + (refresh ? ' [REFRESH]' : ' [FETCH]') + ' cookie=' + (cookie ? cookie.slice(0, 20) + '...' : 'VAZIA'))
+          console.log('[inscricoes] tcode=' + tcode + ' cookie=' + (cookie ? cookie.slice(0, 30) + '...' : 'VAZIA'))
 
+          const fpgUrl = 'https://scoring.datagolf.pt/pt/tournAdmissions.aspx?ccode=000&tcode=' + tcode
           const headers: Record<string, string> = {
             'User-Agent':      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
             'Accept':          'text/html,application/xhtml+xml;q=0.9,*/*;q=0.8',
@@ -194,13 +140,6 @@ export default defineConfig({
             if (!fpgRes.ok) {
               console.warn('[inscricoes] Resposta erro: ' + html.slice(0, 300))
               if (raw) { res.writeHead(fpgRes.status, { 'Content-Type': 'text/html; charset=utf-8' }); res.end(html); return }
-              // Se falhou mas temos cache, devolve a cache com aviso
-              if (cached) {
-                console.warn('[inscricoes] FPG falhou, a usar cache anterior')
-                res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-cache' })
-                res.end(JSON.stringify({ ...cached, fromCache: true, fetchError: 'FPG HTTP ' + fpgRes.status, diff: null }))
-                return
-              }
               res.writeHead(502, { 'Content-Type': 'application/json' })
               res.end(JSON.stringify({ error: 'FPG HTTP ' + fpgRes.status, tcode, ...meta, totalInscritos: 0, jogadores: [], lastFetched: null }))
               return
@@ -208,36 +147,13 @@ export default defineConfig({
 
             if (raw) { res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' }); res.end(html); return }
 
-            const jogadores   = parseAdmissionsTable(html)
-            const now         = new Date().toISOString()
-            const diff        = cached ? diffJogadores(cached.jogadores, jogadores) : null
-            const hasChanges  = diff && (diff.added.length > 0 || diff.removed.length > 0)
-            const lastChanged = hasChanges ? now : (cached?.lastChanged ?? now)
-
-            if (diff && hasChanges) {
-              if (diff.added.length)   console.log('[inscricoes] NOVOS: ' + diff.added.join(', '))
-              if (diff.removed.length) console.log('[inscricoes] REMOVIDOS: ' + diff.removed.join(', '))
-            }
-
-            const entry: CacheEntry = { tcode, ...meta, totalInscritos: jogadores.length, jogadores, lastFetched: now, lastChanged, fpgUrl }
-
-            // Guardar cache
-            cache[tcode] = entry
-            writeCache(cache)
-            console.log('[inscricoes] tcode=' + tcode + ' -> ' + jogadores.length + ' inscritos, cache gravada')
-
+            const jogadores = parseAdmissionsTable(html)
+            console.log('[inscricoes] tcode=' + tcode + ' -> ' + jogadores.length + ' inscritos')
             res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-cache' })
-            res.end(JSON.stringify({ ...entry, fromCache: false, diff }))
+            res.end(JSON.stringify({ tcode, ...meta, totalInscritos: jogadores.length, jogadores, lastFetched: new Date().toISOString(), fpgUrl }))
 
           } catch (err) {
             console.error('[inscricoes] Erro tcode=' + tcode + ':', err)
-            // Fallback para cache em caso de erro de rede
-            if (cached) {
-              console.warn('[inscricoes] Erro de rede, a usar cache anterior')
-              res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-cache' })
-              res.end(JSON.stringify({ ...cached, fromCache: true, fetchError: String(err), diff: null }))
-              return
-            }
             res.writeHead(502, { 'Content-Type': 'application/json' })
             res.end(JSON.stringify({ error: String(err), tcode, ...meta, totalInscritos: 0, jogadores: [], lastFetched: null }))
           }
