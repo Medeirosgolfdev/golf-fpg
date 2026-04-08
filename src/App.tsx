@@ -38,7 +38,6 @@ const DrivePage = lazy(() => import("./pages/DrivePage"));
 const USKIDSPage = lazy(() => import("./pages/USKIDSPage"));
 const FPGPage = lazy(() => import("./pages/FPGPage"));
 const DORALPage = lazy(() => import("./pages/DORALPage"));
-const NacionaisPage = lazy(() => import("./pages/NacionaisPage"));
 
 type Status =
   | { kind: "loading" }
@@ -265,7 +264,6 @@ export default function App() {
                 <Route path="/uskids" element={<USKIDSPage />} />
                 <Route path="/diversos" element={<FPGPage />} />
                 <Route path="/doral" element={<DORALPage />} />
-                <Route path="/nacionais" element={<NacionaisPage />} />
                 <Route path="*" element={<Navigate to="/jogadores/52884" replace />} />
               </Routes>
             </Suspense>

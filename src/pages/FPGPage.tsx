@@ -14,10 +14,10 @@
  *   • Tabs por ronda (R1, R2, ... + Acumulado para multi-ronda)
  *   • Suporte a 9H e 18H, 1 a N rondas
  */
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import { useAppContext } from "../context/AppContext";
 import { loadPlayers } from "../data/loader";
-import { scClass } from "../utils/scoreDisplay";
+import { scClass, sdClassByHcp } from "../utils/scoreDisplay";
 import { buildEscLookup, type EscLookup } from "../utils/playerUtils";
 import { getTeeHex } from "../utils/teeColors";
 import { PILL_SSERRA, SIDEBAR_ACCENT, EscPill, ESC_STYLE, PillBadge } from "../ui/PillBadge";
@@ -2796,38 +2796,648 @@ function ClubesGruposView({
    MAIN CONTENT
    ───────────────────────────────────────────── */
 
+
+/* ═══════════════════════════════════════════════════════
+   NACIONAIS — Tipos, helpers e componentes de inscrições
+   (movido de NacionaisPage.tsx)
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Tipos ── */
+interface InscricaoJogador {
+  fed: string | null; nome: string; clube: string;
+  hcp: number | null; vac: number | null; dataInscricao: string | null;
+}
+interface TorneioData {
+  tcode: string; nome: string; escalao: string; sex: string;
+  totalInscritos: number; jogadores: InscricaoJogador[];
+  lastFetched: string | null; lastChanged: string | null; fpgUrl?: string;
+  fromCache?: boolean; fetchError?: string;
+  diff?: { added: string[]; removed: string[] } | null;
+  _status: "idle" | "loading" | "ok" | "error";
+}
+type BdPlayer = { name: string; escalao: string; sex: string; fed: string; clube: string; dob: string };
+interface PlayerStats {
+  avgSD5: number | null; lastSD: number | null; currentHcp: number | null;
+  hcpTrend: string | null; hcpDelta3m: number | null;
+  roundsLast3m: number | null; formAlert: string | null;
+}
+type StatsDb = Record<string, PlayerStats>;
+
+function usePlayerStats() {
+  const [stats, setStats] = useState<StatsDb>({});
+  useEffect(() => {
+    fetch("/player-stats.json").then(r => r.ok ? r.json() : {}).then(setStats).catch(() => {});
+  }, []);
+  return stats;
+}
+
+const TORNEIOS_CONFIG = [
+  { tcode: "10935", nome: "Sub-18 H", escalao: "Sub-18", sex: "M" },
+  { tcode: "10936", nome: "Sub-18 S", escalao: "Sub-18", sex: "F" },
+  { tcode: "10937", nome: "Sub-16 H", escalao: "Sub-16", sex: "M" },
+  { tcode: "10938", nome: "Sub-16 S", escalao: "Sub-16", sex: "F" },
+  { tcode: "10939", nome: "Sub-14 H", escalao: "Sub-14", sex: "M" },
+  { tcode: "10940", nome: "Sub-14 S", escalao: "Sub-14", sex: "F" },
+  { tcode: "10941", nome: "Sub-12 H", escalao: "Sub-12", sex: "M" },
+  { tcode: "10942", nome: "Sub-12 S", escalao: "Sub-12", sex: "F" },
+  { tcode: "10943", nome: "Sub-10 H", escalao: "Sub-10", sex: "M" },
+  { tcode: "10944", nome: "Sub-10 S", escalao: "Sub-10", sex: "F" },
+];
+
+function escShort(esc: string) { return esc.replace("Sub-", "S"); }
+function escCls(esc: string) {
+  return esc.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+function norm(s: string) { return s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); }
+function fmtTime(iso: string | null) {
+  if (!iso) return null;
+  return new Date(iso).toLocaleTimeString("pt-PT", { hour: "2-digit", minute: "2-digit" });
+}
+function fmtDataInscricao(s: string | null) {
+  if (!s) return "–";
+  return s.replace(/^\d{4}\//, "").replace("/", "/");
+}
+function anoEscalao(dob: string, escalao: string): "1A" | "2A" | null {
+  if (!dob) return null;
+  const anoNasc = parseInt(dob.slice(0, 4));
+  const idadeMax = parseInt(escalao.replace("Sub-", ""));
+  if (isNaN(anoNasc) || isNaN(idadeMax)) return null;
+  return anoNasc === (new Date().getFullYear() - idadeMax) ? "2A" : "1A";
+}
+function AnoEscalaoPill({ dob, escalao }: { dob: string; escalao: string }) {
+  if (!dob) return null;
+  const anoNasc = dob.slice(0, 4);
+  const isUltimo = anoEscalao(dob, escalao) === "2A";
+  return (
+    <span title={isUltimo ? `${anoNasc} — 2o ano` : `${anoNasc} — 1o ano`}
+      style={{ fontSize: 9, fontWeight: 700, padding: "1px 5px", borderRadius: 3, lineHeight: 1.4,
+        background: isUltimo ? "var(--color-bad)" : "var(--color-good)", color: "#fff", flexShrink: 0 }}>
+      {anoNasc}
+    </span>
+  );
+}
+function TrendBadge({ trend, delta }: { trend: string | null; delta: number | null }) {
+  if (!trend || trend === "stable") return <span className="muted" style={{ fontSize: 11 }}>–</span>;
+  const up = trend === "up";
+  return (
+    <span style={{ color: up ? "var(--color-good)" : "var(--color-bad)", fontWeight: 700, fontSize: 13 }}
+      title={delta != null ? `${delta > 0 ? "+" : ""}${delta.toFixed(1)} (3m)` : ""}>
+      {up ? "↓" : "↑"}
+    </span>
+  );
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   PAINEL DE RESUMO — sempre visível
+   ═══════════════════════════════════════════════════════ */
+function PainelResumo({ torneios, nossosByFed }: {
+  torneios: TorneioData[];
+  nossosByFed: Map<string, BdPlayer>;
+}) {
+  const [clubeSel, setClubesSel] = React.useState<string | null>(null);
+
+  const carregados = torneios.filter(t => t.totalInscritos > 0 || t._status === "ok");
+  const totalGeral = carregados.reduce((s, t) => s + t.totalInscritos, 0);
+  if (totalGeral === 0) return null;
+
+  const escaloes = ["Sub-18", "Sub-16", "Sub-14", "Sub-12", "Sub-10"];
+  const byEsc: Record<string, { M: number; F: number }> =
+    Object.fromEntries(escaloes.map(e => [e, { M: 0, F: 0 }]));
+  for (const t of carregados) {
+    if (byEsc[t.escalao]) byEsc[t.escalao][t.sex as "M" | "F"] = t.totalInscritos;
+  }
+
+  const anoTotals: Record<"1A" | "2A", number> = { "1A": 0, "2A": 0 };
+  let anoBase = 0;
+  for (const t of carregados) {
+    for (const j of t.jogadores) {
+      const p = j.fed ? nossosByFed.get(j.fed) : undefined;
+      if (!p?.dob) continue;
+      const a = anoEscalao(p.dob, t.escalao);
+      if (a) { anoTotals[a]++; anoBase++; }
+    }
+  }
+
+  const clubeMap = new Map<string, {
+    n: number;
+    jogadores: { fed: string; nome: string; escalao: string; sex: string }[];
+  }>();
+  for (const t of carregados) {
+    for (const j of t.jogadores) {
+      const p = j.fed ? nossosByFed.get(j.fed) : undefined;
+      const clube = (p?.clube || j.clube || "").trim();
+      if (!clube) continue;
+      if (!clubeMap.has(clube)) clubeMap.set(clube, { n: 0, jogadores: [] });
+      const entry = clubeMap.get(clube)!;
+      entry.n++;
+      entry.jogadores.push({
+        fed: j.fed ?? "",
+        nome: p?.name ?? j.nome,
+        escalao: p?.escalao ?? t.escalao,
+        sex: p?.sex ?? t.sex,
+      });
+    }
+  }
+  const clubes = [...clubeMap.entries()].sort((a, b) => b[1].n - a[1].n);
+  const selData = clubeSel ? clubeMap.get(clubeSel) : null;
+
+  return (
+    <div style={{ padding: "8px 12px 6px", borderBottom: "1px solid var(--border)", background: "var(--bg-card)" }}>
+      {/* Linha 1: total + escalões + anos */}
+      <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", marginBottom: clubes.length > 0 ? 5 : 0 }}>
+        <span style={{ fontWeight: 800, fontSize: 14, flexShrink: 0 }}>{totalGeral} inscritos</span>
+        <span className="muted" style={{ fontSize: 11 }}>·</span>
+        {escaloes.flatMap((e, ei) => {
+          const g = byEsc[e];
+          if (g.M === 0 && g.F === 0) return [];
+          const items: React.ReactNode[] = [];
+          if (g.M > 0) items.push(
+            <span key={`${e}M`} style={{ display: "inline-flex", alignItems: "center", gap: 3, flexShrink: 0 }}>
+              <span className="muted" style={{ fontSize: 10 }}>{e.replace("Sub-", "S")}</span>
+              <span className="sex-badge sex-M" style={{ minWidth: 20, textAlign: "center" }}>{g.M}</span>
+            </span>
+          );
+          if (g.F > 0) items.push(
+            <span key={`${e}F`} style={{ display: "inline-flex", alignItems: "center", gap: 3, flexShrink: 0 }}>
+              {g.M === 0 && <span className="muted" style={{ fontSize: 10 }}>{e.replace("Sub-", "S")}</span>}
+              <span className="sex-badge sex-F" style={{ minWidth: 20, textAlign: "center" }}>{g.F}</span>
+            </span>
+          );
+          if (ei < escaloes.length - 1) items.push(
+            <span key={`sep${ei}`} className="muted" style={{ fontSize: 10 }}>·</span>
+          );
+          return items;
+        })}
+        {anoBase > 0 && (
+          <>
+            <span className="muted" style={{ fontSize: 11 }}>·</span>
+            <span style={{ fontSize: 11, flexShrink: 0, display: "inline-flex", gap: 5, alignItems: "center" }}>
+              <span className="muted">1º ano</span>
+              <span style={{ fontWeight: 700, color: "var(--color-good)" }}>{anoTotals["1A"]}</span>
+              <span className="muted">2º ano</span>
+              <span style={{ fontWeight: 700, color: "var(--color-bad)" }}>{anoTotals["2A"]}</span>
+            </span>
+          </>
+        )}
+      </div>
+
+      {/* Linha 2: clubes */}
+      {clubes.length > 0 && (
+        <div style={{ display: "flex", alignItems: "center", gap: 4, flexWrap: "wrap" }}>
+          <span className="muted" style={{ fontSize: 10, flexShrink: 0 }}>Clubes:</span>
+          {clubes.map(([c, d]) => (
+            <button key={c}
+              onClick={() => setClubesSel(prev => prev === c ? null : c)}
+              style={{
+                cursor: "pointer", fontSize: 11, padding: "1px 8px", borderRadius: 10,
+                fontWeight: 600, border: "1px solid var(--border)",
+                background: clubeSel === c ? "var(--accent)" : "var(--bg-muted)",
+                color: clubeSel === c ? "#fff" : "var(--text-1)",
+              }}>
+              {c} {d.n}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Jogadores do clube seleccionado */}
+      {selData && clubeSel && (
+        <div style={{ marginTop: 6, padding: "8px 10px", background: "var(--bg-page)",
+          border: "1px solid var(--border)", borderRadius: 6 }}>
+          <div style={{ fontSize: 11, fontWeight: 700, marginBottom: 5, color: "var(--text-1)" }}>
+            {clubeSel} — {selData.n} inscrito{selData.n !== 1 ? "s" : ""}
+          </div>
+          <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
+            {selData.jogadores.map((jj, i) => (
+              <span key={i} style={{
+                fontSize: 11, display: "inline-flex", alignItems: "center", gap: 4,
+                padding: "2px 8px", borderRadius: 10,
+                background: "var(--bg-card)", border: "1px solid var(--border)",
+              }}>
+                <SexBadge sex={jj.sex} size="sm" />
+                <span className={`p p-sm p-${escCls(jj.escalao)}`} style={{ fontSize: 9 }}>{escShort(jj.escalao)}</span>
+                <span>{jj.nome || jj.fed}</span>
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ── Card de escalao — usa o mesmo estilo das pills de escalao da app ── */
+function TorneioCard({ t, active, onClick }: {
+  t: TorneioData; active: boolean; onClick: () => void;
+}) {
+  return (
+    <button
+      className={"tourn-tab tourn-tab-sm" + (active ? " active" : "")}
+      onClick={onClick}
+      title={`Campeonato Nacional de Jovens ${t.nome}`}
+      style={active ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}
+    >
+      {escShort(t.escalao)}
+      <SexBadge sex={t.sex} size="sm" />
+      {t._status === "loading" && <span style={{ opacity: 0.7 }}>⟳</span>}
+      {t._status === "error"   && <span style={{ color: "var(--color-bad)", fontWeight: 700 }}>!</span>}
+      {t._status === "ok" && t.totalInscritos > 0 && (
+        <span style={{
+          background: active ? "rgba(255,255,255,0.25)" : "var(--bg-card)",
+          border: "1px solid var(--border)",
+          borderRadius: 10, padding: "0px 5px",
+          fontSize: 11, fontWeight: 700,
+          color: active ? "inherit" : "var(--text-1)",
+          marginLeft: 2,
+        }}>{t.totalInscritos}</span>
+      )}
+    </button>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════
+   VISTA INSCRIÇÕES — tabela completa
+   ═══════════════════════════════════════════════════════ */
+type InscSortKey = "pos" | "nome" | "hcp" | "vac" | "sd5" | "data" | "trend" | "rondas";
+
+function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
+  t: TorneioData; nossosFedSet: Set<string>; nossosByFed: Map<string, BdPlayer>; statsDb: StatsDb;
+}) {
+  const [search, setSearch] = useState("");
+  const [sortKey, setSortKey] = useState<InscInscSortKey>("pos");
+  const [sortAsc, setSortAsc] = useState(true);
+  const term = norm(search);
+
+  const nossosCount = useMemo(
+    () => t.jogadores.filter(j => j.fed && nossosFedSet.has(j.fed)).length,
+    [t.jogadores, nossosFedSet]
+  );
+  const lista = useMemo(() => {
+    let base = t.jogadores;
+    if (term) base = base.filter(j => norm(j.nome).includes(term) || (j.fed || "").includes(term));
+    if (sortKey === "pos") return sortAsc ? base : [...base].reverse();
+    return [...base].sort((a, b) => {
+      const sa = a.fed ? statsDb[a.fed] : null;
+      const sb = b.fed ? statsDb[b.fed] : null;
+      let v = 0;
+      if      (sortKey === "nome")   { const pa = a.fed ? nossosByFed.get(a.fed) : null; const pb = b.fed ? nossosByFed.get(b.fed) : null; v = (pa?.name ?? a.nome).localeCompare(pb?.name ?? b.nome, "pt"); }
+      else if (sortKey === "hcp")    { v = (a.hcp ?? 999) - (b.hcp ?? 999); }
+      else if (sortKey === "vac")    { v = (a.vac ?? 999) - (b.vac ?? 999); }
+      else if (sortKey === "sd5")    { v = (sa?.avgSD5 ?? 999) - (sb?.avgSD5 ?? 999); }
+      else if (sortKey === "data")   { v = (a.dataInscricao ?? "").localeCompare(b.dataInscricao ?? ""); }
+      else if (sortKey === "rondas") { v = (sb?.roundsLast3m ?? -1) - (sa?.roundsLast3m ?? -1); }
+      else if (sortKey === "trend")  { const ord = { improving: 0, stable: 1, worsening: 2 }; v = (ord[sa?.hcpTrend as keyof typeof ord] ?? 3) - (ord[sb?.hcpTrend as keyof typeof ord] ?? 3); }
+      return sortAsc ? v : -v;
+    });
+  }, [t.jogadores, term, sortKey, sortAsc, nossosByFed, statsDb]);
+
+  function toggleSort(key: InscSortKey) {
+    if (sortKey === key) setSortAsc(v => !v); else { setSortKey(key); setSortAsc(true); }
+  }
+  function SortTh({ label, col, cls }: { label: string; col: InscSortKey; cls?: string }) {
+    const active = sortKey === col;
+    return <th className={cls} onClick={() => toggleSort(col)}
+      style={{ cursor: "pointer", userSelect: "none", whiteSpace: "nowrap" }}>
+      {label}{active ? (sortAsc ? " ↑" : " ↓") : " ↕"}
+    </th>;
+  }
+
+  if (t._status !== "ok" && t._status !== "loading") return null;
+  if (t._status === "loading") return <div className="muted p-16">A carregar...</div>;
+
+  return (
+    <div>
+      <div className="detail-toolbar">
+        <input className="input" value={search} onChange={e => setSearch(e.target.value)}
+          placeholder="Nome, num fed..." style={{ maxWidth: 200 }} />
+        <span className="muted" style={{ fontSize: 12 }}>{nossosCount} da BD · {t.totalInscritos} total</span>
+        <div style={{ marginLeft: "auto", display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+          {t.diff && (t.diff.added.length > 0 || t.diff.removed.length > 0) && (
+            <span style={{ fontSize: 10, background: "var(--color-warn)", color: "#fff", padding: "2px 7px", borderRadius: 10, fontWeight: 700 }}
+              title={[t.diff.added.length ? `+${t.diff.added.join(", ")}` : "", t.diff.removed.length ? `-${t.diff.removed.join(", ")}` : ""].filter(Boolean).join(" · ")}>
+              {t.diff.added.length > 0 && `+${t.diff.added.length} novo${t.diff.added.length > 1 ? "s" : ""}`}
+              {t.diff.added.length > 0 && t.diff.removed.length > 0 && " · "}
+              {t.diff.removed.length > 0 && `-${t.diff.removed.length} removido${t.diff.removed.length > 1 ? "s" : ""}`}
+            </span>
+          )}
+          {t.lastFetched && (
+            <span className="muted" style={{ fontSize: 10 }}
+              title={t.fromCache ? `Cache de ${t.lastFetched}${t.lastChanged && t.lastChanged !== t.lastFetched ? " · alterado " + t.lastChanged : ""}` : "Dados frescos"}>
+              {t.fromCache ? "💾" : "🔄"} {fmtTime(t.lastFetched)}
+            </span>
+          )}
+          {t.fetchError && <span className="muted" style={{ fontSize: 10, color: "var(--color-warn)" }} title={t.fetchError}>⚠️ cache</span>}
+          {t.fpgUrl && <a href={t.fpgUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: "var(--chart-2)" }}>datagolf ↗</a>}
+        </div>
+      </div>
+      <div className="table-wrap">
+        <table className="dtable-lg">
+          <colgroup>
+            <col style={{ width: "4%" }} /><col style={{ width: "17%" }} />
+            <col style={{ width: "7%" }} /><col style={{ width: "5%" }} />
+            <col style={{ width: "5%" }} /><col style={{ width: "5%" }} />
+            <col style={{ width: "4%" }} /><col style={{ width: "4%" }} />
+            <col style={{ width: "9%" }} /><col style={{ width: "40%" }} />
+          </colgroup>
+          <thead>
+            <tr>
+              <SortTh label="#"     col="pos"    />
+              <SortTh label="Nome"  col="nome"   />
+              <th className="r">Fed</th>
+              <SortTh label="HCP"   col="hcp"    cls="r" />
+              <SortTh label="VAC"   col="vac"    cls="r" />
+              <SortTh label="SD5"   col="sd5"    cls="r" />
+              <SortTh label="T"     col="trend"  cls="r" />
+              <SortTh label="R3m"   col="rondas" cls="r" />
+              <SortTh label="Insc"  col="data"   cls="r" />
+              <th>Na BD</th>
+            </tr>
+          </thead>
+          <tbody>
+            {lista.map((j, i) => {
+              const p  = j.fed ? nossosByFed.get(j.fed) : undefined;
+              const st = j.fed ? statsDb[j.fed] : null;
+              const sd5 = st?.avgSD5 ?? null;
+              return (
+                <tr key={`${j.fed ?? j.nome}-${i}`} className={p ? "row-match" : ""}>
+                  <td className="muted r" style={{ fontSize: 11 }}>{i + 1}</td>
+                  <td style={{ fontSize: 13 }}>
+                    {p ? <a href={`/jogadores/${j.fed}?view=by_date`} target="_blank" rel="noopener noreferrer"
+                             style={{ fontWeight: 700, color: "inherit", textDecoration: "none" }}>{p.name}</a>
+                       : <span className="muted">{j.nome || "–"}</span>}
+                  </td>
+                  <td className="r">
+                    {j.fed ? <a href={`/jogadores/${j.fed}?view=by_date`} target="_blank" rel="noopener noreferrer"
+                                style={{ color: "var(--chart-2)", textDecoration: "none", fontSize: 12 }}>{j.fed}</a>
+                           : <span className="muted">–</span>}
+                  </td>
+                  <td className="r muted" style={{ fontSize: 12 }}>{j.hcp != null ? j.hcp.toFixed(1) : "–"}</td>
+                  <td className="r" style={{ fontSize: 12, fontWeight: 600 }}>{j.vac != null ? j.vac.toFixed(1) : "–"}</td>
+                  <td className="r" style={{ fontSize: 11 }}>
+                    {sd5 != null ? <span className={`p p-${sdClassByHcp(sd5, st?.currentHcp ?? j.hcp ?? null)}`} style={{ fontSize: 11 }}>{sd5.toFixed(1)}</span> : <span className="muted">–</span>}
+                  </td>
+                  <td className="r"><TrendBadge trend={st?.hcpTrend ?? null} delta={st?.hcpDelta3m ?? null} /></td>
+                  <td className="r" style={{ fontSize: 12 }}>
+                    {st?.roundsLast3m != null
+                      ? <span style={{ fontWeight: st.roundsLast3m >= 4 ? 600 : 400, color: st.roundsLast3m === 0 ? "var(--color-bad)" : "inherit" }}>{st.roundsLast3m}</span>
+                      : <span className="muted">–</span>}
+                  </td>
+                  <td className="r muted" style={{ fontSize: 11 }}>{fmtDataInscricao(j.dataInscricao)}</td>
+                  <td>
+                    {p ? <span style={{ display: "flex", alignItems: "center", gap: 4, flexWrap: "wrap" }}>
+                        <SexBadge sex={p.sex} size="sm" />
+                        <span className={`p p-sm p-${escCls(p.escalao)}`} style={{ fontSize: 10 }}>{escShort(p.escalao)}</span>
+                        {p.dob && <AnoEscalaoPill dob={p.dob} escalao={t.escalao} />}
+                        {p.clube && <span className="muted" style={{ fontSize: 11 }}>{p.clube}</span>}
+                      </span>
+                    : <span className="muted" style={{ fontSize: 11 }}>{j.fed ? "Nao na BD" : "–"}</span>}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        {lista.length === 0 && <div className="muted p-16">Sem resultados</div>}
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   VISTA ANÁLISE — Análise profissional para o Campeonato Nacional
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── Termos de Competição ── */
+const TERMOS_COMPETICAO = `CAMPEONATO NACIONAL DE JOVENS Sub 18, 16, 14, 12 e 10
+PGA Aroeira II · 01 a 03 de Maio de 2026
+
+1. PARTICIPAÇÃO
+Escalões Sub-18, Sub-16, Sub-14, Sub-12 e Sub-10, filiados na FPG.
+Handicap máximo: Sub-18 → 9,0 · Sub-16 → 12,0 · Sub-14 → 16,0 · Sub-12 → 36,0 · Sub-10 → 50,0
+Para Sub-14, 12 e 10: obrigatória participação prévia em ≥3 torneios Drive Challenge / Drive Tour nos últimos 12 meses, ou C.N. de Jovens.
+
+2. INSCRIÇÕES
+Via formulário on-line em www.fpg.pt até às 12h de 27 de Abril (segunda-feira).
+Critério de aceitação: Índice de handicap WHS™ e VAC-F registado no servidor da FPG no momento do encerramento.
+
+3. LIMITE DE INSCRIÇÕES
+30 jogadores por escalão (15 Rapazes + 15 Raparigas).
+Se excedido o limite: exclusão pelos VAC-F mais altos.
+Vagas não preenchidas transferidas primeiro para o mesmo escalão, depois para o field geral, sempre por ordem de VAC-F, sem consideração de género.
+
+4. VALOR DA INSCRIÇÃO
+Gratuita (0€). Cancelamentos após publicação do draw: 10€.
+
+5. MODALIDADE
+Sub-18, 16 e 14: 54 buracos por pancadas (18/dia). Sem cut.
+Sub-12: 54 buracos por pancadas (18/dia), máximo 10 pancadas/buraco. Sem cut.
+Sub-10: 27 buracos por pancadas (9/dia), máximo 10 pancadas/buraco. Sem cut.
+
+6. REGRAS
+Regras R&A · Regras Locais de Aplicação Permanente da FPG · Regras Locais da Comissão Técnica.
+
+7. MARCAS DE SAÍDA
+Sub-18 e Sub-16 → Brancas e Azuis
+Sub-14 → Amarelas e Vermelhas
+Sub-12 → Vermelhas
+Sub-10 → Verdes
+
+8. EMPATES
+Campeão: Sudden Death Play Off.
+Vice-Campeão: melhores últimos 36, 18, 9, 6, 3 buracos e melhor último buraco. Persistindo: sorteio.
+Restantes lugares: sem desempate.
+
+9. PRÉMIOS
+Campeão(ã) Nacional · Vice-Campeão(ã) Nacional
+(Títulos de Campeão Nacional apenas para cidadãos nacionais.)
+
+10. CADDIES
+Não são permitidos.
+
+11. COMISSÃO TÉCNICA E ÁRBITROS
+Designados pela FPG. Dúvidas: campeonatos@fpg.pt`;
+
+/* ═══════════════════════════════════════════════════════
+   InscricoesPanel — inscrições do Nacional, integrado no Jovens
+   ═══════════════════════════════════════════════════════ */
+function InscricoesPanel() {
+  const { players } = useAppContext();
+  const statsDb = usePlayerStats();
+  const inFlight = useRef(new Set<string>());
+
+  const [torneios, setTorneios] = useState<TorneioData[]>(() =>
+    TORNEIOS_CONFIG.map(t => ({ ...t, totalInscritos: 0, jogadores: [], lastFetched: null, lastChanged: null, fromCache: undefined, diff: null, _status: "idle" as const }))
+  );
+  const [activeTcode, setActiveTcode] = useState<string>("10941");
+
+  const nossosByFed = useMemo(() => {
+    const m = new Map<string, BdPlayer>();
+    const lista = Array.isArray(players) ? players : Object.values(players ?? {});
+    for (const p of lista) {
+      const fed = String((p as any).nfed ?? (p as any).fed ?? "").trim();
+      if (!fed) continue;
+      m.set(fed, { name: p.name, escalao: p.escalao, sex: p.sex, fed, clube: (p as any).club?.short ?? "", dob: (p as any).dob ?? "" });
+    }
+    return m;
+  }, [players]);
+
+  const nossosFedSet = useMemo(() => new Set(nossosByFed.keys()), [nossosByFed]);
+
+  const tryStaticCache = useCallback(async (tcode: string): Promise<boolean> => {
+    try {
+      const r = await fetch("/data/inscricoes_nacionais.json");
+      if (!r.ok) return false;
+      const all = await r.json() as Record<string, unknown>;
+      const entry = all[tcode];
+      if (!entry) return false;
+      setTorneios(prev => prev.map(t => t.tcode === tcode ? { ...t, ...(entry as object), _status: "ok", fromCache: true } : t));
+      return true;
+    } catch { return false; }
+  }, []);
+
+  const fetchTorneio = useCallback(async (tcode: string, forceRefresh = false) => {
+    inFlight.current.delete(tcode); inFlight.current.add(tcode);
+    setTorneios(prev => prev.map(t => t.tcode === tcode ? { ...t, _status: "loading" } : t));
+    try {
+      const apiUrl = `/api/inscricoes?tcode=${tcode}${forceRefresh ? "&refresh=1" : ""}`;
+      let res: Response;
+      try { res = await fetch(apiUrl); }
+      catch { if (await tryStaticCache(tcode)) return; throw new Error("API inacessivel"); }
+      if (!res.ok) { if (await tryStaticCache(tcode)) return; throw new Error(`HTTP ${res.status}`); }
+      const data = await res.json();
+      setTorneios(prev => prev.map(t => t.tcode === tcode ? { ...t, ...data, _status: "ok" } : t));
+    } catch { setTorneios(prev => prev.map(t => t.tcode === tcode ? { ...t, _status: "error" } : t)); }
+    finally { inFlight.current.delete(tcode); }
+  }, [tryStaticCache]);
+
+  useEffect(() => {
+    const t = torneios.find(x => x.tcode === activeTcode);
+    if (t && t._status === "idle") fetchTorneio(activeTcode, false);
+  }, [activeTcode, torneios, fetchTorneio]);
+
+  const refreshAll = useCallback(() => {
+    inFlight.current.clear();
+    TORNEIOS_CONFIG.reduce((chain, cfg) =>
+      chain.then(() => fetchTorneio(cfg.tcode, true).then(() => new Promise<void>(r => setTimeout(r, 350)))),
+      Promise.resolve()
+    );
+  }, [fetchTorneio]);
+
+  const torneioActivo = torneios.find(t => t.tcode === activeTcode) ?? torneios[0];
+  const totalNossosInscritos = useMemo(() => {
+    const feds = new Set<string>();
+    for (const t of torneios) for (const j of t.jogadores) if (j.fed && nossosFedSet.has(j.fed)) feds.add(j.fed);
+    return feds.size;
+  }, [torneios, nossosFedSet]);
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", flex: 1, overflow: "hidden" }}>
+      {/* Selector de escalão */}
+      <div style={{
+        display: "flex", alignItems: "center", gap: 5, flexWrap: "nowrap", flexShrink: 0,
+        padding: "6px 12px", overflowX: "auto", scrollbarWidth: "none" as const,
+        borderBottom: "1px solid var(--border-light)", background: "var(--bg-card)",
+      }}>
+        {torneios.map(t => (
+          <TorneioCard key={t.tcode} t={t} active={activeTcode === t.tcode} onClick={() => setActiveTcode(t.tcode)} />
+        ))}
+        <div style={{ flex: 1, minWidth: 8 }} />
+        {totalNossosInscritos > 0 && <span className="chip" style={{ flexShrink: 0 }}>{totalNossosInscritos} na BD</span>}
+        <button className="tourn-tab tourn-tab-sm" onClick={refreshAll}
+          style={{ flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}
+          title="Actualizar inscrições da FPG">↺</button>
+      </div>
+      <PainelResumo torneios={torneios} nossosByFed={nossosByFed} />
+      <div className="course-detail">
+        <div style={{ display: "flex", alignItems: "baseline", gap: 12, padding: "10px 0 8px",
+          borderBottom: "1px solid var(--border)", marginBottom: 8, flexWrap: "wrap" }}>
+          <span style={{ fontWeight: 700, fontSize: 14 }}>
+            Campeonato Nacional de Jovens — {torneioActivo.nome}
+          </span>
+          <a href={`https://scoring.datagolf.pt/pt/tournAdmissions.aspx?ccode=000&tcode=${torneioActivo.tcode}`}
+             target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: "var(--chart-2)" }}>
+            inscrições datagolf ↗
+          </a>
+        </div>
+        <InscricoesView t={torneioActivo} nossosFedSet={nossosFedSet} nossosByFed={nossosByFed} statsDb={statsDb} />
+      </div>
+    </div>
+  );
+}
+
+
 /* ═══════════════════════════════════════════════════════════════
    JOVENS — agrupamento por evento (date + ccode)
    ═══════════════════════════════════════════════════════════════ */
 interface JovensGroup {
   key: string; date: string; campo: string; name: string;
-  year: string; entries: Tournament[];
+  year: string; isRegional: boolean; isNacional: boolean; entries: Tournament[];
 }
 
-const ESC_ORDER_JOV = ["Sub 10","Sub 12","Sub 14","Sub 16","Sub 18","Sub 24"];
+const ESC_ORDER_JOV = ["Sub 10","Sub 12","Sub 14","Sub 16","Sub 18","Sub 24","Sub 25"];
+
+/** Extrai escalão do nome quando t.escalao é null */
+function inferEscalao(name: string): string | null {
+  const m = name.match(/Sub[\s-]*(\d+)/i);
+  return m ? "Sub " + m[1] : null;
+}
 
 function buildJovensGroups(tournaments: Tournament[]): JovensGroup[] {
   const escIdx = (esc: string | null | undefined) => {
     const i = ESC_ORDER_JOV.indexOf(esc || "");
     return i >= 0 ? i : 99;
   };
-  const map = new Map<string, Tournament[]>();
+  const getEsc = (t: Tournament) => t.escalao || inferEscalao(t.name || "");
+
+  // Phase 1: agrupar por date+ccode (mesmo dia, mesmo local)
+  const phase1 = new Map<string, Tournament[]>();
   for (const t of tournaments) {
-    const key = t.date + "-" + (t.ccode || t.campo || "?");
-    if (!map.has(key)) map.set(key, []);
-    map.get(key)!.push(t);
+    const k = (t.date || "") + "-" + (t.ccode || t.campo || "?");
+    if (!phase1.has(k)) phase1.set(k, []);
+    phase1.get(k)!.push(t);
   }
-  return [...map.entries()].map(([key, entries]) => {
-    entries.sort((a, b) => escIdx(a.escalao) - escIdx(b.escalao));
+
+  // Phase 2: fundir grupos "Dia 1"/"Dia 2" do mesmo evento multi-dia
+  // Chave: ano + ccode + nome sem "Dia X" nem ano de 4 dígitos
+  const normDia = (name: string) => name
+    .replace(/\s*\bDia\b\s*\d+/gi, "")
+    .replace(/\s*\b20\d{2}\b\s*/g, " ")
+    .replace(/\s+/g, " ").trim().toLowerCase();
+
+  const phase2 = new Map<string, Tournament[]>();
+  for (const [, entries] of phase1) {
     const t0 = entries[0];
-    const baseName = (t0.name || "").replace(/\s*Sub[\s-]*\d+\s*[HMS]?\s*$/i, "").replace(/[\s\-–]+$/, "").trim();
+    const year = (t0.date || "").substring(0, 4);
+    const norm = normDia(t0.name || "");
+    const k2 = year + "|" + (t0.ccode || t0.campo || "?") + "|" + norm;
+    if (!phase2.has(k2)) phase2.set(k2, []);
+    phase2.get(k2)!.push(...entries);
+  }
+
+  return [...phase2.entries()].map(([, entries]) => {
+    entries.sort((a, b) => {
+      const dCmp = (a.date || "").localeCompare(b.date || "");
+      if (dCmp !== 0) return dCmp;
+      return escIdx(getEsc(a)) - escIdx(getEsc(b));
+    });
+    const t0 = entries[0];
+    const cleanName = (t0.name || "")
+      .replace(/\s*-?\s*(Rapazes?|Raparigas?)\s*$/i, "")
+      .replace(/\s*Sub[\s-]*\d+\s*[HMS]?\s*$/i, "")
+      .replace(/\s*\bDia\b\s*\d+\s*$/i, "")
+      .replace(/[\s\-–]+$/, "").trim();
+    const isRegional = /regional/i.test(t0.name || "");
+    const isNacional = /nacional/i.test(t0.name || "");
     return {
-      key,
-      date:    t0.date,
-      campo:   t0.campo,
-      name:    baseName || t0.name,
-      year:    (t0 as any)._jovensYear ?? t0.date?.substring(0, 4) ?? "?",
-      entries,
+      key:       t0.date + "-" + (t0.ccode || t0.campo || "?"),
+      date:      t0.date,
+      campo:     t0.campo,
+      name:      cleanName || t0.name,
+      year:      (t0 as any)._jovensYear ?? t0.date?.substring(0, 4) ?? "?",
+      isRegional,
+      isNacional,
+      entries:   entries.map(e => e.escalao ? e : { ...e, escalao: inferEscalao(e.name || "") } as Tournament),
     };
   }).sort((a, b) => b.date.localeCompare(a.date));
 }
@@ -2861,6 +3471,7 @@ function Content() {
   const [jovensLoaded, setJovensLoaded]           = useState(false);
   const [jovensGroupKey, setJovensGroupKey]        = useState<string | null>(null);
   const [jovensEscIdx, setJovensEscIdx]            = useState<number>(0);
+  const [jovensShowInscricoes, setJovensShowInscricoes] = useState(false);
 
   const { melhorias } = useAppContext();
 
@@ -3336,7 +3947,7 @@ function Content() {
               const st = active
                 ? key === "santo"  ? { flexShrink: 0, ...PILL_SSERRA, borderColor: PILL_SSERRA.background as string }
                 : key === "clubes" ? { flexShrink: 0, background: "var(--accent)", borderColor: "var(--accent)", color: "#fff" }
-                : key === "jovens" ? { flexShrink: 0, background: "var(--chart-2)", borderColor: "var(--chart-2)", color: "#fff" }
+                : key === "jovens"    ? { flexShrink: 0, background: "var(--chart-2)", borderColor: "var(--chart-2)", color: "#fff" }
                 : { flexShrink: 0 }
                 : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" };
               return (
@@ -3517,32 +4128,70 @@ function Content() {
             {jovensLoaded && jovensGroups.length === 0 && !jovensLoading && (
               <div className="muted fs-11 u-pad-italic">Ficheiro não encontrado (ainda)</div>
             )}
+            {/* Entrada especial: Inscrições */}
+            <div
+              onClick={() => { setJovensShowInscricoes(true); setJovensGroupKey(null); md.onSelect(); }}
+              style={{
+                padding: "9px 12px", cursor: "pointer", borderBottom: "1px solid var(--border-light)",
+                background: jovensShowInscricoes ? "var(--bg-success-subtle)" : "var(--bg-card)",
+                borderLeft: jovensShowInscricoes ? "3px solid var(--color-good)" : "3px solid transparent",
+              }}
+            >
+              <div style={{ fontWeight: 700, fontSize: 12, color: jovensShowInscricoes ? "var(--color-good-dark)" : "var(--text)" }}>
+                📋 Inscrições 2026
+              </div>
+              <div className="muted" style={{ fontSize: 11 }}>Campeonatos Nacionais de Jovens</div>
+            </div>
             {jovensYears.map(yr => (
               <React.Fragment key={yr}>
                 <div className="sidebar-section-title-dark">🏆 {yr}</div>
                 {jovensByYear[yr].map(g => {
                   const totalJog = g.entries.reduce((s, e) => s + (e.playerCount || e.players.length), 0);
                   const t0 = g.entries[0];
+                  // Mapa ccode → nome de região/organização
+                  const REGION_LABEL: Record<string, string> = {
+                    "000": "Nacional", "988": "Sul", "987": "Norte",
+                    "985": "Tejo", "983": "Açores", "982": "Madeira",
+                    "051": "Açores", "007": "Madeira", "910": "Norte",
+                    "059": "Palheiro", "005": "Açores",
+                  };
+                  const regionLabel = REGION_LABEL[t0.ccode ?? ""] ?? t0.ccode ?? "";
+                  // Data só dd/mm (ano já está no cabeçalho de secção)
+                  const ddmm = g.date ? g.date.substring(8, 10) + "/" + g.date.substring(5, 7) : "";
                   const sidebarT: SidebarItemTournament = {
                     ...(t0 as any),
                     name: g.name,
                     playerCount: totalJog,
                     escalao: null,
-                    tcode: g.key,
+                    ccode: "",     // sem ClubePill automático
+                    date: undefined,  // sem data automática
                   };
                   return (
                     <TournSidebarItem
                       key={g.key}
                       t={sidebarT}
                       isActive={jovensGroupKey === g.key}
-                      onClick={() => { setJovensGroupKey(g.key); setJovensEscIdx(0); md.onSelect(); }}
+                      onClick={() => { setJovensGroupKey(g.key); setJovensEscIdx(0); setJovensShowInscricoes(false); md.onSelect(); }}
                       accentColor={SIDEBAR_ACCENT.tour}
                       extraPills={
                         <span style={{ display: "inline-flex", gap: 3, flexWrap: "wrap", marginTop: 2 }}>
+                          {g.isRegional && !g.isNacional && <PillBadge pill="REGIONAL" />}
                           {g.entries.map(e => (
                             <EscPill key={e.tcode} escalao={e.escalao ?? ""} size="xs" />
                           ))}
                         </span>
+                      }
+                      footer={
+                        <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 3 }}>
+                          {regionLabel && (
+                            <span style={{ fontSize: 10, fontWeight: 600, padding: "1px 6px",
+                              borderRadius: 10, background: "var(--bg-hover)", color: "var(--text-2)",
+                              border: "1px solid var(--border)" }}>
+                              {regionLabel}
+                            </span>
+                          )}
+                          <span style={{ fontSize: 11, color: "var(--text-muted)" }}>{ddmm}</span>
+                        </div>
                       }
                     />
                   );
@@ -3551,7 +4200,9 @@ function Content() {
             ))}
           </div>
           <div className="course-detail">
-            {curJovensGroup ? (
+            {jovensShowInscricoes ? (
+              <InscricoesPanel />
+            ) : curJovensGroup ? (
               <>
                 {/* Tabs por escalão */}
                 {curJovensGroup.entries.length > 1 && (
