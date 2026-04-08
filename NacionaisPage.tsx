@@ -313,7 +313,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
 
   return (
     <div>
-      <div className="detail-toolbar">
+      <div className="nac-det-toolbar">
         <input className="input" value={search} onChange={e => setSearch(e.target.value)}
           placeholder="Nome, num fed..." style={{ maxWidth: 200 }} />
         <span className="muted" style={{ fontSize: 12 }}>{nossosCount} da BD · {t.totalInscritos} total</span>
@@ -365,7 +365,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
               const st = j.fed ? statsDb[j.fed] : null;
               const sd5 = st?.avgSD5 ?? null;
               return (
-                <tr key={`${j.fed ?? j.nome}-${i}`} className={p ? "row-match" : ""}>
+                <tr key={`${j.fed ?? j.nome}-${i}`} className={p ? "nac-row-match" : ""}>
                   <td className="muted r" style={{ fontSize: 11 }}>{i + 1}</td>
                   <td style={{ fontSize: 13 }}>
                     {p ? <a href={`/jogadores/${j.fed}?view=by_date`} target="_blank" rel="noopener noreferrer"
@@ -1400,7 +1400,7 @@ export default function NacionaisPage() {
   }, [torneios, nossosFedSet]);
 
   return (
-    <div className="jogadores-page">
+    <div className="jogadores-page nac-page">
       <div className="toolbar">
         <div className="toolbar-left" style={{ flexWrap: "wrap", gap: 4 }}>
           <span style={{ fontWeight: 700, fontSize: 13, flexShrink: 0 }}>🏆 Nacionais Jovens</span>
@@ -1441,8 +1441,8 @@ export default function NacionaisPage() {
       </div>
 
       <PainelResumo torneios={torneios} nossosByFed={nossosByFed} />
-      <div className="pa-content">
-        <div style={{ display: "flex", alignItems: "baseline", gap: 12, padding: "12px 0 8px", borderBottom: "1px solid var(--border)", marginBottom: 8, flexWrap: "wrap" }}>
+      <div className="nac-content">
+        <div className="nac-det-header">
           <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700 }}>
             Campeonato Nacional de Jovens — {torneioActivo.nome}
           </h3>
@@ -1468,3 +1468,14 @@ export default function NacionaisPage() {
   );
 }
 
+/*
+CSS a adicionar em App.css:
+
+.nac-spin { animation: nac-rotate 1s linear infinite; }
+@keyframes nac-rotate { to { transform: rotate(360deg); } }
+.nac-content { padding: 0 12px 20px; }
+.nac-det-header { display: flex; align-items: baseline; gap: 12px; padding: 12px 0 8px; border-bottom: 1px solid var(--border); margin-bottom: 8px; flex-wrap: wrap; }
+.nac-det-toolbar { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+.nac-row-match { background: color-mix(in srgb, var(--color-good) 8%, transparent); }
+.nac-row-match:hover { background: color-mix(in srgb, var(--color-good) 14%, transparent); }
+*/

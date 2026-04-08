@@ -2844,3 +2844,7 @@ tr.cross-current { background: var(--bg-success); }
 .w-46 { width: 46px; }
 .w-52 { width: 52px; }
 
+/* ─── Destaque genérico de linha em tabela (match na BD) ─── */
+.row-match { background: color-mix(in srgb, var(--color-good) 8%, transparent); }
+.row-match:hover { background: color-mix(in srgb, var(--color-good) 14%, transparent); }
+
