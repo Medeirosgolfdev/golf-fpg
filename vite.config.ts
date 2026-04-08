@@ -116,13 +116,26 @@ function readCache(): CacheFile {
   return {}
 }
 
+const PUBLIC_CACHE = join(process.cwd(), 'public', 'data', 'inscricoes_nacionais.json')
+
 function writeCache(data: CacheFile) {
+  const json = JSON.stringify(data, null, 2)
+  // 1. data/ -- usado pelo middleware local
   try {
     const dir = join(process.cwd(), 'data')
     if (!existsSync(dir)) mkdirSync(dir, { recursive: true })
-    writeFileSync(CACHE_FILE, JSON.stringify(data, null, 2), 'utf8')
+    writeFileSync(CACHE_FILE, json, 'utf8')
   } catch (e) {
-    console.warn('[inscricoes] Nao foi possivel gravar cache:', e)
+    console.warn('[inscricoes] Nao foi possivel gravar data/cache:', e)
+  }
+  // 2. public/data/ -- servido como ficheiro estatico (Vercel / mobile)
+  try {
+    const pubDir = join(process.cwd(), 'public', 'data')
+    if (!existsSync(pubDir)) mkdirSync(pubDir, { recursive: true })
+    writeFileSync(PUBLIC_CACHE, json, 'utf8')
+    console.log('[inscricoes] public/data/ actualizado -- faz commit para publicar no Vercel')
+  } catch (e) {
+    console.warn('[inscricoes] Nao foi possivel gravar public/data/cache:', e)
   }
 }
 

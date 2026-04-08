@@ -1305,11 +1305,18 @@ export default function NacionaisPage() {
           <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700 }}>
             Campeonato Nacional de Jovens — {torneioActivo.nome}
           </h3>
-          <a href={`https://scoring.datagolf.pt/pt/tournAdmissions.aspx?ccode=000&tcode=${torneioActivo.tcode}`}
-             target="_blank" rel="noopener noreferrer"
-             style={{ fontSize: 11, color: "var(--chart-2)", flexShrink: 0 }}>
-            ver em datagolf ↗
-          </a>
+          <div style={{ display: "flex", gap: 10, alignItems: "center", flexShrink: 0 }}>
+            <a href="https://competicoes.fpg.pt/evento/campeonato-nacional-de-jovens-sub10-12-14-16-18-pga-aroeira/"
+               target="_blank" rel="noopener noreferrer"
+               style={{ fontSize: 11, color: "var(--chart-2)" }}>
+              evento FPG ↗
+            </a>
+            <a href={`https://scoring.datagolf.pt/pt/tournAdmissions.aspx?ccode=000&tcode=${torneioActivo.tcode}`}
+               target="_blank" rel="noopener noreferrer"
+               style={{ fontSize: 11, color: "var(--text-3)" }}>
+              inscrições datagolf ↗
+            </a>
+          </div>
         </div>
         {view === "inscricoes"
           ? <InscricoesView t={torneioActivo} nossosFedSet={nossosFedSet} nossosByFed={nossosByFed} statsDb={statsDb} />
