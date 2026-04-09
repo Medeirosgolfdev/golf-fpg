@@ -1,11 +1,11 @@
 // @refresh reset
-import { useEffect, useState, useMemo, useCallback, useTransition } from "react";
+import { useEffect, useState, useMemo, useTransition } from "react";
 import SidebarToggle from "../ui/SidebarToggle";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import React from "react";
 import SectionErrorBoundary from "../ui/SectionErrorBoundary";
 import LoadingState from "../ui/LoadingState";
-import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { C } from "../utils/colors";
 import { scClass } from "../utils/scoreDisplay";
 import { MONTHS_PT, isoDate, fmtDate, fmtToPar } from "../utils/format";
@@ -44,27 +44,6 @@ interface Torneio {
   sem_flights?: boolean; erro?: string;
   url_uskids?: string | null;
 }
-interface IntlTorneio { id: string; name: string; short: string; date: string; rounds: number; par: number; url: string; circuito?: string; }
-interface IntlJogador { n: string; co: string; isM?: boolean; r: Record<string, { p: number; t: number; tp: number; rd: number[] }>; up: string[]; }
-interface IntlData {
-  torneios: IntlTorneio[];
-  proximos: { id: string; name: string }[];
-  jogadores: IntlJogador[];
-  aliases?: { canonical: string; also: string[] }[];
-  nao_confundir?: { nomes: string[] }[];
-}
-
-// ── Member History (uskids-member-history.json) ──
-interface MemberHistRound { gross: number; strokes: number[]; }
-interface MemberHistTorneio { ageGroup: string; place: number | null; rounds: Record<string, MemberHistRound>; }
-interface MemberHistSharedTorneio { name: string; startDate: string; holesPerRound: number; par: number[] | null; yards: number[] | null; }
-interface MemberHistPlayer { name: string; country: string; ageGroup: string; torneios: Record<string, MemberHistTorneio>; }
-interface MemberHistData {
-  gerado_em: string;
-  torneios: Record<string, MemberHistSharedTorneio>;
-  jogadores: Record<string, MemberHistPlayer>;
-}
-
 interface GGEntry { pos: number | null; name: string; fed: string | null; club: string; toPar: number | null; gross: number | null; status: string; }
 interface GreatgolfData {
   name: string; course: string; dates: string[];
@@ -147,211 +126,6 @@ function hasCanon(set: Set<string>, name: string, short?: string): boolean {
   return false;
 }
 
-function apelidos(nome: string): string[] {
-  const ignorar = new Set(['de','da','do','dos','das','van','von','le','la','el','al','del','and','jr','ii','iii']);
-  const partes = normNameAuto(nome).split(' ');
-  return partes.slice(1).filter(p => !ignorar.has(p) && p.length > 2);
-}
-
-function scoreMatch(n1: string, n2: string): number {
-  const p1 = normNameAuto(n1).split(' ').filter(Boolean);
-  const p2 = normNameAuto(n2).split(' ').filter(Boolean);
-  const ap1 = new Set(apelidos(n1));
-  const ap2 = new Set(apelidos(n2));
-  if (!ap1.size || !ap2.size) return 0;
-  const comuns = [...ap1].filter(p => ap2.has(p));
-  if (!comuns.length) return 0;
-  // Exige pelo menos 1 apelido com >5 letras
-  if (!comuns.some(c => c.length > 5) && comuns.length < 2) return 0;
-  // Se os apelidos são iguais mas os primeiros nomes são completamente
-  // diferentes, reduzir drasticamente (previne siblings: Nikita vs Dmitrii)
-  const f1 = p1[0] || "";
-  const f2 = p2[0] || "";
-  if (f1 && f2 && f1 !== f2) {
-    // Primeiro nome diferente: só aceitar se partilham ≥3 chars iniciais
-    const prefixLen = Math.min(f1.length, f2.length, 3);
-    if (f1.slice(0, prefixLen) !== f2.slice(0, prefixLen)) {
-      // Nomes completamente diferentes — penalizar pesado
-      const base = comuns.length / Math.min(ap1.size, ap2.size);
-      return Math.min(0.5, base * 0.4); // abaixo do threshold de 0.7
-    }
-  }
-  const base = comuns.length / Math.min(ap1.size, ap2.size);
-  const bonus = comuns.filter(c => c.length > 7).length * 0.15;
-  return Math.min(1.0, base + bonus);
-}
-
-function criarMatcherIntl(intlData: IntlData | null) {
-  if (!intlData) return (_: string, _p?: string) => null;
-
-  // Mapa canonical → jogador
-  const byNorm = new Map<string, IntlJogador>();
-  for (const j of intlData.jogadores) {
-    byNorm.set(normNameAuto(j.n), j);
-  }
-
-  // Aliases: also → canonical
-  const aliasMap = new Map<string, string>();
-  for (const a of (intlData.aliases ?? [])) {
-    for (const also of a.also) {
-      aliasMap.set(normNameAuto(also), a.canonical);
-    }
-  }
-
-  // Pares a não confundir
-  const naoConfundir = new Set<string>();
-  for (const grupo of (intlData.nao_confundir ?? [])) {
-    for (let i = 0; i < grupo.nomes.length; i++) {
-      for (let j = i + 1; j < grupo.nomes.length; j++) {
-        const chave = [normNameAuto(grupo.nomes[i]), normNameAuto(grupo.nomes[j])].sort().join('|');
-        naoConfundir.add(chave);
-      }
-    }
-  }
-
-  // Índice por "primeiro último" normalizado
-  const byFirstLast = new Map<string, IntlJogador | null>();
-  for (const j of intlData.jogadores) {
-    const parts = normNameAuto(j.n).split(' ').filter(Boolean);
-    if (parts.length >= 2) {
-      const key = `${parts[0]} ${parts[parts.length - 1]}`;
-      if (!byFirstLast.has(key)) byFirstLast.set(key, j);
-      else byFirstLast.set(key, null); // colisão
-    }
-  }
-
-  // Índice por "país:último_apelido" normalizado
-  const byCountryLast = new Map<string, IntlJogador | null>();
-  for (const j of intlData.jogadores) {
-    const parts = normNameAuto(j.n).split(' ').filter(Boolean);
-    if (parts.length >= 1 && j.co) {
-      const key = `${normCountry(j.co)}:${parts[parts.length - 1]}`;
-      if (!byCountryLast.has(key)) byCountryLast.set(key, j);
-      else byCountryLast.set(key, null);
-    }
-  }
-
-  const bjgtNomes = intlData.jogadores.filter(j => !j.isM).map(j => j.n);
-
-  return (nomeUskids: string, paisUskids?: string): IntlJogador | null => {
-    const nNorm = normNameAuto(nomeUskids);
-
-    // 1. Alias directo
-    const canonical = aliasMap.get(nNorm);
-    if (canonical) {
-      const jog = byNorm.get(normNameAuto(canonical));
-      if (jog) return jog;
-    }
-
-    // 2. Match exacto normalizado
-    const exact = byNorm.get(nNorm);
-    if (exact) return exact;
-
-    // 3. First+Last token match
-    const partsInsc = nNorm.split(' ').filter(Boolean);
-    if (partsInsc.length >= 2) {
-      const flKey = `${partsInsc[0]} ${partsInsc[partsInsc.length - 1]}`;
-      const fl = byFirstLast.get(flKey);
-      if (fl) return fl;
-    }
-
-    // 4. País + último apelido (com verificação de primeiro nome)
-    if (paisUskids && partsInsc.length >= 1) {
-      const clKey = `${normCountry(paisUskids || "")}:${partsInsc[partsInsc.length - 1]}`;
-      const cl = byCountryLast.get(clKey);
-      if (cl) {
-        // Verificar que primeiro nome é compatível (previne irmãos: Nikita ≠ Dmitrii)
-        const clFirst = normNameAuto(cl.n).split(' ')[0] || "";
-        const inFirst = partsInsc[0] || "";
-        const prefix = Math.min(clFirst.length, inFirst.length, 3);
-        if (prefix === 0 || clFirst.slice(0, prefix) === inFirst.slice(0, prefix)) return cl;
-      }
-    }
-
-    // 5. Fuzzy por apelidos
-    let melhorScore = 0;
-    let melhorNome: string | null = null;
-    for (const nb of bjgtNomes) {
-      const s = scoreMatch(nomeUskids, nb);
-      if (s > melhorScore) { melhorScore = s; melhorNome = nb; }
-    }
-
-    if (melhorScore >= 0.7 && melhorNome) {
-      // Verificar não-confundir
-      const chave = [nNorm, normNameAuto(melhorNome)].sort().join('|');
-      if (naoConfundir.has(chave)) return null;
-      return byNorm.get(normNameAuto(melhorNome)) ?? null;
-    }
-
-    return null;
-  };
-}
-// ─────────────────────────────────────────────────────────────────
-/** Cria um lookup fuzzy sobre a lista de rivais USKids.
- *  Exact match primeiro; depois first+last token; depois país+último apelido; depois fuzzy (scoreMatch >= 0.7).
- */
-function criarMatcherRivals(rivals: { nome: string; pais: string; cidade: string; encontros: any[] }[]) {
-  const byNorm = new Map<string, typeof rivals[0]>();
-  for (const r of rivals) byNorm.set(normNameAuto(r.nome), r);
-
-  // Índice por "primeiro último" normalizado — apanha diferenças em middle names
-  const byFirstLast = new Map<string, typeof rivals[0] | null>();
-  for (const r of rivals) {
-    const parts = normNameAuto(r.nome).split(' ').filter(Boolean);
-    if (parts.length >= 2) {
-      const key = `${parts[0]} ${parts[parts.length - 1]}`;
-      if (!byFirstLast.has(key)) byFirstLast.set(key, r);
-      else byFirstLast.set(key, null); // colisão → marca como inválido
-    }
-  }
-
-  // Índice por "país_normalizado:último_apelido" — forte para juniores
-  const byCountryLast = new Map<string, typeof rivals[0] | null>();
-  for (const r of rivals) {
-    const parts = normNameAuto(r.nome).split(' ').filter(Boolean);
-    if (parts.length >= 1 && r.pais) {
-      const last = parts[parts.length - 1];
-      const key = `${normCountry(r.pais)}:${last}`;
-      if (!byCountryLast.has(key)) byCountryLast.set(key, r);
-      else byCountryLast.set(key, null); // colisão → ignorar
-    }
-  }
-
-  return (nomeInscrito: string, paisInscrito?: string): typeof rivals[0] | null => {
-    const nNorm = normNameAuto(nomeInscrito);
-    // 1. Exact match normalizado
-    const exact = byNorm.get(nNorm);
-    if (exact) return exact;
-    // 2. First+Last token match (apanha "João Silva" vs "João Pedro Silva")
-    const partsInsc = nNorm.split(' ').filter(Boolean);
-    if (partsInsc.length >= 2) {
-      const flKey = `${partsInsc[0]} ${partsInsc[partsInsc.length - 1]}`;
-      const fl = byFirstLast.get(flKey);
-      if (fl) return fl;
-    }
-    // 3. País + último apelido (com verificação de primeiro nome)
-    if (paisInscrito && partsInsc.length >= 1) {
-      const lastInsc = partsInsc[partsInsc.length - 1];
-      const clKey = `${normCountry(paisInscrito || "")}:${lastInsc}`;
-      const cl = byCountryLast.get(clKey);
-      if (cl) {
-        // Verificar primeiro nome (previne irmãos)
-        const clFirst = normNameAuto(cl.nome).split(' ')[0] || "";
-        const inFirst = partsInsc[0] || "";
-        const prefix = Math.min(clFirst.length, inFirst.length, 3);
-        if (prefix === 0 || clFirst.slice(0, prefix) === inFirst.slice(0, prefix)) return cl;
-      }
-    }
-    // 4. Fuzzy por apelidos
-    let melhorScore = 0;
-    let melhorRival: typeof rivals[0] | null = null;
-    for (const r of rivals) {
-      const s = scoreMatch(nomeInscrito, r.nome);
-      if (s > melhorScore) { melhorScore = s; melhorRival = r; }
-    }
-    return melhorScore >= 0.7 ? melhorRival : null;
-  };
-}
 // ─────────────────────────────────────────────────────────────────
 
 
@@ -1723,2336 +1497,1235 @@ function SecaoGreatgolf({ data }: { data: GreatgolfData }) {
 // TAB RIVAIS
 // ─────────────────────────────────────────────
 
-interface Encontro {
-  torneio_t: number;
-  torneio_nome: string;
-  torneio_data: string;
-  escalao: string;
-  man_score: number;
-  rival_score: number;
-  man_to_par: number | null;
-  rival_to_par: number | null;
-  man_pos: number;
-  rival_pos: number;
-  adjacente?: boolean;  // true = jogador de escalão vizinho (±1), não jogou directamente com o Manuel
+
+/* ════════════════════════════════════════════════════════════════
+   RIVAIS — tipos e helpers
+   ════════════════════════════════════════════════════════════════ */
+
+type TorneioComManuel = {
+  t: number; name: string; date_inicio: string;
+  escalaoManuel?: string; source: "field" | "results";
+};
+
+function seriesBase(name: string): string {
+  return tornCanon(name).replace(/-\d+$/, "");
 }
 
-interface RivalInfo {
-  nome: string; pais: string; cidade: string;
-  encontros: Encontro[];
-}
-
-// Normaliza nome de torneio para comparação cross-year (remove ano final)
-function torneioBaseName(name: string): string {
-  return name.replace(/\s+\d{4}$/, "").replace(/[^\w\s]/g, "").toLowerCase().trim();
-}
-
-function TabelaConhecidos({
-  torneioT, torneioNome, torneioData, escalaoManuel,
-  rivals, fieldData, intlData, matchIntl, matchRival, resultados, defaultOpen, mhCountMap, autoRivals,
-}: {
-  torneioT: number; torneioNome: string; torneioData?: string; escalaoManuel?: string;
-  rivals: RivalInfo[]; fieldData: FieldData | null; intlData: IntlData | null;
-  matchIntl: (nome: string, pais?: string) => IntlJogador | null;
-  matchRival: (nome: string, pais?: string) => RivalInfo | null;
-  resultados: TorneioResult[];
-  defaultOpen?: boolean;
-  mhCountMap: Map<string, number>;
-  autoRivals: AutoRivalPlayer[];
-}) {
-  const [open, setOpen] = useState(defaultOpen ?? false);
-  const torneio = fieldData?.torneios.find(t => t.t === torneioT);
-
-  // Guardar o escalão de referência apenas para o header (contagem)
-  const _escalao = torneio?.escaloes.find(e =>
-    escalaoManuel ? e.nome === escalaoManuel : (e.jogadores?.length ?? 0) > 0
-  );
-  // Agregar inscritos de TODOS os escalões — um rival pode estar num escalão
-  // diferente do Manuel (ex: rival ainda em Boys 11 quando Manuel sobe para Boys 12)
-  const inscritos: { nome: string; pais: string; escalao: string }[] = useMemo(() => {
-    // 1. Tentar fieldData (torneios activos/futuros com lista de inscritos)
-    if (torneio) {
-      const fromField = torneio.escaloes.flatMap(e =>
-        (e.jogadores?.length ?? 0) > 0
-          ? (e.jogadores ?? []).map(j => ({ ...j, escalao: e.nome }))
-          : []
-      );
-      if (fromField.length > 0) return fromField;
-    }
-    // 2. Fallback: extrair jogadores do resultsData (torneios passados com leaderboard)
-    const resT = resultados.find(r => r.t === torneioT);
-    if (!resT) return [];
-    const seen = new Set<string>();
-    const fromResults: { nome: string; pais: string; escalao: string }[] = [];
-    for (const esc of resT.escaloes ?? []) {
-      for (const rd of esc.rondas ?? []) {
-        for (const j of (rd.leaderboard ?? rd.jogadores ?? [])) {
-          const key = j.nome.toLowerCase().trim();
-          if (seen.has(key)) continue;
-          seen.add(key);
-          fromResults.push({ nome: j.nome, pais: j.pais || "", escalao: esc.nome });
-        }
-      }
-    }
-    return fromResults;
-  }, [torneio, resultados, torneioT]);
-
-  const manuelIntl = intlData?.jogadores.find(jj => jj.isM);
-  const manuelIntlTids = manuelIntl ? new Set(Object.keys(manuelIntl.r)) : new Set<string>();
-
-  // inscritoRivalCache: LAZY — só computa quando o card está aberto
-  const inscritoRivalCache = useMemo(() => {
-    if (!open) return new Map<string, RivalInfo | null>();
-    return new Map<string, RivalInfo | null>(
-    inscritos.map(j => {
-      // 1. Match via rivals list (já tem autoRivals correctos)
-      const rivalMatch = matchRival(j.nome, j.pais);
-      if (rivalMatch) return [j.nome, rivalMatch];
-
-      // 2. Fallback: matchIntl → obter o nome canónico → procurar nos rivals
-      const intlJog = matchIntl(j.nome, j.pais);
-      if (intlJog && !intlJog.isM) {
-        // Tentar encontrar nos rivals pelo nome intl (que pode ser diferente do nome inscrito)
-        const rivalByIntlName = matchRival(intlJog.n, intlJog.co);
-        if (rivalByIntlName) return [j.nome, rivalByIntlName];
-
-        // Último recurso: lookup directo no mapa de rivals por nome normalizado
-        const intlKey = intlJog.n.toLowerCase().trim();
-        const rivalDirect = rivals.find(r => r.nome.toLowerCase().trim() === intlKey);
-        if (rivalDirect) return [j.nome, rivalDirect];
-
-        // Se partilha torneios com o Manuel mas não está nos rivals,
-        // criar RivalInfo vazio — allRows adicionará encontros do intlData
-        const sharedTids = Object.keys(intlJog.r).filter(tid => manuelIntlTids.has(tid));
-        if (sharedTids.length > 0) {
-          return [j.nome, { nome: intlJog.n, pais: intlJog.co ?? j.pais, cidade: "", encontros: [] }];
-        }
-      }
-
-      return [j.nome, null];
-    })
-    );
-  }, [open, inscritos, matchRival, matchIntl, intlData, manuelIntl, manuelIntlTids, rivals]);
-
-  // ── Jogaram este torneio no ano passado (escalão abaixo) — LAZY ──
-  const anoPassadoMap = useMemo(() => {
-    if (!open) return new Map<string, { pos: number; escalao: string; ronda: number }>();
-    const base = torneioBaseName(torneioNome);
-    const isoYear = (d: string) => {
-      if (!d) return 0;
-      if (d.includes("-")) return parseInt(d.substring(0, 4));
-      const parts = d.split("/"); return parseInt(parts[2] ?? "0");
-    };
-    const anoAtual = isoYear(torneioData ?? "");
-    const tornAnterior = resultados.find(r =>
-      torneioBaseName(r.name) === base && isoYear(r.date_inicio) === anoAtual - 1
-    );
-    const map = new Map<string, { pos: number; escalao: string; ronda: number }>();
-    if (!tornAnterior) return map;
-    for (const insc of inscritos) {
-      const escalaoActual = torneio?.escaloes.find(e =>
-        (e.jogadores ?? []).some(j => j.nome.toLowerCase().trim() === insc.nome.toLowerCase().trim())
-      );
-      const ageGrpActual = escalaoActual?.age_group ?? 0;
-      const ageGrpAnterior = ageGrpActual > 0 ? ageGrpActual - 1 : 0;
-      const escalaoAnt = tornAnterior.escaloes.find(e => e.age_group === ageGrpAnterior);
-      if (!escalaoAnt) continue;
-
-      const rondasAnt = escalaoAnt.rondas.filter(r => (r.leaderboard ?? r.jogadores ?? []).length > 0);
-      if (!rondasAnt.length) continue;
-
-      // Calcular posição final: acumular totais de todas as rondas e ordenar
-      if (rondasAnt.length >= 2) {
-        // Multi-ronda: somar scores de todas as rondas e calcular posição final
-        const totaisMap = new Map<string, number>();
-        for (const r of rondasAnt) {
-          const lb = r.leaderboard ?? r.jogadores ?? [];
-          for (const j of lb) {
-            const k = j.nome.toLowerCase().trim();
-            totaisMap.set(k, (totaisMap.get(k) ?? 0) + (j.score || 0));
-          }
-        }
-        const sorted = [...totaisMap.entries()].sort((a, b) => a[1] - b[1]);
-        const idx = sorted.findIndex(([k]) => k === insc.nome.toLowerCase().trim());
-        if (idx >= 0) {
-          map.set(insc.nome.toLowerCase().trim(), {
-            pos: idx + 1,
-            escalao: escalaoAnt.nome,
-            ronda: rondasAnt.length,
-          });
-        }
-      } else {
-        // Ronda única: usar posição directamente do leaderboard
-        const lb = rondasAnt[0].leaderboard ?? rondasAnt[0].jogadores ?? [];
-        const idx = lb.findIndex(j => j.nome.toLowerCase().trim() === insc.nome.toLowerCase().trim());
-        if (idx >= 0)
-          map.set(insc.nome.toLowerCase().trim(), { pos: idx + 1, escalao: escalaoAnt.nome, ronda: 1 });
-      }
-    }
-    return map;
-  }, [open, torneioNome, torneioData, resultados, inscritos, torneio]);
-  // ─────────────────────────────────────────────────────────────────────────
-
-  return (
-    <div style={{ marginBottom:10, border:"1px solid var(--border-light)", borderRadius:10, overflow:"hidden" }}>
-      {/* Header do torneio — clicável para collapse */}
-      <div onClick={() => setOpen(v => !v)} style={{
-        padding:"12px 16px", background:"var(--bg-header)",
-        borderBottom: open ? "1px solid var(--border)" : "none",
-        cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"space-between",
-        gap:12,
-      }}>
-        <div style={{ minWidth:0, flex:1 }}>
-          <div className="h-md" style={{ marginBottom:3, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
-            {torneioNome}
-          </div>
-          <div className="detail-sub" style={{ marginTop:0 }}>
-            {torneioData && <span className="muted">📅 {fmtDate(torneioData)}</span>}
-            {escalaoManuel && <span className="chip">🏌️ {escalaoManuel}</span>}
-            {torneio && (
-              <span className="muted">
-                {inscritos.filter(jj => !isManuel(jj.nome)).length} inscritos
-                {anoPassadoMap.size > 0 && <strong style={{ color:"var(--text-2)", marginLeft:6 }}>· ↩ {anoPassadoMap.size} repetem</strong>}
-              </span>
-            )}
-            {!torneio && inscritos.length > 0 && (
-              <span className="muted">{inscritos.filter(jj => !isManuel(jj.nome)).length} jogadores</span>
-            )}
-          </div>
-        </div>
-        <span style={{ color:"var(--text-3)", fontSize:13, flexShrink:0 }}>{open ? "▲" : "▼"}</span>
-      </div>
-
-      {open && <div style={{ padding:"12px 16px" }}>
-        {/* ── Todos os inscritos (conhecidos + novos) ── */}
-        <InscritosTable
-          inscritos={inscritos}
-          inscritoRivalCache={inscritoRivalCache}
-          matchIntl={matchIntl}
-          intlData={intlData}
-          manuelIntl={manuelIntl}
-          anoPassadoMap={anoPassadoMap}
-          escalaoManuel={escalaoManuel}
-          mhCountMap={mhCountMap}
-          autoRivals={autoRivals}
-        />
-      </div>}
-    </div>
-  );
-}
-
-/* ── Tabela unificada de inscritos com filtros e ordenação ── */
-type InscSortCol = "nome" | "pais" | "escalao" | "antEsc" | "antPos" | "encontros" | "hist";
-type InscSortDir = "asc" | "desc";
-// Filtros fixos + dinâmicos por escalão (prefixo "esc:" para escalões)
-type InscFilter = string;
-
-function InscritosTable({
-  inscritos, inscritoRivalCache, matchIntl,
-  intlData, manuelIntl, anoPassadoMap, escalaoManuel, mhCountMap, autoRivals,
-}: {
-  inscritos: { nome: string; pais: string; escalao: string }[];
-  inscritoRivalCache: Map<string, RivalInfo | null>;
-  matchIntl: (nome: string, pais?: string) => IntlJogador | null;
-  intlData: IntlData | null;
-  manuelIntl: IntlJogador | undefined;
-  anoPassadoMap: Map<string, { pos: number; escalao: string; ronda: number }>;
-  escalaoManuel?: string;
-  mhCountMap: Map<string, number>;
-  autoRivals: AutoRivalPlayer[];
-}) {
-  const [filtro, setFiltro] = useState<InscFilter>("todos");
-  const [sortCol, setSortCol] = useState<InscSortCol>("encontros");
-  const [sortDir, setSortDir] = useState<InscSortDir>("desc");
-
-  // Mapa nome normalizado → nome canónico no KIDSPage
-  const kidsRivalMap = useMemo(() => {
-    const m = new Map<string, string>();
-    for (const r of autoRivals) m.set(normNameAuto(r.n), r.n);
-    return m;
-  }, [autoRivals]);
-
-  const toggleSort = (col: InscSortCol) => {
-    if (sortCol === col) setSortDir(d => d === "asc" ? "desc" : "asc");
-    else { setSortCol(col); setSortDir(col === "nome" || col === "pais" || col === "escalao" || col === "antEsc" ? "asc" : "desc"); }
-  };
-
-  const hasAnt = anoPassadoMap.size > 0;
-
-  // Build enriched rows
-  type Row = {
-    nome: string; pais: string; escalao: string;
-    isKnown: boolean;
-    ant: { pos: number; escalao: string } | undefined;
-    isManuelEsc: boolean; nEncontros: number;
-    allEncontros: Encontro[];   // merged: rival.encontros + intlData
-    foiTop3: boolean;
-    mhTorneios: number;
-  };
-
-  const allRows = useMemo<Row[]>(() => {
-    const manuelIntlTids = manuelIntl ? Object.keys(manuelIntl.r) : [];
-    const todos = inscritos.filter(j => !isManuel(j.nome));
-
-    // Member history name lookup
-    // mhCountMap pré-calculado no pai
-
-    return todos.map(j => {
-      const rival = inscritoRivalCache.get(j.nome) ?? null;
-
-      // ── 1. Encontros do rival (USKids + já merged intl/autoRivals) ──
-      const rivalEncs: Encontro[] = rival ? [...rival.encontros] : [];
-
-      // ── 2. Encontros do intlData para torneios NOVOS (que não existem nos rivals) ──
-      // intlData pode ter posições stale; só adiciona torneios não cobertos.
-      const intlJog = matchIntl(j.nome, j.pais);
-      if (intlJog && !intlJog.isM && manuelIntl) {
-        const existCanons = new Set(rivalEncs.map(e => tornCanon(e.torneio_nome)));
-        for (const tid of manuelIntlTids) {
-          const rivalRes = intlJog.r[tid];
-          if (!rivalRes) continue;
-          const torn = intlData?.torneios.find(t => t.id === tid);
-          if (!torn) continue;
-          // Skip se este torneio já existe por tornCanon
-          if (hasCanon(existCanons, torn.name, torn.short)) continue;
-          const manRes = manuelIntl.r[tid];
-          rivalEncs.push({
-            torneio_t: 0, torneio_nome: torn.name, torneio_data: torn.date || "",
-            escalao: torn.short || torn.name,
-            man_score: 0, rival_score: 0,
-            man_to_par: manRes?.tp ?? null, rival_to_par: rivalRes.tp ?? null,
-            man_pos: manRes?.p ?? 0, rival_pos: rivalRes.p ?? 0,
-            adjacente: false,
-          });
-        }
-      }
-
-      // Dedup by tornCanon + escalão (keep first = autoRivals/USKids, correct data)
-      const allEncontros = [...new Map(
-        rivalEncs.map(e => [`${tornCanon(e.torneio_nome)}-${e.escalao}`, e])
-      ).values()];
-
-      const isKnown = allEncontros.length > 0;
-      const ant = anoPassadoMap.get(j.nome.toLowerCase().trim());
-      const foiTop3 = allEncontros.some(e => e.rival_pos > 0 && e.rival_pos <= 3)
-                    || (ant != null && ant.pos <= 3);
-      const isManuelEsc = j.escalao === escalaoManuel;
-      const nEncontros = allEncontros.length;
-      const mhTorneios = mhCountMap.get(j.nome.toLowerCase().trim()) ?? 0;
-      return { nome: j.nome, pais: j.pais, escalao: j.escalao, isKnown, ant, isManuelEsc, nEncontros, allEncontros, foiTop3, mhTorneios };
-    });
-  }, [inscritos, inscritoRivalCache, matchIntl, intlData, manuelIntl, anoPassadoMap, escalaoManuel, mhCountMap]);
-
-  // Filter
-  const filtered = useMemo(() => {
-    let rows = allRows;
-    if (filtro === "mesmo_esc") rows = rows.filter(r => r.isManuelEsc);
-    else if (filtro === "conhecidos") rows = rows.filter(r => r.isKnown);
-    else if (filtro === "repetentes") rows = rows.filter(r => !!r.ant);
-    else if (filtro === "novos") rows = rows.filter(r => !r.isKnown);
-    else if (filtro.startsWith("esc:")) {
-      const escNome = filtro.slice(4);
-      rows = rows.filter(r => r.escalao === escNome);
-    }
-    return rows;
-  }, [allRows, filtro]);
-
-  // Sort
-  const sorted = useMemo(() => {
-    const dir = sortDir === "asc" ? 1 : -1;
-    return [...filtered].sort((a, b) => {
-      let v = 0;
-      if (sortCol === "nome") v = a.nome.localeCompare(b.nome);
-      else if (sortCol === "pais") v = a.pais.localeCompare(b.pais);
-      else if (sortCol === "escalao") v = (ESCALAO_ORDER[a.escalao] ?? 99) - (ESCALAO_ORDER[b.escalao] ?? 99);
-      else if (sortCol === "antEsc") v = (a.ant?.escalao ?? "zzz").localeCompare(b.ant?.escalao ?? "zzz");
-      else if (sortCol === "antPos") v = (a.ant?.pos ?? 999) - (b.ant?.pos ?? 999);
-      else if (sortCol === "encontros") {
-        // Known first, then by nEncontros desc
-        if (a.isKnown !== b.isKnown) return a.isKnown ? -1 : 1;
-        v = a.nEncontros - b.nEncontros;
-      }
-      else if (sortCol === "hist") v = a.mhTorneios - b.mhTorneios;
-      return v * dir;
-    });
-  }, [filtered, sortCol, sortDir]);
-
-  // Filter pill counts
-  const nConhecidos = allRows.filter(r => r.isKnown).length;
-  const nRepetentes = allRows.filter(r => !!r.ant).length;
-  const nNovos = allRows.filter(r => !r.isKnown).length;
-
-  // Escalões disponíveis (ordenados), excluindo o do Manuel (que já tem pill próprio)
-  const escalaosDisponiveis = useMemo(() => {
-    const counts = new Map<string, number>();
-    for (const r of allRows) {
-      counts.set(r.escalao, (counts.get(r.escalao) ?? 0) + 1);
-    }
-    return [...counts.entries()]
-      .sort(([a], [b]) => (ESCALAO_ORDER[a] ?? 99) - (ESCALAO_ORDER[b] ?? 99));
-  }, [allRows]);
-
-  // Escalão do Manuel separado (com contagem)
-  const nMesmoEsc = allRows.filter(r => r.isManuelEsc).length;
-
-  const filters: { id: string; label: string; n: number; sep?: boolean }[] = [
-    { id: "todos",      label: "Todos",        n: allRows.length },
-    ...(escalaoManuel ? [{ id: "mesmo_esc", label: `★ ${escalaoManuel}`, n: nMesmoEsc }] : []),
-    // Escalões individuais (incluindo o do Manuel, mas como filtro de escalão genérico)
-    ...escalaosDisponiveis
-      .filter(([esc]) => esc !== escalaoManuel) // já temos o ★ pill
-      .map(([esc, n], i) => ({ id: `esc:${esc}`, label: esc, n, sep: i === 0 })),
-    { id: "conhecidos", label: "Conhecidos",   n: nConhecidos, sep: true },
-    ...(nRepetentes > 0 ? [{ id: "repetentes", label: "↩ Repetem", n: nRepetentes }] : []),
-    { id: "novos",      label: "Novos",        n: nNovos },
-  ];
-
-  const ThSort = ({ col, label, style }: { col: InscSortCol; label: string; style?: React.CSSProperties }) => (
-    <th onClick={() => toggleSort(col)} style={{
-      cursor:"pointer", userSelect:"none", whiteSpace:"nowrap",
-      color: sortCol === col ? "var(--text)" : "var(--text-3)",
-      ...style,
-    }}>
-      {label}
-      <span style={{ marginLeft:3, fontSize:9, opacity: sortCol === col ? 1 : 0.3 }}>
-        {sortCol === col ? (sortDir === "asc" ? "▲" : "▼") : "⇅"}
-      </span>
-    </th>
-  );
-
-  return (
-    <div>
-      {/* Filter pills */}
-      <div style={{ display:"flex", gap:5, marginBottom:12, flexWrap:"wrap", alignItems:"center" }}>
-        {filters.map(f => (
-          <React.Fragment key={f.id}>
-            {f.sep && <span style={{ width:1, height:18, background:"var(--border)", margin:"0 2px", flexShrink:0 }} />}
-            <button onClick={() => setFiltro(f.id)} style={{
-              background: filtro === f.id ? "var(--bg-active)" : "var(--bg-card)",
-              border: `1px solid ${filtro === f.id ? "var(--border-success)" : "var(--border)"}`,
-              color: filtro === f.id ? "var(--text)" : "var(--text-3)",
-              borderRadius: 7, padding: "4px 9px", fontSize: 11, cursor: "pointer",
-              fontWeight: filtro === f.id ? 700 : 400,
-            }}>
-              {f.label} <span style={{ fontWeight:700, marginLeft:2, opacity:0.7 }}>{f.n}</span>
-            </button>
-          </React.Fragment>
-        ))}
-      </div>
-
-      {sorted.length === 0 ? (
-        <div style={{ fontSize:12, color:"var(--text-3)", padding:"8px 0 12px" }}>
-          Nenhum jogador neste filtro.
-        </div>
-      ) : (
-        <div className="table-wrap">
-        <table className="sc-lb" style={{ width:"100%", marginBottom:16 }}>
-          <thead>
-            <tr>
-              <ThSort col="nome" label="Jogador" style={{ textAlign:"left", paddingLeft:10, minWidth:130 }} />
-              <ThSort col="pais" label="🌍" style={{ width:30, textAlign:"center" }} />
-              <ThSort col="escalao" label="Escalão" style={{ width:75, textAlign:"center", fontSize:10 }} />
-              <ThSort col="hist" label="📊" style={{ width:36, textAlign:"center" }} />
-              {hasAnt && <>
-                <ThSort col="antEsc" label="Ano ant." style={{ width:75, textAlign:"center", fontSize:10 }} />
-                <ThSort col="antPos" label="Pos." style={{ width:42, textAlign:"center", fontSize:10 }} />
-              </>}
-              <ThSort col="encontros" label="Encontros com o Manuel" style={{ textAlign:"left", padding:"6px 8px", minWidth:280 }} />
-            </tr>
-          </thead>
-          <tbody>
-            {sorted.map((r, i) => (
-              <tr key={i} style={!r.isKnown ? { opacity: 0.55 } : undefined}>
-                <td className="sticky-col-0" style={{ textAlign:"left", paddingLeft:10 }}>
-                  <span style={{ display:"flex", alignItems:"center", gap:5 }}>
-                    {displayName(r.nome)}
-                    {r.foiTop3 && (
-                      <span style={{ background:"var(--color-warn)", color:"#fff",
-                        fontSize:10, fontWeight:800, padding:"1px 5px", borderRadius:4, whiteSpace:"nowrap" }}>
-                        🏆 top 3
-                      </span>
-                    )}
-                    {!r.isKnown && (
-                      <span style={{ background:"var(--bg-muted)", color:"var(--text-3)",
-                        fontSize:9, fontWeight:700, padding:"1px 5px", borderRadius:3,
-                        border:"1px solid var(--border)", whiteSpace:"nowrap" }}>
-                        NOVO
-                      </span>
-                    )}
-                    {r.ant && (
-                      <span style={{ background:"var(--bg-info)", color:"var(--color-info)",
-                        fontSize:9, fontWeight:700, padding:"1px 5px", borderRadius:3, whiteSpace:"nowrap" }}>
-                        ↩
-                      </span>
-                    )}
-                    {(() => {
-                      const kidsName = kidsRivalMap.get(normNameAuto(r.nome));
-                      if (!kidsName) return null;
-                      return (
-                        <a href="/kids"
-                          onClick={e => { e.preventDefault(); window.open(`/kids#${encodeURIComponent(kidsName)}`, "_blank"); }}
-                          title="Ver perfil completo em Kids"
-                          style={{ fontSize:9, fontWeight:700, padding:"1px 6px", borderRadius:4,
-                            background:"var(--bg-success-subtle)", color:"var(--color-good-dark)",
-                            border:"1px solid var(--border-success,var(--color-good))",
-                            textDecoration:"none", whiteSpace:"nowrap", flexShrink:0 }}>
-                          ↗ Kids
-                        </a>
-                      );
-                    })()}
-                  </span>
-                </td>
-                <td style={{ textAlign:"center" }}>{flag(r.pais)}</td>
-                <td style={{ textAlign:"center" }}>
-                  <span style={{
-                    fontSize:10, fontWeight:600, padding:"1px 6px", borderRadius:3,
-                    background: r.isManuelEsc ? "var(--bg-success-subtle,rgba(0,128,0,0.06))" : "var(--bg-muted)",
-                    color: r.isManuelEsc ? "var(--color-good)" : "var(--text-3)",
-                    border: `1px solid ${r.isManuelEsc ? "var(--border-success,var(--border))" : "var(--border)"}`,
-                  }}>{r.escalao}</span>
-                </td>
-                <td style={{ textAlign:"center", fontSize:11,
-                  color: r.mhTorneios > 0 ? "var(--text-2)" : "var(--text-3)", fontWeight: r.mhTorneios > 0 ? 600 : 400 }}
-                  title={r.mhTorneios > 0 ? `${r.mhTorneios} torneios USKids no histórico` : ""}>
-                  {r.mhTorneios > 0 ? r.mhTorneios : "—"}
-                </td>
-                {hasAnt && <>
-                  <td style={{ textAlign:"center", fontSize:10, color:"var(--text-3)" }}>
-                    {r.ant ? r.ant.escalao : "—"}
-                  </td>
-                  <td style={{ textAlign:"center", fontWeight: r.ant ? 700 : 400, fontSize:11,
-                    fontFamily:"'JetBrains Mono',monospace",
-                    color: r.ant ? (r.ant.pos <= 3 ? "var(--color-warn)" : "var(--text)") : "var(--text-3)" }}>
-                    {r.ant ? <>{r.ant.pos <= 3 ? "🏆" : ""}{r.ant.pos}º</> : "—"}
-                  </td>
-                </>}
-                <td style={{ fontSize:11, padding:"5px 8px", lineHeight:1.9, textAlign:"left" }}>
-                  {r.allEncontros.length > 0 ? (
-                    <div style={{ display:"flex", flexWrap:"wrap", gap:"4px 10px" }}>
-                      {r.allEncontros.map(enc => {
-                        const isAdj = enc.adjacente;
-                        const manMelhor = !isAdj && enc.man_pos > 0 && enc.man_pos < enc.rival_pos;
-                        const manPior   = !isAdj && enc.man_pos > 0 && enc.man_pos > enc.rival_pos;
-                        const hasVs = !isAdj && enc.man_pos > 0;
-                        return (
-                          <span key={`${enc.torneio_nome}-${enc.escalao}`} style={{ whiteSpace:"nowrap" }}>
-                            <span style={{ color:"var(--text-2)" }}>
-                              {shortTornName(enc.torneio_nome)}
-                            </span>
-                            <span style={{
-                              marginLeft:4, fontSize:10, fontWeight:600, padding:"1px 5px", borderRadius:3,
-                              background: isAdj ? "var(--bg-muted)" : "var(--bg-success-subtle,rgba(0,128,0,0.06))",
-                              color: isAdj ? "var(--text-3)" : "var(--text-2)",
-                              border: `1px solid ${isAdj ? "var(--border)" : "var(--border-success,var(--border))"}`,
-                            }}>
-                              {enc.escalao}:{" "}
-                              {hasVs ? (
-                                <>
-                                  <span style={{ fontWeight:700, color: manMelhor?"var(--color-good)":manPior?"var(--color-danger)":"var(--text-3)" }}>
-                                    {enc.man_pos}º
-                                  </span>
-                                  <span style={{ color:"var(--text-3)" }}> vs </span>
-                                  <span style={{ fontWeight:700 }}>{enc.rival_pos}º</span>
-                                </>
-                              ) : (
-                                <>{enc.rival_pos}º</>
-                              )}
-                            </span>
-                          </span>
-                        );
-                      })}
-                    </div>
-                  ) : (
-                    <span style={{ color:"var(--text-3)", fontSize:10, fontStyle:"italic" }}>sem historial</span>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        </div>
-      )}
-    </div>
-  );
-}
-
-/** Constrói a lista de rivais a partir dos resultados USKids.
- *  Inclui jogadores do escalão do Manuel E dos escalões adjacentes (±1 age_group),
- *  porque nos torneios os miúdos de escalões vizinhos convivem e por vezes
- *  jogam no mesmo draw. Encontros de escalão adjacente ficam marcados
- *  com `adjacente: true`.
- *
- *  Usa o campo numérico `age_group` (ex: 2102, 2103…) em vez de nomes de
- *  escalão, porque os nomes variam entre torneios ("Boys 9", "Boys 9-10", etc.)
- *  mas os age_group codes são sequenciais e consistentes.
- */
-function buildRivalsFromResultados(resultados: TorneioResult[]): RivalInfo[] {
-  const mapa = new Map<string, RivalInfo>();
-  for (const t of resultados) {
-    // 1. Encontrar o escalão do Manuel via escalao_manuel, is_manuel, ou busca directa
-    const escalaoEsperado = escalaoManuelParaData(t.date_inicio);
-    let manuelEsc: EscalaoResult | null = null;
-    let manuelJog: RondaJogador | null = null;
-    let manuelPos = 99;
-
-    // Prioridade: escalao_manuel (numérico, injectado pelo pipeline)
-    if (t.escalao_manuel) {
-      manuelEsc = t.escaloes.find(e => e.age_group === t.escalao_manuel) ?? null;
-    }
-    // Fallback: is_manuel flag + nome esperado
-    if (!manuelEsc) {
-      manuelEsc = t.escaloes.find(e => e.is_manuel && e.nome === escalaoEsperado) ?? null;
-    }
-    // Último recurso: procurar o Manuel directamente nos jogadores
-    if (!manuelEsc) {
-      for (const e of t.escaloes) {
-        const todasRondas = e.rondas.flatMap(r => r.leaderboard ?? r.jogadores ?? []);
-        if (todasRondas.some(j => isManuel(j.nome))) { manuelEsc = e; break; }
-      }
-    }
-    if (!manuelEsc) continue;
-
-    // Obter dados do Manuel no seu escalão (posição calculada dentro do loop onde posMap existe)
-    const manuelRondas = manuelEsc.rondas.flatMap(r => r.leaderboard ?? r.jogadores ?? []);
-    manuelJog = manuelRondas.find(j => isManuel(j.nome)) ?? null;
-
-    const manuelAg = manuelEsc.age_group;
-    const adjacentAgs = new Set([manuelAg - 1, manuelAg, manuelAg + 1]);
-
-    for (const e of t.escaloes) {
-      if (!adjacentAgs.has(e.age_group)) continue;
-
-      const isManuelsEscalao = (e.age_group === manuelAg);
-      const todasRondas = e.rondas.flatMap(r => r.leaderboard ?? r.jogadores ?? []);
-
-      // Calcular posições correctas por total acumulado de todas as rondas
-      const totais = new Map<string, { score: number; rondas: number }>();
-      for (const ronda of e.rondas) {
-        for (const j of (ronda.leaderboard ?? ronda.jogadores ?? [])) {
-          if (!j.nome || j.buracos < 9) continue;
-          const k = j.nome.trim();
-          const c = totais.get(k) ?? { score: 0, rondas: 0 };
-          totais.set(k, { score: c.score + j.score, rondas: c.rondas + 1 });
-        }
-      }
-      const maxRds2 = totais.size ? Math.max(...[...totais.values()].map(v => v.rondas)) : 0;
-      const rankSorted = [...totais.entries()]
-        .filter(([, v]) => v.rondas >= maxRds2)
-        .sort((a, b) => a[1].score - b[1].score);
-      const posMap = new Map<string, number>();
-      let rankPos = 1;
-      for (let ri = 0; ri < rankSorted.length; ri++) {
-        if (ri > 0 && rankSorted[ri][1].score === rankSorted[ri-1][1].score) { /* empate */ }
-        else rankPos = ri + 1;
-        posMap.set(rankSorted[ri][0], rankPos);
-      }
-
-      // manuelPos calculado aqui onde posMap está disponível
-      if (isManuelsEscalao && manuelJog) {
-        manuelPos = posMap.get(manuelJog.nome.trim()) ?? 99;
-      }
-
-      const adversariosVistos = new Set<string>();
-      for (const r of e.rondas)
-        for (const j of (r.leaderboard ?? r.jogadores ?? []))
-          if (!isManuel(j.nome)) adversariosVistos.add(j.nome.trim());
-
-      for (const nomeAdv of adversariosVistos) {
-        const key = nomeAdv.toLowerCase().trim().replace(/\s+/g, " ");
-        const advJog = todasRondas.find(j => j.nome.trim() === nomeAdv);
-        if (!advJog) continue;
-        const advPos = posMap.get(nomeAdv) ?? 99;
-
-        if (!mapa.has(key))
-          mapa.set(key, { nome: advJog.nome, pais: advJog.pais, cidade: advJog.cidade ?? "", encontros: [] });
-
-        mapa.get(key)!.encontros.push({
-          torneio_t:    t.t,
-          torneio_nome: t.name,
-          torneio_data: t.date_inicio,
-          escalao:      e.nome,
-          man_score:    isManuelsEscalao && manuelJog ? (manuelJog.score || 0) : 0,
-          rival_score:  advJog.score || 0,
-          man_to_par:   isManuelsEscalao && manuelJog ? (manuelJog.to_par ?? null) : null,
-          rival_to_par: advJog.to_par ?? null,
-          man_pos:      isManuelsEscalao ? manuelPos : 0,
-          rival_pos:    advPos,
-          adjacente:    !isManuelsEscalao,
-        });
-      }
-    }
+function playerSeriesResult(
+  ar: AutoRivalPlayer,
+  sBase: string,
+  year: number,
+): { p: number; tp: number | null; fieldSize: number } | null {
+  for (const [tid, res] of Object.entries(ar.r)) {
+    const uskM = tid.match(/^(usk\d+)/);
+    if (!uskM) continue;
+    const meta = uskTournNames.get(uskM[1]);
+    if (!meta?.name || !meta?.dateExact) continue;
+    const metaYear = parseInt(meta.dateExact.slice(0, 4));
+    if (metaYear !== year) continue;
+    const canon = tornCanon(meta.name).replace(/-\d+$/, "");
+    if (canon !== sBase) continue;
+    const fs = uskFieldSizes.get(tid) ?? 0;
+    return { p: res.p ?? 0, tp: res.tp ?? null, fieldSize: fs };
   }
-  return [...mapa.values()];
+  return null;
 }
 
-/** Extrai base do tid (remove sufixo de escalão) para agrupar por torneio físico */
-function tidBase(tid: string): string {
-  // eowagr25_b910 → eowagr25, wjgc26_1213 → wjgc26, doral25_b89 → doral25,
-  // gg26_u14 → gg26, gg26_open → gg26, usk18124_b10 → usk18124
-  return tid.replace(/_(?:b?\d+|u\d+|open)$/, "");
+function fmtToParRivais(tp: number | null): { text: string; color: string } {
+  if (tp === null) return { text: "—", color: "var(--text-muted)" };
+  if (tp < 0) return { text: String(tp), color: "var(--color-good)" };
+  if (tp === 0) return { text: "E", color: "var(--text-3)" };
+  if (tp <= 3) return { text: `+${tp}`, color: "var(--color-warn)" };
+  return { text: `+${tp}`, color: "var(--color-danger)" };
 }
 
-function TabRivais({ data, fieldData, intlData, autoRivals, selectedT: _selectedT, mhCountMap,
-  selectedRival, setSelectedRival, greatgolfData: _greatgolfData,
-  onRivalsReady,
-}: {
-  data: ResultsData; fieldData: FieldData | null; intlData: IntlData | null;
-  autoRivals: AutoRivalPlayer[]; selectedT: number | null;
-  mhCountMap: Map<string, number>;
-  selectedRival: string | null; setSelectedRival: (r: string | null | ((prev: string | null) => string | null)) => void;
-  greatgolfData: GreatgolfData | null;
-  onRivalsReady?: (list: {
-    nome: string; pais: string; nEnc: number;
-    vitorias: number; derrotas: number; empates: number;
-    totalTournaments: number; firstYear: number | null;
-    nextTournName: string | null; daysToNext: number | null; nextIsCommon: boolean;
-  }[]) => void;
-}) {
-  const matchIntl = useMemo(() => criarMatcherIntl(intlData), [intlData]);
+function fmtPosRivais(p: number, fieldSize: number): string {
+  if (p <= 0) return "—";
+  if (p === 1) return "🥇";
+  if (p === 2) return "🥈";
+  if (p === 3) return "🥉";
+  return fieldSize > 0 ? `${p}/${fieldSize}` : `${p}º`;
+}
 
-  // ── PASSO 1: Base de rivais a partir dos resultados USKids ──────────────────
-  // Dependência apenas em [data] — NÃO recalcula quando autoRivals chega.
-  // buildRivalsFromResultados é a operação mais pesada: itera todos os torneios
-  // × escalões × jogadores. Separá-la evita que corra 2× por sessão.
-  const baseRivals = useMemo<RivalInfo[]>(
-    () => buildRivalsFromResultados(data.resultados),
-    [data]
+/* ════════════════════════════════════════════════════════════════
+   RivCell — célula de resultado passado (score + posição)
+   ════════════════════════════════════════════════════════════════ */
+function RivCell({ tp, pos, fieldSize }: { tp: number | null; pos: number; fieldSize: number }) {
+  const { text: tpText, color: tpColor } = fmtToParRivais(tp);
+  const posText = fmtPosRivais(pos, fieldSize);
+  return (
+    <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:1, lineHeight:1.2 }}>
+      <span style={{ fontSize:13, fontWeight:800, color: tpColor }}>{tpText}</span>
+      <span style={{ fontSize:11, color:"var(--text-3)" }}>{posText}</span>
+    </div>
   );
+}
 
-  // ── PASSO 2: Merge com autoRivals (internacionais) e intlData (fallback) ─
-  // Este memo é muito mais leve — só faz lookups e pushes num Map já construído.
-  // Corre quando baseRivals, autoRivals ou intlData mudam.
-  const rivals = useMemo<RivalInfo[]>(() => {
-    const mapa = new Map<string, RivalInfo>(baseRivals.map(r => [r.nome.toLowerCase().trim().replace(/\s+/g, " "), r]));
-
-    // ── 2. AutoRivals (KIDSdataLoader): dados dos JSONs brutos (AUTORITATIVOS) ──
-    // Processados PRIMEIRO porque os JSONs têm dados completos e actualizados.
-    // O rivals-intl.json pode ter dados stale (ex: apenas 2 de 3 rondas).
-    if (autoRivals.length > 0) {
-      // Manuel aparece com nomes diferentes em ficheiros diferentes
-      // ("Manuel Medeiros", "Manuel Francisco Medeiros", "Manuel Goulartt Medeiros")
-      // → encontrar TODAS as entradas e mergir todos os torneios
-      const manuelEntries = autoRivals.filter(p =>
-        normNameAuto(p.n).includes("medeiros") && normNameAuto(p.n).includes("manuel")
-      );
-      const manuelBases = new Map<string, { tid: string; res: (typeof autoRivals)[0]["r"][string] }>();
-      for (const me of manuelEntries) {
-        for (const [tid, res] of Object.entries(me.r)) {
-          const b = tidBase(tid);
-          if (!manuelBases.has(b) || res.rd.length > (manuelBases.get(b)!.res.rd?.length ?? 0))
-            manuelBases.set(b, { tid, res });
-        }
-      }
-      if (manuelBases.size > 0) {
-        const manuelKeys = new Set(manuelEntries.map(me => normNameAuto(me.n)));
-
-        for (const ap of autoRivals) {
-          if (manuelKeys.has(normNameAuto(ap.n))) continue;
-          const key = ap.n.toLowerCase().trim().replace(/\s+/g, " ");
-
-          for (const [apTid, apRes] of Object.entries(ap.r)) {
-            const b = tidBase(apTid);
-            const manuelEntry = manuelBases.get(b);
-            if (!manuelEntry) continue;
-
-            const isSameTid = (apTid === manuelEntry.tid);
-            const existing = mapa.get(key);
-
-            // Extract year from tidBase: "wjgc26" → "'26", "eowagr25" → "'25"
-            const yearMatch = b.match(/(\d{2})$/);
-            const yearSuffix = yearMatch ? `'${yearMatch[1]}` : "";
-
-            const tornLabel = (() => {
-              const bl = b.toLowerCase();
-              if (bl.startsWith("eowagr")) return `EU Open ${yearSuffix}`.trim();
-              if (bl.startsWith("wjgc") || bl.startsWith("brjgt")) return `WJGC ${yearSuffix}`.trim();
-              if (bl.startsWith("doral")) return `Doral ${yearSuffix}`.trim();
-              if (bl.startsWith("gg")) return `Great Golf ${yearSuffix}`.trim();
-              if (bl.startsWith("qdl")) return `QDL ${yearSuffix}`.trim();
-              if (bl.startsWith("marco")) return `Marco Simone ${yearSuffix}`.trim();
-              if (bl.startsWith("venice")) return `Venice Open ${yearSuffix}`.trim();
-              if (bl.startsWith("rome")) return `Rome Classic ${yearSuffix}`.trim();
-              if (bl.startsWith("desert")) return `Desert Shootout ${yearSuffix}`.trim();
-              if (bl.startsWith("sandestin")) return `Sandestin ${yearSuffix}`.trim();
-              if (bl.startsWith("msstate")) return `MS State ${yearSuffix}`.trim();
-              if (bl.startsWith("scstate")) return `SC State ${yearSuffix}`.trim();
-              if (bl.startsWith("elprat")) return `El Prat ${yearSuffix}`.trim();
-              return b.replace(/\d+$/, "").replace(/_/g, " ").toUpperCase().trim() + (yearSuffix ? ` ${yearSuffix}` : "") || b;
-            })();
-            const ageLabel = apRes.ageGroup || (() => {
-              const suffix = apTid.replace(b, "").replace(/^_/, "");
-              if (!suffix) return "";
-              const digits = suffix.replace(/^b/, "");
-              const n = Number(digits);
-              if (n >= 7 && n <= 18) return `Boys ${n}`;
-              for (let i = 1; i < digits.length; i++) {
-                const a = Number(digits.slice(0, i));
-                const bb = Number(digits.slice(i));
-                if (a >= 7 && a <= 17 && bb >= 8 && bb <= 18 && bb === a + 1) {
-                  return `Boys ${a}-${bb}`;
-                }
-              }
-              return suffix;
-            })();
-
-            // Dedup: skip se já temos um encontro com este tornCanon (wjgc25 ≠ wjgc26)
-            if (existing) {
-              const existKeys = new Set(existing.encontros.map(e => tornCanon(e.torneio_nome)));
-              if (hasCanon(existKeys, tornLabel)) continue;
-            }
-
-            if (!mapa.has(key))
-              mapa.set(key, { nome: ap.n, pais: ap.co ?? "", cidade: "", encontros: [] });
-
-            mapa.get(key)!.encontros.push({
-              torneio_t:    0,
-              torneio_nome: tornLabel,
-              torneio_data: "",
-              escalao:      ageLabel || tornLabel,
-              man_score:    0,
-              rival_score:  0,
-              man_to_par:   manuelEntry.res.tp ?? null,
-              rival_to_par: apRes.tp ?? null,
-              man_pos:      manuelEntry.res.p ?? 0,
-              rival_pos:    apRes.p ?? 0,
-              adjacente:    !isSameTid,
-            });
-          }
-        }
-      }
-    }
-
-    // ── 3. intlData (rivals-intl.json): FALLBACK para jogadores sem encontros ──
-    // Só adiciona encontros para jogadores que NÃO foram cobertos pelos passos 1+2.
-    // O intlData pode ter posições stale; autoRivals (passo 2) é autoritativo.
-    if (intlData) {
-      const manuelIntlJog = intlData.jogadores.find(j => j.isM);
-      if (manuelIntlJog) {
-        const torneiosComManuel = new Map<string, IntlTorneio>();
-        for (const tid of Object.keys(manuelIntlJog.r)) {
-          const torn = intlData.torneios.find(t => t.id === tid);
-          if (torn && torn.circuito !== "uskids") torneiosComManuel.set(tid, torn);
-        }
-
-        for (const j of intlData.jogadores) {
-          if (j.isM) continue;
-          const key = j.n.toLowerCase().trim().replace(/\s+/g, " ");
-
-          if (!mapa.has(key))
-            mapa.set(key, { nome: j.n, pais: j.co ?? "", cidade: "", encontros: [] });
-
-          const existing = mapa.get(key)!;
-          const existCanons = new Set(existing.encontros.map(e => tornCanon(e.torneio_nome)));
-
-          for (const [tid, torn] of torneiosComManuel) {
-            const rivalRes = j.r[tid];
-            if (!rivalRes) continue;
-            const manRes = manuelIntlJog.r[tid];
-            if (!manRes) continue;
-            // Skip se este torneio já existe por tornCanon
-            if (hasCanon(existCanons, torn.name, torn.short)) continue;
-
-            const ym = tid.match(/(\d{2})(?:_|$)/);
-            const ys = ym ? `'${ym[1]}` : "";
-            const catLabel = `${torn.short || torn.name} ${ys}`.trim();
-
-            mapa.get(key)!.encontros.push({
-              torneio_t:    0,
-              torneio_nome: torn.name,
-              torneio_data: torn.date || "",
-              escalao:      catLabel,
-              man_score:    0,
-              rival_score:  0,
-              man_to_par:   manRes.tp ?? null,
-              rival_to_par: rivalRes.tp ?? null,
-              man_pos:      manRes.p ?? 0,
-              rival_pos:    rivalRes.p ?? 0,
-              adjacente:    false,
-            });
-          }
-        }
-      }
-    }
-
-    return [...mapa.values()];
-  }, [baseRivals, intlData, autoRivals]);
-
-  // Notify parent of sidebar-ready rivals list (avoids duplicate computation)
-  useEffect(() => {
-    if (!onRivalsReady || rivals.length === 0) return;
-    const today = new Date().toISOString().slice(0, 10);
-    const manuelInscTids = new Set(
-      (fieldData?.torneios ?? [])
-        .filter(t => t.escaloes.some(e => (e.jogadores ?? []).some(j => isManuel(j.nome) && j.pais === "PT")))
-        .map(t => t.t)
-    );
-
-    // ── Rivais que cruzaram com Manuel ──
-    const lista: SidebarRival[] = rivals.map(r => {
-      const nTorn = new Set(r.encontros.map(e => tornCanon(e.torneio_nome))).size;
-      let vitorias = 0, derrotas = 0, empates = 0;
-      for (const e of r.encontros) {
-        if (e.adjacente) continue;
-        if (e.man_pos < e.rival_pos) vitorias++;
-        else if (e.man_pos > e.rival_pos) derrotas++;
-        else empates++;
-      }
-      const ar = autoRivals.find(a => normNameAuto(a.n) === normNameAuto(r.nome));
-      const totalTournaments = ar ? Object.keys(ar.r).length : nTorn;
-      const anosEncontros = r.encontros
-        .map(e => { const iso = isoDate(e.torneio_data); return iso ? parseInt(iso.slice(0,4)) : 0; })
-        .filter(Boolean);
-      const anosAr = ar ? Object.keys(ar.r).map(tid => {
-        const b = tidBase(tid); const m = b.match(/(\d{2})$/);
-        if (!m) return 0; const n = parseInt(m[1]);
-        return (n >= 20 && n <= 35) ? 2000 + n : 0;
-      }).filter(Boolean) : [];
-      const todosAnos = [...anosEncontros, ...anosAr];
-      const firstYear = todosAnos.length ? Math.min(...todosAnos) : null;
-      let nextTournName: string | null = null;
-      let daysToNext: number | null = null;
-      let nextIsCommon = false;
-      if (fieldData) {
-        const rivalNorm = normNameAuto(r.nome);
-        const futuros = fieldData.torneios
-          .filter(t => {
-            const iso = isoDate(t.date_inicio);
-            return iso >= today && t.escaloes.some(e =>
-              (e.jogadores ?? []).some(j => normNameAuto(j.nome) === rivalNorm)
-            );
-          })
-          .sort((a, b) => isoDate(a.date_inicio).localeCompare(isoDate(b.date_inicio)));
-        if (futuros.length > 0) {
-          const first = futuros[0];
-          nextTournName = first.name.replace(/\s*\d{4}$/, "");
-          const diff = Math.round((new Date(isoDate(first.date_inicio)).getTime() - new Date(today).getTime()) / 86400000);
-          daysToNext = Math.max(0, diff);
-          nextIsCommon = manuelInscTids.has(first.t);
-        }
-      }
-      return { nome: r.nome, pais: r.pais, nEnc: nTorn, vitorias, derrotas, empates, totalTournaments, firstYear, nextTournName, daysToNext, nextIsCommon };
-    });
-
-    // ── Adicionar autoRivals Boys 9-14 que ainda não estão na lista ──
-    // E enriquecer rivais já existentes com totalTournaments real do member history
-    const nomesNaLista = new Set(lista.map(r => normNameAuto(r.nome)));
-    for (const ap of autoRivals) {
-      if (normNameAuto(ap.n).includes("medeiros") && normNameAuto(ap.n).includes("manuel")) continue;
-
-      // Verificar se tem pelo menos uma entrada Boys 9-14
-      const temBoysRelevante = Object.entries(ap.r).some(([tid]) => {
-        const m = tid.match(/_b(\d+)$/);
-        if (!m) return false;
-        const age = parseInt(m[1]);
-        return age >= 9 && age <= 14;
-      });
-      if (!temBoysRelevante) continue;
-
-      // Anos e totalTournaments do member history
-      const tids = Object.keys(ap.r);
-      const anos = tids.map(tid => {
-        const uskM = tid.match(/^usk(\d+)/);
-        if (uskM) { const meta = uskTournNames.get(`usk${uskM[1]}`); if (meta?.dateExact) return parseInt(meta.dateExact.slice(0,4)); }
-        const b = tidBase(tid); const m = b.match(/(\d{2})$/);
-        if (!m) return 0; const n = parseInt(m[1]);
-        return (n >= 20 && n <= 35) ? 2000 + n : 0;
-      }).filter(Boolean);
-      const firstYearAr = anos.length ? Math.min(...anos) : null;
-      const totalTournAr = tids.length;
-
-      if (nomesNaLista.has(normNameAuto(ap.n))) {
-        // Rival já na lista (tem encontros) → actualizar totalTournaments e firstYear
-        const idx = lista.findIndex(r => normNameAuto(r.nome) === normNameAuto(ap.n));
-        if (idx >= 0) {
-          lista[idx] = {
-            ...lista[idx],
-            totalTournaments: Math.max(lista[idx].totalTournaments, totalTournAr),
-            firstYear: firstYearAr != null
-              ? (lista[idx].firstYear != null ? Math.min(lista[idx].firstYear, firstYearAr) : firstYearAr)
-              : lista[idx].firstYear,
-          };
-        }
-        continue;
-      }
-
-      const pais = ap.co || "";
-
-      // Próximo torneio inscrito
-      let nextTournName: string | null = null;
-      let daysToNext: number | null = null;
-      let nextIsCommon = false;
-      if (fieldData) {
-        const rivalNorm = normNameAuto(ap.n);
-        const futuros = fieldData.torneios
-          .filter(t => {
-            const iso = isoDate(t.date_inicio);
-            return iso >= today && t.escaloes.some(e =>
-              (e.jogadores ?? []).some(j => normNameAuto(j.nome) === rivalNorm)
-            );
-          })
-          .sort((a, b) => isoDate(a.date_inicio).localeCompare(isoDate(b.date_inicio)));
-        if (futuros.length > 0) {
-          const first = futuros[0];
-          nextTournName = first.name.replace(/\s*\d{4}$/, "");
-          const diff = Math.round((new Date(isoDate(first.date_inicio)).getTime() - new Date(today).getTime()) / 86400000);
-          daysToNext = Math.max(0, diff);
-          nextIsCommon = manuelInscTids.has(first.t);
-        }
-      }
-
-      lista.push({
-        nome: ap.n, pais, nEnc: 0,
-        vitorias: 0, derrotas: 0, empates: 0,
-        totalTournaments: totalTournAr,
-        firstYear: firstYearAr, nextTournName, daysToNext, nextIsCommon,
-      });
-      nomesNaLista.add(normNameAuto(ap.n));
-    }
-
-    // ── Calcular playerTier e normalizar país ──────────────────────────────
-    // Quick tier a partir dos dados disponíveis no member history / encounters
-    // Só faz sentido para rivais que podem disputar directamente com o Manuel (escalão ±2)
-    // Manuel está actualmente em Boys 12 (nascido 2012) — escalões relevantes: 10, 11, 12, 13, 14
-    const MANUEL_CURRENT_AGE = new Date().getFullYear() - MANUEL_BIRTHDAY_YEAR;
-    const RELEVANT_AGES = new Set([
-      MANUEL_CURRENT_AGE - 2, MANUEL_CURRENT_AGE - 1, MANUEL_CURRENT_AGE,
-      MANUEL_CURRENT_AGE + 1, MANUEL_CURRENT_AGE + 2,
-    ].map(String));
-
-    function computeQuickTier(
-      r: { nEnc: number; vitorias: number; derrotas: number; totalTournaments: number; firstYear: number | null },
-      ar: AutoRivalPlayer | undefined,
-    ): SidebarRival["playerTier"] {
-      // Verificar se tem escalões relevantes (±2 do Manuel)
-      if (ar) {
-        const ages = Object.keys(ar.r)
-          .map(tid => tid.match(/_b(\d+)$/)?.[1])
-          .filter((a): a is string => a != null);
-        const temEscalaoRelevante = ages.some(a => RELEVANT_AGES.has(a));
-        if (!temEscalaoRelevante) return null;
-      } else if (r.nEnc === 0) {
-        // Sem autoRivals e sem encontros — não classificar
-        return null;
-      }
-
-      // avgPos aproximada a partir dos resultados do rival
-      let avgPos: number | null = null;
-      let wins = 0;
-      if (ar) {
-        const ps = Object.values(ar.r).map(v => v.p).filter((p): p is number => p != null && p > 0);
-        if (ps.length >= 3) avgPos = ps.reduce((s, p) => s + p, 0) / ps.length;
-        wins = Object.values(ar.r).filter(v => v.p === 1).length;
-      }
-      const curYear = new Date().getFullYear();
-      const anosActivo = r.firstYear ? curYear - r.firstYear + 1 : 0;
-      const tot = r.totalTournaments;
-
-      if (wins >= 3 && avgPos != null && avgPos <= 4)       return "elite";
-      if (wins >= 1 && avgPos != null && avgPos <= 5)        return "contender";
-      if (avgPos != null && avgPos <= 8 && tot >= 10)        return "forte";
-      if (anosActivo <= 3 && tot >= 10)                      return "subindo";
-      if (tot >= 20 && anosActivo >= 4)                      return "assiduo";
-      if (avgPos != null && avgPos <= 12 && tot >= 8)        return "consistente";
-      return null;
-    }
-
-    // Normalizar país e adicionar tier
-    const listaFinal: SidebarRival[] = lista.map(r => {
-      const ar = autoRivals.find(a => normNameAuto(a.n) === normNameAuto(r.nome));
-      return {
-        ...r,
-        pais: normPaisDisplay(r.pais),
-        playerTier: computeQuickTier(r, ar),
-      };
-    });
-
-    onRivalsReady(listaFinal.sort((a, b) => b.nEnc - a.nEnc || b.totalTournaments - a.totalTournaments));
-  }, [rivals, onRivalsReady, autoRivals, fieldData]);
-
-  // Memoized matcher — criado UMA vez, reutilizado por SubTabPorTorneio e TabelaConhecidos
-  const matchRival = useMemo(() => criarMatcherRivals(rivals), [rivals]);
-
-  // Torneios futuros onde o Manuel está inscrito (nome+PT)
-  const torneiosComManuel = useMemo(() => {
-    const map = new Map<number, { t: number; name: string; date_inicio: string; escalaoManuel?: string; source: "field" | "results" }>();
-
-    // 1. Torneios do fieldData (inscritos — futuros e recentes)
-    if (fieldData) {
-      for (const t of fieldData.torneios) {
-        const esc = t.escaloes.find(e =>
-          (e.jogadores ?? []).some(j => isManuel(j.nome) && j.pais === "PT")
-        );
-        if (esc) {
-          map.set(t.t, { t: t.t, name: t.name, date_inicio: t.date_inicio, escalaoManuel: esc.nome, source: "field" });
-        }
-      }
-    }
-
-    // 2. Torneios do resultsData (passados onde o Manuel jogou)
-    for (const t of data.resultados) {
-      if (map.has(t.t)) continue; // já temos do fieldData
-      const manuelJogou = t.escaloes?.some(e =>
-        e.rondas?.some(r =>
-          (r.leaderboard ?? r.jogadores ?? []).some(j => isManuel(j.nome))
-        )
-      );
-      if (manuelJogou) {
-        const esc = t.escaloes?.find(e =>
-          e.rondas?.some(r =>
-            (r.leaderboard ?? r.jogadores ?? []).some(j => isManuel(j.nome))
-          )
-        );
-        map.set(t.t, { t: t.t, name: t.name, date_inicio: t.date_inicio, escalaoManuel: esc?.nome, source: "results" });
-      }
-    }
-
-    return [...map.values()]
-      .sort((a, b) => isoDate(b.date_inicio).localeCompare(isoDate(a.date_inicio)));  // mais recentes primeiro
-  }, [fieldData, data]);
-
-  // Navigate to rival profile
-  const goToProfile = (nome: string) => {
-    setSelectedRival(nome);
-  };
-  const goBack = () => {
-    setSelectedRival(null);
-  };
-
-  // Mapa nome normalizado → nome canónico para link ↗ Kids (abre nova janela)
-  const kidsRivalMap = useMemo(() => {
+/* ════════════════════════════════════════════════════════════════
+   TabRivais — componente principal
+   ════════════════════════════════════════════════════════════════ */
+function TabRivais({ resultados, fieldData, torneiosComManuel, selectedT, setSelectedT, autoRivals, showTabela, setShowTabela, futureTorneios }: {
+  resultados: TorneioResult[];
+  fieldData: FieldData | null;
+  torneiosComManuel: TorneioComManuel[];
+  selectedT: number | null;
+  setSelectedT: (t: number | null) => void;
+  autoRivals: AutoRivalPlayer[];
+  showTabela: boolean;
+  setShowTabela: (v: boolean) => void;
+  futureTorneios?: TorneioComManuel[];
+}) {
+  const kidsMap = useMemo(() => {
     const m = new Map<string, string>();
     for (const r of autoRivals) m.set(normNameAuto(r.n), r.n);
     return m;
   }, [autoRivals]);
 
-  if (!rivals.length) return (
-    <div style={{ color:"var(--text-3)", padding:"32px 0", textAlign:"center", fontSize:13 }}>
-      Sem dados de rivais ainda — os scorecards aparecem após os torneios
-    </div>
-  );
+  const arMap = useMemo(() => {
+    const m = new Map<string, AutoRivalPlayer>();
+    for (const r of autoRivals) m.set(normNameAuto(r.n), r);
+    return m;
+  }, [autoRivals]);
 
-  // ── MODO PERFIL: rival seleccionado ──
-  if (selectedRival) {
+  const selectedTorneio = !showTabela && selectedT != null
+    ? torneiosComManuel.find(t => t.t === selectedT) ?? null
+    : null;
+
+  const handleSelectTorneio = (t: number) => {
+    setShowTabela(false);
+    setSelectedT(t);
+  };
+
+  if (showTabela) {
+    const futureCols = (futureTorneios ?? []).map(t => ({
+      tid: `usk${t.t}`,
+      short: t.name.replace(/\s*\d{4}$/, "").slice(0, 12),
+      escalao: t.escalaoManuel ?? "",
+      url: undefined as string | undefined,
+    }));
     return (
-      <PerfilRivalNovo
-        nome={selectedRival}
-        rivals={rivals}
+      <TabelaGlobal
         autoRivals={autoRivals}
+        futureCols={futureCols}
         fieldData={fieldData}
-        resultados={data.resultados}
-        torneiosComManuel={torneiosComManuel}
-        goBack={goBack}
-        goToProfile={goToProfile}
       />
     );
   }
 
-  // ── Vista por torneio (directa, sem sub-tabs) ──
+  if (selectedTorneio) {
+    return (
+      <TorneioRivaisDetalhe
+        torneio={selectedTorneio}
+        resultados={resultados}
+        fieldData={fieldData}
+        torneiosComManuel={torneiosComManuel}
+        arMap={arMap}
+        kidsMap={kidsMap}
+      />
+    );
+  }
+
+  const today = new Date().toISOString().slice(0, 10);
   return (
-    <SubTabPorTorneio
-      torneiosComManuel={torneiosComManuel}
-      rivals={rivals} fieldData={fieldData} intlData={intlData}
-      matchIntl={matchIntl} matchRival={matchRival} resultados={data.resultados}
-      mhCountMap={mhCountMap} goToProfile={goToProfile}
-      kidsRivalMap={kidsRivalMap}
-    />
+    <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+      <div className="h-sm" style={{ marginBottom:4 }}>Torneios do Manuel ({torneiosComManuel.length})</div>
+      {torneiosComManuel.map(t => {
+        const isFuture = isoDate(t.date_inicio) > today;
+        const resT = resultados.find(r => r.t === t.t);
+        return (
+          <button key={t.t}
+            className="course-item"
+            style={{ textAlign:"left", padding:"12px 16px", display:"block", width:"100%", cursor:"pointer" }}
+            onClick={() => handleSelectTorneio(t.t)}>
+            <div className="h-md" style={{ marginBottom:4 }}>{t.name}</div>
+            <div className="detail-sub">
+              {t.date_inicio && <span className="muted">📅 {fmtDate(t.date_inicio)}</span>}
+              {t.escalaoManuel && <span className="chip">{t.escalaoManuel}</span>}
+              {isFuture
+                ? <span className="p p-sm" style={{ background:"var(--bg-info-strong)", color:"var(--color-info)", borderColor:"var(--border-info)" }}>inscrito</span>
+                : resT && <span className="p p-sm" style={{ background:"var(--bg-success-strong)", color:"var(--color-good-dark)", borderColor:"var(--border-success)" }}>resultados</span>
+              }
+            </div>
+          </button>
+        );
+      })}
+    </div>
   );
 }
 
 /* ════════════════════════════════════════════════════════════════
-   SubTabPorTorneio — Vista por torneio (rivais + inscritos unificados)
-   Mostra TabelaConhecidos per tournament + secções de inscritos futuros
+   TorneioRivaisDetalhe — detalhe de um torneio seleccionado
    ════════════════════════════════════════════════════════════════ */
-function SubTabPorTorneio({
-  torneiosComManuel, rivals, fieldData, intlData, matchIntl, matchRival, resultados, mhCountMap, goToProfile, kidsRivalMap,
-}: {
-  torneiosComManuel: { t: number; name: string; date_inicio: string; escalaoManuel?: string; source: "field" | "results" }[];
-  rivals: RivalInfo[]; fieldData: FieldData | null; intlData: IntlData | null;
-  matchIntl: (nome: string, pais?: string) => IntlJogador | null;
-  matchRival: (nome: string, pais?: string) => RivalInfo | null;
+function TorneioRivaisDetalhe({ torneio, resultados, fieldData, torneiosComManuel, arMap, kidsMap }: {
+  torneio: TorneioComManuel;
   resultados: TorneioResult[];
-  mhCountMap: Map<string, number>;
-  goToProfile: (nome: string) => void;
-  kidsRivalMap: Map<string, string>;
+  fieldData: FieldData | null;
+  torneiosComManuel: TorneioComManuel[];
+  arMap: Map<string, AutoRivalPlayer>;
+  kidsMap: Map<string, string>;
 }) {
-  const [showInscritos, setShowInscritos] = useState(false);
+  const today = new Date().toISOString().slice(0, 10);
+  const isFuture = isoDate(torneio.date_inicio) > today;
 
-  // ── Inscritos: LAZY — só computa quando showInscritos === true ──
-  const torneiosFuturos = useMemo(() => {
-    if (!fieldData || !showInscritos) return [];
-    return fieldData.torneios
-      .filter(t => isoDate(t.date_inicio) >= new Date().toISOString().slice(0,10))
-      .sort((a,b) => isoDate(a.date_inicio).localeCompare(isoDate(b.date_inicio)));
-  }, [fieldData, showInscritos]);
+  const resT = resultados.find(r => r.t === torneio.t);
+  const fieldT = fieldData?.torneios.find(f => f.t === torneio.t);
 
-  type InscritoEntry = { torneioT: number; torneioNome: string; torneioData: string; escalao: string; mesmoEscalao: boolean };
-  const { conhecidosMap, desconhecidosMap } = useMemo(() => {
-    if (!showInscritos) return {
-      conhecidosMap: new Map<string, { rival: RivalInfo; torneios: InscritoEntry[] }>(),
-      desconhecidosMap: new Map<string, { nome: string; pais: string; torneios: InscritoEntry[] }>(),
-    };
-    const conhecidosMap  = new Map<string, { rival: RivalInfo; torneios: InscritoEntry[] }>();
-    const desconhecidosMap = new Map<string, { nome: string; pais: string; torneios: InscritoEntry[] }>();
-    for (const t of torneiosFuturos) {
-      const manuelInscrito = t.escaloes.some(e => (e.jogadores ?? []).some(j => isManuel(j.nome) && j.pais === "PT"));
-      const escalaoComManuel = new Set(
-        t.escaloes.filter(e => (e.jogadores ?? []).some(j => isManuel(j.nome) && j.pais === "PT")).map(e => e.nome)
-      );
-      for (const esc of t.escaloes) {
-        if ((esc.jogadores?.length ?? 0) === 0) continue;
-        for (const j of (esc.jogadores ?? [])) {
-          if (isManuel(j.nome)) continue;
-          const key = j.nome.toLowerCase().trim();
-          const mesmoEscalao = manuelInscrito && escalaoComManuel.has(esc.nome);
-          const rivalMatch = matchRival(j.nome, j.pais);
-          if (rivalMatch) {
-            const entry: InscritoEntry = { torneioT: t.t, torneioNome: t.name, torneioData: t.date_inicio, escalao: esc.nome, mesmoEscalao };
-            if (!conhecidosMap.has(key)) conhecidosMap.set(key, { rival: rivalMatch, torneios: [] });
-            if (!conhecidosMap.get(key)!.torneios.some(p => p.torneioT === t.t)) conhecidosMap.get(key)!.torneios.push(entry);
-          } else {
-            if (!manuelInscrito) continue;
-            const entry: InscritoEntry = { torneioT: t.t, torneioNome: t.name, torneioData: t.date_inicio, escalao: esc.nome, mesmoEscalao: true };
-            if (!desconhecidosMap.has(key)) desconhecidosMap.set(key, { nome: j.nome, pais: j.pais, torneios: [] });
-            if (!desconhecidosMap.get(key)!.torneios.some(p => p.torneioT === t.t)) desconhecidosMap.get(key)!.torneios.push(entry);
+  const escaloes: { nome: string; age_group: number; players: { nome: string; pais: string }[]; isManuel: boolean }[] = useMemo(() => {
+    const esc = new Map<string, { nome: string; age_group: number; players: { nome: string; pais: string }[]; isManuel: boolean }>();
+    if (resT) {
+      for (const e of resT.escaloes) {
+        const seen = new Set<string>();
+        const pList: { nome: string; pais: string }[] = [];
+        for (const rd of e.rondas) {
+          for (const j of (rd.leaderboard ?? rd.jogadores ?? [])) {
+            const k = normNameAuto(j.nome);
+            if (!seen.has(k)) { seen.add(k); pList.push({ nome: j.nome, pais: j.pais }); }
           }
         }
+        if (pList.length > 0) esc.set(e.nome, { nome: e.nome, age_group: e.age_group, players: pList, isManuel: e.is_manuel });
       }
     }
-    return { conhecidosMap, desconhecidosMap };
-  }, [showInscritos, matchRival, torneiosFuturos]);
-
-  const vaiReencontrar = useMemo(() =>
-    [...conhecidosMap.values()].filter(e => e.torneios.some(t => t.mesmoEscalao)).sort((a,b) => b.torneios.length - a.torneios.length)
-  , [conhecidosMap]);
-  const vaiConhecer = useMemo(() =>
-    [...desconhecidosMap.values()].filter(e => e.torneios.some(t => t.mesmoEscalao)).sort((a,b) => b.torneios.length - a.torneios.length)
-  , [desconhecidosMap]);
-  const escalaoOutro = useMemo(() =>
-    [...conhecidosMap.values()].filter(e => !e.torneios.some(t => t.mesmoEscalao)).sort((a,b) => b.torneios.length - a.torneios.length)
-  , [conhecidosMap]);
-  const assiduos = useMemo(() =>
-    [...desconhecidosMap.values()]
-      .filter(e => !e.torneios.some(t => t.mesmoEscalao) && e.torneios.length >= 2)
-      .sort((a,b) => b.torneios.length - a.torneios.length)
-  , [desconhecidosMap]);
-  const assiduosTodos = useMemo(() => {
-    const conhecidosKeys = new Set(rivals.map(r => r.nome.toLowerCase().trim()));
-    const presencas = new Map<string, { nome: string; pais: string; torneios: { torneioT: number; torneioNome: string; escalao: string }[] }>();
-    for (const t of torneiosFuturos) {
-      for (const esc of t.escaloes) {
-        if ((esc.jogadores?.length ?? 0) === 0) continue;
-        for (const j of (esc.jogadores ?? [])) {
-          if (isManuel(j.nome)) continue;
-          const key = j.nome.toLowerCase().trim();
-          if (conhecidosKeys.has(key)) continue;
-          if (!presencas.has(key)) presencas.set(key, { nome: j.nome, pais: j.pais, torneios: [] });
-          if (!presencas.get(key)!.torneios.some(p => p.torneioT === t.t))
-            presencas.get(key)!.torneios.push({ torneioT: t.t, torneioNome: t.name, escalao: esc.nome });
+    if (fieldT) {
+      for (const e of fieldT.escaloes) {
+        const jogadores = e.jogadores ?? [];
+        if (jogadores.length === 0) continue;
+        const hasManuel = jogadores.some(j => isManuel(j.nome) && j.pais === "PT");
+        if (!esc.has(e.nome)) {
+          esc.set(e.nome, { nome: e.nome, age_group: e.age_group ?? 0, players: jogadores.map(j => ({ nome: j.nome, pais: j.pais })), isManuel: hasManuel });
+        } else {
+          const ex = esc.get(e.nome)!;
+          const existNames = new Set(ex.players.map(p => normNameAuto(p.nome)));
+          for (const j of jogadores) {
+            if (!existNames.has(normNameAuto(j.nome))) ex.players.push({ nome: j.nome, pais: j.pais });
+          }
+          if (hasManuel) ex.isManuel = true;
         }
       }
     }
-    return [...presencas.values()].filter(e => e.torneios.length >= 2).sort((a, b) => b.torneios.length - a.torneios.length);
-  }, [rivals, torneiosFuturos]);
+    return sortEscaloes([...esc.values()]);
+  }, [resT, fieldT]);
 
-  const TorneiosPills = ({ torneios }: { torneios: InscritoEntry[] }) => (
-    <div style={{ display:"flex", gap:4, flexWrap:"wrap" }}>
-      {torneios.map((t, j) => (
-        <span key={j} style={{
-          fontSize:11, padding:"2px 8px", borderRadius:6, whiteSpace:"nowrap",
-          background: t.mesmoEscalao ? "var(--bg-active)" : "var(--bg-muted)",
-          color: t.mesmoEscalao ? "var(--text)" : "var(--text-3)",
-          border: `1px solid ${t.mesmoEscalao ? "var(--border-success)" : "var(--border)"}`,
-          fontWeight: t.mesmoEscalao ? 600 : 400,
-        }}>
-          {t.mesmoEscalao && <span style={{ marginRight:2 }}>★</span>}{t.torneioNome.replace(/\s*\d{4}$/, "")}
-          <span style={{ opacity:0.6, marginLeft:3, fontSize:10 }}>{t.escalao}</span>
-        </span>
-      ))}
-    </div>
-  );
+  const defaultEsc = torneio.escalaoManuel ?? escaloes.find(e => e.isManuel)?.nome ?? escaloes[0]?.nome ?? "";
+  const [activeEsc, setActiveEsc] = useState(defaultEsc);
+  useEffect(() => { setActiveEsc(defaultEsc); }, [torneio.t]);
 
-  const HistorialLine = ({ rival }: { rival: RivalInfo }) => {
-    const unicos = [...new Map(rival.encontros.map(e => [e.torneio_t, e])).values()];
-    if (!unicos.length) return null;
-    return (
-      <div style={{ fontSize:10, color:"var(--text-3)", marginTop:2, display:"flex", flexWrap:"wrap", gap:"0 8px" }}>
-        {unicos.map(enc => (
-          <span key={`${enc.torneio_nome}-${enc.escalao}`}>
-            {shortTornName(enc.torneio_nome)}
-            <span style={{ marginLeft:2, fontWeight:600,
-              color: enc.man_pos < enc.rival_pos ? "var(--color-good)" : enc.man_pos > enc.rival_pos ? "var(--color-danger)" : "var(--text-3)" }}>
-              {enc.man_pos}º vs {enc.rival_pos}º
-            </span>
-          </span>
-        ))}
-      </div>
-    );
-  };
+  const activeEscData = escaloes.find(e => e.nome === activeEsc);
+  const nPaises = new Set((activeEscData?.players ?? []).map(p => normPaisDisplay(p.pais)).filter(Boolean)).size;
 
-  // Tabela genérica para secções de inscritos
-  const InscTable = ({ rows, showHist }: { rows: { nome: string; pais: string; rival?: RivalInfo; torneios: InscritoEntry[] }[]; showHist?: boolean }) => (
-    <div className="table-wrap">
-    <table className="dtable-lg" style={{ width:"100%" }}>
-      <thead><tr>
-        <th style={{ textAlign:"left" }}>Jogador</th>
-        <th style={{ width:30, textAlign:"center" }}>🌍</th>
-        <th style={{ textAlign:"left" }}>Torneios</th>
-        <th style={{ width:36, textAlign:"center" }}>#</th>
-      </tr></thead>
-      <tbody>
-        {rows.map((r, i) => {
-          const kidsName = kidsRivalMap.get(normNameAuto(r.nome));
-          return (
-            <tr key={r.nome} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)" }}>
-              <td style={{ padding:"6px 10px" }}>
-                <span style={{ display:"flex", alignItems:"center", gap:5, flexWrap:"wrap" }}>
-                  {r.rival ? (
-                    <span style={{ cursor:"pointer", color:"var(--accent)", fontWeight:600 }} onClick={() => goToProfile(r.nome)}>
-                      {displayName(r.nome)}
-                    </span>
-                  ) : (
-                    <span style={{ color:"var(--text-2)" }}>{displayName(r.nome)}</span>
-                  )}
-                  {kidsName && (
-                    <a href={`/kids`}
-                      onClick={e => { e.preventDefault(); window.open(`/kids#${encodeURIComponent(kidsName)}`, "_blank"); }}
-                      title="Ver perfil completo em Kids"
-                      style={{ fontSize:9, fontWeight:700, padding:"1px 6px", borderRadius:4,
-                        background:"var(--bg-success-subtle)", color:"var(--color-good-dark)",
-                        border:"1px solid var(--border-success,var(--color-good))",
-                        textDecoration:"none", whiteSpace:"nowrap", flexShrink:0 }}>
-                      ↗ Kids
-                    </a>
-                  )}
-                </span>
-                {showHist && r.rival && <HistorialLine rival={r.rival} />}
-              </td>
-              <td style={{ textAlign:"center", fontSize:14 }}>{flag(r.pais)}</td>
-              <td style={{ padding:"6px 10px" }}><TorneiosPills torneios={r.torneios} /></td>
-              <td style={{ textAlign:"center", fontWeight:700, fontSize:12, color:"var(--text-2)" }}>{r.torneios.length}</td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
-    </div>
-  );
+  const sBase = seriesBase(torneio.name);
+  const currentYear = parseInt((isoDate(torneio.date_inicio) || `${new Date().getFullYear()}-01-01`).slice(0, 4));
+  const prevYears = [currentYear - 1, currentYear - 2, currentYear - 3].filter(y => y >= 2020);
 
   return (
     <div style={{ display:"flex", flexDirection:"column", gap:20 }}>
-      {/* ── 1. Torneios com o Manuel (cards colapsáveis) ── */}
-      {torneiosComManuel.length > 0 && (
-        <div>
-          <div className="h-sm" style={{ marginBottom:8, color:"var(--text-2)" }}>
-            Resultados por torneio ({torneiosComManuel.length})
-          </div>
-          <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
-            {torneiosComManuel.map(t => (
-              <TabelaConhecidos
-                key={t.t}
-                torneioT={t.t} torneioNome={t.name}
-                torneioData={t.date_inicio}
-                escalaoManuel={t.escalaoManuel}
-                rivals={rivals} fieldData={fieldData}
-                intlData={intlData} matchIntl={matchIntl}
-                matchRival={matchRival}
-                resultados={resultados}
-                mhCountMap={mhCountMap}
-                autoRivals={autoRivals}
-              />
-            ))}
-          </div>
+      <div>
+        <div className="h-lg" style={{ marginTop:0 }}>{torneio.name}</div>
+        <div className="detail-sub" style={{ marginTop:4 }}>
+          {torneio.date_inicio && <span className="muted">📅 {fmtDate(torneio.date_inicio)}</span>}
+          {isFuture
+            ? <span className="p p-sm" style={{ background:"var(--bg-info-strong)", color:"var(--color-info)", borderColor:"var(--border-info)" }}>futuro</span>
+            : <span className="p p-sm" style={{ background:"var(--bg-success-strong)", color:"var(--color-good-dark)", borderColor:"var(--border-success)" }}>disputado</span>
+          }
+          {activeEscData && <span className="muted">{activeEscData.players.length} jogadores</span>}
+          {nPaises > 1 && <span className="muted">{nPaises} países</span>}
+          {resT?.url_resultados && (
+            <a href={resT.url_resultados} target="_blank" rel="noopener noreferrer"
+              className="p p-sm p-muted" style={{ textDecoration:"none" }}>
+              Resultados ↗
+            </a>
+          )}
+          {fieldT?.url_uskids && !resT?.url_resultados && (
+            <a href={fieldT.url_uskids} target="_blank" rel="noopener noreferrer"
+              className="p p-sm p-muted" style={{ textDecoration:"none" }}>
+              USKids ↗
+            </a>
+          )}
+        </div>
+      </div>
+
+      {escaloes.length > 1 && (
+        <div style={{ display:"flex", gap:5, flexWrap:"wrap" }}>
+          {escaloes.map(e => (
+            <button key={e.nome}
+              className={`tourn-tab tourn-tab-sm${activeEsc === e.nome ? " active" : ""}`}
+              style={activeEsc === e.nome ? {} : { background:"var(--bg-muted)", color:"var(--text-2)", borderColor:"var(--border)" }}
+              onClick={() => setActiveEsc(e.nome)}>
+              {e.nome}
+              <span style={{ marginLeft:4, opacity:.7, fontSize:11 }}>{e.players.length}</span>
+              {e.isManuel && (
+                <span style={{ marginLeft:3, fontSize:10, color: activeEsc === e.nome ? "rgba(255,255,255,.8)" : "var(--color-good)" }}>●</span>
+              )}
+            </button>
+          ))}
         </div>
       )}
 
-      {/* ── 2. Inscritos futuros (LAZY — só carrega quando pedido) ── */}
-      {!showInscritos ? (
-        <button onClick={() => setShowInscritos(true)} className="btn" style={{
-          display:"flex", alignItems:"center", gap:6, fontSize:12, padding:"8px 16px",
-        }}>
-          🗓️ Carregar inscrições futuras
-        </button>
-      ) : (vaiReencontrar.length > 0 || vaiConhecer.length > 0) ? (
-        <div>
-          <div className="h-sm" style={{ marginBottom:8, color:"var(--text-2)" }}>
-            Inscrições em torneios futuros
-          </div>
+      {activeEscData && (
+        <FieldEscalaoTable
+          escalaoNome={activeEsc}
+          players={activeEscData.players}
+          isFuture={isFuture}
+          torneioT={torneio.t}
+          resultados={resultados}
+          sBase={sBase}
+          prevYears={prevYears}
+          tornName={torneio.name}
+          arMap={arMap}
+          kidsMap={kidsMap}
+          urlResultados={resT?.url_resultados}
+          urlUskids={fieldT?.url_uskids ?? undefined}
+        />
+      )}
+    </div>
+  );
+}
 
-          {vaiReencontrar.length > 0 && (
-            <Secao titulo="🤝 Vai reencontrar" corTitulo="var(--color-good)"
-              sub="Já se cruzaram — inscrito no mesmo escalão"
-              count={vaiReencontrar.length} defaultOpen={true}>
-              <InscTable rows={vaiReencontrar.map(e => ({ nome: e.rival.nome, pais: e.rival.pais, rival: e.rival, torneios: e.torneios }))} showHist />
-            </Secao>
-          )}
+/* ════════════════════════════════════════════════════════════════
+   FieldEscalaoTable — tabela do field com colunas de edições anteriores
+   ════════════════════════════════════════════════════════════════ */
+function FieldEscalaoTable({ escalaoNome, players, isFuture, torneioT, resultados, sBase, prevYears, tornName, arMap, kidsMap, urlResultados, urlUskids }: {
+  escalaoNome: string;
+  players: { nome: string; pais: string }[];
+  isFuture: boolean;
+  torneioT: number;
+  resultados: TorneioResult[];
+  sBase: string;
+  prevYears: number[];
+  tornName: string;
+  arMap: Map<string, AutoRivalPlayer>;
+  kidsMap: Map<string, string>;
+  urlResultados?: string;
+  urlUskids?: string;
+}) {
+  type LbRow = { nome: string; pais: string; pos: number; finalToPar: number | null; fieldSize: number };
+  const leaderboard: LbRow[] | null = useMemo(() => {
+    if (isFuture) return null;
+    const resT = resultados.find(r => r.t === torneioT);
+    if (!resT) return null;
+    const esc = resT.escaloes.find(e => e.nome === escalaoNome);
+    if (!esc) return null;
+    const rondasValidas = esc.rondas.filter(r => (r.leaderboard ?? r.jogadores ?? []).length > 0);
+    if (rondasValidas.length === 0) return null;
+    const totaisMap = new Map<string, { nome: string; pais: string; totalScore: number; toParArr: (number | null)[] }>();
+    for (const rd of rondasValidas) {
+      for (const j of (rd.leaderboard ?? rd.jogadores ?? [])) {
+        const k = normNameAuto(j.nome);
+        if (!totaisMap.has(k)) totaisMap.set(k, { nome: j.nome, pais: j.pais, totalScore: 0, toParArr: [] });
+        const entry = totaisMap.get(k)!;
+        entry.totalScore += (j.score || 0);
+        entry.toParArr.push(j.to_par ?? null);
+      }
+    }
+    const fieldSize = totaisMap.size;
+    return [...totaisMap.entries()]
+      .sort((a, b) => a[1].totalScore - b[1].totalScore)
+      .map(([, v], i) => ({
+        nome: v.nome, pais: v.pais,
+        pos: i + 1,
+        finalToPar: v.toParArr.every(x => x != null) ? v.toParArr.reduce((s, x) => s + x!, 0) : null,
+        fieldSize,
+      }));
+  }, [isFuture, resultados, torneioT, escalaoNome]);
 
-          {vaiConhecer.length > 0 && (
-            <Secao titulo="🆕 Vai conhecer" corTitulo="var(--color-info)"
-              sub="Primeiro encontro — inscrito no mesmo escalão"
-              count={vaiConhecer.length} defaultOpen={false}>
-              <InscTable rows={vaiConhecer.map(e => ({ nome: e.nome, pais: e.pais, torneios: e.torneios }))} />
-            </Secao>
-          )}
+  const displayPlayers: { nome: string; pais: string; pos?: number; finalToPar?: number | null; fieldSize?: number }[] = useMemo(() => {
+    if (!isFuture && leaderboard) return leaderboard;
+    return [...players].sort((a, b) => {
+      if (isManuel(a.nome)) return 1;
+      if (isManuel(b.nome)) return -1;
+      const getBest = (ar: AutoRivalPlayer | undefined) => {
+        if (!ar) return 9999;
+        let best = 9999;
+        for (const yr of prevYears) {
+          const res = playerSeriesResult(ar, sBase, yr);
+          if (res && res.p > 0 && res.p < best) best = res.p;
+        }
+        return best;
+      };
+      return getBest(arMap.get(normNameAuto(a.nome))) - getBest(arMap.get(normNameAuto(b.nome)));
+    });
+  }, [isFuture, leaderboard, players, arMap, sBase, prevYears]);
 
-          {escalaoOutro.length > 0 && (
-            <Secao titulo="⚔️ Noutro escalão" corTitulo="var(--text-3)"
-              sub="Já se cruzaram mas agora competem noutro escalão"
-              count={escalaoOutro.length} defaultOpen={false}>
-              <InscTable rows={escalaoOutro.map(e => ({ nome: e.rival.nome, pais: e.rival.pais, rival: e.rival, torneios: e.torneios }))} showHist />
-            </Secao>
-          )}
+  const shortBase = tornName.replace(/\s*\d{4}$/, "");
+  const histCols = prevYears.map(y => ({ year: y, label: `${shortBase} '${String(y).slice(2)}` }));
 
-          {assiduos.length > 0 && (
-            <Secao titulo="🔍 Assíduos noutro escalão" corTitulo="var(--text-3)"
-              sub="2+ torneios futuros, sem cruzamento directo"
-              count={assiduos.length} defaultOpen={false}>
-              <InscTable rows={assiduos.map(e => ({ nome: e.nome, pais: e.pais, torneios: e.torneios }))} />
-            </Secao>
-          )}
-
-          {assiduosTodos.length > 0 && (
-            <Secao titulo="📊 Mais assíduos" corTitulo="var(--text-3)"
-              sub="2+ torneios futuros — todo o universo USKids"
-              count={assiduosTodos.length} defaultOpen={false}>
-              <div className="table-wrap">
-              <table className="dtable-lg" style={{ width:"100%" }}>
-                <thead><tr><th style={{ textAlign:"left" }}>Jogador</th><th style={{ width:30 }}></th><th style={{ textAlign:"left" }}>Torneios</th><th style={{ width:36, textAlign:"center" }}>#</th></tr></thead>
-                <tbody>
-                  {assiduosTodos.map((entry, i) => (
-                    <tr key={i} style={{ background: i%2===0 ? "var(--bg-card)" : "var(--bg-detail)" }}>
-                      <td style={{ padding:"6px 10px", color:"var(--text-2)" }}>{displayName(entry.nome)}</td>
-                      <td style={{ textAlign:"center", fontSize:14 }}>{flag(entry.pais)}</td>
-                      <td style={{ padding:"6px 10px" }}>
-                        <div style={{ display:"flex", gap:4, flexWrap:"wrap" }}>
-                          {entry.torneios.map((t, j) => (
-                            <span key={j} style={{ fontSize:11, padding:"2px 8px", borderRadius:6, background:"var(--bg-muted)", color:"var(--text-3)", border:"1px solid var(--border)" }}>
-                              {t.torneioNome.replace(/\s*\d{4}$/, "")} <span style={{ opacity:0.6, fontSize:10 }}>{t.escalao}</span>
-                            </span>
-                          ))}
-                        </div>
+  return (
+    <div>
+      <div className="h-sm" style={{ marginBottom:8 }}>
+        {isFuture ? "Inscritos" : "Resultados"} — {escalaoNome} ({displayPlayers.length})
+      </div>
+      <div style={{ overflowX:"auto" }}>
+        <table className="dtable-lg" style={{ width:"100%" }}>
+          <thead>
+            <tr>
+              {!isFuture && <th style={{ width:40, textAlign:"center" }}>#</th>}
+              <th style={{ width:28, textAlign:"center" }}>🌍</th>
+              <th>Jogador</th>
+              {!isFuture && <th style={{ width:56, textAlign:"center" }}>vs par</th>}
+              {histCols.map(c => (
+                <th key={c.year} style={{ width:92, textAlign:"center" }}>{c.label}</th>
+              ))}
+              <th style={{ width:44, textAlign:"center" }}>torn.</th>
+            </tr>
+          </thead>
+          <tbody>
+            {displayPlayers.map((p, i) => {
+              const isM = isManuel(p.nome);
+              const arEntry = arMap.get(normNameAuto(p.nome));
+              const totalTorn = arEntry ? Object.keys(arEntry.r).length : 0;
+              const kidsName = kidsMap.get(normNameAuto(p.nome));
+              const rowBg = isM
+                ? "var(--bg-success-subtle)"
+                : i % 2 === 0 ? "var(--bg-card)" : "var(--bg-detail)";
+              return (
+                <tr key={p.nome} style={{ background: rowBg, fontWeight: isM ? 700 : 400 }}>
+                  {!isFuture && (
+                    <td style={{ textAlign:"center", fontSize:14, fontWeight:700 }}>
+                      {(p.pos ?? 0) === 1 ? "🥇" : (p.pos ?? 0) === 2 ? "🥈" : (p.pos ?? 0) === 3 ? "🥉" : (p.pos ?? "?")}
+                    </td>
+                  )}
+                  <td style={{ textAlign:"center", fontSize:16 }}>{flag(p.pais)}</td>
+                  <td style={{ padding:"7px 10px" }}>
+                    <span style={{ display:"flex", alignItems:"center", gap:6, flexWrap:"wrap" }}>
+                      <span>{displayName(p.nome)}</span>
+                      {kidsName && (
+                        <a href="/kids"
+                          onClick={e => { e.preventDefault(); window.open(`/kids#${encodeURIComponent(kidsName)}`, "_blank"); }}
+                          title="Ver em Kids"
+                          style={{ fontWeight:800, color:"var(--color-good-dark)", fontSize:14, cursor:"pointer", textDecoration:"none", flexShrink:0 }}>
+                          ↗
+                        </a>
+                      )}
+                    </span>
+                  </td>
+                  {!isFuture && (() => {
+                    const { text, color } = fmtToParRivais(p.finalToPar ?? null);
+                    return (
+                      <td style={{ textAlign:"center" }}>
+                        <span style={{ fontSize:13, fontWeight:800, color }}>{text}</span>
                       </td>
-                      <td style={{ textAlign:"center", fontWeight:700, fontSize:12, color:"var(--text-3)" }}>{entry.torneios.length}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              </div>
-            </Secao>
+                    );
+                  })()}
+                  {histCols.map(c => {
+                    if (!arEntry) return (
+                      <td key={c.year} style={{ textAlign:"center" }}>
+                        <span style={{ color:"var(--text-muted)", fontSize:13 }}>—</span>
+                      </td>
+                    );
+                    const res = playerSeriesResult(arEntry, sBase, c.year);
+                    if (!res || res.p <= 0) return (
+                      <td key={c.year} style={{ textAlign:"center" }}>
+                        <span style={{ color:"var(--text-muted)", fontSize:13 }}>—</span>
+                      </td>
+                    );
+                    return (
+                      <td key={c.year} style={{ textAlign:"center" }}>
+                        <RivCell tp={res.tp} pos={res.p} fieldSize={res.fieldSize} />
+                      </td>
+                    );
+                  })}
+                  <td style={{ textAlign:"center", color:"var(--text-3)", fontWeight:700, fontSize:12 }}>
+                    {totalTorn || "—"}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      {(urlResultados || urlUskids) && (
+        <div style={{ textAlign:"right", marginTop:6 }}>
+          {urlResultados && (
+            <a href={urlResultados} target="_blank" rel="noopener noreferrer"
+              className="p p-sm p-muted" style={{ textDecoration:"none", fontSize:11 }}>
+              Resultados ↗
+            </a>
           )}
-        </div>
-      ) : showInscritos && (
-        <div style={{ color:"var(--text-3)", fontSize:12, padding:"8px 0" }}>
-          Nenhum adversário inscrito em torneios futuros
-        </div>
-      )}
-
-      {/* ── Vazio ── */}
-      {torneiosComManuel.length === 0 && !showInscritos && (
-        <div style={{ color:"var(--text-3)", fontSize:12, padding:"24px 0", textAlign:"center" }}>
-          Sem torneios com o Manuel
+          {urlUskids && (
+            <a href={urlUskids} target="_blank" rel="noopener noreferrer"
+              className="p p-sm p-muted" style={{ textDecoration:"none", fontSize:11, marginLeft:6 }}>
+              USKids ↗
+            </a>
+          )}
         </div>
       )}
     </div>
   );
 }
 
-
-
 /* ════════════════════════════════════════════════════════════════
-   tidToLabel — converte tid interno em nome legível
+   TABELA GLOBAL — porta directa de RivaisDashboard (KIDSPage)
+   Usa autoRivals (AutoRivalPlayer[]) + D (dados estáticos BJGT/WJGC)
    ════════════════════════════════════════════════════════════════ */
-function tidToLabel(tid: string): string {
-  const b = tidBase(tid);
-  const ym = b.match(/(\d{2})$/);
-  const ys = ym ? `'${ym[1]}` : "";
-  const bl = b.toLowerCase();
-  if (bl.startsWith("eowagr"))   return `EU Open ${ys}`.trim();
-  if (bl.startsWith("wjgc") || bl.startsWith("brjgt")) return `WJGC ${ys}`.trim();
-  if (bl.startsWith("doral"))    return `Doral ${ys}`.trim();
-  if (bl.startsWith("gg"))       return `Great Golf ${ys}`.trim();
-  if (bl.startsWith("qdl"))      return `QDL ${ys}`.trim();
-  if (bl.startsWith("marco"))    return `Marco Simone ${ys}`.trim();
-  if (bl.startsWith("venice"))   return `Venice Open ${ys}`.trim();
-  if (bl.startsWith("rome"))     return `Rome Classic ${ys}`.trim();
-  if (bl.startsWith("desert"))   return `Desert Shootout ${ys}`.trim();
-  if (bl.startsWith("sandestin"))return `Sandestin ${ys}`.trim();
-  if (bl.startsWith("msstate"))  return `MS State ${ys}`.trim();
-  if (bl.startsWith("scstate"))  return `SC State ${ys}`.trim();
-  if (bl.startsWith("elprat"))   return `El Prat ${ys}`.trim();
-  if (bl.startsWith("usk"))      return `USK ${ys}`.trim();
-  return b.replace(/\d+$/, "").replace(/_/g, " ").toUpperCase().trim() + (ys ? ` ${ys}` : "") || tid;
+
+// ── Tipos locais ──
+interface TGTournDef {
+  id: string; name: string; short: string; date: string;
+  rounds: number; par: number; field: number; nations: number;
+  intendedRounds?: number; url: string; dateExact?: string;
+}
+interface TGResult {
+  p: number | "WD"; t?: number | null; tp?: number | null; rd: number[];
+}
+interface TGPlayer {
+  n: string; co: string; isM?: boolean; dob?: string;
+  r: Record<string, TGResult>; up: string[];
+}
+
+// ── Torneios fixos (BJGT/EOWAGR — tids que NÃO existem no USKids scraper) ──
+const TG_T: TGTournDef[] = [
+  { id:"gg25",     name:"Greatgolf Open 2025",    short:"GG25",      date:"Fev 2025", rounds:2, par:72, field:12, nations:4,  dateExact:"2025-02-08", url:"https://scoring-pt.datagolf.pt/scripts/classif.asp?tourn=10202&club=935" },
+  { id:"brjgt25",  name:"WJGC 2025",              short:"WJGC",      date:"Fev 2025", rounds:3, par:71, field:40, nations:17, dateExact:"2025-02-24", url:"https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt251/contest/34/leaderboard.htm" },
+  { id:"eowagr25", name:"European Open",           short:"EU Open",   date:"Ago 2025", rounds:3, par:72, field:8,  nations:6,  dateExact:"2025-08-01", url:"https://brjgt.bluegolf.com/bluegolfw/brjgt25/event/brjgt2512/contest/21/leaderboard.htm" },
+  { id:"venice25", name:"Venice Open 2025",        short:"Venice",    date:"Ago 2025", rounds:3, par:72, field:39, nations:16, dateExact:"2025-08-07", url:"https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/515206/venice-open-2025/results" },
+  { id:"rome25",   name:"Rome Classic 2025",       short:"Rome",      date:"Out 2025", rounds:2, par:72, field:14, nations:6,  dateExact:"2025-10-18", url:"https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516026/rome-classic-2025/results" },
+  { id:"doral25",  name:"Doral Junior 2025",       short:"Doral",     date:"Dez 2025", rounds:2, par:71, field:35, nations:13, dateExact:"2025-12-18", url:"https://www.golfgenius.com/v2tournaments/4222407" },
+  { id:"qdl25",    name:"QDL Junior Open 2025",    short:"QDL",       date:"Nov 2025", rounds:1, par:72, field:12, nations:7,  dateExact:"2025-11-08", url:"https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=962&tcode=10080&classif_order=2" },
+  { id:"gg26",     name:"Greatgolf Junior Open",   short:"GG",        date:"Fev 2026", rounds:2, par:72, field:12, nations:4,  dateExact:"2026-02-08", url:"https://scoring-pt.datagolf.pt/scripts/classif.asp?tourn=10296&club=935&ack=OT342GH16T" },
+  { id:"wjgc26",   name:"WJGC 2026",              short:"WJGC26",    date:"Fev 2026", rounds:3, par:72, field:38, nations:18, dateExact:"2026-02-24", url:"https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/73/leaderboard.htm" },
+  { id:"marco26",  name:"Marco Simone Inv. 2026",  short:"Marco 26",  date:"Mar 2026", rounds:2, par:72, field:17, nations:9,  dateExact:"2026-03-14", url:"https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516989/marco-simone-invitational-2026/results" },
+];
+
+
+const TG_AUTO_META: Record<string, { field: number; par: number; url?: string }> = {
+  wjgc25_b89:    { field:37, par:71 }, wjgc25_b1011: { field:40, par:71 }, wjgc25_b1213: { field:38, par:71 },
+  wjgc26_b1213:  { field:39, par:73 },
+  marco26_b9:    { field:17, par:72 }, marco26_b10: { field:17, par:72 }, marco26_b11: { field:17, par:72 }, marco26_b12: { field:17, par:72 },
+  doral25_b89:   { field:30, par:71 }, doral25_b1011: { field:35, par:71 }, doral25_b1213: { field:32, par:71 },
+  venice25_b9:   { field:35, par:72 }, venice25_b10: { field:38, par:72 }, venice25_b11: { field:39, par:72 }, venice25_b12: { field:36, par:72 },
+  rome25_b9:     { field:12, par:72 }, rome25_b10: { field:14, par:72 }, rome25_b11: { field:14, par:72 }, rome25_b12: { field:12, par:72 },
+};
+
+const TG_AUTO_NAMES: Record<string, { name: string; short: string; date: string }> = {
+  wjgc25_b89:    { name:"WJGC 2025",          short:"WJGC25",   date:"Fev 2025" },
+  wjgc25_b1011:  { name:"WJGC 2025",          short:"WJGC25",   date:"Fev 2025" },
+  wjgc25_b1213:  { name:"WJGC 2025",          short:"WJGC25",   date:"Fev 2025" },
+  wjgc26_b1213:  { name:"WJGC 2026",          short:"WJGC26",   date:"Fev 2026" },
+  eowagr25_b78:  { name:"European Open",       short:"EU Open",  date:"Ago 2025" },
+  eowagr25_b910: { name:"European Open",       short:"EU Open",  date:"Ago 2025" },
+  eowagr25_b1314:{ name:"European Open",       short:"EU Open",  date:"Ago 2025" },
+  doral25_b89:   { name:"Doral Junior 2025",   short:"Doral",    date:"Dez 2025" },
+  doral25_b1011: { name:"Doral Junior 2025",   short:"Doral",    date:"Dez 2025" },
+  doral25_b1213: { name:"Doral Junior 2025",   short:"Doral",    date:"Dez 2025" },
+  venice25_b9:   { name:"Venice Open 2025",    short:"Venice",   date:"Ago 2025" },
+  venice25_b10:  { name:"Venice Open 2025",    short:"Venice",   date:"Ago 2025" },
+  venice25_b11:  { name:"Venice Open 2025",    short:"Venice",   date:"Ago 2025" },
+  venice25_b12:  { name:"Venice Open 2025",    short:"Venice",   date:"Ago 2025" },
+  rome25_b10:    { name:"Rome Classic 2025",   short:"Rome",     date:"Out 2025" },
+  rome25_b11:    { name:"Rome Classic 2025",   short:"Rome",     date:"Out 2025" },
+  rome25_b12:    { name:"Rome Classic 2025",   short:"Rome",     date:"Out 2025" },
+  marco25_b9:    { name:"Marco Simone Inv.",    short:"Marco25",  date:"Mar 2025" },
+  marco25_b10:   { name:"Marco Simone Inv.",    short:"Marco25",  date:"Mar 2025" },
+  marco25_b11:   { name:"Marco Simone Inv.",    short:"Marco25",  date:"Mar 2025" },
+  marco25_b12:   { name:"Marco Simone Inv.",    short:"Marco25",  date:"Mar 2025" },
+  marco26_b9:    { name:"Marco Simone Inv. 2026", short:"Marco26", date:"Mar 2026" },
+  marco26_b10:   { name:"Marco Simone Inv. 2026", short:"Marco26", date:"Mar 2026" },
+  marco26_b11:   { name:"Marco Simone Inv. 2026", short:"Marco26", date:"Mar 2026" },
+  marco26_b12:   { name:"Marco Simone Inv. 2026", short:"Marco26", date:"Mar 2026" },
+  desert26_b9:   { name:"Desert Shootout",     short:"Desert",   date:"Fev 2026" },
+  desert26_b10:  { name:"Desert Shootout",     short:"Desert",   date:"Fev 2026" },
+  desert26_b11:  { name:"Desert Shootout",     short:"Desert",   date:"Fev 2026" },
+  desert26_b12:  { name:"Desert Shootout",     short:"Desert",   date:"Fev 2026" },
+  sandestin26_b9: { name:"Sandestin Champ.",   short:"Sandest",  date:"Jan 2026" },
+  sandestin26_b10:{ name:"Sandestin Champ.",   short:"Sandest",  date:"Jan 2026" },
+  sandestin26_b11:{ name:"Sandestin Champ.",   short:"Sandest",  date:"Jan 2026" },
+  sandestin26_b12:{ name:"Sandestin Champ.",   short:"Sandest",  date:"Jan 2026" },
+  msstate26_b9:  { name:"MS State Inv. 2026",  short:"MS State", date:"Mar 2026" },
+  msstate26_b10: { name:"MS State Inv. 2026",  short:"MS State", date:"Mar 2026" },
+  msstate26_b11: { name:"MS State Inv. 2026",  short:"MS State", date:"Mar 2026" },
+  msstate26_b12: { name:"MS State Inv. 2026",  short:"MS State", date:"Mar 2026" },
+  elprat23_b8:   { name:"El Prat 2023",        short:"El Prat",  date:"Out 2023" },
+  elprat23_b9:   { name:"El Prat 2023",        short:"El Prat",  date:"Out 2023" },
+  elprat23_b10:  { name:"El Prat 2023",        short:"El Prat",  date:"Out 2023" },
+  doral24_b89:   { name:"Doral Junior 2024",   short:"Doral24",  date:"Dez 2024" },
+  doral24_b1011: { name:"Doral Junior 2024",   short:"Doral24",  date:"Dez 2024" },
+  doral24_b1213: { name:"Doral Junior 2024",   short:"Doral24",  date:"Dez 2024" },
+  gg25:          { name:"Greatgolf Open 2025",  short:"GG25",     date:"Fev 2025" },
+  gg26_u14:      { name:"Greatgolf U14 2026",   short:"GG U14",   date:"Fev 2026" },
+  gg26_open:     { name:"Greatgolf Open 2026",  short:"GG Open",  date:"Fev 2026" },
+};
+
+// ── Players estáticos (BJGT/WJGC não cobertos pelo USKids scraper) ──
+const TG_D: TGPlayer[] = [
+  {n:"Manuel Medeiros",co:"Portugal",isM:true,dob:"29/04/2014",r:{brjgt25:{p:26,t:265,tp:52,rd:[90,85,90]},eowagr25:{p:7,t:238,tp:22,rd:[85,77,76]},venice25:{p:28,t:237,tp:21,rd:[78,76,83]},rome25:{p:10,t:166,tp:22,rd:[89,77]},doral25:{p:29,t:177,tp:35,rd:[98,79]},qdl25:{p:11,t:90,tp:18,rd:[90]},gg26:{p:4,t:169,tp:25,rd:[87,82]},wjgc26:{p:9,t:232,tp:16,rd:[79,78,75]}},up:[]},
+  {n:"Dmitrii Elchaninov",co:"Russian Federation",dob:"13/05/2014",r:{brjgt25:{p:1,t:205,tp:-8,rd:[69,68,68]},eowagr25:{p:2,t:218,tp:2,rd:[77,70,71]},venice25:{p:1,t:198,tp:-18,rd:[62,68,68]},qdl25:{p:1,t:71,tp:-1,rd:[71]},wjgc26:{p:1,t:210,tp:-6,rd:[69,69,72]}},up:[]},
+  {n:"Diego Gross Paneque",co:"Spain",r:{brjgt25:{p:16,t:249,tp:36,rd:[80,84,85]},wjgc26:{p:9,t:232,tp:16,rd:[76,75,81]}},up:[]},
+  {n:"Álex Carrón",co:"Spain",r:{brjgt25:{p:13,t:246,tp:33,rd:[82,84,80]},wjgc26:{p:12,t:241,tp:25,rd:[76,82,83]}},up:[]},
+  {n:"Henry Liechti",co:"Switzerland",r:{brjgt25:{p:17,t:250,tp:37,rd:[87,84,79]},wjgc26:{p:23,t:255,tp:39,rd:[79,87,89]}},up:[]},
+  {n:"Niko Alvarez Van Der Walt",co:"Spain",r:{brjgt25:{p:22,t:261,tp:48,rd:[89,83,89]},wjgc26:{p:19,t:249,tp:33,rd:[81,86,82]}},up:[]},
+  {n:"Miroslavs Bogdanovs",co:"Spain",dob:"19/05/2014",r:{brjgt25:{p:24,t:263,tp:50,rd:[86,88,89]},venice25:{p:18,t:227,tp:11,rd:[76,74,77]},wjgc26:{p:20,t:252,tp:36,rd:[78,86,88]}},up:[]},
+  {n:"Christian Chepishev",co:"Bulgaria",r:{brjgt25:{p:29,t:270,tp:57,rd:[87,86,97]},wjgc26:{p:7,t:230,tp:14,rd:[75,76,79]}},up:["marco26"]},
+  {n:"James Doyle",co:"Ireland",r:{brjgt25:{p:32,t:277,tp:64,rd:[93,92,92]},wjgc26:{p:31,t:276,tp:60,rd:[91,87,98]}},up:[]},
+  {n:"Alexis Beringer",co:"Switzerland",r:{brjgt25:{p:33,t:290,tp:77,rd:[93,94,103]},wjgc26:{p:17,t:246,tp:30,rd:[83,82,81]}},up:[]},
+  {n:"Kevin Canton",co:"Italy",r:{brjgt25:{p:34,t:291,tp:78,rd:[98,96,97]},wjgc26:{p:30,t:273,tp:57,rd:[85,88,100]}},up:[]},
+  {n:"Leon Schneitter",co:"Switzerland",r:{brjgt25:{p:"WD",t:null,tp:null,rd:[]},wjgc26:{p:11,t:236,tp:20,rd:[76,80,80]}},up:[]},
+  {n:"Victor Canot Januel",co:"France",r:{brjgt25:{p:30,t:274,tp:61,rd:[88,88,98]},venice25:{p:24,t:233,tp:17,rd:[76,82,75]}},up:[]},
+  {n:"Theodore Dausse",co:"France",r:{brjgt25:{p:31,t:275,tp:62,rd:[96,90,89]},venice25:{p:30,t:244,tp:28,rd:[83,80,81]}},up:[]},
+  {n:"Aronas Juodis",co:"Lithuania",r:{brjgt25:{p:8,t:232,tp:19,rd:[74,77,81]},eowagr25:{p:1,t:213,tp:-3,rd:[72,71,70]},qdl25:{p:4,t:75,tp:3,rd:[75]},wjgc26_1213:{p:22,t:163,tp:17,rd:[87,76]}},up:[]},
+  {n:"Marcus Karim",co:"England",r:{brjgt25:{p:2,t:218,tp:5,rd:[74,73,71]},qdl25:{p:3,t:72,tp:0,rd:[72]},wjgc26_1213:{p:8,t:150,tp:4,rd:[78,72]}},up:[]},
+  {n:"Harrison Barnett",co:"England",r:{brjgt25:{p:3,t:220,tp:7,rd:[77,71,72]},qdl25:{p:6,t:78,tp:6,rd:[78]},wjgc26_1213:{p:19,t:160,tp:14,rd:[83,77]}},up:[]},
+  {n:"Julian Sepulveda",co:"United States",r:{brjgt25:{p:4,t:223,tp:10,rd:[73,77,73]},doral25:{p:17,t:162,tp:20,rd:[81,81]}},up:[]},
+  {n:"Mihir Pasura",co:"United Kingdom",r:{brjgt25:{p:5,t:229,tp:16,rd:[82,74,73]}},up:[]},
+  {n:"Yorick De Hek",co:"Netherlands",r:{brjgt25:{p:28,t:270,tp:57,rd:[92,87,91]},eowagr25:{p:5,t:234,tp:18,rd:[79,76,79]}},up:[]},
+  {n:"Nial Diwan",co:"England",r:{brjgt25:{p:25,t:264,tp:51,rd:[93,87,84]},eowagr25:{p:6,t:238,tp:22,rd:[81,84,73]}},up:[]},
+  {n:"Maximilien Demole",co:"Switzerland",r:{venice25:{p:3,t:207,tp:-9,rd:[69,70,68]},doral25:{p:5,t:155,tp:13,rd:[80,75]}},up:[]},
+  {n:"Emile Cuanalo",co:"England",r:{eowagr25:{p:3,t:224,tp:8,rd:[70,76,78]},venice25:{p:5,t:211,tp:-5,rd:[67,71,73]},rome25:{p:2,t:139,tp:-5,rd:[70,69]},qdl25:{p:5,t:75,tp:3,rd:[75]},wjgc26_1213:{p:5,t:146,tp:0,rd:[74,72]}},up:[]},
+  {n:"Gregorio Vitolo",co:"Italy",r:{venice25:{p:2,t:204,tp:-12,rd:[64,71,69]},rome25:{p:1,t:134,tp:-10,rd:[67,67]},wjgc26:{p:14,t:244,tp:28,rd:[80,82,82]}},up:[]},
+  {n:"Hugo Luque Reina",co:"Spain",r:{eowagr25:{p:4,t:229,tp:13,rd:[80,74,75]},wjgc26:{p:18,t:247,tp:31,rd:[82,82,83]}},up:["marco26"]},
+  {n:"Maxime Vervaet",co:"Belgium",r:{eowagr25:{p:8,t:246,tp:30,rd:[85,80,81]},wjgc26:{p:16,t:244,tp:28,rd:[81,82,81]}},up:[]},
+  {n:"Emilio Valverde",co:"Spain",r:{eowagr25:{p:9,t:252,tp:36,rd:[87,84,81]},wjgc26:{p:26,t:261,tp:45,rd:[87,87,87]}},up:[]},
+  {n:"Nicolas Pape",co:"France",r:{wjgc26:{p:6,t:227,tp:11,rd:[75,76,76]}},up:[]},
+];
+
+// ── Pesos de presença (round averages a partir de D estático) ──
+const TG_AVG_R: Record<string, Array<{ m: number; s: number } | null>> = {};
+for (const t of TG_T) {
+  TG_AVG_R[t.id] = [];
+  for (let i = 0; i < t.rounds; i++) {
+    const vals = TG_D.filter(p => (p.r[t.id] as any)?.rd?.[i] != null).map(p => (p.r[t.id] as any).rd[i]).filter((v: any): v is number => v != null);
+    if (vals.length > 1) {
+      const m = vals.reduce((a: number, b: number) => a + b, 0) / vals.length;
+      const s = Math.sqrt(vals.reduce((a: number, b: number) => a + (b - m) ** 2, 0) / vals.length);
+      TG_AVG_R[t.id][i] = { m, s };
+    }
+  }
+}
+
+const TG_TIER_L = { elite: "Elite", strong: "Forte", solid: "Sólido", developing: "Em Desenv.", beginner: "Iniciante" };
+const TG_TR_I: Record<string, { i: string; c: string }> = {
+  up2:    { i: "▲▲", c: "var(--color-good)" },
+  up:     { i: "▲",  c: "var(--score-par-seg)" },
+  stable: { i: "●",  c: "var(--text-muted)" },
+  down:   { i: "▼",  c: "var(--color-warn)" },
+  down2:  { i: "▼▼", c: "var(--color-danger)" },
+};
+const TG_TIER = {
+  elite:      { bg: "var(--bg-success-strong)",  c: "var(--color-good-dark)" },
+  strong:     { bg: "var(--bg-current,#e0f7fa)", c: "var(--text-current,#006064)" },
+  solid:      { bg: "var(--bg-warn-light)",       c: "var(--color-warn-dark)" },
+  developing: { bg: "var(--bg-warn-strong)",      c: "var(--color-warn-dark)" },
+  beginner:   { bg: "var(--bg-danger-subtle,var(--bg-danger-strong))", c: "var(--color-danger-dark)" },
+};
+
+const TG_HIDDEN: Array<[string, string]> = [
+  // WJGC25: brjgt25 escondido quando existe o tid USKids
+  ["brjgt25",        "wjgc25_b1011"],
+  // WJGC26: wjgc26_1213 (Boys 12-13) já não está em TG_T; suprimir auto tids USKids
+  ["wjgc26_b1213",   "wjgc26_1213"],
+  ["wjgc26_b1011",   "wjgc26"],
+  // EU Open 2025: suprimir tids USKids em favor do TG_T eowagr25
+  ["eowagr25_b78",   "eowagr25"], ["eowagr25_b910",  "eowagr25"],
+  ["eowagr25_b1011", "eowagr25"], ["eowagr25_b1314", "eowagr25"],
+  // Venice 2025
+  ["venice25_b11","venice25"], ["venice25_b12","venice25"],
+  ["venice25_b9", "venice25"], ["venice25_b10","venice25"],
+  // Rome 2025
+  ["rome25_b11","rome25"], ["rome25_b12","rome25"],
+  ["rome25_b9", "rome25"], ["rome25_b10","rome25"],
+  // Doral 2025
+  ["doral25_b1011","doral25"], ["doral25_b89","doral25"], ["doral25_b1213","doral25"],
+  // QDL 2025
+  ["qdl25_b11","qdl25"], ["qdl25_b12","qdl25"], ["qdl25_b9","qdl25"],
+  // Greatgolf 2026
+  ["gg26_u14","gg26"], ["gg26_open","gg26"],
+  // Marco Simone 2026 — esconder outros escalões quando Boys 11 (marco26) presente
+  ["marco26_b9","marco26"],  ["marco26_b10","marco26"],  ["marco26_b12","marco26"],
+  ["usk21080_b9","marco26"], ["usk21080_b10","marco26"], ["usk21080_b12","marco26"],
+  // Marco Simone 2025 — esconder outros escalões quando Boys 11 (usk18438_b11) presente
+  ["marco25_b9","usk18438_b11"],  ["marco25_b10","usk18438_b11"],  ["marco25_b12","usk18438_b11"],
+  ["usk18438_b9","usk18438_b11"], ["usk18438_b10","usk18438_b11"], ["usk18438_b12","usk18438_b11"],
+];
+
+function tgHiddenTids(p: TGPlayer): Set<string> {
+  const hidden = new Set<string>();
+  for (const [toHide, whenPresent] of TG_HIDDEN) {
+    if ((p.r[toHide] as any)?.rd?.length > 0 && (p.r[whenPresent] as any)?.rd?.length > 0)
+      hidden.add(toHide);
+  }
+  return hidden;
+}
+
+function tgNPlayed(p: TGPlayer) {
+  const total = Object.values(p.r).filter(r => r && (r.tp != null || r.rd?.length > 0)).length;
+  return total - tgHiddenTids(p).size;
+}
+
+function tgNRounds(p: TGPlayer) {
+  const hidden = tgHiddenTids(p);
+  return Object.entries(p.r).reduce((acc, [tid, res]) => {
+    if (hidden.has(tid)) return acc;
+    return acc + (res?.rd ? res.rd.filter((x: number) => x != null && x > 0).length : 0);
+  }, 0);
+}
+
+function tgGetVsAvg(p: TGPlayer, manuelRef: TGPlayer | null): number | null {
+  if (p.isM || !manuelRef) return null;
+  const ds: number[] = [];
+  Object.keys(p.r).forEach(tid => {
+    const mr = manuelRef.r[tid];
+    if (mr && p.r[tid].tp != null && mr.tp != null) ds.push(p.r[tid].tp! - mr.tp!);
+  });
+  return ds.length ? Math.round(ds.reduce((a, b) => a + b, 0) / ds.length) : null;
+}
+
+function tgGetTournInfo(tid: string): { name: string; short: string; date: string; dateExact: string } {
+  const manual = TG_T.find(t => t.id === tid);
+  if (manual) return { name: manual.name, short: manual.short, date: manual.date, dateExact: manual.dateExact ?? manual.date };
+  const autoName = TG_AUTO_NAMES[tid];
+  if (autoName) return { ...autoName, dateExact: autoName.date };
+  const uskMatch = tid.match(/^(usk\d+)_b(\d+)$/);
+  if (uskMatch) {
+    const base = uskTournNames.get(uskMatch[1]);
+    if (base) return { name: base.name, short: base.short, date: base.date, dateExact: base.dateExact ?? base.date };
+  }
+  return { name: tid, short: tid, date: "?", dateExact: "9999" };
+}
+
+function tgGetTournWeight(tid: string): number {
+  if (tid.startsWith("brjgt") || tid.startsWith("wjgc"))  return 1.2;
+  if (tid.startsWith("venice") || tid.startsWith("doral")) return 1.2;
+  if (/^usk\d+_b\d+$/.test(tid)) {
+    const base = tid.replace(/_b\d+$/, "");
+    const name = (uskTournNames.get(base)?.name ?? "").toLowerCase();
+    if (name.includes("world")) return 1.4;
+    if (name.includes("european")) return 1.2;
+    if (name.includes("venice")) return 1.2;
+    return 1.0;
+  }
+  return 0.3;
+}
+
+function tgFmtSign(n: number | null | undefined, dec = 0): string {
+  if (n == null) return "—";
+  const s = dec === 0 ? Math.round(n).toString() : n.toFixed(dec);
+  return n > 0 ? `+${s}` : s;
+}
+
+function tgSc3m(v: number): string {
+  if (v < -2) return "var(--color-good)";
+  if (v < 0) return "var(--score-par-seg,var(--color-good))";
+  if (v === 0) return "var(--text-3)";
+  if (v <= 3) return "var(--color-warn)";
+  return "var(--color-danger)";
+}
+
+function tgTpColorDark(tp: number | null | undefined): string {
+  if (tp == null) return "var(--text-3)";
+  if (tp <= -5) return "var(--score-eagle)";
+  if (tp < 0)  return "var(--color-good-dark)";
+  if (tp === 0) return "var(--text-2)";
+  if (tp <= 10) return "var(--color-warn-dark)";
+  return "var(--color-danger-dark)";
+}
+
+// ── zTier calculation (simplified) ──
+function tgZTier(playerAvg: number, field: { m: number; s: number }): keyof typeof TG_TIER | null {
+  if (field.s <= 0) return null;
+  const z = (playerAvg - field.m) / field.s;
+  if (z <= -1.5) return "elite";
+  if (z <= -0.8) return "strong";
+  if (z <= 0.2)  return "solid";
+  if (z <= 1.0)  return "developing";
+  return "beginner";
+}
+
+// ── Rank map (simplified z-rank) ──
+function tgBuildRankMap(rivals: TGPlayer[]): Record<string, number> {
+  const scored: { n: string; avg: number }[] = [];
+  for (const p of rivals) {
+    const hidden = tgHiddenTids(p);
+    const tps = Object.entries(p.r)
+      .filter(([tid, r]) => !hidden.has(tid) && r?.tp != null)
+      .map(([, r]) => r.tp as number);
+    if (tps.length >= 2) {
+      scored.push({ n: p.n, avg: tps.reduce((a, b) => a + b, 0) / tps.length });
+    }
+  }
+  scored.sort((a, b) => a.avg - b.avg);
+  const m: Record<string, number> = {};
+  scored.forEach((s, i) => { m[s.n] = i + 1; });
+  return m;
+}
+
+// ── Trend (simplified) ──
+function tgGetTrend(p: TGPlayer): string | null {
+  const hidden = tgHiddenTids(p);
+  const tps = Object.entries(p.r)
+    .filter(([tid, r]) => !hidden.has(tid) && r?.tp != null)
+    .sort(([a], [b]) => tgGetTournInfo(a).dateExact.localeCompare(tgGetTournInfo(b).dateExact))
+    .map(([, r]) => r.tp as number);
+  if (tps.length < 2) return null;
+  const half = Math.floor(tps.length / 2);
+  const first = tps.slice(0, half).reduce((a, b) => a + b, 0) / half;
+  const last  = tps.slice(-half).reduce((a, b) => a + b, 0) / half;
+  const diff = last - first;
+  if (diff <= -5)  return "up2";
+  if (diff <= -2)  return "up";
+  if (diff >= 5)   return "down2";
+  if (diff >= 2)   return "down";
+  return "stable";
+}
+
+// ── Mapeamento de tids USKids/auto → tids canónicos de TG_T ──
+// Permite que jogadores auto-carregados apareçam nas colunas fixas correctas.
+// Mapeamento de tids auto → tids canónicos de TG_T.
+// REGRA: mapear APENAS o escalão que o Manuel jogou em cada torneio.
+// Os outros escalões ficam com o tid original e são ignorados (não aparecem
+// em visibleTids nem em manuelTids → filtrados automaticamente na TabelaGlobal).
+const TG_TID_EXACT: Record<string, string> = {
+  // WJGC 2025 → brjgt25 — APENAS Boys 10-11 (escalão do Manuel)
+  "wjgc25_b1011":"brjgt25",
+  // EU Open 2025 → eowagr25 — Manuel jogou o escalão principal (eowagr25 directo)
+  // Os outros escalões (b78, b910, b1314) não são mapeados e ficam suprimidos.
+  // Venice 2025 → venice25 — APENAS Boys 11 (escalão do Manuel)
+  "venice25_b11":"venice25",
+  // Rome 2025 → rome25 — APENAS Boys 11 (escalão do Manuel)
+  "rome25_b11":"rome25",
+  // Doral 2025 → doral25 — APENAS Boys 10-11 (escalão do Manuel)
+  "doral25_b1011":"doral25",
+  // QDL 2025 → qdl25 (torneio sub-12 unificado — escalão único)
+  "qdl25_b9":"qdl25", "qdl25_b11":"qdl25", "qdl25_b12":"qdl25",
+  // GG 2025 → gg25 — APENAS Boys 10 (escalão do Manuel)
+  "gg25_b10":"gg25",
+  // WJGC 2026 → wjgc26 — APENAS Boys 10-11 (escalão do Manuel)
+  "wjgc26_b1011":"wjgc26",
+  // Marco Simone 2026 → marco26 — APENAS Boys 11 (escalão do Manuel)
+  "marco26_b11":"marco26",
+  // USKids completo (tcode numérico) — apenas escalão do Manuel
+  "usk21080_b11":"marco26",   // Marco Simone Inv. 2026 (tcode 21080)
+  "usk19418_b11":"venice25",  // Venice Open 2025 (tcode 19418) — Boys 11
+  "usk20175_b11":"rome25",    // Rome Classic 2025 (tcode 20175) — Boys 11
+  // Marco Simone 2025 — colapsar formato antigo no formato completo (evitar 2 colunas auto)
+  "marco25_b11":"usk18438_b11",  // Marco Simone Inv. 2025 (tcode 18438) — Boys 11
+};
+// Mapeamento genérico por tcode USKids — vazio intencionalmente.
+// Anteriormente mapeava TODOS os escalões de venice25/rome25 para o mesmo tid.
+// Substituído por entradas exactas por escalão em TG_TID_EXACT acima.
+const TG_USK_TCODE: Record<string, string> = {};
+
+function tgNormalizeTid(tid: string): string {
+  if (TG_TID_EXACT[tid]) return TG_TID_EXACT[tid];
+  const m = tid.match(/^(usk\d+)_b\d+$/);
+  if (m && TG_USK_TCODE[m[1]]) return TG_USK_TCODE[m[1]];
+  return tid;
+}
+
+// ── Merge TG_D com autoRivals ──
+function tgMerge(autoRivals: AutoRivalPlayer[]): TGPlayer[] {
+  const normName = (n: string) => n.toLowerCase().trim().replace(/\s+/g, " ");
+  const ALIASES: Record<string, string> = {
+    "manuel francisco medeiros": "manuel medeiros",
+    "manuel goulartt medeiros":  "manuel medeiros",
+    "manuel f medeiros":         "manuel medeiros",
+  };
+  const resolve = (n: string) => ALIASES[normName(n)] ?? normName(n);
+
+  const map = new Map<string, TGPlayer>(TG_D.map(p => [resolve(p.n), { ...p, r: { ...p.r } }]));
+
+  for (const ap of autoRivals) {
+    const key = resolve(ap.n);
+    if (map.has(key)) {
+      const ex = map.get(key)!;
+      for (const [rawTid, res] of Object.entries(ap.r)) {
+        const tid = tgNormalizeTid(rawTid);
+        if (!ex.r[tid] || (res.rd?.length ?? 0) > (ex.r[tid]?.rd?.length ?? 0)) {
+          ex.r[tid] = { p: res.p ?? "WD", tp: res.tp ?? null, t: undefined, rd: res.rd ?? [] };
+        }
+      }
+      if (ap.co && !ex.co) ex.co = ap.co;
+      if (ap.dob && !ex.dob) ex.dob = ap.dob;
+      // Merge up arrays — inscrições futuras do autoRivals
+      if (ap.up?.length) ex.up = [...new Set([...ex.up, ...ap.up])];
+    } else {
+      const convertedR: Record<string, TGResult> = {};
+      for (const [rawTid, v] of Object.entries(ap.r)) {
+        const tid = tgNormalizeTid(rawTid);
+        if (!convertedR[tid] || (v.rd?.length ?? 0) > (convertedR[tid]?.rd?.length ?? 0)) {
+          convertedR[tid] = { p: v.p ?? "WD" as "WD", tp: v.tp ?? null, rd: v.rd ?? [] };
+        }
+      }
+      map.set(key, { n: ap.n, co: ap.co ?? "", r: convertedR, up: ap.up ?? [] });
+    }
+  }
+  return Array.from(map.values());
 }
 
 /* ════════════════════════════════════════════════════════════════
-   tidToLabel — converte tid interno em nome legível
+   TabelaGlobal — tabela completa de todos os rivais × torneios
    ════════════════════════════════════════════════════════════════ */
-function PerfilRivalNovo({
-  nome, rivals, autoRivals, fieldData, resultados, torneiosComManuel, goBack,
-}: {
-  nome: string; rivals: RivalInfo[]; autoRivals: AutoRivalPlayer[];
-  fieldData: FieldData | null; resultados: TorneioResult[];
-  torneiosComManuel: { t: number; name: string; date_inicio: string; escalaoManuel?: string }[];
-  goBack: () => void; goToProfile: (nome: string) => void;
+function TabelaGlobal({ autoRivals, futureCols, fieldData }: {
+  autoRivals: AutoRivalPlayer[];
+  futureCols?: { tid: string; short: string; escalao: string; url?: string }[];
+  fieldData: FieldData | null;
 }) {
-  const rival = rivals.find(r => r.nome.toLowerCase().trim() === nome.toLowerCase().trim());
-  const ar    = autoRivals.find(a => normNameAuto(a.n) === normNameAuto(nome));
-  const today = new Date().toISOString().slice(0, 10);
+  const rivals = useMemo(() => tgMerge(autoRivals), [autoRivals]);
+  const manuelRef = useMemo(() => rivals.find(p => p.isM) ?? null, [rivals]);
 
-  const directEnc = useMemo(() =>
-    [...(rival?.encontros ?? [])].filter(e => !e.adjacente)
-      .sort((a, b) => isoDate(b.torneio_data).localeCompare(isoDate(a.torneio_data)))
-  , [rival]);
-
-  // ── Wall of fame com dados de contexto do torneio ──
-  const wallOfFame = useMemo(() => {
-    if (!ar) return [];
-    const manuelTornNomes = new Set((rival?.encontros ?? []).map(e => tornCanon(e.torneio_nome)));
-    const entries: {
-      tid: string; nome: string; date: string; year: number;
-      pos: number | null; tp: number | null; rondas: number;
-      ageGroup: string; withManuel: boolean; isDirectConfronto: boolean; manPos?: number; rivalPos?: number;
-      // Contexto do campo
-      fieldSize: number | null;       // nº jogadores no escalão
-      winnerTp: number | null;        // to-par do vencedor
-      medianTp: number | null;        // to-par da mediana
-      percentile: number | null;      // top X% (0-100, menor = melhor)
-    }[] = [];
-
-    for (const [tid, res] of Object.entries(ar.r)) {
-      const uskMatch = tid.match(/^usk(\d{4,})/i);
-      const tidNum = uskMatch ? parseInt(uskMatch[1]) : (isNaN(parseInt(tid)) ? NaN : parseInt(tid));
-      const torn = isNaN(tidNum) ? null : resultados.find(t => t.t === tidNum);
-      // Fallback: uskTournNames (preenchido pelo processMemberHistory e TCODE_META)
-      const uskKey  = tid.replace(/_b\d+$/, "");   // "usk8300_b12" → "usk8300"
-      const uskMeta = uskTournNames.get(uskKey);
-      const tornNome = torn?.name ?? uskMeta?.name ?? tidToLabel(tid);
-      const tornDate = torn?.date_inicio ?? uskMeta?.dateExact ?? "";
-      const yrFromTid = (() => {
-        if (uskMeta?.dateExact) return parseInt(uskMeta.dateExact.slice(0, 4));
-        const b = tidBase(tid); const m = b.match(/(\d{2})$/);
-        if (!m) return 0; const n = parseInt(m[1]);
-        return (n >= 20 && n <= 35) ? 2000 + n : 0;
-      })();
-      const year = tornDate ? parseInt(isoDate(tornDate).slice(0, 4)) : yrFromTid;
-      // withManuel: estiveram no mesmo torneio (mesmo que escalões diferentes) → fundo azul + ∩
-      const withManuel = manuelTornNomes.has(tornCanon(tornNome));
-      // isDirectConfronto: mesmo torneio E mesmo escalão → mostra resultado
-      const enc = withManuel
-        ? (rival?.encontros ?? []).find(e =>
-            tornCanon(e.torneio_nome) === tornCanon(tornNome) && !e.adjacente)
-        : undefined;
-      const isDirectConfronto = enc != null;
-
-      // Dados de contexto do campo (via resultados → fallback: uskids-field-sizes.json)
-      let fieldSize: number | null = null;
-      let winnerTp: number | null = null;
-      let medianTp: number | null = null;
-      let percentile: number | null = null;
-
-      if (torn && res.ageGroup) {
-        const esc = torn.escaloes?.find(e => e.nome === res.ageGroup)
-          ?? torn.escaloes?.find(e => e.nome.includes(res.ageGroup ?? ""));
-        if (esc) {
-          const lastRd = esc.rondas?.[esc.rondas.length - 1];
-          const lb = [...(lastRd?.leaderboard ?? lastRd?.jogadores ?? [])];
-          if (lb.length > 0) {
-            fieldSize = lb.length;
-            const sorted = [...lb].filter(j => j.to_par != null).sort((a, b) => (a.to_par ?? 0) - (b.to_par ?? 0));
-            if (sorted.length > 0) {
-              winnerTp = sorted[0].to_par ?? null;
-              medianTp = sorted[Math.floor(sorted.length / 2)].to_par ?? null;
-            }
-          }
+  // Mapa de inscrições: tid → Set de nomes normalizados (de fieldData, não de up)
+  const inscricaoMap = useMemo(() => {
+    const m = new Map<string, Set<string>>();
+    if (!fieldData || !futureCols?.length) return m;
+    for (const fc of futureCols) {
+      const tNum = parseInt(fc.tid.replace("usk", ""));
+      const torneio = fieldData.torneios.find(t => t.t === tNum);
+      if (!torneio) continue;
+      const s = new Set<string>();
+      for (const esc of torneio.escaloes) {
+        for (const j of (esc.jogadores ?? [])) {
+          s.add(normNameAuto(j.nome));
         }
       }
-      // Fallback: uskids-field-sizes.json (inscritos por escalão)
-      if (fieldSize == null) {
-        fieldSize = uskFieldSizes.get(tid) ?? null;
-      }
-      // Percentil: só calcular com o field real (leaderboard), não com inscritos
-      if (res.p != null && fieldSize != null && !winnerTp && !medianTp) {
-        // field-sizes dá inscritos, não to-par — apenas percentil de posição
-        percentile = Math.round((res.p / fieldSize) * 100);
-      } else if (res.p != null && fieldSize != null && fieldSize > 0 && winnerTp != null) {
-        percentile = Math.round((res.p / fieldSize) * 100);
-      }
-
-      entries.push({
-        tid, nome: tornNome, date: tornDate, year,
-        pos: res.p ?? null,
-        tp: res.tp, rondas: res.rd?.length ?? 1,
-        ageGroup: res.ageGroup ?? "", withManuel, isDirectConfronto,
-        manPos: enc?.man_pos, rivalPos: enc?.rival_pos,
-        fieldSize, winnerTp, medianTp, percentile,
-      });
+      m.set(fc.tid, s);
     }
-    return entries.sort((a, b) =>
-      b.year !== a.year ? b.year - a.year : isoDate(b.date).localeCompare(isoDate(a.date))
-    );
-  }, [ar, rival, resultados]);
+    return m;
+  }, [fieldData, futureCols]);
 
-  const byYear = useMemo(() => {
-    const map = new Map<number, typeof wallOfFame>();
-    for (const e of wallOfFame) {
-      if (!map.has(e.year)) map.set(e.year, []);
-      map.get(e.year)!.push(e);
-    }
-    return [...map.entries()].sort((a, b) => b[0] - a[0]);
-  }, [wallOfFame]);
+  const [fTour, setFTour] = useState("all");
+  const [fCo,   setFCo]   = useState("all");
+  const [q,     setQ]     = useState("");
+  const [sort,  setSort]  = useState("rank");
+  const [dir,   setDir]   = useState<"asc"|"desc">("asc");
+  const [dOnly, setDOnly] = useState(false);
+  const [showFilters, setShowFilters] = useState(false);
 
-  // ── Stats globais ──
-  const stats = useMemo(() => {
-    const withPos = wallOfFame.filter(e => e.pos != null);
-    if (!withPos.length) return null;
-    const ps  = withPos.map(e => e.pos!);
-    const tps = wallOfFame.filter(e => e.tp != null).map(e => e.tp!);
-    const pcts = wallOfFame.filter(e => e.percentile != null).map(e => e.percentile!);
+  const rankMap = useMemo(() => tgBuildRankMap(rivals), [rivals]);
+  const totalRanked = Object.keys(rankMap).length;
 
-    // vs campo: diferença do jogador à mediana do field (trimmed 10% em cada extremo)
-    const vsFieldRaw = wallOfFame
-      .filter(e => e.tp != null && e.medianTp != null)
-      .map(e => e.tp! - e.medianTp!);
-    let vsFieldTrimmed: number | null = null;
-    if (vsFieldRaw.length >= 4) {
-      const sorted = [...vsFieldRaw].sort((a,b)=>a-b);
-      const cut = Math.max(1, Math.floor(sorted.length * 0.1));
-      const trimmed = sorted.slice(cut, sorted.length - cut);
-      vsFieldTrimmed = +(trimmed.reduce((s,v)=>s+v,0)/trimmed.length).toFixed(1);
-    } else if (vsFieldRaw.length > 0) {
-      vsFieldTrimmed = +(vsFieldRaw.reduce((s,v)=>s+v,0)/vsFieldRaw.length).toFixed(1);
-    }
+  const allCountries = useMemo(() => [...new Set(rivals.map(p => p.co))].sort(), [rivals]);
 
-    // Média do tamanho do field (só entradas com dados)
-    const fieldSizes = wallOfFame.filter(e => e.fieldSize != null).map(e => e.fieldSize!);
-    const avgFieldSize = fieldSizes.length
-      ? Math.round(fieldSizes.reduce((s,v)=>s+v,0)/fieldSizes.length)
-      : null;
+  // Tids de escalões que o Manuel NÃO jogou — suprimir de colunas auto e do list filter
+  const TG_SUPPRESS = [
+    "wjgc26_1213",
+    // WJGC 2025 — Boys 8-9 e Boys 12-13 (Manuel jogou Boys 10-11)
+    "wjgc25_b89", "wjgc25_b1213",
+    // EU Open 2025 — outros escalões (Manuel jogou eowagr25 directo = Boys 11-12)
+    "eowagr25_b78", "eowagr25_b910", "eowagr25_b1011", "eowagr25_b1314",
+    // Venice 2025 — Boys 9, 10, 12 (Manuel jogou Boys 11)
+    "venice25_b9", "venice25_b10", "venice25_b12",
+    "usk19418_b9", "usk19418_b10", "usk19418_b12",
+    // Rome 2025 — Boys 9, 10, 12 (Manuel jogou Boys 11)
+    "rome25_b9", "rome25_b10", "rome25_b12",
+    "usk20175_b9", "usk20175_b10", "usk20175_b12",
+    // Doral 2025 — Boys 8-9 e Boys 12-13 (Manuel jogou Boys 10-11)
+    "doral25_b89", "doral25_b1213",
+    // WJGC 2026 — Boys 12-13 (Manuel jogou Boys 10-11)
+    "wjgc26_b1213",
+    // GG 2026 — U14 e Open (Manuel jogou sub-12 = gg26)
+    "gg26_u14", "gg26_open",
+    // Marco 2026 — Boys 9, 10, 12 (Manuel jogou Boys 11)
+    "marco26_b9", "marco26_b10", "marco26_b12",
+    "usk21080_b9", "usk21080_b10", "usk21080_b12",
+    // GG 2025 — outros escalões além do Boys 10 (Manuel)
+    "gg25_b9", "gg25_b11", "gg25_b12",
+    // Marco Simone 2025 — Boys 9, 10, 12 (Manuel jogou Boys 11 = usk18438_b11)
+    "marco25_b9", "marco25_b10", "marco25_b12",
+    "usk18438_b9", "usk18438_b10", "usk18438_b12",
+    // Venice 2025 — Boys 8 (tcode 19418 e formato antigo; Manuel jogou Boys 11)
+    "venice25_b8", "usk19418_b8",
+  ];
 
-    return {
-      total: wallOfFame.length,
-      avgPos: ps.reduce((s,p)=>s+p,0)/ps.length,
-      avgTp:  tps.length ? tps.reduce((s,t)=>s+t,0)/tps.length : null,
-      best: Math.min(...ps), bestTp: tps.length ? Math.min(...tps) : null,
-      top3: ps.filter(p=>p<=3).length, top5: ps.filter(p=>p<=5).length,
-      avgRd: wallOfFame.reduce((s,e)=>s+e.rondas,0)/wallOfFame.length,
-      avgPct: pcts.length ? Math.round(pcts.reduce((s,p)=>s+p,0)/pcts.length) : null,
-      vsFieldTrimmed,
-      avgFieldSize,
-    };
-  }, [wallOfFame]);
+  const autoTournCols = useMemo(() => {
+    const tFixed = new Set(TG_T.map(t => t.id));
+    const tFuture = new Set((futureCols ?? []).map(c => c.tid));
 
-  // ── DOB: mesmo algoritmo do computeDobInfo (KIDSPage.tsx) ────────────────
-  // Usa ar.r directamente: o sufixo _b{n} do tid dá a idade exacta, e o
-  // ageGroup refina para grupos de idade simples ("Boys 10" → exact=10).
-  // Intersecta todas as janelas e aperta com transições de escalão.
-  const { dobLabel, ageGroupRange } = useMemo(() => {
-    const MESES = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
-
-    // parseExactAge: só grupos de 1 número ("Boys 10" → 10; "Boys 9-10" → null)
-    function parseExactAge(ag: string): number | null {
-      const m = ag.match(/boys\s+(\d+)$/i);
-      return m ? parseInt(m[1]) : null;
-    }
-
-    if (!ar) return { dobLabel: null, ageGroupRange: null };
-
-    // ── Step 1: construir constraints a partir de ar.r ──
-    const constraints: Array<{ dateExact: string; ageMin: number; ageMax: number }> = [];
-
-    for (const [tid, res] of Object.entries(ar.r)) {
-      // Tentar obter data e idade base a partir do sufixo do tid
-      const uskMatch = tid.match(/^(usk\d+)_b(\d+)$/);
-      if (!uskMatch) continue; // ignorar tids sem sufixo _b{n} (ex: wjgc25, doral25)
-
-      const base = uskTournNames.get(uskMatch[1]);
-      if (!base?.dateExact) continue;
-
-      const ageFromTid = parseInt(uskMatch[2]);
-      let ageMin = ageFromTid;
-      let ageMax = ageFromTid;
-
-      // Refinar com ageGroup string se for exacto ("Boys 10" → 10)
-      const exact = res.ageGroup ? parseExactAge(res.ageGroup) : null;
-      if (exact != null) {
-        ageMin = Math.max(ageMin, exact);
-        ageMax = Math.min(ageMax, exact);
-      }
-      if (ageMin > ageMax || ageMin < 7 || ageMax > 18) continue;
-
-      constraints.push({ dateExact: base.dateExact, ageMin, ageMax });
-    }
-
-    if (!constraints.length) return { dobLabel: null, ageGroupRange: null };
-
-    // ── Step 2: intersectar todas as janelas ──
-    // "Idade A no dia D" → birthday ∈ (D − (A+1) anos + 1 dia, D − A anos]
-    let rangeMin: Date | null = null;
-    let rangeMax: Date | null = null;
-
-    for (const c of constraints) {
-      const tDate = new Date(c.dateExact);
-      const latest = new Date(tDate);
-      latest.setFullYear(latest.getFullYear() - c.ageMin);
-      const earliest = new Date(tDate);
-      earliest.setFullYear(earliest.getFullYear() - c.ageMax - 1);
-      earliest.setDate(earliest.getDate() + 1);
-
-      const newMin = (!rangeMin || earliest > rangeMin) ? earliest : rangeMin;
-      const newMax = (!rangeMax || latest  < rangeMax)  ? latest   : rangeMax;
-      if (newMin <= newMax) { rangeMin = newMin; rangeMax = newMax; }
-      // else: constraint conflituoso (provavelmente outro jogador com mesmo nome) — ignorar
-    }
-
-    if (!rangeMin || !rangeMax || rangeMin > rangeMax)
-      return { dobLabel: null, ageGroupRange: null };
-
-    // ── Step 3: apertar com transições de escalão ──
-    const sorted = [...constraints].sort((a,b) => a.dateExact.localeCompare(b.dateExact));
-    for (let i = 0; i < sorted.length - 1; i++) {
-      const c1 = sorted[i], c2 = sorted[i+1];
-      if (c2.ageMin - c1.ageMax === 1) {
-        const transA = c1.ageMax + 1;
-        const transLate = new Date(c2.dateExact);
-        transLate.setFullYear(transLate.getFullYear() - transA);
-        const transEarly = new Date(c1.dateExact);
-        transEarly.setFullYear(transEarly.getFullYear() - transA);
-        transEarly.setDate(transEarly.getDate() + 1);
-        const tMin = transEarly > rangeMin ? transEarly : rangeMin;
-        const tMax = transLate  < rangeMax ? transLate  : rangeMax;
-        if (tMin <= tMax) { rangeMin = tMin; rangeMax = tMax; }
+    // Tids onde o Manuel tem resultado real
+    const manuelTids = new Set<string>();
+    const manuel = rivals.find(p => p.isM);
+    if (manuel) {
+      for (const [tid, res] of Object.entries(manuel.r)) {
+        if (res && (res.tp != null || (res.rd?.length ?? 0) > 0)) manuelTids.add(tid);
       }
     }
 
-    // ── Step 4: formatar ──
-    const minY = rangeMin.getFullYear(), maxY = rangeMax.getFullYear();
-    const minM = rangeMin.getMonth(),    maxM = rangeMax.getMonth();
-    const spanDays = Math.round((rangeMax.getTime() - rangeMin.getTime()) / 86400000);
-
-    let dobLabel: string;
-    if (spanDays <= 1) {
-      dobLabel = `n. ${String(rangeMin.getDate()).padStart(2,"0")}/${String(rangeMin.getMonth()+1).padStart(2,"0")}/${rangeMin.getFullYear()}`;
-    } else if (minY === maxY) {
-      dobLabel = minM === maxM
-        ? `n. ${MESES[minM]} ${minY}`
-        : `n. ${MESES[minM]}–${MESES[maxM]} ${minY}`;
-    } else {
-      dobLabel = `n. ${MESES[minM]} ${minY} – ${MESES[maxM]} ${maxY}`;
+    const counts = new Map<string, number>();
+    for (const p of rivals) {
+      for (const [tid, res] of Object.entries(p.r)) {
+        if (tFixed.has(tid) || tFuture.has(tid)) continue;
+        if (TG_SUPPRESS.some(pfx => tid.startsWith(pfx))) continue; // duplicado de TG_T
+        if (!manuelTids.has(tid)) continue;
+        if (!res || (res.tp == null && !(res as any).p)) continue;
+        counts.set(tid, (counts.get(tid) ?? 0) + 1);
+      }
     }
 
-    // Range de escalões (mín → máx idade dos tids _b{n})
-    const allAges = Object.keys(ar.r)
-      .map(tid => tid.match(/^usk\d+_b(\d+)$/)?.[1])
-      .filter(Boolean)
-      .map(Number)
-      .filter(n => n >= 7 && n <= 18);
-    const minAg = allAges.length ? Math.min(...allAges) : null;
-    const maxAg = allAges.length ? Math.max(...allAges) : null;
-    const ageGroupRange = minAg && maxAg && minAg < maxAg
-      ? `Boys ${minAg}→${maxAg}`
-      : minAg ? `Boys ${minAg}` : null;
-
-    return { dobLabel, ageGroupRange };
-  }, [ar]);
-
-  // ── Regularidade ──
-  const { torneiosPorAno, anosActivo, anosComParticipacao, hiatos } = useMemo(() => {
-    const firstYear = byYear.length ? byYear[byYear.length-1][0] : null;
-    const lastYear  = byYear[0]?.[0] ?? null;
-    if (!firstYear || !lastYear) return { torneiosPorAno: 0, anosActivo: 0, anosComParticipacao: 0, hiatos: [] as number[] };
-    const anosActivo = lastYear - firstYear + 1;
-    const anosComPart = byYear.length;
-    const torneiosPorAno = +(wallOfFame.length / anosActivo).toFixed(1);
-    const todosAnos = Array.from({length: anosActivo}, (_, i) => firstYear + i);
-    const anosParticipou = new Set(byYear.map(([yr]) => yr));
-    const hiatos = todosAnos.filter(yr => !anosParticipou.has(yr));
-    return { torneiosPorAno, anosActivo, anosComParticipacao: anosComPart, hiatos };
-  }, [byYear, wallOfFame]);
-
-  // ── Torneios recorrentes (evolução no mesmo torneio) ──
-  const torneiosRecorrentes = useMemo(() => {
-    const map = new Map<string, typeof wallOfFame>();
-    for (const e of wallOfFame) {
-      // Chave SEM ano — para agrupar Marco Simone 2025 + Marco Simone 2026 juntos
-      const canon = tornCanon(e.nome).replace(/-\d{2}$/, "");
-      if (!map.has(canon)) map.set(canon, []);
-      map.get(canon)!.push(e);
-    }
-    return [...map.entries()]
-      .map(([canon, es]) => {
-        // Deduplicar: mesmo torneio (mesmo nome + mesmo ano) → manter só a melhor entrada
-        const dedupMap = new Map<string, typeof wallOfFame[0]>();
-        for (const e of es) {
-          const key = `${tornCanon(e.nome)}|${e.year}|${e.ageGroup}`;
-          const ex = dedupMap.get(key);
-          if (!ex || e.rondas > ex.rondas || (e.rondas === ex.rondas && e.tp != null && ex.tp == null))
-            dedupMap.set(key, e);
-        }
-        return { canon, entries: [...dedupMap.values()].sort((a,b) => a.year - b.year || isoDate(a.date).localeCompare(isoDate(b.date))) };
+    return [...counts.entries()]
+      .filter(([, n]) => n >= 1)
+      .sort((a, b) => {
+        const dA = tgGetTournInfo(a[0]).dateExact, dB = tgGetTournInfo(b[0]).dateExact;
+        return dB.localeCompare(dA) || b[1] - a[1];
       })
-      .filter(g => g.entries.length >= 2)
-      .sort((a,b) => b.entries.length - a.entries.length);
-  }, [wallOfFame]);
+      .map(([tid]) => ({ tid, info: tgGetTournInfo(tid), weight: tgGetTournWeight(tid) }));
+  }, [rivals, futureCols]);
 
-  // ── V/E/D ──
-  const { vitorias, empates, derrotas } = useMemo(() => {
-    let v=0,e=0,d=0;
-    // Perspectiva do RIVAL: V = rival ganhou (rival_pos < man_pos)
-    for (const enc of directEnc) {
-      if (enc.rival_pos < enc.man_pos) v++;
-      else if (enc.rival_pos > enc.man_pos) d++;
-      else e++;
+  // AVG_R dinâmico para colunas auto-detectadas (para z-tier coloring)
+  const autoAvgR = useMemo(() => {
+    const m: Record<string, { avg: number; std: number } | null> = {};
+    for (const { tid } of autoTournCols) {
+      const avgs: number[] = [];
+      for (const p of rivals) {
+        const res = p.r[tid];
+        if (!res || res.tp == null) continue;
+        const rounds = res.rd?.filter((x: number) => x > 0);
+        if (!rounds?.length) continue;
+        const gross = rounds.reduce((a: number, b: number) => a + b, 0);
+        avgs.push(gross / rounds.length); // média por ronda
+      }
+      if (avgs.length < 3) { m[tid] = null; continue; }
+      const avg = avgs.reduce((a, b) => a + b, 0) / avgs.length;
+      const std = Math.sqrt(avgs.reduce((a, b) => a + (b - avg) ** 2, 0) / avgs.length);
+      m[tid] = std > 0 ? { avg, std } : null;
     }
-    return {vitorias:v,empates:e,derrotas:d};
-  }, [directEnc]);
+    return m;
+  }, [autoTournCols, rivals]);
 
-  const firstYear = byYear.length ? byYear[byYear.length-1][0] : null;
-  const lastYear  = byYear[0]?.[0] ?? null;
+  const allTournCols = useMemo(() => [
+    ...TG_T.map(t => ({ tid: t.id, info: { name: t.name, short: t.short, date: t.date, dateExact: t.dateExact ?? "" }, weight: tgGetTournWeight(t.id), url: t.url, isFixed: true, isFuture: false })),
+    ...autoTournCols.map(c => ({ ...c, url: undefined, isFixed: false, isFuture: false })),
+    ...(futureCols ?? []).map(c => ({ tid: c.tid, info: { name: c.short, short: c.short, date: "", dateExact: "9999" }, weight: 1.2, url: c.url, isFixed: false, isFuture: true })),
+  ], [autoTournCols, futureCols]);
 
-  // ── Inscrições futuras ──
-  const manuelInscTids = new Set(
-    (fieldData?.torneios ?? [])
-      .filter(t => t.escaloes.some(e=>(e.jogadores??[]).some(j=>isManuel(j.nome)&&j.pais==="PT")))
-      .map(t=>t.t)
-  );
-  const inscricoesFuturas = useMemo(() => {
-    if (!fieldData) return [];
-    const rn = normNameAuto(nome);
-    return fieldData.torneios.filter(t => {
-      const iso = isoDate(t.date_inicio);
-      return iso>=today && t.escaloes.some(e=>(e.jogadores??[]).some(j=>normNameAuto(j.nome)===rn));
-    }).map(t => {
-      const esc = t.escaloes.find(e=>(e.jogadores??[]).some(j=>normNameAuto(j.nome)===normNameAuto(nome)));
-      const iso = isoDate(t.date_inicio);
-      const diff = Math.round((new Date(iso).getTime()-new Date(today).getTime())/86400000);
-      return {t:t.t,name:t.name,date:t.date_inicio,escalao:esc?.nome??"",daysAway:Math.max(0,diff),isCommon:manuelInscTids.has(t.t)};
-    }).sort((a,b)=>isoDate(a.date).localeCompare(isoDate(b.date)));
-  }, [fieldData,nome,today]);
+  const list = useMemo(() => {
+    // Tids visíveis (colunas reais, sem futuras)
+    const visibleTids = new Set(allTournCols.filter(c => !c.isFuture).map(c => c.tid));
+    let pl = rivals.filter(p =>
+      p.isM || Object.keys(p.r).some(tid => visibleTids.has(tid) && p.r[tid]?.tp != null)
+    );
+    if (dOnly) pl = pl.filter(x => Object.values(x.r).some(r => r.tp != null));
+    if (fTour !== "all") pl = pl.filter(x => x.r[fTour]);
+    if (fCo !== "all") pl = pl.filter(x => x.co === fCo);
+    if (q) { const ql = q.toLowerCase(); pl = pl.filter(x => x.n.toLowerCase().includes(ql)); }
+    pl.sort((a, b) => {
+      let cmp = 0;
+      if (sort === "name") cmp = a.n.localeCompare(b.n);
+      else if (sort === "rank") cmp = (rankMap[a.n] ?? 9999) - (rankMap[b.n] ?? 9999);
+      else if (sort === "nT") cmp = tgNPlayed(b) - tgNPlayed(a);
+      else if (sort.startsWith("t:")) {
+        const tid = sort.slice(2);
+        const isFutureTid = allTournCols.find(c => c.tid === tid)?.isFuture ?? false;
+        if (isFutureTid) {
+          // Coluna de inscrições: inscritos primeiro (1), não inscritos depois (0)
+          const inscribed = inscricaoMap.get(tid);
+          const aIn = inscribed ? (a.isM ? inscribed.has(normNameAuto("Manuel Medeiros")) : inscribed.has(normNameAuto(a.n))) : false;
+          const bIn = inscribed ? (b.isM ? inscribed.has(normNameAuto("Manuel Medeiros")) : inscribed.has(normNameAuto(b.n))) : false;
+          cmp = (bIn ? 1 : 0) - (aIn ? 1 : 0);
+        } else {
+          const posOf = (x: TGPlayer) => { const r = x.r[tid]; if (!r || (r.tp == null && r.p !== "WD")) return 9999; return typeof r.p === "number" ? r.p : 9998; };
+          cmp = posOf(a) - posOf(b);
+        }
+      }
+      if (a.isM) return -999;
+      if (b.isM) return 999;
+      return dir === "desc" ? -cmp : cmp;
+    });
+    return pl;
+  }, [fTour, fCo, q, sort, dir, dOnly, rivals, rankMap, allTournCols]);
 
-  // ── Tendência ──
-  const yearAvgs = byYear.map(([yr,es])=>({yr,avg:(es.filter(e=>e.pos!=null).map(e=>e.pos!).reduce((s,p,_,a)=>s+p/a.length,0))||null}));
-  const trend = yearAvgs.length>=2&&yearAvgs[0].avg!=null&&yearAvgs[yearAvgs.length-1].avg!=null
-    ? yearAvgs[0].avg<yearAvgs[yearAvgs.length-1].avg?"melhora":"piora" : null;
+  const doSort = (c: string) => { if (sort === c) setDir(d => d === "asc" ? "desc" : "asc"); else { setSort(c); setDir("asc"); } };
+  const sortIcon = (c: string) => sort === c ? (dir === "asc" ? " ↑" : " ↓") : "";
 
-  const posLabel = (p:number|null|undefined) => p==null?"—":p===1?"🥇":p===2?"🥈":p===3?"🥉":`#${p}`;
-  const tpFmt = (t:number|null|undefined,short=false) => t==null?(short?"—":"—"):t===0?"E":t>0?`+${t}`:`${t}`;
-  const firstName = displayName(nome).split(" ")[0];
+  // Manuel KPIs
+  const manuelKpis = manuelRef ? (() => {
+    const allRds = Object.values(manuelRef.r).flatMap((r: any) => r.rd?.filter((x: number) => x > 0) ?? []) as number[];
+    return {
+      torn: tgNPlayed(manuelRef),
+      rondas: tgNRounds(manuelRef),
+      avg: allRds.length ? (allRds.reduce((a, b) => a + b, 0) / allRds.length).toFixed(1) : null,
+      best: allRds.length ? Math.min(...allRds) : null,
+    };
+  })() : null;
 
-  // Pill helpers usando o sistema de classes da app
-  const Pill = ({cls,style:st,children}:{cls?:string,style?:React.CSSProperties,children:React.ReactNode}) => (
-    <span className={`p p-sm${cls?" "+cls:""}`} style={st}>{children}</span>
-  );
-
-  // ── Palmarès: pódio (pos 1/2/3) com contexto ──────────────────
-  const palmares = useMemo(() =>
-    wallOfFame
-      .filter(e => e.pos != null && e.pos <= 3)
-      .sort((a, b) => (a.pos ?? 9) - (b.pos ?? 9) || b.year - a.year || isoDate(b.date).localeCompare(isoDate(a.date))),
-  [wallOfFame]);
-
-  // ── Tipo de jogador (classificação automática) ────────────────
-  const playerType = useMemo(() => {
-    if (!stats) return null;
-  const wins = palmares.filter(e => e.pos === 1).length;
-    const avg  = stats.avgPos;
-    const pct  = stats.avgPct;
-    const tot  = stats.total;
-    if (wins >= 3 && avg <= 4)                        return { label: "🏆 Elite",               bg: "var(--score-eagle)",       fg: "#fff" };
-    if (wins >= 1 && avg <= 5)                        return { label: "⭐ Top Contender",        bg: "var(--medal-gold)",        fg: "#fff" };
-    if (avg <= 8 && (pct == null || pct <= 25))       return { label: "🎯 Forte Competidor",    bg: "var(--color-good-dark)",   fg: "#fff" };
-    if (trend === "melhora" && anosActivo <= 3)       return { label: "📈 Em Ascensão",          bg: "var(--color-info)",        fg: "#fff" };
-    if (tot >= 20 && anosActivo >= 4)                 return { label: "🔁 Assíduo do Circuito", bg: "var(--text-dark)",         fg: "#fff" };
-    if (avg <= 12 && tot >= 10)                       return { label: "✅ Consistente",          bg: "var(--accent)",            fg: "#fff" };
-    return null;
-  }, [stats, palmares, trend, anosActivo]);
+  const activeCount = [fTour, fCo].filter(v => v !== "all").length + (dOnly ? 1 : 0) + (q ? 1 : 0);
+  const resetAll = () => { setFTour("all"); setFCo("all"); setDOnly(false); setQ(""); };
 
   return (
-    <div style={{maxWidth:920, paddingBottom:32}}>
-
-      {/* Voltar */}
-      <button onClick={goBack} className="btn" style={{
-        display:"flex", alignItems:"center", gap:6,
-        marginBottom:16, fontSize:13, fontWeight:600,
-        color:"var(--accent)", background:"transparent", border:"none",
-        padding:"6px 0", cursor:"pointer",
-      }}>
-        ◀ Todos os rivais
-      </button>
-
-      {/* ══ HERO CARD ══ */}
-      <div className="card" style={{marginBottom:16, padding:0, overflow:"hidden", border:"1.5px solid var(--border-light)"}}>
-
-        {/* Faixa de identidade */}
-        <div style={{
-          display:"flex", gap:16, alignItems:"flex-start",
-          padding:"20px 22px 16px",
-          background: playerType ? "linear-gradient(135deg, var(--bg-card) 60%, rgba(0,0,0,.03))" : "var(--bg-card)",
-          borderBottom:"1px solid var(--border-light)",
-        }}>
-          {/* Flag grande */}
-          <div style={{fontSize:56, lineHeight:1, flexShrink:0, marginTop:2}}>{flag(rival?.pais??ar?.co??"")}</div>
-
-          {/* Nome + pills */}
-          <div style={{flex:1, minWidth:0}}>
-            <div style={{display:"flex", alignItems:"center", gap:10, flexWrap:"wrap", marginBottom:8}}>
-              <div style={{fontSize:26, fontWeight:900, color:"var(--text)", lineHeight:1.1, letterSpacing:"-0.02em"}}>
-                {displayName(nome)}
-              </div>
-              {playerType && (
-                <span style={{
-                  fontSize:12, fontWeight:800, padding:"3px 10px", borderRadius:20,
-                  background:playerType.bg, color:playerType.fg,
-                  letterSpacing:"0.02em", flexShrink:0,
-                }}>
-                  {playerType.label}
-                </span>
-              )}
-              {ar && (
-                <a href="/kids"
-                  onClick={e => { e.preventDefault(); window.open(`/kids#${encodeURIComponent(ar.n)}`, "_blank"); }}
-                  title="Ver perfil completo em Kids"
-                  style={{ fontSize:11, fontWeight:700, padding:"3px 10px", borderRadius:20,
-                    background:"var(--bg-success-subtle)", color:"var(--color-good-dark)",
-                    border:"1px solid var(--color-good)", textDecoration:"none", flexShrink:0 }}>
-                  ↗ Kids
-                </a>
-              )}
+    <div>
+      {/* Manuel KPIs */}
+      {manuelKpis && (
+        <div style={{ display:"flex", gap:8, flexWrap:"wrap", marginBottom:12, alignItems:"stretch" }}>
+          <div className="kpi" style={{ flex:"0 0 auto", padding:"8px 14px", background:"var(--bg-info-subtle,var(--bg-info))", borderLeft:"3px solid var(--accent)" }}>
+            <div className="kpi-lbl" style={{ color:"var(--color-info-alt)" }}>Manuel — Total</div>
+            <div style={{ display:"flex", gap:16, alignItems:"baseline", marginTop:4 }}>
+              <span><span className="fw-800 fs-16">{manuelKpis.torn}</span><span className="fs-10 c-text-3 ml-4">torneios</span></span>
+              <span><span className="fw-800 fs-16">{manuelKpis.rondas}</span><span className="fs-10 c-text-3 ml-4">rondas</span></span>
+              {manuelKpis.avg && <span><span className="fw-700 fs-14">{manuelKpis.avg}</span><span className="fs-10 c-text-3 ml-4">média</span></span>}
+              {manuelKpis.best && <span><span className="fw-700 fs-14" style={{ color:"var(--color-good-dark)" }}>{manuelKpis.best}</span><span className="fs-10 c-text-3 ml-4">melhor</span></span>}
             </div>
-            <div style={{display:"flex", gap:5, flexWrap:"wrap", alignItems:"center"}}>
-              {(rival?.pais||ar?.co) && <Pill cls="p-muted" style={{fontSize:12}}>{normPaisDisplay(rival?.pais||ar?.co||"")}</Pill>}
-              {dobLabel && <Pill style={{background:"var(--bg-info)", color:"var(--color-info)", fontWeight:700, fontSize:12}}>{dobLabel}</Pill>}
-              {/* Escalão actual: pill com o grupo mais recente detectado */}
-              {ageGroupRange && (
-                <Pill style={{
-                  background:"var(--bg-topbar)", color:"var(--text-inv)", fontWeight:700, fontSize:12,
-                }}>
-                  {ageGroupRange}
-                </Pill>
-              )}
-              {firstYear && <Pill cls="p-muted" style={{fontSize:12}}>desde {firstYear}</Pill>}
-              {anosActivo>1 && <Pill cls="p-muted" style={{fontSize:12}}>{anosActivo} anos activo</Pill>}
-              {hiatos.length>0 && <Pill style={{background:"var(--bg-warn)", color:"var(--color-warn-dark)", fontSize:12}}>pausa {hiatos.join(", ")}</Pill>}
-              {trend && <Pill style={{background:trend==="melhora"?"var(--bg-success-subtle)":"var(--bg-danger-strong)", color:trend==="melhora"?"var(--color-good-dark)":"var(--color-danger-vivid)", fontWeight:800, fontSize:12}}>{trend==="melhora"?"↑ a melhorar":"↓ a piorar"}</Pill>}
-            </div>
-            {/* Palmarès compacto inline — top-3, com nome do torneio */}
-            {palmares.length > 0 && (
-              <div style={{display:"flex", alignItems:"flex-start", gap:4, marginTop:8, flexWrap:"wrap"}}>
-                {palmares.slice(0, 5).map((e, i) => {
-                  const tornNome = e.nome.replace(/\s*\d{4}$/, "").replace(/\s*'\d{2}$/, "");
-                  const medal = e.pos===1?"🥇":e.pos===2?"🥈":"🥉";
-                  const bg = e.pos===1?"#fffbea":e.pos===2?"#f0f4ff":"#fff4f0";
-                  const border = e.pos===1?"var(--medal-gold)":e.pos===2?"var(--medal-silver)":"var(--medal-bronze)";
-                  return (
-                    <div key={i} title={`${tornNome} ${e.year}`} style={{
-                      display:"inline-flex", alignItems:"center", gap:4,
-                      padding:"3px 7px", borderRadius:6,
-                      background:bg, border:`1px solid ${border}`, flexShrink:0,
-                    }}>
-                      <span style={{fontSize:13}}>{medal}</span>
-                      <div style={{lineHeight:1.2}}>
-                        <div style={{fontSize:10, fontWeight:700, color:"var(--color-warn-dark)", maxWidth:90, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap"}}>{tornNome}</div>
-                        <div style={{fontSize:9, color:"var(--text-3)"}}>{e.year}</div>
-                      </div>
-                    </div>
-                  );
-                })}
-                {palmares.length > 5 && (
-                  <div style={{display:"inline-flex", alignItems:"center", gap:3, padding:"3px 8px", borderRadius:6, background:"var(--bg-warn-strong)", border:"1px solid var(--medal-gold)"}}>
-                    <span style={{fontSize:11, fontWeight:800, color:"var(--color-warn-dark)"}}>+{palmares.length - 5}</span>
-                    <span style={{fontSize:11}}>🏆</span>
-                  </div>
-                )}
-              </div>
-            )}
           </div>
-
-          {/* V/E/D vs Manuel */}
-          <div style={{flexShrink:0, textAlign:"center"}}>
-            <div style={{fontSize:11, fontWeight:700, color:"var(--text-3)", marginBottom:6, textTransform:"uppercase", letterSpacing:"0.06em"}}>vs Manuel</div>
-            <div style={{display:"flex", gap:5, marginBottom:5}}>
-              {([
-                {n:vitorias, bg:"var(--bg-success-strong)", co:"var(--color-good-dark)", l:"V"},
-                {n:empates,  bg:"var(--bg-muted)",          co:"var(--text-2)",           l:"E"},
-                {n:derrotas, bg:"var(--bg-danger-strong)",  co:"var(--color-danger-vivid)", l:"D"},
-              ] as const).map(({n,bg,co,l})=>(
-                <div key={l} style={{textAlign:"center", minWidth:46, padding:"10px 6px", background:bg, borderRadius:10}}>
-                  <div style={{fontSize:28, fontWeight:900, color:co, lineHeight:1}}>{n}</div>
-                  <div style={{fontSize:11, fontWeight:700, color:co, marginTop:2, opacity:.75}}>{l}</div>
-                </div>
-              ))}
-            </div>
-            {directEnc.length > 0 && (
-              <div style={{fontSize:11, color:"var(--text-3)"}}>
-                {directEnc.length} confronto{directEnc.length!==1?"s":""}
+          {TG_T.map(t => {
+            const res = manuelRef?.r[t.id];
+            if (!res) return (
+              <div key={t.id} className="kpi" style={{ opacity:.4, padding:"8px 10px", flex:"1 1 80px", minWidth:80 }}>
+                <div className="kpi-lbl">{t.short}</div>
+                <div className="kpi-val fs-16">–</div>
               </div>
+            );
+            return (
+              <div key={t.id} className="kpi" style={{ padding:"8px 10px", flex:"1 1 80px", minWidth:80 }}>
+                <div className="kpi-lbl">{t.short}</div>
+                <div className="kpi-val" style={{ fontSize:18, color: tgTpColorDark(res.tp) }}>{tgFmtSign(res.tp)}</div>
+                <div className="kpi-sub">#{res.p as number}{res.rd?.length > 0 && <span style={{ marginLeft:4, opacity:.7 }}>{res.rd.join("-")}</span>}</div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Filtros */}
+      <div style={{ marginBottom:8 }}>
+        <div className="detail-toolbar" style={{ flexWrap:"wrap" }}>
+          <input type="text" placeholder="Pesquisar..." value={q} onChange={e => setQ(e.target.value)} className="input" style={{ maxWidth:140 }} />
+          <select value={fTour} onChange={e => setFTour(e.target.value)} className="select">
+            <option value="all">Todos Torneios</option>
+            {allTournCols.map(({ tid, info }) => <option key={tid} value={tid}>{info.short} {info.date}</option>)}
+          </select>
+          <select value={fCo} onChange={e => setFCo(e.target.value)} className="select">
+            <option value="all">🌍 País</option>
+            {allCountries.map(c => <option key={c} value={c}>{flag(c)} {c}</option>)}
+          </select>
+          <button
+            className={`p p-filter p-sm${showFilters ? " active" : ""}`}
+            onClick={() => setShowFilters(s => !s)}
+            style={{ position:"relative" }}>
+            Filtros {showFilters ? "▲" : "▼"}
+            {activeCount > 0 && (
+              <span style={{ position:"absolute", top:-4, right:-4, background:"var(--accent)", color:"#fff", borderRadius:"50%", width:16, height:16, fontSize:10, fontWeight:700, display:"flex", alignItems:"center", justifyContent:"center" }}>
+                {activeCount}
+              </span>
             )}
-          </div>
+          </button>
+          {activeCount > 0 && <button className="p p-filter p-sm" onClick={resetAll} style={{ color:"var(--color-danger)" }}>✕ Limpar</button>}
+          <div className="chip" style={{ marginLeft:"auto" }}>{list.length} jogadores</div>
         </div>
-
-        {/* KPI grid — números grandes */}
-        <div style={{display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(110px, 1fr))"}}>
-          {[
-            {v: String(stats?.total ?? wallOfFame.length),               l:"torneios",           accent:false},
-            {v: String(palmares.filter(e => e.pos === 1).length || "0"),          l:"vitórias 🥇",       accent: palmares.some(e => e.pos === 1)},
-            {v: stats?.best!=null ? posLabel(stats.best) : "—",          l:"melhor resultado",   accent:stats?.best!=null && stats.best<=3},
-            {v: stats ? `${Math.round(stats.avgPos)}º` : "—",
-             sub: stats?.avgFieldSize!=null ? `em ~${stats.avgFieldSize}` : null,
-             l:"posição média",    accent:false},
-            {v: stats?.avgPct!=null ? `top ${stats.avgPct}%` : "—",      l:"percentil médio",    accent:stats?.avgPct!=null && stats.avgPct<=25},
-            {v: torneiosPorAno>0 ? torneiosPorAno.toFixed(1) : "—",      l:"torn./ano",          accent:false},
-            {v: stats?.vsFieldTrimmed!=null ? (stats.vsFieldTrimmed>0?"+":"")+stats.vsFieldTrimmed : "—",
-             l:"vs campo",         accent:stats?.vsFieldTrimmed!=null && stats.vsFieldTrimmed<-1,
-             tip:"Score médio comparado com a mediana do field (aparado 10%)"},
-          ].map(({v,l,accent,sub,tip}:{v:string,l:string,accent:boolean,sub?:string|null,tip?:string}, i, arr)=>(
-            <div key={l} title={tip} style={{
-              padding:"14px 10px", textAlign:"center",
-              borderRight: i<arr.length-1 ? "1px solid var(--border-light)" : "none",
-              borderTop:"1px solid var(--border-light)",
-              background:"var(--bg-card)",
-              cursor:tip?"help":"default",
-            }}>
-              <div style={{fontSize:24, fontWeight:900, color:accent?"var(--color-good-dark)":"var(--text)", lineHeight:1}}>{v}</div>
-              {sub && <div style={{fontSize:11, color:"var(--text-3)", marginTop:2}}>{sub}</div>}
-              <div style={{fontSize:12, color:"var(--text-3)", marginTop:5, fontWeight:500}}>{l}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* Confrontos directos — linha de contexto */}
-        {directEnc.length>0 && (
-          <div style={{padding:"10px 20px", background:"var(--accent-light)", borderTop:"1px solid var(--accent-alpha-20)", display:"flex", gap:20, flexWrap:"wrap", fontSize:13, color:"var(--text-2)"}}>
-            <span>
-              Confrontos directos ({directEnc.length}): &nbsp;
-              <strong style={{color:"var(--text)"}}>{firstName}</strong> média <strong style={{color:vitorias>derrotas?"var(--color-good-dark)":"var(--color-danger-vivid)"}}>{Math.round(directEnc.reduce((s,e)=>s+e.rival_pos,0)/directEnc.length)}º</strong>
-              &nbsp;·&nbsp;
-              <strong style={{color:"var(--text)"}}>Manuel</strong> média <strong>{Math.round(directEnc.reduce((s,e)=>s+e.man_pos,0)/directEnc.length)}º</strong>
-            </span>
-            {stats && <span>Top-3: <strong style={{color:"var(--text)"}}>{stats.top3}/{stats.total}</strong></span>}
-            {anosComParticipacao>0 && <span>Activo em <strong style={{color:"var(--text)"}}>{anosComParticipacao}/{anosActivo}</strong> anos</span>}
-            {(()=>{
-              const difs=directEnc.filter(e=>e.man_to_par!=null&&e.rival_to_par!=null).map(e=>(e.rival_to_par??0)-(e.man_to_par??0));
-              if(!difs.length) return null;
-              const avg=difs.reduce((s,d)=>s+d,0)/difs.length;
-              return <span>Dif. to-par: <strong style={{color:avg>0?"var(--color-good-dark)":"var(--color-danger-vivid)"}}>{avg>0?"+":""}{avg.toFixed(1)}</strong></span>;
-            })()}
+        {showFilters && (
+          <div style={{ display:"flex", gap:8, flexWrap:"wrap", padding:"8px 0 4px", borderTop:"1px solid var(--border-light)", marginTop:6 }}>
+            <label className="filter-checkbox" style={{ fontSize:11 }}>
+              <input type="checkbox" checked={dOnly} onChange={e => setDOnly(e.target.checked)} /> Só com dados
+            </label>
           </div>
         )}
       </div>
 
-      {/* ══ PALMARÈS ══ */}
-      {palmares.length > 0 && (
-        <div className="card" style={{marginBottom:16, padding:"14px 16px"}}>
-          <div className="h-md" style={{marginBottom:12, display:"flex", alignItems:"center", gap:10}}>
-            🏆 Palmarès
-            <span style={{fontSize:13, fontWeight:400, color:"var(--text-3)"}}>
-              {palmares.filter(e=>e.pos===1).length} 🥇
-              {palmares.filter(e=>e.pos===2).length > 0 && ` · ${palmares.filter(e=>e.pos===2).length} 🥈`}
-              {palmares.filter(e=>e.pos===3).length > 0 && ` · ${palmares.filter(e=>e.pos===3).length} 🥉`}
-            </span>
-          </div>
-          <div style={{display:"flex", flexWrap:"wrap", gap:5}}>
-            {palmares.map((e, i) => {
-              const tornNome = e.nome.replace(/\s*\d{4}$/, "").replace(/\s*'\d{2}$/, "");
-              const tpStr = e.tp != null ? (e.tp === 0 ? "E" : e.tp > 0 ? `+${e.tp}` : `${e.tp}`) : null;
-              const medal = e.pos===1?"🥇":e.pos===2?"🥈":"🥉";
-              const bg = e.pos===1?(e.isDirectConfronto?"var(--bg-warn-strong)":"#fffbea"):e.pos===2?"#f0f4ff":"#fff4f0";
-              const border = e.pos===1?(e.isDirectConfronto?"var(--color-amber)":"var(--medal-gold)"):e.pos===2?"var(--medal-silver)":"var(--medal-bronze)";
-              const textColor = e.pos===1?"var(--color-warn-dark)":e.pos===2?"var(--color-info)":"var(--medal-bronze)";
-              return (
-                <div key={i} style={{
-                  display:"flex", alignItems:"center", gap:6,
-                  padding:"6px 10px", borderRadius:7,
-                  background:bg, border:`1px solid ${border}`,
-                  minWidth:110, maxWidth:175,
-                }}>
-                  <div style={{fontSize:20, lineHeight:1, flexShrink:0}}>{medal}</div>
-                  <div style={{minWidth:0}}>
-                    <div style={{fontSize:11, fontWeight:700, color:textColor, marginBottom:1, lineHeight:1.2, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap"}}>
-                      {tornNome}
-                    </div>
-                    <div style={{fontSize:10, color:"var(--text-2)", fontWeight:500}}>
-                      {e.year}
-                      {e.ageGroup && <span style={{marginLeft:4, color:"var(--text-3)", fontWeight:400}}>{e.ageGroup}</span>}
-                      {tpStr && <span style={{marginLeft:4, color:"var(--color-good-dark)", fontWeight:700}}>{tpStr}</span>}
-                    </div>
-                    {e.isDirectConfronto && e.pos === 1 && <div style={{fontSize:9, color:"var(--color-warn-vivid)", fontWeight:700}}>⚔️ vs Manuel</div>}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* ══ TORNEIOS RECORRENTES ══ */}
-      {torneiosRecorrentes.length>0 && (
-        <div style={{marginBottom:16}}>
-          <div className="h-md" style={{marginBottom:10}}>
-            Evolução por torneio
-            <span className="muted fs-11 fw-400" style={{marginLeft:8}}>torneios com 2+ participações</span>
-          </div>
-          <div style={{display:"grid", gridTemplateColumns:"repeat(auto-fill, minmax(260px,1fr))", gap:6}}>
-            {torneiosRecorrentes.map(({canon,entries:es})=>{
-              const nomeBase = es[0].nome.replace(/\s*'\d\d$/,"").replace(/\s*\d{4}$/,"");
-              const hasPodium = es.some(e => e.pos != null && e.pos <= 3);
-              const podiumBorder = es.some(e=>e.pos===1)?"var(--medal-gold)":es.some(e=>e.pos===2)?"var(--medal-silver)":es.some(e=>e.pos===3)?"var(--medal-bronze)":undefined;
-              const manyEntries = es.length > 5;
-              return(
-                <div key={canon} className="card" style={{padding:"8px 12px", borderLeft: podiumBorder ? `3px solid ${podiumBorder}` : undefined, margin:0}}>
-                  <div style={{fontSize:12, fontWeight:700, color:"var(--text)", marginBottom:5, display:"flex", alignItems:"center", gap:4}}>
-                    {hasPodium && <span style={{fontSize:12}}>{es.find(e=>e.pos===1)?"🏆":es.find(e=>e.pos===2)?"🥈":"🥉"}</span>}
-                    <span style={{overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",flex:1}}>{nomeBase}</span>
-                    <span className="muted fs-10 fw-400" style={{flexShrink:0}}>{es.length}×</span>
-                  </div>
-                  <div style={{overflowX:"auto", paddingBottom:1}}>
-                    <div style={{display:"flex", gap:3, flexWrap:"nowrap", alignItems:"center"}}>
-                      {es.map((e,i)=>{
-                        const prev=es[i-1];
-                        const delta=prev&&e.pos!=null&&prev.pos!=null?e.pos-prev.pos:null;
-                        const medal = e.pos===1?"🥇":e.pos===2?"🥈":e.pos===3?"🥉":null;
-                        const posColor = e.pos===1?"var(--color-warn-dark)":e.pos!=null&&e.pos<=3?"var(--medal-silver)":e.pos!=null&&e.pos<=8?"var(--text)":"var(--text-3)";
-                        const posBg = e.pos===1?"#fffbea":e.pos===2?"#f0f4ff":e.pos===3?"#fff4f0":"var(--bg-detail)";
-                        const borderColor = e.pos===1?"var(--medal-gold)":e.pos===2?"var(--medal-silver)":e.pos===3?"var(--medal-bronze)":"var(--border-light)";
-                        return(
-                          <React.Fragment key={e.tid}>
-                            {i>0 && (
-                              <span style={{fontSize:10, fontWeight:800, color:delta!=null&&delta<0?"var(--color-good-dark)":delta!=null&&delta>0?"var(--color-danger-vivid)":"var(--text-3)", flexShrink:0}}>
-                                {delta!=null&&delta<0?"↑":delta!=null&&delta>0?"↓":"="}
-                              </span>
-                            )}
-                            <div style={{display:"flex", flexDirection:"column", alignItems:"center", gap:0, padding:"3px 5px", borderRadius:4, background:posBg, border:`1px solid ${borderColor}`, flexShrink:0}}>
-                              <span style={{fontSize:9, color:"var(--text-3)", fontWeight:500, lineHeight:1.3}}>{e.year}</span>
-                              <span style={{fontSize:medal?13:11, fontWeight:900, color:posColor, lineHeight:1}}>
-                                {medal ?? (e.pos!=null?`#${e.pos}`:"—")}
-                              </span>
-                              {e.tp!=null && <span style={{fontSize:9, color:e.tp<=0?"var(--color-good-dark)":"var(--text-3)", fontWeight:600, lineHeight:1.3}}>{e.tp>0?"+":""}{e.tp}</span>}
-                            </div>
-                          </React.Fragment>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* ══ INSCRIÇÕES FUTURAS ══ */}
-      {inscricoesFuturas.length>0 && (
-        <div style={{marginBottom:16}}>
-          <div className="h-md" style={{marginBottom:10}}>
-            Inscrições futuras <Pill cls="p-muted" style={{fontWeight:400,marginLeft:4}}>{inscricoesFuturas.length}</Pill>
-          </div>
-          <div className="card" style={{padding:0, overflow:"hidden"}}>
-            {inscricoesFuturas.map((t,i)=>(
-              <div key={t.t} style={{display:"flex", alignItems:"center", gap:12, padding:"12px 16px", borderBottom:i<inscricoesFuturas.length-1?"1px solid var(--border-light)":"none", background:t.isCommon?"var(--bg-success)":"transparent"}}>
-                <Pill style={{background:t.daysAway===0?"var(--bg-success-strong)":t.daysAway<=7?"var(--bg-warn-strong)":"var(--bg-muted)", color:t.daysAway===0?"var(--color-good-dark)":t.daysAway<=7?"var(--color-warn-dark)":"var(--text-3)", minWidth:64, justifyContent:"center", fontSize:12, fontWeight:700}}>
-                  {t.daysAway===0?"hoje":`em ${t.daysAway}d`}
-                </Pill>
-                <span style={{flex:1, fontSize:14, fontWeight:t.isCommon?700:500, color:"var(--text)"}}>{t.name.replace(/\s*\d{4}$/,"")}</span>
-                <Pill cls="p-muted" style={{fontSize:12}}>{t.escalao}</Pill>
-                {t.isCommon && <Pill style={{background:"var(--color-good)", color:"#fff", fontSize:12, fontWeight:700}}>∩ Manuel</Pill>}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* ══ WALL OF FAME ══ */}
-      <div style={{marginBottom:20}}>
-        <div className="h-md" style={{marginBottom:10, display:"flex", alignItems:"baseline", gap:8}}>
-          Histórico completo
-          <Pill cls="p-muted" style={{fontWeight:400}}>{wallOfFame.length} torneios{firstYear&&lastYear?` · ${lastYear}→${firstYear}`:""}</Pill>
-          <span className="muted fs-11 fw-400">borda azul = encontrou o Manuel</span>
-        </div>
-        <div style={{border:"1px solid var(--border-light)",borderRadius:10,overflow:"hidden"}}>
-          {byYear.length===0&&<div style={{padding:"24px",color:"var(--text-3)",fontSize:13,textAlign:"center"}}>Sem dados</div>}
-          {byYear.map(([yr,entries],yi)=>{
-            const ps=entries.filter(e=>e.pos!=null).map(e=>e.pos!);
-            const tps=entries.filter(e=>e.tp!=null).map(e=>e.tp!);
-            const yrBest=ps.length?Math.min(...ps):null;
-            const yrAvgPos=ps.length?+(ps.reduce((s,p)=>s+p,0)/ps.length).toFixed(1):null;
-            const yrAvgTp=tps.length?+(tps.reduce((s,t)=>s+t,0)/tps.length).toFixed(1):null;
-            const prevPs=byYear[yi+1]?.[1].filter(e=>e.pos!=null).map(e=>e.pos!)??[];
-            const prevAvg=prevPs.length?prevPs.reduce((s,p)=>s+p,0)/prevPs.length:null;
-            const improving=yrAvgPos!=null&&prevAvg!=null?yrAvgPos<prevAvg:null;
-            const ageGrp=entries.find(e=>e.ageGroup)?.ageGroup??"";
-            const n=entries.length;
-            return(
-              <React.Fragment key={yr}>
-                {/* Cabeçalho de ano */}
-                <div style={{padding:"10px 14px",background:"var(--bg-muted)",display:"flex",justifyContent:"space-between",alignItems:"center",borderTop:yi>0?"1px solid var(--border-light)":"none"}}>
-                  <div style={{display:"flex",alignItems:"center",gap:10}}>
-                    <span style={{fontSize:16,fontWeight:800,color:"var(--text)"}}>{yr}</span>
-                    {ageGrp&&<span style={{fontSize:12,color:"var(--text-2)"}}>{ageGrp}</span>}
-                    {firstYear===yr&&<Pill style={{background:"var(--bg-warn-strong)",color:"var(--color-warn-dark)"}}>estreia</Pill>}
-                    {yr===new Date().getFullYear()&&<Pill style={{background:"var(--bg-success-strong)",color:"var(--color-good-dark)"}}>em curso</Pill>}
-                  </div>
-                  <div style={{display:"flex",gap:6,alignItems:"center"}}>
-                    <Pill style={{background:n>=7?"var(--bg-info)":n>=4?"var(--bg-warn-strong)":"var(--bg-muted)",color:n>=7?"var(--color-info)":n>=4?"var(--color-warn-dark)":"var(--text-3)"}}>{n} torn.</Pill>
-                    {yrBest!=null&&<Pill style={{background:"var(--bg-success-subtle)",color:"var(--color-good-dark)"}}>melhor: {posLabel(yrBest)}</Pill>}
-                    {yrAvgPos!=null&&<span style={{fontSize:11,color:"var(--text-3)"}}>avg {yrAvgPos}º</span>}
-                    {yrAvgTp!=null&&<span style={{fontSize:12,fontWeight:700,color:yrAvgTp<=0?"var(--color-good-dark)":"var(--text-3)"}}>{yrAvgTp>0?"+":""}{yrAvgTp}</span>}
-                    {improving!=null&&<span style={{fontSize:15,fontWeight:800,color:improving?"var(--color-good-dark)":"var(--color-danger-vivid)"}}>{improving?"↑":"↓"}</span>}
-                  </div>
-                </div>
-                {/* Coluna header (só no primeiro ano) */}
-                {yi===0&&<div style={{display:"grid",gridTemplateColumns:"38px 82px 1fr 70px 22px 64px 56px",fontSize:10,color:"var(--text-3)",padding:"4px 14px",background:"var(--bg-card)",borderBottom:".5px solid var(--border-light)"}}>
-                  <span style={{textAlign:"center"}}>Pos.</span>
-                  <span>Data</span>
-                  <span>Torneio · jogadores</span>
-                  <span style={{textAlign:"center"}}>Escalão</span>
-                  <span style={{textAlign:"center"}}>R</span>
-                  <span style={{textAlign:"right"}}>Score · top%</span>
-                  <span style={{textAlign:"center"}}>vs campo</span>
-                </div>}
-                {/* Torneios */}
-                {entries.map((e,ei)=>{
-                  const isTop3=e.pos!=null&&e.pos<=3;
-                  const opac=e.pos==null?0.45:1;
-                  const vsWinner=e.tp!=null&&e.winnerTp!=null?e.tp-e.winnerTp:null;
-                  const vsMedian=e.tp!=null&&e.medianTp!=null?e.tp-e.medianTp:null;
-                  const dateStr = e.date ? fmtDate(e.date) : null;
-                  return(
-                    <div key={e.tid} style={{display:"grid",gridTemplateColumns:"38px 82px 1fr 70px 22px 64px 56px",alignItems:"center",padding:"8px 14px",borderBottom:ei<entries.length-1?".5px solid var(--border-light)":"none",
-                      background:e.isDirectConfronto?"var(--accent-alpha-10)":e.withManuel?"var(--accent-alpha-10)":"transparent",
-                      borderLeft:e.isDirectConfronto?"3px solid var(--accent)":e.withManuel?"3px solid var(--accent-alpha-20)":"3px solid transparent",
-                      opacity:opac}}>
-                      {/* Pos */}
-                      <div style={{textAlign:"center"}}>
-                        {isTop3?<span style={{fontSize:20}}>{e.pos===1?"🥇":e.pos===2?"🥈":"🥉"}</span>:<span style={{fontSize:12,fontWeight:600,color:"var(--text-3)"}}>#{e.pos??""}</span>}
-                      </div>
-                      {/* Data — só dia/mês */}
-                      <div style={{fontSize:11,color:"var(--text-3)",lineHeight:1.3}}>
-                        {dateStr
-                          ? (() => {
-                              const parts = dateStr.split(" ");
-                              return <><span style={{fontWeight:600,color:"var(--text-2)"}}>{parts[0]}</span> {parts[1]}</>;
-                            })()
-                          : <span style={{opacity:.4}}>—</span>}
-                      </div>
-                      {/* Nome + contexto */}
-                      <div style={{minWidth:0}}>
-                        <div style={{fontSize:13,fontWeight: (e.fieldSize??0)>=15 ? 800 : 700,color:"var(--text)",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:4}}>
-                          <span style={{overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{e.nome.replace(/\s*\d{4}$/,"")}</span>
-                          {(() => {
-                            const m = e.tid.match(/^usk(\d+)/);
-                            if (!m) return null;
-                            const url = `https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${m[1]}`;
-                            return (
-                              <a href={url} target="_blank" rel="noopener noreferrer"
-                                onClick={ev => ev.stopPropagation()}
-                                style={{flexShrink:0,fontSize:10,color:"var(--accent)",opacity:.6,textDecoration:"none",lineHeight:1}}
-                                title="Ver resultados no signupanytime">
-                                ↗
-                              </a>
-                            );
-                          })()}
-                        </div>
-                        <div style={{fontSize:10,marginTop:1,display:"flex",alignItems:"center",gap:4}}>
-                          {e.fieldSize!=null
-                            ? <span style={{
-                                color: (e.fieldSize)>=15 ? "var(--accent)" : "var(--text-3)",
-                                fontWeight: (e.fieldSize)>=15 ? 700 : 400,
-                              }}>
-                                {(e.fieldSize)>=15 && "⭐ "}{e.fieldSize} jog.
-                              </span>
-                            : <span style={{opacity:.4,color:"var(--text-3)"}}>campo desconhecido</span>}
-                        </div>
-                        {e.withManuel&&!e.isDirectConfronto&&<div style={{fontSize:10,color:"var(--accent)",opacity:.7,marginTop:1}}>∩ Manuel jogou neste torneio</div>}
-                        {e.isDirectConfronto&&e.manPos!=null&&e.rivalPos!=null&&<div style={{fontSize:11,color:"var(--accent)",fontWeight:600,marginTop:1}}>∩ Manuel {e.manPos}º · {firstName} {e.rivalPos}º</div>}
-                      </div>
-                      {/* Escalão */}
-                      <div style={{textAlign:"center"}}><Pill cls="p-muted" style={{fontSize:10}}>{e.ageGroup||"—"}</Pill></div>
-                      {/* Rondas */}
-                      <span style={{fontSize:11,color:"var(--text-3)",textAlign:"center"}}>{e.rondas}</span>
-                      {/* To-par + percentil juntos */}
-                      <div style={{textAlign:"right"}}>
-                        <div style={{fontSize:13,fontWeight:700,color:e.tp==null?"var(--text-3)":e.tp<0?"var(--color-good-dark)":e.tp>0?"var(--text-2)":"var(--text-3)"}}>{tpFmt(e.tp)}</div>
-                        {e.percentile!=null&&<div style={{fontSize:10,fontWeight:600,color:e.percentile<=10?"var(--color-good-dark)":e.percentile<=25?"var(--color-good)":"var(--text-3)",marginTop:1}}>top {e.percentile}%</div>}
-                      </div>
-                      {/* vs campo */}
-                      <div style={{textAlign:"center",fontSize:10,color:"var(--text-3)"}}>
-                        {vsWinner!=null&&<div style={{color:vsWinner===0?"var(--color-good-dark)":"var(--text-3)"}}>W: {vsWinner===0?"=":(vsWinner>0?"+":"")+vsWinner}</div>}
-                        {vsMedian!=null&&<div style={{color:vsMedian<0?"var(--color-good-dark)":vsMedian>0?"var(--color-danger-vivid)":"var(--text-3)"}}>Med: {vsMedian===0?"=":(vsMedian>0?"+":"")+vsMedian}</div>}
-                      </div>
-                    </div>
-                  );
-                })}
-              </React.Fragment>
-            );
-          })}
-        </div>
+      {/* Legenda tiers */}
+      <div className="legend-row" style={{ marginBottom:8 }}>
+        {(Object.keys(TG_TIER) as Array<keyof typeof TG_TIER>).map(k => (
+          <span key={k} className="legend-item">
+            <span className="legend-dot" style={{ background: TG_TIER[k].bg }} />
+            <span style={{ color: TG_TIER[k].c, fontSize:10 }}>{TG_TIER_L[k]}</span>
+          </span>
+        ))}
       </div>
 
-      {/* ══ HEAD-TO-HEAD ══ */}
-      {directEnc.length>0&&(
-        <div>
-          <div className="h-md" style={{marginBottom:8,display:"flex",alignItems:"baseline",gap:8}}>
-            Head-to-head
-            <span style={{fontSize:12,fontWeight:400,color:"var(--text-3)"}}>
-              {directEnc.length} confronto{directEnc.length!==1?"s":""}
-            </span>
-            {/* Score explícito: X vitórias de cada lado */}
-            <span style={{fontSize:13,fontWeight:700,display:"flex",gap:6,alignItems:"center"}}>
-              <span style={{color:vitorias>derrotas?"var(--color-good-dark)":"var(--text-3)"}}>{firstName} {vitorias}×</span>
-              <span style={{color:"var(--text-3)",fontWeight:400}}>vs</span>
-              <span style={{color:derrotas>vitorias?"var(--color-good-dark)":"var(--text-3)"}}>Manuel {derrotas}×</span>
-            </span>
-          </div>
-          <div style={{border:"1px solid var(--border-light)",borderRadius:10,overflow:"hidden"}}>
-            <div style={{display:"grid",gridTemplateColumns:"1fr 56px 72px 72px 44px 96px",fontSize:11,fontWeight:600,color:"var(--text-3)",background:"var(--bg-muted)",padding:"7px 14px",borderBottom:"1px solid var(--border-light)"}}>
-              <span>Torneio</span><span style={{textAlign:"center"}}>Escalão</span>
-              <span style={{textAlign:"center"}}>Manuel</span><span style={{textAlign:"center"}}>{firstName}</span>
-              <span style={{textAlign:"center"}}>Dif.</span><span style={{textAlign:"right"}}>Vencedor</span>
-            </div>
-            {directEnc.map((e,i)=>{
-              const rivalWon = e.rival_pos < e.man_pos;
-              const draw = e.man_pos === e.rival_pos;
-              const dif = e.man_to_par!=null&&e.rival_to_par!=null ? e.man_to_par - e.rival_to_par : null;
-              const isNext = torneiosComManuel.some(t=>tornCanon(t.name)===tornCanon(e.torneio_nome)&&isoDate(t.date_inicio)>=today);
-              return(
-                <div key={i} style={{display:"grid",gridTemplateColumns:"1fr 56px 72px 72px 44px 96px",alignItems:"center",padding:"9px 14px",fontSize:12,borderBottom:i<directEnc.length-1?".5px solid var(--border-light)":"none",
-                  background:rivalWon?"rgba(22,163,74,.04)":isNext?"rgba(59,130,246,.04)":i%2===1?"rgba(0,0,0,.013)":"transparent"}}>
-                  <div style={{overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>
-                    <span style={{color:"var(--text)",fontWeight:500}}>{e.torneio_nome.replace(/\s*\d{4}$/,"")}{e.torneio_data?` '${isoDate(e.torneio_data).slice(2,4)}`:""}</span>
-                    {isNext&&<Pill cls="" style={{marginLeft:6,background:"var(--bg-info)",color:"var(--color-info)"}}>próx.</Pill>}
-                  </div>
-                  <div style={{textAlign:"center"}}><Pill cls="p-muted" style={{fontSize:10}}>{e.escalao?.replace(/Boys /,"B").replace(/Girls /,"G")??"—"}</Pill></div>
-                  {/* Manuel: verde quando Manuel ganhou */}
-                  <div style={{textAlign:"center"}}>
-                    <span style={{fontWeight:700,fontSize:13,color:!rivalWon&&!draw?"var(--color-good-dark)":"var(--text-2)"}}>{e.man_pos}º</span>
-                    {e.man_to_par!=null&&<span style={{fontSize:11,color:"var(--text-3)",marginLeft:3}}>{tpFmt(e.man_to_par)}</span>}
-                  </div>
-                  {/* Rival: verde quando rival ganhou */}
-                  <div style={{textAlign:"center"}}>
-                    <span style={{fontWeight:700,fontSize:13,color:rivalWon?"var(--color-good-dark)":"var(--text-2)"}}>{e.rival_pos}º</span>
-                    {e.rival_to_par!=null&&<span style={{fontSize:11,color:"var(--text-3)",marginLeft:3}}>{tpFmt(e.rival_to_par)}</span>}
-                  </div>
-                  {/* Dif: positivo = rival melhor */}
-                  <div style={{textAlign:"center",fontWeight:800,fontSize:14,color:dif==null?"var(--text-3)":dif>0?"var(--color-good-dark)":dif<0?"var(--color-danger-vivid)":"var(--text-3)"}}>{dif==null?"—":dif>0?"+"+dif:dif===0?"=":dif}</div>
-                  {/* Vencedor — explícito, sem ambiguidade */}
-                  <div style={{textAlign:"right"}}>
-                    {isNext
-                      ? <Pill style={{background:"var(--bg-info)",color:"var(--color-info)"}}>inscrito</Pill>
-                      : rivalWon
-                        ? <Pill style={{background:"var(--bg-success-strong)",color:"var(--color-good-dark)",fontWeight:700}}>✓ {firstName}</Pill>
-                        : draw
-                          ? <Pill cls="p-muted">empate</Pill>
-                          : <Pill style={{background:"var(--bg-danger-strong)",color:"var(--color-danger-vivid)",fontWeight:700}}>✓ Manuel</Pill>
-                    }
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+      {/* Tabela */}
+      <div className="card">
+        <div className="scroll-x">
+          <table className="tourn-form-table">
+            <thead>
+              <tr className="rivais-group-header">
+                <th className="rivais-th-name pointer" onClick={() => doSort("name")}>Jogador{sortIcon("name")}</th>
+                <th className="rivais-th pointer ta-center" onClick={() => doSort("nT")} title="Torneios">#T{sortIcon("nT")}</th>
+                {allTournCols.map(({ tid, info, weight, url, isFixed, isFuture }) => {
+                  const stars = weight >= 1.3 ? "★★★★★" : weight >= 1.1 ? "★★★★" : weight >= 0.9 ? "★★★" : weight >= 0.6 ? "★★" : weight >= 0.4 ? "★" : "½";
+                  return (
+                    <th key={tid} className="rivais-th pointer ta-center"
+                      style={{ minWidth:56, opacity: isFixed ? 1 : 0.85,
+                        color: isFuture ? "var(--color-info)" : undefined }}
+                      onClick={() => doSort("t:" + tid)}>
+                      {url ? <a href={url} target="_blank" rel="noopener noreferrer" className="rivais-link" onClick={e => e.stopPropagation()}>{info.short}</a> : info.short}
+                      {sortIcon("t:" + tid)}
+                      {!isFuture && <div className="fs-9 fw-500 op-6 mt-1">{stars} {info.date}</div>}
+                      {isFuture && <div className="fs-9 fw-500 mt-1" style={{ color:"var(--color-info)" }}>inscrito</div>}
+                    </th>
+                  );
+                })}
+                <th className="rivais-th pointer ta-center" style={{ borderLeft:"3px solid var(--text-muted)", minWidth:56 }} onClick={() => doSort("rank")}>Rank{sortIcon("rank")}</th>
+                <th className="rivais-th ta-center">Tend.</th>
+              </tr>
+            </thead>
+            <tbody>
+              {list.map(p => {
+                const isM = p.isM;
+                const tr = tgGetTrend(p);
+                const fl = flag(p.co);
+                const played = tgNPlayed(p);
+                return (
+                  <tr key={p.n} className={isM ? "rivais-row-ref" : ""}>
+                    <td className="rivais-player-name">
+                      <span className="rivais-flag" title={p.co}>{fl}</span>
+                      <span className={`fs-12${isM ? " fw-700" : " fw-600"}`} style={{ color: isM ? "var(--text)" : "var(--text-2)" }}>{p.n}</span>
+                      {isM && <span className="p p-sm p-outline ml-4">REF</span>}
+                    </td>
+                    <td className="ta-center fs-12 fw-600 c-text-3">{played || ""}</td>
+                    {allTournCols.map(({ tid, isFixed, isFuture }) => {
+                      // Coluna futura: mostrar escalão inscrito se player está inscrito
+                      if (isFuture) {
+                        const inscribed = inscricaoMap.get(tid);
+                        const inscrito = p.isM
+                          ? inscribed?.has(normNameAuto("Manuel Medeiros")) ?? false
+                          : inscribed?.has(normNameAuto(p.n)) ?? false;
+                        return (
+                          <td key={tid} className="ta-center"
+                            style={{ background: inscrito ? "var(--bg-info-strong,var(--bg-info))" : undefined }}>
+                            {inscrito
+                              ? <span style={{ fontSize:14 }}>⛳</span>
+                              : <span className="fs-10 c-border">—</span>}
+                          </td>
+                        );
+                      }
+                      const res = p.r[tid];
+                      if (!res || (res.tp == null && res.p !== "WD")) return <td key={tid} />;
+                      if (res.p === "WD") return <td key={tid} className="ta-center fs-11 c-muted">WD</td>;
+
+                      // Calcular z-tier: usar TG_AVG_R para fixas, autoAvgR para auto
+                      const validRd = res.rd?.filter((x: number) => x > 0) ?? [];
+                      const rounds = validRd.length || 1;
+                      const playerAvg = validRd.length
+                        ? validRd.reduce((a: number, b: number) => a + b, 0) / rounds
+                        : (res.t != null ? res.t / rounds : 0);
+                      let ti: keyof typeof TG_TIER | null = null;
+                      const fixedAvgs = TG_AVG_R[tid];
+                      const hasFixedAvg = fixedAvgs?.some((x: any) => x != null);
+                      if (hasFixedAvg) {
+                        const ms = fixedAvgs.filter((x: any): x is {m:number;s:number} => x != null).map((x: {m:number}) => x.m);
+                        const ss = fixedAvgs.filter((x: any): x is {m:number;s:number} => x != null).map((x: {s:number}) => x.s);
+                        if (ms.length) ti = tgZTier(playerAvg, { m: ms.reduce((a,b)=>a+b,0)/ms.length, s: ss.reduce((a,b)=>a+b,0)/ss.length });
+                      } else {
+                        const ar = autoAvgR[tid];
+                        if (ar) ti = tgZTier(playerAvg, { m: ar.avg, s: ar.std });
+                      }
+                      const st = ti ? TG_TIER[ti] : null;
+                      const tpStr = res.tp != null ? tgFmtSign(res.tp) : "—";
+                      return (
+                        <td key={tid} className="ta-center" style={{ background: st?.bg || "transparent", padding:"5px 4px" }}>
+                          <div className="fw-700 fs-13" style={{ color: st?.c || "var(--text-3)" }}>{tpStr}</div>
+                          {res.p != null && <div className="fs-10 fw-600 c-text-3">#{res.p}</div>}
+                        </td>
+                      );
+                    })}
+                    <td className="ta-center" style={{ borderLeft:"3px solid var(--border-light)", padding:"4px 6px" }}>
+                      {rankMap[p.n] != null ? (
+                        <div>
+                          <div className="fw-800 fs-13" style={{ color: rankMap[p.n] <= 10 ? "var(--color-good-dark)" : rankMap[p.n] <= 30 ? "var(--text)" : "var(--text-3)" }}>
+                            {rankMap[p.n]}º
+                          </div>
+                          <div className="fs-10 c-text-3">{tgNPlayed(p)}T · {tgNRounds(p)}R</div>
+                        </div>
+                      ) : <span className="fs-10 c-border">s/d</span>}
+                    </td>
+                    <td className="ta-center">
+                      {tr ? <span className="fw-700 fs-13" style={{ color: TG_TR_I[tr]?.c }}>{TG_TR_I[tr]?.i}</span> : <span className="c-border">—</span>}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
-      )}
+      </div>
+      <div className="section-subtitle ta-c mt-10">
+        Clica num cabeçalho para ordenar · Rank por to-par médio · ★★★★★ WJGC/World · ★★★★ European/Venice · ★★★ USKids · ½ peso mínimo · ({totalRanked} jogadores classificados)
+      </div>
     </div>
   );
 }
-
 
 function Secao({ titulo, sub, count, corTitulo, defaultOpen, children }: {
   titulo: string; sub?: string; count: number; corTitulo?: string;
@@ -4351,8 +3024,6 @@ type TorneioEntry = {
 };
 
 export default function USKidsFieldPage() {
-  const location = useLocation();
-  const locationRival = (location.state as any)?.rival as string | undefined;
   const [searchParams, setSearchParams] = useSearchParams();
 
   const VALID_TABS: Tab[] = ["campo", "resultados", "rivais"];
@@ -4360,60 +3031,26 @@ export default function USKidsFieldPage() {
 
   const [fieldData,   setFieldData]   = useState<FieldData | null>(null);
   const [resultsData, setResultsData] = useState<ResultsData | null>(null);
-  const [intlData,    setIntlData]    = useState<IntlData | null>(null); void setIntlData;
   const [autoRivals,  setAutoRivals]  = useState<AutoRivalPlayer[]>([]);
-  const [greatgolfData, setGreatgolfData] = useState<GreatgolfData | null>(null); void setGreatgolfData;
-  const [memberHist,   setMemberHist]   = useState<MemberHistData | null>(null);
-
-  // Mapa leve nome→nTorneios — substitui memberHist nas props
-  const mhCountMap = useMemo<Map<string, number>>(() => {
-    const m = new Map<string, number>();
-    if (!memberHist) return m;
-    for (const mh of Object.values(memberHist.jogadores)) {
-      if (!mh.name || mh.name === '?' || String(mh.name).startsWith('[unknown')) continue;
-      m.set(mh.name.toLowerCase().trim(), Object.keys(mh.torneios).length);
-    }
-    return m;
-  }, [memberHist]);
+  const [erro,        setErro]        = useState<string | null>(null);
   const [tab, setTabState] = useState<Tab>(() => {
     if (paramTab && VALID_TABS.includes(paramTab)) return paramTab;
-    if (locationRival) return "rivais";
     return "campo";
   });
   const setTab = (t: Tab) => {
     setTabState(t);
     setSearchParams(prev => { const n = new URLSearchParams(prev); n.set("tab", t); return n; }, { replace: true });
   };
-    const md = useMasterDetail();
+  const md = useMasterDetail();
   const [filterManuel, setFilterManuel] = useState(true);
-  const [sidebarRivalSearch, setSidebarRivalSearch] = useState("");
-  const [sidebarRivalSort, setSidebarRivalSort] = useState<"torn" | "enc" | "name">("torn");
-  const [sidebarRivalTier, setSidebarRivalTier] = useState<string>("");
-  const [rivalFilters, setRivalFilters] = useState<{
-    pais: string;
-    escaloes: Set<string>;   // multi-select: "9","10","11","12","13"
-    apenasCruzaram: boolean;
-    apenasProximoTourn: boolean;
-    minTorneios: number;
-    maxNascimento: number;
-    minNascimento: number;
-  }>({ pais: "", escaloes: new Set(), apenasCruzaram: false, apenasProximoTourn: false, minTorneios: 0, maxNascimento: 0, minNascimento: 0 });
-  const [erro,        setErro]        = useState<string | null>(null);
 
-  // selectedT e selectedRival sincronizados com URL params (?t=&rival=)
+  // selectedT sincronizado com URL params (?t=)
   const paramT = searchParams.get("t");
-  const paramRival = searchParams.get("rival");
-  const [selectedT,     setSelectedTState]    = useState<number | null>(paramT ? (parseInt(paramT) || null) : null);
-  const [selectedRival, setSelectedRivalState] = useState<string | null>(locationRival ?? paramRival ?? null);
+  const [selectedT, setSelectedTState] = useState<number | null>(paramT ? (parseInt(paramT) || null) : null);
 
   const setSelectedT = (t: number | null) => {
     setSelectedTState(t);
     setSearchParams(prev => { const n = new URLSearchParams(prev); if (t != null) n.set("t", String(t)); else n.delete("t"); return n; }, { replace: true });
-  };
-  const setSelectedRival = (r: string | null | ((prev: string | null) => string | null)) => {
-    const next = typeof r === "function" ? r(selectedRival) : r;
-    setSelectedRivalState(next);
-    setSearchParams(prev => { const n = new URLSearchParams(prev); if (next) n.set("rival", next); else n.delete("rival"); return n; }, { replace: true });
   };
 
   // Declarado ANTES do useEffect que o usa — regra de React: hooks antes de qualquer uso.
@@ -4503,34 +3140,14 @@ export default function USKidsFieldPage() {
     buildAutoRivals(undefined, {
       onUpdate: (rivals) => startRivalsTransition(() => setAutoRivals(rivals)),
     }).catch(() => {});
-
-    // Carregar member history (slim — cachedFetchJson partilha cache com KIDSdataLoader)
-    cachedFetchJson("/data/uskids-member-history-slim.json")
-      .then(d => setMemberHist(d as MemberHistData))
-      .catch(() => {});
   }, []);
 
   const nResultados = resultsData?.resultados?.length ?? 0;
 
-  // Sidebar rivals — populated by TabRivais via callback (avoids duplicate buildRivalsFromResultados)
-  type SidebarRival = {
-    nome: string; pais: string; nEnc: number;
-    vitorias: number; derrotas: number; empates: number;
-    totalTournaments: number; firstYear: number | null;
-    nextTournName: string | null; daysToNext: number | null; nextIsCommon: boolean;
-    playerTier?: "elite" | "contender" | "forte" | "subindo" | "assiduo" | "consistente" | null;
-  };
-  const [sidebarRivals, setSidebarRivals] = useState<SidebarRival[]>([]);
-  const onRivalsReady = useCallback((list: SidebarRival[]) => {
-    setSidebarRivals(list);
-  }, []);
-
-  // nRivais: só mostrar quando sidebarRivals já foi calculado (valor real)
-  // Evita o flash 1700 → 498 durante o carregamento
-  const nRivais = sidebarRivals.length > 0 ? sidebarRivals.length : null;
-
   const torneiosCampo = useMemo(() => fieldData?.torneios ?? [], [fieldData]);
   const torneiosResultados = useMemo(() => resultsData?.resultados ?? [], [resultsData]);
+
+  const [showRivaisTabela, setShowRivaisTabela] = useState(false);
 
   const allTorneios = useMemo(() => {
     const map = new Map<number, TorneioEntry>();
@@ -4618,17 +3235,42 @@ export default function USKidsFieldPage() {
       .sort((a, b) => isoDate(a.date).localeCompare(isoDate(b.date)));
   }, [torneiosCampo, torneiosResultados]);
 
-  // Pré-computar escalão máximo por rival — evita autoRivals.find() dentro de renderItem (era O(n²))
-  const escalaoMap = useMemo<Map<string, number | null>>(() => {
-    const m = new Map<string, number | null>();
-    for (const a of autoRivals) {
-      const ages = Object.keys(a.r)
-        .map(tid => tid.match(/^usk\d+_b(\d+)$/)?.[1])
-        .filter(Boolean).map(Number);
-      m.set(normNameAuto(a.n), ages.length ? Math.max(...ages) : null);
+  // Torneios onde o Manuel participou ou está inscrito (para tab Rivais)
+  const torneiosComManuel = useMemo((): TorneioComManuel[] => {
+    const map = new Map<number, TorneioComManuel>();
+
+    // Helper: confirmação estrita de que é o nosso Manuel (nome + PT + cidade de Madeira quando disponível)
+    const isManuelStrict = (j: { nome: string; pais: string; cidade?: string }) => {
+      if (!isManuel(j.nome)) return false;
+      if (j.pais && j.pais !== "PT") return false;
+      // Se cidade está preenchida, tem de ser Madeira/Funchal/Santo da Serra/CGSS
+      if (j.cidade) {
+        const c = j.cidade.toLowerCase();
+        if (!c.includes("madeira") && !c.includes("funchal") && !c.includes("santo") && !c.includes("cgss")) return false;
+      }
+      return true;
+    };
+
+    if (fieldData) {
+      for (const t of fieldData.torneios) {
+        const esc = t.escaloes.find(e => (e.jogadores ?? []).some(j => isManuelStrict(j)));
+        if (esc) map.set(t.t, { t: t.t, name: t.name, date_inicio: t.date_inicio, escalaoManuel: esc.nome, source: "field" });
+      }
     }
-    return m;
-  }, [autoRivals]);
+    if (resultsData) {
+      for (const t of resultsData.resultados) {
+        if (map.has(t.t)) continue;
+        // Só incluir se o Manuel realmente aparece no leaderboard (não apenas is_manuel flag)
+        const manEsc = t.escaloes?.find(e =>
+          e.rondas?.some(r => (r.leaderboard ?? r.jogadores ?? []).some(j => isManuelStrict({ nome: j.nome, pais: j.pais, cidade: j.cidade })))
+        );
+        if (manEsc) map.set(t.t, { t: t.t, name: t.name, date_inicio: t.date_inicio, escalaoManuel: manEsc.nome, source: "results" });
+      }
+    }
+    return [...map.values()].sort((a, b) => isoDate(b.date_inicio).localeCompare(isoDate(a.date_inicio)));
+  }, [fieldData, resultsData]);
+
+  const nRivais = torneiosComManuel.length || null;
 
   if (erro) return (
     <div style={{ padding: 32 }}>
@@ -4644,7 +3286,7 @@ export default function USKidsFieldPage() {
   // Quando muda de tab, verificar se o torneio seleccionado existe nessa tab
   const handleTabChange = (newTab: Tab) => {
     setTab(newTab);
-    // Seleccionar o primeiro torneio disponível para a nova tab se o actual não existir
+    if (newTab !== "rivais") setShowRivaisTabela(false);
     if (newTab === "resultados" && selectedT) {
       const exists = torneiosResultados.some(t => t.t === selectedT);
       if (!exists && torneiosResultados.length) setSelectedT(torneiosResultados[0].t);
@@ -4662,315 +3304,65 @@ export default function USKidsFieldPage() {
   // ── Render functions para o sidebar — extraídas dos IIFEs para melhor legibilidade ──
 
   const renderSidebarRivais = () => {
-    const q = sidebarRivalSearch.toLowerCase().trim();
-    const filtered = sidebarRivals.filter(r => {
-      if (q && !r.nome.toLowerCase().includes(q) && !r.pais.toLowerCase().includes(q)) return false;
-      if (rivalFilters.pais && normPaisDisplay(r.pais) !== rivalFilters.pais) return false;
-      if (sidebarRivalTier && r.playerTier !== sidebarRivalTier) return false;
-      if (rivalFilters.escaloes.size > 0) {
-        const arR = autoRivals.find(a => normNameAuto(a.n) === normNameAuto(r.nome));
-        if (!arR || !Object.keys(arR.r).some(tid =>
-          [...rivalFilters.escaloes].some(n => tid.includes(`_b${n}`))
-        )) return false;
-      }
-      if (rivalFilters.minTorneios > 0 && r.totalTournaments < rivalFilters.minTorneios) return false;
-      if (rivalFilters.apenasCruzaram && r.nEnc === 0) return false;
-      if (rivalFilters.apenasProximoTourn && !r.nextIsCommon) return false;
-      return true;
-    });
-
-    // Ordenar
-    const sorted = [...filtered].sort((a, b) => {
-      if (sidebarRivalSort === "torn") return b.totalTournaments - a.totalTournaments || b.nEnc - a.nEnc;
-      if (sidebarRivalSort === "enc")  return b.nEnc - a.nEnc || b.totalTournaments - a.totalTournaments;
-      return displayName(a.nome).localeCompare(displayName(b.nome), "pt");
-    });
-
-    // Separar em grupos
-    const directos  = sorted.filter(r => r.nEnc > 0);
-    const circuito  = sorted.filter(r => r.nEnc === 0);
-
-    const maxTorn = sorted[0]?.totalTournaments ?? 1;
-
-    const renderItem = (r: typeof sorted[0], rank: number) => {
-      const active = selectedRival === r.nome;
-      const accentColor = r.vitorias > r.derrotas
-        ? "var(--color-teal)"
-        : r.derrotas > r.vitorias ? "var(--color-danger)"
-        : r.nEnc > 0 ? "var(--accent)"
-        : "var(--border)";
-
-      const recordStr = r.nEnc > 0
-        ? [r.vitorias > 0 ? `${r.vitorias}V` : "", r.empates > 0 ? `${r.empates}E` : "", r.derrotas > 0 ? `${r.derrotas}D` : ""].filter(Boolean).join(" ")
-        : null;
-      const recordBg = r.vitorias > r.derrotas ? "var(--bg-success-subtle)"
-        : r.derrotas > r.vitorias ? "var(--bg-danger-strong)"
-        : "var(--bg-muted)";
-      const recordCo = r.vitorias > r.derrotas ? "var(--color-good-dark)"
-        : r.derrotas > r.vitorias ? "var(--color-danger-dark)"
-        : "var(--text-3)";
-
-      // Barra de actividade relativa
-      const pct = Math.max(8, Math.round((r.totalTournaments / maxTorn) * 100));
-
-      return (
-        <button key={r.nome}
-          className={`course-item${active ? " active" : ""}`}
-          style={{ borderLeftColor: active ? accentColor : undefined, padding: "9px 10px 9px 12px" }}
-          onClick={() => setSelectedRival(prev => prev === r.nome ? null : r.nome)}>
-
-          {/* Linha 1: rank + flag + nome + nº torneios */}
-          <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:4 }}>
-            {/* Rank */}
-            <span className="sidebar-rank" style={{ flexShrink:0, fontSize:10, minWidth:20, height:20, borderRadius:4,
-              background: rank <= 3 ? "var(--bg-topbar)" : "var(--bg-muted)",
-              color: rank <= 3 ? "var(--text-inv)" : "var(--text-3)",
-              display:"inline-flex", alignItems:"center", justifyContent:"center", fontWeight:700,
-            }}>
-              {rank}
-            </span>
-            {/* Flag + nome */}
-            <span style={{ fontSize:14, flexShrink:0 }}>{flag(r.pais)}</span>
-            <span style={{ flex:1, fontSize:13, fontWeight: active ? 700 : 600, color:"var(--text)",
-              overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
-              {displayName(r.nome)}
-            </span>
-            {/* Total torneios — número em destaque */}
-            <span style={{ flexShrink:0, textAlign:"right" }}>
-              <span style={{ fontSize:17, fontWeight:900, color: active ? "var(--accent)" : "var(--text-2)", lineHeight:1 }}>
-                {r.totalTournaments}
-              </span>
-              <span style={{ fontSize:9, color:"var(--text-muted)", display:"block", lineHeight:1, textAlign:"center" }}>
-                torn.
-              </span>
-            </span>
-          </div>
-
-          {/* Barra de actividade */}
-          <div style={{ height:3, borderRadius:2, background:"var(--border-light)", overflow:"hidden", marginBottom:5 }}>
-            <div style={{ height:"100%", width:`${pct}%`, borderRadius:2,
-              background: r.nEnc > 0 ? accentColor : "var(--border)" }} />
-          </div>
-
-          {/* Linha 2: encontros + record + desde + escalão actual */}
-          <div style={{ display:"flex", alignItems:"center", gap:5, flexWrap:"wrap" }}>
-            {r.nEnc > 0 && (
-              <span style={{ fontSize:11, fontWeight:700, color:"var(--text-2)" }}>
-                {r.nEnc} enc.
-              </span>
-            )}
-            {recordStr && (
-              <span className="p p-sm" style={{ background:recordBg, color:recordCo, fontSize:10, padding:"1px 5px" }}>
-                {recordStr}
-              </span>
-            )}
-            {r.firstYear && (
-              <span style={{ fontSize:11, color:"var(--text-3)" }}>
-                {r.firstYear}–
-              </span>
-            )}
-            {/* Tier pill compacta */}
-            {r.playerTier && (
-              <span style={{ fontSize:9, padding:"1px 5px", borderRadius:10, fontWeight:700, flexShrink:0,
-                background: r.playerTier==="elite"?"var(--score-eagle)":r.playerTier==="contender"?"var(--medal-gold)":r.playerTier==="forte"?"var(--color-good-dark)":r.playerTier==="subindo"?"var(--color-info)":r.playerTier==="assiduo"?"var(--text-dark)":"var(--accent)",
-                color:"#fff",
-              }}>
-                {r.playerTier==="elite"?"🏆":r.playerTier==="contender"?"⭐":r.playerTier==="forte"?"🎯":r.playerTier==="subindo"?"📈":r.playerTier==="assiduo"?"🔁":"✅"}
-              </span>
-            )}
-            {/* Escalão actual: pré-computado no escalaoMap (O(1) em vez de O(n)) */}
-            {(() => {
-              const maxAge = escalaoMap.get(normNameAuto(r.nome)) ?? null;
-              if (!maxAge) return null;
-              const cls = maxAge <= 10 ? "p-sub10" : maxAge <= 12 ? "p-sub12" : "p-sub14";
-              return <span className={`p p-sm ${cls}`} style={{fontSize:9, padding:"1px 5px"}}>Boys {maxAge}</span>;
-            })()}
-          </div>
-
-          {/* Linha 3: próximo torneio */}
-          {r.nextTournName && (
-            <div style={{ display:"flex", alignItems:"center", gap:4, marginTop:4 }}>
-              <span style={{ fontSize:10, color:"var(--text-3)", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", flex:1 }}>
-                🗓 {r.nextTournName}
-                {r.daysToNext != null && (
-                  <span style={{ marginLeft:4, fontWeight:700,
-                    color: r.daysToNext === 0 ? "var(--color-good)" : r.daysToNext <= 14 ? "var(--color-warn-vivid)" : "var(--text-3)" }}>
-                    {r.daysToNext === 0 ? "hoje" : `${r.daysToNext}d`}
-                  </span>
-                )}
-              </span>
-              {r.nextIsCommon && (
-                <span className="p p-sm" style={{ flexShrink:0, background:"var(--bg-success-subtle)", color:"var(--color-good-dark)", fontSize:9, padding:"1px 4px" }}>∩</span>
-              )}
-            </div>
-          )}
-        </button>
-      );
-    };
-
+    const today = new Date().toISOString().slice(0, 10);
     return (
       <>
-        {/* ── Painel de filtros (estilo DrivePage) ── */}
-        <div style={{ borderBottom:"1px solid var(--border-light)", background:"var(--bg-card)" }}>
-
-          {/* Pesquisa + Ordenar */}
-          <div style={{ padding:"8px 10px", display:"flex", flexDirection:"column", gap:5 }}>
-            <input className="input" value={sidebarRivalSearch}
-              onChange={e => setSidebarRivalSearch(e.target.value)}
-              placeholder="🔎 Pesquisar rival…"
-              style={{ width:"100%", fontSize:12, boxSizing:"border-box" }} />
-            <select className="select" value={sidebarRivalSort}
-              onChange={e => setSidebarRivalSort(e.target.value as "torn" | "enc" | "name")}
-              style={{ width:"100%", fontSize:12 }}>
-              <option value="torn">↓ Ordenar por: mais presenças</option>
-              <option value="enc">↓ Ordenar por: mais encontros</option>
-              <option value="name">↓ Ordenar por: nome A–Z</option>
-            </select>
+        {/* ── Tabela global (entrada fixa no topo) ── */}
+        <button
+          className={`course-item${showRivaisTabela ? " active" : ""}`}
+          style={{ padding:"10px 12px", display:"block", width:"100%", textAlign:"left", borderBottom:"2px solid var(--border-light)" }}
+          onClick={() => { setShowRivaisTabela(true); setSelectedT(null); }}>
+          <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+            <span style={{ fontSize:15 }}>📊</span>
+            <span style={{ fontSize:13, fontWeight:700, color: showRivaisTabela ? "var(--accent)" : "var(--text)" }}>
+              Tabela global
+            </span>
+            <span className="p p-sm p-muted" style={{ fontSize:10, marginLeft:"auto" }}>
+              {torneiosComManuel.length} torneios
+            </span>
           </div>
-
-          {/* Escalão — multi-select com cores */}
-          <div className="sidebar-section-title" style={{ paddingTop:2, paddingBottom:2 }}>Escalão (multi-select)</div>
-          <div style={{ padding:"4px 10px 8px", display:"flex", gap:4, flexWrap:"wrap" }}>
-            {([
-              { n:"9",  cls:"p-sub10", bg:"var(--esc-sub10-bg)", fg:"var(--esc-sub10-fg)" },
-              { n:"10", cls:"p-sub10", bg:"var(--esc-sub10-bg)", fg:"var(--esc-sub10-fg)" },
-              { n:"11", cls:"p-sub12", bg:"var(--esc-sub12-bg)", fg:"var(--esc-sub12-fg)" },
-              { n:"12", cls:"p-sub14", bg:"var(--esc-sub14-bg)", fg:"var(--esc-sub14-fg)" },
-              { n:"13", cls:"p-sub14", bg:"var(--esc-sub14-bg)", fg:"var(--esc-sub14-fg)" },
-            ] as const).map(({ n, bg, fg }) => {
-              const active = rivalFilters.escaloes.has(n);
-              return (
-                <button key={n}
-                  className="p p-sm"
-                  style={{
-                    background: active ? bg : "var(--bg-muted)",
-                    color: active ? fg : "var(--text-2)",
-                    border: active ? "none" : "1px solid var(--border)",
-                    cursor:"pointer", fontWeight: active ? 700 : 500,
-                    boxShadow: active ? "0 1px 3px rgba(0,0,0,.2)" : "none",
-                    opacity: active ? 1 : 0.7,
-                  }}
-                  onClick={() => setRivalFilters(f => {
-                    const next = new Set(f.escaloes);
-                    next.has(n) ? next.delete(n) : next.add(n);
-                    return { ...f, escaloes: next };
-                  })}>
-                  Boys {n}
-                </button>
-              );
-            })}
+          <div style={{ fontSize:11, color:"var(--text-3)", marginTop:2 }}>
+            Todos os jogadores × todos os torneios
           </div>
+        </button>
 
-          {/* País */}
-          <div className="sidebar-section-title" style={{ paddingTop:2, paddingBottom:2 }}>País</div>
-          <div style={{ padding:"4px 10px 8px" }}>
-            <select className="select" value={rivalFilters.pais}
-              onChange={e => setRivalFilters(f => ({ ...f, pais: e.target.value }))}
-              style={{ width:"100%", fontSize:12 }}>
-              <option value="">Todos os países</option>
-              {[...new Set(sidebarRivals.map(r => normPaisDisplay(r.pais)).filter(Boolean))]
-                .map(p => ({ p, n: sidebarRivals.filter(r => normPaisDisplay(r.pais) === p).length }))
-                .sort((a, b) => b.n - a.n)
-                .map(({ p, n }) => (
-                  <option key={p} value={p}>{flag(p)} {p} ({n})</option>
-                ))}
-            </select>
-          </div>
-
-          {/* Tipo de jogador */}
-          <div className="sidebar-section-title" style={{ paddingTop:2, paddingBottom:2 }}>Tipo de jogador</div>
-          <div style={{ padding:"4px 10px 8px", display:"flex", gap:4, flexWrap:"wrap" }}>
-            {([
-              { key:"elite",      label:"🏆 Elite",            bg:"var(--score-eagle)",    fg:"#fff" },
-              { key:"contender",  label:"⭐ Top Contender",    bg:"var(--medal-gold)",     fg:"#fff" },
-              { key:"forte",      label:"🎯 Forte Competidor", bg:"var(--color-good-dark)",fg:"#fff" },
-              { key:"subindo",    label:"📈 Em Ascensão",      bg:"var(--color-info)",     fg:"#fff" },
-              { key:"assiduo",    label:"🔁 Assíduo",          bg:"var(--text-dark)",      fg:"#fff" },
-              { key:"consistente",label:"✅ Consistente",      bg:"var(--accent)",         fg:"#fff" },
-            ] as const).map(({ key, label, bg, fg }) => {
-              const count = sidebarRivals.filter(r => r.playerTier === key).length;
-              if (count === 0) return null;
-              const active = sidebarRivalTier === key;
-              return (
-                <button key={key}
-                  onClick={() => setSidebarRivalTier(active ? "" : key)}
-                  style={{
-                    display:"flex", alignItems:"center", gap:4,
-                    padding:"3px 8px", borderRadius:20, border:"none", cursor:"pointer",
-                    background: active ? bg : "var(--bg-muted)",
-                    color: active ? fg : "var(--text-2)",
-                    fontSize:11, fontWeight:active?700:500,
-                    boxShadow: active ? "0 1px 3px rgba(0,0,0,.15)" : "none",
-                  }}>
-                  {label}
-                  <span style={{ fontSize:10, opacity:.8 }}>{count}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Mínimo de torneios */}
-          <div className="sidebar-section-title" style={{ paddingTop:2, paddingBottom:2 }}>Presenças mínimas</div>
-          <div style={{ padding:"4px 10px 8px", display:"flex", gap:4, flexWrap:"wrap" }}>
-            {([0, 5, 10, 20] as const).map(n => (
-              <button key={n}
-                className={`tourn-tab tourn-tab-sm${rivalFilters.minTorneios===n?" active":""}`}
-                style={rivalFilters.minTorneios===n?{}:{ background:"var(--bg-muted)", color:"var(--text-2)", borderColor:"var(--border)" }}
-                onClick={() => setRivalFilters(f=>({...f, minTorneios:n}))}>
-                {n===0 ? "Todos" : `${n}+`}
-              </button>
-            ))}
-          </div>
-
-          {/* Tipo */}
-          <div className="sidebar-section-title" style={{ paddingTop:2, paddingBottom:2 }}>Tipo</div>
-          <div style={{ padding:"4px 10px 10px", display:"flex", gap:4, flexWrap:"wrap" }}>
-            <button
-              className={`tourn-tab tourn-tab-sm${rivalFilters.apenasCruzaram?" active":""}`}
-              style={rivalFilters.apenasCruzaram?{ background:"var(--bg-success-subtle)", borderColor:"var(--color-good)", color:"var(--color-good-dark)" }:{ background:"var(--bg-muted)", color:"var(--text-2)", borderColor:"var(--border)" }}
-              onClick={() => setRivalFilters(f=>({...f, apenasCruzaram:!f.apenasCruzaram}))}>
-              ⚔️ Só directos
+        <div className="sidebar-section-title">{torneiosComManuel.length} torneios</div>
+        {torneiosComManuel.length === 0 && (
+          <div className="muted" style={{ padding:"16px 12px", fontSize:12 }}>Sem torneios com o Manuel</div>
+        )}
+        {torneiosComManuel.map(t => {
+          const active = !showRivaisTabela && t.t === selectedT;
+          const isFuture = isoDate(t.date_inicio) > today;
+          const resT = resultsData?.resultados.find(r => r.t === t.t);
+          const temResultados = !isFuture && !!resT;
+          return (
+            <button key={t.t}
+              className={`course-item${active ? " active" : ""}`}
+              style={{ padding:"9px 10px 9px 12px", textAlign:"left", width:"100%", display:"block" }}
+              onClick={() => { setShowRivaisTabela(false); setSelectedT(t.t); }}>
+              <div style={{ fontSize:13, fontWeight: active ? 700 : 600, color:"var(--text)",
+                overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", marginBottom:3 }}>
+                {t.name.replace(/\s*\d{4}$/, "")} <span style={{ color:"var(--text-3)", fontWeight:400, fontSize:12 }}>'{isoDate(t.date_inicio).slice(2,4)}</span>
+              </div>
+              <div style={{ display:"flex", gap:4, flexWrap:"wrap", alignItems:"center" }}>
+                <span style={{ fontSize:11, color:"var(--text-3)" }}>{fmtDate(t.date_inicio)}</span>
+                {t.escalaoManuel && (
+                  <span className="p p-sm p-muted" style={{ fontSize:10 }}>{t.escalaoManuel}</span>
+                )}
+                {temResultados && (
+                  <span className="p p-sm" style={{ fontSize:10, background:"var(--bg-success-strong)", color:"var(--color-good-dark)", borderColor:"var(--border-success)" }}>
+                    resultados
+                  </span>
+                )}
+                {isFuture && (
+                  <span className="p p-sm" style={{ fontSize:10, background:"var(--bg-info-strong)", color:"var(--color-info)", borderColor:"var(--border-info)" }}>
+                    inscrito
+                  </span>
+                )}
+              </div>
             </button>
-            {/* Limpar filtros */}
-            {(rivalFilters.pais || rivalFilters.escaloes.size > 0 || rivalFilters.minTorneios > 0 || rivalFilters.apenasCruzaram || sidebarRivalTier) && (
-              <button className="tourn-tab tourn-tab-sm" style={{ background:"var(--bg-danger)", color:"var(--color-danger)", borderColor:"var(--border-danger)" }}
-                onClick={() => { setRivalFilters({ pais:"", escaloes: new Set(), apenasCruzaram:false, apenasProximoTourn:false, minTorneios:0, maxNascimento:0, minNascimento:0 }); setSidebarRivalTier(""); }}>
-                ✕ Limpar
-              </button>
-            )}
-          </div>
-        </div>
-
-        {/* Cabeçalho com contagem */}
-        <div className="sidebar-section-title" style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
-          <span>{filtered.length} rival{filtered.length !== 1 ? "s" : ""}
-            {filtered.length < sidebarRivals.length ? ` (de ${sidebarRivals.length})` : ""}
-          </span>
-        </div>
-
-        {/* Grupo 1: Confrontos directos */}
-        {directos.length > 0 && (
-          <>
-            <div className="sidebar-section-title-dark" style={{ fontSize:10, letterSpacing:"0.06em", textTransform:"uppercase" }}>
-              ⚔️ Directos ({directos.length})
-            </div>
-            {directos.map((r, i) => renderItem(r, i + 1))}
-          </>
-        )}
-
-        {/* Grupo 2: Mesmo circuito */}
-        {circuito.length > 0 && (
-          <>
-            <div className="sidebar-section-title-dark" style={{ fontSize:10, letterSpacing:"0.06em", textTransform:"uppercase" }}>
-              🌍 Circuito ({circuito.length})
-            </div>
-            {circuito.map((r, i) => renderItem(r, directos.length + i + 1))}
-          </>
-        )}
-
-        {filtered.length === 0 && (
-          <div className="muted" style={{ padding:"16px 12px", fontSize:12 }}>Sem rivais com estes filtros</div>
-        )}
+          );
+        })}
       </>
     );
   };
@@ -5188,7 +3580,7 @@ export default function USKidsFieldPage() {
         )}
 
         {tab === "resultados" && resultsData && (
-          <TabResultados greatgolfData={greatgolfData}
+          <TabResultados greatgolfData={null}
             data={resultsData}
             selectedT={selectedT}
           />
@@ -5200,17 +3592,19 @@ export default function USKidsFieldPage() {
         {tab === "rivais" && !resultsData && (
           <LoadingState message="A carregar rivais…" size="md" icon="🤝" />
         )}
-        {/* TabRivais renderizado sempre quando resultsData existe — pré-calcula em background */}
-        {resultsData && (
+        {tab === "rivais" && resultsData && (
           <SectionErrorBoundary label="TabRivais">
-            <div style={{ display: tab === "rivais" ? "block" : "none" }}>
-              <TabRivais data={resultsData} fieldData={fieldData} intlData={intlData}
-                autoRivals={autoRivals} selectedT={selectedT} mhCountMap={mhCountMap}
-                selectedRival={selectedRival} setSelectedRival={setSelectedRival}
-                greatgolfData={greatgolfData}
-                onRivalsReady={onRivalsReady}
-              />
-            </div>
+            <TabRivais
+              resultados={resultsData.resultados}
+              fieldData={fieldData}
+              torneiosComManuel={torneiosComManuel}
+              selectedT={selectedT}
+              setSelectedT={setSelectedT}
+              autoRivals={autoRivals}
+              showTabela={showRivaisTabela}
+              setShowTabela={setShowRivaisTabela}
+              futureTorneios={torneiosComManuel.filter(t => isoDate(t.date_inicio) > new Date().toISOString().slice(0, 10))}
+            />
           </SectionErrorBoundary>
         )}
 

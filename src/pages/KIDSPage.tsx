@@ -733,6 +733,25 @@ const D: RivalPlayer[]=[
 
 const manuel = D.find(x => x.isM)!;
 
+/** Conjunto de nomes normalizados de jogadores curados manualmente em D[]. */
+const D_NAMES = new Set(D.map(p => normName(p.n)));
+
+/** Um rival é escalão-relevante se:
+ *  - for o Manuel (isM), OU
+ *  - estiver curado em D[] (adicionado manualmente → escalão correcto por definição), OU
+ *  - for auto-loaded E partilhar ≥1 tid com o Manuel merged.
+ *
+ *  O tid encoda o escalão: usk{tcode}_b11 ≠ usk{tcode}_b9.
+ *  Após merge, o Manuel tem tanto tids manuais (venice25) como auto (venice25_b11),
+ *  portanto jogadores do mesmo escalão em qualquer torneio são sempre detectados. */
+function isEscalaoRelevant(p: RivalPlayer, manuelMerged: RivalPlayer | undefined | null): boolean {
+  if (p.isM) return true;
+  if (D_NAMES.has(normName(p.n))) return true;
+  if (!manuelMerged) return false;
+  const manTids = new Set(Object.keys(manuelMerged.r));
+  return Object.keys(p.r).some(tid => manTids.has(tid));
+}
+
 /** Hook: carrega todos os ficheiros JSON e faz merge com D */
 /** Converte dob FPG "YYYY-MM-DD" → "DD/MM/YYYY" esperado por RivalPlayer.dob */
 function fpgDobToPt(d: string): string {
@@ -1164,519 +1183,6 @@ function TournScorecard({ par, si, meters, rounds }: { par: readonly number[]; s
 }
 
 /* ── Scoring distribution pills ── */
-function RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) => void }) {
-  const rivals = useRivals();
-  const memberHist = useMH();
-
-  // Mapa nome (lowercase, normalizado) → nº de torneios USKids com resultados
-  const mhCountMap = useMemo<Map<string, number>>(() => {
-    const m = new Map<string, number>();
-    if (!memberHist) return m;
-    for (const mh of Object.values(memberHist.jogadores)) {
-      if (!mh.name || mh.name === "?" || mh.name.startsWith("[unknown")) continue;
-      const key = mh.name.toLowerCase().trim().replace(/\s+/g, " ");
-      const cnt = Object.values(mh.torneios).filter(t => t.rounds && Object.keys(t.rounds).length > 0).length;
-      if (cnt > 0) m.set(key, cnt);
-    }
-    return m;
-  }, [memberHist]);
-
-  const [fTour, setFTour] = useState("all");
-  const [fUp, setFUp] = useState("all");
-  const [fCo, setFCo] = useState("all");
-  const [q, setQ] = useState("");
-  const [sort, setSort] = useState("zrank");
-  const [dir, setDir] = useState<"asc"|"desc">("asc");
-  const [dOnly, setDOnly] = useState(false);
-  const [vsOn, setVsOn] = useState(true);
-  // New filters
-  const [fJuntos, setFJuntos]   = useState("all");   // torneios jogados juntos com Manuel
-  const [fPerf, setFPerf]       = useState("all");   // performance (melhor ±par)
-  const [fTrend, setFTrend]     = useState("all");   // tendência
-  const [fUsk, setFUsk]         = useState("all");   // USKids histórico
-  const [fH2H, setFH2H]         = useState("all");   // H2H vs Manuel (ganhou/perdeu/equilibrado)
-  const [showFilters, setShowFilters] = useState(false); // toggle painel de filtros extra
-
-  const manuelMergedDash = useMemo(() => rivals.find(p => p.isM) ?? manuel, [rivals]);
-
-  const list = useMemo(() => {
-    let pl = [...rivals];
-    if (dOnly) pl = pl.filter(x => Object.values(x.r).some(r => r.tp != null));
-    if (fTour !== "all") pl = pl.filter(x => x.r[fTour]);
-    if (fUp !== "all") pl = pl.filter(x => x.up.includes(fUp));
-    if (fCo !== "all") pl = pl.filter(x => x.co === fCo);
-    if (q) { const ql = q.toLowerCase(); pl = pl.filter(x => x.n.toLowerCase().includes(ql)); }
-
-    // Torneios juntos com Manuel
-    if (fJuntos !== "all" && manuelMergedDash) {
-      pl = pl.filter(x => {
-        if (x.isM) return true;
-        const hidden = hiddenTids(x), mHidden = hiddenTids(manuelMergedDash);
-        const shared = Object.keys(x.r).filter(tid =>
-          !hidden.has(tid) && !mHidden.has(tid) &&
-          typeof manuelMergedDash.r[tid]?.p === "number" && typeof x.r[tid]?.p === "number"
-        ).length;
-        if (fJuntos === "0")  return shared === 0;
-        if (fJuntos === "1")  return shared === 1;
-        if (fJuntos === "2+") return shared >= 2;
-        if (fJuntos === "3+") return shared >= 3;
-        return true;
-      });
-    }
-
-    // Performance (melhor ±par total)
-    if (fPerf !== "all") {
-      pl = pl.filter(x => {
-        if (x.isM) return true;
-        const tps = Object.values(x.r).filter(r => r?.tp != null).map(r => r!.tp as number);
-        if (tps.length === 0) return fPerf === "nodata";
-        const best = Math.min(...tps);
-        if (fPerf === "elite") return best <= 0;
-        if (fPerf === "strong") return best > 0 && best <= 15;
-        if (fPerf === "mid") return best > 15 && best <= 30;
-        if (fPerf === "dev") return best > 30;
-        return true;
-      });
-    }
-
-    // Tendência
-    if (fTrend !== "all") {
-      pl = pl.filter(x => {
-        if (x.isM) return true;
-        const tr = (getTrend as (p: RivalPlayer) => string | null)(x);
-        if (fTrend === "up")     return tr === "up" || tr === "up2";
-        if (fTrend === "down")   return tr === "down" || tr === "down2";
-        if (fTrend === "stable") return tr === "stable" || tr == null;
-        return true;
-      });
-    }
-
-    // USKids histórico
-    if (fUsk !== "all") {
-      pl = pl.filter(x => {
-        if (x.isM) return true;
-        const key = x.n.toLowerCase().trim().replace(/\s+/g, " ");
-        const cnt = mhCountMap.get(key) ?? 0;
-        if (fUsk === "yes") return cnt > 0;
-        if (fUsk === "no")  return cnt === 0;
-        if (fUsk === "3+")  return cnt >= 3;
-        return true;
-      });
-    }
-
-    // H2H vs Manuel
-    if (fH2H !== "all" && manuelMergedDash) {
-      pl = pl.filter(x => {
-        if (x.isM) return true;
-        const hidden = hiddenTids(x), mHidden = hiddenTids(manuelMergedDash);
-        const shared = Object.keys(x.r).filter(tid =>
-          !hidden.has(tid) && !mHidden.has(tid) &&
-          typeof manuelMergedDash.r[tid]?.p === "number" && typeof x.r[tid]?.p === "number"
-        );
-        if (shared.length === 0) return fH2H === "none";
-        const wins = shared.filter(t => (manuelMergedDash.r[t].p as number) < (x.r[t].p as number)).length;
-        const losses = shared.filter(t => (manuelMergedDash.r[t].p as number) > (x.r[t].p as number)).length;
-        if (fH2H === "manuel_wins") return wins > losses;
-        if (fH2H === "rival_wins")  return losses > wins;
-        if (fH2H === "balanced")    return wins === losses;
-        if (fH2H === "none")        return shared.length === 0;
-        return true;
-      });
-    }
-
-    pl.sort((a, b) => {
-      let cmp = 0;
-      if (sort === "name") cmp = a.n.localeCompare(b.n);
-      else if (sort === "zrank") { cmp = ((getAvgZ as unknown as (p: RivalPlayer) => number | null)(a) ?? 99) - ((getAvgZ as unknown as (p: RivalPlayer) => number | null)(b) ?? 99); }
-      else if (sort === "vsManuel") { cmp = (getVsAvg(a, manuelMergedDash) ?? 999) - (getVsAvg(b, manuelMergedDash) ?? 999); }
-      else if (sort.startsWith("t:")) {
-        const tid = sort.slice(2);
-        const posOf = (x: RivalPlayer) => { const r = x.r[tid]; if (!r || (r.tp == null && (r.p as any) !== "WD")) return 9999; return typeof r.p === "number" ? r.p : 9998; };
-        cmp = posOf(a) - posOf(b);
-      }
-      else if (sort.startsWith("up:")) {
-        const uid = sort.slice(3);
-        cmp = (a.up.includes(uid) ? 0 : 1) - (b.up.includes(uid) ? 0 : 1);
-        if (cmp === 0) cmp = a.n.localeCompare(b.n);
-      }
-      return dir === "desc" ? -cmp : cmp;
-    });
-    return pl;
-  }, [fTour, fUp, fCo, q, sort, dir, dOnly, fJuntos, fPerf, fTrend, fUsk, fH2H, rivals, manuelMergedDash]);
-
-  const doSort = (c: string) => { if (sort === c) setDir(d => d === "asc" ? "desc" : "asc"); else { setSort(c); setDir("asc"); } };
-  const sortIcon = (c: string) => sort === c ? (dir === "asc" ? " ↑" : " ↓") : "";
-
-  // Count tournaments & rounds played
-  const nPlayedLocal = (p: RivalPlayer) => nPlayed(p);
-  const nRoundsLocal = (p: RivalPlayer) => nRounds(p);
-
-  // Countries from merged rivals (includes auto-loaded players)
-  const allCountries = useMemo(() => [...new Set(rivals.map(p => p.co))].sort(), [rivals]);
-
-  // Build dynamic list of auto-loaded tournaments that actually appear in the data
-  // Sorted by: most players first, then by date
-  const autoTournCols = useMemo(() => {
-    const tFixed = new Set(T.map(t => t.id));
-    const hidden = new Set<string>();
-    for (const p of rivals) for (const h of hiddenTids(p)) hidden.add(h);
-    const counts = new Map<string, number>();
-    for (const p of rivals) {
-      for (const [tid, res] of Object.entries(p.r)) {
-        if (tFixed.has(tid) || hidden.has(tid)) continue;
-        if (!res || (res.tp == null && !(res as any).p)) continue;
-        counts.set(tid, (counts.get(tid) ?? 0) + 1);
-      }
-    }
-    return [...counts.entries()]
-      .filter(([, n]) => n >= 2) // at least 2 players → worth a column
-      .sort((a, b) => {
-        const infoA = getTournInfo(a[0]), infoB = getTournInfo(b[0]);
-        // Sort: most recent first, then by player count
-        const dateA = infoA.dateExact || infoA.date;
-        const dateB = infoB.dateExact || infoB.date;
-        const dateCmp = dateB.localeCompare(dateA);
-        return dateCmp !== 0 ? dateCmp : b[1] - a[1];
-      })
-      .slice(0, 12) // cap at 12 extra columns
-      .map(([tid]) => ({ tid, info: getTournInfo(tid), weight: getTournWeight(tid) }));
-  }, [rivals]);
-
-  const allTournCols = useMemo(() => [
-    ...T.map(t => ({ tid: t.id, info: { name: t.name, short: t.short, date: t.date, dateExact: t.dateExact ?? t.date }, weight: getTournWeight(t.id), url: t.url, isFixed: true })),
-    ...autoTournCols.map(c => ({ ...c, url: undefined, isFixed: false })),
-  ], [autoTournCols]);
-
-  return (
-    <div>
-      {/* Manuel KPIs — por torneio + resumo global */}
-      {(() => {
-        // Global stats for Manuel
-        const manuelRivals = rivals.find(d => d.isM) ?? manuel;
-        const allManuelRds = Object.values(manuelRivals.r).flatMap((r: any) => r.rd?.filter((x: number) => x > 0) ?? []) as number[];
-        const manuelAvg = allManuelRds.length ? allManuelRds.reduce((a,b)=>a+b,0)/allManuelRds.length : null;
-        const manuelBest = allManuelRds.length ? Math.min(...allManuelRds) : null;
-        const manuelTorneios = nPlayed(manuelRivals);
-        const manuelRondas = nRounds(manuelRivals);
-        return (
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 12, alignItems: "stretch" }}>
-            {/* Global summary */}
-            <div className="kpi" style={{ flex: "0 0 auto", padding: "8px 14px", background: "var(--bg-info-subtle)", borderLeft: "3px solid var(--accent)" }}>
-              <div className="kpi-lbl" style={{ color: "var(--color-info-alt)" }}>Manuel — Total</div>
-              <div style={{ display: "flex", gap: 16, alignItems: "baseline", marginTop: 4 }}>
-                <span><span className="fw-800 fs-16">{manuelTorneios}</span><span className="fs-10 c-text-3 ml-4">torneios</span></span>
-                <span><span className="fw-800 fs-16">{manuelRondas}</span><span className="fs-10 c-text-3 ml-4">rondas</span></span>
-                {manuelAvg != null && <span><span className="fw-700 fs-14">{manuelAvg.toFixed(1)}</span><span className="fs-10 c-text-3 ml-4">média</span></span>}
-                {manuelBest != null && <span><span className="fw-700 fs-14" style={{ color: "var(--color-good-dark)" }}>{manuelBest}</span><span className="fs-10 c-text-3 ml-4">melhor</span></span>}
-              </div>
-            </div>
-            {/* Per-tournament */}
-            {T.map(t => {
-              const res = manuelRivals.r[t.id];
-              if (!res) return (
-                <div key={t.id} className="kpi op-4" style={{ padding: "8px 10px", flex: "1 1 80px", minWidth: 80 }}>
-                  <div className="kpi-lbl">{t.short}</div>
-                  <div className="kpi-val fs-16">–</div>
-                </div>
-              );
-              return (
-                <div key={t.id} className="kpi" style={{ padding: "8px 10px", flex: "1 1 80px", minWidth: 80 }}>
-                  <div className="kpi-lbl">{t.short}</div>
-                  <div className="kpi-val" style={{ fontSize: 18, color: tpColorDark(res.tp) }}>
-                    {fmtSign(res.tp!)}
-                  </div>
-                  <div className="kpi-sub">
-                    #{res.p as number}
-                    {res.rd?.length > 0 && <span style={{ marginLeft: 4, opacity: 0.7 }}>{res.rd.join("-")}</span>}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        );
-      })()}
-
-      {/* Filters */}
-      {/* ── Toolbar + filtros ── */}
-      {(() => {
-        const activeCount = [fTour, fUp, fCo, fJuntos, fPerf, fTrend, fUsk, fH2H].filter(v => v !== "all").length
-          + (dOnly ? 1 : 0) + (q ? 1 : 0);
-        const resetAll = () => { setFTour("all"); setFUp("all"); setFCo("all"); setFJuntos("all"); setFPerf("all"); setFTrend("all"); setFUsk("all"); setFH2H("all"); setDOnly(false); setQ(""); };
-        return (
-          <div style={{ marginBottom: 8 }}>
-            {/* Row 1: search + main filters + toggle */}
-            <div className="detail-toolbar" style={{ flexWrap: "wrap" }}>
-              <input type="text" placeholder="Pesquisar..." value={q} onChange={e => setQ(e.target.value)} className="input" style={{ maxWidth: 140 }} />
-              <select value={fTour} onChange={e => setFTour(e.target.value)} className="select">
-                <option value="all">Todos Torneios</option>
-                {allTournCols.map(({ tid, info }) => <option key={tid} value={tid}>{info.short} {info.date}</option>)}
-              </select>
-              <select value={fCo} onChange={e => setFCo(e.target.value)} className="select">
-                <option value="all">🌍 País</option>
-                {allCountries.map(c => <option key={c} value={c}>{FL[c] || ""} {c}</option>)}
-              </select>
-              <label className="filter-checkbox"><input type="checkbox" checked={vsOn} onChange={e => setVsOn(e.target.checked)} /> vs M</label>
-              <button
-                className={`p p-filter p-sm${showFilters ? " active" : ""}`}
-                onClick={() => setShowFilters(s => !s)}
-                style={{ position: "relative" }}
-              >
-                Filtros {showFilters ? "▲" : "▼"}
-                {activeCount > 0 && (
-                  <span style={{ position: "absolute", top: -4, right: -4, background: "var(--accent)", color: "#fff", borderRadius: "50%", width: 16, height: 16, fontSize: 10, fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    {activeCount}
-                  </span>
-                )}
-              </button>
-              {activeCount > 0 && (
-                <button className="p p-filter p-sm" onClick={resetAll} title="Limpar filtros" style={{ color: "var(--color-danger)" }}>✕ Limpar</button>
-              )}
-              <div className="chip" style={{ marginLeft: "auto" }}>{list.length} jogadores</div>
-            </div>
-
-            {/* Row 2: extra filters (collapsible) */}
-            {showFilters && (
-              <div style={{ display: "flex", gap: 8, flexWrap: "wrap", padding: "8px 0 4px", borderTop: "1px solid var(--border-light)", marginTop: 6 }}>
-
-                {/* Torneios juntos com Manuel */}
-                <div className="u-col-flex3">
-                  <span className="u-fs10-fw6-mut">🤝 Juntos</span>
-                  <div className="u-flex-gap3">
-                    {[["all","Todos"],["0","0"],["1","1"],["2+","2+"],["3+","3+"]].map(([v,l]) => (
-                      <button key={v} className={`p p-filter p-sm${fJuntos===v?" active":""}`} onClick={() => setFJuntos(v)}>{l}</button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Performance */}
-                <div className="u-col-flex3">
-                  <span className="u-fs10-fw6-mut">⛳ Melhor ±Par</span>
-                  <div className="u-flex-gap3">
-                    {[["all","Todos"],["elite","≤ E"],["strong","0–15"],["mid","16–30"],["dev",">30"],["nodata","S/d"]].map(([v,l]) => (
-                      <button key={v} className={`p p-filter p-sm${fPerf===v?" active":""}`} onClick={() => setFPerf(v)}>{l}</button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Tendência */}
-                <div className="u-col-flex3">
-                  <span className="u-fs10-fw6-mut">📈 Tendência</span>
-                  <div className="u-flex-gap3">
-                    {[["all","Todos"],["up","▲ A subir"],["stable","● Estável"],["down","▼ A descer"]].map(([v,l]) => (
-                      <button key={v} className={`p p-filter p-sm${fTrend===v?" active":""}`} onClick={() => setFTrend(v)}>{l}</button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* H2H vs Manuel */}
-                <div className="u-col-flex3">
-                  <span className="u-fs10-fw6-mut">⚔️ H2H vs Manuel</span>
-                  <div className="u-flex-gap3">
-                    {[["all","Todos"],["manuel_wins","Manuel ganhou"],["rival_wins","Rival ganhou"],["balanced","Equilibrado"],["none","Sem encontros"]].map(([v,l]) => (
-                      <button key={v} className={`p p-filter p-sm${fH2H===v?" active":""}`} onClick={() => setFH2H(v)}>{l}</button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* USKids histórico */}
-                <div className="u-col-flex3">
-                  <span className="u-fs10-fw6-mut">📊 USKids histórico</span>
-                  <div className="u-flex-gap3">
-                    {[["all","Todos"],["yes","Tem"],["3+","3+ torn."],["no","Sem"]].map(([v,l]) => (
-                      <button key={v} className={`p p-filter p-sm${fUsk===v?" active":""}`} onClick={() => setFUsk(v)}>{l}</button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Próximos torneios */}
-                {UP.length > 0 && (
-                  <div className="u-col-flex3">
-                    <span className="u-fs10-fw6-mut">▲ Próximos</span>
-                    <div className="u-flex-gap3">
-                      <button className={`p p-filter p-sm${fUp==="all"?" active":""}`} onClick={() => setFUp("all")}>Todos</button>
-                      {UP.map(u => (
-                        <button key={u.id} className={`p p-filter p-sm${fUp===u.id?" active":""}`} onClick={() => setFUp(u.id)}>{u.short}</button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Checkbox: só com dados */}
-                <div style={{ display: "flex", flexDirection: "column", gap: 3, justifyContent: "flex-end" }}>
-                  <label className="filter-checkbox" style={{ fontSize: 11 }}>
-                    <input type="checkbox" checked={dOnly} onChange={e => setDOnly(e.target.checked)} /> Só com dados
-                  </label>
-                </div>
-              </div>
-            )}
-          </div>
-        );
-      })()}
-
-      {/* Legend */}
-      <div className="legend-row">
-        {(Object.keys(TIER) as Array<keyof typeof TIER>).map(k => (
-          <span key={k} className="legend-item">
-            <span className="legend-dot" style={{ background: TIER[k].bg }} />
-            <span style={{ color: TIER[k].c, fontSize: 10 }}>{TIER_L[k]}</span>
-          </span>
-        ))}
-      </div>
-
-      {/* Table */}
-      <div className="card">
-        <div className="scroll-x">
-          <table className="tourn-form-table">
-            <thead>
-              <tr className="rivais-group-header">
-                <th className="rivais-th-name pointer" onClick={() => doSort("name")}>Jogador{sortIcon("name")}</th>
-                <th className="rivais-th pointer ta-center" onClick={() => doSort("zrank")} title="Torneios jogados">#T</th>
-                {allTournCols.map(({ tid, info, weight, url, isFixed }) => {
-                  const stars = weight >= 1.3 ? "★★★★★" : weight >= 1.1 ? "★★★★" : weight >= 0.9 ? "★★★" : weight >= 0.6 ? "★★" : weight >= 0.4 ? "★" : "½";
-                  return (
-                    <th key={tid} className="rivais-th pointer ta-center"
-                      style={{ minWidth: 56, opacity: isFixed ? 1 : 0.85 }}
-                      onClick={() => doSort("t:" + tid)}>
-                      {url ? <a href={url} target="_blank" rel="noopener noreferrer" className="rivais-link" onClick={e => e.stopPropagation()}>{info.short}</a> : info.short}
-                      {sortIcon("t:" + tid)}
-                      <div className="fs-9 fw-500 op-6 mt-1">{stars} {info.date}</div>
-                    </th>
-                  );
-                })}
-                <th className="rivais-th pointer ta-center" style={{ borderLeft: "3px solid var(--text-muted)", minWidth: 56 }} onClick={() => doSort("zrank")}>Rank{sortIcon("zrank")}</th>
-                <th className="rivais-th ta-center">▲</th>
-                {UP.map(u => (
-                  <th key={u.id} className="rivais-th pointer ta-center" onClick={() => doSort("up:" + u.id)}>
-                    {u.url ? <a href={u.url} target="_blank" rel="noopener noreferrer" className="rivais-link" onClick={e => e.stopPropagation()}>{u.short}</a> : u.short}
-                    {sortIcon("up:" + u.id)}
-                  </th>
-                ))}
-                {vsOn && <th className="rivais-th pointer ta-center" onClick={() => doSort("vsManuel")}>vs M{sortIcon("vsManuel")}</th>}
-                <th className="rivais-th ta-center" title="Torneios USKids no histórico oficial">📊</th>
-              </tr>
-            </thead>
-            <tbody>
-              {list.map(p => {
-                const isM = p.isM;
-                const tr = (getTrend as (p: RivalPlayer) => string | null)(p);
-                const flag = FL[p.co] || "🏳️";
-                const vsAvg = vsOn ? getVsAvg(p, manuelMergedDash) : null;
-                const played = nPlayedLocal(p);
-
-                return (
-                  <tr key={p.n} className={isM ? "rivais-row-ref" : ""}>
-                    {/* Player name — clickable */}
-                    <td className="rivais-player-name">
-                      <span className="rivais-flag" title={p.co}>{flag}</span>
-                      {onSelectPlayer ? (
-                        <button className="btn-link fs-12 fw-600" style={{ color: isM ? "var(--text)" : "var(--text-2)" }} onClick={() => onSelectPlayer(p.n)}>
-                          {p.n}
-                        </button>
-                      ) : (
-                        <span className={`fs-12${isM ? " fw-700" : " fw-600"}`} style={{ color: isM ? "var(--text)" : "var(--text-2)" }}>{p.n}</span>
-                      )}
-                      {isM && <span className="p p-sm p-outline ml-4">REF</span>}
-                    </td>
-
-                    {/* # tournaments played */}
-                    <td className="ta-center fs-12 fw-600 c-text-3">{played || ""}</td>
-
-                    {/* One cell per tournament: ±par colored + position */}
-                    {allTournCols.map(({ tid, info: _info }) => {
-                      const res = p.r[tid];
-                      if (!res || (res.tp == null && res.p !== "WD")) return <td key={tid} />;
-                      if (res.p === "WD") return <td key={tid} className="ta-center fs-11 c-muted">WD</td>;
-
-                      const tDef = T.find(t => t.id === tid);
-                      const rounds = tDef?.rounds ?? res.rd?.length ?? 1;
-                      const playerAvg = res.t != null ? res.t / rounds : 0;
-                      const roundAvgs = AVG_R[tid];
-                      let fieldAvg: number | null = null, fieldStd: number | null = null;
-                      if (roundAvgs && roundAvgs.length > 0) {
-                        const ms = roundAvgs.filter((x: RoundAvg): x is { m: number; s: number } => x != null).map((x: { m: number }) => x.m);
-                        const ss = roundAvgs.filter((x: RoundAvg): x is { m: number; s: number } => x != null).map((x: { s: number }) => x.s);
-                        if (ms.length > 0) { fieldAvg = ms.reduce((a: number, b: number) => a + b, 0) / ms.length; fieldStd = ss.reduce((a: number, b: number) => a + b, 0) / ss.length; }
-                      }
-                      const ti = fieldAvg != null ? zTier(playerAvg, { m: fieldAvg, s: fieldStd ?? 0 }) : null;
-                      const st = (ti ? TIER[ti as keyof typeof TIER] : null) as { bg: string; c: string } | null;
-                      const tpStr = res.tp != null ? fmtSign(res.tp) : "—";
-
-                      let vsM: number | null = null;
-                      if (vsOn && !isM) {
-                        const mRes = manuelMergedDash.r[tid];
-                        if (mRes?.tp != null && res.tp != null) vsM = res.tp - mRes.tp;
-                      }
-
-                      return (
-                        <td key={tid} className="ta-center" style={{ background: st?.bg || "transparent", padding: "5px 4px" }}>
-                          <div className="fw-700 fs-13" style={{ color: st?.c || "var(--text-3)" }}>{tpStr}</div>
-                          {res.p != null && <div className="fs-10 fw-600 c-text-3">#{res.p}</div>}
-                          {vsM != null && <div className="fs-10 fw-600" style={{ color: sc3m(vsM, 0, 0) }}>{fmtSign(vsM)}</div>}
-                        </td>
-                      );
-                    })}
-
-                    {/* Rank */}
-                    <td className="ta-center" style={{ borderLeft: "3px solid var(--border-light)", padding: "4px 6px" }}>
-                      {rankMap[p.n] != null ? (
-                        <div title={`z-score: ${((getAvgZ as unknown as (p: RivalPlayer) => number | null)(p) ?? 0).toFixed(2)} · ${nRounds(p)} rondas`}>
-                          <div className="fw-800 fs-13" style={{ color: rankMap[p.n] <= 10 ? "var(--color-good-dark)" : rankMap[p.n] <= 30 ? "var(--text)" : "var(--text-3)" }}>
-                            {rankMap[p.n]}º
-                          </div>
-                          <div className="fs-10 c-text-3">{nPlayedLocal(p)}T · {nRoundsLocal(p)}R</div>
-                        </div>
-                      ) : <span className="fs-10 c-border">s/d</span>}
-                    </td>
-
-                    {/* Trend */}
-                    <td className="ta-center">
-                      {tr ? <span className="fw-700 fs-13" style={{ color: TR_I[tr as keyof typeof TR_I].c }}>{TR_I[tr as keyof typeof TR_I].i}</span> : <span className="c-border">—</span>}
-                    </td>
-
-                    {/* Upcoming tournaments */}
-                    {UP.map(u => (
-                      <td key={u.id} className="ta-center fs-12">
-                        {p.up.includes(u.id) ? <span className="fw-700 c-good-dark">✓</span> : <span className="c-border">—</span>}
-                      </td>
-                    ))}
-
-                    {/* vs Manuel average */}
-                    {vsOn && (
-                      <td className="ta-center">
-                        {isM ? <span className="fs-10 c-border">—</span> :
-                        vsAvg != null ? <span className="fs-12 fw-700" style={{ color: sc3m(vsAvg, 0, 0) }}>{fmtSign(vsAvg)}</span> :
-                        <span className="fs-10 c-border">—</span>}
-                      </td>
-                    )}
-
-                    {/* 📊 Member history count */}
-                    {(() => {
-                      const key = p.n.toLowerCase().trim().replace(/\s+/g, " ");
-                      const cnt = mhCountMap.get(key) ?? 0;
-                      return (
-                        <td className="ta-center">
-                          {cnt > 0
-                            ? <span className="fs-11 fw-700" style={{ color: "var(--accent)", cursor: onSelectPlayer ? "pointer" : "default" }}
-                                onClick={() => onSelectPlayer?.(p.n)}>{cnt}</span>
-                            : <span className="fs-10 c-border">—</span>}
-                        </td>
-                      );
-                    })()}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div className="section-subtitle ta-c mt-10">
-        Clica num jogador para ver detalhe · Rank ponderado por prestígio: ★★★★★ USKids World · ★★★★ European/BJGT/Venice · ★★★ outros top · ½ peso mínimo · ({totalRanked} jogadores com dados)
-      </div>
-    </div>
-  );
-}
-
 /* ═══════════════════════════════════
    SIDEBAR
    ═══════════════════════════════════ */
@@ -1811,7 +1317,7 @@ function RivaisSidebar({ selected, onSelect, fids, q, paisFilter, tierFilter, mi
 
   // Lista filtrada + agrupamento directos / circuito
   const { directos, circuito } = useMemo(() => {
-    let pl = rivals.filter(p => nPlayed(p) > 0 || p.isM);
+    let pl = rivals.filter(p => (nPlayed(p) > 0 || p.isM) && isEscalaoRelevant(p, manuelMerged));
     if (fids.size > 0) pl = pl.filter(p => playerMatchesFilter(p, fids));
     if (paisFilter) pl = pl.filter(p => p.co === paisFilter);
     if (tierFilter) pl = pl.filter(p => !p.isM && playerTypeMap.get(p.n)?.label.includes(tierFilter.split(" ")[0]));
@@ -3345,6 +2851,8 @@ function RivaisIntlContent() {
   const memberHist = useMemberHist();
   const scoringStats = useScoringStats();
 
+  const manuelMerged = useMemo(() => rivals.find(d => d.isM) ?? null, [rivals]);
+
   // Actualizar rankMap quando os rivais carregam
   const [_rankVersion, setRankVersion] = React.useState(0);
   React.useEffect(() => {
@@ -3366,7 +2874,6 @@ function RivaisIntlContent() {
     locationPlayer ?? hashPlayer ?? "Manuel Medeiros"
   );
   const md = useMasterDetail();
-  const [showTable, setShowTable] = useState(false);
 
   // ── Todos os filtros no toolbar ──
   const [fids, setFids]                 = useState<Set<string>>(new Set());
@@ -3402,7 +2909,6 @@ function RivaisIntlContent() {
 
   const handleSelectPlayer = (name: string) => {
     setSelectedPlayer(name);
-    setShowTable(false);
     md.onSelect();
   };
 
@@ -3486,14 +2992,8 @@ function RivaisIntlContent() {
         )}
         <div style={{ flex: 1 }} />
         <span className="chip" style={{ flexShrink: 0 }}>
-          {rivals.filter(p => (nPlayed(p) > 0 || p.isM) && playerMatchesFilter(p, fids)).length}
+          {rivals.filter(p => (nPlayed(p) > 0 || p.isM) && isEscalaoRelevant(p, manuelMerged) && playerMatchesFilter(p, fids)).length}
         </span>
-        <button
-          className={"tourn-tab tourn-tab-sm" + (showTable ? " active" : "")}
-          style={showTable ? { flexShrink: 0 } : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}
-          onClick={() => setShowTable(t => !t)}>
-          Tabela
-        </button>
       </div>
 
       {/* ── Toolbar row 2: filtros de circuito (multi-select) ── */}
@@ -3532,9 +3032,7 @@ function RivaisIntlContent() {
           />
         </div>
         <div className="course-detail" ref={md.detailRef}>
-          {showTable ? (
-            <RivaisDashboard onSelectPlayer={handleSelectPlayer} />
-          ) : selectedPlayer ? (
+          {selectedPlayer ? (
             <RivalDetail playerName={selectedPlayer} />
           ) : (
             <div className="muted p-16">Selecciona um rival na lista à esquerda.</div>

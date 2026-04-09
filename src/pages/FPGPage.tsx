@@ -3359,6 +3359,13 @@ function InscricoesPanel() {
              target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: "var(--chart-2)" }}>
             inscrições datagolf ↗
           </a>
+          <a href="https://competicoes.fpg.pt/evento/campeonato-nacional-de-jovens-sub10-12-14-16-18-pga-aroeira/"
+             target="_blank" rel="noopener noreferrer"
+             style={{ fontSize: 11, fontWeight: 700, color: "var(--color-good-dark)",
+               background: "var(--bg-success-subtle)", border: "1px solid var(--color-good)",
+               borderRadius: 6, padding: "2px 8px", textDecoration: "none", whiteSpace: "nowrap" as const }}>
+            🏆 página oficial FPG ↗
+          </a>
         </div>
         <InscricoesView t={torneioActivo} nossosFedSet={nossosFedSet} nossosByFed={nossosByFed} statsDb={statsDb} />
       </div>

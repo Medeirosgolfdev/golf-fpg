@@ -42,6 +42,34 @@ const MIME: Record<string, string> = {
   '.svg':  'image/svg+xml',
 }
 
+const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
+
+/* Obtém cookie de sessão fresco da FPG via redirect manual */
+async function getSession(): Promise<string> {
+  try {
+    // redirect:'manual' permite capturar Set-Cookie do primeiro redirect
+    const r = await fetch('https://scoring.datagolf.pt/pt/', {
+      headers: {
+        'User-Agent': UA,
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'pt-PT,pt;q=0.9',
+      },
+      redirect: 'manual',
+    })
+    const setCookie = r.headers.get('set-cookie') || ''
+    console.log('[inscricoes] getSession -> ' + r.status + ' set-cookie=' + (setCookie || 'nenhum').slice(0, 60))
+    const m = setCookie.match(/ASP\.NET_SessionId=([^;,\s]+)/)
+    if (m) {
+      const fresh = 'ASP.NET_SessionId=' + m[1]
+      console.log('[inscricoes] sessao fresca: ' + fresh.slice(0, 35) + '...')
+      return fresh
+    }
+  } catch (e) {
+    console.warn('[inscricoes] getSession erro:', (e as Error).message)
+  }
+  return '' // sem cookie — página é pública, ASP.NET cria sessão nova
+}
+
 const TORNEIOS: Record<string, { nome: string; escalao: string; sex: string }> = {
   '10935': { nome: 'Campeonato Nacional Sub-18 H', escalao: 'Sub-18', sex: 'M' },
   '10936': { nome: 'Campeonato Nacional Sub-18 S', escalao: 'Sub-18', sex: 'F' },
@@ -235,28 +263,47 @@ export default defineConfig({
           }
 
           const fpgUrl = 'https://scoring.datagolf.pt/pt/tournAdmissions.aspx?ccode=000&tcode=' + tcode
-          const cookie = process.env.DATAGOLF_SESSION ?? ''
-          if (!cookie) console.warn('[inscricoes] DATAGOLF_SESSION em falta no .env.local !')
-          console.log('[inscricoes] tcode=' + tcode + ' [FETCH] cookie=' + (cookie ? cookie.slice(0, 20) + '...' : 'VAZIA'))
-
-          const reqHeaders: Record<string, string> = {
-            'User-Agent':      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-            'Accept':          'text/html,application/xhtml+xml;q=0.9,*/*;q=0.8',
-            'Accept-Language': 'pt-PT,pt;q=0.9',
-            'Referer':         'https://scoring.datagolf.pt/',
+          const baseHeaders: Record<string, string> = {
+            'User-Agent':              UA,
+            'Accept':                  'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Language':         'pt-PT,pt;q=0.9,en-US;q=0.8,en;q=0.7',
+            'Accept-Encoding':         'gzip, deflate, br',
+            'Connection':              'keep-alive',
+            'Upgrade-Insecure-Requests': '1',
+            'Referer':                 'https://scoring.datagolf.pt/pt/',
+            'Cache-Control':           'no-cache',
           }
-          if (cookie) reqHeaders['Cookie'] = cookie
+
+          // 1ª tentativa: sem cookie (página pública — sessão expirada causa 500)
+          // 2ª tentativa: com cookie fresco se a 1ª falhar
+          const attempts: Array<Record<string, string>> = [
+            { ...baseHeaders },
+          ]
+          const freshCookie = await getSession()
+          if (freshCookie) attempts.push({ ...baseHeaders, 'Cookie': freshCookie })
+
+          let fpgRes: Response | null = null
+          let html = ''
+          for (const reqHeaders of attempts) {
+            const hasCookie = !!reqHeaders['Cookie']
+            console.log('[inscricoes] tcode=' + tcode + (hasCookie ? ' [com cookie]' : ' [sem cookie]'))
+            try {
+              fpgRes = await fetch(fpgUrl, { headers: reqHeaders, redirect: 'follow' })
+              html   = await fpgRes.text()
+              console.log('[inscricoes] tcode=' + tcode + ' -> HTTP ' + fpgRes.status)
+              if (fpgRes.ok) break // sucesso — não tentar mais
+              console.warn('[inscricoes] tentativa falhou HTTP ' + fpgRes.status + (attempts.indexOf(reqHeaders) < attempts.length - 1 ? ', a tentar com cookie...' : ''))
+            } catch (fetchErr) {
+              console.error('[inscricoes] fetch erro:', fetchErr)
+            }
+          }
 
           try {
-            const fpgRes = await fetch(fpgUrl, { headers: reqHeaders, redirect: 'follow' })
-            const html   = await fpgRes.text()
-            console.log('[inscricoes] tcode=' + tcode + ' -> HTTP ' + fpgRes.status)
-
-            if (!fpgRes.ok) {
+            if (!fpgRes || !fpgRes.ok) {
               console.warn('[inscricoes] FPG erro: ' + html.slice(0, 200))
-              if (raw) { res.writeHead(fpgRes.status, { 'Content-Type': 'text/html; charset=utf-8' }); res.end(html); return }
+              if (raw) { res.writeHead(fpgRes?.status ?? 502, { 'Content-Type': 'text/html; charset=utf-8' }); res.end(html); return }
               res.writeHead(502, { 'Content-Type': 'application/json' })
-              res.end(JSON.stringify({ error: 'FPG HTTP ' + fpgRes.status, tcode, ...meta, totalInscritos: 0, jogadores: [], lastFetched: null }))
+              res.end(JSON.stringify({ error: 'FPG HTTP ' + (fpgRes?.status ?? 0), tcode, ...meta, totalInscritos: 0, jogadores: [], lastFetched: null }))
               return
             }
 
