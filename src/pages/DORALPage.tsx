@@ -7,6 +7,8 @@ import React, { useEffect, useState } from "react";
 import { cachedFetch } from "../data/fetchCache";
 import { scClass, SC } from "../utils/scoreDisplay";
 import { tpColor, isManuel } from "../ui/tournamentPrimitives";
+import EvoBadge from "../ui/EvoBadge";
+import SidebarSectionTitle from "../ui/SidebarSectionTitle";
 import { gf } from "../utils/flagUtils";
 const isM = (name: string) => isManuel({ name });
 import { fmtToPar, norm } from "../utils/format";
@@ -310,14 +312,12 @@ function AccLB({ entry, evo }: { entry: Entry; evo?: Map<string, EvoEntry> }) {
                     {ev.delta > 0 ? "+" : ""}{ev.delta}
                   </td>
                   <td style={{ textAlign:"center", padding:"0 4px" }}>
-                    {ev.pill === "UP"
-                      ? <span className="badge-evo-up">⬆ {ev.from}→{ev.to}{ev.prevPos != null ? ` · ${ev.prevPos}/${ev.fieldSize}` : ""}</span>
-                      : <span className="badge-evo-eq">= {ev.from}{ev.prevPos != null ? ` · ${ev.prevPos}/${ev.fieldSize}` : ""}</span>}
+                    <EvoBadge pill={ev.pill} from={ev.from} to={ev.to} prevPos={ev.prevPos} fieldSize={ev.fieldSize} />
                   </td>
                 </> : <>
                   <td style={{ textAlign:"center", fontSize:11, padding:"0 3px", borderLeft:"2px solid var(--border)" }} className="c-muted">–</td>
                   <td className="c-muted" style={{ textAlign:"center", fontSize:11, padding:"0 3px" }}>–</td>
-                  <td style={{ textAlign:"center", padding:"0 4px" }}><span className="badge-evo-new">novo</span></td>
+                  <td style={{ textAlign:"center", padding:"0 4px" }}><EvoBadge pill="NEW" /></td>
                 </>)}
               </tr>
             );
@@ -606,16 +606,20 @@ function Content() {
 
       {/* Toolbar */}
       <div className="toolbar">
-        <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
-        <span className="toolbar-title">🇺🇸 Doral</span>
-        {cur && <span className="toolbar-meta">📍 Doral Golf Resort</span>}
-        {cur && (
-          <span className="chip" style={{ marginLeft: "auto" }}>
-            {cur.players.filter(p => p.rounds.length === Math.max(...cur.players.map(q => q.rounds.length))).length} field
-            {" · "}{Math.max(...cur.players.map(p => p.rounds.length))}R
-            {" · "}{cur.category}
-          </span>
-        )}
+        <div className="toolbar-left">
+          <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
+          <span className="toolbar-title">🇺🇸 Doral</span>
+          {cur && <span className="toolbar-meta">📍 Doral Golf Resort</span>}
+        </div>
+        <div className="toolbar-right">
+          {cur && (
+            <span className="chip">
+              {cur.players.filter(p => p.rounds.length === Math.max(...cur.players.map(q => q.rounds.length))).length} field
+              {" · "}{Math.max(...cur.players.map(p => p.rounds.length))}R
+              {" · "}{cur.category}
+            </span>
+          )}
+        </div>
       </div>
 
       {/* Master-detail */}
@@ -627,14 +631,9 @@ function Content() {
             const yearEntries = entries.filter(e => e.year === year);
             return (
               <React.Fragment key={year}>
-                <div className="sidebar-section-title-dark" style={{
-                  background: "var(--color-doral-dark)",
-                  color: "var(--color-doral-text)",
-                  borderBottom: "1px solid var(--color-doral-mid)",
-                  letterSpacing: "0.08em",
-                }}>
+                <SidebarSectionTitle dark color="var(--color-doral-dark)" textColor="var(--color-doral-text)" borderColor="var(--color-doral-mid)" letterSpacing="0.08em">
                   🇺🇸 First Tee Miami Doral Jr. Classic
-                </div>
+                </SidebarSectionTitle>
                 <div className="sidebar-year-label" style={{
                   padding: "2px 10px",
                   fontSize: 10,

@@ -126,3 +126,18 @@ export function fmtSignParen(n: number): string {
   if (n === 0) return "(E)";
   return n > 0 ? `(+${n})` : `(${n})`;
 }
+
+/** Formata "YYYY-MM" ou "YYYY" → "Jan 2025" / "2025". Suporta key "?" → "Data desconhecida". */
+export function monthLabel(key: string): string {
+  if (key === "?") return "Data desconhecida";
+  if (key.length === 4) return key;
+  const [yr, mo] = key.split("-");
+  return `${MONTHS_PT[parseInt(mo) - 1] || mo} ${yr}`;
+}
+
+/** Formata data ISO "YYYY-MM-DD" → "dd/mm" (sem ano). Usado em tabelas compactas. */
+export function fmtDateShort(d: string): string {
+  if (!d) return "";
+  const [, m, day] = d.split("-");
+  return `${day}/${m}`;
+}

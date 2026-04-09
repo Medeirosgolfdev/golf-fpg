@@ -6,6 +6,8 @@ import React, { useEffect, useState } from "react";
 import { cachedFetch } from "../data/fetchCache";
 import { scClass, SC } from "../utils/scoreDisplay";
 import { tpColor, isManuel } from "../ui/tournamentPrimitives";
+import EvoBadge from "../ui/EvoBadge";
+import SidebarSectionTitle from "../ui/SidebarSectionTitle";
 import { gf } from "../utils/flagUtils";
 const isM = (name: string) => isManuel({ name });
 import { fmtToPar, fmtSign, fmtSignParen as fmtSub } from "../utils/format";
@@ -125,14 +127,12 @@ function AccLB({ data, evo, evoYear, roundDates }: { data: TData; evo?: Map<stri
                     {ev.delta > 0 ? "+" : ""}{ev.delta}
                   </td>
                   <td style={{ textAlign: "center", padding: "0 4px" }}>
-                    {ev.pill === "UP"
-                      ? <span className="badge-evo-up">⬆ {ev.from}→{ev.to}</span>
-                      : <span className="badge-evo-eq">= {ev.from}</span>}
+                    <EvoBadge pill={ev.pill} from={ev.from} to={ev.to} />
                   </td>
                 </> : <>
                   <td style={{ textAlign: "center", fontSize: 11, padding: "0 3px", borderLeft: "2px solid var(--border)" }} className="c-muted">–</td>
                   <td className="c-muted" style={{ textAlign: "center", fontSize: 11, padding: "0 3px" }}>–</td>
-                  <td style={{ textAlign: "center", padding: "0 4px" }}><span className="badge-evo-new">{evoYear === "2026" ? "não voltou" : "novo"}</span></td>
+                  <td style={{ textAlign: "center", padding: "0 4px" }}><EvoBadge pill="NEW" label={evoYear === "2026" ? "não voltou" : "novo"} /></td>
                 </>)}
               </tr>
             );
@@ -420,18 +420,22 @@ function Content() {
 
       {/* Toolbar */}
       <div className="toolbar">
-        <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
-        {cur?.series === "eowagr"
-          ? <span className="toolbar-title">🌍 European Open</span>
-          : <span className="toolbar-title">🏌️ WJGC</span>}
-        {cur && <span className="toolbar-meta">{
-          cur.series === "eowagr"
-            ? "📍 Le Touquet GC — La Forêt"
-            : cur.category === "Boys 12-13"
-              ? "📍 Villa Padierna — Alferini"
-              : "📍 Villa Padierna — Flamingos"
-        }</span>}
-        {cur && <span className="chip" style={{ marginLeft: "auto" }}>{cur.data.players.filter(p => p.rounds.length === Math.max(...cur.data.players.map(q => q.rounds.length))).length} field · {Math.max(...cur.data.players.map(p => p.rounds.length))}R · {cur.category}</span>}
+        <div className="toolbar-left">
+          <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
+          {cur?.series === "eowagr"
+            ? <span className="toolbar-title">🌍 European Open</span>
+            : <span className="toolbar-title">🏌️ WJGC</span>}
+          {cur && <span className="toolbar-meta">{
+            cur.series === "eowagr"
+              ? "📍 Le Touquet GC — La Forêt"
+              : cur.category === "Boys 12-13"
+                ? "📍 Villa Padierna — Alferini"
+                : "📍 Villa Padierna — Flamingos"
+          }</span>}
+        </div>
+        <div className="toolbar-right">
+          {cur && <span className="chip">{cur.data.players.filter(p => p.rounds.length === Math.max(...cur.data.players.map(q => q.rounds.length))).length} field · {Math.max(...cur.data.players.map(p => p.rounds.length))}R · {cur.category}</span>}
+        </div>
       </div>
 
       {/* Master-detail */}
@@ -446,14 +450,9 @@ function Content() {
             const isEowagr = series === "eowagr";
             return (
               <React.Fragment key={series}>
-                <div className="sidebar-section-title-dark" style={isEowagr ? {
-                  background: "var(--color-eowagr-dark)",
-                  color: "var(--color-eowagr-text)",
-                  borderBottom: "1px solid var(--color-warn-vivid)",
-                  letterSpacing: "0.08em",
-                } : {}}>
+                <SidebarSectionTitle dark color={isEowagr ? "var(--color-eowagr-dark)" : undefined} textColor={isEowagr ? "var(--color-eowagr-text)" : undefined} borderColor={isEowagr ? "var(--color-warn-vivid)" : undefined} letterSpacing={isEowagr ? "0.08em" : undefined}>
                   {isEowagr ? "🌍 European Open" : "🏌️ World Junior Golf Championship"}
-                </div>
+                </SidebarSectionTitle>
                 {seriesYears.map(year => (
                   <React.Fragment key={year}>
                     <div className="sidebar-year-label" style={{

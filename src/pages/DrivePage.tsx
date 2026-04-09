@@ -5,18 +5,18 @@
  *      + multi-round support (R1/R2/Total tabs)
  */
 import React, { useEffect, useState, useMemo, useCallback } from "react";
+import { useSort } from "../hooks/useSort";
 import { loadPlayers } from "../data/loader";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from "recharts";
 import { SC, sdClassByHcp, scClass } from "../utils/scoreDisplay";
 import { calcAGS, expectedSD9 } from "../utils/whsCalc";
-import { fmtToPar } from "../utils/format";
+import { fmtToPar, fmtDateShort } from "../utils/format";
 import { isCalUnlocked } from "../utils/authConstants";
 import { resolveFedsInTournaments , buildEscLookup, resolveEscFromLookup } from "../utils/playerUtils";
 import PasswordGate from "../ui/PasswordGate";
 import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
 import { PILL_TCODE, EscPill, SIDEBAR_ACCENT } from "../ui/PillBadge";
 import SidebarToggle from "../ui/SidebarToggle";
-import SortableHdr from "../ui/SortableHdr";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import KpiCard from "../ui/KpiCard";
 import LoadingState from "../ui/LoadingState";
@@ -249,11 +249,6 @@ const regionOf = (id: string) => REGIONS.find((r) => r.id === id);
 /* ── WHS Expected 9h SD table ── */
 
 /* ── Helpers ── */
-const fmtDate = (d: string) => {
-  if (!d) return "";
-  const [, m, day] = d.split("-");
-  return day + "/" + m;
-};
 
 /** URL público do torneio em scoring.datagolf.pt */
 const tournFpgUrl = (ccode: string, tcode: string) => {
@@ -595,13 +590,8 @@ function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; s
   const globalEscLookup = props.escLookup;
   const mergeByEvent = !!props.mergeByEvent;
   const sorted = useMemo(() => [...props.tournaments].sort((a, b) => a.date.localeCompare(b.date)), [props.tournaments]);
-  const [sortKey, setSortKey] = useState<SortKey>("totalPts");
-  const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
+  const { sortKey, sortDir, toggleSort: handleSort } = useSort<SortKey>("totalPts", "desc");
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
-  const handleSort = useCallback((k: SortKey) => {
-    if (k === sortKey) setSortDir((d) => (d === "asc" ? "desc" : "asc"));
-    else { setSortKey(k); setSortDir("asc"); }
-  }, [sortKey]);
 
   const toggleGroup = useCallback((groupId: string) => {
     setExpandedGroups(prev => {
@@ -838,7 +828,7 @@ function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; s
                 )}
               </div>
               <div className="c-muted-fs10-fw5">
-                {fmtDate(t.date)} · Par {par} · {nh}h · {realCount} jog
+                {fmtDateShort(t.date)} · Par {par} · {nh}h · {realCount} jog
                 {gh.isMulti && <> · {t._totalRounds}R</>}
               </div>
             </th>
@@ -937,13 +927,7 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
   const { tournament, playersDB, escLookup, sdLookup, temporalEscLookup } = props;
   const tournYear = tournament.date?.split("-")[0];
   const [showScorecard, setShowScorecard] = React.useState(true);
-  const [sortKey, setSortKey] = React.useState<"pos"|"esc"|"tee"|"hcp"|"sd">("pos");
-  const [sortDir, setSortDir] = React.useState<"asc"|"desc">("asc");
-
-  const handleSort = (k: "pos"|"esc"|"tee"|"hcp"|"sd") => {
-    if (k === sortKey) setSortDir(d => d === "asc" ? "desc" : "asc");
-    else { setSortKey(k); setSortDir(k === "pos" ? "asc" : "asc"); }
-  };
+  const { sortKey, sortDir, toggleSort: handleSort } = useSort<"pos"|"esc"|"tee"|"hcp"|"sd">("pos");
 
   const players = tournament.players.filter((p) => !isDNS(p) && p.scores && p.scores.length > 0);
   if (!players.length) return <div className="muted ta-center p-16">Scorecards não disponíveis.</div>;
@@ -1110,8 +1094,7 @@ function DriveAllRoundsScorecardLB({
   const [nameQ,   setNameQ]   = useState("");
   const [clubQ,   setClubQ]   = useState("");
   const [showSC,  setShowSC]  = useState(true);
-  const [sortKey, setSortKey] = useState<string>("pos");
-  const [sortDir, setSortDir] = useState<"asc"|"desc">("asc");
+  const { sortKey, sortDir, toggleSort } = useSort<string>("pos");
   const [groupMode, setGroupMode] = useState(true);
 
   const nRounds = totalTournament._totalRounds || 2;
@@ -1232,10 +1215,7 @@ function DriveAllRoundsScorecardLB({
     return flatRows.map(r => ({ ...r, pos: pm.get(r.key)??null }));
   }, [flatRows]);
 
-  function toggleSort(k: string) {
-    if (sortKey === k) setSortDir(d => d === "asc" ? "desc" : "asc");
-    else { setSortKey(k); setSortDir("asc"); }
-  }
+
 
   const sorted = useMemo(() => {
     const INF = 9999;
@@ -1331,6 +1311,18 @@ function DriveAllRoundsScorecardLB({
     </>);
   }
 
+  function SHdr({ k, children, className, style }: { k: string; children: React.ReactNode; className?: string; style?: React.CSSProperties }) {
+    const active = sortKey === k;
+    return (
+      <th className={"lb-sortable "+(className||"")}
+          style={{ ...style, color: active ? "var(--accent)" : undefined, fontWeight: active ? 700 : undefined }}
+          title={active ? (sortDir==="asc" ? "Ordenado crescente" : "Ordenado decrescente") : "Clique para ordenar"}
+          onClick={() => toggleSort(k)}>
+        {children}{active && <span style={{ fontSize:8, marginLeft:2 }}>{sortDir==="asc"?"▲":"▼"}</span>}
+      </th>
+    );
+  }
+
   const postCols = 4;
 
   return (
@@ -1401,19 +1393,19 @@ function DriveAllRoundsScorecardLB({
             {/* Headers — ± Tot e buracos clicáveis (melhor ronda de cada jogador) */}
             <tr>
               <th className="lb-pos sticky-col-0">#</th>
-              <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-name sticky-col-1">Jogador</SortableHdr>
-              <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-club">Clube</SortableHdr>
-              <SortableHdr k="hcp"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-hcp">HCP</SortableHdr>
+              <SHdr k="name" className="lb-name sticky-col-1">Jogador</SHdr>
+              <SHdr k="club" className="lb-club">Clube</SHdr>
+              <SHdr k="hcp"  className="lb-hcp">HCP</SHdr>
               <th className="lb-tee" style={{ fontSize:10, fontWeight:600, color:"var(--text-muted)" }}>Rnd</th>
-              <SortableHdr k="topar" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-topar">±</SortableHdr>
-              <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-gross">Tot</SortableHdr>
+              <SHdr k="topar" className="lb-topar">±</SHdr>
+              <SHdr k="gross" className="lb-gross">Tot</SHdr>
               {showSC && (<>
                 {Array.from({length:9},(_,h)=>(
-                  <SortableHdr key={h} k={`h${h}`} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={"lb-hole"+(h===0?" lb-hole-first":"")} style={{ fontSize:10 }}>{h+1}</SortableHdr>
+                  <SHdr key={h} k={`h${h}`} className={"lb-hole"+(h===0?" lb-hole-first":"")} style={{ fontSize:10 }}>{h+1}</SHdr>
                 ))}
                 <th className="lb-halftot">{is9?"Tot":"Out"}</th>
                 {!is9 && Array.from({length:9},(_,h)=>(
-                  <SortableHdr key={h+9} k={`h${h+9}`} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={"lb-hole"+(h===0?" lb-hole-first":"")} style={{ fontSize:10 }}>{h+10}</SortableHdr>
+                  <SHdr key={h+9} k={`h${h+9}`} className={"lb-hole"+(h===0?" lb-hole-first":"")} style={{ fontSize:10 }}>{h+10}</SHdr>
                 ))}
                 {!is9 && <th className="lb-halftot">In</th>}
               </>)}
@@ -1449,7 +1441,7 @@ function DriveAllRoundsScorecardLB({
                             <td className="lb-pos sticky-col-0" style={{ background:rdBg, borderTop:bTop }}>{isFirstRd?(showPos?posStr:""):""}</td>
                             <td className="lb-name sticky-col-1" style={{ background:rdBg, fontWeight:isFirstRd?600:400, borderTop:bTop }}>
                               {isFirstRd
-                                ? (row.fed?<a href={`/jogadores/${row.fed}`} target="_blank" rel="noopener noreferrer" style={{ color:"inherit",textDecoration:"none" }}>{row.name}</a>:row.name)
+                                ? (row.fed ? <PlayerLink fed={row.fed} name={row.name} /> : row.name)
                                 : <span className="muted fs-10" style={{ paddingLeft:8 }}>↳</span>}
                             </td>
                             <td className="lb-club" style={{ borderTop:bTop, color:isFirstRd?undefined:"var(--text-muted)", fontSize:isFirstRd?undefined:11 }}>{row.club||"–"}</td>
@@ -1481,7 +1473,7 @@ function DriveAllRoundsScorecardLB({
                     <tr key={row.key} style={{ background:bg, borderTop:bTop }}>
                       <td className="lb-pos sticky-col-0" style={{ background:bg }}>{showPos?posStr:""}</td>
                       <td className="lb-name sticky-col-1" style={{ background:bg, fontWeight:600 }}>
-                        {row.fed?<a href={`/jogadores/${row.fed}`} target="_blank" rel="noopener noreferrer" style={{ color:"inherit",textDecoration:"none" }}>{row.name}</a>:row.name}
+                        {row.fed ? <PlayerLink fed={row.fed} name={row.name} /> : row.name}
                       </td>
                       <td className="lb-club">{row.club||"–"}</td>
                       <td className="lb-hcp">{row.hcp!=null?row.hcp.toFixed(1):"–"}</td>
@@ -1876,13 +1868,7 @@ function TournamentGrid({ rows, allTournaments, onPlayerClick, playersDB, escLoo
   escLookup?: EscLookup;
 }) {
   type S12SortKey = "name" | "fed" | "escalao" | "club" | "hcp" | "played" | "avgSD" | "avgGross" | string;
-  const [sortKey, setSortKey] = useState<S12SortKey>("totalPts");
-  const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
-
-  const handleSort = useCallback((k: S12SortKey) => {
-    if (k === sortKey) setSortDir(d => d === "asc" ? "desc" : "asc");
-    else { setSortKey(k); setSortDir("asc"); }
-  }, [sortKey]);
+  const { sortKey, sortDir, toggleSort: handleSort } = useSort<S12SortKey>("totalPts", "desc");
 
   const sorted = useMemo(() => {
     const mult = sortDir === "asc" ? 1 : -1;
@@ -2154,7 +2140,7 @@ function PlayerDetail({ row, onClose }: { row: Sub12Row; onClose: () => void }) 
       <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 8 }}>
         <span style={{ fontSize: 16, fontWeight: 800 }}>{row.name}</span>
         <span className="muted fs-11">{row.club} · {row.region} · HCP {row.hcp != null ? row.hcp.toFixed(1) : "–"}</span>
-        <a href={`/jogadores/${row.fed}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: "var(--accent)", textDecoration: "underline" }}>Ver perfil →</a>
+        <PlayerLink fed={row.fed} name="Ver perfil →" style={{ fontSize: 11, color: "var(--accent)", textDecoration: "underline" }} />
       </div>
       <div style={{ display: "flex", gap: 6, marginBottom: 10, flexWrap: "wrap" }}>
         <KpiCard label="Torneios"  value={String(row.tourneiosPlayed)} />
@@ -2451,7 +2437,7 @@ function DriveContent() {
   const sidebarItemLabel = (g: TournGroup) => {
     const region = g.entries[0]?.region || "";
     const isDup = (sidebarNumCount.get(region)?.get(g.num) || 0) > 1;
-    const base = `T${g.num}${isDup ? " · " + fmtDate(g.date) : ""} · ${g.label}`;
+    const base = `T${g.num}${isDup ? " · " + fmtDateShort(g.date) : ""} · ${g.label}`;
     if (g.isEvent) return base; // Challenge evento — escalões mostrados como sub-badges
     if (g.escalao) return base + " · " + g.escalao;
     return base;
@@ -2540,7 +2526,7 @@ function DriveContent() {
         }}>
           <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />
           <span className="toolbar-title" style={{ flexShrink: 0 }}>🏁 DRIVE</span>
-          <div className="toolbar-sep" />
+          <div className="toolbar-sep" style={{ flexShrink: 0 }} />
           {([
             { key: "torneios",      label: "Torneios" },
             { key: "ranking-pja",   label: "📊 Ranking PJA" },
@@ -2556,7 +2542,7 @@ function DriveContent() {
             </button>
           ))}
           {navMode === "torneios" && (<>
-            <div className="toolbar-sep" />
+            <div className="toolbar-sep" style={{ flexShrink: 0 }} />
             {([
               { key: "all",       label: "Todos" },
               { key: "tour",      label: "🏌️ Tour" },
@@ -2573,7 +2559,7 @@ function DriveContent() {
               </button>
             ))}
             {availYears.length > 1 && (<>
-              <div className="toolbar-sep" />
+              <div className="toolbar-sep" style={{ flexShrink: 0 }} />
               {availYears.map(y => (
                 <button key={y}
                   className={"tourn-tab tourn-tab-sm" + (activeYear === y ? " active" : "")}
@@ -2584,7 +2570,7 @@ function DriveContent() {
                   {y}
                 </button>
               ))}
-              <div className="toolbar-sep" />
+              <div className="toolbar-sep" style={{ flexShrink: 0 }} />
               <button
                 className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
                 onClick={() => setFilterManuel(v => !v)}
@@ -2631,7 +2617,7 @@ function DriveContent() {
                   </button>
                 );
               })}
-              <div className="toolbar-sep" />
+              <div className="toolbar-sep" style={{ flexShrink: 0 }} />
             </>)}
             <button className={"tourn-tab tourn-tab-sm" + (escFilter.length === 0 ? " active" : "")}
               onClick={() => setEscFilter([])} style={{ flexShrink: 0 }}>
@@ -2878,7 +2864,7 @@ function DriveContent() {
                       </a>
                     </div>
                     <div className="muted fs-11 mb-4">
-                      T{curTournament.num} · 📍 {curTournament.campo} · 📅 {fmtDate(curTournament.date)}
+                      T{curTournament.num} · 📍 {curTournament.campo} · 📅 {fmtDateShort(curTournament.date)}
                       {selectedGroup.isMulti && <> · {selectedGroup.totalRounds} rondas</>}
                       {selectedGroup.isEvent && <> · {selectedGroup.entries.length} escalões</>}
                       {" · "}{curTournament.players.filter(p => !isDNS(p) && !p._incomplete).length} jog

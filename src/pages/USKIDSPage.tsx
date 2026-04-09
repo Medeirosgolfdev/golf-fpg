@@ -8,7 +8,7 @@ import LoadingState from "../ui/LoadingState";
 import { useSearchParams } from "react-router-dom";
 import { C } from "../utils/colors";
 import { scClass } from "../utils/scoreDisplay";
-import { MONTHS_PT, isoDate, fmtDate, fmtToPar } from "../utils/format";
+import { MONTHS_PT, isoDate, fmtDate, fmtToPar, monthLabel } from "../utils/format";
 import { flag, normCountry, normPaisDisplay } from "../utils/flagUtils";
 import EmptyState from "../ui/EmptyState";
 import { tpColor, isManuel as _isManuel } from "../ui/tournamentPrimitives";
@@ -3489,12 +3489,6 @@ export default function USKidsFieldPage() {
     };
     const monthMap = buildMonthMap(activeList);
 
-    const monthLabel = (key: string) => {
-      if (key === "?") return "Data desconhecida";
-      if (key.length === 4) return key;
-      const [yr, mo] = key.split("-");
-      return `${MONTHS_PT[parseInt(mo) - 1] || mo} ${yr}`;
-    };
     const today = new Date().toISOString().substring(0, 7);
     const currentYear = new Date().getFullYear().toString();
 
@@ -3622,7 +3616,7 @@ export default function USKidsFieldPage() {
       <div style={{ display:"flex", alignItems:"center", gap:6, padding:"6px 10px", overflowX:"auto", flexWrap:"nowrap", borderBottom:"1px solid var(--border-light)", scrollbarWidth:"none" }}>
         <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
         <span className="toolbar-title" style={{ flexShrink:0 }}>🏌️ USKids</span>
-        <div className="toolbar-sep" />
+        <div className="toolbar-sep" style={{ flexShrink:0 }} />
         {TABS.map(tb => (
           <button key={tb.id}
             onClick={() => handleTabChange(tb.id)}
@@ -3638,7 +3632,7 @@ export default function USKidsFieldPage() {
           </button>
         ))}
         {tab !== "rivais" && (<>
-          <div className="toolbar-sep" />
+          <div className="toolbar-sep" style={{ flexShrink:0 }} />
           <button
             className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
             onClick={() => setFilterManuel(v => !v)}

@@ -25,7 +25,6 @@
  *   fmtTP()           — formata to-par: +3 / -2 / E / –
  *   tpColor()         — cor CSS para to-par (vermelho/verde/undefined)
  *   ESC_STYLE         — mapa de cores por escalão
- *   EscPill           — badge colorido de escalão
  *   TeeDot            — quadrado colorido de tee
  *   TournPName        — nome clicável do jogador com ícone M/F e estrela Manuel
  */
@@ -66,17 +65,6 @@ export const ESC_STYLE: Record<string, { bg: string; color: string }> = {
   "sub16": { bg: C.esc.sub16.bg, color: C.esc.sub16.fg },
   "sub18": { bg: C.esc.sub18.bg, color: C.esc.sub18.fg },
 };
-
-export function EscPill({ esc }: { esc: string }) {
-  if (!esc) return null;
-  const key = esc.toLowerCase().replace(/[\s-]/g, "");
-  const s = ESC_STYLE[key] ?? { bg: "var(--bg-hover)", color: "var(--text-muted)" };
-  return (
-    <span className="p p-sm" style={{ background: s.bg, color: s.color, borderColor: "transparent" }}>
-      {esc}
-    </span>
-  );
-}
 
 /* ─── Tee dot ─── */
 export function TeeDot({ teeName }: { teeName?: string }) {

@@ -1,6 +1,5 @@
 // @refresh reset
 import { MRRound, MultiRoundRow, PlayerFilter, EMPTY_FILTER } from "./multiRoundTypes";
-import { useSort } from "../hooks/useSort";
 /**
  *
  * ═══════════════════════════════════════════════════════════════
@@ -47,6 +46,7 @@ import {
 } from "./tournamentPrimitives";
 import { toggleArr } from "../utils/mathUtils";
 import { EscPill, ESC_STYLE } from "../ui/PillBadge";
+import EmptyState from "../ui/EmptyState";
 
 /* ══════════════════════════════════════════════════════════════
    TIPOS PÚBLICOS
@@ -77,7 +77,12 @@ function PlayerFilterBar({ rows, filter, onChange, total }: {
   const filtered = useMemo(() => filterRows(rows, filter), [rows, filter]);
   const hasOpts = availClubs.length > 1 || availEsc.length > 1 || availTees.length > 1;
   if (total < 8 && !isActive) return null;
-
+  const chip = (active: boolean, label: React.ReactNode, onClick: () => void, color?: string): React.ReactNode => (
+    <button key={String(label)} onClick={onClick} style={{ fontSize:10, padding:"2px 8px", borderRadius:20,
+      border:`1px solid ${active?(color||"var(--accent)"):"var(--border)"}`,
+      background:active?(color||"var(--accent)"):"var(--bg-hover)", color:active?"#fff":"var(--text-muted)",
+      cursor:"pointer", whiteSpace:"nowrap", fontWeight:active?700:500 }}>{label}</button>
+  );
   return (
     <div style={{ display:"flex", flexWrap:"wrap", alignItems:"center", gap:6, padding:"6px 0 8px", borderBottom:"1px solid var(--border)", marginBottom:8 }}>
       <div style={{ position:"relative", flexShrink:0 }}>
@@ -86,13 +91,13 @@ function PlayerFilterBar({ rows, filter, onChange, total }: {
           style={{ fontSize:11, padding:"3px 8px 3px 22px", borderRadius:6, border:"1px solid var(--border)", background:"var(--bg-card,#fff)", color:"var(--text)", width:140, outline:"none" }} />
       </div>
       {hasOpts && <span style={{ color:"var(--border)", fontSize:11 }}>|</span>}
-      {availEsc.length > 1 && availEsc.map(e => { const k = e.toLowerCase().replace(/[\s-]/g,""); const s = ESC_STYLE[k]; return <FilterChip key={e} active={filter.escs.includes(e)} onClick={() => onChange({ ...filter, escs:toggleArr(filter.escs,e) })} color={s?.bg}>{e}</FilterChip>; })}
+      {availEsc.length > 1 && availEsc.map(e => { const k = e.toLowerCase().replace(/[\s-]/g,""); const s = ESC_STYLE[k]; return chip(filter.escs.includes(e), e, () => onChange({ ...filter, escs:toggleArr(filter.escs,e) }), s?.bg); })}
       {availTees.length > 1 && availTees.map(t => { const hex = getTeeHex(t); return (
-        <FilterChip key={t} active={filter.tees.includes(t)} onClick={() => onChange({ ...filter, tees:toggleArr(filter.tees,t) })} color={hex}>
+        <React.Fragment key={t}>{chip(filter.tees.includes(t),
           <span style={{ display:"flex", alignItems:"center", gap:4 }}>
             <span style={{ display:"inline-block", width:8, height:8, borderRadius:2, background:hex, border:"1px solid rgba(0,0,0,.18)" }} />{t}
-          </span>
-        </FilterChip>
+          </span>,
+          () => onChange({ ...filter, tees:toggleArr(filter.tees,t) }), hex)}</React.Fragment>
       ); })}
       {availClubs.length > 2 && <select value={filter.club} onChange={e => onChange({ ...filter, club:e.target.value })} style={{ fontSize:11, padding:"3px 6px", borderRadius:6, border:`1px solid ${filter.club?"var(--accent)":"var(--border)"}`, background:"var(--bg-card,#fff)", color:"var(--text)", cursor:"pointer", fontWeight:filter.club?700:400 }}><option value="">Todos os clubes</option>{availClubs.map(c => <option key={c} value={c}>{c}</option>)}</select>}
       {isActive && <><span style={{ fontSize:10, color:"var(--text-muted)", marginLeft:2 }}>{filtered.length} de {total}</span><button onClick={() => onChange(EMPTY_FILTER)} style={{ fontSize:10, padding:"2px 8px", borderRadius:20, border:"1px solid var(--border)", background:"var(--bg-hover)", color:"var(--text-muted)", cursor:"pointer" }}>✕ limpar</button></>}
@@ -126,10 +131,11 @@ export function MultiRoundLeaderboard({
 }: MultiRoundLBProps) {
   const { esc: showEsc = true, fed: showFed = true, tee: showTee = true } = showCols;
 
-  const { sortKey: sortKey, sortDir: sortDir, toggleSort: handleSort } = useSort<MRSortKey>("pos", "asc");
+  const [sortKey, setSortKey] = useState<MRSortKey>("pos");
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
   const [filter, setFilter] = useState<PlayerFilter>(EMPTY_FILTER);
 
-  if (!rows.length) return <div className="muted ta-center p-16">Sem resultados.</div>;
+  if (!rows.length) return <EmptyState size="sm" message="Sem resultados." />;
 
   // WD = desistiu; incomplete = ainda não jogou todas as rondas disponíveis
   const complete   = rows.filter(r => !r.isIncomplete && !r.isWD);
@@ -157,7 +163,11 @@ export function MultiRoundLeaderboard({
   const filteredWD         = useMemo(() => filterRows(withPos.filter(r =>  r.isWD), filter),                   [withPos, filter]);
 
   /* Sort */
-
+  function handleSort(k: MRSortKey) {
+    if (!sortable) return;
+    if (k === sortKey) setSortDir(d => d === "asc" ? "desc" : "asc");
+    else { setSortKey(k); setSortDir("asc"); }
+  }
 
   function cmp(a: typeof withPos[0], b: typeof withPos[0]): number {
     const INF = 9999;

@@ -25,8 +25,10 @@ import PasswordGate from "../ui/PasswordGate";
 import SidebarToggle from "../ui/SidebarToggle";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { tpColor , MANUEL_FED } from "../ui/tournamentPrimitives";
+import EvoBadge from "../ui/EvoBadge";
 import LoadingState from "../ui/LoadingState";
 import EmptyState from "../ui/EmptyState";
+import KpiCard from "../ui/KpiCard";
 import { COURSE_KEYWORDS, TOURN, FIELD_2025, VP_PAR, TIER, FIELD_CARDS } from "../data/rivalData";
 
 /* ═══════════════════════════════════
@@ -717,13 +719,7 @@ function _RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) 
             </div>
           );
           return (
-            <div key={t.id} className="kpi">
-              <div className="kpi-lbl">{t.short}</div>
-              <div className="kpi-val" style={{ fontSize: 16, color: tpColorDark(res.tp) }}>
-                {fmtSign(res.tp!)}
-              </div>
-              <div className="kpi-sub">#{res.p} · {res.rd.join("-")}</div>
-            </div>
+            <KpiCard key={t.id} label={t.short} value={fmtSign(res.tp!)} sub={`#${res.p} · ${res.rd.join("-")}`} color={tpColorDark(res.tp)} size="sm" />
           );
         })}
       </div>
@@ -1076,11 +1072,11 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
 
       {/* KPIs */}
       <div className="kpis" style={{ gridTemplateColumns: `repeat(${card ? 5 : 4}, 1fr)`, marginBottom: 16 }}>
-        {lbEntry && <div className="kpi"><div className="kpi-lbl">BJGT Total</div><div className="kpi-val">{lbEntry.total}</div><div className="kpi-sub">{fmtToPar(lbEntry.result)} · #{lbEntry.pos}</div></div>}
-        {bestTp != null && <div className="kpi"><div className="kpi-lbl">Melhor ±Par</div><div className="kpi-val" style={{ color: bestTp <= 0 ? "var(--color-good-dark)" : "var(--text)" }}>{fmtToPar(bestTp)}</div></div>}
-        {bestRound != null && <div className="kpi"><div className="kpi-lbl">Melhor Ronda</div><div className="kpi-val c-good-dark">{bestRound}</div></div>}
-        {avgRound != null && <div className="kpi"><div className="kpi-lbl">Média Ronda</div><div className="kpi-val">{avgRound.toFixed(1)}</div></div>}
-        {card && <div className="kpi"><div className="kpi-lbl">Eclético BJGT</div><div className="kpi-val c-good-dark">{card.eclTotal}</div><div className="kpi-sub">{fmtToPar(card.eclTotal - totalPar)}</div></div>}
+        {lbEntry && <KpiCard label="BJGT Total" value={lbEntry.total} sub={`${fmtToPar(lbEntry.result)} · #${lbEntry.pos}`} />}
+        {bestTp != null && <KpiCard label="Melhor ±Par" value={fmtToPar(bestTp)} color={bestTp <= 0 ? "var(--color-good-dark)" : undefined} />}
+        {bestRound != null && <KpiCard label="Melhor Ronda" value={bestRound} color="var(--color-good-dark)" />}
+        {avgRound != null && <KpiCard label="Média Ronda" value={avgRound.toFixed(1)} />}
+        {card && <KpiCard label="Eclético BJGT" value={card.eclTotal} sub={fmtToPar(card.eclTotal - totalPar)} color="var(--color-good-dark)" />}
       </div>
 
       {/* ── Scoring distribution ── */}
@@ -1764,7 +1760,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
   /* ═══ RENDER ═══ */
   if (loading) return (
     <div className="tourn-layout">
-      <div className="toolbar"><span className="toolbar-title">🇪🇸 BJGT</span></div>
+      <div className="toolbar"><div className="toolbar-left"><span className="toolbar-title">🇪🇸 BJGT</span></div></div>
       <div className="master-detail"><div className="course-detail empty-state-lg">
         <LoadingState size="lg" icon="🏌️" message="A carregar dados…" />
       </div></div>
@@ -1772,7 +1768,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
   );
   if (error) return (
     <div className="tourn-layout">
-      <div className="toolbar"><span className="toolbar-title">🇪🇸 BJGT</span></div>
+      <div className="toolbar"><div className="toolbar-left"><span className="toolbar-title">🇪🇸 BJGT</span></div></div>
       <div className="master-detail"><div className="course-detail" ref={md.detailRef}>
         <div className="card empty-state"><div className="empty-icon">⚠️</div><div className="fw-700-dc">Erro: {error}</div></div>
       </div></div>
@@ -1782,7 +1778,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
     const info = A as { err?: string; courses?: string[]; nRounds?: number; nCards?: number; hsKeys?: string[] };
     return (
       <div className="tourn-layout">
-        <div className="toolbar"><span className="toolbar-title">🇪🇸 BJGT</span></div>
+        <div className="toolbar"><div className="toolbar-left"><span className="toolbar-title">🇪🇸 BJGT</span></div></div>
         <div className="master-detail"><div className="course-detail">
           <div className="card empty-state">
             <div className="empty-icon-lg">🔍</div>
@@ -1821,21 +1817,25 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
       {/* ── Toolbar ── */}
       <div className="toolbar">
-        <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
-        <span className="toolbar-title">🇪🇸 BJGT</span>
-        <span className="toolbar-meta">📍 {TOURN.location}</span>
-        <span className="toolbar-meta">📅 {TOURN.dates}</span>
-        <span className="toolbar-meta">🏷️ {PLAYER_NAME} · Sub-12</span>
-        <div className="toolbar-sep" />
-        <div className="escalao-pills">
-          {CONTEST_KEYS.map(k => (
-            <button key={k} onClick={() => setTab(k)}
-              className={`tourn-tab tourn-tab-sm${tab === k ? " active" : ""}`}>
-              {CONTEST_LABELS[k]}
-            </button>
-          ))}
+        <div className="toolbar-left">
+          <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
+          <span className="toolbar-title">🇪🇸 BJGT</span>
+          <span className="toolbar-meta">📍 {TOURN.location}</span>
+          <span className="toolbar-meta">📅 {TOURN.dates}</span>
+          <span className="toolbar-meta">🏷️ {PLAYER_NAME} · Sub-12</span>
+          <div className="toolbar-sep" />
+          <div className="escalao-pills">
+            {CONTEST_KEYS.map(k => (
+              <button key={k} onClick={() => setTab(k)}
+                className={`tourn-tab tourn-tab-sm${tab === k ? " active" : ""}`}>
+                {CONTEST_LABELS[k]}
+              </button>
+            ))}
+          </div>
         </div>
-        <span className="chip" style={{ marginLeft: "auto" }}>{(() => { const c = CONTEST_MAP[tab]; return `${c.players.filter(p=>typeof p.p==="number").length} field · ${c.nRounds}R · Par ${c.par}`; })()}</span>
+        <div className="toolbar-right">
+          <span className="chip">{(() => { const c = CONTEST_MAP[tab]; return `${c.players.filter(p=>typeof p.p==="number").length} field · ${c.nRounds}R · Par ${c.par}`; })()}</span>
+        </div>
       </div>
 
       {/* ── Master-detail ── */}
@@ -2090,10 +2090,7 @@ function ContestLeaderboard({ contest, evo }: { contest: ContestData; evo?: EvoE
                         {e.delta > 0 ? "+" : ""}{e.delta}
                       </td>
                       <td>
-                        {e.pill === "UP"
-                          ? <span className="badge-evo-up">⬆ {e.from}→{e.to}</span>
-                          : <span className="badge-evo-eq">= {e.from}</span>
-                        }
+                        <EvoBadge pill={e.pill} from={e.from} to={e.to} />
                       </td>
                     </tr>
                   );

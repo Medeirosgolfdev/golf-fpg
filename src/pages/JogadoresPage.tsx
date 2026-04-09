@@ -18,6 +18,7 @@ import TeePill from "../ui/TeePill";
 import TeeDate from "../ui/TeeDate";
 import ScoreCircle from "../ui/ScoreCircle";
 import LoadingState from "../ui/LoadingState";
+import EmptyState from "../ui/EmptyState";
 import SidebarToggle from "../ui/SidebarToggle";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { loadPlayerStats, daysSince, type PlayerStatsDb } from "../data/playerStatsTypes";
@@ -263,7 +264,7 @@ function ByDateView({ data, search }: {
           })}
         </tbody>
       </table>
-      {all.length === 0 && <div className="muted p-16">Nenhuma ronda encontrada</div>}
+      {all.length === 0 && <EmptyState size="sm" message="Nenhuma ronda encontrada" />}
     </div>
   );
 }
@@ -4348,58 +4349,62 @@ export default function JogadoresPage() {
   return (
     <div className="jogadores-page">
       <div className="toolbar">
-        <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Jogadores" />
-        <input className="input" value={q} onChange={e => { setQ(e.target.value); setSelectedFed(null); }}
-          placeholder="Nome, clube, n.º federado…" />
-        <select className="select" value={sexFilter} onChange={e => setSexFilter(e.target.value as SexFilter)}>
-          <option value="ALL">Sexo</option><option value="M">Masculino</option><option value="F">Feminino</option>
-        </select>
-        <div className="escalao-pills">
-          {escalaoFilter.size > 0 && (
-            <button className="p p-esc-clear" onClick={clearEscalao} title="Limpar filtros">✕</button>
-          )}
-          {escaloes.map(esc => {
-            const active = escalaoFilter.has(esc);
-            const cls = escCls(esc);
-            const count = escalaoCountMap[esc] || 0;
-            if (count === 0 && !active) return null;
+        <div className="toolbar-left">
+          <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Jogadores" />
+          <input className="input" value={q} onChange={e => { setQ(e.target.value); setSelectedFed(null); }}
+            placeholder="Nome, clube, n.º federado…" />
+          <select className="select" value={sexFilter} onChange={e => setSexFilter(e.target.value as SexFilter)}>
+            <option value="ALL">Sexo</option><option value="M">Masculino</option><option value="F">Feminino</option>
+          </select>
+          <div className="escalao-pills">
+            {escalaoFilter.size > 0 && (
+              <button className="p p-esc-clear" onClick={clearEscalao} title="Limpar filtros">✕</button>
+            )}
+            {escaloes.map(esc => {
+              const active = escalaoFilter.has(esc);
+              const cls = escCls(esc);
+              const count = escalaoCountMap[esc] || 0;
+              if (count === 0 && !active) return null;
+              return (
+                <button
+                  key={esc}
+                  className={`p p-esc-filter p-${cls}${active ? " active" : ""}`}
+                  onClick={() => toggleEscalao(esc)}
+                  title={`${esc} (${count})`}
+                >
+                  {esc.replace("Sub-", "S")}{count > 0 && <span className="p-filter-count">{count}</span>}
+                </button>
+              );
+            })}
+          </div>
+          <select className="select" value={regionFilter} onChange={e => setRegionFilter(e.target.value)}>
+            <option value="ALL">Região</option>
+            {regions.map(r => <option key={r} value={r}>{r}</option>)}
+          </select>
+          {Object.keys(statsDb).length > 0 && (() => {
+            const newCount = allPlayers.filter(p => { const d = daysSince(statsDb[p.fed]); return d != null && d <= NEW_DAYS; }).length;
+            if (newCount === 0) return null;
             return (
               <button
-                key={esc}
-                className={`p p-esc-filter p-${cls}${active ? " active" : ""}`}
-                onClick={() => toggleEscalao(esc)}
-                title={`${esc} (${count})`}
+                className={`p p-esc-filter p-novo${newFilter ? " active" : ""}`}
+                onClick={() => setNewFilter(v => !v)}
+                title={`${newCount} jogadores com rondas nos últimos ${NEW_DAYS} dias`}
+                style={{ background: newFilter ? "var(--color-good)" : undefined, color: newFilter ? "#fff" : undefined, borderColor: newFilter ? "var(--color-good)" : "var(--border-best)", gap: 3 }}
               >
-                {esc.replace("Sub-", "S")}{count > 0 && <span className="p-filter-count">{count}</span>}
+                🟢 Novos<span className="p-filter-count">{newCount}</span>
               </button>
             );
-          })}
+          })()}
+          <select className="select" value={sortKey} onChange={e => setSortKey(e.target.value as SortKey)}>
+            <option value="name">Nome</option><option value="hcp">Handicap</option>
+            <option value="club">Clube</option><option value="escalao">Escalão</option>
+            <option value="ranking">🏆 Ranking</option>
+            <option value="rounds">Voltas</option>
+          </select>
         </div>
-        <select className="select" value={regionFilter} onChange={e => setRegionFilter(e.target.value)}>
-          <option value="ALL">Região</option>
-          {regions.map(r => <option key={r} value={r}>{r}</option>)}
-        </select>
-        {Object.keys(statsDb).length > 0 && (() => {
-          const newCount = allPlayers.filter(p => { const d = daysSince(statsDb[p.fed]); return d != null && d <= NEW_DAYS; }).length;
-          if (newCount === 0) return null;
-          return (
-            <button
-              className={`p p-esc-filter p-novo${newFilter ? " active" : ""}`}
-              onClick={() => setNewFilter(v => !v)}
-              title={`${newCount} jogadores com rondas nos últimos ${NEW_DAYS} dias`}
-              style={{ background: newFilter ? "var(--color-good)" : undefined, color: newFilter ? "#fff" : undefined, borderColor: newFilter ? "var(--color-good)" : "var(--border-best)", gap: 3 }}
-            >
-              🟢 Novos<span className="p-filter-count">{newCount}</span>
-            </button>
-          );
-        })()}
-        <select className="select" value={sortKey} onChange={e => setSortKey(e.target.value as SortKey)}>
-          <option value="name">Nome</option><option value="hcp">Handicap</option>
-          <option value="club">Clube</option><option value="escalao">Escalão</option>
-          <option value="ranking">🏆 Ranking</option>
-          <option value="rounds">Voltas</option>
-        </select>
-        <div className="chip" style={{ marginLeft: "auto" }}>{filtered.length} jogadores</div>
+        <div className="toolbar-right">
+          <div className="chip">{filtered.length} jogadores</div>
+        </div>
       </div>
 
       <div className="master-detail">
@@ -4438,7 +4443,7 @@ export default function JogadoresPage() {
               </button>
             );
           })}
-          {filtered.length === 0 && <div className="muted p-16">Nenhum jogador encontrado</div>}
+          {filtered.length === 0 && <EmptyState size="sm" message="Nenhum jogador encontrado" />}
         </div>
 
         <div className="course-detail jog-detail" ref={md.detailRef}>

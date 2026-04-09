@@ -17,6 +17,7 @@ import SidebarToggle from "../ui/SidebarToggle";
 import { RoundPill } from "../ui/PillBadge";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import EmptyState from "../ui/EmptyState";
+import SidebarSectionTitle from "../ui/SidebarSectionTitle";
 import { buildAutoRivals, normName, getScorecards, uskTournNames, uskFieldSizes } from "./KIDSdataLoader";
 import { FIELD_2025, VP_PAR, VP_SI, VP_M, VP_WJGC26_PAR, VP_WJGC26_SI, VP_WJGC26_M, VP_ALFERINI_PAR, VP_ALFERINI_SI, VP_ALFERINI_M, LT_FORET_PAR, LT_FORET_SI, LT_FORET_M, VENICE_M, MS_USKIDS_M_B1011, MS_USKIDS_M_B12, DORAL_GP_M_B1011, DORAL_SF_M_B1213, TIER, FIELD_CARDS } from "../data/rivalData";
 
@@ -1408,16 +1409,16 @@ function RivaisSidebar({ selected, onSelect, fids, q, paisFilter, tierFilter, mi
         {/* Grupo ⚔️ Directos */}
         {directos.length > 0 && (
           <>
-            <div className="sidebar-section-title-dark">⚔️ Directos ({directos.length})</div>
+            <SidebarSectionTitle dark>⚔️ Directos ({directos.length})</SidebarSectionTitle>
             {directos.map((p, i) => renderItem(p))}
           </>
         )}
         {/* Grupo 🌍 Circuito */}
         {circuito.length > 0 && !apenasDirectos && (
           <>
-            <div className="sidebar-section-title-dark" style={{ background: "var(--color-info-dark)" }}>
+            <SidebarSectionTitle dark color="var(--color-info-dark)">
               🎯 Torneios USKids ({circuito.length})
-            </div>
+            </SidebarSectionTitle>
             {circuito.map((p, i) => renderItem(p))}
           </>
         )}
@@ -2936,7 +2937,7 @@ function RivaisIntlContent() {
       }}>
         <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
         <span className="toolbar-title" style={{ flexShrink: 0 }}>🌍 Kids</span>
-        <div className="toolbar-sep" />
+        <div className="toolbar-sep" style={{ flexShrink: 0 }} />
         <span className="toolbar-meta" style={{ flexShrink: 0 }}>
           {loaded
             ? <span style={{ fontSize: 10, color: "var(--color-good-dark)", fontWeight: 700 }}>{rivals.length} rivais · ✓</span>
@@ -2951,12 +2952,12 @@ function RivaisIntlContent() {
                 </span>
               : <span style={{ fontSize: 10, color: "var(--text-muted)" }}>⏳ a iniciar…</span>}
         </span>
-        <div className="toolbar-sep" />
+        <div className="toolbar-sep" style={{ flexShrink: 0 }} />
         {/* Pesquisa */}
         <input type="text" value={q} onChange={e => setQ(e.target.value)}
           placeholder="🔎 Pesquisar rival…" className="input"
           style={{ width: 150, height: 26, fontSize: 12, flexShrink: 0 }} />
-        <div className="toolbar-sep" />
+        <div className="toolbar-sep" style={{ flexShrink: 0 }} />
         {/* Filtros avançados: país, tipo, presenças, directos, limpar */}
         <select className="select" value={paisFilter} onChange={e => setPaisFilter(e.target.value)}
           style={{ fontSize: 11, height: 26, minWidth: 85, flexShrink: 0 }}>

@@ -5,6 +5,8 @@ import {
 } from "recharts";
 import { useAppContext } from "../context/AppContext";
 import { sdClassByHcp } from "../utils/scoreDisplay";
+import { norm } from "../utils/format";
+import PlayerLink from "../ui/PlayerLink";
 import SexBadge from "../ui/SexBadge";
 
 /* ── Tipos ── */
@@ -53,7 +55,6 @@ function escShort(esc: string) { return esc.replace("Sub-", "S"); }
 function escCls(esc: string) {
   return esc.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "");
 }
-function norm(s: string) { return s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); }
 function fmtTime(iso: string | null) {
   if (!iso) return null;
   return new Date(iso).toLocaleTimeString("pt-PT", { hour: "2-digit", minute: "2-digit" });
@@ -368,14 +369,10 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
                 <tr key={`${j.fed ?? j.nome}-${i}`} className={p ? "nac-row-match" : ""}>
                   <td className="muted r" style={{ fontSize: 11 }}>{i + 1}</td>
                   <td style={{ fontSize: 13 }}>
-                    {p ? <a href={`/jogadores/${j.fed}?view=by_date`} target="_blank" rel="noopener noreferrer"
-                             style={{ fontWeight: 700, color: "inherit", textDecoration: "none" }}>{p.name}</a>
-                       : <span className="muted">{j.nome || "–"}</span>}
+                    {p ? <PlayerLink fed={j.fed} name={p.name} query="?view=by_date" style={{ fontWeight: 700 }} /> : <span className="muted">{j.nome || "–"}</span>}
                   </td>
                   <td className="r">
-                    {j.fed ? <a href={`/jogadores/${j.fed}?view=by_date`} target="_blank" rel="noopener noreferrer"
-                                style={{ color: "var(--chart-2)", textDecoration: "none", fontSize: 12 }}>{j.fed}</a>
-                           : <span className="muted">–</span>}
+                    {j.fed ? <PlayerLink fed={j.fed} name={j.fed} query="?view=by_date" style={{ color: "var(--chart-2)", fontSize: 12 }} /> : <span className="muted">–</span>}
                   </td>
                   <td className="r muted" style={{ fontSize: 12 }}>{j.hcp != null ? j.hcp.toFixed(1) : "–"}</td>
                   <td className="r" style={{ fontSize: 12, fontWeight: 600 }}>{j.vac != null ? j.vac.toFixed(1) : "–"}</td>
@@ -1402,38 +1399,42 @@ export default function NacionaisPage() {
   return (
     <div className="jogadores-page nac-page">
       <div className="toolbar">
-        <span style={{ fontWeight: 700, fontSize: 13, flexShrink: 0 }}>🏆 Nacionais Jovens</span>
-        <div className="toolbar-sep" />
-        {([
-          { key: "inscricoes", label: "Inscrições" },
-          { key: "analise",    label: "📊 Análise" },
-          { key: "resultados", label: "🏅 Resultados", disabled: true },
-        ] as const).map(({ key, label, disabled }) => (
-          <button key={key}
-            className={"tourn-tab tourn-tab-sm" + (view === key ? " active" : "")}
-            onClick={() => !disabled && setView(key as PageView)}
-            title={disabled ? "Disponivel quando o torneio decorrer" : undefined}
-            style={view === key
-              ? {}
-              : { background: "var(--bg-muted)", color: disabled ? "var(--text-3)" : "var(--text-2)", borderColor: "var(--border)", cursor: disabled ? "not-allowed" : "pointer", opacity: disabled ? 0.5 : 1 }}>
-            {label}
+        <div className="toolbar-left" style={{ flexWrap: "wrap", gap: 4 }}>
+          <span style={{ fontWeight: 700, fontSize: 13, flexShrink: 0 }}>🏆 Nacionais Jovens</span>
+          <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+          {([
+            { key: "inscricoes", label: "Inscrições" },
+            { key: "analise",    label: "📊 Análise" },
+            { key: "resultados", label: "🏅 Resultados", disabled: true },
+          ] as const).map(({ key, label, disabled }) => (
+            <button key={key}
+              className={"tourn-tab tourn-tab-sm" + (view === key ? " active" : "")}
+              onClick={() => !disabled && setView(key as PageView)}
+              title={disabled ? "Disponivel quando o torneio decorrer" : undefined}
+              style={view === key
+                ? { flexShrink: 0 }
+                : { flexShrink: 0, background: "var(--bg-muted)", color: disabled ? "var(--text-3)" : "var(--text-2)", borderColor: "var(--border)", cursor: disabled ? "not-allowed" : "pointer", opacity: disabled ? 0.5 : 1 }}>
+              {label}
+            </button>
+          ))}
+          <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+          <button className="tourn-tab tourn-tab-sm" onClick={refreshAll}
+            style={{ flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}
+            title="Ir buscar inscrições actualizadas à FPG para todos os escalões">
+            ↺ Actualizar
           </button>
-        ))}
-        <div className="toolbar-sep" />
-        <button className="tourn-tab tourn-tab-sm" onClick={refreshAll}
-          style={{ background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}
-          title="Ir buscar inscrições actualizadas à FPG para todos os escalões">
-          ↺ Actualizar
-        </button>
-        <div className="toolbar-sep" />
-        {torneios.map(t => (
-          <TorneioCard key={t.tcode} t={t}
-            active={activeTcode === t.tcode}
-            onClick={() => setActiveTcode(t.tcode)} />
-        ))}
-        {totalNossosInscritos > 0 && (
-          <div className="chip" style={{ marginLeft: "auto" }}>{totalNossosInscritos} na BD</div>
-        )}
+          <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+          {torneios.map(t => (
+            <TorneioCard key={t.tcode} t={t}
+              active={activeTcode === t.tcode}
+              onClick={() => setActiveTcode(t.tcode)} />
+          ))}
+        </div>
+        <div className="toolbar-right">
+          {totalNossosInscritos > 0 && (
+            <div className="chip">{totalNossosInscritos} na BD</div>
+          )}
+        </div>
       </div>
 
       <PainelResumo torneios={torneios} nossosByFed={nossosByFed} />

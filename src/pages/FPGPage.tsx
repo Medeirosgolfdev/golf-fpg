@@ -15,6 +15,7 @@
  *   • Suporte a 9H e 18H, 1 a N rondas
  */
 import React, { useEffect, useState, useMemo, useCallback, useRef } from "react";
+import { useSort } from "../hooks/useSort";
 import { useAppContext } from "../context/AppContext";
 import { loadPlayers } from "../data/loader";
 import { scClass, sdClassByHcp } from "../utils/scoreDisplay";
@@ -27,7 +28,7 @@ import SidebarToggle from "../ui/SidebarToggle";
 import SortableHdr from "../ui/SortableHdr";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { C } from "../utils/colors";
-import { fmtDate, fmtToPar, MONTHS_PT } from "../utils/format";
+import { fmtDate, fmtToPar, MONTHS_PT, norm, monthLabel } from "../utils/format";
 import { toggleArr } from "../utils/mathUtils";
 import { calcAGS, expectedSD9 } from "../utils/whsCalc";
 import { ScorecardLeaderboard, type ScorecardRow } from "../ui/ScorecardLeaderboard";
@@ -915,12 +916,7 @@ function PlayerFilterBar({ players, filter, onChange, escLookup, playersDB, tota
   const filtered = useMemo(() => filterPlayers(players, filter, escLookup, playersDB), [players, filter, escLookup, playersDB]);
   const hasOpts = availClubs.length > 1 || availEsc.length > 1 || availTees.length > 1;
   if (total < 8 && !isActive) return null;
-  const chip = (active: boolean, label: React.ReactNode, onClick: () => void, color?: string): React.ReactNode => (
-    <button key={String(label)} onClick={onClick} style={{ fontSize:10, padding:"2px 8px", borderRadius:20,
-      border:`1px solid ${active?(color||"var(--accent)"):"var(--border)"}`,
-      background:active?(color||"var(--accent)"):"var(--bg-hover)", color:active?"#fff":"var(--text-muted)",
-      cursor:"pointer", whiteSpace:"nowrap", fontWeight:active?700:500 }}>{label}</button>
-  );
+
   return (
     <div style={{ display:"flex", flexWrap:"wrap", alignItems:"center", gap:6, padding:"6px 0 8px", borderBottom:"1px solid var(--border)", marginBottom:8 }}>
       <div style={{ position:"relative", flexShrink:0 }}>
@@ -929,8 +925,8 @@ function PlayerFilterBar({ players, filter, onChange, escLookup, playersDB, tota
           style={{ fontSize:11, padding:"3px 8px 3px 22px", borderRadius:6, border:"1px solid var(--border)", background:"var(--bg-card,#fff)", color:"var(--text)", width:140, outline:"none" }} />
       </div>
       {hasOpts && <span style={{ color:"var(--border)", fontSize:11 }}>|</span>}
-      {availEsc.length > 1 && availEsc.map(e => { const k = e.toLowerCase().replace(/[\s-]/g,""); const s = ESC_STYLE[k]; return chip(filter.escs.includes(e), e, () => onChange({ ...filter, escs:toggleArr(filter.escs,e) }), s?.bg); })}
-      {availTees.length > 1 && availTees.map(t => { const hex = getTeeHex(t); return <React.Fragment key={t}>{chip(filter.tees.includes(t), <span style={{ display:"flex", alignItems:"center", gap:4 }}><span style={{ display:"inline-block", width:8, height:8, borderRadius:2, background:hex, border:"1px solid rgba(0,0,0,.18)" }} />{t}</span>, () => onChange({ ...filter, tees:toggleArr(filter.tees,t) }), hex)}</React.Fragment>; })}
+      {availEsc.length > 1 && availEsc.map(e => { const k = e.toLowerCase().replace(/[\s-]/g,""); const s = ESC_STYLE[k]; return <FilterChip key={e} active={filter.escs.includes(e)} onClick={() => onChange({ ...filter, escs:toggleArr(filter.escs,e) })} color={s?.bg}>{e}</FilterChip>; })}
+      {availTees.length > 1 && availTees.map(t => { const hex = getTeeHex(t); return <FilterChip key={t} active={filter.tees.includes(t)} onClick={() => onChange({ ...filter, tees:toggleArr(filter.tees,t) })} color={hex}><span style={{ display:"flex", alignItems:"center", gap:4 }}><span style={{ display:"inline-block", width:8, height:8, borderRadius:2, background:hex, border:"1px solid rgba(0,0,0,.18)" }} />{t}</span></FilterChip>; })}
       {availClubs.length > 2 && <select value={filter.club} onChange={e => onChange({ ...filter, club:e.target.value })} style={{ fontSize:11, padding:"3px 6px", borderRadius:6, border:`1px solid ${filter.club?"var(--accent)":"var(--border)"}`, background:"var(--bg-card,#fff)", color:"var(--text)", cursor:"pointer", fontWeight:filter.club?700:400 }}><option value="">Todos os clubes</option>{availClubs.map(c => <option key={c} value={c}>{c}</option>)}</select>}
       {isActive && <><span style={{ fontSize:10, color:"var(--text-muted)", marginLeft:2 }}>{filtered.length} de {total}</span><button onClick={() => onChange(EMPTY_FILTER)} style={{ fontSize:10, padding:"2px 8px", borderRadius:20, border:"1px solid var(--border)", background:"var(--bg-hover)", color:"var(--text-muted)", cursor:"pointer" }}>✕ limpar</button></>}
     </div>
@@ -951,8 +947,7 @@ type SortKey = "pos" | "name" | "club" | "esc" | "hcp" | "gross" | "toPar" | "te
    Colunas idênticas ao Drive: ESC · FED · CLUBE · HCP · TEE · Tot · ± · SD · 🐦 · Par · ■
    ───────────────────────────────────────────── */
 export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabelColSpan = 5 }: { tournament: Tournament; escLookup: EscLookup; playersDB: PlayersDB; siLabel?: string; parLabelColSpan?: number }) {
-  const [sortKey, setSortKey] = useState<SortKey>("pos");
-  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
+  const { sortKey, sortDir, toggleSort: handleSort } = useSort<SortKey>("pos");
   const [showScorecard, setShowScorecard] = useState(true);
   const [filter, setFilter] = useState<PlayerFilter>(EMPTY_FILTER);
 
@@ -988,10 +983,7 @@ export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabe
     [rawPlayers, filter, escLookup, playersDB]
   );
 
-  function handleSort(k: SortKey) {
-    if (k === sortKey) setSortDir(d => d === "asc" ? "desc" : "asc");
-    else { setSortKey(k); setSortDir("asc"); }
-  }
+
 
   const sorted = useMemo(() => [...filteredPlayers].sort((a, b) => {
     // WD players sempre no fim, independentemente do sortKey
@@ -1014,6 +1006,16 @@ export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabe
     if (typeof av === "string") return sortDir === "asc" ? av.localeCompare(bv) : bv.localeCompare(av);
     return sortDir === "asc" ? av - bv : bv - av;
   }), [filteredPlayers, sortKey, sortDir, parTotal, escLookup]);
+
+  function SortableHdr({ k, children, className }: { k: SortKey; children: React.ReactNode; className?: string }) {
+    const active = sortKey === k;
+    return (
+      <th className={"lb-sortable " + (className || "")}
+        onClick={() => handleSort(k)}>
+        {children}{active && <span className="sort-arrow">{sortDir === "asc" ? "▲" : "▼"}</span>}
+      </th>
+    );
+  }
 
   // Agora é seguro fazer early return — todos os hooks já foram chamados
   if (!rawPlayers.length) return <div className="muted ta-center p-16">Scorecards não disponíveis.</div>;
@@ -1094,14 +1096,14 @@ export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabe
         />
       }
       prefixHeaderCells={<>
-        <SortableHdr k="esc"  sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-esc">ESC.</SortableHdr>
+        <SortableHdr k="esc"  className="lb-esc">ESC.</SortableHdr>
         <th className="lb-fed">FED</th>
-        <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-club">CLUBE</SortableHdr>
-        <SortableHdr k="hcp"  sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-hcp">HCP</SortableHdr>
-        <SortableHdr k="tee"  sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-tee">TEE</SortableHdr>
+        <SortableHdr k="club" className="lb-club">CLUBE</SortableHdr>
+        <SortableHdr k="hcp"  className="lb-hcp">HCP</SortableHdr>
+        <SortableHdr k="tee"  className="lb-tee">TEE</SortableHdr>
       </>}
       postScorecardHeaderCells={<>
-        <SortableHdr k="sd" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-sd">SD</SortableHdr>
+        <SortableHdr k="sd" className="lb-sd">SD</SortableHdr>
         <th className="lb-bird">🐦</th>
         <th className="lb-par-stat">Par</th>
         <th className="lb-bog">■</th>
@@ -1298,8 +1300,7 @@ export function AllRoundsScorecardLB({
   playersDB: PlayersDB;
 }) {
   const [filter, setFilter]   = useState<PlayerFilter>(EMPTY_FILTER);
-  const [sortKey, setSortKey] = useState<string>("pos");
-  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
+  const { sortKey, sortDir, toggleSort } = useSort<string>("pos");
   const [showSC, setShowSC]   = useState(true);
   const [groupMode, setGroupMode] = useState(true); // true = agrupado por jogador; false = linha por ronda
 
@@ -1445,10 +1446,7 @@ export function AllRoundsScorecardLB({
     return flatRows.map(r => ({ ...r, pos: pm.get(r.key) ?? null }));
   }, [flatRows]);
 
-  function toggleSort(k: string) {
-    if (sortKey === k) setSortDir(d => d === "asc" ? "desc" : "asc");
-    else { setSortKey(k); setSortDir("asc"); }
-  }
+
 
   const sorted = useMemo(() => {
     const INF = 9999;
@@ -1532,6 +1530,18 @@ export function AllRoundsScorecardLB({
     </>);
   }
 
+  function SHdr({ k, children, className, style }: { k: string; children: React.ReactNode; className?: string; style?: React.CSSProperties }) {
+    const active = sortKey === k;
+    return (
+      <th className={"lb-sortable " + (className || "")}
+          style={{ ...style, color: active ? "var(--accent)" : undefined, fontWeight: active ? 700 : undefined }}
+          title={active ? (sortDir === "asc" ? "Ordenado crescente" : "Ordenado decrescente") : "Clique para ordenar"}
+          onClick={() => toggleSort(k)}>
+        {children}{active && <span style={{ fontSize: 8, marginLeft: 2 }}>{sortDir === "asc" ? "▲" : "▼"}</span>}
+      </th>
+    );
+  }
+
   const postCols = 4; // SD 🐦 Par ■
 
   return (
@@ -1613,23 +1623,23 @@ export function AllRoundsScorecardLB({
             {/* Headers — ± Tot e buracos clicáveis (melhor ronda de cada jogador) */}
             <tr>
               <th className="lb-pos sticky-col-0">#</th>
-              <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-name sticky-col-1">Jogador</SortableHdr>
-              <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-club">Clube</SortableHdr>
-              <SortableHdr k="hcp"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-hcp">HCP</SortableHdr>
+              <SHdr k="name" className="lb-name sticky-col-1">Jogador</SHdr>
+              <SHdr k="club" className="lb-club">Clube</SHdr>
+              <SHdr k="hcp"  className="lb-hcp">HCP</SHdr>
               <th className="lb-tee" style={{ fontSize: 10, color: "var(--text-muted)", fontWeight: 600 }}>Rnd</th>
-              <SortableHdr k="topar" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-topar">±</SortableHdr>
-              <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-gross">Tot</SortableHdr>
+              <SHdr k="topar" className="lb-topar">±</SHdr>
+              <SHdr k="gross" className="lb-gross">Tot</SHdr>
               {showSC && (<>
                 {Array.from({ length: 9 }, (_, h) => (
-                  <SortableHdr key={h} k={`h${h}`} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={"lb-hole" + (h === 0 ? " lb-hole-first" : "")} style={{ fontSize: 10 }}>
+                  <SHdr key={h} k={`h${h}`} className={"lb-hole" + (h === 0 ? " lb-hole-first" : "")} style={{ fontSize: 10 }}>
                     {h + 1}
-                  </SortableHdr>
+                  </SHdr>
                 ))}
                 <th className="lb-halftot">{is9 ? "Tot" : "Out"}</th>
                 {!is9 && Array.from({ length: 9 }, (_, h) => (
-                  <SortableHdr key={h + 9} k={`h${h + 9}`} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={"lb-hole" + (h === 0 ? " lb-hole-first" : "")} style={{ fontSize: 10 }}>
+                  <SHdr key={h + 9} k={`h${h + 9}`} className={"lb-hole" + (h === 0 ? " lb-hole-first" : "")} style={{ fontSize: 10 }}>
                     {h + 10}
-                  </SortableHdr>
+                  </SHdr>
                 ))}
                 {!is9 && <th className="lb-halftot">In</th>}
               </>)}
@@ -1667,8 +1677,7 @@ export function AllRoundsScorecardLB({
                               <td className="lb-name sticky-col-1" style={{ background: rdBg, fontWeight: isFirstRd ? 600 : 400, borderTop: bTop }}>
                                 {isFirstRd
                                   ? (row.fed
-                                      ? <a href={`/jogadores/${row.fed}`} target="_blank" rel="noopener noreferrer"
-                                           style={{ color:"inherit", textDecoration:"none" }}>{abreviarNome(row.name)}</a>
+                                      ? <PlayerLink fed={row.fed} name={abreviarNome(row.name)} />
                                       : abreviarNome(row.name))
                                   : <span className="muted fs-10" style={{ paddingLeft: 8 }}>↳</span>}
                               </td>
@@ -1701,10 +1710,7 @@ export function AllRoundsScorecardLB({
                     <tr key={row.key} style={{ background: bg, borderTop: bTop }}>
                       <td className="lb-pos sticky-col-0" style={{ background: bg }}>{showPos ? posStr : ""}</td>
                       <td className="lb-name sticky-col-1" style={{ background: bg, fontWeight: 600 }}>
-                        {row.fed
-                          ? <a href={`/jogadores/${row.fed}`} target="_blank" rel="noopener noreferrer"
-                               style={{ color:"inherit", textDecoration:"none" }}>{abreviarNome(row.name)}</a>
-                          : abreviarNome(row.name)}
+                        {row.fed ? <PlayerLink fed={row.fed} name={abreviarNome(row.name)} /> : abreviarNome(row.name)}
                       </td>
                       <td className="lb-club">{row.club || "–"}</td>
                       <td className="lb-hcp">{row.hcp != null ? row.hcp.toFixed(1) : "–"}</td>
@@ -1936,15 +1942,11 @@ function PJARankingView({
   const [activeYear, setActiveYear] = useState<string>("");
   const year = activeYear || years[0] || "";
 
-  const [sortKey, setSortKey] = useState("total");
-  const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
+  const { sortKey, sortDir, toggleSort: handleSort, resetSort: resetYearSort } = useSort<string>("total", "desc");
   const [filterEsc, setFilterEsc] = useState<string[]>([]);
   const [filterName, setFilterName] = useState("");
 
-  function handleSort(k: string) {
-    if (k === sortKey) setSortDir(d => d === "asc" ? "desc" : "asc");
-    else { setSortKey(k); setSortDir(k === "name" || k === "club" || k === "escalao" ? "asc" : "desc"); }
-  }
+
   function toggleEsc(e: string) {
     setFilterEsc(prev => prev.includes(e) ? prev.filter(x => x !== e) : [...prev, e]);
   }
@@ -2073,15 +2075,7 @@ function PJARankingView({
     });
   }, [allRows, filterEsc, filterName, sortKey, sortDir]);
 
-  const chip = (active: boolean, label: React.ReactNode, onClick: () => void, color?: string) => (
-    <button key={String(label)} onClick={onClick} style={{
-      fontSize: 10, padding: "2px 8px", borderRadius: 20,
-      border: `1px solid ${active ? (color || "var(--accent)") : "var(--border)"}`,
-      background: active ? (color || "var(--accent)") : "var(--bg-hover)",
-      color: active ? "#fff" : "var(--text-muted)",
-      cursor: "pointer", whiteSpace: "nowrap", fontWeight: active ? 700 : 500,
-    }}>{label}</button>
-  );
+
 
   if (loading && pjaList.length === 0) return <div className="muted fs-11" style={{ padding: 24 }}>A carregar…</div>;
   if (!year) return <div className="muted fs-11" style={{ padding: 24 }}>Sem torneios PJA.</div>;
@@ -2094,7 +2088,7 @@ function PJARankingView({
           {years.map(yr => (
             <button key={yr}
               className={"tourn-tab tourn-tab-sm" + (yr === year ? " active" : "")}
-              onClick={() => { setActiveYear(yr); setFilterEsc([]); setFilterName(""); setSortKey("total"); setSortDir("desc"); }}
+              onClick={() => { setActiveYear(yr); setFilterEsc([]); setFilterName(""); resetYearSort(); }}
               style={yr === year ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
               {yr}
             </button>
@@ -2114,11 +2108,11 @@ function PJARankingView({
         {availEscs.map(e => {
           const k = e.toLowerCase().replace(/[\s-]/g, "");
           const s = ESC_STYLE[k];
-          return chip(filterEsc.includes(e), e, () => toggleEsc(e), s?.bg);
+          return <FilterChip key={e} active={filterEsc.includes(e)} onClick={() => toggleEsc(e)} color={s?.bg}>{e}</FilterChip>;
         })}
         {(filterEsc.length > 0 || filterName) && <>
           <span className="muted fs-10">{sortedRows.length} de {allRows.length}</span>
-          {chip(false, "✕ limpar", () => { setFilterEsc([]); setFilterName(""); })}
+          <FilterChip active={false} onClick={() => { setFilterEsc([]); setFilterName(""); }}>✕ limpar</FilterChip>
         </>}
         <span className="chip" style={{ marginLeft: "auto" }}>{allRows.length} jogadores · {tournCols.length} torneios</span>
       </div>
@@ -2288,16 +2282,12 @@ function ClubesGruposView({
   tournament: Tournament | null;
   escKey: "sub14" | "sub18";
 }) {
-  const [sortCol, setSortCol] = useState<SortCol>("total");
-  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
+  const { sortKey: sortCol, sortDir, toggleSort: toggleSortCol } = useSort<SortCol>("total");
   // ordenação dos jogadores dentro de cada card
   const [playerSort, setPlayerSort] = useState<"nome" | "hcp" | number>("nome");
   const [playerSortDir, setPlayerSortDir] = useState<"asc" | "desc">("asc");
 
-  function toggleSort(col: SortCol) {
-    if (sortCol === col) setSortDir(d => d === "asc" ? "desc" : "asc");
-    else { setSortCol(col); setSortDir("asc"); }
-  }
+
   function togglePlayerSort(col: "nome" | "hcp" | number) {
     if (playerSort === col) setPlayerSortDir(d => d === "asc" ? "desc" : "asc");
     else { setPlayerSort(col); setPlayerSortDir(col === "nome" ? "asc" : "asc"); }
@@ -2431,7 +2421,7 @@ function ClubesGruposView({
   function SortBtn({ label, col }: { label: string; col: SortCol }) {
     const active = sortCol === col;
     return (
-      <button onClick={() => toggleSort(col)} style={{
+      <button onClick={() => toggleSortCol(col)} style={{
         fontSize: 11, fontWeight: active ? 700 : 500, padding: "3px 9px", borderRadius: 4,
         border: `1px solid ${active ? "var(--accent)" : "var(--border)"}`,
         background: active ? "var(--accent)" : "var(--bg-hover)",
@@ -2827,7 +2817,7 @@ function escShort(esc: string) { return esc.replace("Sub-", "S"); }
 function escCls(esc: string) {
   return esc.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "");
 }
-function norm(s: string) { return s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); }
+// norm importada de ../utils/format
 function fmtTime(iso: string | null) {
   if (!iso) return null;
   return new Date(iso).toLocaleTimeString("pt-PT", { hour: "2-digit", minute: "2-digit" });
@@ -3076,7 +3066,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
   }
   function SortTh({ label, col, cls }: { label: string; col: InscSortKey; cls?: string }) {
     const active = sortKey === col;
-    return <th className={cls} onClick={() => toggleSort(col)}
+    return <th className={cls} onClick={() => toggleSortCol(col)}
       style={{ cursor: "pointer", userSelect: "none", whiteSpace: "nowrap" }}>
       {label}{active ? (sortAsc ? " ↑" : " ↓") : " ↕"}
     </th>;
@@ -3142,14 +3132,10 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
                 <tr key={`${j.fed ?? j.nome}-${i}`} className={p ? "row-match" : ""}>
                   <td className="muted r" style={{ fontSize: 11 }}>{i + 1}</td>
                   <td style={{ fontSize: 13 }}>
-                    {p ? <a href={`/jogadores/${j.fed}?view=by_date`} target="_blank" rel="noopener noreferrer"
-                             style={{ fontWeight: 700, color: "inherit", textDecoration: "none" }}>{p.name}</a>
-                       : <span className="muted">{j.nome || "–"}</span>}
+                    {p ? <PlayerLink fed={j.fed} name={p.name} query="?view=by_date" style={{ fontWeight: 700 }} /> : <span className="muted">{j.nome || "–"}</span>}
                   </td>
                   <td className="r">
-                    {j.fed ? <a href={`/jogadores/${j.fed}?view=by_date`} target="_blank" rel="noopener noreferrer"
-                                style={{ color: "var(--chart-2)", textDecoration: "none", fontSize: 12 }}>{j.fed}</a>
-                           : <span className="muted">–</span>}
+                    {j.fed ? <PlayerLink fed={j.fed} name={j.fed} query="?view=by_date" style={{ color: "var(--chart-2)", fontSize: 12 }} /> : <span className="muted">–</span>}
                   </td>
                   <td className="r muted" style={{ fontSize: 12 }}>{j.hcp != null ? j.hcp.toFixed(1) : "–"}</td>
                   <td className="r" style={{ fontSize: 12, fontWeight: 600 }}>{j.vac != null ? j.vac.toFixed(1) : "–"}</td>
@@ -3789,12 +3775,6 @@ function Content() {
     return { byYear, years };
   }, [santoList, activeYear, filterManuel]);
 
-  function monthLabel(key: string): string {
-    if (key === "?") return "Data desconhecida";
-    const [yr, mo] = key.split("-");
-    return `${MONTHS_PT[parseInt(mo) - 1] || mo} ${yr}`;
-  }
-
   function renderSidebarItem(t: Tournament) {
     const isClubesItem = (t as any)._clubesEsc !== undefined;
     const idx = isClubesItem ? -1 : displayList.indexOf(t);
@@ -3848,7 +3828,7 @@ function Content() {
           <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />
           <span className="toolbar-title" style={{ flexShrink: 0 }}>🏌️ FPG</span>
           {!loading && (<>
-            <div className="toolbar-sep" />
+            <div className="toolbar-sep" style={{ flexShrink: 0 }} />
             {([
               { key: "torneios",      label: "Torneios" },
               { key: "ranking-pja",   label: "📊 Ranking PJA" },
@@ -3864,7 +3844,7 @@ function Content() {
               </button>
             ))}
             {navMode === "torneios" && availYears.length > 1 && (<>
-              <div className="toolbar-sep" />
+              <div className="toolbar-sep" style={{ flexShrink: 0 }} />
               {availYears.map(y => (
                 <button key={y}
                   className={"tourn-tab tourn-tab-sm" + (activeYear === y ? " active" : "")}
@@ -3875,7 +3855,7 @@ function Content() {
                   {y}
                 </button>
               ))}
-              <div className="toolbar-sep" />
+              <div className="toolbar-sep" style={{ flexShrink: 0 }} />
               <button
                 className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
                 onClick={() => setFilterManuel(v => !v)}
