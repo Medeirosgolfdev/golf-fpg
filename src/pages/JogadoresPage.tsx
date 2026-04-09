@@ -19,6 +19,7 @@ import TeeDate from "../ui/TeeDate";
 import ScoreCircle from "../ui/ScoreCircle";
 import LoadingState from "../ui/LoadingState";
 import EmptyState from "../ui/EmptyState";
+import DetailHeader from "../ui/DetailHeader";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
 import { useMasterDetail } from "../hooks/useMasterDetail";

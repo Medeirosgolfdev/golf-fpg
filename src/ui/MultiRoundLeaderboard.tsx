@@ -1,7 +1,9 @@
 // @refresh reset
 import { MRRound, MultiRoundRow, PlayerFilter, EMPTY_FILTER } from "./multiRoundTypes";
+import { fmtHcp } from "../utils/format";
 import { useSort } from "../hooks/useSort";
 import FilterChip from "../ui/FilterChip";
+import WdBadge from "../ui/WdBadge";
 import EmptyState from "../ui/EmptyState";
 /**
  *
@@ -263,7 +265,7 @@ export function MultiRoundLeaderboard({
                   style={(isInc || isWD) ? { background: rowBg, opacity: isWD ? 0.55 : 0.7 } : undefined}>
                   <td className="lb-pos sticky-col-0" style={row.isHighlighted ? undefined : { background: stickyBg }}>
                     {isWD
-                      ? <span className="badge-wd">WD</span>
+                      ? <WdBadge />
                       : isInc
                         ? ""
                         : showPos ? (medal || dp) : ""}
@@ -275,7 +277,7 @@ export function MultiRoundLeaderboard({
                   {showEsc && <td className="lb-esc">{row.esc ? <EscPill esc={row.esc} /> : <span className="muted">–</span>}</td>}
                   {showFed && <td className="lb-fed">{row.fed || "–"}</td>}
                   <td className="lb-club">{row.club || "–"}</td>
-                  <td className="lb-hcp">{row.hcp != null ? row.hcp.toFixed(1) : "–"}</td>
+                  <td className="lb-hcp">{fmtHcp(row.hcp)}</td>
                   {showTee && <td className="lb-tee"><TeeDot teeName={row.teeName} /></td>}
 
                   {/* ±Par ANTES de Total */}

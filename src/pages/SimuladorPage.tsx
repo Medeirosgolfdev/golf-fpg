@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo, useState } from "react";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
+import DetailHeader from "../ui/DetailHeader";
 import EmptyState from "../ui/EmptyState";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import type { Course, Tee, Hole, SexFilter } from "../data/types";
@@ -1346,12 +1347,7 @@ export default function SimuladorPage() {
         <div className="course-detail" ref={md.detailRef}>
           {isManual ? (
             <>
-              <div className="detail-header">
-                <h2 className="detail-title">✎ Modo Manual</h2>
-                <div className="detail-sub">
-                  <span className="muted">Introduz CR e Slope para calcular. Par é opcional.</span>
-                </div>
-              </div>
+              <DetailHeader title="✎ Modo Manual" sub={<span className="muted">Introduz CR e Slope para calcular. Par é opcional.</span>} />
 
               <div className="sim-manual-panel">
                 <ManualInputs label="18 buracos" value={manual18} onChange={setManual18} />
@@ -1417,13 +1413,10 @@ export default function SimuladorPage() {
             </>
           ) : selected && teeData ? (
             <>
-              <div className="detail-header">
-                <h2 className="detail-title">{selected.master.name}</h2>
-                <div className="detail-sub">
-                  <span className="muted">{selected.courseKey}</span>
-                  {is9h && <span className="muted"> · {holesLabel}</span>}
-                </div>
-              </div>
+              <DetailHeader
+                title={selected.master.name}
+                sub={<><span className="muted">{selected.courseKey}</span>{is9h && <span className="muted"> · {holesLabel}</span>}</>}
+              />
 
               {/* Seletor de Tee */}
               <div className="sim-tee-selector">

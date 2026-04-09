@@ -27,13 +27,14 @@ import SexBadge from "../ui/SexBadge";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
 import SortableHdr from "../ui/SortableHdr";
+import DetailHeader from "../ui/DetailHeader";
 import EmptyState from "../ui/EmptyState";
 import LoadingState from "../ui/LoadingState";
 import FilterChip from "../ui/FilterChip";
 import PlayerLink from "../ui/PlayerLink";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { C } from "../utils/colors";
-import { fmtDate, fmtToPar, MONTHS_PT, norm, monthLabel } from "../utils/format";
+import { fmtDate, fmtToPar, MONTHS_PT, norm, monthLabel, fmtHcp } from "../utils/format";
 import { toggleArr } from "../utils/mathUtils";
 import { calcAGS, expectedSD9 } from "../utils/whsCalc";
 import { ScorecardLeaderboard, type ScorecardRow } from "../ui/ScorecardLeaderboard";
@@ -1051,7 +1052,7 @@ export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabe
         <td className="lb-esc">{esc ? <EscPill esc={esc} /> : <span className="muted">–</span>}</td>
         <td className="lb-fed">{p.fedCode || "–"}</td>
         <td className="lb-club">{p.club || "–"}</td>
-        <td className="lb-hcp">{p.hcpExact != null ? p.hcpExact.toFixed(1) : "–"}</td>
+        <td className="lb-hcp">{fmtHcp(p.hcpExact)}</td>
         <td className="lb-tee"><TeeDot teeName={p.teeName} /></td>
       </>,
       postScorecardCells: <>
@@ -1665,7 +1666,7 @@ export function AllRoundsScorecardLB({
                                   : <span className="muted fs-10" style={{ paddingLeft: 8 }}>↳</span>}
                               </td>
                               <td className="lb-club" style={{ borderTop: bTop, color: isFirstRd ? undefined : "var(--text-muted)", fontSize: isFirstRd ? undefined : 11 }}>{row.club || "–"}</td>
-                              <td className="lb-hcp" style={{ borderTop: bTop, color: isFirstRd ? undefined : "var(--text-muted)" }}>{row.hcp != null ? row.hcp.toFixed(1) : "–"}</td>
+                              <td className="lb-hcp" style={{ borderTop: bTop, color: isFirstRd ? undefined : "var(--text-muted)" }}>{fmtHcp(row.hcp)}</td>
                               <td className="lb-tee" style={{ fontWeight:600, fontSize:10, color:"var(--text-muted)", borderTop: bTop }}>{`R${ri+1}`}</td>
                               <td className="lb-topar" style={{ color: rd.toPar<0?"var(--color-good)":rd.toPar>0?"var(--color-danger)":"var(--text)", borderTop: bTop }}>{fmtToPar(rd.toPar)}</td>
                               <td className="lb-gross" style={{ borderTop: bTop }}>{rd.gross}</td>
@@ -1696,7 +1697,7 @@ export function AllRoundsScorecardLB({
                         {row.fed ? <PlayerLink fed={row.fed} name={abreviarNome(row.name)} /> : abreviarNome(row.name)}
                       </td>
                       <td className="lb-club">{row.club || "–"}</td>
-                      <td className="lb-hcp">{row.hcp != null ? row.hcp.toFixed(1) : "–"}</td>
+                      <td className="lb-hcp">{fmtHcp(row.hcp)}</td>
                       <td className="lb-tee" style={{ fontWeight:600, fontSize:10, color:"var(--text-muted)" }}>{row.rdLabel}</td>
                       <td className="lb-topar" style={{ color: rd.toPar<0?"var(--color-good)":rd.toPar>0?"var(--color-danger)":"var(--text)" }}>{fmtToPar(rd.toPar)}</td>
                       <td className="lb-gross">{rd.gross}</td>
@@ -3120,8 +3121,8 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
                   <td className="r">
                     {j.fed ? <PlayerLink fed={j.fed} name={j.fed} query="?view=by_date" style={{ color: "var(--chart-2)", fontSize: 12 }} /> : <span className="muted">–</span>}
                   </td>
-                  <td className="r muted" style={{ fontSize: 12 }}>{j.hcp != null ? j.hcp.toFixed(1) : "–"}</td>
-                  <td className="r" style={{ fontSize: 12, fontWeight: 600 }}>{j.vac != null ? j.vac.toFixed(1) : "–"}</td>
+                  <td className="r muted" style={{ fontSize: 12 }}>{fmtHcp(j.hcp)}</td>
+                  <td className="r" style={{ fontSize: 12, fontWeight: 600 }}>{fmtHcp(j.vac)}</td>
                   <td className="r" style={{ fontSize: 11 }}>
                     {sd5 != null ? <span className={`p p-${sdClassByHcp(sd5, st?.currentHcp ?? j.hcp ?? null)}`} style={{ fontSize: 11 }}>{sd5.toFixed(1)}</span> : <span className="muted">–</span>}
                   </td>

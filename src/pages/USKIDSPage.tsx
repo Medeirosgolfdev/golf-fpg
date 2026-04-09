@@ -12,6 +12,8 @@ import { scClass } from "../utils/scoreDisplay";
 import { MONTHS_PT, isoDate, fmtDate, fmtToPar, monthLabel } from "../utils/format";
 import { flag, normCountry, normPaisDisplay } from "../utils/flagUtils";
 import EmptyState from "../ui/EmptyState";
+import WdBadge from "../ui/WdBadge";
+import DetailHeader from "../ui/DetailHeader";
 import { tpColor, isManuel as _isManuel } from "../ui/tournamentPrimitives";
 import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
 import { SIDEBAR_ACCENT, ManuelPill } from "../ui/PillBadge";
@@ -2767,7 +2769,7 @@ function TabelaGlobal({ autoRivals, futureCols, fieldData }: {
                       }
                       const res = p.r[tid];
                       if (!res || (res.tp == null && res.p !== "WD")) return <td key={tid} />;
-                      if (res.p === "WD") return <td key={tid} className="ta-center fs-11 c-muted">WD</td>;
+                      if (res.p === "WD") return <td key={tid}><WdBadge muted /></td>;
 
                       // Calcular z-tier: usar TG_AVG_R para fixas, autoAvgR para auto
                       const validRd = res.rd?.filter((x: number) => x > 0) ?? [];

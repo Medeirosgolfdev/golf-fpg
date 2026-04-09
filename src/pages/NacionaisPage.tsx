@@ -6,7 +6,7 @@ import {
 } from "recharts";
 import { useAppContext } from "../context/AppContext";
 import { sdClassByHcp } from "../utils/scoreDisplay";
-import { norm } from "../utils/format";
+import { norm, fmtHcp } from "../utils/format";
 import PlayerLink from "../ui/PlayerLink";
 import EmptyState from "../ui/EmptyState";
 import LoadingState from "../ui/LoadingState";
@@ -377,8 +377,8 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
                   <td className="r">
                     {j.fed ? <PlayerLink fed={j.fed} name={j.fed} query="?view=by_date" style={{ color: "var(--chart-2)", fontSize: 12 }} /> : <span className="muted">–</span>}
                   </td>
-                  <td className="r muted" style={{ fontSize: 12 }}>{j.hcp != null ? j.hcp.toFixed(1) : "–"}</td>
-                  <td className="r" style={{ fontSize: 12, fontWeight: 600 }}>{j.vac != null ? j.vac.toFixed(1) : "–"}</td>
+                  <td className="r muted" style={{ fontSize: 12 }}>{fmtHcp(j.hcp)}</td>
+                  <td className="r" style={{ fontSize: 12, fontWeight: 600 }}>{fmtHcp(j.vac)}</td>
                   <td className="r" style={{ fontSize: 11 }}>
                     {sd5 != null ? <span className={`p p-${sdClassByHcp(sd5, st?.currentHcp ?? j.hcp ?? null)}`} style={{ fontSize: 11 }}>{sd5.toFixed(1)}</span> : <span className="muted">–</span>}
                   </td>

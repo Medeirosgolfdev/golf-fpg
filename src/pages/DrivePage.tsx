@@ -10,7 +10,7 @@ import { loadPlayers } from "../data/loader";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from "recharts";
 import { SC, sdClassByHcp, scClass } from "../utils/scoreDisplay";
 import { calcAGS, expectedSD9 } from "../utils/whsCalc";
-import { fmtToPar, fmtDateShort } from "../utils/format";
+import { fmtToPar, fmtDateShort, fmtHcp } from "../utils/format";
 import { isCalUnlocked } from "../utils/authConstants";
 import { resolveFedsInTournaments , buildEscLookup, resolveEscFromLookup } from "../utils/playerUtils";
 import PasswordGate from "../ui/PasswordGate";
@@ -886,7 +886,7 @@ function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; s
             <td className="cs-fed">{row.fed || "–"}</td>
             <td className="cs-esc">{row.escalao ? <span className={escCls + " fs-9"}>{row.escalao}</span> : <span className="c-muted-fs10">–</span>}</td>
             <td className="cs-club">{row.club}</td>
-            <td className="cs-hcp cs-id-end">{row.hcp != null ? row.hcp.toFixed(1) : "–"}</td>
+            <td className="cs-hcp cs-id-end">{fmtHcp(row.hcp)}</td>
             {visibleSorted.map(t => {
               const tKey = mkKey(t);
               const rv = row.results.get(tKey);
@@ -1020,7 +1020,7 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
       prefixCells: <>
         <td className="lb-esc">{esc ? <EscPill esc={esc} /> : <span className="muted">–</span>}</td>
         <td className="lb-club">{p.club || "–"}</td>
-        <td className="lb-hcp">{p.hcpExact != null ? p.hcpExact.toFixed(1) : "–"}</td>
+        <td className="lb-hcp">{fmtHcp(p.hcpExact)}</td>
         <td className="lb-tee"><TeeDot teeName={p.teeName} /></td>
       </>,
       postScorecardCells: <>
@@ -1448,7 +1448,7 @@ function DriveAllRoundsScorecardLB({
                                 : <span className="muted fs-10" style={{ paddingLeft:8 }}>↳</span>}
                             </td>
                             <td className="lb-club" style={{ borderTop:bTop, color:isFirstRd?undefined:"var(--text-muted)", fontSize:isFirstRd?undefined:11 }}>{row.club||"–"}</td>
-                            <td className="lb-hcp" style={{ borderTop:bTop, color:isFirstRd?undefined:"var(--text-muted)" }}>{row.hcp!=null?row.hcp.toFixed(1):"–"}</td>
+                            <td className="lb-hcp" style={{ borderTop:bTop, color:isFirstRd?undefined:"var(--text-muted)" }}>{fmtHcp(row.hcp)}</td>
                             <td className="lb-tee" style={{ fontWeight:600, fontSize:10, color:"var(--text-muted)", borderTop:bTop }}>{RD_LABELS[ri]??`R${ri+1}`}</td>
                             <td className="lb-topar" style={{ color:rd.toPar<0?"var(--color-good)":rd.toPar>0?"var(--color-danger)":"var(--text)", borderTop:bTop }}>{fmtToPar(rd.toPar)}</td>
                             <td className="lb-gross" style={{ borderTop:bTop }}>{rd.gross}</td>
@@ -1479,7 +1479,7 @@ function DriveAllRoundsScorecardLB({
                         {row.fed ? <PlayerLink fed={row.fed} name={row.name} /> : row.name}
                       </td>
                       <td className="lb-club">{row.club||"–"}</td>
-                      <td className="lb-hcp">{row.hcp!=null?row.hcp.toFixed(1):"–"}</td>
+                      <td className="lb-hcp">{fmtHcp(row.hcp)}</td>
                       <td className="lb-tee" style={{ fontWeight:600, fontSize:10, color:"var(--text-muted)" }}>{row.rdLabel}</td>
                       <td className="lb-topar" style={{ color:row.rd.toPar<0?"var(--color-good)":row.rd.toPar>0?"var(--color-danger)":"var(--text)" }}>{fmtToPar(row.rd.toPar)}</td>
                       <td className="lb-gross">{row.rd.gross}</td>
@@ -2002,7 +2002,7 @@ function TournamentGrid({ rows, allTournaments, onPlayerClick, playersDB, escLoo
             <td className="cs-fed">{p.fed || "–"}</td>
             <td className="cs-esc">{escalao ? <span className={escCls + " fs-9"}>{escalao}</span> : <span className="c-muted-fs10">–</span>}</td>
             <td className="cs-club">{p.club}</td>
-            <td className="cs-hcp cs-id-end">{p.hcp != null ? p.hcp.toFixed(1) : "–"}</td>
+            <td className="cs-hcp cs-id-end">{fmtHcp(p.hcp)}</td>
             {allTournaments.map(t => {
               const res = p.results.find(r => r.tournKey === t.key);
               if (!res) return <td key={t.key} colSpan={7} className="cs-grp" />;
@@ -2069,7 +2069,7 @@ function RankingView({ rows, onPlayerClick }: { rows: Sub12Row[]; onPlayerClick:
                     <SexBadge sex={p.sex} size="sm" className="ml-4" />
                   </td>
                   <td className="c-muted fs-11">{p.club}</td>
-                  <td className="r tourn-mono">{p.hcp != null ? p.hcp.toFixed(1) : "–"}</td>
+                  <td className="r tourn-mono">{fmtHcp(p.hcp)}</td>
                   <td className="r tourn-mono">{p.tourneiosPlayed}</td>
                   <td className="r fw-800" style={{ color: "var(--color-warn-dark)" }}>{p.totalPts}</td>
                   <td className="r"><SdSpan sd={p.bestSD} hcp={p.hcp} /></td>
@@ -2142,7 +2142,7 @@ function PlayerDetail({ row, onClose }: { row: Sub12Row; onClose: () => void }) 
       <button onClick={onClose} title="Fechar" aria-label="Fechar" style={{ position: "absolute", top: 8, right: 10, background: "none", border: "none", cursor: "pointer", fontSize: 18, color: "var(--text-3)" }}>✕</button>
       <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 8 }}>
         <span style={{ fontSize: 16, fontWeight: 800 }}>{row.name}</span>
-        <span className="muted fs-11">{row.club} · {row.region} · HCP {row.hcp != null ? row.hcp.toFixed(1) : "–"}</span>
+        <span className="muted fs-11">{row.club} · {row.region} · HCP {fmtHcp(row.hcp)}</span>
         <PlayerLink fed={row.fed} name="Ver perfil →" style={{ fontSize: 11, color: "var(--accent)", textDecoration: "underline" }} />
       </div>
       <div style={{ display: "flex", gap: 6, marginBottom: 10, flexWrap: "wrap" }}>

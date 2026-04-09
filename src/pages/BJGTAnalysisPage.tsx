@@ -29,6 +29,9 @@ import { tpColor , MANUEL_FED } from "../ui/tournamentPrimitives";
 import EvoBadge from "../ui/EvoBadge";
 import LoadingState from "../ui/LoadingState";
 import EmptyState from "../ui/EmptyState";
+import WdBadge from "../ui/WdBadge";
+import DetailHeader from "../ui/DetailHeader";
+import TabRow from "../ui/TabRow";
 import KpiCard from "../ui/KpiCard";
 import { COURSE_KEYWORDS, TOURN, FIELD_2025, VP_PAR, TIER, FIELD_CARDS } from "../data/rivalData";
 
@@ -815,7 +818,7 @@ function _RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) 
                     {T.map(t => {
                       const res = p.r[t.id];
                       if (!res || (res.tp == null && res.p !== "WD")) return <td key={t.id} />;
-                      if (res.p === "WD") return <td key={t.id} className="ta-center fs-11 c-muted">WD</td>;
+                      if (res.p === "WD") return <td key={t.id}><WdBadge muted /></td>;
 
                       // Tier color
                       const playerAvg = res.t! / t.rounds;
@@ -1913,12 +1916,7 @@ function ContestLeaderboard({ contest, evo }: { contest: ContestData; evo?: EvoE
   return (
     <>
       {/* Sub-tabs: Accumulated + per-round */}
-      <div className="escalao-pills mb-8" style={{gap:4}}>
-        <button onClick={() => setRoundTab(0)} className={`tourn-tab tourn-tab-sm${roundTab === 0 ? " active" : ""}`}>Acumulado</button>
-        {Array.from({length: nR}, (_, i) => (
-          <button key={i+1} onClick={() => setRoundTab(i+1)} className={`tourn-tab tourn-tab-sm${roundTab === i+1 ? " active" : ""}`}>R{i+1}</button>
-        ))}
-      </div>
+      <TabRow tabs={[{ key: 0, label: "Acumulado" }, ...Array.from({ length: nR }, (_, i) => ({ key: i + 1, label: `R${i + 1}` }))]} active={roundTab} onChange={setRoundTab} />
 
       {/* Meta */}
       <div className="muted fs-10 mb-8">

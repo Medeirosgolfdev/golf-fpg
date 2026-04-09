@@ -18,6 +18,7 @@ import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
 import { RoundPill } from "../ui/PillBadge";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import EmptyState from "../ui/EmptyState";
+import DetailHeader from "../ui/DetailHeader";
 import SidebarSectionTitle from "../ui/SidebarSectionTitle";
 import { buildAutoRivals, normName, getScorecards, uskTournNames, uskFieldSizes } from "./KIDSdataLoader";
 import { FIELD_2025, VP_PAR, VP_SI, VP_M, VP_WJGC26_PAR, VP_WJGC26_SI, VP_WJGC26_M, VP_ALFERINI_PAR, VP_ALFERINI_SI, VP_ALFERINI_M, LT_FORET_PAR, LT_FORET_SI, LT_FORET_M, VENICE_M, MS_USKIDS_M_B1011, MS_USKIDS_M_B12, DORAL_GP_M_B1011, DORAL_SF_M_B1213, TIER, FIELD_CARDS } from "../data/rivalData";
@@ -2331,13 +2332,13 @@ function RivalDetail({ playerName }: { playerName: string }) {
 
   // ── Todos os hooks foram chamados — safe para early return ────────
   if (!rival && !lbEntry) return (
-    <div className="detail-header">
+    <DetailHeader>
       <div className="muted">
         {/^\d+$/.test(playerName)
           ? "⏳ A identificar jogador…"
           : `Sem dados para ${playerName}`}
       </div>
-    </div>
+    </DetailHeader>
   );
 
   return (

@@ -16,6 +16,8 @@ import { isCalUnlocked } from "../utils/authConstants";
 import PasswordGate from "../ui/PasswordGate";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
+import DetailHeader from "../ui/DetailHeader";
+import TabRow from "../ui/TabRow";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import LoadingState from "../ui/LoadingState";
 import EmptyState from "../ui/EmptyState";
@@ -526,16 +528,7 @@ function DivView({ entry, evo }: { entry: Entry; evo?: Map<string, EvoEntry> }) 
 
   return (
     <div>
-      <div className="escalao-pills mb-8" style={{ gap:4 }}>
-        <button onClick={() => setDt("all")} className={`tourn-tab tourn-tab-sm${dt === "all" ? " active" : ""}`}>
-          Acumulado
-        </button>
-        {Array.from({ length: nR }, (_, i) => (
-          <button key={i} onClick={() => setDt(i)} className={`tourn-tab tourn-tab-sm${dt === i ? " active" : ""}`}>
-            {roundLabel(i)}
-          </button>
-        ))}
-      </div>
+      <TabRow tabs={[{ key: "all" as string|number, label: "Acumulado" }, ...Array.from({ length: nR }, (_, i) => ({ key: i as string|number, label: roundLabel(i) }))]} active={dt} onChange={setDt} />
 
       {dt === "all" && (
         <div className="card">
@@ -693,16 +686,10 @@ function Content() {
         <div className="course-detail" ref={md.detailRef}>
           {cur ? (
             <>
-              <div className="detail-header">
-                <h2 className="detail-title">{cur.label}</h2>
-                <div className="detail-sub">
-                  <span className="muted">📍 Doral Golf Resort — {cur.divisionName}</span>
-                  <a href={cur.sourceUrl} target="_blank" rel="noopener noreferrer"
-                    className="tourn-ext-link" style={{ marginLeft:8 }}>
-                    🔗 Leaderboard oficial
-                  </a>
-                </div>
-              </div>
+              <DetailHeader
+                title={cur.label}
+                sub={<><span className="muted">📍 Doral Golf Resort — {cur.divisionName}</span><a href={cur.sourceUrl} target="_blank" rel="noopener noreferrer" className="tourn-ext-link" style={{ marginLeft:8 }}>🔗 Leaderboard oficial</a></>}
+              />
               <DivView entry={cur} evo={evo} />
               {(() => {
                 const manuelEvo = evo?.get([...evo.keys()].find(k => isM(k)) ?? "");

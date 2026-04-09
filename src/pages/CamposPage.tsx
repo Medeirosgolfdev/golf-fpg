@@ -1,6 +1,7 @@
 import { useMemo, useState, useEffect } from "react";
 import SidebarToggle from "../ui/SidebarToggle";
 import EmptyState from "../ui/EmptyState";
+import DetailHeader from "../ui/DetailHeader";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { useParams, useNavigate } from "react-router-dom";
