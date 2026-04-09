@@ -20,6 +20,7 @@ import ScoreCircle from "../ui/ScoreCircle";
 import LoadingState from "../ui/LoadingState";
 import EmptyState from "../ui/EmptyState";
 import DetailHeader from "../ui/DetailHeader";
+import ExtLink from "../ui/ExternalLink";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
 import { useMasterDetail } from "../hooks/useMasterDetail";
@@ -4052,7 +4053,7 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
   const paramView = searchParams.get("view") as ViewKey | null;
 
   const [view, setViewState] = useState<ViewKey>(
-    paramView && VALID_VIEWS.includes(paramView) ? paramView : "by_course"
+    paramView && VALID_VIEWS.includes(paramView) ? paramView : "by_date"
   );
   const setView = (v: ViewKey) => {
     setViewState(v);

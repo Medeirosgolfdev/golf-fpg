@@ -19,6 +19,7 @@ import { RoundPill } from "../ui/PillBadge";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import EmptyState from "../ui/EmptyState";
 import DetailHeader from "../ui/DetailHeader";
+import KpiCard from "../ui/KpiCard";
 import SidebarSectionTitle from "../ui/SidebarSectionTitle";
 import { buildAutoRivals, normName, getScorecards, uskTournNames, uskFieldSizes } from "./KIDSdataLoader";
 import { FIELD_2025, VP_PAR, VP_SI, VP_M, VP_WJGC26_PAR, VP_WJGC26_SI, VP_WJGC26_M, VP_ALFERINI_PAR, VP_ALFERINI_SI, VP_ALFERINI_M, LT_FORET_PAR, LT_FORET_SI, LT_FORET_M, VENICE_M, MS_USKIDS_M_B1011, MS_USKIDS_M_B12, DORAL_GP_M_B1011, DORAL_SF_M_B1213, TIER, FIELD_CARDS } from "../data/rivalData";
@@ -2592,11 +2593,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
                   const diff = avg!=null?avg-pp:null;
                   const col = diff==null?"var(--text-3)":diff<0?"var(--color-good-dark)":diff<0.3?"var(--text-2)":"var(--color-warn)";
                   return (
-                    <div key={pp} className="kpi" style={{ flex:"1 1 80px", padding:"6px 10px", minWidth:72 }}>
-                      <div className="kpi-lbl">Par {pp}</div>
-                      <div className="kpi-val" style={{ fontSize:18, color:col }}>{avg!=null?avg.toFixed(2):"—"}</div>
-                      <div className="kpi-sub">{Math.round(under/n*100)}% sub-par</div>
-                    </div>
+                    <KpiCard key={pp} label={`Par ${pp}`} value={avg!=null?avg.toFixed(2):"—"} sub={`${Math.round(under/n*100)}% sub-par`} color={col} style={{ flex:"1 1 80px", padding:"6px 10px", minWidth:72 }} />
                   );
                 })}
               </div>

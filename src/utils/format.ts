@@ -86,6 +86,27 @@ export function isoDate(s: string): string {
   return s;
 }
 
+/** Formata data curta: "17/03" (dd/mm sem ano). Útil para colunas compactas. */
+export function fmtDateShort(s: string): string {
+  if (!s) return "";
+  const [, m, day] = s.split("-");
+  if (!m || !day) return s;
+  return `${day}/${m}`;
+}
+
+/** Formata chave "YYYY-MM" → "Jan 2025". Aceita "?" e anos de 4 dígitos. */
+export function monthLabel(key: string): string {
+  if (!key || key === "?") return "Data desconhecida";
+  if (key.length === 4) return key;
+  const [yr, mo] = key.split("-");
+  return `${MONTHS_PT[parseInt(mo) - 1] || mo} ${yr}`;
+}
+
+/** Formata chip de torneio: "21 field · 3R · Boys 10-11" */
+export function fmtFieldInfo(fieldSize: number, nRounds: number, category: string): string {
+  return `${fieldSize} field · ${nRounds}R · ${category}`;
+}
+
 /** Formata data para exibição: "17 mar. 2026"
  *  Aceita ISO, MM/DD/YYYY ou DD-MM-YYYY */
 export function fmtDate(s: string): string {
@@ -125,19 +146,4 @@ export function fmtSign(n: number, decimals?: number): string {
 export function fmtSignParen(n: number): string {
   if (n === 0) return "(E)";
   return n > 0 ? `(+${n})` : `(${n})`;
-}
-
-/** Formata "YYYY-MM" ou "YYYY" → "Jan 2025" / "2025". Suporta key "?" → "Data desconhecida". */
-export function monthLabel(key: string): string {
-  if (key === "?") return "Data desconhecida";
-  if (key.length === 4) return key;
-  const [yr, mo] = key.split("-");
-  return `${MONTHS_PT[parseInt(mo) - 1] || mo} ${yr}`;
-}
-
-/** Formata data ISO "YYYY-MM-DD" → "dd/mm" (sem ano). Usado em tabelas compactas. */
-export function fmtDateShort(d: string): string {
-  if (!d) return "";
-  const [, m, day] = d.split("-");
-  return `${day}/${m}`;
 }

@@ -15,7 +15,7 @@ import {
   type EclecticEntry,
 } from "../data/playerDataLoader";
 import { usePlayerData } from "../data/usePlayerData";
-import { norm, fmtToPar, firstName, fmtSign, MONTHS_PT } from "../utils/format";
+import { norm, fmtToPar, firstName, fmtSign, MONTHS_PT, fmtFieldInfo } from "../utils/format";
 import { FL } from "../utils/flagUtils";
 import { zTier, getTrend, getAvgZ } from "../utils/mathUtils";
 import { meanArr } from "../utils/mathUtils";
@@ -30,6 +30,7 @@ import EvoBadge from "../ui/EvoBadge";
 import LoadingState from "../ui/LoadingState";
 import EmptyState from "../ui/EmptyState";
 import WdBadge from "../ui/WdBadge";
+import EvoBadge from "../ui/EvoBadge";
 import DetailHeader from "../ui/DetailHeader";
 import TabRow from "../ui/TabRow";
 import KpiCard from "../ui/KpiCard";
@@ -1836,7 +1837,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
           ))}
         </div>
         </div>
-        <span className="chip" style={{ marginLeft: "auto" }}>{(() => { const c = CONTEST_MAP[tab]; return `${c.players.filter(p=>typeof p.p==="number").length} field · ${c.nRounds}R · Par ${c.par}`; })()}</span>
+        <span className="chip" style={{ marginLeft: "auto" }}>{fmtFieldInfo(CONTEST_MAP[tab].players.filter(p=>typeof p.p==="number").length, CONTEST_MAP[tab].nRounds, `Par ${CONTEST_MAP[tab].par}`)}</span>
       </Toolbar>
 
       {/* ── Master-detail ── */}

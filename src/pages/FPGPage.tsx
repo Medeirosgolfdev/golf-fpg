@@ -28,6 +28,7 @@ import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
 import SortableHdr from "../ui/SortableHdr";
 import DetailHeader from "../ui/DetailHeader";
+import ExtLink from "../ui/ExternalLink";
 import EmptyState from "../ui/EmptyState";
 import LoadingState from "../ui/LoadingState";
 import FilterChip from "../ui/FilterChip";

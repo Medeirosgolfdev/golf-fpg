@@ -7,14 +7,16 @@ import { cachedFetch } from "../data/fetchCache";
 import { scClass, SC } from "../utils/scoreDisplay";
 import { tpColor, isManuel } from "../ui/tournamentPrimitives";
 import EvoBadge from "../ui/EvoBadge";
+import ExtLink from "../ui/ExternalLink";
 import SidebarSectionTitle from "../ui/SidebarSectionTitle";
 import { gf } from "../utils/flagUtils";
 const isM = (name: string) => isManuel({ name });
-import { fmtToPar, fmtSign, fmtSignParen as fmtSub } from "../utils/format";
+import { fmtToPar, fmtSign, fmtSignParen as fmtSub, fmtFieldInfo } from "../utils/format";
 import { isCalUnlocked } from "../utils/authConstants";
 import PasswordGate from "../ui/PasswordGate";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
+import EvoBadge from "../ui/EvoBadge";
 import DetailHeader from "../ui/DetailHeader";
 import TabRow from "../ui/TabRow";
 import { useMasterDetail } from "../hooks/useMasterDetail";
@@ -431,7 +433,10 @@ function Content() {
               ? "📍 Villa Padierna — Alferini"
               : "📍 Villa Padierna — Flamingos"
         }</ToolbarMeta>}
-        {cur && <span className="chip" style={{ marginLeft: "auto" }}>{cur.data.players.filter(p => p.rounds.length === Math.max(...cur.data.players.map(q => q.rounds.length))).length} field · {Math.max(...cur.data.players.map(p => p.rounds.length))}R · {cur.category}</span>}
+        {cur && (() => {
+          const nR = Math.max(...cur.data.players.map(p => p.rounds.length));
+          return <span className="chip" style={{ marginLeft: "auto" }}>{fmtFieldInfo(cur.data.players.filter(p => p.rounds.length === nR).length, nR, cur.category)}</span>;
+        })()}
       </Toolbar>
 
       {/* Master-detail */}
@@ -474,11 +479,10 @@ function Content() {
                           onClick={() => { setTi(idx); md.onSelect(); }}>
                           <div className="course-item-name">{u.category}</div>
                           {t && <div className="course-item-meta">{nP} jog · {nR}R</div>}
-                          <a href={u.sourceUrl} target="_blank" rel="noopener noreferrer"
-                            className="tourn-ext-link" style={{ marginTop: 4 }}
+                          <ExtLink href={u.sourceUrl} className="tourn-ext-link" style={{ marginTop: 4 }}
                             onClick={e => e.stopPropagation()}>
                             🔗 Leaderboard oficial
-                          </a>
+                          </ExtLink>
                         </button>
                       );
                     })}
@@ -494,7 +498,7 @@ function Content() {
           {cur ? (<>
             <DetailHeader
               title={cur.label}
-              sub={<><span className="muted">{cur.series === "eowagr" ? "📍 Le Touquet GC — La Forêt" : cur.category === "Boys 12-13" ? "📍 Villa Padierna — Alferini" : "📍 Villa Padierna — Flamingos"}</span><a href={URLS[ti].sourceUrl} target="_blank" rel="noopener noreferrer" className="tourn-ext-link" style={{ marginLeft: 8 }}>🔗 Leaderboard oficial</a></>}
+              sub={<><span className="muted">{cur.series === "eowagr" ? "📍 Le Touquet GC — La Forêt" : cur.category === "Boys 12-13" ? "📍 Villa Padierna — Alferini" : "📍 Villa Padierna — Flamingos"}</span><ExtLink href={URLS[ti].sourceUrl} className="tourn-ext-link" style={{ marginLeft: 8 }}>🔗 Leaderboard oficial</ExtLink></>}
             />
             <TournView def={cur} evo={evoMap} evoYear={evoYear} />
             {manuelEvo && cur.year === 2026 && (

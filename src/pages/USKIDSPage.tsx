@@ -13,6 +13,7 @@ import { MONTHS_PT, isoDate, fmtDate, fmtToPar, monthLabel } from "../utils/form
 import { flag, normCountry, normPaisDisplay } from "../utils/flagUtils";
 import EmptyState from "../ui/EmptyState";
 import WdBadge from "../ui/WdBadge";
+import KpiCard from "../ui/KpiCard";
 import DetailHeader from "../ui/DetailHeader";
 import { tpColor, isManuel as _isManuel } from "../ui/tournamentPrimitives";
 import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
@@ -2637,29 +2638,26 @@ function TabelaGlobal({ autoRivals, futureCols, fieldData }: {
       {/* Manuel KPIs */}
       {manuelKpis && (
         <div style={{ display:"flex", gap:6, flexWrap:"nowrap", overflowX:"auto", marginBottom:12, alignItems:"stretch", scrollbarWidth:"none" }}>
-          <div className="kpi" style={{ flex:"0 0 auto", padding:"6px 10px", background:"var(--bg-info-subtle,var(--bg-info))", borderLeft:"3px solid var(--accent)", minWidth:0 }}>
-            <div className="kpi-lbl" style={{ color:"var(--color-info-alt)", fontSize:9, marginBottom:3 }}>MANUEL — TOTAL</div>
-            <div style={{ display:"flex", gap:8, alignItems:"baseline" }}>
-              <span><span className="fw-800 fs-14">{manuelKpis.torn}</span><span style={{ fontSize:9, color:"var(--text-3)", marginLeft:2 }}>T</span></span>
-              <span><span className="fw-800 fs-14">{manuelKpis.rondas}</span><span style={{ fontSize:9, color:"var(--text-3)", marginLeft:2 }}>R</span></span>
-              {manuelKpis.avg && <span><span className="fw-700 fs-13">{manuelKpis.avg}</span><span style={{ fontSize:9, color:"var(--text-3)", marginLeft:2 }}>avg</span></span>}
-              {manuelKpis.best && <span><span className="fw-700 fs-13" style={{ color:"var(--color-good-dark)" }}>{manuelKpis.best}</span><span style={{ fontSize:9, color:"var(--text-3)", marginLeft:2 }}>min</span></span>}
-            </div>
-          </div>
+          <KpiCard
+            label="MANUEL — TOTAL"
+            labelStyle={{ color:"var(--color-info-alt)", fontSize:9, marginBottom:3 }}
+            value={
+              <div style={{ display:"flex", gap:8, alignItems:"baseline" }}>
+                <span><span className="fw-800 fs-14">{manuelKpis.torn}</span><span style={{ fontSize:9, color:"var(--text-3)", marginLeft:2 }}>T</span></span>
+                <span><span className="fw-800 fs-14">{manuelKpis.rondas}</span><span style={{ fontSize:9, color:"var(--text-3)", marginLeft:2 }}>R</span></span>
+                {manuelKpis.avg && <span><span className="fw-700 fs-13">{manuelKpis.avg}</span><span style={{ fontSize:9, color:"var(--text-3)", marginLeft:2 }}>avg</span></span>}
+                {manuelKpis.best && <span><span className="fw-700 fs-13" style={{ color:"var(--color-good-dark)" }}>{manuelKpis.best}</span><span style={{ fontSize:9, color:"var(--text-3)", marginLeft:2 }}>min</span></span>}
+              </div>
+            }
+            style={{ flex:"0 0 auto", padding:"6px 10px", background:"var(--bg-info-subtle,var(--bg-info))", borderLeft:"3px solid var(--accent)", minWidth:0 }}
+          />
           {TG_T.map(t => {
             const res = manuelRef?.r[t.id];
             if (!res) return (
-              <div key={t.id} className="kpi" style={{ opacity:.4, padding:"6px 8px", flex:"1 1 60px", minWidth:60 }}>
-                <div className="kpi-lbl">{t.short}</div>
-                <div className="kpi-val fs-15">–</div>
-              </div>
+              <KpiCard key={t.id} label={t.short} value="–" size="sm" style={{ opacity:.4, padding:"6px 8px", flex:"1 1 60px", minWidth:60 }} />
             );
             return (
-              <div key={t.id} className="kpi" style={{ padding:"6px 8px", flex:"1 1 60px", minWidth:60 }}>
-                <div className="kpi-lbl">{t.short}</div>
-                <div className="kpi-val" style={{ fontSize:16, color: tgTpColorDark(res.tp) }}>{tgFmtSign(res.tp)}</div>
-                <div className="kpi-sub">#{res.p as number}{res.rd?.length > 0 && <span style={{ marginLeft:3, opacity:.7 }}>{res.rd.join("-")}</span>}</div>
-              </div>
+              <KpiCard key={t.id} label={t.short} value={tgFmtSign(res.tp)} sub={<>#{res.p as number}{res.rd?.length > 0 && <span style={{ marginLeft:3, opacity:.7 }}>{res.rd.join("-")}</span>}</>} color={tgTpColorDark(res.tp)} size="sm" style={{ padding:"6px 8px", flex:"1 1 60px", minWidth:60 }} />
             );
           })}
         </div>

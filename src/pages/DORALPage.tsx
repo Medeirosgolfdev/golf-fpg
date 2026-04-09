@@ -8,10 +8,11 @@ import { cachedFetch } from "../data/fetchCache";
 import { scClass, SC } from "../utils/scoreDisplay";
 import { tpColor, isManuel } from "../ui/tournamentPrimitives";
 import EvoBadge from "../ui/EvoBadge";
+import ExtLink from "../ui/ExternalLink";
 import SidebarSectionTitle from "../ui/SidebarSectionTitle";
 import { gf } from "../utils/flagUtils";
 const isM = (name: string) => isManuel({ name });
-import { fmtToPar, norm } from "../utils/format";
+import { fmtToPar, norm, fmtFieldInfo } from "../utils/format";
 import { isCalUnlocked } from "../utils/authConstants";
 import PasswordGate from "../ui/PasswordGate";
 import SidebarToggle from "../ui/SidebarToggle";
@@ -604,11 +605,10 @@ function Content() {
         <ToolbarTitle>🇺🇸 Doral</ToolbarTitle>
         {cur && <ToolbarMeta>📍 Doral Golf Resort</ToolbarMeta>}
         {cur && (
-          <span className="chip" style={{ marginLeft: "auto" }}>
-            {cur.players.filter(p => p.rounds.length === Math.max(...cur.players.map(q => q.rounds.length))).length} field
-            {" · "}{Math.max(...cur.players.map(p => p.rounds.length))}R
-            {" · "}{cur.category}
-          </span>
+          {(() => {
+            const nR = Math.max(...cur.players.map(p => p.rounds.length));
+            return <span className="chip" style={{ marginLeft: "auto" }}>{fmtFieldInfo(cur.players.filter(p => p.rounds.length === nR).length, nR, cur.category)}</span>;
+          })()}
         )}
       </Toolbar>
 
@@ -669,11 +669,10 @@ function Content() {
                           border: "1px solid var(--color-good)",
                         }}>★ Manuel</span>
                       )}
-                      <a href={entry.sourceUrl} target="_blank" rel="noopener noreferrer"
-                        className="tourn-ext-link" style={{ marginTop:4 }}
+                      <ExtLink href={entry.sourceUrl} className="tourn-ext-link" style={{ marginTop:4 }}
                         onClick={e => e.stopPropagation()}>
                         🔗 Leaderboard oficial
-                      </a>
+                      </ExtLink>
                     </button>
                   );
                 })}
@@ -688,7 +687,7 @@ function Content() {
             <>
               <DetailHeader
                 title={cur.label}
-                sub={<><span className="muted">📍 Doral Golf Resort — {cur.divisionName}</span><a href={cur.sourceUrl} target="_blank" rel="noopener noreferrer" className="tourn-ext-link" style={{ marginLeft:8 }}>🔗 Leaderboard oficial</a></>}
+                sub={<><span className="muted">📍 Doral Golf Resort — {cur.divisionName}</span><ExtLink href={cur.sourceUrl} className="tourn-ext-link" style={{ marginLeft:8 }}>🔗 Leaderboard oficial</ExtLink></>}
               />
               <DivView entry={cur} evo={evo} />
               {(() => {
