@@ -1889,7 +1889,13 @@ function FieldEscalaoTable({ escalaoNome, players, isFuture, torneioT, resultado
                       <span>{displayName(p.nome)}</span>
                       {kidsName && (
                         <a href="/kids"
-                          onClick={e => { e.preventDefault(); window.open(`/kids#${encodeURIComponent(kidsName)}`, "_blank"); }}
+                          onClick={e => {
+                            e.preventDefault();
+                            // Preferir memberId (ID único USKids) — resolve no KIDSPage antes dos 45 ficheiros
+                            const memberId = arEntry?.memberId;
+                            const hash = memberId ?? encodeURIComponent(kidsName);
+                            window.open(`/kids#${hash}`, "_blank");
+                          }}
                           title="Ver em Kids"
                           style={{ fontWeight:800, color:"var(--color-good-dark)", fontSize:14, cursor:"pointer", textDecoration:"none", flexShrink:0 }}>
                           ↗
@@ -2540,29 +2546,29 @@ function TabelaGlobal({ autoRivals, futureCols, fieldData }: {
     <div>
       {/* Manuel KPIs */}
       {manuelKpis && (
-        <div style={{ display:"flex", gap:8, flexWrap:"wrap", marginBottom:12, alignItems:"stretch" }}>
-          <div className="kpi" style={{ flex:"0 0 auto", padding:"8px 14px", background:"var(--bg-info-subtle,var(--bg-info))", borderLeft:"3px solid var(--accent)" }}>
-            <div className="kpi-lbl" style={{ color:"var(--color-info-alt)" }}>Manuel — Total</div>
-            <div style={{ display:"flex", gap:16, alignItems:"baseline", marginTop:4 }}>
-              <span><span className="fw-800 fs-16">{manuelKpis.torn}</span><span className="fs-10 c-text-3 ml-4">torneios</span></span>
-              <span><span className="fw-800 fs-16">{manuelKpis.rondas}</span><span className="fs-10 c-text-3 ml-4">rondas</span></span>
-              {manuelKpis.avg && <span><span className="fw-700 fs-14">{manuelKpis.avg}</span><span className="fs-10 c-text-3 ml-4">média</span></span>}
-              {manuelKpis.best && <span><span className="fw-700 fs-14" style={{ color:"var(--color-good-dark)" }}>{manuelKpis.best}</span><span className="fs-10 c-text-3 ml-4">melhor</span></span>}
+        <div style={{ display:"flex", gap:6, flexWrap:"nowrap", overflowX:"auto", marginBottom:12, alignItems:"stretch", scrollbarWidth:"none" }}>
+          <div className="kpi" style={{ flex:"0 0 auto", padding:"6px 10px", background:"var(--bg-info-subtle,var(--bg-info))", borderLeft:"3px solid var(--accent)", minWidth:0 }}>
+            <div className="kpi-lbl" style={{ color:"var(--color-info-alt)", fontSize:9, marginBottom:3 }}>MANUEL — TOTAL</div>
+            <div style={{ display:"flex", gap:8, alignItems:"baseline" }}>
+              <span><span className="fw-800 fs-14">{manuelKpis.torn}</span><span style={{ fontSize:9, color:"var(--text-3)", marginLeft:2 }}>T</span></span>
+              <span><span className="fw-800 fs-14">{manuelKpis.rondas}</span><span style={{ fontSize:9, color:"var(--text-3)", marginLeft:2 }}>R</span></span>
+              {manuelKpis.avg && <span><span className="fw-700 fs-13">{manuelKpis.avg}</span><span style={{ fontSize:9, color:"var(--text-3)", marginLeft:2 }}>avg</span></span>}
+              {manuelKpis.best && <span><span className="fw-700 fs-13" style={{ color:"var(--color-good-dark)" }}>{manuelKpis.best}</span><span style={{ fontSize:9, color:"var(--text-3)", marginLeft:2 }}>min</span></span>}
             </div>
           </div>
           {TG_T.map(t => {
             const res = manuelRef?.r[t.id];
             if (!res) return (
-              <div key={t.id} className="kpi" style={{ opacity:.4, padding:"8px 10px", flex:"1 1 80px", minWidth:80 }}>
+              <div key={t.id} className="kpi" style={{ opacity:.4, padding:"6px 8px", flex:"1 1 60px", minWidth:60 }}>
                 <div className="kpi-lbl">{t.short}</div>
-                <div className="kpi-val fs-16">–</div>
+                <div className="kpi-val fs-15">–</div>
               </div>
             );
             return (
-              <div key={t.id} className="kpi" style={{ padding:"8px 10px", flex:"1 1 80px", minWidth:80 }}>
+              <div key={t.id} className="kpi" style={{ padding:"6px 8px", flex:"1 1 60px", minWidth:60 }}>
                 <div className="kpi-lbl">{t.short}</div>
-                <div className="kpi-val" style={{ fontSize:18, color: tgTpColorDark(res.tp) }}>{tgFmtSign(res.tp)}</div>
-                <div className="kpi-sub">#{res.p as number}{res.rd?.length > 0 && <span style={{ marginLeft:4, opacity:.7 }}>{res.rd.join("-")}</span>}</div>
+                <div className="kpi-val" style={{ fontSize:16, color: tgTpColorDark(res.tp) }}>{tgFmtSign(res.tp)}</div>
+                <div className="kpi-sub">#{res.p as number}{res.rd?.length > 0 && <span style={{ marginLeft:3, opacity:.7 }}>{res.rd.join("-")}</span>}</div>
               </div>
             );
           })}

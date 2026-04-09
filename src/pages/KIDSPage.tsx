@@ -733,25 +733,6 @@ const D: RivalPlayer[]=[
 
 const manuel = D.find(x => x.isM)!;
 
-/** Conjunto de nomes normalizados de jogadores curados manualmente em D[]. */
-const D_NAMES = new Set(D.map(p => normName(p.n)));
-
-/** Um rival é escalão-relevante se:
- *  - for o Manuel (isM), OU
- *  - estiver curado em D[] (adicionado manualmente → escalão correcto por definição), OU
- *  - for auto-loaded E partilhar ≥1 tid com o Manuel merged.
- *
- *  O tid encoda o escalão: usk{tcode}_b11 ≠ usk{tcode}_b9.
- *  Após merge, o Manuel tem tanto tids manuais (venice25) como auto (venice25_b11),
- *  portanto jogadores do mesmo escalão em qualquer torneio são sempre detectados. */
-function isEscalaoRelevant(p: RivalPlayer, manuelMerged: RivalPlayer | undefined | null): boolean {
-  if (p.isM) return true;
-  if (D_NAMES.has(normName(p.n))) return true;
-  if (!manuelMerged) return false;
-  const manTids = new Set(Object.keys(manuelMerged.r));
-  return Object.keys(p.r).some(tid => manTids.has(tid));
-}
-
 /** Hook: carrega todos os ficheiros JSON e faz merge com D */
 /** Converte dob FPG "YYYY-MM-DD" → "DD/MM/YYYY" esperado por RivalPlayer.dob */
 function fpgDobToPt(d: string): string {
@@ -782,6 +763,7 @@ function useAutoRivals() {
           if (ap.fpgClub) (ex as any).fpgClub = ap.fpgClub;
           if (ap.dob && !ex.dob) ex.dob = fpgDobToPt(ap.dob);
           if (ap.co === "Portugal" && !ex.isM) ex.co = "Portugal";
+          if (ap.memberId && !(ex as any).memberId) (ex as any).memberId = ap.memberId;
         } else {
           const convertedR: Record<string, TournResult> = Object.fromEntries(
             Object.entries(ap.r).map(([k, v]) => [k, { ...v, p: v.p ?? "WD" } as TournResult])
@@ -789,6 +771,7 @@ function useAutoRivals() {
           const newPlayer: RivalPlayer = { n: ap.n, co: ap.co, r: convertedR, up: [] };
           if (ap.fpgClub) (newPlayer as any).fpgClub = ap.fpgClub;
           if (ap.dob) newPlayer.dob = fpgDobToPt(ap.dob);
+          if (ap.memberId) (newPlayer as any).memberId = ap.memberId;
           map.set(key, newPlayer);
         }
       }
@@ -1317,7 +1300,7 @@ function RivaisSidebar({ selected, onSelect, fids, q, paisFilter, tierFilter, mi
 
   // Lista filtrada + agrupamento directos / circuito
   const { directos, circuito } = useMemo(() => {
-    let pl = rivals.filter(p => (nPlayed(p) > 0 || p.isM) && isEscalaoRelevant(p, manuelMerged));
+    let pl = rivals.filter(p => nPlayed(p) > 0 || p.isM);
     if (fids.size > 0) pl = pl.filter(p => playerMatchesFilter(p, fids));
     if (paisFilter) pl = pl.filter(p => p.co === paisFilter);
     if (tierFilter) pl = pl.filter(p => !p.isM && playerTypeMap.get(p.n)?.label.includes(tierFilter.split(" ")[0]));
@@ -1845,12 +1828,6 @@ function RivalDetail({ playerName }: { playerName: string }) {
     return next;
   });
 
-  if (!rival && !lbEntry) return (
-    <div className="detail-header">
-      <div className="muted">Sem dados para {playerName}</div>
-    </div>
-  );
-
   const flag = rival ? (FL[rival.co] || "🏳️") : "";
   const rank = rankMap[playerName];
   const tr = rival ? (getTrend as (p: RivalPlayer) => string | null)(rival) : null;
@@ -2349,6 +2326,17 @@ function RivalDetail({ playerName }: { playerName: string }) {
 
   // ── DOB ──────────────────────────────────────────────────────────
   const dobInfo = React.useMemo(() => rival ? computeDobInfo(rival, mhPlayer) : null, [rival, mhPlayer]);
+
+  // ── Todos os hooks foram chamados — safe para early return ────────
+  if (!rival && !lbEntry) return (
+    <div className="detail-header">
+      <div className="muted">
+        {/^\d+$/.test(playerName)
+          ? "⏳ A identificar jogador…"
+          : `Sem dados para ${playerName}`}
+      </div>
+    </div>
+  );
 
   return (
     <>
@@ -2851,8 +2839,6 @@ function RivaisIntlContent() {
   const memberHist = useMemberHist();
   const scoringStats = useScoringStats();
 
-  const manuelMerged = useMemo(() => rivals.find(d => d.isM) ?? null, [rivals]);
-
   // Actualizar rankMap quando os rivais carregam
   const [_rankVersion, setRankVersion] = React.useState(0);
   React.useEffect(() => {
@@ -2874,6 +2860,31 @@ function RivaisIntlContent() {
     locationPlayer ?? hashPlayer ?? "Manuel Medeiros"
   );
   const md = useMasterDetail();
+
+  // ── Resolução do jogador do hash ─────────────────────────────────────────────
+  // Um único effect com dep [rivals]: re-corre a cada carregamento parcial.
+  // Para hash numérico: procura por memberId (propagado do loader para cada RivalPlayer).
+  // Para hash de texto: procura por nome (exacto, depois normalizado).
+  // hashResolvedRef evita re-selecções após resolução.
+  const hashResolvedRef = React.useRef(false);
+  React.useEffect(() => {
+    if (hashResolvedRef.current || !hashPlayer) return;
+    let found: RivalPlayer | undefined;
+    if (/^\d+$/.test(hashPlayer)) {
+      // Hash numérico → procurar por memberId
+      found = rivals.find(d => (d as any).memberId === hashPlayer);
+    } else {
+      // Hash de texto → procurar por nome
+      found = rivals.find(d => d.n === hashPlayer)
+        ?? rivals.find(d => normName(d.n) === normName(hashPlayer));
+    }
+    if (found) {
+      hashResolvedRef.current = true;
+      setSelectedPlayer(found.n);
+      md.onSelect(); // mobile: esconde sidebar; desktop: scroll to top
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rivals]);
 
   // ── Todos os filtros no toolbar ──
   const [fids, setFids]                 = useState<Set<string>>(new Set());
@@ -2992,7 +3003,7 @@ function RivaisIntlContent() {
         )}
         <div style={{ flex: 1 }} />
         <span className="chip" style={{ flexShrink: 0 }}>
-          {rivals.filter(p => (nPlayed(p) > 0 || p.isM) && isEscalaoRelevant(p, manuelMerged) && playerMatchesFilter(p, fids)).length}
+          {rivals.filter(p => (nPlayed(p) > 0 || p.isM) && playerMatchesFilter(p, fids)).length}
         </span>
       </div>
 

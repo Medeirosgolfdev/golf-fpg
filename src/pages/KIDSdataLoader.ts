@@ -59,6 +59,7 @@ export interface AutoRivalPlayer {
   r: Record<string, AutoTournResult>;
   fpgClub?: string;   // clube FPG quando o jogador está na base de dados portuguesa
   dob?: string;       // data de nascimento (YYYY-MM-DD) da base de dados FPG
+  memberId?: string;  // ID único USKids (numérico) — chave do uskids-member-history-slim.json
 }
 
 async function fetchJson(path: string): Promise<unknown> {
@@ -444,6 +445,7 @@ function mergeInto(map: Map<string, AutoRivalPlayer>, players: AutoRivalPlayer[]
         if (forceTids?.has(tid) || !ex.r[tid] || res.rd.length > ex.r[tid].rd.length)
           ex.r[tid] = res;
       }
+      if (p.memberId && !ex.memberId) ex.memberId = p.memberId;
     } else {
       map.set(key, { ...p, r: { ...p.r } });
     }
@@ -832,7 +834,7 @@ function processMemberHistory(data: unknown): AutoRivalPlayer[] {
 
   const all: AutoRivalPlayer[] = [];
 
-  for (const player of Object.values(d.jogadores || {})) {
+  for (const [memberId, player] of Object.entries(d.jogadores || {})) {
     // Ignorar jogadores sem nome identificado
     if (!player.name || player.name === "?" || player.name === null) continue;
 
@@ -921,7 +923,7 @@ function processMemberHistory(data: unknown): AutoRivalPlayer[] {
 
     if (Object.keys(r).length === 0) continue;
 
-    all.push({ n: player.name, co: co(player.country || ""), r });
+    all.push({ n: player.name, co: co(player.country || ""), r, memberId });
   }
 
   return all;
