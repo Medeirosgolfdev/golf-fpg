@@ -126,6 +126,7 @@ export interface PlayersDBEntry {
   hcp?: number;
   hcpExact?: number;
   region?: string;
+  kidsHash?: string;  // memberId ou nome encodificado para link /kids#hash
 }
 export type PlayersDB = Record<string, PlayersDBEntry>;
 
@@ -151,6 +152,15 @@ export function TournPName({
   const star = highlight ?? isManuel({ name, fed, fedCode });
   const truncName = name.length > maxLen ? name.substring(0, maxLen - 2) + "…" : name;
 
+  // Kids link: procura por fedKey (quando presente) ou pelo nome normalizado
+  const normN = name.toLowerCase().replace(/\s+/g, " ").trim();
+  const kidsEntry = playersDB
+    ? (fedKey && playersDB[fedKey]?.kidsHash
+        ? playersDB[fedKey]
+        : Object.values(playersDB).find(e => e.name?.toLowerCase().replace(/\s+/g, " ").trim() === normN))
+    : undefined;
+  const kidsHash = kidsEntry?.kidsHash;
+
   return (
     <span
       className={"tourn-pname" + (hasProfile ? " tourn-pname-link" : "")}
@@ -159,6 +169,16 @@ export function TournPName({
       {truncName}
       {star && <span style={{ marginLeft: 3, fontSize: 10 }}>⭐</span>}
       {sex && <SexBadge sex={sex} size="sm" className="ml-4" />}
+      {kidsHash && (
+        <a
+          href="/kids"
+          onClick={e => { e.stopPropagation(); e.preventDefault(); window.open(`/kids#${kidsHash}`, "_blank"); }}
+          title="Ver em Kids"
+          style={{ marginLeft: 4, fontWeight: 800, color: "var(--color-good-dark)",
+            fontSize: 11, cursor: "pointer", textDecoration: "none" }}>
+          ↗
+        </a>
+      )}
     </span>
   );
 }

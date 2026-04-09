@@ -420,22 +420,18 @@ function Content() {
 
       {/* Toolbar */}
       <div className="toolbar">
-        <div className="toolbar-left">
-          <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
-          {cur?.series === "eowagr"
-            ? <span className="toolbar-title">🌍 European Open</span>
-            : <span className="toolbar-title">🏌️ WJGC</span>}
-          {cur && <span className="toolbar-meta">{
-            cur.series === "eowagr"
-              ? "📍 Le Touquet GC — La Forêt"
-              : cur.category === "Boys 12-13"
-                ? "📍 Villa Padierna — Alferini"
-                : "📍 Villa Padierna — Flamingos"
-          }</span>}
-        </div>
-        <div className="toolbar-right">
-          {cur && <span className="chip">{cur.data.players.filter(p => p.rounds.length === Math.max(...cur.data.players.map(q => q.rounds.length))).length} field · {Math.max(...cur.data.players.map(p => p.rounds.length))}R · {cur.category}</span>}
-        </div>
+        <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
+        {cur?.series === "eowagr"
+          ? <span className="toolbar-title">🌍 European Open</span>
+          : <span className="toolbar-title">🏌️ WJGC</span>}
+        {cur && <span className="toolbar-meta">{
+          cur.series === "eowagr"
+            ? "📍 Le Touquet GC — La Forêt"
+            : cur.category === "Boys 12-13"
+              ? "📍 Villa Padierna — Alferini"
+              : "📍 Villa Padierna — Flamingos"
+        }</span>}
+        {cur && <span className="chip" style={{ marginLeft: "auto" }}>{cur.data.players.filter(p => p.rounds.length === Math.max(...cur.data.players.map(q => q.rounds.length))).length} field · {Math.max(...cur.data.players.map(p => p.rounds.length))}R · {cur.category}</span>}
       </div>
 
       {/* Master-detail */}

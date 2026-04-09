@@ -24,6 +24,7 @@ import { PILL_SSERRA, SIDEBAR_ACCENT, EscPill, ESC_STYLE, PillBadge } from "../u
 import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
 import SexBadge from "../ui/SexBadge";
 import SidebarToggle from "../ui/SidebarToggle";
+import SortableHdr from "../ui/SortableHdr";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { C } from "../utils/colors";
 import { fmtDate, fmtToPar, MONTHS_PT } from "../utils/format";
@@ -1014,16 +1015,6 @@ export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabe
     return sortDir === "asc" ? av - bv : bv - av;
   }), [filteredPlayers, sortKey, sortDir, parTotal, escLookup]);
 
-  function SortableHdr({ k, children, className }: { k: SortKey; children: React.ReactNode; className?: string }) {
-    const active = sortKey === k;
-    return (
-      <th className={"lb-sortable " + (className || "")}
-        onClick={() => handleSort(k)}>
-        {children}{active && <span className="sort-arrow">{sortDir === "asc" ? "▲" : "▼"}</span>}
-      </th>
-    );
-  }
-
   // Agora é seguro fazer early return — todos os hooks já foram chamados
   if (!rawPlayers.length) return <div className="muted ta-center p-16">Scorecards não disponíveis.</div>;
 
@@ -1103,14 +1094,14 @@ export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabe
         />
       }
       prefixHeaderCells={<>
-        <SortableHdr k="esc"  className="lb-esc">ESC.</SortableHdr>
+        <SortableHdr k="esc"  sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-esc">ESC.</SortableHdr>
         <th className="lb-fed">FED</th>
-        <SortableHdr k="club" className="lb-club">CLUBE</SortableHdr>
-        <SortableHdr k="hcp"  className="lb-hcp">HCP</SortableHdr>
-        <SortableHdr k="tee"  className="lb-tee">TEE</SortableHdr>
+        <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-club">CLUBE</SortableHdr>
+        <SortableHdr k="hcp"  sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-hcp">HCP</SortableHdr>
+        <SortableHdr k="tee"  sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-tee">TEE</SortableHdr>
       </>}
       postScorecardHeaderCells={<>
-        <SortableHdr k="sd" className="lb-sd">SD</SortableHdr>
+        <SortableHdr k="sd" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-sd">SD</SortableHdr>
         <th className="lb-bird">🐦</th>
         <th className="lb-par-stat">Par</th>
         <th className="lb-bog">■</th>
@@ -1541,18 +1532,6 @@ export function AllRoundsScorecardLB({
     </>);
   }
 
-  function SHdr({ k, children, className, style }: { k: string; children: React.ReactNode; className?: string; style?: React.CSSProperties }) {
-    const active = sortKey === k;
-    return (
-      <th className={"lb-sortable " + (className || "")}
-          style={{ ...style, color: active ? "var(--accent)" : undefined, fontWeight: active ? 700 : undefined }}
-          title={active ? (sortDir === "asc" ? "Ordenado crescente" : "Ordenado decrescente") : "Clique para ordenar"}
-          onClick={() => toggleSort(k)}>
-        {children}{active && <span style={{ fontSize: 8, marginLeft: 2 }}>{sortDir === "asc" ? "▲" : "▼"}</span>}
-      </th>
-    );
-  }
-
   const postCols = 4; // SD 🐦 Par ■
 
   return (
@@ -1634,23 +1613,23 @@ export function AllRoundsScorecardLB({
             {/* Headers — ± Tot e buracos clicáveis (melhor ronda de cada jogador) */}
             <tr>
               <th className="lb-pos sticky-col-0">#</th>
-              <SHdr k="name" className="lb-name sticky-col-1">Jogador</SHdr>
-              <SHdr k="club" className="lb-club">Clube</SHdr>
-              <SHdr k="hcp"  className="lb-hcp">HCP</SHdr>
+              <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-name sticky-col-1">Jogador</SortableHdr>
+              <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-club">Clube</SortableHdr>
+              <SortableHdr k="hcp"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-hcp">HCP</SortableHdr>
               <th className="lb-tee" style={{ fontSize: 10, color: "var(--text-muted)", fontWeight: 600 }}>Rnd</th>
-              <SHdr k="topar" className="lb-topar">±</SHdr>
-              <SHdr k="gross" className="lb-gross">Tot</SHdr>
+              <SortableHdr k="topar" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-topar">±</SortableHdr>
+              <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-gross">Tot</SortableHdr>
               {showSC && (<>
                 {Array.from({ length: 9 }, (_, h) => (
-                  <SHdr key={h} k={`h${h}`} className={"lb-hole" + (h === 0 ? " lb-hole-first" : "")} style={{ fontSize: 10 }}>
+                  <SortableHdr key={h} k={`h${h}`} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={"lb-hole" + (h === 0 ? " lb-hole-first" : "")} style={{ fontSize: 10 }}>
                     {h + 1}
-                  </SHdr>
+                  </SortableHdr>
                 ))}
                 <th className="lb-halftot">{is9 ? "Tot" : "Out"}</th>
                 {!is9 && Array.from({ length: 9 }, (_, h) => (
-                  <SHdr key={h + 9} k={`h${h + 9}`} className={"lb-hole" + (h === 0 ? " lb-hole-first" : "")} style={{ fontSize: 10 }}>
+                  <SortableHdr key={h + 9} k={`h${h + 9}`} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={"lb-hole" + (h === 0 ? " lb-hole-first" : "")} style={{ fontSize: 10 }}>
                     {h + 10}
-                  </SHdr>
+                  </SortableHdr>
                 ))}
                 {!is9 && <th className="lb-halftot">In</th>}
               </>)}
@@ -3869,7 +3848,7 @@ function Content() {
           <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />
           <span className="toolbar-title" style={{ flexShrink: 0 }}>🏌️ FPG</span>
           {!loading && (<>
-            <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+            <div className="toolbar-sep" />
             {([
               { key: "torneios",      label: "Torneios" },
               { key: "ranking-pja",   label: "📊 Ranking PJA" },
@@ -3885,7 +3864,7 @@ function Content() {
               </button>
             ))}
             {navMode === "torneios" && availYears.length > 1 && (<>
-              <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+              <div className="toolbar-sep" />
               {availYears.map(y => (
                 <button key={y}
                   className={"tourn-tab tourn-tab-sm" + (activeYear === y ? " active" : "")}
@@ -3896,7 +3875,7 @@ function Content() {
                   {y}
                 </button>
               ))}
-              <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+              <div className="toolbar-sep" />
               <button
                 className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
                 onClick={() => setFilterManuel(v => !v)}

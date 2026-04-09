@@ -24,6 +24,33 @@ import { buildAutoRivals, normName as normNameAuto, type AutoRivalPlayer, uskTou
 import { cachedFetchJson } from "../data/fetchCache";
 
 // ─────────────────────────────────────────────
+// CONTEXTO arMap — partilhado por toda a árvore
+// Permite que qualquer componente (incluindo leaderboards) aceda ao arMap
+// sem ter de passar a prop manualmente por toda a hierarquia.
+// ─────────────────────────────────────────────
+const ArMapCtx = React.createContext<Map<string, AutoRivalPlayer>>(new Map());
+
+/** Devolve o elemento ↗ com link para a página Kids do jogador.
+ *  Usa memberId quando disponível (resolve antes dos 45 ficheiros carregarem). */
+function KidsLink({ nome }: { nome: string }) {
+  const arMap = React.useContext(ArMapCtx);
+  const arEntry = arMap.get(normNameAuto(nome));
+  if (!arEntry) return null;
+  const memberId = (arEntry as any).memberId as string | undefined;
+  const hash = memberId ?? encodeURIComponent(arEntry.n);
+  return (
+    <a
+      href="/kids"
+      onClick={e => { e.preventDefault(); window.open(`/kids#${hash}`, "_blank"); }}
+      title="Ver em Kids"
+      style={{ fontWeight: 800, color: "var(--color-good-dark)", fontSize: 13,
+        cursor: "pointer", textDecoration: "none", flexShrink: 0, marginLeft: 4 }}>
+      ↗
+    </a>
+  );
+}
+
+// ─────────────────────────────────────────────
 // TIPOS — CAMPO (inscritos)
 // ─────────────────────────────────────────────
 interface Jogador      { nome: string; pais: string; cidade: string; }
@@ -715,9 +742,10 @@ function escalaoToTournament(e: EscalaoResult, t: TorneioResult): TATournament {
 // ESCALÃO SECTION — tabs R1 / R2 / Acumulado
 // usa ScorecardLB e AccumulatedLB de TorneiosAnalisePage
 // ─────────────────────────────────────────────
-function EscalaoSection({ escalao: e, torneio: t }: {
+function EscalaoSection({ escalao: e, torneio: t, arMap }: {
   escalao: EscalaoResult;
   torneio: TorneioResult;
+  arMap?: Map<string, AutoRivalPlayer>;
 }) {
   const rondasComDados = e.rondas.filter(r => (r.leaderboard ?? r.jogadores ?? []).length > 0);
   if (!rondasComDados.length) return <EmptyState size="sm" message="Sem dados para este escalão." />;
@@ -778,21 +806,37 @@ function EscalaoSection({ escalao: e, torneio: t }: {
           )}
         </div>
       )}
-      {isScorecardTab
-        ? <AllRoundsScorecardLB tournament={tournament} escLookup={new Map()} playersDB={{}} />
-        : isAccTab
-          ? <AccumulatedLB tournament={curT} nRounds={rondasComDados.length} escLookup={new Map()} playersDB={{}} />
-          : <ScorecardLB tournament={curT} escLookup={new Map()} playersDB={{}} siLabel="m" parLabelColSpan={6} />
-      }
+      {(() => {
+        // Construir playersDB com kidsHash para todos os jogadores deste escalão
+        const kidsDB: Record<string, { name: string; kidsHash: string }> = {};
+        if (arMap) {
+          for (const rd of rondasComDados) {
+            for (const j of (rd.leaderboard ?? rd.jogadores ?? [])) {
+              const ar = arMap.get(normNameAuto(j.nome));
+              if (!ar) continue;
+              const memberId = (ar as any).memberId as string | undefined;
+              const hash = memberId ?? encodeURIComponent(ar.n);
+              const key = normNameAuto(j.nome);
+              if (!kidsDB[key]) kidsDB[key] = { name: ar.n, kidsHash: hash };
+            }
+          }
+        }
+        return isScorecardTab
+          ? <AllRoundsScorecardLB tournament={tournament} escLookup={new Map()} playersDB={kidsDB} />
+          : isAccTab
+            ? <AccumulatedLB tournament={curT} nRounds={rondasComDados.length} escLookup={new Map()} playersDB={kidsDB} />
+            : <ScorecardLB tournament={curT} escLookup={new Map()} playersDB={kidsDB} siLabel="m" parLabelColSpan={6} />;
+      })()}
 
     </div>
   );
 }
 
-function EscalaoTabs({ escaloes, torneio: t, defaultIdx }: {
+function EscalaoTabs({ escaloes, torneio: t, defaultIdx, arMap }: {
   escaloes: EscalaoResult[];
   torneio: TorneioResult;
   defaultIdx: number;
+  arMap?: Map<string, AutoRivalPlayer>;
 }) {
   const [esc, setEsc] = useState(defaultIdx);
   const escalaoEsperado = escalaoManuelParaData(t.date_inicio);
@@ -829,7 +873,7 @@ function EscalaoTabs({ escaloes, torneio: t, defaultIdx }: {
         })}
       </div>
       {/* Conteúdo do escalão activo */}
-      {e && <EscalaoSection key={e.age_group} escalao={e} torneio={t} />}
+      {e && <EscalaoSection key={e.age_group} escalao={e} torneio={t} arMap={arMap} />}
     </div>
   );
 }
@@ -839,7 +883,10 @@ function EscalaoTabs({ escaloes, torneio: t, defaultIdx }: {
 // TAB CAMPO
 // ─────────────────────────────────────────────
 function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
+  const arMap = React.useContext(ArMapCtx);
   const escalaoM = escalaoManuelParaData(t.date_inicio);
+  const sBase = seriesBase(t.name);
+  const currentYear = parseInt((isoDate(t.date_inicio) || `${new Date().getFullYear()}-01-01`).slice(0, 4));
   const b12     = t.escaloes.find(e => e.nome === escalaoM);
   const ptTotal = t.escaloes.flatMap(e => e.jogadores ?? []).filter(j => j.pais === "PT");
   const dias    = diasAte(t.date_inicio);
@@ -990,6 +1037,15 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                     <div style={{ borderTop:"1px solid var(--border-light)", paddingTop:6, display:"flex", flexDirection:"column", gap:2 }}>
                       {e.jogadores.map((j, i) => {
                         const isM = isManuel(j.nome);
+                        const arEntry = !isM ? arMap.get(normNameAuto(j.nome)) : undefined;
+                        const nTorn = arEntry ? Object.values(arEntry.r).filter(r => r.tp != null || (r.rd?.length ?? 0) > 0).length : 0;
+                        // Resultados nos 2 anos anteriores neste mesmo torneio
+                        const prevResults = arEntry
+                          ? [currentYear - 1, currentYear - 2]
+                              .filter(y => y >= 2020)
+                              .map(y => ({ y, res: playerSeriesResult(arEntry, sBase, y) }))
+                              .filter(x => x.res !== null)
+                          : [];
                         return (
                           <div key={i} style={{
                             display:"flex", justifyContent:"space-between", alignItems:"center",
@@ -1000,8 +1056,36 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                             background: isM ? "var(--accent)" : "transparent",
                             color: isM ? "#fff" : j.pais === "PT" ? "var(--accent)" : "var(--text)",
                           }}>
-                            <span>{isM ? "★ " : ""}{displayName(j.nome)}</span>
-                            <span title={j.cidade}>{flag(j.pais)}</span>
+                            <span style={{ display:"flex", alignItems:"center", gap:2 }}>
+                              {isM ? "★ " : ""}{displayName(j.nome)}
+                              {!isM && <KidsLink nome={j.nome} />}
+                            </span>
+                            <span style={{ display:"flex", alignItems:"center", gap:5 }}>
+                              {/* Resultados anos anteriores */}
+                              {prevResults.map(({ y, res }) => {
+                                const p = res!.p;
+                                const medal = p === 1 ? "🥇" : p === 2 ? "🥈" : p === 3 ? "🥉" : null;
+                                const col = p <= 3 ? "var(--color-warn-dark)" : p <= 10 ? "var(--color-good-dark)" : "var(--text-3)";
+                                return (
+                                  <span key={y} title={`${y}: #${p}${res!.tp != null ? ` (${res!.tp > 0 ? "+" : ""}${res!.tp})` : ""}`}
+                                    style={{ fontSize:10, fontWeight:700, color: col, opacity:.85 }}>
+                                    {medal ?? `#${p}`}
+                                    <span style={{ fontSize:9, fontWeight:400, opacity:.7 }}>'{String(y).slice(2)}</span>
+                                  </span>
+                                );
+                              })}
+                              {nTorn > 0 && (
+                                <span style={{
+                                  fontSize:10, fontWeight:700, color:"var(--text-2)",
+                                  background:"var(--bg-muted)", border:"1px solid var(--border)",
+                                  borderRadius:4, padding:"0 4px", lineHeight:"16px",
+                                  display:"inline-block",
+                                }}>
+                                  {nTorn}T
+                                </span>
+                              )}
+                              <span title={j.cidade}>{flag(j.pais)}</span>
+                            </span>
                           </div>
                         );
                       })}
@@ -1026,7 +1110,9 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                   <div className="h-xs" style={{ color:"var(--accent-text)", marginBottom:4 }}>{e.nome}</div>
                   {e.jogadores!.filter(j => j.pais === "PT").map((j, i) => (
                     <div key={i} style={{ display:"flex", justifyContent:"space-between", fontSize:13, padding:"3px 8px", borderRadius:4, background:"rgba(255,255,255,.5)", marginBottom:2 }}>
-                      <span style={{ fontWeight:600 }}>{displayName(j.nome)}</span>
+                      <span style={{ fontWeight:600, display:"flex", alignItems:"center", gap:2 }}>
+                        {displayName(j.nome)}<KidsLink nome={j.nome} />
+                      </span>
                       <span style={{ color:"var(--text-3)", fontSize:12 }}>{j.cidade}</span>
                     </div>
                   ))}
@@ -1048,6 +1134,7 @@ function TabResultados({ data, selectedT, greatgolfData }: {
   selectedT: number | null;
   greatgolfData: GreatgolfData | null;
 }) {
+  const arMap = React.useContext(ArMapCtx);
   const t = data.resultados.find(r => r.t === selectedT) ?? null;
 
   // ── PRINT ──────────────────────────────────────────────────────────────────
@@ -1390,7 +1477,7 @@ function TabResultados({ data, selectedT, greatgolfData }: {
           t.escalao_manuel ? e.age_group === t.escalao_manuel
             : (e.is_manuel === true && e.nome === escalaoEsperado)
         );
-        return <EscalaoTabs escaloes={escaloes} torneio={t} defaultIdx={manuelIdx >= 0 ? manuelIdx : 0} />;
+        return <EscalaoTabs escaloes={escaloes} torneio={t} defaultIdx={manuelIdx >= 0 ? manuelIdx : 0} arMap={arMap} />;
       })()}
 
       {/* ── Greatgolf Junior Open ── */}
@@ -2658,6 +2745,7 @@ function TabelaGlobal({ autoRivals, futureCols, fieldData }: {
                       <span className="rivais-flag" title={p.co}>{fl}</span>
                       <span className={`fs-12${isM ? " fw-700" : " fw-600"}`} style={{ color: isM ? "var(--text)" : "var(--text-2)" }}>{p.n}</span>
                       {isM && <span className="p p-sm p-outline ml-4">REF</span>}
+                      {!isM && <KidsLink nome={p.n} />}
                     </td>
                     <td className="ta-center fs-12 fw-600 c-text-3">{played || ""}</td>
                     {allTournCols.map(({ tid, isFixed, isFuture }) => {
@@ -3278,6 +3366,13 @@ export default function USKidsFieldPage() {
 
   const nRivais = torneiosComManuel.length || null;
 
+  // useMemo ANTES dos early returns — obrigatório pelas Rules of Hooks
+  const arMapCtxValue = useMemo(() => {
+    const m = new Map<string, AutoRivalPlayer>();
+    for (const r of autoRivals) m.set(normNameAuto(r.n), r);
+    return m;
+  }, [autoRivals]);
+
   if (erro) return (
     <div style={{ padding: 32 }}>
       <div className="notice-error">
@@ -3520,13 +3615,14 @@ export default function USKidsFieldPage() {
   };
 
   return (
+    <ArMapCtx.Provider value={arMapCtxValue}>
     <div className="tourn-layout" style={{ height:"calc(100vh - 52px)" }}>
 
       {/* ── TOOLBAR ── */}
       <div style={{ display:"flex", alignItems:"center", gap:6, padding:"6px 10px", overflowX:"auto", flexWrap:"nowrap", borderBottom:"1px solid var(--border-light)", scrollbarWidth:"none" }}>
         <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
         <span className="toolbar-title" style={{ flexShrink:0 }}>🏌️ USKids</span>
-        <div className="toolbar-sep" style={{ flexShrink:0 }} />
+        <div className="toolbar-sep" />
         {TABS.map(tb => (
           <button key={tb.id}
             onClick={() => handleTabChange(tb.id)}
@@ -3542,7 +3638,7 @@ export default function USKidsFieldPage() {
           </button>
         ))}
         {tab !== "rivais" && (<>
-          <div className="toolbar-sep" style={{ flexShrink:0 }} />
+          <div className="toolbar-sep" />
           <button
             className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
             onClick={() => setFilterManuel(v => !v)}
@@ -3619,5 +3715,6 @@ export default function USKidsFieldPage() {
       </div>
     {/* ← fecha tourn-layout */}
     </div>
+    </ArMapCtx.Provider>
   );
 }

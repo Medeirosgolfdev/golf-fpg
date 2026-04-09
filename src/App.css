@@ -150,40 +150,13 @@ html, body, #root {
 
 .toolbar {
  display: flex;
- align-items: flex-end;
- justify-content: space-between;
- gap: 12px;
- padding: 12px 16px;
+ align-items: center;
+ justify-content: flex-start;
+ gap: 8px;
+ padding: 6px 12px;
  background: var(--bg-card);
  border-bottom: 1px solid var(--border-light);
  flex-shrink: 0;
-}
-
-.toolbar-left {
- display: flex;
- gap: 12px;
- align-items: flex-end;
-}
-
-.toolbar-right {
- display: flex;
- gap: 8px;
- align-items: center;
-}
-
-/* CamposPage, JogadoresPage & tournament compact toolbar (no labels) */
-.campos-page .toolbar,
-.jogadores-page .toolbar,
-.tourn-layout .toolbar {
- padding: 6px 12px;
- gap: 8px;
- align-items: center;
-}
-.campos-page .toolbar-left,
-.jogadores-page .toolbar-left,
-.tourn-layout .toolbar-left {
- gap: 8px;
- align-items: center;
 }
 
 /* Compact selects inside jogadores/tourn toolbar */

@@ -2936,7 +2936,7 @@ function RivaisIntlContent() {
       }}>
         <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
         <span className="toolbar-title" style={{ flexShrink: 0 }}>🌍 Kids</span>
-        <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+        <div className="toolbar-sep" />
         <span className="toolbar-meta" style={{ flexShrink: 0 }}>
           {loaded
             ? <span style={{ fontSize: 10, color: "var(--color-good-dark)", fontWeight: 700 }}>{rivals.length} rivais · ✓</span>
@@ -2951,12 +2951,12 @@ function RivaisIntlContent() {
                 </span>
               : <span style={{ fontSize: 10, color: "var(--text-muted)" }}>⏳ a iniciar…</span>}
         </span>
-        <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+        <div className="toolbar-sep" />
         {/* Pesquisa */}
         <input type="text" value={q} onChange={e => setQ(e.target.value)}
           placeholder="🔎 Pesquisar rival…" className="input"
           style={{ width: 150, height: 26, fontSize: 12, flexShrink: 0 }} />
-        <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+        <div className="toolbar-sep" />
         {/* Filtros avançados: país, tipo, presenças, directos, limpar */}
         <select className="select" value={paisFilter} onChange={e => setPaisFilter(e.target.value)}
           style={{ fontSize: 11, height: 26, minWidth: 85, flexShrink: 0 }}>

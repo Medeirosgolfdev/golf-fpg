@@ -4348,62 +4348,58 @@ export default function JogadoresPage() {
   return (
     <div className="jogadores-page">
       <div className="toolbar">
-        <div className="toolbar-left">
-          <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Jogadores" />
-          <input className="input" value={q} onChange={e => { setQ(e.target.value); setSelectedFed(null); }}
-            placeholder="Nome, clube, n.º federado…" />
-          <select className="select" value={sexFilter} onChange={e => setSexFilter(e.target.value as SexFilter)}>
-            <option value="ALL">Sexo</option><option value="M">Masculino</option><option value="F">Feminino</option>
-          </select>
-          <div className="escalao-pills">
-            {escalaoFilter.size > 0 && (
-              <button className="p p-esc-clear" onClick={clearEscalao} title="Limpar filtros">✕</button>
-            )}
-            {escaloes.map(esc => {
-              const active = escalaoFilter.has(esc);
-              const cls = escCls(esc);
-              const count = escalaoCountMap[esc] || 0;
-              if (count === 0 && !active) return null;
-              return (
-                <button
-                  key={esc}
-                  className={`p p-esc-filter p-${cls}${active ? " active" : ""}`}
-                  onClick={() => toggleEscalao(esc)}
-                  title={`${esc} (${count})`}
-                >
-                  {esc.replace("Sub-", "S")}{count > 0 && <span className="p-filter-count">{count}</span>}
-                </button>
-              );
-            })}
-          </div>
-          <select className="select" value={regionFilter} onChange={e => setRegionFilter(e.target.value)}>
-            <option value="ALL">Região</option>
-            {regions.map(r => <option key={r} value={r}>{r}</option>)}
-          </select>
-          {Object.keys(statsDb).length > 0 && (() => {
-            const newCount = allPlayers.filter(p => { const d = daysSince(statsDb[p.fed]); return d != null && d <= NEW_DAYS; }).length;
-            if (newCount === 0) return null;
+        <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Jogadores" />
+        <input className="input" value={q} onChange={e => { setQ(e.target.value); setSelectedFed(null); }}
+          placeholder="Nome, clube, n.º federado…" />
+        <select className="select" value={sexFilter} onChange={e => setSexFilter(e.target.value as SexFilter)}>
+          <option value="ALL">Sexo</option><option value="M">Masculino</option><option value="F">Feminino</option>
+        </select>
+        <div className="escalao-pills">
+          {escalaoFilter.size > 0 && (
+            <button className="p p-esc-clear" onClick={clearEscalao} title="Limpar filtros">✕</button>
+          )}
+          {escaloes.map(esc => {
+            const active = escalaoFilter.has(esc);
+            const cls = escCls(esc);
+            const count = escalaoCountMap[esc] || 0;
+            if (count === 0 && !active) return null;
             return (
               <button
-                className={`p p-esc-filter p-novo${newFilter ? " active" : ""}`}
-                onClick={() => setNewFilter(v => !v)}
-                title={`${newCount} jogadores com rondas nos últimos ${NEW_DAYS} dias`}
-                style={{ background: newFilter ? "var(--color-good)" : undefined, color: newFilter ? "#fff" : undefined, borderColor: newFilter ? "var(--color-good)" : "var(--border-best)", gap: 3 }}
+                key={esc}
+                className={`p p-esc-filter p-${cls}${active ? " active" : ""}`}
+                onClick={() => toggleEscalao(esc)}
+                title={`${esc} (${count})`}
               >
-                🟢 Novos<span className="p-filter-count">{newCount}</span>
+                {esc.replace("Sub-", "S")}{count > 0 && <span className="p-filter-count">{count}</span>}
               </button>
             );
-          })()}
-          <select className="select" value={sortKey} onChange={e => setSortKey(e.target.value as SortKey)}>
-            <option value="name">Nome</option><option value="hcp">Handicap</option>
-            <option value="club">Clube</option><option value="escalao">Escalão</option>
-            <option value="ranking">🏆 Ranking</option>
-            <option value="rounds">Voltas</option>
-          </select>
+          })}
         </div>
-        <div className="toolbar-right">
-          <div className="chip">{filtered.length} jogadores</div>
-        </div>
+        <select className="select" value={regionFilter} onChange={e => setRegionFilter(e.target.value)}>
+          <option value="ALL">Região</option>
+          {regions.map(r => <option key={r} value={r}>{r}</option>)}
+        </select>
+        {Object.keys(statsDb).length > 0 && (() => {
+          const newCount = allPlayers.filter(p => { const d = daysSince(statsDb[p.fed]); return d != null && d <= NEW_DAYS; }).length;
+          if (newCount === 0) return null;
+          return (
+            <button
+              className={`p p-esc-filter p-novo${newFilter ? " active" : ""}`}
+              onClick={() => setNewFilter(v => !v)}
+              title={`${newCount} jogadores com rondas nos últimos ${NEW_DAYS} dias`}
+              style={{ background: newFilter ? "var(--color-good)" : undefined, color: newFilter ? "#fff" : undefined, borderColor: newFilter ? "var(--color-good)" : "var(--border-best)", gap: 3 }}
+            >
+              🟢 Novos<span className="p-filter-count">{newCount}</span>
+            </button>
+          );
+        })()}
+        <select className="select" value={sortKey} onChange={e => setSortKey(e.target.value as SortKey)}>
+          <option value="name">Nome</option><option value="hcp">Handicap</option>
+          <option value="club">Clube</option><option value="escalao">Escalão</option>
+          <option value="ranking">🏆 Ranking</option>
+          <option value="rounds">Voltas</option>
+        </select>
+        <div className="chip" style={{ marginLeft: "auto" }}>{filtered.length} jogadores</div>
       </div>
 
       <div className="master-detail">

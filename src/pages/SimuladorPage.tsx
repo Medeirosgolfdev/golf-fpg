@@ -1245,48 +1245,44 @@ export default function SimuladorPage() {
     <div className="campos-page">
       {/* Toolbar */}
       <div className="toolbar">
-        <div className="toolbar-left">
-          <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Campos" />
-          <input
-            className="input"
-            value={q}
-            onChange={(e) => { setQ(e.target.value); setSelectedKey(null); }}
-            placeholder="Nome do campo…"
-          />
-          <select className="select" value={holesMode} onChange={(e) => { setHolesMode(e.target.value as HolesMode); setSelectedTeeIdx(null); }}>
-            <option value="18">18 buracos</option>
-            <option value="front9">Front 9</option>
-            <option value="back9">Back 9</option>
-          </select>
-          <select className="select" value={sexFilter} onChange={(e) => setSexFilter(e.target.value as SexFilter)}>
-            <option value="ALL">Sexo</option>
-            <option value="M">Masculino</option>
-            <option value="F">Feminino</option>
-          </select>
-          <input
-            className="input col-w100"
-            value={hiInput}
-            onChange={(e) => setHiInput(e.target.value)}
-            placeholder="HI (ex: 15,4)"
-          />
-          <select className="select" value={pcc} onChange={(e) => setPcc(Number(e.target.value))}>
-            {[-3, -2, -1, 0, 1, 2, 3].map((v) => (
-              <option key={v} value={v}>{v === 0 ? "PCC 0" : v > 0 ? `PCC +${v}` : `PCC ${v}`}</option>
-            ))}
-          </select>
-          <select className="select" value={allowance} onChange={(e) => setAllowance(Number(e.target.value))}>
-            <option value={100}>100%</option>
-            <option value={95}>95%</option>
-            <option value={90}>90%</option>
-            <option value={85}>85%</option>
-            <option value={75}>75%</option>
-            <option value={50}>50%</option>
-          </select>
-        </div>
-        <div className="toolbar-right">
-          <div className="chip">{filtered.length} campos</div>
-          {is9h && <div className="chip">{holesLabel}</div>}
-        </div>
+        <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Campos" />
+        <input
+          className="input"
+          value={q}
+          onChange={(e) => { setQ(e.target.value); setSelectedKey(null); }}
+          placeholder="Nome do campo…"
+        />
+        <select className="select" value={holesMode} onChange={(e) => { setHolesMode(e.target.value as HolesMode); setSelectedTeeIdx(null); }}>
+          <option value="18">18 buracos</option>
+          <option value="front9">Front 9</option>
+          <option value="back9">Back 9</option>
+        </select>
+        <select className="select" value={sexFilter} onChange={(e) => setSexFilter(e.target.value as SexFilter)}>
+          <option value="ALL">Sexo</option>
+          <option value="M">Masculino</option>
+          <option value="F">Feminino</option>
+        </select>
+        <input
+          className="input col-w100"
+          value={hiInput}
+          onChange={(e) => setHiInput(e.target.value)}
+          placeholder="HI (ex: 15,4)"
+        />
+        <select className="select" value={pcc} onChange={(e) => setPcc(Number(e.target.value))}>
+          {[-3, -2, -1, 0, 1, 2, 3].map((v) => (
+            <option key={v} value={v}>{v === 0 ? "PCC 0" : v > 0 ? `PCC +${v}` : `PCC ${v}`}</option>
+          ))}
+        </select>
+        <select className="select" value={allowance} onChange={(e) => setAllowance(Number(e.target.value))}>
+          <option value={100}>100%</option>
+          <option value={95}>95%</option>
+          <option value={90}>90%</option>
+          <option value={85}>85%</option>
+          <option value={75}>75%</option>
+          <option value={50}>50%</option>
+        </select>
+        <div className="chip" style={{ marginLeft: "auto" }}>{filtered.length} campos</div>
+        {is9h && <div className="chip">{holesLabel}</div>}
       </div>
 
       {/* Banner: preencher HI */}

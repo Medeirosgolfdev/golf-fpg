@@ -1764,7 +1764,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
   /* ═══ RENDER ═══ */
   if (loading) return (
     <div className="tourn-layout">
-      <div className="toolbar"><div className="toolbar-left"><span className="toolbar-title">🇪🇸 BJGT</span></div></div>
+      <div className="toolbar"><span className="toolbar-title">🇪🇸 BJGT</span></div>
       <div className="master-detail"><div className="course-detail empty-state-lg">
         <LoadingState size="lg" icon="🏌️" message="A carregar dados…" />
       </div></div>
@@ -1772,7 +1772,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
   );
   if (error) return (
     <div className="tourn-layout">
-      <div className="toolbar"><div className="toolbar-left"><span className="toolbar-title">🇪🇸 BJGT</span></div></div>
+      <div className="toolbar"><span className="toolbar-title">🇪🇸 BJGT</span></div>
       <div className="master-detail"><div className="course-detail" ref={md.detailRef}>
         <div className="card empty-state"><div className="empty-icon">⚠️</div><div className="fw-700-dc">Erro: {error}</div></div>
       </div></div>
@@ -1782,7 +1782,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
     const info = A as { err?: string; courses?: string[]; nRounds?: number; nCards?: number; hsKeys?: string[] };
     return (
       <div className="tourn-layout">
-        <div className="toolbar"><div className="toolbar-left"><span className="toolbar-title">🇪🇸 BJGT</span></div></div>
+        <div className="toolbar"><span className="toolbar-title">🇪🇸 BJGT</span></div>
         <div className="master-detail"><div className="course-detail">
           <div className="card empty-state">
             <div className="empty-icon-lg">🔍</div>
@@ -1821,25 +1821,21 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
       {/* ── Toolbar ── */}
       <div className="toolbar">
-        <div className="toolbar-left">
-          <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
-          <span className="toolbar-title">🇪🇸 BJGT</span>
-          <span className="toolbar-meta">📍 {TOURN.location}</span>
-          <span className="toolbar-meta">📅 {TOURN.dates}</span>
-          <span className="toolbar-meta">🏷️ {PLAYER_NAME} · Sub-12</span>
-          <div className="toolbar-sep" />
-          <div className="escalao-pills">
-            {CONTEST_KEYS.map(k => (
-              <button key={k} onClick={() => setTab(k)}
-                className={`tourn-tab tourn-tab-sm${tab === k ? " active" : ""}`}>
-                {CONTEST_LABELS[k]}
-              </button>
-            ))}
-          </div>
+        <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
+        <span className="toolbar-title">🇪🇸 BJGT</span>
+        <span className="toolbar-meta">📍 {TOURN.location}</span>
+        <span className="toolbar-meta">📅 {TOURN.dates}</span>
+        <span className="toolbar-meta">🏷️ {PLAYER_NAME} · Sub-12</span>
+        <div className="toolbar-sep" />
+        <div className="escalao-pills">
+          {CONTEST_KEYS.map(k => (
+            <button key={k} onClick={() => setTab(k)}
+              className={`tourn-tab tourn-tab-sm${tab === k ? " active" : ""}`}>
+              {CONTEST_LABELS[k]}
+            </button>
+          ))}
         </div>
-        <div className="toolbar-right">
-          <span className="chip">{(() => { const c = CONTEST_MAP[tab]; return `${c.players.filter(p=>typeof p.p==="number").length} field · ${c.nRounds}R · Par ${c.par}`; })()}</span>
-        </div>
+        <span className="chip" style={{ marginLeft: "auto" }}>{(() => { const c = CONTEST_MAP[tab]; return `${c.players.filter(p=>typeof p.p==="number").length} field · ${c.nRounds}R · Par ${c.par}`; })()}</span>
       </div>
 
       {/* ── Master-detail ── */}

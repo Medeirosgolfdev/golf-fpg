@@ -16,6 +16,7 @@ import PasswordGate from "../ui/PasswordGate";
 import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
 import { PILL_TCODE, EscPill, SIDEBAR_ACCENT } from "../ui/PillBadge";
 import SidebarToggle from "../ui/SidebarToggle";
+import SortableHdr from "../ui/SortableHdr";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import KpiCard from "../ui/KpiCard";
 import LoadingState from "../ui/LoadingState";
@@ -1330,18 +1331,6 @@ function DriveAllRoundsScorecardLB({
     </>);
   }
 
-  function SHdr({ k, children, className, style }: { k: string; children: React.ReactNode; className?: string; style?: React.CSSProperties }) {
-    const active = sortKey === k;
-    return (
-      <th className={"lb-sortable "+(className||"")}
-          style={{ ...style, color: active ? "var(--accent)" : undefined, fontWeight: active ? 700 : undefined }}
-          title={active ? (sortDir==="asc" ? "Ordenado crescente" : "Ordenado decrescente") : "Clique para ordenar"}
-          onClick={() => toggleSort(k)}>
-        {children}{active && <span style={{ fontSize:8, marginLeft:2 }}>{sortDir==="asc"?"▲":"▼"}</span>}
-      </th>
-    );
-  }
-
   const postCols = 4;
 
   return (
@@ -1412,19 +1401,19 @@ function DriveAllRoundsScorecardLB({
             {/* Headers — ± Tot e buracos clicáveis (melhor ronda de cada jogador) */}
             <tr>
               <th className="lb-pos sticky-col-0">#</th>
-              <SHdr k="name" className="lb-name sticky-col-1">Jogador</SHdr>
-              <SHdr k="club" className="lb-club">Clube</SHdr>
-              <SHdr k="hcp"  className="lb-hcp">HCP</SHdr>
+              <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-name sticky-col-1">Jogador</SortableHdr>
+              <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-club">Clube</SortableHdr>
+              <SortableHdr k="hcp"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-hcp">HCP</SortableHdr>
               <th className="lb-tee" style={{ fontSize:10, fontWeight:600, color:"var(--text-muted)" }}>Rnd</th>
-              <SHdr k="topar" className="lb-topar">±</SHdr>
-              <SHdr k="gross" className="lb-gross">Tot</SHdr>
+              <SortableHdr k="topar" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-topar">±</SortableHdr>
+              <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-gross">Tot</SortableHdr>
               {showSC && (<>
                 {Array.from({length:9},(_,h)=>(
-                  <SHdr key={h} k={`h${h}`} className={"lb-hole"+(h===0?" lb-hole-first":"")} style={{ fontSize:10 }}>{h+1}</SHdr>
+                  <SortableHdr key={h} k={`h${h}`} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={"lb-hole"+(h===0?" lb-hole-first":"")} style={{ fontSize:10 }}>{h+1}</SortableHdr>
                 ))}
                 <th className="lb-halftot">{is9?"Tot":"Out"}</th>
                 {!is9 && Array.from({length:9},(_,h)=>(
-                  <SHdr key={h+9} k={`h${h+9}`} className={"lb-hole"+(h===0?" lb-hole-first":"")} style={{ fontSize:10 }}>{h+10}</SHdr>
+                  <SortableHdr key={h+9} k={`h${h+9}`} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={"lb-hole"+(h===0?" lb-hole-first":"")} style={{ fontSize:10 }}>{h+10}</SortableHdr>
                 ))}
                 {!is9 && <th className="lb-halftot">In</th>}
               </>)}
@@ -2551,7 +2540,7 @@ function DriveContent() {
         }}>
           <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />
           <span className="toolbar-title" style={{ flexShrink: 0 }}>🏁 DRIVE</span>
-          <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+          <div className="toolbar-sep" />
           {([
             { key: "torneios",      label: "Torneios" },
             { key: "ranking-pja",   label: "📊 Ranking PJA" },
@@ -2567,7 +2556,7 @@ function DriveContent() {
             </button>
           ))}
           {navMode === "torneios" && (<>
-            <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+            <div className="toolbar-sep" />
             {([
               { key: "all",       label: "Todos" },
               { key: "tour",      label: "🏌️ Tour" },
@@ -2584,7 +2573,7 @@ function DriveContent() {
               </button>
             ))}
             {availYears.length > 1 && (<>
-              <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+              <div className="toolbar-sep" />
               {availYears.map(y => (
                 <button key={y}
                   className={"tourn-tab tourn-tab-sm" + (activeYear === y ? " active" : "")}
@@ -2595,7 +2584,7 @@ function DriveContent() {
                   {y}
                 </button>
               ))}
-              <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+              <div className="toolbar-sep" />
               <button
                 className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
                 onClick={() => setFilterManuel(v => !v)}
@@ -2642,7 +2631,7 @@ function DriveContent() {
                   </button>
                 );
               })}
-              <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+              <div className="toolbar-sep" />
             </>)}
             <button className={"tourn-tab tourn-tab-sm" + (escFilter.length === 0 ? " active" : "")}
               onClick={() => setEscFilter([])} style={{ flexShrink: 0 }}>
