@@ -4067,7 +4067,10 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
   useEffect(() => {
     setCourseSearch("");
     const pv = searchParams.get("view") as ViewKey | null;
-    setViewState(pv && VALID_VIEWS.includes(pv) ? pv : "by_course");
+    const resolved: ViewKey = pv && VALID_VIEWS.includes(pv) ? pv : "by_date";
+    setViewState(resolved);
+    // Garantir que o URL reflecte a vista activa (mesmo sem parâmetro explícito)
+    if (!pv) setSearchParams(prev => { const n = new URLSearchParams(prev); n.set("view", "by_date"); return n; }, { replace: true });
     if (data?.META) onMetaLoaded?.(data.META);
   }, [data]);
 
