@@ -1,6 +1,8 @@
 // @refresh reset
 import { MRRound, MultiRoundRow, PlayerFilter, EMPTY_FILTER } from "./multiRoundTypes";
 import { useSort } from "../hooks/useSort";
+import FilterChip from "../ui/FilterChip";
+import EmptyState from "../ui/EmptyState";
 /**
  *
  * ═══════════════════════════════════════════════════════════════
@@ -129,7 +131,7 @@ export function MultiRoundLeaderboard({
   const { sortKey: sortKey, sortDir: sortDir, toggleSort: handleSort } = useSort<MRSortKey>("pos", "asc");
   const [filter, setFilter] = useState<PlayerFilter>(EMPTY_FILTER);
 
-  if (!rows.length) return <div className="muted ta-center p-16">Sem resultados.</div>;
+  if (!rows.length) return <EmptyState size="sm" message="Sem resultados." />;
 
   // WD = desistiu; incomplete = ainda não jogou todas as rondas disponíveis
   const complete   = rows.filter(r => !r.isIncomplete && !r.isWD);

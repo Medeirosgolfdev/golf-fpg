@@ -1,6 +1,7 @@
 // @refresh reset
 import { useEffect, useState, useMemo, useTransition } from "react";
 import SidebarToggle from "../ui/SidebarToggle";
+import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import React from "react";
 import SectionErrorBoundary from "../ui/SectionErrorBoundary";
@@ -3613,10 +3614,10 @@ export default function USKidsFieldPage() {
     <div className="tourn-layout" style={{ height:"calc(100vh - 52px)" }}>
 
       {/* ── TOOLBAR ── */}
-      <div style={{ display:"flex", alignItems:"center", gap:6, padding:"6px 10px", overflowX:"auto", flexWrap:"nowrap", borderBottom:"1px solid var(--border-light)", scrollbarWidth:"none" }}>
+      <Toolbar>
         <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
-        <span className="toolbar-title" style={{ flexShrink:0 }}>🏌️ USKids</span>
-        <div className="toolbar-sep" style={{ flexShrink:0 }} />
+        <ToolbarTitle>🏌️ USKids</ToolbarTitle>
+        <ToolbarSep />
         {TABS.map(tb => (
           <button key={tb.id}
             onClick={() => handleTabChange(tb.id)}
@@ -3632,7 +3633,7 @@ export default function USKidsFieldPage() {
           </button>
         ))}
         {tab !== "rivais" && (<>
-          <div className="toolbar-sep" style={{ flexShrink:0 }} />
+          <ToolbarSep />
           <button
             className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
             onClick={() => setFilterManuel(v => !v)}
@@ -3648,7 +3649,7 @@ export default function USKidsFieldPage() {
           Histórico ↗
         </a>
         <span className="chip" style={{ flexShrink:0 }}>{allTorneios.length} torn.</span>
-      </div>
+      </Toolbar>
 
       {/* ── MASTER-DETAIL ── */}
       <div className="master-detail">

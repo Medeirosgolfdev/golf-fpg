@@ -15,6 +15,7 @@ import { fmtToPar, norm } from "../utils/format";
 import { isCalUnlocked } from "../utils/authConstants";
 import PasswordGate from "../ui/PasswordGate";
 import SidebarToggle from "../ui/SidebarToggle";
+import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import LoadingState from "../ui/LoadingState";
 import EmptyState from "../ui/EmptyState";
@@ -605,22 +606,18 @@ function Content() {
     <div className="tourn-layout">
 
       {/* Toolbar */}
-      <div className="toolbar">
-        <div className="toolbar-left">
-          <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
-          <span className="toolbar-title">🇺🇸 Doral</span>
-          {cur && <span className="toolbar-meta">📍 Doral Golf Resort</span>}
-        </div>
-        <div className="toolbar-right">
-          {cur && (
-            <span className="chip">
-              {cur.players.filter(p => p.rounds.length === Math.max(...cur.players.map(q => q.rounds.length))).length} field
-              {" · "}{Math.max(...cur.players.map(p => p.rounds.length))}R
-              {" · "}{cur.category}
-            </span>
-          )}
-        </div>
-      </div>
+      <Toolbar>
+                <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
+        <ToolbarTitle>🇺🇸 Doral</ToolbarTitle>
+        {cur && <ToolbarMeta>📍 Doral Golf Resort</ToolbarMeta>}
+        {cur && (
+          <span className="chip" style={{ marginLeft: "auto" }}>
+            {cur.players.filter(p => p.rounds.length === Math.max(...cur.players.map(q => q.rounds.length))).length} field
+            {" · "}{Math.max(...cur.players.map(p => p.rounds.length))}R
+            {" · "}{cur.category}
+          </span>
+        )}
+      </Toolbar>
 
       {/* Master-detail */}
       <div className="master-detail">

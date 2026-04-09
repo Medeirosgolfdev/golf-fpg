@@ -1,6 +1,7 @@
 import { useMemo, useState, useEffect } from "react";
 import SidebarToggle from "../ui/SidebarToggle";
 import EmptyState from "../ui/EmptyState";
+import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { useParams, useNavigate } from "react-router-dom";
 import type { Course, Tee, SexFilter } from "../data/types";
@@ -433,65 +434,61 @@ export default function CamposPage() {
   return (
     <div className="campos-page">
       {/* Toolbar */}
-      <div className="toolbar">
-        <div className="toolbar-left">
-          <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Campos" />
-          <input
-            className="input"
-            value={q}
-            onChange={(e) => { setQ(e.target.value); setPlayerQ(""); selectCourse(null); }}
-            placeholder="Nome do campo…"
-          />
-          <input
-            className="input"
-            value={playerQ}
-            onChange={(e) => { setPlayerQ(e.target.value); setQ(""); selectCourse(null); }}
-            placeholder="Jogador…"
-            title="Mostra os campos onde este jogador já jogou"
-          />
+      <Toolbar>
+                <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Campos" />
+        <input
+          className="input"
+          value={q}
+          onChange={(e) => { setQ(e.target.value); setPlayerQ(""); selectCourse(null); }}
+          placeholder="Nome do campo…"
+        />
+        <input
+          className="input"
+          value={playerQ}
+          onChange={(e) => { setPlayerQ(e.target.value); setQ(""); selectCourse(null); }}
+          placeholder="Jogador…"
+          title="Mostra os campos onde este jogador já jogou"
+        />
+        <select
+          className="select"
+          value={originFilter}
+          onChange={(e) => { setOriginFilter(e.target.value as OriginFilter); setCountryFilter("ALL"); selectCourse(null); }}
+        >
+          <option value="ALL">Origem</option>
+          <option value="PT">{"\ud83c\uddf5\ud83c\uddf9"} Portugal</option>
+          <option value="INTL">{"\ud83c\udf0d"} Internacional</option>
+        </select>
+        {(originFilter === "INTL" || originFilter === "ALL") && (
           <select
             className="select"
-            value={originFilter}
-            onChange={(e) => { setOriginFilter(e.target.value as OriginFilter); setCountryFilter("ALL"); selectCourse(null); }}
+            value={countryFilter}
+            onChange={(e) => { setCountryFilter(e.target.value); selectCourse(null); }}
           >
-            <option value="ALL">Origem</option>
-            <option value="PT">{"\ud83c\uddf5\ud83c\uddf9"} Portugal</option>
-            <option value="INTL">{"\ud83c\udf0d"} Internacional</option>
-          </select>
-          {(originFilter === "INTL" || originFilter === "ALL") && (
-            <select
-              className="select"
-              value={countryFilter}
-              onChange={(e) => { setCountryFilter(e.target.value); selectCourse(null); }}
-            >
-              <option value="ALL">País</option>
-              {intlCountries.map(({ key, label, flag }) => (
-                <option key={key} value={key}>{flag} {label}</option>
-              ))}
-            </select>
-          )}
-          <select className="select" value={sexFilter} onChange={(e) => setSexFilter(e.target.value as SexFilter)}>
-            <option value="ALL">Sexo</option>
-            <option value="M">Masculino</option>
-            <option value="F">Feminino</option>
-          </select>
-          <select
-            className="select"
-            value={teeFilter}
-            onChange={(e) => { setTeeFilter(e.target.value); selectCourse(null); }}
-          >
-            <option value="ALL">Todos os tees</option>
-            {uniqueTees.map((t) => (
-              <option key={t.hex} value={t.hex}>{t.label}</option>
+            <option value="ALL">País</option>
+            {intlCountries.map(({ key, label, flag }) => (
+              <option key={key} value={key}>{flag} {label}</option>
             ))}
           </select>
-        </div>
-        <div className="toolbar-right">
-          <div className="chip">{filtered.length} campos</div>
+        )}
+        <select className="select" value={sexFilter} onChange={(e) => setSexFilter(e.target.value as SexFilter)}>
+          <option value="ALL">Sexo</option>
+          <option value="M">Masculino</option>
+          <option value="F">Feminino</option>
+        </select>
+        <select
+          className="select"
+          value={teeFilter}
+          onChange={(e) => { setTeeFilter(e.target.value); selectCourse(null); }}
+        >
+          <option value="ALL">Todos os tees</option>
+          {uniqueTees.map((t) => (
+            <option key={t.hex} value={t.hex}>{t.label}</option>
+          ))}
+        </select>
+        <div className="chip" style={{ marginLeft: "auto" }}>{filtered.length} campos</div>
           <div className="chip">{totalTees} tees</div>
           {intlCount > 0 && <div className="chip">{"\ud83c\udf0d"} {intlCount} intl</div>}
-        </div>
-      </div>
+      </Toolbar>
 
       {/* Master-detail */}
       <div className="master-detail">

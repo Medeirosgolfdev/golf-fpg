@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine,
   ScatterChart, Scatter, ResponsiveContainer, Cell, LabelList,
@@ -7,6 +8,8 @@ import { useAppContext } from "../context/AppContext";
 import { sdClassByHcp } from "../utils/scoreDisplay";
 import { norm } from "../utils/format";
 import PlayerLink from "../ui/PlayerLink";
+import EmptyState from "../ui/EmptyState";
+import LoadingState from "../ui/LoadingState";
 import SexBadge from "../ui/SexBadge";
 
 /* ── Tipos ── */
@@ -310,7 +313,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
   }
 
   if (t._status !== "ok" && t._status !== "loading") return null;
-  if (t._status === "loading") return <div className="muted p-16">A carregar...</div>;
+  if (t._status === "loading") return <LoadingState size="sm" />;
 
   return (
     <div>
@@ -400,7 +403,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
             })}
           </tbody>
         </table>
-        {lista.length === 0 && <div className="muted p-16">Sem resultados</div>}
+        {lista.length === 0 && <EmptyState size="sm" message="Sem resultados" />}
       </div>
     </div>
   );
@@ -1140,8 +1143,8 @@ function AnaliseView({ t, nossosByFed, statsDb }: {
     });
   }, [playerLoads]);
 
-  if (t._status !== "ok") return <div className="muted p-16">Carrega o torneio primeiro.</div>;
-  if (t.totalInscritos === 0) return <div className="muted p-16">Sem inscritos.</div>;
+  if (t._status !== "ok") return <EmptyState size="sm" message="Carrega o torneio primeiro." />;
+  if (t.totalInscritos === 0) return <EmptyState size="sm" message="Sem inscritos." />;
 
   const ctx     = CONTEXTO_TORNEIO[t.escalao];
   const nDone   = playerLoads.filter(p => p.status === "ok" || p.status === "nodata").length;
@@ -1398,44 +1401,40 @@ export default function NacionaisPage() {
 
   return (
     <div className="jogadores-page nac-page">
-      <div className="toolbar">
-        <div className="toolbar-left" style={{ flexWrap: "wrap", gap: 4 }}>
-          <span style={{ fontWeight: 700, fontSize: 13, flexShrink: 0 }}>🏆 Nacionais Jovens</span>
-          <div className="toolbar-sep" style={{ flexShrink: 0 }} />
-          {([
-            { key: "inscricoes", label: "Inscrições" },
-            { key: "analise",    label: "📊 Análise" },
-            { key: "resultados", label: "🏅 Resultados", disabled: true },
-          ] as const).map(({ key, label, disabled }) => (
-            <button key={key}
-              className={"tourn-tab tourn-tab-sm" + (view === key ? " active" : "")}
-              onClick={() => !disabled && setView(key as PageView)}
-              title={disabled ? "Disponivel quando o torneio decorrer" : undefined}
-              style={view === key
-                ? { flexShrink: 0 }
-                : { flexShrink: 0, background: "var(--bg-muted)", color: disabled ? "var(--text-3)" : "var(--text-2)", borderColor: "var(--border)", cursor: disabled ? "not-allowed" : "pointer", opacity: disabled ? 0.5 : 1 }}>
-              {label}
-            </button>
-          ))}
-          <div className="toolbar-sep" style={{ flexShrink: 0 }} />
-          <button className="tourn-tab tourn-tab-sm" onClick={refreshAll}
-            style={{ flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}
-            title="Ir buscar inscrições actualizadas à FPG para todos os escalões">
-            ↺ Actualizar
+      <Toolbar>
+                <span style={{ fontWeight: 700, fontSize: 13, flexShrink: 0 }}>🏆 Nacionais Jovens</span>
+        <ToolbarSep />
+        {([
+          { key: "inscricoes", label: "Inscrições" },
+          { key: "analise",    label: "📊 Análise" },
+          { key: "resultados", label: "🏅 Resultados", disabled: true },
+        ] as const).map(({ key, label, disabled }) => (
+          <button key={key}
+            className={"tourn-tab tourn-tab-sm" + (view === key ? " active" : "")}
+            onClick={() => !disabled && setView(key as PageView)}
+            title={disabled ? "Disponivel quando o torneio decorrer" : undefined}
+            style={view === key
+              ? { flexShrink: 0 }
+              : { flexShrink: 0, background: "var(--bg-muted)", color: disabled ? "var(--text-3)" : "var(--text-2)", borderColor: "var(--border)", cursor: disabled ? "not-allowed" : "pointer", opacity: disabled ? 0.5 : 1 }}>
+            {label}
           </button>
-          <div className="toolbar-sep" style={{ flexShrink: 0 }} />
-          {torneios.map(t => (
-            <TorneioCard key={t.tcode} t={t}
-              active={activeTcode === t.tcode}
-              onClick={() => setActiveTcode(t.tcode)} />
-          ))}
-        </div>
-        <div className="toolbar-right">
-          {totalNossosInscritos > 0 && (
-            <div className="chip">{totalNossosInscritos} na BD</div>
-          )}
-        </div>
-      </div>
+        ))}
+        <ToolbarSep />
+        <button className="tourn-tab tourn-tab-sm" onClick={refreshAll}
+          style={{ flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}
+          title="Ir buscar inscrições actualizadas à FPG para todos os escalões">
+          ↺ Actualizar
+        </button>
+        <ToolbarSep />
+        {torneios.map(t => (
+          <TorneioCard key={t.tcode} t={t}
+            active={activeTcode === t.tcode}
+            onClick={() => setActiveTcode(t.tcode)} />
+        ))}
+        {totalNossosInscritos > 0 && (
+          <div className="chip" style={{ marginLeft: "auto" }}>{totalNossosInscritos} na BD</div>
+        )}
+      </Toolbar>
 
       <PainelResumo torneios={torneios} nossosByFed={nossosByFed} />
       <div className="nac-content">

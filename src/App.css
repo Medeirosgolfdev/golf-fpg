@@ -157,6 +157,26 @@ html, body, #root {
  background: var(--bg-card);
  border-bottom: 1px solid var(--border-light);
  flex-shrink: 0;
+ flex-wrap: nowrap;
+ overflow-x: auto;
+ scrollbar-width: none;
+ -webkit-overflow-scrolling: touch;
+}
+.toolbar::-webkit-scrollbar { display: none; }
+
+/* CamposPage, JogadoresPage & tournament compact toolbar (no labels) */
+.campos-page .toolbar,
+.jogadores-page .toolbar,
+.tourn-layout .toolbar {
+ padding: 6px 12px;
+ gap: 8px;
+ align-items: center;
+}
+.campos-page .toolbar-left,
+.jogadores-page .toolbar-left,
+.tourn-layout .toolbar-left {
+ gap: 8px;
+ align-items: center;
 }
 
 /* Compact selects inside jogadores/tourn toolbar */
@@ -1296,9 +1316,7 @@ tr.cross-current { background: var(--bg-success); }
  .nav         { margin-left: 4px; }
  .nav-btn     { font-size: 11px; padding: 4px 8px; }
 
- .toolbar       { flex-wrap: wrap; padding: 5px 8px; gap: 5px; align-items: center; min-height: 0; }
- .toolbar-left  { flex-wrap: wrap; gap: 5px; align-items: center; }
- .toolbar-right { flex-wrap: wrap; gap: 4px; align-items: center; }
+ .toolbar       { flex-wrap: wrap; overflow-x: visible; padding: 5px 8px; gap: 5px; align-items: center; min-height: 0; }
  .toolbar-sep   { display: none; }
  .toolbar-meta  { display: none; }
  .toolbar-title { font-size: 12px; }

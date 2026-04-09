@@ -17,6 +17,9 @@ import PasswordGate from "../ui/PasswordGate";
 import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
 import { PILL_TCODE, EscPill, SIDEBAR_ACCENT } from "../ui/PillBadge";
 import SidebarToggle from "../ui/SidebarToggle";
+import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
+import PlayerLink from "../ui/PlayerLink";
+import EmptyState from "../ui/EmptyState";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import KpiCard from "../ui/KpiCard";
 import LoadingState from "../ui/LoadingState";
@@ -930,7 +933,7 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
   const { sortKey, sortDir, toggleSort: handleSort } = useSort<"pos"|"esc"|"tee"|"hcp"|"sd">("pos");
 
   const players = tournament.players.filter((p) => !isDNS(p) && p.scores && p.scores.length > 0);
-  if (!players.length) return <div className="muted ta-center p-16">Scorecards não disponíveis.</div>;
+  if (!players.length) return <EmptyState size="sm" message="Scorecards não disponíveis." />;
 
   const refP = players[0];
   const par = refP.par || [];
@@ -2028,7 +2031,7 @@ function TournamentGrid({ rows, allTournaments, onPlayerClick, playersDB, escLoo
         );
       })}
       {sorted.length === 0 && (
-        <tr><td colSpan={99} className="muted p-16">Nenhum jogador Sub-12 encontrado</td></tr>
+        <tr><td colSpan={99}><EmptyState size="sm" message="Nenhum jogador Sub-12 encontrado" /></td></tr>
       )}
     </CrossSeasonTable>
   );
@@ -2519,14 +2522,10 @@ function DriveContent() {
       <div style={{ borderBottom: "1px solid var(--border-light)" }}>
 
         {/* Linha 1: tudo numa linha scrollável */}
-        <div style={{
-          display: "flex", alignItems: "center", gap: 6,
-          padding: "6px 10px", overflowX: "auto", flexWrap: "nowrap",
-          scrollbarWidth: "none", WebkitOverflowScrolling: "touch",
-        }}>
+        <Toolbar>
           <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />
-          <span className="toolbar-title" style={{ flexShrink: 0 }}>🏁 DRIVE</span>
-          <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+          <ToolbarTitle>🏁 DRIVE</ToolbarTitle>
+          <ToolbarSep />
           {([
             { key: "torneios",      label: "Torneios" },
             { key: "ranking-pja",   label: "📊 Ranking PJA" },
@@ -2542,7 +2541,7 @@ function DriveContent() {
             </button>
           ))}
           {navMode === "torneios" && (<>
-            <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+            <ToolbarSep />
             {([
               { key: "all",       label: "Todos" },
               { key: "tour",      label: "🏌️ Tour" },
@@ -2559,7 +2558,7 @@ function DriveContent() {
               </button>
             ))}
             {availYears.length > 1 && (<>
-              <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+              <ToolbarSep />
               {availYears.map(y => (
                 <button key={y}
                   className={"tourn-tab tourn-tab-sm" + (activeYear === y ? " active" : "")}
@@ -2570,7 +2569,7 @@ function DriveContent() {
                   {y}
                 </button>
               ))}
-              <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+              <ToolbarSep />
               <button
                 className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
                 onClick={() => setFilterManuel(v => !v)}
@@ -2589,7 +2588,7 @@ function DriveContent() {
             </span>
           )}
           {data.lastUpdated && <span className="muted fs-10" style={{ whiteSpace: "nowrap", flexShrink: 0 }}>{data.lastUpdated}</span>}
-        </div>
+        </Toolbar>
 
         {/* Linha 2: regiões + escalões — scroll horizontal */}
         {navMode === "torneios" && (availRegions.length > 1 || availEscs.length > 0) && (
@@ -2617,7 +2616,7 @@ function DriveContent() {
                   </button>
                 );
               })}
-              <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+              <ToolbarSep />
             </>)}
             <button className={"tourn-tab tourn-tab-sm" + (escFilter.length === 0 ? " active" : "")}
               onClick={() => setEscFilter([])} style={{ flexShrink: 0 }}>
@@ -2779,7 +2778,7 @@ function DriveContent() {
             }
 
             {filteredGroups.length === 0 && (
-              <div className="muted" style={{ padding: "16px 12px", fontSize: 12 }}>Sem torneios</div>
+              <EmptyState size="sm" message="Sem torneios" />
             )}
             <div className="muted fs-10" style={{ padding: "8px 12px", borderTop: "1px solid var(--border-light)" }}>
               scoring.datagolf.pt{sdCount > 0 && ` · SD: ${sdCount}`}
@@ -2878,7 +2877,7 @@ function DriveContent() {
                           const totalT = selectedGroup.entries.find(e => e._roundLabel === "Resumo");
                           return totalT
                             ? <DriveAllRoundsScorecardLB totalTournament={totalT} playersDB={pdb} sdLookup={sdLookup} />
-                            : <div className="muted ta-center p-16">Dados insuficientes</div>;
+                            : <EmptyState size="sm" message="Dados insuficientes" />;
                         })()
                       : curTournament._roundLabel === "Resumo"
                         ? <TotalLeaderboard tournament={curTournament} playersDB={pdb} sdLookup={sdLookup} />

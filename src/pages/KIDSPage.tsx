@@ -14,6 +14,7 @@ import { scClass, toParClass, sc3m, SC, tpColorDark } from "../utils/scoreDispla
 import { isCalUnlocked } from "../utils/authConstants";
 import PasswordGate from "../ui/PasswordGate";
 import SidebarToggle from "../ui/SidebarToggle";
+import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
 import { RoundPill } from "../ui/PillBadge";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import EmptyState from "../ui/EmptyState";
@@ -2931,13 +2932,10 @@ function RivaisIntlContent() {
     <div className="tourn-layout">
 
       {/* ── Toolbar row 1 ── */}
-      <div className="toolbar" style={{
-        display: "flex", alignItems: "center", gap: 6,
-        overflowX: "auto", flexWrap: "nowrap", scrollbarWidth: "none",
-      }}>
+      <Toolbar>
         <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
-        <span className="toolbar-title" style={{ flexShrink: 0 }}>🌍 Kids</span>
-        <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+        <ToolbarTitle>🌍 Kids</ToolbarTitle>
+        <ToolbarSep />
         <span className="toolbar-meta" style={{ flexShrink: 0 }}>
           {loaded
             ? <span style={{ fontSize: 10, color: "var(--color-good-dark)", fontWeight: 700 }}>{rivals.length} rivais · ✓</span>
@@ -2952,12 +2950,12 @@ function RivaisIntlContent() {
                 </span>
               : <span style={{ fontSize: 10, color: "var(--text-muted)" }}>⏳ a iniciar…</span>}
         </span>
-        <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+        <ToolbarSep />
         {/* Pesquisa */}
         <input type="text" value={q} onChange={e => setQ(e.target.value)}
           placeholder="🔎 Pesquisar rival…" className="input"
           style={{ width: 150, height: 26, fontSize: 12, flexShrink: 0 }} />
-        <div className="toolbar-sep" style={{ flexShrink: 0 }} />
+        <ToolbarSep />
         {/* Filtros avançados: país, tipo, presenças, directos, limpar */}
         <select className="select" value={paisFilter} onChange={e => setPaisFilter(e.target.value)}
           style={{ fontSize: 11, height: 26, minWidth: 85, flexShrink: 0 }}>
@@ -3006,7 +3004,7 @@ function RivaisIntlContent() {
         <span className="chip" style={{ flexShrink: 0 }}>
           {rivals.filter(p => (nPlayed(p) > 0 || p.isM) && playerMatchesFilter(p, fids)).length}
         </span>
-      </div>
+      </Toolbar>
 
       {/* ── Toolbar row 2: filtros de circuito (multi-select) ── */}
       <div style={{
