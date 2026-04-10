@@ -9,7 +9,7 @@ jobs:
   historico:
     name: 📋 Histórico de Jogadores
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 360
     steps:
       - uses: actions/checkout@v4
         with:
@@ -25,10 +25,10 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add public/data/uskids-member-history.json
+          git add public/data/uskids-member-history-*.json
           git diff --cached --quiet && exit 0
           git fetch origin main
           git merge origin/main --no-edit --strategy-option=ours
-          git add public/data/uskids-member-history.json
+          git add public/data/uskids-member-history-*.json
           git commit -m "data: histórico USKids [$(date -u '+%Y-%m-%d %H:%M UTC')]"
           git push
