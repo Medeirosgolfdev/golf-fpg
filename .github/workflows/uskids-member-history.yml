@@ -21,6 +21,7 @@ jobs:
       - run: npm ci
       - run: npx playwright install chromium --with-deps
       - run: node scripts/fetch-uskids-member-history.js
+      - run: node scripts/build-member-history-slim.js
       - name: Commit se houve alterações
         run: |
           git config user.name  "github-actions[bot]"

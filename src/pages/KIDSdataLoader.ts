@@ -30,7 +30,7 @@ const CC: Record<string, string> = {
   UY:"Uruguay",VE:"Venezuela",
 };
 
-function co(raw: string): string {
+export function co(raw: string): string {
   const t = (raw||"").trim();
   return CC[t] || CC[t.toUpperCase()] || CC[t.toLowerCase()] || t;
 }
@@ -156,7 +156,7 @@ export function getScorecards(playerName: string): AutoScorecard[] {
   return [];
 }
 
-function processWjgc(data: unknown, tid: string): AutoRivalPlayer[] {
+export function processWjgc(data: unknown, tid: string): AutoRivalPlayer[] {
   const d = data as {
     par?: number[]; si?: number[];
     players: Array<{
@@ -190,7 +190,7 @@ function processWjgc(data: unknown, tid: string): AutoRivalPlayer[] {
   });
 }
 
-function processDoral(data: unknown): AutoRivalPlayer[] {
+export function processDoral(data: unknown): AutoRivalPlayer[] {
   const d = data as {
     year?: number;
     divisions: Array<{
@@ -312,7 +312,7 @@ const MANUEL_OVERRIDES: Array<{
   },
 ];
 
-function processManuelOverrides(): AutoRivalPlayer[] {
+export function processManuelOverrides(): AutoRivalPlayer[] {
   const all: AutoRivalPlayer[] = [];
   for (const ov of MANUEL_OVERRIDES) {
     const rd = ov.rounds.map(r => r.score);
@@ -333,7 +333,7 @@ function processManuelOverrides(): AutoRivalPlayer[] {
   return all;
 }
 
-function processUskids(data: unknown): AutoRivalPlayer[] {
+export function processUskids(data: unknown): AutoRivalPlayer[] {
   const d = data as {
     resultados: Array<{
       t: number;
@@ -436,7 +436,7 @@ function processUskids(data: unknown): AutoRivalPlayer[] {
   return all;
 }
 
-function mergeInto(map: Map<string, AutoRivalPlayer>, players: AutoRivalPlayer[], forceTids?: ReadonlySet<string>) {
+export function mergeInto(map: Map<string, AutoRivalPlayer>, players: AutoRivalPlayer[], forceTids?: ReadonlySet<string>) {
   for (const p of players) {
     const key = normName(p.n);
     if (map.has(key)) {
@@ -462,7 +462,7 @@ const PULL_TCODE_TO_TID: Record<string, string> = {
   "10294": "gg26_open", // Greatgolf Junior Open 2026 - open (todos escalões)
 };
 
-function processPullTorneios(d: unknown): AutoRivalPlayer[] {
+export function processPullTorneios(d: unknown): AutoRivalPlayer[] {
   const data = d as {
     tournaments: Array<{
       name: string; tcode: string; date: string; campo?: string;
@@ -527,7 +527,7 @@ function processPullTorneios(d: unknown): AutoRivalPlayer[] {
  * - Carrega escalões Boys ±1 do que Manuel teria jogado na altura (9H e 18H incluídos)
  * - tid gerado como "usk{tcode}_b{minAge}"
  */
-function processUskidsCompleto(data: unknown): AutoRivalPlayer[] {
+export function processUskidsCompleto(data: unknown): AutoRivalPlayer[] {
   type AgeGroup = { name: string; gender: string; min_age: number; holes_per_round: number };
   type PlayerRoundData = { strokes: number[]; flight_round?: string | number };
   type FlightPlayer = {
@@ -784,7 +784,7 @@ function processUskidsCompleto(data: unknown): AutoRivalPlayer[] {
 }
 
 // ── Abreviatura de nome de torneio USKids ─────────────────────────
-function shortenTournName(name: string): string {
+export function shortenTournName(name: string): string {
   const n = name.trim();
   // World Championship
   if (/world championship/i.test(n)) { const y = n.match(/\d{4}/)?.[0]; return y ? `WC ${y.slice(2)}` : "WC"; }
@@ -814,7 +814,7 @@ function shortenTournName(name: string): string {
 //
 // Formato slim: par[], yards[], name e startDate estão em d.torneios[tcode]
 // (partilhados por todos os jogadores), não em cada jogador×torneio.
-function processMemberHistory(data: unknown): AutoRivalPlayer[] {
+export function processMemberHistory(data: unknown): AutoRivalPlayer[] {
   const d = data as {
     gerado_em: string;
     // Dados partilhados do torneio (uma entrada por tcode)
