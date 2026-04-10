@@ -11,7 +11,7 @@
  *   2. Fingerprint de strokes via GetPlayerTeeTimes
  *   3. Fingerprint de strokes via uskids-results.json
  *
- * Output: public/data/uskids-member-history.json
+ * Output: public/data-archive/uskids-member-history.json
  *
  * Uso:
  *   node fetch-uskids-member-history.js            # processa novos + actualiza histórico
@@ -24,84 +24,9 @@ const path = require('path');
 const { chromium } = require('playwright');
 
 // ── Config ───────────────────────────────────
-const DIR          = path.join(__dirname, '..', 'public', 'data');
-const RESULTS_PATH   = path.join(DIR, 'uskids-results.json');
-const FLIGHTS_CACHE  = path.join(DIR, 'uskids-flights-cache.json');
-const FLIGHTS_MAX_DIAS = 3; // re-descobrir flights após 3 dias
-
-function flightsCacheValida() {
-  if (!fs.existsSync(FLIGHTS_CACHE)) return false;
-  try {
-    const d = JSON.parse(fs.readFileSync(FLIGHTS_CACHE, 'utf8'));
-    if (!d.gerado_em) return false;
-    const dias = (Date.now() - new Date(d.gerado_em).getTime()) / 86400000;
-    return dias < FLIGHTS_MAX_DIAS;
-  } catch { return false; }
-}
-
-function loadFlightsCache() {
-  try { return JSON.parse(fs.readFileSync(FLIGHTS_CACHE, 'utf8')); } catch { return null; }
-}
-
-function saveFlightsCache(data) {
-  fs.mkdirSync(DIR, { recursive: true });
-  fs.writeFileSync(FLIGHTS_CACHE, JSON.stringify({ ...data, gerado_em: new Date().toISOString() }, null, 2), 'utf8');
-}
-const PART_SIZE    = 75;   // jogadores por ficheiro
-const PART_PREFIX  = 'uskids-member-history-';
-
-function partPath(n) {
-  return path.join(DIR, `${PART_PREFIX}${String(n).padStart(3,'0')}.json`);
-}
-
-// Carregar todos os ficheiros de partes existentes → { torneios, jogadores }
-function loadAllParts() {
-  let torneios = {};
-  let jogadores = {};
-
-  // Migração: se existir o ficheiro único antigo, carregá-lo primeiro
-  const legacyPath = path.join(DIR, 'uskids-member-history.json');
-  if (fs.existsSync(legacyPath)) {
-    try {
-      const d = JSON.parse(fs.readFileSync(legacyPath, 'utf8'));
-      Object.assign(torneios, d.torneios || {});
-      Object.assign(jogadores, d.jogadores || {});
-      console.log(`  📦 Migração: ${Object.keys(jogadores).length} jogadores do ficheiro legado`);
-    } catch {}
-  }
-
-  // Carregar partes numeradas
-  let n = 1;
-  while (fs.existsSync(partPath(n))) {
-    try {
-      const d = JSON.parse(fs.readFileSync(partPath(n), 'utf8'));
-      Object.assign(torneios, d.torneios || {});
-      Object.assign(jogadores, d.jogadores || {});
-    } catch {}
-    n++;
-  }
-  return { torneios, jogadores };
-}
-
-// Gravar todos os jogadores em ficheiros de PART_SIZE
-function saveAllParts(torneios, jogadores) {
-  fs.mkdirSync(DIR, { recursive: true });
-  const entries = Object.entries(jogadores);
-  const now = new Date().toISOString();
-  const nParts = Math.max(1, Math.ceil(entries.length / PART_SIZE));
-  for (let i = 0; i < nParts; i++) {
-    const slice = Object.fromEntries(entries.slice(i * PART_SIZE, (i + 1) * PART_SIZE));
-    const obj = { gerado_em: now, torneios, jogadores: slice };
-    fs.writeFileSync(partPath(i + 1), JSON.stringify(obj, null, 2), 'utf8');
-  }
-  // Apagar partes antigas que já não existem (ex: ficheiro reduziu)
-  let n = nParts + 1;
-  while (fs.existsSync(partPath(n))) { fs.unlinkSync(partPath(n)); n++; }
-  // Apagar ficheiro legado se existir (já migrado)
-  const legacyPath = path.join(DIR, 'uskids-member-history.json');
-  if (fs.existsSync(legacyPath)) { fs.unlinkSync(legacyPath); }
-  return nParts;
-}
+const DIR    = path.join(__dirname, '..', 'public', 'data-archive');
+const OUTPUT = path.join(DIR, 'uskids-member-history.json');
+const RESULTS_PATH = path.join(__dirname, '..', 'public', 'data', 'uskids-results.json');
 
 // Torneios a rastrear.
 // Para torneios com flights conhecidos, especifica-os manualmente.
@@ -207,17 +132,6 @@ function strokesKey(arr) {
   return arr.join(',');
 }
 
-// Valida se um array de strokes é suficientemente rico para ser fingerprint fiável.
-// Rejeita: < 18 buracos, maioria zeros, todos iguais (padrão repetido).
-function strokedValid(arr) {
-  if (!arr || arr.length < 18) return false;
-  const nonZero = arr.filter(s => s > 0);
-  if (nonZero.length < 14) return false; // mais de 4 zeros → suspeito
-  const unique = new Set(arr).size;
-  if (unique <= 3) return false; // demasiado uniforme (ex: todos 4s)
-  return true;
-}
-
 function parseDate(s) {
   if (!s) return '';
   if (s.includes('-')) return s;
@@ -226,153 +140,81 @@ function parseDate(s) {
 }
 
 /**
- * Constrói fingerprints a partir de:
- *   1. uskids-results.json (leaderboards com strokes)
- *   2. uskids_torneios_completos(1-19).json (scorecards completos)
- * Chave: "{tcode}:R{ronda}:{strokes}" → { name, country, place }
+ * Constrói fingerprints a partir do uskids-results.json.
  */
 function buildResultsFingerprints() {
   const fp = new Map();
-
-  // ── 1. uskids-results.json ──
-  if (fs.existsSync(RESULTS_PATH)) {
-    try {
-      const data = JSON.parse(fs.readFileSync(RESULTS_PATH, 'utf8'));
-      for (const tourn of data.resultados || []) {
-        const tcode = String(tourn.t);
-        for (const esc of tourn.escaloes || []) {
-          for (const ronda of esc.rondas || []) {
-            const rn = ronda.ronda;
-            for (const j of ronda.leaderboard || []) {
-              const sk = strokesKey(j.strokes);
-              if (sk && strokedValid(j.strokes)) fp.set(`${tcode}:R${rn}:${sk}`, {
-                name: j.nome, country: j.pais, place: j.cidade || '',
-              });
-            }
+  if (!fs.existsSync(RESULTS_PATH)) return fp;
+  try {
+    const data = JSON.parse(fs.readFileSync(RESULTS_PATH, 'utf8'));
+    for (const tourn of data.resultados || []) {
+      const tcode = String(tourn.t);
+      for (const esc of tourn.escaloes || []) {
+        for (const ronda of esc.rondas || []) {
+          const rn = ronda.ronda;
+          for (const j of ronda.leaderboard || []) {
+            const sk = strokesKey(j.strokes);
+            if (sk) fp.set(`${tcode}:R${rn}:${sk}`, {
+              name: j.nome, country: j.pais, place: j.cidade || '',
+            });
           }
         }
       }
-    } catch {}
-  }
-
-  // ── 2. uskids_torneios_completos(1-N).json ──
-  for (let i = 1; i <= 30; i++) {
-    const p = path.join(DIR, `uskids_torneios_completos(${i}).json`);
-    if (!fs.existsSync(p)) continue;
-    try {
-      const data = JSON.parse(fs.readFileSync(p, 'utf8'));
-      const tcode = String(data.signupanytime_t || '');
-      if (!tcode) continue;
-      for (const flight of Object.values(data.flights || {})) {
-        for (const pl of Object.values(flight.flight_players || {})) {
-          const name = `${(pl.first || '').trim()} ${(pl.last || '').trim()}`.trim();
-          if (!name) continue;
-          const info = { name, country: (pl.country || '').toUpperCase(), place: pl.place || '' };
-          for (const [rn, rd] of Object.entries(pl.rounds || {})) {
-            const sk = strokesKey(rd.strokes);
-            if (sk && strokedValid(rd.strokes)) fp.set(`${tcode}:R${rn}:${sk}`, info);
-          }
-        }
-      }
-    } catch {}
-  }
-
+    }
+  } catch {}
   return fp;
 }
 
 /**
  * Tenta identificar um jogador pelos strokes.
- * Exige pelo menos 2 matches independentes do mesmo nome para confirmar.
- * Um "match independente" = ronda diferente ou torneio diferente.
- * Isto evita falsos positivos por colisão de fingerprint.
  */
 function matchPlayer(memberData, apiFingerprints, resultsFP, memberFlights) {
-  // Acumular votos: normName → { info, count, sources }
-  const votos = new Map(); // key: nome normalizado → { info, count }
-
-  function addVoto(info) {
-    if (!info?.name || info.name === '?') return;
-    const key = info.name.toLowerCase().trim();
-    if (!votos.has(key)) votos.set(key, { info, count: 0 });
-    votos.get(key).count++;
-  }
-
-  // 1. API fingerprints (torneios fonte)
+  // 1. API fingerprints (torneio fonte)
   for (const { tcode, fid } of memberFlights) {
     const fpMap = apiFingerprints.get(`${tcode}:${fid}`);
     if (!fpMap) continue;
     const tournData = memberData[String(tcode)];
     if (!tournData || !tournData.p_rounds) continue;
     for (const [rn, rd] of Object.entries(tournData.p_rounds)) {
-      if (!strokedValid(rd.strokes)) continue;
       const sk = strokesKey(rd.strokes);
       if (!sk) continue;
       const match = fpMap.get(`R${rn}:${sk}`);
-      if (match) addVoto(match);
+      if (match) return match;
     }
   }
-
-  // 2. uskids-results.json + torneios_completos
+  // 2. Fallback: uskids-results.json
   for (const [tid, t] of Object.entries(memberData)) {
     if (!t.p_rounds) continue;
     for (const [rn, rd] of Object.entries(t.p_rounds)) {
-      if (!strokedValid(rd.strokes)) continue;
       const sk = strokesKey(rd.strokes);
       if (!sk) continue;
       const match = resultsFP.get(`${tid}:R${rn}:${sk}`);
-      if (match) addVoto(match);
+      if (match) return match;
     }
   }
-
-  // Só aceitar se o mesmo nome apareceu em 2+ rondas independentes
-  let melhor = null;
-  for (const { info, count } of votos.values()) {
-    if (count >= 2) {
-      if (!melhor || count > melhor.count) melhor = { info, count };
-    }
-  }
-  return melhor?.info ?? null;
+  return null;
 }
 
 // ── Re-match offline (--clean) ───────────────
 
 function cleanAndRematch() {
   console.log('\n🧹  Modo --clean: re-match nomes\n');
-  const { torneios, jogadores } = loadAllParts();
-  if (!Object.keys(jogadores).length) { console.log('Nenhum ficheiro encontrado.'); return; }
+  if (!fs.existsSync(OUTPUT)) { console.log('Ficheiro não encontrado:', OUTPUT); return; }
 
-  const cache = { torneios, jogadores };
+  const cache = JSON.parse(fs.readFileSync(OUTPUT, 'utf8'));
   const resultsFP = buildResultsFingerprints();
 
   let matched = 0, already = 0, agFixed = 0;
 
   for (const j of Object.values(cache.jogadores)) {
-    const semNome = !j.name || j.name === '?' || j.name === null || String(j.name).startsWith('[unknown');
-
-    if (semNome) {
-      // Acumular votos com dupla verificação
-      const votos = new Map();
+    if (!j.name || j.name === '?' || j.name === null || String(j.name).startsWith('[unknown')) {
       for (const [tid, t] of Object.entries(j.torneios || {})) {
+        if (j.name && j.name !== '?' && j.name !== null) break;
         for (const [rn, rd] of Object.entries(t.rounds || {})) {
-          if (!strokedValid(rd.strokes)) continue;
+          if (!rd.strokes || !rd.strokes.length) continue;
           const m = resultsFP.get(`${tid}:R${rn}:${strokesKey(rd.strokes)}`);
-          if (m?.name) {
-            const key = m.name.toLowerCase().trim();
-            if (!votos.has(key)) votos.set(key, { info: m, count: 0 });
-            votos.get(key).count++;
-          }
+          if (m) { j.name = m.name; j.country = m.country; j.place = m.place; matched++; break; }
         }
-      }
-      // Só aceitar com 2+ votos
-      let melhor = null;
-      for (const { info, count } of votos.values()) {
-        if (count >= 2 && (!melhor || count > melhor.count)) melhor = { info, count };
-      }
-      if (melhor) {
-        j.name = melhor.info.name;
-        j.country = melhor.info.country;
-        j.place = melhor.info.place;
-        matched++;
       }
     } else { already++; }
 
@@ -382,59 +224,20 @@ function cleanAndRematch() {
   }
 
   cache.gerado_em = new Date().toISOString();
-  const nParts = saveAllParts(cache.torneios, cache.jogadores);
+  fs.writeFileSync(OUTPUT, JSON.stringify(cache, null, 2), 'utf8');
 
   const total = Object.keys(cache.jogadores).length;
   const named = Object.values(cache.jogadores).filter(j => j.name && j.name !== '?' && j.name !== null).length;
   console.log(`  Já tinham nome: ${already} | Novos matches: ${matched} | AgeGroups fixed: ${agFixed}`);
-  console.log(`  Total: ${total} jogadores (${named} com nome) em ${nParts} ficheiros\n`);
+  console.log(`  Total: ${total} jogadores (${named} com nome)\n`);
 }
 
-// ── Prune offline (--prune) ──────────────────
-// Remove jogadores sem nome que não têm nenhuma entrada em Boys 9-13.
-// Esses nunca vão ser utilizados na app.
-
-function pruneUseless() {
-  console.log('\n✂️   Modo --prune: limpeza de jogadores inúteis\n');
-  const { torneios, jogadores } = loadAllParts();
-  if (!Object.keys(jogadores).length) { console.log('Nenhum ficheiro encontrado.'); return; }
-
-  let removidos = 0, mantidos = 0;
-  const jogadoresFiltrados = {};
-
-  for (const [mid, j] of Object.entries(jogadores)) {
-    // Manter sempre jogadores com nome identificado
-    if (j.name && j.name !== '?') {
-      jogadoresFiltrados[mid] = j;
-      mantidos++;
-      continue;
-    }
-
-    // Sem nome: só manter se tiver pelo menos um torneio em Boys 9-13
-    const temBoysRelevante = Object.values(j.torneios || {}).some(t => {
-      const m = (t.ageGroup || '').match(/boys\s+(\d+)/i);
-      if (!m) return false;
-      const age = parseInt(m[1]);
-      return age >= 9 && age <= 13;
-    });
-
-    if (temBoysRelevante) {
-      jogadoresFiltrados[mid] = j;
-      mantidos++;
-    } else {
-      removidos++;
-    }
-  }
-
-  const nParts = saveAllParts(torneios, jogadoresFiltrados);
-  console.log(`  Removidos: ${removidos} | Mantidos: ${mantidos} | Ficheiros: ${nParts}`);
-}
+// ── Main ─────────────────────────────────────
 
 async function main() {
   const forceAll = process.argv.includes('--force');
 
   if (process.argv.includes('--clean')) { cleanAndRematch(); return; }
-  if (process.argv.includes('--prune')) { pruneUseless();    return; }
 
   const tcodes = [...ALL_TCODES];
 
@@ -445,15 +248,17 @@ async function main() {
   if (forceAll) console.log('    ⚠️  Modo --force: re-fetch de todos os membros');
   console.log('══════════════════════════════════════');
 
-  // Carregar cache existente (de todos os ficheiros de partes)
-  const { torneios: cachedTorneiosData, jogadores: cachedJogadores } = loadAllParts();
-  let cache = { gerado_em: null, torneios: cachedTorneiosData, jogadores: cachedJogadores };
+  // Carregar cache existente
+  let cache = { gerado_em: null, torneios: {}, jogadores: {} };
+  if (fs.existsSync(OUTPUT)) {
+    try { cache = JSON.parse(fs.readFileSync(OUTPUT, 'utf8')); } catch {}
+  }
   const existingMembers = new Set(Object.keys(cache.jogadores));
   console.log(`\n📂 Cache: ${existingMembers.size} jogadores`);
 
   // Fingerprints do uskids-results.json
   const resultsFP = buildResultsFingerprints();
-  console.log(`  📄 ${resultsFP.size} fingerprints (results.json + torneios_completos)`);
+  console.log(`  📄 ${resultsFP.size} fingerprints do uskids-results.json`);
 
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext({
@@ -461,7 +266,10 @@ async function main() {
   });
   const page = await context.newPage();
 
-  // Mapa de fingerprints por flight
+  // Mapa directo: memberID (node_id) → { name, country, place }
+  // Construído a partir do GetPlayerTeeTimes — funciona mesmo sem scores
+  const memberNameMap = new Map();
+
   const apiFingerprints = new Map(); // "tcode:fid" → Map(strokesKey → info)
   const memberFlights   = new Map(); // memberID → [{ tcode, fid, ageGroup }]
   const allMemberIds    = new Set();
@@ -475,128 +283,111 @@ async function main() {
 
   let matched = 0, unmatched = 0, skipped = 0;
 
-  const forceFlights = process.argv.includes('--refresh-flights');
-
   try {
     // ══════════════════════════════════════════════
-    // FASE 1: Member IDs + Fingerprints por flight
-    // Cache em uskids-flights-cache.json (válida 3 dias)
-    // Forçar actualização: --refresh-flights
+    // FASE 1: Nomes directos + Fingerprints + member IDs
     // ══════════════════════════════════════════════
 
-    if (!forceFlights && flightsCacheValida()) {
-      // ── Carregar da cache ──
-      const fc = loadFlightsCache();
-      console.log(`\n⚡ Fase 1 em cache (${fc.gerado_em?.slice(0,10)}) — a saltar`);
+    for (const tcode of tcodes) {
+      await initPage(page, tcode);
 
-      // Mesmo com cache, inicializar sessão no browser antes da Fase 2
-      // (sem isto, page fica em about:blank e todos os fetch() falham)
-      const tcodeInicio = tcodes[0] || ALL_TCODES[0];
-      await initPage(page, tcodeInicio);
-      console.log(`   Sessão inicializada (t=${tcodeInicio})`);
-
-      for (const [midStr, flts] of Object.entries(fc.memberFlights || {})) {
-        const mid = parseInt(midStr);
-        allMemberIds.add(mid);
-        memberFlights.set(mid, flts);
+      // Usar flights manuais se existirem, senão auto-descobrir via GetMeta
+      let flights = FLIGHTS_MANUAL[tcode];
+      if (!flights || flights.length === 0) {
+        flights = await descobrirFlights(page, tcode);
+        await sleep(DELAY_MS);
       }
-      for (const [fpKey, entries] of Object.entries(fc.apiFingerprints || {})) {
-        apiFingerprints.set(fpKey, new Map(entries));
-      }
-      for (const [tcode, info] of Object.entries(fc.torneios || {})) {
-        if (!cache.torneios[tcode]?.name) cache.torneios[tcode] = info;
-      }
-      console.log(`   ${allMemberIds.size} membros | ${apiFingerprints.size} flights com fingerprints`);
 
-    } else {
-      // ── Descobrir da API ──
-      if (forceFlights) console.log('\n🔄 --refresh-flights: a re-descobrir Fase 1...');
-      else console.log('\n🔍 Fase 1: a descobrir member IDs e fingerprints...');
+      const tournLabel = cache.torneios[tcode]?.name || `t=${tcode}`;
+      console.log(`\n▶ ${tournLabel} (${flights.length} flights)`);
 
-      for (const tcode of tcodes) {
-        await initPage(page, tcode);
+      for (const { fid, ag } of flights) {
+        console.log(`  ⛳ ${ag} (flight ${fid})`);
 
-        let flights = FLIGHTS_MANUAL[tcode];
-        if (!flights || flights.length === 0) {
-          flights = await descobrirFlights(page, tcode);
-          await sleep(DELAY_MS);
+        // Member IDs via GetTournamentPlayers
+        let memberIds = [];
+        try {
+          const tp = await pageJSON(page, `${API}?op=GetTournamentPlayers&t=${tcode}&f=${fid}`);
+          memberIds = tp.PlayerNodeId || [];
+        } catch (err) {
+          console.warn(`    ⚠️ GetTournamentPlayers falhou: ${err.message}`);
+          continue;
         }
+        await sleep(DELAY_MS);
 
-        const tournLabel = cache.torneios[tcode]?.name || `t=${tcode}`;
-        console.log(`\n▶ ${tournLabel} (${flights.length} flights)`);
+        // GetPlayerTeeTimes — extrai nomes directos E fingerprints de strokes
+        const fpKey = `${tcode}:${fid}`;
+        const fpMap = new Map();
+        let directNames = 0;
 
-        for (const { fid, ag } of flights) {
-          console.log(`  ⛳ ${ag} (flight ${fid})`);
+        try {
+          const totalPages = Math.ceil((memberIds.length || 20) / 20);
+          for (let p = 1; p <= totalPages; p++) {
+            const d = await pageJSON(page, `${API}?op=GetPlayerTeeTimes&f=${fid}&r=1&p=${p}&t=0`);
 
-          let memberIds = [];
-          try {
-            const tp = await pageJSON(page, `${API}?op=GetTournamentPlayers&t=${tcode}&f=${fid}`);
-            memberIds = tp.PlayerNodeId || [];
-          } catch (err) {
-            console.warn(`    ⚠️ GetTournamentPlayers falhou: ${err.message}`);
-            continue;
-          }
-          await sleep(DELAY_MS);
+            for (const [pid, pl] of Object.entries(d.flight_players || {})) {
+              const name    = `${(pl.first || '').trim()} ${(pl.last || '').trim()}`.trim();
+              const country = (pl.country || '').toUpperCase();
+              const place   = pl.place || '';
+              const info    = { name, country, place };
 
-          const fpKey = `${tcode}:${fid}`;
-          const fpMap = new Map();
+              if (!name) continue;
 
-          try {
-            const totalPages = Math.ceil((memberIds.length || 20) / 20);
-            for (let p = 1; p <= totalPages; p++) {
-              const d = await pageJSON(page, `${API}?op=GetPlayerTeeTimes&f=${fid}&r=1&p=${p}&t=0`);
-              for (const [, pl] of Object.entries(d.flight_players || {})) {
-                const name    = `${(pl.first || '').trim()} ${(pl.last || '').trim()}`.trim();
-                const country = (pl.country || '').toUpperCase();
-                const place   = pl.place || '';
-                const info    = { name, country, place };
-                if (!name) continue;
-                for (const [rn, rd] of Object.entries(pl.rounds || {})) {
-                  const sk = strokesKey(rd.strokes);
-                  if (sk && strokedValid(rd.strokes)) fpMap.set(`R${rn}:${sk}`, info);
+              // ── Estratégia 1: mapeamento directo por node_id ──
+              // O GetPlayerTeeTimes pode expor o node_id do membro em vários campos.
+              // Tentamos os mais comuns; o primeiro que bater com um memberID conhecido ganha.
+              const candidateIds = [
+                pl.node_id, pl.member_id, pl.member_node_id,
+                pl.memberId, pl.nodeId, pl.mid,
+                pid,            // às vezes o próprio key do flight_player é o node_id
+              ].filter(Boolean).map(String);
+
+              for (const cid of candidateIds) {
+                if (memberIds.map(String).includes(cid)) {
+                  if (!memberNameMap.has(cid)) {
+                    memberNameMap.set(cid, info);
+                    directNames++;
+                  }
+                  break;
                 }
               }
-              await sleep(DELAY_MS);
+
+              // ── Estratégia 2: fingerprint de strokes (fallback) ──
+              for (const [rn, rd] of Object.entries(pl.rounds || {})) {
+                const sk = strokesKey(rd.strokes);
+                if (sk) fpMap.set(`R${rn}:${sk}`, info);
+              }
             }
-          } catch (err) {
-            console.warn(`    ⚠️ GetPlayerTeeTimes falhou: ${err.message}`);
+            await sleep(DELAY_MS);
           }
-
-          apiFingerprints.set(fpKey, fpMap);
-
-          for (const mid of memberIds) {
-            allMemberIds.add(mid);
-            if (!memberFlights.has(mid)) memberFlights.set(mid, []);
-            memberFlights.get(mid).push({ tcode, fid, ageGroup: ag });
-          }
-
-          console.log(`    → ${memberIds.length} membros | ${fpMap.size} fingerprints`);
+        } catch (err) {
+          console.warn(`    ⚠️ GetPlayerTeeTimes falhou: ${err.message}`);
         }
 
-        if (!cache.torneios[tcode]?.name) {
-          try {
-            const meta = await pageJSON(page, `${API}?op=GetMeta&t=${tcode}`);
-            cache.torneios[tcode] = { name: meta?.tournament?.name || `t=${tcode}` };
-          } catch {
-            cache.torneios[tcode] = { name: `t=${tcode}` };
-          }
-          await sleep(DELAY_MS);
+        apiFingerprints.set(fpKey, fpMap);
+
+        for (const mid of memberIds) {
+          allMemberIds.add(mid);
+          if (!memberFlights.has(mid)) memberFlights.set(mid, []);
+          memberFlights.get(mid).push({ tcode, fid, ageGroup: ag });
         }
+
+        console.log(`    → ${memberIds.length} membros | ${fpMap.size} fingerprints | ${directNames} nomes directos`);
       }
 
-      // Guardar cache de flights (serializar Maps → arrays)
-      const fcData = {
-        memberFlights: Object.fromEntries(
-          [...memberFlights.entries()].map(([mid, flts]) => [String(mid), flts])
-        ),
-        apiFingerprints: Object.fromEntries(
-          [...apiFingerprints.entries()].map(([k, m]) => [k, [...m.entries()]])
-        ),
-        torneios: cache.torneios,
-      };
-      saveFlightsCache(fcData);
-      console.log(`\n  💾 uskids-flights-cache.json — ${allMemberIds.size} membros guardados`);
+      if (!cache.torneios[tcode] || !cache.torneios[tcode].name) {
+        // Tentar obter nome do torneio do GetMeta
+        try {
+          const meta = await pageJSON(page, `${API}?op=GetMeta&t=${tcode}`);
+          cache.torneios[tcode] = { name: meta?.tournament?.name || `t=${tcode}` };
+        } catch {
+          cache.torneios[tcode] = { name: `t=${tcode}` };
+        }
+        await sleep(DELAY_MS);
+      }
     }
+
+    console.log(`\n  🗺️  Nomes directos por node_id: ${memberNameMap.size}/${allMemberIds.size}`);
 
     // ══════════════════════════════════════════════
     // FASE 2: Histórico + matching
@@ -633,7 +424,6 @@ async function main() {
     console.log(`══════════════════════════════════════\n`);
 
     let processed = 0;
-    let consecutiveErrors = 0;
 
     for (const { mid, isNew } of toProcess) {
       processed++;
@@ -641,7 +431,6 @@ async function main() {
 
       try {
         const data = await pageJSON(page, `${API}?op=GetMemberTournamentResults&m=${mid}`);
-        consecutiveErrors = 0; // reset ao primeiro sucesso
         const tids = Object.keys(data);
 
         if (tids.length === 0) { continue; }
@@ -652,18 +441,18 @@ async function main() {
         const ag = latestT?.p_age_group || '';
         if (ag.startsWith('Girls') || ag.includes('Girl')) { skipped++; continue; }
 
-        // ── Matching de nome (2 estratégias) ──────────────────────
-        // Nota: GetMemberProfile foi removido — devolve o utilizador autenticado
-        // como fallback quando o member ID não existe, corrompendo os dados.
+        // ── Matching de nome (3 estratégias) ──────────────────────
 
-        // 1. Fingerprint de strokes (API + results.json)
-        let playerMatch = null;
-        {
+        // 1. Mapa directo por node_id (funciona mesmo sem scores)
+        let playerMatch = memberNameMap.get(midStr) || null;
+
+        // 2. Fingerprint de strokes (API + results.json)
+        if (!playerMatch) {
           const mFlights = memberFlights.get(mid) || [];
           playerMatch = matchPlayer(data, apiFingerprints, resultsFP, mFlights);
         }
 
-        // 2. Recuperar nome do próprio histórico se já estava em cache
+        // 3. Tentar recuperar nome do próprio histórico se já estava em cache
         if (!playerMatch && existingMembers.has(midStr)) {
           const cached = cache.jogadores[midStr];
           if (cached?.name && cached.name !== '?') {
@@ -734,29 +523,16 @@ async function main() {
         console.log(`  ${label} [${processed}/${toProcess.length}][${tag}] ${playerName} | ${ag} | ${nTorns} torneios`);
 
       } catch (err) {
-        consecutiveErrors++;
         console.warn(`  ❌ [${processed}/${toProcess.length}] m=${mid}: ${err.message}`);
-
-        // Após 5 erros consecutivos → sessão provavelmente perdida → reconectar
-        if (consecutiveErrors >= 5) {
-          console.log(`  🔄 ${consecutiveErrors} erros seguidos — a reconectar sessão...`);
-          try {
-            const tcodeRec = tcodes[0] || ALL_TCODES[0];
-            await initPage(page, tcodeRec);
-            console.log(`  ✅ Sessão reestabelecida`);
-            consecutiveErrors = 0;
-          } catch (reconnErr) {
-            console.error(`  ❌ Falha na reconexão: ${reconnErr.message}`);
-          }
-          await sleep(2000);
-        }
       }
 
       await sleep(DELAY_HIST);
 
-      if (processed % 75 === 0) {
-        const nParts = saveAllParts(cache.torneios, cache.jogadores);
-        console.log(`  💾 Checkpoint: ${Object.keys(cache.jogadores).length} jogadores em ${nParts} ficheiros`);
+      if (processed % 50 === 0) {
+        cache.gerado_em = new Date().toISOString();
+        fs.mkdirSync(DIR, { recursive: true });
+        fs.writeFileSync(OUTPUT, JSON.stringify(cache, null, 2), 'utf8');
+        console.log(`  💾 Checkpoint: ${Object.keys(cache.jogadores).length} jogadores`);
       }
     }
 
@@ -777,8 +553,10 @@ async function main() {
     j.totalTorneios = Object.keys(j.torneios || {}).length;
   }
 
-  // ── Salvar em partes ──
-  const nPartes = saveAllParts(cache.torneios, cache.jogadores);
+  // ── Salvar ──
+  cache.gerado_em = new Date().toISOString();
+  fs.mkdirSync(DIR, { recursive: true });
+  fs.writeFileSync(OUTPUT, JSON.stringify(cache, null, 2), 'utf8');
 
   const total      = Object.keys(cache.jogadores).length;
   const named      = Object.values(cache.jogadores).filter(j => j.name && j.name !== '?').length;
@@ -786,7 +564,7 @@ async function main() {
     .reduce((s, j) => s + Object.keys(j.torneios).length, 0);
 
   console.log('\n══════════════════════════════════════');
-  console.log(`✅  uskids-member-history-001..${String(nPartes).padStart(3,'0')}.json`);
+  console.log('✅  uskids-member-history.json');
   console.log(`    ${total} jogadores (${named} com nome, ${total - named} sem nome)`);
   console.log(`    ${totalEntries} entradas de torneio`);
   console.log(`    Matched: ${matched} | Unmatched: ${unmatched} | AgeGroups fixed: ${agFixed}`);

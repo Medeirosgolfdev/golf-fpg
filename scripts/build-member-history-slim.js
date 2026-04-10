@@ -25,8 +25,8 @@ const fs   = require('fs');
 const path = require('path');
 
 // ── Configuração ──────────────────────────────────────────────────
-const DATA_DIR = path.join(__dirname, '..', 'public', 'data');
-const OUTPUT   = path.join(DATA_DIR, 'uskids-member-history-slim.json');
+const ARCHIVE_DIR = path.join(__dirname, '..', 'public', 'data-archive');
+const OUTPUT      = path.join(__dirname, '..', 'public', 'data', 'uskids-member-history-slim.json');
 const MAX_FILES = parseInt(
   (process.argv.find(a => a.startsWith('--max-files=')) || '').split('=')[1] || '999'
 );
@@ -70,13 +70,13 @@ let skippedNoName  = 0;
 // ── Processar ficheiros ───────────────────────────────────────────
 
 // Descobrir ficheiros disponíveis
-const allFiles = fs.readdirSync(DATA_DIR)
+const allFiles = fs.readdirSync(ARCHIVE_DIR)
   .filter(f => /^uskids-member-history-\d{3}\.json$/.test(f))
   .sort()
   .slice(0, MAX_FILES);
 
 if (allFiles.length === 0) {
-  console.error(`❌ Nenhum ficheiro uskids-member-history-XXX.json encontrado em:\n   ${DATA_DIR}`);
+  console.error(`❌ Nenhum ficheiro uskids-member-history-XXX.json encontrado em:\n   ${ARCHIVE_DIR}`);
   process.exit(1);
 }
 
@@ -87,7 +87,7 @@ console.log(`   ${allFiles.length} ficheiros a processar`);
 console.log('══════════════════════════════════════════════\n');
 
 for (const filename of allFiles) {
-  const filepath = path.join(DATA_DIR, filename);
+  const filepath = path.join(ARCHIVE_DIR, filename);
   const sizeMB = (fs.statSync(filepath).size / 1024 / 1024).toFixed(1);
 
   let data;
@@ -182,7 +182,7 @@ const output = {
 const outputStr = JSON.stringify(output);
 const outputMB  = (Buffer.byteLength(outputStr, 'utf8') / 1024 / 1024).toFixed(2);
 
-fs.mkdirSync(DATA_DIR, { recursive: true });
+fs.mkdirSync(path.dirname(OUTPUT), { recursive: true });
 fs.writeFileSync(OUTPUT, outputStr, 'utf8');
 
 const nTorneios  = Object.keys(torneios).length;

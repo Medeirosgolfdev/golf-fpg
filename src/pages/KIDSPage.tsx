@@ -790,11 +790,45 @@ function useAutoRivals() {
   return { rivals: merged, loaded, progress };
 }
 
-/** Hook: carrega uskids-member-history.json */
+/** Hook: carrega uskids-member-history-slim.json e transforma em MHData */
 function useMemberHist() {
   const [mh, setMh] = React.useState<MHData | null>(null);
   React.useEffect(() => {
-    fetch("/data/uskids-member-history.json").then(r => r.json()).then(setMh).catch(() => {});
+    fetch("/data/uskids-member-history-slim.json")
+      .then(r => r.json())
+      .then((slim: {
+        torneios: Record<string, { name: string; startDate: string; holesPerRound: number; par: number[] | null }>;
+        jogadores: Record<string, {
+          name: string; country: string; ageGroup: string;
+          torneios: Record<string, { ageGroup: string; place: number | null; rounds: Record<string, { gross: number; strokes?: number[] }> }>;
+        }>;
+      }) => {
+        const jogadores: Record<string, MHPlayer> = {};
+        for (const [mid, p] of Object.entries(slim.jogadores || {})) {
+          const torneios: Record<string, MHTournament> = {};
+          for (const [tcode, t] of Object.entries(p.torneios || {})) {
+            const shared = slim.torneios?.[tcode];
+            const rounds: Record<string, MHTournRound> = {};
+            let totalStrokes = 0;
+            for (const [rn, rd] of Object.entries(t.rounds || {})) {
+              rounds[rn] = { gross: rd.gross };
+              totalStrokes += rd.gross || 0;
+            }
+            torneios[tcode] = {
+              name: shared?.name || "",
+              startDate: shared?.startDate || "",
+              par: shared?.par || undefined,
+              ageGroup: t.ageGroup,
+              place: t.place ?? 0,
+              totalStrokes,
+              rounds,
+            };
+          }
+          jogadores[mid] = { memberId: mid, name: p.name, torneios };
+        }
+        setMh({ jogadores });
+      })
+      .catch(() => {});
   }, []);
   return mh;
 }

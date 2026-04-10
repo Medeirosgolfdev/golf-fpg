@@ -39,6 +39,7 @@ src/
 
 scripts/          # ~20 scripts Node.js para pipeline de dados
 public/data/      # ficheiros JSON servidos ao runtime
+public/data-archive/ # ficheiros pesados (uskids-member-history-XXX.json) — não servidos ao browser
 
 tokens.css        # FICHEIRO ÚNICO de design tokens
 App.css           # Classes de componentes (~110KB)
@@ -230,7 +231,12 @@ Output: `public/data/uskids-results.json`
 node fetch-uskids-member-history.js         # scrape (só novos)
 node fetch-uskids-member-history.js --clean  # re-match nomes offline (sem browser)
 ```
-Output: `public/data/uskids-member-history.json` (e `uskids-member-history-slim.json` — versão compacta para o KIDSdataLoader)
+Output: `public/data-archive/uskids-member-history.json` (ficheiro único)
+
+**build-member-history-slim.js** — Converte os ficheiros numerados `uskids-member-history-XXX.json` (em `public/data-archive/`) num único `uskids-member-history-slim.json` (em `public/data/`). Remove campos duplicados entre jogadores, mantém apenas gross+strokes por ronda.
+```bash
+node scripts/build-member-history-slim.js
+```
 
 **fetch-uskids-field.js** — Corre 1x/dia. Descobre novos torneios + inscritos.
 ```bash
@@ -420,6 +426,8 @@ Detectado automaticamente por presença de `signupanytime_t`. Par extraído de `
 
 ### uskids-member-history-slim.json (formato slim para KIDSdataLoader)
 
+Gerado por `build-member-history-slim.js` a partir dos ficheiros numerados em `public/data-archive/`. Escrito em `public/data/`.
+
 ```
 { gerado_em,
   torneios: Record<tcode, { name, startDate, holesPerRound, par: number[]|null, yards: number[]|null }>,
@@ -511,8 +519,9 @@ Popula `uskTournNames` como fallback (hardcoded em `USKIDS_TCODE_META` tem prior
 | {fed}/analysis/data.json | FPG | make-scorecards-ui.js | ✓ | JogadoresPage, BJGTAnalysisPage, DrivePage |
 | uskids-results.json | USKids | fetch-uskids-results.js | ✓ | USKIDSPage, KIDSdataLoader |
 | uskids_torneios_completos(1-30).json | USKids | browser script | ✓ | USKIDSPage, KIDSdataLoader |
-| uskids-member-history.json | USKids | fetch-uskids-member-history.js | ✓ (sem par/SI) | KIDSPage (H2H) |
-| uskids-member-history-slim.json | USKids | (derivado do anterior) | ✓ (sem par/SI) | KIDSdataLoader (Fase 2) |
+| uskids-member-history.json | USKids | fetch-uskids-member-history.js | ✓ (sem par/SI) | **Em `public/data-archive/`** — fonte para build-slim |
+| uskids-member-history-XXX.json | USKids | fetch (legacy) | ✓ (sem par/SI) | **Em `public/data-archive/`** — fonte para build-slim |
+| uskids-member-history-slim.json | USKids | build-member-history-slim.js | ✓ (sem par/SI) | KIDSdataLoader (Fase 2) + KIDSPage (H2H, DOB) |
 | uskids-field.json | USKids | fetch-uskids-field.js | ✗ | USKIDSPage |
 | uskids-field-sizes.json | USKids | (automação) | ✗ | KIDSdataLoader (uskFieldSizes) |
 | uskids-discovery-cache.json | USKids | fetch-uskids-discovery.js | ✗ | fetch-uskids-results.js |
