@@ -147,3 +147,50 @@ export function fmtSignParen(n: number): string {
   if (n === 0) return "(E)";
   return n > 0 ? `(+${n})` : `(${n})`;
 }
+
+/** Ícone de seta de ordenação: " ↑" / " ↓" / "" */
+export function sortArrow(col: string, activeCol: string, dir: "asc" | "desc"): string {
+  return col === activeCol ? (dir === "asc" ? " ↑" : " ↓") : "";
+}
+
+/** Meses PT por extenso (lowercase): "janeiro", "fevereiro", ... */
+export const MONTHS_PT_FULL = [
+  "janeiro","fevereiro","março","abril","maio","junho",
+  "julho","agosto","setembro","outubro","novembro","dezembro",
+] as const;
+
+/** Meses PT por extenso (Title Case): "Janeiro", "Fevereiro", ... */
+export const MONTHS_PT_LONG = [
+  "Janeiro","Fevereiro","Março","Abril","Maio","Junho",
+  "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro",
+] as const;
+
+/** Map abreviatura → índice 0-based (pt+en): jan→0, fev→1, feb→1, etc. */
+export const MONTH_MAP: Record<string, number> = {
+  jan:0,fev:1,feb:1,mar:2,abr:3,apr:3,mai:4,may:4,jun:5,
+  jul:6,ago:7,aug:7,set:8,sep:8,out:9,oct:9,nov:10,dez:11,dec:11,
+};
+
+/** "Sub-14" → "S14" */
+export function escShort(esc: string): string { return esc.replace("Sub-", "S"); }
+
+/** ISO timestamp → "HH:MM" (PT locale) */
+export function fmtTime(iso: string | null): string | null {
+  if (!iso) return null;
+  return new Date(iso).toLocaleTimeString("pt-PT", { hour: "2-digit", minute: "2-digit" });
+}
+
+/** Data de inscrição sem o ano: "2026/03/15" → "03/15" */
+export function fmtDataInscricao(s: string | null): string {
+  if (!s) return "–";
+  return s.replace(/^\d{4}\//, "").replace("/", "/");
+}
+
+/** Calcula se jogador está no 1º ou 2º ano do escalão */
+export function anoEscalao(dob: string, escalao: string): "1A" | "2A" | null {
+  if (!dob) return null;
+  const anoNasc = parseInt(dob.slice(0, 4));
+  const idadeMax = parseInt(escalao.replace("Sub-", ""));
+  if (isNaN(anoNasc) || isNaN(idadeMax)) return null;
+  return anoNasc === (new Date().getFullYear() - idadeMax) ? "2A" : "1A";
+}

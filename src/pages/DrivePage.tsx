@@ -8,11 +8,11 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { useSort } from "../hooks/useSort";
 import { loadPlayers } from "../data/loader";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from "recharts";
-import { SC, sdClassByHcp, scClass } from "../utils/scoreDisplay";
+import { SC, sdClassByHcp, scClass, medalColor } from "../utils/scoreDisplay";
 import { calcAGS, expectedSD9 } from "../utils/whsCalc";
 import { fmtToPar, fmtDateShort, fmtHcp } from "../utils/format";
 import { isCalUnlocked } from "../utils/authConstants";
-import { resolveFedsInTournaments , buildEscLookup, resolveEscFromLookup } from "../utils/playerUtils";
+import { resolveFedsInTournaments , buildEscLookup, resolveEscFromLookup, escPillCls, normalizePlayer } from "../utils/playerUtils";
 import PasswordGate from "../ui/PasswordGate";
 import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
 import { PILL_TCODE, EscPill, SIDEBAR_ACCENT } from "../ui/PillBadge";
@@ -39,6 +39,7 @@ import {
   TournPName,
   type PlayersDB,
 } from "../ui/tournamentPrimitives";
+import { ResumoTable } from "./drive/ResumoTable";
 
 /* ── Types ── */
 interface RoundScore {
@@ -77,21 +78,7 @@ interface DriveData {
 /* PlayersDB importado de tournamentPrimitives */
 type SDLookup = Record<string, number>;
 
-/* ── Normalizer: scraper format → internal format ── */
-function normalizePlayer(p: any): Player {
-  const r1: RoundScore | undefined = p.roundScores?.[0];
-  return {
-    ...p,
-    fed: p.fed || p.fedCode || undefined,
-    scores: p.scores || r1?.scores,
-    par: p.par || r1?.pars,
-    si: p.si || r1?.si,
-    meters: p.meters || r1?.meters,
-    courseRating: p.courseRating ?? r1?.courseRating,
-    slope: p.slope ?? r1?.slope,
-    teeName: p.teeName || r1?.teeName,
-  };
-}
+/* ── Normalizer: imported from playerUtils ── */
 
 function normalizeTournament(t: any): Tournament {
   return { ...t, players: (t.players || []).map(normalizePlayer) };
@@ -539,13 +526,6 @@ function DrivePointsTable() {
   const col1 = entries.slice(0, half);
   const col2 = entries.slice(half);
 
-  const medalColor = (pos: number) => {
-    if (pos === 1) return C.medalGold;
-    if (pos === 2) return C.medalSilver;
-    if (pos === 3) return C.medalBronze;
-    return undefined;
-  };
-
   return (
     <div>
       <button
@@ -555,14 +535,14 @@ function DrivePointsTable() {
         <span style={{ fontSize: 10, color: "var(--text-muted)", marginTop: 1 }}>{open ? "▲ fechar" : "▼ ver"}</span>
       </button>
       {open && (
-        <div style={{ marginTop: 10 }}>
+        <div className="mt-10">
           <div className="muted fs-11 mb-8">Pontos atribuídos por posição final em cada torneio.</div>
-          <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
+          <div className="flex-wrap" style={{ display: "flex", gap: 24 }}>
             {[col1, col2].map((col, ci) => (
               <table key={ci} className="dtable tbl-compact" style={{ width: "auto", minWidth: 140 }}>
                 <thead>
                   <tr>
-                    <th className="r" style={{ fontSize: 11, padding: "4px 8px", width: 40 }}>Pos</th>
+                    <th className="r fs-11"  style={{ padding: "4px 8px", width: 40 }}>Pos</th>
                     <th className="r" style={{ fontSize: 11, padding: "4px 8px", width: 60, color: "var(--color-warn-dark)", fontWeight: 800 }}>Pts</th>
                   </tr>
                 </thead>
@@ -582,343 +562,6 @@ function DrivePointsTable() {
         </div>
       )}
     </div>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════
-   RESUMO TABLE
-   ═══════════════════════════════════════════════════════ */
-function ResumoTable(props: { tournaments: Tournament[]; playersDB: PlayersDB; sdLookup: SDLookup; escLookup?: EscLookup; mergeByEvent?: boolean }) {
-  const { playersDB, sdLookup } = props;
-  const globalEscLookup = props.escLookup;
-  const mergeByEvent = !!props.mergeByEvent;
-  const sorted = useMemo(() => [...props.tournaments].sort((a, b) => a.date.localeCompare(b.date)), [props.tournaments]);
-  const { sortKey, sortDir, toggleSort: handleSort } = useSort<SortKey>("totalPts", "desc");
-  const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
-
-  const toggleGroup = useCallback((groupId: string) => {
-    setExpandedGroups(prev => {
-      const next = new Set(prev);
-      if (next.has(groupId)) next.delete(groupId);
-      else next.add(groupId);
-      return next;
-    });
-  }, []);
-
-  // Chave de coluna — inline, sem useCallback
-  const mkKey = (t: Tournament) =>
-    mergeByEvent
-      ? String(t.num) + "|" + String(t.region) + "|" + String(t.date)
-      : (t.ccode + "-" + t.tcode + "-" + t.date);
-
-  // Torneios visíveis (colunas da tabela)
-  const visibleSorted = useMemo(() => {
-    if (mergeByEvent) {
-      // Uma coluna por evento físico (num+region+date), ignorar duplicados por escalão
-      const seen = new Set<string>();
-      return sorted.filter(t => {
-        if (t._multiGroup && t._roundLabel !== "Resumo") return false;
-        const k = String(t.num) + "|" + String(t.region) + "|" + String(t.date);
-        if (seen.has(k)) return false;
-        seen.add(k);
-        return true;
-      });
-    }
-    return sorted.filter(t => {
-      if (!t._multiGroup) return true;
-      if (t._roundLabel === "Resumo") return true;
-      return expandedGroups.has(t._multiGroup);
-    });
-  }, [sorted, expandedGroups, mergeByEvent]);
-
-  interface PRow {
-    pKey: string; name: string; club: string; fed: string; escalao: string; hcp: number | null;
-    results: Map<string, TStats | "dns">; jogos: number; bestSD: number | null; avgSD: number | null;
-    totalBird: number; totalPars: number; totalBog: number; totalPts: number;
-  }
-
-  // Build escalao lookup from Challenge tournament data
-  const challEscLookup = useMemo(() => {
-    const m = new Map<string, string>();
-    for (const t of sorted) {
-      if (t.escalao) {
-        for (const p of t.players) {
-          const fed = p.fed || p.fedCode;
-          if (fed && !m.has(fed)) m.set(fed, t.escalao);
-        }
-      }
-    }
-    return m;
-  }, [sorted]);
-
-  const rows = useMemo(() => {
-    const map = new Map<string, PRow>();
-    const totalKeys = new Set<string>();
-    for (const t of sorted) {
-      if (t._roundLabel === "Resumo") totalKeys.add(mkKey(t));
-    }
-    for (const t of sorted) {
-      const tKey = mkKey(t);
-      const isTotal = totalKeys.has(tKey);
-      for (const p of t.players) {
-        const pKey = p.fed || p.name;
-        if (!map.has(pKey)) {
-          let esc = t.escalao || "";
-          if (!esc && p.fed) {
-            if (globalEscLookup?.has(p.fed)) {
-              esc = globalEscLookup.get(p.fed)!;
-            } else if (playersDB[p.fed]?.escalao) {
-              const raw = playersDB[p.fed].escalao!;
-              esc = raw.startsWith("Sub") ? raw.replace("-", " ") : raw;
-            } else if (challEscLookup.has(p.fed)) {
-              esc = challEscLookup.get(p.fed)!;
-            }
-          }
-          map.set(pKey, { pKey, name: p.name, club: p.club, fed: p.fed || "", escalao: esc,
-            hcp: p.hcpExact ?? null, results: new Map(), jogos: 0, bestSD: null, avgSD: null,
-            totalBird: 0, totalPars: 0, totalBog: 0, totalPts: 0 });
-        }
-        const row = map.get(pKey)!;
-        if (p.hcpExact != null) row.hcp = p.hcpExact;
-        if (!row.escalao && t.escalao) row.escalao = t.escalao;
-        if (!row.escalao && p.fed && globalEscLookup?.has(p.fed)) row.escalao = globalEscLookup.get(p.fed)!;
-        if (!row.escalao && p.fed && challEscLookup.has(p.fed)) row.escalao = challEscLookup.get(p.fed)!;
-        if (isDNS(p)) {
-          row.results.set(tKey, "dns");
-        } else {
-          const st = computeStats(p, sdLookup);
-          if (st) {
-            row.results.set(tKey, st);
-            if (!isTotal) {
-              row.totalBird += st.birdies;
-              row.totalPars += st.pars;
-              row.totalBog += st.bogeys;
-            }
-            // Assign points: only for single-round events OR the "Total" of a multi-round event
-            // (not for individual R1/R2 entries)
-            const isRoundEntry = t._roundLabel && t._roundLabel !== "Resumo";
-            if (!isRoundEntry) {
-              row.totalPts += drivePoints(p.pos);
-            }
-          }
-        }
-        row.jogos = [...row.results.entries()]
-          .filter(([k, v]) => v !== "dns" && !totalKeys.has(k))
-          .length;
-      }
-    }
-    for (const row of map.values()) {
-      const sds: number[] = [];
-      for (const [tKey, r] of row.results.entries()) {
-        if (!totalKeys.has(tKey) && r !== "dns" && r.sd18 != null) sds.push(r.sd18);
-      }
-      row.bestSD = sds.length ? Math.min(...sds) : null;
-      row.avgSD = sds.length ? sds.reduce((s, v) => s + v, 0) / sds.length : null;
-    }
-    return [...map.values()];
-  }, [sorted, playersDB, sdLookup, challEscLookup, globalEscLookup]);
-
-  const sortedRows = useMemo(() => {
-    const mult = sortDir === "asc" ? 1 : -1;
-    const INF = 9999;
-    return [...rows].sort((a, b) => {
-      if (sortKey === "name") return mult * a.name.localeCompare(b.name);
-      if (sortKey === "fed") return mult * a.fed.localeCompare(b.fed);
-      if (sortKey === "escalao") return mult * a.escalao.localeCompare(b.escalao);
-      if (sortKey === "club") return mult * a.club.localeCompare(b.club);
-      if (sortKey === "hcp") return mult * ((a.hcp ?? INF) - (b.hcp ?? INF));
-      if (sortKey === "jogos") return mult * (a.jogos - b.jogos);
-      if (sortKey === "totalPts") return mult * (a.totalPts - b.totalPts);
-      if (sortKey === "bestSD") return mult * ((a.bestSD ?? INF) - (b.bestSD ?? INF));
-      if (sortKey === "avgSD") return mult * ((a.avgSD ?? INF) - (b.avgSD ?? INF));
-      if (sortKey === "totalBird") return mult * (a.totalBird - b.totalBird);
-      if (sortKey === "totalPars") return mult * (a.totalPars - b.totalPars);
-      if (sortKey === "totalBog") return mult * (a.totalBog - b.totalBog);
-      const parts = sortKey.split("_");
-      const field = parts[0];
-      const tKey = parts.slice(1).join("_");
-      const ra = a.results.get(tKey);
-      const rb = b.results.get(tKey);
-      const sa = ra && ra !== "dns" ? ra : null;
-      const sb = rb && rb !== "dns" ? rb : null;
-      let va: number, vb: number;
-      if (field === "pos") { va = sa ? Number(sa.pos) || INF : INF; vb = sb ? Number(sb.pos) || INF : INF; }
-      else if (field === "gross") { va = sa?.gross ?? INF; vb = sb?.gross ?? INF; }
-      else if (field === "toPar") { va = sa?.toPar ?? INF; vb = sb?.toPar ?? INF; }
-      else if (field === "sd") { va = sa?.sd18 ?? INF; vb = sb?.sd18 ?? INF; }
-      else if (field === "bird") { va = sa?.birdies ?? -1; vb = sb?.birdies ?? -1; }
-      else if (field === "par") { va = sa?.pars ?? -1; vb = sb?.pars ?? -1; }
-      else if (field === "bog") { va = sa?.bogeys ?? INF; vb = sb?.bogeys ?? INF; }
-      else { va = 0; vb = 0; }
-      return mult * (va - vb);
-    });
-  }, [rows, sortKey, sortDir]);
-
-  // Build group headers for CrossSeasonTable — DEVE ficar antes de qualquer return (regra dos hooks)
-  interface GroupHeader { key: string; label: string; colSpan: number; isMulti: boolean; groupId?: string; tournament: Tournament; isExpanded: boolean }
-  const groupHeaders = useMemo(() => {
-    const headers: GroupHeader[] = [];
-    const seenGroups = new Set<string>();
-    for (const t of visibleSorted) {
-      if (t._multiGroup) {
-        if (seenGroups.has(t._multiGroup)) continue;
-        seenGroups.add(t._multiGroup);
-        const entries = visibleSorted.filter(vt => vt._multiGroup === t._multiGroup);
-        const isExpanded = expandedGroups.has(t._multiGroup);
-        headers.push({
-          key: t._multiGroup,
-          label: "T" + t.num + " · " + shortCampo(t.campo),
-          colSpan: entries.length * 7,
-          isMulti: true,
-          groupId: t._multiGroup,
-          tournament: t,
-          isExpanded,
-        });
-      } else {
-        headers.push({
-          key: t.tcode,
-          label: "T" + t.num + " · " + shortCampo(t.campo),
-          colSpan: 7,
-          isMulti: false,
-          tournament: t,
-          isExpanded: false,
-        });
-      }
-    }
-    return headers;
-  }, [visibleSorted, expandedGroups]);
-
-  if (!sorted.length) return <div className="muted ta-center p-24">Sem torneios.</div>;
-
-  return (
-    <CrossSeasonTable
-      identityHeaders={<>
-        <CSortTh k="name" s={sortKey} d={sortDir} on={handleSort} className="cs-pos sticky-col-0">#</CSortTh>
-        <CSortTh k="name" s={sortKey} d={sortDir} on={handleSort} className="cs-name sticky-col-1">Jogador</CSortTh>
-        <CSortTh k="fed"     s={sortKey} d={sortDir} on={handleSort} className="cs-fed">Fed</CSortTh>
-        <CSortTh k="escalao" s={sortKey} d={sortDir} on={handleSort} className="cs-esc">Esc.</CSortTh>
-        <CSortTh k="club"    s={sortKey} d={sortDir} on={handleSort} className="cs-club">Clube</CSortTh>
-        <CSortTh k="hcp"     s={sortKey} d={sortDir} on={handleSort} className="cs-hcp cs-id-end">HCP</CSortTh>
-      </>}
-      groups={groupHeaders.map(gh => {
-        const t = gh.tournament;
-        const nh = t.players.find(p => !isDNS(p))?.nholes || 18;
-        const realCount = t.players.filter(p => !isDNS(p) && !p._incomplete).length;
-        const parSrc = gh.isMulti
-          ? visibleSorted.find(vt => vt._multiGroup === gh.groupId && vt._roundLabel !== "Resumo")
-          : t;
-        const par = (parSrc || t).players.find(p => !isDNS(p))?.parTotal || "?";
-        return {
-          key: gh.key,
-          headerTh: (
-            <th key={gh.key} colSpan={gh.colSpan} className="cs-grp" style={{ lineHeight: 1.3 }}>
-              <div className="fw-800" style={{ fontSize: 13, display: "flex", alignItems: "center", justifyContent: "center", gap: 4 }}>
-                <span>{gh.label}</span>
-                {gh.isMulti && (
-                  <button
-                    onClick={e => { e.stopPropagation(); toggleGroup(gh.groupId!); }}
-                    className="btn"
-                    style={{
-                      fontSize: 11, fontWeight: 800, width: 20, height: 18, padding: 0,
-                      background: gh.isExpanded ? "var(--bg-success-strong)" : undefined,
-                      color: gh.isExpanded ? "var(--color-good)" : "var(--text-muted)",
-                      display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
-                    }}
-                    title={gh.isExpanded ? "Colapsar rondas" : "Expandir R1/R2"}
-                  >
-                    {gh.isExpanded ? "−" : "+"}
-                  </button>
-                )}
-              </div>
-              <div className="c-muted-fs10-fw5">
-                {fmtDateShort(t.date)} · Par {par} · {nh}h · {realCount} jog
-                {gh.isMulti && <> · {t._totalRounds}R</>}
-              </div>
-            </th>
-          ),
-          subHeaderThs: (
-            <>
-              {visibleSorted.filter(vt =>
-                gh.isMulti ? vt._multiGroup === gh.groupId : vt.tcode === gh.key
-              ).map(vt => {
-                const tKey = mkKey(vt);
-                const roundLabel = vt._roundLabel;
-                const isRoundCol = roundLabel && roundLabel !== "Total";
-                const isTotalCol = roundLabel === "Total";
-                const bg = isTotalCol ? "var(--bg-warn-subtle)" : isRoundCol ? "var(--bg-success-subtle)" : undefined;
-                return (
-                  <React.Fragment key={tKey}>
-                    <CSortTh k={"pos_"+tKey} s={sortKey} d={sortDir} on={handleSort} className="cs-t-pos cs-grp" style={bg ? { background: bg } : undefined}>
-                      {roundLabel ? <span style={{ fontSize: 10, fontWeight: 800, color: isTotalCol ? "var(--color-warn-dark)" : "var(--color-good-dark)" }}>{isTotalCol ? "Σ" : roundLabel}</span> : "#"}
-                    </CSortTh>
-                    <CSortTh k={"gross_"+tKey} s={sortKey} d={sortDir} on={handleSort} className="cs-t-gross cs-col" style={bg ? { background: bg } : undefined}>Gross</CSortTh>
-                    <CSortTh k={"toPar_"+tKey} s={sortKey} d={sortDir} on={handleSort} className="cs-t-topar cs-col" style={bg ? { background: bg } : undefined}>±Par</CSortTh>
-                    <CSortTh k={"sd_"+tKey}    s={sortKey} d={sortDir} on={handleSort} className="cs-t-sd cs-col" style={bg ? { background: bg } : undefined}>SD</CSortTh>
-                    <CSortTh k={"bird_"+tKey}  s={sortKey} d={sortDir} on={handleSort} className="cs-t-stat cs-col" style={bg ? { background: bg } : undefined}>🐦</CSortTh>
-                    <CSortTh k={"par_"+tKey}   s={sortKey} d={sortDir} on={handleSort} className="cs-t-stat cs-col" style={bg ? { background: bg } : undefined}>Par</CSortTh>
-                    <CSortTh k={"bog_"+tKey}   s={sortKey} d={sortDir} on={handleSort} className="cs-t-stat cs-col" style={bg ? { background: bg } : undefined}>■</CSortTh>
-                  </React.Fragment>
-                );
-              })}
-            </>
-          ),
-        };
-      })}
-      summaryGroupTh={<th className="cs-grp u-fw8-fs12" colSpan={7}>Temporada</th>}
-      summarySubHeaders={<>
-        <CSortTh k="jogos"     s={sortKey} d={sortDir} on={handleSort} className="cs-s-games cs-grp">Jogos</CSortTh>
-        <CSortTh k="totalPts"  s={sortKey} d={sortDir} on={handleSort} className="cs-s-pts cs-col" style={{ color: "var(--color-warn-dark)" }}>Pts</CSortTh>
-        <CSortTh k="bestSD"    s={sortKey} d={sortDir} on={handleSort} className="cs-s-sd cs-col">Best SD</CSortTh>
-        <CSortTh k="avgSD"     s={sortKey} d={sortDir} on={handleSort} className="cs-s-sd cs-col">Avg SD</CSortTh>
-        <CSortTh k="totalBird" s={sortKey} d={sortDir} on={handleSort} className="cs-s-stat cs-col">🐦</CSortTh>
-        <CSortTh k="totalPars" s={sortKey} d={sortDir} on={handleSort} className="cs-s-stat cs-col">Par</CSortTh>
-        <CSortTh k="totalBog"  s={sortKey} d={sortDir} on={handleSort} className="cs-s-stat cs-col">■</CSortTh>
-      </>}
-    >
-      {sortedRows.map((row, idx) => {
-        const escCls = row.escalao ? "p p-sm p-" + row.escalao.toLowerCase().replace(/\s+/g, "") : "";
-        return (
-          <tr key={row.pKey} className={isManuel(row) ? "row-manuel" : undefined}>
-            <td className="cs-pos sticky-col-0">{idx + 1}</td>
-            <td className="cs-name sticky-col-1">
-              <PName name={row.name} fed={row.fed || undefined} playersDB={playersDB} highlight={isManuel(row)} />
-            </td>
-            <td className="cs-fed">{row.fed || "–"}</td>
-            <td className="cs-esc">{row.escalao ? <span className={escCls + " fs-9"}>{row.escalao}</span> : <span className="c-muted-fs10">–</span>}</td>
-            <td className="cs-club">{row.club}</td>
-            <td className="cs-hcp cs-id-end">{fmtHcp(row.hcp)}</td>
-            {visibleSorted.map(t => {
-              const tKey = mkKey(t);
-              const rv = row.results.get(tKey);
-              const isTotalCol = t._roundLabel === "Resumo";
-              const isRoundCol = t._roundLabel && t._roundLabel !== "Resumo";
-              const colBg = isTotalCol ? "var(--bg-warn-subtle)" : isRoundCol ? "var(--bg-success-subtle)" : undefined;
-              if (!rv) return <td key={tKey} colSpan={7} className="cs-grp" style={colBg ? { background: colBg } : undefined} />;
-              if (rv === "dns") return <td key={tKey} colSpan={7} className="cs-grp" style={colBg ? { background: colBg } : undefined}><span className="muted fw-600 fs-11">NS</span></td>;
-              return (
-                <React.Fragment key={tKey}>
-                  <td className="cs-t-pos cs-grp" style={colBg ? { background: colBg } : undefined}>{rv.pos}</td>
-                  <td className="cs-t-gross cs-col" style={colBg ? { background: colBg } : undefined}>{rv.gross}</td>
-                  <td className="cs-t-topar cs-col" style={{ color: tpColor(rv.toPar), ...(colBg ? { background: colBg } : {}) }}>{fmtTP(rv.toPar)}</td>
-                  <SDCell sd={rv.sd18} sdSource={rv.sdSource} hcp={row.hcp} nholes={rv.nholes}
-                    style={{ ...(colBg ? { background: colBg } : {}), borderLeft: "1px solid var(--border-light)" }} />
-                  <td className="cs-t-stat cs-col" style={colBg ? { background: colBg } : undefined}>{rv.birdies}</td>
-                  <td className="cs-t-stat cs-col" style={colBg ? { background: colBg } : undefined}>{rv.pars}</td>
-                  <td className="cs-t-stat cs-col" style={colBg ? { background: colBg } : undefined}>{rv.bogeys}</td>
-                </React.Fragment>
-              );
-            })}
-            <td className="cs-s-games cs-grp">{row.jogos}</td>
-            <td className="cs-s-pts cs-col">{row.totalPts > 0 ? row.totalPts : "–"}</td>
-            <td className="cs-s-sd cs-col">{row.bestSD != null ? <span className={"p p-sm p-" + sdClassByHcp(row.bestSD, row.hcp)}>{row.bestSD.toFixed(1)}</span> : "–"}</td>
-            <td className="cs-s-sd cs-col">{row.avgSD != null ? <span className={"p p-sm p-" + sdClassByHcp(row.avgSD, row.hcp)}>{row.avgSD.toFixed(1)}</span> : "–"}</td>
-            <td className="cs-s-stat cs-col">{row.totalBird}</td>
-            <td className="cs-s-stat cs-col">{row.totalPars}</td>
-            <td className="cs-s-stat cs-col">{row.totalBog}</td>
-          </tr>
-        );
-      })}
-    </CrossSeasonTable>
   );
 }
 
@@ -1353,11 +996,11 @@ function DriveAllRoundsScorecardLB({
         <div style={{ position:"relative" }}>
           <span style={{ position:"absolute", left:7, top:"50%", transform:"translateY(-50%)", fontSize:11, color:"var(--text-muted)", pointerEvents:"none" }}>🔍</span>
           <input type="text" placeholder="Nome ou clube…" value={nameQ} onChange={e=>setNameQ(e.target.value)}
-            style={{ fontSize:11, padding:"3px 8px 3px 22px", borderRadius:6, border:"1px solid var(--border)", background:"var(--bg-card,#fff)", color:"var(--text)", width:150, outline:"none" }} />
+            className="input-search" style={{ width:150 }} />
         </div>
         {availClubs.length > 2 && (
           <select value={clubQ} onChange={e=>setClubQ(e.target.value)}
-            style={{ fontSize:11, padding:"3px 6px", borderRadius:6, border:`1px solid ${clubQ?"var(--accent)":"var(--border)"}`, background:"var(--bg-card,#fff)", color:"var(--text)", cursor:"pointer" }}>
+            className="select-compact" style={{ border:`1px solid ${clubQ?"var(--accent)":"var(--border)"}` }}>
             <option value="">Todos os clubes</option>
             {availClubs.map(c=><option key={c} value={c}>{c}</option>)}
           </select>
@@ -1820,7 +1463,7 @@ function UpcomingSchedule({ series }: { series: Sub12SeriesTab }) {
   return (
     <div className="card p-8-12">
       <div className="h-xs mb-6">📅 Calendário {SERIE_LABELS[series]} 2026</div>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
+      <div className="flex-wrap gap-4" style={{ display: "flex" }}>
         {entries.map((e, i) => {
           const endRef = e.endDate || e.date;
           const isPast = endRef.getTime() < now.getTime();
@@ -1854,7 +1497,7 @@ function SdSpan({ sd, hcp }: { sd: number | null; hcp?: number | null }) {
 function ToParSpan({ tp }: { tp: number | null }) {
   if (tp == null) return <span className="c-muted">–</span>;
   const color = tpColor(tp);
-  return <span style={{ fontWeight: 700, fontSize: 11, color }}>{fmtToPar(tp)}</span>;
+  return <span className="fw-700 fs-11" style={{ color }}>{fmtToPar(tp)}</span>;
 }
 
 const _STICKY_HCP_W  = 48;
@@ -1944,7 +1587,8 @@ function TournamentGrid({ rows, allTournaments, onPlayerClick, playersDB, escLoo
   }, [rows, sortKey, sortDir, playersDB]);
 
   // Mesmas constantes exactas do ResumoTable
-  const fmtTP2 = (v: number | null) => v == null ? "–" : v === 0 ? "E" : v > 0 ? "+" + v : "" + v;
+
+  /** Variante local intencional: lógica invertida (negativo=danger, positivo=neutro) — específica do CrossSeason DRIVE */
   const tpColor2 = (v: number | null) => v == null ? undefined : v < 0 ? SC.danger : v === 0 ? SC.good : undefined;
 
   return (
@@ -1961,7 +1605,7 @@ function TournamentGrid({ rows, allTournaments, onPlayerClick, playersDB, escLoo
         key: t.key,
         headerTh: (
           <th key={t.key} colSpan={7} className="cs-grp" style={{ lineHeight: 1.3 }}>
-            <div className="fw-800" style={{ fontSize: 13 }}>{t.short}</div>
+            <div className="fw-800 fs-13" >{t.short}</div>
             <div className="c-muted-fs10-fw5">
               {shortDate(t.date)}{t.campo ? " · " + t.campo : ""}{t.nholes ? " · " + t.nholes + "h" : ""}
             </div>
@@ -1992,7 +1636,7 @@ function TournamentGrid({ rows, allTournaments, onPlayerClick, playersDB, escLoo
       {sorted.map((p, idx) => {
         const dbInfo = playersDB[p.fed] || {};
         const escalao = dbInfo.escalao || "";
-        const escCls = escalao ? "p p-sm p-" + escalao.toLowerCase().replace(/[\s-]/g, "") : "";
+        const cls = escPillCls(escalao);
         return (
           <tr key={p.fed} className={"pointer" + (isManuel(p) ? " row-manuel" : "")} onClick={() => onPlayerClick(p.fed)}>
             <td className="cs-pos sticky-col-0">{idx + 1}</td>
@@ -2000,7 +1644,7 @@ function TournamentGrid({ rows, allTournaments, onPlayerClick, playersDB, escLoo
               <PName name={p.name} fed={p.fed || undefined} playersDB={playersDB} highlight={isManuel(p)} />
             </td>
             <td className="cs-fed">{p.fed || "–"}</td>
-            <td className="cs-esc">{escalao ? <span className={escCls + " fs-9"}>{escalao}</span> : <span className="c-muted-fs10">–</span>}</td>
+            <td className="cs-esc">{escalao ? <span className={cls + " fs-9"}>{escalao}</span> : <span className="c-muted-fs10">–</span>}</td>
             <td className="cs-club">{p.club}</td>
             <td className="cs-hcp cs-id-end">{fmtHcp(p.hcp)}</td>
             {allTournaments.map(t => {
@@ -2010,7 +1654,7 @@ function TournamentGrid({ rows, allTournaments, onPlayerClick, playersDB, escLoo
                 <React.Fragment key={t.key}>
                   <td className="cs-t-pos cs-grp">{res.pos ?? "–"}</td>
                   <td className="cs-t-gross cs-col">{res.gross}</td>
-                  <td className="cs-t-topar cs-col" style={{ color: tpColor2(res.toPar) }}>{fmtTP2(res.toPar)}</td>
+                  <td className="cs-t-topar cs-col" style={{ color: tpColor2(res.toPar) }}>{fmtToPar(res.toPar)}</td>
                   <SDCell sd={res.sd} sdSource={res.sdSource} hcp={p.hcp} nholes={res.nholes}
                     style={{ borderLeft: "1px solid var(--border-light)" }} />
                   <td className="cs-t-stat cs-col">{res.birdies}</td>
@@ -2048,10 +1692,10 @@ function RankingView({ rows, onPlayerClick }: { rows: Sub12Row[]; onPlayerClick:
         <div className="card"><div className="muted">Nenhum jogador com pontos ainda</div></div>
       ) : (
         <div className="bjgt-chart-scroll">
-          <table className="dtable" style={{ fontSize: 12 }}>
+          <table className="dtable fs-12" >
             <thead><tr>
               <th className="r" style={{ width: 36 }}>#</th>
-              <th style={{ textAlign: "left", paddingLeft: 6 }}>Jogador</th>
+              <th className="ta-left" style={{ paddingLeft: 6 }}>Jogador</th>
               <th>Clube</th>
               <th className="r">HCP</th>
               <th className="r">T</th>
@@ -2116,7 +1760,7 @@ function EvolutionChart({ rows }: { rows: Sub12Row[] }) {
   return (
     <div className="card">
       <div className="h-xs">Evolução SD ao longo da época</div>
-      <div style={{ width: "100%", height: 340, marginTop: 8 }}>
+      <div className="w-full mt-8" style={{ height: 340 }}>
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--border-light)" />
@@ -2124,7 +1768,7 @@ function EvolutionChart({ rows }: { rows: Sub12Row[] }) {
             <YAxis tick={{ fontSize: 10 }} domain={["dataMin - 2", "dataMax + 2"]} />
             <Tooltip contentStyle={{ background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 6, fontSize: 11 }}
               formatter={(value: number | undefined, name: string) => { const p = top.find(x => x.fed===name); return [value != null ? value.toFixed(1) : "", p?.name||name]; }} />
-            <Legend formatter={(value: string) => { const p = top.find(x => x.fed===value); return <span style={{ fontSize: 10 }}>{p?.name||value}</span>; }} />
+            <Legend formatter={(value: string) => { const p = top.find(x => x.fed===value); return <span className="fs-10">{p?.name||value}</span>; }} />
             <ReferenceLine y={36} stroke="var(--color-danger)" strokeDasharray="4 4" strokeWidth={1} />
             {top.map((p, i) => (
               <Line key={p.fed} type="monotone" dataKey={p.fed} stroke={CHART_COLORS[i % CHART_COLORS.length]} strokeWidth={2} dot={{ r: 3 }} connectNulls />
@@ -2140,12 +1784,12 @@ function PlayerDetail({ row, onClose }: { row: Sub12Row; onClose: () => void }) 
   return (
     <div className="card" style={{ border: "2px solid var(--accent)", position: "relative" }}>
       <button onClick={onClose} title="Fechar" aria-label="Fechar" style={{ position: "absolute", top: 8, right: 10, background: "none", border: "none", cursor: "pointer", fontSize: 18, color: "var(--text-3)" }}>✕</button>
-      <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 8 }}>
-        <span style={{ fontSize: 16, fontWeight: 800 }}>{row.name}</span>
+      <div className="mb-8" style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
+        <span className="fw-800" style={{ fontSize: 16 }}>{row.name}</span>
         <span className="muted fs-11">{row.club} · {row.region} · HCP {fmtHcp(row.hcp)}</span>
         <PlayerLink fed={row.fed} name="Ver perfil →" style={{ fontSize: 11, color: "var(--accent)", textDecoration: "underline" }} />
       </div>
-      <div style={{ display: "flex", gap: 6, marginBottom: 10, flexWrap: "wrap" }}>
+      <div className="mb-10 flex-wrap" style={{ display: "flex", gap: 6 }}>
         <KpiCard label="Torneios"  value={String(row.tourneiosPlayed)} />
         <KpiCard label="Pts"       value={row.totalPts > 0 ? String(row.totalPts) : "–"} color="var(--color-warn-dark)" />
         <KpiCard label="Best SD"   value={row.bestSD?.toFixed(1) ?? "–"} color={row.bestSD != null && row.bestSD <= 25 ? "var(--color-good)" : undefined} />
@@ -2457,7 +2101,7 @@ function DriveContent() {
             const tc = e.tcode?.replace(/_R\d+$|_Total$/, "") || "";
             const url = (tc && e.ccode) ? `https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=${String(e.ccode).padStart(3,"0")}&tcode=${tc}` : "";
             return esc && (
-              <span key={esc} style={{ display: "inline-flex", alignItems: "center", gap: 2 }}>
+              <span key={esc} className="gap-2" style={{ display: "inline-flex", alignItems: "center" }}>
                 <span className={`p p-sm p-${esc.toLowerCase().replace(/\s+/g,"")}`}>{esc}</span>
                 {tc && (
                   <span className="p p-sm p-tourn" style={PILL_TCODE}>{tc}</span>
@@ -2580,14 +2224,14 @@ function DriveContent() {
               </button>
             </>)}
           </>)}
-          <div style={{ flex: 1, minWidth: 8 }} />
+          <div className="flex-1" style={{ minWidth: 8 }} />
           {/* Contadores à direita */}
           {navMode === "torneios" && data.totalScorecards > 0 && (
             <span className="chip" style={{ flexShrink: 0, background: "var(--bg-success-strong)", color: "var(--color-good-dark)" }}>
               📊 {data.totalScorecards} sc
             </span>
           )}
-          {data.lastUpdated && <span className="muted fs-10" style={{ whiteSpace: "nowrap", flexShrink: 0 }}>{data.lastUpdated}</span>}
+          {data.lastUpdated && <span className="muted fs-10 flex-shrink-0"  style={{ whiteSpace: "nowrap" }}>{data.lastUpdated}</span>}
         </Toolbar>
 
         {/* Linha 2: regiões + escalões — scroll horizontal */}
@@ -2600,7 +2244,7 @@ function DriveContent() {
           }}>
             {availRegions.length > 1 && (<>
               <button className={"tourn-tab tourn-tab-sm" + (regionFilter === null ? " active" : "")}
-                onClick={() => setRegionFilter(null)} style={{ flexShrink: 0 }}>
+                onClick={() => setRegionFilter(null)} className="flex-shrink-0">
                 Todas ({countEvents(seriesT)})
               </button>
               {availRegions.map(reg => {
@@ -2619,7 +2263,7 @@ function DriveContent() {
               <ToolbarSep />
             </>)}
             <button className={"tourn-tab tourn-tab-sm" + (escFilter.length === 0 ? " active" : "")}
-              onClick={() => setEscFilter([])} style={{ flexShrink: 0 }}>
+              onClick={() => setEscFilter([])} className="flex-shrink-0">
               Todos ({uniquePCRegion} jog)
             </button>
             {(["Sub 10","Sub 12","Sub 14","Sub 16","Sub 18","Absoluto","Sénior"] as const).map(e => {
@@ -2686,7 +2330,7 @@ function DriveContent() {
 
             {/* Filtros compactos */}
             <div className="sidebar-section-title mt-8">Filtros</div>
-            <div style={{ padding: "4px 8px", display: "flex", flexDirection: "column", gap: 4 }}>
+            <div className="flex-col gap-4" style={{ padding: "4px 8px", display: "flex" }}>
               {sub12AvailRegions.length > 1 && (
                 <select className="select w-full fs-11" value={sub12Region} onChange={e => setSub12Region(e.target.value)}>
                   <option value="all">Todas as zonas</option>
@@ -2698,7 +2342,7 @@ function DriveContent() {
                 <option value="M">Masculino</option>
                 <option value="F">Feminino</option>
               </select>
-              <input className="input" style={{ width: "100%", fontSize: 11, boxSizing: "border-box" }}
+              <input className="input w-full fs-11"  style={{ boxSizing: "border-box" }}
                 value={sub12Search} onChange={e => setSub12Search(e.target.value)} placeholder="Nome, clube…" />
             </div>
 
@@ -2816,7 +2460,7 @@ function DriveContent() {
               <div style={{ padding: "0 12px 12px" }}>
                 {/* Tabs: rondas (isMulti) ou escalões (isEvent) */}
                 {(selectedGroup.isMulti || selectedGroup.isEvent) && (
-                  <div className="escalao-pills" style={{ gap: 3, flexWrap: "wrap", padding: "8px 0 0" }}>
+                  <div className="escalao-pills flex-wrap"  style={{ gap: 3, padding: "8px 0 0" }}>
                     {selectedGroup.entries.map((entry, ri) => {
                       const lbl = selectedGroup.isEvent
                         ? (entry.escalao || ("E" + (ri + 1)))
@@ -2831,7 +2475,7 @@ function DriveContent() {
                             ? { background: "var(--bg-warn-strong)", color: "var(--color-warn-dark)", borderColor: "var(--bg-warn-strong)" }
                             : {}}>
                           {isResumo ? "📊" : selectedGroup.isEvent ? "⚡" : "🏌️"} {lbl}
-                          <span style={{ fontSize: 10, marginLeft: 3, opacity: 0.7 }}>({activeCount} jog)</span>
+                          <span className="fs-10" style={{ marginLeft: 3, opacity: 0.7 }}>({activeCount} jog)</span>
                         </button>
                       );
                     })}
@@ -2847,7 +2491,7 @@ function DriveContent() {
                 )}
                 {curTournament && (
                   <div className="card card-scroll" style={{ marginTop: (selectedGroup.isMulti || selectedGroup.isEvent) ? 8 : 0 }}>
-                    <div className="h-md fs-14" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+                    <div className="h-md fs-14 gap-8"  style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                       <span>
                         {selectedGroup.isEvent
                           ? <>⚡ {curTournament.escalao} — {selectedGroup.campo}</>
@@ -2896,7 +2540,7 @@ function DriveContent() {
         <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 12, color: "var(--text-muted)", padding: 40 }}>
           <div style={{ fontSize: 40 }}>📊</div>
           <div style={{ fontSize: 16, fontWeight: 700, color: "var(--text)" }}>Ranking PJA</div>
-          <div style={{ fontSize: 13, textAlign: "center", maxWidth: 320 }}>Em desenvolvimento — pontuação acumulada dos atletas PJA nos torneios Drive.</div>
+          <div className="fs-13 ta-c" style={{ maxWidth: 320 }}>Em desenvolvimento — pontuação acumulada dos atletas PJA nos torneios Drive.</div>
         </div>
       )}
 

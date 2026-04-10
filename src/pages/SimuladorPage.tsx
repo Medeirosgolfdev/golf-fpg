@@ -1284,7 +1284,7 @@ export default function SimuladorPage() {
           <option value={75}>75%</option>
           <option value={50}>50%</option>
         </select>
-        <div className="chip" style={{ marginLeft: "auto" }}>{filtered.length} campos</div>
+        <div className="chip ml-auto" >{filtered.length} campos</div>
         {is9h && <div className="chip">{holesLabel}</div>}
       </Toolbar>
 

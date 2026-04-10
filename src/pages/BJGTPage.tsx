@@ -83,20 +83,20 @@ function AccLB({ data, evo, evoYear, roundDates }: { data: TData; evo?: Map<stri
     <div className="bjgt-chart-scroll">
       <table className="sc-table-modern" data-sc-table="1" style={{ width: "auto" }}>
         <thead><tr>
-          <th className="hole-header" style={{ textAlign: "center", width: 26, padding: "0 2px" }}>#</th>
-          <th className="hole-header" style={{ textAlign: "left", paddingLeft: 6, paddingRight: 8 }}>Jogador</th>
+          <th className="hole-header ta-c"  style={{ width: 26, padding: "0 2px" }}>#</th>
+          <th className="hole-header ta-left"  style={{ paddingLeft: 6, paddingRight: 8 }}>Jogador</th>
           {Array.from({ length: nR }, (_, i) => (<React.Fragment key={i}>
             <th className="hole-header" style={{ width: roundDates?.[i] ? 52 : 30, textAlign: "center", padding: "0 1px" }}>
               R{i + 1}{roundDates?.[i] ? <><br /><span className="th-sub">{roundDates[i]}</span></> : ""}
             </th>
-            <th className="hole-header c-muted fs-10 fw-500" style={{ width: 34, textAlign: "center", padding: "0 1px" }}>±par</th>
+            <th className="hole-header c-muted fs-10 fw-500 ta-c"  style={{ width: 34, padding: "0 1px" }}>±par</th>
           </React.Fragment>))}
           <th className="hole-header col-total" style={{ width: 34, padding: "0 3px" }}>Tot</th>
-          <th className="hole-header" style={{ width: 38, textAlign: "center", padding: "0 3px" }}>±Par</th>
+          <th className="hole-header ta-c"  style={{ width: 38, padding: "0 3px" }}>±Par</th>
           {hasEvo && <>
             <th className="hole-header" style={{ width: 36, textAlign: "center", padding: "0 3px", borderLeft: "2px solid var(--border)" }}>{evoYear || "2025"}</th>
-            <th className="hole-header" style={{ width: 34, textAlign: "center", padding: "0 3px" }}>Δ</th>
-            <th className="hole-header" style={{ width: 140, textAlign: "center", padding: "0 4px" }}>Percurso</th>
+            <th className="hole-header ta-c"  style={{ width: 34, padding: "0 3px" }}>Δ</th>
+            <th className="hole-header ta-c"  style={{ width: 140, padding: "0 4px" }}>Percurso</th>
           </>}
         </tr></thead>
         <tbody>
@@ -109,21 +109,21 @@ function AccLB({ data, evo, evoYear, roundDates }: { data: TData; evo?: Map<stri
             return (
               <tr key={idx} style={{ ...(bg ? { background: bg } : {}), ...(incomplete ? { opacity: 0.5 } : {}) }}>
                 <td className="fw-800 ta-center" style={{ color: "var(--text-3)", fontSize: 11, padding: "0 2px" }}>{incomplete ? "WD" : (showPos ? p.pos : "")}</td>
-                <td style={{ whiteSpace: "nowrap", paddingLeft: 6, paddingRight: 8, fontSize: 12, textAlign: "left" }}>
+                <td className="fs-12 ta-left" style={{ whiteSpace: "nowrap", paddingLeft: 6, paddingRight: 8 }}>
                   <span className="fw-700">{gf(p.country)} {p.name}</span>
                 </td>
                 {Array.from({ length: nR }, (_, i) => {
                   const r = p.rounds[i];
-                  if (!r) return (<React.Fragment key={i}><td style={{ textAlign: "center", fontSize: 12, padding: "0 1px" }} className="c-muted">–</td><td style={{ textAlign: "center", fontSize: 10, padding: "0 1px" }} className="c-muted">–</td></React.Fragment>);
+                  if (!r) return (<React.Fragment key={i}><td className="ta-c fs-12" style={{ padding: "0 1px" }} className="c-muted">–</td><td className="ta-c fs-10" style={{ padding: "0 1px" }} className="c-muted">–</td></React.Fragment>);
                   const rdTp = r.gross - parTotal;
                   const c = tpColor(rdTp);
                   return (<React.Fragment key={i}>
-                    <td style={{ textAlign: "center", fontSize: 12, fontWeight: 600, padding: "0 1px" }}>{r.gross}</td>
-                    <td style={{ textAlign: "center", fontSize: 10, fontWeight: 600, padding: "0 1px", color: c }}>{fmtToPar(rdTp)}</td>
+                    <td className="ta-c fs-12 fw-600" style={{ padding: "0 1px" }}>{r.gross}</td>
+                    <td className="ta-c fs-10 fw-600" style={{ padding: "0 1px", color: c }}>{fmtToPar(rdTp)}</td>
                   </React.Fragment>);
                 })}
-                <td className="col-total fw-800" style={{ fontSize: 13, padding: "0 3px" }}>{p.total}</td>
-                <td className="fw-700" style={{ textAlign: "center", fontSize: 12, padding: "0 3px", color: tpColor(tp) }}>
+                <td className="col-total fw-800 fs-13"  style={{ padding: "0 3px" }}>{p.total}</td>
+                <td className="fw-700 ta-c fs-12"  style={{ padding: "0 3px", color: tpColor(tp) }}>
                   {tp != null ? fmtToPar(tp) : "–"}
                 </td>
                 {hasEvo && (ev ? <>
@@ -131,13 +131,13 @@ function AccLB({ data, evo, evoYear, roundDates }: { data: TData; evo?: Map<stri
                   <td style={{ textAlign: "center", fontSize: 11, fontWeight: 700, padding: "0 3px", color: ev.delta < 0 ? "var(--good-dark)" : ev.delta > 0 ? SC.danger : "var(--text-3)" }}>
                     {ev.delta > 0 ? "+" : ""}{ev.delta}
                   </td>
-                  <td style={{ textAlign: "center", padding: "0 4px" }}>
+                  <td className="ta-c" style={{ padding: "0 4px" }}>
                     <EvoBadge pill={ev.pill} from={ev.from} to={ev.to} />
                   </td>
                 </> : <>
                   <td style={{ textAlign: "center", fontSize: 11, padding: "0 3px", borderLeft: "2px solid var(--border)" }} className="c-muted">–</td>
-                  <td className="c-muted" style={{ textAlign: "center", fontSize: 11, padding: "0 3px" }}>–</td>
-                  <td style={{ textAlign: "center", padding: "0 4px" }}><EvoBadge pill="NEW" label={evoYear === "2026" ? "não voltou" : "novo"} /></td>
+                  <td className="c-muted ta-c fs-11"  style={{ padding: "0 3px" }}>–</td>
+                  <td className="ta-c" style={{ padding: "0 4px" }}><EvoBadge pill="NEW" label={evoYear === "2026" ? "não voltou" : "novo"} /></td>
                 </>)}
               </tr>
             );
@@ -162,8 +162,8 @@ if (!sorted.length) return <EmptyState size="sm" message="Scorecards buraco-a-bu
     <div className="bjgt-chart-scroll">
       <table className="sc-table-modern" data-sc-table="1">
         <thead><tr>
-          <th className="hole-header" style={{ textAlign: "center", width: 26 }}>#</th>
-          <th className="hole-header" style={{ textAlign: "left", paddingLeft: 6 }}>Jogador</th>
+          <th className="hole-header ta-c"  style={{ width: 26 }}>#</th>
+          <th className="hole-header ta-left"  style={{ paddingLeft: 6 }}>Jogador</th>
           <th className="hole-header col-total" style={{ width: 28 }}>Tot</th>
           <th className="hole-header" style={{ width: 28 }}>±</th>
           {[1,2,3,4,5,6,7,8,9].map(h => <th key={h} className="hole-header">{h}</th>)}
@@ -186,9 +186,9 @@ if (!sorted.length) return <EmptyState size="sm" message="Scorecards buraco-a-bu
             return (
               <tr key={idx} style={bg ? { background: bg } : undefined}>
                 <td className="fw-800 ta-center" style={{ color: "var(--text-3)", fontSize: 11 }}>{showP ? dp : ""}</td>
-                <td className="row-label fw-700" style={{ whiteSpace: "nowrap", fontSize: 11 }}>{gf(p.country)} {p.name.length > 22 ? p.name.substring(0, 20) + "…" : p.name}</td>
+                <td className="row-label fw-700 fs-11"  style={{ whiteSpace: "nowrap" }}>{gf(p.country)} {p.name.length > 22 ? p.name.substring(0, 20) + "…" : p.name}</td>
                 <td className="col-total">{r.gross}</td>
-                <td className="fw-700" style={{ color: tpColor(tp), fontSize: 11 }}>{fmtToPar(tp)}</td>
+                <td className="fw-700 fs-11"  style={{ color: tpColor(tp) }}>{fmtToPar(tp)}</td>
                 {r.scores.slice(0,9).map((sc,i) => <td key={i}><span className={`sc-score ${scClass(sc, par[i])}`}>{sc}</span></td>)}
                 <td className="col-out fw-600">{f9} <span className="fs-8 c-text-3">{fmtSub(f9 - parF9)}</span></td>
                 {r.scores.slice(9,18).map((sc,i) => <td key={i}><span className={`sc-score ${scClass(sc, par[9+i])}`}>{sc}</span></td>)}
@@ -219,7 +219,7 @@ function HoleDiff({ data, ri, mn }: { data: TData; ri: number | "all"; mn?: stri
     <div className="bjgt-chart-scroll">
       <table className="sc-table-modern" data-sc-table="1">
         <thead><tr>
-          <th className="hole-header" style={{ textAlign: "left", paddingLeft: 6, minWidth: 44 }}></th>
+          <th className="hole-header ta-left"  style={{ paddingLeft: 6, minWidth: 44 }}></th>
           {par.slice(0,9).map((_,i) => <th key={i} className="hole-header">{i+1}</th>)}
           <th className="hole-header col-out fs-10">Out</th>
           {par.slice(9).map((_,i) => <th key={i+9} className="hole-header">{i+10}</th>)}
@@ -295,7 +295,7 @@ function ManuelDay({ data, ri }: { data: TData; ri: number }) {
       </div>
       {prevR?.scores && vsPrev && <>
         <div className="muted fs-10 mb-4 fw-700">vs R{ri} (anterior: {prevR.gross})</div>
-        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+        <div className="gap-12 flex-wrap" style={{ display: "flex" }}>
           {worseVP.length > 0 && <div className="fs-10"><span className="fw-700 c-warn-dark">Pior (+{worseVP.reduce((s,h) => s+h.delta, 0)}):</span> {worseVP.map(h => `H${h.h} ${h.prev}→${h.gross}`).join(", ")}</div>}
           {betterVP.length > 0 && <div className="fs-10"><span className="fw-700" style={{ color: SC.good }}>Melhor ({betterVP.reduce((s,h) => s+h.delta, 0)}):</span> {betterVP.map(h => `H${h.h} ${h.prev}→${h.gross}`).join(", ")}</div>}
         </div>
@@ -435,7 +435,7 @@ function Content() {
         }</ToolbarMeta>}
         {cur && (() => {
           const nR = Math.max(...cur.data.players.map(p => p.rounds.length));
-          return <span className="chip" style={{ marginLeft: "auto" }}>{fmtFieldInfo(cur.data.players.filter(p => p.rounds.length === nR).length, nR, cur.category)}</span>;
+          return <span className="chip ml-auto" >{fmtFieldInfo(cur.data.players.filter(p => p.rounds.length === nR).length, nR, cur.category)}</span>;
         })()}
       </Toolbar>
 
@@ -479,7 +479,7 @@ function Content() {
                           onClick={() => { setTi(idx); md.onSelect(); }}>
                           <div className="course-item-name">{u.category}</div>
                           {t && <div className="course-item-meta">{nP} jog · {nR}R</div>}
-                          <ExtLink href={u.sourceUrl} className="tourn-ext-link" style={{ marginTop: 4 }}
+                          <ExtLink href={u.sourceUrl} className="tourn-ext-link mt-4" 
                             onClick={e => e.stopPropagation()}>
                             🔗 Leaderboard oficial
                           </ExtLink>
@@ -498,23 +498,23 @@ function Content() {
           {cur ? (<>
             <DetailHeader
               title={cur.label}
-              sub={<><span className="muted">{cur.series === "eowagr" ? "📍 Le Touquet GC — La Forêt" : cur.category === "Boys 12-13" ? "📍 Villa Padierna — Alferini" : "📍 Villa Padierna — Flamingos"}</span><ExtLink href={URLS[ti].sourceUrl} className="tourn-ext-link" style={{ marginLeft: 8 }}>🔗 Leaderboard oficial</ExtLink></>}
+              sub={<><span className="muted">{cur.series === "eowagr" ? "📍 Le Touquet GC — La Forêt" : cur.category === "Boys 12-13" ? "📍 Villa Padierna — Alferini" : "📍 Villa Padierna — Flamingos"}</span><ExtLink href={URLS[ti].sourceUrl} className="tourn-ext-link ml-8" >🔗 Leaderboard oficial</ExtLink></>}
             />
             <TournView def={cur} evo={evoMap} evoYear={evoYear} />
             {manuelEvo && cur.year === 2026 && (
               <div className="card" style={{ background: "var(--bg-success-subtle)", border: "1px solid var(--good)" }}>
                 <div className="h-md fs-14">🇵🇹 Manuel — Evolução WJGC</div>
-                <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
-                  <div style={{ textAlign: "center", flex: "1 1 100px" }}>
+                <div className="gap-16 flex-wrap" style={{ display: "flex", alignItems: "center" }}>
+                  <div className="ta-c" style={{ flex: "1 1 100px" }}>
                     <div className="muted fs-10">2025 ({manuelEvo.from})</div>
                     <div className="fw-900" style={{ fontSize: 24 }}>{manuelEvo.otherTotal}</div>
                   </div>
                   <div style={{ fontSize: 24, color: "var(--good-dark)" }}>→</div>
-                  <div style={{ textAlign: "center", flex: "1 1 100px" }}>
+                  <div className="ta-c" style={{ flex: "1 1 100px" }}>
                     <div className="muted fs-10">2026 ({manuelEvo.to})</div>
                     <div className="fw-900" style={{ fontSize: 24, color: manuelEvo.delta < 0 ? "var(--good-dark)" : "var(--text-3)" }}>{manuelEvo.otherTotal + manuelEvo.delta}</div>
                   </div>
-                  <div style={{ textAlign: "center", flex: "1 1 80px" }}>
+                  <div className="ta-c" style={{ flex: "1 1 80px" }}>
                     <div className="muted fs-10">Δ</div>
                     <div className="fw-900" style={{ fontSize: 24, color: manuelEvo.delta < 0 ? "var(--good-dark)" : SC.danger }}>{manuelEvo.delta > 0 ? "+" : ""}{manuelEvo.delta}</div>
                     <div className="muted fs-10">pancadas (3R)</div>

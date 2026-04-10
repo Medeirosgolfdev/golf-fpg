@@ -21,7 +21,7 @@ import { isCalUnlocked } from "../utils/authConstants";
 import { useIsMobile } from "../hooks/useIsMobile";
 import { clickableA11y } from "../utils/a11y";
 import { norm } from "../utils/format";
-import { MONTHS_PT as MONTHS_SHORT } from "../utils/format";
+import { MONTHS_PT as MONTHS_SHORT, MONTHS_PT_LONG } from "../utils/format";
 import PasswordGate from "../ui/PasswordGate";
 
 /* ═══ Types ═══ */
@@ -321,11 +321,7 @@ const EVENTS: CalEvent[] = [
 ];
 
 /* ═══ Helpers ═══ */
-const MONTHS_PT = [
-  "Janeiro","Fevereiro","Março","Abril","Maio","Junho",
-  "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro",
-];
-function monthLabel(m: number) { return `${MONTHS_PT[m]} (${String(m + 1).padStart(2, "0")})`; }
+function monthLabel(m: number) { return `${MONTHS_PT_LONG[m]} (${String(m + 1).padStart(2, "0")})`; }
 const DAYS_SHORT = ["S","T","Q","Q","S","S","D"];
 const DAYS_PT = ["Seg","Ter","Qua","Qui","Sex","Sáb","Dom"];
 const DAY_NAMES = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"]; // indexed by JS getDay()
@@ -726,10 +722,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                       <div key={cal.id}>
                         <div className="flex-center" style={{ gap: 0 }}>
                           {/* Checkbox */}
-                          <button onClick={() => toggleCal(cal.id)} style={{
-                            width: 28, height: 26, border: "none", cursor: "pointer", background: "transparent",
-                            display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, padding: 0,
-                          }}>
+                          <button onClick={() => toggleCal(cal.id)} className="flex-shrink-0" style={{ width: 28, height: 26, border: "none", cursor: "pointer", background: "transparent", display: "flex", alignItems: "center", justifyContent: "center", padding: 0 }}>
                             <span style={{
                               width: 12, height: 12, borderRadius: "var(--radius-xs)", transition: "all 0.15s",
                               background: enabledCals.has(cal.id) ? cal.color : "transparent",
@@ -775,8 +768,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                                 }}
                                   onMouseEnter={e => (e.currentTarget.style.background = "var(--bg-hover)")}
                                   onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>
-                                  <span style={{ fontSize: 10, fontFamily: "'JetBrains Mono', monospace",
-                                    color: cal.color, fontWeight: 600, minWidth: 30, flexShrink: 0 }}>{dd}</span>
+                                  <span className="fs-10 fw-600 flex-shrink-0" style={{ fontFamily: "'JetBrains Mono', monospace", color: cal.color, minWidth: 30 }}>{dd}</span>
                                   <span className="text-ellipsis" style={{ fontSize: 10, color: "var(--text-2)", flex: 1, textAlign: "left" }}>{ev.title}</span>
                                 </button>
                               );
@@ -796,12 +788,12 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
       {/* ── Main ── */}
  <div className="flex-1 d-flex flex-col overflow-hidden">
         <div style={{ borderBottom: "1px solid var(--border-light)", flexShrink: 0 }}>
-          <div style={{ display: "flex", alignItems: "center", padding: "8px 12px", gap: 8, flexWrap: "wrap" }}>
+          <div className="gap-8 flex-wrap" style={{ display: "flex", alignItems: "center", padding: "8px 12px" }}>
             <button className="sidebar-toggle" onClick={() => setSidebarOpen(v => !v)} title={sidebarOpen ? "Fechar painel" : "Abrir painel"}>
               {sidebarOpen ? "◀" : "▶"}
             </button>
-            <h2 className="cal-month-title" style={{ fontSize: 14, margin: 0, whiteSpace: "nowrap" }}>Calendário 2026</h2>
-            <button onClick={goToday} className="p p-filter" title="Ir para hoje" style={{ opacity: 1, flexShrink: 0 }}>Hoje</button>
+            <h2 className="cal-month-title fs-14"  style={{ margin: 0, whiteSpace: "nowrap" }}>Calendário 2026</h2>
+            <button onClick={goToday} className="p p-filter" title="Ir para hoje" className="flex-shrink-0" style={{ opacity: 1 }}>Hoje</button>
             <div ref={searchRef} style={{ position: "relative", flex: "1 1 120px", minWidth: 100, maxWidth: 220 }}>
               <input value={searchQ} onChange={e => { setSearchQ(e.target.value); setSearchOpen(true); }}
                 onFocus={() => searchQ.length >= 2 && setSearchOpen(true)}
@@ -840,7 +832,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                 </div>
               )}
             </div>
-            <div className="escalao-pills" style={{ marginLeft: "auto", flexShrink: 0 }}>
+            <div className="escalao-pills ml-auto flex-shrink-0" >
               {(["month", "list"] as ViewMode[]).map(v => (
                 <button key={v} onClick={() => setViewMode(v)}
                   className={`p p-filter${viewMode === v ? " active" : ""}`}>
@@ -849,8 +841,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
               ))}
             </div>
           </div>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between",
-            padding: "4px 12px 8px", gap: 8 }}>
+          <div className="gap-8" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "4px 12px 8px" }}>
             <button onClick={() => setCurrentMonth(m => Math.max(0, m-1))} title="Mês anterior" disabled={currentMonth <= 0}
               style={{ width: 32, height: 32, borderRadius: "50%", border: "1px solid var(--border)",
                 background: "var(--bg-card)", cursor: currentMonth <= 0 ? "default" : "pointer",
@@ -860,7 +851,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
             <span style={{ fontSize: 15, fontWeight: 700, color: "var(--text)", textAlign: "center", flex: 1 }}>
               {monthLabel(currentMonth)} 2026
             </span>
-            <span className="fs-11 c-text-3 mono" style={{ flexShrink: 0 }}>{visibleEvents.length} provas</span>
+            <span className="fs-11 c-text-3 mono flex-shrink-0" >{visibleEvents.length} provas</span>
             <button onClick={() => setCurrentMonth(m => Math.min(11, m+1))} title="Mês seguinte" disabled={currentMonth >= 11}
               style={{ width: 32, height: 32, borderRadius: "50%", border: "1px solid var(--border)",
                 background: "var(--bg-card)", cursor: currentMonth >= 11 ? "default" : "pointer",
@@ -916,13 +907,11 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                         </div>
                         <div className="fs-14" style={{ lineHeight: 1 }}>{hl.icon}</div>
                         {isFirst ? (
-                          <div style={{ fontSize: 10, fontWeight: 900, color: hl.text, textAlign: "center",
-                            lineHeight: 1.1, letterSpacing: "0.02em", marginTop: 1 }}>
+                          <div className="fs-10 fw-900 ta-c mt-1" style={{ color: hl.text, lineHeight: 1.1, letterSpacing: "0.02em" }}>
                             {titleLines.map((l, j) => <div key={j}>{l}</div>)}
                           </div>
                         ) : (
-                          <div style={{ fontSize: 10, fontWeight: 700, color: hl.text, opacity: 0.6, textAlign: "center",
-                            lineHeight: 1.1, marginTop: 1 }}>
+                          <div className="fs-10 fw-700 ta-c mt-1" style={{ color: hl.text, opacity: 0.6, lineHeight: 1.1 }}>
                             {hlEvt.title}
                           </div>
                         )}

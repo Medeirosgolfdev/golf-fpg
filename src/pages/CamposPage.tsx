@@ -486,7 +486,7 @@ export default function CamposPage() {
             <option key={t.hex} value={t.hex}>{t.label}</option>
           ))}
         </select>
-        <div className="chip" style={{ marginLeft: "auto" }}>{filtered.length} campos</div>
+        <div className="chip ml-auto" >{filtered.length} campos</div>
           <div className="chip">{totalTees} tees</div>
           {intlCount > 0 && <div className="chip">{"\ud83c\udf0d"} {intlCount} intl</div>}
       </Toolbar>
@@ -583,7 +583,7 @@ export default function CamposPage() {
                       colorHex={teeHexFromTee(t)}
                       suffix={teeSuffix(t)}
                     />
-                    <span className="muted" style={{ fontSize: 11 }}>
+                    <span className="muted fs-11" >
                       {t.sex} · {fmt(t.distances?.total)} m
                     </span>
                   </span>

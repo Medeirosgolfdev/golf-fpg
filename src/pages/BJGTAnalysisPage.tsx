@@ -15,7 +15,7 @@ import {
   type EclecticEntry,
 } from "../data/playerDataLoader";
 import { usePlayerData } from "../data/usePlayerData";
-import { norm, fmtToPar, firstName, fmtSign, MONTHS_PT, fmtFieldInfo } from "../utils/format";
+import { norm, fmtToPar, firstName, fmtSign, MONTHS_PT, fmtFieldInfo, MONTH_MAP, sortArrow } from "../utils/format";
 import { FL } from "../utils/flagUtils";
 import { zTier, getTrend, getAvgZ } from "../utils/mathUtils";
 import { meanArr } from "../utils/mathUtils";
@@ -35,6 +35,7 @@ import DetailHeader from "../ui/DetailHeader";
 import TabRow from "../ui/TabRow";
 import KpiCard from "../ui/KpiCard";
 import { COURSE_KEYWORDS, TOURN, FIELD_2025, VP_PAR, TIER, FIELD_CARDS } from "../data/rivalData";
+import { TIER_L, TR_I } from "../constants/tierDisplay";
 
 /* ═══════════════════════════════════
    TYPES
@@ -640,9 +641,7 @@ for (const t of T) {
   }
 }
 
-const TIER_L = { elite: "Elite", strong: "Forte", solid: "Sólido", developing: "Em Desenv.", beginner: "Iniciante" };
-
-const TR_I = { up2: { i: "▲▲", c: SC.good }, up: { i: "▲", c: "var(--score-par-seg)" }, stable: { i: "●", c: "var(--text-muted)" }, down: { i: "▼", c: SC.warn }, down2: { i: "▼▼", c: SC.danger } };
+// TIER_L and TR_I imported from constants/tierDisplay
 
 // Average z-score across all rounds played
 const allCountries = [...new Set(D.map(p => p.co))].sort();
@@ -685,7 +684,6 @@ function _RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) 
   }, [fTour, fUp, fCo, q, sort, dir, dOnly]);
 
   const doSort = (c: string) => { if (sort === c) setDir(d => d === "asc" ? "desc" : "asc"); else { setSort(c); setDir("asc"); } };
-  const sortIcon = (c: string) => sort === c ? (dir === "asc" ? " ↑" : " ↓") : "";
 
   // Compute global ordinal rankings from z-score (across ALL players, not just filtered)
   const rankMap = useMemo(() => {
@@ -754,7 +752,7 @@ function _RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) 
         {(Object.keys(TIER) as Array<keyof typeof TIER>).map(k => (
           <span key={k} className="legend-item">
             <span className="legend-dot" style={{ background: TIER[k].bg }} />
-            <span style={{ color: TIER[k].c, fontSize: 10 }}>{TIER_L[k]}</span>
+            <span className="fs-10" style={{ color: TIER[k].c }}>{TIER_L[k]}</span>
           </span>
         ))}
       </div>
@@ -765,7 +763,7 @@ function _RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) 
           <table className="tourn-form-table">
             <thead>
               <tr className="rivais-group-header">
-                <th className="rivais-th-name pointer" onClick={() => doSort("name")}>Jogador{sortIcon("name")}</th>
+                <th className="rivais-th-name pointer" onClick={() => doSort("name")}>Jogador{sortArrow("name", sort, dir)}</th>
                 <th className="rivais-th pointer ta-center" onClick={() => doSort("zrank")} title="Torneios jogados">#T</th>
                 {T.map(t => {
                   const w = T_WEIGHTS[t.id];
@@ -773,20 +771,20 @@ function _RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) 
                   return (
                   <th key={t.id} className="rivais-th pointer ta-center" style={{ minWidth: 56 }} onClick={() => doSort("t:" + t.id)}>
                     {t.url ? <a href={t.url} target="_blank" rel="noopener noreferrer" className="rivais-link" onClick={e => e.stopPropagation()}>{t.short}</a> : t.short}
-                    {sortIcon("t:" + t.id)}
+                    {sortArrow("t:" + t.id, sort, dir)}
                     <div className="fs-9 fw-500 op-6 mt-1">{stars}</div>
                   </th>
                   );
                 })}
-                <th className="rivais-th pointer ta-center" style={{ borderLeft: "3px solid var(--text-muted)", minWidth: 56 }} onClick={() => doSort("zrank")}>Rank{sortIcon("zrank")}</th>
+                <th className="rivais-th pointer ta-center" style={{ borderLeft: "3px solid var(--text-muted)", minWidth: 56 }} onClick={() => doSort("zrank")}>Rank{sortArrow("zrank", sort, dir)}</th>
                 <th className="rivais-th ta-center">▲</th>
                 {UP.map(u => (
                   <th key={u.id} className="rivais-th pointer ta-center" onClick={() => doSort("up:" + u.id)}>
                     {u.url ? <a href={u.url} target="_blank" rel="noopener noreferrer" className="rivais-link" onClick={e => e.stopPropagation()}>{u.short}</a> : u.short}
-                    {sortIcon("up:" + u.id)}
+                    {sortArrow("up:" + u.id, sort, dir)}
                   </th>
                 ))}
-                {vsOn && <th className="rivais-th pointer ta-center" onClick={() => doSort("vsManuel")}>vs M{sortIcon("vsManuel")}</th>}
+                {vsOn && <th className="rivais-th pointer ta-center" onClick={() => doSort("vsManuel")}>vs M{sortArrow("vsManuel", sort, dir)}</th>}
               </tr>
             </thead>
             <tbody>
@@ -927,7 +925,7 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
   /* ── Shared table header ── */
   const THead = () => (
     <thead><tr>
-      <th className="hole-header" style={{ textAlign: "left", paddingLeft: 8, minWidth: 50 }}>Buraco</th>
+      <th className="hole-header ta-left"  style={{ paddingLeft: 8, minWidth: 50 }}>Buraco</th>
       {par.slice(0, 9).map((_, i) => <th key={i} className="hole-header">{i + 1}</th>)}
       <th className="hole-header col-out fs-10">Out</th>
       {par.slice(9).map((_, i) => <th key={i + 9} className="hole-header">{i + 10}</th>)}
@@ -1097,7 +1095,7 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
             { label: "Triple+", val: scoringStats.worse, cls: "triple" },
           ].filter(s => s.val > 0).map(s => (
             <span key={s.label} className="d-flex items-center gap-4">
-              <span className={`sc-score ${s.cls}`} style={{ width: 22, height: 22, fontSize: 10 }}>{s.val}</span>
+              <span className={`sc-score ${s.cls}`} className="fs-10" style={{ width: 22, height: 22 }}>{s.val}</span>
               <span className="fs-10 fw-600 c-text-3">{s.label} ({(s.val / scoringStats.total * 100).toFixed(0)}%)</span>
             </span>
           ))}
@@ -1211,7 +1209,6 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
   const A = useMemo(() => {
     if (!data) return null;
 
-    const MONTH_MAP: Record<string,number> = { jan:0,fev:1,feb:1,mar:2,abr:3,apr:3,mai:4,may:4,jun:5,jul:6,ago:7,aug:7,set:8,sep:8,out:9,oct:9,nov:10,dez:11,dec:11 };
     /** Parse a round's date info into { key: "2025-06", label: "Jun 25" } */
     function toMonth(dateStr: string, dateSort: number): { key: string; label: string } {
       // Try date string first: "15 Jun 2024", "2024-06-15", "15/06/2024", etc.
@@ -1836,7 +1833,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
             </button>
           ))}
         </div>
-        <span className="chip" style={{ marginLeft: "auto" }}>{fmtFieldInfo(CONTEST_MAP[tab].players.filter(p=>typeof p.p==="number").length, CONTEST_MAP[tab].nRounds, `Par ${CONTEST_MAP[tab].par}`)}</span>
+        <span className="chip ml-auto" >{fmtFieldInfo(CONTEST_MAP[tab].players.filter(p=>typeof p.p==="number").length, CONTEST_MAP[tab].nRounds, `Par ${CONTEST_MAP[tab].par}`)}</span>
       </Toolbar>
 
       {/* ── Master-detail ── */}
@@ -1878,7 +1875,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
       {!selectedPlayer && (
         <div className="ta-c" style={{ margin: "20px 0" }}>
-          <Link to={`/jogadores/${fed}`} className="p p-filter active" style={{ textDecoration: "none", padding: "8px 20px", fontSize: 13, height: "auto" }}>
+          <Link to={`/jogadores/${fed}`} className="p p-filter active td-none fs-13"  style={{ padding: "8px 20px", height: "auto" }}>
             Ver perfil completo do {PLAYER_NAME} →
           </Link>
         </div>

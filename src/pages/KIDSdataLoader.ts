@@ -37,6 +37,7 @@ export function co(raw: string): string {
 
 import { MONTHS_PT } from "../utils/format";
 import { cachedFetchJson } from "../data/fetchCache";
+import { MANUEL_BIRTH_YEAR } from "../constants/manuel";
 
 export function normName(n: string): string {
   return n.trim().toLowerCase()
@@ -81,9 +82,6 @@ export interface AutoScorecard {
 
 // Global scorecard store: key = normName(playerName), value = list of scorecards
 const _scorecards: Map<string, AutoScorecard[]> = new Map();
-
-// Manuel Medeiros DOB: 29/04/2014
-const MANUEL_BIRTH_YEAR = 2014;
 
 // t-codes dos 15 ficheiros USKids World Championship / major events
 const USKIDS_KNOWN_TCODES = new Set([

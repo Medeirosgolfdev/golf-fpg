@@ -105,11 +105,12 @@ export function ScorecardLeaderboard({
   return (
     <div>
       {(metaLine != null || onToggleScorecard) && (
-        <div className="muted fs-11 mb-8 p-0-4px"
-          style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+        <div className="muted fs-11 mb-8 p-0-4px flex-wrap"
+          
+          style={{ display: "flex", alignItems: "center", gap: 10 }}>
           {metaLine}
           {onToggleScorecard && (
-            <button onClick={onToggleScorecard} className="btn" style={{ marginLeft: "auto" }}>
+            <button onClick={onToggleScorecard} className="btn ml-auto" >
               {showScorecard ? "Ocultar scorecard" : "Ver scorecard"}
             </button>
           )}

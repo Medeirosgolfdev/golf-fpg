@@ -6,7 +6,7 @@
  *
  * Uso:
  *   <ExtLink href={url}>🔗 Leaderboard oficial</ExtLink>
- *   <ExtLink href={url} className="tourn-ext-link" style={{ marginLeft: 8 }}>Ver ↗</ExtLink>
+ *   <ExtLink href={url} className="tourn-ext-link ml-8" >Ver ↗</ExtLink>
  *   <ExtLink href={url} className="detail-link">Ver scorecard ↗</ExtLink>
  *   <ExtLink href={url} className="sc-ext-link" title="FPG Scoring">🔗</ExtLink>
  */

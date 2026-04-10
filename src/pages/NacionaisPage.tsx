@@ -6,7 +6,11 @@ import {
 } from "recharts";
 import { useAppContext } from "../context/AppContext";
 import { sdClassByHcp } from "../utils/scoreDisplay";
-import { norm, fmtHcp } from "../utils/format";
+import { C } from "../utils/colors";
+import { norm, fmtHcp, escShort, fmtTime, fmtDataInscricao, anoEscalao, shortName } from "../utils/format";
+import { AnoEscalaoPill, TrendBadge } from "../ui/AnoEscalaoPill";
+import { escCls } from "../utils/playerUtils";
+import { TORNEIOS_CONFIG } from "../constants/tournaments";
 import PlayerLink from "../ui/PlayerLink";
 import EmptyState from "../ui/EmptyState";
 import LoadingState from "../ui/LoadingState";
@@ -41,60 +45,6 @@ function usePlayerStats() {
   return stats;
 }
 
-const TORNEIOS_CONFIG = [
-  { tcode: "10935", nome: "Sub-18 H", escalao: "Sub-18", sex: "M" },
-  { tcode: "10936", nome: "Sub-18 S", escalao: "Sub-18", sex: "F" },
-  { tcode: "10937", nome: "Sub-16 H", escalao: "Sub-16", sex: "M" },
-  { tcode: "10938", nome: "Sub-16 S", escalao: "Sub-16", sex: "F" },
-  { tcode: "10939", nome: "Sub-14 H", escalao: "Sub-14", sex: "M" },
-  { tcode: "10940", nome: "Sub-14 S", escalao: "Sub-14", sex: "F" },
-  { tcode: "10941", nome: "Sub-12 H", escalao: "Sub-12", sex: "M" },
-  { tcode: "10942", nome: "Sub-12 S", escalao: "Sub-12", sex: "F" },
-  { tcode: "10943", nome: "Sub-10 H", escalao: "Sub-10", sex: "M" },
-  { tcode: "10944", nome: "Sub-10 S", escalao: "Sub-10", sex: "F" },
-];
-
-function escShort(esc: string) { return esc.replace("Sub-", "S"); }
-function escCls(esc: string) {
-  return esc.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "");
-}
-function fmtTime(iso: string | null) {
-  if (!iso) return null;
-  return new Date(iso).toLocaleTimeString("pt-PT", { hour: "2-digit", minute: "2-digit" });
-}
-function fmtDataInscricao(s: string | null) {
-  if (!s) return "–";
-  return s.replace(/^\d{4}\//, "").replace("/", "/");
-}
-function anoEscalao(dob: string, escalao: string): "1A" | "2A" | null {
-  if (!dob) return null;
-  const anoNasc = parseInt(dob.slice(0, 4));
-  const idadeMax = parseInt(escalao.replace("Sub-", ""));
-  if (isNaN(anoNasc) || isNaN(idadeMax)) return null;
-  return anoNasc === (new Date().getFullYear() - idadeMax) ? "2A" : "1A";
-}
-function AnoEscalaoPill({ dob, escalao }: { dob: string; escalao: string }) {
-  if (!dob) return null;
-  const anoNasc = dob.slice(0, 4);
-  const isUltimo = anoEscalao(dob, escalao) === "2A";
-  return (
-    <span title={isUltimo ? `${anoNasc} — 2o ano` : `${anoNasc} — 1o ano`}
-      style={{ fontSize: 9, fontWeight: 700, padding: "1px 5px", borderRadius: 3, lineHeight: 1.4,
-        background: isUltimo ? "var(--color-bad)" : "var(--color-good)", color: "#fff", flexShrink: 0 }}>
-      {anoNasc}
-    </span>
-  );
-}
-function TrendBadge({ trend, delta }: { trend: string | null; delta: number | null }) {
-  if (!trend || trend === "stable") return <span className="muted" style={{ fontSize: 11 }}>–</span>;
-  const up = trend === "up";
-  return (
-    <span style={{ color: up ? "var(--color-good)" : "var(--color-bad)", fontWeight: 700, fontSize: 13 }}
-      title={delta != null ? `${delta > 0 ? "+" : ""}${delta.toFixed(1)} (3m)` : ""}>
-      {up ? "↓" : "↑"}
-    </span>
-  );
-}
 
 
 /* ═══════════════════════════════════════════════════════
@@ -155,33 +105,33 @@ function PainelResumo({ torneios, nossosByFed }: {
     <div style={{ padding: "8px 12px 6px", borderBottom: "1px solid var(--border)", background: "var(--bg-card)" }}>
       {/* Linha 1: total + escalões + anos */}
       <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", marginBottom: clubes.length > 0 ? 5 : 0 }}>
-        <span style={{ fontWeight: 800, fontSize: 14, flexShrink: 0 }}>{totalGeral} inscritos</span>
-        <span className="muted" style={{ fontSize: 11 }}>·</span>
+        <span className="fw-800 fs-14 flex-shrink-0">{totalGeral} inscritos</span>
+        <span className="muted fs-11" >·</span>
         {escaloes.flatMap((e, ei) => {
           const g = byEsc[e];
           if (g.M === 0 && g.F === 0) return [];
           const items: React.ReactNode[] = [];
           if (g.M > 0) items.push(
-            <span key={`${e}M`} style={{ display: "inline-flex", alignItems: "center", gap: 3, flexShrink: 0 }}>
-              <span className="muted" style={{ fontSize: 10 }}>{e.replace("Sub-", "S")}</span>
-              <span className="sex-badge sex-M" style={{ minWidth: 20, textAlign: "center" }}>{g.M}</span>
+            <span key={`${e}M`} className="flex-shrink-0" style={{ display: "inline-flex", alignItems: "center", gap: 3 }}>
+              <span className="muted fs-10" >{e.replace("Sub-", "S")}</span>
+              <span className="sex-badge sex-M ta-c"  style={{ minWidth: 20 }}>{g.M}</span>
             </span>
           );
           if (g.F > 0) items.push(
-            <span key={`${e}F`} style={{ display: "inline-flex", alignItems: "center", gap: 3, flexShrink: 0 }}>
-              {g.M === 0 && <span className="muted" style={{ fontSize: 10 }}>{e.replace("Sub-", "S")}</span>}
-              <span className="sex-badge sex-F" style={{ minWidth: 20, textAlign: "center" }}>{g.F}</span>
+            <span key={`${e}F`} className="flex-shrink-0" style={{ display: "inline-flex", alignItems: "center", gap: 3 }}>
+              {g.M === 0 && <span className="muted fs-10" >{e.replace("Sub-", "S")}</span>}
+              <span className="sex-badge sex-F ta-c"  style={{ minWidth: 20 }}>{g.F}</span>
             </span>
           );
           if (ei < escaloes.length - 1) items.push(
-            <span key={`sep${ei}`} className="muted" style={{ fontSize: 10 }}>·</span>
+            <span key={`sep${ei}`} className="muted fs-10" >·</span>
           );
           return items;
         })}
         {anoBase > 0 && (
           <>
-            <span className="muted" style={{ fontSize: 11 }}>·</span>
-            <span style={{ fontSize: 11, flexShrink: 0, display: "inline-flex", gap: 5, alignItems: "center" }}>
+            <span className="muted fs-11" >·</span>
+            <span className="fs-11 flex-shrink-0" style={{ display: "inline-flex", gap: 5, alignItems: "center" }}>
               <span className="muted">1º ano</span>
               <span style={{ fontWeight: 700, color: "var(--color-good)" }}>{anoTotals["1A"]}</span>
               <span className="muted">2º ano</span>
@@ -193,8 +143,8 @@ function PainelResumo({ torneios, nossosByFed }: {
 
       {/* Linha 2: clubes */}
       {clubes.length > 0 && (
-        <div style={{ display: "flex", alignItems: "center", gap: 4, flexWrap: "wrap" }}>
-          <span className="muted" style={{ fontSize: 10, flexShrink: 0 }}>Clubes:</span>
+        <div className="gap-4 flex-wrap" style={{ display: "flex", alignItems: "center" }}>
+          <span className="muted fs-10 flex-shrink-0" >Clubes:</span>
           {clubes.map(([c, d]) => (
             <button key={c}
               onClick={() => setClubesSel(prev => prev === c ? null : c)}
@@ -217,7 +167,7 @@ function PainelResumo({ torneios, nossosByFed }: {
           <div style={{ fontSize: 11, fontWeight: 700, marginBottom: 5, color: "var(--text-1)" }}>
             {clubeSel} — {selData.n} inscrito{selData.n !== 1 ? "s" : ""}
           </div>
-          <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
+          <div className="gap-4 flex-wrap" style={{ display: "flex" }}>
             {selData.jogadores.map((jj, i) => (
               <span key={i} style={{
                 fontSize: 11, display: "inline-flex", alignItems: "center", gap: 4,
@@ -225,7 +175,7 @@ function PainelResumo({ torneios, nossosByFed }: {
                 background: "var(--bg-card)", border: "1px solid var(--border)",
               }}>
                 <SexBadge sex={jj.sex} size="sm" />
-                <span className={`p p-sm p-${escCls(jj.escalao)}`} style={{ fontSize: 9 }}>{escShort(jj.escalao)}</span>
+                <span className={`p p-sm p-${escCls(jj.escalao)}`} className="fs-9">{escShort(jj.escalao)}</span>
                 <span>{jj.nome || jj.fed}</span>
               </span>
             ))}
@@ -320,8 +270,8 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
       <div className="nac-det-toolbar">
         <input className="input" value={search} onChange={e => setSearch(e.target.value)}
           placeholder="Nome, num fed..." style={{ maxWidth: 200 }} />
-        <span className="muted" style={{ fontSize: 12 }}>{nossosCount} da BD · {t.totalInscritos} total</span>
-        <div style={{ marginLeft: "auto", display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+        <span className="muted fs-12" >{nossosCount} da BD · {t.totalInscritos} total</span>
+        <div className="ml-auto gap-8 flex-wrap" style={{ display: "flex", alignItems: "center" }}>
           {t.diff && (t.diff.added.length > 0 || t.diff.removed.length > 0) && (
             <span style={{ fontSize: 10, background: "var(--color-warn)", color: "#fff", padding: "2px 7px", borderRadius: 10, fontWeight: 700 }}
               title={[t.diff.added.length ? `+${t.diff.added.join(", ")}` : "", t.diff.removed.length ? `-${t.diff.removed.join(", ")}` : ""].filter(Boolean).join(" · ")}>
@@ -331,7 +281,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
             </span>
           )}
           {t.lastFetched && (
-            <span className="muted" style={{ fontSize: 10 }}
+            <span className="muted fs-10" 
               title={t.fromCache ? `Cache de ${t.lastFetched}${t.lastChanged && t.lastChanged !== t.lastFetched ? " · alterado " + t.lastChanged : ""}` : "Dados frescos"}>
               {t.fromCache ? "💾" : "🔄"} {fmtTime(t.lastFetched)}
             </span>
@@ -370,33 +320,33 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
               const sd5 = st?.avgSD5 ?? null;
               return (
                 <tr key={`${j.fed ?? j.nome}-${i}`} className={p ? "nac-row-match" : ""}>
-                  <td className="muted r" style={{ fontSize: 11 }}>{i + 1}</td>
-                  <td style={{ fontSize: 13 }}>
-                    {p ? <PlayerLink fed={j.fed} name={p.name} query="?view=by_date" style={{ fontWeight: 700 }} /> : <span className="muted">{j.nome || "–"}</span>}
+                  <td className="muted r fs-11" >{i + 1}</td>
+                  <td className="fs-13">
+                    {p ? <PlayerLink fed={j.fed} name={p.name} query="?view=by_date" className="fw-700" /> : <span className="muted">{j.nome || "–"}</span>}
                   </td>
                   <td className="r">
                     {j.fed ? <PlayerLink fed={j.fed} name={j.fed} query="?view=by_date" style={{ color: "var(--chart-2)", fontSize: 12 }} /> : <span className="muted">–</span>}
                   </td>
-                  <td className="r muted" style={{ fontSize: 12 }}>{fmtHcp(j.hcp)}</td>
-                  <td className="r" style={{ fontSize: 12, fontWeight: 600 }}>{fmtHcp(j.vac)}</td>
-                  <td className="r" style={{ fontSize: 11 }}>
-                    {sd5 != null ? <span className={`p p-${sdClassByHcp(sd5, st?.currentHcp ?? j.hcp ?? null)}`} style={{ fontSize: 11 }}>{sd5.toFixed(1)}</span> : <span className="muted">–</span>}
+                  <td className="r muted fs-12" >{fmtHcp(j.hcp)}</td>
+                  <td className="r fs-12 fw-600" >{fmtHcp(j.vac)}</td>
+                  <td className="r fs-11" >
+                    {sd5 != null ? <span className={`p p-${sdClassByHcp(sd5, st?.currentHcp ?? j.hcp ?? null)}`} className="fs-11">{sd5.toFixed(1)}</span> : <span className="muted">–</span>}
                   </td>
                   <td className="r"><TrendBadge trend={st?.hcpTrend ?? null} delta={st?.hcpDelta3m ?? null} /></td>
-                  <td className="r" style={{ fontSize: 12 }}>
+                  <td className="r fs-12" >
                     {st?.roundsLast3m != null
                       ? <span style={{ fontWeight: st.roundsLast3m >= 4 ? 600 : 400, color: st.roundsLast3m === 0 ? "var(--color-bad)" : "inherit" }}>{st.roundsLast3m}</span>
                       : <span className="muted">–</span>}
                   </td>
-                  <td className="r muted" style={{ fontSize: 11 }}>{fmtDataInscricao(j.dataInscricao)}</td>
+                  <td className="r muted fs-11" >{fmtDataInscricao(j.dataInscricao)}</td>
                   <td>
-                    {p ? <span style={{ display: "flex", alignItems: "center", gap: 4, flexWrap: "wrap" }}>
+                    {p ? <span className="gap-4 flex-wrap" style={{ display: "flex", alignItems: "center" }}>
                         <SexBadge sex={p.sex} size="sm" />
-                        <span className={`p p-sm p-${escCls(p.escalao)}`} style={{ fontSize: 10 }}>{escShort(p.escalao)}</span>
+                        <span className={`p p-sm p-${escCls(p.escalao)}`} className="fs-10">{escShort(p.escalao)}</span>
                         {p.dob && <AnoEscalaoPill dob={p.dob} escalao={t.escalao} />}
-                        {p.clube && <span className="muted" style={{ fontSize: 11 }}>{p.clube}</span>}
+                        {p.clube && <span className="muted fs-11" >{p.clube}</span>}
                       </span>
-                    : <span className="muted" style={{ fontSize: 11 }}>{j.fed ? "Nao na BD" : "–"}</span>}
+                    : <span className="muted fs-11" >{j.fed ? "Nao na BD" : "–"}</span>}
                   </td>
                 </tr>
               );
@@ -469,10 +419,10 @@ function TermosSection() {
     <div style={{ background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 8, overflow: "hidden" }}>
       <button
         onClick={() => setOpen(v => !v)}
-        style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between",
-          padding: "10px 14px", background: "none", border: "none", cursor: "pointer", textAlign: "left" }}>
-        <span style={{ fontWeight: 700, fontSize: 12 }}>📋 Termos de Competição — PGA Aroeira II 2026</span>
-        <span className="muted" style={{ fontSize: 11 }}>
+        className="w-full ta-left"
+        style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 14px", background: "none", border: "none", cursor: "pointer" }}>
+        <span className="fw-700 fs-12">📋 Termos de Competição — PGA Aroeira II 2026</span>
+        <span className="muted fs-11" >
           {open ? "▲ fechar" : "▼ ver"}
           <a href="https://competicoes.fpg.pt/wp-content/uploads/2025/09/Campeonato_Nacional_de_Jovens_Sub18-a-Sub-10.pdf"
              target="_blank" rel="noopener noreferrer"
@@ -740,7 +690,7 @@ function ProfileRadar({ r, all }: { r: ScoutingReport; all: ScoutingReport[] }) 
   const bg = axes.map((a, i) => { const ang = (i / n) * 2 * Math.PI - Math.PI / 2; return `${cx + Math.cos(ang) * R},${cy + Math.sin(ang) * R}`; }).join(' ');
   const poly = pts.map(p => `${p.x},${p.y}`).join(' ');
   return (
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ flexShrink: 0 }}>
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="flex-shrink-0">
       <polygon points={bg} fill="none" stroke="var(--border)" strokeWidth="0.5" />
       {[0.25,0.5,0.75].map(t => (
         <polygon key={t} points={axes.map((_,i) => { const a = (i/n)*2*Math.PI-Math.PI/2; return `${cx+Math.cos(a)*R*t},${cy+Math.sin(a)*R*t}`; }).join(' ')}
@@ -756,18 +706,18 @@ function ProfileRadar({ r, all }: { r: ScoutingReport; all: ScoutingReport[] }) 
 
 /* ── Barra de forma (arco) ── */
 function FormArc({ formDelta }: { formDelta: number | null }) {
-  if (formDelta == null) return <span className="muted" style={{ fontSize: 11 }}>–</span>;
+  if (formDelta == null) return <span className="muted fs-11" >–</span>;
   const clamped = Math.max(-3, Math.min(3, -formDelta)); // invertido: neg=melhora
   const pct = (clamped + 3) / 6; // 0=pior, 1=melhor
   const color = pct > 0.6 ? "var(--color-good)" : pct < 0.4 ? "var(--color-bad)" : "var(--color-warn)";
   const label = formDelta < -1.5 ? "↑ Em alta" : formDelta > 1.5 ? "↓ A ceder" : "→ Estável";
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+    <div className="flex-center-gap6">
       <div style={{ width: 60, height: 5, background: "var(--bg-page)", borderRadius: 3, overflow: "hidden", flexShrink: 0 }}>
         <div style={{ width: `${pct * 100}%`, height: "100%", background: color, borderRadius: 3 }} />
       </div>
-      <span style={{ fontSize: 11, fontWeight: 700, color }}>{label}</span>
-      <span className="muted" style={{ fontSize: 10 }}>({formDelta > 0 ? "+" : ""}{formDelta.toFixed(1)})</span>
+      <span className="fs-11 fw-700" style={{ color }}>{label}</span>
+      <span className="muted fs-10" >({formDelta > 0 ? "+" : ""}{formDelta.toFixed(1)})</span>
     </div>
   );
 }
@@ -815,27 +765,27 @@ function PlayerScoutCard({ r, fitScore, allReports, bdPlayer }: {
           width: 52, background: "var(--bg-page)", borderRight: "1px solid var(--border)", flexShrink: 0, padding: "10px 0" }}>
           <div style={{ fontSize: 9, color: "var(--text-3)", textTransform: "uppercase" }}>VAC</div>
           <div style={{ fontSize: 22, fontWeight: 900, lineHeight: 1,
-            color: r.rank === 1 ? "#f59e0b" : r.rank <= 3 ? "var(--color-good)" : r.rank <= Math.ceil(r.fieldSize/2) ? "var(--text-1)" : "var(--text-3)" }}>
+            color: r.rank === 1 ? C.medalGold : r.rank <= 3 ? "var(--color-good)" : r.rank <= Math.ceil(r.fieldSize/2) ? "var(--text-1)" : "var(--text-3)" }}>
             {r.rank}
           </div>
           <div style={{ fontSize: 9, color: "var(--text-3)" }}>/{r.fieldSize}</div>
         </div>
 
         {/* Nome + meta */}
-        <div style={{ flex: 1, padding: "10px 12px", minWidth: 0 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
-            <span style={{ fontSize: 15, fontWeight: 800 }}>
+        <div className="flex-1" style={{ padding: "10px 12px", minWidth: 0 }}>
+          <div className="flex-wrap" style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            <span className="fw-800" style={{ fontSize: 15 }}>
               {bdPlayer?.name ?? r.nome}
             </span>
             {bdPlayer && <SexBadge sex={bdPlayer.sex} size="sm" />}
-            {bdPlayer?.escalao && <span className={`p p-sm p-${escCls(bdPlayer.escalao)}`} style={{ fontSize: 9 }}>{escShort(bdPlayer.escalao)}</span>}
+            {bdPlayer?.escalao && <span className={`p p-sm p-${escCls(bdPlayer.escalao)}`} className="fs-9">{escShort(bdPlayer.escalao)}</span>}
             {bdPlayer?.dob && <AnoEscalaoPill dob={bdPlayer.dob} escalao={bdPlayer.escalao} />}
             {!bdPlayer && <span style={{ fontSize: 9, color: "var(--text-3)", border: "1px solid var(--border)", borderRadius: 3, padding: "1px 5px" }}>externo</span>}
           </div>
-          <div style={{ display: "flex", gap: 12, marginTop: 6, flexWrap: "wrap", alignItems: "center" }}>
-            <span className="muted" style={{ fontSize: 11 }}>HCP {r.hcp?.toFixed(1) ?? "–"}</span>
-            <span className="muted" style={{ fontSize: 11 }}>VAC {r.vac?.toFixed(1) ?? "–"}</span>
-            <span className="muted" style={{ fontSize: 11 }}>{r.agg.nRounds} rondas (6m)</span>
+          <div className="gap-12 mt-6 flex-wrap" style={{ display: "flex", alignItems: "center" }}>
+            <span className="muted fs-11" >HCP {r.hcp?.toFixed(1) ?? "–"}</span>
+            <span className="muted fs-11" >VAC {r.vac?.toFixed(1) ?? "–"}</span>
+            <span className="muted fs-11" >{r.agg.nRounds} rondas (6m)</span>
             {r.aroeiraRounds > 0 && <span style={{ fontSize: 11, color: "var(--chart-2)", fontWeight: 600 }}>Aroeira {r.aroeiraRounds}× ({r.aroeiraAvg?.toFixed(1)})</span>}
             <FormArc formDelta={r.formDelta} />
           </div>
@@ -846,7 +796,7 @@ function PlayerScoutCard({ r, fitScore, allReports, bdPlayer }: {
           padding: "10px 12px", borderLeft: "1px solid var(--border)", flexShrink: 0, gap: 2 }}>
           <ProfileRadar r={r} all={allReports} />
           <div style={{ fontSize: 9, color: "var(--text-3)", textAlign: "center" }}>fit</div>
-          <div style={{ fontSize: 16, fontWeight: 900, color: fitColor, lineHeight: 1 }}>{fitScore}</div>
+          <div className="fw-900" style={{ fontSize: 16, color: fitColor, lineHeight: 1 }}>{fitScore}</div>
         </div>
 
         {/* Toggle */}
@@ -902,7 +852,7 @@ function PlayerScoutCard({ r, fitScore, allReports, bdPlayer }: {
                 borderRight: i < arr.length-1 ? "1px solid var(--border)" : "none" }}>
                 <div style={{ fontSize: 9, color: "var(--text-3)", textTransform: "uppercase", letterSpacing:"0.04em", marginBottom: 3 }}>{k.l}</div>
                 {(k as any).cls ? (
-                  <span className={(k as any).cls} style={{ fontSize: 14, padding: "1px 5px", fontWeight: 800 }}>{k.v ?? "–"}</span>
+                  <span className={(k as any).cls} className="fs-14 fw-800" style={{ padding: "1px 5px" }}>{k.v ?? "–"}</span>
                 ) : (
                   <div style={{ fontSize: 16, fontWeight: 800, color: (k as any).color ?? "var(--text-1)" }}>{k.v ?? "–"}</div>
                 )}
@@ -930,7 +880,7 @@ function PlayerScoutCard({ r, fitScore, allReports, bdPlayer }: {
                       className={s.k !== "par" ? s.cls : ""} />
                   ))}
                 </div>
-                <div style={{ display: "flex", gap: "3px 10px", flexWrap: "wrap" }}>
+                <div className="flex-wrap" style={{ display: "flex", gap: "3px 10px" }}>
                   {segs.map(s => (
                     <span key={s.k} style={{ fontSize: 10, color: "var(--text-2)", display: "flex", alignItems: "center", gap: 3 }}>
                       <span className={s.k !== "par" ? s.cls : ""}
@@ -953,7 +903,6 @@ function PlayerScoutCard({ r, fitScore, allReports, bdPlayer }: {
 function FieldIntelligence({ reports, escalao }: { reports: ScoutingReport[]; escalao: string }) {
   if (reports.length < 2) return null;
 
-  function shortName(n: string) { return n.split(" ").slice(0, 2).join(" "); }
   function rankList(key: keyof ScoutingReport, inverted = false) {
     return [...reports].filter(r => r[key] != null)
       .sort((a, b) => inverted ? (b[key] as number) - (a[key] as number) : (a[key] as number) - (b[key] as number))
@@ -990,7 +939,7 @@ function FieldIntelligence({ reports, escalao }: { reports: ScoutingReport[]; es
   return (
     <div style={{ background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 10, overflow: "hidden", marginBottom: 10 }}>
       <div style={{ padding: "12px 16px", borderBottom: "1px solid var(--border)", background: "var(--bg-page)" }}>
-        <div style={{ fontWeight: 800, fontSize: 14 }}>O que decide este torneio</div>
+        <div className="fw-800 fs-14">O que decide este torneio</div>
         <div style={{ fontSize: 11, color: "var(--text-2)", marginTop: 2 }}>
           Factores preditivos para 54H stroke play em Aroeira{escalao === "Sub-12" || escalao === "Sub-10" ? " · máx 10/buraco" : ""}
         </div>
@@ -998,16 +947,16 @@ function FieldIntelligence({ reports, escalao }: { reports: ScoutingReport[]; es
       <div style={{ padding: "0 16px 16px" }}>
         {sections.map((s, si) => (
           <div key={si} style={{ paddingTop: 14, borderTop: si > 0 ? "1px solid var(--border)" : "none", marginTop: si > 0 ? 0 : 14 }}>
-            <div style={{ fontWeight: 700, fontSize: 12, marginBottom: 4 }}>{s.title}</div>
+            <div className="fw-700 fs-12 mb-4">{s.title}</div>
             <div style={{ fontSize: 11, color: "var(--text-2)", lineHeight: 1.55, marginBottom: 10, maxWidth: 620 }}>{s.why}</div>
-            <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+            <div className="flex-wrap" style={{ display: "flex", gap: 6 }}>
               {s.data.map(d => (
                 <a key={d.fed} href={`/jogadores/${d.fed}?view=by_date`} target="_blank" rel="noopener noreferrer"
                   style={{ display: "flex", alignItems: "center", gap: 6, background: "var(--bg-page)",
                     border: "1px solid var(--border)", borderRadius: 6, padding: "5px 10px", textDecoration: "none", color: "inherit" }}>
                   <span style={{ fontSize: 9, color: "var(--text-3)", fontWeight: 700 }}>#{d.rank}</span>
-                  <span style={{ fontSize: 12, fontWeight: 600 }}>{d.name}</span>
-                  <span style={{ fontSize: 13, fontWeight: 800, color: d.color }}>{d.v}</span>
+                  <span className="fs-12 fw-600">{d.name}</span>
+                  <span className="fs-13 fw-800" style={{ color: d.color }}>{d.v}</span>
                 </a>
               ))}
             </div>
@@ -1033,21 +982,22 @@ function AroeiraBurTable({ players }: { players: { nome: string; fed: string; ag
   return (
     <div style={{ background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 10, overflow: "hidden", marginBottom: 10 }}>
       <div style={{ padding: "12px 16px", borderBottom: "1px solid var(--border)", background: "var(--bg-page)" }}>
-        <div style={{ fontWeight: 800, fontSize: 14 }}>Aroeira — performance histórica no campo</div>
+        <div className="fw-800 fs-14">Aroeira — performance histórica no campo</div>
         <div style={{ fontSize: 11, color: "var(--text-2)", marginTop: 2 }}>
           Médias buraco-a-buraco · últimos 6 meses · ★ melhor do grupo
         </div>
       </div>
       <div style={{ padding: "12px 16px", overflowX: "auto" }}>
-        <table className="dtable-lg" style={{ fontSize: 12 }}>
+        <table className="dtable-lg fs-12" >
           <thead>
             <tr>
-              <th style={{ width: 32, fontSize: 11 }}>B.</th>
-              <th style={{ width: 28, fontSize: 11, textAlign: "center" }}>Par</th>
+              <th className="fs-11" style={{ width: 32 }}>B.</th>
+              <th className="fs-11 ta-c" style={{ width: 28 }}>Par</th>
               {com.map(p => (
-                <th key={p.fed} style={{ textAlign: "center", fontSize: 12 }}>
+                <th key={p.fed} className="ta-c fs-12">
                   <a href={`/jogadores/${p.fed}?view=by_date`} target="_blank" rel="noopener noreferrer"
-                    style={{ color: "inherit", textDecoration: "none" }}>{p.nome.split(" ").slice(0,2).join(" ")}</a>
+                    className="td-none"
+                    style={{ color: "inherit" }}>{p.nome.split(" ").slice(0,2).join(" ")}</a>
                   <div style={{ fontSize: 9, color: "var(--text-3)", fontWeight: 400 }}>{p.agg.aroeira.nRounds}× · {p.agg.aroeira.avgGross?.toFixed(1)}</div>
                 </th>
               ))}
@@ -1181,7 +1131,7 @@ function AnaliseView({ t, nossosByFed, statsDb }: {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 12, paddingTop: 8 }}>
+    <div className="flex-col gap-12" style={{ display: "flex", paddingTop: 8 }}>
 
       {/* Termos */}
       <TermosSection />
@@ -1189,12 +1139,12 @@ function AnaliseView({ t, nossosByFed, statsDb }: {
       {/* Contexto */}
       {ctx && (
         <div style={{ background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 10, padding: "14px 18px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
-            <span style={{ fontWeight: 800, fontSize: 13 }}>🏆 PGA Aroeira II · 1–3 Maio 2026</span>
+          <div className="gap-8 mb-10" style={{ display: "flex", alignItems: "center" }}>
+            <span className="fw-800 fs-13">🏆 PGA Aroeira II · 1–3 Maio 2026</span>
             <a href="https://competicoes.fpg.pt/evento/campeonato-nacional-de-jovens-sub10-12-14-16-18-pga-aroeira/"
                target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: "var(--chart-2)", marginLeft: "auto" }}>Ver evento ↗</a>
           </div>
-          <div style={{ display: "flex", gap: 20, flexWrap: "wrap", alignItems: "center" }}>
+          <div className="flex-wrap" style={{ display: "flex", gap: 20, alignItems: "center" }}>
             <div>
               <div style={{ fontSize: 9, color: "var(--text-3)", textTransform: "uppercase", marginBottom: 5 }}>Marcas de saída</div>
               <div style={{ display: "flex", gap: 5 }}>
@@ -1206,7 +1156,7 @@ function AnaliseView({ t, nossosByFed, statsDb }: {
             </div>
             <div>
               <div style={{ fontSize: 9, color: "var(--text-3)", textTransform: "uppercase", marginBottom: 3 }}>Formato</div>
-              <div style={{ fontSize: 14, fontWeight: 700 }}>{ctx.formato}</div>
+              <div className="fs-14 fw-700">{ctx.formato}</div>
             </div>
             {ctx.maxScore && <div style={{ border:"1px solid var(--color-warn)", borderRadius:7, padding:"5px 12px" }}>
               <div style={{ fontSize:9, color:"var(--text-3)" }}>Máx/buraco</div>
@@ -1402,7 +1352,7 @@ export default function NacionaisPage() {
   return (
     <div className="jogadores-page nac-page">
       <Toolbar>
-                <span style={{ fontWeight: 700, fontSize: 13, flexShrink: 0 }}>🏆 Nacionais Jovens</span>
+                <span className="fw-700 fs-13 flex-shrink-0">🏆 Nacionais Jovens</span>
         <ToolbarSep />
         {([
           { key: "inscricoes", label: "Inscrições" },
@@ -1432,17 +1382,17 @@ export default function NacionaisPage() {
             onClick={() => setActiveTcode(t.tcode)} />
         ))}
         {totalNossosInscritos > 0 && (
-          <div className="chip" style={{ marginLeft: "auto" }}>{totalNossosInscritos} na BD</div>
+          <div className="chip ml-auto" >{totalNossosInscritos} na BD</div>
         )}
       </Toolbar>
 
       <PainelResumo torneios={torneios} nossosByFed={nossosByFed} />
       <div className="nac-content">
         <div className="nac-det-header">
-          <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700 }}>
+          <h3 className="fw-700" style={{ margin: 0, fontSize: 15 }}>
             Campeonato Nacional de Jovens — {torneioActivo.nome}
           </h3>
-          <div style={{ display: "flex", gap: 10, alignItems: "center", flexShrink: 0 }}>
+          <div className="flex-shrink-0" style={{ display: "flex", gap: 10, alignItems: "center" }}>
             <a href="https://competicoes.fpg.pt/evento/campeonato-nacional-de-jovens-sub10-12-14-16-18-pga-aroeira/"
                target="_blank" rel="noopener noreferrer"
                style={{ fontSize: 11, color: "var(--chart-2)" }}>

@@ -11,7 +11,7 @@
  *     <ToolbarMeta>📍 Santo da Serra</ToolbarMeta>
  *     <ToolbarSep />
  *     <button ...>...</button>
- *     <span className="chip" style={{ marginLeft: "auto" }}>12 torneios</span>
+ *     <span className="chip ml-auto" >12 torneios</span>
  *   </Toolbar>
  */
 import React from "react";

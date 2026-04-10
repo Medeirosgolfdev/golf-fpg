@@ -147,3 +147,11 @@ export function tpColorDark(tp: number | null | undefined, hi = 20): string {
   if (tp <= hi) return C.warnDark;
   return C.dangerDark;
 }
+
+/** Cor de medalha por posição: ouro (1º), prata (2º), bronze (3º) */
+export function medalColor(pos: number): string | undefined {
+  if (pos === 1) return C.medalGold;
+  if (pos === 2) return C.medalSilver;
+  if (pos === 3) return C.medalBronze;
+  return undefined;
+}

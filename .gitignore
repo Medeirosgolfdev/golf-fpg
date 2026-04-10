@@ -1,9 +1,5 @@
 node_modules/
 .vite/
-output/assets/
-output/data/
-output/players.json
-output/golf-icon.png
 dist/
 session.json
 lista.txt
@@ -11,11 +7,7 @@ lista.txt
 **/whs-list-raw.txt
 **/failed-scorecards.json
 **/0.json
-
-# Playwright browser profile
 .playwright-profile/
-
-# Backups e temporarios
 *.bak
 arvore.txt
 reorganizar.ps1

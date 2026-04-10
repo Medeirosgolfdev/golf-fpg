@@ -7,10 +7,10 @@
 import React, { useMemo, useState } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from "recharts";
 import { useLocation } from "react-router-dom";
-import { fmtToPar, fmtSign, MONTHS_PT } from "../utils/format";
+import { fmtToPar, fmtSign, MONTHS_PT, MONTHS_PT_FULL, sortArrow, isoDate } from "../utils/format";
 import { FL } from "../utils/flagUtils";
 import { zTier, getTrend, getAvgZ } from "../utils/mathUtils";
-import { scClass, toParClass, sc3m, SC, tpColorDark } from "../utils/scoreDisplay";
+import { scClass, toParClass, sc3m, tpColorDark } from "../utils/scoreDisplay";
 import { isCalUnlocked } from "../utils/authConstants";
 import PasswordGate from "../ui/PasswordGate";
 import SidebarToggle from "../ui/SidebarToggle";
@@ -23,6 +23,8 @@ import KpiCard from "../ui/KpiCard";
 import SidebarSectionTitle from "../ui/SidebarSectionTitle";
 import { buildAutoRivals, normName, getScorecards, uskTournNames, uskFieldSizes } from "./KIDSdataLoader";
 import { FIELD_2025, VP_PAR, VP_SI, VP_M, VP_WJGC26_PAR, VP_WJGC26_SI, VP_WJGC26_M, VP_ALFERINI_PAR, VP_ALFERINI_SI, VP_ALFERINI_M, LT_FORET_PAR, LT_FORET_SI, LT_FORET_M, VENICE_M, MS_USKIDS_M_B1011, MS_USKIDS_M_B12, DORAL_GP_M_B1011, DORAL_SF_M_B1213, TIER, FIELD_CARDS } from "../data/rivalData";
+import { MANUEL_KNOWN_TIDS } from "../constants/manuel";
+import { TIER_L, TR_I } from "../constants/tierDisplay";
 
 
 /* ═══════════════════════════════════
@@ -858,14 +860,6 @@ function useScoringStats() {
   return stats;
 }
 
-/** Parse data "MM/DD/YYYY" ou "YYYY-MM-DD" → "YYYY-MM-DD" para sort/display */
-function isoDate(s: string): string {
-  if (!s) return "";
-  if (/^\d{4}-\d{2}-\d{2}/.test(s)) return s;
-  const p = s.split("/");
-  if (p.length === 3) return `${p[2]}-${p[0].padStart(2,"0")}-${p[1].padStart(2,"0")}`;
-  return "";
-}
 
 /** Extrai o ano de um dateExact (YYYY-MM-DD) ou de um texto de data ("Fev 2025") */
 function yearOf(dateExact?: string, fallback?: string): number {
@@ -873,7 +867,7 @@ function yearOf(dateExact?: string, fallback?: string): number {
   return parseInt(fallback?.match(/(\d{4})/)?.[1] ?? "0");
 }
 
-/** ±par color (dark theme friendly) */
+/** ±par color — variante local intencional: retorna sempre cor (nunca undefined), usa dark variants para contraste em cards */
 function tpColorMH(tp: number | null): string {
   if (tp == null) return "var(--text-3)";
   if (tp < 0) return "var(--color-good-dark)";
@@ -1001,9 +995,6 @@ for (const t of T) {
   }
 }
 
-const TIER_L = { elite: "Elite", strong: "Forte", solid: "Sólido", developing: "Em Desenv.", beginner: "Iniciante" };
-
-const TR_I = { up2: { i: "▲▲", c: SC.good }, up: { i: "▲", c: "var(--score-par-seg)" }, stable: { i: "●", c: "var(--text-muted)" }, down: { i: "▼", c: SC.warn }, down2: { i: "▼▼", c: SC.danger } };
 
 /* ── Name matching: "Manuel Medeiros" <→ "Manuel Francisco Medeiros" ── */
 function matchName(dName: string, cardName: string): boolean {
@@ -1147,7 +1138,7 @@ function TournScorecard({ par, si, meters, rounds }: { par: readonly number[]; s
     <div className="scroll-x">
       <table className="sc-table-modern" data-sc-table="1">
         <thead><tr>
-          <th className="hole-header" style={{ textAlign: "left", paddingLeft: 8, minWidth: 60 }}>Buraco</th>
+          <th className="hole-header ta-left"  style={{ paddingLeft: 8, minWidth: 60 }}>Buraco</th>
           {par.slice(0, 9).map((_, i) => <th key={i} className="hole-header">{i + 1}</th>)}
           <th className="hole-header col-out fs-10">Out</th>
           {par.slice(9).map((_, i) => <th key={i + 9} className="hole-header">{i + 10}</th>)}
@@ -1240,7 +1231,7 @@ function DobPill({ player }: { player: RivalPlayer }) {
   const tooltip = `Estimativa: ${info.rangeStr} · janela de ${spanDays}d`;
 
   return (
-    <span style={{ fontSize: 10, color, marginLeft: 4, fontWeight: fw }} title={tooltip}>
+    <span className="fs-10 ml-4" style={{ color, fontWeight: fw }} title={tooltip}>
       {icon} ~{info.rangeStr}
     </span>
   );
@@ -1258,12 +1249,6 @@ const SIDEBAR_FILTERS = [
   { id: "pt",       label: "🇵🇹 Nacional" },
 ];
 
-// Tids que o Manuel tem resultados (para detectar confrontos directos)
-const MANUEL_KNOWN_TIDS = new Set([
-  "wjgc25","wjgc26","wjgc26_1213","brjgt25",
-  "eowagr25",
-  "venice25","rome25","marco26","qdl25","gg26","doral25",
-]);
 
 function playerMatchesFilter(p: RivalPlayer, fids: Set<string>): boolean {
   if (fids.size === 0) return true;
@@ -1395,7 +1380,7 @@ function RivaisSidebar({ selected, onSelect, fids, q, paisFilter, tierFilter, mi
               {rank}
             </span>
           ) : <span style={{ width: 18 }} />}
-          <span style={{ fontSize: 13, flexShrink: 0 }}>{flagEmoji}</span>
+          <span className="fs-13 flex-shrink-0">{flagEmoji}</span>
           <span style={{ flex: 1, fontSize: 12, fontWeight: isActive ? 700 : 600, color: "var(--text)",
             overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
             {p.n}
@@ -1407,20 +1392,19 @@ function RivaisSidebar({ selected, onSelect, fids, q, paisFilter, tierFilter, mi
         </div>
 
         {/* Linha 2: player type + record + bestTp + mhCnt + upcoming */}
-        <div style={{ display: "flex", alignItems: "center", gap: 4, paddingLeft: 23, flexWrap: "wrap" }}>
+        <div className="gap-4 flex-wrap" style={{ display: "flex", alignItems: "center", paddingLeft: 23 }}>
           {playerType && !p.isM && (
-            <span style={{ fontSize: 9, padding: "1px 5px", borderRadius: 10, fontWeight: 700,
-              background: playerType.bg, color: playerType.fg }}>
+            <span className="fs-9 fw-700" style={{ padding: "1px 5px", borderRadius: 10, background: playerType.bg, color: playerType.fg }}>
               {playerType.label}
             </span>
           )}
           {recordStr && (
-            <span className="p p-sm" style={{ background: recordBg, color: recordCo, fontSize: 10, padding: "1px 5px" }}>
+            <span className="p p-sm fs-10"  style={{ background: recordBg, color: recordCo, padding: "1px 5px" }}>
               {recordStr}
             </span>
           )}
           {bestTp != null && (
-            <span style={{ fontWeight: 700, fontSize: 11, color: tpColorDark(bestTp) }}>
+            <span className="fw-700 fs-11" style={{ color: tpColorDark(bestTp) }}>
               {fmtToPar(bestTp)}
             </span>
           )}
@@ -1440,9 +1424,9 @@ function RivaisSidebar({ selected, onSelect, fids, q, paisFilter, tierFilter, mi
   const total = directos.length + circuito.length;
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+    <div className="flex-col" style={{ display: "flex", height: "100%" }}>
       {/* Lista agrupada — sem pesquisa nem filtros (estão no toolbar) */}
-      <div style={{ flex: 1, overflowY: "auto" }}>
+      <div className="flex-1" style={{ overflowY: "auto" }}>
         {/* Grupo ⚔️ Directos */}
         {directos.length > 0 && (
           <>
@@ -1491,7 +1475,6 @@ function MemberHistTable({ mhTorneios, memberId }: {
     if (sortCol === col) setSortDir(d => d === "asc" ? "desc" : "asc");
     else { setSortCol(col); setSortDir(col === "name" ? "asc" : "desc"); }
   };
-  const sortIcon = (col: MHSortCol) => sortCol === col ? (sortDir === "asc" ? " ↑" : " ↓") : "";
 
   const sorted = useMemo(() => {
     return [...mhTorneios].sort((a, b) => {
@@ -1512,26 +1495,26 @@ function MemberHistTable({ mhTorneios, memberId }: {
 
   const ThS = ({ col, label, style }: { col: MHSortCol; label: string; style?: React.CSSProperties }) => (
     <th onClick={() => doSort(col)} style={{ cursor: "pointer", userSelect: "none", ...style }}>
-      {label}{sortIcon(col)}
+      {label}{sortArrow(col, sortCol, sortDir)}
     </th>
   );
 
   return (
-    <div style={{ marginTop: 24, marginBottom: 16 }}>
+    <div className="mt-24 mb-16">
       <div className="h-sm mb-8" style={{ color: "var(--text-2)", display: "flex", alignItems: "center", gap: 8 }}>
         <span>📊 Histórico USKids · {mhTorneios.length} torneios</span>
         <span style={{ fontSize: 10, color: "var(--text-3)", fontWeight: 400 }}>ID: {memberId}</span>
       </div>
       <div className="scroll-x">
-        <table className="dtable" style={{ width: "100%", fontSize: 12 }}>
+        <table className="dtable w-full fs-12" >
           <thead>
             <tr>
-              <ThS col="name"  label="Torneio"  style={{ textAlign: "left", padding: "4px 8px" }} />
-              <th style={{ textAlign: "center", width: 60 }}>Escalão</th>
-              <ThS col="pos"   label="Pos"   style={{ textAlign: "center", width: 42 }} />
-              <ThS col="total" label="Total" style={{ textAlign: "center", width: 60 }} />
-              <th style={{ textAlign: "center", width: 70 }}>Rondas</th>
-              <ThS col="date"  label="Data"  style={{ textAlign: "left", width: 70 }} />
+              <ThS col="name"  label="Torneio"  className="ta-left"  style={{ padding: "4px 8px" }} />
+              <th className="ta-c" style={{ width: 60 }}>Escalão</th>
+              <ThS col="pos"   label="Pos"   className="ta-c"   style={{ width: 42 }} />
+              <ThS col="total" label="Total" className="ta-c" style={{ width: 60 }} />
+              <th className="ta-c" style={{ width: 70 }}>Rondas</th>
+              <ThS col="date"  label="Data"  className="ta-left"  style={{ width: 70 }} />
             </tr>
           </thead>
           <tbody>
@@ -1551,11 +1534,11 @@ function MemberHistTable({ mhTorneios, memberId }: {
                     color: t.place <= 3 && t.place > 0 ? "var(--color-good-dark)" : "var(--text-2)" }}>
                     {t.place > 0 ? `${t.place}º` : "—"}
                   </td>
-                  <td style={{ textAlign: "center" }}>
+                  <td className="ta-c">
                     {t.totalStrokes > 0 ? (
                       <>
-                        <span style={{ fontWeight: 600 }}>{t.totalStrokes}</span>
-                        {tpStr && <span style={{ color: tpColorMH(tp), marginLeft: 3, fontSize: 10 }}>({tpStr})</span>}
+                        <span className="fw-600">{t.totalStrokes}</span>
+                        {tpStr && <span className="fs-10" style={{ color: tpColorMH(tp), marginLeft: 3 }}>({tpStr})</span>}
                       </>
                     ) : "—"}
                   </td>
@@ -1618,8 +1601,8 @@ function EvolucaoChart({
   const yFormat  = (v: number) => mode === "tpr" ? (v > 0 ? `+${v.toFixed(1)}` : v.toFixed(1)) : `${v}%`;
 
   return (
-    <div style={{ marginBottom: 16 }}>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
+    <div className="mb-16">
+      <div className="flex-between-mb6">
         <div style={{ fontSize: 12, fontWeight: 700, color: "var(--text-2)" }}>
           Evolução por torneio
         </div>
@@ -1627,7 +1610,7 @@ function EvolucaoChart({
           {(["tpr", "pos"] as EvoMode[]).map(m => (
             <button key={m}
               className={`p p-filter p-sm${mode === m ? " active" : ""}`}
-              style={{ fontSize: 10 }}
+              className="fs-10"
               onClick={() => setMode(m)}>
               {m === "tpr" ? "±par/ronda" : "posição %"}
             </button>
@@ -1669,13 +1652,12 @@ function TorneiosRecorrentes({
   groups: { canon: string; name: string; entries: { year: number; pos: number | null; tp: number | null; ageGroup: string | null }[] }[];
 }) {
   if (!groups.length) return null;
-  const fmtTp2 = (v: number | null) => v == null ? null : v === 0 ? "E" : v > 0 ? `+${v}` : `${v}`;
   return (
-    <div className="card" style={{ marginBottom: 12, padding: "12px 16px" }}>
+    <div className="card mb-12"  style={{ padding: "12px 16px" }}>
       <div className="h-sm mb-8" style={{ color: "var(--text-2)" }}>
-        Evolução no mesmo torneio · <span style={{ fontWeight: 400, fontSize: 11 }}>torneios com 2+ presenças</span>
+        Evolução no mesmo torneio · <span className="fw-400 fs-11">torneios com 2+ presenças</span>
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 8 }}>
+      <div className="gap-8" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))" }}>
         {groups.map(g => {
           const hasPodium    = g.entries.some(e => e.pos != null && e.pos <= 3);
           const podiumBorder = g.entries.some(e => e.pos === 1) ? "var(--medal-gold)"
@@ -1687,8 +1669,8 @@ function TorneiosRecorrentes({
               <div style={{ fontSize: 12, fontWeight: 700, color: "var(--text)", marginBottom: 6,
                 display: "flex", alignItems: "center", gap: 4 }}>
                 {hasPodium && <span>{g.entries.some(e => e.pos === 1) ? "🏆" : g.entries.some(e => e.pos === 2) ? "🥈" : "🥉"}</span>}
-                <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1 }}>{g.name}</span>
-                <span className="muted fs-10 fw-400" style={{ flexShrink: 0 }}>{g.entries.length}×</span>
+                <span className="overflow-hidden flex-1" style={{ textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{g.name}</span>
+                <span className="muted fs-10 fw-400 flex-shrink-0" >{g.entries.length}×</span>
               </div>
               <div style={{ display: "flex", gap: 3, alignItems: "center", overflowX: "auto" }}>
                 {g.entries.map((e, i) => {
@@ -1697,7 +1679,7 @@ function TorneiosRecorrentes({
                   const medal = e.pos === 1 ? "🥇" : e.pos === 2 ? "🥈" : e.pos === 3 ? "🥉" : null;
                   const bg    = e.pos === 1 ? "#fffbea" : e.pos === 2 ? "#f0f4ff" : e.pos === 3 ? "#fff4f0" : "var(--bg-detail)";
                   const bd    = e.pos === 1 ? "var(--medal-gold)" : e.pos === 2 ? "var(--medal-silver)" : e.pos === 3 ? "var(--medal-bronze)" : "var(--border-light)";
-                  const tpStr = fmtTp2(e.tp);
+                  const tpStr = fmtToPar(e.tp);
                   return (
                     <React.Fragment key={i}>
                       {i > 0 && (
@@ -1715,7 +1697,7 @@ function TorneiosRecorrentes({
                           color: e.pos === 1 ? "var(--color-warn-dark)" : e.pos != null && e.pos <= 3 ? "var(--medal-silver)" : "var(--text-3)" }}>
                           {medal ?? (e.pos != null ? `#${e.pos}` : "—")}
                         </span>
-                        {tpStr && <span style={{ fontSize: 9, fontWeight: 600,
+                        {e.tp != null && <span style={{ fontSize: 9, fontWeight: 600,
                           color: (e.tp ?? 0) <= 0 ? "var(--color-good-dark)" : "var(--text-3)" }}>{tpStr}</span>}
                       </div>
                     </React.Fragment>
@@ -1749,11 +1731,10 @@ function H2HTable({
   })();
   const avgManPos  = Math.round(confrontos.reduce((s, c) => s + c.manPos, 0) / confrontos.length);
   const avgRivPos  = Math.round(confrontos.reduce((s, c) => s + c.rivalPos, 0) / confrontos.length);
-  const fmtTp2 = (v: number | null) => v == null ? "—" : v === 0 ? "E" : v > 0 ? `+${v}` : `${v}`;
 
   return (
-    <div className="card" style={{ marginBottom: 12, overflow: "hidden" }}>
-      <div style={{ padding: "12px 16px 8px", display: "flex", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
+    <div className="card mb-12 overflow-hidden" >
+      <div className="flex-wrap" style={{ padding: "12px 16px 8px", display: "flex", alignItems: "baseline", gap: 10 }}>
         <div className="h-sm" style={{ color: "var(--text-2)" }}>
           Head-to-head · {confrontos.length} confronto{confrontos.length !== 1 ? "s" : ""}
         </div>
@@ -1766,15 +1747,15 @@ function H2HTable({
         </span>
       </div>
       <div className="scroll-x">
-        <table className="dtable" style={{ width: "100%" }}>
+        <table className="dtable w-full" >
           <thead>
             <tr>
-              <th style={{ textAlign: "left", padding: "4px 12px" }}>Torneio</th>
-              <th style={{ textAlign: "center", width: 60 }}>Escalão</th>
-              <th style={{ textAlign: "center", width: 70 }}>Manuel</th>
-              <th style={{ textAlign: "center", width: 70 }}>{firstName}</th>
-              <th style={{ textAlign: "center", width: 50 }}>Dif.</th>
-              <th style={{ textAlign: "right", width: 100, paddingRight: 12 }}>Resultado</th>
+              <th className="ta-left" style={{ padding: "4px 12px" }}>Torneio</th>
+              <th className="ta-c" style={{ width: 60 }}>Escalão</th>
+              <th className="ta-c" style={{ width: 70 }}>Manuel</th>
+              <th className="ta-c" style={{ width: 70 }}>{firstName}</th>
+              <th className="ta-c" style={{ width: 50 }}>Dif.</th>
+              <th className="ta-right" style={{ width: 100, paddingRight: 12 }}>Resultado</th>
             </tr>
           </thead>
           <tbody>
@@ -1792,13 +1773,13 @@ function H2HTable({
                     <span style={{ marginLeft: 5, fontSize: 10, color: "var(--text-3)" }}> '{String(c.year).slice(2)}</span>
                   </td>
                   <td style={{ textAlign: "center", fontSize: 10, color: "var(--text-2)" }}>{c.ageGroup ?? "—"}</td>
-                  <td style={{ textAlign: "center" }}>
+                  <td className="ta-c">
                     <strong>#{c.manPos}</strong>
-                    {c.manTp != null && <span style={{ fontSize: 10, color: (c.manTp ?? 1) <= 0 ? "var(--color-good-dark)" : "var(--text-3)", marginLeft: 4 }}>({fmtTp2(c.manTp)})</span>}
+                    {c.manTp != null && <span style={{ fontSize: 10, color: (c.manTp ?? 1) <= 0 ? "var(--color-good-dark)" : "var(--text-3)", marginLeft: 4 }}>({fmtToPar(c.manTp)})</span>}
                   </td>
                   <td style={{ textAlign: "center", color: rivalWon ? "var(--color-good-dark)" : "var(--color-danger-vivid)" }}>
                     <strong>#{c.rivalPos}</strong>
-                    {c.rivalTp != null && <span style={{ fontSize: 10, marginLeft: 4 }}>({fmtTp2(c.rivalTp)})</span>}
+                    {c.rivalTp != null && <span className="fs-10 ml-4">({fmtToPar(c.rivalTp)})</span>}
                   </td>
                   <td style={{ textAlign: "center", fontSize: 11,
                     color: dif != null && dif < 0 ? "var(--color-good-dark)" : dif != null && dif > 0 ? "var(--color-danger-vivid)" : "var(--text-3)" }}>
@@ -2206,7 +2187,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
 
   const THead = () => (
     <thead><tr>
-      <th className="hole-header" style={{ textAlign: "left", paddingLeft: 8, minWidth: 50 }}>Buraco</th>
+      <th className="hole-header ta-left"  style={{ paddingLeft: 8, minWidth: 50 }}>Buraco</th>
       {par.slice(0, 9).map((_, i) => <th key={i} className="hole-header">{i + 1}</th>)}
       <th className="hole-header col-out fs-10">Out</th>
       {par.slice(9).map((_, i) => <th key={i + 9} className="hole-header">{i + 10}</th>)}
@@ -2288,8 +2269,6 @@ function RivalDetail({ playerName }: { playerName: string }) {
 
 
   // ── Helpers de data ──────────────────────────────────────────────
-  const MONTHS_PT_FULL = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
-
   const fmtDM = (dateExact?: string, fallback?: string): string => {
     if (dateExact) {
       const d = new Date(dateExact + "T12:00:00");
@@ -2385,18 +2364,17 @@ function RivalDetail({ playerName }: { playerName: string }) {
         <div style={{ display: "flex", gap: 16, alignItems: "flex-start", padding: "20px 22px 16px", borderBottom: "1px solid var(--border-light)" }}>
 
           {/* Flag grande */}
-          <div style={{ fontSize: 56, lineHeight: 1, flexShrink: 0, marginTop: 2 }}>{flag}</div>
+          <div className="flex-shrink-0" style={{ fontSize: 56, lineHeight: 1, marginTop: 2 }}>{flag}</div>
 
           {/* Nome + pills + palmarès inline */}
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 8 }}>
+          <div className="flex-1" style={{ minWidth: 0 }}>
+            <div className="flex-wrap mb-8" style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <div style={{ fontSize: 26, fontWeight: 900, color: "var(--text)", lineHeight: 1.1, letterSpacing: "-0.02em" }}>
                 {playerName}
               </div>
               {/* Player type badge (getPlayerType) */}
               {playerType && (
-                <span style={{ fontSize: 12, fontWeight: 800, padding: "3px 10px", borderRadius: 20,
-                  background: playerType.bg, color: playerType.fg, letterSpacing: "0.02em", flexShrink: 0 }}>
+                <span className="fs-12 fw-800 flex-shrink-0" style={{ padding: "3px 10px", borderRadius: 20, background: playerType.bg, color: playerType.fg, letterSpacing: "0.02em" }}>
                   {playerType.label}
                 </span>
               )}
@@ -2414,19 +2392,20 @@ function RivalDetail({ playerName }: { playerName: string }) {
             </div>
 
             {/* Pills: país · trend · DOB · rank · ano activo */}
-            <div style={{ display: "flex", gap: 5, flexWrap: "wrap", alignItems: "center", marginBottom: 8 }}>
-              {rival && !isManuel && <span className="p p-sm p-muted" style={{ fontSize: 12 }}>{rival.co}</span>}
+            <div className="flex-wrap mb-8" style={{ display: "flex", gap: 5, alignItems: "center" }}>
+              {rival && !isManuel && <span className="p p-sm p-muted fs-12" >{rival.co}</span>}
               {rival && !isManuel && (rival as any).fpgClub && (
-                <span className="p p-sm p-club" style={{ fontSize: 11 }} title="Clube FPG">
+                <span className="p p-sm p-club fs-11"  title="Clube FPG">
                   🏌️ {(rival as any).fpgClub}
                 </span>
               )}
               {isManuel && <span className="p p-outline p-sm">REF</span>}
               {rank != null && (
                 <span className={`sidebar-rank ${rank <= 3 ? "sidebar-rank-top3" : rank <= 10 ? "sidebar-rank-top10" : "sidebar-rank-rest"}`}
-                  style={{ fontSize: 11, padding: "2px 7px" }}>#{rank}/{totalRanked}</span>
+                  className="fs-11"
+                  style={{ padding: "2px 7px" }}>#{rank}/{totalRanked}</span>
               )}
-              {tr && <span style={{ fontSize: 13, fontWeight: 700, color: TR_I[tr as keyof typeof TR_I].c }}>{TR_I[tr as keyof typeof TR_I].i}</span>}
+              {tr && <span className="fs-13 fw-700" style={{ color: TR_I[tr as keyof typeof TR_I].c }}>{TR_I[tr as keyof typeof TR_I].i}</span>}
               {rival?.up.map(u => { const up = UP.find(x => x.id === u); return up ? <span key={u} className="p p-sm" style={{ background: "var(--bg-success-strong)", color: "var(--color-good-dark)", fontSize: 11 }}>▲ {up.short}</span> : null; })}
               {dobInfo && (() => {
                 if (!dobInfo.exact && dobInfo.rangeStr === "?") return null;
@@ -2454,7 +2433,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
 
             {/* Palmarès compacto inline */}
             {palmares.length > 0 && (
-              <div style={{ display: "flex", alignItems: "flex-start", gap: 4, flexWrap: "wrap" }}>
+              <div className="gap-4 flex-wrap" style={{ display: "flex", alignItems: "flex-start" }}>
                 {palmares.slice(0, 5).map(({ t, res }) => {
                   const ag = (res as any).ageGroup as string | null;
                   const medal = res.p === 1 ? "🥇" : res.p === 2 ? "🥈" : "🥉";
@@ -2465,7 +2444,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
                     <div key={t.id} title={`${t.name} ${yearOf(t.dateExact, t.date)}`}
                       style={{ display: "inline-flex", alignItems: "center", gap: 4, padding: "3px 7px",
                         borderRadius: 6, background: bg, border: `1px solid ${border}`, flexShrink: 0 }}>
-                      <span style={{ fontSize: 13 }}>{medal}</span>
+                      <span className="fs-13">{medal}</span>
                       <div style={{ lineHeight: 1.2 }}>
                         <div style={{ fontSize: 10, fontWeight: 700, color: "var(--color-warn-dark)", maxWidth: 90,
                           overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{shortName}</div>
@@ -2480,7 +2459,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
                   <div style={{ display: "inline-flex", alignItems: "center", gap: 3, padding: "3px 8px",
                     borderRadius: 6, background: "var(--bg-warn-strong)", border: "1px solid var(--medal-gold)" }}>
                     <span style={{ fontSize: 11, fontWeight: 800, color: "var(--color-warn-dark)" }}>+{palmares.length - 5}</span>
-                    <span style={{ fontSize: 11 }}>🏆</span>
+                    <span className="fs-11">🏆</span>
                   </div>
                 )}
               </div>
@@ -2489,7 +2468,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
 
           {/* V/E/D vs Manuel — caixas coloridas */}
           {h2hData && !isManuel && (
-            <div style={{ flexShrink: 0, textAlign: "center" }}>
+            <div className="flex-shrink-0 ta-c">
               <div style={{ fontSize: 11, fontWeight: 700, color: "var(--text-3)", marginBottom: 6,
                 textTransform: "uppercase", letterSpacing: "0.06em" }}>vs Manuel</div>
               <div style={{ display: "flex", gap: 5, marginBottom: 5 }}>
@@ -2498,10 +2477,9 @@ function RivalDetail({ playerName }: { playerName: string }) {
                   { n: h2hData.draws,  bg: "var(--bg-muted)",          co: "var(--text-2)",          l: "E" },
                   { n: h2hData.losses, bg: "var(--bg-danger-strong)",  co: "var(--color-danger-vivid)", l: "D" },
                 ] as const).map(({ n, bg, co, l }) => (
-                  <div key={l} style={{ textAlign: "center", minWidth: 46, padding: "10px 6px",
-                    background: bg, borderRadius: 10 }}>
-                    <div style={{ fontSize: 28, fontWeight: 900, color: co, lineHeight: 1 }}>{n}</div>
-                    <div style={{ fontSize: 11, fontWeight: 700, color: co, marginTop: 2, opacity: .75 }}>{l}</div>
+                  <div key={l} className="ta-c" style={{ minWidth: 46, padding: "10px 6px", background: bg, borderRadius: 10 }}>
+                    <div className="fw-900" style={{ fontSize: 28, color: co, lineHeight: 1 }}>{n}</div>
+                    <div className="fs-11 fw-700" style={{ color: co, marginTop: 2, opacity: .75 }}>{l}</div>
                   </div>
                 ))}
               </div>
@@ -2538,16 +2516,16 @@ function RivalDetail({ playerName }: { playerName: string }) {
 
       {/* ══ GRÁFICO DE EVOLUÇÃO ══ */}
       {evoRivalData.filter(d => d.tp != null && d.rounds > 0).length >= 2 && (
-        <div className="card" style={{ marginBottom: 12, padding: "12px 16px" }}>
+        <div className="card mb-12"  style={{ padding: "12px 16px" }}>
           <EvolucaoChart tournResults={evoRivalData} manuelResults={evoManuelData} />
         </div>
       )}
 
       {/* ══ PALMARÈS ══ */}
       {palmares.length > 0 && (
-        <div className="card" style={{ marginBottom: 12, padding: "12px 16px" }}>
+        <div className="card mb-12"  style={{ padding: "12px 16px" }}>
           <div className="h-sm mb-8" style={{ color: "var(--text-2)" }}>🥇 Palmarès · {palmares.length} {palmares.length===1?"vitória":"vitórias"}</div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(210px,1fr))", gap: 8 }}>
+          <div className="gap-8" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(210px,1fr))" }}>
             {palmares.map(({ t, res }) => {
               const mPos = manuelMerged?.r[t.id]?.p;
               const bateuManuel = mPos!=null && typeof mPos==="number" && typeof res.p==="number" && res.p < mPos;
@@ -2556,9 +2534,9 @@ function RivalDetail({ playerName }: { playerName: string }) {
               const agCls = agNum<=10?"p-sub10":agNum<=12?"p-sub12":agNum<=14?"p-sub14":"p-sub18";
               return (
                 <div key={t.id} style={{ border: "1.5px solid var(--medal-gold,#d97706)", borderRadius: 8, padding: "10px 12px", display: "flex", gap: 10, alignItems: "center" }}>
-                  <span style={{ fontSize: 32, lineHeight: 1, flexShrink: 0 }}>🥇</span>
+                  <span className="flex-shrink-0" style={{ fontSize: 32, lineHeight: 1 }}>🥇</span>
                   <div>
-                    <div style={{ fontSize: 13, fontWeight: 600 }}>{t.name}</div>
+                    <div className="fs-13 fw-600">{t.name}</div>
                     <div style={{ fontSize: 11, color: "var(--text-2)", marginTop: 2 }}>
                       {fmtDM(t.dateExact, t.date)}
                       {ag && <span className={`p p-sm ${agCls}`} style={{ marginLeft: 5 }}>{ag}</span>}
@@ -2594,7 +2572,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
           under:scoringBlock.bp[pp].under,
         })).filter(x=>x.n>0);
         return (
-          <div className="card" style={{ marginBottom: 12, padding: "12px 16px" }}>
+          <div className="card mb-12"  style={{ padding: "12px 16px" }}>
             <div style={{ fontSize: 10, fontWeight: 600, color: "var(--text-3)", marginBottom: 6 }}>
               Distribuição de scoring · {tot} buracos
             </div>
@@ -2622,7 +2600,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
             </div>
             {/* Par 3 / 4 / 5 */}
             {parAvgs.length>0 && (
-              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+              <div className="gap-8 flex-wrap" style={{ display: "flex" }}>
                 {parAvgs.map(({ pp, avg, n, under }) => {
                   const diff = avg!=null?avg-pp:null;
                   const col = diff==null?"var(--text-3)":diff<0?"var(--color-good-dark)":diff<0.3?"var(--text-2)":"var(--color-warn)";
@@ -2640,7 +2618,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
       {tournResults.length > 0 && (() => {
         let lastYear = 0;
         return (
-          <div className="card" style={{ marginBottom: 12, overflow: "hidden" }}>
+          <div className="card mb-12 overflow-hidden" >
             {tournResults.map(({ t, res, hasCard, autoCard, ageGroup }) => {
               const expanded    = expandedTourns.has(t.id);
               const pos         = typeof res.p==="number" ? res.p : null;
@@ -2696,12 +2674,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
                         <RoundPill nR={rds.length} />
                         {/* ── DEBUG TEMPORÁRIO: fonte do torneio — remover após diagnóstico ── */}
                         {debugMode && (
-                          <span title={`tid: ${t.id}`} style={{
-                            fontSize: 9, fontFamily: "monospace", padding: "1px 5px",
-                            borderRadius: 4, background: "#fef08a", color: "#713f12",
-                            border: "1px solid #fde047", flexShrink: 0, maxWidth: 200,
-                            overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
-                          }}>
+                          <span title={`tid: ${t.id}`} className="fs-9 flex-shrink-0 overflow-hidden" style={{ fontFamily: "monospace", padding: "1px 5px", borderRadius: 4, background: "#fef08a", color: "#713f12", border: "1px solid #fde047", maxWidth: 200, textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                             {t.id}
                           </span>
                         )}
@@ -2968,7 +2941,7 @@ function RivaisIntlContent() {
         <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
         <ToolbarTitle>🌍 Kids</ToolbarTitle>
         <ToolbarSep />
-        <span className="toolbar-meta" style={{ flexShrink: 0 }}>
+        <span className="toolbar-meta flex-shrink-0" >
           {loaded
             ? <span style={{ fontSize: 10, color: "var(--color-good-dark)", fontWeight: 700 }}>{rivals.length} rivais · ✓</span>
             : progress
@@ -2985,12 +2958,14 @@ function RivaisIntlContent() {
         <ToolbarSep />
         {/* Pesquisa */}
         <input type="text" value={q} onChange={e => setQ(e.target.value)}
-          placeholder="🔎 Pesquisar rival…" className="input"
-          style={{ width: 150, height: 26, fontSize: 12, flexShrink: 0 }} />
+          placeholder="🔎 Pesquisar rival…" className="input fs-12 flex-shrink-0"
+          
+          style={{ width: 150, height: 26 }} />
         <ToolbarSep />
         {/* Filtros avançados: país, tipo, presenças, directos, limpar */}
         <select className="select" value={paisFilter} onChange={e => setPaisFilter(e.target.value)}
-          style={{ fontSize: 11, height: 26, minWidth: 85, flexShrink: 0 }}>
+          className="fs-11 flex-shrink-0"
+          style={{ height: 26, minWidth: 85 }}>
           <option value="">🌍 País</option>
           {paises.map(p => <option key={p} value={p}>{FL[p] || "🏳️"} {p}</option>)}
         </select>
@@ -3032,8 +3007,8 @@ function RivaisIntlContent() {
             ✕
           </button>
         )}
-        <div style={{ flex: 1 }} />
-        <span className="chip" style={{ flexShrink: 0 }}>
+        <div className="flex-1" />
+        <span className="chip flex-shrink-0" >
           {rivals.filter(p => (nPlayed(p) > 0 || p.isM) && playerMatchesFilter(p, fids)).length}
         </span>
       </Toolbar>

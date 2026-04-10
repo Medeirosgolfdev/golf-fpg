@@ -27,7 +27,7 @@ import { loadPlayerStats, type PlayerStatsDb, type PlayerStats, daysSince } from
 import { norm, fD, fD2, firstName, shortName } from "../utils/format";
 import { clubShort, hcpDisplay } from "../utils/playerUtils";
 import { deepFixMojibake } from "../utils/fixEncoding";
-import { sc3m, sc3, SC } from "../utils/scoreDisplay";
+import { sc3, sc3m, SC } from "../utils/scoreDisplay";
 import { isTournamentRound } from "../utils/roundFilters";
 import { calcCourseHcp, calcPlayingHcp , expectedSD9, calcStrokesPerHole, get9hRatings } from "../utils/whsCalc";
 import { sortTees } from "../utils/teeUtils";
@@ -268,9 +268,6 @@ const pct = (v: number) => v.toFixed(0) + "%";
 const MAX_CREDIBLE_GROSS = 130;
 
 /* ─── Helpers visuais ─── */
-function sc3_local(val: number, lo: number, hi: number) {
-  return val <= lo ? SC.good : val <= hi ? SC.warn : SC.danger;
-}
 
 /* ═══════════════════ SEARCH + CHIPS ═══════════════════ */
 
@@ -686,7 +683,7 @@ function HoleProfileSection({ slots, refTee, holesMode }: {
 
 
   return (
-    <div style={{ marginTop: 20 }}>
+    <div className="mt-20">
       <div className="flex-wrap-gap10 mb-14" style={{ alignItems:"center" }}>
         <span className="h-md">🔍 Perfil Histórico por Tipo de Buraco</span>
         <div style={{ marginLeft:"auto", display:"flex", alignItems:"center", gap:8 }}>
@@ -1008,7 +1005,7 @@ function HoleProfileSection({ slots, refTee, holesMode }: {
                       <td className="fs-11">
                         {dist ? `${dist}m` : "–"}
                         {bkt && (
-                          <span className="muted ml-6" style={{ fontSize: 10 }}>
+                          <span className="muted ml-6 fs-10" >
                             {bktLabel(bkt)}
                             {usingAll && " *"}
                           </span>
@@ -1203,7 +1200,7 @@ function RoundPrepSection({ slots }: { slots: Slot[] }) {
         {/* Campo */}
         <div style={{ position: "relative", minWidth: 220 }} ref={courseSearchRef}>
           <label className="fs-11 fw-600 c-text-3 mb-4" style={{ display: "block" }}>Campo</label>
-          <input className="input" style={{ width: "100%" }}
+          <input className="input w-full" 
             value={selectedCourse ? selectedCourse.master.name : courseQ}
             placeholder="Pesquisar campo…"
             onChange={e => { setCourseQ(e.target.value); setSelectedCourse(null); setCourseOpen(true); }}
@@ -1307,7 +1304,7 @@ function RoundPrepSection({ slots }: { slots: Slot[] }) {
                     <tr key={i}>
                       <td>
                         <span className="round" style={{ width: 10, height: 10, background: COLORS[i], display: "inline-block", marginRight: 8, verticalAlign: "middle" }} />
-                        <span style={{ fontWeight: 700 }}>{firstName(pc.name)}</span>
+                        <span className="fw-700">{firstName(pc.name)}</span>
                         <span className="c-text-3 fs-11 ml-6">{pc.escalao}</span>
                       </td>
                       <td>
@@ -1323,12 +1320,12 @@ function RoundPrepSection({ slots }: { slots: Slot[] }) {
                   <tr key={i}>
                     <td>
                       <span className="round" style={{ width: 10, height: 10, background: COLORS[i], display: "inline-block", marginRight: 8, verticalAlign: "middle" }} />
-                      <span style={{ fontWeight: 700 }}>{firstName(pc.name)}</span>
+                      <span className="fw-700">{firstName(pc.name)}</span>
                       <span className="c-text-3 fs-11 ml-6">{pc.escalao}</span>
                     </td>
                     <td>
-                      <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                        <span style={{ width: 10, height: 10, borderRadius: "50%", background: teeHex, display: "inline-block", border: "1px solid rgba(0,0,0,.2)", flexShrink: 0 }} />
+                      <div className="flex-center-gap6">
+                        <span className="flex-shrink-0" style={{ width: 10, height: 10, borderRadius: "50%", background: teeHex, display: "inline-block", border: "1px solid rgba(0,0,0,.2)" }} />
                         <select className="select select-sm" value={playerTeeIds[i] ?? ""} onChange={e => setPlayerTee(i, e.target.value)}>
                           {teeOptions.map(t => <option key={t.teeId} value={t.teeId}>{t.teeName} ({t.sex})</option>)}
                         </select>
@@ -1573,7 +1570,7 @@ function CategoryScorecardSection({ slots, allAgg, statsDb }: { slots: Slot[]; a
       </div>
 
       {/* Grid de categorias */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: 8 }}>
+      <div className="gap-8" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))" }}>
         {results.map(({ cat, winnerIdx, values }, ri) => (
           <div key={ri} style={{
             border: "1px solid var(--border-light)",
@@ -1742,9 +1739,9 @@ function SwotSection({ slots, allAgg, statsDb }: { slots: Slot[]; allAgg: (AggSt
           return (
             <div key={i} style={{ border: `2px solid ${COLORS[i]}`, borderRadius: "var(--radius)", overflow: "hidden" }}>
               {/* Player header */}
-              <div style={{ background: COLORS[i], padding: "8px 14px", display: "flex", alignItems: "center", gap: 8 }}>
-                <span style={{ color: "#fff", fontWeight: 800, fontSize: 14 }}>{firstName(s.player.name)}</span>
-                <span style={{ color: "rgba(255,255,255,.75)", fontSize: 11 }}>HCP {hcpDisplay(s.player.hcp)} · {s.player.escalao}</span>
+              <div className="gap-8" style={{ background: COLORS[i], padding: "8px 14px", display: "flex", alignItems: "center" }}>
+                <span className="fw-800 fs-14" style={{ color: "#fff" }}>{firstName(s.player.name)}</span>
+                <span className="fs-11" style={{ color: "rgba(255,255,255,.75)" }}>HCP {hcpDisplay(s.player.hcp)} · {s.player.escalao}</span>
               </div>
               {/* SWOT grid */}
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
@@ -1753,7 +1750,7 @@ function SwotSection({ slots, allAgg, statsDb }: { slots: Slot[]; allAgg: (AggSt
                   const typeItems = items.filter(x => x.type === type);
                   return (
                     <div key={type} style={{ background: cfg.bg, borderTop: `1px solid ${cfg.border}`, borderRight: type === "S" || type === "O" ? `1px solid ${cfg.border}` : undefined, padding: "10px 12px" }}>
-                      <div className="uppercase" style={{ color: cfg.color, fontWeight: 700, fontSize: 11, marginBottom: 6, letterSpacing: "0.05em" }}>{cfg.label}</div>
+                      <div className="uppercase fw-700 fs-11 mb-6"  style={{ color: cfg.color, letterSpacing: "0.05em" }}>{cfg.label}</div>
                       <ul style={{ margin: 0, padding: "0 0 0 14px" }}>
                         {typeItems.map((item, j) => (
                           <li key={j} style={{ fontSize: 11, lineHeight: 1.5, color: "var(--text-2)", marginBottom: 3 }}>{item.text}</li>
@@ -1786,7 +1783,7 @@ function ConsistencySection({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStat
         {loaded.map(({ s, agg, i }) => {
           if (!agg) return null;
           const stdLabel = agg.grossStdDev != null ? agg.grossStdDev.toFixed(1) : "–";
-          const stdColor = agg.grossStdDev == null ? undefined : sc3_local(agg.grossStdDev, 3, 5.5);
+          const stdColor = agg.grossStdDev == null ? undefined : sc3(agg.grossStdDev, 3, 5.5);
           return (
             <div key={i} className="caKpi" style={{ borderColor: COLORS[i] }}>
               <div className="caKpiVal" style={{ color: stdColor ?? COLORS[i] }}>{stdLabel}</div>
@@ -1871,7 +1868,7 @@ function ConsistencySection({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStat
             return (
               <div key={i} style={{ border: `1px solid ${COLORS[i]}`, borderRadius: "var(--radius)", padding: 8, background: COLORS_LIGHT[i] }}>
                 <div className="fs-11 fw-700 mb-4" style={{ color: COLORS[i] }}>{firstName(s.player.name)}</div>
-                <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", display: "block" }}>
+                <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ display: "block" }}>
                   {/* avg line */}
                   <line x1={pad} x2={W - pad} y1={y(avg)} y2={y(avg)} stroke={COLORS[i]} strokeWidth={1} strokeDasharray="4,2" opacity={0.4} />
                   {/* points */}
@@ -2038,7 +2035,7 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
                 {entries.map((e, i) => {
                   const diff = e?.avg != null && e?.par != null ? e.avg - e.par : null;
                   const isBest = diff != null && diff === bestAvg && avgs.filter(v => v === bestAvg).length === 1;
-                  const diffCol = diff == null ? undefined : sc3_local(diff, 0, 0.3);
+                  const diffCol = diff == null ? undefined : sc3(diff, 0, 0.3);
                   return (<React.Fragment key={i}>
                     <td className="r" style={{ color: COLORS[i] }}>{e?.avg != null ? e.avg.toFixed(1) : "–"}</td>
                     <td className="r" style={{ color: diffCol }}>{diff != null ? (isBest ? <b>{fD2(diff)}</b> : fD2(diff)) : "–"}</td>
@@ -2168,7 +2165,7 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
 
       {/* Dominância (só 2 jogadores) */}
       {dominanceData && (
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 14 }}>
+        <div className="gap-8" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", marginBottom: 14 }}>
           <div style={{ background: "var(--bg-muted)", borderRadius: "var(--radius)", padding: "8px 12px" }}>
             <div className="fs-11 fw-600 c-text-3 mb-4">Vitórias por 3+ pancadas</div>
             <div className="flex-center-gap8">
@@ -2352,7 +2349,7 @@ function TournamentEvolutionSection({ slots }: { slots: Slot[] }) {
             <div key={i} className="caKpi" style={{ borderColor: s.color }}>
               <div className="caKpiVal" style={{ color: s.color }}>{last != null ? last.toFixed(1) : "–"}</div>
               <div className="caKpiLbl">{shortName(s.name)} · {s.pts.length} rondas</div>
-              <div className="flex-wrap-gap8 jc-center" style={{ marginTop: 3 }}>
+              <div className="flex-wrap-gap8 jc-center mt-3" >
                 {delta != null && <span className="fw-700 fs-10" style={{ color: sc3m(delta, 0, 0) }}>{delta > 0 ? "+" : ""}{delta.toFixed(1)}</span>}
                 {best != null && <span className="fs-10 fw-600 c-text-3">melhor: {best.toFixed(metric === "sd" ? 1 : 0)}</span>}
               </div>

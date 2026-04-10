@@ -95,7 +95,7 @@ export function TournSidebarItem({ t, isActive, onClick, accentColor, extraPills
       onKeyDown={e => { if (e.key === "Enter" || e.key === " ") onClick(); }}
     >
       {/* Linha 1: nome */}
-      <div style={{ display: "flex", alignItems: "flex-start", gap: 4, marginBottom: 3 }}>
+      <div className="gap-4" style={{ display: "flex", alignItems: "flex-start", marginBottom: 3 }}>
         <span className="course-item-name" style={{ flex: 1, fontSize: 12, fontWeight: isActive ? 700 : 500, lineHeight: 1.3 }}>
           {t.name}
         </span>
@@ -111,11 +111,11 @@ export function TournSidebarItem({ t, isActive, onClick, accentColor, extraPills
       <Sep />
 
       {/* Linha 3: pills */}
-      <div style={{ display: "flex", alignItems: "center", gap: 4, flexWrap: "wrap", margin: "3px 0" }}>
+      <div className="gap-4 flex-wrap" style={{ display: "flex", alignItems: "center", margin: "3px 0" }}>
 
         {/* tcode(s) + link individual */}
         {tcodes.map(tc => (
-          <span key={tc} style={{ display: "inline-flex", alignItems: "center", gap: 2 }}>
+          <span key={tc} className="gap-2" style={{ display: "inline-flex", alignItems: "center" }}>
             <TcodePill tc={tc} />
             <LinkBtn ccode={t.ccode} tcode={tc} active={isActive} />
           </span>

@@ -36,15 +36,9 @@ import { sdClassByHcp } from "../utils/scoreDisplay";
 import { C } from "../utils/colors";
 import { fmtToPar } from "../utils/format";
 
-/* ─── Constante do jogador especial ─── */
-export const MANUEL_FED = "52884";
-
-export function isManuel(p: { name?: string; fed?: string; fedCode?: string }): boolean {
-  const fed = p.fed || p.fedCode;
-  if (fed === MANUEL_FED) return true;
-  const n = p.name || "";
-  return n.includes("Manuel") && (n.includes("Medeiros") || n.includes("Goulartt"));
-}
+/* ─── Constante do jogador especial (re-export de constants/manuel) ─── */
+import { MANUEL_FED as _MANUEL_FED, isManuel } from "../constants/manuel";
+export { _MANUEL_FED as MANUEL_FED, isManuel };
 
 /* ─── Formatação to-par ─── */
 /** @deprecated Usa fmtToPar de utils/format. Mantido por compatibilidade. */
@@ -74,11 +68,8 @@ export function TeeDot({ teeName }: { teeName?: string }) {
   return (
     <span
       title={teeName}
-      style={{
-        display: "inline-block", width: 12, height: 12,
-        borderRadius: 3, background: hex, border,
-        verticalAlign: "middle", cursor: "default", flexShrink: 0,
-      }}
+      className="flex-shrink-0"
+      style={{ display: "inline-block", width: 12, height: 12, borderRadius: 3, background: hex, border, verticalAlign: "middle", cursor: "default" }}
     />
   );
 }
@@ -155,7 +146,7 @@ export function TournPName({
       onClick={hasProfile ? () => window.open("/jogadores/" + fedKey, "_blank") : undefined}
     >
       {truncName}
-      {star && <span style={{ marginLeft: 3, fontSize: 10 }}>⭐</span>}
+      {star && <span className="fs-10" style={{ marginLeft: 3 }}>⭐</span>}
       {sex && <SexBadge sex={sex} size="sm" className="ml-4" />}
       {kidsHash && (
         <a

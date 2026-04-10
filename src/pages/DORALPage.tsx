@@ -606,7 +606,7 @@ function Content() {
         {cur && <ToolbarMeta>📍 Doral Golf Resort</ToolbarMeta>}
         {cur && (() => {
           const nR = Math.max(...cur.players.map(p => p.rounds.length));
-          return <span className="chip" style={{ marginLeft: "auto" }}>{fmtFieldInfo(cur.players.filter(p => p.rounds.length === nR).length, nR, cur.category)}</span>;
+          return <span className="chip ml-auto" >{fmtFieldInfo(cur.players.filter(p => p.rounds.length === nR).length, nR, cur.category)}</span>;
         })()}
       </Toolbar>
 

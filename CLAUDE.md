@@ -578,9 +578,17 @@ Na barra de distribuição de scores, o segmento de par usa branco/transparente,
 - `Toolbar.tsx` exporta `Toolbar`, `ToolbarTitle`, `ToolbarMeta`, `ToolbarSep`.
 - `scoreDisplay.ts`: `scClass()`, `toParClass()`, `sc3m()`, `tpColorDark()`, `SC` (alias de C de colors.ts).
 - `mathUtils.ts`: `zTier()`, `getTrend()`, `getAvgZ()`, `linearSlope()`, `toggleArr()`.
+- `format.ts`: `fmtToPar()` (usar em vez de `fmtTp2`/`fmtTP2` locais), `sortArrow()`, `MONTHS_PT` (abrev.), `MONTHS_PT_FULL` (lowercase), `MONTHS_PT_LONG` (Title Case), `MONTH_MAP`.
+- `constants/manuel.ts`: `MANUEL_FED`, `MANUEL_BIRTH_YEAR`, `isManuel()`, `escalaoManuelParaData()`, `MANUEL_KNOWN_TIDS`.
+- `constants/tournaments.ts`: `TORNEIOS_CONFIG` (10 torneios FPG).
+- `constants/tierDisplay.ts`: `TIER_L`, `TR_I` (labels e ícones de tier).
+- CSS `.tab-under` + `.active`: tabs com underline (substitui `tabStyle()` inline).
 
 ### Princípios de arquitectura
 
+- **Máxima globalização** — definições partilhadas (constantes, formatação, CSS) devem viver em módulos globais (`constants/`, `utils/`, `App.css`), nunca duplicadas por página. Se duas páginas usam o mesmo valor, extrair para um módulo partilhado.
+- **Escalões são definidos por torneio** — cada organizador define os age groups conforme o número de inscritos (9-10, 10-11, etc.). Não existe uma lista global de escalões. Filtros de UI como `ESCALOES_DESTAQUE_USKIDS` são específicos da página onde são usados.
+- **Cores de tees são da FPG** — `teeColors.ts` define cores específicas das marcações de tees (Vermelhas, Amarelas, etc.) conforme a federação. Não alterar nem "corrigir" esses hex — são intencionais.
 - **Data layer sobre display layer** — filtragem, normalização e cálculos pertencem ao loader/data layer, não aos componentes de display.
 - **Validação de scores** — `tp` (to-par) só se calcula quando todas as rondas têm scorecard hole-by-hole completo. Em torneios de 9 buracos, validar `grossStrokes >= holes`.
 - **Consistência de deduplicação** — hero cards e tabelas de detalhe devem usar a mesma fonte de dados deduplicada (e.g. `confrontosH2H`).
@@ -686,22 +694,4 @@ npx vitest            # watch mode
 | `shortenTournName` | 7 | WC, EC, Venice, Marco, Rome, El Prat, RWB |
 | `mergeInto` | 5 | Dedup por normName, forceTids override, memberId propagation |
 | `processUskidsCompleto` | 4 | 18H válido, 9H com tp correcto, zeros rejeitados, filtro ±1 escalão |
-| `processMemberHistory` | 7 | tp com scorecard completo, tp=null sem strokes, tp=null com zeros, Boys 9-13, nome "?", 9H El Prat, uskTournNames |
-| `processWjgc` | 1 | Formato bluegolf com scores 18H |
-| `processManuelOverrides` | 1 | Injeção IE Marco Simone 2026 |
-
-### Funções exportadas para teste
-
-As seguintes funções internas de `KIDSdataLoader.ts` foram exportadas para serem testáveis:
-`co`, `mergeInto`, `shortenTournName`, `processUskidsCompleto`, `processMemberHistory`, `processUskids`, `processDoral`, `processWjgc`, `processPullTorneios`, `processManuelOverrides`
-
-### Próximos testes a adicionar
-
-- `processUskidsCompleto` formato v2 (`signupanytime_t`)
-- `processDoral` com `nineHoleOnly` e `startingHole: 10`
-- `processPullTorneios` com `PULL_TCODE_TO_TID` mapping
-- Teste de integração de `buildAutoRivals` com fetch mockado
-
-## Deploy
-
-Push para `main` no GitHub → Vercel faz build e deploy automático. JSON data files servidos com cache headers configurados em `vercel.json`. SPA rewrites para `index.html` em todas as rotas não-API.
+| `processMemberHistory` | 7 | tp com scorecard completo, tp=null sem strokes, tp=null com zeros, Boys 9-13, nome "?", 9H El Prat
