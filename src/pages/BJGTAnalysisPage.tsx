@@ -1836,7 +1836,6 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
             </button>
           ))}
         </div>
-        </div>
         <span className="chip" style={{ marginLeft: "auto" }}>{fmtFieldInfo(CONTEST_MAP[tab].players.filter(p=>typeof p.p==="number").length, CONTEST_MAP[tab].nRounds, `Par ${CONTEST_MAP[tab].par}`)}</span>
       </Toolbar>
 
