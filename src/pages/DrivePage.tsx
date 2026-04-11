@@ -582,14 +582,27 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
   const [showScorecard, setShowScorecard] = React.useState(true);
   const { sortKey, sortDir, toggleSort: handleSort } = useSort<"pos"|"esc"|"tee"|"hcp"|"sd">("pos");
 
-  const players = tournament.players.filter((p) => !isDNS(p) && p.scores && p.scores.length > 0);
+  const players = tournament.players.filter((p) => !isDNS(p) && ((p.scores && p.scores.length > 0) || (p.roundScores?.[0]?.scores?.length ?? 0) > 0));
   if (!players.length) return <EmptyState size="sm" message="Scorecards não disponíveis." />;
 
   const refP = players[0];
-  const par = refP.par || [];
+  const rs0 = refP.roundScores?.[0];
+  const par = refP.par?.length ? refP.par : rs0?.pars || [];
   const nh = par.length;
   const parTotal = par.reduce((a, b) => a + b, 0);
-  const si = refP.si || [];
+  const si = refP.si?.length ? refP.si : rs0?.si || [];
+
+  // Colectar metros por tee (cada tee distinto gera uma linha)
+  const teeMetersMap = new Map<string, number[]>();
+  for (const p of players) {
+    const prs = p.roundScores?.[0];
+    const tn = p.teeName || prs?.teeName;
+    const m = prs?.meters?.length ? prs.meters : p.meters;
+    if (tn && m?.length && m.length >= nh && !teeMetersMap.has(tn)) {
+      teeMetersMap.set(tn, m);
+    }
+  }
+  const teeMeters = Array.from(teeMetersMap.entries()).map(([teeName, meters]) => ({ teeName, meters }));
 
   // Ordenar por pos (gross) primeiro para calcular _dp
   const byGross = [...players].sort((a, b) => {
@@ -664,14 +677,14 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
       pos: showP ? dp : "",
       gross,
       toPar: gross - parTotal,
-      scores: p.scores,
+      scores: p.scores?.length ? p.scores : p.roundScores?.[0]?.scores,
       rowBg,
       nameContent: <PName name={p.name} fed={p.fed} playersDB={playersDB} highlight={isManuel(p)} />,
       prefixCells: <>
         <td className="lb-esc">{esc ? <EscPill esc={esc} /> : <span className="muted">–</span>}</td>
         <td className="lb-club">{p.club || "–"}</td>
         <td className="lb-hcp">{fmtHcp(p.hcpExact)}</td>
-        <td className="lb-tee"><TeeDot teeName={p.teeName} distance={p.roundScores?.[0]?.meters?.reduce((a: number, b: number) => a + b, 0) || p.meters?.reduce((a: number, b: number) => a + b, 0) || undefined} /></td>
+        <td className="lb-tee"><TeeDot teeName={p.teeName || p.roundScores?.[0]?.teeName} /></td>
       </>,
       postScorecardCells: <>
         <td className="lb-sd">
@@ -690,8 +703,9 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
     <ScorecardLeaderboard
       par={par}
       si={si.length >= nh ? si : undefined}
+      teeMeters={teeMeters.length ? teeMeters : undefined}
       rows={rows}
-      parLabelColSpan={5}
+      parLabelColSpan={4}
       postTotalColCount={0}
       postScorecardColCount={4}
       showScorecard={showScorecard}

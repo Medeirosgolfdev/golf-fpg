@@ -35,8 +35,6 @@ export interface MultiRoundRow {
   esc?: string;
   tee?: string;
   teeName?: string;
-  /** Distância total do tee em metros */
-  teeDistance?: number;
   sex?: string;
   club?: string;
   hcp?: number | null;

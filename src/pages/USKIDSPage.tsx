@@ -8,7 +8,7 @@ import SectionErrorBoundary from "../ui/SectionErrorBoundary";
 import LoadingState from "../ui/LoadingState";
 import { useSearchParams } from "react-router-dom";
 import { C } from "../utils/colors";
-import { scClass } from "../utils/scoreDisplay";
+import { scClass, fmtToParRivais } from "../utils/scoreDisplay";
 import { MONTHS_PT, isoDate, fmtDate, fmtToPar, monthLabel, sortArrow } from "../utils/format";
 import { flag, normCountry, normPaisDisplay } from "../utils/flagUtils";
 import EmptyState from "../ui/EmptyState";
@@ -1578,13 +1578,6 @@ function playerSeriesResult(
   return null;
 }
 
-function fmtToParRivais(tp: number | null): { text: string; color: string } {
-  if (tp === null) return { text: "—", color: "var(--text-muted)" };
-  if (tp < 0) return { text: String(tp), color: "var(--color-good)" };
-  if (tp === 0) return { text: "E", color: "var(--text-3)" };
-  if (tp <= 3) return { text: `+${tp}`, color: "var(--color-warn)" };
-  return { text: `+${tp}`, color: "var(--color-danger)" };
-}
 
 function fmtPosRivais(p: number, fieldSize: number): string {
   if (p <= 0) return "—";

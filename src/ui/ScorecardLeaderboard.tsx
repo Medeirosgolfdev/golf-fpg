@@ -31,6 +31,7 @@ import { scClass } from "../utils/scoreDisplay";
 import { fmtToPar } from "../utils/format";
 import { useSort } from "../hooks/useSort";
 import { tpColor } from "./tournamentPrimitives";
+import { getTeeHex, teeBorder } from "../utils/teeColors";
 
 export interface ScorecardRow {
   key: string | number;
@@ -58,6 +59,8 @@ interface ScorecardLeaderboardProps {
   si?: number[];
   /** Label da linha SI (default: "S.I."). Usar "m" para metros. */
   siLabel?: string;
+  /** Distâncias por buraco, por tee. Cada entrada gera uma linha "m" acima de SI/PAR. */
+  teeMeters?: { teeName: string; meters: number[] }[];
   rows: ScorecardRow[];
   prefixHeaderCells?: React.ReactNode;
   /** Headers após In (SD, 🐦, Par, ■) */
@@ -85,7 +88,7 @@ interface ScorecardLeaderboardProps {
 type SCSortKey = "pos" | "name" | "gross" | "toPar";
 
 export function ScorecardLeaderboard({
-  par, si, siLabel = "S.I.", rows,
+  par, si, siLabel = "S.I.", teeMeters, rows,
   prefixHeaderCells,
   postScorecardHeaderCells, postTotalHeaderCells,
   parLabelColSpan = 1,
@@ -108,6 +111,9 @@ export function ScorecardLeaderboard({
   const siF9    = siArr.length >= 9 ? siArr.slice(0, 9).reduce((a, b) => a + b, 0) : 0;
   const siB9    = !is9 && siArr.length >= 18 ? siArr.slice(9, 18).reduce((a, b) => a + b, 0) : 0;
   const siTotal = siArr.reduce((a, b) => a + b, 0);
+
+  // Filtrar teeMeters válidos (com metros suficientes)
+  const validTeeMeters = (teeMeters || []).filter(tm => tm.meters.length >= nh);
 
   const afterScorecardHeaders = postScorecardHeaderCells ?? postTotalHeaderCells;
 
@@ -161,7 +167,40 @@ export function ScorecardLeaderboard({
       <div className="bjgt-chart-scroll">
         <table className={"sc-lb" + (showScorecard ? " sc-lb-with-sc" : "")} data-sc-table="1">
           <thead>
-            {/* Linha S.I. / metros — primeiro, NÃO sticky */}
+            {/* Linhas de metros por tee — uma por cada tee distinto, NÃO sticky */}
+            {showScorecard && validTeeMeters.map(tm => {
+              const mArr = tm.meters.slice(0, nh);
+              const mF9  = mArr.slice(0, 9).reduce((a, b) => a + b, 0);
+              const mB9  = !is9 ? mArr.slice(9, 18).reduce((a, b) => a + b, 0) : 0;
+              const mTot = mArr.reduce((a, b) => a + b, 0);
+              const hex  = getTeeHex(tm.teeName);
+              const bdr  = teeBorder(hex) || "1px solid rgba(0,0,0,.18)";
+              return (
+                <tr key={tm.teeName} className="lb-si-row">
+                  <td className="sticky-col-0" />
+                  <td className="lb-par-lbl sticky-col-1" colSpan={parLabelColSpan + 1}>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+                      <span style={{ display: "inline-block", width: 10, height: 10, borderRadius: 2, background: hex, border: bdr, flexShrink: 0 }} />
+                      <span>m</span>
+                    </span>
+                  </td>
+                  <td className="lb-topar" />
+                  <td className="lb-gross">{mTot > 0 ? mTot.toLocaleString("pt") : ""}</td>
+                  {Array.from({ length: postTotalColCount }, (_, i) => <td key={i} />)}
+                  {mArr.slice(0, 9).map((v, i) => (
+                    <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{v || ""}</td>
+                  ))}
+                  <td className="lb-halftot">{mF9 > 0 ? mF9.toLocaleString("pt") : ""}</td>
+                  {!is9 && mArr.slice(9, 18).map((v, i) => (
+                    <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{v || ""}</td>
+                  ))}
+                  {!is9 && <td className="lb-halftot">{mB9 > 0 ? mB9.toLocaleString("pt") : ""}</td>}
+                  {postScorecardColCount > 0 && Array.from({ length: postScorecardColCount }, (_, i) => <td key={i} />)}
+                </tr>
+              );
+            })}
+
+            {/* Linha S.I. — NÃO sticky */}
             {showScorecard && hasSI && (
               <tr className="lb-si-row">
                 <td className="sticky-col-0" />

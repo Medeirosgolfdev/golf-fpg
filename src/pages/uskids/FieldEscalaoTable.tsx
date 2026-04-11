@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { AutoRivalPlayer, uskTournNames, uskFieldSizes, normName as normNameAuto } from "../KIDSdataLoader";
 import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
+import { fmtToParRivais } from "../../utils/scoreDisplay";
 
 // ─────────────────────────────────────────────
 // Types
@@ -101,13 +102,6 @@ function playerSeriesResult(
   return null;
 }
 
-function fmtToParRivais(tp: number | null): { text: string; color: string } {
-  if (tp === null) return { text: "—", color: "var(--text-muted)" };
-  if (tp < 0) return { text: String(tp), color: "var(--color-good)" };
-  if (tp === 0) return { text: "E", color: "var(--text-3)" };
-  if (tp <= 3) return { text: `+${tp}`, color: "var(--color-warn)" };
-  return { text: `+${tp}`, color: "var(--color-danger)" };
-}
 
 function fmtPosRivais(p: number, fieldSize: number): string {
   if (p <= 0) return "—";

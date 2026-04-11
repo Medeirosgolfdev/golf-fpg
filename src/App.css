@@ -2076,7 +2076,7 @@ tr.cross-current { background: var(--bg-success); }
 /* Colunas por ronda (MultiRoundLeaderboard) — separador no início de cada grupo */
 .sc-lb .lb-rnd    { width: 38px; background: var(--bg-rnd, #e8f2e4);
   font-weight: 700; font-family: 'JetBrains Mono', monospace;
-  border-left: 1px solid var(--border); }
+  border-left: 2px solid var(--border-strong, #999); }
 .sc-lb .lb-rnd-tp { width: 30px; background: var(--bg-rnd, #e8f2e4); font-size: 11px;
   font-family: 'JetBrains Mono', monospace; }
 .sc-lb .lb-rnd-sd   { width: 44px; background: var(--bg-rnd-stats, #f5f9f3); }
@@ -2092,6 +2092,19 @@ tr.cross-current { background: var(--bg-success); }
 .sc-lb thead th.lb-rnd-bird,
 .sc-lb thead th.lb-rnd-par,
 .sc-lb thead th.lb-rnd-bog  { background: var(--bg-rnd-stats-header); }
+
+/* Colunas acumuladas (totais) — verde-salva para distinguir das rondas verde-folha */
+.sc-lb .lb-acc-bird { width: 22px; background: var(--bg-acc); font-size: 11px; color: var(--color-good); font-weight: 700; }
+.sc-lb .lb-acc-par  { width: 22px; background: var(--bg-acc); font-size: 11px; color: var(--text-3); }
+.sc-lb .lb-acc-bog  { width: 22px; background: var(--bg-acc); font-size: 11px; color: var(--color-danger); }
+.sc-lb thead th.lb-acc-bird,
+.sc-lb thead th.lb-acc-par,
+.sc-lb thead th.lb-acc-bog  { background: var(--bg-acc-header); }
+/* ±Par e Total — mais escuros que as stats acumuladas (multi-ronda) */
+.sc-lb-multi .lb-topar { background: var(--bg-acc-strong); }
+.sc-lb-multi .lb-gross { background: var(--bg-acc-strong); }
+.sc-lb-multi thead th.lb-topar,
+.sc-lb-multi thead th.lb-gross { background: var(--bg-acc-header); }
 
 /* Buracos scorecard — sem width fixo (box-sizing:border-box distorce); bS entre todos, bM nos grupos */
 .sc-lb .lb-hole       { min-width: 33px; border-left: 1px solid var(--border-light); }

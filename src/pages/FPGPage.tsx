@@ -946,10 +946,23 @@ export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabe
   // ─── Calcular ref, par, posições ANTES de qualquer early return ───────────
   // (React exige que todos os hooks sejam chamados incondicionalmente)
   const refP    = rawPlayers[0];
-  const par     = refP?.par || [];
+  const refRs0  = refP?.roundScores?.[0];
+  const par     = refP?.par?.length ? refP.par : refRs0?.pars || [];
   const nh      = par.length;
   const parTotal = par.reduce((a, b) => a + b, 0);
-  const si      = refP?.si || [];
+  const si      = refP?.si?.length ? refP.si : refRs0?.si || [];
+
+  // Colectar metros por tee (cada tee distinto gera uma linha)
+  const teeMetersMap = new Map<string, number[]>();
+  for (const p of rawPlayers) {
+    const prs = p.roundScores?.[0];
+    const tn = p.teeName || prs?.teeName;
+    const m = prs?.meters?.length ? prs.meters : p.meters;
+    if (tn && m?.length && m.length >= nh && !teeMetersMap.has(tn)) {
+      teeMetersMap.set(tn, m);
+    }
+  }
+  const teeMeters = Array.from(teeMetersMap.entries()).map(([teeName, meters]) => ({ teeName, meters }));
 
   const nonWD   = rawPlayers.filter(p => !p._wd);
   const wdOnly  = rawPlayers.filter(p =>  p._wd);
@@ -1010,7 +1023,7 @@ export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabe
     const stickyBg = rowManuel ? "var(--bg-manuel-sticky)" : undefined;
 
     // Birdies / pars / bogeys
-    const scores = p.scores || [];
+    const scores = p.scores?.length ? p.scores : p.roundScores?.[0]?.scores || [];
     let birds = 0, pars = 0, bogs = 0;
     for (let i = 0; i < scores.length && i < par.length; i++) {
       const d = scores[i] - par[i];
@@ -1033,7 +1046,7 @@ export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabe
         {!hideFed && <td className="lb-fed">{p.fedCode || "–"}</td>}
         <td className="lb-club">{p.club || "–"}</td>
         {!hideHCP_ && <td className="lb-hcp">{fmtHcp(p.hcpExact)}</td>}
-        {!hideTee && <td className="lb-tee"><TeeDot teeName={p.teeName} distance={p.roundScores?.[0]?.meters?.reduce((a: number, b: number) => a + b, 0) || undefined} /></td>}
+        {!hideTee && <td className="lb-tee"><TeeDot teeName={p.teeName} /></td>}
       </>,
       postScorecardCells: <>
         {!hideSD_ && <td className="lb-sd">
@@ -1053,6 +1066,7 @@ export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabe
       par={par}
       si={si.length >= nh ? si : undefined}
       siLabel={siLabel}
+      teeMeters={teeMeters.length ? teeMeters : undefined}
       rows={rows}
       parLabelColSpan={parLabelColSpan}
       postTotalColCount={0}
@@ -1137,7 +1151,6 @@ export function AccumulatedLB({ tournament, nRounds, escLookup, playersDB, showC
       hcp: p.hcpExact ?? null,
       esc: esc || undefined,
       teeName: p.teeName,
-      teeDistance: p.roundScores?.[0]?.meters?.reduce((a: number, b: number) => a + b, 0) || undefined,
       gross: numGross(p),
       parTotal: parPerRound * nRounds,
       isIncomplete: !!p._incomplete,

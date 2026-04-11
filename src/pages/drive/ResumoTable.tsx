@@ -3,6 +3,7 @@ import { useSort } from "../../hooks/useSort";
 import { sdClassByHcp } from "../../utils/scoreDisplay";
 import { fmtDateShort, fmtHcp } from "../../utils/format";
 import { escPillCls } from "../../utils/playerUtils";
+import { calcAGS, expectedSD9 } from "../../utils/whsCalc";
 import { CrossSeasonTable, SortTh as _CSortTh } from "../../ui/CrossSeasonTable";
 import { isManuel, fmtTP, tpColor, TournPName, type PlayersDB } from "../../ui/tournamentPrimitives";
 
@@ -103,12 +104,19 @@ function computeStats(p: Player, sdLookup: SDLookup): TStats | null {
   const gross = typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : p.grossTotal;
   if (gross == null || isNaN(gross as number)) return null;
   const g = gross as number;
-  const parArr = p.par || [];
-  const scores = p.scores || [];
-  const si = p.si || [];
+
+  // Flat fields may be absent when player uses roundScores format;
+  // fall back to roundScores[0] for single-round tournaments
+  const rs0 = p.roundScores?.[0];
+  const parArr = p.par?.length ? p.par : rs0?.pars || [];
+  const scores = p.scores?.length ? p.scores : rs0?.scores || [];
+  const si = p.si?.length ? p.si : rs0?.si || [];
+  const cr = p.courseRating ?? rs0?.courseRating;
+  const slope = p.slope ?? rs0?.slope;
+
   const parT = p.parTotal || parArr.reduce((a, b) => a + b, 0);
   const tp = g - parT;
-  const nh = p.nholes || scores.length || 18;
+  const nh = p.nholes || scores.length || parArr.length || 18;
   const is9 = nh <= 9;
 
   let sd18: number | null = null;
@@ -123,24 +131,17 @@ function computeStats(p: Player, sdLookup: SDLookup): TStats | null {
       sdSource = "fpg";
     }
     // 2) AGS calculation (needs SI data)
-    else if (
-      p.courseRating &&
-      p.slope &&
-      p.hcpExact != null &&
-      si.length >= nh &&
-      scores.length >= nh &&
-      parArr.length >= nh
-    ) {
-      // Import calcAGS, expectedSD9 from whsCalc
-      // For now, skip AGS calculation since it requires external imports
-      // This can be added if needed
+    else if (cr && slope && p.hcpExact != null && si.length >= nh && scores.length >= nh && parArr.length >= nh) {
+      const adjGross = calcAGS(scores, parArr, si, cr, slope, p.hcpExact, nh);
+      const rawSD = (113 / slope) * (adjGross - cr);
+      sd18 = is9 ? rawSD + expectedSD9(p.hcpExact) : rawSD;
+      sdSource = "ags";
     }
     // 3) Raw fallback (no SI)
-    else if (p.courseRating && p.slope) {
-      const rawSD = (113 / p.slope) * (g - p.courseRating);
+    else if (cr && slope) {
+      const rawSD = (113 / slope) * (g - cr);
       if (is9 && p.hcpExact != null) {
-        // Would use expectedSD9 here
-        sd18 = rawSD;
+        sd18 = rawSD + expectedSD9(p.hcpExact);
       } else if (!is9) {
         sd18 = rawSD;
       }

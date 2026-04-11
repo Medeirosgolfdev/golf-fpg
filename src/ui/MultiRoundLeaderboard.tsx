@@ -246,7 +246,7 @@ export function MultiRoundLeaderboard({
         <PlayerFilterBar rows={withPos} filter={filter} onChange={setFilter} total={rows.length} />
       )}
       <div className="bjgt-chart-scroll">
-        <table className="sc-lb sc-lb-lbd">
+        <table className={"sc-lb sc-lb-lbd" + (isMulti ? " sc-lb-multi" : "")}>
           <thead>
             <tr>
               <th className="lb-pos sticky-col-0">#</th>
@@ -260,6 +260,13 @@ export function MultiRoundLeaderboard({
               {/* ±Par ANTES de Total */}
               <SHdr k="toPar" className="lb-topar">±Par</SHdr>
               <SHdr k="gross" className="lb-gross">{isMulti ? "Total" : "Tot"}</SHdr>
+
+              {/* Acumulados multi-ronda (entre Total e R1) */}
+              {isMulti && showRoundStats && <>
+                <th className="lb-acc-bird">🐦</th>
+                <th className="lb-acc-par">=</th>
+                <th className="lb-acc-bog">■</th>
+              </>}
 
               {/* Por ronda */}
               {isMulti
@@ -339,11 +346,22 @@ export function MultiRoundLeaderboard({
                   {showFed && <td className="lb-fed">{row.fed || "–"}</td>}
                   {showClub && <td className="lb-club">{row.club || "–"}</td>}
                   {showHcp && <td className="lb-hcp">{fmtHcp(row.hcp)}</td>}
-                  {showTee && <td className="lb-tee"><TeeDot teeName={row.teeName} distance={row.teeDistance} /></td>}
+                  {showTee && <td className="lb-tee"><TeeDot teeName={row.teeName} /></td>}
 
                   {/* ±Par ANTES de Total */}
                   <td className="lb-topar" style={{ color: tpCol, opacity: (isInc || isWD) ? 0.5 : 1 }}>{fmtTP(tp)}</td>
                   <td className="lb-gross" style={{ opacity: (isInc || isWD) ? 0.5 : 1 }}>{(row.gross ?? 0) > 0 ? row.gross : "–"}</td>
+
+                  {/* Acumulados multi-ronda */}
+                  {isMulti && showRoundStats && (() => {
+                    let tBird = 0, tPar = 0, tBog = 0;
+                    for (const rd of row.rounds) { if (rd) { tBird += rd.birdies || 0; tPar += rd.pars || 0; tBog += rd.bogeys || 0; } }
+                    return <>
+                      <td className="lb-acc-bird">{tBird || ""}</td>
+                      <td className="lb-acc-par">{tPar || ""}</td>
+                      <td className="lb-acc-bog">{tBog || ""}</td>
+                    </>;
+                  })()}
 
                   {/* Colunas por ronda */}
                   {isMulti

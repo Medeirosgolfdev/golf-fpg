@@ -63,6 +63,9 @@
   --bg-rnd-stats:     #f5f9f3;
   --bg-rnd-header:    #dde8d9;   /* header de th das colunas de ronda (mais escuro) */
   --bg-rnd-stats-header: #f0f5ee; /* header de th das colunas de stats de ronda */
+  --bg-acc:           #d6e8d0;   /* colunas acumuladas stats — verde escuro vs rondas #f5f9f3 */
+  --bg-acc-strong:    #c4dbbe;   /* colunas acumuladas fortes (±Par, Total) */
+  --bg-acc-header:    #b5cead;   /* header de colunas acumuladas */
 
 
   /* ── 2. Text / Greyscale ───────────────────────────────────── */

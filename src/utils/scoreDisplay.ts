@@ -86,6 +86,9 @@ const C = {
   dangerDark:"var(--color-danger-dark)",
   warnDark:  "var(--color-warn-dark)",
   infoDark:  "var(--color-navy)",
+  medalGold:   "var(--medal-gold)",
+  medalSilver: "var(--medal-silver)",
+  medalBronze: "var(--medal-bronze)",
 } as const;
 
 /** 3-level semantic color: good / warn / danger
@@ -146,6 +149,17 @@ export function tpColorDark(tp: number | null | undefined, hi = 20): string {
   if (tp <= 0) return C.goodDark;
   if (tp <= hi) return C.warnDark;
   return C.dangerDark;
+}
+
+/** Formata to-par para rivais: texto + cor CSS (com escalas warn/danger).
+ *  Usado em tabelas USKids e Field.
+ */
+export function fmtToParRivais(tp: number | null): { text: string; color: string } {
+  if (tp === null) return { text: "—", color: "var(--text-muted)" };
+  if (tp < 0) return { text: String(tp), color: "var(--color-good)" };
+  if (tp === 0) return { text: "E", color: "var(--text-3)" };
+  if (tp <= 3) return { text: `+${tp}`, color: "var(--color-warn)" };
+  return { text: `+${tp}`, color: "var(--color-danger)" };
 }
 
 /** Cor de medalha por posição: ouro (1º), prata (2º), bronze (3º) */
