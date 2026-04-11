@@ -9,7 +9,7 @@ import LoadingState from "../ui/LoadingState";
 import { useSearchParams } from "react-router-dom";
 import { C } from "../utils/colors";
 import { scClass, fmtToParRivais } from "../utils/scoreDisplay";
-import { MONTHS_PT, isoDate, fmtDate, fmtToPar, monthLabel, sortArrow } from "../utils/format";
+import { MONTHS_PT, isoDate, fmtDate, fmtToPar, monthLabel, sortArrow, displayName } from "../utils/format";
 import { flag, normCountry, normPaisDisplay } from "../utils/flagUtils";
 import EmptyState from "../ui/EmptyState";
 import WdBadge from "../ui/WdBadge";
@@ -89,32 +89,6 @@ interface GreatgolfData {
 }
 
 // ── Matching robusto USKids ↔ BJGT ──────────────────────────────
-
-/** Normaliza nomes ALL CAPS para Title Case e limpa espaços duplos.
- *  "GREGORIO VITOLO" → "Gregorio Vitolo"
- *  "LORENZO MARIA TRIOLO" → "Lorenzo Maria Triolo"
- *  "Jean Imperiali De Francavilla" → "Jean Imperiali de Francavilla"
- */
-const PARTICLES = new Set(['de','da','do','dos','das','di','del','van','von','den','der','ter','le','la','el','al','y','e']);
-function displayName(s: string): string {
-  const clean = s.replace(/\s+/g, ' ').trim();
-  if (!clean) return clean;
-  // Detectar se é ALL CAPS (>80% maiúsculas nas letras)
-  const letters = clean.replace(/[^a-zA-ZÀ-ÿ]/g, '');
-  const upper = letters.replace(/[^A-ZÀ-Ý]/g, '');
-  const isAllCaps = letters.length > 2 && upper.length / letters.length > 0.45;
-  if (!isAllCaps) {
-    // Não é all caps, só corrigir partículas e espaços
-    return clean.split(' ').map((w, i) =>
-      i > 0 && PARTICLES.has(w.toLowerCase()) ? w.toLowerCase() : w
-    ).join(' ');
-  }
-  // Converter para Title Case
-  return clean.toLowerCase().split(' ').map((w, i) => {
-    if (i > 0 && PARTICLES.has(w)) return w;
-    return w.charAt(0).toUpperCase() + w.slice(1);
-  }).join(' ');
-}
 
 /** Encurta nome de torneio com sufixo de ano: "Rome Classic 2025" → "Rome Classic '25"
  *  "WJGC '26" → "WJGC '26" (já tem), "European Open" → "European Open" */

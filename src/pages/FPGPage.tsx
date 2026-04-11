@@ -36,7 +36,7 @@ import FilterChip from "../ui/FilterChip";
 import PlayerLink from "../ui/PlayerLink";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { C } from "../utils/colors";
-import { fmtDate, fmtToPar, MONTHS_PT, norm, monthLabel, fmtHcp, escShort, fmtTime, fmtDataInscricao, anoEscalao, abreviarNome } from "../utils/format";
+import { fmtDate, fmtToPar, MONTHS_PT, norm, monthLabel, fmtHcp, escShort, fmtTime, fmtDataInscricao, anoEscalao, abreviarNome, medal, fpgDrawUrl, fpgScoringUrl } from "../utils/format";
 import { AnoEscalaoPill, TrendBadge } from "../ui/AnoEscalaoPill";
 import { toggleArr } from "../utils/mathUtils";
 import { calcAGS, expectedSD9 } from "../utils/whsCalc";
@@ -1511,8 +1511,6 @@ export function AllRoundsScorecardLB({
     return [...s].sort((a, b) => a.localeCompare(b, "pt"));
   }, [sorted]);
 
-  const medals = ["🥇","🥈","🥉"];
-
   /* Renderizar células de score buraco-a-buraco
      Closure component — usa is9, par, parF9, parB9 do scope pai.
      Duplicado em DrivePage com mesma lógica; não extraível sem passar todas as props. */
@@ -1656,8 +1654,8 @@ export function AllRoundsScorecardLB({
               ? gDisplayed.map((row, playerIdx) => {
                   const prevPos = playerIdx > 0 ? gDisplayed[playerIdx - 1].pos : undefined;
                     const showPos = row.pos !== prevPos || row.isWD;
-                    const medal   = row.pos != null && row.pos <= 3 ? medals[row.pos - 1] : null;
-                    const posStr  = row.isWD ? "WD" : row.pos != null ? (medal ?? String(row.pos)) : "–";
+                    const mdl     = row.pos != null ? medal(row.pos) : null;
+                    const posStr  = row.isWD ? "WD" : row.pos != null ? (mdl ?? String(row.pos)) : "–";
                     const playerBg = playerIdx % 2 === 0 ? undefined : "var(--bg-muted)";
                     const isFirst  = playerIdx === 0;
                     return (
@@ -1702,8 +1700,8 @@ export function AllRoundsScorecardLB({
               : displayed.map((row, idx) => {
                   const prevPos = idx > 0 ? displayed[idx - 1].pos : undefined;
                   const showPos = row.pos !== prevPos || row.isWD;
-                  const medal   = row.pos != null && row.pos <= 3 ? medals[row.pos - 1] : null;
-                  const posStr  = row.isWD ? "WD" : row.pos != null ? (medal ?? String(row.pos)) : "–";
+                  const mdl     = row.pos != null ? medal(row.pos) : null;
+                  const posStr  = row.isWD ? "WD" : row.pos != null ? (mdl ?? String(row.pos)) : "–";
                   const bg      = idx % 2 === 0 ? undefined : "var(--bg-muted)";
                   const bTop    = idx > 0 ? "1px solid var(--border-light)" : undefined;
                   const rd      = row.rd;
@@ -1795,40 +1793,41 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
                 {tournament.tcode}
               </span>
             )}
+            {/* Botões DRAW + SCORING para cada torneio/sub-round */}
             {(tournament as any)._isSynthetic
               ? ((tournament as any)._subRounds as Tournament[]).map((sr, i) => (
                   sr.ccode && sr.tcode
-                    ? <a key={sr.tcode}
-                        href={`https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=${sr.ccode}&tcode=${sr.tcode}`}
-                        target="_blank" rel="noopener noreferrer"
-                        title={`Abre a classificação do Dia ${i + 1} na Federação — abre primeiro a página FPG Torneios (tcode ${sr.tcode})`}
-                        style={{
-                          fontSize: 10, fontWeight: 600,
-                          color: "var(--accent)",
-                          border: "1px solid var(--accent)",
-                          borderRadius: 4, padding: "1px 6px",
-                          textDecoration: "none", whiteSpace: "nowrap", lineHeight: 1.6,
-                        }}
-                      >
-                        Dia {i + 1} ↗
-                      </a>
+                    ? <React.Fragment key={sr.tcode}>
+                        <a href={fpgDrawUrl(sr.ccode, sr.tcode)}
+                          target="_blank" rel="noopener noreferrer"
+                          title={`Draw do Dia ${i + 1}`}
+                          className="tourn-ext-link" style={{ color: "var(--text-2)", borderColor: "var(--border)" }}>
+                          Draw D{i + 1} ↗
+                        </a>
+                        <a href={fpgScoringUrl(sr.ccode, sr.tcode)}
+                          target="_blank" rel="noopener noreferrer"
+                          title={`Classificação do Dia ${i + 1}`}
+                          className="tourn-ext-link" style={{ color: "var(--accent)", borderColor: "var(--accent)" }}>
+                          Scoring D{i + 1} ↗
+                        </a>
+                      </React.Fragment>
                     : null
                 ))
               : tournament.ccode && tournament.tcode && (
-                  <a
-                    href={`https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=${tournament.ccode}&tcode=${tournament.tcode}`}
-                    target="_blank" rel="noopener noreferrer"
-                    title="Abre a classificação na Federação — abre primeiro a página FPG Torneios"
-                    style={{
-                      fontSize: 10, fontWeight: 600,
-                      color: "var(--accent)",
-                      border: "1px solid var(--accent)",
-                      borderRadius: 4, padding: "1px 6px",
-                      textDecoration: "none", whiteSpace: "nowrap", lineHeight: 1.6,
-                    }}
-                  >
-                    Link Federação ↗
-                  </a>
+                  <>
+                    <a href={fpgDrawUrl(tournament.ccode, tournament.tcode)}
+                      target="_blank" rel="noopener noreferrer"
+                      title="Emparelhamentos (Draw) na Federação"
+                      className="tourn-ext-link" style={{ color: "var(--text-2)", borderColor: "var(--border)" }}>
+                      Draw ↗
+                    </a>
+                    <a href={fpgScoringUrl(tournament.ccode, tournament.tcode)}
+                      target="_blank" rel="noopener noreferrer"
+                      title="Classificação (Scoring) na Federação"
+                      className="tourn-ext-link" style={{ color: "var(--accent)", borderColor: "var(--accent)" }}>
+                      Scoring ↗
+                    </a>
+                  </>
                 )
             }
           </div>

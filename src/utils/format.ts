@@ -206,3 +206,69 @@ export function anoEscalao(dob: string, escalao: string): "1A" | "2A" | null {
   if (isNaN(anoNasc) || isNaN(idadeMax)) return null;
   return anoNasc === (new Date().getFullYear() - idadeMax) ? "2A" : "1A";
 }
+
+/* ═══════ Name Display ═══════ */
+
+/** Partículas que ficam em minúsculas no meio de nomes (de, da, van, etc.) */
+const PARTICLES = new Set(['de','da','do','dos','das','di','del','van','von','den','der','ter','le','la','el','al','y','e']);
+
+/**
+ * Normaliza nomes para display: detecta ALL CAPS (>45% maiúsculas) e converte
+ * para Title Case respeitando partículas. Nomes normais ficam intocados.
+ */
+export function displayName(s: string): string {
+  const clean = s.replace(/\s+/g, ' ').trim();
+  if (!clean) return clean;
+  const letters = clean.replace(/[^a-zA-ZÀ-ÿ]/g, '');
+  const upper = letters.replace(/[^A-ZÀ-Ý]/g, '');
+  const isAllCaps = letters.length > 2 && upper.length / letters.length > 0.45;
+  if (!isAllCaps) {
+    return clean.split(' ').map((w, i) =>
+      i > 0 && PARTICLES.has(w.toLowerCase()) ? w.toLowerCase() : w
+    ).join(' ');
+  }
+  return clean.toLowerCase().split(' ').map((w, i) => {
+    if (i > 0 && PARTICLES.has(w)) return w;
+    return w.charAt(0).toUpperCase() + w.slice(1);
+  }).join(' ');
+}
+
+/* ═══════ Medals ═══════ */
+
+/** Emojis de medalha por posição (0-indexed: [0]=🥇, [1]=🥈, [2]=🥉) */
+export const MEDALS = ["🥇", "🥈", "🥉"] as const;
+
+/** Retorna emoji de medalha para posição 1-3, ou null */
+export function medal(pos: number): string | null {
+  return pos >= 1 && pos <= 3 ? MEDALS[pos - 1] : null;
+}
+
+/* ═══════ FPG Tournament URLs ═══════ */
+
+const FPG_ACK = "XH256YF45T";
+
+/** Limpa ccode/tcode para URLs FPG */
+function fpgClean(ccode: string, tcode: string): [string, string] {
+  return [
+    String(ccode || "").padStart(3, "0"),
+    String(tcode || "").replace(/_R\d+$|_Total$/, ""),
+  ];
+}
+
+/** URL do draw (emparelhamentos) no scoring.fpg.pt */
+export function fpgDrawUrl(ccode: string, tcode: string, round = 1): string {
+  const [cc, tc] = fpgClean(ccode, tcode);
+  return `https://scoring.fpg.pt/lists/linkpage.aspx?page=draw&club=${cc}&tourn=${tc}&round=${round}&ack=${FPG_ACK}`;
+}
+
+/** URL da classificação no scoring.fpg.pt */
+export function fpgScoringUrl(ccode: string, tcode: string): string {
+  const [cc, tc] = fpgClean(ccode, tcode);
+  return `https://scoring.fpg.pt/lists/linkpage.aspx?page=classif&club=${cc}&tourn=${tc}&ack=${FPG_ACK}`;
+}
+
+/** URL da classificação no scoring.datagolf.pt (legacy, usado no DrivePage) */
+export function fpgDatagolfUrl(ccode: string, tcode: string): string {
+  const [cc, tc] = fpgClean(ccode, tcode);
+  return `https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=${cc}&tcode=${tc}`;
+}

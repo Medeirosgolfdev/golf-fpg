@@ -20,7 +20,6 @@ import PasswordGate from "../ui/PasswordGate";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
 import DetailHeader from "../ui/DetailHeader";
-import TabRow from "../ui/TabRow";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import LoadingState from "../ui/LoadingState";
 import EmptyState from "../ui/EmptyState";
@@ -362,9 +361,18 @@ function TournView({ def, evo, evoYear }: { def: TDef; evo?: Map<string, EvoEntr
   const nR = Math.max(...data.players.map(p => p.rounds.length), 0);
   const [dt, setDt] = useState<number | "all">("all");
   const rLabel = (i: number) => def.roundDates?.[i] ? `R${i + 1} · ${def.roundDates[i]}` : `R${i + 1}`;
+  const tabs: { key: number | "all"; label: string }[] = [
+    { key: "all", label: "Acumulado" },
+    ...Array.from({ length: nR }, (_, i) => ({ key: i, label: rLabel(i) })),
+  ];
   return (
     <div>
-      <TabRow tabs={[{ key: "all" as string|number, label: "Acumulado" }, ...Array.from({ length: nR }, (_, i) => ({ key: i as string|number, label: rLabel(i) }))]} active={dt} onChange={setDt} />
+      {/* Tabs tab-under — mesmo padrão que FPGPage/DORALPage */}
+      <div style={{ display: "flex", borderBottom: "1px solid var(--border)", marginBottom: 12, gap: 2, overflowX: "auto" }}>
+        {tabs.map(t => (
+          <button key={String(t.key)} className={`tab-under${dt === t.key ? " active" : ""}`} onClick={() => setDt(t.key)}>{t.label}</button>
+        ))}
+      </div>
       {dt === "all" && <>
         <div className="card"><div className="h-md fs-14">🏆 Leaderboard — {def.label}</div><FStats data={data} ri="all" /><AccLB data={data} evo={evo} evoYear={evoYear} roundDates={def.roundDates} /></div>
         <div className="card"><div className="h-md fs-14">📊 Dificuldade por Buraco — Todas as rondas</div><FStats data={data} ri="all" /><HoleDiff data={data} ri="all" mn={manuelName} /></div>
@@ -512,7 +520,16 @@ function Content() {
                           onClick={() => { setTi(idx); md.onSelect(); }}>
                           <div className="course-item-name">{u.category}</div>
                           {t && <div className="course-item-meta">{nP} jog · {nR}R</div>}
-                          <ExtLink href={u.sourceUrl} className="tourn-ext-link mt-4" 
+                          {t && t.data.players.some(p => isM(p.name)) && (
+                            <span style={{
+                              display: "inline-block", marginTop: 4,
+                              fontSize: 11, fontWeight: 700,
+                              background: "var(--bg-success-subtle)", color: "var(--color-good-dark)",
+                              borderRadius: 6, padding: "2px 8px",
+                              border: "1px solid var(--color-good)",
+                            }}>★ Manuel</span>
+                          )}
+                          <ExtLink href={u.sourceUrl} className="tourn-ext-link mt-4"
                             onClick={e => e.stopPropagation()}>
                             🔗 Leaderboard oficial
                           </ExtLink>
@@ -531,7 +548,11 @@ function Content() {
           {cur ? (<>
             <DetailHeader
               title={cur.label}
-              sub={<><span className="muted">{cur.series === "eowagr" ? "📍 Le Touquet GC — La Forêt" : cur.category === "Boys 12-13" ? "📍 Villa Padierna — Alferini" : "📍 Villa Padierna — Flamingos"}</span><ExtLink href={URLS[ti].sourceUrl} className="tourn-ext-link ml-8" >🔗 Leaderboard oficial</ExtLink></>}
+              sub={<>
+                <span className="muted">{cur.series === "eowagr" ? "📍 Le Touquet GC — La Forêt" : cur.category === "Boys 12-13" ? "📍 Villa Padierna — Alferini" : "📍 Villa Padierna — Flamingos"}</span>
+                <span className="chip ml-8">{fmtFieldInfo(cur.data.players.filter(p => p.rounds.length === Math.max(...cur.data.players.map(pp => pp.rounds.length))).length, Math.max(...cur.data.players.map(p => p.rounds.length)), cur.category)}</span>
+                <ExtLink href={URLS[ti].sourceUrl} className="tourn-ext-link ml-8">🔗 Leaderboard oficial</ExtLink>
+              </>}
             />
             <TournView def={cur} evo={evoMap} evoYear={evoYear} />
             {manuelEvo && cur.year === 2026 && (

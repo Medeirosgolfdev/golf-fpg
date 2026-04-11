@@ -8,6 +8,7 @@ import { useAppContext } from "../context/AppContext";
 import { sdClassByHcp } from "../utils/scoreDisplay";
 import { C } from "../utils/colors";
 import { norm, fmtHcp, escShort, fmtTime, fmtDataInscricao, anoEscalao, shortName } from "../utils/format";
+import { getTeeHex, textOnColor, teeBorder } from "../utils/teeColors";
 import { AnoEscalaoPill, TrendBadge } from "../ui/AnoEscalaoPill";
 import { escCls } from "../utils/playerUtils";
 import { TORNEIOS_CONFIG } from "../constants/tournaments";
@@ -453,13 +454,11 @@ const CONTEXTO_TORNEIO: Record<string, {
   "Sub-10": { tees: ["Verdes"],               formato: "27 buracos · 9/dia  · max 10/buraco", horasPorDia: 9,  totalBuracos: 27, maxScore: 10 },
 };
 
-const TEE_STYLE: Record<string, { bg: string; color: string; border?: string }> = {
-  "Brancas":   { bg: "#f5f5f5", color: "#333", border: "1px solid #bbb" },
-  "Azuis":     { bg: "#1d4ed8", color: "#fff" },
-  "Amarelas":  { bg: "#ca8a04", color: "#fff" },
-  "Vermelhas": { bg: "#dc2626", color: "#fff" },
-  "Verdes":    { bg: "#16a34a", color: "#fff" },
-};
+/** Estilo de pill de tee usando teeColors.ts (fonte única de verdade) */
+function teeStyle(tee: string): { background: string; color: string; border?: string } {
+  const hex = getTeeHex(tee);
+  return { background: hex, color: textOnColor(hex), border: teeBorder(hex) };
+}
 
 /* ── Tabela buraco-a-buraco no Aroeira — Heat Map ── */
 /* ── AggStats + computeAgg + PlayerLoad ── */
@@ -1150,7 +1149,7 @@ function AnaliseView({ t, nossosByFed, statsDb }: {
               <div style={{ display: "flex", gap: 5 }}>
                 {ctx.tees.map(tee => (
                   <span key={tee} style={{ fontSize: 13, fontWeight: 800, padding: "4px 12px", borderRadius: 20,
-                    background: TEE_STYLE[tee]?.bg??"#888", color: TEE_STYLE[tee]?.color??"#fff", border: TEE_STYLE[tee]?.border }}>{tee}</span>
+                    ...teeStyle(tee) }}>{tee}</span>
                 ))}
               </div>
             </div>
@@ -1352,7 +1351,7 @@ export default function NacionaisPage() {
   return (
     <div className="jogadores-page nac-page">
       <Toolbar>
-                <span className="fw-700 fs-13 flex-shrink-0">🏆 Nacionais Jovens</span>
+        <ToolbarTitle>🏆 Nacionais Jovens</ToolbarTitle>
         <ToolbarSep />
         {([
           { key: "inscricoes", label: "Inscrições" },

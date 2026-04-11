@@ -1,5 +1,6 @@
 // @refresh reset
 import { MRRound, MultiRoundRow, PlayerFilter, EMPTY_FILTER } from "./multiRoundTypes";
+import { medal } from "../utils/format";
 /**
  *
  * ═══════════════════════════════════════════════════════════════
@@ -199,7 +200,6 @@ export function MultiRoundLeaderboard({
     );
   }
 
-  const medals = ["🥇", "🥈", "🥉"];
   const isMulti = nRounds >= 2;
 
   return (
@@ -251,7 +251,7 @@ export function MultiRoundLeaderboard({
               const isWD  = !!row.isWD;                     // desistiu
               const dp = row._pos;
               const tpCol = (!isInc && !isWD) ? tpColor(tp) : undefined;
-              const medal = !isInc && !isWD && dp != null && dp <= 3 ? medals[dp - 1] : null;
+              const mdl = !isInc && !isWD && dp != null ? medal(dp) : null;
               const showPos = !isInc && !isWD && (
                 sortable && sortKey === "pos"
                   ? (idx === 0 || dp !== sorted[idx - 1]._pos)
@@ -274,7 +274,7 @@ export function MultiRoundLeaderboard({
                       ? <span className="badge-wd">WD</span>
                       : isInc
                         ? ""
-                        : showPos ? (medal || dp) : ""}
+                        : showPos ? (mdl || dp) : ""}
                   </td>
                   <td className="lb-name sticky-col-1" style={row.isHighlighted ? undefined : { background: stickyBg }}>
                     <TournPName name={row.name} fedCode={row.fed} playersDB={playersDB} />

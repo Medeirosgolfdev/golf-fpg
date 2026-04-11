@@ -3,6 +3,8 @@ import { AutoRivalPlayer, uskTournNames, uskFieldSizes, normName as normNameAuto
 import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import { fmtToParRivais } from "../../utils/scoreDisplay";
+import { displayName } from "../../utils/format";
+import { isManuel } from "../../constants/manuel";
 
 // ─────────────────────────────────────────────
 // Types
@@ -29,37 +31,12 @@ interface RondaResult {
 }
 
 // ─────────────────────────────────────────────
-// Constants
-// ─────────────────────────────────────────────
-const PARTICLES = new Set(['de','da','do','dos','das','di','del','van','von','den','der','ter','le','la','el','al','y','e']);
-
-// ─────────────────────────────────────────────
 // Helper Functions
 // ─────────────────────────────────────────────
 
-function displayName(s: string): string {
-  const clean = s.replace(/\s+/g, ' ').trim();
-  if (!clean) return clean;
-  // Detectar se é ALL CAPS (>80% maiúsculas nas letras)
-  const letters = clean.replace(/[^a-zA-ZÀ-ÿ]/g, '');
-  const upper = letters.replace(/[^A-ZÀ-Ý]/g, '');
-  const isAllCaps = letters.length > 2 && upper.length / letters.length > 0.45;
-  if (!isAllCaps) {
-    // Não é all caps, só corrigir partículas e espaços
-    return clean.split(' ').map((w, i) =>
-      i > 0 && PARTICLES.has(w.toLowerCase()) ? w.toLowerCase() : w
-    ).join(' ');
-  }
-  // Converter para Title Case
-  return clean.toLowerCase().split(' ').map((w, i) => {
-    if (i > 0 && PARTICLES.has(w)) return w;
-    return w.charAt(0).toUpperCase() + w.slice(1);
-  }).join(' ');
-}
-
+/** Detecta Manuel por nome (wrapper para isManuel com interface de string) */
 function isManuelName(nome: string): boolean {
-  const norm = normNameAuto(nome);
-  return norm.includes("manuel") && norm.includes("medeiros");
+  return isManuel({ name: nome });
 }
 
 function tornCanon(s: string): string {

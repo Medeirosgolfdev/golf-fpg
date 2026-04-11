@@ -1,6 +1,6 @@
 // @refresh reset
 import { MRRound, MultiRoundRow, PlayerFilter, EMPTY_FILTER, ExtraColumn } from "./multiRoundTypes";
-import { fmtHcp } from "../utils/format";
+import { fmtHcp, medal } from "../utils/format";
 import { useSort } from "../hooks/useSort";
 import FilterChip from "../ui/FilterChip";
 import WdBadge from "../ui/WdBadge";
@@ -237,7 +237,6 @@ export function MultiRoundLeaderboard({
     );
   }
 
-  const medals = ["🥇", "🥈", "🥉"];
   const isMulti = nRounds >= 2;
 
   return (
@@ -308,7 +307,7 @@ export function MultiRoundLeaderboard({
               const isWD  = !!row.isWD;                     // desistiu
               const dp = row._pos;
               const tpCol = (!isInc && !isWD) ? tpColor(tp) : undefined;
-              const medal = !isInc && !isWD && dp != null && dp <= 3 ? medals[dp - 1] : null;
+              const mdl = !isInc && !isWD && dp != null ? medal(dp) : null;
               const showPos = !isInc && !isWD && (
                 sortable && sortKey === "pos"
                   ? (idx === 0 || dp !== sorted[idx - 1]._pos)
@@ -331,7 +330,7 @@ export function MultiRoundLeaderboard({
                       ? <WdBadge />
                       : isInc
                         ? ""
-                        : showPos ? (medal || dp) : ""}
+                        : showPos ? (mdl || dp) : ""}
                   </td>
                   <td className="lb-name sticky-col-1" style={row.isHighlighted ? undefined : { background: stickyBg }}>
                     {renderName

@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { useSort } from "../../hooks/useSort";
 import { C as _C } from "../../utils/colors";
-import { abreviarNome } from "../../utils/format";
+import { abreviarNome, medal } from "../../utils/format";
 
 /* ─────────────────────────────────────────────
    TIPOS
@@ -283,7 +283,7 @@ export default function ClubesGruposView({
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(310px, 1fr))", gap: 10 }}>
         {sorted.map(({ g, color, isMulti, teamIdx, jRows, rdTeam, teamTotal }) => {
           const pos = rankMap.get(g.grupo);
-          const medal = pos === 1 ? "🥇" : pos === 2 ? "🥈" : pos === 3 ? "🥉" : null;
+          const mdl = medal(pos ?? 0);
           const teamPar = parTotal > 0 && playedRounds > 0 ? parTotal * CLUBES_BEST_N * playedRounds : 0;
           const teamTP = teamTotal != null && teamPar > 0 ? teamTotal - teamPar : null;
 
@@ -320,7 +320,7 @@ export default function ClubesGruposView({
                   return (
                     <div className="flex-shrink-0 ta-right">
                       <div className="fs-10" style={{ opacity: 0.85, lineHeight: 1, marginBottom: 2 }}>
-                        {viewRd != null ? `R${viewRd}` : (medal ?? `#${pos}`)}
+                        {viewRd != null ? `R${viewRd}` : (mdl ?? `#${pos}`)}
                       </div>
                       <div className="fw-900" style={{ fontSize: 20, lineHeight: 1 }}>{dispScore}</div>
                       {dispTP != null && (

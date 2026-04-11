@@ -360,13 +360,12 @@ function tgNormalizeTid(tid: string): string {
 
 // ── Merge TG_D com autoRivals ──
 function tgMerge(autoRivals: AutoRivalPlayer[]): TGPlayer[] {
-  const normName = (n: string) => n.toLowerCase().trim().replace(/\s+/g, " ");
   const ALIASES: Record<string, string> = {
     "manuel francisco medeiros": "manuel medeiros",
     "manuel goulartt medeiros":  "manuel medeiros",
     "manuel f medeiros":         "manuel medeiros",
   };
-  const resolve = (n: string) => ALIASES[normName(n)] ?? normName(n);
+  const resolve = (n: string) => ALIASES[normNameAuto(n)] ?? normNameAuto(n);
 
   const map = new Map<string, TGPlayer>(TG_D.map(p => [resolve(p.n), { ...p, r: { ...p.r } }]));
 

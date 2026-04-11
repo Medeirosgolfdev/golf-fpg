@@ -7,7 +7,7 @@
 import React, { useMemo, useState } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from "recharts";
 import { useLocation } from "react-router-dom";
-import { fmtToPar, fmtSign, MONTHS_PT, MONTHS_PT_FULL, sortArrow, isoDate } from "../utils/format";
+import { fmtToPar, fmtSign, MONTHS_PT, MONTHS_PT_FULL, sortArrow, isoDate, medal } from "../utils/format";
 import { useSort } from "../hooks/useSort";
 import { FL } from "../utils/flagUtils";
 import { zTier, getTrend, getAvgZ } from "../utils/mathUtils";
@@ -1676,7 +1676,7 @@ function TorneiosRecorrentes({
                 {g.entries.map((e, i) => {
                   const prev  = g.entries[i - 1];
                   const delta = (prev && e.pos != null && prev.pos != null) ? e.pos - prev.pos : null;
-                  const medal = e.pos === 1 ? "🥇" : e.pos === 2 ? "🥈" : e.pos === 3 ? "🥉" : null;
+                  const mdl = medal(e.pos ?? 0);
                   const bg    = e.pos === 1 ? "#fffbea" : e.pos === 2 ? "#f0f4ff" : e.pos === 3 ? "#fff4f0" : "var(--bg-detail)";
                   const bd    = e.pos === 1 ? "var(--medal-gold)" : e.pos === 2 ? "var(--medal-silver)" : e.pos === 3 ? "var(--medal-bronze)" : "var(--border-light)";
                   const tpStr = fmtToPar(e.tp);
@@ -1693,9 +1693,9 @@ function TorneiosRecorrentes({
                       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 0,
                         padding: "3px 5px", borderRadius: 4, background: bg, border: `1px solid ${bd}`, flexShrink: 0 }}>
                         <span style={{ fontSize: 9, color: "var(--text-3)", fontWeight: 500 }}>{e.year}</span>
-                        <span style={{ fontSize: medal ? 14 : 11, fontWeight: 900, lineHeight: 1,
+                        <span style={{ fontSize: mdl ? 14 : 11, fontWeight: 900, lineHeight: 1,
                           color: e.pos === 1 ? "var(--color-warn-dark)" : e.pos != null && e.pos <= 3 ? "var(--medal-silver)" : "var(--text-3)" }}>
-                          {medal ?? (e.pos != null ? `#${e.pos}` : "—")}
+                          {mdl ?? (e.pos != null ? `#${e.pos}` : "—")}
                         </span>
                         {e.tp != null && <span style={{ fontSize: 9, fontWeight: 600,
                           color: (e.tp ?? 0) <= 0 ? "var(--color-good-dark)" : "var(--text-3)" }}>{tpStr}</span>}
@@ -2476,7 +2476,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
               <div className="gap-4 flex-wrap" style={{ display: "flex", alignItems: "flex-start" }}>
                 {palmares.slice(0, 5).map(({ t, res }) => {
                   const ag = (res as any).ageGroup as string | null;
-                  const medal = res.p === 1 ? "🥇" : res.p === 2 ? "🥈" : "🥉";
+                  const mdl2 = medal(res.p) ?? "🥉";
                   const bg = res.p === 1 ? "#fffbea" : res.p === 2 ? "#f0f4ff" : "#fff4f0";
                   const border = res.p === 1 ? "var(--medal-gold)" : res.p === 2 ? "var(--medal-silver)" : "var(--medal-bronze)";
                   const shortName = t.name.replace(/\s*\d{4}$/, "").replace(/\s*'\d{2}$/, "");
@@ -2484,7 +2484,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
                     <div key={t.id} title={`${t.name} ${yearOf(t.dateExact, t.date)}`}
                       style={{ display: "inline-flex", alignItems: "center", gap: 4, padding: "3px 7px",
                         borderRadius: 6, background: bg, border: `1px solid ${border}`, flexShrink: 0 }}>
-                      <span className="fs-13">{medal}</span>
+                      <span className="fs-13">{mdl2}</span>
                       <div style={{ lineHeight: 1.2 }}>
                         <div style={{ fontSize: 10, fontWeight: 700, color: "var(--color-warn-dark)", maxWidth: 90,
                           overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{shortName}</div>
@@ -2662,7 +2662,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
             {tournResults.map(({ t, res, hasCard, autoCard, ageGroup }) => {
               const expanded    = expandedTourns.has(t.id);
               const pos         = typeof res.p==="number" ? res.p : null;
-              const medal       = pos===1?"🥇":pos===2?"🥈":pos===3?"🥉":null;
+              const mdl3        = pos != null ? medal(pos) : null;
               const nholes      = inferNholes((res as any).nholes, ageGroup);
               const is9h        = nholes === 9;
               const tpDisplay   = res.tp!=null ? fmtToPar(res.tp) : null;
@@ -2699,8 +2699,8 @@ function RivalDetail({ playerName }: { playerName: string }) {
 
                     {/* Col 1: medalha ou posição */}
                     <div style={{ textAlign:"center" }}>
-                      {medal
-                        ? <span style={{ fontSize:18, lineHeight:1 }}>{medal}</span>
+                      {mdl3
+                        ? <span style={{ fontSize:18, lineHeight:1 }}>{mdl3}</span>
                         : pos!=null
                           ? <span style={{ fontSize:13, fontWeight:700, color:"var(--text-2)" }}>#{pos}</span>
                           : <span style={{ fontSize:12, color:"var(--text-3)" }}>—</span>}

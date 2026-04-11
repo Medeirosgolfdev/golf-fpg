@@ -10,7 +10,7 @@ import { loadPlayers } from "../data/loader";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from "recharts";
 import { SC, sdClassByHcp, scClass, medalColor } from "../utils/scoreDisplay";
 import { calcAGS, expectedSD9 } from "../utils/whsCalc";
-import { fmtToPar, fmtDateShort, fmtHcp } from "../utils/format";
+import { fmtToPar, fmtDateShort, fmtHcp, medal, fpgDrawUrl, fpgScoringUrl } from "../utils/format";
 import { isCalUnlocked } from "../utils/authConstants";
 import { resolveFedsInTournaments , buildEscLookup, resolveEscFromLookup, escPillCls, normalizePlayer } from "../utils/playerUtils";
 import PasswordGate from "../ui/PasswordGate";
@@ -241,12 +241,6 @@ const regionOf = (id: string) => REGIONS.find((r) => r.id === id);
 /* ── Helpers ── */
 
 /** URL público do torneio em scoring.datagolf.pt */
-const tournFpgUrl = (ccode: string, tcode: string) => {
-  const cc = String(ccode || "").padStart(3, "0");
-  const tc = String(tcode || "").replace(/_R\d+$|_Total$/, "");
-  return `https://scoring.datagolf.pt/pt/Classifications.aspx?ccode=${cc}&tcode=${tc}`;
-};
-
 function isDNS(p: Player): boolean {
   const g = typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : p.grossTotal;
   if (g != null && g >= 900) return true;
@@ -557,7 +551,7 @@ function DrivePointsTable() {
                   {col.map(({ pos, pts }) => (
                     <tr key={pos}>
                       <td className="r fw-700" style={{ padding: "3px 8px", fontSize: 12, color: medalColor(pos) ?? "var(--text)" }}>
-                        {pos === 1 ? "🥇" : pos === 2 ? "🥈" : pos === 3 ? "🥉" : pos + "º"}
+                        {medal(pos) ?? pos + "º"}
                       </td>
                       <td className="r fw-800" style={{ padding: "3px 8px", fontSize: 13, color: "var(--color-warn-dark)" }}>{pts}</td>
                     </tr>
@@ -960,7 +954,6 @@ function DriveAllRoundsScorecardLB({
     return [...s].sort((a, b) => a.localeCompare(b,"pt"));
   }, [sorted]);
 
-  const medals = ["🥇","🥈","🥉"];
   const RD_LABELS = ["R1","R2","R3","R4"];
   const cell: React.CSSProperties = { padding: "3px 4px" };
 
@@ -1096,7 +1089,7 @@ function DriveAllRoundsScorecardLB({
               ? displayed.map((row, playerIdx) => {
                   const prevPos = playerIdx > 0 ? displayed[playerIdx-1].pos : undefined;
                   const showPos = row.pos !== prevPos || row.isWD;
-                  const medal   = row.pos!=null && row.pos<=3 ? medals[row.pos-1] : null;
+                  const medal   = row.pos!=null ? medal(row.pos) : null;
                   const posStr  = row.isWD ? "WD" : row.pos!=null ? (medal??String(row.pos)) : "–";
                   const isFirst = playerIdx === 0;
                   const playerBg = playerIdx%2===0 ? undefined : "var(--bg-muted)";
@@ -1139,7 +1132,7 @@ function DriveAllRoundsScorecardLB({
               : displayedFlat.map((row, idx) => {
                   const prevPos = idx > 0 ? displayedFlat[idx-1].pos : undefined;
                   const showPos = row.pos !== prevPos || row.isWD;
-                  const medal   = row.pos!=null && row.pos<=3 ? medals[row.pos-1] : null;
+                  const medal   = row.pos!=null ? medal(row.pos) : null;
                   const posStr  = row.isWD ? "WD" : row.pos!=null ? (medal??String(row.pos)) : "–";
                   const bg      = idx%2===0 ? undefined : "var(--bg-muted)";
                   const bTop    = idx>0 ? "1px solid var(--border-light)" : undefined;
@@ -1716,7 +1709,6 @@ function TournamentGrid({ rows, allTournaments, onPlayerClick, playersDB, escLoo
 function RankingView({ rows, onPlayerClick }: { rows: Sub12Row[]; onPlayerClick: (fed: string) => void }) {
   const ranked = [...rows].filter(p => p.totalPts > 0).sort((a, b) => b.totalPts - a.totalPts);
   const zeroPts = rows.filter(p => p.totalPts === 0);
-  const medals = ["🥇","🥈","🥉"];
   return (
     <div>
       {ranked.length === 0 ? (
@@ -1737,7 +1729,7 @@ function RankingView({ rows, onPlayerClick }: { rows: Sub12Row[]; onPlayerClick:
             <tbody>
               {ranked.map((p, i) => (
                 <tr key={p.fed} className={`pointer${p.sex === "F" ? " tourn-female-row" : ""}`} onClick={() => onPlayerClick(p.fed)}>
-                  <td className="r" style={{ fontSize: 16 }}>{i < 3 ? medals[i] : <span className="tourn-mono fw-700">{i+1}</span>}</td>
+                  <td className="r" style={{ fontSize: 16 }}>{medal(i + 1) ?? <span className="tourn-mono fw-700">{i+1}</span>}</td>
                   <td>
                     <span className="fw-700" style={{ cursor: "pointer", textDecoration: "underline", textDecorationColor: "var(--border)", textUnderlineOffset: 2 }}
                       onClick={(e) => { e.stopPropagation(); window.open(`/jogadores/${p.fed}`, "_blank"); }}>{p.name}</span>
@@ -2530,11 +2522,17 @@ function DriveContent() {
                             ? <>{curTournament._roundLabel === "Resumo" ? "📊 Acumulado" : "🏌️ " + curTournament._roundLabel} — {selectedGroup.campo}</>
                             : <>🏆 Scorecard — {selectedGroup.label}</>}
                       </span>
-                      <a href={tournFpgUrl(curTournament.ccode, curTournament.tcode)}
+                      <a href={fpgDrawUrl(curTournament.ccode, curTournament.tcode)}
                         target="_blank" rel="noopener noreferrer"
-                        style={{ fontSize: 11, fontWeight: 600, color: "var(--accent)", textDecoration: "none", whiteSpace: "nowrap", flexShrink: 0 }}
-                        title="Ver no site da Federação">
-                        🔗 FPG
+                        className="tourn-ext-link" style={{ color: "var(--text-2)", borderColor: "var(--border)" }}
+                        title="Emparelhamentos (Draw) na Federação">
+                        Draw ↗
+                      </a>
+                      <a href={fpgScoringUrl(curTournament.ccode, curTournament.tcode)}
+                        target="_blank" rel="noopener noreferrer"
+                        className="tourn-ext-link" style={{ color: "var(--accent)", borderColor: "var(--accent)" }}
+                        title="Classificação (Scoring) na Federação">
+                        Scoring ↗
                       </a>
                     </div>
                     <div className="muted fs-11 mb-4">
