@@ -1,1 +1,0 @@
-import{j as l}from"./index-DHQnElPH.js";function s({sex:n,size:o="sm",className:r=""}){if(!n||n!=="M"&&n!=="F")return null;const e=n==="M"?"sex-M":"sex-F",i=o==="md"?n==="M"?"Masculino":"Feminino":n;return o==="md"?l.jsx("span",{className:`sex-badge-pill ${e}${r?" "+r:""}`,children:i}):l.jsx("span",{className:`sex-badge ${e}${r?" "+r:""}`,children:i})}export{s as S};
