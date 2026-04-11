@@ -1,0 +1,1 @@
+import{r}from"./index-BhpT24fs.js";function K(e,o="asc",s){const[n,S]=r.useState(e),[g,c]=r.useState(o),m=r.useCallback(t=>{S(u=>u===t?(c(x=>x==="asc"?"desc":"asc"),t):(c((s==null?void 0:s[t])??o),t))},[o,s]);return{sortKey:n,sortDir:g,toggleSort:m}}export{K as u};

@@ -1,0 +1,1 @@
+import{r as s}from"./index-CE7-WTic.js";function m(o,t="asc",c){const[a,n]=s.useState(o),[u,e]=s.useState(t),S=s.useCallback(r=>{n(i=>i===r?(e(p=>p==="asc"?"desc":"asc"),r):(e(t),r))},[t,c]);return{sortKey:a,sortDir:u,toggleSort:S}}export{m as u};

@@ -259,12 +259,19 @@ function computeStats(p: Player, sdLookup: SDLookup): TStats | null {
   const gross = typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : p.grossTotal;
   if (gross == null || isNaN(gross as number)) return null;
   const g = gross as number;
-  const parArr = p.par || [];
-  const scores = p.scores || [];
-  const si = p.si || [];
+
+  // Flat fields may be absent when player uses roundScores format;
+  // fall back to roundScores[0] for single-round tournaments
+  const rs0 = p.roundScores?.[0];
+  const parArr = p.par?.length ? p.par : rs0?.pars || [];
+  const scores = p.scores?.length ? p.scores : rs0?.scores || [];
+  const si = p.si?.length ? p.si : rs0?.si || [];
+  const cr = p.courseRating ?? rs0?.courseRating;
+  const slope = p.slope ?? rs0?.slope;
+
   const parT = p.parTotal || parArr.reduce((a, b) => a + b, 0);
   const tp = g - parT;
-  const nh = p.nholes || scores.length || 18;
+  const nh = p.nholes || scores.length || parArr.length || 18;
   const is9 = nh <= 9;
 
   let sd18: number | null = null;
@@ -279,15 +286,15 @@ function computeStats(p: Player, sdLookup: SDLookup): TStats | null {
       sdSource = "fpg";
     }
     // 2) AGS calculation (needs SI data)
-    else if (p.courseRating && p.slope && p.hcpExact != null && si.length >= nh && scores.length >= nh && parArr.length >= nh) {
-      const adjGross = calcAGS(scores, parArr, si, p.courseRating, p.slope, p.hcpExact, nh);
-      const rawSD = (113 / p.slope) * (adjGross - p.courseRating);
+    else if (cr && slope && p.hcpExact != null && si.length >= nh && scores.length >= nh && parArr.length >= nh) {
+      const adjGross = calcAGS(scores, parArr, si, cr, slope, p.hcpExact, nh);
+      const rawSD = (113 / slope) * (adjGross - cr);
       sd18 = is9 ? rawSD + expectedSD9(p.hcpExact) : rawSD;
       sdSource = "ags";
     }
     // 3) Raw fallback (no SI)
-    else if (p.courseRating && p.slope) {
-      const rawSD = (113 / p.slope) * (g - p.courseRating);
+    else if (cr && slope) {
+      const rawSD = (113 / slope) * (g - cr);
       if (is9 && p.hcpExact != null) {
         sd18 = rawSD + expectedSD9(p.hcpExact);
       } else if (!is9) {
@@ -793,11 +800,19 @@ function DriveAllRoundsScorecardLB({
     // SD desta ronda
     let sd: number | null = null;
     const cr = rs.courseRating; const slope = rs.slope;
-    if (cr && slope && p.hcpExact != null && rs.si?.length >= nh && capped.length >= nh && rs.pars?.length >= nh) {
-      const ags = calcAGS(capped, rs.pars, rs.si, cr, slope, p.hcpExact, nh);
-      sd = Math.max(0, Math.round((113 / slope) * (ags - cr) * 10) / 10);
+    const rdNh = capped.length || nh;
+    const rdIs9 = rdNh <= 9;
+    if (cr && slope && p.hcpExact != null && rs.si?.length >= rdNh && capped.length >= rdNh && rs.pars?.length >= rdNh) {
+      const ags = calcAGS(capped, rs.pars, rs.si, cr, slope, p.hcpExact, rdNh);
+      const rawSD = (113 / slope) * (ags - cr);
+      sd = Math.round((rdIs9 ? rawSD + expectedSD9(p.hcpExact) : rawSD) * 10) / 10;
     } else if (cr && slope) {
-      sd = Math.max(0, Math.round((113 / slope) * (gross - cr) * 10) / 10);
+      const rawSD = (113 / slope) * (gross - cr);
+      if (rdIs9 && p.hcpExact != null) {
+        sd = Math.round((rawSD + expectedSD9(p.hcpExact)) * 10) / 10;
+      } else if (!rdIs9) {
+        sd = Math.round(rawSD * 10) / 10;
+      }
     }
     return { scores: capped, gross, toPar: gross - rdPar, sd, birds, pars2, bogs };
   }
@@ -1290,15 +1305,17 @@ function isSub12(esc: string): boolean {
 function _computeSDWithSource(p: Player, sdLookup: SDLookup): { sd: number | null; source: "fpg" | "ags" | "raw" | null } {
   const fed = p.fed || p.fedCode;
   if (fed && sdLookup[fed] != null) return { sd: sdLookup[fed], source: "fpg" };
-  const scores = p.scores || [];
-  const parArr = p.par || [];
-  const si = p.si || [];
-  const nholes = p.nholes || scores.length || 18;
+  // Fall back to roundScores[0] for single-round tournaments with no flat fields
+  const rs0 = p.roundScores?.[0];
+  const scores = p.scores?.length ? p.scores : rs0?.scores || [];
+  const parArr = p.par?.length ? p.par : rs0?.pars || [];
+  const si = p.si?.length ? p.si : rs0?.si || [];
+  const nholes = p.nholes || scores.length || parArr.length || 18;
   const parT = p.parTotal || (parArr.length ? parArr.reduce((a,b)=>a+b,0) : 72);
   const gross = typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : (p.grossTotal as number);
   if (gross == null || isNaN(gross)) return { sd: null, source: null };
-  const cr = p.courseRating;
-  const slope = p.slope;
+  const cr = p.courseRating ?? rs0?.courseRating;
+  const slope = p.slope ?? rs0?.slope;
   const hcp = p.hcpExact;
   if (cr && slope && hcp != null && scores.length >= nholes && parArr.length >= nholes && si.length >= nholes) {
     const ags = calcAGS(scores, parArr, si, cr, slope, hcp, nholes);

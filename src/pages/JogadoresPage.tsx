@@ -873,25 +873,23 @@ function ByCourseView({ data, search, sort, isAnalysis }: {
     else if (sort === "last_desc") l.sort((a, b) => (b.lastDateSort - a.lastDateSort) || (b.count - a.count));
     else l.sort((a, b) => (b.count - a.count) || a.course.localeCompare(b.course, "pt"));
 
-    // Override with custom sort if not default
-    if (sortKey !== "voltas" || sortDir !== "desc") {
-      l.sort((a, b) => {
-        let av: number | string, bv: number | string;
-        const lastA = a.rounds[0];
-        const lastB = b.rounds[0];
-        switch (sortKey) {
-          case "course": return (sortDir === "asc" ? 1 : -1) * a.course.localeCompare(b.course, "pt");
-          case "voltas": av = a.count; bv = b.count; break;
-          case "ultima": av = a.lastDateSort; bv = b.lastDateSort; break;
-          case "gross": av = (lastA?.gross ?? 999); bv = (lastB?.gross ?? 999); break;
-          case "stb": av = (lastA?.stb ?? -999); bv = (lastB?.stb ?? -999); break;
-          case "sd": av = (lastA?.sd ?? 999); bv = (lastB?.sd ?? 999); break;
-          default: av = a.count; bv = b.count;
-        }
-        const cmp = typeof av === "number" && typeof bv === "number" ? av - bv : 0;
-        return sortDir === "asc" ? cmp : -cmp;
-      });
-    }
+    // Apply column sort (always — the pre-sort above is just the initial order)
+    l.sort((a, b) => {
+      let av: number | string, bv: number | string;
+      const lastA = a.rounds[0];
+      const lastB = b.rounds[0];
+      switch (sortKey) {
+        case "course": return (sortDir === "asc" ? 1 : -1) * a.course.localeCompare(b.course, "pt");
+        case "voltas": av = a.count; bv = b.count; break;
+        case "ultima": av = a.lastDateSort; bv = b.lastDateSort; break;
+        case "gross": av = (lastA?.gross ?? 999); bv = (lastB?.gross ?? 999); break;
+        case "stb": av = (lastA?.stb ?? -999); bv = (lastB?.stb ?? -999); break;
+        case "sd": av = (lastA?.sd ?? 999); bv = (lastB?.sd ?? 999); break;
+        default: av = a.count; bv = b.count;
+      }
+      const cmp = typeof av === "number" && typeof bv === "number" ? av - bv : 0;
+      return sortDir === "asc" ? cmp : -cmp;
+    });
     return l;
   }, [data, search, sort, sortKey, sortDir]);
 
@@ -1656,23 +1654,6 @@ function whsQtyCalc(nSds: number): number {
 /* ─── Last 20 Table with scorecard expansion ─── */
 type L20SortKey = "whs" | "date" | "course" | "event" | "holes" | "hcp" | "tee" | "meters" | "gross" | "stb" | "sd" | "rank";
 
-function L20SortTh({ col, label, cur, dir, onSort, className }: {
-  col: L20SortKey; label: string; cur: L20SortKey; dir: 1 | -1;
-  onSort: (c: L20SortKey) => void; className?: string;
-}) {
-  const active = cur === col;
-  return (
-    <th className={className}
-      style={{ cursor: "pointer", userSelect: "none", whiteSpace: "nowrap" }}
-      onClick={() => onSort(col)}>
-      {label}
-      <span style={{ marginLeft: 3, opacity: active ? 1 : 0.25, fontSize: 10 }}>
-        {active ? (dir === -1 ? "↓" : "↑") : "↕"}
-      </span>
-    </th>
-  );
-}
-
 function Last20Table({ data, last20Table, best8, whsPosMap, bare: _bare }: {
   data: PlayerPageData;
   last20Table: (RoundData & { course: string })[];
@@ -1681,8 +1662,10 @@ function Last20Table({ data, last20Table, best8, whsPosMap, bare: _bare }: {
   bare?: boolean;
 }) {
   const [openSc, setOpenSc] = useState<string | null>(null);
-  const [sortKey, setSortKey] = useState<L20SortKey>("date");
-  const [sortDir, setSortDir] = useState<1 | -1>(-1);
+  const { sortKey, sortDir, toggleSort } = useSort<L20SortKey>("date", "desc", {
+    gross: "asc", hcp: "asc", sd: "asc", stb: "desc", meters: "desc",
+    whs: "asc", rank: "asc", holes: "desc", date: "desc",
+  });
 
   // Rows outside the WHS window (no whs pos) AND after the last WHS round → fade
   const fadingIds = useMemo(() => {
@@ -1696,23 +1679,19 @@ function Last20Table({ data, last20Table, best8, whsPosMap, bare: _bare }: {
     return s;
   }, [last20Table, whsPosMap]);
 
-  function handleSort(col: L20SortKey) {
-    if (col === sortKey) setSortDir(d => (d === -1 ? 1 : -1));
-    else { setSortKey(col); setSortDir(col === "date" ? -1 : col === "gross" || col === "hcp" || col === "sd" ? 1 : -1); }
-  }
-
   const sortedRows = useMemo(() => {
+    const dir = sortDir === "asc" ? 1 : -1;
     const arr = [...last20Table];
     arr.sort((a, b) => {
       let av: number, bv: number;
       switch (sortKey) {
         case "whs": av = whsPosMap.get(a.scoreId) ?? 999; bv = whsPosMap.get(b.scoreId) ?? 999; break;
         case "date": av = a.dateSort; bv = b.dateSort; break;
-        case "course": return sortDir * a.course.localeCompare(b.course, "pt");
-        case "event": return sortDir * (a.eventName || "").localeCompare(b.eventName || "", "pt");
+        case "course": return dir * a.course.localeCompare(b.course, "pt");
+        case "event": return dir * (a.eventName || "").localeCompare(b.eventName || "", "pt");
         case "holes": av = a.holeCount; bv = b.holeCount; break;
         case "hcp": av = a.hi ?? 999; bv = b.hi ?? 999; break;
-        case "tee": return sortDir * (a.tee || "").localeCompare(b.tee || "");
+        case "tee": return dir * (a.tee || "").localeCompare(b.tee || "");
         case "meters": av = a.meters ?? 0; bv = b.meters ?? 0; break;
         case "gross": av = a.gross ?? 999; bv = b.gross ?? 999; break;
         case "stb": av = a.stb ?? -999; bv = b.stb ?? -999; break;
@@ -1720,12 +1699,12 @@ function Last20Table({ data, last20Table, best8, whsPosMap, bare: _bare }: {
         case "rank": av = best8.get(a.scoreId) ?? 999; bv = best8.get(b.scoreId) ?? 999; break;
         default: av = a.dateSort; bv = b.dateSort;
       }
-      return sortDir * (av - bv);
+      return dir * (av - bv);
     });
     return arr;
   }, [last20Table, sortKey, sortDir, best8, whsPosMap]);
 
-  const thProps = { cur: sortKey, dir: sortDir, onSort: handleSort };
+  const shProps = { sortKey, sortDir, onSort: toggleSort };
   const _whsMax = whsPosMap.size;
 
   return (
@@ -1738,18 +1717,18 @@ function Last20Table({ data, last20Table, best8, whsPosMap, bare: _bare }: {
         <table className="dtable">
           <thead>
             <tr>
-              <L20SortTh col="whs" label="WHS#" {...thProps} className="r" />
-              <L20SortTh col="date" label="Data" {...thProps} />
-              <L20SortTh col="course" label="Campo" {...thProps} />
-              <L20SortTh col="event" label="Prova" {...thProps} />
-              <L20SortTh col="holes" label="Bur." {...thProps} className="r" />
-              <L20SortTh col="hcp" label="HCP" {...thProps} className="r" />
-              <L20SortTh col="tee" label="Tee" {...thProps} />
-              <L20SortTh col="meters" label="Dist." {...thProps} className="r" />
-              <L20SortTh col="gross" label="Gross" {...thProps} className="r" />
-              <L20SortTh col="stb" label="Stb" {...thProps} className="r" />
-              <L20SortTh col="sd" label="SD" {...thProps} className="r" />
-              <L20SortTh col="rank" label="Top 8" {...thProps} className="r" />
+              <SortableHdr k="whs" {...shProps} className="r">WHS#</SortableHdr>
+              <SortableHdr k="date" {...shProps}>Data</SortableHdr>
+              <SortableHdr k="course" {...shProps}>Campo</SortableHdr>
+              <SortableHdr k="event" {...shProps}>Prova</SortableHdr>
+              <SortableHdr k="holes" {...shProps} className="r">Bur.</SortableHdr>
+              <SortableHdr k="hcp" {...shProps} className="r">HCP</SortableHdr>
+              <SortableHdr k="tee" {...shProps}>Tee</SortableHdr>
+              <SortableHdr k="meters" {...shProps} className="r">Dist.</SortableHdr>
+              <SortableHdr k="gross" {...shProps} className="r">Gross</SortableHdr>
+              <SortableHdr k="stb" {...shProps} className="r">Stb</SortableHdr>
+              <SortableHdr k="sd" {...shProps} className="r">SD</SortableHdr>
+              <SortableHdr k="rank" {...shProps} className="r">Top 8</SortableHdr>
             </tr>
           </thead>
           <tbody>

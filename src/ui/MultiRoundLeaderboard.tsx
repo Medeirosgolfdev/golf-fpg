@@ -151,14 +151,30 @@ export function MultiRoundLeaderboard({
   renderName,
 }: MultiRoundLBProps) {
   const {
-    esc: showEsc = true,
-    fed: showFed = true,
-    tee: showTee = true,
-    club: showClub = true,
-    hcp: showHcp = true,
-    roundStats: showRoundStats = true,
-    roundToPar: showRoundToPar = true,
+    esc: wantEsc = true,
+    fed: wantFed = true,
+    tee: wantTee = true,
+    club: wantClub = true,
+    hcp: wantHcp = true,
+    roundStats: wantRoundStats = true,
+    roundToPar: wantRoundToPar = true,
   } = showCols;
+
+  // Auto-hide: mesmo que showCols permita, esconder se NENHUM row tem dados
+  const hasAnyEsc  = useMemo(() => rows.some(r => r.esc != null && r.esc !== ""), [rows]);
+  const hasAnyFed  = useMemo(() => rows.some(r => r.fed != null && r.fed !== ""), [rows]);
+  const hasAnyClub = useMemo(() => rows.some(r => r.club != null && r.club !== ""), [rows]);
+  const hasAnyHcp  = useMemo(() => rows.some(r => r.hcp != null), [rows]);
+  const hasAnyTee  = useMemo(() => rows.some(r => r.teeName != null && r.teeName !== ""), [rows]);
+  const hasAnySD   = useMemo(() => rows.some(r => r.rounds?.some(rd => rd?.sd != null)), [rows]);
+
+  const showEsc = wantEsc && hasAnyEsc;
+  const showFed = wantFed && hasAnyFed;
+  const showClub = wantClub && hasAnyClub;
+  const showHcp = wantHcp && hasAnyHcp;
+  const showTee = wantTee && hasAnyTee;
+  const showRoundStats = wantRoundStats && hasAnySD;
+  const showRoundToPar = wantRoundToPar;
 
   const { sortKey, sortDir, toggleSort: handleSort } = useSort<MRSortKey>("pos", "asc");
   const [filter, setFilter] = useState<PlayerFilter>(EMPTY_FILTER);
