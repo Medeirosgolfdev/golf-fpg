@@ -48,13 +48,18 @@ const LO = "'Lora',serif";
 function scBg(d: number): string | null {
   if (d <= -2) return "#d4a017"; // eagle+ — ouro
   if (d === -1) return "#dc2626"; // birdie — vermelho
-  if (d === 1)  return "#3b82f6"; // bogey — azul médio (era #5BADE6)
-  if (d === 2)  return "#1e6ab0"; // double — azul mais visível (era #2B6EA0)
-  if (d >= 3)   return "#1e4480"; // triple+ — navy mais visível (era #1B4570)
+  if (d === 1)  return "#3b82f6"; // bogey — azul médio
+  if (d === 2)  return "#1e6ab0"; // double — azul mais visível
+  if (d >= 3)   return "#1e4480"; // triple+ — navy mais visível
   return null;
 }
-const vpC  = (v: number) => { if (v <= -2) return "#d4a017"; if (v === -1) return "#ef4444"; if (v === 0) return "#a3a3a3"; if (v === 1) return "#7eb8e8"; return "#22c55e"; };
-const vpCd = (v: number) => { if (v < 0) return "#16a34a"; if (v === 0) return "#888"; return "#dc2626"; };
+const vpC  = (v: number) => { if (v <= -2) return "#d4a017"; if (v === -1) return "#ef4444"; if (v === 0) return "#d0d0d0"; if (v === 1) return "#7eb8e8"; return "#22c55e"; };
+const vpCd = (v: number) => { if (v < 0) return "#16a34a"; if (v === 0) return "#666"; return "#dc2626"; };
+
+/* Text shadow for readability over photos — applied to root container of each design */
+const TS = "0 1px 4px rgba(0,0,0,.7), 0 0 2px rgba(0,0,0,.5)";
+/* Stronger shadow for large score numbers */
+const TS_SCORE = "0 2px 6px rgba(0,0,0,.8), 0 0 3px rgba(0,0,0,.6)";
 
 function hexToRgba(hex: string, a: number) {
   const safe = /^#[0-9a-fA-F]{6}$/.test(hex) ? hex : "#000000";
@@ -172,7 +177,7 @@ type P = { d:DD; v:Vis; s:Stats; bg?:string|null; tc?:string; tc2?:string; tc3?:
 /* V1 · STICKER */
 function V1({ d, v, s, bg, tc="white", tc2, tc3 }: P) {
   return (
-    <div style={{ fontFamily:II, display:"inline-flex", alignItems:"center", gap:5, padding:"3px 6px", borderRadius:12, background:bg||"rgba(0,0,0,.75)", color:tc }}>
+    <div style={{ fontFamily:II, display:"inline-flex", alignItems:"center", gap:5, padding:"3px 6px", borderRadius:12, background:bg||"rgba(0,0,0,.75)", color:tc, textShadow:TS }}>
       <span style={{ fontFamily:OS, fontSize:22, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
       <span style={{ fontFamily:OS, fontSize:22, fontWeight:700 }}>{s.sT}</span>
       {v.player&&d.player && <span style={{ fontSize:13, fontWeight:700, color:tc2 }}>{d.player}</span>}
@@ -184,7 +189,7 @@ function V1({ d, v, s, bg, tc="white", tc2, tc3 }: P) {
 /* V2 · STRIP */
 function V2({ d, v, s, bg, tc="white", tc2, tc3 }: P) {
   return (
-    <div style={{ fontFamily:II, display:"inline-flex", alignItems:"center", gap:6, padding:"4px 10px", background:bg||"rgba(0,0,0,.78)", color:tc }}>
+    <div style={{ fontFamily:II, display:"inline-flex", alignItems:"center", gap:6, padding:"4px 10px", background:bg||"rgba(0,0,0,.78)", color:tc, textShadow:TS }}>
       <div className="u-col-flex2">
         {v.player&&d.player && <div style={{ fontFamily:OS, fontSize:15, fontWeight:700 }}>{d.player.toUpperCase()}</div>}
         {(v.course||v.date||v.round) && <div style={{ fontSize:11, fontWeight:600, color:tc3 }}>{metaStr(d,{course:v.course,date:v.date,round:v.round})}</div>}
@@ -210,7 +215,7 @@ function V3({ d, v, s, bg, tc="white", tc2, tc3 }: P) {
     </div>
   );
   return (
-    <div style={{ fontFamily:II, display:"inline-flex", flexDirection:"column", background:bg||"rgba(0,0,0,.80)", color:tc, borderRadius:8, overflow:"hidden", minWidth:220 }}>
+    <div style={{ fontFamily:II, display:"inline-flex", flexDirection:"column", background:bg||"rgba(0,0,0,.80)", color:tc, borderRadius:8, overflow:"hidden", minWidth:220, textShadow:TS }}>
       {(v.player&&d.player || v.course&&d.course) && <>
         <div style={{ padding:"3px 6px 2px" }}>
           {v.player&&d.player && <div style={{ fontFamily:OS, fontSize:14, fontWeight:700 }}>{d.player.toUpperCase()}</div>}
@@ -237,7 +242,7 @@ function V3({ d, v, s, bg, tc="white", tc2, tc3 }: P) {
 /* V4 · NEON RING */
 function V4({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
   return (
-    <div style={{ fontFamily:II, width:160, color:tc, textAlign:"center", background:bg, padding:"3px 6px", borderRadius:10 }}>
+    <div style={{ fontFamily:II, width:160, color:tc, textAlign:"center", background:bg, padding:"3px 6px", borderRadius:10, textShadow:TS }}>
       {v.course&&d.course && <div style={{ fontSize:11, fontWeight:700, letterSpacing:1, color:tc3 }}>{d.course}</div>}
       {v.player&&d.player && <div style={{ fontFamily:OS, fontSize:14, fontWeight:700, marginTop:2 }}>{d.player.toUpperCase()}</div>}
       <div style={{ margin:"4px auto", width:70, height:70, borderRadius:"50%", border:`3px solid ${vpC(s.vpT)}`, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center" }}>
@@ -254,7 +259,7 @@ function V4({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
 function V5({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
   const hcl = hiChStr(d,v,s);
   return (
-    <div style={{ fontFamily:LO, width:230, color:tc, background:bg||"rgba(0,0,0,0.82)", borderRadius:6, padding:"3px 6px", border:"1px solid rgba(255,255,255,0.15)" }}>
+    <div style={{ fontFamily:LO, width:230, color:tc, background:bg||"rgba(0,0,0,0.82)", borderRadius:6, padding:"3px 6px", border:"1px solid rgba(255,255,255,0.15)", textShadow:TS }}>
       {(v.player&&d.player || v.course&&d.course) && (
         <div style={{ textAlign:"center", borderBottom:"1px dashed rgba(255,255,255,0.2)", paddingBottom:6, marginBottom:4 }}>
           {v.player&&d.player && <div style={{ fontSize:16, fontWeight:700, fontStyle:"italic" }}>{d.player}</div>}
@@ -279,7 +284,7 @@ function V6({ d, v, s, bg, tc="white", tc2, tc3, tc4 }: P) {
   const is18 = d.scores.length >= 18;
   const hcl = hiChStr(d,v,s);
   return (
-    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg, padding:"3px 6px", borderRadius:8 }}>
+    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg, padding:"3px 6px", borderRadius:8, textShadow:TS }}>
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:4, gap:6 }}>
         <div className="u-col-flex2">
           {(v.course||v.date||v.round) && <div style={{ fontSize:10, fontWeight:700, color:tc3 }}>{metaStr(d,{course:v.course,date:v.date,round:v.round})}</div>}
@@ -315,7 +320,7 @@ function V7({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
   const is18 = d.scores.length >= 18;
   const hcl = hiChStr(d,v,s);
   return (
-    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg, padding:"3px 5px", borderRadius:8 }}>
+    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg, padding:"3px 5px", borderRadius:8, textShadow:TS }}>
       <div style={{ display:"flex", alignItems:"flex-start", gap:5, marginBottom:3 }}>
         <div style={{ display:"flex", alignItems:"baseline", gap:4, flexShrink:0 }}>
           <span style={{ fontFamily:OS, fontSize:26, fontWeight:900, lineHeight:1 }}>{s.sT}</span>
@@ -355,7 +360,7 @@ function V8({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
   const is18 = d.scores.length >= 18;
   const hcl = hiChStr(d,v,s);
   return (
-    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg||"linear-gradient(135deg,rgba(15,30,55,.88),rgba(20,50,35,.82))", borderRadius:8, padding:"3px 5px" }}>
+    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg||"linear-gradient(135deg,rgba(15,30,55,.88),rgba(20,50,35,.82))", borderRadius:8, padding:"3px 5px", textShadow:TS }}>
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:4 }}>
         <div>
           {v.player&&d.player && <div style={{ fontSize:14, fontWeight:900 }}>{d.player}</div>}
@@ -389,7 +394,7 @@ function V8({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
 function V9({ d, v, s, bg, tc="white", tc2, tc3, tc4 }: P) {
   const is18 = d.scores.length >= 18;
   return (
-    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg||"rgba(15,15,25,0.9)", borderRadius:10, padding:"3px 6px" }}>
+    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg||"rgba(15,15,25,0.9)", borderRadius:10, padding:"3px 6px", textShadow:TS }}>
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:3 }}>
         <div>
           {v.date&&d.date && <div style={{ fontSize:9, fontWeight:700, letterSpacing:2, color:tc3 }}>{d.date}</div>}
@@ -432,7 +437,7 @@ function V9({ d, v, s, bg, tc="white", tc2, tc3, tc4 }: P) {
 function V10({ d, v, s, bg, tc="white", tc2, tc3, tc4 }: P) {
   const hcl = hiChStr(d,v,s);
   return (
-    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg||"rgba(0,0,0,.78)", borderRadius:10, padding:"3px 5px", textAlign:"center" }}>
+    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg||"rgba(0,0,0,.78)", borderRadius:10, padding:"3px 5px", textAlign:"center", textShadow:TS }}>
       <div style={{ fontSize:9, fontWeight:700, letterSpacing:3, color:tc3 }}>TO PAR</div>
       <div style={{ fontFamily:OS, fontSize:48, fontWeight:900, lineHeight:.9, letterSpacing:-3, margin:"2px 0", color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</div>
       <div style={{ fontSize:11, fontWeight:700, color:tc2 }}>Gross <span style={{ fontWeight:900, color:tc, fontSize:22 }}>{s.sT}</span></div>
@@ -451,7 +456,7 @@ function V11({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
   const hcl = hiChStr(d,v,s);
   return (
     <div style={{ fontFamily:OS, display:"inline-block", textAlign:"center", color:tc }}>
-      <div style={{ background:bg||"rgba(0,0,0,.75)", borderRadius:10, padding:"3px 5px" }}>
+      <div style={{ background:bg||"rgba(0,0,0,.75)", borderRadius:10, padding:"3px 5px", textShadow:TS }}>
         {v.round && <div style={{ fontFamily:II, fontSize:9, fontWeight:700, letterSpacing:3, color:tc3 }}>ROUND {d.round}</div>}
         {v.player&&d.player && <div style={{ fontSize:14, fontWeight:700, letterSpacing:.3, marginTop:1, wordBreak:"break-word" }}>{d.player.toUpperCase()}</div>}
         {(v.course||v.tee) && <div style={{ fontFamily:II, fontSize:10, fontWeight:600, color:tc3 }}>{[v.course&&d.course,v.tee&&d.tee].filter(Boolean).join(" · ")}</div>}
@@ -472,7 +477,7 @@ function V11({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
 function V12({ d, v, s, bg, tc="white", tc2, tc3, tc4 }: P) {
   const hcl = hiChStr(d,v,s);
   return (
-    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg||"rgba(15,35,60,.88)", borderRadius:8, overflow:"hidden" }}>
+    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg||"rgba(15,35,60,.88)", borderRadius:8, overflow:"hidden", textShadow:TS }}>
       <div style={{ padding:"3px 6px 4px", display:"flex", alignItems:"center", gap:5 }}>
         <div style={{ flex:1, display:"flex", flexDirection:"column", gap:2 }}>
           {v.player&&d.player && <div style={{ fontSize:16, fontWeight:900 }}>{d.player}</div>}
@@ -506,7 +511,7 @@ function V13Bx({ val, label, c, big, tc, tc3 }: { val:string|number; label:strin
 function V13({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
   const hcl = hiChStr(d,v,s);
   return (
-    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg||"rgba(15,25,45,.85)", borderRadius:8, padding:"3px 6px" }}>
+    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg||"rgba(15,25,45,.85)", borderRadius:8, padding:"3px 6px", textShadow:TS }}>
       {(v.player||v.course) && (
         <div style={{ textAlign:"center", marginBottom:4 }}>
           {v.player&&d.player && <div style={{ fontSize:16, fontWeight:900 }}>{d.player}</div>}
@@ -531,7 +536,7 @@ function V13({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
 function V14({ d, v, s, bg, tc="white", tc2, tc3, tc4 }: P) {
   const is18 = d.scores.length >= 18; const W = 20;
   return (
-    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg, padding:"2px 5px", borderRadius:8 }}>
+    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg, padding:"2px 5px", borderRadius:8, textShadow:TS }}>
       <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:3, flexWrap:"wrap" }}>
         <span style={{ fontFamily:OS, fontSize:26, fontWeight:700, lineHeight:1 }}>{s.sT}</span>
         <span style={{ fontSize:16, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
@@ -563,15 +568,15 @@ function V14({ d, v, s, bg, tc="white", tc2, tc3, tc4 }: P) {
 }
 
 /* V15 · B&W CARD */
-function V15({ d, v, s }: P) {
+function V15({ d, v, s, bg }: P) {
   const is18 = d.scores.length >= 18; const W = 20;
   const bdr = "1px solid #e5e7eb";
   return (
-    <div style={{ fontFamily:II, display:"inline-block", background:"#fff", color:"#111", overflow:"hidden", borderRadius:8 }}>
-      <div style={{ background:"#1a2744", padding:"3px 7px", display:"flex", justifyContent:"space-between", alignItems:"center", gap:5 }}>
+    <div style={{ fontFamily:II, display:"inline-block", background:bg||"rgba(255,255,255,0.92)", color:"#111", overflow:"hidden", borderRadius:8 }}>
+      <div style={{ background:"rgba(26,39,68,0.92)", padding:"3px 7px", display:"flex", justifyContent:"space-between", alignItems:"center", gap:5, textShadow:TS }}>
         <div>
           {v.player&&d.player && <div style={{ fontFamily:OS, fontSize:16, fontWeight:700, color:"#fff" }}>{d.player.toUpperCase()}</div>}
-          {(v.event||v.round||v.position) && <div style={{ fontSize:10, fontWeight:700, color:"#aaaaaa", letterSpacing:.5 }}>{[v.event&&d.event,v.round&&`R${d.round}`,v.position&&d.position].filter(Boolean).join(" · ")}</div>}
+          {(v.event||v.round||v.position) && <div style={{ fontSize:10, fontWeight:700, color:"#cccccc", letterSpacing:.5 }}>{[v.event&&d.event,v.round&&`R${d.round}`,v.position&&d.position].filter(Boolean).join(" · ")}</div>}
         </div>
         <div style={{ display:"flex", flexDirection:"column", alignItems:"flex-end", flexShrink:0 }}>
           <div style={{ fontFamily:OS, fontSize:28, fontWeight:700, color:"#fff", lineHeight:1 }}>{s.sT}</div>
@@ -608,10 +613,10 @@ function V15({ d, v, s }: P) {
 }
 
 /* V16 · LIGHT CARD */
-function V16({ d, v, s }: P) {
+function V16({ d, v, s, bg }: P) {
   const is18 = d.scores.length >= 18; const W = 22;
   return (
-    <div style={{ fontFamily:II, display:"inline-block", background:"#fff", borderRadius:8, padding:"3px 5px", color:"#222", border:"1px solid rgba(0,0,0,.08)" }}>
+    <div style={{ fontFamily:II, display:"inline-block", background:bg||"rgba(255,255,255,0.92)", borderRadius:8, padding:"3px 5px", color:"#222", border:"1px solid rgba(0,0,0,.08)" }}>
       {/* Header: apenas campo + data, sem score */}
       {(v.course||v.date||v.tee||v.round) && (
         <div style={{ borderBottom:"1px solid #e5e7eb", paddingBottom:3, marginBottom:3 }}>
@@ -663,7 +668,7 @@ function V17({ d, v, s, bg, tc="white", tc2, tc3, tc4 }: P) {
   const is18 = d.scores.length >= 18; const W = 20;
   const hcl = hiChStr(d,v,s);
   return (
-    <div style={{ fontFamily:II, display:"inline-block", padding:"3px 6px 4px", background:bg||"rgba(0,0,0,.75)", borderRadius:10, color:tc, border:"1px solid rgba(255,255,255,.1)" }}>
+    <div style={{ fontFamily:II, display:"inline-block", padding:"3px 6px 4px", background:bg||"rgba(0,0,0,.75)", borderRadius:10, color:tc, border:"1px solid rgba(255,255,255,.1)", textShadow:TS }}>
       {v.holeScores && (is18 ? [[0,"Out"],[9,"In"]] as [number,string][] : [[0,"Tot"] as [number,string]]).map(([off,label],ri) => {
         const cnt = is18?9:d.scores.length;
         const subS = d.scores.slice(off,off+cnt).reduce((a,b)=>a+b,0);
@@ -719,7 +724,7 @@ function V18({ d, v, s, bg, tc="white", tc2, tc3, tc4 }: P) {
   const hcl = hiChStr(d,v,s);
   const vl = "1px solid rgba(255,255,255,.15)";
   return (
-    <div style={{ fontFamily:II, padding:10, display:"inline-block", background:bg||"rgba(15,30,55,.90)", borderRadius:8, color:tc }}>
+    <div style={{ fontFamily:II, padding:10, display:"inline-block", background:bg||"rgba(15,30,55,.90)", borderRadius:8, color:tc, textShadow:TS }}>
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:4, gap:6 }}>
         <div>
           {v.player&&d.player && <div style={{ fontSize:15, fontWeight:900 }}>{d.player}</div>}
@@ -767,7 +772,7 @@ function V18({ d, v, s, bg, tc="white", tc2, tc3, tc4 }: P) {
 function V19({ d, v, s, bg, tc="white", tc3 }: P) {
   const is18 = d.scores.length >= 18;
   return (
-    <div style={{ fontFamily:OS, display:"inline-flex", flexDirection:"column", alignItems:"center", color:tc, background:bg, overflow:"hidden", borderRadius:8 }}>
+    <div style={{ fontFamily:OS, display:"inline-flex", flexDirection:"column", alignItems:"center", color:tc, background:bg, overflow:"hidden", borderRadius:8, textShadow:TS }}>
       {(v.player||v.event||v.round) && (
         <div style={{ padding:"8px 10px 4px", textAlign:"center" }}>
           {v.player&&d.player && <div style={{ fontSize:18, fontWeight:700, lineHeight:1.2, wordBreak:"break-word" }}>{d.player.toUpperCase()}</div>}
@@ -811,7 +816,7 @@ function V19({ d, v, s, bg, tc="white", tc3 }: P) {
 function V20({ d, v, s, bg, tc="white", tc3 }: P) {
   const is18 = d.scores.length >= 18;
   return (
-    <div style={{ fontFamily:OS, display:"inline-flex", flexDirection:"column", alignItems:"center", color:tc, background:bg||"rgba(10,30,20,.90)", borderRadius:8, overflow:"hidden" }}>
+    <div style={{ fontFamily:OS, display:"inline-flex", flexDirection:"column", alignItems:"center", color:tc, background:bg||"rgba(10,30,20,.90)", borderRadius:8, overflow:"hidden", textShadow:TS }}>
       {(v.player||v.course||v.round||v.date) && (
         <div style={{ padding:"5px 8px 3px", textAlign:"center" }}>
           {(v.round||v.date) && <div style={{ fontFamily:II, fontSize:9, fontWeight:700, letterSpacing:2, color:tc3 }}>{[v.round&&`R${d.round}`,v.date&&d.date].filter(Boolean).join(" · ")}</div>}
@@ -860,7 +865,7 @@ function V21Col({ scores, pars, tc }: { scores:number[]; pars:number[]; tc:strin
 function V21({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
   const is18 = d.scores.length >= 18;
   return (
-    <div style={{ fontFamily:II, display:"inline-flex", flexDirection:"column", alignItems:"center", color:tc, background:bg||"rgba(0,0,0,.72)", padding:"10px 12px", borderRadius:10 }}>
+    <div style={{ fontFamily:II, display:"inline-flex", flexDirection:"column", alignItems:"center", color:tc, background:bg||"rgba(0,0,0,.72)", padding:"10px 12px", borderRadius:10, textShadow:TS }}>
       {(v.player||v.position||v.event||v.round) && (
         <div style={{ width:"100%", marginBottom:4 }}>
           {v.player&&d.player && <div style={{ fontFamily:OS, fontSize:13, fontWeight:700, letterSpacing:.3, textTransform:"uppercase", wordBreak:"break-word" }}>{d.player}</div>}
@@ -892,6 +897,249 @@ function V21({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
   );
 }
 
+/* V22 · MAGAZINE — Inspirado no estilo Golf Digest / Tyrrell Hatton.
+   Score enorme como elemento dominante, grid compacto 2×9 abaixo, tipografia limpa. */
+function V22({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
+  const is18 = d.scores.length >= 18;
+  return (
+    <div style={{ fontFamily:OS, display:"inline-flex", flexDirection:"column", alignItems:"center", color:tc, background:bg||"rgba(0,0,0,.72)", borderRadius:10, padding:"6px 12px 8px", minWidth:160, textShadow:TS }}>
+      {v.player&&d.player && <div style={{ fontFamily:II, fontSize:11, fontWeight:800, letterSpacing:2, color:tc3, textTransform:"uppercase", wordBreak:"break-word", textAlign:"center" }}>{d.player}</div>}
+      {(v.course||v.event) && <div style={{ fontFamily:II, fontSize:9, fontWeight:600, color:tc4, textAlign:"center", marginTop:1 }}>{[v.course&&d.course,v.event&&d.event].filter(Boolean).join(" · ")}</div>}
+      <div style={{ display:"flex", alignItems:"baseline", justifyContent:"center", gap:6, margin:"2px 0" }}>
+        <span style={{ fontSize:72, fontWeight:700, lineHeight:.85, letterSpacing:-4 }}>{s.sT}</span>
+        <span style={{ fontFamily:II, fontSize:22, fontWeight:900, color:vpC(s.vpT), paddingBottom:4 }}>{fmtToPar(s.vpT)}</span>
+      </div>
+      {v.holeScores && (
+        <div style={{ display:"flex", flexDirection:"column", gap:2, marginTop:2 }}>
+          {(is18 ? [[0,9,s.sF],[9,9,s.sB]] as [number,number,number][] : [[0,d.scores.length,s.sT] as [number,number,number]]).map(([off,len,sub]) => (
+            <div key={off} style={{ display:"flex", alignItems:"center", gap:3 }}>
+              <div style={{ display:"flex", gap:2 }}>
+                {d.scores.slice(off,off+len).map((sc,i) => <SC key={i} sc={sc} par={d.par[off+i]} sz={20} />)}
+              </div>
+              <div style={{ fontFamily:II, fontSize:13, fontWeight:900, color:tc3, minWidth:22, textAlign:"center" }}>{sub}</div>
+            </div>
+          ))}
+        </div>
+      )}
+      {(v.date||v.round||v.stats) && (
+        <div style={{ fontFamily:II, display:"flex", alignItems:"center", justifyContent:"center", gap:8, marginTop:4, flexWrap:"wrap" }}>
+          {(v.date||v.round) && <span style={{ fontSize:9, fontWeight:700, color:tc4 }}>{[v.round&&`R${d.round}`,v.date&&d.date].filter(Boolean).join(" · ")}</span>}
+          {v.stats && <StatsRow st={s.st} tc3={tc4} gap={4} fs={9} />}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* V23 · BROADCAST — Estilo banner de TV / Grace Gipper.
+   Barra horizontal compacta, nome à esquerda, front·back·total à direita. */
+function V23({ d, v, s, bg, tc="white", tc2, tc3 }: P) {
+  const is18 = d.scores.length >= 18;
+  return (
+    <div style={{ fontFamily:II, display:"inline-flex", alignItems:"stretch", background:bg||"rgba(15,30,60,.92)", color:tc, overflow:"hidden", borderRadius:6, textShadow:TS }}>
+      {/* Left: player info */}
+      <div style={{ padding:"4px 10px", display:"flex", flexDirection:"column", justifyContent:"center", borderRight:"2px solid rgba(255,255,255,.12)", minWidth:80 }}>
+        {v.player&&d.player && <div style={{ fontFamily:OS, fontSize:14, fontWeight:700, letterSpacing:.5, lineHeight:1.1 }}>{d.player.toUpperCase()}</div>}
+        {(v.course||v.event) && <div style={{ fontSize:9, fontWeight:600, color:tc3, marginTop:2 }}>{[v.event&&d.event,v.course&&d.course].filter(Boolean).join(" · ")}</div>}
+        {(v.date||v.round) && <div style={{ fontSize:9, fontWeight:600, color:tc3 }}>{[v.round&&`R${d.round}`,v.date&&d.date].filter(Boolean).join(" · ")}</div>}
+      </div>
+      {/* Right: scores */}
+      <div style={{ display:"flex", alignItems:"center", gap:0 }}>
+        {is18 && v.holeScores && (
+          <>
+            <div style={{ padding:"6px 8px", textAlign:"center", borderRight:"1px solid rgba(255,255,255,.08)" }}>
+              <div style={{ fontFamily:OS, fontSize:20, fontWeight:700, lineHeight:1 }}>{s.sF}</div>
+              <div style={{ fontSize:8, fontWeight:700, letterSpacing:1, color:tc3 }}>FRONT</div>
+            </div>
+            <div style={{ padding:"6px 8px", textAlign:"center", borderRight:"1px solid rgba(255,255,255,.08)" }}>
+              <div style={{ fontFamily:OS, fontSize:20, fontWeight:700, lineHeight:1 }}>{s.sB}</div>
+              <div style={{ fontSize:8, fontWeight:700, letterSpacing:1, color:tc3 }}>BACK</div>
+            </div>
+          </>
+        )}
+        <div style={{ padding:"4px 12px", textAlign:"center", background:"rgba(255,255,255,.07)" }}>
+          <div style={{ fontFamily:OS, fontSize:28, fontWeight:900, lineHeight:1 }}>{s.sT}</div>
+          <div style={{ fontSize:13, fontWeight:900, color:vpC(s.vpT), marginTop:0 }}>{fmtToPar(s.vpT)}</div>
+        </div>
+      </div>
+      {v.position&&d.position && <div style={{ padding:"4px 8px", display:"flex", alignItems:"center", fontSize:12, fontWeight:800, color:tc2 }}>{d.position}</div>}
+    </div>
+  );
+}
+
+/* V24 · STORY — Optimizado para formato 9:16 (stories).
+   Score enorme no topo, grid vertical de scores, info condensada no fundo. */
+function V24({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
+  const is18 = d.scores.length >= 18;
+  const hcl = hiChStr(d,v,s);
+  return (
+    <div style={{ fontFamily:OS, display:"inline-flex", flexDirection:"column", alignItems:"center", color:tc, background:bg||"rgba(0,0,0,.78)", borderRadius:12, padding:"8px 14px 10px", minWidth:120, textShadow:TS }}>
+      {(v.round||v.event) && <div style={{ fontFamily:II, fontSize:8, fontWeight:800, letterSpacing:3, color:tc4, textTransform:"uppercase" }}>{[v.event&&d.event,v.round&&`ROUND ${d.round}`].filter(Boolean).join(" · ")}</div>}
+      {v.player&&d.player && <div style={{ fontSize:14, fontWeight:700, letterSpacing:1, marginTop:2, textTransform:"uppercase", wordBreak:"break-word", textAlign:"center" }}>{d.player}</div>}
+      {/* Giant score */}
+      <div style={{ margin:"4px 0 2px", textAlign:"center" }}>
+        <div style={{ fontSize:80, fontWeight:700, lineHeight:.82, letterSpacing:-5 }}>{s.sT}</div>
+        <div style={{ fontFamily:II, fontSize:20, fontWeight:900, color:vpC(s.vpT), marginTop:2 }}>{fmtToPar(s.vpT)}</div>
+      </div>
+      {/* Vertical 2-col scores */}
+      {v.holeScores && is18 && (
+        <div style={{ display:"flex", gap:6, marginTop:4 }}>
+          {[{off:0,sub:s.sF},{off:9,sub:s.sB}].map(({off,sub},ci) => (
+            <div key={off} style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:2, borderRight:ci===0?"1px solid rgba(255,255,255,.15)":"none", paddingRight:ci===0?6:0 }}>
+              {d.scores.slice(off,off+9).map((sc,i) => <SC key={i} sc={sc} par={d.par[off+i]} sz={22} />)}
+              <div style={{ fontFamily:II, fontSize:12, fontWeight:900, color:tc3, marginTop:2 }}>{sub}</div>
+            </div>
+          ))}
+        </div>
+      )}
+      {v.holeScores && !is18 && (
+        <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:2, marginTop:4 }}>
+          {d.scores.map((sc,i) => <SC key={i} sc={sc} par={d.par[i]} sz={22} />)}
+        </div>
+      )}
+      {/* Footer */}
+      {(v.course||v.date||v.stats||hcl) && (
+        <div style={{ fontFamily:II, textAlign:"center", marginTop:6 }}>
+          {v.course&&d.course && <div style={{ fontSize:10, fontWeight:600, color:tc3 }}>{d.course}</div>}
+          {v.date&&d.date && <div style={{ fontSize:9, fontWeight:600, color:tc4 }}>{d.date}</div>}
+          {v.stats && <div style={{ display:"flex", justifyContent:"center", marginTop:2 }}><StatsRow st={s.st} tc3={tc4} gap={4} fs={9} /></div>}
+          {hcl && <div style={{ fontSize:9, fontWeight:700, color:tc4, marginTop:2 }}>{hcl}</div>}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* V25 · MINIMAL — Ultra-compacto: só score + toPar + nome.
+   Para quando a foto é tudo e o overlay deve ser o mais pequeno possível. */
+function V25({ d, v, s, bg, tc="white", tc3 }: P) {
+  return (
+    <div style={{ fontFamily:OS, display:"inline-flex", alignItems:"baseline", gap:6, color:tc, background:bg||"rgba(0,0,0,.65)", borderRadius:8, padding:"4px 10px", textShadow:TS }}>
+      <span style={{ fontSize:42, fontWeight:900, lineHeight:.85, letterSpacing:-2 }}>{s.sT}</span>
+      <span style={{ fontFamily:II, fontSize:18, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
+      {v.player&&d.player && <span style={{ fontFamily:II, fontSize:12, fontWeight:700, color:tc3, marginLeft:2 }}>{d.player}</span>}
+    </div>
+  );
+}
+
+/* V26 · SIGNATURE — Elegante com tipografia serif, score dominante, grid compacto.
+   Inspirado nos overlays editoriais (Golf Digest, LPGA). */
+function V26({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
+  const is18 = d.scores.length >= 18;
+  return (
+    <div style={{ fontFamily:LO, display:"inline-flex", flexDirection:"column", alignItems:"center", color:tc, background:bg||"rgba(0,0,0,.75)", borderRadius:10, padding:"6px 14px 8px", minWidth:140, textShadow:TS }}>
+      {v.player&&d.player && <div style={{ fontSize:16, fontWeight:700, fontStyle:"italic", letterSpacing:.5, marginBottom:2, wordBreak:"break-word", textAlign:"center" }}>{d.player}</div>}
+      {(v.course||v.event) && <div style={{ fontFamily:II, fontSize:9, fontWeight:600, color:tc3, textTransform:"uppercase", letterSpacing:2, textAlign:"center" }}>{[v.event&&d.event,v.course&&d.course].filter(Boolean).join(" · ")}</div>}
+      <div style={{ fontFamily:OS, fontSize:64, fontWeight:700, lineHeight:.82, letterSpacing:-3, margin:"4px 0 2px" }}>{s.sT}</div>
+      <div style={{ fontFamily:II, fontSize:18, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</div>
+      {/* Thin separator */}
+      {v.holeScores && <div style={{ width:40, height:1, background:"rgba(255,255,255,.25)", margin:"6px 0 4px" }} />}
+      {v.holeScores && (
+        <div style={{ display:"flex", flexDirection:"column", gap:2 }}>
+          {(is18 ? [[0,9,s.sF],[9,9,s.sB]] as [number,number,number][] : [[0,d.scores.length,s.sT] as [number,number,number]]).map(([off,len,sub]) => (
+            <div key={off} style={{ display:"flex", alignItems:"center", gap:2 }}>
+              <div style={{ display:"flex", gap:2 }}>
+                {d.scores.slice(off,off+len).map((sc,i) => <SC key={i} sc={sc} par={d.par[off+i]} sz={18} />)}
+              </div>
+              <div style={{ fontFamily:II, fontSize:11, fontWeight:900, color:tc3, minWidth:20, textAlign:"center" }}>{sub}</div>
+            </div>
+          ))}
+        </div>
+      )}
+      {(v.round||v.date||v.stats) && (
+        <div style={{ fontFamily:II, display:"flex", alignItems:"center", justifyContent:"center", gap:6, marginTop:4, flexWrap:"wrap" }}>
+          {(v.round||v.date) && <span style={{ fontSize:9, fontWeight:600, color:tc4 }}>{[v.round&&`R${d.round}`,v.date&&d.date].filter(Boolean).join(" · ")}</span>}
+          {v.stats && <StatsRow st={s.st} tc3={tc4} gap={4} fs={9} />}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* V27 · SCORE STRIP — Barra horizontal mínima com score grande + grid inline.
+   Ideal para topo/fundo de story, ocupando toda a largura mas pouca altura. */
+function V27({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
+  const is18 = d.scores.length >= 18;
+  return (
+    <div style={{ fontFamily:II, display:"inline-flex", alignItems:"center", gap:8, color:tc, background:bg||"rgba(0,0,0,.78)", borderRadius:8, padding:"4px 10px", textShadow:TS }}>
+      <div style={{ display:"flex", alignItems:"baseline", gap:4, flexShrink:0 }}>
+        <span style={{ fontFamily:OS, fontSize:36, fontWeight:900, lineHeight:1, letterSpacing:-2 }}>{s.sT}</span>
+        <span style={{ fontSize:16, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
+      </div>
+      {v.holeScores && (
+        <div style={{ display:"flex", flexDirection:"column", gap:1 }}>
+          {(is18 ? [[0,9],[9,9]] as [number,number][] : [[0,d.scores.length] as [number,number]]).map(([off,len]) => (
+            <div key={off} style={{ display:"flex", gap:1 }}>
+              {d.scores.slice(off,off+len).map((sc,i) => <SC key={i} sc={sc} par={d.par[off+i]} sz={16} />)}
+            </div>
+          ))}
+        </div>
+      )}
+      {v.player&&d.player && <div style={{ fontSize:11, fontWeight:700, color:tc3, flexShrink:0 }}>{d.player}</div>}
+    </div>
+  );
+}
+
+/* V28 · FULL TABLE — Scorecard completo estilo Taylor McCormick/Grandhall.
+   Tabela front+back com HOLE/PAR/SCORE, birdies com círculo, bogeys com quadrado, compacto. */
+function V28({ d, v, s, bg, tc="white", tc2, tc3, tc4 }: P) {
+  const is18 = d.scores.length >= 18; const W = 22;
+  const hcl = hiChStr(d,v,s);
+  const accent = "#e87722"; /* laranja estilo Grandhall */
+  return (
+    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg||"rgba(0,0,0,.88)", borderRadius:8, overflow:"hidden", textShadow:TS }}>
+      {/* Header com nome + score */}
+      {(v.player||v.event||v.round) && (
+        <div style={{ padding:"4px 8px", display:"flex", justifyContent:"space-between", alignItems:"center", borderBottom:`2px solid ${accent}` }}>
+          <div>
+            {v.player&&d.player && <div style={{ fontFamily:OS, fontSize:15, fontWeight:700, letterSpacing:.5 }}>{d.player.toUpperCase()}</div>}
+            {(v.event||v.round) && <div style={{ fontSize:9, fontWeight:700, color:tc3 }}>{[v.event&&d.event,v.round&&`ROUND ${d.round}`].filter(Boolean).join(" · ")}</div>}
+          </div>
+          <div style={{ textAlign:"right" }}>
+            <div style={{ fontFamily:OS, fontSize:24, fontWeight:900, lineHeight:1 }}>{s.sT}</div>
+            <div style={{ fontSize:13, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</div>
+          </div>
+        </div>
+      )}
+      {/* Table */}
+      {v.holeScores && (is18 ? [[0,9,s.sF,s.pF,"FRONT"],[9,9,s.sB,s.pB,"BACK"]] as [number,number,number,number,string][] : [[0,d.scores.length,s.sT,s.pT,"TOT"] as [number,number,number,number,string]]).map(([off,len,sub,subP,lbl],ri) => (
+        <div key={off}>
+          {/* Hole row */}
+          <div style={{ display:"flex", background:accent, padding:"2px 0" }}>
+            <div style={{ width:36, fontSize:8, fontWeight:800, color:"#fff", letterSpacing:1, display:"flex", alignItems:"center", paddingLeft:4 }}>HOLE</div>
+            {Array.from({length:len},(_,i) => <div key={i} style={{width:W,textAlign:"center",fontSize:10,fontWeight:800,color:"#fff"}}>{off+i+1}</div>)}
+            <div style={{ width:30, textAlign:"center", fontSize:8, fontWeight:800, color:"#fff", letterSpacing:1, display:"flex", alignItems:"center", justifyContent:"center" }}>{lbl}</div>
+          </div>
+          {/* Par row */}
+          {v.holePar && (
+            <div style={{ display:"flex", padding:"2px 0", background:"rgba(255,255,255,.06)" }}>
+              <div style={{ width:36, fontSize:9, fontWeight:700, color:tc3, paddingLeft:4, display:"flex", alignItems:"center" }}>PAR</div>
+              {d.par.slice(off,off+len).map((p,i) => <div key={i} style={{width:W,textAlign:"center",fontSize:10,fontWeight:700,color:tc2}}>{p}</div>)}
+              <div style={{ width:30, textAlign:"center", fontSize:10, fontWeight:800, color:tc2 }}>{subP}</div>
+            </div>
+          )}
+          {/* Score row */}
+          <div style={{ display:"flex", padding:"2px 0", borderBottom:ri===0&&is18?`1px solid ${accent}`:"none" }}>
+            <div style={{ width:36, fontSize:9, fontWeight:900, color:tc, paddingLeft:4, display:"flex", alignItems:"center" }}>SCORE</div>
+            {d.scores.slice(off,off+len).map((sc,i) => <div key={i} style={{width:W,display:"flex",justifyContent:"center"}}><SC sc={sc} par={d.par[off+i]} sz={20} /></div>)}
+            <div style={{ width:30, textAlign:"center", fontFamily:OS, fontSize:15, fontWeight:900, display:"flex", alignItems:"center", justifyContent:"center" }}>{sub}</div>
+          </div>
+        </div>
+      ))}
+      {/* Footer */}
+      {(v.course||v.date||v.stats||hcl) && (
+        <div style={{ padding:"3px 8px", background:"rgba(255,255,255,.05)", display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:3 }}>
+          <div style={{ display:"flex", flexDirection:"column", gap:1 }}>
+            {v.course&&d.course && <span style={{ fontSize:10, fontWeight:600, color:tc3 }}>{d.course}</span>}
+            {v.date&&d.date && <span style={{ fontSize:9, fontWeight:600, color:tc4 }}>{d.date}</span>}
+          </div>
+          {v.stats && <StatsRow st={s.st} tc3={tc4} gap={4} fs={9} />}
+        </div>
+      )}
+    </div>
+  );
+}
+
 /* ═══════ REGISTRY ═══════ */
 type DesignDef = { id:string; label:string; C:React.FC<P>; needsHoles:boolean };
 const DESIGNS: DesignDef[] = [
@@ -899,6 +1147,8 @@ const DESIGNS: DesignDef[] = [
   { id:"V2",  label:"V2 · Strip",          C:V2,  needsHoles:false },
   { id:"V3",  label:"V3 · Front/Back",     C:V3,  needsHoles:false },
   { id:"V4",  label:"V4 · Neon Ring",      C:V4,  needsHoles:false },
+  { id:"V25", label:"V25 · Minimal",       C:V25, needsHoles:false },
+  { id:"V23", label:"V23 · Broadcast",     C:V23, needsHoles:false },
   { id:"V5",  label:"V5 · Ticket",         C:V5,  needsHoles:true  },
   { id:"V6",  label:"V6 · Grint Row",      C:V6,  needsHoles:true  },
   { id:"V7",  label:"V7 · Wide Row",       C:V7,  needsHoles:true  },
@@ -916,6 +1166,11 @@ const DESIGNS: DesignDef[] = [
   { id:"V19", label:"V19 · PGA Columns",   C:V19, needsHoles:true  },
   { id:"V20", label:"V20 · Green Columns", C:V20, needsHoles:true  },
   { id:"V21", label:"V21 · DP World",      C:V21, needsHoles:true  },
+  { id:"V22", label:"V22 · Magazine",      C:V22, needsHoles:true  },
+  { id:"V24", label:"V24 · Story",         C:V24, needsHoles:true  },
+  { id:"V26", label:"V26 · Signature",     C:V26, needsHoles:true  },
+  { id:"V27", label:"V27 · Score Strip",   C:V27, needsHoles:true  },
+  { id:"V28", label:"V28 · Full Table",    C:V28, needsHoles:true  },
 ];
 
 /* ═══════ TOGGLES ═══════ */
@@ -1007,9 +1262,9 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
   const bgColor = bgHex ? hexToRgba(bgHex, bgAlpha/100) : null;
 
   const tc  = theme === "light" ? "#111111" : "#ffffff";
-  const tc2 = theme === "light" ? "#737373" : "#aaaaaa"; // era rgba(0,0,0,0.55) / rgba(255,255,255,0.6)
-  const tc3 = theme === "light" ? "#a0a0a0" : "#808080"; // era rgba(0,0,0,0.35) / rgba(255,255,255,0.4)
-  const tc4 = theme === "light" ? "#c0c0c0" : "#707070"; // era rgba(0,0,0,0.2)  / rgba(255,255,255,0.25)
+  const tc2 = theme === "light" ? "#555555" : "#cccccc"; // texto secundário — totalmente opaco
+  const tc3 = theme === "light" ? "#777777" : "#b0b0b0"; // labels — opaco, legível sobre foto
+  const tc4 = theme === "light" ? "#999999" : "#999999"; // metadata — opaco, legível sobre foto
 
   const checkerBg: React.CSSProperties = {
     backgroundImage:"linear-gradient(45deg,#ccc 25%,transparent 25%),linear-gradient(-45deg,#ccc 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#ccc 75%),linear-gradient(-45deg,transparent 75%,#ccc 75%)",
