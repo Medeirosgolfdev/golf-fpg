@@ -1,1 +1,0 @@
-import{j as s}from"./index-C2NlOhK9.js";function i({href:r,children:e,className:n,style:t,title:o,onClick:a}){return s.jsx("a",{href:r,target:"_blank",rel:"noopener noreferrer",className:n,style:t,title:o,onClick:a,children:e})}export{i as E};

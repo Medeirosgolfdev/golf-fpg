@@ -61,16 +61,19 @@ export const ESC_STYLE: Record<string, { bg: string; color: string }> = {
 };
 
 /* ─── Tee dot ─── */
-export function TeeDot({ teeName }: { teeName?: string }) {
+export function TeeDot({ teeName, distance }: { teeName?: string; distance?: number }) {
   if (!teeName) return <span className="muted">–</span>;
   const hex = getTeeHex(teeName);
   const border = teeBorder(hex) || "1px solid rgba(0,0,0,.18)";
+  const label = distance ? `${teeName} · ${distance.toLocaleString("pt")}m` : teeName;
   return (
-    <span
-      title={teeName}
-      className="flex-shrink-0"
-      style={{ display: "inline-block", width: 12, height: 12, borderRadius: 3, background: hex, border, verticalAlign: "middle", cursor: "default" }}
-    />
+    <span title={label} style={{ display: "inline-flex", alignItems: "center", gap: 4, whiteSpace: "nowrap", cursor: "default" }}>
+      <span
+        className="flex-shrink-0"
+        style={{ display: "inline-block", width: 12, height: 12, borderRadius: 3, background: hex, border, verticalAlign: "middle" }}
+      />
+      {distance != null && <span style={{ fontSize: 10, color: "var(--text-muted)" }}>{distance.toLocaleString("pt")}</span>}
+    </span>
   );
 }
 

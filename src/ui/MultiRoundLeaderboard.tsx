@@ -339,7 +339,7 @@ export function MultiRoundLeaderboard({
                   {showFed && <td className="lb-fed">{row.fed || "–"}</td>}
                   {showClub && <td className="lb-club">{row.club || "–"}</td>}
                   {showHcp && <td className="lb-hcp">{fmtHcp(row.hcp)}</td>}
-                  {showTee && <td className="lb-tee"><TeeDot teeName={row.teeName} /></td>}
+                  {showTee && <td className="lb-tee"><TeeDot teeName={row.teeName} distance={row.teeDistance} /></td>}
 
                   {/* ±Par ANTES de Total */}
                   <td className="lb-topar" style={{ color: tpCol, opacity: (isInc || isWD) ? 0.5 : 1 }}>{fmtTP(tp)}</td>

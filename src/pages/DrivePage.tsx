@@ -671,7 +671,7 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
         <td className="lb-esc">{esc ? <EscPill esc={esc} /> : <span className="muted">–</span>}</td>
         <td className="lb-club">{p.club || "–"}</td>
         <td className="lb-hcp">{fmtHcp(p.hcpExact)}</td>
-        <td className="lb-tee"><TeeDot teeName={p.teeName} /></td>
+        <td className="lb-tee"><TeeDot teeName={p.teeName} distance={p.roundScores?.[0]?.meters?.reduce((a: number, b: number) => a + b, 0) || p.meters?.reduce((a: number, b: number) => a + b, 0) || undefined} /></td>
       </>,
       postScorecardCells: <>
         <td className="lb-sd">

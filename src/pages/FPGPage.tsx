@@ -1033,7 +1033,7 @@ export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabe
         {!hideFed && <td className="lb-fed">{p.fedCode || "–"}</td>}
         <td className="lb-club">{p.club || "–"}</td>
         {!hideHCP_ && <td className="lb-hcp">{fmtHcp(p.hcpExact)}</td>}
-        {!hideTee && <td className="lb-tee"><TeeDot teeName={p.teeName} /></td>}
+        {!hideTee && <td className="lb-tee"><TeeDot teeName={p.teeName} distance={p.roundScores?.[0]?.meters?.reduce((a: number, b: number) => a + b, 0) || undefined} /></td>}
       </>,
       postScorecardCells: <>
         {!hideSD_ && <td className="lb-sd">
@@ -1137,6 +1137,7 @@ export function AccumulatedLB({ tournament, nRounds, escLookup, playersDB, showC
       hcp: p.hcpExact ?? null,
       esc: esc || undefined,
       teeName: p.teeName,
+      teeDistance: p.roundScores?.[0]?.meters?.reduce((a: number, b: number) => a + b, 0) || undefined,
       gross: numGross(p),
       parTotal: parPerRound * nRounds,
       isIncomplete: !!p._incomplete,

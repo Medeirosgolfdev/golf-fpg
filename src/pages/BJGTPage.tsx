@@ -5,7 +5,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { cachedFetch } from "../data/fetchCache";
 import { scClass, SC } from "../utils/scoreDisplay";
-import { tpColor, isManuel } from "../ui/tournamentPrimitives";
+import { tpColor, isManuel, fmtTP } from "../ui/tournamentPrimitives";
 import EvoBadge from "../ui/EvoBadge";
 import ExtLink from "../ui/ExternalLink";
 import SidebarSectionTitle from "../ui/SidebarSectionTitle";
@@ -158,12 +158,18 @@ function AccLB({ data, evo, evoYear, roundDates }: { data: TData; evo?: Map<stri
    ═══════════════════════════════════════════════════════════════ */
 function SCTable({ data, ri }: { data: TData; ri: number }) {
   const { par, si, parTotal, players } = data;
+  const nh = par.length;
   const ws = players.filter(p => p.rounds[ri]?.scores);
   const sorted = [...ws].sort((a, b) => a.rounds[ri].gross - b.rounds[ri].gross);
+  const [showSC, setShowSC] = React.useState(true);
 
   // Calcular posições
   let pos = 1;
   sorted.forEach((p, i) => { if (i > 0 && p.rounds[ri].gross > sorted[i - 1].rounds[ri].gross) pos = i + 1; (p as any)._dp = pos; });
+
+  // Média de grosses
+  const grosses = sorted.map(p => p.rounds[ri].gross).filter(g => g != null && !isNaN(g));
+  const avg = grosses.length ? grosses.reduce((a, b) => a + b, 0) / grosses.length : 0;
 
   const rows: ScorecardRow[] = useMemo(() => {
     return sorted.map((p, idx) => {
@@ -172,7 +178,16 @@ function SCTable({ data, ri }: { data: TData; ri: number }) {
       const tp = r.gross - parTotal;
       const dp = (p as any)._dp as number;
       const showP = idx === 0 || dp !== (sorted[idx - 1] as any)._dp;
-      const bg = isM(p.name) ? "var(--bg-success-subtle)" : p.country.includes("Portugal") ? "rgba(var(--rgb-success), 0.06)" : undefined;
+      const isPT = p.country.includes("Portugal");
+      const bg = isM(p.name) ? "var(--bg-success-subtle)" : isPT ? "rgba(var(--rgb-success), 0.06)" : undefined;
+
+      // Contadores de score
+      let birds = 0, pars = 0, bogs = 0;
+      for (let i = 0; i < r.scores.length && i < par.length; i++) {
+        const d = r.scores[i] - par[i];
+        if (d <= -1) birds++; else if (d === 0) pars++; else bogs++;
+      }
+
       return {
         key: p.name + idx,
         pos: showP ? dp : "",
@@ -184,19 +199,37 @@ function SCTable({ data, ri }: { data: TData; ri: number }) {
         nameContent: <span className="fw-700">{gf(p.country)} {p.name.length > 22 ? p.name.substring(0, 20) + "…" : p.name}</span>,
         sortName: p.name,
         sortPos: dp,
+        prefixCells: <td className="lb-fed" style={{ fontSize: 10 }}>{p.country || "–"}</td>,
+        postScorecardCells: <>
+          <td className="lb-bird">{birds || ""}</td>
+          <td className="lb-par-stat">{pars || ""}</td>
+          <td className="lb-bog">{bogs || ""}</td>
+        </>,
       } as ScorecardRow;
     }).filter(Boolean) as ScorecardRow[];
-  }, [sorted, ri, parTotal]);
+  }, [sorted, ri, parTotal, par]);
 
   if (!rows.length) return <EmptyState size="sm" message="Scorecards buraco-a-buraco não disponíveis para esta ronda." />;
 
   return (
     <ScorecardLeaderboard
       par={par}
-      si={si}
+      si={si.length >= nh ? si : undefined}
       rows={rows}
-      showScorecard
+      parLabelColSpan={2}
+      postScorecardColCount={3}
+      showScorecard={showSC}
+      onToggleScorecard={() => setShowSC(v => !v)}
       sortable
+      metaLine={<>
+        {sorted.length} jogadores · Par {parTotal} · {nh}h · Média: {avg.toFixed(1)} ({fmtTP(Math.round(avg - parTotal))})
+      </>}
+      prefixHeaderCells={<th className="lb-fed">País</th>}
+      postScorecardHeaderCells={<>
+        <th className="lb-bird">🐦</th>
+        <th className="lb-par-stat">Par</th>
+        <th className="lb-bog">■</th>
+      </>}
     />
   );
 }
