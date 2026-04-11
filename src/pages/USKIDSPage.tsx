@@ -28,6 +28,8 @@ import { buildAutoRivals, normName as normNameAuto, type AutoRivalPlayer, uskTou
 import { cachedFetchJson } from "../data/fetchCache";
 import { escalaoManuelParaData } from "../constants/manuel";
 import { FieldEscalaoTable } from "./uskids/FieldEscalaoTable";
+import { MultiRoundLeaderboard } from "../ui/MultiRoundLeaderboard";
+import type { MultiRoundRow } from "../ui/multiRoundTypes";
 import TabelaGlobal from "./uskids/TabelaGlobal";
 /** Escalões do Manuel e rivais directos — filtro de destaque na UI */
 const ESCALOES_DESTAQUE_USKIDS = new Set(["Boys 9", "Boys 10", "Boys 11", "Boys 12", "Boys 13", "Boys 13-14"]);
@@ -1480,13 +1482,6 @@ function SecaoGreatgolf({ data }: { data: GreatgolfData }) {
 
   const rows = data.results[cat] ?? [];
 
-  const _renderToPar = (v: number | null) => {
-    if (v == null) return <span className="muted">—</span>;
-    if (v === 0)   return <span style={{ color:"var(--text-2)", fontWeight:700 }}>E</span>;
-    if (v < 0)     return <span style={{ color:"var(--color-good)", fontWeight:700 }}>{v}</span>;
-    return <span style={{ color:"var(--color-danger)", fontWeight:700 }}>+{v}</span>;
-  };
-
   return (
     <div className="card" style={{ marginTop:20, padding:0, overflow:"hidden" }}>
       {/* Header clicável */}
@@ -1521,40 +1516,23 @@ function SecaoGreatgolf({ data }: { data: GreatgolfData }) {
           </div>
 
           <div className="table-wrap">
-            <table className="sc-lb" style={{ width:"100%" }}>
-              <thead>
-                <tr>
-                  <th className="sticky-col-0" style={{ width:26 }}>#</th>
-                  <th className="sticky-col-1" style={{ textAlign:"left", paddingLeft:10 }}>Jogador</th>
-                  <th style={{ textAlign:"left" }}>Clube</th>
-                  <th className="lb-topar">±</th>
-                  <th className="lb-gross">TOT</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((r, i) => {
-                  const manuelRow = isManuel(r.name);
-                  return (
-                    <tr key={i} className={manuelRow ? "row-manuel" : undefined}>
-                      <td className={`sticky-col-0${manuelRow ? " row-manuel" : ""}`} style={{ textAlign:"center", fontWeight:700 }}>
-                        {r.pos != null
-                          ? r.pos
-                          : <span className="muted fs-11">{r.status}</span>}
-                      </td>
-                      <td className={`sticky-col-1${manuelRow ? " row-manuel" : ""}`}
-                          style={{ textAlign:"left", paddingLeft:10, fontWeight: manuelRow ? 800 : 500 }}>
-                        {manuelRow && "★ "}{r.name}
-                      </td>
-                      <td className="muted fs-11" style={{ padding:"6px 8px" }}>{r.club}</td>
-                      <td className="lb-topar" style={{ color: tpColor(r.toPar) }}>
-                        {r.toPar == null ? "–" : r.toPar === 0 ? "E" : r.toPar > 0 ? `+${r.toPar}` : r.toPar}
-                      </td>
-                      <td className="lb-gross">{r.gross ?? "—"}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+            <MultiRoundLeaderboard
+              rows={rows.map((r, i): MultiRoundRow => ({
+                key: r.name + i,
+                name: isManuel(r.name) ? `★ ${r.name}` : r.name,
+                club: r.club,
+                gross: r.gross ?? 0,
+                parTotal: r.gross != null && r.toPar != null ? r.gross - r.toPar : 0,
+                toPar: r.toPar,
+                pos: r.pos ?? 0,
+                isHighlighted: isManuel(r.name),
+                isWD: r.pos == null,
+                rounds: [{ gross: r.gross }],
+              }))}
+              nRounds={1}
+              sortable
+              showCols={{ esc: false, fed: false, tee: false, hcp: false, roundStats: false, roundToPar: false }}
+            />
           </div>
         </div>
       )}

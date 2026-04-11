@@ -72,6 +72,18 @@ export function shortName(name: string): string {
   return (name || "").split(" ").slice(0, 2).join(" ");
 }
 
+/** "Manuel Henrique Goulartt Medeiros" → "Manuel H. G. Medeiros" (se > maxLen) */
+export function abreviarNome(nome: string, maxLen = 25): string {
+  if (!nome || nome.length <= maxLen) return nome;
+  const parts = nome.trim().split(/\s+/);
+  if (parts.length <= 2) return nome;
+  const primeiro = parts[0];
+  const ultimo = parts[parts.length - 1];
+  const meios = parts.slice(1, -1).map(p => p[0] + ".").join(" ");
+  const abrev = primeiro + " " + meios + " " + ultimo;
+  return abrev.length < nome.length ? abrev : nome;
+}
+
 /** Meses abreviados em português */
 export const MONTHS_PT = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"] as const;
 

@@ -1,5 +1,7 @@
 import { useMemo } from "react";
 import { AutoRivalPlayer, uskTournNames, uskFieldSizes, normName as normNameAuto } from "../KIDSdataLoader";
+import { useSort } from "../../hooks/useSort";
+import SortableHdr from "../../ui/SortableHdr";
 
 // ─────────────────────────────────────────────
 // Types
@@ -196,23 +198,64 @@ export function FieldEscalaoTable({ escalaoNome, players, isFuture, torneioT, re
       }));
   }, [isFuture, resultados, torneioT, escalaoNome]);
 
+  // Default sort: pos asc for past events, name asc for future
+  const defaultSortKey = isFuture ? "nome" : "pos";
+  const { sortKey, sortDir, toggleSort } = useSort(defaultSortKey as any, "asc");
+
   const displayPlayers: { nome: string; pais: string; pos?: number; finalToPar?: number | null; fieldSize?: number }[] = useMemo(() => {
-    if (!isFuture && leaderboard) return leaderboard;
-    return [...players].sort((a, b) => {
-      if (isManuelName(a.nome)) return 1;
-      if (isManuelName(b.nome)) return -1;
-      const getBest = (ar: AutoRivalPlayer | undefined) => {
-        if (!ar) return 9999;
-        let best = 9999;
-        for (const yr of prevYears) {
-          const res = playerSeriesResult(ar, sBase, yr);
-          if (res && res.p > 0 && res.p < best) best = res.p;
-        }
-        return best;
-      };
-      return getBest(arMap.get(normNameAuto(a.nome))) - getBest(arMap.get(normNameAuto(b.nome)));
+    let result: { nome: string; pais: string; pos?: number; finalToPar?: number | null; fieldSize?: number }[] = [];
+
+    // Pre-sort: if leaderboard exists (past event), use it; otherwise apply pre-sort logic
+    if (!isFuture && leaderboard) {
+      result = [...leaderboard];
+    } else {
+      result = [...players].sort((a, b) => {
+        if (isManuelName(a.nome)) return 1;
+        if (isManuelName(b.nome)) return -1;
+        const getBest = (ar: AutoRivalPlayer | undefined) => {
+          if (!ar) return 9999;
+          let best = 9999;
+          for (const yr of prevYears) {
+            const res = playerSeriesResult(ar, sBase, yr);
+            if (res && res.p > 0 && res.p < best) best = res.p;
+          }
+          return best;
+        };
+        return getBest(arMap.get(normNameAuto(a.nome))) - getBest(arMap.get(normNameAuto(b.nome)));
+      });
+    }
+
+    // Apply sort based on sortKey/sortDir
+    const sorted = [...result].sort((a, b) => {
+      let cmp = 0;
+      if (sortKey === "pos") {
+        cmp = (a.pos ?? 9999) - (b.pos ?? 9999);
+      } else if (sortKey === "nome") {
+        cmp = normNameAuto(a.nome).localeCompare(normNameAuto(b.nome));
+      } else if (sortKey === "vsPar") {
+        const aVal = a.finalToPar ?? 9999;
+        const bVal = b.finalToPar ?? 9999;
+        cmp = aVal - bVal;
+      } else if (sortKey.startsWith("hist-")) {
+        // History column: extract year and compare position
+        const year = parseInt(sortKey.slice(5));
+        const aAr = arMap.get(normNameAuto(a.nome));
+        const bAr = arMap.get(normNameAuto(b.nome));
+        const aRes = aAr ? playerSeriesResult(aAr, sBase, year) : null;
+        const bRes = bAr ? playerSeriesResult(bAr, sBase, year) : null;
+        const aPos = aRes?.p ?? 9999;
+        const bPos = bRes?.p ?? 9999;
+        cmp = aPos - bPos;
+      } else if (sortKey === "torn") {
+        const aTorn = arMap.get(normNameAuto(a.nome)) ? Object.keys(arMap.get(normNameAuto(a.nome))!.r).length : 0;
+        const bTorn = arMap.get(normNameAuto(b.nome)) ? Object.keys(arMap.get(normNameAuto(b.nome))!.r).length : 0;
+        cmp = aTorn - bTorn;
+      }
+      return sortDir === "asc" ? cmp : -cmp;
     });
-  }, [isFuture, leaderboard, players, arMap, sBase, prevYears]);
+
+    return sorted;
+  }, [isFuture, leaderboard, players, arMap, sBase, prevYears, sortKey, sortDir]);
 
   const shortBase = tornName.replace(/\s*\d{4}$/, "");
   const histCols = prevYears.map(y => ({ year: y, label: `${shortBase} '${String(y).slice(2)}` }));
@@ -226,14 +269,58 @@ export function FieldEscalaoTable({ escalaoNome, players, isFuture, torneioT, re
         <table className="dtable-lg" style={{ width:"100%" }}>
           <thead>
             <tr>
-              {!isFuture && <th style={{ width:40, textAlign:"center" }}>#</th>}
+              {!isFuture && (
+                <SortableHdr
+                  k="pos"
+                  sortKey={sortKey}
+                  sortDir={sortDir}
+                  onSort={toggleSort}
+                  style={{ width:40, textAlign:"center" }}
+                >
+                  #
+                </SortableHdr>
+              )}
               <th style={{ width:28, textAlign:"center" }}>🌍</th>
-              <th>Jogador</th>
-              {!isFuture && <th style={{ width:56, textAlign:"center" }}>vs par</th>}
+              <SortableHdr
+                k="nome"
+                sortKey={sortKey}
+                sortDir={sortDir}
+                onSort={toggleSort}
+              >
+                Jogador
+              </SortableHdr>
+              {!isFuture && (
+                <SortableHdr
+                  k="vsPar"
+                  sortKey={sortKey}
+                  sortDir={sortDir}
+                  onSort={toggleSort}
+                  style={{ width:56, textAlign:"center" }}
+                >
+                  vs par
+                </SortableHdr>
+              )}
               {histCols.map(c => (
-                <th key={c.year} style={{ width:92, textAlign:"center" }}>{c.label}</th>
+                <SortableHdr
+                  key={c.year}
+                  k={`hist-${c.year}`}
+                  sortKey={sortKey}
+                  sortDir={sortDir}
+                  onSort={toggleSort}
+                  style={{ width:92, textAlign:"center" }}
+                >
+                  {c.label}
+                </SortableHdr>
               ))}
-              <th style={{ width:44, textAlign:"center" }}>torn.</th>
+              <SortableHdr
+                k="torn"
+                sortKey={sortKey}
+                sortDir={sortDir}
+                onSort={toggleSort}
+                style={{ width:44, textAlign:"center" }}
+              >
+                torn.
+              </SortableHdr>
             </tr>
           </thead>
           <tbody>

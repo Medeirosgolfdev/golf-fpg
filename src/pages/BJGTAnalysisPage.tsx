@@ -1095,7 +1095,7 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
             { label: "Triple+", val: scoringStats.worse, cls: "triple" },
           ].filter(s => s.val > 0).map(s => (
             <span key={s.label} className="d-flex items-center gap-4">
-              <span className={`sc-score ${s.cls}`} className="fs-10" style={{ width: 22, height: 22 }}>{s.val}</span>
+              <span className={`sc-score ${s.cls} fs-10`} style={{ width: 22, height: 22 }}>{s.val}</span>
               <span className="fs-10 fw-600 c-text-3">{s.label} ({(s.val / scoringStats.total * 100).toFixed(0)}%)</span>
             </span>
           ))}

@@ -1,5 +1,5 @@
 // @refresh reset
-import { MRRound, MultiRoundRow, PlayerFilter, EMPTY_FILTER } from "./multiRoundTypes";
+import { MRRound, MultiRoundRow, PlayerFilter, EMPTY_FILTER, ExtraColumn } from "./multiRoundTypes";
 import { fmtHcp } from "../utils/format";
 import { useSort } from "../hooks/useSort";
 import FilterChip from "../ui/FilterChip";
@@ -24,19 +24,20 @@ import EmptyState from "../ui/EmptyState";
  * MultiRoundLeaderboard.tsx
  *
  * Leaderboard para torneios multi-ronda (2R, 3R, …).
- * Partilhado entre DrivePage e TorneiosAnalisePage.
+ * Partilhado entre DrivePage, FPGPage, BJGTPage e USKIDSPage.
  *
  * Estrutura de colunas (nRounds >= 2):
  *   # | Jogador | [ESC·FED·Clube·HCP·Tee] | ±Par | Total
- *   | R1 | ±R1 | SD | 🐦 | = | ■
- *   | R2 | ±R2 | SD | 🐦 | = | ■
- *   | …
+ *   | R1 | ±R1 | [SD | 🐦 | = | ■]
+ *   | R2 | ±R2 | [SD | 🐦 | = | ■]
+ *   | …  | [extraColumns]
  *
  * Estrutura de colunas (nRounds === 1):
- *   # | Jogador | [ESC·FED·Clube·HCP·Tee] | ±Par | Total | SD | 🐦 | = | ■
+ *   # | Jogador | [ESC·FED·Clube·HCP·Tee] | ±Par | Total | [SD | 🐦 | = | ■] | [extraColumns]
  *
- * Stats (SD/🐦/=/■) são SEMPRE por ronda — calculadas pelo caller e
- * passadas em `MRRound.sd`, `.birdies`, `.pars`, `.bogeys`.
+ * Stats (SD/🐦/=/■) controladas por `showRoundStats` (default true).
+ * Colunas extra (evolução, etc.) via `extraColumns` render prop.
+ * Datas nas rondas via `roundDates`.
  */
 import React, { useState, useMemo } from "react";
 import { getTeeHex } from "../utils/teeColors";
@@ -64,7 +65,7 @@ import { EscPill, ESC_STYLE } from "../ui/PillBadge";
 
 function filterRows(rows: MultiRoundRow[], f: PlayerFilter): MultiRoundRow[] {
   let ps = rows;
-  if (f.name) { const q = f.name.toLowerCase(); ps = ps.filter(r => r.name.toLowerCase().includes(q) || r.club.toLowerCase().includes(q)); }
+  if (f.name) { const q = f.name.toLowerCase(); ps = ps.filter(r => r.name.toLowerCase().includes(q) || (r.club || "").toLowerCase().includes(q)); }
   if (f.escs.length) ps = ps.filter(r => r.esc != null && f.escs.includes(r.esc));
   if (f.tees.length) ps = ps.filter(r => r.teeName != null && f.tees.includes(r.teeName));
   if (f.club) ps = ps.filter(r => r.club === f.club);
@@ -113,24 +114,53 @@ type MRSortKey = "pos" | "name" | "club" | "esc" | "hcp" | "gross" | "toPar" | "
    COMPONENTE PRINCIPAL
    ══════════════════════════════════════════════════════════════ */
 
+type RowWithPos = MultiRoundRow & { _pos: number | null };
+
 interface MultiRoundLBProps {
   rows: MultiRoundRow[];
   nRounds: number;
-  playersDB: PlayersDB;
-  showCols?: { esc?: boolean; fed?: boolean; tee?: boolean };
+  playersDB?: PlayersDB;
+  showCols?: {
+    esc?: boolean;
+    fed?: boolean;
+    tee?: boolean;
+    club?: boolean;
+    hcp?: boolean;
+    /** Mostrar colunas de stats por ronda (SD/🐦/=/■). Default: true */
+    roundStats?: boolean;
+    /** Mostrar colunas de ±par por ronda. Default: true */
+    roundToPar?: boolean;
+  };
   sortable?: boolean;
   filterable?: boolean;
+  /** Labels de data para cada ronda (ex: ["25 Fev", "26 Fev"]) */
+  roundDates?: string[];
+  /** Colunas extra no final da tabela (ex: evolução) */
+  extraColumns?: ExtraColumn<RowWithPos>[];
+  /** Renderização customizada do nome do jogador. Se omitido, usa TournPName */
+  renderName?: (row: MultiRoundRow) => React.ReactNode;
 }
 
 export function MultiRoundLeaderboard({
   rows, nRounds, playersDB,
-  showCols = { esc: true, fed: true, tee: true },  // default: mostrar tudo como nas tabs individuais
+  showCols = {},
   sortable = false,
   filterable = false,
+  roundDates,
+  extraColumns,
+  renderName,
 }: MultiRoundLBProps) {
-  const { esc: showEsc = true, fed: showFed = true, tee: showTee = true } = showCols;
+  const {
+    esc: showEsc = true,
+    fed: showFed = true,
+    tee: showTee = true,
+    club: showClub = true,
+    hcp: showHcp = true,
+    roundStats: showRoundStats = true,
+    roundToPar: showRoundToPar = true,
+  } = showCols;
 
-  const { sortKey: sortKey, sortDir: sortDir, toggleSort: handleSort } = useSort<MRSortKey>("pos", "asc");
+  const { sortKey, sortDir, toggleSort: handleSort } = useSort<MRSortKey>("pos", "asc");
   const [filter, setFilter] = useState<PlayerFilter>(EMPTY_FILTER);
 
   if (!rows.length) return <EmptyState size="sm" message="Sem resultados." />;
@@ -141,17 +171,17 @@ export function MultiRoundLeaderboard({
   const wdRows     = rows.filter(r =>  r.isWD);
 
   /* Posições — apenas jogadores completos e não-WD */
-  const withPos = useMemo(() => {
-    const forRank = [...complete].sort((a, b) => a.gross - b.gross);
+  const withPos: RowWithPos[] = useMemo(() => {
+    const forRank = [...complete].sort((a, b) => (a.gross ?? 9999) - (b.gross ?? 9999));
     let counter = 1;
     const posMap = new Map<string, number>();
     forRank.forEach((r, i) => {
       if (i > 0 && r.gross !== forRank[i - 1].gross) counter = i + 1;
-      posMap.set(r.key, counter);
+      posMap.set(r.key || r.name, counter);
     });
     return rows.map(r => ({
       ...r,
-      _pos: (r.isIncomplete || r.isWD) ? null : (posMap.get(r.key) ?? null),
+      _pos: (r.isIncomplete || r.isWD) ? null : (posMap.get(r.key || r.name) ?? null),
     }));
   }, [rows]);
 
@@ -161,9 +191,7 @@ export function MultiRoundLeaderboard({
   const filteredWD         = useMemo(() => filterRows(withPos.filter(r =>  r.isWD), filter),                   [withPos, filter]);
 
   /* Sort */
-
-
-  function cmp(a: typeof withPos[0], b: typeof withPos[0]): number {
+  function cmp(a: RowWithPos, b: RowWithPos): number {
     const INF = 9999;
     switch (sortKey) {
       case "pos":   return sortDir === "asc" ? (a._pos ?? INF) - (b._pos ?? INF) : (b._pos ?? INF) - (a._pos ?? INF);
@@ -172,8 +200,8 @@ export function MultiRoundLeaderboard({
       case "esc":   return sortDir === "asc" ? (a.esc||"").localeCompare(b.esc||"") : (b.esc||"").localeCompare(a.esc||"");
       case "tee":   return sortDir === "asc" ? (a.teeName||"").localeCompare(b.teeName||"") : (b.teeName||"").localeCompare(a.teeName||"");
       case "hcp":   return sortDir === "asc" ? (a.hcp ?? INF) - (b.hcp ?? INF) : (b.hcp ?? INF) - (a.hcp ?? INF);
-      case "gross": return sortDir === "asc" ? a.gross - b.gross : b.gross - a.gross;
-      case "toPar": return sortDir === "asc" ? (a.gross - a.parTotal) - (b.gross - b.parTotal) : (b.gross - b.parTotal) - (a.gross - a.parTotal);
+      case "gross": return sortDir === "asc" ? (a.gross ?? INF) - (b.gross ?? INF) : (b.gross ?? INF) - (a.gross ?? INF);
+      case "toPar": return sortDir === "asc" ? ((a.gross ?? INF) - (a.parTotal ?? 0)) - ((b.gross ?? INF) - (b.parTotal ?? 0)) : ((b.gross ?? INF) - (b.parTotal ?? 0)) - ((a.gross ?? INF) - (a.parTotal ?? 0));
       case "sd":    { const sa = a.rounds[0]?.sd ?? INF; const sb = b.rounds[0]?.sd ?? INF; return sortDir === "asc" ? sa - sb : sb - sa; }
       default:      return 0;
     }
@@ -181,7 +209,7 @@ export function MultiRoundLeaderboard({
 
   const sorted = useMemo(() => {
     if (!sortable) return [...filteredComplete, ...filteredIncomplete, ...filteredWD];
-    return [...filteredComplete.sort(cmp), ...filteredIncomplete.sort(cmp), ...filteredWD.sort(cmp)];
+    return [...filteredComplete].sort(cmp).concat([...filteredIncomplete].sort(cmp), [...filteredWD].sort(cmp));
   }, [filteredComplete, filteredIncomplete, filteredWD, sortKey, sortDir, sortable]);
 
   function SHdr({ k, children, className }: { k: MRSortKey; children: React.ReactNode; className?: string }) {
@@ -209,8 +237,8 @@ export function MultiRoundLeaderboard({
               <SHdr k="name" className="lb-name sticky-col-1">Jogador</SHdr>
               {showEsc && <SHdr k="esc" className="lb-esc">ESC.</SHdr>}
               {showFed && <th className="lb-fed">FED</th>}
-              <SHdr k="club" className="lb-club">Clube</SHdr>
-              <SHdr k="hcp"  className="lb-hcp">HCP</SHdr>
+              {showClub && <SHdr k="club" className="lb-club">Clube</SHdr>}
+              {showHcp && <SHdr k="hcp"  className="lb-hcp">HCP</SHdr>}
               {showTee && <th className="lb-tee">TEE</th>}
 
               {/* ±Par ANTES de Total */}
@@ -221,26 +249,38 @@ export function MultiRoundLeaderboard({
               {isMulti
                 ? Array.from({ length: nRounds }, (_, r) => (
                     <React.Fragment key={r}>
-                      <th className="lb-rnd">R{r + 1}</th>
-                      <th className="lb-rnd-tp">±</th>
-                      <th className="lb-rnd-sd">SD</th>
-                      <th className="lb-rnd-bird">🐦</th>
-                      <th className="lb-rnd-par">=</th>
-                      <th className="lb-rnd-bog">■</th>
+                      <th className="lb-rnd">
+                        R{r + 1}
+                        {roundDates?.[r] && <><br /><span className="th-sub">{roundDates[r]}</span></>}
+                      </th>
+                      {showRoundToPar && <th className="lb-rnd-tp">±</th>}
+                      {showRoundStats && <>
+                        <th className="lb-rnd-sd">SD</th>
+                        <th className="lb-rnd-bird">🐦</th>
+                        <th className="lb-rnd-par">=</th>
+                        <th className="lb-rnd-bog">■</th>
+                      </>}
                     </React.Fragment>
                   ))
                 : <>
-                    <th className="lb-sd">SD</th>
-                    <th className="lb-bird">🐦</th>
-                    <th className="lb-par-stat">Par</th>
-                    <th className="lb-bog">■</th>
+                    {showRoundStats && <>
+                      <th className="lb-sd">SD</th>
+                      <th className="lb-bird">🐦</th>
+                      <th className="lb-par-stat">Par</th>
+                      <th className="lb-bog">■</th>
+                    </>}
                   </>
               }
+
+              {/* Colunas extra */}
+              {extraColumns?.map((col, ci) => (
+                <th key={ci} className={col.className} style={col.headerStyle}>{col.header}</th>
+              ))}
             </tr>
           </thead>
           <tbody>
             {sorted.map((row, idx) => {
-              const tp = row.gross - row.parTotal;
+              const tp = (row.gross ?? 0) - (row.parTotal ?? 0);
               const isInc = row.isIncomplete && !row.isWD;  // ronda ainda por jogar
               const isWD  = !!row.isWD;                     // desistiu
               const dp = row._pos;
@@ -260,9 +300,9 @@ export function MultiRoundLeaderboard({
                 : "var(--bg-card,#fff)";
 
               return (
-                <tr key={row.key}
+                <tr key={row.key || row.name + idx}
                   className={row.isHighlighted ? "row-manuel" : undefined}
-                  style={(isInc || isWD) ? { background: rowBg, opacity: isWD ? 0.55 : 0.7 } : undefined}>
+                  style={(isInc || isWD) ? { background: rowBg, opacity: isWD ? 0.55 : 0.7 } : row.isHighlighted ? { background: rowBg } : undefined}>
                   <td className="lb-pos sticky-col-0" style={row.isHighlighted ? undefined : { background: stickyBg }}>
                     {isWD
                       ? <WdBadge />
@@ -271,50 +311,56 @@ export function MultiRoundLeaderboard({
                         : showPos ? (medal || dp) : ""}
                   </td>
                   <td className="lb-name sticky-col-1" style={row.isHighlighted ? undefined : { background: stickyBg }}>
-                    <TournPName name={row.name} fedCode={row.fed} playersDB={playersDB} />
+                    {renderName
+                      ? renderName(row)
+                      : playersDB
+                        ? <TournPName name={row.name} fedCode={row.fed} playersDB={playersDB} />
+                        : <>{row.countryFlag && <>{row.countryFlag} </>}<span className="fw-700">{row.name}</span></>
+                    }
                     {isInc && <span className="badge-inc">INC</span>}
                   </td>
                   {showEsc && <td className="lb-esc">{row.esc ? <EscPill esc={row.esc} /> : <span className="muted">–</span>}</td>}
                   {showFed && <td className="lb-fed">{row.fed || "–"}</td>}
-                  <td className="lb-club">{row.club || "–"}</td>
-                  <td className="lb-hcp">{fmtHcp(row.hcp)}</td>
+                  {showClub && <td className="lb-club">{row.club || "–"}</td>}
+                  {showHcp && <td className="lb-hcp">{fmtHcp(row.hcp)}</td>}
                   {showTee && <td className="lb-tee"><TeeDot teeName={row.teeName} /></td>}
 
                   {/* ±Par ANTES de Total */}
                   <td className="lb-topar" style={{ color: tpCol, opacity: (isInc || isWD) ? 0.5 : 1 }}>{fmtTP(tp)}</td>
-                  <td className="lb-gross" style={{ opacity: (isInc || isWD) ? 0.5 : 1 }}>{row.gross > 0 ? row.gross : "–"}</td>
+                  <td className="lb-gross" style={{ opacity: (isInc || isWD) ? 0.5 : 1 }}>{(row.gross ?? 0) > 0 ? row.gross : "–"}</td>
 
                   {/* Colunas por ronda */}
                   {isMulti
                     ? Array.from({ length: nRounds }, (_, r) => {
                         const rd = row.rounds[r];
+                        const emptyCols = (showRoundToPar ? 1 : 0) + (showRoundStats ? 4 : 0);
                         if (!rd) return (
                           <React.Fragment key={r}>
                             <td className="lb-rnd c-muted">–</td>
-                            <td className="lb-rnd-tp c-muted">–</td>
-                            <td className="lb-rnd-sd c-muted">–</td>
-                            <td className="lb-rnd-bird">–</td>
-                            <td className="lb-rnd-par">–</td>
-                            <td className="lb-rnd-bog">–</td>
+                            {Array.from({ length: emptyCols }, (_, j) => (
+                              <td key={j} className="c-muted">–</td>
+                            ))}
                           </React.Fragment>
                         );
-                        const rtp = rd.gross - rd.parPerRound;
+                        const rtp = (rd.gross ?? 0) - (rd.parPerRound ?? 0);
                         return (
                           <React.Fragment key={r}>
                             <td className="lb-rnd">{rd.gross}</td>
-                            <td className="lb-rnd-tp" style={{ color: tpColor(rtp) }}>{fmtTP(rtp)}</td>
-                            <td className="lb-rnd-sd">
-                              {rd.sd != null
-                                ? <SDPill sd={rd.sd} source={rd.sdSource ?? null} hcp={row.hcp} />
-                                : <span className="muted">–</span>}
-                            </td>
-                            <td className="lb-rnd-bird">{rd.birdies || ""}</td>
-                            <td className="lb-rnd-par">{rd.pars || ""}</td>
-                            <td className="lb-rnd-bog">{rd.bogeys || ""}</td>
+                            {showRoundToPar && <td className="lb-rnd-tp" style={{ color: tpColor(rtp) }}>{fmtTP(rtp)}</td>}
+                            {showRoundStats && <>
+                              <td className="lb-rnd-sd">
+                                {rd.sd != null
+                                  ? <SDPill sd={rd.sd} source={rd.sdSource ?? null} hcp={row.hcp} />
+                                  : <span className="muted">–</span>}
+                              </td>
+                              <td className="lb-rnd-bird">{rd.birdies || ""}</td>
+                              <td className="lb-rnd-par">{rd.pars || ""}</td>
+                              <td className="lb-rnd-bog">{rd.bogeys || ""}</td>
+                            </>}
                           </React.Fragment>
                         );
                       })
-                    : (() => {
+                    : showRoundStats ? (() => {
                         const rd = row.rounds[0];
                         return (
                           <>
@@ -328,8 +374,13 @@ export function MultiRoundLeaderboard({
                             <td className="lb-bog">{rd?.bogeys || ""}</td>
                           </>
                         );
-                      })()
+                      })() : null
                   }
+
+                  {/* Colunas extra */}
+                  {extraColumns?.map((col, ci) => (
+                    <td key={ci} className={col.className}>{col.cell(row, idx)}</td>
+                  ))}
                 </tr>
               );
             })}

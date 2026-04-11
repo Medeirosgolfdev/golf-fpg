@@ -2243,8 +2243,8 @@ function DriveContent() {
             borderTop: "1px solid var(--border-light)",
           }}>
             {availRegions.length > 1 && (<>
-              <button className={"tourn-tab tourn-tab-sm" + (regionFilter === null ? " active" : "")}
-                onClick={() => setRegionFilter(null)} className="flex-shrink-0">
+              <button className={"tourn-tab tourn-tab-sm flex-shrink-0" + (regionFilter === null ? " active" : "")}
+                onClick={() => setRegionFilter(null)}>
                 Todas ({countEvents(seriesT)})
               </button>
               {availRegions.map(reg => {
@@ -2262,8 +2262,8 @@ function DriveContent() {
               })}
               <ToolbarSep />
             </>)}
-            <button className={"tourn-tab tourn-tab-sm" + (escFilter.length === 0 ? " active" : "")}
-              onClick={() => setEscFilter([])} className="flex-shrink-0">
+            <button className={"tourn-tab tourn-tab-sm flex-shrink-0" + (escFilter.length === 0 ? " active" : "")}
+              onClick={() => setEscFilter([])}>
               Todos ({uniquePCRegion} jog)
             </button>
             {(["Sub 10","Sub 12","Sub 14","Sub 16","Sub 18","Absoluto","Sénior"] as const).map(e => {

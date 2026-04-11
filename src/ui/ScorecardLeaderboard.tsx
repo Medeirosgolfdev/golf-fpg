@@ -26,9 +26,10 @@
  *  – ±Par tem border-left espessa (2px) via CSS.
  *  – SD e estatísticas vêm APÓS o scorecard (postScorecardCells).
  */
-import React from "react";
+import React, { useMemo } from "react";
 import { scClass } from "../utils/scoreDisplay";
 import { fmtToPar } from "../utils/format";
+import { useSort } from "../hooks/useSort";
 import { tpColor } from "./tournamentPrimitives";
 
 export interface ScorecardRow {
@@ -46,6 +47,10 @@ export interface ScorecardRow {
   postScorecardCells?: React.ReactNode;
   /** @deprecated use postScorecardCells */
   postTotalCells?: React.ReactNode;
+  /** Nome em texto para sorting interno (quando sortable=true) */
+  sortName?: string;
+  /** Posição numérica para sorting interno (quando sortable=true) */
+  sortPos?: number | null;
 }
 
 interface ScorecardLeaderboardProps {
@@ -63,6 +68,8 @@ interface ScorecardLeaderboardProps {
   postTotalColCount?: number;
   /** Número de colunas após o scorecard (SD, 🐦, Par, ■) — para preencher SI/PAR rows */
   postScorecardColCount?: number;
+  /** Buraco inicial para numeração (default 1, back-9: 10) */
+  startHole?: number;
   showScorecard: boolean;
   onToggleScorecard?: () => void;
   metaLine?: React.ReactNode;
@@ -71,7 +78,11 @@ interface ScorecardLeaderboardProps {
   onSortName?: () => void;
   activeSortKey?: string;
   activeSortDir?: "asc" | "desc";
+  /** Sorting interno — usa sortName/sortPos de ScorecardRow. Ignora onSortPos/onSortName. */
+  sortable?: boolean;
 }
+
+type SCSortKey = "pos" | "name" | "gross" | "toPar";
 
 export function ScorecardLeaderboard({
   par, si, siLabel = "S.I.", rows,
@@ -80,10 +91,13 @@ export function ScorecardLeaderboard({
   parLabelColSpan = 1,
   postTotalColCount = 0,
   postScorecardColCount = 0,
+  startHole: startHoleProp,
   showScorecard, onToggleScorecard,
   metaLine, filterBar,
   onSortPos, onSortName, activeSortKey, activeSortDir,
+  sortable = false,
 }: ScorecardLeaderboardProps) {
+  const startHole = startHoleProp ?? 1;
   const nh = par.length;
   const is9 = nh <= 9;
   const parF9 = par.slice(0, 9).reduce((a, b) => a + b, 0);
@@ -97,9 +111,34 @@ export function ScorecardLeaderboard({
 
   const afterScorecardHeaders = postScorecardHeaderCells ?? postTotalHeaderCells;
 
+  /* ── Sorting interno ── */
+  const { sortKey: intSortKey, sortDir: intSortDir, toggleSort: intToggle } = useSort<SCSortKey>("pos", "asc");
+
+  const effectiveSortKey = sortable ? intSortKey : activeSortKey;
+  const effectiveSortDir = sortable ? intSortDir : activeSortDir;
+
+  const sortedRows = useMemo(() => {
+    if (!sortable) return rows;
+    const INF = 9999;
+    return [...rows].sort((a, b) => {
+      const dir = intSortDir === "asc" ? 1 : -1;
+      switch (intSortKey) {
+        case "pos":   return dir * ((a.sortPos ?? INF) - (b.sortPos ?? INF));
+        case "name":  return dir * ((a.sortName ?? a.key.toString()).localeCompare(b.sortName ?? b.key.toString(), "pt"));
+        case "gross": return dir * (a.gross - b.gross);
+        case "toPar": return dir * ((a.toPar ?? INF) - (b.toPar ?? INF));
+        default:      return 0;
+      }
+    });
+  }, [rows, sortable, intSortKey, intSortDir]);
+
+  const handleSortPos  = sortable ? () => intToggle("pos")  : onSortPos;
+  const handleSortName = sortable ? () => intToggle("name") : onSortName;
+  const isSortable = sortable || !!onSortPos || !!onSortName;
+
   function SortArrow({ col }: { col: string }) {
-    if (activeSortKey !== col) return null;
-    return <span className="sort-arrow">{activeSortDir === "asc" ? "▲" : "▼"}</span>;
+    if (effectiveSortKey !== col) return null;
+    return <span className="sort-arrow">{effectiveSortDir === "asc" ? "▲" : "▼"}</span>;
   }
 
   return (
@@ -164,22 +203,26 @@ export function ScorecardLeaderboard({
 
             {/* Header principal — terceiro, sticky vertical */}
             <tr>
-              <th className={"lb-pos sticky-col-0" + (onSortPos ? " lb-sortable" : "")} onClick={onSortPos}>
+              <th className={"lb-pos sticky-col-0" + (handleSortPos ? " lb-sortable" : "")} onClick={handleSortPos}>
                 #<SortArrow col="pos" />
               </th>
-              <th className={"lb-name sticky-col-1" + (onSortName ? " lb-sortable" : "")} onClick={onSortName}>
+              <th className={"lb-name sticky-col-1" + (handleSortName ? " lb-sortable" : "")} onClick={handleSortName}>
                 Jogador<SortArrow col="name" />
               </th>
               {prefixHeaderCells}
-              <th className="lb-topar">±</th>
-              <th className="lb-gross">Tot</th>
+              <th className={"lb-topar" + (sortable ? " lb-sortable" : "")} onClick={sortable ? () => intToggle("toPar") : undefined}>
+                ±<SortArrow col="toPar" />
+              </th>
+              <th className={"lb-gross" + (sortable ? " lb-sortable" : "")} onClick={sortable ? () => intToggle("gross") : undefined}>
+                Tot<SortArrow col="gross" />
+              </th>
               {showScorecard && <>
                 {Array.from({ length: Math.min(9, nh) }, (_, i) => (
-                  <th key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{i + 1}</th>
+                  <th key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{startHole + i}</th>
                 ))}
                 <th className="lb-halftot">{is9 ? "Tot" : "Out"}</th>
                 {!is9 && Array.from({ length: Math.min(9, nh - 9) }, (_, i) => (
-                  <th key={i + 9} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{i + 10}</th>
+                  <th key={i + 9} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{startHole + 9 + i}</th>
                 ))}
                 {!is9 && <th className="lb-halftot">In</th>}
               </>}
@@ -187,7 +230,7 @@ export function ScorecardLeaderboard({
             </tr>
           </thead>
           <tbody>
-            {rows.map(row => {
+            {sortedRows.map(row => {
               const sticky = row.stickyBg || "var(--bg-card,#fff)";
               const manuelCls = row.rowBg ? " row-manuel" : "";
               const scores = row.scores ?? [];

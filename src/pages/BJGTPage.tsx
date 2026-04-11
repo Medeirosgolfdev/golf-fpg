@@ -2,7 +2,7 @@
  * BJGTPage.tsx — BJGT Tournament Results
  * 3 tournaments · day sub-tabs (Acumulado, R1, R2, R3)
  */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { cachedFetch } from "../data/fetchCache";
 import { scClass, SC } from "../utils/scoreDisplay";
 import { tpColor, isManuel } from "../ui/tournamentPrimitives";
@@ -13,10 +13,12 @@ import { gf } from "../utils/flagUtils";
 const isM = (name: string) => isManuel({ name });
 import { fmtToPar, fmtSign, fmtSignParen as fmtSub, fmtFieldInfo } from "../utils/format";
 import { isCalUnlocked } from "../utils/authConstants";
+import { MultiRoundLeaderboard } from "../ui/MultiRoundLeaderboard";
+import { ScorecardLeaderboard, type ScorecardRow } from "../ui/ScorecardLeaderboard";
+import type { MultiRoundRow, ExtraColumn } from "../ui/multiRoundTypes";
 import PasswordGate from "../ui/PasswordGate";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
-import EvoBadge from "../ui/EvoBadge";
 import DetailHeader from "../ui/DetailHeader";
 import TabRow from "../ui/TabRow";
 import { useMasterDetail } from "../hooks/useMasterDetail";
@@ -73,131 +75,129 @@ function loadT(raw: any, reverseRounds?: boolean): TData {
 
 
 /* ═══════════════════════════════════════════════════════════════
-   ACCUMULATED LEADERBOARD — compact, ±par per round
+   ACCUMULATED LEADERBOARD — via MultiRoundLeaderboard
    ═══════════════════════════════════════════════════════════════ */
 function AccLB({ data, evo, evoYear, roundDates }: { data: TData; evo?: Map<string, EvoEntry>; evoYear?: string; roundDates?: string[] }) {
   const { parTotal, players } = data;
   const nR = Math.max(...players.map(p => p.rounds.length), 0);
   const hasEvo = evo && evo.size > 0;
+
+  const rows: MultiRoundRow[] = useMemo(() => players.map((p, idx) => {
+    const incomplete = p.rounds.length < nR;
+    const isPT = p.country.includes("Portugal");
+    return {
+      key: p.name + idx,
+      name: p.name,
+      countryFlag: gf(p.country),
+      gross: p.total ?? 0,
+      parTotal: parTotal * nR,
+      toPar: p.result ?? (p.total != null ? p.total - parTotal * nR : null),
+      pos: p.pos ?? 0,
+      isIncomplete: incomplete,
+      isWD: incomplete,
+      isHighlighted: isM(p.name) || isPT,
+      rounds: Array.from({ length: nR }, (_, i) => {
+        const r = p.rounds[i];
+        if (!r) return { gross: null, parPerRound: parTotal };
+        return { gross: r.gross, parPerRound: parTotal };
+      }),
+    };
+  }), [players, nR, parTotal]);
+
+  /* Colunas de evolução */
+  const extraCols: ExtraColumn<MultiRoundRow & { _pos?: number | null }>[] | undefined = hasEvo ? [
+    {
+      header: evoYear || "2025",
+      className: "ta-c fs-11 fw-600",
+      headerStyle: { width: 36, textAlign: "center", padding: "0 3px", borderLeft: "2px solid var(--border)" },
+      cell: (row) => {
+        const ev = evo!.get(row.name);
+        return ev
+          ? <span style={{ borderLeft: "2px solid var(--border)", padding: "0 3px", display: "inline-block" }}>{ev.otherTotal}</span>
+          : <span className="c-muted" style={{ borderLeft: "2px solid var(--border)", padding: "0 3px", display: "inline-block" }}>–</span>;
+      },
+    },
+    {
+      header: "Δ",
+      className: "ta-c fs-11 fw-700",
+      headerStyle: { width: 34, textAlign: "center", padding: "0 3px" },
+      cell: (row) => {
+        const ev = evo!.get(row.name);
+        if (!ev) return <span className="c-muted">–</span>;
+        return <span style={{ color: ev.delta < 0 ? "var(--good-dark)" : ev.delta > 0 ? SC.danger : "var(--text-3)" }}>{ev.delta > 0 ? "+" : ""}{ev.delta}</span>;
+      },
+    },
+    {
+      header: "Percurso",
+      className: "ta-c",
+      headerStyle: { width: 140, textAlign: "center", padding: "0 4px" },
+      cell: (row) => {
+        const ev = evo!.get(row.name);
+        return ev
+          ? <EvoBadge pill={ev.pill} from={ev.from} to={ev.to} />
+          : <EvoBadge pill="NEW" label={evoYear === "2026" ? "não voltou" : "novo"} />;
+      },
+    },
+  ] : undefined;
+
   return (
-    <div className="bjgt-chart-scroll">
-      <table className="sc-table-modern" data-sc-table="1" style={{ width: "auto" }}>
-        <thead><tr>
-          <th className="hole-header ta-c"  style={{ width: 26, padding: "0 2px" }}>#</th>
-          <th className="hole-header ta-left"  style={{ paddingLeft: 6, paddingRight: 8 }}>Jogador</th>
-          {Array.from({ length: nR }, (_, i) => (<React.Fragment key={i}>
-            <th className="hole-header" style={{ width: roundDates?.[i] ? 52 : 30, textAlign: "center", padding: "0 1px" }}>
-              R{i + 1}{roundDates?.[i] ? <><br /><span className="th-sub">{roundDates[i]}</span></> : ""}
-            </th>
-            <th className="hole-header c-muted fs-10 fw-500 ta-c"  style={{ width: 34, padding: "0 1px" }}>±par</th>
-          </React.Fragment>))}
-          <th className="hole-header col-total" style={{ width: 34, padding: "0 3px" }}>Tot</th>
-          <th className="hole-header ta-c"  style={{ width: 38, padding: "0 3px" }}>±Par</th>
-          {hasEvo && <>
-            <th className="hole-header" style={{ width: 36, textAlign: "center", padding: "0 3px", borderLeft: "2px solid var(--border)" }}>{evoYear || "2025"}</th>
-            <th className="hole-header ta-c"  style={{ width: 34, padding: "0 3px" }}>Δ</th>
-            <th className="hole-header ta-c"  style={{ width: 140, padding: "0 4px" }}>Percurso</th>
-          </>}
-        </tr></thead>
-        <tbody>
-          {players.map((p, idx) => {
-            const incomplete = p.rounds.length < nR;
-            const showPos = idx === 0 || p.pos !== players[idx - 1].pos;
-            const tp = p.result ?? (p.total != null ? p.total - parTotal * p.rounds.length : null);
-            const bg = isM(p.name) ? "var(--bg-success-subtle)" : p.country.includes("Portugal") ? "rgba(var(--rgb-success), 0.06)" : undefined;
-            const ev = hasEvo ? evo!.get(p.name) : undefined;
-            return (
-              <tr key={idx} style={{ ...(bg ? { background: bg } : {}), ...(incomplete ? { opacity: 0.5 } : {}) }}>
-                <td className="fw-800 ta-center" style={{ color: "var(--text-3)", fontSize: 11, padding: "0 2px" }}>{incomplete ? "WD" : (showPos ? p.pos : "")}</td>
-                <td className="fs-12 ta-left" style={{ whiteSpace: "nowrap", paddingLeft: 6, paddingRight: 8 }}>
-                  <span className="fw-700">{gf(p.country)} {p.name}</span>
-                </td>
-                {Array.from({ length: nR }, (_, i) => {
-                  const r = p.rounds[i];
-                  if (!r) return (<React.Fragment key={i}><td className="ta-c fs-12" style={{ padding: "0 1px" }} className="c-muted">–</td><td className="ta-c fs-10" style={{ padding: "0 1px" }} className="c-muted">–</td></React.Fragment>);
-                  const rdTp = r.gross - parTotal;
-                  const c = tpColor(rdTp);
-                  return (<React.Fragment key={i}>
-                    <td className="ta-c fs-12 fw-600" style={{ padding: "0 1px" }}>{r.gross}</td>
-                    <td className="ta-c fs-10 fw-600" style={{ padding: "0 1px", color: c }}>{fmtToPar(rdTp)}</td>
-                  </React.Fragment>);
-                })}
-                <td className="col-total fw-800 fs-13"  style={{ padding: "0 3px" }}>{p.total}</td>
-                <td className="fw-700 ta-c fs-12"  style={{ padding: "0 3px", color: tpColor(tp) }}>
-                  {tp != null ? fmtToPar(tp) : "–"}
-                </td>
-                {hasEvo && (ev ? <>
-                  <td style={{ textAlign: "center", fontSize: 11, fontWeight: 600, padding: "0 3px", borderLeft: "2px solid var(--border)" }}>{ev.otherTotal}</td>
-                  <td style={{ textAlign: "center", fontSize: 11, fontWeight: 700, padding: "0 3px", color: ev.delta < 0 ? "var(--good-dark)" : ev.delta > 0 ? SC.danger : "var(--text-3)" }}>
-                    {ev.delta > 0 ? "+" : ""}{ev.delta}
-                  </td>
-                  <td className="ta-c" style={{ padding: "0 4px" }}>
-                    <EvoBadge pill={ev.pill} from={ev.from} to={ev.to} />
-                  </td>
-                </> : <>
-                  <td style={{ textAlign: "center", fontSize: 11, padding: "0 3px", borderLeft: "2px solid var(--border)" }} className="c-muted">–</td>
-                  <td className="c-muted ta-c fs-11"  style={{ padding: "0 3px" }}>–</td>
-                  <td className="ta-c" style={{ padding: "0 4px" }}><EvoBadge pill="NEW" label={evoYear === "2026" ? "não voltou" : "novo"} /></td>
-                </>)}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+    <MultiRoundLeaderboard
+      rows={rows}
+      nRounds={nR}
+      sortable
+      showCols={{ esc: false, fed: false, tee: false, club: false, hcp: false, roundStats: false }}
+      roundDates={roundDates}
+      extraColumns={extraCols}
+      renderName={(row) => <span className="fw-700">{row.countryFlag} {row.name}</span>}
+    />
   );
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   SCORECARD TABLE — hole-by-hole for one round
+   SCORECARD TABLE — via ScorecardLeaderboard
    ═══════════════════════════════════════════════════════════════ */
 function SCTable({ data, ri }: { data: TData; ri: number }) {
-  const { par, si, parF9, parB9, parTotal, players } = data;
+  const { par, si, parTotal, players } = data;
   const ws = players.filter(p => p.rounds[ri]?.scores);
   const sorted = [...ws].sort((a, b) => a.rounds[ri].gross - b.rounds[ri].gross);
+
+  // Calcular posições
   let pos = 1;
   sorted.forEach((p, i) => { if (i > 0 && p.rounds[ri].gross > sorted[i - 1].rounds[ri].gross) pos = i + 1; (p as any)._dp = pos; });
-if (!sorted.length) return <EmptyState size="sm" message="Scorecards buraco-a-buraco não disponíveis para esta ronda." />;
+
+  const rows: ScorecardRow[] = useMemo(() => {
+    return sorted.map((p, idx) => {
+      const r = p.rounds[ri];
+      if (!r?.scores) return null;
+      const tp = r.gross - parTotal;
+      const dp = (p as any)._dp as number;
+      const showP = idx === 0 || dp !== (sorted[idx - 1] as any)._dp;
+      const bg = isM(p.name) ? "var(--bg-success-subtle)" : p.country.includes("Portugal") ? "rgba(var(--rgb-success), 0.06)" : undefined;
+      return {
+        key: p.name + idx,
+        pos: showP ? dp : "",
+        gross: r.gross,
+        toPar: tp,
+        scores: r.scores,
+        rowBg: bg,
+        stickyBg: bg || "var(--bg-card,#fff)",
+        nameContent: <span className="fw-700">{gf(p.country)} {p.name.length > 22 ? p.name.substring(0, 20) + "…" : p.name}</span>,
+        sortName: p.name,
+        sortPos: dp,
+      } as ScorecardRow;
+    }).filter(Boolean) as ScorecardRow[];
+  }, [sorted, ri, parTotal]);
+
+  if (!rows.length) return <EmptyState size="sm" message="Scorecards buraco-a-buraco não disponíveis para esta ronda." />;
+
   return (
-    <div className="bjgt-chart-scroll">
-      <table className="sc-table-modern" data-sc-table="1">
-        <thead><tr>
-          <th className="hole-header ta-c"  style={{ width: 26 }}>#</th>
-          <th className="hole-header ta-left"  style={{ paddingLeft: 6 }}>Jogador</th>
-          <th className="hole-header col-total" style={{ width: 28 }}>Tot</th>
-          <th className="hole-header" style={{ width: 28 }}>±</th>
-          {[1,2,3,4,5,6,7,8,9].map(h => <th key={h} className="hole-header">{h}</th>)}
-          <th className="hole-header col-out fs-10">Out</th>
-          {[10,11,12,13,14,15,16,17,18].map(h => <th key={h} className="hole-header">{h}</th>)}
-          <th className="hole-header col-in fs-10">In</th>
-        </tr></thead>
-        <tbody>
-          <tr className="sep-row"><td></td><td className="row-label par-label">PAR</td><td className="col-total">{parTotal}</td><td></td>
-            {par.slice(0,9).map((p,i) => <td key={i}>{p}</td>)}<td className="col-out fw-600">{parF9}</td>
-            {par.slice(9,18).map((p,i) => <td key={i}>{p}</td>)}<td className="col-in fw-600">{parB9}</td></tr>
-          {si && si.length >= 18 && <tr className="meta-row sep-row"><td></td><td className="row-label par-label">S.I.</td><td></td><td></td>
-            {si.slice(0,9).map((s,i) => <td key={i}>{s}</td>)}<td className="col-out"></td>
-            {si.slice(9,18).map((s,i) => <td key={i}>{s}</td>)}<td className="col-in"></td></tr>}
-          {sorted.map((p, idx) => {
-            const r = p.rounds[ri]; if (!r?.scores) return null;
-            const f9 = r.f9!, b9 = r.b9!, tp = r.gross - parTotal;
-            const dp = (p as any)._dp; const showP = idx === 0 || dp !== (sorted[idx - 1] as any)._dp;
-            const bg = isM(p.name) ? "var(--bg-success-subtle)" : p.country.includes("Portugal") ? "rgba(var(--rgb-success), 0.06)" : undefined;
-            return (
-              <tr key={idx} style={bg ? { background: bg } : undefined}>
-                <td className="fw-800 ta-center" style={{ color: "var(--text-3)", fontSize: 11 }}>{showP ? dp : ""}</td>
-                <td className="row-label fw-700 fs-11"  style={{ whiteSpace: "nowrap" }}>{gf(p.country)} {p.name.length > 22 ? p.name.substring(0, 20) + "…" : p.name}</td>
-                <td className="col-total">{r.gross}</td>
-                <td className="fw-700 fs-11"  style={{ color: tpColor(tp) }}>{fmtToPar(tp)}</td>
-                {r.scores.slice(0,9).map((sc,i) => <td key={i}><span className={`sc-score ${scClass(sc, par[i])}`}>{sc}</span></td>)}
-                <td className="col-out fw-600">{f9} <span className="fs-8 c-text-3">{fmtSub(f9 - parF9)}</span></td>
-                {r.scores.slice(9,18).map((sc,i) => <td key={i}><span className={`sc-score ${scClass(sc, par[9+i])}`}>{sc}</span></td>)}
-                <td className="col-in fw-600">{b9} <span className="fs-8 c-text-3">{fmtSub(b9 - parB9)}</span></td>
-              </tr>);
-          })}
-        </tbody>
-      </table>
-    </div>
+    <ScorecardLeaderboard
+      par={par}
+      si={si}
+      rows={rows}
+      showScorecard
+      sortable
+    />
   );
 }
 

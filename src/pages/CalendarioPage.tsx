@@ -793,7 +793,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
               {sidebarOpen ? "◀" : "▶"}
             </button>
             <h2 className="cal-month-title fs-14"  style={{ margin: 0, whiteSpace: "nowrap" }}>Calendário 2026</h2>
-            <button onClick={goToday} className="p p-filter" title="Ir para hoje" className="flex-shrink-0" style={{ opacity: 1 }}>Hoje</button>
+            <button onClick={goToday} className="p p-filter flex-shrink-0" title="Ir para hoje" style={{ opacity: 1 }}>Hoje</button>
             <div ref={searchRef} style={{ position: "relative", flex: "1 1 120px", minWidth: 100, maxWidth: 220 }}>
               <input value={searchQ} onChange={e => { setSearchQ(e.target.value); setSearchOpen(true); }}
                 onFocus={() => searchQ.length >= 2 && setSearchOpen(true)}

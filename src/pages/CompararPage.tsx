@@ -34,6 +34,8 @@ import { sortTees } from "../utils/teeUtils";
 import { getTeeHex, textOnColor } from "../utils/teeColors";
 import SectionErrorBoundary from "../ui/SectionErrorBoundary";
 import LoadingState from "../ui/LoadingState";
+import { useSort } from "../hooks/useSort";
+import SortableHdr from "../ui/SortableHdr";
 
 const COLORS = ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)"];
 const COLORS_LIGHT = ["var(--bg-success-strong)", "var(--bg-info-strong)", "var(--bg-danger-strong)", "var(--bg-warn-strong)"];
@@ -753,6 +755,55 @@ function HoleProfileSection({ slots, refTee, holesMode }: {
           return { name: s.player.name, nRondasTorneio, nRondas9h, nEDS, nTreino, nRondas, nHolesTotal, holesWithCard, parTotals };
         });
 
+        // Sorting for data summary table
+        const { sortKey, sortDir, toggleSort } = useSort<"name" | "9h" | "eds" | "outros" | "tourn18" | "buracos" | "par3" | "par4" | "par5" | "scorecard">("tourn18", "desc");
+
+        const sortedSummary = [...summary].sort((a, b) => {
+          let aVal: any = a.name, bVal: any = b.name;
+
+          if (sortKey === "name") {
+            aVal = a.name;
+            bVal = b.name;
+          } else if (sortKey === "9h") {
+            aVal = a.nRondas9h;
+            bVal = b.nRondas9h;
+          } else if (sortKey === "eds") {
+            aVal = a.nEDS;
+            bVal = b.nEDS;
+          } else if (sortKey === "outros") {
+            aVal = a.nTreino;
+            bVal = b.nTreino;
+          } else if (sortKey === "tourn18") {
+            aVal = a.nRondasTorneio;
+            bVal = b.nRondasTorneio;
+          } else if (sortKey === "buracos") {
+            aVal = a.nHolesTotal;
+            bVal = b.nHolesTotal;
+          } else if (sortKey === "par3") {
+            aVal = a.parTotals[3];
+            bVal = b.parTotals[3];
+          } else if (sortKey === "par4") {
+            aVal = a.parTotals[4];
+            bVal = b.parTotals[4];
+          } else if (sortKey === "par5") {
+            aVal = a.parTotals[5];
+            bVal = b.parTotals[5];
+          } else if (sortKey === "scorecard") {
+            aVal = a.holesWithCard;
+            bVal = b.holesWithCard;
+          }
+
+          if (typeof aVal === "string") {
+            const cmp = aVal.localeCompare(bVal, "pt");
+            return sortDir === "asc" ? cmp : -cmp;
+          }
+
+          aVal = aVal ?? 0;
+          bVal = bVal ?? 0;
+          const cmp = aVal - bVal;
+          return sortDir === "asc" ? cmp : -cmp;
+        });
+
         return (
           <div style={{
             border: "1px solid var(--border-light)", borderRadius: "var(--radius)",
@@ -775,26 +826,20 @@ function HoleProfileSection({ slots, refTee, holesMode }: {
               <table className="dtable-lg fs-12" style={{ width:"100%" }}>
                 <thead>
                   <tr>
-                    <th>Jogador</th>
-                    <th className="r" title="Rondas de 9 buracos (Drive Challenge, etc.)">9h</th>
-                    <th className="r" title="Rondas EDS (Equalized Differential Score)">EDS</th>
-                    <th className="r" title="Treinos, individuais e outras rondas não competitivas">Outros</th>
-                    <th className="r" title="Rondas de torneio 18 buracos — usadas na análise abaixo"
-                      style={{ background:"var(--bg-info-subtle)", borderLeft:"2px solid var(--color-info)" }}>
-                      Torneio 18h ↓
-                    </th>
-                    <th className="r" style={{ background:"var(--bg-info-subtle)" }}>Buracos</th>
-                    <th className="r" style={{ background:"var(--bg-info-subtle)" }}
-                      title="Buracos na análise (c/distância) / totais do scorecard">Par 3</th>
-                    <th className="r" style={{ background:"var(--bg-info-subtle)" }}
-                      title="Buracos na análise (c/distância) / totais do scorecard">Par 4</th>
-                    <th className="r" style={{ background:"var(--bg-info-subtle)" }}
-                      title="Buracos na análise (c/distância) / totais do scorecard">Par 5</th>
-                    <th className="r" style={{ background:"var(--bg-info-subtle)" }}>Com scorecard</th>
+                    <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Jogador</SortableHdr>
+                    <SortableHdr k="9h" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="Rondas de 9 buracos (Drive Challenge, etc.)">9h</SortableHdr>
+                    <SortableHdr k="eds" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="Rondas EDS (Equalized Differential Score)">EDS</SortableHdr>
+                    <SortableHdr k="outros" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="Treinos, individuais e outras rondas não competitivas">Outros</SortableHdr>
+                    <SortableHdr k="tourn18" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" style={{ background:"var(--bg-info-subtle)", borderLeft:"2px solid var(--color-info)" }} title="Rondas de torneio 18 buracos — usadas na análise abaixo">Torneio 18h</SortableHdr>
+                    <SortableHdr k="buracos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" style={{ background:"var(--bg-info-subtle)" }}>Buracos</SortableHdr>
+                    <SortableHdr k="par3" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" style={{ background:"var(--bg-info-subtle)" }} title="Buracos na análise (c/distância) / totais do scorecard">Par 3</SortableHdr>
+                    <SortableHdr k="par4" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" style={{ background:"var(--bg-info-subtle)" }} title="Buracos na análise (c/distância) / totais do scorecard">Par 4</SortableHdr>
+                    <SortableHdr k="par5" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" style={{ background:"var(--bg-info-subtle)" }} title="Buracos na análise (c/distância) / totais do scorecard">Par 5</SortableHdr>
+                    <SortableHdr k="scorecard" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" style={{ background:"var(--bg-info-subtle)" }}>Com scorecard</SortableHdr>
                   </tr>
                 </thead>
                 <tbody>
-                  {summary.map((s, i) => {
+                  {sortedSummary.map((s, i) => {
                     return (
                       <tr key={i}>
                         <td>
@@ -2110,7 +2155,63 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
     }
   });
   const totalMatches = matches.length;
-  const displayed = showAll ? matches : matches.slice(0, 20);
+
+  // Sorting for H2H table
+  const { sortKey, sortDir, toggleSort } = useSort<"date" | "tourn" | "p0" | "p1" | "p2" | "p3" | "delta">("date", "desc");
+
+  const sortedMatches = [...matches].sort((a, b) => {
+    let aVal: any = a.dateSort, bVal: any = b.dateSort;
+
+    if (sortKey === "date") {
+      aVal = a.dateSort;
+      bVal = b.dateSort;
+    } else if (sortKey === "tourn") {
+      aVal = a.event;
+      bVal = b.event;
+    } else if (sortKey === "p0") {
+      const aRes = a.results.find(r => r.idx === 0);
+      const bRes = b.results.find(r => r.idx === 0);
+      aVal = aRes?.gross ?? 999;
+      bVal = bRes?.gross ?? 999;
+    } else if (sortKey === "p1") {
+      const aRes = a.results.find(r => r.idx === 1);
+      const bRes = b.results.find(r => r.idx === 1);
+      aVal = aRes?.gross ?? 999;
+      bVal = bRes?.gross ?? 999;
+    } else if (sortKey === "p2") {
+      const aRes = a.results.find(r => r.idx === 2);
+      const bRes = b.results.find(r => r.idx === 2);
+      aVal = aRes?.gross ?? 999;
+      bVal = bRes?.gross ?? 999;
+    } else if (sortKey === "p3") {
+      const aRes = a.results.find(r => r.idx === 3);
+      const bRes = b.results.find(r => r.idx === 3);
+      aVal = aRes?.gross ?? 999;
+      bVal = bRes?.gross ?? 999;
+    } else if (sortKey === "delta") {
+      if (loaded.length === 2) {
+        const r0a = a.results.find(r => r.idx === 0), r1a = a.results.find(r => r.idx === 1);
+        const r0b = b.results.find(r => r.idx === 0), r1b = b.results.find(r => r.idx === 1);
+        aVal = (r0a && r1a) ? Math.abs(r0a.gross - r1a.gross) : 999;
+        bVal = (r0b && r1b) ? Math.abs(r0b.gross - r1b.gross) : 999;
+      } else {
+        aVal = 999;
+        bVal = 999;
+      }
+    }
+
+    if (typeof aVal === "string") {
+      const cmp = aVal.localeCompare(bVal, "pt");
+      return sortDir === "asc" ? cmp : -cmp;
+    }
+
+    aVal = aVal ?? 999;
+    bVal = bVal ?? 999;
+    const cmp = aVal - bVal;
+    return sortDir === "asc" ? cmp : -cmp;
+  });
+
+  const displayed = showAll ? sortedMatches : sortedMatches.slice(0, 20);
 
   // Dominance stats (2-player only)
   const dominanceData = loaded.length === 2 ? (() => {
@@ -2190,10 +2291,13 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
       <div className="table-wrap cmp-result-list">
         <table className="dtable-lg">
           <thead><tr>
-            <th>Data</th>
-            <th>Torneio</th>
-            {loaded.map((s, i) => <th key={i} className="r" style={{ color: COLORS[i] }}>{firstName(s.player.name)}</th>)}
-            <th className="r">Δ</th>
+            <SortableHdr k="date" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Data</SortableHdr>
+            <SortableHdr k="tourn" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Torneio</SortableHdr>
+            {loaded.map((s, i) => {
+              const pKey = `p${i}` as "p0" | "p1" | "p2" | "p3";
+              return <SortableHdr key={i} k={pKey} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" style={{ color: COLORS[i] }}>{firstName(s.player.name)}</SortableHdr>;
+            })}
+            <SortableHdr k="delta" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Δ</SortableHdr>
             <th className="r">Vencedor</th>
           </tr></thead>
           <tbody>

@@ -175,7 +175,7 @@ function PainelResumo({ torneios, nossosByFed }: {
                 background: "var(--bg-card)", border: "1px solid var(--border)",
               }}>
                 <SexBadge sex={jj.sex} size="sm" />
-                <span className={`p p-sm p-${escCls(jj.escalao)}`} className="fs-9">{escShort(jj.escalao)}</span>
+                <span className={`p p-sm p-${escCls(jj.escalao)} fs-9`}>{escShort(jj.escalao)}</span>
                 <span>{jj.nome || jj.fed}</span>
               </span>
             ))}
@@ -330,7 +330,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
                   <td className="r muted fs-12" >{fmtHcp(j.hcp)}</td>
                   <td className="r fs-12 fw-600" >{fmtHcp(j.vac)}</td>
                   <td className="r fs-11" >
-                    {sd5 != null ? <span className={`p p-${sdClassByHcp(sd5, st?.currentHcp ?? j.hcp ?? null)}`} className="fs-11">{sd5.toFixed(1)}</span> : <span className="muted">–</span>}
+                    {sd5 != null ? <span className={`p p-${sdClassByHcp(sd5, st?.currentHcp ?? j.hcp ?? null)} fs-11`}>{sd5.toFixed(1)}</span> : <span className="muted">–</span>}
                   </td>
                   <td className="r"><TrendBadge trend={st?.hcpTrend ?? null} delta={st?.hcpDelta3m ?? null} /></td>
                   <td className="r fs-12" >
@@ -342,7 +342,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
                   <td>
                     {p ? <span className="gap-4 flex-wrap" style={{ display: "flex", alignItems: "center" }}>
                         <SexBadge sex={p.sex} size="sm" />
-                        <span className={`p p-sm p-${escCls(p.escalao)}`} className="fs-10">{escShort(p.escalao)}</span>
+                        <span className={`p p-sm p-${escCls(p.escalao)} fs-10`}>{escShort(p.escalao)}</span>
                         {p.dob && <AnoEscalaoPill dob={p.dob} escalao={t.escalao} />}
                         {p.clube && <span className="muted fs-11" >{p.clube}</span>}
                       </span>
@@ -778,7 +778,7 @@ function PlayerScoutCard({ r, fitScore, allReports, bdPlayer }: {
               {bdPlayer?.name ?? r.nome}
             </span>
             {bdPlayer && <SexBadge sex={bdPlayer.sex} size="sm" />}
-            {bdPlayer?.escalao && <span className={`p p-sm p-${escCls(bdPlayer.escalao)}`} className="fs-9">{escShort(bdPlayer.escalao)}</span>}
+            {bdPlayer?.escalao && <span className={`p p-sm p-${escCls(bdPlayer.escalao)} fs-9`}>{escShort(bdPlayer.escalao)}</span>}
             {bdPlayer?.dob && <AnoEscalaoPill dob={bdPlayer.dob} escalao={bdPlayer.escalao} />}
             {!bdPlayer && <span style={{ fontSize: 9, color: "var(--text-3)", border: "1px solid var(--border)", borderRadius: 3, padding: "1px 5px" }}>externo</span>}
           </div>
@@ -852,7 +852,7 @@ function PlayerScoutCard({ r, fitScore, allReports, bdPlayer }: {
                 borderRight: i < arr.length-1 ? "1px solid var(--border)" : "none" }}>
                 <div style={{ fontSize: 9, color: "var(--text-3)", textTransform: "uppercase", letterSpacing:"0.04em", marginBottom: 3 }}>{k.l}</div>
                 {(k as any).cls ? (
-                  <span className={(k as any).cls} className="fs-14 fw-800" style={{ padding: "1px 5px" }}>{k.v ?? "–"}</span>
+                  <span className={(k as any).cls + " fs-14 fw-800"} style={{ padding: "1px 5px" }}>{k.v ?? "–"}</span>
                 ) : (
                   <div style={{ fontSize: 16, fontWeight: 800, color: (k as any).color ?? "var(--text-1)" }}>{k.v ?? "–"}</div>
                 )}

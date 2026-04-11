@@ -36,7 +36,7 @@ import FilterChip from "../ui/FilterChip";
 import PlayerLink from "../ui/PlayerLink";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { C } from "../utils/colors";
-import { fmtDate, fmtToPar, MONTHS_PT, norm, monthLabel, fmtHcp, escShort, fmtTime, fmtDataInscricao, anoEscalao } from "../utils/format";
+import { fmtDate, fmtToPar, MONTHS_PT, norm, monthLabel, fmtHcp, escShort, fmtTime, fmtDataInscricao, anoEscalao, abreviarNome } from "../utils/format";
 import { AnoEscalaoPill, TrendBadge } from "../ui/AnoEscalaoPill";
 import { toggleArr } from "../utils/mathUtils";
 import { calcAGS, expectedSD9 } from "../utils/whsCalc";
@@ -923,7 +923,16 @@ type SortKey = "pos" | "name" | "club" | "esc" | "hcp" | "gross" | "toPar" | "te
    LEADERBOARD PRINCIPAL (1 ronda)
    Colunas idênticas ao Drive: ESC · FED · CLUBE · HCP · TEE · Tot · ± · SD · 🐦 · Par · ■
    ───────────────────────────────────────────── */
-export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabelColSpan = 5 }: { tournament: Tournament; escLookup: EscLookup; playersDB: PlayersDB; siLabel?: string; parLabelColSpan?: number }) {
+export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabelColSpan: parLabelColSpanProp, options }: { tournament: Tournament; escLookup: EscLookup; playersDB: PlayersDB; siLabel?: string; parLabelColSpan?: number; options?: ScorecardOptions }) {
+  const hideHCP_   = options?.hideHCP ?? false;
+  const hideSD_    = options?.hideSD ?? false;
+  const hideEsc    = options?.hideEsc ?? false;
+  const hideFed    = options?.hideFed ?? false;
+  const hideTee    = options?.hideTee ?? false;
+  const clubLabel_ = options?.clubLabel ?? "CLUBE";
+  const startHole_ = options?.startHole ?? 1;
+  // Calcular colSpan dinâmico: base 5 (ESC+FED+CLUBE+HCP+TEE) menos as colunas ocultas
+  const parLabelColSpan = parLabelColSpanProp ?? (5 - (hideEsc ? 1 : 0) - (hideFed ? 1 : 0) - (hideHCP_ ? 1 : 0) - (hideTee ? 1 : 0));
   const { sortKey, sortDir, toggleSort: handleSort } = useSort<SortKey>("pos");
   const [showScorecard, setShowScorecard] = useState(true);
   const [filter, setFilter] = useState<PlayerFilter>(EMPTY_FILTER);
@@ -1020,18 +1029,18 @@ export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabe
       stickyBg,
       nameContent: <PName name={p.name} fedCode={p.fedCode} playersDB={playersDB} highlight={isManuel(p)} />,
       prefixCells: <>
-        <td className="lb-esc">{esc ? <EscPill esc={esc} /> : <span className="muted">–</span>}</td>
-        <td className="lb-fed">{p.fedCode || "–"}</td>
+        {!hideEsc && <td className="lb-esc">{esc ? <EscPill esc={esc} /> : <span className="muted">–</span>}</td>}
+        {!hideFed && <td className="lb-fed">{p.fedCode || "–"}</td>}
         <td className="lb-club">{p.club || "–"}</td>
-        <td className="lb-hcp">{fmtHcp(p.hcpExact)}</td>
-        <td className="lb-tee"><TeeDot teeName={p.teeName} /></td>
+        {!hideHCP_ && <td className="lb-hcp">{fmtHcp(p.hcpExact)}</td>}
+        {!hideTee && <td className="lb-tee"><TeeDot teeName={p.teeName} /></td>}
       </>,
       postScorecardCells: <>
-        <td className="lb-sd">
+        {!hideSD_ && <td className="lb-sd">
           {sd != null
             ? <SDPill sd={sd} source={source} hcp={p.hcpExact ?? null} />
             : <span className="muted">–</span>}
-        </td>
+        </td>}
         <td className="lb-bird">{birds || ""}</td>
         <td className="lb-par-stat">{pars || ""}</td>
         <td className="lb-bog">{bogs || ""}</td>
@@ -1047,6 +1056,7 @@ export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabe
       rows={rows}
       parLabelColSpan={parLabelColSpan}
       postTotalColCount={0}
+      startHole={startHole_}
       showScorecard={showScorecard}
       onToggleScorecard={() => setShowScorecard(v => !v)}
       metaLine={<>
@@ -1063,14 +1073,14 @@ export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabe
         />
       }
       prefixHeaderCells={<>
-        <SortableHdr k="esc" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-esc">ESC.</SortableHdr>
-        <th className="lb-fed">FED</th>
-        <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-club">CLUBE</SortableHdr>
-        <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-hcp">HCP</SortableHdr>
-        <SortableHdr k="tee" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-tee">TEE</SortableHdr>
+        {!hideEsc && <SortableHdr k="esc" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-esc">ESC.</SortableHdr>}
+        {!hideFed && <th className="lb-fed">FED</th>}
+        <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-club">{clubLabel_}</SortableHdr>
+        {!hideHCP_ && <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-hcp">HCP</SortableHdr>}
+        {!hideTee && <SortableHdr k="tee" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-tee">TEE</SortableHdr>}
       </>}
       postScorecardHeaderCells={<>
-        <SortableHdr k="sd" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-sd">SD</SortableHdr>
+        {!hideSD_ && <SortableHdr k="sd" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className="lb-sd">SD</SortableHdr>}
         <th className="lb-bird">🐦</th>
         <th className="lb-par-stat">Par</th>
         <th className="lb-bog">■</th>
@@ -1086,7 +1096,7 @@ export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabe
 /* ─────────────────────────────────────────────
    LEADERBOARD ACUMULADO (multi-ronda)
    ───────────────────────────────────────────── */
-export function AccumulatedLB({ tournament, nRounds, escLookup, playersDB }: { tournament: Tournament; nRounds: number; escLookup: EscLookup; playersDB: PlayersDB }) {
+export function AccumulatedLB({ tournament, nRounds, escLookup, playersDB, showCols: showColsProp }: { tournament: Tournament; nRounds: number; escLookup: EscLookup; playersDB: PlayersDB; showCols?: { esc?: boolean; fed?: boolean; tee?: boolean } }) {
   const rawPlayers = tournament.players;
 
   const complete   = rawPlayers.filter(p => !p._incomplete);
@@ -1104,7 +1114,8 @@ export function AccumulatedLB({ tournament, nRounds, escLookup, playersDB }: { t
       const rs = roundScores.find(r => r.round === rdNum);
       if (!rs) return undefined;
       const sdP: Player = { ...p, scores: rs.scores, par: rs.pars, si: rs.si,
-        courseRating: rs.courseRating, slope: rs.slope, nholes: rs.pars?.length };
+        courseRating: rs.courseRating, slope: rs.slope, nholes: rs.pars?.length,
+        grossTotal: rs.gross };
       const { sd } = computeSD(sdP);
       let birdies = 0, pars = 0, bogeys = 0;
       for (let i = 0; i < (rs.scores?.length ?? 0); i++) {
@@ -1165,7 +1176,7 @@ export function AccumulatedLB({ tournament, nRounds, escLookup, playersDB }: { t
         rows={rows}
         nRounds={nRounds}
         playersDB={playersDB}
-        showCols={{ esc: true, fed: true, tee: true }}
+        showCols={showColsProp ?? { esc: true, fed: true, tee: true }}
         sortable
         filterable
       />
@@ -1259,13 +1270,29 @@ function LinksBar({ links, escalao }: { links?: Record<string, string>; escalao?
    Um dia por baixo do outro, mesmo aspecto dos círculos.
    Implementação global para todos os torneios multi-ronda.
    ───────────────────────────────────────────── */
+/** Opções opcionais para adaptar o scorecard a contextos não-FPG (ex: Doral) */
+export interface ScorecardOptions {
+  hideHCP?: boolean;      // ocultar coluna HCP
+  hideSD?: boolean;       // ocultar coluna SD
+  hideEsc?: boolean;      // ocultar coluna ESC (escalão)
+  hideFed?: boolean;      // ocultar coluna FED (federação)
+  hideTee?: boolean;      // ocultar coluna TEE
+  clubLabel?: string;     // label alternativo para coluna Clube (ex: "País")
+  startHole?: number;     // buraco inicial (default 1, back-9: 10)
+}
+
 export function AllRoundsScorecardLB({
-  tournament, escLookup, playersDB,
+  tournament, escLookup, playersDB, options,
 }: {
   tournament: Tournament;
   escLookup: EscLookup;
   playersDB: PlayersDB;
+  options?: ScorecardOptions;
 }) {
+  const hideHCP   = options?.hideHCP ?? false;
+  const hideSD    = options?.hideSD ?? false;
+  const clubLabel = options?.clubLabel ?? "Clube";
+  const startHole = options?.startHole ?? 1;
   const [filter, setFilter]   = useState<PlayerFilter>(EMPTY_FILTER);
   const { sortKey, sortDir, toggleSort } = useSort<string>("pos");
   const [showSC, setShowSC]   = useState(true);
@@ -1325,9 +1352,10 @@ export function AllRoundsScorecardLB({
       const d = s - (rs.pars?.[h] ?? par[h] ?? 0);
       if (d <= -1) birds++; else if (d === 0) pars2++; else bogs++;
     });
-    // SD desta ronda
+    // SD desta ronda — grossTotal deve ser o gross DA RONDA, não o total acumulado
     const sdP: Player = { ...p, scores: capped, par: rs.pars, si: rs.si,
-      courseRating: rs.courseRating, slope: rs.slope, nholes: rs.pars?.length };
+      courseRating: rs.courseRating, slope: rs.slope, nholes: rs.pars?.length,
+      grossTotal: gross };
     const { sd } = computeSD(sdP);
     return { scores: capped, gross, toPar: gross - rdPar, sd, birds, pars: pars2, bogs };
   }
@@ -1499,7 +1527,9 @@ export function AllRoundsScorecardLB({
     </>);
   }
 
-  const postCols = 4; // SD 🐦 Par ■
+  const postCols = (hideSD ? 0 : 1) + 3; // SD(opcional) 🐦 Par ■
+  // colSpan para linhas SI/PAR: Jogador + Clube + (HCP?) + Rnd
+  const headerSpan = 2 + (hideHCP ? 0 : 1) + 1;
 
   return (
     <div>
@@ -1555,7 +1585,7 @@ export function AllRoundsScorecardLB({
             {showSC && hasSI && (
               <tr className="lb-si-row">
                 <td className="sticky-col-0" />
-                <td className="lb-par-lbl sticky-col-1" colSpan={4}>S.I.</td>
+                <td className="lb-par-lbl sticky-col-1" colSpan={headerSpan}>S.I.</td>
                 <td className="lb-topar" /><td className="lb-gross">{si.reduce((a, b) => a + b, 0) || ""}</td>
                 {si.slice(0, 9).map((v, i) => <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{v || ""}</td>)}
                 <td className="lb-halftot">{si.slice(0,9).reduce((a,b)=>a+b,0) || ""}</td>
@@ -1568,7 +1598,7 @@ export function AllRoundsScorecardLB({
             {showSC && (
               <tr className="lb-par-row">
                 <td className="sticky-col-0" />
-                <td className="lb-par-lbl sticky-col-1" colSpan={4}>PAR</td>
+                <td className="lb-par-lbl sticky-col-1" colSpan={headerSpan}>PAR</td>
                 <td className="lb-topar" /><td className="lb-gross">{parTot}</td>
                 {par.slice(0, 9).map((v, i) => <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{v}</td>)}
                 <td className="lb-halftot">{parF9}</td>
@@ -1581,26 +1611,26 @@ export function AllRoundsScorecardLB({
             <tr>
               <th className="lb-pos sticky-col-0">#</th>
               <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-name sticky-col-1">Jogador</SortableHdr>
-              <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-club">Clube</SortableHdr>
-              <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-hcp">HCP</SortableHdr>
+              <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-club">{clubLabel}</SortableHdr>
+              {!hideHCP && <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-hcp">HCP</SortableHdr>}
               <th className="lb-tee" style={{ fontSize: 10, color: "var(--text-muted)", fontWeight: 600 }}>Rnd</th>
               <SortableHdr k="topar" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-topar">±</SortableHdr>
               <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-gross">Tot</SortableHdr>
               {showSC && (<>
                 {Array.from({ length: 9 }, (_, h) => (
-                  <SortableHdr key={h} k={`h${h}`} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={"lb-hole" + (h === 0 ? " lb-hole-first" : "")} className="fs-10">
-                    {h + 1}
+                  <SortableHdr key={h} k={`h${h}`} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={"lb-hole" + (h === 0 ? " lb-hole-first" : "") + " fs-10"}>
+                    {startHole + h}
                   </SortableHdr>
                 ))}
                 <th className="lb-halftot">{is9 ? "Tot" : "Out"}</th>
                 {!is9 && Array.from({ length: 9 }, (_, h) => (
-                  <SortableHdr key={h + 9} k={`h${h + 9}`} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={"lb-hole" + (h === 0 ? " lb-hole-first" : "")} className="fs-10">
-                    {h + 10}
+                  <SortableHdr key={h + 9} k={`h${h + 9}`} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={"lb-hole" + (h === 0 ? " lb-hole-first" : "") + " fs-10"}>
+                    {startHole + 9 + h}
                   </SortableHdr>
                 ))}
                 {!is9 && <th className="lb-halftot">In</th>}
               </>)}
-              <th className="lb-sd">SD</th>
+              {!hideSD && <th className="lb-sd">SD</th>}
               <th className="lb-bird">🐦</th>
               <th className="lb-par-stat">Par</th>
               <th className="lb-bog">■</th>
@@ -1639,12 +1669,12 @@ export function AllRoundsScorecardLB({
                                   : <span className="muted fs-10" style={{ paddingLeft: 8 }}>↳</span>}
                               </td>
                               <td className="lb-club" style={{ borderTop: bTop, color: isFirstRd ? undefined : "var(--text-muted)", fontSize: isFirstRd ? undefined : 11 }}>{row.club || "–"}</td>
-                              <td className="lb-hcp" style={{ borderTop: bTop, color: isFirstRd ? undefined : "var(--text-muted)" }}>{fmtHcp(row.hcp)}</td>
+                              {!hideHCP && <td className="lb-hcp" style={{ borderTop: bTop, color: isFirstRd ? undefined : "var(--text-muted)" }}>{fmtHcp(row.hcp)}</td>}
                               <td className="lb-tee" style={{ fontWeight:600, fontSize:10, color:"var(--text-muted)", borderTop: bTop }}>{`R${ri+1}`}</td>
                               <td className="lb-topar" style={{ color: rd.toPar<0?"var(--color-good)":rd.toPar>0?"var(--color-danger)":"var(--text)", borderTop: bTop }}>{fmtToPar(rd.toPar)}</td>
                               <td className="lb-gross" style={{ borderTop: bTop }}>{rd.gross}</td>
                               {showSC && <ScoreCells scores={rd.scores} pars={par} />}
-                              <td className="lb-sd" style={{ borderTop: bTop }}>{rd.sd!=null?<SDPill sd={rd.sd} source={null} hcp={row.hcp}/>:<span className="muted">–</span>}</td>
+                              {!hideSD && <td className="lb-sd" style={{ borderTop: bTop }}>{rd.sd!=null?<SDPill sd={rd.sd} source={null} hcp={row.hcp}/>:<span className="muted">–</span>}</td>}
                               <td className="lb-bird" style={{ borderTop: bTop }}>{rd.birds||""}</td>
                               <td className="lb-par-stat" style={{ borderTop: bTop }}>{rd.pars||""}</td>
                               <td className="lb-bog" style={{ borderTop: bTop }}>{rd.bogs||""}</td>
@@ -1670,12 +1700,12 @@ export function AllRoundsScorecardLB({
                         {row.fed ? <PlayerLink fed={row.fed} name={abreviarNome(row.name)} /> : abreviarNome(row.name)}
                       </td>
                       <td className="lb-club">{row.club || "–"}</td>
-                      <td className="lb-hcp">{fmtHcp(row.hcp)}</td>
+                      {!hideHCP && <td className="lb-hcp">{fmtHcp(row.hcp)}</td>}
                       <td className="lb-tee" style={{ fontWeight:600, fontSize:10, color:"var(--text-muted)" }}>{row.rdLabel}</td>
                       <td className="lb-topar" style={{ color: rd.toPar<0?"var(--color-good)":rd.toPar>0?"var(--color-danger)":"var(--text)" }}>{fmtToPar(rd.toPar)}</td>
                       <td className="lb-gross">{rd.gross}</td>
                       {showSC && <ScoreCells scores={rd.scores} pars={par} />}
-                      <td className="lb-sd">{rd.sd!=null?<SDPill sd={rd.sd} source={null} hcp={row.hcp}/>:<span className="muted">–</span>}</td>
+                      {!hideSD && <td className="lb-sd">{rd.sd!=null?<SDPill sd={rd.sd} source={null} hcp={row.hcp}/>:<span className="muted">–</span>}</td>}
                       <td className="lb-bird">{rd.birds||""}</td>
                       <td className="lb-par-stat">{rd.pars||""}</td>
                       <td className="lb-bog">{rd.bogs||""}</td>
@@ -1989,7 +2019,7 @@ function PainelResumo({ torneios, nossosByFed }: {
                 background: "var(--bg-card)", border: "1px solid var(--border)",
               }}>
                 <SexBadge sex={jj.sex} size="sm" />
-                <span className={`p p-sm p-${escCls(jj.escalao)}`} className="fs-9">{escShort(jj.escalao)}</span>
+                <span className={`p p-sm p-${escCls(jj.escalao)} fs-9`}>{escShort(jj.escalao)}</span>
                 <span>{jj.nome || jj.fed}</span>
               </span>
             ))}
@@ -2144,7 +2174,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
                   <td className="r muted fs-12" >{fmtHcp(j.hcp)}</td>
                   <td className="r fs-12 fw-600" >{fmtHcp(j.vac)}</td>
                   <td className="r fs-11" >
-                    {sd5 != null ? <span className={`p p-${sdClassByHcp(sd5, st?.currentHcp ?? j.hcp ?? null)}`} className="fs-11">{sd5.toFixed(1)}</span> : <span className="muted">–</span>}
+                    {sd5 != null ? <span className={`p p-${sdClassByHcp(sd5, st?.currentHcp ?? j.hcp ?? null)} fs-11`}>{sd5.toFixed(1)}</span> : <span className="muted">–</span>}
                   </td>
                   <td className="r"><TrendBadge trend={st?.hcpTrend ?? null} delta={st?.hcpDelta3m ?? null} /></td>
                   <td className="r fs-12" >
@@ -2156,7 +2186,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
                   <td>
                     {p ? <span className="gap-4 flex-wrap" style={{ display: "flex", alignItems: "center" }}>
                         <SexBadge sex={p.sex} size="sm" />
-                        <span className={`p p-sm p-${escCls(p.escalao)}`} className="fs-10">{escShort(p.escalao)}</span>
+                        <span className={`p p-sm p-${escCls(p.escalao)} fs-10`}>{escShort(p.escalao)}</span>
                         {p.dob && <AnoEscalaoPill dob={p.dob} escalao={t.escalao} />}
                         {p.clube && <span className="muted fs-11" >{p.clube}</span>}
                       </span>

@@ -3,25 +3,23 @@
  * Lê ficheiros Golf Genius (sem par[], com divisions[], toPar directo)
  * Boys 8-9: 9 buracos (H10-H18) · Boys 10-11 / 12-13: 18 buracos
  */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { cachedFetch } from "../data/fetchCache";
-import { scClass, SC } from "../utils/scoreDisplay";
-import { tpColor, isManuel } from "../ui/tournamentPrimitives";
-import EvoBadge from "../ui/EvoBadge";
+import { SC } from "../utils/scoreDisplay";
+import { isManuel } from "../ui/tournamentPrimitives";
 import ExtLink from "../ui/ExternalLink";
 import SidebarSectionTitle from "../ui/SidebarSectionTitle";
 import { gf } from "../utils/flagUtils";
 const isM = (name: string) => isManuel({ name });
-import { fmtToPar, norm, fmtFieldInfo } from "../utils/format";
+import { norm, fmtFieldInfo } from "../utils/format";
 import { isCalUnlocked } from "../utils/authConstants";
 import PasswordGate from "../ui/PasswordGate";
 import SidebarToggle from "../ui/SidebarToggle";
-import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
+import { Toolbar, ToolbarTitle, ToolbarMeta } from "../ui/Toolbar";
 import DetailHeader from "../ui/DetailHeader";
-import TabRow from "../ui/TabRow";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import LoadingState from "../ui/LoadingState";
-import EmptyState from "../ui/EmptyState";
+import { AllRoundsScorecardLB, AccumulatedLB, ScorecardLB, expandMultiRound, type Tournament as FPGTournament, type Player as FPGPlayer, type RoundScore as FPGRoundScore, type ScorecardOptions } from "./FPGPage";
 
 /* ── Types ─────────────────────────────────────────────────── */
 interface RoundGG {
@@ -133,8 +131,7 @@ function normalizeName(raw: string): string {
 }
 
 /** Manuel Medeiros — mesmo critério que BJGTPage */
-/** Ano de graduação → ano de nascimento real (graduação aos 18 anos) */
-const gradToBirth = (gradYear: number) => gradYear - 18;
+/* gradToBirth removido — não usado directamente, birthYear vem no entryToTournament */
 
 
 function normalizeFile(raw: RawGG, sourceUrl: string): Entry[] {
@@ -228,263 +225,77 @@ function buildEvo(cur: Entry, all: Entry[]): Map<string, EvoEntry> {
   return evo;
 }
 
-/* ── AccLB — Leaderboard acumulado ─────────────────────────── */
-function AccLB({ entry, evo }: { entry: Entry; evo?: Map<string, EvoEntry> }) {
-  const { players, nineHole, parTotal } = entry;
-  const nR = Math.max(...players.map(p => p.rounds.length), 0);
-  const hasEvo = evo && evo.size > 0;
-  const prevYear = entry.year - 1;
+/* AccLB removido — agora usa AccumulatedLB da FPGPage */
 
-  // Datas das rondas para sub-header (ex: "Dec 18")
-  const roundDates = Array.from({ length: nR }, (_, i) => {
-    const sample = players.find(p => p.rounds[i]?.date);
-    if (!sample) return undefined;
-    const d = sample.rounds[i].date.replace(/^[A-Za-z]+,\s+/, ""); // "December 18"
-    const [mon, day] = d.split(" ");
-    return mon ? `${mon.slice(0, 3)} ${day}` : undefined; // "Dec 18"
-  });
-
-  return (
-    <div className="bjgt-chart-scroll">
-      <table className="sc-table-modern" data-sc-table="1" style={{ width: "auto" }}>
-        <thead><tr>
-          <th className="hole-header" style={{ textAlign:"center", width:26, padding:"0 2px" }}>#</th>
-          <th className="hole-header" style={{ textAlign:"left", paddingLeft:6, paddingRight:8 }}>Jogador</th>
-          {!nineHole && <th className="hole-header" style={{ width:44, textAlign:"center" }}>Nasc.</th>}
-          {Array.from({ length: nR }, (_, i) => (<React.Fragment key={i}>
-            <th className="hole-header" style={{ width: roundDates[i] ? 52 : 30, textAlign:"center", padding:"0 1px" }}>
-              R{i+1}{roundDates[i] ? <><br /><span className="th-sub">{roundDates[i]}</span></> : ""}
-            </th>
-            <th className="hole-header c-muted fs-10 fw-500" style={{ width:34, textAlign:"center", padding:"0 1px" }}>±par</th>
-          </React.Fragment>))}
-          <th className="hole-header col-total" style={{ width:34, padding:"0 3px" }}>Tot</th>
-          <th className="hole-header" style={{ width:38, textAlign:"center", padding:"0 3px" }}>±Par</th>
-          {hasEvo && <>
-            <th className="hole-header" style={{ width:36, textAlign:"center", padding:"0 3px", borderLeft:"2px solid var(--border)" }}>{prevYear}</th>
-            <th className="hole-header" style={{ width:34, textAlign:"center", padding:"0 3px" }}>Δ</th>
-            <th className="hole-header" style={{ width:140, textAlign:"center", padding:"0 4px" }}>Percurso</th>
-          </>}
-        </tr></thead>
-        <tbody>
-          {players.map((p, idx) => {
-            const incomplete = p.rounds.length < nR;
-            const showPos = idx === 0 || p.pos !== players[idx-1]?.pos;
-            const tp = p.toPar;
-            const bg = isM(p.name)
-              ? "var(--bg-success-subtle)"
-              : p.country?.includes("Portugal") ? "rgba(var(--rgb-success), 0.06)" : undefined;
-            const ev = hasEvo ? evo!.get(p.name) : undefined;
-            return (
-              <tr key={p.id} style={{ ...(bg ? { background: bg } : {}), ...(incomplete ? { opacity:0.5 } : {}) }}>
-                <td className="fw-800 ta-center" style={{ color:"var(--text-3)", fontSize:11, padding:"0 2px" }}>
-                  {incomplete ? "WD" : (showPos ? p.pos : "")}
-                </td>
-                <td style={{ whiteSpace:"nowrap", paddingLeft:6, paddingRight:8, fontSize:12, textAlign:"left" }}>
-                  <span className="fw-700">{gf(p.country)} {p.name}</span>
-                </td>
-                {!nineHole && <td style={{ textAlign:"center" }}>
-                  {p.birthYear
-                    ? <span className="pill-birth">{gradToBirth(p.birthYear)}</span>
-                    : <span className="c-muted fs-10">–</span>}
-                </td>}
-                {Array.from({ length: nR }, (_, i) => {
-                  const r = p.rounds[i];
-                  if (!r) return (<React.Fragment key={i}>
-                    <td style={{ textAlign:"center", fontSize:12, padding:"0 1px" }} className="c-muted">–</td>
-                    <td style={{ textAlign:"center", fontSize:10, padding:"0 1px" }} className="c-muted">–</td>
-                  </React.Fragment>);
-                  const rdTp = parTotal > 0 ? r.gross - parTotal : null;
-                  const c = tpColor(rdTp);
-                  return (<React.Fragment key={i}>
-                    <td style={{ textAlign:"center", fontSize:12, fontWeight:600, padding:"0 1px" }}>{r.gross}</td>
-                    <td style={{ textAlign:"center", fontSize:10, fontWeight:600, padding:"0 1px", color: c }}>
-                      {rdTp != null ? fmtToPar(rdTp) : "–"}
-                    </td>
-                  </React.Fragment>);
-                })}
-                <td className="col-total fw-800" style={{ fontSize:13, padding:"0 3px" }}>{p.total ?? "–"}</td>
-                <td className="fw-700" style={{
-                  textAlign:"center", fontSize:12, padding:"0 3px",
-                  color: tpColor(tp),
-                }}>
-                  {tp != null ? fmtToPar(tp) : "–"}
-                </td>
-                {hasEvo && (ev ? <>
-                  <td style={{ textAlign:"center", fontSize:11, fontWeight:600, padding:"0 3px", borderLeft:"2px solid var(--border)" }}>{ev.prevTotal}</td>
-                  <td style={{ textAlign:"center", fontSize:11, fontWeight:700, padding:"0 3px",
-                    color: ev.delta < 0 ? "var(--good-dark)" : ev.delta > 0 ? SC.danger : "var(--text-3)" }}>
-                    {ev.delta > 0 ? "+" : ""}{ev.delta}
-                  </td>
-                  <td style={{ textAlign:"center", padding:"0 4px" }}>
-                    <EvoBadge pill={ev.pill} from={ev.from} to={ev.to} prevPos={ev.prevPos} fieldSize={ev.fieldSize} />
-                  </td>
-                </> : <>
-                  <td style={{ textAlign:"center", fontSize:11, padding:"0 3px", borderLeft:"2px solid var(--border)" }} className="c-muted">–</td>
-                  <td className="c-muted" style={{ textAlign:"center", fontSize:11, padding:"0 3px" }}>–</td>
-                  <td style={{ textAlign:"center", padding:"0 4px" }}><EvoBadge pill="NEW" /></td>
-                </>)}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
-  );
+/* ── Adaptador Entry → FPGTournament para reutilizar AllRoundsScorecardLB ── */
+function entryToTournament(entry: Entry): FPGTournament {
+  const nR = Math.max(...entry.players.map(p => p.rounds.length), 0);
+  const players: FPGPlayer[] = entry.players
+    .filter(p => p.rounds.length > 0)
+    .map(p => {
+      const roundScores: FPGRoundScore[] = p.rounds.map((r, ri) => ({
+        round: ri + 1,
+        gross: r.gross,
+        scores: r.scores,
+        pars: entry.par,
+        si: entry.metres,       // metros na linha SI (siLabel="m")
+        meters: entry.metres,
+        courseRating: entry.cr,
+        slope: entry.slope,
+      }));
+      const incomplete = p.rounds.length < nR;
+      return {
+        scoreId: p.id,
+        pos: p.pos,
+        name: p.name,
+        club: p.country ? `${gf(p.country)} ${p.country}` : "",
+        grossTotal: p.total,
+        toPar: p.toPar,
+        nholes: entry.par.length || (entry.nineHole ? 9 : 18),
+        parTotal: entry.parTotal,
+        scores: p.rounds[0]?.scores,
+        par: entry.par,
+        si: entry.metres,       // metros na linha SI
+        meters: entry.metres,
+        courseRating: entry.cr,
+        slope: entry.slope,
+        roundScores,
+        _wd: incomplete,
+        _roundsPlayed: p.rounds.length,
+      } as FPGPlayer;
+    });
+  return {
+    name: entry.label,
+    tcode: entry.id,
+    date: "",
+    campo: entry.course,
+    rounds: nR,
+    playerCount: players.length,
+    players,
+  };
 }
 
-/* ── SCTable 9H — scorecard 9 buracos (H10-H18) ────────────── */
-function SCTable9H({ entry, ri }: { entry: Entry; ri: number }) {
-  const { par, parTotal, metres, metresTotal } = entry;
-  const ws = entry.players.filter(p => p.rounds[ri]?.scores?.length === 9);
-  if (!ws.length) return <EmptyState size="sm" message="Scorecards não disponíveis para esta ronda." />;
-  const sorted = [...ws].sort((a, b) => a.rounds[ri].gross - b.rounds[ri].gross);
-  let pos = 1;
-  sorted.forEach((p, i) => {
-    if (i > 0 && p.rounds[ri].gross > sorted[i-1].rounds[ri].gross) pos = i + 1;
-    (p as any)._dp = pos;
-  });
-  return (
-    <div className="bjgt-chart-scroll">
-      <table className="sc-table-modern" data-sc-table="1">
-        <thead><tr>
-          <th className="hole-header" style={{ textAlign:"center", width:26 }}>#</th>
-          <th className="hole-header" style={{ textAlign:"left", paddingLeft:6 }}>Jogador</th>
-          <th className="hole-header col-total" style={{ width:32 }}>Tot</th>
-          <th className="hole-header" style={{ width:30 }}>±</th>
-          {[10,11,12,13,14,15,16,17,18].map(h => <th key={h} className="hole-header">{h}</th>)}
-        </tr></thead>
-        <tbody>
-          {par.length > 0 && (
-            <tr className="sep-row">
-              <td></td>
-              <td className="row-label par-label">PAR</td>
-              <td className="col-total">{parTotal}</td>
-              <td></td>
-              {par.map((p, i) => <td key={i}>{p}</td>)}
-            </tr>
-          )}
-          {metres.length > 0 && (
-            <tr className="sep-row" style={{ opacity:0.6 }}>
-              <td></td>
-              <td className="row-label u-fs9-muted">m</td>
-              <td className="col-total" style={{ fontSize:9 }}>{metresTotal}</td>
-              <td></td>
-              {metres.map((m, i) => <td key={i} className="u-fs9-muted">{m}</td>)}
-            </tr>
-          )}
-          {sorted.map((p, idx) => {
-            const r = p.rounds[ri];
-            const dp = (p as any)._dp;
-            const showP = idx === 0 || dp !== (sorted[idx-1] as any)._dp;
-            const tp = parTotal > 0 ? r.gross - parTotal : null;
-            const bg = isM(p.name) ? "var(--bg-success-subtle)" : p.country?.includes("Portugal") ? "rgba(var(--rgb-success), 0.06)" : undefined;
-            return (
-              <tr key={p.id} style={bg ? { background: bg } : undefined}>
-                <td className="fw-800 ta-center" style={{ color:"var(--text-3)", fontSize:11 }}>{showP ? dp : ""}</td>
-                <td className="row-label fw-700" style={{ whiteSpace:"nowrap", fontSize:11 }}>
-                  {gf(p.country)} {p.name.length > 22 ? p.name.substring(0,20)+"…" : p.name}
-                </td>
-                <td className="col-total fw-700">{r.gross}</td>
-                <td className="fw-700" style={{ fontSize:11, color: tpColor(tp) }}>
-                  {tp != null ? fmtToPar(tp) : "–"}
-                </td>
-                {r.scores.map((sc, i) => (
-                  <td key={i}><span className={`sc-score ${par[i] ? scClass(sc, par[i]) : ""}`}>{sc}</span></td>
-                ))}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
-  );
+const EMPTY_ESC_LOOKUP = new Map<string, string>();
+const EMPTY_PLAYERS_DB = {} as Record<string, any>;
+
+/** Opções para ocultar colunas FPG-específicas e adaptar ao contexto Doral */
+function doralScorecardOptions(entry: Entry): ScorecardOptions {
+  // Boys 8-9 (e Girls 7 & Under, etc.) começam no buraco 10 (back-9)
+  const startHole = entry.players[0]?.rounds[0]?.startingHole === 10 ? 10 : 1;
+  // SD só se esconde quando não há CR/slope
+  const hasRating = entry.cr != null && entry.slope != null;
+  return {
+    hideHCP: true,
+    hideSD: !hasRating,
+    hideEsc: true,
+    hideFed: true,
+    hideTee: true,
+    clubLabel: "País",
+    startHole,
+  };
 }
 
-/* ── SCTable 18H — scorecard 18 buracos com par ─────────────── */
-function SCTable18H({ entry, ri }: { entry: Entry; ri: number }) {
-  const { par, parF9, parB9, parTotal, metres, metresF9, metresB9, metresTotal } = entry;
-  const hasPar = par.length >= 18;
-  const hasMetres = metres.length >= 18;
-  const ws = entry.players.filter(p => p.rounds[ri]?.scores?.length === 18);
-  if (!ws.length) return <EmptyState size="sm" message="Scorecards não disponíveis para esta ronda." />;
-  const sorted = [...ws].sort((a, b) => a.rounds[ri].gross - b.rounds[ri].gross);
-  let pos = 1;
-  sorted.forEach((p, i) => {
-    if (i > 0 && p.rounds[ri].gross > sorted[i-1].rounds[ri].gross) pos = i + 1;
-    (p as any)._dp = pos;
-  });
-  return (
-    <div className="bjgt-chart-scroll">
-      <table className="sc-table-modern" data-sc-table="1">
-        <thead><tr>
-          <th className="hole-header" style={{ textAlign:"center", width:26 }}>#</th>
-          <th className="hole-header" style={{ textAlign:"left", paddingLeft:6 }}>Jogador</th>
-          <th className="hole-header col-total" style={{ width:32 }}>Tot</th>
-          <th className="hole-header" style={{ width:30 }}>±</th>
-          {[1,2,3,4,5,6,7,8,9].map(h => <th key={h} className="hole-header">{h}</th>)}
-          <th className="hole-header col-out fs-10">Out</th>
-          {[10,11,12,13,14,15,16,17,18].map(h => <th key={h} className="hole-header">{h}</th>)}
-          <th className="hole-header col-in fs-10">In</th>
-        </tr></thead>
-        <tbody>
-          {hasPar && (
-            <tr className="sep-row">
-              <td></td>
-              <td className="row-label par-label">PAR</td>
-              <td className="col-total">{parTotal}</td>
-              <td></td>
-              {par.slice(0,9).map((p,i) => <td key={i}>{p}</td>)}
-              <td className="col-out fw-600">{parF9}</td>
-              {par.slice(9,18).map((p,i) => <td key={i}>{p}</td>)}
-              <td className="col-in fw-600">{parB9}</td>
-            </tr>
-          )}
-          {hasMetres && (
-            <tr className="sep-row" style={{ opacity:0.6 }}>
-              <td></td>
-              <td className="row-label u-fs9-muted">m</td>
-              <td className="col-total" style={{ fontSize:9 }}>{metresTotal}</td>
-              <td></td>
-              {metres.slice(0,9).map((m,i) => <td key={i} className="u-fs9-muted">{m}</td>)}
-              <td className="col-out u-fs9-muted">{metresF9}</td>
-              {metres.slice(9,18).map((m,i) => <td key={i} className="u-fs9-muted">{m}</td>)}
-              <td className="col-in u-fs9-muted">{metresB9}</td>
-            </tr>
-          )}
-          {sorted.map((p, idx) => {
-            const r = p.rounds[ri];
-            const f9 = r.f9 ?? r.scores.slice(0,9).reduce((a,b)=>a+b,0);
-            const b9 = r.b9 ?? r.scores.slice(9).reduce((a,b)=>a+b,0);
-            const tp = hasPar ? r.gross - parTotal : null;
-            const dp = (p as any)._dp;
-            const showP = idx === 0 || dp !== (sorted[idx-1] as any)._dp;
-            const bg = isM(p.name) ? "var(--bg-success-subtle)" : p.country?.includes("Portugal") ? "rgba(var(--rgb-success), 0.06)" : undefined;
-            return (
-              <tr key={p.id} style={bg ? { background: bg } : undefined}>
-                <td className="fw-800 ta-center" style={{ color:"var(--text-3)", fontSize:11 }}>{showP ? dp : ""}</td>
-                <td className="row-label fw-700" style={{ whiteSpace:"nowrap", fontSize:11 }}>
-                  {gf(p.country)} {p.name.length > 22 ? p.name.substring(0,20)+"…" : p.name}
-                </td>
-                <td className="col-total fw-700">{r.gross}</td>
-                <td className="fw-700" style={{ fontSize:11, color: tpColor(tp) }}>
-                  {tp != null ? fmtToPar(tp) : "–"}
-                </td>
-                {r.scores.slice(0,9).map((sc,i) => (
-                  <td key={i}><span className={`sc-score ${hasPar ? scClass(sc, par[i]) : ""}`}>{sc}</span></td>
-                ))}
-                <td className="col-out fw-600">{f9}{hasPar && <span className="fs-8 c-text-3"> ({f9-parF9 > 0 ? "+" : ""}{f9-parF9 === 0 ? "E" : f9-parF9})</span>}</td>
-                {r.scores.slice(9,18).map((sc,i) => (
-                  <td key={i}><span className={`sc-score ${hasPar ? scClass(sc, par[9+i]) : ""}`}>{sc}</span></td>
-                ))}
-                <td className="col-in fw-600">{b9}{hasPar && <span className="fs-8 c-text-3"> ({b9-parB9 > 0 ? "+" : ""}{b9-parB9 === 0 ? "E" : b9-parB9})</span>}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
-  );
-}
+/* DoralScorecard removido — lógica inline no DivView */
 
 /* ── FStats — resumo do field ───────────────────────────────── */
 function FStats({ entry, ri }: { entry: Entry; ri: number | "all" }) {
@@ -511,44 +322,64 @@ function FStats({ entry, ri }: { entry: Entry; ri: number | "all" }) {
   );
 }
 
-/* ── DivView — abas por ronda ───────────────────────────────── */
+/* ── DivView — abas R1 · R2 · Resumo · 📋 Scorecards (idêntico ao FPGPage) ── */
 function DivView({ entry, evo }: { entry: Entry; evo?: Map<string, EvoEntry> }) {
-  const { players, nineHole } = entry;
-  const nR = Math.max(...players.map(p => p.rounds.length), 0);
-  const [dt, setDt] = useState<number | "all">("all");
+  const tournament = useMemo(() => entryToTournament(entry), [entry]);
+  const scOptions  = useMemo(() => doralScorecardOptions(entry), [entry]);
+  const nR = Math.max(...entry.players.map(p => p.rounds.length), 0);
+  const isMulti = nR > 1;
+  const hasEvo = evo && evo.size > 0;
 
-  // Etiqueta de data para cada ronda (do 1º jogador com scorecards)
-  const roundLabel = (i: number) => {
-    const sample = players.find(p => p.rounds[i]);
-    if (sample?.rounds[i]?.date) {
-      const d = sample.rounds[i].date.replace(/^[A-Za-z]+,\s+/, ""); // "December 19"
-      return `R${i+1} · ${d}`;
-    }
-    return `R${i+1}`;
-  };
+  // expandMultiRound produz: [R1_tourn, R2_tourn, ..., Resumo_tourn]
+  const expanded = useMemo(() => expandMultiRound(tournament), [tournament]);
+
+  // Tabs: R1 · R2 · Resumo · 📋 Scorecards  (como FPGPage TournamentDetail)
+  const COMBINED_TAB = "📋 Scorecards";
+  const tabs = useMemo(() => {
+    if (!isMulti) return ["Scorecard"];
+    return [...expanded.map((t: any) => t._roundLabel || "?"), COMBINED_TAB];
+  }, [isMulti, expanded]);
+
+  const [tab, setTab] = useState(0);
+
+  const curT       = isMulti ? expanded[Math.min(tab, expanded.length - 1)] : tournament;
+  const isAcc      = isMulti && !!(curT as any)?._isTotal;
+  const isCombined = isMulti && tabs[tab] === COMBINED_TAB;
 
   return (
     <div>
-      <TabRow tabs={[{ key: "all" as string|number, label: "Acumulado" }, ...Array.from({ length: nR }, (_, i) => ({ key: i as string|number, label: roundLabel(i) }))]} active={dt} onChange={setDt} />
-
-      {dt === "all" && (
-        <div className="card">
-          <div className="h-md fs-14">🏆 Leaderboard — {entry.label}</div>
-          <FStats entry={entry} ri="all" />
-          <AccLB entry={entry} evo={evo} />
+      {/* Tabs tab-under como FPGPage */}
+      {isMulti && (
+        <div style={{ display: "flex", borderBottom: "1px solid var(--border)", marginBottom: 12, gap: 2, overflowX: "auto" }}>
+          {tabs.map((label, i) => (
+            <button key={i} className={`tab-under${tab === i ? " active" : ""}`} onClick={() => setTab(i)}>{label}</button>
+          ))}
         </div>
       )}
 
-      {typeof dt === "number" && (
-        <div className="card">
-          <div className="h-md fs-14">🏆 {roundLabel(dt)} — Scorecards</div>
-          <FStats entry={entry} ri={dt} />
-          {nineHole
-            ? <SCTable9H entry={entry} ri={dt} />
-            : <SCTable18H entry={entry} ri={dt} />
-          }
-        </div>
-      )}
+      {hasEvo && isAcc && <EvoSummary entry={entry} evo={evo!} />}
+
+      {/* Conteúdo — mesma lógica que TournamentDetail de FPGPage */}
+      {isCombined
+        ? <AllRoundsScorecardLB tournament={tournament} escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB} options={scOptions} />
+        : isAcc
+          ? <AccumulatedLB tournament={curT} nRounds={nR} escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB} showCols={{ esc: false, fed: false, tee: false }} />
+          : <ScorecardLB tournament={curT} escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB} siLabel="m" options={scOptions} />
+      }
+    </div>
+  );
+}
+
+/** Mini-resumo de evolução ano-a-ano (preserva info do Evo sem o AccLB custom) */
+function EvoSummary({ entry, evo }: { entry: Entry; evo: Map<string, EvoEntry> }) {
+  if (!evo.size) return null;
+  const prevYear = entry.year - 1;
+  const returning = [...evo.values()].filter(e => e.delta !== 0);
+  const improved  = returning.filter(e => e.delta < 0).length;
+  const total     = returning.length;
+  return (
+    <div className="muted fs-10 mb-8">
+      {evo.size} jogadores regressaram de {prevYear}{total > 0 ? ` · ${improved}/${total} melhoraram` : ""}
     </div>
   );
 }

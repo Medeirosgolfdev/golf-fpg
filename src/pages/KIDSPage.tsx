@@ -8,6 +8,7 @@ import React, { useMemo, useState } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from "recharts";
 import { useLocation } from "react-router-dom";
 import { fmtToPar, fmtSign, MONTHS_PT, MONTHS_PT_FULL, sortArrow, isoDate } from "../utils/format";
+import { useSort } from "../hooks/useSort";
 import { FL } from "../utils/flagUtils";
 import { zTier, getTrend, getAvgZ } from "../utils/mathUtils";
 import { scClass, toParClass, sc3m, tpColorDark } from "../utils/scoreDisplay";
@@ -1609,8 +1610,7 @@ function EvolucaoChart({
         <div style={{ display: "flex", gap: 3 }}>
           {(["tpr", "pos"] as EvoMode[]).map(m => (
             <button key={m}
-              className={`p p-filter p-sm${mode === m ? " active" : ""}`}
-              className="fs-10"
+              className={`p p-filter p-sm fs-10${mode === m ? " active" : ""}`}
               onClick={() => setMode(m)}>
               {m === "tpr" ? "±par/ronda" : "posição %"}
             </button>
@@ -1715,10 +1715,97 @@ function TorneiosRecorrentes({
 /* ═══════════════════════════════════
    HEAD-TO-HEAD TABLE DETALHADA
    ═══════════════════════════════════ */
+type H2HConfronto = { tid: string; tornName: string; ageGroup: string | null; manPos: number; rivalPos: number; manTp: number | null; rivalTp: number | null; year: number };
+type H2HSortKey = "tourn" | "year" | "manPos" | "rivalPos" | "dif" | "result";
+
+function H2HSortableTable({ confrontos, firstName }: { confrontos: H2HConfronto[]; firstName: string }) {
+  const { sortKey, sortDir, toggleSort } = useSort<H2HSortKey>("year", "desc");
+
+  const sorted = useMemo(() => {
+    const INF = 9999;
+    return [...confrontos].sort((a, b) => {
+      const dir = sortDir === "asc" ? 1 : -1;
+      switch (sortKey) {
+        case "tourn":    return dir * a.tornName.localeCompare(b.tornName, "pt");
+        case "year":     return dir * (a.year - b.year);
+        case "manPos":   return dir * (a.manPos - b.manPos);
+        case "rivalPos": return dir * (a.rivalPos - b.rivalPos);
+        case "dif": {
+          const da = a.manTp != null && a.rivalTp != null ? a.rivalTp - a.manTp : INF;
+          const db = b.manTp != null && b.rivalTp != null ? b.rivalTp - b.manTp : INF;
+          return dir * (da - db);
+        }
+        case "result": {
+          const ra = a.manPos < a.rivalPos ? -1 : a.manPos > a.rivalPos ? 1 : 0;
+          const rb = b.manPos < b.rivalPos ? -1 : b.manPos > b.rivalPos ? 1 : 0;
+          return dir * (ra - rb);
+        }
+        default: return 0;
+      }
+    });
+  }, [confrontos, sortKey, sortDir]);
+
+  const SH = ({ k, children, className, style }: { k: H2HSortKey; children: React.ReactNode; className?: string; style?: React.CSSProperties }) => (
+    <th className={(className || "") + " lb-sortable"} style={style} onClick={() => toggleSort(k)}>
+      {children}{sortKey === k && <span className="sort-arrow">{sortDir === "asc" ? "▲" : "▼"}</span>}
+    </th>
+  );
+
+  return (
+    <table className="dtable w-full">
+      <thead>
+        <tr>
+          <SH k="tourn" className="ta-left" style={{ padding: "4px 12px" }}>Torneio</SH>
+          <SH k="year" className="ta-c" style={{ width: 60 }}>Escalão</SH>
+          <SH k="manPos" className="ta-c" style={{ width: 70 }}>Manuel</SH>
+          <SH k="rivalPos" className="ta-c" style={{ width: 70 }}>{firstName}</SH>
+          <SH k="dif" className="ta-c" style={{ width: 50 }}>Dif.</SH>
+          <SH k="result" className="ta-right" style={{ width: 100, paddingRight: 12 }}>Resultado</SH>
+        </tr>
+      </thead>
+      <tbody>
+        {sorted.map((c, i) => {
+          const rivalWon = c.rivalPos < c.manPos;
+          const draw     = c.rivalPos === c.manPos;
+          const dif      = c.manTp != null && c.rivalTp != null ? c.rivalTp - c.manTp : null;
+          return (
+            <tr key={c.tid} style={{
+              background: rivalWon ? "rgba(22,163,74,.04)" : draw ? "transparent" : "rgba(220,38,38,.04)",
+              borderBottom: i < confrontos.length - 1 ? "1px solid var(--border-light)" : "none",
+            }}>
+              <td style={{ padding: "7px 12px", fontWeight: 500 }}>
+                {c.tornName.replace(/\s*\d{4}$/, "")}
+                <span style={{ marginLeft: 5, fontSize: 10, color: "var(--text-3)" }}> '{String(c.year).slice(2)}</span>
+              </td>
+              <td style={{ textAlign: "center", fontSize: 10, color: "var(--text-2)" }}>{c.ageGroup ?? "—"}</td>
+              <td className="ta-c">
+                <strong>#{c.manPos}</strong>
+                {c.manTp != null && <span style={{ fontSize: 10, color: (c.manTp ?? 1) <= 0 ? "var(--color-good-dark)" : "var(--text-3)", marginLeft: 4 }}>({fmtToPar(c.manTp)})</span>}
+              </td>
+              <td style={{ textAlign: "center", color: rivalWon ? "var(--color-good-dark)" : "var(--color-danger-vivid)" }}>
+                <strong>#{c.rivalPos}</strong>
+                {c.rivalTp != null && <span className="fs-10 ml-4">({fmtToPar(c.rivalTp)})</span>}
+              </td>
+              <td style={{ textAlign: "center", fontSize: 11,
+                color: dif != null && dif < 0 ? "var(--color-good-dark)" : dif != null && dif > 0 ? "var(--color-danger-vivid)" : "var(--text-3)" }}>
+                {dif != null ? (dif > 0 ? "+" : "") + dif : "—"}
+              </td>
+              <td style={{ textAlign: "right", fontWeight: 700, fontSize: 11, paddingRight: 12,
+                color: rivalWon ? "var(--color-good-dark)" : draw ? "var(--text-3)" : "var(--color-danger-vivid)" }}>
+                {rivalWon ? `${firstName} venceu` : draw ? "empate" : "Manuel venceu"}
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  );
+}
+
 function H2HTable({
   confrontos, playerName,
 }: {
-  confrontos: { tid: string; tornName: string; ageGroup: string | null; manPos: number; rivalPos: number; manTp: number | null; rivalTp: number | null; year: number }[];
+  confrontos: H2HConfronto[];
   playerName: string;
 }) {
   if (!confrontos.length) return null;
@@ -1747,53 +1834,7 @@ function H2HTable({
         </span>
       </div>
       <div className="scroll-x">
-        <table className="dtable w-full" >
-          <thead>
-            <tr>
-              <th className="ta-left" style={{ padding: "4px 12px" }}>Torneio</th>
-              <th className="ta-c" style={{ width: 60 }}>Escalão</th>
-              <th className="ta-c" style={{ width: 70 }}>Manuel</th>
-              <th className="ta-c" style={{ width: 70 }}>{firstName}</th>
-              <th className="ta-c" style={{ width: 50 }}>Dif.</th>
-              <th className="ta-right" style={{ width: 100, paddingRight: 12 }}>Resultado</th>
-            </tr>
-          </thead>
-          <tbody>
-            {[...confrontos].sort((a, b) => b.year - a.year).map((c, i) => {
-              const rivalWon = c.rivalPos < c.manPos;
-              const draw     = c.rivalPos === c.manPos;
-              const dif      = c.manTp != null && c.rivalTp != null ? c.rivalTp - c.manTp : null;
-              return (
-                <tr key={c.tid} style={{
-                  background: rivalWon ? "rgba(22,163,74,.04)" : draw ? "transparent" : "rgba(220,38,38,.04)",
-                  borderBottom: i < confrontos.length - 1 ? "1px solid var(--border-light)" : "none",
-                }}>
-                  <td style={{ padding: "7px 12px", fontWeight: 500 }}>
-                    {c.tornName.replace(/\s*\d{4}$/, "")}
-                    <span style={{ marginLeft: 5, fontSize: 10, color: "var(--text-3)" }}> '{String(c.year).slice(2)}</span>
-                  </td>
-                  <td style={{ textAlign: "center", fontSize: 10, color: "var(--text-2)" }}>{c.ageGroup ?? "—"}</td>
-                  <td className="ta-c">
-                    <strong>#{c.manPos}</strong>
-                    {c.manTp != null && <span style={{ fontSize: 10, color: (c.manTp ?? 1) <= 0 ? "var(--color-good-dark)" : "var(--text-3)", marginLeft: 4 }}>({fmtToPar(c.manTp)})</span>}
-                  </td>
-                  <td style={{ textAlign: "center", color: rivalWon ? "var(--color-good-dark)" : "var(--color-danger-vivid)" }}>
-                    <strong>#{c.rivalPos}</strong>
-                    {c.rivalTp != null && <span className="fs-10 ml-4">({fmtToPar(c.rivalTp)})</span>}
-                  </td>
-                  <td style={{ textAlign: "center", fontSize: 11,
-                    color: dif != null && dif < 0 ? "var(--color-good-dark)" : dif != null && dif > 0 ? "var(--color-danger-vivid)" : "var(--text-3)" }}>
-                    {dif != null ? (dif > 0 ? "+" : "") + dif : "—"}
-                  </td>
-                  <td style={{ textAlign: "right", fontWeight: 700, fontSize: 11, paddingRight: 12,
-                    color: rivalWon ? "var(--color-good-dark)" : draw ? "var(--text-3)" : "var(--color-danger-vivid)" }}>
-                    {rivalWon ? `${firstName} venceu` : draw ? "empate" : "Manuel venceu"}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <H2HSortableTable confrontos={confrontos} firstName={firstName} />
       </div>
     </div>
   );
@@ -2401,8 +2442,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
               )}
               {isManuel && <span className="p p-outline p-sm">REF</span>}
               {rank != null && (
-                <span className={`sidebar-rank ${rank <= 3 ? "sidebar-rank-top3" : rank <= 10 ? "sidebar-rank-top10" : "sidebar-rank-rest"}`}
-                  className="fs-11"
+                <span className={`sidebar-rank fs-11 ${rank <= 3 ? "sidebar-rank-top3" : rank <= 10 ? "sidebar-rank-top10" : "sidebar-rank-rest"}`}
                   style={{ padding: "2px 7px" }}>#{rank}/{totalRanked}</span>
               )}
               {tr && <span className="fs-13 fw-700" style={{ color: TR_I[tr as keyof typeof TR_I].c }}>{TR_I[tr as keyof typeof TR_I].i}</span>}
@@ -2963,8 +3003,7 @@ function RivaisIntlContent() {
           style={{ width: 150, height: 26 }} />
         <ToolbarSep />
         {/* Filtros avançados: país, tipo, presenças, directos, limpar */}
-        <select className="select" value={paisFilter} onChange={e => setPaisFilter(e.target.value)}
-          className="fs-11 flex-shrink-0"
+        <select className="select fs-11 flex-shrink-0" value={paisFilter} onChange={e => setPaisFilter(e.target.value)}
           style={{ height: 26, minWidth: 85 }}>
           <option value="">🌍 País</option>
           {paises.map(p => <option key={p} value={p}>{FL[p] || "🏳️"} {p}</option>)}
