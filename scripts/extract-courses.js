@@ -37,6 +37,54 @@ const masterPath    = path.join(process.cwd(), "public", "data", "master-courses
 const melhoriasPath = path.join(process.cwd(), "melhorias.json");
 const aliasPath     = path.join(process.cwd(), "course-aliases.json");
 const outPath       = path.join(process.cwd(), "public", "data", "away-courses.json");
+const cachePath     = path.join(process.cwd(), "output", "extract-courses-cache.json");
+
+/* ── Cache: fingerprint baseado nos mtimes dos inputs ── */
+
+function computeCacheFingerprint() {
+  const parts = [];
+
+  // 1. Config files
+  for (const fp of [masterPath, melhoriasPath, aliasPath]) {
+    try { parts.push(`${fp}:${fs.statSync(fp).mtimeMs}`); }
+    catch { parts.push(`${fp}:missing`); }
+  }
+
+  // 2. Scorecard dirs — usar mtime da pasta (muda quando ficheiros são adicionados/removidos)
+  //    + mtime do analysis/data.json de cada jogador
+  if (fs.existsSync(outputRoot)) {
+    const dirs = fs.readdirSync(outputRoot).filter(d => {
+      const full = path.join(outputRoot, d);
+      return fs.statSync(full).isDirectory() && /^\d+$/.test(d);
+    }).sort();
+
+    for (const d of dirs) {
+      const scDir = path.join(outputRoot, d, "scorecards");
+      try { parts.push(`sc:${d}:${fs.statSync(scDir).mtimeMs}`); }
+      catch { /* sem scorecards */ }
+
+      const dataP = path.join(outputRoot, d, "analysis", "data.json");
+      try { parts.push(`dj:${d}:${fs.statSync(dataP).mtimeMs}`); }
+      catch { /* sem data.json */ }
+    }
+  }
+
+  return parts.join("|");
+}
+
+const forceExtract = process.argv.includes("--force");
+const fingerprint  = computeCacheFingerprint();
+
+// Verificar cache
+if (!forceExtract && fs.existsSync(cachePath) && fs.existsSync(outPath)) {
+  try {
+    const cached = readJSON(cachePath);
+    if (cached._fingerprint === fingerprint) {
+      console.log("  Extract-courses: cache válido — nada mudou");
+      process.exit(0);
+    }
+  } catch { /* cache corrompido, continuar */ }
+}
 
 /* ── Helpers ── */
 
@@ -502,3 +550,8 @@ console.log(`\n  Gravado: ${outPath}`);
 console.log(`  ${courses.length} campos, ${courses.reduce((n, c) => n + c.master.tees.length, 0)} tees`);
 console.log(`  Campos com país: ${courses.filter(c => c.master.country).length}/${courses.length}`);
 console.log(`  Campos com _players: ${coursesWithPlayers}/${courses.length}`);
+
+// Gravar cache fingerprint
+try {
+  fs.writeFileSync(cachePath, JSON.stringify({ _fingerprint: fingerprint }), "utf-8");
+} catch { /* ignorar — cache é opcional */ }

@@ -1994,48 +1994,69 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
     backgroundSize:"12px 12px", backgroundPosition:"0 0,0 6px,6px -6px,-6px 0px", backgroundColor:"#fff",
   };
 
+  /* ── Helpers de export ── */
+  const renderDesign = useCallback(async (h2c: typeof import("html2canvas").default, designId: string): Promise<Blob|null> => {
+    const el = designRefs.current[designId]; if (!el) return null;
+    await document.fonts.ready; /* esperar Google Fonts carregarem */
+    const canvas = await h2c(el, { backgroundColor:null, scale:3, useCORS:true, logging:false });
+    return new Promise<Blob|null>(r => canvas.toBlob(r, "image/png"));
+  }, []);
+
+  const shareFiles = async (files: File[]): Promise<boolean> => {
+    if (!navigator.share || !navigator.canShare) return false;
+    try {
+      if (!navigator.canShare({ files })) return false;
+      await navigator.share({ files, title:"Scorecards" });
+      return true;
+    } catch (e: unknown) {
+      /* Utilizador cancelou → não fazer fallback */
+      if (e instanceof DOMException && e.name === "AbortError") return true;
+      return false; /* erro real → tentar fallback */
+    }
+  };
+
+  const downloadAsZip = async (files: File[]) => {
+    const JSZip = (await import("jszip")).default;
+    const zip = new JSZip();
+    for (const f of files) zip.file(f.name, f);
+    const blob = await zip.generateAsync({ type:"blob" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a"); a.href=url; a.download="scorecards.zip"; a.click();
+    URL.revokeObjectURL(url);
+  };
+
   const doExportAll = useCallback(async () => {
     setExporting(true);
     try {
       const h2c = (await import("html2canvas")).default;
       const files: File[] = [];
       for (const design of available) {
-        const el = designRefs.current[design.id]; if (!el) continue;
-        const canvas = await h2c(el, { backgroundColor:null, scale:3, useCORS:true, logging:false });
-        const blob = await new Promise<Blob|null>(r => canvas.toBlob(r, "image/png"));
+        const blob = await renderDesign(h2c, design.id);
         if (blob) files.push(new File([blob], `${design.label}.png`, { type:"image/png" }));
       }
       if (!files.length) return;
-      if (navigator.share && navigator.canShare && navigator.canShare({ files })) {
-        try { await navigator.share({ files, title:"Scorecards" }); return; } catch {}
-      }
-      for (let i = 0; i < files.length; i++) {
-        const url = URL.createObjectURL(files[i]);
-        const a = document.createElement("a"); a.href=url; a.download=files[i].name; a.click();
-        URL.revokeObjectURL(url);
-        if (i < files.length-1) await new Promise(r => setTimeout(r, 300));
-      }
+      /* 1. Tentar share nativo (mobile) */
+      if (await shareFiles(files)) return;
+      /* 2. Fallback: ZIP com todos os ficheiros (1 download) */
+      await downloadAsZip(files);
     } catch(err) { console.error(err); alert("Erro ao exportar."); }
     finally { setExporting(false); }
-  }, [available]);
+  }, [available, renderDesign]);
 
   const doExportOne = useCallback(async (designId: string) => {
-    const el = designRefs.current[designId]; if (!el) return;
     try {
       const h2c = (await import("html2canvas")).default;
-      const canvas = await h2c(el, { backgroundColor:null, scale:3, useCORS:true, logging:false });
-      canvas.toBlob(async (blob: Blob|null) => {
-        if (!blob) return;
-        const file = new File([blob], `scorecard-${designId}.png`, { type:"image/png" });
-        if (navigator.share && navigator.canShare && navigator.canShare({ files:[file] })) {
-          try { await navigator.share({ files:[file], title:"Scorecard" }); return; } catch {}
-        }
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a"); a.href=url; a.download=file.name; a.click();
-        URL.revokeObjectURL(url);
-      }, "image/png");
+      const blob = await renderDesign(h2c, designId);
+      if (!blob) return;
+      const file = new File([blob], `scorecard-${designId}.png`, { type:"image/png" });
+      /* 1. Tentar share nativo (mobile) */
+      if (await shareFiles([file])) return;
+      /* 2. Fallback: download directo */
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a"); a.href=url; a.download=file.name; a.click();
+      URL.revokeObjectURL(url);
     } catch(err) { console.error(err); alert("Erro ao exportar"); }
-  }, []);
+  }, [renderDesign]);
 
   return (
     <div className={inline ? "ov-export-inline" : "ov-export"}>
