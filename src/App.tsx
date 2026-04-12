@@ -263,6 +263,7 @@ export default function App() {
                 <Route path="/kids" element={<KIDSPage />} />
                 <Route path="/uskids" element={<USKIDSPage />} />
                 <Route path="/diversos" element={<FPGPage />} />
+                <Route path="/diversos/inscritos" element={<FPGPage />} />
                 <Route path="/doral" element={<DORALPage />} />
                 <Route path="*" element={<Navigate to="/jogadores/52884" replace />} />
               </Routes>

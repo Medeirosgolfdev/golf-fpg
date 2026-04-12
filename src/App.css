@@ -1693,7 +1693,6 @@ tr.cross-current { background: var(--bg-success); }
  .ov-toggles { gap: 4px 8px; }
  .ov-gallery { gap: 8px; }
  .ov-section { padding: 8px 10px; }
- .ov-card-preview { overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
 }
 
 /* ─── Filtros Rivais — colapsáveis em mobile, sempre visíveis em desktop ─── */
@@ -2759,13 +2758,13 @@ tr.cross-current { background: var(--bg-success); }
 .ov-share-btn:hover { background: var(--link-color); color: #fff; border-color: var(--link-color); transform: scale(1.05); }
 .ov-share-btn:active { transform: scale(0.98); }
 .ov-card-preview {
- display: inline-flex; border-radius: var(--radius); overflow: visible; border: 1px solid var(--border-light);
+ display: inline-flex; border-radius: var(--radius); overflow-x: auto; overflow-y: hidden; border: 1px solid var(--border-light);
+ max-width: 100%; -webkit-overflow-scrolling: touch;
 }
 /* Mobile: gallery full-width cards */
 @media (max-width: 480px) {
  .ov-gallery { gap: 12px; }
  .ov-card { width: 100%; }
- .ov-card-preview { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
  .ov-export { padding: 12px; }
  .ov-export-btn { width: 100%; text-align: center; padding: 12px 20px; }
 }

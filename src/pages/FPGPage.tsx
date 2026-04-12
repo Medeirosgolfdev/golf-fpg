@@ -15,6 +15,7 @@
  *   • Suporte a 9H e 18H, 1 a N rondas
  */
 import React, { useEffect, useState, useMemo, useCallback, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import { useSort } from "../hooks/useSort";
 import { useAppContext } from "../context/AppContext";
 import { loadPlayers } from "../data/loader";
@@ -2058,11 +2059,12 @@ function PainelResumo({ torneios, nossosByFed }: {
 function TorneioCard({ t, active, onClick }: {
   t: TorneioData; active: boolean; onClick: () => void;
 }) {
+  const recentes = useMemo(() => t.jogadores.filter(j => isRecentHours(j.dataInscricao, 48)).length, [t.jogadores]);
   return (
     <button
       className={"tourn-tab tourn-tab-sm" + (active ? " active" : "")}
       onClick={onClick}
-      title={`Campeonato Nacional de Jovens ${t.nome}`}
+      title={`Campeonato Nacional de Jovens ${t.nome}${recentes ? ` · ${recentes} inscrito${recentes > 1 ? "s" : ""} nas últimas 48h` : ""}`}
       style={active ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}
     >
       {escShort(t.escalao)}
@@ -2078,6 +2080,7 @@ function TorneioCard({ t, active, onClick }: {
           marginLeft: 2,
         }}>{t.totalInscritos}</span>
       )}
+      {recentes > 0 && <span className="new-round-dot" style={{ marginLeft: 2 }} title={`${recentes} nas últimas 48h`} />}
     </button>
   );
 }
@@ -2087,17 +2090,34 @@ function TorneioCard({ t, active, onClick }: {
    ═══════════════════════════════════════════════════════ */
 type InscSortKey = "pos" | "nome" | "hcp" | "vac" | "sd5" | "data" | "trend" | "rondas";
 
+/** Verifica se dataInscricao ("2026/04/03 09:14") é das últimas N horas */
+function isRecentHours(s: string | null, hours: number): boolean {
+  if (!s) return false;
+  const d = new Date(s.replace(/\//g, "-"));
+  return !isNaN(d.getTime()) && (Date.now() - d.getTime()) < hours * 3600_000;
+}
+
 function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
   t: TorneioData; nossosFedSet: Set<string>; nossosByFed: Map<string, BdPlayer>; statsDb: StatsDb;
 }) {
   const [search, setSearch] = useState("");
-  const [sortKey, setSortKey] = useState<InscInscSortKey>("pos");
+  const [sortKey, setSortKey] = useState<InscSortKey>("pos");
   const [sortAsc, setSortAsc] = useState(true);
   const term = norm(search);
 
   const nossosCount = useMemo(
     () => t.jogadores.filter(j => j.fed && nossosFedSet.has(j.fed)).length,
     [t.jogadores, nossosFedSet]
+  );
+
+  /* ── Inscrições recentes (últimas 48h) e desinscrições ── */
+  const recentes48h = useMemo(
+    () => t.jogadores.filter(j => isRecentHours(j.dataInscricao, 48)),
+    [t.jogadores]
+  );
+  const removidos48h = useMemo(
+    () => t.diff?.removed ?? [],
+    [t.diff]
   );
   const lista = useMemo(() => {
     let base = t.jogadores;
@@ -2123,7 +2143,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
   }
   function SortTh({ label, col, cls }: { label: string; col: InscSortKey; cls?: string }) {
     const active = sortKey === col;
-    return <th className={cls} onClick={() => toggleSortCol(col)}
+    return <th className={cls} onClick={() => toggleSort(col)}
       style={{ cursor: "pointer", userSelect: "none", whiteSpace: "nowrap" }}>
       {label}{active ? (sortAsc ? " ↑" : " ↓") : " ↕"}
     </th>;
@@ -2157,6 +2177,27 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
           {t.fpgUrl && <a href={t.fpgUrl} target="_blank" rel="noopener noreferrer" className="fs-11" style={{ color: "var(--chart-2)" }}>datagolf ↗</a>}
         </div>
       </div>
+      {/* ── Alerta inscrições/desinscrições últimas 48h ── */}
+      {(recentes48h.length > 0 || removidos48h.length > 0) && (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, padding: "6px 12px",
+          background: "var(--bg-muted)", borderRadius: 6, margin: "4px 0 6px", fontSize: 12 }}>
+          {recentes48h.length > 0 && (
+            <span style={{ color: "var(--color-good)" }}>
+              <span className="fw-700">+{recentes48h.length} inscrito{recentes48h.length > 1 ? "s" : ""} (48h):</span>{" "}
+              {recentes48h.map((j, i) => {
+                const p = j.fed ? nossosByFed.get(j.fed) : undefined;
+                return <span key={j.fed ?? j.nome}>{i > 0 && ", "}<span className={p ? "fw-600" : ""}>{p?.name ?? j.nome}</span></span>;
+              })}
+            </span>
+          )}
+          {removidos48h.length > 0 && (
+            <span style={{ color: "var(--color-bad)" }}>
+              <span className="fw-700">-{removidos48h.length} desistência{removidos48h.length > 1 ? "s" : ""}:</span>{" "}
+              {removidos48h.join(", ")}
+            </span>
+          )}
+        </div>
+      )}
       <div className="table-wrap">
         <table className="dtable-lg">
           <colgroup>
@@ -2185,9 +2226,11 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
               const p  = j.fed ? nossosByFed.get(j.fed) : undefined;
               const st = j.fed ? statsDb[j.fed] : null;
               const sd5 = st?.avgSD5 ?? null;
+              const recent = isRecentHours(j.dataInscricao, 48);
               return (
-                <tr key={`${j.fed ?? j.nome}-${i}`} className={p ? "row-match" : ""}>
-                  <td className="muted r fs-11" >{i + 1}</td>
+                <tr key={`${j.fed ?? j.nome}-${i}`}
+                  style={recent ? { background: "color-mix(in srgb, var(--score-eagle) 10%, transparent)" } : undefined}>
+                  <td className="muted r fs-11">{i + 1}</td>
                   <td className="fs-13">
                     {p ? <PlayerLink fed={j.fed} name={p.name} query="?view=by_date" className="fw-700" /> : <span className="muted">{j.nome || "–"}</span>}
                   </td>
@@ -2205,7 +2248,13 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
                       ? <span style={{ fontWeight: st.roundsLast3m >= 4 ? 600 : 400, color: st.roundsLast3m === 0 ? "var(--color-bad)" : "inherit" }}>{st.roundsLast3m}</span>
                       : <span className="muted">–</span>}
                   </td>
-                  <td className="r muted fs-11" >{fmtDataInscricao(j.dataInscricao)}</td>
+                  <td className="r fs-11" style={{ whiteSpace: "nowrap" }}>
+                    <span className="muted">{fmtDataInscricao(j.dataInscricao)}</span>
+                    {recent && <span className="p p-sm fs-9 fw-700" style={{
+                      background: "var(--score-eagle)", color: "#fff",
+                      marginLeft: 4, padding: "1px 5px", borderRadius: 8,
+                    }} title="Inscrito nas últimas 48h">NOVO</span>}
+                  </td>
                   <td>
                     {p ? <span className="gap-4 flex-wrap" style={{ display: "flex", alignItems: "center" }}>
                         <SexBadge sex={p.sex} size="sm" />
@@ -2306,16 +2355,22 @@ function InscricoesPanel() {
 
   const nossosFedSet = useMemo(() => new Set(nossosByFed.keys()), [nossosByFed]);
 
-  const tryStaticCache = useCallback(async (tcode: string): Promise<boolean> => {
-    try {
-      const r = await fetch("/data/inscricoes_nacionais.json");
-      if (!r.ok) return false;
-      const all = await r.json() as Record<string, unknown>;
-      const entry = all[tcode];
-      if (!entry) return false;
-      setTorneios(prev => prev.map(t => t.tcode === tcode ? { ...t, ...(entry as object), _status: "ok", fromCache: true } : t));
-      return true;
-    } catch { return false; }
+  /* ── Carregar cache estática inteira no mount (todos os escalões de uma vez) ── */
+  const cacheLoaded = useRef(false);
+  useEffect(() => {
+    if (cacheLoaded.current) return;
+    cacheLoaded.current = true;
+    fetch("/data/inscricoes_nacionais.json")
+      .then(r => r.ok ? r.json() : null)
+      .then((all: Record<string, unknown> | null) => {
+        if (!all) return;
+        setTorneios(prev => prev.map(t => {
+          const entry = all[t.tcode];
+          if (!entry || t._status === "ok") return t;  // não sobrescrever dados frescos
+          return { ...t, ...(entry as object), _status: "ok" as const, fromCache: true };
+        }));
+      })
+      .catch(() => {});
   }, []);
 
   const fetchTorneio = useCallback(async (tcode: string, forceRefresh = false) => {
@@ -2323,20 +2378,16 @@ function InscricoesPanel() {
     setTorneios(prev => prev.map(t => t.tcode === tcode ? { ...t, _status: "loading" } : t));
     try {
       const apiUrl = `/api/inscricoes?tcode=${tcode}${forceRefresh ? "&refresh=1" : ""}`;
-      let res: Response;
-      try { res = await fetch(apiUrl); }
-      catch { if (await tryStaticCache(tcode)) return; throw new Error("API inacessivel"); }
-      if (!res.ok) { if (await tryStaticCache(tcode)) return; throw new Error(`HTTP ${res.status}`); }
+      const res = await fetch(apiUrl);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       setTorneios(prev => prev.map(t => t.tcode === tcode ? { ...t, ...data, _status: "ok" } : t));
-    } catch { setTorneios(prev => prev.map(t => t.tcode === tcode ? { ...t, _status: "error" } : t)); }
+    } catch { /* cache já está carregada — só marcar erro se nem cache existir */
+      setTorneios(prev => prev.map(t => t.tcode === tcode
+        ? { ...t, _status: t.jogadores.length > 0 ? "ok" : "error", fetchError: "API inacessível" } : t));
+    }
     finally { inFlight.current.delete(tcode); }
-  }, [tryStaticCache]);
-
-  useEffect(() => {
-    const t = torneios.find(x => x.tcode === activeTcode);
-    if (t && t._status === "idle") fetchTorneio(activeTcode, false);
-  }, [activeTcode, torneios, fetchTorneio]);
+  }, []);
 
   const refreshAll = useCallback(() => {
     inFlight.current.clear();
@@ -2473,6 +2524,8 @@ function buildJovensGroups(tournaments: Tournament[]): JovensGroup[] {
 }
 
 function Content() {
+  const location = useLocation();
+  const startInscritos = location.pathname.includes("/inscritos");
   const [tournaments, setTournaments] = useState<Tournament[]>([]);
   const [fileMeta, setFileMeta] = useState<FileMeta[]>([]);
   const [loading, setLoading] = useState(true);
@@ -2481,7 +2534,7 @@ function Content() {
   const [selected, setSelected] = useState(0);
     const md = useMasterDetail();
   const [navMode, setNavMode]         = useState<"torneios" | "ranking-pja" | "ranking-sub12">("torneios");
-  const [seriesFilter, setSeriesFilter] = useState<"" | "circuit" | "santo" | "clubes" | "jovens">(""); // filtro de série dentro de Torneios
+  const [seriesFilter, setSeriesFilter] = useState<"" | "circuit" | "santo" | "clubes" | "jovens">(startInscritos ? "jovens" : ""); // filtro de série dentro de Torneios
   const [yearFilter, setYearFilter]    = useState<string | null>(null);
   const [filterManuel, setFilterManuel] = useState(true);
   const [escLookup, setEscLookup] = useState<EscLookup>(new Map());
@@ -2501,7 +2554,7 @@ function Content() {
   const [jovensLoaded, setJovensLoaded]           = useState(false);
   const [jovensGroupKey, setJovensGroupKey]        = useState<string | null>(null);
   const [jovensEscIdx, setJovensEscIdx]            = useState<number>(0);
-  const [jovensShowInscricoes, setJovensShowInscricoes] = useState(false);
+  const [jovensShowInscricoes, setJovensShowInscricoes] = useState(startInscritos);
 
   const { melhorias } = useAppContext();
 
@@ -2968,7 +3021,7 @@ function Content() {
               const st = active
                 ? key === "santo"  ? { flexShrink: 0, ...PILL_SSERRA, borderColor: PILL_SSERRA.background as string }
                 : key === "clubes" ? { flexShrink: 0, background: "var(--accent)", borderColor: "var(--accent)", color: "#fff" }
-                : key === "jovens"    ? { flexShrink: 0, background: "var(--chart-2)", borderColor: "var(--chart-2)", color: "#fff" }
+                : key === "jovens"    ? { flexShrink: 0, background: SIDEBAR_ACCENT.tour, borderColor: SIDEBAR_ACCENT.tour, color: "#fff" }
                 : { flexShrink: 0 }
                 : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" };
               return (
@@ -3152,13 +3205,12 @@ function Content() {
             {/* Entrada especial: Inscrições */}
             <div
               onClick={() => { setJovensShowInscricoes(true); setJovensGroupKey(null); md.onSelect(); }}
+              className={`course-item${jovensShowInscricoes ? " active" : ""}`}
               style={{
-                padding: "9px 12px", cursor: "pointer", borderBottom: "1px solid var(--border-light)",
-                background: jovensShowInscricoes ? "var(--bg-success-subtle)" : "var(--bg-card)",
-                borderLeft: jovensShowInscricoes ? "3px solid var(--color-good)" : "3px solid transparent",
+                borderLeft: `4px solid ${SIDEBAR_ACCENT.tour}`, borderRadius: "0 6px 6px 0", cursor: "pointer",
               }}
             >
-              <div className="fw-700 fs-12" style={{ color: jovensShowInscricoes ? "var(--color-good-dark)" : "var(--text)" }}>
+              <div className="fw-700 fs-12">
                 📋 Inscrições 2026
               </div>
               <div className="muted fs-11" >Campeonatos Nacionais de Jovens</div>

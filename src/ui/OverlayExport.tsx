@@ -34,7 +34,7 @@ type DD = {
   is9h: boolean; hasHoles: boolean;
 };
 type Vis = Record<string, boolean>;
-type StT = { eagles:number; birdies:number; pars:number; bogeys:number; doubles:number; triples:number };
+type StT = { hio:number; eagles:number; birdies:number; pars:number; bogeys:number; doubles:number; triples:number };
 type Stats = { pF:number;pB:number;pT:number;sF:number;sB:number;sT:number;vpT:number;vpF:number;vpB:number;sd:number;st:StT };
 
 /* ═══════ FONTS ═══════ */
@@ -55,10 +55,8 @@ function getFontEmbedCSS(): Promise<string> {
   if (_fontCSSCache) return _fontCSSCache;
   _fontCSSCache = (async () => {
     try {
-      /* 1. Fetch CSS do Google Fonts (com user-agent que retorna woff2) */
-      const res = await fetch(FONT_LINK, {
-        headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" },
-      });
+      /* 1. Fetch CSS do Google Fonts (browser moderno → retorna woff2) */
+      const res = await fetch(FONT_LINK);
       let css = await res.text();
       /* 2. Extrair URLs de fonts e converter para base64 data URIs */
       const urls = [...css.matchAll(/url\(([^)]+)\)/g)].map(m => m[1]);
@@ -66,7 +64,13 @@ function getFontEmbedCSS(): Promise<string> {
         try {
           const fontRes = await fetch(url);
           const buf = await fontRes.arrayBuffer();
-          const b64 = btoa(String.fromCharCode(...new Uint8Array(buf)));
+          /* Conversão chunked — spread de arrays grandes rebenta a call stack */
+          const bytes = new Uint8Array(buf);
+          let bin = "";
+          for (let i = 0; i < bytes.length; i += 8192) {
+            bin += String.fromCharCode(...bytes.subarray(i, Math.min(i + 8192, bytes.length)));
+          }
+          const b64 = btoa(bin);
           const mime = url.includes(".woff2") ? "font/woff2" : "font/woff";
           css = css.replace(url, `data:${mime};base64,${b64}`);
         } catch { /* se uma font falhar, manter URL original */ }
@@ -1400,7 +1404,7 @@ function V35({ d, v, s, bg, tc="white", tc3 }: P) {
   );
 }
 
-/* V39 · GHOST WHITE — Igual ao V37 mas com SCO (contornos brancos).
+/* V39 · GHOST WHITE — SCO (contornos brancos).
    Transparente. 2 filas de circles outline à esquerda, score ENORME à direita. */
 function V39({ d, v, s, bg, tc="white", tc3 }: P) {
   const is18 = d.scores.length >= 18;
