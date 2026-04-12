@@ -742,7 +742,7 @@ function EscalaoSection({ escalao: e, torneio: t, arMap }: {
   return (
     <div>
       {campo && (
-        <div style={{ fontSize: 11, color: "var(--text-3)", marginBottom: 6 }}>
+        <div className="fs-11 c-text-3" style={{ marginBottom: 6 }}>
           📍 {campo}
         </div>
       )}
@@ -893,16 +893,16 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
         {/* KPIs de inscrição */}
         {!t.erro && !t.sem_flights && (
           <div style={{ display:"flex", gap:8, flexWrap:"wrap", marginTop:8 }}>
-            <span className="chip" style={{ background:"var(--color-good-dark)", color:"#fff", fontWeight:700, fontSize:13, padding:"3px 12px" }}>
+            <span className="chip fw-700 fs-13" style={{ background:"var(--color-good-dark)", color:"#fff", padding:"3px 12px" }}>
               {t.total_inscritos}/{t.total_maximo} inscritos
             </span>
             {b12 && (() => {
               const bd = badgeVagas(b12.vagas, b12.maximo);
               return bd ? (
-                <span className="chip" style={{
+                <span className="chip fw-700 fs-13" style={{
                   background: urgente ? bd.bg : "var(--bg-hover)",
                   color: urgente ? bd.cor : "var(--text-2)",
-                  border:`1px solid ${bd.bg}`, fontWeight:700, fontSize:13, padding:"3px 12px",
+                  border:`1px solid ${bd.bg}`, padding:"3px 12px",
                 }}>
                   ★ {escalaoM}: {b12.inscritos}/{b12.maximo}
                   <span style={{ marginLeft:5, opacity:.8 }}>({bd.label})</span>
@@ -927,7 +927,7 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
             { href:`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${t.t}`, label:"🏆 Resultados ↗" },
           ].map(l => (
             <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer"
-              style={{ fontSize:12, padding:"3px 10px", borderRadius:6, fontWeight:600,
+              className="fs-12 fw-600" style={{ padding:"3px 10px", borderRadius:6,
                 background:"var(--bg-muted)", color:"var(--accent-text)", border:"1px solid var(--border)", textDecoration:"none" }}>
               {l.label}
             </a>
@@ -935,14 +935,14 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
           {(t.url_uskids || (LINKS_EXTRA[t.t] ?? []).find(l => l.label === "USKids ↗")?.url) && (
             <a href={t.url_uskids ?? (LINKS_EXTRA[t.t] ?? []).find(l => l.label === "USKids ↗")!.url}
               target="_blank" rel="noopener noreferrer"
-              style={{ fontSize:12, padding:"3px 10px", borderRadius:6, fontWeight:600,
+              className="fs-12 fw-600" style={{ padding:"3px 10px", borderRadius:6,
                 background:"var(--bg-muted)", color:"var(--accent-text)", border:"1px solid var(--border)", textDecoration:"none" }}>
               USKids ↗
             </a>
           )}
           {(LINKS_EXTRA[t.t] ?? []).filter(l => l.label !== "USKids ↗").map((l, i) => (
             <a key={i} href={l.url} target="_blank" rel="noopener noreferrer"
-              style={{ fontSize:12, padding:"3px 10px", borderRadius:6, fontWeight:600,
+              className="fs-12 fw-600" style={{ padding:"3px 10px", borderRadius:6,
                 background:"var(--bg-muted)", color:"var(--accent-text)", border:"1px solid var(--border)", textDecoration:"none" }}>
               {l.label}
             </a>
@@ -968,17 +968,17 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                   {/* Cabeçalho do card */}
                   <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:8 }}>
                     <div>
-                      <div style={{ fontSize:13, fontWeight:700, color: man ? "var(--accent)" : dst ? "var(--text)" : "var(--text-2)" }}>
+                      <div className="fs-13 fw-700" style={{ color: man ? "var(--accent)" : dst ? "var(--text)" : "var(--text-2)" }}>
                         {man && <span style={{ marginRight:4 }}>★</span>}{e.nome}
                       </div>
-                      <div style={{ fontSize:11, color:"var(--text-3)", marginTop:1 }}>{e.holes} buracos</div>
+                      <div className="fs-11 c-text-3" style={{ marginTop:1 }}>{e.holes} buracos</div>
                     </div>
                     <div style={{ textAlign:"right" }}>
-                      <div style={{ fontSize:15, fontWeight:800, color: man ? "var(--accent)" : "var(--text)" }}>
-                        {e.inscritos}<span style={{ fontSize:11, fontWeight:400, color:"var(--text-3)" }}>/{e.maximo}</span>
+                      <div className="fw-800" style={{ fontSize:15, color: man ? "var(--accent)" : "var(--text)" }}>
+                        {e.inscritos}<span className="fs-11 fw-400 c-text-3">/{e.maximo}</span>
                       </div>
                       {bd && (
-                        <span style={{ background:bd.bg, color:bd.cor, padding:"1px 6px", borderRadius:5, fontSize:11, fontWeight:700 }}>
+                        <span className="fs-11 fw-700" style={{ background:bd.bg, color:bd.cor, padding:"1px 6px", borderRadius:5 }}>
                           {bd.label}
                         </span>
                       )}
@@ -1026,15 +1026,14 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                                 const col = p <= 3 ? "var(--color-warn-dark)" : p <= 10 ? "var(--color-good-dark)" : "var(--text-3)";
                                 return (
                                   <span key={y} title={`${y}: #${p}${res!.tp != null ? ` (${res!.tp > 0 ? "+" : ""}${res!.tp})` : ""}`}
-                                    style={{ fontSize:10, fontWeight:700, color: col, opacity:.85 }}>
+                                    className="fs-10 fw-700" style={{ color: col, opacity:.85 }}>
                                     {medal ?? `#${p}`}
-                                    <span style={{ fontSize:9, fontWeight:400, opacity:.7 }}>'{String(y).slice(2)}</span>
+                                    <span className="fs-9 fw-400" style={{ opacity:.7 }}>'{String(y).slice(2)}</span>
                                   </span>
                                 );
                               })}
                               {nTorn > 0 && (
-                                <span style={{
-                                  fontSize:10, fontWeight:700, color:"var(--text-2)",
+                                <span className="fs-10 fw-700 c-text-2" style={{
                                   background:"var(--bg-muted)", border:"1px solid var(--border)",
                                   borderRadius:4, padding:"0 4px", lineHeight:"16px",
                                   display:"inline-block",
@@ -1050,7 +1049,7 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                     </div>
                   )}
                   {!e.jogadores && e.paises && e.paises.length > 0 && (
-                    <div style={{ fontSize:12, color:"var(--text-3)", marginTop:4, lineHeight:1.6 }}>
+                    <div className="fs-12 c-text-3" style={{ marginTop:4, lineHeight:1.6 }}>
                       {e.paises.slice(0, 8).map(p => `${flag(p.pais)} ${p.n}`).join("  ")}
                     </div>
                   )}
@@ -1067,11 +1066,11 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                 <div key={e.age_group} style={{ marginBottom:8 }}>
                   <div className="h-xs" style={{ color:"var(--accent-text)", marginBottom:4 }}>{e.nome}</div>
                   {e.jogadores!.filter(j => j.pais === "PT").map((j, i) => (
-                    <div key={i} style={{ display:"flex", justifyContent:"space-between", fontSize:13, padding:"3px 8px", borderRadius:4, background:"rgba(255,255,255,.5)", marginBottom:2 }}>
-                      <span style={{ fontWeight:600, display:"flex", alignItems:"center", gap:2 }}>
+                    <div key={i} className="fs-13" style={{ display:"flex", justifyContent:"space-between", padding:"3px 8px", borderRadius:4, background:"rgba(255,255,255,.5)", marginBottom:2 }}>
+                      <span className="fw-600" style={{ display:"flex", alignItems:"center", gap:2 }}>
                         {displayName(j.nome)}<KidsLink nome={j.nome} />
                       </span>
-                      <span style={{ color:"var(--text-3)", fontSize:12 }}>{j.cidade}</span>
+                      <span className="c-text-3 fs-12">{j.cidade}</span>
                     </div>
                   ))}
                 </div>
@@ -1344,14 +1343,14 @@ function TabResultados({ data, selectedT, greatgolfData }: {
   // ──────────────────────────────────────────────────────────────────────────
 
   if (!data.resultados.length) return (
-    <div style={{ color:"var(--text-3)", padding:"32px 0", textAlign:"center", fontSize:13 }}>
+    <div className="c-text-3 fs-13" style={{ padding:"32px 0", textAlign:"center" }}>
       Sem resultados ainda — os scorecards aparecerão aqui durante e após os torneios
     </div>
   );
 
   if (!t) return (
     <div>
-      <div style={{ color:"var(--text-3)", padding:"32px 0 16px", textAlign:"center", fontSize:13 }}>
+      <div className="c-text-3 fs-13" style={{ padding:"32px 0 16px", textAlign:"center" }}>
         Selecciona um torneio na sidebar
       </div>
       {greatgolfData && <SecaoGreatgolf data={greatgolfData} />}
@@ -1377,7 +1376,7 @@ function TabResultados({ data, selectedT, greatgolfData }: {
       <div className="detail-header">
         <div className="detail-header-top">
           <h2 className="detail-title">{t.name}</h2>
-          <button onClick={printRondas} className="btn" style={{ fontSize:12, display:"flex", alignItems:"center", gap:5 }}>
+          <button onClick={printRondas} className="btn fs-12" style={{ display:"flex", alignItems:"center", gap:5 }}>
             🖨️ Imprimir
           </button>
         </div>
@@ -1386,13 +1385,13 @@ function TabResultados({ data, selectedT, greatgolfData }: {
           <span className="muted fs-11">actualizado {fmtTs(t.ultima_atualizacao)}</span>
           <a href={`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${t.t}`}
             target="_blank" rel="noopener noreferrer"
-            style={{ fontSize:12, fontWeight:600, textDecoration:"none", color:"var(--accent-text)",
+            className="fs-12 fw-600" style={{ textDecoration:"none", color:"var(--accent-text)",
               border:"1px solid var(--border)", borderRadius:5, padding:"1px 8px" }}>
             📋 Resultados ↗
           </a>
           {(LINKS_EXTRA[t.t] ?? []).map((l, i) => (
             <a key={i} href={l.url} target="_blank" rel="noopener noreferrer"
-              style={{ fontSize:12, fontWeight:600, textDecoration:"none", color:"var(--accent-text)",
+              className="fs-12 fw-600" style={{ textDecoration:"none", color:"var(--accent-text)",
                 border:"1px solid var(--border)", borderRadius:5, padding:"1px 8px" }}>
               {l.label}
             </a>
@@ -1409,14 +1408,14 @@ function TabResultados({ data, selectedT, greatgolfData }: {
                 : m.diffLider != null ? `+${m.diffLider} do líder`
                 : null;
               return (
-                <span key={i} style={{
+                <span key={i} className="fs-13 fw-700" style={{
                   background:"var(--accent)", color:"#fff",
-                  padding:"5px 14px", borderRadius:8, fontSize:13, fontWeight:700,
+                  padding:"5px 14px", borderRadius:8,
                   display:"inline-flex", alignItems:"center", gap:6,
                 }}>
                   <span style={{ opacity:.8 }}>★</span>
                   <span>{m.escalao} · R{m.ronda} · {m.score}{toPar ? ` (${toPar})` : ""}</span>
-                  {liderStr && <span style={{ opacity:.8, fontSize:11 }}>{liderStr}</span>}
+                  {liderStr && <span className="fs-11" style={{ opacity:.8 }}>{liderStr}</span>}
                 </span>
               );
             })}
@@ -1472,7 +1471,7 @@ function SecaoGreatgolf({ data }: { data: GreatgolfData }) {
             <span className="muted">📍 {data.course}</span>
           </div>
         </div>
-        <span style={{ color:"var(--text-3)", fontSize:13 }}>{open ? "▲" : "▼"}</span>
+        <span className="fs-13 c-text-3">{open ? "▲" : "▼"}</span>
       </div>
 
       {open && (
@@ -1569,8 +1568,8 @@ function RivCell({ tp, pos, fieldSize }: { tp: number | null; pos: number; field
   const posText = fmtPosRivais(pos, fieldSize);
   return (
     <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:1, lineHeight:1.2 }}>
-      <span style={{ fontSize:13, fontWeight:800, color: tpColor }}>{tpText}</span>
-      <span style={{ fontSize:11, color:"var(--text-3)" }}>{posText}</span>
+      <span className="fs-13 fw-800" style={{ color: tpColor }}>{tpText}</span>
+      <span className="fs-11 c-text-3">{posText}</span>
     </div>
   );
 }
@@ -1766,9 +1765,9 @@ function TorneioRivaisDetalhe({ torneio, resultados, fieldData, torneiosComManue
               style={activeEsc === e.nome ? {} : { background:"var(--bg-muted)", color:"var(--text-2)", borderColor:"var(--border)" }}
               onClick={() => setActiveEsc(e.nome)}>
               {e.nome}
-              <span style={{ marginLeft:4, opacity:.7, fontSize:11 }}>{e.players.length}</span>
+              <span className="fs-11" style={{ marginLeft:4, opacity:.7 }}>{e.players.length}</span>
               {e.isManuel && (
-                <span style={{ marginLeft:3, fontSize:10, color: activeEsc === e.nome ? "rgba(255,255,255,.8)" : "var(--color-good)" }}>●</span>
+                <span className="fs-10" style={{ marginLeft:3, color: activeEsc === e.nome ? "rgba(255,255,255,.8)" : "var(--color-good)" }}>●</span>
               )}
             </button>
           ))}
@@ -1807,14 +1806,14 @@ function Secao({ titulo, sub, count, corTitulo, defaultOpen, children }: {
         display:"flex", alignItems:"baseline", gap:8, background:"none", border:"none",
         cursor:"pointer", padding:0, marginBottom: open ? 4 : 0, width:"100%", textAlign:"left",
       }}>
-        <span style={{ fontSize:11, fontWeight:700, color: corTitulo ?? "var(--text-3)",
+        <span className="fs-11 fw-700" style={{ color: corTitulo ?? "var(--text-3)",
           textTransform:"uppercase", letterSpacing:"0.06em" }}>
           {titulo} ({count})
         </span>
-        <span style={{ fontSize:11, color:"var(--text-3)", marginLeft:"auto" }}>{open ? "▲" : "▼"}</span>
+        <span className="fs-11 c-text-3" style={{ marginLeft:"auto" }}>{open ? "▲" : "▼"}</span>
       </button>
       {sub && open && (
-        <div style={{ fontSize:11, color:"var(--text-3)", marginBottom:8 }}>{sub}</div>
+        <div className="fs-11 c-text-3" style={{ marginBottom:8 }}>{sub}</div>
       )}
       {open && children}
     </div>
@@ -2389,21 +2388,21 @@ export default function USKidsFieldPage() {
           onClick={() => { setShowRivaisTabela(true); setSelectedT(null); }}>
           <div style={{ display:"flex", alignItems:"center", gap:8 }}>
             <span style={{ fontSize:15 }}>📊</span>
-            <span style={{ fontSize:13, fontWeight:700, color: showRivaisTabela ? "var(--accent)" : "var(--text)" }}>
+            <span className="fs-13 fw-700" style={{ color: showRivaisTabela ? "var(--accent)" : "var(--text)" }}>
               Tabela global
             </span>
-            <span className="p p-sm p-muted" style={{ fontSize:10, marginLeft:"auto" }}>
+            <span className="p p-sm p-muted fs-10" style={{ marginLeft:"auto" }}>
               {torneiosComManuel.length} torneios
             </span>
           </div>
-          <div style={{ fontSize:11, color:"var(--text-3)", marginTop:2 }}>
+          <div className="fs-11 c-text-3" style={{ marginTop:2 }}>
             Todos os jogadores × todos os torneios
           </div>
         </button>
 
         <div className="sidebar-section-title">{torneiosComManuel.length} torneios</div>
         {torneiosComManuel.length === 0 && (
-          <div className="muted" style={{ padding:"16px 12px", fontSize:12 }}>Sem torneios com o Manuel</div>
+          <div className="muted fs-12" style={{ padding:"16px 12px" }}>Sem torneios com o Manuel</div>
         )}
         {torneiosComManuel.map(t => {
           const active = !showRivaisTabela && t.t === selectedT;
@@ -2415,22 +2414,22 @@ export default function USKidsFieldPage() {
               className={`course-item${active ? " active" : ""}`}
               style={{ padding:"9px 10px 9px 12px", textAlign:"left", width:"100%", display:"block" }}
               onClick={() => { setShowRivaisTabela(false); setSelectedT(t.t); }}>
-              <div style={{ fontSize:13, fontWeight: active ? 700 : 600, color:"var(--text)",
+              <div className="fs-13" style={{ fontWeight: active ? 700 : 600, color:"var(--text)",
                 overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", marginBottom:3 }}>
-                {t.name.replace(/\s*\d{4}$/, "")} <span style={{ color:"var(--text-3)", fontWeight:400, fontSize:12 }}>'{isoDate(t.date_inicio).slice(2,4)}</span>
+                {t.name.replace(/\s*\d{4}$/, "")} <span className="fs-12 fw-400 c-text-3">'{isoDate(t.date_inicio).slice(2,4)}</span>
               </div>
               <div style={{ display:"flex", gap:4, flexWrap:"wrap", alignItems:"center" }}>
-                <span style={{ fontSize:11, color:"var(--text-3)" }}>{fmtDate(t.date_inicio)}</span>
+                <span className="fs-11 c-text-3">{fmtDate(t.date_inicio)}</span>
                 {t.escalaoManuel && (
-                  <span className="p p-sm p-muted" style={{ fontSize:10 }}>{t.escalaoManuel}</span>
+                  <span className="p p-sm p-muted fs-10">{t.escalaoManuel}</span>
                 )}
                 {temResultados && (
-                  <span className="p p-sm" style={{ fontSize:10, background:"var(--bg-success-strong)", color:"var(--color-good-dark)", borderColor:"var(--border-success)" }}>
+                  <span className="p p-sm fs-10" style={{ background:"var(--bg-success-strong)", color:"var(--color-good-dark)", borderColor:"var(--border-success)" }}>
                     resultados
                   </span>
                 )}
                 {isFuture && (
-                  <span className="p p-sm" style={{ fontSize:10, background:"var(--bg-info-strong)", color:"var(--color-info)", borderColor:"var(--border-info)" }}>
+                  <span className="p p-sm fs-10" style={{ background:"var(--bg-info-strong)", color:"var(--color-info)", borderColor:"var(--border-info)" }}>
                     inscrito
                   </span>
                 )}
@@ -2535,8 +2534,8 @@ export default function USKidsFieldPage() {
         <>
           {t.maximo != null && t.maximo > 0 && (
             <div className="mb-4">
-              <div style={{ display:"flex", justifyContent:"space-between", marginBottom:3, fontSize:11, color:"var(--text-2)" }}>
-                <span style={{ fontWeight:600 }}>{t.escalaoManuel}</span>
+              <div className="fs-11 c-text-2" style={{ display:"flex", justifyContent:"space-between", marginBottom:3 }}>
+                <span className="fw-600">{t.escalaoManuel}</span>
                 <span>
                   {t.inscritos}/{t.maximo}
                   {(t.vagas ?? 0) > 0
@@ -2550,7 +2549,7 @@ export default function USKidsFieldPage() {
             </div>
           )}
           {(t.totalMaximo ?? 0) > 0 && (
-            <div style={{ fontSize:11, color:"var(--text-3)", display:"flex", justifyContent:"space-between", marginBottom:3 }}>
+            <div className="fs-11 c-text-3" style={{ display:"flex", justifyContent:"space-between", marginBottom:3 }}>
               <span>Total: {t.totalInscritos}/{t.totalMaximo}</span>
               {t.fee && <span>${t.fee.toFixed(0)}</span>}
             </div>
@@ -2598,7 +2597,7 @@ export default function USKidsFieldPage() {
             style={tab === tb.id ? { flexShrink:0 } : { flexShrink:0, background:"var(--bg-muted)", color:"var(--text-2)", borderColor:"var(--border)" }}>
             {tb.label}
             {tb.badge > 0 && (
-              <span style={{ marginLeft:4, fontSize:10, fontWeight:700, padding:"0 5px", borderRadius:8,
+              <span className="fs-10 fw-700" style={{ marginLeft:4, padding:"0 5px", borderRadius:8,
                 background: tab === tb.id ? "rgba(255,255,255,0.25)" : "var(--bg-hover)",
                 color: tab === tb.id ? "#fff" : "var(--text-3)",
               }}>{tb.badge}</span>
@@ -2618,7 +2617,7 @@ export default function USKidsFieldPage() {
         </>)}
         <div style={{ flex:1, minWidth:8 }} />
         <a href="https://uskids-golf.vercel.app/" target="_blank" rel="noopener noreferrer"
-          style={{ fontSize:11, fontWeight:600, flexShrink:0, color:"var(--accent)", border:"1px solid var(--accent)", borderRadius:5, padding:"3px 8px", textDecoration:"none", whiteSpace:"nowrap", display:"inline-flex", alignItems:"center", gap:3 }}>
+          className="fs-11 fw-600" style={{ flexShrink:0, color:"var(--accent)", border:"1px solid var(--accent)", borderRadius:5, padding:"3px 8px", textDecoration:"none", whiteSpace:"nowrap", display:"inline-flex", alignItems:"center", gap:3 }}>
           Histórico ↗
         </a>
         <span className="chip" style={{ flexShrink:0 }}>{allTorneios.length} torn.</span>

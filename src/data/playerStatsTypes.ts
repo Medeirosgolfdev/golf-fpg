@@ -47,6 +47,8 @@ export async function loadPlayerStats(): Promise<PlayerStatsDb> {
       }
       let text = await resp.text();
       if (text.charCodeAt(0) === 0xFEFF) text = text.slice(1);
+      // Remover null bytes que podem surgir de escrita truncada no Windows
+      text = text.replace(/\0+/g, "");
       return JSON.parse(text) as PlayerStatsDb;
     } catch (e) {
       console.warn("Failed to load player-stats.json:", e);

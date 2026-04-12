@@ -36,6 +36,7 @@ import TabRow from "../ui/TabRow";
 import KpiCard from "../ui/KpiCard";
 import { COURSE_KEYWORDS, TOURN, FIELD_2025, VP_PAR, TIER, FIELD_CARDS } from "../data/rivalData";
 import { TIER_L, TR_I } from "../constants/tierDisplay";
+import { RoundPill } from "../ui/PillBadge";
 
 /* ═══════════════════════════════════
    TYPES
@@ -854,7 +855,7 @@ function _RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) 
                           <div className="fw-800 fs-13" style={{ color: rankMap[p.n] <= 10 ? "var(--color-good-dark)" : rankMap[p.n] <= 30 ? "var(--text)" : "var(--text-3)" }}>
                             {rankMap[p.n]}º
                           </div>
-                          <div className="fs-10 c-text-3">{nPlayed(p)}T · {nRounds(p)}R</div>
+                          <div className="fs-10 c-text-3">{nPlayed(p)}T{nRounds(p) > 1 && <> · <RoundPill nR={nRounds(p)} /></>}</div>
                         </div>
                       ) : <span className="fs-10 c-border">s/d</span>}
                     </td>
@@ -925,7 +926,7 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
   /* ── Shared table header ── */
   const THead = () => (
     <thead><tr>
-      <th className="hole-header ta-left"  style={{ paddingLeft: 8, minWidth: 50 }}>Buraco</th>
+      <th className="hole-header ta-left">Buraco</th>
       {par.slice(0, 9).map((_, i) => <th key={i} className="hole-header">{i + 1}</th>)}
       <th className="hole-header col-out fs-10">Out</th>
       {par.slice(9).map((_, i) => <th key={i + 9} className="hole-header">{i + 10}</th>)}
@@ -1006,10 +1007,10 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
       {FH.map((h, i) => (
         <React.Fragment key={i}>
           <td className="fs-10 c-muted">{h.fAvg.toFixed(1)}</td>
-          {i === 8 && <td className="col-out fs-10 c-muted">{FH.slice(0, 9).reduce((a, x) => a + x.fAvg, 0).toFixed(1)}</td>}
+          {i === 8 && <td className="col-out c-muted">{FH.slice(0, 9).reduce((a, x) => a + x.fAvg, 0).toFixed(1)}</td>}
         </React.Fragment>
       ))}
-      <td className="col-in fs-10 c-muted">{FH.slice(9).reduce((a, x) => a + x.fAvg, 0).toFixed(1)}</td>
+      <td className="col-in c-muted">{FH.slice(9).reduce((a, x) => a + x.fAvg, 0).toFixed(1)}</td>
       <td className="col-total fs-10 c-muted">{FH.reduce((a, x) => a + x.fAvg, 0).toFixed(1)}</td>
     </tr>
   );
@@ -1095,7 +1096,7 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
             { label: "Triple+", val: scoringStats.worse, cls: "triple" },
           ].filter(s => s.val > 0).map(s => (
             <span key={s.label} className="d-flex items-center gap-4">
-              <span className={`sc-score ${s.cls} fs-10`} style={{ width: 22, height: 22 }}>{s.val}</span>
+              <span className={`sc-score ${s.cls}`}>{s.val}</span>
               <span className="fs-10 fw-600 c-text-3">{s.label} ({(s.val / scoringStats.total * 100).toFixed(0)}%)</span>
             </span>
           ))}
@@ -1160,11 +1161,11 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
                     return (
                       <React.Fragment key={i}>
                         <td className="fs-10 fw-600" style={{ color: col }}>{avg.toFixed(1)}</td>
-                        {i === 8 && <td className="col-out fs-10 fw-600">{playerHoleAvg.slice(0, 9).reduce((a, b) => a + b, 0).toFixed(1)}</td>}
+                        {i === 8 && <td className="col-out fw-600">{playerHoleAvg.slice(0, 9).reduce((a, b) => a + b, 0).toFixed(1)}</td>}
                       </React.Fragment>
                     );
                   })}
-                  <td className="col-in fs-10 fw-600">{playerHoleAvg.slice(9).reduce((a, b) => a + b, 0).toFixed(1)}</td>
+                  <td className="col-in fw-600">{playerHoleAvg.slice(9).reduce((a, b) => a + b, 0).toFixed(1)}</td>
                   <td className="col-total fs-10 fw-700">{playerHoleAvg.reduce((a, b) => a + b, 0).toFixed(1)}</td>
                 </tr>
               )}
@@ -1846,7 +1847,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
           {CONTEST_MAP[tab].players.filter(p => p.rd.length > 0).map((p, idx) => (
             <div key={idx} className="course-item" style={{padding:"4px 8px",display:"flex",justifyContent:"space-between",alignItems:"center",borderBottom:"1px solid var(--border-subtle)", background: p.isM ? "var(--bg-success-subtle)" : undefined}}>
               <div className="course-item-name">
-                <span style={{ minWidth: 22, color: typeof p.p === "number" && p.p <= 3 ? "var(--color-warn-dark)" : "var(--text-3)", fontWeight: 800, fontSize: 11 }}>{typeof p.p === "number" ? `${p.p}.` : ""}</span>
+                <span className="fs-11 fw-800" style={{ minWidth: 22, color: typeof p.p === "number" && p.p <= 3 ? "var(--color-warn-dark)" : "var(--text-3)" }}>{typeof p.p === "number" ? `${p.p}.` : ""}</span>
                 {p.fl} {firstName(p.n)}
               </div>
               <div className="course-item-meta" style={{fontVariantNumeric:"tabular-nums"}}>
@@ -1917,7 +1918,7 @@ function ContestLeaderboard({ contest, evo }: { contest: ContestData; evo?: EvoE
 
       {/* Meta */}
       <div className="muted fs-10 mb-8">
-        {players.filter(p=>p.rd.length===nR).length} jogadores · {nR} rondas · Par {parT}
+        {players.filter(p=>p.rd.length===nR).length} jogadores{nR > 1 && <> · <RoundPill nR={nR} /></>} · Par {parT}
         {roundTab === 0 && <> · Média: {fieldAvg.toFixed(1)} ({fmtToPar(Math.round(fieldAvg - parT * nR))}) · Líder: {leader?.n} ({leader?.t})</>}
       </div>
 
@@ -1929,7 +1930,7 @@ function ContestLeaderboard({ contest, evo }: { contest: ContestData; evo?: EvoE
             <table className="dtable-lg">
               <thead><tr>
                 <th className="col-w30">#</th>
-                <th style={{textAlign:"left",minWidth:120}}>Jogador</th>
+                <th className="ta-left" style={{minWidth:120}}>Jogador</th>
                 {Array.from({length: nR}, (_, i) => <th key={i} className="r col-w40">R{i+1}</th>)}
                 <th className="r col-w50 fw-700">Tot</th>
                 <th className="r col-w40">±Par</th>
@@ -1975,8 +1976,8 @@ function ContestLeaderboard({ contest, evo }: { contest: ContestData; evo?: EvoE
               <table className="sc-table-modern" data-sc-table="1">
                 <thead>
                   <tr>
-                    <th className="hole-header" style={{textAlign:"center",width:30}}>Pos</th>
-                    <th className="hole-header" style={{textAlign:"left",paddingLeft:8,minWidth:50}}>Jogador</th>
+                    <th className="hole-header ta-c" style={{width:30}}>Pos</th>
+                    <th className="hole-header ta-left">Jogador</th>
                     <th className="hole-header col-total" style={{width:32}}>Tot</th>
                     <th className="hole-header" style={{width:32}}>±Par</th>
                     {par.slice(0,9).map((_,i) => <th key={i} className="hole-header">{i+1}</th>)}
@@ -2036,20 +2037,20 @@ function ContestLeaderboard({ contest, evo }: { contest: ContestData; evo?: EvoE
           <div className="card" style={{background:"var(--bg-success-subtle)", border:"1px solid var(--good)"}}>
             <div className="h-md fs-14">🇵🇹 Manuel — Evolução WJGC</div>
             <div className="d-flex" style={{gap:16,flexWrap:"wrap",alignItems:"center"}}>
-              <div style={{textAlign:"center",flex:"1 1 100px"}}>
+              <div className="ta-c" style={{flex:"1 1 100px"}}>
                 <div className="muted fs-10">2025</div>
-                <div className="fw-900" style={{fontSize:24}}>{mEvo.y25}</div>
+                <div className="fw-900 fs-24">{mEvo.y25}</div>
                 <div className="muted fs-10">{mEvo.from}</div>
               </div>
-              <div style={{fontSize:24,color:"var(--good-dark)"}}>→</div>
-              <div style={{textAlign:"center",flex:"1 1 100px"}}>
+              <div className="fs-24" style={{color:"var(--good-dark)"}}>→</div>
+              <div className="ta-c" style={{flex:"1 1 100px"}}>
                 <div className="muted fs-10">2026</div>
-                <div className="fw-900" style={{fontSize:24, color: mEvo.delta < 0 ? "var(--good-dark)" : "var(--text-3)"}}>{mEvo.y26}</div>
+                <div className="fw-900 fs-24" style={{color: mEvo.delta < 0 ? "var(--good-dark)" : "var(--text-3)"}}>{mEvo.y26}</div>
                 <div className="muted fs-10">{mEvo.to}</div>
               </div>
-              <div style={{textAlign:"center",flex:"1 1 80px"}}>
+              <div className="ta-c" style={{flex:"1 1 80px"}}>
                 <div className="muted fs-10">Δ</div>
-                <div className="fw-900" style={{fontSize:24, color: mEvo.delta < 0 ? "var(--good-dark)" : SC.danger}}>{mEvo.delta > 0 ? "+" : ""}{mEvo.delta}</div>
+                <div className="fw-900 fs-24" style={{color: mEvo.delta < 0 ? "var(--good-dark)" : SC.danger}}>{mEvo.delta > 0 ? "+" : ""}{mEvo.delta}</div>
                 <div className="muted fs-10">pancadas</div>
               </div>
             </div>
@@ -2065,7 +2066,7 @@ function ContestLeaderboard({ contest, evo }: { contest: ContestData; evo?: EvoE
           <div className="tourn-scroll">
             <table className="dtable-lg">
               <thead><tr>
-                <th style={{textAlign:"left",minWidth:120}}>Jogador</th>
+                <th className="ta-left" style={{minWidth:120}}>Jogador</th>
                 <th className="r col-w55">2025</th>
                 <th className="r col-w55">2026</th>
                 <th className="r col-w45">Δ</th>

@@ -169,7 +169,9 @@ function ByDateView({ data, search }: {
   data: PlayerPageData; search: string;
 }) {
   const [openScorecardId, setOpenScorecardId] = useState<string | null>(null);
-  const { sortKey, sortDir, toggleSort } = useSort<"date" | "course" | "gross" | "stb" | "sd">("date", "desc");
+  const { sortKey, sortDir, toggleSort } = useSort<"date" | "course" | "event" | "holes" | "hcp" | "tee" | "meters" | "gross" | "stb" | "sd">("date", "desc", {
+    gross: "asc", sd: "asc", hcp: "asc", meters: "desc", stb: "desc", holes: "desc",
+  });
 
   const all = useMemo(() => {
     const term = norm(search);
@@ -184,19 +186,23 @@ function ByDateView({ data, search }: {
         norm(x.course).includes(term) || norm(x.eventName || "").includes(term)
       );
     }
-    // Sort based on current sortKey
+    const dir = sortDir === "asc" ? 1 : -1;
     rounds.sort((a, b) => {
-      let av: number | string, bv: number | string;
+      let av: number, bv: number;
       switch (sortKey) {
         case "date": av = a.dateSort; bv = b.dateSort; break;
-        case "course": return (sortDir === "asc" ? 1 : -1) * a.course.localeCompare(b.course, "pt");
-        case "gross": av = a.gross ?? (sortDir === "asc" ? 999 : -999); bv = b.gross ?? (sortDir === "asc" ? 999 : -999); break;
-        case "stb": av = a.stb ?? (sortDir === "asc" ? -999 : 999); bv = b.stb ?? (sortDir === "asc" ? -999 : 999); break;
-        case "sd": av = a.sd ?? (sortDir === "asc" ? 999 : -999); bv = b.sd ?? (sortDir === "asc" ? 999 : -999); break;
+        case "course": return dir * a.course.localeCompare(b.course, "pt");
+        case "event": return dir * (a.eventName || "").localeCompare(b.eventName || "", "pt");
+        case "holes": av = a.holeCount; bv = b.holeCount; break;
+        case "hcp": av = a.hi ?? 999; bv = b.hi ?? 999; break;
+        case "tee": return dir * (a.tee || "").localeCompare(b.tee || "");
+        case "meters": av = a.meters ?? 0; bv = b.meters ?? 0; break;
+        case "gross": av = a.gross ?? 999; bv = b.gross ?? 999; break;
+        case "stb": av = a.stb ?? -999; bv = b.stb ?? -999; break;
+        case "sd": av = a.sd ?? 999; bv = b.sd ?? 999; break;
         default: av = a.dateSort; bv = b.dateSort;
       }
-      const cmp = typeof av === "number" && typeof bv === "number" ? av - bv : 0;
-      return sortDir === "asc" ? cmp : -cmp;
+      return dir * (av - bv);
     });
     return rounds;
   }, [data, search, sortKey, sortDir]);
@@ -213,9 +219,11 @@ function ByDateView({ data, search }: {
           <tr>
             <SortableHdr k="date" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Data</SortableHdr>
             <SortableHdr k="course" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Campo</SortableHdr>
-            <th>Prova</th>
-            <th className="r">Bur.</th><th className="r">HCP</th><th>Tee</th>
-            <th className="r">Dist.</th>
+            <SortableHdr k="event" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Prova</SortableHdr>
+            <SortableHdr k="holes" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Bur.</SortableHdr>
+            <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">HCP</SortableHdr>
+            <SortableHdr k="tee" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Tee</SortableHdr>
+            <SortableHdr k="meters" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Dist.</SortableHdr>
             <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Gross</SortableHdr>
             <SortableHdr k="stb" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Stb</SortableHdr>
             <SortableHdr k="sd" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">SD</SortableHdr>
@@ -297,7 +305,9 @@ function ByDateView({ data, search }: {
 
 /* ─── Tee Summary Table (compact, for simple by_course view) ─── */
 function TeeSummaryTable({ rounds }: { rounds: RoundData[] }) {
-  const { sortKey, sortDir, toggleSort } = useSort<"rondas" | "melhor" | "media_gr" | "media_stb" | "media_sd">("rondas", "desc");
+  const { sortKey, sortDir, toggleSort } = useSort<"rondas" | "melhor" | "media_gr" | "media_stb" | "media_sd">("rondas", "desc", {
+    melhor: "asc", media_gr: "asc", media_sd: "asc", media_stb: "desc",
+  });
 
   const tees = useMemo(() => {
     const map: Record<string, { tee: string; count: number; gross: number[]; stb: number[]; sd: number[]; hi: (number | null)[] }> = {};
@@ -314,7 +324,7 @@ function TeeSummaryTable({ rounds }: { rounds: RoundData[] }) {
       map[tk].hi.push(r.hi != null ? Number(r.hi) : null);
     });
     let result = Object.values(map);
-    // Sort by selected key
+    const dir = sortDir === "asc" ? 1 : -1;
     result.sort((a, b) => {
       let av: number, bv: number;
       switch (sortKey) {
@@ -325,7 +335,7 @@ function TeeSummaryTable({ rounds }: { rounds: RoundData[] }) {
         case "media_sd": av = meanArr(a.sd) ?? 0; bv = meanArr(b.sd) ?? 0; break;
         default: av = a.count; bv = b.count;
       }
-      return sortDir === "asc" ? av - bv : bv - av;
+      return dir * (av - bv);
     });
     return result;
   }, [rounds, sortKey, sortDir]);
@@ -579,7 +589,7 @@ function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, eclecti
           {/* Metros row */}
           {meters && meters.some(v => v != null && v > 0) && (
             <tr className="meta-row">
-              <td className="row-label c-muted fs-10 fw-400">Metros</td>
+              <td className="row-label c-muted fw-400">Metros</td>
               {Array.from({ length: totalHoles }, (_, h) => (
                 <React.Fragment key={h}>
                   <td>{meters[h] != null && meters[h]! > 0 ? meters[h] : ""}</td>
@@ -591,14 +601,14 @@ function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, eclecti
               <td className={`col-${is9 ? "total" : "in"} fw-600`}>
                 {is9 ? sumArr(meters, 0, totalHoles) : sumArr(meters, 9, totalHoles)}
               </td>
-              {!is9 && <td className="col-total c-muted fs-10">{metersTotal}</td>}
+              {!is9 && <td className="col-total c-muted">{metersTotal}</td>}
             </tr>
           )}
 
           {/* S.I. row */}
           {si && si.some(v => v != null && v > 0) && (
             <tr className="meta-row">
-              <td className="row-label c-muted fs-10 fw-400">S.I.</td>
+              <td className="row-label c-muted fw-400">S.I.</td>
               {Array.from({ length: totalHoles }, (_, h) => (
                 <React.Fragment key={h}>
                   <td>{si[h] != null && si[h]! > 0 ? si[h] : ""}</td>
@@ -862,7 +872,9 @@ function ByCourseView({ data, search, sort, isAnalysis }: {
   data: PlayerPageData; search: string; sort: CourseSort; isAnalysis: boolean;
 }) {
   const [openScorecardId, setOpenScorecardId] = useState<string | null>(null);
-  const { sortKey, sortDir, toggleSort } = useSort<"course" | "voltas" | "ultima" | "gross" | "stb" | "sd">("voltas", "desc");
+  const { sortKey, sortDir, toggleSort } = useSort<"course" | "voltas" | "ultima" | "gross" | "stb" | "sd">("voltas", "desc", {
+    gross: "asc", sd: "asc", stb: "desc",
+  });
 
   const list = useMemo(() => {
     const term = norm(search);
@@ -874,12 +886,13 @@ function ByCourseView({ data, search, sort, isAnalysis }: {
     else l.sort((a, b) => (b.count - a.count) || a.course.localeCompare(b.course, "pt"));
 
     // Apply column sort (always — the pre-sort above is just the initial order)
+    const dir = sortDir === "asc" ? 1 : -1;
     l.sort((a, b) => {
-      let av: number | string, bv: number | string;
+      let av: number, bv: number;
       const lastA = a.rounds[0];
       const lastB = b.rounds[0];
       switch (sortKey) {
-        case "course": return (sortDir === "asc" ? 1 : -1) * a.course.localeCompare(b.course, "pt");
+        case "course": return dir * a.course.localeCompare(b.course, "pt");
         case "voltas": av = a.count; bv = b.count; break;
         case "ultima": av = a.lastDateSort; bv = b.lastDateSort; break;
         case "gross": av = (lastA?.gross ?? 999); bv = (lastB?.gross ?? 999); break;
@@ -887,8 +900,7 @@ function ByCourseView({ data, search, sort, isAnalysis }: {
         case "sd": av = (lastA?.sd ?? 999); bv = (lastB?.sd ?? 999); break;
         default: av = a.count; bv = b.count;
       }
-      const cmp = typeof av === "number" && typeof bv === "number" ? av - bv : 0;
-      return sortDir === "asc" ? cmp : -cmp;
+      return dir * (av - bv);
     });
     return l;
   }, [data, search, sort, sortKey, sortDir]);
@@ -936,10 +948,13 @@ function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, ac
   courseRounds: RoundData[]; holesData: Record<string, HoleScores>;
   activeTee: string | null; onSelectTee: (tk: string) => void;
 }) {
-  const { sortKey, sortDir, toggleSort } = useSort<"rondas" | "par" | "eclético" | "vs_par" | "melhor_gr" | "media_gr">("rondas", "desc");
+  const { sortKey, sortDir, toggleSort } = useSort<"rondas" | "par" | "eclético" | "vs_par" | "melhor_gr" | "media_gr">("rondas", "desc", {
+    eclético: "asc", vs_par: "asc", melhor_gr: "asc", media_gr: "asc",
+  });
 
   const sortedEcList = useMemo(() => {
     let sorted = [...ecList];
+    const dir = sortDir === "asc" ? 1 : -1;
     sorted.sort((a, b) => {
       let av: number, bv: number;
       const hsA = holeStats[a.teeKey];
@@ -953,7 +968,7 @@ function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, ac
         case "media_gr": av = hsA?.avgGross ?? 0; bv = hsB?.avgGross ?? 0; break;
         default: av = hsA?.nRounds ?? 0; bv = hsB?.nRounds ?? 0;
       }
-      return sortDir === "asc" ? av - bv : bv - av;
+      return dir * (av - bv);
     });
     return sorted;
   }, [ecList, holeStats, sortKey, sortDir]);
@@ -1811,7 +1826,9 @@ function CrossAnalysis({ data, bare: _bare }: { data: PlayerPageData; bare?: boo
   const [activeEsc, setActiveEsc] = useState<string>("");
   const [sexFilter, setSexFilter] = useState("all");
   const [hcpMax, setHcpMax] = useState("all");
-  const { sortKey, sortDir, toggleSort } = useSort<"jogador" | "hcp" | "ult_sd" | "m_sd" | "torneios" | "total">("total", "asc");
+  const { sortKey, sortDir, toggleSort } = useSort<"jogador" | "hcp" | "ult_sd" | "m_sd" | "torneios" | "total">("total", "desc", {
+    hcp: "asc", ult_sd: "asc", m_sd: "asc", torneios: "desc",
+  });
 
   const byEscalao = useMemo(() => {
     const map: Record<string, CrossPlayerData[]> = {};
@@ -1844,11 +1861,11 @@ function CrossAnalysis({ data, bare: _bare }: { data: PlayerPageData; bare?: boo
         return true;
       });
 
-    // Sort by selected key
+    const dir = sortDir === "asc" ? 1 : -1;
     p.sort((a, b) => {
-      let av: number | string, bv: number | string;
+      let av: number, bv: number;
       switch (sortKey) {
-        case "jogador": return (sortDir === "asc" ? 1 : -1) * a.name.localeCompare(b.name, "pt");
+        case "jogador": return dir * a.name.localeCompare(b.name, "pt");
         case "hcp": av = a.currentHcp ?? 999; bv = b.currentHcp ?? 999; break;
         case "ult_sd": av = a.lastSD ?? 999; bv = b.lastSD ?? 999; break;
         case "m_sd": av = a.avgSD20 ?? 999; bv = b.avgSD20 ?? 999; break;
@@ -1856,8 +1873,7 @@ function CrossAnalysis({ data, bare: _bare }: { data: PlayerPageData; bare?: boo
         case "total": av = a.numRounds ?? 0; bv = b.numRounds ?? 0; break;
         default: av = a.numRounds ?? 0; bv = b.numRounds ?? 0;
       }
-      const cmp = typeof av === "number" && typeof bv === "number" ? av - bv : 0;
-      return sortDir === "asc" ? cmp : -cmp;
+      return dir * (av - bv);
     });
     return p;
   }, [byEscalao, activeEsc, sexFilter, hcpMax, sortKey, sortDir]);
@@ -2434,7 +2450,7 @@ function CompScoreRow({ label, labelBg, labelFg, gross, par, hc, is9, frontEnd, 
           <React.Fragment key={i}>
             <td style={cs}>
               {gv != null && gv > 0
- ? <span className={`sc-score ${cls} ai-center jc-center fw-700 fs-12`} style={{ display: "inline-flex", width: 26, height: 26 }}>{gv}</span>
+ ? <span className={`sc-score ${cls}`}>{gv}</span>
                 : ""}
             </td>
             {i === frontEnd - 1 && !is9 && (
@@ -2711,23 +2727,25 @@ function ByTournamentView({ data, search }: { data: PlayerPageData; search: stri
   }, [data, search]);
 
   const [openIdx, setOpenIdx] = useState<number | null>(null);
-  const { sortKey, sortDir, toggleSort } = useSort<"torneio" | "campo" | "rondas" | "datas">("datas", "desc");
+  const { sortKey, sortDir, toggleSort } = useSort<"torneio" | "campo" | "rondas" | "datas">("datas", "desc", {
+    rondas: "desc",
+  });
 
   const sortedItems = useMemo(() => {
     let sorted = [...items];
+    const dir = sortDir === "asc" ? 1 : -1;
     sorted.sort((a, b) => {
-      let av: number | string, bv: number | string;
+      let av: number, bv: number;
       const al = a.rounds[a.rounds.length - 1]?.dateSort || 0;
       const bl = b.rounds[b.rounds.length - 1]?.dateSort || 0;
       switch (sortKey) {
-        case "torneio": return (sortDir === "asc" ? 1 : -1) * a.name.localeCompare(b.name, "pt");
-        case "campo": return (sortDir === "asc" ? 1 : -1) * a.course.localeCompare(b.course, "pt");
+        case "torneio": return dir * a.name.localeCompare(b.name, "pt");
+        case "campo": return dir * a.course.localeCompare(b.course, "pt");
         case "rondas": av = a.rounds.length; bv = b.rounds.length; break;
         case "datas": av = al; bv = bl; break;
         default: av = al; bv = bl;
       }
-      const cmp = typeof av === "number" && typeof bv === "number" ? av - bv : 0;
-      return sortDir === "asc" ? cmp : -cmp;
+      return dir * (av - bv);
     });
     return sorted;
   }, [items, sortKey, sortDir]);

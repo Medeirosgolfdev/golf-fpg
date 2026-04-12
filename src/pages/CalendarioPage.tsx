@@ -503,7 +503,7 @@ function ListView({ events, onSelect }: { events: CalEvent[]; onSelect: (e: CalE
         const isCur = month === today.getMonth();
         return (
         <div key={month} ref={isCur ? todayMonthRef : undefined}>
-          <div className="uppercase" style={{ fontSize: 13, fontWeight: 700, color: "var(--accent)",
+          <div className="uppercase fs-13 fw-700" style={{ color: "var(--accent)",
             letterSpacing: "0.04em", marginBottom: 8, paddingBottom: 4, borderBottom: "2px solid var(--accent-light)" }}>
             {monthLabel(month)} 2026
           </div>
@@ -529,14 +529,14 @@ function ListView({ events, onSelect }: { events: CalEvent[]; onSelect: (e: CalE
                   <div style={{ width: 4, alignSelf: "stretch", borderRadius: "var(--radius-xs)",
                     background: hl ? hl.bg : c, flexShrink: 0 }} />
                   <div className="flex-1" style={{ minWidth: 0 }}>
-                    <div className="text-ellipsis" style={{ fontSize: 13, fontWeight: 600, color: "var(--text)" }}>
+                    <div className="text-ellipsis fs-13 fw-600" style={{ color: "var(--text)" }}>
                       {hl ? `${hl.icon} ` : ""}{e.title}
                     </div>
                     <div className="fs-11 c-text-3 mt-4" >
                       {e.modalidade}{e.modalidade && " · "}{e.campo}
                     </div>
                   </div>
-                  <span style={{ fontSize: 10, fontWeight: 600, padding: "2px 8px", borderRadius: "var(--radius-lg)",
+                  <span className="fs-10 fw-600" style={{ padding: "2px 8px", borderRadius: "var(--radius-lg)",
                     background: hl ? hl.bg : c,
                     color: hl ? hl.text : "#fff", whiteSpace: "nowrap", flexShrink: 0 }}>
                     {CAL_MAP.get(e.calId)?.name ?? ""}
@@ -738,13 +738,13 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                           }}
                             onMouseEnter={e => { if (!isExpanded) e.currentTarget.style.background = "var(--bg-hover)"; }}
                             onMouseLeave={e => { e.currentTarget.style.background = isExpanded ? "var(--accent-light)" : "transparent"; }}>
-                            <span className="text-ellipsis" style={{
-                              fontSize: 11, color: enabledCals.has(cal.id) ? "var(--text)" : "var(--text-3)",
-                              flex: 1, textAlign: "left", fontWeight: isExpanded ? 600 : enabledCals.has(cal.id) ? 500 : 400,
+                            <span className="text-ellipsis fs-11 ta-left" style={{
+                              color: enabledCals.has(cal.id) ? "var(--text)" : "var(--text-3)",
+                              flex: 1, fontWeight: isExpanded ? 600 : enabledCals.has(cal.id) ? 500 : 400,
                             }}>{cal.name}</span>
-                            <span style={{ fontSize: 10, fontFamily: "'JetBrains Mono', monospace",
+                            <span className="fs-10" style={{ fontFamily: "'JetBrains Mono', monospace",
                               color: "var(--text-3)", flexShrink: 0 }}>{calEvts.length}</span>
-                            <span style={{ fontSize: 10, color: "var(--text-3)", flexShrink: 0, transition: "transform 0.15s",
+                            <span className="fs-10" style={{ color: "var(--text-3)", flexShrink: 0, transition: "transform 0.15s",
                               transform: isExpanded ? "rotate(180deg)" : "none" }}>▼</span>
                           </button>
                         </div>
@@ -769,7 +769,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                                   onMouseEnter={e => (e.currentTarget.style.background = "var(--bg-hover)")}
                                   onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>
                                   <span className="fs-10 fw-600 flex-shrink-0" style={{ fontFamily: "'JetBrains Mono', monospace", color: cal.color, minWidth: 30 }}>{dd}</span>
-                                  <span className="text-ellipsis" style={{ fontSize: 10, color: "var(--text-2)", flex: 1, textAlign: "left" }}>{ev.title}</span>
+                                  <span className="text-ellipsis fs-10 ta-left" style={{ color: "var(--text-2)", flex: 1 }}>{ev.title}</span>
                                 </button>
                               );
                             })}
@@ -826,8 +826,8 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
               {searchOpen && searchQ.length >= 2 && searchResults.length === 0 && (
                 <div style={{ position: "absolute", top: "100%", left: 0, right: 0, marginTop: 4,
                   background: "var(--bg-card)", border: "1px solid var(--border-light)",
-                  borderRadius: "var(--radius-lg)", padding: "12px 14px", fontSize: 11,
-                  color: "var(--text-3)", textAlign: "center" }}>
+                  borderRadius: "var(--radius-lg)", padding: "12px 14px",
+                  color: "var(--text-3)" }} className="fs-11 ta-c">
                   Nenhum evento encontrado
                 </div>
               )}
@@ -848,7 +848,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                 display: "flex", alignItems: "center", justifyContent: "center",
                 fontSize: 18, color: currentMonth <= 0 ? "var(--border)" : "var(--text-2)",
                 flexShrink: 0 }}>‹</button>
-            <span style={{ fontSize: 15, fontWeight: 700, color: "var(--text)", textAlign: "center", flex: 1 }}>
+            <span className="fw-700 ta-c" style={{ fontSize: 15, color: "var(--text)", flex: 1 }}>
               {monthLabel(currentMonth)} 2026
             </span>
             <span className="fs-11 c-text-3 mono flex-shrink-0" >{visibleEvents.length} provas</span>
@@ -870,8 +870,8 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
               <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)",
                 borderBottom: "1px solid var(--border-light)", marginBottom: 4 }}>
                 {DAYS_PT.map((d, i) => (
-                  <div key={i} className="uppercase" style={{ textAlign: "center", padding: "8px 0", fontSize: 11,
-                    fontWeight: 600, color: "var(--text-3)", letterSpacing: "0.04em" }}>{d}</div>
+                  <div key={i} className="uppercase ta-c fs-11 fw-600" style={{ padding: "8px 0",
+                    color: "var(--text-3)", letterSpacing: "0.04em" }}>{d}</div>
                 ))}
               </div>
               <div style={{ flex: 1, display: "grid", gridTemplateColumns: "repeat(7,1fr)", gridTemplateRows: `repeat(${gridRows},1fr)` }}>
@@ -930,7 +930,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                     }}
                       onMouseEnter={ev => { if (!isSel) ev.currentTarget.style.background = "var(--bg-hover)"; }}
                       onMouseLeave={ev => { if (!isSel) ev.currentTarget.style.background = isSel ? "var(--accent-light)" : "transparent"; }}>
-                      <div style={{ fontSize: 11,
+                      <div className="fs-11" style={{
                         fontWeight: isToday ? 700 : 500,
                         minHeight: 22, borderRadius: "var(--radius-lg)", padding: "1px 4px",
                         display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 2px",

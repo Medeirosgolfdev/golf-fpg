@@ -11,8 +11,12 @@
  *
  * Ao clicar na mesma key inverte direção; ao mudar de key usa defaultDir.
  * Override por key: useSort("pos", "asc", { totalPts: "desc" })
+ *
+ * NOTA: usa useRef para evitar chamar setSortDir dentro de um updater
+ * de setSortKey — esse padrão causa bug em React 19 strict mode
+ * (updaters correm 2×, logo a direcção inverte e volta ao mesmo valor).
  */
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 
 export function useSort<K extends string>(
   defaultKey: K,
@@ -21,19 +25,18 @@ export function useSort<K extends string>(
 ) {
   const [sortKey, setSortKey] = useState<K>(defaultKey);
   const [sortDir, setSortDir] = useState<"asc" | "desc">(defaultDir);
-  // para resetSort
-  const _defKey = defaultKey;
-  const _defDir = defaultDir;
+  const keyRef = useRef<K>(defaultKey);
 
   const toggleSort = useCallback((k: K) => {
-    setSortKey(prev => {
-      if (prev === k) {
-        setSortDir(d => d === "asc" ? "desc" : "asc");
-        return k;
-      }
+    if (keyRef.current === k) {
+      // mesma coluna → inverter direcção
+      setSortDir(d => d === "asc" ? "desc" : "asc");
+    } else {
+      // nova coluna → direcção default para essa key
+      keyRef.current = k;
+      setSortKey(k);
       setSortDir(defaultDirMap?.[k] ?? defaultDir);
-      return k;
-    });
+    }
   }, [defaultDir, defaultDirMap]);
 
   return { sortKey, sortDir, toggleSort } as const;

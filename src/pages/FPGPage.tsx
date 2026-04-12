@@ -22,7 +22,7 @@ import { scClass, sdClassByHcp } from "../utils/scoreDisplay";
 import { buildEscLookup, type EscLookup, escCls, escPillCls, formatPlayerName, normalizePlayer } from "../utils/playerUtils";
 import { getTeeHex } from "../utils/teeColors";
 import { TORNEIOS_CONFIG } from "../constants/tournaments";
-import { PILL_SSERRA, SIDEBAR_ACCENT, EscPill, ESC_STYLE, PillBadge } from "../ui/PillBadge";
+import { PILL_SSERRA, SIDEBAR_ACCENT, EscPill, ESC_STYLE, PillBadge, RoundPill } from "../ui/PillBadge";
 import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
 import SexBadge from "../ui/SexBadge";
 import SidebarToggle from "../ui/SidebarToggle";
@@ -42,7 +42,7 @@ import { toggleArr } from "../utils/mathUtils";
 import { calcAGS, expectedSD9 } from "../utils/whsCalc";
 import { ScorecardLeaderboard, type ScorecardRow } from "../ui/ScorecardLeaderboard";
 import { MultiRoundLeaderboard } from "../ui/MultiRoundLeaderboard";
-import { EMPTY_FILTER, type MultiRoundRow as MRRow } from "../ui/multiRoundTypes";
+import { EMPTY_FILTER, type MultiRoundRow as MRRow, type ExtraColumn } from "../ui/multiRoundTypes";
 import { CrossSeasonTable, SortTh as CSortTh } from "../ui/CrossSeasonTable";
 import {
   MANUEL_FED,
@@ -897,15 +897,15 @@ function PlayerFilterBar({ players, filter, onChange, escLookup, playersDB, tota
   return (
     <div style={{ display:"flex", flexWrap:"wrap", alignItems:"center", gap:6, padding:"6px 0 8px", borderBottom:"1px solid var(--border)", marginBottom:8 }}>
       <div style={{ position:"relative", flexShrink:0 }}>
-        <span style={{ position:"absolute", left:7, top:"50%", transform:"translateY(-50%)", fontSize:11, color:"var(--text-muted)", pointerEvents:"none" }}>🔍</span>
+        <span className="fs-11 c-muted" style={{ position:"absolute", left:7, top:"50%", transform:"translateY(-50%)", pointerEvents:"none" }}>🔍</span>
         <input type="text" placeholder="Nome ou clube…" value={filter.name} onChange={e => onChange({ ...filter, name:e.target.value })}
           className="input-search" style={{ width:140 }} />
       </div>
-      {hasOpts && <span style={{ color:"var(--border)", fontSize:11 }}>|</span>}
+      {hasOpts && <span className="fs-11" style={{ color:"var(--border)" }}>|</span>}
       {availEsc.length > 1 && availEsc.map(e => { const k = e.toLowerCase().replace(/[\s-]/g,""); const s = ESC_STYLE[k]; return <FilterChip key={e} active={filter.escs.includes(e)} onClick={() => onChange({ ...filter, escs:toggleArr(filter.escs,e) })} color={s?.bg}>{e}</FilterChip>; })}
       {availTees.length > 1 && availTees.map(t => { const hex = getTeeHex(t); return <FilterChip key={t} active={filter.tees.includes(t)} onClick={() => onChange({ ...filter, tees:toggleArr(filter.tees,t) })} color={hex}><span style={{ display:"flex", alignItems:"center", gap:4 }}><span style={{ display:"inline-block", width:8, height:8, borderRadius:2, background:hex, border:"1px solid rgba(0,0,0,.18)" }} />{t}</span></FilterChip>; })}
       {availClubs.length > 2 && <select value={filter.club} onChange={e => onChange({ ...filter, club:e.target.value })} className="select-compact" style={{ border:`1px solid ${filter.club?"var(--accent)":"var(--border)"}`, fontWeight:filter.club?700:400 }}><option value="">Todos os clubes</option>{availClubs.map(c => <option key={c} value={c}>{c}</option>)}</select>}
-      {isActive && <><span style={{ fontSize:10, color:"var(--text-muted)", marginLeft:2 }}>{filtered.length} de {total}</span><button onClick={() => onChange(EMPTY_FILTER)} style={{ fontSize:10, padding:"2px 8px", borderRadius:20, border:"1px solid var(--border)", background:"var(--bg-hover)", color:"var(--text-muted)", cursor:"pointer" }}>✕ limpar</button></>}
+      {isActive && <><span className="fs-10 c-muted" style={{ marginLeft:2 }}>{filtered.length} de {total}</span><button onClick={() => onChange(EMPTY_FILTER)} className="fs-10 c-muted" style={{ padding:"2px 8px", borderRadius:20, border:"1px solid var(--border)", background:"var(--bg-hover)", cursor:"pointer" }}>✕ limpar</button></>}
     </div>
   );
 }
@@ -931,6 +931,7 @@ export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabe
   const hideTee    = options?.hideTee ?? false;
   const clubLabel_ = options?.clubLabel ?? "CLUBE";
   const startHole_ = options?.startHole ?? 1;
+  const nameDecorator_ = options?.nameDecorator;
   // Calcular colSpan dinâmico: base 5 (ESC+FED+CLUBE+HCP+TEE) menos as colunas ocultas
   const parLabelColSpan = parLabelColSpanProp ?? (5 - (hideEsc ? 1 : 0) - (hideFed ? 1 : 0) - (hideHCP_ ? 1 : 0) - (hideTee ? 1 : 0));
   const { sortKey, sortDir, toggleSort: handleSort } = useSort<SortKey>("pos");
@@ -1040,7 +1041,9 @@ export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabe
       scores,
       rowBg,
       stickyBg,
-      nameContent: <PName name={p.name} fedCode={p.fedCode} playersDB={playersDB} highlight={isManuel(p)} />,
+      nameContent: nameDecorator_
+        ? nameDecorator_(p.name, <PName name={p.name} fedCode={p.fedCode} playersDB={playersDB} highlight={isManuel(p)} />)
+        : <PName name={p.name} fedCode={p.fedCode} playersDB={playersDB} highlight={isManuel(p)} />,
       prefixCells: <>
         {!hideEsc && <td className="lb-esc">{esc ? <EscPill esc={esc} /> : <span className="muted">–</span>}</td>}
         {!hideFed && <td className="lb-fed">{p.fedCode || "–"}</td>}
@@ -1110,7 +1113,7 @@ export function ScorecardLB({ tournament, escLookup, playersDB, siLabel, parLabe
 /* ─────────────────────────────────────────────
    LEADERBOARD ACUMULADO (multi-ronda)
    ───────────────────────────────────────────── */
-export function AccumulatedLB({ tournament, nRounds, escLookup, playersDB, showCols: showColsProp }: { tournament: Tournament; nRounds: number; escLookup: EscLookup; playersDB: PlayersDB; showCols?: { esc?: boolean; fed?: boolean; tee?: boolean } }) {
+export function AccumulatedLB({ tournament, nRounds, escLookup, playersDB, showCols: showColsProp, extraColumns, renderName }: { tournament: Tournament; nRounds: number; escLookup: EscLookup; playersDB: PlayersDB; showCols?: { esc?: boolean; fed?: boolean; tee?: boolean }; extraColumns?: ExtraColumn<MRRow & { _pos?: number | null }>[]; renderName?: (row: MRRow) => React.ReactNode }) {
   const rawPlayers = tournament.players;
 
   const complete   = rawPlayers.filter(p => !p._incomplete);
@@ -1169,23 +1172,24 @@ export function AccumulatedLB({ tournament, nRounds, escLookup, playersDB, showC
   const grosses   = complete.map(p => numGross(p)).filter(g => !isNaN(g) && g > 0);
   const avgGross  = grosses.length ? grosses.reduce((a, b) => a + b, 0) / grosses.length : null;
 
-  const info = [
+  const infoParts: (string | null)[] = [
     `${complete.length} classif.`,
     incomplete.length > 0 ? `${incomplete.length} inc.` : null,
-    `${nRounds}R`,
+    nRounds > 1 ? `__ROUND_PILL__` : null,
     `Par ${parPerRound * nRounds}`,
     avgGross != null ? `Média ${avgGross.toFixed(1)} (${avgGross - parPerRound * nRounds >= 0 ? "+" : ""}${(avgGross - parPerRound * nRounds).toFixed(1)})` : null,
     campo ? `📍 ${campo}` : null,
     cr    ? `CR ${cr}`    : null,
     slope ? `Slope ${slope}` : null,
-  ].filter(Boolean).join(" · ");
+  ];
+  const infoFiltered = infoParts.filter(Boolean) as string[];
 
   // Early return seguro — useMemo já foi chamado acima
   if (!rawPlayers.length) return <EmptyState size="sm" message="Sem resultados." />;
 
   return (
     <div>
-      <div className="muted fs-11 mb-8 p-0-4px">{info}</div>
+      <div className="muted fs-11 mb-8 p-0-4px">{infoFiltered.map((s, i) => <React.Fragment key={i}>{i > 0 && " · "}{s === "__ROUND_PILL__" ? <RoundPill nR={nRounds} /> : s}</React.Fragment>)}</div>
       <MultiRoundLeaderboard
         rows={rows}
         nRounds={nRounds}
@@ -1193,6 +1197,8 @@ export function AccumulatedLB({ tournament, nRounds, escLookup, playersDB, showC
         showCols={showColsProp ?? { esc: true, fed: true, tee: true }}
         sortable
         filterable
+        extraColumns={extraColumns}
+        renderName={renderName}
       />
     </div>
   );
@@ -1257,7 +1263,7 @@ function LinksBar({ links, escalao }: { links?: Record<string, string>; escalao?
     <div className="flex-wrap mt-8" style={{ display: "flex", gap: 6, alignItems: "center" }}>
       {groups.map((g, gi) => (
         <React.Fragment key={g.label}>
-          {gi > 0 && <span style={{ color: "var(--border)", fontSize: 12 }}>·</span>}
+          {gi > 0 && <span className="fs-12" style={{ color: "var(--border)" }}>·</span>}
           <span className="label-caps c-muted" style={{ marginRight: 2 }}>{g.label}</span>
           {g.items.map(item => (
             <a key={item.name} href={item.url} target="_blank" rel="noopener noreferrer"
@@ -1293,6 +1299,8 @@ export interface ScorecardOptions {
   hideTee?: boolean;      // ocultar coluna TEE
   clubLabel?: string;     // label alternativo para coluna Clube (ex: "País")
   startHole?: number;     // buraco inicial (default 1, back-9: 10)
+  /** Decorador que envolve o conteúdo do nome (ex: para adicionar ↗ Kids link) */
+  nameDecorator?: (name: string, content: React.ReactNode) => React.ReactNode;
 }
 
 export function AllRoundsScorecardLB({
@@ -1307,6 +1315,7 @@ export function AllRoundsScorecardLB({
   const hideSD    = options?.hideSD ?? false;
   const clubLabel = options?.clubLabel ?? "Clube";
   const startHole = options?.startHole ?? 1;
+  const nameDecorator = options?.nameDecorator;
   const [filter, setFilter]   = useState<PlayerFilter>(EMPTY_FILTER);
   const { sortKey, sortDir, toggleSort } = useSort<string>("pos");
   const [showSC, setShowSC]   = useState(true);
@@ -1552,8 +1561,9 @@ export function AllRoundsScorecardLB({
         <span style={{ display: "flex", gap: 2, marginLeft: 4, border: "1px solid var(--border)", borderRadius: 8, overflow: "hidden" }}>
           {([true, false] as const).map(g => (
             <button key={String(g)} onClick={() => setGroupMode(g)}
+              className="fs-10"
               style={{
-                fontSize: 10, padding: "2px 9px", border: "none", cursor: "pointer",
+                padding: "2px 9px", border: "none", cursor: "pointer",
                 background: groupMode === g ? "var(--accent)" : "transparent",
                 color: groupMode === g ? "#fff" : "var(--text-muted)",
                 fontWeight: groupMode === g ? 700 : 400,
@@ -1570,7 +1580,7 @@ export function AllRoundsScorecardLB({
       {/* Barra de filtro compacta */}
       <div style={{ display: "flex", flexWrap: "wrap", gap: 6, paddingBottom: 8, borderBottom: "1px solid var(--border)", marginBottom: 8 }}>
         <div style={{ position: "relative" }}>
-          <span style={{ position: "absolute", left: 7, top: "50%", transform: "translateY(-50%)", fontSize: 11, color: "var(--text-muted)", pointerEvents: "none" }}>🔍</span>
+          <span className="fs-11 c-muted" style={{ position: "absolute", left: 7, top: "50%", transform: "translateY(-50%)", pointerEvents: "none" }}>🔍</span>
           <input type="text" placeholder="Nome ou clube…" value={filter.name}
             onChange={e => setFilter({ ...filter, name: e.target.value })}
             className="input-search" style={{ width: 150 }} />
@@ -1584,7 +1594,7 @@ export function AllRoundsScorecardLB({
         )}
         {(filter.name || filter.club) && (
           <button onClick={() => setFilter({ name: "", escs: [], tees: [], club: "" })}
-            style={{ fontSize: 10, padding: "2px 8px", borderRadius: 20, border: "1px solid var(--border)", background: "var(--bg-hover)", color: "var(--text-muted)", cursor: "pointer" }}>
+            className="fs-10 c-muted" style={{ padding: "2px 8px", borderRadius: 20, border: "1px solid var(--border)", background: "var(--bg-hover)", cursor: "pointer" }}>
             ✕ limpar
           </button>
         )}
@@ -1625,7 +1635,7 @@ export function AllRoundsScorecardLB({
               <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-name sticky-col-1">Jogador</SortableHdr>
               <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-club">{clubLabel}</SortableHdr>
               {!hideHCP && <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-hcp">HCP</SortableHdr>}
-              <th className="lb-tee" style={{ fontSize: 10, color: "var(--text-muted)", fontWeight: 600 }}>Rnd</th>
+              <th className="lb-tee fs-10 c-muted fw-600">Rnd</th>
               <SortableHdr k="topar" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-topar">±</SortableHdr>
               <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-gross">Tot</SortableHdr>
               {showSC && (<>
@@ -1675,14 +1685,14 @@ export function AllRoundsScorecardLB({
                               </td>
                               <td className="lb-name sticky-col-1" style={{ background: rdBg, fontWeight: isFirstRd ? 600 : 400, borderTop: bTop }}>
                                 {isFirstRd
-                                  ? (row.fed
-                                      ? <PlayerLink fed={row.fed} name={abreviarNome(row.name)} />
-                                      : abreviarNome(row.name))
+                                  ? nameDecorator
+                                    ? nameDecorator(row.name, row.fed ? <PlayerLink fed={row.fed} name={abreviarNome(row.name)} /> : abreviarNome(row.name))
+                                    : (row.fed ? <PlayerLink fed={row.fed} name={abreviarNome(row.name)} /> : abreviarNome(row.name))
                                   : <span className="muted fs-10" style={{ paddingLeft: 8 }}>↳</span>}
                               </td>
                               <td className="lb-club" style={{ borderTop: bTop, color: isFirstRd ? undefined : "var(--text-muted)", fontSize: isFirstRd ? undefined : 11 }}>{row.club || "–"}</td>
                               {!hideHCP && <td className="lb-hcp" style={{ borderTop: bTop, color: isFirstRd ? undefined : "var(--text-muted)" }}>{fmtHcp(row.hcp)}</td>}
-                              <td className="lb-tee" style={{ fontWeight:600, fontSize:10, color:"var(--text-muted)", borderTop: bTop }}>{`R${ri+1}`}</td>
+                              <td className="lb-tee fw-600 fs-10 c-muted" style={{ borderTop: bTop }}>{`R${ri+1}`}</td>
                               <td className="lb-topar" style={{ color: rd.toPar<0?"var(--color-good)":rd.toPar>0?"var(--color-danger)":"var(--text)", borderTop: bTop }}>{fmtToPar(rd.toPar)}</td>
                               <td className="lb-gross" style={{ borderTop: bTop }}>{rd.gross}</td>
                               {showSC && <ScoreCells scores={rd.scores} pars={par} />}
@@ -1709,11 +1719,13 @@ export function AllRoundsScorecardLB({
                     <tr key={row.key} style={{ background: bg, borderTop: bTop }}>
                       <td className="lb-pos sticky-col-0" style={{ background: bg }}>{showPos ? posStr : ""}</td>
                       <td className="lb-name sticky-col-1 fw-600"  style={{ background: bg }}>
-                        {row.fed ? <PlayerLink fed={row.fed} name={abreviarNome(row.name)} /> : abreviarNome(row.name)}
+                        {nameDecorator
+                          ? nameDecorator(row.name, row.fed ? <PlayerLink fed={row.fed} name={abreviarNome(row.name)} /> : abreviarNome(row.name))
+                          : (row.fed ? <PlayerLink fed={row.fed} name={abreviarNome(row.name)} /> : abreviarNome(row.name))}
                       </td>
                       <td className="lb-club">{row.club || "–"}</td>
                       {!hideHCP && <td className="lb-hcp">{fmtHcp(row.hcp)}</td>}
-                      <td className="lb-tee" style={{ fontWeight:600, fontSize:10, color:"var(--text-muted)" }}>{row.rdLabel}</td>
+                      <td className="lb-tee fw-600 fs-10 c-muted">{row.rdLabel}</td>
                       <td className="lb-topar" style={{ color: rd.toPar<0?"var(--color-good)":rd.toPar>0?"var(--color-danger)":"var(--text)" }}>{fmtToPar(rd.toPar)}</td>
                       <td className="lb-gross">{rd.gross}</td>
                       {showSC && <ScoreCells scores={rd.scores} pars={par} />}
@@ -1773,8 +1785,7 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
           <h2 className="detail-title" style={{ margin: 0 }}>{tournament.name}</h2>
           <div className="gap-4" style={{ display: "flex", alignItems: "center" }}>
             {tournament.ccode && (
-              <span title="tclub" style={{
-                fontFamily: "monospace", fontSize: 10, fontWeight: 600,
+              <span title="tclub" className="fs-10 fw-600 tourn-mono" style={{
                 background: "var(--bg-hover)", color: "var(--text-muted)",
                 border: "1px solid var(--border)",
                 borderRadius: 4, padding: "1px 6px", letterSpacing: "0.02em",
@@ -1784,8 +1795,7 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
               </span>
             )}
             {tournament.tcode && (
-              <span title="tcode" style={{
-                fontFamily: "monospace", fontSize: 10, fontWeight: 700,
+              <span title="tcode" className="fs-10 fw-700 tourn-mono" style={{
                 background: "var(--accent)", color: "#fff",
                 borderRadius: 4, padding: "1px 6px", letterSpacing: "0.02em",
                 userSelect: "all", cursor: "text",
@@ -1836,7 +1846,7 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
           {tournament.campo && <span className="muted">📍 {tournament.campo}</span>}
           <span className="muted ml-8" >{fmtDate(tournament.date)}</span>
           <span className="chip ml-8" >
-            {tournament.playerCount} jog · {nRounds}R · {nholes}h · Par {parTotal}
+            {tournament.playerCount} jog{nRounds > 1 && <> · <RoundPill nR={nRounds} /></>} · {nholes}h · Par {parTotal}
           </span>
 
         </div>
@@ -1990,9 +2000,9 @@ function PainelResumo({ torneios, nossosByFed }: {
             <span className="muted fs-11" >·</span>
             <span className="fs-11 flex-shrink-0" style={{ display: "inline-flex", gap: 5, alignItems: "center" }}>
               <span className="muted">1º ano</span>
-              <span style={{ fontWeight: 700, color: "var(--color-good)" }}>{anoTotals["1A"]}</span>
+              <span className="fw-700" style={{ color: "var(--color-good)" }}>{anoTotals["1A"]}</span>
               <span className="muted">2º ano</span>
-              <span style={{ fontWeight: 700, color: "var(--color-bad)" }}>{anoTotals["2A"]}</span>
+              <span className="fw-700" style={{ color: "var(--color-bad)" }}>{anoTotals["2A"]}</span>
             </span>
           </>
         )}
@@ -2005,9 +2015,10 @@ function PainelResumo({ torneios, nossosByFed }: {
           {clubes.map(([c, d]) => (
             <button key={c}
               onClick={() => setClubesSel(prev => prev === c ? null : c)}
+              className="fs-11 fw-600"
               style={{
-                cursor: "pointer", fontSize: 11, padding: "1px 8px", borderRadius: 10,
-                fontWeight: 600, border: "1px solid var(--border)",
+                cursor: "pointer", padding: "1px 8px", borderRadius: 10,
+                border: "1px solid var(--border)",
                 background: clubeSel === c ? "var(--accent)" : "var(--bg-muted)",
                 color: clubeSel === c ? "#fff" : "var(--text-1)",
               }}>
@@ -2021,13 +2032,13 @@ function PainelResumo({ torneios, nossosByFed }: {
       {selData && clubeSel && (
         <div style={{ marginTop: 6, padding: "8px 10px", background: "var(--bg-page)",
           border: "1px solid var(--border)", borderRadius: 6 }}>
-          <div style={{ fontSize: 11, fontWeight: 700, marginBottom: 5, color: "var(--text-1)" }}>
+          <div className="fs-11 fw-700" style={{ marginBottom: 5, color: "var(--text-1)" }}>
             {clubeSel} — {selData.n} inscrito{selData.n !== 1 ? "s" : ""}
           </div>
           <div className="gap-4 flex-wrap" style={{ display: "flex" }}>
             {selData.jogadores.map((jj, i) => (
-              <span key={i} style={{
-                fontSize: 11, display: "inline-flex", alignItems: "center", gap: 4,
+              <span key={i} className="fs-11" style={{
+                display: "inline-flex", alignItems: "center", gap: 4,
                 padding: "2px 8px", borderRadius: 10,
                 background: "var(--bg-card)", border: "1px solid var(--border)",
               }}>
@@ -2057,13 +2068,12 @@ function TorneioCard({ t, active, onClick }: {
       {escShort(t.escalao)}
       <SexBadge sex={t.sex} size="sm" />
       {t._status === "loading" && <span style={{ opacity: 0.7 }}>⟳</span>}
-      {t._status === "error"   && <span style={{ color: "var(--color-bad)", fontWeight: 700 }}>!</span>}
+      {t._status === "error"   && <span className="fw-700" style={{ color: "var(--color-bad)" }}>!</span>}
       {t._status === "ok" && t.totalInscritos > 0 && (
-        <span style={{
+        <span className="fs-11 fw-700" style={{
           background: active ? "rgba(255,255,255,0.25)" : "var(--bg-card)",
           border: "1px solid var(--border)",
           borderRadius: 10, padding: "0px 5px",
-          fontSize: 11, fontWeight: 700,
           color: active ? "inherit" : "var(--text-1)",
           marginLeft: 2,
         }}>{t.totalInscritos}</span>
@@ -2130,7 +2140,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
         <span className="muted fs-12" >{nossosCount} da BD · {t.totalInscritos} total</span>
         <div className="ml-auto gap-8 flex-wrap" style={{ display: "flex", alignItems: "center" }}>
           {t.diff && (t.diff.added.length > 0 || t.diff.removed.length > 0) && (
-            <span style={{ fontSize: 10, background: "var(--color-warn)", color: "#fff", padding: "2px 7px", borderRadius: 10, fontWeight: 700 }}
+            <span className="fs-10 fw-700" style={{ background: "var(--color-warn)", color: "#fff", padding: "2px 7px", borderRadius: 10 }}
               title={[t.diff.added.length ? `+${t.diff.added.join(", ")}` : "", t.diff.removed.length ? `-${t.diff.removed.join(", ")}` : ""].filter(Boolean).join(" · ")}>
               {t.diff.added.length > 0 && `+${t.diff.added.length} novo${t.diff.added.length > 1 ? "s" : ""}`}
               {t.diff.added.length > 0 && t.diff.removed.length > 0 && " · "}
@@ -2143,8 +2153,8 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
               {t.fromCache ? "💾" : "🔄"} {fmtTime(t.lastFetched)}
             </span>
           )}
-          {t.fetchError && <span className="muted" style={{ fontSize: 10, color: "var(--color-warn)" }} title={t.fetchError}>⚠️ cache</span>}
-          {t.fpgUrl && <a href={t.fpgUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: "var(--chart-2)" }}>datagolf ↗</a>}
+          {t.fetchError && <span className="muted fs-10" style={{ color: "var(--color-warn)" }} title={t.fetchError}>⚠️ cache</span>}
+          {t.fpgUrl && <a href={t.fpgUrl} target="_blank" rel="noopener noreferrer" className="fs-11" style={{ color: "var(--chart-2)" }}>datagolf ↗</a>}
         </div>
       </div>
       <div className="table-wrap">
@@ -2182,7 +2192,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
                     {p ? <PlayerLink fed={j.fed} name={p.name} query="?view=by_date" className="fw-700" /> : <span className="muted">{j.nome || "–"}</span>}
                   </td>
                   <td className="r">
-                    {j.fed ? <PlayerLink fed={j.fed} name={j.fed} query="?view=by_date" style={{ color: "var(--chart-2)", fontSize: 12 }} /> : <span className="muted">–</span>}
+                    {j.fed ? <PlayerLink fed={j.fed} name={j.fed} query="?view=by_date" className="fs-12" style={{ color: "var(--chart-2)" }} /> : <span className="muted">–</span>}
                   </td>
                   <td className="r muted fs-12" >{fmtHcp(j.hcp)}</td>
                   <td className="r fs-12 fw-600" >{fmtHcp(j.vac)}</td>
@@ -2368,12 +2378,13 @@ function InscricoesPanel() {
             Campeonato Nacional de Jovens — {torneioActivo.nome}
           </span>
           <a href={`https://scoring.datagolf.pt/pt/tournAdmissions.aspx?ccode=000&tcode=${torneioActivo.tcode}`}
-             target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: "var(--chart-2)" }}>
+             target="_blank" rel="noopener noreferrer" className="fs-11" style={{ color: "var(--chart-2)" }}>
             inscrições datagolf ↗
           </a>
           <a href="https://competicoes.fpg.pt/evento/campeonato-nacional-de-jovens-sub10-12-14-16-18-pga-aroeira/"
              target="_blank" rel="noopener noreferrer"
-             style={{ fontSize: 11, fontWeight: 700, color: "var(--color-good-dark)",
+             className="fs-11 fw-700"
+             style={{ color: "var(--color-good-dark)",
                background: "var(--bg-success-subtle)", border: "1px solid var(--color-good)",
                borderRadius: 6, padding: "2px 8px", textDecoration: "none", whiteSpace: "nowrap" as const }}>
             🏆 página oficial FPG ↗
@@ -2911,7 +2922,8 @@ function Content() {
             <div className="flex-1" style={{ minWidth: 8 }} />
             {/* Contadores à direita */}
             <a href="https://scoring.datagolf.pt/pt/tournaments.aspx" target="_blank" rel="noopener noreferrer"
-              style={{ flexShrink: 0, fontSize: 11, fontWeight: 600, cursor: "pointer", color: "var(--accent)", border: "1px solid var(--accent)", borderRadius: 5, padding: "3px 8px", lineHeight: 1.6, textDecoration: "none", whiteSpace: "nowrap", display: "inline-flex", alignItems: "center", gap: 3 }}>
+              className="fs-11 fw-600"
+              style={{ flexShrink: 0, cursor: "pointer", color: "var(--accent)", border: "1px solid var(--accent)", borderRadius: 5, padding: "3px 8px", lineHeight: 1.6, textDecoration: "none", whiteSpace: "nowrap", display: "inline-flex", alignItems: "center", gap: 3 }}>
               FPG Torneios ↗
             </a>
             {loading
@@ -2973,7 +2985,7 @@ function Content() {
       </div>
 
       {error && (
-        <div style={{ padding: "16px 20px", color: "var(--danger)", fontWeight: 600, fontSize: 13 }}>
+        <div className="fw-600 fs-13" style={{ padding: "16px 20px", color: "var(--danger)" }}>
           ⚠️ {error}
         </div>
       )}
@@ -3085,8 +3097,8 @@ function Content() {
                 const label = v === "grupos" ? "🏅 Grupos" : "📋 Individual";
                 const active = clubesView === v;
                 return (
-                  <button key={v} onClick={() => setClubesView(v)} style={{
-                    padding: "8px 16px", fontSize: 12, fontWeight: active ? 700 : 500,
+                  <button key={v} onClick={() => setClubesView(v)} className="fs-12" style={{
+                    padding: "8px 16px", fontWeight: active ? 700 : 500,
                     color: active ? "var(--text)" : "var(--text-muted)",
                     background: "transparent", border: "none",
                     borderBottom: active ? "2px solid var(--accent)" : "2px solid transparent",
@@ -3117,7 +3129,7 @@ function Content() {
                     return <div className="center-msg muted">Selecciona um torneio</div>;
                   }
                   return (
-                    <div style={{ padding: "32px 24px", textAlign: "center", color: "var(--text-muted)", fontSize: 13 }}>
+                    <div className="fs-13 c-muted" style={{ padding: "32px 24px", textAlign: "center" }}>
                       <div className="mb-12" style={{ fontSize: 32 }}>📋</div>
                       <div className="fw-600 mb-6">Vista de grupos não disponível para {curClubesYear}</div>
                       <div className="fs-12">Os dados de composição de grupos desta edição não estão carregados.<br/>Use o tab <strong>Individual</strong> para ver os resultados.</div>
@@ -3146,7 +3158,7 @@ function Content() {
                 borderLeft: jovensShowInscricoes ? "3px solid var(--color-good)" : "3px solid transparent",
               }}
             >
-              <div style={{ fontWeight: 700, fontSize: 12, color: jovensShowInscricoes ? "var(--color-good-dark)" : "var(--text)" }}>
+              <div className="fw-700 fs-12" style={{ color: jovensShowInscricoes ? "var(--color-good-dark)" : "var(--text)" }}>
                 📋 Inscrições 2026
               </div>
               <div className="muted fs-11" >Campeonatos Nacionais de Jovens</div>
@@ -3193,13 +3205,13 @@ function Content() {
                       footer={
                         <div className="mt-3" style={{ display: "flex", alignItems: "center", gap: 6 }}>
                           {regionLabel && (
-                            <span style={{ fontSize: 10, fontWeight: 600, padding: "1px 6px",
+                            <span className="fs-10 fw-600" style={{ padding: "1px 6px",
                               borderRadius: 10, background: "var(--bg-hover)", color: "var(--text-2)",
                               border: "1px solid var(--border)" }}>
                               {regionLabel}
                             </span>
                           )}
-                          <span style={{ fontSize: 11, color: "var(--text-muted)" }}>{ddmm}</span>
+                          <span className="fs-11 c-muted">{ddmm}</span>
                         </div>
                       }
                     />

@@ -5,7 +5,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { cachedFetch } from "../data/fetchCache";
 import { scClass, SC } from "../utils/scoreDisplay";
-import { tpColor, isManuel, fmtTP } from "../ui/tournamentPrimitives";
+import { isManuel } from "../ui/tournamentPrimitives";
 import EvoBadge from "../ui/EvoBadge";
 import ExtLink from "../ui/ExternalLink";
 import SidebarSectionTitle from "../ui/SidebarSectionTitle";
@@ -13,9 +13,8 @@ import { gf } from "../utils/flagUtils";
 const isM = (name: string) => isManuel({ name });
 import { fmtToPar, fmtSign, fmtSignParen as fmtSub, fmtFieldInfo } from "../utils/format";
 import { isCalUnlocked } from "../utils/authConstants";
-import { MultiRoundLeaderboard } from "../ui/MultiRoundLeaderboard";
-import { ScorecardLeaderboard, type ScorecardRow } from "../ui/ScorecardLeaderboard";
 import type { MultiRoundRow, ExtraColumn } from "../ui/multiRoundTypes";
+import { AccumulatedLB, ScorecardLB, AllRoundsScorecardLB, expandMultiRound, type Tournament as FPGTournament, type Player as FPGPlayer, type RoundScore as FPGRoundScore, type ScorecardOptions } from "./FPGPage";
 import PasswordGate from "../ui/PasswordGate";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
@@ -23,13 +22,16 @@ import DetailHeader from "../ui/DetailHeader";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import LoadingState from "../ui/LoadingState";
 import EmptyState from "../ui/EmptyState";
+import { buildAutoRivals, normName as normNameAuto, type AutoRivalPlayer } from "./KIDSdataLoader";
+import { KidsLink, KidsLinkCtx, type KidsLinkEntry } from "../ui/KidsLink";
+import { RoundPill } from "../ui/PillBadge";
 
 /* ── Types ── */
 interface RoundData { day: number; scores: number[] | null; f9: number | null; b9: number | null; gross: number }
 interface PlayerData { name: string; country: string; pos: number | null; result: number | null; total: number | null; rounds: RoundData[] }
 interface TData { tournament: string; par: number[]; si?: number[]; parF9: number; parB9: number; parTotal: number; players: PlayerData[] }
 interface TDef { id: string; label: string; shortLabel: string; data: TData; manuelName: string; year: number; category: string; roundDates?: string[]; series: "bjgt" | "eowagr" }
-interface EvoEntry { otherTotal: number; delta: number; from: string; to: string; pill: string }
+interface EvoEntry { otherToPar: number; delta: number; from: string; to: string; pill: "UP" | "EQ" | "NEW" }
 
 /* ── Data URLs ── */
 const URLS = [
@@ -74,163 +76,64 @@ function loadT(raw: any, reverseRounds?: boolean): TData {
 
 
 /* ═══════════════════════════════════════════════════════════════
-   ACCUMULATED LEADERBOARD — via MultiRoundLeaderboard
+   ADAPTADOR TData → FPGTournament (padrão DORALPage)
    ═══════════════════════════════════════════════════════════════ */
-function AccLB({ data, evo, evoYear, roundDates }: { data: TData; evo?: Map<string, EvoEntry>; evoYear?: string; roundDates?: string[] }) {
-  const { parTotal, players } = data;
+function tDataToTournament(data: TData, def: TDef): FPGTournament {
+  const { par, si, parTotal, players } = data;
   const nR = Math.max(...players.map(p => p.rounds.length), 0);
-  const hasEvo = evo && evo.size > 0;
-
-  const rows: MultiRoundRow[] = useMemo(() => players.map((p, idx) => {
-    const incomplete = p.rounds.length < nR;
-    const isPT = p.country.includes("Portugal");
-    return {
-      key: p.name + idx,
-      name: p.name,
-      countryFlag: gf(p.country),
-      gross: p.total ?? 0,
-      parTotal: parTotal * nR,
-      toPar: p.result ?? (p.total != null ? p.total - parTotal * nR : null),
-      pos: p.pos ?? 0,
-      isIncomplete: incomplete,
-      isWD: incomplete,
-      isHighlighted: isM(p.name) || isPT,
-      rounds: Array.from({ length: nR }, (_, i) => {
-        const r = p.rounds[i];
-        if (!r) return { gross: null, parPerRound: parTotal };
-        return { gross: r.gross, parPerRound: parTotal };
-      }),
-    };
-  }), [players, nR, parTotal]);
-
-  /* Colunas de evolução */
-  const extraCols: ExtraColumn<MultiRoundRow & { _pos?: number | null }>[] | undefined = hasEvo ? [
-    {
-      header: evoYear || "2025",
-      className: "ta-c fs-11 fw-600",
-      headerStyle: { width: 36, textAlign: "center", padding: "0 3px", borderLeft: "2px solid var(--border)" },
-      cell: (row) => {
-        const ev = evo!.get(row.name);
-        return ev
-          ? <span style={{ borderLeft: "2px solid var(--border)", padding: "0 3px", display: "inline-block" }}>{ev.otherTotal}</span>
-          : <span className="c-muted" style={{ borderLeft: "2px solid var(--border)", padding: "0 3px", display: "inline-block" }}>–</span>;
-      },
-    },
-    {
-      header: "Δ",
-      className: "ta-c fs-11 fw-700",
-      headerStyle: { width: 34, textAlign: "center", padding: "0 3px" },
-      cell: (row) => {
-        const ev = evo!.get(row.name);
-        if (!ev) return <span className="c-muted">–</span>;
-        return <span style={{ color: ev.delta < 0 ? "var(--good-dark)" : ev.delta > 0 ? SC.danger : "var(--text-3)" }}>{ev.delta > 0 ? "+" : ""}{ev.delta}</span>;
-      },
-    },
-    {
-      header: "Percurso",
-      className: "ta-c",
-      headerStyle: { width: 140, textAlign: "center", padding: "0 4px" },
-      cell: (row) => {
-        const ev = evo!.get(row.name);
-        return ev
-          ? <EvoBadge pill={ev.pill} from={ev.from} to={ev.to} />
-          : <EvoBadge pill="NEW" label={evoYear === "2026" ? "não voltou" : "novo"} />;
-      },
-    },
-  ] : undefined;
-
-  return (
-    <MultiRoundLeaderboard
-      rows={rows}
-      nRounds={nR}
-      sortable
-      showCols={{ esc: false, fed: false, tee: false, club: false, hcp: false, roundStats: false }}
-      roundDates={roundDates}
-      extraColumns={extraCols}
-      renderName={(row) => <span className="fw-700">{row.countryFlag} {row.name}</span>}
-    />
-  );
+  const fpgPlayers: FPGPlayer[] = players
+    .filter(p => p.rounds.length > 0)
+    .map(p => {
+      const roundScores: FPGRoundScore[] = p.rounds.map((r, ri) => ({
+        round: ri + 1,
+        gross: r.gross,
+        scores: r.scores ?? undefined,
+        pars: par,
+        si: si && si.length >= par.length ? si : undefined,
+      }));
+      const incomplete = p.rounds.length < nR;
+      return {
+        scoreId: p.name,
+        pos: p.pos,
+        name: p.name,
+        club: p.country ? `${gf(p.country)} ${p.country}` : "",
+        grossTotal: p.total,
+        toPar: p.result ?? (p.total != null ? p.total - parTotal * nR : null),
+        nholes: par.length,
+        parTotal,
+        scores: p.rounds[0]?.scores ?? undefined,
+        par,
+        si: si && si.length >= par.length ? si : undefined,
+        roundScores,
+        _wd: incomplete,
+        _roundsPlayed: p.rounds.length,
+      } as FPGPlayer;
+    });
+  return {
+    name: def.label,
+    tcode: def.id,
+    date: "",
+    campo: def.series === "eowagr" ? "Le Touquet GC — La Forêt" : def.category === "Boys 12-13" ? "Villa Padierna — Alferini" : "Villa Padierna — Flamingos",
+    rounds: nR,
+    playerCount: fpgPlayers.length,
+    players: fpgPlayers,
+  };
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   SCORECARD TABLE — via ScorecardLeaderboard
-   ═══════════════════════════════════════════════════════════════ */
-function SCTable({ data, ri }: { data: TData; ri: number }) {
-  const { par, si, parTotal, players } = data;
-  const nh = par.length;
-  const ws = players.filter(p => p.rounds[ri]?.scores);
-  const sorted = [...ws].sort((a, b) => a.rounds[ri].gross - b.rounds[ri].gross);
-  const [showSC, setShowSC] = React.useState(true);
+const EMPTY_ESC_LOOKUP = new Map<string, string>();
+const EMPTY_PLAYERS_DB = {} as Record<string, any>;
 
-  // Calcular posições
-  let pos = 1;
-  sorted.forEach((p, i) => { if (i > 0 && p.rounds[ri].gross > sorted[i - 1].rounds[ri].gross) pos = i + 1; (p as any)._dp = pos; });
-
-  // Média de grosses
-  const grosses = sorted.map(p => p.rounds[ri].gross).filter(g => g != null && !isNaN(g));
-  const avg = grosses.length ? grosses.reduce((a, b) => a + b, 0) / grosses.length : 0;
-
-  const rows: ScorecardRow[] = useMemo(() => {
-    return sorted.map((p, idx) => {
-      const r = p.rounds[ri];
-      if (!r?.scores) return null;
-      const tp = r.gross - parTotal;
-      const dp = (p as any)._dp as number;
-      const showP = idx === 0 || dp !== (sorted[idx - 1] as any)._dp;
-      const isPT = p.country.includes("Portugal");
-      const bg = isM(p.name) ? "var(--bg-success-subtle)" : isPT ? "rgba(var(--rgb-success), 0.06)" : undefined;
-
-      // Contadores de score
-      let birds = 0, pars = 0, bogs = 0;
-      for (let i = 0; i < r.scores.length && i < par.length; i++) {
-        const d = r.scores[i] - par[i];
-        if (d <= -1) birds++; else if (d === 0) pars++; else bogs++;
-      }
-
-      return {
-        key: p.name + idx,
-        pos: showP ? dp : "",
-        gross: r.gross,
-        toPar: tp,
-        scores: r.scores,
-        rowBg: bg,
-        stickyBg: bg || "var(--bg-card,#fff)",
-        nameContent: <span className="fw-700">{gf(p.country)} {p.name.length > 22 ? p.name.substring(0, 20) + "…" : p.name}</span>,
-        sortName: p.name,
-        sortPos: dp,
-        prefixCells: <td className="lb-fed" style={{ fontSize: 10 }}>{p.country || "–"}</td>,
-        postScorecardCells: <>
-          <td className="lb-bird">{birds || ""}</td>
-          <td className="lb-par-stat">{pars || ""}</td>
-          <td className="lb-bog">{bogs || ""}</td>
-        </>,
-      } as ScorecardRow;
-    }).filter(Boolean) as ScorecardRow[];
-  }, [sorted, ri, parTotal, par]);
-
-  if (!rows.length) return <EmptyState size="sm" message="Scorecards buraco-a-buraco não disponíveis para esta ronda." />;
-
-  return (
-    <ScorecardLeaderboard
-      par={par}
-      si={si.length >= nh ? si : undefined}
-      rows={rows}
-      parLabelColSpan={2}
-      postScorecardColCount={3}
-      showScorecard={showSC}
-      onToggleScorecard={() => setShowSC(v => !v)}
-      sortable
-      metaLine={<>
-        {sorted.length} jogadores · Par {parTotal} · {nh}h · Média: {avg.toFixed(1)} ({fmtTP(Math.round(avg - parTotal))})
-      </>}
-      prefixHeaderCells={<th className="lb-fed">País</th>}
-      postScorecardHeaderCells={<>
-        <th className="lb-bird">🐦</th>
-        <th className="lb-par-stat">Par</th>
-        <th className="lb-bog">■</th>
-      </>}
-    />
-  );
+/** Opções para ocultar colunas FPG-específicas e adaptar ao contexto BJGT */
+function bjgtScorecardOptions(nameDecorator?: ScorecardOptions["nameDecorator"]): ScorecardOptions {
+  return {
+    hideHCP: true,
+    hideSD: true,
+    hideEsc: true,
+    hideFed: true,
+    hideTee: true,
+    clubLabel: "País",
+    nameDecorator,
+  };
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -251,7 +154,7 @@ function HoleDiff({ data, ri, mn }: { data: TData; ri: number | "all"; mn?: stri
     <div className="bjgt-chart-scroll">
       <table className="sc-table-modern" data-sc-table="1">
         <thead><tr>
-          <th className="hole-header ta-left"  style={{ paddingLeft: 6, minWidth: 44 }}></th>
+          <th className="hole-header ta-left"></th>
           {par.slice(0,9).map((_,i) => <th key={i} className="hole-header">{i+1}</th>)}
           <th className="hole-header col-out fs-10">Out</th>
           {par.slice(9).map((_,i) => <th key={i+9} className="hole-header">{i+10}</th>)}
@@ -346,11 +249,23 @@ function FStats({ data, ri }: { data: TData; ri: number | "all" }) {
   const nSC = ri === "all" ? players.filter(p => p.rounds.some(r => r.scores)).length : players.filter(p => p.rounds[ri as number]?.scores).length;
   if (ri === "all") {
     const avg = fullPlayers.reduce((s,p) => s + p.total!, 0) / fullPlayers.length;
-    return <div className="muted fs-10 mb-8">{fullPlayers.length} jogadores ({nR} rondas){players.length > fullPlayers.length ? ` + ${players.length - fullPlayers.length} WD` : ""} · Par {parTotal} · Média: {avg.toFixed(1)} ({fmtToPar(Math.round(avg - parTotal * nR))}) · Líder: {fullPlayers[0]?.name} ({fullPlayers[0]?.total}){nSC < players.length && ` · ${nSC} com scorecard`}</div>;
+    return <div className="muted fs-10 mb-8">{fullPlayers.length} jogadores{nR > 1 && <> (<RoundPill nR={nR} />)</>}{players.length > fullPlayers.length ? ` + ${players.length - fullPlayers.length} WD` : ""} · Par {parTotal} · Média: {avg.toFixed(1)} ({fmtToPar(Math.round(avg - parTotal * nR))}) · Líder: {fullPlayers[0]?.name} ({fullPlayers[0]?.total}){nSC < players.length && ` · ${nSC} com scorecard`}</div>;
   }
   const scores = players.filter(p => p.rounds[ri as number]).map(p => p.rounds[ri as number].gross);
   const avg = scores.reduce((s,v) => s+v, 0) / scores.length;
   return <div className="muted fs-10 mb-8">{scores.length} jogadores · Par {parTotal} · Média R{(ri as number)+1}: {avg.toFixed(1)} ({fmtToPar(Math.round(avg - parTotal))}){nSC < scores.length && ` · ${nSC} com scorecard`}</div>;
+}
+
+/** Mini-resumo de evolução ano-a-ano */
+function EvoSummary({ evo, evoYear }: { evo: Map<string, EvoEntry>; evoYear: string }) {
+  if (!evo.size) return null;
+  const returning = [...evo.values()].filter(e => e.delta !== 0);
+  const improved = returning.filter(e => e.delta < 0).length;
+  return (
+    <div className="muted fs-10 mb-8">
+      {evo.size} jogadores regressaram de {evoYear}{returning.length > 0 ? ` · ${improved}/${returning.length} melhoraram (±par)` : ""}
+    </div>
+  );
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -359,29 +274,114 @@ function FStats({ data, ri }: { data: TData; ri: number | "all" }) {
 function TournView({ def, evo, evoYear }: { def: TDef; evo?: Map<string, EvoEntry>; evoYear?: string }) {
   const { data, manuelName } = def;
   const nR = Math.max(...data.players.map(p => p.rounds.length), 0);
-  const [dt, setDt] = useState<number | "all">("all");
+  const isMulti = nR > 1;
+  const hasEvo = evo && evo.size > 0;
+
+  const tournament = useMemo(() => tDataToTournament(data, def), [data, def]);
+
+  /** Decorador de nome: adiciona ↗ KidsLink ao lado do nome */
+  const nameDecoratorFn: ScorecardOptions["nameDecorator"] = React.useCallback(
+    (name: string, content: React.ReactNode) => (
+      <span style={{ display: "inline-flex", alignItems: "center" }}>{content}<KidsLink nome={name} /></span>
+    ), []);
+
+  /** renderName para AccumulatedLB (MultiRoundRow) */
+  const renderNameFn = React.useCallback(
+    (row: MultiRoundRow) => (
+      <span className="fw-700" style={{ display: "inline-flex", alignItems: "center" }}>
+        {row.countryFlag} {row.name}<KidsLink nome={row.name} />
+      </span>
+    ), []);
+
+  const scOptions = useMemo(() => bjgtScorecardOptions(nameDecoratorFn), [nameDecoratorFn]);
+
+  // expandMultiRound produz: [R1_tourn, R2_tourn, ..., Resumo_tourn]
+  const expanded = useMemo(() => expandMultiRound(tournament), [tournament]);
+
+  // Tabs: R1 · R2 · Resumo · 📋 Scorecards  (como FPGPage/DORALPage)
+  const COMBINED_TAB = "📋 Scorecards";
+  const tabLabels = useMemo(() => {
+    if (!isMulti) return ["Scorecard"];
+    return [...expanded.map((t: any) => {
+      // Usar roundDates se disponível
+      const rIdx = (t as any)._roundIndex;
+      const isTotal = (t as any)._isTotal;
+      if (isTotal) return "Resumo";
+      const dateLabel = def.roundDates?.[rIdx];
+      return dateLabel ? `R${rIdx + 1} · ${dateLabel}` : (t as any)._roundLabel || `R${rIdx + 1}`;
+    }), COMBINED_TAB];
+  }, [isMulti, expanded, def.roundDates]);
+
+  const [tab, setTab] = useState(0);
+
+  const curT       = isMulti ? expanded[Math.min(tab, expanded.length - 1)] : tournament;
+  const isAcc      = isMulti && !!(curT as any)?._isTotal;
+  const isCombined = isMulti && tabLabels[tab] === COMBINED_TAB;
+
+  /* Colunas de evolução (só no Resumo) */
+  type RowWithPos = MultiRoundRow & { _pos?: number | null };
+  const evoCols: ExtraColumn<RowWithPos>[] | undefined = hasEvo ? [
+    {
+      header: evoYear || "2025",
+      className: "ta-c fs-11 fw-600",
+      headerStyle: { width: 44, textAlign: "center" as const, padding: "0 3px", borderLeft: "2px solid var(--border)" },
+      cell: (row: RowWithPos) => {
+        const ev = evo!.get(row.name);
+        return ev
+          ? <span style={{ borderLeft: "2px solid var(--border)", padding: "0 3px", display: "inline-block" }}>{fmtSign(ev.otherToPar)}</span>
+          : <span className="c-muted" style={{ borderLeft: "2px solid var(--border)", padding: "0 3px", display: "inline-block" }}>–</span>;
+      },
+    },
+    {
+      header: "Δ",
+      className: "ta-c fs-11 fw-700",
+      headerStyle: { width: 34, textAlign: "center" as const, padding: "0 3px" },
+      cell: (row: RowWithPos) => {
+        const ev = evo!.get(row.name);
+        if (!ev) return <span className="c-muted">–</span>;
+        return <span style={{ color: ev.delta < 0 ? "var(--good-dark)" : ev.delta > 0 ? SC.danger : "var(--text-3)" }}>{ev.delta > 0 ? "+" : ""}{ev.delta}</span>;
+      },
+    },
+    {
+      header: "Percurso",
+      className: "ta-c",
+      headerStyle: { width: 140, textAlign: "center" as const, padding: "0 4px" },
+      cell: (row: RowWithPos) => {
+        const ev = evo!.get(row.name);
+        return ev
+          ? <EvoBadge pill={ev.pill} from={ev.from} to={ev.to} />
+          : <EvoBadge pill="NEW" label={evoYear === "2026" ? "não voltou" : "novo"} />;
+      },
+    },
+  ] : undefined;
+
   const rLabel = (i: number) => def.roundDates?.[i] ? `R${i + 1} · ${def.roundDates[i]}` : `R${i + 1}`;
-  const tabs: { key: number | "all"; label: string }[] = [
-    { key: "all", label: "Acumulado" },
-    ...Array.from({ length: nR }, (_, i) => ({ key: i, label: rLabel(i) })),
-  ];
+
   return (
     <div>
       {/* Tabs tab-under — mesmo padrão que FPGPage/DORALPage */}
-      <div style={{ display: "flex", borderBottom: "1px solid var(--border)", marginBottom: 12, gap: 2, overflowX: "auto" }}>
-        {tabs.map(t => (
-          <button key={String(t.key)} className={`tab-under${dt === t.key ? " active" : ""}`} onClick={() => setDt(t.key)}>{t.label}</button>
-        ))}
-      </div>
-      {dt === "all" && <>
-        <div className="card"><div className="h-md fs-14">🏆 Leaderboard — {def.label}</div><FStats data={data} ri="all" /><AccLB data={data} evo={evo} evoYear={evoYear} roundDates={def.roundDates} /></div>
-        <div className="card"><div className="h-md fs-14">📊 Dificuldade por Buraco — Todas as rondas</div><FStats data={data} ri="all" /><HoleDiff data={data} ri="all" mn={manuelName} /></div>
-      </>}
-      {typeof dt === "number" && <>
-        <div className="card"><div className="h-md fs-14">🏆 {rLabel(dt)} — Scorecards</div><FStats data={data} ri={dt} /><SCTable data={data} ri={dt} /></div>
-        <div className="card"><div className="h-md fs-14">📊 Dificuldade por Buraco — {rLabel(dt)}</div><HoleDiff data={data} ri={dt} mn={manuelName} /></div>
-        {manuelName && <ManuelDay data={data} ri={dt} />}
-      </>}
+      {isMulti && (
+        <div style={{ display: "flex", borderBottom: "1px solid var(--border)", marginBottom: 12, gap: 2, overflowX: "auto" }}>
+          {tabLabels.map((label, i) => (
+            <button key={i} className={`tab-under${tab === i ? " active" : ""}`} onClick={() => setTab(i)}>{label}</button>
+          ))}
+        </div>
+      )}
+
+      {/* Conteúdo — mesma lógica que DORALPage DivView */}
+      {isCombined
+        ? <AllRoundsScorecardLB tournament={tournament} escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB} options={scOptions} />
+        : isAcc
+          ? <>
+              <div className="card"><div className="h-md fs-14">🏆 Leaderboard — {def.label}</div>{hasEvo && <EvoSummary evo={evo!} evoYear={evoYear!} />}<AccumulatedLB tournament={curT} nRounds={nR} escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB} showCols={{ esc: false, fed: false, tee: false }} extraColumns={evoCols} renderName={renderNameFn} /></div>
+              <div className="card"><div className="h-md fs-14">📊 Dificuldade por Buraco — Todas as rondas</div><FStats data={data} ri="all" /><HoleDiff data={data} ri="all" mn={manuelName} /></div>
+            </>
+          : <>
+              <div className="card"><div className="h-md fs-14">🏆 {rLabel(tab)} — Scorecards</div><FStats data={data} ri={tab} /><ScorecardLB tournament={curT} escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB} options={scOptions} /></div>
+              <div className="card"><div className="h-md fs-14">📊 Dificuldade por Buraco — {rLabel(tab)}</div><HoleDiff data={data} ri={tab} mn={manuelName} /></div>
+              {manuelName && <ManuelDay data={data} ri={tab} />}
+            </>
+      }
     </div>
   );
 }
@@ -394,22 +394,32 @@ function buildEvo(cur: TDef, all: (TDef | null)[]): { evoMap?: Map<string, EvoEn
   let evoYear: string | undefined;
   let manuelEvo: EvoEntry | undefined;
 
+  const nameMatch = (a: string, b: string) => {
+    const na = a.toLowerCase().replace(/\s+/g, " ");
+    const nb = b.toLowerCase().replace(/\s+/g, " ");
+    return na === nb || (na.includes(nb.split(" ")[0]) && na.includes(nb.split(" ").slice(-1)[0]));
+  };
+
+  const curNR = Math.max(...cur.data.players.map(p => p.rounds.length), 0);
+  const curParTotal = cur.data.parTotal * curNR;
+
   if (cur.year === 2026) {
     evoYear = "2025";
-    const prev25 = all.filter(t => t && t.year === 2025) as TDef[];
+    const prev25 = all.filter(t => t && t.year === 2025 && t.series === cur.series) as TDef[];
     if (prev25.length) {
-      const all25Players = prev25.flatMap(t => t.data.players.map(p => ({ ...p, cat: t.category })));
+      const all25Players = prev25.flatMap(t => {
+        const tNR = Math.max(...t.data.players.map(p => p.rounds.length), 0);
+        const tPar = t.data.parTotal * tNR;
+        return t.data.players.map(p => ({ ...p, cat: t.category, _parTotal: tPar }));
+      });
       evoMap = new Map();
       for (const p26 of cur.data.players) {
         if (!p26.total) continue;
-        const match = all25Players.find(p25 => {
-          const n25 = p25.name.toLowerCase().replace(/\s+/g, " ");
-          const n26 = p26.name.toLowerCase().replace(/\s+/g, " ");
-          return n25 === n26 || (n25.includes(n26.split(" ")[0]) && n25.includes(n26.split(" ").slice(-1)[0]));
-        });
+        const match = all25Players.find(p25 => nameMatch(p25.name, p26.name));
         if (!match || !match.total) continue;
-        if (match.rounds.length !== p26.rounds.length) continue;
-        const entry: EvoEntry = { otherTotal: match.total, delta: p26.total - match.total, from: match.cat, to: cur.category, pill: match.cat === cur.category ? "STAY" : "UP" };
+        const curTP = p26.total - curParTotal;
+        const otherTP = match.total - match._parTotal;
+        const entry: EvoEntry = { otherToPar: otherTP, delta: curTP - otherTP, from: match.cat, to: cur.category, pill: match.cat === cur.category ? "EQ" : "UP" };
         evoMap.set(p26.name, entry);
         if (isM(p26.name)) manuelEvo = entry;
       }
@@ -417,20 +427,21 @@ function buildEvo(cur: TDef, all: (TDef | null)[]): { evoMap?: Map<string, EvoEn
     }
   } else if (cur.year === 2025) {
     evoYear = "2026";
-    const next26 = all.filter(t => t && t.year === 2026) as TDef[];
+    const next26 = all.filter(t => t && t.year === 2026 && t.series === cur.series) as TDef[];
     if (next26.length) {
-      const all26Players = next26.flatMap(t => t.data.players.map(p => ({ ...p, cat: t.category })));
+      const all26Players = next26.flatMap(t => {
+        const tNR = Math.max(...t.data.players.map(p => p.rounds.length), 0);
+        const tPar = t.data.parTotal * tNR;
+        return t.data.players.map(p => ({ ...p, cat: t.category, _parTotal: tPar }));
+      });
       evoMap = new Map();
       for (const p25 of cur.data.players) {
         if (!p25.total) continue;
-        const match = all26Players.find(p26 => {
-          const n25 = p25.name.toLowerCase().replace(/\s+/g, " ");
-          const n26 = p26.name.toLowerCase().replace(/\s+/g, " ");
-          return n25 === n26 || (n26.includes(n25.split(" ")[0]) && n26.includes(n25.split(" ").slice(-1)[0]));
-        });
+        const match = all26Players.find(p26 => nameMatch(p25.name, p26.name));
         if (!match || !match.total) continue;
-        if (match.rounds.length !== p25.rounds.length) continue;
-        const entry: EvoEntry = { otherTotal: match.total, delta: match.total - p25.total, from: cur.category, to: match.cat, pill: cur.category === match.cat ? "STAY" : "UP" };
+        const curTP = p25.total - curParTotal;
+        const otherTP = match.total - match._parTotal;
+        const entry: EvoEntry = { otherToPar: otherTP, delta: otherTP - curTP, from: cur.category, to: match.cat, pill: cur.category === match.cat ? "EQ" : "UP" };
         evoMap.set(p25.name, entry);
         if (isM(p25.name)) manuelEvo = entry;
       }
@@ -444,14 +455,27 @@ function Content() {
   const [ti, setTi] = useState(2);
   const [all, setAll] = useState<(TDef | null)[]>(new Array(URLS.length).fill(null));
   const [loading, setLoading] = useState(true);
-    const md = useMasterDetail();
+  const [autoRivals, setAutoRivals] = useState<AutoRivalPlayer[]>([]);
+  const md = useMasterDetail();
+
   useEffect(() => {
     Promise.all(URLS.map(async (m) => {
       try { const res = await cachedFetch(m.url); if (!res.ok) return null; const raw = await res.json();
         return { id: m.id, label: m.label, shortLabel: m.shortLabel, data: loadT(raw, (m as any).reverseRounds), manuelName: m.manuelName, year: m.year, category: m.category, roundDates: m.roundDates, series: m.series } as TDef;
       } catch { return null; }
     })).then(r => { setAll(r); setLoading(false); });
+    // Carregar autoRivals em background para KidsLinks
+    buildAutoRivals(undefined, {
+      onUpdate: (rivals) => setAutoRivals(rivals),
+    }).catch(() => {});
   }, []);
+
+  // Mapa normName → KidsLinkEntry para o contexto ↗
+  const kidsMap = useMemo(() => {
+    const m = new Map<string, KidsLinkEntry>();
+    for (const r of autoRivals) m.set(normNameAuto(r.n), { n: r.n, memberId: (r as any).memberId });
+    return m;
+  }, [autoRivals]);
 
   const cur = all[ti];
   if (loading) return <LoadingState />;
@@ -459,11 +483,12 @@ function Content() {
   const { evoMap, evoYear, manuelEvo } = cur ? buildEvo(cur, all) : {};
 
   return (
+    <KidsLinkCtx.Provider value={kidsMap}>
     <div className="tourn-layout">
 
       {/* Toolbar */}
       <Toolbar>
-                <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
+        <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
         {cur?.series === "eowagr"
           ? <ToolbarTitle>🌍 European Open</ToolbarTitle>
           : <ToolbarTitle>🏌️ WJGC</ToolbarTitle>}
@@ -519,7 +544,7 @@ function Content() {
                           style={isEowagr && ti === idx ? { borderLeft: "3px solid var(--color-warn-vivid)" } : isEowagr ? { borderLeft: "3px solid transparent" } : {}}
                           onClick={() => { setTi(idx); md.onSelect(); }}>
                           <div className="course-item-name">{u.category}</div>
-                          {t && <div className="course-item-meta">{nP} jog · {nR}R</div>}
+                          {t && <div className="course-item-meta">{nP} jog{nR > 1 && <> · <RoundPill nR={nR} /></>}</div>}
                           {t && t.data.players.some(p => isM(p.name)) && (
                             <span style={{
                               display: "inline-block", marginTop: 4,
@@ -557,21 +582,21 @@ function Content() {
             <TournView def={cur} evo={evoMap} evoYear={evoYear} />
             {manuelEvo && cur.year === 2026 && (
               <div className="card" style={{ background: "var(--bg-success-subtle)", border: "1px solid var(--good)" }}>
-                <div className="h-md fs-14">🇵🇹 Manuel — Evolução WJGC</div>
+                <div className="h-md fs-14">🇵🇹 Manuel — Evolução WJGC (±Par)</div>
                 <div className="gap-16 flex-wrap" style={{ display: "flex", alignItems: "center" }}>
                   <div className="ta-c" style={{ flex: "1 1 100px" }}>
                     <div className="muted fs-10">2025 ({manuelEvo.from})</div>
-                    <div className="fw-900" style={{ fontSize: 24 }}>{manuelEvo.otherTotal}</div>
+                    <div className="fw-900" style={{ fontSize: 24 }}>{fmtSign(manuelEvo.otherToPar)}</div>
                   </div>
                   <div style={{ fontSize: 24, color: "var(--good-dark)" }}>→</div>
                   <div className="ta-c" style={{ flex: "1 1 100px" }}>
                     <div className="muted fs-10">2026 ({manuelEvo.to})</div>
-                    <div className="fw-900" style={{ fontSize: 24, color: manuelEvo.delta < 0 ? "var(--good-dark)" : "var(--text-3)" }}>{manuelEvo.otherTotal + manuelEvo.delta}</div>
+                    <div className="fw-900" style={{ fontSize: 24, color: manuelEvo.delta < 0 ? "var(--good-dark)" : "var(--text-3)" }}>{fmtSign(manuelEvo.otherToPar + manuelEvo.delta)}</div>
                   </div>
                   <div className="ta-c" style={{ flex: "1 1 80px" }}>
-                    <div className="muted fs-10">Δ</div>
+                    <div className="muted fs-10">Δ ±Par</div>
                     <div className="fw-900" style={{ fontSize: 24, color: manuelEvo.delta < 0 ? "var(--good-dark)" : SC.danger }}>{manuelEvo.delta > 0 ? "+" : ""}{manuelEvo.delta}</div>
-                    <div className="muted fs-10">pancadas (3R)</div>
+                    <div className="muted fs-10">vs par (3R)</div>
                   </div>
                 </div>
               </div>
@@ -581,6 +606,7 @@ function Content() {
 
       </div>
     </div>
+    </KidsLinkCtx.Provider>
   );
 }
 

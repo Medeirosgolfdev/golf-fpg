@@ -1139,7 +1139,7 @@ function TournScorecard({ par, si, meters, rounds }: { par: readonly number[]; s
     <div className="scroll-x">
       <table className="sc-table-modern" data-sc-table="1">
         <thead><tr>
-          <th className="hole-header ta-left"  style={{ paddingLeft: 8, minWidth: 60 }}>Buraco</th>
+          <th className="hole-header ta-left">Buraco</th>
           {par.slice(0, 9).map((_, i) => <th key={i} className="hole-header">{i + 1}</th>)}
           <th className="hole-header col-out fs-10">Out</th>
           {par.slice(9).map((_, i) => <th key={i + 9} className="hole-header">{i + 10}</th>)}
@@ -1151,9 +1151,9 @@ function TournScorecard({ par, si, meters, rounds }: { par: readonly number[]; s
             <tr className="meta-row">
               <td className="row-label fs-10 c-text-3">m</td>
               {meters.slice(0, 9).map((m, i) => <td key={i} className="fs-10 c-text-3">{m}</td>)}
-              <td className="col-out fs-10 c-text-3">{frontM}</td>
+              <td className="col-out c-text-3">{frontM}</td>
               {meters.slice(9).map((m, i) => <td key={i + 9} className="fs-10 c-text-3">{m}</td>)}
-              <td className="col-in fs-10 c-text-3">{backM}</td>
+              <td className="col-in c-text-3">{backM}</td>
               <td className="col-total fs-10 c-text-3">{totalM}</td>
             </tr>
           )}
@@ -1699,6 +1699,7 @@ function TorneiosRecorrentes({
                         </span>
                         {e.tp != null && <span style={{ fontSize: 9, fontWeight: 600,
                           color: (e.tp ?? 0) <= 0 ? "var(--color-good-dark)" : "var(--text-3)" }}>{tpStr}</span>}
+                        {e.ageGroup && <span style={{ fontSize: 8, color: "var(--text-muted)", fontWeight: 500, whiteSpace: "nowrap" }}>{e.ageGroup}</span>}
                       </div>
                     </React.Fragment>
                   );
@@ -2228,7 +2229,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
 
   const THead = () => (
     <thead><tr>
-      <th className="hole-header ta-left"  style={{ paddingLeft: 8, minWidth: 50 }}>Buraco</th>
+      <th className="hole-header ta-left">Buraco</th>
       {par.slice(0, 9).map((_, i) => <th key={i} className="hole-header">{i + 1}</th>)}
       <th className="hole-header col-out fs-10">Out</th>
       {par.slice(9).map((_, i) => <th key={i + 9} className="hole-header">{i + 10}</th>)}
@@ -2240,9 +2241,9 @@ function RivalDetail({ playerName }: { playerName: string }) {
     <tr className="meta-row">
       <td className="row-label fs-10 c-text-3">m</td>
       {VP_M.slice(0, 9).map((m, i) => <td key={i} className="fs-10 c-text-3">{m}</td>)}
-      <td className="col-out fs-10 c-text-3">{vpFrontM}</td>
+      <td className="col-out c-text-3">{vpFrontM}</td>
       {VP_M.slice(9).map((m, i) => <td key={i + 9} className="fs-10 c-text-3">{m}</td>)}
-      <td className="col-in fs-10 c-text-3">{vpBackM}</td>
+      <td className="col-in c-text-3">{vpBackM}</td>
       <td className="col-total fs-10 c-text-3">{vpTotalM}</td>
     </tr>
   );
@@ -2284,10 +2285,10 @@ function RivalDetail({ playerName }: { playerName: string }) {
       {FH.map((h, i) => (
         <React.Fragment key={i}>
           <td className="fs-10 c-muted">{h.fAvg.toFixed(1)}</td>
-          {i === 8 && <td className="col-out fs-10 c-muted">{FH.slice(0, 9).reduce((a, x) => a + x.fAvg, 0).toFixed(1)}</td>}
+          {i === 8 && <td className="col-out c-muted">{FH.slice(0, 9).reduce((a, x) => a + x.fAvg, 0).toFixed(1)}</td>}
         </React.Fragment>
       ))}
-      <td className="col-in fs-10 c-muted">{FH.slice(9).reduce((a, x) => a + x.fAvg, 0).toFixed(1)}</td>
+      <td className="col-in c-muted">{FH.slice(9).reduce((a, x) => a + x.fAvg, 0).toFixed(1)}</td>
       <td className="col-total fs-10 c-muted">{FH.reduce((a, x) => a + x.fAvg, 0).toFixed(1)}</td>
     </tr>
   );
@@ -2714,7 +2715,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
                         <RoundPill nR={rds.length} />
                         {/* ── DEBUG TEMPORÁRIO: fonte do torneio — remover após diagnóstico ── */}
                         {debugMode && (
-                          <span title={`tid: ${t.id}`} className="fs-9 flex-shrink-0 overflow-hidden" style={{ fontFamily: "monospace", padding: "1px 5px", borderRadius: 4, background: "#fef08a", color: "#713f12", border: "1px solid #fde047", maxWidth: 200, textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                          <span title={`tid: ${t.id}`} className="fs-9 flex-shrink-0 overflow-hidden" style={{ fontFamily: "'JetBrains Mono', monospace", padding: "1px 5px", borderRadius: 4, background: "#fef08a", color: "#713f12", border: "1px solid #fde047", maxWidth: 200, textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                             {t.id}
                           </span>
                         )}

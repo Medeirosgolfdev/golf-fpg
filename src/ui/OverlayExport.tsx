@@ -75,7 +75,7 @@ function SC({ sc, par, sz = 32 }: { sc: number; par: number; sz?: number }) {
   const fs = Math.round(sz * 0.52);
   const base: React.CSSProperties = { width: sz, height: sz, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: fs, lineHeight: 1, flexShrink: 0 };
   const bg = scBg(d);
-  if (!bg) return <div style={{ ...base, textShadow: "0 1px 2px rgba(0,0,0,.3)" }}>{sc}</div>;
+  if (!bg) return <div style={{ ...base, color: "inherit", textShadow: "0 1px 2px rgba(0,0,0,.3)" }}>{sc}</div>;
   return <div style={{ ...base, background: bg, color: "#fff", borderRadius: d <= -1 ? "50%" : 0 }}>{sc}</div>;
 }
 /* light bg variant */
@@ -84,7 +84,7 @@ function SCL({ sc, par, sz = 28 }: { sc: number; par: number; sz?: number }) {
   const fs = Math.round(sz * 0.52);
   const base: React.CSSProperties = { width: sz, height: sz, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: fs, lineHeight: 1, flexShrink: 0 };
   const bg = scBg(d);
-  if (!bg) return <div style={{ ...base, color: "#222" }}>{sc}</div>;
+  if (!bg) return <div style={{ ...base, color: "#333" }}>{sc}</div>;
   return <div style={{ ...base, background: bg, color: "#fff", borderRadius: d <= -1 ? "50%" : 0 }}>{sc}</div>;
 }
 /* 18Birdies style: over-par = border only */
@@ -94,8 +94,8 @@ function SCQ({ sc, par, sz = 24 }: { sc: number; par: number; sz?: number }) {
   const base: React.CSSProperties = { width: sz, height: sz, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: fs, lineHeight: 1, flexShrink: 0 };
   if (d <= -2) return <div style={{ ...base, background: "#d4a017", color: "#fff", borderRadius: "50%" }}>{sc}</div>;
   if (d === -1) return <div style={{ ...base, background: "#dc2626", color: "#fff", borderRadius: "50%" }}>{sc}</div>;
-  if (d === 0)  return <div style={base}>{sc}</div>;
-  return <div style={{ ...base, border: "1.5px solid rgba(255,255,255,0.45)", color: "#fff" }}>{sc}</div>;
+  if (d === 0)  return <div style={{ ...base, color: "inherit" }}>{sc}</div>;
+  return <div style={{ ...base, border: "1.5px solid rgba(255,255,255,0.45)", color: "inherit" }}>{sc}</div>;
 }
 
 /* ── SCO: score circle OUTLINE only — all white, for transparent overlays ── */
@@ -194,7 +194,7 @@ function V1({ d, v, s, bg, tc="white", tc2, tc3 }: P) {
   return (
     <div style={{ fontFamily:II, display:"inline-flex", alignItems:"center", gap:5, padding:"3px 6px", borderRadius:12, background:bg||"rgba(0,0,0,.75)", color:tc, textShadow:TS }}>
       <span style={{ fontFamily:OS, fontSize:22, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
-      <span style={{ fontFamily:OS, fontSize:22, fontWeight:700 }}>{s.sT}</span>
+      <span style={{ fontFamily:OS, fontSize:22, fontWeight:700, color:tc }}>{s.sT}</span>
       {v.player&&d.player && <span style={{ fontSize:13, fontWeight:700, color:tc2 }}>{d.player}</span>}
       {(v.course||v.date||v.round) && <span style={{ fontSize:11, color:tc3 }}>{metaStr(d,{course:v.course,date:v.date,round:v.round})}</span>}
     </div>
@@ -212,7 +212,7 @@ function V2({ d, v, s, bg, tc="white", tc2, tc3 }: P) {
       </div>
       <div style={{ width:1, background:"rgba(255,255,255,.15)", alignSelf:"stretch" }} />
       <div style={{ display:"flex", alignItems:"baseline", gap:5, flexShrink:0 }}>
-        <span style={{ fontFamily:OS, fontSize:40, fontWeight:900, lineHeight:1 }}>{s.sT}</span>
+        <span style={{ fontFamily:OS, fontSize:40, fontWeight:900, lineHeight:1, color:tc }}>{s.sT}</span>
         <span style={{ fontSize:18, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
       </div>
     </div>
@@ -261,7 +261,7 @@ function V4({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
       {v.course&&d.course && <div style={{ fontSize:11, fontWeight:700, letterSpacing:1, color:tc3 }}>{d.course}</div>}
       {v.player&&d.player && <div style={{ fontFamily:OS, fontSize:14, fontWeight:700, marginTop:2 }}>{d.player.toUpperCase()}</div>}
       <div style={{ margin:"4px auto", width:90, height:90, borderRadius:"50%", border:`3px solid ${vpC(s.vpT)}`, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center" }}>
-        <div style={{ fontFamily:OS, fontSize:34, fontWeight:900, lineHeight:1, letterSpacing:-1 }}>{s.sT}</div>
+        <div style={{ fontFamily:OS, fontSize:34, fontWeight:900, lineHeight:1, letterSpacing:-1, color:tc }}>{s.sT}</div>
         <div style={{ fontSize:20, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</div>
       </div>
       {v.stats && <div style={{ display:"flex", justifyContent:"center", marginTop:2 }}><StatsRow st={s.st} tc3={tc3} gap={5} fs={11} /></div>}
@@ -282,7 +282,7 @@ function V5({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
         </div>
       )}
       <div style={{ textAlign:"center", marginBottom:4 }}>
-        <div style={{ fontFamily:II, fontSize:48, fontWeight:900, lineHeight:1, letterSpacing:-2 }}>{s.sT}</div>
+        <div style={{ fontFamily:II, fontSize:48, fontWeight:900, lineHeight:1, letterSpacing:-2, color:tc }}>{s.sT}</div>
         <div style={{ fontFamily:II, fontSize:22, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</div>
       </div>
       {v.holeScores && <Grid2 d={d} sz={28} gap={3} nc="#666" />}
@@ -305,7 +305,7 @@ function V6({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
           {v.player&&d.player && <div style={{ fontFamily:BN, fontSize:26, letterSpacing:1.5, lineHeight:1.1 }}>{d.player.toUpperCase()}</div>}
         </div>
         <div style={{ textAlign:"right", flexShrink:0 }}>
-          <div style={{ fontFamily:BN, fontSize:56, lineHeight:.85, letterSpacing:-1, textShadow:TS_SCORE }}>{s.sT}</div>
+          <div style={{ fontFamily:BN, fontSize:56, lineHeight:.85, letterSpacing:-1, color:tc, textShadow:TS_SCORE }}>{s.sT}</div>
           <div style={{ fontFamily:SG, fontSize:18, fontWeight:700, color:vpC(s.vpT), marginTop:1 }}>{fmtToPar(s.vpT)}</div>
           {v.position&&d.position && <div style={{ fontSize:10, fontWeight:700, color:tc3 }}>{d.position}</div>}
         </div>
@@ -330,7 +330,7 @@ function V7({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
   return (
     <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg, padding:"3px 5px", borderRadius:8, textShadow:TS }}>
       <div style={{ display:"flex", alignItems:"baseline", gap:5, marginBottom:4 }}>
-        <span style={{ fontFamily:BN, fontSize:50, lineHeight:.85, letterSpacing:-1, textShadow:TS_SCORE }}>{s.sT}</span>
+        <span style={{ fontFamily:BN, fontSize:50, lineHeight:.85, letterSpacing:-1, color:tc, textShadow:TS_SCORE }}>{s.sT}</span>
         <span style={{ fontSize:20, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
         <div style={{ marginLeft:"auto" }}>
           {v.player&&d.player && <div style={{ fontFamily:OS, fontSize:16, fontWeight:700 }}>{d.player}</div>}
@@ -364,7 +364,7 @@ function V8({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
           {hcl && <div style={{ fontSize:10, fontWeight:600, color:tc4 }}>{hcl}</div>}
         </div>
         <div style={{ display:"flex", alignItems:"baseline", gap:5, flexShrink:0 }}>
-          <span style={{ fontFamily:BN, fontSize:52, lineHeight:.85, letterSpacing:-1, textShadow:TS_SCORE }}>{s.sT}</span>
+          <span style={{ fontFamily:BN, fontSize:52, lineHeight:.85, letterSpacing:-1, color:tc, textShadow:TS_SCORE }}>{s.sT}</span>
           <span style={{ fontFamily:SG, fontSize:18, fontWeight:700, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
         </div>
       </div>
@@ -397,7 +397,7 @@ function V9({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
           <div style={{ fontSize:10, fontWeight:600, color:tc3 }}>Par {s.pT}{v.tee&&d.tee?` · ${d.tee}`:""}{v.date&&d.date?` · ${d.date}`:""}</div>
         </div>
         <div style={{ textAlign:"right" }}>
-          <div style={{ fontFamily:BN, fontSize:54, lineHeight:.85, letterSpacing:-1, textShadow:TS_SCORE }}>{s.sT}</div>
+          <div style={{ fontFamily:BN, fontSize:54, lineHeight:.85, letterSpacing:-1, color:tc, textShadow:TS_SCORE }}>{s.sT}</div>
           <div style={{ fontFamily:SG, fontSize:16, fontWeight:700, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</div>
         </div>
       </div>
@@ -449,7 +449,7 @@ function V11({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
         {v.player&&d.player && <div style={{ fontSize:18, fontWeight:700, letterSpacing:.3, marginTop:1, wordBreak:"break-word" }}>{d.player.toUpperCase()}</div>}
         {(v.course||v.tee) && <div style={{ fontFamily:II, fontSize:10, fontWeight:600, color:tc3 }}>{[v.course&&d.course,v.tee&&d.tee].filter(Boolean).join(" · ")}</div>}
         <div style={{ display:"flex", alignItems:"baseline", justifyContent:"center", gap:6, margin:"6px 0 4px" }}>
-          <span style={{ fontFamily:BN, fontSize:72, lineHeight:.8, letterSpacing:-2, textShadow:TS_SCORE }}>{s.sT}</span>
+          <span style={{ fontFamily:BN, fontSize:72, lineHeight:.8, letterSpacing:-2, color:tc, textShadow:TS_SCORE }}>{s.sT}</span>
           <span style={{ fontFamily:SG, fontSize:28, fontWeight:700, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
         </div>
         <div style={{ fontFamily:II, fontSize:10, fontWeight:700, color:tc3, marginBottom:4 }}>Par {s.pT}{v.date&&d.date?` · ${d.date}`:""}</div>
@@ -474,7 +474,7 @@ function V12({ d, v, s, bg, tc="white", tc2, tc3, tc4 }: P) {
           {hcl && <div style={{ fontSize:10, fontWeight:600, color:tc4 }}>{hcl}</div>}
         </div>
         <div style={{ textAlign:"right", flexShrink:0 }}>
-          <div style={{ fontFamily:BN, fontSize:52, lineHeight:.85, letterSpacing:-1, textShadow:TS_SCORE }}>{s.sT}</div>
+          <div style={{ fontFamily:BN, fontSize:52, lineHeight:.85, letterSpacing:-1, color:tc, textShadow:TS_SCORE }}>{s.sT}</div>
           <div style={{ fontFamily:SG, fontSize:18, fontWeight:700, color:vpC(s.vpT), marginTop:1 }}>{fmtToPar(s.vpT)}</div>
           {v.position&&d.position && <div style={{ fontSize:11, fontWeight:700, color:tc3 }}>{d.position}</div>}
         </div>
@@ -1004,7 +1004,7 @@ function V24({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
 function V25({ d, v, s, bg, tc="white", tc3 }: P) {
   return (
     <div style={{ fontFamily:OS, display:"inline-flex", alignItems:"baseline", gap:6, color:tc, background:bg||"rgba(0,0,0,.65)", borderRadius:8, padding:"4px 10px", textShadow:TS }}>
-      <span style={{ fontSize:42, fontWeight:900, lineHeight:.85, letterSpacing:-2 }}>{s.sT}</span>
+      <span style={{ fontSize:42, fontWeight:900, lineHeight:.85, letterSpacing:-2, color:tc }}>{s.sT}</span>
       <span style={{ fontFamily:II, fontSize:18, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
       {v.player&&d.player && <span style={{ fontFamily:II, fontSize:12, fontWeight:700, color:tc3, marginLeft:2 }}>{d.player}</span>}
     </div>
@@ -1019,7 +1019,7 @@ function V26({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
     <div style={{ fontFamily:LO, display:"inline-flex", flexDirection:"column", alignItems:"center", color:tc, background:bg||"rgba(0,0,0,.75)", borderRadius:10, padding:"6px 14px 8px", minWidth:140, textShadow:TS }}>
       {v.player&&d.player && <div style={{ fontSize:16, fontWeight:700, fontStyle:"italic", letterSpacing:.5, marginBottom:2, wordBreak:"break-word", textAlign:"center" }}>{d.player}</div>}
       {(v.course||v.event) && <div style={{ fontFamily:II, fontSize:9, fontWeight:600, color:tc3, textTransform:"uppercase", letterSpacing:2, textAlign:"center" }}>{[v.event&&d.event,v.course&&d.course].filter(Boolean).join(" · ")}</div>}
-      <div style={{ fontFamily:OS, fontSize:64, fontWeight:700, lineHeight:.82, letterSpacing:-3, margin:"4px 0 2px" }}>{s.sT}</div>
+      <div style={{ fontFamily:OS, fontSize:64, fontWeight:700, lineHeight:.82, letterSpacing:-3, margin:"4px 0 2px", color:tc }}>{s.sT}</div>
       <div style={{ fontFamily:II, fontSize:18, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</div>
       {/* Thin separator */}
       {v.holeScores && <div style={{ width:40, height:1, background:"rgba(255,255,255,.25)", margin:"6px 0 4px" }} />}
@@ -1052,7 +1052,7 @@ function V27({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
   return (
     <div style={{ fontFamily:II, display:"inline-flex", alignItems:"center", gap:8, color:tc, background:bg||"rgba(0,0,0,.78)", borderRadius:8, padding:"4px 10px", textShadow:TS }}>
       <div style={{ display:"flex", alignItems:"baseline", gap:4, flexShrink:0 }}>
-        <span style={{ fontFamily:OS, fontSize:44, fontWeight:900, lineHeight:1, letterSpacing:-2 }}>{s.sT}</span>
+        <span style={{ fontFamily:OS, fontSize:44, fontWeight:900, lineHeight:1, letterSpacing:-2, color:tc }}>{s.sT}</span>
         <span style={{ fontSize:20, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
       </div>
       {v.holeScores && (
@@ -1146,14 +1146,14 @@ function V29({ d, v, s, bg, tc="white", tc3 }: P) {
             ))}
           </div>
           <div style={{ textAlign:"right", flexShrink:0, marginLeft:8 }}>
-            <div style={{ fontFamily:BN, fontSize:100, lineHeight:.75, letterSpacing:-3 }}>{s.sT}</div>
+            <div style={{ fontFamily:BN, fontSize:100, lineHeight:.75, letterSpacing:-3, color:tc }}>{s.sT}</div>
             <div style={{ fontFamily:SG, fontSize:16, fontWeight:700, color:vpC(s.vpT), marginTop:2 }}>{fmtToPar(s.vpT)}</div>
           </div>
         </div>
       )}
       {!v.holeScores && (
         <div style={{ display:"flex", alignItems:"baseline", gap:6, justifyContent:"center" }}>
-          <span style={{ fontFamily:BN, fontSize:100, lineHeight:.75, letterSpacing:-3 }}>{s.sT}</span>
+          <span style={{ fontFamily:BN, fontSize:100, lineHeight:.75, letterSpacing:-3, color:tc }}>{s.sT}</span>
           <span style={{ fontFamily:SG, fontSize:18, fontWeight:700, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
         </div>
       )}
@@ -1191,7 +1191,7 @@ function V30({ d, v, s, bg, tc="white", tc3 }: P) {
           </div>
         </div>
         <div style={{ padding:"6px 14px", display:"flex", alignItems:"center" }}>
-          <div style={{ fontFamily:BN, fontSize:60, lineHeight:.8, letterSpacing:-2 }}>{s.sT}</div>
+          <div style={{ fontFamily:BN, fontSize:60, lineHeight:.8, letterSpacing:-2, color:tc }}>{s.sT}</div>
         </div>
       </div>
       {v.holeScores && (
@@ -1353,7 +1353,7 @@ function V33({ d, v, s, bg, tc="white", tc3 }: P) {
       )}
       {/* Total score + to-par */}
       <div style={{ display:"flex", alignItems:"baseline", justifyContent:"center", gap:6, marginTop:6, paddingTop:4, borderTop:"1px solid rgba(255,255,255,.12)" }}>
-        <span style={{ fontFamily:BN, fontSize:56, lineHeight:.8, letterSpacing:-1, textShadow:TS_SCORE }}>{s.sT}</span>
+        <span style={{ fontFamily:BN, fontSize:56, lineHeight:.8, letterSpacing:-1, color:tc, textShadow:TS_SCORE }}>{s.sT}</span>
         <span style={{ fontFamily:SG, fontSize:20, fontWeight:700, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
       </div>
       {(v.event||v.course||v.date||v.round) && (
@@ -1390,14 +1390,14 @@ function V37({ d, v, s, bg, tc="white", tc3 }: P) {
             ))}
           </div>
           <div style={{ textAlign:"right", flexShrink:0, marginLeft:8 }}>
-            <div style={{ fontFamily:BN, fontSize:120, lineHeight:.75, letterSpacing:-4 }}>{s.sT}</div>
+            <div style={{ fontFamily:BN, fontSize:120, lineHeight:.75, letterSpacing:-4, color:tc }}>{s.sT}</div>
             <div style={{ fontFamily:SG, fontSize:16, fontWeight:700, color:vpC(s.vpT), marginTop:2, letterSpacing:1 }}>{fmtToPar(s.vpT)}</div>
           </div>
         </div>
       )}
       {!v.holeScores && (
         <div style={{ textAlign:"center" }}>
-          <div style={{ fontFamily:BN, fontSize:120, lineHeight:.75, letterSpacing:-4 }}>{s.sT}</div>
+          <div style={{ fontFamily:BN, fontSize:120, lineHeight:.75, letterSpacing:-4, color:tc }}>{s.sT}</div>
           <div style={{ fontFamily:SG, fontSize:20, fontWeight:700, color:vpC(s.vpT), marginTop:4 }}>{fmtToPar(s.vpT)}</div>
         </div>
       )}
@@ -1443,7 +1443,7 @@ function V38({ d, v, s, bg, tc="white", tc3 }: P) {
             ))}
           </div>
           <div style={{ textAlign:"right", flexShrink:0, marginLeft:8 }}>
-            <div style={{ fontFamily:BN, fontSize:120, lineHeight:.75, letterSpacing:-4 }}>{s.sT}</div>
+            <div style={{ fontFamily:BN, fontSize:120, lineHeight:.75, letterSpacing:-4, color:tc }}>{s.sT}</div>
             <div style={{ fontFamily:SG, fontSize:16, fontWeight:700, marginTop:4 }}>
               <span style={{ color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
             </div>
@@ -1452,7 +1452,7 @@ function V38({ d, v, s, bg, tc="white", tc3 }: P) {
       )}
       {!v.holeScores && (
         <div style={{ display:"flex", alignItems:"baseline", gap:8 }}>
-          <div style={{ fontFamily:BN, fontSize:120, lineHeight:.75, letterSpacing:-4 }}>{s.sT}</div>
+          <div style={{ fontFamily:BN, fontSize:120, lineHeight:.75, letterSpacing:-4, color:tc }}>{s.sT}</div>
           <div style={{ fontFamily:SG, fontSize:20, fontWeight:700, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</div>
         </div>
       )}
@@ -1487,7 +1487,7 @@ function V34({ d, v, s, bg, tc="white", tc3 }: P) {
             {(v.course||v.event||v.date) && <div style={{ fontSize:10, fontWeight:600, color:tc3||tx3 }}>{[v.event&&d.event,v.course&&d.course,v.date&&d.date].filter(Boolean).join(" · ")}</div>}
           </div>
           <div style={{ display:"flex", alignItems:"baseline", gap:4 }}>
-            <span style={{ fontFamily:BN, fontSize:36 }}>{s.sT}</span>
+            <span style={{ fontFamily:BN, fontSize:36, color:tx }}>{s.sT}</span>
             <span style={{ fontSize:14, fontWeight:700, color:isDark?vpC(s.vpT):vpCd(s.vpT) }}>{fmtToPar(s.vpT)}</span>
           </div>
         </div>
@@ -1578,7 +1578,7 @@ function V36({ d, v, s, bg, tc="white", tc3 }: P) {
   return (
     <div style={{ fontFamily:SG, display:"inline-block", background:bgF, color:tx, borderRadius:8, padding:"8px 10px" }}>
       <div style={{ display:"flex", alignItems:"baseline", gap:5, marginBottom:6 }}>
-        <span style={{ fontFamily:BN, fontSize:48, lineHeight:.8 }}>{s.sT}</span>
+        <span style={{ fontFamily:BN, fontSize:48, lineHeight:.8, color:tx }}>{s.sT}</span>
         <span style={{ fontSize:18, fontWeight:700, color:isDark?vpC(s.vpT):vpCd(s.vpT) }}>{fmtToPar(s.vpT)}</span>
         {v.player&&d.player && <span style={{ marginLeft:"auto", fontFamily:BN, fontSize:16, letterSpacing:1, color:tc3||tx3 }}>{d.player.toUpperCase()}</span>}
       </div>
@@ -1629,14 +1629,14 @@ function V39({ d, v, s, bg, tc="white", tc3 }: P) {
             ))}
           </div>
           <div style={{ textAlign:"right", flexShrink:0, marginLeft:8 }}>
-            <div style={{ fontFamily:BN, fontSize:120, lineHeight:.75, letterSpacing:-4 }}>{s.sT}</div>
+            <div style={{ fontFamily:BN, fontSize:120, lineHeight:.75, letterSpacing:-4, color:tc }}>{s.sT}</div>
             <div style={{ fontFamily:SG, fontSize:16, fontWeight:700, color:tc3, marginTop:2, letterSpacing:1 }}>{fmtToPar(s.vpT)}</div>
           </div>
         </div>
       )}
       {!v.holeScores && (
         <div style={{ textAlign:"center" }}>
-          <div style={{ fontFamily:BN, fontSize:120, lineHeight:.75, letterSpacing:-4 }}>{s.sT}</div>
+          <div style={{ fontFamily:BN, fontSize:120, lineHeight:.75, letterSpacing:-4, color:tc }}>{s.sT}</div>
           <div style={{ fontFamily:SG, fontSize:20, fontWeight:700, color:tc3, marginTop:4 }}>{fmtToPar(s.vpT)}</div>
         </div>
       )}
@@ -1680,14 +1680,14 @@ function V40({ d, v, s, bg, tc="white", tc3 }: P) {
             ))}
           </div>
           <div style={{ textAlign:"right", flexShrink:0, marginLeft:8 }}>
-            <div style={{ fontFamily:BN, fontSize:120, lineHeight:.75, letterSpacing:-4 }}>{s.sT}</div>
+            <div style={{ fontFamily:BN, fontSize:120, lineHeight:.75, letterSpacing:-4, color:tc }}>{s.sT}</div>
             <div style={{ fontFamily:SG, fontSize:16, fontWeight:700, color:tc3, marginTop:4 }}>{fmtToPar(s.vpT)}</div>
           </div>
         </div>
       )}
       {!v.holeScores && (
         <div style={{ display:"flex", alignItems:"baseline", gap:8 }}>
-          <div style={{ fontFamily:BN, fontSize:120, lineHeight:.75, letterSpacing:-4 }}>{s.sT}</div>
+          <div style={{ fontFamily:BN, fontSize:120, lineHeight:.75, letterSpacing:-4, color:tc }}>{s.sT}</div>
           <div style={{ fontFamily:SG, fontSize:20, fontWeight:700, color:tc3 }}>{fmtToPar(s.vpT)}</div>
         </div>
       )}
@@ -1706,7 +1706,7 @@ function V41({ d, v, s, bg, tc="white", tc3 }: P) {
   return (
     <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg, padding:4 }}>
       <div style={{ display:"flex", alignItems:"baseline", gap:6 }}>
-        <div style={{ fontFamily:BN, fontSize:140, lineHeight:.72, letterSpacing:-5 }}>{s.sT}</div>
+        <div style={{ fontFamily:BN, fontSize:140, lineHeight:.72, letterSpacing:-5, color:tc }}>{s.sT}</div>
         <div style={{ fontFamily:SG, fontSize:24, fontWeight:700, color:vpC(s.vpT), letterSpacing:1 }}>{fmtToPar(s.vpT)}</div>
       </div>
       {v.player&&d.player && (
@@ -1770,7 +1770,7 @@ function V43({ d, v, s, bg, tc="white", tc3 }: P) {
       <div style={{ width:4, background:accent, borderRadius:2, marginRight:8, flexShrink:0 }} />
       <div>
         <div style={{ display:"flex", alignItems:"baseline", gap:6 }}>
-          <span style={{ fontFamily:BN, fontSize:100, lineHeight:.72, letterSpacing:-4 }}>{s.sT}</span>
+          <span style={{ fontFamily:BN, fontSize:100, lineHeight:.72, letterSpacing:-4, color:tc }}>{s.sT}</span>
           <span style={{ fontFamily:SG, fontSize:20, fontWeight:700, color:vpC(s.vpT), letterSpacing:1 }}>{fmtToPar(s.vpT)}</span>
         </div>
         {v.player&&d.player && (
@@ -1801,14 +1801,14 @@ function V44({ d, v, s, bg, tc="white", tc3 }: P) {
             ))}
           </div>
           <div style={{ textAlign:"right", flexShrink:0, marginLeft:8 }}>
-            <div style={{ fontFamily:BN, fontSize:100, lineHeight:.75, letterSpacing:-3 }}>{s.sT}</div>
+            <div style={{ fontFamily:BN, fontSize:100, lineHeight:.75, letterSpacing:-3, color:tc }}>{s.sT}</div>
             <div style={{ fontFamily:SG, fontSize:16, fontWeight:700, color:tc3, marginTop:2 }}>{fmtToPar(s.vpT)}</div>
           </div>
         </div>
       )}
       {!v.holeScores && (
         <div style={{ display:"flex", alignItems:"baseline", gap:6, justifyContent:"center" }}>
-          <span style={{ fontFamily:BN, fontSize:100, lineHeight:.75, letterSpacing:-3 }}>{s.sT}</span>
+          <span style={{ fontFamily:BN, fontSize:100, lineHeight:.75, letterSpacing:-3, color:tc }}>{s.sT}</span>
           <span style={{ fontFamily:SG, fontSize:18, fontWeight:700, color:tc3 }}>{fmtToPar(s.vpT)}</span>
         </div>
       )}
@@ -2177,7 +2177,7 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
                       <button className="ov-share-btn" onClick={()=>doExportOne(x.id)} title="Partilhar / Descarregar">📤</button>
                     </div>
                     <div className="ov-card-preview" style={checkerBg}>
-                      <div ref={el=>{ designRefs.current[x.id]=el; }} style={{ display:"inline-block" }}>
+                      <div ref={el=>{ designRefs.current[x.id]=el; }} style={{ display:"inline-block", color:tc }}>
                         <x.C d={dd} v={vis} s={stats} bg={bgColor} tc={tc} tc2={tc2} tc3={tc3} tc4={tc4} />
                       </div>
                     </div>

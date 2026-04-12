@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { useSort } from "../../hooks/useSort";
 import { escPillCls, type EscLookup } from "../../utils/playerUtils";
-import { ESC_STYLE, PillBadge } from "../../ui/PillBadge";
+import { ESC_STYLE, PillBadge, RoundPill } from "../../ui/PillBadge";
 import SexBadge from "../../ui/SexBadge";
 import EmptyState from "../../ui/EmptyState";
 import LoadingState from "../../ui/LoadingState";
@@ -327,7 +327,7 @@ export function PJARankingView({
                     {tc.isGF && <span className="badge-gf">★ GF×1.5</span>}
                   </div>
                   <div className="c-muted-fs10-fw5">
-                    {fmtDate(tc.date)}{tc.campo ? " · " + tc.campo : ""}{tc.rounds.length > 1 ? ` · ${tc.rounds.length}R` : ""}
+                    {fmtDate(tc.date)}{tc.campo ? " · " + tc.campo : ""}{tc.rounds.length > 1 && <> · <RoundPill nR={tc.rounds.length} /></>}
                   </div>
                 </th>
               ),

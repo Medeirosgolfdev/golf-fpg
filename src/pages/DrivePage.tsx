@@ -15,7 +15,7 @@ import { isCalUnlocked } from "../utils/authConstants";
 import { resolveFedsInTournaments , buildEscLookup, resolveEscFromLookup, escPillCls, normalizePlayer } from "../utils/playerUtils";
 import PasswordGate from "../ui/PasswordGate";
 import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
-import { PILL_TCODE, EscPill, SIDEBAR_ACCENT } from "../ui/PillBadge";
+import { PILL_TCODE, EscPill, SIDEBAR_ACCENT, RoundPill } from "../ui/PillBadge";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
 import PlayerLink from "../ui/PlayerLink";
@@ -543,17 +543,17 @@ function DrivePointsTable() {
               <table key={ci} className="dtable tbl-compact" style={{ width: "auto", minWidth: 140 }}>
                 <thead>
                   <tr>
-                    <th className="r fs-11"  style={{ padding: "4px 8px", width: 40 }}>Pos</th>
-                    <th className="r" style={{ fontSize: 11, padding: "4px 8px", width: 60, color: "var(--color-warn-dark)", fontWeight: 800 }}>Pts</th>
+                    <th className="r" style={{ width: 40 }}>Pos</th>
+                    <th className="r fw-800" style={{ width: 60, color: "var(--color-warn-dark)" }}>Pts</th>
                   </tr>
                 </thead>
                 <tbody>
                   {col.map(({ pos, pts }) => (
                     <tr key={pos}>
-                      <td className="r fw-700" style={{ padding: "3px 8px", fontSize: 12, color: medalColor(pos) ?? "var(--text)" }}>
+                      <td className="r fw-700" style={{ color: medalColor(pos) ?? "var(--text)" }}>
                         {medal(pos) ?? pos + "º"}
                       </td>
-                      <td className="r fw-800" style={{ padding: "3px 8px", fontSize: 13, color: "var(--color-warn-dark)" }}>{pts}</td>
+                      <td className="r fw-800" style={{ color: "var(--color-warn-dark)" }}>{pts}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -996,7 +996,7 @@ function DriveAllRoundsScorecardLB({
   return (
     <div>
       <div className="muted fs-11 mb-8 p-0-4px" style={{ display:"flex", alignItems:"center", gap:8, flexWrap:"wrap" }}>
-        <span>{groupMode ? displayed.length : displayedFlat.length} {groupMode?"jogadores":"scorecards"} · {nRounds}R · Par {parTot}</span>
+        <span>{groupMode ? displayed.length : displayedFlat.length} {groupMode?"jogadores":"scorecards"}{nRounds > 1 && <> · <RoundPill nR={nRounds} /></>} · Par {parTot}</span>
         <span style={{ display:"flex", gap:2, marginLeft:4, border:"1px solid var(--border)", borderRadius:8, overflow:"hidden" }}>
           {([true,false] as const).map(g=>(
             <button key={String(g)} onClick={()=>setGroupMode(g)}
@@ -2514,7 +2514,7 @@ function DriveContent() {
                 )}
                 {curTournament && (
                   <div className="card card-scroll" style={{ marginTop: (selectedGroup.isMulti || selectedGroup.isEvent) ? 8 : 0 }}>
-                    <div className="h-md fs-14 gap-8"  style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <div className="h-md fs-14 gap-8" style={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
                       <span>
                         {selectedGroup.isEvent
                           ? <>⚡ {curTournament.escalao} — {selectedGroup.campo}</>

@@ -19,7 +19,12 @@ import { Toolbar, ToolbarTitle, ToolbarMeta } from "../ui/Toolbar";
 import DetailHeader from "../ui/DetailHeader";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import LoadingState from "../ui/LoadingState";
+import { RoundPill } from "../ui/PillBadge";
 import { AllRoundsScorecardLB, AccumulatedLB, ScorecardLB, expandMultiRound, type Tournament as FPGTournament, type Player as FPGPlayer, type RoundScore as FPGRoundScore, type ScorecardOptions } from "./FPGPage";
+import EvoBadge from "../ui/EvoBadge";
+import type { ExtraColumn, MultiRoundRow } from "../ui/multiRoundTypes";
+import { buildAutoRivals, normName as normNameAuto, type AutoRivalPlayer } from "./KIDSdataLoader";
+import { KidsLink, KidsLinkCtx, type KidsLinkEntry } from "../ui/KidsLink";
 
 /* ── Types ─────────────────────────────────────────────────── */
 interface RoundGG {
@@ -190,7 +195,7 @@ function normalizeFile(raw: RawGG, sourceUrl: string): Entry[] {
 }
 
 /* ── Evo: presença no ano anterior ─────────────────────────── */
-interface EvoEntry { prevTotal: number; delta: number; from: string; to: string; pill: "UP" | "STAY"; prevPos: number | null; fieldSize: number }
+interface EvoEntry { prevTotal: number; delta: number; from: string; to: string; pill: "UP" | "EQ"; prevPos: number | null; fieldSize: number }
 
 function buildEvo(cur: Entry, all: Entry[]): Map<string, EvoEntry> {
   const evo = new Map<string, EvoEntry>();
@@ -215,7 +220,7 @@ function buildEvo(cur: Entry, all: Entry[]): Map<string, EvoEntry> {
         delta: p.total - match.total,
         from: prev.category,
         to: cur.category,
-        pill: prev.category === cur.category ? "STAY" : "UP",
+        pill: prev.category === cur.category ? "EQ" : "UP",
         prevPos: match.pos,
         fieldSize,
       });
@@ -279,7 +284,7 @@ const EMPTY_ESC_LOOKUP = new Map<string, string>();
 const EMPTY_PLAYERS_DB = {} as Record<string, any>;
 
 /** Opções para ocultar colunas FPG-específicas e adaptar ao contexto Doral */
-function doralScorecardOptions(entry: Entry): ScorecardOptions {
+function doralScorecardOptions(entry: Entry, nameDecorator?: ScorecardOptions["nameDecorator"]): ScorecardOptions {
   // Boys 8-9 (e Girls 7 & Under, etc.) começam no buraco 10 (back-9)
   const startHole = entry.players[0]?.rounds[0]?.startingHole === 10 ? 10 : 1;
   // SD só se esconde quando não há CR/slope
@@ -292,6 +297,7 @@ function doralScorecardOptions(entry: Entry): ScorecardOptions {
     hideTee: true,
     clubLabel: "País",
     startHole,
+    nameDecorator,
   };
 }
 
@@ -306,7 +312,7 @@ function FStats({ entry, ri }: { entry: Entry; ri: number | "all" }) {
     const avg = full.length ? full.reduce((s, p) => s + (p.total ?? 0), 0) / full.length : 0;
     return (
       <div className="muted fs-10 mb-8">
-        {full.length} jogadores ({nR}R){players.length > full.length ? ` + ${players.length - full.length} WD` : ""}
+        {full.length} jogadores{nR > 1 && <> (<RoundPill nR={nR} />)</>}{players.length > full.length ? ` + ${players.length - full.length} WD` : ""}
         {" · "}Média total: {avg.toFixed(1)}
         {" · "}Líder: {full[0]?.name} ({full[0]?.total})
       </div>
@@ -325,10 +331,23 @@ function FStats({ entry, ri }: { entry: Entry; ri: number | "all" }) {
 /* ── DivView — abas R1 · R2 · Resumo · 📋 Scorecards (idêntico ao FPGPage) ── */
 function DivView({ entry, evo }: { entry: Entry; evo?: Map<string, EvoEntry> }) {
   const tournament = useMemo(() => entryToTournament(entry), [entry]);
-  const scOptions  = useMemo(() => doralScorecardOptions(entry), [entry]);
   const nR = Math.max(...entry.players.map(p => p.rounds.length), 0);
   const isMulti = nR > 1;
   const hasEvo = evo && evo.size > 0;
+
+  /** Decorador de nome: adiciona ↗ KidsLink */
+  const nameDecoratorFn: ScorecardOptions["nameDecorator"] = React.useCallback(
+    (name: string, content: React.ReactNode) => (
+      <span style={{ display: "inline-flex", alignItems: "center" }}>{content}<KidsLink nome={name} /></span>
+    ), []);
+  const renderNameFn = React.useCallback(
+    (row: MultiRoundRow) => (
+      <span className="fw-700" style={{ display: "inline-flex", alignItems: "center" }}>
+        {row.countryFlag} {row.name}<KidsLink nome={row.name} />
+      </span>
+    ), []);
+
+  const scOptions = useMemo(() => doralScorecardOptions(entry, nameDecoratorFn), [entry, nameDecoratorFn]);
 
   // expandMultiRound produz: [R1_tourn, R2_tourn, ..., Resumo_tourn]
   const expanded = useMemo(() => expandMultiRound(tournament), [tournament]);
@@ -345,6 +364,43 @@ function DivView({ entry, evo }: { entry: Entry; evo?: Map<string, EvoEntry> }) 
   const curT       = isMulti ? expanded[Math.min(tab, expanded.length - 1)] : tournament;
   const isAcc      = isMulti && !!(curT as any)?._isTotal;
   const isCombined = isMulti && tabs[tab] === COMBINED_TAB;
+
+  const prevYear = entry.year - 1;
+  type RowWithPos = MultiRoundRow & { _pos?: number | null };
+  const evoCols: ExtraColumn<RowWithPos>[] | undefined = hasEvo ? [
+    {
+      header: String(prevYear),
+      className: "ta-c fs-11 fw-600",
+      headerStyle: { width: 36, textAlign: "center" as const, padding: "0 3px", borderLeft: "2px solid var(--border)" },
+      cell: (row: RowWithPos) => {
+        const ev = evo!.get(row.name);
+        return ev
+          ? <span style={{ borderLeft: "2px solid var(--border)", padding: "0 3px", display: "inline-block" }}>{ev.prevTotal}</span>
+          : <span className="c-muted" style={{ borderLeft: "2px solid var(--border)", padding: "0 3px", display: "inline-block" }}>–</span>;
+      },
+    },
+    {
+      header: "Δ",
+      className: "ta-c fs-11 fw-700",
+      headerStyle: { width: 34, textAlign: "center" as const, padding: "0 3px" },
+      cell: (row: RowWithPos) => {
+        const ev = evo!.get(row.name);
+        if (!ev) return <span className="c-muted">–</span>;
+        return <span style={{ color: ev.delta < 0 ? "var(--good-dark)" : ev.delta > 0 ? SC.danger : "var(--text-3)" }}>{ev.delta > 0 ? "+" : ""}{ev.delta}</span>;
+      },
+    },
+    {
+      header: "Percurso",
+      className: "ta-c",
+      headerStyle: { width: 140, textAlign: "center" as const, padding: "0 4px" },
+      cell: (row: RowWithPos) => {
+        const ev = evo!.get(row.name);
+        return ev
+          ? <EvoBadge pill={ev.pill} from={ev.from} to={ev.to} prevPos={ev.prevPos} fieldSize={ev.fieldSize} />
+          : <EvoBadge pill="NEW" />;
+      },
+    },
+  ] : undefined;
 
   return (
     <div>
@@ -363,7 +419,7 @@ function DivView({ entry, evo }: { entry: Entry; evo?: Map<string, EvoEntry> }) 
       {isCombined
         ? <AllRoundsScorecardLB tournament={tournament} escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB} options={scOptions} />
         : isAcc
-          ? <AccumulatedLB tournament={curT} nRounds={nR} escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB} showCols={{ esc: false, fed: false, tee: false }} />
+          ? <AccumulatedLB tournament={curT} nRounds={nR} escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB} showCols={{ esc: false, fed: false, tee: false }} extraColumns={evoCols} renderName={renderNameFn} />
           : <ScorecardLB tournament={curT} escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB} siLabel="m" options={scOptions} />
       }
     </div>
@@ -391,7 +447,9 @@ function Content() {
   const [entries, setEntries] = useState<Entry[]>([]);
   const [loading, setLoading] = useState(true);
   const [ti, setTi] = useState(0);
-    const md = useMasterDetail();
+  const [autoRivals, setAutoRivals] = useState<AutoRivalPlayer[]>([]);
+  const md = useMasterDetail();
+
   useEffect(() => {
     Promise.all(
       DATA_FILES.map(async ({ url, sourceUrl }) => {
@@ -409,7 +467,18 @@ function Content() {
       setEntries(all);
       setLoading(false);
     });
+    // Carregar autoRivals em background para KidsLinks
+    buildAutoRivals(undefined, {
+      onUpdate: (rivals) => setAutoRivals(rivals),
+    }).catch(() => {});
   }, []);
+
+  // Mapa normName → KidsLinkEntry para o contexto ↗
+  const kidsMap = useMemo(() => {
+    const m = new Map<string, KidsLinkEntry>();
+    for (const r of autoRivals) m.set(normNameAuto(r.n), { n: r.n, memberId: (r as any).memberId });
+    return m;
+  }, [autoRivals]);
 
   if (loading) return <LoadingState />;
   if (!entries.length) return (
@@ -428,11 +497,12 @@ function Content() {
   const years = [...new Set(entries.map(e => e.year))].sort((a, b) => b - a);
 
   return (
+    <KidsLinkCtx.Provider value={kidsMap}>
     <div className="tourn-layout">
 
       {/* Toolbar */}
       <Toolbar>
-                <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
+        <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
         <ToolbarTitle>🇺🇸 Doral</ToolbarTitle>
         {cur && <ToolbarMeta>📍 Doral Golf Resort</ToolbarMeta>}
         {cur && (() => {
@@ -481,11 +551,11 @@ function Content() {
                         </div>
                       )}
                       <div className="course-item-meta">
-                        {nP} jog · {nR}R{entry.nineHole ? " · 9H" : ""}
+                        {nP} jog{nR > 1 && <> · <RoundPill nR={nR} /></>}{entry.nineHole ? " · 9H" : ""}
                         {entry.metresTotal ? ` · ${entry.metresTotal.toLocaleString("pt-PT")} m` : ""}
                       </div>
                       {(entry.cr != null || entry.slope != null) && (
-                        <div className="course-item-meta" style={{ fontFamily:"monospace", fontSize:10, color:"var(--text-3)" }}>
+                        <div className="course-item-meta" style={{ fontFamily:"'JetBrains Mono', monospace", fontSize:10, color:"var(--text-3)" }}>
                           CR {entry.cr?.toFixed(1)} · Slope {entry.slope}
                         </div>
                       )}
@@ -556,6 +626,7 @@ function Content() {
 
       </div>
     </div>
+    </KidsLinkCtx.Provider>
   );
 }
 

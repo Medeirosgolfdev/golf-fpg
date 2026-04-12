@@ -24,6 +24,12 @@ export const FLAG: Record<string, string> = {
   GT:"🇬🇹",HN:"🇭🇳",KE:"🇰🇪",KH:"🇰🇭",NI:"🇳🇮",PA:"🇵🇦",PE:"🇵🇪",
   SV:"🇸🇻",UG:"🇺🇬",UY:"🇺🇾",VE:"🇻🇪",GR:"🇬🇷",IL:"🇮🇱",HR:"🇭🇷",
   RS:"🇷🇸",LU:"🇱🇺",IS:"🇮🇸",MY:"🇲🇾",SC:"🏴󠁧󠁢󠁳󠁣󠁴󠁿",
+  // Aliases e variantes (dados USKids)
+  UK:"🇬🇧",    // alias de GB
+  // Países adicionais encontrados nos torneios completos
+  AZ:"🇦🇿",BA:"🇧🇦",BM:"🇧🇲",CD:"🇨🇩",CU:"🇨🇺",
+  JO:"🇯🇴",MC:"🇲🇨",MT:"🇲🇹",QA:"🇶🇦",RE:"🇷🇪",
+  TN:"🇹🇳",ZM:"🇿🇲",ZW:"🇿🇼",NN:"🏳️",XX:"🏳️",
 };
 
 /** Mapa nome → código ISO-2 (inglês e português) */
@@ -68,10 +74,16 @@ const COUNTRY_TO_CODE: Record<string, string> = {
   grécia:"gr",croácia:"hr",sérvia:"rs",luxemburgo:"lu",islândia:"is",malásia:"my",
 };
 
+/** Aliases de código curto → ISO-2 canónico */
+const CODE_ALIAS: Record<string, string> = {
+  uk:"gb", phl:"ph", "gb-nir":"gb", "gb-wls":"gb", "gb-sct":"gb",
+};
+
 /** Normaliza país para código ISO-2 */
 export function normCountry(raw: string): string {
   if (!raw) return "";
   const lower = raw.toLowerCase().trim();
+  if (CODE_ALIAS[lower]) return CODE_ALIAS[lower];
   if (lower.length === 2) return lower;
   return COUNTRY_TO_CODE[lower] || lower;
 }

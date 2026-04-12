@@ -58,7 +58,10 @@ export async function cachedFetchJson<T = unknown>(url: string): Promise<T | nul
       if (clone.status === 404 || clone.status === 0) return null;
       throw new Error(`HTTP ${clone.status} ao carregar ${url}`);
     }
-    return (await clone.json()) as T;
+    let text = await clone.text();
+    // Remover null bytes que podem surgir de escrita truncada no Windows
+    if (text.includes("\0")) text = text.replace(/\0+/g, "");
+    return JSON.parse(text) as T;
   } catch (e) {
     // Erro de rede (sem servidor, CORS, etc.) — propagar
     throw e;
