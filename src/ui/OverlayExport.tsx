@@ -5,10 +5,9 @@ import { MONTHS_PT, fmtSD, fmtToPar } from "../utils/format";
  * ╔══════════════════════════════════════════════════════════════════════════╗
  * ║  NOTA — CORES HARDCODED INTENCIONAIS                                    ║
  * ║                                                                          ║
- * ║  Este ficheiro gera scorecards visuais via html2canvas.                  ║
- * ║  O html2canvas NÃO suporta CSS custom properties (var(--token)).         ║
- * ║  Por isso, todas as cores nos templates de renderização (funções         ║
- * ║  ScTemplate e DkTemplate) estão hardcoded.                              ║
+ * ║  Este ficheiro gera scorecards visuais via html-to-image.                ║
+ * ║  Cores nos templates estão hardcoded para máxima compatibilidade         ║
+ * ║  com o renderer (DOM → SVG → Canvas → PNG).                              ║
  * ║                                                                          ║
  * ║  Para alterar as cores dos scorecards exportados, editar:                ║
  * ║    1. Os valores hardcoded neste ficheiro                                ║
@@ -1995,11 +1994,16 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
   };
 
   /* ── Helpers de export ── */
-  const renderDesign = useCallback(async (h2c: typeof import("html2canvas").default, designId: string): Promise<Blob|null> => {
+  const renderDesign = useCallback(async (designId: string): Promise<Blob|null> => {
     const el = designRefs.current[designId]; if (!el) return null;
     await document.fonts.ready; /* esperar Google Fonts carregarem */
-    const canvas = await h2c(el, { backgroundColor:null, scale:3, useCORS:true, logging:false });
-    return new Promise<Blob|null>(r => canvas.toBlob(r, "image/png"));
+    const { toBlob } = await import("html-to-image");
+    return toBlob(el, {
+      pixelRatio: 3,
+      backgroundColor: undefined, /* fundo transparente */
+      skipFonts: false,
+      cacheBust: true,
+    });
   }, []);
 
   const shareFiles = async (files: File[]): Promise<boolean> => {
@@ -2015,38 +2019,31 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
     }
   };
 
-  const downloadAsZip = async (files: File[]) => {
-    const JSZip = (await import("jszip")).default;
-    const zip = new JSZip();
-    for (const f of files) zip.file(f.name, f);
-    const blob = await zip.generateAsync({ type:"blob" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a"); a.href=url; a.download="scorecards.zip"; a.click();
-    URL.revokeObjectURL(url);
-  };
-
   const doExportAll = useCallback(async () => {
     setExporting(true);
     try {
-      const h2c = (await import("html2canvas")).default;
       const files: File[] = [];
       for (const design of available) {
-        const blob = await renderDesign(h2c, design.id);
+        const blob = await renderDesign(design.id);
         if (blob) files.push(new File([blob], `${design.label}.png`, { type:"image/png" }));
       }
       if (!files.length) return;
-      /* 1. Tentar share nativo (mobile) */
+      /* 1. Tentar share nativo (ideal para mobile — "Guardar X imagens") */
       if (await shareFiles(files)) return;
-      /* 2. Fallback: ZIP com todos os ficheiros (1 download) */
-      await downloadAsZip(files);
+      /* 2. Fallback desktop: downloads individuais */
+      for (let i = 0; i < files.length; i++) {
+        const url = URL.createObjectURL(files[i]);
+        const a = document.createElement("a"); a.href=url; a.download=files[i].name; a.click();
+        URL.revokeObjectURL(url);
+        if (i < files.length-1) await new Promise(r => setTimeout(r, 300));
+      }
     } catch(err) { console.error(err); alert("Erro ao exportar."); }
     finally { setExporting(false); }
   }, [available, renderDesign]);
 
   const doExportOne = useCallback(async (designId: string) => {
     try {
-      const h2c = (await import("html2canvas")).default;
-      const blob = await renderDesign(h2c, designId);
+      const blob = await renderDesign(designId);
       if (!blob) return;
       const file = new File([blob], `scorecard-${designId}.png`, { type:"image/png" });
       /* 1. Tentar share nativo (mobile) */

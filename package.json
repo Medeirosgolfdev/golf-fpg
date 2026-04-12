@@ -12,8 +12,8 @@
     "scorecards": "node scripts/make-scorecards-ui.js"
   },
   "dependencies": {
+    "html-to-image": "^1.11.13",
     "html2canvas": "^1.4.1",
-    "jszip": "^3.10.1",
     "playwright-extra": "^4.3.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2",
     "react": "^19.2.4",
