@@ -1234,10 +1234,16 @@ export default function SimuladorPage() {
     const grossTotal = allFilled ? (holeScores as number[]).reduce((a, b) => a + b, 0) : null;
     const sd = grossTotal !== null && slope > 0 ? calcSD(grossTotal, cr, slope, pcc) : null;
 
+    /* metros por buraco (do tee seleccionado) */
+    const meters = !isManual && selectedTee?.holes
+      ? selectedTee.holes.map((h: { distance: number | null }) => h.distance)
+      : undefined;
+
     return {
       courseName, teeName, teeDist,
       cr, slope,
       par: overlayHoleData?.par ?? [], scores: holeScores ?? [], si: overlayHoleData?.si ?? [],
+      meters,
       hi, courseHcp: courseHcp !== null ? Math.round(courseHcp) : null, sd,
       is9h, hasHoles: !!overlayHoleData,
       player: "", event: "", round: 1, date: "", position: "",

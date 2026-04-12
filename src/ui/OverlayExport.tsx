@@ -21,6 +21,7 @@ export type OverlayData = {
   courseName: string; teeName: string; teeDist: number | null;
   cr: number; slope: number;
   par: number[]; scores: (number | null)[]; si: number[];
+  meters?: (number | null)[];  // metros por buraco (do tee)
   hi: number | null; courseHcp: number | null; sd: number | null;
   is9h: boolean; hasHoles: boolean;
   player: string; event: string; round: number; date: string; position: string;
@@ -30,6 +31,7 @@ type DD = {
   course: string; tee: string; teeDist: number | null;
   cr: number; slope: number;
   par: number[]; scores: number[]; si: number[];
+  meters?: (number | null)[];
   hi: number | null; courseHcp: number | null; sd: number | null;
   is9h: boolean; hasHoles: boolean;
 };
@@ -84,7 +86,9 @@ function getFontEmbedCSS(): Promise<string> {
 }
 
 /* ═══════ HELPERS ═══════ */
-function scBg(d: number): string | null {
+const HIO_GREEN = "#10b981"; // hole-in-one — verde esmeralda
+function scBg(d: number, sc?: number): string | null {
+  if (sc === 1) return HIO_GREEN;  // hole-in-one — SEMPRE verde
   if (d <= -2) return "#d4a017"; // eagle+ — ouro
   if (d === -1) return "#dc2626"; // birdie — vermelho
   if (d === 1)  return "#3b82f6"; // bogey — azul médio
@@ -111,7 +115,7 @@ function SC({ sc, par, sz = 32 }: { sc: number; par: number; sz?: number }) {
   const d = sc - par;
   const fs = Math.round(sz * 0.52);
   const base: React.CSSProperties = { width: sz, height: sz, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: fs, lineHeight: 1, flexShrink: 0 };
-  const bg = scBg(d);
+  const bg = scBg(d, sc);
   if (!bg) return <div style={{ ...base, color: "inherit", textShadow: "0 1px 2px rgba(0,0,0,.3)" }}>{sc}</div>;
   return <div style={{ ...base, background: bg, color: "#fff", borderRadius: d <= -1 ? "50%" : 0 }}>{sc}</div>;
 }
@@ -120,7 +124,7 @@ function SCL({ sc, par, sz = 28 }: { sc: number; par: number; sz?: number }) {
   const d = sc - par;
   const fs = Math.round(sz * 0.52);
   const base: React.CSSProperties = { width: sz, height: sz, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: fs, lineHeight: 1, flexShrink: 0 };
-  const bg = scBg(d);
+  const bg = scBg(d, sc);
   if (!bg) return <div style={{ ...base, color: "#333" }}>{sc}</div>;
   return <div style={{ ...base, background: bg, color: "#fff", borderRadius: d <= -1 ? "50%" : 0 }}>{sc}</div>;
 }
@@ -129,6 +133,7 @@ function SCQ({ sc, par, sz = 24 }: { sc: number; par: number; sz?: number }) {
   const d = sc - par;
   const fs = Math.round(sz * 0.5);
   const base: React.CSSProperties = { width: sz, height: sz, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: fs, lineHeight: 1, flexShrink: 0 };
+  if (sc === 1) return <div style={{ ...base, background: HIO_GREEN, color: "#fff", borderRadius: "50%" }}>{sc}</div>;
   if (d <= -2) return <div style={{ ...base, background: "#d4a017", color: "#fff", borderRadius: "50%" }}>{sc}</div>;
   if (d === -1) return <div style={{ ...base, background: "#dc2626", color: "#fff", borderRadius: "50%" }}>{sc}</div>;
   if (d === 0)  return <div style={{ ...base, color: "inherit" }}>{sc}</div>;
@@ -136,11 +141,12 @@ function SCQ({ sc, par, sz = 24 }: { sc: number; par: number; sz?: number }) {
 }
 
 /* ── SCO: score circle OUTLINE only — all white, for transparent overlays ── */
-/* Birdies/eagles = white circle outline, bogeys+ = white square outline, par = plain number */
+/* HIO = green circle, Birdies/eagles = white circle outline, bogeys+ = white square outline, par = plain number */
 function SCO({ sc, par, sz = 36 }: { sc: number; par: number; sz?: number }) {
   const d = sc - par;
   const fs = Math.round(sz * 0.52);
   const base: React.CSSProperties = { width: sz, height: sz, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: fs, lineHeight: 1, flexShrink: 0, color: "#fff" };
+  if (sc === 1) return <div style={{ ...base, background: HIO_GREEN, borderRadius: "50%" }}>{sc}</div>;
   if (d <= -2) return <div style={{ ...base, border: "2.5px solid #fff", borderRadius: "50%" }}>{sc}</div>;
   if (d === -1) return <div style={{ ...base, border: "2px solid #fff", borderRadius: "50%" }}>{sc}</div>;
   if (d === 0)  return <div style={base}>{sc}</div>;
@@ -171,6 +177,7 @@ function Grid2({ d, sz = 24, gap = 2, nc = "#555" }: { d: DD; sz?: number; gap?:
 /* stats pills */
 function StatsRow({ st, tc3, gap = 8, fs = 11 }: { st: StT; tc3?: string; gap?: number; fs?: number }) {
   const items = [
+    { n: st.hio,     l: "HIO", c: HIO_GREEN  },
     { n: st.eagles,  l: "🦅",  c: "#d4a017" },
     { n: st.birdies, l: "Bir", c: "#dc2626"  },
     { n: st.pars,    l: "Par", c: tc3        },
@@ -215,8 +222,8 @@ function calcStats(d: DD): Stats {
   const sF = d.scores.slice(0, Math.min(9,n)).reduce((a,b)=>a+b,0);
   const sB = is18 ? d.scores.slice(9).reduce((a,b)=>a+b,0) : 0;
   const sT = is18 ? sF+sB : d.scores.reduce((a,b)=>a+b,0);
-  const st: StT = { eagles:0, birdies:0, pars:0, bogeys:0, doubles:0, triples:0 };
-  d.scores.forEach((sc,i) => { const x=sc-d.par[i]; if(x<=-2)st.eagles++; else if(x===-1)st.birdies++; else if(x===0)st.pars++; else if(x===1)st.bogeys++; else if(x===2)st.doubles++; else st.triples++; });
+  const st: StT = { hio:0, eagles:0, birdies:0, pars:0, bogeys:0, doubles:0, triples:0 };
+  d.scores.forEach((sc,i) => { const x=sc-d.par[i]; if(sc===1){st.hio++;} else if(x<=-2)st.eagles++; else if(x===-1)st.birdies++; else if(x===0)st.pars++; else if(x===1)st.bogeys++; else if(x===2)st.doubles++; else st.triples++; });
   const sd = d.slope > 0 ? (113/d.slope)*(sT-d.cr) : 0;
   return { pF, pB, pT, sF, sB, sT, vpT:sT-pT, vpF:sF-pF, vpB:is18?sB-pB:0, sd, st };
 }
@@ -1756,17 +1763,83 @@ function V47({ d, v, s, bg, tc="white", tc3 }: P) {
   );
 }
 
+/* V48 · HOLE-IN-ONE CELEBRATION — design especial para HIO (score=1) */
+function V48({ d, v, s, bg, tc="white", tc2="#aaa", tc3="#888" }: P) {
+  /* Detectar buracos com HIO */
+  const hioHoles: { hole: number; par: number; meters: number | null }[] = [];
+  d.scores.forEach((sc, i) => { if (sc === 1) hioHoles.push({ hole: i + 1, par: d.par[i], meters: d.meters?.[i] ?? null }); });
+  /* Se não há HIO, mostrar fallback discreto */
+  if (hioHoles.length === 0) {
+    return (
+      <div style={{ fontFamily: II, background: bg || "#111", color: tc, padding: 20, borderRadius: 10, textAlign: "center", minWidth: 280 }}>
+        <div style={{ fontSize: 13, fontWeight: 600, color: tc3 }}>Sem Hole-in-One neste scorecard</div>
+      </div>
+    );
+  }
+  const hio = hioHoles[0]; // primeiro HIO (raramente haverá mais)
+  return (
+    <div style={{ fontFamily: II, background: bg || "#111", color: tc, padding: 0, borderRadius: 10, overflow: "hidden", minWidth: 320, maxWidth: 380, textAlign: "center" }}>
+      {/* Top banner verde */}
+      <div style={{ background: HIO_GREEN, padding: "14px 20px 10px", position: "relative" }}>
+        <div style={{ fontFamily: OS, fontSize: 14, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase", color: "rgba(255,255,255,.85)" }}>Hole-in-One</div>
+        <div style={{ fontFamily: BN, fontSize: 72, lineHeight: .85, color: "#fff", marginTop: 2, textShadow: "0 2px 8px rgba(0,0,0,.3)" }}>ACE!</div>
+      </div>
+      {/* Hole info */}
+      <div style={{ padding: "18px 20px 14px", display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+        {/* Hole + Par + Distance */}
+        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <div style={{ fontSize: 11, fontWeight: 700, color: tc3, letterSpacing: 1.5, textTransform: "uppercase" }}>Buraco</div>
+            <div style={{ fontFamily: BN, fontSize: 64, lineHeight: .85, color: HIO_GREEN }}>{hio.hole}</div>
+          </div>
+          <div style={{ width: 1, height: 50, background: "rgba(255,255,255,.15)" }} />
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <div style={{ fontSize: 11, fontWeight: 700, color: tc3, letterSpacing: 1.5, textTransform: "uppercase" }}>Par</div>
+            <div style={{ fontFamily: BN, fontSize: 64, lineHeight: .85, color: tc2 }}>{hio.par}</div>
+          </div>
+          {hio.meters != null && hio.meters > 0 && <>
+            <div style={{ width: 1, height: 50, background: "rgba(255,255,255,.15)" }} />
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+              <div style={{ fontSize: 11, fontWeight: 700, color: tc3, letterSpacing: 1.5, textTransform: "uppercase" }}>Metros</div>
+              <div style={{ fontFamily: BN, fontSize: 64, lineHeight: .85, color: tc2 }}>{hio.meters}</div>
+            </div>
+          </>}
+        </div>
+        {/* Player */}
+        {v.player && d.player && (
+          <div style={{ fontFamily: OS, fontSize: 22, fontWeight: 700, color: tc, letterSpacing: 1, marginTop: 4 }}>{d.player.toUpperCase()}</div>
+        )}
+        {/* Course + Event */}
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2, marginTop: 2 }}>
+          {v.course && d.course && <div style={{ fontSize: 13, fontWeight: 600, color: tc2 }}>{d.course}</div>}
+          {v.event && d.event && <div style={{ fontSize: 12, fontWeight: 500, color: tc3 }}>{d.event}</div>}
+          {v.date && d.date && <div style={{ fontSize: 11, fontWeight: 500, color: tc3 }}>{d.date}</div>}
+        </div>
+        {/* Score total discreto */}
+        <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 6, padding: "4px 12px", background: "rgba(255,255,255,.06)", borderRadius: 6 }}>
+          <span style={{ fontSize: 11, fontWeight: 600, color: tc3 }}>Score Total</span>
+          <span style={{ fontFamily: OS, fontSize: 18, fontWeight: 700, color: tc }}>{s.sT}</span>
+          <span style={{ fontFamily: OS, fontSize: 14, fontWeight: 700, color: vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ═══════ REGISTRY ═══════ */
-type DesignDef = { id:string; label:string; C:React.FC<P>; needsHoles:boolean; cat:string };
+type DesignDef = { id:string; label:string; C:React.FC<P>; needsHoles:boolean; needsHIO?:boolean; cat:string };
+const CAT_HIO     = "🏌️ Hole-in-One";
 const CAT_PRO     = "⭐ Pro Tour";
 const CAT_TRANS   = "📷 Para Fotos";
 const CAT_MINIMAL = "💬 Compactos";
 const CAT_GRID    = "🏆 Cards";
 const CAT_TABLE   = "📊 Tabelas";
 const CAT_COLS    = "📱 Verticais";
-const CAT_ORDER = [CAT_PRO, CAT_TRANS, CAT_MINIMAL, CAT_GRID, CAT_TABLE, CAT_COLS];
+const CAT_ORDER = [CAT_HIO, CAT_PRO, CAT_TRANS, CAT_MINIMAL, CAT_GRID, CAT_TABLE, CAT_COLS];
 
 const DESIGNS: DesignDef[] = [
+  /* 🏌️ Hole-in-One — design celebratório para HIO */
+  { id:"V48", label:"Ace Celebration", C:V48, needsHoles:true, needsHIO:true, cat:CAT_HIO },
   /* ⭐ Pro Tour — estilo PGA Tour / PGA Tour U / College Golf */
   { id:"V45", label:"PGA Broadcast",  C:V45, needsHoles:true, cat:CAT_PRO },
   { id:"V46", label:"College Poster", C:V46, needsHoles:true, cat:CAT_PRO },
@@ -1890,6 +1963,7 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
     par: noHoleData ? [] : data.par,
     scores: filledScores,
     si: noHoleData ? [] : data.si,
+    meters: data.meters,
     hi: data.hi, courseHcp: data.courseHcp,
     sd: noHoleData ? (manualSD ?? null) : data.sd,
     is9h: data.is9h, hasHoles: data.hasHoles,
@@ -1899,13 +1973,14 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
     if (!noHoleData) return calcStats(dd);
     const sT = manualTotal ?? manualPar;
     return { pF:0,pB:0,pT:manualPar, sF:0,sB:0,sT, vpT:sT-manualPar, vpF:0,vpB:0, sd:manualSD??0,
-      st:{ eagles:0, birdies:0, pars:0, bogeys:0, doubles:0, triples:0 } };
+      st:{ hio:0, eagles:0, birdies:0, pars:0, bogeys:0, doubles:0, triples:0 } };
   }, [dd, noHoleData, manualTotal, manualPar, manualSD]);
 
   const toggle = useCallback((key: string) => setVis(prev => ({ ...prev, [key]: !prev[key] })), []);
+  const hasHIO = useMemo(() => dd.scores.some(sc => sc === 1), [dd.scores]);
   const available = useMemo(
-    () => DESIGNS.filter(x => !x.needsHoles || data.hasHoles),
-    [data.hasHoles],
+    () => DESIGNS.filter(x => (!x.needsHoles || data.hasHoles) && (!x.needsHIO || hasHIO)),
+    [data.hasHoles, hasHIO],
   );
 
   const bgOpt   = BG_OPTIONS.find(b => b.id === bgId);

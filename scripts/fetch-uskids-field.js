@@ -132,6 +132,38 @@ function parsearJogadores(flightPlayers) {
     .sort((a, b) => a.nome.localeCompare(b.nome));
 }
 
+/** Carrega o field anterior para preservar firstSeen dos jogadores já conhecidos */
+function carregarFieldAnterior() {
+  try {
+    if (!fs.existsSync(OUTPUT)) return new Map();
+    const prev = JSON.parse(fs.readFileSync(OUTPUT, 'utf8'));
+    // Map: "t:nomeNorm" → firstSeen ISO string
+    const m = new Map();
+    for (const t of (prev.torneios || [])) {
+      for (const e of (t.escaloes || [])) {
+        for (const j of (e.jogadores || [])) {
+          m.set(`${t.t}:${j.nome.toLowerCase().trim()}`, j.firstSeen || prev.gerado_em || null);
+        }
+      }
+    }
+    return m;
+  } catch { return new Map(); }
+}
+
+/** Aplica firstSeen: preserva do anterior, novos recebem agora */
+function aplicarFirstSeen(resultados, prevMap) {
+  const agora = new Date().toISOString();
+  for (const t of resultados) {
+    for (const e of (t.escaloes || [])) {
+      if (!e.jogadores) continue;
+      for (const j of e.jogadores) {
+        const key = `${t.t}:${j.nome.toLowerCase().trim()}`;
+        j.firstSeen = prevMap.get(key) || agora;
+      }
+    }
+  }
+}
+
 function esperarGetMeta(page, t, ms = 12000) {
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => reject(new Error('timeout')), ms);
@@ -395,6 +427,10 @@ async function main() {
       console.log(`\n📂 Cache com ${torneios.length} torneios (há ${diasCache}d — próxima descoberta em ${CACHE_MAX_DIAS - diasCache}d)`);
     }
 
+    // Carregar field anterior para preservar firstSeen
+    const prevMap = carregarFieldAnterior();
+    console.log(`   📦 ${prevMap.size} jogadores com firstSeen do run anterior`);
+
     // Fase 2: inscritos (só torneios futuros ou em curso)
     console.log(`\n📋 FASE 2 — Inscritos (${torneios.filter(t=>diasAte(t.date_inicio)>=-1).length} torneios)`);
     const resultados = [];
@@ -402,6 +438,9 @@ async function main() {
       resultados.push(await processarTorneio(page, torneio));
       await sleep(DELAY_FETCH);
     }
+
+    // Aplicar firstSeen a todos os jogadores
+    aplicarFirstSeen(resultados, prevMap);
 
     fs.mkdirSync(DIR, { recursive: true });
     fs.writeFileSync(OUTPUT, JSON.stringify({
