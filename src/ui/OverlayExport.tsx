@@ -1823,69 +1823,285 @@ function V44({ d, v, s, bg, tc="white", tc3 }: P) {
   );
 }
 
+/* ═══════════════════════════════════════════════════════════
+   V45–V47 — PGA TOUR PREMIUM DESIGNS
+   Baseados nos overlays oficiais de @pgatour, @pgatouru, @auburngolf
+   ═══════════════════════════════════════════════════════════ */
+
+/* To-par badge — pill colorida como nos posts do PGA Tour */
+function TpBadge({ vp, sz = 22 }: { vp: number; sz?: number }) {
+  const bg = vp < 0 ? "#dc2626" : vp > 0 ? "#2563eb" : "#666";
+  const txt = vp < 0 ? String(vp) : vp > 0 ? `+${vp}` : "E";
+  return (
+    <div style={{ background: bg, color: "#fff", fontFamily: II, fontSize: sz, fontWeight: 900, padding: `${Math.round(sz * 0.22)}px ${Math.round(sz * 0.55)}px`, borderRadius: 4, display: "inline-flex", alignItems: "center", justifyContent: "center", lineHeight: 1 }}>
+      {txt}
+    </div>
+  );
+}
+
+/* Score circle com contorno accent — birdies com circle colorido, bogeys com square */
+function SCA({ sc, par, sz = 36, accent = "#e87722" }: { sc: number; par: number; sz?: number; accent?: string }) {
+  const d = sc - par;
+  const fs = Math.round(sz * 0.5);
+  const base: React.CSSProperties = { width: sz, height: sz, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: fs, lineHeight: 1, flexShrink: 0 };
+  if (d <= -2) return <div style={{ ...base, border: `2.5px solid ${accent}`, borderRadius: "50%", color: "inherit" }}>{sc}</div>;
+  if (d === -1) return <div style={{ ...base, border: `2px solid ${accent}`, borderRadius: "50%", color: "inherit" }}>{sc}</div>;
+  if (d === 0)  return <div style={{ ...base, color: "inherit" }}>{sc}</div>;
+  if (d === 1)  return <div style={{ ...base, background: "rgba(255,255,255,.12)", color: "inherit" }}>{sc}</div>;
+  return <div style={{ ...base, background: "rgba(255,255,255,.15)", border: "1px solid rgba(255,255,255,.25)", color: "inherit" }}>{sc}</div>;
+}
+
+/* V45 · PGA BROADCAST — Estilo @pgatour Min Woo Lee / Houston Open.
+   Score ENORME em fundo semi-transparente, badge de to-par vermelho,
+   2 filas de circles em baixo, barra de torneio+round no fundo. */
+function V45({ d, v, s, bg, tc="white", tc3 }: P) {
+  const is18 = d.scores.length >= 18;
+  return (
+    <div style={{ fontFamily: II, display: "inline-block", color: tc, background: bg, padding: "4px 6px 0" }}>
+      {/* Name */}
+      {v.player && d.player && (
+        <div style={{ fontFamily: LO, fontSize: 24, fontWeight: 700, fontStyle: "italic", letterSpacing: .5, marginBottom: 2 }}>
+          {d.player}
+        </div>
+      )}
+      {/* Giant score + to-par badge */}
+      <div style={{ display: "flex", alignItems: "flex-start", gap: 6, marginBottom: 4 }}>
+        <TpBadge vp={s.vpT} sz={20} />
+        <div style={{ fontFamily: BN, fontSize: 140, lineHeight: .72, letterSpacing: -6, color: tc }}>{s.sT}</div>
+      </div>
+      {/* Score circles 2×9 com hole numbers */}
+      {v.holeScores && (
+        <div style={{ display: "flex", flexDirection: "column", gap: 1 }}>
+          {(is18 ? [[0, 9], [9, 9]] as [number, number][] : [[0, d.scores.length] as [number, number]]).map(([off, len], ri) => (
+            <div key={off}>
+              <div style={{ display: "flex", gap: 2 }}>
+                {d.scores.slice(off, off + len).map((sc, i) => (
+                  <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 1 }}>
+                    {ri === 0 && <div style={{ fontSize: 9, fontWeight: 600, color: tc3 }}>{off + i + 1}</div>}
+                    <SC sc={sc} par={d.par[off + i]} sz={36} />
+                    {ri === (is18 ? 1 : 0) && <div style={{ fontSize: 9, fontWeight: 600, color: tc3 }}>{off + i + 1}</div>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+      {/* Tournament bar */}
+      {(v.event || v.round || v.course || v.date) && (
+        <div style={{ display: "flex", gap: 0, marginTop: 6 }}>
+          {(v.event || v.course) && (
+            <div style={{ background: "#dc2626", padding: "3px 10px", fontSize: 9, fontWeight: 800, letterSpacing: 1.5, color: "#fff", textTransform: "uppercase" }}>
+              {[v.event && d.event, v.course && d.course].filter(Boolean).join(" · ")}
+            </div>
+          )}
+          {v.round && (
+            <div style={{ background: "rgba(255,255,255,.15)", padding: "3px 10px", fontSize: 9, fontWeight: 800, letterSpacing: 1.5, color: tc, textTransform: "uppercase" }}>
+              ROUND {d.round}
+            </div>
+          )}
+          {v.date && d.date && (
+            <div style={{ background: "rgba(255,255,255,.08)", padding: "3px 10px", fontSize: 9, fontWeight: 700, letterSpacing: 1, color: tc3, textTransform: "uppercase" }}>
+              {d.date}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* V46 · COLLEGE POSTER — Estilo @auburngolf / Jackson Koivun.
+   2 filas de circles com separador, score ENORME à direita,
+   nome + torneio + round em small caps no fundo. */
+function V46({ d, v, s, bg, tc="white", tc3 }: P) {
+  const is18 = d.scores.length >= 18;
+  return (
+    <div style={{ fontFamily: II, display: "inline-block", color: tc, background: bg, padding: "4px 6px" }}>
+      {v.holeScores && (
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+            {(is18 ? [[0, 9], [9, 9]] as [number, number][] : [[0, d.scores.length] as [number, number]]).map(([off, len], ri) => (
+              <div key={off}>
+                {/* Hole numbers acima da fila 1, abaixo da fila 2 */}
+                {ri === 0 && (
+                  <div style={{ display: "flex", gap: 3, marginBottom: 1 }}>
+                    {Array.from({ length: len }, (_, i) => (
+                      <div key={i} style={{ width: 36, textAlign: "center", fontSize: 9, fontWeight: 600, color: tc3 }}>{off + i + 1}</div>
+                    ))}
+                  </div>
+                )}
+                {/* Score circles */}
+                <div style={{ display: "flex", gap: 3 }}>
+                  {d.scores.slice(off, off + len).map((sc, i) => <SCO key={i} sc={sc} par={d.par[off + i]} sz={36} />)}
+                </div>
+                {/* Separator line between front and back */}
+                {ri === 0 && is18 && (
+                  <div style={{ height: 2, background: "rgba(255,255,255,.35)", margin: "4px 0" }} />
+                )}
+                {/* Hole numbers below row 2 */}
+                {ri === (is18 ? 1 : 0) && (
+                  <div style={{ display: "flex", gap: 3, marginTop: 1 }}>
+                    {Array.from({ length: len }, (_, i) => (
+                      <div key={i} style={{ width: 36, textAlign: "center", fontSize: 9, fontWeight: 600, color: tc3 }}>{off + i + 1}</div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+          {/* Giant score + to-par */}
+          <div style={{ textAlign: "right", flexShrink: 0, marginLeft: 10 }}>
+            <div style={{ fontFamily: BN, fontSize: 130, lineHeight: .72, letterSpacing: -5, color: tc }}>
+              {s.sT}
+            </div>
+            <TpBadge vp={s.vpT} sz={18} />
+          </div>
+        </div>
+      )}
+      {!v.holeScores && (
+        <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
+          <div style={{ fontFamily: BN, fontSize: 130, lineHeight: .72, letterSpacing: -5, color: tc }}>{s.sT}</div>
+          <TpBadge vp={s.vpT} sz={22} />
+        </div>
+      )}
+      {/* Footer bar: NOME · TORNEIO · ROUND */}
+      {(v.player || v.event || v.round || v.course || v.date) && (
+        <div style={{ display: "flex", justifyContent: "space-between", marginTop: 8, fontSize: 9, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase", color: tc3, lineHeight: 1 }}>
+          {v.player && d.player && <span>{d.player}</span>}
+          <span>{[v.event && d.event, v.course && d.course].filter(Boolean).join(" · ")}</span>
+          {v.round && <span>ROUND {d.round}</span>}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* V47 · PGA TOUR U — Estilo @pgatouru David Ford / Phichaksn Maichon.
+   Nome ENORME, barra accent com torneio/round/to-par, circles com accent color,
+   score enorme em baixo. Transparente para fotos. */
+function V47({ d, v, s, bg, tc="white", tc3 }: P) {
+  const is18 = d.scores.length >= 18;
+  const accent = "#e87722"; /* laranja estilo PGA Tour U */
+  const accentBar = "#3b1f7e"; /* roxo para barra de info */
+  return (
+    <div style={{ fontFamily: II, display: "inline-block", color: tc, background: bg, padding: "4px 6px" }}>
+      {/* Player name — HUGE */}
+      {v.player && d.player && (() => {
+        const parts = d.player.split(" ");
+        const first = parts.slice(0, -1).join(" ");
+        const last = parts[parts.length - 1] || "";
+        return (
+          <div style={{ fontFamily: OS, textTransform: "uppercase", lineHeight: .95, marginBottom: 2 }}>
+            {first && <div style={{ fontSize: 22, fontWeight: 500, letterSpacing: 2 }}>{first}</div>}
+            <div style={{ fontSize: 48, fontWeight: 700, letterSpacing: 1 }}>{last.toUpperCase()}</div>
+          </div>
+        );
+      })()}
+      {/* Info bar — roxo com torneio + round + to-par */}
+      {(v.event || v.round || v.course) && (
+        <div style={{ background: accentBar, padding: "3px 10px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8, marginBottom: 4 }}>
+          <div style={{ fontSize: 8, fontWeight: 800, letterSpacing: 1.5, color: "rgba(255,255,255,.8)", textTransform: "uppercase" }}>
+            {[v.event && d.event, v.round && `ROUND ${d.round}`, v.course && d.course].filter(Boolean).join("  /  ")}
+          </div>
+          <div style={{ fontSize: 9, fontWeight: 900, color: "#fff", letterSpacing: 1 }}>
+            TOURNAMENT {fmtToPar(s.vpT)}
+          </div>
+        </div>
+      )}
+      {/* Score circles 2×9 com accent color + hole numbers */}
+      {v.holeScores && (
+        <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+          {(is18 ? [[0, 9], [9, 9]] as [number, number][] : [[0, d.scores.length] as [number, number]]).map(([off, len], ri) => (
+            <div key={off}>
+              <div style={{ display: "flex", gap: 2, marginBottom: 1 }}>
+                {Array.from({ length: len }, (_, i) => (
+                  <div key={i} style={{ width: 36, textAlign: "center", fontSize: 8, fontWeight: 700, color: accent, letterSpacing: .5 }}>{off + i + 1}</div>
+                ))}
+              </div>
+              <div style={{ display: "flex", gap: 2 }}>
+                {d.scores.slice(off, off + len).map((sc, i) => <SCA key={i} sc={sc} par={d.par[off + i]} sz={36} accent={accent} />)}
+              </div>
+              {ri === 0 && is18 && (
+                <div style={{ display: "flex", gap: 2, marginTop: 1, marginBottom: 2 }}>
+                  {Array.from({ length: len }, (_, i) => (
+                    <div key={i} style={{ width: 36, textAlign: "center", fontSize: 8, fontWeight: 700, color: tc3 }}>{off + i + 1}</div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+      {/* Giant score + to-par */}
+      <div style={{ display: "flex", alignItems: "flex-end", gap: 4, marginTop: 2 }}>
+        <div style={{ fontFamily: BN, fontSize: 120, lineHeight: .72, letterSpacing: -4, color: tc }}>{s.sT}</div>
+        <TpBadge vp={s.vpT} sz={24} />
+      </div>
+      {/* Date */}
+      {v.date && d.date && (
+        <div style={{ fontSize: 9, fontWeight: 600, color: tc3, marginTop: 4, letterSpacing: 1 }}>{d.date}</div>
+      )}
+    </div>
+  );
+}
+
 /* ═══════ REGISTRY ═══════ */
 type DesignDef = { id:string; label:string; C:React.FC<P>; needsHoles:boolean; cat:string };
-const CAT_TRANS   = "Transparentes";
-const CAT_MINIMAL = "Mínimos";
-const CAT_ROWS    = "Scores em Linha";
-const CAT_GRID    = "Score + Grelha";
-const CAT_TABLE   = "Tabelas";
-const CAT_WHITE   = "Fundo Branco";
-const CAT_COLS    = "Colunas";
-const CAT_ORDER = [CAT_TRANS, CAT_WHITE, CAT_MINIMAL, CAT_ROWS, CAT_GRID, CAT_TABLE, CAT_COLS];
+const CAT_PRO     = "⭐ Pro Tour";
+const CAT_TRANS   = "📷 Para Fotos";
+const CAT_MINIMAL = "💬 Compactos";
+const CAT_GRID    = "🏆 Cards";
+const CAT_TABLE   = "📊 Tabelas";
+const CAT_COLS    = "📱 Verticais";
+const CAT_ORDER = [CAT_PRO, CAT_TRANS, CAT_MINIMAL, CAT_GRID, CAT_TABLE, CAT_COLS];
 
 const DESIGNS: DesignDef[] = [
-  /* Transparentes — sem fundo, flutuam sobre a foto */
-  { id:"V39", label:"Ghost White",   C:V39, needsHoles:true, cat:CAT_TRANS },
-  { id:"V40", label:"Tower White",   C:V40, needsHoles:true, cat:CAT_TRANS },
-  { id:"V37", label:"Ghost",         C:V37, needsHoles:true, cat:CAT_TRANS },
-  { id:"V38", label:"Tower",         C:V38, needsHoles:true, cat:CAT_TRANS },
-  { id:"V44", label:"Tour White",    C:V44, needsHoles:true, cat:CAT_TRANS },
-  { id:"V41", label:"Hero Score",    C:V41, needsHoles:false, cat:CAT_TRANS },
-  { id:"V43", label:"Accent Strip",  C:V43, needsHoles:false, cat:CAT_TRANS },
-  { id:"V42", label:"Glass Panel",   C:V42, needsHoles:true, cat:CAT_TRANS },
-  /* Mínimos — sem scores buraco-a-buraco */
-  { id:"V25", label:"Minimal",       C:V25, needsHoles:false, cat:CAT_MINIMAL },
-  { id:"V1",  label:"Sticker",       C:V1,  needsHoles:false, cat:CAT_MINIMAL },
-  { id:"V2",  label:"Strip",         C:V2,  needsHoles:false, cat:CAT_MINIMAL },
-  { id:"V3",  label:"Front / Back",  C:V3,  needsHoles:false, cat:CAT_MINIMAL },
-  { id:"V4",  label:"Neon Ring",     C:V4,  needsHoles:false, cat:CAT_MINIMAL },
-  { id:"V23", label:"Broadcast",     C:V23, needsHoles:false, cat:CAT_MINIMAL },
-  /* Scores em linha */
-  { id:"V6",  label:"Grint Row",     C:V6,  needsHoles:true, cat:CAT_ROWS },
-  { id:"V7",  label:"Wide Row",      C:V7,  needsHoles:true, cat:CAT_ROWS },
-  { id:"V8",  label:"Gradient",      C:V8,  needsHoles:true, cat:CAT_ROWS },
-  { id:"V9",  label:"18Birdies",     C:V9,  needsHoles:true, cat:CAT_ROWS },
-  { id:"V27", label:"Score Strip",   C:V27, needsHoles:true, cat:CAT_ROWS },
-  /* Score + grelha centrada */
-  { id:"V11", label:"Giant Score",   C:V11, needsHoles:true, cat:CAT_GRID },
-  { id:"V22", label:"Magazine",      C:V22, needsHoles:true, cat:CAT_GRID },
-  { id:"V10", label:"Score Hero",    C:V10, needsHoles:true, cat:CAT_GRID },
-  { id:"V12", label:"Tournament",    C:V12, needsHoles:true, cat:CAT_GRID },
-  { id:"V13", label:"Dashboard",     C:V13, needsHoles:true, cat:CAT_GRID },
-  { id:"V5",  label:"Ticket",        C:V5,  needsHoles:true, cat:CAT_GRID },
-  { id:"V26", label:"Signature",     C:V26, needsHoles:true, cat:CAT_GRID },
-  { id:"V24", label:"Story",         C:V24, needsHoles:true, cat:CAT_GRID },
-  /* Tabelas */
-  { id:"V15", label:"B&W Card",      C:V15, needsHoles:true, cat:CAT_TABLE },
-  { id:"V28", label:"Full Table",    C:V28, needsHoles:true, cat:CAT_TABLE },
-  { id:"V14", label:"Compact Table", C:V14, needsHoles:true, cat:CAT_TABLE },
-  { id:"V16", label:"Light Card",    C:V16, needsHoles:true, cat:CAT_TABLE },
-  { id:"V17", label:"Glass Card",    C:V17, needsHoles:true, cat:CAT_TABLE },
-  { id:"V18", label:"Classic Table", C:V18, needsHoles:true, cat:CAT_TABLE },
-  { id:"V34", label:"Clean White",   C:V34, needsHoles:true, cat:CAT_WHITE },
-  { id:"V35", label:"Accent Bar",    C:V35, needsHoles:true, cat:CAT_WHITE },
-  { id:"V36", label:"Pure White",    C:V36, needsHoles:true, cat:CAT_WHITE },
-  /* Colunas verticais */
-  { id:"V19", label:"PGA Columns",   C:V19, needsHoles:true, cat:CAT_COLS },
-  { id:"V20", label:"Green Columns", C:V20, needsHoles:true, cat:CAT_COLS },
-  { id:"V21", label:"DP World",      C:V21, needsHoles:true, cat:CAT_COLS },
-  { id:"V33", label:"College Grid",  C:V33, needsHoles:true, cat:CAT_COLS },
-  /* Pro Tour */
-  { id:"V29", label:"Tour",          C:V29, needsHoles:true, cat:CAT_ROWS },
-  { id:"V30", label:"Korn Ferry",    C:V30, needsHoles:true, cat:CAT_ROWS },
-  { id:"V31", label:"Running To-Par",C:V31, needsHoles:true, cat:CAT_TABLE },
-  { id:"V32", label:"Ole Miss",      C:V32, needsHoles:true, cat:CAT_TABLE },
+  /* ⭐ Pro Tour — estilo PGA Tour / PGA Tour U / College Golf */
+  { id:"V45", label:"PGA Broadcast",  C:V45, needsHoles:true, cat:CAT_PRO },
+  { id:"V46", label:"College Poster", C:V46, needsHoles:true, cat:CAT_PRO },
+  { id:"V47", label:"PGA Tour U",     C:V47, needsHoles:true, cat:CAT_PRO },
+  { id:"V29", label:"Tour Classic",   C:V29, needsHoles:true, cat:CAT_PRO },
+  { id:"V38", label:"Tour + Nome",    C:V38, needsHoles:true, cat:CAT_PRO },
+  { id:"V30", label:"Korn Ferry",     C:V30, needsHoles:true, cat:CAT_PRO },
+  /* 📷 Para Fotos — transparentes, flutuam sobre foto */
+  { id:"V39", label:"Outline Branco", C:V39, needsHoles:true, cat:CAT_TRANS },
+  { id:"V41", label:"Só Score",       C:V41, needsHoles:false, cat:CAT_TRANS },
+  { id:"V43", label:"Barra Accent",   C:V43, needsHoles:false, cat:CAT_TRANS },
+  { id:"V42", label:"Painel Glass",   C:V42, needsHoles:true, cat:CAT_TRANS },
+  /* 💬 Compactos — badges, strips, sem scores por buraco */
+  { id:"V25", label:"Minimal",        C:V25, needsHoles:false, cat:CAT_MINIMAL },
+  { id:"V1",  label:"Sticker",        C:V1,  needsHoles:false, cat:CAT_MINIMAL },
+  { id:"V2",  label:"Strip",          C:V2,  needsHoles:false, cat:CAT_MINIMAL },
+  { id:"V3",  label:"Front / Back",   C:V3,  needsHoles:false, cat:CAT_MINIMAL },
+  { id:"V4",  label:"Neon Ring",      C:V4,  needsHoles:false, cat:CAT_MINIMAL },
+  { id:"V23", label:"TV Broadcast",   C:V23, needsHoles:false, cat:CAT_MINIMAL },
+  { id:"V27", label:"Score Strip",    C:V27, needsHoles:true, cat:CAT_MINIMAL },
+  /* 🏆 Cards — designs completos com fundo */
+  { id:"V11", label:"Giant Score",    C:V11, needsHoles:true, cat:CAT_GRID },
+  { id:"V22", label:"Magazine",       C:V22, needsHoles:true, cat:CAT_GRID },
+  { id:"V10", label:"Score Hero",     C:V10, needsHoles:true, cat:CAT_GRID },
+  { id:"V12", label:"Tournament",     C:V12, needsHoles:true, cat:CAT_GRID },
+  { id:"V6",  label:"Grint Row",      C:V6,  needsHoles:true, cat:CAT_GRID },
+  { id:"V9",  label:"18Birdies",      C:V9,  needsHoles:true, cat:CAT_GRID },
+  { id:"V13", label:"Dashboard",      C:V13, needsHoles:true, cat:CAT_GRID },
+  { id:"V5",  label:"Ticket",         C:V5,  needsHoles:true, cat:CAT_GRID },
+  { id:"V26", label:"Signature",      C:V26, needsHoles:true, cat:CAT_GRID },
+  /* 📊 Tabelas — scorecards detalhados */
+  { id:"V15", label:"B&W Card",       C:V15, needsHoles:true, cat:CAT_TABLE },
+  { id:"V28", label:"Full Table",     C:V28, needsHoles:true, cat:CAT_TABLE },
+  { id:"V31", label:"To-Par Cumulat.",C:V31, needsHoles:true, cat:CAT_TABLE },
+  { id:"V32", label:"College Red",    C:V32, needsHoles:true, cat:CAT_TABLE },
+  { id:"V34", label:"Clean White",    C:V34, needsHoles:true, cat:CAT_TABLE },
+  { id:"V35", label:"Accent Bar",     C:V35, needsHoles:true, cat:CAT_TABLE },
+  { id:"V14", label:"Compact Table",  C:V14, needsHoles:true, cat:CAT_TABLE },
+  { id:"V16", label:"Light Card",     C:V16, needsHoles:true, cat:CAT_TABLE },
+  { id:"V17", label:"Glass Card",     C:V17, needsHoles:true, cat:CAT_TABLE },
+  /* 📱 Verticais — formato story / colunas */
+  { id:"V24", label:"Story",          C:V24, needsHoles:true, cat:CAT_COLS },
+  { id:"V19", label:"PGA Columns",    C:V19, needsHoles:true, cat:CAT_COLS },
+  { id:"V21", label:"DP World",       C:V21, needsHoles:true, cat:CAT_COLS },
+  { id:"V33", label:"College Grid",   C:V33, needsHoles:true, cat:CAT_COLS },
 ];
 
 /* ═══════ TOGGLES ═══════ */
