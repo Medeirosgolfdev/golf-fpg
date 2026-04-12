@@ -208,12 +208,13 @@ function ByDateView({ data, search }: {
   }, [data, search, sortKey, sortDir]);
 
   return (
+    <div className="card">
     <div className="table-wrap">
       <table className="dtable-lg">
         <colgroup>
-          <col className="col-p9" /><col className="col-p18" /><col className="col-p13" />
+          <col className="col-p9" /><col className="col-p18" /><col className="col-p15" />
           <col className="col-p6" /><col className="col-p7" /><col className="col-p10" />
-          <col className="col-p8" /><col className="col-p9" /><col className="col-p7" /><col className="col-p7" />
+          <col className="col-p9" /><col className="col-p9" /><col className="col-p8" /><col className="col-p9" />
         </colgroup>
         <thead>
           <tr>
@@ -296,6 +297,7 @@ function ByDateView({ data, search }: {
       </table>
       {all.length === 0 && <EmptyState size="sm" message="Nenhuma ronda encontrada" />}
     </div>
+    </div>
   );
 }
 
@@ -343,7 +345,7 @@ function TeeSummaryTable({ rounds }: { rounds: RoundData[] }) {
   if (tees.length <= 1) return null; // No point showing if only 1 tee
 
   return (
-    <div className="card mb-10">
+    <div className="mb-10">
       <div className="sc-bar-head"><span>Resumo por Tee</span></div>
       <table className="dtable-lg fs-12"  style={{ marginBottom: 0 }}>
         <thead>
@@ -460,8 +462,8 @@ function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId 
                 <table className="dt-compact">
                   <colgroup>
                     <col className="col-p17" /><col className="col-p8" /><col className="col-p9" />
-                    <col className="col-p15" /><col className="col-p11" /><col className="col-p14" />
-                    <col className="col-p10" /><col className="col-p10" />
+                    <col className="col-p17" /><col className="col-p11" /><col className="col-p14" />
+                    <col className="col-p12" /><col className="col-p12" />
                   </colgroup>
                   <thead>
                     <tr>
@@ -910,9 +912,9 @@ function ByCourseView({ data, search, sort, isAnalysis }: {
       <div className="table-wrap">
         <table className="dtable-lg">
           <colgroup>
-            <col className="col-p26" /><col className="col-p6" /><col className="col-p9" />
+            <col className="col-p26" /><col className="col-p7" /><col className="col-p9" />
             <col className="col-p6" /><col className="col-p7" /><col className="col-p12" />
-            <col className="col-p8" /><col className="col-p9" /><col className="col-p7" /><col className="col-p7" />
+            <col className="col-p8" /><col className="col-p9" /><col className="col-p8" /><col className="col-p8" />
           </colgroup>
           <thead>
             <tr>
@@ -979,7 +981,7 @@ function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, ac
       <div className="ecHint">Clique num tee na tabela de buracos para ver análise e filtrar rondas.</div>
 
       {/* Summary table */}
-      <div className="card mb-10">
+      <div className="mb-10">
         <table className="ec-sum">
           <thead>
             <tr><th>Tee</th>
