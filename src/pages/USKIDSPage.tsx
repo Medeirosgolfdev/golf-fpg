@@ -71,6 +71,7 @@ interface Escalao {
   holes: number; flight_id: number;
   inscritos: number; maximo: number; vagas: number; pct_cheio: number;
   jogadores: Jogador[] | null; paises: PaisContagem[] | null;
+  removed?: string[];
 }
 interface Torneio {
   t: number; name: string; emoji?: string;
@@ -958,7 +959,7 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
               const bd  = badgeVagas(e.vagas, e.maximo);
               const dst = ESCALOES_DESTAQUE_USKIDS.has(e.nome);
               const man = e.nome === escalaoM;
-              const novos48h = (e.jogadores || []).filter(j => j.firstSeen && (Date.now() - new Date(j.firstSeen).getTime()) < 48 * 3600_000).length;
+              const novos7d = (e.jogadores || []).filter(j => j.firstSeen && (Date.now() - new Date(j.firstSeen).getTime()) < 7 * 86400_000).length;
               return (
                 <div key={e.age_group} className="card" style={{
                   background: man ? "var(--accent-light)" : dst ? "var(--bg-card)" : "var(--bg-card)",
@@ -983,10 +984,10 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                           {bd.label}
                         </span>
                       )}
-                      {novos48h > 0 && (
+                      {novos7d > 0 && (
                         <span className="fs-10 fw-700" style={{ background:"var(--score-eagle)", color:"#fff", padding:"1px 5px", borderRadius:5, marginLeft:3 }}
-                          title={`${novos48h} inscrito${novos48h > 1 ? "s" : ""} nas últimas 48h`}>
-                          +{novos48h}
+                          title={`${novos7d} inscrito${novos7d > 1 ? "s" : ""} nos últimos 7 dias`}>
+                          +{novos7d}
                         </span>
                       )}
                     </div>
@@ -1004,7 +1005,8 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                         const isM = isManuel(j.nome);
                         const arEntry = !isM ? arMap.get(normNameAuto(j.nome)) : undefined;
                         const nTorn = arEntry ? Object.values(arEntry.r).filter(r => r.tp != null || (r.rd?.length ?? 0) > 0).length : 0;
-                        const recent = j.firstSeen ? (Date.now() - new Date(j.firstSeen).getTime()) < 48 * 3600_000 : false;
+                        const daysSinceReg = j.firstSeen ? Math.floor((Date.now() - new Date(j.firstSeen).getTime()) / 86400_000) : null;
+                        const showDaysPill = daysSinceReg != null && daysSinceReg <= 25;
                         // Resultados nos 2 anos anteriores neste mesmo torneio
                         const prevResults = arEntry
                           ? [currentYear - 1, currentYear - 2]
@@ -1019,15 +1021,24 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                             padding: isM ? "4px 8px" : "1px 0",
                             margin: isM ? "2px -14px" : "0",
                             borderRadius: isM ? 5 : 0,
-                            background: isM ? "var(--accent)" : recent ? "color-mix(in srgb, var(--score-eagle) 10%, transparent)" : "transparent",
+                            background: isM ? "var(--accent)" : "transparent",
                             color: isM ? "#fff" : j.pais === "PT" ? "var(--accent)" : "var(--text)",
                           }}>
                             <span style={{ display:"flex", alignItems:"center", gap:2 }}>
                               {isM ? "★ " : ""}{displayName(j.nome)}
-                              {recent && !isM && <span className="fs-9 fw-700" style={{
-                                background:"var(--score-eagle)", color:"#fff",
-                                padding:"0 4px", borderRadius:6, marginLeft:3, lineHeight:"14px",
-                              }}>NOVO</span>}
+                              {showDaysPill && !isM && (() => {
+                                const d = daysSinceReg!;
+                                const label = d === 0 ? "hoje" : `${d}d`;
+                                // Degradê: 0d=100%, 10d=60%, 25d=20%
+                                const pct = d <= 10 ? Math.round(100 - d * 4) : Math.round(60 - (d - 10) * 2.7);
+                                const bg = `color-mix(in srgb, var(--score-eagle) ${pct}%, transparent)`;
+                                const fg = pct >= 60 ? "#fff" : "var(--text-2)";
+                                return <span className="fs-9 fw-700" style={{
+                                  background: bg, color: fg,
+                                  border: pct < 60 ? "1px solid color-mix(in srgb, var(--score-eagle) 40%, transparent)" : "none",
+                                  padding: "0 4px", borderRadius: 6, marginLeft: 3, lineHeight: "14px",
+                                }} title={`Inscrito há ${d} dia${d !== 1 ? "s" : ""} (${j.firstSeen?.slice(0,10)})`}>{label}</span>;
+                              })()}
                               {!isM && <KidsLink nome={j.nome} />}
                             </span>
                             <span style={{ display:"flex", alignItems:"center", gap:5 }}>
@@ -1058,6 +1069,22 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                           </div>
                         );
                       })}
+                    </div>
+                  )}
+                  {/* Jogadores removidos (desinscritos) */}
+                  {e.removed && e.removed.length > 0 && (
+                    <div style={{ borderTop:"1px dashed var(--border-light)", paddingTop:4, marginTop:4 }}>
+                      <div className="fs-10 fw-600 c-text-3" style={{ marginBottom:2 }}>Desinscritos:</div>
+                      {e.removed.map((n, i) => (
+                        <div key={i} className="fs-11" style={{
+                          display:"flex", alignItems:"center", gap:2,
+                          color:"var(--text-3)", opacity:.7, padding:"0 0 1px",
+                        }}>
+                          <span style={{ color:"var(--color-bad)", fontSize:9, marginRight:1 }}>✕</span>
+                          {displayName(n)}
+                          <KidsLink nome={n} />
+                        </div>
+                      ))}
                     </div>
                   )}
                   {!e.jogadores && e.paises && e.paises.length > 0 && (
