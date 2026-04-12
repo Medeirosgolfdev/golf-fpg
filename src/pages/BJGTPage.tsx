@@ -282,13 +282,13 @@ function TournView({ def, evo, evoYear }: { def: TDef; evo?: Map<string, EvoEntr
   /** Decorador de nome: adiciona ↗ KidsLink ao lado do nome */
   const nameDecoratorFn: ScorecardOptions["nameDecorator"] = React.useCallback(
     (name: string, content: React.ReactNode) => (
-      <span style={{ display: "inline-flex", alignItems: "center" }}>{content}<KidsLink nome={name} /></span>
+      <span className="inline-flex items-center">{content}<KidsLink nome={name} /></span>
     ), []);
 
   /** renderName para AccumulatedLB (MultiRoundRow) */
   const renderNameFn = React.useCallback(
     (row: MultiRoundRow) => (
-      <span className="fw-700" style={{ display: "inline-flex", alignItems: "center" }}>
+      <span className="fw-700 inline-flex items-center">
         {row.countryFlag} {row.name}<KidsLink nome={row.name} />
       </span>
     ), []);
@@ -328,8 +328,8 @@ function TournView({ def, evo, evoYear }: { def: TDef; evo?: Map<string, EvoEntr
       cell: (row: RowWithPos) => {
         const ev = evo!.get(row.name);
         return ev
-          ? <span style={{ borderLeft: "2px solid var(--border)", padding: "0 3px", display: "inline-block" }}>{fmtSign(ev.otherToPar)}</span>
-          : <span className="c-muted" style={{ borderLeft: "2px solid var(--border)", padding: "0 3px", display: "inline-block" }}>–</span>;
+          ? <span className="inline-sep">{fmtSign(ev.otherToPar)}</span>
+          : <span className="c-muted inline-sep">–</span>;
       },
     },
     {
@@ -361,7 +361,7 @@ function TournView({ def, evo, evoYear }: { def: TDef; evo?: Map<string, EvoEntr
     <div>
       {/* Tabs tab-under — mesmo padrão que FPGPage/DORALPage */}
       {isMulti && (
-        <div style={{ display: "flex", borderBottom: "1px solid var(--border)", marginBottom: 12, gap: 2, overflowX: "auto" }}>
+        <div className="tab-bar">
           {tabLabels.map((label, i) => (
             <button key={i} className={`tab-under${tab === i ? " active" : ""}`} onClick={() => setTab(i)}>{label}</button>
           ))}

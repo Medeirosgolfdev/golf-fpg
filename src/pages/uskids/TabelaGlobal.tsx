@@ -666,27 +666,27 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
       {/* Tabela */}
       <div className="card">
         <div className="scroll-x">
-          <table className="tourn-form-table">
+          <table className="bc-collapse">
             <thead>
               <tr className="rivais-group-header">
                 <th className="rivais-th-name pointer" onClick={() => doSort("name")}>Jogador{sortArrow("name", sort, dir)}</th>
-                <th className="rivais-th pointer ta-center" onClick={() => doSort("nT")} title="Torneios">#T{sortArrow("nT", sort, dir)}</th>
+                <th className="rivais-th pointer ta-c" onClick={() => doSort("nT")} title="Torneios">#T{sortArrow("nT", sort, dir)}</th>
                 {allTournCols.map(({ tid, info, weight, url, isFixed, isFuture }) => {
                   const stars = weight >= 1.3 ? "★★★★★" : weight >= 1.1 ? "★★★★" : weight >= 0.9 ? "★★★" : weight >= 0.6 ? "★★" : weight >= 0.4 ? "★" : "½";
                   return (
-                    <th key={tid} className="rivais-th pointer ta-center"
+                    <th key={tid} className="rivais-th pointer ta-c"
                       style={{ minWidth:56, opacity: isFixed ? 1 : 0.85,
                         color: isFuture ? "var(--color-info)" : undefined }}
                       onClick={() => doSort("t:" + tid)}>
                       {url ? <a href={url} target="_blank" rel="noopener noreferrer" className="rivais-link" onClick={e => e.stopPropagation()}>{info.short}</a> : info.short}
                       {sortArrow("t:" + tid, sort, dir)}
-                      {!isFuture && <div className="fs-9 fw-500 op-6 mt-1">{stars} {info.date}</div>}
-                      {isFuture && <div className="fs-9 fw-500 mt-1" style={{ color:"var(--color-info)" }}>inscrito</div>}
+                      {!isFuture && <div className="fs-10 fw-500 op-6 mt-1">{stars} {info.date}</div>}
+                      {isFuture && <div className="fs-10 fw-500 mt-1" style={{ color:"var(--color-info)" }}>inscrito</div>}
                     </th>
                   );
                 })}
-                <th className="rivais-th pointer ta-center" style={{ borderLeft:"3px solid var(--text-muted)", minWidth:56 }} onClick={() => doSort("rank")}>Rank{sortArrow("rank", sort, dir)}</th>
-                <th className="rivais-th ta-center">Tend.</th>
+                <th className="rivais-th pointer ta-c" style={{ borderLeft:"3px solid var(--text-muted)", minWidth:56 }} onClick={() => doSort("rank")}>Rank{sortArrow("rank", sort, dir)}</th>
+                <th className="rivais-th ta-c">Tend.</th>
               </tr>
             </thead>
             <tbody>
@@ -703,7 +703,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                       {isM && <span className="p p-sm p-outline ml-4">REF</span>}
                       {!isM && KidsLink && <KidsLink nome={p.n} />}
                     </td>
-                    <td className="ta-center fs-12 fw-600 c-text-3">{played || ""}</td>
+                    <td className="ta-c fs-12 fw-600 c-text-3">{played || ""}</td>
                     {allTournCols.map(({ tid, isFixed, isFuture }) => {
                       // Coluna futura: mostrar escalão inscrito se player está inscrito
                       if (isFuture) {
@@ -712,7 +712,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                           ? inscribed?.has(norm2("Manuel Medeiros")) ?? false
                           : inscribed?.has(norm2(p.n)) ?? false;
                         return (
-                          <td key={tid} className="ta-center"
+                          <td key={tid} className="ta-c"
                             style={{ background: inscrito ? "var(--bg-info-strong,var(--bg-info))" : undefined }}>
                             {inscrito
                               ? <span style={{ fontSize:14 }}>⛳</span>
@@ -744,13 +744,13 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                       const st = ti ? TG_TIER[ti] : null;
                       const tpStr = res.tp != null ? tgFmtSign(res.tp) : "—";
                       return (
-                        <td key={tid} className="ta-center" style={{ background: st?.bg || "transparent", padding:"5px 4px" }}>
+                        <td key={tid} className="ta-c" style={{ background: st?.bg || "transparent", padding:"5px 4px" }}>
                           <div className="fw-700 fs-13" style={{ color: st?.c || "var(--text-3)" }}>{tpStr}</div>
                           {res.p != null && <div className="fs-10 fw-600 c-text-3">#{res.p}</div>}
                         </td>
                       );
                     })}
-                    <td className="ta-center" style={{ borderLeft:"3px solid var(--border-light)", padding:"4px 6px" }}>
+                    <td className="ta-c" style={{ borderLeft:"3px solid var(--border-light)", padding:"4px 6px" }}>
                       {rankMap[p.n] != null ? (
                         <div>
                           <div className="fw-800 fs-13" style={{ color: rankMap[p.n] <= 10 ? "var(--color-good-dark)" : rankMap[p.n] <= 30 ? "var(--text)" : "var(--text-3)" }}>
@@ -760,7 +760,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                         </div>
                       ) : <span className="fs-10 c-border">s/d</span>}
                     </td>
-                    <td className="ta-center">
+                    <td className="ta-c">
                       {tr ? <span className="fw-700 fs-13" style={{ color: TG_TR_I[tr]?.c }}>{TG_TR_I[tr]?.i}</span> : <span className="c-border">—</span>}
                     </td>
                   </tr>

@@ -289,7 +289,7 @@ export function PJARankingView({
       </div>
 
       <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 6, padding: "8px 16px", borderBottom: "1px solid var(--border)" }}>
-        <div className="flex-shrink-0" style={{ position: "relative" }}>
+        <div className="shrink-0" style={{ position: "relative" }}>
           <span style={{ position: "absolute", left: 7, top: "50%", transform: "translateY(-50%)", fontSize: 11, color: "var(--text-muted)", pointerEvents: "none" }}>🔍</span>
           <input type="text" placeholder="Nome ou clube…" value={filterName}
             onChange={e => setFilterName(e.target.value)}
@@ -326,7 +326,7 @@ export function PJARankingView({
                     {tc.name}
                     {tc.isGF && <span className="badge-gf">★ GF×1.5</span>}
                   </div>
-                  <div className="c-muted-fs10-fw5">
+                  <div className="c-muted fs-10-fw5">
                     {fmtDate(tc.date)}{tc.campo ? " · " + tc.campo : ""}{tc.rounds.length > 1 && <> · <RoundPill nR={tc.rounds.length} /></>}
                   </div>
                 </th>
@@ -359,7 +359,7 @@ export function PJARankingView({
                     {row.sex === "F" && <SexBadge sex="F" className="ml-4" />}
                   </td>
                   <td className="cs-esc">
-                    {row.escalao ? <span className={escPillCls(row.escalao) + " fs-9"}>{row.escalao}</span> : <span className="muted">–</span>}
+                    {row.escalao ? <span className={escPillCls(row.escalao) + " fs-10"}>{row.escalao}</span> : <span className="muted">–</span>}
                   </td>
                   <td className="cs-club cs-id-end">{row.club || "–"}</td>
 

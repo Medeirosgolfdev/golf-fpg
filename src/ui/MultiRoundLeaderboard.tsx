@@ -84,9 +84,9 @@ function PlayerFilterBar({ rows, filter, onChange, total }: {
   if (total < 8 && !isActive) return null;
 
   return (
-    <div style={{ display:"flex", flexWrap:"wrap", alignItems:"center", gap:6, padding:"6px 0 8px", borderBottom:"1px solid var(--border)", marginBottom:8 }}>
-      <div style={{ position:"relative", flexShrink:0 }}>
-        <span style={{ position:"absolute", left:7, top:"50%", transform:"translateY(-50%)", fontSize:11, color:"var(--text-muted)", pointerEvents:"none" }}>🔍</span>
+    <div className="filter-bar">
+      <div className="search-wrap">
+        <span className="search-icon-abs">🔍</span>
         <input type="text" placeholder="Nome ou clube…" value={filter.name} onChange={e => onChange({ ...filter, name:e.target.value })}
           style={{ fontSize:11, padding:"3px 8px 3px 22px", borderRadius:6, border:"1px solid var(--border)", background:"var(--bg-card,#fff)", color:"var(--text)", width:140, outline:"none" }} />
       </div>
@@ -95,12 +95,12 @@ function PlayerFilterBar({ rows, filter, onChange, total }: {
       {availTees.length > 1 && availTees.map(t => { const hex = getTeeHex(t); return (
         <FilterChip key={t} active={filter.tees.includes(t)} onClick={() => onChange({ ...filter, tees:toggleArr(filter.tees,t) })} color={hex}>
           <span style={{ display:"flex", alignItems:"center", gap:4 }}>
-            <span style={{ display:"inline-block", width:8, height:8, borderRadius:2, background:hex, border:"1px solid rgba(0,0,0,.18)" }} />{t}
+            <span className="tee-dot-sq" style={{ background:hex }} />{t}
           </span>
         </FilterChip>
       ); })}
       {availClubs.length > 2 && <select value={filter.club} onChange={e => onChange({ ...filter, club:e.target.value })} style={{ fontSize:11, padding:"3px 6px", borderRadius:6, border:`1px solid ${filter.club?"var(--accent)":"var(--border)"}`, background:"var(--bg-card,#fff)", color:"var(--text)", cursor:"pointer", fontWeight:filter.club?700:400 }}><option value="">Todos os clubes</option>{availClubs.map(c => <option key={c} value={c}>{c}</option>)}</select>}
-      {isActive && <><span style={{ fontSize:10, color:"var(--text-muted)", marginLeft:2 }}>{filtered.length} de {total}</span><button onClick={() => onChange(EMPTY_FILTER)} style={{ fontSize:10, padding:"2px 8px", borderRadius:20, border:"1px solid var(--border)", background:"var(--bg-hover)", color:"var(--text-muted)", cursor:"pointer" }}>✕ limpar</button></>}
+      {isActive && <><span style={{ fontSize:10, color:"var(--text-muted)", marginLeft:2 }}>{filtered.length} de {total}</span><button onClick={() => onChange(EMPTY_FILTER)} className="filter-clear-btn" style={{ fontSize:10, color:"var(--text-muted)" }}>✕ limpar</button></>}
     </div>
   );
 }

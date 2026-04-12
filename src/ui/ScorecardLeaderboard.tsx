@@ -290,7 +290,7 @@ export function ScorecardLeaderboard({
                       </td>
                     ))}
                     <td className="lb-halftot">
-                      {f9} <span className="fs-8 c-text-3">({fmtToPar(f9 - parF9)})</span>
+                      {f9} <span className="fs-10 c-text-3">({fmtToPar(f9 - parF9)})</span>
                     </td>
                     {!is9 && scores.slice(9, 18).map((sc, i) => (
                       <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>
@@ -299,7 +299,7 @@ export function ScorecardLeaderboard({
                     ))}
                     {!is9 && (
                       <td className="lb-halftot">
-                        {b9} <span className="fs-8 c-text-3">({fmtToPar(b9 - parB9)})</span>
+                        {b9} <span className="fs-10 c-text-3">({fmtToPar(b9 - parB9)})</span>
                       </td>
                     )}
                   </>}

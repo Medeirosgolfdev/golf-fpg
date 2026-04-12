@@ -106,20 +106,20 @@ function PainelResumo({ torneios, nossosByFed }: {
     <div style={{ padding: "8px 12px 6px", borderBottom: "1px solid var(--border)", background: "var(--bg-card)" }}>
       {/* Linha 1: total + escalões + anos */}
       <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", marginBottom: clubes.length > 0 ? 5 : 0 }}>
-        <span className="fw-800 fs-14 flex-shrink-0">{totalGeral} inscritos</span>
+        <span className="fw-800 fs-14 shrink-0">{totalGeral} inscritos</span>
         <span className="muted fs-11" >·</span>
         {escaloes.flatMap((e, ei) => {
           const g = byEsc[e];
           if (g.M === 0 && g.F === 0) return [];
           const items: React.ReactNode[] = [];
           if (g.M > 0) items.push(
-            <span key={`${e}M`} className="flex-shrink-0" style={{ display: "inline-flex", alignItems: "center", gap: 3 }}>
+            <span key={`${e}M`} className="shrink-0 inline-flex items-center-gap3">
               <span className="muted fs-10" >{e.replace("Sub-", "S")}</span>
               <span className="sex-badge sex-M ta-c"  style={{ minWidth: 20 }}>{g.M}</span>
             </span>
           );
           if (g.F > 0) items.push(
-            <span key={`${e}F`} className="flex-shrink-0" style={{ display: "inline-flex", alignItems: "center", gap: 3 }}>
+            <span key={`${e}F`} className="shrink-0 inline-flex items-center-gap3">
               {g.M === 0 && <span className="muted fs-10" >{e.replace("Sub-", "S")}</span>}
               <span className="sex-badge sex-F ta-c"  style={{ minWidth: 20 }}>{g.F}</span>
             </span>
@@ -132,7 +132,7 @@ function PainelResumo({ torneios, nossosByFed }: {
         {anoBase > 0 && (
           <>
             <span className="muted fs-11" >·</span>
-            <span className="fs-11 flex-shrink-0" style={{ display: "inline-flex", gap: 5, alignItems: "center" }}>
+            <span className="fs-11 shrink-0" style={{ display: "inline-flex", gap: 5, alignItems: "center" }}>
               <span className="muted">1º ano</span>
               <span style={{ fontWeight: 700, color: "var(--color-good)" }}>{anoTotals["1A"]}</span>
               <span className="muted">2º ano</span>
@@ -145,7 +145,7 @@ function PainelResumo({ torneios, nossosByFed }: {
       {/* Linha 2: clubes */}
       {clubes.length > 0 && (
         <div className="gap-4 flex-wrap" style={{ display: "flex", alignItems: "center" }}>
-          <span className="muted fs-10 flex-shrink-0" >Clubes:</span>
+          <span className="muted fs-10 shrink-0" >Clubes:</span>
           {clubes.map(([c, d]) => (
             <button key={c}
               onClick={() => setClubesSel(prev => prev === c ? null : c)}
@@ -176,7 +176,7 @@ function PainelResumo({ torneios, nossosByFed }: {
                 background: "var(--bg-card)", border: "1px solid var(--border)",
               }}>
                 <SexBadge sex={jj.sex} size="sm" />
-                <span className={`p p-sm p-${escCls(jj.escalao)} fs-9`}>{escShort(jj.escalao)}</span>
+                <span className={`p p-sm p-${escCls(jj.escalao)} fs-10`}>{escShort(jj.escalao)}</span>
                 <span>{jj.nome || jj.fed}</span>
               </span>
             ))}
@@ -291,7 +291,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
           {t.fpgUrl && <a href={t.fpgUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: "var(--chart-2)" }}>datagolf ↗</a>}
         </div>
       </div>
-      <div className="table-wrap">
+      <div className="scroll-x">
         <table className="dtable-lg">
           <colgroup>
             <col style={{ width: "4%" }} /><col style={{ width: "17%" }} />
@@ -689,7 +689,7 @@ function ProfileRadar({ r, all }: { r: ScoutingReport; all: ScoutingReport[] }) 
   const bg = axes.map((a, i) => { const ang = (i / n) * 2 * Math.PI - Math.PI / 2; return `${cx + Math.cos(ang) * R},${cy + Math.sin(ang) * R}`; }).join(' ');
   const poly = pts.map(p => `${p.x},${p.y}`).join(' ');
   return (
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="flex-shrink-0">
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="shrink-0">
       <polygon points={bg} fill="none" stroke="var(--border)" strokeWidth="0.5" />
       {[0.25,0.5,0.75].map(t => (
         <polygon key={t} points={axes.map((_,i) => { const a = (i/n)*2*Math.PI-Math.PI/2; return `${cx+Math.cos(a)*R*t},${cy+Math.sin(a)*R*t}`; }).join(' ')}
@@ -711,7 +711,7 @@ function FormArc({ formDelta }: { formDelta: number | null }) {
   const color = pct > 0.6 ? "var(--color-good)" : pct < 0.4 ? "var(--color-bad)" : "var(--color-warn)";
   const label = formDelta < -1.5 ? "↑ Em alta" : formDelta > 1.5 ? "↓ A ceder" : "→ Estável";
   return (
-    <div className="flex-center-gap6">
+    <div className="d-flex items-center gap-6">
       <div style={{ width: 60, height: 5, background: "var(--bg-page)", borderRadius: 3, overflow: "hidden", flexShrink: 0 }}>
         <div style={{ width: `${pct * 100}%`, height: "100%", background: color, borderRadius: 3 }} />
       </div>
@@ -777,7 +777,7 @@ function PlayerScoutCard({ r, fitScore, allReports, bdPlayer }: {
               {bdPlayer?.name ?? r.nome}
             </span>
             {bdPlayer && <SexBadge sex={bdPlayer.sex} size="sm" />}
-            {bdPlayer?.escalao && <span className={`p p-sm p-${escCls(bdPlayer.escalao)} fs-9`}>{escShort(bdPlayer.escalao)}</span>}
+            {bdPlayer?.escalao && <span className={`p p-sm p-${escCls(bdPlayer.escalao)} fs-10`}>{escShort(bdPlayer.escalao)}</span>}
             {bdPlayer?.dob && <AnoEscalaoPill dob={bdPlayer.dob} escalao={bdPlayer.escalao} />}
             {!bdPlayer && <span style={{ fontSize: 9, color: "var(--text-3)", border: "1px solid var(--border)", borderRadius: 3, padding: "1px 5px" }}>externo</span>}
           </div>
@@ -948,7 +948,7 @@ function FieldIntelligence({ reports, escalao }: { reports: ScoutingReport[]; es
           <div key={si} style={{ paddingTop: 14, borderTop: si > 0 ? "1px solid var(--border)" : "none", marginTop: si > 0 ? 0 : 14 }}>
             <div className="fw-700 fs-12 mb-4">{s.title}</div>
             <div style={{ fontSize: 11, color: "var(--text-2)", lineHeight: 1.55, marginBottom: 10, maxWidth: 620 }}>{s.why}</div>
-            <div className="flex-wrap" style={{ display: "flex", gap: 6 }}>
+            <div className="flex-wrap d-flex gap-6">
               {s.data.map(d => (
                 <a key={d.fed} href={`/jogadores/${d.fed}?view=by_date`} target="_blank" rel="noopener noreferrer"
                   style={{ display: "flex", alignItems: "center", gap: 6, background: "var(--bg-page)",
@@ -1017,7 +1017,7 @@ function AroeiraBurTable({ players }: { players: { nome: string; fed: string; ag
                       {com.map(p => {
                         const h=p.agg.aroeira.holes[idx]; const isBest=best===p.fed;
                         return (
-                          <td key={p.fed} style={{ textAlign:"center" }}>
+                          <td key={p.fed} className="ta-c">
                             <span style={{ fontWeight:isBest?800:600, color:dc(h?.diff??null) }}>
                               {h?.diff != null ? `${h.diff>0?"+":""}${h.diff.toFixed(2)}` : "–"}
                               {isBest && com.length>1 && <span style={{ color:"var(--color-good)", fontSize:9, marginLeft:2 }}>★</span>}
@@ -1044,7 +1044,7 @@ function AroeiraBurTable({ players }: { players: { nome: string; fed: string; ag
               {com.map(p => {
                 const total=p.agg.aroeira.holes.reduce((s,h)=>s+(h.diff??0),0);
                 return (
-                  <td key={p.fed} style={{ textAlign:"center" }}>
+                  <td key={p.fed} className="ta-c">
                     <div style={{ fontWeight:900, fontSize:14 }}>{p.agg.aroeira.avgGross?.toFixed(1)}</div>
                     <div style={{ fontSize:10, color:dc(total/18) }}>{total>0?"+":""}{total.toFixed(1)} vs par</div>
                   </td>
@@ -1391,7 +1391,7 @@ export default function NacionaisPage() {
           <h3 className="fw-700" style={{ margin: 0, fontSize: 15 }}>
             Campeonato Nacional de Jovens — {torneioActivo.nome}
           </h3>
-          <div className="flex-shrink-0" style={{ display: "flex", gap: 10, alignItems: "center" }}>
+          <div className="shrink-0" style={{ display: "flex", gap: 10, alignItems: "center" }}>
             <a href="https://competicoes.fpg.pt/evento/campeonato-nacional-de-jovens-sub10-12-14-16-18-pga-aroeira/"
                target="_blank" rel="noopener noreferrer"
                style={{ fontSize: 11, color: "var(--chart-2)" }}>

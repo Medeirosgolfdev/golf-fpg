@@ -338,11 +338,11 @@ function DivView({ entry, evo }: { entry: Entry; evo?: Map<string, EvoEntry> }) 
   /** Decorador de nome: adiciona ↗ KidsLink */
   const nameDecoratorFn: ScorecardOptions["nameDecorator"] = React.useCallback(
     (name: string, content: React.ReactNode) => (
-      <span style={{ display: "inline-flex", alignItems: "center" }}>{content}<KidsLink nome={name} /></span>
+      <span className="inline-flex items-center">{content}<KidsLink nome={name} /></span>
     ), []);
   const renderNameFn = React.useCallback(
     (row: MultiRoundRow) => (
-      <span className="fw-700" style={{ display: "inline-flex", alignItems: "center" }}>
+      <span className="fw-700 inline-flex items-center">
         {row.countryFlag} {row.name}<KidsLink nome={row.name} />
       </span>
     ), []);
@@ -375,8 +375,8 @@ function DivView({ entry, evo }: { entry: Entry; evo?: Map<string, EvoEntry> }) 
       cell: (row: RowWithPos) => {
         const ev = evo!.get(row.name);
         return ev
-          ? <span style={{ borderLeft: "2px solid var(--border)", padding: "0 3px", display: "inline-block" }}>{ev.prevTotal}</span>
-          : <span className="c-muted" style={{ borderLeft: "2px solid var(--border)", padding: "0 3px", display: "inline-block" }}>–</span>;
+          ? <span className="inline-sep">{ev.prevTotal}</span>
+          : <span className="c-muted inline-sep">–</span>;
       },
     },
     {
@@ -406,7 +406,7 @@ function DivView({ entry, evo }: { entry: Entry; evo?: Map<string, EvoEntry> }) 
     <div>
       {/* Tabs tab-under como FPGPage */}
       {isMulti && (
-        <div style={{ display: "flex", borderBottom: "1px solid var(--border)", marginBottom: 12, gap: 2, overflowX: "auto" }}>
+        <div className="tab-bar">
           {tabs.map((label, i) => (
             <button key={i} className={`tab-under${tab === i ? " active" : ""}`} onClick={() => setTab(i)}>{label}</button>
           ))}

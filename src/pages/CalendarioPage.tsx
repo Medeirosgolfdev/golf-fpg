@@ -467,7 +467,7 @@ function EventPopup({ event, onClose }: { event: CalEvent; onClose: () => void }
         </div>
         <div className="cal-sidebar">
           <div className="h-lg">{event.title}</div>
-          <div className="flex-col-gap8">
+          <div className="d-flex flex-col gap-8">
             <InfoRow icon="📅" label={fmtRange(event)} />
             {event.modalidade && <InfoRow icon="🏌️" label={event.modalidade} />}
             {event.campo && <InfoRow icon="⛳" label={event.campo} />}
@@ -478,7 +478,7 @@ function EventPopup({ event, onClose }: { event: CalEvent; onClose: () => void }
   );
 }
 function InfoRow({ icon, label }: { icon: string; label: string }) {
-  return (<div className="flex-center-gap8">
+  return (<div className="d-flex items-center gap-8">
     <span className="cal-day-num">{icon}</span>
     <span className="fs-13 c-text-2">{label}</span>
   </div>);
@@ -507,7 +507,7 @@ function ListView({ events, onSelect }: { events: CalEvent[]; onSelect: (e: CalE
             letterSpacing: "0.04em", marginBottom: 8, paddingBottom: 4, borderBottom: "2px solid var(--accent-light)" }}>
             {monthLabel(month)} 2026
           </div>
-          <div className="flex-col-gap4">
+          <div className="d-flex flex-col gap-4">
             {evts.map(e => {
               const c = calColor(e);
               const hl = HIGHLIGHT[e.calId];
@@ -522,7 +522,7 @@ function ListView({ events, onSelect }: { events: CalEvent[]; onSelect: (e: CalE
                   }}
                   onMouseEnter={ev => (ev.currentTarget.style.background = hl ? `${hl.bg}30` : "var(--bg-hover)")}
                   onMouseLeave={ev => (ev.currentTarget.style.background = hl ? `${hl.bg}18` : "transparent")}>
-                  <div className="col-w42 ta-c flex-shrink-0">
+                  <div className="col-w42 ta-c shrink-0">
  <div className="uppercase fw-500 fs-10" style={{ color: hl ? hl.border : "var(--text-3)" }}>{DAY_NAMES[e.date.getDay()]}</div>
  <div className="fw-600 fs-18" style={{ color: hl ? hl.border : "var(--text)", lineHeight: 1.2 }}>{e.date.getDate()}</div>
                   </div>
@@ -700,7 +700,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
         </div>
 
         {/* Calendar toggles */}
-        <div className="flex-col-gap6">
+        <div className="d-flex flex-col gap-6">
           {groups.map(g => {
             const cals = CALENDARS.filter(c => c.group === g);
             const groupCount = allEvents.filter(e => cals.some(c => c.id === e.calId)).length;
@@ -714,7 +714,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                   <span className="cal-toggle-label">{GROUP_LABELS[g]}</span>
                   <span className="fs-10 c-text-3 mono">{groupCount}</span>
                 </button>
-                <div className="flex-col-gap1" style={{ paddingLeft: 8, marginTop: 2 }}>
+                <div className="d-flex flex-col gap-1" style={{ paddingLeft: 8, marginTop: 2 }}>
                   {cals.map(cal => {
                     const calEvts = allEvents.filter(e => e.calId === cal.id).sort((a, b) => a.date.getTime() - b.date.getTime());
                     const isExpanded = expandedCal === cal.id;
@@ -722,7 +722,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                       <div key={cal.id}>
                         <div className="flex-center" style={{ gap: 0 }}>
                           {/* Checkbox */}
-                          <button onClick={() => toggleCal(cal.id)} className="flex-shrink-0" style={{ width: 28, height: 26, border: "none", cursor: "pointer", background: "transparent", display: "flex", alignItems: "center", justifyContent: "center", padding: 0 }}>
+                          <button onClick={() => toggleCal(cal.id)} className="shrink-0" style={{ width: 28, height: 26, border: "none", cursor: "pointer", background: "transparent", display: "flex", alignItems: "center", justifyContent: "center", padding: 0 }}>
                             <span style={{
                               width: 12, height: 12, borderRadius: "var(--radius-xs)", transition: "all 0.15s",
                               background: enabledCals.has(cal.id) ? cal.color : "transparent",
@@ -768,7 +768,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                                 }}
                                   onMouseEnter={e => (e.currentTarget.style.background = "var(--bg-hover)")}
                                   onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>
-                                  <span className="fs-10 fw-600 flex-shrink-0" style={{ fontFamily: "'JetBrains Mono', monospace", color: cal.color, minWidth: 30 }}>{dd}</span>
+                                  <span className="fs-10 fw-600 shrink-0" style={{ fontFamily: "'JetBrains Mono', monospace", color: cal.color, minWidth: 30 }}>{dd}</span>
                                   <span className="text-ellipsis fs-10 ta-left" style={{ color: "var(--text-2)", flex: 1 }}>{ev.title}</span>
                                 </button>
                               );
@@ -793,7 +793,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
               {sidebarOpen ? "◀" : "▶"}
             </button>
             <h2 className="cal-month-title fs-14"  style={{ margin: 0, whiteSpace: "nowrap" }}>Calendário 2026</h2>
-            <button onClick={goToday} className="p p-filter flex-shrink-0" title="Ir para hoje" style={{ opacity: 1 }}>Hoje</button>
+            <button onClick={goToday} className="p p-filter shrink-0" title="Ir para hoje" style={{ opacity: 1 }}>Hoje</button>
             <div ref={searchRef} style={{ position: "relative", flex: "1 1 120px", minWidth: 100, maxWidth: 220 }}>
               <input value={searchQ} onChange={e => { setSearchQ(e.target.value); setSearchOpen(true); }}
                 onFocus={() => searchQ.length >= 2 && setSearchOpen(true)}
@@ -832,7 +832,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                 </div>
               )}
             </div>
-            <div className="escalao-pills ml-auto flex-shrink-0" >
+            <div className="escalao-pills ml-auto shrink-0" >
               {(["month", "list"] as ViewMode[]).map(v => (
                 <button key={v} onClick={() => setViewMode(v)}
                   className={`p p-filter${viewMode === v ? " active" : ""}`}>
@@ -851,7 +851,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
             <span className="fw-700 ta-c" style={{ fontSize: 15, color: "var(--text)", flex: 1 }}>
               {monthLabel(currentMonth)} 2026
             </span>
-            <span className="fs-11 c-text-3 mono flex-shrink-0" >{visibleEvents.length} provas</span>
+            <span className="fs-11 c-text-3 mono shrink-0" >{visibleEvents.length} provas</span>
             <button onClick={() => setCurrentMonth(m => Math.min(11, m+1))} title="Mês seguinte" disabled={currentMonth >= 11}
               style={{ width: 32, height: 32, borderRadius: "50%", border: "1px solid var(--border)",
                 background: "var(--bg-card)", cursor: currentMonth >= 11 ? "default" : "pointer",
@@ -903,7 +903,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                         onMouseEnter={ev => (ev.currentTarget.style.filter = "brightness(1.1)")}
                         onMouseLeave={ev => (ev.currentTarget.style.filter = "none")}>
  <div className="fs-10 fw-800" style={{ color: hl.text, opacity: 0.5 }}>
-                          <span className="fs-8">{MONTHS_SHORT[d.date.getMonth()]}</span> {d.date.getDate()}
+                          <span className="fs-10">{MONTHS_SHORT[d.date.getMonth()]}</span> {d.date.getDate()}
                         </div>
                         <div className="fs-14" style={{ lineHeight: 1 }}>{hl.icon}</div>
                         {isFirst ? (
@@ -975,7 +975,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                         );
                       })}
                       {dayEvts.length > 3 && (
-                        <div className="fs-9 c-text-3 ta-c fw-600">+{dayEvts.length - 3} mais</div>
+                        <div className="fs-10 c-text-3 ta-c fw-600">+{dayEvts.length - 3} mais</div>
                       )}
                     </div>
                   );

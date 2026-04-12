@@ -83,7 +83,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
 
       {/* By par type */}
       {parTypes.length > 1 && (
-        <div className="haParTypes">
+        <div className="mt-10">
           <div className="h-sm">Desempenho por Tipo de Buraco</div>
           <div className="haParGrid">
             {parTypes.map(pt => {
@@ -105,7 +105,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                   <div className="haParAvg" style={{ color: vpCol }}>{fD2(g.avgVsPar ?? 0)} <span style={{ fontSize: 10, color: "var(--text-3)" }}>média vs par</span></div>
                   <div className="haParStat">{fD(g.strokesLostPerRound)} <span>pancadas/volta</span></div>
                   {distTotal > 0 && (
-                    <div className="haParDist">
+                    <div className="mt-6">
                       <div className="haParDistBar">
                         {segs.map(sg => sg.n > 0 ? <div key={sg.cls} className={`haDistSeg ${sg.cls}`} style={{ width: `${(sg.n / distTotal * 100).toFixed(1)}%` }} title={`${sg.label}: ${sg.n}`} /> : null)}
                       </div>
@@ -179,7 +179,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
 
       {/* Scoring distribution bar */}
       {td && td.total > 0 && (
-        <div className="haDistSection">
+        <div className="mt-4">
           <div className="h-sm">Distribuição de Scoring</div>
           <div className="haDistBar">
             {td.eagle > 0 && <div className="haDistSeg seg-eagle" style={{ width: `${(td.eagle / td.total * 100).toFixed(1)}%` }} title={`Eagle+: ${td.eagle}`} />}
@@ -201,7 +201,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
       )}
 
       {/* Hole-by-hole table */}
-      <div className="haTableSection">
+      <div className="mt-4">
         <div className="card">
           <div className="sc-bar-head"><span>Detalhe Buraco a Buraco</span></div>
           <div className="scroll-x">

@@ -508,7 +508,7 @@ export function ResumoTable(props: {
     return headers;
   }, [visibleSorted, expandedGroups]);
 
-  if (!sorted.length) return <div className="muted ta-center p-24">Sem torneios.</div>;
+  if (!sorted.length) return <div className="muted ta-c p-24">Sem torneios.</div>;
 
   return (
     <CrossSeasonTable
@@ -586,7 +586,7 @@ export function ResumoTable(props: {
                   </button>
                 )}
               </div>
-              <div className="c-muted-fs10-fw5">
+              <div className="c-muted fs-10-fw5">
                 {fmtDateShort(t.date)} · Par {par} · {nh}h · {realCount} jog
                 {gh.isMulti && <> · {t._totalRounds}R</>}
               </div>
@@ -599,8 +599,8 @@ export function ResumoTable(props: {
                 .map((vt) => {
                   const tKey = mkKey(vt);
                   const roundLabel = vt._roundLabel;
-                  const isRoundCol = roundLabel && roundLabel !== "Total";
-                  const isTotalCol = roundLabel === "Total";
+                  const isRoundCol = roundLabel && roundLabel !== "Resumo";
+                  const isTotalCol = roundLabel === "Resumo";
                   const bg = isTotalCol
                     ? "var(--bg-warn-subtle)"
                     : isRoundCol
@@ -787,9 +787,9 @@ export function ResumoTable(props: {
             <td className="cs-fed">{row.fed || "–"}</td>
             <td className="cs-esc">
               {row.escalao ? (
-                <span className={cls + " fs-9"}>{row.escalao}</span>
+                <span className={cls + " fs-10"}>{row.escalao}</span>
               ) : (
-                <span className="c-muted-fs10">–</span>
+                <span className="c-muted fs-10">–</span>
               )}
             </td>
             <td className="cs-club">{row.club}</td>

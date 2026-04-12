@@ -270,7 +270,7 @@ export default function ClubesGruposView({
                 border: `1px solid ${color}`, borderRadius: 4, padding: "2px 8px",
                 background: `${color}12`,
               }}>
-                <span className="flex-shrink-0" style={{ width: 9, height: 9, borderRadius: 2, background: color, display: "inline-block" }} />
+                <span className="shrink-0" style={{ width: 9, height: 9, borderRadius: 2, background: color, display: "inline-block" }} />
                 <strong style={{ color }}>{teams}</strong>
                 <span style={{ color: "var(--text-muted)" }}>— {clube}</span>
               </span>
@@ -297,7 +297,7 @@ export default function ClubesGruposView({
               {/* Header do card */}
               <div style={{ background: color, color: "#fff", padding: "8px 12px", display: "flex", alignItems: "center", gap: 10 }}>
                 {/* Letra do grupo em caixa */}
-                <div className="flex-shrink-0 fw-900" style={{ width: 34, height: 34, background: "rgba(255,255,255,0.18)", borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, lineHeight: 1 }}>
+                <div className="shrink-0 fw-900" style={{ width: 34, height: 34, background: "rgba(255,255,255,0.18)", borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, lineHeight: 1 }}>
                   {g.grupo}
                 </div>
 
@@ -307,7 +307,7 @@ export default function ClubesGruposView({
                     {g.clube}
                   </div>
                   {isMulti && (
-                    <div className="fs-9 fw-600 mt-1" style={{ opacity: 0.8 }}>equipa {teamIdx + 1}</div>
+                    <div className="fs-10 fw-600 mt-1" style={{ opacity: 0.8 }}>equipa {teamIdx + 1}</div>
                   )}
                 </div>
 
@@ -318,7 +318,7 @@ export default function ClubesGruposView({
                     ? (parTotal > 0 ? dispScore - parTotal * CLUBES_BEST_N : null)
                     : teamTP;
                   return (
-                    <div className="flex-shrink-0 ta-right">
+                    <div className="shrink-0 ta-right">
                       <div className="fs-10" style={{ opacity: 0.85, lineHeight: 1, marginBottom: 2 }}>
                         {viewRd != null ? `R${viewRd}` : (mdl ?? `#${pos}`)}
                       </div>

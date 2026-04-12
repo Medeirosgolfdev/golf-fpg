@@ -209,7 +209,7 @@ function ByDateView({ data, search }: {
 
   return (
     <div className="card">
-    <div className="table-wrap">
+    <div className="scroll-x">
       <table className="dtable-lg">
         <colgroup>
           <col className="col-p9" /><col className="col-p18" /><col className="col-p15" />
@@ -275,7 +275,7 @@ function ByDateView({ data, search }: {
                 {isOpen && holes && (
                   <tr>
                     <td colSpan={10} className="bg-page p-0">
-                      <div className="scHost" style={scHostStyle}>
+                      <div className="scroll-x" style={scHostStyle}>
                         <ScorecardTable
                           holes={holes}
                           courseName={r.course}
@@ -458,7 +458,7 @@ function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId 
               {/* Tee Summary (for all views when multiple tees) */}
               <TeeSummaryTable rounds={course.rounds} />
               {/* Rounds table */}
-              <div className="innerTable">
+              <div className="mt-8">
                 <table className="dt-compact">
                   <colgroup>
                     <col className="col-p17" /><col className="col-p8" /><col className="col-p9" />
@@ -851,7 +851,7 @@ function RoundRow({ r, data, courseName, isOpen, onToggle }: {
       {isOpen && holes && (
         <tr>
           <td colSpan={8} className="bg-page p-0">
-            <div className="scHost" style={scHostStyle}>
+            <div className="scroll-x" style={scHostStyle}>
               <ScorecardTable
                 holes={holes}
                 courseName={courseName}
@@ -909,7 +909,7 @@ function ByCourseView({ data, search, sort, isAnalysis }: {
 
   return (
     <div className="card">
-      <div className="table-wrap">
+      <div className="scroll-x">
         <table className="dtable-lg">
           <colgroup>
             <col className="col-p26" /><col className="col-p7" /><col className="col-p9" />
@@ -976,7 +976,7 @@ function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, ac
   }, [ecList, holeStats, sortKey, sortDir]);
 
   return (
-    <div className="ecBlock">
+    <div className="mb-16">
       <div className="h-sm">Eclético (gross) por tee</div>
       <div className="ecHint">Clique num tee na tabela de buracos para ver análise e filtrar rondas.</div>
 
@@ -1094,7 +1094,7 @@ function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, ac
                           <td key={i + 9}><ScoreCircle gross={trG[i + 9]} par={parArr[i + 9]} size="small" /></td>
                         ))}
                         {!is9 && <td className="col-in fw-600 fs-10">{sumArr(trG, 9, hc)}</td>}
-                        <td className="col-total fs-11-fw700">{sumArr(trG, 0, hc)}</td>
+                        <td className="col-total fs-11 fw-700">{sumArr(trG, 0, hc)}</td>
                       </tr>
                     );
                   })}
@@ -1730,7 +1730,7 @@ function Last20Table({ data, last20Table, best8, whsPosMap, bare: _bare }: {
       <div className="muted mb-8 fs-11">
         <b>WHS#</b> = posição na janela WHS (só rondas com SD contam) · ★ = top-8 SDs · <b>*</b> = Stableford normalizado 9B→18B · <span style={{ opacity: 0.45 }}>Esbatido</span> = fora da janela · Clica nos cabeçalhos para ordenar
       </div>
-      <div className="table-wrap">
+      <div className="scroll-x">
         <table className="dtable">
           <thead>
             <tr>
@@ -1797,7 +1797,7 @@ function Last20Table({ data, last20Table, best8, whsPosMap, bare: _bare }: {
                   {isOpen && holes && (
                     <tr>
                       <td colSpan={12} className="bg-page p-0">
-                        <div className="scHost" style={scHostStyle}>
+                        <div className="scroll-x" style={scHostStyle}>
                           <ScorecardTable
                             holes={holes}
                             courseName={r.course}
@@ -1912,7 +1912,7 @@ function CrossAnalysis({ data, bare: _bare }: { data: PlayerPageData; bare?: boo
         <span className="muted fw-600 fs-11">{players.length} jogadores</span>
       </div>
       {/* Ranking table */}
-      <div className="table-wrap">
+      <div className="scroll-x">
         <table className="dtable cross-table">
           <thead>
             <tr>
@@ -2032,7 +2032,7 @@ function HcpEvolutionChart({ players, currentFed, escName }: {
 
   return (
     <div className="mt-20">
-      <div className="h-md flex-center-gap12">
+      <div className="h-md d-flex items-center gap-12 flex-wrap">
         Evolução HCP — {escName}
         <select className="mini-badge"
           value={period} onChange={e => setPeriod(Number(e.target.value))}>
@@ -2133,7 +2133,7 @@ function CommonCourses({ players, currentFed, escName }: {
           <div key={ci} className="mb-4">
             <div className="card-detail pointer"
               onClick={() => setOpenCard(isOpen ? null : ci)}>
-              <div className="flex-center-gap8">
+              <div className="d-flex items-center gap-8">
  <span className="fs-10" style={{ transition: "transform .2s", transform: isOpen ? "rotate(90deg)" : "" }}>▶</span>
                 <span className="fw-700">⛳ {cc.course}</span>
                 <TeePill name={cc.tee} />
@@ -2202,7 +2202,7 @@ function CommonCourses({ players, currentFed, escName }: {
                     })}
                   </tbody>
                 </table>
-                <div className="mt-10 fs-11-fw700 c-text-2">
+                <div className="mt-10 fs-11 fw-700 c-text-2">
                   Histórico de rondas — {cc.course} ({cc.tee})
                 </div>
                 {cc.players.map(hp => {
@@ -2213,13 +2213,13 @@ function CommonCourses({ players, currentFed, escName }: {
                       <div className="fw-600 fs-11 mb-4">
                         {hp.name} <span className="muted">({hp.rounds.length} ronda{hp.rounds.length > 1 ? "s" : ""})</span>
                       </div>
- <div className="flex-wrap-gap8 gap-4" >
+ <div className="d-flex flex-wrap gap-8 gap-4" >
                         {hp.rounds.map((rd: RoundData, ri: number) => {
                           const isBest = rd.gross === hp.best;
                           return (
                             <div key={ri} style={{ padding: "3px 8px", borderRadius: "var(--radius)", fontSize: 11, background: isBest ? "var(--bg-success-strong)" : "var(--bg-card)", border: `1px solid ${isBest ? "var(--border-best)" : "var(--border-light)"}`, display: "flex", gap: 6, alignItems: "center" }}>
                               <span className="c-text-3">{rd.date || "–"}</span>
-                              <span className="fw-700">{rd.gross}{rd.par ? <span className={`score-delta ${(rd.gross! - rd.par) > 0 ? "pos" : (rd.gross! - rd.par) < 0 ? "neg" : ""} fs-9`} style={{ marginLeft: 2 }}>{fmtSign(rd.gross! - rd.par)}</span> : null}</span>
+                              <span className="fw-700">{rd.gross}{rd.par ? <span className={`score-delta ${(rd.gross! - rd.par) > 0 ? "pos" : (rd.gross! - rd.par) < 0 ? "neg" : ""} fs-10`} style={{ marginLeft: 2 }}>{fmtSign(rd.gross! - rd.par)}</span> : null}</span>
                               {rd.sd != null && <span className="c-text-3">SD {rd.sd}</span>}
                               {isBest && <span>★</span>}
                             </div>
@@ -2558,7 +2558,7 @@ function TournRoundRow({ r, idx: _idx, data }: {
       {scOpen && holes && (
         <tr>
           <td colSpan={8} className="bg-page p-0">
-            <div className="scHost" style={scHostStyle}>
+            <div className="scroll-x" style={scHostStyle}>
               <ScorecardTable
                 holes={holes}
                 courseName={r.course}
@@ -2754,7 +2754,7 @@ function ByTournamentView({ data, search }: { data: PlayerPageData; search: stri
 
   return (
     <div className="card">
-      <div className="table-wrap">
+      <div className="scroll-x">
         <table className="dtable-lg">
           <colgroup>
             <col className="col-p46" /><col className="col-p34" />

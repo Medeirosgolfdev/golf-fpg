@@ -87,7 +87,7 @@ function SDTable({
   }, [cr, slope, par, pcc, hi, is9h]);
 
   return (
-    <div className="sim-table-wrap">
+    <div className="sim-scroll-x">
       <table className="sim-table">
         <thead>
           <tr>
@@ -241,7 +241,7 @@ function MultiTeeSDTable({
   const stickyBase: React.CSSProperties = { position: "sticky", zIndex: 3 };
 
   return (
-    <div className="sim-table-wrap scroll-x" style={{ maxHeight: 500 }}>
+    <div className="sim-scroll-x scroll-x" style={{ maxHeight: 500 }}>
       <table className="sim-table sim-multi-tee">
         <thead>
           {/* Row 1: tee color headers — sticky top:0 */}
@@ -278,7 +278,7 @@ function MultiTeeSDTable({
                   borderBottom: "none",
                 }}>
                 {c.teeName}
-                <span className="op-7 fs-9 fw-400" style={{ marginLeft: 5 }}>
+                <span className="op-7 fs-10 fw-400" style={{ marginLeft: 5 }}>
                   {c.dist != null && <>{fmt(c.dist)}m · </>}CR {fmtCR(c.cr)} · SR {c.slope} · Par {c.par}
                 </span>
               </th>
@@ -1010,7 +1010,7 @@ function AgsSection({
                       <React.Fragment key={h.hole}>
                         <td style={{ color: capped ? SC.danger : h.adjusted != null ? SC.good : "var(--border)", fontWeight: h.adjusted != null ? 700 : 400 }}>
                           {h.adjusted != null ? h.adjusted : ""}
-                          {capped && <span className="fs-8">✂</span>}
+                          {capped && <span className="fs-10">✂</span>}
                         </td>
                         {is18 && i === 8 && (
                           <td className="col-out cb-par-ok">{adjOut ?? "–"}</td>
@@ -1023,7 +1023,7 @@ function AgsSection({
                     return (
                       <td key={h.hole} style={{ color: capped ? SC.danger : h.adjusted != null ? SC.good : "var(--border)", fontWeight: h.adjusted != null ? 700 : 400 }}>
                         {h.adjusted != null ? h.adjusted : ""}
-                        {capped && <span className="fs-8">✂</span>}
+                        {capped && <span className="fs-10">✂</span>}
                       </td>
                     );
                   })}
@@ -1040,7 +1040,7 @@ function AgsSection({
       {hasAgs && (
         <details className="mt-12">
           <summary className="sim-toggle-link">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="flex-shrink-0">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="shrink-0">
               <circle cx="8" cy="8" r="7" stroke="var(--color-warn-dark)" strokeWidth="1.5" fill="var(--bg-warn)"/>
               <text x="8" y="12" textAnchor="middle" fontSize="11" fontWeight="700" fill="var(--color-warn-dark)">i</text>
             </svg>

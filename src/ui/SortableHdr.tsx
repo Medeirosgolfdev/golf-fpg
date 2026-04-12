@@ -21,7 +21,7 @@ export default function SortableHdr({
       title={active ? (sortDir === "asc" ? "Ordenado crescente" : "Ordenado decrescente") : "Clique para ordenar"}
       onClick={() => onSort(k)}
     >
-      {children}{active && <span className="fs-8" style={{ marginLeft: 2 }}>{sortDir === "asc" ? "▲" : "▼"}</span>}
+      {children}{active && <span className="fs-10" style={{ marginLeft: 2 }}>{sortDir === "asc" ? "▲" : "▼"}</span>}
     </th>
   );
 }

@@ -1381,7 +1381,7 @@ function RivaisSidebar({ selected, onSelect, fids, q, paisFilter, tierFilter, mi
               {rank}
             </span>
           ) : <span style={{ width: 18 }} />}
-          <span className="fs-13 flex-shrink-0">{flagEmoji}</span>
+          <span className="fs-13 shrink-0">{flagEmoji}</span>
           <span style={{ flex: 1, fontSize: 12, fontWeight: isActive ? 700 : 600, color: "var(--text)",
             overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
             {p.n}
@@ -1395,7 +1395,7 @@ function RivaisSidebar({ selected, onSelect, fids, q, paisFilter, tierFilter, mi
         {/* Linha 2: player type + record + bestTp + mhCnt + upcoming */}
         <div className="gap-4 flex-wrap" style={{ display: "flex", alignItems: "center", paddingLeft: 23 }}>
           {playerType && !p.isM && (
-            <span className="fs-9 fw-700" style={{ padding: "1px 5px", borderRadius: 10, background: playerType.bg, color: playerType.fg }}>
+            <span className="fs-10 fw-700" style={{ padding: "1px 5px", borderRadius: 10, background: playerType.bg, color: playerType.fg }}>
               {playerType.label}
             </span>
           )}
@@ -1670,7 +1670,7 @@ function TorneiosRecorrentes({
                 display: "flex", alignItems: "center", gap: 4 }}>
                 {hasPodium && <span>{g.entries.some(e => e.pos === 1) ? "🏆" : g.entries.some(e => e.pos === 2) ? "🥈" : "🥉"}</span>}
                 <span className="overflow-hidden flex-1" style={{ textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{g.name}</span>
-                <span className="muted fs-10 fw-400 flex-shrink-0" >{g.entries.length}×</span>
+                <span className="muted fs-10 fw-400 shrink-0" >{g.entries.length}×</span>
               </div>
               <div style={{ display: "flex", gap: 3, alignItems: "center", overflowX: "auto" }}>
                 {g.entries.map((e, i) => {
@@ -2406,7 +2406,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
         <div style={{ display: "flex", gap: 16, alignItems: "flex-start", padding: "20px 22px 16px", borderBottom: "1px solid var(--border-light)" }}>
 
           {/* Flag grande */}
-          <div className="flex-shrink-0" style={{ fontSize: 56, lineHeight: 1, marginTop: 2 }}>{flag}</div>
+          <div className="shrink-0" style={{ fontSize: 56, lineHeight: 1, marginTop: 2 }}>{flag}</div>
 
           {/* Nome + pills + palmarès inline */}
           <div className="flex-1" style={{ minWidth: 0 }}>
@@ -2416,7 +2416,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
               </div>
               {/* Player type badge (getPlayerType) */}
               {playerType && (
-                <span className="fs-12 fw-800 flex-shrink-0" style={{ padding: "3px 10px", borderRadius: 20, background: playerType.bg, color: playerType.fg, letterSpacing: "0.02em" }}>
+                <span className="fs-12 fw-800 shrink-0" style={{ padding: "3px 10px", borderRadius: 20, background: playerType.bg, color: playerType.fg, letterSpacing: "0.02em" }}>
                   {playerType.label}
                 </span>
               )}
@@ -2509,7 +2509,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
 
           {/* V/E/D vs Manuel — caixas coloridas */}
           {h2hData && !isManuel && (
-            <div className="flex-shrink-0 ta-c">
+            <div className="shrink-0 ta-c">
               <div style={{ fontSize: 11, fontWeight: 700, color: "var(--text-3)", marginBottom: 6,
                 textTransform: "uppercase", letterSpacing: "0.06em" }}>vs Manuel</div>
               <div style={{ display: "flex", gap: 5, marginBottom: 5 }}>
@@ -2575,7 +2575,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
               const agCls = agNum<=10?"p-sub10":agNum<=12?"p-sub12":agNum<=14?"p-sub14":"p-sub18";
               return (
                 <div key={t.id} style={{ border: "1.5px solid var(--medal-gold,#d97706)", borderRadius: 8, padding: "10px 12px", display: "flex", gap: 10, alignItems: "center" }}>
-                  <span className="flex-shrink-0" style={{ fontSize: 32, lineHeight: 1 }}>🥇</span>
+                  <span className="shrink-0" style={{ fontSize: 32, lineHeight: 1 }}>🥇</span>
                   <div>
                     <div className="fs-13 fw-600">{t.name}</div>
                     <div style={{ fontSize: 11, color: "var(--text-2)", marginTop: 2 }}>
@@ -2699,7 +2699,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
                     borderBottom:expanded?"none":"1px solid var(--border-light)" }}>
 
                     {/* Col 1: medalha ou posição */}
-                    <div style={{ textAlign:"center" }}>
+                    <div className="ta-c">
                       {mdl3
                         ? <span style={{ fontSize:18, lineHeight:1 }}>{mdl3}</span>
                         : pos!=null
@@ -2715,7 +2715,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
                         <RoundPill nR={rds.length} />
                         {/* ── DEBUG TEMPORÁRIO: fonte do torneio — remover após diagnóstico ── */}
                         {debugMode && (
-                          <span title={`tid: ${t.id}`} className="fs-9 flex-shrink-0 overflow-hidden" style={{ fontFamily: "'JetBrains Mono', monospace", padding: "1px 5px", borderRadius: 4, background: "#fef08a", color: "#713f12", border: "1px solid #fde047", maxWidth: 200, textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                          <span title={`tid: ${t.id}`} className="fs-10 shrink-0 overflow-hidden" style={{ fontFamily: "'JetBrains Mono', monospace", padding: "1px 5px", borderRadius: 4, background: "#fef08a", color: "#713f12", border: "1px solid #fde047", maxWidth: 200, textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                             {t.id}
                           </span>
                         )}
@@ -2982,7 +2982,7 @@ function RivaisIntlContent() {
         <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
         <ToolbarTitle>🌍 Kids</ToolbarTitle>
         <ToolbarSep />
-        <span className="toolbar-meta flex-shrink-0" >
+        <span className="toolbar-meta shrink-0" >
           {loaded
             ? <span style={{ fontSize: 10, color: "var(--color-good-dark)", fontWeight: 700 }}>{rivals.length} rivais · ✓</span>
             : progress
@@ -2999,12 +2999,12 @@ function RivaisIntlContent() {
         <ToolbarSep />
         {/* Pesquisa */}
         <input type="text" value={q} onChange={e => setQ(e.target.value)}
-          placeholder="🔎 Pesquisar rival…" className="input fs-12 flex-shrink-0"
+          placeholder="🔎 Pesquisar rival…" className="input fs-12 shrink-0"
           
           style={{ width: 150, height: 26 }} />
         <ToolbarSep />
         {/* Filtros avançados: país, tipo, presenças, directos, limpar */}
-        <select className="select fs-11 flex-shrink-0" value={paisFilter} onChange={e => setPaisFilter(e.target.value)}
+        <select className="select fs-11 shrink-0" value={paisFilter} onChange={e => setPaisFilter(e.target.value)}
           style={{ height: 26, minWidth: 85 }}>
           <option value="">🌍 País</option>
           {paises.map(p => <option key={p} value={p}>{FL[p] || "🏳️"} {p}</option>)}
@@ -3048,7 +3048,7 @@ function RivaisIntlContent() {
           </button>
         )}
         <div className="flex-1" />
-        <span className="chip flex-shrink-0" >
+        <span className="chip shrink-0" >
           {rivals.filter(p => (nPlayed(p) > 0 || p.isM) && playerMatchesFilter(p, fids)).length}
         </span>
       </Toolbar>

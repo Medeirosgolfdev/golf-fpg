@@ -334,7 +334,7 @@ function PlayerSearch({ players, slots, statsDb, onAdd, onRemove }: {
         <span className="chip cmp-chip">{slots.length}/4</span>
       </div>
       {slots.length > 0 && (
-        <div className="flex-wrap-gap8">
+        <div className="d-flex flex-wrap gap-8">
           {slots.map((s, i) => {
             const ps = statsDb[s.fed];
             return (
@@ -342,7 +342,7 @@ function PlayerSearch({ players, slots, statsDb, onAdd, onRemove }: {
                 borderColor: COLORS[i], background: COLORS_LIGHT[i],
                 display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 14px", fontSize: 13, borderRadius: "var(--radius-pill)",
               }}>
-                <span className="round flex-shrink-0" style={{ width: 10, height: 10, background: COLORS[i] }} />
+                <span className="round shrink-0" style={{ width: 10, height: 10, background: COLORS[i] }} />
                 <b>{shortName(s.player.name)}</b>
                 <span className="muted fs-11">HCP {hcpDisplay(s.player.hcp)}</span>
                 <FormBadge ps={ps} /><TrendArrow ps={ps} />
@@ -822,7 +822,7 @@ function HoleProfileSection({ slots, refTee, holesMode }: {
                   : PERIOD_OPTIONS.find(o => o.key === period)?.label}
               </span>
             </div>
-            <div className="table-wrap">
+            <div className="scroll-x">
               <table className="dtable-lg fs-12" style={{ width:"100%" }}>
                 <thead>
                   <tr>
@@ -843,7 +843,7 @@ function HoleProfileSection({ slots, refTee, holesMode }: {
                     return (
                       <tr key={i}>
                         <td>
-                          <span className="round flex-shrink-0" style={{
+                          <span className="round shrink-0" style={{
                             width:8, height:8, background:COLORS[i],
                             display:"inline-block", marginRight:7, verticalAlign:"middle",
                           }} />
@@ -941,7 +941,7 @@ function HoleProfileSection({ slots, refTee, holesMode }: {
               )}
             </div>
 
-            <div className="table-wrap">
+            <div className="scroll-x">
               <table className="dtable-lg fs-12" style={{ width:"100%" }}>
                 <colgroup>
                   <col style={{ width: "22%" }} />
@@ -1021,7 +1021,7 @@ function HoleProfileSection({ slots, refTee, holesMode }: {
       {hasCourse && hasDistances && (
         <>
           <div className="fs-12 fw-600 c-text-2 mb-8 mt-4">⛳ Buraco a Buraco — grupo de distância aplicado</div>
-          <div className="table-wrap">
+          <div className="scroll-x">
             <table className="dtable-lg fs-12">
               <thead>
                 <tr>
@@ -1234,14 +1234,14 @@ function RoundPrepSection({ slots }: { slots: Slot[] }) {
   return (
     <div className="card">
       {/* Header */}
-      <div className="h-md flex-center-gap10 flex-wrap mb-14">
+      <div className="h-md d-flex items-center gap-10 flex-wrap mb-14">
         <span>⛳ Preparar Ronda</span>
         {selectedCourse && <span className="muted fs-11 fw-400">{selectedCourse.master.name}</span>}
         {is9h && selectedCourse && <span className="chip fs-11">{holesMode === "front9" ? "Front 9" : "Back 9"}</span>}
       </div>
 
       {/* Configuração global */}
-      <div className="flex-wrap-gap8 mb-14" style={{ alignItems: "flex-end" }}>
+      <div className="d-flex flex-wrap gap-8 mb-14" style={{ alignItems: "flex-end" }}>
         {/* Campo */}
         <div style={{ position: "relative", minWidth: 220 }} ref={courseSearchRef}>
           <label className="fs-11 fw-600 c-text-3 mb-4" style={{ display: "block" }}>Campo</label>
@@ -1323,7 +1323,7 @@ function RoundPrepSection({ slots }: { slots: Slot[] }) {
 
       {/* ── Tabela por jogador com tee individual ── */}
       {loaded.length > 0 && selectedCourse && availableTees.length > 0 && (
-        <div className="table-wrap mb-14">
+        <div className="scroll-x mb-14">
           <table className="dtable-lg">
             <thead>
               <tr>
@@ -1369,8 +1369,8 @@ function RoundPrepSection({ slots }: { slots: Slot[] }) {
                       <span className="c-text-3 fs-11 ml-6">{pc.escalao}</span>
                     </td>
                     <td>
-                      <div className="flex-center-gap6">
-                        <span className="flex-shrink-0" style={{ width: 10, height: 10, borderRadius: "50%", background: teeHex, display: "inline-block", border: "1px solid rgba(0,0,0,.2)" }} />
+                      <div className="d-flex items-center gap-6">
+                        <span className="shrink-0" style={{ width: 10, height: 10, borderRadius: "50%", background: teeHex, display: "inline-block", border: "1px solid rgba(0,0,0,.2)" }} />
                         <select className="select select-sm" value={playerTeeIds[i] ?? ""} onChange={e => setPlayerTee(i, e.target.value)}>
                           {teeOptions.map(t => <option key={t.teeId} value={t.teeId}>{t.teeName} ({t.sex})</option>)}
                         </select>
@@ -1401,7 +1401,7 @@ function RoundPrepSection({ slots }: { slots: Slot[] }) {
             {!allSameTee && <span className="muted fw-400 ml-6 fs-11">(SI do tee de {firstName(playerCalcs[0]?.name ?? "jogador 1")})</span>}
             <span className="muted fs-11 fw-400 ml-6">(Course HCP, não Playing HCP)</span>
           </div>
-          <div className="table-wrap" style={{ overflowX: "auto" }}>
+          <div className="scroll-x" style={{ overflowX: "auto" }}>
             <table className="dtable-lg" style={{ minWidth: 500 }}>
               <thead>
                 <tr>
@@ -1515,9 +1515,9 @@ function StatsTable({ slots, allAgg, statsDb }: { slots: Slot[]; allAgg: (AggSta
   });
 
   return (
-    <div className="card p-0 no-overflow">
+    <div className="card p-0 overflow-hidden">
       <div className="h-md p-14" style={{ paddingBottom: 0 }}>Comparação Detalhada <span className="muted fs-11 fw-400">(apenas torneios)</span></div>
-      <div className="table-wrap mt-8">
+      <div className="scroll-x mt-8">
         <table className="dtable-lg fs-13">
           <thead>
             <tr>
@@ -1629,8 +1629,8 @@ function CategoryScorecardSection({ slots, allAgg, statsDb }: { slots: Slot[]; a
               const v = values[i];
               const isWinner = winnerIdx === i;
               return (
-                <div key={i} className="flex-center-gap8" style={{ marginBottom: 2 }}>
-                  <span className="round flex-shrink-0" style={{ width: 8, height: 8, background: COLORS[i] }} />
+                <div key={i} className="d-flex items-center gap-8" style={{ marginBottom: 2 }}>
+                  <span className="round shrink-0" style={{ width: 8, height: 8, background: COLORS[i] }} />
                   <span className="fs-11 mono" style={{ fontWeight: isWinner ? 800 : 400, color: isWinner ? COLORS[i] : "var(--text-2)" }}>
                     {v != null ? (Number.isInteger(v) ? v : v.toFixed(1)) : "–"}
                   </span>
@@ -1833,7 +1833,7 @@ function ConsistencySection({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStat
             <div key={i} className="caKpi" style={{ borderColor: COLORS[i] }}>
               <div className="caKpiVal" style={{ color: stdColor ?? COLORS[i] }}>{stdLabel}</div>
               <div className="caKpiLbl">{firstName(s.player.name)} · σ Gross</div>
-              <div className="flex-wrap-gap8 jc-center mt-4">
+              <div className="d-flex flex-wrap gap-8 jc-center mt-4">
                 {agg.sdStdDev != null && <span className="fs-10 c-text-3">σ SD: {agg.sdStdDev.toFixed(1)}</span>}
                 {agg.longestStreak > 0 && <span className="fs-10 c-text-3">Streak: {agg.longestStreak}</span>}
               </div>
@@ -1843,7 +1843,7 @@ function ConsistencySection({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStat
       </div>
 
       {/* Tabela de consistência */}
-      <div className="table-wrap">
+      <div className="scroll-x">
         <table className="dtable-lg fs-12">
           <thead>
             <tr>
@@ -1954,20 +1954,20 @@ function ScoreDistribution({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats
   return (
     <div className="card p-16">
       <div className="h-md">Distribuição de Scores <span className="muted fs-11 fw-400">(apenas torneios)</span></div>
-      <div className="flex-col-gap12 mt-8">
+      <div className="d-flex flex-col gap-12 mt-8">
         {cats.map(cat => {
           const vals = loaded.map(x => { const d = x.agg!.scoreDist; return d.total > 0 ? (d[cat.key] / d.total * 100) : 0; });
           const maxVal = Math.max(...vals, 1);
           return (
             <div key={cat.key}>
-              <div className="flex-center-gap8-mb4"><span className="cmp-stat-label">{cat.emoji} {cat.label}</span></div>
-              <div className="flex-col-gap3">
+              <div className="d-flex items-center gap-8-mb4"><span className="cmp-stat-label">{cat.emoji} {cat.label}</span></div>
+              <div className="d-flex flex-col gap-3">
                 {loaded.map(x => {
                   const v = vals[x.i];
                   const barW = Math.max(2, (v / maxVal) * 100);
                   return (
-                    <div key={x.i} className="flex-center-gap8">
-                      <span className="fs-11 ta-right fw-600 flex-shrink-0" style={{ width: 60, color: COLORS[x.i] }}>{firstName(x.s.player.name)}</span>
+                    <div key={x.i} className="d-flex items-center gap-8">
+                      <span className="fs-11 ta-right fw-600 shrink-0" style={{ width: 60, color: COLORS[x.i] }}>{firstName(x.s.player.name)}</span>
                       <div className="cmp-distrib-track">
                         <div style={{ width: `${barW}%`, height: "100%", background: COLORS[x.i], borderRadius: "var(--radius-sm)", opacity: 0.75 }} />
                       </div>
@@ -2019,7 +2019,7 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
 
   return (
     <div className="card">
-      <div className="h-md flex-center-gap10 flex-wrap">
+      <div className="h-md d-flex items-center gap-10 flex-wrap">
         Buraco a Buraco <span className="muted fs-11 fw-400">(torneios)</span>
         <select className="select" value={sel} onChange={e => setSel(Number(e.target.value))}>
           {combos.map((c, i) => <option key={i} value={i}>{c.label} ({c.nRounds.filter(n => n > 0).join("/")} rondas)</option>)}
@@ -2059,7 +2059,7 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
           );
         })}
       </div>
-      <div className="table-wrap mt-8">
+      <div className="scroll-x mt-8">
         <table className="dtable-lg">
           <thead><tr>
             <th className="r">H</th><th className="r">Par</th>
@@ -2269,7 +2269,7 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
         <div className="gap-8" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", marginBottom: 14 }}>
           <div style={{ background: "var(--bg-muted)", borderRadius: "var(--radius)", padding: "8px 12px" }}>
             <div className="fs-11 fw-600 c-text-3 mb-4">Vitórias por 3+ pancadas</div>
-            <div className="flex-center-gap8">
+            <div className="d-flex items-center gap-8">
               <span className="fw-700 mono" style={{ color: COLORS[0] }}>{dominanceData.bigWins0}</span>
               <span className="c-text-3 fs-11">{firstName(loaded[0].player.name)}</span>
               <span className="c-text-3 fs-11 mx-4">vs</span>
@@ -2288,7 +2288,7 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
       )}
 
       {/* Tabela de duelos */}
-      <div className="table-wrap cmp-result-list">
+      <div className="scroll-x cmp-result-list">
         <table className="dtable-lg">
           <thead><tr>
             <SortableHdr k="date" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Data</SortableHdr>
@@ -2400,7 +2400,7 @@ function TournamentEvolutionSection({ slots }: { slots: Slot[] }) {
 
   return (
     <div className="card">
-      <div className="h-md flex-center-gap10 flex-wrap">
+      <div className="h-md d-flex items-center gap-10 flex-wrap">
         Evolução em Torneios
         <select className="select" value={metric} onChange={e => setMetric(e.target.value as "sd" | "gross")}>
           <option value="sd">Score Differential</option>
@@ -2453,7 +2453,7 @@ function TournamentEvolutionSection({ slots }: { slots: Slot[] }) {
             <div key={i} className="caKpi" style={{ borderColor: s.color }}>
               <div className="caKpiVal" style={{ color: s.color }}>{last != null ? last.toFixed(1) : "–"}</div>
               <div className="caKpiLbl">{shortName(s.name)} · {s.pts.length} rondas</div>
-              <div className="flex-wrap-gap8 jc-center mt-3" >
+              <div className="d-flex flex-wrap gap-8 jc-center mt-3" >
                 {delta != null && <span className="fw-700 fs-10" style={{ color: sc3m(delta, 0, 0) }}>{delta > 0 ? "+" : ""}{delta.toFixed(1)}</span>}
                 {best != null && <span className="fs-10 fw-600 c-text-3">melhor: {best.toFixed(metric === "sd" ? 1 : 0)}</span>}
               </div>
@@ -2505,7 +2505,7 @@ export default function CompararPage() {
         <div className="card empty-state">
           <div className="cmp-empty-icon">⚔️</div>
           <div className="h-md cmp-empty-title">Comparar Jogadores</div>
-          <div className="muted fs-13-lh16">
+          <div className="muted fs-13 lh-16">
             Pesquisa e adiciona até 4 jogadores para comparar lado a lado.
           </div>
           <div className="muted fs-12 mt-4 c-text-3">

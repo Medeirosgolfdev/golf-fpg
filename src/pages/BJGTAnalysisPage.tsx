@@ -761,31 +761,31 @@ function _RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) 
       {/* Table */}
       <div className="card">
         <div className="scroll-x">
-          <table className="tourn-form-table">
+          <table className="bc-collapse">
             <thead>
               <tr className="rivais-group-header">
                 <th className="rivais-th-name pointer" onClick={() => doSort("name")}>Jogador{sortArrow("name", sort, dir)}</th>
-                <th className="rivais-th pointer ta-center" onClick={() => doSort("zrank")} title="Torneios jogados">#T</th>
+                <th className="rivais-th pointer ta-c" onClick={() => doSort("zrank")} title="Torneios jogados">#T</th>
                 {T.map(t => {
                   const w = T_WEIGHTS[t.id];
                   const stars = w >= 0.9 ? "★★★" : w >= 0.6 ? "★★" : w >= 0.4 ? "★" : "½";
                   return (
-                  <th key={t.id} className="rivais-th pointer ta-center" style={{ minWidth: 56 }} onClick={() => doSort("t:" + t.id)}>
+                  <th key={t.id} className="rivais-th pointer ta-c" style={{ minWidth: 56 }} onClick={() => doSort("t:" + t.id)}>
                     {t.url ? <a href={t.url} target="_blank" rel="noopener noreferrer" className="rivais-link" onClick={e => e.stopPropagation()}>{t.short}</a> : t.short}
                     {sortArrow("t:" + t.id, sort, dir)}
-                    <div className="fs-9 fw-500 op-6 mt-1">{stars}</div>
+                    <div className="fs-10 fw-500 op-6 mt-1">{stars}</div>
                   </th>
                   );
                 })}
-                <th className="rivais-th pointer ta-center" style={{ borderLeft: "3px solid var(--text-muted)", minWidth: 56 }} onClick={() => doSort("zrank")}>Rank{sortArrow("zrank", sort, dir)}</th>
-                <th className="rivais-th ta-center">▲</th>
+                <th className="rivais-th pointer ta-c" style={{ borderLeft: "3px solid var(--text-muted)", minWidth: 56 }} onClick={() => doSort("zrank")}>Rank{sortArrow("zrank", sort, dir)}</th>
+                <th className="rivais-th ta-c">▲</th>
                 {UP.map(u => (
-                  <th key={u.id} className="rivais-th pointer ta-center" onClick={() => doSort("up:" + u.id)}>
+                  <th key={u.id} className="rivais-th pointer ta-c" onClick={() => doSort("up:" + u.id)}>
                     {u.url ? <a href={u.url} target="_blank" rel="noopener noreferrer" className="rivais-link" onClick={e => e.stopPropagation()}>{u.short}</a> : u.short}
                     {sortArrow("up:" + u.id, sort, dir)}
                   </th>
                 ))}
-                {vsOn && <th className="rivais-th pointer ta-center" onClick={() => doSort("vsManuel")}>vs M{sortArrow("vsManuel", sort, dir)}</th>}
+                {vsOn && <th className="rivais-th pointer ta-c" onClick={() => doSort("vsManuel")}>vs M{sortArrow("vsManuel", sort, dir)}</th>}
               </tr>
             </thead>
             <tbody>
@@ -812,7 +812,7 @@ function _RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) 
                     </td>
 
                     {/* # tournaments played */}
-                    <td className="ta-center fs-12 fw-600 c-text-3">{played || ""}</td>
+                    <td className="ta-c fs-12 fw-600 c-text-3">{played || ""}</td>
 
                     {/* One cell per tournament: ±par colored + position */}
                     {T.map(t => {
@@ -840,7 +840,7 @@ function _RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) 
                       }
 
                       return (
-                        <td key={t.id} className="ta-center" style={{ background: st?.bg || "transparent", padding: "5px 4px" }}>
+                        <td key={t.id} className="ta-c" style={{ background: st?.bg || "transparent", padding: "5px 4px" }}>
                           <div className="fw-700 fs-13" style={{ color: st?.c || "var(--text-3)" }}>{tpStr}</div>
                           <div className="fs-10 fw-600 c-text-3">#{res.p}</div>
                           {vsM != null && <div className="fs-10 fw-600" style={{ color: sc3m(vsM, 0, 0) }}>{fmtSign(vsM)}</div>}
@@ -849,7 +849,7 @@ function _RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) 
                     })}
 
                     {/* Rank */}
-                    <td className="ta-center" style={{ borderLeft: "3px solid var(--border-light)", padding: "4px 6px" }}>
+                    <td className="ta-c" style={{ borderLeft: "3px solid var(--border-light)", padding: "4px 6px" }}>
                       {rankMap[p.n] != null ? (
                         <div title={`z-score: ${(( getAvgZ as unknown as (p: RivalPlayer) => number | null)(p) ?? 0).toFixed(2)} · ${nRounds(p)} rondas`}>
                           <div className="fw-800 fs-13" style={{ color: rankMap[p.n] <= 10 ? "var(--color-good-dark)" : rankMap[p.n] <= 30 ? "var(--text)" : "var(--text-3)" }}>
@@ -861,20 +861,20 @@ function _RivaisDashboard({ onSelectPlayer }: { onSelectPlayer?: (name: string) 
                     </td>
 
                     {/* Trend */}
-                    <td className="ta-center">
+                    <td className="ta-c">
                       {tr ? <span className="fw-700 fs-13" style={{ color: TR_I[tr].c }}>{TR_I[tr].i}</span> : <span className="c-border">—</span>}
                     </td>
 
                     {/* Upcoming tournaments */}
                     {UP.map(u => (
-                      <td key={u.id} className="ta-center fs-12">
+                      <td key={u.id} className="ta-c fs-12">
                         {p.up.includes(u.id) ? <span className="fw-700 c-good-dark">✓</span> : <span className="c-border">—</span>}
                       </td>
                     ))}
 
                     {/* vs Manuel average */}
                     {vsOn && (
-                      <td className="ta-center">
+                      <td className="ta-c">
                         {isM ? <span className="fs-10 c-border">—</span> :
                         vsAvg != null ? <span className="fs-12 fw-700" style={{ color: sc3m(vsAvg, 0, 0) }}>{fmtSign(vsAvg)}</span> :
                         <span className="fs-10 c-border">—</span>}
@@ -990,7 +990,7 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
         const col = rank <= 3 ? "var(--color-danger)" : rank >= 16 ? "var(--color-good)" : "var(--text-muted)";
         return (
           <React.Fragment key={i}>
-            <td className="fs-9 fw-600" style={{ color: col }}>{rank}</td>
+            <td className="fs-10 fw-600" style={{ color: col }}>{rank}</td>
             {i === 8 && <td className="col-out" />}
           </React.Fragment>
         );
@@ -1108,7 +1108,7 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
         <div className="mb-16">
           <div className="tourn-meta fw-700 mb-6">Historial de Torneios</div>
           <div className="tourn-scroll">
-            <table className="tourn-form-table">
+            <table className="bc-collapse">
               <thead><tr>
                 <th>Torneio</th><th>Data</th><th className="r">Par</th><th className="r">Pos</th>
                 {Array.from({ length: Math.max(...tournResults.map(r => r.rounds.length)) }, (_, i) => <th key={i} className="r">R{i + 1}</th>)}
@@ -1121,15 +1121,15 @@ function FieldPlayerDetail({ playerName, onBack }: { playerName: string; onBack:
                     <tr key={i}>
                       <td className="fw-700 fs-12">{r.short}</td>
                       <td className="fs-11 c-text-3">{r.date}</td>
-                      <td className="r tourn-mono">{r.par}</td>
-                      <td className="r tourn-mono fw-700">{typeof r.pos === "number" ? `#${r.pos}` : r.pos}</td>
+                      <td className="r mono">{r.par}</td>
+                      <td className="r mono fw-700">{typeof r.pos === "number" ? `#${r.pos}` : r.pos}</td>
                       {Array.from({ length: mx }, (_, j) => {
                         const rd = r.rounds[j]; if (rd == null) return <td key={j} />;
                         const rdTp = rd - r.par;
                         const col = tpColorDark(rdTp, 5);
-                        return <td key={j} className="r tourn-mono fw-600" style={{ color: col }}>{rd}</td>;
+                        return <td key={j} className="r mono fw-600" style={{ color: col }}>{rd}</td>;
                       })}
-                      <td className="r tourn-mono fw-800">{r.total ?? "–"}</td>
+                      <td className="r mono fw-800">{r.total ?? "–"}</td>
                       <td className="r fw-700" style={{ color: tpColorDark(r.tp, 15) }}>{fmtToPar(r.tp)}</td>
                     </tr>
                   );
@@ -1773,7 +1773,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
     <div className="tourn-layout">
       <Toolbar><ToolbarTitle>🇪🇸 BJGT</ToolbarTitle></Toolbar>
       <div className="master-detail"><div className="course-detail" ref={md.detailRef}>
-        <div className="card empty-state"><div className="empty-icon">⚠️</div><div className="fw-700-dc">Erro: {error}</div></div>
+        <div className="card empty-state"><div className="empty-icon">⚠️</div><div className="fw-700 c-danger">Erro: {error}</div></div>
       </div></div>
     </div>
   );
@@ -1785,10 +1785,10 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
         <div className="master-detail"><div className="course-detail">
           <div className="card empty-state">
             <div className="empty-icon-lg">🔍</div>
-            <div className="fw-700-text2-mb8">
+            <div className="fw-700 c-text-2 mb-8">
               {info?.err === "no_course" ? "Sem campo Villa Padierna nos dados" : "Sem estatísticas de buracos disponíveis"}
             </div>
-            <div className="muted fs-11-lh16">
+            <div className="muted fs-11 lh-16">
               {info?.err === "no_stats" && <>
                 <div>Campo encontrado: {info.courses?.join(", ")}</div>
                 <div>Rondas: {info.nRounds} · Scorecards: {info.nCards}</div>
@@ -1931,9 +1931,9 @@ function ContestLeaderboard({ contest, evo }: { contest: ContestData; evo?: EvoE
               <thead><tr>
                 <th className="col-w30">#</th>
                 <th className="ta-left" style={{minWidth:120}}>Jogador</th>
-                {Array.from({length: nR}, (_, i) => <th key={i} className="r col-w40">R{i+1}</th>)}
+                {Array.from({length: nR}, (_, i) => <th key={i} className="r w-40">R{i+1}</th>)}
                 <th className="r col-w50 fw-700">Tot</th>
-                <th className="r col-w40">±Par</th>
+                <th className="r w-40">±Par</th>
               </tr></thead>
               <tbody>
                 {sortedForRound.map((p, idx) => {
@@ -1950,9 +1950,9 @@ function ContestLeaderboard({ contest, evo }: { contest: ContestData; evo?: EvoE
                         {p.fl} <span className={isM ? "fw-800" : "fw-600"}>{p.n}</span>
                       </td>
                       {Array.from({length: nR}, (_, i) => (
-                        <td key={i} className="r tourn-mono">{p.rd[i]?.g ?? "–"}</td>
+                        <td key={i} className="r mono">{p.rd[i]?.g ?? "–"}</td>
                       ))}
-                      <td className="r fw-800 tourn-mono">{p.t}</td>
+                      <td className="r fw-800 mono">{p.t}</td>
                       <td className="r fw-700" style={{color: tpColor(p.tp)}}>
                         {isWD ? "–" : fmtToPar(p.tp)}
                       </td>
@@ -2078,8 +2078,8 @@ function ContestLeaderboard({ contest, evo }: { contest: ContestData; evo?: EvoE
                   return (
                     <tr key={idx} style={{background: isM ? "var(--bg-success-subtle)" : undefined}}>
                       <td className={isM ? "fw-800" : "fw-600"} style={{whiteSpace:"nowrap"}}>{e.n}</td>
-                      <td className="r tourn-mono">{e.y25}</td>
-                      <td className="r tourn-mono">{e.y26}</td>
+                      <td className="r mono">{e.y25}</td>
+                      <td className="r mono">{e.y26}</td>
                       <td className="r fw-700" style={{color: e.delta < 0 ? "var(--good-dark)" : e.delta > 0 ? SC.danger : "var(--text-3)"}}>
                         {e.delta > 0 ? "+" : ""}{e.delta}
                       </td>
@@ -2110,7 +2110,7 @@ function _MiniBar({ d }: { d: { eagle: number; birdie: number; par: number; boge
   return (
  <div className="overflow-hidden br-sm d-flex" style={{ height: 14, gap: 1 }}>
       {segs.filter(s => s.n > 0).map((s, i) => (
- <div key={i} className={`${s.cls} d-flex ai-center jc-center fs-10 fw-700 c-white`} style={{ flex: s.n }}>
+ <div key={i} className={`${s.cls} d-flex items-center jc-center fs-10 fw-700 c-white`} style={{ flex: s.n }}>
           {s.n}
         </div>
       ))}

@@ -1033,7 +1033,7 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                                 const pct = d <= 10 ? Math.round(100 - d * 4) : Math.round(60 - (d - 10) * 2.7);
                                 const bg = `color-mix(in srgb, var(--score-eagle) ${pct}%, transparent)`;
                                 const fg = pct >= 60 ? "#fff" : "var(--text-2)";
-                                return <span className="fs-9 fw-700" style={{
+                                return <span className="fs-10 fw-700" style={{
                                   background: bg, color: fg,
                                   border: pct < 60 ? "1px solid color-mix(in srgb, var(--score-eagle) 40%, transparent)" : "none",
                                   padding: "0 4px", borderRadius: 6, marginLeft: 3, lineHeight: "14px",
@@ -1051,7 +1051,7 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                                   <span key={y} title={`${y}: #${p}${res!.tp != null ? ` (${res!.tp > 0 ? "+" : ""}${res!.tp})` : ""}`}
                                     className="fs-10 fw-700" style={{ color: col, opacity:.85 }}>
                                     {medal ?? `#${p}`}
-                                    <span className="fs-9 fw-400" style={{ opacity:.7 }}>'{String(y).slice(2)}</span>
+                                    <span className="fs-10 fw-400" style={{ opacity:.7 }}>'{String(y).slice(2)}</span>
                                   </span>
                                 );
                               })}
@@ -1280,7 +1280,7 @@ function TabResultados({ data, selectedT, greatgolfData }: {
 
           const pb = tableIndex++ > 0 ? '<div class="page-break"></div>' : '';
           return `${pb}${escalaoTitle}<h3>Ronda ${r.ronda} · ${jogadores.length} jogadores · ${buracos}H${totalPar ? ` · Par ${totalPar}` : ""}</h3>
-          <div className="table-wrap">
+          <div className="scroll-x">
           <table>
             <thead>
               ${metrosRow}${parRow}
@@ -1347,7 +1347,7 @@ function TabResultados({ data, selectedT, greatgolfData }: {
         }).join("");
 
         accHtml = `<div class="page-break"></div>${escalaoTitle}<h3>Acumulado · ${sorted.length} classificados · ${rondasComDados.length} rondas${totalParAcc ? ` · Par ${totalParAcc}` : ""}</h3>
-        <div className="table-wrap">
+        <div className="scroll-x">
         <table>
           <thead><tr>
             <th class="pos">#</th><th class="name">Jogador</th><th class="flag"></th>
@@ -1527,7 +1527,7 @@ function SecaoGreatgolf({ data }: { data: GreatgolfData }) {
             ))}
           </div>
 
-          <div className="table-wrap">
+          <div className="scroll-x">
             <MultiRoundLeaderboard
               rows={rows.map((r, i): MultiRoundRow => ({
                 key: r.name + i,
@@ -1695,8 +1695,8 @@ function TabRivais({ resultados, fieldData, torneiosComManuel, selectedT, setSel
               {t.date_inicio && <span className="muted">📅 {fmtDate(t.date_inicio)}</span>}
               {t.escalaoManuel && <span className="chip">{t.escalaoManuel}</span>}
               {isFuture
-                ? <span className="p p-sm" style={{ background:"var(--bg-info-strong)", color:"var(--color-info)", borderColor:"var(--border-info)" }}>inscrito</span>
-                : resT && <span className="p p-sm" style={{ background:"var(--bg-success-strong)", color:"var(--color-good-dark)", borderColor:"var(--border-success)" }}>resultados</span>
+                ? <span className="p p-sm toggle-pill-info">inscrito</span>
+                : resT && <span className="p p-sm toggle-pill-success">resultados</span>
               }
             </div>
           </button>
@@ -1776,20 +1776,20 @@ function TorneioRivaisDetalhe({ torneio, resultados, fieldData, torneiosComManue
         <div className="detail-sub" style={{ marginTop:4 }}>
           {torneio.date_inicio && <span className="muted">📅 {fmtDate(torneio.date_inicio)}</span>}
           {isFuture
-            ? <span className="p p-sm" style={{ background:"var(--bg-info-strong)", color:"var(--color-info)", borderColor:"var(--border-info)" }}>futuro</span>
-            : <span className="p p-sm" style={{ background:"var(--bg-success-strong)", color:"var(--color-good-dark)", borderColor:"var(--border-success)" }}>disputado</span>
+            ? <span className="p p-sm toggle-pill-info">futuro</span>
+            : <span className="p p-sm toggle-pill-success">disputado</span>
           }
           {activeEscData && <span className="muted">{activeEscData.players.length} jogadores</span>}
           {nPaises > 1 && <span className="muted">{nPaises} países</span>}
           {resT?.url_resultados && (
             <a href={resT.url_resultados} target="_blank" rel="noopener noreferrer"
-              className="p p-sm p-muted" style={{ textDecoration:"none" }}>
+              className="p p-sm p-muted td-none">
               Resultados ↗
             </a>
           )}
           {fieldT?.url_uskids && !resT?.url_resultados && (
             <a href={fieldT.url_uskids} target="_blank" rel="noopener noreferrer"
-              className="p p-sm p-muted" style={{ textDecoration:"none" }}>
+              className="p p-sm p-muted td-none">
               USKids ↗
             </a>
           )}
@@ -2463,12 +2463,12 @@ export default function USKidsFieldPage() {
                   <span className="p p-sm p-muted fs-10">{t.escalaoManuel}</span>
                 )}
                 {temResultados && (
-                  <span className="p p-sm fs-10" style={{ background:"var(--bg-success-strong)", color:"var(--color-good-dark)", borderColor:"var(--border-success)" }}>
+                  <span className="p p-sm fs-10 toggle-pill-success">
                     resultados
                   </span>
                 )}
                 {isFuture && (
-                  <span className="p p-sm fs-10" style={{ background:"var(--bg-info-strong)", color:"var(--color-info)", borderColor:"var(--border-info)" }}>
+                  <span className="p p-sm fs-10 toggle-pill-info">
                     inscrito
                   </span>
                 )}
@@ -2554,7 +2554,7 @@ export default function USKidsFieldPage() {
           {t.urlResultados && (
             <a href={t.urlResultados} target="_blank" rel="noopener noreferrer"
               onClick={e => e.stopPropagation()}
-              className="p p-sm p-muted" style={{ textDecoration:"none" }}>
+              className="p p-sm p-muted td-none">
               Resultados ↗
             </a>
           )}

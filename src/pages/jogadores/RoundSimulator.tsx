@@ -1577,7 +1577,7 @@ export function RoundSimulator({
             {" — "}CR {grossTable.cr} / Slope {grossTable.slope} / Par{" "}
             {grossTable.par}
           </div>
-          <div className="table-wrap">
+          <div className="scroll-x">
             <table className="dtable fs-12">
               <thead>
                 <tr>
@@ -1693,7 +1693,7 @@ export function RoundSimulator({
 
       {/* ── Janela WHS final ── */}
       {simResults && validResults.length > 0 && (
-        <div className="table-wrap">
+        <div className="scroll-x">
           <div className="muted fs-11 mb-6">
             Janela WHS após simulação — ★ = top-
             {whsQtyCalc(simResults.finalPool.length)} SDs ·{" "}
@@ -1813,7 +1813,7 @@ export function RoundSimulator({
                             className={`p p-${sdClassByHcp(
                               adjSd,
                               currentHI
-                            )} fs-11-fw700`}
+                            )} fs-11 fw-700`}
                           >
                             {adjSd.toFixed(1)}
                           </span>
