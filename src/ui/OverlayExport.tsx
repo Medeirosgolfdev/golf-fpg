@@ -2108,17 +2108,18 @@ const DESIGNS: DesignDef[] = [
 const ALL_TOGGLES: {key:string;label:string;def:boolean}[] = [
   {key:"holeScores",label:"Scores",def:true},{key:"holePar",label:"Par",def:true},{key:"holeSI",label:"S.I.",def:false},{key:"stats",label:"Stats",def:true},
   {key:"course",label:"Campo",def:true},{key:"tee",label:"Tee",def:false},{key:"teeDist",label:"Dist.",def:false},
-  {key:"player",label:"Nome",def:false},{key:"hiCh",label:"HI/CH",def:false},{key:"sd",label:"SD",def:false},
-  {key:"event",label:"Torneio",def:false},{key:"round",label:"Round",def:false},{key:"date",label:"Data",def:true},{key:"position",label:"Pos.",def:false},
+  {key:"player",label:"Nome",def:true},{key:"hiCh",label:"HI/CH",def:false},{key:"sd",label:"SD",def:false},
+  {key:"event",label:"Torneio",def:true},{key:"round",label:"Round",def:true},{key:"date",label:"Data",def:true},{key:"position",label:"Pos.",def:false},
 ];
 const defaultVis = (): Vis => Object.fromEntries(ALL_TOGGLES.map(t => [t.key, t.def]));
 
 /* Presets rápidos */
 const VIS_PRESETS: {label:string; desc:string; vis:Vis}[] = [
-  { label:"Essencial", desc:"Scores + campo + data", vis:{ holeScores:true, holePar:true, holeSI:false, stats:false, course:true, tee:false, teeDist:false, player:false, hiCh:false, sd:false, event:false, round:false, date:true, position:false } },
+  { label:"⭐ PGA Tour", desc:"Nome + torneio + round + posição — ideal para os designs Pro Tour", vis:{ holeScores:true, holePar:false, holeSI:false, stats:false, course:false, tee:false, teeDist:false, player:true, hiCh:false, sd:false, event:true, round:true, date:false, position:true } },
+  { label:"Torneio",   desc:"Jogador + torneio + campo + stats", vis:{ holeScores:true, holePar:true, holeSI:false, stats:true, course:true, tee:false, teeDist:false, player:true, hiCh:false, sd:false, event:true, round:true, date:true, position:true } },
+  { label:"Essencial", desc:"Scores + campo + nome + data", vis:{ holeScores:true, holePar:true, holeSI:false, stats:true, course:true, tee:false, teeDist:false, player:true, hiCh:false, sd:false, event:false, round:false, date:true, position:false } },
   { label:"Completo",  desc:"Tudo ligado", vis:{ holeScores:true, holePar:true, holeSI:true, stats:true, course:true, tee:true, teeDist:true, player:true, hiCh:true, sd:true, event:true, round:true, date:true, position:true } },
-  { label:"Torneio",   desc:"Jogador + torneio + posição", vis:{ holeScores:true, holePar:true, holeSI:false, stats:true, course:true, tee:false, teeDist:false, player:true, hiCh:false, sd:false, event:true, round:true, date:true, position:true } },
-  { label:"Só Scores", desc:"Scores sem texto", vis:{ holeScores:true, holePar:false, holeSI:false, stats:false, course:false, tee:false, teeDist:false, player:false, hiCh:false, sd:false, event:false, round:false, date:false, position:false } },
+  { label:"Só Scores", desc:"Scores sem texto — limpo", vis:{ holeScores:true, holePar:false, holeSI:false, stats:false, course:false, tee:false, teeDist:false, player:false, hiCh:false, sd:false, event:false, round:false, date:false, position:false } },
 ];
 
 /* ═══════ BACKGROUNDS ═══════ */
@@ -2126,7 +2127,8 @@ const BG_OPTIONS: { id:string; label:string; hex:string|null }[] = [
   { id:"transparent", label:"Sem fundo", hex:null     },
   { id:"black",       label:"Preto",     hex:"#000000" },
   { id:"navy",        label:"Navy",      hex:"#0f1e35" },
-  { id:"navy2",       label:"Navy 2",    hex:"#14284f" },
+  { id:"pga",         label:"PGA Blue",  hex:"#00205b" },
+  { id:"masters",     label:"Masters",   hex:"#006747" },
   { id:"green",       label:"Verde",     hex:"#0d3320" },
   { id:"wine",        label:"Vinho",     hex:"#4a1020" },
   { id:"white",       label:"Branco",    hex:"#f2f2f2" },
@@ -2373,26 +2375,24 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
           </div>
         )}
 
-        {/* ── 3. CONTEÚDO — presets + toggles individuais ── */}
+        {/* ── 3. CONTEÚDO — presets + toggles ── */}
         <div style={{ marginBottom:8 }}>
-          <div style={{ display:"flex", flexWrap:"wrap", gap:4, marginBottom:4 }}>
-            <span style={{ fontSize:11, fontWeight:700, color:"#888", marginRight:2, lineHeight:"26px" }}>Conteúdo</span>
+          <div style={{ display:"flex", flexWrap:"wrap", gap:4, marginBottom:6 }}>
+            <span style={{ fontSize:11, fontWeight:700, color:"#888", marginRight:2, lineHeight:"26px" }}>Presets</span>
             {VIS_PRESETS.map(p => (
               <button key={p.label} className="ov-opt-btn" onClick={()=>setVis(p.vis)} title={p.desc}
                 style={{ padding:"3px 8px", fontSize:11 }}>{p.label}</button>
             ))}
           </div>
-          <details style={{ fontSize:11, color:"#888" }}>
-            <summary style={{ cursor:"pointer", fontWeight:600, userSelect:"none" }}>Ajustar individualmente</summary>
-            <div style={{ display:"flex", flexWrap:"wrap", gap:"3px 8px", paddingTop:4 }}>
-              {ALL_TOGGLES.map(t => (
-                <label key={t.key} className="ov-toggle">
-                  <input type="checkbox" checked={!!vis[t.key]} onChange={()=>toggle(t.key)} />
-                  <span>{t.label}</span>
-                </label>
-              ))}
-            </div>
-          </details>
+          <div style={{ display:"flex", flexWrap:"wrap", gap:"3px 8px" }}>
+            <span style={{ fontSize:11, fontWeight:700, color:"#888", marginRight:2, lineHeight:"22px" }}>Mostrar</span>
+            {ALL_TOGGLES.map(t => (
+              <label key={t.key} className="ov-toggle">
+                <input type="checkbox" checked={!!vis[t.key]} onChange={()=>toggle(t.key)} />
+                <span>{t.label}</span>
+              </label>
+            ))}
+          </div>
         </div>
 
         {/* ── 4. EXPORT ALL ── */}
