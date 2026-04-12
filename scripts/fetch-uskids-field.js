@@ -132,33 +132,57 @@ function parsearJogadores(flightPlayers) {
     .sort((a, b) => a.nome.localeCompare(b.nome));
 }
 
-/** Carrega o field anterior para preservar firstSeen dos jogadores já conhecidos */
+/** Carrega o field anterior para preservar firstSeen e detectar desinscrições.
+ *  Retorna { firstSeenMap, prevByEscalao } */
 function carregarFieldAnterior() {
+  const empty = { firstSeenMap: new Map(), prevByEscalao: new Map() };
   try {
-    if (!fs.existsSync(OUTPUT)) return new Map();
+    if (!fs.existsSync(OUTPUT)) return empty;
     const prev = JSON.parse(fs.readFileSync(OUTPUT, 'utf8'));
-    // Map: "t:nomeNorm" → firstSeen ISO string
-    const m = new Map();
+    const fsMap = new Map();      // "t:nomeNorm" → firstSeen
+    const byEsc = new Map();      // "t:escalaoNome" → Set<nomeNorm>
     for (const t of (prev.torneios || [])) {
       for (const e of (t.escaloes || [])) {
+        const escKey = `${t.t}:${e.nome}`;
+        const set = new Set();
         for (const j of (e.jogadores || [])) {
-          m.set(`${t.t}:${j.nome.toLowerCase().trim()}`, j.firstSeen || prev.gerado_em || null);
+          const norm = j.nome.toLowerCase().trim();
+          fsMap.set(`${t.t}:${norm}`, j.firstSeen || prev.gerado_em || null);
+          set.add(norm);
         }
+        if (set.size) byEsc.set(escKey, set);
       }
     }
-    return m;
-  } catch { return new Map(); }
+    return { firstSeenMap: fsMap, prevByEscalao: byEsc };
+  } catch { return empty; }
 }
 
-/** Aplica firstSeen: preserva do anterior, novos recebem agora */
-function aplicarFirstSeen(resultados, prevMap) {
+/** Aplica firstSeen e calcula removed (desinscrições) por escalão */
+function aplicarFirstSeen(resultados, { firstSeenMap, prevByEscalao }) {
   const agora = new Date().toISOString();
   for (const t of resultados) {
     for (const e of (t.escaloes || [])) {
-      if (!e.jogadores) continue;
-      for (const j of e.jogadores) {
-        const key = `${t.t}:${j.nome.toLowerCase().trim()}`;
-        j.firstSeen = prevMap.get(key) || agora;
+      // firstSeen
+      if (e.jogadores) {
+        for (const j of e.jogadores) {
+          const key = `${t.t}:${j.nome.toLowerCase().trim()}`;
+          j.firstSeen = firstSeenMap.get(key) || agora;
+        }
+      }
+      // removed: quem estava antes e já não está
+      const escKey = `${t.t}:${e.nome}`;
+      const prevSet = prevByEscalao.get(escKey);
+      if (prevSet && e.jogadores) {
+        const curSet = new Set(e.jogadores.map(j => j.nome.toLowerCase().trim()));
+        const rem = [...prevSet].filter(n => !curSet.has(n));
+        if (rem.length) {
+          // Guardar nomes originais (Title Case) — lookup no firstSeenMap
+          e.removed = rem.map(n => {
+            // Tentar recuperar nome original com capitalização
+            const parts = n.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1));
+            return parts.join(' ');
+          });
+        }
       }
     }
   }
