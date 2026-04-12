@@ -1664,18 +1664,36 @@ tr.cross-current { background: var(--bg-success); }
 
 /* ═══════ Overlay Export ═══════ */
 
-.ov-field label { font-size: 11px; font-weight: 800; color: var(--text-3); text-transform: uppercase; }
-.ov-field .input { font-size: 13px; padding: 5px 8px; font-weight: 600; }
+.ov-field label { font-size: 11px; font-weight: 800; color: var(--text-3); text-transform: uppercase; letter-spacing: .3px; }
+.ov-field .input { font-size: 13px; padding: 6px 10px; font-weight: 600; border-radius: var(--radius); border: 1.5px solid var(--border); background: var(--bg); transition: border-color .15s; }
+.ov-field .input:focus { border-color: var(--link-color); outline: none; }
 
-.ov-opt-btn.active { background: var(--text); color: #fff; border-color: var(--text); }
+/* Secção colapsável de personalização */
+.ov-section { background: var(--bg-detail); border-radius: var(--radius); padding: 10px 12px; margin-bottom: 8px; border: 1px solid var(--border-light); }
+.ov-section-label { font-size: 10px; font-weight: 900; color: var(--text-3); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 6px; }
 
-.ov-toggle input[type="checkbox"] { accent-color: var(--link-color); width: 14px; height: 14px; }
+/* Botões opção (fundo, presets, tema) */
+.ov-opt-btn {
+  padding: 4px 10px; font-size: 11px; font-weight: 700; border-radius: 6px;
+  border: 1.5px solid var(--border); background: var(--bg); color: var(--text-2);
+  cursor: pointer; transition: all .15s; user-select: none; line-height: 1.3;
+}
+.ov-opt-btn:hover { background: var(--bg-hover); border-color: var(--text-3); }
+.ov-opt-btn.active { background: var(--link-color); color: #fff; border-color: var(--link-color); }
+
+/* Toggle checkboxes — estilo pill */
+.ov-toggle { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px 2px 4px; border-radius: 6px; cursor: pointer; transition: background .12s; user-select: none; font-size: 12px; font-weight: 600; color: var(--text-2); }
+.ov-toggle:hover { background: var(--bg-hover); }
+.ov-toggle input[type="checkbox"] { accent-color: var(--link-color); width: 15px; height: 15px; margin: 0; cursor: pointer; }
+
 @media (max-width: 600px) {
  .ov-fields { gap: 6px; }
- .ov-field .input { font-size: 11px; padding: 3px 6px; }
+ .ov-field .input { font-size: 12px; padding: 5px 8px; }
  .ov-options { gap: 8px; }
  .ov-toggles { gap: 4px 8px; }
- .ov-gallery { gap: 10px; }
+ .ov-gallery { gap: 8px; }
+ .ov-section { padding: 8px 10px; }
+ .ov-card-preview { overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
 }
 
 /* ─── Filtros Rivais — colapsáveis em mobile, sempre visíveis em desktop ─── */
@@ -2695,7 +2713,7 @@ tr.cross-current { background: var(--bg-success); }
 .tee-date { display: inline-block; padding: 1px 7px; border-radius: var(--radius); font-size: 11px; font-weight: 600; }
 .ov-export {
  margin: 20px 0;
- padding: 16px;
+ padding: 16px 18px;
  border: 2px solid var(--border);
  border-radius: var(--radius-lg);
  background: var(--bg-detail);
@@ -2712,16 +2730,17 @@ tr.cross-current { background: var(--bg-success); }
 }
 .ov-opt-group { display: flex; align-items: center; gap: 4px; }
 .ov-opt-label { font-size: 11px; font-weight: 800; color: var(--grey-400); margin-right: 4px; text-transform: uppercase; }
-.ov-opt-btn:hover { background: var(--bg-hover); }
 .ov-toggles {
  display: flex; gap: 6px 12px; flex-wrap: wrap; margin-bottom: 12px;
 }
 .ov-export-btn {
- padding: 10px 24px; background: var(--link-color); color: #fff; border: none; border-radius: var(--radius);
- font-size: 14px; font-weight: 800; cursor: pointer; transition: background 0.15s;
+ padding: 10px 28px; background: var(--link-color); color: #fff; border: none; border-radius: 8px;
+ font-size: 14px; font-weight: 800; cursor: pointer; transition: all 0.15s;
+ box-shadow: 0 2px 8px rgba(0,0,0,.15); letter-spacing: .3px;
 }
-.ov-export-btn:hover { background: var(--accent-hover); }
-.ov-export-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.ov-export-btn:hover { background: var(--accent-hover); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,.2); }
+.ov-export-btn:active { transform: translateY(0); box-shadow: 0 1px 4px rgba(0,0,0,.15); }
+.ov-export-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
 .ov-gallery {
  display: flex; flex-wrap: wrap; gap: 16px;
 }
@@ -2733,12 +2752,22 @@ tr.cross-current { background: var(--bg-success); }
 }
 .ov-card-label { font-size: 12px; font-weight: 800; color: var(--text-2); }
 .ov-share-btn {
- padding: 3px 10px; border-radius: var(--radius-lg); background: var(--accent-alpha-10);
- border: 1px solid var(--accent-alpha-20); cursor: pointer; font-size: 12px; line-height: 1;
+ padding: 4px 12px; border-radius: 8px; background: var(--accent-alpha-10);
+ border: 1.5px solid var(--accent-alpha-20); cursor: pointer; font-size: 13px; line-height: 1;
+ transition: all .12s; font-weight: 600;
 }
-.ov-share-btn:hover { background: var(--accent-alpha-20); }
+.ov-share-btn:hover { background: var(--link-color); color: #fff; border-color: var(--link-color); transform: scale(1.05); }
+.ov-share-btn:active { transform: scale(0.98); }
 .ov-card-preview {
  display: inline-flex; border-radius: var(--radius); overflow: visible; border: 1px solid var(--border-light);
+}
+/* Mobile: gallery full-width cards */
+@media (max-width: 480px) {
+ .ov-gallery { gap: 12px; }
+ .ov-card { width: 100%; }
+ .ov-card-preview { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+ .ov-export { padding: 12px; }
+ .ov-export-btn { width: 100%; text-align: center; padding: 12px 20px; }
 }
 .error-msg { font-size: 13px; margin-top: 4px; }
 

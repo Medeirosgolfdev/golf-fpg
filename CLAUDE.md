@@ -20,7 +20,7 @@ Erros de tipo, imports em falta, variáveis não usadas, ou testes falhados inva
 - React 19 + TypeScript 5.9 + Vite 6
 - react-router-dom 6 (SPA, client-side routing)
 - recharts 3 (gráficos)
-- html2canvas (exportação de overlays)
+- html-to-image (exportação de overlays)
 - Playwright (scraping pipeline)
 - Deploy: Vercel com GitHub integration
 - 5 GitHub Actions para automação de dados
@@ -555,7 +555,7 @@ Popula `uskTournNames` como fallback (hardcoded em `USKIDS_TCODE_META` tem prior
 
 - **Todas as cores passam por `tokens.css`** — nunca hardcodar hex nos componentes.
 - `colors.ts` espelha os tokens para uso em JS/TS (recharts, arrays de dados). Alterar primeiro em `tokens.css`, depois actualizar `colors.ts`.
-- **Excepção intencional:** `OverlayExport.tsx` usa cores hardcoded porque `html2canvas` não suporta CSS custom properties — documentado com comentário no cabeçalho.
+- **Excepção intencional:** `OverlayExport.tsx` usa cores hardcoded porque `html-to-image` não suporta CSS custom properties — documentado com comentário no cabeçalho.
 - `.p-intl { background: #00FF00 }` (verde néon) é **intencional** — não "corrigir".
 - `design-system.html` na raiz documenta visualmente todas as classes CSS.
 

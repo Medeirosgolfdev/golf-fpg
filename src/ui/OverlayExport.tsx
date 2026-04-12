@@ -45,6 +45,40 @@ const LO = "'Lora',serif";
 const BN = "'Bebas Neue',sans-serif";
 const SG = "'Space Grotesk',sans-serif";
 
+/*
+ * Pre-fetch Google Fonts CSS e converte as fonts woff2 para base64 data URIs.
+ * Contorna o bug CORS do html-to-image (embed-webfonts.ts → normalizeFontFamily).
+ * Resultado cacheado — só faz fetch na 1ª chamada.
+ */
+let _fontCSSCache: Promise<string> | null = null;
+function getFontEmbedCSS(): Promise<string> {
+  if (_fontCSSCache) return _fontCSSCache;
+  _fontCSSCache = (async () => {
+    try {
+      /* 1. Fetch CSS do Google Fonts (com user-agent que retorna woff2) */
+      const res = await fetch(FONT_LINK, {
+        headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" },
+      });
+      let css = await res.text();
+      /* 2. Extrair URLs de fonts e converter para base64 data URIs */
+      const urls = [...css.matchAll(/url\(([^)]+)\)/g)].map(m => m[1]);
+      for (const url of urls) {
+        try {
+          const fontRes = await fetch(url);
+          const buf = await fontRes.arrayBuffer();
+          const b64 = btoa(String.fromCharCode(...new Uint8Array(buf)));
+          const mime = url.includes(".woff2") ? "font/woff2" : "font/woff";
+          css = css.replace(url, `data:${mime};base64,${b64}`);
+        } catch { /* se uma font falhar, manter URL original */ }
+      }
+      return css;
+    } catch {
+      return ""; /* fallback: sem embed (usa fonts do browser) */
+    }
+  })();
+  return _fontCSSCache;
+}
+
 /* ═══════ HELPERS ═══════ */
 function scBg(d: number): string | null {
   if (d <= -2) return "#d4a017"; // eagle+ — ouro
@@ -319,68 +353,6 @@ function V6({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
         </div>
       )}
       {v.stats && <div style={{ marginTop:3 }}><StatsRow st={s.st} tc3={tc4} gap={5} fs={10} /></div>}
-    </div>
-  );
-}
-
-/* V7 · WIDE ROW — compact 2-row grid with clear Out/In labels */
-function V7({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
-  const is18 = d.scores.length >= 18;
-  return (
-    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg, padding:"3px 5px", borderRadius:8, textShadow:TS }}>
-      <div style={{ display:"flex", alignItems:"baseline", gap:5, marginBottom:4 }}>
-        <span style={{ fontFamily:BN, fontSize:50, lineHeight:.85, letterSpacing:-1, color:tc, textShadow:TS_SCORE }}>{s.sT}</span>
-        <span style={{ fontSize:20, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
-        <div style={{ marginLeft:"auto" }}>
-          {v.player&&d.player && <div style={{ fontFamily:OS, fontSize:16, fontWeight:700 }}>{d.player}</div>}
-          {(v.course||v.date||v.round) && <div style={{ fontSize:10, fontWeight:500, color:tc3 }}>{metaStr(d,{course:v.course,date:v.date,round:v.round})}</div>}
-        </div>
-      </div>
-      {v.holeScores && (
-        <div style={{ display:"flex", flexDirection:"column", gap:2 }}>
-          {(is18 ? [[0,9],[9,9]] as [number,number][] : [[0,d.scores.length] as [number,number]]).map(([off,len]) => (
-            <div key={off} style={{ display:"flex", gap:2 }}>
-              {d.scores.slice(off,off+len).map((sc,i) => <SC key={i} sc={sc} par={d.par[off+i]} sz={28} />)}
-            </div>
-          ))}
-        </div>
-      )}
-      {v.stats && <div style={{ borderTop:"1px solid rgba(255,255,255,.08)", paddingTop:3, marginTop:3 }}><StatsRow st={s.st} tc3={tc4} gap={5} fs={10} /></div>}
-    </div>
-  );
-}
-
-/* V8 · GRADIENT */
-function V8({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
-  const is18 = d.scores.length >= 18;
-  const hcl = hiChStr(d,v,s);
-  return (
-    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg||"linear-gradient(135deg,rgba(15,30,55,.88),rgba(20,50,35,.82))", borderRadius:8, padding:"3px 5px", textShadow:TS }}>
-      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:4 }}>
-        <div>
-          {v.player&&d.player && <div style={{ fontSize:18, fontWeight:900 }}>{d.player}</div>}
-          {(v.course||v.round||v.date) && <div style={{ fontSize:10, fontWeight:500, color:tc3 }}>{metaStr(d,{course:v.course,round:v.round,date:v.date})}</div>}
-          {hcl && <div style={{ fontSize:10, fontWeight:600, color:tc4 }}>{hcl}</div>}
-        </div>
-        <div style={{ display:"flex", alignItems:"baseline", gap:5, flexShrink:0 }}>
-          <span style={{ fontFamily:BN, fontSize:52, lineHeight:.85, letterSpacing:-1, color:tc, textShadow:TS_SCORE }}>{s.sT}</span>
-          <span style={{ fontFamily:SG, fontSize:18, fontWeight:700, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
-        </div>
-      </div>
-      {v.holeScores && (is18 ? [[0,9],[9,9]] as [number,number][] : [[0,d.scores.length] as [number,number]]).map(([off,len]) => (
-        <div key={off} style={{ display:"flex", gap:3, marginBottom:off===0&&is18?2:0 }}>
-          {d.scores.slice(off,off+len).map((sc,i) => (
-            <div key={i} style={{ flex:1, display:"flex", flexDirection:"column", alignItems:"center", gap:1 }}>
-              <div style={{ fontSize:9, fontWeight:700, color:tc4 }}>{off+i+1}</div>
-              <SC sc={sc} par={d.par[off+i]} sz={28} />
-            </div>
-          ))}
-        </div>
-      ))}
-      <div style={{ display:"flex", justifyContent:"space-between", borderTop:"1px solid rgba(255,255,255,.08)", paddingTop:6, marginTop:3, fontSize:10, fontWeight:700, color:tc3 }}>
-        {v.date&&d.date ? <span>{d.date}</span> : <span />}
-        {v.stats ? <StatsRow st={s.st} tc3={tc3} gap={5} fs={10} /> : <span />}
-      </div>
     </div>
   );
 }
@@ -705,56 +677,6 @@ function V17({ d, v, s, bg, tc="white", tc2, tc3, tc4 }: P) {
   );
 }
 
-/* V18 · CLASSIC TABLE */
-function V18({ d, v, s, bg, tc="white", tc2, tc3, tc4 }: P) {
-  const is18 = d.scores.length >= 18; const W = 20;
-  const hcl = hiChStr(d,v,s);
-  const vl = "1px solid rgba(255,255,255,.15)";
-  return (
-    <div style={{ fontFamily:II, padding:10, display:"inline-block", background:bg||"rgba(15,30,55,.90)", borderRadius:8, color:tc, textShadow:TS }}>
-      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:4, gap:6 }}>
-        <div>
-          {v.player&&d.player && <div style={{ fontSize:15, fontWeight:900 }}>{d.player}</div>}
-          {(v.round||v.course) && <div style={{ fontSize:10, fontWeight:600, color:tc3 }}>{[v.round&&`Round ${d.round}`,v.course&&d.course].filter(Boolean).join(" · ")}</div>}
-        </div>
-        <div style={{ display:"flex", alignItems:"baseline", gap:4, flexShrink:0 }}>
-          <span style={{ fontFamily:OS, fontSize:30, fontWeight:900 }}>{s.sT}</span>
-          <span style={{ fontSize:14, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
-        </div>
-      </div>
-      {v.holeScores && (is18 ? [[0,"Out",s.sF,s.pF],[9,"In",s.sB,s.pB]] as [number,string,number,number][] : [[0,"Tot",s.sT,s.pT] as [number,string,number,number]]).map(([off,label,sub,subP],ri) => {
-        const cnt = is18?9:d.scores.length;
-        return (
-          <div key={off} style={{ marginBottom:ri===0&&is18?2:0 }}>
-            <div style={{ display:"flex", background:"rgba(20,45,75,.95)", padding:"3px 0" }}>
-              <div style={{ width:46, padding:"0 6px", fontWeight:900, fontSize:11, color:"#fff" }}>Hole</div>
-              {Array.from({length:cnt},(_,i) => <div key={i} style={{width:W,textAlign:"center",fontWeight:800,fontSize:11,color:"#fff"}}>{off+i+1}</div>)}
-              <div style={{ width:34, textAlign:"center", fontWeight:900, fontSize:11, borderLeft:vl, color:"#fff" }}>{label}</div>
-            </div>
-            {v.holePar && (
-              <div style={{ display:"flex", padding:"2px 0", background:"rgba(255,255,255,.05)" }}>
-                <div style={{ width:46, padding:"0 6px", fontSize:10, fontWeight:600, color:tc3 }}>Par</div>
-                {d.par.slice(off,off+cnt).map((p,i) => <div key={i} style={{width:W,textAlign:"center",fontSize:10,color:tc2}}>{p}</div>)}
-                <div style={{ width:34, textAlign:"center", fontWeight:700, fontSize:10, color:tc2, borderLeft:vl }}>{subP}</div>
-              </div>
-            )}
-            <div style={{ display:"flex", padding:"2px 0" }}>
-              <div style={{ width:46, padding:"0 6px", fontWeight:900, fontSize:11, color:tc }}>Score</div>
-              {d.scores.slice(off,off+cnt).map((sc,i) => <div key={i} style={{width:W,display:"flex",justifyContent:"center"}}><SC sc={sc} par={d.par[off+i]} sz={24} /></div>)}
-              <div style={{ width:34, textAlign:"center", fontWeight:900, fontSize:15, borderLeft:vl, display:"flex", alignItems:"center", justifyContent:"center", color:tc }}>{sub}</div>
-            </div>
-            {ri===0&&is18 && <div style={{ height:2, background:"rgba(100,180,100,.4)", margin:"2px 0" }} />}
-          </div>
-        );
-      })}
-      <div style={{ display:"flex", justifyContent:"space-between", marginTop:4, fontSize:10, fontWeight:700, color:tc4 }}>
-        {v.stats ? <StatsRow st={s.st} tc3={tc4} gap={5} fs={10} /> : <span />}
-        {hcl && <span>{hcl}</span>}
-      </div>
-    </div>
-  );
-}
-
 /* V19 · PGA COLUMNS — sem barra horizontal */
 function V19({ d, v, s, bg, tc="white", tc3 }: P) {
   const is18 = d.scores.length >= 18;
@@ -796,46 +718,6 @@ function V19({ d, v, s, bg, tc="white", tc3 }: P) {
           {v.date&&d.date && <div>{d.date}</div>}
         </div>
       )}
-    </div>
-  );
-}
-
-/* V20 · GREEN COLUMNS — sem barra horizontal */
-function V20({ d, v, s, bg, tc="white", tc3 }: P) {
-  const is18 = d.scores.length >= 18;
-  const maxW = is18 ? 80 : 42;
-  return (
-    <div style={{ fontFamily:OS, display:"inline-flex", flexDirection:"column", alignItems:"center", color:tc, background:bg||"rgba(10,30,20,.90)", borderRadius:8, overflow:"hidden", textShadow:TS, maxWidth: maxW + 40 }}>
-      {(v.player||v.course||v.round||v.date) && (
-        <div style={{ padding:"5px 8px 3px", textAlign:"center", maxWidth: maxW + 30, overflow:"hidden" }}>
-          {(v.round||v.date) && <div style={{ fontFamily:II, fontSize:9, fontWeight:700, letterSpacing:1, color:tc3 }}>{[v.round&&`R${d.round}`,v.date&&d.date].filter(Boolean).join(" · ")}</div>}
-          {v.player&&d.player && <div style={{ fontSize:15, fontWeight:700, letterSpacing:1, marginTop:2, whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis" }}>{d.player.toUpperCase()}</div>}
-          {v.course&&d.course && <div style={{ fontFamily:II, fontSize:9, fontWeight:500, color:tc3, whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis" }}>{d.course}</div>}
-        </div>
-      )}
-      {v.holeScores && (
-        <div style={{ display:"flex", justifyContent:"center", padding:"3px 6px 4px" }}>
-          {is18 ? (
-            [{off:0,sc:s.sF},{off:9,sc:s.sB}].map(({off,sc:sub},ci) => (
-              <div key={off} style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:2, borderRight:ci===0?"2px solid rgba(74,222,128,.25)":"none", paddingRight:ci===0?6:0, paddingLeft:ci===1?6:0 }}>
-                {d.scores.slice(off,off+9).map((sc,i) => <SC key={i} sc={sc} par={d.par[off+i]} sz={22} />)}
-                <div style={{ fontFamily:II, fontSize:12, fontWeight:900, marginTop:1 }}>{sub}</div>
-              </div>
-            ))
-          ) : (
-            <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:2 }}>
-              {d.scores.map((sc,i) => <SC key={i} sc={sc} par={d.par[i]} sz={22} />)}
-            </div>
-          )}
-        </div>
-      )}
-      <div style={{ background:"rgba(255,255,255,.07)", padding:"3px 7px", textAlign:"center", width:"100%" }}>
-        <div style={{ display:"flex", alignItems:"baseline", justifyContent:"center", gap:5 }}>
-          <span style={{ fontSize:22, lineHeight:1 }}>{s.sT}</span>
-          <span style={{ fontFamily:II, fontSize:16, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
-        </div>
-        {v.stats && <div style={{ display:"flex", justifyContent:"center", marginTop:2 }}><StatsRow st={s.st} tc3={tc3} gap={5} fs={11} /></div>}
-      </div>
     </div>
   );
 }
@@ -1364,54 +1246,6 @@ function V33({ d, v, s, bg, tc="white", tc3 }: P) {
   );
 }
 
-/* V37 · KORN FERRY — Estilo Korn Ferry Tour / Auburn.
-   Transparente puro. 2 filas de circles à esquerda, score ENORME à direita.
-   Nome + torneio + round em baixo. Sem qualquer fundo. */
-function V37({ d, v, s, bg, tc="white", tc3 }: P) {
-  const is18 = d.scores.length >= 18;
-  return (
-    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg, padding:"4px 4px 4px 4px" }}>
-      {v.holeScores && (
-        <div style={{ display:"flex", alignItems:"center" }}>
-          <div style={{ display:"flex", flexDirection:"column", gap:4 }}>
-            {(is18 ? [[0,9],[9,9]] as [number,number][] : [[0,d.scores.length] as [number,number]]).map(([off,len],ri) => (
-              <div key={off}>
-                {ri === 0 && <div style={{ display:"flex", gap:2, marginBottom:1 }}>
-                  {Array.from({length:len},(_,i) => <div key={i} style={{ width:36, textAlign:"center", fontSize:9, fontWeight:600, color:tc3 }}>{off+i+1}</div>)}
-                </div>}
-                <div style={{ display:"flex", gap:2 }}>
-                  {d.scores.slice(off,off+len).map((sc,i) => <SC key={i} sc={sc} par={d.par[off+i]} sz={36} />)}
-                </div>
-                {ri === 1 && <div style={{ display:"flex", gap:2, marginTop:1 }}>
-                  {Array.from({length:len},(_,i) => <div key={i} style={{ width:36, textAlign:"center", fontSize:9, fontWeight:600, color:tc3 }}>{off+i+1}</div>)}
-                </div>}
-              </div>
-            ))}
-          </div>
-          <div style={{ textAlign:"right", flexShrink:0, marginLeft:8 }}>
-            <div style={{ fontFamily:BN, fontSize:120, lineHeight:.75, letterSpacing:-4, color:tc }}>{s.sT}</div>
-            <div style={{ fontFamily:SG, fontSize:16, fontWeight:700, color:vpC(s.vpT), marginTop:2, letterSpacing:1 }}>{fmtToPar(s.vpT)}</div>
-          </div>
-        </div>
-      )}
-      {!v.holeScores && (
-        <div style={{ textAlign:"center" }}>
-          <div style={{ fontFamily:BN, fontSize:120, lineHeight:.75, letterSpacing:-4, color:tc }}>{s.sT}</div>
-          <div style={{ fontFamily:SG, fontSize:20, fontWeight:700, color:vpC(s.vpT), marginTop:4 }}>{fmtToPar(s.vpT)}</div>
-        </div>
-      )}
-      {(v.player||v.event||v.round||v.course||v.date) && (
-        <div style={{ marginTop:6, fontSize:10, fontWeight:700, letterSpacing:1.5, textTransform:"uppercase", color:tc3, lineHeight:1.4 }}>
-          {v.player&&d.player && <div>{d.player}</div>}
-          {[v.event&&d.event,v.course&&d.course,v.round&&`R${d.round}`,v.date&&d.date].filter(Boolean).length > 0 && (
-            <div style={{ fontSize:9 }}>{[v.event&&d.event,v.course&&d.course,v.round&&`R${d.round}`,v.date&&d.date].filter(Boolean).join(" · ")}</div>
-          )}
-        </div>
-      )}
-    </div>
-  );
-}
-
 /* V38 · PGA AMERICAS — Estilo PGA Tour Americas.
    Transparente. Nome GRANDE em cima, hole numbers + 2 filas de circles,
    score ENORME à direita, round + tournament em barra em baixo. */
@@ -1566,44 +1400,6 @@ function V35({ d, v, s, bg, tc="white", tc3 }: P) {
   );
 }
 
-/* V36 · PURE WHITE MINIMAL — Só scores num fundo branco puro. Sem header escuro, sem ruído.
-   Números de buraco em cinza muito claro, scores com cor, total grande. O mais limpo possível. */
-function V36({ d, v, s, bg, tc="white", tc3 }: P) {
-  const is18 = d.scores.length >= 18;
-  const isDark = tc === "#ffffff" || tc === "white";
-  const bgF = bg || (isDark ? "#1a1e2a" : "#fff");
-  const tx = isDark ? "#eee" : "#222";
-  const tx3 = isDark ? "#64748b" : "#ccc";
-  return (
-    <div style={{ fontFamily:SG, display:"inline-block", background:bgF, color:tx, borderRadius:8, padding:"8px 10px" }}>
-      <div style={{ display:"flex", alignItems:"baseline", gap:5, marginBottom:6 }}>
-        <span style={{ fontFamily:BN, fontSize:48, lineHeight:.8, color:tx }}>{s.sT}</span>
-        <span style={{ fontSize:18, fontWeight:700, color:isDark?vpC(s.vpT):vpCd(s.vpT) }}>{fmtToPar(s.vpT)}</span>
-        {v.player&&d.player && <span style={{ marginLeft:"auto", fontFamily:BN, fontSize:16, letterSpacing:1, color:tc3||tx3 }}>{d.player.toUpperCase()}</span>}
-      </div>
-      {v.holeScores && (is18 ? [[0,9],[9,9]] as [number,number][] : [[0,d.scores.length] as [number,number]]).map(([off,len]) => (
-        <div key={off} style={{ display:"flex", gap:3, marginBottom:3 }}>
-          {d.scores.slice(off,off+len).map((sc,i) => (
-            <div key={i} style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:1 }}>
-              <div style={{ fontSize:8, fontWeight:600, color:tx3 }}>{off+i+1}</div>
-              {isDark ? <SC sc={sc} par={d.par[off+i]} sz={26} /> : <SCL sc={sc} par={d.par[off+i]} sz={26} />}
-            </div>
-          ))}
-        </div>
-      ))}
-      {(v.course||v.date||v.event) && (
-        <div style={{ fontSize:9, fontWeight:600, color:tc3||tx3, marginTop:4 }}>
-          {[v.event&&d.event,v.course&&d.course,v.date&&d.date].filter(Boolean).join(" · ")}
-        </div>
-      )}
-    </div>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════
-   V39–V44 — NOVOS DESIGNS "TOTALMENTE A BRANCO" + EXTRAS
-   ═══════════════════════════════════════════════════════════ */
-
 /* V39 · GHOST WHITE — Igual ao V37 mas com SCO (contornos brancos).
    Transparente. 2 filas de circles outline à esquerda, score ENORME à direita. */
 function V39({ d, v, s, bg, tc="white", tc3 }: P) {
@@ -1645,55 +1441,6 @@ function V39({ d, v, s, bg, tc="white", tc3 }: P) {
           {[v.event&&d.event,v.course&&d.course,v.round&&`R${d.round}`,v.date&&d.date].filter(Boolean).length > 0 && (
             <div style={{ fontSize:9 }}>{[v.event&&d.event,v.course&&d.course,v.round&&`R${d.round}`,v.date&&d.date].filter(Boolean).join(" · ")}</div>
           )}
-        </div>
-      )}
-    </div>
-  );
-}
-
-/* V40 · TOWER WHITE — SCO (contornos brancos) + nome grande + footer. */
-function V40({ d, v, s, bg, tc="white", tc3 }: P) {
-  const is18 = d.scores.length >= 18;
-  return (
-    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg, padding:"4px 4px 4px 4px" }}>
-      {v.player&&d.player && (
-        <div style={{ fontFamily:LO, fontSize:32, fontWeight:700, fontStyle:"italic", marginBottom:4, letterSpacing:.5 }}>
-          {d.player}
-        </div>
-      )}
-      {v.holeScores && (
-        <div style={{ display:"flex", alignItems:"center" }}>
-          <div style={{ display:"flex", flexDirection:"column", gap:3 }}>
-            {(is18 ? [[0,9],[9,9]] as [number,number][] : [[0,d.scores.length] as [number,number]]).map(([off,len],ri) => (
-              <div key={off}>
-                {ri === 0 && <div style={{ display:"flex", gap:2, marginBottom:1 }}>
-                  {Array.from({length:len},(_,i) => <div key={i} style={{ width:36, textAlign:"center", fontSize:9, fontWeight:600, color:tc3 }}>{off+i+1}</div>)}
-                </div>}
-                <div style={{ display:"flex", gap:2 }}>
-                  {d.scores.slice(off,off+len).map((sc,i) => <SCO key={i} sc={sc} par={d.par[off+i]} sz={36} />)}
-                </div>
-                {ri === (is18 ? 1 : 0) && <div style={{ display:"flex", gap:2, marginTop:1 }}>
-                  {Array.from({length:len},(_,i) => <div key={i} style={{ width:36, textAlign:"center", fontSize:9, fontWeight:600, color:tc3 }}>{off+i+1}</div>)}
-                </div>}
-              </div>
-            ))}
-          </div>
-          <div style={{ textAlign:"right", flexShrink:0, marginLeft:8 }}>
-            <div style={{ fontFamily:BN, fontSize:120, lineHeight:.75, letterSpacing:-4, color:tc }}>{s.sT}</div>
-            <div style={{ fontFamily:SG, fontSize:16, fontWeight:700, color:tc3, marginTop:4 }}>{fmtToPar(s.vpT)}</div>
-          </div>
-        </div>
-      )}
-      {!v.holeScores && (
-        <div style={{ display:"flex", alignItems:"baseline", gap:8 }}>
-          <div style={{ fontFamily:BN, fontSize:120, lineHeight:.75, letterSpacing:-4, color:tc }}>{s.sT}</div>
-          <div style={{ fontFamily:SG, fontSize:20, fontWeight:700, color:tc3 }}>{fmtToPar(s.vpT)}</div>
-        </div>
-      )}
-      {(v.round||v.event||v.course||v.date) && (
-        <div style={{ marginTop:6, fontSize:10, fontWeight:700, letterSpacing:1.5, textTransform:"uppercase", lineHeight:1.4 }}>
-          {v.round && <span style={{ background:"rgba(255,255,255,.15)", padding:"2px 8px", fontSize:10, fontWeight:800, marginRight:4 }}>R{d.round}</span>}
-          <div style={{ fontSize:9, color:tc3, marginTop:2 }}>{[v.event&&d.event,v.course&&d.course,v.date&&d.date].filter(Boolean).join(" · ")}</div>
         </div>
       )}
     </div>
@@ -1781,44 +1528,6 @@ function V43({ d, v, s, bg, tc="white", tc3 }: P) {
           </div>
         )}
       </div>
-    </div>
-  );
-}
-
-/* V44 · TOUR WHITE — SCO circles + score grande à direita. */
-function V44({ d, v, s, bg, tc="white", tc3 }: P) {
-  const is18 = d.scores.length >= 18;
-  return (
-    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg, padding:"4px 6px" }}>
-      {v.holeScores && (
-        <div style={{ display:"flex", alignItems:"center" }}>
-          <div style={{ display:"flex", flexDirection:"column", gap:3 }}>
-            {(is18 ? [[0,9],[9,9]] as [number,number][] : [[0,d.scores.length] as [number,number]]).map(([off,len]) => (
-              <div key={off} style={{ display:"flex", gap:2 }}>
-                {d.scores.slice(off,off+len).map((sc,i) => <SCO key={i} sc={sc} par={d.par[off+i]} sz={36} />)}
-              </div>
-            ))}
-          </div>
-          <div style={{ textAlign:"right", flexShrink:0, marginLeft:8 }}>
-            <div style={{ fontFamily:BN, fontSize:100, lineHeight:.75, letterSpacing:-3, color:tc }}>{s.sT}</div>
-            <div style={{ fontFamily:SG, fontSize:16, fontWeight:700, color:tc3, marginTop:2 }}>{fmtToPar(s.vpT)}</div>
-          </div>
-        </div>
-      )}
-      {!v.holeScores && (
-        <div style={{ display:"flex", alignItems:"baseline", gap:6, justifyContent:"center" }}>
-          <span style={{ fontFamily:BN, fontSize:100, lineHeight:.75, letterSpacing:-3, color:tc }}>{s.sT}</span>
-          <span style={{ fontFamily:SG, fontSize:18, fontWeight:700, color:tc3 }}>{fmtToPar(s.vpT)}</span>
-        </div>
-      )}
-      {(v.player||v.event||v.round||v.course) && (
-        <div style={{ marginTop:5, fontSize:10, fontWeight:700, letterSpacing:1.5, textTransform:"uppercase", color:tc3, lineHeight:1.4 }}>
-          {v.player&&d.player && <span>{d.player}</span>}
-          {[v.event&&d.event,v.round&&`R${d.round}`].filter(Boolean).length > 0 && (
-            <div style={{ fontSize:9 }}>{[v.event&&d.event,v.round&&`R${d.round}`].filter(Boolean).join(" · ")}</div>
-          )}
-        </div>
-      )}
     </div>
   );
 }
@@ -2000,12 +1709,9 @@ function V47({ d, v, s, bg, tc="white", tc3 }: P) {
       })()}
       {/* Info bar — roxo com torneio + round + to-par */}
       {(v.event || v.round || v.course) && (
-        <div style={{ background: accentBar, padding: "3px 10px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8, marginBottom: 4 }}>
+        <div style={{ background: accentBar, padding: "3px 10px", display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
           <div style={{ fontSize: 8, fontWeight: 800, letterSpacing: 1.5, color: "rgba(255,255,255,.8)", textTransform: "uppercase" }}>
             {[v.event && d.event, v.round && `ROUND ${d.round}`, v.course && d.course].filter(Boolean).join("  /  ")}
-          </div>
-          <div style={{ fontSize: 9, fontWeight: 900, color: "#fff", letterSpacing: 1 }}>
-            TOURNAMENT {fmtToPar(s.vpT)}
           </div>
         </div>
       )}
@@ -2109,7 +1815,7 @@ const ALL_TOGGLES: {key:string;label:string;def:boolean}[] = [
   {key:"holeScores",label:"Scores",def:true},{key:"holePar",label:"Par",def:true},{key:"holeSI",label:"S.I.",def:false},{key:"stats",label:"Stats",def:true},
   {key:"course",label:"Campo",def:true},{key:"tee",label:"Tee",def:false},{key:"teeDist",label:"Dist.",def:false},
   {key:"player",label:"Nome",def:true},{key:"hiCh",label:"HI/CH",def:false},{key:"sd",label:"SD",def:false},
-  {key:"event",label:"Torneio",def:true},{key:"round",label:"Round",def:true},{key:"date",label:"Data",def:true},{key:"position",label:"Pos.",def:false},
+  {key:"event",label:"Torneio",def:true},{key:"round",label:"Round",def:false},{key:"date",label:"Data",def:true},{key:"position",label:"Pos.",def:false},
 ];
 const defaultVis = (): Vis => Object.fromEntries(ALL_TOGGLES.map(t => [t.key, t.def]));
 
@@ -2153,6 +1859,7 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
   const [bgAlpha,     setBgAlpha]     = useState(88);
   const [theme,       setTheme]       = useState<"dark"|"light">("dark");
   const [exporting,   setExporting]   = useState(false);
+  const [exportingId, setExportingId] = useState<string|null>(null);
   const [collapsed,   setCollapsed]   = useState(true);
   const [manualScore, setManualScore] = useState("");
   const designRefs = useRef<Record<string, HTMLDivElement|null>>({});
@@ -2213,24 +1920,25 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
 
   /* ── Helpers de export ── */
   const renderDesign = useCallback(async (designId: string): Promise<Blob|null> => {
-    const el = designRefs.current[designId]; if (!el) return null;
-    await document.fonts.ready; /* esperar Google Fonts carregarem */
+    const el = designRefs.current[designId];
+    if (!el) { console.warn("[overlay] ref not found:", designId); return null; }
+    try { await document.fonts.ready; } catch { /* ignore */ }
     const { toBlob } = await import("html-to-image");
+    /* Pre-fetch fonts como base64 — contorna bug CORS do html-to-image */
+    const fontEmbedCSS = await getFontEmbedCSS();
     const opts = {
       pixelRatio: 3,
-      backgroundColor: undefined as string | undefined, /* fundo transparente */
-      skipFonts: false,
+      backgroundColor: undefined as string | undefined,
+      fontEmbedCSS, /* fonts já embebidas — skipFonts implícito */
       cacheBust: true,
     };
     /*
-     * iOS Safari: html-to-image usa SVG foreignObject que falha
-     * na 1ª passagem (imagem em branco). Múltiplas passagens
-     * "aquecem" o renderer e produzem o resultado correcto.
+     * Safari/iOS: html-to-image precisa de múltiplas passagens
+     * para "aquecer" o renderer SVG foreignObject.
      */
     const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
       || (/iPad|iPhone/.test(navigator.userAgent) && !("MSStream" in window));
     if (isSafari) {
-      /* passagens dummy — resultado descartado */
       await toBlob(el, opts).catch(() => null);
       await toBlob(el, opts).catch(() => null);
     }
@@ -2268,14 +1976,18 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
         URL.revokeObjectURL(url);
         if (i < files.length-1) await new Promise(r => setTimeout(r, 300));
       }
-    } catch(err) { console.error(err); alert("Erro ao exportar."); }
+    } catch(err) {
+      console.error("[overlay] export-all error:", err);
+      alert(`Erro ao exportar: ${err instanceof Error ? err.message : String(err)}`);
+    }
     finally { setExporting(false); }
   }, [available, renderDesign]);
 
   const doExportOne = useCallback(async (designId: string) => {
+    setExportingId(designId);
     try {
       const blob = await renderDesign(designId);
-      if (!blob) return;
+      if (!blob) { alert("Não foi possível gerar a imagem."); return; }
       const file = new File([blob], `scorecard-${designId}.png`, { type:"image/png" });
       /* 1. Tentar share nativo (mobile) */
       if (await shareFiles([file])) return;
@@ -2283,7 +1995,11 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a"); a.href=url; a.download=file.name; a.click();
       URL.revokeObjectURL(url);
-    } catch(err) { console.error(err); alert("Erro ao exportar"); }
+    } catch(err) {
+      console.error("[overlay] export error:", err);
+      alert(`Erro ao exportar: ${err instanceof Error ? err.message : String(err)}`);
+    }
+    finally { setExportingId(null); }
   }, [renderDesign]);
 
   return (
@@ -2338,54 +2054,56 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
           )}
         </div>
 
-        {/* ── 2. FUNDO + TEMA ── */}
-        <div style={{ display:"flex", flexWrap:"wrap", gap:4, alignItems:"center", marginBottom:6 }}>
-          <span style={{ fontSize:11, fontWeight:700, color:"#888", marginRight:2 }}>Fundo</span>
-          {BG_OPTIONS.map(bg => (
-            <button key={bg.id} className={`ov-opt-btn${bgId===bg.id?" active":""}`} onClick={()=>setBgId(bg.id)}
-              style={{ display:"inline-flex", alignItems:"center", gap:4, padding:"3px 7px" }}>
-              <span style={{ display:"inline-block", width:14, height:14, borderRadius:3, flexShrink:0,
-                border:"1px solid rgba(128,128,128,0.4)",
-                background: bg.hex===null ? "linear-gradient(45deg,#ccc 25%,#fff 25%,#fff 50%,#ccc 50%,#ccc 75%,#fff 75%)" : bg.hex,
-                backgroundSize: bg.hex===null ? "6px 6px" : undefined }} />
-              <span style={{ fontSize:11 }}>{bg.label}</span>
+        {/* ── 2. PERSONALIZAÇÃO ── */}
+        <div className="ov-section">
+          {/* Fundo + Tema */}
+          <div className="ov-section-label">Fundo</div>
+          <div style={{ display:"flex", flexWrap:"wrap", gap:5, alignItems:"center", marginBottom:8 }}>
+            {BG_OPTIONS.map(bg => (
+              <button key={bg.id} className={`ov-opt-btn${bgId===bg.id?" active":""}`} onClick={()=>setBgId(bg.id)}
+                style={{ display:"inline-flex", alignItems:"center", gap:5 }}>
+                <span style={{ display:"inline-block", width:16, height:16, borderRadius:4, flexShrink:0,
+                  border:"1.5px solid rgba(128,128,128,0.3)",
+                  background: bg.hex===null ? "linear-gradient(45deg,#ccc 25%,#fff 25%,#fff 50%,#ccc 50%,#ccc 75%,#fff 75%)" : bg.hex,
+                  backgroundSize: bg.hex===null ? "6px 6px" : undefined }} />
+                <span>{bg.label}</span>
+              </button>
+            ))}
+            <button className={`ov-opt-btn${bgId==="custom"?" active":""}`} onClick={()=>setBgId("custom")}
+              style={{ display:"inline-flex", alignItems:"center", gap:5 }}>
+              <input type="color" value={customBg} onClick={e=>e.stopPropagation()}
+                onChange={e=>{ setCustomBg(e.target.value); setBgId("custom"); }}
+                style={{ width:16, height:16, padding:0, border:"1.5px solid rgba(128,128,128,0.3)", borderRadius:4, cursor:"pointer" }} />
+              <span>Outra</span>
             </button>
-          ))}
-          <button className={`ov-opt-btn${bgId==="custom"?" active":""}`} onClick={()=>setBgId("custom")}
-            style={{ display:"inline-flex", alignItems:"center", gap:4, padding:"3px 7px" }}>
-            <input type="color" value={customBg} onClick={e=>e.stopPropagation()}
-              onChange={e=>{ setCustomBg(e.target.value); setBgId("custom"); }}
-              style={{ width:14, height:14, padding:0, border:"1px solid rgba(128,128,128,0.4)", borderRadius:3, cursor:"pointer" }} />
-            <span style={{ fontSize:11 }}>Outra</span>
-          </button>
-          <span style={{ width:1, height:16, background:"rgba(128,128,128,.2)", margin:"0 4px" }} />
-          {(["dark","light"] as const).map(t => (
-            <button key={t} className={`ov-opt-btn${theme===t?" active":""}`} onClick={()=>setTheme(t)}
-              style={{ display:"inline-flex", alignItems:"center", gap:4, padding:"3px 7px" }}>
-              <span style={{ display:"inline-block", width:14, height:14, borderRadius:3, background:t==="dark"?"#1a1a1a":"#fff", border:"1px solid rgba(128,128,128,0.4)" }} />
-              <span style={{ fontSize:11 }}>{t==="dark"?"Escuro":"Claro"}</span>
-            </button>
-          ))}
-        </div>
-        {bgHex && (
-          <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:6 }}>
-            <span style={{ fontSize:11, fontWeight:700, color:"#888" }}>Opacidade</span>
-            <input type="range" min={0} max={100} value={bgAlpha} onChange={e=>setBgAlpha(parseInt(e.target.value))} style={{ width:120, accentColor:"#2e7d32" }} />
-            <span style={{ fontSize:12, color:"#888", fontWeight:700 }}>{bgAlpha}%</span>
-          </div>
-        )}
-
-        {/* ── 3. CONTEÚDO — presets + toggles ── */}
-        <div style={{ marginBottom:8 }}>
-          <div style={{ display:"flex", flexWrap:"wrap", gap:4, marginBottom:6 }}>
-            <span style={{ fontSize:11, fontWeight:700, color:"#888", marginRight:2, lineHeight:"26px" }}>Presets</span>
-            {VIS_PRESETS.map(p => (
-              <button key={p.label} className="ov-opt-btn" onClick={()=>setVis(p.vis)} title={p.desc}
-                style={{ padding:"3px 8px", fontSize:11 }}>{p.label}</button>
+            <span style={{ width:1, height:18, background:"rgba(128,128,128,.2)", margin:"0 2px" }} />
+            {(["dark","light"] as const).map(t => (
+              <button key={t} className={`ov-opt-btn${theme===t?" active":""}`} onClick={()=>setTheme(t)}
+                style={{ display:"inline-flex", alignItems:"center", gap:5 }}>
+                <span style={{ display:"inline-block", width:16, height:16, borderRadius:4, background:t==="dark"?"#1a1a1a":"#fff", border:"1.5px solid rgba(128,128,128,0.3)" }} />
+                <span>{t==="dark"?"Escuro":"Claro"}</span>
+              </button>
             ))}
           </div>
-          <div style={{ display:"flex", flexWrap:"wrap", gap:"3px 8px" }}>
-            <span style={{ fontSize:11, fontWeight:700, color:"#888", marginRight:2, lineHeight:"22px" }}>Mostrar</span>
+          {bgHex && (
+            <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:8 }}>
+              <span style={{ fontSize:11, fontWeight:800, color:"#888" }}>Opacidade</span>
+              <input type="range" min={0} max={100} value={bgAlpha} onChange={e=>setBgAlpha(parseInt(e.target.value))} style={{ flex:1, maxWidth:160, accentColor:"#2e7d32" }} />
+              <span style={{ fontSize:12, color:"#666", fontWeight:800, minWidth:32 }}>{bgAlpha}%</span>
+            </div>
+          )}
+
+          {/* Presets */}
+          <div className="ov-section-label" style={{ marginTop:4 }}>Preset</div>
+          <div style={{ display:"flex", flexWrap:"wrap", gap:5, marginBottom:8 }}>
+            {VIS_PRESETS.map(p => (
+              <button key={p.label} className="ov-opt-btn" onClick={()=>setVis(p.vis)} title={p.desc}>{p.label}</button>
+            ))}
+          </div>
+
+          {/* Toggles */}
+          <div className="ov-section-label">Mostrar</div>
+          <div style={{ display:"flex", flexWrap:"wrap", gap:"4px 6px" }}>
             {ALL_TOGGLES.map(t => (
               <label key={t.key} className="ov-toggle">
                 <input type="checkbox" checked={!!vis[t.key]} onChange={()=>toggle(t.key)} />
@@ -2395,8 +2113,8 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
           </div>
         </div>
 
-        {/* ── 4. EXPORT ALL ── */}
-        <div style={{ display:"flex", gap:5, marginBottom:10 }}>
+        {/* ── 3. EXPORT ALL ── */}
+        <div style={{ display:"flex", gap:8, marginBottom:12 }}>
           <button className="ov-export-btn" onClick={doExportAll} disabled={exporting}>
             {exporting ? "A gerar imagens…" : `📷 Descarregar Todos (${available.length})`}
           </button>
@@ -2421,7 +2139,9 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
                   <div key={x.id} className="ov-card">
                     <div className="ov-card-header">
                       <span className="ov-card-label">{x.label}</span>
-                      <button className="ov-share-btn" onClick={()=>doExportOne(x.id)} title="Partilhar / Descarregar">📤</button>
+                      <button className="ov-share-btn" onClick={()=>doExportOne(x.id)} disabled={exportingId===x.id} title="Partilhar / Descarregar">
+                        {exportingId===x.id ? "⏳" : "📤"}
+                      </button>
                     </div>
                     <div className="ov-card-preview" style={checkerBg}>
                       <div ref={el=>{ designRefs.current[x.id]=el; }} style={{ display:"inline-block", color:tc }}>
