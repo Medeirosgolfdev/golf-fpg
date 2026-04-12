@@ -1998,12 +1998,25 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
     const el = designRefs.current[designId]; if (!el) return null;
     await document.fonts.ready; /* esperar Google Fonts carregarem */
     const { toBlob } = await import("html-to-image");
-    return toBlob(el, {
+    const opts = {
       pixelRatio: 3,
-      backgroundColor: undefined, /* fundo transparente */
+      backgroundColor: undefined as string | undefined, /* fundo transparente */
       skipFonts: false,
       cacheBust: true,
-    });
+    };
+    /*
+     * iOS Safari: html-to-image usa SVG foreignObject que falha
+     * na 1ª passagem (imagem em branco). Múltiplas passagens
+     * "aquecem" o renderer e produzem o resultado correcto.
+     */
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
+      || (/iPad|iPhone/.test(navigator.userAgent) && !("MSStream" in window));
+    if (isSafari) {
+      /* passagens dummy — resultado descartado */
+      await toBlob(el, opts).catch(() => null);
+      await toBlob(el, opts).catch(() => null);
+    }
+    return toBlob(el, opts);
   }, []);
 
   const shareFiles = async (files: File[]): Promise<boolean> => {
