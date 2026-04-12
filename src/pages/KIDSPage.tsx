@@ -3016,8 +3016,8 @@ function RivaisIntlContent() {
           const active = tierFilter === label;
           return (
             <button key={label}
-              className={"tourn-tab tourn-tab-sm" + (active ? " active" : "")}
-              style={active ? { flexShrink: 0 } : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}
+              className={"tourn-tab tourn-tab-sm" + (active ? " active" : " tourn-tab-muted")}
+              style={{ flexShrink: 0 }}
               onClick={() => setTierFilter(active ? "" : label)}
               title={label}>
               {emoji}
@@ -3026,17 +3026,17 @@ function RivaisIntlContent() {
         })}
         {[5, 10, 20].map(n => (
           <button key={n}
-            className={"tourn-tab tourn-tab-sm" + (minTorn === n ? " active" : "")}
-            style={minTorn === n ? { flexShrink: 0 } : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}
+            className={"tourn-tab tourn-tab-sm" + (minTorn === n ? " active" : " tourn-tab-muted")}
+            style={{ flexShrink: 0 }}
             onClick={() => setMinTorn(minTorn === n ? 0 : n)}>
             {n}+
           </button>
         ))}
         <button
-          className={"tourn-tab tourn-tab-sm" + (apenasDirectos ? " active" : "")}
+          className={"tourn-tab tourn-tab-sm" + (apenasDirectos ? " active" : " tourn-tab-muted")}
           style={apenasDirectos
             ? { flexShrink: 0, background: "var(--bg-success-subtle)", borderColor: "var(--color-good)", color: "var(--color-good-dark)" }
-            : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}
+            : { flexShrink: 0 }}
           onClick={() => setApenasDirectos(v => !v)}
           title="Só directos">
           ⚔️
@@ -3065,8 +3065,8 @@ function RivaisIntlContent() {
           const active = fids.has(f.id);
           return (
             <button key={f.id}
-              className={"tourn-tab tourn-tab-sm" + (active ? " active" : "")}
-              style={active ? { flexShrink: 0 } : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}
+              className={"tourn-tab tourn-tab-sm" + (active ? " active" : " tourn-tab-muted")}
+              style={{ flexShrink: 0 }}
               onClick={() => toggleFid(f.id)}>
               {f.label}
             </button>

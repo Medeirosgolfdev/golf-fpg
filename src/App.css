@@ -2820,6 +2820,24 @@ tr.cross-current { background: var(--bg-success); }
  padding: 4px 10px;
  font-size: 12px;
 }
+/* Inactive/muted state — used for "★ Manuel" filter off, etc. */
+.tourn-tab-muted {
+ background: var(--bg-muted);
+ color: var(--text-2);
+ border-color: var(--border);
+}
+/* Clear/reset filter button */
+.btn-clear {
+ font-size: 10px;
+ padding: 2px 8px;
+ border-radius: 20px;
+ border: 1px solid var(--border);
+ background: var(--bg-hover);
+ color: var(--text-muted);
+ cursor: pointer;
+ font-family: inherit;
+}
+.btn-clear:hover { background: var(--bg-muted); }
 
 /* ─── Restored: escalão pills (gerados dinamicamente via escCls/esc.toLowerCase) ─── */
 .p-sub10 { background: var(--esc-sub10-bg); color: var(--esc-sub10-fg); }

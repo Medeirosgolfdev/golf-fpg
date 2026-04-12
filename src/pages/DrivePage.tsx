@@ -2199,11 +2199,11 @@ function DriveContent() {
             { key: "ranking-sub12", label: "🏅 Ranking Sub-12" },
           ] as const).map(({ key, label }) => (
             <button key={key}
-              className={"tourn-tab tourn-tab-sm" + (navMode === key ? " active" : "")}
+              className={"tourn-tab tourn-tab-sm" + (navMode === key ? " active" : " tourn-tab-muted")}
               onClick={() => { setNavMode(key); setSeries("tour"); setYearFilter(null); setSelectedGroupKey(null); setRoundIdx(0); }}
               style={navMode === key
                 ? { flexShrink: 0 }
-                : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                : { flexShrink: 0 }}>
               {label}
             </button>
           ))}
@@ -2216,11 +2216,11 @@ function DriveContent() {
               { key: "aquapor",   label: "💧 AQUAPOR" },
             ] as const).map(({ key, label }) => (
               <button key={key}
-                className={"tourn-tab tourn-tab-sm" + (series === key ? " active" : "")}
+                className={"tourn-tab tourn-tab-sm" + (series === key ? " active" : " tourn-tab-muted")}
                 onClick={() => { setSeries(key); setRegionFilter(null); setEscFilter([]); setSelectedGroupKey(null); setRoundIdx(0); if (key === "all" && !yearFilter) setYearFilter(availYears[0] ?? null); }}
                 style={series === key
                   ? { flexShrink: 0 }
-                  : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                  : { flexShrink: 0 }}>
                 {label}{key !== "all" ? ` (${key === "tour" ? countTour : key === "challenge" ? countChall : countAquapor})` : ""}
               </button>
             ))}
@@ -2228,21 +2228,21 @@ function DriveContent() {
               <ToolbarSep />
               {availYears.map(y => (
                 <button key={y}
-                  className={"tourn-tab tourn-tab-sm" + (activeYear === y ? " active" : "")}
+                  className={"tourn-tab tourn-tab-sm" + (activeYear === y ? " active" : " tourn-tab-muted")}
                   onClick={() => { setYearFilter(y === activeYear && availYears.length > 1 ? null : y); setSelectedGroupKey(null); setRoundIdx(0); }}
                   style={activeYear === y
                     ? { flexShrink: 0 }
-                    : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                    : { flexShrink: 0 }}>
                   {y}
                 </button>
               ))}
               <ToolbarSep />
               <button
-                className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
+                className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : " tourn-tab-muted")}
                 onClick={() => setFilterManuel(v => !v)}
                 style={filterManuel
                   ? { flexShrink: 0, background: "var(--bg-success-subtle)", borderColor: "var(--color-good)", color: "var(--color-good-dark)", whiteSpace: "nowrap" }
-                  : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)", whiteSpace: "nowrap" }}>
+                  : { flexShrink: 0, whiteSpace: "nowrap" }}>
                 ★ Manuel
               </button>
             </>)}
@@ -2274,11 +2274,11 @@ function DriveContent() {
                 const rt = seriesT.filter(t => t.region === reg.id);
                 return (
                   <button key={reg.id}
-                    className={"tourn-tab tourn-tab-sm" + (regionFilter === reg.id ? " active" : "")}
+                    className={"tourn-tab tourn-tab-sm" + (regionFilter === reg.id ? " active" : " tourn-tab-muted")}
                     onClick={() => setRegionFilter(reg.id)}
                     style={regionFilter === reg.id
                       ? { flexShrink: 0 }
-                      : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                      : { flexShrink: 0 }}>
                     {reg.emoji} {reg.label} ({countEvents(rt)}T · {uniquePC(rt)} jog)
                   </button>
                 );
@@ -2300,11 +2300,11 @@ function DriveContent() {
               );
               return (
                 <button key={e}
-                  className={"tourn-tab tourn-tab-sm" + (on ? " active" : "")}
+                  className={"tourn-tab tourn-tab-sm" + (on ? " active" : " tourn-tab-muted")}
                   onClick={() => setEscFilter(prev => on ? prev.filter(x => x !== e) : [...prev, e])}
                   style={on
                     ? { flexShrink: 0 }
-                    : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
+                    : { flexShrink: 0 }}>
                   {e}
                 </button>
               );

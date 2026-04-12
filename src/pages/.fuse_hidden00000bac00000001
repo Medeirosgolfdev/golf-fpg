@@ -2951,19 +2951,21 @@ function Content() {
               <ToolbarSep />
               {availYears.map(y => (
                 <button key={y}
-                  className={"tourn-tab tourn-tab-sm" + (activeYear === y ? " active" : " tourn-tab-muted")}
+                  className={"tourn-tab tourn-tab-sm" + (activeYear === y ? " active" : "")}
                   onClick={() => setYearFilter(activeYear === y ? null : y)}
-                  style={{ flexShrink: 0 }}>
+                  style={activeYear === y
+                    ? { flexShrink: 0 }
+                    : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
                   {y}
                 </button>
               ))}
               <ToolbarSep />
               <button
-                className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : " tourn-tab-muted")}
+                className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
                 onClick={() => setFilterManuel(v => !v)}
                 style={filterManuel
                   ? { flexShrink: 0, background: "var(--bg-success-subtle)", borderColor: "var(--color-good)", color: "var(--color-good-dark)", whiteSpace: "nowrap" }
-                  : { flexShrink: 0, whiteSpace: "nowrap" }}>
+                  : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)", whiteSpace: "nowrap" }}>
                 ★ Manuel
               </button>
             </>)}
@@ -3018,10 +3020,10 @@ function Content() {
                 : key === "clubes" ? { flexShrink: 0, background: "var(--accent)", borderColor: "var(--accent)", color: "#fff" }
                 : key === "jovens"    ? { flexShrink: 0, background: SIDEBAR_ACCENT.tour, borderColor: SIDEBAR_ACCENT.tour, color: "#fff" }
                 : { flexShrink: 0 }
-                : { flexShrink: 0 };
+                : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" };
               return (
                 <button key={key}
-                  className={"tourn-tab tourn-tab-sm" + (active ? " active" : " tourn-tab-muted")}
+                  className={"tourn-tab tourn-tab-sm" + (active ? " active" : "")}
                   onClick={() => { setSeriesFilter(key); }}
                   style={st}>
                   {label}
@@ -3135,7 +3137,7 @@ function Content() {
           </div>
 
           {/* Detail Clubes */}
-          <div className="course-detail" ref={md.detailRef}>
+          <div className="course-detail">
             {/* Tabs Individual / Grupos */}
             <div style={{
               display: "flex", borderBottom: "1px solid var(--border)",
@@ -3267,7 +3269,7 @@ function Content() {
               </React.Fragment>
             ))}
           </div>
-          <div className="course-detail" ref={md.detailRef}>
+          <div className="course-detail">
             {jovensShowInscricoes ? (
               <InscricoesPanel />
             ) : curJovensGroup ? (
@@ -3278,9 +3280,9 @@ function Content() {
                     borderBottom: "1px solid var(--border-light)", background: "var(--bg-card)" }}>
                     {curJovensGroup.entries.map((e, ri) => (
                       <button key={e.tcode + "_" + ri}
-                        className={"tourn-tab tourn-tab-sm" + (jovensEscIdx === ri ? " active" : " tourn-tab-muted")}
+                        className={"tourn-tab tourn-tab-sm" + (jovensEscIdx === ri ? " active" : "")}
                         onClick={() => setJovensEscIdx(ri)}
-                        style={{ marginBottom: 6 }}>
+                        style={jovensEscIdx === ri ? { marginBottom: 6 } : { marginBottom: 6, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
                         {e.escalao ?? "Esc " + (ri + 1)}
                         <span className="fs-10" style={{ marginLeft: 3, opacity: 0.7 }}>
                           ({(e.playerCount || e.players.length)} jog)
