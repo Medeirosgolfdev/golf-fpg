@@ -2423,7 +2423,7 @@ export default function USKidsFieldPage() {
         {/* ── Tabela global (entrada fixa no topo) ── */}
         <button
           className={`course-item${showRivaisTabela ? " active" : ""}`}
-          style={{ padding:"10px 12px", display:"block", width:"100%", textAlign:"left", borderBottom:"2px solid var(--border-light)" }}
+          style={{ padding:"10px 14px", display:"block", width:"100%", textAlign:"left", borderBottom:"2px solid var(--border-light)" }}
           onClick={() => { setShowRivaisTabela(true); setSelectedT(null); }}>
           <div style={{ display:"flex", alignItems:"center", gap:8 }}>
             <span style={{ fontSize:15 }}>📊</span>

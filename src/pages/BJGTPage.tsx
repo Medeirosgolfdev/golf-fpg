@@ -24,7 +24,7 @@ import LoadingState from "../ui/LoadingState";
 import EmptyState from "../ui/EmptyState";
 import { buildAutoRivals, normName as normNameAuto, type AutoRivalPlayer } from "./KIDSdataLoader";
 import { KidsLink, KidsLinkCtx, type KidsLinkEntry } from "../ui/KidsLink";
-import { RoundPill } from "../ui/PillBadge";
+import { RoundPill, ManuelPill } from "../ui/PillBadge";
 
 /* ── Types ── */
 interface RoundData { day: number; scores: number[] | null; f9: number | null; b9: number | null; gross: number }
@@ -541,18 +541,12 @@ function Content() {
                       return (
                         <button key={u.id}
                           className={`course-item ${ti === idx ? "active" : ""}`}
-                          style={isEowagr && ti === idx ? { borderLeft: "3px solid var(--color-warn-vivid)" } : isEowagr ? { borderLeft: "3px solid transparent" } : {}}
+                          style={isEowagr && ti === idx ? { borderLeft: "4px solid var(--color-warn-vivid)" } : isEowagr ? { borderLeft: "4px solid transparent" } : {}}
                           onClick={() => { setTi(idx); md.onSelect(); }}>
                           <div className="course-item-name">{u.category}</div>
                           {t && <div className="course-item-meta">{nP} jog{nR > 1 && <> · <RoundPill nR={nR} /></>}</div>}
                           {t && t.data.players.some(p => isM(p.name)) && (
-                            <span style={{
-                              display: "inline-block", marginTop: 4,
-                              fontSize: 11, fontWeight: 700,
-                              background: "var(--bg-success-subtle)", color: "var(--color-good-dark)",
-                              borderRadius: 6, padding: "2px 8px",
-                              border: "1px solid var(--color-good)",
-                            }}>★ Manuel</span>
+                            <span style={{ display:"inline-block", marginTop:4 }}><ManuelPill /></span>
                           )}
                           <ExtLink href={u.sourceUrl} className="tourn-ext-link mt-4"
                             onClick={e => e.stopPropagation()}>

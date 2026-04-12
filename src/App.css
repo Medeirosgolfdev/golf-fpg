@@ -324,8 +324,8 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 
 .course-item.active {
  background: var(--bg-active);
- border-left: 3px solid var(--accent);
- padding-left: 11px;
+ border-left: 4px solid var(--accent);
+ padding-left: 10px;
 }
 
 .course-item-name {
@@ -1877,7 +1877,6 @@ tr.cross-current { background: var(--bg-success); }
 .c-eagle  { color: var(--color-warn); }
 .c-par-ok  { color: var(--color-good); }
 .c-blue   { color: var(--color-info-alt); }
-.c-purple  { color: var(--chart-5); }
 .c-amber  { color: var(--color-warn-dark); }
 
 /* Score color + bold combos */
@@ -2784,7 +2783,6 @@ tr.cross-current { background: var(--bg-success); }
 .round { border-radius: 50%; }
 .c-border { color: var(--border); }
 .bb-light { border-bottom: 1px solid var(--border-light); }
-.gap-8 { gap: 8px; }
 .p-14 { padding: 14px; }
 .mb-18 { margin-bottom: 18px; }
 .br-default { border-radius: var(--radius); }

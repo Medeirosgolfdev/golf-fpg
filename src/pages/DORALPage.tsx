@@ -19,7 +19,7 @@ import { Toolbar, ToolbarTitle, ToolbarMeta } from "../ui/Toolbar";
 import DetailHeader from "../ui/DetailHeader";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import LoadingState from "../ui/LoadingState";
-import { RoundPill } from "../ui/PillBadge";
+import { RoundPill, ManuelPill } from "../ui/PillBadge";
 import { AllRoundsScorecardLB, AccumulatedLB, ScorecardLB, expandMultiRound, type Tournament as FPGTournament, type Player as FPGPlayer, type RoundScore as FPGRoundScore, type ScorecardOptions } from "./FPGPage";
 import EvoBadge from "../ui/EvoBadge";
 import type { ExtraColumn, MultiRoundRow } from "../ui/multiRoundTypes";
@@ -560,13 +560,7 @@ function Content() {
                         </div>
                       )}
                       {manuelPlayed && (
-                        <span style={{
-                          display: "inline-block", marginTop: 4,
-                          fontSize: 11, fontWeight: 700,
-                          background: "var(--bg-success-subtle)", color: "var(--color-good-dark)",
-                          borderRadius: 6, padding: "2px 8px",
-                          border: "1px solid var(--color-good)",
-                        }}>★ Manuel</span>
+                        <span style={{ display:"inline-block", marginTop:4 }}><ManuelPill /></span>
                       )}
                       <ExtLink href={entry.sourceUrl} className="tourn-ext-link" style={{ marginTop:4 }}
                         onClick={e => e.stopPropagation()}>
