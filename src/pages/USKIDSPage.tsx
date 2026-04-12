@@ -64,7 +64,7 @@ function KidsLink({ nome }: { nome: string }) {
 // ─────────────────────────────────────────────
 // TIPOS — CAMPO (inscritos)
 // ─────────────────────────────────────────────
-interface Jogador      { nome: string; pais: string; cidade: string; }
+interface Jogador      { nome: string; pais: string; cidade: string; firstSeen?: string; }
 interface PaisContagem { pais: string; n: number; }
 interface Escalao {
   age_group: number; nome: string; genero: string | null;
@@ -958,6 +958,7 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
               const bd  = badgeVagas(e.vagas, e.maximo);
               const dst = ESCALOES_DESTAQUE_USKIDS.has(e.nome);
               const man = e.nome === escalaoM;
+              const novos48h = (e.jogadores || []).filter(j => j.firstSeen && (Date.now() - new Date(j.firstSeen).getTime()) < 48 * 3600_000).length;
               return (
                 <div key={e.age_group} className="card" style={{
                   background: man ? "var(--accent-light)" : dst ? "var(--bg-card)" : "var(--bg-card)",
@@ -982,6 +983,12 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                           {bd.label}
                         </span>
                       )}
+                      {novos48h > 0 && (
+                        <span className="fs-10 fw-700" style={{ background:"var(--score-eagle)", color:"#fff", padding:"1px 5px", borderRadius:5, marginLeft:3 }}
+                          title={`${novos48h} inscrito${novos48h > 1 ? "s" : ""} nas últimas 48h`}>
+                          +{novos48h}
+                        </span>
+                      )}
                     </div>
                   </div>
                   {/* Barra de preenchimento */}
@@ -997,6 +1004,7 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                         const isM = isManuel(j.nome);
                         const arEntry = !isM ? arMap.get(normNameAuto(j.nome)) : undefined;
                         const nTorn = arEntry ? Object.values(arEntry.r).filter(r => r.tp != null || (r.rd?.length ?? 0) > 0).length : 0;
+                        const recent = j.firstSeen ? (Date.now() - new Date(j.firstSeen).getTime()) < 48 * 3600_000 : false;
                         // Resultados nos 2 anos anteriores neste mesmo torneio
                         const prevResults = arEntry
                           ? [currentYear - 1, currentYear - 2]
@@ -1011,11 +1019,15 @@ function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                             padding: isM ? "4px 8px" : "1px 0",
                             margin: isM ? "2px -14px" : "0",
                             borderRadius: isM ? 5 : 0,
-                            background: isM ? "var(--accent)" : "transparent",
+                            background: isM ? "var(--accent)" : recent ? "color-mix(in srgb, var(--score-eagle) 10%, transparent)" : "transparent",
                             color: isM ? "#fff" : j.pais === "PT" ? "var(--accent)" : "var(--text)",
                           }}>
                             <span style={{ display:"flex", alignItems:"center", gap:2 }}>
                               {isM ? "★ " : ""}{displayName(j.nome)}
+                              {recent && !isM && <span className="fs-9 fw-700" style={{
+                                background:"var(--score-eagle)", color:"#fff",
+                                padding:"0 4px", borderRadius:6, marginLeft:3, lineHeight:"14px",
+                              }}>NOVO</span>}
                               {!isM && <KidsLink nome={j.nome} />}
                             </span>
                             <span style={{ display:"flex", alignItems:"center", gap:5 }}>
