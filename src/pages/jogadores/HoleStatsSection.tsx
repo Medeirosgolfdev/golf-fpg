@@ -46,21 +46,21 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
       <div className="haDiag">
         <div className="haDiagCard">
           <div className="haDiagIcon" style={{ background: slColor + "20", color: slColor }}>🎯</div>
-          <div className="haDiagBody">
+          <div className="min-w-0">
             <div className="haDiagVal" style={{ color: slColor }}>{fD(stats.totalStrokesLost)}</div>
             <div className="haDiagLbl">pancadas perdidas p/ volta vs par</div>
           </div>
         </div>
         <div className="haDiagCard">
           <div className="haDiagIcon" style={{ background: pobCol + "20", color: pobCol }}>⛳</div>
-          <div className="haDiagBody">
+          <div className="min-w-0">
             <div className="haDiagVal" style={{ color: pobCol }}>{parOrBetterPct.toFixed(0)}%</div>
             <div className="haDiagLbl">par ou melhor ({parOrBetter}/{td?.total ?? 0} buracos)</div>
           </div>
         </div>
         <div className="haDiagCard">
           <div className="haDiagIcon" style={{ background: dowCol + "20", color: dowCol }}>💣</div>
-          <div className="haDiagBody">
+          <div className="min-w-0">
             <div className="haDiagVal" style={{ color: dowCol }}>{dblOrWorsePct.toFixed(0)}%</div>
             <div className="haDiagLbl">double bogey ou pior ({dblOrWorse}/{td?.total ?? 0})</div>
           </div>
@@ -72,7 +72,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
           return (
             <div className="haDiagCard">
               <div className="haDiagIcon diag-bg-purple">🔄</div>
-              <div className="haDiagBody">
+              <div className="min-w-0">
                 <div className="haDiagVal c-purple">{worse9}</div>
                 <div className="haDiagLbl">custa mais {Math.abs(diff9).toFixed(1)} panc./volta (F9: {fD(stats.f9b9!.f9.strokesLost)}, B9: {fD(stats.f9b9!.b9.strokesLost)})</div>
               </div>
@@ -132,7 +132,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                   return (
                     <div key={bh.h} className="haTopItem">
                       <div className="haTopHole">{bh.h}</div>
-                      <div className="haTopDetail">
+                      <div className="min-w-0">
                         <div><b>Bur. {bh.h}</b> · Par {bh.par}{bh.si ? ` · SI ${bh.si}` : ""}</div>
                         <div className="haTopMeta">
                           <span className="cb-par-ok">{fD2(bh.diff)}</span> média vs par · <span className="c-par-ok">{pobPct}% par ou melhor</span>
@@ -154,7 +154,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                     return (
                       <div key={wh.h} className="haTopItem">
                         <div className="haTopHole haTopHoleRed">{wh.h}</div>
-                        <div className="haTopDetail">
+                        <div className="min-w-0">
                           <div><b>Bur. {wh.h}</b> · Par {wh.par}{wh.si ? ` · SI ${wh.si}` : ""}</div>
                           <div className="haTopMeta">
                             <span className="cb-birdie">{fD(wh.strokesLost)}</span> pancadas/volta

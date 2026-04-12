@@ -3690,117 +3690,97 @@ tr.cross-current { background: var(--bg-success); }
   <p style="font-size:12px;color:var(--text-3);margin:0 0 16px">839 classes activas em App.css, organizadas por categoria. 3 classes removidas (btn-clear, rivals-filters, rivals-filters-sep). 12 novas classes utilit&aacute;rias adicionadas para substituir inline styles repetidos.</p>
 
   <!-- 13.1 UTILITIES: FLEX -->
-  <h3 style="font-size:14px;margin:20px 0 8px;color:var(--accent)">13.1 Flex &amp; Layout Utilities (27 classes)</h3>
+  <h3 style="font-size:14px;margin:20px 0 8px;color:var(--accent)">13.1 Flex &amp; Layout Utilities (11 classes)</h3>
   <table class="ds-table"><thead><tr><th>Classe</th><th>Propriedades</th></tr></thead><tbody>
     <tr><td><code>.d-flex</code></td><td>display:flex</td></tr>
+    <tr><td><code>.inline-flex</code></td><td>display:inline-flex</td></tr>
     <tr><td><code>.flex-1</code></td><td>flex:1</td></tr>
-    <tr><td><code>.flex-1-scroll</code></td><td>flex:1; overflow-y:auto</td></tr>
+    <tr><td><code>.content</code></td><td>flex:1; overflow:auto</td></tr>
     <tr><td><code>.flex-center</code></td><td>display:flex; align-items:center; justify-content:center</td></tr>
-    <tr><td><code>.flex-center-gap6/8/10/12</code></td><td>display:flex; align-items:center; gap:Npx</td></tr>
-    <tr><td><code>.flex-center-gap8-mb4</code></td><td>display:flex; align-items:center; gap:8px; margin-bottom:4px</td></tr>
-    <tr><td><code>.flex-col</code></td><td>display:flex; flex-direction:column</td></tr>
-    <tr><td><code>.flex-col-gap1/2/3/4/6/8/12</code></td><td>display:flex; flex-direction:column; gap:Npx</td></tr>
     <tr><td><code>.flex-between-mb6</code></td><td>display:flex; justify-content:space-between; margin-bottom:6px</td></tr>
+    <tr><td><code>.flex-col</code></td><td>flex-direction:column</td></tr>
     <tr><td><code>.flex-wrap</code></td><td>flex-wrap:wrap</td></tr>
-    <tr><td><code>.flex-wrap-gap8</code></td><td>display:flex; flex-wrap:wrap; gap:8px</td></tr>
-    <tr><td><code>.flex-shrink-0</code> / <code>.shrink-0</code></td><td>flex-shrink:0</td></tr>
-    <tr><td><code>.ai-center</code> / <code>.items-center</code></td><td>align-items:center</td></tr>
-    <tr><td><code>.justify-between</code></td><td>justify-content:space-between</td></tr>
-    <tr><td><code>.jc-center</code></td><td>justify-content:center</td></tr>
-    <tr><td><code>.inline-flex-center</code> <span style="color:var(--color-good);font-size:10px">NOVO</span></td><td>display:inline-flex; align-items:center</td></tr>
-    <tr><td><code>.inline-flex-center-gap3</code> <span style="color:var(--color-good);font-size:10px">NOVO</span></td><td>display:inline-flex; align-items:center; gap:3px</td></tr>
+    <tr><td><code>.shrink-0</code></td><td>flex-shrink:0</td></tr>
+    <tr><td><code>.items-center</code></td><td>align-items:center</td></tr>
+    <tr><td><code>.jc-center</code> / <code>.justify-between</code></td><td>justify-content</td></tr>
   </tbody></table>
+  <p style="font-size:11px;color:var(--text-muted);margin:4px 0 0">Combina&ccedil;&otilde;es flex via composi&ccedil;&atilde;o: <code>d-flex items-center gap-8</code> em vez de combo classes.</p>
 
   <!-- 13.2 UTILITIES: SPACING -->
-  <h3 style="font-size:14px;margin:20px 0 8px;color:var(--accent)">13.2 Spacing Utilities (51 classes)</h3>
+  <h3 style="font-size:14px;margin:20px 0 8px;color:var(--accent)">13.2 Spacing Utilities (42 classes)</h3>
   <table class="ds-table"><thead><tr><th>Prefixo</th><th>Valores dispon&iacute;veis</th></tr></thead><tbody>
-    <tr><td><code>.mt-{N}</code></td><td>1, 2, 3, 4, 6, 8, 10, 12, 14, 16, 20, 24</td></tr>
-    <tr><td><code>.mb-{N}</code></td><td>2, 4, 6, 8, 10, 12, 16, 18, 20</td></tr>
-    <tr><td><code>.ml-{N}</code></td><td>2, 3, 4, 5, 6, 8, auto</td></tr>
-    <tr><td><code>.gap-{N}</code></td><td>2, 3, 4, 5, 6, 8, 12, 16</td></tr>
-    <tr><td><code>.m-0</code></td><td>margin:0</td></tr>
-    <tr><td><code>.m-14-0</code></td><td>margin:14px 0</td></tr>
+    <tr><td><code>.mt-{N}</code></td><td>1, 2, 3, 4, 6, 8, 10, 12, 14, 20, 24</td></tr>
+    <tr><td><code>.mb-{N}</code></td><td>4, 6, 8, 10, 12, 16, 18</td></tr>
+    <tr><td><code>.ml-{N}</code></td><td>3, 4, 6, 8, auto</td></tr>
+    <tr><td><code>.gap-{N}</code></td><td>1, 2, 3, 4, 6, 8, 10, 12, 16</td></tr>
+    <tr><td><code>.m-0</code> / <code>.m-14-0</code></td><td>margin reset / margin:14px 0</td></tr>
     <tr><td><code>.p-0 / .p-8 / .p-12 / .p-14 / .p-16 / .p-24 / .p-40</code></td><td>padding:Npx</td></tr>
-    <tr><td><code>.p-4-8 / .p-8-10 / .p-8-12 / .p-0-12-12 / .p-0-4px</code></td><td>padding compound</td></tr>
+    <tr><td><code>.p-8-12 / .p-0-4px</code></td><td>padding compound</td></tr>
   </tbody></table>
 
   <!-- 13.3 UTILITIES: TEXT -->
-  <h3 style="font-size:14px;margin:20px 0 8px;color:var(--accent)">13.3 Text Utilities (32 classes)</h3>
+  <h3 style="font-size:14px;margin:20px 0 8px;color:var(--accent)">13.3 Text Utilities (24 classes)</h3>
   <table class="ds-table"><thead><tr><th>Classe</th><th>Uso</th></tr></thead><tbody>
-    <tr><td><code>.fs-8/9/10/11/12/13/14/16/18/24</code></td><td>font-size: Npx</td></tr>
-    <tr><td><code>.fs-11-fw700</code> / <code>.fs-11-lh16</code> / <code>.fs-13-lh16</code></td><td>combos frequentes</td></tr>
+    <tr><td><code>.fs-10/11/12/13/14/16/18/24</code></td><td>font-size: Npx</td></tr>
     <tr><td><code>.fw-400/500/600/700/800/900</code></td><td>font-weight: N</td></tr>
-    <tr><td><code>.ta-c</code> / <code>.ta-center</code> / <code>.ta-left</code> / <code>.ta-right</code></td><td>text-align</td></tr>
-    <tr><td><code>.nowrap</code></td><td>white-space: nowrap</td></tr>
-    <tr><td><code>.text-ellipsis</code></td><td>overflow:hidden; text-overflow:ellipsis; white-space:nowrap</td></tr>
-    <tr><td><code>.uppercase</code></td><td>text-transform: uppercase</td></tr>
-    <tr><td><code>.underline</code></td><td>text-decoration: underline</td></tr>
-    <tr><td><code>.td-none</code></td><td>text-decoration: none</td></tr>
+    <tr><td><code>.ta-c</code> / <code>.ta-left</code> / <code>.ta-right</code></td><td>text-align</td></tr>
+    <tr><td><code>.lh-16</code></td><td>line-height: 1.6</td></tr>
+    <tr><td><code>.nowrap</code> / <code>.text-ellipsis</code></td><td>white-space / overflow ellipsis</td></tr>
+    <tr><td><code>.uppercase</code> / <code>.underline</code> / <code>.td-none</code></td><td>text-transform / decoration</td></tr>
     <tr><td><code>.mono</code></td><td>font-family: JetBrains Mono</td></tr>
-    <tr><td><code>.lh-13</code></td><td>line-height: 1.3</td></tr>
-    <tr><td><code>.label-caps</code></td><td>text-transform:uppercase; letter-spacing:0.5px; font-size:10px; font-weight:700</td></tr>
+    <tr><td><code>.label-caps</code></td><td>uppercase + letter-spacing + fs-10 + fw-700</td></tr>
   </tbody></table>
+  <p style="font-size:11px;color:var(--text-muted);margin:4px 0 0">Combina&ccedil;&otilde;es texto via composi&ccedil;&atilde;o: <code>fs-11 fw-700</code> em vez de <code>fs-11-fw700</code>.</p>
 
   <!-- 13.4 UTILITIES: VISUAL -->
-  <h3 style="font-size:14px;margin:20px 0 8px;color:var(--accent)">13.4 Visual Utilities (16 classes)</h3>
+  <h3 style="font-size:14px;margin:20px 0 8px;color:var(--accent)">13.4 Visual Utilities (8 classes)</h3>
   <table class="ds-table"><thead><tr><th>Classe</th><th>Uso</th></tr></thead><tbody>
-    <tr><td><code>.bg-page / .bg-detail / .bg-muted / .bg-success</code></td><td>backgrounds sem&acirc;nticos</td></tr>
-    <tr><td><code>.br / .br-sm / .br-lg / .br-default</code></td><td>border-radius variants</td></tr>
-    <tr><td><code>.overflow-hidden / .scroll-x / .scroll-y / .no-overflow</code></td><td>overflow control</td></tr>
-    <tr><td><code>.op-4 / .op-6 / .op-7 / .opacity-40</code></td><td>opacity</td></tr>
+    <tr><td><code>.br</code> / <code>.br-sm</code> / <code>.br-lg</code></td><td>border-radius variants</td></tr>
+    <tr><td><code>.overflow-hidden</code> / <code>.scroll-x</code> / <code>.scroll-y</code></td><td>overflow control</td></tr>
+    <tr><td><code>.op-4</code> / <code>.op-6</code> / <code>.op-7</code></td><td>opacity</td></tr>
     <tr><td><code>.pointer</code></td><td>cursor:pointer</td></tr>
-    <tr><td><code>.mobile-hide / .mobile-only</code></td><td>responsive visibility</td></tr>
+    <tr><td><code>.min-w-0</code></td><td>min-width:0 (flex children)</td></tr>
   </tbody></table>
 
   <!-- 13.5 UTILITIES: WIDTH -->
-  <h3 style="font-size:14px;margin:20px 0 8px;color:var(--accent)">13.5 Width/Column Utilities (42 classes)</h3>
+  <h3 style="font-size:14px;margin:20px 0 8px;color:var(--accent)">13.5 Width/Column Utilities (27 classes)</h3>
   <table class="ds-table"><thead><tr><th>Prefixo</th><th>Valores</th></tr></thead><tbody>
-    <tr><td><code>.col-w{N}</code></td><td>30, 40, 42, 45, 48, 50, 55, 60, 65, 70, 72, 80, 100, 130, 180, 220</td></tr>
-    <tr><td><code>.col-p{N}</code></td><td>6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 26, 34, 46</td></tr>
-    <tr><td><code>.col-mw{N}</code></td><td>120, 180</td></tr>
+    <tr><td><code>.col-w{N}</code></td><td>30, 42, 45, 50, 55, 60, 70, 72, 100</td></tr>
+    <tr><td><code>.col-p{N}</code></td><td>6, 7, 8, 9, 10, 11, 12, 14, 15, 17, 18, 26, 34, 46</td></tr>
+    <tr><td><code>.col-mw120</code></td><td>min-width:120px</td></tr>
     <tr><td><code>.col-in / .col-out / .col-total</code></td><td>colunas front9/back9/total</td></tr>
-    <tr><td><code>.w-{N}</code></td><td>26, 28, 30, 32, 34, 36, 38, 40, 46, 52</td></tr>
-    <tr><td><code>.w-full</code></td><td>width:100%</td></tr>
+    <tr><td><code>.w-40</code> / <code>.w-full</code></td><td>width fixa / 100%</td></tr>
   </tbody></table>
 
   <!-- 13.6 SCORECARD -->
-  <h3 style="font-size:14px;margin:20px 0 8px;color:var(--accent)">13.6 Scorecard (41 classes — prefixo <code>.sc-*</code>)</h3>
+  <h3 style="font-size:14px;margin:20px 0 8px;color:var(--accent)">13.6 Scorecard (25 classes — prefixo <code>.sc-*</code>)</h3>
   <table class="ds-table"><thead><tr><th>Grupo</th><th>Classes</th></tr></thead><tbody>
-    <tr><td>Layout</td><td><code>.sc-lb</code> <code>.sc-lb-multi</code> <code>.sc-wrap</code> <code>.sc-table</code> <code>.sc-table-modern</code> <code>.sc-table-ec</code></td></tr>
-    <tr><td>Header</td><td><code>.sc-header</code> <code>.sc-header-dark</code> <code>.sc-header-light</code> <code>.sc-header-left</code> <code>.sc-header-right</code> <code>.sc-title</code> <code>.sc-subtitle</code></td></tr>
-    <tr><td>Cells</td><td><code>.sc-h</code> (hole) <code>.sc-c</code> (center) <code>.sc-score</code> <code>.sc-score-sm</code> <code>.sc-nr</code> <code>.sc-empty</code></td></tr>
-    <tr><td>Rows</td><td><code>.sc-par-row</code> <code>.sc-hcp-row</code> <code>.sc-tee-row</code> <code>.sc-tee-cell</code> <code>.sc-meta-row</code> <code>.sc-meta-label</code></td></tr>
-    <tr><td>Stats</td><td><code>.sc-stat</code> <code>.sc-stat-label</code> <code>.sc-stat-value</code> <code>.sc-stat-score</code></td></tr>
-    <tr><td>To-par</td><td><code>.sc-topar</code> <code>.sc-topar-neg</code> <code>.sc-topar-pos</code> <code>.sc-topar-zero</code> <code>.sc-tot</code> <code>.sc-tot-val</code></td></tr>
-    <tr><td>Outros</td><td><code>.sc-sticky</code> <code>.sc-modern</code> <code>.sc-bar-head</code> <code>.sc-eagle</code> <code>.sc-links</code> <code>.sc-ext-link</code></td></tr>
+    <tr><td>Layout</td><td><code>.sc-lb</code> <code>.sc-wrap</code> <code>.sc-table</code> <code>.sc-table-modern</code> <code>.sc-table-ec</code> <code>.sc-modern</code></td></tr>
+    <tr><td>Header</td><td><code>.sc-header</code> <code>.sc-header-light</code> <code>.sc-header-left</code> <code>.sc-header-right</code> <code>.sc-title</code> <code>.sc-subtitle</code></td></tr>
+    <tr><td>Cells</td><td><code>.sc-h</code> <code>.sc-score</code> <code>.sc-score-sm</code></td></tr>
+    <tr><td>Meta</td><td><code>.sc-meta-label</code> <code>.sc-stat</code> <code>.sc-stat-label</code> <code>.sc-stat-value</code></td></tr>
+    <tr><td>To-par</td><td><code>.sc-topar</code> <code>.sc-tot-val</code> <code>.sc-bar-head</code></td></tr>
+    <tr><td>Links</td><td><code>.sc-sticky</code> <code>.sc-links</code> <code>.sc-ext-link</code></td></tr>
   </tbody></table>
+  <p style="font-size:11px;color:var(--text-muted);margin:4px 0 0">Cores to-par via utilit&aacute;rios: <code>.c-danger</code> (over), <code>.c-par-ok</code> (under), <code>.c-muted</code> (even).</p>
 
   <!-- 13.7 LEADERBOARD -->
-  <h3 style="font-size:14px;margin:20px 0 8px;color:var(--accent)">13.7 Leaderboard (34 classes — prefixo <code>.lb-*</code>)</h3>
+  <h3 style="font-size:14px;margin:20px 0 8px;color:var(--accent)">13.7 Leaderboard (classes — prefixo <code>.lb-*</code>)</h3>
   <table class="ds-table"><thead><tr><th>Grupo</th><th>Classes</th></tr></thead><tbody>
     <tr><td>Colunas</td><td><code>.lb-pos</code> <code>.lb-name</code> <code>.lb-club</code> <code>.lb-fed</code> <code>.lb-esc</code> <code>.lb-hcp</code> <code>.lb-tee</code> <code>.lb-gross</code> <code>.lb-topar</code> <code>.lb-sd</code></td></tr>
     <tr><td>Ronda</td><td><code>.lb-rnd</code> <code>.lb-rnd-bird</code> <code>.lb-rnd-bog</code> <code>.lb-rnd-par</code> <code>.lb-rnd-sd</code> <code>.lb-rnd-tp</code></td></tr>
     <tr><td>Acumulado</td><td><code>.lb-acc-bird</code> <code>.lb-acc-bog</code> <code>.lb-acc-par</code></td></tr>
-    <tr><td>Estrutura</td><td><code>.lb-hole</code> <code>.lb-hole-first</code> <code>.lb-halftot</code> <code>.lb-day-header</code> <code>.lb-sep</code> <code>.lb-sep-navy</code> <code>.lb-total-sep</code></td></tr>
+    <tr><td>Estrutura</td><td><code>.lb-hole</code> <code>.lb-hole-first</code> <code>.lb-halftot</code></td></tr>
     <tr><td>Par/SI</td><td><code>.lb-par-lbl</code> <code>.lb-par-row</code> <code>.lb-par-stat</code> <code>.lb-si-row</code></td></tr>
-    <tr><td>Misc</td><td><code>.lb-sortable</code> <code>.lb-muted-bold</code></td></tr>
+    <tr><td>Misc</td><td><code>.lb-sortable</code></td></tr>
   </tbody></table>
 
   <!-- 13.8 TOURNAMENT -->
-  <h3 style="font-size:14px;margin:20px 0 8px;color:var(--accent)">13.8 Tournament (62 classes — prefixo <code>.tourn-*</code>)</h3>
-  <table class="ds-table"><thead><tr><th>Grupo</th><th>Classes</th></tr></thead><tbody>
-    <tr><td>Layout</td><td><code>.tourn-layout</code> <code>.tourn-section</code> <code>.tourn-scroll</code> <code>.tourn-loaded</code> <code>.tourn-loading</code> <code>.tourn-meta</code></td></tr>
-    <tr><td>Tabs</td><td><code>.tourn-tab</code> <code>.tourn-tab-sm</code> <code>.tourn-tab-muted</code></td></tr>
-    <tr><td>Draw</td><td><code>.tourn-draw</code> <code>.tourn-draw-player</code> <code>.tourn-draw-hcp</code> <code>.tourn-draw-tee</code> <code>.tourn-draw-time</code></td></tr>
-    <tr><td>Scorecard</td><td><code>.tourn-scorecard</code> <code>.tourn-hole-cell</code> <code>.tourn-par-row</code> <code>.tourn-par-col</code> <code>.tourn-si-row</code></td></tr>
-    <tr><td>Leaderboard</td><td><code>.tourn-player-row</code> <code>.tourn-female-row</code> <code>.tourn-pos</code> <code>.tourn-pos-col</code> <code>.tourn-pname</code> <code>.tourn-pname-link</code> <code>.tourn-lb-name-col</code> <code>.tourn-lb-pills</code></td></tr>
-    <tr><td>Sum&aacute;rio</td><td><code>.tourn-sum-col</code> <code>.tourn-sum-val</code> <code>.tourn-sum-over</code> <code>.tourn-sum-under</code> <code>.tourn-gross-col</code></td></tr>
-    <tr><td>KPIs</td><td><code>.tourn-kpis</code> <code>.tourn-kpi</code> <code>.tourn-kpi-val</code> <code>.tourn-kpi-lbl</code> <code>.tourn-kpi-sub</code></td></tr>
-    <tr><td>Distribui&ccedil;&atilde;o</td><td><code>.tourn-distrib</code> <code>.tourn-d-birdie</code> <code>.tourn-d-par</code> <code>.tourn-d-bogey</code> <code>.tourn-dist-row</code></td></tr>
-    <tr><td>Sparklines</td><td><code>.tourn-sparkline</code> <code>.tourn-spark-dot</code> <code>.tourn-spark-avg</code></td></tr>
-    <tr><td>Grupos</td><td><code>.tourn-group-first</code> <code>.tourn-group-last</code> <code>.tourn-in-border</code> <code>.tourn-half-par</code></td></tr>
-    <tr><td>Misc</td><td><code>.tourn-mono</code> <code>.tourn-lbl</code> <code>.tourn-nd</code> <code>.tourn-ns</code> <code>.tourn-status</code> <code>.tourn-trend</code> <code>.tourn-trend-badge</code> <code>.tourn-ext-group</code> <code>.tourn-ext-group-label</code> <code>.tourn-ext-link</code> <code>.tourn-others</code> <code>.tourn-other-line</code> <code>.tourn-form-table</code></td></tr>
+  <h3 style="font-size:14px;margin:20px 0 8px;color:var(--accent)">13.8 Tournament (9 classes — prefixo <code>.tourn-*</code>)</h3>
+  <table class="ds-table"><thead><tr><th>Classes</th></tr></thead><tbody>
+    <tr><td><code>.tourn-layout</code> <code>.tourn-section</code> <code>.tourn-scroll</code> <code>.tourn-meta</code> <code>.tourn-ext-link</code> <code>.tourn-tab</code> <code>.tourn-tab-sm</code> <code>.tourn-tab-muted</code> <code>.tourn-pname</code></td></tr>
   </tbody></table>
+  <p style="font-size:11px;color:var(--text-muted);margin:4px 0 0">Muitas tourn-* classes foram removidas (draw, KPIs, sparklines, distribui&ccedil;&atilde;o). Usar utilit&aacute;rios gen&eacute;ricos.</p>
 
   <!-- 13.9 CROSS-SEASON -->
   <h3 style="font-size:14px;margin:20px 0 8px;color:var(--accent)">13.9 Cross-Season Table (22 classes — prefixo <code>.cs-*</code>)</h3>
@@ -3839,7 +3819,7 @@ tr.cross-current { background: var(--bg-success); }
   </tbody></table>
 
   <!-- 13.13 SIMULATOR -->
-  <h3 style="font-size:14px;margin:20px 0 8px;color:var(--accent)">13.13 Simulator (49 classes — prefixo <code>.sim-*</code>)</h3>
+  <h3 style="font-size:14px;margin:20px 0 8px;color:var(--accent)">13.13 Simulator (43 classes — prefixo <code>.sim-*</code>)</h3>
   <table class="ds-table"><thead><tr><th>Grupo</th><th>Classes</th></tr></thead><tbody>
     <tr><td>Tabela</td><td><code>.sim-table</code> <code>.sim-table-wrap</code> <code>.sim-th</code> <code>.sim-td</code> <code>.sim-td-score</code> <code>.sim-td-net</code> <code>.sim-td-sd</code> <code>.sim-td-sd18</code> <code>.sim-td-vspar</code></td></tr>
     <tr><td>Strip</td><td><code>.sim-strip</code> <code>.sim-strip-cell</code> <code>.sim-strip-cell-9h</code> <code>.sim-strip-cell-accent</code> <code>.sim-strip-cell-ags</code> <code>.sim-strip-cell-cut</code> <code>.sim-strip-label</code> <code>.sim-strip-num</code> <code>.sim-strip-sub</code> <code>.sim-strip-tab</code></td></tr>
@@ -3857,7 +3837,7 @@ tr.cross-current { background: var(--bg-success); }
   </tbody></table>
 
   <!-- 13.15 OVERLAY EXPORT -->
-  <h3 style="font-size:14px;margin:20px 0 8px;color:var(--accent)">13.15 Overlay Export (20 classes — prefixo <code>.ov-*</code>)</h3>
+  <h3 style="font-size:14px;margin:20px 0 8px;color:var(--accent)">13.15 Overlay Export (14 classes — prefixo <code>.ov-*</code>)</h3>
   <table class="ds-table"><thead><tr><th>Classes</th></tr></thead><tbody>
     <tr><td><code>.ov-export</code> <code>.ov-export-btn</code> <code>.ov-export-inline</code> <code>.ov-header</code> <code>.ov-section</code> <code>.ov-section-label</code> <code>.ov-fields</code> <code>.ov-field</code> <code>.ov-options</code> <code>.ov-opt-group</code> <code>.ov-opt-btn</code> <code>.ov-opt-label</code> <code>.ov-toggle</code> <code>.ov-toggles</code> <code>.ov-card</code> <code>.ov-card-header</code> <code>.ov-card-label</code> <code>.ov-card-preview</code> <code>.ov-gallery</code> <code>.ov-share-btn</code></td></tr>
   </tbody></table>
@@ -3880,20 +3860,20 @@ tr.cross-current { background: var(--bg-success); }
   </tbody></table>
 
   <!-- 13.18 COLOR UTILITIES -->
-  <h3 style="font-size:14px;margin:20px 0 8px;color:var(--accent)">13.18 Color &amp; Semantic Utilities (32 classes)</h3>
+  <h3 style="font-size:14px;margin:20px 0 8px;color:var(--accent)">13.18 Color &amp; Semantic Utilities (29 classes)</h3>
   <table class="ds-table"><thead><tr><th>Grupo</th><th>Classes</th></tr></thead><tbody>
     <tr><td>Texto</td><td><code>.c-text</code> <code>.c-text-2</code> <code>.c-text-3</code> <code>.c-muted</code> <code>.c-white</code></td></tr>
     <tr><td>Sem&acirc;ntico</td><td><code>.c-good</code> <code>.c-good-dark</code> <code>.c-danger</code> <code>.c-warn</code> <code>.c-warn-dark</code></td></tr>
     <tr><td>Score</td><td><code>.c-eagle</code> <code>.c-birdie</code> <code>.c-par-ok</code> <code>.c-border</code></td></tr>
     <tr><td>Cor</td><td><code>.c-amber</code> <code>.c-blue</code> <code>.c-purple</code> <code>.c-teal</code></td></tr>
-    <tr><td>Combos</td><td><code>.c-amber-11</code> <code>.c-blue-13</code> <code>.c-blue-2563</code> <code>.c-muted-fs10</code> <code>.c-par-ok-11</code></td></tr>
+    <tr><td>Combos</td><td><code>.c-amber-11</code> <code>.c-blue-13</code> <code>.c-blue-2563</code> <code>.c-par-ok-11</code></td></tr>
     <tr><td>Background</td><td><code>.cb-amber</code> <code>.cb-birdie</code> <code>.cb-blue</code> <code>.cb-blue-10</code> <code>.cb-blue-800</code> <code>.cb-par-ok</code></td></tr>
   </tbody></table>
 
 </div>
 
 <div style="text-align:center;padding:24px 0;font-size:11px;color:var(--text-muted)">
-  Golf FPG Design System &middot; 206 tokens &middot; 839 classes activas &middot; 12 novas utilit&aacute;rias &middot; 14 p&aacute;ginas &middot; Abril 2026 &middot; Zero cores hardcoded
+  Golf FPG Design System &middot; 206 tokens &middot; 555 classes activas (de 842 — redu&ccedil;&atilde;o de 34%) &middot; 14 p&aacute;ginas &middot; Abril 2026 &middot; Zero cores hardcoded
 </div>
 
 </div>

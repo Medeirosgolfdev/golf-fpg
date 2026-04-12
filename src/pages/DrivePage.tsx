@@ -2467,7 +2467,7 @@ function DriveContent() {
           </div>
 
           {/* Conteúdo principal */}
-          <div className="flex-1-scroll" ref={md.detailRef}>
+          <div className="content" ref={md.detailRef}>
             <div style={{ padding: "0 12px 12px" }}>
 
               {/* Detalhe jogador (se aberto) */}
@@ -2545,7 +2545,7 @@ function DriveContent() {
           </div>
 
           {/* Conteúdo principal */}
-          <div className="flex-1-scroll">
+          <div className="content">
 
             {/* RESUMO */}
             {selectedGroupKey === null && (

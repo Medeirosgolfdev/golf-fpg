@@ -33,7 +33,7 @@ export default function PasswordGate({ onUnlock }: Props) {
       <div className="pw-icon">🔒</div>
       <div className="pw-title">Acesso restrito</div>
       <div className="pw-sub">Este separador requer password</div>
-      <div className="pw-row">
+      <div className="stats">
         <input
           type="password"
           value={pw}

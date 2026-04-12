@@ -88,7 +88,7 @@ function SDTable({
 
   return (
     <div className="sim-scroll-x">
-      <table className="sim-table">
+      <table className="dtable">
         <thead>
           <tr>
             <th className="sim-th">Score</th>
@@ -120,7 +120,7 @@ function SDTable({
                 ].join(" ")}
               >
                 <td className="sim-td sim-td-score">{r.score}</td>
-                <td className="sim-td sim-td-vspar">
+                <td className="sim-td c-text-3">
                   {r.vsPar === 0 ? "E" : r.vsPar > 0 ? `+${r.vsPar}` : r.vsPar}
                 </td>
                 {is9h ? (
@@ -134,7 +134,7 @@ function SDTable({
                   <td className="sim-td sim-td-sd">{fmtSD(r.sd18)}</td>
                 )}
                 {hi !== null && (
-                  <td className="sim-td sim-td-net">
+                  <td className="sim-td c-text-2">
                     {r.netScore !== null ? r.netScore : "–"}
                   </td>
                 )}
@@ -242,7 +242,7 @@ function MultiTeeSDTable({
 
   return (
     <div className="sim-scroll-x scroll-x" style={{ maxHeight: 500 }}>
-      <table className="sim-table sim-multi-tee">
+      <table className="dtable sim-multi-tee">
         <thead>
           {/* Row 1: tee color headers — sticky top:0 */}
           <tr>
@@ -1451,7 +1451,7 @@ export default function SimuladorPage() {
                         colorHex={teeHex(t)}
                         suffix={t.sex !== "U" ? t.sex : null}
                       />
-                      <span className="sim-tee-info">
+                      <span className="toolbar-meta">
                         CR {fmtCR(crDisp)} · Sl {slDisp}{distDisp != null ? ` · ${fmt(distDisp)}m` : ""}
                       </span>
                     </button>

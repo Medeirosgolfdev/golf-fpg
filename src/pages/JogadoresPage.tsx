@@ -534,7 +534,7 @@ function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, eclecti
   return (
     <div className="sc-modern" style={{ "--tee-color": teeHex_, "--tee-fg": teeFg_ } as React.CSSProperties}>
       {/* Header */}
-      <div className={`sc-header ${teeFg_ === "#fff" ? "sc-header-dark" : "sc-header-light"}`} style={{ background: teeHex_, border: teeBorder(teeHex_) }}>
+      <div className={`sc-header ${teeFg_ === "#fff" ? "c-white" : "sc-header-light"}`} style={{ background: teeHex_, border: teeBorder(teeHex_) }}>
         <div className="sc-header-left">
           <div className="sc-title"><CourseLink name={courseName} /></div>
           <div className="sc-subtitle">
@@ -982,7 +982,7 @@ function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, ac
 
       {/* Summary table */}
       <div className="mb-10">
-        <table className="ec-sum">
+        <table className="dtable">
           <thead>
             <tr><th>Tee</th>
               <SortableHdr k="rondas" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Rondas</SortableHdr>
@@ -1472,7 +1472,7 @@ function HistogramCard({ rounds, period, setPeriod }: {
           {bins.bins.map(b => (
             <div key={b.label} className="an-hist-row">
               <div className="an-hist-label">{b.label}</div>
-              <div className="an-hist-bar-wrap">
+              <div className="flex-1">
                 <div className="an-hist-bar" style={{
                   width: `${bins.maxCount > 0 ? Math.max(4, (b.count / bins.maxCount) * 100) : 4}%`,
                   background: b.color
@@ -2192,7 +2192,7 @@ function CommonCourses({ players, currentFed, escName }: {
  <td className="r fw-600" style={{ color: SC.danger }}>{cp.worst ?? "–"}</td>
                           <td className="r">{ampl ?? "–"}</td>
                           <td>
-                            <div className="progress-track-sm">
+                            <div className="progress-track">
                               <div style={{ position: "absolute", top: 2, height: 10, borderRadius: "var(--radius-xs)", background: bCol, opacity: 0.3, left: `${barLeft}%`, width: `${barW}%` }} />
                               <div style={{ position: "absolute", top: 0, width: 2, height: 14, background: bCol, left: `${avgM}%` }} />
                             </div>
@@ -2209,7 +2209,7 @@ function CommonCourses({ players, currentFed, escName }: {
                   const isCur = hp.fed === currentFed;
                   if (!hp.rounds?.length) return null;
                   return (
- <div key={hp.fed} className="br-default mt-6" style={{ padding: "6px 8px", border: isCur ? "1px solid var(--border-current-good)" : "1px solid var(--border-light)", background: isCur ? "var(--bg-success)" : "var(--bg)" }}>
+ <div key={hp.fed} className="br mt-6" style={{ padding: "6px 8px", border: isCur ? "1px solid var(--border-current-good)" : "1px solid var(--border-light)", background: isCur ? "var(--bg-success)" : "var(--bg)" }}>
                       <div className="fw-600 fs-11 mb-4">
                         {hp.name} <span className="muted">({hp.rounds.length} ronda{hp.rounds.length > 1 ? "s" : ""})</span>
                       </div>
@@ -2239,7 +2239,7 @@ function CommonCourses({ players, currentFed, escName }: {
 }
 function PeriodSelect({ value, onChange }: { value: number; onChange: (n: number) => void }) {
   return (
- <select className="br-default c-text-2 fs-11" style={{ padding: "2px 6px", border: "1px solid var(--border)", background: "var(--bg-card)" }}
+ <select className="br c-text-2 fs-11" style={{ padding: "2px 6px", border: "1px solid var(--border)", background: "var(--bg-card)" }}
       value={value} onChange={e => onChange(Number(e.target.value))}>
       <option value={3}>3 meses</option>
       <option value={6}>6 meses</option>
@@ -3238,7 +3238,7 @@ export default function JogadoresPage() {
                     {(() => { const d = daysSince(statsDb[p.fed]); return d != null && d <= NEW_DAYS ? <span className="new-round-dot" title={`Ronda há ${d}d`} /> : null; })()}
                   </span>
                   {rankingMode && displayHcp != null && (
-                    <span className={`sidebar-sd ${displayHcp <= 5 ? "sidebar-sd-good" : displayHcp <= 15 ? "sidebar-sd-ok" : "sidebar-sd-high"}`}>
+                    <span className={`sidebar-sd ${displayHcp <= 5 ? "trend-up" : displayHcp <= 15 ? "sidebar-c-text-3" : "sidebar-sd-high"}`}>
                       {hcpDisplay(displayHcp)}
                     </span>
                   )}

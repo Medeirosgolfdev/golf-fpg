@@ -148,17 +148,17 @@ export default function NavBar() {
 
       {/* Estatísticas de topo */}
       <div className="top-stats">
-        <div className="top-stat">
-          <div className="top-stat-val">{stats.courses}</div>
-          <div className="top-stat-label">Campos</div>
+        <div className="ta-c">
+          <div className="ta-c-val">{stats.courses}</div>
+          <div className="ta-c-label">Campos</div>
         </div>
-        <div className="top-stat">
-          <div className="top-stat-val">{stats.tees}</div>
-          <div className="top-stat-label">Tees</div>
+        <div className="ta-c">
+          <div className="ta-c-val">{stats.tees}</div>
+          <div className="ta-c-label">Tees</div>
         </div>
-        <div className="top-stat">
-          <div className="top-stat-val">{stats.players}</div>
-          <div className="top-stat-label">Jogadores</div>
+        <div className="ta-c">
+          <div className="ta-c-val">{stats.players}</div>
+          <div className="ta-c-label">Jogadores</div>
         </div>
       </div>
     </header>

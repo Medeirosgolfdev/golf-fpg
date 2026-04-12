@@ -147,14 +147,14 @@ function ScorecardGrid({ tees }: { tees: Tee[] }) {
                   />
                 </td>
                 {Array.from({ length: 9 }, (_, i) => (
-                  <td key={i + 1} className="sc-c">{fmt(byHole.get(i + 1)?.distance ?? null)}</td>
+                  <td key={i + 1} className="ta-c">{fmt(byHole.get(i + 1)?.distance ?? null)}</td>
                 ))}
-                <td className="sc-c sc-tot-val">{fmt(out)}</td>
+                <td className="ta-c sc-tot-val">{fmt(out)}</td>
                 {Array.from({ length: 9 }, (_, i) => (
-                  <td key={i + 10} className="sc-c">{fmt(byHole.get(i + 10)?.distance ?? null)}</td>
+                  <td key={i + 10} className="ta-c">{fmt(byHole.get(i + 10)?.distance ?? null)}</td>
                 ))}
-                <td className="sc-c sc-tot-val">{fmt(inn)}</td>
-                <td className="sc-c sc-tot-val">{fmt(tot || null)}</td>
+                <td className="ta-c sc-tot-val">{fmt(inn)}</td>
+                <td className="ta-c sc-tot-val">{fmt(tot || null)}</td>
               </tr>
             );
           })}
@@ -163,28 +163,28 @@ function ScorecardGrid({ tees }: { tees: Tee[] }) {
           <tr className="sc-meta-row sc-par-row">
             <td className="sc-sticky sc-meta-label">PAR</td>
             {Array.from({ length: 9 }, (_, i) => (
-              <td key={i + 1} className="sc-c">{refByHole.get(i + 1)?.par ?? "–"}</td>
+              <td key={i + 1} className="ta-c">{refByHole.get(i + 1)?.par ?? "–"}</td>
             ))}
-            <td className="sc-c sc-tot-val">{fmt(sumRange(1, 9, (i) => refByHole.get(i)?.par ?? null))}</td>
+            <td className="ta-c sc-tot-val">{fmt(sumRange(1, 9, (i) => refByHole.get(i)?.par ?? null))}</td>
             {Array.from({ length: 9 }, (_, i) => (
-              <td key={i + 10} className="sc-c">{refByHole.get(i + 10)?.par ?? "–"}</td>
+              <td key={i + 10} className="ta-c">{refByHole.get(i + 10)?.par ?? "–"}</td>
             ))}
-            <td className="sc-c sc-tot-val">{fmt(sumRange(10, 18, (i) => refByHole.get(i)?.par ?? null))}</td>
-            <td className="sc-c sc-tot-val">{fmt(sumRange(1, 18, (i) => refByHole.get(i)?.par ?? null))}</td>
+            <td className="ta-c sc-tot-val">{fmt(sumRange(10, 18, (i) => refByHole.get(i)?.par ?? null))}</td>
+            <td className="ta-c sc-tot-val">{fmt(sumRange(1, 18, (i) => refByHole.get(i)?.par ?? null))}</td>
           </tr>
 
           {/* SI / HCP */}
           <tr className="sc-meta-row sc-hcp-row">
             <td className="sc-sticky sc-meta-label">HCP</td>
             {Array.from({ length: 9 }, (_, i) => (
-              <td key={i + 1} className="sc-c">{refByHole.get(i + 1)?.si ?? "–"}</td>
+              <td key={i + 1} className="ta-c">{refByHole.get(i + 1)?.si ?? "–"}</td>
             ))}
-            <td className="sc-c">–</td>
+            <td className="ta-c">–</td>
             {Array.from({ length: 9 }, (_, i) => (
-              <td key={i + 10} className="sc-c">{refByHole.get(i + 10)?.si ?? "–"}</td>
+              <td key={i + 10} className="ta-c">{refByHole.get(i + 10)?.si ?? "–"}</td>
             ))}
-            <td className="sc-c">–</td>
-            <td className="sc-c">–</td>
+            <td className="ta-c">–</td>
+            <td className="ta-c">–</td>
           </tr>
         </tbody>
       </table>
@@ -198,7 +198,7 @@ function RatingsTable({ tees }: { tees: Tee[] }) {
   const sorted = sortTees(tees);
 
   return (
-    <div className="ratings-wrap">
+    <div className="sc-wrap">
       <table className="ratings-table">
         <thead>
           <tr>
