@@ -551,8 +551,9 @@ function Content() {
   );
 }
 
-export default function FTMDoralPage() {
+export default function DORALPage() {
   const { unlocked, unlock } = usePasswordGate();
   if (!unlocked) return <PasswordGate onUnlock={unlock} />;
   return <Content />;
 }
+      

@@ -1328,42 +1328,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
         />
       )}
 
-
-      {!selectedPlayer && (
-        <div className="ta-c" style={{ margin: "20px 0" }}>
-          <Link to={`/jogadores/${fed}`} className="p p-filter active td-none fs-13"  style={{ padding: "8px 20px", height: "auto" }}>
-            Ver perfil completo do {PLAYER_NAME} →
-          </Link>
         </div>
-      )}
-
-        </div>{/* /course-detail */}
-      </div>{/* /master-detail */}
-    </div>
-  );
-}
-
-/* ═══════════════════════════════════
-   SUB-COMPONENTS
-   ═══════════════════════════════════ */
-
-
-function _MiniBar({ d }: { d: { eagle: number; birdie: number; par: number; bogey: number; double: number; triple: number } }) {
-  const tot = Object.values(d).reduce((a, b) => a + b, 0);
-  if (!tot) return <span className="muted">–</span>;
-  const segs = [
-    { n: d.eagle + d.birdie, cls: "seg-birdie" },
-    { n: d.par, cls: "seg-par" },
-    { n: d.bogey, cls: "seg-bogey" },
-    { n: d.double + d.triple, cls: "seg-double" },
-  ];
-  return (
- <div className="overflow-hidden br-sm d-flex" style={{ height: 14, gap: 1 }}>
-      {segs.filter(s => s.n > 0).map((s, i) => (
- <div key={i} className={`${s.cls} d-flex items-center jc-center fs-10 fw-700 c-white`} style={{ flex: s.n }}>
-          {s.n}
-        </div>
-      ))}
+      </div>
     </div>
   );
 }
