@@ -16,12 +16,12 @@ on:
         description: 'Fed codes separados por espaço (vazio = TODOS de players.json)'
         required: false
         default: ''
-      new_only:
-        description: 'Só descarregar scorecards novos?'
+      full_rebuild:
+        description: 'Re-descarregar TUDO (lento, só usar se suspeitar de dados corrompidos)?'
         required: false
-        default: 'true'
+        default: 'false'
         type: choice
-        options: ['true', 'false']
+        options: ['false', 'true']
   schedule:
     - cron: '0 21 * * 6,0'   # Sáb e Dom às 21:00 UTC
 
@@ -61,11 +61,11 @@ jobs:
         id: scrape
         run: |
           set +e
-          NEW_ONLY_FLAG=""
-          if [ "${{ github.event.inputs.new_only || 'true' }}" = "true" ]; then
-            NEW_ONLY_FLAG="--new-only"
+          FULL_FLAG=""
+          if [ "${{ github.event.inputs.full_rebuild || 'false' }}" = "true" ]; then
+            FULL_FLAG="--full"
           fi
-          node scripts/fpg-scrape-node.js ${{ steps.feds.outputs.codes }} $NEW_ONLY_FLAG --concurrency 3
+          node scripts/fpg-scrape-node.js ${{ steps.feds.outputs.codes }} $FULL_FLAG --concurrency 3
           EXIT=$?
           echo "exit_code=$EXIT" >> $GITHUB_OUTPUT
           if [ "$EXIT" = "1" ]; then exit 1; fi  # erro real
