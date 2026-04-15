@@ -1,24 +1,36 @@
 name: Actualizar Dados DRIVE
 
+# Corre:
+#  - Automaticamente Sex/Sáb/Dom às 21:00 UTC (~22:00 Lisboa)
+#  - A pedido (botão "Run workflow" no GitHub)
+#
+# Por DEFAULT só descarrega torneios do mês corrente + mês anterior (rápido).
+# Para histórico completo, usar workflow_dispatch com months_back=99.
+#
+# Requer GitHub Secret:
+#   DATAGOLF_SCORING_COOKIES — cookie header capturado de scoring.datagolf.pt
+#                              formato: "ASP.NET_SessionId=XXX; DG_Lists_URL=YYY"
 on:
-  # Disparo manual (botão "Run workflow" no GitHub)
   workflow_dispatch:
     inputs:
-      year:
-        description: 'Ano dos torneios (vazio = ano actual)'
+      months_back:
+        description: 'Quantos meses anteriores incluir (0=só mês corrente, 1=default, 99=ano inteiro)'
         required: false
-        default: ''
-      force:
-        description: 'Re-processar torneios já existentes?'
+        default: '1'
+      force_commit:
+        description: 'Fazer commit mesmo se os totais não aumentarem?'
         required: false
         default: 'false'
         type: choice
         options: ['false', 'true']
 
-  # Opcional: corre automaticamente todos os dias às 22h (Lisboa = UTC+0 no inverno, UTC+1 no verão)
-  # Descomenta as linhas abaixo se quiseres automático diário:
-  # schedule:
-  #   - cron: '0 21 * * *'   # 21:00 UTC = 22:00 Lisboa (inverno) / 23:00 (verão)
+  schedule:
+    # Minuto Hora Dia Mês DiaSemana (UTC)
+    # 21:00 UTC à Sexta (5), Sábado (6) e Domingo (0)
+    - cron: '0 21 * * 5,6,0'
+
+permissions:
+  contents: write
 
 jobs:
   update-drive:
@@ -38,50 +50,46 @@ jobs:
           cache: 'npm'
 
       - name: Instalar dependências
+        run: npm ci
+
+      - name: Correr scrape-drive-node.js (Node puro, sem Playwright)
+        id: scrape
         run: |
-          npm ci
-          # Instalar Playwright e browser Chromium
-          npm install playwright
-          npx playwright install chromium --with-deps
-
-      - name: Correr scraper DRIVE (Fase 1)
-        run: |
-          YEAR_ARG=""
-          if [ -n "${{ github.event.inputs.year }}" ]; then
-            YEAR_ARG="--year ${{ github.event.inputs.year }}"
-          fi
-
-          FORCE_ARG=""
-          if [ "${{ github.event.inputs.force }}" = "true" ]; then
-            FORCE_ARG="--force"
-          fi
-
-          node fpg-drive-playwright.js $YEAR_ARG $FORCE_ARG
-
-      - name: Verificar output
-        run: |
-          if [ ! -f "public/data/drive-data.json" ]; then
-            echo "ERRO: drive-data.json não foi criado"
+          set +e
+          MONTHS_BACK="${{ github.event.inputs.months_back || '1' }}"
+          node scripts/scrape-drive-node.js --months-back $MONTHS_BACK
+          EXIT_CODE=$?
+          echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
+          # 0 = há mais dados → commit
+          # 2 = nada novo → não commit (NÃO é erro)
+          # 1 = erro real
+          if [ "$EXIT_CODE" = "1" ]; then
+            echo "❌ Scraper falhou — ver logs acima"
             exit 1
           fi
-          TOTAL=$(node -e "const d=require('./public/data/drive-data.json'); console.log(d.totalTournaments)")
-          SC=$(node -e "const d=require('./public/data/drive-data.json'); console.log(d.totalScorecards)")
-          echo "✓ drive-data.json: $TOTAL torneios, $SC scorecards"
+          if [ "$EXIT_CODE" = "2" ]; then
+            echo "ℹ️  Nenhum dado novo — a saltar o commit"
+          fi
+          exit 0
+        env:
+          DATAGOLF_SCORING_COOKIES: ${{ secrets.DATAGOLF_SCORING_COOKIES }}
 
-      - name: Commit e push (se houver alterações)
+      - name: Commit e push (se houver novos dados)
+        if: steps.scrape.outputs.exit_code == '0' || github.event.inputs.force_commit == 'true'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add public/data/drive-data.json
+          git add public/data/drive-data-*.json public/data/aquapor-data-*.json
 
-          # Só faz commit se houver alterações reais
+          # Dupla verificação: só commitar se o git diff realmente mostra alterações
           if git diff --staged --quiet; then
-            echo "Nenhuma alteração — sem commit."
-          else
-            DATE=$(date +'%Y-%m-%d %H:%M')
-            TOTAL=$(node -e "const d=require('./public/data/drive-data.json'); console.log(d.totalTournaments)")
-            git commit -m "data: update DRIVE ${DATE} (${TOTAL} torneios)"
-            git push
-            echo "✓ Push feito com sucesso."
+            echo "Nenhuma alteração em staging — sem commit."
+            exit 0
           fi
+
+          DATE=$(date +'%Y-%m-%d %H:%M')
+          CHANGED=$(git diff --staged --name-only | wc -l)
+          git commit -m "data: update DRIVE/AQUAPOR ${DATE} (${CHANGED} ficheiros)"
+          git push
+          echo "✓ Commit feito — ${CHANGED} ficheiros actualizados"
