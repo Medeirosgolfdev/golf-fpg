@@ -542,10 +542,834 @@ Popula `uskTournNames` como fallback (hardcoded em `USKIDS_TCODE_META` tem prior
 | scoring.datagolf.pt | `scoring.datagolf.pt/pt/tournaments.aspx` | Torneios DRIVE+AQUAPOR+pull | Público |
 | scoring.fpg.pt | `scoring.fpg.pt/lists/PlayerWHS.aspx?no=52884` | Download WHS | Login |
 | area.my.fpg.pt | `area.my.fpg.pt/login/` | Login FPG (SSO) | SSO |
+| my.fpg.pt | `my.fpg.pt/Home/PlayerWHS.aspx?no=52884` | WHS — **gémeo de scoring.datagolf.pt** | Login |
+| golf-portugal.pt | `golf-portugal.pt/api/*` | Proxy público FPG (REST) | Público |
 | signupanytime.com | `www.signupanytime.com` | Torneios USKids | Público |
 | tournaments.uskidsgolf.com | `tournaments.uskidsgolf.com/tournaments/international` | Calendário torneios | Público |
 | brjgt.bluegolf.com | `brjgt.bluegolf.com` | BJGT/WJGC/EOWAGR | CAPTCHA possível |
 | GolfGenius (Doral) | `firstteemiamidoraljrclassic.golfgenius.com` | Doral Jr. Classic | Público |
+
+---
+
+## FPG — APIs em tempo real (descobertas 2026-04-14)
+
+Documentação completa em `docs/api-fpg-endpoints.md`. Resumo crítico:
+
+### ⚡ DUPLO BREAKTHROUGH (2026-04-14, tarde) — automação server-side TOTAL
+
+Depois de dezenas de tentativas falhadas em sessões anteriores, descobriu-se
+num único dia a solução para **ambos os backends da FPG**: `my.fpg.pt`
+(autenticado) e `scoring.datagolf.pt` (público mas com proteção). Os dois
+funcionam agora em Node puro com `fetch`, sem Playwright, sem
+`golf-portugal.pt`, sem browser automation.
+
+**Impacto:** toda a pipeline FPG (federados, WHS, scorecards, torneios, drive,
+aquapor) pode correr em GitHub Actions ou Node.js local. Playwright deixa de
+ser necessário para estes domínios.
+
+---
+
+#### Backend 1: `my.fpg.pt` (autenticado — WHS, scorecards, federados)
+
+**Cookie em falta:** `.AspNet.ApplicationCookie` (ASP.NET Identity auth token).
+
+**Por que nunca o tínhamos visto antes:** o servidor FPG não seta `SameSite`
+nos cookies. O Chrome moderno aplica `SameSite=Lax` por default →
+**rejeita o cookie silenciosamente antes de o persistir** → nenhuma ferramenta
+(DevTools UI, `document.cookie`, `cookieStore`, Playwright `context.cookies()`)
+o mostra, porque nunca chegou a existir na sessão do browser.
+
+A conclusão histórica "há um cookie httpOnly invisível" estava errada. **O
+cookie não era invisível — era ausente**, bloqueado na fase de setting pelo
+próprio browser.
+
+**Solução:** instalar **Chrome 90** (última versão com flags SameSite
+toggleáveis em `chrome://flags`), desactivar:
+- `SameSite by default cookies` → **Disabled**
+- `Cookies without SameSite must be secure` → **Disabled**
+- `Schemeful Same-Site` → **Disabled** (opcional)
+
+Depois fazer login em `area.my.fpg.pt/login/` → navegar para
+`my.fpg.pt/Home/PlayerWHS.aspx?no=52884` → F12 → Application → Cookies →
+copiar os 6 cookies que aparecem (incluindo `.AspNet.ApplicationCookie`).
+
+Qualquer script Node com `fetch` + esse `Cookie:` header autentica
+imediatamente. Teste confirmado 2026-04-14: `POST /Home/PlayerWHS.aspx/HCPWhsFederLST`
+devolveu `Result:"OK"` com 138 rondas do Manuel.
+
+**IP-binding:** **CONFIRMADO NÃO IP-BOUND** (teste 2026-04-15 — cookies do
+Firefox capturados num IP continuaram a funcionar noutro IP diferente).
+GitHub Actions pode usar estes cookies via GitHub Secret `FPG_COOKIES` /
+`DATAGOLF_COOKIES`.
+
+**Armadilha encontrada (para não repetir):** o `scripts/test-fpg-auth.js`
+tinha inicialmente o cookie header **hardcoded** numa constante, em vez
+de ler de `api/.datagolf-cookies.json`. Resultado: actualizar o ficheiro
+de cookies não mudava nada no teste, e durante horas debitei "cookies
+inválidos" quando na realidade estava a testar sempre com os cookies
+expirados originais. **Lição:** scripts de teste devem SEMPRE ler cookies
+de ficheiro/env var — nunca hardcoded. Actualmente corrigido.
+
+---
+
+#### Backend 2: `scoring.datagolf.pt` (público — torneios, drive, aquapor)
+
+**Cookies necessários:** dois, **ambos obrigatórios**:
+- `ASP.NET_SessionId` — sessão ASP.NET (HttpOnly, SameSite=None)
+- `DG_Lists_URL` — cookie de "entry context" que prova que o browser passou
+  pela `1EntryPage.aspx` com hash válido
+
+**Gotcha crítico:** `GET /pt/tournaments.aspx` **direto devolve HTTP 500 ou
+302 → Param_Errors.aspx?Err=999**. A página não é acessível sem passar
+primeiro por `1EntryPage.aspx?user=fpguser&dt=X&page=Y&hash=Z&...` — esse
+entry page seta o `DG_Lists_URL` e valida o hash server-side.
+
+**O hash NÃO é replicável de fora do browser.** Tentámos chamar
+`1EntryPage.aspx` com o hash copiado do browser a partir de Node → 500.
+O servidor valida o hash contra estado só conhecido pela sessão do browser
+que o pediu originalmente (provavelmente timestamp + user-agent + alguma
+entropy server-side).
+
+**Solução:** capturar cookies uma vez do Chrome 90 (depois de navegar
+normalmente para `scoring.datagolf.pt/pt/tournaments.aspx`), guardar em
+ficheiro/secret, e usar via `fetch` Node.
+
+**IP-binding:** **CONFIRMADO NÃO IP-BOUND** (teste 2026-04-14 via hotspot 4G
+com IP completamente diferente do login original — os cookies continuaram a
+funcionar). Isto valida **GitHub Actions** como alvo viável.
+
+Teste confirmado: `POST /pt/tournaments.aspx/TournamentsLST` devolveu
+`Result:"OK"` com 25 torneios, `TotalRecordCount=83131`.
+
+---
+
+#### Fluxo prático de captura de cookies (Chrome 90)
+
+Para **qualquer** dos dois backends, o fluxo é o mesmo:
+
+1. Abrir Chrome 90 com SameSite flags desactivadas
+2. Fazer login (para `my.fpg.pt`) ou apenas navegar (para `scoring.datagolf.pt`)
+3. F12 → **Network** → reload da página
+4. Encontrar qualquer pedido XHR/Fetch → botão direito → **Copy as cURL (bash)**
+5. Extrair o header `cookie:` do cURL — isso dá os cookies completos
+6. Guardar em `api/.datagolf-cookies.json` (gitignored) ou em GitHub Secret
+
+Alternativa sem cURL: F12 → **Application** → **Cookies** → clicar no
+domínio → copiar cada linha (nome=valor). Ambos os métodos dão os mesmos
+cookies.
+
+Validade dos cookies:
+- `my.fpg.pt` — `.AspNet.ApplicationCookie` dura dias a semanas (ASP.NET
+  Identity default é 14 dias sliding expiration)
+- `scoring.datagolf.pt` — `ASP.NET_SessionId` dura 20min sem actividade
+  (ASP.NET default), mas pode ser muito mais longo na FPG. `DG_Lists_URL`
+  não testada individualmente. Para fins práticos, assumir **1 semana**
+  e refrescar por precaução.
+
+---
+
+#### Scripts de prova de conceito
+
+- `scripts/test-fpg-auth.js` — valida cookies `my.fpg.pt` com POST a
+  `HCPWhsFederLST`. Devolve `Result:"OK"` se cookies válidos.
+- `scripts/test-datagolf-node.js` — valida cookies `scoring.datagolf.pt`
+  com POST a `TournamentsLST`. Tem dois testes (A: tentar
+  `1EntryPage.aspx` de Node — falha sempre; B: usar cookies manuais —
+  funciona).
+
+### Chrome 90 — setup detalhado (INSTRUÇÕES PARA NÃO REDESCOBRIR)
+
+Chrome 90 é **a última versão** com as flags SameSite toggleáveis em
+`chrome://flags`. Chrome 91+ removeu as flags da UI; Chrome 94+ removeu a
+flag CLI `--disable-features=SameSiteByDefaultCookies`. Playwright/Chromium
+bundled nunca vai conseguir — as features estão hard-coded desde v100+.
+
+**Passos exactos (testados 2026-04-14):**
+1. Download Chrome 90 offline installer (arquivos históricos — pesquisar
+   "Chrome 90.0.4430.93 offline installer" em sites como slimjet.com)
+2. Instalar numa pasta dedicada ou como perfil portátil (evitar substituir
+   Chrome principal)
+3. Abrir, ir a `chrome://flags`, procurar "SameSite"
+4. Desactivar:
+   - `SameSite by default cookies` (ID `#same-site-by-default-cookies`)
+   - `Cookies without SameSite must be secure` (ID `#cookies-without-same-site-must-be-secure`)
+   - `Schemeful Same-Site` (ID `#schemeful-same-site`) — opcional
+5. Clicar "Relaunch" em baixo
+6. Usar **exclusivamente para FPG** — não para navegação geral (Chrome 90
+   tem 5+ anos de vulnerabilidades não patchadas)
+
+⚠ Se as flags não aparecerem: estás a ver Chrome moderno, não o 90. Confirmar
+versão em `chrome://version` — deve dizer exactamente `Chrome/90.0.4430.93`
+ou similar.
+
+### Endpoints descobertos — referência completa
+
+#### `my.fpg.pt/Home/*` (autenticado)
+
+| Endpoint | Método | Body/Params | Devolve |
+|---|---|---|---|
+| `/Home/PlayerWHS.aspx/HCPWhsFederLST?fed_code=X&pp=N&jtStartIndex=0&jtPageSize=100` | POST | `{fed_code, pp:"N", jtStartIndex, jtPageSize}` **sem jtSorting** | Lista rondas WHS (~38 campos/ronda) |
+| `/Home/PlayerWHS.aspx/ScoreCard?score_id=X&scoringtype=Y&competitiontype=Z&pp=N` | POST | `{score_id, scoringtype, competitiontype, pp:"N"}` | Scorecard hole-by-hole (par_1..18, gross_1..18, meters_1..18, stroke_index_1..18, stbgross_1..18, stbnet_1..18, bogey_1..18). **Atenção:** `scoringtype` e `competitiontype` TÊM de estar na URL E no body (descoberto 2026-04-15). Valores vêm do record da lista WHS (`scoring_type_id` e `competition_type_id`). Hardcodar valores fixos (1/10 para tudo) falha com "An error occurred while processing this request". |
+| `/Home/PlayerWHS.aspx/View20Scores?fed_code=X` | POST | `{fed_code}` | 20 rondas do cálculo WHS |
+| `/Home/PlayerWHS.aspx/ViewWHSCalc?fed_code=X` | POST | `{fed_code}` | Cálculo WHS detalhado (soft/hard cap) |
+| `/Home/FederatedsList_V2.aspx/HandicapsLST` | POST | ver `scripts/scrape-federados.js` | Lista de federados (32 campos, incl. `encryptedfedcode`) |
+
+Headers obrigatórios: `Cookie:` (6 cookies), `Content-Type: application/json`,
+`X-Requested-With: XMLHttpRequest`, `Referer: https://my.fpg.pt/Home/PlayerWHS.aspx?no=X`.
+
+#### `scoring.datagolf.pt/pt/*` (público com entry-gate)
+
+| Endpoint | Método | Body | Devolve |
+|---|---|---|---|
+| `/pt/tournaments.aspx/TournamentsLST?jtStartIndex=0&jtPageSize=25&jtSorting=started_at%20DESC` | POST | `{ClubCode, dtIni, dtFim, CourseName, TournCode, TournName, jtStartIndex, jtPageSize, jtSorting}` | Lista de torneios (name, ccode, tcode, started_at, etc.) |
+| `/pt/Classifications.aspx/ScoreCard?...` | POST | `{score_id, classifround:1}` | Scorecard de torneio (1 ronda) |
+| `/pt/classifAgregate.aspx/ScoreCard` | POST | `{score_id, classifround:""}` | Scorecards de torneio agregado (array, 1 record por ronda) — USAR para torneios >1 ronda |
+| `/pt/Classifications.aspx/GetClassifications?ccode=X&tcode=Y` | POST | `{ccode, tcode, classifround}` | Classificação geral de torneio |
+
+Headers obrigatórios: `Cookie:` (2 cookies), `Content-Type: application/json`,
+`X-Requested-With: XMLHttpRequest`, `Origin: https://scoring.datagolf.pt`,
+`Referer: https://scoring.datagolf.pt/pt/tournaments.aspx`.
+
+**Body mínimo do `TournamentsLST` (testado)**:
+```json
+{"ClubCode":"0","dtIni":"","dtFim":"","CourseName":"","TournCode":"","TournName":"","jtStartIndex":"0","jtPageSize":"25","jtSorting":"started_at DESC"}
+```
+`ClubCode:"0"` = todos os clubes. Paginar via `jtStartIndex` (múltiplos de 25).
+
+### Estrutura dos cookies
+
+#### `my.fpg.pt` — 6 cookies
+
+```
+.AspNet.ApplicationCookie=<~600 chars base64>    ← auth token (crítico)
+ASP.NET_SessionId=<24 chars>                     ← sessão
+PlayerArea=photo=&fedStatId=9                    ← estado player
+playerIsLogin=<N>                                ← user-id interno
+_ga=GA1.1.X.Y                                    ← GA
+_ga_LLMN8JTFJ6=GS2.1.sX$o1$g0$tY$j56$l0$h0       ← GA
+_ga_SBKT3JPZ7V=GS2.1.sX$o1$g1$tY$j56$l0$h0       ← GA
+```
+
+#### `scoring.datagolf.pt` — 2 cookies
+
+```
+ASP.NET_SessionId=<24 chars>                     ← sessão
+DG_Lists_URL=OriginalUrl=https%3a%2f%2fscoring.datagolf.pt%3a443%2fpt%2f1EntryPage.aspx%3fuser%3dfpguser%26dt%3dXXXX%26page%3dtournlist%26hash%3d<40-char hash SHA-1>%26ccode%3dAll%26pagelang%3dPT%26callcontext%3ddirect
+```
+
+O `DG_Lists_URL` é URL-encoded. Descodificado: `1EntryPage.aspx?user=fpguser&dt=XXXX&page=tournlist&hash=<SHA-1>&ccode=All&pagelang=PT&callcontext=direct`.
+O `hash` (40 chars hex) é gerado pelo browser ao entrar pela primeira vez e
+validado server-side. **Não replicável de Node puro.**
+
+### GitHub Actions — estado 2026-04-15
+
+| Workflow | Estado | Script | Cron | Notas |
+|---|---|---|---|---|
+| `uskids-field.yml` | ✅ | Playwright headless | — | Site público signupanytime.com |
+| `uskids-results.yml` | ✅ | idem | — | idem |
+| `uskids-member-history.yml` | ✅ | idem | — | idem |
+| **`update-drive.yml`** | ✅ Reescrito 2026-04-15 | `scripts/scrape-drive-node.js` (Node puro) | Sex/Sáb/Dom 21:00 UTC | Default: mês corrente + mês anterior (`--months-back 1`). Secret: `DATAGOLF_SCORING_COOKIES`. |
+| **`update-data.yml`** | ✅ Reescrito 2026-04-15 | `scripts/fpg-scrape-node.js` (Node puro) | Sáb/Dom 21:00 UTC | Default: incremental (só rondas novas). Override `full_rebuild=true`. Secret: `FPG_COOKIES`. |
+
+**IP-binding em Actions:** `scoring.datagolf.pt` CONFIRMADO não IP-bound
+(teste via hotspot 4G). `my.fpg.pt` CONFIRMADO não IP-bound (teste cross-IP
+2026-04-15). Os mesmos cookies do user funcionam em qualquer IP — Actions
+OK.
+
+**Quando os cookies expiram:** user refresca no browser (Firefox com
+SameSite=off em about:config, ou Chrome 90) → copia via DevTools → actualiza
+GitHub Secret no repo + `api/.datagolf-cookies.json` local. Validade típica
+~1 semana.
+
+### Pipeline de actualização de dados — arquitectura 2026-04-15
+
+Três camadas de automação, escolhidas por onde fazem sentido:
+
+**1. GitHub Actions (cloud, automático no fim-de-semana):**
+- `update-drive.yml` (torneios públicos DRIVE/AQUAPOR)
+- `update-data.yml` (WHS + scorecards dos jogadores seleccionados em players.json)
+- `uskids-*.yml` (3 workflows para USKids)
+- Todos respeitam exit code 2 = "sem dados novos" → sem commit (não é erro)
+
+**2. Scheduled Task Windows local (ao PC, 13:00 diário):**
+- `scripts/setup-scheduled-task.ps1` regista tarefa
+- Corre `scripts/fpg-scrape-node.js --all --concurrency 3` por default incremental
+- Útil para complementar actions (se for preciso running extra)
+- Log em `logs/scheduled-task.log`
+
+**3. Manual / ad-hoc:**
+- `node scripts/fpg-scrape-node.js <fedcode>` — scrape de 1 jogador
+- `node scripts/fpg-scrape-node.js --full <fedcode>` — re-fetch de tudo (lento)
+- `node scripts/scrape-drive-node.js --months-back 99` — histórico completo anual
+- `node scripts/test-fpg-auth.js` — validar cookies
+- `node scripts/test-datagolf-node.js` — validar cookies scoring.datagolf.pt
+
+### Cron schedules
+
+Torneios FPG acontecem tipicamente **Sexta/Sábado/Domingo**. Crons:
+
+```yaml
+# update-drive.yml — scrape de torneios (usa scoring.datagolf.pt)
+- cron: '0 21 * * 5,6,0'   # 21:00 UTC Sex+Sáb+Dom
+
+# update-data.yml — scrape de WHS/scorecards dos nossos jogadores (usa my.fpg.pt)
+- cron: '0 21 * * 6,0'     # 21:00 UTC Sáb+Dom
+```
+
+21:00 UTC = 22:00 Lisboa (inverno) / 22:00 BST (verão), após torneios
+estarem carregados. O drive corre também à Sexta para apanhar torneios
+que começam nesse dia.
+
+### Scripts Node-puros criados 2026-04-15
+
+Substituem a abordagem Playwright antiga. Todos lêem cookies de
+env (`FPG_COOKIES` ou `DATAGOLF_SCORING_COOKIES`) ou de
+`api/.datagolf-cookies.json` / `api/.scoring-datagolf-cookies.json`.
+
+#### `scripts/fpg-scrape-node.js`
+Scraper de WHS + scorecards via `my.fpg.pt/Home/PlayerWHS.aspx/*`.
+
+```bash
+node scripts/fpg-scrape-node.js 52884                  # 1 jogador, incremental
+node scripts/fpg-scrape-node.js --all --concurrency 3  # todos em players.json
+node scripts/fpg-scrape-node.js --full 52884           # re-fetch completo
+```
+
+Por default **incremental** (--new-only implícito): só scorecards de rondas
+novas (rápido, ~1-2s por jogador). Use `--full`/`--full-rebuild` para
+re-fetch (lento, ~12s).
+
+Respeita tag `no-scrape` (salta jogadores marcados) e tag `hidden` (idem).
+
+Output em `output/{fed}/whs.json`, `scorecards.json`, `summary.json`.
+
+Exit codes: 0=há novidades (commit), 2=sem novidades (skip), 1=erro.
+
+#### `scripts/scrape-drive-node.js`
+Scraper de torneios Drive/Aquapor via `scoring.datagolf.pt`.
+
+```bash
+node scripts/scrape-drive-node.js                    # mês corrente + anterior (default)
+node scripts/scrape-drive-node.js --months-back 0    # só mês corrente
+node scripts/scrape-drive-node.js --months-back 99   # ano inteiro
+```
+
+Output mensal em `public/data/drive-data-YYYY-MM.json` e
+`public/data/aquapor-data-YYYY-MM.json`.
+
+Re-implementação pura Node do antigo `scrape-drive-aquapor-v8.js` (browser
+console). Elimina Playwright wrapper.
+
+#### `scripts/cleanup-players-json.js`
+Limpeza de `players.json` segundo regras que podem ser combinadas:
+
+- **REMOVE:** qualquer jogador com tag `hidden` (já não está visível na UI)
+- **REMOVE:** não-jovens com tag `no-priority`
+- **KEEP:** todos os jovens (Sub-*) sem hidden
+- **KEEP:** não-jovens PJA ou sem-tag negativa
+- **ADICIONA:** Manuel Medeiros (fed 54907, marido)
+- **MARCA no-scrape:** Sub-16/18 com hcp > 15 (ficam na UI mas scraper salta)
+- **PRIORIDADE MÁXIMA:** fed codes em `inscricoes_nacionais.json` — sempre
+  keep, nunca no-scrape (reavaliar quando o ficheiro for actualizado para
+  um novo torneio)
+
+Dry-run por default, `--apply` aplica. Cria backup automático antes de
+escrever.
+
+#### `scripts/setup-scheduled-task.ps1`
+Regista Windows Scheduled Task "GolfFPG-DailyScrape" que corre `fpg-scrape-node.js`
+todos os dias às 13:00 locais. Output em `logs/scheduled-task.log`.
+
+Correr como administrador. Re-correr para actualizar (remove e recria).
+
+### Descobertas críticas do endpoint `ScoreCard` do my.fpg.pt
+
+Duas armadilhas descobertas 2026-04-15 ao construir o scraper Node puro:
+
+**1. `score_id` ≠ `id`.** O endpoint `HCPWhsFederLST` devolve para cada
+ronda dois IDs:
+- `id` (~2875259) = ID interno da entrada WHS
+- `score_id` (~4244840) = ID do scorecard real
+
+O endpoint `ScoreCard?score_id=X` quer o **segundo**. Usar o primeiro
+retorna `"An error occurred while processing this request"` silenciosamente.
+
+**2. `scoringtype` e `competitiontype` têm de estar na URL E no body.**
+```
+POST /Home/PlayerWHS.aspx/ScoreCard?score_id=X&scoringtype=Y&competitiontype=Z&pp=N
+body: {score_id, scoringtype, competitiontype, pp:"N"}
+```
+Se faltarem na URL (mesmo estando no body), o servidor retorna o mesmo
+erro genérico. Os valores vêm do record da lista WHS (`scoring_type_id`
+e `competition_type_id`) — NÃO hardcodar 1/10 fixo porque algumas rondas
+são 4/10, etc.
+
+### Controlo "só commit se há mais informação"
+
+`scripts/run-scrape-drive-headless.js` implementa 3 níveis:
+
+1. **Comparar JSON normalizado** (ignorando timestamps `gerado_em`) — se
+   igual byte-a-byte, é "inalterado"
+2. **Comparar totais** (`totalTournaments`, `totalPlayers`,
+   `totalScorecards`) — "mais informação" significa algum total aumentou
+3. **Exit code semântico**: `0` = mais dados (commit), `2` = nada novo
+   (skip commit, **não é erro**), `1` = erro real (workflow falha)
+
+No workflow:
+```yaml
+- run: |
+    set +e
+    node scripts/run-scrape-drive-headless.js
+    EXIT_CODE=$?
+    if [ "$EXIT_CODE" = "1" ]; then exit 1; fi
+    if [ "$EXIT_CODE" = "2" ]; then echo "Nada novo"; fi
+    echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
+- if: steps.scrape.outputs.exit_code == '0'
+  run: git commit ... && git push
+```
+
+### Websites gémeos da FPG (CRÍTICO — diferenças subtis)
+
+`scoring.datagolf.pt/pt/*` e `my.fpg.pt/Home/*` são **quase o mesmo backend** —
+mesma estrutura jTable + ASP.NET PageMethods, mesmos dados de origem, mesmos
+nomes de método. **MAS** têm diferenças no formato exacto do POST body que
+fazem código hardcoded falhar com **HTTP 500** ao chamar o endpoint do gémeo
+errado.
+
+| Diferença | `scoring.datagolf.pt/pt/` | `my.fpg.pt/Home/` |
+|---|---|---|
+| Path base | `/pt/` | `/Home/` |
+| Auth | Cookie ASP.NET via GET inicial | **Login SSO obrigatório** (area.my.fpg.pt) |
+| listAction da `PlayerWHS.aspx` | `/pt/PlayerWHS.aspx/HCPWhsFederLST?fed_code=X` | `/Home/PlayerWHS.aspx/HCPWhsFederLST?fed_code=X&pp=N` |
+| Body do POST WHS | `{ fed_code, jtStartIndex, jtPageSize, jtSorting }` | `{ fed_code, pp:"N", jtStartIndex, jtPageSize }` (**sem `jtSorting`!**) |
+| `jtSorting` no body | obrigatório (`"hcp_date DESC"`) | rejeitado (devolve HTTP 500) |
+| Param `pp:"N"` | inexistente | obrigatório (na URL E no body) |
+
+**Lição aprendida:** nunca hardcodar o path nem o body do POST. Sempre fazer
+auto-descoberta via `jt.options.actions.listAction` (string com URL completo
+incluindo query params extra como `pp=N`). Os params extra (excepto `jt*`)
+têm de ser **espelhados no body**.
+
+Padrão recomendado em scripts/clientes:
+```js
+const u = new URL(jt.options.actions.listAction, location.href);
+const extraParams = {};
+for (const [k, v] of u.searchParams) if (!k.startsWith("jt")) extraParams[k] = v;
+const body = { ...extraParams, fed_code: fed, jtStartIndex: "0", jtPageSize: "100" };
+```
+
+Implementação de referência: `scripts/console-fpg-whs-scrape.js`.
+
+### PageMethods descobertos em `PlayerWHS.aspx`
+
+POST JSON com `Cookie: ASP.NET_SessionId=X` + Referer da própria página.
+
+| Endpoint | Body | Devolve |
+|---|---|---|
+| `PlayerWHS.aspx/HCPWhsFederLST?fed_code=X` | `{ fed_code, jtStartIndex, jtPageSize, jtSorting }` | Lista de rondas WHS (~38 campos/ronda) |
+| `PlayerWHS.aspx/ScoreCard?score_id=X` | `{ score_id, scoringtype, competitiontype }` | Scorecard hole-by-hole (`par_1..18`, `gross_1..18`, `meters_1..18`, `stroke_index_1..18`, `stbgross_1..18`, `stbnet_1..18`, `bogey_1..18`) |
+| `PlayerWHS.aspx/View20Scores?fed_code=X` | `{ fed_code }` | 20 rondas do cálculo WHS |
+| `PlayerWHS.aspx/ViewWHSCalc?fed_code=X` | `{ fed_code }` | Cálculo WHS detalhado (soft/hard cap, etc.) |
+| `FederatedsList_V2.aspx/HandicapsLST` | Ver `scripts/scrape-federados.js` | Lista de federados (32 campos — o `encryptedfedcode` é token único por jogador) |
+
+### Autenticação — cookies necessários
+
+São 6 cookies. **O crítico é o `.AspNet.ApplicationCookie`** (ASP.NET Identity
+token de autenticação). Sem ele o servidor devolve `Param_Errors.aspx`;
+com ele devolve `Result:"OK"`. Os outros 5 são necessários em conjunto
+mas nenhum isolado chega.
+
+| Cookie | Papel | Obtenção |
+|---|---|---|
+| `.AspNet.ApplicationCookie` | **Token de autenticação (crítico)** | Setado por SSO em `area.my.fpg.pt/login/` após submit de credenciais |
+| `ASP.NET_SessionId` | Sessão ASP.NET | Setado pelo GET inicial a qualquer página `my.fpg.pt` |
+| `PlayerArea` | Estado da área do jogador (`photo=&fedStatId=9`) | Setado pelo server após login |
+| `playerIsLogin` | Flag de login (valor numérico, aparenta ser user-id interno) | Setado após login |
+| `_ga`, `_ga_LLMN8JTFJ6`, `_ga_SBKT3JPZ7V` | Google Analytics | Benignos, mantêm-se por consistência |
+
+Validade: não testada, mas `.AspNet.ApplicationCookie` de ASP.NET Identity
+tipicamente dura dias a semanas (configurável no servidor). Refresh feito
+re-fazendo login manual em `area.my.fpg.pt`.
+
+### Gotcha crítico: Chrome SameSite enforcement bloqueia a captura do cookie
+
+O servidor FPG **não seta `SameSite` nos cookies**. O Chrome moderno
+aplica por default `SameSite=Lax` → **cookies de autenticação rejeitados
+silenciosamente antes de serem persistidos** → sessão inválida → FPG
+devolve "Erro 999" a pedir que desactives as flags SameSite.
+
+**O user comum faz isto no Chrome dele e tudo funciona.** As flags a
+desactivar (até estarem disponíveis):
+- `SameSite by default cookies` → **Disabled**
+- `Cookies without SameSite must be secure` → **Disabled**
+
+**Problema:** essas flags **foram REMOVIDAS do `chrome://flags` no Chrome 91**
+(Mai 2021) e a flag de linha de comandos `--disable-features=SameSiteByDefaultCookies`
+foi removida no Chrome 94. Em Chrome 94+, tentar desactivar não é possível
+nem via flags nem via args.
+
+**✅ SOLUÇÃO QUE FUNCIONA:** instalar **Chrome 90** (última versão com as
+flags ainda na UI), configurar `chrome://flags` → fazer login em
+`area.my.fpg.pt` → copiar cookies do DevTools (Application → Cookies →
+my.fpg.pt). O `.AspNet.ApplicationCookie` fica visível e copiável.
+
+⚠ Segurança: Chrome 90 tem 5+ anos de vulnerabilidades não patchadas. Usar
+**apenas para FPG**, não para navegação geral. Idealmente numa instalação
+portátil isolada, ou num perfil dedicado.
+
+**Tentativas falhadas anteriormente:**
+- Playwright Chromium bundled + `--disable-features=SameSiteByDefaultCookies`
+  → Chromium v100+ ignora (hard-coded)
+- Playwright `channel: "chrome"` → abre Chrome do user com perfil limpo,
+  sem as flags configuradas
+- `channel: "chromium"` + warmup multi-step → falha no passo 3 com 500
+
+Alternativa futura sem Chrome 90: Playwright conectado via CDP a Chrome
+do user já aberto e logado (`--remote-debugging-port=9222`). Permite
+extrair cookies incluindo httpOnly via `Network.getAllCookies`. Não testado
+mas tecnicamente viável.
+
+### Histórico de tentativas server-side (ambos os backends)
+
+#### `my.fpg.pt`
+
+| Tentativa | Resultado |
+|---|---|
+| `fetch` Node com só `ASP.NET_SessionId` | ❌ Param_Errors |
+| `fetch` Node com 5 cookies visíveis (sem `.AspNet.ApplicationCookie`) | ❌ Param_Errors — conclusão errada: "há cookie invisível" |
+| Adicionar Sec-Fetch-*, Sec-Ch-Ua-*, Origin, Priority, etc. | ❌ Nenhum desbloqueia |
+| Playwright Chromium bundled + `--disable-features` | ❌ Chromium v100+ ignora flags SameSite (hard-coded) |
+| Playwright `channel: "chrome"` com perfil limpo | ❌ Sem as flags chrome://flags configuradas |
+| Copiar `ASP.NET_SessionId` do header `x-cookie-session-id` do golf-portugal | ❌ Sessão IP-bound a Google Cloud IPs |
+| **`fetch` Node com 6 cookies (incluindo `.AspNet.ApplicationCookie`), capturados em Chrome 90** | **✅ FUNCIONA — Result:"OK", 138 rondas Manuel** |
+
+#### `scoring.datagolf.pt`
+
+| Tentativa | Resultado |
+|---|---|
+| GET direto a `/pt/tournaments.aspx` | ❌ HTTP 500 ou 302 → Param_Errors?Err=999 |
+| GET a `/pt/` ou `/pt/Default.aspx` | ❌ HTTP 500 (bug ASP.NET sem sessão) |
+| GET a `/pt/FederatedsList_V2.aspx` | ⚠ Outrora setava `ASP.NET_SessionId` mas agora também devolve 500 |
+| Chamar `1EntryPage.aspx` de Node com hash copiado do browser | ❌ HTTP 500 (hash validado contra estado server-side da sessão que o pediu) |
+| POST a `tournaments.aspx/GetTournamentList` (nome inventado) | ❌ HTTP 500 Runtime Error (endpoint não existe) |
+| **POST a `tournaments.aspx/TournamentsLST` com 2 cookies do Chrome 90 (`ASP.NET_SessionId` + `DG_Lists_URL`)** | **✅ FUNCIONA — Result:"OK", 25 torneios, TotalRecordCount=83131** |
+| Teste IP-binding: mesmos cookies via hotspot 4G (IP completamente diferente) | ✅ **Continuam a funcionar** → NÃO IP-bound |
+
+**Insight chave:** durante meses pensámos que havia um cookie httpOnly
+"invisível" que faltava. Na verdade o cookie `.AspNet.ApplicationCookie`
+é visível na Application tab do DevTools — mas só quando o browser
+consegue persisti-lo, o que requer SameSite desactivado. Em Chrome
+moderno o cookie era rejeitado silenciosamente no momento de setting,
+logo nunca aparecia em lado nenhum — nem no DevTools, nem em `document.cookie`,
+nem em `cookieStore`, nem em Playwright. A ilusão de "cookie invisível"
+era na verdade "cookie ausente".
+
+### Estratégias disponíveis (em ordem de preferência, 2026-04-14 tarde)
+
+1. **⭐ Primário — server-side direto com `.AspNet.ApplicationCookie`**
+   - Login manual em Chrome 90 → copiar cookies do DevTools → guardar em
+     `api/.datagolf-cookies.json` (gitignored) → proxy/scripts lêem o ficheiro
+     e usam como `Cookie:` header
+   - Endpoints diretos em `my.fpg.pt/Home/*` (ou `scoring.datagolf.pt/pt/*`)
+   - Refresh ~1×/semana via novo login manual (validade do token ASP.NET Identity)
+   - **Sem dependência de golf-portugal.pt, sem Playwright, sem Cloud Run**
+   - Prova de conceito: `scripts/test-fpg-auth.js`
+   - Implementações a fazer: `scripts/scrape-fpg-server.js` (bulk scrape),
+     atualizar `api/datagolf.js` para usar `my.fpg.pt` diretamente
+
+2. **Fallback — `golf-portugal.pt/api/*` via proxy `api/datagolf.js`**
+   - Se os nossos cookies expirarem e o user não puder refrescar logo
+   - Hospedado em Google Cloud Run; mantém pool de cookies FPG vivos
+   - Headers: `x-cookie-provider: FPG`, `x-cookie-session-id`, `x-cookie-version`
+   - CORS `MISSING` → precisa do nosso proxy server-side
+   - Endpoints:
+     - `/api/clubs/{anyCode}/players/{fed}/results?startIndex=0&limit=N`
+     - `/api/clubs/{anyCode}/players/{fed}` (perfil)
+     - `/api/clubs/{anyCode}/players/{fed}/handicaps`
+     - `/api/scorecards/{score_id}` (hole-by-hole)
+
+3. **Alternativa manual — console browser script**
+   - `scripts/console-fpg-whs-scrape.js` — colar na consola de `my.fpg.pt`
+     ou `scoring.datagolf.pt` (gémeos)
+   - Scrape bulk de todos os 396 jogadores, download de `fpg-whs.json`
+   - Ainda útil quando queres snapshot datado sem configurar pipeline
+   - App usa como cache local (datagolfClient.ts lê primeiro este ficheiro
+     antes de ir ao proxy live)
+
+### Proxy `api/datagolf.js` — arquitectura actualizada 2026-04-14/15
+
+Depois dos breakthroughs do `.AspNet.ApplicationCookie` e dos cookies do
+`scoring.datagolf.pt`, o proxy `api/datagolf.js` foi refactorizado.
+Comportamento actual:
+
+**Fluxo de autenticação (`dgGetSession`) — por ordem de preferência:**
+
+1. **Env var `DATAGOLF_COOKIES`** (produção Vercel) — ler cookieHeader directo.
+   Opcional: `DATAGOLF_HOST` (default "my.fpg.pt").
+2. **Ficheiro `api/.datagolf-cookies.json`** (dev local, gitignored) com
+   formato `{host, cookieHeader, ...}`. Quando `host` é `"my.fpg.pt"`, o
+   proxy seta `DG_BASE = https://my.fpg.pt/Home` e `DG_PP = "N"`.
+3. **Fallback: `golf-portugal.pt` + `x-cookie-session-id`** — só usado se
+   response foi `r.ok` (bug corrigido: antes usava mesmo em HTTP 500, e o
+   session ID vinha mas era inválido para outros fed codes → Param_Errors).
+4. **Último recurso: GET simples** a páginas que setavam `ASP.NET_SessionId`.
+   Hoje quase todas devolvem 500 sem contexto do browser.
+
+**Fluxo de scraping (`tryBoth`) — por ordem de preferência:**
+
+Se há cookies locais (`hasLocalDgCookies()` retorna true):
+1. Tentar **datagolf PRIMEIRO** (com os nossos cookies, ~2-6 segundos)
+2. Fallback ao **golf-portugal.pt** só se o datagolf falhar
+
+Se NÃO há cookies locais:
+1. Tentar **golf-portugal.pt PRIMEIRO** (comportamento histórico)
+2. Fallback ao datagolf
+
+**Razão da inversão:** antes, o código tentava sempre GP primeiro — e como
+o GP tenta 5 clubs × 3 retries com backoff (~10-15s de esperas), a latência
+total era ~30s para jogadores que o GP não suporta. Com os nossos cookies a
+funcionar directamente no `my.fpg.pt`, ir lá primeiro corta latência de 30s
+→ 3-6s.
+
+**Paginação obrigatória (confirmado 2026-04-14):**
+- `my.fpg.pt/Home/PlayerWHS.aspx/HCPWhsFederLST` **rejeita `jtPageSize > 100`
+  com HTTP 500** ("There was an error processing the request")
+- Proxy pagina em batches de 100 (`jtStartIndex` 0, 100, 200, …) até
+  atingir `TotalRecordCount` ou o `limit` pedido
+- Paginação é sequencial — poderia ser paralela se total fosse conhecido
+  à partida
+
+**Normalização FPG → WhsRound (`normalizeFpgWhsRecord`):**
+
+`my.fpg.pt/HCPWhsFederLST` e `golf-portugal.pt/api/.../results` devolvem os
+mesmos dados mas com nomes diferentes. A UI em `datagolfClient.ts` (tipo
+`WhsRound`) espera o formato do golf-portugal. O proxy converte os records
+do `my.fpg.pt` antes de devolver à UI:
+
+| Campo WhsRound (UI) | Campo my.fpg.pt |
+|---|---|
+| `id` | `id` (ou `score_id`) |
+| `federation_code` | `federated_code` |
+| `tournament_description` | `tourn_name` |
+| `course_description` | `course_description` ✓ |
+| `score_dateStr` | `hcp_dateStr` ou `mov_dateStr` |
+| `hole_count` | `holes` |
+| `par_total` | `par` |
+| `exact_hcp` | `exact_handicap` |
+| `calc_hcp_index` | `exact_handicap` (aproximação — FPG não expõe index separado) |
+| `calculated_stablnet_total` | `stableford` |
+| `score_differential` | `sgd` |
+| `score_origin` | `score_origin` ✓ ("Torn", "Indiv", etc.) |
+| `cba_value` | `cba` |
+| `status_name` | `score_status` |
+| `gross_total` | **não devolvido** pelo `HCPWhsFederLST` — disponível via `ScoreCard` endpoint |
+
+Campos originais são preservados via `...r` spread, para não quebrar código
+que possa vir a inspeccionar campos não-canónicos.
+
+### UI de "Só cadastro FPG" em `JogadoresPage.tsx`
+
+Componente `FederadoOnlyDetail` (linha ~1982) renderiza jogadores que só têm
+cadastro em `federados.json` (sem `{fed}/analysis/data.json` pré-calculado).
+Usa `getPlayerHistory(fed)` de `datagolfClient.ts` → `/api/datagolf?action=whs&fed=X`.
+
+Depois das correcções 2026-04-14/15:
+- Erro é mostrado num `<details>` expansível "Ver detalhes do erro" em vez
+  de truncado a 80 chars (antes ficavam invisíveis mensagens importantes
+  como o erro do segundo backend)
+- Mensagem auxiliar sugere consultar o site da FPG directamente quando
+  ambos falham
+- Tabela renderiza 100 primeiras rondas com data, torneio, campo, buracos,
+  HCP, stableford, score differential, origem
+
+### Sidebar de JogadoresPage — limite aumentado
+
+`MAX_SIDEBAR_ITEMS = 2000` (era 500, 2026-04-15). Razão: com 15.646
+federados activos, 500 não chega para encontrar jogadores com nomes
+comuns (ex: "Joana Sousa" aparecia depois da 500ª posição). O filtro
+`filtered` já corre sobre todos os federados, só o render é limitado.
+Para uma lista maior, considerar virtualização real (react-window).
+
+### Pitfall histórico: não copiar o cookie do `x-cookie-session-id`
+
+Parece tentador porque o header do golf-portugal expõe literalmente
+`ASP.NET_SessionId=gmjub...` — mas é uma sessão IP-bound a Google Cloud IPs,
+logo usá-la a partir de outro IP falha. **Isto continua verdade** — mas
+agora é irrelevante porque com o `.AspNet.ApplicationCookie` (e o teu
+`ASP.NET_SessionId` local do próprio login) a autenticação funciona sem
+dependências externas.
+
+### Padrão recomendado para chamar PageMethods FPG
+
+**Nunca hardcodar paths/bodies.** Sempre auto-descobrir o endpoint via DOM:
+
+```js
+// Em qualquer página com jTable carregado (PlayerWHS.aspx etc.)
+const parent = document.querySelector(".jtable-main-container").parentElement;
+const jt = jQuery.data(parent, "hik-jtable");
+const u = new URL(jt.options.actions.listAction, location.href);
+
+// Extrair params extra (todos excepto jt*) → têm de ir no body também
+const extraParams = {};
+for (const [k, v] of u.searchParams) {
+  if (!k.startsWith("jt")) extraParams[k] = v;   // fed_code, pp:"N", etc.
+}
+
+const body = {
+  ...extraParams,                 // OBRIGATÓRIO espelhar params extra
+  jtStartIndex: "0",
+  jtPageSize: "100",              // máximo aceite (200+ → HTTP 500)
+  // jtSorting: NÃO incluir incondicionalmente (my.fpg.pt rejeita)
+};
+
+const response = await fetch(u.pathname + u.search.replace(/fed_code=\d+/, `fed_code=${targetFed}`), {
+  method: "POST", credentials: "include",
+  headers: { "Content-Type": "application/json; charset=utf-8", "X-Requested-With": "XMLHttpRequest" },
+  body: JSON.stringify(body),
+});
+```
+
+Implementação canónica: `scripts/console-fpg-whs-scrape.js`.
+
+### Códigos de resposta e erros conhecidos
+
+| Cenário | Status | Body / Mensagem |
+|---|---|---|
+| GET `/pt/` puro | 500 | "Server Error in '/pt' Application" |
+| GET `/pt/PlayerWHS.aspx?no=X` (sem sessão prévia) | 500 | "Runtime Error" |
+| GET `/pt/FederatedsList_V2.aspx` (sem sessão) | 200 | Body diz "Erro 999 — autenticação inválida" mas **seta `Set-Cookie: ASP.NET_SessionId`** ← URL útil para getSession() |
+| POST PageMethod sem cookie / sem auth válida | 200 | `{"d":{"Result":"ERROR","Message":"Error executing child request for Param_Errors.aspx."}}` |
+| POST PageMethod com auth + body certo | 200 | `{"d":{"Result":"OK","Records":[...],"TotalRecordCount":N}}` |
+| POST PageMethod com `jtSorting` no `my.fpg.pt` | **500** | Internal Server Error |
+| POST PageMethod com `pageSize > 100` | **500** | Internal Server Error |
+| POST `golf-portugal.pt` transitório | 500 ocasional | `{"error":"Failed to fetch player results"}` — retry resolve |
+
+### Lições aprendidas (ATUALIZADAS 2026-04-14)
+
+1. **Os cookies crave de autenticação são 2, não 1.** Para `my.fpg.pt` é
+   o `.AspNet.ApplicationCookie` (ASP.NET Identity token). Para
+   `scoring.datagolf.pt` é o par `ASP.NET_SessionId` + `DG_Lists_URL`.
+   Sem eles, nenhum PageMethod autentica. Com eles + cookies acompanhantes,
+   server-side funciona em Node `fetch` puro.
+
+2. **"Cookie invisível" era "cookie ausente".** SameSite enforcement do
+   Chrome moderno rejeita cookies da FPG silenciosamente antes de persistir
+   (o servidor FPG não seta `SameSite` nos Set-Cookie headers). Resultado:
+   testávamos sempre sem o cookie de auth e concluíamos que havia algo
+   httpOnly escondido — não havia, simplesmente não tinha sido guardado.
+   **Debug heuristic:** quando um cookie parece "não existir" no browser,
+   verificar F12 → Network → Response Headers → Set-Cookie e comparar com
+   F12 → Application → Cookies. Se aparece no Set-Cookie mas não em
+   Application, o browser rejeitou-o na chegada (SameSite, Secure, domain
+   mismatch, etc.).
+
+3. **Chrome 90 + SameSite OFF é a combinação fundadora.** Qualquer browser
+   headless/moderno falha na captura. Chrome 91+ removeu as flags da UI;
+   Chrome 94+ removeu a flag CLI. Playwright/Chromium bundled nunca vai
+   conseguir — as features estão hard-coded desde v100+.
+
+4. **Os cookies da FPG NÃO são IP-bound ao servidor.** Testado explicitamente
+   2026-04-14 via hotspot 4G (IP completamente diferente do login original) —
+   cookies continuaram a funcionar. Isto contradiz a conclusão anterior
+   ("sessão ASP.NET FPG é IP-bound") que era baseada em testes com o
+   `ASP.NET_SessionId` do `golf-portugal.pt` (que É IP-bound, mas por causa
+   da infra deles, não do ASP.NET em geral). **Consequência prática:**
+   GitHub Actions pode usar cookies capturados localmente.
+
+5. **`scoring.datagolf.pt` exige passagem pelo `1EntryPage.aspx`.** GET
+   directo a `/pt/tournaments.aspx` devolve sempre 500 ou redirect para
+   Err=999. O entry page valida um hash SHA-1 que é impossível de
+   replicar de Node (depende do estado server-side da sessão que o pediu).
+   Logo: a captura tem de ser feita via browser real (Chrome 90), não pode
+   ser automatizada sem Playwright+browser.
+
+6. **Nunca hardcodar paths/bodies de PageMethods FPG.** Auto-descobrir
+   sempre via `jt.options.actions.listAction`. As subtilezas `/pt/` vs
+   `/Home/` (pp=N obrigatório num, ausente noutro; jtSorting obrigatório
+   num, proibido noutro) quebram silenciosamente com HTTP 500.
+
+7. **Os 2 sites são gémeos no nome, primos na implementação.** Mesma
+   origem de dados, mas frontends ASP.NET separados com configurações
+   diferentes. Ver tabela "Websites gémeos" para diferenças exactas.
+
+8. **Para descobrir endpoints novos: DevTools Network + Copy as cURL.**
+   O fluxo padrão:
+   - Abrir página no Chrome 90 com sessão válida
+   - F12 → Network → limpar (Ctrl+L)
+   - Interagir com a página (reload, filtrar, paginar) para disparar XHR
+   - Encontrar o pedido certo → botão direito → Copy → Copy as cURL
+   - Colar numa conversa ou num script de teste — tens o endpoint exacto,
+     body, headers e cookies
+
+9. **golf-portugal.pt degradado a fallback.** Era a solução primária antes
+   (proxy externo que mantinha pool de cookies FPG). Agora só serve se os
+   nossos cookies expirarem e o user não puder refrescar. Evitar dependência
+   externa — somos donos da pipeline agora.
+
+10. **Browser console > Playwright para testes exploratórios.** Quando
+    precisares de testar um endpoint novo, colar um script na consola do
+    browser logado é mais rápido e fiável que configurar Playwright.
+
+11. **Playwright só é necessário para (a) captura inicial de cookies — e
+    nem isso, porque o Chrome 90 do user resolve — ou (b) scraping de
+    sites não-FPG que tenham protecção extra.** Para FPG, **não precisamos
+    mais de Playwright**.
+
+12. **Documentação completa em `docs/api-fpg-endpoints.md`** — 12 secções
+    com tudo o que descobrimos. Consultar em caso de dúvida antes de
+    redescobrir.
+
+### Playbook — cookbook para futuras sessões
+
+**Cenário 1: "Os cookies expiraram, preciso de os refrescar"**
+1. Abrir Chrome 90
+2. Navegar para `https://scoring.datagolf.pt/pt/tournaments.aspx` → F12 →
+   Application → Cookies → copiar `ASP.NET_SessionId` + `DG_Lists_URL`
+3. Navegar para `https://my.fpg.pt/Home/PlayerWHS.aspx?no=52884` → login
+   se pedir → F12 → Application → Cookies → copiar os 6 cookies
+4. Atualizar GitHub Secrets (`DATAGOLF_COOKIES` e `FPG_COOKIES`) ou
+   ficheiro local `api/.datagolf-cookies.json`
+5. Correr `node scripts/test-fpg-auth.js` e `node scripts/test-datagolf-node.js`
+   para confirmar que ambos devolvem `Result:"OK"`
+
+**Cenário 2: "Quero automatizar scraping novo endpoint"**
+1. Identificar o que a página faz ao carregar (abrir no Chrome 90 + F12 Network)
+2. Copy as cURL do pedido XHR que devolve os dados
+3. Replicar em Node (`scripts/test-<endpoint>.js`) — manter os mesmos
+   cookies, headers, body
+4. Se funcionar, integrar no pipeline (script Node puro, não Playwright)
+5. Se não funcionar, verificar:
+   - Cookies completos? (especialmente `.AspNet.ApplicationCookie` e `DG_Lists_URL`)
+   - Headers obrigatórios? (`X-Requested-With: XMLHttpRequest`, `Referer`)
+   - Body no formato exacto? (ASP.NET é sensível a tipos — tudo como string)
+
+**Cenário 3: "GitHub Action parou de funcionar"**
+1. Ver logs do último run — procurar `HTTP 500` ou `Result:"ERROR"` ou
+   `Param_Errors`
+2. Se `Param_Errors` → cookies expiraram, seguir Cenário 1
+3. Se `HTTP 500` Runtime Error → endpoint mudou, seguir Cenário 2 para
+   re-descobrir
+4. Se timeout → site lento ou bloqueado, dar retry manual
+
+**Cenário 4: "Parece que um cookie não existe"**
+1. F12 → Network → encontrar a response que devia setar o cookie
+2. Response Headers → procurar `Set-Cookie:` — está lá?
+3. Se sim mas cookie não aparece em Application → Cookies: browser rejeitou
+   - Ver atributos (SameSite, Secure, domain) — algum a bloquear?
+   - Chrome moderno → SameSite quase sempre a causa, usar Chrome 90
+4. Se não está no Set-Cookie do servidor: servidor não o está a enviar
+   - Falta algum passo no fluxo (ex: redirect intermédio, POST de login)
+   - Ver o Network completo: há algum request "anterior" que deveria
+     setá-lo e não foi chamado?
+
+### Ficheiros de dados relacionados
+
+- `public/data/federados.json` (15 MB, 15.646 activos — `FedStat=9`)
+- `public/data/federados-inativos.json` (41 MB, 43.054 inactivos — `FedStat=7`)
+- `public/data/federados-inativos-stats.json` (~25 KB, agregados)
+- `public/data/federados-inativos-jovens.json` (~2.7 MB, Sub-10 a Sub-21)
+- `public/data/fpg-whs.json` (gerado pelo console script — usar como cache)
+- `api/.datagolf-cookies.json` (gerado pelo Playwright — gitignored)
 
 ---
 
@@ -572,6 +1396,8 @@ Na barra de distribuição de scores, o segmento de par usa branco/transparente,
 
 ### Componentes
 
+- **`SexBadge.tsx` — NUNCA usar símbolos Unicode ♂ ou ♀ na UI.** Usar sempre `<SexBadge sex="M" />` ou `<SexBadge sex="F" />`. O badge é um círculo/pill com as cores oficiais do projecto (`--badge-male` / `--badge-female`). Isto aplica-se a legendas, labels, cabeçalhos de tabelas, contadores, tooltips — em TODO o lado onde seria tentador escrever ♂/♀ para indicar sexo.
+- **Tabelas — TODAS as tabelas devem ser ordenáveis pelo cabeçalho.** Usar sempre `useSort` (hook) + `SortableHdr` (componente) para os `<th>`. Esta regra é universal e aplica-se a qualquer tabela nova ou existente, independentemente do número de linhas. Se criares uma tabela sem colunas sortable, estás a violar a convenção do projecto. Exemplo: `const { sortKey, sortDir, toggleSort } = useSort("pos")` + `<SortableHdr k="pos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Pos</SortableHdr>`.
 - `PillBadge.tsx`: usa classes CSS (`p`, `p-sm`, `p-muted`, `p-tourn`, `p-sub10`, `p-sub12`, `p-sub14`), nunca inline styles. `RoundPill` exportado para pills de rondas.
 - Toggles de scorecard: usar `<span>`, não `<button>` (o styling default do browser sobrepõe o CSS).
 - Hooks partilhados: `useIsMobile.ts`, `useMasterDetail.ts`, `SidebarToggle.tsx` para sidebar unificada.
@@ -583,6 +1409,40 @@ Na barra de distribuição de scores, o segmento de par usa branco/transparente,
 - `constants/tournaments.ts`: `TORNEIOS_CONFIG` (10 torneios FPG).
 - `constants/tierDisplay.ts`: `TIER_L`, `TR_I` (labels e ícones de tier).
 - CSS `.tab-under` + `.active`: tabs com underline (substitui `tabStyle()` inline).
+
+### Features novas em JogadoresPage (2026-04-15)
+
+- **Modal scorecard** no `FederadoOnlyDetail` — clicar em qualquer ronda da
+  tabela abre modal com grelha hole-by-hole estilo oficial: `sc-score` +
+  `scClass(gross, par)` + halftotal F9/B9 + `fmtToPar()`. Fetch via
+  `getScorecard(round.id)` de `datagolfClient.ts`.
+- **Botão "🧒 Jovens"** na toolbar (modo Todos) — activa filtro com todos os
+  Sub-* (Sub-10 a Sub-21) de uma vez. Quando activo, levanta o cap de
+  `MAX_SIDEBAR_ITEMS` e mostra KPI grid por escalão (total + distribuição
+  por sexo com `SexBadge`).
+- **`MAX_SIDEBAR_ITEMS = 2000`** (era 500) — para jogadores com nomes comuns
+  aparecerem sem refinar filtros. Para virtualização real usar react-window
+  no futuro.
+- **Erro expansível** no `FederadoOnlyDetail` com `<details>` — mostra
+  mensagem COMPLETA (antes truncava a 80 chars e escondia parte crítica do
+  fallback).
+
+### Tags no `players.json` e o que fazem
+
+| Tag | Efeito na UI (JogadoresPage) | Efeito no scraper |
+|---|---|---|
+| (sem tag) | Visível na sidebar, prioridade normal | Scraped na automação |
+| `PJA` | Visível, prioridade máxima | Scraped |
+| `no-priority` | Visível (não-jovens são removidos pelo cleanup) | Scraped se estiver na lista |
+| `hidden` | **Escondido da sidebar** (filtro em JogadoresPage) | Removido pelo cleanup |
+| `no-scrape` | Visível normalmente | **Scraper salta** (não actualizado) |
+| `inscrito-nacional` | Marcador, visível | Prioridade máxima, nunca no-scrape |
+
+**Regra de ouro:** `hidden` vs `no-scrape` distinguem-se por visibilidade.
+- `hidden` = invisível na UI + removido do players.json via cleanup
+- `no-scrape` = visível na UI, mas congelado (dados não actualizados)
+
+`cleanup-players-json.js` aplica estas regras automaticamente.
 
 ### Princípios de arquitectura
 

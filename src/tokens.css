@@ -228,7 +228,7 @@
   --tier-bad:          #ef4444;   /* vermelho */
 
 
-  /* ── 10. Escalão (sub-10 … sub-18) ────────────────────────── */
+  /* ── 10. Escalão (sub-10 … sub-24) ────────────────────────── */
   /* Fundo e texto para EscPill e tabelas de resultados.
      Ramp: verde escuro (jovens) → verde claro (mais velhos) */
   --esc-sub10-bg:   #2a5a18;
@@ -241,6 +241,10 @@
   --esc-sub16-fg:   #1a3a10;
   --esc-sub18-bg:   #a0d480;
   --esc-sub18-fg:   #1a3a10;
+  --esc-sub21-bg:   #c2e4a8;
+  --esc-sub21-fg:   #1a3a10;
+  --esc-sub24-bg:   #dff0cd;
+  --esc-sub24-fg:   #1a3a10;
 
 
   /* ── 11. Medals ────────────────────────────────────────────── */

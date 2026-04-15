@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
+import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine,
   ScatterChart, Scatter, ResponsiveContainer, Cell, LabelList,
@@ -7,36 +7,18 @@ import {
 import { useAppContext } from "../context/AppContext";
 import { sdClassByHcp } from "../utils/scoreDisplay";
 import { C } from "../utils/colors";
-import { norm, fmtHcp, escShort, fmtTime, fmtDataInscricao, anoEscalao, shortName } from "../utils/format";
+import { norm, fmtHcp, escShort, fmtTime, fmtDataInscricao, anoEscalao } from "../utils/format";
 import { getTeeHex, textOnColor, teeBorder } from "../utils/teeColors";
 import { AnoEscalaoPill, TrendBadge } from "../ui/AnoEscalaoPill";
 import { escCls } from "../utils/playerUtils";
-import { TORNEIOS_CONFIG } from "../constants/tournaments";
+import { TORNEIOS_CONFIG } from "../constants/config";
 import PlayerLink from "../ui/PlayerLink";
 import EmptyState from "../ui/EmptyState";
 import LoadingState from "../ui/LoadingState";
 import SexBadge from "../ui/SexBadge";
-
-/* ── Tipos ── */
-interface InscricaoJogador {
-  fed: string | null; nome: string; clube: string;
-  hcp: number | null; vac: number | null; dataInscricao: string | null;
-}
-interface TorneioData {
-  tcode: string; nome: string; escalao: string; sex: string;
-  totalInscritos: number; jogadores: InscricaoJogador[];
-  lastFetched: string | null; lastChanged: string | null; fpgUrl?: string;
-  fromCache?: boolean; fetchError?: string;
-  diff?: { added: string[]; removed: string[] } | null;
-  _status: "idle" | "loading" | "ok" | "error";
-}
-type BdPlayer = { name: string; escalao: string; sex: string; fed: string; clube: string; dob: string };
-interface PlayerStats {
-  avgSD5: number | null; lastSD: number | null; currentHcp: number | null;
-  hcpTrend: string | null; hcpDelta3m: number | null;
-  roundsLast3m: number | null; formAlert: string | null;
-}
-type StatsDb = Record<string, PlayerStats>;
+import AroeiraBurTable from "./nacionais/AroeiraBurTable";
+import FieldIntelligence from "./nacionais/FieldIntelligence";
+import type { InscricaoJogador, TorneioData, BdPlayer, PlayerStats, StatsDb, AggStats, PlayerLoad, ScoutingReport } from "./nacionais/types";
 
 function usePlayerStats() {
   const [stats, setStats] = useState<StatsDb>({});
@@ -461,25 +443,6 @@ function teeStyle(tee: string): { background: string; color: string; border?: st
 }
 
 /* ── Tabela buraco-a-buraco no Aroeira — Heat Map ── */
-/* ── AggStats + computeAgg + PlayerLoad ── */
-interface AggStats {
-  nRounds: number; nRoundsWithCard: number;
-  avgGross: number | null; bestGross: number | null; grossStdDev: number | null;
-  avgSD: number | null; bestSD: number | null; last5AvgSD: number | null; sdStdDev: number | null;
-  scoreDist: { eagle: number; birdie: number; par: number; bogey: number; double: number; triple: number; total: number };
-  byPar: Record<number, { avgVsPar: number; subParPct: number; n: number }>;
-  f9avg: number | null; b9avg: number | null;
-  aroeira: {
-    nRounds: number; avgGross: number | null; tees: string[];
-    holes: { h: number; par: number | null; avg: number | null; diff: number | null }[];
-  };
-}
-
-type PlayerLoad = {
-  fed: string; nome: string; hcp: number | null; vac: number | null;
-  status: "idle" | "loading" | "ok" | "nodata" | "error";
-  agg: AggStats | null;
-};
 
 // Janela temporal configurável
 function makeCutoff(months: number): number {
@@ -611,19 +574,6 @@ function computeAgg(
 /* ════════════════════════════════════════════════════════════════════
    ANÁLISE PRÉ-TORNEIO — Aroeira II
    ════════════════════════════════════════════════════════════════════ */
-
-interface ScoutingReport {
-  nome: string; fed: string; hcp: number | null; vac: number | null;
-  rank: number; fieldSize: number;
-  formDelta: number | null;
-  sdAvg: number | null; sd5: number | null; sdStdDev: number | null;
-  par5avg: number | null; par3avg: number | null; par4avg: number | null;
-  blowupPct: number; birdiePct: number;
-  grossStdDev: number | null;
-  f9: number | null; b9: number | null;
-  aroeiraRounds: number; aroeiraAvg: number | null;
-  r3m: number | null; agg: AggStats;
-}
 
 function buildReport(pl: PlayerLoad, rank: number, fieldSize: number, statsDb: StatsDb): ScoutingReport {
   const agg = pl.agg!; const st = statsDb[pl.fed]; const dist = agg.scoreDist; const tot = dist.total || 1;
@@ -898,167 +848,7 @@ function PlayerScoutCard({ r, fitScore, allReports, bdPlayer }: {
   );
 }
 
-/* ── Painel "O que decide em Aroeira" ── */
-function FieldIntelligence({ reports, escalao }: { reports: ScoutingReport[]; escalao: string }) {
-  if (reports.length < 2) return null;
-
-  function rankList(key: keyof ScoutingReport, inverted = false) {
-    return [...reports].filter(r => r[key] != null)
-      .sort((a, b) => inverted ? (b[key] as number) - (a[key] as number) : (a[key] as number) - (b[key] as number))
-      .slice(0, Math.min(reports.length, 5));
-  }
-
-  const sections = [
-    {
-      title: "Par-5 scoring — onde se ganham as posições",
-      why: `Em ${escalao === "Sub-10" ? "27H" : "54H"} stroke play, os par-5 são as únicas oportunidades garantidas de birdie. Quem capitaliza ganha 1–2 pancadas por volta sobre o resto do campo.`,
-      data: rankList("par5avg").map((r, i) => ({ name: shortName(r.nome), v: `${r.par5avg! > 0 ? "+" : ""}${r.par5avg!.toFixed(2)}/h`, fed: r.fed,
-        color: r.par5avg! < 0.7 ? "var(--color-good)" : r.par5avg! < 1.2 ? "var(--color-warn)" : "var(--color-bad)", rank: i+1 })),
-    },
-    {
-      title: "Gestão de risco — duplo+ avoidance",
-      why: "Em 54 buracos sem cut, uma volta de +12 que incluí dois triplos pode ser irreparável. O jogador que nunca explode ganha consistência ao longo dos 3 dias.",
-      data: rankList("blowupPct").map((r, i) => ({ name: shortName(r.nome), v: `${r.blowupPct.toFixed(0)}%`, fed: r.fed,
-        color: r.blowupPct < 10 ? "var(--color-good)" : r.blowupPct < 16 ? "var(--color-warn)" : "var(--color-bad)", rank: i+1 })),
-    },
-    {
-      title: "Forma recente — os últimos 5 torneios vs histórico",
-      why: "Quem chega ao torneio com o SD das últimas 5 rondas melhor que a sua média pessoal está num ciclo de evolução. Nos majors amadores, a forma imediata é mais preditiva que o histórico de longo prazo.",
-      data: rankList("formDelta").map((r, i) => ({ name: shortName(r.nome), v: r.formDelta! < 0 ? `${r.formDelta!.toFixed(1)} ↑` : `+${r.formDelta!.toFixed(1)}`, fed: r.fed,
-        color: r.formDelta! < -1 ? "var(--color-good)" : r.formDelta! > 1 ? "var(--color-bad)" : "var(--text-2)", rank: i+1 })),
-    },
-    ...(reports.filter(r => r.aroeiraRounds > 0).length >= 2 ? [{
-      title: "Experiência em Aroeira — conhecimento do campo",
-      why: "Aroeira 2 tem greens rápidos e buracos com OB laterais. Ter rondas no campo traduz-se em menos erros estratégicos e gestão de tempo de putting.",
-      data: rankList("aroeiraAvg").filter(r => r.aroeiraRounds > 0).map((r, i) => ({ name: shortName(r.nome), v: `${r.aroeiraAvg?.toFixed(1)} (${r.aroeiraRounds}×)`, fed: r.fed,
-        color: "var(--chart-2)", rank: i+1 })),
-    }] : []),
-  ];
-
-  return (
-    <div style={{ background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 10, overflow: "hidden", marginBottom: 10 }}>
-      <div style={{ padding: "12px 16px", borderBottom: "1px solid var(--border)", background: "var(--bg-page)" }}>
-        <div className="fw-800 fs-14">O que decide este torneio</div>
-        <div style={{ fontSize: 11, color: "var(--text-2)", marginTop: 2 }}>
-          Factores preditivos para 54H stroke play em Aroeira{escalao === "Sub-12" || escalao === "Sub-10" ? " · máx 10/buraco" : ""}
-        </div>
-      </div>
-      <div style={{ padding: "0 16px 16px" }}>
-        {sections.map((s, si) => (
-          <div key={si} style={{ paddingTop: 14, borderTop: si > 0 ? "1px solid var(--border)" : "none", marginTop: si > 0 ? 0 : 14 }}>
-            <div className="fw-700 fs-12 mb-4">{s.title}</div>
-            <div style={{ fontSize: 11, color: "var(--text-2)", lineHeight: 1.55, marginBottom: 10, maxWidth: 620 }}>{s.why}</div>
-            <div className="flex-wrap d-flex gap-6">
-              {s.data.map(d => (
-                <a key={d.fed} href={`/jogadores/${d.fed}?view=by_date`} target="_blank" rel="noopener noreferrer"
-                  style={{ display: "flex", alignItems: "center", gap: 6, background: "var(--bg-page)",
-                    border: "1px solid var(--border)", borderRadius: 6, padding: "5px 10px", textDecoration: "none", color: "inherit" }}>
-                  <span style={{ fontSize: 9, color: "var(--text-3)", fontWeight: 700 }}>#{d.rank}</span>
-                  <span className="fs-12 fw-600">{d.name}</span>
-                  <span className="fs-13 fw-800" style={{ color: d.color }}>{d.v}</span>
-                </a>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/* ── Aroeira buraco a buraco ── */
-function AroeiraBurTable({ players }: { players: { nome: string; fed: string; agg: AggStats }[] }) {
-  const com = players.filter(p => p.agg.aroeira.nRounds > 0 && p.agg.aroeira.holes.length === 18);
-  if (com.length < 1) return null;
-  const pars = com[0].agg.aroeira.holes.map(h => h.par ?? 4);
-  const totalPar = pars.reduce((s, p) => s + p, 0);
-  function bestAt(idx: number) {
-    const vs = com.map(p => ({ fed: p.fed, d: p.agg.aroeira.holes[idx]?.diff })).filter(x => x.d != null);
-    if (!vs.length) return null;
-    return vs.reduce((b, x) => x.d! < b.d! ? x : b).fed;
-  }
-  const dc = (d: number | null) => d == null ? "var(--text-3)" : d <= 0 ? "var(--color-good)" : d < 0.75 ? "var(--text-1)" : d < 1.5 ? "var(--color-warn)" : "var(--color-bad)";
-  return (
-    <div style={{ background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 10, overflow: "hidden", marginBottom: 10 }}>
-      <div style={{ padding: "12px 16px", borderBottom: "1px solid var(--border)", background: "var(--bg-page)" }}>
-        <div className="fw-800 fs-14">Aroeira — performance histórica no campo</div>
-        <div style={{ fontSize: 11, color: "var(--text-2)", marginTop: 2 }}>
-          Médias buraco-a-buraco · últimos 6 meses · ★ melhor do grupo
-        </div>
-      </div>
-      <div style={{ padding: "12px 16px", overflowX: "auto" }}>
-        <table className="dtable-lg fs-12" >
-          <thead>
-            <tr>
-              <th className="fs-11" style={{ width: 32 }}>B.</th>
-              <th className="fs-11 ta-c" style={{ width: 28 }}>Par</th>
-              {com.map(p => (
-                <th key={p.fed} className="ta-c fs-12">
-                  <a href={`/jogadores/${p.fed}?view=by_date`} target="_blank" rel="noopener noreferrer"
-                    className="td-none"
-                    style={{ color: "inherit" }}>{p.nome.split(" ").slice(0,2).join(" ")}</a>
-                  <div style={{ fontSize: 9, color: "var(--text-3)", fontWeight: 400 }}>{p.agg.aroeira.nRounds}× · {p.agg.aroeira.avgGross?.toFixed(1)}</div>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {[{l:"1ª Volta",r:[0,8]},{l:"2ª Volta",r:[9,17]}].map(({l,r}) => (
-              <React.Fragment key={l}>
-                <tr><td colSpan={2+com.length} style={{ fontSize: 10, fontWeight: 800, color:"var(--text-3)", padding:"8px 8px 3px", textTransform:"uppercase", letterSpacing:"0.07em", background:"var(--bg-page)" }}>{l}</td></tr>
-                {Array.from({length:r[1]-r[0]+1},(_,i)=>r[0]+i).map(idx => {
-                  const par=pars[idx]; const best=bestAt(idx);
-                  return (
-                    <tr key={idx}>
-                      <td style={{ fontWeight:700 }}>{idx+1}</td>
-                      <td style={{ textAlign:"center", fontWeight:700, fontSize:11,
-                        color: par===3?"#92400e":par===5?"#1e40af":"var(--text-2)",
-                        background: par===3?"#fef9c3":par===5?"#eff6ff":"transparent" }}>{par}</td>
-                      {com.map(p => {
-                        const h=p.agg.aroeira.holes[idx]; const isBest=best===p.fed;
-                        return (
-                          <td key={p.fed} className="ta-c">
-                            <span style={{ fontWeight:isBest?800:600, color:dc(h?.diff??null) }}>
-                              {h?.diff != null ? `${h.diff>0?"+":""}${h.diff.toFixed(2)}` : "–"}
-                              {isBest && com.length>1 && <span style={{ color:"var(--color-good)", fontSize:9, marginLeft:2 }}>★</span>}
-                            </span>
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  );
-                })}
-                <tr style={{ borderTop:"1px solid var(--border)", background:"var(--bg-hover)" }}>
-                  <td style={{ fontWeight:800, fontSize:11 }}>Sub</td>
-                  <td style={{ textAlign:"center", fontWeight:700, color:"var(--text-2)" }}>{pars.slice(r[0],r[1]+1).reduce((s,p)=>s+p,0)}</td>
-                  {com.map(p => {
-                    const sub=p.agg.aroeira.holes.slice(r[0],r[1]+1).reduce((s,h)=>s+(h.diff??0),0);
-                    return <td key={p.fed} style={{ textAlign:"center", fontWeight:800, color:dc(sub/(r[1]-r[0]+1)) }}>{sub>0?"+":""}{sub.toFixed(1)}</td>;
-                  })}
-                </tr>
-              </React.Fragment>
-            ))}
-            <tr style={{ borderTop:"2px solid var(--border)" }}>
-              <td style={{ fontWeight:800 }}>Total</td>
-              <td style={{ textAlign:"center", fontWeight:700, color:"var(--text-2)" }}>{totalPar}</td>
-              {com.map(p => {
-                const total=p.agg.aroeira.holes.reduce((s,h)=>s+(h.diff??0),0);
-                return (
-                  <td key={p.fed} className="ta-c">
-                    <div style={{ fontWeight:900, fontSize:14 }}>{p.agg.aroeira.avgGross?.toFixed(1)}</div>
-                    <div style={{ fontSize:10, color:dc(total/18) }}>{total>0?"+":""}{total.toFixed(1)} vs par</div>
-                  </td>
-                );
-              })}
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-}
-
-
+/* FieldIntelligence extraído para ./nacionais/FieldIntelligence.tsx */
 
 function AnaliseView({ t, nossosByFed, statsDb }: {
   t: TorneioData; nossosByFed: Map<string, BdPlayer>; statsDb: StatsDb;

@@ -17,12 +17,12 @@ import { useState, useRef, useEffect, useMemo } from "react";
 import { C } from "../utils/colors";
 import type { PlayersDb } from "../data/types";
 import { useAppContext } from "../context/AppContext";
-import { isCalUnlocked } from "../utils/authConstants";
+import { usePasswordGate } from "../hooks/usePasswordGate";
+import PasswordGate from "../ui/PasswordGate";
 import { useIsMobile } from "../hooks/useIsMobile";
 import { clickableA11y } from "../utils/a11y";
 import { norm } from "../utils/format";
 import { MONTHS_PT as MONTHS_SHORT, MONTHS_PT_LONG } from "../utils/format";
-import PasswordGate from "../ui/PasswordGate";
 
 /* ═══ Types ═══ */
 interface CalEvent {
@@ -561,9 +561,9 @@ type GroupKey = "CGSS" | "JUNIOR" | "DRIVE" | "FPG" | "DESTAQUE" | "ANIVER" | "V
 
 export default function CalendarioPage() {
   const { players } = useAppContext();
-  const [unlocked, setUnlocked] = useState(() => isCalUnlocked());
+  const { unlocked, unlock } = usePasswordGate();
 
-  if (!unlocked) return <PasswordGate onUnlock={() => setUnlocked(true)} />;
+  if (!unlocked) return <PasswordGate onUnlock={unlock} />;
 
   return <CalendarioContent players={players} />;
 }

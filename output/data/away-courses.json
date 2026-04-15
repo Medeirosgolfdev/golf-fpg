@@ -59857,4 +59857,100 @@
               },
               {
                 "hole": 11,
-                "par"
+                "par": 4,
+                "si": 7,
+                "distance": 0
+              },
+              {
+                "hole": 12,
+                "par": 4,
+                "si": 11,
+                "distance": 0
+              },
+              {
+                "hole": 13,
+                "par": 4,
+                "si": 1,
+                "distance": 0
+              },
+              {
+                "hole": 14,
+                "par": 4,
+                "si": 17,
+                "distance": 0
+              },
+              {
+                "hole": 15,
+                "par": 3,
+                "si": 13,
+                "distance": 0
+              },
+              {
+                "hole": 16,
+                "par": 4,
+                "si": 3,
+                "distance": 0
+              },
+              {
+                "hole": 17,
+                "par": 4,
+                "si": 5,
+                "distance": 0
+              },
+              {
+                "hole": 18,
+                "par": 5,
+                "si": 15,
+                "distance": 0
+              }
+            ],
+            "distances": {
+              "total": 0,
+              "front9": 0,
+              "back9": 0,
+              "holesCount": 18,
+              "complete18": true
+            }
+          }
+        ],
+        "_players": {
+          "45647": "2024-07-17"
+        }
+      }
+    },
+    {
+      "courseKey": "away-woodhall-spa-golf-course-hotchkin",
+      "master": {
+        "courseId": "away-woodhall-spa-golf-course-hotchkin",
+        "name": "Woodhall Spa Golf Course - Hotchkin",
+        "country": "Reino Unido",
+        "links": {
+          "fpg": null,
+          "scorecards": null
+        },
+        "tees": [
+          {
+            "teeId": "away-woodhall-spa-golf-course-hotchkin-0",
+            "sex": "U",
+            "teeName": "BRANCAS",
+            "ratings": {
+              "holes18": {
+                "par": null,
+                "courseRating": 75,
+                "slopeRating": 113
+              }
+            },
+            "holes": [],
+            "distances": {
+              "total": null,
+              "front9": null,
+              "back9": null,
+              "holesCount": 0,
+              "complete18": false
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

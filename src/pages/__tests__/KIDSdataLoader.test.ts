@@ -25,7 +25,7 @@ import {
   uskTournNames,
   uskFieldSizes,
   type AutoRivalPlayer,
-} from "../KIDSdataLoader";
+} from "../../data/KIDSdataLoader";
 
 /* ═══════════════════════════════════════════
    normName — normalização de nomes

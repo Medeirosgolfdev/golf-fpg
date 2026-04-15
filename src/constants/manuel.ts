@@ -51,6 +51,13 @@ export function isManuel(p: { name?: string; fed?: string; fedCode?: string }): 
   return n.includes("Manuel") && (n.includes("Medeiros") || n.includes("Goulartt"));
 }
 
+/** Variante por nome — para contextos USKids onde só temos a string do nome.
+ *  Case-insensitive, suporta displayName() e nomes em CAPS. */
+export function isManuelByName(nome: string): boolean {
+  const n = nome.toLowerCase();
+  return n.includes("manuel") && (n.includes("medeiros") || n.includes("francisco") || n.includes("goulartt"));
+}
+
 /**
  * Tids onde o Manuel tem resultados (para detectar confrontos directos na KIDSPage).
  */

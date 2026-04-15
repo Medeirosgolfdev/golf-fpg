@@ -41,6 +41,8 @@ export interface ScorecardRow {
   scores?: number[];
   rowBg?: string;
   stickyBg?: string;
+  /** Border-top style para linha (aplicado a pos, name, e scorecard cells) */
+  borderTop?: string;
   nameContent: React.ReactNode;
   /** <td> entre Jogador e ±Par — usar classes .lb-esc .lb-fed .lb-club .lb-hcp .lb-tee */
   prefixCells?: React.ReactNode;
@@ -278,27 +280,27 @@ export function ScorecardLeaderboard({
               const afterScorecard = row.postScorecardCells ?? row.postTotalCells;
               return (
                 <tr key={row.key} className={manuelCls.trim() || undefined}>
-                  <td className="lb-pos sticky-col-0" style={{ background: sticky }}>{row.pos}</td>
-                  <td className="lb-name sticky-col-1" style={{ background: sticky }}>{row.nameContent}</td>
+                  <td className="lb-pos sticky-col-0" style={{ background: sticky, borderTop: row.borderTop }}>{row.pos}</td>
+                  <td className="lb-name sticky-col-1" style={{ background: sticky, borderTop: row.borderTop }}>{row.nameContent}</td>
                   {row.prefixCells}
-                  <td className="lb-topar" style={{ color: tpColor(row.toPar) }}>{fmtToPar(row.toPar)}</td>
-                  <td className="lb-gross">{row.gross > 0 && row.toPar != null ? row.gross : "–"}</td>
+                  <td className="lb-topar" style={{ color: tpColor(row.toPar), borderTop: row.borderTop }}>{fmtToPar(row.toPar)}</td>
+                  <td className="lb-gross" style={{ borderTop: row.borderTop }}>{row.gross > 0 && row.toPar != null ? row.gross : "–"}</td>
                   {showScorecard && <>
                     {scores.slice(0, 9).map((sc, i) => (
-                      <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>
+                      <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")} style={{ borderTop: row.borderTop }}>
                         <span className={"sc-score " + scClass(sc, par[i])}>{sc || ""}</span>
                       </td>
                     ))}
-                    <td className="lb-halftot">
+                    <td className="lb-halftot" style={{ borderTop: row.borderTop }}>
                       {f9} <span className="fs-10 c-text-3">({fmtToPar(f9 - parF9)})</span>
                     </td>
                     {!is9 && scores.slice(9, 18).map((sc, i) => (
-                      <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>
+                      <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")} style={{ borderTop: row.borderTop }}>
                         <span className={"sc-score " + scClass(sc, par[9 + i])}>{sc || ""}</span>
                       </td>
                     ))}
                     {!is9 && (
-                      <td className="lb-halftot">
+                      <td className="lb-halftot" style={{ borderTop: row.borderTop }}>
                         {b9} <span className="fs-10 c-text-3">({fmtToPar(b9 - parB9)})</span>
                       </td>
                     )}

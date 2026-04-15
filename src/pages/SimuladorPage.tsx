@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react";
 import SidebarToggle from "../ui/SidebarToggle";
-import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
+import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
 import DetailHeader from "../ui/DetailHeader";
 import EmptyState from "../ui/EmptyState";
 import { useMasterDetail } from "../hooks/useMasterDetail";

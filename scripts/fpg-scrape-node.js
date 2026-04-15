@@ -218,7 +218,18 @@ async function main() {
   if (ALL) {
     if (!fs.existsSync(PLAYERS_JSON)) { console.error(`${R}players.json não encontrado${X}`); process.exit(1); }
     const players = JSON.parse(fs.readFileSync(PLAYERS_JSON, "utf8"));
-    feds = Object.keys(players);
+    // Filtrar tags negativas — jogadores com "no-scrape" são saltados pelo automação
+    // (ficam visíveis na UI mas não são re-descarregados — para reduzir custo de
+    // chamadas FPG em jogadores que sabemos que estão inactivos ou não interessam)
+    const skipTags = new Set(["no-scrape", "hidden"]);
+    let total = 0, skipped = 0;
+    for (const [fed, p] of Object.entries(players)) {
+      total++;
+      const tags = p.tags || [];
+      if (tags.some(t => skipTags.has(t))) { skipped++; continue; }
+      feds.push(fed);
+    }
+    log(`players.json: ${total} total, ${G}${feds.length}${X} a processar (${Y}${skipped} saltados${X} por tag no-scrape/hidden)`);
   }
   if (feds.length === 0) { console.error("Uso: node scripts/fpg-scrape-node.js <fed>... | --all"); process.exit(1); }
 

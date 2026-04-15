@@ -4,7 +4,7 @@
  * Reutilizado em USKIDSPage, BJGTPage, DORALPage.
  */
 import React from "react";
-import { normName } from "../pages/KIDSdataLoader";
+import { normName } from "../data/KIDSdataLoader";
 
 export interface KidsLinkEntry {
   n: string;            // nome display

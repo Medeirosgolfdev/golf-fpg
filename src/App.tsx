@@ -198,19 +198,25 @@ export default function App() {
     return [...finalMap.values()];
   }, [status]);
 
-  /* Valor do contexto — só fornecido quando os dados estão prontos */
-  const ctxValue = status.kind === "ready" ? {
-    masterData: status.data,
-    players: status.players,
-    simCourses,
-    melhorias: status.melhorias,
-    stats: {
-      courses: status.data.meta.stats.courses,
-      tees: status.data.meta.stats.tees,
-      players: playerCount,
-    },
-    calUnlocked,
-  } : null;
+  /* Valor do contexto — só fornecido quando os dados estão prontos.
+     MEMOIZADO: sem useMemo, ctxValue era um novo objecto a cada render do
+     App, fazendo qualquer useEffect com `players`/`simCourses`/`melhorias`
+     nas deps disparar em loop nos consumidores (ex: JogadoresPage URL sync). */
+  const ctxValue = useMemo(
+    () => status.kind === "ready" ? {
+      masterData: status.data,
+      players: status.players,
+      simCourses,
+      melhorias: status.melhorias,
+      stats: {
+        courses: status.data.meta.stats.courses,
+        tees: status.data.meta.stats.tees,
+        players: playerCount,
+      },
+      calUnlocked,
+    } : null,
+    [status, simCourses, playerCount, calUnlocked]
+  );
 
   return (
     <div className="app">
@@ -253,6 +259,7 @@ export default function App() {
               <Routes>
                 <Route path="/campos/:courseKey?" element={<CamposPage />} />
                 <Route path="/jogadores/:fed" element={<JogadoresPage />} />
+                {/* Entry point: abre na página do Manuel por defeito */}
                 <Route path="/jogadores" element={<Navigate to="/jogadores/52884" replace />} />
                 <Route path="/simulador" element={<SimuladorPage />} />
                 <Route path="/comparar" element={<CompararPage />} />
@@ -262,8 +269,12 @@ export default function App() {
                 <Route path="/bjgt-analysis/:fed?" element={<BJGTAnalysisPage />} />
                 <Route path="/kids" element={<KIDSPage />} />
                 <Route path="/uskids" element={<USKIDSPage />} />
-                <Route path="/diversos" element={<FPGPage />} />
-                <Route path="/diversos/inscritos" element={<FPGPage />} />
+                <Route path="/FPG" element={<FPGPage />} />
+                <Route path="/FPG/:filter" element={<FPGPage />} />
+                <Route path="/FPG/:filter/:sub" element={<FPGPage />} />
+                {/* Compat: URLs antigas continuam a funcionar (redirect) */}
+                <Route path="/diversos" element={<Navigate to="/FPG" replace />} />
+                <Route path="/diversos/inscritos" element={<Navigate to="/FPG/jovens/inscritosCN" replace />} />
                 <Route path="/doral" element={<DORALPage />} />
                 <Route path="*" element={<Navigate to="/jogadores/52884" replace />} />
               </Routes>

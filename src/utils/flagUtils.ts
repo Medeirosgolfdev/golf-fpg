@@ -30,6 +30,29 @@ export const FLAG: Record<string, string> = {
   AZ:"🇦🇿",BA:"🇧🇦",BM:"🇧🇲",CD:"🇨🇩",CU:"🇨🇺",
   JO:"🇯🇴",MC:"🇲🇨",MT:"🇲🇹",QA:"🇶🇦",RE:"🇷🇪",
   TN:"🇹🇳",ZM:"🇿🇲",ZW:"🇿🇼",NN:"🏳️",XX:"🏳️",
+  // Países adicionais encontrados em federados.json (FPG)
+  MZ:"🇲🇿",  // Moçambique
+  SZ:"🇸🇿",  // Eswatini (Suazilândia)
+  GD:"🇬🇩",  // Granada
+  NP:"🇳🇵",  // Nepal
+  BY:"🇧🇾",  // Bielorrússia
+  AO:"🇦🇴",  // Angola
+  DM:"🇩🇲",  // Dominica
+  KG:"🇰🇬",  // Quirguistão
+  MD:"🇲🇩",  // Moldávia
+  MO:"🇲🇴",  // Macau
+  MU:"🇲🇺",  // Maurícias
+  TT:"🇹🇹",  // Trindade e Tobago
+  BJ:"🇧🇯",  // Benim
+  ET:"🇪🇹",  // Etiópia
+  BT:"🇧🇹",  // Butão
+  GE:"🇬🇪",  // Geórgia
+  CV:"🇨🇻",  // Cabo Verde
+  GW:"🇬🇼",  // Guiné-Bissau
+  TL:"🇹🇱",  // Timor-Leste
+  ST:"🇸🇹",  // São Tomé e Príncipe
+  // Prefixos internos FPG (apátridas/desconhecidos)
+  "@1":"🏴","@2":"🏴","@3":"🏴","@4":"🏴",
 };
 
 /** Mapa nome → código ISO-2 (inglês e português) */

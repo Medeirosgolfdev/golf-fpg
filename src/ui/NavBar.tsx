@@ -22,7 +22,7 @@ const NAV_ITEMS: { tab: Tab; label: string; path: string }[] = [
   { tab: "simulador",  label: "Simulador",    path: "/simulador"  },
   { tab: "calendario", label: "Calendário",   path: "/calendario" },
   { tab: "drive",      label: "🇵🇹 DRIVE",   path: "/drive"      },
-  { tab: "diversos",   label: "🇵🇹 FPG",     path: "/diversos"   },
+  { tab: "diversos",   label: "🇵🇹 FPG",     path: "/FPG"        },
   { tab: "uskids",     label: "🇺🇸 USKids",  path: "/uskids"     },
   { tab: "doral",      label: "🇺🇸 Doral",   path: "/doral"      },
   { tab: "bjgt",       label: "🇪🇸 BJGT",    path: "/bjgt"       },
@@ -45,6 +45,7 @@ function tabFromPath(pathname: string): Tab {
     kids: "kids",
     uskids: "uskids",
     diversos: "diversos",
+    FPG: "diversos",
     doral: "doral",
   };
   return map[seg] ?? "jogadores";

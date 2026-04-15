@@ -44,30 +44,35 @@ const MIME: Record<string, string> = {
 
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
 
-/* Obtém cookie de sessão fresco da FPG via redirect manual */
-async function getSession(): Promise<string> {
+/* Cookies para scoring.fpg.pt/lists (domínio real das inscrições):
+   ASP.NET_SessionId + DG_Lists_URL capturados do Chrome 90 com user=admin&page=admissions.
+   Sem estes, GET a tournAdmissions.aspx devolve 500 ou redirect. */
+function loadScoringCookies(): string {
+  if (process.env.FPG_ADMISSIONS_COOKIES) {
+    console.log('[inscricoes] cookies de env FPG_ADMISSIONS_COOKIES')
+    return process.env.FPG_ADMISSIONS_COOKIES
+  }
   try {
-    // redirect:'manual' permite capturar Set-Cookie do primeiro redirect
-    const r = await fetch('https://scoring.datagolf.pt/pt/', {
-      headers: {
-        'User-Agent': UA,
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Accept-Language': 'pt-PT,pt;q=0.9',
-      },
-      redirect: 'manual',
-    })
-    const setCookie = r.headers.get('set-cookie') || ''
-    console.log('[inscricoes] getSession -> ' + r.status + ' set-cookie=' + (setCookie || 'nenhum').slice(0, 60))
-    const m = setCookie.match(/ASP\.NET_SessionId=([^;,\s]+)/)
-    if (m) {
-      const fresh = 'ASP.NET_SessionId=' + m[1]
-      console.log('[inscricoes] sessao fresca: ' + fresh.slice(0, 35) + '...')
-      return fresh
+    const fp = join(process.cwd(), 'api', '.fpg-admissions-cookies.json')
+    if (existsSync(fp)) {
+      const j = JSON.parse(readFileSync(fp, 'utf8'))
+      if (j.cookieHeader) {
+        console.log('[inscricoes] cookies de api/.fpg-admissions-cookies.json')
+        return j.cookieHeader
+      }
+    }
+    const fp2 = join(process.cwd(), 'api', '.scoring-datagolf-cookies.json')
+    if (existsSync(fp2)) {
+      const j = JSON.parse(readFileSync(fp2, 'utf8'))
+      if (j.cookieHeader) {
+        console.log('[inscricoes] cookies fallback de api/.scoring-datagolf-cookies.json')
+        return j.cookieHeader
+      }
     }
   } catch (e) {
-    console.warn('[inscricoes] getSession erro:', (e as Error).message)
+    console.warn('[inscricoes] erro a ler cookies locais:', (e as Error).message)
   }
-  return '' // sem cookie — página é pública, ASP.NET cria sessão nova
+  return ''
 }
 
 const TORNEIOS: Record<string, { nome: string; escalao: string; sex: string }> = {
@@ -134,16 +139,24 @@ function parseAdmissionsTable(html: string, logPrefix: string): Jogador[] {
     if (score > bestScore) { bestScore = score; headerRowIdx = i }
   }
 
-  const headers = extractCells(rows[headerRowIdx]).map(c => c.toLowerCase())
+  // FIX 2026-04-15: se o "header" detectado tem score muito baixo (<3), provavelmente
+  // é uma linha de dados ou ruído ("Volta 1"). Nesse caso processar TODAS as linhas
+  // (start = 0) — perdíamos um inscrito por tcode antes deste fix.
+  const hasRealHeader = bestScore >= 3
+  const startRow = hasRealHeader ? headerRowIdx + 1 : 0
+
+  const headers = hasRealHeader
+    ? extractCells(rows[headerRowIdx]).map(c => c.toLowerCase())
+    : []
   const iNome  = headers.findIndex(h => /nome|jogador/.test(h))
   const iFed   = headers.findIndex(h => /fed|lic/.test(h))
   const iHcp   = headers.findIndex(h => /hcp|handicap|ndice|index/.test(h))
   const iVac   = headers.findIndex(h => /\bvac\b/.test(h))
   const iClube = headers.findIndex(h => /clube|assoc/.test(h))
   const iData  = headers.findIndex(h => /data|insc/.test(h))
-  console.log(logPrefix + ' headers:' + JSON.stringify(headers.slice(0, 8)) + ' cols nome:' + iNome + ' fed:' + iFed + ' hcp:' + iHcp + ' vac:' + iVac + ' clube:' + iClube + ' data:' + iData)
+  console.log(logPrefix + ' headers:' + JSON.stringify(headers.slice(0, 8)) + ' (score=' + bestScore + (hasRealHeader ? ', usar' : ', IGNORAR — sem header real') + ') cols nome:' + iNome + ' fed:' + iFed + ' hcp:' + iHcp + ' vac:' + iVac + ' clube:' + iClube + ' data:' + iData)
 
-  for (let i = headerRowIdx + 1; i < rows.length; i++) {
+  for (let i = startRow; i < rows.length; i++) {
     const cells: string[] = []
     const tdRe = /<td[^>]*>([\s\S]*?)<\/td>/gi
     while ((m = tdRe.exec(rows[i])) !== null) cells.push(stripTags(m[1]))
@@ -247,6 +260,19 @@ export default defineConfig({
       name: 'serve-output',
       configureServer(server) {
 
+        /* /api/datagolf — proxy para PlayerWHS.aspx endpoints */
+        server.middlewares.use(async (req, res, next) => {
+          if (!req.url?.startsWith('/api/datagolf')) return next()
+          try {
+            // @ts-ignore - JS module sem tipos
+            const handler = (await import('./api/datagolf.js')).default
+            await handler(req, res)
+          } catch (e: any) {
+            res.writeHead(500, { 'Content-Type': 'application/json' })
+            res.end(JSON.stringify({ ok: false, error: String(e?.message || e) }))
+          }
+        })
+
         /* /api/inscricoes — vai SEMPRE à FPG, sem cache */
         server.middlewares.use(async (req, res, next) => {
           if (!req.url?.startsWith('/api/inscricoes')) return next()
@@ -262,7 +288,13 @@ export default defineConfig({
             return
           }
 
-          const fpgUrl = 'https://scoring.datagolf.pt/pt/tournAdmissions.aspx?ccode=000&tcode=' + tcode
+          // 2 URLs diferentes do FPG têm os mesmos dados de inscrições.
+          // Cada um com cookies próprios. Tentamos AMBOS e usamos o que
+          // devolver mais inscritos (prevalece o melhor parse).
+          const FPG_URL_1 = 'https://scoring.fpg.pt/lists/tournAdmissions.aspx?ccode=000&tcode=' + tcode
+          const FPG_URL_2 = 'https://scoring.datagolf.pt/pt/tournAdmissions.aspx?ccode=000&tcode=' + tcode
+          const fpgUrl = FPG_URL_1  // mantido para o cache.fpgUrl
+
           const baseHeaders: Record<string, string> = {
             'User-Agent':              UA,
             'Accept':                  'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -270,50 +302,107 @@ export default defineConfig({
             'Accept-Encoding':         'gzip, deflate, br',
             'Connection':              'keep-alive',
             'Upgrade-Insecure-Requests': '1',
-            'Referer':                 'https://scoring.datagolf.pt/pt/',
+            'Referer':                 'https://competicoes.fpg.pt/evento/campeonato-nacional-de-jovens-sub10-12-14-16-18-pga-aroeira/',
             'Cache-Control':           'no-cache',
           }
 
-          // 1ª tentativa: sem cookie (página pública — sessão expirada causa 500)
-          // 2ª tentativa: com cookie fresco se a 1ª falhar
-          const attempts: Array<Record<string, string>> = [
-            { ...baseHeaders },
-          ]
-          const freshCookie = await getSession()
-          if (freshCookie) attempts.push({ ...baseHeaders, 'Cookie': freshCookie })
+          // Carregar cookies por domínio
+          const cookieFpg = loadScoringCookies()  // scoring.fpg.pt (admissions)
+          let cookieDatagolf = ''
+          try {
+            const fp = join(process.cwd(), 'api', '.scoring-datagolf-cookies.json')
+            if (existsSync(fp)) {
+              const j = JSON.parse(readFileSync(fp, 'utf8'))
+              if (j.cookieHeader) cookieDatagolf = j.cookieHeader
+            }
+          } catch {}
 
-          let fpgRes: Response | null = null
-          let html = ''
-          for (const reqHeaders of attempts) {
-            const hasCookie = !!reqHeaders['Cookie']
-            console.log('[inscricoes] tcode=' + tcode + (hasCookie ? ' [com cookie]' : ' [sem cookie]'))
+          // Tentativas: 4 (2 URLs × com/sem cookie próprio do domínio)
+          type Attempt = { url: string; headers: Record<string, string>; label: string }
+          const attempts: Attempt[] = []
+          if (cookieFpg) attempts.push({ url: FPG_URL_1, headers: { ...baseHeaders, Cookie: cookieFpg }, label: 'fpg+cookie' })
+          if (cookieDatagolf) attempts.push({ url: FPG_URL_2, headers: { ...baseHeaders, Cookie: cookieDatagolf }, label: 'datagolf+cookie' })
+          attempts.push({ url: FPG_URL_1, headers: { ...baseHeaders }, label: 'fpg sem cookie' })
+          attempts.push({ url: FPG_URL_2, headers: { ...baseHeaders }, label: 'datagolf sem cookie' })
+
+          // Tentar todos os URLs e FUNDIR resultados (deduplicar por fed code).
+          // Os 2 URLs (scoring.fpg.pt vs scoring.datagolf.pt) podem ter
+          // inscritos diferentes — alguns aparecem só num, outros só noutro.
+          // O union final dá o conjunto completo.
+          const merged = new Map<string, Jogador>()  // fed → jogador
+          let bestStatus = 0
+          let bestHtml = ''
+          let totalRowsByLabel: Record<string, number> = {}
+          for (const att of attempts) {
+            console.log('[inscricoes] tcode=' + tcode + ' [' + att.label + '] ' + att.url)
             try {
-              fpgRes = await fetch(fpgUrl, { headers: reqHeaders, redirect: 'follow' })
-              html   = await fpgRes.text()
-              console.log('[inscricoes] tcode=' + tcode + ' -> HTTP ' + fpgRes.status)
-              if (fpgRes.ok) break // sucesso — não tentar mais
-              console.warn('[inscricoes] tentativa falhou HTTP ' + fpgRes.status + (attempts.indexOf(reqHeaders) < attempts.length - 1 ? ', a tentar com cookie...' : ''))
+              const r = await fetch(att.url, { headers: att.headers, redirect: 'follow' })
+              const txt = await r.text()
+              console.log('[inscricoes] tcode=' + tcode + ' [' + att.label + '] -> HTTP ' + r.status)
+              if (!r.ok) continue
+              if (!bestStatus) { bestStatus = r.status; bestHtml = txt }
+              const parsed = parseAdmissionsTable(txt, '[inscricoes] tcode=' + tcode + ' [' + att.label + ']')
+              totalRowsByLabel[att.label] = parsed.length
+              for (const j of parsed) {
+                if (!j.fed) {
+                  // Sem fed code — usar nome como key (raro mas evita perda)
+                  const key = '_noFed_' + (j.nome || Math.random()).slice(0, 50)
+                  if (!merged.has(key)) merged.set(key, j)
+                  continue
+                }
+                if (!merged.has(j.fed)) {
+                  merged.set(j.fed, j)
+                } else {
+                  // Já existe — preservar mas merge campos vazios
+                  const existing = merged.get(j.fed)!
+                  if (!existing.nome && j.nome) existing.nome = j.nome
+                  if (!existing.clube && j.clube) existing.clube = j.clube
+                  if (existing.hcp == null && j.hcp != null) existing.hcp = j.hcp
+                  if (existing.vac == null && j.vac != null) existing.vac = j.vac
+                  if (!existing.dataInscricao && j.dataInscricao) existing.dataInscricao = j.dataInscricao
+                }
+              }
             } catch (fetchErr) {
-              console.error('[inscricoes] fetch erro:', fetchErr)
+              console.error('[inscricoes] fetch erro [' + att.label + ']:', fetchErr)
             }
           }
+          const bestJogadores = [...merged.values()]
+          const breakdown = Object.entries(totalRowsByLabel).map(([k, v]) => k + '=' + v).join(', ')
+          console.log('[inscricoes] tcode=' + tcode + ' MERGE: ' + bestJogadores.length + ' únicos (' + breakdown + ')')
 
           try {
-            if (!fpgRes || !fpgRes.ok) {
-              console.warn('[inscricoes] FPG erro: ' + html.slice(0, 200))
-              if (raw) { res.writeHead(fpgRes?.status ?? 502, { 'Content-Type': 'text/html; charset=utf-8' }); res.end(html); return }
-              res.writeHead(502, { 'Content-Type': 'application/json' })
-              res.end(JSON.stringify({ error: 'FPG HTTP ' + (fpgRes?.status ?? 0), tcode, ...meta, totalInscritos: 0, jogadores: [], lastFetched: null }))
+            if (raw) {
+              res.writeHead(bestStatus || 502, { 'Content-Type': 'text/html; charset=utf-8' })
+              res.end(bestHtml || 'sem resposta de nenhum dos 2 URLs')
               return
             }
 
-            if (raw) { res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' }); res.end(html); return }
+            // Para compatibilidade com o resto do código abaixo
+            const fpgRes: { ok: boolean; status: number } = { ok: bestStatus > 0, status: bestStatus || 502 }
+            const html = bestHtml
+            if (!fpgRes.ok) {
+              console.warn('[inscricoes] tcode=' + tcode + ' — todos os attempts falharam (status=' + fpgRes.status + ')')
+              res.writeHead(502, { 'Content-Type': 'application/json' })
+              res.end(JSON.stringify({ error: 'FPG HTTP ' + fpgRes.status, tcode, ...meta, totalInscritos: 0, jogadores: [], lastFetched: null }))
+              return
+            }
 
-            const jogadores = parseAdmissionsTable(html, '[inscricoes] tcode=' + tcode)
+            const jogadores = bestJogadores
             const now       = new Date().toISOString()
 
             const prevCache  = readCache()
             const cached     = prevCache[tcode]
+
+            // PROTECÇÃO CRÍTICA (2026-04-15): se o parser devolveu 0 mas o
+            // cache tinha jogadores, NÃO sobrescrever — provavelmente cookies
+            // expiraram ou parser falhou. Devolver o cache existente.
+            if (jogadores.length === 0 && cached && cached.jogadores.length > 0) {
+              console.warn('[inscricoes] tcode=' + tcode + ' -> 0 inscritos NOVO mas cache tem ' + cached.jogadores.length + ' — A PRESERVAR cache (provável erro de cookies/parser)')
+              res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-cache' })
+              res.end(JSON.stringify({ ...cached, fromCache: true, warning: 'parser devolveu 0 — usar cache' }))
+              return
+            }
+
             const diff       = cached ? diffJogadores(cached.jogadores, jogadores) : null
             const hasChanges = !!diff && (diff.added.length > 0 || diff.removed.length > 0)
             if (diff?.added.length)   console.log('[inscricoes] NOVOS: '     + diff.added.join(', '))

@@ -48,6 +48,21 @@ export function shortDate(d: string): string {
   return (d || "").replace(/^(\d{2})-(\d{2})-\d{4}$/, "$1-$2");
 }
 
+/**
+ * Data abreviada com barra — aceita ISO "YYYY-MM-DD" ou "DD-MM-YYYY" → "DD/MM".
+ * Se `smartYear` = true, mostra ano quando ≠ ano corrente (ex: "25/03/2023").
+ */
+export function shortDateSlash(d?: string, smartYear = false): string {
+  if (!d) return "";
+  const parts = d.split("-");
+  if (parts.length < 3) return d;
+  const [day, mo, yr] = parts[0].length === 4
+    ? [parts[2], parts[1], parts[0]]
+    : [parts[0], parts[1], parts[2]];
+  if (smartYear && yr !== String(new Date().getFullYear())) return `${day}/${mo}/${yr}`;
+  return `${day}/${mo}`;
+}
+
 /* ── Delta formatters (signed, fixed decimals) ── */
 
 /** +1.5 / -2.3 / E (1 decimal) */

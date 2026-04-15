@@ -251,6 +251,56 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .input { width: 200px; }
 .select { min-width: 120px; }
 
+/* ── Toggle segmentado (ex: Nossos / TODOS) ──────────────────── */
+.segmented-toggle {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--bg-subtle);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.segmented-toggle .seg-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-2);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+.segmented-toggle .seg-btn + .seg-btn {
+  border-left: 1px solid var(--border);
+}
+.segmented-toggle .seg-btn:hover:not(.active) {
+  background: var(--bg-hover);
+  color: var(--text-1);
+}
+.segmented-toggle .seg-btn.active {
+  background: var(--accent);
+  color: #fff;
+}
+.segmented-toggle .seg-btn .seg-count {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.08);
+  color: inherit;
+  font-variant-numeric: tabular-nums;
+}
+.segmented-toggle .seg-btn.active .seg-count {
+  background: rgba(255,255,255,0.25);
+}
+
 .chip {
  padding: 3px 10px;
  font-size: 12px;
@@ -364,6 +414,19 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
  vertical-align: middle;
 }
 .p-sm { font-size: 10px; padding: 1px 6px; }
+
+/* ── Icon-only pill (Jovens/Seniores/Novos) ── */
+/* Emoji grande, sem texto ao lado. Padding menor e emoji 18px para destacar. */
+.p-icon-only {
+ padding: 2px 8px;
+ gap: 4px;
+ line-height: 1;
+}
+.p-icon-big {
+ font-size: 18px;
+ line-height: 1;
+ display: inline-block;
+}
 
 /* ── Outline ── */
 .p-outline { border-color: var(--text-dark); color: var(--text-dark); background: transparent; }
@@ -2636,7 +2699,10 @@ tr.cross-current { background: var(--bg-success); }
 /* ─── Restored: escalão pills (gerados dinamicamente via escCls/esc.toLowerCase) ─── */
 .p-sub10 { background: var(--esc-sub10-bg); color: var(--esc-sub10-fg); }
 .p-sub14 { background: var(--esc-sub14-bg); color: var(--esc-sub14-fg); }
+.p-sub16 { background: var(--esc-sub16-bg); color: var(--esc-sub16-fg); }
 .p-sub18 { background: var(--esc-sub18-bg); color: var(--esc-sub18-fg); }
+.p-sub21 { background: var(--esc-sub21-bg); color: var(--esc-sub21-fg); }
+.p-sub24 { background: var(--esc-sub24-bg); color: var(--esc-sub24-fg); }
 
 /* ─── Restored: fs combos e utilitários ─── */
 .stats { display: flex; gap: 8px; }

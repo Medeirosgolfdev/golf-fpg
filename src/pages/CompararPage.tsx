@@ -23,22 +23,24 @@ import {
   loadPlayerData, type PlayerPageData, type RoundData,
   type HoleScores,
 } from "../data/playerDataLoader";
-import { loadPlayerStats, type PlayerStatsDb, type PlayerStats, daysSince } from "../data/playerStatsTypes";
+import { loadPlayerStats, type PlayerStatsDb, type PlayerStats } from "../data/playerStatsTypes";
 import { norm, fD, fD2, firstName, shortName } from "../utils/format";
 import { clubShort, hcpDisplay } from "../utils/playerUtils";
 import { deepFixMojibake } from "../utils/fixEncoding";
 import { sc3, sc3m, SC } from "../utils/scoreDisplay";
 import { isTournamentRound } from "../utils/roundFilters";
-import { calcCourseHcp, calcPlayingHcp , expectedSD9, calcStrokesPerHole, get9hRatings } from "../utils/whsCalc";
+import { calcCourseHcp, expectedSD9, calcStrokesPerHole, get9hRatings } from "../utils/whsCalc";
 import { sortTees } from "../utils/teeUtils";
 import { getTeeHex, textOnColor } from "../utils/teeColors";
 import SectionErrorBoundary from "../ui/SectionErrorBoundary";
 import LoadingState from "../ui/LoadingState";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "../ui/SortableHdr";
+import StatsTable from "./comparar/StatsTable";
+import ConsistencySection from "./comparar/ConsistencySection";
+import ScoreDistribution from "./comparar/ScoreDistribution";
+import { COLORS, COLORS_LIGHT } from "./comparar/types";
 
-const COLORS = ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)"];
-const COLORS_LIGHT = ["var(--bg-success-strong)", "var(--bg-info-strong)", "var(--bg-danger-strong)", "var(--bg-warn-strong)"];
 
 interface Slot {
   fed: string; player: Player;
@@ -258,8 +260,6 @@ function buildTourneyHoleStats(data: PlayerPageData): Map<string, { label: strin
   }
   return map;
 }
-
-const pct = (v: number) => v.toFixed(0) + "%";
 
 /**
  * Gross máximo credível para 18 buracos.
@@ -1477,84 +1477,7 @@ function RoundPrepSection({ slots }: { slots: Slot[] }) {
 
 /* ═══════════════════ § 2 TABELA COMPARATIVA ═══════════════════ */
 
-function StatsTable({ slots, allAgg, statsDb }: { slots: Slot[]; allAgg: (AggStats | null)[]; statsDb: PlayerStatsDb }) {
-  const loaded = slots.map((s, i) => ({ s, agg: allAgg[i], i })).filter(x => x.agg);
-  if (loaded.length < 2) return null;
-
-  type Row = { label: string; values: (string | null)[]; best?: "low" | "high"; emoji?: string; section?: string };
-  const rows: Row[] = [];
-  const val = (fn: (agg: AggStats | null) => string | null) => loaded.map(x => fn(x.agg));
-  const pVal = (fn: (ps: PlayerStats | undefined) => string | null) => loaded.map(x => fn(statsDb[x.s.fed]));
-
-  rows.push({ section: "Actividade", label: "Última ronda", emoji: "🕐", values: pVal(ps => { const d = daysSince(ps); if (d == null) return null; if (d <= 1) return "Hoje"; return `${d} dias`; }), best: "low" });
-  rows.push({ label: "Rondas 12m", emoji: "📅", values: pVal(ps => ps?.roundsLast12m != null ? String(ps.roundsLast12m) : null), best: "high" });
-  rows.push({ label: "Rondas 3m", emoji: "🗓️", values: pVal(ps => ps?.roundsLast3m != null ? String(ps.roundsLast3m) : null), best: "high" });
-  rows.push({ label: "Tendência HCP", emoji: "📉", values: pVal(ps => { if (!ps) return null; const arrow = ps.hcpTrend === "up" ? "↗ A melhorar" : ps.hcpTrend === "down" ? "↘ A subir" : "→ Estável"; return ps.hcpDelta3m != null ? `${arrow} (${ps.hcpDelta3m > 0 ? "+" : ""}${ps.hcpDelta3m})` : arrow; }) });
-  rows.push({ label: "Forma", emoji: "🔥", values: pVal(ps => { if (!ps?.formAlert) return "Normal"; return ps.formAlert === "hot" ? "🔥 Boa forma" : "❄️ Má forma"; }) });
-
-  rows.push({ section: "Torneios", label: "Rondas Torneio", emoji: "🏟️", values: val((a) => a ? String(a.nRounds) : null), best: "high" });
-  rows.push({ label: "Melhor Gross", emoji: "🏆", values: val((a) => a?.bestGross != null ? String(a.bestGross) : null), best: "low" });
-  rows.push({ label: "Gross Médio", emoji: "📊", values: val((a) => a?.avgGross != null ? a.avgGross.toFixed(0) : null), best: "low" });
-  rows.push({ label: "SD Médio", emoji: "📈", values: val((a) => a?.avgSD != null ? a.avgSD.toFixed(1) : null), best: "low" });
-  rows.push({ label: "SD Últimas 5", emoji: "⭐", values: val((a) => a?.last5AvgSD != null ? a.last5AvgSD.toFixed(1) : null), best: "low" });
-  rows.push({ label: "SD de Sempre", emoji: "💎", values: val((a) => a?.bestSD != null ? a.bestSD.toFixed(1) : null), best: "low" });
-
-  rows.push({ section: "Análise", label: "Panc. s/ Par/Volta", emoji: "🎯", values: val((a) => a ? fD(a.totalStrokesOverPar) : null), best: "low" });
-  rows.push({ label: "Par ou Melhor", emoji: "⛳", values: val((a) => a ? pct(a.parOrBetterPct) : null), best: "high" });
-  rows.push({ label: "Dbl+ ou Pior", emoji: "⚠️", values: val((a) => a ? pct(a.dblOrWorsePct) : null), best: "low" });
-  rows.push({ label: "Par 3 vs Par", emoji: "🟢", values: val((a) => a?.byPar[3] ? fD2(a.byPar[3].avgVsPar) : null), best: "low" });
-  rows.push({ label: "Par 4 vs Par", emoji: "🔵", values: val((a) => a?.byPar[4] ? fD2(a.byPar[4].avgVsPar) : null), best: "low" });
-  rows.push({ label: "Par 5 vs Par", emoji: "🟣", values: val((a) => a?.byPar[5] ? fD2(a.byPar[5].avgVsPar) : null), best: "low" });
-
-  const bestIdx = rows.map(r => {
-    const nums = r.values.map(v => v != null ? parseFloat(v.replace(/[+%↗↘→a-zA-ZÀ-ú🔥❄️ ()]/g, "")) : null);
-    const valid = nums.filter((n): n is number => n != null && !isNaN(n));
-    if (valid.length < 2) return -1;
-    const target = r.best === "high" ? Math.max(...valid) : Math.min(...valid);
-    return nums.indexOf(target);
-  });
-
-  return (
-    <div className="card p-0 overflow-hidden">
-      <div className="h-md p-14" style={{ paddingBottom: 0 }}>Comparação Detalhada <span className="muted fs-11 fw-400">(apenas torneios)</span></div>
-      <div className="scroll-x mt-8">
-        <table className="dtable-lg fs-13">
-          <thead>
-            <tr>
-              <th style={{ minWidth: 140 }}>Métrica</th>
-              {loaded.map(x => <th key={x.i} className="r" style={{ color: COLORS[x.i], minWidth: 80 }}>{firstName(x.s.player.name)}</th>)}
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((r, ri) => (
-              <React.Fragment key={ri}>
-                {r.section && (
-                  <tr>
-                    <td colSpan={loaded.length + 1} className="fw-700 fs-11 c-text-3 uppercase" style={{ paddingTop: ri > 0 ? 12 : 6, paddingBottom: 2, borderBottom: "1px solid var(--border-light)", letterSpacing: "0.05em" }}>
-                      {r.section}
-                    </td>
-                  </tr>
-                )}
-                <tr>
-                  <td className="fw-600 fs-12"><span style={{ marginRight: 6 }}>{r.emoji}</span>{r.label}</td>
-                  {loaded.map((x, ci) => {
-                    const v = r.values[ci];
-                    const isBest = bestIdx[ri] === ci;
-                    return (
-                      <td key={ci} className="r" style={{ fontWeight: isBest ? 800 : 400, color: isBest ? COLORS[x.i] : undefined, fontFamily: "'JetBrains Mono', monospace", background: isBest ? COLORS_LIGHT[x.i] : undefined }}>
-                        {v ?? "–"}
-                      </td>
-                    );
-                  })}
-                </tr>
-              </React.Fragment>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-}
+/* StatsTable extraído para ./comparar/StatsTable.tsx */
 
 /* ═══════════════════ § 3 PAINEL "QUEM GANHA EM QUÊ" ═══════════════════ */
 
@@ -1813,176 +1736,9 @@ function SwotSection({ slots, allAgg, statsDb }: { slots: Slot[]; allAgg: (AggSt
   );
 }
 
-/* ═══════════════════ § 5 CONSISTÊNCIA ═══════════════════ */
+/* ConsistencySection extraído para ./comparar/ConsistencySection.tsx */
 
-function ConsistencySection({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats | null)[] }) {
-  const loaded = slots.map((s, i) => ({ s, agg: allAgg[i], i })).filter(x => x.agg);
-  if (loaded.length < 2) return null;
-
-  return (
-    <div className="card">
-      <div className="h-md mb-12">📐 Consistência</div>
-
-      {/* KPIs */}
-      <div className="caKpis mb-16">
-        {loaded.map(({ s, agg, i }) => {
-          if (!agg) return null;
-          const stdLabel = agg.grossStdDev != null ? agg.grossStdDev.toFixed(1) : "–";
-          const stdColor = agg.grossStdDev == null ? undefined : sc3(agg.grossStdDev, 3, 5.5);
-          return (
-            <div key={i} className="caKpi" style={{ borderColor: COLORS[i] }}>
-              <div className="caKpiVal" style={{ color: stdColor ?? COLORS[i] }}>{stdLabel}</div>
-              <div className="caKpiLbl">{firstName(s.player.name)} · σ Gross</div>
-              <div className="d-flex flex-wrap gap-8 jc-center mt-4">
-                {agg.sdStdDev != null && <span className="fs-10 c-text-3">σ SD: {agg.sdStdDev.toFixed(1)}</span>}
-                {agg.longestStreak > 0 && <span className="fs-10 c-text-3">Streak: {agg.longestStreak}</span>}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Tabela de consistência */}
-      <div className="scroll-x">
-        <table className="dtable-lg fs-12">
-          <thead>
-            <tr>
-              <th>Métrica</th>
-              {loaded.map(x => <th key={x.i} className="r" style={{ color: COLORS[x.i] }}>{firstName(x.s.player.name)}</th>)}
-            </tr>
-          </thead>
-          <tbody>
-            {[
-              { label: "σ Gross (desvio padrão)", key: "grossStdDev" as const, dir: "low" },
-              { label: "σ SD (desvio padrão)", key: "sdStdDev" as const, dir: "low" },
-              { label: "Intervalo Gross (max − min)", key: null, dir: "low" },
-              { label: "Maior sequência crescente", key: "longestStreak" as const, dir: "high" },
-              { label: "% dentro de ±3 do avg", key: null, dir: "high" },
-            ].map((row, ri) => {
-              const vals = loaded.map(({ agg }) => {
-                if (!agg) return null;
-                if (row.key) return agg[row.key] as number | null;
-                if (row.label.includes("Intervalo") && agg.grossSeries.length > 1) {
-                  return Math.max(...agg.grossSeries) - Math.min(...agg.grossSeries);
-                }
-                if (row.label.includes("±3") && agg.grossSeries.length > 0) {
-                  const avg = agg.avgGross!;
-                  const inRange = agg.grossSeries.filter(g => Math.abs(g - avg) <= 3).length;
-                  return inRange / agg.grossSeries.length * 100;
-                }
-                return null;
-              });
-              const nums = vals.filter((v): v is number => v != null);
-              const best = nums.length >= 2 ? (row.dir === "low" ? Math.min(...nums) : Math.max(...nums)) : null;
-
-              return (
-                <tr key={ri}>
-                  <td className="fw-600 fs-11">{row.label}</td>
-                  {vals.map((v, ci) => {
-                    const isBest = v != null && best != null && v === best && nums.filter(n => n === best).length === 1;
-                    const formatted = v == null ? "–" : row.label.includes("±3") ? `${v.toFixed(0)}%` : v.toFixed(1);
-                    return (
-                      <td key={ci} className="r mono" style={{
-                        fontWeight: isBest ? 800 : 400,
-                        color: isBest ? COLORS[ci] : undefined,
-                        background: isBest ? COLORS_LIGHT[ci] : undefined,
-                      }}>
-                        {formatted}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Mini sparklines de dispersão */}
-      <div className="mt-14">
-        <div className="fs-11 fw-600 c-text-3 mb-8">Dispersão de Gross (torneios)</div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 10 }}>
-          {loaded.map(({ s, agg, i }) => {
-            if (!agg || agg.grossSeries.length < 3) return null;
-            const gs = agg.grossSeries;
-            const mn = Math.min(...gs), mx = Math.max(...gs), rng = mx - mn || 1;
-            const avg = agg.avgGross!;
-            const W = 180, H = 50, pad = 8;
-            const x = (j: number) => pad + (j / (gs.length - 1)) * (W - pad * 2);
-            const y = (v: number) => H - pad - ((v - mn) / rng) * (H - pad * 2);
-            return (
-              <div key={i} style={{ border: `1px solid ${COLORS[i]}`, borderRadius: "var(--radius)", padding: 8, background: COLORS_LIGHT[i] }}>
-                <div className="fs-11 fw-700 mb-4" style={{ color: COLORS[i] }}>{firstName(s.player.name)}</div>
-                <svg viewBox={`0 0 ${W} ${H}`} className="w-full" style={{ display: "block" }}>
-                  {/* avg line */}
-                  <line x1={pad} x2={W - pad} y1={y(avg)} y2={y(avg)} stroke={COLORS[i]} strokeWidth={1} strokeDasharray="4,2" opacity={0.4} />
-                  {/* points */}
-                  {gs.map((g, j) => (
-                    <circle key={j} cx={x(j)} cy={y(g)} r={3} fill={COLORS[i]} opacity={0.7}>
-                      <title>Ronda {j + 1}: {g}</title>
-                    </circle>
-                  ))}
-                  {/* labels */}
-                  <text x={pad} y={H - 2} fontSize={9} fill="var(--text-3)">{mn}</text>
-                  <text x={W - pad} y={H - 2} fontSize={9} fill="var(--text-3)" textAnchor="end">{mx}</text>
-                  <text x={W / 2} y={y(avg) - 4} fontSize={9} fill={COLORS[i]} textAnchor="middle">avg {avg.toFixed(0)}</text>
-                </svg>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ═══════════════════ § 6 DISTRIBUIÇÃO DE SCORES ═══════════════════ */
-
-function ScoreDistribution({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats | null)[] }) {
-  const loaded = slots.map((s, i) => ({ s, agg: allAgg[i], i })).filter(x => x.agg && x.agg.scoreDist.total > 0);
-  if (loaded.length < 2) return null;
-
-  const cats = [
-    { key: "eagle" as const, label: "Eagle", emoji: "🦅" },
-    { key: "birdie" as const, label: "Birdie", emoji: "🐦" },
-    { key: "par" as const, label: "Par", emoji: "✅" },
-    { key: "bogey" as const, label: "Bogey", emoji: "🟡" },
-    { key: "double" as const, label: "Double+", emoji: "🔴" },
-    { key: "triple" as const, label: "Triple+", emoji: "⛔" },
-  ];
-
-  return (
-    <div className="card p-16">
-      <div className="h-md">Distribuição de Scores <span className="muted fs-11 fw-400">(apenas torneios)</span></div>
-      <div className="d-flex flex-col gap-12 mt-8">
-        {cats.map(cat => {
-          const vals = loaded.map(x => { const d = x.agg!.scoreDist; return d.total > 0 ? (d[cat.key] / d.total * 100) : 0; });
-          const maxVal = Math.max(...vals, 1);
-          return (
-            <div key={cat.key}>
-              <div className="d-flex items-center gap-8-mb4"><span className="cmp-stat-label">{cat.emoji} {cat.label}</span></div>
-              <div className="d-flex flex-col gap-3">
-                {loaded.map(x => {
-                  const v = vals[x.i];
-                  const barW = Math.max(2, (v / maxVal) * 100);
-                  return (
-                    <div key={x.i} className="d-flex items-center gap-8">
-                      <span className="fs-11 ta-right fw-600 shrink-0" style={{ width: 60, color: COLORS[x.i] }}>{firstName(x.s.player.name)}</span>
-                      <div className="cmp-distrib-track">
-                        <div style={{ width: `${barW}%`, height: "100%", background: COLORS[x.i], borderRadius: "var(--radius-sm)", opacity: 0.75 }} />
-                      </div>
-                      <span className="ta-right fw-700 c-text-2 fs-11 mono" style={{ width: 46 }}>{v.toFixed(1)}%</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
+/* ScoreDistribution extraído para ./comparar/ScoreDistribution.tsx */
 
 /* ═══════════════════ § 7 BURACO A BURACO ═══════════════════ */
 

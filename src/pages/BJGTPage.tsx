@@ -5,33 +5,33 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { cachedFetch } from "../data/fetchCache";
 import { scClass, SC } from "../utils/scoreDisplay";
-import { isManuel } from "../ui/tournamentPrimitives";
+import { isManuelByName as isM } from "../constants/manuel";
 import EvoBadge from "../ui/EvoBadge";
 import ExtLink from "../ui/ExternalLink";
 import SidebarSectionTitle from "../ui/SidebarSectionTitle";
 import { gf } from "../utils/flagUtils";
-const isM = (name: string) => isManuel({ name });
 import { fmtToPar, fmtSign, fmtSignParen as fmtSub, fmtFieldInfo } from "../utils/format";
-import { isCalUnlocked } from "../utils/authConstants";
-import type { MultiRoundRow, ExtraColumn } from "../ui/multiRoundTypes";
-import { AccumulatedLB, ScorecardLB, AllRoundsScorecardLB, expandMultiRound, type Tournament as FPGTournament, type Player as FPGPlayer, type RoundScore as FPGRoundScore, type ScorecardOptions } from "./FPGPage";
+import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
+import type { MultiRoundRow, ExtraColumn } from "../ui/multiRoundTypes";
+import { type Tournament as FPGTournament, type Player as FPGPlayer, type RoundScore as FPGRoundScore, type ScorecardOptions } from "./FPGPage";
+import { IntlTournView } from "../ui/IntlTournView";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
 import DetailHeader from "../ui/DetailHeader";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import LoadingState from "../ui/LoadingState";
 import EmptyState from "../ui/EmptyState";
-import { buildAutoRivals, normName as normNameAuto, type AutoRivalPlayer } from "./KIDSdataLoader";
-import { KidsLink, KidsLinkCtx, type KidsLinkEntry } from "../ui/KidsLink";
+import { useKidsLinkMap } from "../hooks/useKidsLinkMap";
+import { KidsLinkCtx } from "../ui/KidsLink";
 import { RoundPill, ManuelPill } from "../ui/PillBadge";
+import { useEvoComparison, type EvoEntry, type EvoInput } from "../hooks/useEvoComparison";
 
 /* ── Types ── */
 interface RoundData { day: number; scores: number[] | null; f9: number | null; b9: number | null; gross: number }
 interface PlayerData { name: string; country: string; pos: number | null; result: number | null; total: number | null; rounds: RoundData[] }
 interface TData { tournament: string; par: number[]; si?: number[]; parF9: number; parB9: number; parTotal: number; players: PlayerData[] }
 interface TDef { id: string; label: string; shortLabel: string; data: TData; manuelName: string; year: number; category: string; roundDates?: string[]; series: "bjgt" | "eowagr" }
-interface EvoEntry { otherToPar: number; delta: number; from: string; to: string; pill: "UP" | "EQ" | "NEW" }
 
 /* ── Data URLs ── */
 const URLS = [
@@ -120,11 +120,9 @@ function tDataToTournament(data: TData, def: TDef): FPGTournament {
   };
 }
 
-const EMPTY_ESC_LOOKUP = new Map<string, string>();
-const EMPTY_PLAYERS_DB = {} as Record<string, any>;
 
 /** Opções para ocultar colunas FPG-específicas e adaptar ao contexto BJGT */
-function bjgtScorecardOptions(nameDecorator?: ScorecardOptions["nameDecorator"]): ScorecardOptions {
+function bjgtScorecardOptions(): ScorecardOptions {
   return {
     hideHCP: true,
     hideSD: true,
@@ -132,7 +130,6 @@ function bjgtScorecardOptions(nameDecorator?: ScorecardOptions["nameDecorator"])
     hideFed: true,
     hideTee: true,
     clubLabel: "País",
-    nameDecorator,
   };
 }
 
@@ -273,50 +270,16 @@ function EvoSummary({ evo, evoYear }: { evo: Map<string, EvoEntry>; evoYear: str
    ═══════════════════════════════════════════════════════════════ */
 function TournView({ def, evo, evoYear }: { def: TDef; evo?: Map<string, EvoEntry>; evoYear?: string }) {
   const { data, manuelName } = def;
-  const nR = Math.max(...data.players.map(p => p.rounds.length), 0);
-  const isMulti = nR > 1;
   const hasEvo = evo && evo.size > 0;
 
   const tournament = useMemo(() => tDataToTournament(data, def), [data, def]);
+  const scOptions = useMemo(() => bjgtScorecardOptions(), []);
 
-  /** Decorador de nome: adiciona ↗ KidsLink ao lado do nome */
-  const nameDecoratorFn: ScorecardOptions["nameDecorator"] = React.useCallback(
-    (name: string, content: React.ReactNode) => (
-      <span className="inline-flex items-center">{content}<KidsLink nome={name} /></span>
-    ), []);
-
-  /** renderName para AccumulatedLB (MultiRoundRow) */
-  const renderNameFn = React.useCallback(
-    (row: MultiRoundRow) => (
-      <span className="fw-700 inline-flex items-center">
-        {row.countryFlag} {row.name}<KidsLink nome={row.name} />
-      </span>
-    ), []);
-
-  const scOptions = useMemo(() => bjgtScorecardOptions(nameDecoratorFn), [nameDecoratorFn]);
-
-  // expandMultiRound produz: [R1_tourn, R2_tourn, ..., Resumo_tourn]
-  const expanded = useMemo(() => expandMultiRound(tournament), [tournament]);
-
-  // Tabs: R1 · R2 · Resumo · 📋 Scorecards  (como FPGPage/DORALPage)
-  const COMBINED_TAB = "📋 Scorecards";
-  const tabLabels = useMemo(() => {
-    if (!isMulti) return ["Scorecard"];
-    return [...expanded.map((t: any) => {
-      // Usar roundDates se disponível
-      const rIdx = (t as any)._roundIndex;
-      const isTotal = (t as any)._isTotal;
-      if (isTotal) return "Resumo";
-      const dateLabel = def.roundDates?.[rIdx];
-      return dateLabel ? `R${rIdx + 1} · ${dateLabel}` : (t as any)._roundLabel || `R${rIdx + 1}`;
-    }), COMBINED_TAB];
-  }, [isMulti, expanded, def.roundDates]);
-
-  const [tab, setTab] = useState(0);
-
-  const curT       = isMulti ? expanded[Math.min(tab, expanded.length - 1)] : tournament;
-  const isAcc      = isMulti && !!(curT as any)?._isTotal;
-  const isCombined = isMulti && tabLabels[tab] === COMBINED_TAB;
+  // Round labels com datas (e.g. "R1 · 25 Fev")
+  const roundLabels = useMemo(() =>
+    def.roundDates?.map((d, i) => `R${i + 1} · ${d}`),
+    [def.roundDates],
+  );
 
   /* Colunas de evolução (só no Resumo) */
   type RowWithPos = MultiRoundRow & { _pos?: number | null };
@@ -328,7 +291,7 @@ function TournView({ def, evo, evoYear }: { def: TDef; evo?: Map<string, EvoEntr
       cell: (row: RowWithPos) => {
         const ev = evo!.get(row.name);
         return ev
-          ? <span className="inline-sep">{fmtSign(ev.otherToPar)}</span>
+          ? <span className="inline-sep">{fmtSign(ev.otherValue)}</span>
           : <span className="c-muted inline-sep">–</span>;
       },
     },
@@ -358,104 +321,52 @@ function TournView({ def, evo, evoYear }: { def: TDef; evo?: Map<string, EvoEntr
   const rLabel = (i: number) => def.roundDates?.[i] ? `R${i + 1} · ${def.roundDates[i]}` : `R${i + 1}`;
 
   return (
-    <div>
-      {/* Tabs tab-under — mesmo padrão que FPGPage/DORALPage */}
-      {isMulti && (
-        <div className="tab-bar">
-          {tabLabels.map((label, i) => (
-            <button key={i} className={`tab-under${tab === i ? " active" : ""}`} onClick={() => setTab(i)}>{label}</button>
-          ))}
-        </div>
+    <IntlTournView
+      tournament={tournament}
+      scOptions={scOptions}
+      roundLabels={roundLabels}
+      evoCols={evoCols}
+      renderAccSection={(accLB) => (
+        <>
+          <div className="card">
+            <div className="h-md fs-14">🏆 Leaderboard — {def.label}</div>
+            {hasEvo && <EvoSummary evo={evo!} evoYear={evoYear!} />}
+            {accLB}
+          </div>
+          <div className="card">
+            <div className="h-md fs-14">📊 Dificuldade por Buraco — Todas as rondas</div>
+            <FStats data={data} ri="all" />
+            <HoleDiff data={data} ri="all" mn={manuelName} />
+          </div>
+        </>
       )}
-
-      {/* Conteúdo — mesma lógica que DORALPage DivView */}
-      {isCombined
-        ? <AllRoundsScorecardLB tournament={tournament} escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB} options={scOptions} />
-        : isAcc
-          ? <>
-              <div className="card"><div className="h-md fs-14">🏆 Leaderboard — {def.label}</div>{hasEvo && <EvoSummary evo={evo!} evoYear={evoYear!} />}<AccumulatedLB tournament={curT} nRounds={nR} escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB} showCols={{ esc: false, fed: false, tee: false }} extraColumns={evoCols} renderName={renderNameFn} /></div>
-              <div className="card"><div className="h-md fs-14">📊 Dificuldade por Buraco — Todas as rondas</div><FStats data={data} ri="all" /><HoleDiff data={data} ri="all" mn={manuelName} /></div>
-            </>
-          : <>
-              <div className="card"><div className="h-md fs-14">🏆 {rLabel(tab)} — Scorecards</div><FStats data={data} ri={tab} /><ScorecardLB tournament={curT} escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB} options={scOptions} /></div>
-              <div className="card"><div className="h-md fs-14">📊 Dificuldade por Buraco — {rLabel(tab)}</div><HoleDiff data={data} ri={tab} mn={manuelName} /></div>
-              {manuelName && <ManuelDay data={data} ri={tab} />}
-            </>
-      }
-    </div>
+      renderRoundSection={(roundLB, tab) => (
+        <>
+          <div className="card">
+            <div className="h-md fs-14">🏆 {rLabel(tab)} — Scorecards</div>
+            <FStats data={data} ri={tab} />
+            {roundLB}
+          </div>
+          <div className="card">
+            <div className="h-md fs-14">📊 Dificuldade por Buraco — {rLabel(tab)}</div>
+            <HoleDiff data={data} ri={tab} mn={manuelName} />
+          </div>
+          {manuelName && <ManuelDay data={data} ri={tab} />}
+        </>
+      )}
+    />
   );
 }
 
 /* ═══════════════════════════════════════════════════════════════
    MAIN PAGE
    ═══════════════════════════════════════════════════════════════ */
-function buildEvo(cur: TDef, all: (TDef | null)[]): { evoMap?: Map<string, EvoEntry>; evoYear?: string; manuelEvo?: EvoEntry } {
-  let evoMap: Map<string, EvoEntry> | undefined;
-  let evoYear: string | undefined;
-  let manuelEvo: EvoEntry | undefined;
-
-  const nameMatch = (a: string, b: string) => {
-    const na = a.toLowerCase().replace(/\s+/g, " ");
-    const nb = b.toLowerCase().replace(/\s+/g, " ");
-    return na === nb || (na.includes(nb.split(" ")[0]) && na.includes(nb.split(" ").slice(-1)[0]));
-  };
-
-  const curNR = Math.max(...cur.data.players.map(p => p.rounds.length), 0);
-  const curParTotal = cur.data.parTotal * curNR;
-
-  if (cur.year === 2026) {
-    evoYear = "2025";
-    const prev25 = all.filter(t => t && t.year === 2025 && t.series === cur.series) as TDef[];
-    if (prev25.length) {
-      const all25Players = prev25.flatMap(t => {
-        const tNR = Math.max(...t.data.players.map(p => p.rounds.length), 0);
-        const tPar = t.data.parTotal * tNR;
-        return t.data.players.map(p => ({ ...p, cat: t.category, _parTotal: tPar }));
-      });
-      evoMap = new Map();
-      for (const p26 of cur.data.players) {
-        if (!p26.total) continue;
-        const match = all25Players.find(p25 => nameMatch(p25.name, p26.name));
-        if (!match || !match.total) continue;
-        const curTP = p26.total - curParTotal;
-        const otherTP = match.total - match._parTotal;
-        const entry: EvoEntry = { otherToPar: otherTP, delta: curTP - otherTP, from: match.cat, to: cur.category, pill: match.cat === cur.category ? "EQ" : "UP" };
-        evoMap.set(p26.name, entry);
-        if (isM(p26.name)) manuelEvo = entry;
-      }
-      if (!evoMap.size) evoMap = undefined;
-    }
-  } else if (cur.year === 2025) {
-    evoYear = "2026";
-    const next26 = all.filter(t => t && t.year === 2026 && t.series === cur.series) as TDef[];
-    if (next26.length) {
-      const all26Players = next26.flatMap(t => {
-        const tNR = Math.max(...t.data.players.map(p => p.rounds.length), 0);
-        const tPar = t.data.parTotal * tNR;
-        return t.data.players.map(p => ({ ...p, cat: t.category, _parTotal: tPar }));
-      });
-      evoMap = new Map();
-      for (const p25 of cur.data.players) {
-        if (!p25.total) continue;
-        const match = all26Players.find(p26 => nameMatch(p25.name, p26.name));
-        if (!match || !match.total) continue;
-        const curTP = p25.total - curParTotal;
-        const otherTP = match.total - match._parTotal;
-        const entry: EvoEntry = { otherToPar: otherTP, delta: otherTP - curTP, from: cur.category, to: match.cat, pill: cur.category === match.cat ? "EQ" : "UP" };
-        evoMap.set(p25.name, entry);
-        if (isM(p25.name)) manuelEvo = entry;
-      }
-      if (!evoMap.size) evoMap = undefined;
-    }
-  }
-  return { evoMap, evoYear, manuelEvo };
-}
 
 function Content() {
   const [ti, setTi] = useState(2);
   const [all, setAll] = useState<(TDef | null)[]>(new Array(URLS.length).fill(null));
   const [loading, setLoading] = useState(true);
-  const [autoRivals, setAutoRivals] = useState<AutoRivalPlayer[]>([]);
+  const { kidsMap } = useKidsLinkMap();
   const md = useMasterDetail();
 
   useEffect(() => {
@@ -464,23 +375,55 @@ function Content() {
         return { id: m.id, label: m.label, shortLabel: m.shortLabel, data: loadT(raw, (m as any).reverseRounds), manuelName: m.manuelName, year: m.year, category: m.category, roundDates: m.roundDates, series: m.series } as TDef;
       } catch { return null; }
     })).then(r => { setAll(r); setLoading(false); });
-    // Carregar autoRivals em background para KidsLinks
-    buildAutoRivals(undefined, {
-      onUpdate: (rivals) => setAutoRivals(rivals),
-    }).catch(() => {});
   }, []);
 
-  // Mapa normName → KidsLinkEntry para o contexto ↗
-  const kidsMap = useMemo(() => {
-    const m = new Map<string, KidsLinkEntry>();
-    for (const r of autoRivals) m.set(normNameAuto(r.n), { n: r.n, memberId: (r as any).memberId });
-    return m;
-  }, [autoRivals]);
-
   const cur = all[ti];
-  if (loading) return <LoadingState />;
 
-  const { evoMap, evoYear, manuelEvo } = cur ? buildEvo(cur, all) : {};
+  /* ── Evolução ano-a-ano via hook unificado ── */
+  const evoInput = useMemo((): EvoInput | null => {
+    if (!cur) return null;
+    // Bidirecional: 2026 compara com 2025, 2025 compara com 2026
+    const refYear = cur.year === 2026 ? 2025 : cur.year === 2025 ? 2026 : 0;
+    if (!refYear) return null;
+    const refDefs = all.filter(t => t && t.year === refYear && t.series === cur.series) as TDef[];
+    if (!refDefs.length) return null;
+
+    const curNR = Math.max(...cur.data.players.map(p => p.rounds.length), 0);
+    const curParTotal = cur.data.parTotal * curNR;
+
+    return {
+      currentPlayers: cur.data.players
+        .filter(p => p.total != null)
+        .map(p => ({ name: p.name, value: p.total! - curParTotal, category: cur.category })),
+      referencePlayers: refDefs.flatMap(t => {
+        const tNR = Math.max(...t.data.players.map(p => p.rounds.length), 0);
+        const tPar = t.data.parTotal * tNR;
+        return t.data.players
+          .filter(p => p.total != null)
+          .map(p => ({ name: p.name, value: p.total! - tPar, category: t.category }));
+      }),
+      referenceYear: String(refYear),
+      isManuel: isM,
+    };
+  }, [cur, all]);
+
+  const rawEvo = useEvoComparison(evoInput);
+
+  // Para o caso bidirecional (2025→2026): inverter delta e trocar from/to
+  // Hook dá delta = cur2025 - ref2026, mas queremos ref2026 - cur2025
+  const { evoMap, evoYear, manuelEvo } = useMemo(() => {
+    if (!rawEvo.evoMap || !cur || cur.year !== 2025) return rawEvo;
+    const flipped = new Map<string, EvoEntry>();
+    for (const [k, v] of rawEvo.evoMap) {
+      flipped.set(k, { ...v, delta: -v.delta, from: v.to, to: v.from });
+    }
+    const flippedManuel = rawEvo.manuelEvo
+      ? { ...rawEvo.manuelEvo, delta: -rawEvo.manuelEvo.delta, from: rawEvo.manuelEvo.to, to: rawEvo.manuelEvo.from }
+      : undefined;
+    return { evoMap: flipped.size ? flipped : undefined, evoYear: rawEvo.evoYear, manuelEvo: flippedManuel };
+  }, [rawEvo, cur]);
+
+  if (loading) return <LoadingState />;
 
   return (
     <KidsLinkCtx.Provider value={kidsMap}>
@@ -579,33 +522,14 @@ function Content() {
                 <div className="h-md fs-14">🇵🇹 Manuel — Evolução WJGC (±Par)</div>
                 <div className="gap-16 flex-wrap" style={{ display: "flex", alignItems: "center" }}>
                   <div className="ta-c" style={{ flex: "1 1 100px" }}>
-                    <div className="muted fs-10">2025 ({manuelEvo.from})</div>
-                    <div className="fw-900" style={{ fontSize: 24 }}>{fmtSign(manuelEvo.otherToPar)}</div>
+                    <div className="muted fs-10">{evoYear} ({manuelEvo.from})</div>
+                    <div className="fw-900" style={{ fontSize: 24 }}>{fmtSign(manuelEvo.otherValue)}</div>
                   </div>
                   <div style={{ fontSize: 24, color: "var(--good-dark)" }}>→</div>
                   <div className="ta-c" style={{ flex: "1 1 100px" }}>
-                    <div className="muted fs-10">2026 ({manuelEvo.to})</div>
-                    <div className="fw-900" style={{ fontSize: 24, color: manuelEvo.delta < 0 ? "var(--good-dark)" : "var(--text-3)" }}>{fmtSign(manuelEvo.otherToPar + manuelEvo.delta)}</div>
+                    <div className="muted fs-10">{cur.year} ({manuelEvo.to})</div>
+                    <div className="fw-900" style={{ fontSize: 24, color: manuelEvo.delta < 0 ? "var(--good-dark)" : "var(--text-3)" }}>{fmtSign(manuelEvo.otherValue + manuelEvo.delta)}</div>
                   </div>
                   <div className="ta-c" style={{ flex: "1 1 80px" }}>
                     <div className="muted fs-10">Δ ±Par</div>
-                    <div className="fw-900" style={{ fontSize: 24, color: manuelEvo.delta < 0 ? "var(--good-dark)" : SC.danger }}>{manuelEvo.delta > 0 ? "+" : ""}{manuelEvo.delta}</div>
-                    <div className="muted fs-10">vs par (3R)</div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </>) : <div className="center-msg muted">Dados não disponíveis</div>}
-        </div>
-
-      </div>
-    </div>
-    </KidsLinkCtx.Provider>
-  );
-}
-
-export default function BJGTPage() {
-  const [unlocked, setUnlocked] = useState(() => isCalUnlocked());
-  if (!unlocked) return <PasswordGate onUnlock={() => setUnlocked(true)} />;
-  return <Content />;
-}
+                    <div className="fw-900" style={{ fontSize: 24, color: manuelEvo.delta < 0 ? "var(--good-dark)" : SC.danger }}>{m

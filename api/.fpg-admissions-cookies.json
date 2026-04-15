@@ -1,7 +1,7 @@
 {
-  "generated": "2026-04-15T17:30:00.000Z",
-  "source": "Chrome 90 — capturado em scoring.fpg.pt/lists/tournAdmissions.aspx (user=admin)",
+  "generated": "2026-04-15T22:35:00.000Z",
+  "source": "Firefox/Chrome 90 — scoring.fpg.pt/lists/tournAdmissions.aspx (user=admin)",
   "host": "scoring.fpg.pt",
-  "cookieHeader": "ASP.NET_SessionId=yvfewvdjofk5idw2avzzgxyf; DG_Lists_URL=OriginalUrl=https%3a%2f%2fscoring.fpg.pt%3a443%2flists%2f1EntryPage.aspx%3fuser%3dadmin%26dt%3d15522%26page%3dadmissions%26hash%3de41625824fd04006e5a7e2c9e578be87695aad0f%26ccode%3d000%26tcode%3d10935%26callcontext%3ddirect",
-  "notes": "2 cookies: ASP.NET_SessionId + DG_Lists_URL. Entry-gate apontado para tcode=10935 (Sub-18 H) mas o servidor aceita os mesmos cookies para os outros tcodes da mesma session."
+  "cookieHeader": "ASP.NET_SessionId=dyuedjzjbdjksgjgg3r3eq5j; DG_Lists_URL=OriginalUrl=https%3a%2f%2fscoring.fpg.pt%3a443%2flists%2f1EntryPage.aspx%3fuser%3dadmin%26dt%3d15531%26page%3dadmissions%26hash%3d9e112f3acb12cf177a54ab9be063fa562173707a%26ccode%3d000%26tcode%3d10936%26callcontext%3ddirect",
+  "notes": "Cookies para scoring.fpg.pt/lists/* (page=admissions). Refrescar quando middleware /api/inscricoes começar a logar 'parser devolveu 0'."
 }

@@ -7,25 +7,28 @@
 import React, { useMemo, useState } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from "recharts";
 import { useLocation } from "react-router-dom";
-import { fmtToPar, fmtSign, MONTHS_PT, MONTHS_PT_FULL, sortArrow, isoDate, medal } from "../utils/format";
-import { useSort } from "../hooks/useSort";
+import { fmtToPar, fmtSign, MONTHS_PT, MONTHS_PT_FULL, isoDate, medal, sortArrow } from "../utils/format";
+/* useSort movido para ./kids/H2HSortableTable.tsx */
 import { FL } from "../utils/flagUtils";
-import { zTier, getTrend, getAvgZ } from "../utils/mathUtils";
-import { scClass, toParClass, sc3m, tpColorDark } from "../utils/scoreDisplay";
-import { isCalUnlocked } from "../utils/authConstants";
+import { getTrend, getAvgZ } from "../utils/mathUtils";
+import { scClass, toParClass, tpColorDark } from "../utils/scoreDisplay";
+import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
 import SidebarToggle from "../ui/SidebarToggle";
-import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
+import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
 import { RoundPill } from "../ui/PillBadge";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import EmptyState from "../ui/EmptyState";
 import DetailHeader from "../ui/DetailHeader";
 import KpiCard from "../ui/KpiCard";
 import SidebarSectionTitle from "../ui/SidebarSectionTitle";
-import { buildAutoRivals, normName, getScorecards, uskTournNames, uskFieldSizes } from "./KIDSdataLoader";
-import { FIELD_2025, VP_PAR, VP_SI, VP_M, VP_WJGC26_PAR, VP_WJGC26_SI, VP_WJGC26_M, VP_ALFERINI_PAR, VP_ALFERINI_SI, VP_ALFERINI_M, LT_FORET_PAR, LT_FORET_SI, LT_FORET_M, VENICE_M, MS_USKIDS_M_B1011, MS_USKIDS_M_B12, DORAL_GP_M_B1011, DORAL_SF_M_B1213, TIER, FIELD_CARDS } from "../data/rivalData";
+import { buildAutoRivals, normName, getScorecards, uskTournNames, uskFieldSizes } from "../data/KIDSdataLoader";
+import { FIELD_2025, VP_PAR, VP_SI, VP_M, VP_WJGC26_PAR, VP_WJGC26_SI, VP_WJGC26_M, VP_ALFERINI_PAR, VP_ALFERINI_SI, VP_ALFERINI_M, LT_FORET_PAR, LT_FORET_SI, LT_FORET_M, MS_USKIDS_M_B1011, MS_USKIDS_M_B12, DORAL_GP_M_B1011, DORAL_SF_M_B1213, FIELD_CARDS } from "../data/rivalData";
 import { MANUEL_KNOWN_TIDS } from "../constants/manuel";
-import { TIER_L, TR_I } from "../constants/tierDisplay";
+import { TR_I } from "../constants/config";
+import TournScorecard from "./kids/TournScorecard";
+import H2HSortableTable from "./kids/H2HSortableTable";
+import type { ScRound, H2HConfronto, H2HSortKey } from "./kids/types";
 
 
 /* ═══════════════════════════════════
@@ -1123,77 +1126,7 @@ function getVsAvg(p: RivalPlayer, manuelRef?: RivalPlayer | null) {
 /* ─────────────────────────────────────────────────────────────
    Generic scorecard table (WJGC26, GG26, QDL25)
    ───────────────────────────────────────────────────────────── */
-interface ScRound { label: string; scores: number[] }
-function TournScorecard({ par, si, meters, rounds }: { par: readonly number[]; si?: readonly number[]; meters?: readonly number[]; rounds: ScRound[] }) {
-  const frontPar = par.slice(0, 9).reduce((a, b) => a + b, 0);
-  const backPar = par.slice(9).reduce((a, b) => a + b, 0);
-  const totalPar = frontPar + backPar;
-  const frontM = meters ? meters.slice(0, 9).reduce((a, b) => a + b, 0) : 0;
-  const backM  = meters ? meters.slice(9).reduce((a, b) => a + b, 0) : 0;
-  const totalM = frontM + backM;
-  const Sub = ({ gross, base, cls }: { gross: number; base: number; cls: string }) => {
-    const tp = gross - base;
-    return <td className={`${cls} fw-700`}>{gross}<span className={`sc-topar ${toParClass(tp)}`}>{fmtSign(tp)}</span></td>;
-  };
-  return (
-    <div className="scroll-x">
-      <table className="sc-table-modern" data-sc-table="1">
-        <thead><tr>
-          <th className="hole-header ta-left">Buraco</th>
-          {par.slice(0, 9).map((_, i) => <th key={i} className="hole-header">{i + 1}</th>)}
-          <th className="hole-header col-out fs-10">Out</th>
-          {par.slice(9).map((_, i) => <th key={i + 9} className="hole-header">{i + 10}</th>)}
-          <th className="hole-header col-in fs-10">In</th>
-          <th className="hole-header col-total">TOT</th>
-        </tr></thead>
-        <tbody>
-          {meters && (
-            <tr className="meta-row">
-              <td className="row-label fs-10 c-text-3">m</td>
-              {meters.slice(0, 9).map((m, i) => <td key={i} className="fs-10 c-text-3">{m}</td>)}
-              <td className="col-out c-text-3">{frontM}</td>
-              {meters.slice(9).map((m, i) => <td key={i + 9} className="fs-10 c-text-3">{m}</td>)}
-              <td className="col-in c-text-3">{backM}</td>
-              <td className="col-total fs-10 c-text-3">{totalM}</td>
-            </tr>
-          )}
-          {si && (
-            <tr className="meta-row">
-              <td className="row-label fs-10">SI</td>
-              {si.slice(0, 9).map((s, i) => <td key={i}>{s}</td>)}
-              <td className="col-out" />
-              {si.slice(9).map((s, i) => <td key={i + 9}>{s}</td>)}
-              <td className="col-in" /><td className="col-total" />
-            </tr>
-          )}
-          <tr className="sep-row">
-            <td className="row-label par-label">Par</td>
-            {par.slice(0, 9).map((p, i) => <td key={i}>{p}</td>)}
-            <td className="col-out fw-600">{frontPar}</td>
-            {par.slice(9).map((p, i) => <td key={i + 9}>{p}</td>)}
-            <td className="col-in fw-600">{backPar}</td>
-            <td className="col-total">{totalPar}</td>
-          </tr>
-          {rounds.map((rd, ri) => {
-            const front = rd.scores.slice(0, 9).reduce((a, b) => a + b, 0);
-            const back = rd.scores.slice(9).reduce((a, b) => a + b, 0);
-            const total = front + back;
-            return (
-              <tr key={ri}>
-                <td className="row-label fw-700">{rd.label}</td>
-                {rd.scores.slice(0, 9).map((g, i) => <td key={i}><span className={`sc-score ${scClass(g, par[i])}`}>{g}</span></td>)}
-                <Sub gross={front} base={frontPar} cls="col-out" />
-                {rd.scores.slice(9).map((g, i) => <td key={i + 9}><span className={`sc-score ${scClass(g, par[i + 9])}`}>{g}</span></td>)}
-                <Sub gross={back} base={backPar} cls="col-in" />
-                <Sub gross={total} base={totalPar} cls="col-total" />
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
-  );
-}
+/* TournScorecard extraído para ./kids/TournScorecard.tsx */
 
 /* ── Scoring distribution pills ── */
 /* ═══════════════════════════════════
@@ -1716,92 +1649,7 @@ function TorneiosRecorrentes({
 /* ═══════════════════════════════════
    HEAD-TO-HEAD TABLE DETALHADA
    ═══════════════════════════════════ */
-type H2HConfronto = { tid: string; tornName: string; ageGroup: string | null; manPos: number; rivalPos: number; manTp: number | null; rivalTp: number | null; year: number };
-type H2HSortKey = "tourn" | "year" | "manPos" | "rivalPos" | "dif" | "result";
-
-function H2HSortableTable({ confrontos, firstName }: { confrontos: H2HConfronto[]; firstName: string }) {
-  const { sortKey, sortDir, toggleSort } = useSort<H2HSortKey>("year", "desc");
-
-  const sorted = useMemo(() => {
-    const INF = 9999;
-    return [...confrontos].sort((a, b) => {
-      const dir = sortDir === "asc" ? 1 : -1;
-      switch (sortKey) {
-        case "tourn":    return dir * a.tornName.localeCompare(b.tornName, "pt");
-        case "year":     return dir * (a.year - b.year);
-        case "manPos":   return dir * (a.manPos - b.manPos);
-        case "rivalPos": return dir * (a.rivalPos - b.rivalPos);
-        case "dif": {
-          const da = a.manTp != null && a.rivalTp != null ? a.rivalTp - a.manTp : INF;
-          const db = b.manTp != null && b.rivalTp != null ? b.rivalTp - b.manTp : INF;
-          return dir * (da - db);
-        }
-        case "result": {
-          const ra = a.manPos < a.rivalPos ? -1 : a.manPos > a.rivalPos ? 1 : 0;
-          const rb = b.manPos < b.rivalPos ? -1 : b.manPos > b.rivalPos ? 1 : 0;
-          return dir * (ra - rb);
-        }
-        default: return 0;
-      }
-    });
-  }, [confrontos, sortKey, sortDir]);
-
-  const SH = ({ k, children, className, style }: { k: H2HSortKey; children: React.ReactNode; className?: string; style?: React.CSSProperties }) => (
-    <th className={(className || "") + " lb-sortable"} style={style} onClick={() => toggleSort(k)}>
-      {children}{sortKey === k && <span className="sort-arrow">{sortDir === "asc" ? "▲" : "▼"}</span>}
-    </th>
-  );
-
-  return (
-    <table className="dtable w-full">
-      <thead>
-        <tr>
-          <SH k="tourn" className="ta-left" style={{ padding: "4px 12px" }}>Torneio</SH>
-          <SH k="year" className="ta-c" style={{ width: 60 }}>Escalão</SH>
-          <SH k="manPos" className="ta-c" style={{ width: 70 }}>Manuel</SH>
-          <SH k="rivalPos" className="ta-c" style={{ width: 70 }}>{firstName}</SH>
-          <SH k="dif" className="ta-c" style={{ width: 50 }}>Dif.</SH>
-          <SH k="result" className="ta-right" style={{ width: 100, paddingRight: 12 }}>Resultado</SH>
-        </tr>
-      </thead>
-      <tbody>
-        {sorted.map((c, i) => {
-          const rivalWon = c.rivalPos < c.manPos;
-          const draw     = c.rivalPos === c.manPos;
-          const dif      = c.manTp != null && c.rivalTp != null ? c.rivalTp - c.manTp : null;
-          return (
-            <tr key={c.tid} style={{
-              background: rivalWon ? "rgba(22,163,74,.04)" : draw ? "transparent" : "rgba(220,38,38,.04)",
-              borderBottom: i < confrontos.length - 1 ? "1px solid var(--border-light)" : "none",
-            }}>
-              <td style={{ padding: "7px 12px", fontWeight: 500 }}>
-                {c.tornName.replace(/\s*\d{4}$/, "")}
-                <span style={{ marginLeft: 5, fontSize: 10, color: "var(--text-3)" }}> '{String(c.year).slice(2)}</span>
-              </td>
-              <td style={{ textAlign: "center", fontSize: 10, color: "var(--text-2)" }}>{c.ageGroup ?? "—"}</td>
-              <td className="ta-c">
-                <strong>#{c.manPos}</strong>
-                {c.manTp != null && <span style={{ fontSize: 10, color: (c.manTp ?? 1) <= 0 ? "var(--color-good-dark)" : "var(--text-3)", marginLeft: 4 }}>({fmtToPar(c.manTp)})</span>}
-              </td>
-              <td style={{ textAlign: "center", color: rivalWon ? "var(--color-good-dark)" : "var(--color-danger-vivid)" }}>
-                <strong>#{c.rivalPos}</strong>
-                {c.rivalTp != null && <span className="fs-10 ml-4">({fmtToPar(c.rivalTp)})</span>}
-              </td>
-              <td style={{ textAlign: "center", fontSize: 11,
-                color: dif != null && dif < 0 ? "var(--color-good-dark)" : dif != null && dif > 0 ? "var(--color-danger-vivid)" : "var(--text-3)" }}>
-                {dif != null ? (dif > 0 ? "+" : "") + dif : "—"}
-              </td>
-              <td style={{ textAlign: "right", fontWeight: 700, fontSize: 11, paddingRight: 12,
-                color: rivalWon ? "var(--color-good-dark)" : draw ? "var(--text-3)" : "var(--color-danger-vivid)" }}>
-                {rivalWon ? `${firstName} venceu` : draw ? "empate" : "Manuel venceu"}
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
-  );
-}
+/* H2HSortableTable extraído para ./kids/H2HSortableTable.tsx */
 
 function H2HTable({
   confrontos, playerName,
@@ -3104,7 +2952,7 @@ function RivaisIntlContent() {
 }
 
 export default function RivaisIntlPage() {
-  const [unlocked, setUnlocked] = useState(() => isCalUnlocked());
-  if (!unlocked) return <PasswordGate onUnlock={() => setUnlocked(true)} />;
+  const { unlocked, unlock } = usePasswordGate();
+  if (!unlocked) return <PasswordGate onUnlock={unlock} />;
   return <RivaisIntlContent />;
 }

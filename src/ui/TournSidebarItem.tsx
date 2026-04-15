@@ -11,14 +11,11 @@ import {
   EscPill, RoundPill, TcodePill, NineHPill, SserraPill, JuniorPill,
   ManuelPill, ClubePill, NacionalPill, PillBadge,
 } from "./PillBadge";
+import { shortDateSlash } from "../utils/format";
 
 export const SSERRA_CCODE = "007";
 
-function shortDate(d?: string): string {
-  if (!d) return "";
-  const day = d.substring(8, 10), mo = d.substring(5, 7), yr = d.substring(0, 4);
-  return yr === new Date().getFullYear().toString() ? `${day}/${mo}` : `${day}/${mo}/${yr}`;
-}
+const shortDate = (d?: string) => shortDateSlash(d, true);
 
 function openFpg(ccode?: string, tcode?: string) {
   if (!ccode || !tcode) return;

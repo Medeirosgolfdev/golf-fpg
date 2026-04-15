@@ -6,13 +6,12 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { cachedFetch } from "../data/fetchCache";
 import { SC } from "../utils/scoreDisplay";
-import { isManuel } from "../ui/tournamentPrimitives";
+import { isManuelByName as isM } from "../constants/manuel";
 import ExtLink from "../ui/ExternalLink";
 import SidebarSectionTitle from "../ui/SidebarSectionTitle";
 import { gf } from "../utils/flagUtils";
-const isM = (name: string) => isManuel({ name });
 import { norm, fmtFieldInfo } from "../utils/format";
-import { isCalUnlocked } from "../utils/authConstants";
+import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarMeta } from "../ui/Toolbar";
@@ -20,11 +19,13 @@ import DetailHeader from "../ui/DetailHeader";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import LoadingState from "../ui/LoadingState";
 import { RoundPill, ManuelPill } from "../ui/PillBadge";
-import { AllRoundsScorecardLB, AccumulatedLB, ScorecardLB, expandMultiRound, type Tournament as FPGTournament, type Player as FPGPlayer, type RoundScore as FPGRoundScore, type ScorecardOptions } from "./FPGPage";
+import { type Tournament as FPGTournament, type Player as FPGPlayer, type RoundScore as FPGRoundScore, type ScorecardOptions } from "./FPGPage";
 import EvoBadge from "../ui/EvoBadge";
 import type { ExtraColumn, MultiRoundRow } from "../ui/multiRoundTypes";
-import { buildAutoRivals, normName as normNameAuto, type AutoRivalPlayer } from "./KIDSdataLoader";
-import { KidsLink, KidsLinkCtx, type KidsLinkEntry } from "../ui/KidsLink";
+import { IntlTournView } from "../ui/IntlTournView";
+import { useKidsLinkMap } from "../hooks/useKidsLinkMap";
+import { useEvoComparison, type EvoEntry, type EvoInput } from "../hooks/useEvoComparison";
+import { KidsLinkCtx } from "../ui/KidsLink";
 
 /* ── Types ─────────────────────────────────────────────────── */
 interface RoundGG {
@@ -194,41 +195,7 @@ function normalizeFile(raw: RawGG, sourceUrl: string): Entry[] {
   });
 }
 
-/* ── Evo: presença no ano anterior ─────────────────────────── */
-interface EvoEntry { prevTotal: number; delta: number; from: string; to: string; pill: "UP" | "EQ"; prevPos: number | null; fieldSize: number }
-
-function buildEvo(cur: Entry, all: Entry[]): Map<string, EvoEntry> {
-  const evo = new Map<string, EvoEntry>();
-  const prevYear = cur.year - 1;
-  const prevEntries = all.filter(e => e.year === prevYear);
-  if (!prevEntries.length) return evo;
-
-  for (const p of cur.players) {
-    if (!p.total) continue;
-    for (const prev of prevEntries) {
-      const match = prev.players.find(q => {
-        const n1 = norm(p.name), n2 = norm(q.name);
-        return n1 === n2 ||
-          (n1.split(" ")[0] === n2.split(" ")[0] &&
-           n1.split(" ")[n1.split(" ").length - 1] === n2.split(" ")[n2.split(" ").length - 1]);
-      });
-      if (!match?.total) continue;
-      const nR = Math.max(...prev.players.map(q => q.rounds.length));
-      const fieldSize = prev.players.filter(q => q.rounds.length === nR).length;
-      evo.set(p.name, {
-        prevTotal: match.total,
-        delta: p.total - match.total,
-        from: prev.category,
-        to: cur.category,
-        pill: prev.category === cur.category ? "EQ" : "UP",
-        prevPos: match.pos,
-        fieldSize,
-      });
-      break;
-    }
-  }
-  return evo;
-}
+/* ── Evo: presença no ano anterior (via hook unificado) ─────── */
 
 /* AccLB removido — agora usa AccumulatedLB da FPGPage */
 
@@ -280,11 +247,9 @@ function entryToTournament(entry: Entry): FPGTournament {
   };
 }
 
-const EMPTY_ESC_LOOKUP = new Map<string, string>();
-const EMPTY_PLAYERS_DB = {} as Record<string, any>;
 
 /** Opções para ocultar colunas FPG-específicas e adaptar ao contexto Doral */
-function doralScorecardOptions(entry: Entry, nameDecorator?: ScorecardOptions["nameDecorator"]): ScorecardOptions {
+function doralScorecardOptions(entry: Entry): ScorecardOptions {
   // Boys 8-9 (e Girls 7 & Under, etc.) começam no buraco 10 (back-9)
   const startHole = entry.players[0]?.rounds[0]?.startingHole === 10 ? 10 : 1;
   // SD só se esconde quando não há CR/slope
@@ -297,7 +262,6 @@ function doralScorecardOptions(entry: Entry, nameDecorator?: ScorecardOptions["n
     hideTee: true,
     clubLabel: "País",
     startHole,
-    nameDecorator,
   };
 }
 
@@ -328,42 +292,11 @@ function FStats({ entry, ri }: { entry: Entry; ri: number | "all" }) {
   );
 }
 
-/* ── DivView — abas R1 · R2 · Resumo · 📋 Scorecards (idêntico ao FPGPage) ── */
+/* ── DivView — usa IntlTournView (abas R1·R2·Resumo·📋 Scorecards) ── */
 function DivView({ entry, evo }: { entry: Entry; evo?: Map<string, EvoEntry> }) {
   const tournament = useMemo(() => entryToTournament(entry), [entry]);
-  const nR = Math.max(...entry.players.map(p => p.rounds.length), 0);
-  const isMulti = nR > 1;
   const hasEvo = evo && evo.size > 0;
-
-  /** Decorador de nome: adiciona ↗ KidsLink */
-  const nameDecoratorFn: ScorecardOptions["nameDecorator"] = React.useCallback(
-    (name: string, content: React.ReactNode) => (
-      <span className="inline-flex items-center">{content}<KidsLink nome={name} /></span>
-    ), []);
-  const renderNameFn = React.useCallback(
-    (row: MultiRoundRow) => (
-      <span className="fw-700 inline-flex items-center">
-        {row.countryFlag} {row.name}<KidsLink nome={row.name} />
-      </span>
-    ), []);
-
-  const scOptions = useMemo(() => doralScorecardOptions(entry, nameDecoratorFn), [entry, nameDecoratorFn]);
-
-  // expandMultiRound produz: [R1_tourn, R2_tourn, ..., Resumo_tourn]
-  const expanded = useMemo(() => expandMultiRound(tournament), [tournament]);
-
-  // Tabs: R1 · R2 · Resumo · 📋 Scorecards  (como FPGPage TournamentDetail)
-  const COMBINED_TAB = "📋 Scorecards";
-  const tabs = useMemo(() => {
-    if (!isMulti) return ["Scorecard"];
-    return [...expanded.map((t: any) => t._roundLabel || "?"), COMBINED_TAB];
-  }, [isMulti, expanded]);
-
-  const [tab, setTab] = useState(0);
-
-  const curT       = isMulti ? expanded[Math.min(tab, expanded.length - 1)] : tournament;
-  const isAcc      = isMulti && !!(curT as any)?._isTotal;
-  const isCombined = isMulti && tabs[tab] === COMBINED_TAB;
+  const scOptions = useMemo(() => doralScorecardOptions(entry), [entry]);
 
   const prevYear = entry.year - 1;
   type RowWithPos = MultiRoundRow & { _pos?: number | null };
@@ -375,7 +308,7 @@ function DivView({ entry, evo }: { entry: Entry; evo?: Map<string, EvoEntry> }) 
       cell: (row: RowWithPos) => {
         const ev = evo!.get(row.name);
         return ev
-          ? <span className="inline-sep">{ev.prevTotal}</span>
+          ? <span className="inline-sep">{ev.otherValue}</span>
           : <span className="c-muted inline-sep">–</span>;
       },
     },
@@ -403,26 +336,13 @@ function DivView({ entry, evo }: { entry: Entry; evo?: Map<string, EvoEntry> }) 
   ] : undefined;
 
   return (
-    <div>
-      {/* Tabs tab-under como FPGPage */}
-      {isMulti && (
-        <div className="tab-bar">
-          {tabs.map((label, i) => (
-            <button key={i} className={`tab-under${tab === i ? " active" : ""}`} onClick={() => setTab(i)}>{label}</button>
-          ))}
-        </div>
-      )}
-
-      {hasEvo && isAcc && <EvoSummary entry={entry} evo={evo!} />}
-
-      {/* Conteúdo — mesma lógica que TournamentDetail de FPGPage */}
-      {isCombined
-        ? <AllRoundsScorecardLB tournament={tournament} escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB} options={scOptions} />
-        : isAcc
-          ? <AccumulatedLB tournament={curT} nRounds={nR} escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB} showCols={{ esc: false, fed: false, tee: false }} extraColumns={evoCols} renderName={renderNameFn} />
-          : <ScorecardLB tournament={curT} escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB} siLabel="m" options={scOptions} />
-      }
-    </div>
+    <IntlTournView
+      tournament={tournament}
+      scOptions={scOptions}
+      evoCols={evoCols}
+      accHeader={hasEvo ? <EvoSummary entry={entry} evo={evo!} /> : undefined}
+      siLabel="m"
+    />
   );
 }
 
@@ -447,7 +367,7 @@ function Content() {
   const [entries, setEntries] = useState<Entry[]>([]);
   const [loading, setLoading] = useState(true);
   const [ti, setTi] = useState(0);
-  const [autoRivals, setAutoRivals] = useState<AutoRivalPlayer[]>([]);
+  const { kidsMap } = useKidsLinkMap();
   const md = useMasterDetail();
 
   useEffect(() => {
@@ -467,31 +387,42 @@ function Content() {
       setEntries(all);
       setLoading(false);
     });
-    // Carregar autoRivals em background para KidsLinks
-    buildAutoRivals(undefined, {
-      onUpdate: (rivals) => setAutoRivals(rivals),
-    }).catch(() => {});
   }, []);
 
-  // Mapa normName → KidsLinkEntry para o contexto ↗
-  const kidsMap = useMemo(() => {
-    const m = new Map<string, KidsLinkEntry>();
-    for (const r of autoRivals) m.set(normNameAuto(r.n), { n: r.n, memberId: (r as any).memberId });
-    return m;
-  }, [autoRivals]);
+  // Hook deve ser chamado antes dos early returns (regras dos hooks)
+  const safeIdx = entries.length ? Math.min(ti, entries.length - 1) : 0;
+  const cur = entries.length ? entries[safeIdx] : null;
+
+  const evoInput = useMemo((): EvoInput | null => {
+    if (!cur) return null;
+    const prevEntries = entries.filter(e => e.year === cur.year - 1 && e.category === cur.category);
+    if (!prevEntries.length) return null;
+    const nR = Math.max(...cur.players.map(p => p.rounds.length), 0);
+    return {
+      currentPlayers: cur.players
+        .filter(p => p.total != null && p.rounds.length === nR)
+        .map(p => ({ name: p.name, value: p.total!, category: cur.category, pos: p.pos })),
+      referencePlayers: prevEntries.flatMap(e => {
+        const eNR = Math.max(...e.players.map(p => p.rounds.length), 0);
+        return e.players
+          .filter(p => p.total != null && p.rounds.length === eNR)
+          .map(p => ({ name: p.name, value: p.total!, category: e.category, pos: p.pos }));
+      }),
+      referenceYear: String(cur.year - 1),
+      includeFieldSize: true,
+      isManuel: isM,
+    };
+  }, [cur, entries]);
+
+  const { evoMap: evo, evoYear, manuelEvo } = useEvoComparison(evoInput);
 
   if (loading) return <LoadingState />;
-  if (!entries.length) return (
+  if (!entries.length || !cur) return (
     <div className="center-msg muted">
       Nenhum ficheiro de dados encontrado.<br />
       <span className="fs-10">Coloca <code>ftm_doral_2025.json</code> em <code>public/data/</code></span>
     </div>
   );
-
-  // Selecção válida
-  const safeIdx = Math.min(ti, entries.length - 1);
-  const cur = entries[safeIdx];
-  const evo = cur ? buildEvo(cur, entries) : undefined;
 
   // Agrupar por ano para o sidebar
   const years = [...new Set(entries.map(e => e.year))].sort((a, b) => b - a);
@@ -583,22 +514,19 @@ function Content() {
                 sub={<><span className="muted">📍 Doral Golf Resort — {cur.divisionName}</span><ExtLink href={cur.sourceUrl} className="tourn-ext-link" style={{ marginLeft:8 }}>🔗 Leaderboard oficial</ExtLink></>}
               />
               <DivView entry={cur} evo={evo} />
-              {(() => {
-                const manuelEvo = evo?.get([...evo.keys()].find(k => isM(k)) ?? "");
-                if (!manuelEvo) return null;
-                return (
+              {manuelEvo && (
                   <div className="card" style={{ background:"var(--bg-success-subtle)", border:"1px solid var(--good)", marginTop:8 }}>
                     <div className="h-md fs-14">🇵🇹 Manuel — Evolução Doral</div>
                     <div style={{ display:"flex", gap:16, flexWrap:"wrap", alignItems:"center" }}>
                       <div style={{ textAlign:"center", flex:"1 1 100px" }}>
-                        <div className="muted fs-10">{cur.year - 1} ({manuelEvo.from})</div>
-                        <div className="fw-900" style={{ fontSize:24 }}>{manuelEvo.prevTotal}</div>
+                        <div className="muted fs-10">{evoYear} ({manuelEvo.from})</div>
+                        <div className="fw-900" style={{ fontSize:24 }}>{manuelEvo.otherValue}</div>
                       </div>
                       <div style={{ fontSize:24, color:"var(--good-dark)" }}>→</div>
                       <div style={{ textAlign:"center", flex:"1 1 100px" }}>
                         <div className="muted fs-10">{cur.year} ({manuelEvo.to})</div>
                         <div className="fw-900" style={{ fontSize:24, color: manuelEvo.delta < 0 ? "var(--good-dark)" : "var(--text-3)" }}>
-                          {manuelEvo.prevTotal + manuelEvo.delta}
+                          {manuelEvo.otherValue + manuelEvo.delta}
                         </div>
                       </div>
                       <div style={{ textAlign:"center", flex:"1 1 80px" }}>
@@ -610,8 +538,7 @@ function Content() {
                       </div>
                     </div>
                   </div>
-                );
-              })()}
+              )}
             </>
           ) : (
             <div className="center-msg muted">Dados não disponíveis</div>
@@ -625,7 +552,7 @@ function Content() {
 }
 
 export default function FTMDoralPage() {
-  const [unlocked, setUnlocked] = useState(() => isCalUnlocked());
-  if (!unlocked) return <PasswordGate onUnlock={() => setUnlocked(true)} />;
+  const { unlocked, unlock } = usePasswordGate();
+  if (!unlocked) return <PasswordGate onUnlock={unlock} />;
   return <Content />;
 }

@@ -1,5 +1,5 @@
 // @refresh reset
-import { MRRound, MultiRoundRow, PlayerFilter, EMPTY_FILTER, ExtraColumn } from "./multiRoundTypes";
+import { MultiRoundRow, PlayerFilter, EMPTY_FILTER, ExtraColumn } from "./multiRoundTypes";
 import { fmtHcp, medal } from "../utils/format";
 import { useSort } from "../hooks/useSort";
 import FilterChip from "../ui/FilterChip";

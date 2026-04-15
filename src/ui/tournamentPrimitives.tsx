@@ -110,6 +110,10 @@ export interface PlayersDBEntry {
 }
 export type PlayersDB = Record<string, PlayersDBEntry>;
 
+/** Defaults vazios para leaderboards sem dados FPG (BJGTPage, DORALPage, etc.) */
+export const EMPTY_ESC_LOOKUP = new Map<string, string>();
+export const EMPTY_PLAYERS_DB: PlayersDB = {} as PlayersDB;
+
 export function TournPName({
   name,
   fed,
