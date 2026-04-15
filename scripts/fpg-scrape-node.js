@@ -10,11 +10,14 @@
  *   2. api/.datagolf-cookies.json (dev local)
  *
  * Uso:
- *   node scripts/fpg-scrape-node.js 52884                    # um jogador
+ *   node scripts/fpg-scrape-node.js 52884                    # um jogador (só rondas novas)
  *   node scripts/fpg-scrape-node.js 52884 47078 59252        # vários
  *   node scripts/fpg-scrape-node.js --all                    # todos de players.json
- *   node scripts/fpg-scrape-node.js --new-only 52884         # só scorecards novos
+ *   node scripts/fpg-scrape-node.js --full 52884             # re-fetch de tudo (lento)
  *   node scripts/fpg-scrape-node.js --concurrency 4 --all    # 4 jogadores em paralelo
+ *
+ * Por DEFAULT só descarrega scorecards de rondas novas (rápido).
+ * Use --full / --full-rebuild para forçar re-download completo.
  *
  * Output por jogador (em output/{fed}/):
  *   whs.json          — lista de rondas (formato my.fpg.pt)
@@ -41,7 +44,11 @@ const argv = process.argv.slice(2);
 const hasFlag = f => argv.includes(f);
 const getArg = (f, def) => { const i = argv.indexOf(f); return i >= 0 ? argv[i + 1] : def; };
 const ALL = hasFlag("--all");
-const NEW_ONLY = hasFlag("--new-only");
+// Por DEFAULT só descarregamos rondas novas (rápido, comportamento normal).
+// --full-rebuild força re-fetch de TUDO (lento, ~12s por jogador, usar só se
+// suspeitamos de scorecards corrompidos ou queremos re-snapshot completo).
+const FULL_REBUILD = hasFlag("--full-rebuild") || hasFlag("--full");
+const NEW_ONLY = !FULL_REBUILD;
 const CONCURRENCY = Number(getArg("--concurrency", 2));
 
 // Flags que consomem valor — para não apanhar esses valores como feds
