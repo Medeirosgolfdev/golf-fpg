@@ -20,9 +20,11 @@
  *   1  → erro real
  *
  * Uso:
- *   node scripts/scrape-drive-node.js                        # ano corrente
- *   node scripts/scrape-drive-node.js --year-from 2022       # mais histórico
- *   node scripts/scrape-drive-node.js --force                # ignorar cache de ficheiros
+ *   node scripts/scrape-drive-node.js                        # mês corrente + anterior (rápido — para cron diário)
+ *   node scripts/scrape-drive-node.js --months-back 0        # SÓ mês corrente
+ *   node scripts/scrape-drive-node.js --months-back 6        # últimos 6 meses
+ *   node scripts/scrape-drive-node.js --months-back 99       # ano inteiro (histórico completo)
+ *   node scripts/scrape-drive-node.js --year-from 2022       # múltiplos anos (combina com months-back)
  */
 
 "use strict";
@@ -47,8 +49,26 @@ const hasFlag = flag => argv.includes(flag);
 
 const YEAR_FROM = Number(getArg("--year-from", new Date().getFullYear()));
 const YEAR_TO   = new Date().getFullYear();
+// MONTHS_BACK: filtra torneios apenas do mês corrente + N meses anteriores.
+// Default 1 = mês corrente e o anterior (suficiente para a corrida de fim-de-semana
+// detectar torneios que mudam de mês). Usar 0 para só mês corrente. Usar 99 para
+// histórico completo do ano (default antigo).
+const MONTHS_BACK = Number(getArg("--months-back", 1));
 const FORCE     = hasFlag("--force");
 const DELAY     = 100;   // ms entre pedidos
+
+// Calcular meses permitidos (formato "YYYY-MM")
+function getAllowedMonths() {
+  if (MONTHS_BACK >= 99) return null;  // null = sem filtro de mês
+  const allowed = new Set();
+  const now = new Date();
+  for (let i = 0; i <= MONTHS_BACK; i++) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    allowed.add(d.toISOString().slice(0, 7));
+  }
+  return allowed;
+}
+const ALLOWED_MONTHS = getAllowedMonths();
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
@@ -120,7 +140,13 @@ const getMonthKey = r => {
 };
 const isInScope = r => {
   const y = getYear(r);
-  return y >= YEAR_FROM && y <= YEAR_TO;
+  if (y < YEAR_FROM || y > YEAR_TO) return false;
+  // Filtro adicional: se MONTHS_BACK definido, só meses recentes
+  if (ALLOWED_MONTHS) {
+    const m = getMonthKey(r);
+    if (!ALLOWED_MONTHS.has(m)) return false;
+  }
+  return true;
 };
 
 async function tournSearchPage(TournName, startIndex) {
