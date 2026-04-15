@@ -81,12 +81,18 @@ async function fpgPost(pathname, bodyObj, queryString = "") {
   const res = await fetch(url, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json; charset=UTF-8",
-      "X-Requested-With": "XMLHttpRequest",
-      "Accept": "application/json, text/javascript, */*; q=0.01",
-      "Origin": "https://my.fpg.pt",
-      "Referer": "https://my.fpg.pt/Home/PlayerWHS.aspx?no=52884",
+      // Réplica completa dos headers que o Firefox envia (cURL real do user)
       "User-Agent": UA,
+      "Accept": "application/json, text/javascript, */*; q=0.01",
+      "Accept-Language": "pt-PT,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+      "Content-Type": "application/json; charset=utf-8",
+      "X-Requested-With": "XMLHttpRequest",
+      "Origin": "https://my.fpg.pt",
+      "DNT": "1",
+      "Referer": "https://my.fpg.pt/Home/PlayerWHS.aspx?no=52884",
+      "Sec-Fetch-Dest": "empty",
+      "Sec-Fetch-Mode": "cors",
+      "Sec-Fetch-Site": "same-origin",
       "Cookie": COOKIE,
     },
     body: JSON.stringify(bodyObj),
@@ -115,16 +121,32 @@ async function fetchWhsAll(fed) {
   return all;
 }
 
-async function fetchScorecard(scoreId) {
+async function fetchScorecard(round) {
+  // CRÍTICO: o endpoint ScoreCard quer o campo `score_id` (~4244840),
+  // NÃO o campo `id` (~2875259, que é o ID interno da entry WHS).
+  // Usar o errado retorna "An error occurred while processing this request"
+  // silenciosamente. Descoberto 2026-04-15.
+  const scoreId = round.score_id;
+  if (!scoreId) {
+    console.error(`  ⚠ round sem score_id (id=${round.id}) — saltar`);
+    return null;
+  }
+  const scoringType = round.scoring_type_id ?? round.scoringtype ?? 1;
+  const competitionType = round.competition_type_id ?? round.competitiontype ?? 10;
   try {
-    // my.fpg.pt exige pp=N tanto na URL como no body (como o WHS list)
-    const qs = `score_id=${scoreId}&pp=N`;
-    const body = { score_id: String(scoreId), pp: "N", scoringtype: "1", competitiontype: "10" };
+    // IMPORTANTE (descoberto 2026-04-15 via cURL do Firefox): my.fpg.pt exige
+    // que scoringtype + competitiontype estejam TAMBÉM na URL (não chega no body).
+    const qs = `score_id=${scoreId}&scoringtype=${scoringType}&competitiontype=${competitionType}&pp=N`;
+    const body = {
+      score_id: String(scoreId),
+      scoringtype: String(scoringType),
+      competitiontype: String(competitionType),
+      pp: "N",
+    };
     const d = await fpgPost("PlayerWHS.aspx/ScoreCard", body, qs);
     return (d.Records && d.Records[0]) || null;
   } catch (e) {
-    // Já não é silencioso — os erros aparecem no stderr para debug
-    console.error(`  ⚠ scorecard ${scoreId} falhou: ${e.message}`);
+    console.error(`  ⚠ scorecard ${scoreId} (scoringType=${scoringType}, competitionType=${competitionType}) falhou: ${e.message}`);
     return null;
   }
 }
@@ -145,24 +167,27 @@ async function processPlayer(fed) {
   const scFile  = path.join(dir, "scorecards.json");
   const sumFile = path.join(dir, "summary.json");
 
-  // 1) Lista de rondas
+  // 1) Lista de rondas — chave de identificação é o campo `id` do WHS entry
+  //    (sempre único; pode haver múltiplas WHS entries para o mesmo score_id
+  //    se houver correções/recálculos)
   const rounds = await fetchWhsAll(fed);
   const existingRounds = readJsonIfExists(whsFile) || [];
-  const existingIds = new Set(existingRounds.map(r => r.id || r.score_id));
-  const newRounds = rounds.filter(r => !existingIds.has(r.id || r.score_id));
+  const existingIds = new Set(existingRounds.map(r => r.id));
+  const newRounds = rounds.filter(r => !existingIds.has(r.id));
 
   // 2) Scorecards (dos novos se NEW_ONLY, senão de todos os em falta)
+  //    Indexamos por `score_id` (o ID do scorecard, NÃO o `id` da WHS entry)
   const existingSC = readJsonIfExists(scFile) || {};
-  const toFetch = NEW_ONLY
-    ? newRounds.map(r => r.id || r.score_id)
-    : rounds.filter(r => !existingSC[String(r.id || r.score_id)]).map(r => r.id || r.score_id);
+  const roundsToFetch = NEW_ONLY
+    ? newRounds
+    : rounds.filter(r => r.score_id && !existingSC[String(r.score_id)]);
 
   const scorecards = { ...existingSC };
   let newScorecards = 0;
-  for (const scoreId of toFetch) {
-    if (!scoreId) continue;
-    const sc = await fetchScorecard(scoreId);
-    if (sc) { scorecards[String(scoreId)] = sc; newScorecards++; }
+  for (const round of roundsToFetch) {
+    if (!round.score_id) continue;
+    const sc = await fetchScorecard(round);
+    if (sc) { scorecards[String(round.score_id)] = sc; newScorecards++; }
     await new Promise(r => setTimeout(r, 80)); // throttle
   }
 
