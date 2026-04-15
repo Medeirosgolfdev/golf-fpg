@@ -532,4 +532,23 @@ function Content() {
                   </div>
                   <div className="ta-c" style={{ flex: "1 1 80px" }}>
                     <div className="muted fs-10">Δ ±Par</div>
-                    <div className="fw-900" style={{ fontSize: 24, color: manuelEvo.delta < 0 ? "var(--good-dark)" : SC.danger }}>{m
+                    <div className="fw-900" style={{ fontSize: 24, color: manuelEvo.delta < 0 ? "var(--good-dark)" : SC.danger }}>{manuelEvo.delta > 0 ? "+" : ""}{manuelEvo.delta}</div>
+                    <div className="muted fs-10">vs par (3R)</div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </>) : <div className="center-msg muted">Dados não disponíveis</div>}
+        </div>
+
+      </div>
+    </div>
+    </KidsLinkCtx.Provider>
+  );
+}
+
+export default function BJGTPage() {
+  const { unlocked, unlock } = usePasswordGate();
+  if (!unlocked) return <PasswordGate onUnlock={unlock} />;
+  return <Content />;
+}
