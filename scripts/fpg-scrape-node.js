@@ -43,7 +43,16 @@ const getArg = (f, def) => { const i = argv.indexOf(f); return i >= 0 ? argv[i +
 const ALL = hasFlag("--all");
 const NEW_ONLY = hasFlag("--new-only");
 const CONCURRENCY = Number(getArg("--concurrency", 2));
-const explicitFeds = argv.filter(a => /^\d+$/.test(a));
+
+// Flags que consomem valor — para não apanhar esses valores como feds
+const VALUE_FLAGS = new Set(["--concurrency", "--output-dir"]);
+const explicitFeds = [];
+for (let i = 0; i < argv.length; i++) {
+  const a = argv[i];
+  if (VALUE_FLAGS.has(a)) { i++; continue; }  // saltar valor do flag
+  if (a.startsWith("--")) continue;            // saltar outros flags
+  if (/^\d+$/.test(a)) explicitFeds.push(a);
+}
 
 // ─── Cores ─────────────────────────────────────────────────
 const G = "\x1b[32m", R = "\x1b[31m", Y = "\x1b[33m", C = "\x1b[36m", X = "\x1b[0m";
@@ -108,11 +117,16 @@ async function fetchWhsAll(fed) {
 
 async function fetchScorecard(scoreId) {
   try {
-    const qs = `score_id=${scoreId}`;
-    const body = { score_id: String(scoreId), scoringtype: "1", competitiontype: "10" };
+    // my.fpg.pt exige pp=N tanto na URL como no body (como o WHS list)
+    const qs = `score_id=${scoreId}&pp=N`;
+    const body = { score_id: String(scoreId), pp: "N", scoringtype: "1", competitiontype: "10" };
     const d = await fpgPost("PlayerWHS.aspx/ScoreCard", body, qs);
     return (d.Records && d.Records[0]) || null;
-  } catch { return null; }
+  } catch (e) {
+    // Já não é silencioso — os erros aparecem no stderr para debug
+    console.error(`  ⚠ scorecard ${scoreId} falhou: ${e.message}`);
+    return null;
+  }
 }
 
 // ─── IO helpers ───────────────────────────────────────────
