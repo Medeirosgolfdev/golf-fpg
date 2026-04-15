@@ -1,36 +1,40 @@
-name: Atualizar Dados Golf FPG
+name: Atualizar Dados Golf FPG (cookies-based)
+
+# Corre:
+#  - Automaticamente Sábado e Domingo às 21:00 UTC (≈22:00 Lisboa)
+#  - A pedido (botão "Run workflow" no GitHub)
+#
+# Requer GitHub Secret:
+#   FPG_COOKIES — cookie header completo capturado do Firefox/Chrome 90
+#                 formato: "_ga=...; ASP.NET_SessionId=...; .AspNet.ApplicationCookie=...; ..."
+#                 Refrescar ~1×/semana
 
 on:
   workflow_dispatch:
     inputs:
       fed_codes:
-        description: 'Números de federado (separados por espaço). Deixa vazio para TODOS.'
+        description: 'Fed codes separados por espaço (vazio = TODOS de players.json)'
         required: false
         default: ''
-      mode:
-        description: 'Modo de execução'
-        required: true
-        default: '--refresh'
+      new_only:
+        description: 'Só descarregar scorecards novos?'
+        required: false
+        default: 'true'
         type: choice
-        options:
-          - '--refresh'
-          - '--force'
-          - '--skip-download'
+        options: ['true', 'false']
+  schedule:
+    - cron: '0 21 * * 6,0'   # Sáb e Dom às 21:00 UTC
 
-  # schedule:
-  #   - cron: '0 7 * * *'
-
-# ── Permissão de escrita no repositório ──────────────────────────
 permissions:
   contents: write
 
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
 
     steps:
-      - name: Checkout repositório
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Node.js
@@ -39,43 +43,52 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Instalar dependências
-        run: |
-          npm ci
-          npx playwright install --with-deps chromium
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Determinar federados
+      - name: Determinar fed codes
         id: feds
         run: |
           if [ -n "${{ github.event.inputs.fed_codes }}" ]; then
+            echo "mode=explicit" >> $GITHUB_OUTPUT
             echo "codes=${{ github.event.inputs.fed_codes }}" >> $GITHUB_OUTPUT
           else
-            codes=$(node -e "
-              const p = require('./players.json');
-              console.log(Object.keys(p).join(' '));
-            ")
-            echo "codes=$codes" >> $GITHUB_OUTPUT
+            echo "mode=all" >> $GITHUB_OUTPUT
+            echo "codes=--all" >> $GITHUB_OUTPUT
           fi
 
-      - name: Correr pipeline de scraping
+      - name: Correr scraper FPG (Node puro, sem Playwright)
+        id: scrape
         run: |
-          MODE="${{ github.event.inputs.mode || '--refresh' }}"
-          FEDS="${{ steps.feds.outputs.codes }}"
-          echo "Modo: $MODE"
-          echo "Federados: $(echo $FEDS | wc -w) jogadores"
-          node golf-all.js $MODE $FEDS
+          set +e
+          NEW_ONLY_FLAG=""
+          if [ "${{ github.event.inputs.new_only || 'true' }}" = "true" ]; then
+            NEW_ONLY_FLAG="--new-only"
+          fi
+          node scripts/fpg-scrape-node.js ${{ steps.feds.outputs.codes }} $NEW_ONLY_FLAG --concurrency 3
+          EXIT=$?
+          echo "exit_code=$EXIT" >> $GITHUB_OUTPUT
+          if [ "$EXIT" = "1" ]; then exit 1; fi  # erro real
+          exit 0
         env:
-          FPG_USERNAME: ${{ secrets.FPG_USERNAME }}
-          FPG_PASSWORD: ${{ secrets.FPG_PASSWORD }}
+          FPG_COOKIES: ${{ secrets.FPG_COOKIES }}
 
-      - name: Commit e push
+      - name: Regenerar data.json consolidados (pipeline)
+        if: steps.scrape.outputs.exit_code == '0'
         run: |
-          git config user.name "GitHub Actions Bot"
-          git config user.email "actions@github.com"
-          git add output/ players.json public/data/players.json
+          node pipeline.js --skip-import --all || echo "pipeline.js falhou — continuar"
+
+      - name: Commit e push (se houve novidades)
+        if: steps.scrape.outputs.exit_code == '0'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add output/ public/data/*/analysis/ public/data/players.json players.json 2>/dev/null || true
           if git diff --staged --quiet; then
-            echo "Sem alterações para commit."
-          else
-            git commit -m "📊 Dados atualizados $(date +'%Y-%m-%d %H:%M')"
-            git push
+            echo "Nada em staging — sem commit."
+            exit 0
           fi
+          DATE=$(date +'%Y-%m-%d %H:%M')
+          git commit -m "data: update WHS+scorecards ${DATE}"
+          git push
+          echo "✓ Commit feito"
