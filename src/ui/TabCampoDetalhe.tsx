@@ -1,0 +1,317 @@
+import React, { useContext } from "react";
+import { isoDate, fmtDate, displayName } from "../utils/format";
+import { flag } from "../utils/flagUtils";
+import { normName as normNameAuto, type AutoRivalPlayer } from "../data/KIDSdataLoader";
+import { escalaoManuelParaData, isManuelByName as isManuel } from "../constants/manuel";
+import type { Torneio } from "./uskidsTypes";
+import { sortEscaloes, ESCALOES_DESTAQUE_USKIDS } from "./uskidsTypes";
+import {
+  LINKS_EXTRA, REGIONAL_CHAMPIONSHIPS, TEES_LOOKUP, ArMapCtx,
+  badgeVagas, fmtTs, diasAte, isTerminado, seriesBase, playerSeriesResult
+} from "./USKIDSPageHelpers";
+
+/** Devolve o elemento ↗ com link para a página Kids do jogador.
+ *  Usa memberId quando disponível (resolve antes dos 45 ficheiros carregarem). */
+export function KidsLink({ nome }: { nome: string }) {
+  const arMap = useContext(ArMapCtx);
+  const arEntry = arMap.get(normNameAuto(nome));
+  if (!arEntry) return null;
+  const memberId = (arEntry as any).memberId as string | undefined;
+  const hash = memberId ?? encodeURIComponent(arEntry.n);
+  return (
+    <a
+      href="/kids"
+      onClick={e => { e.preventDefault(); window.open(`/kids#${hash}`, "_blank"); }}
+      title="Ver em Kids"
+      style={{ fontWeight: 800, color: "var(--color-good-dark)", fontSize: 13,
+        cursor: "pointer", textDecoration: "none", flexShrink: 0, marginLeft: 4 }}>
+      ↗
+    </a>
+  );
+}
+
+// ─────────────────────────────────────────────
+// TAB CAMPO
+// ─────────────────────────────────────────────
+export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
+  const arMap = useContext(ArMapCtx);
+  const escalaoM = escalaoManuelParaData(t.date_inicio);
+  const sBase = seriesBase(t.name);
+  const currentYear = parseInt((isoDate(t.date_inicio) || `${new Date().getFullYear()}-01-01`).slice(0, 4));
+  const b12     = t.escaloes.find(e => e.nome === escalaoM);
+  const ptTotal = t.escaloes.flatMap(e => e.jogadores ?? []).filter(j => j.pais === "PT");
+  const dias    = diasAte(t.date_inicio);
+  const urgente = b12 && b12.vagas <= 3 && b12.vagas > 0;
+
+  return (
+    <div>
+      {/* ── Header — padrão detail-header idêntico a FPGPage/DrivePage ── */}
+      <div className="detail-header">
+        <div className="detail-header-top">
+          <h2 className="detail-title">
+            {t.emoji && <span style={{ marginRight: 6 }}>{t.emoji}</span>}
+            {t.name}
+          </h2>
+          <div style={{ display:"flex", gap:6, alignItems:"center", flexWrap:"wrap" }}>
+            {REGIONAL_CHAMPIONSHIPS[t.t] && (
+              <span className="p p-sm" style={{
+                background:"var(--bg-pink)", color:"var(--color-purple)", borderColor:"var(--border-purple)",
+                fontWeight:800, letterSpacing:"0.04em",
+              }}>⭐ REGIONAL INVITATION</span>
+            )}
+            {dias >= 0 && dias <= 14 && (
+              <span className="p p-sm" style={{ background:"var(--chart-5)", color:"#fff", borderColor:"var(--chart-5)" }}>
+                daqui a {dias}d
+              </span>
+            )}
+            {dias < 0 && !isTerminado(t.date_fim, t.date_inicio) && (
+              <span className="p p-sm" style={{ background:"var(--color-good)", color:"#fff", borderColor:"var(--color-good)" }}>
+                ▶ em curso
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Sub-linha: data · campo · rondas · fee · tcode */}
+        <div className="detail-sub">
+          <span className="muted">
+            📅 {fmtDate(t.date_inicio)}{t.date_fim && t.date_fim !== t.date_inicio ? ` → ${fmtDate(t.date_fim)}` : ""}
+          </span>
+          {t.campo && <span className="muted">📍 {t.campo}</span>}
+          {t.rondas && <span className="chip">{t.rondas} rondas</span>}
+          {t.fee_18 && <span className="chip">💵 {t.fee_18}</span>}
+          <span className="muted fs-11" style={{ userSelect:"all", cursor:"text", opacity:.6 }}>t={t.t}</span>
+        </div>
+
+        {/* KPIs de inscrição */}
+        {!t.erro && !t.sem_flights && (
+          <div style={{ display:"flex", gap:8, flexWrap:"wrap", marginTop:8 }}>
+            <span className="chip fw-700 fs-13" style={{ background:"var(--color-good-dark)", color:"#fff", padding:"3px 12px" }}>
+              {t.total_inscritos}/{t.total_maximo} inscritos
+            </span>
+            {b12 && (() => {
+              const bd = badgeVagas(b12.vagas, b12.maximo);
+              return bd ? (
+                <span className="chip fw-700 fs-13" style={{
+                  background: urgente ? bd.bg : "var(--bg-hover)",
+                  color: urgente ? bd.cor : "var(--text-2)",
+                  border:`1px solid ${bd.bg}`, padding:"3px 12px",
+                }}>
+                  ★ {escalaoM}: {b12.inscritos}/{b12.maximo}
+                  <span style={{ marginLeft:5, opacity:.8 }}>({bd.label})</span>
+                </span>
+              ) : null;
+            })()}
+          </div>
+        )}
+
+        {/* Alertas */}
+        {t.sem_flights && (
+          <div className="notice" style={{ marginTop:10 }}>⏳ Flights ainda não publicados</div>
+        )}
+        {t.erro && (
+          <div className="notice-error" style={{ marginTop:10 }}>⚠️ {t.erro}</div>
+        )}
+
+        {/* Links */}
+        <div style={{ display:"flex", gap:6, flexWrap:"wrap", marginTop:10 }}>
+          {[
+            { href:`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=field&fmt=nohead&ax=2739&t=${t.t}`, label:"📋 Inscritos" },
+            { href:`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${t.t}`, label:"🏆 Resultados ↗" },
+          ].map(l => (
+            <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer"
+              className="fs-12 fw-600" style={{ padding:"3px 10px", borderRadius:6,
+                background:"var(--bg-muted)", color:"var(--accent-text)", border:"1px solid var(--border)", textDecoration:"none" }}>
+              {l.label}
+            </a>
+          ))}
+          {(t.url_uskids || (LINKS_EXTRA[t.t] ?? []).find(l => l.label === "USKids ↗")?.url) && (
+            <a href={t.url_uskids ?? (LINKS_EXTRA[t.t] ?? []).find(l => l.label === "USKids ↗")!.url}
+              target="_blank" rel="noopener noreferrer"
+              className="fs-12 fw-600" style={{ padding:"3px 10px", borderRadius:6,
+                background:"var(--bg-muted)", color:"var(--accent-text)", border:"1px solid var(--border)", textDecoration:"none" }}>
+              USKids ↗
+            </a>
+          )}
+          {(LINKS_EXTRA[t.t] ?? []).filter(l => l.label !== "USKids ↗").map((l, i) => (
+            <a key={i} href={l.url} target="_blank" rel="noopener noreferrer"
+              className="fs-12 fw-600" style={{ padding:"3px 10px", borderRadius:6,
+                background:"var(--bg-muted)", color:"var(--accent-text)", border:"1px solid var(--border)", textDecoration:"none" }}>
+              {l.label}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {t.erro || t.sem_flights ? null : (
+        <>
+          {/* ── Grid de escalões ── */}
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(230px,1fr))", gap:10, marginBottom:20 }}>
+            {sortEscaloes(t.escaloes).map(e => {
+              const bd  = badgeVagas(e.vagas, e.maximo);
+              const dst = ESCALOES_DESTAQUE_USKIDS.has(e.nome);
+              const man = e.nome === escalaoM;
+              const novos7d = (e.jogadores || []).filter(j => j.firstSeen && (Date.now() - new Date(j.firstSeen).getTime()) < 7 * 86400_000).length;
+              return (
+                <div key={e.age_group} className="card" style={{
+                  background: man ? "var(--accent-light)" : dst ? "var(--bg-card)" : "var(--bg-card)",
+                  border: `1.5px solid ${man ? "var(--accent)" : dst ? "var(--border)" : "var(--border-light)"}`,
+                  padding:"12px 14px",
+                  boxShadow: man ? "0 0 0 2px var(--accent-alpha-10)" : undefined,
+                }}>
+                  {/* Cabeçalho do card */}
+                  <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:8 }}>
+                    <div>
+                      <div className="fs-13 fw-700" style={{ color: man ? "var(--accent)" : dst ? "var(--text)" : "var(--text-2)" }}>
+                        {man && <span style={{ marginRight:4 }}>★</span>}{e.nome}
+                      </div>
+                      <div className="fs-11 c-text-3" style={{ marginTop:1 }}>{e.holes} buracos</div>
+                    </div>
+                    <div style={{ textAlign:"right" }}>
+                      <div className="fw-800" style={{ fontSize:15, color: man ? "var(--accent)" : "var(--text)" }}>
+                        {e.inscritos}<span className="fs-11 fw-400 c-text-3">/{e.maximo}</span>
+                      </div>
+                      {bd && (
+                        <span className="fs-11 fw-700" style={{ background:bd.bg, color:bd.cor, padding:"1px 6px", borderRadius:5 }}>
+                          {bd.label}
+                        </span>
+                      )}
+                      {novos7d > 0 && (
+                        <span className="fs-10 fw-700" style={{ background:"var(--score-eagle)", color:"#fff", padding:"1px 5px", borderRadius:5, marginLeft:3 }}
+                          title={`${novos7d} inscrito${novos7d > 1 ? "s" : ""} nos últimos 7 dias`}>
+                          +{novos7d}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  {/* Barra de preenchimento */}
+                  {e.maximo > 0 && (
+                    <div style={{ height:4, borderRadius:2, background:"var(--border)", overflow:"hidden", marginBottom: e.jogadores?.length ? 8 : 0 }}>
+                      <div style={{ height:"100%", borderRadius:2, background: man ? "var(--accent)" : "var(--color-good)", width:`${Math.min(100, Math.round((e.inscritos/e.maximo)*100))}%`, transition:"width .3s" }} />
+                    </div>
+                  )}
+                  {/* Lista de jogadores */}
+                  {e.jogadores && e.jogadores.length > 0 && (
+                    <div style={{ borderTop:"1px solid var(--border-light)", paddingTop:6, display:"flex", flexDirection:"column", gap:2 }}>
+                      {e.jogadores.map((j, i) => {
+                        const isM = isManuel(j.nome);
+                        const arEntry = !isM ? arMap.get(normNameAuto(j.nome)) : undefined;
+                        const nTorn = arEntry ? Object.values(arEntry.r).filter(r => r.tp != null || (r.rd?.length ?? 0) > 0).length : 0;
+                        const daysSinceReg = j.firstSeen ? Math.floor((Date.now() - new Date(j.firstSeen).getTime()) / 86400_000) : null;
+                        const showDaysPill = daysSinceReg != null && daysSinceReg <= 25;
+                        // Resultados nos 2 anos anteriores neste mesmo torneio
+                        const prevResults = arEntry
+                          ? [currentYear - 1, currentYear - 2]
+                              .filter(y => y >= 2020)
+                              .map(y => ({ y, res: playerSeriesResult(arEntry, sBase, y) }))
+                              .filter(x => x.res !== null)
+                          : [];
+                        return (
+                          <div key={i} style={{
+                            display:"flex", justifyContent:"space-between", alignItems:"center",
+                            fontSize: isM ? 13 : 12, fontWeight: isM ? 800 : 400,
+                            padding: isM ? "4px 8px" : "1px 0",
+                            margin: isM ? "2px -14px" : "0",
+                            borderRadius: isM ? 5 : 0,
+                            background: isM ? "var(--accent)" : "transparent",
+                            color: isM ? "#fff" : j.pais === "PT" ? "var(--accent)" : "var(--text)",
+                          }}>
+                            <span style={{ display:"flex", alignItems:"center", gap:2 }}>
+                              {isM ? "★ " : ""}{displayName(j.nome)}
+                              {showDaysPill && !isM && (() => {
+                                const d = daysSinceReg!;
+                                const label = d === 0 ? "hoje" : `${d}d`;
+                                // Degradê: 0d=100%, 10d=60%, 25d=20%
+                                const pct = d <= 10 ? Math.round(100 - d * 4) : Math.round(60 - (d - 10) * 2.7);
+                                const bg = `color-mix(in srgb, var(--score-eagle) ${pct}%, transparent)`;
+                                const fg = pct >= 60 ? "#fff" : "var(--text-2)";
+                                return <span className="fs-10 fw-700" style={{
+                                  background: bg, color: fg,
+                                  border: pct < 60 ? "1px solid color-mix(in srgb, var(--score-eagle) 40%, transparent)" : "none",
+                                  padding: "0 4px", borderRadius: 6, marginLeft: 3, lineHeight: "14px",
+                                }} title={`Inscrito há ${d} dia${d !== 1 ? "s" : ""} (${j.firstSeen?.slice(0,10)})`}>{label}</span>;
+                              })()}
+                              {!isM && <KidsLink nome={j.nome} />}
+                            </span>
+                            <span style={{ display:"flex", alignItems:"center", gap:5 }}>
+                              {/* Resultados anos anteriores */}
+                              {prevResults.map(({ y, res }) => {
+                                const p = res!.p;
+                                const medal = p === 1 ? "🥇" : p === 2 ? "🥈" : p === 3 ? "🥉" : null;
+                                const col = p <= 3 ? "var(--color-warn-dark)" : p <= 10 ? "var(--color-good-dark)" : "var(--text-3)";
+                                return (
+                                  <span key={y} title={`${y}: #${p}${res!.tp != null ? ` (${res!.tp > 0 ? "+" : ""}${res!.tp})` : ""}`}
+                                    className="fs-10 fw-700" style={{ color: col, opacity:.85 }}>
+                                    {medal ?? `#${p}`}
+                                    <span className="fs-10 fw-400" style={{ opacity:.7 }}>'{String(y).slice(2)}</span>
+                                  </span>
+                                );
+                              })}
+                              {nTorn > 0 && (
+                                <span className="fs-10 fw-700 c-text-2" style={{
+                                  background:"var(--bg-muted)", border:"1px solid var(--border)",
+                                  borderRadius:4, padding:"0 4px", lineHeight:"16px",
+                                  display:"inline-block",
+                                }}>
+                                  {nTorn}T
+                                </span>
+                              )}
+                              <span title={j.cidade}>{flag(j.pais)}</span>
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                  {/* Jogadores removidos (desinscritos) */}
+                  {e.removed && e.removed.length > 0 && (
+                    <div style={{ borderTop:"1px dashed var(--border-light)", paddingTop:4, marginTop:4 }}>
+                      <div className="fs-10 fw-600 c-text-3" style={{ marginBottom:2 }}>Desinscritos:</div>
+                      {e.removed.map((n, i) => (
+                        <div key={i} className="fs-11" style={{
+                          display:"flex", alignItems:"center", gap:2,
+                          color:"var(--text-3)", opacity:.7, padding:"0 0 1px",
+                        }}>
+                          <span style={{ color:"var(--color-bad)", fontSize:9, marginRight:1 }}>✕</span>
+                          {displayName(n)}
+                          <KidsLink nome={n} />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  {!e.jogadores && e.paises && e.paises.length > 0 && (
+                    <div className="fs-12 c-text-3" style={{ marginTop:4, lineHeight:1.6 }}>
+                      {e.paises.slice(0, 8).map(p => `${flag(p.pais)} ${p.n}`).join("  ")}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* ── Portugueses inscritos ── */}
+          {ptTotal.length > 0 && (
+            <div className="card" style={{ background:"var(--accent-light)", border:"1.5px solid var(--accent)", marginBottom:12 }}>
+              <div className="h-sm" style={{ color:"var(--accent)", marginBottom:10 }}>🇵🇹 Portugueses inscritos</div>
+              {t.escaloes.filter(e => e.jogadores?.some(j => j.pais === "PT")).map(e => (
+                <div key={e.age_group} style={{ marginBottom:8 }}>
+                  <div className="h-xs" style={{ color:"var(--accent-text)", marginBottom:4 }}>{e.nome}</div>
+                  {e.jogadores!.filter(j => j.pais === "PT").map((j, i) => (
+                    <div key={i} className="fs-13" style={{ display:"flex", justifyContent:"space-between", padding:"3px 8px", borderRadius:4, background:"rgba(255,255,255,.5)", marginBottom:2 }}>
+                      <span className="fw-600" style={{ display:"flex", alignItems:"center", gap:2 }}>
+                        {displayName(j.nome)}<KidsLink nome={j.nome} />
+                      </span>
+                      <span className="c-text-3 fs-12">{j.cidade}</span>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div className="muted fs-11" style={{ textAlign:"right" }}>{fmtTs(t.ultima_atualizacao)}</div>
+        </>
+      )}
+    </div>
+  );
+}
