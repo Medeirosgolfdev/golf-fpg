@@ -1384,7 +1384,7 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
     const fakePlayer = { ...selected, _source: "both" as const, _federadoRaw: synthFed } as MergedPlayer & { fed: string };
     return (
       <div className="pa-page">
-        <div style={{ padding: "8px 12px", display: "flex", gap: 8, alignItems: "center", borderBottom: "1px solid var(--border)" }}>
+        <div style={{ padding: "8px 12px", display: "flex", gap: 8, alignItems: "center", borderBottom: "1px solid var(--border)", flexShrink: 0 }}>
           <span className="muted fs-12">Vista de federado (cadastro FPG + rondas WHS live, sem análise nossa)</span>
           <button className="p p-outline" style={{ marginLeft: "auto", cursor: "pointer" }}
             onClick={() => setFederadoView(false)}
@@ -1392,7 +1392,10 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
             ← Vista completa
           </button>
         </div>
-        <FederadoOnlyDetail player={fakePlayer} />
+        {/* pa-content dá scroll vertical (.pa-page tem overflow:hidden) */}
+        <div className="pa-content" style={{ padding: 0 }}>
+          <FederadoOnlyDetail player={fakePlayer} />
+        </div>
       </div>
     );
   }
