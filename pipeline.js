@@ -580,20 +580,29 @@ try {
 }
 
 // ══════════════════════════════════════════════════════════
-// PASSO 5: EXTRACT — gerar away-courses.json
+// PASSO 5: EXTRACT — gerar away-courses.json (DESACTIVADO)
 // ══════════════════════════════════════════════════════════
-step("5/5", "Extrair campos internacionais");
-try {
-  const extractScript = path.join(process.cwd(), "scripts", "extract-courses.js");
-  if (fs.existsSync(extractScript)) {
-    execSync(`node "${extractScript}"`, { stdio: "inherit", cwd: process.cwd() });
-    ok("away-courses.json actualizado");
-  } else {
-    warn("extract-courses.js não encontrado");
-  }
-} catch (e) {
-  warn(`extract-courses.js falhou: ${e.message}`);
-}
+// Removido do pipeline normal por ser lento (varre TODOS os scorecards
+// de TODOS os jogadores, mesmo quando só 1 jogador mudou). Os campos
+// internacionais raramente mudam entre corridas — basta correr manualmente
+// quando se descobre um campo novo:
+//
+//   node scripts/extract-courses.js
+//
+// Para reactivar, descomentar o bloco abaixo:
+//
+// step("5/5", "Extrair campos internacionais");
+// try {
+//   const extractScript = path.join(process.cwd(), "scripts", "extract-courses.js");
+//   if (fs.existsSync(extractScript)) {
+//     execSync(`node "${extractScript}"`, { stdio: "inherit", cwd: process.cwd() });
+//     ok("away-courses.json actualizado");
+//   } else {
+//     warn("extract-courses.js não encontrado");
+//   }
+// } catch (e) {
+//   warn(`extract-courses.js falhou: ${e.message}`);
+// }
 
 // ══════════════════════════════════════════════════════════
 // RESUMO

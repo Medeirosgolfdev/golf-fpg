@@ -59,9 +59,13 @@ function computeCacheFingerprint() {
     }).sort();
 
     for (const d of dirs) {
+      // Aceita ambos os formatos — usa o mais recente
       const scDir = path.join(outputRoot, d, "scorecards");
+      const scJson = path.join(outputRoot, d, "scorecards.json");
       try { parts.push(`sc:${d}:${fs.statSync(scDir).mtimeMs}`); }
-      catch { /* sem scorecards */ }
+      catch { /* sem dir antigo */ }
+      try { parts.push(`scj:${d}:${fs.statSync(scJson).mtimeMs}`); }
+      catch { /* sem scorecards.json novo */ }
 
       const dataP = path.join(outputRoot, d, "analysis", "data.json");
       try { parts.push(`dj:${d}:${fs.statSync(dataP).mtimeMs}`); }
@@ -252,16 +256,17 @@ if (fs.existsSync(outputRoot)) {
     return fs.statSync(full).isDirectory() && /^\d+$/.test(d);
   });
 
+  // Carregar scorecards de ambos os formatos (novo + antigo) via helper unificado
+  const { loadScorecardsByScoreId } = require("../lib/helpers");
   for (const fedDir of dirs) {
-    const scDir = path.join(outputRoot, fedDir, "scorecards");
-    if (!fs.existsSync(scDir)) continue;
+    const baseDir = path.join(outputRoot, fedDir);
+    const cardMap = loadScorecardsByScoreId(baseDir);
+    if (cardMap.size === 0) continue;
 
-    const files = fs.readdirSync(scDir).filter(f => f.endsWith(".json"));
-    for (const f of files) {
+    for (const [, rec] of cardMap.entries()) {
       totalFiles++;
       try {
-        const raw  = readJSON(path.join(scDir, f));
-        const recs = raw.Records || (Array.isArray(raw) ? raw : []);
+        const recs = [rec]; // wrap em array para manter o loop seguinte intacto
         for (const rec of recs) {
           const courseName = (rec.course_description || "").trim();
           const teeName    = (rec.tee_name || "").trim();

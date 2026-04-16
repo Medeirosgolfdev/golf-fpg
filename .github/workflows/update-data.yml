@@ -73,10 +73,10 @@ jobs:
         env:
           FPG_COOKIES: ${{ secrets.FPG_COOKIES }}
 
-      - name: Regenerar data.json consolidados (pipeline)
-        if: steps.scrape.outputs.exit_code == '0'
-        run: |
-          node pipeline.js --skip-import --all || echo "pipeline.js falhou — continuar"
+      # Nota: o `fpg-scrape-node.js` já dispara `pipeline.js --skip-import <feds_com_novidades>`
+      # automaticamente no fim quando há scorecards novos. Não é preciso passo extra aqui.
+      # Para reprocessar TODOS os jogadores (caso muito raro): correr manualmente
+      # `node pipeline.js --skip-import --all` localmente e committar.
 
       - name: Commit e push (se houve novidades)
         if: steps.scrape.outputs.exit_code == '0'
@@ -89,6 +89,4 @@ jobs:
             exit 0
           fi
           DATE=$(date +'%Y-%m-%d %H:%M')
-          git commit -m "data: update WHS+scorecards ${DATE}"
-          git push
-          echo "✓ Commit feito"
+          git commit -m 

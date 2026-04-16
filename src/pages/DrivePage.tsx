@@ -504,6 +504,7 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
       toPar: gross - parTotal,
       scores: p.scores?.length ? p.scores : p.roundScores?.[0]?.scores,
       rowBg,
+      isManuel: isManuel(p),
       nameContent: <PName name={p.name} fed={p.fed} playersDB={playersDB} highlight={isManuel(p)} />,
       prefixCells: <>
         <td className="lb-esc">{esc ? <EscPill esc={esc} /> : <span className="muted">–</span>}</td>

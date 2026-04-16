@@ -225,6 +225,7 @@ export function ScorecardLB({
       scores,
       rowBg,
       stickyBg,
+      isManuel: rowManuel,
       nameContent: nameDecorator_
         ? nameDecorator_(
             p.name,

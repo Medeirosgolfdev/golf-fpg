@@ -24,15 +24,22 @@
  *   scorecards.json   — hole-by-hole de cada ronda
  *   summary.json      — totais + timestamp
  *
+ * No fim, se houve scorecards novos, dispara automaticamente:
+ *   node pipeline.js --skip-import <feds_com_novidades>
+ * que gera data.json, players.json, player-stats.json e away-courses.json
+ * SÓ para os jogadores que mudaram. Para reprocessar todos, correr
+ * manualmente `node pipeline.js --skip-import --all`.
+ *
  * Exit codes:
- *   0 — sucesso com novidades (há scorecards novos desde última corrida)
+ *   0 — sucesso com novidades (scrape OK + pipeline OK)
  *   2 — sucesso sem novidades (não é erro)
- *   1 — erro real
+ *   1 — erro real (scrape ou pipeline)
  */
 
 "use strict";
 const fs = require("fs");
 const path = require("path");
+const { execSync } = require("child_process");
 
 const REPO_ROOT = path.resolve(__dirname, "..");
 const OUTPUT_DIR = path.join(REPO_ROOT, "output");
@@ -48,8 +55,7 @@ const ALL = hasFlag("--all");
 // --full-rebuild força re-fetch de TUDO (lento, ~12s por jogador, usar só se
 // suspeitamos de scorecards corrompidos ou queremos re-snapshot completo).
 const FULL_REBUILD = hasFlag("--full-rebuild") || hasFlag("--full");
-const NEW_ONLY = !FULL_REBUILD;
-const CONCURRENCY = Number(getArg("--concurrency", 2));
+const CONCURRENCY = Number(getArg("--concurrency", 3));
 
 // Flags que consomem valor — para não apanhar esses valores como feds
 const VALUE_FLAGS = new Set(["--concurrency", "--output-dir"]);
@@ -182,11 +188,20 @@ async function processPlayer(fed) {
   const existingIds = new Set(existingRounds.map(r => r.id));
   const newRounds = rounds.filter(r => !existingIds.has(r.id));
 
-  // 2) Scorecards (dos novos se NEW_ONLY, senão de todos os em falta)
-  //    Indexamos por `score_id` (o ID do scorecard, NÃO o `id` da WHS entry)
+  // 2) Scorecards — baixar QUALQUER scorecard em falta (não só de rondas novas).
+  //    Indexamos por `score_id` (o ID do scorecard, NÃO o `id` da WHS entry).
+  //
+  //    Bug histórico (corrigido): antes a condição era "só rondas com id novo",
+  //    o que falhava se o whs.json estivesse populado mas scorecards.json vazio
+  //    (ex: corrida interrompida, primeira execução com erro). Resultado:
+  //    scorecards nunca eram baixados em corridas seguintes porque nenhuma
+  //    ronda era "nova". Agora baixamos qualquer scorecard em falta.
+  //
+  //    --full / --full-rebuild: força re-download de TODOS os scorecards
+  //    (sobrescreve existingSC). Útil se suspeitares que estão corrompidos.
   const existingSC = readJsonIfExists(scFile) || {};
-  const roundsToFetch = NEW_ONLY
-    ? newRounds
+  const roundsToFetch = FULL_REBUILD
+    ? rounds.filter(r => r.score_id)
     : rounds.filter(r => r.score_id && !existingSC[String(r.score_id)]);
 
   const scorecards = { ...existingSC };
@@ -201,6 +216,14 @@ async function processPlayer(fed) {
   // 3) Escrever
   writeJson(whsFile, rounds);
   writeJson(scFile, scorecards);
+
+  // 4) Detectar se data.json (output do pipeline/render) está em falta.
+  //    Se sim, marcar para reprocessar mesmo sem scorecards novos —
+  //    senão jogadores recém-scrapeados (sem novidades subsequentes)
+  //    nunca passariam pelo render e o site não os mostraria.
+  const dataJsonPath = path.join(dir, "analysis", "data.json");
+  const needsRender = !fs.existsSync(dataJsonPath);
+
   writeJson(sumFile, {
     fed, lastRun: new Date().toISOString(),
     totalRounds: rounds.length,
@@ -209,7 +232,7 @@ async function processPlayer(fed) {
     newScorecardsThisRun: newScorecards,
   });
 
-  return { fed, rounds: rounds.length, newRounds: newRounds.length, newScorecards };
+  return { fed, rounds: rounds.length, newRounds: newRounds.length, newScorecards, needsRender };
 }
 
 // ─── Main ─────────────────────────────────────────────────
@@ -233,9 +256,10 @@ async function main() {
   }
   if (feds.length === 0) { console.error("Uso: node scripts/fpg-scrape-node.js <fed>... | --all"); process.exit(1); }
 
-  log(`${feds.length} jogador(es) a processar — concurrency=${CONCURRENCY}, new-only=${NEW_ONLY}`);
+  log(`${feds.length} jogador(es) a processar — concurrency=${CONCURRENCY}, mode=${FULL_REBUILD ? "full-rebuild" : "missing-only"}`);
 
-  let totals = { rounds: 0, newRounds: 0, newScorecards: 0, ok: 0, failed: 0 };
+  let totals = { rounds: 0, newRounds: 0, newScorecards: 0, ok: 0, failed: 0, needsRender: 0 };
+  const fedsToProcess = new Set(); // feds que precisam de render: scorecards novos OU data.json em falta
 
   // Processar em batches paralelos
   for (let i = 0; i < feds.length; i += CONCURRENCY) {
@@ -249,8 +273,11 @@ async function main() {
         totals.rounds += v.rounds;
         totals.newRounds += v.newRounds;
         totals.newScorecards += v.newScorecards;
-        const marker = v.newScorecards > 0 ? `${G}NOVO${X}` : "   ";
-        console.log(`  ${marker} ${fed}: ${v.rounds} rondas (${v.newRounds} novas, ${v.newScorecards} scorecards novos)`);
+        if (v.newScorecards > 0 || v.needsRender) fedsToProcess.add(String(fed));
+        if (v.needsRender) totals.needsRender++;
+        const marker = v.newScorecards > 0 ? `${G}NOVO${X}` : v.needsRender ? `${Y}RNDR${X}` : "    ";
+        const tag = v.needsRender && v.newScorecards === 0 ? " (sem data.json — render forçado)" : "";
+        console.log(`  ${marker} ${fed}: ${v.rounds} rondas (${v.newRounds} novas, ${v.newScorecards} scorecards novos)${tag}`);
       } else {
         totals.failed++;
         warn(`${fed}: ${r.reason?.message || r.reason}`);
@@ -264,9 +291,34 @@ async function main() {
   console.log(`  Rondas totais: ${totals.rounds}`);
   console.log(`  Rondas novas nesta corrida: ${G}${totals.newRounds}${X}`);
   console.log(`  Scorecards novos nesta corrida: ${G}${totals.newScorecards}${X}`);
+  if (totals.needsRender > 0) {
+    console.log(`  Sem data.json (render forçado): ${Y}${totals.needsRender}${X}`);
+  }
 
-  if (totals.newScorecards > 0) {
-    ok(`Há ${totals.newScorecards} scorecards novos — seguro committar`);
+  if (fedsToProcess.size > 0) {
+    const feds_arr = [...fedsToProcess];
+    ok(`${feds_arr.length} jogador(es) a render: ${totals.newScorecards} scorecards novos + ${totals.needsRender} sem data.json`);
+
+    // ─── Pipeline pós-scrape ───
+    // Render data.json + sync players.json + enrich player-stats + extract away-courses
+    // SÓ para os jogadores que precisam (não --all) — evita reprocessar 215 jogadores
+    // de cada vez. extract-courses.js corre globalmente de qualquer maneira.
+    //
+    // ALTERNATIVA: se algum dia precisares de reprocessar TODOS (ex: mudou
+    // formato de data.json, alteraste make-scorecards-ui.js, etc.):
+    //   node pipeline.js --skip-import --all
+    log(`A correr pipeline (render + sync + enrich + extract) para ${feds_arr.length} jogador(es)...`);
+    try {
+      execSync(`node pipeline.js --skip-import ${feds_arr.join(" ")}`, {
+        stdio: "inherit",
+        cwd: REPO_ROOT,
+        maxBuffer: 50 * 1024 * 1024,
+      });
+      ok(`Pipeline concluído — seguro committar`);
+    } catch (e) {
+      warn(`Pipeline retornou erro (output acima): ${e.message}`);
+      process.exit(1);
+    }
     process.exit(0);
   }
   console.log(`${Y}Nada de novo — sem commit${X}`);
