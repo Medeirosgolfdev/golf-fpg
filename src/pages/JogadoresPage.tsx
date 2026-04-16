@@ -1416,12 +1416,12 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
     return (
       <div className="pa-page">
         <div style={{ padding: "8px 12px", display: "flex", gap: 8, alignItems: "center", borderBottom: "1px solid var(--border)", flexShrink: 0 }}>
-          <span className="muted fs-12">Vista de federado (cadastro FPG + rondas WHS live, sem análise nossa)</span>
-          <button className="p p-outline" style={{ marginLeft: "auto", cursor: "pointer" }}
+          <button className="p p-outline" style={{ cursor: "pointer" }}
             onClick={() => setFederadoView(false)}
             title="Voltar à vista completa com análise">
             ← Vista completa
           </button>
+          <span className="muted fs-12">Vista de federado (cadastro FPG + rondas WHS live, sem análise nossa)</span>
         </div>
         {/* pa-content dá scroll vertical (.pa-page tem overflow:hidden) */}
         <div className="pa-content" style={{ padding: 0 }}>
@@ -2141,8 +2141,9 @@ function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, extraMap, localI
   let lastYear = "";
 
   // Contagem de rondas que NÃO temos em local
+  // Ignorar registos administrativos (ajustes de HCP) que têm id=0/null/undefined — não são rondas jogadas
   const missingCount = localIds && localIds.size > 0
-    ? rounds.filter(r => !localIds.has(r.id)).length
+    ? rounds.filter(r => r.id && !localIds.has(r.id)).length
     : 0;
 
   return (
@@ -2187,7 +2188,8 @@ function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, extraMap, localI
             const extra = extraMap?.get(r.id);
 
             // Indicador visual se a ronda não existe nos nossos dados locais
-            const isMissing = localIds && localIds.size > 0 && !localIds.has(r.id);
+            // Ignorar registos admin (id=0/null) — ajustes de HCP, não rondas jogadas
+            const isMissing = r.id && localIds && localIds.size > 0 && !localIds.has(r.id);
 
             return (
               <React.Fragment key={r.id}>
