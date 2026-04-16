@@ -2136,7 +2136,8 @@ function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, extraMap, localI
   }, [rounds, sortKey, sortDir]);
 
   const hasExtra = extraMap && extraMap.size > 0;
-  const COLS = hasExtra ? 11 : 9;
+  // Ordem: Data | Campo | Prova | Bur. | HCP | Tee? | Par | Gross? | Stb | SD | Tipo
+  const COLS = 9 + (hasExtra ? 2 : 0);
   let lastYear = "";
 
   // Contagem de rondas que NÃO temos em local
@@ -2155,13 +2156,13 @@ function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, extraMap, localI
         <thead>
           <tr>
             <SortableHdr k="date"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Data</SortableHdr>
-            <SortableHdr k="event"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Prova</SortableHdr>
             <SortableHdr k="course" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Campo</SortableHdr>
+            <SortableHdr k="event"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Prova</SortableHdr>
             <SortableHdr k="holes"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Bur.</SortableHdr>
+            <SortableHdr k="hcp"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">HCP</SortableHdr>
             {hasExtra && <SortableHdr k="tee" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Tee</SortableHdr>}
             <SortableHdr k="par"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Par</SortableHdr>
             {hasExtra && <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Gross</SortableHdr>}
-            <SortableHdr k="hcp"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">HCP</SortableHdr>
             <SortableHdr k="stb"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Stb</SortableHdr>
             <SortableHdr k="sd"     sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">SD</SortableHdr>
             <SortableHdr k="origin" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Tipo</SortableHdr>
@@ -2173,6 +2174,9 @@ function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, extraMap, localI
             const year = dateStr.slice(0, 4);
             const showYearBar = sortKey === "date" && year !== lastYear;
             if (showYearBar) lastYear = year;
+
+            // Data sem ano: DD-MM
+            const shortDate = dateStr.slice(8, 10) + "-" + dateStr.slice(5, 7);
 
             const sdNum = r.score_differential != null ? Number(r.score_differential) : NaN;
             const hiRef = r.calc_hcp_index ?? r.calculated_exact_hcp ?? hcpRef ?? null;
@@ -2202,16 +2206,17 @@ function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, extraMap, localI
                   onClick={() => onOpenScorecard(r)}
                 >
                   <td className="fw-600">
-                    {dateStr}
+                    {shortDate}
                     {isMissing && <span style={{ marginLeft: 4, color: "var(--color-warn-vivid)", fontSize: 10 }} title="Não temos esta ronda em local">●</span>}
                   </td>
+                  <td className="muted">{r.course_description}</td>
                   <td>
                     <span className="muted">{r.tournament_description}</span>
                     <OriginPill origin={r.score_origin} />
                     {isIntl && <PillBadge pill="INTL" />}
                   </td>
-                  <td className="muted">{r.course_description}</td>
                   <td className="r"><HoleBadge hc={r.hole_count} /></td>
+                  <td className="r fw-700">{r.calc_hcp_index ?? r.calculated_exact_hcp ?? ""}</td>
                   {hasExtra && (
                     <td>{extra?.tee ? <TeePill name={extra.tee} /> : <span className="muted fs-10">…</span>}</td>
                   )}
@@ -2227,7 +2232,6 @@ function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, extraMap, localI
                       ) : <span className="muted fs-10">…</span>}
                     </td>
                   )}
-                  <td className="r fw-700">{r.calc_hcp_index ?? r.calculated_exact_hcp ?? ""}</td>
                   <td className="r">{r.calculated_stablnet_total ?? ""}</td>
                   <td className="r">
                     {isFinite(sdNum)
