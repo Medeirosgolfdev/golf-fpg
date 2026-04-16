@@ -289,7 +289,10 @@ function normalizeFpgWhsRecord(r) {
     // Preservar todos os campos originais…
     ...r,
     // …e por cima adicionar os campos canónicos que a UI consulta
-    id:                         r.id ?? r.score_id,
+    // ⚠ CRÍTICO: usar score_id (ID do scorecard real, ~4244840) como id canónico,
+    // NÃO r.id (ID interno da entrada WHS, ~2875259). O endpoint ScoreCard precisa
+    // do score_id, e os HOLES keys em data.json também são score_id.
+    id:                         r.score_id ?? r.id,
     federation_code:            String(r.federated_code ?? ""),
     tournament_id:              r.tournament_id,
     tournament_description:     r.tourn_name ?? "",
@@ -371,9 +374,11 @@ async function callDatagolf(action, params) {
     return { Result: "OK", Records: normalized, TotalRecordCount: total };
   }
   if (action === "scorecard") {
+    const st = String(params.scoringType || "1");
+    const ct = String(params.competitionType || "10");
     return await dgCall(
-      "/PlayerWHS.aspx/ScoreCard?score_id=" + params.scoreId,
-      { score_id: String(params.scoreId), scoringtype: "1", competitiontype: "10" },
+      `/PlayerWHS.aspx/ScoreCard?score_id=${params.scoreId}&scoringtype=${st}&competitiontype=${ct}&pp=N`,
+      { score_id: String(params.scoreId), scoringtype: st, competitiontype: ct, pp: "N" },
       "/PlayerWHS.aspx?no=" + (params.fed || ""),
     );
   }
@@ -393,7 +398,7 @@ const RESP_TTL_SCORECARD = 60 * 60 * 1000;   // 60 min
 const RESP_TTL_DEFAULT = 10 * 60 * 1000;
 
 function respCacheKey(action, params) {
-  if (action === "scorecard") return `sc:${params.scoreId}`;
+  if (action === "scorecard") return `sc:${params.scoreId}:${params.scoringType || "1"}:${params.competitionType || "10"}`;
   if (action === "whs")       return `whs:${params.fed}:${params.limit || "all"}`;
   if (action === "profile")   return `profile:${params.fed}`;
   if (action === "handicaps") return `hcps:${params.fed}`;
@@ -601,6 +606,8 @@ module.exports = async function handler(req, res) {
   const action = url.searchParams.get("action");
   const fed    = url.searchParams.get("fed");
   const scoreId= url.searchParams.get("score_id");
+  const scoringType = url.searchParams.get("scoringtype") || "1";
+  const competitionType = url.searchParams.get("competitiontype") || "10";
   const limit  = parseInt(url.searchParams.get("limit") || "200", 10);
 
   // CORS — permitir que o script de consola do my.fpg.pt envie cookies
@@ -692,7 +699,7 @@ module.exports = async function handler(req, res) {
         break;
       case "scorecard":
         if (!scoreId) return sendErr(400, "score_id= obrigatório");
-        params = { scoreId, fed };
+        params = { scoreId, fed, scoringType, competitionType };
         break;
       case "profile":
       case "handicaps":

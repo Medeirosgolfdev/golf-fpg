@@ -363,6 +363,8 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
  border-bottom: 1px solid var(--border-light);
  transition: background 0.15s;
  font: inherit;
+ text-decoration: none;
+ color: inherit;
 }
 
 .course-item:hover {
@@ -2673,6 +2675,7 @@ tr.cross-current { background: var(--bg-success); }
  font-weight: 600;
  cursor: pointer;
  font-family: inherit;
+ text-decoration: none;
  transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
 .tourn-tab:hover:not(.active) {

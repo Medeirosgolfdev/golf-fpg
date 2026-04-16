@@ -1245,18 +1245,23 @@ function Content() {
                 : key === "jovens"    ? { flexShrink: 0, background: SIDEBAR_ACCENT.tour, borderColor: SIDEBAR_ACCENT.tour, color: "#fff" }
                 : { flexShrink: 0 }
                 : { flexShrink: 0 };
+              const urlSeg = FILTER_TO_URL[key];
+              const href = urlSeg ? `/FPG/${urlSeg}` : "/FPG";
               return (
-                <button key={key}
+                <a key={key}
+                  href={href}
                   className={"tourn-tab tourn-tab-sm" + (active ? " active" : " tourn-tab-muted")}
-                  onClick={() => {
-                    setSeriesFilter(key);
-                    setJovensShowInscricoes(false); // reset inscrições ao mudar de filtro
-                    const urlSeg = FILTER_TO_URL[key];
-                    navigate(urlSeg ? `/FPG/${urlSeg}` : "/FPG");
+                  onClick={e => {
+                    if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                      e.preventDefault();
+                      setSeriesFilter(key);
+                      setJovensShowInscricoes(false);
+                      navigate(urlSeg ? `/FPG/${urlSeg}` : "/FPG");
+                    }
                   }}
                   style={st}>
                   {label}
-                </button>
+                </a>
               );
             })}
           </div>
@@ -1429,21 +1434,25 @@ function Content() {
               <div className="muted fs-11 u-pad-italic">Ficheiro não encontrado (ainda)</div>
             )}
             {/* Entrada especial: Inscrições */}
-            <div
-              onClick={() => {
-                setJovensShowInscricoes(true); setJovensGroupKey(null); md.onSelect();
-                navigate("/FPG/jovens/inscritosCN");
+            <a
+              href="/FPG/jovens/inscritosCN"
+              onClick={e => {
+                if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                  e.preventDefault();
+                  setJovensShowInscricoes(true); setJovensGroupKey(null); md.onSelect();
+                  navigate("/FPG/jovens/inscritosCN");
+                }
               }}
               className={`course-item${jovensShowInscricoes ? " active" : ""}`}
               style={{
-                borderLeft: `4px solid ${SIDEBAR_ACCENT.tour}`, borderRadius: "0 6px 6px 0", cursor: "pointer",
+                borderLeft: `4px solid ${SIDEBAR_ACCENT.tour}`, borderRadius: "0 6px 6px 0",
               }}
             >
               <div className="fw-700 fs-12">
                 📋 Inscrições 2026
               </div>
               <div className="muted fs-11" >Campeonatos Nacionais de Jovens</div>
-            </div>
+            </a>
             {jovensYears.map(yr => (
               <React.Fragment key={yr}>
                 <div className="sidebar-section-title-dark">🏆 {yr}</div>

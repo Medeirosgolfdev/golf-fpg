@@ -500,10 +500,11 @@ export default function CamposPage() {
             const tees = filterTees(c.master.tees, sexFilter);
             const flag = resolveFlag(c);
             return (
-              <button
+              <a
                 key={c.courseKey}
+                href={`/campos/${c.courseKey}`}
                 className={`course-item ${active ? "active" : ""}`}
-                onClick={() => { selectCourse(c.courseKey); md.onSelect(); }}
+                onClick={e => { if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) { e.preventDefault(); selectCourse(c.courseKey); md.onSelect(); } }}
               >
                 <div className="course-item-name">
                   {flag && <span className="course-flag">{flag}</span>}
@@ -513,7 +514,7 @@ export default function CamposPage() {
                 <div className="course-item-meta">
                   {tees.length} tee{tees.length !== 1 ? "s" : ""}
                 </div>
-              </button>
+              </a>
             );
           })}
           {filtered.length === 0 && (

@@ -170,17 +170,18 @@ export async function getPlayerHistory(fed: string | number): Promise<WhsRound[]
 }
 
 /** Scorecard detalhado (hole-by-hole) de uma ronda.
- *  Os parâmetros `scoringType`/`competitionType` são mantidos por
- *  compatibilidade mas ignorados — a API golf-portugal.pt só precisa
- *  do score_id. */
+ *  `scoringType` e `competitionType` vêm do record WhsRound
+ *  (campos `scoring_type_id` e `competition_type_id`).
+ *  ⚠ NÃO hardcodar 1/10 — algumas rondas são 4/10, etc.
+ *  Sem estes valores correctos a API pode devolver scorecard errado. */
 export async function getScorecard(
   scoreId: string | number,
-  _scoringType: string | number = 1,
-  _competitionType: string | number = 10,
+  scoringType: string | number = 1,
+  competitionType: string | number = 10,
 ): Promise<Scorecard[]> {
   return call<Scorecard[]>(
-    `/api/datagolf?action=scorecard&score_id=${encodeURIComponent(String(scoreId))}`,
-    `sc:${scoreId}`,
+    `/api/datagolf?action=scorecard&score_id=${encodeURIComponent(String(scoreId))}&scoringtype=${encodeURIComponent(String(scoringType))}&competitiontype=${encodeURIComponent(String(competitionType))}`,
+    `sc:${scoreId}:${scoringType}:${competitionType}`,
   );
 }
 

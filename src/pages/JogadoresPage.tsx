@@ -1436,8 +1436,13 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
       {/* Header: name + controls on same row, pills below */}
       <div className="detail-header">
         <div className="detail-header-top">
-          <h2 className="detail-title">
-            {selected.name}
+          <h2 className="detail-title" style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            {(selected as MergedPlayer)._federadoRaw?.photo && (
+              <img src={`https://hcp-portugal.datagolf.pt/photos/${(selected as MergedPlayer)._federadoRaw!.photo}`}
+                alt="" style={{ width: 44, height: 56, borderRadius: 4, objectFit: "cover", flexShrink: 0 }}
+                onError={e => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />
+            )}
+            <span>{selected.name}</span>
             <a
               href={`https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=${selected.fed}`}
               target="_blank"
@@ -2083,6 +2088,176 @@ function DrillDownCard({ drillDown, stats, onClose, onPickPlayer }: {
 }
 
 /* ────────────────────────────────────────────────────────────────────────────────────────
+   FederadoRoundsTable — tabela rica de rondas WHS (usada em FederadoOnlyDetail e vista federado)
+   Replica o estilo da ByDateView com pills, sorting, separadores por ano, etc.
+   ──────────────────────────────────────────────────────────────────────────────────────── */
+
+/** Info extra de cada ronda extraída do ScoreCard (tee, gross, CR, slope). */
+type RoundExtra = { tee: string; gross: number | null; cr: number | null; slope: number | null };
+
+type FRTSortKey = "date" | "event" | "course" | "holes" | "hcp" | "tee" | "gross" | "stb" | "sd" | "origin" | "par";
+
+function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, extraMap, localIds }: {
+  rounds: WhsRound[];
+  hcpRef: number | null;
+  onOpenScorecard: (r: WhsRound) => void;
+  /** Mapa scoreId → info extra (tee, gross) preenchido async pelo parent */
+  extraMap?: Map<number, RoundExtra>;
+  /** Set de scoreIds que existem nos nossos dados locais (para comparação) */
+  localIds?: Set<number>;
+}) {
+  const { sortKey, sortDir, toggleSort } = useSort<FRTSortKey>("date", "desc", {
+    sd: "asc", hcp: "asc", stb: "desc", holes: "desc", par: "asc", gross: "asc",
+  });
+
+  const sorted = useMemo(() => {
+    const arr = [...rounds];
+    const dir = sortDir === "asc" ? 1 : -1;
+    arr.sort((a, b) => {
+      let va: unknown, vb: unknown;
+      switch (sortKey) {
+        case "date":   va = a.score_dateStr; vb = b.score_dateStr; break;
+        case "event":  va = a.tournament_description; vb = b.tournament_description; break;
+        case "course": va = a.course_description; vb = b.course_description; break;
+        case "holes":  va = a.hole_count; vb = b.hole_count; break;
+        case "hcp":    va = a.calc_hcp_index ?? a.calculated_exact_hcp; vb = b.calc_hcp_index ?? b.calculated_exact_hcp; break;
+        case "par":    va = a.par_total; vb = b.par_total; break;
+        case "tee":    va = extraMap?.get(a.id)?.tee ?? ""; vb = extraMap?.get(b.id)?.tee ?? ""; break;
+        case "gross":  va = extraMap?.get(a.id)?.gross ?? 999; vb = extraMap?.get(b.id)?.gross ?? 999; break;
+        case "stb":    va = a.calculated_stablnet_total; vb = b.calculated_stablnet_total; break;
+        case "sd":     va = a.score_differential; vb = b.score_differential; break;
+        case "origin": va = a.score_origin; vb = b.score_origin; break;
+        default:       va = a.score_dateStr; vb = b.score_dateStr;
+      }
+      if (typeof va === "string" && typeof vb === "string") return va.localeCompare(vb) * dir;
+      return ((Number(va) || 0) - (Number(vb) || 0)) * dir;
+    });
+    return arr;
+  }, [rounds, sortKey, sortDir]);
+
+  const hasExtra = extraMap && extraMap.size > 0;
+  const COLS = hasExtra ? 11 : 9;
+  let lastYear = "";
+
+  // Contagem de rondas que NÃO temos em local
+  const missingCount = localIds && localIds.size > 0
+    ? rounds.filter(r => !localIds.has(r.id)).length
+    : 0;
+
+  return (
+    <div style={{ maxHeight: 600, overflowY: "auto" }}>
+      {localIds && localIds.size > 0 && missingCount > 0 && (
+        <div className="p p-sm" style={{ marginBottom: 8, display: "inline-block" }}>
+          {missingCount} ronda{missingCount !== 1 ? "s" : ""} na FPG que não temos em local
+        </div>
+      )}
+      <table className="dtable-lg">
+        <thead>
+          <tr>
+            <SortableHdr k="date"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Data</SortableHdr>
+            <SortableHdr k="event"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Prova</SortableHdr>
+            <SortableHdr k="course" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Campo</SortableHdr>
+            <SortableHdr k="holes"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Bur.</SortableHdr>
+            {hasExtra && <SortableHdr k="tee" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Tee</SortableHdr>}
+            <SortableHdr k="par"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Par</SortableHdr>
+            {hasExtra && <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Gross</SortableHdr>}
+            <SortableHdr k="hcp"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">HCP</SortableHdr>
+            <SortableHdr k="stb"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Stb</SortableHdr>
+            <SortableHdr k="sd"     sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">SD</SortableHdr>
+            <SortableHdr k="origin" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Tipo</SortableHdr>
+          </tr>
+        </thead>
+        <tbody>
+          {sorted.slice(0, 200).map(r => {
+            const dateStr = (r.score_dateStr || "").slice(0, 10);
+            const year = dateStr.slice(0, 4);
+            const showYearBar = sortKey === "date" && year !== lastYear;
+            if (showYearBar) lastYear = year;
+
+            const sdNum = r.score_differential != null ? Number(r.score_differential) : NaN;
+            const hiRef = r.calc_hcp_index ?? r.calculated_exact_hcp ?? hcpRef ?? null;
+            const sdCls = isFinite(sdNum) && hiRef != null ? sdClassByHcp(sdNum, Number(hiRef)) : "";
+
+            const originKey = (r.score_origin || "").trim().toUpperCase();
+            const isIntl = originKey === "INTERN";
+            const extra = extraMap?.get(r.id);
+
+            // Indicador visual se a ronda não existe nos nossos dados locais
+            const isMissing = localIds && localIds.size > 0 && !localIds.has(r.id);
+
+            return (
+              <React.Fragment key={r.id}>
+                {showYearBar && (
+                  <tr>
+                    <td colSpan={COLS} style={{ padding: 0, background: "var(--bg-header)", borderBottom: "2px solid var(--border)" }}>
+                      <div className="uppercase" style={{ padding: "6px 12px", fontSize: 12, fontWeight: 700, color: "var(--text-2)", letterSpacing: "0.04em" }}>
+                        {year}
+                      </div>
+                    </td>
+                  </tr>
+                )}
+                <tr
+                  style={{ cursor: "pointer" }}
+                  title={isMissing ? "Ronda que não temos em local — clicar para ver scorecard" : "Clicar para ver scorecard hole-by-hole"}
+                  onClick={() => onOpenScorecard(r)}
+                >
+                  <td className="fw-600">
+                    {dateStr}
+                    {isMissing && <span style={{ marginLeft: 4, color: "var(--color-warn-vivid)", fontSize: 10 }} title="Não temos esta ronda em local">●</span>}
+                  </td>
+                  <td>
+                    <span className="muted">{r.tournament_description}</span>
+                    <OriginPill origin={r.score_origin} />
+                    {isIntl && <PillBadge pill="INTL" />}
+                  </td>
+                  <td className="muted">{r.course_description}</td>
+                  <td className="r"><HoleBadge hc={r.hole_count} /></td>
+                  {hasExtra && (
+                    <td>{extra?.tee ? <TeePill name={extra.tee} /> : <span className="muted fs-10">…</span>}</td>
+                  )}
+                  <td className="r muted">{r.par_total ?? ""}</td>
+                  {hasExtra && (
+                    <td className="r">
+                      {extra?.gross != null ? (
+                        <><b>{extra.gross}</b>{r.par_total != null && extra.gross !== r.par_total && (
+                          <span className={`score-delta ${toParClass(extra.gross - r.par_total)}`}>
+                            {fmtToPar(extra.gross - r.par_total)}
+                          </span>
+                        )}</>
+                      ) : <span className="muted fs-10">…</span>}
+                    </td>
+                  )}
+                  <td className="r fw-700">{r.calc_hcp_index ?? r.calculated_exact_hcp ?? ""}</td>
+                  <td className="r">{r.calculated_stablnet_total ?? ""}</td>
+                  <td className="r">
+                    {isFinite(sdNum)
+                      ? <span className={sdCls ? `p p-sm p-${sdCls}` : ""}>{r.score_differential}</span>
+                      : (r.score_differential ?? "")}
+                  </td>
+                  <td>
+                    {originKey === "TORN" ? <span className="muted fs-10">Torneio</span>
+                      : originKey === "INTERN" ? <span className="muted fs-10">Internacional</span>
+                      : originKey === "EDS" ? <span className="p p-sm p-origin p-eds">EDS</span>
+                      : originKey === "INDIV" ? <span className="p p-sm p-origin p-indiv">INDIV</span>
+                      : originKey === "TREINO" ? <span className="p p-sm p-origin p-treino">TREINO</span>
+                      : originKey === "EXTRA" ? <span className="p p-sm p-origin p-extra">EXTRA</span>
+                      : originKey === "IMPORT" ? <span className="p p-sm p-origin p-import">IMPORT</span>
+                      : <span className="muted fs-10">{r.score_origin}</span>}
+                  </td>
+                </tr>
+              </React.Fragment>
+            );
+          })}
+        </tbody>
+      </table>
+      {rounds.length > 200 && (
+        <div className="muted fs-10 ta-c p-4">A mostrar 200 de {rounds.length} rondas</div>
+      )}
+    </div>
+  );
+}
+
+/* ────────────────────────────────────────────────────────────────────────────────────────
    FederadoOnlyDetail — stub para jogadores que só existem em federados.json
    (cadastro FPG sem análise de scorecards)
    ──────────────────────────────────────────────────────────────────────────────────────── */
@@ -2102,7 +2277,7 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
   const openScorecard = async (round: WhsRound) => {
     setScorecardModal({ round, data: null, loading: true, error: null });
     try {
-      const arr = await getScorecard(round.id);
+      const arr = await getScorecard(round.id, round.scoring_type_id ?? 1, round.competition_type_id ?? 10);
       const data = Array.isArray(arr) ? arr[0] : arr;
       setScorecardModal(prev => prev && prev.round.id === round.id ? { ...prev, data: data || null, loading: false } : prev);
     } catch (e) {
@@ -2111,11 +2286,18 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
     }
   };
 
+  /* ── Enriquecimento: tee/gross por ronda (batch-fetch de scorecards) ── */
+  const [extraMap, setExtraMap] = useState<Map<number, RoundExtra>>(new Map());
+
+  /* ── Comparação com dados locais (scoreIds que já temos em ficheiro) ── */
+  const [localIds, setLocalIds] = useState<Set<number>>(new Set());
+
   useEffect(() => {
     let cancelled = false;
     setLoadingLive(true);
     setLiveError(null);
     setLiveRounds(null);
+    setExtraMap(new Map());
     getPlayerHistory(f.federation_code)
       .then(rounds => { if (!cancelled) setLiveRounds(rounds); })
       .catch(err => { if (!cancelled) setLiveError(String(err?.message || err)); })
@@ -2123,31 +2305,107 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
     return () => { cancelled = true; };
   }, [f.federation_code]);
 
+  /* Batch-fetch scorecards para extrair tee + gross (concurrency ~3) */
+  useEffect(() => {
+    if (!liveRounds || liveRounds.length === 0) return;
+    let cancelled = false;
+    const map = new Map<number, RoundExtra>();
+    const queue = [...liveRounds];
+    let running = 0;
+    const CONC = 3;
+
+    function flush() {
+      if (cancelled) return;
+      setExtraMap(new Map(map));
+    }
+    async function next(): Promise<void> {
+      while (queue.length > 0 && !cancelled) {
+        const r = queue.shift()!;
+        running++;
+        try {
+          const arr = await getScorecard(r.id, r.scoring_type_id ?? 1, r.competition_type_id ?? 10);
+          const sc = Array.isArray(arr) ? arr[0] : arr;
+          if (sc && !cancelled) {
+            map.set(r.id, {
+              tee: sc.tee_name || "",
+              gross: typeof sc.gross_total === "number" ? sc.gross_total : null,
+              cr: typeof sc.course_rating === "number" ? sc.course_rating : null,
+              slope: typeof sc.slope === "number" ? sc.slope : null,
+            });
+            // Flush progressively every 5 scorecards
+            if (map.size % 5 === 0) flush();
+          }
+        } catch { /* silently skip failed scorecards */ }
+        running--;
+      }
+      if (running === 0) flush();
+    }
+    // Launch CONC parallel workers
+    for (let i = 0; i < CONC; i++) next();
+    return () => { cancelled = true; };
+  }, [liveRounds]);
+
+  /* Load local data scoreIds for comparison */
+  useEffect(() => {
+    let cancelled = false;
+    setLocalIds(new Set());
+    const fed = f.federation_code;
+    if (!fed) return;
+    (async () => {
+      try {
+        const resp = await fetch(`/${fed}/analysis/data.json`);
+        if (!resp.ok) return;
+        const json = await resp.json();
+        // HOLES keys are scoreId strings; DATA[].rounds[].scoreId too
+        const ids = new Set<number>();
+        if (json.HOLES) {
+          for (const k of Object.keys(json.HOLES)) {
+            const n = Number(k);
+            if (isFinite(n)) ids.add(n);
+          }
+        }
+        if (!cancelled && ids.size > 0) setLocalIds(ids);
+      } catch { /* no local data available — OK */ }
+    })();
+    return () => { cancelled = true; };
+  }, [f.federation_code]);
+
   return (
     <div className="p-16">
-      <DetailHeader
-        title={
-          <>
-            {showFlag && <span className="mr-8">{gf(f.country_prefix)}</span>}
-            {f.name}
-            <a
-              href={`https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=${f.federation_code}`}
-              target="_blank" rel="noopener noreferrer"
-              title="Ver ficha WHS no FPG Scoring"
-              style={{ marginLeft: 8, fontSize: 14, color: "var(--chart-2)", textDecoration: "none", verticalAlign: "middle" }}
-              onClick={e => e.stopPropagation()}
-            >🔗</a>
-            <a
-              href={`https://my.fpg.pt/Home/PlayerWHS.aspx?no=${f.federation_code}`}
-              target="_blank" rel="noopener noreferrer"
-              title="Ver ficha WHS no My FPG"
-              style={{ marginLeft: 4, fontSize: 14, color: "var(--chart-2)", textDecoration: "none", verticalAlign: "middle" }}
-              onClick={e => e.stopPropagation()}
-            >🔗</a>
-          </>
-        }
-        sub={<span className="muted">#{f.federation_code} · Só cadastro FPG (sem scorecards detalhados)</span>}
-      />
+      {/* Header com foto grande ao lado */}
+      <div style={{ display: "flex", gap: 16, alignItems: "flex-start", marginBottom: 12 }}>
+        {f.photo && (
+          <img src={`https://hcp-portugal.datagolf.pt/photos/${f.photo}`}
+            alt={f.name}
+            style={{ width: 200, maxHeight: 260, borderRadius: 6, objectFit: "cover", flexShrink: 0 }}
+            onError={e => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />
+        )}
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <DetailHeader
+            title={
+              <>
+                {showFlag && <span className="mr-8">{gf(f.country_prefix)}</span>}
+                {f.name}
+                <a
+                  href={`https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=${f.federation_code}`}
+                  target="_blank" rel="noopener noreferrer"
+                  title="Ver ficha WHS no FPG Scoring"
+                  style={{ marginLeft: 8, fontSize: 14, color: "var(--chart-2)", textDecoration: "none", verticalAlign: "middle" }}
+                  onClick={e => e.stopPropagation()}
+                >🔗</a>
+                <a
+                  href={`https://my.fpg.pt/Home/PlayerWHS.aspx?no=${f.federation_code}`}
+                  target="_blank" rel="noopener noreferrer"
+                  title="Ver ficha WHS no My FPG"
+                  style={{ marginLeft: 4, fontSize: 14, color: "var(--chart-2)", textDecoration: "none", verticalAlign: "middle" }}
+                  onClick={e => e.stopPropagation()}
+                >🔗</a>
+              </>
+            }
+            sub={<span className="muted">#{f.federation_code} · Só cadastro FPG (sem scorecards detalhados)</span>}
+          />
+        </div>
+      </div>
       <div className="card" style={{ marginTop: 12 }}>
         <div className="h-md fs-14 mb-8">Cadastro FPG — todos os {Object.keys(f).length} campos</div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 12 }}>
@@ -2161,17 +2419,7 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
               return <KV key={k} label={label} value={value} />;
             })}
         </div>
-        {f.photo && (
-          <div style={{ marginTop: 16 }}>
-            <div className="muted fs-10 mb-4">Fotografia FPG</div>
-            {/* URL público descoberto 2026-04-16: hcp-portugal.datagolf.pt/photos/{path}
-                Não precisa de cookies nem proxy — carrega directamente no browser. */}
-            <img src={`https://hcp-portugal.datagolf.pt/photos/${f.photo}`}
-              alt={f.name}
-              style={{ maxHeight: 180, borderRadius: 6 }}
-              onError={e => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />
-          </div>
-        )}
+        {/* Foto movida para o hero header (ao lado do nome) — 2026-04-16 */}
       </div>
       {/* KPIs de actividade — calculados a partir das rondas WHS */}
       {liveRounds && liveRounds.length > 0 && (() => {
@@ -2241,53 +2489,7 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
             Dados de cadastro acima. As rondas WHS podem ser consultadas diretamente no site da FPG.
           </div>
         )}
-        {liveRounds && liveRounds.length > 0 && (
-          <div style={{ maxHeight: 500, overflowY: "auto" }}>
-            <table className="w-full" style={{ fontSize: 12, borderCollapse: "collapse" }}>
-              <thead>
-                <tr style={{ position: "sticky", top: 0, background: "var(--bg)", borderBottom: "1px solid var(--border)" }}>
-                  <th className="muted fs-10" style={{ textAlign: "left",  padding: "6px 4px", fontWeight: 600 }}>Data</th>
-                  <th className="muted fs-10" style={{ textAlign: "left",  padding: "6px 4px", fontWeight: 600 }}>Torneio</th>
-                  <th className="muted fs-10" style={{ textAlign: "left",  padding: "6px 4px", fontWeight: 600 }}>Campo</th>
-                  <th className="muted fs-10" style={{ textAlign: "center",padding: "6px 4px", fontWeight: 600 }}>Bur.</th>
-                  <th className="muted fs-10" style={{ textAlign: "center",padding: "6px 4px", fontWeight: 600 }}>HCP</th>
-                  <th className="muted fs-10" style={{ textAlign: "center",padding: "6px 4px", fontWeight: 600 }}>Stab.</th>
-                  <th className="muted fs-10" style={{ textAlign: "center",padding: "6px 4px", fontWeight: 600 }}>SD</th>
-                  <th className="muted fs-10" style={{ textAlign: "center",padding: "6px 4px", fontWeight: 600 }}>Origem</th>
-                </tr>
-              </thead>
-              <tbody>
-                {liveRounds.slice(0, 100).map(r => {
-                  const sdNum = r.score_differential != null ? Number(r.score_differential) : NaN;
-                  const hiRef = r.calc_hcp_index ?? r.calculated_exact_hcp ?? player.hcp ?? null;
-                  const sdCls = isFinite(sdNum) && hiRef != null ? sdClassByHcp(sdNum, Number(hiRef)) : "";
-                  return (
-                    <tr key={r.id}
-                        style={{ borderBottom: "1px solid var(--border-subtle, rgba(0,0,0,0.04))", cursor: "pointer" }}
-                        title="Clicar para ver scorecard hole-by-hole"
-                        onClick={() => openScorecard(r)}>
-                      <td style={{ padding: "4px" }} className="fw-600">{(r.score_dateStr || "").slice(0, 10)}</td>
-                      <td style={{ padding: "4px" }}>{r.tournament_description}</td>
-                      <td style={{ padding: "4px" }} className="muted">{r.course_description}</td>
-                      <td style={{ padding: "4px", textAlign: "center" }}>{r.hole_count}</td>
-                      <td style={{ padding: "4px", textAlign: "center" }} className="fw-700">{r.calc_hcp_index ?? r.calculated_exact_hcp}</td>
-                      <td style={{ padding: "4px", textAlign: "center" }}>{r.calculated_stablnet_total}</td>
-                      <td style={{ padding: "4px", textAlign: "center" }}>
-                        {isFinite(sdNum)
-                          ? <span className={sdCls ? `p p-sm p-${sdCls}` : ""}>{r.score_differential}</span>
-                          : r.score_differential}
-                      </td>
-                      <td style={{ padding: "4px", textAlign: "center" }} className="muted fs-10">{r.score_origin}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-            {liveRounds.length > 100 && (
-              <div className="muted fs-10 ta-c p-4">A mostrar 100 de {liveRounds.length} rondas</div>
-            )}
-          </div>
-        )}
+        {liveRounds && liveRounds.length > 0 && <FederadoRoundsTable rounds={liveRounds} hcpRef={player.hcp} onOpenScorecard={openScorecard} extraMap={extraMap} localIds={localIds} />}
         {liveRounds && liveRounds.length === 0 && (
           <div className="muted fs-10 ta-c">Sem rondas registadas no WHS</div>
         )}
@@ -3449,9 +3651,10 @@ export default function JogadoresPage() {
             const showFlag = countryPrefix && countryPrefix !== "PT" && !countryPrefix.startsWith("@");
 
             return (
-              <button key={p.fed} className={`course-item ${isActive ? "active" : ""}`}
+              <a key={p.fed} href={`/jogadores/${p.fed}`}
+                className={`course-item ${isActive ? "active" : ""}`}
                 style={isFedsOnly ? { opacity: 0.75 } : undefined}
-                onClick={() => { selectPlayer(p.fed); md.onSelect(); }}>
+                onClick={e => { if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) { e.preventDefault(); selectPlayer(p.fed); md.onSelect(); } }}>
                 <div className="course-item-name flex-center">
                   {rankingMode && rank != null && (
                     <span className={`sidebar-rank ${rank <= 3 ? "sidebar-rank-top3" : rank <= 10 ? "sidebar-rank-top10" : "sidebar-rank-rest"}`}>
@@ -3477,7 +3680,7 @@ export default function JogadoresPage() {
                   {[displayClub, displayEscalao, ...(p.tags?.filter(t => t !== "no-priority") || [])].filter(Boolean).join(" · ") || `#${p.fed}`}
                   {displayHcp != null && ` · HCP ${hcpDisplay(displayHcp)}`}
                 </div>
-              </button>
+              </a>
             );
           })}
           {filtered.length === 0 && <EmptyState size="sm" message="Nenhum jogador encontrado" />}
