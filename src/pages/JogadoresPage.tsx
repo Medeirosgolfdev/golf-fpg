@@ -2164,9 +2164,9 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
         {f.photo && (
           <div style={{ marginTop: 16 }}>
             <div className="muted fs-10 mb-4">Fotografia FPG</div>
-            {/* Proxy via /api/fpg-photo: o PhotoHandler.ashx exige cookies de
-                sessão FPG que o browser do user não tem. Backend adiciona-os. */}
-            <img src={`/api/fpg-photo?path=${encodeURIComponent(f.photo)}&fed=${encodeURIComponent(f.federation_code)}`}
+            {/* URL público descoberto 2026-04-16: hcp-portugal.datagolf.pt/photos/{path}
+                Não precisa de cookies nem proxy — carrega directamente no browser. */}
+            <img src={`https://hcp-portugal.datagolf.pt/photos/${f.photo}`}
               alt={f.name}
               style={{ maxHeight: 180, borderRadius: 6 }}
               onError={e => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />

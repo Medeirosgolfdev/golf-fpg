@@ -473,3 +473,33 @@
 [33mNada de novo — sem commit[0m
 [15/04/2026 16:00:12,01] Exit code: 2 
 [15/04/2026 16:00:12,02] Sem novidades 
+============================================================ 
+[16/04/2026 13:12:31,48] Scheduled scrape starting 
+============================================================ 
+[36m[fpg-scrape][0m cookies de api\.datagolf-cookies.json
+[36m[fpg-scrape][0m players.json: 261 total, [32m215[0m a processar ([33m46 saltados[0m por tag no-scrape/hidden)
+[36m[fpg-scrape][0m 215 jogador(es) a processar — concurrency=3, mode=missing-only
+  [32mNOVO[0m 28845: 348 rondas (0 novas, 347 scorecards novos)
+  [32mNOVO[0m 33811: 96 rondas (0 novas, 93 scorecards novos)
+  [32mNOVO[0m 36844: 102 rondas (0 novas, 101 scorecards novos)
+  ⚠ scorecard 2616779 (scoringType=1, competitionType=10) falhou: FPG: An error occurred while processing this request.
+  [32mNOVO[0m 36901: 163 rondas (0 novas, 162 scorecards novos)
+  [32mNOVO[0m 37010: 422 rondas (0 novas, 418 scorecards novos)
+  [32mNOVO[0m 38006: 165 rondas (0 novas, 163 scorecards novos)
+  ⚠ scorecard 2616781 (scoringType=1, competitionType=10) falhou: FPG: An error occurred while processing this request.
+  [32mNOVO[0m 38233: 395 rondas (0 novas, 394 scorecards novos)
+  [32mNOVO[0m 38334: 488 rondas (0 novas, 483 scorecards novos)
+  [32mNOVO[0m 38424: 328 rondas (0 novas, 324 scorecards novos)
+  ⚠ scorecard 2616784 (scoringType=1, competitionType=10) falhou: FPG: An error occurred while processing this request.
+  [32mNOVO[0m 38722: 198 rondas (0 novas, 193 scorecards novos)
+  [32mNOVO[0m 38976: 149 rondas (0 novas, 146 scorecards novos)
+  [32mNOVO[0m 39097: 231 rondas (0 novas, 229 scorecards novos)
+  [32mNOVO[0m 39465: 156 rondas (0 novas, 155 scorecards novos)
+  [32mNOVO[0m 39552: 221 rondas (0 novas, 220 scorecards novos)
+  [32mNOVO[0m 40115: 387 rondas (0 novas, 384 scorecards novos)
+  [32mNOVO[0m 40318: 284 rondas (0 novas, 283 scorecards novos)
+  [32mNOVO[0m 40390: 285 rondas (0 novas, 283 scorecards novos)
+  [32mNOVO[0m 40473: 88 rondas (0 novas, 86 scorecards novos)
+  [32mNOVO[0m 40492: 119 rondas (0 novas, 117 scorecards novos)
+  [32mNOVO[0m 40534: 428 rondas (0 novas, 426 scorecards novos)
+  [32mNOVO[0m 40645: 205 rondas (0 novas, 204 scorecards novos)
