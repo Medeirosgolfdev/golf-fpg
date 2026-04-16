@@ -650,24 +650,24 @@ export function InscricoesPanel() {
   }, [torneios, nossosFedSet]);
 
   return (
-    <div className="flex-col flex-1 overflow-hidden" style={{ display: "flex" }}>
+    <div>
       {/* Selector de escalão */}
       <div style={{
-        display: "flex", alignItems: "center", gap: 5, flexWrap: "nowrap", flexShrink: 0,
+        display: "flex", alignItems: "center", gap: 5, flexWrap: "nowrap",
         padding: "6px 12px", overflowX: "auto", scrollbarWidth: "none" as const,
         borderBottom: "1px solid var(--border-light)", background: "var(--bg-card)",
       }}>
         {torneios.map(t => (
           <TorneioCard key={t.tcode} t={t} active={activeTcode === t.tcode} onClick={() => setActiveTcode(t.tcode)} />
         ))}
-        <div className="flex-1" style={{ minWidth: 8 }} />
+        <div style={{ flex: 1, minWidth: 8 }} />
         {totalNossosInscritos > 0 && <span className="chip shrink-0" >{totalNossosInscritos} na BD</span>}
         <button className="tourn-tab tourn-tab-sm tourn-tab-muted" onClick={refreshAll}
           style={{ flexShrink: 0 }}
           title="Actualizar inscrições da FPG">↺</button>
       </div>
       <PainelResumo torneios={torneios} nossosByFed={nossosByFed} />
-      <div className="course-detail">
+      <div style={{ padding: "0 12px" }}>
         <div style={{ display: "flex", alignItems: "baseline", gap: 12, padding: "10px 0 8px",
           borderBottom: "1px solid var(--border)", marginBottom: 8, flexWrap: "wrap" }}>
           <span className="fw-700 fs-14">

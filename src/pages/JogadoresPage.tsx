@@ -1329,10 +1329,35 @@ function syntheticFederadoFromPlayer(p: { fed: string } & Player): FederadoRaw {
 function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; selected: { fed: string } & Player; onMetaLoaded?: (meta: PlayerPageData["META"]) => void }) {
   const { data, loading, error } = usePlayerData(fedId);
   const [searchParams, setSearchParams] = useSearchParams();
-  // Toggle: ver este jogador como se fosse só um federado (sem análise rica)
-  const [federadoView, setFederadoView] = useState(false);
+  // Toggle: ver este jogador como se fosse só um federado (sem análise rica).
+  // Persiste no URL via ?view=federado para sobreviver a refresh / share.
+  const federadoView = searchParams.get("view") === "federado";
+  const setFederadoView = (on: boolean) => {
+    setSearchParams(prev => {
+      const n = new URLSearchParams(prev);
+      if (on) n.set("view", "federado");
+      else n.set("view", "by_date");
+      return n;
+    }, { replace: true });
+  };
+  // Federado real do FPG (carregado lazy quando se entra na vista federado) —
+  // permite mostrar foto, country_prefix, dados de cadastro reais, etc.
+  const [realFederado, setRealFederado] = useState<FederadoRaw | null>(null);
   // Reset quando muda de jogador
-  useEffect(() => { setFederadoView(false); }, [fedId]);
+  useEffect(() => { setRealFederado(null); }, [fedId]);
+  // Quando se activa a vista federado, procurar o federado real em federados.json
+  useEffect(() => {
+    if (!federadoView) return;
+    let cancelled = false;
+    loadFederados()
+      .then(file => {
+        if (cancelled) return;
+        const found = file.players.find(p => String(p.federation_code) === String(fedId));
+        if (found) setRealFederado(found);
+      })
+      .catch(() => { /* ignorar — synthetic ainda funciona */ });
+    return () => { cancelled = true; };
+  }, [federadoView, fedId]);
 
   const VALID_VIEWS: ViewKey[] = ["by_course", "by_course_analysis", "by_date", "by_tournament", "analysis"];
   const paramView = searchParams.get("view") as ViewKey | null;
@@ -1351,8 +1376,13 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
   // Reset search + view quando muda de jogador; notify parent when player data loads
   useEffect(() => {
     setCourseSearch("");
-    const pv = searchParams.get("view") as ViewKey | null;
-    const resolved: ViewKey = pv && VALID_VIEWS.includes(pv) ? pv : "by_date";
+    const pv = searchParams.get("view") as string | null;
+    // "federado" é uma vista válida (não-ViewKey) — ignorar aqui, é tratada noutro código
+    if (pv === "federado") {
+      if (data?.META) onMetaLoaded?.(data.META);
+      return;
+    }
+    const resolved: ViewKey = pv && VALID_VIEWS.includes(pv as ViewKey) ? (pv as ViewKey) : "by_date";
     setViewState(resolved);
     // Garantir que o URL reflecte a vista activa (mesmo sem parâmetro explícito)
     if (!pv) setSearchParams(prev => { const n = new URLSearchParams(prev); n.set("view", "by_date"); return n; }, { replace: true });
@@ -1380,8 +1410,9 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
   // sintético (Nossos não têm um real). Útil para ver a ficha base FPG +
   // rondas WHS live em tempo real, sem o overlay rico de análise.
   if (federadoView) {
-    const synthFed = (selected as MergedPlayer)._federadoRaw || syntheticFederadoFromPlayer(selected);
-    const fakePlayer = { ...selected, _source: "both" as const, _federadoRaw: synthFed } as MergedPlayer & { fed: string };
+    // Preferência: federado real do FPG (com foto, country, etc.) > _federadoRaw já anexado > synthetic
+    const fedSrc = realFederado || (selected as MergedPlayer)._federadoRaw || syntheticFederadoFromPlayer(selected);
+    const fakePlayer = { ...selected, _source: "both" as const, _federadoRaw: fedSrc } as MergedPlayer & { fed: string };
     return (
       <div className="pa-page">
         <div style={{ padding: "8px 12px", display: "flex", gap: 8, alignItems: "center", borderBottom: "1px solid var(--border)", flexShrink: 0 }}>
@@ -2133,7 +2164,12 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
         {f.photo && (
           <div style={{ marginTop: 16 }}>
             <div className="muted fs-10 mb-4">Fotografia FPG</div>
-            <img src={`https://scoring.datagolf.pt/pt/PhotoHandler.ashx?photo=${encodeURIComponent(f.photo)}`} alt={f.name} style={{ maxHeight: 180, borderRadius: 6 }} onError={e => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />
+            {/* Proxy via /api/fpg-photo: o PhotoHandler.ashx exige cookies de
+                sessão FPG que o browser do user não tem. Backend adiciona-os. */}
+            <img src={`/api/fpg-photo?path=${encodeURIComponent(f.photo)}&fed=${encodeURIComponent(f.federation_code)}`}
+              alt={f.name}
+              style={{ maxHeight: 180, borderRadius: 6 }}
+              onError={e => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />
           </div>
         )}
       </div>

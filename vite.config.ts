@@ -288,6 +288,102 @@ export default defineConfig({
           }
         })
 
+        /* /api/fpg-photo?path=<photo_path> — proxy de fotos do FPG.
+           PhotoHandler.ashx em scoring.datagolf.pt exige cookies de sessão
+           (ASP.NET_SessionId + DG_Lists_URL). Como o browser do utilizador
+           não os tem, fazemos o fetch server-side e devolvemos o blob. */
+        server.middlewares.use(async (req, res, next) => {
+          if (!req.url?.startsWith('/api/fpg-photo')) return next()
+          try {
+            const url = new URL(req.url, 'http://localhost')
+            const photoPath = url.searchParams.get('path') || ''
+            if (!photoPath) {
+              res.writeHead(400, { 'Content-Type': 'text/plain' })
+              res.end('missing ?path=')
+              return
+            }
+            // Carregar cookies (mesmos do datagolf scoring)
+            let cookieHeader = process.env.DATAGOLF_SCORING_COOKIES || ''
+            if (!cookieHeader) {
+              try {
+                const fp = join(process.cwd(), 'api', '.scoring-datagolf-cookies.json')
+                if (existsSync(fp)) {
+                  const j = JSON.parse(readFileSync(fp, 'utf8'))
+                  if (j.cookieHeader) cookieHeader = j.cookieHeader
+                }
+              } catch {}
+            }
+            // Fallback: cookies do FPG admissions (scoring.fpg.pt) — partilham
+            // base de cookies em alguns casos
+            if (!cookieHeader) cookieHeader = loadScoringCookies()
+
+            // Tentar múltiplos URLs em cascata — não sabemos qual o host/path
+            // correcto da FPG para fotos. Param 'fed' ajuda alguns endpoints.
+            const fed = url.searchParams.get('fed') || ''
+            const candidates = [
+              { url: 'https://my.fpg.pt/Home/PhotoHandler.ashx?photo=' + encodeURIComponent(photoPath), referer: 'https://my.fpg.pt/' },
+              { url: 'https://scoring.fpg.pt/lists/PhotoHandler.ashx?photo=' + encodeURIComponent(photoPath), referer: 'https://scoring.fpg.pt/' },
+              { url: 'https://my.fpg.pt/photos/' + photoPath, referer: 'https://my.fpg.pt/' },
+              { url: 'https://scoring.datagolf.pt/photos/' + photoPath, referer: 'https://scoring.datagolf.pt/' },
+              { url: 'https://scoring.datagolf.pt/pt/PhotoHandler.ashx?photo=' + encodeURIComponent(photoPath), referer: 'https://scoring.datagolf.pt/pt/' },
+              ...(fed ? [
+                { url: 'https://my.fpg.pt/Home/PhotoHandler.ashx?fed=' + fed, referer: 'https://my.fpg.pt/' },
+              ] : []),
+            ]
+
+            // Carregar TAMBÉM os cookies do my.fpg.pt (FPG_COOKIES) — diferentes
+            // dos de scoring.datagolf.pt
+            let myFpgCookies = process.env.FPG_COOKIES || ''
+            if (!myFpgCookies) {
+              try {
+                const fp = join(process.cwd(), 'api', '.datagolf-cookies.json')
+                if (existsSync(fp)) {
+                  const j = JSON.parse(readFileSync(fp, 'utf8'))
+                  if (j.cookieHeader) myFpgCookies = j.cookieHeader
+                }
+              } catch {}
+            }
+
+            console.log('[fpg-photo] tentar', candidates.length, 'URLs para', photoPath)
+            for (const cand of candidates) {
+              const ck = cand.url.includes('my.fpg.pt') ? myFpgCookies : cookieHeader
+              try {
+                const r = await fetch(cand.url, {
+                  headers: {
+                    'User-Agent': UA,
+                    'Accept': 'image/*,*/*;q=0.8',
+                    'Referer': cand.referer,
+                    ...(ck ? { 'Cookie': ck } : {}),
+                  },
+                  redirect: 'follow',
+                })
+                const ct = r.headers.get('content-type') || ''
+                console.log('  →', new URL(cand.url).hostname + new URL(cand.url).pathname, 'HTTP', r.status, 'CT=', ct)
+                if (!r.ok) continue
+                if (ct.includes('text/html') || ct.includes('application/json')) continue
+                const buf = Buffer.from(await r.arrayBuffer())
+                if (buf.length < 200) continue   // demasiado pequeno para ser foto válida
+                console.log('[fpg-photo] OK ✓ via', new URL(cand.url).hostname, '(', buf.length, 'bytes)')
+                res.writeHead(200, {
+                  'Content-Type': ct || 'image/jpeg',
+                  'Cache-Control': 'public, max-age=86400',
+                  'Content-Length': String(buf.length),
+                })
+                res.end(buf)
+                return
+              } catch (err) {
+                console.log('  → erro:', String((err as Error).message))
+              }
+            }
+            // Nenhum candidato funcionou
+            res.writeHead(404, { 'Content-Type': 'text/plain' })
+            res.end('Foto não encontrada em nenhum dos ' + candidates.length + ' URLs do FPG')
+          } catch (e: any) {
+            res.writeHead(500, { 'Content-Type': 'text/plain' })
+            res.end(String(e?.message || e))
+          }
+        })
+
         /* /api/inscricoes — vai SEMPRE à FPG, sem cache */
         server.middlewares.use(async (req, res, next) => {
           if (!req.url?.startsWith('/api/inscricoes')) return next()
