@@ -24,6 +24,7 @@
 
 const fs   = require("fs");
 const path = require("path");
+const { writeAtomic, writeJsonAtomic } = require("../lib/atomic-write");
 
 /** Ler JSON de ficheiro, removendo BOM se existir */
 function readJSON(fpath) {
@@ -549,7 +550,7 @@ courses.sort((a, b) => a.master.name.localeCompare(b.master.name, "pt"));
 // Gravar
 const dir = path.dirname(outPath);
 fs.mkdirSync(dir, { recursive: true });
-fs.writeFileSync(outPath, JSON.stringify({ courses }, null, 2), "utf-8");
+writeJsonAtomic(outPath, { courses });
 
 console.log(`\n  Gravado: ${outPath}`);
 console.log(`  ${courses.length} campos, ${courses.reduce((n, c) => n + c.master.tees.length, 0)} tees`);
@@ -558,5 +559,5 @@ console.log(`  Campos com _players: ${coursesWithPlayers}/${courses.length}`);
 
 // Gravar cache fingerprint
 try {
-  fs.writeFileSync(cachePath, JSON.stringify({ _fingerprint: fingerprint }), "utf-8");
+  writeJsonAtomic(cachePath, { _fingerprint: fingerprint });
 } catch { /* ignorar — cache é opcional */ }

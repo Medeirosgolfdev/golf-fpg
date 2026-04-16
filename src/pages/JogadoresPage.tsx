@@ -1288,9 +1288,51 @@ function whsQtyCalc(nSds: number): number {
 /* ──── — data loading + view switching
    ──────────────────────────────────────────────────────────────────────────────────────── */
 
+/** Constrói um FederadoRaw mínimo a partir de um Player "Nossos" — para
+ *  poder renderizar FederadoOnlyDetail no modo "ver como federado". Os campos
+ *  ausentes são preenchidos de forma neutra; o cadastro fica esparso mas a
+ *  ficha live (rondas WHS) funciona porque só precisa do federation_code. */
+function syntheticFederadoFromPlayer(p: { fed: string } & Player): FederadoRaw {
+  const clubName = typeof p.club === "string" ? p.club : (p.club?.long || p.club?.short || "");
+  const acronym  = typeof p.club === "string" ? p.club : (p.club?.short || "");
+  const clubCode = typeof p.club === "object" && p.club?.code ? String(p.club.code) : "";
+  return {
+    federation_code:    p.fed,
+    federation_number:  p.fed.padStart(7, "0"),
+    name:               p.name,
+    gender:             p.sex || "",
+    birthdate:          p.dob || null,
+    admission_date:     null,
+    club_code:          clubCode,
+    club_name:          clubName,
+    acronym,
+    country_prefix:     "PT",
+    country:            "Portugal",
+    hcp_exact:          p.hcp ?? null,
+    hcp_index:          p.hcp ?? null,
+    hcp_status:         "",
+    hcp_status_id:      0,
+    hcp_type:           "",
+    age_level:          p.escalao || "",
+    age_level_id:       0,
+    player_type:        "",
+    player_type_id:     0,
+    federated_status:   "",
+    federated_status_id: 0,
+    rounds_current_year: 0,
+    photo:              null,
+    last_hcp_date:      null,
+    encryptedfedcode:   "",
+  };
+}
+
 function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; selected: { fed: string } & Player; onMetaLoaded?: (meta: PlayerPageData["META"]) => void }) {
   const { data, loading, error } = usePlayerData(fedId);
   const [searchParams, setSearchParams] = useSearchParams();
+  // Toggle: ver este jogador como se fosse só um federado (sem análise rica)
+  const [federadoView, setFederadoView] = useState(false);
+  // Reset quando muda de jogador
+  useEffect(() => { setFederadoView(false); }, [fedId]);
 
   const VALID_VIEWS: ViewKey[] = ["by_course", "by_course_analysis", "by_date", "by_tournament", "analysis"];
   const paramView = searchParams.get("view") as ViewKey | null;
@@ -1334,6 +1376,27 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
   const latestHcp = data?.HCP_INFO?.current != null ? Number(data.HCP_INFO.current) : null;
   const meta = data?.META;
 
+  // Vista "como federado": renderiza FederadoOnlyDetail com um _federadoRaw
+  // sintético (Nossos não têm um real). Útil para ver a ficha base FPG +
+  // rondas WHS live em tempo real, sem o overlay rico de análise.
+  if (federadoView) {
+    const synthFed = (selected as MergedPlayer)._federadoRaw || syntheticFederadoFromPlayer(selected);
+    const fakePlayer = { ...selected, _source: "both" as const, _federadoRaw: synthFed } as MergedPlayer & { fed: string };
+    return (
+      <div className="pa-page">
+        <div style={{ padding: "8px 12px", display: "flex", gap: 8, alignItems: "center", borderBottom: "1px solid var(--border)" }}>
+          <span className="muted fs-12">Vista de federado (cadastro FPG + rondas WHS live, sem análise nossa)</span>
+          <button className="p p-outline" style={{ marginLeft: "auto", cursor: "pointer" }}
+            onClick={() => setFederadoView(false)}
+            title="Voltar à vista completa com análise">
+            ← Vista completa
+          </button>
+        </div>
+        <FederadoOnlyDetail player={fakePlayer} />
+      </div>
+    );
+  }
+
   return (
     <div className="pa-page">
       {/* Header: name + controls on same row, pills below */}
@@ -1357,6 +1420,16 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
               style={{ marginLeft: 4, fontSize: 14, color: "var(--chart-2)", textDecoration: "none", verticalAlign: "middle" }}
               onClick={e => e.stopPropagation()}
             >🔗</a>
+            <button
+              onClick={() => setFederadoView(true)}
+              title="Ver como federado: cadastro FPG + rondas WHS live (sem análise nossa)"
+              style={{
+                marginLeft: 8, padding: "2px 8px", fontSize: 11, fontWeight: 600,
+                background: "transparent", border: "1px solid var(--border)",
+                borderRadius: 10, cursor: "pointer", color: "var(--text-2)",
+                verticalAlign: "middle",
+              }}
+            >👤 Vista federado</button>
           </h2>
           {data && (
             <div className="pa-controls-left">

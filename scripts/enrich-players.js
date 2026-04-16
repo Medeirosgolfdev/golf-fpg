@@ -13,6 +13,7 @@
 const fs = require("fs");
 const path = require("path");
 const { extractPlayerStats } = require("../lib/cross-stats");
+const { writeJsonAtomic } = require("../lib/atomic-write");
 
 const args = process.argv.slice(2);
 const fedFilter = args.filter(a => /^\d+$/.test(a));
@@ -137,7 +138,7 @@ for (const fed of targetFeds) {
 
 const outDir = path.dirname(statsOutPath);
 if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
-fs.writeFileSync(statsOutPath, JSON.stringify(existing, null, 2), "utf-8");
+writeJsonAtomic(statsOutPath, existing);
 
 console.log(`✅ ${processed} enriched, ${skipped} skipped`);
 console.log(`📄 ${statsOutPath}`);

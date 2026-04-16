@@ -1,0 +1,9 @@
+{
+  "_README": "Override manual de nacionalidades por federation_code. Os dados de country_prefix em federados.json reflectem 'pais de federação' e estão por vezes errados (ex: estrangeiros federados em PT ficam PT; William Gao marcado US mas é CN como os irmãos). Adicionar entries aqui para corrigir. Formato: \"<fed>\": \"<código ISO-2>\". Default = usar FPG.",
+  "_format_help": "Códigos ISO-2: PT, ES, FR, DE, GB, US, CN, RU, UA, IL, PL, BR, etc. Ver src/utils/flagUtils.ts para a lista completa.",
+
+  "51524": "CN",
+  "51949": "CZ",
+  "54475": "RU",
+  "53685": "UA"
+}

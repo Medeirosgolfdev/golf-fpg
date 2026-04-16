@@ -30,6 +30,7 @@
 "use strict";
 const fs = require("fs");
 const path = require("path");
+const { writeAtomic } = require("../lib/atomic-write");
 
 // ═══════════════════════════════════════════════════════════
 // CONFIGURAÇÃO
@@ -368,7 +369,7 @@ function writeIfChanged(filepath, newObj) {
     filesUnchanged++;
     return;
   }
-  fs.writeFileSync(filepath, JSON.stringify(newObj, null, 2));
+  writeAtomic(filepath, JSON.stringify(newObj, null, 2));
   filesWritten++;
   const nT = totalsOf(newObj);
   const oT = oldObj ? totalsOf(oldObj) : { torneios: 0, jogadores: 0, scorecards: 0 };

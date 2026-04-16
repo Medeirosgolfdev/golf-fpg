@@ -29,6 +29,7 @@ import { AnoEscalaoPill, TrendBadge } from "./AnoEscalaoPill";
 import PlayerLink from "./PlayerLink";
 import LoadingState from "./LoadingState";
 import EmptyState from "./EmptyState";
+import { FLAG } from "../utils/flagUtils";
 
 /* ═══════════════════════════════════════════════════════
    HOOKS
@@ -40,6 +41,60 @@ function usePlayerStats() {
     fetch("/player-stats.json").then(r => r.ok ? r.json() : {}).then(setStats).catch(() => {});
   }, []);
   return stats;
+}
+
+/* ── fed → country_prefix (lazy-load, partilhado entre instâncias) ──
+ *
+ * Funde 2 fontes:
+ *   1. /data/federados.json        — country_prefix do FPG (mas é "país de federação",
+ *                                     não nacionalidade — frequentemente errado)
+ *   2. /data/nationalities.json    — override manual (curado por nós) — prevalece
+ *
+ * Resultado: Map<fed, código_ISO_2_em_maiúsculas>. Só inclui não-PT (PT é default).
+ */
+let _fedCountryPromise: Promise<Map<string, string>> | null = null;
+function loadFedCountries(): Promise<Map<string, string>> {
+  if (_fedCountryPromise) return _fedCountryPromise;
+  _fedCountryPromise = Promise.all([
+    fetch("/data/federados.json").then(r => r.ok ? r.json() : null).catch(() => null),
+    fetch("/data/nationalities.json").then(r => r.ok ? r.json() : null).catch(() => null),
+  ]).then(([feds, overrides]) => {
+    const m = new Map<string, string>();
+    // 1) Base: FPG
+    const items = (feds && (feds.players || feds.federados || feds.records || (Array.isArray(feds) ? feds : []))) || [];
+    for (const p of items) {
+      const fed = String(p.federation_code || p.fed || "");
+      const cc = (p.country_prefix || "").toUpperCase().trim().slice(0, 2);
+      if (fed && cc && cc !== "PT" && !cc.startsWith("@")) m.set(fed, cc);
+    }
+    // 2) Override (curado): adiciona/substitui/remove
+    if (overrides && typeof overrides === "object") {
+      for (const [fed, raw] of Object.entries(overrides)) {
+        if (fed.startsWith("_")) continue;  // metadados (_README, etc.)
+        const cc = String(raw || "").toUpperCase().trim().slice(0, 2);
+        if (!cc) { m.delete(fed); continue; }
+        if (cc === "PT") m.delete(fed);   // forçar default (sem bandeira)
+        else m.set(fed, cc);
+      }
+    }
+    return m;
+  });
+  return _fedCountryPromise;
+}
+
+function useFedCountries(): Map<string, string> {
+  const [m, setM] = useState<Map<string, string>>(new Map());
+  useEffect(() => { loadFedCountries().then(setM); }, []);
+  return m;
+}
+
+/** Renderiza bandeira só se o jogador for não-PT (PT é default sem bandeira). */
+function CountryFlag({ fed, fedCountries }: { fed: string | null; fedCountries: Map<string, string> }) {
+  if (!fed) return null;
+  const cc = fedCountries.get(fed);
+  if (!cc) return null;
+  const emoji = FLAG[cc] ?? "🏳️";
+  return <span title={cc} style={{ marginRight: 4, fontSize: "0.95em" }}>{emoji}</span>;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -60,6 +115,7 @@ function PainelResumo({ torneios, nossosByFed }: {
   torneios: TorneioData[];
   nossosByFed: Map<string, BdPlayer>;
 }) {
+  const fedCountries = useFedCountries();
   const [clubeSel, setClubesSel] = React.useState<string | null>(null);
 
   const carregados = torneios.filter(t => t.totalInscritos > 0 || t._status === "ok");
@@ -183,6 +239,7 @@ function PainelResumo({ torneios, nossosByFed }: {
               }}>
                 <SexBadge sex={jj.sex} size="sm" />
                 <span className={`p p-sm p-${escCls(jj.escalao)} fs-10`}>{escShort(jj.escalao)}</span>
+                <CountryFlag fed={jj.fed} fedCountries={fedCountries} />
                 <span>{jj.nome || jj.fed}</span>
               </span>
             ))}
@@ -199,12 +256,38 @@ function PainelResumo({ torneios, nossosByFed }: {
 function TorneioCard({ t, active, onClick }: {
   t: TorneioData; active: boolean; onClick: () => void;
 }) {
+  const fedCountries = useFedCountries();
   const recentes = useMemo(() => t.jogadores.filter(j => isRecentHours(j.dataInscricao, 48)).length, [t.jogadores]);
+  // Contar estrangeiros (não-PT) — agrupar por país para tooltip
+  const estrangeirosByCountry = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const j of t.jogadores) {
+      const cc = j.fed ? fedCountries.get(j.fed) : null;
+      if (cc) m.set(cc, (m.get(cc) || 0) + 1);
+    }
+    return m;
+  }, [t.jogadores, fedCountries]);
+  const estrangeirosTotal = useMemo(
+    () => [...estrangeirosByCountry.values()].reduce((a, b) => a + b, 0),
+    [estrangeirosByCountry]
+  );
+  const estrangeirosTitle = useMemo(() => {
+    if (estrangeirosTotal === 0) return "";
+    const parts = [...estrangeirosByCountry.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .map(([cc, n]) => `${FLAG[cc] ?? "🏳️"} ${cc} ${n}`);
+    return ` · ${estrangeirosTotal} estrangeiro${estrangeirosTotal > 1 ? "s" : ""}: ${parts.join(", ")}`;
+  }, [estrangeirosByCountry, estrangeirosTotal]);
+  // As 3 bandeiras mais frequentes (para mostrar inline no card)
+  const topCountries = useMemo(
+    () => [...estrangeirosByCountry.entries()].sort((a, b) => b[1] - a[1]).slice(0, 3),
+    [estrangeirosByCountry]
+  );
   return (
     <button
       className={"tourn-tab tourn-tab-sm" + (active ? " active" : " tourn-tab-muted")}
       onClick={onClick}
-      title={`Campeonato Nacional de Jovens ${t.nome}${recentes ? ` · ${recentes} inscrito${recentes > 1 ? "s" : ""} nas últimas 48h` : ""}`}
+      title={`Campeonato Nacional de Jovens ${t.nome}${recentes ? ` · ${recentes} inscrito${recentes > 1 ? "s" : ""} nas últimas 48h` : ""}${estrangeirosTitle}`}
     >
       {escShort(t.escalao)}
       <SexBadge sex={t.sex} size="sm" />
@@ -219,6 +302,18 @@ function TorneioCard({ t, active, onClick }: {
           marginLeft: 2,
         }}>{t.totalInscritos}</span>
       )}
+      {estrangeirosTotal > 0 && (
+        <span className="fs-10 fw-700" style={{
+          marginLeft: 3, padding: "0 4px", borderRadius: 8,
+          background: active ? "rgba(255,255,255,0.18)" : "var(--bg-card)",
+          border: "1px solid var(--border)",
+          display: "inline-flex", alignItems: "center", gap: 2,
+        }}>
+          {topCountries.map(([cc]) => <span key={cc}>{FLAG[cc] ?? "🏳️"}</span>)}
+          {estrangeirosByCountry.size > topCountries.length && <span style={{ opacity: 0.7 }}>+</span>}
+          <span>{estrangeirosTotal}</span>
+        </span>
+      )}
       {recentes > 0 && <span className="new-round-dot" style={{ marginLeft: 2 }} title={`${recentes} nas últimas 48h`} />}
     </button>
   );
@@ -232,6 +327,7 @@ type InscSortKey = "pos" | "nome" | "hcp" | "vac" | "sd5" | "data" | "trend" | "
 function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
   t: TorneioData; nossosFedSet: Set<string>; nossosByFed: Map<string, BdPlayer>; statsDb: StatsDb;
 }) {
+  const fedCountries = useFedCountries();
   const [search, setSearch] = useState("");
   const [sortKey, setSortKey] = useState<InscSortKey>("pos");
   const [sortAsc, setSortAsc] = useState(true);
@@ -326,7 +422,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
               <span className="fw-700">+{recentes48h.length} inscrito{recentes48h.length > 1 ? "s" : ""} (48h):</span>{" "}
               {recentes48h.map((j, i) => {
                 const p = j.fed ? nossosByFed.get(j.fed) : undefined;
-                return <span key={j.fed ?? j.nome}>{i > 0 && ", "}<span className={p ? "fw-600" : ""}>{p?.name ?? j.nome}</span></span>;
+                return <span key={j.fed ?? j.nome}>{i > 0 && ", "}<CountryFlag fed={j.fed} fedCountries={fedCountries} /><span className={p ? "fw-600" : ""}>{p?.name ?? j.nome}</span></span>;
               })}
             </span>
           )}
@@ -372,6 +468,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
                   style={recent ? { background: "color-mix(in srgb, var(--score-eagle) 10%, transparent)" } : undefined}>
                   <td className="muted r fs-11">{i + 1}</td>
                   <td className="fs-13">
+                    <CountryFlag fed={j.fed} fedCountries={fedCountries} />
                     {p ? <PlayerLink fed={j.fed} name={p.name} query="?view=by_date" className="fw-700" /> : <span className="muted">{j.nome || "–"}</span>}
                   </td>
                   <td className="r">

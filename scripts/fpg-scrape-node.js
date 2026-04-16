@@ -40,6 +40,7 @@
 const fs = require("fs");
 const path = require("path");
 const { execSync } = require("child_process");
+const { writeJsonAtomic } = require("../lib/atomic-write");
 
 const REPO_ROOT = path.resolve(__dirname, "..");
 const OUTPUT_DIR = path.join(REPO_ROOT, "output");
@@ -166,7 +167,7 @@ async function fetchScorecard(round) {
 
 // ─── IO helpers ───────────────────────────────────────────
 function ensureDir(dir) { if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true }); }
-function writeJson(file, obj) { fs.writeFileSync(file, JSON.stringify(obj, null, 2)); }
+function writeJson(file, obj) { writeJsonAtomic(file, obj); }
 function readJsonIfExists(file) {
   if (!fs.existsSync(file)) return null;
   try { return JSON.parse(fs.readFileSync(file, "utf8")); } catch { return null; }

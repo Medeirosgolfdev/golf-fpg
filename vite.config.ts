@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { join, extname } from 'path'
-import { existsSync, statSync, createReadStream, readFileSync, writeFileSync, mkdirSync } from 'fs'
+import { existsSync, statSync, createReadStream, readFileSync, writeFileSync, mkdirSync, renameSync, unlinkSync } from 'fs'
 
 function loadEnvLocal() {
   const p = join(process.cwd(), '.env.local')
@@ -226,17 +226,32 @@ function readCache(): CacheFile {
   return {}
 }
 
+// Escrita atómica (write→.tmp + rename). O Vite serve o ficheiro em watch
+// mode e pode lê-lo enquanto escrevemos — sem isto, ficheiros ficavam
+// truncados a meio várias vezes. O rename é atómico em NTFS e POSIX.
+function writeAtomic(target: string, content: string): void {
+  const dir = require('path').dirname(target)
+  const tmp = require('path').join(dir, '.' + require('path').basename(target) + '.tmp.' + process.pid + '.' + Date.now())
+  try {
+    writeFileSync(tmp, content, 'utf8')
+    renameSync(tmp, target)
+  } catch (e) {
+    try { unlinkSync(tmp) } catch {}
+    throw e
+  }
+}
+
 function writeCache(data: CacheFile): void {
   const json = JSON.stringify(data, null, 2)
   try {
     const dir = join(process.cwd(), 'data')
     if (!existsSync(dir)) mkdirSync(dir, { recursive: true })
-    writeFileSync(CACHE_FILE, json, 'utf8')
+    writeAtomic(CACHE_FILE, json)
   } catch (e) { console.warn('[inscricoes] Erro a gravar data/:', e) }
   try {
     const pubDir = join(process.cwd(), 'public', 'data')
     if (!existsSync(pubDir)) mkdirSync(pubDir, { recursive: true })
-    writeFileSync(PUBLIC_CACHE, json, 'utf8')
+    writeAtomic(PUBLIC_CACHE, json)
     console.log('[inscricoes] public/data/ actualizado -- faz commit para publicar no Vercel')
   } catch (e) { console.warn('[inscricoes] Erro a gravar public/data/:', e) }
 }

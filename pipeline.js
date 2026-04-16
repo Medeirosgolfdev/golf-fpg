@@ -784,10 +784,20 @@ function syncPlayersJson(fedList) {
   }
 
   if (updated > 0) {
-    fs.writeFileSync(pPath, JSON.stringify(db, null, 2), "utf-8");
+    // Escrita atómica: write→tmp + rename. Evita corrupção se o processo
+    // for interrompido (ou outro processo ler) durante a escrita. Isto
+    // aconteceu várias vezes (truncamentos parciais de players.json) —
+    // a operação rename é atómica em qualquer FS razoável (incluindo NTFS).
+    const writeAtomic = (target, content) => {
+      const tmp = target + ".tmp." + process.pid + "." + Date.now();
+      fs.writeFileSync(tmp, content, "utf-8");
+      fs.renameSync(tmp, target);
+    };
+    const json = JSON.stringify(db, null, 2);
+    writeAtomic(pPath, json);
     const publicPath = path.join(process.cwd(), "public", "data", "players.json");
     fs.mkdirSync(path.dirname(publicPath), { recursive: true });
-    fs.copyFileSync(pPath, publicPath);
+    writeAtomic(publicPath, json);
     ok(`players.json actualizado (${updated} jogador(es))`);
   } else {
     info("players.json sem alterações");
