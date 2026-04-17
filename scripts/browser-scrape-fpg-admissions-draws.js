@@ -375,7 +375,13 @@
     tournaments: results,
   };
 
-  const blob = new Blob([JSON.stringify(out, null, 2)], { type: "application/json" });
+  // ⚠ Encoding: codificar explicitamente em UTF-8 bytes (caracteres especiais
+  // como á/é/ç têm múltiplos bytes em UTF-8; sem este passo, o Blob calcula
+  // o size com contagem de chars JS e trunca o ficheiro ao descarregar).
+  const jsonStr = JSON.stringify(out, null, 2);
+  const utf8Bytes = new TextEncoder().encode(jsonStr);
+  const blob = new Blob([utf8Bytes], { type: "application/json;charset=utf-8" });
+  console.log(`Ficheiro: ${jsonStr.length} chars, ${utf8Bytes.length} bytes UTF-8`);
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
   a.download = filename;

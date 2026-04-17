@@ -27,6 +27,6 @@ for (const t of (j.tournaments || [])) {
     }
   }
 }
-fs.writeFileSync(FILE, JSON.stringify(j, null, 2));
+fs.writeFileSync(FILE, Buffer.from(JSON.stringify(j, null, 2), "utf8"));
 console.log(`Jogadores totais: ${totalPlayers}`);
 console.log(`VAC fixados (set to null): ${fixed}`);

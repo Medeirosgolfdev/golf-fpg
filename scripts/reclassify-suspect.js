@@ -2,14 +2,18 @@
 /**
  * scripts/reclassify-suspect.js
  *
- * Passagem retroactiva sobre public/data/fpg-admissions-draws.json:
- * compara a data do HTML scraped com a data esperada do torneio (campo `date`).
- * Se a diferença for > 30 dias, marca `_suspect` (reutilização de tcode).
+ * Passagem retroactiva sobre public/data/fpg-admissions-draws.json.
+ * Compara `date` do HTML scraped com `date` esperada do torneio (cache).
+ * Se diferença > 30 dias → é reutilização de tcode (FPG sobreposto).
  *
- * Use quando a lógica de detecção melhora e queremos re-analisar dados antigos
- * sem re-scrapar.
+ * Por defeito **APAGA os dados suspect** (admissions fica com error,
+ * draws fica com {groups:[], note:"dados suspect apagados"}).
+ * A UI já não mostra dados errados — simplesmente diz que não há dados.
  *
- * Opcional: --clear  remove todos os _suspect antes de re-aplicar.
+ * Flags:
+ *   --flag-only    Só marca _suspect, não apaga dados
+ *   --keep-data    Apaga _suspect mas preserva dados (inverso)
+ *   --clear        Remove todos os _suspect antes de processar
  */
 "use strict";
 const fs = require("fs");
@@ -17,6 +21,8 @@ const path = require("path");
 const FILE = path.resolve(__dirname, "..", "public", "data", "fpg-admissions-draws.json");
 
 const args = process.argv.slice(2);
+const FLAG_ONLY = args.includes("--flag-only");
+const KEEP_DATA = args.includes("--keep-data");
 const CLEAR = args.includes("--clear");
 const TOLERANCE_DAYS = 30;
 
@@ -28,7 +34,8 @@ function daysBetween(a, b) {
   return Math.round(Math.abs(pa - pb) / 86400000);
 }
 
-let flaggedAdm = 0, flaggedDraws = 0, clearedAdm = 0, clearedDraws = 0;
+let flaggedAdm = 0, flaggedDraws = 0, deletedAdm = 0, deletedDraws = 0;
+let clearedAdm = 0, clearedDraws = 0;
 
 for (const t of (j.tournaments || [])) {
   const expected = t.date;
@@ -42,9 +49,20 @@ for (const t of (j.tournaments || [])) {
     if (expected && t.admissions.date) {
       const d = daysBetween(t.admissions.date, expected);
       if (d !== null && d > TOLERANCE_DAYS) {
-        t.admissions._suspect = true;
-        t.admissions._suspectReason = `página=${t.admissions.date}, esperada=${expected} (${d}d)`;
         flaggedAdm++;
+        if (FLAG_ONLY) {
+          t.admissions._suspect = true;
+          t.admissions._suspectReason = `página=${t.admissions.date}, esperada=${expected} (${d}d)`;
+        } else {
+          // APAGAR dados — substitui por error descritivo
+          const origDate = t.admissions.date;
+          const origName = t.admissions.name;
+          t.admissions = {
+            error: `dados suspect apagados: tcode reutilizado pela FPG (página=${origDate} name="${origName||""}", esperada=${expected}, ${d}d)`,
+            players: [],
+          };
+          deletedAdm++;
+        }
       }
     }
   }
@@ -58,17 +76,32 @@ for (const t of (j.tournaments || [])) {
     if (expected && dd.date) {
       const d = daysBetween(dd.date, expected);
       if (d !== null && d > TOLERANCE_DAYS) {
-        dd._suspect = true;
-        dd._suspectReason = `página=${dd.date}, esperada=${expected} (${d}d)`;
         flaggedDraws++;
+        if (FLAG_ONLY) {
+          dd._suspect = true;
+          dd._suspectReason = `página=${dd.date}, esperada=${expected} (${d}d)`;
+        } else {
+          // APAGAR flights — substitui por placeholder com erro
+          const origDate = dd.date;
+          const origName = dd.name;
+          t.draws[r] = {
+            groups: [],
+            error: `dados suspect apagados: tcode reutilizado pela FPG (página=${origDate} name="${origName||""}", esperada=${expected}, ${d}d)`,
+          };
+          deletedDraws++;
+        }
       }
     }
   }
 }
 
-fs.writeFileSync(FILE, JSON.stringify(j, null, 2));
+fs.writeFileSync(FILE, Buffer.from(JSON.stringify(j, null, 2), "utf8"));
 
-console.log(`Flags aplicados: admissions=${flaggedAdm}, draws=${flaggedDraws}`);
-if (CLEAR) console.log(`Flags limpos antes: admissions=${clearedAdm}, draws=${clearedDraws}`);
 console.log(`Tolerância: ${TOLERANCE_DAYS} dias`);
+if (CLEAR) console.log(`Flags _suspect limpos antes: admissions=${clearedAdm}, draws=${clearedDraws}`);
+if (FLAG_ONLY) {
+  console.log(`Flagged (--flag-only): admissions=${flaggedAdm}, draws=${flaggedDraws}`);
+} else {
+  console.log(`APAGADOS (reutilização detectada): admissions=${deletedAdm}, draws=${deletedDraws}`);
+}
 console.log(`✓ Escrito: ${FILE}`);

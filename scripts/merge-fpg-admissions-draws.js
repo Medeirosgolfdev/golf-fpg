@@ -42,20 +42,36 @@ console.log(`fpg-admissions-new:  ${admNew?.tournaments?.length ?? "(ausente)"}`
 console.log(`fpg-draws-new:       ${drawsNew?.tournaments?.length ?? "(ausente)"}`);
 if (unified) console.log(`fpg-admissions-draws-new (legacy unified): ${unified.tournaments?.length ?? 0}`);
 
-// Backup
-fs.writeFileSync(BACKUP, JSON.stringify(base, null, 2));
+// Backup — usar Buffer explícito para evitar truncamento em Windows com caracteres UTF-8
+fs.writeFileSync(BACKUP, Buffer.from(JSON.stringify(base, null, 2), "utf8"));
 console.log(`Backup: ${BACKUP}`);
 
-function admScore(a) {
+/** Comparação de datas — se diferem por >30 dias é reutilização de tcode. */
+function daysBetween(a, b) {
+  const pa = Date.parse(a), pb = Date.parse(b);
+  if (isNaN(pa) || isNaN(pb)) return null;
+  return Math.round(Math.abs(pa - pb) / 86400000);
+}
+function isSuspect(pageDate, expectedDate) {
+  if (!pageDate || !expectedDate) return false;
+  const d = daysBetween(pageDate, expectedDate);
+  return d != null && d > 30;
+}
+
+/** Score do admissions. Suspect por data OU por _suspect flag → score negativo.
+ *  tournDate é a data esperada do torneio (do cache). */
+function admScore(a, tournDate) {
   if (!a || a.error) return 0;
   if (a._suspect) return -1;
+  if (isSuspect(a.date, tournDate)) return -1;
   return (a.players?.length ?? 0);
 }
-function drawsScore(d) {
+function drawsScore(d, tournDate) {
   if (!d) return 0;
   let total = 0, suspect = false;
   for (const dr of Object.values(d)) {
     if (dr?._suspect) suspect = true;
+    else if (isSuspect(dr?.date, tournDate)) suspect = true;
     if (dr?.groups?.length > 0) total += dr.groups.length;
   }
   return suspect ? -1 : total;
@@ -66,24 +82,63 @@ const baseIdx = new Map();
 for (const t of (base.tournaments || [])) baseIdx.set(key(t), { ...t });
 
 // Aplicar admissions new (se existe)
-let stats = { admReplaced: 0, admKept: 0, admSuspect: 0, admNewOnly: 0 };
+/** Apaga dados suspect de um objecto admissions (dados errados não devem ser mostrados). */
+function cleanSuspectAdm(a, tournDate) {
+  if (!a || a.error) return a;
+  if (a._suspect || isSuspect(a.date, tournDate)) {
+    const d = daysBetween(a.date, tournDate);
+    return {
+      error: `dados suspect apagados: tcode reutilizado pela FPG (página=${a.date} name="${a.name||""}", esperada=${tournDate}, ${d||"?"}d)`,
+      players: [],
+    };
+  }
+  return a;
+}
+function cleanSuspectDraws(draws, tournDate) {
+  if (!draws) return {};
+  const out = {};
+  for (const [r, d] of Object.entries(draws)) {
+    if (d?._suspect || isSuspect(d?.date, tournDate)) {
+      const diff = daysBetween(d?.date, tournDate);
+      out[r] = {
+        groups: [],
+        error: `dados suspect apagados: tcode reutilizado (página=${d?.date} name="${d?.name||""}", esperada=${tournDate}, ${diff||"?"}d)`,
+      };
+    } else {
+      out[r] = d;
+    }
+  }
+  return out;
+}
+
+let stats = { admReplaced: 0, admKept: 0, admSuspect: 0, admNewOnly: 0, admCleaned: 0 };
 function applyAdmissions(src) {
   if (!src?.tournaments) return;
   for (const n of src.tournaments) {
     const k = key(n);
     const b = baseIdx.get(k);
+    const tournDate = b?.date || n.date;
     if (!b) {
-      baseIdx.set(k, { ...n, draws: n.draws || {} });
+      const cleaned = cleanSuspectAdm(n.admissions, tournDate);
+      if (cleaned !== n.admissions) stats.admCleaned++;
+      baseIdx.set(k, { ...n, admissions: cleaned, draws: cleanSuspectDraws(n.draws || {}, tournDate) });
       stats.admNewOnly++;
       continue;
     }
-    const bScore = admScore(b.admissions);
-    const nScore = admScore(n.admissions);
+    // Limpar suspect em base (caso antigo)
+    const bClean = cleanSuspectAdm(b.admissions, tournDate);
+    if (bClean !== b.admissions) { b.admissions = bClean; stats.admCleaned++; }
+    const bScore = admScore(b.admissions, tournDate);
+    const nScore = admScore(n.admissions, tournDate);
     if (nScore > bScore) {
       b.admissions = n.admissions;
       stats.admReplaced++;
     } else if (nScore === -1 && bScore > 0) {
       stats.admSuspect++;
+    } else if (nScore === -1 && bScore <= 0) {
+      // Ambos suspect/vazios — limpar de vez
+      b.admissions = cleanSuspectAdm(n.admissions, tournDate);
+      stats.admCleaned++;
     } else {
       stats.admKept++;
     }
@@ -93,22 +148,30 @@ function applyAdmissions(src) {
   }
 }
 
-// Aplicar draws new (se existe)
-let drawStats = { drReplaced: 0, drKept: 0, drSuspect: 0, drNewOnly: 0 };
+let drawStats = { drReplaced: 0, drKept: 0, drSuspect: 0, drNewOnly: 0, drCleaned: 0 };
 function applyDraws(src) {
   if (!src?.tournaments) return;
   for (const n of src.tournaments) {
     const k = key(n);
     const b = baseIdx.get(k);
+    const tournDate = b?.date || n.date;
     if (!b) {
-      baseIdx.set(k, { ...n, admissions: n.admissions || null });
+      baseIdx.set(k, { ...n, admissions: n.admissions || null, draws: cleanSuspectDraws(n.draws || {}, tournDate) });
       drawStats.drNewOnly++;
       continue;
     }
-    const bScore = drawsScore(b.draws);
-    const nScore = drawsScore(n.draws);
+    // Limpar suspect em base (para casos já merged antes do fix)
+    const bCleanDraws = cleanSuspectDraws(b.draws || {}, tournDate);
+    let cleanedFlag = false;
+    for (const [r, d] of Object.entries(bCleanDraws)) {
+      if (d !== (b.draws || {})[r]) cleanedFlag = true;
+    }
+    if (cleanedFlag) { b.draws = bCleanDraws; drawStats.drCleaned++; }
+
+    const bScore = drawsScore(b.draws, tournDate);
+    const nScore = drawsScore(n.draws, tournDate);
     if (nScore > bScore) {
-      b.draws = n.draws;
+      b.draws = cleanSuspectDraws(n.draws, tournDate);
       drawStats.drReplaced++;
     } else if (nScore === -1 && bScore > 0) {
       drawStats.drSuspect++;
@@ -143,10 +206,11 @@ const out = {
   tournaments: merged,
 };
 
-fs.writeFileSync(BASE_FILE, JSON.stringify(out, null, 2));
+// Escrita final — Buffer UTF-8 explícito para evitar truncamento em Windows
+fs.writeFileSync(BASE_FILE, Buffer.from(JSON.stringify(out, null, 2), "utf8"));
 
 console.log("\n─── Resumo ───");
 console.log(`Total após merge:    ${merged.length}`);
-console.log(`Admissions actualizados: ${stats.admReplaced} | mantidos: ${stats.admKept} | rejeitados-suspect: ${stats.admSuspect} | só no novo: ${stats.admNewOnly}`);
-console.log(`Draws actualizados:      ${drawStats.drReplaced} | mantidos: ${drawStats.drKept} | rejeitados-suspect: ${drawStats.drSuspect} | só no novo: ${drawStats.drNewOnly}`);
+console.log(`Admissions actualizados: ${stats.admReplaced} | mantidos: ${stats.admKept} | rejeitados-suspect: ${stats.admSuspect} | só no novo: ${stats.admNewOnly} | dados suspect apagados: ${stats.admCleaned}`);
+console.log(`Draws actualizados:      ${drawStats.drReplaced} | mantidos: ${drawStats.drKept} | rejeitados-suspect: ${drawStats.drSuspect} | só no novo: ${drawStats.drNewOnly} | dados suspect apagados: ${drawStats.drCleaned}`);
 console.log(`\n✓ Escrito: ${BASE_FILE}`);
