@@ -5,7 +5,10 @@
  * com `showScorecard={false}`. Cada linha é um jogador; em vez dos scores
  * mostra Hora e Buraco de saída.
  *
- * Colunas: # | Jogador | ESC | FED | CLUBE | HCP | TEE | ± | Tot | Hora | Buraco
+ * Colunas: # | Jogador | ESC | FED | CLUBE | HCP | TEE | Nasc. | ± | Tot | Hora | Buraco
+ *
+ * ⚠ REGRA do projecto: TODAS as colunas do cabeçalho têm de ser ordenáveis.
+ * Usa `useSort` + `SortableHdr` nas colunas custom.
  */
 
 import React, { useMemo } from "react";
@@ -16,7 +19,10 @@ import type { PlayersDB } from "./tournamentPrimitives";
 import { EscPill } from "./PillBadge";
 import { useFedCountries, CountryFlag } from "./InscricoesComponents";
 import { norm, fmtHcp, ageAtDate, escalaoAtDate } from "../utils/format";
+import { formatPlayerName } from "../utils/playerUtils";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
+import { useSort } from "../hooks/useSort";
+import SortableHdr from "./SortableHdr";
 
 interface Props {
   draw: FpgDraw;
@@ -27,6 +33,8 @@ interface Props {
   /** Data do torneio (YYYY-MM-DD) — usada para calcular escalão histórico. */
   tournamentDate?: string | null;
 }
+
+type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "nasc" | "hora" | "buraco";
 
 function teeNameFor(escalao?: string, sex?: "M" | "F"): string | undefined {
   if (!escalao) return undefined;
@@ -45,6 +53,7 @@ export default function DrawTab({
   const effDate = tournamentDate || draw.date || null;
   const fedCountries = useFedCountries();
   const teeName = teeNameFor(tournamentEscalao, tournamentSex);
+  const { sortKey, sortDir, toggleSort } = useSort<SortKey>("pos", "asc");
 
   const nameToFed = useMemo(() => {
     const m = new Map<string, string>();
@@ -56,7 +65,7 @@ export default function DrawTab({
     return m;
   }, [playersDB]);
 
-  // Achatar flights em linhas
+  // Achatar flights + enriquecer com dados do playersDB
   const flat = useMemo(() => {
     const out: Array<{
       pos: number;
@@ -64,32 +73,67 @@ export default function DrawTab({
       startHole: number | null;
       tee: string | null;
       nome: string;
-      clube: string | null;
+      clube: string;
       fed: string | null;
+      hcp: number | null;
+      dob?: string;
+      dobYear: number | null;
+      escHist: string | null;
     }> = [];
     let idx = 0;
     for (const g of (draw.groups || [])) {
       for (const p of g.players) {
         idx++;
+        const nomeFormatted = formatPlayerName(p.nome || "");
+        const fed = nameToFed.get(norm(p.nome)) || nameToFed.get(norm(nomeFormatted)) || null;
+        const bd = fed && playersDB ? (playersDB[fed] as any) : undefined;
+        const hcp = bd?.hcpExact ?? bd?.hcp ?? null;
+        const dob: string | undefined = bd?.dob;
+        const dobYear = dob ? parseInt(dob.slice(0, 4), 10) : null;
+        const escHist = escalaoAtDate(dob, effDate || undefined) || tournamentEscalao || null;
         out.push({
           pos: idx,
           teeTime: g.teeTime,
           startHole: g.startHole,
           tee: g.tee,
-          nome: p.nome,
-          clube: p.clube,
-          fed: nameToFed.get(norm(p.nome)) || null,
+          nome: nomeFormatted,
+          clube: p.clube || "",
+          fed,
+          hcp,
+          dob,
+          dobYear,
+          escHist,
         });
       }
     }
     return out;
-  }, [draw, nameToFed]);
+  }, [draw, nameToFed, playersDB, effDate, tournamentEscalao]);
+
+  // Ordenar por sortKey
+  const sorted = useMemo(() => {
+    const INF = 9999;
+    const mult = sortDir === "asc" ? 1 : -1;
+    return [...flat].sort((a, b) => {
+      let v = 0;
+      switch (sortKey) {
+        case "pos":    v = a.pos - b.pos; break;
+        case "nome":   v = a.nome.localeCompare(b.nome, "pt"); break;
+        case "esc":    v = (a.escHist || "").localeCompare(b.escHist || "", "pt"); break;
+        case "fed":    v = (a.fed || "").localeCompare(b.fed || ""); break;
+        case "clube":  v = a.clube.localeCompare(b.clube, "pt"); break;
+        case "hcp":    v = (a.hcp ?? INF) - (b.hcp ?? INF); break;
+        case "nasc":   v = (a.dobYear ?? INF) - (b.dobYear ?? INF); break;
+        case "hora":   v = a.teeTime.localeCompare(b.teeTime); break;
+        case "buraco": v = (a.startHole ?? INF) - (b.startHole ?? INF); break;
+      }
+      return mult * v;
+    });
+  }, [flat, sortKey, sortDir]);
 
   const rows: ScorecardRow[] = useMemo(() => {
-    return flat.map(p => {
+    return sorted.map(p => {
       const manuel = p.fed === MANUEL_FED;
-      const bd = p.fed && playersDB ? (playersDB[p.fed] as any) : undefined;
-      const hcp = bd?.hcpExact ?? bd?.hcp ?? null;
+      const age = ageAtDate(p.dob, effDate || undefined);
       return {
         key: `${p.pos}-${p.fed ?? p.nome}`,
         pos: p.pos,
@@ -97,6 +141,8 @@ export default function DrawTab({
         toPar: null,
         scores: [],
         isManuel: manuel,
+        sortPos: p.pos,
+        sortName: p.nome,
         nameContent: (
           <>
             <CountryFlag fed={p.fed} fedCountries={fedCountries} />
@@ -108,26 +154,20 @@ export default function DrawTab({
             />
           </>
         ),
-        prefixCells: (() => {
-          const dob: string | undefined = bd?.dob;
-          const dobYear = dob ? dob.slice(0, 4) : "";
-          const escHist = escalaoAtDate(dob, effDate || undefined) || tournamentEscalao || null;
-          const age = ageAtDate(dob, effDate || undefined);
-          return (
-            <>
-              <td className="lb-esc">
-                {escHist ? <EscPill esc={escHist} /> : <span className="muted">–</span>}
-              </td>
-              <td className="lb-fed">{p.fed || "–"}</td>
-              <td className="lb-club" title={p.clube || ""}>{p.clube || "–"}</td>
-              <td className="lb-hcp">{hcp != null ? fmtHcp(hcp) : "–"}</td>
-              <td className="lb-tee"><TeeDot teeName={p.tee || teeName} /></td>
-              <td className="fs-11 mono muted" title={dob ? `${dob} (${age ?? "?"} anos à data)` : ""} style={{ textAlign: "center", padding: "6px 8px" }}>
-                {dobYear ? (age != null ? `${dobYear} (${age})` : dobYear) : "–"}
-              </td>
-            </>
-          );
-        })(),
+        prefixCells: (
+          <>
+            <td className="lb-esc">
+              {p.escHist ? <EscPill esc={p.escHist} /> : <span className="muted">–</span>}
+            </td>
+            <td className="lb-fed">{p.fed || "–"}</td>
+            <td className="lb-club" title={p.clube}>{p.clube || "–"}</td>
+            <td className="lb-hcp">{p.hcp != null ? fmtHcp(p.hcp) : "–"}</td>
+            <td className="lb-tee"><TeeDot teeName={p.tee || teeName} /></td>
+            <td className="fs-11 mono muted" title={p.dob ? `${p.dob} (${age ?? "?"} anos à data)` : ""} style={{ textAlign: "center", padding: "6px 8px" }}>
+              {p.dobYear != null ? (age != null ? `${p.dobYear} (${age})` : String(p.dobYear)) : "–"}
+            </td>
+          </>
+        ),
         postScorecardCells: (
           <>
             <td className="fs-12 fw-700 mono" style={{ padding: "6px 8px", whiteSpace: "nowrap", textAlign: "center" }}>
@@ -140,7 +180,7 @@ export default function DrawTab({
         ),
       };
     });
-  }, [flat, playersDB, fedCountries, tournamentEscalao, teeName, effDate]);
+  }, [sorted, playersDB, fedCountries, teeName, effDate]);
 
   if (draw.error) {
     return <div className="detail-toolbar" style={{ padding: 16 }}>
@@ -155,18 +195,18 @@ export default function DrawTab({
 
   const prefixHeaderCells = (
     <>
-      <th className="lb-esc">ESC.</th>
-      <th className="lb-fed">FED</th>
-      <th className="lb-club">CLUBE</th>
-      <th className="lb-hcp">HCP</th>
+      <SortableHdr k="esc"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">ESC.</SortableHdr>
+      <SortableHdr k="fed"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-fed">FED</SortableHdr>
+      <SortableHdr k="clube" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-club">CLUBE</SortableHdr>
+      <SortableHdr k="hcp"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">HCP</SortableHdr>
       <th className="lb-tee">TEE</th>
-      <th style={{ padding: "7px 8px", textAlign: "center" }}>Nasc.</th>
+      <SortableHdr k="nasc"  sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px", textAlign: "center" }}>Nasc.</SortableHdr>
     </>
   );
   const postScorecardHeaderCells = (
     <>
-      <th style={{ padding: "7px 8px", textAlign: "center" }}>Hora</th>
-      <th style={{ padding: "7px 8px", textAlign: "center" }}>Buraco</th>
+      <SortableHdr k="hora"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px", textAlign: "center" }}>Hora</SortableHdr>
+      <SortableHdr k="buraco" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px", textAlign: "center" }}>Buraco</SortableHdr>
     </>
   );
 
@@ -188,7 +228,11 @@ export default function DrawTab({
       postScorecardColCount={2}
       showScorecard={false}
       filterBar={filterBar}
-      sortable
+      // Sorting da pos e nome: delegamos a useSort externo
+      onSortPos={() => toggleSort("pos")}
+      onSortName={() => toggleSort("nome")}
+      activeSortKey={sortKey}
+      activeSortDir={sortDir}
     />
   );
 }
