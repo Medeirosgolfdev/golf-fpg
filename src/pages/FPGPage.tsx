@@ -1347,7 +1347,13 @@ function Content() {
   // reflectir a selecção (`/FPG/torneio/{ccode}-{tcode}` com `replace: true`
   // para não poluir o histórico do browser).
   //
-  // Skip explícito:
+  // IMPORTANTE: deps=[cur, curJovens] APENAS. Não incluir `seriesFilter` nem
+  // `jovensShowInscricoes` — se incluídos, clicar num tab (ex: "SSerra" →
+  // navega para `/FPG/sto`) dispara este effect e sobrepõe a URL com
+  // `/FPG/torneio/...` (o `cur` do displayList não muda com troca de tab).
+  // O effect apenas deve disparar quando o TORNEIO muda de facto.
+  //
+  // Skip explícito (lido via closure, não por deps):
   //   - Painel de inscrições (`jovensShowInscricoes`) — URL dedicada
   //   - Vista Clubes — a URL `/FPG/clubes` não conflita e a selecção é local
   //
@@ -1364,7 +1370,7 @@ function Content() {
       navigate(target, { replace: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cur, curJovens, seriesFilter, jovensShowInscricoes]);
+  }, [cur, curJovens]);
 
   /** Lista de torneios indexados pelo seu ficheiro de origem — alimenta o
    *  popover do clique-direito no FileBadge. Inclui clubes e jovens (que têm

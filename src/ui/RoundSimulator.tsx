@@ -6,9 +6,10 @@ import { useAppContext } from "../context/AppContext";
 import { norm } from "../utils/format";
 import { meanArr } from "../utils/mathUtils";
 import { sdClassByHcp, fmtGrossDelta } from "../utils/scoreDisplay";
-import { calcSD } from "../utils/whsCalc";
+import { calcSD, expectedSD9, get9hRatings } from "../utils/whsCalc";
 import TeePill from "./TeePill";
 import TeeDate from "./TeeDate";
+import SexBadge from "./SexBadge";
 
 /* ─── Helper: Course display link ─── */
 function findCourseKey(courseName: string): string | null {
@@ -67,14 +68,20 @@ export function RoundSimulator({
   bare,
   courseLookupFn,
 }: RoundSimulatorProps) {
+  type HolesMode = "18" | "front9" | "back9";
   type SimRound = {
     id: string;
     mode: "sd" | "course";
+    holesMode: HolesMode;
     sdInput: string;
     courseKey: string;
     teeId: string;
     grossInput: string;
   };
+  const is9hMode = (hm: HolesMode): hm is "front9" | "back9" =>
+    hm === "front9" || hm === "back9";
+  const holesLabel = (hm: HolesMode) =>
+    hm === "front9" ? "Front 9" : hm === "back9" ? "Back 9" : "18 buracos";
   type PoolEntry = {
     eid: string;
     sd: number;
@@ -86,7 +93,12 @@ export function RoundSimulator({
   type RoundResult = {
     roundId: string;
     roundIdx: number;
+    /** SD final (equivalente 18H) — é este que entra no pool */
     sd: number | null;
+    /** SD de 9 buracos, antes de +expectedSD9(HI). null para rondas 18H. */
+    sd9: number | null;
+    /** Valor de expectedSD9 usado para conversão 9H→18H. null para rondas 18H. */
+    exp9: number | null;
     sdInPool: number | null;
     exceptionalAdj: number;
     exceptionalDiff: number;
@@ -100,6 +112,7 @@ export function RoundSimulator({
     displaced: PoolEntry | null;
     courseName: string;
     teeLabel: string;
+    holesMode: HolesMode;
     cr: number | null;
     slope: number | null;
     par: number | null;
@@ -114,6 +127,15 @@ export function RoundSimulator({
   const newId = () => `sr_${nextIdRef.current++}`;
   const storageKey = urlFedId ? `sim_rounds_v2_${urlFedId}` : null;
   const [savedTs, setSavedTs] = useState<number | null>(null);
+
+  // ── Sexo do jogador (para filtrar tees M/F) ──
+  // Vem de CROSS_DATA indexado pelo fed actual. Normalizamos para "M"|"F"|null.
+  const playerSex: "M" | "F" | null = useMemo(() => {
+    const raw =
+      playerData.CROSS_DATA?.[playerData.CURRENT_FED]?.sex;
+    if (raw === "M" || raw === "F") return raw;
+    return null;
+  }, [playerData.CROSS_DATA, playerData.CURRENT_FED]);
 
   // ── Dados de campos ──
   const playedNormSet = useMemo(() => {
@@ -143,6 +165,27 @@ export function RoundSimulator({
 
   const defaultCourseKey = allRatedCourses[0]?.courseKey ?? "";
 
+  // Migração dados antigos do localStorage: garantir holesMode="18" por default
+  const normalizeSaved = (raw: unknown): SimRound[] | null => {
+    if (!Array.isArray(raw) || raw.length === 0) return null;
+    const out: SimRound[] = [];
+    for (const r of raw) {
+      if (!r || typeof r !== "object") continue;
+      const rr = r as Partial<SimRound> & { holesMode?: unknown };
+      out.push({
+        id: String(rr.id ?? `sr_${Math.random().toString(36).slice(2, 8)}`),
+        mode: rr.mode === "course" ? "course" : "sd",
+        holesMode:
+          rr.holesMode === "front9" || rr.holesMode === "back9" ? rr.holesMode : "18",
+        sdInput: typeof rr.sdInput === "string" ? rr.sdInput : "",
+        courseKey: typeof rr.courseKey === "string" ? rr.courseKey : "",
+        teeId: typeof rr.teeId === "string" ? rr.teeId : "",
+        grossInput: typeof rr.grossInput === "string" ? rr.grossInput : "",
+      });
+    }
+    return out.length > 0 ? out : null;
+  };
+
   // ── Estado das rondas — carregado do localStorage se existir ──
   const [rounds, setRounds] = useState<SimRound[]>(() => {
     if (storageKey) {
@@ -150,7 +193,8 @@ export function RoundSimulator({
         const saved = localStorage.getItem(storageKey);
         if (saved) {
           const parsed = JSON.parse(saved);
-          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+          const norm = normalizeSaved(parsed);
+          if (norm) return norm;
         }
       } catch {}
     }
@@ -158,6 +202,7 @@ export function RoundSimulator({
       {
         id: "sr_0",
         mode: "sd",
+        holesMode: "18",
         sdInput: "",
         courseKey: "",
         teeId: "",
@@ -214,26 +259,60 @@ export function RoundSimulator({
   );
 
   // ── Helpers campos/tees ──
-  function getValidTees(courseKey: string): typeof courses extends Array<infer C>
+  function getValidTees(
+    courseKey: string,
+    holesMode: HolesMode = "18"
+  ): typeof courses extends Array<infer C>
     ? C["master"]["tees"]
     : any[] {
     const c = allRatedCourses.find((x) => x.courseKey === courseKey);
     if (!c) return [];
-    return c.master.tees.filter(
-      (t) =>
+    // 1) Filtrar por disponibilidade de ratings (18H ou 9H conforme holesMode)
+    const ratingValid = c.master.tees.filter((t) => {
+      if (is9hMode(holesMode)) {
+        return get9hRatings(t, holesMode) !== null;
+      }
+      return (
         t.ratings.holes18?.courseRating != null &&
         t.ratings.holes18?.slopeRating != null
-    ) as any[];
+      );
+    });
+    // 2) Filtrar pelo sexo do jogador. Se o jogador é M/F, só tees desse sexo;
+    //    se não conseguimos determinar o sexo, não filtramos.
+    if (playerSex === "M" || playerSex === "F") {
+      const bySex = ratingValid.filter((t) => t.sex === playerSex);
+      // Fallback: se não há tees do sexo do jogador (caso raro — campo só
+      // com um sexo), mostramos todos os que têm ratings para não deixar
+      // o utilizador bloqueado.
+      if (bySex.length > 0) return bySex as any[];
+    }
+    return ratingValid as any[];
   }
 
   function getEffectiveTeeId(r: SimRound): string {
-    return r.teeId || getValidTees(r.courseKey)[0]?.teeId || "";
+    const valid = getValidTees(r.courseKey, r.holesMode);
+    if (r.teeId && valid.some((t) => t.teeId === r.teeId)) return r.teeId;
+    return valid[0]?.teeId || "";
   }
 
-  function getTeeRatings(courseKey: string, teeId: string) {
+  function getTeeRatings(
+    courseKey: string,
+    teeId: string,
+    holesMode: HolesMode = "18"
+  ) {
     const c = allRatedCourses.find((x) => x.courseKey === courseKey);
-    const tees = getValidTees(courseKey);
+    const tees = getValidTees(courseKey, holesMode);
     const tee = tees.find((t) => t.teeId === teeId) ?? tees[0] ?? null;
+    if (tee && is9hMode(holesMode)) {
+      const r9 = get9hRatings(tee, holesMode);
+      return {
+        cr: r9?.cr ?? null,
+        slope: r9?.slope ?? null,
+        par: r9?.par ?? 36,
+        teeName: tee?.teeName ?? "",
+        courseName: c?.master.name ?? "",
+      };
+    }
     return {
       cr: tee?.ratings.holes18?.courseRating ?? null,
       slope: tee?.ratings.holes18?.slopeRating ?? null,
@@ -251,6 +330,7 @@ export function RoundSimulator({
       {
         id: newId(),
         mode: last?.mode ?? "sd",
+        holesMode: last?.holesMode ?? "18",
         sdInput: "",
         courseKey: last?.courseKey || defaultCourseKey,
         teeId: "",
@@ -265,17 +345,19 @@ export function RoundSimulator({
 
   function updateRound(id: string, patch: Partial<SimRound>) {
     setRounds((prev) =>
-      prev.map((r) =>
-        r.id === id
-          ? {
-              ...r,
-              ...patch,
-              ...(patch.courseKey && patch.courseKey !== r.courseKey
-                ? { teeId: "" }
-                : {}),
-            }
-          : r
-      )
+      prev.map((r) => {
+        if (r.id !== id) return r;
+        const merged = { ...r, ...patch };
+        // Se mudou courseKey ou holesMode, reset teeId porque o conjunto
+        // de tees válidos pode ser diferente (nem todos os tees têm 9H).
+        if (
+          (patch.courseKey !== undefined && patch.courseKey !== r.courseKey) ||
+          (patch.holesMode !== undefined && patch.holesMode !== r.holesMode)
+        ) {
+          merged.teeId = "";
+        }
+        return merged;
+      })
     );
   }
 
@@ -284,6 +366,7 @@ export function RoundSimulator({
       {
         id: newId(),
         mode: "sd",
+        holesMode: "18",
         sdInput: "",
         courseKey: defaultCourseKey,
         teeId: "",
@@ -309,7 +392,8 @@ export function RoundSimulator({
       const saved = localStorage.getItem(storageKey);
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) setRounds(parsed);
+        const norm = normalizeSaved(parsed);
+        if (norm) setRounds(norm);
       }
     } catch {}
   }
@@ -337,7 +421,10 @@ export function RoundSimulator({
 
     for (let i = 0; i < rounds.length; i++) {
       const round = rounds[i];
+      const is9 = is9hMode(round.holesMode);
       let sd: number | null = null;
+      let sd9Raw: number | null = null;
+      let exp9: number | null = null;
       let cr: number | null = null,
         slope: number | null = null,
         par: number | null = null;
@@ -347,11 +434,20 @@ export function RoundSimulator({
 
       if (round.mode === "sd") {
         const v = parseFloat(round.sdInput.replace(",", "."));
-        if (!isNaN(v)) sd = v;
+        if (!isNaN(v)) {
+          if (is9) {
+            // Input é SD9; converte-se para SD18 equivalente somando exp9(HI actual)
+            sd9Raw = Math.round(v * 10) / 10;
+            exp9 = Math.round(expectedSD9(curHI) * 10) / 10;
+            sd = Math.round((sd9Raw + exp9) * 10) / 10;
+          } else {
+            sd = v;
+          }
+        }
         courseName = "Ronda simulada";
       } else {
         const teeId = getEffectiveTeeId(round);
-        const rat = getTeeRatings(round.courseKey, teeId);
+        const rat = getTeeRatings(round.courseKey, teeId, round.holesMode);
         cr = rat.cr;
         slope = rat.slope;
         par = rat.par;
@@ -360,7 +456,14 @@ export function RoundSimulator({
         const g = parseInt(round.grossInput);
         if (!isNaN(g) && cr != null && slope != null) {
           gross = g;
-          sd = Math.round(calcSD(g, cr, slope) * 10) / 10;
+          const sdRaw = Math.round(calcSD(g, cr, slope) * 10) / 10;
+          if (is9) {
+            sd9Raw = sdRaw;
+            exp9 = Math.round(expectedSD9(curHI) * 10) / 10;
+            sd = Math.round((sd9Raw + exp9) * 10) / 10;
+          } else {
+            sd = sdRaw;
+          }
         }
       }
 
@@ -370,6 +473,8 @@ export function RoundSimulator({
           roundId: round.id,
           roundIdx: i,
           sd: null,
+          sd9: null,
+          exp9: null,
           sdInPool: null,
           exceptionalAdj: 0,
           exceptionalDiff: 0,
@@ -383,6 +488,7 @@ export function RoundSimulator({
           displaced: null,
           courseName,
           teeLabel,
+          holesMode: round.holesMode,
           cr,
           slope,
           par,
@@ -431,6 +537,8 @@ export function RoundSimulator({
         roundId: round.id,
         roundIdx: i,
         sd,
+        sd9: sd9Raw,
+        exp9,
         sdInPool: sd + exceptionalAdj,
         exceptionalAdj,
         exceptionalDiff,
@@ -444,6 +552,7 @@ export function RoundSimulator({
         displaced,
         courseName,
         teeLabel,
+        holesMode: round.holesMode,
         cr,
         slope,
         par,
@@ -482,18 +591,23 @@ export function RoundSimulator({
     if (!validRes.length) return null;
     const last = validRes[validRes.length - 1];
     if (last.cr == null || last.slope == null) return null;
+    const is9 = is9hMode(last.holesMode);
+    const defaultPar = is9 ? 36 : 72;
     const {
       cr,
       slope,
-      par = 72,
+      par = defaultPar,
       poolBefore,
       hiBeforeRound,
       roundIdx,
       gross: enteredGross,
     } = last;
+    const exp9 = is9 ? Math.round(expectedSD9(hiBeforeRound) * 10) / 10 : 0;
     const rows: {
       gross: number;
       sd: number;
+      /** SD9 original quando ronda é de 9 buracos */
+      sd9: number | null;
       newHI: number;
       delta: number;
       entersTop: boolean;
@@ -501,8 +615,15 @@ export function RoundSimulator({
       exceptionalAdj: number;
       isEntered: boolean;
     }[] = [];
-    for (let g = par - 10; g <= par + 35; g++) {
-      const sd = Math.round(calcSD(g, cr!, slope!) * 10) / 10;
+    // Range de scores: 9H usa delta mais estreito conforme SimuladorPage
+    const minDelta = is9 ? -4 : -10;
+    const maxDelta = is9 ? 20 : 35;
+    const minScore = is9 ? 25 : 50;
+    for (let delta = minDelta; delta <= maxDelta; delta++) {
+      const g = (par as number) + delta;
+      if (g < minScore) continue;
+      const sdRaw = Math.round(calcSD(g, cr!, slope!) * 10) / 10;
+      const sd = is9 ? Math.round((sdRaw + exp9) * 10) / 10 : sdRaw;
       const excDiff = hiBeforeRound - sd;
       const excAdj =
         excDiff >= 10 ? -2 : excDiff >= 7 ? -1 : 0;
@@ -529,15 +650,16 @@ export function RoundSimulator({
       rows.push({
         gross: g,
         sd,
+        sd9: is9 ? sdRaw : null,
         newHI,
         delta: newHI - hiBeforeRound,
         entersTop,
-        toPar: g - par!,
+        toPar: g - (par as number),
         exceptionalAdj: excAdj,
         isEntered: g === enteredGross,
       });
     }
-    return { rows, par, cr, slope, roundIdx };
+    return { rows, par: par as number, cr, slope, roundIdx, is9, holesMode: last.holesMode, exp9: is9 ? exp9 : null };
   }, [simResults, totalAdjustment]);
 
   // ── Rondas deslocadas ──
@@ -643,14 +765,23 @@ export function RoundSimulator({
               : r.delta > 0.05
                 ? badClr
                 : "#d1d5db";
+        const is9 = r.holesMode === "front9" || r.holesMode === "back9";
+        const hmLabelPdf = is9 ? (r.holesMode === "front9" ? "Front 9" : "Back 9") : null;
+        const holesBadgePdf = hmLabelPdf
+          ? ` <span style="background:#fde68a;color:#92400e;border-radius:4px;padding:1px 6px;font-size:10px;font-weight:700;margin-left:4px">${hmLabelPdf}</span>`
+          : "";
         const modeLabel =
           r.cr != null
-            ? `⛳ <b>${r.courseName}</b>${r.teeLabel ? ` — ${r.teeLabel}` : ""} <span style="color:${mutedClr};font-size:10px">CR ${r.cr} / Slope ${r.slope} / Par ${r.par}</span>`
-            : `📊 SD directo`;
+            ? `⛳ <b>${r.courseName}</b>${r.teeLabel ? ` — ${r.teeLabel}` : ""}${holesBadgePdf} <span style="color:${mutedClr};font-size:10px">CR ${r.cr} / Slope ${r.slope} / Par ${r.par}</span>`
+            : `📊 SD directo${holesBadgePdf}`;
         const inputLine =
           r.gross != null
-            ? `Gross: <b>${r.gross}</b> pancadas`
-            : `SD introduzido: <b>${r.sd!.toFixed(1)}</b>`;
+            ? (is9 && r.sd9 != null && r.exp9 != null
+                ? `Gross 9h: <b>${r.gross}</b> → SD9 <b>${r.sd9.toFixed(1)}</b> + exp9 <b>${r.exp9.toFixed(1)}</b>`
+                : `Gross: <b>${r.gross}</b> pancadas`)
+            : (is9 && r.sd9 != null && r.exp9 != null
+                ? `SD9 introduzido: <b>${r.sd9.toFixed(1)}</b> + exp9 <b>${r.exp9.toFixed(1)}</b>`
+                : `SD introduzido: <b>${r.sd!.toFixed(1)}</b>`);
         const topBadge = r.entersTop
           ? `<span style="background:#16a34a;color:#fff;border-radius:4px;padding:2px 8px;font-size:11px;font-weight:700">★ top-${r.topRank ?? ""}</span> `
           : "";
@@ -900,7 +1031,8 @@ export function RoundSimulator({
         }}
       >
         <span className="muted fs-11">
-          Simula rondas sequencialmente — SD directo ou Campo+Tee+Gross.
+          Simula rondas sequencialmente — SD directo ou Campo+Tee+Gross · 18 · F9 · B9 suportados
+          {playerSex && ` · tees filtrados por ${playerSex === "M" ? "Masculino" : "Feminino"}`}.
         </span>
         <div
           style={{
@@ -994,11 +1126,20 @@ export function RoundSimulator({
         style={{ display: "flex", flexDirection: "column" }}
       >
         {rounds.map((round, idx) => {
+          const is9 = is9hMode(round.holesMode);
           const teeId = getEffectiveTeeId(round);
-          const validTees = getValidTees(round.courseKey);
-          const ratings = getTeeRatings(round.courseKey, teeId);
+          const validTees = getValidTees(round.courseKey, round.holesMode);
+          const ratings = getTeeRatings(round.courseKey, teeId, round.holesMode);
+          const allTees18 = getValidTees(round.courseKey, "18");
+          // Se o campo não tem 9H ratings em nenhum tee, avisar
+          const has9Hsupport = round.mode === "course" && round.courseKey
+            ? allRatedCourses
+                .find((c) => c.courseKey === round.courseKey)
+                ?.master.tees.some((t) => get9hRatings(t, "front9") !== null || get9hRatings(t, "back9") !== null) ?? false
+            : true;
           const grossNum = parseInt(round.grossInput);
-          const computedSd =
+          // SD "cru" calculado a partir do gross com os ratings actuais (9H ou 18H)
+          const computedSdRaw =
             round.mode === "course" &&
             !isNaN(grossNum) &&
             ratings.cr != null &&
@@ -1008,6 +1149,14 @@ export function RoundSimulator({
               : null;
           const result = simResults?.results[idx];
           const hiRef = result?.hiBeforeRound ?? currentHI;
+          // Para 9H: computedSd18 = SD9 + expectedSD9(HI antes da ronda)
+          const exp9Preview = is9
+            ? Math.round(expectedSD9(hiRef) * 10) / 10
+            : null;
+          const computedSd18 =
+            computedSdRaw != null && is9 && exp9Preview != null
+              ? Math.round((computedSdRaw + exp9Preview) * 10) / 10
+              : computedSdRaw;
           const borderClr = roundBorderColor(result);
 
           return (
@@ -1084,6 +1233,42 @@ export function RoundSimulator({
                       {m === "sd" ? "📊 SD" : "⛳ Campo"}
                     </button>
                   ))}
+                </div>
+
+                {/* Toggle 18 / Front 9 / Back 9 */}
+                <div
+                  style={{
+                    display: "flex",
+                    borderRadius: 6,
+                    overflow: "hidden",
+                    border: "1px solid var(--line)",
+                    fontSize: 11,
+                  }}
+                  title="Número de buracos jogados"
+                >
+                  {(["18", "front9", "back9"] as const).map((hm) => {
+                    const label =
+                      hm === "18" ? "18" : hm === "front9" ? "F9" : "B9";
+                    const active = round.holesMode === hm;
+                    return (
+                      <button
+                        key={hm}
+                        onClick={() =>
+                          updateRound(round.id, { holesMode: hm })
+                        }
+                        style={{
+                          padding: "3px 9px",
+                          border: "none",
+                          cursor: "pointer",
+                          background: active ? "var(--chart-2)" : "transparent",
+                          color: active ? "#fff" : "var(--text-2)",
+                          fontWeight: active ? 700 : 400,
+                        }}
+                      >
+                        {label}
+                      </button>
+                    );
+                  })}
                 </div>
 
                 {/* Resultado inline */}
@@ -1197,33 +1382,51 @@ export function RoundSimulator({
                 }}
               >
                 {round.mode === "sd" ? (
-                  <label
-                    className="fs-13 fw-600"
-                    style={{ display: "flex", alignItems: "center", gap: 6 }}
-                  >
-                    SD:
-                    <input
-                      type="number"
-                      step="0.1"
-                      placeholder="ex: 28.5"
-                      value={round.sdInput}
-                      onChange={(e) =>
-                        updateRound(round.id, {
-                          sdInput: e.target.value,
-                        })
-                      }
-                      style={{
-                        width: 90,
-                        padding: "4px 8px",
-                        borderRadius: 6,
-                        border: "1px solid var(--line)",
-                        background: "var(--bg-card)",
-                        color: "var(--text-1)",
-                        fontSize: 14,
-                        fontWeight: 700,
-                      }}
-                    />
-                  </label>
+                  <>
+                    <label
+                      className="fs-13 fw-600"
+                      style={{ display: "flex", alignItems: "center", gap: 6 }}
+                    >
+                      {is9 ? "SD 9h:" : "SD:"}
+                      <input
+                        type="number"
+                        step="0.1"
+                        placeholder={is9 ? "ex: 14.2" : "ex: 28.5"}
+                        value={round.sdInput}
+                        onChange={(e) =>
+                          updateRound(round.id, {
+                            sdInput: e.target.value,
+                          })
+                        }
+                        style={{
+                          width: 90,
+                          padding: "4px 8px",
+                          borderRadius: 6,
+                          border: "1px solid var(--line)",
+                          background: "var(--bg-card)",
+                          color: "var(--text-1)",
+                          fontSize: 14,
+                          fontWeight: 700,
+                        }}
+                      />
+                    </label>
+                    {is9 && (() => {
+                      const v = parseFloat(round.sdInput.replace(",", "."));
+                      if (isNaN(v)) return null;
+                      const e9 = Math.round(expectedSD9(hiRef) * 10) / 10;
+                      const sd18 = Math.round((v + e9) * 10) / 10;
+                      return (
+                        <span className="muted fs-11">
+                          + exp9({hiRef.toFixed(1)}) = {e9.toFixed(1)} →{" "}
+                          <span
+                            className={`p p-${sdClassByHcp(sd18, hiRef)} fs-12 fw-800`}
+                          >
+                            SD18 {sd18.toFixed(1)}
+                          </span>
+                        </span>
+                      );
+                    })()}
+                  </>
                 ) : (
                   <>
                     <select
@@ -1245,6 +1448,12 @@ export function RoundSimulator({
                         </option>
                       ))}
                     </select>
+                    {playerSex && (
+                      <SexBadge
+                        sex={playerSex}
+                        className="fs-11"
+                      />
+                    )}
                     <select
                       className="select"
                       value={teeId}
@@ -1253,21 +1462,38 @@ export function RoundSimulator({
                           teeId: e.target.value,
                         })
                       }
+                      disabled={validTees.length === 0}
+                      title={
+                        playerSex
+                          ? `A mostrar apenas tees ${playerSex === "M" ? "Masculinos" : "Femininos"}`
+                          : undefined
+                      }
                     >
-                      {validTees.map((t) => (
-                        <option key={t.teeId} value={t.teeId}>
-                          {t.teeName} — CR{" "}
-                          {
-                            t.ratings.holes18!
-                              .courseRating
-                          }{" "}
-                          / Slope{" "}
-                          {
-                            t.ratings.holes18!
-                              .slopeRating
-                          }
-                        </option>
-                      ))}
+                      {validTees.length === 0 && (
+                        <option value="">— sem tees disponíveis —</option>
+                      )}
+                      {validTees.map((t) => {
+                        if (is9) {
+                          const r9 = get9hRatings(
+                            t,
+                            round.holesMode as "front9" | "back9"
+                          );
+                          if (!r9) return null;
+                          return (
+                            <option key={t.teeId} value={t.teeId}>
+                              {t.teeName} — CR {r9.cr} / Slope {r9.slope} /
+                              Par {r9.par}
+                            </option>
+                          );
+                        }
+                        return (
+                          <option key={t.teeId} value={t.teeId}>
+                            {t.teeName} — CR{" "}
+                            {t.ratings.holes18!.courseRating} / Slope{" "}
+                            {t.ratings.holes18!.slopeRating}
+                          </option>
+                        );
+                      })}
                     </select>
                     <label
                       className="fs-13 fw-600"
@@ -1277,11 +1503,11 @@ export function RoundSimulator({
                         gap: 6,
                       }}
                     >
-                      Gross:
+                      {is9 ? "Gross (9h):" : "Gross:"}
                       <input
                         type="number"
                         step="1"
-                        placeholder="ex: 85"
+                        placeholder={is9 ? "ex: 42" : "ex: 85"}
                         value={round.grossInput}
                         onChange={(e) =>
                           updateRound(round.id, {
@@ -1300,14 +1526,39 @@ export function RoundSimulator({
                         }}
                       />
                     </label>
-                    {computedSd != null && (
+                    {computedSdRaw != null && !is9 && (
                       <span
                         className={`p p-${sdClassByHcp(
-                          computedSd,
+                          computedSdRaw,
                           hiRef
                         )} fs-13 fw-800`}
                       >
-                        SD {computedSd.toFixed(1)}
+                        SD {computedSdRaw.toFixed(1)}
+                      </span>
+                    )}
+                    {computedSdRaw != null && is9 && exp9Preview != null && computedSd18 != null && (
+                      <span style={{ display: "inline-flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
+                        <span
+                          className={`p p-${sdClassByHcp(
+                            computedSd18,
+                            hiRef
+                          )} fs-12 fw-700`}
+                          title="SD de 9 buracos antes da conversão para 18H"
+                        >
+                          SD9 {computedSdRaw.toFixed(1)}
+                        </span>
+                        <span className="muted fs-11">
+                          + exp9({hiRef.toFixed(1)}) = {exp9Preview.toFixed(1)} →
+                        </span>
+                        <span
+                          className={`p p-${sdClassByHcp(
+                            computedSd18,
+                            hiRef
+                          )} fs-13 fw-800`}
+                          title="SD equivalente a 18H — é este que entra no pool WHS"
+                        >
+                          SD18 {computedSd18.toFixed(1)}
+                        </span>
                       </span>
                     )}
                     {ratings.cr != null && (
@@ -1315,11 +1566,53 @@ export function RoundSimulator({
                         CR {ratings.cr} / Slope{" "}
                         {ratings.slope} / Par{" "}
                         {ratings.par}
+                        {is9 && ` · ${holesLabel(round.holesMode)}`}
+                      </span>
+                    )}
+                    {is9 && !has9Hsupport && round.courseKey && (
+                      <span
+                        className="fs-11"
+                        style={{ color: "var(--color-warn, #e07b00)" }}
+                        title="Este campo não tem ratings oficiais de 9 buracos registados"
+                      >
+                        ⚠ Este campo não tem CR/Slope 9H. Escolhe outro campo ou modo 18.
+                      </span>
+                    )}
+                    {is9 && has9Hsupport && validTees.length === 0 && (
+                      <span
+                        className="fs-11"
+                        style={{ color: "var(--color-warn, #e07b00)" }}
+                      >
+                        ⚠ Sem tees com CR/Slope para {holesLabel(round.holesMode)} neste campo.
                       </span>
                     )}
                   </>
                 )}
               </div>
+
+              {/* 9H → 18H conversion notice (quando a ronda foi validamente simulada em 9H) */}
+              {result?.valid && is9hMode(result.holesMode) &&
+                result.sd9 != null && result.exp9 != null && (
+                <div
+                  style={{
+                    marginTop: 8,
+                    padding: "6px 10px",
+                    borderRadius: 6,
+                    fontSize: 11,
+                    lineHeight: 1.55,
+                    background: "var(--bg-detail)",
+                    border: "1px dashed var(--border)",
+                    color: "var(--text-2)",
+                  }}
+                >
+                  🎯 <b>{holesLabel(result.holesMode)}</b>: SD9{" "}
+                  <b>{result.sd9.toFixed(1)}</b>
+                  {" + "}exp9(HI {result.hiBeforeRound.toFixed(1)}) ={" "}
+                  <b>{result.exp9.toFixed(1)}</b>
+                  {" → SD equivalente 18H "}
+                  <b>{result.sd!.toFixed(1)}</b> — é este valor que entra na janela WHS (Regra 5.1c).
+                </div>
+              )}
 
               {/* Exceptional score notice */}
               {result?.valid && result.exceptionalAdj !== 0 && (
@@ -1464,6 +1757,11 @@ export function RoundSimulator({
                   }}
                 >
                   Ronda {i + 1}
+                  {is9hMode(r.holesMode)
+                    ? r.holesMode === "front9"
+                      ? " · F9"
+                      : " · B9"
+                    : ""}
                   {r.exceptionalAdj !== 0 ? " ⚡" : ""}
                 </div>
                 <div
@@ -1576,14 +1874,21 @@ export function RoundSimulator({
             )}
             {" — "}CR {grossTable.cr} / Slope {grossTable.slope} / Par{" "}
             {grossTable.par}
+            {grossTable.is9 && (
+              <span>
+                {" "}· {holesLabel(grossTable.holesMode)} · exp9(HI) ={" "}
+                <b>{grossTable.exp9?.toFixed(1)}</b> somado a cada SD9 para 18H equivalente
+              </span>
+            )}
           </div>
           <div className="scroll-x">
             <table className="dtable fs-12">
               <thead>
                 <tr>
-                  <th className="r">Pancadas</th>
+                  <th className="r">Pancadas{grossTable.is9 ? " (9h)" : ""}</th>
                   <th className="r">Ao par</th>
-                  <th className="r">SD</th>
+                  {grossTable.is9 && <th className="r">SD 9h</th>}
+                  <th className="r">{grossTable.is9 ? "SD 18h" : "SD"}</th>
                   <th className="r">HCP</th>
                   <th className="r">Δ</th>
                   <th>Estado</th>
@@ -1634,6 +1939,11 @@ export function RoundSimulator({
                         {row.toPar >= 0 ? "+" : ""}
                         {row.toPar}
                       </td>
+                      {grossTable.is9 && (
+                        <td className="r muted fs-11">
+                          {row.sd9 != null ? row.sd9.toFixed(1) : "—"}
+                        </td>
+                      )}
                       <td className="r">
                         <span
                           className={`p p-${sdClassByHcp(
@@ -1768,6 +2078,21 @@ export function RoundSimulator({
                       {entry.isSimulated ? (
                         <span className="muted">
                           {res?.courseName ?? "—"}
+                          {res && is9hMode(res.holesMode) && (
+                            <span
+                              style={{
+                                marginLeft: 6,
+                                background: "#fde68a",
+                                color: "#92400e",
+                                borderRadius: 4,
+                                padding: "1px 5px",
+                                fontSize: 10,
+                                fontWeight: 700,
+                              }}
+                            >
+                              {res.holesMode === "front9" ? "F9" : "B9"}
+                            </span>
+                          )}
                         </span>
                       ) : r ? (
                         <CourseLink name={r.course} />
