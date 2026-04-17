@@ -51,6 +51,10 @@ export interface SidebarItemTournament {
   /** Caminho do ficheiro JSON de onde este torneio veio — mostrado como pill discreto.
    *  Hover: caminho completo. Clique direito: lista de torneios desse ficheiro. */
   _sourceFile?: string;
+  /** Override para torneios pre-jogo onde o Manuel está em _admissions/_draws mas
+   *  não em `players`. Quando true, o ManuelPill é mostrado mesmo que `players` esteja
+   *  vazio. Preenchido pelo caller (FPGPage) via `tournamentHasManuel(t)`. */
+  _manuelInscrito?: boolean;
 }
 
 export interface TournSidebarItemProps {
@@ -71,7 +75,9 @@ export function TournSidebarItem({ t, isActive, onClick, accentColor, extraPills
   const is9h     = nh <= 9;
   const isSserra = t.ccode === SSERRA_CCODE;
   const isPja    = t.pill === "PJA";
-  const manuelPlayed = t.players.some(p => isManuel(p as any));
+  // ManuelPill: torneios jogados têm Manuel em `players`; pre-jogo tem-no apenas
+  // em _admissions/_draws — a flag `_manuelInscrito` é setada pelo caller nesses casos.
+  const manuelPlayed = t.players.some(p => isManuel(p as any)) || !!t._manuelInscrito;
   const tcodes   = (t.tcode || "").split("+").map(s => s.trim()).filter(Boolean);
   const hasNacional = (t.name || "").toUpperCase().includes("NACIONAL");
   const hasJunior   = /JUNIOR|J[ÚU]NIOR/i.test(t.name || "");

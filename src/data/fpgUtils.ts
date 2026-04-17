@@ -10,9 +10,39 @@ import type { PlayersDB } from "../ui/tournamentPrimitives";
 import { normalizePlayer } from "../utils/playerUtils";
 import { calcAGS, expectedSD9 } from "../utils/whsCalc";
 import { norm, escalaoAtDate } from "../utils/format";
+import { isManuel } from "../constants/manuel";
 
 export function numGross(p: Player): number {
   return typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : (p.grossTotal as number) ?? 999;
+}
+
+/** Verifica se o Manuel está neste torneio — em qualquer fase.
+ *
+ *  Procura em 3 sítios (em ordem de disponibilidade):
+ *    1. `t.players` — torneios jogados (scorecards) ou com resultados parciais
+ *    2. `t._admissions.players` — torneios pre-jogo da FPG (Nacional 2026, Drive, etc.)
+ *    3. `t._draws[*].groups[*].players` — torneios pre-jogo sem admissions scraped
+ *       (ex: Regional Santo da Serra — draw vem por email em PDF, sem admissions)
+ *
+ *  Fonte única desta lógica para garantir consistência entre filtros da sidebar,
+ *  pill no cabeçalho do detail e highlight na sidebar.
+ */
+export function tournamentHasManuel(t: Tournament | undefined | null): boolean {
+  if (!t) return false;
+  if ((t.players || []).some(p => isManuel(p as any))) return true;
+  const adm = (t as any)._admissions?.players as Array<{ fed?: string | null; nome?: string }> | undefined;
+  if (adm?.some(p => isManuel({ name: p.nome, fed: p.fed ?? undefined }))) return true;
+  const dr = (t as any)._draws as Record<string, { groups?: Array<{ players?: Array<{ nome?: string; fed?: string | null }> }> }> | undefined;
+  if (dr) {
+    for (const round of Object.values(dr)) {
+      for (const g of (round?.groups || [])) {
+        for (const p of (g.players || [])) {
+          if (isManuel({ name: p.nome, fed: p.fed ?? undefined })) return true;
+        }
+      }
+    }
+  }
+  return false;
 }
 
 /** Mapa fed → ano → escalão. Construído a partir de torneios Challenge (t.escalao explícito).

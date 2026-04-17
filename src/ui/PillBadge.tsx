@@ -279,24 +279,34 @@ export function ClubePill({ clube, ccode }: { clube?: string | null; ccode?: str
 }
 
 /* ── YearPill ──────────────────────────────────────────────────────
- * Ano de nascimento. Só 2 cores alternadas (par/ímpar) — numa tabela
- * ordenada os anos consecutivos "cruzam e descruzam" naturalmente,
- * criando um padrão fácil de ler sem sobrecarga visual.
+ * Ano de nascimento. Paleta de 6 cores cíclicas (`year % 6`). A variante
+ * anterior (2 cores par/ímpar) não dava para distinguir em tabelas
+ * multi-escalão — ex: Regional Sub 14-24 junta nascimentos de 2003 a
+ * 2013 (11 anos diferentes), onde 2 cores deixam tudo à frente dos
+ * olhos a parecer igual.
  *
  * Cores escolhidas para NÃO colidirem com o resto da UI do projecto:
  *   - verde está reservado ao Manuel
  *   - todo o espectro roxo/violeta está reservado aos escalões (Sub-10..Sub-24)
- * Por isso: par=laranja quente, ímpar=azul-céu. Complementares, contraste alto,
- * sem border (mais limpo).
+ *
+ * Todas pastel com foreground escuro (contraste AA para fs-10/11).
  * ────────────────────────────────────────────────────────────────── */
-const YEAR_COLOR_EVEN = { bg: "#fed7aa", fg: "#7c2d12" }; // anos pares — laranja
-const YEAR_COLOR_ODD  = { bg: "#bae6fd", fg: "#075985" }; // anos ímpares — azul-céu
+const YEAR_PALETTE: { bg: string; fg: string }[] = [
+  { bg: "#dbeafe", fg: "#1e40af" },   // azul
+  { bg: "#fef3c7", fg: "#78350f" },   // âmbar
+  { bg: "#fce7f3", fg: "#9d174d" },   // rosa
+  { bg: "#fed7aa", fg: "#7c2d12" },   // pêssego
+  { bg: "#cffafe", fg: "#155e75" },   // ciano
+  { bg: "#fecdd3", fg: "#881337" },   // vermelho-rosa
+];
 
 export function YearPill({ year }: { year: number | string | null | undefined }) {
   if (year == null || year === "") return <span className="muted">–</span>;
   const y = typeof year === "number" ? year : parseInt(String(year), 10);
   if (!Number.isFinite(y)) return <span className="muted">–</span>;
-  const c = y % 2 === 0 ? YEAR_COLOR_EVEN : YEAR_COLOR_ODD;
+  // Módulo positivo — evita índices negativos se y for negativo (improvável, mas seguro).
+  const idx = ((y % YEAR_PALETTE.length) + YEAR_PALETTE.length) % YEAR_PALETTE.length;
+  const c = YEAR_PALETTE[idx];
   return (
     <span className="p p-sm" style={{
       background: c.bg,

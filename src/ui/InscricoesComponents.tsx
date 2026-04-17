@@ -88,6 +88,44 @@ export function useFedCountries(): Map<string, string> {
   return m;
 }
 
+/* ── fed → birthdate (lazy-load, partilhado entre instâncias) ──
+ *
+ * Fonte: `/data/federados.json` (campo `birthdate`, formato "YYYY-MM-DD").
+ *
+ * Usado como fallback quando `playersDB[fed].dob` está indisponível — ou
+ * seja, para jogadores que não estão em `players.json` curado (muito comum
+ * para Sub-10 e novos registados). Sem este fallback, a DrawTab cairia no
+ * `tournamentEscalao` genérico do torneio, que está errado para torneios
+ * combinados como o Campeonato Regional de Jovens (Sub 10+12, Sub 14-24).
+ */
+let _fedBirthdatePromise: Promise<Map<string, string>> | null = null;
+export function loadFedBirthdates(): Promise<Map<string, string>> {
+  if (_fedBirthdatePromise) return _fedBirthdatePromise;
+  _fedBirthdatePromise = fetch("/data/federados.json")
+    .then(r => r.ok ? r.json() : null)
+    .catch(() => null)
+    .then(feds => {
+      const m = new Map<string, string>();
+      if (!feds) return m;
+      const items = feds.players || feds.federados || feds.records || (Array.isArray(feds) ? feds : []);
+      for (const p of items) {
+        const fed = String(p.federation_code || p.fed || "");
+        const dob = p.birthdate || p.dt_aniv || p.dob || "";
+        if (fed && typeof dob === "string" && /^\d{4}-\d{2}-\d{2}/.test(dob)) {
+          m.set(fed, dob.slice(0, 10));
+        }
+      }
+      return m;
+    });
+  return _fedBirthdatePromise;
+}
+
+export function useFedBirthdates(): Map<string, string> {
+  const [m, setM] = useState<Map<string, string>>(new Map());
+  useEffect(() => { loadFedBirthdates().then(setM); }, []);
+  return m;
+}
+
 /** Renderiza bandeira só se o jogador for não-PT (PT é default sem bandeira). */
 export function CountryFlag({ fed, fedCountries }: { fed: string | null; fedCountries: Map<string, string> }) {
   if (!fed) return null;

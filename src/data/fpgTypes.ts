@@ -55,6 +55,11 @@ export interface Tournament extends BaseTournament {
   _roundLabel?: string;    // "R1", "R2", "Resumo"
   _totalRounds?: number;   // e.g. 2
   _isIncomplete?: boolean; // true for players missing rounds
+  /** Override do label do botão/tab de escalão na Jovens view. Usar quando o
+   *  `escalao` canónico (ex: "Sub 10") não descreve bem o torneio — p.ex. num
+   *  Regional combinado Sub 10/12 ou Sub 14 a 24, o label fica "Sub 10 e 12"
+   *  ou "Sub 14 a 24" apenas no botão, mantendo o `escalao` para sorting/pills. */
+  _tabLabel?: string;
 }
 
 export interface GrupoJogador { nome: string; fed: string | null; hcp: number | string; }

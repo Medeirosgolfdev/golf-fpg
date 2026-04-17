@@ -20,7 +20,7 @@ import { MANUEL_FED } from "../constants/manuel";
 import { TournPName, TeeDot } from "./tournamentPrimitives";
 import type { PlayersDB } from "./tournamentPrimitives";
 import { EscPill, YearPill } from "./PillBadge";
-import { useFedCountries, CountryFlag } from "./InscricoesComponents";
+import { useFedCountries, useFedBirthdates, CountryFlag } from "./InscricoesComponents";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
@@ -52,6 +52,7 @@ export default function AdmissionsTab({
 }: Props) {
   const [q, setQ] = useState("");
   const fedCountries = useFedCountries();
+  const fedBirthdates = useFedBirthdates();
   const { sortKey, sortDir, toggleSort } = useSort<SortKey>("pos", "asc");
 
   const players = admissions.players || [];
@@ -64,14 +65,18 @@ export default function AdmissionsTab({
   const enriched = useMemo(() => players.map(p => {
     const bd = p.fed && playersDB ? (playersDB[p.fed] as any) : undefined;
     const nomeFormatted = formatPlayerName(p.nome || "");
-    const dob: string | undefined = bd?.dob;
+    // Dob: playersDB (curado) → federados.json (base FPG) → undefined
+    const dob: string | undefined = bd?.dob || (p.fed ? fedBirthdates.get(p.fed) : undefined);
     const dobYear = dob ? parseInt(dob.slice(0, 4), 10) : null;
     let clube = p.clube;
     if (!clube && bd) {
       const club = typeof bd.club === "string" ? bd.club : bd.club?.short;
       clube = club || clube;
     }
-    const escHist = escalaoAtDate(dob, date || undefined) || tournamentEscalao || null;
+    // Escalão: calculado da dob (autoritativo). NÃO cair em `tournamentEscalao`
+    // porque torneios combinados (Regional Sub 14-24, Sub 10+12) misturam vários
+    // escalões — o genérico engana.
+    const escHist = escalaoAtDate(dob, date || undefined) || null;
     return {
       ...p,
       _nomeFormatted: nomeFormatted,
@@ -80,7 +85,7 @@ export default function AdmissionsTab({
       _dobYear: dobYear,
       _escHist: escHist,
     };
-  }), [players, playersDB, date, tournamentEscalao]);
+  }), [players, playersDB, fedBirthdates, date]);
 
   const filtered = useMemo(() => {
     if (!term) return enriched;

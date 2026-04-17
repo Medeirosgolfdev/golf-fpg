@@ -20,7 +20,7 @@ import { useAppContext } from "../context/AppContext";
 import { loadPlayers } from "../data/loader";
 import { buildEscLookup, type EscLookup, escCls, escPillCls, formatPlayerName, normalizePlayer } from "../utils/playerUtils";
 import { TORNEIOS_CONFIG } from "../constants/config";
-import { PILL_SSERRA, SIDEBAR_ACCENT, EscPill, PillBadge, RoundPill, NineHPill, SserraPill, NacionalPill, JuniorPill, ClubePill, ManuelPill, escTabStyle } from "../ui/PillBadge";
+import { PILL_SSERRA, SIDEBAR_ACCENT, EscPill, PillBadge, RoundPill, NineHPill, SserraPill, NacionalPill, JuniorPill, ClubePill, ManuelPill } from "../ui/PillBadge";
 import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
 import SexBadge from "../ui/SexBadge";
 import SidebarToggle from "../ui/SidebarToggle";
@@ -50,7 +50,7 @@ import { PJARankingView } from "../ui/PJARankingView";
 import ClubesGruposView from "../ui/ClubesGruposView";
 // Tipos e utilitários FPG — fonte canónica em ../data/fpgTypes.ts e ../data/fpgUtils.ts
 import type { RoundScore, Player, Tournament, ScorecardOptions, SDResult, PlayerFilter, GrupoJogador, GrupoEntry } from "../data/fpgTypes";
-import { numGross, resolveEsc, computeSD, filterPlayers, expandMultiRound, buildDisplayList } from "../data/fpgUtils";
+import { numGross, resolveEsc, computeSD, filterPlayers, expandMultiRound, buildDisplayList, tournamentHasManuel } from "../data/fpgUtils";
 // Leaderboard components — extraídos para fpg/LeaderboardComponents.tsx
 import { ScorecardLB, AccumulatedLB, AllRoundsScorecardLB } from "../ui/LeaderboardComponents";
 import { LinksBar } from "../ui/LinksBar";
@@ -780,7 +780,7 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
             {/JUNIOR|J[ÚU]NIOR/i.test(tournament.name || "") && <JuniorPill />}
             {tournament.ccode === SSERRA_CCODE && <SserraPill />}
             {tournament.ccode !== SSERRA_CCODE && <ClubePill clube={tournament.clube} ccode={tournament.ccode} />}
-            {tournament.players.some(p => isManuel(p)) && <ManuelPill />}
+            {tournamentHasManuel(tournament) && <ManuelPill />}
           </span>
 
         </div>
@@ -814,6 +814,7 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
               tournamentEscalao={tournament.escalao || undefined}
               tournamentSex={/\bF\b|\bS\b|Feminino/i.test(tournament.name || "") ? "F" : /\bM\b|\bH\b|Masculino/i.test(tournament.name || "") ? "M" : undefined}
               tournamentDate={tournament.date}
+              admissions={admissions}
             />
           : isCombined
             ? <AllRoundsScorecardLB tournament={tournament} escLookup={escLookup} playersDB={playersDB} />
@@ -1242,15 +1243,10 @@ function Content() {
   const curClubesYear: string = (curClubes as any)?._clubesYear ?? curClubes?.date?.substring(0, 4) ?? "";
 
   const jovensGroups = useMemo(() => {
-    // Para torneios pré-jogo (ex: Nacional 2026 injectado sinteticamente com players: []),
-    // o Manuel só aparece em _admissions.players. Verificar ambos os sítios.
-    const hasManuel = (t: Tournament): boolean => {
-      if (t.players.some(p => isManuel(p))) return true;
-      const adm = (t as any)._admissions?.players as Array<{ fed?: string | null; nome?: string }> | undefined;
-      return !!adm?.some(p => isManuel({ name: p.nome, fed: p.fed ?? undefined }));
-    };
+    // Para torneios pré-jogo o Manuel só aparece em _admissions.players ou
+    // _draws.*.groups.*.players. `tournamentHasManuel` cobre todos os sítios.
     const filtered = jovensTournaments
-      .filter(t => !filterManuel || hasManuel(t))
+      .filter(t => !filterManuel || tournamentHasManuel(t))
       .filter(t => !yearFilter || ((t as any)._jovensYear ?? t.date?.substring(0, 4)) === yearFilter)
       .filter(t => matchesSearch(t));
     return buildJovensGroups(filtered);
@@ -1409,6 +1405,7 @@ function Content() {
       ...(t as any),
       playerCount: nJog,
       pill: pillVal,
+      _manuelInscrito: tournamentHasManuel(t),
     };
     return (
       <TournSidebarItem
@@ -1782,6 +1779,9 @@ function Content() {
                   const regionLabel = REGION_LABEL[t0.ccode ?? ""] ?? t0.ccode ?? "";
                   // Data só dd/mm (ano já está no cabeçalho de secção)
                   const ddmm = g.date ? g.date.substring(8, 10) + "/" + g.date.substring(5, 7) : "";
+                  // Manuel detection: procurar em TODAS as entries do grupo (o grupo
+                  // pode ter Sub 10 e Sub 14 do mesmo Regional — Manuel está só numa).
+                  const groupHasManuel = g.entries.some(e => tournamentHasManuel(e));
                   const sidebarT: SidebarItemTournament = {
                     ...(t0 as any),
                     name: g.name,
@@ -1789,6 +1789,7 @@ function Content() {
                     escalao: null,
                     ccode: "",     // sem ClubePill automático
                     date: undefined,  // sem data automática
+                    _manuelInscrito: groupHasManuel,
                   };
                   return (
                     <TournSidebarItem
@@ -1835,36 +1836,31 @@ function Content() {
                 {/* Tabs por escalão — fundo com a cor do escalão (tokens --esc-subN-*).
                     Quando o grupo tem tanto M como F, border da cor do sexo (azul/rosa).
                     Se o grupo tem só um sexo, sem border (não é preciso distinguir). */}
-                {curJovensGroup.entries.length > 1 && (() => {
-                  // Detectar sexo de cada entry
-                  const detectSex = (n: string): "M" | "F" | null =>
-                    /\bF\b|\bS\b|Feminino/i.test(n) ? "F"
-                    : /\bM\b|\bH\b|Masculino/i.test(n) ? "M"
-                    : null;
-                  const sexesInGroup = new Set(curJovensGroup.entries.map(e => detectSex(e.name || "")).filter(Boolean));
-                  const showSexBorder = sexesInGroup.size > 1;  // só se há M E F
-                  return (
-                    <div style={{ display: "flex", gap: 4, padding: "8px 12px 0", flexWrap: "wrap",
-                      borderBottom: "1px solid var(--border-light)", background: "var(--bg-card)" }}>
-                      {curJovensGroup.entries.map((e, ri) => {
-                        const active = jovensEscIdx === ri;
-                        const sex = showSexBorder ? detectSex(e.name || "") : null;
-                        const escStyle = escTabStyle(e.escalao, active, sex);
-                        return (
-                          <button key={e.tcode + "_" + ri}
-                            className="tourn-tab tourn-tab-sm"
-                            onClick={() => setJovensEscIdx(ri)}
-                            style={{ marginBottom: 6, ...escStyle }}>
-                            {e.escalao ?? "Esc " + (ri + 1)}
-                            <span className="fs-10" style={{ marginLeft: 3, opacity: 0.8 }}>
-                              ({(e.playerCount || e.players.length)} jog)
-                            </span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  );
-                })()}
+                {curJovensGroup.entries.length > 1 && (
+                  <div style={{ display: "flex", gap: 4, padding: "8px 12px 0", flexWrap: "wrap",
+                    borderBottom: "1px solid var(--border-light)", background: "var(--bg-card)" }}>
+                    {curJovensGroup.entries.map((e, ri) => {
+                      const active = jovensEscIdx === ri;
+                      // Estilo default (.tourn-tab / .active) — SEM cores do escalão
+                      // (ver memória "Sem cores nos botões de escalão"). Os pills
+                      // na sidebar continuam coloridos; só aqui nos botões é default.
+                      // Label: _tabLabel (override p/ torneios combinados "Sub 10 e 12"
+                      // ou "Sub 14 a 24") → escalao → fallback "Esc N".
+                      const label = (e as any)._tabLabel ?? e.escalao ?? "Esc " + (ri + 1);
+                      return (
+                        <button key={e.tcode + "_" + ri}
+                          className={`tourn-tab tourn-tab-sm${active ? " active" : ""}`}
+                          onClick={() => setJovensEscIdx(ri)}
+                          style={{ marginBottom: 6 }}>
+                          {label}
+                          <span className="fs-10" style={{ marginLeft: 3, opacity: 0.8 }}>
+                            ({(e.playerCount || e.players.length)} jog)
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
                 {curJovens
                   ? <TournamentDetail tournament={curJovens} escLookup={escLookup} playersDB={playersDB} />
                   : <div className="center-msg muted">Selecciona um torneio</div>

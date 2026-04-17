@@ -12,12 +12,12 @@
  */
 
 import React, { useMemo } from "react";
-import type { FpgDraw } from "../data/nacional2026Loader";
+import type { FpgDraw, FpgAdmissions } from "../data/nacional2026Loader";
 import { MANUEL_FED } from "../constants/manuel";
 import { TournPName, TeeDot } from "./tournamentPrimitives";
 import type { PlayersDB } from "./tournamentPrimitives";
 import { EscPill, YearPill } from "./PillBadge";
-import { useFedCountries, CountryFlag } from "./InscricoesComponents";
+import { useFedCountries, useFedBirthdates, CountryFlag } from "./InscricoesComponents";
 import { norm, fmtHcp, ageAtDate, escalaoAtDate } from "../utils/format";
 import { formatPlayerName } from "../utils/playerUtils";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
@@ -32,9 +32,25 @@ interface Props {
   tournamentSex?: "M" | "F";
   /** Data do torneio (YYYY-MM-DD) — usada para calcular escalão histórico. */
   tournamentDate?: string | null;
+  /** Admissions do mesmo torneio — usadas como snapshot temporal para HCP do
+   *  evento quando o draw não o traz explicitamente. O valor em `admissions`
+   *  foi capturado no momento da inscrição/draw e reflecte o HCP com que o
+   *  jogador vai entrar em campo (≠ HCP actual, que já pode ter evoluído). */
+  admissions?: FpgAdmissions;
 }
 
-type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "nasc" | "hora" | "buraco";
+type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "tee" | "nasc" | "hora" | "buraco";
+
+// Paleta de fundo para distinguir horas de saída (grupos de flight).
+// Cores pastel translúcidas — funcionam em tema claro e escuro.
+const TEE_TIME_PALETTE = [
+  "rgba(59, 130, 246, 0.14)",   // azul
+  "rgba(34, 197, 94, 0.14)",    // verde
+  "rgba(245, 158, 11, 0.14)",   // âmbar
+  "rgba(236, 72, 153, 0.14)",   // rosa
+  "rgba(168, 85, 247, 0.14)",   // roxo
+  "rgba(20, 184, 166, 0.14)",   // teal
+];
 
 function teeNameFor(escalao?: string, sex?: "M" | "F"): string | undefined {
   if (!escalao) return undefined;
@@ -49,11 +65,30 @@ function teeNameFor(escalao?: string, sex?: "M" | "F"): string | undefined {
 export default function DrawTab({
   draw, roundNum, playersDB,
   tournamentEscalao, tournamentSex, tournamentDate,
+  admissions,
 }: Props) {
   const effDate = tournamentDate || draw.date || null;
   const fedCountries = useFedCountries();
+  const fedBirthdates = useFedBirthdates();
   const teeName = teeNameFor(tournamentEscalao, tournamentSex);
   const { sortKey, sortDir, toggleSort } = useSort<SortKey>("pos", "asc");
+
+  // Snapshot temporal de HCP — HCP do evento, capturado das admissões.
+  // Usado como fonte autoritativa quando o draw em si não traz `hcp` por jogador.
+  const admHcpByFed = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const p of (admissions?.players || [])) {
+      if (p.fed && typeof p.hcp === "number") m.set(p.fed, p.hcp);
+    }
+    return m;
+  }, [admissions]);
+  const admHcpByName = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const p of (admissions?.players || [])) {
+      if (p.nome && typeof p.hcp === "number") m.set(norm(p.nome), p.hcp);
+    }
+    return m;
+  }, [admissions]);
 
   const nameToFed = useMemo(() => {
     const m = new Map<string, string>();
@@ -89,9 +124,16 @@ export default function DrawTab({
       for (const p of g.players) {
         idx++;
         const nomeFormatted = formatPlayerName(p.nome || "");
-        // Obter fed: (a) via match de nome no playersDB, (b) via campo clube se parecer fed
-        let fed = nameToFed.get(norm(p.nome)) || nameToFed.get(norm(nomeFormatted)) || null;
+        // Obter fed (em ordem de prioridade):
+        //   1. Campo `p.fed` — quando a fonte o forneceu (ex: PDFs manuais curados)
+        //   2. Match por nome no playersDB (players.json)
+        //   3. Campo `p.clube` se parecer um fed (erro do scraper datagolf)
+        const pFed = (p as any).fed as string | null | undefined;
+        let fed: string | null = pFed && String(pFed).trim() ? String(pFed).trim() : null;
         let clubeRaw = p.clube || "";
+        if (!fed) {
+          fed = nameToFed.get(norm(p.nome)) || nameToFed.get(norm(nomeFormatted)) || null;
+        }
         if (!fed && looksLikeFed(clubeRaw)) {
           fed = clubeRaw.trim();
           clubeRaw = "";
@@ -106,10 +148,25 @@ export default function DrawTab({
           ? (typeof bd.club === "string" ? bd.club : (bd.club.short || bd.club.name || ""))
           : "";
         const clube = clubeFromDB || clubeRaw || "";
-        const hcp = bd?.hcpExact ?? bd?.hcp ?? null;
-        const dob: string | undefined = bd?.dob;
+        // HCP — apenas se disponível como snapshot temporal do evento:
+        //   1. `p.hcp` do draw (PDF oficial / scrape da folha do draw)
+        //   2. Admissions HCP (por fed ou nome normalizado) — capturado na inscrição
+        // NÃO cair em `playersDB.hcpExact` (HCP actual): um jogador pode ter um HCP
+        // muito diferente agora vs. na altura do evento e levar a conclusões erradas.
+        // Quando não há snapshot, mostra-se "–" (honesto) em vez de HCP potencialmente
+        // deslocado no tempo.
+        const pHcp = (p as any).hcp as number | null | undefined;
+        const drawHcp = typeof pHcp === "number" ? pHcp : null;
+        const admHcp = fed ? admHcpByFed.get(fed) : undefined;
+        const admHcpByN = admHcpByName.get(norm(p.nome)) ?? admHcpByName.get(norm(nomeFormatted));
+        const hcp: number | null = drawHcp ?? admHcp ?? admHcpByN ?? null;
+        // Dob: playersDB (curado) → federados.json (base FPG) → undefined
+        const dob: string | undefined = bd?.dob || (fed ? fedBirthdates.get(fed) : undefined);
         const dobYear = dob ? parseInt(dob.slice(0, 4), 10) : null;
-        const escHist = escalaoAtDate(dob, effDate || undefined) || tournamentEscalao || null;
+        // Escalão: calculado da dob (fonte autoritativa). NÃO caímos em
+        // `tournamentEscalao` porque torneios combinados (Regional Sub 14-24,
+        // Sub 10+12) têm múltiplos escalões em disputa — o genérico engana.
+        const escHist = escalaoAtDate(dob, effDate || undefined) || null;
         out.push({
           pos: idx,
           teeTime: g.teeTime,
@@ -126,7 +183,7 @@ export default function DrawTab({
       }
     }
     return out;
-  }, [draw, nameToFed, playersDB, effDate, tournamentEscalao]);
+  }, [draw, nameToFed, playersDB, fedBirthdates, effDate, admHcpByFed, admHcpByName]);
 
   // Ordenar por sortKey
   const sorted = useMemo(() => {
@@ -141,6 +198,7 @@ export default function DrawTab({
         case "fed":    v = (a.fed || "").localeCompare(b.fed || ""); break;
         case "clube":  v = a.clube.localeCompare(b.clube, "pt"); break;
         case "hcp":    v = (a.hcp ?? INF) - (b.hcp ?? INF); break;
+        case "tee":    v = (a.tee || "").localeCompare(b.tee || "", "pt"); break;
         case "nasc":   v = (a.dobYear ?? INF) - (b.dobYear ?? INF); break;
         case "hora":   v = a.teeTime.localeCompare(b.teeTime); break;
         case "buraco": v = (a.startHole ?? INF) - (b.startHole ?? INF); break;
@@ -149,10 +207,36 @@ export default function DrawTab({
     });
   }, [flat, sortKey, sortDir]);
 
+  // Mapa de cor de fundo por teeTime (cicla uma paleta pastel pela ordem das horas).
+  // Permite identificar visualmente os grupos de flight mesmo quando a tabela é
+  // reordenada por outra coluna.
+  const teeTimeBg = useMemo(() => {
+    const m = new Map<string, string>();
+    const unique = [...new Set(flat.map(p => p.teeTime))].sort();
+    for (let i = 0; i < unique.length; i++) {
+      m.set(unique[i], TEE_TIME_PALETTE[i % TEE_TIME_PALETTE.length]);
+    }
+    return m;
+  }, [flat]);
+
   const rows: ScorecardRow[] = useMemo(() => {
-    return sorted.map(p => {
+    // Separador de grupos: linha mais grossa entre flights quando a ordenação
+    // respeita o agrupamento natural (sort por `pos` ou `hora` — rows do mesmo
+    // teeTime ficam consecutivas). Com outros sorts os flights quebram-se e a
+    // linha deixaria de marcar grupos coerentes, por isso só aparece nestes dois.
+    //
+    // 3px + `var(--text-3)` (#7a8a6e) dá uma linha claramente visível. A
+    // `ScorecardLeaderboard` aplica o `borderTop` nos <td> que controla
+    // (pos/nome/±Tot/buracos); aqui propagamos-o também aos <td> custom em
+    // `prefixCells`/`postScorecardCells` para o traço atravessar a linha toda.
+    const groupingActive = sortKey === "pos" || sortKey === "hora";
+    const GROUP_BORDER = "3px solid var(--text-3)";
+    return sorted.map((p, i) => {
       const manuel = p.fed === MANUEL_FED;
       const age = ageAtDate(p.dob, effDate || undefined);
+      const isFirstOfGroup = groupingActive && i > 0 && sorted[i - 1].teeTime !== p.teeTime;
+      const borderTop = isFirstOfGroup ? GROUP_BORDER : undefined;
+      const bStyle = borderTop ? { borderTop } : undefined;
       return {
         key: `${p.pos}-${p.fed ?? p.nome}`,
         pos: p.pos,
@@ -162,6 +246,7 @@ export default function DrawTab({
         isManuel: manuel,
         sortPos: p.pos,
         sortName: p.nome,
+        borderTop,
         nameContent: (
           <>
             <CountryFlag fed={p.fed} fedCountries={fedCountries} />
@@ -175,14 +260,14 @@ export default function DrawTab({
         ),
         prefixCells: (
           <>
-            <td className="lb-esc">
+            <td className="lb-esc" style={bStyle}>
               {p.escHist ? <EscPill esc={p.escHist} /> : <span className="muted">–</span>}
             </td>
-            <td className="lb-fed">{p.fed || "–"}</td>
-            <td className="lb-club" title={p.clube}>{p.clube || "–"}</td>
-            <td className="lb-hcp">{p.hcp != null ? fmtHcp(p.hcp) : "–"}</td>
-            <td className="lb-tee"><TeeDot teeName={p.tee || teeName} /></td>
-            <td title={p.dob ? `${p.dob} (${age ?? "?"} anos à data)` : ""} style={{ textAlign: "center", padding: "6px 8px", whiteSpace: "nowrap" }}>
+            <td className="lb-fed" style={bStyle}>{p.fed || "–"}</td>
+            <td className="lb-club" title={p.clube} style={bStyle}>{p.clube || "–"}</td>
+            <td className="lb-hcp" style={bStyle}>{p.hcp != null ? fmtHcp(p.hcp) : "–"}</td>
+            <td className="lb-tee" style={bStyle}><TeeDot teeName={p.tee || teeName} /></td>
+            <td title={p.dob ? `${p.dob} (${age ?? "?"} anos à data)` : ""} style={{ textAlign: "center", padding: "6px 8px", whiteSpace: "nowrap", ...bStyle }}>
               {p.dobYear != null ? (
                 <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
                   <YearPill year={p.dobYear} />
@@ -194,17 +279,21 @@ export default function DrawTab({
         ),
         postScorecardCells: (
           <>
-            <td className="fs-12 fw-700 mono" style={{ padding: "6px 8px", whiteSpace: "nowrap", textAlign: "center" }}>
+            <td className="fs-12 fw-700 mono" style={{
+              padding: "6px 8px", whiteSpace: "nowrap", textAlign: "center",
+              background: teeTimeBg.get(p.teeTime),
+              ...bStyle,
+            }}>
               {p.teeTime}
             </td>
-            <td className="fs-12 fw-600" style={{ padding: "6px 8px", textAlign: "center" }}>
+            <td className="fs-12 fw-600" style={{ padding: "6px 8px", textAlign: "center", ...bStyle }}>
               T{p.startHole ?? "?"}
             </td>
           </>
         ),
       };
     });
-  }, [sorted, playersDB, fedCountries, teeName, effDate]);
+  }, [sorted, playersDB, fedCountries, teeName, effDate, teeTimeBg, sortKey]);
 
   if (draw.error) {
     return <div className="detail-toolbar" style={{ padding: 16 }}>
@@ -223,7 +312,7 @@ export default function DrawTab({
       <SortableHdr k="fed"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-fed">FED</SortableHdr>
       <SortableHdr k="clube" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-club">CLUBE</SortableHdr>
       <SortableHdr k="hcp"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">HCP</SortableHdr>
-      <th className="lb-tee">TEE</th>
+      <SortableHdr k="tee"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-tee">TEE</SortableHdr>
       <SortableHdr k="nasc"  sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px", textAlign: "center" }}>Nasc.</SortableHdr>
     </>
   );

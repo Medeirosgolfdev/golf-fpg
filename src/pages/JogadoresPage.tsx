@@ -3571,7 +3571,10 @@ export default function JogadoresPage() {
   const NEW_DAYS = 7; // threshold: "novo" = última ronda há ≤7 dias
 
   /* ── Modo TODOS (federados.json) ──────────────────────────────── */
-  const [viewMode, setViewMode] = useState<"ours" | "todos">("ours");
+  // Default "todos" — garante que qualquer link externo para um federado (ex. do
+  // DrawTab/AdmissionsTab) é encontrado, mesmo que o jogador não esteja nos 261
+  // curados de players.json. O user pode alternar para "Nossos" na toolbar.
+  const [viewMode, setViewMode] = useState<"ours" | "todos">("todos");
   const [federados, setFederados] = useState<FederadoRaw[] | null>(null);
   const [loadingFeds, setLoadingFeds] = useState(false);
   const [natFilter, setNatFilter] = useState<"ALL" | "PT" | "FOREIGN">("ALL");

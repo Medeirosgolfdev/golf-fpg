@@ -31,7 +31,16 @@ export interface FpgDrawFlight {
   teeTime: string;
   startHole: number | null;
   tee: string | null;
-  players: Array<{ nome: string; clube: string | null }>;
+  players: Array<{
+    nome: string;
+    clube: string | null;
+    /** Código FPG opcional (quando a fonte tem esta info — PDFs manuais por ex.).
+     *  Torna o matching robusto em casos de homónimos e evita dependência de
+     *  `players.json` estar curado para o jogador. */
+    fed?: string | null;
+    /** HCP exacto opcional (quando a fonte tem esta info — PDFs manuais). */
+    hcp?: number | null;
+  }>;
 }
 
 export interface FpgDraw {
