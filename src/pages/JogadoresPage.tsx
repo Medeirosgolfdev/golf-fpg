@@ -29,7 +29,7 @@ import { loadFederados, mergePlayersWithFederados, loadInativosStats, normalizeA
 import { getPlayerHistory, getScorecard, type WhsRound, type Scorecard } from "../data/datagolfClient";
 import { gf } from "../utils/flagUtils";
 import SortableHdr from "../ui/SortableHdr";
-import { PillBadge } from "../ui/PillBadge";
+import { PillBadge, EscPill, ClubePill, SIDEBAR_ACCENT } from "../ui/PillBadge";
 import { RoundSimulator } from "../ui/RoundSimulator";
 import HoleStatsSection from "../ui/HoleStatsSection";
 import { ScorecardTable } from "../ui/ScorecardTable";
@@ -2412,21 +2412,117 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
           />
         </div>
       </div>
-      <div className="card" style={{ marginTop: 12 }}>
-        <div className="h-md fs-14 mb-8">Cadastro FPG — todos os {Object.keys(f).length} campos</div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 12 }}>
-          {FEDERADO_FIELD_ORDER
-            .filter(k => k in f)
-            .concat(Object.keys(f).filter(k => !FEDERADO_FIELD_ORDER.includes(k)))
-            .map(k => {
-              const label = FEDERADO_FIELD_LABELS[k] || k;
-              const raw = (f as Record<string, unknown>)[k];
-              const value = formatFedValue(k, raw);
-              return <KV key={k} label={label} value={value} />;
+      {(() => {
+        const fRec = f as Record<string, unknown>;
+        const fKeys = new Set(Object.keys(fRec));
+        // Campos já cobertos pelas secções + bloco técnico
+        const covered = new Set<string>([
+          ...FEDERADO_SECTIONS.flatMap(s => s.fields),
+          ...FEDERADO_TECHNICAL_FIELDS,
+        ]);
+        // Campos "soltos" — apareceram no JSON mas não estão mapeados em nenhum lado
+        const extraFields = Object.keys(fRec).filter(k => !covered.has(k));
+        const visibleCount =
+          FEDERADO_SECTIONS.reduce((n, s) => n + s.fields.filter(k => fKeys.has(k)).length, 0) +
+          extraFields.length;
+        const technicalCount = FEDERADO_TECHNICAL_FIELDS.filter(k => fKeys.has(k)).length;
+
+        // Detecta divergência entre HCP Exacto e HCP Index (raro mas possível)
+        const hcpExact = fRec.hcp_exact;
+        const hcpIndex = fRec.hcp_index;
+        const hcpDiverges =
+          hcpExact != null && hcpIndex != null &&
+          typeof hcpExact === "number" && typeof hcpIndex === "number" &&
+          Math.abs(hcpExact - hcpIndex) > 0.05;
+
+        const renderKV = (k: string) => {
+          const label = FEDERADO_FIELD_LABELS[k] || k;
+          const raw = fRec[k];
+          let value = formatFedValue(k, raw);
+          // Aviso inline quando hcp_exact e hcp_index divergem
+          if (k === "hcp_index" && hcpDiverges) {
+            value = (
+              <>
+                {value}
+                <span
+                  className="p p-sm"
+                  title={`Divergência: HCP Exacto=${hcpExact}, HCP Index=${hcpIndex}. Normalmente são iguais — investigar.`}
+                  style={{ background: "var(--color-warn)", color: "#fff", borderColor: "transparent" }}
+                >⚠ ≠ exacto</span>
+              </>
+            );
+          }
+          return <KV key={k} label={label} value={value} description={FEDERADO_FIELD_DESCRIPTIONS[k]} />;
+        };
+
+        return (
+          <div className="card" style={{ marginTop: 12 }}>
+            <div className="h-md fs-14 mb-8" style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <span>Cadastro FPG</span>
+              <span className="muted fs-10" style={{ fontWeight: 400 }}>
+                {visibleCount} campos visíveis{technicalCount > 0 ? ` · ${technicalCount} técnicos ocultos` : ""}
+              </span>
+            </div>
+
+            {/* Secções principais */}
+            {FEDERADO_SECTIONS.map(sec => {
+              const keys = sec.fields.filter(k => fKeys.has(k));
+              if (keys.length === 0) return null;
+              return (
+                <div key={sec.title} style={{ marginBottom: 14 }}>
+                  <div
+                    className="muted"
+                    style={{
+                      fontSize: 11, fontWeight: 700, letterSpacing: "0.05em",
+                      textTransform: "uppercase", marginBottom: 6,
+                      borderBottom: "1px solid var(--border)", paddingBottom: 3,
+                    }}
+                  >{sec.title}</div>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: 10 }}>
+                    {keys.map(renderKV)}
+                  </div>
+                </div>
+              );
             })}
-        </div>
-        {/* Foto movida para o hero header (ao lado do nome) — 2026-04-16 */}
-      </div>
+
+            {/* Campos extra não mapeados (caso futuro em que o JSON ganhe campos novos) */}
+            {extraFields.length > 0 && (
+              <div style={{ marginBottom: 14 }}>
+                <div
+                  className="muted"
+                  style={{
+                    fontSize: 11, fontWeight: 700, letterSpacing: "0.05em",
+                    textTransform: "uppercase", marginBottom: 6,
+                    borderBottom: "1px solid var(--border)", paddingBottom: 3,
+                  }}
+                >Outros</div>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: 10 }}>
+                  {extraFields.map(renderKV)}
+                </div>
+              </div>
+            )}
+
+            {/* Campos técnicos — colapsados por defeito */}
+            {technicalCount > 0 && (
+              <details style={{ marginTop: 8, borderTop: "1px solid var(--border)", paddingTop: 8 }}>
+                <summary
+                  className="muted"
+                  style={{
+                    cursor: "pointer", fontSize: 11, fontWeight: 600,
+                    letterSpacing: "0.03em", userSelect: "none",
+                  }}
+                  title="IDs internos, tokens e campos redundantes — úteis para debug."
+                >
+                  ⚙ Campos técnicos ({technicalCount}) <span style={{ opacity: 0.6, fontWeight: 400 }}>— IDs, tokens e redundâncias</span>
+                </summary>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: 10, marginTop: 8 }}>
+                  {FEDERADO_TECHNICAL_FIELDS.filter(k => fKeys.has(k)).map(renderKV)}
+                </div>
+              </details>
+            )}
+          </div>
+        );
+      })()}
       {/* KPIs de actividade — calculados a partir das rondas WHS */}
       {liveRounds && liveRounds.length > 0 && (() => {
         const now = new Date();
@@ -2635,15 +2731,40 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
 }
 
 /* ── Ordem e etiquetas dos 32 campos FPG ──────────────────── */
-const FEDERADO_FIELD_ORDER = [
-  "federation_code", "federation_number", "name", "gender", "birthdate",
-  "age_level", "age_level_id", "hcp_exact", "hcp_index", "hcp_status",
-  "hcp_status_id", "hcp_type", "hcp_type_id", "player_type", "player_type_id",
-  "federated_status", "federated_status_id", "acronym", "club_code", "club_name",
-  "club_notpublic", "clubplayerstatus", "country", "country_prefix",
-  "admission_date", "last_hcp_date", "rounds_current_year",
-  "notpublic", "permit", "dt_aniv", "photo", "encryptedfedcode",
+/* ────────────────────────────────────────────────────────────────────
+   Cadastro FPG — organização dos campos em secções + tooltips
+   ──────────────────────────────────────────────────────────────────── */
+
+/** Secções visíveis por defeito. Cada uma agrupa campos relacionados. */
+const FEDERADO_SECTIONS: { title: string; fields: string[] }[] = [
+  {
+    title: "Identificação",
+    fields: ["federation_code", "name", "gender", "birthdate", "country", "country_prefix"],
+  },
+  {
+    title: "Clube",
+    fields: ["acronym", "club_name", "club_code", "clubplayerstatus", "club_notpublic"],
+  },
+  {
+    title: "Handicap",
+    fields: ["hcp_index", "hcp_status", "hcp_type", "last_hcp_date", "rounds_current_year"],
+  },
+  {
+    title: "Estado FPG",
+    fields: ["federated_status", "player_type", "age_level", "admission_date", "notpublic"],
+  },
 ];
+
+/** Campos "técnicos" — IDs internos, tokens e redundâncias — escondidos num
+ *  <details> colapsado. Não são úteis no dia-a-dia mas podem ser necessários
+ *  para debug ou cross-referencing com outros scripts. */
+const FEDERADO_TECHNICAL_FIELDS = [
+  "federation_number",    // redundante com federation_code (zeros à esquerda)
+  "hcp_exact",            // igual ao hcp_index em 99% dos casos
+  "age_level_id", "hcp_status_id", "hcp_type_id", "player_type_id", "federated_status_id",
+  "permit", "dt_aniv", "photo", "encryptedfedcode",
+];
+
 const FEDERADO_FIELD_LABELS: Record<string, string> = {
   federation_code: "Nº Federado",
   federation_number: "Nº Federado (7 dígitos)",
@@ -2659,41 +2780,278 @@ const FEDERADO_FIELD_LABELS: Record<string, string> = {
   hcp_type: "HCP Tipo",
   hcp_type_id: "HCP Tipo (ID)",
   player_type: "Tipo de jogador",
-  player_type_id: "Tipo (ID)",
+  player_type_id: "Tipo de jogador (ID)",
   federated_status: "Status federado",
   federated_status_id: "Status federado (ID)",
   acronym: "Clube (acrónimo)",
   club_code: "Clube (código)",
   club_name: "Clube (nome oficial)",
-  club_notpublic: "Clube — not public",
+  club_notpublic: "Clube — privacidade",
   clubplayerstatus: "Clube — status jogador",
   country: "País",
   country_prefix: "País (prefixo)",
   admission_date: "Federado desde",
-  last_hcp_date: "Última data HCP",
+  last_hcp_date: "Última actualização HCP",
   rounds_current_year: "Rondas este ano",
-  notpublic: "Not public",
+  notpublic: "Perfil público",
   permit: "Permit",
   dt_aniv: "DT Aniv",
   photo: "Fotografia (path)",
   encryptedfedcode: "Token encriptado",
 };
 
-function formatFedValue(key: string, v: unknown): React.ReactNode {
-  if (v == null || v === "") return <span className="c-muted">—</span>;
-  if (key === "encryptedfedcode" && typeof v === "string") {
-    return <code className="fs-10" title={v}>{v.slice(0, 20)}…</code>;
-  }
-  if (typeof v === "boolean") return v ? "Sim" : "Não";
-  if (typeof v === "number") return v.toString();
-  return String(v);
+/** Tooltips — aparecem via `title=` ao fazer hover no label.
+ *  Escrito para um leigo que pode não estar familiarizado com os termos FPG. */
+const FEDERADO_FIELD_DESCRIPTIONS: Record<string, string> = {
+  federation_code: "Número único atribuído pela FPG quando o jogador se federa. Usado em toda a federação para identificar o jogador.",
+  federation_number: "Mesmo nº federado com zeros à esquerda até 7 dígitos. É só um formato alternativo — sem informação adicional.",
+  name: "Nome completo como consta no registo da FPG.",
+  gender: "Masculino (M) ou Feminino (F). Determina os escalões competitivos e os tees oficiais a jogar.",
+  birthdate: "Data de nascimento. Determina o escalão etário em cada torneio.",
+  age_level: "Escalão etário competitivo conforme o regulamento FPG. Sub-10, Sub-12, Sub-14, Sub-16, Sub-18, Sub-21, Absoluto, Sénior, etc.",
+  age_level_id: "Código numérico interno do escalão (10=Sub-10, 12=Sub-12, …). Só útil para debug.",
+  hcp_exact: "Handicap 'exacto' — terminologia antiga da EGA. Em Portugal desde a migração para o WHS é igual ao HCP Index.",
+  hcp_index: "Handicap oficial WHS (World Handicap System). Reflecte a capacidade actual do jogador; quanto mais baixo, melhor. É o valor usado para calcular o Playing Handicap em cada campo.",
+  hcp_status: "Estado do handicap: Válido = pode ser usado em competição; Provisório = ainda em formação (menos de 20 cartões entregues); Suspenso = alguma irregularidade.",
+  hcp_status_id: "Código numérico do status HCP (10=Válido, etc.). Só útil para debug.",
+  hcp_type: "Sistema de handicap: EGA = sistema europeu antigo; WHS = sistema mundial actual (em vigor em Portugal desde 2020).",
+  hcp_type_id: "Código numérico do tipo de HCP. Só útil para debug.",
+  player_type: "Amador compete por prazer e pode receber prémios em vouchers/géneros; Profissional está inscrito como tal e pode receber prémios monetários.",
+  player_type_id: "Código numérico do tipo de jogador (1=Amador, 2=Profissional, etc.). Só útil para debug.",
+  federated_status: "Ativo = federação em dia e pode participar em competições; Inativo = quota por regularizar.",
+  federated_status_id: "Código numérico do status federado (9=Ativo, 7=Inativo, etc.). Só útil para debug.",
+  acronym: "Nome curto do clube onde o jogador está inscrito.",
+  club_code: "Código FPG do clube (3 dígitos, ex.: 007 = CGSS Santo da Serra, 004 = Estoril).",
+  club_name: "Nome oficial completo do clube de filiação.",
+  club_notpublic: "Se Privado, o clube optou por não exibir listas de jogadores publicamente nos rankings FPG.",
+  clubplayerstatus: "Status do jogador dentro do próprio clube (0=regular, 1=social, etc.).",
+  country: "País de origem ou de federação.",
+  country_prefix: "Código ISO de 2 letras do país (PT=Portugal, ES=Espanha, …).",
+  admission_date: "Data da primeira inscrição do jogador na FPG.",
+  last_hcp_date: "Data do último cartão/ronda que fez mexer o HCP Index.",
+  rounds_current_year: "Número de cartões entregues este ano civil. Pode incluir torneios e rondas individuais (EDS).",
+  notpublic: "Se Privado, o jogador optou por não aparecer publicamente nas listas/rankings da FPG.",
+  permit: "Código interno FPG relacionado com autorizações de jogo (permits internacionais, reciprocidades, etc.).",
+  dt_aniv: "Data interna de aniversário de filiação, usada pela FPG para renovações. Quase sempre vazia.",
+  photo: "Caminho interno da fotografia do jogador nos servidores da FPG.",
+  encryptedfedcode: "Identificador criptografado usado pela FPG para gerar URLs únicos (ex.: scorecard partilháveis). Nunca muda para o mesmo jogador.",
+};
+
+/* ────────────────────────────────────────────────────────────────
+   formatFedValue — todos os 32 campos do Cadastro FPG renderizados
+   com os pills globais (PillBadge.tsx + App.css .p/.p-sm/.p-*).
+   Cada valor vira pill apropriado ao tipo de campo.
+   ──────────────────────────────────────────────────────────────── */
+const STATUS_GOOD_PILL: React.CSSProperties = {
+  background: "var(--color-good)", color: "#fff", borderColor: "transparent",
+};
+const STATUS_WARN_PILL: React.CSSProperties = {
+  background: "var(--color-warn)", color: "#fff", borderColor: "transparent",
+};
+const STATUS_DANGER_PILL: React.CSSProperties = {
+  background: "var(--color-danger)", color: "#fff", borderColor: "transparent",
+};
+const HCP_VALUE_PILL: React.CSSProperties = {
+  background: "var(--bg-topbar, #1f2937)", color: "#fff", borderColor: "transparent",
+  letterSpacing: "0.02em",
+};
+
+function normalizeAgeLabel(s: string): string {
+  // "SUB12" → "Sub-12" · "SUB-14" → "Sub-14" · mantém "Absoluto", "Sénior", etc.
+  const m = s.match(/^sub[-\s]?(\d{1,2})$/i);
+  return m ? `Sub-${m[1]}` : s;
 }
 
-function KV({ label, value }: { label: string; value: React.ReactNode }) {
+function formatFedValue(key: string, v: unknown): React.ReactNode {
+  // ── Vazios ───────────────────────────────────────────────────
+  if (v == null || v === "") return <span className="p p-sm p-muted">—</span>;
+
+  // ── Tokens longos (path/hash) — pill muted com code mono ────
+  if (key === "encryptedfedcode" && typeof v === "string") {
+    return (
+      <span className="p p-sm p-muted" title={v}>
+        <code className="fs-10">{v.slice(0, 16)}…</code>
+      </span>
+    );
+  }
+  if (key === "photo" && typeof v === "string") {
+    return (
+      <span className="p p-sm p-muted" title={v}>
+        <code className="fs-10">…{v.slice(-18)}</code>
+      </span>
+    );
+  }
+
+  // ── Nome — texto, não pill (demasiado longo) ─────────────────
+  if (key === "name") {
+    return <span className="fw-700" style={{ fontSize: 13 }}>{String(v)}</span>;
+  }
+
+  // ── Género ───────────────────────────────────────────────────
+  if (key === "gender") {
+    const sex = String(v).toUpperCase();
+    return sex === "M" || sex === "F"
+      ? <SexBadge sex={sex as "M" | "F"} size="md" />
+      : <span className="p p-sm p-muted">{String(v)}</span>;
+  }
+
+  // ── Códigos de federação ─────────────────────────────────────
+  if (key === "federation_code" || key === "federation_number") {
+    return <span className="p p-sm p-fed">{String(v)}</span>;
+  }
+
+  // ── Escalão — pill global (.p-sub10 etc.) via <EscPill /> ───
+  if (key === "age_level" && typeof v === "string") {
+    return <EscPill esc={normalizeAgeLabel(v)} />;
+  }
+
+  // ── Datas → .p-birth ─────────────────────────────────────────
+  if (key === "birthdate" || key === "admission_date" || key === "last_hcp_date" || key === "dt_aniv") {
+    return <span className="p p-sm p-birth">{String(v)}</span>;
+  }
+
+  // ── HCP Exacto / Index → pill escuro destacado ───────────────
+  if (key === "hcp_exact" || key === "hcp_index") {
+    const n = Number(v);
+    const txt = isFinite(n) ? (Number.isInteger(n) ? n.toString() : n.toFixed(1)) : String(v);
+    return <span className="p p-sm" style={HCP_VALUE_PILL}>{txt}</span>;
+  }
+
+  // ── Status de HCP (Válido / Provisório / …) ─────────────────
+  if (key === "hcp_status") {
+    const s = String(v).toLowerCase();
+    const isGood = /v[aá]lid|ativo|activo/.test(s);
+    const isWarn = /provis|review|revis/.test(s);
+    const style = isGood ? STATUS_GOOD_PILL : isWarn ? STATUS_WARN_PILL : undefined;
+    return style
+      ? <span className="p p-sm" style={style}>{String(v)}</span>
+      : <span className="p p-sm p-muted">{String(v)}</span>;
+  }
+
+  // ── Status federado (Ativo / Inativo) ───────────────────────
+  if (key === "federated_status") {
+    const s = String(v).toLowerCase();
+    const isGood = /ativ/.test(s) && !/inativ/.test(s);
+    const isBad = /inativ|suspen/.test(s);
+    const style = isGood ? STATUS_GOOD_PILL : isBad ? STATUS_DANGER_PILL : undefined;
+    return style
+      ? <span className="p p-sm" style={style}>{String(v)}</span>
+      : <span className="p p-sm p-muted">{String(v)}</span>;
+  }
+
+  // ── Tipo de HCP (EGA, WHS, …) → outline ─────────────────────
+  if (key === "hcp_type") {
+    return <span className="p p-sm p-outline">{String(v)}</span>;
+  }
+
+  // ── Tipo de jogador (Amador / Profissional) ─────────────────
+  if (key === "player_type") {
+    const s = String(v).toLowerCase();
+    const isPro = /profiss/.test(s);
+    return isPro
+      ? <span className="p p-sm" style={STATUS_WARN_PILL}>{String(v)}</span>
+      : <span className="p p-sm p-muted">{String(v)}</span>;
+  }
+
+  // ── País (nome extenso) com bandeira ────────────────────────
+  if (key === "country") {
+    const flag = gf(String(v));
+    return (
+      <span className="p p-sm p-muted">
+        {flag && <span style={{ marginRight: 4 }}>{flag}</span>}
+        {String(v)}
+      </span>
+    );
+  }
+
+  // ── País (prefixo ISO) ──────────────────────────────────────
+  if (key === "country_prefix") {
+    const txt = String(v);
+    const flag = gf(txt);
+    return (
+      <span className="p p-sm p-muted">
+        {flag && <span style={{ marginRight: 4 }}>{flag}</span>}
+        {txt}
+      </span>
+    );
+  }
+
+  // ── Clube — acrónimo, código, nome ──────────────────────────
+  if (key === "acronym" || key === "club_name") {
+    return <span className="p p-sm p-club">{String(v)}</span>;
+  }
+  if (key === "club_code") {
+    return <span className="p p-sm p-club">{String(v).padStart(3, "0")}</span>;
+  }
+
+  // ── Rondas este ano → número destacado ──────────────────────
+  if (key === "rounds_current_year") {
+    const n = Number(v);
+    const isZero = isFinite(n) && n === 0;
+    return (
+      <span className="p p-sm" style={isZero ? { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "transparent" } : HCP_VALUE_PILL}>
+        {isFinite(n) ? n : String(v)}
+      </span>
+    );
+  }
+
+  // ── Flags booleanas (notpublic, club_notpublic) ─────────────
+  if (key === "notpublic" || key === "club_notpublic") {
+    // 1 = privado (warn), 0/null = público (good)
+    const truthy = v === true || v === 1 || v === "1";
+    return (
+      <span className="p p-sm" style={truthy ? STATUS_WARN_PILL : STATUS_GOOD_PILL}>
+        {truthy ? "Privado" : "Público"}
+      </span>
+    );
+  }
+
+  // ── IDs numéricos (termina em _id) → muted ──────────────────
+  if (key.endsWith("_id")) {
+    return <span className="p p-sm p-muted">{String(v)}</span>;
+  }
+
+  // ── Permit (número) ─────────────────────────────────────────
+  if (key === "permit") {
+    return <span className="p p-sm p-muted">{String(v)}</span>;
+  }
+
+  // ── clubplayerstatus (0/1) ──────────────────────────────────
+  if (key === "clubplayerstatus") {
+    return <span className="p p-sm p-muted">{String(v)}</span>;
+  }
+
+  // ── Fallbacks por tipo ──────────────────────────────────────
+  if (typeof v === "boolean") {
+    return (
+      <span className="p p-sm" style={v ? STATUS_GOOD_PILL : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "transparent" }}>
+        {v ? "Sim" : "Não"}
+      </span>
+    );
+  }
+  if (typeof v === "number") return <span className="p p-sm p-muted">{v}</span>;
+  return <span className="p p-sm p-muted">{String(v)}</span>;
+}
+
+function KV({ label, value, description }: { label: string; value: React.ReactNode; description?: string }) {
+  const hasDesc = !!description;
   return (
     <div>
-      <div className="muted fs-10">{label}</div>
-      <div className="fw-600">{value}</div>
+      <div
+        className="muted fs-10"
+        style={{
+          marginBottom: 2,
+          cursor: hasDesc ? "help" : "default",
+          textDecoration: hasDesc ? "underline dotted var(--text-3)" : "none",
+          textUnderlineOffset: "2px",
+        }}
+        title={description}
+      >
+        {label}{hasDesc && <span aria-hidden style={{ marginLeft: 3, opacity: 0.5 }}>ⓘ</span>}
+      </div>
+      <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 4, minHeight: 20 }}>
+        {value}
+      </div>
     </div>
   );
 }
@@ -2922,6 +3280,192 @@ function FilteredStatsCard({ filtered, viewMode, onPickPlayer, activeFiltersCoun
         </div>
       )}
     </div>
+  );
+}
+
+/* ────────────────────────────────────────────────────────────────────────
+   PlayerSidebarItem — item de sidebar unificado para JogadoresPage.
+   Inspirado no TournSidebarItem (FPGPage): accent lateral + pills globais.
+   ──────────────────────────────────────────────────────────────────────── */
+
+type PlayerSidebarPlayer = {
+  name: string;
+  fed: string;
+  escalao: string;
+  sex?: "M" | "F" | string;
+  hcp: number | null;
+  club?: unknown;
+  tags?: string[];
+  _source?: MergedPlayer["_source"];
+  _federadoRaw?: FederadoRaw;
+  _fpgDiffs?: MergedPlayer["_fpgDiffs"];
+};
+
+/** Sep — pequena linha separadora entre blocos do cartão */
+const PlayerSidebarSep = () => (
+  <div style={{ height: "0.5px", background: "var(--border-light, rgba(0,0,0,.08))", margin: "4px 0" }} />
+);
+
+/** Pill HCP com código de cor por valor (verde baixo → âmbar médio → cinza alto) */
+function HcpPill({ hcp }: { hcp: number | null }) {
+  if (hcp == null || !isFinite(hcp)) return null;
+  // ≤ 5 → verde escuro · ≤ 15 → neutro · ≤ 28 → outline âmbar · > 28 → muted
+  let style: React.CSSProperties;
+  if (hcp <= 5) {
+    style = { background: "var(--color-good)", color: "#fff", borderColor: "transparent" };
+  } else if (hcp <= 15) {
+    style = { background: "var(--bg-topbar, #1f2937)", color: "#fff", borderColor: "transparent" };
+  } else if (hcp <= 28) {
+    style = { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" };
+  } else {
+    style = { background: "var(--bg-muted)", color: "var(--text-3)", borderColor: "var(--border)" };
+  }
+  return (
+    <span className="p p-sm" style={style} title={`HCP ${hcp}`}>
+      HCP {hcpDisplay(hcp)}
+    </span>
+  );
+}
+
+/** Pill de tag (PJA, inscrito-nacional, no-scrape, hidden) */
+function TagPill({ tag }: { tag: string }) {
+  const t = tag.toLowerCase();
+  // Mapeamento tag → estilo + label
+  if (t === "pja") return <PillBadge pill="PJA" />;
+  if (t === "inscrito-nacional") {
+    return (
+      <span
+        className="p p-sm p-tourn"
+        style={{ background: "var(--color-good-dark, #166534)", color: "#fff", borderColor: "transparent" }}
+        title="Inscrito no Campeonato Nacional"
+      >
+        🇵🇹 NACIONAL
+      </span>
+    );
+  }
+  if (t === "no-scrape") {
+    return (
+      <span
+        className="p p-sm"
+        style={{ background: "var(--bg-muted)", color: "var(--text-3)", borderColor: "var(--border)" }}
+        title="Scraper salta este jogador (dados congelados)"
+      >
+        ⏸ sem scrape
+      </span>
+    );
+  }
+  if (t === "hidden") {
+    return (
+      <span
+        className="p p-sm"
+        style={{ background: "var(--bg-muted)", color: "var(--text-3)", borderColor: "var(--border)" }}
+        title="Escondido da sidebar"
+      >
+        👁 oculto
+      </span>
+    );
+  }
+  // Fallback — tag genérica
+  return <span className="p p-sm p-muted">{tag}</span>;
+}
+
+type PlayerSidebarItemProps = {
+  p: PlayerSidebarPlayer;
+  isActive: boolean;
+  displayClub: string | null;
+  displayEscalao: string;
+  displayHcp: number | null;
+  rank?: number | null;
+  rankingMode: boolean;
+  isNewRound: boolean;
+  onClick: (e: React.MouseEvent) => void;
+};
+
+function PlayerSidebarItem({
+  p, isActive, displayClub, displayEscalao, displayHcp, rank, rankingMode, isNewRound, onClick,
+}: PlayerSidebarItemProps) {
+  const pm = p;
+  const isFedsOnly = pm._source === "feds";
+  const isOrphan = pm._source === "players";
+  const hcpChanged = !!pm._fpgDiffs?.hcpChanged;
+  const tags = (pm.tags || []).filter(t => t !== "no-priority");
+  const isNacional = tags.includes("inscrito-nacional");
+  const isPja = tags.includes("PJA") || tags.includes("pja");
+
+  const countryPrefix = pm._federadoRaw?.country_prefix;
+  const showFlag = countryPrefix && countryPrefix !== "PT" && !countryPrefix.startsWith("@");
+
+  // ── Accent lateral: prioridade nacional > PJA > orphan > escalão > feds-only ──
+  const escKey = (displayEscalao || "").toLowerCase().replace(/[\s-]/g, "");
+  const escBg =
+    escKey === "sub10" ? "var(--esc-sub10-bg)" :
+    escKey === "sub12" ? "var(--esc-sub12-bg)" :
+    escKey === "sub14" ? "var(--esc-sub14-bg)" :
+    escKey === "sub16" ? "var(--esc-sub16-bg)" :
+    escKey === "sub18" ? "var(--esc-sub18-bg)" :
+    null;
+  const accent =
+    isNacional ? "var(--color-good-dark, #166534)" :
+    isPja      ? SIDEBAR_ACCENT.pja :
+    isOrphan   ? "var(--color-warn)" :
+    escBg      ??
+    (isFedsOnly ? "var(--border)" : SIDEBAR_ACCENT.default);
+
+  // Club — fallback para fed code se não houver clube
+  const clubText = typeof displayClub === "string" && displayClub.trim() ? displayClub : null;
+
+  return (
+    <a
+      href={`/jogadores/${p.fed}`}
+      className={`course-item ${isActive ? "active" : ""}`}
+      onClick={onClick}
+      style={{
+        borderLeft: `4px solid ${accent}`,
+        paddingLeft: 10,
+        borderRadius: "0 6px 6px 0",
+        opacity: isFedsOnly ? 0.82 : 1,
+      }}
+    >
+      {/* Linha 1: rank (se rankingMode) + flag + nome + sexo + indicadores */}
+      <div className="course-item-name flex-center" style={{ marginBottom: 3 }}>
+        {rankingMode && rank != null && (
+          <span className={`sidebar-rank ${rank <= 3 ? "sidebar-rank-top3" : rank <= 10 ? "sidebar-rank-top10" : "sidebar-rank-rest"}`}>
+            {rank}
+          </span>
+        )}
+        <span className="flex-1" style={{ minWidth: 0 }}>
+          {showFlag && <span className="mr-4" title={pm._federadoRaw?.country}>{gf(countryPrefix!)}</span>}
+          <span style={{ fontWeight: isActive ? 700 : 600 }}>{p.name}</span>
+          <SexBadge sex={p.sex} size="sm" className="ml-4" />
+          {isNewRound && <span className="new-round-dot ml-4" title="Ronda recente (< 7 dias)" />}
+          {isFedsOnly && <span className="ml-4 c-muted fs-10" title="Só cadastro FPG — sem análise de scorecards">ø</span>}
+          {isOrphan && <span className="ml-4 fs-10" title="Não encontrado na FPG activa (quotas por regularizar?)" style={{ color: "var(--color-warn-vivid)" }}>⚠</span>}
+          {hcpChanged && <span className="ml-4 fs-10" title={`FPG actual: HCP ${pm._fpgDiffs?.hcpChanged?.fpg}`} style={{ color: "var(--color-warn-vivid)" }}>⚡</span>}
+        </span>
+      </div>
+
+      <PlayerSidebarSep />
+
+      {/* Linha 2: pills — escalão · clube · HCP · tags */}
+      <div className="gap-4 flex-wrap" style={{ display: "flex", alignItems: "center", margin: "3px 0" }}>
+        {displayEscalao && <EscPill esc={displayEscalao} />}
+        {clubText && <ClubePill clube={clubText} ccode={null} />}
+        <HcpPill hcp={displayHcp} />
+        {tags.map(t => <TagPill key={t} tag={t} />)}
+      </div>
+
+      <PlayerSidebarSep />
+
+      {/* Linha 3: fed# + (opcional) rank HCP colorido à direita */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <span style={{ fontSize: 11, color: "var(--text-muted)" }}>#{p.fed}</span>
+        {rankingMode && displayHcp != null && (
+          <span className={`sidebar-sd ${displayHcp <= 5 ? "trend-up" : displayHcp <= 15 ? "sidebar-c-text-3" : "sidebar-sd-high"}`}>
+            {hcpDisplay(displayHcp)}
+          </span>
+        )}
+      </div>
+    </a>
   );
 }
 
@@ -3650,43 +4194,27 @@ export default function JogadoresPage() {
             const displayEscalao = (isActive && playerMeta?.escalao) ? playerMeta.escalao : p.escalao;
             const displayHcp = (isActive) ? (playerMeta?.latestHcp ?? null) : p.hcp;
             const rank = rankings.get(p.fed);
-            const pm = p as typeof p & { _source?: MergedPlayer["_source"]; _federadoRaw?: FederadoRaw; _fpgDiffs?: MergedPlayer["_fpgDiffs"] };
-            const isFedsOnly = pm._source === "feds";
-            const isOrphan = pm._source === "players";
-            const countryPrefix = pm._federadoRaw?.country_prefix;
-            const showFlag = countryPrefix && countryPrefix !== "PT" && !countryPrefix.startsWith("@");
-
+            const d = daysSince(statsDb[p.fed]);
+            const isNewRound = d != null && d <= NEW_DAYS;
             return (
-              <a key={p.fed} href={`/jogadores/${p.fed}`}
-                className={`course-item ${isActive ? "active" : ""}`}
-                style={isFedsOnly ? { opacity: 0.75 } : undefined}
-                onClick={e => { if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) { e.preventDefault(); selectPlayer(p.fed); md.onSelect(); } }}>
-                <div className="course-item-name flex-center">
-                  {rankingMode && rank != null && (
-                    <span className={`sidebar-rank ${rank <= 3 ? "sidebar-rank-top3" : rank <= 10 ? "sidebar-rank-top10" : "sidebar-rank-rest"}`}>
-                      {rank}
-                    </span>
-                  )}
-                  <span className="flex-1">
-                    {showFlag && <span className="mr-4" title={pm._federadoRaw?.country}>{gf(countryPrefix!)}</span>}
-                    {p.name}
-                    <SexBadge sex={p.sex} size="sm" />
-                    {(() => { const d = daysSince(statsDb[p.fed]); return d != null && d <= NEW_DAYS ? <span className="new-round-dot" title={`Ronda há ${d}d`} /> : null; })()}
-                    {isFedsOnly && <span className="ml-4 c-muted fs-10" title="Só cadastro FPG — sem análise">ø</span>}
-                    {isOrphan && <span className="ml-4 fs-10" title="Não encontrado na FPG activa (quotas?)" style={{ color: "var(--color-warn-vivid)" }}>⚠</span>}
-                    {pm._fpgDiffs?.hcpChanged && <span className="ml-4 fs-10" title={`FPG actual: HCP ${pm._fpgDiffs.hcpChanged.fpg}`} style={{ color: "var(--color-warn-vivid)" }}>⚡</span>}
-                  </span>
-                  {rankingMode && displayHcp != null && (
-                    <span className={`sidebar-sd ${displayHcp <= 5 ? "trend-up" : displayHcp <= 15 ? "sidebar-c-text-3" : "sidebar-sd-high"}`}>
-                      {hcpDisplay(displayHcp)}
-                    </span>
-                  )}
-                </div>
-                <div className="course-item-meta">
-                  {[displayClub, displayEscalao, ...(p.tags?.filter(t => t !== "no-priority") || [])].filter(Boolean).join(" · ") || `#${p.fed}`}
-                  {displayHcp != null && ` · HCP ${hcpDisplay(displayHcp)}`}
-                </div>
-              </a>
+              <PlayerSidebarItem
+                key={p.fed}
+                p={p as PlayerSidebarPlayer}
+                isActive={isActive}
+                displayClub={typeof displayClub === "string" ? displayClub : displayClub != null ? String(displayClub) : null}
+                displayEscalao={displayEscalao}
+                displayHcp={displayHcp}
+                rank={rank}
+                rankingMode={rankingMode}
+                isNewRound={isNewRound}
+                onClick={e => {
+                  if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                    e.preventDefault();
+                    selectPlayer(p.fed);
+                    md.onSelect();
+                  }
+                }}
+              />
             );
           })}
           {filtered.length === 0 && <EmptyState size="sm" message="Nenhum jogador encontrado" />}
