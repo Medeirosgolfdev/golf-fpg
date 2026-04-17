@@ -155,8 +155,8 @@ export function ScorecardLB({
           bv = b.club || "";
           break;
         case "esc":
-          av = resolveEsc(a, escLookup) || "";
-          bv = resolveEsc(b, escLookup) || "";
+          av = resolveEsc(a, escLookup, { tournamentDate: tournament.date, playersDB }) || "";
+          bv = resolveEsc(b, escLookup, { tournamentDate: tournament.date, playersDB }) || "";
           break;
         case "hcp":
           av = a.hcpExact ?? 999;
@@ -199,7 +199,7 @@ export function ScorecardLB({
     const medalEmoji = dp === 1 ? "🥇" : dp === 2 ? "🥈" : dp === 3 ? "🥉" : null;
     const posDisplay =
       isWDPlayer ? "WD" : sortKey === "pos" ? (showPos ? medalEmoji ?? dp : "") : medalEmoji ?? dp;
-    const esc = resolveEsc(p, escLookup) || tournament.escalao || "";
+    const esc = resolveEsc(p, escLookup, { tournamentDate: tournament.date, playersDB }) || tournament.escalao || "";
     const { sd, source } = computeSD(p);
     const rowManuel = isManuel(p);
     const rowBg = rowManuel ? "var(--bg-success-subtle)" : undefined;

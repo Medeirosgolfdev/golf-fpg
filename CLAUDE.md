@@ -162,6 +162,64 @@ Dois modos: **Browser Console** (colar no F12 num site específico) e **Node.js 
 2. Browser Console em `scoring.datagolf.pt`: `pull-torneios.js` → `pull-torneiosNNN.json` (editar `POR_CODIGO` com ccode/tcode)
 3. `node build-drive-sd-lookup.js` → `drive-sd-lookup.json`
 
+### Fluxo: Descarregar inscrições + draws de torneios FPG
+
+**Fluxo que funciona (browser console + merge Node). Não fazer Node puro — o servidor FPG exige sessão de browser real.**
+
+Duas páginas públicas são necessárias, em subdomínios diferentes:
+
+- **Admissions:** `https://scoring.datagolf.pt/pt/tournAdmissions.aspx?ccode={ccode}&tcode={tcode}`
+- **Draws:** `https://scoring-pt.datagolf.pt/scripts/draw.asp?club={ccode}&tourn={tcode}&round_number={n}&LANG_TXT=PT&ack=XH256YF45T`
+
+⚠ **Entry-gate e redirects** (peculiaridade crítica):
+- `https://scoring-pt.datagolf.pt/scripts/tournaments.asp?club=ALL&ack=XH256YF45T` é um entry-gate que seta cookies de sessão nos DOIS subdomínios e **redireciona** para `scoring.datagolf.pt/pt/tournaments.aspx`.
+- Ir directo a `scoring.datagolf.pt/pt/tournaments.aspx` sem passar pelo entry-gate → falha com HTTP 500.
+- Passar pelo entry-gate deixa o tab em `scoring.datagolf.pt` — ideal para fetch same-origin de admissions. **Mas draws em `scoring-pt.datagolf.pt` dão erro CORS daí**.
+- Para correr draws: abrir **directamente** uma URL de `scripts/draw.asp?...` (ex: `https://scoring-pt.datagolf.pt/scripts/draw.asp?club=000&tourn=10941&round_number=1&LANG_TXT=PT&ack=XH256YF45T`). Essa URL específica **não redireciona**, deixa o tab em `scoring-pt.datagolf.pt` e permite fetch same-origin dos restantes draws.
+
+**Pipeline em 3 passos:**
+
+1. **Admissions** — tab em `https://scoring-pt.datagolf.pt/scripts/tournaments.asp?club=ALL&ack=XH256YF45T` (deixa redirecionar para scoring.datagolf.pt), F12 → Console, colar `scripts/browser-scrape-fpg-admissions-draws.js`. Descarrega `fpg-admissions-draws.json` (admissions OK, draws vazios por CORS).
+2. **Draws** — tab em `https://scoring-pt.datagolf.pt/scripts/draw.asp?club=000&tourn=10941&round_number=1&LANG_TXT=PT&ack=XH256YF45T` (URL directa, sem redirect). F12 → Console, colar `scripts/browser-scrape-fpg-draws-only.js`. Descarrega `fpg-draws.json`.
+3. **Merge** — copiar ambos os JSONs para `public/data/`, depois:
+   ```bash
+   node scripts/merge-fpg-admissions-draws.js
+   ```
+   Junta os dois em `public/data/fpg-admissions-draws.json` final.
+
+**Scope embutido nos scripts** (107 torneios, regenerar ao adicionar novos):
+- Drive + Aquapor 2026: ~86 torneios de `drive-data-2026-*.json` e `aquapor-data-2026-*.json`
+- Jovens FPG: ~11 torneios de `pull-torneios*.json` com escalão Sub-* ou nome "Jovens"
+- Nacional 2026 Aroeira: 10 escalões (tcodes 10935-10944, 01-03 Maio 2026)
+
+**Taxa de sucesso esperada:** ~92/107 com draws (torneios futuros como Nacional 2026 ainda não têm draw publicado — é normal, não é erro).
+
+**Output consolidado** (`public/data/fpg-admissions-draws.json`):
+```json
+{
+  "scrapedAt": "ISO datetime", "total": 107, "source": "merged (admissions + draws)",
+  "tournaments": [
+    {
+      "ccode": "000", "tcode": "10941",
+      "name": "Campeonato Nacional de Jovens Sub 12 H", "date": "2026-05-01",
+      "admissions": {
+        "name": "...", "date": "...", "status": "Inscrições em curso",
+        "totalInscritos": 15, "reservas": 2,
+        "players": [{ "pos": 1, "fed": "51804", "nome": "Joe Short", "clube": "Vila Sol",
+                      "hcp": 6.3, "vac": 81.3, "dataInscricao": "2026/04/01 09:52", "status": "confirmed" }]
+        // reservas: pos reinicia em 1 e status="reserva"
+      },
+      "draws": { "1": { "totalJogadores": 23, "groups": [...] }, "2": {...}, "3": {...} }
+      // cada grupo: { teeTime: "08:00", startHole: 10, tee: "Vermelhas", players: [{nome, clube}] }
+    }
+  ]
+}
+```
+
+**Parsers Node em `scripts/fpg-admissions-draw-parser.js`** — usados pelos testes (`npm test`). Os scripts browser têm parsers inline equivalentes.
+
+**Script Node `scripts/scrape-fpg-admissions-draws.js` (legacy)** — existe mas **não funciona**. Servidor FPG rejeita (HTTP 500 ou HTML truncado) mesmo com cookies capturados de Chrome 90. Mantido como referência dos URLs e da tentativa; **usar sempre o fluxo browser acima**.
+
 ### Scripts FPG detalhados
 
 **golf-all.js** — Pipeline completo: login → download WHS → scorecards → data.json → sync players → enrich stats.
@@ -548,6 +606,27 @@ Popula `uskTournNames` como fallback (hardcoded em `USKIDS_TCODE_META` tem prior
 | tournaments.uskidsgolf.com | `tournaments.uskidsgolf.com/tournaments/international` | Calendário torneios | Público |
 | brjgt.bluegolf.com | `brjgt.bluegolf.com` | BJGT/WJGC/EOWAGR | CAPTCHA possível |
 | GolfGenius (Doral) | `firstteemiamidoraljrclassic.golfgenius.com` | Doral Jr. Classic | Público |
+
+### scoring.fpg.pt — URLs públicas (linkpage.aspx)
+
+O `scoring.fpg.pt` expõe publicamente (sem auth) páginas de inscrições, draw, live scoring e resultados de **todos os torneios FPG**. Padrão:
+
+```
+https://scoring.fpg.pt/lists/linkpage.aspx?page={page}&club={ccode}&tourn={tcode}[&round={n}]&ack={ack}
+```
+
+**⚠ Os `ack` tokens são UNIVERSAIS — não são específicos por torneio.** Os mesmos dois valores funcionam para qualquer `tcode`:
+
+| Página | `page=` | `ack=` universal | Params extra |
+|---|---|---|---|
+| Inscrições | `admissions` | `XH256YF450` | — |
+| Draw (pairings) | `draw` | `8428ACK987` | `&round={1|2|3}` |
+| Resultados (classificação) | `classif` | `8428ACK987` | — |
+| Live Scoring | — (URL diferente) | — | `/live-scoring/1.aspx?pa=classif&c={ccode}&t={tcode}&r=0` |
+
+`club` é normalmente `000` (três dígitos, com zeros à esquerda) para Campeonatos Nacionais; outros ccodes aplicam-se a torneios organizados por clubes. `tcode` é o identificador numérico do torneio (ex: `10941` para Sub-12 Masculino Jovens 2026 Aroeira, `10935-10944` para o conjunto Sub 10/12/14/16/18 M+F).
+
+Estas URLs são úteis para scrapar dados **pré-jogo** (quem está inscrito, tee times) que não vêm nos endpoints de classificação usados pelo `pull-torneios.js`.
 
 ---
 

@@ -222,6 +222,30 @@ export function anoEscalao(dob: string, escalao: string): "1A" | "2A" | null {
   return anoNasc === (new Date().getFullYear() - idadeMax) ? "2A" : "1A";
 }
 
+/** Idade completa (em anos) do jogador à data fornecida. Retorna null se inválido. */
+export function ageAtDate(dob: string | null | undefined, date: string | null | undefined): number | null {
+  if (!dob || !date) return null;
+  const d = new Date(dob), t = new Date(date);
+  if (isNaN(+d) || isNaN(+t)) return null;
+  let age = t.getFullYear() - d.getFullYear();
+  const md = t.getMonth() - d.getMonth();
+  if (md < 0 || (md === 0 && t.getDate() < d.getDate())) age--;
+  return age >= 0 ? age : null;
+}
+
+/** Escalão FPG na data do torneio, calculado a partir da data de nascimento.
+ *  Retorna "Sub 10" / "Sub 12" / ... ou null se inputs inválidos. */
+export function escalaoAtDate(dob: string | null | undefined, date: string | null | undefined): string | null {
+  const age = ageAtDate(dob, date);
+  if (age == null) return null;
+  if (age <= 10) return "Sub 10";
+  if (age <= 12) return "Sub 12";
+  if (age <= 14) return "Sub 14";
+  if (age <= 16) return "Sub 16";
+  if (age <= 18) return "Sub 18";
+  return "Sub 24";
+}
+
 /* ═══════ Name Display ═══════ */
 
 /** Partículas que ficam em minúsculas no meio de nomes (de, da, van, etc.) */
@@ -280,6 +304,12 @@ export function fpgDrawUrl(ccode: string, tcode: string, round = 1): string {
 export function fpgScoringUrl(ccode: string, tcode: string): string {
   const [cc, tc] = fpgClean(ccode, tcode);
   return `https://scoring.fpg.pt/lists/linkpage.aspx?page=classif&club=${cc}&tourn=${tc}&ack=${FPG_ACK}`;
+}
+
+/** URL directa das inscrições (tournAdmissions.aspx) no scoring.fpg.pt */
+export function fpgAdmissionsUrl(ccode: string, tcode: string): string {
+  const [cc, tc] = fpgClean(ccode, tcode);
+  return `https://scoring.fpg.pt/lists/tournAdmissions.aspx?ccode=${cc}&tcode=${tc}`;
 }
 
 /** URL da classificação no scoring.datagolf.pt (legacy, usado no DrivePage) */

@@ -2445,7 +2445,7 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
           if (!isFinite(d.getTime())) return false;
           return (now.getTime() - d.getTime()) / 86400000 <= 90;
         });
-        const sds = liveRounds.map(r => Number(r.score_differential)).filter(n => isFinite(n));
+        const sds = liveRounds.filter(r => r.score_differential != null).map(r => Number(r.score_differential)).filter(n => isFinite(n));
         const bestSD = sds.length ? Math.min(...sds) : null;
         const avgSD = sds.length ? sds.reduce((a, b) => a + b, 0) / sds.length : null;
         const tornRounds = liveRounds.filter(r => /torn/i.test(String(r.score_origin || "")));

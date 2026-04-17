@@ -40,7 +40,7 @@ export function AccumulatedLB({
   // useMemo ANTES do early return — regra dos hooks React
   const rows: MRRow[] = useMemo(() => {
     return rawPlayers.map((p) => {
-      const esc = resolveEsc(p, escLookup) || tournament.escalao || "";
+      const esc = resolveEsc(p, escLookup, { tournamentDate: tournament.date, playersDB }) || tournament.escalao || "";
       const roundScores = p.roundScores || [];
       // Posicionar cada ronda pelo seu número real (rounds[0]=R1, rounds[1]=R2, ...)
       // para que jogadores parciais mostrem "–" nas rondas que não jogaram

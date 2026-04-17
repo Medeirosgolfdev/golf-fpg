@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" style="" class=" js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers no-applicationcache svg inlinesvg smil svgclippaths"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><title>
+	Inscritos em Torneio
+</title><link href="Inscritos%20em%20Torneio_files/bootstrap.min.css" rel="stylesheet" type="text/css"><link href="Inscritos%20em%20Torneio_files/Site.css" rel="stylesheet" type="text/css"><link href="Inscritos%20em%20Torneio_files/jquery-ui.css" rel="stylesheet" type="text/css">
+
+    <!-- jTable style file -->
+    <link href="Inscritos%20em%20Torneio_files/jtable.css" rel="stylesheet" type="text/css">
+    <script src="Inscritos%20em%20Torneio_files/modernizr-2.8.3.js" type="text/javascript"></script>
+    <script src="Inscritos%20em%20Torneio_files/jquery-2.2.2.js" type="text/javascript"></script>
+    <script src="Inscritos%20em%20Torneio_files/jquery-ui-1.11.4.min.js" type="text/javascript"></script>
+    
+    <script src="Inscritos%20em%20Torneio_files/jtablesite.js" type="text/javascript"></script>
+
+    <!-- A helper library for JSON serialization -->
+    <script type="text/javascript" src="Inscritos%20em%20Torneio_files/json2.js"></script>
+    <!-- Core jTable script file -->
+    <script type="text/javascript" src="Inscritos%20em%20Torneio_files/jquery.jtable.js"></script>
+    <!-- ASP.NET Web Forms extension for jTable -->
+    <script type="text/javascript" src="Inscritos%20em%20Torneio_files/jquery.jtable.aspnetpagemethods.js"></script>
+
+    <!-- Date formatting -->
+    <script type="text/javascript" src="Inscritos%20em%20Torneio_files/moment.min.js"></script>
+    
+    <script src="Inscritos%20em%20Torneio_files/bootstrap.min.js" type="text/javascript"></script>
+
+    
+
+    
+    
+    
+
+    <!-- CSS to control color codes in Scorecard -->
+    
+    <link href="Inscritos%20em%20Torneio_files/datagolf.css" rel="stylesheet" type="text/css">
+    
+    
+    
+    
+
+     <script type="text/javascript" src="Inscritos%20em%20Torneio_files/iframeResizer.contentWindow.min.js"></script>
+
+<script type="text/javascript" src="Inscritos%20em%20Torneio_files/iframeResizer.contentWindow.min_002.js"></script><link rel="stylesheet" type="text/css" href="Inscritos%20em%20Torneio_files/pikaday.min.css"><link rel="stylesheet" type="text/css" href="Inscritos%20em%20Torneio_files/font-awesome.min.css"></head>
+
+<body>
+
+<form method="post" action="./tournAdmissions.aspx?ccode=000&amp;tcode=10941" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="">
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="">
+<input type="hidden" name="__LASTFOCUS" id="__LASTFOCUS" value="">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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">
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="97EA050D">
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="zQwsqQeXTCMNGNgQwC0iUpqdm0w0E5dD51K2M6twodsnfREK92rUVnCQG9zTwIKdUMupjSYhs9Bfzan13vPGG/EOzxazNzEGut43/4B74uCjx0YKWxwpYUIf5OlzDZpM7cZPvpLonVmuJs5HC3QcnshEFh8Oekvqxlq9IPbs4WA2kQNax5A91zc+Sz548NEhN19dSxVs6h+kJPRXqCAHvB6ttvbDhq4FOJxVn1TgXaf0/gQ7QHfdW2vTud/+1c1sRYibz94i+3pASgISUrwWUpt9qu6yfySVCfX0U21V8U1Yp61z0lFPP+0RcII25Qxi16pZh5IaCG1q9IRY/ZIR8K/TxiPUnDrn5ks/HC5ad+o=">
+</div>
+
+    <span id="lblTorn" style="display:none;">10941</span>
+    <span id="lblClub" style="display:none;">000</span>
+    <span id="lblTournAdminID" style="display:none;">90910</span>
+    <span id="lblorderName" style="display:none;">HASC</span>
+    <span id="lblRegDate" style="display:none;">Y</span>
+    <span id="lblStatus" style="display:none;">2</span>
+    <span id="lblTeams" style="display:none;">0</span>
+    <span id="lblCutNumber" style="display:none;">15</span>
+    <span id="lblCutOrder" style="display:none;">2</span>
+    <span id="lblSacfUsed" style="display:none;">Y</span>
+
+<div class="container">
+
+    <div id="panelTournInfo">
+	
+        <div class="jumbotron jumboadmis">
+            <div class="row">
+                <div class="col-sm-10 col-xs-9">
+                    <div class="form-group">
+                    <span id="lblTdesc" class="H4title">Campeonato Nacional de Jovens Sub 12 H</span>
+                    </div>
+                </div>
+                <div class="col-sm-2 col-xs-3">
+                    <div class="form-group">
+                    <span id="lbldt" type="date" class="H4Date">01/05/2026</span>
+                    </div>
+                </div>
+            </div>            
+
+            <div id="drNumRounds" class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <table id="radioNRounds" cellspacing="5" cellpadding="0" style="width:100%;display:none;">
+		<tbody><tr>
+			<td><span style="margin-right:5px;"><input id="radioNRounds_0" type="radio" name="radioNRounds" value="1" checked="checked"><label for="radioNRounds_0">Volta 1  </label></span></td>
+		</tr>
+	</tbody></table> 
+                    </div>
+                </div>
+            </div>
+
+            <div id="divbuttons" class="row">
+
+                <div class="col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <a id="btnInscri" type="button" class="btn btn-primary btn-md btnAdmis" href="javascript:__doPostBack('btnInscri','')">Inscrever</a>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xs-12" style="text-align:center;">
+                    <span id="lblPlayersCount">Jogadores Inscritos:</span>
+                    <span id="PlayersCount">15 (+2)</span><br>
+                    
+                    <span id="lblTournStatus">Inscrições em curso</span>&nbsp;&nbsp;&nbsp;
+                </div>
+                
+
+            </div>
+            <div id="DescAdic" class="row" style="display:none;">
+                <div class="col-sm-12 col-xs-12">
+                    <span id="lblDescAdic"></span>
+                </div>
+            </div>
+
+        </div>
+    
+</div>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+            <th><span id="id" class="colheader">#</span></th>
+            <th><span id="nfeder" class="colheader">Nº Fed.</span></th>
+            <th><a id="lnkBtSoName" class="colheader" href="javascript:__doPostBack('lnkBtSoName','')">Nome</a></th>
+            <th><a id="lnkBtSoTeam" class="colheader" href="javascript:__doPostBack('lnkBtSoTeam','')">Clube</a></th>
+            <th><a id="lnkBtSoHcp" class="colheader" href="javascript:__doPostBack('lnkBtSoHcp','')">HCP</a></th>
+              
+            <th><a id="lnkBtSoSacf" class="colheader" href="javascript:__doPostBack('lnkBtSoSacf','')">VAC-F</a></th>
+              
+            <th><a id="lnkBtSoReg" class="colheader" href="javascript:__doPostBack('lnkBtSoReg','')">Registo</a></th>
+            
+            </tr>
+        </thead>
+            
+                <tbody>
+                    <tr>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            1
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            51804
+                        </td>
+                        <td class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            Joe Short
+                        </td>
+                        <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                            Vila Sol
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            <div id="repPlayers_x_0">
+                                6.3
+                            </div>
+                        </td>
+                          
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            81.3
+                        </td>
+                          
+                            <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                2026/04/01 09:52
+                            </td>
+                        
+                    </tr>
+                </tbody>
+                
+                <tbody>
+                    <tr>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            2
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            49085
+                        </td>
+                        <td class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            Ricardo Castro Ferreira
+                        </td>
+                        <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                            Estoril
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            <div id="repPlayers_x_1">
+                                6.8
+                            </div>
+                        </td>
+                          
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            80.2
+                        </td>
+                          
+                            <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                2026/04/02 08:03
+                            </td>
+                        
+                    </tr>
+                </tbody>
+                
+                <tbody>
+                    <tr>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            3
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            52884
+                        </td>
+                        <td class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            Manuel Goulartt Medeiros
+                        </td>
+                        <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                            Santo da Serra
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            <div id="repPlayers_x_2">
+                                10.0
+                            </div>
+                        </td>
+                          
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            82.9
+                        </td>
+                          
+                            <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                2026/04/01 17:30
+                            </td>
+                        
+                    </tr>
+                </tbody>
+                
+                <tbody>
+                    <tr>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            4
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            57904
+                        </td>
+                        <td class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            Guo Ziyang
+                        </td>
+                        <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                            Estoril
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            <div id="repPlayers_x_3">
+                                11.6
+                            </div>
+                        </td>
+                          
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            82.5
+                        </td>
+                          
+                            <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                2026/04/02 17:28
+                            </td>
+                        
+                    </tr>
+                </tbody>
+                
+                <tbody>
+                    <tr>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            5
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            51180
+                        </td>
+                        <td class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            Ricardo Rocha Ferreira
+                        </td>
+                        <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                            Miramar
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            <div id="repPlayers_x_4">
+                                15.8
+                            </div>
+                        </td>
+                          
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            87.8
+                        </td>
+                          
+                            <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                2026/04/09 09:49
+                            </td>
+                        
+                    </tr>
+                </tbody>
+                
+                <tbody>
+                    <tr>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            6
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            48046
+                        </td>
+                        <td class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            Tomás Sarmento de Beires
+                        </td>
+                        <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                            Citynorte
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            <div id="repPlayers_x_5">
+                                16.0
+                            </div>
+                        </td>
+                          
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            87.6
+                        </td>
+                          
+                            <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                2026/04/06 08:30
+                            </td>
+                        
+                    </tr>
+                </tbody>
+                
+                <tbody>
+                    <tr>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            7
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            53645
+                        </td>
+                        <td class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            José Maria Pereira
+                        </td>
+                        <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                            Miramar
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            <div id="repPlayers_x_6">
+                                19.2
+                            </div>
+                        </td>
+                          
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            90.8
+                        </td>
+                          
+                            <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                2026/04/08 15:08
+                            </td>
+                        
+                    </tr>
+                </tbody>
+                
+                <tbody>
+                    <tr>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            8
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            48946
+                        </td>
+                        <td class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            Miguel Santos Pereira
+                        </td>
+                        <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                            Vilamoura, C. G
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            <div id="repPlayers_x_7">
+                                19.6
+                            </div>
+                        </td>
+                          
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            90.6
+                        </td>
+                          
+                            <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                2026/04/09 16:53
+                            </td>
+                        
+                    </tr>
+                </tbody>
+                
+                <tbody>
+                    <tr>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            9
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            53838
+                        </td>
+                        <td class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            Gabriel Costa
+                        </td>
+                        <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                            Amendoeira
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            <div id="repPlayers_x_8">
+                                20.2
+                            </div>
+                        </td>
+                          
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            91.5
+                        </td>
+                          
+                            <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                2026/04/09 14:34
+                            </td>
+                        
+                    </tr>
+                </tbody>
+                
+                <tbody>
+                    <tr>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            10
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            51182
+                        </td>
+                        <td class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            Eduardo Rocha Ferreira
+                        </td>
+                        <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                            Miramar
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            <div id="repPlayers_x_9">
+                                21.9
+                            </div>
+                        </td>
+                          
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            95.1
+                        </td>
+                          
+                            <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                2026/04/09 09:48
+                            </td>
+                        
+                    </tr>
+                </tbody>
+                
+                <tbody>
+                    <tr>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            11
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            55498
+                        </td>
+                        <td class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            Zeyn Lababedi
+                        </td>
+                        <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                            Vila Sol
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            <div id="repPlayers_x_10">
+                                25.2
+                            </div>
+                        </td>
+                          
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            103.4
+                        </td>
+                          
+                            <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                2026/04/01 07:40
+                            </td>
+                        
+                    </tr>
+                </tbody>
+                
+                <tbody>
+                    <tr>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            12
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            50011
+                        </td>
+                        <td class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            Tomás Valério
+                        </td>
+                        <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                            Vilamoura, C. G
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            <div id="repPlayers_x_11">
+                                26.1
+                            </div>
+                        </td>
+                          
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            98.3
+                        </td>
+                          
+                            <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                2026/04/16 11:34
+                            </td>
+                        
+                    </tr>
+                </tbody>
+                
+                <tbody>
+                    <tr>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            13
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            50761
+                        </td>
+                        <td class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            Peter Yao
+                        </td>
+                        <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                            Vilamoura, C. G
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            <div id="repPlayers_x_12">
+                                26.2
+                            </div>
+                        </td>
+                          
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            96.3
+                        </td>
+                          
+                            <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                2026/04/15 23:01
+                            </td>
+                        
+                    </tr>
+                </tbody>
+                
+                <tbody>
+                    <tr>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            14
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            55914
+                        </td>
+                        <td class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            João Couto
+                        </td>
+                        <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                            Braga
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            <div id="repPlayers_x_13">
+                                30.0
+                            </div>
+                        </td>
+                          
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            104.0
+                        </td>
+                          
+                            <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                2026/04/12 08:11
+                            </td>
+                        
+                    </tr>
+                </tbody>
+                
+                <tbody>
+                    <tr>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            15
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            54475
+                        </td>
+                        <td class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            Maksim Mutalapov
+                        </td>
+                        <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                            Oporto
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            <div id="repPlayers_x_14">
+                                30.5
+                            </div>
+                        </td>
+                          
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            101.6
+                        </td>
+                          
+                            <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                2026/04/06 14:45
+                            </td>
+                        
+                    </tr>
+                </tbody>
+            
+    </table>
+
+    <p class="cutline col-sm-12 text-center"><span id="lblCutLine" class="cutline">Linha de CUT</span></p>
+
+    <table class="table table-hover">
+            
+                <tbody>
+                    <tr>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            1
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            49714
+                        </td>
+                        <td class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            Martim Silva
+                        </td>
+                        <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                            Citynorte
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            <div id="repPlayersOut_x_0">
+                                31.5
+                            </div>
+                        </td>
+                          
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            103.5
+                        </td>
+                          
+                            <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                2026/04/07 13:48
+                            </td>
+                        
+                    </tr>
+                </tbody>
+                
+                <tbody>
+                    <tr>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            2
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            50412
+                        </td>
+                        <td class="col-lg-3 col-md-3 col-xs-3 col-sm-3">
+                            Vasco Abreu
+                        </td>
+                        <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                            UCDR Guardizela
+                        </td>
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            <div id="repPlayersOut_x_1">
+                                31.8
+                            </div>
+                        </td>
+                          
+                        <td class="col-lg-1 col-md-1 col-xs-1 col-sm-1">
+                            102.7
+                        </td>
+                          
+                            <td class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                2026/04/14 10:11
+                            </td>
+                        
+                    </tr>
+                </tbody>
+            
+    </table>
+    <div class="row">
+       <div class="col-xs-12 languages">
+            <a id="buttonLangPT" class="btn btn-secondary btn-sm" href="javascript:__doPostBack('buttonLangPT','')" style="font-size:11px; padding:3px 3px 3px 3px;">PT</a>
+              <a id="buttonLangGB" class="btn btn-secondary btn-sm" href="javascript:__doPostBack('buttonLangGB','')" style="font-size:11px; padding:3px 3px 3px 3px;">UK</a>
+              <a id="buttonLangES" class="btn btn-secondary btn-sm" href="javascript:__doPostBack('buttonLangES','')" style="font-size:11px; padding:3px 3px 3px 3px;">ES</a>
+              <a id="buttonLangTR" class="btn btn-secondary btn-sm" href="javascript:__doPostBack('buttonLangTR','')" style="font-size:11px; padding:3px 3px 3px 3px;">TR</a>
+        </div>      
+    </div>
+</div>
+
+</form>
+
+
+
+</body></html>

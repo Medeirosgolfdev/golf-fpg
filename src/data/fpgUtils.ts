@@ -9,18 +9,36 @@ import type { EscLookup } from "../utils/playerUtils";
 import type { PlayersDB } from "../ui/tournamentPrimitives";
 import { normalizePlayer } from "../utils/playerUtils";
 import { calcAGS, expectedSD9 } from "../utils/whsCalc";
-import { norm } from "../utils/format";
+import { norm, escalaoAtDate } from "../utils/format";
 
 export function numGross(p: Player): number {
   return typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : (p.grossTotal as number) ?? 999;
 }
 
-export function resolveEsc(p: Player, escLookup: EscLookup): string {
-  // Prioridade 1: escalão gravado no próprio registo do torneio (histórico)
+/** Escalão do jogador no contexto do torneio.
+ *  Prioridade:
+ *    1) escalaoAtDate(dob, tournamentDate)  — SEMPRE preferido se há dob+data
+ *    2) escalão gravado no registo do torneio (histórico do scrape)
+ *    3) lookup actual (players.json) — último recurso
+ */
+export function resolveEsc(
+  p: Player,
+  escLookup: EscLookup,
+  opts?: { tournamentDate?: string | null; playersDB?: PlayersDB }
+): string {
+  const fed = p.fedCode || (p as any).fed;
+  // 1) Cálculo dob + data do torneio (verdade matemática)
+  if (opts?.tournamentDate && opts?.playersDB && fed) {
+    const dob = (opts.playersDB[fed] as any)?.dob;
+    if (dob) {
+      const calc = escalaoAtDate(dob, opts.tournamentDate);
+      if (calc) return calc;
+    }
+  }
+  // 2) Histórico do registo
   const historic = (p as any).escalao || (p as any).ageCategory;
   if (historic) return historic.replace("-", " ").replace(/sub(\d)/i, "Sub $1").trim();
-  // Prioridade 2: lookup atual (players.json) — só usado se não há dado histórico
-  const fed = p.fedCode || (p as any).fed;
+  // 3) Lookup actual
   if (fed && escLookup.has(fed)) return escLookup.get(fed)!;
   return "";
 }

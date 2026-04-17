@@ -59,8 +59,8 @@ export function AllRoundsScorecardLB({
   }, []);
 
   const resolveEscFn = useMemo(
-    () => (p: Player) => resolveEsc(p, escLookup) || tournament.escalao || "",
-    [escLookup, tournament.escalao],
+    () => (p: Player) => resolveEsc(p, escLookup, { tournamentDate: tournament.date, playersDB }) || tournament.escalao || "",
+    [escLookup, tournament.escalao, tournament.date, playersDB],
   );
 
   const d = useAllRoundsData({

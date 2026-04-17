@@ -110,7 +110,7 @@ export function ScorecardLeaderboard({
   const parF9 = par.slice(0, 9).reduce((a, b) => a + b, 0);
   const parB9 = !is9 ? par.slice(9, 18).reduce((a, b) => a + b, 0) : 0;
   const parTotal = par.reduce((a, b) => a + b, 0);
-  const hasSI = (si?.length ?? 0) >= nh;
+  const hasSI = nh > 0 && (si?.length ?? 0) >= nh;
   const siArr = hasSI ? si!.slice(0, nh).map(v => typeof v === 'string' ? parseInt(v as string, 10) : (Number(v) || 0)) : [];
   const siF9    = siArr.length >= 9 ? siArr.slice(0, 9).reduce((a, b) => a + b, 0) : 0;
   const siB9    = !is9 && siArr.length >= 18 ? siArr.slice(9, 18).reduce((a, b) => a + b, 0) : 0;

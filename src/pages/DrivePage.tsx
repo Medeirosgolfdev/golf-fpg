@@ -10,7 +10,7 @@ import { loadPlayers } from "../data/loader";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from "recharts";
 import { SC, sdClassByHcp, scClass, medalColor } from "../utils/scoreDisplay";
 import { calcAGS, expectedSD9 } from "../utils/whsCalc";
-import { fmtToPar, fmtDateShort, fmtHcp, medal, fpgDrawUrl, fpgScoringUrl, shortDateSlash } from "../utils/format";
+import { fmtToPar, fmtDateShort, fmtHcp, medal, fpgDrawUrl, fpgScoringUrl, fpgAdmissionsUrl, shortDateSlash } from "../utils/format";
 import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
 import { resolveFedsInTournaments , buildEscLookup, resolveEscFromLookup, escPillCls, normalizePlayer } from "../utils/playerUtils";
@@ -451,7 +451,7 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
   const ESC_ORDER = ["Sub 10","Sub 12","Sub 14","Sub 16","Sub 18"];
   const escOf = (p: Player) => (temporalEscLookup
     ? resolveEscTemporal(p, tournYear, temporalEscLookup, escLookup)
-    : resolveEsc(p, escLookup)) || tournament.escalao || "";
+    : resolveEsc(p, escLookup, { tournamentDate: tournament.date, playersDB })) || tournament.escalao || "";
   const sdOf = (p: Player) => computeStats(p, sdLookup)?.sd18 ?? null;
 
   const mult = sortDir === "asc" ? 1 : -1;
@@ -495,7 +495,7 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
     const rowBg = isManuel(p) ? "var(--bg-success-subtle)" : undefined;
     const esc = (temporalEscLookup
       ? resolveEscTemporal(p, tournYear, temporalEscLookup, escLookup)
-      : resolveEsc(p, escLookup)) || tournament.escalao || "";
+      : resolveEsc(p, escLookup, { tournamentDate: tournament.date, playersDB })) || tournament.escalao || "";
     const stats = computeStats(p, sdLookup);
     return {
       key: p.scoreId || idx,
@@ -585,7 +585,7 @@ function DriveAccumulatedLB({ tournament, nRounds, escLookup, playersDB, sdLooku
   const parPerRound = complete[0]?.parTotal ?? incomplete[0]?.parTotal ?? 72;
 
   const rows: MultiRoundRow[] = useMemo(() => rawPlayers.map(p => {
-    const esc = resolveEsc(p, escLookup) || tournament.escalao || "";
+    const esc = resolveEsc(p, escLookup, { tournamentDate: tournament.date, playersDB }) || tournament.escalao || "";
     const roundScores = p.roundScores || [];
     const mappedRounds: MRRound[] = Array.from({ length: nRounds }, (_, i) => {
       const rdNum = i + 1;
@@ -1845,15 +1845,21 @@ function DriveContent() {
                             ? <>{curTournament._roundLabel === "Resumo" ? "📊 Acumulado" : "🏌️ " + curTournament._roundLabel} — {selectedGroup.campo}</>
                             : <>🏆 Scorecard — {selectedGroup.label}</>}
                       </span>
+                      <a href={fpgAdmissionsUrl(curTournament.ccode, curTournament.tcode)}
+                        target="_blank" rel="noopener noreferrer"
+                        className="tourn-ext-link"
+                        title="Inscrições (tournAdmissions) na Federação">
+                        Inscrições ↗
+                      </a>
                       <a href={fpgDrawUrl(curTournament.ccode, curTournament.tcode)}
                         target="_blank" rel="noopener noreferrer"
-                        className="tourn-ext-link" style={{ color: "var(--text-2)", borderColor: "var(--border)" }}
+                        className="tourn-ext-link"
                         title="Emparelhamentos (Draw) na Federação">
                         Draw ↗
                       </a>
                       <a href={fpgScoringUrl(curTournament.ccode, curTournament.tcode)}
                         target="_blank" rel="noopener noreferrer"
-                        className="tourn-ext-link" style={{ color: "var(--accent)", borderColor: "var(--accent)" }}
+                        className="tourn-ext-link"
                         title="Classificação (Scoring) na Federação">
                         Scoring ↗
                       </a>

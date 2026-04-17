@@ -33,7 +33,7 @@ import LoadingState from "../ui/LoadingState";
 import PlayerLink from "../ui/PlayerLink";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { C } from "../utils/colors";
-import { fmtDate, fmtToPar, MONTHS_PT, norm, monthLabel, fmtHcp, escShort, fmtTime, fmtDataInscricao, anoEscalao, abreviarNome, medal, fpgDrawUrl, fpgScoringUrl } from "../utils/format";
+import { fmtDate, fmtToPar, MONTHS_PT, norm, monthLabel, fmtHcp, escShort, fmtTime, fmtDataInscricao, anoEscalao, abreviarNome, medal, fpgDrawUrl, fpgScoringUrl, fpgAdmissionsUrl } from "../utils/format";
 import { AnoEscalaoPill, TrendBadge } from "../ui/AnoEscalaoPill";
 import { CrossSeasonTable, SortTh as CSortTh } from "../ui/CrossSeasonTable";
 import {
@@ -56,6 +56,10 @@ import { ScorecardLB, AccumulatedLB, AllRoundsScorecardLB } from "../ui/Leaderbo
 import { LinksBar } from "../ui/LinksBar";
 // Inscrições e Jovens — extraídos para fpg/InscricoesComponents.tsx
 import { InscricoesPanel, buildJovensGroups, TERMOS_COMPETICAO, type JovensGroup } from "../ui/InscricoesComponents";
+// Admissions + draws (browser scrape + merge) — ver CLAUDE.md
+import { loadFpgAdmissionsDraws, indexFpgAdmissionsDraws, NACIONAL_2026_META, NACIONAL_2026_TCODES, type FpgTournamentData } from "../data/nacional2026Loader";
+import AdmissionsTab from "../ui/AdmissionsTab";
+import DrawTab from "../ui/DrawTab";
 // Re-exports para consumidores que ainda importam de FPGPage
 export type { RoundScore, Player, Tournament, ScorecardOptions } from "../data/fpgTypes";
 export { expandMultiRound } from "../data/fpgUtils";
@@ -583,16 +587,55 @@ interface DriveData {
 export function TournamentDetail({ tournament, escLookup, playersDB }: { tournament: Tournament; escLookup: EscLookup; playersDB: PlayersDB }) {
   const isMulti = (tournament.rounds || 1) > 1 && tournament.players.some(p => (p.roundScores?.length ?? 0) > 1);
   const nRounds = tournament.rounds || 1;
+  const hasAnyRounds = (tournament.players?.length ?? 0) > 0;
+
+  // Dados extra (admissions + draws) — injectados no loader Jovens
+  const admissions = (tournament as any)._admissions as import("../data/nacional2026Loader").FpgAdmissions | undefined;
+  const draws      = (tournament as any)._draws as Record<string, import("../data/nacional2026Loader").FpgDraw> | undefined;
+  const hasAdmissions = !!admissions && !admissions.error && (admissions.players?.length ?? 0) > 0;
+  const drawsByRound = useMemo(() => {
+    const out = new Map<number, import("../data/nacional2026Loader").FpgDraw>();
+    if (draws) for (const [k, d] of Object.entries(draws)) {
+      if (d && (d.groups?.length ?? 0) > 0) out.set(parseInt(k, 10), d);
+    }
+    return out;
+  }, [draws]);
 
   // Expanded list: R1, R2, ..., Resumo
   const expanded = useMemo(() => expandMultiRound(tournament), [tournament]);
 
-  // Tab labels: R1 · R2 · R3 · Resumo · 📋 Scorecards
+  /**
+   * Ordem canónica das tabs:
+   *   Inscrições → Draw R1 → R1 → Draw R2 → R2 → Draw R3 → R3 → Resumo → 📋 Scorecards
+   * Só aparecem tabs cujos dados existem.
+   *
+   * Internamente cada tab é identificada por uma chave:
+   *   "admissions", "draw:N" (N=1..3), "round:I" (I=índice em expanded, exclui Resumo),
+   *   "resumo", "scorecards"
+   */
   const COMBINED_TAB = "📋 Scorecards";
-  const tabs = useMemo(() => {
-    if (!isMulti) return ["Scorecard"];
-    return [...expanded.map((t: any) => t._roundLabel || "?"), COMBINED_TAB];
-  }, [isMulti, expanded]);
+  type TabDef = { key: string; label: string };
+  const tabs: TabDef[] = useMemo(() => {
+    const out: TabDef[] = [];
+    if (hasAdmissions) out.push({ key: "admissions", label: "Inscrições" });
+    if (isMulti) {
+      // expanded é [R1, R2, ..., RN, Resumo] — últio elemento é o Resumo.
+      const rondas = expanded.filter((e: any) => !e._isTotal);
+      const temResumo = expanded.some((e: any) => e._isTotal);
+      for (let i = 0; i < rondas.length; i++) {
+        const roundNum = i + 1;
+        if (drawsByRound.has(roundNum)) {
+          out.push({ key: `draw:${roundNum}`, label: `Draw R${roundNum}` });
+        }
+        out.push({ key: `round:${i}`, label: (rondas[i] as any)._roundLabel || `R${roundNum}` });
+      }
+      if (temResumo) out.push({ key: "resumo", label: "Resumo" });
+      out.push({ key: "scorecards", label: COMBINED_TAB });
+    } else if (hasAnyRounds) {
+      out.push({ key: "round:0", label: "Scorecard" });
+    }
+    return out;
+  }, [hasAdmissions, isMulti, expanded, drawsByRound, hasAnyRounds]);
 
   const [tab, setTab] = useState(0);
   // Reset tab when tournament changes
@@ -602,9 +645,25 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
     setTab(0);
   }
 
-  const curT       = isMulti ? expanded[Math.min(tab, expanded.length - 1)] : tournament;
-  const isAcc      = isMulti && !!(curT as any)?._isTotal;
-  const isCombined = isMulti && tabs[tab] === COMBINED_TAB;
+  const activeTab = tabs[Math.min(tab, Math.max(0, tabs.length - 1))];
+  const activeKey = activeTab?.key || "";
+  const isAdmissionsTab = activeKey === "admissions";
+  const isDrawTab = activeKey.startsWith("draw:");
+  const drawRoundNum = isDrawTab ? parseInt(activeKey.slice(5), 10) : 0;
+  const isResumoTab = activeKey === "resumo";
+  const isCombinedTab = activeKey === "scorecards";
+  const isRoundTab = activeKey.startsWith("round:");
+  const roundIdx = isRoundTab ? parseInt(activeKey.slice(6), 10) : 0;
+
+  // curT só é relevante para round/resumo tabs (lógica existente)
+  const expandedIdxForCurT = isResumoTab
+    ? expanded.findIndex((e: any) => e._isTotal)
+    : isRoundTab
+      ? expanded.findIndex((e: any, i: number) => !e._isTotal && expanded.filter((x: any, j: number) => !x._isTotal && j <= i).length === roundIdx + 1)
+      : -1;
+  const curT = expandedIdxForCurT >= 0 && expanded[expandedIdxForCurT] ? expanded[expandedIdxForCurT] : tournament;
+  const isAcc = isResumoTab;
+  const isCombined = isCombinedTab;
 
   // Info about tournament
   const refPlayer = tournament.players[0];
@@ -638,21 +697,28 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
                 {tournament.tcode}
               </span>
             )}
-            {/* Botões DRAW + SCORING para cada torneio/sub-round */}
+            {/* Botões INSCRIÇÕES + DRAW + SCORING — todos mesmo tamanho/estilo.
+                Uniformizados para consistência em todas as páginas de torneio. */}
             {tournament._isSynthetic
               ? (tournament._subRounds ?? []).map((sr, i) => (
                   sr.ccode && sr.tcode
                     ? <React.Fragment key={sr.tcode}>
+                        <a href={fpgAdmissionsUrl(sr.ccode, sr.tcode)}
+                          target="_blank" rel="noopener noreferrer"
+                          title={`Inscrições do Dia ${i + 1}`}
+                          className="tourn-ext-link">
+                          Inscrições D{i + 1} ↗
+                        </a>
                         <a href={fpgDrawUrl(sr.ccode, sr.tcode)}
                           target="_blank" rel="noopener noreferrer"
                           title={`Draw do Dia ${i + 1}`}
-                          className="tourn-ext-link" style={{ color: "var(--text-2)", borderColor: "var(--border)" }}>
+                          className="tourn-ext-link">
                           Draw D{i + 1} ↗
                         </a>
                         <a href={fpgScoringUrl(sr.ccode, sr.tcode)}
                           target="_blank" rel="noopener noreferrer"
                           title={`Classificação do Dia ${i + 1}`}
-                          className="tourn-ext-link" style={{ color: "var(--accent)", borderColor: "var(--accent)" }}>
+                          className="tourn-ext-link">
                           Scoring D{i + 1} ↗
                         </a>
                       </React.Fragment>
@@ -660,16 +726,22 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
                 ))
               : tournament.ccode && tournament.tcode && (
                   <>
+                    <a href={fpgAdmissionsUrl(tournament.ccode, tournament.tcode)}
+                      target="_blank" rel="noopener noreferrer"
+                      title="Inscrições (tournAdmissions) na Federação"
+                      className="tourn-ext-link">
+                      Inscrições ↗
+                    </a>
                     <a href={fpgDrawUrl(tournament.ccode, tournament.tcode)}
                       target="_blank" rel="noopener noreferrer"
                       title="Emparelhamentos (Draw) na Federação"
-                      className="tourn-ext-link" style={{ color: "var(--text-2)", borderColor: "var(--border)" }}>
+                      className="tourn-ext-link">
                       Draw ↗
                     </a>
                     <a href={fpgScoringUrl(tournament.ccode, tournament.tcode)}
                       target="_blank" rel="noopener noreferrer"
                       title="Classificação (Scoring) na Federação"
-                      className="tourn-ext-link" style={{ color: "var(--accent)", borderColor: "var(--accent)" }}>
+                      className="tourn-ext-link">
                       Scoring ↗
                     </a>
                   </>
@@ -688,21 +760,41 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
         <LinksBar links={tournament.links} escalao={tournament.escalao} />
       </div>
 
-      {/* Tabs */}
-      {isMulti && (
+      {/* Tabs (só mostra se há mais do que uma) */}
+      {tabs.length > 1 && (
         <div className="tab-bar">
-          {tabs.map((label: string, i: number) => (
-            <button key={i} className={`tab-under${tab === i ? " active" : ""}`} onClick={() => setTab(i)}>{label}</button>
+          {tabs.map((t, i) => (
+            <button key={t.key} className={`tab-under${tab === i ? " active" : ""}`} onClick={() => setTab(i)}>{t.label}</button>
           ))}
         </div>
       )}
 
       {/* Conteúdo */}
-      {isCombined
-        ? <AllRoundsScorecardLB tournament={tournament} escLookup={escLookup} playersDB={playersDB} />
-        : isAcc
-          ? <AccumulatedLB tournament={curT} nRounds={nRounds} escLookup={escLookup} playersDB={playersDB} />
-          : <ScorecardLB tournament={curT} escLookup={escLookup} playersDB={playersDB} />
+      {isAdmissionsTab && admissions
+        ? <AdmissionsTab
+            admissions={admissions}
+            playersDB={playersDB as any}
+            date={tournament.date}
+            fpgUrl={tournament.ccode && tournament.tcode ? `https://scoring.fpg.pt/lists/tournAdmissions.aspx?ccode=${tournament.ccode}&tcode=${tournament.tcode}` : undefined}
+            tournamentEscalao={tournament.escalao || undefined}
+            tournamentSex={/\bF\b|\bS\b|Feminino/i.test(tournament.name || "") ? "F" : /\bM\b|\bH\b|Masculino/i.test(tournament.name || "") ? "M" : undefined}
+          />
+        : isDrawTab
+          ? <DrawTab
+              draw={drawsByRound.get(drawRoundNum) || { groups: [] }}
+              roundNum={drawRoundNum}
+              playersDB={playersDB as any}
+              tournamentEscalao={tournament.escalao || undefined}
+              tournamentSex={/\bF\b|\bS\b|Feminino/i.test(tournament.name || "") ? "F" : /\bM\b|\bH\b|Masculino/i.test(tournament.name || "") ? "M" : undefined}
+              tournamentDate={tournament.date}
+            />
+          : isCombined
+            ? <AllRoundsScorecardLB tournament={tournament} escLookup={escLookup} playersDB={playersDB} />
+            : isAcc
+              ? <AccumulatedLB tournament={curT} nRounds={nRounds} escLookup={escLookup} playersDB={playersDB} />
+              : isRoundTab || !isMulti
+                ? <ScorecardLB tournament={curT} escLookup={escLookup} playersDB={playersDB} />
+                : null /* sem tabs válidas — pode ser torneio futuro sem admissions (unlikely) */
       }
     </div>
   );
@@ -975,8 +1067,8 @@ function Content() {
       { url: "/data/jovens_2023.json", year: "2023" },
       { url: "/data/jovens_2022.json", year: "2022" },
     ];
-    Promise.all(
-      JOVENS_FILES.map(async ({ url, year }) => {
+    Promise.all([
+      ...JOVENS_FILES.map(async ({ url, year }) => {
         try {
           const r = await fetch(url);
           if (!r.ok) return [];
@@ -986,11 +1078,60 @@ function Content() {
             players: t.players.map(normalizePlayer),
           }));
         } catch { return []; }
-      })
-    ).then(results => {
+      }),
+      // Carrega também admissions + draws (107 torneios) para enriquecer existentes
+      // e injectar sinteticamente os 10 Nacional 2026 (que ainda não estão em jovens_2026).
+      loadFpgAdmissionsDraws().catch(() => null),
+    ]).then(all => {
       if (!alive) return;
+      const admDrawsFile = all[all.length - 1] as Awaited<ReturnType<typeof loadFpgAdmissionsDraws>> | null;
+      const admDrawsIdx = admDrawsFile ? indexFpgAdmissionsDraws(admDrawsFile) : new Map<string, FpgTournamentData>();
+      const tournaments = (all.slice(0, -1) as any[]).flat() as Tournament[];
+
       const seen = new Map<string, Tournament>();
-      for (const t of results.flat()) seen.set(t.ccode + "/" + String((t as any).tcode), t as Tournament);
+      // 1) Torneios existentes — dedup + enriquecer com admissions/draws quando houver match
+      for (const t of tournaments) {
+        const key = t.ccode + "/" + String((t as any).tcode);
+        if (seen.has(key)) continue;
+        const idxKey = `${t.ccode}-${(t as any).tcode}`;
+        const ad = admDrawsIdx.get(idxKey);
+        if (ad) {
+          (t as any)._admissions = ad.admissions;
+          (t as any)._draws = ad.draws;
+        }
+        seen.set(key, t);
+      }
+      // 2) Injectar Nacional 2026 (tcodes 10935-10944) como torneios sintéticos
+      //    se não existirem já em jovens_2026.json.
+      for (const tcode of NACIONAL_2026_TCODES) {
+        const key = "000/" + tcode;
+        if (seen.has(key)) continue;
+        const meta = NACIONAL_2026_META[tcode];
+        const ad = admDrawsIdx.get(`000-${tcode}`);
+        if (!ad) continue;  // sem dados scraped, não injecta
+        const playerCount = ad.admissions?.totalInscritos ?? (ad.admissions?.players?.length ?? 0);
+        const synthetic = {
+          name: meta.name,
+          ccode: "000",
+          tcode,
+          date: "2026-05-01",
+          campo: "PGA Aroeira II",
+          clube: "000",
+          circuit: "tour",
+          series: "jovens",
+          region: "nacional",
+          escalao: meta.escalao,
+          num: 1,
+          rounds: 3,
+          playerCount,
+          players: [],
+          _jovensYear: "2026",
+          _sourceFile: "fpg-admissions-draws.json",
+          _admissions: ad.admissions,
+          _draws: ad.draws,
+        } as unknown as Tournament;
+        seen.set(key, synthetic);
+      }
       setJovensTournaments([...seen.values()] as Tournament[]);
       setJovensLoaded(true);
       setJovensLoading(false);

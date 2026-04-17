@@ -53,7 +53,7 @@ function usePlayerStats() {
  * Resultado: Map<fed, código_ISO_2_em_maiúsculas>. Só inclui não-PT (PT é default).
  */
 let _fedCountryPromise: Promise<Map<string, string>> | null = null;
-function loadFedCountries(): Promise<Map<string, string>> {
+export function loadFedCountries(): Promise<Map<string, string>> {
   if (_fedCountryPromise) return _fedCountryPromise;
   _fedCountryPromise = Promise.all([
     fetch("/data/federados.json").then(r => r.ok ? r.json() : null).catch(() => null),
@@ -82,14 +82,14 @@ function loadFedCountries(): Promise<Map<string, string>> {
   return _fedCountryPromise;
 }
 
-function useFedCountries(): Map<string, string> {
+export function useFedCountries(): Map<string, string> {
   const [m, setM] = useState<Map<string, string>>(new Map());
   useEffect(() => { loadFedCountries().then(setM); }, []);
   return m;
 }
 
 /** Renderiza bandeira só se o jogador for não-PT (PT é default sem bandeira). */
-function CountryFlag({ fed, fedCountries }: { fed: string | null; fedCountries: Map<string, string> }) {
+export function CountryFlag({ fed, fedCountries }: { fed: string | null; fedCountries: Map<string, string> }) {
   if (!fed) return null;
   const cc = fedCountries.get(fed);
   if (!cc) return null;
