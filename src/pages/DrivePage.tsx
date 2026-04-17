@@ -1180,15 +1180,19 @@ function DriveContent() {
   const [sub12Player, setSub12Player]   = useState<Sub12Row | null>(null);
 
   // Carrega todos os ficheiros mensais: {prefix}-YYYY-MM.json
-  // Itera 2022 → ano corrente, todos os meses; ignora silenciosamente os que não existem (404)
+  // Itera startYear → ano corrente, todos os meses; ignora silenciosamente os que não existem (404)
   // Retorna tornedos com `_sourceFile` preenchido + meta de cada ficheiro.
-  async function loadAllFiles(prefix: string, forceAqapor = false): Promise<{ tournaments: Tournament[]; meta: DataSource[] }> {
+  // startYear por prefixo (primeiro ficheiro que existe):
+  //   drive-data   → 2021 (2021-09)
+  //   aquapor-data → 2024 (2024-02)
+  // Evita dezenas de fetches a ficheiros que sabemos não existirem.
+  async function loadAllFiles(prefix: string, forceAqapor = false, startYear = 2021): Promise<{ tournaments: Tournament[]; meta: DataSource[] }> {
     const all: Tournament[] = [];
     const meta: DataSource[] = [];
     const now = new Date();
     const curYear  = now.getFullYear();
     const curMonth = now.getMonth() + 1;
-    for (let year = 2022; year <= curYear; year++) {
+    for (let year = startYear; year <= curYear; year++) {
       for (let month = 1; month <= 12; month++) {
         if (year === curYear && month > curMonth) break;
         const mm  = String(month).padStart(2, "0");
@@ -1227,8 +1231,8 @@ function DriveContent() {
 
   useEffect(() => {
     Promise.all([
-      loadAllFiles("drive-data"),
-      loadAllFiles("aquapor-data", true),
+      loadAllFiles("drive-data", false, 2021),
+      loadAllFiles("aquapor-data", true, 2024),
       loadPlayers().catch(() => ({})),
       fetch("/data/drive-sd-lookup.json").then(r => r.ok ? r.json() : {}).catch(() => ({})),
     ]).then(([driveR, aqR, pp, sd]) => {
