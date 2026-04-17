@@ -19,7 +19,7 @@ import { formatPlayerName } from "../utils/playerUtils";
 import { MANUEL_FED } from "../constants/manuel";
 import { TournPName, TeeDot } from "./tournamentPrimitives";
 import type { PlayersDB } from "./tournamentPrimitives";
-import { EscPill } from "./PillBadge";
+import { EscPill, YearPill } from "./PillBadge";
 import { useFedCountries, CountryFlag } from "./InscricoesComponents";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
 import { useSort } from "../hooks/useSort";
@@ -91,16 +91,22 @@ export default function AdmissionsTab({
     );
   }, [enriched, term]);
 
-  // Ordenar: confirmed antes de reservas, depois pela sortKey
+  // Ordenar: confirmed e reservas misturam-se conforme a sortKey escolhida.
+  // Só `pos` e `status` fazem separação explícita (faz sentido para a ordem natural
+  // da inscrição). As restantes colunas (hcp, vac, nome, nasc, ...) ordenam a lista
+  // toda junta — o estado reserva/confirmed continua distinguível pelo pill da última
+  // coluna ("Status").
   const sorted = useMemo(() => {
     const INF = 9999;
     const mult = sortDir === "asc" ? 1 : -1;
+    // Posição absoluta: confirmed 1..N, reservas N+1..N+M (para sort por "pos")
+    const nConf = filtered.filter(p => p.status === "confirmed").length;
+    const absPos = (p: typeof filtered[number]) =>
+      p.status === "confirmed" ? (p.pos ?? INF) : nConf + (p.pos ?? INF);
     return [...filtered].sort((a, b) => {
-      // Confirmed sempre antes de reservas
-      if (a.status !== b.status) return a.status === "confirmed" ? -1 : 1;
       let v = 0;
       switch (sortKey) {
-        case "pos":     v = (a.pos ?? INF) - (b.pos ?? INF); break;
+        case "pos":     v = absPos(a) - absPos(b); break;
         case "nome":    v = a._nomeFormatted.localeCompare(b._nomeFormatted, "pt"); break;
         case "esc":     v = (a._escHist || "").localeCompare(b._escHist || "", "pt"); break;
         case "fed":     v = (a.fed || "").localeCompare(b.fed || ""); break;
@@ -116,20 +122,24 @@ export default function AdmissionsTab({
   }, [filtered, sortKey, sortDir]);
 
   const rows: ScorecardRow[] = useMemo(() => {
+    // Posição contínua: confirmed 1..N, reservas N+1..N+M. Mostra números únicos
+    // mesmo quando confirmed e reservas aparecem misturadas por sort custom.
+    const nConf = sorted.filter(p => p.status === "confirmed").length;
     return sorted.map((p, i) => {
       const manuel = p.fed === MANUEL_FED;
       const isReserva = p.status === "reserva";
       const age = ageAtDate(p._dob, date || undefined);
+      const displayPos = isReserva ? nConf + (p.pos ?? i + 1) : (p.pos ?? i + 1);
       return {
         key: `${p.fed ?? p.nome}-${i}`,
-        pos: p.pos ?? i + 1,
+        pos: displayPos,
         gross: 0,
         toPar: null,
         scores: [],
         isManuel: manuel,
-        sortPos: p.pos ?? i + 1,
+        sortPos: displayPos,
         sortName: p._nomeFormatted,
-        rowBg: !manuel && isReserva ? "color-mix(in srgb, var(--color-warn) 10%, transparent)" : undefined,
+        rowBg: !manuel && isReserva ? "color-mix(in srgb, var(--text-muted) 6%, transparent)" : undefined,
         nameContent: (
           <>
             <CountryFlag fed={p.fed} fedCountries={fedCountries} />
@@ -150,8 +160,13 @@ export default function AdmissionsTab({
             <td className="lb-club" title={p._clube}>{p._clube || "–"}</td>
             <td className="lb-hcp">{fmtHcp(p.hcp)}</td>
             <td className="lb-tee"><TeeDot teeName={teeName} /></td>
-            <td className="fs-11 mono muted" title={p._dob ? `${p._dob} (${age ?? "?"} anos à data)` : ""} style={{ textAlign: "center", padding: "6px 8px" }}>
-              {p._dobYear != null ? (age != null ? `${p._dobYear} (${age})` : String(p._dobYear)) : "–"}
+            <td title={p._dob ? `${p._dob} (${age ?? "?"} anos à data)` : ""} style={{ textAlign: "center", padding: "6px 8px", whiteSpace: "nowrap" }}>
+              {p._dobYear != null ? (
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+                  <YearPill year={p._dobYear} />
+                  {age != null && <span className="muted fs-10">({age})</span>}
+                </span>
+              ) : <span className="muted">–</span>}
             </td>
           </>
         ),
@@ -163,7 +178,7 @@ export default function AdmissionsTab({
             </td>
             <td style={{ padding: "6px 8px", textAlign: "center" }}>
               {isReserva
-                ? <span style={{ background: "var(--color-warn)", color: "#fff", fontSize: 10, padding: "1px 6px", borderRadius: 10 }}>reserva</span>
+                ? <span style={{ background: "var(--bg-muted)", color: "var(--text-muted)", fontSize: 10, padding: "1px 6px", borderRadius: 10, border: "1px solid var(--border-light)" }}>pendente</span>
                 : <span className="muted fs-10">✓</span>}
             </td>
           </>
@@ -208,7 +223,7 @@ export default function AdmissionsTab({
       <input className="input" value={q} onChange={e => setQ(e.target.value)}
         placeholder="Nome, clube, nº fed..." style={{ maxWidth: 240 }} />
       <span className="muted fs-12">
-        {confirmedCount} confirmados{reservasCount > 0 && ` · ${reservasCount} reservas`}
+        {confirmedCount} confirmados{reservasCount > 0 && ` · ${reservasCount} pendentes`}
       </span>
       {admissions.status && <span className="chip" title="Estado FPG">{admissions.status}</span>}
       <div className="ml-auto gap-8 flex-wrap" style={{ display: "flex", alignItems: "center" }}>

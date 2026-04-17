@@ -146,6 +146,58 @@ export function Pill({
   );
 }
 
+/** Chave CSS normalizada para um escalão: "Sub 12" → "sub12", "Sub-14" → "sub14". */
+export function escKey(esc: string | null | undefined): string {
+  return (esc || "").toLowerCase().replace(/[\s-]/g, "");
+}
+
+/** Style inline para tabs/botões de escalão.
+ *  Regras:
+ *   - Default (muted): outline-only — sem preenchimento, border 1.5px da cor do escalão
+ *     (ou da cor do sexo quando há distinção M/F no grupo), texto da cor do escalão.
+ *   - Activo: fundo preenchido com a cor do escalão, texto da cor --esc-subN-fg.
+ *   - Distinção de sexo (apenas quando o grupo tem M e F): border com as cores sóbrias
+ *     --badge-male (#6A93A8) / --badge-female (#B87D8B), em vez da cor do escalão.
+ */
+export function escTabStyle(
+  esc: string | null | undefined,
+  active: boolean,
+  sex?: "M" | "F" | null
+): CSSProperties {
+  const key = escKey(esc);
+  const hasCssClass = ["sub10","sub12","sub14","sub16","sub18","sub21","sub24","absoluto","senior"].includes(key);
+  const sexBorder = sex === "M" ? "var(--badge-male)" : sex === "F" ? "var(--badge-female)" : null;
+  if (!hasCssClass) {
+    // Escalões não mapeados (Absoluto, etc.) — neutro
+    return active
+      ? { background: "var(--accent)", color: "#fff",
+          border: sexBorder ? `1.5px solid ${sexBorder}` : "1px solid var(--accent)",
+          fontWeight: 800 }
+      : { background: "transparent", color: "var(--text-2)",
+          border: sexBorder ? `1.5px solid ${sexBorder}` : "1px solid var(--border)",
+          fontWeight: 600 };
+  }
+  const escBg = `var(--esc-${key}-bg)`;
+  const escFg = `var(--esc-${key}-fg)`;
+  if (active) {
+    // Preenchido com a cor do escalão (fg/bg dos tokens); se há distinção de sexo,
+    // o border herda a cor do sexo (mais grosso para se destacar sobre o preenchimento).
+    return {
+      background: escBg,
+      color: escFg,
+      border: sexBorder ? `1.5px solid ${sexBorder}` : "1px solid transparent",
+      fontWeight: 800,
+    };
+  }
+  // Muted / outline-only: sem preenchimento, border da cor do escalão (ou do sexo).
+  return {
+    background: "transparent",
+    color: escBg,                    // usa a cor do escalão como cor do texto
+    border: `1.5px solid ${sexBorder ?? escBg}`,
+    fontWeight: 600,
+  };
+}
+
 /** Escalão — usa classes CSS globais (.p-sub14, etc.) */
 export function EscPill({ esc }: { esc: string }) {
   if (!esc) return null;
@@ -224,6 +276,34 @@ export function ClubePill({ clube, ccode }: { clube?: string | null; ccode?: str
   const short = shortClubFromField(clube, ccode);
   if (!short) return null;
   return <span className="p p-sm p-club">{short}</span>;
+}
+
+/* ── YearPill ──────────────────────────────────────────────────────
+ * Ano de nascimento. Só 2 cores alternadas (par/ímpar) — numa tabela
+ * ordenada os anos consecutivos "cruzam e descruzam" naturalmente,
+ * criando um padrão fácil de ler sem sobrecarga visual.
+ *
+ * Cores escolhidas para NÃO colidirem com o resto da UI do projecto:
+ *   - verde está reservado ao Manuel
+ *   - todo o espectro roxo/violeta está reservado aos escalões (Sub-10..Sub-24)
+ * Por isso: par=laranja quente, ímpar=azul-céu. Complementares, contraste alto,
+ * sem border (mais limpo).
+ * ────────────────────────────────────────────────────────────────── */
+const YEAR_COLOR_EVEN = { bg: "#fed7aa", fg: "#7c2d12" }; // anos pares — laranja
+const YEAR_COLOR_ODD  = { bg: "#bae6fd", fg: "#075985" }; // anos ímpares — azul-céu
+
+export function YearPill({ year }: { year: number | string | null | undefined }) {
+  if (year == null || year === "") return <span className="muted">–</span>;
+  const y = typeof year === "number" ? year : parseInt(String(year), 10);
+  if (!Number.isFinite(y)) return <span className="muted">–</span>;
+  const c = y % 2 === 0 ? YEAR_COLOR_EVEN : YEAR_COLOR_ODD;
+  return (
+    <span className="p p-sm" style={{
+      background: c.bg,
+      color: c.fg,
+      border: "none",
+    }}>{y}</span>
+  );
 }
 
 export default PillBadge;

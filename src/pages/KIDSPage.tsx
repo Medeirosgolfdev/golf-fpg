@@ -22,7 +22,8 @@ import EmptyState from "../ui/EmptyState";
 import DetailHeader from "../ui/DetailHeader";
 import KpiCard from "../ui/KpiCard";
 import SidebarSectionTitle from "../ui/SidebarSectionTitle";
-import { buildAutoRivals, normName, getScorecards, uskTournNames, uskFieldSizes } from "../data/KIDSdataLoader";
+import { buildAutoRivals, normName, getScorecards, uskTournNames, uskFieldSizes, getLoadedKidsFiles, type KidsFileMeta } from "../data/KIDSdataLoader";
+import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
 import { FIELD_2025, VP_PAR, VP_SI, VP_M, VP_WJGC26_PAR, VP_WJGC26_SI, VP_WJGC26_M, VP_ALFERINI_PAR, VP_ALFERINI_SI, VP_ALFERINI_M, LT_FORET_PAR, LT_FORET_SI, LT_FORET_M, MS_USKIDS_M_B1011, MS_USKIDS_M_B12, DORAL_GP_M_B1011, DORAL_SF_M_B1213, FIELD_CARDS } from "../data/rivalData";
 import { MANUEL_KNOWN_TIDS } from "../constants/manuel";
 import { TR_I } from "../constants/config";
@@ -754,9 +755,11 @@ function useAutoRivals() {
   const [merged, setMerged] = React.useState<RivalPlayer[]>(D);
   const [loaded, setLoaded] = React.useState(false);
   const [progress, setProgress] = React.useState<{ done: number; total: number; label: string } | null>(null);
+  const [fileMeta, setFileMeta] = React.useState<KidsFileMeta[]>([]);
 
   React.useEffect(() => {
     buildAutoRivals((p) => setProgress({ ...p })).then(autoPlayers => {
+      setFileMeta(getLoadedKidsFiles());
       // Trabalhar sobre uma cópia profunda de D
       const map = new Map<string, RivalPlayer>(
         D.map(p => [normName(p.n), { ...p, r: { ...p.r } }])
@@ -789,11 +792,12 @@ function useAutoRivals() {
       setLoaded(true);
     }).catch(err => {
       console.warn("rivaisDataLoader: erro ao carregar JSON", err);
+      setFileMeta(getLoadedKidsFiles());
       setLoaded(true);
     });
   }, []);
 
-  return { rivals: merged, loaded, progress };
+  return { rivals: merged, loaded, progress, fileMeta };
 }
 
 /** Hook: carrega uskids-member-history-slim.json e transforma em MHData */
@@ -2731,7 +2735,16 @@ function RivalDetail({ playerName }: { playerName: string }) {
    PAGE COMPONENT
    ═══════════════════════════════════ */
 function RivaisIntlContent() {
-  const { rivals, loaded, progress } = useAutoRivals();
+  const { rivals, loaded, progress, fileMeta } = useAutoRivals();
+  const allSources: DataSource[] = React.useMemo(() =>
+    fileMeta.map(f => ({
+      path: f.path,
+      status: f.status,
+      error: f.error,
+      group: f.group,
+    })),
+    [fileMeta]
+  );
   const memberHist = useMemberHist();
   const scoringStats = useScoringStats();
 
@@ -2823,12 +2836,14 @@ function RivaisIntlContent() {
     <RivalsCtx.Provider value={rivals}>
     <MemberHistCtx.Provider value={memberHist}>
     <ScoringStatsCtx.Provider value={scoringStats}>
+    <DataSourcesProvider tournaments={[]}>
     <div className="tourn-layout">
 
       {/* ── Toolbar row 1 ── */}
       <Toolbar>
         <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
         <ToolbarTitle>🌍 Kids</ToolbarTitle>
+        <DataSourcesChip sources={allSources} />
         <ToolbarSep />
         <span className="toolbar-meta shrink-0" >
           {loaded
@@ -2945,6 +2960,7 @@ function RivaisIntlContent() {
         </div>
       </div>
     </div>
+    </DataSourcesProvider>
     </ScoringStatsCtx.Provider>
     </MemberHistCtx.Provider>
     </RivalsCtx.Provider>

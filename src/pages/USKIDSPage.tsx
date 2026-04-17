@@ -2,6 +2,7 @@
 import { useEffect, useState, useMemo, useTransition } from "react";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
+import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import React from "react";
 import SectionErrorBoundary from "../ui/SectionErrorBoundary";
@@ -386,6 +387,8 @@ export default function USKidsFieldPage() {
   // Marca setAutoRivals como actualização não-urgente para não bloquear o render inicial.
   const [, startRivalsTransition] = useTransition();
 
+  const [fileMeta, setFileMeta] = useState<DataSource[]>([]);
+
   useEffect(() => {
     // Cache diário: só re-faz fetch uma vez por dia (usa HTTP cache nos restantes pedidos da sessão)
     const daily = new Date().toISOString().slice(0, 10); // "2026-04-03"
@@ -394,9 +397,13 @@ export default function USKidsFieldPage() {
       .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
       .then((d: FieldData) => {
         setFieldData(d);
+        setFileMeta(prev => [...prev, { path: "/data/uskids-field.json", status: "loaded", count: d.torneios?.length, group: "field" }]);
         if (d.torneios.length) setSelectedTState(prev => prev !== null ? prev : d.torneios[0].t);
       })
-      .catch(e => setErro(e.message));
+      .catch(e => {
+        setErro(e.message);
+        setFileMeta(prev => [...prev, { path: "/data/uskids-field.json", status: "error", error: String(e), group: "field" }]);
+      });
 
     // ── Carregar resultados: 15 ficheiros históricos permanentes + ficheiro auto-gerado ──
     // Os históricos têm prioridade; o auto-gerado apenas acrescenta torneios ainda não cobertos.
@@ -408,10 +415,25 @@ export default function USKidsFieldPage() {
     Promise.all([
       // ficheiro auto-gerado — cache diária para não re-buscar em cada refresh
       fetch(`/data/uskids-results.json?v=${daily}`)
-        .then(r => r.ok ? r.json() : { gerado_em: "", resultados: [] })
+        .then(r => {
+          if (!r.ok) {
+            setFileMeta(prev => [...prev, { path: "/data/uskids-results.json", status: "error", error: `HTTP ${r.status}`, group: "results" }]);
+            return { gerado_em: "", resultados: [] };
+          }
+          return r.json().then((d: ResultsData) => {
+            setFileMeta(prev => [...prev, { path: "/data/uskids-results.json", status: "loaded", count: d.resultados?.length, group: "results" }]);
+            return d;
+          });
+        })
         .catch((): ResultsData => ({ gerado_em: "", resultados: [] })),
       // ficheiros históricos permanentes (usam cachedFetchJson — cached em memória na sessão)
-      ...historicosUrls.map(url => cachedFetchJson(url).catch(() => null)),
+      ...historicosUrls.map((url, i) => cachedFetchJson(url).then(d => {
+        setFileMeta(prev => [...prev, { path: url, status: "loaded", group: "completos" }]);
+        return d;
+      }).catch(e => {
+        setFileMeta(prev => [...prev, { path: url, status: "error", error: String(e), group: "completos" }]);
+        return null;
+      })),
     ]).then(([autoGerado, ...historicos]) => {
       const auto = autoGerado as ResultsData;
 
@@ -845,12 +867,14 @@ export default function USKidsFieldPage() {
 
   return (
     <ArMapCtx.Provider value={arMapCtxValue}>
+    <DataSourcesProvider tournaments={[]}>
     <div className="tourn-layout" style={{ height:"calc(100vh - 52px)" }}>
 
       {/* ── TOOLBAR ── */}
       <Toolbar>
         <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
         <ToolbarTitle>🏌️ USKids</ToolbarTitle>
+        <DataSourcesChip sources={fileMeta} />
         <ToolbarSep />
         {TABS.map(tb => (
           <button key={tb.id}
@@ -944,6 +968,7 @@ export default function USKidsFieldPage() {
       </div>
     {/* ← fecha tourn-layout */}
     </div>
+    </DataSourcesProvider>
     </ArMapCtx.Provider>
   );
 }

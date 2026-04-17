@@ -131,6 +131,10 @@ export function TournPName({
   maxLen?: number;
 }) {
   const fedKey = fed || fedCode;
+  // hasLink: basta ter fed — a página /jogadores/{fed} sempre renderiza algo
+  //   (perfil completo se em players.json, senão FederadoOnlyDetail a partir de federados.json).
+  // hasProfile: dados curados completos (usado para mostrar SexBadge, clube, etc.).
+  const hasLink = !!fedKey;
   const hasProfile = !!(fedKey && playersDB && playersDB[fedKey]);
   const sex = fedKey && playersDB ? playersDB[fedKey]?.sex : undefined;
   const star = highlight ?? isManuel({ name, fed, fedCode });
@@ -147,8 +151,9 @@ export function TournPName({
 
   return (
     <span
-      className={"tourn-pname" + (hasProfile ? " tourn-pname-link" : "")}
-      onClick={hasProfile ? () => window.open("/jogadores/" + fedKey, "_blank") : undefined}
+      className={"tourn-pname" + (hasLink ? " tourn-pname-link" : "")}
+      onClick={hasLink ? () => window.open("/jogadores/" + fedKey, "_blank") : undefined}
+      title={hasLink && !hasProfile ? "Federado (perfil limitado — dados do federados.json)" : undefined}
     >
       {truncName}
       {star && <span className="fs-10" style={{ marginLeft: 3 }}>⭐</span>}

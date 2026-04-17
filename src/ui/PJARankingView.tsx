@@ -8,7 +8,7 @@ import LoadingState from "./LoadingState";
 import FilterChip from "./FilterChip";
 import { CrossSeasonTable, SortTh as CSortTh } from "./CrossSeasonTable";
 import { isManuel, fmtTP, tpColor, TournPName, type PlayersDB } from "./tournamentPrimitives";
-import { fmtDate } from "../utils/format";
+import { fmtDate, escalaoAtDate } from "../utils/format";
 import type { RoundScore, Player, Tournament } from "../data/fpgTypes";
 
 /* ─────────────────────────────────────────────
@@ -154,9 +154,18 @@ export function PJARankingView({
           const club = clubRaw
             ? (typeof clubRaw === "object" ? (clubRaw as any).short || "" : String(clubRaw))
             : (p.club || "");
+          // Escalão no ANO do ranking (year-based FPG).
+          // Prioridade: DOB+year → histórico (scrape) → actual (último recurso, pode estar errado).
+          const dob = (db as any)?.dob;
+          const escByYear = dob && year ? escalaoAtDate(dob, year) : null;
+          const historic = (p as any).escalao;
+          const esc = escByYear
+            || (historic ? String(historic).replace("-", " ").replace(/sub(\d)/i, "Sub $1").trim() : "")
+            || db?.escalao
+            || "";
           map.set(playerKey, {
             key: playerKey, name: p.name, fedCode: p.fedCode,
-            club, escalao: db?.escalao || (p as any).escalao || "",
+            club, escalao: esc,
             sex: db?.sex || "", hcp: p.hcpExact ?? null,
             results: new Map(), allRounds: [], total: 0, voltas: 0, eligible: false,
           });

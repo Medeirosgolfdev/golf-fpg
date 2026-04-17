@@ -15,19 +15,35 @@ export function numGross(p: Player): number {
   return typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : (p.grossTotal as number) ?? 999;
 }
 
-/** Escalão do jogador no contexto do torneio.
+/** Mapa fed → ano → escalão. Construído a partir de torneios Challenge (t.escalao explícito).
+ *  Usado como fallback quando não há DOB na playersDB para inferir o escalão num ano específico. */
+export type TemporalEscLookup = Map<string, Map<string, string>>;
+
+/** Escalão do jogador no contexto do torneio — FONTE ÚNICA DE VERDADE.
+ *
+ *  Regra FPG: escalão é baseado na idade que o jogador faz no ano civil do torneio
+ *  (year − yearOfBirth). Ver `escalaoAtDate` em utils/format.ts.
+ *
  *  Prioridade:
- *    1) escalaoAtDate(dob, tournamentDate)  — SEMPRE preferido se há dob+data
- *    2) escalão gravado no registo do torneio (histórico do scrape)
- *    3) lookup actual (players.json) — último recurso
+ *    1) escalaoAtDate(dob, tournamentDate) — SEMPRE preferido se há dob + data (cálculo directo)
+ *    2) escalão gravado no registo do torneio (histórico do scrape) — reflecte o escalão na altura
+ *    3) temporalEscLookup[fed][year] — escalão inferido de outros torneios do mesmo ano (ex: Challenge)
+ *    4) lookup actual (players.json) — último recurso (pode estar errado para torneios antigos)
+ *
+ *  Usar sempre esta função em vez de aceder directamente ao playersDB[fed].escalao ou
+ *  ao escLookup global: isso mostraria sempre o escalão ACTUAL, errado para torneios antigos.
  */
 export function resolveEsc(
   p: Player,
   escLookup: EscLookup,
-  opts?: { tournamentDate?: string | null; playersDB?: PlayersDB }
+  opts?: {
+    tournamentDate?: string | null;
+    playersDB?: PlayersDB;
+    temporalEscLookup?: TemporalEscLookup;
+  }
 ): string {
   const fed = p.fedCode || (p as any).fed;
-  // 1) Cálculo dob + data do torneio (verdade matemática)
+  // 1) Cálculo dob + data do torneio (verdade matemática, year-based)
   if (opts?.tournamentDate && opts?.playersDB && fed) {
     const dob = (opts.playersDB[fed] as any)?.dob;
     if (dob) {
@@ -35,12 +51,49 @@ export function resolveEsc(
       if (calc) return calc;
     }
   }
-  // 2) Histórico do registo
+  // 2) Histórico do registo do torneio (escalão guardado no scrape)
   const historic = (p as any).escalao || (p as any).ageCategory;
   if (historic) return historic.replace("-", " ").replace(/sub(\d)/i, "Sub $1").trim();
-  // 3) Lookup actual
+  // 3) Temporal lookup por ano do torneio (inferido de outros torneios do mesmo ano)
+  if (fed && opts?.tournamentDate && opts?.temporalEscLookup) {
+    const year = String(opts.tournamentDate).slice(0, 4);
+    const y = opts.temporalEscLookup.get(fed)?.get(year);
+    if (y) return y;
+  }
+  // 4) Lookup actual (fallback — pode estar errado para torneios antigos)
   if (fed && escLookup.has(fed)) return escLookup.get(fed)!;
   return "";
+}
+
+/** Constrói o temporal lookup: fedCode → Map<year, escalão>
+ *  A partir dos torneios Challenge (que têm t.escalao explícito).
+ *  Permite saber o escalão de um jogador num ANO específico mesmo sem DOB na playersDB. */
+export function buildTemporalEscLookup(
+  tournaments: Array<{
+    escalao?: string | null;
+    series?: string;
+    date?: string;
+    players: Array<{ fed?: string; fedCode?: string }>;
+    _roundLabel?: string;
+  }>
+): TemporalEscLookup {
+  const map: TemporalEscLookup = new Map();
+  for (const t of tournaments) {
+    // Só Challenge têm t.escalao explícito (escalão único por torneio)
+    if (t.series !== "challenge" || !t.escalao) continue;
+    // Ignorar rondas expandidas (R1/R2) — só o torneio base ou Total
+    if (t._roundLabel && t._roundLabel !== "Resumo") continue;
+    const year = t.date?.split("-")[0];
+    if (!year) continue;
+    for (const p of t.players) {
+      const fed = p.fed || p.fedCode || "";
+      if (!fed) continue;
+      if (!map.has(fed)) map.set(fed, new Map());
+      // Não sobrescrever se já existe (primeiro torneio encontrado ganha)
+      if (!map.get(fed)!.has(year)) map.get(fed)!.set(year, t.escalao);
+    }
+  }
+  return map;
 }
 
 export function computeSD(p: Player): SDResult {
@@ -77,11 +130,11 @@ export function filterPlayers(
   f: PlayerFilter,
   escLookup: EscLookup,
   playersDB: PlayersDB,
-  opts?: { tournamentDate?: string | null }
+  opts?: { tournamentDate?: string | null; temporalEscLookup?: TemporalEscLookup }
 ): Player[] {
   let ps = players;
   if (f.name) { const q = f.name.toLowerCase(); ps = ps.filter(p => p.name.toLowerCase().includes(q) || (p.club || "").toLowerCase().includes(q)); }
-  if (f.escs.length) ps = ps.filter(p => f.escs.includes(resolveEsc(p, escLookup, { tournamentDate: opts?.tournamentDate, playersDB })));
+  if (f.escs.length) ps = ps.filter(p => f.escs.includes(resolveEsc(p, escLookup, { tournamentDate: opts?.tournamentDate, playersDB, temporalEscLookup: opts?.temporalEscLookup })));
   if (f.tees.length) ps = ps.filter(p => p.teeName != null && f.tees.includes(p.teeName));
   if (f.club) ps = ps.filter(p => p.club === f.club);
   return ps;

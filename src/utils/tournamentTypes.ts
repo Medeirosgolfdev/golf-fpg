@@ -571,18 +571,9 @@ export function birthYear(norm: NormalizedTournament, fed: string | null): numbe
   return fed ? norm.birthYears[fed] ?? null : null;
 }
 
-export function escalaoFromYear(year: number | null): string {
-  if (!year) return "";
-  const age = new Date().getFullYear() - year;
-  if (age <= 10) return "Sub-10";
-  if (age <= 12) return "Sub-12";
-  if (age <= 14) return "Sub-14";
-  if (age <= 16) return "Sub-16";
-  if (age <= 18) return "Sub-18";
-  if (age <= 21) return "Sub-21";
-  if (age >= 50) return "Sénior";
-  return "Absoluto";
-}
+// escalaoFromYear removida (2026-04-17): usava new Date().getFullYear() em vez do ano
+// do torneio, violando a regra FPG year-based. Fonte única de verdade é
+// `escalaoAtDate(dob, year)` em src/utils/format.ts.
 
 /** playerCategory: determina se um jogador é wagr, sub14 ou sub12 */
 export function playerCategory(

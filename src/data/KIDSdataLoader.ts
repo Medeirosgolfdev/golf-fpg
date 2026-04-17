@@ -929,11 +929,25 @@ export function processMemberHistory(data: unknown): AutoRivalPlayer[] {
 
 export type LoadProgress = { done: number; total: number; label: string };
 
+/** Meta de cada ficheiro carregado pelo buildAutoRivals — usado pelo painel DataSourcesChip. */
+export interface KidsFileMeta {
+  path: string;
+  status: "loaded" | "error";
+  error?: string;
+  /** Grupo visual: "phase 1 core", "phase 2 history", "phase 3 pull", "enrich" */
+  group: string;
+}
+let _loadedFiles: KidsFileMeta[] = [];
+export function getLoadedKidsFiles(): KidsFileMeta[] {
+  return _loadedFiles;
+}
+
 // Cache da Promise de buildAutoRivals
 let _autoRivalsCache: Promise<AutoRivalPlayer[]> | null = null;
 
 export function invalidateAutoRivalsCache(): void {
   _autoRivalsCache = null;
+  _loadedFiles = [];
 }
 
 export async function buildAutoRivals(
@@ -1017,6 +1031,7 @@ async function _buildAutoRivalsInternal(
 ): Promise<AutoRivalPlayer[]> {
   _scorecards.clear();
   uskTournNames.clear();
+  _loadedFiles = [];  // reset file tracker por cada reload
   for (const [tcode, meta] of Object.entries(USKIDS_TCODE_META as Record<string, { name: string; short: string; dateExact: string }>)) {
     const [yr, mo] = meta.dateExact.split("-").map(Number);
     uskTournNames.set(`usk${tcode}`, { name: meta.name, short: meta.short, date: `${MONTHS_PT[mo - 1]} ${yr}`, dateExact: meta.dateExact });
@@ -1084,34 +1099,54 @@ async function _buildAutoRivalsInternal(
 
   // ── Fase 1: paralelo (sem pull-torneios — este corre na Fase 3 autoritativa) ──
   await Promise.all(coreTasks.map(async task => {
+    const path = `${base}${task.file}`;
     try {
-      const d = await fetchJson(`${base}${task.file}`);
+      const d = await fetchJson(path);
       if (task.kind === "wjgc")       mergeInto(map, processWjgc(d, task.tid));
       if (task.kind === "doral")      mergeInto(map, processDoral(d));
       if (task.kind === "uskids")     mergeInto(map, processUskids(d));
       if (task.kind === "completo")   mergeInto(map, processUskidsCompleto(d));
       if (task.kind === "fieldSizes") processFieldSizes(d);
       if (task.kind === "tournMeta")  processTournMeta(d);
-    } catch { /* ignorar */ }
+      _loadedFiles.push({ path, status: "loaded", group: "phase 1 core" });
+    } catch (e) {
+      _loadedFiles.push({ path, status: "error", error: String(e), group: "phase 1 core" });
+    }
     report(labelFor(task));
   }));
 
   mergeInto(map, processManuelOverrides());
 
   // ── Fase 2: aguardar o slim (já estava a descarregar em paralelo) ──
-  try {
-    const d = await slimPromise;
-    if (d) mergeInto(map, processMemberHistory(d));
-  } catch { /* ignorar */ }
-  report("Member History");
+  {
+    const path = `${base}${MEMBER_HIST_SLIM}`;
+    try {
+      const d = await slimPromise;
+      if (d) {
+        mergeInto(map, processMemberHistory(d));
+        _loadedFiles.push({ path, status: "loaded", group: "phase 2 history" });
+      } else {
+        _loadedFiles.push({ path, status: "error", error: "null", group: "phase 2 history" });
+      }
+    } catch (e) {
+      _loadedFiles.push({ path, status: "error", error: String(e), group: "phase 2 history" });
+    }
+    report("Member History");
+  }
 
   // ── Fase 3: pull-torneios (autoritativo — sobrescreve dados incompletos de outras fontes) ──
   // GG25, QDL25, GG26, etc. vêm SEMPRE daqui; completos e member history podem ter versões parciais.
-  try {
-    const d = await fetchJson(`${base}pull-torneios000.json`);
-    mergeInto(map, processPullTorneios(d), PULL_TIDS);
-  } catch { /* ignorar — se não existir, usar o que já foi carregado */ }
-  report("Torneios PT");
+  {
+    const path = `${base}pull-torneios000.json`;
+    try {
+      const d = await fetchJson(path);
+      mergeInto(map, processPullTorneios(d), PULL_TIDS);
+      _loadedFiles.push({ path, status: "loaded", group: "phase 3 pull" });
+    } catch (e) {
+      _loadedFiles.push({ path, status: "error", error: String(e), group: "phase 3 pull" });
+    }
+    report("Torneios PT");
+  }
 
   // ── Enriquecimento FPG: players.json → corrigir co + adicionar fpgClub e dob ──
   // Jogadores portugueses no USKids podem ter o nome do clube como país.
@@ -1119,6 +1154,7 @@ async function _buildAutoRivalsInternal(
   try {
     const playersRaw = await playersJsonPromise;
     if (playersRaw) {
+      _loadedFiles.push({ path: `${base}players.json`, status: "loaded", group: "enrich" });
       type FpgPlayer = { name: string; dob: string; club: { short: string }; co?: string };
       const fpg = playersRaw as Record<string, FpgPlayer>;
       // Mapa nome_normalizado → dados FPG
@@ -1133,8 +1169,12 @@ async function _buildAutoRivalsInternal(
         rival.fpgClub = match.club?.short ?? undefined;
         if (!rival.dob && match.dob) rival.dob = match.dob;
       }
+    } else {
+      _loadedFiles.push({ path: `${base}players.json`, status: "error", error: "null", group: "enrich" });
     }
-  } catch { /* ignorar */ }
+  } catch (e) {
+    _loadedFiles.push({ path: `${base}players.json`, status: "error", error: String(e), group: "enrich" });
+  }
 
   onUpdate?.(Array.from(map.values()));
   return Array.from(map.values());

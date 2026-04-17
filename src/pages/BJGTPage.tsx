@@ -18,6 +18,7 @@ import { type Tournament as FPGTournament, type Player as FPGPlayer, type RoundS
 import { IntlTournView } from "../ui/IntlTournView";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
+import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
 import DetailHeader from "../ui/DetailHeader";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import LoadingState from "../ui/LoadingState";
@@ -366,14 +367,25 @@ function Content() {
   const [ti, setTi] = useState(2);
   const [all, setAll] = useState<(TDef | null)[]>(new Array(URLS.length).fill(null));
   const [loading, setLoading] = useState(true);
+  const [fileMeta, setFileMeta] = useState<DataSource[]>([]);
   const { kidsMap } = useKidsLinkMap();
   const md = useMasterDetail();
 
   useEffect(() => {
     Promise.all(URLS.map(async (m) => {
-      try { const res = await cachedFetch(m.url); if (!res.ok) return null; const raw = await res.json();
+      try {
+        const res = await cachedFetch(m.url);
+        if (!res.ok) {
+          setFileMeta(prev => [...prev, { path: m.url, status: "error", error: `HTTP ${res.status}`, group: m.series }]);
+          return null;
+        }
+        const raw = await res.json();
+        setFileMeta(prev => [...prev, { path: m.url, status: "loaded", group: m.series }]);
         return { id: m.id, label: m.label, shortLabel: m.shortLabel, data: loadT(raw, (m as any).reverseRounds), manuelName: m.manuelName, year: m.year, category: m.category, roundDates: m.roundDates, series: m.series } as TDef;
-      } catch { return null; }
+      } catch (e) {
+        setFileMeta(prev => [...prev, { path: m.url, status: "error", error: String(e), group: m.series }]);
+        return null;
+      }
     })).then(r => { setAll(r); setLoading(false); });
   }, []);
 
@@ -427,6 +439,7 @@ function Content() {
 
   return (
     <KidsLinkCtx.Provider value={kidsMap}>
+    <DataSourcesProvider tournaments={[]}>
     <div className="tourn-layout">
 
       {/* Toolbar */}
@@ -435,6 +448,7 @@ function Content() {
         {cur?.series === "eowagr"
           ? <ToolbarTitle>🌍 European Open</ToolbarTitle>
           : <ToolbarTitle>🏌️ WJGC</ToolbarTitle>}
+        <DataSourcesChip sources={fileMeta} />
         {cur && <ToolbarMeta>{
           cur.series === "eowagr"
             ? "📍 Le Touquet GC — La Forêt"
@@ -543,6 +557,7 @@ function Content() {
 
       </div>
     </div>
+    </DataSourcesProvider>
     </KidsLinkCtx.Provider>
   );
 }

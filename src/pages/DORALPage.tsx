@@ -15,6 +15,7 @@ import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarMeta } from "../ui/Toolbar";
+import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
 import DetailHeader from "../ui/DetailHeader";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import LoadingState from "../ui/LoadingState";
@@ -370,15 +371,23 @@ function Content() {
   const { kidsMap } = useKidsLinkMap();
   const md = useMasterDetail();
 
+  const [fileMeta, setFileMeta] = useState<DataSource[]>([]);
+
   useEffect(() => {
     Promise.all(
       DATA_FILES.map(async ({ url, sourceUrl }) => {
         try {
           const res = await cachedFetch(url);  // fetchCache: partilhado com KIDSdataLoader
-          if (!res.ok) return [] as Entry[];
+          if (!res.ok) {
+            setFileMeta(prev => [...prev, { path: url, status: "error", error: `HTTP ${res.status}`, group: "doral" }]);
+            return [] as Entry[];
+          }
           const raw: RawGG = await res.json();
-          return normalizeFile(raw, sourceUrl);
-        } catch {
+          const entries = normalizeFile(raw, sourceUrl);
+          setFileMeta(prev => [...prev, { path: url, status: "loaded", count: entries.length, group: "doral" }]);
+          return entries;
+        } catch (e) {
+          setFileMeta(prev => [...prev, { path: url, status: "error", error: String(e), group: "doral" }]);
           return [] as Entry[];
         }
       })
@@ -429,12 +438,14 @@ function Content() {
 
   return (
     <KidsLinkCtx.Provider value={kidsMap}>
+    <DataSourcesProvider tournaments={[]}>
     <div className="tourn-layout">
 
       {/* Toolbar */}
       <Toolbar>
         <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
         <ToolbarTitle>🇺🇸 Doral</ToolbarTitle>
+        <DataSourcesChip sources={fileMeta} />
         {cur && <ToolbarMeta>📍 Doral Golf Resort</ToolbarMeta>}
         {cur && (() => {
           const nR = Math.max(...cur.players.map(p => p.rounds.length));
@@ -547,6 +558,7 @@ function Content() {
 
       </div>
     </div>
+    </DataSourcesProvider>
     </KidsLinkCtx.Provider>
   );
 }

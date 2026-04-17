@@ -213,16 +213,26 @@ export function fmtDataInscricao(s: string | null): string {
   return s.replace(/^\d{4}\//, "").replace("/", "/");
 }
 
-/** Calcula se jogador está no 1º ou 2º ano do escalão */
-export function anoEscalao(dob: string, escalao: string): "1A" | "2A" | null {
+/** Calcula se jogador está no 1º ou 2º ano do escalão, relativo ao ano do torneio
+ *  (ou ao ano actual, se não for fornecida data). Regra FPG: idade no ano = year - yearOfBirth.
+ *  Sub-N tem dois anos: 1A = (N-1) anos no ano; 2A = N anos no ano (último ano). */
+export function anoEscalao(dob: string, escalao: string, dateOrYear?: string | number | null): "1A" | "2A" | null {
   if (!dob) return null;
-  const anoNasc = parseInt(dob.slice(0, 4));
-  const idadeMax = parseInt(escalao.replace("Sub-", ""));
+  const anoNasc = parseInt(String(dob).slice(0, 4));
+  const idadeMax = parseInt(String(escalao).replace(/[^0-9]/g, ""));
   if (isNaN(anoNasc) || isNaN(idadeMax)) return null;
-  return anoNasc === (new Date().getFullYear() - idadeMax) ? "2A" : "1A";
+  const yearRef = dateOrYear == null
+    ? new Date().getFullYear()
+    : typeof dateOrYear === "number"
+      ? dateOrYear
+      : parseInt(String(dateOrYear).slice(0, 4));
+  if (isNaN(yearRef)) return null;
+  return anoNasc === (yearRef - idadeMax) ? "2A" : "1A";
 }
 
-/** Idade completa (em anos) do jogador à data fornecida. Retorna null se inválido. */
+/** Idade completa (em anos) do jogador à data fornecida. Retorna null se inválido.
+ *  NOTA: Esta é a idade REAL/exacta, baseada em dias. Para o escalão FPG usa `escalaoAtDate`,
+ *  que segue a regra year-based (year − yearOfBirth). */
 export function ageAtDate(dob: string | null | undefined, date: string | null | undefined): number | null {
   if (!dob || !date) return null;
   const d = new Date(dob), t = new Date(date);
@@ -233,16 +243,36 @@ export function ageAtDate(dob: string | null | undefined, date: string | null | 
   return age >= 0 ? age : null;
 }
 
-/** Escalão FPG na data do torneio, calculado a partir da data de nascimento.
- *  Retorna "Sub 10" / "Sub 12" / ... ou null se inputs inválidos. */
-export function escalaoAtDate(dob: string | null | undefined, date: string | null | undefined): string | null {
-  const age = ageAtDate(dob, date);
-  if (age == null) return null;
-  if (age <= 10) return "Sub 10";
-  if (age <= 12) return "Sub 12";
-  if (age <= 14) return "Sub 14";
-  if (age <= 16) return "Sub 16";
-  if (age <= 18) return "Sub 18";
+/** Escalão FPG no ano do torneio, calculado a partir da data de nascimento.
+ *
+ *  Regra FPG (confirmada): o escalão é atribuído no início do ano civil e mantém-se
+ *  durante esse ano. É baseado na **idade que o jogador faz no ano do torneio**, ou seja
+ *  `idadeNoAno = anoTorneio − anoNascimento` (NÃO a idade exacta à data do torneio).
+ *
+ *  Exemplo: jogador nascido em Dezembro de 2015, torneio em Fevereiro de 2026.
+ *    idade exacta (errado): 10 anos → "Sub 10" ❌
+ *    idadeNoAno FPG:         2026−2015 = 11 → "Sub 12" ✅
+ *
+ *  `date` pode ser "YYYY-MM-DD", "YYYY", ou um number (ano). Só o ano é usado.
+ *  Retorna "Sub 10" / "Sub 12" / ... ou null se inputs inválidos.
+ *
+ *  ⚠ Esta é a fonte de verdade para a atribuição de escalão. Todos os locais que
+ *  mostrem ou filtrem por escalão devem usar esta função com o ano do torneio. */
+export function escalaoAtDate(
+  dob: string | null | undefined,
+  date: string | number | null | undefined
+): string | null {
+  if (!dob || date == null) return null;
+  const anoNasc = parseInt(String(dob).slice(0, 4));
+  const anoTorn = typeof date === "number" ? date : parseInt(String(date).slice(0, 4));
+  if (isNaN(anoNasc) || isNaN(anoTorn)) return null;
+  const idade = anoTorn - anoNasc;
+  if (idade < 0) return null;
+  if (idade <= 10) return "Sub 10";
+  if (idade <= 12) return "Sub 12";
+  if (idade <= 14) return "Sub 14";
+  if (idade <= 16) return "Sub 16";
+  if (idade <= 18) return "Sub 18";
   return "Sub 24";
 }
 

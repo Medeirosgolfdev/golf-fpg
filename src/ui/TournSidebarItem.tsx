@@ -12,6 +12,7 @@ import {
   ManuelPill, ClubePill, NacionalPill, PillBadge,
 } from "./PillBadge";
 import { shortDateSlash } from "../utils/format";
+import { FileBadge } from "./DataSources";
 
 export const SSERRA_CCODE = "007";
 
@@ -47,6 +48,9 @@ export interface SidebarItemTournament {
   players: { fedCode?: string; fed?: string; name?: string; nholes?: number; par?: number[]; roundScores?: unknown[] }[];
   pill?: string;
   _isSynthetic?: boolean; _subRounds?: unknown[]; _clubesEsc?: string;
+  /** Caminho do ficheiro JSON de onde este torneio veio — mostrado como pill discreto.
+   *  Hover: caminho completo. Clique direito: lista de torneios desse ficheiro. */
+  _sourceFile?: string;
 }
 
 export interface TournSidebarItemProps {
@@ -135,12 +139,15 @@ export function TournSidebarItem({ t, isActive, onClick, accentColor, extraPills
       {/* Footer extra (conteúdo específico de cada página, ex: barra de inscritos USKids) */}
       {footer}
 
-      {/* Linha 4: data + nº jog */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <span style={{ fontSize: 11, color: "var(--text-muted)" }}>{shortDate(t.date)}</span>
-        {(t.playerCount ?? 0) > 0 && (
-          <span style={{ fontSize: 11, color: "var(--text-muted)" }}>{t.playerCount} jog</span>
-        )}
+      {/* Linha 4: data + nº jog + origem do ficheiro */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 6 }}>
+        <span style={{ fontSize: 11, color: "var(--text-muted)", flexShrink: 0 }}>{shortDate(t.date)}</span>
+        <div style={{ display: "flex", alignItems: "center", gap: 4, flexShrink: 0 }}>
+          {t._sourceFile && <FileBadge path={t._sourceFile} />}
+          {(t.playerCount ?? 0) > 0 && (
+            <span style={{ fontSize: 11, color: "var(--text-muted)" }}>{t.playerCount} jog</span>
+          )}
+        </div>
       </div>
     </div>
   );

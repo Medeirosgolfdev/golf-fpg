@@ -16,7 +16,7 @@ import type { FpgDraw } from "../data/nacional2026Loader";
 import { MANUEL_FED } from "../constants/manuel";
 import { TournPName, TeeDot } from "./tournamentPrimitives";
 import type { PlayersDB } from "./tournamentPrimitives";
-import { EscPill } from "./PillBadge";
+import { EscPill, YearPill } from "./PillBadge";
 import { useFedCountries, CountryFlag } from "./InscricoesComponents";
 import { norm, fmtHcp, ageAtDate, escalaoAtDate } from "../utils/format";
 import { formatPlayerName } from "../utils/playerUtils";
@@ -81,12 +81,31 @@ export default function DrawTab({
       escHist: string | null;
     }> = [];
     let idx = 0;
+    // Heurística: o scraper do draw às vezes mete o fed no campo `clube` (só dígitos 4-6 chars).
+    // Quando isto acontece: reaproveitar como fed (se fed ainda não tem valor) e limpar clube.
+    const looksLikeFed = (s: string | undefined): boolean => !!s && /^\d{4,6}$/.test(s.trim());
+
     for (const g of (draw.groups || [])) {
       for (const p of g.players) {
         idx++;
         const nomeFormatted = formatPlayerName(p.nome || "");
-        const fed = nameToFed.get(norm(p.nome)) || nameToFed.get(norm(nomeFormatted)) || null;
+        // Obter fed: (a) via match de nome no playersDB, (b) via campo clube se parecer fed
+        let fed = nameToFed.get(norm(p.nome)) || nameToFed.get(norm(nomeFormatted)) || null;
+        let clubeRaw = p.clube || "";
+        if (!fed && looksLikeFed(clubeRaw)) {
+          fed = clubeRaw.trim();
+          clubeRaw = "";
+        } else if (looksLikeFed(clubeRaw)) {
+          // fed já conhecido por nome; clube está a conter fed (erro scraper) → limpar
+          clubeRaw = "";
+        }
         const bd = fed && playersDB ? (playersDB[fed] as any) : undefined;
+        // Preferir clube do playersDB (dados curados); cair para clubeRaw só se playersDB
+        // não tiver info útil para este jogador.
+        const clubeFromDB = bd?.club
+          ? (typeof bd.club === "string" ? bd.club : (bd.club.short || bd.club.name || ""))
+          : "";
+        const clube = clubeFromDB || clubeRaw || "";
         const hcp = bd?.hcpExact ?? bd?.hcp ?? null;
         const dob: string | undefined = bd?.dob;
         const dobYear = dob ? parseInt(dob.slice(0, 4), 10) : null;
@@ -97,7 +116,7 @@ export default function DrawTab({
           startHole: g.startHole,
           tee: g.tee,
           nome: nomeFormatted,
-          clube: p.clube || "",
+          clube,
           fed,
           hcp,
           dob,
@@ -163,8 +182,13 @@ export default function DrawTab({
             <td className="lb-club" title={p.clube}>{p.clube || "–"}</td>
             <td className="lb-hcp">{p.hcp != null ? fmtHcp(p.hcp) : "–"}</td>
             <td className="lb-tee"><TeeDot teeName={p.tee || teeName} /></td>
-            <td className="fs-11 mono muted" title={p.dob ? `${p.dob} (${age ?? "?"} anos à data)` : ""} style={{ textAlign: "center", padding: "6px 8px" }}>
-              {p.dobYear != null ? (age != null ? `${p.dobYear} (${age})` : String(p.dobYear)) : "–"}
+            <td title={p.dob ? `${p.dob} (${age ?? "?"} anos à data)` : ""} style={{ textAlign: "center", padding: "6px 8px", whiteSpace: "nowrap" }}>
+              {p.dobYear != null ? (
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+                  <YearPill year={p.dobYear} />
+                  {age != null && <span className="muted fs-10">({age})</span>}
+                </span>
+              ) : <span className="muted">–</span>}
             </td>
           </>
         ),

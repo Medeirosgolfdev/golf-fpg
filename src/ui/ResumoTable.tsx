@@ -1,7 +1,7 @@
 import React, { useMemo, useCallback, useState } from "react";
 import { useSort } from "../hooks/useSort";
 import { sdClassByHcp } from "../utils/scoreDisplay";
-import { fmtDateShort, fmtHcp } from "../utils/format";
+import { fmtDateShort, fmtHcp, escalaoAtDate } from "../utils/format";
 import { escPillCls } from "../utils/playerUtils";
 import { calcAGS, expectedSD9 } from "../utils/whsCalc";
 import { CrossSeasonTable, SortTh as _CSortTh } from "./CrossSeasonTable";
@@ -332,29 +332,46 @@ export function ResumoTable(props: {
     for (const t of sorted) {
       if (t._roundLabel === "Resumo") totalKeys.add(mkKey(t));
     }
+    /**
+     * Resolve o escalão do jogador para esta tabela.
+     * Prioridade (regra FPG year-based):
+     *   1) escalaoAtDate(dob, t.date)  — verdade matemática quando há DOB
+     *   2) t.escalao                   — escalão explícito do torneio (Challenge)
+     *   3) escalão histórico gravado no próprio registo (p.escalao)
+     *   4) challEscLookup (Challenge lookup local — legacy, sem ano)
+     *   5) globalEscLookup (actual — último recurso)
+     */
+    const resolveRowEsc = (p: Player, t: Tournament): string => {
+      if (p.fed && t.date) {
+        const dob = (playersDB[p.fed] as any)?.dob;
+        if (dob) {
+          const calc = escalaoAtDate(dob, t.date);
+          if (calc) return calc;
+        }
+      }
+      if (t.escalao) return t.escalao;
+      const historic = (p as any).escalao;
+      if (historic) return String(historic).replace("-", " ").replace(/sub(\d)/i, "Sub $1").trim();
+      if (p.fed && challEscLookup.has(p.fed)) return challEscLookup.get(p.fed)!;
+      if (p.fed && globalEscLookup?.has(p.fed)) return globalEscLookup.get(p.fed)!;
+      if (p.fed && playersDB[p.fed]?.escalao) {
+        const raw = playersDB[p.fed].escalao!;
+        return raw.startsWith("Sub") ? raw.replace("-", " ") : raw;
+      }
+      return "";
+    };
     for (const t of sorted) {
       const tKey = mkKey(t);
       const isTotal = totalKeys.has(tKey);
       for (const p of t.players) {
         const pKey = p.fed || p.name;
         if (!map.has(pKey)) {
-          let esc = t.escalao || "";
-          if (!esc && p.fed) {
-            if (globalEscLookup?.has(p.fed)) {
-              esc = globalEscLookup.get(p.fed)!;
-            } else if (playersDB[p.fed]?.escalao) {
-              const raw = playersDB[p.fed].escalao!;
-              esc = raw.startsWith("Sub") ? raw.replace("-", " ") : raw;
-            } else if (challEscLookup.has(p.fed)) {
-              esc = challEscLookup.get(p.fed)!;
-            }
-          }
           map.set(pKey, {
             pKey,
             name: p.name,
             club: p.club,
             fed: p.fed || "",
-            escalao: esc,
+            escalao: resolveRowEsc(p, t),
             hcp: p.hcpExact ?? null,
             results: new Map(),
             jogos: 0,
@@ -368,11 +385,8 @@ export function ResumoTable(props: {
         }
         const row = map.get(pKey)!;
         if (p.hcpExact != null) row.hcp = p.hcpExact;
-        if (!row.escalao && t.escalao) row.escalao = t.escalao;
-        if (!row.escalao && p.fed && globalEscLookup?.has(p.fed))
-          row.escalao = globalEscLookup.get(p.fed)!;
-        if (!row.escalao && p.fed && challEscLookup.has(p.fed))
-          row.escalao = challEscLookup.get(p.fed)!;
+        // Se ainda não temos escalão, tenta novamente com este torneio (pode ter dob visível)
+        if (!row.escalao) row.escalao = resolveRowEsc(p, t);
         if (isDNS(p)) {
           row.results.set(tKey, "dns");
         } else {

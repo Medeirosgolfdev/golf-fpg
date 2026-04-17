@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
+import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine,
   ScatterChart, Scatter, ResponsiveContainer, Cell, LabelList,
@@ -1138,10 +1139,24 @@ export default function NacionaisPage() {
     return feds.size;
   }, [torneios, nossosFedSet]);
 
+  // Painel de ficheiros de dados
+  const allSources: DataSource[] = [
+    { path: "/player-stats.json", status: "loaded", group: "stats" },
+    { path: "/data/inscricoes_nacionais.json", status: "loaded", group: "inscrições" },
+    ...torneios.map<DataSource>(t => ({
+      path: `/api/inscricoes?tcode=${t.tcode}`,
+      status: t._status === "ok" ? "loaded" : t._status === "loading" ? "loading" : t._status === "error" ? "error" : "loading",
+      count: t.totalInscritos,
+      error: t.fetchError,
+      group: "api inscrições",
+    })),
+  ];
   return (
+    <DataSourcesProvider tournaments={[]}>
     <div className="jogadores-page nac-page">
       <Toolbar>
         <ToolbarTitle>🏆 Nacionais Jovens</ToolbarTitle>
+        <DataSourcesChip sources={allSources} />
         <ToolbarSep />
         {([
           { key: "inscricoes", label: "Inscrições" },
@@ -1200,6 +1215,7 @@ export default function NacionaisPage() {
         }
       </div>
     </div>
+    </DataSourcesProvider>
   );
 }
 

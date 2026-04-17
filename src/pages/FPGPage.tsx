@@ -20,7 +20,7 @@ import { useAppContext } from "../context/AppContext";
 import { loadPlayers } from "../data/loader";
 import { buildEscLookup, type EscLookup, escCls, escPillCls, formatPlayerName, normalizePlayer } from "../utils/playerUtils";
 import { TORNEIOS_CONFIG } from "../constants/config";
-import { PILL_SSERRA, SIDEBAR_ACCENT, EscPill, PillBadge, RoundPill } from "../ui/PillBadge";
+import { PILL_SSERRA, SIDEBAR_ACCENT, EscPill, PillBadge, RoundPill, NineHPill, SserraPill, NacionalPill, JuniorPill, ClubePill, ManuelPill, escTabStyle } from "../ui/PillBadge";
 import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
 import SexBadge from "../ui/SexBadge";
 import SidebarToggle from "../ui/SidebarToggle";
@@ -60,6 +60,7 @@ import { InscricoesPanel, buildJovensGroups, TERMOS_COMPETICAO, type JovensGroup
 import { loadFpgAdmissionsDraws, indexFpgAdmissionsDraws, NACIONAL_2026_META, NACIONAL_2026_TCODES, type FpgTournamentData } from "../data/nacional2026Loader";
 import AdmissionsTab from "../ui/AdmissionsTab";
 import DrawTab from "../ui/DrawTab";
+import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
 // Re-exports para consumidores que ainda importam de FPGPage
 export type { RoundScore, Player, Tournament, ScorecardOptions } from "../data/fpgTypes";
 export { expandMultiRound } from "../data/fpgUtils";
@@ -758,8 +759,28 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
         <div className="detail-sub">
           {tournament.campo && <span className="muted">📍 {tournament.campo}</span>}
           <span className="muted ml-8" >{fmtDate(tournament.date)}</span>
-          <span className="chip ml-8" >
-            {tournament.playerCount} jog{nRounds > 1 && <> · <RoundPill nR={nRounds} /></>} · {nholes}h · Par {parTotal}
+          {/* Pills individuais — reutilizam os componentes globais (consistência com a sidebar).
+              Ordem: stats básicos (jog, ronda, 9H, par) → características do torneio (escalão,
+              NACIONAL, JUNIOR, SSerra, Clube, Manuel). */}
+          <span className="gap-4 ml-8" style={{ display: "inline-flex", alignItems: "center", flexWrap: "wrap" }}>
+            {tournament.playerCount != null && (
+              <span className="p p-sm" style={{ background: "var(--bg-muted)", color: "var(--text-2)", border: "1px solid var(--border)" }}>
+                {tournament.playerCount} jog
+              </span>
+            )}
+            {nRounds > 1 && <RoundPill nR={nRounds} />}
+            {nholes <= 9 && <NineHPill />}
+            {parTotal > 0 && (
+              <span className="p p-sm" style={{ background: "var(--bg-muted)", color: "var(--text-2)", border: "1px solid var(--border)" }}>
+                Par {parTotal}
+              </span>
+            )}
+            {tournament.escalao && <EscPill esc={tournament.escalao} />}
+            {/NACIONAL/i.test(tournament.name || "") && <NacionalPill />}
+            {/JUNIOR|J[ÚU]NIOR/i.test(tournament.name || "") && <JuniorPill />}
+            {tournament.ccode === SSERRA_CCODE && <SserraPill />}
+            {tournament.ccode !== SSERRA_CCODE && <ClubePill clube={tournament.clube} ccode={tournament.ccode} />}
+            {tournament.players.some(p => isManuel(p)) && <ManuelPill />}
           </span>
 
         </div>
@@ -860,6 +881,7 @@ function Content() {
   const [seriesFilter, setSeriesFilter] = useState<"" | "circuit" | "santo" | "clubes" | "jovens">(startInscritos ? "jovens" : ""); // filtro de série dentro de Torneios
   const [yearFilter, setYearFilter]    = useState<string | null>(null);
   const [filterManuel, setFilterManuel] = useState(true);
+  const [searchQuery, setSearchQuery]  = useState("");  // filtro de texto: nome ou campo/clube
   const [escLookup, setEscLookup] = useState<EscLookup>(new Map());
   const [playersDB, setPlayersDB] = useState<PlayersDB>({});
 
@@ -878,6 +900,13 @@ function Content() {
   const [jovensGroupKey, setJovensGroupKey]        = useState<string | null>(null);
   const [jovensEscIdx, setJovensEscIdx]            = useState<number>(0);
   const [jovensShowInscricoes, setJovensShowInscricoes] = useState(startInscritos);
+
+  // ── Sources secundárias (para o painel DataSourcesChip) ─────────────────
+  //   Cada secção (clubes, jovens, admissions) regista ficheiros tentados/lidos.
+  //   fileMeta cobre apenas os pull-torneios; estes cobrem o resto.
+  const [clubesMeta, setClubesMeta] = useState<DataSource[]>([]);
+  const [jovensMeta, setJovensMeta] = useState<DataSource[]>([]);
+  const [admissionsMeta, setAdmissionsMeta] = useState<DataSource[]>([]);
 
   const { melhorias } = useAppContext();
 
@@ -967,20 +996,31 @@ function Content() {
             if (escalao && /18/i.test(escalao)) return "sub18";
             return "sub14";
           };
+          const clubesMetaLocal: DataSource[] = [];
           const clubesResults = await Promise.all(CLUBES_FILES_MAIN.map(async ({ url, year }) => {
             try {
               const r = await fetch(url);
-              if (!r.ok) return [];
+              if (!r.ok) {
+                clubesMetaLocal.push({ path: url, status: "error", error: `HTTP ${r.status}`, group: "clubes" });
+                return [];
+              }
               const d: DriveData = await r.json();
-              return (d.tournaments || []).map(t => ({
+              const rows = (d.tournaments || []).map(t => ({
                 ...t,
                 series: "clubes" as const,
                 _clubesEsc: resolveEscKeyMain((t as any).escalao),
                 _clubesYear: year,
+                _sourceFile: url,
                 players: t.players.map(normalizePlayer),
               }));
-            } catch { return []; }
+              clubesMetaLocal.push({ path: url, status: "loaded", count: rows.length, source: d.source, lastUpdated: d.lastUpdated, group: "clubes" });
+              return rows;
+            } catch (e) {
+              clubesMetaLocal.push({ path: url, status: "error", error: String(e), group: "clubes" });
+              return [];
+            }
           }));
+          if (alive) setClubesMeta(clubesMetaLocal);
           const clubesFlat = clubesResults.flat();
           // Deduplicar por tcode
           const seen = new Map<string, Tournament>();
@@ -1061,9 +1101,9 @@ function Content() {
     return () => { alive = false; };
   }, [navMode, seriesFilter, clubesLoaded]);
 
-  // ── Loader Jovens (lazy — só quando activado) ─────────────────────────────
+  // ── Loader Jovens (arranca automaticamente no mount, para aparecerem em "Todos") ──
   useEffect(() => {
-    if (!(navMode === "torneios" && seriesFilter === "jovens") || jovensLoaded) return;
+    if (jovensLoaded) return;
     let alive = true;
     setJovensLoading(true);
     const JOVENS_FILES = [
@@ -1073,23 +1113,42 @@ function Content() {
       { url: "/data/jovens_2023.json", year: "2023" },
       { url: "/data/jovens_2022.json", year: "2022" },
     ];
+    const jovensMetaLocal: DataSource[] = [];
     Promise.all([
       ...JOVENS_FILES.map(async ({ url, year }) => {
         try {
           const r = await fetch(url);
-          if (!r.ok) return [];
+          if (!r.ok) {
+            jovensMetaLocal.push({ path: url, status: "error", error: `HTTP ${r.status}`, group: "jovens" });
+            return [];
+          }
           const d: DriveData = await r.json();
-          return (d.tournaments || []).map(t => ({
+          const rows = (d.tournaments || []).map(t => ({
             ...t, _jovensYear: year, _sourceFile: url,
             players: t.players.map(normalizePlayer),
           }));
-        } catch { return []; }
+          jovensMetaLocal.push({ path: url, status: "loaded", count: rows.length, source: d.source, lastUpdated: d.lastUpdated, group: "jovens" });
+          return rows;
+        } catch (e) {
+          jovensMetaLocal.push({ path: url, status: "error", error: String(e), group: "jovens" });
+          return [];
+        }
       }),
       // Carrega também admissions + draws (107 torneios) para enriquecer existentes
       // e injectar sinteticamente os 10 Nacional 2026 (que ainda não estão em jovens_2026).
       loadFpgAdmissionsDraws().catch(() => null),
     ]).then(all => {
       if (!alive) return;
+      const admLoaded = all[all.length - 1];
+      setAdmissionsMeta([{
+        path: "/data/fpg-admissions-draws.json",
+        status: admLoaded ? "loaded" : "error",
+        count: admLoaded ? (admLoaded.tournaments?.length || 0) : undefined,
+        source: (admLoaded as any)?.source,
+        lastUpdated: (admLoaded as any)?.scrapedAt,
+        group: "admissions",
+      }]);
+      setJovensMeta(jovensMetaLocal);
       const admDrawsFile = all[all.length - 1] as Awaited<ReturnType<typeof loadFpgAdmissionsDraws>> | null;
       const admDrawsIdx = admDrawsFile ? indexFpgAdmissionsDraws(admDrawsFile) : new Map<string, FpgTournamentData>();
       const tournaments = (all.slice(0, -1) as any[]).flat() as Tournament[];
@@ -1143,19 +1202,31 @@ function Content() {
       setJovensLoading(false);
     });
     return () => { alive = false; };
-  }, [navMode, seriesFilter, jovensLoaded]);
+  }, [jovensLoaded]);
+
+  // Match do filtro de pesquisa por nome/campo/clube (normalizado, case+accent insensitive)
+  // Declarado ANTES dos useMemo que o consomem (ordem importante no JS — temporal dead zone).
+  const searchTerm = searchQuery.trim().toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "");
+  const matchesSearch = (t: Tournament): boolean => {
+    if (!searchTerm) return true;
+    const fields = [t.name, t.campo, (t as any).clube, t.tcode, t.ccode]
+      .map(v => String(v ?? "").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, ""));
+    return fields.some(f => f.includes(searchTerm));
+  };
 
   // Lista filtrada por escalão dentro de Clubes, agrupada por ano
   const clubesList = useMemo(
     () => clubesTournaments
       .filter(t => !filterManuel || t.players.some(p => isManuel(p)))
       .filter(t => !yearFilter || ((t as any)._clubesYear ?? t.date?.substring(0, 4)) === yearFilter)
+      .filter(t => matchesSearch(t))
       .sort((a, b) => {
         const yCmp = ((b as any)._clubesYear ?? "").localeCompare((a as any)._clubesYear ?? "");
         if (yCmp !== 0) return yCmp;
         return ((a as any)._clubesEsc ?? "").localeCompare((b as any)._clubesEsc ?? "");
       }),
-    [clubesTournaments, filterManuel, yearFilter]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [clubesTournaments, filterManuel, yearFilter, searchTerm]
   );
   const clubesByYear = useMemo(() => {
     const m: Record<string, Tournament[]> = {};
@@ -1180,9 +1251,11 @@ function Content() {
     };
     const filtered = jovensTournaments
       .filter(t => !filterManuel || hasManuel(t))
-      .filter(t => !yearFilter || ((t as any)._jovensYear ?? t.date?.substring(0, 4)) === yearFilter);
+      .filter(t => !yearFilter || ((t as any)._jovensYear ?? t.date?.substring(0, 4)) === yearFilter)
+      .filter(t => matchesSearch(t));
     return buildJovensGroups(filtered);
-  }, [jovensTournaments, filterManuel, yearFilter]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [jovensTournaments, filterManuel, yearFilter, searchTerm]);
 
   const jovensByYear = useMemo(() => {
     const m: Record<string, JovensGroup[]> = {};
@@ -1196,8 +1269,49 @@ function Content() {
   const curJovensGroup = jovensGroups.find(g => g.key === jovensGroupKey) ?? jovensGroups[0] ?? null;
   const curJovens = curJovensGroup?.entries[jovensEscIdx] ?? curJovensGroup?.entries[0] ?? null;
 
-  const displayList = useMemo(() => buildDisplayList(tournaments), [tournaments]);
+  /** Lista unificada que alimenta o tab "Todos":
+   *  - tournaments (pull-torneios + clubes merged no loader principal)
+   *  - jovensTournaments (jovens_YYYY.json + Nacional 2026 sintético) — dedup por ccode/tcode
+   *  Clubes (seriesFilter === "clubes") mantém sidebar própria, mas também fazem parte de `tournaments`. */
+  const displayList = useMemo(() => {
+    const base: Tournament[] = [...tournaments];
+    const seen = new Set<string>(base.map(t => (t.ccode || "?") + "/" + String(t.tcode ?? "?")));
+    for (const j of jovensTournaments) {
+      const k = (j.ccode || "?") + "/" + String(j.tcode ?? "?");
+      if (seen.has(k)) continue;
+      seen.add(k);
+      base.push(j);
+    }
+    return buildDisplayList(base);
+  }, [tournaments, jovensTournaments]);
   const cur = displayList[selected];
+
+  /** Lista de torneios indexados pelo seu ficheiro de origem — alimenta o
+   *  popover do clique-direito no FileBadge. Inclui clubes e jovens (que têm
+   *  _sourceFile próprio) além dos pull-torneios. */
+  const providerTournaments = useMemo(() => {
+    const base = [...tournaments, ...jovensTournaments];
+    return base.map(t => ({
+      _sourceFile: (t as any)._sourceFile,
+      name: t.name,
+      date: t.date,
+      tcode: t.tcode,
+      ccode: t.ccode,
+    }));
+  }, [tournaments, jovensTournaments]);
+
+  /** Lista de todos os ficheiros lidos pela página — alimenta o DataSourcesChip. */
+  const allSources = useMemo<DataSource[]>(() => {
+    const main: DataSource[] = fileMeta.map(m => ({
+      path: m.file,
+      status: "loaded",
+      count: m.count,
+      source: m.source,
+      lastUpdated: m.lastUpdated,
+      group: "main",
+    }));
+    return [...main, ...clubesMeta, ...jovensMeta, ...admissionsMeta];
+  }, [fileMeta, clubesMeta, jovensMeta, admissionsMeta]);
 
   // Anos disponíveis no modo Torneios
   const availYears = useMemo(() => {
@@ -1208,20 +1322,20 @@ function Content() {
   const activeYear = yearFilter ?? null;
   const inYear = (t: Tournament) => !activeYear || (t.date || "").startsWith(activeYear);
 
-  // Agrupamento por mês — todos os torneios incluindo Clubes (usados em seriesFilter === "")
+  // Agrupamento por mês — todos os torneios (pull + clubes + jovens) — alimenta o tab "Todos"
   const { groups: monthGroups, groupKeys: monthKeys } = useMemo(() => {
     const g: Record<string, Tournament[]> = {};
     for (const t of displayList) {
       if (!inYear(t)) continue;
       if (filterManuel && !t.players.some(p => isManuel(p))) continue;
-      if (seriesFilter === "clubes") continue; // clubes tem sidebar própria
-      if (seriesFilter === "jovens") continue; // jovens tem sidebar própria
+      if (!matchesSearch(t)) continue;
       const key = t.date ? t.date.substring(0, 7) : "?";
       if (!g[key]) g[key] = [];
       g[key].push(t);
     }
     return { groups: g, groupKeys: Object.keys(g).sort().reverse() };
-  }, [displayList, filterManuel, activeYear, seriesFilter]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [displayList, filterManuel, activeYear, searchTerm]);
 
   // Lista apenas PJA (para o modo circuito) — exclui explicitamente SSerra
   const pjaList = useMemo(
@@ -1239,13 +1353,15 @@ function Content() {
     for (const t of pjaList) {
       if (!inYear(t)) continue;
       if (filterManuel && !t.players.some(p => isManuel(p))) continue;
+      if (!matchesSearch(t)) continue;
       const yr = t.date ? t.date.substring(0, 4) : "?";
       if (!byYear[yr]) byYear[yr] = [];
       byYear[yr].push(t);
     }
     const years = Object.keys(byYear).sort().reverse();
     return { byYear, years };
-  }, [pjaList, activeYear, filterManuel]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pjaList, activeYear, filterManuel, searchTerm]);
 
   // ── Santo da Serra ──
   const santoList = useMemo(
@@ -1257,13 +1373,15 @@ function Content() {
     for (const t of santoList) {
       if (!inYear(t)) continue;
       if (filterManuel && !t.players.some(p => isManuel(p))) continue;
+      if (!matchesSearch(t)) continue;
       const yr = t.date ? t.date.substring(0, 4) : "?";
       if (!byYear[yr]) byYear[yr] = [];
       byYear[yr].push(t);
     }
     const years = Object.keys(byYear).sort().reverse();
     return { byYear, years };
-  }, [santoList, activeYear, filterManuel]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [santoList, activeYear, filterManuel, searchTerm]);
 
   function renderSidebarItem(t: Tournament) {
     const isClubesItem = (t as any)._clubesEsc !== undefined;
@@ -1304,6 +1422,7 @@ function Content() {
   }
 
   return (
+    <DataSourcesProvider tournaments={providerTournaments}>
     <div className="tourn-layout">
 
       {/* ── Toolbar mobile-first: scroll horizontal em vez de grid ── */}
@@ -1313,6 +1432,46 @@ function Content() {
         <Toolbar>
           <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />
           <ToolbarTitle>🏌️ FPG</ToolbarTitle>
+          <DataSourcesChip sources={allSources} />
+          {!loading && navMode === "torneios" && (<>
+            <ToolbarSep />
+            {/* Search — antes dos botões Torneios/Ranking, como pediste */}
+            <div style={{ flexShrink: 0, position: "relative", display: "inline-flex", alignItems: "center" }}>
+              <span aria-hidden="true" style={{
+                position: "absolute", left: 8, fontSize: 11, color: "var(--text-muted)", pointerEvents: "none",
+              }}>🔎</span>
+              <input
+                type="search"
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                placeholder="nome, campo, clube..."
+                aria-label="Pesquisar torneios por nome, campo ou clube"
+                style={{
+                  fontSize: 12,
+                  padding: "4px 22px 4px 24px",
+                  width: 200,
+                  border: "1px solid var(--border)",
+                  borderRadius: 5,
+                  background: "var(--bg-card)",
+                  color: "var(--text)",
+                  outline: "none",
+                }}
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  aria-label="Limpar pesquisa"
+                  onClick={() => setSearchQuery("")}
+                  style={{
+                    position: "absolute", right: 2,
+                    background: "none", border: "none", cursor: "pointer",
+                    color: "var(--text-muted)", fontSize: 14, padding: "0 4px",
+                    lineHeight: 1,
+                  }}
+                >×</button>
+              )}
+            </div>
+          </>)}
           {!loading && (<>
             <ToolbarSep />
             {([
@@ -1362,10 +1521,10 @@ function Content() {
                                 : seriesFilter === "circuit" ? pjaByYear.years.reduce((s, y) => s + (pjaByYear.byYear[y]?.length ?? 0), 0)
                                 : seriesFilter === "clubes"  ? clubesList.length
                                 : seriesFilter === "jovens"  ? jovensGroups.length
-                                : activeYear
-                                  ? displayList.filter(t => (t.date || "").startsWith(activeYear)).length
-                                  : displayList.length;
-                    return <span className="chip shrink-0" >{count} torneios</span>;
+                                : monthKeys.reduce((s, k) => s + (monthGroups[k]?.length ?? 0), 0);  // "Todos" respeita search + year + manuel
+                    return <span className="chip shrink-0" title={searchTerm ? `Com filtro "${searchQuery}"` : undefined}>
+                      {count} torneio{count !== 1 ? "s" : ""}{searchTerm ? " ✓" : ""}
+                    </span>;
                   })()}
                   {seriesFilter !== "santo" && seriesFilter !== "clubes" && seriesFilter !== "jovens" && navMode === "torneios" && (
                     <span className="chip" style={{ flexShrink: 0, marginLeft: 4, background: "var(--bg-hover)" }}>
@@ -1673,23 +1832,39 @@ function Content() {
               <InscricoesPanel />
             ) : curJovensGroup ? (
               <>
-                {/* Tabs por escalão */}
-                {curJovensGroup.entries.length > 1 && (
-                  <div style={{ display: "flex", gap: 4, padding: "8px 12px 0", flexWrap: "wrap",
-                    borderBottom: "1px solid var(--border-light)", background: "var(--bg-card)" }}>
-                    {curJovensGroup.entries.map((e, ri) => (
-                      <button key={e.tcode + "_" + ri}
-                        className={"tourn-tab tourn-tab-sm" + (jovensEscIdx === ri ? " active" : " tourn-tab-muted")}
-                        onClick={() => setJovensEscIdx(ri)}
-                        style={{ marginBottom: 6 }}>
-                        {e.escalao ?? "Esc " + (ri + 1)}
-                        <span className="fs-10" style={{ marginLeft: 3, opacity: 0.7 }}>
-                          ({(e.playerCount || e.players.length)} jog)
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-                )}
+                {/* Tabs por escalão — fundo com a cor do escalão (tokens --esc-subN-*).
+                    Quando o grupo tem tanto M como F, border da cor do sexo (azul/rosa).
+                    Se o grupo tem só um sexo, sem border (não é preciso distinguir). */}
+                {curJovensGroup.entries.length > 1 && (() => {
+                  // Detectar sexo de cada entry
+                  const detectSex = (n: string): "M" | "F" | null =>
+                    /\bF\b|\bS\b|Feminino/i.test(n) ? "F"
+                    : /\bM\b|\bH\b|Masculino/i.test(n) ? "M"
+                    : null;
+                  const sexesInGroup = new Set(curJovensGroup.entries.map(e => detectSex(e.name || "")).filter(Boolean));
+                  const showSexBorder = sexesInGroup.size > 1;  // só se há M E F
+                  return (
+                    <div style={{ display: "flex", gap: 4, padding: "8px 12px 0", flexWrap: "wrap",
+                      borderBottom: "1px solid var(--border-light)", background: "var(--bg-card)" }}>
+                      {curJovensGroup.entries.map((e, ri) => {
+                        const active = jovensEscIdx === ri;
+                        const sex = showSexBorder ? detectSex(e.name || "") : null;
+                        const escStyle = escTabStyle(e.escalao, active, sex);
+                        return (
+                          <button key={e.tcode + "_" + ri}
+                            className="tourn-tab tourn-tab-sm"
+                            onClick={() => setJovensEscIdx(ri)}
+                            style={{ marginBottom: 6, ...escStyle }}>
+                            {e.escalao ?? "Esc " + (ri + 1)}
+                            <span className="fs-10" style={{ marginLeft: 3, opacity: 0.8 }}>
+                              ({(e.playerCount || e.players.length)} jog)
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  );
+                })()}
                 {curJovens
                   ? <TournamentDetail tournament={curJovens} escLookup={escLookup} playersDB={playersDB} />
                   : <div className="center-msg muted">Selecciona um torneio</div>
@@ -1709,6 +1884,7 @@ function Content() {
         </div>
       )}
     </div>
+    </DataSourcesProvider>
   );
 }
 

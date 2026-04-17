@@ -1,14 +1,19 @@
 /**
  * TournamentGrid — Cross-season tournament grid for Sub-12 players
+ *
+ * O escalão mostrado na coluna do jogador é calculado pela regra FPG year-based
+ * (`escalaoAtDate(dob, year)`), usando o ano do torneio mais recente do jogador
+ * visível na grelha. Isto evita mostrar "Sub-14" (escalão actual) num ranking
+ * histórico onde o jogador era Sub-10/12.
  */
 import React, { useMemo } from "react";
 import { useSort } from "../hooks/useSort";
-import { fmtToPar, fmtHcp, shortDateSlash } from "../utils/format";
+import { fmtToPar, fmtHcp, shortDateSlash, escalaoAtDate } from "../utils/format";
 import { SC, sdClassByHcp } from "../utils/scoreDisplay";
 import { CrossSeasonTable, SortTh as _CSortTh } from "./CrossSeasonTable";
 import PlayerLink from "./PlayerLink";
 import EmptyState from "./EmptyState";
-import { escPillCls, resolveEscFromLookup } from "../utils/playerUtils";
+import { escPillCls } from "../utils/playerUtils";
 import { isManuel, TournPName, type PlayersDB } from "./tournamentPrimitives";
 import type { Sub12Row, EscLookup } from "./driveTypes";
 
@@ -49,6 +54,25 @@ function TournamentGrid({
     | string;
   const { sortKey, sortDir, toggleSort: handleSort } = useSort<S12SortKey>("totalPts", "desc");
 
+  /** Escalão do jogador para a grelha: year-based no ano mais recente dos seus resultados.
+   *  Fallback para o escalão actual da playersDB se não houver DOB. */
+  const escalaoDeRow = React.useCallback((p: Sub12Row): string => {
+    const db = playersDB[p.fed];
+    const dob = (db as any)?.dob as string | undefined;
+    if (dob && p.results.length > 0) {
+      // Ano mais recente dos resultados do jogador
+      const mostRecentYear = p.results.reduce((max, r) => {
+        const y = parseInt(String(r.date).slice(0, 4));
+        return !isNaN(y) && y > max ? y : max;
+      }, 0);
+      if (mostRecentYear > 0) {
+        const calc = escalaoAtDate(dob, mostRecentYear);
+        if (calc) return calc;
+      }
+    }
+    return db?.escalao || "";
+  }, [playersDB]);
+
   const sorted = useMemo(() => {
     const mult = sortDir === "asc" ? 1 : -1;
     return [...rows].sort((a, b) => {
@@ -59,8 +83,8 @@ function TournamentGrid({
         case "fed":
           return mult * (a.fed || "").localeCompare(b.fed || "");
         case "escalao": {
-          const ea = playersDB[a.fed]?.escalao || "";
-          const eb = playersDB[b.fed]?.escalao || "";
+          const ea = escalaoDeRow(a);
+          const eb = escalaoDeRow(b);
           return mult * ea.localeCompare(eb, "pt");
         }
         case "club":
@@ -134,7 +158,7 @@ function TournamentGrid({
         }
       }
     });
-  }, [rows, sortKey, sortDir, playersDB]);
+  }, [rows, sortKey, sortDir, playersDB, escalaoDeRow]);
 
   // Mesmas constantes exactas do ResumoTable
 
@@ -320,8 +344,7 @@ function TournamentGrid({
       }
     >
       {sorted.map((p, idx) => {
-        const dbInfo = playersDB[p.fed] || {};
-        const escalao = dbInfo.escalao || "";
+        const escalao = escalaoDeRow(p);
         const cls = escPillCls(escalao);
         return (
           <tr
