@@ -216,8 +216,13 @@ type CacheEntry = {
 }
 type CacheFile = Record<string, CacheEntry>
 
-const CACHE_FILE   = join(process.cwd(), 'data', 'inscricoes_nacionais.json')
-const PUBLIC_CACHE = join(process.cwd(), 'public', 'data', 'inscricoes_nacionais.json')
+// FONTE ÚNICA DE VERDADE: public/data/inscricoes_nacionais.json.
+// Decisão 2026-04-17 (Via B): antes lia de `data/` e escrevia para ambos
+// → edições manuais em public/data/ eram sobrescritas. Agora tudo passa
+// pelo mesmo ficheiro — que também é o servido pelo Vite/Vercel ao cliente.
+// O antigo `data/inscricoes_nacionais.json` deixa de ser lido ou escrito;
+// pode ser apagado manualmente (fica como backup histórico, não ignorado).
+const CACHE_FILE = join(process.cwd(), 'public', 'data', 'inscricoes_nacionais.json')
 
 function readCache(): CacheFile {
   try {
@@ -244,15 +249,10 @@ function writeAtomic(target: string, content: string): void {
 function writeCache(data: CacheFile): void {
   const json = JSON.stringify(data, null, 2)
   try {
-    const dir = join(process.cwd(), 'data')
-    if (!existsSync(dir)) mkdirSync(dir, { recursive: true })
-    writeAtomic(CACHE_FILE, json)
-  } catch (e) { console.warn('[inscricoes] Erro a gravar data/:', e) }
-  try {
     const pubDir = join(process.cwd(), 'public', 'data')
     if (!existsSync(pubDir)) mkdirSync(pubDir, { recursive: true })
-    writeAtomic(PUBLIC_CACHE, json)
-    console.log('[inscricoes] public/data/ actualizado -- faz commit para publicar no Vercel')
+    writeAtomic(CACHE_FILE, json)
+    console.log('[inscricoes] public/data/inscricoes_nacionais.json actualizado -- faz commit para publicar no Vercel')
   } catch (e) { console.warn('[inscricoes] Erro a gravar public/data/:', e) }
 }
 
