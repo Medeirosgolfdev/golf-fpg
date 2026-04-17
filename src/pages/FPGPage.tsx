@@ -1171,8 +1171,15 @@ function Content() {
   const curClubesYear: string = (curClubes as any)?._clubesYear ?? curClubes?.date?.substring(0, 4) ?? "";
 
   const jovensGroups = useMemo(() => {
+    // Para torneios pré-jogo (ex: Nacional 2026 injectado sinteticamente com players: []),
+    // o Manuel só aparece em _admissions.players. Verificar ambos os sítios.
+    const hasManuel = (t: Tournament): boolean => {
+      if (t.players.some(p => isManuel(p))) return true;
+      const adm = (t as any)._admissions?.players as Array<{ fed?: string | null; nome?: string }> | undefined;
+      return !!adm?.some(p => isManuel({ name: p.nome, fed: p.fed ?? undefined }));
+    };
     const filtered = jovensTournaments
-      .filter(t => !filterManuel || t.players.some(p => isManuel(p)))
+      .filter(t => !filterManuel || hasManuel(t))
       .filter(t => !yearFilter || ((t as any)._jovensYear ?? t.date?.substring(0, 4)) === yearFilter);
     return buildJovensGroups(filtered);
   }, [jovensTournaments, filterManuel, yearFilter]);
