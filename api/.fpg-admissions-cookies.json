@@ -1,7 +1,7 @@
 {
-  "generated": "2026-04-15T22:35:00.000Z",
-  "source": "Firefox/Chrome 90 — scoring.fpg.pt/lists/tournAdmissions.aspx (user=admin)",
+  "generated": "2026-04-17T11:50:00.000Z",
+  "source": "Chrome 90 — scoring.fpg.pt/lists/ (user=admin, page=admissions, tcode=10941)",
   "host": "scoring.fpg.pt",
-  "cookieHeader": "ASP.NET_SessionId=dyuedjzjbdjksgjgg3r3eq5j; DG_Lists_URL=OriginalUrl=https%3a%2f%2fscoring.fpg.pt%3a443%2flists%2f1EntryPage.aspx%3fuser%3dadmin%26dt%3d15531%26page%3dadmissions%26hash%3d9e112f3acb12cf177a54ab9be063fa562173707a%26ccode%3d000%26tcode%3d10936%26callcontext%3ddirect",
-  "notes": "Cookies para scoring.fpg.pt/lists/* (page=admissions). Refrescar quando middleware /api/inscricoes começar a logar 'parser devolveu 0'."
+  "cookieHeader": "ASP.NET_SessionId=4dtyytq3etyjycibwqv1kr2v; DG_Lists_URL=OriginalUrl=https%3a%2f%2fscoring.fpg.pt%3a443%2flists%2f1EntryPage.aspx%3fuser%3dadmin%26dt%3d1750%26page%3dadmissions%26hash%3d0aac43808e25472947f2a1413b79182081ce6e74%26ccode%3d000%26tcode%3d10941%26callcontext%3ddirect",
+  "notes": "2 cookies para scoring.fpg.pt/lists/*. Diferente do .scoring-datagolf-cookies.json: ASP.NET_SessionId próprio (4dtyyt...) + DG_Lists_URL que aponta para scoring.fpg.pt:443/lists/1EntryPage.aspx com user=admin. Nunca juntar num só cookieHeader: misturaria valores com o mesmo nome. Refrescar quando /api/inscricoes/health indicar paramErr em fpg+cookie."
 }

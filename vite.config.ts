@@ -346,9 +346,99 @@ export default defineConfig({
           }
         })
 
+        /* /api/inscricoes/health — diagnóstico de saúde das fontes.
+           Testa um tcode de amostra contra TODAS as 4-6 combinações de
+           URL×cookie e devolve um sumário JSON. Análogo ao que /api/datagolf
+           faz implicitamente nos logs. Útil para diagnóstico rápido sem abrir
+           a página completa.
+
+           GET /api/inscricoes/health          → usa tcode 10941 como sample
+           GET /api/inscricoes/health?tcode=X  → usa tcode especificado */
+        server.middlewares.use(async (req, res, next) => {
+          if (!req.url?.startsWith('/api/inscricoes/health')) return next()
+          const url = new URL(req.url, 'http://localhost')
+          const tcode = url.searchParams.get('tcode') || '10941'
+          if (!TORNEIOS[tcode]) {
+            res.writeHead(400, { 'Content-Type': 'application/json' })
+            res.end(JSON.stringify({ error: 'tcode invalido' }))
+            return
+          }
+
+          const FPG_URL_1 = 'https://scoring.fpg.pt/lists/tournAdmissions.aspx?ccode=000&tcode=' + tcode
+          const FPG_URL_2 = 'https://scoring.datagolf.pt/pt/tournAdmissions.aspx?ccode=000&tcode=' + tcode
+          const baseHeaders: Record<string, string> = {
+            'User-Agent': UA,
+            'Accept': 'text/html,application/xhtml+xml;q=0.9,*/*;q=0.8',
+            'Accept-Language': 'pt-PT,pt;q=0.9',
+            'Upgrade-Insecure-Requests': '1',
+            'Referer': 'https://competicoes.fpg.pt/evento/campeonato-nacional-de-jovens-sub10-12-14-16-18-pga-aroeira/',
+          }
+
+          const cookieFpg = loadScoringCookies()
+          let cookieDatagolf = ''
+          try {
+            const fp = join(process.cwd(), 'api', '.scoring-datagolf-cookies.json')
+            if (existsSync(fp)) { const j = JSON.parse(readFileSync(fp, 'utf8')); if (j.cookieHeader) cookieDatagolf = j.cookieHeader }
+          } catch {}
+          let cookieMyFpg = ''
+          try {
+            const fp = join(process.cwd(), 'api', '.datagolf-cookies.json')
+            if (existsSync(fp)) { const j = JSON.parse(readFileSync(fp, 'utf8')); if (j.cookieHeader && (j.host === 'my.fpg.pt' || !j.host)) cookieMyFpg = j.cookieHeader }
+          } catch {}
+
+          const tests: Array<{ label: string; url: string; cookie: string }> = [
+            { label: 'fpg+admissions-cookie',  url: FPG_URL_1, cookie: cookieFpg },
+            { label: 'datagolf+datagolf-cookie', url: FPG_URL_2, cookie: cookieDatagolf },
+            { label: 'fpg+myfpg-cookie',       url: FPG_URL_1, cookie: cookieMyFpg },
+            { label: 'datagolf+myfpg-cookie',  url: FPG_URL_2, cookie: cookieMyFpg },
+            { label: 'fpg sem cookie',         url: FPG_URL_1, cookie: '' },
+            { label: 'datagolf sem cookie',    url: FPG_URL_2, cookie: '' },
+          ].filter(t => t.cookie !== undefined)  // manter todos, mesmo os sem-cookie
+
+          type HealthResult = { label: string; cookieLen: number; http: number; paramErr: boolean; parsed: number; bytes: number; error?: string }
+          const results: HealthResult[] = []
+          for (const t of tests) {
+            const hdrs: Record<string, string> = { ...baseHeaders }
+            if (t.cookie) hdrs.Cookie = t.cookie
+            const row: HealthResult = { label: t.label, cookieLen: t.cookie?.length || 0, http: 0, paramErr: false, parsed: 0, bytes: 0 }
+            try {
+              const r = await fetch(t.url, { headers: hdrs, redirect: 'follow' })
+              const txt = await r.text()
+              row.http = r.status
+              row.bytes = txt.length
+              row.paramErr = /Param_Errors|Err=999/.test(txt)
+              if (r.ok && !row.paramErr) {
+                row.parsed = parseAdmissionsTable(txt, '[health]').length
+              }
+            } catch (e) {
+              row.error = (e as Error).message
+            }
+            results.push(row)
+          }
+
+          const healthy = results.filter(r => r.parsed > 0)
+          const rejected = results.filter(r => r.paramErr)
+          const summary = {
+            tcode,
+            torneio: TORNEIOS[tcode].nome,
+            liveSources: healthy.map(r => ({ label: r.label, parsed: r.parsed })),
+            rejectedByServer: rejected.map(r => r.label),
+            recommendation: healthy.length > 0
+              ? 'OK — fontes vivas: ' + healthy.map(r => r.label).join(', ')
+              : (rejected.length > 0
+                  ? 'Renovar cookies: ' + rejected.map(r => r.label.split('+')[1] || r.label).join(' e ')
+                  : 'Nenhuma fonte responde com dados — verifica se o endpoint HTML mudou'),
+            results,
+          }
+          res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-cache' })
+          res.end(JSON.stringify(summary, null, 2))
+        })
+
         /* /api/inscricoes — vai SEMPRE à FPG, sem cache */
         server.middlewares.use(async (req, res, next) => {
           if (!req.url?.startsWith('/api/inscricoes')) return next()
+          // Health-check é tratado pelo middleware acima; aqui só para não cair nele
+          if (req.url.startsWith('/api/inscricoes/health')) return next()
 
           const url   = new URL(req.url, 'http://localhost')
           const tcode = url.searchParams.get('tcode') ?? ''
@@ -390,11 +480,34 @@ export default defineConfig({
             }
           } catch {}
 
-          // Tentativas: 4 (2 URLs × com/sem cookie próprio do domínio)
+          // Cookies do my.fpg.pt (renovados regularmente para o WHS). Experimentar
+          // contra scoring.fpg.pt/lists/ e scoring.datagolf.pt/pt/ — se o
+          // .AspNet.ApplicationCookie for válido cross-subdomain (ambos têm SSO
+          // via area.my.fpg.pt), estas inscrições passam a estar em real-time
+          // automaticamente sempre que o WHS for renovado. Verificação
+          // equivalente à das rondas WHS: /api/datagolf tenta múltiplas fontes
+          // até uma devolver dados.
+          let cookieMyFpg = ''
+          try {
+            const fp = join(process.cwd(), 'api', '.datagolf-cookies.json')
+            if (existsSync(fp)) {
+              const j = JSON.parse(readFileSync(fp, 'utf8'))
+              if (j.cookieHeader && (j.host === 'my.fpg.pt' || !j.host)) cookieMyFpg = j.cookieHeader
+            }
+          } catch {}
+
+          // Tentativas (em ordem de preferência).
+          // Caminho 2 (2026-04-17): adicionado fpg+myfpg-cookie + datagolf+myfpg-cookie
+          // — se o cookie de auth do my.fpg.pt (renovado regularmente para WHS) for
+          // aceite cross-subdomain em scoring.fpg.pt, temos real-time "grátis".
           type Attempt = { url: string; headers: Record<string, string>; label: string }
           const attempts: Attempt[] = []
-          if (cookieFpg) attempts.push({ url: FPG_URL_1, headers: { ...baseHeaders, Cookie: cookieFpg }, label: 'fpg+cookie' })
+          if (cookieFpg)      attempts.push({ url: FPG_URL_1, headers: { ...baseHeaders, Cookie: cookieFpg },      label: 'fpg+cookie' })
           if (cookieDatagolf) attempts.push({ url: FPG_URL_2, headers: { ...baseHeaders, Cookie: cookieDatagolf }, label: 'datagolf+cookie' })
+          if (cookieMyFpg) {
+            attempts.push({ url: FPG_URL_1, headers: { ...baseHeaders, Cookie: cookieMyFpg }, label: 'fpg+myfpg-cookie' })
+            attempts.push({ url: FPG_URL_2, headers: { ...baseHeaders, Cookie: cookieMyFpg }, label: 'datagolf+myfpg-cookie' })
+          }
           attempts.push({ url: FPG_URL_1, headers: { ...baseHeaders }, label: 'fpg sem cookie' })
           attempts.push({ url: FPG_URL_2, headers: { ...baseHeaders }, label: 'datagolf sem cookie' })
 
@@ -402,6 +515,14 @@ export default defineConfig({
           // Os 2 URLs (scoring.fpg.pt vs scoring.datagolf.pt) podem ter
           // inscritos diferentes — alguns aparecem só num, outros só noutro.
           // O union final dá o conjunto completo.
+          //
+          // DIAGNÓSTICO (2026-04-17, equivalente "verificação WHS"): para cada
+          // attempt registamos HTTP status, se houve redirect para Param_Errors
+          // (indicador de cookie expirado/rejeitado), e quantas linhas o parser
+          // extraiu. Assim a utilizadora vê no log exactamente qual fonte está
+          // viva e qual não — análogo ao que se passa em /api/datagolf.
+          type Diag = { label: string; http: number; paramErr: boolean; parsed: number; note?: string }
+          const diagnostics: Diag[] = []
           const merged = new Map<string, Jogador>()  // fed → jogador
           let bestStatus = 0
           let bestHtml = ''
@@ -411,11 +532,16 @@ export default defineConfig({
             try {
               const r = await fetch(att.url, { headers: att.headers, redirect: 'follow' })
               const txt = await r.text()
-              console.log('[inscricoes] tcode=' + tcode + ' [' + att.label + '] -> HTTP ' + r.status)
-              if (!r.ok) continue
+              const paramErr = /Param_Errors|Err=999/.test(txt)
+              const diag: Diag = { label: att.label, http: r.status, paramErr, parsed: 0 }
+              console.log('[inscricoes] tcode=' + tcode + ' [' + att.label + '] -> HTTP ' + r.status + (paramErr ? ' ⚠ Param_Errors (cookies rejeitados)' : ''))
+              if (!r.ok) { diag.note = 'http-nao-ok'; diagnostics.push(diag); continue }
+              if (paramErr) { diag.note = 'param-errors'; diagnostics.push(diag); continue }
               if (!bestStatus) { bestStatus = r.status; bestHtml = txt }
               const parsed = parseAdmissionsTable(txt, '[inscricoes] tcode=' + tcode + ' [' + att.label + ']')
               totalRowsByLabel[att.label] = parsed.length
+              diag.parsed = parsed.length
+              diagnostics.push(diag)
               for (const j of parsed) {
                 if (!j.fed) {
                   // Sem fed code — usar nome como key (raro mas evita perda)
@@ -436,12 +562,24 @@ export default defineConfig({
                 }
               }
             } catch (fetchErr) {
+              diagnostics.push({ label: att.label, http: 0, paramErr: false, parsed: 0, note: 'fetch-error: ' + (fetchErr as Error).message })
               console.error('[inscricoes] fetch erro [' + att.label + ']:', fetchErr)
             }
           }
           const bestJogadores = [...merged.values()]
           const breakdown = Object.entries(totalRowsByLabel).map(([k, v]) => k + '=' + v).join(', ')
           console.log('[inscricoes] tcode=' + tcode + ' MERGE: ' + bestJogadores.length + ' únicos (' + breakdown + ')')
+
+          // Sumário de saúde de cada fonte (verificação tipo-WHS)
+          const healthy = diagnostics.filter(d => d.parsed > 0).map(d => d.label)
+          const rejected = diagnostics.filter(d => d.paramErr).map(d => d.label)
+          if (healthy.length > 0) {
+            console.log('[inscricoes] ✓ FONTES VIVAS: ' + healthy.join(', '))
+          } else if (rejected.length > 0) {
+            console.log('[inscricoes] ⚠ COOKIES REJEITADOS em: ' + rejected.join(', ') + ' — precisa renovar')
+          } else {
+            console.log('[inscricoes] ⚠ Nenhuma fonte devolveu dados e nenhum Param_Errors — HTML vazio ou formato mudou')
+          }
 
           try {
             if (raw) {
@@ -468,11 +606,16 @@ export default defineConfig({
 
             // PROTECÇÃO CRÍTICA (2026-04-15): se o parser devolveu 0 mas o
             // cache tinha jogadores, NÃO sobrescrever — provavelmente cookies
-            // expiraram ou parser falhou. Devolver o cache existente.
+            // expiraram ou parser falhou. Devolver o cache existente + diagnóstico
+            // (para a UI poder mostrar "fonte live falhou, a usar cache").
             if (jogadores.length === 0 && cached && cached.jogadores.length > 0) {
-              console.warn('[inscricoes] tcode=' + tcode + ' -> 0 inscritos NOVO mas cache tem ' + cached.jogadores.length + ' — A PRESERVAR cache (provável erro de cookies/parser)')
+              const rejected = diagnostics.filter(d => d.paramErr).map(d => d.label)
+              const reason = rejected.length > 0
+                ? 'cookies rejeitados em: ' + rejected.join(', ')
+                : 'parser devolveu 0 linhas em todas as fontes'
+              console.warn('[inscricoes] tcode=' + tcode + ' -> 0 inscritos NOVO mas cache tem ' + cached.jogadores.length + ' — A PRESERVAR cache (' + reason + ')')
               res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-cache' })
-              res.end(JSON.stringify({ ...cached, fromCache: true, warning: 'parser devolveu 0 — usar cache' }))
+              res.end(JSON.stringify({ ...cached, fromCache: true, warning: reason, diagnostics }))
               return
             }
 
@@ -485,10 +628,11 @@ export default defineConfig({
             const entry: CacheEntry = { tcode, ...meta, totalInscritos: jogadores.length, jogadores, lastFetched: now, lastChanged, fpgUrl }
             prevCache[tcode] = entry
             writeCache(prevCache)
-            console.log('[inscricoes] tcode=' + tcode + ' -> ' + jogadores.length + ' inscritos, ficheiro actualizado')
+            const liveSource = diagnostics.find(d => d.parsed > 0)?.label || '?'
+            console.log('[inscricoes] tcode=' + tcode + ' -> ' + jogadores.length + ' inscritos, ficheiro actualizado (fonte viva: ' + liveSource + ')')
 
             res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-cache' })
-            res.end(JSON.stringify({ ...entry, fromCache: false, diff }))
+            res.end(JSON.stringify({ ...entry, fromCache: false, diff, diagnostics, liveSource }))
 
           } catch (err) {
             console.error('[inscricoes] Erro tcode=' + tcode + ':', err)
