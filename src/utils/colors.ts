@@ -125,13 +125,20 @@ export const C = {
     bad:         "#ef4444",
   },
 
-  // ── Escalão pills (sub-10 … sub-18) ─────────────────────────────────────────
+  // ── Escalão pills (sub-10 … sub-24) ─────────────────────────────────────────
+  // Gradiente ROXO: Sub-10 CLARO (mais novo) → Sub-24 ESCURO (mais velho).
+  // Espelha tokens.css (--esc-subNN-bg/fg). Roxo é praticamente não usado no
+  // resto do projecto (só chartPurple #7c3aed e USKids #9c27b0, sem colisão
+  // com esta escala) — forte separação visual dos verdes (good/SSerra),
+  // azuis (accent/links) e âmbares (warn/tourn).
   esc: {
-    sub10: { bg: "#2a5a18", fg: "#ffffff" },
-    sub12: { bg: "#3a7a28", fg: "#ffffff" },
-    sub14: { bg: "#5a9a40", fg: "#ffffff" },
-    sub16: { bg: "#7aba60", fg: "#1a3a10" },
-    sub18: { bg: "#a0d480", fg: "#1a3a10" },
+    sub10: { bg: "#f3e8ff", fg: "#581c87" },   // purple-100
+    sub12: { bg: "#d8b4fe", fg: "#581c87" },   // purple-300
+    sub14: { bg: "#a855f7", fg: "#ffffff" },   // purple-500
+    sub16: { bg: "#7e22ce", fg: "#ffffff" },   // purple-700
+    sub18: { bg: "#6b21a8", fg: "#ffffff" },   // purple-800
+    sub21: { bg: "#581c87", fg: "#ffffff" },   // purple-900
+    sub24: { bg: "#3b0764", fg: "#ffffff" },   // purple-950
     default: { bg: "var(--bg-hover)", fg: "var(--text-muted)" },
   },
 

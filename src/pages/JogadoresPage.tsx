@@ -3306,22 +3306,73 @@ const PlayerSidebarSep = () => (
   <div style={{ height: "0.5px", background: "var(--border-light, rgba(0,0,0,.08))", margin: "4px 0" }} />
 );
 
-/** Pill HCP com código de cor por valor (verde baixo → âmbar médio → cinza alto) */
-function HcpPill({ hcp }: { hcp: number | null }) {
+/** Estatísticas de HCP de um escalão. HCP menor = melhor, logo p25 é o valor
+ *  CEILING do quartil de topo (top 25% dos jogadores têm HCP ≤ p25). */
+export type EscHcpStats = {
+  p25: number;   // Topo (25% melhores têm HCP ≤ p25)
+  p50: number;   // Mediana
+  p75: number;   // 25% piores têm HCP > p75
+  count: number;
+};
+
+/** Pill HCP com 3 níveis de destaque relativamente ao escalão:
+ *   - TOP 25%  → verde (standout — "dos melhores do escalão")
+ *   - MEIO 50% → pill neutro (estado maioritário e "normal")
+ *   - BOTTOM 25% → outline esmaecido ("abaixo do escalão")
+ *
+ *  Usa percentis dentro do mesmo escalão para remover a falsa hierarquia
+ *  do "HCP baixo = melhor em absoluto" (um Sub-10 com HCP 25 pode ser dos
+ *  melhores do escalão; um Sub-18 com 15 pode ser dos piores).
+ *
+ *  Nota de design: experimentámos 4 níveis (quartis) mas era confuso —
+ *  dois jogadores com HCP 11.8 e 11.9 podiam cair em quartis adjacentes
+ *  e mudar de cor por ruído estatístico. Com 3 níveis, só o topo e o
+ *  fundo têm sinal visual, os 50% do meio ficam todos iguais. */
+/** WHS cap é 54.0 — valores ≥ 54 (incluindo 99) são placeholders usados
+ *  para jogadores sem HI estabelecido ("a começar a jogar"). Não entram
+ *  nas estatísticas de escalão e têm um pill próprio (neutro, em formação). */
+const HCP_UNESTABLISHED_THRESHOLD = 54;
+
+function HcpPill({ hcp, escHcps }: { hcp: number | null; escHcps?: EscHcpStats }) {
   if (hcp == null || !isFinite(hcp)) return null;
-  // ≤ 5 → verde escuro · ≤ 15 → neutro · ≤ 28 → outline âmbar · > 28 → muted
+
+  // Caso especial: HI ainda não estabelecido (jogador em formação)
+  if (hcp >= HCP_UNESTABLISHED_THRESHOLD) {
+    return (
+      <span
+        className="p p-sm"
+        style={{ background: "transparent", color: "var(--text-3)", borderColor: "transparent" }}
+        title={`HCP ${hcpDisplay(hcp)} — HI ainda não estabelecido (jogador em formação, excluído das stats do escalão)`}
+      >
+        HCP {hcpDisplay(hcp)}
+      </span>
+    );
+  }
+
   let style: React.CSSProperties;
-  if (hcp <= 5) {
-    style = { background: "var(--color-good)", color: "#fff", borderColor: "transparent" };
-  } else if (hcp <= 15) {
-    style = { background: "var(--bg-topbar, #1f2937)", color: "#fff", borderColor: "transparent" };
-  } else if (hcp <= 28) {
-    style = { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" };
+  let tooltip = `HCP ${hcpDisplay(hcp)}`;
+  if (escHcps && escHcps.count >= 5) {
+    const { p25, p75, count } = escHcps;
+    if (hcp <= p25) {
+      // Topo do escalão — único destaque forte
+      style = { background: "var(--color-good)", color: "#fff", borderColor: "transparent" };
+      tooltip += ` · TOP 25% do escalão (entre ${count} jogadores)`;
+    } else if (hcp > p75) {
+      // Fundo do escalão — sem fundo, sem borda, só texto esmaecido
+      style = { background: "transparent", color: "var(--text-3)", borderColor: "transparent" };
+      tooltip += ` · Bottom 25% do escalão (entre ${count} jogadores)`;
+    } else {
+      // Meio 50% — o estado "normal", sem sinal forte
+      style = { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" };
+      tooltip += ` · típico do escalão (entre ${count} jogadores)`;
+    }
   } else {
-    style = { background: "var(--bg-muted)", color: "var(--text-3)", borderColor: "var(--border)" };
+    // Sem estatísticas de escalão — pill neutro
+    style = { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" };
+    if (escHcps) tooltip += ` · escalão com poucos jogadores (${escHcps.count})`;
   }
   return (
-    <span className="p p-sm" style={style} title={`HCP ${hcp}`}>
+    <span className="p p-sm" style={style} title={tooltip}>
       HCP {hcpDisplay(hcp)}
     </span>
   );
@@ -3335,11 +3386,11 @@ function TagPill({ tag }: { tag: string }) {
   if (t === "inscrito-nacional") {
     return (
       <span
-        className="p p-sm p-tourn"
+        className="p p-sm"
         style={{ background: "var(--color-good-dark, #166534)", color: "#fff", borderColor: "transparent" }}
-        title="Inscrito no Campeonato Nacional"
+        title="Inscrito no Campeonato Nacional 2026"
       >
-        🇵🇹 NACIONAL
+        🏆 CN26
       </span>
     );
   }
@@ -3378,19 +3429,27 @@ type PlayerSidebarItemProps = {
   rank?: number | null;
   rankingMode: boolean;
   isNewRound: boolean;
+  escHcps?: EscHcpStats;
+  roundsTotal?: number | null;
+  roundsCurrentYear?: number | null;
   onClick: (e: React.MouseEvent) => void;
 };
 
 function PlayerSidebarItem({
-  p, isActive, displayClub, displayEscalao, displayHcp, rank, rankingMode, isNewRound, onClick,
+  p, isActive, displayClub, displayEscalao, displayHcp, rank, rankingMode, isNewRound,
+  escHcps, roundsTotal, roundsCurrentYear, onClick,
 }: PlayerSidebarItemProps) {
   const pm = p;
   const isFedsOnly = pm._source === "feds";
   const isOrphan = pm._source === "players";
   const hcpChanged = !!pm._fpgDiffs?.hcpChanged;
-  const tags = (pm.tags || []).filter(t => t !== "no-priority");
-  const isNacional = tags.includes("inscrito-nacional");
-  const isPja = tags.includes("PJA") || tags.includes("pja");
+  const rawTags = (pm.tags || []).filter(t => t !== "no-priority");
+  const isPja = rawTags.some(t => t.toUpperCase() === "PJA");
+  const hasNacionalTag = rawTags.includes("inscrito-nacional");
+  // PJAs estão implicitamente inscritos no Campeonato Nacional — se o
+  // tag explícito não existir, adicionamo-lo aqui para o pill aparecer.
+  const tags = isPja && !hasNacionalTag ? [...rawTags, "inscrito-nacional"] : rawTags;
+  const isNacional = isPja || hasNacionalTag;
 
   const countryPrefix = pm._federadoRaw?.country_prefix;
   const showFlag = countryPrefix && countryPrefix !== "PT" && !countryPrefix.startsWith("@");
@@ -3403,6 +3462,8 @@ function PlayerSidebarItem({
     escKey === "sub14" ? "var(--esc-sub14-bg)" :
     escKey === "sub16" ? "var(--esc-sub16-bg)" :
     escKey === "sub18" ? "var(--esc-sub18-bg)" :
+    escKey === "sub21" ? "var(--esc-sub21-bg)" :
+    escKey === "sub24" ? "var(--esc-sub24-bg)" :
     null;
   const accent =
     isNacional ? "var(--color-good-dark, #166534)" :
@@ -3449,16 +3510,30 @@ function PlayerSidebarItem({
       {/* Linha 2: pills — escalão · clube · HCP · tags */}
       <div className="gap-4 flex-wrap" style={{ display: "flex", alignItems: "center", margin: "3px 0" }}>
         {displayEscalao && <EscPill esc={displayEscalao} />}
-        {clubText && <ClubePill clube={clubText} ccode={null} />}
-        <HcpPill hcp={displayHcp} />
+        {clubText && (
+          // Nota: NÃO usamos ClubePill aqui porque o seu helper `shortClubFromField`
+          // rejeita ccode="000" (reservado à FPG) e devolve null nesse caso.
+          // O `displayClub` vem de `clubShort(p)` já normalizado — renderizamos
+          // directamente com a mesma classe .p-club para visual consistente.
+          <span className="p p-sm p-club" title={clubText}>{clubText}</span>
+        )}
+        <HcpPill hcp={displayHcp} escHcps={escHcps} />
         {tags.map(t => <TagPill key={t} tag={t} />)}
       </div>
 
       <PlayerSidebarSep />
 
-      {/* Linha 3: fed# + (opcional) rank HCP colorido à direita */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <span style={{ fontSize: 11, color: "var(--text-muted)" }}>#{p.fed}</span>
+      {/* Linha 3: fed# + rondas (total · este ano) + rank HCP (se rankingMode) */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
+        <span style={{ fontSize: 11, color: "var(--text-muted)", display: "inline-flex", alignItems: "center", gap: 8 }}>
+          <span>#{p.fed}</span>
+          {(roundsTotal != null && roundsTotal > 0) && (
+            <span title={`${roundsTotal} rondas no histórico WHS`}>📊 {roundsTotal}</span>
+          )}
+          {(roundsCurrentYear != null && roundsCurrentYear > 0) && (
+            <span title={`${roundsCurrentYear} rondas este ano civil (FPG)`} style={{ color: "var(--color-good-dark, #166534)", fontWeight: 600 }}>🗓 {roundsCurrentYear}</span>
+          )}
+        </span>
         {rankingMode && displayHcp != null && (
           <span className={`sidebar-sd ${displayHcp <= 5 ? "trend-up" : displayHcp <= 15 ? "sidebar-c-text-3" : "sidebar-sd-high"}`}>
             {hcpDisplay(displayHcp)}
@@ -3606,6 +3681,35 @@ export default function JogadoresPage() {
     const present = new Set<string>();
     allPlayers.forEach(p => p.escalao && present.add(p.escalao));
     return order.filter(e => present.has(e));
+  }, [allPlayers]);
+
+  /** Estatísticas de HCP por escalão — usadas pelo HcpPill da sidebar para
+   *  colorir o pill relativamente aos pares do mesmo escalão (em vez de uma
+   *  escala absoluta que seria injusta: um Sub-10 com HCP 25 pode ser dos
+   *  melhores do escalão, um Sub-18 com 15 pode ser dos piores do seu).
+   *
+   *  ⚠ Filtramos jogadores com HCP ≥ 54 (WHS cap / placeholder 99) — são
+   *  jogadores em formação, sem HI real estabelecido, que puxariam os
+   *  percentis artificialmente para cima. Um Sub-10 com 8 iniciantes todos
+   *  com HCP 54 passaria a ter a mediana em 54 e ninguém no bottom 25%. */
+  const hcpStatsByEscalao = useMemo(() => {
+    const byEsc: Record<string, number[]> = {};
+    for (const p of allPlayers) {
+      if (p.hcp == null || !isFinite(p.hcp)) continue;
+      if (p.hcp >= HCP_UNESTABLISHED_THRESHOLD) continue; // excluir jogadores em formação
+      const e = p.escalao;
+      if (!e) continue;
+      (byEsc[e] ||= []).push(p.hcp);
+    }
+    const out: Record<string, EscHcpStats> = {};
+    for (const [esc, hcps] of Object.entries(byEsc)) {
+      if (hcps.length === 0) continue;
+      const sorted = [...hcps].sort((a, b) => a - b);
+      const n = sorted.length;
+      const q = (pct: number) => sorted[Math.min(n - 1, Math.floor(n * pct))];
+      out[esc] = { p25: q(0.25), p50: q(0.50), p75: q(0.75), count: n };
+    }
+    return out;
   }, [allPlayers]);
 
   const regions = useMemo(() => {
@@ -4194,8 +4298,16 @@ export default function JogadoresPage() {
             const displayEscalao = (isActive && playerMeta?.escalao) ? playerMeta.escalao : p.escalao;
             const displayHcp = (isActive) ? (playerMeta?.latestHcp ?? null) : p.hcp;
             const rank = rankings.get(p.fed);
-            const d = daysSince(statsDb[p.fed]);
+            const ps = statsDb[p.fed];
+            const d = daysSince(ps);
             const isNewRound = d != null && d <= NEW_DAYS;
+            const escHcps = hcpStatsByEscalao[displayEscalao];
+            // Rondas total: vem do histórico WHS consolidado (statsDb.roundsTotal)
+            const roundsTotal = ps?.roundsTotal ?? null;
+            // Rondas este ano: directo do cadastro FPG (rounds_current_year é
+            // ano civil, ao contrário de statsDb.roundsLast12m que é rolling 12m)
+            const rcy = (p as typeof p & { _federadoRaw?: FederadoRaw })._federadoRaw?.rounds_current_year;
+            const roundsCurrentYear = typeof rcy === "number" ? rcy : null;
             return (
               <PlayerSidebarItem
                 key={p.fed}
@@ -4207,6 +4319,9 @@ export default function JogadoresPage() {
                 rank={rank}
                 rankingMode={rankingMode}
                 isNewRound={isNewRound}
+                escHcps={escHcps}
+                roundsTotal={roundsTotal}
+                roundsCurrentYear={roundsCurrentYear}
                 onClick={e => {
                   if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
                     e.preventDefault();

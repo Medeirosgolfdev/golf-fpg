@@ -74,6 +74,8 @@ export const ESC_STYLE: Record<string, { bg: string; color: string }> = {
   sub14: { bg: C.esc.sub14.bg, color: C.esc.sub14.fg },
   sub16: { bg: C.esc.sub16.bg, color: C.esc.sub16.fg },
   sub18: { bg: C.esc.sub18.bg, color: C.esc.sub18.fg },
+  sub21: { bg: C.esc.sub21.bg, color: C.esc.sub21.fg },
+  sub24: { bg: C.esc.sub24.bg, color: C.esc.sub24.fg },
   default: { bg: C.esc.default.bg, color: C.esc.default.fg },
 };
 
@@ -150,7 +152,7 @@ export function EscPill({ esc }: { esc: string }) {
   const key = esc.toLowerCase().replace(/[\s-]/g, "");
   // Fallback para inline style se não houver classe CSS
   const s = ESC_STYLE[key] ?? ESC_STYLE.default;
-  const hasCssClass = ["sub10","sub12","sub14","sub16","sub18","absoluto","senior"].includes(key);
+  const hasCssClass = ["sub10","sub12","sub14","sub16","sub18","sub21","sub24","absoluto","senior"].includes(key);
   return hasCssClass
     ? <span className={`p p-sm p-${key}`}>{esc}</span>
     : <span className="p p-sm" style={{ background: s.bg, color: s.color, borderColor: "transparent" }}>{esc}</span>;
