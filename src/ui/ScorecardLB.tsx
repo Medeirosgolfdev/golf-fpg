@@ -129,8 +129,8 @@ export function ScorecardLB({
 
   // Hooks têm de vir ANTES de qualquer return condicional
   const filteredPlayers = useMemo(
-    () => filterPlayers(rawPlayers, filter, escLookup, playersDB),
-    [rawPlayers, filter, escLookup, playersDB]
+    () => filterPlayers(rawPlayers, filter, escLookup, playersDB, { tournamentDate: tournament.date }),
+    [rawPlayers, filter, escLookup, playersDB, tournament.date]
   );
 
   const sorted = useMemo(() => {
@@ -311,6 +311,7 @@ export function ScorecardLB({
           escLookup={escLookup}
           playersDB={playersDB}
           total={rawPlayers.length}
+          tournamentDate={tournament.date}
         />
       }
       prefixHeaderCells={

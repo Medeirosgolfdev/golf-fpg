@@ -21,6 +21,7 @@ export function PlayerFilterBar({
   escLookup,
   playersDB,
   total,
+  tournamentDate,
 }: {
   players: Player[];
   filter: PlayerFilter;
@@ -28,15 +29,17 @@ export function PlayerFilterBar({
   escLookup: EscLookup;
   playersDB: PlayersDB;
   total: number;
+  /** Data do torneio — para calcular escalão histórico na data. */
+  tournamentDate?: string | null;
 }) {
   const availEsc = useMemo(() => {
     const s = new Set<string>();
     for (const p of players) {
-      const e = resolveEsc(p, escLookup);
+      const e = resolveEsc(p, escLookup, { tournamentDate, playersDB });
       if (e) s.add(e);
     }
     return [...s].sort((a, b) => a.localeCompare(b));
-  }, [players, escLookup]);
+  }, [players, escLookup, playersDB, tournamentDate]);
   const availTees = useMemo(() => {
     const s = new Set<string>();
     for (const p of players) if (p.teeName) s.add(p.teeName);
@@ -49,8 +52,8 @@ export function PlayerFilterBar({
   }, [players]);
   const isActive = filter.name || filter.escs.length || filter.tees.length || filter.club;
   const filtered = useMemo(
-    () => filterPlayers(players, filter, escLookup, playersDB),
-    [players, filter, escLookup, playersDB]
+    () => filterPlayers(players, filter, escLookup, playersDB, { tournamentDate }),
+    [players, filter, escLookup, playersDB, tournamentDate]
   );
   const hasOpts = availClubs.length > 1 || availEsc.length > 1 || availTees.length > 1;
   if (total < 8 && !isActive) return null;

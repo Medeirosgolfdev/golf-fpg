@@ -72,10 +72,16 @@ export function computeSD(p: Player): SDResult {
   return { sd: null, source: null };
 }
 
-export function filterPlayers(players: Player[], f: PlayerFilter, escLookup: EscLookup, playersDB: PlayersDB): Player[] {
+export function filterPlayers(
+  players: Player[],
+  f: PlayerFilter,
+  escLookup: EscLookup,
+  playersDB: PlayersDB,
+  opts?: { tournamentDate?: string | null }
+): Player[] {
   let ps = players;
   if (f.name) { const q = f.name.toLowerCase(); ps = ps.filter(p => p.name.toLowerCase().includes(q) || (p.club || "").toLowerCase().includes(q)); }
-  if (f.escs.length) ps = ps.filter(p => f.escs.includes(resolveEsc(p, escLookup)));
+  if (f.escs.length) ps = ps.filter(p => f.escs.includes(resolveEsc(p, escLookup, { tournamentDate: opts?.tournamentDate, playersDB })));
   if (f.tees.length) ps = ps.filter(p => p.teeName != null && f.tees.includes(p.teeName));
   if (f.club) ps = ps.filter(p => p.club === f.club);
   return ps;

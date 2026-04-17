@@ -632,7 +632,13 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
       if (temResumo) out.push({ key: "resumo", label: "Resumo" });
       out.push({ key: "scorecards", label: COMBINED_TAB });
     } else if (hasAnyRounds) {
+      // 1-round: Draw R1 (se existir) + Scorecard
+      if (drawsByRound.has(1)) out.push({ key: "draw:1", label: "Draw R1" });
       out.push({ key: "round:0", label: "Scorecard" });
+    } else {
+      // Sem rondas jogadas — pode ter só draws (torneio prestes a começar)
+      const drawKeys = [...drawsByRound.keys()].sort((a, b) => a - b);
+      for (const r of drawKeys) out.push({ key: `draw:${r}`, label: `Draw R${r}` });
     }
     return out;
   }, [hasAdmissions, isMulti, expanded, drawsByRound, hasAnyRounds]);
