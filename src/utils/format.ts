@@ -312,6 +312,42 @@ export function medal(pos: number): string | null {
   return pos >= 1 && pos <= 3 ? MEDALS[pos - 1] : null;
 }
 
+/* ═══════ Deep-link canónico de torneios ═══════
+ * URL schema: `/<base>/torneio/<ccode>-<tcode>`
+ *   - FPGPage:   /FPG/torneio/007-99012
+ *   - DrivePage: /drive/torneio/988-10301
+ *
+ * `tkey` é a combinação `{ccode}-{tcode}` que serve de identificador único
+ * canónico para qualquer torneio da app. Multi-dia (tcode com "+") aceite
+ * mas tratado como string opaca — usa o primeiro tcode para lookup.
+ */
+
+/** Gera o `tkey` canónico de um torneio: "{ccode}-{tcode}". */
+export function tournamentKey(ccode: string | null | undefined, tcode: string | null | undefined): string {
+  const cc = String(ccode || "").trim();
+  const tc = String(tcode || "").trim();
+  if (!cc || !tc) return "";
+  return `${cc}-${tc}`;
+}
+
+/** Parse de um `tkey` URL-safe em ccode/tcode. O primeiro "-" separa
+ *  ccode de tcode (ccode é sempre numérico/3 chars, não contém "-"). */
+export function parseTournKey(tkey: string | null | undefined): { ccode: string; tcode: string } | null {
+  if (!tkey) return null;
+  const s = String(tkey);
+  const i = s.indexOf("-");
+  if (i <= 0 || i === s.length - 1) return null;
+  return { ccode: s.slice(0, i), tcode: s.slice(i + 1) };
+}
+
+/** URL canónica para deep-link de torneio. `base` é o prefixo da página
+ *  ("FPG" ou "drive"). Retorna string vazia se faltar ccode ou tcode. */
+export function tournamentUrl(base: "FPG" | "drive", ccode: string | null | undefined, tcode: string | null | undefined): string {
+  const key = tournamentKey(ccode, tcode);
+  if (!key) return "";
+  return `/${base}/torneio/${key}`;
+}
+
 /* ═══════ FPG Tournament URLs ═══════ */
 
 const FPG_ACK = "XH256YF45T";

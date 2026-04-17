@@ -13,6 +13,7 @@ import { ESC_STYLE } from "./PillBadge";
 import FilterChip from "./FilterChip";
 import { getTeeHex } from "../utils/teeColors";
 import type { PlayersDB } from "./tournamentPrimitives";
+import { useFedBirthdates } from "./InscricoesComponents";
 
 export function PlayerFilterBar({
   players,
@@ -32,14 +33,15 @@ export function PlayerFilterBar({
   /** Data do torneio — para calcular escalão histórico na data. */
   tournamentDate?: string | null;
 }) {
+  const fedBirthdates = useFedBirthdates();
   const availEsc = useMemo(() => {
     const s = new Set<string>();
     for (const p of players) {
-      const e = resolveEsc(p, escLookup, { tournamentDate, playersDB });
+      const e = resolveEsc(p, escLookup, { tournamentDate, playersDB, fedBirthdates });
       if (e) s.add(e);
     }
     return [...s].sort((a, b) => a.localeCompare(b));
-  }, [players, escLookup, playersDB, tournamentDate]);
+  }, [players, escLookup, playersDB, tournamentDate, fedBirthdates]);
   const availTees = useMemo(() => {
     const s = new Set<string>();
     for (const p of players) if (p.teeName) s.add(p.teeName);
@@ -52,8 +54,8 @@ export function PlayerFilterBar({
   }, [players]);
   const isActive = filter.name || filter.escs.length || filter.tees.length || filter.club;
   const filtered = useMemo(
-    () => filterPlayers(players, filter, escLookup, playersDB, { tournamentDate }),
-    [players, filter, escLookup, playersDB, tournamentDate]
+    () => filterPlayers(players, filter, escLookup, playersDB, { tournamentDate, fedBirthdates }),
+    [players, filter, escLookup, playersDB, tournamentDate, fedBirthdates]
   );
   const hasOpts = availClubs.length > 1 || availEsc.length > 1 || availTees.length > 1;
   if (total < 8 && !isActive) return null;

@@ -10,7 +10,8 @@ import { loadPlayers } from "../data/loader";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from "recharts";
 import { SC, sdClassByHcp, scClass, medalColor } from "../utils/scoreDisplay";
 import { calcAGS, expectedSD9 } from "../utils/whsCalc";
-import { fmtToPar, fmtDateShort, fmtHcp, medal, fpgDrawUrl, fpgScoringUrl, fpgAdmissionsUrl, shortDateSlash } from "../utils/format";
+import { fmtToPar, fmtDateShort, fmtHcp, medal, fpgDrawUrl, fpgScoringUrl, fpgAdmissionsUrl, shortDateSlash, tournamentUrl, parseTournKey } from "../utils/format";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
 import { resolveFedsInTournaments , buildEscLookup, escPillCls, normalizePlayer } from "../utils/playerUtils";
@@ -22,6 +23,7 @@ import { PILL_TCODE, EscPill, SIDEBAR_ACCENT, RoundPill } from "../ui/PillBadge"
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
 import PlayerLink from "../ui/PlayerLink";
+import { useFedBirthdates } from "../ui/InscricoesComponents";
 import EmptyState from "../ui/EmptyState";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import KpiCard from "../ui/KpiCard";
@@ -193,13 +195,18 @@ function resolveEscForTournament(
   t: Tournament,
   escLookup: EscLookup,
   playersDB: PlayersDB,
-  temporalEscLookup?: TemporalEscLookup
+  temporalEscLookup?: TemporalEscLookup,
+  fedBirthdates?: Map<string, string>
 ): string {
-  // Tentar via DOB (regra FPG year-based) + historic + temporal + actual
+  // Tentar via DOB (regra FPG year-based) + historic + temporal + actual.
+  // `fedBirthdates` (federados.json) cobre Sub-10 e novos registos que não
+  // estão em `players.json` curado — sem ele, torneios combinados herdam o
+  // escalão base errado.
   const viaResolve = resolveEsc(p as any, escLookup, {
     tournamentDate: t.date,
     playersDB,
     temporalEscLookup,
+    fedBirthdates,
   });
   if (viaResolve) return viaResolve;
   // Último recurso: se o torneio tem escalão explícito (Drive Challenge), usa-o
@@ -211,13 +218,14 @@ function availEscaloes(
   tournaments: Tournament[],
   escLookup: EscLookup,
   playersDB: PlayersDB,
-  temporalEscLookup?: TemporalEscLookup
+  temporalEscLookup?: TemporalEscLookup,
+  fedBirthdates?: Map<string, string>
 ): string[] {
   const s = new Set<string>();
   for (const t of tournaments) {
     for (const p of t.players) {
       if (isDNS(p)) continue;
-      const e = resolveEscForTournament(p, t, escLookup, playersDB, temporalEscLookup);
+      const e = resolveEscForTournament(p, t, escLookup, playersDB, temporalEscLookup, fedBirthdates);
       if (e) s.add(e);
     }
   }
@@ -234,12 +242,13 @@ function filterTournByEsc(
   escs: string[],
   escLookup: EscLookup,
   playersDB: PlayersDB,
-  temporalEscLookup?: TemporalEscLookup
+  temporalEscLookup?: TemporalEscLookup,
+  fedBirthdates?: Map<string, string>
 ): Tournament[] {
   return tournaments.map(t => {
     const filtered = t.players.filter(p => {
       if (isDNS(p)) return false;
-      const esc = resolveEscForTournament(p, t, escLookup, playersDB, temporalEscLookup);
+      const esc = resolveEscForTournament(p, t, escLookup, playersDB, temporalEscLookup, fedBirthdates);
       return escs.includes(esc);
     });
     if (!filtered.length) return null;
@@ -355,8 +364,8 @@ function DrivePointsTable() {
    SCORECARD LEADERBOARD
    Colunas idênticas ao Diversos: ESC · CLUBE · HCP · TEE · Tot · ± · SD · 🐦 · Par · ■
    ═══════════════════════════════════════════════════════ */
-function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escLookup: EscLookup; sdLookup: SDLookup; temporalEscLookup?: TemporalEscLookup }) {
-  const { tournament, playersDB, escLookup, sdLookup, temporalEscLookup } = props;
+function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escLookup: EscLookup; sdLookup: SDLookup; temporalEscLookup?: TemporalEscLookup; fedBirthdates?: Map<string, string> }) {
+  const { tournament, playersDB, escLookup, sdLookup, temporalEscLookup, fedBirthdates } = props;
   const [showScorecard, setShowScorecard] = React.useState(true);
   const { sortKey, sortDir, toggleSort: handleSort } = useSort<"pos"|"esc"|"tee"|"hcp"|"sd">("pos");
 
@@ -402,7 +411,7 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
 
   // Resolver escalão e stats por jogador antes de ordenar
   const ESC_ORDER = ["Sub 10","Sub 12","Sub 14","Sub 16","Sub 18"];
-  const escOf = (p: Player) => resolveEscForTournament(p, tournament, escLookup, playersDB, temporalEscLookup);
+  const escOf = (p: Player) => resolveEscForTournament(p, tournament, escLookup, playersDB, temporalEscLookup, fedBirthdates);
   const sdOf = (p: Player) => computeStats(p, sdLookup)?.sd18 ?? null;
 
   const mult = sortDir === "asc" ? 1 : -1;
@@ -444,7 +453,7 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
     const dp = p._dp;
     const showP = idx === 0 || dp !== (sorted[idx - 1] as Player)._dp;
     const rowBg = isManuel(p) ? "var(--bg-success-subtle)" : undefined;
-    const esc = resolveEscForTournament(p, tournament, escLookup, playersDB, temporalEscLookup);
+    const esc = resolveEscForTournament(p, tournament, escLookup, playersDB, temporalEscLookup, fedBirthdates);
     const stats = computeStats(p, sdLookup);
     return {
       key: p.scoreId || idx,
@@ -525,8 +534,9 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
    ACUMULADO MULTI-RONDA — usa MultiRoundLeaderboard
    (local, sem importar FPGPage — evita loop HMR)
    ═══════════════════════════════════════════════════════ */
-function DriveAccumulatedLB({ tournament, nRounds, escLookup, playersDB, sdLookup, temporalEscLookup }: {
+function DriveAccumulatedLB({ tournament, nRounds, escLookup, playersDB, sdLookup, temporalEscLookup, fedBirthdates }: {
   tournament: Tournament; nRounds: number; escLookup: EscLookup; playersDB: PlayersDB; sdLookup: SDLookup; temporalEscLookup?: TemporalEscLookup;
+  fedBirthdates?: Map<string, string>;
 }) {
   const rawPlayers = tournament.players;
   const complete = rawPlayers.filter(p => !p._incomplete);
@@ -534,7 +544,7 @@ function DriveAccumulatedLB({ tournament, nRounds, escLookup, playersDB, sdLooku
   const parPerRound = complete[0]?.parTotal ?? incomplete[0]?.parTotal ?? 72;
 
   const rows: MultiRoundRow[] = useMemo(() => rawPlayers.map(p => {
-    const esc = resolveEscForTournament(p, tournament, escLookup, playersDB, temporalEscLookup);
+    const esc = resolveEscForTournament(p, tournament, escLookup, playersDB, temporalEscLookup, fedBirthdates);
     const roundScores = p.roundScores || [];
     const mappedRounds: MRRound[] = Array.from({ length: nRounds }, (_, i) => {
       const rdNum = i + 1;
@@ -575,7 +585,7 @@ function DriveAccumulatedLB({ tournament, nRounds, escLookup, playersDB, sdLooku
       isHighlighted: isManuel(p),
       rounds: mappedRounds,
     };
-  }), [rawPlayers, escLookup, nRounds, parPerRound, sdLookup, tournament, playersDB, temporalEscLookup]);
+  }), [rawPlayers, escLookup, nRounds, parPerRound, sdLookup, tournament, playersDB, temporalEscLookup, fedBirthdates]);
 
   if (!rawPlayers.length) return <EmptyState size="sm" message="Sem resultados." />;
 
@@ -817,7 +827,8 @@ function buildSub12Data(
   playersDB: PlayersDB,
   sdLookup: SDLookup,
   escLookup: EscLookup,
-  temporalEscLookup?: TemporalEscLookup
+  temporalEscLookup?: TemporalEscLookup,
+  fedBirthdates?: Map<string, string>
 ): Sub12Row[] {
   // Incluir apenas ronda única OU a entrada "Total" de torneios multi-ronda
   // (nunca R1/R2 individuais — pontos são pela classificação do Total)
@@ -831,7 +842,7 @@ function buildSub12Data(
       // Escalão no ANO do torneio (year-based) — crucial para filtrar Sub-12
       // correctamente em torneios antigos (um jogador que é Sub-14 hoje pode ter
       // sido Sub-12 em 2024, e vice-versa).
-      const esc = resolveEscForTournament(p, t, escLookup, playersDB, temporalEscLookup);
+      const esc = resolveEscForTournament(p, t, escLookup, playersDB, temporalEscLookup, fedBirthdates);
       if (!isSub12(esc)) continue;
       const fed = p.fed || p.fedCode || "";
       if (!fed) continue;
@@ -1012,8 +1023,12 @@ function RankingView({ rows, onPlayerClick }: { rows: Sub12Row[]; onPlayerClick:
                 <tr key={p.fed} className={`pointer${p.sex === "F" ? " tourn-female-row" : ""}`} onClick={() => onPlayerClick(p.fed)}>
                   <td className="r" style={{ fontSize: 16 }}>{medal(i + 1) ?? <span className="mono fw-700">{i+1}</span>}</td>
                   <td>
-                    <span className="fw-700" style={{ cursor: "pointer", textDecoration: "underline", textDecorationColor: "var(--border)", textUnderlineOffset: 2 }}
-                      onClick={(e) => { e.stopPropagation(); window.open(`/jogadores/${p.fed}`, "_blank"); }}>{p.name}</span>
+                    <a href={`/jogadores/${p.fed}`} target="_blank" rel="noopener noreferrer"
+                      className="fw-700"
+                      onClick={e => e.stopPropagation()}
+                      style={{ color: "inherit", textDecoration: "underline", textDecorationColor: "var(--border)", textUnderlineOffset: 2 }}>
+                      {p.name}
+                    </a>
                     <SexBadge sex={p.sex} size="sm" className="ml-4" />
                   </td>
                   <td className="c-muted fs-11">{p.club}</td>
@@ -1035,11 +1050,15 @@ function RankingView({ rows, onPlayerClick }: { rows: Sub12Row[]; onPlayerClick:
             {zeroPts.map(p => {
               const r = p.results[0];
               return (
-                <div key={p.fed} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "4px 8px", background: "var(--bg)", borderRadius: "var(--radius)", fontSize: 11, cursor: "pointer" }}
-                  onClick={() => onPlayerClick(p.fed)}>
+                <a key={p.fed}
+                  href={`/jogadores/${p.fed}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "4px 8px", background: "var(--bg)", borderRadius: "var(--radius)", fontSize: 11, color: "inherit", textDecoration: "none" }}
+                  onClick={e => { e.stopPropagation(); }}>
                   <span className="fw-600">{p.name}</span>
                   <span className="mono">{r?.gross ?? "–"} <span className="c-muted">({r?.tournShort})</span></span>
-                </div>
+                </a>
               );
             })}
           </div>
@@ -1133,6 +1152,12 @@ function DriveContent() {
   const [sdLookup, setSdLookup]   = useState<SDLookup>({});
   const [loading, setLoading]     = useState(true);
   const [error, setError]         = useState<string | null>(null);
+  // Fallback DOB p/ federados fora de players.json curado.
+  const fedBirthdates = useFedBirthdates();
+  // Deep-link canónico: /drive/torneio/{ccode}-{tcode}
+  const { tkey: urlTkey } = useParams<{ tkey?: string }>();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const [navMode, setNavMode]   = useState<"torneios"|"ranking-pja"|"ranking-sub12">("torneios");
   const [series, setSeries]     = useState<"all"|"tour"|"challenge"|"aquapor">("tour");
@@ -1171,6 +1196,11 @@ function DriveContent() {
         try {
           const r = await fetch(url);
           if (!r.ok) continue;   // mês sem ficheiro → saltar (não regista 404 para não poluir o painel)
+          // Em dev, Vite faz fallback para index.html quando o ficheiro não existe
+          // (r.ok=true mas body é HTML, não JSON). Verificar Content-Type antes
+          // de parsear, senão r.json() rebenta com "unexpected character at line 1".
+          const ct = r.headers.get("content-type") || "";
+          if (!ct.includes("json")) continue;
           const d = await r.json();
           const tourns: Tournament[] = (d.tournaments || []).map((t: any) => {
             const base = forceAqapor ? { ...t, series: "aquapor" as const } : t;
@@ -1300,8 +1330,8 @@ function DriveContent() {
     const tourns = activeYear
       ? data.tournaments.filter(t => t.date?.startsWith(activeYear))
       : data.tournaments;
-    return buildSub12Data(tourns, pdb, sdLookup, escLookup, temporalEscLookup);
-  }, [sub12Ready, data, pdb, sdLookup, escLookup, temporalEscLookup, activeYear]);
+    return buildSub12Data(tourns, pdb, sdLookup, escLookup, temporalEscLookup, fedBirthdates);
+  }, [sub12Ready, data, pdb, sdLookup, escLookup, temporalEscLookup, activeYear, fedBirthdates]);
 
   const sub12SeriesRows = useMemo(() => filterBySub12Series(sub12Data, sub12Series), [sub12Data, sub12Series]);
   const sub12Tourns = useMemo(() => {
@@ -1361,16 +1391,16 @@ function DriveContent() {
     if (regionFilter) ts = ts.filter(t => t.region === regionFilter);
     // Para Challenge (isEvent), NÃO filtrar por escalão aqui — o grupo agrupa todos os escalões
     // O escFilter é aplicado ao nível dos entries do grupo em filteredGroups
-    if (escFilter.length > 0 && series !== "challenge") ts = filterTournByEsc(ts, escFilter, escLookup, pdb, temporalEscLookup);
+    if (escFilter.length > 0 && series !== "challenge") ts = filterTournByEsc(ts, escFilter, escLookup, pdb, temporalEscLookup, fedBirthdates);
     if (filterManuel) ts = ts.filter(t => t.players.some(p => isManuel(p)));
     return ts;
-  }, [series, seriesT, regionFilter, escFilter, escLookup, pdb, temporalEscLookup, filterManuel]);
+  }, [series, seriesT, regionFilter, escFilter, escLookup, pdb, temporalEscLookup, filterManuel, fedBirthdates]);
 
   const filteredGroups = useMemo(() => {
     const applyFilters = (ts: Tournament[]) => {
       let r = ts;
       if (regionFilter) r = r.filter(t => t.region === regionFilter);
-      if (escFilter.length > 0 && series !== "challenge") r = filterTournByEsc(r, escFilter, escLookup, pdb, temporalEscLookup);
+      if (escFilter.length > 0 && series !== "challenge") r = filterTournByEsc(r, escFilter, escLookup, pdb, temporalEscLookup, fedBirthdates);
       if (filterManuel) r = r.filter(t => t.players.some(p => isManuel(p)));
       return r;
     };
@@ -1398,7 +1428,7 @@ function DriveContent() {
     }
 
     return groups;
-  }, [series, filteredT, tourT, challT, aquaporT, regionFilter, escFilter, filterManuel, escLookup, pdb, temporalEscLookup]);
+  }, [series, filteredT, tourT, challT, aquaporT, regionFilter, escFilter, filterManuel, escLookup, pdb, temporalEscLookup, fedBirthdates]);
 
   const regionT = useMemo(() => regionFilter ? seriesT.filter(t => t.region === regionFilter) : seriesT, [seriesT, regionFilter]);
   const uniquePCFiltered  = useMemo(() => uniquePC(filteredT), [filteredT]);
@@ -1411,8 +1441,8 @@ function DriveContent() {
   // Para series="all" mostramos sempre todos os escalões (fixo) — evita iterar todos os jogadores
   const availEscs = useMemo(() => {
     if (series === "all") return ["Sub 10","Sub 12","Sub 14","Sub 16","Sub 18","Absoluto","Sénior"];
-    return availEscaloes(regionT, escLookup, pdb, temporalEscLookup);
-  }, [series, regionT, escLookup, pdb, temporalEscLookup]);
+    return availEscaloes(regionT, escLookup, pdb, temporalEscLookup, fedBirthdates);
+  }, [series, regionT, escLookup, pdb, temporalEscLookup, fedBirthdates]);
 
   useEffect(() => { setRegionFilter(null); setEscFilter([]); setSelectedGroupKey(null); setRoundIdx(0); }, [series]);
   // Se o ano activo não existe na nova série, resetar para o mais recente disponível
@@ -1427,6 +1457,46 @@ function DriveContent() {
     [filteredGroups, selectedGroupKey]
   );
   const curTournament = selectedGroup ? (selectedGroup.entries[roundIdx] || selectedGroup.entries[0]) : null;
+
+  // ── Deep-link: sync URL (:tkey) → selectedGroupKey + roundIdx ──────────
+  // `/drive/torneio/{ccode}-{tcode}` → procura o torneio na lista filtrada
+  // e selecciona o grupo/entry correspondente. Corre quando `filteredGroups`
+  // termina de carregar e sempre que o tkey da URL muda.
+  useEffect(() => {
+    if (!urlTkey || filteredGroups.length === 0) return;
+    const parsed = parseTournKey(urlTkey);
+    if (!parsed) return;
+    const { ccode, tcode } = parsed;
+    for (const g of filteredGroups) {
+      const entryIdx = g.entries.findIndex(e =>
+        e.ccode === ccode && (
+          e.tcode === tcode ||
+          (e.tcode || "").split("+").includes(tcode)
+        )
+      );
+      if (entryIdx >= 0) {
+        if (selectedGroupKey !== g.key) setSelectedGroupKey(g.key);
+        if (roundIdx !== entryIdx) setRoundIdx(entryIdx);
+        return;
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlTkey, filteredGroups]);
+
+  // ── Deep-link: sync estado (torneio seleccionado) → URL ────────────────
+  // Quando o utilizador muda de torneio (clica na sidebar ou nas tabs de
+  // ronda/escalão), actualizar a URL para `/drive/torneio/{ccode}-{tcode}`
+  // com `replace: true` (não pollui o histórico). Não há loop: o useEffect
+  // URL→estado acima só dispara setters quando `idx !== selected`, e
+  // navegar para a URL actual é no-op.
+  useEffect(() => {
+    if (!curTournament || !curTournament.ccode || !curTournament.tcode) return;
+    const target = tournamentUrl("drive", curTournament.ccode, curTournament.tcode);
+    if (target && location.pathname !== target) {
+      navigate(target, { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [curTournament]);
 
   // Pré-calcular labels sidebar
   const sidebarNumCount = useMemo(() => {
@@ -1889,13 +1959,30 @@ function DriveContent() {
                 {curTournament && (
                   <div className="card overflow-hidden" style={{ marginTop: (selectedGroup.isMulti || selectedGroup.isEvent) ? 8 : 0 }}>
                     <div className="h-md fs-14 gap-8" style={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
-                      <span>
-                        {selectedGroup.isEvent
-                          ? <>⚡ {curTournament.escalao} — {selectedGroup.campo}</>
-                          : selectedGroup.isMulti
-                            ? <>{curTournament._roundLabel === "Resumo" ? "📊 Acumulado" : "🏌️ " + curTournament._roundLabel} — {selectedGroup.campo}</>
-                            : <>🏆 Scorecard — {selectedGroup.label}</>}
-                      </span>
+                      {/* Título clicável → link canónico `/drive/torneio/{ccode}-{tcode}`.
+                          Permite partilhar deep-link via right-click "copiar endereço do link". */}
+                      {(() => {
+                        const canonicalUrl = tournamentUrl("drive", curTournament.ccode, curTournament.tcode);
+                        const content = (
+                          <>
+                            {selectedGroup.isEvent
+                              ? <>⚡ {curTournament.escalao} — {selectedGroup.campo}</>
+                              : selectedGroup.isMulti
+                                ? <>{curTournament._roundLabel === "Resumo" ? "📊 Acumulado" : "🏌️ " + curTournament._roundLabel} — {selectedGroup.campo}</>
+                                : <>🏆 Scorecard — {selectedGroup.label}</>}
+                          </>
+                        );
+                        return canonicalUrl ? (
+                          <a
+                            href={canonicalUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            title="Link canónico do torneio (abrir em nova aba para partilhar)"
+                            style={{ color: "inherit", textDecoration: "none" }}>
+                            <span>{content}</span>
+                          </a>
+                        ) : <span>{content}</span>;
+                      })()}
                       <a href={fpgAdmissionsUrl(curTournament.ccode, curTournament.tcode)}
                         target="_blank" rel="noopener noreferrer"
                         className="tourn-ext-link"
@@ -1942,6 +2029,7 @@ function DriveContent() {
                             tournamentEscalao={curTournament.escalao || undefined}
                             tournamentSex={/\bF\b|\bS\b|Feminino/i.test(curTournament.name || "") ? "F" : /\bM\b|\bH\b|Masculino/i.test(curTournament.name || "") ? "M" : undefined}
                             tournamentDate={curTournament.date}
+                            admissions={adm}
                           />
                         : roundIdx === selectedGroup.entries.length
                           ? (() => {
@@ -1951,8 +2039,8 @@ function DriveContent() {
                                 : <EmptyState size="sm" message="Dados insuficientes" />;
                             })()
                           : curTournament._roundLabel === "Resumo"
-                            ? <DriveAccumulatedLB tournament={curTournament} nRounds={selectedGroup.totalRounds || 2} escLookup={escLookup} playersDB={pdb} sdLookup={sdLookup} temporalEscLookup={temporalEscLookup} />
-                            : <ScorecardLB tournament={curTournament} playersDB={pdb} escLookup={escLookup} sdLookup={sdLookup} temporalEscLookup={temporalEscLookup} />}
+                            ? <DriveAccumulatedLB tournament={curTournament} nRounds={selectedGroup.totalRounds || 2} escLookup={escLookup} playersDB={pdb} sdLookup={sdLookup} temporalEscLookup={temporalEscLookup} fedBirthdates={fedBirthdates} />
+                            : <ScorecardLB tournament={curTournament} playersDB={pdb} escLookup={escLookup} sdLookup={sdLookup} temporalEscLookup={temporalEscLookup} fedBirthdates={fedBirthdates} />}
                   </div>
                 )}
               </div>

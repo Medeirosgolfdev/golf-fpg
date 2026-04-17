@@ -265,11 +265,17 @@ export default function App() {
                 <Route path="/comparar" element={<CompararPage />} />
                 <Route path="/calendario" element={<CalendarioPage />} />
                 <Route path="/drive" element={<DrivePage />} />
+                {/* Deep-link canónico de torneio Drive: /drive/torneio/{ccode}-{tcode} */}
+                <Route path="/drive/torneio/:tkey" element={<DrivePage />} />
                 <Route path="/bjgt/:fed?" element={<BJGTPage />} />
                 <Route path="/bjgt-analysis/:fed?" element={<BJGTAnalysisPage />} />
                 <Route path="/kids" element={<KIDSPage />} />
                 <Route path="/uskids" element={<USKIDSPage />} />
                 <Route path="/FPG" element={<FPGPage />} />
+                {/* Deep-link canónico de torneio FPG: /FPG/torneio/{ccode}-{tcode}.
+                    Registado antes dos routes genéricos para ser escolhido quando
+                    filter === "torneio" (caso contrário seria capturado por /FPG/:filter). */}
+                <Route path="/FPG/torneio/:tkey" element={<FPGPage />} />
                 <Route path="/FPG/:filter" element={<FPGPage />} />
                 <Route path="/FPG/:filter/:sub" element={<FPGPage />} />
                 {/* Compat: URLs antigas continuam a funcionar (redirect) */}

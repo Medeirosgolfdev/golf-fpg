@@ -12,6 +12,7 @@ import { MultiRoundLeaderboard } from "./MultiRoundLeaderboard";
 import { RoundPill } from "./PillBadge";
 import EmptyState from "./EmptyState";
 import { isManuel, type PlayersDB } from "./tournamentPrimitives";
+import { useFedBirthdates } from "./InscricoesComponents";
 import type { MultiRoundRow as MRRow, MRRound, ExtraColumn } from "./multiRoundTypes";
 
 export function AccumulatedLB({
@@ -32,6 +33,7 @@ export function AccumulatedLB({
   renderName?: (row: MRRow) => React.ReactNode;
 }) {
   const rawPlayers = tournament.players;
+  const fedBirthdates = useFedBirthdates();
 
   const complete = rawPlayers.filter((p) => !p._incomplete);
   const incomplete = rawPlayers.filter((p) => p._incomplete);
@@ -40,7 +42,7 @@ export function AccumulatedLB({
   // useMemo ANTES do early return — regra dos hooks React
   const rows: MRRow[] = useMemo(() => {
     return rawPlayers.map((p) => {
-      const esc = resolveEsc(p, escLookup, { tournamentDate: tournament.date, playersDB }) || tournament.escalao || "";
+      const esc = resolveEsc(p, escLookup, { tournamentDate: tournament.date, playersDB, fedBirthdates }) || tournament.escalao || "";
       const roundScores = p.roundScores || [];
       // Posicionar cada ronda pelo seu número real (rounds[0]=R1, rounds[1]=R2, ...)
       // para que jogadores parciais mostrem "–" nas rondas que não jogaram
@@ -94,7 +96,7 @@ export function AccumulatedLB({
         rounds: mappedRounds,
       };
     });
-  }, [rawPlayers, escLookup, nRounds, parPerRound]);
+  }, [rawPlayers, escLookup, nRounds, parPerRound, playersDB, tournament.date, tournament.escalao, fedBirthdates]);
 
   // Referência para meta-informação do campo (mesmo que ScorecardLB)
   const refP0 = complete[0] ?? rawPlayers[0];

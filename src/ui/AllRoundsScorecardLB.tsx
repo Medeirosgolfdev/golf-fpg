@@ -16,6 +16,7 @@ import SortableHdr from "./SortableHdr";
 import EmptyState from "./EmptyState";
 import PlayerLink from "./PlayerLink";
 import { isManuel, type PlayersDB } from "./tournamentPrimitives";
+import { useFedBirthdates } from "./InscricoesComponents";
 import {
   useAllRoundsData,
   type ComputeRoundSD,
@@ -58,9 +59,10 @@ export function AllRoundsScorecardLB({
     };
   }, []);
 
+  const fedBirthdates = useFedBirthdates();
   const resolveEscFn = useMemo(
-    () => (p: Player) => resolveEsc(p, escLookup, { tournamentDate: tournament.date, playersDB }) || tournament.escalao || "",
-    [escLookup, tournament.escalao, tournament.date, playersDB],
+    () => (p: Player) => resolveEsc(p, escLookup, { tournamentDate: tournament.date, playersDB, fedBirthdates }) || tournament.escalao || "",
+    [escLookup, tournament.escalao, tournament.date, playersDB, fedBirthdates],
   );
 
   const d = useAllRoundsData({

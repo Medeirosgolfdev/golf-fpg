@@ -31,6 +31,7 @@ import {
   type PlayersDB,
 } from "./tournamentPrimitives";
 import { PlayerFilterBar } from "./PlayerFilterBar";
+import { useFedBirthdates } from "./InscricoesComponents";
 
 /** Score máximo por buraco (regra do torneio) */
 const MAX_HOLE_SCORE = 10;
@@ -128,9 +129,10 @@ export function ScorecardLB({
   const avg = grosses.length ? grosses.reduce((a, b) => a + b, 0) / grosses.length : 0;
 
   // Hooks têm de vir ANTES de qualquer return condicional
+  const fedBirthdates = useFedBirthdates();
   const filteredPlayers = useMemo(
-    () => filterPlayers(rawPlayers, filter, escLookup, playersDB, { tournamentDate: tournament.date }),
-    [rawPlayers, filter, escLookup, playersDB, tournament.date]
+    () => filterPlayers(rawPlayers, filter, escLookup, playersDB, { tournamentDate: tournament.date, fedBirthdates }),
+    [rawPlayers, filter, escLookup, playersDB, tournament.date, fedBirthdates]
   );
 
   const sorted = useMemo(() => {
@@ -155,8 +157,8 @@ export function ScorecardLB({
           bv = b.club || "";
           break;
         case "esc":
-          av = resolveEsc(a, escLookup, { tournamentDate: tournament.date, playersDB }) || "";
-          bv = resolveEsc(b, escLookup, { tournamentDate: tournament.date, playersDB }) || "";
+          av = resolveEsc(a, escLookup, { tournamentDate: tournament.date, playersDB, fedBirthdates }) || "";
+          bv = resolveEsc(b, escLookup, { tournamentDate: tournament.date, playersDB, fedBirthdates }) || "";
           break;
         case "hcp":
           av = a.hcpExact ?? 999;
@@ -186,7 +188,7 @@ export function ScorecardLB({
         return sortDir === "asc" ? av.localeCompare(bv) : bv.localeCompare(av);
       return sortDir === "asc" ? av - bv : bv - av;
     });
-  }, [filteredPlayers, sortKey, sortDir, parTotal, escLookup]);
+  }, [filteredPlayers, sortKey, sortDir, parTotal, escLookup, playersDB, tournament.date, fedBirthdates]);
 
   // Agora é seguro fazer early return — todos os hooks já foram chamados
   if (!rawPlayers.length) return <EmptyState size="sm" message="Scorecards não disponíveis." />;
@@ -199,7 +201,7 @@ export function ScorecardLB({
     const medalEmoji = dp === 1 ? "🥇" : dp === 2 ? "🥈" : dp === 3 ? "🥉" : null;
     const posDisplay =
       isWDPlayer ? "WD" : sortKey === "pos" ? (showPos ? medalEmoji ?? dp : "") : medalEmoji ?? dp;
-    const esc = resolveEsc(p, escLookup, { tournamentDate: tournament.date, playersDB }) || tournament.escalao || "";
+    const esc = resolveEsc(p, escLookup, { tournamentDate: tournament.date, playersDB, fedBirthdates }) || tournament.escalao || "";
     const { sd, source } = computeSD(p);
     const rowManuel = isManuel(p);
     const rowBg = rowManuel ? "var(--bg-success-subtle)" : undefined;

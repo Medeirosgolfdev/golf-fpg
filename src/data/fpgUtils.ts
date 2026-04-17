@@ -70,12 +70,19 @@ export function resolveEsc(
     tournamentDate?: string | null;
     playersDB?: PlayersDB;
     temporalEscLookup?: TemporalEscLookup;
+    /** Fallback: fed → birthdate vindo de `federados.json` (FPG). Cobre Sub-10
+     *  e novos registados que não estão em `players.json`. Fonte: hook
+     *  `useFedBirthdates()` em `InscricoesComponents.tsx`. */
+    fedBirthdates?: Map<string, string>;
   }
 ): string {
   const fed = p.fedCode || (p as any).fed;
-  // 1) Cálculo dob + data do torneio (verdade matemática, year-based)
-  if (opts?.tournamentDate && opts?.playersDB && fed) {
-    const dob = (opts.playersDB[fed] as any)?.dob;
+  // 1) Cálculo dob + data do torneio (verdade matemática, year-based).
+  //    Dob: playersDB (curado) → federados.json (base completa FPG).
+  if (opts?.tournamentDate && fed) {
+    const dob: string | undefined =
+      (opts.playersDB?.[fed] as any)?.dob ||
+      opts.fedBirthdates?.get(fed);
     if (dob) {
       const calc = escalaoAtDate(dob, opts.tournamentDate);
       if (calc) return calc;
@@ -160,11 +167,11 @@ export function filterPlayers(
   f: PlayerFilter,
   escLookup: EscLookup,
   playersDB: PlayersDB,
-  opts?: { tournamentDate?: string | null; temporalEscLookup?: TemporalEscLookup }
+  opts?: { tournamentDate?: string | null; temporalEscLookup?: TemporalEscLookup; fedBirthdates?: Map<string, string> }
 ): Player[] {
   let ps = players;
   if (f.name) { const q = f.name.toLowerCase(); ps = ps.filter(p => p.name.toLowerCase().includes(q) || (p.club || "").toLowerCase().includes(q)); }
-  if (f.escs.length) ps = ps.filter(p => f.escs.includes(resolveEsc(p, escLookup, { tournamentDate: opts?.tournamentDate, playersDB, temporalEscLookup: opts?.temporalEscLookup })));
+  if (f.escs.length) ps = ps.filter(p => f.escs.includes(resolveEsc(p, escLookup, { tournamentDate: opts?.tournamentDate, playersDB, temporalEscLookup: opts?.temporalEscLookup, fedBirthdates: opts?.fedBirthdates })));
   if (f.tees.length) ps = ps.filter(p => p.teeName != null && f.tees.includes(p.teeName));
   if (f.club) ps = ps.filter(p => p.club === f.club);
   return ps;

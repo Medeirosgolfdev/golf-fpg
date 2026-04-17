@@ -33,7 +33,7 @@ import LoadingState from "../ui/LoadingState";
 import PlayerLink from "../ui/PlayerLink";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { C } from "../utils/colors";
-import { fmtDate, fmtToPar, MONTHS_PT, norm, monthLabel, fmtHcp, escShort, fmtTime, fmtDataInscricao, anoEscalao, abreviarNome, medal, fpgDrawUrl, fpgScoringUrl, fpgAdmissionsUrl } from "../utils/format";
+import { fmtDate, fmtToPar, MONTHS_PT, norm, monthLabel, fmtHcp, escShort, fmtTime, fmtDataInscricao, anoEscalao, abreviarNome, medal, fpgDrawUrl, fpgScoringUrl, fpgAdmissionsUrl, tournamentKey, tournamentUrl, parseTournKey } from "../utils/format";
 import { AnoEscalaoPill, TrendBadge } from "../ui/AnoEscalaoPill";
 import { CrossSeasonTable, SortTh as CSortTh } from "../ui/CrossSeasonTable";
 import {
@@ -683,7 +683,24 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
       {/* Cabeçalho */}
       <div className="detail-header">
         <div className="flex-wrap gap-8" style={{ display: "flex", alignItems: "baseline" }}>
-          <h2 className="detail-title" style={{ margin: 0 }}>{tournament.name}</h2>
+          {/* Título clicável: link canónico `/FPG/torneio/{ccode}-{tcode}`.
+              Preserva right-click "abrir em nova aba", Ctrl/Cmd+click, middle-click,
+              preview de URL. O próprio h2 continua visualmente inalterado. */}
+          {(() => {
+            const canonicalUrl = tournamentUrl("FPG", tournament.ccode, tournament.tcode);
+            return canonicalUrl ? (
+              <a
+                href={canonicalUrl}
+                title="Link canónico do torneio (abrir em nova aba para partilhar)"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "inherit", textDecoration: "none" }}>
+                <h2 className="detail-title" style={{ margin: 0 }}>{tournament.name}</h2>
+              </a>
+            ) : (
+              <h2 className="detail-title" style={{ margin: 0 }}>{tournament.name}</h2>
+            );
+          })()}
           <div className="gap-4" style={{ display: "flex", alignItems: "center" }}>
             {tournament.ccode && (
               <span title="tclub" className="fs-10 fw-600 mono" style={{
@@ -858,7 +875,12 @@ const INSCRITOS_SHORTCUTS = new Set(["inscritoscn", "inscritos"]);
 function Content() {
   const location = useLocation();
   const navigate = useNavigate();
-  const params   = useParams<{ filter?: string; sub?: string }>();
+  const params   = useParams<{ filter?: string; sub?: string; tkey?: string }>();
+
+  // Deep-link de torneio (`/FPG/torneio/{ccode}-{tcode}`) — prioritário sobre
+  // os filtros de série. Quando presente, fazemos auto-select do torneio no
+  // useEffect mais abaixo, assim que o displayList/jovensTournaments carregar.
+  const urlTkey = params.tkey || null;
 
   // Resolver filtro inicial pela URL. Dois formatos válidos para inscrições:
   //   /FPG/jovens/inscritosCN  (canónico, nested)
@@ -1281,6 +1303,68 @@ function Content() {
     return buildDisplayList(base);
   }, [tournaments, jovensTournaments]);
   const cur = displayList[selected];
+
+  // ── Deep-link: sync URL (:tkey) → selected ──────────────────────────────
+  // Ao carregar com `/FPG/torneio/{ccode}-{tcode}` (ou ao navegar para uma URL
+  // desse formato), procurar o torneio em displayList/jovensTournaments e:
+  //   a) se estiver na displayList base → seleccionar via `setSelected`
+  //   b) se estiver em Jovens (sintético) → trocar para seriesFilter="jovens"
+  //      e definir o group + escIdx
+  // Só corre quando displayList e jovensTournaments terminam de carregar.
+  useEffect(() => {
+    if (!urlTkey || displayList.length === 0) return;
+    const parsed = parseTournKey(urlTkey);
+    if (!parsed) return;
+    const { ccode, tcode } = parsed;
+    const matchesT = (t: Tournament) =>
+      t.ccode === ccode && (
+        t.tcode === tcode ||
+        // Torneios sintéticos (multi-dia) guardam tcode como "10935+10936" — match contém
+        (t.tcode || "").split("+").includes(tcode)
+      );
+    const idx = displayList.findIndex(matchesT);
+    if (idx >= 0 && idx !== selected) {
+      setSelected(idx);
+      return;
+    }
+    // Se não encontrou no displayList base, procurar em Jovens
+    const jovT = jovensTournaments.find(matchesT);
+    if (jovT) {
+      setSeriesFilter("jovens");
+      // Encontrar o grupo (phase1 de buildJovensGroups): date+ccode
+      const groupKey = (jovT.date || "") + "-" + (jovT.ccode || jovT.campo || "?");
+      setJovensGroupKey(groupKey);
+      // Encontrar o índice da entry dentro do grupo (pode haver várias escalões)
+      setJovensShowInscricoes(false);
+      // jovensEscIdx será 0 por default; o useEffect que constrói jovensGroups
+      // já alinha as entries por escalão — setSelected não se aplica aqui.
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlTkey, displayList, jovensTournaments]);
+
+  // ── Deep-link: sync estado (torneio seleccionado) → URL ────────────────
+  // Quando o utilizador clica num torneio na sidebar, actualizar a URL para
+  // reflectir a selecção (`/FPG/torneio/{ccode}-{tcode}` com `replace: true`
+  // para não poluir o histórico do browser).
+  //
+  // Skip explícito:
+  //   - Painel de inscrições (`jovensShowInscricoes`) — URL dedicada
+  //   - Vista Clubes — a URL `/FPG/clubes` não conflita e a selecção é local
+  //
+  // Não há loop: o useEffect URL→estado acima só muda `selected` se
+  // `idx !== selected`, por isso navegar para a URL actual é no-op.
+  useEffect(() => {
+    if (jovensShowInscricoes) return;
+    if (seriesFilter === "clubes") return;
+    const t: Tournament | null =
+      seriesFilter === "jovens" ? curJovens : cur;
+    if (!t || !t.ccode || !t.tcode) return;
+    const target = tournamentUrl("FPG", t.ccode, t.tcode);
+    if (target && location.pathname !== target) {
+      navigate(target, { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cur, curJovens, seriesFilter, jovensShowInscricoes]);
 
   /** Lista de torneios indexados pelo seu ficheiro de origem — alimenta o
    *  popover do clique-direito no FileBadge. Inclui clubes e jovens (que têm

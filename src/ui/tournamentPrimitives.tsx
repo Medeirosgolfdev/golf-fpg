@@ -149,25 +149,44 @@ export function TournPName({
     : undefined;
   const kidsHash = kidsEntry?.kidsHash;
 
-  return (
-    <span
-      className={"tourn-pname" + (hasLink ? " tourn-pname-link" : "")}
-      onClick={hasLink ? () => window.open("/jogadores/" + fedKey, "_blank") : undefined}
-      title={hasLink && !hasProfile ? "Federado (perfil limitado — dados do federados.json)" : undefined}
-    >
+  // Usar <a href> em vez de window.open via onClick — assim o browser
+  // preserva right-click "abrir em nova aba", Ctrl/Cmd+click, middle-click,
+  // preview de link, arrastar para favoritos, etc. Todos estes gestos ficam
+  // quebrados quando se usa um span com onClick=window.open.
+  const titleMsg = hasLink && !hasProfile ? "Federado (perfil limitado — dados do federados.json)" : undefined;
+  const inner = (
+    <>
       {truncName}
       {star && <span className="fs-10" style={{ marginLeft: 3 }}>⭐</span>}
       {sex && <SexBadge sex={sex} size="sm" className="ml-4" />}
+    </>
+  );
+  const nameEl = hasLink ? (
+    <a
+      href={`/jogadores/${fedKey}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="tourn-pname tourn-pname-link"
+      title={titleMsg}
+      style={{ color: "inherit", textDecoration: "none" }}
+    >{inner}</a>
+  ) : (
+    <span className="tourn-pname" title={titleMsg}>{inner}</span>
+  );
+  return (
+    <>
+      {nameEl}
       {kidsHash && (
         <a
-          href="/kids"
-          onClick={e => { e.stopPropagation(); e.preventDefault(); window.open(`/kids#${kidsHash}`, "_blank"); }}
+          href={`/kids#${kidsHash}`}
+          target="_blank"
+          rel="noopener noreferrer"
           title="Ver em Kids"
           style={{ marginLeft: 4, fontWeight: 800, color: "var(--color-good-dark)",
-            fontSize: 11, cursor: "pointer", textDecoration: "none" }}>
+            fontSize: 11, textDecoration: "none" }}>
           ↗
         </a>
       )}
-    </span>
+    </>
   );
 }

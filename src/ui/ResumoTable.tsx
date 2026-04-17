@@ -6,6 +6,7 @@ import { escPillCls } from "../utils/playerUtils";
 import { calcAGS, expectedSD9 } from "../utils/whsCalc";
 import { CrossSeasonTable, SortTh as _CSortTh } from "./CrossSeasonTable";
 import { isManuel, fmtTP, tpColor, TournPName, type PlayersDB } from "./tournamentPrimitives";
+import { useFedBirthdates } from "./InscricoesComponents";
 import { isDNS } from "./driveUtils";
 
 // Wrapper que aceita style (não incluído nos props originais de SortTh)
@@ -253,6 +254,8 @@ export function ResumoTable(props: {
   const { playersDB, sdLookup } = props;
   const globalEscLookup = props.escLookup;
   const mergeByEvent = !!props.mergeByEvent;
+  // Fallback DOB: federados.json para novos registados ou não curados em players.json.
+  const fedBirthdates = useFedBirthdates();
   const sorted = useMemo(
     () => [...props.tournaments].sort((a, b) => a.date.localeCompare(b.date)),
     [props.tournaments]
@@ -343,7 +346,10 @@ export function ResumoTable(props: {
      */
     const resolveRowEsc = (p: Player, t: Tournament): string => {
       if (p.fed && t.date) {
-        const dob = (playersDB[p.fed] as any)?.dob;
+        // Dob: playersDB (curado) → federados.json (base FPG completa).
+        // Crítico porque players.json não cobre Sub-10 kids nem novos registos
+        // e fica-se preso ao t.escalao genérico para torneios combinados.
+        const dob = (playersDB[p.fed] as any)?.dob || fedBirthdates.get(p.fed);
         if (dob) {
           const calc = escalaoAtDate(dob, t.date);
           if (calc) return calc;
@@ -419,7 +425,7 @@ export function ResumoTable(props: {
       row.avgSD = sds.length ? sds.reduce((s, v) => s + v, 0) / sds.length : null;
     }
     return [...map.values()];
-  }, [sorted, playersDB, sdLookup, challEscLookup, globalEscLookup]);
+  }, [sorted, playersDB, sdLookup, challEscLookup, globalEscLookup, fedBirthdates]);
 
   const sortedRows = useMemo(() => {
     const mult = sortDir === "asc" ? 1 : -1;
