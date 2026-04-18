@@ -154,6 +154,21 @@ export function getScorecards(playerName: string): AutoScorecard[] {
   return [];
 }
 
+/**
+ * Devolve todos os scorecards de um tid (todos os jogadores do escalão
+ * desse torneio). Usado para comparação jogador-vs-field na Análise.
+ * Cada tid já inclui o escalão no sufixo (ex: usk18242_b11, wjgc26, doral25_b1011).
+ */
+export function getScorecardsByTid(tid: string): Array<AutoScorecard & { normName: string }> {
+  const out: Array<AutoScorecard & { normName: string }> = [];
+  for (const [normN, scs] of _scorecards.entries()) {
+    for (const sc of scs) {
+      if (sc.tid === tid) out.push({ ...sc, normName: normN });
+    }
+  }
+  return out;
+}
+
 export function processWjgc(data: unknown, tid: string): AutoRivalPlayer[] {
   const d = data as {
     par?: number[]; si?: number[];
