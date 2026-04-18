@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Simulador WHS — mockup Hero+Inline (tokens FPG)</title>
+<!-- Carrega os tokens reais do projecto -->
+<link rel="stylesheet" href="src/tokens.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-feature-settings: "tnum" on, "cv11" on;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* ══════════════════════════════════════════════════════════════
+     Header do mockup
+     ══════════════════════════════════════════════════════════════ */
+  .mockup-header {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--bg-topbar);
+    color: var(--text-inv);
+    padding: 16px 32px;
+  }
+  .mockup-header h1 {
+    margin: 0 0 4px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .mockup-header p {
+    margin: 0;
+    color: var(--nav-text);
+    font-size: 12px;
+  }
+
+  .intro {
+    padding: 32px 32px 8px;
+    max-width: 900px;
+  }
+  .intro h2 {
+    margin: 0 0 6px;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .intro p {
+    margin: 0;
+    color: var(--text-2);
+  }
+
+  /* ══════════════════════════════════════════════════════════════
+     Device frames
+     ══════════════════════════════════════════════════════════════ */
+  .device-row {
+    padding: 24px 32px 60px;
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 28px;
+    align-items: start;
+  }
+  @media (max-width: 1300px) {
+    .device-row {
+      grid-template-columns: 1fr;
+      max-width: 960px;
+    }
+  }
+
+  .device {
+    position: relative;
+    background: var(--bg-card);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .device-label {
+    position: absolute;
+    top: 12px; left: 16px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    z-index: 2;
+  }
+  .device-desktop { width: 100%; min-height: 600px; }
+  .device-mobile  { width: 400px; min-height: 600px; }
+
+  .device-content { padding: 40px 28px 28px; }
+  .device-mobile .device-content { padding: 34px 16px 20px; }
+
+  /* ══════════════════════════════════════════════════════════════
+     Primitivas partilhadas (usando tokens do projecto)
+     ══════════════════════════════════════════════════════════════ */
+  .muted { color: var(--text-3); }
+  .text-good { color: var(--color-good); }
+  .text-bad  { color: var(--color-danger); }
+  .text-warn { color: var(--color-warn); }
+  .text-acc  { color: var(--accent); }
+  .fw-600 { font-weight: 600; }
+  .fw-700 { font-weight: 700; }
+  .fw-800 { font-weight: 800; }
+  .fw-900 { font-weight: 900; }
+  .fs-10 { font-size: 10px; }
+  .fs-11 { font-size: 11px; }
+  .fs-12 { font-size: 12px; }
+  .fs-13 { font-size: 13px; }
+
+  /* Pills — cores verde FPG + semantic */
+  .pill {
+    display: inline-flex; align-items: center;
+    padding: 2px 9px;
+    border-radius: var(--radius-pill);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    border: 1px solid transparent;
+    line-height: 1.4;
+  }
+  .pill-good    { background: var(--bg-success); color: var(--color-good); border-color: var(--border-success); }
+  .pill-bad     { background: var(--bg-danger); color: var(--color-danger); border-color: var(--border-danger); }
+  .pill-warn    { background: var(--bg-warn); color: var(--color-warn-dark); border-color: var(--border-warn); }
+  .pill-sim     { background: var(--bg-info); color: var(--color-info); border-color: var(--border-info); }
+  .pill-neutral { background: var(--bg-muted); color: var(--text-2); border-color: var(--border-light); }
+  .pill-acc     { background: var(--accent-light); color: var(--accent); border-color: var(--accent); border-color: var(--accent-alpha-20); }
+
+  /* Badges de sexo — usa os tokens reais --badge-male / --badge-female */
+  .sex-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 10px; font-weight: 800;
+  }
+  .sex-m { background: var(--badge-male); }
+  .sex-f { background: var(--badge-female); }
+
+  /* Toggle segmentado (estilo consistente com app) */
+  .seg {
+    display: inline-flex;
+    background: var(--bg-muted);
+    border-radius: var(--radius);
+    padding: 2px;
+    gap: 0;
+    border: 1px solid var(--border-light);
+  }
+  .seg button {
+    border: none; background: transparent; cursor: pointer;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-2);
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    line-height: 1.4;
+  }
+  .seg button.on {
+    background: var(--bg-card);
+    color: var(--accent);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .field {
+    padding: 6px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font: inherit;
+    background: var(--bg-card);
+    color: var(--text);
+    font-weight: 700;
+  }
+  .field:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: var(--accent); }
+
+  .btn {
+    padding: 6px 11px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-2);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .btn:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-acc { color: var(--accent); border-color: var(--accent-alpha-20); background: var(--accent-light); }
+
+  /* ══════════════════════════════════════════════════════════════
+     HERO — KPI grande no topo (mistura com Inline)
+     ══════════════════════════════════════════════════════════════ */
+  .hero {
+    background: linear-gradient(180deg, var(--bg-card), var(--bg-detail));
+    border-radius: var(--radius-xl);
+    padding: 26px 28px;
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 28px;
+    align-items: center;
+    border: 1px solid var(--border-light);
+  }
+  .device-mobile .hero {
+    grid-template-columns: 1fr;
+    padding: 20px 18px;
+    gap: 16px;
+  }
+
+  .hero-main {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .hero-label {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+  .hero-numbers {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .hero-before {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .hero-arrow {
+    color: var(--text-3);
+    font-size: 18px;
+  }
+  .hero-after {
+    font-size: 64px;
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: var(--color-good);
+    font-variant-numeric: tabular-nums;
+  }
+  .hero-after.worse { color: var(--color-danger); }
+  .hero-after.neutral { color: var(--text); }
+  .device-mobile .hero-after { font-size: 48px; }
+
+  .hero-delta {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--color-good);
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    background: var(--bg-success-strong);
+    display: inline-block;
+    width: fit-content;
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    min-width: 220px;
+  }
+  .device-mobile .hero-stats {
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+  }
+  .stat {
+    padding: 10px 12px;
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border-light);
+    text-align: center;
+  }
+  .stat-label {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+  .stat-value {
+    font-size: 20px;
+    font-weight: 800;
+    margin-top: 2px;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
+  }
+  .device-mobile .stat-value { font-size: 16px; }
+
+  /* ══════════════════════════════════════════════════════════════
+     TIMELINE — barra de progresso (Hero)
+     ══════════════════════════════════════════════════════════════ */
+  .timeline-bar { margin: 18px 0 24px; }
+  .timeline-track {
+    display: flex;
+    height: 6px;
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+    background: var(--border-light);
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .timeline-fill {
+    background: linear-gradient(90deg, var(--color-good), var(--color-good-dark));
+    height: 100%;
+    border-radius: var(--radius-pill);
+  }
+  .timeline-marks {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--text-3);
+    font-weight: 600;
+  }
+  .timeline-mark {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  .timeline-mark.final { font-weight: 800; }
+  .timeline-mark .v {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+  }
+  .timeline-mark .lbl {
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 9px;
+  }
+  .device-mobile .timeline-mark .v { font-size: 12px; }
+  .device-mobile .timeline-mark .lbl { font-size: 8px; }
+
+  /* ══════════════════════════════════════════════════════════════
+     SECTION HEADER
+     ══════════════════════════════════════════════════════════════ */
+  .section-title {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-2);
+    margin: 22px 0 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border-light);
+  }
+  .section-title .chip {
+    font-size: 10px;
+    color: var(--text-3);
+    padding: 2px 8px;
+    border-radius: var(--radius-pill);
+    background: var(--bg-muted);
+    font-weight: 700;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  /* ══════════════════════════════════════════════════════════════
+     RONDAS — estilo Inline (linhas densas)
+     ══════════════════════════════════════════════════════════════ */
+  .rounds {
+    margin: 0;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    background: var(--bg-card);
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 32px 1fr auto auto 26px;
+    gap: 12px;
+    align-items: center;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border-light);
+    transition: background .12s;
+  }
+  .row:last-of-type { border-bottom: none; }
+  .row:hover { background: var(--bg-hover); }
+  .row.good { box-shadow: inset 3px 0 0 var(--color-good); }
+  .row.bad { box-shadow: inset 3px 0 0 var(--color-danger); }
+  .row.warn { box-shadow: inset 3px 0 0 var(--color-warn); }
+
+  .row-num {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--bg-muted);
+    color: var(--text-2);
+    font-size: 11px; font-weight: 800;
+    text-align: center; line-height: 26px;
+  }
+  .row.good .row-num { background: var(--color-good); color: #fff; }
+  .row.bad .row-num  { background: var(--color-danger); color: #fff; }
+  .row.warn .row-num { background: var(--color-warn); color: #fff; }
+
+  .row-inputs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .row-course {
+    color: var(--text);
+    font-weight: 700;
+    font-size: 13px;
+  }
+  .row-meta { color: var(--text-3); font-size: 12px; }
+  .row-meta b { color: var(--text-2); font-weight: 700; }
+
+  .row-sd {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+  }
+  .row-sd .main {
+    font-size: 13px;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+  }
+  .row-sd .sub {
+    font-size: 10px;
+    color: var(--text-3);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .row-impact {
+    text-align: right;
+    min-width: 74px;
+    padding-left: 10px;
+    border-left: 1px solid var(--border-light);
+  }
+  .row-impact .delta {
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .row-impact .hi {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-3);
+    margin-top: 3px;
+    font-variant-numeric: tabular-nums;
+  }
+  .row-impact.down .delta { color: var(--color-good); }
+  .row-impact.up   .delta { color: var(--color-danger); }
+  .row-impact.flat .delta { color: var(--text-3); }
+
+  .row-x {
+    color: var(--text-3);
+    text-align: center;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1;
+    border: none;
+    background: transparent;
+    padding: 4px;
+  }
+  .row-x:hover { color: var(--color-danger); }
+
+  /* Expanded row (detalhe 9H notice) */
+  .row-expanded {
+    padding: 10px 14px;
+    background: var(--bg-detail);
+    border-bottom: 1px solid var(--border-light);
+    font-size: 12px;
+    color: var(--text-2);
+    line-height: 1.55;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .row-expanded .icon { font-size: 14px; }
+  .row-expanded b { color: var(--text); }
+
+  /* Adicionar ronda */
+  .row-add {
+    padding: 14px;
+    text-align: center;
+    color: var(--text-3);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    background: var(--bg-detail);
+    border: none;
+    width: 100%;
+    font-family: inherit;
+    border-bottom-left-radius: var(--radius-xl);
+    border-bottom-right-radius: var(--radius-xl);
+  }
+  .row-add:hover { color: var(--accent); background: var(--accent-light); }
+
+  /* ══════════════════════════════════════════════════════════════
+     MOBILE — row colapsado numa lista mais simples
+     ══════════════════════════════════════════════════════════════ */
+  .device-mobile .row {
+    grid-template-columns: 24px 1fr auto 20px;
+    gap: 10px;
+    padding: 10px 12px;
+  }
+  .device-mobile .row-num {
+    width: 22px; height: 22px;
+    font-size: 10px; line-height: 22px;
+  }
+  .device-mobile .row-inputs {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+  }
+  .device-mobile .row-course { font-size: 12px; }
+  .device-mobile .row-meta { font-size: 11px; }
+  .device-mobile .row-impact {
+    min-width: 56px;
+    padding-left: 6px;
+  }
+  .device-mobile .row-impact .delta { font-size: 13px; }
+
+  /* ══════════════════════════════════════════════════════════════
+     Toolbar (acções)
+     ══════════════════════════════════════════════════════════════ */
+  .toolbar {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .toolbar .help {
+    color: var(--text-3);
+    font-size: 11px;
+  }
+  .toolbar .spacer { flex: 1; }
+
+  /* ══════════════════════════════════════════════════════════════
+     TABELAS — impacto + pool (estilo app)
+     ══════════════════════════════════════════════════════════════ */
+  .details {
+    margin-top: 10px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+  }
+  .details-summary {
+    padding: 12px 16px;
+    background: var(--bg-header);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .details-summary::after {
+    content: "▾";
+    margin-left: auto;
+    color: var(--text-3);
+  }
+  .details-summary .chip {
+    margin-left: auto;
+    margin-right: 12px;
+    font-size: 10px;
+    color: var(--text-3);
+    font-weight: 600;
+  }
+  .details-body { padding: 12px 16px; }
+
+  .dtable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+  .dtable th {
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--text-3);
+    padding: 6px 8px;
+    border-bottom: 2px solid var(--border);
+    text-align: left;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    background: var(--bg-header);
+  }
+  .dtable th.r { text-align: right; }
+  .dtable td { padding: 7px 8px; border-bottom: 1px solid var(--border-light); }
+  .dtable .r { text-align: right; }
+  .dtable tr.hit td { background: var(--bg-success); }
+  .dtable tr.focus td {
+    background: var(--bg-info);
+    box-shadow: inset 3px 0 0 var(--accent);
+  }
+
+  /* ══════════════════════════════════════════════════════════════
+     Notas informativas (9H → 18H, exceptional)
+     ══════════════════════════════════════════════════════════════ */
+  .note {
+    margin-top: 10px;
+    padding: 9px 12px;
+    border-radius: var(--radius);
+    font-size: 11px;
+    line-height: 1.6;
+  }
+  .note-info {
+    background: var(--bg-info);
+    border: 1px dashed var(--border-info);
+    color: var(--color-info);
+  }
+  .note-info b { color: var(--color-info); }
+  .note-warn {
+    background: var(--bg-warn);
+    border: 1px solid var(--border-warn);
+    color: var(--color-warn-dark);
+  }
+  .note-warn b { color: var(--color-warn-dark); }
+
+</style>
+</head>
+<body>
+
+<div class="mockup-header">
+  <h1>Simulador WHS — mockup Hero + Inline</h1>
+  <p>Tokens reais do projecto (verde FPG <code>#2d6a30</code>, DM Sans, radii/sombras da app) · Manuel · HI 14.2 → 13.6 (−0.6)</p>
+</div>
+
+<div class="intro">
+  <h2>Hero em cima (o que importa), rondas em linhas densas (Inline)</h2>
+  <p>
+    KPI grande do HCP final a dominar o topo, timeline como barra de progresso com os marcos de cada ronda. Em baixo, cada ronda é uma linha só — toggles compactos à esquerda, SD no meio, impacto à direita. Quando uma ronda é 9H, abre uma sub-linha com a conversão SD9→SD18 (Regra 5.1c). Tabelas complementares ficam colapsadas no fundo.
+  </p>
+</div>
+
+<div class="device-row">
+  <!-- ═══════════════════════════════════════════════════════════════
+       DESKTOP
+       ═══════════════════════════════════════════════════════════════ -->
+  <div class="device device-desktop">
+    <span class="device-label">Desktop</span>
+    <div class="device-content">
+
+      <!-- HERO -->
+      <div class="hero">
+        <div class="hero-main">
+          <span class="hero-label">HCP após simulação</span>
+          <div class="hero-numbers">
+            <span class="hero-before">14.2</span>
+            <span class="hero-arrow">→</span>
+            <span class="hero-after">13.6</span>
+          </div>
+          <span class="hero-delta">−0.6 após 2 rondas</span>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><div class="stat-label">Rondas</div><div class="stat-value">2</div></div>
+          <div class="stat"><div class="stat-label">Janela</div><div class="stat-value">8<span class="muted fw-700" style="font-size:13px">/20</span></div></div>
+          <div class="stat"><div class="stat-label">Melhor SD</div><div class="stat-value text-good">7.5</div></div>
+          <div class="stat"><div class="stat-label">Top novas</div><div class="stat-value text-good">2</div></div>
+        </div>
+      </div>
+
+      <!-- TIMELINE -->
+      <div class="timeline-bar">
+        <div class="timeline-track"><div class="timeline-fill" style="width:100%"></div></div>
+        <div class="timeline-marks">
+          <div class="timeline-mark"><span class="v">14.2</span><span class="lbl">Actual</span></div>
+          <div class="timeline-mark"><span class="v text-good">13.9</span><span class="lbl">R1 · −0.3</span></div>
+          <div class="timeline-mark"><span class="v text-good">13.6</span><span class="lbl">R2 · F9 · −0.3</span></div>
+          <div class="timeline-mark final"><span class="v text-good" style="font-size:16px">13.6</span><span class="lbl text-good">Final</span></div>
+        </div>
+      </div>
+
+      <!-- TOOLBAR + RONDAS -->
+      <div class="toolbar">
+        <span class="help">Simula rondas sequencialmente · tees filtrados por <span class="sex-badge sex-m">M</span> Masculino</span>
+        <div class="spacer"></div>
+        <button class="btn">💾 Guardar</button>
+        <button class="btn">📂 Repor</button>
+        <button class="btn btn-acc">📄 PDF</button>
+        <button class="btn">✕ Limpar</button>
+      </div>
+
+      <div class="section-title">Rondas simuladas <span class="chip">2 rondas</span></div>
+
+      <div class="rounds">
+
+        <!-- R1: 18H, Villa Padierna, Amarelas, gross 81 → SD 7.5 → HI 13.9 -->
+        <div class="row good">
+          <div class="row-num">1</div>
+          <div class="row-inputs">
+            <div class="seg"><button class="on">⛳</button><button>📊</button></div>
+            <div class="seg"><button class="on">18</button><button>F9</button><button>B9</button></div>
+            <span class="sex-badge sex-m">M</span>
+            <span class="row-course">Villa Padierna — Alferini</span>
+            <span class="row-meta">· Amarelas · <b>CR 72.1</b> / <b>137</b> / <b>Par 72</b></span>
+            <span class="row-meta">· Gross</span>
+            <input class="field" style="width:58px" value="81">
+          </div>
+          <div class="row-sd">
+            <span class="main pill pill-good">SD 7.5</span>
+          </div>
+          <div class="row-impact down">
+            <div class="delta">−0.3</div>
+            <div class="hi">HCP 13.9</div>
+          </div>
+          <button class="row-x" title="Remover">×</button>
+        </div>
+
+        <!-- R2: SD directo F9 → SD9 4.2 + exp9 5.6 → SD18 9.8 → HI 13.6 -->
+        <div class="row good">
+          <div class="row-num">2</div>
+          <div class="row-inputs">
+            <div class="seg"><button>⛳</button><button class="on">📊</button></div>
+            <div class="seg"><button>18</button><button class="on">F9</button><button>B9</button></div>
+            <span class="row-meta">SD 9h</span>
+            <input class="field" style="width:72px" value="4.2">
+            <span class="row-meta">+ exp9(13.9) = <b>5.6</b></span>
+          </div>
+          <div class="row-sd">
+            <span class="main pill pill-good">SD18 9.8</span>
+            <span class="sub">SD9 4.2</span>
+          </div>
+          <div class="row-impact down">
+            <div class="delta">−0.3</div>
+            <div class="hi">HCP 13.6</div>
+          </div>
+          <button class="row-x" title="Remover">×</button>
+        </div>
+
+        <!-- Nota explicativa 9H → 18H -->
+        <div class="row-expanded">
+          <span class="icon">🎯</span>
+          <span><b>Front 9:</b> SD9 4.2 + exp9(13.9) 5.6 → SD equivalente 18H <b>9.8</b> — valor que entra na janela WHS (Regra 5.1c).</span>
+        </div>
+
+        <!-- Add row -->
+        <button class="row-add">+ Adicionar ronda</button>
+      </div>
+
+      <!-- TABELAS COLAPSADAS -->
+      <div class="section-title">Mais detalhe</div>
+
+      <div class="details">
+        <div class="details-summary">
+          Tabela de impacto · Ronda 1 — Villa Padierna
+          <span class="chip">CR 72.1 · Slope 137 · Par 72</span>
+        </div>
+        <div class="details-body">
+          <table class="dtable">
+            <thead>
+              <tr>
+                <th>Gross</th>
+                <th class="r">vs Par</th>
+                <th class="r">SD</th>
+                <th class="r">HCP</th>
+                <th class="r">Δ</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="hit"><td>74</td><td class="r">+2</td><td class="r"><span class="pill pill-good">1.6</span></td><td class="r fw-800">13.4</td><td class="r fw-800 text-good">−0.8</td><td><span class="pill pill-good">★ entra top-8</span></td></tr>
+              <tr class="hit"><td>77</td><td class="r">+5</td><td class="r"><span class="pill pill-good">4.1</span></td><td class="r fw-800">13.6</td><td class="r fw-800 text-good">−0.6</td><td class="text-good">↓ melhora</td></tr>
+              <tr class="focus"><td class="fw-800">81 ◀</td><td class="r">+9</td><td class="r"><span class="pill pill-good">7.5</span></td><td class="r fw-800 text-good">13.9</td><td class="r fw-800 text-good">−0.3</td><td><span class="pill pill-sim">ronda simulada</span></td></tr>
+              <tr><td>85</td><td class="r">+13</td><td class="r"><span class="pill pill-warn">10.8</span></td><td class="r fw-800">14.2</td><td class="r fw-800 muted">0.0</td><td class="muted">= sem impacto</td></tr>
+              <tr><td>92</td><td class="r">+20</td><td class="r"><span class="pill pill-bad">16.6</span></td><td class="r fw-800 text-bad">14.5</td><td class="r fw-800 text-bad">+0.3</td><td class="text-bad">↑ agrava</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="details" style="margin-top:8px">
+        <div class="details-summary">
+          Janela WHS final
+          <span class="chip">20 rondas · top-8 entram no cálculo</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       MOBILE
+       ═══════════════════════════════════════════════════════════════ -->
+  <div class="device device-mobile">
+    <span class="device-label">Mobile</span>
+    <div class="device-content">
+
+      <div class="hero">
+        <div class="hero-main">
+          <span class="hero-label">HCP após simulação</span>
+          <div class="hero-numbers">
+            <span class="hero-before">14.2</span>
+            <span class="hero-arrow">→</span>
+            <span class="hero-after">13.6</span>
+          </div>
+          <span class="hero-delta">−0.6 após 2 rondas</span>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><div class="stat-label">R</div><div class="stat-value">2</div></div>
+          <div class="stat"><div class="stat-label">Top</div><div class="stat-value" style="font-size:14px">8/20</div></div>
+          <div class="stat"><div class="stat-label">Mel.</div><div class="stat-value text-good" style="font-size:14px">7.5</div></div>
+          <div class="stat"><div class="stat-label">Entra</div><div class="stat-value text-good" style="font-size:14px">2</div></div>
+        </div>
+      </div>
+
+      <div class="timeline-bar">
+        <div class="timeline-track"><div class="timeline-fill" style="width:100%"></div></div>
+        <div class="timeline-marks">
+          <div class="timeline-mark"><span class="v">14.2</span><span class="lbl">Actual</span></div>
+          <div class="timeline-mark"><span class="v text-good">13.9</span><span class="lbl">R1</span></div>
+          <div class="timeline-mark"><span class="v text-good">13.6</span><span class="lbl">R2</span></div>
+          <div class="timeline-mark final"><span class="v text-good">13.6</span><span class="lbl text-good">Final</span></div>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <span class="help" style="font-size:10px">tees: <span class="sex-badge sex-m" style="width:14px;height:14px;font-size:8px">M</span></span>
+        <div class="spacer"></div>
+        <button class="btn" style="padding:4px 8px;font-size:11px">💾</button>
+        <button class="btn btn-acc" style="padding:4px 8px;font-size:11px">📄</button>
+        <button class="btn" style="padding:4px 8px;font-size:11px">✕</button>
+      </div>
+
+      <div class="section-title">Rondas</div>
+
+      <div class="rounds">
+        <div class="row good">
+          <div class="row-num">1</div>
+          <div class="row-inputs">
+            <span class="row-course">⛳ Villa Padierna <span class="sex-badge sex-m" style="width:14px;height:14px;font-size:8px">M</span></span>
+            <span class="row-meta">Amarelas · 81 · <span class="pill pill-good">SD 7.5</span></span>
+          </div>
+          <div class="row-impact down">
+            <div class="delta">−0.3</div>
+            <div class="hi">13.9</div>
+          </div>
+          <button class="row-x">×</button>
+        </div>
+        <div class="row good">
+          <div class="row-num">2</div>
+          <div class="row-inputs">
+            <span class="row-course">📊 SD · <span class="pill pill-warn" style="font-size:10px">F9</span></span>
+            <span class="row-meta">SD9 4.2 + exp9 5.6 · <span class="pill pill-good">9.8</span></span>
+          </div>
+          <div class="row-impact down">
+            <div class="delta">−0.3</div>
+            <div class="hi">13.6</div>
+          </div>
+          <button class="row-x">×</button>
+        </div>
+        <button class="row-add">+ Adicionar ronda</button>
+      </div>
+
+      <div class="details" style="margin-top:14px">
+        <div class="details-summary" style="font-size:11px">Tabela de impacto · R1</div>
+      </div>
+      <div class="details" style="margin-top:6px">
+        <div class="details-summary" style="font-size:11px">Janela WHS (20)</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
