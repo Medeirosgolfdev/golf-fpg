@@ -29,6 +29,7 @@ import { MANUEL_KNOWN_TIDS } from "../constants/manuel";
 import { TR_I } from "../constants/config";
 import TournScorecard from "./kids/TournScorecard";
 import H2HSortableTable from "./kids/H2HSortableTable";
+import AnaliseSection from "./kids/AnaliseSection";
 import type { ScRound, H2HConfronto, H2HSortKey } from "./kids/types";
 
 
@@ -2506,6 +2507,16 @@ function RivalDetail({ playerName }: { playerName: string }) {
           </div>
         );
       })()}
+
+      {/* ══ ANÁLISE ESTILO MASTERS ══ */}
+      {autoScorecards.length > 0 && (
+        <div className="card mb-12" style={{ padding: "12px 16px" }}>
+          <div className="h-sm mb-8" style={{ color: "var(--text-2)" }}>
+            📊 Análise · Scoring · Por ronda · F9 vs B9 · Por buraco
+          </div>
+          <AnaliseSection playerName={playerName} scorecards={autoScorecards} />
+        </div>
+      )}
 
       {/* ══ LISTA DE TORNEIOS ══ */}
       {tournResults.length > 0 && (() => {
