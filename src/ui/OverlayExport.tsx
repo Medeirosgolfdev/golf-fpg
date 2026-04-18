@@ -1946,8 +1946,6 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
   const [bgId,        setBgId]        = useState("navy");
   const [customBg,    setCustomBg]    = useState("#1a4a2e");
   const [bgAlpha,     setBgAlpha]     = useState(88);
-  /* Opacidade GLOBAL aplicada via CSS opacity ao wrapper — afecta tudo (bg + texto + accents) */
-  const [globalAlpha, setGlobalAlpha] = useState(100);
   const [theme,       setTheme]       = useState<"dark"|"light">("dark");
   const [exporting,   setExporting]   = useState(false);
   const [exportingId, setExportingId] = useState<string|null>(null);
@@ -2016,26 +2014,35 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
     const el = designRefs.current[designId];
     if (!el) { console.warn("[overlay] ref not found:", designId); return null; }
     try { await document.fonts.ready; } catch { /* ignore */ }
-    const { toBlob } = await import("html-to-image");
-    /* Pre-fetch fonts como base64 — contorna bug CORS do html-to-image */
+    /* Usar toCanvas directamente para garantir que o canvas preserva o alpha
+     * (toBlob da lib faz internamente canvas.toBlob("image/png", 1) mas
+     * alguns browsers/versões perdem alpha no caminho SVG→Canvas se não
+     * forçarmos explicitamente. Omitir `backgroundColor` por completo — se for
+     * passado como undefined, a lib ainda testa com `if (options.backgroundColor)`
+     * e não preenche; mas omitindo a chave evita qualquer ambiguidade). */
+    const { toCanvas } = await import("html-to-image");
     const fontEmbedCSS = await getFontEmbedCSS();
     const opts = {
       pixelRatio: 3,
-      backgroundColor: undefined as string | undefined,
-      fontEmbedCSS, /* fonts já embebidas — skipFonts implícito */
+      fontEmbedCSS, /* fonts já embebidas — contorna bug CORS do html-to-image */
       cacheBust: true,
     };
-    /*
-     * Safari/iOS: html-to-image precisa de múltiplas passagens
-     * para "aquecer" o renderer SVG foreignObject.
-     */
+    /* Safari/iOS: html-to-image precisa de múltiplas passagens
+     * para "aquecer" o renderer SVG foreignObject. */
     const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
       || (/iPad|iPhone/.test(navigator.userAgent) && !("MSStream" in window));
     if (isSafari) {
-      await toBlob(el, opts).catch(() => null);
-      await toBlob(el, opts).catch(() => null);
+      await toCanvas(el, opts).catch(() => null);
+      await toCanvas(el, opts).catch(() => null);
     }
-    return toBlob(el, opts);
+    const canvas = await toCanvas(el, opts);
+    if (!canvas) return null;
+    /* Converter para Blob explicitamente como PNG — PNG suporta alpha channel
+     * nativamente, ao contrário de JPEG. canvas.toBlob(callback, "image/png")
+     * preserva alpha do canvas tal como está. */
+    return new Promise<Blob|null>(resolve => {
+      canvas.toBlob(blob => resolve(blob), "image/png");
+    });
   }, []);
 
   const shareFiles = async (files: File[]): Promise<boolean> => {
@@ -2179,17 +2186,12 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
             ))}
           </div>
           {bgHex && (
-            <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:6 }}>
-              <span style={{ fontSize:11, fontWeight:800, color:"#888", minWidth:110 }}>Fundo</span>
+            <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:8 }}>
+              <span style={{ fontSize:11, fontWeight:800, color:"#888" }}>Opacidade do fundo</span>
               <input type="range" min={0} max={100} value={bgAlpha} onChange={e=>setBgAlpha(parseInt(e.target.value))} style={{ flex:1, maxWidth:160, accentColor:"#2e7d32" }} />
               <span style={{ fontSize:12, color:"#666", fontWeight:800, minWidth:32 }}>{bgAlpha}%</span>
             </div>
           )}
-          <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:8 }}>
-            <span style={{ fontSize:11, fontWeight:800, color:"#888", minWidth:110 }}>Opacidade geral</span>
-            <input type="range" min={0} max={100} value={globalAlpha} onChange={e=>setGlobalAlpha(parseInt(e.target.value))} style={{ flex:1, maxWidth:160, accentColor:"#2e7d32" }} />
-            <span style={{ fontSize:12, color:"#666", fontWeight:800, minWidth:32 }}>{globalAlpha}%</span>
-          </div>
 
           {/* Presets */}
           <div className="ov-section-label" style={{ marginTop:4 }}>Preset</div>
@@ -2242,7 +2244,7 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
                       </button>
                     </div>
                     <div className="ov-card-preview" style={checkerBg}>
-                      <div ref={el=>{ designRefs.current[x.id]=el; }} style={{ display:"inline-block", color:tc, opacity: globalAlpha/100 }}>
+                      <div ref={el=>{ designRefs.current[x.id]=el; }} style={{ display:"inline-block", color:tc }}>
                         <x.C d={dd} v={vis} s={stats} bg={bgColor} tc={tc} tc2={tc2} tc3={tc3} tc4={tc4} />
                       </div>
                     </div>

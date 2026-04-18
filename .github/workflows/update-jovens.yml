@@ -1,0 +1,115 @@
+name: Actualizar Dados JOVENS
+
+# Corre:
+#  - Automaticamente Sex/Sáb/Dom às 21:00 UTC (~22:00 Lisboa), imediatamente
+#    após o update-drive. Torneios de Jovens (FPG Nacional + Regional) ocorrem
+#    sobretudo a fim-de-semana, por isso 3x/semana basta.
+#  - A pedido (botão "Run workflow" no GitHub) — útil para re-apanhar
+#    resultados que entrem atrasados (2ª-feira, terça-feira, etc.).
+#
+# Lógica:
+#   - Descobre torneios com "Jovens" no nome no ano escolhido
+#   - Faz MERGE incremental com public/data/jovens_YYYY.json
+#   - Preserva torneios já guardados mesmo que não venham na API
+#   - Salta torneios já "settled" (> 21 dias, a menos que refetch_all=true)
+#
+# Requer GitHub Secret:
+#   DATAGOLF_SCORING_COOKIES — cookie header capturado de scoring.datagolf.pt
+#                              (mesmo que usa o workflow update-drive)
+on:
+  workflow_dispatch:
+    inputs:
+      year:
+        description: 'Ano a processar (default = ano corrente)'
+        required: false
+        default: ''
+      refetch_all:
+        description: 'Re-fazer fetch mesmo de torneios já settled (> 21 dias)?'
+        required: false
+        default: 'false'
+        type: choice
+        options: ['false', 'true']
+      force_commit:
+        description: 'Fazer commit mesmo se os totais não aumentarem?'
+        required: false
+        default: 'false'
+        type: choice
+        options: ['false', 'true']
+
+  schedule:
+    # Minuto Hora Dia Mês DiaSemana (UTC)
+    # 21:00 UTC à Sexta (5), Sábado (6) e Domingo (0)
+    - cron: '0 21 * * 5,6,0'
+
+permissions:
+  contents: write
+
+jobs:
+  update-jovens:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Correr scrape-jovens-node.js (Node puro, sem Playwright)
+        id: scrape
+        run: |
+          set +e
+          ARGS=""
+          YEAR="${{ github.event.inputs.year }}"
+          if [ -n "$YEAR" ]; then
+            ARGS="$ARGS --year $YEAR"
+          fi
+          if [ "${{ github.event.inputs.refetch_all }}" = "true" ]; then
+            ARGS="$ARGS --refetch-all"
+          fi
+          echo "Args: $ARGS"
+          node scripts/scrape-jovens-node.js $ARGS
+          EXIT_CODE=$?
+          echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
+          # 0 = há mais dados → commit
+          # 2 = nada novo → não commit (NÃO é erro)
+          # 1 = erro real
+          if [ "$EXIT_CODE" = "1" ]; then
+            echo "❌ Scraper falhou — ver logs acima"
+            exit 1
+          fi
+          if [ "$EXIT_CODE" = "2" ]; then
+            echo "ℹ️  Nenhum dado novo — a saltar o commit"
+          fi
+          exit 0
+        env:
+          DATAGOLF_SCORING_COOKIES: ${{ secrets.DATAGOLF_SCORING_COOKIES }}
+
+      - name: Commit e push (se houver novos dados)
+        if: steps.scrape.outputs.exit_code == '0' || github.event.inputs.force_commit == 'true'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add public/data/jovens_*.json
+
+          # Dupla verificação: só commitar se o git diff realmente mostra alterações
+          if git diff --staged --quiet; then
+            echo "Nenhuma alteração em staging — sem commit."
+            exit 0
+          fi
+
+          DATE=$(date +'%Y-%m-%d %H:%M')
+          CHANGED=$(git diff --staged --name-only | wc -l)
+          git commit -m "data: update JOVENS ${DATE} (${CHANGED} ficheiros)"
+          git push
+          echo "✓ Commit feito — ${CHANGED} ficheiros actualizados"
