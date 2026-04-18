@@ -228,22 +228,40 @@ export function ScorecardLB({
       rowBg,
       stickyBg,
       isManuel: rowManuel,
-      nameContent: nameDecorator_
-        ? nameDecorator_(
-            p.name,
-            <PName
+      nameContent: ((): React.ReactNode => {
+        const base: React.ReactNode = nameDecorator_
+          ? nameDecorator_(
+              p.name,
+              <PName
+                name={p.name}
+                fedCode={p.fedCode}
+                playersDB={playersDB}
+                highlight={isManuel(p)}
+              />
+            )
+          : <PName
               name={p.name}
               fedCode={p.fedCode}
               playersDB={playersDB}
               highlight={isManuel(p)}
-            />
-          )
-        : <PName
-            name={p.name}
-            fedCode={p.fedCode}
-            playersDB={playersDB}
-            highlight={isManuel(p)}
-          />,
+            />;
+        // Marker para jogadores acrescentados de torneio simultâneo (ex: Sub 12
+        // que jogou no Absoluto). _absolutoNote dá o tooltip completo.
+        if (!(p as any)._fromAbsoluto) return base;
+        return (
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 4, flexWrap: "wrap" }}>
+            {base}
+            <span title={(p as any)._absolutoNote || "Jogou em torneio simultâneo"}
+              style={{
+                fontSize: 9, lineHeight: 1.4, padding: "1px 6px",
+                borderRadius: 8, background: "var(--bg-warn-subtle, #fef3c7)",
+                color: "var(--color-warn-dark, #92400e)",
+                border: "1px solid var(--color-warn, #f59e0b)",
+                cursor: "help", fontWeight: 700, whiteSpace: "nowrap",
+              }}>⚠ Abs</span>
+          </span>
+        );
+      })(),
       prefixCells: (
         <>
           {!hideEsc && (

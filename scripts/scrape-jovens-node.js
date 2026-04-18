@@ -23,9 +23,24 @@
  *   1  → erro real
  *
  * Uso:
- *   node scripts/scrape-jovens-node.js                 # ano corrente
- *   node scripts/scrape-jovens-node.js --year 2025     # ano específico
- *   node scripts/scrape-jovens-node.js --refetch-all   # re-fetch mesmo torneios já completos
+ *   node scripts/scrape-jovens-node.js                     # ano corrente
+ *   node scripts/scrape-jovens-node.js --year 2025         # ano específico
+ *   node scripts/scrape-jovens-node.js --refetch-all       # re-fetch mesmo torneios já completos
+ *   node scripts/scrape-jovens-node.js --extra-tcodes 007:11010
+ *                                                           # força fetch de tcodes específicos
+ *                                                           # (útil quando o nome do torneio não
+ *                                                           #  contém literalmente "Jovens")
+ *
+ * Flags/convenções:
+ *   - tcodes 99xxx são sintéticos (placeholders manuais, ex: Regionais com
+ *     draw por email). O scrape NUNCA os toca — se aparecerem em `existing`
+ *     são preservados sem refetch.
+ *   - Se a API devolve 0 torneios mas o ficheiro existente tem torneios
+ *     reais (não-sintéticos), o script aborta com exit 1 em vez de escrever
+ *     um ficheiro vazio — defesa contra cookies expirados a fazer wipe.
+ *   - HTTP 500 em `tournaments.aspx/*` é sinal canónico de cookies expirados:
+ *     o script faz retry e, se persistir, aborta com instruções claras em
+ *     vez de stack trace bruto.
  */
 
 "use strict";
@@ -58,6 +73,25 @@ const REFETCH_ALL = hasFlag("--refetch-all");
 // a mudar, resultados a serem carregados). Fora dessa janela, saltamos.
 const REFETCH_DAYS = Number(getArg("--refetch-days", 21));
 const DELAY = 100; // ms entre pedidos
+
+// --extra-tcodes "ccode:tcode,ccode:tcode" — força fetch destes torneios mesmo
+// que a pesquisa "Jovens" não os encontre. Útil para Regionais que a FPG
+// indexa com nome alternativo (ex: "Regional Sub 10/12") e por isso escapam
+// ao filtro `TournName="Jovens"`. Aceita também só "tcode" (assume ccode=000).
+const EXTRA_TCODES_RAW = getArg("--extra-tcodes", "");
+const EXTRA_TCODES = EXTRA_TCODES_RAW
+  ? EXTRA_TCODES_RAW.split(",").map(s => {
+      const parts = s.trim().split(":");
+      return parts.length === 2
+        ? { ccode: parts[0].trim(), tcode: parts[1].trim() }
+        : { ccode: "000", tcode: parts[0].trim() };
+    }).filter(x => x.tcode)
+  : [];
+
+// Tcodes sintéticos (placeholder para torneios sem entrada na FPG, ex:
+// Regionais com draw por email/PDF). Convencionados: 99xxx. O scrape NUNCA
+// os toca — se forem encontrados em `existing` são preservados sem refetch.
+const SYNTHETIC_TCODE = tcode => /^99\d{3}$/.test(String(tcode || ""));
 
 const OUTPUT_FILE = path.join(OUTPUT_DIR, `jovens_${YEAR}.json`);
 
@@ -94,26 +128,53 @@ const COOKIE = loadCookies();
 // ═══════════════════════════════════════════════════════════
 // FETCH WRAPPER
 // ═══════════════════════════════════════════════════════════
-async function dgPost(pathname, bodyObj, queryString = "") {
+// Erro estruturado do FPG — distingue 401/403/500 (auth/cookies) de outros.
+class FpgHttpError extends Error {
+  constructor(status, pathname, body) {
+    super(`HTTP ${status} em ${pathname}`);
+    this.status = status; this.pathname = pathname; this.body = body;
+  }
+}
+
+async function dgPost(pathname, bodyObj, queryString = "", { retries = 2 } = {}) {
   const url = `${BASE_URL}/${pathname}${queryString ? "?" + queryString : ""}`;
-  const res = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json; charset=UTF-8",
-      "X-Requested-With": "XMLHttpRequest",
-      "Accept": "application/json, text/javascript, */*; q=0.01",
-      "Origin": "https://scoring.datagolf.pt",
-      "Referer": `${BASE_URL}/tournaments.aspx`,
-      "User-Agent": UA,
-      "Cookie": COOKIE,
-    },
-    body: JSON.stringify(bodyObj),
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status} em ${pathname}`);
-  const json = await res.json();
-  const d = json.d || json;
-  if (d.Result === "ERROR") throw new Error(`FPG erro: ${d.Message || "unknown"}`);
-  return d;
+  let lastErr = null;
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+          "X-Requested-With": "XMLHttpRequest",
+          "Accept": "application/json, text/javascript, */*; q=0.01",
+          "Origin": "https://scoring.datagolf.pt",
+          "Referer": `${BASE_URL}/tournaments.aspx`,
+          "User-Agent": UA,
+          "Cookie": COOKIE,
+        },
+        body: JSON.stringify(bodyObj),
+      });
+      if (!res.ok) {
+        const txt = await res.text().catch(() => "");
+        // HTTP 500 no FPG é o sinal canónico de cookies expirados (servidor
+        // explode em vez de devolver 401). Retry uma vez por causa de
+        // transients — se persistir, é cookie morto.
+        if (res.status === 500 && attempt < retries) {
+          await sleep(500 * (attempt + 1));
+          continue;
+        }
+        throw new FpgHttpError(res.status, pathname, txt.slice(0, 500));
+      }
+      const json = await res.json();
+      const d = json.d || json;
+      if (d.Result === "ERROR") throw new Error(`FPG erro: ${d.Message || "unknown"}`);
+      return d;
+    } catch (e) {
+      lastErr = e;
+      if (!(e instanceof FpgHttpError) || e.status !== 500 || attempt >= retries) throw e;
+    }
+  }
+  throw lastErr;
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -142,6 +203,20 @@ async function tournSearchPage(startIndex, pageSize) {
   const qs = `jtStartIndex=${startIndex}&jtPageSize=${pageSize}&jtSorting=${encodeURIComponent("started_at DESC")}`;
   const d = await dgPost("tournaments.aspx/TournamentsLST", body, qs);
   return { records: d.Records || [], total: d.TotalRecordCount || 0 };
+}
+
+// Lookup directo por tcode (ignora o filtro TournName="Jovens"). Usado para
+// `--extra-tcodes`, onde sabemos o código do torneio mas o nome pode não
+// conter "Jovens" (ex: "Campeonato Regional Sub 10/12 2026" sem essa palavra).
+async function tournLookupByCode(ccode, tcode) {
+  const body = {
+    ClubCode: String(ccode || "0"), dtIni: "", dtFim: "",
+    CourseName: "", TournCode: String(tcode), TournName: "",
+    jtStartIndex: "0", jtPageSize: "10", jtSorting: "started_at DESC",
+  };
+  const qs = `jtStartIndex=0&jtPageSize=10&jtSorting=${encodeURIComponent("started_at DESC")}`;
+  const d = await dgPost("tournaments.aspx/TournamentsLST", body, qs);
+  return (d.Records || []).find(r => String(r.code) === String(tcode)) || null;
 }
 
 async function tournSearchAll() {
@@ -463,6 +538,38 @@ function countPlayers(tournaments) {
   const apiRecords = await tournSearchAll();
   ok(`${apiRecords.length} torneios com "${SEARCH_NAME}" em ${YEAR}`);
 
+  // Fase 1b — juntar tcodes explícitos (--extra-tcodes) que a pesquisa "Jovens"
+  // não encontrou. Cada entrada é resolvida via lookup directo por TournCode.
+  if (EXTRA_TCODES.length > 0) {
+    log(`FASE 1b: lookup de ${EXTRA_TCODES.length} tcode(s) extra`);
+    const alreadyIn = new Set(apiRecords.map(r => `${r.club_code}/${r.code}`));
+    for (const { ccode, tcode } of EXTRA_TCODES) {
+      const key = `${ccode}/${tcode}`;
+      if (alreadyIn.has(key)) { info(`  ${key} → já estava na pesquisa`); continue; }
+      try {
+        const rec = await tournLookupByCode(ccode, tcode);
+        if (!rec) { warn(`  ${key} → não existe no servidor FPG`); continue; }
+        apiRecords.push(rec);
+        info(`  ${key} → "${rec.description}" (${getDateStr(rec)})`);
+      } catch (e) {
+        warn(`  ${key} → ERRO: ${e.message}`);
+      }
+      await sleep(DELAY);
+    }
+  }
+
+  // SENTINELA ANTI-WIPE: se a API devolveu 0 resultados mas o ficheiro existente
+  // tem torneios reais (não-sintéticos), isto é suspeito — provavelmente cookies
+  // expirados, ou resposta vazia temporária. NUNCA escrever um ficheiro vazio
+  // por cima de dados reais. Sai com exit 1 para o workflow falhar visivelmente.
+  const existingRealCount = (existing?.tournaments || []).filter(t => !SYNTHETIC_TCODE(t.tcode)).length;
+  if (apiRecords.length === 0 && existingRealCount > 0) {
+    console.error(`${R}ABORTAR: API devolveu 0 torneios mas ficheiro tem ${existingRealCount} torneio(s) real(is).${X}`);
+    console.error(`${R}Possíveis causas: cookies expirados, servidor em manutenção, filtro TournName demasiado estrito.${X}`);
+    console.error(`${R}Se é intencional (ano sem Jovens), apaga public/data/jovens_${YEAR}.json antes de correr.${X}`);
+    process.exit(1);
+  }
+
   if (apiRecords.length === 0 && (!existing || existing.tournaments.length === 0)) {
     // Criar ficheiro vazio se não existir ainda
     const empty = {
@@ -479,6 +586,13 @@ function countPlayers(tournaments) {
     process.exit(2);
   }
 
+  // Caso edge: API devolveu 0 mas existing só tinha torneios sintéticos (99xxx).
+  // Os sintéticos são preservados sem tocar — saimos sem commit.
+  if (apiRecords.length === 0 && existingRealCount === 0) {
+    info(`Nenhum torneio real na API; ${existing.tournaments.length} sintético(s) preservado(s)`);
+    process.exit(2);
+  }
+
   // Fase 2 — processar torneios
   log("FASE 2: processar classificações + scorecards");
   const nowMs = Date.now();
@@ -491,6 +605,15 @@ function countPlayers(tournaments) {
     const key = tKey(t);
     const label = `[${i + 1}/${apiRecords.length}] ${key}`;
     const prev = existingByKey.get(key);
+
+    // Proteger tcodes sintéticos (99xxx): convencionados para torneios que
+    // não existem no scoring da FPG. Se a API por acaso devolver um desses
+    // (improvável, mas defensivo), ignora e preserva a entrada manual.
+    if (SYNTHETIC_TCODE(t.tcode)) {
+      info(`${label} ${t.name} → skip (tcode sintético)`);
+      skipped++;
+      continue;
+    }
 
     if (prev && !shouldRefetch(prev, raw, nowMs)) {
       info(`${label} ${t.name} → skip (já settled há > ${REFETCH_DAYS}d)`);
@@ -563,6 +686,22 @@ function countPlayers(tournaments) {
   console.log(`${G}✓ Há mais dados — seguro fazer commit${X}`);
   process.exit(0);
 })().catch(err => {
+  if (err instanceof FpgHttpError && err.status === 500) {
+    console.error("");
+    console.error(`${R}═══ COOKIES EXPIRADOS (HTTP 500) ═══${X}`);
+    console.error(`${R}Endpoint ${err.pathname} devolveu 500 após retries.${X}`);
+    console.error(`${R}Causa canónica: cookies do scoring.datagolf.pt expirados.${X}`);
+    console.error("");
+    console.error(`${Y}Como refrescar:${X}`);
+    console.error(`  1. Abrir Chrome 90 (ou Firefox com SameSite off)`);
+    console.error(`  2. Navegar: https://scoring.datagolf.pt/pt/tournaments.aspx`);
+    console.error(`  3. F12 → Application → Cookies → copiar ASP.NET_SessionId + DG_Lists_URL`);
+    console.error(`  4. Actualizar GitHub Secret DATAGOLF_SCORING_COOKIES`);
+    console.error(`     (e api/.scoring-datagolf-cookies.json se estás a correr local)`);
+    console.error("");
+    console.error(`${Y}NB: não se escreveu nada em disco — ficheiro existente preservado.${X}`);
+    process.exit(1);
+  }
   console.error(`${R}ERRO FATAL:${X} ${err.stack || err.message}`);
   process.exit(1);
 });

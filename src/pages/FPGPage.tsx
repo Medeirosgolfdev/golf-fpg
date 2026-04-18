@@ -56,6 +56,7 @@ import { ScorecardLB, AccumulatedLB, AllRoundsScorecardLB } from "../ui/Leaderbo
 import { LinksBar } from "../ui/LinksBar";
 // Inscrições e Jovens — extraídos para fpg/InscricoesComponents.tsx
 import { InscricoesPanel, buildJovensGroups, TERMOS_COMPETICAO, type JovensGroup } from "../ui/InscricoesComponents";
+import { JovensAnaliseView } from "../ui/JovensAnaliseView";
 // Admissions + draws (browser scrape + merge) — ver CLAUDE.md
 import { loadFpgAdmissionsDraws, indexFpgAdmissionsDraws, NACIONAL_2026_META, NACIONAL_2026_TCODES, type FpgTournamentData } from "../data/nacional2026Loader";
 import AdmissionsTab from "../ui/AdmissionsTab";
@@ -633,9 +634,16 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
       if (temResumo) out.push({ key: "resumo", label: "Resumo" });
       out.push({ key: "scorecards", label: COMBINED_TAB });
     } else if (hasAnyRounds) {
-      // 1-round: Draw R1 (se existir) + Scorecard
+      // 1-round OU multi-round parcialmente jogado (ex: R1 com scorecards, R2
+      // ainda só draw publicado). Mostrar:
+      //   - Draw R1 (se existir) → Scorecard (R1) → Draw R2..N (se houver)
       if (drawsByRound.has(1)) out.push({ key: "draw:1", label: "Draw R1" });
-      out.push({ key: "round:0", label: "Scorecard" });
+      out.push({ key: "round:0", label: nRounds > 1 ? "R1" : "Scorecard" });
+      // Draws de rondas futuras ainda não jogadas (R2, R3, ...)
+      const futureDraws = [...drawsByRound.keys()].filter(r => r >= 2).sort((a, b) => a - b);
+      for (const r of futureDraws) {
+        out.push({ key: `draw:${r}`, label: `Draw R${r}` });
+      }
     } else {
       // Sem rondas jogadas — pode ter só draws (torneio prestes a começar)
       const drawKeys = [...drawsByRound.keys()].sort((a, b) => a - b);
@@ -804,6 +812,21 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
         <LinksBar links={tournament.links} escalao={tournament.escalao} />
       </div>
 
+      {/* Nota editorial do torneio (_note) — usada para contexto cross-torneio
+          (ex: "alguns jogadores jogaram simultaneamente no Absoluto").
+          Estilo de ALERTA (amber/warning) para chamar à atenção. */}
+      {(tournament as any)._note && (
+        <div className="fs-12 fw-600" style={{
+          padding: "10px 14px", margin: "8px 12px",
+          background: "var(--bg-warn-subtle, #fef3c7)",
+          border: "1px solid var(--color-warn, #f59e0b)",
+          borderRadius: 6,
+          color: "var(--text-1, #1f2937)", lineHeight: 1.45,
+        }}>
+          ⚠️ {(tournament as any)._note}
+        </div>
+      )}
+
       {/* Tabs (só mostra se há mais do que uma) */}
       {tabs.length > 1 && (
         <div className="tab-bar">
@@ -901,7 +924,9 @@ function Content() {
   const [selected, setSelected] = useState(0);
     const md = useMasterDetail();
   const [navMode, setNavMode]         = useState<"torneios" | "ranking-pja" | "ranking-sub12">("torneios");
-  const [seriesFilter, setSeriesFilter] = useState<"" | "circuit" | "santo" | "clubes" | "jovens">(startInscritos ? "jovens" : ""); // filtro de série dentro de Torneios
+  const [seriesFilter, setSeriesFilter] = useState<"" | "circuit" | "santo" | "clubes" | "jovens">(
+    (startInscritos || urlSeg === "jovens") ? "jovens" : ""
+  );
   const [yearFilter, setYearFilter]    = useState<string | null>(null);
   const [filterManuel, setFilterManuel] = useState(true);
   const [searchQuery, setSearchQuery]  = useState("");  // filtro de texto: nome ou campo/clube
@@ -923,6 +948,10 @@ function Content() {
   const [jovensGroupKey, setJovensGroupKey]        = useState<string | null>(null);
   const [jovensEscIdx, setJovensEscIdx]            = useState<number>(0);
   const [jovensShowInscricoes, setJovensShowInscricoes] = useState(startInscritos);
+  // /FPG/jovens sem sub-segmento → abre directamente na vista de Análise.
+  // /FPG/jovens/inscritosCN → Inscrições. /FPG/torneio/X-Y → torneio específico.
+  const startAnalise = urlSeg === "jovens" && !urlSub && !params.tkey;
+  const [jovensShowAnalise, setJovensShowAnalise] = useState(startAnalise);
 
   // ── Sources secundárias (para o painel DataSourcesChip) ─────────────────
   //   Cada secção (clubes, jovens, admissions) regista ficheiros tentados/lidos.
@@ -1135,6 +1164,8 @@ function Content() {
       { url: "/data/jovens_2024.json", year: "2024" },
       { url: "/data/jovens_2023.json", year: "2023" },
       { url: "/data/jovens_2022.json", year: "2022" },
+      { url: "/data/jovens_2020.json", year: "2020" },
+      { url: "/data/jovens_2019.json", year: "2019" },
     ];
     const jovensMetaLocal: DataSource[] = [];
     Promise.all([
@@ -1284,8 +1315,23 @@ function Content() {
     return m;
   }, [jovensGroups]);
   const jovensYears = useMemo(() => Object.keys(jovensByYear).sort().reverse(), [jovensByYear]);
-  const curJovensGroup = jovensGroups.find(g => g.key === jovensGroupKey) ?? jovensGroups[0] ?? null;
+  // Quando jovensGroupKey é null (estado inicial em /FPG/jovens, sem deep-link)
+  // NÃO fazer fallback para jovensGroups[0]. Senão o auto-select escolhe sempre
+  // o grupo mais futuro (Nacional 2026-05-01 > Regional 2026-04-17), faz
+  // state→URL navegar para essa URL, e o utilizador é "atirado" para o Nacional
+  // ao abrir Jovens. Com null, render mostra "Selecciona um torneio" e a URL
+  // fica /FPG/jovens limpa até o utilizador escolher.
+  const curJovensGroup = jovensGroupKey
+    ? (jovensGroups.find(g => g.key === jovensGroupKey) ?? null)
+    : null;
   const curJovens = curJovensGroup?.entries[jovensEscIdx] ?? curJovensGroup?.entries[0] ?? null;
+
+  // Anti-loop: quando URL→state ou escIdx-sync aplicam actualizações de estado,
+  // levantam este flag para que o state→URL a seguir SALTE uma navegação. Sem
+  // isto o state→URL pode disparar com estado "stale" (old groupKey/escIdx)
+  // enquanto URL→state ainda está a sincronizar, e navegar para URL errada,
+  // criando ping-pong entre dois torneios. Ver logs do 2026-04-19.
+  const skipNextStateUrlRef = useRef(false);
 
   /** Lista unificada que alimenta o tab "Todos":
    *  - tournaments (pull-torneios + clubes merged no loader principal)
@@ -1304,13 +1350,22 @@ function Content() {
   }, [tournaments, jovensTournaments]);
   const cur = displayList[selected];
 
-  // ── Deep-link: sync URL (:tkey) → selected ──────────────────────────────
+  // ── Deep-link: sync URL (:tkey) → estado ────────────────────────────────
   // Ao carregar com `/FPG/torneio/{ccode}-{tcode}` (ou ao navegar para uma URL
-  // desse formato), procurar o torneio em displayList/jovensTournaments e:
-  //   a) se estiver na displayList base → seleccionar via `setSelected`
-  //   b) se estiver em Jovens (sintético) → trocar para seriesFilter="jovens"
-  //      e definir o group + escIdx
-  // Só corre quando displayList e jovensTournaments terminam de carregar.
+  // desse formato), procurar o torneio em displayList E em jovensTournaments
+  // e fazer DUAS actualizações em paralelo:
+  //   - se estiver em displayList → setSelected (alimenta `cur` para vistas
+  //     "Todos"/"Circuito"/"Santo")
+  //   - se estiver em jovensTournaments → setSeriesFilter("jovens") +
+  //     setJovensGroupKey (alimenta `curJovens` para a vista "Jovens")
+  //
+  // ⚠ Bug anterior: fazia early-return depois do setSelected, deixando
+  // jovensGroupKey por sincronizar. Como displayList contém os torneios de
+  // jovens (fundidos no `displayList` useMemo), o early-return triggava SEMPRE
+  // para deep-links de jovens, e o jovensGroupKey ficava preso ao default
+  // (null → fallback para jovensGroups[0] → Nacional 2026-05-01) mesmo com a
+  // URL a apontar para outro torneio (ex: Regional 007-11010). O state→URL
+  // depois reverteia a URL para o do default, criando o "loop" Nacional↔Regional.
   useEffect(() => {
     if (!urlTkey || displayList.length === 0) return;
     const parsed = parseTournKey(urlTkey);
@@ -1323,24 +1378,60 @@ function Content() {
         (t.tcode || "").split("+").includes(tcode)
       );
     const idx = displayList.findIndex(matchesT);
-    if (idx >= 0 && idx !== selected) {
-      setSelected(idx);
-      return;
-    }
-    // Se não encontrou no displayList base, procurar em Jovens
+    if (import.meta.env.DEV) console.log("[URL→state]", { urlTkey, idx, selected, seriesFilter, jovensGroupKey, jovensEscIdx });
+
+    let anyUpdate = false;
+    if (idx >= 0 && idx !== selected) { setSelected(idx); anyUpdate = true; }
+
+    // Se também é um torneio de Jovens, sincronizar o grupo seleccionado.
+    // Isto cobre tanto deep-links externos (`/FPG/torneio/...`) quanto a
+    // re-entrada na vista Jovens depois de auto-navegar via state→URL.
+    //
+    // ⚠ NÃO pôr jovensGroups em deps — quando jovensGroups muda referência
+    // (ex: toggle filterManuel), URL→state re-fire-ava e competia com
+    // state→URL, causando loops entre torneios. O sync de jovensEscIdx é
+    // deixado ao useEffect dedicado abaixo.
     const jovT = jovensTournaments.find(matchesT);
     if (jovT) {
-      setSeriesFilter("jovens");
-      // Encontrar o grupo (phase1 de buildJovensGroups): date+ccode
+      if (seriesFilter !== "jovens") { setSeriesFilter("jovens"); anyUpdate = true; }
       const groupKey = (jovT.date || "") + "-" + (jovT.ccode || jovT.campo || "?");
-      setJovensGroupKey(groupKey);
-      // Encontrar o índice da entry dentro do grupo (pode haver várias escalões)
-      setJovensShowInscricoes(false);
-      // jovensEscIdx será 0 por default; o useEffect que constrói jovensGroups
-      // já alinha as entries por escalão — setSelected não se aplica aqui.
+      if (jovensGroupKey !== groupKey) { setJovensGroupKey(groupKey); anyUpdate = true; }
+      if (jovensShowInscricoes) { setJovensShowInscricoes(false); anyUpdate = true; }
+      // Se o torneio pedido pela URL é histórico/sem Manuel, o filtro
+      // filterManuel (default=true) escondê-lo-ia da sidebar e da view.
+      // Auto-desactiva para que o deep-link funcione sempre.
+      const tHasManuel = tournamentHasManuel(jovT);
+      if (filterManuel && !tHasManuel) { setFilterManuel(false); anyUpdate = true; }
     }
+
+    // Se actualizámos alguma coisa, sinalizar ao state→URL para não navegar
+    // no próximo ciclo (URL é a fonte de verdade; estado está-se a alinhar).
+    if (anyUpdate) skipNextStateUrlRef.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [urlTkey, displayList, jovensTournaments]);
+
+  // ── Sync jovensEscIdx com o tcode exacto pedido na URL ──
+  // Quando urlTkey aponta para um torneio de Jovens numa posição do grupo
+  // diferente de entries[0] (ex: /FPG/torneio/007-11011 = Sub 14/24, posição 1),
+  // sincroniza jovensEscIdx. Separado do effect principal para evitar que deps
+  // de jovensGroups causem loops (ver comentário acima).
+  useEffect(() => {
+    if (!urlTkey || !jovensGroupKey) return;
+    const parsed = parseTournKey(urlTkey);
+    if (!parsed) return;
+    const curGroup = jovensGroups.find(g => g.key === jovensGroupKey);
+    if (!curGroup) return;
+    const escIdx = curGroup.entries.findIndex(
+      e => e.ccode === parsed.ccode && e.tcode === parsed.tcode
+    );
+    if (escIdx >= 0 && escIdx !== jovensEscIdx) {
+      setJovensEscIdx(escIdx);
+      // Guarda anti-loop: a alteração de escIdx é consequência da URL, não
+      // uma decisão nova do utilizador — o state→URL não deve reagir.
+      skipNextStateUrlRef.current = true;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlTkey, jovensGroupKey, jovensGroups]);
 
   // ── Deep-link: sync estado (torneio seleccionado) → URL ────────────────
   // Quando o utilizador clica num torneio na sidebar, actualizar a URL para
@@ -1361,11 +1452,22 @@ function Content() {
   // `idx !== selected`, por isso navegar para a URL actual é no-op.
   useEffect(() => {
     if (jovensShowInscricoes) return;
+    if (jovensShowAnalise) return;
     if (seriesFilter === "clubes") return;
+    // Guarda anti-loop: se URL→state ou escIdx-sync acabaram de actualizar
+    // estado, esse estado pode ainda não reflectir TUDO (ex: escIdx actualizado
+    // mas groupKey acabou de mudar e entries[escIdx] aponta noutro lado). Saltar
+    // esta execução — próximo render terá estado consistente e a URL coincidirá.
+    if (skipNextStateUrlRef.current) {
+      skipNextStateUrlRef.current = false;
+      if (import.meta.env.DEV) console.log("[state→URL] SKIPPED (URL→state in flight)");
+      return;
+    }
     const t: Tournament | null =
       seriesFilter === "jovens" ? curJovens : cur;
     if (!t || !t.ccode || !t.tcode) return;
     const target = tournamentUrl("FPG", t.ccode, t.tcode);
+    if (import.meta.env.DEV) console.log("[state→URL]", { from: location.pathname, target, seriesFilter, source: seriesFilter === "jovens" ? "curJovens" : "cur", tcode: t.tcode });
     if (target && location.pathname !== target) {
       navigate(target, { replace: true });
     }
@@ -1833,13 +1935,39 @@ function Content() {
             {jovensLoaded && jovensGroups.length === 0 && !jovensLoading && (
               <div className="muted fs-11 u-pad-italic">Ficheiro não encontrado (ainda)</div>
             )}
+            {/* Entrada especial: Análise (landing/landing page) */}
+            <a
+              href="/FPG/jovens"
+              onClick={e => {
+                if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
+                  e.preventDefault();
+                  setJovensShowAnalise(true);
+                  setJovensShowInscricoes(false);
+                  setJovensGroupKey(null);
+                  md.onSelect();
+                  if (location.pathname !== "/FPG/jovens") navigate("/FPG/jovens");
+                }
+              }}
+              className={`course-item${jovensShowAnalise ? " active" : ""}`}
+              style={{
+                borderLeft: `4px solid ${SIDEBAR_ACCENT.tour}`, borderRadius: "0 6px 6px 0",
+              }}
+            >
+              <div className="fw-700 fs-12">
+                📊 Análise 4 anos
+              </div>
+              <div className="muted fs-11">Campeões Regional + Nacional · jogadores frequentes</div>
+            </a>
             {/* Entrada especial: Inscrições */}
             <a
               href="/FPG/jovens/inscritosCN"
               onClick={e => {
                 if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
                   e.preventDefault();
-                  setJovensShowInscricoes(true); setJovensGroupKey(null); md.onSelect();
+                  setJovensShowInscricoes(true);
+                  setJovensShowAnalise(false);
+                  setJovensGroupKey(null);
+                  md.onSelect();
                   navigate("/FPG/jovens/inscritosCN");
                 }
               }}
@@ -1887,7 +2015,7 @@ function Content() {
                       t={sidebarT}
                       isActive={jovensGroupKey === g.key}
                       onClick={() => {
-                        setJovensGroupKey(g.key); setJovensEscIdx(0); setJovensShowInscricoes(false); md.onSelect();
+                        setJovensGroupKey(g.key); setJovensEscIdx(0); setJovensShowInscricoes(false); setJovensShowAnalise(false); md.onSelect();
                         // volta à URL do filtro JOVENS (sem subfiltro inscritosCN)
                         if (/\/inscritos/i.test(location.pathname)) navigate("/FPG/jovens");
                       }}
@@ -1919,7 +2047,9 @@ function Content() {
             ))}
           </div>
           <div className="course-detail" ref={md.detailRef}>
-            {jovensShowInscricoes ? (
+            {jovensShowAnalise ? (
+              <JovensAnaliseView jovensTournaments={jovensTournaments} playersDB={playersDB} />
+            ) : jovensShowInscricoes ? (
               <InscricoesPanel />
             ) : curJovensGroup ? (
               <>
