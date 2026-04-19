@@ -6,6 +6,7 @@
  */
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { useSort } from "../hooks/useSort";
+import PrintButton from "../ui/PrintButton";
 import { loadPlayers } from "../data/loader";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from "recharts";
 import { SC, sdClassByHcp, scClass, medalColor } from "../utils/scoreDisplay";
@@ -2005,6 +2006,7 @@ function DriveContent() {
                         title="Classificação (Scoring) na Federação">
                         Scoring ↗
                       </a>
+                      <PrintButton />
                     </div>
                     <div className="muted fs-11 mb-4">
                       T{curTournament.num} · 📍 {curTournament.campo} · 📅 {fmtDateShort(curTournament.date)}

@@ -28,6 +28,11 @@ export interface RdData {
   birds: number;
   pars: number;
   bogs: number;
+  /** Pars por buraco PARA ESTA RONDA — usado pelo ScoreCells para colorir
+   *  cada score (birdie/par/bogey) com base nas pars reais da ronda, e não
+   *  das pars globais (que podem diferir quando R1 e R2 são em percursos
+   *  com routing diferente, ex: Santo da Serra Desertas-Serras vs Serras-Serras). */
+  holePars: number[];
 }
 
 export interface PRow {
@@ -194,7 +199,7 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
       else bogs++;
     });
     const sd = computeRoundSD ? computeRoundSD(p, capped, rs, ref, gross) : null;
-    return { scores: capped, gross, toPar: gross - rdPar, sd, birds, pars: pars2, bogs };
+    return { scores: capped, gross, toPar: gross - rdPar, sd, birds, pars: pars2, bogs, holePars: refPars || [] };
   }
 
   // Jogadores filtrados

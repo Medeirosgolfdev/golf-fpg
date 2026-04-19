@@ -1,7 +1,7 @@
 {
-  "scrapedAt": "2026-04-19T12:00:00.000Z",
+  "scrapedAt": "2026-04-18T20:09:25.000Z",
   "total": 335,
-  "source": "merged (additive) + synced from inscricoes_nacionais.json + CRJ26 manual (PDFs de Santo da Serra) + CRJ26 manual (PDFs de Santo da Serra) + CRJ26 manual (PDFs de Santo da Serra) + CRJ26 manual (PDFs de Santo da Serra) + CRJ26 manual (PDFs de Santo da Serra) + CRJ26 manual (PDFs de Santo da Serra) + CRJ26 11010 R2 (PDF Santo da Serra) + merge Sub10&12+Sub14&24 numa entrada (align date, 99012→11010) + Sub14&24 real tcode 11011 + admissions corrupta removida em 910/10115 (só tinha 3 jog vs 33 reais) + admissions 910/10118 recuperadas (9→14 jog, via Chrome MCP) + recuperação bulk de 57 admissions parciais via Chrome MCP + CRJ26 11010 R2 atualizado (PDF 2026-04-19, 18→17 jog) + CRJ26 11011 R2 (PDF 2026-04-19, 22 jog)",
+  "source": "merged (additive) + synced from inscricoes_nacionais.json + CRJ26 manual (PDFs de Santo da Serra) + CRJ26 manual (PDFs de Santo da Serra) + CRJ26 manual (PDFs de Santo da Serra) + CRJ26 manual (PDFs de Santo da Serra) + CRJ26 manual (PDFs de Santo da Serra) + CRJ26 manual (PDFs de Santo da Serra) + CRJ26 11010 R2 (PDF Santo da Serra) + merge Sub10&12+Sub14&24 numa entrada (align date, 99012→11010) + Sub14&24 real tcode 11011 + admissions corrupta removida em 910/10115 (só tinha 3 jog vs 33 reais) + admissions 910/10118 recuperadas (9→14 jog, via Chrome MCP) + recuperação bulk de 57 admissions parciais via Chrome MCP",
   "tournaments": [
     {
       "ccode": "000",
@@ -1746,7 +1746,7 @@
             "fed": "58948",
             "nome": "Valter Fernandes",
             "clube": "Palheiro",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2026/04/02 15:59",
             "status": "confirmed"
@@ -1822,7 +1822,7 @@
             "fed": "52884",
             "nome": "Manuel Goulartt Medeiros",
             "clube": "Santo da Serra",
-            "hcp": 10,
+            "hcp": 10.0,
             "vac": 82.9,
             "dataInscricao": "2026/03/19 12:37",
             "status": "confirmed"
@@ -1853,7 +1853,7 @@
             "nome": "Íris Costa",
             "clube": "Palheiro",
             "hcp": 39.6,
-            "vac": 111,
+            "vac": 111.0,
             "dataInscricao": "2026/03/12 08:50",
             "status": "confirmed"
           },
@@ -1872,7 +1872,7 @@
             "fed": "56635",
             "nome": "Laura Temtem",
             "clube": "Santo da Serra",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2026/03/20 12:21",
             "status": "confirmed"
@@ -1882,7 +1882,7 @@
             "fed": "52398",
             "nome": "Benedita Carvalho",
             "clube": "Santo da Serra",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2026/03/20 15:38",
             "status": "confirmed"
@@ -1892,8 +1892,8 @@
             "fed": "50528",
             "nome": "Áurea Camacho",
             "clube": "Palheiro",
-            "hcp": 54,
-            "vac": 130,
+            "hcp": 54.0,
+            "vac": 130.0,
             "dataInscricao": "2026/03/20 17:31",
             "status": "confirmed"
           }
@@ -2093,7 +2093,7 @@
             "fed": "59252",
             "nome": "Gastão Thomaz Medeiros",
             "clube": "Santo da Serra",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2026/03/24 13:46",
             "status": "confirmed"
@@ -2103,7 +2103,7 @@
             "fed": "58969",
             "nome": "Matilde Teixeira",
             "clube": "Palheiro",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": 142.2,
             "dataInscricao": "2026/03/25 10:04",
             "status": "confirmed"
@@ -2113,7 +2113,7 @@
             "fed": "57663",
             "nome": "Maria Do Carmo Mendes",
             "clube": "Santo da Serra",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2026/03/31 11:31",
             "status": "confirmed"
@@ -2123,7 +2123,7 @@
             "fed": "52394",
             "nome": "Martim Góis Macedo",
             "clube": "Santo da Serra",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2026/03/31 15:34",
             "status": "confirmed"
@@ -2770,7 +2770,7 @@
             "fed": "40645",
             "nome": "João Santos",
             "clube": "PXO Clube",
-            "hcp": 2,
+            "hcp": 2.0,
             "vac": 72.5,
             "dataInscricao": "2026/03/23 08:21",
             "status": "confirmed"
@@ -2791,7 +2791,7 @@
             "nome": "José Pedro Miranda",
             "clube": "Palheiro",
             "hcp": 8.2,
-            "vac": 79,
+            "vac": 79.0,
             "dataInscricao": "2026/03/20 15:23",
             "status": "confirmed"
           },
@@ -2811,7 +2811,7 @@
             "nome": "Maria Câmara",
             "clube": "Santo da Serra",
             "hcp": 9.4,
-            "vac": 81,
+            "vac": 81.0,
             "dataInscricao": "2026/03/25 13:32",
             "status": "confirmed"
           },
@@ -2830,7 +2830,7 @@
             "fed": "52884",
             "nome": "Manuel Goulartt Medeiros",
             "clube": "Santo da Serra",
-            "hcp": 10,
+            "hcp": 10.0,
             "vac": 82.9,
             "dataInscricao": "2026/03/19 12:36",
             "status": "confirmed"
@@ -8282,7 +8282,7 @@
             "fed": "50955",
             "nome": "Mateus Miguel Estevão",
             "clube": "Vilamoura, C. G",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": 133.9,
             "dataInscricao": "2026/03/16 09:26",
             "status": "confirmed"
@@ -8302,7 +8302,7 @@
             "fed": "55936",
             "nome": "Nathan Rothwell",
             "clube": "Vila Sol",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2026/02/28 12:19",
             "status": "confirmed"
@@ -8332,7 +8332,7 @@
             "fed": "58831",
             "nome": "Afonso Furtado de Oliveira",
             "clube": "Espiche",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2026/03/05 11:32",
             "status": "confirmed"
@@ -8342,7 +8342,7 @@
             "fed": "57224",
             "nome": "Alexander Adeoye",
             "clube": "Espiche",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2026/03/06 11:58",
             "status": "confirmed"
@@ -11340,8 +11340,8 @@
             "fed": "38006",
             "nome": "Marcelo Gaspar",
             "clube": "Santo da Serra",
-            "hcp": 7,
-            "vac": 80,
+            "hcp": 7.0,
+            "vac": 80.0,
             "dataInscricao": "2026/03/01 21:17",
             "status": "confirmed"
           },
@@ -11371,7 +11371,7 @@
             "nome": "Martim Lima",
             "clube": "Santo da Serra",
             "hcp": 12.2,
-            "vac": 84,
+            "vac": 84.0,
             "dataInscricao": "2026/02/19 21:45",
             "status": "confirmed"
           },
@@ -11400,7 +11400,7 @@
             "fed": "58986",
             "nome": "Vasco Abreu",
             "clube": "Palheiro",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2026/03/02 10:41",
             "status": "confirmed"
@@ -11785,7 +11785,7 @@
             "nome": "Irís Costa",
             "clube": "Palheiro",
             "hcp": 40.6,
-            "vac": 112,
+            "vac": 112.0,
             "dataInscricao": "2026/02/13 09:45",
             "status": "confirmed"
           },
@@ -11814,7 +11814,7 @@
             "fed": "56635",
             "nome": "Laura Temtem",
             "clube": "Santo da Serra",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2026/02/19 14:21",
             "status": "confirmed"
@@ -11824,7 +11824,7 @@
             "fed": "52398",
             "nome": "Benedita Carvalho",
             "clube": "Santo da Serra",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2026/02/23 15:58",
             "status": "confirmed"
@@ -11834,8 +11834,8 @@
             "fed": "50528",
             "nome": "Áurea Camacho",
             "clube": "Palheiro",
-            "hcp": 54,
-            "vac": 130,
+            "hcp": 54.0,
+            "vac": 130.0,
             "dataInscricao": "2026/02/25 15:26",
             "status": "confirmed"
           },
@@ -11844,7 +11844,7 @@
             "fed": "56235",
             "nome": "Aylara Harper",
             "clube": "Santo da Serra",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2026/03/02 08:28",
             "status": "confirmed"
@@ -14674,7 +14674,7 @@
             "nome": "Ethan Hutchinson",
             "clube": "Assoc. Qta.Lago",
             "hcp": 9.8,
-            "vac": 87,
+            "vac": 87.0,
             "dataInscricao": "2026/01/22 21:43",
             "status": "confirmed"
           },
@@ -14744,7 +14744,7 @@
             "nome": "João Dragão",
             "clube": "Vilamoura, C. G",
             "hcp": 31.4,
-            "vac": 105,
+            "vac": 105.0,
             "dataInscricao": "2026/02/16 11:15",
             "status": "confirmed"
           },
@@ -14763,7 +14763,7 @@
             "fed": "57192",
             "nome": "Vir Runganadhan",
             "clube": "Vila Sol",
-            "hcp": 43,
+            "hcp": 43.0,
             "vac": null,
             "dataInscricao": "2026/02/12 21:09",
             "status": "confirmed"
@@ -14773,7 +14773,7 @@
             "fed": "53983",
             "nome": "Vasco Cabral",
             "clube": "Vilamoura, C. G",
-            "hcp": 45,
+            "hcp": 45.0,
             "vac": 117.3,
             "dataInscricao": "2026/02/16 01:05",
             "status": "confirmed"
@@ -15843,7 +15843,7 @@
             "fed": "58948",
             "nome": "Valter Fernandes",
             "clube": "Palheiro",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2026/02/02 09:31",
             "status": "confirmed"
@@ -15984,8 +15984,8 @@
             "fed": "50528",
             "nome": "Áurea Camacho",
             "clube": "Palheiro",
-            "hcp": 54,
-            "vac": 130,
+            "hcp": 54.0,
+            "vac": 130.0,
             "dataInscricao": "2026/01/22 19:29",
             "status": "confirmed"
           },
@@ -15994,7 +15994,7 @@
             "fed": "56635",
             "nome": "Laura Temtem",
             "clube": "Santo da Serra",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2026/01/26 09:22",
             "status": "confirmed"
@@ -19545,7 +19545,7 @@
             "nome": "André Gonçalves",
             "clube": "Palheiro",
             "hcp": 6.1,
-            "vac": 77,
+            "vac": 77.0,
             "dataInscricao": "2025/12/23 13:08",
             "status": "confirmed"
           },
@@ -19555,7 +19555,7 @@
             "nome": "Salvador Rodrigues",
             "clube": "Palheiro",
             "hcp": 6.3,
-            "vac": 78,
+            "vac": 78.0,
             "dataInscricao": "2025/12/27 13:43",
             "status": "confirmed"
           },
@@ -19595,7 +19595,7 @@
             "nome": "Rodrigo Abreu",
             "clube": "Palheiro",
             "hcp": 9.3,
-            "vac": 85,
+            "vac": 85.0,
             "dataInscricao": "2025/12/27 22:27",
             "status": "confirmed"
           },
@@ -19828,8 +19828,8 @@
             "fed": "50528",
             "nome": "Áurea Camacho",
             "clube": "Palheiro",
-            "hcp": 54,
-            "vac": 130,
+            "hcp": 54.0,
+            "vac": 130.0,
             "dataInscricao": "2025/12/24 10:23",
             "status": "confirmed"
           },
@@ -19934,7 +19934,7 @@
             "fed": "57640",
             "nome": "Daniel Augusto",
             "clube": "PXO Clube",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2025/12/28 23:27",
             "status": "confirmed"
@@ -19944,7 +19944,7 @@
             "fed": "52880",
             "nome": "Manuel Goes",
             "clube": "Santo da Serra",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2025/12/29 13:44",
             "status": "confirmed"
@@ -19954,7 +19954,7 @@
             "fed": "56647",
             "nome": "Lourenço Vasconcelos",
             "clube": "Palheiro",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2025/12/31 21:35",
             "status": "confirmed"
@@ -27496,7 +27496,7 @@
             "nome": "Madalena Policarpo",
             "clube": "Citynorte",
             "hcp": 18.4,
-            "vac": 90,
+            "vac": 90.0,
             "dataInscricao": "2025/07/17 16:28",
             "status": "confirmed"
           },
@@ -27525,7 +27525,7 @@
             "fed": "53645",
             "nome": "José Maria Pereira",
             "clube": "Miramar",
-            "hcp": 24,
+            "hcp": 24.0,
             "vac": 94.7,
             "dataInscricao": "2025/07/17 16:26",
             "status": "confirmed"
@@ -27566,7 +27566,7 @@
             "nome": "Gil Ribeiro",
             "clube": "Citynorte",
             "hcp": 28.2,
-            "vac": 100,
+            "vac": 100.0,
             "dataInscricao": "2025/07/17 16:26",
             "status": "confirmed"
           },
@@ -27586,7 +27586,7 @@
             "nome": "Marta Mendes",
             "clube": "Citynorte",
             "hcp": 35.1,
-            "vac": 105,
+            "vac": 105.0,
             "dataInscricao": "2025/07/17 16:28",
             "status": "confirmed"
           },
@@ -27625,7 +27625,7 @@
             "fed": "46314",
             "nome": "Carolina Paiva",
             "clube": "Citynorte",
-            "hcp": 49,
+            "hcp": 49.0,
             "vac": 123.6,
             "dataInscricao": "2025/07/17 16:29",
             "status": "confirmed"
@@ -28314,7 +28314,7 @@
             "nome": "José Silva",
             "clube": "Amendoeira",
             "hcp": 13.5,
-            "vac": 83,
+            "vac": 83.0,
             "dataInscricao": "2025/08/03 23:45",
             "status": "confirmed"
           },
@@ -28323,7 +28323,7 @@
             "fed": "48794",
             "nome": "Catarina Sousa Conceição",
             "clube": "Vilamoura, C. G",
-            "hcp": 12,
+            "hcp": 12.0,
             "vac": 83.7,
             "dataInscricao": "2025/08/10 14:21",
             "status": "confirmed"
@@ -29406,7 +29406,7 @@
             "fed": "46480",
             "nome": "Afonso de Sousa Pinto",
             "clube": "Oporto",
-            "hcp": 15,
+            "hcp": 15.0,
             "vac": 86.2,
             "dataInscricao": "2025/02/16 22:53",
             "status": "confirmed"
@@ -29447,7 +29447,7 @@
             "nome": "Madalena Policarpo",
             "clube": "Citynorte",
             "hcp": 18.4,
-            "vac": 90,
+            "vac": 90.0,
             "dataInscricao": "2025/02/25 09:56",
             "status": "confirmed"
           },
@@ -29467,7 +29467,7 @@
             "nome": "João Pedro Frade",
             "clube": "Citynorte",
             "hcp": 22.3,
-            "vac": 93,
+            "vac": 93.0,
             "dataInscricao": "2025/03/01 07:44",
             "status": "confirmed"
           },
@@ -29517,7 +29517,7 @@
             "nome": "Gustavo Barros Silva Ramos",
             "clube": "Paredes",
             "hcp": 29.4,
-            "vac": 101,
+            "vac": 101.0,
             "dataInscricao": "2025/02/11 16:18",
             "status": "confirmed"
           },
@@ -29546,8 +29546,8 @@
             "fed": "48045",
             "nome": "Marta Mendes",
             "clube": "Citynorte",
-            "hcp": 35,
-            "vac": 105,
+            "hcp": 35.0,
+            "vac": 105.0,
             "dataInscricao": "2025/02/28 17:29",
             "status": "confirmed"
           },
@@ -29587,7 +29587,7 @@
             "nome": "Marta Andrade",
             "clube": "Citynorte",
             "hcp": 45.6,
-            "vac": 120,
+            "vac": 120.0,
             "dataInscricao": "2025/02/28 21:44",
             "status": "confirmed"
           },
@@ -29596,8 +29596,8 @@
             "fed": "52488",
             "nome": "Maria Isabel Teixeira dos Santos",
             "clube": "Miramar",
-            "hcp": 50,
-            "vac": 122,
+            "hcp": 50.0,
+            "vac": 122.0,
             "dataInscricao": "2025/02/24 16:09",
             "status": "confirmed"
           },
@@ -29616,7 +29616,7 @@
             "fed": "46314",
             "nome": "Carolina Paiva",
             "clube": "Citynorte",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": 128.6,
             "dataInscricao": "2025/03/01 14:25",
             "status": "confirmed"
@@ -29626,7 +29626,7 @@
             "fed": "54550",
             "nome": "Gui Silva",
             "clube": "Cantanhede",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": 132.4,
             "dataInscricao": "2025/02/26 10:09",
             "status": "confirmed"
@@ -29636,7 +29636,7 @@
             "fed": "54551",
             "nome": "Alice Araújo",
             "clube": "Cantanhede",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": 135.5,
             "dataInscricao": "2025/03/01 10:55",
             "status": "confirmed"
@@ -29666,7 +29666,7 @@
             "fed": "52663",
             "nome": "Maria Benedita Fleming Carvalho",
             "clube": "Oporto",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2025/02/28 12:09",
             "status": "confirmed"
@@ -29676,7 +29676,7 @@
             "fed": "53020",
             "nome": "Francisco Maria França E Silva Raposo de Magalhães",
             "clube": "Oporto",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2025/03/04 09:19",
             "status": "confirmed"
@@ -29686,7 +29686,7 @@
             "fed": "56219",
             "nome": "António O` Mahony",
             "clube": "Cantanhede",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2025/06/30 14:19",
             "status": "confirmed"
@@ -30329,7 +30329,7 @@
             "nome": "Jack Brando",
             "clube": "Vila Sol",
             "hcp": 13.1,
-            "vac": 88,
+            "vac": 88.0,
             "dataInscricao": "2025/06/26 12:35",
             "status": "confirmed"
           },
@@ -31289,7 +31289,7 @@
             "fed": "53548",
             "nome": "Tomás Câmara",
             "clube": "PXO Clube",
-            "hcp": 13,
+            "hcp": 13.0,
             "vac": 83.7,
             "dataInscricao": "2025/07/08 14:50",
             "status": "confirmed"
@@ -31330,7 +31330,7 @@
             "nome": "Lucas Costa Cubbin",
             "clube": "Santo da Serra",
             "hcp": 30.9,
-            "vac": 102,
+            "vac": 102.0,
             "dataInscricao": "2025/07/08 14:51",
             "status": "confirmed"
           },
@@ -31544,7 +31544,7 @@
             "nome": "Manuel Gouveia",
             "clube": "Santo da Serra",
             "hcp": 29.5,
-            "vac": 102,
+            "vac": 102.0,
             "dataInscricao": "2025/07/08 14:46",
             "status": "confirmed"
           },
@@ -31755,7 +31755,7 @@
             "fed": "47677",
             "nome": "Irís Costa",
             "clube": "Palheiro",
-            "hcp": 46,
+            "hcp": 46.0,
             "vac": 118.6,
             "dataInscricao": "2025/07/08 14:40",
             "status": "confirmed"
@@ -31775,7 +31775,7 @@
             "fed": "53728",
             "nome": "Santiago Couto",
             "clube": "PXO Clube",
-            "hcp": 48,
+            "hcp": 48.0,
             "vac": 126.6,
             "dataInscricao": "2025/07/08 14:40",
             "status": "confirmed"
@@ -34614,7 +34614,7 @@
             "fed": "53548",
             "nome": "Tomás Câmara",
             "clube": "PXO Clube",
-            "hcp": 13,
+            "hcp": 13.0,
             "vac": 83.7,
             "dataInscricao": "2025/06/12 13:43",
             "status": "confirmed"
@@ -34655,7 +34655,7 @@
             "nome": "Lucas Costa Cubbin",
             "clube": "Santo da Serra",
             "hcp": 30.9,
-            "vac": 102,
+            "vac": 102.0,
             "dataInscricao": "2025/06/24 14:23",
             "status": "confirmed"
           },
@@ -34849,7 +34849,7 @@
             "nome": "Manuel Gouveia",
             "clube": "Santo da Serra",
             "hcp": 29.5,
-            "vac": 102,
+            "vac": 102.0,
             "dataInscricao": "2025/06/25 22:19",
             "status": "confirmed"
           },
@@ -35715,7 +35715,7 @@
             "fed": "40990",
             "nome": "Maria Câmara",
             "clube": "Santo da Serra",
-            "hcp": 13,
+            "hcp": 13.0,
             "vac": 83.5,
             "dataInscricao": "2025/02/28 20:15",
             "status": "confirmed"
@@ -35735,7 +35735,7 @@
             "fed": "39023",
             "nome": "Bernardo Dias",
             "clube": "PXO Clube",
-            "hcp": 23,
+            "hcp": 23.0,
             "vac": 94.3,
             "dataInscricao": "2025/02/10 12:32",
             "status": "confirmed"
@@ -35840,7 +35840,7 @@
             "fed": "45393",
             "nome": "Laura Santos",
             "clube": "PXO Clube",
-            "hcp": 9,
+            "hcp": 9.0,
             "vac": 80.4,
             "dataInscricao": "2025/02/09 12:01",
             "status": "confirmed"
@@ -35901,7 +35901,7 @@
             "nome": "Cassiel Khayali",
             "clube": "Palheiro",
             "hcp": 30.5,
-            "vac": 102,
+            "vac": 102.0,
             "dataInscricao": "2025/02/14 13:57",
             "status": "confirmed"
           },
@@ -36109,7 +36109,7 @@
             "nome": "Irís Costa",
             "clube": "Palheiro",
             "hcp": 47.8,
-            "vac": 121,
+            "vac": 121.0,
             "dataInscricao": "2025/02/10 14:14",
             "status": "confirmed"
           },
@@ -36118,7 +36118,7 @@
             "fed": "53728",
             "nome": "Santiago Couto",
             "clube": "PXO Clube",
-            "hcp": 48,
+            "hcp": 48.0,
             "vac": 125.9,
             "dataInscricao": "2025/02/25 16:26",
             "status": "confirmed"
@@ -36138,7 +36138,7 @@
             "fed": "54757",
             "nome": "Mafalda Sousa",
             "clube": "Santo da Serra",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2025/02/12 22:50",
             "status": "confirmed"
@@ -36148,7 +36148,7 @@
             "fed": "57486",
             "nome": "Nicolau Rodrigues",
             "clube": "PXO Clube",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2025/06/05 16:59",
             "status": "confirmed"
@@ -38563,7 +38563,7 @@
             "fed": "48933",
             "nome": "Ethan Sutherland",
             "clube": "Vila Sol",
-            "hcp": 6,
+            "hcp": 6.0,
             "vac": 80.4,
             "dataInscricao": "2025/05/13 14:56",
             "status": "confirmed"
@@ -38594,7 +38594,7 @@
             "nome": "Jack Brando",
             "clube": "Vila Sol",
             "hcp": 12.8,
-            "vac": 88,
+            "vac": 88.0,
             "dataInscricao": "2025/05/28 19:50",
             "status": "confirmed"
           },
@@ -38613,7 +38613,7 @@
             "fed": "45228",
             "nome": "Nicole de Castro",
             "clube": "Assoc. Qta.Lago",
-            "hcp": 30,
+            "hcp": 30.0,
             "vac": 103.7,
             "dataInscricao": "2025/05/14 09:48",
             "status": "confirmed"
@@ -39833,7 +39833,7 @@
             "fed": "46310",
             "nome": "Margarida Silva Pinto",
             "clube": "Miramar",
-            "hcp": 9,
+            "hcp": 9.0,
             "vac": 80.3,
             "dataInscricao": "2025/05/29 16:46",
             "status": "confirmed"
@@ -39853,7 +39853,7 @@
             "fed": "45608",
             "nome": "Madalena Policarpo",
             "clube": "Citynorte",
-            "hcp": 19,
+            "hcp": 19.0,
             "vac": 90.9,
             "dataInscricao": "2025/06/16 22:42",
             "status": "confirmed"
@@ -39863,7 +39863,7 @@
             "fed": "53847",
             "nome": "Madalena Miguel Araujo",
             "clube": "Ponte de Lima",
-            "hcp": 20,
+            "hcp": 20.0,
             "vac": 94.2,
             "dataInscricao": "2025/05/30 09:37",
             "status": "confirmed"
@@ -39884,7 +39884,7 @@
             "nome": "Marta Mendes",
             "clube": "Citynorte",
             "hcp": 35.4,
-            "vac": 105,
+            "vac": 105.0,
             "dataInscricao": "2025/06/08 22:49",
             "status": "confirmed"
           },
@@ -39913,7 +39913,7 @@
             "fed": "50786",
             "nome": "Maria La Piedad",
             "clube": "Vilamoura, C. G",
-            "hcp": 36,
+            "hcp": 36.0,
             "vac": 110.5,
             "dataInscricao": "2025/06/23 09:01",
             "status": "confirmed"
@@ -40330,7 +40330,7 @@
             "fed": "39023",
             "nome": "Bernardo Dias",
             "clube": "PXO Clube",
-            "hcp": 24,
+            "hcp": 24.0,
             "vac": 95.5,
             "dataInscricao": "2025/05/14 12:53",
             "status": "confirmed"
@@ -40466,7 +40466,7 @@
             "nome": "Maria Cunha",
             "clube": "Palheiro",
             "hcp": 7.2,
-            "vac": 79,
+            "vac": 79.0,
             "dataInscricao": "2025/05/20 16:50",
             "status": "confirmed"
           },
@@ -40575,7 +40575,7 @@
             "fed": "53687",
             "nome": "Santiago Santos",
             "clube": "PXO Clube",
-            "hcp": 41,
+            "hcp": 41.0,
             "vac": 112.1,
             "dataInscricao": "2025/05/15 13:33",
             "status": "confirmed"
@@ -40767,8 +40767,8 @@
             "fed": "53728",
             "nome": "Santiago Couto",
             "clube": "PXO Clube",
-            "hcp": 48,
-            "vac": 127,
+            "hcp": 48.0,
+            "vac": 127.0,
             "dataInscricao": "2025/05/19 12:07",
             "status": "confirmed"
           },
@@ -40787,7 +40787,7 @@
             "fed": "54757",
             "nome": "Mafalda Sousa",
             "clube": "Santo da Serra",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": 135.8,
             "dataInscricao": "2025/05/12 10:03",
             "status": "confirmed"
@@ -44320,7 +44320,7 @@
             "nome": "Bernardo Dias",
             "clube": "PXO Clube",
             "hcp": 23.4,
-            "vac": 95,
+            "vac": 95.0,
             "dataInscricao": "2025/04/23 00:30",
             "status": "confirmed"
           },
@@ -44450,7 +44450,7 @@
             "nome": "Bernardo Cunha",
             "clube": "Santo da Serra",
             "hcp": 25.2,
-            "vac": 98,
+            "vac": 98.0,
             "dataInscricao": "2025/04/21 21:49",
             "status": "confirmed"
           },
@@ -44470,7 +44470,7 @@
             "nome": "Cassiel Khayali",
             "clube": "Palheiro",
             "hcp": 30.5,
-            "vac": 102,
+            "vac": 102.0,
             "dataInscricao": "2025/04/14 11:40",
             "status": "confirmed"
           },
@@ -44678,7 +44678,7 @@
             "fed": "53728",
             "nome": "Santiago Couto",
             "clube": "PXO Clube",
-            "hcp": 48,
+            "hcp": 48.0,
             "vac": 126.4,
             "dataInscricao": "2025/04/30 14:12",
             "status": "confirmed"
@@ -44698,7 +44698,7 @@
             "fed": "54757",
             "nome": "Mafalda Sousa",
             "clube": "Santo da Serra",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2025/04/12 13:24",
             "status": "confirmed"
@@ -44788,7 +44788,7 @@
             "fed": "50528",
             "nome": "Áurea Camacho",
             "clube": "Palheiro",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": 130.9,
             "dataInscricao": "2025/04/14 11:30",
             "status": "confirmed"
@@ -44818,7 +44818,7 @@
             "fed": "57640",
             "nome": "Daniel Augusto",
             "clube": "PXO Clube",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2025/05/02 09:24",
             "status": "confirmed"
@@ -44828,7 +44828,7 @@
             "fed": "55353",
             "nome": "Gabriel Velosa",
             "clube": "PXO Clube",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2025/05/02 22:10",
             "status": "confirmed"
@@ -45475,7 +45475,7 @@
             "fed": "51523",
             "nome": "Angelina Gao",
             "clube": "Quinta do Peru",
-            "hcp": 11,
+            "hcp": 11.0,
             "vac": 81.9,
             "dataInscricao": "2025/04/13 15:54",
             "status": "confirmed"
@@ -46846,7 +46846,7 @@
             "nome": "Diogo Guilherme",
             "clube": "Oporto",
             "hcp": 20.3,
-            "vac": 92,
+            "vac": 92.0,
             "dataInscricao": "2025/04/11 13:08",
             "status": "confirmed"
           },
@@ -46876,7 +46876,7 @@
             "nome": "Tomás Araújo",
             "clube": "Citynorte",
             "hcp": 30.5,
-            "vac": 104,
+            "vac": 104.0,
             "dataInscricao": "2025/04/27 20:29",
             "status": "confirmed"
           },
@@ -46885,7 +46885,7 @@
             "fed": "47810",
             "nome": "Gil Ribeiro",
             "clube": "Citynorte",
-            "hcp": 36,
+            "hcp": 36.0,
             "vac": 106.6,
             "dataInscricao": "2025/04/23 20:02",
             "status": "confirmed"
@@ -46955,7 +46955,7 @@
             "fed": "52488",
             "nome": "Maria Isabel Teixeira dos Santos",
             "clube": "Miramar",
-            "hcp": 50,
+            "hcp": 50.0,
             "vac": 123.3,
             "dataInscricao": "2025/05/04 14:16",
             "status": "confirmed"
@@ -46976,7 +46976,7 @@
             "nome": "Tomás Tomásio",
             "clube": "Cantanhede",
             "hcp": 49.5,
-            "vac": 126,
+            "vac": 126.0,
             "dataInscricao": "2025/05/04 14:15",
             "status": "confirmed"
           },
@@ -46995,7 +46995,7 @@
             "fed": "46314",
             "nome": "Carolina Paiva",
             "clube": "Citynorte",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": 132.6,
             "dataInscricao": "2025/05/02 11:02",
             "status": "confirmed"
@@ -47005,7 +47005,7 @@
             "fed": "46531",
             "nome": "Elias Bacelar Ferreira",
             "clube": "Citynorte",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": 133.9,
             "dataInscricao": "2025/05/05 11:46",
             "status": "confirmed"
@@ -47015,7 +47015,7 @@
             "fed": "52798",
             "nome": "Vicente Messala",
             "clube": "Miramar",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": 136.9,
             "dataInscricao": "2025/05/05 11:21",
             "status": "confirmed"
@@ -47025,8 +47025,8 @@
             "fed": "54551",
             "nome": "Alice Araújo",
             "clube": "Cantanhede",
-            "hcp": 54,
-            "vac": 138,
+            "hcp": 54.0,
+            "vac": 138.0,
             "dataInscricao": "2025/05/01 11:09",
             "status": "confirmed"
           },
@@ -47035,7 +47035,7 @@
             "fed": "54550",
             "nome": "Gui Silva",
             "clube": "Cantanhede",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": 141.1,
             "dataInscricao": "2025/05/01 11:04",
             "status": "confirmed"
@@ -47055,7 +47055,7 @@
             "fed": "52663",
             "nome": "Maria Benedita Fleming Carvalho",
             "clube": "Oporto",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2025/04/30 17:51",
             "status": "confirmed"
@@ -47065,7 +47065,7 @@
             "fed": "53020",
             "nome": "Francisco Raposo de Magalhães",
             "clube": "Oporto",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2025/05/02 17:45",
             "status": "confirmed"
@@ -47075,7 +47075,7 @@
             "fed": "56006",
             "nome": "Maitê Da Rosa",
             "clube": "Oporto",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2025/05/03 12:39",
             "status": "confirmed"
@@ -47715,7 +47715,7 @@
             "fed": "48933",
             "nome": "Ethan Sutherland",
             "clube": "Vila Sol",
-            "hcp": 6,
+            "hcp": 6.0,
             "vac": 79.8,
             "dataInscricao": "2025/04/16 14:30",
             "status": "confirmed"
@@ -48764,7 +48764,7 @@
             "fed": "45393",
             "nome": "Laura Santos",
             "clube": "PXO Clube",
-            "hcp": 7,
+            "hcp": 7.0,
             "vac": 78.3,
             "dataInscricao": "2025/03/29 15:35",
             "status": "confirmed"
@@ -48785,7 +48785,7 @@
             "nome": "Clara Trindade",
             "clube": "Belas",
             "hcp": 9.3,
-            "vac": 80,
+            "vac": 80.0,
             "dataInscricao": "2025/03/31 19:52",
             "status": "confirmed"
           },
@@ -48834,7 +48834,7 @@
             "fed": "51523",
             "nome": "Angelina Gao",
             "clube": "Quinta do Peru",
-            "hcp": 11,
+            "hcp": 11.0,
             "vac": 81.9,
             "dataInscricao": "2025/04/17 09:10",
             "status": "confirmed"
@@ -50035,7 +50035,7 @@
             "fed": "46437",
             "nome": "Eva Silva",
             "clube": "Oporto",
-            "hcp": 4,
+            "hcp": 4.0,
             "vac": 75.5,
             "dataInscricao": "2025/03/26 16:37",
             "status": "confirmed"
@@ -53471,7 +53471,7 @@
             "fed": "46475",
             "nome": "Elisa Garcez",
             "clube": "Paredes",
-            "hcp": 5,
+            "hcp": 5.0,
             "vac": 76.1,
             "dataInscricao": "2025/03/23 08:23",
             "status": "confirmed"
@@ -53481,7 +53481,7 @@
             "fed": "40318",
             "nome": "Francisco Costa Mendes",
             "clube": "Citynorte",
-            "hcp": 9,
+            "hcp": 9.0,
             "vac": 79.6,
             "dataInscricao": "2025/04/07 05:23",
             "status": "confirmed"
@@ -53501,7 +53501,7 @@
             "fed": "48705",
             "nome": "Jorge Xavier Graça Silva",
             "clube": "Miramar",
-            "hcp": 12,
+            "hcp": 12.0,
             "vac": 83.9,
             "dataInscricao": "2025/03/25 12:20",
             "status": "confirmed"
@@ -53562,7 +53562,7 @@
             "nome": "Nuno Bessa",
             "clube": "Vale Pisão",
             "hcp": 29.9,
-            "vac": 101,
+            "vac": 101.0,
             "dataInscricao": "2025/03/29 19:03",
             "status": "confirmed"
           },
@@ -53591,7 +53591,7 @@
             "fed": "52351",
             "nome": "Iris Lopes",
             "clube": "Cantanhede",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2025/04/06 08:33",
             "status": "confirmed"
@@ -54120,7 +54120,7 @@
             "fed": "46480",
             "nome": "Afonso de Sousa Pinto",
             "clube": "Oporto",
-            "hcp": 14,
+            "hcp": 14.0,
             "vac": 85.3,
             "dataInscricao": "2025/03/26 14:20",
             "status": "confirmed"
@@ -54221,7 +54221,7 @@
             "nome": "Gil Ribeiro",
             "clube": "Citynorte",
             "hcp": 38.2,
-            "vac": 110,
+            "vac": 110.0,
             "dataInscricao": "2025/04/03 12:13",
             "status": "confirmed"
           },
@@ -54240,7 +54240,7 @@
             "fed": "52724",
             "nome": "Guilherme Oliveira Alves",
             "clube": "Paredes",
-            "hcp": 39,
+            "hcp": 39.0,
             "vac": 112.5,
             "dataInscricao": "2025/03/25 09:47",
             "status": "confirmed"
@@ -54270,7 +54270,7 @@
             "fed": "52488",
             "nome": "Maria Isabel Teixeira dos Santos",
             "clube": "Miramar",
-            "hcp": 50,
+            "hcp": 50.0,
             "vac": 123.3,
             "dataInscricao": "2025/03/26 12:45",
             "status": "confirmed"
@@ -54290,7 +54290,7 @@
             "fed": "52431",
             "nome": "António Ribeiro Rebelo",
             "clube": "Oporto",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": 128.1,
             "dataInscricao": "2025/03/17 19:38",
             "status": "confirmed"
@@ -54300,7 +54300,7 @@
             "fed": "52270",
             "nome": "Marta Andrade",
             "clube": "Citynorte",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": 134.3,
             "dataInscricao": "2025/04/07 09:32",
             "status": "confirmed"
@@ -54310,8 +54310,8 @@
             "fed": "46314",
             "nome": "Carolina Paiva",
             "clube": "Citynorte",
-            "hcp": 54,
-            "vac": 135,
+            "hcp": 54.0,
+            "vac": 135.0,
             "dataInscricao": "2025/04/07 10:10",
             "status": "confirmed"
           },
@@ -54330,7 +54330,7 @@
             "fed": "52798",
             "nome": "Vicente Messala",
             "clube": "Miramar",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2025/04/03 19:29",
             "status": "confirmed"
@@ -54340,7 +54340,7 @@
             "fed": "54551",
             "nome": "Alice Araújo",
             "clube": "Cantanhede",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2025/04/04 17:27",
             "status": "confirmed"
@@ -54350,7 +54350,7 @@
             "fed": "54550",
             "nome": "Gui Silva",
             "clube": "Cantanhede",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2025/04/04 17:33",
             "status": "confirmed"
@@ -54360,7 +54360,7 @@
             "fed": "51671",
             "nome": "Infante Paz Ferreira",
             "clube": "Quinta do Fojo",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2025/04/06 11:58",
             "status": "confirmed"
@@ -54961,7 +54961,7 @@
             "fed": "40990",
             "nome": "Maria Câmara",
             "clube": "Santo da Serra",
-            "hcp": 13,
+            "hcp": 13.0,
             "vac": 83.5,
             "dataInscricao": "2025/03/25 12:49",
             "status": "confirmed"
@@ -54971,7 +54971,7 @@
             "fed": "41108",
             "nome": "Martim Lima",
             "clube": "Santo da Serra",
-            "hcp": 13,
+            "hcp": 13.0,
             "vac": 85.3,
             "dataInscricao": "2025/03/30 09:18",
             "status": "confirmed"
@@ -55002,7 +55002,7 @@
             "nome": "Bernardo Dias",
             "clube": "PXO Clube",
             "hcp": 23.4,
-            "vac": 95,
+            "vac": 95.0,
             "dataInscricao": "2025/03/20 00:43",
             "status": "confirmed"
           },
@@ -55012,7 +55012,7 @@
             "nome": "André Fernandes",
             "clube": "Santo da Serra",
             "hcp": 23.1,
-            "vac": 99,
+            "vac": 99.0,
             "dataInscricao": "2025/03/25 16:59",
             "status": "confirmed"
           },
@@ -55041,7 +55041,7 @@
             "fed": "41801",
             "nome": "Alejandro Quindos",
             "clube": "Santo da Serra",
-            "hcp": 49,
+            "hcp": 49.0,
             "vac": null,
             "dataInscricao": "2025/03/28 09:33",
             "status": "confirmed"
@@ -55181,7 +55181,7 @@
             "nome": "Bernardo Cunha",
             "clube": "Santo da Serra",
             "hcp": 25.2,
-            "vac": 98,
+            "vac": 98.0,
             "dataInscricao": "2025/03/21 13:50",
             "status": "confirmed"
           },
@@ -55190,7 +55190,7 @@
             "fed": "45688",
             "nome": "Gonçalo Figueira",
             "clube": "Santo da Serra",
-            "hcp": 28,
+            "hcp": 28.0,
             "vac": 99.5,
             "dataInscricao": "2025/03/23 10:00",
             "status": "confirmed"
@@ -61660,7 +61660,7 @@
             "fed": "51523",
             "nome": "Angelina Gao",
             "clube": "Quinta do Peru",
-            "hcp": 13,
+            "hcp": 13.0,
             "vac": 84.4,
             "dataInscricao": "2025/02/09 08:45",
             "status": "confirmed"
@@ -61701,7 +61701,7 @@
             "nome": "Lourenço Cid",
             "clube": "Lisbon SC",
             "hcp": 39.3,
-            "vac": 111,
+            "vac": 111.0,
             "dataInscricao": "2025/02/26 11:33",
             "status": "confirmed"
           },
@@ -63832,7 +63832,7 @@
             "fed": "40990",
             "nome": "Maria Câmara",
             "clube": "Santo da Serra",
-            "hcp": 13,
+            "hcp": 13.0,
             "vac": 83.5,
             "dataInscricao": "2025/01/26 11:23",
             "status": "confirmed"
@@ -63842,7 +63842,7 @@
             "fed": "41108",
             "nome": "Martim Lima",
             "clube": "Santo da Serra",
-            "hcp": 13,
+            "hcp": 13.0,
             "vac": 85.2,
             "dataInscricao": "2025/01/29 17:09",
             "status": "confirmed"
@@ -63872,7 +63872,7 @@
             "fed": "39023",
             "nome": "Bernardo Dias",
             "clube": "PXO Clube",
-            "hcp": 23,
+            "hcp": 23.0,
             "vac": 94.3,
             "dataInscricao": "2025/01/12 22:55",
             "status": "confirmed"
@@ -63902,7 +63902,7 @@
             "fed": "39470",
             "nome": "Carlota Fernandes",
             "clube": "Santo da Serra",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2025/02/03 07:59",
             "status": "confirmed"
@@ -64045,7 +64045,7 @@
             "fed": "45393",
             "nome": "Laura Santos",
             "clube": "PXO Clube",
-            "hcp": 9,
+            "hcp": 9.0,
             "vac": 80.4,
             "dataInscricao": "2025/01/12 08:51",
             "status": "confirmed"
@@ -64085,7 +64085,7 @@
             "fed": "45688",
             "nome": "Gonçalo Figueira",
             "clube": "Santo da Serra",
-            "hcp": 28,
+            "hcp": 28.0,
             "vac": 99.5,
             "dataInscricao": "2025/01/29 11:04",
             "status": "confirmed"
@@ -64106,7 +64106,7 @@
             "nome": "Cassiel Khayali",
             "clube": "Palheiro",
             "hcp": 30.5,
-            "vac": 102,
+            "vac": 102.0,
             "dataInscricao": "2025/02/03 11:45",
             "status": "confirmed"
           },
@@ -64338,7 +64338,7 @@
             "nome": "Irís Costa",
             "clube": "Palheiro",
             "hcp": 47.8,
-            "vac": 121,
+            "vac": 121.0,
             "dataInscricao": "2025/01/30 21:02",
             "status": "confirmed"
           },
@@ -64347,7 +64347,7 @@
             "fed": "53728",
             "nome": "Santiago Couto",
             "clube": "PXO Clube",
-            "hcp": 48,
+            "hcp": 48.0,
             "vac": 125.9,
             "dataInscricao": "2025/01/26 09:28",
             "status": "confirmed"
@@ -64367,7 +64367,7 @@
             "fed": "54757",
             "nome": "Mafalda Sousa",
             "clube": "Santo da Serra",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2025/01/29 23:07",
             "status": "confirmed"
@@ -66500,7 +66500,7 @@
             "fed": "46480",
             "nome": "Afonso de Sousa Pinto",
             "clube": "Oporto",
-            "hcp": 14,
+            "hcp": 14.0,
             "vac": 85.3,
             "dataInscricao": "2025/01/14 21:02",
             "status": "confirmed"
@@ -66530,7 +66530,7 @@
             "fed": "46308",
             "nome": "Marc Costa",
             "clube": "Citynorte",
-            "hcp": 21,
+            "hcp": 21.0,
             "vac": 91.5,
             "dataInscricao": "2025/01/29 11:24",
             "status": "confirmed"
@@ -66571,7 +66571,7 @@
             "nome": "Gustavo Barros Silva Ramos",
             "clube": "Paredes",
             "hcp": 30.8,
-            "vac": 103,
+            "vac": 103.0,
             "dataInscricao": "2025/01/30 15:44",
             "status": "confirmed"
           },
@@ -66610,7 +66610,7 @@
             "fed": "52724",
             "nome": "Guilherme Oliveira Alves",
             "clube": "Paredes",
-            "hcp": 39,
+            "hcp": 39.0,
             "vac": 113.2,
             "dataInscricao": "2025/01/19 12:04",
             "status": "confirmed"
@@ -66671,7 +66671,7 @@
             "nome": "Gabriel Guimarães Mota",
             "clube": "Estela",
             "hcp": 49.3,
-            "vac": 122,
+            "vac": 122.0,
             "dataInscricao": "2025/01/19 21:04",
             "status": "confirmed"
           },
@@ -66690,8 +66690,8 @@
             "fed": "52488",
             "nome": "Maria Isabel Teixeira dos Santos",
             "clube": "Miramar",
-            "hcp": 54,
-            "vac": 128,
+            "hcp": 54.0,
+            "vac": 128.0,
             "dataInscricao": "2025/01/23 12:20",
             "status": "confirmed"
           },
@@ -66700,7 +66700,7 @@
             "fed": "52431",
             "nome": "António Ribeiro Rebelo",
             "clube": "Oporto",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": 128.1,
             "dataInscricao": "2025/01/29 17:37",
             "status": "confirmed"
@@ -66710,7 +66710,7 @@
             "fed": "46314",
             "nome": "Carolina Paiva",
             "clube": "Citynorte",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": 143.9,
             "dataInscricao": "2025/02/01 19:41",
             "status": "confirmed"
@@ -66730,7 +66730,7 @@
             "fed": "56943",
             "nome": "Tomás Duarte Matias",
             "clube": "Quinta do Fojo",
-            "hcp": 36,
+            "hcp": 36.0,
             "vac": null,
             "dataInscricao": "2025/01/23 10:04",
             "status": "confirmed"
@@ -66750,7 +66750,7 @@
             "fed": "52663",
             "nome": "Maria Benedita Carvalho",
             "clube": "Oporto",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2025/01/31 10:20",
             "status": "confirmed"
@@ -66760,7 +66760,7 @@
             "fed": "54551",
             "nome": "Alice Araújo",
             "clube": "Cantanhede",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2025/02/02 12:44",
             "status": "confirmed"
@@ -66770,7 +66770,7 @@
             "fed": "52270",
             "nome": "Marta Andrade",
             "clube": "Citynorte",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2025/02/02 23:56",
             "status": "confirmed"
@@ -66790,7 +66790,7 @@
             "fed": "52798",
             "nome": "Vicente Messala",
             "clube": "Miramar",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2025/02/03 11:22",
             "status": "confirmed"
@@ -68630,7 +68630,7 @@
             "fed": "54232",
             "nome": "Jack Brando",
             "clube": "Vila Sol",
-            "hcp": 13,
+            "hcp": 13.0,
             "vac": 90.5,
             "dataInscricao": "2024/12/30 15:38",
             "status": "confirmed"
@@ -68690,7 +68690,7 @@
             "fed": "55151",
             "nome": "Maximilian Libens",
             "clube": "Espiche",
-            "hcp": 54,
+            "hcp": 54.0,
             "vac": null,
             "dataInscricao": "2025/01/19 15:37",
             "status": "confirmed"
@@ -73599,7 +73599,7 @@
             "fed": "31111",
             "nome": "Pedro Afonso de Correia Mendes",
             "clube": "Oporto",
-            "hcp": 2,
+            "hcp": 2.0,
             "vac": null,
             "dataInscricao": "",
             "status": "confirmed"
@@ -80870,7 +80870,7 @@
             "fed": "46480",
             "nome": "Afonso de Sousa Pinto",
             "clube": "Oporto",
-            "hcp": 18,
+            "hcp": 18.0,
             "dataInscricao": "2023/08/01 10:53",
             "vac": null,
             "status": "confirmed"
@@ -86745,6 +86745,161 @@
       "expectedYear": 2026,
       "admissions": null,
       "draws": {
+        "2": {
+          "totalJogadores": 18,
+          "groups": [
+            {
+              "teeTime": "10:10",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Manuel Goulartt Medeiros",
+                  "clube": "Santo da Serra",
+                  "fed": "52884",
+                  "hcp": 10.0
+                },
+                {
+                  "nome": "Vicente Rodrigues",
+                  "clube": "Palheiro",
+                  "fed": null,
+                  "hcp": 35.7
+                },
+                {
+                  "nome": "Íris Costa",
+                  "clube": "Palheiro",
+                  "fed": null,
+                  "hcp": 39.2
+                }
+              ]
+            },
+            {
+              "teeTime": "10:20",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Benedita Carvalho",
+                  "clube": "Santo da Serra",
+                  "fed": null,
+                  "hcp": 54.0
+                },
+                {
+                  "nome": "Laura Temtem",
+                  "clube": "Santo da Serra",
+                  "fed": null,
+                  "hcp": 54.0
+                },
+                {
+                  "nome": "Áurea Camacho",
+                  "clube": "Palheiro",
+                  "fed": null,
+                  "hcp": 54.0
+                }
+              ]
+            },
+            {
+              "teeTime": "10:30",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Afonso Aniceto",
+                  "clube": "Santo da Serra",
+                  "fed": null,
+                  "hcp": 41.5
+                },
+                {
+                  "nome": "Daniel Augusto",
+                  "clube": "PXO Clube",
+                  "fed": null,
+                  "hcp": 49.7
+                },
+                {
+                  "nome": "Dominic Kowalczewski",
+                  "clube": "Santo da Serra",
+                  "fed": null,
+                  "hcp": 50.8
+                }
+              ]
+            },
+            {
+              "teeTime": "10:40",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Maximilian Luckhardt",
+                  "clube": "Palheiro",
+                  "fed": null,
+                  "hcp": 45.1
+                },
+                {
+                  "nome": "Mikhail Bugaev",
+                  "clube": "Palheiro",
+                  "fed": null,
+                  "hcp": 52.8
+                },
+                {
+                  "nome": "Artur Sobrinho",
+                  "clube": "Santo da Serra",
+                  "fed": null,
+                  "hcp": 54.0
+                }
+              ]
+            },
+            {
+              "teeTime": "10:50",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Henrique Santana",
+                  "clube": "Santo da Serra",
+                  "fed": null,
+                  "hcp": 30.7
+                },
+                {
+                  "nome": "Gastão Thomaz Medeiros",
+                  "clube": "Santo da Serra",
+                  "fed": null,
+                  "hcp": 54.0
+                },
+                {
+                  "nome": "João Lourenço Sousa",
+                  "clube": "Santo da Serra",
+                  "fed": null,
+                  "hcp": 52.8
+                }
+              ]
+            },
+            {
+              "teeTime": "11:00",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Matilde Teixeira",
+                  "clube": "Palheiro",
+                  "fed": null,
+                  "hcp": 54.0
+                },
+                {
+                  "nome": "Maria Do Carmo Mendes",
+                  "clube": "Santo da Serra",
+                  "fed": null,
+                  "hcp": 54.0
+                },
+                {
+                  "nome": "Beatriz Marques",
+                  "clube": "Santo da Serra",
+                  "fed": null,
+                  "hcp": 54.0
+                }
+              ]
+            }
+          ]
+        },
         "1": {
           "totalJogadores": 16,
           "groups": [
@@ -86894,158 +87049,9 @@
               ]
             }
           ]
-        },
-        "2": {
-          "totalJogadores": 17,
-          "groups": [
-            {
-              "teeTime": "10:10",
-              "startHole": 1,
-              "tee": "Verdes",
-              "players": [
-                {
-                  "nome": "Manuel Goulartt Medeiros",
-                  "clube": "Santo da Serra",
-                  "fed": "52884",
-                  "hcp": 9.6
-                },
-                {
-                  "nome": "Vicente Rodrigues",
-                  "clube": "Palheiro",
-                  "fed": "51896",
-                  "hcp": 35.1
-                },
-                {
-                  "nome": "Miguel Vicente Mendes",
-                  "clube": "Santo da Serra",
-                  "fed": "50485",
-                  "hcp": 38.8
-                }
-              ]
-            },
-            {
-              "teeTime": "10:20",
-              "startHole": 1,
-              "tee": "Verdes",
-              "players": [
-                {
-                  "nome": "Benedita Carvalho",
-                  "clube": "Santo da Serra",
-                  "fed": "52398",
-                  "hcp": 54
-                },
-                {
-                  "nome": "Laura Temtem",
-                  "clube": "Santo da Serra",
-                  "fed": "56635",
-                  "hcp": 54
-                },
-                {
-                  "nome": "Íris Costa",
-                  "clube": "Palheiro",
-                  "fed": "47677",
-                  "hcp": 38.6
-                }
-              ]
-            },
-            {
-              "teeTime": "10:30",
-              "startHole": 1,
-              "tee": "Roxas",
-              "players": [
-                {
-                  "nome": "Afonso Aniceto",
-                  "clube": "Santo da Serra",
-                  "fed": "56026",
-                  "hcp": 40.1
-                },
-                {
-                  "nome": "Daniel Augusto",
-                  "clube": "PXO Clube",
-                  "fed": "57640",
-                  "hcp": 43.7
-                },
-                {
-                  "nome": "Dominic Kowalczewski",
-                  "clube": "Santo da Serra",
-                  "fed": "58984",
-                  "hcp": 36.2
-                }
-              ]
-            },
-            {
-              "teeTime": "10:40",
-              "startHole": 1,
-              "tee": "Roxas",
-              "players": [
-                {
-                  "nome": "Maximilian Luckhardt",
-                  "clube": "Palheiro",
-                  "fed": "56696",
-                  "hcp": 45.1
-                },
-                {
-                  "nome": "Mikhail Bugaev",
-                  "clube": "Palheiro",
-                  "fed": "56705",
-                  "hcp": 52.8
-                },
-                {
-                  "nome": "Artur Sobrinho",
-                  "clube": "Santo da Serra",
-                  "fed": "59008",
-                  "hcp": 54
-                }
-              ]
-            },
-            {
-              "teeTime": "10:50",
-              "startHole": 1,
-              "tee": "Roxas",
-              "players": [
-                {
-                  "nome": "Gastão Thomaz Medeiros",
-                  "clube": "Santo da Serra",
-                  "fed": "59252",
-                  "hcp": 54
-                },
-                {
-                  "nome": "João Lourenço Sousa",
-                  "clube": "Santo da Serra",
-                  "fed": "57356",
-                  "hcp": 52.8
-                }
-              ]
-            },
-            {
-              "teeTime": "11:00",
-              "startHole": 1,
-              "tee": "Roxas",
-              "players": [
-                {
-                  "nome": "Matilde Teixeira",
-                  "clube": "Palheiro",
-                  "fed": "58969",
-                  "hcp": 54
-                },
-                {
-                  "nome": "Maria Do Carmo Mendes",
-                  "clube": "Santo da Serra",
-                  "fed": "57663",
-                  "hcp": 54
-                },
-                {
-                  "nome": "Beatriz Marques",
-                  "clube": "Santo da Serra",
-                  "fed": null,
-                  "hcp": 54
-                }
-              ]
-            }
-          ]
         }
       },
-      "scrapedAt": "2026-04-19T12:00:00.000Z"
+      "scrapedAt": "2026-04-18T18:21:16.000Z"
     },
     {
       "ccode": "007",
@@ -87296,216 +87302,9 @@
               ]
             }
           ]
-        },
-        "2": {
-          "totalJogadores": 22,
-          "groups": [
-            {
-              "teeTime": "08:45",
-              "startHole": 1,
-              "tee": "Vermelhas",
-              "players": [
-                {
-                  "nome": "Laura Santos",
-                  "clube": "PXO Clube",
-                  "fed": "45393",
-                  "hcp": 2.1
-                },
-                {
-                  "nome": "Mafalda Sousa",
-                  "clube": "Santo da Serra",
-                  "fed": "54757",
-                  "hcp": 37.2
-                }
-              ]
-            },
-            {
-              "teeTime": "08:55",
-              "startHole": 1,
-              "tee": "Vermelhas",
-              "players": [
-                {
-                  "nome": "Maria Cunha",
-                  "clube": "Palheiro",
-                  "fed": "46482",
-                  "hcp": 6
-                },
-                {
-                  "nome": "Isabela Ramalho",
-                  "clube": "Palheiro",
-                  "fed": "58677",
-                  "hcp": 41.9
-                }
-              ]
-            },
-            {
-              "teeTime": "09:05",
-              "startHole": 1,
-              "tee": "Vermelhas",
-              "players": [
-                {
-                  "nome": "Rafael Brito",
-                  "clube": "PXO Clube",
-                  "fed": "53532",
-                  "hcp": 22.6
-                },
-                {
-                  "nome": "Santiago Santos",
-                  "clube": "PXO Clube",
-                  "fed": "53687",
-                  "hcp": 30.9
-                },
-                {
-                  "nome": "Mateus Penucho",
-                  "clube": "Santo da Serra",
-                  "fed": "52393",
-                  "hcp": 15.7
-                }
-              ]
-            },
-            {
-              "teeTime": "09:15",
-              "startHole": 1,
-              "tee": "Amarelas",
-              "players": [
-                {
-                  "nome": "Salvador Rodrigues",
-                  "clube": "Palheiro",
-                  "fed": "39465",
-                  "hcp": 6.8
-                },
-                {
-                  "nome": "Manuel Gouveia",
-                  "clube": "Santo da Serra",
-                  "fed": "41124",
-                  "hcp": 16.7
-                },
-                {
-                  "nome": "José Pedro Miranda",
-                  "clube": "Palheiro",
-                  "fed": "38976",
-                  "hcp": 8.6
-                }
-              ]
-            },
-            {
-              "teeTime": "09:25",
-              "startHole": 1,
-              "tee": "Amarelas",
-              "players": [
-                {
-                  "nome": "Vasco Leal Gouveia",
-                  "clube": "Santo da Serra",
-                  "fed": "41130",
-                  "hcp": 18.4
-                },
-                {
-                  "nome": "Lucas Duarte",
-                  "clube": "Palheiro",
-                  "fed": "38195",
-                  "hcp": 38.8
-                }
-              ]
-            },
-            {
-              "teeTime": "09:25",
-              "startHole": 1,
-              "tee": "Vermelhas",
-              "players": [
-                {
-                  "nome": "Vadzim Lyhach",
-                  "clube": "Santo da Serra",
-                  "fed": "57388",
-                  "hcp": 45.8
-                }
-              ]
-            },
-            {
-              "teeTime": "09:35",
-              "startHole": 1,
-              "tee": "Amarelas",
-              "players": [
-                {
-                  "nome": "André Gonçalves",
-                  "clube": "Palheiro",
-                  "fed": "41121",
-                  "hcp": 6.5
-                },
-                {
-                  "nome": "Rodrigo Abreu",
-                  "clube": "Palheiro",
-                  "fed": "42684",
-                  "hcp": 11
-                },
-                {
-                  "nome": "João Santos",
-                  "clube": "PXO Clube",
-                  "fed": "40645",
-                  "hcp": 3
-                }
-              ]
-            },
-            {
-              "teeTime": "09:45",
-              "startHole": 1,
-              "tee": "Vermelhas",
-              "players": [
-                {
-                  "nome": "Matilde Leal Gouveia",
-                  "clube": "Santo da Serra",
-                  "fed": "41131",
-                  "hcp": 3.3
-                },
-                {
-                  "nome": "Maria Câmara",
-                  "clube": "Santo da Serra",
-                  "fed": "40990",
-                  "hcp": 8.8
-                }
-              ]
-            },
-            {
-              "teeTime": "09:55",
-              "startHole": 1,
-              "tee": "Amarelas",
-              "players": [
-                {
-                  "nome": "Tomás Câmara",
-                  "clube": "PXO Clube",
-                  "fed": "53548",
-                  "hcp": 12.3
-                },
-                {
-                  "nome": "Martim Lima",
-                  "clube": "Santo da Serra",
-                  "fed": "41108",
-                  "hcp": 12.5
-                }
-              ]
-            },
-            {
-              "teeTime": "10:05",
-              "startHole": 1,
-              "tee": "Amarelas",
-              "players": [
-                {
-                  "nome": "Lucas Costa Cubbin",
-                  "clube": "Santo da Serra",
-                  "fed": "50671",
-                  "hcp": 25
-                },
-                {
-                  "nome": "Santiago Nicolau",
-                  "clube": "Santo da Serra",
-                  "fed": "41102",
-                  "hcp": 33.1
-                }
-              ]
-            }
-          ]
         }
       },
-      "scrapedAt": "2026-04-19T12:00:00.000Z"
+      "scrapedAt": "2026-04-18T18:39:50.000Z"
     }
   ]
 }

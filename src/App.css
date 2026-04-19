@@ -2805,3 +2805,106 @@ tr.cross-current { background: var(--bg-success); }
 .toggle-pill-info { background:var(--bg-info-strong); color:var(--color-info); border-color:var(--border-info); }
 .toggle-pill-success { background:var(--bg-success-strong); color:var(--color-good-dark); border-color:var(--border-success); }
 
+/* ══════════════════════════════════════════════════════════════════════
+   IMPRESSÃO / PDF — disparada por PrintButton (window.print)
+   Regra geral: mostrar APENAS o conteúdo do detalhe do torneio (ou a
+   página actual). Esconde topbar, sidebar, tabs, filtros, botões.
+   ══════════════════════════════════════════════════════════════════════ */
+@media print {
+  /* Fundo branco, sem dark mode */
+  :root, body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  /* Esconder explicitamente tudo o que não deve ir para o PDF */
+  .topbar, .sidebar, .sidebar-toggle, .tab-bar, .filter-bar,
+  .print-hide, .tourn-ext-link, .sidebar-back-btn,
+  button[class*="tab-under"],
+  nav, header.topbar {
+    display: none !important;
+  }
+
+  /* Layout full-width, sem margens exageradas */
+  .app, .main, .master-detail, .detail, .detail-body,
+  .tournament-detail, .content-scroll, .main-content {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  /* Título compacto, sem emojis pesados */
+  .detail-title {
+    font-size: 14pt !important;
+    margin: 0 0 4px 0 !important;
+  }
+  .detail-sub {
+    font-size: 9pt !important;
+    color: #333 !important;
+    margin-bottom: 6px !important;
+  }
+
+  /* Pills mais discretas em papel — mantêm a forma mas ficam pretas/cinza */
+  .p, .p-sm {
+    border-color: #999 !important;
+    box-shadow: none !important;
+    background: #f5f5f5 !important;
+    color: #111 !important;
+  }
+
+  /* TABELAS DE SCORECARDS — compactas e com bordas para impressão */
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    font-size: 8pt !important;
+    page-break-inside: auto !important;
+  }
+  thead { display: table-header-group !important; }
+  tr { page-break-inside: avoid !important; }
+  th, td {
+    border: 0.5pt solid #999 !important;
+    padding: 2pt 3pt !important;
+    background: transparent !important;
+    color: #000 !important;
+  }
+  th {
+    background: #eee !important;
+    font-weight: 700 !important;
+  }
+
+  /* Manter as cores semânticas do scorecard (birdie/eagle/bogey) porque é
+     precisamente o que o utilizador quer imprimir. force-color-adjust
+     garante que o Chrome não descarta as cores de fundo no PDF. */
+  .sc-score, .sc-score-eagle, .sc-score-birdie,
+  .sc-score-bogey, .sc-score-dbogey, .sc-score-par,
+  .lb-acc-bird, .lb-acc-bog, .lb-acc-par,
+  [class*="score-"], [class*="-tp-"] {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Links sem sublinhar preto (fica confuso em papel) */
+  a { color: #000 !important; text-decoration: none !important; }
+
+  /* Orientação e margens da página — apanrar 18 holes num A4 landscape */
+  @page {
+    size: A4 landscape;
+    margin: 10mm 8mm;
+  }
+
+  /* Garantir que sections que normalmente scrollam passam a mostrar tudo */
+  .scroll, .x-scroll, [class*="scroll"] {
+    overflow: visible !important;
+    max-height: none !important;
+  }
+
+  /* Esconder elementos interactivos irrelevantes em papel */
+  input, select {
+    display: none !important;
+  }
+}
+

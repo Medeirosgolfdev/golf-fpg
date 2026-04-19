@@ -61,6 +61,7 @@ import { JovensAnaliseView } from "../ui/JovensAnaliseView";
 import { loadFpgAdmissionsDraws, indexFpgAdmissionsDraws, NACIONAL_2026_META, NACIONAL_2026_TCODES, type FpgTournamentData } from "../data/nacional2026Loader";
 import AdmissionsTab from "../ui/AdmissionsTab";
 import DrawTab from "../ui/DrawTab";
+import PrintButton from "../ui/PrintButton";
 import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
 // Re-exports para consumidores que ainda importam de FPGPage
 export type { RoundScore, Player, Tournament, ScorecardOptions } from "../data/fpgTypes";
@@ -779,6 +780,7 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
                   </>
                 )
             }
+            <PrintButton />
           </div>
         </div>
         <div className="detail-sub">

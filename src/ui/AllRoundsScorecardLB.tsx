@@ -378,7 +378,7 @@ export function AllRoundsScorecardLB({
                               {fmtToPar(rd.toPar)}
                             </td>
                             <td className="lb-gross" style={{ borderTop: bTop }}>{rd.gross}</td>
-                            {showSC && <ScoreCells scores={rd.scores} pars={par} />}
+                            {showSC && <ScoreCells scores={rd.scores} pars={rd.holePars.length ? rd.holePars : par} />}
                             {!hideSD && (
                               <td className="lb-sd" style={{ borderTop: bTop }}>
                                 {rd.sd != null ? <span className="c-text-2">{rd.sd}</span> : <span className="muted">–</span>}
@@ -420,7 +420,7 @@ export function AllRoundsScorecardLB({
                         {fmtToPar(rd.toPar)}
                       </td>
                       <td className="lb-gross">{rd.gross}</td>
-                      {showSC && <ScoreCells scores={rd.scores} pars={par} />}
+                      {showSC && <ScoreCells scores={rd.scores} pars={rd.holePars.length ? rd.holePars : par} />}
                       {!hideSD && (
                         <td className="lb-sd">
                           {rd.sd != null ? <span className="c-text-2">{rd.sd}</span> : <span className="muted">–</span>}
