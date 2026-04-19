@@ -4,6 +4,9 @@ name: Actualizar Dados DRIVE
 #  - Automaticamente Sex/Sáb/Dom às 21:00 UTC (~22:00 Lisboa)
 #  - A pedido (botão "Run workflow" no GitHub)
 #
+# Cron desfasado dos workflows update-jovens (21:20) e update-data (21:40)
+# para evitar non-fast-forward no git push.
+#
 # Por DEFAULT só descarrega torneios do mês corrente + mês anterior (rápido).
 # Para histórico completo, usar workflow_dispatch com months_back=99.
 #
@@ -91,5 +94,8 @@ jobs:
           DATE=$(date +'%Y-%m-%d %H:%M')
           CHANGED=$(git diff --staged --name-only | wc -l)
           git commit -m "data: update DRIVE/AQUAPOR ${DATE} (${CHANGED} ficheiros)"
+          # Rebase em cima de qualquer commit que tenha entrado entretanto
+          # (evita non-fast-forward quando vários workflows correm em paralelo)
+          git pull --rebase origin ${GITHUB_REF_NAME} || git rebase --abort
           git push
           echo "✓ Commit feito — ${CHANGED} ficheiros actualizados"

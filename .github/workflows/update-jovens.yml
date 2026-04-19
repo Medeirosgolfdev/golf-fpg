@@ -1,9 +1,11 @@
 name: Actualizar Dados JOVENS
 
 # Corre:
-#  - Automaticamente Sex/Sáb/Dom às 21:00 UTC (~22:00 Lisboa), imediatamente
-#    após o update-drive. Torneios de Jovens (FPG Nacional + Regional) ocorrem
-#    sobretudo a fim-de-semana, por isso 3x/semana basta.
+#  - Automaticamente Sex/Sáb/Dom às 21:20 UTC (~22:20 Lisboa), 20 min após
+#    o update-drive (21:00) e 20 min antes do update-data (21:40). Cron
+#    desfasado para evitar non-fast-forward no git push. Torneios de Jovens
+#    (FPG Nacional + Regional) ocorrem sobretudo a fim-de-semana, por isso
+#    3x/semana basta.
 #  - A pedido (botão "Run workflow" no GitHub) — útil para re-apanhar
 #    resultados que entrem atrasados (2ª-feira, terça-feira, etc.).
 #
@@ -38,8 +40,8 @@ on:
 
   schedule:
     # Minuto Hora Dia Mês DiaSemana (UTC)
-    # 21:00 UTC à Sexta (5), Sábado (6) e Domingo (0)
-    - cron: '0 21 * * 5,6,0'
+    # 21:20 UTC à Sexta (5), Sábado (6) e Domingo (0)
+    - cron: '20 21 * * 5,6,0'
 
 permissions:
   contents: write
@@ -111,5 +113,8 @@ jobs:
           DATE=$(date +'%Y-%m-%d %H:%M')
           CHANGED=$(git diff --staged --name-only | wc -l)
           git commit -m "data: update JOVENS ${DATE} (${CHANGED} ficheiros)"
+          # Rebase em cima de qualquer commit que tenha entrado entretanto
+          # (evita non-fast-forward quando vários workflows correm em paralelo)
+          git pull --rebase origin ${GITHUB_REF_NAME} || git rebase --abort
           git push
           echo "✓ Commit feito — ${CHANGED} ficheiros actualizados"

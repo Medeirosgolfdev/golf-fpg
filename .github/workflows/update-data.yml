@@ -1,8 +1,11 @@
 name: Atualizar Dados Golf FPG (cookies-based)
 
 # Corre:
-#  - Automaticamente Sábado e Domingo às 21:00 UTC (≈22:00 Lisboa)
+#  - Automaticamente Sábado e Domingo às 21:40 UTC (≈22:40 Lisboa)
 #  - A pedido (botão "Run workflow" no GitHub)
+#
+# Cron desfasado dos workflows update-drive (21:00) e update-jovens (21:20)
+# para evitar non-fast-forward no git push.
 #
 # Requer GitHub Secret:
 #   FPG_COOKIES — cookie header completo capturado do Firefox/Chrome 90
@@ -23,7 +26,7 @@ on:
         type: choice
         options: ['false', 'true']
   schedule:
-    - cron: '0 21 * * 6,0'   # Sáb e Dom às 21:00 UTC
+    - cron: '40 21 * * 6,0'   # Sáb e Dom às 21:40 UTC
 
 permissions:
   contents: write
@@ -89,4 +92,10 @@ jobs:
             exit 0
           fi
           DATE=$(date +'%Y-%m-%d %H:%M')
-          git commit -m 
+          CHANGED=$(git diff --staged --name-only | wc -l)
+          git commit -m "data: update FPG WHS+scorecards ${DATE} (${CHANGED} ficheiros)"
+          # Rebase em cima de qualquer commit que tenha entrado entretanto
+          # (evita non-fast-forward quando vários workflows correm em paralelo)
+          git pull --rebase origin ${GITHUB_REF_NAME} || git rebase --abort
+          git push
+          echo "✓ Commit feito — ${CHANGED} ficheiros actualizados"
