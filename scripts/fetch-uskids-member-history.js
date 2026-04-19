@@ -195,13 +195,52 @@ function matchPlayer(memberData, apiFingerprints, resultsFP, memberFlights) {
   return null;
 }
 
+// ── Cache loading ────────────────────────────
+//
+// Prioridade (por esta ordem):
+//   1. monolítico uskids-member-history.json (deixado pelo fetch anterior, local)
+//   2. chunks uskids-member-history-XXX.json (deixados por split-member-history.js,
+//      é o estado em git após runs da GitHub Action)
+//
+// Isto garante que a cache incremental continua a funcionar na Action
+// mesmo depois do split ter apagado o monolítico.
+function loadCache() {
+  const empty = { gerado_em: null, torneios: {}, jogadores: {} };
+  if (fs.existsSync(OUTPUT)) {
+    try { return JSON.parse(fs.readFileSync(OUTPUT, 'utf8')); } catch {}
+  }
+  // Fallback: reconstituir a partir dos chunks numerados.
+  const chunkRe = /^uskids-member-history-\d{3,}\.json$/;
+  const files = fs.existsSync(DIR)
+    ? fs.readdirSync(DIR).filter(f => chunkRe.test(f)).sort()
+    : [];
+  if (!files.length) return empty;
+  console.log(`📂 Monolítico ausente — a reconstruir cache a partir de ${files.length} chunks`);
+  const merged = { gerado_em: null, torneios: {}, jogadores: {} };
+  for (const f of files) {
+    try {
+      const d = JSON.parse(fs.readFileSync(path.join(DIR, f), 'utf8'));
+      Object.assign(merged.torneios, d.torneios || {});
+      Object.assign(merged.jogadores, d.jogadores || {});
+      if (d.gerado_em && (!merged.gerado_em || d.gerado_em > merged.gerado_em)) {
+        merged.gerado_em = d.gerado_em;
+      }
+    } catch (err) {
+      console.warn(`   ⚠️  ${f}: ${err.message}`);
+    }
+  }
+  return merged;
+}
+
 // ── Re-match offline (--clean) ───────────────
 
 function cleanAndRematch() {
   console.log('\n🧹  Modo --clean: re-match nomes\n');
-  if (!fs.existsSync(OUTPUT)) { console.log('Ficheiro não encontrado:', OUTPUT); return; }
-
-  const cache = JSON.parse(fs.readFileSync(OUTPUT, 'utf8'));
+  const cache = loadCache();
+  if (!Object.keys(cache.jogadores).length) {
+    console.log('Sem dados (nem monolítico nem chunks).');
+    return;
+  }
   const resultsFP = buildResultsFingerprints();
 
   let matched = 0, already = 0, agFixed = 0;
@@ -248,11 +287,8 @@ async function main() {
   if (forceAll) console.log('    ⚠️  Modo --force: re-fetch de todos os membros');
   console.log('══════════════════════════════════════');
 
-  // Carregar cache existente
-  let cache = { gerado_em: null, torneios: {}, jogadores: {} };
-  if (fs.existsSync(OUTPUT)) {
-    try { cache = JSON.parse(fs.readFileSync(OUTPUT, 'utf8')); } catch {}
-  }
+  // Carregar cache existente (monolítico ou chunks — ver loadCache())
+  let cache = loadCache();
   const existingMembers = new Set(Object.keys(cache.jogadores));
   console.log(`\n📂 Cache: ${existingMembers.size} jogadores`);
 

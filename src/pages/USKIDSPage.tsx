@@ -1,5 +1,5 @@
 // @refresh reset
-import { useEffect, useState, useMemo, useTransition } from "react";
+import { useEffect, useState, useMemo, useTransition, useCallback } from "react";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
 import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
@@ -389,6 +389,16 @@ export default function USKidsFieldPage() {
 
   const [fileMeta, setFileMeta] = useState<DataSource[]>([]);
 
+  // Upsert em vez de append — evita duplicados quando o effect corre duas vezes
+  // (React StrictMode em dev) ou quando o mesmo ficheiro é reportado mais que
+  // uma vez (ex: loading → loaded, ou duas fontes diferentes).
+  const upsertFileMeta = useCallback((entry: DataSource) => {
+    setFileMeta(prev => {
+      const others = prev.filter(s => s.path !== entry.path);
+      return [...others, entry];
+    });
+  }, []);
+
   useEffect(() => {
     // Cache diário: só re-faz fetch uma vez por dia (usa HTTP cache nos restantes pedidos da sessão)
     const daily = new Date().toISOString().slice(0, 10); // "2026-04-03"
@@ -397,17 +407,20 @@ export default function USKidsFieldPage() {
       .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
       .then((d: FieldData) => {
         setFieldData(d);
-        setFileMeta(prev => [...prev, { path: "/data/uskids-field.json", status: "loaded", count: d.torneios?.length, group: "field" }]);
+        upsertFileMeta({ path: "/data/uskids-field.json", status: "loaded", count: d.torneios?.length, group: "field" });
         if (d.torneios.length) setSelectedTState(prev => prev !== null ? prev : d.torneios[0].t);
       })
       .catch(e => {
         setErro(e.message);
-        setFileMeta(prev => [...prev, { path: "/data/uskids-field.json", status: "error", error: String(e), group: "field" }]);
+        upsertFileMeta({ path: "/data/uskids-field.json", status: "error", error: String(e), group: "field" });
       });
 
-    // ── Carregar resultados: 15 ficheiros históricos permanentes + ficheiro auto-gerado ──
+    // ── Carregar resultados: N ficheiros históricos permanentes + ficheiro auto-gerado ──
     // Os históricos têm prioridade; o auto-gerado apenas acrescenta torneios ainda não cobertos.
-    const TORNEIOS_COMPLETOS_COUNT = 30;
+    // ⚠ Manter em sincronia com o número real de ficheiros uskids_torneios_completos(N).json
+    // em public/data/. Ao adicionar novos ficheiros, incrementar AQUI e também em
+    // KIDSdataLoader.ts (array `coreTasks`, kind "completo").
+    const TORNEIOS_COMPLETOS_COUNT = 22;
     const historicosUrls = Array.from({ length: TORNEIOS_COMPLETOS_COUNT }, (_, i) =>
       `/data/uskids_torneios_completos(${i + 1}).json`
     );
@@ -417,21 +430,21 @@ export default function USKidsFieldPage() {
       fetch(`/data/uskids-results.json?v=${daily}`)
         .then(r => {
           if (!r.ok) {
-            setFileMeta(prev => [...prev, { path: "/data/uskids-results.json", status: "error", error: `HTTP ${r.status}`, group: "results" }]);
+            upsertFileMeta({ path: "/data/uskids-results.json", status: "error", error: `HTTP ${r.status}`, group: "results" });
             return { gerado_em: "", resultados: [] };
           }
           return r.json().then((d: ResultsData) => {
-            setFileMeta(prev => [...prev, { path: "/data/uskids-results.json", status: "loaded", count: d.resultados?.length, group: "results" }]);
+            upsertFileMeta({ path: "/data/uskids-results.json", status: "loaded", count: d.resultados?.length, group: "results" });
             return d;
           });
         })
         .catch((): ResultsData => ({ gerado_em: "", resultados: [] })),
       // ficheiros históricos permanentes (usam cachedFetchJson — cached em memória na sessão)
       ...historicosUrls.map((url, i) => cachedFetchJson(url).then(d => {
-        setFileMeta(prev => [...prev, { path: url, status: "loaded", group: "completos" }]);
+        upsertFileMeta({ path: url, status: "loaded", group: "completos" });
         return d;
       }).catch(e => {
-        setFileMeta(prev => [...prev, { path: url, status: "error", error: String(e), group: "completos" }]);
+        upsertFileMeta({ path: url, status: "error", error: String(e), group: "completos" });
         return null;
       })),
     ]).then(([autoGerado, ...historicos]) => {

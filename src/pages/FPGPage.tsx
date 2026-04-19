@@ -780,6 +780,16 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
                   </>
                 )
             }
+            {/* Links extra específicos do torneio — regulamento, página do
+                clube/evento, etc. Carregados de Tournament.extraLinks. */}
+            {(tournament.extraLinks || []).map((lnk) => (
+              <a key={lnk.url} href={lnk.url}
+                target="_blank" rel="noopener noreferrer"
+                title={lnk.label}
+                className="tourn-ext-link">
+                {lnk.icon ? `${lnk.icon} ` : ""}{lnk.label} ↗
+              </a>
+            ))}
             <PrintButton />
           </div>
         </div>

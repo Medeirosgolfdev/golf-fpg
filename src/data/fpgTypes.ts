@@ -44,6 +44,9 @@ export interface Tournament extends BaseTournament {
   escalao?: string | null;
   num?: number;
   links?: Record<string, string>;
+  /** Links extra do torneio (regulamento, página do evento, etc.) — aparecem
+   *  na toolbar do detalhe ao lado de Inscrições/Draw/Scoring. */
+  extraLinks?: Array<{ label: string; url: string; icon?: string }>;
   rounds?: number;
   playerCount: number;
   _sourceFile?: string;

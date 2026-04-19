@@ -52,7 +52,7 @@ design-system.html # Referência visual de todos os componentes CSS
 |------|--------|-------|
 | `/jogadores/:fed` | JogadoresPage | data.json por jogador, player-stats.json |
 | `/campos/:courseKey?` | CamposPage | master-courses.json, away-courses.json, extraCourses.ts |
-| `/uskids` | USKIDSPage | uskids-results.json, uskids_torneios_completos(1-30).json, uskids-field.json |
+| `/uskids` | USKIDSPage | uskids-results.json, uskids_torneios_completos(1-22).json, uskids-field.json |
 | `/kids` | KIDSPage | KIDSdataLoader (todos os JSON internacionais) |
 | `/diversos` | FPGPage | pull-torneiosNNN.json |
 | `/drive` | DrivePage | drive-data.json, aquapor-data.json |
@@ -82,7 +82,7 @@ npm run login     # login FPG (gera sessão)
 | Manuel — USKids playerID | `630106` |
 | Manuel — USKids accountUID | `762810` |
 | Manuel — DOB | `29/04/2014` (MANUEL_BIRTH_YEAR = 2014) |
-| TORNEIOS_COMPLETOS_COUNT | `30` (constante em USKIDSPage.tsx — atualizar ao adicionar completos) |
+| TORNEIOS_COMPLETOS_COUNT | `22` (constante em USKIDSPage.tsx — atualizar ao adicionar completos; espelhar em KIDSdataLoader.ts) |
 | Signupanytime ax — intl | `1129` |
 | Signupanytime ax — Marco Simone 2025 | `2739` |
 | Signupanytime ax — El Prat | `2760` |
@@ -101,7 +101,7 @@ Carrega em paralelo todos estes ficheiros, processando cada um com a função ad
 - `wjgc_*.json`, `eowagr*.json` → `processWjgc(d, tid)`
 - `ftm_doral_*.json` → `processDoral(d)`
 - `uskids-results.json` → `processUskids(d)`
-- `uskids_torneios_completos(1-30).json` → `processUskidsCompleto(d)` (suporta formato v1 e v2)
+- `uskids_torneios_completos(1-22).json` → `processUskidsCompleto(d)` (suporta formato v1 e v2)
 - `uskids-field-sizes.json` → `processFieldSizes(d)` (popula `uskFieldSizes`)
 - `t_de_tournaments_do_uskids.json` → `processTournMeta(d)` (popula `uskTournNames`, 6448 entradas)
 - `processManuelOverrides()` — injeta scores manuais do Manuel (MANUEL_OVERRIDES)
@@ -576,7 +576,7 @@ Popula `uskTournNames` como fallback (hardcoded em `USKIDS_TCODE_META` tem prior
 | drive-sd-lookup.json | FPG | build-drive-sd-lookup.js | ✗ | DrivePage |
 | {fed}/analysis/data.json | FPG | make-scorecards-ui.js | ✓ | JogadoresPage, BJGTAnalysisPage, DrivePage |
 | uskids-results.json | USKids | fetch-uskids-results.js | ✓ | USKIDSPage, KIDSdataLoader |
-| uskids_torneios_completos(1-30).json | USKids | browser script | ✓ | USKIDSPage, KIDSdataLoader |
+| uskids_torneios_completos(1-22).json | USKids | browser script | ✓ | USKIDSPage, KIDSdataLoader |
 | uskids-member-history.json | USKids | fetch-uskids-member-history.js | ✓ (sem par/SI) | **Em `public/data-archive/`** — fonte para build-slim |
 | uskids-member-history-XXX.json | USKids | fetch (legacy) | ✓ (sem par/SI) | **Em `public/data-archive/`** — fonte para build-slim |
 | uskids-member-history-slim.json | USKids | build-member-history-slim.js | ✓ (sem par/SI) | KIDSdataLoader (Fase 2) + KIDSPage (H2H, DOB) |
@@ -1568,7 +1568,7 @@ Na barra de distribuição de scores, o segmento de par usa branco/transparente,
 
 ### Críticos
 
-**Separação de pipelines USKids vs não-USKids** — Torneios não-USKids (Doral, WJGC, Greatgolf, QDL, EOWAGR) devem alimentar **apenas** a tab Rivais via `buildAutoRivals()`. A tab Resultados carrega **exclusivamente** de `uskids-results.json` e `uskids_torneios_completos(1-30).json`. Este bug voltou várias vezes.
+**Separação de pipelines USKids vs não-USKids** — Torneios não-USKids (Doral, WJGC, Greatgolf, QDL, EOWAGR) devem alimentar **apenas** a tab Rivais via `buildAutoRivals()`. A tab Resultados carrega **exclusivamente** de `uskids-results.json` e `uskids_torneios_completos(1-22).json`. Este bug voltou várias vezes.
 
 **Manuel tem 3 variantes de nome** — "Manuel Medeiros", "Manuel Francisco Medeiros", "Manuel Goulartt Medeiros". Usar sempre `autoRivals.filter(d => d.isM)` (não `find()`) e fazer merge de todas as entradas.
 

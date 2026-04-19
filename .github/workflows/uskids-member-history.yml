@@ -21,15 +21,24 @@ jobs:
       - run: npm ci
       - run: npx playwright install chromium --with-deps
       - run: node scripts/fetch-uskids-member-history.js
+      # O fetch produz um monolítico uskids-member-history.json que já passa
+      # dos 300 MB — acima do limite de 100 MB do GitHub. O split parte-o em
+      # chunks ≤ 85 MB e apaga o monolítico. Os chunks alimentam o build-slim
+      # e ficam em git como cache para o próximo run do fetch.
+      - run: node scripts/split-member-history.js
       - run: node scripts/build-member-history-slim.js
       - name: Commit se houve alterações
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add public/data/uskids-member-history-slim.json public/data-archive/uskids-member-history*.json
+          # -A apanha tanto novos chunks como deletions de chunks antigos
+          # (o número de chunks varia entre runs).
+          git add -A public/data-archive/uskids-member-history-*.json
+          git add public/data/uskids-member-history-slim.json
           git diff --cached --quiet && exit 0
           git fetch origin main
           git merge origin/main --no-edit --strategy-option=ours
-          git add public/data/uskids-member-history-slim.json public/data-archive/uskids-member-history*.json
+          git add -A public/data-archive/uskids-member-history-*.json
+          git add public/data/uskids-member-history-slim.json
           git commit -m "data: histórico USKids [$(date -u '+%Y-%m-%d %H:%M UTC')]"
           git push
