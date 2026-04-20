@@ -1,7 +1,7 @@
 {
-  "generated": "2026-04-17T14:55:00.000Z",
-  "source": "Refresh manual do user (Chrome Beta) — 3 cookies colados na conversa",
+  "generated": "2026-04-19T22:30:00.000Z",
+  "source": "Refresh manual da user (Chrome 90) — DevTools Application → Cookies (Mariana, 2026-04-19 sessão de fix dos GitHub Actions)",
   "host": "scoring.datagolf.pt",
-  "cookieHeader": "ASP.NET_SessionId=zmmu2evrhcrkeuvowrk3r51b; DG_Lists_URL=OriginalUrl=https%3a%2f%2fscoring.datagolf.pt%3a443%2fpt%2f1EntryPage.aspx%3fuser%3dfpguser%26dt%3d17547%26page%3dtournlist%26hash%3da2c68d25b19bd6032e03029c192d9af5df03e498%26ccode%3dAll%26pagelang%3dPT%26callcontext%3ddirect; ASPSESSIONIDAEQTBADQ=JBMKFEBBCOHEDOCNEOAEJHGB",
-  "notes": "3 cookies: (1) ASP.NET_SessionId scoring.datagolf.pt (2) DG_Lists_URL entry-gate hash user=fpguser page=tournlist (3) ASPSESSIONIDAEQTBADQ classic ASP session scoring-pt.datagolf.pt. Refrescar quando /api/inscricoes/health indicar paramErr."
+  "cookieHeader": "ASP.NET_SessionId=0il0gfl41m3e0qrdpj42pjtn; DG_Lists_URL=OriginalUrl=https%3a%2f%2fscoring.datagolf.pt%3a443%2fpt%2f1EntryPage.aspx%3fuser%3dfpguser%26dt%3d20528%26page%3dtournlist%26hash%3ddb2c7afe25411393e2d53dea15b83bdb41dfd002%26ccode%3dAll%26pagelang%3dPT%26callcontext%3ddirect",
+  "notes": "2 cookies de scoring.datagolf.pt: (1) ASP.NET_SessionId (2) DG_Lists_URL entry-gate hash user=fpguser page=tournlist. Para o scraper de drive/jovens estes 2 chegam. O ASPSESSIONID... de scoring-pt.datagolf.pt (admissions) não está incluído — adicionar se precisares desse fluxo. Refrescar quando test-datagolf-node.js começar a falhar."
 }

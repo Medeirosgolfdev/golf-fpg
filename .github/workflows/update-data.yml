@@ -86,7 +86,14 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add output/ public/data/*/analysis/ public/data/players.json players.json 2>/dev/null || true
+          # Abrangente: tudo o que o fpg-scrape-node.js + pipeline.js podem gerar
+          git add output/ \
+                  public/data/*/analysis/ \
+                  public/data/players.json \
+                  public/data/player-stats.json \
+                  public/data/away-courses.json \
+                  public/data/master-courses.json \
+                  players.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "Nada em staging — sem commit."
             exit 0
@@ -94,8 +101,9 @@ jobs:
           DATE=$(date +'%Y-%m-%d %H:%M')
           CHANGED=$(git diff --staged --name-only | wc -l)
           git commit -m "data: update FPG WHS+scorecards ${DATE} (${CHANGED} ficheiros)"
-          # Rebase em cima de qualquer commit que tenha entrado entretanto
-          # (evita non-fast-forward quando vários workflows correm em paralelo)
-          git pull --rebase origin ${GITHUB_REF_NAME} || git rebase --abort
+          # Rebase em cima de qualquer commit que tenha entrado entretanto.
+          # --autostash lida com quaisquer ficheiros unstaged que tenham ficado
+          # para trás do git add (stashes automaticamente e repõe após o pull).
+          git pull --rebase --autostash origin ${GITHUB_REF_NAME} || git rebase --abort
           git push
           echo "✓ Commit feito — ${CHANGED} ficheiros actualizados"

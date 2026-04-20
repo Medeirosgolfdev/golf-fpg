@@ -113,8 +113,9 @@ jobs:
           DATE=$(date +'%Y-%m-%d %H:%M')
           CHANGED=$(git diff --staged --name-only | wc -l)
           git commit -m "data: update JOVENS ${DATE} (${CHANGED} ficheiros)"
-          # Rebase em cima de qualquer commit que tenha entrado entretanto
-          # (evita non-fast-forward quando vários workflows correm em paralelo)
-          git pull --rebase origin ${GITHUB_REF_NAME} || git rebase --abort
+          # Rebase em cima de qualquer commit que tenha entrado entretanto.
+          # --autostash lida com quaisquer ficheiros unstaged que tenham ficado
+          # para trás do git add (stashes automaticamente e repõe após o pull).
+          git pull --rebase --autostash origin ${GITHUB_REF_NAME} || git rebase --abort
           git push
           echo "✓ Commit feito — ${CHANGED} ficheiros actualizados"
