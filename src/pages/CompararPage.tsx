@@ -9,7 +9,7 @@
  *   1. Radar chart — perfil comparativo visual
  *   2. Tabela comparativa lado a lado com highlight do melhor
  *   3. Painel "Quem Ganha em Quê" — scorecard de categorias
- *   4. Análise SWOT automática por jogador
+ *   4. Perfil do jogador — leitura rápida e comparação visual
  *   5. Consistência — std dev, sequências, dispersão
  *   6. Distribuição de scores (eagle→triple) com barras
  *   7. Buraco a buraco (gráfico + tabela) — só torneios
@@ -39,7 +39,13 @@ import SortableHdr from "../ui/SortableHdr";
 import StatsTable from "./comparar/StatsTable";
 import ConsistencySection from "./comparar/ConsistencySection";
 import ScoreDistribution from "./comparar/ScoreDistribution";
+import PerfilJogadorSection from "./comparar/PerfilJogadorSection";
 import { COLORS, COLORS_LIGHT } from "./comparar/types";
+import type { AggStats, ScoreDistBucket, PerHoleStat, PeriodKey as _PeriodKey } from "./comparar/types";
+import { PERIOD_OPTIONS, periodCutoff } from "./comparar/types";
+
+// Re-export for backwards compatibility of local usages that used PeriodKey before.
+type PeriodKey = _PeriodKey;
 
 
 interface Slot {
@@ -49,40 +55,56 @@ interface Slot {
 
 /* ─── Aggregate stats (tournament rounds only) ─── */
 
-interface AggStats {
-  totalStrokesOverPar: number;
-  parOrBetterPct: number;
-  dblOrWorsePct: number;
-  byPar: Record<number, { avgVsPar: number; slPerRound: number }>;
-  nRounds: number;
-  nRoundsWithCard: number;
-  scoreDist: { eagle: number; birdie: number; par: number; bogey: number; double: number; triple: number; total: number };
-  avgGross: number | null;
-  bestGross: number | null;
-  f9sl: number | null;
-  b9sl: number | null;
-  avgSD: number | null;
-  bestSD: number | null;
-  best8of20SD: number | null;
-  last5AvgSD: number | null;
-  grossStdDev: number | null;
-  sdStdDev: number | null;
-  longestStreak: number;
-  grossSeries: number[];
-  sdSeries: { sd: number; dateSort: number; event: string }[];
+const emptyDistBucket = (): ScoreDistBucket =>
+  ({ eagle: 0, birdie: 0, par: 0, bogey: 0, double: 0, triple: 0, total: 0 });
+
+/**
+ * Classifica um diff (gross − par) numa categoria da distribuição.
+ * Usada pelo aggregateStats e potencialmente por outros agregadores.
+ */
+function bumpDist(d: ScoreDistBucket, diff: number): void {
+  if      (diff <= -2) d.eagle++;
+  else if (diff === -1) d.birdie++;
+  else if (diff ===  0) d.par++;
+  else if (diff ===  1) d.bogey++;
+  else if (diff ===  2) d.double++;
+  else                  d.triple++;
+  d.total++;
 }
 
-function aggregateStats(data: PlayerPageData): AggStats | null {
-  const dist = { eagle: 0, birdie: 0, par: 0, bogey: 0, double: 0, triple: 0, total: 0 };
+/**
+ * Agrega estatísticas de rondas de torneio.
+ *
+ * @param data         Dados pré-carregados do jogador.
+ * @param cutoffMs     Se passado, descarta rondas com `dateSort < cutoffMs`.
+ *                     Em conjunto com os cutoffs de "últimas N rondas" (ver
+ *                     `periodCutoff`) implementa o filtro de período
+ *                     partilhado pela página.
+ */
+function aggregateStats(data: PlayerPageData, cutoffMs?: number): AggStats | null {
+  const dist = emptyDistBucket();
+  const distByPar: Record<3 | 4 | 5, ScoreDistBucket> = {
+    3: emptyDistBucket(), 4: emptyDistBucket(), 5: emptyDistBucket(),
+  };
+  const f9dist = emptyDistBucket();
+  const b9dist = emptyDistBucket();
+
   const parTypeAcc: Record<number, { sumDiff: number; count: number }> = {};
   let grossSum = 0, nRounds = 0, nRoundsWithCard = 0, bestGross: number | null = null;
   let sopSum = 0;
   let f9diff = 0, b9diff = 0, fbN = 0;
+  // Totais F9/B9 quando as 9 foram jogadas (gross por meia-volta).
+  const f9gross: number[] = [], b9gross: number[] = [];
+  // Acumuladores por buraco (1..18) para o gráfico buraco-a-buraco.
+  const holeAcc: { g: number; p: number; n: number }[] = Array.from({ length: 18 }, () => ({ g: 0, p: 0, n: 0 }));
   const sdAll: { sd: number; dateSort: number; event: string }[] = [];
   const grossAll: number[] = [];
 
   for (const cd of data.DATA) {
     for (const r of cd.rounds) {
+      // Filtro de período — primeiro de tudo, para evitar custos desnecessários.
+      if (cutoffMs != null && r.dateSort < cutoffMs) continue;
+
       // Aceitar 18h via isTournamentRound, e também 9h válidas (Drive Challenge, etc.)
       const is9h = r.holeCount === 9;
       if (is9h) {
@@ -111,26 +133,34 @@ function aggregateStats(data: PlayerPageData): AggStats | null {
       if (holes && holes.g && holes.g.length >= 18) {
         nRoundsWithCard++;
         let roundPar = 0, f9 = 0, b9 = 0;
+        let f9gSum = 0, b9gSum = 0, f9n = 0, b9n = 0;
         for (let i = 0; i < 18; i++) {
           const hg = holes.g[i];
           const hp = holes.p[i];
           if (hg == null || hp == null) continue;
           const diff = hg - hp;
           roundPar += hp;
-          if (diff <= -2) dist.eagle++;
-          else if (diff === -1) dist.birdie++;
-          else if (diff === 0) dist.par++;
-          else if (diff === 1) dist.bogey++;
-          else if (diff === 2) dist.double++;
-          else dist.triple++;
-          dist.total++;
+          bumpDist(dist, diff);
+          if (hp === 3 || hp === 4 || hp === 5) bumpDist(distByPar[hp as 3 | 4 | 5], diff);
           if (!parTypeAcc[hp]) parTypeAcc[hp] = { sumDiff: 0, count: 0 };
           parTypeAcc[hp].sumDiff += diff;
           parTypeAcc[hp].count++;
-          if (i < 9) f9 += diff; else b9 += diff;
+          if (i < 9) {
+            f9 += diff; bumpDist(f9dist, diff);
+            f9gSum += hg; f9n++;
+          } else {
+            b9 += diff; bumpDist(b9dist, diff);
+            b9gSum += hg; b9n++;
+          }
+          // Acumular no balde por-índice-de-buraco
+          holeAcc[i].g += hg;
+          holeAcc[i].p += hp;
+          holeAcc[i].n++;
         }
         sopSum += (g - roundPar);
         f9diff += f9; b9diff += b9; fbN++;
+        if (f9n === 9) f9gross.push(f9gSum);
+        if (b9n === 9) b9gross.push(b9gSum);
       } else if (r.par != null) {
         sopSum += (g - Number(r.par));
       }
@@ -182,12 +212,27 @@ function aggregateStats(data: PlayerPageData): AggStats | null {
     else curStreak = 0;
   }
 
+  const perHoleAvg: PerHoleStat[] = holeAcc.map(a => ({
+    avg:    a.n > 0 ? a.g / a.n : null,
+    parAvg: a.n > 0 ? a.p / a.n : null,
+    n:      a.n,
+  }));
+
+  const avgArr = (arr: number[]): number | null => arr.length ? arr.reduce((s, v) => s + v, 0) / arr.length : null;
+
   return {
     totalStrokesOverPar: sopSum / nRounds,
     parOrBetterPct: pob,
     dblOrWorsePct: dow,
     byPar, nRounds, nRoundsWithCard,
     scoreDist: dist,
+    distByPar,
+    f9dist, b9dist,
+    f9toParAvg: fbN > 0 ? f9diff / fbN : null,
+    b9toParAvg: fbN > 0 ? b9diff / fbN : null,
+    f9grossAvg: avgArr(f9gross),
+    b9grossAvg: avgArr(b9gross),
+    perHoleAvg,
     avgGross: grossSum / nRounds,
     bestGross,
     f9sl: fbN > 0 ? f9diff / fbN : null,
@@ -204,12 +249,13 @@ function aggregateStats(data: PlayerPageData): AggStats | null {
 interface SimpleHoleEntry { h: number; par: number | null; avg: number | null; strokesLost: number | null; }
 interface SimpleHoleStats { teeName: string; holeCount: number; nRounds: number; avgGross: number | null; holes: SimpleHoleEntry[]; }
 
-function buildTourneyHoleStats(data: PlayerPageData): Map<string, { label: string; nR: number; stats: SimpleHoleStats }> {
+function buildTourneyHoleStats(data: PlayerPageData, cutoffMs?: number): Map<string, { label: string; nR: number; stats: SimpleHoleStats }> {
   const map = new Map<string, { label: string; nR: number; stats: SimpleHoleStats }>();
   const grouped = new Map<string, { tee: string; course: string; nH: number; scoreIds: string[] }>();
   for (const cd of data.DATA) {
     for (const r of cd.rounds) {
       // Aceitar 18h e 9h (Drive Challenge)
+      if (cutoffMs != null && r.dateSort < cutoffMs) continue;
       const is9h = r.holeCount === 9;
       if (is9h) {
         if (r._isTreino || r._isTeamEvent || r.gross == null) continue;
@@ -268,6 +314,36 @@ function buildTourneyHoleStats(data: PlayerPageData): Map<string, { label: strin
  * Nenhum jogador real de torneio faz mais de 130 num campo de 72.
  */
 const MAX_CREDIBLE_GROSS = 130;
+
+/**
+ * Predicate único "ronda entra nas estatísticas da página Comparar".
+ * Abrange:
+ *  - 18h de torneio (via isTournamentRound), excluindo eventos de equipa
+ *  - 9h credíveis (Drive Challenge etc.), excluindo EDS/Indiv/Treino
+ * Usado tanto para computar o cutoff "Últimas N rondas" como para decidir
+ * quais rondas entram nas agregações — garantindo que o cutoff e o que é
+ * mostrado são consistentes (selecionar "20 rondas" mostra exactamente 20).
+ */
+function isValidForStats(r: RoundData): boolean {
+  if (r._isTreino || r._isTeamEvent || r.gross == null) return false;
+  const origin = (r.scoreOrigin || "").trim();
+  if (origin === "EDS" || origin === "Indiv" || origin === "Treino") return false;
+  const g = Number(r.gross);
+  if (r.holeCount === 9) return g > 25 && g <= 70;
+  if (r.holeCount === 18) return isTournamentRound(r) && g > 50 && g <= MAX_CREDIBLE_GROSS;
+  return false;
+}
+
+/** Apanha todas as rondas válidas de um jogador, já achatadas. */
+function validRoundsOf(data: PlayerPageData): RoundData[] {
+  const out: RoundData[] = [];
+  for (const cd of data.DATA) {
+    for (const r of cd.rounds) {
+      if (isValidForStats(r)) out.push(r);
+    }
+  }
+  return out;
+}
 
 /* ─── Helpers visuais ─── */
 
@@ -616,39 +692,14 @@ function sumParBuckets(profile: HoleProfile | null, par: number): HoleBucket | n
   return total.n > 0 ? total : null;
 }
 
-type PeriodKey = "all" | "2y" | "1y" | "6m" | "20r" | "10r";
-
-const PERIOD_OPTIONS: { key: PeriodKey; label: string }[] = [
-  { key: "all",  label: "Todos os jogos" },
-  { key: "2y",   label: "Últimos 2 anos" },
-  { key: "1y",   label: "Último ano" },
-  { key: "6m",   label: "Últimos 6 meses" },
-  { key: "20r",  label: "Últimas 20 rondas" },
-  { key: "10r",  label: "Últimas 10 rondas" },
-];
-
-function periodCutoff(key: PeriodKey, allRounds: { dateSort: number }[]): number | undefined {
-  const now = Date.now();
-  if (key === "2y")  return now - 2 * 365.25 * 86400000;
-  if (key === "1y")  return now - 365.25 * 86400000;
-  if (key === "6m")  return now - 182.5 * 86400000;
-  if (key === "20r" || key === "10r") {
-    const n = key === "20r" ? 20 : 10;
-    const sorted = [...allRounds].sort((a, b) => b.dateSort - a.dateSort);
-    if (sorted.length <= n) return undefined;
-    return sorted[n - 1].dateSort;
-  }
-  return undefined;
-}
-
-function HoleProfileSection({ slots, refTee, holesMode }: {
+function HoleProfileSection({ slots, refTee, holesMode, period }: {
   slots: Slot[];
   refTee: Tee | null;
   holesMode: "18" | "front9" | "back9";
+  period: PeriodKey;
 }) {
   const { simCourses } = useAppContext();
   const loaded = slots.filter(s => s.player);
-  const [period, setPeriod] = useState<PeriodKey>("all");
 
   const teeHex = refTee ? getTeeHex(refTee.teeName, refTee.scorecardMeta?.teeColor) : BOGEY_COLOR;
   const teeTextColor = textOnColor(teeHex);
@@ -688,12 +739,9 @@ function HoleProfileSection({ slots, refTee, holesMode }: {
     <div className="mt-20">
       <div className="flex-wrap-gap10 mb-14" style={{ alignItems:"center" }}>
         <span className="h-md">🔍 Perfil Histórico por Tipo de Buraco</span>
-        <div style={{ marginLeft:"auto", display:"flex", alignItems:"center", gap:8 }}>
-          <span className="muted fs-11">Período:</span>
-          <select className="select select-sm" value={period} onChange={e => setPeriod(e.target.value as PeriodKey)}>
-            {PERIOD_OPTIONS.map(o => <option key={o.key} value={o.key}>{o.label}</option>)}
-          </select>
-        </div>
+        <span className="muted fs-11" style={{ marginLeft:"auto" }}>
+          Período: <b>{PERIOD_OPTIONS.find(o => o.key === period)?.label ?? period}</b>
+        </span>
       </div>
       <div className="muted fs-11 mb-10">
         {hasCourse
@@ -1105,7 +1153,7 @@ function HoleProfileSection({ slots, refTee, holesMode }: {
 
 
 
-function RoundPrepSection({ slots }: { slots: Slot[] }) {
+function RoundPrepSection({ slots, period }: { slots: Slot[]; period: PeriodKey }) {
   const { simCourses } = useAppContext();
   const [courseQ, setCourseQ] = useState("");
   const [courseOpen, setCourseOpen] = useState(false);
@@ -1463,6 +1511,7 @@ function RoundPrepSection({ slots }: { slots: Slot[] }) {
           slots={slots}
           refTee={refTee ?? null}
           holesMode={holesMode}
+          period={period}
         />
       )}
 
@@ -1568,187 +1617,22 @@ function CategoryScorecardSection({ slots, allAgg, statsDb }: { slots: Slot[]; a
   );
 }
 
-/* ═══════════════════ § 4 SWOT ═══════════════════ */
-
-function SwotSection({ slots, allAgg, statsDb }: { slots: Slot[]; allAgg: (AggStats | null)[]; statsDb: PlayerStatsDb }) {
-  const loaded = slots.map((s, i) => ({ s, agg: allAgg[i], i })).filter(x => x.agg);
-  if (loaded.length < 2) return null;
-
-  type SwotItem = { text: string; type: "S" | "W" | "O" | "T" };
-
-  function buildSwot(idx: number): SwotItem[] {
-    const agg = loaded[idx].agg!;
-    const ps = statsDb[loaded[idx].s.fed];
-    const others = loaded.filter((_, i) => i !== idx).map(x => x.agg!);
-    const items: SwotItem[] = [];
-
-    // ── FORÇAS ──
-    // Best par type
-    for (const pt of [3, 4, 5]) {
-      const mine = agg.byPar[pt]?.avgVsPar;
-      if (mine == null) continue;
-      const allOthers = others.map(o => o.byPar[pt]?.avgVsPar).filter((v): v is number => v != null);
-      if (allOthers.length > 0 && mine < Math.min(...allOthers) - 0.05) {
-        items.push({ type: "S", text: `Melhor nos Par ${pt} (${fD2(mine)} vs par)` });
-      }
-    }
-    if (agg.parOrBetterPct != null) {
-      const allOthers = others.map(o => o.parOrBetterPct).filter(v => v != null);
-      if (allOthers.length > 0 && agg.parOrBetterPct > Math.max(...allOthers) + 2) {
-        items.push({ type: "S", text: `Mais pares ou melhor (${agg.parOrBetterPct.toFixed(0)}%)` });
-      }
-    }
-    if (agg.bestSD != null) {
-      const allOthers = others.map(o => o.bestSD).filter((v): v is number => v != null);
-      if (allOthers.length > 0 && agg.bestSD < Math.min(...allOthers) - 0.5) {
-        items.push({ type: "S", text: `Melhor SD de sempre (${agg.bestSD.toFixed(1)})` });
-      }
-    }
-    if (agg.grossStdDev != null) {
-      const allOthers = others.map(o => o.grossStdDev).filter((v): v is number => v != null);
-      if (allOthers.length > 0 && agg.grossStdDev < Math.min(...allOthers) - 0.5) {
-        items.push({ type: "S", text: `Mais consistente (σ gross ${agg.grossStdDev.toFixed(1)})` });
-      }
-    }
-    if (agg.scoreDist.total > 0) {
-      const birdiePct = agg.scoreDist.birdie / agg.scoreDist.total * 100;
-      const allOthers = others.map(o => o.scoreDist.total > 0 ? o.scoreDist.birdie / o.scoreDist.total * 100 : 0);
-      if (allOthers.length > 0 && birdiePct > Math.max(...allOthers) + 1) {
-        items.push({ type: "S", text: `Mais birdies (${birdiePct.toFixed(1)}%)` });
-      }
-    }
-
-    // ── FRAQUEZAS ──
-    for (const pt of [3, 4, 5]) {
-      const mine = agg.byPar[pt]?.avgVsPar;
-      if (mine == null) continue;
-      const allOthers = others.map(o => o.byPar[pt]?.avgVsPar).filter((v): v is number => v != null);
-      if (allOthers.length > 0 && mine > Math.max(...allOthers) + 0.1) {
-        items.push({ type: "W", text: `Pior nos Par ${pt} (${fD2(mine)} vs par)` });
-      }
-    }
-    if (agg.dblOrWorsePct != null) {
-      const allOthers = others.map(o => o.dblOrWorsePct).filter(v => v != null);
-      if (allOthers.length > 0 && agg.dblOrWorsePct > Math.max(...allOthers) + 2) {
-        items.push({ type: "W", text: `Mais doubles+ (${agg.dblOrWorsePct.toFixed(0)}%)` });
-      }
-    }
-    if (agg.grossStdDev != null) {
-      const allOthers = others.map(o => o.grossStdDev).filter((v): v is number => v != null);
-      if (allOthers.length > 0 && agg.grossStdDev > Math.max(...allOthers) + 0.5) {
-        items.push({ type: "W", text: `Menos consistente (σ gross ${agg.grossStdDev.toFixed(1)})` });
-      }
-    }
-    if (agg.avgSD != null) {
-      const allOthers = others.map(o => o.avgSD).filter((v): v is number => v != null);
-      if (allOthers.length > 0 && agg.avgSD > Math.max(...allOthers) + 0.5) {
-        items.push({ type: "W", text: `SD médio mais alto (${agg.avgSD.toFixed(1)})` });
-      }
-    }
-
-    // ── OPORTUNIDADES ──
-    if (ps?.hcpTrend === "up") {
-      const delta = ps.hcpDelta3m != null ? ` (${ps.hcpDelta3m} nos últimos 3 meses)` : "";
-      items.push({ type: "O", text: `HCP em queda — em progressão${delta}` });
-    }
-    if (ps?.formAlert === "hot") {
-      items.push({ type: "O", text: "Forma recente excelente 🔥" });
-    }
-    if (agg.longestStreak >= 3) {
-      items.push({ type: "O", text: `Sequência de ${agg.longestStreak} rondas consecutivas a melhorar` });
-    }
-    if (agg.last5AvgSD != null && agg.avgSD != null && agg.last5AvgSD < agg.avgSD - 1) {
-      items.push({ type: "O", text: `Últimas 5 rondas muito acima da média (SD ${agg.last5AvgSD.toFixed(1)} vs avg ${agg.avgSD.toFixed(1)})` });
-    }
-    if (ps?.roundsLast12m != null && ps.roundsLast12m > 20) {
-      items.push({ type: "O", text: `Elevado volume de jogo (${ps.roundsLast12m} rondas nos últimos 12 meses)` });
-    }
-
-    // ── AMEAÇAS ──
-    if (ps?.hcpTrend === "down") {
-      const delta = ps.hcpDelta3m != null ? ` (+${ps.hcpDelta3m} nos últimos 3 meses)` : "";
-      items.push({ type: "T", text: `HCP em subida — tendência negativa${delta}` });
-    }
-    if (ps?.formAlert === "cold") {
-      items.push({ type: "T", text: "Má forma recente ❄️" });
-    }
-    if (agg.grossStdDev != null && agg.grossStdDev > 5) {
-      items.push({ type: "T", text: `Alta inconsistência (σ gross ${agg.grossStdDev.toFixed(1)}) — resultados imprevisíveis` });
-    }
-    if (agg.sdStdDev != null && agg.sdStdDev > 4) {
-      items.push({ type: "T", text: `Alta variância de SD (σ ${agg.sdStdDev.toFixed(1)}) — rondas muito irregulares` });
-    }
-    if (ps?.roundsLast3m != null && ps.roundsLast3m < 2) {
-      items.push({ type: "T", text: `Poucas rondas recentes (${ps.roundsLast3m} nos últimos 3 meses)` });
-    }
-
-    // Defaults if empty sections
-    if (!items.find(x => x.type === "S")) items.push({ type: "S", text: "Dados insuficientes para identificar forças" });
-    if (!items.find(x => x.type === "W")) items.push({ type: "W", text: "Dados insuficientes para identificar fraquezas" });
-    if (!items.find(x => x.type === "O")) items.push({ type: "O", text: "Sem oportunidades identificadas no período" });
-    if (!items.find(x => x.type === "T")) items.push({ type: "T", text: "Sem ameaças identificadas no período" });
-
-    return items;
-  }
-
-  const swotConfig: Record<string, { label: string; bg: string; border: string; color: string }> = {
-    S: { label: "💪 Forças", bg: "var(--bg-success)", border: "var(--border-success)", color: "var(--color-good-dark)" },
-    W: { label: "⚠️ Fraquezas", bg: "var(--bg-danger)", border: "var(--border-danger)", color: "var(--color-danger-dark)" },
-    O: { label: "🌱 Oportunidades", bg: "var(--bg-info)", border: "var(--border-info)", color: "var(--color-info)" },
-    T: { label: "🎯 Ameaças", bg: "var(--bg-warn)", border: "var(--border-warn)", color: "var(--color-warn-dark)" },
-  };
-
-  return (
-    <div className="card">
-      <div className="h-md mb-12">🔍 Análise SWOT</div>
-      <div style={{ display: "grid", gridTemplateColumns: `repeat(${Math.min(loaded.length, 2)}, 1fr)`, gap: 16 }}>
-        {loaded.map(({ s, i }) => {
-          const items = buildSwot(i);
-          return (
-            <div key={i} style={{ border: `2px solid ${COLORS[i]}`, borderRadius: "var(--radius)", overflow: "hidden" }}>
-              {/* Player header */}
-              <div className="gap-8" style={{ background: COLORS[i], padding: "8px 14px", display: "flex", alignItems: "center" }}>
-                <span className="fw-800 fs-14" style={{ color: "#fff" }}>{firstName(s.player.name)}</span>
-                <span className="fs-11" style={{ color: "rgba(255,255,255,.75)" }}>HCP {hcpDisplay(s.player.hcp)} · {s.player.escalao}</span>
-              </div>
-              {/* SWOT grid */}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-                {(["S", "W", "O", "T"] as const).map(type => {
-                  const cfg = swotConfig[type];
-                  const typeItems = items.filter(x => x.type === type);
-                  return (
-                    <div key={type} style={{ background: cfg.bg, borderTop: `1px solid ${cfg.border}`, borderRight: type === "S" || type === "O" ? `1px solid ${cfg.border}` : undefined, padding: "10px 12px" }}>
-                      <div className="uppercase fw-700 fs-11 mb-6"  style={{ color: cfg.color, letterSpacing: "0.05em" }}>{cfg.label}</div>
-                      <ul style={{ margin: 0, padding: "0 0 0 14px" }}>
-                        {typeItems.map((item, j) => (
-                          <li key={j} style={{ fontSize: 11, lineHeight: 1.5, color: "var(--text-2)", marginBottom: 3 }}>{item.text}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
 /* ConsistencySection extraído para ./comparar/ConsistencySection.tsx */
 
 /* ScoreDistribution extraído para ./comparar/ScoreDistribution.tsx */
 
 /* ═══════════════════ § 7 BURACO A BURACO ═══════════════════ */
 
-function HoleByHoleSection({ slots }: { slots: Slot[] }) {
+function HoleByHoleSection({ slots, period }: { slots: Slot[]; period: PeriodKey }) {
   const loaded = slots.filter(s => s.data);
   const [sel, setSel] = useState(0);
 
   const combos = useMemo(() => {
     if (loaded.length < 2) return [];
-    const maps = loaded.map(s => buildTourneyHoleStats(s.data!));
+    const maps = loaded.map(s => {
+      const cutoff = periodCutoff(period, validRoundsOf(s.data!));
+      return buildTourneyHoleStats(s.data!, cutoff);
+    });
     const allKeys = new Set<string>();
     maps.forEach(m => m.forEach((_, k) => allKeys.add(k)));
     const result: { label: string; nRounds: number[]; stats: (SimpleHoleStats | null)[] }[] = [];
@@ -1760,7 +1644,8 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
     }
     result.sort((a, b) => b.nRounds.reduce((s, v) => s + v, 0) - a.nRounds.reduce((s, v) => s + v, 0));
     return result;
-  }, [loaded]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loaded, period]);
 
   if (loaded.length < 2 || combos.length === 0) return null;
   const combo = combos[Math.min(sel, combos.length - 1)];
@@ -1853,7 +1738,7 @@ function HoleByHoleSection({ slots }: { slots: Slot[] }) {
 
 /* ═══════════════════ § 8 HEAD-TO-HEAD ═══════════════════ */
 
-function HeadToHeadSection({ slots }: { slots: Slot[] }) {
+function HeadToHeadSection({ slots, period }: { slots: Slot[]; period: PeriodKey }) {
   const loaded = slots.filter(s => s.data);
   const [showAll, setShowAll] = useState(false);
 
@@ -1872,9 +1757,13 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
 
   const matches = useMemo(() => {
     if (loaded.length < 2) return [];
+    // Cutoffs por jogador (para modos "últimas N rondas" o cutoff é individual).
+    const cutoffs = loaded.map(s => periodCutoff(period, validRoundsOf(s.data!)));
     const eventMap = new Map<string, Map<number, RoundData & { course: string }>>();
     loaded.forEach((s, si) => {
+      const cutoff = cutoffs[si];
       for (const c of s.data!.DATA) for (const r of c.rounds) {
+        if (cutoff != null && r.dateSort < cutoff) continue;
         if (!isValidH2HRound(r)) continue;
         // Chave: nome do evento + data + nº buracos (evita colidir 9h com 18h do mesmo dia)
         const key = norm(r.eventName) + "|" + r.date + "|" + r.holeCount;
@@ -1897,7 +1786,8 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
     }
     res.sort((a, b) => b.dateSort - a.dateSort);
     return res;
-  }, [loaded]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loaded, period]);
 
   if (loaded.length < 2 || matches.length === 0) return null;
   const wins = loaded.map(() => 0);
@@ -2098,20 +1988,23 @@ function HeadToHeadSection({ slots }: { slots: Slot[] }) {
 
 /* ═══════════════════ § 9 EVOLUÇÃO EM TORNEIOS ═══════════════════ */
 
-function TournamentEvolutionSection({ slots }: { slots: Slot[] }) {
-  const [period, setPeriod] = useState(12);
+function TournamentEvolutionSection({ slots, period }: { slots: Slot[]; period: PeriodKey }) {
   const [metric, setMetric] = useState<"sd" | "gross">("sd");
   const loaded = slots.filter(s => s.data);
 
-  const cutoff = period > 0 ? Date.now() - period * 30.44 * 86400000 : 0;
+  // Cutoffs por jogador (o modo "últimas N rondas" resolve-se por slot).
+  const cutoffs = useMemo(() => loaded.map(s => periodCutoff(period, validRoundsOf(s.data!))),
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  [loaded, period]);
 
   const series = useMemo(() => {
     if (loaded.length < 2) return [];
     return loaded.map((s, i) => {
+      const cutoff = cutoffs[i];
       const pts: { d: number; sd: number; gross: number; event: string; is9h: boolean }[] = [];
       for (const cd of s.data!.DATA) {
         for (const r of cd.rounds) {
-          if (r.dateSort < cutoff) continue;
+          if (cutoff != null && r.dateSort < cutoff) continue;
           if (r._isTreino || r._isTeamEvent) continue;
           const is9h = r.holeCount === 9;
           const is18h = r.holeCount === 18;
@@ -2139,7 +2032,8 @@ function TournamentEvolutionSection({ slots }: { slots: Slot[] }) {
       }
       return { name: s.player.name, color: COLORS[i], pts: rolling };
     });
-  }, [loaded, cutoff, metric]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loaded, cutoffs, metric]);
 
   if (loaded.length < 2) return null;
   const allPts = series.flatMap(s => s.pts);
@@ -2162,10 +2056,10 @@ function TournamentEvolutionSection({ slots }: { slots: Slot[] }) {
           <option value="sd">Score Differential</option>
           <option value="gross">Gross</option>
         </select>
-        <select className="select" value={period} onChange={e => setPeriod(Number(e.target.value))}>
-          <option value={0}>Total</option><option value={36}>3 anos</option><option value={24}>2 anos</option><option value={12}>1 ano</option><option value={6}>6 meses</option>
-        </select>
-        <span className="muted fs-10 fw-400">média móvel 5 rondas · {metric === "sd" ? "SD por ronda (não o HI)" : "gross por ronda"}</span>
+        <span className="muted fs-10 fw-400">
+          média móvel 5 rondas · {metric === "sd" ? "SD por ronda (não o HI)" : "gross por ronda"} ·
+          período: <b>{PERIOD_OPTIONS.find(o => o.key === period)?.label ?? period}</b>
+        </span>
       </div>
       <svg viewBox={`0 0 ${W} ${H}`} className="cmp-radar-wrap-sm">
         {Array.from({ length: 5 }, (_, i) => {
@@ -2227,6 +2121,8 @@ export default function CompararPage() {
   const { players } = useAppContext();
   const [slots, setSlots] = useState<Slot[]>([]);
   const [statsDb, setStatsDb] = useState<PlayerStatsDb>({});
+  // Período único que filtra TODAS as análises da página.
+  const [period, setPeriod] = useState<PeriodKey>("all");
 
   useEffect(() => { loadPlayerStats().then(setStatsDb); }, []);
 
@@ -2247,11 +2143,46 @@ export default function CompararPage() {
   const removePlayer = (fed: string) => setSlots(prev => prev.filter(s => s.fed !== fed));
   const anyLoading = slots.some(s => s.loading);
 
-  const allAgg = useMemo(() => slots.map(s => {
+  // Cutoff por slot (o modo "últimas N rondas" é por jogador).
+  const cutoffs = useMemo(() => slots.map(s => {
+    if (!s.data) return undefined;
+    return periodCutoff(period, validRoundsOf(s.data));
+  }), [slots, period]);
+
+  // Intervalo de datas efectivamente usado, para mostrar no header.
+  const dateRange = useMemo(() => {
+    const coveredStarts: number[] = [];
+    const coveredEnds: number[] = [];
+    slots.forEach((s, i) => {
+      if (!s.data) return;
+      const valid = validRoundsOf(s.data).filter(r => {
+        const c = cutoffs[i];
+        return c == null || r.dateSort >= c;
+      });
+      if (valid.length === 0) return;
+      const dates = valid.map(r => r.dateSort);
+      coveredStarts.push(Math.min(...dates));
+      coveredEnds.push(Math.max(...dates));
+    });
+    if (coveredStarts.length === 0) return null;
+    return {
+      from: Math.min(...coveredStarts),
+      to:   Math.max(...coveredEnds),
+    };
+  }, [slots, cutoffs]);
+
+  const fmtDate = (ms: number) => new Date(ms).toLocaleDateString("pt-PT", { day: "2-digit", month: "short", year: "numeric" });
+
+  const allAgg = useMemo(() => slots.map((s, i) => {
     if (!s.data) return null;
-    try { return aggregateStats(s.data); }
+    try { return aggregateStats(s.data, cutoffs[i]); }
     catch (e) { console.error("[Comparar] aggregateStats error for", s.fed, e); return null; }
-  }), [slots]);
+  }), [slots, cutoffs]);
+
+  // Contar jogadores com amostra pequena (<5 rondas) no período.
+  const smallSampleSlots = slots
+    .map((s, i) => ({ s, n: allAgg[i]?.nRounds ?? 0, i }))
+    .filter(x => x.s.data && x.n > 0 && x.n < 5);
 
   return (
     <div className="page-full">
@@ -2268,9 +2199,69 @@ export default function CompararPage() {
             📌 Todas as estatísticas consideram apenas rondas de torneio (sem EDS nem individuais).
           </div>
           <div className="cmp-feature-tags">
-            {["⛳ Preparar Ronda", "Perfil radar", "Tabela detalhada", "🏅 Quem ganha em quê", "🔍 SWOT", "📐 Consistência", "Distribuição de scores", "Buraco a buraco", "⚔️ Duelos", "Evolução torneios"].map(label => (
+            {["⛳ Preparar Ronda", "Tabela detalhada", "🏅 Quem ganha em quê", "📖 Leitura rápida", "📐 Consistência", "Distribuição de scores", "Buraco a buraco", "⚔️ Duelos", "Evolução torneios"].map(label => (
               <span key={label} className="cmp-feature-tag">{label}</span>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* ── Barra única de PERÍODO — afecta TODAS as secções ── */}
+      {slots.length >= 1 && !anyLoading && (
+        <div className="card p-10 mb-12">
+          <div className="d-flex items-center gap-10 flex-wrap">
+            <span className="fw-700 fs-12">📅 Período de análise</span>
+            <select
+              className="select"
+              value={period}
+              onChange={e => setPeriod(e.target.value as PeriodKey)}
+              title="Filtra TODAS as estatísticas, tabelas e gráficos desta página"
+            >
+              {PERIOD_OPTIONS.map(o => <option key={o.key} value={o.key}>{o.label}</option>)}
+            </select>
+            {dateRange && (
+              <span className="muted fs-11">
+                {period === "all"
+                  ? <>Todas as rondas — desde <b>{fmtDate(dateRange.from)}</b> até <b>{fmtDate(dateRange.to)}</b></>
+                  : <>Cobre <b>{fmtDate(dateRange.from)}</b> → <b>{fmtDate(dateRange.to)}</b></>}
+              </span>
+            )}
+            {slots.filter(s => s.data).length >= 1 && (
+              <span className="fs-11 c-text-3" style={{ marginLeft: "auto", display: "flex", flexWrap: "wrap", gap: 6 }}>
+                {slots.map((s, i) => {
+                  const agg = allAgg[i];
+                  if (!s.data || !agg) return null;
+                  return (
+                    <span key={s.fed} className="chip" style={{ borderColor: COLORS[i], color: COLORS[i] }}>
+                      {firstName(s.player.name)}: {agg.nRounds} rondas
+                    </span>
+                  );
+                })}
+              </span>
+            )}
+          </div>
+          <div className="muted fs-11 mt-4">
+            {period === "all"
+              ? "Todas as rondas contam: tabelas, buraco-a-buraco, duelos e evolução."
+              : "Aplica-se a tudo: médias, distribuições, consistência, buraco-a-buraco, duelos e evolução."}
+          </div>
+        </div>
+      )}
+
+      {/* Aviso de amostra pequena */}
+      {smallSampleSlots.length > 0 && period !== "all" && (
+        <div className="card p-10 mb-12" style={{ borderLeft: `4px solid ${SC.warn}` }}>
+          <div className="fw-700 fs-12" style={{ color: SC.warn }}>
+            ⚠️ Amostra pequena no período escolhido
+          </div>
+          <div className="muted fs-11 mt-2">
+            {smallSampleSlots.map((x, k) => (
+              <span key={x.s.fed}>
+                {k > 0 && " · "}
+                <b style={{ color: COLORS[x.i] }}>{firstName(x.s.player.name)}</b> só tem {x.n} ronda{x.n === 1 ? "" : "s"}
+              </span>
+            ))}
+            . Médias e distribuições podem não ser representativas — considera alargar o período.
           </div>
         </div>
       )}
@@ -2290,7 +2281,7 @@ export default function CompararPage() {
       {/* Preparar Ronda — visível logo que haja 1 jogador */}
       {slots.length >= 1 && !anyLoading && (
         <SectionErrorBoundary label="Preparar Ronda">
-          <RoundPrepSection slots={slots} />
+          <RoundPrepSection slots={slots} period={period} />
         </SectionErrorBoundary>
       )}
 
@@ -2301,23 +2292,23 @@ export default function CompararPage() {
         <SectionErrorBoundary label="Category Scorecard">
           <CategoryScorecardSection slots={slots} allAgg={allAgg} statsDb={statsDb} />
         </SectionErrorBoundary>
-        <SectionErrorBoundary label="SWOT">
-          <SwotSection slots={slots} allAgg={allAgg} statsDb={statsDb} />
+        <SectionErrorBoundary label="Perfil do Jogador">
+          <PerfilJogadorSection slots={slots} allAgg={allAgg} statsDb={statsDb} period={period} />
         </SectionErrorBoundary>
         <SectionErrorBoundary label="Consistência">
-          <ConsistencySection slots={slots} allAgg={allAgg} />
+          <ConsistencySection slots={slots} allAgg={allAgg} period={period} />
         </SectionErrorBoundary>
         <SectionErrorBoundary label="Score Distribution">
           <ScoreDistribution slots={slots} allAgg={allAgg} />
         </SectionErrorBoundary>
         <SectionErrorBoundary label="Hole by Hole">
-          <HoleByHoleSection slots={slots} />
+          <HoleByHoleSection slots={slots} period={period} />
         </SectionErrorBoundary>
         <SectionErrorBoundary label="Head to Head">
-          <HeadToHeadSection slots={slots} />
+          <HeadToHeadSection slots={slots} period={period} />
         </SectionErrorBoundary>
         <SectionErrorBoundary label="Tournament Evolution">
-          <TournamentEvolutionSection slots={slots} />
+          <TournamentEvolutionSection slots={slots} period={period} />
         </SectionErrorBoundary>
       </>)}
 
