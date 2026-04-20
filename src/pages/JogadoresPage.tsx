@@ -6,7 +6,7 @@ import { norm, shortDate, firstName, fmtSign, fmtToPar } from "../utils/format";
 import { getTeeHex, textOnColor, normKey, teeBorder } from "../utils/teeColors";
 import { clubShort, clubLong, hcpDisplay, escCls } from "../utils/playerUtils";
 import { numSafe, meanArr, stdevArr, sumArr, minArr, maxArr, linearSlope } from "../utils/mathUtils";
-import { scClass, fmtGrossDelta, fmtStb, sdClassByHcp, fmtSdVal, sc2, SC, toParClass } from "../utils/scoreDisplay";
+import { scClass, fmtGrossDelta, fmtStb, sdClassByHcp, fmtSdVal, sc2, sc3m, SC, toParClass } from "../utils/scoreDisplay";
 import {
   type PlayerPageData, type CourseData, type RoundData,
   type EclecticEntry, type HoleStatsData,
@@ -1036,6 +1036,22 @@ function KPICard({ title, val, sub, delta, deltaLabel, tip, accent }: {
       )}
       {sub && <div style={{ fontSize: 11, color: "var(--text-3)", marginTop: 2 }}>{sub}</div>}
     </div>
+  );
+}
+
+/* ─── Period selector (3m/6m/1a/…/total) ─── */
+function PeriodSelect({ value, onChange }: { value: number; onChange: (n: number) => void }) {
+  return (
+    <select className="br c-text-2 fs-11" style={{ padding: "2px 6px", border: "1px solid var(--border)", background: "var(--bg-card)" }}
+      value={value} onChange={e => onChange(Number(e.target.value))}>
+      <option value={3}>3 meses</option>
+      <option value={6}>6 meses</option>
+      <option value={9}>9 meses</option>
+      <option value={12}>1 ano</option>
+      <option value={24}>2 anos</option>
+      <option value={36}>3 anos</option>
+      <option value={0}>Total</option>
+    </select>
   );
 }
 

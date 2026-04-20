@@ -41,8 +41,8 @@ import ConsistencySection from "./comparar/ConsistencySection";
 import ScoreDistribution from "./comparar/ScoreDistribution";
 import PerfilJogadorSection from "./comparar/PerfilJogadorSection";
 import { COLORS, COLORS_LIGHT } from "./comparar/types";
-import type { AggStats, ScoreDistBucket, PerHoleStat, PeriodKey as _PeriodKey } from "./comparar/types";
-import { PERIOD_OPTIONS, periodCutoff } from "./comparar/types";
+import type { AggStats, ScoreDistBucket, PerHoleStat, PeriodKey as _PeriodKey, RoundInPeriod } from "./comparar/types";
+import { PERIOD_OPTIONS, buildPeriodSelector } from "./comparar/types";
 
 // Re-export for backwards compatibility of local usages that used PeriodKey before.
 type PeriodKey = _PeriodKey;
@@ -75,13 +75,12 @@ function bumpDist(d: ScoreDistBucket, diff: number): void {
 /**
  * Agrega estatísticas de rondas de torneio.
  *
- * @param data         Dados pré-carregados do jogador.
- * @param cutoffMs     Se passado, descarta rondas com `dateSort < cutoffMs`.
- *                     Em conjunto com os cutoffs de "últimas N rondas" (ver
- *                     `periodCutoff`) implementa o filtro de período
- *                     partilhado pela página.
+ * @param data      Dados pré-carregados do jogador.
+ * @param inPeriod  Se passado, só considera rondas em que `inPeriod(r)` é true.
+ *                  Construído uma vez por jogador via `buildPeriodSelector()`
+ *                  para evitar off-by-one e empates em modos "últimas N rondas".
  */
-function aggregateStats(data: PlayerPageData, cutoffMs?: number): AggStats | null {
+function aggregateStats(data: PlayerPageData, inPeriod?: RoundInPeriod): AggStats | null {
   const dist = emptyDistBucket();
   const distByPar: Record<3 | 4 | 5, ScoreDistBucket> = {
     3: emptyDistBucket(), 4: emptyDistBucket(), 5: emptyDistBucket(),
@@ -103,23 +102,11 @@ function aggregateStats(data: PlayerPageData, cutoffMs?: number): AggStats | nul
   for (const cd of data.DATA) {
     for (const r of cd.rounds) {
       // Filtro de período — primeiro de tudo, para evitar custos desnecessários.
-      if (cutoffMs != null && r.dateSort < cutoffMs) continue;
-
-      // Aceitar 18h via isTournamentRound, e também 9h válidas (Drive Challenge, etc.)
+      if (inPeriod && !inPeriod(r)) continue;
+      // Filtro unificado (18h torneio + 9h credíveis). Ver isValidForStats().
+      if (!isValidForStats(r)) continue;
       const is9h = r.holeCount === 9;
-      if (is9h) {
-        // Filtro manual para 9h: sem treino, sem equipa, gross credível
-        if (r._isTreino || r._isTeamEvent || r.gross == null) continue;
-        const o = (r.scoreOrigin || "").trim();
-        if (o === "EDS" || o === "Indiv" || o === "Treino") continue;
-        const g = Number(r.gross);
-        if (g <= 25 || g > 70) continue; // limites credíveis para 9h
-      } else {
-        if (!isTournamentRound(r)) continue;
-        if (r._isTeamEvent) continue;
-      }
       const g = Number(r.gross);
-      if (!is9h && g > MAX_CREDIBLE_GROSS) continue;
       grossSum += g;
       grossAll.push(g);
       nRounds++;
@@ -249,24 +236,14 @@ function aggregateStats(data: PlayerPageData, cutoffMs?: number): AggStats | nul
 interface SimpleHoleEntry { h: number; par: number | null; avg: number | null; strokesLost: number | null; }
 interface SimpleHoleStats { teeName: string; holeCount: number; nRounds: number; avgGross: number | null; holes: SimpleHoleEntry[]; }
 
-function buildTourneyHoleStats(data: PlayerPageData, cutoffMs?: number): Map<string, { label: string; nR: number; stats: SimpleHoleStats }> {
+function buildTourneyHoleStats(data: PlayerPageData, inPeriod?: RoundInPeriod): Map<string, { label: string; nR: number; stats: SimpleHoleStats }> {
   const map = new Map<string, { label: string; nR: number; stats: SimpleHoleStats }>();
   const grouped = new Map<string, { tee: string; course: string; nH: number; scoreIds: string[] }>();
   for (const cd of data.DATA) {
     for (const r of cd.rounds) {
-      // Aceitar 18h e 9h (Drive Challenge)
-      if (cutoffMs != null && r.dateSort < cutoffMs) continue;
-      const is9h = r.holeCount === 9;
-      if (is9h) {
-        if (r._isTreino || r._isTeamEvent || r.gross == null) continue;
-        const o = (r.scoreOrigin || "").trim();
-        if (o === "EDS" || o === "Indiv" || o === "Treino") continue;
-        const g = Number(r.gross);
-        if (g <= 25 || g > 70) continue;
-      } else {
-        if (!isTournamentRound(r)) continue;
-        if (r._isTeamEvent) continue;
-      }
+      // Filtro unificado: aceita 18h torneio + 9h credíveis.
+      if (inPeriod && !inPeriod(r)) continue;
+      if (!isValidForStats(r)) continue;
       if (!data.HOLES[r.scoreId]) continue;
       const holes = data.HOLES[r.scoreId];
       const nH = r.holeCount ?? 18;
@@ -328,6 +305,9 @@ function isValidForStats(r: RoundData): boolean {
   if (r._isTreino || r._isTeamEvent || r.gross == null) return false;
   const origin = (r.scoreOrigin || "").trim();
   if (origin === "EDS" || origin === "Indiv" || origin === "Treino") return false;
+  // Defesa adicional: alguns ficheiros FPG têm eventName="EDS"/"Indiv" sem scoreOrigin correspondente.
+  const ev = (r.eventName || "").trim();
+  if (ev === "EDS" || ev === "Indiv") return false;
   const g = Number(r.gross);
   if (r.holeCount === 9) return g > 25 && g <= 70;
   if (r.holeCount === 18) return isTournamentRound(r) && g > 50 && g <= MAX_CREDIBLE_GROSS;
@@ -464,7 +444,7 @@ interface HoleBucket {
 type HoleProfile = Map<string, HoleBucket>; // key: "par|bkt" ou "par|all"
 
 /** Constrói perfil de desempenho por par+distância a partir de todos os torneios */
-function buildHoleProfile(data: PlayerPageData, simCourses: Course[], cutoffMs?: number): HoleProfile {
+function buildHoleProfile(data: PlayerPageData, simCourses: Course[], inPeriod?: RoundInPeriod): HoleProfile {
   const map: HoleProfile = new Map();
   const getB = (key: string): HoleBucket => {
     if (!map.has(key)) map.set(key, { n:0,sumDiff:0,eagle:0,birdie:0,parScore:0,bogey:0,double:0,triple:0 });
@@ -522,17 +502,21 @@ function buildHoleProfile(data: PlayerPageData, simCourses: Course[], cutoffMs?:
   for (const cd of data.DATA) {
     const courseMatch = findCourse(cd.course);
     for (const r of cd.rounds) {
-      if (!isTournamentRound(r) || r._isTeamEvent) continue;
-      if (cutoffMs != null && r.dateSort < cutoffMs) continue;
+      // Usa isValidForStats — aceita 18h torneio + 9h credíveis (Drive Challenge, etc.).
+      if (!isValidForStats(r)) continue;
+      if (inPeriod && !inPeriod(r)) continue;
       const hd = data.HOLES[r.scoreId];
-      if (!hd?.g || hd.g.length < 18) continue;
+      if (!hd?.g || hd.g.length === 0) continue;
+
+      // Percorremos apenas os buracos disponíveis — 9 em Drive Challenge, 18 em torneio normal.
+      const nH = Math.min(hd.g.length, 18);
 
       // Distâncias: usar hd.m se tiver valores reais (>0).
       // Alguns scorecards internacionais têm hd.m=[0,0,...] — tratar como sem dados.
-      const distByHole: (number | null)[] = Array(18).fill(null);
+      const distByHole: (number | null)[] = Array(nH).fill(null);
       const hasRealMeters = hd.m != null && hd.m.some(v => v != null && v > 0);
       if (hasRealMeters) {
-        for (let hi = 0; hi < 18; hi++) {
+        for (let hi = 0; hi < nH; hi++) {
           distByHole[hi] = (hd.m![hi] ?? 0) > 0 ? hd.m![hi] : null;
         }
       } else if (courseMatch) {
@@ -541,12 +525,12 @@ function buildHoleProfile(data: PlayerPageData, simCourses: Course[], cutoffMs?:
           ?? courseMatch.master.tees[0];
         if (tee?.holes) {
           for (const h of tee.holes) {
-            if (h.hole >= 1 && h.hole <= 18) distByHole[h.hole - 1] = h.distance ?? null;
+            if (h.hole >= 1 && h.hole <= nH) distByHole[h.hole - 1] = h.distance ?? null;
           }
         }
       }
 
-      for (let i = 0; i < 18; i++) {
+      for (let i = 0; i < nH; i++) {
         const hg = hd.g[i]; const hp = hd.p[i];
         if (hg == null || hp == null || hp < 3 || hp > 5) continue;
         const diff = hg - hp;
@@ -707,11 +691,12 @@ function HoleProfileSection({ slots, refTee, holesMode, period }: {
   const profiles = useMemo(() => {
     return loaded.map(s => {
       if (!s.data) return null;
-      const allTourneyRounds = s.data.DATA.flatMap(cd =>
+      // HoleProfile só considera 18h de torneio — selector aplicado a esse universo.
+      const base = s.data.DATA.flatMap(cd =>
         cd.rounds.filter(r => isTournamentRound(r) && !r._isTeamEvent)
       );
-      const cutoff = periodCutoff(period, allTourneyRounds);
-      return buildHoleProfile(s.data, simCourses, cutoff);
+      const inPeriod = buildPeriodSelector(period, base);
+      return buildHoleProfile(s.data, simCourses, inPeriod);
     });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slots, simCourses, period]);
@@ -755,11 +740,11 @@ function HoleProfileSection({ slots, refTee, holesMode, period }: {
         const summary = loaded.map((s, i) => {
           if (!s.data) return { name: s.player.name, nRondasTorneio: 0, nRondas9h: 0, nEDS: 0, nTreino: 0, nRondas: 0, nHolesTotal: 0, holesWithCard: 0, parTotals: { 3:0, 4:0, 5:0 } };
 
-          // Calcular cutoff uma vez
-          const allTR = s.data.DATA.flatMap(cd =>
+          // Selector do período (mesmo universo do buildHoleProfile: 18h torneio)
+          const base = s.data.DATA.flatMap(cd =>
             cd.rounds.filter(r => isTournamentRound(r) && !r._isTeamEvent)
           );
-          const cutoff = period !== "all" ? periodCutoff(period, allTR) : undefined;
+          const inPeriod = buildPeriodSelector(period, base);
 
           let nRondasTorneio = 0; // torneio 18h (entra na análise)
           let nRondas9h = 0;       // 9 buracos (Drive Challenge, etc.)
@@ -771,7 +756,7 @@ function HoleProfileSection({ slots, refTee, holesMode, period }: {
 
           for (const cd of s.data.DATA) {
             for (const r of cd.rounds) {
-              if (cutoff != null && r.dateSort < cutoff) continue;
+              if (!inPeriod(r)) continue;
               const origin = (r.scoreOrigin || "").trim();
               const hc = r.holeCount ?? 18;
 
@@ -1630,8 +1615,8 @@ function HoleByHoleSection({ slots, period }: { slots: Slot[]; period: PeriodKey
   const combos = useMemo(() => {
     if (loaded.length < 2) return [];
     const maps = loaded.map(s => {
-      const cutoff = periodCutoff(period, validRoundsOf(s.data!));
-      return buildTourneyHoleStats(s.data!, cutoff);
+      const inPeriod = buildPeriodSelector(period, validRoundsOf(s.data!));
+      return buildTourneyHoleStats(s.data!, inPeriod);
     });
     const allKeys = new Set<string>();
     maps.forEach(m => m.forEach((_, k) => allKeys.add(k)));
@@ -1742,29 +1727,18 @@ function HeadToHeadSection({ slots, period }: { slots: Slot[]; period: PeriodKey
   const loaded = slots.filter(s => s.data);
   const [showAll, setShowAll] = useState(false);
 
-  /** Versão alargada de isTournamentRound que aceita 9 buracos (Drive Challenge, etc.) */
-  function isValidH2HRound(r: RoundData): boolean {
-    if ((r.holeCount !== 18 && r.holeCount !== 9) || r._isTreino || r._isTeamEvent) return false;
-    if (r.gross == null || Number(r.gross) <= 30) return false;  // 30 para 9h (mínimo credível)
-    if (r.holeCount === 18 && Number(r.gross) > MAX_CREDIBLE_GROSS) return false;
-    if (r.holeCount === 9  && Number(r.gross) > 70) return false;  // máx credível para 9h
-    const o = (r.scoreOrigin || "").trim();
-    if (o === "EDS" || o === "Indiv" || o === "Treino") return false;
-    const ev = (r.eventName || "").trim();
-    if (ev === "EDS" || ev === "Indiv") return false;
-    return true;
-  }
-
   const matches = useMemo(() => {
     if (loaded.length < 2) return [];
-    // Cutoffs por jogador (para modos "últimas N rondas" o cutoff é individual).
-    const cutoffs = loaded.map(s => periodCutoff(period, validRoundsOf(s.data!)));
+    // Selectors por jogador (modo "últimas N rondas" resolve-se por slot).
+    // Usa isValidForStats — mesma definição do resto da página para garantir
+    // que um duelo contabilizado aqui também conta nas estatísticas agregadas.
+    const selectors = loaded.map(s => buildPeriodSelector(period, validRoundsOf(s.data!)));
     const eventMap = new Map<string, Map<number, RoundData & { course: string }>>();
     loaded.forEach((s, si) => {
-      const cutoff = cutoffs[si];
+      const inPeriod = selectors[si];
       for (const c of s.data!.DATA) for (const r of c.rounds) {
-        if (cutoff != null && r.dateSort < cutoff) continue;
-        if (!isValidH2HRound(r)) continue;
+        if (!inPeriod(r)) continue;
+        if (!isValidForStats(r)) continue;
         // Chave: nome do evento + data + nº buracos (evita colidir 9h com 18h do mesmo dia)
         const key = norm(r.eventName) + "|" + r.date + "|" + r.holeCount;
         if (!eventMap.has(key)) eventMap.set(key, new Map());
@@ -1991,30 +1965,27 @@ function HeadToHeadSection({ slots, period }: { slots: Slot[]; period: PeriodKey
 function TournamentEvolutionSection({ slots, period }: { slots: Slot[]; period: PeriodKey }) {
   const [metric, setMetric] = useState<"sd" | "gross">("sd");
   const loaded = slots.filter(s => s.data);
+  const isRankMode = period === "20r" || period === "10r";
 
-  // Cutoffs por jogador (o modo "últimas N rondas" resolve-se por slot).
-  const cutoffs = useMemo(() => loaded.map(s => periodCutoff(period, validRoundsOf(s.data!))),
+  // Selector por jogador (modo "últimas N rondas" resolve-se por slot).
+  const selectors = useMemo(() => loaded.map(s => buildPeriodSelector(period, validRoundsOf(s.data!))),
   // eslint-disable-next-line react-hooks/exhaustive-deps
   [loaded, period]);
 
   const series = useMemo(() => {
     if (loaded.length < 2) return [];
     return loaded.map((s, i) => {
-      const cutoff = cutoffs[i];
+      const inPeriod = selectors[i];
       const pts: { d: number; sd: number; gross: number; event: string; is9h: boolean }[] = [];
       for (const cd of s.data!.DATA) {
         for (const r of cd.rounds) {
-          if (cutoff != null && r.dateSort < cutoff) continue;
-          if (r._isTreino || r._isTeamEvent) continue;
+          if (!inPeriod(r)) continue;
+          if (!isValidForStats(r)) continue;
           const is9h = r.holeCount === 9;
           const is18h = r.holeCount === 18;
-          if (!is9h && !is18h) continue;
-          const o = (r.scoreOrigin || "").trim();
-          if (o === "EDS" || o === "Indiv" || o === "Treino") continue;
-          if (!is9h && !isTournamentRound(r)) continue;
           const gross = Number(r.gross);
-          if (is18h && (gross <= 50 || gross > MAX_CREDIBLE_GROSS)) continue;
-          if (is9h && (gross <= 25 || gross > 70)) continue;
+          // Para gráficos, reforçar limite inferior 18h (≤50 é incredível em torneio).
+          if (is18h && gross <= 50) continue;
           // SD: nunca usar sd=0 (placeholder FPG)
           const sd = r.sd != null && Number(r.sd) !== 0 && !isNaN(Number(r.sd)) ? Number(r.sd) : null;
           if (metric === "sd" && sd == null) continue;
@@ -2022,31 +1993,67 @@ function TournamentEvolutionSection({ slots, period }: { slots: Slot[]; period: 
         }
       }
       pts.sort((a, b) => a.d - b.d);
-      const rolling: { d: number; val: number; raw: number; event: string; is9h: boolean }[] = [];
+      const rolling: { d: number; rank: number; val: number; raw: number; event: string; is9h: boolean }[] = [];
       const window = 5;
       for (let j = 0; j < pts.length; j++) {
         const start = Math.max(0, j - window + 1);
         const slice = pts.slice(start, j + 1);
         const avg = slice.reduce((s, p) => s + (metric === "sd" ? p.sd : p.gross), 0) / slice.length;
-        rolling.push({ d: pts[j].d, val: avg, raw: metric === "sd" ? pts[j].sd : pts[j].gross, event: pts[j].event, is9h: pts[j].is9h });
+        rolling.push({ d: pts[j].d, rank: j + 1, val: avg, raw: metric === "sd" ? pts[j].sd : pts[j].gross, event: pts[j].event, is9h: pts[j].is9h });
       }
       return { name: s.player.name, color: COLORS[i], pts: rolling };
     });
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loaded, cutoffs, metric]);
+  }, [loaded, selectors, metric]);
 
   if (loaded.length < 2) return null;
   const allPts = series.flatMap(s => s.pts);
   if (allPts.length < 4) return null;
 
-  const W = 800, H = 260, PAD = { top: 20, right: 20, bottom: 30, left: 45 };
-  const minD = Math.min(...allPts.map(p => p.d)), maxD = Math.max(...allPts.map(p => p.d));
+  const W = 800, H = 280, PAD = { top: 20, right: 20, bottom: 44, left: 45 };
+  // Dois modos de eixo X:
+  // - Rank-based ("20r"/"10r"): X = índice da ronda 1..N por jogador. Ambas as linhas
+  //   alinhadas, sempre com o mesmo número de pontos no eixo — evita a confusão de
+  //   um jogador ter 20 rondas em 6 meses e o outro ter 20 em 3 anos.
+  // - Time-based (tudo/2y/1y/6m): X = data. Eixo é partilhado no tempo real.
+  const xDomainMin = isRankMode
+    ? 1
+    : Math.min(...allPts.map(p => p.d));
+  const xDomainMax = isRankMode
+    ? Math.max(...series.map(s => s.pts.length), 1)
+    : Math.max(...allPts.map(p => p.d));
+  const rangeD = Math.max(1, xDomainMax - xDomainMin);
+  const xPosOf = (pt: { d: number; rank: number }) => {
+    const v = isRankMode ? pt.rank : pt.d;
+    return PAD.left + ((v - xDomainMin) / rangeD) * (W - PAD.left - PAD.right);
+  };
   const allVals = allPts.map(p => p.val);
   const minV = Math.min(...allVals), maxV = Math.max(...allVals);
-  const rangeD = maxD - minD || 1, rangeV = maxV - minV || 1, padV = rangeV * 0.15;
-  const xPos = (d: number) => PAD.left + ((d - minD) / rangeD) * (W - PAD.left - PAD.right);
+  const rangeV = maxV - minV || 1, padV = rangeV * 0.15;
   const yPos = (v: number) => H - PAD.bottom - ((v - (minV - padV)) / (rangeV + 2 * padV)) * (H - PAD.top - PAD.bottom);
   const metricLabel = metric === "sd" ? "SD" : "Gross";
+
+  // Labels de eixo X
+  const fmtDateShort = (ms: number) => new Date(ms).toLocaleDateString("pt-PT", { day: "2-digit", month: "short", year: "2-digit" });
+  const xLabels: { x: number; text: string }[] = [];
+  if (isRankMode) {
+    const nTicks = Math.min(6, Math.ceil(xDomainMax));
+    for (let k = 1; k <= nTicks; k++) {
+      const rank = Math.round(1 + (xDomainMax - 1) * ((k - 1) / Math.max(1, nTicks - 1)));
+      xLabels.push({ x: PAD.left + ((rank - 1) / rangeD) * (W - PAD.left - PAD.right), text: `#${rank}` });
+    }
+  } else {
+    const nTicks = 5;
+    for (let k = 0; k < nTicks; k++) {
+      const d = xDomainMin + (rangeD * k) / (nTicks - 1);
+      xLabels.push({ x: PAD.left + ((d - xDomainMin) / rangeD) * (W - PAD.left - PAD.right), text: fmtDateShort(d) });
+    }
+  }
+
+  // Datas mínima e máxima efectivas por jogador — para mostrar nos KPIs.
+  const dateRangeOf = (pts: { d: number }[]) => pts.length === 0
+    ? null
+    : { from: Math.min(...pts.map(p => p.d)), to: Math.max(...pts.map(p => p.d)) };
 
   return (
     <div className="card">
@@ -2059,28 +2066,38 @@ function TournamentEvolutionSection({ slots, period }: { slots: Slot[]; period: 
         <span className="muted fs-10 fw-400">
           média móvel 5 rondas · {metric === "sd" ? "SD por ronda (não o HI)" : "gross por ronda"} ·
           período: <b>{PERIOD_OPTIONS.find(o => o.key === period)?.label ?? period}</b>
+          {isRankMode && " · eixo por número da ronda (1 = mais antiga)"}
         </span>
       </div>
       <svg viewBox={`0 0 ${W} ${H}`} className="cmp-radar-wrap-sm">
+        {/* Linhas de Y */}
         {Array.from({ length: 5 }, (_, i) => {
           const val = minV - padV + (rangeV + 2 * padV) * (i / 4);
           return (
-            <g key={i}>
+            <g key={`y${i}`}>
               <line x1={PAD.left} y1={yPos(val)} x2={W - PAD.right} y2={yPos(val)} stroke="var(--border-light)" strokeWidth={0.5} />
               <text x={PAD.left - 4} y={yPos(val) + 3} textAnchor="end" fontSize={10} fill="var(--text-muted)">{val.toFixed(1)}</text>
             </g>
           );
         })}
+        {/* Ticks do eixo X */}
+        {xLabels.map((tk, i) => (
+          <g key={`x${i}`}>
+            <line x1={tk.x} x2={tk.x} y1={H - PAD.bottom} y2={H - PAD.bottom + 4} stroke="var(--border-medium)" strokeWidth={0.8} />
+            <text x={tk.x} y={H - PAD.bottom + 16} textAnchor="middle" fontSize={10} fill="var(--text-muted)">{tk.text}</text>
+          </g>
+        ))}
+        {/* Séries */}
         {series.map((s, si) => {
           if (s.pts.length < 2) return null;
-          const d = s.pts.map(pt => `${xPos(pt.d).toFixed(1)},${yPos(pt.val).toFixed(1)}`).join(" L ");
+          const d = s.pts.map(pt => `${xPosOf(pt).toFixed(1)},${yPos(pt.val).toFixed(1)}`).join(" L ");
           return (
             <g key={si}>
               <path d={`M ${d}`} fill="none" stroke={s.color} strokeWidth={2} opacity={0.8} strokeLinejoin="round" />
               {s.pts.map((pt, j) => (
-                <circle key={j} cx={xPos(pt.d)} cy={yPos(pt.val)} r={pt.is9h ? 3 : 2.5}
+                <circle key={j} cx={xPosOf(pt)} cy={yPos(pt.val)} r={pt.is9h ? 3 : 2.5}
                   fill={pt.is9h ? "none" : s.color} stroke={s.color} strokeWidth={pt.is9h ? 1.5 : 0} opacity={0.7}>
-                  <title>{s.name}: SD {pt.raw.toFixed(1)}{pt.is9h ? " (9h)" : ""} — média {pt.val.toFixed(1)} — {pt.event} ({new Date(pt.d).toLocaleDateString("pt-PT")})</title>
+                  <title>{s.name}: {metricLabel} {pt.raw.toFixed(1)}{pt.is9h ? " (9h)" : ""} — média {pt.val.toFixed(1)} — {pt.event} ({new Date(pt.d).toLocaleDateString("pt-PT")})</title>
                 </circle>
               ))}
             </g>
@@ -2099,6 +2116,7 @@ function TournamentEvolutionSection({ slots, period }: { slots: Slot[]; period: 
           const first = s.pts.length > 0 ? s.pts[0].val : null;
           const delta = last != null && first != null ? last - first : null;
           const best = s.pts.length > 0 ? Math.min(...s.pts.map(p => p.raw)) : null;
+          const dr = dateRangeOf(s.pts);
           return (
             <div key={i} className="caKpi" style={{ borderColor: s.color }}>
               <div className="caKpiVal" style={{ color: s.color }}>{last != null ? last.toFixed(1) : "–"}</div>
@@ -2107,6 +2125,11 @@ function TournamentEvolutionSection({ slots, period }: { slots: Slot[]; period: 
                 {delta != null && <span className="fw-700 fs-10" style={{ color: sc3m(delta, 0, 0) }}>{delta > 0 ? "+" : ""}{delta.toFixed(1)}</span>}
                 {best != null && <span className="fs-10 fw-600 c-text-3">melhor: {best.toFixed(metric === "sd" ? 1 : 0)}</span>}
               </div>
+              {dr && (
+                <div className="fs-10 c-text-3 mt-2">
+                  {fmtDateShort(dr.from)} → {fmtDateShort(dr.to)}
+                </div>
+              )}
             </div>
           );
         })}
@@ -2143,10 +2166,10 @@ export default function CompararPage() {
   const removePlayer = (fed: string) => setSlots(prev => prev.filter(s => s.fed !== fed));
   const anyLoading = slots.some(s => s.loading);
 
-  // Cutoff por slot (o modo "últimas N rondas" é por jogador).
-  const cutoffs = useMemo(() => slots.map(s => {
-    if (!s.data) return undefined;
-    return periodCutoff(period, validRoundsOf(s.data));
+  // Selector por slot (o modo "últimas N rondas" é por jogador).
+  const selectors = useMemo<(RoundInPeriod | null)[]>(() => slots.map(s => {
+    if (!s.data) return null;
+    return buildPeriodSelector(period, validRoundsOf(s.data));
   }), [slots, period]);
 
   // Intervalo de datas efectivamente usado, para mostrar no header.
@@ -2155,10 +2178,8 @@ export default function CompararPage() {
     const coveredEnds: number[] = [];
     slots.forEach((s, i) => {
       if (!s.data) return;
-      const valid = validRoundsOf(s.data).filter(r => {
-        const c = cutoffs[i];
-        return c == null || r.dateSort >= c;
-      });
+      const sel = selectors[i];
+      const valid = validRoundsOf(s.data).filter(r => sel == null || sel(r));
       if (valid.length === 0) return;
       const dates = valid.map(r => r.dateSort);
       coveredStarts.push(Math.min(...dates));
@@ -2169,15 +2190,15 @@ export default function CompararPage() {
       from: Math.min(...coveredStarts),
       to:   Math.max(...coveredEnds),
     };
-  }, [slots, cutoffs]);
+  }, [slots, selectors]);
 
   const fmtDate = (ms: number) => new Date(ms).toLocaleDateString("pt-PT", { day: "2-digit", month: "short", year: "numeric" });
 
   const allAgg = useMemo(() => slots.map((s, i) => {
     if (!s.data) return null;
-    try { return aggregateStats(s.data, cutoffs[i]); }
+    try { return aggregateStats(s.data, selectors[i] ?? undefined); }
     catch (e) { console.error("[Comparar] aggregateStats error for", s.fed, e); return null; }
-  }), [slots, cutoffs]);
+  }), [slots, selectors]);
 
   // Contar jogadores com amostra pequena (<5 rondas) no período.
   const smallSampleSlots = slots

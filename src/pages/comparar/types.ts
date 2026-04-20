@@ -72,23 +72,42 @@ export const PERIOD_OPTIONS: { key: PeriodKey; label: string }[] = [
   { key: "10r",  label: "Últimas 10 rondas" },
 ];
 
+/** Campo mínimo necessário para filtrar uma ronda pelo período. */
+export interface RoundLike {
+  dateSort: number;
+  scoreId: string;
+}
+
+/** Predicate: devolve true se a ronda pertence ao período seleccionado. */
+export type RoundInPeriod = (r: RoundLike) => boolean;
+
 /**
- * Calcula o cutoff temporal para o período escolhido.
- * Para modos "20r"/"10r" precisa de receber todas as rondas do jogador — devolve
- * undefined se o jogador tem ≤ N rondas (todas passam).
+ * Constrói o selector para um período. Contém uma correcção crítica vs
+ * versões anteriores: em modos "20r"/"10r" usa um Set<scoreId> em vez de um
+ * cutoff por data — evita que empates de data (p.ex. 2 rondas no mesmo dia,
+ * comuns em torneios) deixem passar rondas extra. Garante EXACTAMENTE N rondas.
  */
-export function periodCutoff(key: PeriodKey, allRounds: { dateSort: number }[]): number | undefined {
+export function buildPeriodSelector(key: PeriodKey, allRounds: RoundLike[]): RoundInPeriod {
   const now = Date.now();
-  if (key === "2y")  return now - 2 * 365.25 * 86400000;
-  if (key === "1y")  return now - 365.25 * 86400000;
-  if (key === "6m")  return now - 182.5 * 86400000;
+  if (key === "2y" || key === "1y" || key === "6m") {
+    const days = key === "2y" ? 730 : key === "1y" ? 365 : 183;
+    const cutoff = now - days * 86400000;
+    return (r) => r.dateSort >= cutoff;
+  }
   if (key === "20r" || key === "10r") {
     const n = key === "20r" ? 20 : 10;
-    const sorted = [...allRounds].sort((a, b) => b.dateSort - a.dateSort);
-    if (sorted.length <= n) return undefined;
-    return sorted[n - 1].dateSort;
+    if (allRounds.length <= n) return () => true;
+    // Desempate estável: por dateSort DESC, depois por scoreId para tornar
+    // determinístico quando há empates de data.
+    const sorted = [...allRounds].sort((a, b) => {
+      if (b.dateSort !== a.dateSort) return b.dateSort - a.dateSort;
+      return a.scoreId.localeCompare(b.scoreId);
+    });
+    const ids = new Set(sorted.slice(0, n).map(r => r.scoreId));
+    return (r) => ids.has(r.scoreId);
   }
-  return undefined;
+  // "all" ou desconhecido → sem filtro
+  return () => true;
 }
 
 export function periodLabel(key: PeriodKey): string {
