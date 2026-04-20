@@ -13,6 +13,9 @@ import { fmt, fmtCR, norm, titleCase, sumRange } from "../utils/format";
 import { fixMojibake } from "../utils/fixEncoding";
 import { sortTees, filterTees, teeHexFromTee } from "../utils/teeUtils";
 import { PillBadge } from "../ui/PillBadge";
+import ExtLink from "../ui/ExternalLink";
+import { useSort } from "../hooks/useSort";
+import SortableHdr from "../ui/SortableHdr";
 
 
 
@@ -194,24 +197,55 @@ function ScorecardGrid({ tees }: { tees: Tee[] }) {
 
 /* ——— Componente: Tabela de Ratings por Tee ——— */
 
+type RatingsSortKey = "tee" | "sex" | "dist" | "par" | "cr" | "slope" | "crF9" | "slF9" | "crB9" | "slB9";
+
 function RatingsTable({ tees }: { tees: Tee[] }) {
-  const sorted = sortTees(tees);
+  const defaultSorted = sortTees(tees);
+  const { sortKey, sortDir, toggleSort } = useSort<RatingsSortKey>("tee");
+
+  const sorted = useMemo(() => {
+    if (sortKey === "tee") {
+      // "tee" = ordem canónica (branca, amarela, azul, ...) ou inversa
+      return sortDir === "asc" ? defaultSorted : [...defaultSorted].reverse();
+    }
+    const getVal = (t: Tee): number | string => {
+      switch (sortKey) {
+        case "sex":   return t.sex ?? "";
+        case "dist":  return t.distances?.total ?? -Infinity;
+        case "par":   return t.ratings?.holes18?.par ?? -Infinity;
+        case "cr":    return t.ratings?.holes18?.courseRating ?? -Infinity;
+        case "slope": return t.ratings?.holes18?.slopeRating ?? -Infinity;
+        case "crF9":  return t.ratings?.holes9Front?.courseRating ?? -Infinity;
+        case "slF9":  return t.ratings?.holes9Front?.slopeRating ?? -Infinity;
+        case "crB9":  return t.ratings?.holes9Back?.courseRating ?? -Infinity;
+        case "slB9":  return t.ratings?.holes9Back?.slopeRating ?? -Infinity;
+        default:      return 0;
+      }
+    };
+    return [...defaultSorted].sort((a, b) => {
+      const va = getVal(a), vb = getVal(b);
+      let cmp: number;
+      if (typeof va === "string" && typeof vb === "string") cmp = va.localeCompare(vb, "pt");
+      else cmp = (va as number) - (vb as number);
+      return sortDir === "asc" ? cmp : -cmp;
+    });
+  }, [defaultSorted, sortKey, sortDir]);
 
   return (
     <div className="sc-wrap">
       <table className="ratings-table">
         <thead>
           <tr>
-            <th>Tee</th>
-            <th>Sexo</th>
-            <th className="r-num">Dist (m)</th>
-            <th className="r-num">Par</th>
-            <th className="r-num">CR</th>
-            <th className="r-num">Slope</th>
-            <th className="r-num">CR F9</th>
-            <th className="r-num">Sl F9</th>
-            <th className="r-num">CR B9</th>
-            <th className="r-num">Sl B9</th>
+            <SortableHdr k="tee"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Tee</SortableHdr>
+            <SortableHdr k="sex"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Sexo</SortableHdr>
+            <SortableHdr k="dist"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">Dist (m)</SortableHdr>
+            <SortableHdr k="par"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">Par</SortableHdr>
+            <SortableHdr k="cr"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">CR</SortableHdr>
+            <SortableHdr k="slope" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">Slope</SortableHdr>
+            <SortableHdr k="crF9"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">CR F9</SortableHdr>
+            <SortableHdr k="slF9"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">Sl F9</SortableHdr>
+            <SortableHdr k="crB9"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">CR B9</SortableHdr>
+            <SortableHdr k="slB9"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">Sl B9</SortableHdr>
           </tr>
         </thead>
         <tbody>
@@ -543,17 +577,17 @@ export default function CamposPage() {
                     {scorecardLink && (
                       <>
                         {" · "}
-                        <a href={scorecardLink} target="_blank" rel="noreferrer" className="detail-link">
+                        <ExtLink href={scorecardLink} className="detail-link">
                           Ver scorecard ↗
-                        </a>
+                        </ExtLink>
                       </>
                     )}
                     {selected.master.links?.extra?.map((lnk) => (
                       <span key={lnk.url}>
                         {" · "}
-                        <a href={lnk.url} target="_blank" rel="noreferrer" className="detail-link">
+                        <ExtLink href={lnk.url} className="detail-link">
                           {lnk.label} ↗
-                        </a>
+                        </ExtLink>
                       </span>
                     ))}
                   </div>

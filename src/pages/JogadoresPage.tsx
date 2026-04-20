@@ -1096,7 +1096,7 @@ function HistogramCard({ rounds, period, setPeriod }: {
         <div className="h-xs m-0">Desempenho vs Par</div>
         <PeriodSelect value={period} onChange={setPeriod} />
       </div>
-      {bins.total === 0 ? <div className="muted">Sem dados</div> :
+      {bins.total === 0 ? <EmptyState size="sm" message="Sem dados" /> :
         <>
           {bins.bins.map(b => (
             <div key={b.label} className="an-hist-row">
@@ -1208,7 +1208,7 @@ function RecordsCard({ rounds, period, setPeriod }: {
         <div className="h-xs m-0">Recordes Pessoais</div>
         <PeriodSelect value={period} onChange={setPeriod} />
       </div>
-      {!records ? <div className="muted">Sem dados</div> : (
+      {!records ? <EmptyState size="sm" message="Sem dados" /> : (
         <div>
           <RecLine label="🏆 Melhor Gross" r={records.bestGross} field="gross" />
           <RecLine label="📉 Melhor SD" r={records.bestSd} field="sd" />
@@ -1250,7 +1250,7 @@ function WHSDetail({ hcp, bare }: { hcp: HcpInfo; bare?: boolean }) {
   const Wrap = ({ children }: { children: React.ReactNode }) =>
     bare ? <>{children}</> : <div className="card"><div className="h-xs">Handicap — Detalhe WHS</div>{children}</div>;
   if (hcp.current == null) {
-    return <Wrap><div className="muted">Sem dados WHS disponíveis</div></Wrap>;
+    return <Wrap><EmptyState size="sm" message="Sem dados WHS disponíveis" /></Wrap>;
   }
   return (
     <Wrap>
@@ -2285,7 +2285,7 @@ function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, extraMap, localI
    ──────────────────────────────────────────────────────────────────────────────────────── */
 function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string } }) {
   const f = player._federadoRaw;
-  if (!f) return <div className="muted p-24">Sem dados disponíveis</div>;
+  if (!f) return <EmptyState message="Sem dados disponíveis" />;
   const showFlag = f.country_prefix && f.country_prefix !== "PT" && !f.country_prefix.startsWith("@");
 
   /* ── Rondas em tempo real via /api/datagolf ── */

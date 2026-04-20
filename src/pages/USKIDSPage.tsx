@@ -15,6 +15,7 @@ import { flag, normPaisDisplay } from "../utils/flagUtils";
 import EmptyState from "../ui/EmptyState";
 import WdBadge from "../ui/WdBadge";
 import KpiCard from "../ui/KpiCard";
+import ExtLink from "../ui/ExternalLink";
 import DetailHeader from "../ui/DetailHeader";
 import { tpColor } from "../ui/tournamentPrimitives";
 import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
@@ -810,11 +811,11 @@ export default function USKidsFieldPage() {
             </span>
           )}
           {t.urlResultados && (
-            <a href={t.urlResultados} target="_blank" rel="noopener noreferrer"
+            <ExtLink href={t.urlResultados}
               onClick={e => e.stopPropagation()}
               className="p p-sm p-muted td-none">
               Resultados ↗
-            </a>
+            </ExtLink>
           )}
         </>
       );
@@ -915,10 +916,10 @@ export default function USKidsFieldPage() {
           </button>
         </>)}
         <div style={{ flex:1, minWidth:8 }} />
-        <a href="https://uskids-golf.vercel.app/" target="_blank" rel="noopener noreferrer"
+        <ExtLink href="https://uskids-golf.vercel.app/"
           className="fs-11 fw-600" style={{ flexShrink:0, color:"var(--accent)", border:"1px solid var(--accent)", borderRadius:5, padding:"3px 8px", textDecoration:"none", whiteSpace:"nowrap", display:"inline-flex", alignItems:"center", gap:3 }}>
           Histórico ↗
-        </a>
+        </ExtLink>
         <span className="chip" style={{ flexShrink:0 }}>{allTorneios.length} torn.</span>
       </Toolbar>
 

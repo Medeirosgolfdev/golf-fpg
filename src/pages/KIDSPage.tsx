@@ -21,8 +21,10 @@ import { useMasterDetail } from "../hooks/useMasterDetail";
 import EmptyState from "../ui/EmptyState";
 import DetailHeader from "../ui/DetailHeader";
 import KpiCard from "../ui/KpiCard";
+import ExtLink from "../ui/ExternalLink";
 import SidebarSectionTitle from "../ui/SidebarSectionTitle";
 import { buildAutoRivals, normName, getScorecards, uskTournNames, uskFieldSizes, getLoadedKidsFiles, type KidsFileMeta } from "../data/KIDSdataLoader";
+import { cachedFetchJson } from "../data/fetchCache";
 import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
 import { FIELD_2025, VP_PAR, VP_SI, VP_M, VP_WJGC26_PAR, VP_WJGC26_SI, VP_WJGC26_M, VP_ALFERINI_PAR, VP_ALFERINI_SI, VP_ALFERINI_M, LT_FORET_PAR, LT_FORET_SI, LT_FORET_M, MS_USKIDS_M_B1011, MS_USKIDS_M_B12, DORAL_GP_M_B1011, DORAL_SF_M_B1213, FIELD_CARDS } from "../data/rivalData";
 import { MANUEL_KNOWN_TIDS } from "../constants/manuel";
@@ -805,15 +807,16 @@ function useAutoRivals() {
 function useMemberHist() {
   const [mh, setMh] = React.useState<MHData | null>(null);
   React.useEffect(() => {
-    fetch("/data/uskids-member-history-slim.json")
-      .then(r => r.json())
-      .then((slim: {
-        torneios: Record<string, { name: string; startDate: string; holesPerRound: number; par: number[] | null }>;
-        jogadores: Record<string, {
-          name: string; country: string; ageGroup: string;
-          torneios: Record<string, { ageGroup: string; place: number | null; rounds: Record<string, { gross: number; strokes?: number[] }> }>;
-        }>;
-      }) => {
+    type SlimData = {
+      torneios: Record<string, { name: string; startDate: string; holesPerRound: number; par: number[] | null }>;
+      jogadores: Record<string, {
+        name: string; country: string; ageGroup: string;
+        torneios: Record<string, { ageGroup: string; place: number | null; rounds: Record<string, { gross: number; strokes?: number[] }> }>;
+      }>;
+    };
+    cachedFetchJson<SlimData>("/data/uskids-member-history-slim.json")
+      .then(slim => {
+        if (!slim) return;
         const jogadores: Record<string, MHPlayer> = {};
         for (const [mid, p] of Object.entries(slim.jogadores || {})) {
           const torneios: Record<string, MHTournament> = {};
@@ -863,8 +866,9 @@ interface ScoringStatsData {
 function useScoringStats() {
   const [stats, setStats] = React.useState<ScoringStatsData | null>(null);
   React.useEffect(() => {
-    fetch("/data/uskids-player-scoring-stats.json")
-      .then(r => r.json()).then(setStats).catch(() => {});
+    cachedFetchJson<ScoringStatsData>("/data/uskids-player-scoring-stats.json")
+      .then(d => { if (d) setStats(d); })
+      .catch(() => {});
   }, []);
   return stats;
 }
@@ -2576,9 +2580,9 @@ function RivalDetail({ playerName }: { playerName: string }) {
                         <span style={{ fontWeight:600, fontSize:13 }}>{t.name}</span>
                         {/* Nº de rondas — pill do sistema global PillBadge */}
                         <RoundPill nR={rds.length} />
-                        {/* ── DEBUG TEMPORÁRIO: fonte do torneio — remover após diagnóstico ── */}
+                        {/* Debug pill (?debug=1): mostra tid do torneio para diagnóstico */}
                         {debugMode && (
-                          <span title={`tid: ${t.id}`} className="fs-10 shrink-0 overflow-hidden" style={{ fontFamily: "'JetBrains Mono', monospace", padding: "1px 5px", borderRadius: 4, background: "#fef08a", color: "#713f12", border: "1px solid #fde047", maxWidth: 200, textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                          <span title={`tid: ${t.id}`} className="fs-10 shrink-0 overflow-hidden" style={{ fontFamily: "'JetBrains Mono', monospace", padding: "1px 5px", borderRadius: 4, background: "var(--bg-warn-light)", color: "var(--color-warn-dark)", border: "1px solid var(--bg-warn-strong)", maxWidth: 200, textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                             {t.id}
                           </span>
                         )}
@@ -2593,18 +2597,18 @@ function RivalDetail({ playerName }: { playerName: string }) {
                           return (
                             <>
                               {signupanytimeUrl && (
-                                <a href={signupanytimeUrl} target="_blank" rel="noopener noreferrer"
+                                <ExtLink href={signupanytimeUrl}
                                   onClick={e => e.stopPropagation()} title="Resultados (Signupanytime)"
                                   style={{ ...linkStyle, color:"var(--color-info-dark)", border:"1px solid var(--color-info-light)" }}>
                                   ↗ SAT
-                                </a>
+                                </ExtLink>
                               )}
                               {uskidsUrl && (
-                                <a href={uskidsUrl} target="_blank" rel="noopener noreferrer"
+                                <ExtLink href={uskidsUrl}
                                   onClick={e => e.stopPropagation()} title="Ver resultados"
                                   style={{ ...linkStyle, color:"var(--accent)", border:"1px solid var(--accent)" }}>
                                   ↗ result
-                                </a>
+                                </ExtLink>
                               )}
                             </>
                           );

@@ -15,6 +15,7 @@ import { SC } from "../utils/scoreDisplay";
 import OverlayExport from "../ui/OverlayExport";
 import type { OverlayData } from "../ui/OverlayExport";
 import { getNextCalendarEvent } from "../utils/calendarData";
+import ExtLink from "../ui/ExternalLink";
 
 
 
@@ -749,8 +750,8 @@ function AgsSection({
         <div className="notice notice-warn">
           <strong>Scorecard / AGS:</strong> O scorecard para introduzir scores por buraco e calcular o SD exacto
           aparece quando selecionas um campo com dados de Par e Stroke Index.
-          {" "}<a href={USGA_NDB_LINK} target="_blank" rel="noopener noreferrer"
-            className="c-amber-underline">Net Double Bogey — USGA →</a>
+          {" "}<ExtLink href={USGA_NDB_LINK}
+            className="c-amber-underline">Net Double Bogey — USGA →</ExtLink>
         </div>
       </div>
     );
@@ -1077,8 +1078,8 @@ function AgsSection({
               );
             })()}
             <div className="mt-6">
-              <a href={USGA_NDB_LINK} target="_blank" rel="noopener noreferrer"
-                className="c-amber-underline">Net Double Bogey — USGA →</a>
+              <ExtLink href={USGA_NDB_LINK}
+                className="c-amber-underline">Net Double Bogey — USGA →</ExtLink>
             </div>
           </div>
         </details>

@@ -30,6 +30,7 @@ export const FLAG: Record<string, string> = {
   AZ:"🇦🇿",BA:"🇧🇦",BM:"🇧🇲",CD:"🇨🇩",CU:"🇨🇺",
   JO:"🇯🇴",MC:"🇲🇨",MT:"🇲🇹",QA:"🇶🇦",RE:"🇷🇪",
   TN:"🇹🇳",ZM:"🇿🇲",ZW:"🇿🇼",NN:"🏳️",XX:"🏳️",
+  AL:"🇦🇱", ME:"🇲🇪",   // Albânia, Montenegro
   // Países adicionais encontrados em federados.json (FPG)
   MZ:"🇲🇿",  // Moçambique
   SZ:"🇸🇿",  // Eswatini (Suazilândia)
@@ -97,9 +98,20 @@ const COUNTRY_TO_CODE: Record<string, string> = {
   grécia:"gr",croácia:"hr",sérvia:"rs",luxemburgo:"lu",islândia:"is",malásia:"my",
 };
 
-/** Aliases de código curto → ISO-2 canónico */
+/** Aliases de código curto → ISO-2 canónico.
+ *  Inclui códigos IOC/FPG de 3 letras (NOR, BRA, USA, …) usados em dados FPG. */
 const CODE_ALIAS: Record<string, string> = {
   uk:"gb", phl:"ph", "gb-nir":"gb", "gb-wls":"gb", "gb-sct":"gb",
+  // IOC / 3-letter codes usados nos ficheiros FPG
+  nor:"no", den:"dk", bel:"be", ukr:"ua", rus:"ru", usa:"us",
+  can:"ca", mex:"mx", bra:"br", aus:"au", jap:"jp", chn:"cn",
+  ind:"in", tha:"th", sgp:"sg", kor:"kr", twn:"tw", mys:"my",
+  vie:"vn", arg:"ar", chl:"cl", pol:"pl", cze:"cz", aut:"at",
+  por:"pt", esp:"es", fra:"fr", ale:"de", ita:"it", rum:"ro",
+  hun:"hu", srb:"rs", bul:"bg", ltu:"lt", est:"ee", svk:"sk",
+  svn:"si", hrv:"hr", mne:"me", bih:"ba", alb:"al", mac:"ma",
+  tun:"tn", geo:"ge", arm:"am", aze:"az", tur:"tr", isl:"is",
+  irl:"ie", fin:"fi", eng:"gb", sct:"gb", wls:"gb", nir:"gb",
 };
 
 /** Normaliza país para código ISO-2 */

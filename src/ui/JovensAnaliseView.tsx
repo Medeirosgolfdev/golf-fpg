@@ -55,9 +55,9 @@ function YearInEscBadge({ year, escalao }: { year: 1 | 2 | null; escalao?: strin
         marginRight: 4,
         padding: "1px 5px",
         borderRadius: 6,
-        background: useEscColor ? `var(--esc-${escKey}-bg)` : (is1 ? "var(--bg-info-subtle, #eef6ff)" : "var(--bg-success-subtle, #ecfdf5)"),
-        color: useEscColor ? `var(--esc-${escKey}-fg)` : (is1 ? "var(--accent, #2563eb)" : "var(--color-good-dark, #065f46)"),
-        border: `1px solid ${useEscColor ? "transparent" : (is1 ? "var(--accent, #2563eb)" : "var(--color-good, #10b981)")}`,
+        background: useEscColor ? `var(--esc-${escKey}-bg)` : (is1 ? "var(--bg-info-subtle)" : "var(--bg-success-subtle)"),
+        color: useEscColor ? `var(--esc-${escKey}-fg)` : (is1 ? "var(--accent)" : "var(--color-good-dark)"),
+        border: `1px solid ${useEscColor ? "transparent" : (is1 ? "var(--accent)" : "var(--color-good)")}`,
         opacity: 0.75,
         whiteSpace: "nowrap", letterSpacing: 0.3,
       }}>
@@ -146,14 +146,14 @@ function PodiumCell({ ch, isChampion }: { ch: Champion | null; isChampion: boole
     <td className="fs-12" style={{
       padding: "4px 8px", verticalAlign: "middle",
       background: manuel
-        ? "var(--bg-success-subtle, #ecfdf5)"
+        ? "var(--bg-success-subtle)"
         : isProvisional
-          ? "var(--bg-info-subtle, #eff6ff)"
+          ? "var(--bg-info-subtle)"
           : undefined,
       borderLeft: manuel
-        ? "3px solid var(--color-good, #10b981)"
+        ? "3px solid var(--color-good)"
         : isProvisional
-          ? "3px dashed var(--accent, #2563eb)"
+          ? "3px dashed var(--accent)"
           : "1px solid var(--border-light)",
       minWidth: 200, maxWidth: 280,
     }}>
@@ -169,7 +169,7 @@ function PodiumCell({ ch, isChampion }: { ch: Champion | null; isChampion: boole
               <span title={`Resultado provisório: ${ch.roundsPlayed} de ${ch.roundsExpected} rondas jogadas.`}
                 className="fs-10 fw-700" style={{
                   padding: "1px 4px", borderRadius: 3,
-                  background: "var(--accent, #2563eb)", color: "#fff",
+                  background: "var(--accent)", color: "#fff",
                   whiteSpace: "nowrap", letterSpacing: 0.3,
                 }}>
                 R{ch.roundsPlayed}/{ch.roundsExpected}
@@ -180,7 +180,7 @@ function PodiumCell({ ch, isChampion }: { ch: Champion | null; isChampion: boole
                 title="Ver resultados oficiais na FPG ↗"
                 style={{
                   fontSize: 11, textDecoration: "none",
-                  color: "var(--accent, #2563eb)", fontWeight: 700,
+                  color: "var(--accent)", fontWeight: 700,
                   whiteSpace: "nowrap",
                 }}>
                 ↗ FPG
@@ -228,7 +228,7 @@ function PodiumLabelCell({ label, isChampion }: { label: string; isChampion: boo
       <div style={{
         display: "flex", flexDirection: "column", alignItems: "flex-start",
         fontSize: 10, lineHeight: 1.2, fontWeight: 700,
-        color: isChampion ? "var(--color-good-dark, #065f46)" : "var(--text-2)",
+        color: isChampion ? "var(--color-good-dark)" : "var(--text-2)",
         textTransform: "uppercase", letterSpacing: 0.3, whiteSpace: "nowrap",
       }}>
         <span>{isChampion ? "🏆 CAMP." : "VICE C."}</span>
@@ -536,7 +536,7 @@ function TopPlayers({ players, years }: { players: PlayerStats[]; years: number[
               return (
                 <tr key={(p.fed || p.name) + "_" + i} style={{
                   borderBottom: "1px solid var(--border-light)",
-                  background: manuel ? "var(--bg-success-subtle, #ecfdf5)" : undefined,
+                  background: manuel ? "var(--bg-success-subtle)" : undefined,
                 }}>
                   <td style={{ padding: "5px 8px", textAlign: "right" }} className="fw-600">{i + 1}</td>
                   <td style={{ padding: "5px 8px" }}>
@@ -550,7 +550,7 @@ function TopPlayers({ players, years }: { players: PlayerStats[]; years: number[
                   <td style={{ padding: "5px 8px", textAlign: "right" }} className="fw-700">
                     {p.titles.length > 0 ? (
                       <span title={p.titles.map(t => `${t.year} ${t.type} ${t.escalao} ${t.sex}`).join("\n")}
-                        style={{ color: "var(--color-good-dark, #065f46)" }}>
+                        style={{ color: "var(--color-good-dark)" }}>
                         🏆 {p.titles.length}
                       </span>
                     ) : "—"}
@@ -615,7 +615,7 @@ function PlayerTimeline({ player, years }: { player: PlayerStats; years: number[
               border: "1px solid " + (played ? "var(--border)" : "var(--border-light)"),
               borderRadius: 4,
               padding: "3px 6px",
-              background: titles.length > 0 ? "var(--bg-success-subtle, #ecfdf5)" : (played ? undefined : "var(--bg-muted)"),
+              background: titles.length > 0 ? "var(--bg-success-subtle)" : (played ? undefined : "var(--bg-muted)"),
               opacity: played ? 1 : 0.6,
               fontSize: 11,
               display: "inline-flex", alignItems: "center", gap: 3,

@@ -30,6 +30,7 @@ import PlayerLink from "./PlayerLink";
 import LoadingState from "./LoadingState";
 import EmptyState from "./EmptyState";
 import { FLAG } from "../utils/flagUtils";
+import { cachedFetchJson } from "../data/fetchCache";
 
 /* ═══════════════════════════════════════════════════════
    HOOKS
@@ -38,7 +39,9 @@ import { FLAG } from "../utils/flagUtils";
 function usePlayerStats() {
   const [stats, setStats] = useState<StatsDb>({});
   useEffect(() => {
-    fetch("/player-stats.json").then(r => r.ok ? r.json() : {}).then(setStats).catch(() => {});
+    cachedFetchJson<StatsDb>("/player-stats.json")
+      .then(d => { if (d) setStats(d); })
+      .catch(() => {});
   }, []);
   return stats;
 }
@@ -56,8 +59,8 @@ let _fedCountryPromise: Promise<Map<string, string>> | null = null;
 export function loadFedCountries(): Promise<Map<string, string>> {
   if (_fedCountryPromise) return _fedCountryPromise;
   _fedCountryPromise = Promise.all([
-    fetch("/data/federados.json").then(r => r.ok ? r.json() : null).catch(() => null),
-    fetch("/data/nationalities.json").then(r => r.ok ? r.json() : null).catch(() => null),
+    cachedFetchJson<any>("/data/federados.json").catch(() => null),
+    cachedFetchJson<any>("/data/nationalities.json").catch(() => null),
   ]).then(([feds, overrides]) => {
     const m = new Map<string, string>();
     // 1) Base: FPG
@@ -101,8 +104,7 @@ export function useFedCountries(): Map<string, string> {
 let _fedBirthdatePromise: Promise<Map<string, string>> | null = null;
 export function loadFedBirthdates(): Promise<Map<string, string>> {
   if (_fedBirthdatePromise) return _fedBirthdatePromise;
-  _fedBirthdatePromise = fetch("/data/federados.json")
-    .then(r => r.ok ? r.json() : null)
+  _fedBirthdatePromise = cachedFetchJson<any>("/data/federados.json")
     .catch(() => null)
     .then(feds => {
       const m = new Map<string, string>();
@@ -635,9 +637,8 @@ export function InscricoesPanel() {
   useEffect(() => {
     if (cacheLoaded.current) return;
     cacheLoaded.current = true;
-    fetch("/data/inscricoes_nacionais.json")
-      .then(r => r.ok ? r.json() : null)
-      .then((all: Record<string, unknown> | null) => {
+    cachedFetchJson<Record<string, unknown>>("/data/inscricoes_nacionais.json")
+      .then((all) => {
         if (!all) return;
         setTorneios(prev => prev.map(t => {
           const entry = all[t.tcode];

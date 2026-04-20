@@ -17,6 +17,8 @@ import PlayerLink from "../ui/PlayerLink";
 import EmptyState from "../ui/EmptyState";
 import LoadingState from "../ui/LoadingState";
 import SexBadge from "../ui/SexBadge";
+import ExtLink from "../ui/ExternalLink";
+import SortableHdr from "../ui/SortableHdr";
 import AroeiraBurTable from "./nacionais/AroeiraBurTable";
 import FieldIntelligence from "./nacionais/FieldIntelligence";
 import type { InscricaoJogador, TorneioData, BdPlayer, PlayerStats, StatsDb, AggStats, PlayerLoad, ScoutingReport } from "./nacionais/types";
@@ -235,16 +237,14 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
     });
   }, [t.jogadores, term, sortKey, sortAsc, nossosByFed, statsDb]);
 
-  function toggleSort(key: SortKey) {
-    if (sortKey === key) setSortAsc(v => !v); else { setSortKey(key); setSortAsc(true); }
-  }
-  function SortTh({ label, col, cls }: { label: string; col: SortKey; cls?: string }) {
-    const active = sortKey === col;
-    return <th className={cls} onClick={() => toggleSort(col)}
-      style={{ cursor: "pointer", userSelect: "none", whiteSpace: "nowrap" }}>
-      {label}{active ? (sortAsc ? " ↑" : " ↓") : " ↕"}
-    </th>;
-  }
+  const toggleSort = useCallback((k: string) => {
+    if (sortKey === k) setSortAsc(v => !v);
+    else { setSortKey(k as SortKey); setSortAsc(true); }
+  }, [sortKey]);
+  const sortDir: "asc" | "desc" = sortAsc ? "asc" : "desc";
+  const SortTh = ({ label, col, cls }: { label: string; col: SortKey; cls?: string }) => (
+    <SortableHdr k={col} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={cls}>{label}</SortableHdr>
+  );
 
   if (t._status !== "ok" && t._status !== "loading") return null;
   if (t._status === "loading") return <LoadingState size="sm" />;
@@ -271,7 +271,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
             </span>
           )}
           {t.fetchError && <span className="muted" style={{ fontSize: 10, color: "var(--color-warn)" }} title={t.fetchError}>⚠️ cache</span>}
-          {t.fpgUrl && <a href={t.fpgUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: "var(--chart-2)" }}>datagolf ↗</a>}
+          {t.fpgUrl && <ExtLink href={t.fpgUrl} style={{ fontSize: 11, color: "var(--chart-2)" }}>datagolf ↗</ExtLink>}
         </div>
       </div>
       <div className="scroll-x">
@@ -931,8 +931,8 @@ function AnaliseView({ t, nossosByFed, statsDb }: {
         <div style={{ background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 10, padding: "14px 18px" }}>
           <div className="gap-8 mb-10" style={{ display: "flex", alignItems: "center" }}>
             <span className="fw-800 fs-13">🏆 PGA Aroeira II · 1–3 Maio 2026</span>
-            <a href="https://competicoes.fpg.pt/evento/campeonato-nacional-de-jovens-sub10-12-14-16-18-pga-aroeira/"
-               target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: "var(--chart-2)", marginLeft: "auto" }}>Ver evento ↗</a>
+            <ExtLink href="https://competicoes.fpg.pt/evento/campeonato-nacional-de-jovens-sub10-12-14-16-18-pga-aroeira/"
+               style={{ fontSize: 11, color: "var(--chart-2)", marginLeft: "auto" }}>Ver evento ↗</ExtLink>
           </div>
           <div className="flex-wrap" style={{ display: "flex", gap: 20, alignItems: "center" }}>
             <div>
