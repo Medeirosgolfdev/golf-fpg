@@ -1,10 +1,12 @@
 import { useMemo } from "react";
-import { AutoRivalPlayer, uskTournNames, uskFieldSizes, normName as normNameAuto } from "../data/KIDSdataLoader";
+import { AutoRivalPlayer, normName as normNameAuto } from "../data/KIDSdataLoader";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import { fmtToParRivais } from "../utils/scoreDisplay";
 import { displayName } from "../utils/format";
+import { flag } from "../utils/flagUtils";
 import { isManuel } from "../constants/manuel";
+import { fmtPosRivais, playerSeriesResult, tornCanon } from "./uskidsHelpers";
 
 // ─────────────────────────────────────────────
 // Types
@@ -37,75 +39,6 @@ interface RondaResult {
 /** Detecta Manuel por nome (wrapper para isManuel com interface de string) */
 function isManuelName(nome: string): boolean {
   return isManuel({ name: nome });
-}
-
-function tornCanon(s: string): string {
-  const low = s.toLowerCase().replace(/['']/g, "").trim();
-  const y2 = low.match(/\b20(\d{2})\b/)?.[1] || low.match(/(?:^|\s)(\d{2})$/)?.[1] || "";
-  const pc = /parent.child/i.test(low) ? "pc" : ""; // Parent/Child = evento separado
-  if (/venice/i.test(low))                           return `venice${pc}-${y2}`;
-  if (/rome|roma/i.test(low))                        return `rome${pc}-${y2}`;
-  if (/marco\s*simone/i.test(low))                   return `marco${pc}-${y2}`;
-  if (/wjgc|bjgt|world.*junior.*golf/i.test(low))    return `wjgc${pc}-${y2}`;
-  if (/eu\s*open|european\s*open|eowagr/i.test(low)) return `euopen${pc}-${y2}`;
-  if (/world\s*champ/i.test(low))                    return `wc${pc}-${y2}`;
-  if (/european\s*champ/i.test(low))                 return `ec${pc}-${y2}`;
-  if (/red.*white.*blue|rwb/i.test(low))             return `rwb${pc}-${y2}`;
-  if (/doral/i.test(low))                            return `doral${pc}-${y2}`;
-  if (/sandestin/i.test(low))                        return `sandestin${pc}-${y2}`;
-  if (/desert/i.test(low))                           return `desert${pc}-${y2}`;
-  if (/el\s*prat/i.test(low))                        return `elprat${pc}-${y2}`;
-  if (/greatgolf/i.test(low))                        return `gg${pc}-${y2}`;
-  return `${low.replace(/\W+/g, '')}-${y2}`;
-}
-
-function playerSeriesResult(
-  ar: AutoRivalPlayer,
-  sBase: string,
-  year: number,
-): { p: number; tp: number | null; fieldSize: number } | null {
-  for (const [tid, res] of Object.entries(ar.r)) {
-    const uskM = tid.match(/^(usk\d+)/);
-    if (!uskM) continue;
-    const meta = uskTournNames.get(uskM[1]);
-    if (!meta?.name || !meta?.dateExact) continue;
-    const metaYear = parseInt(meta.dateExact.slice(0, 4));
-    if (metaYear !== year) continue;
-    const canon = tornCanon(meta.name).replace(/-\d+$/, "");
-    if (canon !== sBase) continue;
-    const fs = uskFieldSizes.get(tid) ?? 0;
-    return { p: res.p ?? 0, tp: res.tp ?? null, fieldSize: fs };
-  }
-  return null;
-}
-
-
-function fmtPosRivais(p: number, fieldSize: number): string {
-  if (p <= 0) return "—";
-  if (p === 1) return "🥇";
-  if (p === 2) return "🥈";
-  if (p === 3) return "🥉";
-  return fieldSize > 0 ? `${p}/${fieldSize}` : `${p}º`;
-}
-
-function flag(pais: string): string {
-  const CC: Record<string, string> = {
-    PT: "🇵🇹", ES: "🇪🇸", FR: "🇫🇷", DE: "🇩🇪", IT: "🇮🇹",
-    GB: "🇬🇧", CH: "🇨🇭", SE: "🇸🇪", NL: "🇳🇱", NOR: "🇳🇴",
-    DEN: "🇩🇰", BEL: "🇧🇪", UKR: "🇺🇦", RUS: "🇷🇺", USA: "🇺🇸",
-    CAN: "🇨🇦", MEX: "🇲🇽", BRA: "🇧🇷", AUS: "🇦🇺", ZA: "🇿🇦",
-    JAP: "🇯🇵", CHN: "🇨🇳", IND: "🇮🇳", THA: "🇹🇭", SGP: "🇸🇬",
-    KOR: "🇰🇷", TWN: "🇹🇼", PHL: "🇵🇭", MYS: "🇲🇾", VIE: "🇻🇳",
-    ARG: "🇦🇷", CHL: "🇨🇱", UY: "🇺🇾", GR: "🇬🇷", POL: "🇵🇱",
-    CZE: "🇨🇿", AUT: "🇦🇹", POR: "🇵🇹", ESP: "🇪🇸", FRA: "🇫🇷",
-    ALE: "🇩🇪", ITA: "🇮🇹", RUM: "🇷🇴", HUN: "🇭🇺", SRB: "🇷🇸",
-    BUL: "🇧🇬", LTU: "🇱🇹", EST: "🇪🇪", SVK: "🇸🇰", SVN: "🇸🇮",
-    HRV: "🇭🇷", MNE: "🇲🇪", BIH: "🇧🇦", ALB: "🇦🇱", MAC: "🇲🇦",
-    TUN: "🇹🇳", GEO: "🇬🇪", ARM: "🇦🇲", AZE: "🇦🇿", TUR: "🇹🇷",
-    ISL: "🇮🇸", IRL: "🇮🇪", FIN: "🇫🇮", ENG: "🇬🇧", SCT: "🇬🇧",
-    WLS: "🇬🇧", NIR: "🇬🇧",
-  };
-  return CC[pais] || "🌍";
 }
 
 // ─────────────────────────────────────────────

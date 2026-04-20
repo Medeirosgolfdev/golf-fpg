@@ -1964,6 +1964,7 @@ function HeadToHeadSection({ slots, period }: { slots: Slot[]; period: PeriodKey
 
 function TournamentEvolutionSection({ slots, period }: { slots: Slot[]; period: PeriodKey }) {
   const [metric, setMetric] = useState<"sd" | "gross">("sd");
+  const [showRounds, setShowRounds] = useState(false);
   const loaded = slots.filter(s => s.data);
   const isRankMode = period === "20r" || period === "10r";
 
@@ -1976,7 +1977,7 @@ function TournamentEvolutionSection({ slots, period }: { slots: Slot[]; period: 
     if (loaded.length < 2) return [];
     return loaded.map((s, i) => {
       const inPeriod = selectors[i];
-      const pts: { d: number; sd: number; gross: number; event: string; is9h: boolean }[] = [];
+      const pts: { d: number; dateStr: string; sd: number; gross: number; event: string; is9h: boolean; hi: number | null }[] = [];
       for (const cd of s.data!.DATA) {
         for (const r of cd.rounds) {
           if (!inPeriod(r)) continue;
@@ -1989,17 +1990,25 @@ function TournamentEvolutionSection({ slots, period }: { slots: Slot[]; period: 
           // SD: nunca usar sd=0 (placeholder FPG)
           const sd = r.sd != null && Number(r.sd) !== 0 && !isNaN(Number(r.sd)) ? Number(r.sd) : null;
           if (metric === "sd" && sd == null) continue;
-          pts.push({ d: r.dateSort, sd: sd ?? 0, gross, event: r.eventName, is9h });
+          // HI ao momento da ronda — pode vir como string ("18.4") ou number (9.5).
+          const hiRaw = r.hi;
+          const hi = hiRaw != null && !isNaN(Number(hiRaw)) ? Number(hiRaw) : null;
+          pts.push({ d: r.dateSort, dateStr: r.date, sd: sd ?? 0, gross, event: r.eventName, is9h, hi });
         }
       }
       pts.sort((a, b) => a.d - b.d);
-      const rolling: { d: number; rank: number; val: number; raw: number; event: string; is9h: boolean }[] = [];
+      const rolling: { d: number; dateStr: string; rank: number; val: number; raw: number; event: string; is9h: boolean; hi: number | null; gross: number; sd: number }[] = [];
       const window = 5;
       for (let j = 0; j < pts.length; j++) {
         const start = Math.max(0, j - window + 1);
         const slice = pts.slice(start, j + 1);
         const avg = slice.reduce((s, p) => s + (metric === "sd" ? p.sd : p.gross), 0) / slice.length;
-        rolling.push({ d: pts[j].d, rank: j + 1, val: avg, raw: metric === "sd" ? pts[j].sd : pts[j].gross, event: pts[j].event, is9h: pts[j].is9h });
+        rolling.push({
+          d: pts[j].d, dateStr: pts[j].dateStr, rank: j + 1,
+          val: avg, raw: metric === "sd" ? pts[j].sd : pts[j].gross,
+          event: pts[j].event, is9h: pts[j].is9h, hi: pts[j].hi,
+          gross: pts[j].gross, sd: pts[j].sd,
+        });
       }
       return { name: s.player.name, color: COLORS[i], pts: rolling };
     });
@@ -2032,6 +2041,16 @@ function TournamentEvolutionSection({ slots, period }: { slots: Slot[]; period: 
   const rangeV = maxV - minV || 1, padV = rangeV * 0.15;
   const yPos = (v: number) => H - PAD.bottom - ((v - (minV - padV)) / (rangeV + 2 * padV)) * (H - PAD.top - PAD.bottom);
   const metricLabel = metric === "sd" ? "SD" : "Gross";
+
+  // Série secundária: HCP Index ao longo do tempo por jogador.
+  // Escala própria no lado direito (diferente do eixo principal de SD/Gross).
+  const allHis = series.flatMap(s => s.pts.map(p => p.hi).filter((v): v is number => v != null));
+  const showHcpLine = allHis.length >= 2 && metric === "sd";
+  const minH = showHcpLine ? Math.min(...allHis) : 0;
+  const maxH = showHcpLine ? Math.max(...allHis) : 0;
+  const rangeH = Math.max(0.1, maxH - minH);
+  const padH = rangeH * 0.15;
+  const yPosH = (v: number) => H - PAD.bottom - ((v - (minH - padH)) / (rangeH + 2 * padH)) * (H - PAD.top - PAD.bottom);
 
   // Labels de eixo X
   const fmtDateShort = (ms: number) => new Date(ms).toLocaleDateString("pt-PT", { day: "2-digit", month: "short", year: "2-digit" });
@@ -2087,7 +2106,7 @@ function TournamentEvolutionSection({ slots, period }: { slots: Slot[]; period: 
             <text x={tk.x} y={H - PAD.bottom + 16} textAnchor="middle" fontSize={10} fill="var(--text-muted)">{tk.text}</text>
           </g>
         ))}
-        {/* Séries */}
+        {/* Séries principais — SD ou Gross */}
         {series.map((s, si) => {
           if (s.pts.length < 2) return null;
           const d = s.pts.map(pt => `${xPosOf(pt).toFixed(1)},${yPos(pt.val).toFixed(1)}`).join(" L ");
@@ -2097,17 +2116,44 @@ function TournamentEvolutionSection({ slots, period }: { slots: Slot[]; period: 
               {s.pts.map((pt, j) => (
                 <circle key={j} cx={xPosOf(pt)} cy={yPos(pt.val)} r={pt.is9h ? 3 : 2.5}
                   fill={pt.is9h ? "none" : s.color} stroke={s.color} strokeWidth={pt.is9h ? 1.5 : 0} opacity={0.7}>
-                  <title>{s.name}: {metricLabel} {pt.raw.toFixed(1)}{pt.is9h ? " (9h)" : ""} — média {pt.val.toFixed(1)} — {pt.event} ({new Date(pt.d).toLocaleDateString("pt-PT")})</title>
+                  <title>{s.name}: {metricLabel} {pt.raw.toFixed(1)}{pt.is9h ? " (9h)" : ""} — média {pt.val.toFixed(1)} — {pt.event} ({new Date(pt.d).toLocaleDateString("pt-PT")}){pt.hi != null ? ` · HI ${pt.hi.toFixed(1)}` : ""}</title>
                 </circle>
               ))}
             </g>
           );
         })}
+        {/* Séries secundárias — HCP Index ao longo do tempo (linha a tracejado) */}
+        {showHcpLine && series.map((s, si) => {
+          const hiPts = s.pts.filter(p => p.hi != null);
+          if (hiPts.length < 2) return null;
+          const d = hiPts.map(pt => `${xPosOf(pt).toFixed(1)},${yPosH(pt.hi!).toFixed(1)}`).join(" L ");
+          return (
+            <g key={`hi${si}`} opacity={0.55}>
+              <path d={`M ${d}`} fill="none" stroke={s.color} strokeWidth={1.4} strokeDasharray="5,3" />
+            </g>
+          );
+        })}
+        {/* Eixo Y direito para HCP */}
+        {showHcpLine && (
+          <>
+            {Array.from({ length: 3 }, (_, i) => {
+              const val = minH - padH + (rangeH + 2 * padH) * (i / 2);
+              return (
+                <text key={`hiY${i}`} x={W - PAD.right + 4} y={yPosH(val) + 3} fontSize={9} fill="var(--text-muted)">
+                  {val.toFixed(1)}
+                </text>
+              );
+            })}
+            <text x={W - PAD.right + 4} y={PAD.top - 4} fontSize={10} fill="var(--text-muted)" fontWeight={700}>HI</text>
+          </>
+        )}
       </svg>
       {metric === "sd" && (
         <div className="muted fs-11 mt-4 mb-4">
-          ℹ️ O <strong>Score Differential</strong> é calculado por ronda (não é o Handicap Index). O HI ≈ média das 8 melhores das últimas 20 × 96%.
-          Pontos vazios = ronda de 9 buracos (SD não comparável directamente com 18h).
+          ℹ️ A linha sólida é o <strong>Score Differential</strong> por ronda (varia muito — pode ser 7 numa boa ronda e 24 numa má).
+          {showHcpLine && <> A linha tracejada é o <strong>Handicap Index</strong> no momento da ronda (usa o eixo da direita).</>}
+          {" "}O HI ≈ média das 8 melhores das últimas 20 × 96% — por isso rondas más individuais não disparam o HI.
+          Pontos vazios = ronda de 9 buracos.
         </div>
       )}
       <div className="caKpis mt-8">
@@ -2133,6 +2179,78 @@ function TournamentEvolutionSection({ slots, period }: { slots: Slot[]; period: 
             </div>
           );
         })}
+      </div>
+
+      {/* Lista expansível das rondas contabilizadas — a utilizadora pode
+          verificar exactamente o que está incluído no período. */}
+      <div className="mt-12">
+        <button
+          className="btn-link fs-12"
+          onClick={() => setShowRounds(v => !v)}
+          style={{ background: "none", border: "none", cursor: "pointer", color: "var(--color-primary)", fontWeight: 600 }}
+        >
+          {showRounds ? "▾ Esconder rondas contabilizadas" : `▸ Ver rondas contabilizadas (${series.reduce((s, x) => s + x.pts.length, 0)} no total)`}
+        </button>
+        {showRounds && (
+          <div className="mt-8">
+            {series.map((s, si) => (
+              <div key={si} className="mb-14">
+                <div className="fw-700 fs-12 mb-4" style={{ color: s.color }}>
+                  <span className="round mr-6" style={{ width: 9, height: 9, background: s.color, display: "inline-block" }} />
+                  {shortName(s.name)} · {s.pts.length} rondas
+                </div>
+                <div className="scroll-x">
+                  <table className="dtable-lg fs-11">
+                    <thead>
+                      <tr>
+                        <th className="r">#</th>
+                        <th>Data</th>
+                        <th>Torneio</th>
+                        <th className="r">Bur.</th>
+                        <th className="r">Gross</th>
+                        <th className="r">SD</th>
+                        <th className="r">HI no dia</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {(() => {
+                        // Uma única ordenação desc (mais recente em cima).
+                        const desc = [...s.pts].sort((a, b) => b.d - a.d);
+                        const total = desc.length;
+                        return desc.map((pt, idx) => {
+                          const rankFromOldest = total - idx;  // oldest=1, newest=N
+                          const isGoodSD = pt.sd > 0 && pt.sd <= 10;
+                          const isBadSD  = pt.sd >= 17;
+                          return (
+                            <tr key={idx}>
+                              <td className="r c-text-3 mono">{rankFromOldest}</td>
+                              <td className="nowrap">{pt.dateStr}</td>
+                              <td className="fs-11">{pt.event}{pt.is9h && <span className="chip fs-9 ml-6" style={{ verticalAlign: "middle" }}>9h</span>}</td>
+                              <td className="r c-text-3">{pt.is9h ? 9 : 18}</td>
+                              <td className="r mono">{pt.gross}</td>
+                              <td className="r mono" style={{
+                                color: isGoodSD ? SC.good : isBadSD ? SC.danger : "var(--text-2)",
+                                fontWeight: isGoodSD || isBadSD ? 700 : 400,
+                              }}>
+                                {pt.sd > 0 ? pt.sd.toFixed(1) : "–"}
+                              </td>
+                              <td className="r c-text-3 mono">{pt.hi != null ? pt.hi.toFixed(1) : "–"}</td>
+                            </tr>
+                          );
+                        });
+                      })()}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            ))}
+            <div className="muted fs-10 mt-6">
+              SD em <span style={{ color: SC.good, fontWeight: 700 }}>verde</span> = ≤ 10 (ronda boa).
+              SD em <span style={{ color: SC.danger, fontWeight: 700 }}>vermelho</span> = ≥ 17 (ronda fraca).
+              O HCP Index (HI no dia) é o valor que estava em vigor no momento da ronda — repara como vai descendo apesar de algumas rondas más.
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

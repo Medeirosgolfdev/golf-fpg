@@ -21,6 +21,7 @@
  */
 import type { Tournament, Player } from "./fpgTypes";
 import type { PlayersDB } from "../ui/tournamentPrimitives";
+import { escalaoAtDate } from "../utils/format";
 
 export type ChampionshipType = "Nacional" | "Regional";
 export type Sex = "M" | "F" | "?";
@@ -201,19 +202,12 @@ export function detectEscalao(t: Tournament): string | null {
   return `Sub ${n === 25 ? 24 : n}`;
 }
 
-// ── Escalão de um jogador num ano (regra FPG year-based) ───────────────
+// ── Escalão de um jogador num ano ───────────────────────────────────────
+// Re-export de `escalaoAtDate` (utils/format) com alias específico de Jovens,
+// para manter call-sites expressivos e facilitar futura transição total.
+// Regra FPG year-based: idade = ano − yearOfBirth.
 export function escalaoInYear(dob: string | null, year: number): string | null {
-  if (!dob) return null;
-  const yob = parseInt(String(dob).slice(0, 4));
-  if (isNaN(yob)) return null;
-  const age = year - yob;
-  if (age < 0) return null;
-  if (age <= 10) return "Sub 10";
-  if (age <= 12) return "Sub 12";
-  if (age <= 14) return "Sub 14";
-  if (age <= 16) return "Sub 16";
-  if (age <= 18) return "Sub 18";
-  return "Sub 24";
+  return escalaoAtDate(dob, year);
 }
 
 // ── Parser de lista de escalões designados por um torneio ──

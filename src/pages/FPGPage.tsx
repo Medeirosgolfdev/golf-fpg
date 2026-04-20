@@ -21,7 +21,7 @@ import { loadPlayers } from "../data/loader";
 import { buildEscLookup, type EscLookup, escCls, escPillCls, formatPlayerName, normalizePlayer } from "../utils/playerUtils";
 import { TORNEIOS_CONFIG } from "../constants/config";
 import { PILL_SSERRA, SIDEBAR_ACCENT, EscPill, PillBadge, RoundPill, NineHPill, SserraPill, NacionalPill, JuniorPill, ClubePill, ManuelPill } from "../ui/PillBadge";
-import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
+import { TournSidebarItem, SSERRA_CCODE, type SidebarItemTournament } from "../ui/TournSidebarItem";
 import SexBadge from "../ui/SexBadge";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
@@ -520,8 +520,6 @@ const TOURN_PILLS: Record<string, TournPill> = {
   "10019": "PJA",   // Race to Dunas G. Final
 };
 
-
-const SSERRA_CCODE = "007";
 
 function TournPillBadge({ tcode, dynamicPills }: { tcode?: string; dynamicPills?: Record<string, TournPill> }) {
   if (!tcode) return null;
@@ -1709,11 +1707,11 @@ function Content() {
             </>)}
             <div className="flex-1" style={{ minWidth: 8 }} />
             {/* Contadores à direita */}
-            <a href="https://scoring.datagolf.pt/pt/tournaments.aspx" target="_blank" rel="noopener noreferrer"
+            <ExtLink href="https://scoring.datagolf.pt/pt/tournaments.aspx"
               className="fs-11 fw-600"
               style={{ flexShrink: 0, cursor: "pointer", color: "var(--accent)", border: "1px solid var(--accent)", borderRadius: 5, padding: "3px 8px", lineHeight: 1.6, textDecoration: "none", whiteSpace: "nowrap", display: "inline-flex", alignItems: "center", gap: 3 }}>
               FPG Torneios ↗
-            </a>
+            </ExtLink>
             {loading
               ? <span className="muted fs-11 shrink-0"  style={{ fontStyle: "italic" }}>{loadingMsg}</span>
               : <>
@@ -1794,9 +1792,7 @@ function Content() {
         {/* Sidebar */}
         <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
           {loading && displayList.length === 0 && (
-            <div className="muted fs-11 u-pad-italic">
-              A carregar...
-            </div>
+            <LoadingState size="sm" message="A carregar…" />
           )}
 
           {seriesFilter === ""
@@ -1847,9 +1843,7 @@ function Content() {
         <div className="master-detail">
           {/* Sidebar Clubes */}
           <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
-            {clubesLoading && (
-              <div className="muted fs-11 u-pad-italic">A carregar...</div>
-            )}
+            {clubesLoading && <LoadingState size="sm" message="A carregar…" />}
             {clubesLoaded && clubesList.length === 0 && !clubesLoading && (
               <div className="muted fs-11 u-pad-italic">
                 Ficheiro não encontrado (ainda)
@@ -1943,7 +1937,7 @@ function Content() {
       {navMode === "torneios" && seriesFilter === "jovens" && (
         <div className="master-detail">
           <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
-            {jovensLoading && <div className="muted fs-11 u-pad-italic">A carregar...</div>}
+            {jovensLoading && <LoadingState size="sm" message="A carregar…" />}
             {jovensLoaded && jovensGroups.length === 0 && !jovensLoading && (
               <div className="muted fs-11 u-pad-italic">Ficheiro não encontrado (ainda)</div>
             )}

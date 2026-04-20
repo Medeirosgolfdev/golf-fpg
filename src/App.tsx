@@ -9,6 +9,7 @@ import type { Course, MasterData, PlayersDb } from "./data/types";
 import { deepFixMojibake } from "./utils/fixEncoding";
 import { isCalUnlocked, CAL_UNLOCK_EVENT } from "./utils/authConstants";
 import { norm } from "./utils/format";
+import { MANUEL_FED } from "./constants/manuel";
 import type { MelhoriasJson } from "./data/melhoriasTypes";
 import { AppContext } from "./context/AppContext";
 import NavBar from "./ui/NavBar";
@@ -260,7 +261,7 @@ export default function App() {
                 <Route path="/campos/:courseKey?" element={<CamposPage />} />
                 <Route path="/jogadores/:fed" element={<JogadoresPage />} />
                 {/* Entry point: abre na página do Manuel por defeito */}
-                <Route path="/jogadores" element={<Navigate to="/jogadores/52884" replace />} />
+                <Route path="/jogadores" element={<Navigate to={`/jogadores/${MANUEL_FED}`} replace />} />
                 <Route path="/simulador" element={<SimuladorPage />} />
                 <Route path="/comparar" element={<CompararPage />} />
                 <Route path="/calendario" element={<CalendarioPage />} />
@@ -282,7 +283,7 @@ export default function App() {
                 <Route path="/diversos" element={<Navigate to="/FPG" replace />} />
                 <Route path="/diversos/inscritos" element={<Navigate to="/FPG/jovens/inscritosCN" replace />} />
                 <Route path="/doral" element={<DORALPage />} />
-                <Route path="*" element={<Navigate to="/jogadores/52884" replace />} />
+                <Route path="*" element={<Navigate to={`/jogadores/${MANUEL_FED}`} replace />} />
               </Routes>
             </Suspense>
           </main>
