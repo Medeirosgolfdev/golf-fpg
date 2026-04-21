@@ -1,8 +1,36 @@
 {
-  "generated": "2026-04-19T22:30:00.000Z",
-  "source": "Refresh manual da user (Chrome 90) — DevTools Application → Cookies de my.fpg.pt (Mariana, 2026-04-19 sessão de fix dos GitHub Actions)",
+  "generated": "2026-04-21T18:28:33.649Z",
+  "source": "playwright refresh-all-cookies",
   "host": "my.fpg.pt",
-  "cookieHeader": "_ga=GA1.1.79441169.1776684836; _ga_SBKT3JPZ7V=GS2.1.s1776684835$o1$g1$t1776684998$j60$l0$h0; ASP.NET_SessionId=yeih31veaxsrob4wta2rgemw; PlayerArea=photo=&fedStatId=9; playerIsLogin=61251; .AspNet.ApplicationCookie=RtjXU5_SNmj037spafNaKXuLcwTQnRq1cG7Vq0YiaQQksQv5JA_O7qEMZSKd4QzozzsGtrnOuB3pxFSPDQ3sxLJI4cz4vGfe6bJpO0Ep7iBnXwj88pJ2sDJxyY3wmKg9XKAQciMkxVoYZCJfaUqhBIvc_CnDKyg0SO4nGmTIbqv3Kkq8oIM9TAoUO0T80_yTfb1yAEIq5q7sp5nAxfqsqjX8CpuioKuF3CtNoLTtzZwGXtn7PQfmlJicrQ316pKnR4g3alUopdHW8Sgn8gmHpqTr-1YvZe5bawRqGF2cgL7TY8L9PajhLU9o5tiBEq-58SoUf4BW8eXzVuSNRaQNomVi0KTem1l0SN80I1XaE0oFBoYejfMPdbqiDmLZcmM-w2HBFl5xHNc70JGlZ2FfTw9FPGPlqZ0SyJ5mtsRWorhHrnE7vgwF_Cp4Fil1WMeRG8L2DgMIkqofYw-5dAugsdWy25RClze8nCbFzCFadxSaET57NOb7Ydkjx-1giesk7fsBeHLUEg_TrP8dnPc8_Zkhq-aDdtXhhy21sxriEFY",
-  "notes": "6 cookies de my.fpg.pt (+ .fpg.pt): (1) _ga GA (2) _ga_SBKT3JPZ7V GA (3) ASP.NET_SessionId (4) PlayerArea (5) playerIsLogin=61251 (Manuel) (6) .AspNet.ApplicationCookie auth token ASP.NET Identity (crítico). Outros _ga_* (LLMN8JTFJ6, RNYS173M1Y, BF2EJHC56G) não foram vistos desta vez — se o scraper falhar, adicionar os que estejam em DevTools. Refrescar quando test-fpg-auth.js começar a devolver Param_Errors.",
-  "cookies": []
+  "cookieHeader": "PlayerArea=photo=&fedStatId=9; _ga=GA1.1.2027643666.1776794047; _ga_SBKT3JPZ7V=GS2.1.s1776794046$o1$g0$t1776794046$j60$l0$h0; ASP.NET_SessionId=3hieeqmhblpzuzxtukep30gi",
+  "cookies": [
+    {
+      "name": "PlayerArea",
+      "httpOnly": false,
+      "secure": false,
+      "path": "/",
+      "expires": 1776880441.333865
+    },
+    {
+      "name": "_ga",
+      "httpOnly": false,
+      "secure": false,
+      "path": "/",
+      "expires": 1839866046
+    },
+    {
+      "name": "_ga_SBKT3JPZ7V",
+      "httpOnly": false,
+      "secure": false,
+      "path": "/",
+      "expires": 1839866046
+    },
+    {
+      "name": "ASP.NET_SessionId",
+      "httpOnly": true,
+      "secure": false,
+      "path": "/",
+      "expires": -1
+    }
+  ]
 }

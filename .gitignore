@@ -23,3 +23,14 @@ tmp/
 api/.datagolf-cookies.json
 api/.scoring-datagolf-cookies.json
 api/.fpg-admissions-cookies.json
+api/.callmebot-config.json
+
+# Perfil Chrome 90 dedicado (criado por refresh-all-cookies.js) - NUNCA commitar
+# (cache, cookies, extensoes, historico do browser de automacao)
+chrome-profile-automation/
+
+# Ficheiro temporario do wrapper bat (cookieHeader para gh secret set)
+logs/.cookie-header.tmp
+
+# Logs de execucao — gerados por scheduled tasks, nao devem entrar no repo
+logs/

@@ -1,7 +1,36 @@
 {
-  "generated": "2026-04-17T11:50:00.000Z",
-  "source": "Chrome 90 — scoring.fpg.pt/lists/ (user=admin, page=admissions, tcode=10941)",
+  "generated": "2026-04-21T18:28:44.934Z",
+  "source": "playwright refresh-all-cookies",
   "host": "scoring.fpg.pt",
-  "cookieHeader": "ASP.NET_SessionId=4dtyytq3etyjycibwqv1kr2v; DG_Lists_URL=OriginalUrl=https%3a%2f%2fscoring.fpg.pt%3a443%2flists%2f1EntryPage.aspx%3fuser%3dadmin%26dt%3d1750%26page%3dadmissions%26hash%3d0aac43808e25472947f2a1413b79182081ce6e74%26ccode%3d000%26tcode%3d10941%26callcontext%3ddirect",
-  "notes": "2 cookies para scoring.fpg.pt/lists/*. Diferente do .scoring-datagolf-cookies.json: ASP.NET_SessionId próprio (4dtyyt...) + DG_Lists_URL que aponta para scoring.fpg.pt:443/lists/1EntryPage.aspx com user=admin. Nunca juntar num só cookieHeader: misturaria valores com o mesmo nome. Refrescar quando /api/inscricoes/health indicar paramErr em fpg+cookie."
+  "cookieHeader": "_ga=GA1.1.2027643666.1776794047; _ga_SBKT3JPZ7V=GS2.1.s1776794046$o1$g0$t1776794046$j60$l0$h0; ASP.NET_SessionId=3txv0tbyyss4z2nn2cjaoiua; DG_Lists_URL=OriginalUrl=https%3a%2f%2fscoring.fpg.pt%3a443%2flists%2f1EntryPage.aspx%3fuser%3dadmin%26dt%3d21528%26page%3dadmissions%26hash%3d34058e0cab2b3ee34e62a0de71ba3077a018a118%26ccode%3d000%26tcode%3d10941%26callcontext%3ddirect",
+  "cookies": [
+    {
+      "name": "_ga",
+      "httpOnly": false,
+      "secure": false,
+      "path": "/",
+      "expires": 1839866046
+    },
+    {
+      "name": "_ga_SBKT3JPZ7V",
+      "httpOnly": false,
+      "secure": false,
+      "path": "/",
+      "expires": 1839866046
+    },
+    {
+      "name": "ASP.NET_SessionId",
+      "httpOnly": true,
+      "secure": true,
+      "path": "/",
+      "expires": -1
+    },
+    {
+      "name": "DG_Lists_URL",
+      "httpOnly": true,
+      "secure": true,
+      "path": "/",
+      "expires": -1
+    }
+  ]
 }
