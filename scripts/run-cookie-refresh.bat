@@ -93,35 +93,54 @@ if exist "%TMPFILE%" (
 :end
 echo [%date% %time%] Fim. REFRESH_EXIT=!REFRESH_EXIT! FPG_EXIT=!FPG_EXIT! DG_EXIT=!DG_EXIT! >> "%LOGFILE%"
 
-REM ── PASSO 4: notificacao WhatsApp via CallMeBot ──────────────────
-REM Envia sempre (sucesso ou falha). Config em api\.callmebot-config.json.
-if not exist api\.callmebot-config.json goto :skip_whatsapp
+REM ── PASSO 4: notificacao email via Gmail SMTP ────────────────────
+REM Envia sempre (sucesso ou falha). Config em api\.email-config.json.
+if not exist api\.email-config.json goto :skip_email
 
 if "!REFRESH_EXIT!" == "0" (
     if "!FPG_EXIT!" == "0" (
         if "!DG_EXIT!" == "0" (
-            set "MSG=[OK] Golf FPG cookies refreshed %date% %time% - 3/3 hosts valid, GitHub Secrets updated"
+            set "SUBJECT=[OK] Golf FPG cookies refreshed - 3/3 hosts valid"
+            set "BODY=Task GolfFPG-CookieRefresh terminou com sucesso em %date% %time%.^
+
+Refresh:      OK (3/3 hosts)^
+my.fpg.pt:    OK^
+scoring DG:   OK^
+GitHub Secrets actualizados.^
+
+Ver log completo em logs\cookie-refresh.log"
         ) else (
-            set "MSG=[PARCIAL] Golf FPG cookies refreshed %date% %time% - scoring.datagolf.pt falhou (exit !DG_EXIT!)"
+            set "SUBJECT=[PARCIAL] Golf FPG cookies - scoring.datagolf.pt falhou"
+            set "BODY=Task GolfFPG-CookieRefresh em %date% %time% - scoring.datagolf.pt validacao falhou (exit !DG_EXIT!). Ver logs\cookie-refresh.log"
         )
     ) else (
-        set "MSG=[PARCIAL] Golf FPG cookies refreshed %date% %time% - my.fpg.pt validacao falhou (exit !FPG_EXIT!)"
+        set "SUBJECT=[PARCIAL] Golf FPG cookies - my.fpg.pt falhou"
+        set "BODY=Task GolfFPG-CookieRefresh em %date% %time% - my.fpg.pt validacao falhou (exit !FPG_EXIT!). Ver logs\cookie-refresh.log"
     )
 ) else if "!REFRESH_EXIT!" == "2" (
-    set "MSG=[ERRO] Golf FPG cookies %date% %time% - sessao SSO expirou. Abrir Chrome 90 e fazer login em area.my.fpg.pt"
+    set "SUBJECT=[ERRO] Golf FPG - sessao SSO expirou"
+    set "BODY=Task GolfFPG-CookieRefresh em %date% %time% falhou porque a sessao SSO expirou.^
+
+ACCAO NECESSARIA:^
+1. Abrir Chrome 90 com: ^"C:\Users\Mariana\AppData\Local\Google\Chrome\Application\chrome.exe^" --user-data-dir=^"C:\golf-fpg\chrome-profile-automation^"^
+2. Fazer login em https://area.my.fpg.pt/login/^
+3. Fechar o Chrome^
+4. A proxima execucao as 10h voltara a funcionar"
 ) else if "!REFRESH_EXIT!" == "3" (
-    set "MSG=[PARCIAL] Golf FPG cookies %date% %time% - alguns hosts falharam. Ver logs\cookie-refresh.log"
+    set "SUBJECT=[PARCIAL] Golf FPG cookies - alguns hosts falharam"
+    set "BODY=Task GolfFPG-CookieRefresh em %date% %time% - REFRESH_EXIT=!REFRESH_EXIT! (parcial). Alguns hosts nao deram cookies validos. Ver logs\cookie-refresh.log"
 ) else (
-    set "MSG=[ERRO] Golf FPG cookies %date% %time% - refresh falhou (exit !REFRESH_EXIT!). Ver logs\cookie-refresh.log"
+    set "SUBJECT=[ERRO] Golf FPG cookies - refresh falhou"
+    set "BODY=Task GolfFPG-CookieRefresh em %date% %time% falhou (REFRESH_EXIT=!REFRESH_EXIT!, FPG=!FPG_EXIT!, DG=!DG_EXIT!). Ver logs\cookie-refresh.log"
 )
 
-echo [%date% %time%] A enviar WhatsApp: !MSG! >> "%LOGFILE%"
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts\send-whatsapp.ps1 -Message "!MSG!" >> "%LOGFILE%" 2>&1
-echo      send-whatsapp.ps1 exit=!errorlevel! >> "%LOGFILE%"
+echo [%date% %time%] A enviar email: !SUBJECT! >> "%LOGFILE%"
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\send-email.ps1 -Subject "!SUBJECT!" -Body "!BODY!" >> "%LOGFILE%" 2>&1
+echo      send-email.ps1 exit=!errorlevel! >> "%LOGFILE%"
 goto :notification_done
 
-:skip_whatsapp
-echo [%date% %time%] CallMeBot nao configurado (api\.callmebot-config.json em falta) - skip WhatsApp >> "%LOGFILE%"
+:skip_email
+echo [%date% %time%] Email nao configurado (api\.email-config.json em falta) - skip >> "%LOGFILE%"
 
 :notification_done
 echo ============================================================ >> "%LOGFILE%"

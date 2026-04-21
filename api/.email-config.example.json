@@ -1,0 +1,10 @@
+{
+  "_note": "Copiar para .email-config.json (remover .example) e preencher. Ver scripts/send-email.ps1 para instrucoes da App Password do Gmail.",
+  "smtp_server": "smtp.gmail.com",
+  "smtp_port":   587,
+  "username":    "mariana.tomass@gmail.com",
+  "password":    "xxxx xxxx xxxx xxxx",
+  "from_email":  "mariana.tomass@gmail.com",
+  "from_name":   "Golf FPG Bot",
+  "to_email":    "mariana.tomass@gmail.com"
+}
