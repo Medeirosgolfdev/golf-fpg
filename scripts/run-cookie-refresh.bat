@@ -101,7 +101,7 @@ REM ── Actualizar DATAGOLF_COOKIES e DATAGOLF_SCORING_COOKIES ──
 REM Ambos os secrets guardam as MESMAS cookies (scoring.datagolf.pt) mas sao
 REM consumidos por workflows diferentes:
 REM   - DATAGOLF_COOKIES         ← update-drive.yml (scrape-drive-node.js)
-REM   - DATAGOLF_SCORING_COOKIES ← update-jovens.yml (scrape-jovens-node.js)
+REM   - DATAGOLF_SCORING_COOKIES ← update-jovens.yml + update-classif.yml
 REM Naming historico inconsistente; mantem-se os dois para nao partir workflows.
 echo    - DATAGOLF_COOKIES e DATAGOLF_SCORING_COOKIES (scoring.datagolf.pt)... >> "%LOGFILE%"
 powershell -NoProfile -Command "(Get-Content api\.scoring-datagolf-cookies.json -Raw | ConvertFrom-Json).cookieHeader | Set-Content -NoNewline -Encoding ascii '%TMPFILE%'"
@@ -113,6 +113,18 @@ if exist "%TMPFILE%" (
     del /q "%TMPFILE%" >nul 2>nul
 ) else (
     echo      nao consegui ler api\.scoring-datagolf-cookies.json - skip >> "%LOGFILE%"
+)
+
+REM ── Actualizar FPG_ADMISSIONS_COOKIES (scoring.fpg.pt) ──
+REM Usado por update-fpg-admissions-draws.yml (scrape-fpg-admissions-draws-node.js).
+echo    - FPG_ADMISSIONS_COOKIES (scoring.fpg.pt)... >> "%LOGFILE%"
+powershell -NoProfile -Command "(Get-Content api\.fpg-admissions-cookies.json -Raw | ConvertFrom-Json).cookieHeader | Set-Content -NoNewline -Encoding ascii '%TMPFILE%'"
+if exist "%TMPFILE%" (
+    type "%TMPFILE%" | gh secret set FPG_ADMISSIONS_COOKIES >> "%LOGFILE%" 2>&1
+    echo      gh secret set FPG_ADMISSIONS_COOKIES exit=!errorlevel! >> "%LOGFILE%"
+    del /q "%TMPFILE%" >nul 2>nul
+) else (
+    echo      nao consegui ler api\.fpg-admissions-cookies.json - skip >> "%LOGFILE%"
 )
 
 :end

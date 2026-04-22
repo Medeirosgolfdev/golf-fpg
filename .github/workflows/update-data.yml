@@ -86,18 +86,44 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # Abrangente: tudo o que o fpg-scrape-node.js + pipeline.js podem gerar
+
+          # Diagnóstico: listar ficheiros modificados antes do git add.
+          # Útil para debug se "Nada em staging" voltar a acontecer.
+          CHANGED_BEFORE=$(git status --porcelain 2>/dev/null | wc -l)
+          echo "ℹ️  ${CHANGED_BEFORE} ficheiros modificados no working copy antes do git add"
+
+          # Paths gerados pelo fluxo fpg-scrape-node.js + pipeline.js:
+          #   - output/{fed}/*                → fpg-scrape-node.js + pipeline (render)
+          #   - public/data/{fed}/analysis/   → só o Manuel (render estático)
+          #   - public/data/players.json      → pipeline.js (sync step)
+          #   - public/player-stats.json      → enrich-players.js  ⚠ SEM /data/
+          #   - public/data/away-courses.json → extract-courses.js (disabled no pipeline normal)
+          #   - public/data/master-courses.json → idem
+          #   - players.json (raiz)           → pipeline.js (sync step)
+          #
+          # Bug histórico (2026-04-22): o path era "public/data/player-stats.json",
+          # mas enrich-players.js escreve "public/player-stats.json" (sem /data/).
+          # Resultado: o workflow detectava novos scorecards mas nunca commitava.
           git add output/ \
                   public/data/*/analysis/ \
                   public/data/players.json \
-                  public/data/player-stats.json \
+                  public/player-stats.json \
                   public/data/away-courses.json \
                   public/data/master-courses.json \
                   players.json 2>/dev/null || true
+
           if git diff --staged --quiet; then
-            echo "Nada em staging — sem commit."
+            echo "⚠  Nada em staging — sem commit."
+            if [ "${CHANGED_BEFORE}" -gt 0 ]; then
+              echo ""
+              echo "❗ Mas havia ${CHANGED_BEFORE} ficheiros modificados. Lista (primeiros 50):"
+              git status --porcelain 2>/dev/null | head -50
+              echo ""
+              echo "Paths fora do scope do git add. Adicionar à lista acima se for recorrente."
+            fi
             exit 0
           fi
+
           DATE=$(date +'%Y-%m-%d %H:%M')
           CHANGED=$(git diff --staged --name-only | wc -l)
           git commit -m "data: update FPG WHS+scorecards ${DATE} (${CHANGED} ficheiros)"

@@ -260,9 +260,24 @@ node update-jogadores.js --feds 47078 52884
 ```
 Depois no F12 do site correspondente: `fetch("http://localhost:3456/browser-script.js").then(r=>r.text()).then(eval)`
 
-**scrape-drive-aquapor-v7.js** — Colar no F12 de `scoring.datagolf.pt/pt/tournaments.aspx`. v7 fix: usa `classifAgregate.aspx/ScoreCard` (v6 tinha bug R1=R2).
+**scrape-drive-aquapor-v7.js** — Colar no F12 de `scoring.datagolf.pt/pt/tournaments.aspx`. v7 fix: usa `classifAgregate.aspx/ScoreCard` (v6 tinha bug R1=R2). **Legacy** — substituído por `scrape-drive-node.js` (Node puro, correr em GitHub Actions).
 
-**pull-torneios.js** — Browser Console em `scoring.datagolf.pt`. Configurar `POR_CODIGO`: `{ tclub: "985", tcode: "12345" }` (obter da URL: `…Classifications.aspx?ccode=985&tcode=12345`). Output → copiar para `public/data/` e incrementar contador.
+**scrape-fpg-admissions-draws-node.js** — Node puro (2026-04-22). Substitui os browser-scripts `browser-scrape-fpg-admissions-draws.js` + `browser-scrape-fpg-draws-only.js` + `merge-fpg-admissions-draws.js`. Corre linkpage cross-domain (scoring.fpg.pt/lists) em paralelo, merge aditivo (preserva bons, rejeita `_suspect`), output único em `public/data/fpg-admissions-draws.json`. Scope: `scripts/fpg-admissions-scope.json` (333 torneios). Exit code 2 = sem novidades. Workflow: `update-fpg-admissions-draws.yml` (Sex/Sáb/Dom 20:00 UTC). Secret: `FPG_ADMISSIONS_COOKIES`.
+```bash
+node scripts/scrape-fpg-admissions-draws-node.js                # scope todo
+node scripts/scrape-fpg-admissions-draws-node.js --year 2026    # só 2026
+node scripts/scrape-fpg-admissions-draws-node.js --tcodes 10941,10937,10935
+node scripts/scrape-fpg-admissions-draws-node.js --since 2026-01-01 --concurrency 3
+```
+
+**scrape-classif-node.js** — Node puro (2026-04-22). Substitui `pull-torneios.js` browser-console. GET linkpage warmup + POST `classif.aspx/ClassifLST` paginado + POST `classifAgregate.aspx/ScoreCard` por jogador. Output formato compatível com `pull-torneiosNNN.json`. Scope: `scripts/classif-scope.json` (217 torneios já processados) ou flags CLI. Workflow: `update-classif.yml` (Sáb/Dom 20:30 UTC). Secret: `DATAGOLF_SCORING_COOKIES`.
+```bash
+node scripts/scrape-classif-node.js --tclub 000 --tcode 10825
+node scripts/scrape-classif-node.js --scope scripts/classif-scope.json --out public/data/pull-torneios-node.json
+node scripts/scrape-classif-node.js --scope scripts/batch-aroeira.json --concurrency 2
+```
+
+**pull-torneios.js** — Browser Console em `scoring.datagolf.pt`. **Legacy** — usar `scrape-classif-node.js` para novos torneios. Mantido como fallback para casos em que Node não funciona (e.g. ad-hoc num torneio de clube com `ccode` desconhecido).
 
 **fpg-download-whs-only.js** — Browser Console em `scoring.fpg.pt/lists/PlayerWHS.aspx?no=52884`. Download ~2-5 min. Se a página refreshar, alterar `START_INDEX`.
 
@@ -565,7 +580,8 @@ Popula `uskTournNames` como fallback (hardcoded em `USKIDS_TCODE_META` tem prior
 
 | Ficheiro | Circuito | Gerado por | Scorecard? | Usado em |
 |----------|----------|------------|------------|----------|
-| pull-torneiosNNN.json (000-NNN) | FPG | pull-torneios.js | ✓ | FPGPage, KIDSdataLoader (pull-torneios000 autoritativo) |
+| pull-torneiosNNN.json (000-NNN) | FPG | scrape-classif-node.js (novos) ou pull-torneios.js browser (legacy) | ✓ | FPGPage, KIDSdataLoader (pull-torneios000 autoritativo) |
+| fpg-admissions-draws.json | FPG | scrape-fpg-admissions-draws-node.js (novo) | ✗ | AdmissionsTab, DrawTab (inscrições + pairings pré-jogo) |
 | players.json | FPG | pipeline.js | ✗ | JogadoresPage, FPGPage, KIDSdataLoader (enriquecimento) |
 | master-courses.json | FPG | pipeline.js | ✓ | CamposPage |
 | drive-data.json | FPG | scrape-drive-aquapor-v7.js | ✓ | DrivePage |
@@ -897,15 +913,18 @@ O `DG_Lists_URL` é URL-encoded. Descodificado: `1EntryPage.aspx?user=fpguser&dt
 O `hash` (40 chars hex) é gerado pelo browser ao entrar pela primeira vez e
 validado server-side. **Não replicável de Node puro.**
 
-### GitHub Actions — estado 2026-04-15
+### GitHub Actions — estado 2026-04-22
 
 | Workflow | Estado | Script | Cron | Notas |
 |---|---|---|---|---|
 | `uskids-field.yml` | ✅ | Playwright headless | — | Site público signupanytime.com |
 | `uskids-results.yml` | ✅ | idem | — | idem |
 | `uskids-member-history.yml` | ✅ | idem | — | idem |
-| **`update-drive.yml`** | ✅ Reescrito 2026-04-15 | `scripts/scrape-drive-node.js` (Node puro) | Sex/Sáb/Dom 21:00 UTC | Default: mês corrente + mês anterior (`--months-back 1`). Secret: `DATAGOLF_SCORING_COOKIES`. |
-| **`update-data.yml`** | ✅ Reescrito 2026-04-15 | `scripts/fpg-scrape-node.js` (Node puro) | Sáb/Dom 21:00 UTC | Default: incremental (só rondas novas). Override `full_rebuild=true`. Secret: `FPG_COOKIES`. |
+| **`update-drive.yml`** | ✅ Node puro desde 2026-04-15 | `scripts/scrape-drive-node.js` | Sex/Sáb/Dom 21:00 UTC | Default: mês corrente + mês anterior (`--months-back 1`). Secret: `DATAGOLF_SCORING_COOKIES`. |
+| **`update-data.yml`** | ✅ Node puro desde 2026-04-15 | `scripts/fpg-scrape-node.js` | Sáb/Dom 21:00 UTC | Default: incremental (só rondas novas). Override `full_rebuild=true`. Secret: `FPG_COOKIES`. |
+| **`update-jovens.yml`** | ✅ Node puro desde 2026-04-17 | `scripts/scrape-jovens-node.js` | — | Scrape inscrições dos Nacionais de Jovens. Secret: `DATAGOLF_SCORING_COOKIES`. |
+| **`update-fpg-admissions-draws.yml`** | ✅ Novo 2026-04-22 | `scripts/scrape-fpg-admissions-draws-node.js` | Sex/Sáb/Dom 20:00 UTC | 333 torneios em `scripts/fpg-admissions-scope.json` via linkpage cross-domain. Secret: `FPG_ADMISSIONS_COOKIES`. Substitui os browser-scripts `browser-scrape-fpg-*.js`. |
+| **`update-classif.yml`** | ✅ Novo 2026-04-22 | `scripts/scrape-classif-node.js` | Sáb/Dom 20:30 UTC | Classificações + scorecards via POST `classif.aspx/ClassifLST`. Scope: `scripts/classif-scope.json`. Secret: `DATAGOLF_SCORING_COOKIES`. Substitui o browser-console `pull-torneios.js`. |
 
 **IP-binding em Actions:** `scoring.datagolf.pt` CONFIRMADO não IP-bound
 (teste via hotspot 4G). `my.fpg.pt` CONFIRMADO não IP-bound (teste cross-IP

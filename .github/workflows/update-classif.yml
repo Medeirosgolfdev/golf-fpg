@@ -1,0 +1,115 @@
+name: Actualizar Classificações FPG
+
+# Corre:
+#  - Automaticamente Sáb/Dom às 20:30 UTC (~21:30 Lisboa)
+#  - A pedido (botão "Run workflow" no GitHub)
+#
+# Cron desfasado dos outros workflows (20:00 admissions, 21:00 drive,
+# 21:20 jovens, 21:40 data) para evitar colisões no git push.
+#
+# Scrape de classificações + scorecards para torneios já jogados.
+# Substitui o antigo pull-torneios.js (browser console F12).
+#
+# SCOPE: scripts/classif-scope.json (217 torneios pré-carregados).
+# Para um torneio pontual: usar workflow_dispatch com tclub+tcode.
+#
+# Requer GitHub Secret:
+#   DATAGOLF_SCORING_COOKIES — cookie header de scoring.datagolf.pt
+on:
+  workflow_dispatch:
+    inputs:
+      tclub:
+        description: 'tclub específico (ex: 000). Vazio = usar scope.'
+        required: false
+        default: ''
+      tcode:
+        description: 'tcode específico (ex: 10825). Requer tclub.'
+        required: false
+        default: ''
+      scope_file:
+        description: 'Ficheiro de scope alternativo (relative ao repo).'
+        required: false
+        default: 'scripts/classif-scope.json'
+      out_file:
+        description: 'Ficheiro de output.'
+        required: false
+        default: 'public/data/pull-torneios-node.json'
+      force_commit:
+        description: 'Commit mesmo sem mudanças?'
+        required: false
+        default: 'false'
+        type: choice
+        options: ['false', 'true']
+
+  schedule:
+    # 20:30 UTC Sáb/Dom — torneios terminam normalmente Sáb-Dom
+    - cron: '30 20 * * 6,0'
+
+permissions:
+  contents: write
+
+jobs:
+  update-classif:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Correr scrape-classif-node.js
+        id: scrape
+        run: |
+          set +e
+          ARGS=""
+          if [ -n "${{ github.event.inputs.tclub }}" ] && [ -n "${{ github.event.inputs.tcode }}" ]; then
+            ARGS="--tclub ${{ github.event.inputs.tclub }} --tcode ${{ github.event.inputs.tcode }}"
+          else
+            ARGS="--scope ${{ github.event.inputs.scope_file || 'scripts/classif-scope.json' }}"
+          fi
+          ARGS="$ARGS --out ${{ github.event.inputs.out_file || 'public/data/pull-torneios-node.json' }}"
+          echo "Args: $ARGS"
+          node scripts/scrape-classif-node.js $ARGS
+          EXIT_CODE=$?
+          echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
+          if [ "$EXIT_CODE" = "1" ]; then
+            echo "❌ Scraper falhou"
+            exit 1
+          fi
+          if [ "$EXIT_CODE" = "2" ]; then
+            echo "ℹ️  Sem novidades"
+          fi
+          exit 0
+        env:
+          DATAGOLF_SCORING_COOKIES: ${{ secrets.DATAGOLF_SCORING_COOKIES }}
+
+      - name: Commit e push (se houver novos dados)
+        if: steps.scrape.outputs.exit_code == '0' || github.event.inputs.force_commit == 'true'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          OUT="${{ github.event.inputs.out_file || 'public/data/pull-torneios-node.json' }}"
+          git add "$OUT"
+
+          if git diff --staged --quiet; then
+            echo "Nenhuma alteração em staging — sem commit."
+            exit 0
+          fi
+
+          DATE=$(date +'%Y-%m-%d %H:%M')
+          git commit -m "data: update classif FPG ${DATE}"
+          git pull --rebase --autostash origin ${GITHUB_REF_NAME} || git rebase --abort
+          git push
+          echo "✓ Commit feito"
