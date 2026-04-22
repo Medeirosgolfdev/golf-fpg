@@ -1,12 +1,12 @@
 {
-  "lastUpdated": "19/04/2026",
+  "lastUpdated": "22/04/2026",
   "source": "scoring.datagolf.pt",
   "circuit": "jovens",
   "year": 2026,
   "searchTerm": "Jovens",
   "totalTournaments": 2,
   "totalPlayers": 39,
-  "totalScorecards": 37,
+  "totalScorecards": 74,
   "tournaments": [
     {
       "name": "Campeonato Regional de Jovens Sub 10&12 2026",
@@ -15,11 +15,11 @@
       "date": "2026-04-17",
       "campo": "Santo da Serra - Serras-Serras",
       "clube": "007",
-      "circuit": "tour",
-      "series": "tour",
+      "series": "jovens",
       "region": "outro",
       "escalao": "Sub 10",
-      "num": 1,
+      "sex": null,
+      "num": null,
       "rounds": 2,
       "playerCount": 16,
       "players": [
@@ -1760,25 +1760,6 @@
           ]
         },
         {
-          "scoreId": "41953",
-          "pos": "NS",
-          "name": "Áurea Camacho",
-          "club": "Palheiro",
-          "grossTotal": 999,
-          "toPar": null,
-          "hcpExact": 54,
-          "hcpPlay": 25,
-          "fedCode": null,
-          "courseRating": null,
-          "slope": null,
-          "teeName": null,
-          "teeColorId": null,
-          "parTotal": null,
-          "nholes": null,
-          "course": null,
-          "roundScores": []
-        },
-        {
           "scoreId": "41965",
           "pos": "NS",
           "name": "Henrique Santana",
@@ -1796,10 +1777,27 @@
           "nholes": null,
           "course": null,
           "roundScores": []
+        },
+        {
+          "scoreId": "41953",
+          "pos": "NS",
+          "name": "Áurea Camacho",
+          "club": "Palheiro",
+          "grossTotal": 999,
+          "toPar": null,
+          "hcpExact": 54,
+          "hcpPlay": 25,
+          "fedCode": null,
+          "courseRating": null,
+          "slope": null,
+          "teeName": null,
+          "teeColorId": null,
+          "parTotal": null,
+          "nholes": null,
+          "course": null,
+          "roundScores": []
         }
-      ],
-      "_tabLabel": "Sub 10 e 12",
-      "_r2AggregateOnly": true
+      ]
     },
     {
       "name": "Campeonato Regional de Jovens Sub 14 a 24 2026",
@@ -1808,11 +1806,11 @@
       "date": "2026-04-17",
       "campo": "Santo da Serra - Desertas-Serras",
       "clube": "007",
-      "circuit": "tour",
-      "series": "tour",
+      "series": "jovens",
       "region": "outro",
       "escalao": "Sub 14",
-      "num": 1,
+      "sex": null,
+      "num": null,
       "rounds": 2,
       "playerCount": 23,
       "players": [
@@ -6324,9 +6322,7 @@
             }
           ]
         }
-      ],
-      "_tabLabel": "Sub 14 a 24",
-      "_r2AggregateOnly": true
+      ]
     }
   ]
 }
