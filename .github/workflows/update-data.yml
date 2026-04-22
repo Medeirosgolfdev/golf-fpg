@@ -1,11 +1,22 @@
 name: Atualizar Dados Golf FPG (cookies-based)
 
 # Corre:
-#  - Automaticamente Sábado e Domingo às 21:40 UTC (≈22:40 Lisboa)
+#  - Automaticamente Domingo e Segunda às 00:05 UTC — logo após o cut SD
 #  - A pedido (botão "Run workflow" no GitHub)
 #
-# Cron desfasado dos workflows update-drive (21:00) e update-jovens (21:20)
-# para evitar non-fast-forward no git push.
+# ⚠ TIMING IMPORTANTE: O Score Differential (SD) e o WHS Index são calculados
+# pelo sistema FPG à meia-noite Lisboa (00:00 WET / 23:00 UTC no verão, 00:00
+# UTC no inverno). 5 minutos depois são margem suficiente para o FPG processar.
+#
+#   - Dom 00:05 UTC = 00:05 Lisboa inverno / 01:05 Lisboa verão → apanha Sáb
+#   - Seg 00:05 UTC = 00:05 Lisboa inverno / 01:05 Lisboa verão → apanha Dom
+#
+# Se algum scorecard vier sem SD (muito improvável com 5min de margem), o
+# próximo incremental apanha — o scraper salta sempre scorecards já completos.
+#
+# Este é o único workflow FPG que depende do SD (scrapa WHS do my.fpg.pt).
+# Os outros (drive, jovens, admissions-draws, classif) não têm esse constraint
+# porque scrapam dados públicos dos torneios, não handicap index.
 #
 # Requer GitHub Secret:
 #   FPG_COOKIES — cookie header completo capturado do Firefox/Chrome 90
@@ -26,7 +37,7 @@ on:
         type: choice
         options: ['false', 'true']
   schedule:
-    - cron: '40 21 * * 6,0'   # Sáb e Dom às 21:40 UTC
+    - cron: '5 0 * * 0,1'   # Dom e Seg às 00:05 UTC (5min depois do cut SD da meia-noite Lisboa inverno)
 
 permissions:
   contents: write

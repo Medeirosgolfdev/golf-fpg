@@ -1,17 +1,19 @@
 name: Actualizar Classificações FPG
 
 # Corre:
-#  - Automaticamente Sáb/Dom às 20:30 UTC (~21:30 Lisboa)
-#  - A pedido (botão "Run workflow" no GitHub)
+#  - A pedido (botão "Run workflow" no GitHub) — NÃO tem cron
 #
-# Cron desfasado dos outros workflows (20:00 admissions, 21:00 drive,
-# 21:20 jovens, 21:40 data) para evitar colisões no git push.
+# ⚠ Sem cron propositadamente: o scope (scripts/classif-scope.json, 217 torneios
+# pré-carregados) é ESTÁTICO e cobre só torneios já jogados. Correr semanalmente
+# sobre o mesmo scope não traz dados novos — só gasta runtime. Quando quiseres
+# expandir com novos tcodes: editar classif-scope.json (ou criar um batch
+# `scripts/batch-XXX.json`) e disparar manualmente pelo GitHub.
 #
-# Scrape de classificações + scorecards para torneios já jogados.
+# TODO (futuro): fazer scope dinâmico que descobre automaticamente tcodes novos
+# cruzando fpg-admissions-draws.json (futuros+passados) + drive-data-*.json
+# com pull-torneios*.json (já processados). Aí o cron faria sentido.
+#
 # Substitui o antigo pull-torneios.js (browser console F12).
-#
-# SCOPE: scripts/classif-scope.json (217 torneios pré-carregados).
-# Para um torneio pontual: usar workflow_dispatch com tclub+tcode.
 #
 # Requer GitHub Secret:
 #   DATAGOLF_SCORING_COOKIES — cookie header de scoring.datagolf.pt
@@ -41,9 +43,7 @@ on:
         type: choice
         options: ['false', 'true']
 
-  schedule:
-    # 20:30 UTC Sáb/Dom — torneios terminam normalmente Sáb-Dom
-    - cron: '30 20 * * 6,0'
+  # Sem `schedule:` propositadamente — ver nota no topo.
 
 permissions:
   contents: write

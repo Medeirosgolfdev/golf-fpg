@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-04-22T14:22:31.217Z",
-  "total": 335,
+  "scrapedAt": "2026-04-22T15:18:23.989Z",
+  "total": 359,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -66820,6 +66820,18 @@
       }
     },
     {
+      "ccode": "007",
+      "tcode": "10976",
+      "name": "Final Road to Terras da Comporta - Torre dia 1",
+      "date": "2026-01-10",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
       "ccode": "988",
       "tcode": "10292",
       "name": "1º Torneio Drive Tour Sul – Laguna G.C.",
@@ -67197,6 +67209,30 @@
           ]
         }
       }
+    },
+    {
+      "ccode": "003",
+      "tcode": "10612",
+      "name": "Circuito Junior Challenge",
+      "date": "2026-01-11",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "007",
+      "tcode": "10975",
+      "name": "Final Road to Terras da Comporta - Dunas dia 2",
+      "date": "2026-01-11",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
     },
     {
       "ccode": "000",
@@ -68894,6 +68930,18 @@
       }
     },
     {
+      "ccode": "007",
+      "tcode": "10983",
+      "name": "Torneio de Inverno CGSS",
+      "date": "2026-01-17",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
       "ccode": "983",
       "tcode": "10149",
       "name": "1º Torneio Drive Challenge Açores–Terceira-Sub 18",
@@ -69239,6 +69287,30 @@
           ]
         }
       }
+    },
+    {
+      "ccode": "007",
+      "tcode": "10986",
+      "name": "TORNEIO DA RESTAURAÇÃO CGSS 2026",
+      "date": "2026-01-24",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "007",
+      "tcode": "10989",
+      "name": "T1 CAMP. CGSS de PAres - Powered by C. Santos VP",
+      "date": "2026-01-31",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
     },
     {
       "ccode": "988",
@@ -70708,6 +70780,952 @@
       }
     },
     {
+      "ccode": "007",
+      "tcode": "10994",
+      "name": "Torneio de Carnaval CGSS 2026",
+      "date": "2026-02-14",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "935",
+      "tcode": "10294",
+      "name": "Greatgolf Junior Open with Luis Figo Foundation",
+      "date": "2026-02-15",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": null,
+          "date": "2026-02-15",
+          "totalJogadores": 27,
+          "groups": [
+            {
+              "teeTime": "12:30",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Javier Cobiella",
+                  "clube": "-"
+                },
+                {
+                  "nome": "Diogo Silva Pinto Rocha",
+                  "clube": "34186"
+                },
+                {
+                  "nome": "João Crasi Alves",
+                  "clube": "39701"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:39",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Guilherme Grabner Moreira",
+                  "clube": "42205"
+                },
+                {
+                  "nome": "João Maria Ivo de Carvalho",
+                  "clube": "38334"
+                },
+                {
+                  "nome": "Martim Pinto Johansen",
+                  "clube": "40115"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:48",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Francisco Reis",
+                  "clube": "40534"
+                },
+                {
+                  "nome": "Santiago Dias",
+                  "clube": "42908"
+                },
+                {
+                  "nome": "Rodrigo Sousa Correia",
+                  "clube": "44934"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:57",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Dinis Silva",
+                  "clube": "40910"
+                },
+                {
+                  "nome": "Filipe Pinheiro",
+                  "clube": "46591"
+                },
+                {
+                  "nome": "Min Sung Seo",
+                  "clube": "-"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:06",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Pedro Costa Alemão",
+                  "clube": "46706"
+                },
+                {
+                  "nome": "Ethan Prybys Orton",
+                  "clube": "42374"
+                },
+                {
+                  "nome": "Diogo Sequeira",
+                  "clube": "56654"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:15",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Ryan Dantas",
+                  "clube": "45439"
+                },
+                {
+                  "nome": "Jack Murtagh",
+                  "clube": "41593"
+                },
+                {
+                  "nome": "Beau Delfortrie",
+                  "clube": "50247"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:24",
+              "startHole": 1,
+              "tee": "Azuis",
+              "players": [
+                {
+                  "nome": "Angelina Gao",
+                  "clube": "51523"
+                },
+                {
+                  "nome": "Doyeon Kim",
+                  "clube": "-"
+                },
+                {
+                  "nome": "Madalena Figueiredo",
+                  "clube": "52011"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:33",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Matteo Balzer",
+                  "clube": "44406"
+                },
+                {
+                  "nome": "Miguel Teles de Menezes",
+                  "clube": "52487"
+                },
+                {
+                  "nome": "Igor Kostyn",
+                  "clube": "56072"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:42",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Ethan Van Vuuren Maciel",
+                  "clube": "56765"
+                },
+                {
+                  "nome": "Ethan Hutchinson",
+                  "clube": "48990"
+                },
+                {
+                  "nome": "Maximilian O`callaghan",
+                  "clube": "48623"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "name": null,
+          "date": "2026-02-16",
+          "totalJogadores": 26,
+          "groups": [
+            {
+              "teeTime": "08:00",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Guilherme Grabner Moreira",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Francisco Reis",
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:10",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Diogo Silva Pinto Rocha",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "João Crasi Alves",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Ethan Prybys Orton",
+                  "clube": "Vila Sol"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:20",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Santiago Dias",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "João Maria Ivo de Carvalho",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "Martim Pinto Johansen",
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:30",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Pedro Costa Alemão",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "Doyeon Kim",
+                  "clube": "Internacional"
+                },
+                {
+                  "nome": "Angelina Gao",
+                  "clube": "Quinta do Peru"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:40",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Rodrigo Sousa Correia",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Dinis Silva",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Filipe Pinheiro",
+                  "clube": "Belas"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:50",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Ryan Dantas",
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Min Sung Seo",
+                  "clube": "Internacional"
+                },
+                {
+                  "nome": "Beau Delfortrie",
+                  "clube": "Vila Sol"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Jack Murtagh",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Diogo Sequeira",
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "Madalena Figueiredo",
+                  "clube": "Belas"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:40",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Matteo Balzer",
+                  "clube": "Amendoeira"
+                },
+                {
+                  "nome": "Miguel Teles de Menezes",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Igor Kostyn",
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:50",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Ethan Van Vuuren Maciel",
+                  "clube": "Vila Sol"
+                },
+                {
+                  "nome": "Ethan Hutchinson",
+                  "clube": "Assoc. Qta.Lago"
+                },
+                {
+                  "nome": "Maximilian O`callaghan",
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "name": null,
+          "date": "2026-02-17",
+          "totalJogadores": 26,
+          "groups": [
+            {
+              "teeTime": "08:00",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Diogo Silva Pinto Rocha",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Guilherme Grabner Moreira",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Francisco Reis",
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:10",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "João Maria Ivo de Carvalho",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "João Crasi Alves",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Doyeon Kim",
+                  "clube": "Internacional"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:20",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Martim Pinto Johansen",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Ethan Prybys Orton",
+                  "clube": "Vila Sol"
+                },
+                {
+                  "nome": "Pedro Costa Alemão",
+                  "clube": "Estoril"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:30",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Santiago Dias",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Dinis Silva",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Filipe Pinheiro",
+                  "clube": "Belas"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:40",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Rodrigo Sousa Correia",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Matteo Balzer",
+                  "clube": "Amendoeira"
+                },
+                {
+                  "nome": "Diogo Sequeira",
+                  "clube": "Quinta do Peru"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:50",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Igor Kostyn",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Min Sung Seo",
+                  "clube": "Internacional"
+                },
+                {
+                  "nome": "Ryan Dantas",
+                  "clube": "Belas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Miguel Teles de Menezes",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Angelina Gao",
+                  "clube": "Quinta do Peru"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:10",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Jack Murtagh",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Ethan Hutchinson",
+                  "clube": "Assoc. Qta.Lago"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:20",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Maximilian O`callaghan",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Madalena Figueiredo",
+                  "clube": "Belas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:30",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Beau Delfortrie",
+                  "clube": "Vila Sol"
+                },
+                {
+                  "nome": "Ethan Van Vuuren Maciel",
+                  "clube": "Vila Sol"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "935",
+      "tcode": "10295",
+      "name": "Greatgolf Junior Open w/ Luis Figo Foundation -U14",
+      "date": "2026-02-16",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": null,
+          "date": "2026-02-16",
+          "totalJogadores": 14,
+          "groups": [
+            {
+              "teeTime": "09:25",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "João Rocha",
+                  "clube": "48297"
+                },
+                {
+                  "nome": "Nuno Palmares Jr.",
+                  "clube": "49124"
+                },
+                {
+                  "nome": "Seb Toft",
+                  "clube": "57291"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:34",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Tomás Rente",
+                  "clube": "46311"
+                },
+                {
+                  "nome": "Finn Gordon",
+                  "clube": "55269"
+                },
+                {
+                  "nome": "Yoon Jun Lee",
+                  "clube": "-"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:43",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "David Filip Jun.",
+                  "clube": "51949"
+                },
+                {
+                  "nome": "Salvador Ivo de Carvalho",
+                  "clube": "43968"
+                },
+                {
+                  "nome": "William Gao",
+                  "clube": "51524"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:52",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Tomás Lima Pinto",
+                  "clube": "46037"
+                },
+                {
+                  "nome": "Afonso de Sousa Pinto",
+                  "clube": "46480"
+                },
+                {
+                  "nome": "José Silva",
+                  "clube": "54845"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:01",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Alfie Kelley",
+                  "clube": "58043"
+                },
+                {
+                  "nome": "Catarina Sousa Conceição",
+                  "clube": "48794"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "name": null,
+          "date": "2026-02-17",
+          "totalJogadores": 14,
+          "groups": [
+            {
+              "teeTime": "09:39",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Nuno Palmares Jr.",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "João Rocha",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "Tomás Lima Pinto",
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:48",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Finn Gordon",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Salvador Ivo de Carvalho",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "William Gao",
+                  "clube": "Quinta do Peru"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:57",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Tomás Rente",
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Seb Toft",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Yoon Jun Lee",
+                  "clube": "Internacional"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:06",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Afonso de Sousa Pinto",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "José Silva",
+                  "clube": "Amendoeira"
+                },
+                {
+                  "nome": "David Filip Jun.",
+                  "clube": "Lisbon SC"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:15",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Alfie Kelley",
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Catarina Sousa Conceição",
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "935",
+      "tcode": "10296",
+      "name": "Greatgolf Junior Open w/ Luis Figo Foundation -U12",
+      "date": "2026-02-16",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": null,
+          "date": "2026-02-16",
+          "totalJogadores": 12,
+          "groups": [
+            {
+              "teeTime": "10:06",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Joe Short",
+                  "clube": "51804"
+                },
+                {
+                  "nome": "Ricardo Castro Ferreira",
+                  "clube": "49085"
+                },
+                {
+                  "nome": "Guo Ziyang",
+                  "clube": "57904"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:15",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Manuel Goulartt Medeiros",
+                  "clube": "52884"
+                },
+                {
+                  "nome": "Benji Botham",
+                  "clube": "-"
+                },
+                {
+                  "nome": "George Campbell",
+                  "clube": "-"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:24",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Marek Pejas",
+                  "clube": "52069"
+                },
+                {
+                  "nome": "Gabriel Costa",
+                  "clube": "53838"
+                },
+                {
+                  "nome": "Miguel Santos Pereira",
+                  "clube": "48946"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:33",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Harley Botham",
+                  "clube": "-"
+                },
+                {
+                  "nome": "Yeonjin Seo",
+                  "clube": "-"
+                },
+                {
+                  "nome": "Harry Seabrook",
+                  "clube": "54264"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "name": null,
+          "date": "2026-02-17",
+          "totalJogadores": 12,
+          "groups": [
+            {
+              "teeTime": "10:24",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Ricardo Castro Ferreira",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "Joe Short",
+                  "clube": "Vila Sol"
+                },
+                {
+                  "nome": "Guo Ziyang",
+                  "clube": "Estoril"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:33",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Manuel Goulartt Medeiros",
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "Benji Botham",
+                  "clube": "Internacional"
+                },
+                {
+                  "nome": "Marek Pejas",
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:42",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Miguel Santos Pereira",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "George Campbell",
+                  "clube": "Internacional"
+                },
+                {
+                  "nome": "Harry Seabrook",
+                  "clube": "Vila Sol"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:51",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Harley Botham",
+                  "clube": "Internacional"
+                },
+                {
+                  "nome": "Gabriel Costa",
+                  "clube": "Amendoeira"
+                },
+                {
+                  "nome": "Yeonjin Seo",
+                  "clube": "Internacional"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
       "ccode": "988",
       "tcode": "10300",
       "name": "2º Torneio Drive Challenge Sul - Laguna G C Sub 16",
@@ -71614,6 +72632,202 @@
                 {
                   "nome": "Nicholas Murtagh",
                   "clube": "Vilamoura, C. G"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "059",
+      "tcode": "10614",
+      "name": "2º Torneio Academia Junior - 9 buracos",
+      "date": "2026-02-21",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": null,
+          "date": "2026-02-21",
+          "totalJogadores": 19,
+          "groups": [
+            {
+              "teeTime": "14:09",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Fernandes,Edgar",
+                  "clube": "58785"
+                },
+                {
+                  "nome": "Vasilev,Timur",
+                  "clube": "-"
+                },
+                {
+                  "nome": "Abreu,Vasco",
+                  "clube": "58986"
+                }
+              ]
+            },
+            {
+              "teeTime": "14:18",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Duarte,Lucas",
+                  "clube": "38195"
+                },
+                {
+                  "nome": "Madens,Matiass",
+                  "clube": "59101"
+                },
+                {
+                  "nome": "Ramalho,Isabela",
+                  "clube": "58677"
+                }
+              ]
+            },
+            {
+              "teeTime": "14:27",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Teixeira,Rafael",
+                  "clube": "58604"
+                },
+                {
+                  "nome": "Fernandes,Valter",
+                  "clube": "58948"
+                },
+                {
+                  "nome": "Ladutska,Damir",
+                  "clube": "58784"
+                }
+              ]
+            },
+            {
+              "teeTime": "14:36",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Spielmanns,Iarah",
+                  "clube": "55191"
+                },
+                {
+                  "nome": "Camacho,Áurea",
+                  "clube": "50528"
+                },
+                {
+                  "nome": "Teixeira,Matilde",
+                  "clube": "58969"
+                }
+              ]
+            },
+            {
+              "teeTime": "14:45",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Bugaev,Mikhail",
+                  "clube": "56705"
+                },
+                {
+                  "nome": "Luckhardt,Maximilian",
+                  "clube": "56696"
+                },
+                {
+                  "nome": "Côrte,José Eduardo",
+                  "clube": "49205"
+                }
+              ]
+            },
+            {
+              "teeTime": "14:54",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Henriques de Freitas,João",
+                  "clube": "58962"
+                },
+                {
+                  "nome": "Alves,Luis Miguel",
+                  "clube": "58960"
+                },
+                {
+                  "nome": "Vasconcelos,Lourenço",
+                  "clube": "56647"
+                },
+                {
+                  "nome": "Brazão,Simão",
+                  "clube": "56679"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "059",
+      "tcode": "10613",
+      "name": "2º Torneio Academia Junior - 18 buracos",
+      "date": "2026-02-21",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": null,
+          "date": "2026-02-21",
+          "totalJogadores": 6,
+          "groups": [
+            {
+              "teeTime": "11:00",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Gonçalves,André",
+                  "clube": "41121"
+                },
+                {
+                  "nome": "Rodrigues,Salvador",
+                  "clube": "39465"
+                },
+                {
+                  "nome": "Miranda,José Pedro",
+                  "clube": "38976"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:09",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Abreu,Rodrigo",
+                  "clube": "42684"
+                },
+                {
+                  "nome": "Petim,Remi",
+                  "clube": "55188"
+                },
+                {
+                  "nome": "Costa,Íris",
+                  "clube": "47677"
                 }
               ]
             }
@@ -73756,6 +74970,137 @@
       }
     },
     {
+      "ccode": "007",
+      "tcode": "10999",
+      "name": "T2 CAMP. CGSS de PAres - Powered by C. Santos VP",
+      "date": "2026-02-28",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "003",
+      "tcode": "10622",
+      "name": "Circuito Junior Challenge",
+      "date": "2026-03-01",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": null,
+          "date": "2026-03-01",
+          "totalJogadores": 16,
+          "groups": [
+            {
+              "teeTime": "13:00",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Manuel Pontes Carneiro",
+                  "clube": "57884"
+                },
+                {
+                  "nome": "Madalena Dias",
+                  "clube": "44126"
+                },
+                {
+                  "nome": "Vicente Messala",
+                  "clube": "52798"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:10",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Henrique Monção",
+                  "clube": "51176"
+                },
+                {
+                  "nome": "Diego Braga",
+                  "clube": "51980"
+                },
+                {
+                  "nome": "Tom Georges",
+                  "clube": "58549"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:20",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Luis Maria Azevedo",
+                  "clube": "57580"
+                },
+                {
+                  "nome": "Bruno Neto Lichuck",
+                  "clube": "53685"
+                },
+                {
+                  "nome": "José Diogo Pinho",
+                  "clube": "-"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:30",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Mateus Monção",
+                  "clube": "-"
+                },
+                {
+                  "nome": "Tomas Matos Sousa",
+                  "clube": "-"
+                },
+                {
+                  "nome": "Rodrigo Marques",
+                  "clube": "-"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:40",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Afonso Lopes Santos",
+                  "clube": "-"
+                },
+                {
+                  "nome": "Miguel Rente",
+                  "clube": "-"
+                },
+                {
+                  "nome": "Rafael da Silva Oliveira",
+                  "clube": "-"
+                },
+                {
+                  "nome": "Rodrigo Lichuck",
+                  "clube": "-"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
       "ccode": "982",
       "tcode": "10200",
       "name": "3º Torneio Drive Tour Madeira - Palheiro Golf",
@@ -73970,6 +75315,468 @@
                 {
                   "nome": "Gonçalo Gouveia",
                   "clube": "Santo da Serra"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "068",
+      "tcode": "10632",
+      "name": "Taça de Belas 2026",
+      "date": "2026-03-07",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "004",
+      "tcode": "10563",
+      "name": "ESTORIL Golf Junior Open by Manuel Leão",
+      "date": "2026-03-07",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": null,
+          "date": "2026-03-07",
+          "totalJogadores": 7,
+          "groups": [
+            {
+              "teeTime": "13:20",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "TALONE,Maria",
+                  "clube": "51106"
+                },
+                {
+                  "nome": "COUTO DOS SANTOS,Carolina",
+                  "clube": "55486"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:28",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "PALMQVIST,Noel",
+                  "clube": "51651"
+                },
+                {
+                  "nome": "SCARANTINO,Asher",
+                  "clube": "59328"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:36",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "JIYANG,Guo",
+                  "clube": "57903"
+                },
+                {
+                  "nome": "PALMQVIST,William",
+                  "clube": "51650"
+                },
+                {
+                  "nome": "WARDROPE,Henry Michael",
+                  "clube": "54998"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "004",
+      "tcode": "10555",
+      "name": "Taça MANUEL LEÃO",
+      "date": "2026-03-07",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": null,
+          "date": "2026-03-07",
+          "totalJogadores": 57,
+          "groups": [
+            {
+              "teeTime": "09:04",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "RICCIARDI,Martim",
+                  "clube": "17535"
+                },
+                {
+                  "nome": "MATOS,Diogo",
+                  "clube": "22866"
+                },
+                {
+                  "nome": "CAEIRO,Pedro W.",
+                  "clube": "1211"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:12",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "MATOS,Daniel",
+                  "clube": "25909"
+                },
+                {
+                  "nome": "BELLO,Francisco",
+                  "clube": "22192"
+                },
+                {
+                  "nome": "TORGAL,José Nuno",
+                  "clube": "1267"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:20",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "TAVARES,Pedro Luis",
+                  "clube": "9655"
+                },
+                {
+                  "nome": "FONSECA,Eduardo",
+                  "clube": "1532"
+                },
+                {
+                  "nome": "GUEDES,Francisco M. Nobre",
+                  "clube": "1562"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:28",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "GUERREIRO,Paulo",
+                  "clube": "11949"
+                },
+                {
+                  "nome": "BRAGA,Luis Filipe",
+                  "clube": "4003"
+                },
+                {
+                  "nome": "KASTRUP,Nanna",
+                  "clube": "16000"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:36",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "VASCONCELOS,Pedro R.",
+                  "clube": "1300"
+                },
+                {
+                  "nome": "TALONE,Joao",
+                  "clube": "498"
+                },
+                {
+                  "nome": "SALGADO,Manuel",
+                  "clube": "1426"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:44",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "MIKIRTUMOV,Konstantin",
+                  "clube": "34238"
+                },
+                {
+                  "nome": "FRANCO,Pedro Soares",
+                  "clube": "26675"
+                },
+                {
+                  "nome": "CAZAL-RIBEIRO,José Maria",
+                  "clube": "543"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:52",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "FRERE,Bernardo",
+                  "clube": "12121"
+                },
+                {
+                  "nome": "DEVILLERS,Paul",
+                  "clube": "49770"
+                },
+                {
+                  "nome": "BREHM,Guilherme",
+                  "clube": "32252"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:00",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "WALE,Michael Peter",
+                  "clube": "50344"
+                },
+                {
+                  "nome": "GOEBEN,Jorge",
+                  "clube": "1156"
+                },
+                {
+                  "nome": "MELO,José Sousa e",
+                  "clube": "1153"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:08",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "FRANCO,Diogo Soares",
+                  "clube": "41187"
+                },
+                {
+                  "nome": "BENESI,Rafael Gonçales",
+                  "clube": "54774"
+                },
+                {
+                  "nome": "LI,Ruiqi",
+                  "clube": "49076"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:16",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "FRANCO,Duarte Soares",
+                  "clube": "48531"
+                },
+                {
+                  "nome": "IVO DE CARVALHO,Salvador",
+                  "clube": "43968"
+                },
+                {
+                  "nome": "CASTRO FERREIRA,Ricardo",
+                  "clube": "49085"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:24",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "ANJOS,Francisco",
+                  "clube": "34709"
+                },
+                {
+                  "nome": "SOUSA,Pedro B. Guedes de",
+                  "clube": "1170"
+                },
+                {
+                  "nome": "SGANZERLA,Gino Vassily",
+                  "clube": "41461"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:32",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "TROCADO,Francisco",
+                  "clube": "1618"
+                },
+                {
+                  "nome": "KASTRUP,Finn",
+                  "clube": "15999"
+                },
+                {
+                  "nome": "MATTA,Teresa",
+                  "clube": "1146"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:40",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "DEIGNAN,Michael",
+                  "clube": "51251"
+                },
+                {
+                  "nome": "FERGUSON,Alistair",
+                  "clube": "27667"
+                },
+                {
+                  "nome": "MOREIRA,Francisco",
+                  "clube": "24226"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:48",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "VASCONCELOS JR,Pedro Roquette de",
+                  "clube": "49650"
+                },
+                {
+                  "nome": "PALMARES,Pedro",
+                  "clube": "2065"
+                },
+                {
+                  "nome": "MEDINA,Maria da Graça",
+                  "clube": "1147"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:56",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "GODDARD,Ronald",
+                  "clube": "10419"
+                },
+                {
+                  "nome": "RICCIARDI,Luis Leitao",
+                  "clube": "1183"
+                },
+                {
+                  "nome": "SOBRAL,António",
+                  "clube": "1256"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:04",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "CUNHA,Zé Ribeiro da",
+                  "clube": "57899"
+                },
+                {
+                  "nome": "LIMA,António Pires de",
+                  "clube": "1563"
+                },
+                {
+                  "nome": "EMPIS,Pedro Abecassis",
+                  "clube": "1587"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:12",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "BATALHA REIS,Frederico",
+                  "clube": "11288"
+                },
+                {
+                  "nome": "THAPA,Dhruba",
+                  "clube": "47551"
+                },
+                {
+                  "nome": "ZIYANG,Guo",
+                  "clube": "57904"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:20",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "REBELO,Fernando",
+                  "clube": "19400"
+                },
+                {
+                  "nome": "SILVA,Jorge Oliveira da",
+                  "clube": "6392"
+                },
+                {
+                  "nome": "COUTINHO,Francisco Sousa",
+                  "clube": "1150"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:28",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "FERREIRA,Miguel Maria Neves",
+                  "clube": "57756"
+                },
+                {
+                  "nome": "SILVA,Pedro Espirito Santo",
+                  "clube": "1148"
+                },
+                {
+                  "nome": "RICCIARDI,Vikki",
+                  "clube": "12123"
                 }
               ]
             }
@@ -74918,6 +76725,30 @@
           ]
         }
       }
+    },
+    {
+      "ccode": "095",
+      "tcode": "11538",
+      "name": "29th VILA SOL JUNIOR COMP",
+      "date": "2026-03-08",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "095",
+      "tcode": "11539",
+      "name": "29th VILA SOL JUNIOR COMP - 9 HOLES",
+      "date": "2026-03-08",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
     },
     {
       "ccode": "000",
@@ -76758,6 +78589,18 @@
           ]
         }
       }
+    },
+    {
+      "ccode": "007",
+      "tcode": "11001",
+      "name": "Torneio de Primavera CGSS 2026",
+      "date": "2026-03-14",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
     },
     {
       "ccode": "985",
@@ -84688,10 +86531,13 @@
     {
       "ccode": "007",
       "tcode": "11011",
-      "name": "Campeonato Regional de Jovens 2026",
+      "name": "Campeonato Regional de Jovens Sub 14 a 24 2026",
       "date": "2026-04-17",
-      "expectedYear": 2026,
-      "admissions": null,
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
       "draws": {
         "1": {
           "totalJogadores": 22,
@@ -85142,16 +86988,18 @@
             }
           ]
         }
-      },
-      "scrapedAt": "2026-04-19T12:00:00.000Z"
+      }
     },
     {
       "ccode": "007",
       "tcode": "11010",
-      "name": "Campeonato Regional de Jovens 2026",
-      "date": "2026-04-18",
-      "expectedYear": 2026,
-      "admissions": null,
+      "name": "Campeonato Regional de Jovens Sub 10&12 2026",
+      "date": "2026-04-17",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
       "draws": {
         "1": {
           "totalJogadores": 16,
@@ -85452,8 +87300,268 @@
             }
           ]
         }
+      }
+    },
+    {
+      "ccode": "987",
+      "tcode": "10209",
+      "name": "4º Torneio Drive Tour Norte – Ponte de Lima",
+      "date": "2026-04-18",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
       },
-      "scrapedAt": "2026-04-19T12:00:00.000Z"
+      "draws": {
+        "1": {
+          "name": "4º Torneio Drive Tour Norte – Ponte de Lima",
+          "date": "2026-04-19",
+          "totalJogadores": 32,
+          "groups": [
+            {
+              "teeTime": "09:00",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Francisco Costa Mendes",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Eva Silva",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Maria Loureiro",
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:10",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "João Araújo",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Jorge Xavier Graça Silva",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Francisco Saraiva",
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:20",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Diogo Lima",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Francisco Vilardell Carvalho",
+                  "clube": "Vale Pisão"
+                },
+                {
+                  "nome": "Afonso de Sousa Pinto",
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:30",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Gustavo Pinto",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Marc Costa",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Afonso Paiva Gonçalves",
+                  "clube": "Citynorte"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:40",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Afonso Poiarez",
+                  "clube": "Estela"
+                },
+                {
+                  "nome": "Afonso Polery",
+                  "clube": "Estela"
+                },
+                {
+                  "nome": "André Von Hafe",
+                  "clube": "Estela"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:50",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Manuel Rouco Castro",
+                  "clube": "Estela"
+                },
+                {
+                  "nome": "Guido Martins Gonçalves",
+                  "clube": "Quinta Lágrimas"
+                },
+                {
+                  "nome": "Madalena Miguel Araujo",
+                  "clube": "Ponte de Lima"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:00",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Rafael Nogueira",
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Pedro Luís Fernandes",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Tomás Araújo",
+                  "clube": "Citynorte"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:10",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Gustavo Castro",
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Tomás Sarmento de Beires",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Madalena Policarpo",
+                  "clube": "Citynorte"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:20",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "António Pereira Mendes",
+                  "clube": "Estela"
+                },
+                {
+                  "nome": "João Pedro Frade",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Gil Martins Gonçalves",
+                  "clube": "Quinta Lágrimas"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:30",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Matias Carepa",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Gil Ribeiro",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Catarina Loureiro",
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:40",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Leonardo Ferreira",
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "João Oliveira",
+                  "clube": "Paredes"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "095",
+      "tcode": "11561",
+      "name": "Junior 9 hole off yellow tee",
+      "date": "2026-04-18",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "095",
+      "tcode": "11560",
+      "name": "30th VILA SOL JUNIOR COMP",
+      "date": "2026-04-18",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "095",
+      "tcode": "11559",
+      "name": "30th VILA SOL JUNIOR COMP - 9 HOLES",
+      "date": "2026-04-18",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
     },
     {
       "ccode": "000",

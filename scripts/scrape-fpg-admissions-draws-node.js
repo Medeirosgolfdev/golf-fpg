@@ -61,14 +61,23 @@ function argVal(flag, def) {
   return i >= 0 ? args[i + 1] : def;
 }
 const FILTER_TCODES = (argVal("--tcodes", "") || "").split(",").map(s => s.trim()).filter(Boolean);
-const FILTER_SINCE  = argVal("--since", null);
+let   FILTER_SINCE  = argVal("--since", null);
+// Aceitar sintaxe "Nd" (N dias atrás) além de YYYY-MM-DD. Exemplo: --since 4d
+if (FILTER_SINCE && /^\d+d$/i.test(FILTER_SINCE)) {
+  const days = parseInt(FILTER_SINCE, 10);
+  const isoDate = new Date(Date.now() - days * 86400000).toISOString().slice(0, 10);
+  console.log(`[adm-draws] --since ${FILTER_SINCE} → ${isoDate}`);
+  FILTER_SINCE = isoDate;
+}
 const FILTER_YEAR   = argVal("--year", null);
 const CONCURRENCY   = parseInt(argVal("--concurrency", "3"), 10);
 const MAX_ROUNDS    = parseInt(argVal("--max-rounds", "3"), 10);
 const DELAY_MS      = parseInt(argVal("--delay", "150"), 10);
+const AUTO_EXTEND   = args.includes("--auto-extend");
 
 const ACK_ADMISSIONS = "XH256YF450";
 const ACK_DRAW       = "8428ACK987";
+const ACK_TOURNLIST  = "XH256YF45T";  // entry-gate scoring-pt.datagolf.pt
 
 /* ── Cookies ────────────────────────────────────────────────────────────── */
 function loadCookies() {
@@ -91,30 +100,13 @@ function loadCookies() {
 }
 const COOKIE = loadCookies();
 
-/* ── Scope ──────────────────────────────────────────────────────────────── */
+/* ── Scope (construído em main para suportar --auto-extend async) ───────── */
 if (!fs.existsSync(SCOPE_FILE)) {
   console.error(`[adm-draws] ERRO: scope em falta: ${SCOPE_FILE}`);
   process.exit(1);
 }
-let scope = JSON.parse(fs.readFileSync(SCOPE_FILE, "utf8"));
-console.log(`[adm-draws] Scope total: ${scope.length} torneios`);
-
-if (FILTER_TCODES.length > 0) {
-  scope = scope.filter(t => FILTER_TCODES.includes(String(t.tcode)));
-  console.log(`[adm-draws] Filtro --tcodes: ${scope.length} torneios`);
-}
-if (FILTER_SINCE) {
-  scope = scope.filter(t => t.date >= FILTER_SINCE);
-  console.log(`[adm-draws] Filtro --since ${FILTER_SINCE}: ${scope.length} torneios`);
-}
-if (FILTER_YEAR) {
-  scope = scope.filter(t => String(t.expectedYear) === String(FILTER_YEAR));
-  console.log(`[adm-draws] Filtro --year ${FILTER_YEAR}: ${scope.length} torneios`);
-}
-if (scope.length === 0) {
-  console.error("[adm-draws] Scope vazio após filtros");
-  process.exit(1);
-}
+const manualScope = JSON.parse(fs.readFileSync(SCOPE_FILE, "utf8"));
+console.log(`[adm-draws] Scope manual: ${manualScope.length} torneios`);
 
 /* ── HTTP ───────────────────────────────────────────────────────────────── */
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
@@ -241,9 +233,251 @@ function cleanSuspectDraws(draws, tournDate) {
   return out;
 }
 
+/* ═════════════════════════════════════════════════════════════════════════
+   AUTO-EXTEND — expande scope manual com 2 fontes extra:
+     Fonte 2 (passiva): JSONs locais gerados por outros workflows
+                        (drive-data, jovens, pull-torneios, SdS)
+     Fonte 3 (activa):  POST a TournamentsLST com warmup obrigatório ao
+                        entry-gate, filtrado por INCLUDES/EXCLUDES
+   Devolve array normalizado: [{ccode, tcode, date, name, expectedYear, _src}]
+   ═════════════════════════════════════════════════════════════════════════ */
+
+/* Filtros da Fonte 3 (TournamentsLST): */
+const INCLUDE_RX = [
+  /\bjunior\b/i,
+  /\bPJA\b/i,
+  /\bjovens?\b/i,
+  /\bsub[-\s]?(10|12|14|16|18|25)\b/i,
+];
+const INCLUDE_CCODES = new Set(["007"]);  // Santo da Serra: qualquer torneio
+const EXCLUDE_RX = [
+  /\bflint?stones?\b/i,
+  /quarta.?feira.*europeia/i,
+];
+
+function matchesIncludes(name, ccode) {
+  if (INCLUDE_CCODES.has(String(ccode).padStart(3, "0"))) return true;
+  return INCLUDE_RX.some(rx => rx.test(name || ""));
+}
+function matchesExcludes(name) {
+  return EXCLUDE_RX.some(rx => rx.test(name || ""));
+}
+
+/* Parsear timestamp .NET "/Date(1772323200000)/" → YYYY-MM-DD */
+function dotNetToIsoDate(s) {
+  if (!s) return null;
+  const m = String(s).match(/\d+/);
+  if (!m) return null;
+  const ms = parseInt(m[0], 10);
+  if (!Number.isFinite(ms)) return null;
+  return new Date(ms).toISOString().slice(0, 10);
+}
+
+/* Fonte 2: scan de JSONs locais (torneios já descobertos por outros workflows).
+   Aceita filtro `sinceDate` para evitar carregar histórico irrelevante. */
+function scanLocalJsons(sinceDate = null) {
+  const DATA_DIR = path.join(REPO, "public", "data");
+  const patterns = [
+    /^drive-data-\d{4}-\d{2}\.json$/,
+    /^aquapor-data-\d{4}-\d{2}\.json$/,
+    /^jovens_\d{4}\.json$/,
+    /^pull-torneios.*\.json$/,
+    /^santo-da-serra-tournaments\.json$/,
+  ];
+  const seen = new Map();
+  let files = [];
+  try { files = fs.readdirSync(DATA_DIR).filter(f => patterns.some(rx => rx.test(f))); }
+  catch { return []; }
+
+  let totalRead = 0, totalKept = 0;
+  for (const f of files) {
+    try {
+      const j = JSON.parse(fs.readFileSync(path.join(DATA_DIR, f), "utf8"));
+      const arr = Array.isArray(j) ? j : (j.tournaments || j.torneios || []);
+      for (const t of arr) {
+        totalRead++;
+        const ccode = String(t.ccode || t.club_code || "").padStart(3, "0");
+        const tcode = String(t.tcode || t.code || "");
+        const name  = t.name || t.description || t.nome || "";
+        const date  = t.date || t.data || dotNetToIsoDate(t.started_at);
+        if (!ccode || !tcode || !date) continue;
+        // Filtro temporal interno — evita carregar histórico irrelevante
+        if (sinceDate && date < sinceDate) continue;
+        const key = `${ccode}/${tcode}`;
+        // Preserva o mais recente se duplicado (datas podem divergir entre fontes)
+        if (!seen.has(key) || (seen.get(key).date || "") < date) {
+          seen.set(key, {
+            ccode, tcode, name, date,
+            expectedYear: date.slice(0, 4),
+            _src: `json:${f}`,
+          });
+          totalKept++;
+        }
+      }
+    } catch (e) {
+      console.warn(`[adm-draws] scanLocalJsons: falhou a ler ${f}: ${e.message}`);
+    }
+  }
+  if (sinceDate) {
+    console.log(`[adm-draws] auto-extend Fonte 2: ${seen.size} torneios (filtro interno date >= ${sinceDate}; ${totalRead} examinados)`);
+  }
+  return [...seen.values()];
+}
+
+/* Fonte 3: POST a TournamentsLST com warmup obrigatório + filtros */
+async function scanFpgTournamentsLst() {
+  const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
+  // Scoring.datagolf.pt é o domínio gémeo; usar cookies do .scoring-datagolf-cookies.json
+  let dgCookie = "";
+  try {
+    if (process.env.DATAGOLF_SCORING_COOKIES) {
+      dgCookie = process.env.DATAGOLF_SCORING_COOKIES;
+    } else {
+      const fp = path.join(REPO, "api", ".scoring-datagolf-cookies.json");
+      if (fs.existsSync(fp)) {
+        const j = JSON.parse(fs.readFileSync(fp, "utf8"));
+        if (j.cookieHeader) dgCookie = j.cookieHeader;
+      }
+    }
+  } catch { /* ignora */ }
+  if (!dgCookie) {
+    console.warn("[adm-draws] auto-extend Fonte 3 skipped — sem cookies scoring.datagolf.pt");
+    return [];
+  }
+
+  // 1) WARMUP obrigatório via entry-gate (documentado CLAUDE.md):
+  //    scoring-pt.datagolf.pt seta cookies nos dois subdomínios + valida sessão
+  const warmupUrl = `https://scoring-pt.datagolf.pt/scripts/tournaments.asp?club=ALL&ack=${ACK_TOURNLIST}`;
+  try {
+    const r = await fetch(warmupUrl, {
+      headers: {
+        "User-Agent": UA, "Cookie": dgCookie,
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "pt-PT,pt;q=0.9",
+      },
+      redirect: "follow",
+    });
+    await r.text();
+    console.log(`[adm-draws] auto-extend warmup entry-gate HTTP ${r.status}`);
+  } catch (e) {
+    console.warn(`[adm-draws] auto-extend warmup falhou: ${e.message} — abortar Fonte 3`);
+    return [];
+  }
+
+  // 2) POST a TournamentsLST — apanha até 200 torneios começando nos últimos 30d
+  //    (ou janela maior se o FILTER_SINCE externo pedir mais)
+  const defaultDaysBack = 30;
+  const filterDaysBack = FILTER_SINCE
+    ? Math.max(defaultDaysBack, Math.ceil((Date.now() - new Date(FILTER_SINCE).getTime()) / 86400000))
+    : defaultDaysBack;
+  const dtIni = new Date(Date.now() - filterDaysBack * 86400000).toISOString().slice(0, 10);
+  const qs = "jtStartIndex=0&jtPageSize=200&jtSorting=" + encodeURIComponent("started_at DESC");
+  const body = {
+    ClubCode: "0",  // 0 = todos
+    dtIni, dtFim: "",
+    CourseName: "", TournCode: "", TournName: "",
+    jtStartIndex: "0", jtPageSize: "200", jtSorting: "started_at DESC",
+  };
+  let records = [];
+  try {
+    const r = await fetch(`https://scoring.datagolf.pt/pt/tournaments.aspx/TournamentsLST?${qs}`, {
+      method: "POST",
+      headers: {
+        "User-Agent": UA,
+        "Content-Type": "application/json; charset=utf-8",
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "application/json, text/javascript, */*; q=0.01",
+        "Origin": "https://scoring.datagolf.pt",
+        "Referer": "https://scoring.datagolf.pt/pt/tournaments.aspx",
+        "Cookie": dgCookie,
+      },
+      body: JSON.stringify(body),
+    });
+    if (!r.ok) { console.warn(`[adm-draws] TournamentsLST HTTP ${r.status}`); return []; }
+    const j = await r.json();
+    const d = j.d || j;
+    if (d.Result !== "OK") { console.warn(`[adm-draws] TournamentsLST Result=${d.Result}`); return []; }
+    records = d.Records || [];
+  } catch (e) {
+    console.warn(`[adm-draws] TournamentsLST erro: ${e.message}`); return [];
+  }
+
+  // 3) Filtrar por INCLUDE/EXCLUDE
+  const out = [];
+  let inc = 0, exc = 0;
+  for (const rec of records) {
+    const ccode = String(rec.club_code || "").padStart(3, "0");
+    const tcode = String(rec.code || "");
+    const name  = rec.description || "";
+    const date  = dotNetToIsoDate(rec.started_at);
+    if (!ccode || !tcode || !date) continue;
+    if (matchesExcludes(name)) { exc++; continue; }
+    if (!matchesIncludes(name, ccode)) continue;
+    inc++;
+    out.push({
+      ccode, tcode, name, date,
+      expectedYear: date.slice(0, 4),
+      _src: "tournamentsLst",
+    });
+  }
+  console.log(`[adm-draws] auto-extend Fonte 3: ${records.length} torneios do TournamentsLST → ${inc} incluídos (${exc} excluídos)`);
+  return out;
+}
+
+async function buildAutoExtendedScope(manual, sinceDate = null) {
+  const local = scanLocalJsons(sinceDate);
+  const fpg = await scanFpgTournamentsLst();
+  if (!sinceDate) {
+    console.log(`[adm-draws] auto-extend Fonte 2 (JSONs locais): ${local.length} torneios`);
+  }
+  // Union deduplicada por ccode/tcode. Scope manual tem prioridade (preserva
+  // campos extra como expectedYear que vieram do browser-script original).
+  const byKey = new Map();
+  for (const t of manual) {
+    byKey.set(`${t.ccode}/${t.tcode}`, { ...t, _src: t._src || "manual" });
+  }
+  let addedLocal = 0, addedFpg = 0;
+  for (const t of local) {
+    const k = `${t.ccode}/${t.tcode}`;
+    if (!byKey.has(k)) { byKey.set(k, t); addedLocal++; }
+  }
+  for (const t of fpg) {
+    const k = `${t.ccode}/${t.tcode}`;
+    if (!byKey.has(k)) { byKey.set(k, t); addedFpg++; }
+  }
+  console.log(`[adm-draws] auto-extend total: ${byKey.size} torneios (manual=${manual.length} + local=${addedLocal} novos + fpg=${addedFpg} novos)`);
+  return [...byKey.values()];
+}
+
 /* ── Main ───────────────────────────────────────────────────────────────── */
 (async () => {
-  console.log(`[adm-draws] Concurrency=${CONCURRENCY} MaxRounds=${MAX_ROUNDS} Delay=${DELAY_MS}ms`);
+  console.log(`[adm-draws] Concurrency=${CONCURRENCY} MaxRounds=${MAX_ROUNDS} Delay=${DELAY_MS}ms AutoExtend=${AUTO_EXTEND}`);
+
+  // 1) Construir scope base (manual, opcionalmente expandido).
+  //    Passa FILTER_SINCE para as fontes auto-descobertas limitarem o que
+  //    trazem (evita carregar histórico irrelevante de drive-data).
+  let scope = AUTO_EXTEND
+    ? await buildAutoExtendedScope(manualScope, FILTER_SINCE)
+    : manualScope.slice();
+
+  // 2) Aplicar filtros CLI sobre o scope (ordem: tcodes → since → year)
+  if (FILTER_TCODES.length > 0) {
+    scope = scope.filter(t => FILTER_TCODES.includes(String(t.tcode)));
+    console.log(`[adm-draws] Filtro --tcodes: ${scope.length} torneios`);
+  }
+  if (FILTER_SINCE) {
+    scope = scope.filter(t => t.date >= FILTER_SINCE);
+    console.log(`[adm-draws] Filtro --since ${FILTER_SINCE}: ${scope.length} torneios`);
+  }
+  if (FILTER_YEAR) {
+    scope = scope.filter(t => String(t.expectedYear) === String(FILTER_YEAR));
+    console.log(`[adm-draws] Filtro --year ${FILTER_YEAR}: ${scope.length} torneios`);
+  }
+  if (scope.length === 0) {
+    console.error("[adm-draws] Scope vazio após filtros — nada para scrapar");
+    process.exit(2);  // sem novidades
+  }
+
   console.log(`[adm-draws] A começar scrape de ${scope.length} torneios...`);
 
   // Ler base actual (para merge)

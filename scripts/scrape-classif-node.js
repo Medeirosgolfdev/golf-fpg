@@ -47,6 +47,7 @@ function argVal(flag, def) { const i = args.indexOf(flag); return i >= 0 ? args[
 const CLI_TCLUB = argVal("--tclub", null);
 const CLI_TCODE = argVal("--tcode", null);
 const SCOPE_FILE = argVal("--scope", null);
+const AUTO_FROM_TRACKING = args.includes("--auto-from-tracking");
 const OUT_FILE = argVal("--out", path.join(REPO, "public", "data", "pull-torneios-node.json"));
 const CONCURRENCY = parseInt(argVal("--concurrency", "2"), 10);
 const DELAY_MS = parseInt(argVal("--delay", "150"), 10);
