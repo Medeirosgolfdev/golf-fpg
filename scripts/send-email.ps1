@@ -27,11 +27,19 @@ param(
     [string]$Subject,
     [Parameter(Mandatory = $true)]
     [string]$Body,
-    [string]$ConfigPath = (Join-Path $PSScriptRoot "..\api\.email-config.json"),
+    [string]$ConfigPath,
     [switch]$Html
 )
 
 $ErrorActionPreference = "Stop"
+
+# Resolver path do script (robusto contra -File com caminho relativo)
+if (-not $ConfigPath) {
+    $scriptDir = if ($PSCommandPath) { Split-Path -Parent $PSCommandPath }
+                 elseif ($MyInvocation.MyCommand.Path) { Split-Path -Parent $MyInvocation.MyCommand.Path }
+                 else { Get-Location }
+    $ConfigPath = Join-Path $scriptDir "..\api\.email-config.json"
+}
 
 # ── Ler config ──────────────────────────────────────────────────────
 if (-not (Test-Path $ConfigPath)) {

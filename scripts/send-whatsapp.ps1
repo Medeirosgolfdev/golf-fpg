@@ -25,10 +25,18 @@
 param(
     [Parameter(Mandatory = $true)]
     [string]$Message,
-    [string]$ConfigPath = (Join-Path $PSScriptRoot "..\api\.callmebot-config.json")
+    [string]$ConfigPath
 )
 
 $ErrorActionPreference = "Stop"
+
+# Resolver path do script (robusto contra -File com caminho relativo)
+if (-not $ConfigPath) {
+    $scriptDir = if ($PSCommandPath) { Split-Path -Parent $PSCommandPath }
+                 elseif ($MyInvocation.MyCommand.Path) { Split-Path -Parent $MyInvocation.MyCommand.Path }
+                 else { Get-Location }
+    $ConfigPath = Join-Path $scriptDir "..\api\.callmebot-config.json"
+}
 
 # ── Ler config ──────────────────────────────────────────────────────
 if (-not (Test-Path $ConfigPath)) {

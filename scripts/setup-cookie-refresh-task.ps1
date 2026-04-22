@@ -77,11 +77,19 @@ $Action   = New-ScheduledTaskAction `
     -Argument "/c `"$BatFile`"" `
     -WorkingDirectory $RepoPath
 
-$Trigger  = New-ScheduledTaskTrigger -Daily -At 10:00AM
+# Dois triggers:
+#   1. Daily as 10:00 — execucao normal
+#   2. AtStartup (com 2 min de delay para rede estar pronta) — apanha casos
+#      em que o PC estava off/hibernate as 10h e liga-se depois.
+$TriggerDaily   = New-ScheduledTaskTrigger -Daily -At 10:00AM
+$TriggerStartup = New-ScheduledTaskTrigger -AtStartup
+$TriggerStartup.Delay = "PT2M"   # ISO-8601: 2 minutes delay after boot
 
-# -WakeToRun faz o Windows acordar do SLEEP para correr a task.
-# Nota: se o PC estiver COMPLETAMENTE DESLIGADO (power off, nao sleep), isto nao
-# chega — precisa-se de BIOS/UEFI a fazer wake-on-RTC alarm (ver docs abaixo).
+# -StartWhenAvailable: Windows corre task assim que possivel se a hora
+#                      agendada passou com PC off (catchup automatico).
+# -WakeToRun:          acorda o PC do SLEEP/HIBERNATE para correr a task.
+#                      Se o PC estiver COMPLETAMENTE DESLIGADO (power off),
+#                      isto nao chega — precisa BIOS RTC alarm.
 $Settings = New-ScheduledTaskSettingsSet `
     -AllowStartIfOnBatteries `
     -DontStopIfGoingOnBatteries `
@@ -90,6 +98,8 @@ $Settings = New-ScheduledTaskSettingsSet `
     -WakeToRun `
     -ExecutionTimeLimit (New-TimeSpan -Minutes 15) `
     -Priority 4
+# Evitar execucoes simultaneas se houver catchup + scheduled ao mesmo tempo
+$Settings.MultipleInstances = "IgnoreNew"
 
 # Interactive: corre com sessao UI activa (necessario para Chrome 90 ir buscar
 # o perfil persistente e arrancar correctamente). Implica que a utilizadora
@@ -102,10 +112,10 @@ $Principal = New-ScheduledTaskPrincipal `
 Register-ScheduledTask `
     -TaskName $TaskName `
     -Action $Action `
-    -Trigger $Trigger `
+    -Trigger @($TriggerDaily, $TriggerStartup) `
     -Settings $Settings `
     -Principal $Principal `
-    -Description "Captura cookies frescos de my.fpg.pt, scoring.datagolf.pt e scoring.fpg.pt via Chrome 90 + Playwright. Corre diariamente as 10:00."
+    -Description "Captura cookies frescos de my.fpg.pt, scoring.datagolf.pt e scoring.fpg.pt via Chrome 90 + Playwright. Corre diariamente as 10:00 + ao arranque do PC (se a execucao das 10h foi missed)."
 
 Write-Host ""
 Write-Host "=== TAREFA CRIADA COM SUCESSO ===" -ForegroundColor Cyan
