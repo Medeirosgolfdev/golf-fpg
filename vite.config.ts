@@ -154,7 +154,7 @@ function parseAdmissionsTable(html: string, logPrefix: string): Jogador[] {
   const iVac   = headers.findIndex(h => /\bvac\b/.test(h))
   const iClube = headers.findIndex(h => /clube|assoc/.test(h))
   const iData  = headers.findIndex(h => /data|insc/.test(h))
-  console.log(logPrefix + ' headers:' + JSON.stringify(headers.slice(0, 8)) + ' (score=' + bestScore + (hasRealHeader ? ', usar' : ', IGNORAR — sem header real') + ') cols nome:' + iNome + ' fed:' + iFed + ' hcp:' + iHcp + ' vac:' + iVac + ' clube:' + iClube + ' data:' + iData)
+  console.log(logPrefix + ' headers:' + JSON.stringify(headers.slice(0, 8)) + ' (score=' + bestScore + (hasRealHeader ? ', usar' : ', sem header — fallback posicional') + ') cols nome:' + iNome + ' fed:' + iFed + ' hcp:' + iHcp + ' vac:' + iVac + ' clube:' + iClube + ' data:' + iData)
 
   for (let i = startRow; i < rows.length; i++) {
     const cells: string[] = []
@@ -364,8 +364,16 @@ export default defineConfig({
             return
           }
 
-          const FPG_URL_1 = 'https://scoring.fpg.pt/lists/tournAdmissions.aspx?ccode=000&tcode=' + tcode
-          const FPG_URL_2 = 'https://scoring.datagolf.pt/pt/tournAdmissions.aspx?ccode=000&tcode=' + tcode
+          // Gateway canónico (ambos os domínios): linkpage.aspx?page=admissions
+          // com o mesmo ack universal XH256YF450. Descoberta 2026-04-22 via probe:
+          // • scoring.fpg.pt/lists/linkpage.aspx?page=admissions    → funciona
+          // • scoring.datagolf.pt/pt/linkpage.aspx?page=admissions  → funciona (mesmo ack!)
+          // Ir directo a tournAdmissions.aspx em QUALQUER dos dois é frágil —
+          // devolve "Param Error" se a sessão não estiver aquecida. O linkpage
+          // seta o estado e redireciona automaticamente para tournAdmissions com
+          // os dados carregados (fetch com redirect:'follow' apanha a resposta final).
+          const FPG_URL_1 = 'https://scoring.fpg.pt/lists/linkpage.aspx?page=admissions&club=000&tourn=' + tcode + '&ack=XH256YF450'
+          const FPG_URL_2 = 'https://scoring.datagolf.pt/pt/linkpage.aspx?page=admissions&club=000&tourn=' + tcode + '&ack=XH256YF450'
           const baseHeaders: Record<string, string> = {
             'User-Agent': UA,
             'Accept': 'text/html,application/xhtml+xml;q=0.9,*/*;q=0.8',
@@ -380,20 +388,17 @@ export default defineConfig({
             const fp = join(process.cwd(), 'api', '.scoring-datagolf-cookies.json')
             if (existsSync(fp)) { const j = JSON.parse(readFileSync(fp, 'utf8')); if (j.cookieHeader) cookieDatagolf = j.cookieHeader }
           } catch {}
-          let cookieMyFpg = ''
-          try {
-            const fp = join(process.cwd(), 'api', '.datagolf-cookies.json')
-            if (existsSync(fp)) { const j = JSON.parse(readFileSync(fp, 'utf8')); if (j.cookieHeader && (j.host === 'my.fpg.pt' || !j.host)) cookieMyFpg = j.cookieHeader }
-          } catch {}
-
+          // Só testamos as combinações que podem realmente funcionar: cada domínio
+          // com as suas próprias cookies. Os experimentos "cross-domain"
+          // (my.fpg.pt cookies em scoring.fpg.pt / scoring.datagolf.pt) e "sem
+          // cookies" foram removidos 2026-04-22 — devolvem sempre HTTP 500 por
+          // razões arquitecturais (servidores de scoring não aceitam cookies de
+          // outro subdomínio; sem sessão devolvem Param_Errors). Ficam só as
+          // duas fontes legítimas.
           const tests: Array<{ label: string; url: string; cookie: string }> = [
-            { label: 'fpg+admissions-cookie',  url: FPG_URL_1, cookie: cookieFpg },
+            { label: 'fpg+admissions-cookie',    url: FPG_URL_1, cookie: cookieFpg },
             { label: 'datagolf+datagolf-cookie', url: FPG_URL_2, cookie: cookieDatagolf },
-            { label: 'fpg+myfpg-cookie',       url: FPG_URL_1, cookie: cookieMyFpg },
-            { label: 'datagolf+myfpg-cookie',  url: FPG_URL_2, cookie: cookieMyFpg },
-            { label: 'fpg sem cookie',         url: FPG_URL_1, cookie: '' },
-            { label: 'datagolf sem cookie',    url: FPG_URL_2, cookie: '' },
-          ].filter(t => t.cookie !== undefined)  // manter todos, mesmo os sem-cookie
+          ]
 
           type HealthResult = { label: string; cookieLen: number; http: number; paramErr: boolean; parsed: number; bytes: number; error?: string }
           const results: HealthResult[] = []
@@ -454,8 +459,21 @@ export default defineConfig({
           // 2 URLs diferentes do FPG têm os mesmos dados de inscrições.
           // Cada um com cookies próprios. Tentamos AMBOS e usamos o que
           // devolver mais inscritos (prevalece o melhor parse).
-          const FPG_URL_1 = 'https://scoring.fpg.pt/lists/tournAdmissions.aspx?ccode=000&tcode=' + tcode
-          const FPG_URL_2 = 'https://scoring.datagolf.pt/pt/tournAdmissions.aspx?ccode=000&tcode=' + tcode
+          //
+          // Ambos gateway canónicos (descoberta 2026-04-22 via probe).
+          // Ir directo a tournAdmissions.aspx funciona às vezes, mas devolve
+          // "Param Error" quando a sessão não está aquecida. O linkpage SETA
+          // o estado de sessão necessário e redireciona para tournAdmissions
+          // com os dados carregados — fetch com redirect:'follow' apanha tudo.
+          //
+          // O ack=XH256YF450 (universal para page=admissions) funciona em AMBOS
+          // os domínios gémeos — o servidor `scoring.datagolf.pt/pt/linkpage.aspx`
+          // partilha a mesma infra e aceita o mesmo ack.
+          //
+          // Duas fontes fiáveis = redundância real, não mais teórica. Em cada tcode,
+          // as duas devem devolver os mesmos inscritos; o log mostra se divergem.
+          const FPG_URL_1 = 'https://scoring.fpg.pt/lists/linkpage.aspx?page=admissions&club=000&tourn=' + tcode + '&ack=XH256YF450'
+          const FPG_URL_2 = 'https://scoring.datagolf.pt/pt/linkpage.aspx?page=admissions&club=000&tourn=' + tcode + '&ack=XH256YF450'
           const fpgUrl = FPG_URL_1  // mantido para o cache.fpgUrl
 
           const baseHeaders: Record<string, string> = {
@@ -480,36 +498,15 @@ export default defineConfig({
             }
           } catch {}
 
-          // Cookies do my.fpg.pt (renovados regularmente para o WHS). Experimentar
-          // contra scoring.fpg.pt/lists/ e scoring.datagolf.pt/pt/ — se o
-          // .AspNet.ApplicationCookie for válido cross-subdomain (ambos têm SSO
-          // via area.my.fpg.pt), estas inscrições passam a estar em real-time
-          // automaticamente sempre que o WHS for renovado. Verificação
-          // equivalente à das rondas WHS: /api/datagolf tenta múltiplas fontes
-          // até uma devolver dados.
-          let cookieMyFpg = ''
-          try {
-            const fp = join(process.cwd(), 'api', '.datagolf-cookies.json')
-            if (existsSync(fp)) {
-              const j = JSON.parse(readFileSync(fp, 'utf8'))
-              if (j.cookieHeader && (j.host === 'my.fpg.pt' || !j.host)) cookieMyFpg = j.cookieHeader
-            }
-          } catch {}
-
-          // Tentativas (em ordem de preferência).
-          // Caminho 2 (2026-04-17): adicionado fpg+myfpg-cookie + datagolf+myfpg-cookie
-          // — se o cookie de auth do my.fpg.pt (renovado regularmente para WHS) for
-          // aceite cross-subdomain em scoring.fpg.pt, temos real-time "grátis".
+          // Tentativas: cada domínio com as suas próprias cookies. NUNCA cookies
+          // cross-domain (my.fpg.pt cookies em scoring.* devolvem sempre 500 — o
+          // servidor rejeita cookies de subdomínio errado). NUNCA sem cookies (500
+          // por falta de sessão ASP.NET). A experiência "cross-subdomain via SSO"
+          // foi testada 2026-04-17 → 2026-04-22 e é conclusivamente inviável.
           type Attempt = { url: string; headers: Record<string, string>; label: string }
           const attempts: Attempt[] = []
           if (cookieFpg)      attempts.push({ url: FPG_URL_1, headers: { ...baseHeaders, Cookie: cookieFpg },      label: 'fpg+cookie' })
           if (cookieDatagolf) attempts.push({ url: FPG_URL_2, headers: { ...baseHeaders, Cookie: cookieDatagolf }, label: 'datagolf+cookie' })
-          if (cookieMyFpg) {
-            attempts.push({ url: FPG_URL_1, headers: { ...baseHeaders, Cookie: cookieMyFpg }, label: 'fpg+myfpg-cookie' })
-            attempts.push({ url: FPG_URL_2, headers: { ...baseHeaders, Cookie: cookieMyFpg }, label: 'datagolf+myfpg-cookie' })
-          }
-          attempts.push({ url: FPG_URL_1, headers: { ...baseHeaders }, label: 'fpg sem cookie' })
-          attempts.push({ url: FPG_URL_2, headers: { ...baseHeaders }, label: 'datagolf sem cookie' })
 
           // Tentar todos os URLs e FUNDIR resultados (deduplicar por fed code).
           // Os 2 URLs (scoring.fpg.pt vs scoring.datagolf.pt) podem ter
@@ -521,36 +518,41 @@ export default defineConfig({
           // (indicador de cookie expirado/rejeitado), e quantas linhas o parser
           // extraiu. Assim a utilizadora vê no log exactamente qual fonte está
           // viva e qual não — análogo ao que se passa em /api/datagolf.
-          type Diag = { label: string; http: number; paramErr: boolean; parsed: number; note?: string }
+          type Diag = { label: string; http: number; paramErr: boolean; parsed: number; unique: number; note?: string }
           const diagnostics: Diag[] = []
           const merged = new Map<string, Jogador>()  // fed → jogador
           let bestStatus = 0
           let bestHtml = ''
-          let totalRowsByLabel: Record<string, number> = {}
+          // Contabilidade: `parsed` é quantas linhas a fonte extraiu; `unique` é
+          // quantas CONTRIBUIU que eram novas (fed ainda não visto). A segunda
+          // é o que importa para avaliar se uma fonte acrescenta valor.
+          const parsedByLabel: Record<string, number> = {}
+          const uniqueByLabel: Record<string, number> = {}
           for (const att of attempts) {
             console.log('[inscricoes] tcode=' + tcode + ' [' + att.label + '] ' + att.url)
             try {
               const r = await fetch(att.url, { headers: att.headers, redirect: 'follow' })
               const txt = await r.text()
               const paramErr = /Param_Errors|Err=999/.test(txt)
-              const diag: Diag = { label: att.label, http: r.status, paramErr, parsed: 0 }
+              const diag: Diag = { label: att.label, http: r.status, paramErr, parsed: 0, unique: 0 }
               console.log('[inscricoes] tcode=' + tcode + ' [' + att.label + '] -> HTTP ' + r.status + (paramErr ? ' ⚠ Param_Errors (cookies rejeitados)' : ''))
               if (!r.ok) { diag.note = 'http-nao-ok'; diagnostics.push(diag); continue }
               if (paramErr) { diag.note = 'param-errors'; diagnostics.push(diag); continue }
               if (!bestStatus) { bestStatus = r.status; bestHtml = txt }
               const parsed = parseAdmissionsTable(txt, '[inscricoes] tcode=' + tcode + ' [' + att.label + ']')
-              totalRowsByLabel[att.label] = parsed.length
+              parsedByLabel[att.label] = parsed.length
               diag.parsed = parsed.length
-              diagnostics.push(diag)
+              let uniqueContrib = 0
               for (const j of parsed) {
                 if (!j.fed) {
                   // Sem fed code — usar nome como key (raro mas evita perda)
                   const key = '_noFed_' + (j.nome || Math.random()).slice(0, 50)
-                  if (!merged.has(key)) merged.set(key, j)
+                  if (!merged.has(key)) { merged.set(key, j); uniqueContrib++ }
                   continue
                 }
                 if (!merged.has(j.fed)) {
                   merged.set(j.fed, j)
+                  uniqueContrib++
                 } else {
                   // Já existe — preservar mas merge campos vazios
                   const existing = merged.get(j.fed)!
@@ -561,20 +563,34 @@ export default defineConfig({
                   if (!existing.dataInscricao && j.dataInscricao) existing.dataInscricao = j.dataInscricao
                 }
               }
+              uniqueByLabel[att.label] = uniqueContrib
+              diag.unique = uniqueContrib
+              diagnostics.push(diag)
             } catch (fetchErr) {
-              diagnostics.push({ label: att.label, http: 0, paramErr: false, parsed: 0, note: 'fetch-error: ' + (fetchErr as Error).message })
+              diagnostics.push({ label: att.label, http: 0, paramErr: false, parsed: 0, unique: 0, note: 'fetch-error: ' + (fetchErr as Error).message })
               console.error('[inscricoes] fetch erro [' + att.label + ']:', fetchErr)
             }
           }
           const bestJogadores = [...merged.values()]
-          const breakdown = Object.entries(totalRowsByLabel).map(([k, v]) => k + '=' + v).join(', ')
-          console.log('[inscricoes] tcode=' + tcode + ' MERGE: ' + bestJogadores.length + ' únicos (' + breakdown + ')')
+          // Breakdown agora mostra "parsed(unique)" para cada fonte — fica claro
+          // quais fontes contribuíram dados NOVOS vs quais só duplicaram.
+          const breakdown = Object.keys(parsedByLabel).map(k =>
+            k + '=' + parsedByLabel[k] + '(+' + (uniqueByLabel[k] || 0) + ' novos)'
+          ).join(', ')
+          console.log('[inscricoes] tcode=' + tcode + ' MERGE: ' + bestJogadores.length + ' únicos | ' + breakdown)
 
-          // Sumário de saúde de cada fonte (verificação tipo-WHS)
-          const healthy = diagnostics.filter(d => d.parsed > 0).map(d => d.label)
+          // Sumário de saúde de cada fonte.
+          // "Viva com dados NOVOS" = unique > 0 (contribui valor).
+          // "Viva sem dados novos" = parsed > 0 mas unique == 0 (fonte funciona mas
+          //   duplica o que a anterior já deu — útil como redundância).
+          const liveUnique = diagnostics.filter(d => d.unique > 0).map(d => d.label)
+          const liveRedundant = diagnostics.filter(d => d.parsed > 0 && d.unique === 0).map(d => d.label)
           const rejected = diagnostics.filter(d => d.paramErr).map(d => d.label)
-          if (healthy.length > 0) {
-            console.log('[inscricoes] ✓ FONTES VIVAS: ' + healthy.join(', '))
+          if (liveUnique.length > 0) {
+            const suffix = liveRedundant.length > 0 ? ' | redundantes (parsed mas sem novos): ' + liveRedundant.join(', ') : ''
+            console.log('[inscricoes] ✓ FONTES VIVAS: ' + liveUnique.join(', ') + suffix)
+          } else if (liveRedundant.length > 0) {
+            console.log('[inscricoes] ✓ FONTES VIVAS (só duplicados, nenhuma com dados novos): ' + liveRedundant.join(', '))
           } else if (rejected.length > 0) {
             console.log('[inscricoes] ⚠ COOKIES REJEITADOS em: ' + rejected.join(', ') + ' — precisa renovar')
           } else {

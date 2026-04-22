@@ -628,6 +628,42 @@ https://scoring.fpg.pt/lists/linkpage.aspx?page={page}&club={ccode}&tourn={tcode
 
 Estas URLs são úteis para scrapar dados **pré-jogo** (quem está inscrito, tee times) que não vêm nos endpoints de classificação usados pelo `pull-torneios.js`.
 
+#### ⚠ `linkpage.aspx` é o gateway canónico — NÃO ir directo às páginas alvo
+
+**Descoberta 2026-04-22 via `scripts/probe-admissions-sources.js`.** Ir directamente às páginas alvo (`tournAdmissions.aspx`, `classifications.aspx`, etc.) com os cookies certos funciona *às vezes*, mas é frágil — devolve `Param Error` (HTTP 200 com título "Param Error") se a sessão do servidor não estiver "aquecida" pelo `linkpage.aspx` logo antes. Depois do `linkpage.aspx` rodar, o directo passa a funcionar na mesma sessão (estado server-side).
+
+**Consequência prática:** sempre usar `linkpage.aspx?page=...` como ponto de entrada. O servidor FPG faz automaticamente o redirect 302 para a página alvo (`tournAdmissions.aspx`, etc.), `fetch` com `redirect: 'follow'` apanha a resposta final com os dados. Nunca saltar o linkpage em clientes server-side em que o warmup não está garantido.
+
+**Sintoma de bug escondido se ignorares isto:** o middleware em `vite.config.ts` apontava para `tournAdmissions.aspx` directamente e funcionava em 99% dos casos (porque corridas anteriores aqueciam a sessão). Após restart do Vite, a primeira chamada podia devolver "Param Error" silenciosamente — o parser parsearia 0 linhas e a UI ficaria vazia. Mudar para `linkpage.aspx` eliminou essa fragilidade.
+
+#### ⚡ `linkpage.aspx` cobre admissions, draw e classif — cross-domain
+
+**Descoberta alargada 2026-04-22 via probe:** o padrão `linkpage.aspx?page=...` funciona nos dois domínios gémeos (`scoring.fpg.pt/lists/` e `scoring.datagolf.pt/pt/`) para as **três páginas** principais de um torneio:
+
+| Página | `page=` | `ack=` universal | Forma de obter dados | Scraper Node puro |
+|---|---|---|---|---|
+| **admissions** | `admissions` | `XH256YF450` | GET (HTML com tabela) | ✓ linkpage GET basta |
+| **draw** (pairings) | `draw` + `&round=1/2/3` | `8428ACK987` | GET (HTML com tabela) | ✓ linkpage GET basta |
+| **classif** (resultados) | `classif` | `8428ACK987` | GET linkpage (warmup) + POST `classif.aspx/ClassifLST` | ✓ dois passos |
+
+**Testado e confirmado em 3 casos reais** (futuro, passado 1 ronda, passado 3 rondas), ambos domínios, 17 pares comparados, 0 divergências entre `scoring.fpg.pt` e `scoring.datagolf.pt`.
+
+**O `ack` é universal cross-domain** (mesma infra ASP.NET partilhada) — `XH256YF450` para admissions, `8428ACK987` para draw/classif, iguais em ambos os domínios.
+
+Implicação para o middleware: as duas fontes (`FPG_URL_1` e `FPG_URL_2`) passam a ser ambas linkpage — redundância real, não mais "scoring.datagolf.pt só por esperança". Em cada pedido esperamos os mesmos inscritos dos dois domínios; se divergirem, o log marca como "novos" os de cada fonte e sabes que uma está desincronizada.
+
+```
+FPG_URL_1 = scoring.fpg.pt/lists/linkpage.aspx?page=admissions&club=000&tourn=X&ack=XH256YF450
+FPG_URL_2 = scoring.datagolf.pt/pt/linkpage.aspx?page=admissions&club=000&tourn=X&ack=XH256YF450
+```
+
+Cada um usa os seus próprios cookies (`.fpg-admissions-cookies.json` e `.scoring-datagolf-cookies.json` respectivamente).
+
+**Dead ends confirmados no mesmo probe (não voltar a testar):**
+- `scoring-pt.datagolf.pt/scripts/admissions.asp` — redirect para `datalinkpt.html` que é página-frame com iframes. Dados não estão no HTML inicial. Não vale o esforço.
+- `scoring-pt.datagolf.pt/scripts/tournAdmissions.asp` — HTTP 404 (path não existe).
+- `golf-portugal.pt/api/tournaments/{tcode}/admissions` e variantes — HTTP 404. O proxy não expõe admissions, só WHS/scorecards por jogador.
+
 ---
 
 ## FPG — APIs em tempo real (descobertas 2026-04-14)
@@ -803,7 +839,28 @@ Headers obrigatórios: `Cookie:` (6 cookies), `Content-Type: application/json`,
 | `/pt/tournaments.aspx/TournamentsLST?jtStartIndex=0&jtPageSize=25&jtSorting=started_at%20DESC` | POST | `{ClubCode, dtIni, dtFim, CourseName, TournCode, TournName, jtStartIndex, jtPageSize, jtSorting}` | Lista de torneios (name, ccode, tcode, started_at, etc.) |
 | `/pt/Classifications.aspx/ScoreCard?...` | POST | `{score_id, classifround:1}` | Scorecard de torneio (1 ronda) |
 | `/pt/classifAgregate.aspx/ScoreCard` | POST | `{score_id, classifround:""}` | Scorecards de torneio agregado (array, 1 record por ronda) — USAR para torneios >1 ronda |
-| `/pt/Classifications.aspx/GetClassifications?ccode=X&tcode=Y` | POST | `{ccode, tcode, classifround}` | Classificação geral de torneio |
+| `/pt/classif.aspx/ClassifLST?jt*` | POST | ver "Body ClassifLST" abaixo | Classificação geral de torneio (paginada, todos os inscritos) |
+
+**⚠ Não confundir `Classifications.aspx` (maiúsculo, é a página jTable shell) com `classif.aspx` (minúsculo, é o PageMethod que devolve os dados).** O CLAUDE.md histórico tinha `Classifications.aspx/GetClassifications` mas esse endpoint devolve sempre HTTP 500 — não existe. Confirmado 2026-04-22 via probe.
+
+**Body ClassifLST** (todos os campos são strings, filtros em default abertos):
+```json
+{
+  "Classi": "1",
+  "tclub": "{ccode}",    "tcode": "{tcode}",
+  "classiforder": "1",   "classiftype": "I",
+  "classifroundtype": "D","scoringtype": "1",
+  "round": "1",          "members": "0",
+  "playertypes": "0",    "gender": "0",
+  "minagemen": "0",      "maxagemen": "999",
+  "minageladies": "0",   "maxageladies": "999",
+  "minhcp": "-8",        "maxhcp": "99",
+  "idfilter": "-1",
+  "jtStartIndex": "0",   "jtPageSize": "100",
+  "jtSorting": "score_id DESC"
+}
+```
+Os params `jt*` vão também na query string além do body. Headers: `Content-Type: application/json; charset=utf-8`, `X-Requested-With: XMLHttpRequest`. Cross-domain: mesmo endpoint em `scoring.fpg.pt/lists/classif.aspx/ClassifLST`.
 
 Headers obrigatórios: `Cookie:` (2 cookies), `Content-Type: application/json`,
 `X-Requested-With: XMLHttpRequest`, `Origin: https://scoring.datagolf.pt`,
