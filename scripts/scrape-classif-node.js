@@ -48,7 +48,11 @@ const CLI_TCLUB = argVal("--tclub", null);
 const CLI_TCODE = argVal("--tcode", null);
 const SCOPE_FILE = argVal("--scope", null);
 const AUTO_FROM_TRACKING = args.includes("--auto-from-tracking");
-const OUT_FILE = argVal("--out", path.join(REPO, "public", "data", "pull-torneios-node.json"));
+// Default: pull-torneios002.json (próximo número livre depois do 001.json).
+// A FPGPage lê automaticamente pull-torneios000, 001, 002, ... até 404. Para
+// os torneios novos ficarem visíveis na UI, têm de acabar num destes ficheiros.
+// O script faz merge aditivo (preserva torneios antigos, actualiza/adiciona).
+const OUT_FILE = argVal("--out", path.join(REPO, "public", "data", "pull-torneios002.json"));
 const CONCURRENCY = parseInt(argVal("--concurrency", "2"), 10);
 const DELAY_MS = parseInt(argVal("--delay", "150"), 10);
 const PAGE_SIZE = parseInt(argVal("--page-size", "150"), 10);
@@ -81,7 +85,35 @@ const COOKIE = loadCookies();
 
 /* ── Scope ──────────────────────────────────────────────────────────────── */
 let scope = [];
-if (SCOPE_FILE) {
+if (AUTO_FROM_TRACKING) {
+  // Lê public/data/fpg-tournaments-tracking.json e filtra torneios que
+  // precisam de classif/scorecards (status "missing_classif" ou
+  // "missing_scorecards"). Torneios futuros/in_progress ficam de fora —
+  // classif só faz sentido depois do cut do torneio.
+  const trackingFile = path.join(REPO, "public", "data", "fpg-tournaments-tracking.json");
+  if (!fs.existsSync(trackingFile)) {
+    console.error(`[classif] ERRO: tracking em falta: ${trackingFile}. Corre build-tournaments-tracking.js primeiro.`);
+    process.exit(1);
+  }
+  const tracking = JSON.parse(fs.readFileSync(trackingFile, "utf8"));
+  const wanted = new Set(["missing_classif", "missing_scorecards"]);
+  scope = (tracking.tournaments || [])
+    .filter(t => wanted.has(t.status))
+    .map(t => ({
+      tclub: String(t.ccode).padStart(3, "0"),
+      tcode: String(t.tcode),
+      // Metadata do tracking — usada como fallback se TournamentsLST não
+      // devolver o torneio (ex: torneio arquivado). Evita "NÃO ENCONTRADO".
+      name: t.name,
+      date: t.date,
+      rounds: t.rounds,
+    }));
+  console.log(`[classif] Scope auto-from-tracking: ${scope.length} torneios (missing_classif/scorecards)`);
+  if (scope.length === 0) {
+    console.log("[classif] ✓ Nada a processar — todos os torneios elegíveis já têm classif+scorecards");
+    process.exit(2);
+  }
+} else if (SCOPE_FILE) {
   const fp = path.isAbsolute(SCOPE_FILE) ? SCOPE_FILE : path.join(REPO, SCOPE_FILE);
   if (!fs.existsSync(fp)) { console.error(`[classif] ERRO: scope não existe: ${fp}`); process.exit(1); }
   const raw = JSON.parse(fs.readFileSync(fp, "utf8"));
@@ -91,7 +123,7 @@ if (SCOPE_FILE) {
   scope = [{ tclub: CLI_TCLUB, tcode: CLI_TCODE }];
   console.log(`[classif] Single: tclub=${CLI_TCLUB} tcode=${CLI_TCODE}`);
 } else {
-  console.error("[classif] ERRO: usa --scope <ficheiro.json> ou --tclub X --tcode Y");
+  console.error("[classif] ERRO: usa --auto-from-tracking, --scope <ficheiro.json> ou --tclub X --tcode Y");
   process.exit(1);
 }
 
@@ -295,11 +327,33 @@ async function processOne(spec, idx, total) {
   await warmupLinkpage(tclub, tcode);
   await sleep(DELAY_MS);
 
-  // 1. resolve
+  // 1. resolve — tenta via TournamentsLST (metadata completa: campo, rondas, etc)
   const raw = await resolveTournament(tclub, tcode);
-  if (!raw) { console.warn(`${label} NÃO ENCONTRADO`); return null; }
-  const circuit = spec.circuit || detectCircuit(raw);
-  const t = parseTournament(raw, circuit);
+  let t;
+  if (raw) {
+    const circuit = spec.circuit || detectCircuit(raw);
+    t = parseTournament(raw, circuit);
+  } else {
+    // Fallback: torneio não retornado pelo TournamentsLST (arquivo, removido
+    // do índice, etc.). Usar metadata mínima do spec (pode vir do tracking
+    // com name/date/rounds) e tentar classif na mesma. A classif.aspx/ClassifLST
+    // funciona directamente via tclub/tcode — não depende de resolve.
+    console.warn(`${label} não no TournamentsLST — tentar classif com fallback de metadata`);
+    t = {
+      name: spec.name || `${tclub}/${tcode}`,
+      ccode: String(tclub).padStart(3, "0"),
+      tcode: String(tcode),
+      date: spec.date || "",
+      campo: "",
+      clube: String(tclub).padStart(3, "0"),
+      circuit: spec.circuit || "tour",
+      series: "tour",
+      region: regionMap[String(tclub).padStart(3, "0")] || "outro",
+      escalao: null, num: 1,
+      rounds: spec.rounds || 1,
+      playerCount: 0, players: [],
+    };
+  }
 
   // 2. classif R1
   const { records: recs1, error: err1 } = await fetchClassif(t.ccode, t.tcode, 1);
@@ -399,18 +453,58 @@ async function runPool(items, workerFn, concurrency) {
   const t0 = Date.now();
 
   const processed = await runPool(scope, processOne, CONCURRENCY);
-  const tournaments = processed.filter(t => t != null);
+  const scrapedTournaments = processed.filter(t => t != null);
 
+  // Limpar campos internos (scOk/scFail)
+  scrapedTournaments.forEach(t => { delete t.scOk; delete t.scFail; });
+
+  // Merge aditivo: se OUT_FILE já existe, combina com o existente por
+  // ccode/tcode. Novos scrapes substituem entradas antigas (presume-se mais
+  // recentes e completos). Entradas antigas que não foram re-scraped ficam.
+  // Se um scrape novo trouxe 0 jogadores (classif arquivada), NÃO sobrescreve
+  // uma entrada antiga com jogadores — evita regressões.
+  let existing = [];
+  if (fs.existsSync(OUT_FILE)) {
+    try {
+      const prev = JSON.parse(fs.readFileSync(OUT_FILE, "utf8"));
+      existing = prev.tournaments || [];
+    } catch (e) {
+      console.warn(`[classif] Aviso: falhou ler ${OUT_FILE}: ${e.message}`);
+    }
+  }
+
+  const byKey = new Map();
+  for (const t of existing) byKey.set(`${t.ccode}/${t.tcode}`, t);
+
+  let added = 0, updated = 0, preserved = 0;
+  for (const fresh of scrapedTournaments) {
+    const k = `${fresh.ccode}/${fresh.tcode}`;
+    const prev = byKey.get(k);
+    if (!prev) {
+      byKey.set(k, fresh);
+      added++;
+    } else {
+      // Regressão: não sobrescrever dados bons por novo vazio
+      const freshCount = fresh.playerCount || 0;
+      const prevCount = prev.playerCount || 0;
+      if (freshCount === 0 && prevCount > 0) {
+        preserved++;
+        continue;
+      }
+      byKey.set(k, fresh);
+      updated++;
+    }
+  }
+
+  const tournaments = [...byKey.values()].sort((a, b) => (a.date || "").localeCompare(b.date || ""));
   const totalPlayers = tournaments.reduce((s, t) => s + (t.playerCount || 0), 0);
-  const totalScorecards = tournaments.reduce((s, t) => s + (t.scOk || 0), 0);
+  const totalScorecards = tournaments.reduce((s, t) =>
+    s + (t.players?.filter(p => p.roundScores && p.roundScores.length > 0).length || 0), 0);
 
-  // Formato compatível com pull-torneiosNNN.json
   const now = new Date();
   const lastUpdated = `${String(now.getDate()).padStart(2, "0")}/${String(now.getMonth() + 1).padStart(2, "0")}/${now.getFullYear()}`;
 
-  tournaments.sort((a, b) => (a.date || "").localeCompare(b.date || ""));
-  // Limpar campos internos (scOk/scFail)
-  tournaments.forEach(t => { delete t.scOk; delete t.scFail; });
+  console.log(`[classif] Merge: ${added} novos · ${updated} actualizados · ${preserved} preservados contra novo vazio`);
 
   const output = {
     lastUpdated,

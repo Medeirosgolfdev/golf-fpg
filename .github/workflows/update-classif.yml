@@ -1,17 +1,18 @@
 name: Actualizar Classificações FPG
 
 # Corre:
-#  - A pedido (botão "Run workflow" no GitHub) — NÃO tem cron
+#  - Automaticamente Dom/Seg 01:00 UTC (depois do update-data às 00:05 apanhar
+#    os SDs) — processa torneios que têm admissions/draws mas ainda não têm
+#    classif ou scorecards completos.
+#  - A pedido (botão "Run workflow" no GitHub)
 #
-# ⚠ Sem cron propositadamente: o scope (scripts/classif-scope.json, 217 torneios
-# pré-carregados) é ESTÁTICO e cobre só torneios já jogados. Correr semanalmente
-# sobre o mesmo scope não traz dados novos — só gasta runtime. Quando quiseres
-# expandir com novos tcodes: editar classif-scope.json (ou criar um batch
-# `scripts/batch-XXX.json`) e disparar manualmente pelo GitHub.
+# SCOPE (default do cron): dinâmico via --auto-from-tracking.
+#   O script scrape-classif-node.js lê public/data/fpg-tournaments-tracking.json
+#   (gerado pelo build-tournaments-tracking.js, que corre no workflow
+#   update-fpg-admissions-draws depois de cada scrape) e processa apenas os
+#   torneios com status "missing_classif" ou "missing_scorecards".
 #
-# TODO (futuro): fazer scope dinâmico que descobre automaticamente tcodes novos
-# cruzando fpg-admissions-draws.json (futuros+passados) + drive-data-*.json
-# com pull-torneios*.json (já processados). Aí o cron faria sentido.
+# Fallback manual: workflow_dispatch aceita --tclub/--tcode ou --scope.
 #
 # Substitui o antigo pull-torneios.js (browser console F12).
 #
@@ -21,7 +22,7 @@ on:
   workflow_dispatch:
     inputs:
       tclub:
-        description: 'tclub específico (ex: 000). Vazio = usar scope.'
+        description: 'tclub específico (ex: 000). Vazio = auto-from-tracking.'
         required: false
         default: ''
       tcode:
@@ -29,13 +30,13 @@ on:
         required: false
         default: ''
       scope_file:
-        description: 'Ficheiro de scope alternativo (relative ao repo).'
+        description: 'Ficheiro de scope alternativo (relative ao repo). Sobrepõe tracking.'
         required: false
-        default: 'scripts/classif-scope.json'
+        default: ''
       out_file:
         description: 'Ficheiro de output.'
         required: false
-        default: 'public/data/pull-torneios-node.json'
+        default: 'public/data/pull-torneios002.json'
       force_commit:
         description: 'Commit mesmo sem mudanças?'
         required: false
@@ -43,7 +44,12 @@ on:
         type: choice
         options: ['false', 'true']
 
-  # Sem `schedule:` propositadamente — ver nota no topo.
+  schedule:
+    # Dom/Seg 01:00 UTC — 55min depois do update-data (00:05) para não colidir
+    # no git push. Por essa altura o SD já foi atribuído pela FPG e o
+    # tracking JSON é fresco (actualizado no update-fpg-admissions-draws das
+    # 20:00 UTC da véspera).
+    - cron: '0 1 * * 0,1'
 
 permissions:
   contents: write
@@ -72,13 +78,15 @@ jobs:
         id: scrape
         run: |
           set +e
-          ARGS=""
+          # Preferência: input explícito > scope file > auto-from-tracking
           if [ -n "${{ github.event.inputs.tclub }}" ] && [ -n "${{ github.event.inputs.tcode }}" ]; then
             ARGS="--tclub ${{ github.event.inputs.tclub }} --tcode ${{ github.event.inputs.tcode }}"
+          elif [ -n "${{ github.event.inputs.scope_file }}" ]; then
+            ARGS="--scope ${{ github.event.inputs.scope_file }}"
           else
-            ARGS="--scope ${{ github.event.inputs.scope_file || 'scripts/classif-scope.json' }}"
+            ARGS="--auto-from-tracking"
           fi
-          ARGS="$ARGS --out ${{ github.event.inputs.out_file || 'public/data/pull-torneios-node.json' }}"
+          ARGS="$ARGS --out ${{ github.event.inputs.out_file || 'public/data/pull-torneios002.json' }}"
           echo "Args: $ARGS"
           node scripts/scrape-classif-node.js $ARGS
           EXIT_CODE=$?
@@ -94,14 +102,18 @@ jobs:
         env:
           DATAGOLF_SCORING_COOKIES: ${{ secrets.DATAGOLF_SCORING_COOKIES }}
 
+      - name: Regenerar tracking (após novos dados de classif)
+        if: steps.scrape.outputs.exit_code == '0'
+        run: node scripts/build-tournaments-tracking.js
+
       - name: Commit e push (se houver novos dados)
         if: steps.scrape.outputs.exit_code == '0' || github.event.inputs.force_commit == 'true'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          OUT="${{ github.event.inputs.out_file || 'public/data/pull-torneios-node.json' }}"
-          git add "$OUT"
+          OUT="${{ github.event.inputs.out_file || 'public/data/pull-torneios002.json' }}"
+          git add "$OUT" public/data/fpg-tournaments-tracking.json
 
           if git diff --staged --quiet; then
             echo "Nenhuma alteração em staging — sem commit."

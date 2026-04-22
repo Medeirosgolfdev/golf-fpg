@@ -364,48 +364,81 @@ async function scanFpgTournamentsLst() {
     return [];
   }
 
-  // 2) POST a TournamentsLST — apanha até 200 torneios começando nos últimos 30d
-  //    (ou janela maior se o FILTER_SINCE externo pedir mais)
+  // Helper: chamada paginada a TournamentsLST. Devolve array de records.
+  async function callTournamentsLst({ clubCode, dtIni }) {
+    const all = [];
+    let startIndex = 0;
+    const pageSize = 200;
+    while (true) {
+      const qs = `jtStartIndex=${startIndex}&jtPageSize=${pageSize}&jtSorting=` + encodeURIComponent("started_at DESC");
+      const body = {
+        ClubCode: String(clubCode),
+        dtIni: dtIni || "",
+        dtFim: "",
+        CourseName: "", TournCode: "", TournName: "",
+        jtStartIndex: String(startIndex), jtPageSize: String(pageSize), jtSorting: "started_at DESC",
+      };
+      try {
+        const r = await fetch(`https://scoring.datagolf.pt/pt/tournaments.aspx/TournamentsLST?${qs}`, {
+          method: "POST",
+          headers: {
+            "User-Agent": UA,
+            "Content-Type": "application/json; charset=utf-8",
+            "X-Requested-With": "XMLHttpRequest",
+            "Accept": "application/json, text/javascript, */*; q=0.01",
+            "Origin": "https://scoring.datagolf.pt",
+            "Referer": "https://scoring.datagolf.pt/pt/tournaments.aspx",
+            "Cookie": dgCookie,
+          },
+          body: JSON.stringify(body),
+        });
+        if (!r.ok) return all;
+        const j = await r.json();
+        const d = j.d || j;
+        if (d.Result !== "OK") return all;
+        const page = d.Records || [];
+        all.push(...page);
+        if (page.length < pageSize) break;  // esgotou
+        startIndex += pageSize;
+        if (startIndex >= 2000) break;  // limite de segurança (10 páginas)
+      } catch { return all; }
+    }
+    return all;
+  }
+
+  // 2) Query PRINCIPAL — todos os clubes, últimos N dias
   const defaultDaysBack = 30;
   const filterDaysBack = FILTER_SINCE
     ? Math.max(defaultDaysBack, Math.ceil((Date.now() - new Date(FILTER_SINCE).getTime()) / 86400000))
     : defaultDaysBack;
   const dtIni = new Date(Date.now() - filterDaysBack * 86400000).toISOString().slice(0, 10);
-  const qs = "jtStartIndex=0&jtPageSize=200&jtSorting=" + encodeURIComponent("started_at DESC");
-  const body = {
-    ClubCode: "0",  // 0 = todos
-    dtIni, dtFim: "",
-    CourseName: "", TournCode: "", TournName: "",
-    jtStartIndex: "0", jtPageSize: "200", jtSorting: "started_at DESC",
-  };
-  let records = [];
-  try {
-    const r = await fetch(`https://scoring.datagolf.pt/pt/tournaments.aspx/TournamentsLST?${qs}`, {
-      method: "POST",
-      headers: {
-        "User-Agent": UA,
-        "Content-Type": "application/json; charset=utf-8",
-        "X-Requested-With": "XMLHttpRequest",
-        "Accept": "application/json, text/javascript, */*; q=0.01",
-        "Origin": "https://scoring.datagolf.pt",
-        "Referer": "https://scoring.datagolf.pt/pt/tournaments.aspx",
-        "Cookie": dgCookie,
-      },
-      body: JSON.stringify(body),
-    });
-    if (!r.ok) { console.warn(`[adm-draws] TournamentsLST HTTP ${r.status}`); return []; }
-    const j = await r.json();
-    const d = j.d || j;
-    if (d.Result !== "OK") { console.warn(`[adm-draws] TournamentsLST Result=${d.Result}`); return []; }
-    records = d.Records || [];
-  } catch (e) {
-    console.warn(`[adm-draws] TournamentsLST erro: ${e.message}`); return [];
+  let records = await callTournamentsLst({ clubCode: "0", dtIni });
+  console.log(`[adm-draws] TournamentsLST (ClubCode=0, dtIni=${dtIni}): ${records.length} torneios`);
+
+  // 2b) Queries DEDICADAS por ccode em INCLUDE_CCODES — apanha TODOS os
+  //     torneios desses clubes, sem filtro temporal, com paginação. Importante
+  //     para clubes com muitos torneios semanais (ex: CGSS Santo da Serra)
+  //     que ficariam truncados pela query principal.
+  for (const ccode of INCLUDE_CCODES) {
+    const extra = await callTournamentsLst({ clubCode: ccode, dtIni: "" });
+    console.log(`[adm-draws] TournamentsLST (ClubCode=${ccode}, sem filtro): ${extra.length} torneios`);
+    records = records.concat(extra);
   }
 
-  // 3) Filtrar por INCLUDE/EXCLUDE
+  // 3) Deduplicar por ccode/tcode (queries principal + dedicadas podem sobrepor-se)
+  const seenKey = new Set();
+  const uniqueRecords = [];
+  for (const rec of records) {
+    const k = `${rec.club_code}/${rec.code}`;
+    if (seenKey.has(k)) continue;
+    seenKey.add(k);
+    uniqueRecords.push(rec);
+  }
+
+  // 4) Filtrar por INCLUDE/EXCLUDE
   const out = [];
   let inc = 0, exc = 0;
-  for (const rec of records) {
+  for (const rec of uniqueRecords) {
     const ccode = String(rec.club_code || "").padStart(3, "0");
     const tcode = String(rec.code || "");
     const name  = rec.description || "";
@@ -420,7 +453,7 @@ async function scanFpgTournamentsLst() {
       _src: "tournamentsLst",
     });
   }
-  console.log(`[adm-draws] auto-extend Fonte 3: ${records.length} torneios do TournamentsLST → ${inc} incluídos (${exc} excluídos)`);
+  console.log(`[adm-draws] auto-extend Fonte 3: ${records.length} torneios do TournamentsLST (${uniqueRecords.length} únicos) → ${inc} incluídos (${exc} excluídos)`);
   return out;
 }
 
@@ -543,11 +576,25 @@ async function buildAutoExtendedScope(manual, sinceDate = null) {
     else unchanged++;
     if (nAdm < pAdm || (nAdm === 0 && pAdm > 0)) kept++;  // preservámos dados antigos contra um novo vazio/suspect
 
+    // Preferir o nome REAL da FPG (vindo da página de admissions/draws) sobre
+    // o nome do scope manual. Alguns scopes têm nomes genéricos tipo
+    // "Campeonato Nacional Jovens 10935" — a página FPG dá o escalão correcto
+    // ("Sub 18 H", etc.). Também apanhar nome vindo dos draws se admissions
+    // vazia. Fallback: scope manual ou entrada existente.
+    const bestName = (finalAdm && finalAdm.name)
+      || (Object.values(finalDraws || {})[0]?.name)
+      || (prev && prev.name && prev.name !== `Campeonato Nacional Jovens ${tournament.tcode}` ? prev.name : null)
+      || tournament.name;
+    // Preferir data REAL do servidor (FPG) em vez da do scope. Scope tem datas
+    // genéricas tipo "2026-05-01" para todos os Nacionais; a FPG dá data exacta.
+    const bestDate = (finalAdm && finalAdm.date)
+      || (Object.values(finalDraws || {})[0]?.date)
+      || tournament.date;
     baseIdx.set(key, {
       ccode: tournament.ccode,
       tcode: tournament.tcode,
-      name: tournament.name,
-      date: tournament.date,
+      name: bestName,
+      date: bestDate,
       expectedYear: tournament.expectedYear,
       admissions: finalAdm,
       draws: finalDraws,

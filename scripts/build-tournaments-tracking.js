@@ -121,6 +121,9 @@ function readClassifSources() {
             player_count: playerCount,
             players_with_scorecards: withSc,
             rounds: t.rounds || 1,
+            // name/date também — para torneios que não estão em fpg-admissions-draws.json
+            name: t.name || t.description || null,
+            date: t.date || t.data || null,
             _source: f,
           });
         }
@@ -173,8 +176,8 @@ function main() {
     const t = {
       ccode: adm.ccode || ccode,
       tcode: adm.tcode || tcode,
-      name: adm.name || null,
-      date: adm.date || null,
+      name: adm.name || cls.name || null,
+      date: adm.date || cls.date || null,
       rounds: cls.rounds || 1,
       has_admissions: adm.has_admissions || false,
       admissions_count: adm.admissions_count || 0,

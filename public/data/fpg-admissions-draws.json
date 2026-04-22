@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-04-22T15:18:23.989Z",
-  "total": 359,
+  "scrapedAt": "2026-04-22T15:56:59.526Z",
+  "total": 371,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -66832,9 +66832,21 @@
       "draws": {}
     },
     {
+      "ccode": "050",
+      "tcode": "10179",
+      "name": "Mc Donald´s Junior Challenge #04",
+      "date": "2026-01-10",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
       "ccode": "988",
       "tcode": "10292",
-      "name": "1º Torneio Drive Tour Sul – Laguna G.C.",
+      "name": "1º Torneio Drive Tour Sul – Laguna",
       "date": "2026-01-11",
       "expectedYear": "2026",
       "admissions": {
@@ -67235,9 +67247,86 @@
       "draws": {}
     },
     {
+      "ccode": "001",
+      "tcode": "10548",
+      "name": "1ª Prova de Apuramento sub14",
+      "date": "2026-01-11",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": null,
+          "date": "2026-01-11",
+          "totalJogadores": 9,
+          "groups": [
+            {
+              "teeTime": "12:30",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Santiago Dias",
+                  "clube": "42908"
+                },
+                {
+                  "nome": "Francisco Saraiva",
+                  "clube": "39097"
+                },
+                {
+                  "nome": "Afonso de Sousa Pinto",
+                  "clube": "46480"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:38",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Sebastião Soares",
+                  "clube": "47341"
+                },
+                {
+                  "nome": "Lucas Pereira Amorim",
+                  "clube": "54330"
+                },
+                {
+                  "nome": "Diogo Guilherme",
+                  "clube": "56632"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:46",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Ricardo Ferreira",
+                  "clube": "45366"
+                },
+                {
+                  "nome": "Maksim Mutalapov",
+                  "clube": "54475"
+                },
+                {
+                  "nome": "Catarina Loureiro",
+                  "clube": "49328"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
       "ccode": "000",
       "tcode": "10873",
-      "name": "1º Torneio do Circuito Aquapor-Morgado Golf",
+      "name": "1º Torneio do Circuito Aquapor",
       "date": "2026-01-17",
       "expectedYear": "2026",
       "admissions": {
@@ -71726,6 +71815,18 @@
       }
     },
     {
+      "ccode": "152",
+      "tcode": "10522",
+      "name": "GjG OoM Junior Open 2026",
+      "date": "2026-02-18",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
       "ccode": "988",
       "tcode": "10300",
       "name": "2º Torneio Drive Challenge Sul - Laguna G C Sub 16",
@@ -73241,7 +73342,7 @@
     {
       "ccode": "985",
       "tcode": "10212",
-      "name": "2º Torneio Drive Challenge Tejo-Montado- Sub 12",
+      "name": "2º Torneio Drive Challenge Tejo-Montado - Sub 12",
       "date": "2026-02-22",
       "expectedYear": "2026",
       "admissions": {
@@ -76753,7 +76854,7 @@
     {
       "ccode": "000",
       "tcode": "10875",
-      "name": "2º Torneio do Circuito Aquapor - Qtª do Peru",
+      "name": "2º Torneio do Circuito Aquapor",
       "date": "2026-03-14",
       "expectedYear": "2026",
       "admissions": {
@@ -78603,6 +78704,102 @@
       "draws": {}
     },
     {
+      "ccode": "004",
+      "tcode": "10565",
+      "name": "2º ESTORIL Golf Junior Open by Arqtº António Lino",
+      "date": "2026-03-14",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": null,
+          "date": "2026-03-14",
+          "totalJogadores": 12,
+          "groups": [
+            {
+              "teeTime": "13:20",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "TALONE,Maria",
+                  "clube": "51106"
+                },
+                {
+                  "nome": "COUTO DOS SANTOS,Carolina",
+                  "clube": "55486"
+                },
+                {
+                  "nome": "FERREIRA,Maria Madalena Neves",
+                  "clube": "57587"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:28",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "KHONTULEV,Mikhail",
+                  "clube": "58864"
+                },
+                {
+                  "nome": "WARDROPE,Henry Michael",
+                  "clube": "54998"
+                },
+                {
+                  "nome": "PALMQVIST,William",
+                  "clube": "51650"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:36",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "MORAIS,Tomás de",
+                  "clube": "55466"
+                },
+                {
+                  "nome": "PALMQVIST,Noel",
+                  "clube": "51651"
+                },
+                {
+                  "nome": "JIYANG,Guo",
+                  "clube": "57903"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:44",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "ALVARSSON,Birger",
+                  "clube": "56424"
+                },
+                {
+                  "nome": "QUINTUS,Ryder",
+                  "clube": "58954"
+                },
+                {
+                  "nome": "SCARANTINO,Asher",
+                  "clube": "59328"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
       "ccode": "985",
       "tcode": "10220",
       "name": "3º Torneio Drive Challenge Tejo - Jamor - Sub 18",
@@ -79618,7 +79815,7 @@
       "ccode": "983",
       "tcode": "10155",
       "name": "1º Torneio Drive Tour Terceira",
-      "date": "2026-03-22",
+      "date": "2026-03-21",
       "expectedYear": "2026",
       "admissions": {
         "name": "1º Torneio Drive Tour Terceira",
@@ -79780,6 +79977,79 @@
                 {
                   "nome": "Rafael Ourique Azevedo",
                   "clube": "Ilha Terceira"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "004",
+      "tcode": "10567",
+      "name": "3º ESTORIL Golf Junior Open by Rodrigo Bivar",
+      "date": "2026-03-21",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": null,
+          "date": "2026-03-21",
+          "totalJogadores": 8,
+          "groups": [
+            {
+              "teeTime": "13:35",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "WARDROPE,Henry Michael",
+                  "clube": "54998"
+                },
+                {
+                  "nome": "JIYANG,Guo",
+                  "clube": "57903"
+                },
+                {
+                  "nome": "KHONTULEV,Mikhail",
+                  "clube": "58864"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:43",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "FERREIRA,Maria Madalena Neves",
+                  "clube": "57587"
+                },
+                {
+                  "nome": "COUTO DOS SANTOS,Carolina",
+                  "clube": "55486"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:51",
+              "startHole": 1,
+              "tee": "Azuis",
+              "players": [
+                {
+                  "nome": "ALVARSSON,Birger",
+                  "clube": "56424"
+                },
+                {
+                  "nome": "FERREIRA,Miguel Maria Neves",
+                  "clube": "57756"
+                },
+                {
+                  "nome": "QUINTUS,Ryder",
+                  "clube": "58954"
                 }
               ]
             }
@@ -81432,6 +81702,75 @@
       }
     },
     {
+      "ccode": "004",
+      "tcode": "10569",
+      "name": "4º ESTORIL Golf Junior Open by Fausto Figueiredo",
+      "date": "2026-03-28",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": null,
+          "date": "2026-03-28",
+          "totalJogadores": 7,
+          "groups": [
+            {
+              "teeTime": "13:20",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "SCARANTINO,Asher",
+                  "clube": "59328"
+                },
+                {
+                  "nome": "MORAIS,Tomás de",
+                  "clube": "55466"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:28",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "COUTO DOS SANTOS,Carolina",
+                  "clube": "55486"
+                },
+                {
+                  "nome": "FERREIRA,Maria Madalena Neves",
+                  "clube": "57587"
+                },
+                {
+                  "nome": "TALONE,Maria",
+                  "clube": "51106"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:36",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "JIYANG,Guo",
+                  "clube": "57903"
+                },
+                {
+                  "nome": "KHONTULEV,Mikhail",
+                  "clube": "58864"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
       "ccode": "987",
       "tcode": "10224",
       "name": "3º Torneio Drive Challenge Norte - Vidago - Sub 18",
@@ -82857,10 +83196,1814 @@
       }
     },
     {
+      "ccode": "029",
+      "tcode": "10536",
+      "name": "GJG Spring Junior Games 2026, Portugal",
+      "date": "2026-03-29",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "007",
+      "tcode": "11004",
+      "name": "Torneio Golf & Clássicos 2026",
+      "date": "2026-03-29",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "000",
+      "tcode": "10899",
+      "name": "Campeonato Nacional de Clubes Sub 18",
+      "date": "2026-03-31",
+      "expectedYear": "2026",
+      "admissions": {
+        "name": "Campeonato Nacional de Clubes Sub 18",
+        "date": "2026-03-31",
+        "totalInscritos": 44,
+        "reservas": 0,
+        "status": "Inscrições fechadas",
+        "tcode": "10899",
+        "ccode": "000",
+        "players": [],
+        "_warning": "counts mismatch: header=44+0, parsed=0+0"
+      },
+      "draws": {
+        "1": {
+          "name": "Campeonato Nacional de Clubes Sub 18",
+          "date": "2026-03-31",
+          "totalJogadores": 44,
+          "groups": [
+            {
+              "teeTime": "10:40",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Martim Pinto Johansen",
+                  "clube": "Vilamoura"
+                },
+                {
+                  "nome": "Diogo Sequeira",
+                  "clube": "Q. Peru"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:50",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Salvador Rodrigues",
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Gabriel Marques Guerreiro",
+                  "clube": "Estela"
+                },
+                {
+                  "nome": "Francisca Ferreira da Costa",
+                  "clube": "Miramar"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:00",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Luis António Silva",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Ryan Dantas",
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Madalena Alexandra Van Zeller",
+                  "clube": "Ilha Terceira"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:10",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "João Maria Ivo de Carvalho",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "Maria Loureiro",
+                  "clube": "Oporto B"
+                },
+                {
+                  "nome": "Ana Bianchi",
+                  "clube": "Lisbon"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:20",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Jack Murtagh",
+                  "clube": "Vilamoura"
+                },
+                {
+                  "nome": "Salvador Paulo Rodrigues",
+                  "clube": "Q. Peru"
+                },
+                {
+                  "nome": "Afonso Silva Pinto",
+                  "clube": "Miramar"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:30",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Manuel Rouco Castro",
+                  "clube": "Estela"
+                },
+                {
+                  "nome": "Guilherme Grabner Moreira",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Maria Cunha",
+                  "clube": "Palheiro"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:40",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Maria Fonseca Azevedo",
+                  "clube": "Ilha Terceira"
+                },
+                {
+                  "nome": "Clara Trindade",
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Maria Francisca Santos",
+                  "clube": "Oporto B"
+                }
+              ]
+            },
+            {
+              "teeTime": "11:50",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Pedro Costa Alemão",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "Manuel Vaz Pinto",
+                  "clube": "Lisbon"
+                },
+                {
+                  "nome": "Francisco Reis",
+                  "clube": "Vilamoura"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:00",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "João Setúbal",
+                  "clube": "Q. Peru"
+                },
+                {
+                  "nome": "Gaspard Maes",
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "André Gonçalves",
+                  "clube": "Palheiro"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:10",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "André Von Hafe",
+                  "clube": "Estela"
+                },
+                {
+                  "nome": "Pedro Ferreira",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Tomás Valadão",
+                  "clube": "Ilha Terceira"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:20",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Filipe Pinheiro",
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Jorge Xavier Graça Silva",
+                  "clube": "Oporto B"
+                },
+                {
+                  "nome": "Paul Devillers",
+                  "clube": "Estoril"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:30",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Rodrigo Sousa Correia",
+                  "clube": "Vilamoura"
+                },
+                {
+                  "nome": "Francisca Vilela",
+                  "clube": "Lisbon"
+                },
+                {
+                  "nome": "Angelina Gao",
+                  "clube": "Q. Peru"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:40",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "José Pedro Miranda",
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Afonso Poiarez",
+                  "clube": "Estela"
+                },
+                {
+                  "nome": "Camila Pazos",
+                  "clube": "Miramar"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:50",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Rafael Ourique Azevedo",
+                  "clube": "Ilha Terceira"
+                },
+                {
+                  "nome": "Henrique Almeida da Silva",
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Henrique Montenegro",
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:00",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Reuben Thapa",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "João Gomes",
+                  "clube": "Lisbon"
+                },
+                {
+                  "nome": "Teresa Ferreira",
+                  "clube": "Oporto B"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "name": "Campeonato Nacional de Clubes Sub 18 D2",
+          "date": "2026-04-01",
+          "totalJogadores": 44,
+          "groups": [
+            {
+              "teeTime": "08:00",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Rafael Ourique Azevedo",
+                  "clube": "Ilha Terceira"
+                },
+                {
+                  "nome": "Ana Bianchi",
+                  "clube": "Lisbon"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:10",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Gabriel Marques Guerreiro",
+                  "clube": "Estela"
+                },
+                {
+                  "nome": "Salvador Rodrigues",
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Maria Loureiro",
+                  "clube": "Oporto B"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:20",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Maria Fonseca Azevedo",
+                  "clube": "Ilha Terceira"
+                },
+                {
+                  "nome": "João Gomes",
+                  "clube": "Lisbon"
+                },
+                {
+                  "nome": "André Von Hafe",
+                  "clube": "Estela"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:30",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Maria Cunha",
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Jorge Xavier Graça Silva",
+                  "clube": "Oporto B"
+                },
+                {
+                  "nome": "Madalena Alexandra Van Zeller",
+                  "clube": "Ilha Terceira"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:40",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Francisca Vilela",
+                  "clube": "Lisbon"
+                },
+                {
+                  "nome": "Afonso Polery",
+                  "clube": "Estela"
+                },
+                {
+                  "nome": "André Gonçalves",
+                  "clube": "Palheiro"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:50",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Gonçalo Maia",
+                  "clube": "Oporto B"
+                },
+                {
+                  "nome": "Tomás Valadão",
+                  "clube": "Ilha Terceira"
+                },
+                {
+                  "nome": "Manuel Vaz Pinto",
+                  "clube": "Lisbon"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Manuel Rouco Castro",
+                  "clube": "Estela"
+                },
+                {
+                  "nome": "José Pedro Miranda",
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Teresa Ferreira",
+                  "clube": "Oporto B"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:10",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Francisca Ferreira da Costa",
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Salvador Paulo Rodrigues",
+                  "clube": "Q. Peru"
+                },
+                {
+                  "nome": "Frederico Almeida da Silva",
+                  "clube": "Belas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:20",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Gaspard Maes",
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Angelina Gao",
+                  "clube": "Q. Peru"
+                },
+                {
+                  "nome": "Clara Trindade",
+                  "clube": "Belas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:30",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Camila Pazos",
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "João Setúbal",
+                  "clube": "Q. Peru"
+                },
+                {
+                  "nome": "Filipe Pinheiro",
+                  "clube": "Belas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:40",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Margarida Alves",
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Diogo Sequeira",
+                  "clube": "Q. Peru"
+                },
+                {
+                  "nome": "Henrique Almeida da Silva",
+                  "clube": "Belas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:50",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Henrique Montenegro",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Martim Pinto Johansen",
+                  "clube": "Vilamoura"
+                },
+                {
+                  "nome": "João Maria Ivo de Carvalho",
+                  "clube": "Estoril"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:00",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Guilherme Grabner Moreira",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Rodrigo Sousa Correia",
+                  "clube": "Vilamoura"
+                },
+                {
+                  "nome": "Paul Devillers",
+                  "clube": "Estoril"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:10",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Luis António Silva",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Jack Murtagh",
+                  "clube": "Vilamoura"
+                },
+                {
+                  "nome": "Pedro Costa Alemão",
+                  "clube": "Estoril"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:20",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Pedro Ferreira",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Francisco Reis",
+                  "clube": "Vilamoura"
+                },
+                {
+                  "nome": "Duarte Soares Franco",
+                  "clube": "Estoril"
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "name": "Campeonato Nacional de Clubes Sub 18 D3",
+          "date": "2026-04-02",
+          "totalJogadores": 44,
+          "groups": [
+            {
+              "teeTime": "08:00",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "João Lucas Fagundes",
+                  "clube": "Ilha Terceira"
+                },
+                {
+                  "nome": "Ana Bianchi",
+                  "clube": "Lisbon"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:10",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Salvador Rodrigues",
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Gonçalo Maia",
+                  "clube": "Oporto B"
+                },
+                {
+                  "nome": "Afonso Poiarez",
+                  "clube": "Estela"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:20",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Tomás Valadão",
+                  "clube": "Ilha Terceira"
+                },
+                {
+                  "nome": "Francisca Vilela",
+                  "clube": "Lisbon"
+                },
+                {
+                  "nome": "Maria Cunha",
+                  "clube": "Palheiro"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:30",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Jorge Xavier Graça Silva",
+                  "clube": "Oporto B"
+                },
+                {
+                  "nome": "Manuel Rouco Castro",
+                  "clube": "Estela"
+                },
+                {
+                  "nome": "Maria Fonseca Azevedo",
+                  "clube": "Ilha Terceira"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:40",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "João Gomes",
+                  "clube": "Lisbon"
+                },
+                {
+                  "nome": "André Gonçalves",
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Maria Francisca Santos",
+                  "clube": "Oporto B"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:50",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "André Von Hafe",
+                  "clube": "Estela"
+                },
+                {
+                  "nome": "Manuel Vaz Pinto",
+                  "clube": "Lisbon"
+                },
+                {
+                  "nome": "Madalena Alexandra Van Zeller",
+                  "clube": "Ilha Terceira"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "José Pedro Miranda",
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Gabriel Marques Guerreiro",
+                  "clube": "Estela"
+                },
+                {
+                  "nome": "Teresa Ferreira",
+                  "clube": "Oporto B"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:10",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Pedro Costa Alemão",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "João Setúbal",
+                  "clube": "Q. Peru"
+                },
+                {
+                  "nome": "Filipe Pinheiro",
+                  "clube": "Belas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:20",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Duarte Soares Franco",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "Diogo Sequeira",
+                  "clube": "Q. Peru"
+                },
+                {
+                  "nome": "Ryan Dantas",
+                  "clube": "Belas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:30",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Reuben Thapa",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "Frederico Almeida da Silva",
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Angelina Gao",
+                  "clube": "Q. Peru"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:40",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "João Maria Ivo de Carvalho",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "Salvador Paulo Rodrigues",
+                  "clube": "Q. Peru"
+                },
+                {
+                  "nome": "Henrique Almeida da Silva",
+                  "clube": "Belas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:50",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Rodrigo Sousa Correia",
+                  "clube": "Vilamoura"
+                },
+                {
+                  "nome": "Eva Silva",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Francisca Ferreira da Costa",
+                  "clube": "Miramar"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:00",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Guilherme Grabner Moreira",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Jack Murtagh",
+                  "clube": "Vilamoura"
+                },
+                {
+                  "nome": "Camila Pazos",
+                  "clube": "Miramar"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:10",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Pedro Ferreira",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Martim Pinto Johansen",
+                  "clube": "Vilamoura"
+                },
+                {
+                  "nome": "Afonso Silva Pinto",
+                  "clube": "Miramar"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:20",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Luis António Silva",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Francisco Reis",
+                  "clube": "Vilamoura"
+                },
+                {
+                  "nome": "Margarida Alves",
+                  "clube": "Miramar"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "000",
+      "tcode": "10898",
+      "name": "Campeonato Nacional de Clubes Sub 14",
+      "date": "2026-03-31",
+      "expectedYear": "2026",
+      "admissions": {
+        "name": "Campeonato Nacional de Clubes Sub 14",
+        "date": "2026-03-31",
+        "totalInscritos": 44,
+        "reservas": 0,
+        "status": "Inscrições fechadas",
+        "tcode": "10898",
+        "ccode": "000",
+        "players": [],
+        "_warning": "counts mismatch: header=44+0, parsed=0+0"
+      },
+      "draws": {
+        "1": {
+          "name": "Campeonato Nacional de Clubes Sub 14",
+          "date": "2026-03-31",
+          "totalJogadores": 44,
+          "groups": [
+            {
+              "teeTime": "08:00",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "João Pedro Frade",
+                  "clube": "Citynorte B"
+                },
+                {
+                  "nome": "Margarida Silva Pinto",
+                  "clube": "Miramar"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:10",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Nuno Palmares Jr.",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "Santiago Dias",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Sabrina Ribeiro Crisóstomo",
+                  "clube": "Vilamoura"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:20",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "William Gao",
+                  "clube": "Q. Peru"
+                },
+                {
+                  "nome": "Maksim Mutalapov",
+                  "clube": "Oporto B"
+                },
+                {
+                  "nome": "Filipe Delicado",
+                  "clube": "Lisbon"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:30",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Afonso Paiva Gonçalves",
+                  "clube": "CityNorte"
+                },
+                {
+                  "nome": "João Balixa",
+                  "clube": "Miramar B"
+                },
+                {
+                  "nome": "Gil Martins Gonçalves",
+                  "clube": "Q. Lagrimas"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:40",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Tomás Rente",
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Pedro Luís Fernandes",
+                  "clube": "Citynorte B"
+                },
+                {
+                  "nome": "Ricardo Castro Ferreira",
+                  "clube": "Estoril"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:50",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Afonso de Sousa Pinto",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "David Filip Jr",
+                  "clube": "Q. Peru"
+                },
+                {
+                  "nome": "Catarina Sousa Conceição",
+                  "clube": "Vilamoura"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Guilherme Pereira",
+                  "clube": "Lisbon"
+                },
+                {
+                  "nome": "Diogo Lima",
+                  "clube": "CityNorte"
+                },
+                {
+                  "nome": "Catarina Loureiro",
+                  "clube": "Oporto B"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:10",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Ricardo Rocha Ferreira",
+                  "clube": "Miramar B"
+                },
+                {
+                  "nome": "Miguel Silva",
+                  "clube": "Q. Lagrimas"
+                },
+                {
+                  "nome": "Francisco Nunes (jr)",
+                  "clube": "Miramar"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:20",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Madalena Policarpo",
+                  "clube": "Citynorte B"
+                },
+                {
+                  "nome": "Ruiqi Li",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "Catarina Valério",
+                  "clube": "Vilamoura"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:30",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Francisco Saraiva",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Diogo Guilherme",
+                  "clube": "Oporto B"
+                },
+                {
+                  "nome": "Beatriz Mendes",
+                  "clube": "Q. Peru"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:40",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "David Stocksreiter Ferreira",
+                  "clube": "Lisbon"
+                },
+                {
+                  "nome": "Tomás Sarmento de Beires",
+                  "clube": "CityNorte"
+                },
+                {
+                  "nome": "Eduardo Rocha Ferreira",
+                  "clube": "Miramar B"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:50",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Vicente Poeira",
+                  "clube": "Q. Lagrimas"
+                },
+                {
+                  "nome": "Henrique Pereira",
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Gil Ribeiro",
+                  "clube": "Citynorte B"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:00",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "João Rocha",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "Tomás Lima Pinto",
+                  "clube": "Vilamoura"
+                },
+                {
+                  "nome": "Sebastião Soares",
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:10",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Mário Novaes Moura",
+                  "clube": "Q. Peru"
+                },
+                {
+                  "nome": "Ricardo Ferreira",
+                  "clube": "Oporto B"
+                },
+                {
+                  "nome": "Diogo Vaz Pinto Jr.",
+                  "clube": "Lisbon"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:20",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Marc Costa",
+                  "clube": "CityNorte"
+                },
+                {
+                  "nome": "José Maria Pereira",
+                  "clube": "Miramar B"
+                },
+                {
+                  "nome": "Guido Martins Gonçalves",
+                  "clube": "Q. Lagrimas"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "name": "Campeonato Nacional de Clubes Sub 14 D2",
+          "date": "2026-04-01",
+          "totalJogadores": 44,
+          "groups": [
+            {
+              "teeTime": "08:00",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Gil Martins Gonçalves",
+                  "clube": "Q. Lagrimas"
+                },
+                {
+                  "nome": "Filipe Delicado",
+                  "clube": "Lisbon"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:10",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Maksim Mutalapov",
+                  "clube": "Oporto B"
+                },
+                {
+                  "nome": "Pedro Luís Fernandes",
+                  "clube": "Citynorte B"
+                },
+                {
+                  "nome": "Tomás Lima Pinto",
+                  "clube": "Vilamoura"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:20",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Miguel Silva",
+                  "clube": "Q. Lagrimas"
+                },
+                {
+                  "nome": "Guilherme Pereira",
+                  "clube": "Lisbon"
+                },
+                {
+                  "nome": "Catarina Loureiro",
+                  "clube": "Oporto B"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:30",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Vicente Poeira",
+                  "clube": "Q. Lagrimas"
+                },
+                {
+                  "nome": "Madalena Policarpo",
+                  "clube": "Citynorte B"
+                },
+                {
+                  "nome": "Sabrina Ribeiro Crisóstomo",
+                  "clube": "Vilamoura"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:40",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Diogo Vaz Pinto Jr.",
+                  "clube": "Lisbon"
+                },
+                {
+                  "nome": "Diogo Guilherme",
+                  "clube": "Oporto B"
+                },
+                {
+                  "nome": "João Pedro Frade",
+                  "clube": "Citynorte B"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:50",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Guido Martins Gonçalves",
+                  "clube": "Q. Lagrimas"
+                },
+                {
+                  "nome": "David Stocksreiter Ferreira",
+                  "clube": "Lisbon"
+                },
+                {
+                  "nome": "Catarina Valério",
+                  "clube": "Vilamoura"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Ricardo Ferreira",
+                  "clube": "Oporto B"
+                },
+                {
+                  "nome": "Gil Ribeiro",
+                  "clube": "Citynorte B"
+                },
+                {
+                  "nome": "Catarina Sousa Conceição",
+                  "clube": "Vilamoura"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:10",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Afonso Paiva Gonçalves",
+                  "clube": "CityNorte"
+                },
+                {
+                  "nome": "David Filip Jr",
+                  "clube": "Q. Peru"
+                },
+                {
+                  "nome": "José Maria Pereira",
+                  "clube": "Miramar B"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:20",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Marc Costa",
+                  "clube": "CityNorte"
+                },
+                {
+                  "nome": "William Gao",
+                  "clube": "Q. Peru"
+                },
+                {
+                  "nome": "Ricardo Rocha Ferreira",
+                  "clube": "Miramar B"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:30",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Diogo Lima",
+                  "clube": "CityNorte"
+                },
+                {
+                  "nome": "Beatriz Mendes",
+                  "clube": "Q. Peru"
+                },
+                {
+                  "nome": "Eduardo Rocha Ferreira",
+                  "clube": "Miramar B"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:40",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Tomás Araújo",
+                  "clube": "CityNorte"
+                },
+                {
+                  "nome": "Mário Novaes Moura",
+                  "clube": "Q. Peru"
+                },
+                {
+                  "nome": "João Balixa",
+                  "clube": "Miramar B"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:50",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Nuno Palmares Jr.",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "Margarida Silva Pinto",
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Lucas Pereira Amorim",
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:00",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "João Rocha",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "Henrique Pereira",
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Santiago Dias",
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:10",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Salvador Ivo de Carvalho",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "Francisco Nunes (jr)",
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Francisco Saraiva",
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:20",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Ricardo Castro Ferreira",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "Raul Pazos (jr)",
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Afonso de Sousa Pinto",
+                  "clube": "Oporto"
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "name": "Campeonato Nacional de Clubes Sub 14 D3",
+          "date": "2026-04-02",
+          "totalJogadores": 44,
+          "groups": [
+            {
+              "teeTime": "08:00",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Guido Martins Gonçalves",
+                  "clube": "Q. Lagrimas"
+                },
+                {
+                  "nome": "Filipe Delicado",
+                  "clube": "Lisbon"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:10",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Ricardo Ferreira",
+                  "clube": "Oporto B"
+                },
+                {
+                  "nome": "Eduardo Rocha Ferreira",
+                  "clube": "Miramar B"
+                },
+                {
+                  "nome": "Catarina Valério",
+                  "clube": "Vilamoura"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:20",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Gil Martins Gonçalves",
+                  "clube": "Q. Lagrimas"
+                },
+                {
+                  "nome": "Guilherme Pereira",
+                  "clube": "Lisbon"
+                },
+                {
+                  "nome": "Diogo Guilherme",
+                  "clube": "Oporto B"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:30",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "José Maria Pereira",
+                  "clube": "Miramar B"
+                },
+                {
+                  "nome": "Valentin Iria",
+                  "clube": "Q. Lagrimas"
+                },
+                {
+                  "nome": "Sabrina Ribeiro Crisóstomo",
+                  "clube": "Vilamoura"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:40",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Diogo Vaz Pinto Jr.",
+                  "clube": "Lisbon"
+                },
+                {
+                  "nome": "Catarina Loureiro",
+                  "clube": "Oporto B"
+                },
+                {
+                  "nome": "Catarina Sousa Conceição",
+                  "clube": "Vilamoura"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:50",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Ricardo Rocha Ferreira",
+                  "clube": "Miramar B"
+                },
+                {
+                  "nome": "Vicente Poeira",
+                  "clube": "Q. Lagrimas"
+                },
+                {
+                  "nome": "David Stocksreiter Ferreira",
+                  "clube": "Lisbon"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:00",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Maksim Mutalapov",
+                  "clube": "Oporto B"
+                },
+                {
+                  "nome": "Tomás Lima Pinto",
+                  "clube": "Vilamoura"
+                },
+                {
+                  "nome": "João Balixa",
+                  "clube": "Miramar B"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:10",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Tomás Sarmento de Beires",
+                  "clube": "CityNorte"
+                },
+                {
+                  "nome": "William Gao",
+                  "clube": "Q. Peru"
+                },
+                {
+                  "nome": "Pedro Luís Fernandes",
+                  "clube": "Citynorte B"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:20",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Afonso Paiva Gonçalves",
+                  "clube": "CityNorte"
+                },
+                {
+                  "nome": "David Filip Jr",
+                  "clube": "Q. Peru"
+                },
+                {
+                  "nome": "Madalena Policarpo",
+                  "clube": "Citynorte B"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:30",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Marc Costa",
+                  "clube": "CityNorte"
+                },
+                {
+                  "nome": "Gil Ribeiro",
+                  "clube": "Citynorte B"
+                },
+                {
+                  "nome": "Beatriz Mendes",
+                  "clube": "Q. Peru"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:40",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Diogo Lima",
+                  "clube": "CityNorte"
+                },
+                {
+                  "nome": "Mário Novaes Moura",
+                  "clube": "Q. Peru"
+                },
+                {
+                  "nome": "João Pedro Frade",
+                  "clube": "Citynorte B"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:50",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Francisco Nunes (jr)",
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Lucas Pereira Amorim",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Ruiqi Li",
+                  "clube": "Estoril"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:00",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "João Rocha",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "Tomás Rente",
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Santiago Dias",
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:10",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Ricardo Castro Ferreira",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "Raul Pazos (jr)",
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Francisco Saraiva",
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:20",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Nuno Palmares Jr.",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "Margarida Silva Pinto",
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Sebastião Soares",
+                  "clube": "Oporto"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "007",
+      "tcode": "11005",
+      "name": "I ABERTO CGSS 2026",
+      "date": "2026-04-03",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
       "ccode": "988",
       "tcode": "10308",
       "name": "3º Torneio do Circuito Drive Tour - Quinta do Vale",
-      "date": "2026-04-03",
+      "date": "2026-04-04",
       "expectedYear": "2026",
       "admissions": {
         "name": "3º Torneio do Circuito Drive Tour - Quinta do Vale",
@@ -83247,10 +85390,22 @@
       }
     },
     {
+      "ccode": "038",
+      "tcode": "10724",
+      "name": "GJG Blue Carpet Junior Classics 2026",
+      "date": "2026-04-06",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
       "ccode": "983",
       "tcode": "10168",
       "name": "4º Torneio Drive Challenge Açores–Terceira-Sub 18",
-      "date": "2026-04-06",
+      "date": "2026-04-07",
       "expectedYear": "2026",
       "admissions": {
         "name": "4º Torneio Drive Challenge Açores–Terceira-Sub 18",
@@ -83346,7 +85501,7 @@
       "ccode": "983",
       "tcode": "10167",
       "name": "4º Torneio Drive Challenge Açores–Terceira-Sub 16",
-      "date": "2026-04-06",
+      "date": "2026-04-07",
       "expectedYear": "2026",
       "admissions": {
         "name": "4º Torneio Drive Challenge Açores–Terceira-Sub 16",
@@ -83442,7 +85597,7 @@
       "ccode": "983",
       "tcode": "10166",
       "name": "4º Torneio Drive Challenge Açores–Terceira-Sub 14",
-      "date": "2026-04-06",
+      "date": "2026-04-07",
       "expectedYear": "2026",
       "admissions": {
         "name": "4º Torneio Drive Challenge Açores–Terceira-Sub 14",
@@ -83489,7 +85644,7 @@
       "ccode": "983",
       "tcode": "10165",
       "name": "4º Torneio Drive Challenge Açores–Terceira-Sub 12",
-      "date": "2026-04-06",
+      "date": "2026-04-07",
       "expectedYear": "2026",
       "admissions": {
         "name": "4º Torneio Drive Challenge Açores–Terceira-Sub 12",
@@ -83536,7 +85691,7 @@
       "ccode": "983",
       "tcode": "10164",
       "name": "4º Torneio Drive Challenge Açores–Terceira-Sub 10",
-      "date": "2026-04-06",
+      "date": "2026-04-07",
       "expectedYear": "2026",
       "admissions": {
         "name": "4º Torneio Drive Challenge Açores–Terceira-Sub 10",
@@ -83597,7 +85752,7 @@
       "ccode": "983",
       "tcode": "10156",
       "name": "2º Torneio Drive Tour Terceira",
-      "date": "2026-04-07",
+      "date": "2026-04-08",
       "expectedYear": "2026",
       "admissions": {
         "name": "2º Torneio Drive Tour Terceira",
@@ -83756,7 +85911,7 @@
       "ccode": "983",
       "tcode": "10163",
       "name": "3º Torneio Drive Challenge Açores–Terceira-Sub 18",
-      "date": "2026-04-08",
+      "date": "2026-04-09",
       "expectedYear": "2026",
       "admissions": {
         "name": "3º Torneio Drive Challenge Açores–Terceira-Sub 18",
@@ -83841,7 +85996,7 @@
       "ccode": "983",
       "tcode": "10162",
       "name": "3º Torneio Drive Challenge Açores–Terceira-Sub 16",
-      "date": "2026-04-08",
+      "date": "2026-04-09",
       "expectedYear": "2026",
       "admissions": {
         "name": "3º Torneio Drive Challenge Açores–Terceira-Sub 16",
@@ -83937,7 +86092,7 @@
       "ccode": "983",
       "tcode": "10161",
       "name": "3º Torneio Drive Challenge Açores–Terceira-Sub 14",
-      "date": "2026-04-08",
+      "date": "2026-04-09",
       "expectedYear": "2026",
       "admissions": {
         "name": "3º Torneio Drive Challenge Açores–Terceira-Sub 14",
@@ -83984,7 +86139,7 @@
       "ccode": "983",
       "tcode": "10160",
       "name": "3º Torneio Drive Challenge Açores–Terceira-Sub 12",
-      "date": "2026-04-08",
+      "date": "2026-04-09",
       "expectedYear": "2026",
       "admissions": {
         "name": "3º Torneio Drive Challenge Açores–Terceira-Sub 12",
@@ -84031,7 +86186,7 @@
       "ccode": "983",
       "tcode": "10159",
       "name": "3º Torneio Drive Challenge Açores–Terceira-Sub 10",
-      "date": "2026-04-08",
+      "date": "2026-04-09",
       "expectedYear": "2026",
       "admissions": {
         "name": "3º Torneio Drive Challenge Açores–Terceira-Sub 10",
@@ -84092,7 +86247,7 @@
       "ccode": "982",
       "tcode": "10201",
       "name": "4º Torneio Drive Tour Madeira – Porto Santo Golfe",
-      "date": "2026-04-10",
+      "date": "2026-04-11",
       "expectedYear": "2026",
       "admissions": {
         "name": "4º Torneio Drive Tour Madeira – Porto Santo Golfe",
@@ -84244,7 +86399,7 @@
       "ccode": "988",
       "tcode": "10302",
       "name": "4º Torneio Drive Challenge Sul–Penina-Sub16",
-      "date": "2026-04-10",
+      "date": "2026-04-11",
       "expectedYear": "2026",
       "admissions": {
         "name": "4º Torneio Drive Challenge Sul–Penina-Sub16",
@@ -84487,7 +86642,7 @@
       "ccode": "988",
       "tcode": "10275",
       "name": "4º Torneio Drive Challenge Sul–Penina-Sub18",
-      "date": "2026-04-10",
+      "date": "2026-04-11",
       "expectedYear": "2026",
       "admissions": {
         "name": "4º Torneio Drive Challenge Sul–Penina-Sub18",
@@ -84597,7 +86752,7 @@
       "ccode": "988",
       "tcode": "10274",
       "name": "4º Torneio Drive Challenge Sul–Penina-Sub14",
-      "date": "2026-04-10",
+      "date": "2026-04-11",
       "expectedYear": "2026",
       "admissions": {
         "name": "4º Torneio Drive Challenge Sul–Penina-Sub14",
@@ -84819,7 +86974,7 @@
       "ccode": "988",
       "tcode": "10273",
       "name": "4º Torneio Drive Challenge Sul–Penina-Sub12",
-      "date": "2026-04-10",
+      "date": "2026-04-11",
       "expectedYear": "2026",
       "admissions": {
         "name": "4º Torneio Drive Challenge Sul–Penina-Sub12",
@@ -85041,7 +87196,7 @@
       "ccode": "988",
       "tcode": "10272",
       "name": "4º Torneio Drive Challenge Sul–Penina-Sub10",
-      "date": "2026-04-10",
+      "date": "2026-04-11",
       "expectedYear": "2026",
       "admissions": {
         "name": "4º Torneio Drive Challenge Sul–Penina-Sub10",
@@ -85253,7 +87408,7 @@
       "ccode": "982",
       "tcode": "10221",
       "name": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 18",
-      "date": "2026-04-11",
+      "date": "2026-04-12",
       "expectedYear": "2026",
       "admissions": {
         "name": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 18",
@@ -85377,7 +87532,7 @@
       "ccode": "982",
       "tcode": "10220",
       "name": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 16",
-      "date": "2026-04-11",
+      "date": "2026-04-12",
       "expectedYear": "2026",
       "admissions": {
         "name": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 16",
@@ -85466,7 +87621,7 @@
       "ccode": "982",
       "tcode": "10219",
       "name": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 14",
-      "date": "2026-04-11",
+      "date": "2026-04-12",
       "expectedYear": "2026",
       "admissions": {
         "name": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 14",
@@ -85590,7 +87745,7 @@
       "ccode": "982",
       "tcode": "10218",
       "name": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 12",
-      "date": "2026-04-11",
+      "date": "2026-04-12",
       "expectedYear": "2026",
       "admissions": {
         "name": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 12",
@@ -85749,7 +87904,7 @@
       "ccode": "982",
       "tcode": "10217",
       "name": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
-      "date": "2026-04-11",
+      "date": "2026-04-12",
       "expectedYear": "2026",
       "admissions": {
         "name": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 10",
@@ -86020,7 +88175,7 @@
       "ccode": "985",
       "tcode": "10205",
       "name": "4º Torneio Drive Tour Tejo – Lisbon SC",
-      "date": "2026-04-11",
+      "date": "2026-04-12",
       "expectedYear": "2026",
       "admissions": {
         "name": "4º Torneio Drive Tour Tejo – Lisbon SC",
@@ -87303,10 +89458,46 @@
       }
     },
     {
+      "ccode": "095",
+      "tcode": "11561",
+      "name": "Junior 9 hole off yellow tee",
+      "date": "2026-04-18",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "095",
+      "tcode": "11560",
+      "name": "30th VILA SOL JUNIOR COMP",
+      "date": "2026-04-18",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "095",
+      "tcode": "11559",
+      "name": "30th VILA SOL JUNIOR COMP - 9 HOLES",
+      "date": "2026-04-18",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
       "ccode": "987",
       "tcode": "10209",
       "name": "4º Torneio Drive Tour Norte – Ponte de Lima",
-      "date": "2026-04-18",
+      "date": "2026-04-19",
       "expectedYear": "2026",
       "admissions": {
         "error": "param-errors",
@@ -87528,45 +89719,9 @@
       }
     },
     {
-      "ccode": "095",
-      "tcode": "11561",
-      "name": "Junior 9 hole off yellow tee",
-      "date": "2026-04-18",
-      "expectedYear": "2026",
-      "admissions": {
-        "error": "param-errors",
-        "players": []
-      },
-      "draws": {}
-    },
-    {
-      "ccode": "095",
-      "tcode": "11560",
-      "name": "30th VILA SOL JUNIOR COMP",
-      "date": "2026-04-18",
-      "expectedYear": "2026",
-      "admissions": {
-        "error": "param-errors",
-        "players": []
-      },
-      "draws": {}
-    },
-    {
-      "ccode": "095",
-      "tcode": "11559",
-      "name": "30th VILA SOL JUNIOR COMP - 9 HOLES",
-      "date": "2026-04-18",
-      "expectedYear": "2026",
-      "admissions": {
-        "error": "param-errors",
-        "players": []
-      },
-      "draws": {}
-    },
-    {
       "ccode": "000",
       "tcode": "10935",
-      "name": "Campeonato Nacional Jovens 10935",
+      "name": "Campeonato Nacional de Jovens Sub 18 H",
       "date": "2026-05-01",
       "expectedYear": "2026",
       "admissions": {
@@ -87735,7 +89890,7 @@
     {
       "ccode": "000",
       "tcode": "10936",
-      "name": "Campeonato Nacional Jovens 10936",
+      "name": "Campeonato Nacional de Jovens Sub 18 S",
       "date": "2026-05-01",
       "expectedYear": "2026",
       "admissions": {
@@ -87814,7 +89969,7 @@
     {
       "ccode": "000",
       "tcode": "10937",
-      "name": "Campeonato Nacional Jovens 10937",
+      "name": "Campeonato Nacional de Jovens Sub 16 H",
       "date": "2026-05-01",
       "expectedYear": "2026",
       "admissions": {
@@ -88113,7 +90268,7 @@
     {
       "ccode": "000",
       "tcode": "10938",
-      "name": "Campeonato Nacional Jovens 10938",
+      "name": "Campeonato Nacional de Jovens Sub 16 S",
       "date": "2026-05-01",
       "expectedYear": "2026",
       "admissions": {
@@ -88232,7 +90387,7 @@
     {
       "ccode": "000",
       "tcode": "10939",
-      "name": "Campeonato Nacional Jovens 10939",
+      "name": "Campeonato Nacional de Jovens Sub 14 H",
       "date": "2026-05-01",
       "expectedYear": "2026",
       "admissions": {
@@ -88521,7 +90676,7 @@
     {
       "ccode": "000",
       "tcode": "10940",
-      "name": "Campeonato Nacional Jovens 10940",
+      "name": "Campeonato Nacional de Jovens Sub 14 S",
       "date": "2026-05-01",
       "expectedYear": "2026",
       "admissions": {
@@ -88590,7 +90745,7 @@
     {
       "ccode": "000",
       "tcode": "10941",
-      "name": "Campeonato Nacional Jovens 10941",
+      "name": "Campeonato Nacional de Jovens Sub 12 H",
       "date": "2026-05-01",
       "expectedYear": "2026",
       "admissions": {
@@ -88789,7 +90944,7 @@
     {
       "ccode": "000",
       "tcode": "10942",
-      "name": "Campeonato Nacional Jovens 10942",
+      "name": "Campeonato Nacional de Jovens Sub 12 S",
       "date": "2026-05-01",
       "expectedYear": "2026",
       "admissions": {
@@ -88888,7 +91043,7 @@
     {
       "ccode": "000",
       "tcode": "10943",
-      "name": "Campeonato Nacional Jovens 10943",
+      "name": "Campeonato Nacional de Jovens Sub 10 H",
       "date": "2026-05-01",
       "expectedYear": "2026",
       "admissions": {
@@ -89087,7 +91242,7 @@
     {
       "ccode": "000",
       "tcode": "10944",
-      "name": "Campeonato Nacional Jovens 10944",
+      "name": "Campeonato Nacional de Jovens Sub 10 S",
       "date": "2026-05-01",
       "expectedYear": "2026",
       "admissions": {
