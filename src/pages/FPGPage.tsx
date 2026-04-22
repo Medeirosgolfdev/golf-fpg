@@ -1091,8 +1091,23 @@ function Content() {
             const uniqueClubes = [...seen.values()];
             setClubesTournaments(uniqueClubes);
             setClubesLoaded(true);
-            // Adicionar ao allT para aparecerem em Todos
-            setTournaments([...allT, ...uniqueClubes]);
+            // Carregar admissions+draws UMA vez e enriquecer TODOS os torneios
+            // (pull-torneios + clubes) para aparecerem com draws/pairings nos
+            // tabs STO, PJA, Clubes e Todos. Os tabs Jovens e Clubes detalhe
+            // fazem o mesmo enrichment nos seus loaders próprios.
+            const admFile = await loadFpgAdmissionsDraws().catch(() => null);
+            const admIdx = admFile ? indexFpgAdmissionsDraws(admFile) : new Map<string, FpgTournamentData>();
+            const enrich = (t: Tournament): Tournament => {
+              const ad = admIdx.get(`${t.ccode}-${t.tcode}`);
+              if (ad) {
+                (t as any)._admissions = ad.admissions;
+                (t as any)._draws = ad.draws;
+              }
+              return t;
+            };
+            const enrichedAllT = allT.map(enrich);
+            const enrichedClubes = uniqueClubes.map(enrich);
+            setTournaments([...enrichedAllT, ...enrichedClubes]);
           }
 
           setLoading(false);
@@ -1129,8 +1144,11 @@ function Content() {
       return fallback ?? "sub14";
     }
 
-    Promise.all(
-      CLUBES_FILES.map(async ({ url, escFallback, year }) => {
+    // Carregar também admissions+draws em paralelo para enriquecer torneios
+    // Clubes (permite mostrar pairings/tee times na UI). Alinhado com loader
+    // Jovens que já faz isto.
+    Promise.all([
+      ...CLUBES_FILES.map(async ({ url, escFallback, year }) => {
         try {
           const r = await fetch(url);
           if (!r.ok) return [];
@@ -1143,9 +1161,13 @@ function Content() {
             players: t.players.map(normalizePlayer),
           }));
         } catch { return []; }
-      })
-    ).then(results => {
+      }),
+      loadFpgAdmissionsDraws().catch(() => null),
+    ]).then(all => {
       if (!alive) return;
+      const admDrawsFile = all[all.length - 1] as Awaited<ReturnType<typeof loadFpgAdmissionsDraws>> | null;
+      const admDrawsIdx = admDrawsFile ? indexFpgAdmissionsDraws(admDrawsFile) : new Map<string, FpgTournamentData>();
+      const results = all.slice(0, -1) as any[];
       // Deduplicar por tcode — se o ficheiro D1 e o combined 2026 tiverem o mesmo torneio, fica o combined
       const seen = new Map<string, Tournament>();
       for (const t of results.flat()) {
@@ -1153,6 +1175,13 @@ function Content() {
         const existing = seen.get(key);
         // Preferir o combined (escFallback null) sobre D1 (escFallback não null)
         if (!existing || (existing as any)._sourceFile?.includes("D1")) {
+          // Enriquecer com admissions/draws do fpg-admissions-draws.json se houver match
+          const idxKey = `${t.ccode}-${(t as any).tcode}`;
+          const ad = admDrawsIdx.get(idxKey);
+          if (ad) {
+            (t as any)._admissions = ad.admissions;
+            (t as any)._draws = ad.draws;
+          }
           seen.set(key, t as Tournament);
         }
       }
@@ -1306,15 +1335,35 @@ function Content() {
   const curClubesYear: string = (curClubes as any)?._clubesYear ?? curClubes?.date?.substring(0, 4) ?? "";
 
   const jovensGroups = useMemo(() => {
+    // Input do tab JOVENS:
+    //   1. jovensTournaments — Nacionais Jovens + sintéticos 2026 Aroeira
+    //   2. Torneios com "Junior" no nome de outras fontes (Vila Sol Junior,
+    //      GJG Junior Classics, ESTORIL Junior Open, Academia Junior, etc.) —
+    //      têm pill JUNIOR na sidebar e faz sentido também aparecerem aqui
+    //      já que são competições juvenis, mesmo que de clubes não-FPG.
+    //      PJA e Greatgolf já têm os seus tabs próprios — excluídos por
+    //      terem pill PJA em vez de pill JUNIOR genérica.
+    const jovensKeys = new Set(
+      jovensTournaments.map(j => (j.ccode || "") + "/" + String(j.tcode || ""))
+    );
+    const juniorExtras = tournaments.filter(t => {
+      if (!/\bjunior\b/i.test(t.name || "")) return false;
+      if (/PJA/i.test(t.name || "")) return false;                // já em tab PJA
+      if (/greatgolf.*junior/i.test(t.name || "")) return false;  // já em tab PJA (excepção)
+      const k = (t.ccode || "") + "/" + String(t.tcode || "");
+      return !jovensKeys.has(k);
+    });
+    const combined = [...jovensTournaments, ...juniorExtras];
+
     // Para torneios pré-jogo o Manuel só aparece em _admissions.players ou
     // _draws.*.groups.*.players. `tournamentHasManuel` cobre todos os sítios.
-    const filtered = jovensTournaments
+    const filtered = combined
       .filter(t => !filterManuel || tournamentHasManuel(t))
       .filter(t => !yearFilter || ((t as any)._jovensYear ?? t.date?.substring(0, 4)) === yearFilter)
       .filter(t => matchesSearch(t));
     return buildJovensGroups(filtered);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [jovensTournaments, filterManuel, yearFilter, searchTerm]);
+  }, [jovensTournaments, tournaments, filterManuel, yearFilter, searchTerm]);
 
   const jovensByYear = useMemo(() => {
     const m: Record<string, JovensGroup[]> = {};
@@ -1535,11 +1584,16 @@ function Content() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [displayList, filterManuel, activeYear, searchTerm]);
 
-  // Lista apenas PJA (para o modo circuito) — exclui explicitamente SSerra
+  // Lista PJA (modo circuito) — apenas torneios com "PJA" no nome ou
+  // registados em TOURN_PILLS como PJA. Exclui SSerra (tab próprio).
+  //
+  // Excepção: "Greatgolf Junior Open" não tem "PJA" no nome mas é considerado
+  // parte do circuito PJA pela Mariana — incluído explicitamente.
   const pjaList = useMemo(
     () => displayList.filter(t => {
       if (t.ccode === SSERRA_CCODE) return false;  // SSerra tem tab próprio
       if (/PJA/i.test(t.name)) return true;
+      if (/greatgolf.*junior/i.test(t.name)) return true;
       const tcodes = t.tcode?.split("+") || [];
       return tcodes.some(tc => TOURN_PILLS[tc] === "PJA");
     }),
