@@ -7,7 +7,7 @@ import { useSort } from "../hooks/useSort";
 import ScoreCircle from "./ScoreCircle";
 import TeePill from "./TeePill";
 import SortableHdr from "./SortableHdr";
-import { SC } from "../utils/scoreDisplay";
+import { SC, fmtStb, fmtSdVal } from "../utils/scoreDisplay";
 
 export function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesData, activeTee, onSelectTee }: {
   ecList: EclecticEntry[]; ecDet: Record<string, EclecticEntry>;
@@ -94,14 +94,21 @@ export function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesD
           .filter(r => normKey(r.tee || "") === ec.teeKey && holesData[r.scoreId])
           .sort((a, b) => b.dateSort - a.dateSort);
 
+        // Info comum a todas as rondas deste tee: distância (se todas iguais), buracos
+        const metersSet = Array.from(new Set(teeRounds.map(r => r.meters).filter((m): m is number => m != null && m > 0)));
+        const commonMeters = metersSet.length === 1 ? metersSet[0] : null;
+
         return (
           <div key={ec.teeKey} className={`ecPillBlock ${isActive ? "ecActive" : ""} overflow-hidden br-lg mt-8`}
             style={{ border: isActive ? "2px solid " + hx : "1px solid var(--border-light)" }}>
-            <div className="pointer fw-600 fs-12" style={{ padding: "6px 10px", background: isActive ? hx + "10" : "var(--bg-detail)" }}
+            <div className="pointer fw-600 fs-12 ecPillHeader" style={{ background: isActive ? hx + "10" : "var(--bg-detail)" }}
               onClick={() => onSelectTee(ec.teeKey)}>
               <TeePill name={ec.teeName} />{" "}
               <span className="cb-blue-800">{ec.totalGross}</span>
               <span className="muted ml-6">par {ec.totalPar}</span>
+              {commonMeters && <span className="muted ml-6">· {commonMeters}m</span>}
+              <span className="muted ml-6">· {hc} buracos</span>
+              <span className="muted ml-6">· {teeRounds.length} rondas</span>
             </div>
             {/* Eclectic hole-by-hole table */}
             <div className="scroll-x">
@@ -114,6 +121,9 @@ export function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesD
                     {!is9 && Array.from({ length: 9 }, (_, i) => <th key={i + 10}>{i + 10}</th>)}
                     {!is9 && <th className="col-in">IN</th>}
                     <th className="col-total">TOT</th>
+                    <th className="ec-extra">HCP</th>
+                    <th className="ec-extra">STB</th>
+                    <th className="ec-extra">SD</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -125,6 +135,9 @@ export function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesD
                     {!is9 && Array.from({ length: 9 }, (_, i) => <td key={i + 9}>{parArr[i + 9] ?? ""}</td>)}
                     {!is9 && <td className="col-in fw-700">{sumArr(parArr, 9, 18)}</td>}
                     <td className="col-total fw-900">{sumArr(parArr, 0, hc)}</td>
+                    <td className="ec-extra muted">—</td>
+                    <td className="ec-extra muted">—</td>
+                    <td className="ec-extra muted">—</td>
                   </tr>
                   {/* Eclectic row */}
                   <tr className="bt-heavy">
@@ -140,6 +153,9 @@ export function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesD
                     ))}
                     {!is9 && <td className="col-in fw-700">{sumArr(ec.holes.map(h => h.best), 9, 18)}</td>}
                     <td className="col-total fw-900 fs-13">{ec.totalGross}</td>
+                    <td className="ec-extra muted">—</td>
+                    <td className="ec-extra muted">—</td>
+                    <td className="ec-extra muted">—</td>
                   </tr>
                   {/* Individual round rows */}
                   {teeRounds.map(tr => {
@@ -147,6 +163,7 @@ export function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesD
                     if (!trH?.g) return null;
                     const trG = trH.g;
                     const trDate = tr.date ? tr.date.substring(0, 5).replace("-", "/") : "";
+                    const sdInfo = fmtSdVal(tr);
                     return (
                       <tr key={tr.scoreId} style={{ background: hx + "0A" }}>
                         <td className="row-label fs-10">
@@ -161,6 +178,9 @@ export function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesD
                         ))}
                         {!is9 && <td className="col-in fw-600 fs-10">{sumArr(trG, 9, hc)}</td>}
                         <td className="col-total fs-11 fw-700">{sumArr(trG, 0, hc)}</td>
+                        <td className="ec-extra fs-11">{tr.hi ?? "—"}</td>
+                        <td className="ec-extra fs-11">{fmtStb(tr.stb, tr.holeCount) || "—"}</td>
+                        <td className={`ec-extra fs-11 fw-700 ${sdInfo.cls}`}>{sdInfo.text || "—"}</td>
                       </tr>
                     );
                   })}

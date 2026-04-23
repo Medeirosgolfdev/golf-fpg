@@ -463,8 +463,24 @@ function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId 
               )}
               {/* Tee Summary — só no modo não-análise (no modo análise o EclecticSection já cobre) */}
               {!isAnalysis && <TeeSummaryTable rounds={course.rounds} />}
-              {/* Rounds table */}
+              {/* Rounds table — no modo análise com tee activo, as rondas com scorecard já aparecem no
+                  bloco do Eclético (com HCP/Stb/SD à direita). Aqui mostramos apenas rondas SEM scorecard
+                  (para não perder dados) e todas as rondas no modo não-análise ou sem tee seleccionado. */}
+              {(() => {
+                const hasCardIds = new Set(
+                  isAnalysis && activeTee
+                    ? course.rounds.filter(r => normKey(r.tee || "") === activeTee && data.HOLES[r.scoreId]).map(r => r.scoreId)
+                    : []
+                );
+                const rowsToShow = isAnalysis && activeTee
+                  ? roundsView.filter(r => !hasCardIds.has(r.scoreId))
+                  : roundsView;
+                if (rowsToShow.length === 0) return null;
+                return (
               <div className="mt-8">
+                {isAnalysis && activeTee && (
+                  <div className="muted fs-11 mb-4">Rondas sem scorecard detalhado neste tee:</div>
+                )}
                 <table className="dt-compact">
                   <colgroup>
                     <col className="col-p17" /><col className="col-p8" /><col className="col-p9" />
@@ -479,7 +495,7 @@ function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId 
                     </tr>
                   </thead>
                   <tbody>
-                    {roundsView.map(r => {
+                    {rowsToShow.map(r => {
                       return (
                         <RoundRow key={r.scoreId} r={r} data={data} courseName={course.course}
                           isOpen={openScorecardId === r.scoreId}
@@ -489,6 +505,8 @@ function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId 
                   </tbody>
                 </table>
               </div>
+                );
+              })()}
             </div>
           </td>
         </tr>

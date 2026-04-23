@@ -10,36 +10,38 @@ function HoleHeatmap({ holes, hc }: { holes: HoleStatEntry[]; hc: number }) {
   const rows: HoleStatEntry[][] = is9 ? [holes.slice(0, 9)] : [holes.slice(0, 9), holes.slice(9, 18)];
   const labels = is9 ? [""] : ["F9", "B9"];
 
-  // Cor do fundo consoante strokesLost (gradient verde→neutro→vermelho)
+  // Cor do fundo consoante strokesLost — gradiente suave (sem saturação cheia)
+  // para dar leitura rápida sem ficar berrante.
   const cellStyle = (sl: number, n: number): React.CSSProperties => {
     if (n === 0) return { background: "var(--bg-detail)", color: "var(--text-muted)" };
-    if (sl <= -0.3) return { background: "var(--color-good)", color: "#fff" };
-    if (sl <= -0.1) return { background: "var(--color-good-alpha)", color: "var(--text-1)" };
+    if (sl <= -0.2) return { background: "var(--color-good-alpha)", color: "var(--text-1)", borderColor: "var(--color-good)" };
     if (sl <= 0.15) return { background: "var(--bg-detail)", color: "var(--text-1)" };
     if (sl <= 0.4) return { background: "var(--color-warn-alpha)", color: "var(--text-1)" };
     if (sl <= 0.7) return { background: "var(--color-danger-alpha)", color: "var(--text-1)" };
-    return { background: "var(--color-danger)", color: "#fff" };
+    return { background: "var(--color-danger-alpha)", color: "var(--color-danger-dark)", borderColor: "var(--color-danger)" };
   };
 
   return (
     <div className="mt-10">
-      <div className="h-sm">🗺️ Mapa de calor por buraco <span className="muted fs-11">(verde = forte, vermelho = perdes pancadas)</span></div>
+      <div className="h-sm">Mapa de calor por buraco <span className="muted fs-11">(verde = forte, vermelho = perdes pancadas)</span></div>
       <div className="heatmap-wrap">
         {rows.map((row, ri) => (
-          <div key={ri} className="heatmap-row">
+          <div key={ri} className="heatmap-row-container">
             {!is9 && <div className="heatmap-rowlabel">{labels[ri]}</div>}
-            {row.map(h => {
-              const sl = h.strokesLost ?? 0;
-              const vp = h.avg != null && h.par != null ? h.avg - h.par : null;
-              return (
-                <div key={h.h} className="heatmap-cell" style={cellStyle(sl, h.n)}
-                     title={h.n ? `Buraco ${h.h} · Par ${h.par} · média ${h.avg?.toFixed(1)} · ${fD(sl)} panc. perd./volta` : `Buraco ${h.h} — sem dados`}>
-                  <div className="heatmap-hole">{h.h}</div>
-                  <div className="heatmap-par">Par {h.par ?? "—"}</div>
-                  <div className="heatmap-vp">{vp != null ? fmtSign(vp, 1) : "—"}</div>
-                </div>
-              );
-            })}
+            <div className="heatmap-cells">
+              {row.map(h => {
+                const sl = h.strokesLost ?? 0;
+                const vp = h.avg != null && h.par != null ? h.avg - h.par : null;
+                return (
+                  <div key={h.h} className="heatmap-cell" style={cellStyle(sl, h.n)}
+                       title={h.n ? `Buraco ${h.h} · Par ${h.par} · média ${h.avg?.toFixed(1)} · ${fD(sl)} panc. perd./volta` : `Buraco ${h.h} — sem dados`}>
+                    <div className="heatmap-hole">{h.h}</div>
+                    <div className="heatmap-par">Par {h.par ?? "—"}</div>
+                    <div className="heatmap-vp">{vp != null ? fmtSign(vp, 1) : "—"}</div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         ))}
       </div>
@@ -330,16 +332,16 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
             }
           </div>
         </div>
+        </details>
       )}
 
       {/* Scoring distribution chart (bar chart vertical) */}
       <ScoreDistributionChart td={td} />
 
-      {/* Hole-by-hole table */}
-      <div className="mt-4">
-        <div className="card">
-          <div className="sc-bar-head"><span>Detalhe Buraco a Buraco</span></div>
-          <div className="scroll-x">
+      {/* Hole-by-hole table (colapsado por defeito) */}
+      <details className="details-block mt-10">
+        <summary className="details-summary">📋 Detalhe buraco a buraco <span className="muted fs-11">(tabela completa · clica para abrir)</span></summary>
+        <div className="scroll-x mt-6">
             <table className="w-full fs-11 bc-collapse">
               <tbody>
                 {/* Buraco row */}
@@ -461,8 +463,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
               </tbody>
             </table>
           </div>
-        </div>
-      </div>
+      </details>
     </div>
   );
 }
