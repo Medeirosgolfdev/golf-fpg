@@ -57,7 +57,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
     <>
       {/* Eclectic row */}
       <tr>
-        <td className="row-label fw-700 fs-10" style={{ color: "var(--chart-2)", ...ecBorder }}>Eclético</td>
+        <td className="row-label par-label" style={ecBorder}>Eclético</td>
         {Array.from({ length: holeCount }, (_, h) => {
           const ev = ecArr[h];
           const cls = scClass(ev, parArr[h]);
@@ -104,7 +104,7 @@ function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
 
       {/* Δ (delta) row */}
       <tr className="bg-detail">
-        <td className="row-label fw-700 fs-10 c-text-3">Δ</td>
+        <td className="row-label par-label">Δ</td>
         {Array.from({ length: holeCount }, (_, h) => {
           const gv = gross[h];
           const ev = ecArr[h];

@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { useSort } from "../hooks/useSort";
 import { escPillCls, type EscLookup } from "../utils/playerUtils";
 import { ESC_STYLE, PillBadge, RoundPill } from "./PillBadge";
@@ -68,6 +69,13 @@ interface PJATournCol {
   isGF: boolean;
   rounds: PJARound[];
   colSpan: number;
+  /** ccode do torneio — usado para construir URL `/FPG/torneio/{ccode}-{tcode}`. */
+  ccode?: string;
+  /** tcode (ou tcode+tcode para sintéticos). */
+  tcode?: string;
+  /** Nº real de rondas do torneio — pode ser maior que `rounds.length` quando
+   *  alguma ronda está ocultada por regra (ex: GG Main 3R → mostra só R2+R3). */
+  totalRondas?: number;
 }
 
 interface PJARoundResult {
@@ -171,8 +179,12 @@ const PName = ({ name, fedCode, playersDB }: { name: string; fedCode?: string; p
    Main Component
    ───────────────────────────────────────────── */
 
+export interface PjaPdfEntry {
+  fed: string; name: string; rounds: number; pts: number; pos: number;
+}
+
 export function PJARankingView({
-  pjaList, playersDB, loading, pjaMembersByYear,
+  pjaList, playersDB, loading, pjaMembersByYear, pjaPdfSnapshotByYear, externalFilterName,
 }: {
   pjaList: Tournament[];
   playersDB: PlayersDB;
@@ -180,6 +192,12 @@ export function PJARankingView({
   /** fedCodes inscritos no circuito PJA por ano. Jogadores que pontuaram mas
    *  não constam aqui para o ano corrente aparecem na tabela "Não inscritos". */
   pjaMembersByYear?: Record<string, string[]>;
+  /** Snapshot do PDF oficial por ano — activa colunas Δ pts / Δ rondas na tabela
+   *  para destacar disparidades entre o nosso cálculo e o PDF. */
+  pjaPdfSnapshotByYear?: Record<string, PjaPdfEntry[]>;
+  /** Filtro de nome/clube externo (normalmente da toolbar da FPGPage).
+   *  Quando definido, sobrepõe o filterName interno (inline fallback). */
+  externalFilterName?: string;
 }) {
   const years = useMemo(() => {
     const s = new Set<string>();
@@ -192,17 +210,45 @@ export function PJARankingView({
 
   const { sortKey, sortDir, toggleSort: handleSort, resetSort: resetYearSort } = useSort<string>("total", "desc");
   const [filterEsc, setFilterEsc] = useState<string[]>([]);
-  const [filterName, setFilterName] = useState("");
+  const [internalFilterName, setFilterName] = useState("");
+  // Quando a FPGPage passa um search externo (via toolbar unificada), usa-o;
+  // senão cai no state interno (uso standalone). Trim+lowercase feito nos consumers.
+  const filterName = (externalFilterName ?? internalFilterName) || "";
+  /** Jogador seleccionado via clique na linha (fedCode ou "name:..."). Clicar
+   *  outra vez no mesmo jogador desmarca. Permite destacar visualmente e
+   *  comparar mais facilmente. */
+  const [selectedKey, setSelectedKey] = useState<string | null>(null);
 
 
   function toggleEsc(e: string) {
     setFilterEsc(prev => prev.includes(e) ? prev.filter(x => x !== e) : [...prev, e]);
   }
 
+  // Categoria de um torneio para ordenar por grupo na tabela.
+  // Ordem: Madeira → Sul → Tejo → Norte → Açores → Aquapor → Greatgolf →
+  // PJA exclusivos. Dentro de cada grupo, ordena por data ascendente.
+  const tournSortKey = (t: Tournament): string => {
+    const n = t.name || "";
+    const date = t.date || "";
+    const evType = classifyPJAEvent(t);
+    // DT por região
+    if (evType === "DT") {
+      if (/Madeira/i.test(n))  return `1_madeira_${date}`;
+      if (/\bSul\b|Laguna|Vila Sol|Penina|Vale.*—|Quinta do Vale|Pinheiros Altos/i.test(n)) return `2_sul_${date}`;
+      if (/\bTejo\b|Montado|Sto\.?\s*Est[eê]v[aã]o|Santo Est[eê]v[aã]o|Lisbon|Jamor|Belas/i.test(n)) return `3_tejo_${date}`;
+      if (/\bNorte\b|Estela|Vale Pis[aã]o|Ponte de Lima|Vidago/i.test(n)) return `4_norte_${date}`;
+      if (/Terceira|A[çc]ores/i.test(n)) return `5_acores_${date}`;
+      return `6_dt_outros_${date}`;
+    }
+    if (evType === "AQUAPOR") return `7_aquapor_${date}`;
+    if (evType && evType.startsWith("GG")) return `8_gg_${date}`;
+    return `9_pja_excl_${date}`;  // PJA exclusivo / torneios manuais
+  };
+
   const yearTournaments: Tournament[] = useMemo(() =>
     pjaList
       .filter(t => (t.date || "").startsWith(year))
-      .sort((a, b) => (a.date || "").localeCompare(b.date || ""))
+      .sort((a, b) => tournSortKey(a).localeCompare(tournSortKey(b)))
   , [pjaList, year]);
 
   const tournCols: PJATournCol[] = useMemo(() => {
@@ -213,15 +259,38 @@ export function PJARankingView({
       const isGF = isGFTournament(t);
       const tournKey = t.tcode + "_" + t.date;
 
-      if (isSynth && subRounds.length > 1) {
-        const rounds: PJARound[] = subRounds.map((sr, i) => ({
-          roundKey: tournKey + "_r" + (i + 1),
-          label: "R" + (i + 1),
-          date: sr.date || t.date,
-        }));
-        cols.push({ tournKey, name: t.name, date: t.date || "", campo: t.campo || "", isGF, rounds, colSpan: rounds.length * 2 });
+      // Descobrir nº de rondas: preferencialmente pelos subRounds sintéticos,
+      // senão por t.rounds ou pelo máximo de roundScores de algum jogador.
+      let nR = 1;
+      if (isSynth && subRounds.length > 1) nR = subRounds.length;
+      else if (t.rounds && t.rounds > 1) nR = t.rounds;
+      else {
+        for (const p of (t.players || [])) {
+          const rs = (p as any).roundScores;
+          if (rs && rs.length > nR) nR = rs.length;
+        }
+      }
+
+      const ccode = (t as any).ccode || "";
+      const tcode = String((t as any).tcode || "");
+      // GG Main 3R em 2026+: R1 nunca conta (regulamento §2.5 — só os últimos 2
+      // dias contam). Ocultar a coluna R1 e mostrar só R2/R3.
+      const evType = classifyPJAEvent(t);
+      const hideR1 = (year >= "2026") && evType === "GG_MAIN" && nR === 3;
+
+      if (nR > 1) {
+        const rounds: PJARound[] = [];
+        for (let i = 0; i < nR; i++) {
+          if (hideR1 && i === 0) continue;  // R1 ocultada
+          rounds.push({
+            roundKey: tournKey + "_r" + (i + 1),
+            label: "R" + (i + 1),
+            date: (subRounds[i]?.date) || t.date || "",
+          });
+        }
+        cols.push({ tournKey, name: t.name, date: t.date || "", campo: t.campo || "", isGF, rounds, colSpan: rounds.length * 2, ccode, tcode, totalRondas: nR });
       } else {
-        cols.push({ tournKey, name: t.name, date: t.date || "", campo: t.campo || "", isGF, rounds: [{ roundKey: tournKey + "_r1", label: "", date: t.date || "" }], colSpan: 2 });
+        cols.push({ tournKey, name: t.name, date: t.date || "", campo: t.campo || "", isGF, rounds: [{ roundKey: tournKey + "_r1", label: "", date: t.date || "" }], colSpan: 2, ccode, tcode, totalRondas: 1 });
       }
     }
     return cols;
@@ -412,6 +481,59 @@ export function PJARankingView({
     return list && list.length ? new Set(list) : null;
   }, [pjaMembersByYear, year]);
 
+  // Filtrar tournCols para esconder colunas irrelevantes ao ranking:
+  //  - Esconder torneios onde NENHUM inscrito PJA está nem registado nos
+  //    players, nem em `_admissions`, nem em `_draws` (ex: DT Açores Terceira,
+  //    DT4 Norte Ponte de Lima — só jogaram não-inscritos).
+  //  - Mostrar torneios FUTUROS onde há inscritos PJA em `_admissions` / `_draws`
+  //    mesmo sem rondas ainda (ex: PJA Aroeira 2 que vai acontecer).
+  //  - Mostrar torneios PASSADOS onde algum inscrito PJA jogou.
+  const visibleTournCols = useMemo(() => {
+    const inscritosSetLocal = (() => {
+      const list = pjaMembersByYear?.[year];
+      return list && list.length ? new Set(list) : null;
+    })();
+    const hasPjaInscrito = (t: Tournament): boolean => {
+      if (!inscritosSetLocal) return true;  // sem lista, assume que sim
+      // 1. Players com grossTotal (torneio já jogado)
+      for (const p of (t.players || [])) {
+        if (p.fedCode && inscritosSetLocal.has(p.fedCode)) return true;
+      }
+      // 2. Admissions (torneio futuro com inscrições)
+      const adm = (t as any)._admissions?.players as Array<{fed?: string|null}> | undefined;
+      if (adm) {
+        for (const p of adm) {
+          if (p.fed && inscritosSetLocal.has(p.fed)) return true;
+        }
+      }
+      // 3. Draws (pre-jogo)
+      const dr = (t as any)._draws as Record<string, { groups?: Array<{ players?: Array<{ fed?: string|null }> }> }> | undefined;
+      if (dr) {
+        for (const round of Object.values(dr)) {
+          for (const g of (round?.groups || [])) {
+            for (const p of (g.players || [])) {
+              if (p.fed && inscritosSetLocal.has(p.fed)) return true;
+            }
+          }
+        }
+      }
+      return false;
+    };
+    return tournCols.filter(tc => {
+      const t = yearTournaments.find(x => (x.tcode + "_" + x.date) === tc.tournKey);
+      return !t || hasPjaInscrito(t);
+    });
+  }, [tournCols, yearTournaments, pjaMembersByYear, year]);
+
+  // Map fedCode → entry do PDF oficial (para comparar e destacar disparidades).
+  const pdfByFed = useMemo(() => {
+    const map = new Map<string, PjaPdfEntry>();
+    const arr = pjaPdfSnapshotByYear?.[year];
+    if (arr) for (const e of arr) if (e.fed) map.set(String(e.fed), e);
+    return map;
+  }, [pjaPdfSnapshotByYear, year]);
+  const hasPdfSnapshot = pdfByFed.size > 0;
+
   // Divide em 2 grupos: inscritos (ranking principal) e não-inscritos (lista
   // à parte, só para referência — estes não competem pelo troféu PJA).
   const { rowsInscritos, rowsNaoInscritos } = useMemo(() => {
@@ -472,48 +594,66 @@ export function PJARankingView({
 
 
 
+  // Slot na toolbar principal da FPGPage. Se existir, renderizamos os filtros
+  // via createPortal para lá (evita ter 2 toolbars empilhadas). Se não existir
+  // (fallback), mostramos a toolbar dentro do próprio componente.
+  const [toolbarSlot, setToolbarSlot] = useState<HTMLElement | null>(null);
+  useEffect(() => {
+    const el = document.getElementById("pja-toolbar-slot");
+    setToolbarSlot(el);
+  }, []);
+
   if (loading && pjaList.length === 0) return <LoadingState size="sm" />;
   if (!year) return <div className="muted fs-11" style={{ padding: 24 }}>Sem torneios PJA.</div>;
 
-  return (
-    <div>
-      <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 16px 10px", flexWrap: "wrap", borderBottom: "1px solid var(--border)" }}>
-        <span className="fw-800 fs-14">Ranking PJA</span>
-        <div style={{ display: "flex", gap: 6 }}>
-          {years.map(yr => (
-            <button key={yr}
-              className={"tourn-tab tourn-tab-sm" + (yr === year ? " active" : "")}
-              onClick={() => { setActiveYear(yr); setFilterEsc([]); setFilterName(""); resetYearSort(); }}
-              style={yr === year ? {} : { background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}>
-              {yr}
-            </button>
-          ))}
-        </div>
-        <span className="muted fs-11 ml-4">
-          Par=25pts · top 14 rondas · GF×1,5
-          {year >= "2026" && " · GG Main só R2+R3 · Aquapor só para quem não joga DT"}
-        </span>
+  const toolbarInner = <>
+    <div style={{ display: "flex", gap: 4 }}>
+      {years.map(yr => (
+        <button key={yr}
+          className={"tourn-tab tourn-tab-sm" + (yr === year ? " active" : " tourn-tab-muted")}
+          onClick={() => { setActiveYear(yr); setFilterEsc([]); setFilterName(""); resetYearSort(); }}
+          style={{ flexShrink: 0 }}>
+          {yr}
+        </button>
+      ))}
+    </div>
+    {/* Search removido — a FPGPage renderiza um search único na sua toolbar
+        e passa o valor via `externalFilterName`. Fallback inline quando o
+        componente é usado standalone (sem externalFilterName). */}
+    {externalFilterName === undefined && (
+      <div className="shrink-0" style={{ position: "relative" }}>
+        <span style={{ position: "absolute", left: 7, top: "50%", transform: "translateY(-50%)", fontSize: 11, color: "var(--text-muted)", pointerEvents: "none" }}>🔍</span>
+        <input type="text" placeholder="Nome ou clube…" value={internalFilterName}
+          onChange={e => setFilterName(e.target.value)}
+          className="input-search" style={{ width: 140 }} />
       </div>
+    )}
+    {availEscs.length > 1 && <span style={{ color: "var(--border)" }}>|</span>}
+    {availEscs.map(e => {
+      const k = e.toLowerCase().replace(/[\s-]/g, "");
+      const s = ESC_STYLE[k];
+      return <FilterChip key={e} active={filterEsc.includes(e)} onClick={() => toggleEsc(e)} color={s?.bg}>{e}</FilterChip>;
+    })}
+    {(filterEsc.length > 0 || filterName) && <>
+      <span className="muted fs-10">{sortedRows.length} de {allRows.length}</span>
+      <FilterChip active={false} onClick={() => { setFilterEsc([]); if (externalFilterName === undefined) setFilterName(""); }}>✕ limpar</FilterChip>
+    </>}
+    <span className="muted fs-10 ml-auto" title="Regras de pontuação PJA 2026 aplicadas" style={{ whiteSpace: "nowrap" }}>
+      Par=25pts · top 14 · GF×1,5
+      {year >= "2026" && " · GG Main R2+R3"}
+      {hasPdfSnapshot && <> · <span style={{ color: "var(--color-danger-dark, #991B1B)" }}>Δ PDF</span></>}
+    </span>
+    <span className="chip">{allRows.length} jog · {visibleTournCols.length} torn</span>
+  </>;
 
-      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 6, padding: "8px 16px", borderBottom: "1px solid var(--border)" }}>
-        <div className="shrink-0" style={{ position: "relative" }}>
-          <span style={{ position: "absolute", left: 7, top: "50%", transform: "translateY(-50%)", fontSize: 11, color: "var(--text-muted)", pointerEvents: "none" }}>🔍</span>
-          <input type="text" placeholder="Nome ou clube…" value={filterName}
-            onChange={e => setFilterName(e.target.value)}
-            className="input-search" style={{ width: 150 }} />
-        </div>
-        {availEscs.length > 1 && <span style={{ color: "var(--border)" }}>|</span>}
-        {availEscs.map(e => {
-          const k = e.toLowerCase().replace(/[\s-]/g, "");
-          const s = ESC_STYLE[k];
-          return <FilterChip key={e} active={filterEsc.includes(e)} onClick={() => toggleEsc(e)} color={s?.bg}>{e}</FilterChip>;
-        })}
-        {(filterEsc.length > 0 || filterName) && <>
-          <span className="muted fs-10">{sortedRows.length} de {allRows.length}</span>
-          <FilterChip active={false} onClick={() => { setFilterEsc([]); setFilterName(""); }}>✕ limpar</FilterChip>
-        </>}
-        <span className="chip ml-auto" >{allRows.length} jogadores · {tournCols.length} torneios</span>
-      </div>
+  return (
+    <div style={{ paddingTop: 12 }}>
+      {/* Filtros: via portal para a toolbar da FPGPage se disponível, senão
+          inline como toolbar própria (fallback para usos standalone). */}
+      {toolbarSlot
+        ? createPortal(toolbarInner, toolbarSlot)
+        : <div className="toolbar" style={{ flexWrap: "wrap", gap: 6 }}>{toolbarInner}</div>
+      }
 
       {sortedRows.length === 0
         ? <EmptyState size="sm" message={`Sem dados para ${year}.`} />
@@ -526,21 +666,28 @@ export function PJARankingView({
               <CSortTh k="escalao" s={sortKey} d={sortDir} on={handleSort} className="cs-esc">Esc.</CSortTh>
               <CSortTh k="club"    s={sortKey} d={sortDir} on={handleSort} className="cs-club cs-id-end">Clube</CSortTh>
             </>}
-            groups={tournCols.map(tc => ({
+            groups={visibleTournCols.map(tc => ({
               key: tc.tournKey,
               headerTh: (() => {
                 const { circuito, local } = shortTournName(tc.name, tc.campo);
                 // Tipografia uniforme: mesma font-size e font-weight nas 3 linhas.
                 // Só a cor distingue hierarquia (título mais escuro; local+data mais muted).
                 const lineStyle: React.CSSProperties = {
-                  fontSize: 11,
+                  fontSize: 10,
                   fontWeight: 600,
-                  lineHeight: 1.25,
+                  lineHeight: 1.2,
                   whiteSpace: "normal",
-                  wordBreak: "break-word",
+                  textAlign: "center",
                 };
-                return (
-                  <th key={tc.tournKey} colSpan={tc.colSpan} className="cs-grp" style={{ padding: "4px 3px", minWidth: tc.colSpan * 44, verticalAlign: "top" }} title={tc.name + (tc.campo ? " — " + tc.campo : "")}>
+                // Link para o torneio — base URL depende do tipo:
+                //  - Drive Tour / Aquapor → /drive/torneio/... (estão na DrivePage)
+                //  - Greatgolf, PJA exclusivos, torneios manuais → /FPG/torneio/...
+                const firstTcode = (tc.tcode || "").split("+")[0];
+                const isDriveOrAquapor = /Drive\s+Tour/i.test(tc.name) || /Circuito\s+Aquapor/i.test(tc.name);
+                const base = isDriveOrAquapor ? "/drive/torneio" : "/FPG/torneio";
+                const href = tc.ccode && firstTcode ? `${base}/${tc.ccode}-${firstTcode}` : null;
+                const content = (
+                  <>
                     <div style={{ ...lineStyle, color: "var(--text-1)" }}>
                       {circuito}
                       {tc.isGF && <span className="badge-gf" style={{ marginLeft: 3 }}>★1.5</span>}
@@ -549,8 +696,31 @@ export function PJARankingView({
                       {local || "\u00A0"}
                     </div>
                     <div style={{ ...lineStyle, color: "var(--text-muted)" }}>
-                      {shortDate(tc.date)}{tc.rounds.length > 1 && <> · <RoundPill nR={tc.rounds.length} /></>}
+                      {shortDate(tc.date)}
+                      {(tc.totalRondas ?? tc.rounds.length) > 1 && <>
+                        {" · "}
+                        <RoundPill nR={tc.totalRondas ?? tc.rounds.length} />
+                        {tc.totalRondas && tc.totalRondas > tc.rounds.length && (
+                          <span title={`Só ${tc.rounds.length} rondas contam para o ranking PJA (regulamento §2.5 — últimos 2 dias)`}
+                                style={{ marginLeft: 3, fontSize: 9, fontWeight: 700, color: "var(--color-warn-dark)" }}>
+                            {tc.rounds.length}/{tc.totalRondas} contam
+                          </span>
+                        )}
+                      </>}
                     </div>
+                  </>
+                );
+                return (
+                  <th key={tc.tournKey} colSpan={tc.colSpan} className="cs-grp" style={{ padding: 0, verticalAlign: "top" }} title={tc.name + (tc.campo ? " — " + tc.campo : "") + (href ? " · clicar para abrir" : "")}>
+                    {href ? (
+                      <a href={href} target="_blank" rel="noopener noreferrer"
+                         style={{ display: "block", padding: "4px 3px", textDecoration: "none", color: "inherit" }}
+                         className="tourn-header-link">
+                        {content}
+                      </a>
+                    ) : (
+                      <div style={{ padding: "4px 3px" }}>{content}</div>
+                    )}
                   </th>
                 );
               })(),
@@ -567,15 +737,29 @@ export function PJARankingView({
                 </>
               ),
             }))}
-            summaryGroupTh={<th className="cs-grp u-fw8-fs12" colSpan={2}>Ranking</th>}
+            summaryGroupTh={<th className="cs-grp u-fw8-fs12" colSpan={hasPdfSnapshot ? 5 : 2}>
+              Ranking{hasPdfSnapshot && <span className="muted fs-10" style={{ fontWeight: 500, marginLeft: 6 }}>· vs PDF oficial</span>}
+            </th>}
             summarySubHeaders={<>
               <CSortTh k="voltas" s={sortKey} d={sortDir} on={handleSort} className="cs-s-games cs-grp">Voltas</CSortTh>
               <CSortTh k="total"  s={sortKey} d={sortDir} on={handleSort} className="cs-s-pts cs-col" style={{ color: "var(--color-warn-dark)", fontWeight: 800 }}>Total</CSortTh>
+              {hasPdfSnapshot && <>
+                <th className="cs-col" style={{ color: "var(--text-muted)", fontWeight: 700, fontSize: 10 }}>PDF pts</th>
+                <th className="cs-col" style={{ color: "var(--text-muted)", fontWeight: 700, fontSize: 10 }}>Δ pts</th>
+                <th className="cs-col" style={{ color: "var(--text-muted)", fontWeight: 700, fontSize: 10 }}>Δ r</th>
+              </>}
             </>}
           >
             {sortedRows.map((row, idx) => {
+              const isSel = selectedKey === row.key;
+              const classes = [
+                isManuel(row) ? "row-manuel" : "",
+                isSel ? "row-selected" : "",
+              ].filter(Boolean).join(" ") || undefined;
               return (
-                <tr key={row.key} className={isManuel(row) ? "row-manuel" : undefined}>
+                <tr key={row.key} className={classes}
+                    onClick={() => setSelectedKey(isSel ? null : row.key)}
+                    style={{ cursor: "pointer" }}>
                   <td className="cs-pos sticky-col-0">{idx + 1}</td>
                   <td className="cs-name sticky-col-1">
                     <PName name={row.name} fedCode={row.fedCode} playersDB={playersDB} />
@@ -586,7 +770,7 @@ export function PJARankingView({
                   </td>
                   <td className="cs-club cs-id-end">{row.club || "–"}</td>
 
-                  {tournCols.map(tc => {
+                  {visibleTournCols.map(tc => {
                     const hasAny = tc.rounds.some(r => row.results.has(r.roundKey));
                     if (!hasAny) return <td key={tc.tournKey} colSpan={tc.colSpan} className="cs-grp" />;
                     return (
@@ -622,6 +806,37 @@ export function PJARankingView({
                   <td className="cs-s-pts cs-col" style={{ fontWeight: 800, color: "var(--color-warn-dark)", fontVariantNumeric: "tabular-nums" }}>
                     {fmtPts(row.total)}
                   </td>
+                  {hasPdfSnapshot && (() => {
+                    const pdf = row.fedCode ? pdfByFed.get(row.fedCode) : null;
+                    if (!pdf) {
+                      return <>
+                        <td className="cs-col muted fs-10" style={{ textAlign: "center" }} title="Jogador não consta no snapshot do PDF oficial">–</td>
+                        <td className="cs-col muted fs-10" style={{ textAlign: "center" }}>–</td>
+                        <td className="cs-col muted fs-10" style={{ textAlign: "center" }}>–</td>
+                      </>;
+                    }
+                    const dPts = row.total - pdf.pts;
+                    const dR = row.voltas - pdf.rounds;
+                    const okPts = dPts === 0;
+                    const okR = dR === 0;
+                    const okBg = "transparent";
+                    const badBg = "var(--bg-danger-subtle, #FFE0E0)";
+                    const fmtDiff = (n: number) => n === 0 ? "±0" : (n > 0 ? `+${n}` : `${n}`);
+                    const title = (okPts && okR)
+                      ? "✓ Bate com o PDF oficial"
+                      : `PDF: ${pdf.pts}pts/${pdf.rounds}r · Cálc: ${row.total}pts/${row.voltas}r`;
+                    return <>
+                      <td className="cs-col fs-10" style={{ textAlign: "center", color: "var(--text-muted)" }} title={title}>
+                        {pdf.pts}<span style={{ fontSize: 9, marginLeft: 2 }}>/{pdf.rounds}r</span>
+                      </td>
+                      <td className="cs-col" style={{ textAlign: "center", fontWeight: 700, background: okPts ? okBg : badBg, color: okPts ? "var(--text-muted)" : "var(--color-danger-dark, #991B1B)" }} title={title}>
+                        {fmtDiff(dPts)}
+                      </td>
+                      <td className="cs-col" style={{ textAlign: "center", fontWeight: 700, background: okR ? okBg : badBg, color: okR ? "var(--text-muted)" : "var(--color-danger-dark, #991B1B)" }} title={title}>
+                        {fmtDiff(dR)}
+                      </td>
+                    </>;
+                  })()}
                 </tr>
               );
             })}
@@ -654,8 +869,13 @@ export function PJARankingView({
               </tr>
             </thead>
             <tbody>
-              {sortedNaoInscritos.map((row, idx) => (
-                <tr key={row.key} style={{ opacity: 0.75 }}>
+              {sortedNaoInscritos.map((row, idx) => {
+                const isSel = selectedKey === row.key;
+                return (
+                <tr key={row.key}
+                    className={isSel ? "row-selected" : undefined}
+                    onClick={() => setSelectedKey(isSel ? null : row.key)}
+                    style={{ opacity: isSel ? 1 : 0.75, cursor: "pointer" }}>
                   <td style={{ padding: "5px 8px" }}>{idx + 1}</td>
                   <td style={{ padding: "5px 8px" }}>
                     <PName name={row.name} fedCode={row.fedCode} playersDB={playersDB} />
@@ -670,7 +890,8 @@ export function PJARankingView({
                     {fmtPts(row.total)}
                   </td>
                 </tr>
-              ))}
+                );
+              })}
             </tbody>
           </table>
         </div>

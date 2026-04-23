@@ -21,14 +21,20 @@ export function setCourseKeyMap(map: Map<string, string>) {
   _courseKeyMap = map;
 }
 
-/* ─── Course name link → /campos/:courseKey (abre em nova janela) ─── */
+/* ─── Course name + arrow → /campos/:courseKey (abre em nova janela) ───
+   O nome fica como texto normal; a seta ↗ é o único elemento clicável,
+   para uniformizar com o padrão da ByCourseView e evitar conflitos com
+   handlers de clique na linha/botão pai. */
 export function CourseLink({ name }: { name: string }) {
   const key = findCourseKey(name);
   if (!key) return <>{name}</>;
   return (
-    <a href={`/campos/${key}`} className="courseLink" title={`Ver campo: ${name}`}
-       target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}>
+    <>
       {name}
-    </a>
+      <a href={`/campos/${key}`} className="courseLink fs-10 ml-4" title={`Ver campo: ${name}`}
+         target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}>
+        ↗
+      </a>
+    </>
   );
 }

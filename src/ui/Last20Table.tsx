@@ -105,7 +105,7 @@ function LinkBtns({ links }: { links?: Record<string, string> }) {
   );
 }
 
-const scHostStyle: React.CSSProperties = { margin: "6px 8px", border: "1px solid var(--border)", borderRadius: "var(--radius-xl)", background: "var(--bg-card)", padding: 10, overflow: "hidden" };
+const scHostStyle: React.CSSProperties = { margin: "6px 8px", border: "1px solid var(--border)", borderRadius: "var(--radius-xl)", background: "var(--bg-card)", padding: 10, overflow: "hidden", width: "fit-content", maxWidth: "calc(100% - 16px)" };
 
 export function Last20Table({ data, last20Table, best8, whsPosMap, bare: _bare }: {
   data: PlayerPageData;

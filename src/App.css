@@ -746,8 +746,16 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 .dt-compact { width: 100%; border-collapse: collapse; font-size: 12px; font-variant-numeric: tabular-nums; }
 .dt-compact th { padding: 5px 8px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); background: var(--bg-header); border-bottom: 2px solid var(--border); text-align: left; white-space: nowrap; }
 .dt-compact th.r, .dt-compact td.r { text-align: right; }
+.dt-compact th.ta-c, .dt-compact td.ta-c { text-align: center; }
 .dt-compact td { padding: 5px 8px; border-bottom: 1px solid var(--border-light); }
 .dt-compact tbody tr:hover { background: var(--bg-hover); }
+
+/* Utility: sticky table header row inside a scrolling container */
+.sticky-head th { position: sticky; top: 0; z-index: 1; }
+/* Utility: clickable rows with cursor + subtle hover */
+tr.clickable { cursor: pointer; }
+/* Utility: "year" separator label shown between rows/sections */
+.year-label { padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--text-2); letter-spacing: 0.04em; text-transform: uppercase; }
 
 .score-delta { font-size: 10px; font-weight: 500; margin-left: 3px; }
 .score-delta.pos { color: var(--color-danger); }
@@ -877,7 +885,7 @@ tr.cross-current { background: var(--bg-success); }
 
 .sc-bar-head { background: var(--bg-header); padding: 8px 12px; font-size: 12px; font-weight: 700; color: var(--text-2); display: flex; justify-content: space-between; border-bottom: 2px solid var(--border); }
 
-.sc-modern { border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); background: var(--bg-card); margin: 12px 0; }
+.sc-modern { border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); background: var(--bg-card); margin: 12px 0; width: fit-content; max-width: 100%; }
 .sc-header { padding: 12px 16px; color: #fff; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
 .sc-header-light { color: var(--grey-900); }
 .sc-header-left { flex: 1; min-width: 0; }
@@ -2104,6 +2112,23 @@ tr.cross-current { background: var(--bg-success); }
 .row-manuel .sticky-col-0,
 .row-manuel .sticky-col-1 { background: var(--bg-manuel-sticky) !important; }
 .row-manuel:hover { background: var(--bg-success-subtle) !important; }
+
+/* Link no header do torneio (Ranking PJA) — hover subtil para indicar
+   que é clicável sem ser ruidoso. */
+.tourn-header-link:hover { background: var(--bg-hover-subtle, #F5F5F5); }
+.tourn-header-link:hover > div:first-child { text-decoration: underline; }
+
+/* Linha seleccionada via clique (Ranking PJA e outros rankings clicáveis).
+   Destaca com fundo amarelo suave — sem border nas células (era ruidoso
+   dentro do cs-table com dezenas de colunas). */
+.row-selected { background: var(--bg-warn-subtle, #FFF4C4) !important; }
+.row-selected .sticky-col-0,
+.row-selected .sticky-col-1 { background: var(--bg-warn-subtle, #FFF4C4) !important; }
+.row-selected:hover { background: var(--bg-warn-subtle, #FFF4C4) !important; filter: brightness(0.97); }
+/* Combinação Manuel + seleccionado: mantém amarelo (seleccionado vence) */
+.row-manuel.row-selected { background: var(--bg-warn-subtle, #FFF4C4) !important; }
+.row-manuel.row-selected .sticky-col-0,
+.row-manuel.row-selected .sticky-col-1 { background: var(--bg-warn-subtle, #FFF4C4) !important; }
 
 .sc-lb tbody tr:hover { background: var(--bg-detail); }
 .sc-lb tbody tr:hover .sticky-col-0,

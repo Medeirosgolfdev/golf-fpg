@@ -145,17 +145,37 @@ export default function AdmissionsTab({
         sortPos: displayPos,
         sortName: p._nomeFormatted,
         rowBg: !manuel && isReserva ? "color-mix(in srgb, var(--text-muted) 6%, transparent)" : undefined,
-        nameContent: (
-          <>
-            <CountryFlag fed={p.fed} fedCountries={fedCountries} />
-            <TournPName
-              name={p._nomeFormatted || "–"}
-              fed={p.fed || undefined}
-              playersDB={playersDB}
-              highlight={manuel}
-            />
-          </>
-        ),
+        nameContent: (() => {
+          // Internacionais sem fedCode PT: obter country via lookup no playersDB
+          // (entries virtuais "intl:..." criadas a partir de kids-links.json).
+          let intlCountry: string | null = null;
+          if (playersDB) {
+            if (p.fed && p.fed.startsWith("intl:")) {
+              intlCountry = (playersDB[p.fed] as any)?.country || null;
+            } else if (!p.fed) {
+              const nrm = (p._nomeFormatted || p.nome || "").toLowerCase().trim().normalize("NFKD").replace(/[\u0300-\u036f]/g, "");
+              for (const [k, bd] of Object.entries(playersDB)) {
+                if (!k.startsWith("intl:")) continue;
+                const bdName = ((bd as any)?.name || "").toLowerCase().trim().normalize("NFKD").replace(/[\u0300-\u036f]/g, "");
+                if (bdName === nrm) {
+                  intlCountry = (bd as any)?.country || null;
+                  break;
+                }
+              }
+            }
+          }
+          return (
+            <>
+              <CountryFlag fed={p.fed} fedCountries={fedCountries} country={intlCountry} />
+              <TournPName
+                name={p._nomeFormatted || "–"}
+                fed={p.fed || undefined}
+                playersDB={playersDB}
+                highlight={manuel}
+              />
+            </>
+          );
+        })(),
         prefixCells: (
           <>
             <td className="lb-esc">

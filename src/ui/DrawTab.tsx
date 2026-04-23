@@ -247,17 +247,37 @@ export default function DrawTab({
         sortPos: p.pos,
         sortName: p.nome,
         borderTop,
-        nameContent: (
-          <>
-            <CountryFlag fed={p.fed} fedCountries={fedCountries} />
-            <TournPName
-              name={p.nome}
-              fed={p.fed || undefined}
-              playersDB={playersDB}
-              highlight={manuel}
-            />
-          </>
-        ),
+        nameContent: (() => {
+          // Para internacionais: se o fed começa com "intl:" (resolvido via
+          // kids-links.json) OU se não há fed, procurar country no playersDB.
+          // Entries virtuais "intl:..." têm `country` directo.
+          let intlCountry: string | null = null;
+          if (playersDB) {
+            if (p.fed && p.fed.startsWith("intl:")) {
+              intlCountry = (playersDB[p.fed] as any)?.country || null;
+            } else if (!p.fed) {
+              const nrm = norm(p.nome);
+              for (const [k, bd] of Object.entries(playersDB)) {
+                if (!k.startsWith("intl:")) continue;
+                if (norm((bd as any)?.name || "") === nrm) {
+                  intlCountry = (bd as any)?.country || null;
+                  break;
+                }
+              }
+            }
+          }
+          return (
+            <>
+              <CountryFlag fed={p.fed} fedCountries={fedCountries} country={intlCountry} />
+              <TournPName
+                name={p.nome}
+                fed={p.fed || undefined}
+                playersDB={playersDB}
+                highlight={manuel}
+              />
+            </>
+          );
+        })(),
         prefixCells: (
           <>
             <td className="lb-esc" style={bStyle}>

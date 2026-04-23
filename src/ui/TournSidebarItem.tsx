@@ -65,11 +65,16 @@ export interface TournSidebarItemProps {
   extraPills?: React.ReactNode;
   /** Conteúdo extra a mostrar dentro do card, entre os pills e a linha de data/jog */
   footer?: React.ReactNode;
+  /** URL canónica para deep-link. Se fornecida, o item é renderizado como `<a href>`
+   *  permitindo Ctrl/Cmd+click para abrir em nova aba e "Copiar endereço do link" no
+   *  menu de contexto. O onClick continua a ser chamado para click normal (previne
+   *  default). Se omitida, é um `<div>` puro com onClick. */
+  href?: string;
 }
 
 const Sep = () => <div style={{ height: "0.5px", background: "var(--border-light,rgba(0,0,0,.08))", margin: "4px 0" }} />;
 
-export function TournSidebarItem({ t, isActive, onClick, accentColor, extraPills, footer }: TournSidebarItemProps) {
+export function TournSidebarItem({ t, isActive, onClick, accentColor, extraPills, footer, href }: TournSidebarItemProps) {
   const nR       = t.rounds || 1;
   const nh       = t.nholes ?? (t.players[0] as any)?.nholes ?? (t.players[0] as any)?.par?.length ?? 18;
   const is9h     = nh <= 9;
@@ -92,15 +97,31 @@ export function TournSidebarItem({ t, isActive, onClick, accentColor, extraPills
     SIDEBAR_ACCENT.default
   );
 
+  // Wrap the item in <a href> if href is provided — allows native
+  // Ctrl/Cmd+click "open in new tab" and right-click "copy link address".
+  const commonProps = {
+    className: `course-item ${isActive ? "active" : ""}`,
+    style: { borderLeft: `4px solid ${accent}`, borderRadius: "0 6px 6px 0", cursor: "pointer",
+             color: "inherit", textDecoration: "none", display: "block" } as React.CSSProperties,
+  };
+  const Wrapper: any = href ? "a" : "div";
+  const wrapperProps = href ? {
+    href,
+    onClick: (e: React.MouseEvent) => {
+      // Click normal → chamar onClick local (seleciona na sidebar sem navegar).
+      // Ctrl/Cmd/Shift/middle-click → deixar comportamento default (nova aba).
+      if (e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
+      e.preventDefault();
+      onClick();
+    },
+  } : {
+    onClick,
+    role: "button",
+    tabIndex: 0,
+    onKeyDown: (e: React.KeyboardEvent) => { if (e.key === "Enter" || e.key === " ") onClick(); },
+  };
   return (
-    <div
-      className={`course-item ${isActive ? "active" : ""}`}
-      style={{ borderLeft: `4px solid ${accent}`, borderRadius: "0 6px 6px 0", cursor: "pointer" }}
-      onClick={onClick}
-      role="button"
-      tabIndex={0}
-      onKeyDown={e => { if (e.key === "Enter" || e.key === " ") onClick(); }}
-    >
+    <Wrapper {...commonProps} {...wrapperProps}>
       {/* Linha 1: nome */}
       <div className="gap-4" style={{ display: "flex", alignItems: "flex-start", marginBottom: 3 }}>
         <span className="course-item-name" style={{ flex: 1, fontSize: 12, fontWeight: isActive ? 700 : 500, lineHeight: 1.3 }}>
@@ -155,7 +176,7 @@ export function TournSidebarItem({ t, isActive, onClick, accentColor, extraPills
           )}
         </div>
       </div>
-    </div>
+    </Wrapper>
   );
 }
 

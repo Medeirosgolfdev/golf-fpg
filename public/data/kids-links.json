@@ -1,9 +1,10 @@
 {
   "_comment": "Mappings de nome → kidsHash para jogadores internacionais sem fedCode português. O kidsHash é usado como fragmento da URL /kids#{hash}; pode ser um memberId USKids (preferido, numérico) ou o nome encodificado (encodeURIComponent). O TournPName faz fallback de match por nome normalizado.",
   "_formato": "Lista de entries com {name, kidsHash}. Adicionar manualmente jogadores que aparecem em draws/resultados FPG mas não têm fedCode português — tipicamente internacionais que competem em eventos PJA / Greatgolf / Drive Tour.",
+  "_campos_opcionais": "country (ISO-2 ou ISO-3), escalao, sex — usados para mostrar bandeira/escalão em tabelas que normalmente só têm isso via fedCode português.",
   "players": [
-    { "name": "Emile Cuanalo",   "kidsHash": "Emile%20Cuanalo" },
-    { "name": "Lucas Imperatriz", "kidsHash": "Lucas%20Imperatriz" },
+    { "name": "Emile Cuanalo",   "kidsHash": "Emile%20Cuanalo", "country": "GB" },
+    { "name": "Lucas Imperatriz", "kidsHash": "Lucas%20Imperatriz", "country": "BR", "escalao": "Sub 14", "sex": "M" },
     { "name": "Javier Cobiella",  "kidsHash": "Javier%20Cobiella" },
     { "name": "Doyeon Kim",       "kidsHash": "Doyeon%20Kim" },
     { "name": "Min Sung Seo",     "kidsHash": "Min%20Sung%20Seo" },

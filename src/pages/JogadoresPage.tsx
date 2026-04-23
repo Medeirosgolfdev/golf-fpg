@@ -5,11 +5,11 @@ import { useAppContext } from "../context/AppContext";
 import { norm, shortDate, firstName, fmtSign, fmtToPar } from "../utils/format";
 import { getTeeHex, textOnColor, normKey, teeBorder } from "../utils/teeColors";
 import { clubShort, clubLong, hcpDisplay, escCls } from "../utils/playerUtils";
-import { numSafe, meanArr, stdevArr, sumArr, minArr, maxArr, linearSlope } from "../utils/mathUtils";
-import { scClass, fmtGrossDelta, fmtStb, sdClassByHcp, fmtSdVal, sc2, sc3m, SC, toParClass } from "../utils/scoreDisplay";
+import { numSafe, meanArr, stdevArr, minArr, maxArr, linearSlope } from "../utils/mathUtils";
+import { scClass, fmtGrossDelta, fmtStb, sdClassByHcp, fmtSdVal, sc3m, SC, toParClass } from "../utils/scoreDisplay";
 import {
   type PlayerPageData, type CourseData, type RoundData,
-  type EclecticEntry, type HoleStatsData,
+  type HoleStatsData,
   type CrossPlayerData, type HcpInfo, type HoleScores,
 } from "../data/playerDataLoader";
 import { usePlayerData } from "../data/usePlayerData";
@@ -49,7 +49,7 @@ type ViewKey = "by_course" | "by_course_analysis" | "by_date" | "by_tournament" 
 type CourseSort = "last_desc" | "count_desc" | "name_asc";
 
 
-const scHostStyle: React.CSSProperties = { margin: "6px 8px", border: "1px solid var(--border)", borderRadius: "var(--radius-xl)", background: "var(--bg-card)", padding: 10, overflow: "hidden" };
+const scHostStyle: React.CSSProperties = { margin: "6px 8px", border: "1px solid var(--border)", borderRadius: "var(--radius-xl)", background: "var(--bg-card)", padding: 10, overflow: "hidden", width: "fit-content", maxWidth: "calc(100% - 16px)" };
 
 /* ────────────────────────────────────────────────────────────────────────────────────────
    Micro-components
@@ -230,9 +230,7 @@ function ByDateView({ data, search }: {
                 {showYearBar && (
                   <tr>
                     <td colSpan={10} style={{ padding: 0, background: "var(--bg-header)", borderBottom: "2px solid var(--border)" }}>
-                      <div className="uppercase" style={{ padding: "6px 12px", fontSize: 12, fontWeight: 700, color: "var(--text-2)", letterSpacing: "0.04em" }}>
-                        {year}
-                      </div>
+                      <div className="year-label">{year}</div>
                     </td>
                   </tr>
                 )}
@@ -482,117 +480,6 @@ const linkLabels: Record<string, string> = {
   fpg_scoring: "FPG Scoring", noticia_teetimes: "Notícia", link: "Ver torneio",
 };
 
-
-/* ─── Eclectic + Delta rows (sub-component of ScorecardTable) ─── */
-
-function EclecticRows({ gross, par, eclectic, holeCount, is9, frontEnd }: {
-  gross: (number | null)[];
-  par: (number | null)[];
-  eclectic: EclecticEntry;
-  holeCount: number;
-  is9: boolean;
-  frontEnd: number;
-}) {
-  const ecArr = eclectic.holes.slice(0, holeCount).map(h => h?.best ?? null);
-  const parArr = eclectic.holes.slice(0, holeCount).map((h, i) => h?.par ?? par[i]);
-  const ecBorder = { borderTop: "2px solid var(--border)" } as const;
-
-  const sumEc = sumArr(ecArr, 0, holeCount);
-  const sumGross = sumArr(gross, 0, holeCount);
-
-  return (
-    <>
-      {/* Eclectic row */}
-      <tr>
- <td className="row-label fw-700 fs-10" style={{ color: "var(--chart-2)", ...ecBorder }}>Eclético</td>
-        {Array.from({ length: holeCount }, (_, h) => {
-          const ev = ecArr[h];
-          const cls = scClass(ev, parArr[h]);
-          return (
-            <React.Fragment key={h}>
-              <td style={ecBorder}>
-                {ev != null ? <span className={`sc-score ${cls}`}>{ev}</span> : ""}
-              </td>
-              {h === frontEnd - 1 && !is9 && (() => {
-                const outEc = sumArr(ecArr, 0, frontEnd);
-                const outP = sumArr(parArr, 0, frontEnd);
-                const outTP = outEc - outP;
-                const tpCls = toParClass(outTP);
-                return (
-                  <td className="col-out" style={{ fontWeight: 700, ...ecBorder }}>
-                    {outEc}<span className={`sc-topar ${tpCls}`}>{fmtSign(outTP)}</span>
-                  </td>
-                );
-              })()}
-            </React.Fragment>
-          );
-        })}
-        {(() => {
-          const inEc = is9 ? sumEc : sumArr(ecArr, 9, holeCount);
-          const inP = is9 ? sumArr(parArr, 0, holeCount) : sumArr(parArr, 9, holeCount);
-          const inTP = inEc - inP;
-          const inCls = toParClass(inTP);
-          return (
-            <td className={`col-${is9 ? "total" : "in"}`} style={{ fontWeight: 700, ...ecBorder }}>
-              {inEc}<span className={`sc-topar ${inCls}`}>{fmtSign(inTP)}</span>
-            </td>
-          );
-        })()}
-        {!is9 && (() => {
-          const ecTP = sumEc - sumArr(parArr, 0, holeCount);
-          const totCls = toParClass(ecTP);
-          return (
-            <td className="col-total" style={ecBorder}>
-              {sumEc}<span className={`sc-topar ${totCls}`}>{fmtSign(ecTP)}</span>
-            </td>
-          );
-        })()}
-      </tr>
-
-      {/* Δ (delta) row */}
-      <tr className="bg-detail">
- <td className="row-label fw-700 fs-10 c-text-3" >Δ</td>
-        {Array.from({ length: holeCount }, (_, h) => {
-          const gv = gross[h];
-          const ev = ecArr[h];
-          const diff = gv != null && gv > 0 && ev != null ? ev - gv : null;
-          const dc = diff != null ? (diff <= 0 ? { color: SC.good, fontWeight: 700 } : { color: SC.danger, fontWeight: 600 }) : { color: "var(--text-muted)" };
-          return (
-            <React.Fragment key={h}>
-              <td style={dc}>
-                {diff != null ? (diff === 0 ? "=" : (diff > 0 ? "+" : "") + diff) : ""}
-              </td>
-              {h === frontEnd - 1 && !is9 && (() => {
-                const dOut = sumArr(ecArr, 0, frontEnd) - sumArr(gross, 0, frontEnd);
-                return (
- <td className="col-out fw-600" style={{ color: sc2(dOut, 0) }}>
-                    {dOut === 0 ? "=" : (dOut > 0 ? "+" : "") + dOut}
-                  </td>
-                );
-              })()}
-            </React.Fragment>
-          );
-        })}
-        {(() => {
-          const dIn = (is9 ? sumEc : sumArr(ecArr, 9, holeCount)) - (is9 ? sumGross : sumArr(gross, 9, holeCount));
-          return (
- <td className={`col-${is9 ? "total" : "in"} fw-600`} style={{ color: sc2(dIn, 0) }}>
-              {dIn === 0 ? "=" : (dIn > 0 ? "+" : "") + dIn}
-            </td>
-          );
-        })()}
-        {!is9 && (() => {
-          const totalDiff = sumEc - sumGross;
-          return (
-            <td className="col-total" style={{ color: sc2(totalDiff, 0) }}>
-              {fmtSign(totalDiff)}
-            </td>
-          );
-        })()}
-      </tr>
-    </>
-  );
-}
 
 /* ─── Scorecard wrapper that resolves HOLES data and renders ScorecardTable ─── */
 
@@ -1608,33 +1495,27 @@ function ClubsTable({ stats, onDrillDown, maxClub, pct, COL_M, COL_F }: {
         </div>
       </div>
       <div style={{ maxHeight: 520, overflowY: "auto", paddingRight: 4 }}>
-        <table className="w-full" style={{ fontSize: 12, borderCollapse: "collapse" }}>
+        <table className="dt-compact">
           <thead>
-            <tr style={{ borderBottom: "1px solid var(--border)", position: "sticky", top: 0, background: "var(--bg)", zIndex: 1 }}>
-              <SortableHdr k="rank" sortKey={sortKey} sortDir={sortDir} onSort={k => toggleSort(k as ClubSortKey)} className="muted fs-10" style={{ textAlign: "left", padding: "6px 4px", fontWeight: 600, width: 30 }}>#</SortableHdr>
-              <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={k => toggleSort(k as ClubSortKey)} className="muted fs-10" style={{ textAlign: "left", padding: "6px 4px", fontWeight: 600 }}>Clube</SortableHdr>
-              <th className="muted fs-10" style={{ textAlign: "left", padding: "6px 4px", fontWeight: 600, width: "40%" }}>Distribuição</th>
-              <SortableHdr k="m" sortKey={sortKey} sortDir={sortDir} onSort={k => toggleSort(k as ClubSortKey)} className="muted fs-10" style={{ textAlign: "center", padding: "6px 4px", fontWeight: 600, width: 50 }}><SexBadge sex="M" /></SortableHdr>
-              <SortableHdr k="f" sortKey={sortKey} sortDir={sortDir} onSort={k => toggleSort(k as ClubSortKey)} className="muted fs-10" style={{ textAlign: "center", padding: "6px 4px", fontWeight: 600, width: 50 }}><SexBadge sex="F" /></SortableHdr>
-              <SortableHdr k="count" sortKey={sortKey} sortDir={sortDir} onSort={k => toggleSort(k as ClubSortKey)} className="muted fs-10" style={{ textAlign: "right", padding: "6px 4px", fontWeight: 600, width: 60 }}>Total</SortableHdr>
+            <tr className="sticky-head">
+              <SortableHdr k="rank" sortKey={sortKey} sortDir={sortDir} onSort={k => toggleSort(k as ClubSortKey)} style={{ width: 30 }}>#</SortableHdr>
+              <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={k => toggleSort(k as ClubSortKey)}>Clube</SortableHdr>
+              <th style={{ width: "40%" }}>Distribuição</th>
+              <SortableHdr k="m" sortKey={sortKey} sortDir={sortDir} onSort={k => toggleSort(k as ClubSortKey)} className="ta-c" style={{ width: 50 }}><SexBadge sex="M" /></SortableHdr>
+              <SortableHdr k="f" sortKey={sortKey} sortDir={sortDir} onSort={k => toggleSort(k as ClubSortKey)} className="ta-c" style={{ width: 50 }}><SexBadge sex="F" /></SortableHdr>
+              <SortableHdr k="count" sortKey={sortKey} sortDir={sortDir} onSort={k => toggleSort(k as ClubSortKey)} className="r" style={{ width: 60 }}>Total</SortableHdr>
             </tr>
           </thead>
           <tbody>
             {sortedRows.map(row => {
               const mPct = row.count > 0 ? (row.m / row.count) * 100 : 0;
               return (
-                <tr
-                  key={row.code}
-                  onClick={() => onDrillDown({ type: "club", key: row.code })}
-                  style={{ cursor: "pointer", borderBottom: "1px solid var(--border-subtle, rgba(0,0,0,0.04))" }}
-                  onMouseEnter={e => { e.currentTarget.style.background = "var(--bg-hover)"; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
-                >
-                  <td className="muted fs-10" style={{ padding: "4px", textAlign: "left" }}>{row.rank}</td>
-                  <td style={{ padding: "4px" }}>
+                <tr key={row.code} className="clickable" onClick={() => onDrillDown({ type: "club", key: row.code })}>
+                  <td className="muted fs-10">{row.rank}</td>
+                  <td>
                     <span className="fw-600">{row.name}</span> <span className="muted fs-10">({row.code})</span>
                   </td>
-                  <td style={{ padding: "4px" }}>
+                  <td>
                     <div style={{ height: 8, borderRadius: 3, overflow: "hidden", display: "flex", background: "var(--bg-subtle)" }}>
                       <div style={{ width: pct(row.count, maxClub), height: "100%", display: "flex" }}>
                         <div style={{ width: `${mPct}%`, background: COL_M }} />
@@ -1642,9 +1523,9 @@ function ClubsTable({ stats, onDrillDown, maxClub, pct, COL_M, COL_F }: {
                       </div>
                     </div>
                   </td>
-                  <td className="fw-600" style={{ padding: "4px", textAlign: "right", color: COL_M }}>{row.m}</td>
-                  <td className="fw-600" style={{ padding: "4px", textAlign: "right", color: COL_F }}>{row.f}</td>
-                  <td className="fw-900" style={{ padding: "4px", textAlign: "right" }}>{row.count}</td>
+                  <td className="r fw-600" style={{ color: COL_M }}>{row.m}</td>
+                  <td className="r fw-600" style={{ color: COL_F }}>{row.f}</td>
+                  <td className="r fw-900">{row.count}</td>
                 </tr>
               );
             })}
@@ -1791,7 +1672,7 @@ function FederadosStatsPanel({ stats, inativosStats, drillDown, onDrillDown, hcp
                 {p.name}
                 <span className="muted fs-10 ml-4">({p.acronym})</span>
               </span>
-              <span className="fw-900" style={{ fontSize: 14, color: (p.hcp_exact as number) < 0 ? "#f59e0b" : "var(--text-1)" }}>
+              <span className="fw-900" style={{ fontSize: 14, color: (p.hcp_exact as number) < 0 ? "var(--medal-gold)" : "var(--text-1)" }}>
                 {(p.hcp_exact as number).toFixed(1)}
               </span>
             </button>
@@ -1971,7 +1852,7 @@ function HcpBinDrillCard({ bin, federados, onClose, onPickPlayer }: {
               <span className="fw-600">{p.name}</span>
               <span className="muted fs-10 ml-4">({p.acronym})</span>
             </span>
-            <span className="fw-900" style={{ fontSize: 13, color: (p.hcp_exact as number) < 0 ? "#f59e0b" : "var(--text-1)" }}>
+            <span className="fw-900" style={{ fontSize: 13, color: (p.hcp_exact as number) < 0 ? "var(--medal-gold)" : "var(--text-1)" }}>
               {(p.hcp_exact as number).toFixed(1)}
             </span>
           </button>
@@ -2056,7 +1937,7 @@ function DrillDownCard({ drillDown, stats, onClose, onPickPlayer }: {
             >
               <span className="fw-700" style={{ width: 18, fontSize: 11 }}>{i + 1}</span>
               <span style={{ flex: 1, textAlign: "left", fontSize: 12 }}>{p.name}</span>
-              <span className="fw-900" style={{ fontSize: 13, color: (p.hcp_exact as number) < 0 ? "#f59e0b" : "var(--text-1)" }}>
+              <span className="fw-900" style={{ fontSize: 13, color: (p.hcp_exact as number) < 0 ? "var(--medal-gold)" : "var(--text-1)" }}>
                 {(p.hcp_exact as number).toFixed(1)}
               </span>
             </button>
@@ -2212,9 +2093,7 @@ function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, extraMap, localI
                 {showYearBar && (
                   <tr>
                     <td colSpan={COLS} style={{ padding: 0, background: "var(--bg-header)", borderBottom: "2px solid var(--border)" }}>
-                      <div className="uppercase" style={{ padding: "6px 12px", fontSize: 12, fontWeight: 700, color: "var(--text-2)", letterSpacing: "0.04em" }}>
-                        {year}
-                      </div>
+                      <div className="year-label">{year}</div>
                     </td>
                   </tr>
                 )}
@@ -2617,11 +2496,11 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
       {scorecardModal && (
         <div
           onClick={() => setScorecardModal(null)}
-          style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)", zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}
+          style={{ position: "fixed", inset: 0, background: "var(--overlay-black-50)", zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}
         >
           <div
             onClick={e => e.stopPropagation()}
-            style={{ background: "var(--bg, white)", borderRadius: 8, padding: 20, maxWidth: 900, width: "100%", maxHeight: "90vh", overflowY: "auto", boxShadow: "0 10px 40px rgba(0,0,0,0.3)" }}
+            style={{ background: "var(--bg-card)", borderRadius: "var(--radius-lg)", padding: 20, maxWidth: 900, width: "100%", maxHeight: "90vh", overflowY: "auto", boxShadow: "0 10px 40px var(--overlay-black-30)" }}
           >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
               <div>
@@ -2868,7 +2747,7 @@ const STATUS_DANGER_PILL: React.CSSProperties = {
   background: "var(--color-danger)", color: "#fff", borderColor: "transparent",
 };
 const HCP_VALUE_PILL: React.CSSProperties = {
-  background: "var(--bg-topbar, #1f2937)", color: "#fff", borderColor: "transparent",
+  background: "var(--bg-topbar)", color: "#fff", borderColor: "transparent",
   letterSpacing: "0.02em",
 };
 
@@ -3191,7 +3070,7 @@ function FilteredStatsCard({ filtered, viewMode, onPickPlayer, activeFiltersCoun
                       return club ? <span className="muted fs-10 ml-4">({club})</span> : null;
                     })()}
                   </span>
-                  <span className="fw-900" style={{ fontSize: 13, color: (p.hcp as number) < 0 ? "#f59e0b" : "var(--text-1)" }}>
+                  <span className="fw-900" style={{ fontSize: 13, color: (p.hcp as number) < 0 ? "var(--medal-gold)" : "var(--text-1)" }}>
                     {(p.hcp as number).toFixed(1)}
                   </span>
                 </button>
@@ -3403,7 +3282,7 @@ function TagPill({ tag }: { tag: string }) {
     return (
       <span
         className="p p-sm"
-        style={{ background: "var(--color-good-dark, #166534)", color: "#fff", borderColor: "transparent" }}
+        style={{ background: "var(--color-good-dark)", color: "#fff", borderColor: "transparent" }}
         title="Inscrito no Campeonato Nacional 2026"
       >
         🏆 CN26

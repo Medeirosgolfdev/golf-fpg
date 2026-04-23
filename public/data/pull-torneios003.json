@@ -2,7 +2,7 @@
   "_comment": "Torneios criados manualmente (exclusivos PJA, juniores Santo da Serra, ou qualquer outro evento cujos draws existam antes de haver tcode oficial no scraping). Estrutura genérica — _origin distingue o circuito (PJA / SSERRA / OUTRO).",
   "_formato": "Cada entry é um torneio com: ccode/tcode (podem ser temporários até scrape). Quando chegar o tcode real via scrape, preencher _realCcode/_realTcode; o merge com os scores do scrape é automático via match por fedCode+date.",
   "_merge": "O merge com scores do scrape é feito no loader. Se o scrape tiver scores para o mesmo fedCode no mesmo dia, esses scores são injectados no torneio manual. Podes também editar manualmente o array 'players' para acrescentar grossTotal+roundScores se quiseres preencher antes do scrape.",
-  "generatedAt": "2026-04-22T20:00:00Z",
+  "generatedAt": "2026-04-23T14:45:00Z",
   "source": "manual",
   "tournaments": [
     {
@@ -18,93 +18,427 @@
       "clube": "PJA",
       "circuit": "tour",
       "rounds": 2,
-      "playerCount": 22,
+      "playerCount": 21,
       "players": [],
       "_admissions": {
         "name": "PJA Aroeira 2",
         "date": "2026-04-25",
-        "status": "Inscrições encerradas · Draw D1 publicado",
-        "totalInscritos": 22,
+        "status": "Inscrições encerradas · Draw D1 actualizado (7 flights)",
+        "totalInscritos": 21,
         "reservas": 0,
         "players": [
-          { "pos": 1,  "fed": "52011", "nome": "Madalena Figueiredo",        "clube": "Belas",           "hcp": null, "vac": null, "dataInscricao": null, "status": "confirmed" },
-          { "pos": 2,  "fed": "48971", "nome": "Sabrina Ribeiro Crisóstomo", "clube": null,              "hcp": null, "vac": null, "dataInscricao": null, "status": "confirmed" },
-          { "pos": 3,  "fed": "51523", "nome": "Angelina Gao",               "clube": "Quinta do Peru",  "hcp": null, "vac": null, "dataInscricao": null, "status": "confirmed" },
-          { "pos": 4,  "fed": "52884", "nome": "Manuel Goulartt Medeiros",   "clube": "Santo da Serra",  "hcp": null, "vac": null, "dataInscricao": null, "status": "confirmed" },
-          { "pos": 5,  "fed": "49085", "nome": "Ricardo Castro Ferreira",    "clube": "Estoril",         "hcp": null, "vac": null, "dataInscricao": null, "status": "confirmed" },
-          { "pos": 6,  "fed": "57904", "nome": "Guo Ziyang",                 "clube": "Estoril",         "hcp": null, "vac": null, "dataInscricao": null, "status": "confirmed" },
-          { "pos": 7,  "fed": "51524", "nome": "William Gao",                "clube": "Quinta do Peru",  "hcp": null, "vac": null, "dataInscricao": null, "status": "confirmed" },
-          { "pos": 8,  "fed": "49124", "nome": "Nuno Palmares Jr.",          "clube": "Estoril",         "hcp": null, "vac": null, "dataInscricao": null, "status": "confirmed" },
-          { "pos": 9,  "fed": "46037", "nome": "Tomás Lima Pinto",           "clube": "Vilamoura, C. G", "hcp": null, "vac": null, "dataInscricao": null, "status": "confirmed" },
-          { "pos": 10, "fed": "48297", "nome": "João Rocha",                 "clube": "Estoril",         "hcp": null, "vac": null, "dataInscricao": null, "status": "confirmed" },
-          { "pos": 11, "fed": "44934", "nome": "Rodrigo Sousa Correia",      "clube": "Vilamoura, C. G", "hcp": null, "vac": null, "dataInscricao": null, "status": "confirmed" },
-          { "pos": 12, "fed": "38334", "nome": "João Maria Ivo de Carvalho", "clube": "Estoril",         "hcp": null, "vac": null, "dataInscricao": null, "status": "confirmed" },
-          { "pos": 13, "fed": "45439", "nome": "Ryan Dantas",                "clube": "Belas",           "hcp": null, "vac": null, "dataInscricao": null, "status": "confirmed" },
-          { "pos": 14, "fed": "46706", "nome": "Pedro Costa Alemão",         "clube": "Estoril",         "hcp": null, "vac": null, "dataInscricao": null, "status": "confirmed" },
-          { "pos": 15, "fed": null,    "nome": "Lucas Imperatriz",           "clube": "Internacional",   "hcp": null, "vac": null, "dataInscricao": null, "status": "confirmed" },
-          { "pos": 16, "fed": "45278", "nome": "Rodrigo Faria Constantino",  "clube": "Belas",           "hcp": null, "vac": null, "dataInscricao": null, "status": "confirmed" },
-          { "pos": 17, "fed": "54774", "nome": "Rafael Gonçales Benesi",     "clube": null,              "hcp": null, "vac": null, "dataInscricao": null, "status": "confirmed" },
-          { "pos": 18, "fed": "43968", "nome": "Salvador Ivo de Carvalho",   "clube": "Estoril",         "hcp": null, "vac": null, "dataInscricao": null, "status": "confirmed" },
-          { "pos": 19, "fed": "51949", "nome": "David Filip Jun.",           "clube": "Quinta do Peru",  "hcp": null, "vac": null, "dataInscricao": null, "status": "confirmed" },
-          { "pos": 20, "fed": "52856", "nome": "Francisco Vilardell Carvalho","clube": null,             "hcp": null, "vac": null, "dataInscricao": null, "status": "confirmed" },
-          { "pos": 21, "fed": "42985", "nome": "Martim Moreira",             "clube": null,              "hcp": null, "vac": null, "dataInscricao": null, "status": "confirmed" }
+          {
+            "pos": 1,
+            "fed": "52011",
+            "nome": "Madalena Figueiredo",
+            "clube": "Belas",
+            "hcp": 8.1,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "48971",
+            "nome": "Sabrina Ribeiro Crisóstomo",
+            "clube": null,
+            "hcp": 10,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "51523",
+            "nome": "Angelina Gao",
+            "clube": "Quinta do Peru",
+            "hcp": 3.5,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "52884",
+            "nome": "Manuel Goulartt Medeiros",
+            "clube": "Santo da Serra",
+            "hcp": 9.8,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "49085",
+            "nome": "Ricardo Castro Ferreira",
+            "clube": "Estoril",
+            "hcp": 6.8,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "57904",
+            "nome": "Guo Ziyang",
+            "clube": "Estoril",
+            "hcp": 11.6,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "51524",
+            "nome": "William Gao",
+            "clube": "Quinta do Peru",
+            "hcp": 7.8,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": 8,
+            "fed": "49124",
+            "nome": "Nuno Palmares Jr.",
+            "clube": "Estoril",
+            "hcp": 4,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": 9,
+            "fed": "46037",
+            "nome": "Tomás Lima Pinto",
+            "clube": "Vilamoura, C. G",
+            "hcp": 9.4,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": 10,
+            "fed": "48297",
+            "nome": "João Rocha",
+            "clube": "Estoril",
+            "hcp": 5.9,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": 11,
+            "fed": null,
+            "nome": "Lucas Imperatriz",
+            "clube": "Internacional",
+            "hcp": null,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": 12,
+            "fed": "43968",
+            "nome": "Salvador Ivo de Carvalho",
+            "clube": "Estoril",
+            "hcp": 7.8,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": 13,
+            "fed": "51949",
+            "nome": "David Filip Jun.",
+            "clube": "Quinta do Peru",
+            "hcp": 9.6,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": 14,
+            "fed": "52856",
+            "nome": "Francisco Vilardell Carvalho",
+            "clube": null,
+            "hcp": 9.2,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": 15,
+            "fed": "42985",
+            "nome": "Martim Moreira",
+            "clube": null,
+            "hcp": 8.6,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": 16,
+            "fed": "44934",
+            "nome": "Rodrigo Sousa Correia",
+            "clube": "Vilamoura, C. G",
+            "hcp": 4,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": 17,
+            "fed": "38334",
+            "nome": "João Maria Ivo de Carvalho",
+            "clube": "Estoril",
+            "hcp": -0.9,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": 18,
+            "fed": "45439",
+            "nome": "Ryan Dantas",
+            "clube": "Belas",
+            "hcp": 6.8,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": 19,
+            "fed": "46706",
+            "nome": "Pedro Costa Alemão",
+            "clube": "Estoril",
+            "hcp": 5.7,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": 20,
+            "fed": "45278",
+            "nome": "Rodrigo Faria Constantino",
+            "clube": "Belas",
+            "hcp": 1.6,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed"
+          },
+          {
+            "pos": 21,
+            "fed": "54774",
+            "nome": "Rafael Gonçales Benesi",
+            "clube": null,
+            "hcp": 6.8,
+            "vac": null,
+            "dataInscricao": null,
+            "status": "confirmed"
+          }
         ]
       },
       "_draws": {
         "1": {
-          "name": "PJA Aroeira 2 — Draw D1",
+          "name": "PJA Aroeira 2 — Draw D1 (7 flights)",
           "date": "2026-04-25",
-          "totalJogadores": 22,
+          "totalJogadores": 21,
           "groups": [
             {
-              "teeTime": "12:15", "startHole": 1, "tee": "Vermelhas/Azuis",
+              "teeTime": "12:15",
+              "startHole": 1,
+              "tee": "Vermelhas/Azuis",
               "players": [
-                { "nome": "Madalena Figueiredo",        "fed": "52011", "clube": "Belas",          "hcp": null, "_tee": "Azuis" },
-                { "nome": "Sabrina Ribeiro Crisóstomo", "fed": "48971", "clube": null,             "hcp": null, "_tee": "Vermelhas" },
-                { "nome": "Angelina Gao",               "fed": "51523", "clube": "Quinta do Peru", "hcp": null, "_tee": "Azuis" }
+                {
+                  "nome": "Madalena Figueiredo",
+                  "fed": "52011",
+                  "clube": "Belas",
+                  "hcp": 8.1,
+                  "_tee": "Azuis"
+                },
+                {
+                  "nome": "Sabrina Ribeiro Crisóstomo",
+                  "fed": "48971",
+                  "clube": null,
+                  "hcp": 10,
+                  "_tee": "Vermelhas"
+                },
+                {
+                  "nome": "Angelina Gao",
+                  "fed": "51523",
+                  "clube": "Quinta do Peru",
+                  "hcp": 3.5,
+                  "_tee": "Azuis"
+                }
               ]
             },
             {
-              "teeTime": "12:25", "startHole": 1, "tee": "Vermelhas",
+              "teeTime": "12:25",
+              "startHole": 1,
+              "tee": "Vermelhas",
               "players": [
-                { "nome": "Manuel Goulartt Medeiros",   "fed": "52884", "clube": "Santo da Serra", "hcp": null, "_tee": "Vermelhas" },
-                { "nome": "Ricardo Castro Ferreira",    "fed": "49085", "clube": "Estoril",        "hcp": null, "_tee": "Vermelhas" },
-                { "nome": "Guo Ziyang",                 "fed": "57904", "clube": "Estoril",        "hcp": null, "_tee": "Vermelhas" }
+                {
+                  "nome": "Manuel Goulartt Medeiros",
+                  "fed": "52884",
+                  "clube": "Santo da Serra",
+                  "hcp": 9.8,
+                  "_tee": "Vermelhas"
+                },
+                {
+                  "nome": "Ricardo Castro Ferreira",
+                  "fed": "49085",
+                  "clube": "Estoril",
+                  "hcp": 6.8,
+                  "_tee": "Vermelhas"
+                },
+                {
+                  "nome": "Guo Ziyang",
+                  "fed": "57904",
+                  "clube": "Estoril",
+                  "hcp": 11.6,
+                  "_tee": "Vermelhas"
+                }
               ]
             },
             {
-              "teeTime": "12:35", "startHole": 1, "tee": "Amarelas",
+              "teeTime": "12:35",
+              "startHole": 1,
+              "tee": "Amarelas",
               "players": [
-                { "nome": "William Gao",                "fed": "51524", "clube": "Quinta do Peru", "hcp": null, "_tee": "Amarelas" },
-                { "nome": "Nuno Palmares Jr.",          "fed": "49124", "clube": "Estoril",        "hcp": null, "_tee": "Amarelas" },
-                { "nome": "Tomás Lima Pinto",           "fed": "46037", "clube": "Vilamoura, C. G","hcp": null, "_tee": "Amarelas" }
+                {
+                  "nome": "William Gao",
+                  "fed": "51524",
+                  "clube": "Quinta do Peru",
+                  "hcp": 7.8,
+                  "_tee": "Amarelas"
+                },
+                {
+                  "nome": "Nuno Palmares Jr.",
+                  "fed": "49124",
+                  "clube": "Estoril",
+                  "hcp": 4,
+                  "_tee": "Amarelas"
+                },
+                {
+                  "nome": "Tomás Lima Pinto",
+                  "fed": "46037",
+                  "clube": "Vilamoura, C. G",
+                  "hcp": 9.4,
+                  "_tee": "Amarelas"
+                }
               ]
             },
             {
-              "teeTime": "12:45", "startHole": 1, "tee": "Amarelas/Brancas",
+              "teeTime": "12:45",
+              "startHole": 1,
+              "tee": "Amarelas",
               "players": [
-                { "nome": "João Rocha",                 "fed": "48297", "clube": "Estoril",        "hcp": null, "_tee": "Amarelas" },
-                { "nome": "Rodrigo Sousa Correia",      "fed": "44934", "clube": "Vilamoura, C. G","hcp": null, "_tee": "Brancas" },
-                { "nome": "João Maria Ivo de Carvalho", "fed": "38334", "clube": "Estoril",        "hcp": null, "_tee": "Brancas" },
-                { "nome": "Ryan Dantas",                "fed": "45439", "clube": "Belas",          "hcp": null, "_tee": "Brancas" }
+                {
+                  "nome": "João Rocha",
+                  "fed": "48297",
+                  "clube": "Estoril",
+                  "hcp": 5.9,
+                  "_tee": "Amarelas"
+                },
+                {
+                  "nome": "Lucas Imperatriz",
+                  "fed": null,
+                  "clube": "Internacional",
+                  "hcp": null,
+                  "_tee": "Amarelas"
+                },
+                {
+                  "nome": "Salvador Ivo de Carvalho",
+                  "fed": "43968",
+                  "clube": "Estoril",
+                  "hcp": 7.8,
+                  "_tee": "Amarelas"
+                }
               ]
             },
             {
-              "teeTime": "12:55", "startHole": 1, "tee": "Amarelas/Brancas",
+              "teeTime": "12:55",
+              "startHole": 1,
+              "tee": "Amarelas",
               "players": [
-                { "nome": "Pedro Costa Alemão",         "fed": "46706", "clube": "Estoril",        "hcp": null, "_tee": "Brancas" },
-                { "nome": "Lucas Imperatriz",           "fed": null,    "clube": "Internacional",  "hcp": null, "_tee": "Amarelas" },
-                { "nome": "Rodrigo Faria Constantino",  "fed": "45278", "clube": "Belas",          "hcp": null, "_tee": "Brancas" },
-                { "nome": "Rafael Gonçales Benesi",     "fed": "54774", "clube": null,             "hcp": null, "_tee": "Brancas" }
+                {
+                  "nome": "David Filip Jun.",
+                  "fed": "51949",
+                  "clube": "Quinta do Peru",
+                  "hcp": 9.6,
+                  "_tee": "Amarelas"
+                },
+                {
+                  "nome": "Francisco Vilardell Carvalho",
+                  "fed": "52856",
+                  "clube": null,
+                  "hcp": 9.2,
+                  "_tee": "Amarelas"
+                },
+                {
+                  "nome": "Martim Moreira",
+                  "fed": "42985",
+                  "clube": null,
+                  "hcp": 8.6,
+                  "_tee": "Amarelas"
+                }
               ]
             },
             {
-              "teeTime": "13:05", "startHole": 1, "tee": "Amarelas",
+              "teeTime": "13:05",
+              "startHole": 1,
+              "tee": "Brancas",
               "players": [
-                { "nome": "Salvador Ivo de Carvalho",   "fed": "43968", "clube": "Estoril",        "hcp": null, "_tee": "Amarelas" },
-                { "nome": "David Filip Jun.",           "fed": "51949", "clube": "Quinta do Peru", "hcp": null, "_tee": "Amarelas" },
-                { "nome": "Francisco Vilardell Carvalho","fed": "52856","clube": null,             "hcp": null, "_tee": "Amarelas" },
-                { "nome": "Martim Moreira",             "fed": "42985", "clube": null,             "hcp": null, "_tee": "Amarelas" }
+                {
+                  "nome": "Rodrigo Sousa Correia",
+                  "fed": "44934",
+                  "clube": "Vilamoura, C. G",
+                  "hcp": 4,
+                  "_tee": "Brancas"
+                },
+                {
+                  "nome": "João Maria Ivo de Carvalho",
+                  "fed": "38334",
+                  "clube": "Estoril",
+                  "hcp": -0.9,
+                  "_tee": "Brancas"
+                },
+                {
+                  "nome": "Ryan Dantas",
+                  "fed": "45439",
+                  "clube": "Belas",
+                  "hcp": 6.8,
+                  "_tee": "Brancas"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:15",
+              "startHole": 1,
+              "tee": "Brancas",
+              "players": [
+                {
+                  "nome": "Pedro Costa Alemão",
+                  "fed": "46706",
+                  "clube": "Estoril",
+                  "hcp": 5.7,
+                  "_tee": "Brancas"
+                },
+                {
+                  "nome": "Rodrigo Faria Constantino",
+                  "fed": "45278",
+                  "clube": "Belas",
+                  "hcp": 1.6,
+                  "_tee": "Brancas"
+                },
+                {
+                  "nome": "Rafael Gonçales Benesi",
+                  "fed": "54774",
+                  "clube": null,
+                  "hcp": 6.8,
+                  "_tee": "Brancas"
+                }
               ]
             }
           ]

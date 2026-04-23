@@ -131,10 +131,11 @@ export function useFedBirthdates(): Map<string, string> {
   return m;
 }
 
-/** Renderiza bandeira só se o jogador for não-PT (PT é default sem bandeira). */
-export function CountryFlag({ fed, fedCountries }: { fed: string | null; fedCountries: Map<string, string> }) {
-  if (!fed) return null;
-  const cc = fedCountries.get(fed);
+/** Renderiza bandeira só se o jogador for não-PT (PT é default sem bandeira).
+ *  Aceita `country` directo (override) — usado para jogadores internacionais sem
+ *  fedCode português, onde a info vem de kids-links.json / playersDB entry virtual. */
+export function CountryFlag({ fed, fedCountries, country }: { fed: string | null; fedCountries: Map<string, string>; country?: string | null }) {
+  const cc = country || (fed ? fedCountries.get(fed) : null);
   if (!cc) return null;
   const emoji = FLAG[cc] ?? "🏳️";
   return <span title={cc} style={{ marginRight: 4, fontSize: "0.95em" }}>{emoji}</span>;

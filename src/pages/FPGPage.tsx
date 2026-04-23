@@ -15,7 +15,7 @@
  *   • Suporte a 9H e 18H, 1 a N rondas
  */
 import React, { useEffect, useState, useMemo, useCallback, useRef } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import { loadPlayers } from "../data/loader";
 import { buildEscLookup, type EscLookup, escCls, escPillCls, formatPlayerName, normalizePlayer } from "../utils/playerUtils";
@@ -946,22 +946,34 @@ function Content() {
   const [loading, setLoading] = useState(true);
   const [loadingMsg, setLoadingMsg] = useState("A carregar ficheiros...");
   const [error, setError] = useState<string | null>(null);
-  const [selected, setSelected] = useState(0);
+  // Deep-link em curso → começar com selected=-1 para que `cur = displayList[selected]`
+  // fique undefined até o URL→state encontrar o match correcto e chamar setSelected(idx).
+  // Sem esta guarda, selected=0 faz o render mostrar displayList[0] (torneio aleatório,
+  // dependendo de qual ficheiro pull-torneios carregou primeiro) enquanto pjaExtra
+  // ou jovens ainda carregam — dando a ilusão de "várias páginas a piscar".
+  const [selected, setSelected] = useState<number>(() => params.tkey ? -1 : 0);
     const md = useMasterDetail();
+  // Filtros sincronizados com URL query params para partilha directa.
+  // Ex: `/FPG?year=2026&manuel=0&q=pedro`. Declarado ANTES dos useStates que
+  // dependem dele (Temporal Dead Zone).
+  const [searchParams, setSearchParams] = useSearchParams();
   const [navMode, setNavMode]         = useState<"torneios" | "ranking-pja" | "ranking-sub12">(
     URL_TO_NAV[urlSeg] ?? "torneios"
   );
   const [seriesFilter, setSeriesFilter] = useState<"" | "circuit" | "santo" | "clubes" | "jovens">(
     (startInscritos || urlSeg === "jovens") ? "jovens" : ""
   );
-  const [yearFilter, setYearFilter]    = useState<string | null>(null);
-  const [filterManuel, setFilterManuel] = useState(true);
-  const [searchQuery, setSearchQuery]  = useState("");  // filtro de texto: nome ou campo/clube
+  const [yearFilter, setYearFilter]    = useState<string | null>(() => searchParams.get("year"));
+  const [filterManuel, setFilterManuel] = useState(() => searchParams.get("manuel") !== "0");
+  const [searchQuery, setSearchQuery]  = useState(() => searchParams.get("q") || "");  // filtro de texto: nome ou campo/clube
   const [escLookup, setEscLookup] = useState<EscLookup>(new Map());
   const [playersDB, setPlayersDB] = useState<PlayersDB>({});
   // Lista de fedCodes inscritos no circuito PJA por ano.
   // Carregado de /data/pja-members.json — ver PJARankingView para uso.
   const [pjaMembers, setPjaMembers] = useState<Record<string, string[]>>({});
+  // Snapshot do PDF oficial PJA para comparação — se definido, a tabela mostra
+  // Δ pts e Δ rondas vs PDF e destaca células com disparidade.
+  const [pjaPdfSnapshot, setPjaPdfSnapshot] = useState<Record<string, Array<{fed:string;name:string;rounds:number;pts:number;pos:number}>>>({});
 
   // ── Estado Clubes ─────────────────────────────────────────────────────────
   const [clubesTournaments, setClubesTournaments] = useState<Tournament[]>([]);
@@ -975,6 +987,22 @@ function Content() {
   // Carregamos separadamente para não afectar o displayList principal (tabs
   // Todos/Circuito/Santo continuam a ver apenas pull-torneios).
   const [pjaExtraTournaments, setPjaExtraTournaments] = useState<Tournament[]>([]);
+
+  // Sincronização state → URL (query string). Só parâmetros com valor
+  // não-default vão para o URL. replace:true evita poluir o histórico.
+  useEffect(() => {
+    const sp = new URLSearchParams(searchParams);
+    // year
+    if (yearFilter) sp.set("year", yearFilter); else sp.delete("year");
+    // manuel (default: true — só guardar "0" se desligado)
+    if (!filterManuel) sp.set("manuel", "0"); else sp.delete("manuel");
+    // search
+    if (searchQuery.trim()) sp.set("q", searchQuery.trim()); else sp.delete("q");
+    if (sp.toString() !== searchParams.toString()) {
+      setSearchParams(sp, { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [yearFilter, filterManuel, searchQuery]);
 
   // ── Estado Jovens ─────────────────────────────────────────────────────────
   const [jovensTournaments, setJovensTournaments] = useState<Tournament[]>([]);
@@ -1070,6 +1098,9 @@ function Content() {
               (pdb as any)[key] = {
                 name: entry.name,
                 kidsHash: entry.kidsHash,
+                ...(entry.country ? { country: entry.country } : {}),
+                ...(entry.escalao ? { escalao: entry.escalao } : {}),
+                ...(entry.sex ? { sex: entry.sex } : {}),
               };
             }
           } catch { /* ignore */ }
@@ -1083,48 +1114,53 @@ function Content() {
         const allT: Tournament[] = [];
         const meta: FileMeta[] = [];
 
-        // Consecutive-misses: só paramos após 2 404/erros seguidos, para não
-        // quebrar o carregamento quando um ficheiro individual está corrompido
-        // (ex: pull-torneios002 truncado a meio) e outros posteriores contêm
-        // dados válidos (ex: pull-torneios003 com torneios manuais).
-        let consecutiveMisses = 0;
-        for (let i = 0; i < DATA_MAX; i++) {
+        // Paraleliza os fetches dos pull-torneios*.json em lotes de PARALLEL_BATCH.
+        // Antes: loop sequencial com await (6 ficheiros → 6× latência da rede).
+        // Agora: 1 único batch de até DATA_MAX fetches concorrentes, pára no
+        // primeiro null consecutivo que vier (via findIndex).
+        const PARALLEL_BATCH = 10;
+        let stopAt = DATA_MAX;
+        for (let start = 0; start < stopAt; start += PARALLEL_BATCH) {
           if (!alive) return;
-          const url = dataUrl(i);
-          let resp: Response;
-          try { resp = await fetch(url); } catch { consecutiveMisses++; if (consecutiveMisses >= 2) break; else continue; }
-          if (!resp.ok) { consecutiveMisses++; if (consecutiveMisses >= 2) break; else continue; }
-
-          let d: DriveData;
-          try { d = await resp.json(); }
-          catch (e) {
-            console.warn(`[FPGPage] Falhou a parsear ${url}: ${String(e).slice(0, 120)} — a continuar`);
-            consecutiveMisses++;
-            if (consecutiveMisses >= 2) break; else continue;
+          const batchEnd = Math.min(start + PARALLEL_BATCH, stopAt);
+          const batch = await Promise.all(
+            Array.from({ length: batchEnd - start }, (_, k) => start + k).map(async (i) => {
+              const url = dataUrl(i);
+              try {
+                const resp = await fetch(url);
+                if (!resp.ok) return { i, url, d: null as DriveData | null, parseErr: null as string | null };
+                const d = await resp.json() as DriveData;
+                return { i, url, d, parseErr: null };
+              } catch (e) {
+                return { i, url, d: null, parseErr: String(e).slice(0, 120) };
+              }
+            })
+          );
+          let consecutiveMisses = 0;
+          let hitStop = false;
+          for (const { i, url, d, parseErr } of batch) {
+            if (!d) {
+              if (parseErr) console.warn(`[FPGPage] Falhou a parsear ${url}: ${parseErr} — a continuar`);
+              consecutiveMisses++;
+              if (consecutiveMisses >= 2) { stopAt = i; hitStop = true; break; }
+              continue;
+            }
+            consecutiveMisses = 0;
+            const normalised = (d.tournaments || []).map(t => {
+              const extLinks = externalLinks[String(t.tcode)];
+              return { ...t, _sourceFile: url, _sourceIndex: i,
+                players: t.players.map(normalizePlayer),
+                ...(extLinks ? { links: { ...(t.links || {}), ...extLinks } } : {}) };
+            });
+            allT.push(...normalised);
+            meta.push({ file: url, index: i, lastUpdated: d.lastUpdated, source: d.source, count: normalised.length });
           }
-          consecutiveMisses = 0;
-          const normalised = (d.tournaments || []).map(t => {
-            const extLinks = externalLinks[String(t.tcode)];
-            return {
-              ...t,
-              _sourceFile: url,
-              _sourceIndex: i,
-              players: t.players.map(normalizePlayer),
-              ...(extLinks ? { links: { ...(t.links || {}), ...extLinks } } : {}),
-            };
-          });
-          allT.push(...normalised);
-          meta.push({
-            file: url, index: i,
-            lastUpdated: d.lastUpdated,
-            source: d.source,
-            count: normalised.length,
-          });
           if (alive) {
             setTournaments([...allT]);
             setFileMeta([...meta]);
             setLoadingMsg(`A carregar... ${meta.length} ficheiro(s) · ${allT.length} torneios`);
           }
+          if (hitStop) break;
         }
 
         if (alive) {
@@ -1213,36 +1249,42 @@ function Content() {
   // construímos `pjaRankingList`. Activado apenas quando a tab Ranking PJA
   // está activa.
   useEffect(() => {
-    if (navMode !== "ranking-pja") return;
+    // Carregar drive-data/aquapor SEMPRE (não só no tab Ranking PJA) — assim
+    // deep-links em nova aba para `/FPG/torneio/{ccode}-{tcode}` de um Drive
+    // Tour ou Aquapor conseguem encontrar o torneio no displayList em vez de
+    // cair no default (primeiro torneio).
     if (pjaExtraTournaments.length > 0) return;  // já carregado
     let alive = true;
+    // Monta lista de URLs a tentar (todos os meses desde startYear até agora),
+    // faz fetch em PARALELO com Promise.all. Cada fetch individual falha
+    // silenciosamente (muitos meses podem não existir). Isto é 10-30× mais
+    // rápido que o loop sequencial com await.
     const loadMonthly = async (prefix: string, startYear: number): Promise<Tournament[]> => {
-      const out: Tournament[] = [];
       const now = new Date();
       const curYear = now.getFullYear();
       const curMonth = now.getMonth() + 1;
+      const urls: string[] = [];
       for (let y = startYear; y <= curYear; y++) {
-        for (let m = 1; m <= 12; m++) {
-          if (!alive) return out;
-          if (y === curYear && m > curMonth) break;
-          const mm = String(m).padStart(2, "0");
-          const url = `/data/${prefix}-${y}-${mm}.json`;
-          try {
-            const r = await fetch(url);
-            if (!r.ok) continue;
-            const ct = r.headers.get("content-type") || "";
-            if (!ct.includes("json")) continue;
-            const d = await r.json();
-            const tourns = (d.tournaments || []).map((t: any) => ({
-              ...t,
-              _sourceFile: url,
-              players: (t.players || []).map(normalizePlayer),
-            }));
-            out.push(...tourns);
-          } catch { /* ignore */ }
+        const endMonth = (y === curYear) ? curMonth : 12;
+        for (let m = 1; m <= endMonth; m++) {
+          urls.push(`/data/${prefix}-${y}-${String(m).padStart(2, "0")}.json`);
         }
       }
-      return out;
+      const results = await Promise.all(urls.map(async (url) => {
+        try {
+          const r = await fetch(url);
+          if (!r.ok) return [];
+          const ct = r.headers.get("content-type") || "";
+          if (!ct.includes("json")) return [];
+          const d = await r.json();
+          return (d.tournaments || []).map((t: any) => ({
+            ...t, _sourceFile: url,
+            players: (t.players || []).map(normalizePlayer),
+          })) as Tournament[];
+        } catch { return []; }
+      }));
+      if (!alive) return [];
+      return results.flat();
     };
     const loadPjaMembers = async (): Promise<Record<string, string[]>> => {
       try {
@@ -1251,7 +1293,6 @@ function Content() {
         const ct = r.headers.get("content-type") || "";
         if (!ct.includes("json")) return {};
         const d = await r.json();
-        // Filtrar as keys que começam com "_" (comentários)
         const out: Record<string, string[]> = {};
         for (const [k, v] of Object.entries(d)) {
           if (k.startsWith("_")) continue;
@@ -1260,11 +1301,27 @@ function Content() {
         return out;
       } catch { return {}; }
     };
+    const loadPdfSnapshot = async (): Promise<Record<string, any[]>> => {
+      try {
+        const r = await fetch("/data/pja-pdf-snapshot.json");
+        if (!r.ok) return {};
+        const ct = r.headers.get("content-type") || "";
+        if (!ct.includes("json")) return {};
+        const d = await r.json();
+        const out: Record<string, any[]> = {};
+        for (const [k, v] of Object.entries(d)) {
+          if (k.startsWith("_")) continue;
+          if (Array.isArray(v)) out[k] = v as any[];
+        }
+        return out;
+      } catch { return {}; }
+    };
     Promise.all([
       loadMonthly("drive-data", 2026),
       loadMonthly("aquapor-data", 2026),
       loadPjaMembers(),
-    ]).then(([drive, aq, members]) => {
+      loadPdfSnapshot(),
+    ]).then(([drive, aq, members, pdfSnap]) => {
       if (!alive) return;
       // NÃO chamar buildDisplayList aqui — drive-data é single-round por design,
       // aquapor já vem como entrada única multi-round. buildDisplayList só
@@ -1275,6 +1332,7 @@ function Content() {
       // (Torneios, Ranking PJA, Draw) tal como o Nacional sintético.
       setPjaExtraTournaments([...drive, ...aq]);
       setPjaMembers(members);
+      setPjaPdfSnapshot(pdfSnap);
     });
     return () => { alive = false; };
   }, [navMode, pjaExtraTournaments.length]);
@@ -1562,6 +1620,9 @@ function Content() {
       seen.add(k);
       base.push(j);
     }
+    // Drive Tour + Aquapor NÃO entram aqui — esses torneios estão na DrivePage
+    // e os deep-links usam /drive/torneio/{ccode}-{tcode} (não /FPG/torneio/...).
+    // pjaExtraTournaments só é usado internamente pelo Ranking PJA.
     return buildDisplayList(base);
   }, [tournaments, jovensTournaments]);
   const cur = displayList[selected];
@@ -1703,6 +1764,24 @@ function Content() {
       seriesFilter === "jovens" ? curJovens : cur;
     if (!t || !t.ccode || !t.tcode) return;
     const target = tournamentUrl("FPG", t.ccode, t.tcode);
+    // Guarda anti-race: se o URL actual já é `/FPG/torneio/{tkey}` E esse
+    // tkey NÃO corresponde ao `cur`, significa que URL→state ainda não
+    // encontrou o torneio no displayList (provavelmente pjaExtraTournaments
+    // ou jovensTournaments ainda não carregou). NÃO navegar — ficaria preso
+    // a redireccionar para o displayList[0] e o deep-link perder-se-ia.
+    // Aceitar também tcode sintético "A+B" quando o params.tkey é "A".
+    if (params.tkey) {
+      const parsed = parseTournKey(params.tkey);
+      if (parsed) {
+        const curCcode = t.ccode || "";
+        const curTcodes = String(t.tcode || "").split("+");
+        const matches = curCcode === parsed.ccode && (curTcodes.includes(parsed.tcode) || String(t.tcode) === parsed.tcode);
+        if (!matches) {
+          if (import.meta.env.DEV) console.log("[state→URL] SKIPPED — urlTkey", params.tkey, "não bate com cur", `${curCcode}-${t.tcode}`, "(aguardar URL→state)");
+          return;
+        }
+      }
+    }
     if (import.meta.env.DEV) console.log("[state→URL]", { from: location.pathname, target, seriesFilter, source: seriesFilter === "jovens" ? "curJovens" : "cur", tcode: t.tcode });
     if (target && location.pathname !== target) {
       navigate(target, { replace: true });
@@ -1947,6 +2026,10 @@ function Content() {
       pill: pillVal,
       _manuelInscrito: g.entries.some(tournamentHasManuel),
     };
+    // Deep-link canónico — o TournSidebarItem vira <a href>. Para sintéticos
+    // com tcode "A+B" usa o primeiro tcode no URL (parseTournKey match ambos).
+    const firstTcode = (activeEntry.tcode || "").split("+")[0];
+    const href = (activeEntry.ccode && firstTcode) ? tournamentUrl("FPG", activeEntry.ccode, firstTcode) : undefined;
     return (
       <TournSidebarItem
         key={(activeEntry._isSynthetic ? "synth_" : "") + keyTcodes + "_" + g.date}
@@ -1954,6 +2037,7 @@ function Content() {
         isActive={isActive}
         onClick={handleClick}
         extraPills={extraPills}
+        href={href}
       />
     );
   }
@@ -1970,9 +2054,11 @@ function Content() {
           <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />
           <ToolbarTitle>🏌️ FPG</ToolbarTitle>
           <DataSourcesChip sources={allSources} />
-          {!loading && navMode === "torneios" && (<>
+          {!loading && (<>
             <ToolbarSep />
-            {/* Search — antes dos botões Torneios/Ranking, como pediste */}
+            {/* Search unificado — mesmo local e tamanho em todos os modos.
+                Filtra torneios em modo Torneios, jogadores em modo Ranking PJA,
+                etc. O valor é partilhado (searchQuery). */}
             <div style={{ flexShrink: 0, position: "relative", display: "inline-flex", alignItems: "center" }}>
               <span aria-hidden="true" style={{
                 position: "absolute", left: 8, fontSize: 11, color: "var(--text-muted)", pointerEvents: "none",
@@ -1981,8 +2067,12 @@ function Content() {
                 type="search"
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                placeholder="nome, campo, clube..."
-                aria-label="Pesquisar torneios por nome, campo ou clube"
+                placeholder={
+                  navMode === "ranking-pja" ? "jogador ou clube..."
+                    : navMode === "ranking-sub12" ? "jogador..."
+                    : "nome, campo, clube..."
+                }
+                aria-label="Pesquisar"
                 style={{
                   fontSize: 12,
                   padding: "4px 22px 4px 24px",
@@ -2030,6 +2120,13 @@ function Content() {
                 {label}
               </button>
             ))}
+            {/* Slot de portal: o PJARankingView renderiza os seus filtros
+                (years, search, escalões) aqui via createPortal em vez de ter
+                uma toolbar separada. */}
+            {navMode === "ranking-pja" && <>
+              <ToolbarSep />
+              <div id="pja-toolbar-slot" style={{ display: "contents" }} />
+            </>}
             {navMode === "torneios" && availYears.length > 1 && (<>
               <ToolbarSep />
               {availYears.map(y => (
@@ -2173,7 +2270,23 @@ function Content() {
 
         {/* Detail */}
         <div className="course-detail" ref={md.detailRef}>
-          {cur
+          {/* Deep-link em curso: URL tem /FPG/torneio/{tkey} mas `cur` ainda
+              não corresponde (displayList incompleto — pull-torneios,
+              pjaExtra, jovens estão a carregar). Mostra "A carregar..." em
+              vez do torneio errado, evitando que o utilizador veja várias
+              páginas diferentes a piscar até o match ser encontrado.
+              Aceita tcode sintético "A+B" quando o URL pede apenas "A". */}
+          {(() => {
+            if (!params.tkey) return false;  // sem deep-link, não aplicar
+            if (!cur) return true;  // deep-link mas sem cur ainda → loading
+            const parsed = parseTournKey(params.tkey);
+            if (!parsed) return false;
+            const curTcodes = String(cur.tcode || "").split("+");
+            const matches = cur.ccode === parsed.ccode && (curTcodes.includes(parsed.tcode) || String(cur.tcode) === parsed.tcode);
+            return !matches;
+          })()
+            ? <div className="center-msg muted" style={{ padding: 40 }}>A carregar torneio {params.tkey}…</div>
+            : cur
             ? (() => {
                 const curGroup = eventGroupByKey.get((cur.ccode || "?") + "/" + String(cur.tcode ?? "?"));
                 const showTabs = curGroup && curGroup.entries.length > 1;
@@ -2479,7 +2592,7 @@ function Content() {
       {/* Ranking PJA */}
       {navMode === "ranking-pja" && (
         <div className="flex-1" style={{ overflowY: "auto", overflowX: "hidden", minHeight: 0 }}>
-          <PJARankingView pjaList={pjaRankingList} playersDB={playersDB} loading={loading} pjaMembersByYear={pjaMembers} />
+          <PJARankingView pjaList={pjaRankingList} playersDB={playersDB} loading={loading} pjaMembersByYear={pjaMembers} pjaPdfSnapshotByYear={pjaPdfSnapshot} externalFilterName={searchQuery} />
         </div>
       )}
     </div>

@@ -134,16 +134,23 @@ export default function NavBar() {
         <div className="brand-title">Golf</div>
       </div>
 
-      {/* Nav */}
+      {/* Nav — elementos <a href> para suportar Ctrl/Cmd+click "abrir em nova
+          aba" e right-click "copiar endereço". Click normal faz preventDefault
+          + navigate SPA (sem reload). */}
       <nav ref={navRef} className="nav nav-scroll">
         {calUnlocked && NAV_ITEMS.map(({ tab: t, label, path }) => (
-          <button
+          <a
             key={t}
+            href={path}
             className={`nav-btn${tab === t ? " active" : ""}`}
-            onClick={() => go(path)}
+            onClick={(e) => {
+              if (e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
+              e.preventDefault();
+              go(path);
+            }}
           >
             {label}
-          </button>
+          </a>
         ))}
       </nav>
 

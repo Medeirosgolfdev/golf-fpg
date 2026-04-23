@@ -10,24 +10,7 @@ import { calcSD, expectedSD9, get9hRatings } from "../utils/whsCalc";
 import TeePill from "./TeePill";
 import TeeDate from "./TeeDate";
 import SexBadge from "./SexBadge";
-
-/* ─── Helper: Course display link ─── */
-function findCourseKey(courseName: string): string | null {
-  // This will be injected as a prop - we need to build a simple version here
-  // For now, return null to avoid dependency loops
-  return null;
-}
-
-function CourseLink({ name }: { name: string }) {
-  const key = findCourseKey(name);
-  if (!key) return <>{name}</>;
-  return (
-    <a href={`/campos/${key}`} className="courseLink" title={`Ver campo: ${name}`}
-       target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}>
-      {name}
-    </a>
-  );
-}
+import { CourseLink } from "./jogadoresHelpers";
 
 /* ─── Helper: Gross cell with delta ─── */
 function GrossCell({ gross, par }: { gross: number | null; par: number | null }) {

@@ -12,7 +12,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { SC, sdClassByHcp, scClass, medalColor } from "../utils/scoreDisplay";
 import { calcAGS, expectedSD9 } from "../utils/whsCalc";
 import { fmtToPar, fmtDateShort, fmtHcp, medal, fpgDrawUrl, fpgScoringUrl, fpgAdmissionsUrl, shortDateSlash, tournamentUrl, parseTournKey } from "../utils/format";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useParams, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
 import { resolveFedsInTournaments , buildEscLookup, escPillCls, normalizePlayer } from "../utils/playerUtils";
@@ -1160,25 +1160,66 @@ function DriveContent() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [navMode, setNavMode]   = useState<"torneios"|"ranking-pja"|"ranking-sub12">("torneios");
-  const [series, setSeries]     = useState<"all"|"tour"|"challenge"|"aquapor">("tour");
-  const [filterManuel, setFilterManuel] = useState(true);
+  // Filtros sincronizados com URL query params para partilha directa.
+  // Formato: `/drive?nav=ranking-pja&series=aquapor&year=2026&region=Norte&esc=Sub+12,Sub+14&manuel=0`.
+  const [searchParams, setSearchParams] = useSearchParams();
+  const getQP = (key: string) => searchParams.get(key);
+
+  const [navMode, setNavMode]   = useState<"torneios"|"ranking-pja"|"ranking-sub12">(() => {
+    const v = getQP("nav");
+    return (v === "ranking-pja" || v === "ranking-sub12") ? v : "torneios";
+  });
+  const [series, setSeries]     = useState<"all"|"tour"|"challenge"|"aquapor">(() => {
+    const v = getQP("series");
+    return (v === "all" || v === "tour" || v === "challenge" || v === "aquapor") ? v : "tour";
+  });
+  const [filterManuel, setFilterManuel] = useState(() => getQP("manuel") !== "0");
     const md = useMasterDetail();
-  const [regionFilter, setRegionFilter]         = useState<string | null>(null);
-  const [escFilter, setEscFilter]               = useState<string[]>([]);
+  const [regionFilter, setRegionFilter]         = useState<string | null>(() => getQP("region"));
+  const [escFilter, setEscFilter]               = useState<string[]>(() => {
+    const v = getQP("esc");
+    return v ? v.split(",").map(s => s.trim()).filter(Boolean) : [];
+  });
   const [selectedGroupKey, setSelectedGroupKey] = useState<string | null>(null);
   const [roundIdx, setRoundIdx]                 = useState(0);
 
   // Filtro de ano (null = todos)
-  const [yearFilter, setYearFilter]             = useState<string | null>(null);
+  const [yearFilter, setYearFilter]             = useState<string | null>(() => getQP("year"));
 
   // Estado específico Sub-12
-  const [sub12Series, setSub12Series]   = useState<Sub12SeriesTab>("tour");
-  const [sub12View, setSub12View]       = useState<Sub12ViewTab>("grid");
-  const [sub12Region, setSub12Region]   = useState("all");
-  const [sub12Sex, setSub12Sex]         = useState("all");
+  const [sub12Series, setSub12Series]   = useState<Sub12SeriesTab>(() => {
+    const v = getQP("s12s"); return (v === "tour" || v === "aquapor") ? v as Sub12SeriesTab : "tour";
+  });
+  const [sub12View, setSub12View]       = useState<Sub12ViewTab>(() => {
+    const v = getQP("s12v"); return (v === "grid" || v === "list") ? v as Sub12ViewTab : "grid";
+  });
+  const [sub12Region, setSub12Region]   = useState(() => getQP("s12r") || "all");
+  const [sub12Sex, setSub12Sex]         = useState(() => getQP("s12x") || "all");
   const [sub12Search, setSub12Search]   = useState("");
   const [sub12Player, setSub12Player]   = useState<Sub12Row | null>(null);
+
+  // Sincronização state → URL (query string). Constrói params só com valores
+  // não-default para manter URLs limpas. `replace: true` não pollui histórico.
+  useEffect(() => {
+    const sp = new URLSearchParams();
+    if (navMode !== "torneios") sp.set("nav", navMode);
+    if (series !== "tour") sp.set("series", series);
+    if (!filterManuel) sp.set("manuel", "0");
+    if (regionFilter) sp.set("region", regionFilter);
+    if (escFilter.length) sp.set("esc", escFilter.join(","));
+    if (yearFilter) sp.set("year", yearFilter);
+    if (navMode === "ranking-sub12") {
+      if (sub12Series !== "tour") sp.set("s12s", sub12Series);
+      if (sub12View !== "grid") sp.set("s12v", sub12View);
+      if (sub12Region !== "all") sp.set("s12r", sub12Region);
+      if (sub12Sex !== "all") sp.set("s12x", sub12Sex);
+    }
+    // Não mexer se o URL já é igual (evita push inútil ao histórico)
+    if (sp.toString() !== searchParams.toString()) {
+      setSearchParams(sp, { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navMode, series, filterManuel, regionFilter, escFilter, yearFilter, sub12Series, sub12View, sub12Region, sub12Sex]);
 
   // Carrega todos os ficheiros mensais: {prefix}-YYYY-MM.json
   // Itera startYear → ano corrente, todos os meses; ignora silenciosamente os que não existem (404)
@@ -1463,6 +1504,36 @@ function DriveContent() {
   );
   const curTournament = selectedGroup ? (selectedGroup.entries[roundIdx] || selectedGroup.entries[0]) : null;
 
+  // ── Deep-link: ajustar filtros para que o torneio seja visível ──────────
+  // Quando há `/drive/torneio/{ccode}-{tcode}` na URL, detectar em que série
+  // (tour/challenge/aquapor) o torneio está e mudar `series` para essa antes
+  // de procurar. Também desliga `filterManuel` se o Manuel não jogou no
+  // torneio apontado pelo deep-link. Corre só uma vez por deep-link (e
+  // quando a data chega).
+  useEffect(() => {
+    if (!urlTkey) return;
+    const parsed = parseTournKey(urlTkey);
+    if (!parsed) return;
+    const { ccode, tcode } = parsed;
+    const matchesT = (t: Tournament) => t.ccode === ccode && (
+      t.tcode === tcode || (t.tcode || "").split("+").includes(tcode)
+    );
+    let found: Tournament | null = null;
+    let detectedSeries: "tour" | "challenge" | "aquapor" | null = null;
+    for (const t of tourT) { if (matchesT(t)) { found = t; detectedSeries = "tour"; break; } }
+    if (!found) for (const t of challT) { if (matchesT(t)) { found = t; detectedSeries = "challenge"; break; } }
+    if (!found) for (const t of aquaporT) { if (matchesT(t)) { found = t; detectedSeries = "aquapor"; break; } }
+    if (!found || !detectedSeries) return;  // ainda não carregado — próxima corrida apanha
+    if (series !== detectedSeries && series !== "all") setSeries(detectedSeries);
+    // Desligar filterManuel se o Manuel não está neste torneio — caso contrário o
+    // filtro esconde-o e nunca aparece.
+    if (filterManuel && !found.players.some(p => isManuel(p))) setFilterManuel(false);
+    // Limpar filtros regionais/escalão que possam estar a esconder o torneio
+    if (regionFilter && found.region !== regionFilter) setRegionFilter(null);
+    if (escFilter.length > 0) setEscFilter([]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlTkey, tourT, challT, aquaporT]);
+
   // ── Deep-link: sync URL (:tkey) → selectedGroupKey + roundIdx ──────────
   // `/drive/torneio/{ccode}-{tcode}` → procura o torneio na lista filtrada
   // e selecciona o grupo/entry correspondente. Corre quando `filteredGroups`
@@ -1577,6 +1648,11 @@ function DriveContent() {
       players:     g.entries.flatMap(e => e.players),
     };
 
+    // Deep-link canónico — o TournSidebarItem renderiza como <a href> (com
+    // Ctrl/Cmd+click a abrir em nova aba). Para sintéticos com tcode "A+B"
+    // usamos apenas o primeiro tcode no URL (parseTournKey match ambos).
+    const firstTcode = (t0?.tcode || "").split("+")[0].replace(/_R\d+$|_Total$/, "");
+    const href = (t0?.ccode && firstTcode) ? tournamentUrl("drive", t0.ccode, firstTcode) : undefined;
     return (
       <TournSidebarItem
         key={g.key}
@@ -1585,6 +1661,7 @@ function DriveContent() {
         onClick={onClick}
         accentColor={grpAccent}
         extraPills={extraPills}
+        href={href}
       />
     );
   };
