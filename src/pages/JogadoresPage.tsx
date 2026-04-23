@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useParams, useNavigate, useSearchParams, Link } from "react-router-dom";
 import type { Player, Course, SexFilter } from "../data/types";
 import { useAppContext } from "../context/AppContext";
@@ -388,6 +388,26 @@ function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId 
   const lastHex = getTeeHex(last?.tee || "");
   const courseLinkKey = findCourseKey(course.course);
 
+  // Na análise por campo, auto-seleccionar o tee com mais voltas quando se abre o detalhe
+  // (caso o utilizador ainda não tenha feito escolha explícita). Assim os gráficos aparecem
+  // logo, em vez de exigir um clique prévio.
+  useEffect(() => {
+    if (!open || !isAnalysis || activeTee) return;
+    const keys = Object.keys(holeStats);
+    if (keys.length === 0) return;
+    const best = keys.reduce((a, b) => ((holeStats[a]?.nRounds ?? 0) >= (holeStats[b]?.nRounds ?? 0) ? a : b));
+    setActiveTee(best);
+  }, [open, isAnalysis, activeTee, holeStats]);
+
+  // Handler de clique manual num tee — muda o filtro E faz scroll suave até à análise.
+  const handleSelectTee = useCallback((tk: string) => {
+    setActiveTee(tk);
+    setTimeout(() => {
+      const el = document.getElementById("hole-stats-section");
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }, 80);
+  }, []);
+
   return (
     <>
       {/* Summary row */}
@@ -418,26 +438,31 @@ function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId 
               {isAnalysis && (
                 <>
                   {activeTee && (
-                    <div className="actions mb-10">
-                      <button className="btn btnGhost" onClick={() => setActiveTee(null)}>Limpar filtro tee</button>
+                    <div className="tee-filter-bar mb-10">
+                      <span className="fs-12 fw-600 c-text-2">Filtro activo:</span>
+                      <TeePill name={course.rounds.find(r => normKey(r.tee || "") === activeTee)?.tee || activeTee} />
+                      <span className="muted fs-11">{roundsView.length} rondas</span>
+                      <button className="btn btnGhost fs-11" onClick={() => setActiveTee(null)}>✕ Limpar filtro</button>
                     </div>
                   )}
                   {/* Eclectic */}
                   {ecList.length > 0 && (
                     <EclecticSection ecList={ecList} ecDet={ecDet} holeStats={holeStats}
                       courseRounds={course.rounds} holesData={data.HOLES}
-                      activeTee={activeTee} onSelectTee={setActiveTee} />
+                      activeTee={activeTee} onSelectTee={handleSelectTee} />
                   )}
-                  {/* Course Performance Analysis */}
-                  <CoursePerformanceSection rounds={roundsView} />
-                  {/* Hole Stats for active tee */}
+                  {/* Hole Stats for active tee (logo a seguir ao Eclético, por ser o detalhe do tee seleccionado) */}
                   {activeTee && holeStats[activeTee] && (
-                    <HoleStatsSection stats={holeStats[activeTee]} />
+                    <div id="hole-stats-section">
+                      <HoleStatsSection stats={holeStats[activeTee]} />
+                    </div>
                   )}
+                  {/* Course Performance Analysis (agnóstico ao tee seleccionado) */}
+                  <CoursePerformanceSection rounds={roundsView} />
                 </>
               )}
-              {/* Tee Summary (for all views when multiple tees) */}
-              <TeeSummaryTable rounds={course.rounds} />
+              {/* Tee Summary — só no modo não-análise (no modo análise o EclecticSection já cobre) */}
+              {!isAnalysis && <TeeSummaryTable rounds={course.rounds} />}
               {/* Rounds table */}
               <div className="mt-8">
                 <table className="dt-compact">
@@ -612,6 +637,94 @@ function ByCourseView({ data, search, sort, isAnalysis }: {
    Hole Stats Section
    ──────────────────────────────────────────────────────────────────────────────────────── */
 
+/* ─── Linha temporal das rondas neste campo ─── */
+function RoundsTimeline({ rounds }: { rounds: RoundData[] }) {
+  // Só rondas com gross+par válido (para termos o eixo Y coerente); excluímos 9H
+  const pts = useMemo(() => {
+    return rounds
+      .filter(r => r.gross != null && r.par != null && r.holeCount === 18 && r.dateSort > 0)
+      .map(r => ({
+        x: r.dateSort,
+        gross: Number(r.gross),
+        par: Number(r.par),
+        tee: r.tee || "",
+        date: r.date,
+        scoreId: r.scoreId,
+        diff: Number(r.gross) - Number(r.par),
+      }))
+      .sort((a, b) => a.x - b.x);
+  }, [rounds]);
+
+  if (pts.length < 3) return null;
+
+  // Dimensões SVG
+  const W = 680, H = 170;
+  const padL = 32, padR = 12, padT = 14, padB = 26;
+  const innerW = W - padL - padR, innerH = H - padT - padB;
+
+  const xs = pts.map(p => p.x);
+  const ys = pts.map(p => p.gross);
+  const pars = pts.map(p => p.par);
+  const xMin = Math.min(...xs), xMax = Math.max(...xs);
+  const yMinRaw = Math.min(...ys, ...pars), yMaxRaw = Math.max(...ys, ...pars);
+  // Margem de 2 golpes em cima e em baixo
+  const yMin = Math.floor(yMinRaw - 2), yMax = Math.ceil(yMaxRaw + 2);
+
+  const xScale = (x: number) => padL + (xMax === xMin ? innerW / 2 : ((x - xMin) / (xMax - xMin)) * innerW);
+  const yScale = (y: number) => padT + innerH - ((y - yMin) / (yMax - yMin || 1)) * innerH;
+
+  // Path da linha de gross (poliline suave)
+  const linePath = pts.map((p, i) => `${i === 0 ? "M" : "L"} ${xScale(p.x).toFixed(1)} ${yScale(p.gross).toFixed(1)}`).join(" ");
+
+  // Par: se for constante, linha horizontal; se não, liga os pontos
+  const parConst = pars.every(p => p === pars[0]);
+  const parPath = parConst
+    ? `M ${padL} ${yScale(pars[0])} L ${W - padR} ${yScale(pars[0])}`
+    : pts.map((p, i) => `${i === 0 ? "M" : "L"} ${xScale(p.x).toFixed(1)} ${yScale(p.par).toFixed(1)}`).join(" ");
+
+  // Grid Y (3 linhas)
+  const yTicks = [yMin, Math.round((yMin + yMax) / 2), yMax];
+
+  // Labels X: primeiro e último ponto
+  const fmtDate = (ds: string) => ds ? ds.substring(0, 5) + "/" + ds.slice(-2) : "";
+
+  return (
+    <div className="mt-10">
+      <div className="h-sm">📈 Evolução dos gross <span className="muted fs-11">({pts.length} rondas de 18 buracos · linha tracejada = par)</span></div>
+      <div className="scroll-x">
+        <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ maxWidth: W, display: "block" }} role="img" aria-label="Evolução do gross ao longo do tempo">
+          {/* Eixo Y: linhas de grelha */}
+          {yTicks.map(t => (
+            <g key={t}>
+              <line x1={padL} y1={yScale(t)} x2={W - padR} y2={yScale(t)} stroke="var(--border-light)" strokeWidth={1} strokeDasharray={t === yTicks[1] ? "" : "2 3"} />
+              <text x={padL - 4} y={yScale(t) + 3} fontSize={10} fill="var(--text-3)" textAnchor="end">{t}</text>
+            </g>
+          ))}
+          {/* Linha do par */}
+          <path d={parPath} stroke="var(--color-good)" strokeWidth={1.5} strokeDasharray="5 4" fill="none" opacity={0.7} />
+          {/* Linha dos gross */}
+          <path d={linePath} stroke="var(--chart-2)" strokeWidth={2} fill="none" />
+          {/* Pontos com cor do tee */}
+          {pts.map(p => {
+            const hex = getTeeHex(p.tee);
+            const above = p.diff > 0;
+            return (
+              <g key={p.scoreId}>
+                <circle cx={xScale(p.x)} cy={yScale(p.gross)} r={4.5} fill={hex} stroke="var(--bg-card)" strokeWidth={1.5}>
+                  <title>{`${p.date} · ${p.tee} · Gross ${p.gross} (par ${p.par}, ${above ? "+" : ""}${p.diff})`}</title>
+                </circle>
+              </g>
+            );
+          })}
+          {/* Labels X: primeiro e último */}
+          <text x={padL} y={H - 8} fontSize={10} fill="var(--text-3)" textAnchor="start">{fmtDate(pts[0].date)}</text>
+          <text x={W - padR} y={H - 8} fontSize={10} fill="var(--text-3)" textAnchor="end">{fmtDate(pts[pts.length - 1].date)}</text>
+        </svg>
+      </div>
+    </div>
+  );
+}
+
 /* ─── Course Performance Analysis (KPIs + Conclusion) ─── */
 function CoursePerformanceSection({ rounds }: { rounds: RoundData[] }) {
   const stats = useMemo(() => {
@@ -730,6 +843,9 @@ function CoursePerformanceSection({ rounds }: { rounds: RoundData[] }) {
           <div className="caConcText">{stats.conclusion}</div>
         </div>
       )}
+
+      {/* Linha temporal das rondas neste campo */}
+      <RoundsTimeline rounds={rounds} />
     </div>
   );
 }

@@ -43,7 +43,7 @@ export function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesD
   return (
     <div className="mb-16">
       <div className="h-sm">Eclético (gross) por tee</div>
-      <div className="ecHint">Clique num tee na tabela de buracos para ver análise e filtrar rondas.</div>
+      <div className="ecHint">Clique num tee para filtrar as rondas e abrir a análise detalhada deste tee.</div>
 
       {/* Summary table */}
       <div className="mb-10">
@@ -63,8 +63,9 @@ export function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesD
               const tp = ex.toPar;
               const tpStr = tp == null ? "" : (fmtSign(tp));
               const tpCol = tp == null ? "" : (tp > 0 ? SC.danger : tp < 0 ? SC.good : SC.muted);
+              const isActive = ex.teeKey === activeTee;
               return (
-                <tr key={ex.teeKey} className="pointer" onClick={() => onSelectTee(ex.teeKey)}>
+                <tr key={ex.teeKey} className={`pointer${isActive ? " tee-row-active" : ""}`} onClick={() => onSelectTee(ex.teeKey)}>
                   <td><TeePill name={ex.teeName} /></td>
                   <td className="r fw-600">{hs?.nRounds ?? ""}</td>
                   <td className="r">{ex.totalPar}</td>

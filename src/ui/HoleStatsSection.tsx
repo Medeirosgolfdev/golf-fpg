@@ -1,8 +1,155 @@
 import React from "react";
-import type { HoleStatsData } from "../data/playerDataLoader";
-import { fD, fD2 } from "../utils/format";
+import type { HoleStatsData, HoleStatEntry } from "../data/playerDataLoader";
+import { fD, fD2, fmtSign } from "../utils/format";
 import { sc3m, sc2, SC, scClass } from "../utils/scoreDisplay";
 import { sumArr } from "../utils/mathUtils";
+
+/* ─── Heatmap de buracos: grelha 1×9 (9H) ou 2×9 (18H) ─── */
+function HoleHeatmap({ holes, hc }: { holes: HoleStatEntry[]; hc: number }) {
+  const is9 = hc === 9;
+  const rows: HoleStatEntry[][] = is9 ? [holes.slice(0, 9)] : [holes.slice(0, 9), holes.slice(9, 18)];
+  const labels = is9 ? [""] : ["F9", "B9"];
+
+  // Cor do fundo consoante strokesLost (gradient verde→neutro→vermelho)
+  const cellStyle = (sl: number, n: number): React.CSSProperties => {
+    if (n === 0) return { background: "var(--bg-detail)", color: "var(--text-muted)" };
+    if (sl <= -0.3) return { background: "var(--color-good)", color: "#fff" };
+    if (sl <= -0.1) return { background: "var(--color-good-alpha)", color: "var(--text-1)" };
+    if (sl <= 0.15) return { background: "var(--bg-detail)", color: "var(--text-1)" };
+    if (sl <= 0.4) return { background: "var(--color-warn-alpha)", color: "var(--text-1)" };
+    if (sl <= 0.7) return { background: "var(--color-danger-alpha)", color: "var(--text-1)" };
+    return { background: "var(--color-danger)", color: "#fff" };
+  };
+
+  return (
+    <div className="mt-10">
+      <div className="h-sm">🗺️ Mapa de calor por buraco <span className="muted fs-11">(verde = forte, vermelho = perdes pancadas)</span></div>
+      <div className="heatmap-wrap">
+        {rows.map((row, ri) => (
+          <div key={ri} className="heatmap-row">
+            {!is9 && <div className="heatmap-rowlabel">{labels[ri]}</div>}
+            {row.map(h => {
+              const sl = h.strokesLost ?? 0;
+              const vp = h.avg != null && h.par != null ? h.avg - h.par : null;
+              return (
+                <div key={h.h} className="heatmap-cell" style={cellStyle(sl, h.n)}
+                     title={h.n ? `Buraco ${h.h} · Par ${h.par} · média ${h.avg?.toFixed(1)} · ${fD(sl)} panc. perd./volta` : `Buraco ${h.h} — sem dados`}>
+                  <div className="heatmap-hole">{h.h}</div>
+                  <div className="heatmap-par">Par {h.par ?? "—"}</div>
+                  <div className="heatmap-vp">{vp != null ? fmtSign(vp, 1) : "—"}</div>
+                </div>
+              );
+            })}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Comparação F9 vs B9 ─── */
+function F9B9Comparison({ stats }: { stats: HoleStatsData }) {
+  if (!stats.f9b9 || stats.holeCount !== 18) return null;
+
+  // Distribuição por 9 (soma das distribuições dos 9 buracos correspondentes)
+  const distFor = (start: number, end: number) => {
+    const acc = { eagle: 0, birdie: 0, par: 0, bogey: 0, double: 0, triple: 0, total: 0 };
+    for (let i = start; i < end; i++) {
+      const d = stats.holes[i]?.dist;
+      if (!d) continue;
+      acc.eagle += d.eagle; acc.birdie += d.birdie; acc.par += d.par;
+      acc.bogey += d.bogey; acc.double += d.double; acc.triple += d.triple;
+      acc.total += d.eagle + d.birdie + d.par + d.bogey + d.double + d.triple;
+    }
+    return acc;
+  };
+  const fD9 = distFor(0, 9);
+  const bD9 = distFor(9, 18);
+
+  const segsOf = (d: typeof fD9) => [
+    { n: d.eagle + d.birdie, cls: "seg-birdie" },
+    { n: d.par, cls: "seg-par" },
+    { n: d.bogey, cls: "seg-bogey" },
+    { n: d.double + d.triple, cls: "seg-double" },
+  ];
+
+  const diffSl = stats.f9b9.b9.strokesLost - stats.f9b9.f9.strokesLost;
+  const worseSide = diffSl > 0.2 ? "b9" : diffSl < -0.2 ? "f9" : null;
+
+  const Side = ({ side, label }: { side: "f9" | "b9"; label: string }) => {
+    const s = side === "f9" ? stats.f9b9!.f9 : stats.f9b9!.b9;
+    const d = side === "f9" ? fD9 : bD9;
+    const isWorse = side === worseSide;
+    const slCol = sc3m(s.strokesLost, 2.5, 6);
+    return (
+      <div className={`f9b9-card${isWorse ? " f9b9-worse" : ""}`}>
+        <div className="f9b9-head">
+          <span className="f9b9-label">{label}</span>
+          <span className="muted fs-11">par {s.par}</span>
+        </div>
+        <div className="f9b9-sl" style={{ color: slCol }}>{fD(s.strokesLost)}<span className="fs-10 c-text-3"> panc. perd./volta</span></div>
+        <div className="f9b9-dbl">{s.dblPct.toFixed(0)}% <span className="fs-10 c-text-3">double bogey ou pior</span></div>
+        {d.total > 0 && (
+          <div className="haParDistBar mt-6">
+            {segsOf(d).map(sg => sg.n > 0 ? <div key={sg.cls} className={`haDistSeg ${sg.cls}`} style={{ width: `${(sg.n / d.total * 100).toFixed(1)}%` }} title={`${sg.cls}: ${sg.n}`} /> : null)}
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  return (
+    <div className="mt-10">
+      <div className="h-sm">↔️ Front 9 vs Back 9</div>
+      <div className="f9b9-grid">
+        <Side side="f9" label="Front 9" />
+        <div className="f9b9-diff" title={`Diferença de pancadas perdidas: ${fmtSign(diffSl, 2)}`}>
+          {Math.abs(diffSl) < 0.2
+            ? <><span className="f9b9-diff-icon">≈</span><span className="f9b9-diff-txt muted">equilibrado</span></>
+            : <><span className="f9b9-diff-icon">{diffSl > 0 ? "→" : "←"}</span><span className="f9b9-diff-txt" style={{ color: SC.danger }}>{diffSl > 0 ? "B9" : "F9"} custa +{Math.abs(diffSl).toFixed(1)}</span></>
+          }
+        </div>
+        <Side side="b9" label="Back 9" />
+      </div>
+    </div>
+  );
+}
+
+/* ─── Bar chart vertical da distribuição de scores ─── */
+function ScoreDistributionChart({ td }: { td: HoleStatsData["totalDist"] }) {
+  if (!td || td.total === 0) return null;
+  const cats = [
+    { key: "eagle", label: "Eagle+", n: td.eagle, cls: "seg-eagle" },
+    { key: "birdie", label: "Birdie", n: td.birdie, cls: "seg-birdie" },
+    { key: "par", label: "Par", n: td.par, cls: "seg-par" },
+    { key: "bogey", label: "Bogey", n: td.bogey, cls: "seg-bogey" },
+    { key: "double", label: "Double", n: td.double, cls: "seg-double" },
+    { key: "triple", label: "Triple+", n: td.triple, cls: "seg-triple" },
+  ];
+  // Altura máxima para normalizar as barras
+  const maxN = Math.max(...cats.map(c => c.n), 1);
+  return (
+    <div className="mt-10">
+      <div className="h-sm">📊 Distribuição de scores <span className="muted fs-11">({td.total} buracos)</span></div>
+      <div className="score-dist">
+        {cats.map(c => {
+          const pct = (c.n / td.total) * 100;
+          const barH = (c.n / maxN) * 100; // % da altura máxima
+          return (
+            <div key={c.key} className="score-dist-col" title={`${c.label}: ${c.n} (${pct.toFixed(1)}%)`}>
+              <div className="score-dist-val">{c.n > 0 ? c.n : ""}</div>
+              <div className="score-dist-barwrap">
+                <div className={`score-dist-bar ${c.cls}`} style={{ height: `${barH}%` }} />
+              </div>
+              <div className="score-dist-pct">{pct.toFixed(1)}%</div>
+              <div className="score-dist-lbl">{c.label}</div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
 function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
   const pctF = (n: number, tot: number) => tot ? (n / tot * 100).toFixed(0) : "0";
@@ -65,63 +212,71 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
             <div className="haDiagLbl">double bogey ou pior ({dblOrWorse}/{td?.total ?? 0})</div>
           </div>
         </div>
-        {stats.f9b9 && (() => {
-          const diff9 = stats.f9b9.b9.strokesLost - stats.f9b9.f9.strokesLost;
-          const worse9 = diff9 > 0.3 ? "Back 9" : diff9 < -0.3 ? "Front 9" : null;
-          if (!worse9) return null;
-          return (
-            <div className="haDiagCard">
-              <div className="haDiagIcon diag-bg-purple">🔄</div>
-              <div className="min-w-0">
-                <div className="haDiagVal c-purple">{worse9}</div>
-                <div className="haDiagLbl">custa mais {Math.abs(diff9).toFixed(1)} panc./volta (F9: {fD(stats.f9b9!.f9.strokesLost)}, B9: {fD(stats.f9b9!.b9.strokesLost)})</div>
-              </div>
-            </div>
-          );
-        })()}
       </div>
 
-      {/* By par type */}
+      {/* Heatmap de buracos */}
+      <HoleHeatmap holes={stats.holes} hc={hc} />
+
+      {/* Front 9 vs Back 9 (só em 18H) */}
+      <F9B9Comparison stats={stats} />
+
+      {/* By par type (colapsado por defeito) */}
       {parTypes.length > 1 && (
-        <div className="mt-10">
-          <div className="h-sm">Desempenho por Tipo de Buraco</div>
-          <div className="haParGrid">
-            {parTypes.map(pt => {
-              const g = stats.byParType[pt];
-              const isWorst = pt === worstPT && (g.avgVsPar ?? 0) > 0.3;
-              const distTotal = g.dist.eagle + g.dist.birdie + g.dist.par + g.dist.bogey + g.dist.double + g.dist.triple;
-              const vpCol = sc3m(g.avgVsPar ?? 0, 0, 0.4);
-              const segs = [
-                { n: g.dist.eagle + g.dist.birdie, cls: "seg-birdie", label: "Birdie+" },
-                { n: g.dist.par, cls: "seg-par", label: "Par" },
-                { n: g.dist.bogey, cls: "seg-bogey", label: "Bogey" },
-                { n: g.dist.double + g.dist.triple, cls: "seg-double", label: "Double+" },
-              ];
-              return (
-                <div key={pt} className="haParCard"
-                  style={{ borderColor: isWorst ? SC.danger : "var(--border)", background: isWorst ? "var(--bg-danger)" : "var(--bg-card)" }}>
-                  {isWorst && <div className="haParAlert">⚠️ Área a melhorar</div>}
-                  <div className="haParHead">Par {pt} <span className="muted">({g.nHoles} buracos)</span></div>
-                  <div className="haParAvg" style={{ color: vpCol }}>{fD2(g.avgVsPar ?? 0)} <span style={{ fontSize: 10, color: "var(--text-3)" }}>média vs par</span></div>
-                  <div className="haParStat">{fD(g.strokesLostPerRound)} <span>pancadas/volta</span></div>
-                  {distTotal > 0 && (
-                    <div className="mt-6">
-                      <div className="haParDistBar">
-                        {segs.map(sg => sg.n > 0 ? <div key={sg.cls} className={`haDistSeg ${sg.cls}`} style={{ width: `${(sg.n / distTotal * 100).toFixed(1)}%` }} title={`${sg.label}: ${sg.n}`} /> : null)}
-                      </div>
-                      <div className="haParDistNums">{pctF(g.dist.eagle + g.dist.birdie, distTotal)}% birdie+ · {pctF(g.dist.par, distTotal)}% par · {pctF(g.dist.bogey, distTotal)}% bogey · {pctF(g.dist.double + g.dist.triple, distTotal)}% double+</div>
+        <details className="details-block mt-10">
+          <summary className="details-summary">🎯 Desempenho por tipo de buraco <span className="muted fs-11">(vs par · clica para abrir)</span></summary>
+          {/* Bar chart horizontal comparativo */}
+          <div className="par-type-chart">
+            {(() => {
+              const maxAbs = Math.max(0.3, ...parTypes.map(pt => Math.abs(stats.byParType[pt].avgVsPar ?? 0)));
+              return parTypes.map(pt => {
+                const g = stats.byParType[pt];
+                const vp = g.avgVsPar ?? 0;
+                const isWorst = pt === worstPT && vp > 0.3;
+                const pct = Math.min(100, (Math.abs(vp) / maxAbs) * 100);
+                const vpCol = sc3m(vp, 0, 0.4);
+                const distTotal = g.dist.eagle + g.dist.birdie + g.dist.par + g.dist.bogey + g.dist.double + g.dist.triple;
+                const segs = [
+                  { n: g.dist.eagle + g.dist.birdie, cls: "seg-birdie", label: "Birdie+" },
+                  { n: g.dist.par, cls: "seg-par", label: "Par" },
+                  { n: g.dist.bogey, cls: "seg-bogey", label: "Bogey" },
+                  { n: g.dist.double + g.dist.triple, cls: "seg-double", label: "Double+" },
+                ];
+                return (
+                  <div key={pt} className={`par-type-row${isWorst ? " par-type-worst" : ""}`}>
+                    <div className="par-type-label">
+                      <span className="par-type-name">Par {pt}</span>
+                      <span className="muted fs-10">{g.nHoles} buracos</span>
                     </div>
-                  )}
-                </div>
-              );
-            })}
+                    {/* Barra simétrica centrada no zero: negativo à esquerda (verde), positivo à direita (vermelho) */}
+                    <div className="par-type-bar-track">
+                      <div className="par-type-zero" />
+                      <div className={`par-type-bar ${vp < 0 ? "bar-neg" : "bar-pos"}`}
+                           style={{ width: `${pct / 2}%`, background: vpCol, [vp < 0 ? "right" : "left"]: "50%" } as React.CSSProperties} />
+                    </div>
+                    <div className="par-type-val" style={{ color: vpCol }}>{fD2(vp)}</div>
+                    <div className="par-type-sl">{fD(g.strokesLostPerRound)} <span className="fs-10 c-text-3">p/volta</span></div>
+                    {/* Distribuição mini */}
+                    {distTotal > 0 && (
+                      <div className="par-type-dist">
+                        <div className="haParDistBar">
+                          {segs.map(sg => sg.n > 0 ? <div key={sg.cls} className={`haDistSeg ${sg.cls}`} style={{ width: `${(sg.n / distTotal * 100).toFixed(1)}%` }} title={`${sg.label}: ${sg.n}`} /> : null)}
+                        </div>
+                        <div className="par-type-dist-nums">{pctF(g.dist.eagle + g.dist.birdie, distTotal)}% birdie+ · {pctF(g.dist.par, distTotal)}% par · {pctF(g.dist.bogey, distTotal)}% bogey · {pctF(g.dist.double + g.dist.triple, distTotal)}% double+</div>
+                      </div>
+                    )}
+                  </div>
+                );
+              });
+            })()}
           </div>
-        </div>
+        </details>
       )}
 
-      {/* Strengths & weaknesses */}
+      {/* Strengths & weaknesses (colapsado por defeito) */}
       {ranked.length >= 4 && (
-        <div className="haTopWrap">
+        <details className="details-block mt-10">
+          <summary className="details-summary">💪 Pontos fortes &amp; onde perdes mais <span className="muted fs-11">(clica para ver top 4)</span></summary>
+        <div className="haTopWrap mt-6">
           <div className="haTopCol haTopStrength">
             <div className="h-sm"><span className="c-par-ok">💪 Pontos Fortes</span></div>
             {strengths.length === 0
@@ -177,28 +332,8 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
         </div>
       )}
 
-      {/* Scoring distribution bar */}
-      {td && td.total > 0 && (
-        <div className="mt-4">
-          <div className="h-sm">Distribuição de Scoring</div>
-          <div className="haDistBar">
-            {td.eagle > 0 && <div className="haDistSeg seg-eagle" style={{ width: `${(td.eagle / td.total * 100).toFixed(1)}%` }} title={`Eagle+: ${td.eagle}`} />}
-            {td.birdie > 0 && <div className="haDistSeg seg-birdie" style={{ width: `${(td.birdie / td.total * 100).toFixed(1)}%` }} title={`Birdie: ${td.birdie}`} />}
-            {td.par > 0 && <div className="haDistSeg seg-par" style={{ width: `${(td.par / td.total * 100).toFixed(1)}%` }} title={`Par: ${td.par}`} />}
-            {td.bogey > 0 && <div className="haDistSeg seg-bogey" style={{ width: `${(td.bogey / td.total * 100).toFixed(1)}%` }} title={`Bogey: ${td.bogey}`} />}
-            {td.double > 0 && <div className="haDistSeg seg-double" style={{ width: `${(td.double / td.total * 100).toFixed(1)}%` }} title={`Double: ${td.double}`} />}
-            {td.triple > 0 && <div className="haDistSeg seg-triple" style={{ width: `${(td.triple / td.total * 100).toFixed(1)}%` }} title={`Triple+: ${td.triple}`} />}
-          </div>
-          <div className="haDistLegend">
-            {td.eagle > 0 && <span className="haLeg"><span className="haLegDot seg-eagle" />Eagle+ {(td.eagle / td.total * 100).toFixed(1)}%</span>}
-            {td.birdie > 0 && <span className="haLeg"><span className="haLegDot seg-birdie" />Birdie {(td.birdie / td.total * 100).toFixed(1)}%</span>}
-            <span className="haLeg"><span className="haLegDot seg-par" />Par {(td.par / td.total * 100).toFixed(1)}%</span>
-            {td.bogey > 0 && <span className="haLeg"><span className="haLegDot seg-bogey" />Bogey {(td.bogey / td.total * 100).toFixed(1)}%</span>}
-            {td.double > 0 && <span className="haLeg"><span className="haLegDot seg-double" />Double {(td.double / td.total * 100).toFixed(1)}%</span>}
-            {td.triple > 0 && <span className="haLeg"><span className="haLegDot seg-triple" />Triple+ {(td.triple / td.total * 100).toFixed(1)}%</span>}
-          </div>
-        </div>
-      )}
+      {/* Scoring distribution chart (bar chart vertical) */}
+      <ScoreDistributionChart td={td} />
 
       {/* Hole-by-hole table */}
       <div className="mt-4">
