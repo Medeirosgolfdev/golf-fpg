@@ -9,10 +9,13 @@
  *   - InscricoesView component (tabela completa)
  *   - TERMOS_COMPETICAO constant
  *   - InscricoesPanel component (integração)
- *   - JovensGroup interface
+ *   - EventGroup interface (genérico)
+ *   - buildEventGroups function (genérico, com similarity-split por Jaccard)
+ *   - eventNameTokens / jaccardSimilarity helpers
+ *   - JovensGroup interface (extends EventGroup)
  *   - ESC_ORDER_JOV constant
  *   - inferEscalao function
- *   - buildJovensGroups function
+ *   - buildJovensGroups function (wrapper sobre buildEventGroups)
  */
 
 import React, { useState, useEffect, useMemo, useCallback, useRef } from "react";
@@ -734,20 +737,95 @@ export function InscricoesPanel() {
 /* ═══════════════════════════════════════════════════════════════
    JOVENS — agrupamento por evento (date + ccode)
    ═══════════════════════════════════════════════════════════════ */
-export interface JovensGroup {
-  key: string; date: string; campo: string; name: string;
-  year: string; isRegional: boolean; isNacional: boolean; entries: Tournament[];
+/** EventGroup — agrupa torneios do mesmo organizador no mesmo dia (ou do
+ *  mesmo evento multi-dia). Cada entry é um tcode distinto; quando um
+ *  campeonato tem vários escalões paralelos, todos caem numa mesma
+ *  EventGroup com o nome simplificado (sem "Sub-N", "Dia N", etc.).
+ */
+export interface EventGroup {
+  key: string;          // `${date}-${ccode||campo}`
+  date: string;
+  campo: string;
+  ccode: string;
+  name: string;         // nome simplificado (sufixos escalão/dia/ronda/género removidos)
+  entries: Tournament[];
 }
 
-export const ESC_ORDER_JOV = ["Sub 10","Sub 12","Sub 14","Sub 16","Sub 18","Sub 24","Sub 25"];
-
-/** Extrai escalão do nome quando t.escalao é null */
-export function inferEscalao(name: string): string | null {
-  const m = name.match(/Sub[\s-]*(\d+)/i);
-  return m ? "Sub " + m[1] : null;
+/** Tokenizar nome para similarity: strip de ruído variável (Dia N, R1/R2,
+ *  Sub-N, Rapazes/Raparigas, Masc/Fem, M/H/F isolados, ano de 4 dígitos),
+ *  lowercase, remover diacríticos, partir por whitespace/separadores. */
+export function eventNameTokens(name: string): Set<string> {
+  const cleaned = (name || "")
+    .replace(/\s*\bDia\b\s*\d+/gi, " ")
+    .replace(/\s*\bR\d+\b/gi, " ")
+    .replace(/\s*\bSub[\s-]*\d+\s*[HMSFR]?\b/gi, " ")
+    .replace(/\s*\b(Rapazes?|Raparigas?|Masculin[oa]s?|Femininos?|Masc|Fem|Hom(?:ens)?|Srs?a?s?)\b/gi, " ")
+    .replace(/\s+[HMF]\b/g, " ") // H/M/F isolados (ex: "Sub 12 H")
+    .replace(/\s*\b20\d{2}\b/g, " ")
+    .replace(/[-–—·/|()]/g, " ")
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+  return new Set(
+    cleaned.split(/\s+/).map(s => s.trim()).filter(w => w.length >= 2)
+  );
 }
 
-export function buildJovensGroups(tournaments: Tournament[]): JovensGroup[] {
+/** Jaccard = |A ∩ B| / |A ∪ B|. Dois conjuntos vazios → 1 (indistinguíveis). */
+export function jaccardSimilarity(a: Set<string>, b: Set<string>): number {
+  if (a.size === 0 && b.size === 0) return 1;
+  let inter = 0;
+  for (const x of a) if (b.has(x)) inter++;
+  const union = a.size + b.size - inter;
+  return union === 0 ? 0 : inter / union;
+}
+
+/** Partição de um conjunto de torneios em sub-grupos pelo grafo de
+ *  similarity: aresta entre i/j se Jaccard(tokens_i, tokens_j) ≥ threshold.
+ *  Componentes conexas via union-find. */
+function partitionByJaccard(entries: Tournament[], threshold: number): Tournament[][] {
+  const n = entries.length;
+  if (n <= 1) return [entries];
+  const toks = entries.map(e => eventNameTokens(e.name || ""));
+  const parent = Array.from({ length: n }, (_, i) => i);
+  const find = (x: number): number => parent[x] === x ? x : (parent[x] = find(parent[x]));
+  const link = (a: number, b: number) => {
+    const ra = find(a), rb = find(b);
+    if (ra !== rb) parent[ra] = rb;
+  };
+  for (let i = 0; i < n; i++) {
+    for (let j = i + 1; j < n; j++) {
+      if (jaccardSimilarity(toks[i], toks[j]) >= threshold) link(i, j);
+    }
+  }
+  const buckets = new Map<number, Tournament[]>();
+  for (let i = 0; i < n; i++) {
+    const r = find(i);
+    if (!buckets.has(r)) buckets.set(r, []);
+    buckets.get(r)!.push(entries[i]);
+  }
+  return [...buckets.values()];
+}
+
+/** Nome simplificado do grupo: retira sufixos de escalão/género/dia. */
+function cleanGroupName(raw: string): string {
+  return (raw || "")
+    .replace(/\s*-?\s*(Rapazes?|Raparigas?|Masculin[oa]s?|Femininos?|Masc|Fem)\s*$/i, "")
+    .replace(/\s*Sub[\s-]*\d+\s*[HMSFR]?\s*$/i, "")
+    .replace(/\s*\bDia\b\s*\d+\s*$/i, "")
+    .replace(/\s*\bR\d+\s*$/i, "")
+    .replace(/\s+[HMF]$/, "")
+    .replace(/[\s\-–]+$/, "").trim();
+}
+
+/** Builder genérico: agrupa torneios por (date+ccode) → funde multi-dia →
+ *  divide por similarity Jaccard.
+ *  @param jaccardThreshold mínimo de similaridade entre QUALQUER par para
+ *         manter no mesmo grupo (default 0.5).  */
+export function buildEventGroups(
+  tournaments: Tournament[],
+  opts: { jaccardThreshold?: number } = {}
+): EventGroup[] {
+  const threshold = opts.jaccardThreshold ?? 0.5;
   const escIdx = (esc: string | null | undefined) => {
     const i = ESC_ORDER_JOV.indexOf(esc || "");
     return i >= 0 ? i : 99;
@@ -762,9 +840,14 @@ export function buildJovensGroups(tournaments: Tournament[]): JovensGroup[] {
     phase1.get(k)!.push(t);
   }
 
-  // Phase 2: fundir grupos "Dia 1"/"Dia 2" do mesmo evento multi-dia
-  // Chave: ano + ccode + nome sem "Dia X" nem ano de 4 dígitos
-  const normDia = (name: string) => name
+  // Phase 2: fundir APENAS grupos "Dia 1"/"Dia 2" do mesmo evento multi-dia.
+  // Strip conservador — só "Dia N" e ano. Não strip de Sub-N/género: se dois
+  // torneios em dias diferentes têm nomes que só diferem em "Sub 10"/"Sub 12",
+  // provavelmente são eventos distintos do mesmo circuito (ex: ranking PJA #1
+  // e #2 em semanas seguidas) — fundi-los seria erro. O caso Nacional Aroeira
+  // (Sub N em dias diferentes) apanha-se na Phase 1 se todos os escalões
+  // partilham `date` (data de início do evento).
+  const normDia = (name: string) => (name || "")
     .replace(/\s*\bDia\b\s*\d+/gi, "")
     .replace(/\s*\b20\d{2}\b\s*/g, " ")
     .replace(/\s+/g, " ").trim().toLowerCase();
@@ -779,29 +862,65 @@ export function buildJovensGroups(tournaments: Tournament[]): JovensGroup[] {
     phase2.get(k2)!.push(...entries);
   }
 
-  return [...phase2.entries()].map(([, entries]) => {
+  // Phase 3: dentro de cada grupo multi-dia, split por Jaccard < threshold.
+  // Evita fundir "Medal Sócios" + "Stableford Solidariedade" no mesmo clube/dia.
+  const finalParts: Tournament[][] = [];
+  for (const [, entries] of phase2) {
+    for (const part of partitionByJaccard(entries, threshold)) {
+      finalParts.push(part);
+    }
+  }
+
+  return finalParts.map((entries) => {
     entries.sort((a, b) => {
       const dCmp = (a.date || "").localeCompare(b.date || "");
       if (dCmp !== 0) return dCmp;
       return escIdx(getEsc(a)) - escIdx(getEsc(b));
     });
     const t0 = entries[0];
-    const cleanName = (t0.name || "")
-      .replace(/\s*-?\s*(Rapazes?|Raparigas?)\s*$/i, "")
-      .replace(/\s*Sub[\s-]*\d+\s*[HMS]?\s*$/i, "")
-      .replace(/\s*\bDia\b\s*\d+\s*$/i, "")
-      .replace(/[\s\-–]+$/, "").trim();
-    const isRegional = /regional/i.test(t0.name || "");
-    const isNacional = /nacional/i.test(t0.name || "");
+    const cleanName = cleanGroupName(t0.name || "");
+    // Chave única: inclui o tcode da primeira entrada para desambiguar quando
+    // a Phase 3 (Jaccard) divide um bucket (date+ccode) em 2+ sub-grupos.
+    // Sem isto, grupos irmãos no mesmo dia/clube partilham key e o lookup
+    // via `.find(g => g.key === ...)` devolve sempre o primeiro.
     return {
-      key:       t0.date + "-" + (t0.ccode || t0.campo || "?"),
-      date:      t0.date,
-      campo:     t0.campo,
-      name:      cleanName || t0.name,
-      year:      (t0 as any)._jovensYear ?? t0.date?.substring(0, 4) ?? "?",
-      isRegional,
-      isNacional,
-      entries:   entries.map(e => e.escalao ? e : { ...e, escalao: inferEscalao(e.name || "") } as Tournament),
+      key:   (t0.date || "") + "-" + (t0.ccode || t0.campo || "?") + "-" + String(t0.tcode ?? "?"),
+      date:  t0.date || "",
+      campo: t0.campo || "",
+      ccode: t0.ccode || "",
+      name:  cleanName || t0.name || "",
+      entries: entries.map(e => e.escalao
+        ? e
+        : { ...e, escalao: inferEscalao(e.name || "") } as Tournament),
     };
   }).sort((a, b) => b.date.localeCompare(a.date));
+}
+
+/** JovensGroup — extends EventGroup com campos específicos da vista Jovens. */
+export interface JovensGroup extends EventGroup {
+  year: string;
+  isRegional: boolean;
+  isNacional: boolean;
+}
+
+export const ESC_ORDER_JOV = ["Sub 10","Sub 12","Sub 14","Sub 16","Sub 18","Sub 24","Sub 25"];
+
+/** Extrai escalão do nome quando t.escalao é null */
+export function inferEscalao(name: string): string | null {
+  const m = name.match(/Sub[\s-]*(\d+)/i);
+  return m ? "Sub " + m[1] : null;
+}
+
+/** Wrapper sobre buildEventGroups que adiciona campos year/isRegional/isNacional
+ *  para a vista Jovens. Mantém contrato pré-existente (mesma chave, mesma ordem). */
+export function buildJovensGroups(tournaments: Tournament[]): JovensGroup[] {
+  return buildEventGroups(tournaments).map(g => {
+    const t0 = g.entries[0];
+    return {
+      ...g,
+      year: (t0 as any)._jovensYear ?? (t0.date?.substring(0, 4) ?? "?"),
+      isRegional: /regional/i.test(t0.name || ""),
+      isNacional: /nacional/i.test(t0.name || ""),
+    };
+  });
 }

@@ -258,6 +258,10 @@ async function validateInPage(page, spec) {
         // Reinforce para versões antigas (em Chrome 90 as flags chrome://flags mandam):
         "--disable-features=SameSiteByDefaultCookies,CookiesWithoutSameSiteMustBeSecure",
         "--disable-blink-features=AutomationControlled",
+        // Flags para Chrome correr bem em session 0 (Scheduled Task sem user logado):
+        "--no-sandbox",
+        "--disable-gpu",
+        "--disable-dev-shm-usage",
       ],
     });
   } catch (e) {

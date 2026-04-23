@@ -98,6 +98,9 @@ interface CrossSeasonTableProps {
   summarySubHeaders: React.ReactNode;
   /** Linhas da tbody */
   children: React.ReactNode;
+  /** Número de colunas após a sticky-col-0 (#) ocupadas pelos identity headers.
+   *  Default = 5 (Jogador / Fed / Esc / Clube / HCP). PJARankingView usa 3 (Jogador / Esc / Clube). */
+  identityColSpan?: number;
 }
 
 /* ── Componente ─────────────────────────────────────────────────────────────*/
@@ -108,6 +111,7 @@ export function CrossSeasonTable({
   summaryGroupTh,
   summarySubHeaders,
   children,
+  identityColSpan = 5,
 }: CrossSeasonTableProps) {
   return (
     <div className="bjgt-chart-scroll">
@@ -116,7 +120,7 @@ export function CrossSeasonTable({
           {/* Linha 1 — cabeçalhos de grupo */}
           <tr className="cs-grp-row">
             <td className="cs-grp-spacer sticky-col-0" />
-            <td className="cs-grp-spacer sticky-col-1" colSpan={5} />
+            <td className="cs-grp-spacer sticky-col-1" colSpan={identityColSpan} />
             {groups.map(g => (
               <React.Fragment key={g.key}>{g.headerTh}</React.Fragment>
             ))}

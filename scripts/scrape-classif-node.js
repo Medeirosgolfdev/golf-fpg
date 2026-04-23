@@ -539,7 +539,13 @@ async function runPool(items, workerFn, concurrency) {
 
   const dir = path.dirname(OUT_FILE);
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(OUT_FILE, JSON.stringify(output, null, 2));
+  // Escrita atómica: escrever para ficheiro temporário e fazer rename.
+  // Evita que uma interrupção (Ctrl+C, kill, crash) deixe o ficheiro final
+  // truncado a meio — se a escrita for interrompida, o ficheiro original fica
+  // intacto e o .tmp é apenas descartado na próxima corrida.
+  const tmp = OUT_FILE + ".tmp";
+  fs.writeFileSync(tmp, JSON.stringify(output, null, 2));
+  fs.renameSync(tmp, OUT_FILE);
   console.log(`[classif] ✓ Gravado ${OUT_FILE}`);
   process.exit(0);
 })().catch(e => {

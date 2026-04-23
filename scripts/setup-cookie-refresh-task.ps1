@@ -79,11 +79,14 @@ $Action   = New-ScheduledTaskAction `
 
 # Dois triggers:
 #   1. Daily as 10:00 — execucao normal
-#   2. AtStartup (com 2 min de delay para rede estar pronta) — apanha casos
-#      em que o PC estava off/hibernate as 10h e liga-se depois.
-$TriggerDaily   = New-ScheduledTaskTrigger -Daily -At 10:00AM
-$TriggerStartup = New-ScheduledTaskTrigger -AtStartup
-$TriggerStartup.Delay = "PT2M"   # ISO-8601: 2 minutes delay after boot
+#   2. AtLogOn do user — apanha casos em que o PC estava off/hibernate as
+#      10h e liga-se depois (quando o user faz login, dispara 3 min depois
+#      — tempo para rede estar pronta).
+#      Usar AtLogOn (nao AtStartup) porque LogonType=Interactive precisa
+#      de sessao activa, que so existe depois do user logar.
+$TriggerDaily = New-ScheduledTaskTrigger -Daily -At 10:00AM
+$TriggerLogon = New-ScheduledTaskTrigger -AtLogOn -User $env:USERNAME
+$TriggerLogon.Delay = "PT3M"   # ISO-8601: 3 minutos apos login
 
 # -StartWhenAvailable: Windows corre task assim que possivel se a hora
 #                      agendada passou com PC off (catchup automatico).
@@ -101,9 +104,10 @@ $Settings = New-ScheduledTaskSettingsSet `
 # Evitar execucoes simultaneas se houver catchup + scheduled ao mesmo tempo
 $Settings.MultipleInstances = "IgnoreNew"
 
-# Interactive: corre com sessao UI activa (necessario para Chrome 90 ir buscar
-# o perfil persistente e arrancar correctamente). Implica que a utilizadora
-# esteja logada as 10:00 — o que tipicamente e o caso.
+# LogonType=Interactive: corre quando o user esta logado (ou auto-logado).
+# Combinado com auto-login via netplwiz, o PC arranca as 10h, faz login
+# automatico, e 3 min depois o trigger AtLogOn dispara a task.
+# Isto evita problemas com Windows Hello passwordless / LOGON32_LOGON_BATCH.
 $Principal = New-ScheduledTaskPrincipal `
     -UserId $env:USERNAME `
     -LogonType Interactive `
@@ -112,10 +116,12 @@ $Principal = New-ScheduledTaskPrincipal `
 Register-ScheduledTask `
     -TaskName $TaskName `
     -Action $Action `
-    -Trigger @($TriggerDaily, $TriggerStartup) `
+    -Trigger @($TriggerDaily, $TriggerLogon) `
     -Settings $Settings `
     -Principal $Principal `
-    -Description "Captura cookies frescos de my.fpg.pt, scoring.datagolf.pt e scoring.fpg.pt via Chrome 90 + Playwright. Corre diariamente as 10:00 + ao arranque do PC (se a execucao das 10h foi missed)."
+    -Description "Captura cookies frescos via Chrome 90 + Playwright. Corre diariamente as 10:00 + 3 min apos logon do user. Combinar com auto-login para autonomia completa." | Out-Null
+
+Write-Host "Task registada com LogonType=Interactive + AtLogOn trigger" -ForegroundColor Green
 
 Write-Host ""
 Write-Host "=== TAREFA CRIADA COM SUCESSO ===" -ForegroundColor Cyan

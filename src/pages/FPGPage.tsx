@@ -55,7 +55,7 @@ import { numGross, resolveEsc, computeSD, filterPlayers, expandMultiRound, build
 import { ScorecardLB, AccumulatedLB, AllRoundsScorecardLB } from "../ui/LeaderboardComponents";
 import { LinksBar } from "../ui/LinksBar";
 // Inscrições e Jovens — extraídos para fpg/InscricoesComponents.tsx
-import { InscricoesPanel, buildJovensGroups, TERMOS_COMPETICAO, type JovensGroup } from "../ui/InscricoesComponents";
+import { InscricoesPanel, buildJovensGroups, buildEventGroups, TERMOS_COMPETICAO, type JovensGroup, type EventGroup } from "../ui/InscricoesComponents";
 import { JovensAnaliseView } from "../ui/JovensAnaliseView";
 // Admissions + draws (browser scrape + merge) — ver CLAUDE.md
 import { loadFpgAdmissionsDraws, indexFpgAdmissionsDraws, NACIONAL_2026_META, NACIONAL_2026_TCODES, type FpgTournamentData } from "../data/nacional2026Loader";
@@ -895,6 +895,21 @@ const URL_TO_FILTER: Record<string, SeriesKey> = {
   pja:     "circuit",
   circuit: "circuit",  // alias
 };
+
+// Mapa URL-segment ↔ navMode (tabs "Torneios" / "Ranking PJA" / "Ranking Sub-12").
+// ⚠ As chaves têm de ser lowercase porque `urlSeg = params.filter.toLowerCase()`.
+// Para preservar leitura natural na URL ("rankingPJA"), usamos redirect no lookup.
+const URL_TO_NAV: Record<string, "torneios" | "ranking-pja" | "ranking-sub12"> = {
+  rankingpja:   "ranking-pja",
+  rankingsub12: "ranking-sub12",
+};
+// URLs geradas — mantemos o case "camelCase" para leitura, mas o comparison
+// com urlSeg é sempre lowercase.
+const NAV_TO_URL: Record<"torneios" | "ranking-pja" | "ranking-sub12", string> = {
+  "torneios":      "",
+  "ranking-pja":   "rankingPJA",
+  "ranking-sub12": "rankingSub12",
+};
 const FILTER_TO_URL: Record<SeriesKey, string> = {
   "":        "",
   jovens:    "jovens",
@@ -933,7 +948,9 @@ function Content() {
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState(0);
     const md = useMasterDetail();
-  const [navMode, setNavMode]         = useState<"torneios" | "ranking-pja" | "ranking-sub12">("torneios");
+  const [navMode, setNavMode]         = useState<"torneios" | "ranking-pja" | "ranking-sub12">(
+    URL_TO_NAV[urlSeg] ?? "torneios"
+  );
   const [seriesFilter, setSeriesFilter] = useState<"" | "circuit" | "santo" | "clubes" | "jovens">(
     (startInscritos || urlSeg === "jovens") ? "jovens" : ""
   );
@@ -942,6 +959,9 @@ function Content() {
   const [searchQuery, setSearchQuery]  = useState("");  // filtro de texto: nome ou campo/clube
   const [escLookup, setEscLookup] = useState<EscLookup>(new Map());
   const [playersDB, setPlayersDB] = useState<PlayersDB>({});
+  // Lista de fedCodes inscritos no circuito PJA por ano.
+  // Carregado de /data/pja-members.json — ver PJARankingView para uso.
+  const [pjaMembers, setPjaMembers] = useState<Record<string, string[]>>({});
 
   // ── Estado Clubes ─────────────────────────────────────────────────────────
   const [clubesTournaments, setClubesTournaments] = useState<Tournament[]>([]);
@@ -950,6 +970,11 @@ function Content() {
   const [clubesSelected, setClubesSelected]       = useState<number>(0);
   const [clubesEsc, setClubesEsc]                 = useState<string>("sub14"); // "sub14" | "sub18"
   const [clubesView, setClubesView]               = useState<"individual" | "grupos">("grupos");
+
+  // ── Estado PJA (drive/aquapor mensais, para o Ranking PJA 2026+) ─────────
+  // Carregamos separadamente para não afectar o displayList principal (tabs
+  // Todos/Circuito/Santo continuam a ver apenas pull-torneios).
+  const [pjaExtraTournaments, setPjaExtraTournaments] = useState<Tournament[]>([]);
 
   // ── Estado Jovens ─────────────────────────────────────────────────────────
   const [jovensTournaments, setJovensTournaments] = useState<Tournament[]>([]);
@@ -962,6 +987,39 @@ function Content() {
   // /FPG/jovens/inscritosCN → Inscrições. /FPG/torneio/X-Y → torneio específico.
   const startAnalise = urlSeg === "jovens" && !urlSub && !params.tkey;
   const [jovensShowAnalise, setJovensShowAnalise] = useState(startAnalise);
+
+  // ── Sync URL→seriesFilter quando o utilizador navega entre /FPG, /FPG/jovens,
+  //     /FPG/sto, /FPG/clubes, /FPG/pja sem remontar a página.
+  // useState só inicializa UMA vez → se o user entrou em /FPG/jovens e depois
+  // clica no topo em "FPG" (→ /FPG), o seriesFilter ficaria preso em "jovens".
+  // Este effect alinha o estado com a URL sempre que urlSeg muda.
+  //
+  // ⚠ Early-return em `/FPG/torneio/:tkey`: essa rota não tem `:filter`, logo
+  // urlSeg="" — o effect interpretaria como "volta a Todos" e arrancaria o
+  // utilizador da tab em que está (Jovens/Santo/PJA). Nesse caso, a selecção
+  // de torneio deve ser local à tab; não é uma mudança de tab.
+  useEffect(() => {
+    if (params.tkey) return;  // rota /FPG/torneio/:tkey → preservar tab actual
+
+    // Navegação por tabs (Ranking PJA / Ranking Sub-12 / Torneios)
+    const targetNav = URL_TO_NAV[urlSeg] ?? "torneios";
+    if (targetNav !== navMode) setNavMode(targetNav);
+
+    // Series-filter (apenas relevante em navMode=torneios)
+    const targetSeries: SeriesKey = isInscritosShortcut
+      ? "jovens"
+      : (URL_TO_FILTER[urlSeg] ?? "");
+    if (targetSeries !== seriesFilter) {
+      setSeriesFilter(targetSeries);
+    }
+    // Se voltou para /FPG puro (sem segmento) a partir de /FPG/jovens, limpar
+    // também as views jovens-específicas que podem ter ficado activas.
+    if (urlSeg === "") {
+      if (jovensShowInscricoes) setJovensShowInscricoes(false);
+      if (jovensShowAnalise) setJovensShowAnalise(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlSeg, urlSub, isInscritosShortcut, params.tkey]);
 
   // ── Sources secundárias (para o painel DataSourcesChip) ─────────────────
   //   Cada secção (clubes, jovens, admissions) regista ficheiros tentados/lidos.
@@ -995,10 +1053,27 @@ function Content() {
       try {
         // loadPlayers() usa fetchCache — 1 único fetch por sessão mesmo que FPGPage,
         // DrivePage e App.tsx o peçam em simultâneo.
-        const [pdb, linksResp] = await Promise.all([
+        const [pdb, linksResp, kidsLinksResp] = await Promise.all([
           loadPlayers().catch(() => ({} as PlayersDB)),
           fetch("/data/tournament-links.json").catch(() => null),
+          fetch("/data/kids-links.json").catch(() => null),
         ]);
+        // Merge kids-links.json no playersDB — adiciona entries virtuais com
+        // fedKey sintético "intl:<name>" para jogadores internacionais, para que
+        // o TournPName encontre o `kidsHash` via name-match e rendirize ↗ Kids.
+        if (kidsLinksResp?.ok) {
+          try {
+            const kl = await kidsLinksResp.json();
+            for (const entry of (kl.players || [])) {
+              if (!entry.name || !entry.kidsHash) continue;
+              const key = "intl:" + entry.name.toLowerCase().replace(/\s+/g, "_");
+              (pdb as any)[key] = {
+                name: entry.name,
+                kidsHash: entry.kidsHash,
+              };
+            }
+          } catch { /* ignore */ }
+        }
         if (alive) { setEscLookup(buildEscLookup(pdb)); setPlayersDB(pdb); }
         let externalLinks: Record<string, Record<string, string>> = {};
         if (linksResp?.ok) {
@@ -1008,16 +1083,26 @@ function Content() {
         const allT: Tournament[] = [];
         const meta: FileMeta[] = [];
 
+        // Consecutive-misses: só paramos após 2 404/erros seguidos, para não
+        // quebrar o carregamento quando um ficheiro individual está corrompido
+        // (ex: pull-torneios002 truncado a meio) e outros posteriores contêm
+        // dados válidos (ex: pull-torneios003 com torneios manuais).
+        let consecutiveMisses = 0;
         for (let i = 0; i < DATA_MAX; i++) {
           if (!alive) return;
           const url = dataUrl(i);
           let resp: Response;
-          try { resp = await fetch(url); } catch { break; }
-          if (!resp.ok) break;  // 404 → parar
+          try { resp = await fetch(url); } catch { consecutiveMisses++; if (consecutiveMisses >= 2) break; else continue; }
+          if (!resp.ok) { consecutiveMisses++; if (consecutiveMisses >= 2) break; else continue; }
 
           let d: DriveData;
           try { d = await resp.json(); }
-          catch { break; }  // resposta não é JSON (ex: HTML de erro) → parar
+          catch (e) {
+            console.warn(`[FPGPage] Falhou a parsear ${url}: ${String(e).slice(0, 120)} — a continuar`);
+            consecutiveMisses++;
+            if (consecutiveMisses >= 2) break; else continue;
+          }
+          consecutiveMisses = 0;
           const normalised = (d.tournaments || []).map(t => {
             const extLinks = externalLinks[String(t.tcode)];
             return {
@@ -1121,6 +1206,78 @@ function Content() {
     load();
     return () => { alive = false; };
   }, []);
+
+  // ── Loader PJA (Drive Tour + Aquapor mensais, para Ranking PJA 2026+) ────
+  // Estes torneios NÃO entram em tournaments/displayList (para não poluir as
+  // outras tabs). São carregados num state separado e combinados só quando
+  // construímos `pjaRankingList`. Activado apenas quando a tab Ranking PJA
+  // está activa.
+  useEffect(() => {
+    if (navMode !== "ranking-pja") return;
+    if (pjaExtraTournaments.length > 0) return;  // já carregado
+    let alive = true;
+    const loadMonthly = async (prefix: string, startYear: number): Promise<Tournament[]> => {
+      const out: Tournament[] = [];
+      const now = new Date();
+      const curYear = now.getFullYear();
+      const curMonth = now.getMonth() + 1;
+      for (let y = startYear; y <= curYear; y++) {
+        for (let m = 1; m <= 12; m++) {
+          if (!alive) return out;
+          if (y === curYear && m > curMonth) break;
+          const mm = String(m).padStart(2, "0");
+          const url = `/data/${prefix}-${y}-${mm}.json`;
+          try {
+            const r = await fetch(url);
+            if (!r.ok) continue;
+            const ct = r.headers.get("content-type") || "";
+            if (!ct.includes("json")) continue;
+            const d = await r.json();
+            const tourns = (d.tournaments || []).map((t: any) => ({
+              ...t,
+              _sourceFile: url,
+              players: (t.players || []).map(normalizePlayer),
+            }));
+            out.push(...tourns);
+          } catch { /* ignore */ }
+        }
+      }
+      return out;
+    };
+    const loadPjaMembers = async (): Promise<Record<string, string[]>> => {
+      try {
+        const r = await fetch("/data/pja-members.json");
+        if (!r.ok) return {};
+        const ct = r.headers.get("content-type") || "";
+        if (!ct.includes("json")) return {};
+        const d = await r.json();
+        // Filtrar as keys que começam com "_" (comentários)
+        const out: Record<string, string[]> = {};
+        for (const [k, v] of Object.entries(d)) {
+          if (k.startsWith("_")) continue;
+          if (Array.isArray(v)) out[k] = v.map(String);
+        }
+        return out;
+      } catch { return {}; }
+    };
+    Promise.all([
+      loadMonthly("drive-data", 2026),
+      loadMonthly("aquapor-data", 2026),
+      loadPjaMembers(),
+    ]).then(([drive, aq, members]) => {
+      if (!alive) return;
+      // NÃO chamar buildDisplayList aqui — drive-data é single-round por design,
+      // aquapor já vem como entrada única multi-round. buildDisplayList só
+      // agruparia se houvesse padrões "Dia 1/Dia 2" no nome (não é o caso).
+      // Torneios manuais (PJA exclusivos, Santo da Serra juniores) são agora
+      // lidos no loader principal via pull-torneios003.json — incluídos em
+      // `tournaments` e `displayList` naturalmente, aparecendo em todas as tabs
+      // (Torneios, Ranking PJA, Draw) tal como o Nacional sintético.
+      setPjaExtraTournaments([...drive, ...aq]);
+      setPjaMembers(members);
+    });
+    return () => { alive = false; };
+  }, [navMode, pjaExtraTournaments.length]);
 
   // ── Loader Clubes (D1 — só quando activado, para dados parciais de 2026) ────
   useEffect(() => {
@@ -1442,19 +1599,26 @@ function Content() {
     let anyUpdate = false;
     if (idx >= 0 && idx !== selected) { setSelected(idx); anyUpdate = true; }
 
-    // Se também é um torneio de Jovens, sincronizar o grupo seleccionado.
-    // Isto cobre tanto deep-links externos (`/FPG/torneio/...`) quanto a
-    // re-entrada na vista Jovens depois de auto-navegar via state→URL.
+    // Se também é um torneio de Jovens E o utilizador JÁ ESTÁ na vista Jovens,
+    // sincronizar o grupo seleccionado para refrescar os tabs de escalão.
+    //
+    // ⚠ NÃO forçar setSeriesFilter("jovens") aqui — antes fazia-se e causava
+    // um bug: clicar num torneio Nacional Jovens a partir do tab "Todos"
+    // arrastava o utilizador de volta para o tab "Jovens". O "Todos" já
+    // mostra os mesmos torneios com escalão-tabs no detalhe, por isso não
+    // há razão para mudar de tab. Para deep-links externos (`/FPG/torneio/...`)
+    // o utilizador fica em Todos por default, o que é aceitável.
     //
     // ⚠ NÃO pôr jovensGroups em deps — quando jovensGroups muda referência
     // (ex: toggle filterManuel), URL→state re-fire-ava e competia com
     // state→URL, causando loops entre torneios. O sync de jovensEscIdx é
     // deixado ao useEffect dedicado abaixo.
     const jovT = jovensTournaments.find(matchesT);
-    if (jovT) {
-      if (seriesFilter !== "jovens") { setSeriesFilter("jovens"); anyUpdate = true; }
-      const groupKey = (jovT.date || "") + "-" + (jovT.ccode || jovT.campo || "?");
-      if (jovensGroupKey !== groupKey) { setJovensGroupKey(groupKey); anyUpdate = true; }
+    if (jovT && seriesFilter === "jovens") {
+      // Usar `entries.some(...)` em vez de construir a key: as keys agora
+      // incluem um discriminator (tcode) para suportar Phase 3 Jaccard split.
+      const grp = jovensGroups.find(g => g.entries.some(e => e.ccode === jovT.ccode && e.tcode === jovT.tcode));
+      if (grp && jovensGroupKey !== grp.key) { setJovensGroupKey(grp.key); anyUpdate = true; }
       if (jovensShowInscricoes) { setJovensShowInscricoes(false); anyUpdate = true; }
       // Se o torneio pedido pela URL é histórico/sem Manuel, o filtro
       // filterManuel (default=true) escondê-lo-ia da sidebar e da view.
@@ -1513,6 +1677,19 @@ function Content() {
     if (jovensShowInscricoes) return;
     if (jovensShowAnalise) return;
     if (seriesFilter === "clubes") return;
+    // Nas tabs Ranking PJA / Ranking Sub-12 a selecção de torneio não é visível
+    // e a URL deve manter-se em /FPG/rankingPJA ou /FPG/rankingSub12. Guarda
+    // dupla:
+    //  (a) navMode actual (o tab pickado no state)
+    //  (b) urlSeg actual (a URL pode já estar numa rota de ranking mesmo antes
+    //      do URL→state effect ter sincronizado o navMode — ex: load inicial
+    //      em /FPG/rankingPJA)
+    // Sem esta guarda, cada mudança em `cur` (que acontece quando o displayList
+    // carrega) sobrescreve a URL para /FPG/torneio/... e empurra o utilizador
+    // para fora do ranking.
+    if (navMode !== "torneios") return;
+    // urlSeg é sempre lowercase (.toLowerCase() em params.filter) — comparar em lowercase.
+    if (urlSeg === "rankingpja" || urlSeg === "rankingsub12") return;
     // Guarda anti-loop: se URL→state ou escIdx-sync acabaram de actualizar
     // estado, esse estado pode ainda não reflectir TUDO (ex: escIdx actualizado
     // mas groupKey acabou de mudar e entries[escIdx] aponta noutro lado). Saltar
@@ -1531,7 +1708,7 @@ function Content() {
       navigate(target, { replace: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cur, curJovens]);
+  }, [cur, curJovens, navMode]);
 
   /** Lista de torneios indexados pelo seu ficheiro de origem — alimenta o
    *  popover do clique-direito no FileBadge. Inclui clubes e jovens (que têm
@@ -1569,20 +1746,42 @@ function Content() {
   const activeYear = yearFilter ?? null;
   const inYear = (t: Tournament) => !activeYear || (t.date || "").startsWith(activeYear);
 
+  // Event-groups globais — os mesmos torneios agrupados por (date+ccode) com
+  // nome simplificado e split por Jaccard<0.5. Usado pelos tabs "Todos",
+  // "Santo" e "PJA" para mostrar 1 linha por evento físico (não 1 por tcode).
+  const allEventGroups = useMemo(
+    () => buildEventGroups(displayList),
+    [displayList]
+  );
+
+  /** Map rápido (ccode/tcode) → EventGroup que o contém. Permite descobrir o
+   *  grupo do `cur` activo em O(1) para renderizar os tabs de escalão. */
+  const eventGroupByKey = useMemo(() => {
+    const m = new Map<string, EventGroup>();
+    for (const g of allEventGroups) {
+      for (const e of g.entries) {
+        m.set((e.ccode || "?") + "/" + String(e.tcode ?? "?"), g);
+      }
+    }
+    return m;
+  }, [allEventGroups]);
+
   // Agrupamento por mês — todos os torneios (pull + clubes + jovens) — alimenta o tab "Todos"
   const { groups: monthGroups, groupKeys: monthKeys } = useMemo(() => {
-    const g: Record<string, Tournament[]> = {};
-    for (const t of displayList) {
-      if (!inYear(t)) continue;
-      if (filterManuel && !t.players.some(p => isManuel(p))) continue;
-      if (!matchesSearch(t)) continue;
-      const key = t.date ? t.date.substring(0, 7) : "?";
+    const g: Record<string, EventGroup[]> = {};
+    for (const eg of allEventGroups) {
+      if (!eg.entries.some(inYear)) continue;
+      // Usa tournamentHasManuel para também cobrir _admissions.players e _draws
+      // (torneios pré-jogo onde a inscrição existe mas players[] ainda é vazio).
+      if (filterManuel && !eg.entries.some(e => tournamentHasManuel(e))) continue;
+      if (!eg.entries.some(matchesSearch)) continue;
+      const key = eg.date ? eg.date.substring(0, 7) : "?";
       if (!g[key]) g[key] = [];
-      g[key].push(t);
+      g[key].push(eg);
     }
     return { groups: g, groupKeys: Object.keys(g).sort().reverse() };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [displayList, filterManuel, activeYear, searchTerm]);
+  }, [allEventGroups, filterManuel, activeYear, searchTerm]);
 
   // Lista PJA (modo circuito) — apenas torneios com "PJA" no nome ou
   // registados em TOURN_PILLS como PJA. Exclui SSerra (tab próprio).
@@ -1600,72 +1799,157 @@ function Content() {
     [displayList]
   );
 
+  // Lista EXPANDIDA para o Ranking PJA — a partir de 2026 o ranking inclui,
+  // além dos torneios exclusivos PJA, os torneios Drive Tour (FPG), Aquapor
+  // (2 primeiros do ano) e Greatgolf Junior Open. Para anos anteriores,
+  // mantém o comportamento antigo (só torneios PJA exclusivos).
+  // A classificação do tipo e aplicação das regras (GG só R2+R3, Aquapor só
+  // para quem não jogou DT, etc.) é feita dentro de PJARankingView.
+  const pjaRankingList = useMemo(
+    () => {
+      const isPJA = (t: Tournament) => {
+        // Torneios manuais marcados explicitamente como PJA
+        if ((t as any)._manual && (t as any)._origin === "PJA") return true;
+        if (t.ccode === SSERRA_CCODE) return false;
+        const year = (t.date || "").slice(0, 4);
+        const name = t.name || "";
+        if (/PJA/i.test(name)) return true;
+        const tcodes = t.tcode?.split("+") || [];
+        if (tcodes.some(tc => TOURN_PILLS[tc] === "PJA")) return true;
+        if (year >= "2026") {
+          if (/greatgolf.*junior/i.test(name)) return true;
+          if (/Drive\s+Tour/i.test(name) && !/Challenge/i.test(name)) return true;
+          if (/Circuito\s+Aquapor/i.test(name)) return true;
+        }
+        return false;
+      };
+      // Combinar displayList (pull-torneios) + drive/aquapor mensais,
+      // deduplicando por tcode+ccode+date.
+      const out: Tournament[] = displayList.filter(isPJA);
+      const seen = new Set(out.map(t => `${t.ccode || "?"}/${t.tcode ?? "?"}/${t.date || "?"}`));
+      for (const t of pjaExtraTournaments) {
+        if (!isPJA(t)) continue;
+        const k = `${t.ccode || "?"}/${t.tcode ?? "?"}/${t.date || "?"}`;
+        if (seen.has(k)) continue;
+        seen.add(k);
+        out.push(t);
+      }
+      return out;
+    },
+    [displayList, pjaExtraTournaments]
+  );
+
+  const pjaEventGroups = useMemo(() => buildEventGroups(pjaList), [pjaList]);
+
   const pjaByYear = useMemo(() => {
-    const byYear: Record<string, Tournament[]> = {};
-    for (const t of pjaList) {
-      if (!inYear(t)) continue;
-      if (filterManuel && !t.players.some(p => isManuel(p))) continue;
-      if (!matchesSearch(t)) continue;
-      const yr = t.date ? t.date.substring(0, 4) : "?";
+    const byYear: Record<string, EventGroup[]> = {};
+    for (const eg of pjaEventGroups) {
+      if (!eg.entries.some(inYear)) continue;
+      // Usa tournamentHasManuel para também cobrir _admissions.players e _draws
+      // (torneios pré-jogo onde a inscrição existe mas players[] ainda é vazio).
+      if (filterManuel && !eg.entries.some(e => tournamentHasManuel(e))) continue;
+      if (!eg.entries.some(matchesSearch)) continue;
+      const yr = eg.date ? eg.date.substring(0, 4) : "?";
       if (!byYear[yr]) byYear[yr] = [];
-      byYear[yr].push(t);
+      byYear[yr].push(eg);
     }
     const years = Object.keys(byYear).sort().reverse();
     return { byYear, years };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pjaList, activeYear, filterManuel, searchTerm]);
+  }, [pjaEventGroups, activeYear, filterManuel, searchTerm]);
 
   // ── Santo da Serra ──
   const santoList = useMemo(
     () => displayList.filter(t => t.ccode === SSERRA_CCODE),
     [displayList]
   );
+  const santoEventGroups = useMemo(() => buildEventGroups(santoList), [santoList]);
+
   const santoByYear = useMemo(() => {
-    const byYear: Record<string, Tournament[]> = {};
-    for (const t of santoList) {
-      if (!inYear(t)) continue;
-      if (filterManuel && !t.players.some(p => isManuel(p))) continue;
-      if (!matchesSearch(t)) continue;
-      const yr = t.date ? t.date.substring(0, 4) : "?";
+    const byYear: Record<string, EventGroup[]> = {};
+    for (const eg of santoEventGroups) {
+      if (!eg.entries.some(inYear)) continue;
+      // Usa tournamentHasManuel para também cobrir _admissions.players e _draws
+      // (torneios pré-jogo onde a inscrição existe mas players[] ainda é vazio).
+      if (filterManuel && !eg.entries.some(e => tournamentHasManuel(e))) continue;
+      if (!eg.entries.some(matchesSearch)) continue;
+      const yr = eg.date ? eg.date.substring(0, 4) : "?";
       if (!byYear[yr]) byYear[yr] = [];
-      byYear[yr].push(t);
+      byYear[yr].push(eg);
     }
     const years = Object.keys(byYear).sort().reverse();
     return { byYear, years };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [santoList, activeYear, filterManuel, searchTerm]);
+  }, [santoEventGroups, activeYear, filterManuel, searchTerm]);
 
-  function renderSidebarItem(t: Tournament) {
-    const isClubesItem = (t as any)._clubesEsc !== undefined;
-    const idx = isClubesItem ? -1 : displayList.indexOf(t);
-    const clubesIdx = isClubesItem ? clubesList.indexOf(t) : -1;
-    const isActive = isClubesItem ? clubesSelected === clubesIdx && seriesFilter === "clubes" : selected === idx;
+  /** Encontra o índice de um torneio em displayList por (ccode, tcode) — NÃO
+   *  por referência, porque buildEventGroups pode embrulhar entradas em novos
+   *  objectos para injectar o escalão inferido (quebra a igualdade `===`). */
+  const findInDisplayList = (t: Tournament): number =>
+    displayList.findIndex(d => d.ccode === t.ccode && d.tcode === t.tcode);
+
+  /** Renderiza item de sidebar para uma EventGroup.
+   *  - Singleton (entries.length === 1): comportamento idêntico ao anterior.
+   *  - Grupo (entries.length > 1): nome simplificado + pill "N escalões" +
+   *    pills agregados de todas as entradas; clique vai à entrada activa
+   *    se `cur` já pertence ao grupo, senão vai à primeira entrada. */
+  function renderSidebarItem(g: EventGroup) {
+    const isMulti = g.entries.length > 1;
+    // Entrada activa dentro do grupo (ou a primeira, se nenhuma está activa).
+    const activeEntryIdx = cur
+      ? g.entries.findIndex(e => e.ccode === cur.ccode && e.tcode === cur.tcode)
+      : -1;
+    const activeEntry = activeEntryIdx >= 0 ? g.entries[activeEntryIdx] : g.entries[0];
+    const idx = findInDisplayList(activeEntry);
+    const isActive = activeEntryIdx >= 0 && selected === idx;
+
     const handleClick = () => {
-      if (isClubesItem) {
-        setSeriesFilter("clubes");
-        if (clubesIdx >= 0) setClubesSelected(clubesIdx);
-      } else {
-        setSelected(idx);
-      }
+      if (idx >= 0) setSelected(idx);
       md.onSelect();
     };
-    // Determinar pill dinâmico (REGIONAL, NACIONAL, etc.)
-    const tcodes = (t.tcode || "").split("+");
-    const pillVal = tcodes.map(tc => TOURN_PILLS[tc] || tcodePills?.[tc]).find(Boolean);
-    const extraPills = pillVal && pillVal !== "PJA" && pillVal !== "SSERRA"
+
+    // Pill dinâmico (REGIONAL, NACIONAL, etc.) agregando todos os tcodes do grupo.
+    const allTcodes = g.entries.flatMap(e => (e.tcode || "").split("+"));
+    const pillVal = allTcodes.map(tc => TOURN_PILLS[tc] || tcodePills?.[tc]).find(Boolean);
+
+    // Contagem de escalões (só se houver mais que 1 entrada).
+    const counterPill = isMulti ? (
+      <span className="p p-sm p-muted" title={g.entries.map(e => e.escalao || "?").join(" · ")}>
+        {g.entries.length} esc.
+      </span>
+    ) : null;
+    const tournPill = pillVal && pillVal !== "PJA" && pillVal !== "SSERRA"
       ? <span className={`p p-sm p-tourn p-${pillVal.toLowerCase()}`}>{pillVal}</span>
       : null;
-    // Número de jogadores
-    const nJog = t.playerCount || t.players.filter(p => !isDNS(p)).length;
+    const extraPills = (counterPill || tournPill) ? <>{counterPill}{tournPill}</> : null;
+
+    // Número de jogadores: quando grupo, soma distinct por jogador (um player
+    // pode aparecer em múltiplos escalões se o organizador o listou assim —
+    // raro). Simples e suficiente: somar playerCount de cada entrada.
+    const nJog = isMulti
+      ? g.entries.reduce((s, e) => s + (e.playerCount || e.players.filter(p => !isDNS(p)).length), 0)
+      : (activeEntry.playerCount || activeEntry.players.filter(p => !isDNS(p)).length);
+
+    // Nome a mostrar: simplificado se grupo; original se singleton (preserva
+    // aspectos como "R1/R2/Total" em torneios multi-ronda sintéticos).
+    const displayName = isMulti ? g.name : (activeEntry.name || g.name);
+
+    // tcode "combinado" para a chave React — apenas para diferenciar elementos.
+    const keyTcodes = g.entries.map(e => e.tcode).join("+");
+
     const tData: SidebarItemTournament = {
-      ...(t as any),
+      ...(activeEntry as any),
+      name: displayName,
+      // Escalão: só mostrar no pill quando é singleton; em grupo o escalão
+      // varia por entrada → não cabe num pill único.
+      escalao: isMulti ? null : activeEntry.escalao,
       playerCount: nJog,
       pill: pillVal,
-      _manuelInscrito: tournamentHasManuel(t),
+      _manuelInscrito: g.entries.some(tournamentHasManuel),
     };
     return (
       <TournSidebarItem
-        key={t._isSynthetic ? "synth_" + t.tcode : (isClubesItem ? "clubes_" : "") + t.tcode + "_" + t.date}
+        key={(activeEntry._isSynthetic ? "synth_" : "") + keyTcodes + "_" + g.date}
         t={tData}
         isActive={isActive}
         onClick={handleClick}
@@ -1734,7 +2018,14 @@ function Content() {
             ] as const).map(({ key, label }) => (
               <button key={key}
                 className={"tourn-tab tourn-tab-sm" + (navMode === key ? " active" : " tourn-tab-muted")}
-                onClick={() => { setNavMode(key); setSeriesFilter(""); setYearFilter(null); }}
+                onClick={() => {
+                  setNavMode(key);
+                  setSeriesFilter("");
+                  setYearFilter(null);
+                  const seg = NAV_TO_URL[key];
+                  const target = seg ? `/FPG/${seg}` : "/FPG";
+                  if (location.pathname !== target) navigate(target);
+                }}
                 style={{ flexShrink: 0 }}>
                 {label}
               </button>
@@ -1853,21 +2144,19 @@ function Content() {
             ? monthKeys.map(gk => (
                 <React.Fragment key={gk}>
                   <div className="sidebar-section-title-dark">{monthLabel(gk)}</div>
-                  {monthGroups[gk].map(t => renderSidebarItem(t))}
+                  {monthGroups[gk].map(eg => renderSidebarItem(eg))}
                 </React.Fragment>
               ))
             : seriesFilter === "santo"
               ? santoByYear.years.length === 0
                 ? <div className="muted fs-11 u-pad-italic">Sem torneios Santo da Serra</div>
                 : santoByYear.years.map(yr => {
-                    const items = santoByYear.byYear[yr].filter(t =>
-                      !filterManuel || t.players.some(p => isManuel(p))
-                    );
+                    const items = santoByYear.byYear[yr];  // já filtrado no useMemo
                     if (items.length === 0) return null;
                     return (
                       <React.Fragment key={yr}>
                         <div className="sidebar-section-title-dark">⛳ Santo da Serra {yr}</div>
-                        {items.map(t => renderSidebarItem(t))}
+                        {items.map(eg => renderSidebarItem(eg))}
                       </React.Fragment>
                     );
                   })
@@ -1876,7 +2165,7 @@ function Content() {
                 : pjaByYear.years.map(yr => (
                     <React.Fragment key={yr}>
                       <div className="sidebar-section-title-dark">🏆 {yr}</div>
-                      {pjaByYear.byYear[yr].map(t => renderSidebarItem(t))}
+                      {pjaByYear.byYear[yr].map(eg => renderSidebarItem(eg))}
                     </React.Fragment>
                   ))
           }
@@ -1885,7 +2174,41 @@ function Content() {
         {/* Detail */}
         <div className="course-detail" ref={md.detailRef}>
           {cur
-            ? <TournamentDetail tournament={cur} escLookup={escLookup} playersDB={playersDB} />
+            ? (() => {
+                const curGroup = eventGroupByKey.get((cur.ccode || "?") + "/" + String(cur.tcode ?? "?"));
+                const showTabs = curGroup && curGroup.entries.length > 1;
+                return (
+                  <>
+                    {showTabs && (
+                      <div style={{ display: "flex", gap: 4, padding: "8px 12px 0", flexWrap: "wrap",
+                        borderBottom: "1px solid var(--border-light)", background: "var(--bg-card)" }}>
+                        {curGroup!.entries.map((e) => {
+                          const active = e.ccode === cur.ccode && e.tcode === cur.tcode;
+                          const label = (e as any)._tabLabel
+                            ?? e.escalao
+                            ?? (e.name && e.name.length <= 20 ? e.name : "Esc");
+                          const nJog = e.playerCount || e.players.length;
+                          const entryIdx = findInDisplayList(e);
+                          return (
+                            <button key={e.tcode + "_" + e.date}
+                              className={`tourn-tab tourn-tab-sm${active ? " active" : ""}`}
+                              onClick={() => { if (entryIdx >= 0) setSelected(entryIdx); }}
+                              style={{ marginBottom: 6 }}>
+                              {label}
+                              {nJog > 0 && (
+                                <span className="fs-10" style={{ marginLeft: 3, opacity: 0.8 }}>
+                                  ({nJog} jog)
+                                </span>
+                              )}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
+                    <TournamentDetail tournament={cur} escLookup={escLookup} playersDB={playersDB} />
+                  </>
+                );
+              })()
             : !loading && <div className="center-msg muted">Selecciona um torneio</div>
           }
         </div>
@@ -2155,8 +2478,8 @@ function Content() {
 
       {/* Ranking PJA */}
       {navMode === "ranking-pja" && (
-        <div className="flex-1" style={{ overflow: "auto" }}>
-          <PJARankingView pjaList={pjaList} playersDB={playersDB} loading={loading} />
+        <div className="flex-1" style={{ overflowY: "auto", overflowX: "hidden", minHeight: 0 }}>
+          <PJARankingView pjaList={pjaRankingList} playersDB={playersDB} loading={loading} pjaMembersByYear={pjaMembers} />
         </div>
       )}
     </div>

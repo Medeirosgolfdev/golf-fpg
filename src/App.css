@@ -66,6 +66,9 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
   margin-left: calc(-1 * var(--space-inner));
   margin-right: calc(-1 * var(--space-inner));
   padding-right: 600px;
+  /* Reserva espaço para a scrollbar horizontal não sobrepor a última linha
+     da tabela — acontecia no Ranking PJA com a Rafaela Pinto cortada. */
+  padding-bottom: 16px;
 }
 .bjgt-chart-scroll > table {
   margin-left: var(--space-inner);

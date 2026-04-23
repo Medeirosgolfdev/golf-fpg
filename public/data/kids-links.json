@@ -1,0 +1,24 @@
+{
+  "_comment": "Mappings de nome → kidsHash para jogadores internacionais sem fedCode português. O kidsHash é usado como fragmento da URL /kids#{hash}; pode ser um memberId USKids (preferido, numérico) ou o nome encodificado (encodeURIComponent). O TournPName faz fallback de match por nome normalizado.",
+  "_formato": "Lista de entries com {name, kidsHash}. Adicionar manualmente jogadores que aparecem em draws/resultados FPG mas não têm fedCode português — tipicamente internacionais que competem em eventos PJA / Greatgolf / Drive Tour.",
+  "players": [
+    { "name": "Emile Cuanalo",   "kidsHash": "Emile%20Cuanalo" },
+    { "name": "Lucas Imperatriz", "kidsHash": "Lucas%20Imperatriz" },
+    { "name": "Javier Cobiella",  "kidsHash": "Javier%20Cobiella" },
+    { "name": "Doyeon Kim",       "kidsHash": "Doyeon%20Kim" },
+    { "name": "Min Sung Seo",     "kidsHash": "Min%20Sung%20Seo" },
+    { "name": "Ethan Prybys Orton","kidsHash": "Ethan%20Prybys%20Orton" },
+    { "name": "Finn Gordon",      "kidsHash": "Finn%20Gordon" },
+    { "name": "Seb Toft",         "kidsHash": "Seb%20Toft" },
+    { "name": "Yoon Jun Lee",     "kidsHash": "Yoon%20Jun%20Lee" },
+    { "name": "Alfie Kelley",     "kidsHash": "Alfie%20Kelley" },
+    { "name": "Joe Short",        "kidsHash": "Joe%20Short" },
+    { "name": "Benji Botham",     "kidsHash": "Benji%20Botham" },
+    { "name": "Harley Botham",    "kidsHash": "Harley%20Botham" },
+    { "name": "Harry Seabrook",   "kidsHash": "Harry%20Seabrook" },
+    { "name": "Marek Pejas",      "kidsHash": "Marek%20Pejas" },
+    { "name": "George Campbell",  "kidsHash": "George%20Campbell" },
+    { "name": "Yeonjin Seo",      "kidsHash": "Yeonjin%20Seo" },
+    { "name": "Ruiqi Li",         "kidsHash": "Ruiqi%20Li" }
+  ]
+}
