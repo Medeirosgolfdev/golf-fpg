@@ -328,7 +328,7 @@ function TeeSummaryTable({ rounds }: { rounds: RoundData[] }) {
   return (
     <div className="mb-10">
       <div className="sc-bar-head"><span>Resumo por Tee</span></div>
-      <table className="dtable-lg fs-12"  style={{ marginBottom: 0 }}>
+      <table className="dtable-lg" style={{ marginBottom: 0 }}>
         <thead>
           <tr>
             <th>Tee</th>
@@ -349,11 +349,11 @@ function TeeSummaryTable({ rounds }: { rounds: RoundData[] }) {
               <tr key={t.tee}>
                 <td><TeePill name={t.tee} /></td>
                 <td className="r fw-600">{t.count}</td>
-                <td className="r cb-par-ok">{minG ?? "–"}</td>
+                <td className="r fw-600 cb-par-ok">{minG ?? "–"}</td>
                 <td className="r fw-600">{avgG?.toFixed(1) ?? "–"}</td>
-                <td className="r">{avgStb?.toFixed(1) ?? "–"}</td>
+                <td className="r fw-600">{avgStb?.toFixed(1) ?? "–"}</td>
                 <td className="r">{avgSd != null ? (
-                  <span className={`p p-${sdClassByHcp(avgSd, meanArr(t.hi) ?? null)}`}>
+                  <span className={`p p-sm p-${sdClassByHcp(avgSd, meanArr(t.hi) ?? null)}`}>
                     {avgSd.toFixed(1)}
                   </span>
                 ) : "–"}</td>
@@ -824,45 +824,23 @@ function CoursePerformanceSection({ rounds }: { rounds: RoundData[] }) {
 
   if (!stats) return null;
 
+  // Versão compacta: tendência pill + resumo em prosa + timeline.
+  // Os KPIs (Média SD, Melhor SD, etc.) deixam de aparecer aqui porque já estão
+  // no bloco do Eclético (colunas HCP/Stb/SD por ronda + totais).
   return (
-    <div className="card">
-      <div className="h-md">
-        Análise de Performance
-        {stats.has9 && <span className="muted fs-11 fw-400"> (Stb de 9h normalizado: +17)</span>}
-      </div>
-      <div className="caKpis">
-        {stats.sdArr.length >= 2 && (
-          <>
-            <div className="caKpi"><div className="caKpiVal">{stats.avgSd!.toFixed(1)}</div><div className="caKpiLbl">Média SD</div></div>
-            <div className="caKpi"><div className="caKpiVal best">{stats.minSd!.toFixed(1)}</div><div className="caKpiLbl">Melhor SD</div></div>
-            <div className="caKpi"><div className="caKpiVal worst">{stats.maxSd!.toFixed(1)}</div><div className="caKpiLbl">Pior SD</div></div>
-          </>
-        )}
-        {stats.stbArr.length >= 2 && (
-          <>
-            <div className="caKpi"><div className="caKpiVal">{stats.avgStb!.toFixed(1)}</div><div className="caKpiLbl">Média Stb</div></div>
-            <div className="caKpi"><div className="caKpiVal best">{stats.maxStb}</div><div className="caKpiLbl">Melhor Stb</div></div>
-          </>
-        )}
-        <div className="caKpi">
-          <div className="caKpiVal">{stats.totalRounds}</div>
-          <div className="caKpiLbl">Rondas{stats.has9 ? ` (${stats.r18Count}×18h + ${stats.r9Count}×9h)` : ""}</div>
-        </div>
+    <div className="mt-10">
+      <div className="course-evolution-head">
+        <span className="h-sm">Evolução neste campo</span>
         {stats.sdArr.length >= 3 && (
-          <div className={`caKpi ${stats.trendCls}`}>
-            <div className="caKpiVal">{stats.trendLabel}</div>
-            <div className="caKpiLbl">Tendência SD</div>
-          </div>
+          <span className={`p p-sm ${stats.trendCls}`} title="Tendência linear da série de SDs">
+            {stats.trendLabel}
+          </span>
         )}
+        {stats.has9 && <span className="muted fs-10">Stb 9h normalizado +17</span>}
       </div>
       {stats.conclusion.length > 0 && (
-        <div className="conclusion-box">
-          <div className="h-sm-warn">💡 Resumo</div>
-          <div className="caConcText">{stats.conclusion}</div>
-        </div>
+        <div className="caConcText fs-12 mt-4">{stats.conclusion}</div>
       )}
-
-      {/* Linha temporal das rondas neste campo */}
       <RoundsTimeline rounds={rounds} />
     </div>
   );

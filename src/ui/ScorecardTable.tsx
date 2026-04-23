@@ -217,10 +217,10 @@ export function ScorecardTable({ holes, courseName, date, tee, hi, links, pill, 
             {Array.from({ length: totalHoles }, (_, h) => (
               <React.Fragment key={h}>
                 <th className="hole-header">{h + 1}</th>
-                {h === frontEnd - 1 && !is9 && <th className="hole-header col-out fs-10">Out</th>}
+                {h === frontEnd - 1 && !is9 && <th className="hole-header col-out">Out</th>}
               </React.Fragment>
             ))}
-            <th className={`hole-header col-${is9 ? "total" : "in"} fs-10`}>{is9 ? "TOTAL" : "In"}</th>
+            <th className={`hole-header col-${is9 ? "total" : "in"}`}>{is9 ? "TOTAL" : "In"}</th>
             {!is9 && <th className="hole-header col-total">TOTAL</th>}
           </tr>
         </thead>

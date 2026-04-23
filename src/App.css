@@ -938,6 +938,7 @@ tr.cross-current { background: var(--bg-success); }
 
 /* ─── Linha temporal das rondas (CoursePerformanceSection) ─── */
 /* O SVG é responsivo via width:100%; o scroll-x do wrapper trata de ecrãs muito estreitos. */
+.course-evolution-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 
 /* ─── Score distribution chart (bar chart vertical compacto) ─── */
 .score-dist { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; margin-top: 6px; align-items: end; }

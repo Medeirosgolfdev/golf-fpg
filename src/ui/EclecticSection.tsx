@@ -110,9 +110,10 @@ export function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesD
               <span className="muted ml-6">· {hc} buracos</span>
               <span className="muted ml-6">· {teeRounds.length} rondas</span>
             </div>
-            {/* Eclectic hole-by-hole table */}
+            {/* Eclectic hole-by-hole table — tamanho/peso uniformes. Só os totais (OUT/IN/TOT) e
+                 labels de linha ficam em fw-700, tudo o resto herda do .sc-table-ec (12px, peso 400). */}
             <div className="scroll-x">
-              <table className="sc-table-ec fs-11 w-full" >
+              <table className="sc-table-ec w-full" >
                 <thead>
                   <tr>
                     <th className="row-label col-w60">Bur.</th>
@@ -129,19 +130,19 @@ export function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesD
                 <tbody>
                   {/* Par row */}
                   <tr className="bg-success">
-                    <td className="row-label fw-700 fs-10">Par</td>
+                    <td className="row-label fw-700">Par</td>
                     {Array.from({ length: Math.min(hc, 9) }, (_, i) => <td key={i}>{parArr[i] ?? ""}</td>)}
                     <td className="col-out fw-700">{sumArr(parArr, 0, Math.min(hc, 9))}</td>
                     {!is9 && Array.from({ length: 9 }, (_, i) => <td key={i + 9}>{parArr[i + 9] ?? ""}</td>)}
                     {!is9 && <td className="col-in fw-700">{sumArr(parArr, 9, 18)}</td>}
-                    <td className="col-total fw-900">{sumArr(parArr, 0, hc)}</td>
+                    <td className="col-total fw-700">{sumArr(parArr, 0, hc)}</td>
                     <td className="ec-extra muted">—</td>
                     <td className="ec-extra muted">—</td>
                     <td className="ec-extra muted">—</td>
                   </tr>
                   {/* Eclectic row */}
                   <tr className="bt-heavy">
-                    <td className="row-label cb-blue-10">Eclético</td>
+                    <td className="row-label fw-700 cb-blue-10">Eclético</td>
                     {ec.holes.slice(0, Math.min(hc, 9)).map((h, i) => (
                       <td key={i}>{h.best != null ? <ScoreCircle gross={h.best} par={parArr[i]} /> : "–"}</td>
                     ))}
@@ -152,7 +153,7 @@ export function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesD
                       <td key={i + 9}>{h.best != null ? <ScoreCircle gross={h.best} par={parArr[i + 9]} /> : "–"}</td>
                     ))}
                     {!is9 && <td className="col-in fw-700">{sumArr(ec.holes.map(h => h.best), 9, 18)}</td>}
-                    <td className="col-total fw-900 fs-13">{ec.totalGross}</td>
+                    <td className="col-total fw-700">{ec.totalGross}</td>
                     <td className="ec-extra muted">—</td>
                     <td className="ec-extra muted">—</td>
                     <td className="ec-extra muted">—</td>
@@ -166,21 +167,25 @@ export function EclecticSection({ ecList, ecDet, holeStats, courseRounds, holesD
                     const sdInfo = fmtSdVal(tr);
                     return (
                       <tr key={tr.scoreId} style={{ background: hx + "0A" }}>
-                        <td className="row-label fs-10">
-                          <span className="p p-sm" style={{ background: hx, color: fg, padding: "1px 6px" }}>{trDate}</span>
+                        <td className="row-label fw-700">
+                          <span className="p p-sm" style={{ background: hx, color: fg }}>{trDate}</span>
                         </td>
                         {Array.from({ length: Math.min(hc, 9) }, (_, i) => (
-                          <td key={i}><ScoreCircle gross={trG[i]} par={parArr[i]} size="small" /></td>
+                          <td key={i}><ScoreCircle gross={trG[i]} par={parArr[i]} /></td>
                         ))}
-                        <td className="col-out fw-600 fs-10">{sumArr(trG, 0, Math.min(hc, 9))}</td>
+                        <td className="col-out fw-700">{sumArr(trG, 0, Math.min(hc, 9))}</td>
                         {!is9 && Array.from({ length: 9 }, (_, i) => (
-                          <td key={i + 9}><ScoreCircle gross={trG[i + 9]} par={parArr[i + 9]} size="small" /></td>
+                          <td key={i + 9}><ScoreCircle gross={trG[i + 9]} par={parArr[i + 9]} /></td>
                         ))}
-                        {!is9 && <td className="col-in fw-600 fs-10">{sumArr(trG, 9, hc)}</td>}
-                        <td className="col-total fs-11 fw-700">{sumArr(trG, 0, hc)}</td>
-                        <td className="ec-extra fs-11">{tr.hi ?? "—"}</td>
-                        <td className="ec-extra fs-11">{fmtStb(tr.stb, tr.holeCount) || "—"}</td>
-                        <td className={`ec-extra fs-11 fw-700 ${sdInfo.cls}`}>{sdInfo.text || "—"}</td>
+                        {!is9 && <td className="col-in fw-700">{sumArr(trG, 9, hc)}</td>}
+                        <td className="col-total fw-700">{sumArr(trG, 0, hc)}</td>
+                        <td className="ec-extra">{tr.hi ?? "—"}</td>
+                        <td className="ec-extra">{fmtStb(tr.stb, tr.holeCount) || "—"}</td>
+                        <td className="ec-extra">
+                          {sdInfo.text
+                            ? <span className={`p p-sm p-${sdInfo.cls || "sd-good"}`}>{sdInfo.text}</span>
+                            : "—"}
+                        </td>
                       </tr>
                     );
                   })}
