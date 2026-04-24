@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-04-22T15:56:59.526Z",
-  "total": 371,
+  "scrapedAt": "2026-04-24T20:37:03.599Z",
+  "total": 372,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -89719,6 +89719,18 @@
       }
     },
     {
+      "ccode": "PJA",
+      "tcode": "pja_aroeira2_2026-04-25",
+      "name": "PJA Aroeira 2",
+      "date": "2026-04-25",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
       "ccode": "000",
       "tcode": "10935",
       "name": "Campeonato Nacional de Jovens Sub 18 H",
@@ -89728,7 +89740,7 @@
         "name": "Campeonato Nacional de Jovens Sub 18 H",
         "date": "2026-05-01",
         "totalInscritos": 15,
-        "reservas": 0,
+        "reservas": 1,
         "status": "Inscrições em curso",
         "tcode": "10935",
         "ccode": "000",
@@ -89855,6 +89867,16 @@
           },
           {
             "pos": 13,
+            "fed": "41612",
+            "nome": "Henrique Almeida da Silva",
+            "clube": "Belas",
+            "hcp": 7.4,
+            "vacf": 78.6,
+            "registo": "2026/04/22 21:16",
+            "status": "confirmed"
+          },
+          {
+            "pos": 14,
             "fed": "56072",
             "nome": "Igor Kostyn",
             "clube": "Vilamoura, C. G",
@@ -89864,7 +89886,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 14,
+            "pos": 15,
             "fed": "41121",
             "nome": "André Gonçalves",
             "clube": "Palheiro",
@@ -89874,14 +89896,14 @@
             "status": "confirmed"
           },
           {
-            "pos": 15,
+            "pos": 1,
             "fed": "40992",
             "nome": "António Maria Cavalinhos",
             "clube": "Miramar",
             "hcp": 8.3,
             "vacf": 81.7,
             "registo": "2026/04/10 13:06",
-            "status": "confirmed"
+            "status": "reserva"
           }
         ]
       },
@@ -89976,7 +89998,7 @@
         "name": "Campeonato Nacional de Jovens Sub 16 H",
         "date": "2026-05-01",
         "totalInscritos": 15,
-        "reservas": 13,
+        "reservas": 15,
         "status": "Inscrições em curso",
         "tcode": "10937",
         "ccode": "000",
@@ -90003,6 +90025,16 @@
           },
           {
             "pos": 3,
+            "fed": "40534",
+            "nome": "Francisco Reis",
+            "clube": "Vilamoura, C. G",
+            "hcp": 0.8,
+            "vacf": 72.5,
+            "registo": "2026/04/24 10:13",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
             "fed": "42374",
             "nome": "Ethan Prybys Orton",
             "clube": "Vila Sol",
@@ -90012,7 +90044,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 4,
+            "pos": 5,
             "fed": "51074",
             "nome": "Gaspard Maes",
             "clube": "Miramar",
@@ -90022,7 +90054,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 5,
+            "pos": 6,
             "fed": "46591",
             "nome": "Filipe Pinheiro",
             "clube": "Belas",
@@ -90032,7 +90064,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 6,
+            "pos": 7,
             "fed": "43359",
             "nome": "Brooks Barker",
             "clube": "Vilamoura, C. G",
@@ -90042,7 +90074,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 7,
+            "pos": 8,
             "fed": "47869",
             "nome": "Ashton Everest",
             "clube": "Vilamoura, C. G",
@@ -90052,7 +90084,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 8,
+            "pos": 9,
             "fed": "44934",
             "nome": "Rodrigo Sousa Correia",
             "clube": "Vilamoura, C. G",
@@ -90062,7 +90094,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 9,
+            "pos": 10,
             "fed": "48933",
             "nome": "Ethan Sutherland",
             "clube": "Vila Sol",
@@ -90072,7 +90104,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 10,
+            "pos": 11,
             "fed": "46706",
             "nome": "Pedro Costa Alemão",
             "clube": "Estoril",
@@ -90082,7 +90114,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 11,
+            "pos": 12,
             "fed": "56654",
             "nome": "Diogo Sequeira",
             "clube": "Quinta do Peru",
@@ -90092,7 +90124,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 12,
+            "pos": 13,
             "fed": "46309",
             "nome": "Afonso Silva Pinto",
             "clube": "Miramar",
@@ -90102,7 +90134,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 13,
+            "pos": 14,
             "fed": "39465",
             "nome": "Salvador Rodrigues",
             "clube": "Palheiro",
@@ -90112,7 +90144,7 @@
             "status": "confirmed"
           },
           {
-            "pos": 14,
+            "pos": 15,
             "fed": "46195",
             "nome": "Sebastiao Sardinha Saraiva",
             "clube": "Miramar",
@@ -90122,17 +90154,17 @@
             "status": "confirmed"
           },
           {
-            "pos": 15,
+            "pos": 1,
             "fed": "54774",
             "nome": "Rafael Gonçales Benesi",
             "clube": "Estoril",
             "hcp": 6.8,
             "vacf": 78.7,
             "registo": "2026/04/14 11:19",
-            "status": "confirmed"
+            "status": "reserva"
           },
           {
-            "pos": 1,
+            "pos": 2,
             "fed": "45439",
             "nome": "Ryan Dantas",
             "clube": "Belas",
@@ -90142,7 +90174,7 @@
             "status": "reserva"
           },
           {
-            "pos": 2,
+            "pos": 3,
             "fed": "49012",
             "nome": "João Araújo",
             "clube": "Citynorte",
@@ -90152,7 +90184,7 @@
             "status": "reserva"
           },
           {
-            "pos": 3,
+            "pos": 4,
             "fed": "48531",
             "nome": "Duarte Soares Franco",
             "clube": "Estoril",
@@ -90162,7 +90194,7 @@
             "status": "reserva"
           },
           {
-            "pos": 4,
+            "pos": 5,
             "fed": "48705",
             "nome": "Jorge Xavier Graça Silva",
             "clube": "Oporto",
@@ -90172,7 +90204,7 @@
             "status": "reserva"
           },
           {
-            "pos": 5,
+            "pos": 6,
             "fed": "38976",
             "nome": "José Pedro Miranda",
             "clube": "Palheiro",
@@ -90182,7 +90214,7 @@
             "status": "reserva"
           },
           {
-            "pos": 6,
+            "pos": 7,
             "fed": "50919",
             "nome": "Clementy Tarasov",
             "clube": "Vila Sol",
@@ -90192,7 +90224,7 @@
             "status": "reserva"
           },
           {
-            "pos": 7,
+            "pos": 8,
             "fed": "41593",
             "nome": "Jack Murtagh",
             "clube": "Vilamoura, C. G",
@@ -90202,7 +90234,7 @@
             "status": "reserva"
           },
           {
-            "pos": 8,
+            "pos": 9,
             "fed": "48791",
             "nome": "Miguel Silva",
             "clube": "Amendoeira",
@@ -90212,7 +90244,7 @@
             "status": "reserva"
           },
           {
-            "pos": 9,
+            "pos": 10,
             "fed": "46395",
             "nome": "Gonçalo Maia",
             "clube": "Oporto",
@@ -90222,7 +90254,17 @@
             "status": "reserva"
           },
           {
-            "pos": 10,
+            "pos": 11,
+            "fed": "41613",
+            "nome": "Frederico Almeida da Silva",
+            "clube": "Belas",
+            "hcp": 9.7,
+            "vacf": 82.2,
+            "registo": "2026/04/22 21:14",
+            "status": "reserva"
+          },
+          {
+            "pos": 12,
             "fed": "50247",
             "nome": "Beau Delfortrie",
             "clube": "Vila Sol",
@@ -90232,7 +90274,7 @@
             "status": "reserva"
           },
           {
-            "pos": 11,
+            "pos": 13,
             "fed": "56048",
             "nome": "Gustavo Pinto",
             "clube": "Oporto",
@@ -90242,7 +90284,7 @@
             "status": "reserva"
           },
           {
-            "pos": 12,
+            "pos": 14,
             "fed": "46079",
             "nome": "Afonso Poiarez",
             "clube": "Estela",
@@ -90252,7 +90294,7 @@
             "status": "reserva"
           },
           {
-            "pos": 13,
+            "pos": 15,
             "fed": "55093",
             "nome": "Afonso Polery",
             "clube": "Estela",
@@ -90394,7 +90436,7 @@
         "name": "Campeonato Nacional de Jovens Sub 14 H",
         "date": "2026-05-01",
         "totalInscritos": 15,
-        "reservas": 12,
+        "reservas": 13,
         "status": "Inscrições em curso",
         "tcode": "10939",
         "ccode": "000",
@@ -90668,6 +90710,16 @@
             "vacf": 88.2,
             "registo": "2026/04/16 01:27",
             "status": "reserva"
+          },
+          {
+            "pos": 13,
+            "fed": "45009",
+            "nome": "João Pedro Quadros",
+            "clube": "Ilha Terceira",
+            "hcp": 15.7,
+            "vacf": 89.3,
+            "registo": "2026/04/23 13:14",
+            "status": "reserva"
           }
         ]
       },
@@ -90682,7 +90734,7 @@
       "admissions": {
         "name": "Campeonato Nacional de Jovens Sub 14 S",
         "date": "2026-05-01",
-        "totalInscritos": 5,
+        "totalInscritos": 6,
         "reservas": 0,
         "status": "Inscrições em curso",
         "tcode": "10940",
@@ -90736,6 +90788,16 @@
             "hcp": 13.9,
             "vacf": 85.9,
             "registo": "2026/04/04 15:38",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "45608",
+            "nome": "Madalena Policarpo",
+            "clube": "Citynorte",
+            "hcp": 14.9,
+            "vacf": 88.8,
+            "registo": "2026/04/22 16:59",
             "status": "confirmed"
           }
         ]
