@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-04-25T20:29:07.825Z",
-  "total": 372,
+  "scrapedAt": "2026-04-26T20:29:43.104Z",
+  "total": 383,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -89719,6 +89719,18 @@
       }
     },
     {
+      "ccode": "029",
+      "tcode": "10543",
+      "name": "PJA  Aroeira Masters 2026",
+      "date": "2026-04-24",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
       "ccode": "PJA",
       "tcode": "pja_aroeira2_2026-04-25",
       "name": "PJA Aroeira 2",
@@ -89731,6 +89743,1146 @@
       "draws": {}
     },
     {
+      "ccode": "985",
+      "tcode": "10225",
+      "name": "4º Torneio Drive Challenge Tejo-Quinta Peru-Sub 18",
+      "date": "2026-04-25",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": "4º Torneio Drive Challenge Tejo-Quinta Peru-Sub 18",
+          "date": "2026-04-25",
+          "totalJogadores": 4,
+          "groups": [
+            {
+              "teeTime": "13:30",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "António Oliveira Martinho",
+                  "clube": "ACP Golfe"
+                },
+                {
+                  "nome": "Lea Malu Husemann",
+                  "clube": "Penha Longa"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:40",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Manuel Vaz Pinto",
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Rodrigo Diamantino Manso",
+                  "clube": "Lisbon SC"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "985",
+      "tcode": "10224",
+      "name": "4º Torneio Drive Challenge Tejo-Quinta Peru-Sub 16",
+      "date": "2026-04-25",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": "4º Torneio Drive Challenge Tejo-Quinta Peru-Sub 16",
+          "date": "2026-04-25",
+          "totalJogadores": 10,
+          "groups": [
+            {
+              "teeTime": "13:50",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "João Gomes",
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "João Pereira",
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "Salvador Paulo Rodrigues",
+                  "clube": "Quinta do Peru"
+                }
+              ]
+            },
+            {
+              "teeTime": "14:00",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Francisco Rodrigues",
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Tiago Afonso Barata",
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "Henrique Rodrigues Pereira",
+                  "clube": "Lisbon SC"
+                }
+              ]
+            },
+            {
+              "teeTime": "14:10",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Nuno Guedes",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "Dinis Campos",
+                  "clube": "Belas"
+                }
+              ]
+            },
+            {
+              "teeTime": "14:20",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Afonso Rocha",
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Flávia David",
+                  "clube": "Lisbon SC"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "985",
+      "tcode": "10223",
+      "name": "4º Torneio Drive Challenge Tejo-Quinta Peru-Sub 14",
+      "date": "2026-04-25",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": "4º Torneio Drive Challenge Tejo-Quinta Peru-Sub 14",
+          "date": "2026-04-25",
+          "totalJogadores": 18,
+          "groups": [
+            {
+              "teeTime": "14:30",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Alfie Kelley",
+                  "clube": "Qta. Marinha"
+                },
+                {
+                  "nome": "Miguel Maria Neves Ferreira",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "Catarina Valério",
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            },
+            {
+              "teeTime": "14:40",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Ario Kiani",
+                  "clube": "Qta. Marinha"
+                },
+                {
+                  "nome": "Francisco Trinité",
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Lourenço Cid",
+                  "clube": "Lisbon SC"
+                }
+              ]
+            },
+            {
+              "teeTime": "14:50",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Harri Tiuleniev",
+                  "clube": "RIO"
+                },
+                {
+                  "nome": "Andres Pava",
+                  "clube": "ACP Golfe"
+                },
+                {
+                  "nome": "Beatriz Mendes",
+                  "clube": "Quinta do Peru"
+                }
+              ]
+            },
+            {
+              "teeTime": "15:00",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "David Cruz da Silva",
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Mário Novaes Moura",
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "David Stocksreiter Ferreira",
+                  "clube": "Lisbon SC"
+                }
+              ]
+            },
+            {
+              "teeTime": "15:10",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Guilherme Pereira",
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Noel Palmqvist",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "Mateus Campos",
+                  "clube": "Belas"
+                }
+              ]
+            },
+            {
+              "teeTime": "15:20",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Lucas Lemos Guerreiro",
+                  "clube": "Clube Benfica"
+                },
+                {
+                  "nome": "Pedro Uva Peixoto",
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Matilde Bandeira",
+                  "clube": "Vale de Janelas"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "985",
+      "tcode": "10222",
+      "name": "4º Torneio Drive Challenge Tejo-Quinta Peru-Sub 12",
+      "date": "2026-04-25",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": "4º Torneio Drive Challenge Tejo-Quinta Peru-Sub 12",
+          "date": "2026-04-25",
+          "totalJogadores": 14,
+          "groups": [
+            {
+              "teeTime": "15:40",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Miguel Santos Pereira",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "António Vasco",
+                  "clube": "Vidago Palace C"
+                },
+                {
+                  "nome": "Tomás Valério",
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            },
+            {
+              "teeTime": "15:50",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Maria Madalena Neves Ferreira",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "Maria Luz",
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Tomás Pinto Barbosa",
+                  "clube": "Quinta do Peru"
+                }
+              ]
+            },
+            {
+              "teeTime": "16:00",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "João Lima",
+                  "clube": "Villa Batalha"
+                },
+                {
+                  "nome": "Tiago Borges Oliveira",
+                  "clube": "The One"
+                },
+                {
+                  "nome": "William Palmqvist",
+                  "clube": "Estoril"
+                }
+              ]
+            },
+            {
+              "teeTime": "16:10",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "António Ferreira Lobo",
+                  "clube": "ACP Golfe"
+                },
+                {
+                  "nome": "Vicente Lima",
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Diogo Cajus",
+                  "clube": "CGCUL"
+                }
+              ]
+            },
+            {
+              "teeTime": "16:20",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Apolo Silva",
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "Vicente Pinheiro",
+                  "clube": "Santander Totta"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "985",
+      "tcode": "10221",
+      "name": "4º Torneio Drive Challenge Tejo-Quinta Peru-Sub 10",
+      "date": "2026-04-25",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": "4º Torneio Drive Challenge Tejo-Quinta Peru-Sub 10",
+          "date": "2026-04-25",
+          "totalJogadores": 8,
+          "groups": [
+            {
+              "teeTime": "16:30",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Francisco Ivo de Carvalho",
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Artur Santos",
+                  "clube": "Exército"
+                },
+                {
+                  "nome": "Mikhail Khontulev",
+                  "clube": "Estoril"
+                }
+              ]
+            },
+            {
+              "teeTime": "16:40",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Alexander James Lucas",
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "António Trinité",
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Salvador Lopes",
+                  "clube": "ACP Golfe"
+                }
+              ]
+            },
+            {
+              "teeTime": "16:50",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Davyd Tiuleniev",
+                  "clube": "RIO"
+                },
+                {
+                  "nome": "Maria Almeida Santos",
+                  "clube": "ACP Golfe"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "987",
+      "tcode": "10229",
+      "name": "4º Torneio Drive Challenge Norte - Estela - Sub 18",
+      "date": "2026-04-26",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": "4º Torneio Drive Challenge Norte - Estela - Sub 18",
+          "date": "2026-04-26",
+          "totalJogadores": 8,
+          "groups": [
+            {
+              "teeTime": "12:00",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Manuel Rouco Castro",
+                  "clube": "Estela"
+                },
+                {
+                  "nome": "Elisa Garcez",
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Madalena Dias",
+                  "clube": "Miramar"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:10",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Alexandre Lopes",
+                  "clube": "Vale Pisão"
+                },
+                {
+                  "nome": "Guilherme Lopes",
+                  "clube": "Cantanhede"
+                },
+                {
+                  "nome": "Iris Lopes",
+                  "clube": "Cantanhede"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:20",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Martim Ferreira",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Taras Zhurbei",
+                  "clube": "Quinta Lágrimas"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "987",
+      "tcode": "10228",
+      "name": "4º Torneio Drive Challenge Norte - Estela - Sub 16",
+      "date": "2026-04-26",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": "4º Torneio Drive Challenge Norte - Estela - Sub 16",
+          "date": "2026-04-26",
+          "totalJogadores": 12,
+          "groups": [
+            {
+              "teeTime": "12:30",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Afonso Poiarez",
+                  "clube": "Estela"
+                },
+                {
+                  "nome": "Afonso Polery",
+                  "clube": "Estela"
+                },
+                {
+                  "nome": "Rafael Nogueira",
+                  "clube": "Paredes"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:40",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Gustavo Castro",
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Nuno Bessa",
+                  "clube": "Vale Pisão"
+                },
+                {
+                  "nome": "Dinis Seabra",
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:50",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "António Pereira Mendes",
+                  "clube": "Estela"
+                },
+                {
+                  "nome": "Leonardo Ferreira",
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Luís Pedro Reis",
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:00",
+              "startHole": 10,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Manuel Pontes Carneiro",
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Pedro Oliveira",
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Tiago Sampaio",
+                  "clube": "Quinta Lágrimas"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "987",
+      "tcode": "10227",
+      "name": "4º Torneio Drive Challenge Norte - Estela - Sub 14",
+      "date": "2026-04-26",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": "4º Torneio Drive Challenge Norte - Estela - Sub 14",
+          "date": "2026-04-26",
+          "totalJogadores": 23,
+          "groups": [
+            {
+              "teeTime": "13:10",
+              "startHole": 10,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Diogo Lima",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Afonso de Sousa Pinto",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Marc Costa",
+                  "clube": "Citynorte"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:20",
+              "startHole": 10,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Afonso Paiva Gonçalves",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "André Von Hafe",
+                  "clube": "Estela"
+                },
+                {
+                  "nome": "Sebastião Soares",
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:30",
+              "startHole": 10,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Tomás Duarte Matias",
+                  "clube": "Quinta do Fojo"
+                },
+                {
+                  "nome": "Pedro Luís Fernandes",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Diogo Guilherme",
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:40",
+              "startHole": 10,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Tomás Araújo",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "David Grilo",
+                  "clube": "Cantanhede"
+                },
+                {
+                  "nome": "João Pedro Frade",
+                  "clube": "Citynorte"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:50",
+              "startHole": 10,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Gil Ribeiro",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Gabriel Guimarães Mota",
+                  "clube": "Estela"
+                },
+                {
+                  "nome": "Guilherme Oliveira Alves",
+                  "clube": "Paredes"
+                }
+              ]
+            },
+            {
+              "teeTime": "14:00",
+              "startHole": 10,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Manuel Gomes da Silva",
+                  "clube": "Quinta do Fojo"
+                },
+                {
+                  "nome": "Mariana Costa",
+                  "clube": "Quinta do Fojo"
+                },
+                {
+                  "nome": "Marta Andrade",
+                  "clube": "Citynorte"
+                }
+              ]
+            },
+            {
+              "teeTime": "14:10",
+              "startHole": 10,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "António O` Mahony",
+                  "clube": "Cantanhede"
+                },
+                {
+                  "nome": "Afonso Morais",
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Maria Ferreira",
+                  "clube": "Paredes"
+                }
+              ]
+            },
+            {
+              "teeTime": "14:20",
+              "startHole": 10,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Dinis Soares",
+                  "clube": "Cantanhede"
+                },
+                {
+                  "nome": "Alice Araújo",
+                  "clube": "Cantanhede"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "987",
+      "tcode": "10226",
+      "name": "4º Torneio Drive Challenge Norte - Estela - Sub 12",
+      "date": "2026-04-26",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": "4º Torneio Drive Challenge Norte - Estela - Sub 12",
+          "date": "2026-04-26",
+          "totalJogadores": 28,
+          "groups": [
+            {
+              "teeTime": "12:00",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Tomás Sarmento de Beires",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Catarina Loureiro",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "João Couto",
+                  "clube": "Braga"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:10",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Diogo Gomes",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "James Orrison",
+                  "clube": "Cantanhede"
+                },
+                {
+                  "nome": "Maksim Mutalapov",
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:20",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Marta Mendes",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Martim Silva",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Vasco Abreu",
+                  "clube": "UCDR Guardizela"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:30",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Valentin Iria",
+                  "clube": "Quinta Lágrimas"
+                },
+                {
+                  "nome": "Carolina Paiva",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Vicente Poeira",
+                  "clube": "Quinta Lágrimas"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:40",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Dinis Henriques",
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Tomás Tomásio",
+                  "clube": "Cantanhede"
+                },
+                {
+                  "nome": "Carlos Gonçalves Dias",
+                  "clube": "Citynorte"
+                }
+              ]
+            },
+            {
+              "teeTime": "12:50",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Dinis Ribeiro",
+                  "clube": "Estela"
+                },
+                {
+                  "nome": "Miguel Ramos",
+                  "clube": "Quinta Lágrimas"
+                },
+                {
+                  "nome": "Lucas Healy",
+                  "clube": "Estela"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:00",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Gonçalo Oliveira",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Elias Bacelar Ferreira",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Maria Leonor Azevedo",
+                  "clube": "Paredes"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:10",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "António Ribeiro Rebelo",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Filipe Bacelar Ferreira",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Duarte Santos",
+                  "clube": "Quinta Lágrimas"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:20",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Eduardo Duarte",
+                  "clube": "Paredes"
+                },
+                {
+                  "nome": "Gui Silva",
+                  "clube": "Cantanhede"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:30",
+              "startHole": 1,
+              "tee": "Verdes",
+              "players": [
+                {
+                  "nome": "Francisco Raposo de Magalhães",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Marta Ferreira",
+                  "clube": "Oporto"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "ccode": "987",
+      "tcode": "10225",
+      "name": "4º Torneio Drive Challenge Norte - Estela - Sub 10",
+      "date": "2026-04-26",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {
+        "1": {
+          "name": "4º Torneio Drive Challenge Norte - Estela - Sub 10",
+          "date": "2026-04-26",
+          "totalJogadores": 19,
+          "groups": [
+            {
+              "teeTime": "13:40",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Lucas Pereira Amorim",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Manuel Dias",
+                  "clube": "Braga"
+                },
+                {
+                  "nome": "Francisco Lopes",
+                  "clube": "Vale Pisão"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:50",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Rafael Paço",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Miguel Mendes",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Henrique Monção",
+                  "clube": "Miramar"
+                }
+              ]
+            },
+            {
+              "teeTime": "14:00",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Bruno Neto Lichuck",
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Diego Braga",
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Tom Georges",
+                  "clube": "Miramar"
+                }
+              ]
+            },
+            {
+              "teeTime": "14:10",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Francisco Cício Barbosa",
+                  "clube": "Quinta do Fojo"
+                },
+                {
+                  "nome": "Artur Von Hafe",
+                  "clube": "RIO"
+                },
+                {
+                  "nome": "David Preto",
+                  "clube": "Paredes"
+                }
+              ]
+            },
+            {
+              "teeTime": "14:20",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Doeun Kim",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Fabian Aponte",
+                  "clube": "Quinta do Fojo"
+                },
+                {
+                  "nome": "Leonor Ferreira",
+                  "clube": "Paredes"
+                }
+              ]
+            },
+            {
+              "teeTime": "14:30",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Francisco Vaz",
+                  "clube": "Miramar"
+                },
+                {
+                  "nome": "Madalena Araújo",
+                  "clube": "Citynorte"
+                }
+              ]
+            },
+            {
+              "teeTime": "14:40",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Gabriela Bueno",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Teresa Vasconcelos Carvalheira",
+                  "clube": "Quinta Lágrimas"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
       "ccode": "000",
       "tcode": "10935",
       "name": "Campeonato Nacional de Jovens Sub 18 H",
@@ -89740,7 +90892,7 @@
         "name": "Campeonato Nacional de Jovens Sub 18 H",
         "date": "2026-05-01",
         "totalInscritos": 15,
-        "reservas": 1,
+        "reservas": 2,
         "status": "Inscrições em curso",
         "tcode": "10935",
         "ccode": "000",
@@ -89903,6 +91055,16 @@
             "hcp": 8.3,
             "vacf": 81.7,
             "registo": "2026/04/10 13:06",
+            "status": "reserva"
+          },
+          {
+            "pos": 2,
+            "fed": "54232",
+            "nome": "Jack Brando",
+            "clube": "Vila Sol",
+            "hcp": 9,
+            "vacf": 82.4,
+            "registo": "2026/04/26 00:06",
             "status": "reserva"
           }
         ]
@@ -90734,7 +91896,7 @@
       "admissions": {
         "name": "Campeonato Nacional de Jovens Sub 14 S",
         "date": "2026-05-01",
-        "totalInscritos": 6,
+        "totalInscritos": 7,
         "reservas": 0,
         "status": "Inscrições em curso",
         "tcode": "10940",
@@ -90799,6 +91961,16 @@
             "vacf": 88.8,
             "registo": "2026/04/22 16:59",
             "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "46873",
+            "nome": "Catarina Valério",
+            "clube": "Vilamoura, C. G",
+            "hcp": 15.6,
+            "vacf": 90.9,
+            "registo": "2026/04/26 08:18",
+            "status": "confirmed"
           }
         ]
       },
@@ -90814,7 +91986,7 @@
         "name": "Campeonato Nacional de Jovens Sub 12 H",
         "date": "2026-05-01",
         "totalInscritos": 15,
-        "reservas": 3,
+        "reservas": 4,
         "status": "Inscrições em curso",
         "tcode": "10941",
         "ccode": "000",
@@ -90971,6 +92143,16 @@
           },
           {
             "pos": 1,
+            "fed": "51650",
+            "nome": "William Palmqvist",
+            "clube": "Estoril",
+            "hcp": 30.7,
+            "vacf": 124.2,
+            "registo": "2026/04/26 21:08",
+            "status": "reserva"
+          },
+          {
+            "pos": 2,
             "fed": "49714",
             "nome": "Martim Silva",
             "clube": "Citynorte",
@@ -90980,7 +92162,7 @@
             "status": "reserva"
           },
           {
-            "pos": 2,
+            "pos": 3,
             "fed": "50412",
             "nome": "Vasco Abreu",
             "clube": "UCDR Guardizela",
@@ -90990,7 +92172,7 @@
             "status": "reserva"
           },
           {
-            "pos": 3,
+            "pos": 4,
             "fed": "51896",
             "nome": "Vicente Rodrigues",
             "clube": "Palheiro",
