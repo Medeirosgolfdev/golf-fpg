@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 /**
- * scrape-jovens-node.js — Scraper de torneios de Jovens (FPG) em Node puro.
+ * scrape-jovens-node.js — Scraper de torneios juvenis (FPG) em Node puro.
  *
- * Descobre torneios cujo nome contém "Jovens" no ano pedido (default ano corrente),
- * faz fetch de classificações + scorecards, e MERGE incremental com o ficheiro
- * existente em public/data/jovens_YYYY.json.
+ * Descobre torneios cujo nome contém "Jovens" OU "PJA" no ano pedido (default
+ * ano corrente), faz fetch de classificações + scorecards, e MERGE incremental
+ * com o ficheiro existente em public/data/jovens_YYYY.json. Os termos são
+ * configuráveis via flag --search "Termo1,Termo2".
  *
  * Princípio: nunca perder dados já persistidos. Se a re-fetch de um torneio
  * vier com menos info (ex: um jogador deixou de ter scorecard), mantém-se o
@@ -23,13 +24,15 @@
  *   1  → erro real
  *
  * Uso:
- *   node scripts/scrape-jovens-node.js                     # ano corrente
+ *   node scripts/scrape-jovens-node.js                     # ano corrente, termos default
  *   node scripts/scrape-jovens-node.js --year 2025         # ano específico
  *   node scripts/scrape-jovens-node.js --refetch-all       # re-fetch mesmo torneios já completos
+ *   node scripts/scrape-jovens-node.js --search "Jovens"   # só Jovens (sem PJA)
+ *   node scripts/scrape-jovens-node.js --search "PJA"      # só PJA
  *   node scripts/scrape-jovens-node.js --extra-tcodes 007:11010
  *                                                           # força fetch de tcodes específicos
  *                                                           # (útil quando o nome do torneio não
- *                                                           #  contém literalmente "Jovens")
+ *                                                           #  contém nenhum dos termos pesquisados)
  *
  * Flags/convenções:
  *   - tcodes 99xxx são sintéticos (placeholders manuais, ex: Regionais com
@@ -56,16 +59,21 @@ const OUTPUT_DIR = path.join(REPO_ROOT, "public", "data");
 const BASE_URL = "https://scoring.datagolf.pt/pt";
 const UA = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36";
 
-// Termo de pesquisa. A FPG usa sempre "Jovens" (plural) nos campeonatos
-// nacionais e regionais. Case-insensitive substring match server-side.
-const SEARCH_NAME = "Jovens";
-
 const argv = process.argv.slice(2);
 const getArg = (flag, def) => {
   const i = argv.indexOf(flag);
   return i < 0 ? def : (argv[i + 1] || def);
 };
 const hasFlag = flag => argv.includes(flag);
+
+// Termos de pesquisa. A FPG usa "Jovens" (plural) nos campeonatos nacionais
+// e regionais; "PJA" prefixa torneios da Portuguese Junior Amateurs (PJA Tour,
+// PJA Masters, PJA Race, etc.) que também são juvenis. Case-insensitive
+// substring match server-side. Override via flag --search "Termo1,Termo2".
+const SEARCH_TERMS = String(getArg("--search", "Jovens,PJA"))
+  .split(",")
+  .map(s => s.trim())
+  .filter(Boolean);
 
 const YEAR = Number(getArg("--year", new Date().getFullYear()));
 const REFETCH_ALL = hasFlag("--refetch-all");
@@ -75,9 +83,9 @@ const REFETCH_DAYS = Number(getArg("--refetch-days", 21));
 const DELAY = 100; // ms entre pedidos
 
 // --extra-tcodes "ccode:tcode,ccode:tcode" — força fetch destes torneios mesmo
-// que a pesquisa "Jovens" não os encontre. Útil para Regionais que a FPG
+// que nenhum dos SEARCH_TERMS os encontre. Útil para Regionais que a FPG
 // indexa com nome alternativo (ex: "Regional Sub 10/12") e por isso escapam
-// ao filtro `TournName="Jovens"`. Aceita também só "tcode" (assume ccode=000).
+// aos filtros `TournName=...`. Aceita também só "tcode" (assume ccode=000).
 const EXTRA_TCODES_RAW = getArg("--extra-tcodes", "");
 const EXTRA_TCODES = EXTRA_TCODES_RAW
   ? EXTRA_TCODES_RAW.split(",").map(s => {
@@ -186,7 +194,7 @@ const getMs = r => parseInt((r.started_at || "").match(/\d+/)?.[0] || "0");
 const getYear = r => new Date(getMs(r)).getFullYear();
 const getDateStr = r => new Date(getMs(r)).toISOString().split("T")[0];
 
-async function tournSearchPage(startIndex, pageSize) {
+async function tournSearchPage(term, startIndex, pageSize) {
   // Formato ISO "YYYY-MM-DD" é o único que funciona em AMBOS dtIni e dtFim.
   // Descoberto 2026-04-18: dtFim em "DD/MM/YYYY" dá HTTP 500; ISO funciona.
   const body = {
@@ -195,7 +203,7 @@ async function tournSearchPage(startIndex, pageSize) {
     dtFim: `${YEAR}-12-31`,
     CourseName: "",
     TournCode: "",
-    TournName: SEARCH_NAME,
+    TournName: term,
     jtStartIndex: String(startIndex),
     jtPageSize: String(pageSize),
     jtSorting: "started_at DESC",
@@ -205,9 +213,9 @@ async function tournSearchPage(startIndex, pageSize) {
   return { records: d.Records || [], total: d.TotalRecordCount || 0 };
 }
 
-// Lookup directo por tcode (ignora o filtro TournName="Jovens"). Usado para
+// Lookup directo por tcode (ignora o filtro TournName). Usado para
 // `--extra-tcodes`, onde sabemos o código do torneio mas o nome pode não
-// conter "Jovens" (ex: "Campeonato Regional Sub 10/12 2026" sem essa palavra).
+// conter nenhum dos SEARCH_TERMS (ex: "Campeonato Regional Sub 10/12 2026").
 async function tournLookupByCode(ccode, tcode) {
   const body = {
     ClubCode: String(ccode || "0"), dtIni: "", dtFim: "",
@@ -221,18 +229,24 @@ async function tournLookupByCode(ccode, tcode) {
 
 async function tournSearchAll() {
   const PAGE = 100;
-  const first = await tournSearchPage(0, PAGE);
-  const all = [...first.records];
-  info(`"${SEARCH_NAME}" em ${YEAR}: ${first.total} total`);
-  let offset = PAGE;
-  while (offset < first.total) {
+  // Dedupe por club_code/code — um torneio pode em teoria casar com mais do
+  // que um termo (ex: "PJA Jovens ..."), mas só queremos uma entrada.
+  const seen = new Map();
+  for (const term of SEARCH_TERMS) {
+    const first = await tournSearchPage(term, 0, PAGE);
+    info(`"${term}" em ${YEAR}: ${first.total} total`);
+    for (const r of first.records) seen.set(`${r.club_code}/${r.code}`, r);
+    let offset = PAGE;
+    while (offset < first.total) {
+      await sleep(DELAY);
+      const page = await tournSearchPage(term, offset, PAGE);
+      for (const r of page.records) seen.set(`${r.club_code}/${r.code}`, r);
+      offset += PAGE;
+    }
     await sleep(DELAY);
-    const page = await tournSearchPage(offset, PAGE);
-    all.push(...page.records);
-    offset += PAGE;
   }
   // Defesa — servidor pode devolver fora do ano (rara mas barato proteger)
-  return all.filter(r => getYear(r) === YEAR);
+  return [...seen.values()].filter(r => getYear(r) === YEAR);
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -534,9 +548,9 @@ function countPlayers(tournaments) {
   }
 
   // Fase 1 — descoberta
-  log("FASE 1: descobrir torneios de Jovens");
+  log(`FASE 1: descobrir torneios (termos: ${SEARCH_TERMS.map(t => `"${t}"`).join(", ")})`);
   const apiRecords = await tournSearchAll();
-  ok(`${apiRecords.length} torneios com "${SEARCH_NAME}" em ${YEAR}`);
+  ok(`${apiRecords.length} torneios em ${YEAR} (após dedupe entre termos)`);
 
   // Fase 1b — juntar tcodes explícitos (--extra-tcodes) que a pesquisa "Jovens"
   // não encontrou. Cada entrada é resolvida via lookup directo por TournCode.
@@ -566,7 +580,7 @@ function countPlayers(tournaments) {
   if (apiRecords.length === 0 && existingRealCount > 0) {
     console.error(`${R}ABORTAR: API devolveu 0 torneios mas ficheiro tem ${existingRealCount} torneio(s) real(is).${X}`);
     console.error(`${R}Possíveis causas: cookies expirados, servidor em manutenção, filtro TournName demasiado estrito.${X}`);
-    console.error(`${R}Se é intencional (ano sem Jovens), apaga public/data/jovens_${YEAR}.json antes de correr.${X}`);
+    console.error(`${R}Se é intencional (ano sem torneios), apaga public/data/jovens_${YEAR}.json antes de correr.${X}`);
     process.exit(1);
   }
 
@@ -574,12 +588,12 @@ function countPlayers(tournaments) {
     // Criar ficheiro vazio se não existir ainda
     const empty = {
       lastUpdated: new Date().toISOString().slice(0, 10).split("-").reverse().join("/"),
-      source: "scoring.datagolf.pt", circuit: "jovens", year: YEAR, searchTerm: SEARCH_NAME,
+      source: "scoring.datagolf.pt", circuit: "jovens", year: YEAR, searchTerm: SEARCH_TERMS.join(","),
       totalTournaments: 0, totalPlayers: 0, totalScorecards: 0, tournaments: [],
     };
     if (!existing) {
       writeAtomic(OUTPUT_FILE, JSON.stringify(empty, null, 2));
-      ok(`Ficheiro vazio criado (nenhum torneio Jovens em ${YEAR} ainda)`);
+      ok(`Ficheiro vazio criado (nenhum torneio em ${YEAR} ainda)`);
       process.exit(0);
     }
     info(`Nenhum torneio na API; ficheiro existente mantém-se`);
@@ -646,7 +660,7 @@ function countPlayers(tournaments) {
     source: "scoring.datagolf.pt",
     circuit: "jovens",
     year: YEAR,
-    searchTerm: SEARCH_NAME,
+    searchTerm: SEARCH_TERMS.join(","),
     totalTournaments: merged.length,
     totalPlayers: countPlayers(merged),
     totalScorecards: countScorecards(merged),
