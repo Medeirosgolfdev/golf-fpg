@@ -903,7 +903,7 @@ tr.cross-current { background: var(--bg-success); }
 .heatmap-hole { font-size: 18px; font-weight: 900; line-height: 1; }
 .heatmap-par { font-size: 9px; opacity: 0.75; margin-top: 2px; white-space: nowrap; }
 .heatmap-vp { font-size: 11px; font-weight: 700; margin-top: 3px; font-variant-numeric: tabular-nums; }
-@media (max-width: 700px) { .heatmap-cells { gap: 3px; } .heatmap-hole { font-size: 14px; } .heatmap-cell { min-height: 54px; padding: 4px 1px; } .heatmap-rowlabel { min-width: 22px; font-size: 9px; } }
+@media (max-width: 700px) { .heatmap-cells { gap: 3px; } .heatmap-hole { font-size: 14px; } .heatmap-cell { min-height: 56px; padding: 4px 1px; } .heatmap-rowlabel { min-width: 26px; font-size: 11px; } .heatmap-par { font-size: 10px; } }
 
 /* ─── F9 vs B9 comparison ─── */
 .f9b9-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: stretch; margin-top: 6px; }
@@ -1490,6 +1490,16 @@ tr.cross-current { background: var(--bg-success); }
   border-bottom: 1px solid var(--border); padding: 8px 10px;
   transition: flex-basis 0.2s ease, height 0.2s ease;
  }
+ /* Vista mensal (7 colunas) em mobile: encolher para caber no portrait
+    sem cortar nem rebentar — caso o utilizador troque manualmente
+    para "Mês" (em mobile o default é "Lista"). */
+ .cal-content        { padding: 0 6px 8px; }
+ .cal-dow            { font-size: 9px !important; padding: 4px 0 !important; letter-spacing: 0 !important; }
+ .cal-month-grid > div { padding: 1px !important; }
+ .cal-month-grid .fs-11 { font-size: 10px; min-height: 18px !important; padding: 0 2px !important; }
+ .cal-month-grid .fs-10 { font-size: 9px; }
+ .hl-cell            { padding: 2px !important; }
+ .hl-cell .fs-14     { font-size: 12px !important; }
 
  .scroll-x, .tourn-scroll, .sc-modern { overflow-x: auto; -webkit-overflow-scrolling: touch; }
  .dtable       { font-size: 12px; }
@@ -2995,13 +3005,13 @@ tr.cross-current { background: var(--bg-success); }
   /* Links sem sublinhar preto (fica confuso em papel) */
   a { color: #000 !important; text-decoration: none !important; }
 
-  /* Orientação e margens da página — apanrar 18 holes num A4 landscape */
+  /* Orientacao e margens da pagina */
   @page {
     size: A4 landscape;
     margin: 10mm 8mm;
   }
 
-  /* Garantir que sections que normalmente scrollam passam a mostrar tudo */
+  /* Garantir que sections que normalmente scrollam mostram tudo */
   .scroll, .x-scroll, [class*="scroll"] {
     overflow: visible !important;
     max-height: none !important;
@@ -3012,4 +3022,4 @@ tr.cross-current { background: var(--bg-success); }
     display: none !important;
   }
 }
-
+/* end of file */

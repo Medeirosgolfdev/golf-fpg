@@ -574,7 +574,11 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
     return now.getFullYear() === 2026 ? now.getMonth() : 1;
   });
   const [selectedEvent, setSelectedEvent] = useState<CalEvent | null>(null);
-  const [viewMode, setViewMode] = useState<ViewMode>("month");
+  // Em mobile, abrir por defeito em "list" — o grid mensal de 7 colunas
+  // fica muito apertado em telemóveis. Lazy init para só ser avaliado 1×.
+  const [viewMode, setViewMode] = useState<ViewMode>(() =>
+    typeof window !== "undefined" && window.innerWidth <= 768 ? "list" : "month"
+  );
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const BDAY_IDS_OFF = ["bday_sub10","bday_sub12","bday_sub14","bday_sub16","bday_sub18","bday_outros"];
   const [enabledCals, setEnabledCals] = useState<Set<string>>(
@@ -867,14 +871,14 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
           )}
           {viewMode === "month" ? (
             <div className="cal-content">
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)",
+              <div className="cal-week-header" style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)",
                 borderBottom: "1px solid var(--border-light)", marginBottom: 4 }}>
                 {DAYS_PT.map((d, i) => (
-                  <div key={i} className="uppercase ta-c fs-11 fw-600" style={{ padding: "8px 0",
+                  <div key={i} className="uppercase ta-c fs-11 fw-600 cal-dow" style={{ padding: "8px 0",
                     color: "var(--text-3)", letterSpacing: "0.04em" }}>{d}</div>
                 ))}
               </div>
-              <div style={{ flex: 1, display: "grid", gridTemplateColumns: "repeat(7,1fr)", gridTemplateRows: `repeat(${gridRows},1fr)` }}>
+              <div className="cal-month-grid" style={{ flex: 1, display: "grid", gridTemplateColumns: "repeat(7,1fr)", gridTemplateRows: `repeat(${gridRows},1fr)` }}>
                 {monthDays.map((d, i) => {
                   const dayEvts = sortEventsForGrid(visibleEvents.filter(e => eventOnDay(e, d.date)));
                   const isToday = isSameDay(d.date, today);

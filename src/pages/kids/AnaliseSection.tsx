@@ -411,26 +411,28 @@ function HolesPane({ player, field }: {
       <div style={{ fontSize: 11, color: "var(--text-3)", marginBottom: 10 }}>
         Média de strokes por buraco — jogador (verde) vs field (cinza).
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(18, 1fr)", gap: 2, alignItems: "end", height: 140 }}>
-        {rows.map(r => {
-          const pHeight = r.avg != null ? ((r.avg - minAvg) / range) * 100 : 0;
-          const fHeight = r.fieldAvg != null ? ((r.fieldAvg - minAvg) / range) * 100 : 0;
-          return (
-            <div key={r.hole} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2, height: "100%" }}>
-              <div style={{ flex: 1, display: "flex", alignItems: "flex-end", gap: 1, width: "100%", justifyContent: "center" }}>
-                <div title={`Jogador ${r.hole}: ${r.avg?.toFixed(2) ?? "—"}`}
-                  style={{ width: "40%", height: `${pHeight}%`, minHeight: r.avg != null ? 2 : 0, background: "var(--accent)", borderRadius: "2px 2px 0 0" }} />
-                <div title={`Field ${r.hole}: ${r.fieldAvg?.toFixed(2) ?? "—"}`}
-                  style={{ width: "40%", height: `${fHeight}%`, minHeight: r.fieldAvg != null ? 2 : 0, background: "var(--text-3)", borderRadius: "2px 2px 0 0" }} />
+      <div className="scroll-x">
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(18, minmax(20px, 1fr))", gap: 2, alignItems: "end", height: 140, minWidth: 360 }}>
+          {rows.map(r => {
+            const pHeight = r.avg != null ? ((r.avg - minAvg) / range) * 100 : 0;
+            const fHeight = r.fieldAvg != null ? ((r.fieldAvg - minAvg) / range) * 100 : 0;
+            return (
+              <div key={r.hole} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2, height: "100%" }}>
+                <div style={{ flex: 1, display: "flex", alignItems: "flex-end", gap: 1, width: "100%", justifyContent: "center" }}>
+                  <div title={`Jogador ${r.hole}: ${r.avg?.toFixed(2) ?? "—"}`}
+                    style={{ width: "40%", height: `${pHeight}%`, minHeight: r.avg != null ? 2 : 0, background: "var(--accent)", borderRadius: "2px 2px 0 0" }} />
+                  <div title={`Field ${r.hole}: ${r.fieldAvg?.toFixed(2) ?? "—"}`}
+                    style={{ width: "40%", height: `${fHeight}%`, minHeight: r.fieldAvg != null ? 2 : 0, background: "var(--text-3)", borderRadius: "2px 2px 0 0" }} />
+                </div>
+                <div style={{ fontSize: 9, color: "var(--text-3)" }}>{r.hole}</div>
               </div>
-              <div style={{ fontSize: 9, color: "var(--text-3)" }}>{r.hole}</div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
       <div style={{ display: "flex", gap: 14, fontSize: 10, color: "var(--text-3)", marginTop: 8, justifyContent: "center" }}>
         <span><span style={{ display: "inline-block", width: 10, height: 10, background: "var(--accent)", borderRadius: 2, marginRight: 4 }} />jogador</span>
-        <span><span style={{ display: "inline-block", width: 10, height: 10, background: "var(--text-3)", borderRadius: 2, marginRight: 4 }} />field (escalão)</span>
+        <span><span style={{ display: "inline-block", width: 10, height: 10, background: "var(--text-3)", borderRadius: 2, marginRight: 4 }} />field (escalao)</span>
       </div>
     </div>
   );

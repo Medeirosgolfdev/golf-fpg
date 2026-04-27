@@ -1119,27 +1119,29 @@ function PlayerDetail({ row, onClose }: { row: Sub12Row; onClose: () => void }) 
         <KpiCard label="Best SD"   value={row.bestSD?.toFixed(1) ?? "–"} color={row.bestSD != null && row.bestSD <= 25 ? "var(--color-good)" : undefined} />
         <KpiCard label="Melhor"    value={row.bestGross != null ? String(row.bestGross) : "–"} color="var(--color-good-dark)" />
       </div>
-      <table className="dtable fs-11">
-        <thead><tr><th>Data</th><th>Torneio</th><th>Campo</th><th className="r">Pos</th><th className="r">Gross</th><th className="r">±Par</th><th className="r">SD</th></tr></thead>
-        <tbody>
-          {row.results.map((r, i) => (
-            <tr key={i}>
-              <td className="mono fs-10">{r.date}</td>
-              <td>
-                <span className="fw-600">{r.tournName}</span>
-                <span className="badge-serie ml-4" style={{ background: (SERIE_COLORS[r.series]||"var(--text-muted)")+"22", color: SERIE_COLORS[r.series], border: `1px solid ${SERIE_COLORS[r.series]}44` }}>
-                  {SERIE_LABELS[r.series]}
-                </span>
-              </td>
-              <td className="c-muted fs-10">{r.campo}</td>
-              <td className="r mono">{r.pos ?? "–"}<span className="c-muted fs-10">/{r.totalPlayers}</span></td>
-              <td className="r mono fw-700">{r.gross}</td>
-              <td className="r"><ToParSpan tp={r.toPar} /></td>
-              <td className="r"><SdSpan sd={r.sd} /></td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="scroll-x">
+        <table className="dtable fs-11">
+          <thead><tr><th>Data</th><th>Torneio</th><th>Campo</th><th className="r">Pos</th><th className="r">Gross</th><th className="r">±Par</th><th className="r">SD</th></tr></thead>
+          <tbody>
+            {row.results.map((r, i) => (
+              <tr key={i}>
+                <td className="mono fs-10">{r.date}</td>
+                <td>
+                  <span className="fw-600">{r.tournName}</span>
+                  <span className="badge-serie ml-4" style={{ background: (SERIE_COLORS[r.series]||"var(--text-muted)")+"22", color: SERIE_COLORS[r.series], border: `1px solid ${SERIE_COLORS[r.series]}44` }}>
+                    {SERIE_LABELS[r.series]}
+                  </span>
+                </td>
+                <td className="c-muted fs-10">{r.campo}</td>
+                <td className="r mono">{r.pos ?? "–"}<span className="c-muted fs-10">/{r.totalPlayers}</span></td>
+                <td className="r mono fw-700">{r.gross}</td>
+                <td className="r"><ToParSpan tp={r.toPar} /></td>
+                <td className="r"><SdSpan sd={r.sd} /></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

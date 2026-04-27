@@ -328,6 +328,7 @@ function TeeSummaryTable({ rounds }: { rounds: RoundData[] }) {
   return (
     <div className="mb-10">
       <div className="sc-bar-head"><span>Resumo por Tee</span></div>
+      <div className="scroll-x">
       <table className="dtable-lg" style={{ marginBottom: 0 }}>
         <thead>
           <tr>
@@ -362,6 +363,7 @@ function TeeSummaryTable({ rounds }: { rounds: RoundData[] }) {
           })}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }
@@ -481,6 +483,7 @@ function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId 
                 {isAnalysis && activeTee && (
                   <div className="muted fs-11 mb-4">Rondas sem scorecard detalhado neste tee:</div>
                 )}
+                <div className="scroll-x">
                 <table className="dt-compact">
                   <colgroup>
                     <col className="col-p17" /><col className="col-p8" /><col className="col-p9" />
@@ -504,6 +507,7 @@ function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId 
                     })}
                   </tbody>
                 </table>
+                </div>
               </div>
                 );
               })()}
@@ -1627,7 +1631,7 @@ function ClubsTable({ stats, onDrillDown, maxClub, pct, COL_M, COL_F }: {
           <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><SexBadge sex="F" /> Feminino</span>
         </div>
       </div>
-      <div style={{ maxHeight: 520, overflowY: "auto", paddingRight: 4 }}>
+      <div style={{ maxHeight: 520, overflowY: "auto", overflowX: "auto", paddingRight: 4, WebkitOverflowScrolling: "touch" }}>
         <table className="dt-compact">
           <thead>
             <tr className="sticky-head">
@@ -2177,7 +2181,7 @@ function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, extraMap, localI
     : 0;
 
   return (
-    <div style={{ maxHeight: 600, overflowY: "auto" }}>
+    <div style={{ maxHeight: 600, overflowY: "auto", overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
       {localIds && localIds.size > 0 && missingCount > 0 && (
         <div className="p p-sm" style={{ marginBottom: 8, display: "inline-block" }}>
           {missingCount} ronda{missingCount !== 1 ? "s" : ""} na FPG que não temos em local
