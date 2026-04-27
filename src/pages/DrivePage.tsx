@@ -1163,13 +1163,13 @@ function DriveContent() {
   const location = useLocation();
 
   // Filtros sincronizados com URL query params para partilha directa.
-  // Formato: `/drive?nav=ranking-pja&series=aquapor&year=2026&region=Norte&esc=Sub+12,Sub+14&manuel=0`.
+  // Formato: `/drive?nav=ranking-sub12&series=aquapor&year=2026&region=Norte&esc=Sub+12,Sub+14&manuel=0`.
   const [searchParams, setSearchParams] = useSearchParams();
   const getQP = (key: string) => searchParams.get(key);
 
-  const [navMode, setNavMode]   = useState<"torneios"|"ranking-pja"|"ranking-sub12">(() => {
+  const [navMode, setNavMode]   = useState<"torneios"|"ranking-sub12">(() => {
     const v = getQP("nav");
-    return (v === "ranking-pja" || v === "ranking-sub12") ? v : "torneios";
+    return (v === "ranking-sub12") ? v : "torneios";
   });
   const [series, setSeries]     = useState<"all"|"tour"|"challenge"|"aquapor">(() => {
     const v = getQP("series");
@@ -1695,7 +1695,6 @@ function DriveContent() {
           <ToolbarSep />
           {([
             { key: "torneios",      label: "Torneios" },
-            { key: "ranking-pja",   label: "📊 Ranking PJA" },
             { key: "ranking-sub12", label: "🏅 Ranking Sub-12" },
           ] as const).map(({ key, label }) => (
             <button key={key}
@@ -2133,15 +2132,6 @@ function DriveContent() {
             })()}
 
           </div>
-        </div>
-      )}
-
-      {/* Ranking PJA — placeholder */}
-      {navMode === "ranking-pja" && (
-        <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 12, color: "var(--text-muted)", padding: 40 }}>
-          <div style={{ fontSize: 40 }}>📊</div>
-          <div style={{ fontSize: 16, fontWeight: 700, color: "var(--text)" }}>Ranking PJA</div>
-          <div className="fs-13 ta-c" style={{ maxWidth: 320 }}>Em desenvolvimento — pontuação acumulada dos atletas PJA nos torneios Drive.</div>
         </div>
       )}
 
