@@ -73,13 +73,17 @@ function HoleBadge({ hc }: { hc: number }) {
     : <span className="hb hb18">18</span>;
 }
 
-/** Retorna a pill efectiva: usa _pill dos dados ou auto-detecta INTL */
-function effectivePill(round: { _pill?: string; course?: string; scoreOrigin?: string }, courseName?: string): string {
+/** Retorna a pill efectiva: usa _pill dos dados ou auto-detecta INTL/REGIONAL/NACIONAL */
+function effectivePill(round: { _pill?: string; course?: string; scoreOrigin?: string; eventName?: string }, courseName?: string): string {
   if (round._pill) return round._pill;
   const o = (round.scoreOrigin || "").trim().toUpperCase();
   if (o === "INTERN") return "INTL";
   const c = (courseName || round.course || "").trim().toUpperCase();
   if (c === "INTERNACIONAL" || c === "INTERNATIONAL") return "INTL";
+  // Detecção pelo nome da prova: "Campeonato Regional...", "Campeonato Nacional..."
+  const ev = (round.eventName || "").trim();
+  if (/regional/i.test(ev)) return "REGIONAL";
+  if (/nacional/i.test(ev)) return "NACIONAL";
   return "";
 }
 
@@ -130,16 +134,69 @@ function LinkBtns({ links }: { links?: Record<string, string> }) {
 }
 
 /* ─── Combined event info: name + EDS badge + pill + links ─── */
-function EventInfo({ name, origin, pill, links }: {
+function EventInfo({ name, origin, pill, links, fed }: {
   name?: string; origin?: string; pill?: string; links?: Record<string, string>;
+  /** Fed code do jogador — fallback final para link à página WHS. */
+  fed?: string;
 }) {
+  // Prioridade do link "Abrir torneio na federação":
+  //   1. _links.classif* — URL curado pelo pipeline (sempre correcto, inclui
+  //      ccode/tcode certos do organizador).
+  //   2. PlayerWHS — fallback honesto: página do jogador na FPG (não é o
+  //      torneio mas pelo menos leva à FPG e o utilizador encontra a ronda).
+  //
+  // NOTA: tentámos antes derivar ccode a partir do nome do campo (course →
+  // CGSS=007, Aroeira=009, etc.) mas isso é incorrecto para muitos torneios:
+  // o ccode é o ORGANIZADOR (que pode ser FPG=000, ou outro clube) e não o
+  // local físico onde se joga. Resultado: links iam parar a torneios errados.
+  // Removido em 2026-04-27.
+  const classifUrl = links
+    ? Object.entries(links).find(([k]) => /^classif/i.test(k))?.[1] ?? null
+    : null;
+  const isFpgTorn = (origin || "").trim().toUpperCase() === "TORN";
+  const fallbackFpgUrl = !classifUrl && isFpgTorn && fed
+    ? `https://scoring.fpg.pt/lists/PlayerWHS.aspx?no=${fed}`
+    : null;
+  const fedUrl = classifUrl || fallbackFpgUrl;
+  const fedTitle = classifUrl
+    ? "Abrir classificação do torneio na federação"
+    : "Abrir histórico WHS do jogador na federação (link directo ao torneio não disponível)";
+  const nameNode = fedUrl ? (
+    <a
+      href={fedUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      title={fedTitle}
+      className="muted"
+      style={{ textDecoration: "none" }}
+      onClick={e => e.stopPropagation()}
+    >{name || ""}</a>
+  ) : (
+    <span className="muted">{name || ""}</span>
+  );
+  // Ícone 🔗 só quando temos link curado (cor accent) ou fallback FPG (cor neutra).
+  const showFallbackIcon = !classifUrl && fallbackFpgUrl;
   return (
-    <>
-      <span className="muted">{name || ""}</span>
+    <span style={{ display: "inline-flex", flexWrap: "wrap", alignItems: "center", gap: 6 }}>
+      {nameNode}
       <OriginPill origin={origin} />
       <PillBadge pill={pill} />
       <LinkBtns links={links} />
-    </>
+      {showFallbackIcon && (
+        <a
+          href={fallbackFpgUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          title={fedTitle}
+          style={{
+            display: "inline-flex", alignItems: "center", gap: 3,
+            fontSize: 10, color: "var(--text-muted)", textDecoration: "none",
+            verticalAlign: "middle", opacity: 0.6,
+          }}
+          onClick={e => e.stopPropagation()}
+        >🔗</a>
+      )}
+    </span>
   );
 }
 
@@ -244,7 +301,13 @@ function ByDateView({ data, search }: {
                     <div className="muted fs-10">#{r.scoreId}</div>
                   </td>
                   <td><CourseLink name={r.course} /></td>
-                  <td><EventInfo name={r.eventName} origin={r.scoreOrigin} pill={effectivePill(r)} links={r._links} /></td>
+                  <td><EventInfo
+                    name={r.eventName}
+                    origin={r.scoreOrigin}
+                    pill={effectivePill(r)}
+                    links={r._links}
+                    fed={data.CURRENT_FED}
+                  /></td>
                   <td className="r"><HoleBadge hc={r.holeCount} /></td>
                   <td className="r">{r.hi ?? ""}</td>
                   <td><TeePill name={r.tee || ""} /></td>
@@ -328,7 +391,6 @@ function TeeSummaryTable({ rounds }: { rounds: RoundData[] }) {
   return (
     <div className="mb-10">
       <div className="sc-bar-head"><span>Resumo por Tee</span></div>
-      <div className="scroll-x">
       <table className="dtable-lg" style={{ marginBottom: 0 }}>
         <thead>
           <tr>
@@ -363,7 +425,6 @@ function TeeSummaryTable({ rounds }: { rounds: RoundData[] }) {
           })}
         </tbody>
       </table>
-      </div>
     </div>
   );
 }
@@ -483,7 +544,6 @@ function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId 
                 {isAnalysis && activeTee && (
                   <div className="muted fs-11 mb-4">Rondas sem scorecard detalhado neste tee:</div>
                 )}
-                <div className="scroll-x">
                 <table className="dt-compact">
                   <colgroup>
                     <col className="col-p17" /><col className="col-p8" /><col className="col-p9" />
@@ -507,7 +567,6 @@ function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId 
                     })}
                   </tbody>
                 </table>
-                </div>
               </div>
                 );
               })()}
@@ -1631,7 +1690,7 @@ function ClubsTable({ stats, onDrillDown, maxClub, pct, COL_M, COL_F }: {
           <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}><SexBadge sex="F" /> Feminino</span>
         </div>
       </div>
-      <div style={{ maxHeight: 520, overflowY: "auto", overflowX: "auto", paddingRight: 4, WebkitOverflowScrolling: "touch" }}>
+      <div style={{ maxHeight: 520, overflowY: "auto", paddingRight: 4 }}>
         <table className="dt-compact">
           <thead>
             <tr className="sticky-head">
@@ -2181,7 +2240,7 @@ function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, extraMap, localI
     : 0;
 
   return (
-    <div style={{ maxHeight: 600, overflowY: "auto", overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+    <div style={{ maxHeight: 600, overflowY: "auto" }}>
       {localIds && localIds.size > 0 && missingCount > 0 && (
         <div className="p p-sm" style={{ marginBottom: 8, display: "inline-block" }}>
           {missingCount} ronda{missingCount !== 1 ? "s" : ""} na FPG que não temos em local
@@ -3468,6 +3527,7 @@ type PlayerSidebarItemProps = {
   isNewRound: boolean;
   escHcps?: EscHcpStats;
   roundsTotal?: number | null;
+  /** Rondas no ano civil corrente — mesma fonte que o detalhe ("N em {ano}"). */
   roundsCurrentYear?: number | null;
   onClick: (e: React.MouseEvent) => void;
 };
@@ -3564,11 +3624,14 @@ function PlayerSidebarItem({
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
         <span style={{ fontSize: 11, color: "var(--text-muted)", display: "inline-flex", alignItems: "center", gap: 8 }}>
           <span>#{p.fed}</span>
-          {(roundsTotal != null && roundsTotal > 0) && (
-            <span title={`${roundsTotal} rondas no histórico WHS`}>📊 {roundsTotal}</span>
-          )}
+          {/* Rondas neste ano civil — mesma fonte (data.json) que o detalhe header.
+              Usado para ordenação por defeito. */}
           {(roundsCurrentYear != null && roundsCurrentYear > 0) && (
-            <span title={`${roundsCurrentYear} rondas este ano civil (FPG)`} style={{ color: "var(--color-good-dark, #166534)", fontWeight: 600 }}>🗓 {roundsCurrentYear}</span>
+            <span title={`${roundsCurrentYear} rondas em ${new Date().getFullYear()}`} style={{ color: "var(--color-good-dark, #166534)", fontWeight: 600 }}>🗓 {roundsCurrentYear}</span>
+          )}
+          {/* Total — também do data.json. */}
+          {(roundsTotal != null && roundsTotal > 0) && (
+            <span title={`${roundsTotal} voltas no total`} style={{ opacity: 0.7 }}>📊 {roundsTotal}</span>
           )}
         </span>
         {rankingMode && displayHcp != null && (
@@ -3972,20 +4035,21 @@ export default function JogadoresPage() {
         }
         case "ranking": return dir * ((a.hcp ?? 999) - (b.hcp ?? 999));
         case "rounds": {
-          // "Rondas" = rondas no ano corrente (consistente com o KPI da ficha
-          // de jogador e com o filtro Activos). Para os nossos contamos via
-          // statsDb.roundsLast12m (janela móvel de 12 meses — bom proxy de
-          // actividade do ano). Para federados-only, usamos o campo FPG
-          // rounds_current_year. Se nenhum existir, usamos roundsTotal como
-          // último recurso (histórico) para não ficar tudo a 0.
+          // "Rondas" = rondas no ano civil corrente (Jan→hoje).
+          // statsDb.roundsCurrentYear é gerado por enrich-players.js a
+          // partir do data.json — MESMA fonte que o detalhe da ficha de
+          // jogador, garantindo que o número do sidebar bate com o do
+          // detalhe header ("N em {ano}"). Para federados-only (sem data.json)
+          // cai para roundsLast12m e depois para roundsTotal.
           const roundCount = (p: typeof a): number => {
             const ps = statsDb[p.fed];
-            if (ps?.roundsLast12m != null) return ps.roundsLast12m;
+            if (ps?.roundsCurrentYear != null) return ps.roundsCurrentYear;
             const rcy = (p as any)._federadoRaw?.rounds_current_year;
-            if (typeof rcy === "number") return rcy;
+            if (typeof rcy === "number" && rcy > 0) return rcy;
+            if (ps?.roundsLast12m != null) return ps.roundsLast12m;
             return ps?.roundsTotal ?? 0;
           };
-          return dir * (roundCount(a) - roundCount(b));
+          return dir * (roundCount(a) - roundCount(b)) || (dir * ((statsDb[a.fed]?.roundsTotal ?? 0) - (statsDb[b.fed]?.roundsTotal ?? 0)));
         }
         default: return 0;
       }
@@ -4345,12 +4409,25 @@ export default function JogadoresPage() {
             const d = daysSince(ps);
             const isNewRound = d != null && d <= NEW_DAYS;
             const escHcps = hcpStatsByEscalao[displayEscalao];
-            // Rondas total: vem do histórico WHS consolidado (statsDb.roundsTotal)
-            const roundsTotal = ps?.roundsTotal ?? null;
-            // Rondas este ano: directo do cadastro FPG (rounds_current_year é
-            // ano civil, ao contrário de statsDb.roundsLast12m que é rolling 12m)
-            const rcy = (p as typeof p & { _federadoRaw?: FederadoRaw })._federadoRaw?.rounds_current_year;
-            const roundsCurrentYear = typeof rcy === "number" ? rcy : null;
+            // Rondas total: do data.json via player-stats.json.
+            // Para o JOGADOR SELECCIONADO, usar directamente data.DATA (via
+            // playerMeta) — garante consistência mesmo que player-stats.json
+            // esteja desfasado / data.json esteja corrompido para outros feds.
+            const isThisActive = isActive;
+            let roundsTotal: number | null = ps?.roundsTotal ?? null;
+            let roundsCurrentYear: number | null = ps?.roundsCurrentYear ?? null;
+            if (isThisActive && playerMeta) {
+              if (typeof playerMeta.totalRounds === "number" && playerMeta.totalRounds > 0) {
+                roundsTotal = playerMeta.totalRounds;
+              }
+              if (typeof playerMeta.roundsCurrentYear === "number") {
+                roundsCurrentYear = playerMeta.roundsCurrentYear;
+              }
+            }
+            if (roundsCurrentYear == null) {
+              const rcy = (p as typeof p & { _federadoRaw?: FederadoRaw })._federadoRaw?.rounds_current_year;
+              roundsCurrentYear = typeof rcy === "number" && rcy > 0 ? rcy : null;
+            }
             return (
               <PlayerSidebarItem
                 key={p.fed}

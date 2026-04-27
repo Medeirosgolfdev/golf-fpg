@@ -163,6 +163,10 @@ export interface PlayerPageData {
     latestHcp: number | null;
     escalao: string;
     club: string;
+    /** Total de voltas calculado a partir de DATA — fonte canónica. */
+    totalRounds: number;
+    /** Voltas neste ano civil, calculado de DATA. */
+    roundsCurrentYear: number;
   };
 }
 
@@ -222,8 +226,21 @@ async function _loadPlayerDataImpl(fedId: string): Promise<PlayerPageData> {
       const club = typeof clubRaw === "string" ? clubRaw
         : (clubRaw?.short || clubRaw?.long || "");
 
+      const data: CourseData[] = raw.DATA || [];
+      // Calcular totalRounds e roundsCurrentYear directamente de DATA
+      // (fonte canónica). Se data.json estiver vazio/truncado, ficam a 0
+      // e o sidebar usa o player-stats.json como fallback.
+      let totalRounds = 0;
+      let roundsCurrentYear = 0;
+      const curYear = String(new Date().getFullYear());
+      for (const c of data) {
+        for (const r of (c.rounds || [])) {
+          totalRounds++;
+          if ((r.date || "").endsWith(curYear)) roundsCurrentYear++;
+        }
+      }
       const result: PlayerPageData = {
-        DATA: raw.DATA || [],
+        DATA: data,
         HOLES: raw.HOLES || {},
         EC: raw.EC || {},
         ECDET: raw.ECDET || {},
@@ -239,6 +256,8 @@ async function _loadPlayerDataImpl(fedId: string): Promise<PlayerPageData> {
           latestHcp,
           escalao: currentCross?.escalao || "",
           club,
+          totalRounds,
+          roundsCurrentYear,
         },
       };
       return result;
@@ -289,8 +308,16 @@ async function _loadPlayerDataImpl(fedId: string): Promise<PlayerPageData> {
     : (clubRaw?.short || clubRaw?.long || "");
 
 
+  let totalRounds = 0, roundsCurrentYear = 0;
+  const curYear = String(new Date().getFullYear());
+  for (const c of result.DATA) {
+    for (const r of (c.rounds || [])) {
+      totalRounds++;
+      if ((r.date || "").endsWith(curYear)) roundsCurrentYear++;
+    }
+  }
   return {
     ...result,
-    META: { lastUpdate, lastRoundDate, generatedDate, latestHcp, escalao: currentCross?.escalao || "", club },
+    META: { lastUpdate, lastRoundDate, generatedDate, latestHcp, escalao: currentCross?.escalao || "", club, totalRounds, roundsCurrentYear },
   };
 }

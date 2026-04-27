@@ -8,6 +8,9 @@
 export interface PlayerStats {
   lastRoundDate: string | null;
   roundsTotal: number;
+  /** Rondas no ano civil corrente (Jan→hoje). Mesma fonte que o detalhe da
+   *  ficha do jogador — calculado a partir de data.json (canónico). */
+  roundsCurrentYear: number;
   roundsLast3m: number;
   roundsLast6m: number;
   roundsLast12m: number;

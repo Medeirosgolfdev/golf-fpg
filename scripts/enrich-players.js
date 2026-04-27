@@ -22,6 +22,66 @@ const playersPath = path.join(__dirname, "..", "players.json");
 const outputRoot = path.join(__dirname, "..", "output");
 const statsOutPath = path.join(__dirname, "..", "public", "player-stats.json");
 
+/**
+ * Lê data.json (fonte canónica que a UI lê) e devolve contagens consistentes
+ * com o que aparece no detalhe do jogador. Inclui treinos+extras injectados
+ * por process-data.js a partir de melhorias.json — coisa que extractPlayerStats
+ * não inclui. Sem isto, o sidebar mostra um total diferente do detalhe.
+ *
+ * IMPORTANTE: o Vite serve `/{fed}/analysis/data.json` a partir de `output/`
+ * (via middleware em vite.config.ts) — esse é o ficheiro canónico, com schema
+ * { DATA, HOLES, META, ... }. NÃO é `public/data/{fed}/analysis/data.json`
+ * (que tem schema { courses, ... } e pode estar desactualizado).
+ */
+const corruptedFiles = [];
+
+function loadCanonicalCounts(fed) {
+  // Caminho canónico: output/{fed}/analysis/data.json (servido pelo Vite middleware).
+  const candidates = [
+    path.join(outputRoot, fed, "analysis", "data.json"),
+    // Fallback: public/data/{fed}/analysis/data.json (formato antigo "courses").
+    path.join(__dirname, "..", "public", "data", fed, "analysis", "data.json"),
+  ];
+  for (const p of candidates) {
+    if (!fs.existsSync(p)) continue;
+    let txt;
+    try {
+      txt = fs.readFileSync(p, "utf-8");
+      if (txt.charCodeAt(0) === 0xFEFF) txt = txt.slice(1);
+    } catch (e) {
+      continue;
+    }
+    try {
+      const d = JSON.parse(txt);
+      const courses = Array.isArray(d.DATA) ? d.DATA : (d.courses || []);
+      if (!courses.length) continue;
+      let total = 0, thisYear = 0;
+      const curYear = String(new Date().getFullYear());
+      let lastDate = null;
+      for (const c of courses) {
+        for (const r of (c.rounds || [])) {
+          total++;
+          const date = r.date || "";
+          if (date.endsWith(curYear)) thisYear++;
+          if (date) {
+            const iso = date.split("-").reverse().join("-");
+            if (!lastDate || iso > lastDate) lastDate = iso;
+          }
+        }
+      }
+      return { total, thisYear, lastDate };
+    } catch (parseErr) {
+      // JSON inválido (ex: truncado a meio por escrita interrompida).
+      // Marcar como corrompido e seguir para o próximo candidato/fallback.
+      // O extractPlayerStats vai ser usado como backup (whs.json é mais pequeno
+      // e raramente trunca). O utilizador é avisado no fim para re-correr o
+      // pipeline para estes feds.
+      corruptedFiles.push({ fed, path: p, parseErr: String(parseErr).slice(0, 60) });
+    }
+  }
+  return null;
+}
+
 let txt = fs.readFileSync(playersPath, "utf-8");
 if (txt.charCodeAt(0) === 0xFEFF) txt = txt.slice(1);
 const players = JSON.parse(txt);
@@ -124,9 +184,17 @@ for (const fed of targetFeds) {
 
   const r = v => v != null ? Math.round(v * 10) / 10 : null;
 
+  // Usar contagens canónicas do data.json (fonte da UI). Se data.json não
+  // existir (jogador sem análise gerada), cai para extractPlayerStats.
+  const canonical = loadCanonicalCounts(fed);
+  const roundsTotal = canonical ? canonical.total : raw.numRounds;
+  const roundsCurrentYear = canonical ? canonical.thisYear : (raw.roundsCurrentYear ?? 0);
+  const finalLastRoundDate = canonical?.lastDate ?? lastRoundDate;
+
   existing[fed] = {
-    lastRoundDate,
-    roundsTotal: raw.numRounds,
+    lastRoundDate: finalLastRoundDate,
+    roundsTotal,
+    roundsCurrentYear,
     roundsLast3m, roundsLast6m, roundsLast12m,
     avgSD5: r(avgSD5), avgSD8: r(avgSD8), avgSD20: r(raw.avgSD20),
     lastSD: r(raw.lastSD), currentHcp: r(raw.currentHcp),
@@ -142,6 +210,19 @@ writeJsonAtomic(statsOutPath, existing);
 
 console.log(`✅ ${processed} enriched, ${skipped} skipped`);
 console.log(`📄 ${statsOutPath}`);
+
+if (corruptedFiles.length > 0) {
+  // Dedup por fed (um fed pode ter o output/ E o public/data/ corrompidos).
+  const uniqFeds = [...new Set(corruptedFiles.map(c => c.fed))];
+  console.log(`\n⚠ ${uniqFeds.length} ficheiro(s) data.json corrompido(s) — usados fallbacks (extractPlayerStats):`);
+  for (const fed of uniqFeds.slice(0, 30)) {
+    console.log(`   #${fed}`);
+  }
+  if (uniqFeds.length > 30) console.log(`   ... e mais ${uniqFeds.length - 30}`);
+  console.log(`\n   Re-correr pipeline para regenerar:`);
+  console.log(`   node pipeline.js --skip-import ${uniqFeds.join(" ")}`);
+  console.log(`\n   (causa típica: escrita interrompida em mounts Windows com ficheiros grandes >5MB)`);
+}
 
 // Diagnostic
 const vals = Object.values(existing);

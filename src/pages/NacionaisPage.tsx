@@ -22,14 +22,12 @@ import SortableHdr from "../ui/SortableHdr";
 import AroeiraBurTable from "./nacionais/AroeiraBurTable";
 import FieldIntelligence from "./nacionais/FieldIntelligence";
 import type { InscricaoJogador, TorneioData, BdPlayer, PlayerStats, StatsDb, AggStats, PlayerLoad, ScoutingReport } from "./nacionais/types";
+import { usePlayerStats as useSharedPlayerStats } from "../hooks/usePlayerStats";
 
-function usePlayerStats() {
-  const [stats, setStats] = useState<StatsDb>({});
-  useEffect(() => {
-    fetch("/player-stats.json").then(r => r.ok ? r.json() : {}).then(setStats).catch(() => {});
-  }, []);
-  return stats;
-}
+// Hook partilhado em src/hooks/usePlayerStats.ts — usa loadPlayerStats()
+// central com cache, tratamento de BOM e null bytes. O tipo StatsDb daqui
+// é um subset do PlayerStatsDb central (ver nacionais/types.ts).
+const usePlayerStats = (): StatsDb => useSharedPlayerStats<StatsDb>();
 
 
 
@@ -1080,7 +1078,7 @@ export default function NacionaisPage() {
       setTorneios(prev => prev.map(t =>
         t.tcode === tcode ? { ...t, ...(entry as object), _status: "ok", fromCache: true } : t
       ));
-      console.log(`[inscricoes] tcode=${tcode} -> cache estatica`);
+      if (import.meta.env.DEV) console.log(`[inscricoes] tcode=${tcode} -> cache estatica`);
       return true;
     } catch { return false; }
   }, []);

@@ -1440,6 +1440,25 @@ tr.cross-current { background: var(--bg-success); }
  .nav-btn     { font-size: 11px; padding: 4px 8px; }
 
  .toolbar       { flex-wrap: wrap; overflow-x: visible; padding: 5px 8px; gap: 5px; align-items: center; min-height: 0; }
+ /* JogadoresPage e CamposPage têm muitos filtros — em mobile preferimos
+    scroll horizontal (como o nav superior) em vez de wrap multi-linha
+    que ocupa demasiado espaço vertical. */
+ .jogadores-page .toolbar,
+ .campos-page .toolbar {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  /* Fade indicator no lado direito quando há overflow — visual hint que
+     há mais conteúdo para o lado, igual ao .nav-scroll. */
+  mask-image: linear-gradient(to right, black calc(100% - 24px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent 100%);
+ }
+ .jogadores-page .toolbar::-webkit-scrollbar,
+ .campos-page .toolbar::-webkit-scrollbar { display: none; }
+ /* Garantir que filhos não encolhem (forçando o scroll). */
+ .jogadores-page .toolbar > *,
+ .campos-page .toolbar > * { flex-shrink: 0; }
  .toolbar-sep   { display: none; }
  .toolbar-meta  { display: none; }
  .toolbar-title { font-size: 12px; }

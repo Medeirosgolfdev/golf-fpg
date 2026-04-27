@@ -44,12 +44,15 @@ function HoleBadge({ hc }: { hc: number }) {
     : <span className="hb hb18">18</span>;
 }
 
-function effectivePill(round: { _pill?: string; course?: string; scoreOrigin?: string }, courseName?: string): string {
+function effectivePill(round: { _pill?: string; course?: string; scoreOrigin?: string; eventName?: string }, courseName?: string): string {
   if (round._pill) return round._pill;
   const o = (round.scoreOrigin || "").trim().toUpperCase();
   if (o === "INTERN") return "INTL";
   const c = (courseName || round.course || "").trim().toUpperCase();
   if (c === "INTERNACIONAL" || c === "INTERNATIONAL") return "INTL";
+  const ev = (round.eventName || "").trim();
+  if (/regional/i.test(ev)) return "REGIONAL";
+  if (/nacional/i.test(ev)) return "NACIONAL";
   return "";
 }
 

@@ -263,7 +263,7 @@ const doralRedTiger: Course = {
         ratings: { holes18: { par: 36, courseRating: null, slopeRating: null } },
         // 9 buracos (holes 10-18): usar holes[9..17] do scorecard
         holes: doralHoles9(doralRTParB9, doralRTDistB89, 10),
-        distances: { total: doralRTDistB89.reduce((a,b)=>a+b,0), front9: 0, back9: doralRTDistB89.reduce((a,b)=>a+b,0), holesCount: 9 as any, complete18: false as any },
+        distances: { total: doralRTDistB89.reduce((a,b)=>a+b,0), front9: 0, back9: doralRTDistB89.reduce((a,b)=>a+b,0), holesCount: 9, complete18: false },
       },
       {
         teeId: "doral-rt-b7u",
@@ -272,7 +272,7 @@ const doralRedTiger: Course = {
         scorecardMeta: { teeColor: "#fbbf24" },
         ratings: { holes18: { par: 36, courseRating: null, slopeRating: null } },
         holes: doralHoles9(doralRTParB9, doralRTDistB7, 10),
-        distances: { total: doralRTDistB7.reduce((a,b)=>a+b,0), front9: 0, back9: doralRTDistB7.reduce((a,b)=>a+b,0), holesCount: 9 as any, complete18: false as any },
+        distances: { total: doralRTDistB7.reduce((a,b)=>a+b,0), front9: 0, back9: doralRTDistB7.reduce((a,b)=>a+b,0), holesCount: 9, complete18: false },
       },
     ],
   },
