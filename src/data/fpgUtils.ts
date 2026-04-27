@@ -368,7 +368,15 @@ export function buildDisplayList(tournaments: Tournament[]): Tournament[] {
   }
 
   const standalone = tournaments.filter(t => !hiddenTcodes.has(t.tcode));
-  return [...standalone, ...synthetics].sort(
-    (a, b) => (b.date || "").localeCompare(a.date || "")
-  );
+  // Sort por data DESC com tie-breaker estável (ccode/tcode). Sem tie-breaker,
+  // torneios com a mesma data podem trocar de ordem entre re-cálculos quando
+  // o array source chega em batches async — isto causava `displayList[N]` a
+  // mudar entre renders, com `selected` a apontar para o torneio errado.
+  return [...standalone, ...synthetics].sort((a, b) => {
+    const d = (b.date || "").localeCompare(a.date || "");
+    if (d !== 0) return d;
+    const ka = (a.ccode || "?") + "/" + String(a.tcode ?? "?");
+    const kb = (b.ccode || "?") + "/" + String(b.tcode ?? "?");
+    return ka.localeCompare(kb);
+  });
 }

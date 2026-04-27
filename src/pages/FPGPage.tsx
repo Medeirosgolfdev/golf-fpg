@@ -1993,6 +1993,15 @@ function Content() {
     const handleClick = () => {
       if (idx >= 0) setSelected(idx);
       md.onSelect();
+      // Navegar imediatamente para a URL do torneio escolhido. Sem isto, o
+      // state→URL effect pode ficar bloqueado pelo guard anti-loop (params.tkey
+      // diferente do novo cur → SKIPPED) e o user fica preso na URL antiga.
+      if (activeEntry && activeEntry.ccode && activeEntry.tcode) {
+        const target = tournamentUrl("FPG", activeEntry.ccode, activeEntry.tcode);
+        if (target && location.pathname !== target) {
+          navigate(target, { replace: true });
+        }
+      }
     };
 
     // Pill dinâmico (REGIONAL, NACIONAL, etc.) agregando todos os tcodes do grupo.
@@ -2285,53 +2294,67 @@ function Content() {
               páginas diferentes a piscar até o match ser encontrado.
               Aceita tcode sintético "A+B" quando o URL pede apenas "A". */}
           {(() => {
-            if (!params.tkey) return false;  // sem deep-link, não aplicar
-            if (!cur) return true;  // deep-link mas sem cur ainda → loading
-            const parsed = parseTournKey(params.tkey);
-            if (!parsed) return false;
-            const curTcodes = String(cur.tcode || "").split("+");
-            const matches = cur.ccode === parsed.ccode && (curTcodes.includes(parsed.tcode) || String(cur.tcode) === parsed.tcode);
-            return !matches;
-          })()
-            ? <div className="center-msg muted" style={{ padding: 40 }}>A carregar torneio {params.tkey}…</div>
-            : cur
-            ? (() => {
-                const curGroup = eventGroupByKey.get((cur.ccode || "?") + "/" + String(cur.tcode ?? "?"));
-                const showTabs = curGroup && curGroup.entries.length > 1;
-                return (
-                  <>
-                    {showTabs && (
-                      <div style={{ display: "flex", gap: 4, padding: "8px 12px 0", flexWrap: "wrap",
-                        borderBottom: "1px solid var(--border-light)", background: "var(--bg-card)" }}>
-                        {curGroup!.entries.map((e) => {
-                          const active = e.ccode === cur.ccode && e.tcode === cur.tcode;
-                          const label = (e as any)._tabLabel
-                            ?? e.escalao
-                            ?? (e.name && e.name.length <= 20 ? e.name : "Esc");
-                          const nJog = e.playerCount || e.players.length;
-                          const entryIdx = findInDisplayList(e);
-                          return (
-                            <button key={e.tcode + "_" + e.date}
-                              className={`tourn-tab tourn-tab-sm${active ? " active" : ""}`}
-                              onClick={() => { if (entryIdx >= 0) setSelected(entryIdx); }}
-                              style={{ marginBottom: 6 }}>
-                              {label}
-                              {nJog > 0 && (
-                                <span className="fs-10" style={{ marginLeft: 3, opacity: 0.8 }}>
-                                  ({nJog} jog)
-                                </span>
-                              )}
-                            </button>
-                          );
-                        })}
-                      </div>
-                    )}
-                    <TournamentDetail tournament={cur} escLookup={escLookup} playersDB={playersDB} />
-                  </>
-                );
-              })()
-            : !loading && <div className="center-msg muted">Selecciona um torneio</div>
-          }
+            // Resolver torneio DIRECTAMENTE pela URL (find por ccode/tcode).
+            // Evita problemas com displayList[selected] stale durante async.
+            const tShow = (() => {
+              if (!params.tkey) return cur;
+              const parsed = parseTournKey(params.tkey);
+              if (!parsed) return cur;
+              return displayList.find(t => {
+                if (String(t.ccode) !== String(parsed.ccode)) return false;
+                const tt = String(t.tcode ?? "");
+                if (tt === String(parsed.tcode)) return true;
+                if (tt.split("+").includes(String(parsed.tcode))) return true;
+                return false;
+              });
+            })();
+            if (params.tkey && !tShow) {
+              return <div className="center-msg muted" style={{ padding: 40 }}>A carregar torneio {params.tkey}…</div>;
+            }
+            if (!tShow) {
+              return !loading && <div className="center-msg muted">Selecciona um torneio</div>;
+            }
+            const curGroup = eventGroupByKey.get((tShow.ccode || "?") + "/" + String(tShow.tcode ?? "?"));
+            const showTabs = curGroup && curGroup.entries.length > 1;
+            return (
+              <>
+                {showTabs && (
+                  <div style={{ display: "flex", gap: 4, padding: "8px 12px 0", flexWrap: "wrap",
+                    borderBottom: "1px solid var(--border-light)", background: "var(--bg-card)" }}>
+                    {curGroup!.entries.map((e) => {
+                      const active = e.ccode === tShow.ccode && e.tcode === tShow.tcode;
+                      const label = (e as any)._tabLabel
+                        ?? e.escalao
+                        ?? (e.name && e.name.length <= 20 ? e.name : "Esc");
+                      const nJog = e.playerCount || e.players.length;
+                      const entryIdx = findInDisplayList(e);
+                      return (
+                        <button key={e.tcode + "_" + e.date}
+                          className={`tourn-tab tourn-tab-sm${active ? " active" : ""}`}
+                          onClick={() => {
+                            if (entryIdx >= 0) setSelected(entryIdx);
+                            // Navegar imediatamente — state→URL pode estar bloqueado por guard anti-loop
+                            if (e.ccode && e.tcode) {
+                              const target = tournamentUrl("FPG", e.ccode, e.tcode);
+                              if (target && location.pathname !== target) navigate(target, { replace: true });
+                            }
+                          }}
+                          style={{ marginBottom: 6 }}>
+                          {label}
+                          {nJog > 0 && (
+                            <span className="fs-10" style={{ marginLeft: 3, opacity: 0.8 }}>
+                              ({nJog} jog)
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+                <TournamentDetail tournament={tShow} escLookup={escLookup} playersDB={playersDB} />
+              </>
+            );
+          })()}
         </div>
       </div>
       )}

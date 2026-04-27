@@ -152,72 +152,89 @@ function HoleMapTable({ holes }: { holes: HoleDistribution[] }) {
 }
 
 
-/* ── Dial por buraco — semicirculo com 4 marcadores ─── */
-function HoleDial({ d }: { d: HoleDial }) {
-  const W = 140, H = 110;
-  const cx = W / 2, cy = 90;
-  const R = 60;
-  // Eixo: birdie (par-1) à esquerda → +4 (par+4) à direita
-  const minScore = d.par - 1;
-  const maxScore = d.par + 4;
-  const range = maxScore - minScore;
-  // Mapear score → ângulo (180° = esquerda, 0° = direita)
-  const angleFor = (s: number) => {
-    const t = Math.max(0, Math.min(1, (s - minScore) / range));
-    return 180 - t * 180;
-  };
-  const radFromAngle = (deg: number) => deg * Math.PI / 180;
-  const pointAt = (s: number, r = R) => {
-    const a = radFromAngle(angleFor(s));
-    return { x: cx + Math.cos(a) * r, y: cy - Math.sin(a) * r };
-  };
-  // Arc base (semi-circulo), do score "minScore" ao "maxScore"
-  const p0 = pointAt(minScore, R), p1 = pointAt(maxScore, R);
-  const arcPath = `M ${p0.x.toFixed(1)} ${p0.y.toFixed(1)} A ${R} ${R} 0 0 1 ${p1.x.toFixed(1)} ${p1.y.toFixed(1)}`;
-  // Tick marker (linha radial)
-  function Tick({ score, color, width = 3, label }: { score: number; color: string; width?: number; label?: string }) {
-    if (score == null || !isFinite(score)) return null;
-    const inner = pointAt(score, R - 8);
-    const outer = pointAt(score, R + 6);
+/* ── Cartão por buraco: 3 donuts comparativos (Manuel / Sub-12 / Field) ── */
+function MiniDonut({ dist, label, sublabel, hideIfEmpty = false }: {
+  dist: { birdiePlus: number; par: number; bogey: number; doublePlus: number; n: number };
+  label: string;
+  sublabel: string;
+  hideIfEmpty?: boolean;
+}) {
+  const SIZE = 78;
+  const STROKE = 14;
+  const R = (SIZE - STROKE) / 2;
+  const CIRC = 2 * Math.PI * R;
+  if (dist.n === 0) {
+    if (hideIfEmpty) return null;
     return (
-      <g>
-        <line x1={inner.x} y1={inner.y} x2={outer.x} y2={outer.y} stroke={color} strokeWidth={width} strokeLinecap="round" />
-        {label && <text x={outer.x} y={outer.y - 4} fontSize="9" fill={color} fontWeight="700" textAnchor="middle">{label}</text>}
-      </g>
+      <div style={{ flex: 1, textAlign: "center" }}>
+        <svg width={SIZE} height={SIZE}>
+          <circle cx={SIZE / 2} cy={SIZE / 2} r={R} fill="none" stroke="#e5e7eb" strokeWidth={STROKE} />
+          <text x={SIZE / 2} y={SIZE / 2 + 4} fontSize="11" fill="var(--text-muted)" textAnchor="middle">–</text>
+        </svg>
+        <div style={{ fontSize: 11, fontWeight: 700, marginTop: 2 }}>{label}</div>
+        <div style={{ fontSize: 9, color: "var(--text-muted)" }}>0 rondas</div>
+      </div>
     );
   }
-  // Marker do par (par é referência)
-  const parPoint = pointAt(d.par, R);
-  // Cores
-  const FIELD = "#9ca3af";   // cinza
-  const SUB12 = "#1e40af";   // azul escuro
-  const BEST = "#16a34a";    // verde Manuel
-  const WORST = "#dc2626";   // vermelho
+  const pct = (n: number) => (n / dist.n) * 100;
+  const segs = [
+    { v: dist.birdiePlus, color: "#16a34a", name: "Birdie+" },
+    { v: dist.par,        color: "#d4d4d4", name: "Par" },
+    { v: dist.bogey,      color: "#60a5fa", name: "Bogey" },
+    { v: dist.doublePlus, color: "#dc2626", name: "Duplo+" },
+  ];
+  let acc = 0;
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: 8, border: "1px solid var(--border)", borderRadius: 8, background: "var(--bg-card)" }}>
-      <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", height: "auto", maxWidth: 160 }}>
-        {/* Arc base com gradient */}
-        <path d={arcPath} fill="none" stroke="#e5e7eb" strokeWidth="14" strokeLinecap="round" />
-        {/* Marca par (verde claro central) */}
-        <circle cx={parPoint.x} cy={parPoint.y} r={5} fill="#86efac" stroke="#16a34a" strokeWidth="1.5" />
-        {/* Ticks dos 4 valores */}
-        <Tick score={d.fieldAvg} color={FIELD} width={2.5} />
-        {d.sub12Avg != null && <Tick score={d.sub12Avg} color={SUB12} width={2.5} />}
-        {d.manuelBest != null && <Tick score={d.manuelBest} color={BEST} width={3} />}
-        {d.manuelWorst != null && <Tick score={d.manuelWorst} color={WORST} width={3} />}
-        {/* Eixo: labels nos extremos */}
-        <text x={pointAt(minScore).x - 4} y={pointAt(minScore).y + 14} fontSize="9" fill="var(--text-muted)" textAnchor="end">{minScore}</text>
-        <text x={pointAt(maxScore).x + 4} y={pointAt(maxScore).y + 14} fontSize="9" fill="var(--text-muted)" textAnchor="start">{maxScore}+</text>
-        <text x={cx} y={cy + 14} fontSize="9" fill="var(--text-muted)" textAnchor="middle">par</text>
-        {/* Centro: B# + par */}
-        <text x={cx} y={cy - 32} fontSize="20" fontWeight="800" textAnchor="middle" fill="var(--text)">B{d.hole}</text>
-        <text x={cx} y={cy - 18} fontSize="10" fontWeight="600" textAnchor="middle" fill="var(--text-muted)">par {d.par}</text>
+    <div style={{ flex: 1, textAlign: "center", minWidth: 90 }}>
+      <svg width={SIZE} height={SIZE} style={{ display: "block", margin: "0 auto" }}>
+        {/* base ring */}
+        <circle cx={SIZE / 2} cy={SIZE / 2} r={R} fill="none" stroke="#f3f4f6" strokeWidth={STROKE} />
+        {/* segments */}
+        {segs.map((s, i) => {
+          if (s.v === 0) return null;
+          const len = (s.v / dist.n) * CIRC;
+          const offset = -acc;  // negative offset to start at top
+          acc += len;
+          return (
+            <circle key={i}
+              cx={SIZE / 2} cy={SIZE / 2} r={R}
+              fill="none" stroke={s.color} strokeWidth={STROKE}
+              strokeDasharray={`${len} ${CIRC - len}`}
+              strokeDashoffset={offset}
+              transform={`rotate(-90 ${SIZE / 2} ${SIZE / 2})`}
+            />
+          );
+        })}
+        {/* center: % par + birdie agregado (positivo) */}
+        <text x={SIZE / 2} y={SIZE / 2 - 2} fontSize="14" fontWeight="800" textAnchor="middle" fill="var(--text)">
+          {Math.round(pct(dist.birdiePlus) + pct(dist.par))}%
+        </text>
+        <text x={SIZE / 2} y={SIZE / 2 + 11} fontSize="8" textAnchor="middle" fill="var(--text-muted)">par-or-better</text>
       </svg>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2px 8px", fontSize: 10, marginTop: 4, width: "100%" }}>
-        <span style={{ color: FIELD, fontWeight: 600 }}>● field {d.fieldAvg.toFixed(2)}</span>
-        <span style={{ color: SUB12, fontWeight: 600 }}>● sub12 {d.sub12Avg != null ? d.sub12Avg.toFixed(2) : "–"}</span>
-        <span style={{ color: BEST, fontWeight: 700 }}>● M best {d.manuelBest ?? "–"}</span>
-        <span style={{ color: WORST, fontWeight: 700 }}>● M worst {d.manuelWorst ?? "–"}</span>
+      <div style={{ fontSize: 11, fontWeight: 700, marginTop: 4 }}>{label}</div>
+      <div style={{ fontSize: 9, color: "var(--text-muted)" }}>{sublabel}</div>
+    </div>
+  );
+}
+
+function HoleDial({ d }: { d: HoleDial }) {
+  return (
+    <div style={{ padding: 10, border: "1px solid var(--border)", borderRadius: 8, background: "var(--bg-card)" }}>
+      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 6 }}>
+        <span style={{ fontSize: 16, fontWeight: 800 }}>B{d.hole}</span>
+        <span className="muted" style={{ fontSize: 11 }}>par <b>{d.par}</b></span>
+      </div>
+      <div style={{ display: "flex", gap: 6, justifyContent: "space-between" }}>
+        <MiniDonut dist={d.manuelDist} label="⭐ Manuel" sublabel={`${d.manuelN} rds${d.manuelBest != null ? ` · best ${d.manuelBest} · worst ${d.manuelWorst}` : ""}`} />
+        <MiniDonut dist={d.sub12Dist}  label="Sub-12"     sublabel={`${d.sub12N} rds${d.sub12Best != null ? ` · best ${d.sub12Best}` : ""}`} />
+        <MiniDonut dist={d.fieldDist}  label="Field"      sublabel={`${d.fieldN} rds${d.fieldBest != null ? ` · best ${d.fieldBest}` : ""}`} />
+      </div>
+      {/* Mini-legenda das cores */}
+      <div style={{ display: "flex", justifyContent: "space-around", marginTop: 8, fontSize: 9 }}>
+        <span style={{ color: "#16a34a", fontWeight: 700 }}>● Birdie+</span>
+        <span style={{ color: "#525252", fontWeight: 700 }}>● Par</span>
+        <span style={{ color: "#1d4ed8", fontWeight: 700 }}>● Bogey</span>
+        <span style={{ color: "#dc2626", fontWeight: 700 }}>● Duplo+</span>
       </div>
     </div>
   );
@@ -436,9 +453,9 @@ export default function Aroeira2AnaliseView({ tournament }: { tournament: Tourna
       <section>
         <h3>1b. 18 dials — média field, Sub-12, melhor e pior do Manuel</h3>
         <div className="muted fs-12" style={{ marginBottom: 10 }}>
-          Cada arco vai de birdie (par-1, esquerda) a quintuple+ (par+4, direita). Verde claro no meio = par. Riscos: <span style={{ color: "#9ca3af", fontWeight: 700 }}>● field</span> (todas as rondas de todos os jogadores) · <span style={{ color: "#1e40af", fontWeight: 700 }}>● Sub-12</span> (jogadores em sub12FedSet ∪ Manuel) · <span style={{ color: "#16a34a", fontWeight: 700 }}>● Manuel best</span> · <span style={{ color: "#dc2626", fontWeight: 700 }}>● Manuel worst</span>.
+          Para cada buraco, melhor (Best) e pior (Worst) score já registado em rondas com routing actual. <strong style={{ color: "#166534" }}>⭐ Manuel</strong> (suas rondas), <strong style={{ color: "#1e40af" }}>Sub-12</strong> (Manuel + outros Sub-12 com histórico) e <strong>Field</strong> (todos no campo). Cores oficiais nas células: vermelho = birdie/eagle, azul = bogey/duplo.
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 10 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 10 }}>
           {holeDials.map(d => <HoleDial key={d.hole} d={d} />)}
         </div>
       </section>

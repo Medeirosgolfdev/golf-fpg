@@ -990,7 +990,16 @@ export async function enrichSub12WithEstreantes(
   return perf;
 }
 
-/* ──────── DIAL POR BURACO — best/worst ──────── */
+/* ──────── DIAL POR BURACO — best/worst + distribuição ──────── */
+
+export interface ScoreDist {
+  birdiePlus: number;
+  par: number;
+  bogey: number;
+  doublePlus: number;
+  /** Total de scores agregados (denominador para %) */
+  n: number;
+}
 
 export interface HoleDial {
   hole: number;
@@ -998,12 +1007,27 @@ export interface HoleDial {
   fieldBest: number | null;
   fieldWorst: number | null;
   fieldN: number;
+  fieldDist: ScoreDist;
   sub12Best: number | null;
   sub12Worst: number | null;
   sub12N: number;
+  sub12Dist: ScoreDist;
   manuelBest: number | null;
   manuelWorst: number | null;
   manuelN: number;
+  manuelDist: ScoreDist;
+}
+
+function distFromScores(scores: number[], par: number): ScoreDist {
+  let bp = 0, p = 0, b = 0, dp = 0;
+  for (const s of scores) {
+    const d = s - par;
+    if (d <= -1) bp++;
+    else if (d === 0) p++;
+    else if (d === 1) b++;
+    else dp++;
+  }
+  return { birdiePlus: bp, par: p, bogey: b, doublePlus: dp, n: scores.length };
 }
 
 export function buildHoleDials(
@@ -1038,8 +1062,11 @@ export function buildHoleDials(
     out.push({
       hole: h + 1, par,
       fieldBest: minOrNull(fieldVals), fieldWorst: maxOrNull(fieldVals), fieldN: fieldVals.length,
+      fieldDist: distFromScores(fieldVals, par),
       sub12Best: minOrNull(sub12Vals), sub12Worst: maxOrNull(sub12Vals), sub12N: sub12Vals.length,
+      sub12Dist: distFromScores(sub12Vals, par),
       manuelBest: minOrNull(manuelVals), manuelWorst: maxOrNull(manuelVals), manuelN: manuelVals.length,
+      manuelDist: distFromScores(manuelVals, par),
     });
   }
   return out;
