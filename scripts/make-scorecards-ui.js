@@ -8,6 +8,7 @@ const { DEFAULT_TEE_COLORS } = require("../lib/tee-colors");
 const { discoverPlayers } = require("../lib/players");
 const { extractAllPlayerStats } = require("../lib/cross-stats");
 const { preparePlayerData } = require("../lib/process-data");
+const { writeJsonAtomicVerified } = require("../lib/atomic-write");
 
 /* ——————————— processPlayer ——————————— */
 function processPlayer(FED, allPlayers, crossStats) {
@@ -45,7 +46,11 @@ function processPlayer(FED, allPlayers, crossStats) {
     }
   };
   const jsonPath = path.join(analysisDir, "data.json");
-  fs.writeFileSync(jsonPath, JSON.stringify(jsonData), "utf-8");
+  // ⚠ Usar writeJsonAtomicVerified (não writeFileSync) — em mounts Windows
+  // com ficheiros >4MB, writeFileSync sem fsync trunca aleatoriamente.
+  // O verified faz fsync + verifica JSON parse + re-tenta uma vez se truncar.
+  // indent=0 para compactar (data.json é grande, sem indentação economiza ~30%).
+  writeJsonAtomicVerified(jsonPath, jsonData, 0);
 
   console.log("OK -> " + jsonPath);
 }

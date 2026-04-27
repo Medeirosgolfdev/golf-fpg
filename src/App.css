@@ -1498,7 +1498,23 @@ tr.cross-current { background: var(--bg-success); }
  .pa-controls        { flex-direction: column; align-items: flex-start; gap: 5px; }
  .pa-controls-left   { flex-wrap: wrap; gap: 4px; }
  .pa-content         { padding: 8px; }
- .jog-pills          { gap: 4px; }
+ /* ─── Header do jogador no mobile ─────────────────────────────────────
+    JSX intacto. CSS posiciona a fotografia absolutamente à esquerda
+    e empurra o nome/links/botão (linha 1) e pills (linha 2) para
+    ocuparem o espaço vertical da foto (~56px = 2 linhas de texto).
+    ───────────────────────────────────────────────────────────────────── */
+ .jog-detail .detail-header { position: relative; padding-left: 64px; min-height: 64px; }
+ .jog-detail .detail-title  { gap: 6px !important; flex-wrap: wrap; row-gap: 2px; }
+ .jog-detail .detail-title img {
+   position: absolute; left: 8px; top: 12px;
+   width: 48px !important; height: 60px !important; margin: 0 !important;
+ }
+ .jog-pills          { gap: 3px; row-gap: 3px; margin-top: 0; align-items: center; }
+ .jog-pills .p       { font-size: 9.5px; padding: 1px 5px; line-height: 1.3; }
+ .jog-pills .sex-badge,
+ .jog-pills .jog-sex-inline { width: 14px; height: 14px; font-size: 9px; }
+ .jog-pills .sex-badge-pill { font-size: 9.5px; padding: 1px 6px; line-height: 1.3; }
+ .jog-pills .muted.fs-11 { font-size: 9.5px; opacity: 0.75; }
  .jog-record-grid    { grid-template-columns: 1fr 1fr; gap: 4px; }
 
  .cal-page        { flex-direction: column; }

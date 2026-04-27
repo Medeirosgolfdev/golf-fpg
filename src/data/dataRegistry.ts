@@ -293,7 +293,7 @@ Player = {
     },
     usedBy: ["CamposPage"],
     structure: `
-Idêntico a master-courses mas sem `numbers` nem `country` em master, e com:
+Idêntico a master-courses mas sem \`numbers\` nem \`country\` em master, e com:
   Course.master._players?: Record<nfed, string|null>
     → valor = "YYYY-MM-DD" da última ronda desse jogador no campo`,
   },
@@ -1280,7 +1280,7 @@ tcode → tid: "10080"→"qdl25", "10296"→"gg26", "10295"→"gg26_u14", "10294
     scorecard: { available: false },
     usedBy: ["FPGPage"],
     structure: `Record<tcode, Record<string, string>>
-Tem também `_comment` na raíz (chave especial, ignorar no processamento).
+Tem também \`_comment\` na raíz (chave especial, ignorar no processamento).
 Exemplo: { "_comment": "...", "10254": { "fpg": "https://…", "leaderboard": "https://…" } }`,
   },
 

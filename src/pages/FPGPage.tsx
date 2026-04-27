@@ -1510,6 +1510,22 @@ function Content() {
           _sourceFile: "fpg-admissions-draws.json",
           _admissions: ad.admissions,
           _draws: ad.draws,
+          // Links arquivados do antigo painel "📋 Inscrições 2026" (desactivado
+          // 2026-04-27 por encerramento das inscrições). Mantidos disponíveis
+          // no detalhe do torneio para consulta — página oficial do evento e
+          // PDF dos termos de competição.
+          extraLinks: [
+            {
+              label: "página oficial FPG",
+              url: "https://competicoes.fpg.pt/evento/campeonato-nacional-de-jovens-sub10-12-14-16-18-pga-aroeira/",
+              icon: "🏆",
+            },
+            {
+              label: "Termos PDF",
+              url: "https://competicoes.fpg.pt/wp-content/uploads/2025/09/Campeonato_Nacional_de_Jovens_Sub18-a-Sub-10.pdf",
+              icon: "📋",
+            },
+          ],
         } as unknown as Tournament;
         seen.set(key, synthetic);
       }

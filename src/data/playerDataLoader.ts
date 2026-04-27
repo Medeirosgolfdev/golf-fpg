@@ -24,6 +24,14 @@ export interface RoundData {
   hasCard: boolean;
   eventName: string;
   scoreOrigin: string;
+  /** Tournament code FPG (do feed WHS). Vazio para rondas não-FPG. */
+  tcode?: string;
+  /** Club code do organizador do torneio (do scorecard). Crítico para
+   *  construir URL Classifications.aspx?ccode=X&tcode=Y — cada torneio
+   *  é organizado por um clube diferente, ccode=000 só funciona para FPG. */
+  ccode?: string;
+  /** Tournament ID interno FPG (do feed WHS). */
+  tournamentId?: number | null;
   _isTreino?: boolean;
   _isTeamEvent?: boolean;
   _isExtra?: boolean;
