@@ -53,6 +53,7 @@ import type { RoundScore, Player, Tournament, ScorecardOptions, SDResult, Player
 import { numGross, resolveEsc, computeSD, filterPlayers, expandMultiRound, buildDisplayList, tournamentHasManuel } from "../data/fpgUtils";
 // Leaderboard components — extraídos para fpg/LeaderboardComponents.tsx
 import { ScorecardLB, AccumulatedLB, AllRoundsScorecardLB } from "../ui/LeaderboardComponents";
+import Aroeira2AnaliseView from "../ui/Aroeira2AnaliseView";
 import { LinksBar } from "../ui/LinksBar";
 // Inscrições e Jovens — extraídos para fpg/InscricoesComponents.tsx
 import { InscricoesPanel, buildJovensGroups, buildEventGroups, TERMOS_COMPETICAO, type JovensGroup, type EventGroup } from "../ui/InscricoesComponents";
@@ -632,6 +633,10 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
       }
       if (temResumo) out.push({ key: "resumo", label: "Resumo" });
       out.push({ key: "scorecards", label: COMBINED_TAB });
+      // Tab "Análise Aroeira II" — só para o PJA Aroeira Masters 2026 (029/10543)
+      if (tournament.ccode === "029" && tournament.tcode === "10543") {
+        out.push({ key: "analise-aroeira2", label: "🎯 Análise" });
+      }
     } else if (hasAnyRounds) {
       // 1-round OU multi-round parcialmente jogado (ex: R1 com scorecards, R2
       // ainda só draw publicado). Mostrar:
@@ -666,6 +671,7 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
   const drawRoundNum = isDrawTab ? parseInt(activeKey.slice(5), 10) : 0;
   const isResumoTab = activeKey === "resumo";
   const isCombinedTab = activeKey === "scorecards";
+  const isAnaliseAroeiraTab = activeKey === "analise-aroeira2";
   const isRoundTab = activeKey.startsWith("round:");
   const roundIdx = isRoundTab ? parseInt(activeKey.slice(6), 10) : 0;
 
@@ -868,7 +874,9 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
             />
           : isCombined
             ? <AllRoundsScorecardLB tournament={tournament} escLookup={escLookup} playersDB={playersDB} />
-            : isAcc
+            : isAnaliseAroeiraTab
+              ? <Aroeira2AnaliseView tournament={tournament} />
+              : isAcc
               ? <AccumulatedLB tournament={curT} nRounds={nRounds} escLookup={escLookup} playersDB={playersDB} />
               : isRoundTab || !isMulti
                 ? <ScorecardLB tournament={curT} escLookup={escLookup} playersDB={playersDB} />

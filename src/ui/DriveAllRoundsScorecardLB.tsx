@@ -9,8 +9,10 @@ import React, { useMemo } from "react";
 import { calcAGS, expectedSD9 } from "../utils/whsCalc";
 import { fmtHcp, medal } from "../utils/format";
 import PlayerLink from "./PlayerLink";
+import FilterChip from "./FilterChip";
 import { SDPill, type PlayersDB } from "./tournamentPrimitives";
-import { RoundPill } from "./PillBadge";
+import { RoundPill, ESC_STYLE } from "./PillBadge";
+import { getTeeHex } from "../utils/teeColors";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
 import type { Tournament, Player, SDLookup } from "./driveTypes";
 import { isDNS } from "./driveUtils";
@@ -88,7 +90,9 @@ function DriveAllRoundsScorecardLB({
     gDisplayed, displayed,
     groupMode, setGroupMode, showSC, setShowSC,
     nameQ, setNameQ, clubQ, setClubQ,
-    availClubs, clearFilter,
+    escFilter, toggleEsc,
+    teeFilter, toggleTee,
+    availClubs, availEsc, availTees, clearFilter,
   } = d;
 
   // Convert grouped rows → ScorecardRow[] for ScorecardLeaderboard
@@ -242,6 +246,25 @@ function DriveAllRoundsScorecardLB({
           style={{ width: 150 }}
         />
       </div>
+      {availEsc.length > 1 && availEsc.map((e) => {
+        const k = e.toLowerCase().replace(/[\s-]/g, "");
+        const s = ESC_STYLE[k];
+        return (
+          <FilterChip key={e} active={escFilter.includes(e)} onClick={() => toggleEsc(e)} color={s?.bg}>
+            {e}
+          </FilterChip>
+        );
+      })}
+      {availTees.length > 1 && availTees.map((t) => {
+        const hex = getTeeHex(t);
+        return (
+          <FilterChip key={t} active={teeFilter.includes(t)} onClick={() => toggleTee(t)} color={hex}>
+            <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
+              <span className="tee-dot-sq" style={{ background: hex }} />{t}
+            </span>
+          </FilterChip>
+        );
+      })}
       {availClubs.length > 2 && (
         <select
           value={clubQ}
@@ -255,7 +278,7 @@ function DriveAllRoundsScorecardLB({
           ))}
         </select>
       )}
-      {(nameQ || clubQ) && (
+      {(nameQ || clubQ || escFilter.length > 0 || teeFilter.length > 0) && (
         <button onClick={clearFilter} className="filter-clear-btn">✕ limpar</button>
       )}
     </div>

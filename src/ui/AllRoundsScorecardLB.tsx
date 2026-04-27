@@ -15,7 +15,10 @@ import { fmtToPar, fmtHcp, abreviarNome, medal } from "../utils/format";
 import SortableHdr from "./SortableHdr";
 import EmptyState from "./EmptyState";
 import PlayerLink from "./PlayerLink";
-import { isManuel, type PlayersDB } from "./tournamentPrimitives";
+import FilterChip from "./FilterChip";
+import { ESC_STYLE } from "./PillBadge";
+import { getTeeHex } from "../utils/teeColors";
+import { isManuel, SDPill, type PlayersDB } from "./tournamentPrimitives";
 import { useFedBirthdates } from "./InscricoesComponents";
 import {
   useAllRoundsData,
@@ -76,8 +79,10 @@ export function AllRoundsScorecardLB({
     gDisplayed, displayed,
     groupMode, setGroupMode, showSC, setShowSC,
     nameQ, setNameQ, clubQ, setClubQ,
+    escFilter, toggleEsc,
+    teeFilter, toggleTee,
     sortKey, sortDir, toggleSort,
-    availClubs, clearFilter,
+    availClubs, availEsc, availTees, clearFilter,
   } = d;
 
   /* Renderizar células de score buraco-a-buraco */
@@ -197,6 +202,25 @@ export function AllRoundsScorecardLB({
             style={{ width: 150 }}
           />
         </div>
+        {availEsc.length > 1 && availEsc.map((e) => {
+          const k = e.toLowerCase().replace(/[\s-]/g, "");
+          const s = ESC_STYLE[k];
+          return (
+            <FilterChip key={e} active={escFilter.includes(e)} onClick={() => toggleEsc(e)} color={s?.bg}>
+              {e}
+            </FilterChip>
+          );
+        })}
+        {availTees.length > 1 && availTees.map((t) => {
+          const hex = getTeeHex(t);
+          return (
+            <FilterChip key={t} active={teeFilter.includes(t)} onClick={() => toggleTee(t)} color={hex}>
+              <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                <span className="tee-dot-sq" style={{ background: hex }} />{t}
+              </span>
+            </FilterChip>
+          );
+        })}
         {availClubs.length > 2 && (
           <select
             value={clubQ}
@@ -214,7 +238,7 @@ export function AllRoundsScorecardLB({
             ))}
           </select>
         )}
-        {(nameQ || clubQ) && (
+        {(nameQ || clubQ || escFilter.length > 0 || teeFilter.length > 0) && (
           <button
             onClick={clearFilter}
             className="fs-10 c-muted"
@@ -381,7 +405,7 @@ export function AllRoundsScorecardLB({
                             {showSC && <ScoreCells scores={rd.scores} pars={rd.holePars.length ? rd.holePars : par} />}
                             {!hideSD && (
                               <td className="lb-sd" style={{ borderTop: bTop }}>
-                                {rd.sd != null ? <span className="c-text-2">{rd.sd}</span> : <span className="muted">–</span>}
+                                {rd.sd != null ? <SDPill sd={rd.sd} source={null} hcp={row.hcp} /> : <span className="muted">–</span>}
                               </td>
                             )}
                             <td className="lb-bird" style={{ borderTop: bTop }}>{rd.birds || ""}</td>
@@ -423,7 +447,7 @@ export function AllRoundsScorecardLB({
                       {showSC && <ScoreCells scores={rd.scores} pars={rd.holePars.length ? rd.holePars : par} />}
                       {!hideSD && (
                         <td className="lb-sd">
-                          {rd.sd != null ? <span className="c-text-2">{rd.sd}</span> : <span className="muted">–</span>}
+                          {rd.sd != null ? <SDPill sd={rd.sd} source={null} hcp={row.hcp} /> : <span className="muted">–</span>}
                         </td>
                       )}
                       <td className="lb-bird">{rd.birds || ""}</td>

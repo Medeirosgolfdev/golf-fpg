@@ -16,6 +16,7 @@
 import { useState, useMemo } from "react";
 import { useSort } from "./useSort";
 import { fmtToPar, medal } from "../utils/format";
+import { toggleArr } from "../utils/mathUtils";
 import type { Player, Tournament, RoundScore } from "../data/fpgTypes";
 
 /* ── Types exportados ── */
@@ -124,10 +125,18 @@ export interface AllRoundsResult {
   setNameQ: (v: string) => void;
   clubQ: string;
   setClubQ: (v: string) => void;
+  escFilter: string[];
+  setEscFilter: (v: string[]) => void;
+  toggleEsc: (e: string) => void;
+  teeFilter: string[];
+  setTeeFilter: (v: string[]) => void;
+  toggleTee: (t: string) => void;
   sortKey: string;
   sortDir: "asc" | "desc";
   toggleSort: (k: string) => void;
   availClubs: string[];
+  availEsc: string[];
+  availTees: string[];
 
   /* Helpers */
   clearFilter: () => void;
@@ -147,6 +156,8 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
   // UI state
   const [nameQ, setNameQ] = useState("");
   const [clubQ, setClubQ] = useState("");
+  const [escFilter, setEscFilter] = useState<string[]>([]);
+  const [teeFilter, setTeeFilter] = useState<string[]>([]);
   const [showSC, setShowSC] = useState(true);
   const [groupMode, setGroupMode] = useState(true);
   const { sortKey, sortDir, toggleSort } = useSort<string>("pos");
@@ -366,18 +377,22 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
     return sortedGrouped.filter(
       (r) =>
         (!q || r.name.toLowerCase().includes(q) || r.club.toLowerCase().includes(q)) &&
-        (!clubQ || r.club === clubQ),
+        (!clubQ || r.club === clubQ) &&
+        (escFilter.length === 0 || (r.esc && escFilter.includes(r.esc))) &&
+        (teeFilter.length === 0 || (r.teeName && teeFilter.includes(r.teeName))),
     );
-  }, [sortedGrouped, nameQ, clubQ]);
+  }, [sortedGrouped, nameQ, clubQ, escFilter, teeFilter]);
 
   const displayed = useMemo(() => {
     const q = nameQ.toLowerCase();
     return sortedFlat.filter(
       (r) =>
         (!q || r.name.toLowerCase().includes(q) || r.club.toLowerCase().includes(q)) &&
-        (!clubQ || r.club === clubQ),
+        (!clubQ || r.club === clubQ) &&
+        (escFilter.length === 0 || (r.esc && escFilter.includes(r.esc))) &&
+        (teeFilter.length === 0 || (r.teeName && teeFilter.includes(r.teeName))),
     );
-  }, [sortedFlat, nameQ, clubQ]);
+  }, [sortedFlat, nameQ, clubQ, escFilter, teeFilter]);
 
   const availClubs = useMemo(() => {
     const s = new Set<string>();
@@ -385,13 +400,27 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
     return [...s].sort((a, b) => a.localeCompare(b, "pt"));
   }, [sortedGrouped]);
 
+  const availEsc = useMemo(() => {
+    const s = new Set<string>();
+    for (const r of sortedGrouped) if (r.esc) s.add(r.esc);
+    return [...s].sort((a, b) => a.localeCompare(b, "pt"));
+  }, [sortedGrouped]);
+
+  const availTees = useMemo(() => {
+    const s = new Set<string>();
+    for (const r of sortedGrouped) if (r.teeName) s.add(r.teeName);
+    return [...s].sort();
+  }, [sortedGrouped]);
+
   return {
     par, si, nh, is9, parF9, parB9, parTot, hasSI, playedRounds, roundRefs,
     gDisplayed, displayed,
     groupMode, setGroupMode, showSC, setShowSC,
     nameQ, setNameQ, clubQ, setClubQ,
+    escFilter, setEscFilter, toggleEsc: (e: string) => setEscFilter(toggleArr(escFilter, e)),
+    teeFilter, setTeeFilter, toggleTee: (t: string) => setTeeFilter(toggleArr(teeFilter, t)),
     sortKey, sortDir, toggleSort,
-    availClubs,
-    clearFilter: () => { setNameQ(""); setClubQ(""); },
+    availClubs, availEsc, availTees,
+    clearFilter: () => { setNameQ(""); setClubQ(""); setEscFilter([]); setTeeFilter([]); },
   };
 }
