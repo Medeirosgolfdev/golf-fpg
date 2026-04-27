@@ -1651,6 +1651,8 @@ Na barra de distribuição de scores, o segmento de par usa branco/transparente,
 
 **Referências estáticas a dados fora de componentes React ficam stale** — `const manuel = D_BASE.find(x => x.isM)` fora de um componente referencia dados pré-merge. Fazer lookup dentro do componente via state.
 
+**FPGPage — torneio resolvido pela URL, não por displayList[selected]** — o render do detalhe usa `tShow = displayList.find(t.ccode/tcode === params.tkey)`, não `cur = displayList[selected]`. Razão: durante load async, `tournaments`/`jovensTournaments`/`clubesTournaments` chegam em batches e cada um re-calcula o `displayList` useMemo (sort por data desc). Sem tie-breaker estável entre items com a mesma data, `displayList[selected]` aponta a torneios diferentes entre re-renders → user vê "A carregar..." preso ou outro torneio. Adicionalmente, o `handleClick` da sidebar precisa de chamar `navigate()` directamente; sem isso, o guard anti-loop do `state→URL` skipa quando `params.tkey != novo cur.tcode/ccode`, deixando o user preso na URL antiga. **Source of truth = URL**. Não tentar fixar via useState/useEffect/selectedKey complexos — leva a regressões em cascata. Resolvido 2026-04-27.
+
 ### Dados
 
 - **scrape-drive-aquapor-v6 bug R1=R2** — v6 usava API que ignora `classifround`. v7 usa `classifAgregate.aspx/ScoreCard` — corrigido.

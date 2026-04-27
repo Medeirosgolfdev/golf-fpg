@@ -580,20 +580,37 @@ function ByCourseView({ data, search, sort, isAnalysis }: {
   data: PlayerPageData; search: string; sort: CourseSort; isAnalysis: boolean;
 }) {
   const [openScorecardId, setOpenScorecardId] = useState<string | null>(null);
-  const { sortKey, sortDir, toggleSort } = useSort<"course" | "voltas" | "ultima" | "gross" | "stb" | "sd">("voltas", "desc", {
-    gross: "asc", sd: "asc", stb: "desc",
-  });
+  type ColKey = "course" | "voltas" | "ultima" | "gross" | "stb" | "sd";
+
+  const dropdownToCol = (s: CourseSort): { key: ColKey; dir: "asc" | "desc" } => {
+    if (s === "name_asc") return { key: "course", dir: "asc" };
+    if (s === "last_desc") return { key: "ultima", dir: "desc" };
+    return { key: "voltas", dir: "desc" };
+  };
+
+  const initial = dropdownToCol(sort);
+  const [sortKey, setSortKey] = useState<ColKey>(initial.key);
+  const [sortDir, setSortDir] = useState<"asc" | "desc">(initial.dir);
+
+  useEffect(() => {
+    const m = dropdownToCol(sort);
+    setSortKey(m.key);
+    setSortDir(m.dir);
+  }, [sort]);
+
+  const defaultDirMap: Record<ColKey, "asc" | "desc"> = {
+    course: "asc", voltas: "desc", ultima: "desc", gross: "asc", stb: "desc", sd: "asc",
+  };
+  const toggleSort = useCallback((k: ColKey) => {
+    if (k === sortKey) setSortDir(d => d === "asc" ? "desc" : "asc");
+    else { setSortKey(k); setSortDir(defaultDirMap[k]); }
+  }, [sortKey]);
 
   const list = useMemo(() => {
     const term = norm(search);
     let l = data.DATA.slice();
     if (term) l = l.filter(c => norm(c.course).includes(term));
-    // First apply the search/filter sort, then override with sortKey if present
-    if (sort === "name_asc") l.sort((a, b) => a.course.localeCompare(b.course, "pt"));
-    else if (sort === "last_desc") l.sort((a, b) => (b.lastDateSort - a.lastDateSort) || (b.count - a.count));
-    else l.sort((a, b) => (b.count - a.count) || a.course.localeCompare(b.course, "pt"));
 
-    // Apply column sort (always — the pre-sort above is just the initial order)
     const dir = sortDir === "asc" ? 1 : -1;
     l.sort((a, b) => {
       let av: number, bv: number;
@@ -608,10 +625,14 @@ function ByCourseView({ data, search, sort, isAnalysis }: {
         case "sd": av = (lastA?.sd ?? 999); bv = (lastB?.sd ?? 999); break;
         default: av = a.count; bv = b.count;
       }
+      if (av === bv) {
+        const tieDate = b.lastDateSort - a.lastDateSort;
+        return tieDate !== 0 ? tieDate : a.course.localeCompare(b.course, "pt");
+      }
       return dir * (av - bv);
     });
     return l;
-  }, [data, search, sort, sortKey, sortDir]);
+  }, [data, search, sortKey, sortDir]);
 
   return (
     <div className="card">
@@ -2194,6 +2215,9 @@ function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, extraMap, localI
 
             const originKey = (r.score_origin || "").trim().toUpperCase();
             const isIntl = originKey === "INTERN";
+            const tournName = r.tournament_description || "";
+            const isRegional = !isIntl && /regional/i.test(tournName);
+            const isNacional = !isIntl && !isRegional && /nacional/i.test(tournName);
             const extra = extraMap?.get(r.id);
 
             // Indicador visual se a ronda não existe nos nossos dados locais
@@ -2223,6 +2247,8 @@ function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, extraMap, localI
                     <span className="muted">{r.tournament_description}</span>
                     <OriginPill origin={r.score_origin} />
                     {isIntl && <PillBadge pill="INTL" />}
+                    {isRegional && <PillBadge pill="REGIONAL" />}
+                    {isNacional && <PillBadge pill="NACIONAL" />}
                   </td>
                   <td className="r"><HoleBadge hc={r.hole_count} /></td>
                   <td className="r fw-700">{r.calc_hcp_index ?? r.calculated_exact_hcp ?? ""}</td>
@@ -3559,8 +3585,11 @@ export default function JogadoresPage() {
   const [sexFilter, setSexFilter] = useState<SexFilter>("ALL");
   const [escalaoFilter, setEscalaoFilter] = useState<Set<string>>(new Set());
   const [regionFilter, setRegionFilter] = useState<string>("ALL");
-  const [sortKey, setSortKey] = useState<SortKey>("name");
-  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
+  // Default: ordenar por nº de rondas no ano corrente (desc) para destacar
+  // jogadores activos. O sortKey "rounds" usa statsDb.roundsLast12m para
+  // os nossos e _federadoRaw.rounds_current_year para federados-only.
+  const [sortKey, setSortKey] = useState<SortKey>("rounds");
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
   const [hcpMin, setHcpMin] = useState<string>("");  // input controlado (string para permitir "")
   const [hcpMax, setHcpMax] = useState<string>("");
   const [activeOnlyFilter, setActiveOnlyFilter] = useState(false);

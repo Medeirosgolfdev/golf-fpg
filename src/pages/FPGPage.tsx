@@ -2166,7 +2166,7 @@ function Content() {
             </>)}
             <div className="flex-1" style={{ minWidth: 8 }} />
             {/* Contadores à direita */}
-            <ExtLink href="https://scoring.datagolf.pt/pt/tournaments.aspx"
+            <ExtLink href="https://scoring-pt.datagolf.pt/scripts/tournaments.asp?club=ALL&ack=XH256YF45T"
               className="fs-11 fw-600"
               style={{ flexShrink: 0, cursor: "pointer", color: "var(--accent)", border: "1px solid var(--accent)", borderRadius: 5, padding: "3px 8px", lineHeight: 1.6, textDecoration: "none", whiteSpace: "nowrap", display: "inline-flex", alignItems: "center", gap: 3 }}>
               FPG Torneios ↗
@@ -2485,7 +2485,12 @@ function Content() {
               </div>
               <div className="muted fs-11">Campeões Regional + Nacional · jogadores frequentes</div>
             </a>
-            {/* Entrada especial: Inscrições */}
+            {/* Entrada "📋 Inscrições 2026" DESACTIVADA 2026-04-27 — inscrições do
+                Nacional Sub-12 fecharam, todos 19 inscritos confirmados (sem reservas).
+                A rota /FPG/jovens/inscritosCN, o InscricoesPanel e o jovensShowInscricoes
+                state mantêm-se intactos no código para reactivação rápida em próximas
+                edições — basta voltar a `true` o flag abaixo. */}
+            {false && (
             <a
               href="/FPG/jovens/inscritosCN"
               onClick={e => {
@@ -2508,6 +2513,7 @@ function Content() {
               </div>
               <div className="muted fs-11" >Campeonatos Nacionais de Jovens</div>
             </a>
+            )}
             {jovensYears.map(yr => (
               <React.Fragment key={yr}>
                 <div className="sidebar-section-title-dark">🏆 {yr}</div>
