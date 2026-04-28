@@ -67,6 +67,10 @@ interface PJATournCol {
   date: string;
   campo: string;
   isGF: boolean;
+  /** Multiplicador de pontos aplicado a todas as rondas deste torneio.
+   *  1.0 standard; 1.5 Grande Final; valores especiais por tcode em
+   *  TOURN_MULTIPLIER (ex: Royal Óbidos AT&T 2025 com x1.75). */
+  mult: number;
   rounds: PJARound[];
   colSpan: number;
   /** ccode do torneio — usado para construir URL `/FPG/torneio/{ccode}-{tcode}`. */
@@ -107,8 +111,30 @@ interface PJAPRow {
    Helper Functions
    ───────────────────────────────────────────── */
 
-function pjaPts(toPar: number, gf: boolean): number {
-  return Math.max(0, 25 - toPar) * (gf ? 1.5 : 1);
+function pjaPts(toPar: number, mult: number): number {
+  return Math.max(0, 25 - toPar) * mult;
+}
+
+/** Multiplicadores especiais por tcode — decisões da comissão técnica PJA
+ *  que se sobrepõem ao standard (1.0) e à Grande Final (1.5).
+ *
+ *  Como adicionar: chave = tcode (string), valor = multiplicador.
+ *  Documentar SEMPRE a razão no comentário ao lado para auditoria futura. */
+const TOURN_MULTIPLIER: Record<string, number> = {
+  // Royal Óbidos AT&T Pebble Beach Pro-Am — 2025-02-01 (ccode 152, tcode 10444):
+  // multiplicador x1.75 decidido pela comissão técnica PJA porque o torneio
+  // anterior do calendário foi cancelado, sendo este compensado com pontuação
+  // mais alta para não prejudicar quem participou.
+  "10444": 1.75,
+};
+
+/** Devolve o multiplicador a aplicar a um torneio para o ranking PJA.
+ *  Prioridade: TOURN_MULTIPLIER (especial) → Grande Final (1.5) → standard (1.0). */
+function getTournMultiplier(t: Tournament): number {
+  const tcode = String(t.tcode || "");
+  if (TOURN_MULTIPLIER[tcode] !== undefined) return TOURN_MULTIPLIER[tcode];
+  if (isGFTournament(t)) return 1.5;
+  return 1.0;
 }
 
 function fmtPts(pts: number): string {
@@ -116,7 +142,11 @@ function fmtPts(pts: number): string {
 }
 
 function isGFTournament(t: Tournament): boolean {
-  return /dunas/i.test(t.name) || /grande\s*final/i.test(t.name);
+  // ATENÇÃO: o regex inicial era /dunas/i || /grande\s*final/i, mas isso
+  // apanhava por engano "PJA Race to Dunas" 2025 (192/10013, 12-Set-2025) que
+  // é torneio regular ×1.0, NÃO Grande Final. A Grande Final tem sempre o
+  // texto "Grande Final" no nome (ex: "PJA TOUR Grand Final" 2024 = 192/10005).
+  return /grande\s*final/i.test(t.name);
 }
 
 /** Decompõe o nome de um torneio em {circuito, local}. Exemplos:
@@ -257,6 +287,7 @@ export function PJARankingView({
       const isSynth = !!t._isSynthetic;
       const subRounds: Tournament[] = t._subRounds || [];
       const isGF = isGFTournament(t);
+      const mult = getTournMultiplier(t);
       const tournKey = t.tcode + "_" + t.date;
 
       // Descobrir nº de rondas: preferencialmente pelos subRounds sintéticos,
@@ -288,9 +319,9 @@ export function PJARankingView({
             date: (subRounds[i]?.date) || t.date || "",
           });
         }
-        cols.push({ tournKey, name: t.name, date: t.date || "", campo: t.campo || "", isGF, rounds, colSpan: rounds.length * 2, ccode, tcode, totalRondas: nR });
+        cols.push({ tournKey, name: t.name, date: t.date || "", campo: t.campo || "", isGF, mult, rounds, colSpan: rounds.length * 2, ccode, tcode, totalRondas: nR });
       } else {
-        cols.push({ tournKey, name: t.name, date: t.date || "", campo: t.campo || "", isGF, rounds: [{ roundKey: tournKey + "_r1", label: "", date: t.date || "" }], colSpan: 2, ccode, tcode, totalRondas: 1 });
+        cols.push({ tournKey, name: t.name, date: t.date || "", campo: t.campo || "", isGF, mult, rounds: [{ roundKey: tournKey + "_r1", label: "", date: t.date || "" }], colSpan: 2, ccode, tcode, totalRondas: 1 });
       }
     }
     return cols;
@@ -309,7 +340,15 @@ export function PJARankingView({
 
   const allRows: PJAPRow[] = useMemo(() => {
     const map = new Map<string, PJAPRow>();
+    // applyNewRules: regras especiais 2026+ de elegibilidade de torneios
+    // (DT/Aquapor exclusão mútua, GG Main R2+R3 só, Aquapor só os 2 primeiros).
     const applyNewRules = year >= "2026";
+    // applyMembershipMode: modo "lista oficial de inscritos" — injecta skeleton
+    // rows para todos os fedCodes em pja-members.json[year] e filtra a tabela
+    // a apenas membros com tag "PJA". Activa-se quando há lista oficial para
+    // este ano (independente de aplicar as regras 2026+).
+    const yearMembers = pjaMembersByYear?.[year];
+    const applyMembershipMode = !!(yearMembers && yearMembers.length);
 
     // Track, per player, whether they played any Drive Tour this year.
     // Used to exclude Aquapor rounds for players who also played DT.
@@ -338,6 +377,7 @@ export function PJARankingView({
       const isSynth = !!t._isSynthetic;
       const subRounds: Tournament[] = t._subRounds || [];
       const isGF = isGFTournament(t);
+      const mult = getTournMultiplier(t);
       const tournKey = t.tcode + "_" + t.date;
 
       for (const p of t.players) {
@@ -372,7 +412,7 @@ export function PJARankingView({
         const addRound = (roundNum: number, gross: number, par: number) => {
           if (!par || !gross || gross >= 900) return;
           const tp = gross - par;
-          const pts = pjaPts(tp, isGF);
+          const pts = pjaPts(tp, mult);
           const roundKey = tournKey + "_r" + roundNum;
 
           // GG Main (Sub 16+ joga 3 dias): só R2 e R3 contam para PJA
@@ -418,12 +458,13 @@ export function PJARankingView({
       row.eligible = row.voltas >= 14;
     }
 
-    // 2026+: injectar rows "esqueleto" (0 voltas, 0 pts) para TODOS os inscritos
-    // da lista pja-members.json do ano corrente que ainda não pontuaram.
-    // Assim o ranking mostra quem está inscrito mesmo antes de haver resultados
-    // (ex: início da época, ou inscritos que só vão jogar torneios futuros).
-    if (applyNewRules) {
-      const inscritos = pjaMembersByYear?.[year] || [];
+    // Membership mode: injectar rows "esqueleto" (0 voltas, 0 pts) para TODOS
+    // os inscritos da lista pja-members.json do ano corrente que ainda não
+    // pontuaram. Assim o ranking mostra quem está inscrito mesmo antes de haver
+    // resultados (ex: início da época, ou inscritos que só vão jogar torneios
+    // futuros). Activa-se sempre que existir lista oficial para o ano.
+    if (applyMembershipMode) {
+      const inscritos = yearMembers || [];
       for (const fed of inscritos) {
         if (map.has(fed)) continue;  // já tem dados a partir de torneios
         const db = playersDB[fed];
@@ -454,15 +495,15 @@ export function PJARankingView({
       }
     }
 
-    // 2026+: mostrar todos os inscritos (incluindo 0 voltas/0 pts).
-    // Anos anteriores: só quem pontuou.
-    let rows = applyNewRules
+    // Membership mode: mostrar todos os inscritos (incluindo 0 voltas/0 pts).
+    // Sem lista oficial: só quem pontuou.
+    let rows = applyMembershipMode
       ? [...map.values()]
       : [...map.values()].filter(r => r.voltas > 0);
 
-    // 2026+: filtrar apenas membros PJA (tag "PJA" em players.json).
-    // Para anos anteriores (legado), qualquer participante aparece.
-    if (applyNewRules) {
+    // Membership mode: filtrar apenas membros PJA (tag "PJA" em players.json).
+    // Sem lista oficial (legado): qualquer participante aparece.
+    if (applyMembershipMode) {
       rows = rows.filter(r => {
         if (!r.fedCode) return false;
         const db = playersDB[r.fedCode];
@@ -690,7 +731,7 @@ export function PJARankingView({
                   <>
                     <div style={{ ...lineStyle, color: "var(--text-1)" }}>
                       {circuito}
-                      {tc.isGF && <span className="badge-gf" style={{ marginLeft: 3 }}>★1.5</span>}
+                      {tc.mult !== 1.0 && <span className="badge-gf" style={{ marginLeft: 3 }}>★{tc.mult}</span>}
                     </div>
                     <div style={{ ...lineStyle, color: "var(--text-2)" }}>
                       {local || "\u00A0"}
@@ -801,7 +842,6 @@ export function PJARankingView({
 
                   <td className="cs-s-games cs-grp">
                     {row.voltas}
-                    {!row.eligible && <span title="< 14 rondas — não elegível para GF" className="badge-warn-sm ml-3">⚠</span>}
                   </td>
                   <td className="cs-s-pts cs-col" style={{ fontWeight: 800, color: "var(--color-warn-dark)", fontVariantNumeric: "tabular-nums" }}>
                     {fmtPts(row.total)}
