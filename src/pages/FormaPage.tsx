@@ -23,6 +23,13 @@ type Round = {
   hcp: number | null;
 };
 
+type Draw = {
+  round: number;
+  teeTime: string;
+  startHole: number;
+  tee: string;
+};
+
 type Row = {
   fed: string;
   name: string;
@@ -32,6 +39,7 @@ type Row = {
   escIns: string;
   totalRounds: number;
   last10: Round[];
+  draws: Draw[];
 };
 
 type FormaData = {
@@ -39,10 +47,11 @@ type FormaData = {
   tournament: string;
   totalInscritos: number;
   withWhsData: number;
+  withDraw?: number;
   rows: Row[];
 };
 
-type SortKey = "name" | "hcp" | "avg" | "delta" | "totalRounds";
+type SortKey = "name" | "hcp" | "avg" | "delta" | "totalRounds" | "teeTime";
 
 // ── Helpers ────────────────────────────────────────────────────────
 
@@ -100,7 +109,7 @@ export default function FormaPage() {
   const [search, setSearch] = useState("");
 
   const { sortKey, sortDir, toggleSort } = useSort<SortKey>("hcp", "asc", {
-    name: "asc", hcp: "asc", avg: "asc", delta: "asc", totalRounds: "desc",
+    name: "asc", hcp: "asc", avg: "asc", delta: "asc", totalRounds: "desc", teeTime: "asc",
   });
 
   useEffect(() => {
@@ -141,8 +150,11 @@ export default function FormaPage() {
   const sorted = useMemo(() => {
     const dir = sortDir === "asc" ? 1 : -1;
     const cmp = (a: typeof enriched[number], b: typeof enriched[number]): number => {
-      // Se filtro de escalão activo, ordena directo. Senão, agrupa por escalão.
-      if (filterEsc === "all") {
+      // Agrupa por escalão SÓ quando o sortKey é "hcp" (default). Para sortKey
+      // explícito (name, avg, delta, totalRounds, teeTime), ordena globalmente
+      // — útil para ver, por exemplo, todas as horas de saída por ordem
+      // independentemente do escalão.
+      if (filterEsc === "all" && sortKey === "hcp") {
         const ie = escIdx(a.escalao) - escIdx(b.escalao);
         if (ie !== 0) return ie;
       }
@@ -153,6 +165,7 @@ export default function FormaPage() {
           case "avg": return r.avg ?? 9999;
           case "delta": return r.delta ?? 9999;
           case "totalRounds": return r.totalRounds;
+          case "teeTime": return (r.draws[0]?.teeTime) || "99:99";
         }
       };
       const va = get(a), vb = get(b);
@@ -214,6 +227,11 @@ export default function FormaPage() {
         .forma-table .dg { color: #15803d; font-weight: 600; }
         .forma-table .dr { color: #b91c1c; font-weight: 600; }
         .forma-table .dn { color: var(--muted, #9ca3af); }
+        .forma-table .tee-cell { padding: 2px 6px; }
+        .forma-table .tee-pill { display: inline-flex; align-items: center; gap: 4px; padding: 2px 6px; background: #eef2ff; border: 1px solid #c7d2fe; border-radius: 10px; font-size: 11px; font-variant-numeric: tabular-nums; }
+        .forma-table .tee-pill b { font-weight: 700; color: #1e3a8a; }
+        .forma-table .tee-pill i { font-style: normal; color: #6366f1; font-size: 9px; }
+
         .forma-loading, .forma-err { padding: 20px; color: var(--muted, #6b7280); }
         .forma-err { background: #fef2f2; border: 1px solid #fca5a5; border-radius: 6px; }
         .forma-note { background: #fef3c7; border: 1px solid #fcd34d; padding: 6px 10px; border-radius: 4px; font-size: 11px; color: #78350f; margin-bottom: 8px; }
@@ -228,6 +246,7 @@ export default function FormaPage() {
         <div>Com dados WHS: <b>{data.withWhsData}</b></div>
         <div>Sem dados: <b style={{ color: data.totalInscritos - data.withWhsData > 0 ? "#b91c1c" : "#15803d" }}>{data.totalInscritos - data.withWhsData}</b></div>
         <div>A mostrar: <b>{sorted.length}</b></div>
+        {data.withDraw != null && <div>Com hora de saída: <b>{data.withDraw}</b></div>}
       </div>
 
       <div className="forma-legend">
@@ -281,6 +300,7 @@ export default function FormaPage() {
             <th>Sx</th>
             <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)}>HCP</SortableHdr>
             <th>Escalão Inscr.</th>
+            <SortableHdr k="teeTime" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)}>R1 Tee</SortableHdr>
             {Array.from({ length: 10 }, (_, i) => <th key={i} className="sd-h">SD {i + 1}</th>)}
             <SortableHdr k="avg" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)}>Média 10</SortableHdr>
             <SortableHdr k="delta" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)}>Tend.</SortableHdr>
@@ -296,7 +316,7 @@ export default function FormaPage() {
               const cnt = sorted.filter((x) => x.escalao === r.escalao).length;
               header = (
                 <tr key={`hdr-${r.escalao}`} className="hdr-esc">
-                  <td colSpan={17}>{r.escalao} <span className="cnt">({cnt})</span></td>
+                  <td colSpan={18}>{r.escalao} <span className="cnt">({cnt})</span></td>
                 </tr>
               );
             }
@@ -329,6 +349,13 @@ export default function FormaPage() {
                   <td><SexBadge sex={r.sex} /></td>
                   <td className="num">{fmt(r.hcp)}</td>
                   <td className="esc-ins">{r.escIns}</td>
+                  <td className="tee-cell">{(() => {
+                    const d = r.draws[0];
+                    if (!d) return <span className="dn" title="Não consta no draw publicado pela FPG (pode ser inscrição tardia ou ainda em actualização)">—</span>;
+                    return <span className="tee-pill" title={`R${d.round} · sai do buraco ${d.startHole} · tees ${d.tee}`}>
+                      <b>{d.teeTime}</b><i> {d.startHole === 10 ? "T10" : "T1"}</i>
+                    </span>;
+                  })()}</td>
                   {cells}
                   <td className="num bold">{fmt(r.avg)}</td>
                   <td>{deltaEl}</td>

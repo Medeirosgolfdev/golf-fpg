@@ -7,9 +7,6 @@
  *
  * Apesar do nome, o loader carrega TODOS os 107 torneios (não só Nacional 2026).
  * O nome mantém-se por historial.
- *
- * Uso típico: indexar por `${ccode}-${tcode}` para enriquecer objectos Tournament
- * do FPGPage/DrivePage.
  */
 
 import { cachedFetchJson } from "./fetchCache";
@@ -34,11 +31,7 @@ export interface FpgDrawFlight {
   players: Array<{
     nome: string;
     clube: string | null;
-    /** Código FPG opcional (quando a fonte tem esta info — PDFs manuais por ex.).
-     *  Torna o matching robusto em casos de homónimos e evita dependência de
-     *  `players.json` estar curado para o jogador. */
     fed?: string | null;
-    /** HCP exacto opcional (quando a fonte tem esta info — PDFs manuais). */
     hcp?: number | null;
   }>;
 }
@@ -78,7 +71,7 @@ export interface FpgAdmissionsDrawsFile {
   tournaments: FpgTournamentData[];
 }
 
-// ── Meta dos 10 torneios Nacional 2026 (para injecção sintética no Jovens) ──
+// ── Meta dos 10 torneios Nacional 2026 ───────────────────────────────
 
 export const NACIONAL_2026_META: Record<string, {
   escalao: "Sub 10" | "Sub 12" | "Sub 14" | "Sub 16" | "Sub 18";
@@ -103,10 +96,39 @@ export const NACIONAL_2026_TCODES = Object.keys(NACIONAL_2026_META);
 
 let _cache: FpgAdmissionsDrawsFile | null = null;
 
+/**
+ * Normaliza um player das admissions: o scraper produz dois formatos
+ * dependendo da versão do script:
+ *   - antigo: { vac, dataInscricao }                  (~3000 entries)
+ *   - novo:   { vacf, registo }                       (~900 entries, Nacional 2026)
+ * Aqui mapeamos sempre para o formato canónico {vac, dataInscricao} que o resto
+ * do código usa. Sem isto, as colunas "VAC" e "Registo" na AdmissionsTab ficam
+ * vazias para o Nacional 2026.
+ */
+function normalizePlayer(p: any): FpgAdmissionPlayer {
+  return {
+    pos: p.pos ?? null,
+    fed: p.fed ?? null,
+    nome: p.nome ?? "",
+    clube: p.clube ?? null,
+    hcp: p.hcp ?? null,
+    vac: p.vac ?? p.vacf ?? null,
+    dataInscricao: p.dataInscricao ?? p.registo ?? null,
+    status: p.status === "reserva" ? "reserva" : "confirmed",
+  };
+}
+
 export async function loadFpgAdmissionsDraws(opts: { force?: boolean } = {}): Promise<FpgAdmissionsDrawsFile> {
   if (_cache && !opts.force) return _cache;
   try {
     const raw = await cachedFetchJson<FpgAdmissionsDrawsFile>("/data/fpg-admissions-draws.json");
+    if (raw) {
+      for (const t of (raw.tournaments || [])) {
+        if (t.admissions && Array.isArray(t.admissions.players)) {
+          t.admissions.players = t.admissions.players.map(normalizePlayer);
+        }
+      }
+    }
     _cache = raw || { scrapedAt: null, total: 0, tournaments: [] };
   } catch {
     _cache = { scrapedAt: null, total: 0, tournaments: [] };
@@ -123,4 +145,6 @@ export function indexFpgAdmissionsDraws(file: FpgAdmissionsDrawsFile): Map<strin
   return m;
 }
 
-export function invalidateFpgAdmissionsDrawsCache() { _cache = null; }
+export function invalidateFpgAdmissionsDrawsCache(): void {
+  _cache = null;
+}

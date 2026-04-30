@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-30T10:16:41.720Z",
+  "generatedAt": "2026-04-30T11:08:19.704Z",
   "tournament": "Campeonato Nacional de Jovens 2026 — Aroeira",
   "tcodes": [
     "10935",
@@ -14,8 +14,10 @@
     "10944"
   ],
   "startDate": "2026-05-01",
-  "totalInscritos": 146,
-  "withWhsData": 146,
+  "totalInscritos": 142,
+  "totalInscritosBrutos": 146,
+  "excluidosSemHora": 4,
+  "withWhsData": 134,
   "rows": [
     {
       "fed": "42845",
@@ -24,6 +26,7 @@
       "sex": "M",
       "hcp": -2.4,
       "escIns": "Sub 18 H",
+      "status": "confirmed",
       "totalRounds": 429,
       "last10": [
         {
@@ -96,6 +99,14 @@
           "holes": 18,
           "hcp": -3.9
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "08:00",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -105,6 +116,7 @@
       "sex": "M",
       "hcp": -1.7,
       "escIns": "Sub 18 H",
+      "status": "confirmed",
       "totalRounds": 422,
       "last10": [
         {
@@ -177,6 +189,14 @@
           "holes": 18,
           "hcp": -1.1
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "08:00",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -186,6 +206,7 @@
       "sex": "M",
       "hcp": -0.8,
       "escIns": "Sub 18 H",
+      "status": "confirmed",
       "totalRounds": 489,
       "last10": [
         {
@@ -258,6 +279,14 @@
           "holes": 18,
           "hcp": -1.6
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "08:00",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -267,6 +296,7 @@
       "sex": "M",
       "hcp": 1.2,
       "escIns": "Sub 18 H",
+      "status": "confirmed",
       "totalRounds": 257,
       "last10": [
         {
@@ -339,6 +369,14 @@
           "holes": 18,
           "hcp": 0.4
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "08:10",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -348,6 +386,7 @@
       "sex": "M",
       "hcp": 0,
       "escIns": "Sub 18 H",
+      "status": "confirmed",
       "totalRounds": 361,
       "last10": [
         {
@@ -420,6 +459,14 @@
           "holes": 18,
           "hcp": 1
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "08:10",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -429,6 +476,7 @@
       "sex": "M",
       "hcp": 2.2,
       "escIns": "Sub 18 H",
+      "status": "confirmed",
       "totalRounds": 223,
       "last10": [
         {
@@ -501,6 +549,14 @@
           "holes": 18,
           "hcp": 1.8
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "08:10",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -510,6 +566,7 @@
       "sex": "M",
       "hcp": 4,
       "escIns": "Sub 18 H",
+      "status": "confirmed",
       "totalRounds": 209,
       "last10": [
         {
@@ -582,6 +639,14 @@
           "holes": 18,
           "hcp": 2.1
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "08:20",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -591,77 +656,15 @@
       "sex": "M",
       "hcp": 3.6,
       "escIns": "Sub 18 H",
-      "totalRounds": 172,
-      "last10": [
+      "status": "confirmed",
+      "totalRounds": 0,
+      "last10": [],
+      "draws": [
         {
-          "sgd": 5.5,
-          "date": "2026-04-25",
-          "tourn": "VIII President Cup - 2026",
-          "holes": 18,
-          "hcp": 3.6
-        },
-        {
-          "sgd": 6.2,
-          "date": "2026-04-04",
-          "tourn": "3º Torneio do Circuito Drive Tour - Quinta do Vale",
-          "holes": 18,
-          "hcp": 3.3
-        },
-        {
-          "sgd": 11.3,
-          "date": "2026-03-15",
-          "tourn": "2º Torneio do Circuito Aquapor D2",
-          "holes": 18,
-          "hcp": 3.3
-        },
-        {
-          "sgd": 7.3,
-          "date": "2026-03-14",
-          "tourn": "2º Torneio do Circuito Aquapor - Qtª do Peru",
-          "holes": 18,
-          "hcp": 3.3
-        },
-        {
-          "sgd": 2.7,
-          "date": "2026-02-17",
-          "tourn": "Greatgolf Junior Open with Luis Figo Foundation Di",
-          "holes": 18,
-          "hcp": 3.5
-        },
-        {
-          "sgd": 3.5,
-          "date": "2026-02-16",
-          "tourn": "Greatgolf Junior Open with Luis Figo Foundation Di",
-          "holes": 18,
-          "hcp": 3.7
-        },
-        {
-          "sgd": 11.9,
-          "date": "2026-02-15",
-          "tourn": "Greatgolf Junior Open with Luis Figo Foundation",
-          "holes": 18,
-          "hcp": 3.7
-        },
-        {
-          "sgd": 6,
-          "date": "2026-02-01",
-          "tourn": "2º Torneio Drive Tour Sul – Vila Sol",
-          "holes": 18,
-          "hcp": 3.5
-        },
-        {
-          "sgd": 5.2,
-          "date": "2026-01-11",
-          "tourn": "1º Torneio Drive Tour Sul – Laguna G.C.",
-          "holes": 18,
-          "hcp": 3.5
-        },
-        {
-          "sgd": 3.8,
-          "date": "2025-11-23",
-          "tourn": "IX CLUB CAHMPIOSHIP 2025 D2",
-          "holes": 18,
-          "hcp": 3.2
+          "round": 1,
+          "teeTime": "08:20",
+          "startHole": 1,
+          "tee": "Brancas"
         }
       ]
     },
@@ -672,6 +675,7 @@
       "sex": "M",
       "hcp": 4.1,
       "escIns": "Sub 18 H",
+      "status": "confirmed",
       "totalRounds": 68,
       "last10": [
         {
@@ -744,6 +748,14 @@
           "holes": 18,
           "hcp": 4.8
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "08:20",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -753,6 +765,7 @@
       "sex": "M",
       "hcp": 4.3,
       "escIns": "Sub 18 H",
+      "status": "confirmed",
       "totalRounds": 213,
       "last10": [
         {
@@ -825,6 +838,14 @@
           "holes": 18,
           "hcp": 3.4
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "08:30",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -834,6 +855,7 @@
       "sex": "M",
       "hcp": 5.6,
       "escIns": "Sub 18 H",
+      "status": "confirmed",
       "totalRounds": 285,
       "last10": [
         {
@@ -906,6 +928,14 @@
           "holes": 18,
           "hcp": 6.3
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "08:30",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -915,6 +945,7 @@
       "sex": "M",
       "hcp": 5.3,
       "escIns": "Sub 18 H",
+      "status": "confirmed",
       "totalRounds": 180,
       "last10": [
         {
@@ -987,6 +1018,14 @@
           "holes": 18,
           "hcp": 4.6
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "08:30",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -996,6 +1035,7 @@
       "sex": "M",
       "hcp": 6.5,
       "escIns": "Sub 18 H",
+      "status": "confirmed",
       "totalRounds": 281,
       "last10": [
         {
@@ -1068,6 +1108,14 @@
           "holes": 18,
           "hcp": 6.8
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "08:40",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -1077,6 +1125,7 @@
       "sex": "M",
       "hcp": 7.4,
       "escIns": "Sub 18 H",
+      "status": "confirmed",
       "totalRounds": 237,
       "last10": [
         {
@@ -1149,6 +1198,14 @@
           "holes": 18,
           "hcp": 6.4
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "08:40",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -1158,6 +1215,7 @@
       "sex": "M",
       "hcp": 9,
       "escIns": "Sub 18 H",
+      "status": "confirmed",
       "totalRounds": 20,
       "last10": [
         {
@@ -1230,6 +1288,14 @@
           "holes": 18,
           "hcp": 9.5
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "08:50",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -1239,6 +1305,7 @@
       "sex": "M",
       "hcp": 7.8,
       "escIns": "Sub 18 H",
+      "status": "confirmed",
       "totalRounds": 232,
       "last10": [
         {
@@ -1311,86 +1378,13 @@
           "holes": 18,
           "hcp": 8.6
         }
-      ]
-    },
-    {
-      "fed": "38233",
-      "name": "Amélia Gabin",
-      "escalao": "Sub-18",
-      "sex": "F",
-      "hcp": -1.9,
-      "escIns": "Sub 18 S",
-      "totalRounds": 395,
-      "last10": [
+      ],
+      "draws": [
         {
-          "sgd": 0.6,
-          "date": "2026-03-05",
-          "tourn": "Copa deS.M la Reina 2026",
-          "holes": 18,
-          "hcp": -1.9
-        },
-        {
-          "sgd": 2.2,
-          "date": "2026-03-03",
-          "tourn": "Copa deS.M la Reina 2026",
-          "holes": 18,
-          "hcp": -2.6
-        },
-        {
-          "sgd": -0.6,
-          "date": "2026-01-30",
-          "tourn": "96th Portuguese International Ladies Amateur Champ",
-          "holes": 18,
-          "hcp": -2.8
-        },
-        {
-          "sgd": 1.1,
-          "date": "2026-01-29",
-          "tourn": "96th Portuguese International Ladies Amateur Champ",
-          "holes": 18,
-          "hcp": -2.8
-        },
-        {
-          "sgd": 1.1,
-          "date": "2026-01-28",
-          "tourn": "96th Portuguese International Ladies Amateur Champ",
-          "holes": 18,
-          "hcp": -3
-        },
-        {
-          "sgd": -1,
-          "date": "2026-01-18",
-          "tourn": "1º Torneio do Circuito Aquapor D2",
-          "holes": 18,
-          "hcp": -3
-        },
-        {
-          "sgd": -2.7,
-          "date": "2026-01-17",
-          "tourn": "1º Torneio do Circuito Aquapor-Morgado Golf",
-          "holes": 18,
-          "hcp": -2.8
-        },
-        {
-          "sgd": 2.9,
-          "date": "2025-12-29",
-          "tourn": "Quinta do Lago Junior Open 2025 - U21 & U16",
-          "holes": 18,
-          "hcp": -2.8
-        },
-        {
-          "sgd": -1.9,
-          "date": "2025-12-22",
-          "tourn": "Orlando International Amateur 2025",
-          "holes": 18,
-          "hcp": -2.8
-        },
-        {
-          "sgd": -1.9,
-          "date": "2025-12-21",
-          "tourn": "Orlando International Amateur 2025",
-          "holes": 18,
-          "hcp": -2.7
+          "round": 1,
+          "teeTime": "08:50",
+          "startHole": 1,
+          "tee": "Brancas"
         }
       ]
     },
@@ -1401,6 +1395,7 @@
       "sex": "F",
       "hcp": 1.1,
       "escIns": "Sub 18 S",
+      "status": "confirmed",
       "totalRounds": 373,
       "last10": [
         {
@@ -1473,6 +1468,14 @@
           "holes": 18,
           "hcp": 0.8
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "10:50",
+          "startHole": 1,
+          "tee": "Azuis"
+        }
       ]
     },
     {
@@ -1482,6 +1485,7 @@
       "sex": "F",
       "hcp": 3.1,
       "escIns": "Sub 18 S",
+      "status": "confirmed",
       "totalRounds": 176,
       "last10": [
         {
@@ -1554,6 +1558,14 @@
           "holes": 18,
           "hcp": 4.2
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "10:50",
+          "startHole": 1,
+          "tee": "Azuis"
+        }
       ]
     },
     {
@@ -1563,6 +1575,7 @@
       "sex": "F",
       "hcp": 7.4,
       "escIns": "Sub 18 S",
+      "status": "confirmed",
       "totalRounds": 168,
       "last10": [
         {
@@ -1635,6 +1648,14 @@
           "holes": 18,
           "hcp": 7.1
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "10:50",
+          "startHole": 1,
+          "tee": "Azuis"
+        }
       ]
     },
     {
@@ -1644,6 +1665,7 @@
       "sex": "F",
       "hcp": 8.3,
       "escIns": "Sub 18 S",
+      "status": "confirmed",
       "totalRounds": 174,
       "last10": [
         {
@@ -1716,6 +1738,14 @@
           "holes": 18,
           "hcp": 7.6
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "11:00",
+          "startHole": 1,
+          "tee": "Azuis"
+        }
       ]
     },
     {
@@ -1725,6 +1755,7 @@
       "sex": "F",
       "hcp": 8.3,
       "escIns": "Sub 18 S",
+      "status": "confirmed",
       "totalRounds": 166,
       "last10": [
         {
@@ -1797,6 +1828,14 @@
           "holes": 18,
           "hcp": 9.4
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "11:00",
+          "startHole": 1,
+          "tee": "Azuis"
+        }
       ]
     },
     {
@@ -1806,6 +1845,7 @@
       "sex": "M",
       "hcp": -0.8,
       "escIns": "Sub 16 H",
+      "status": "confirmed",
       "totalRounds": 387,
       "last10": [
         {
@@ -1878,6 +1918,14 @@
           "holes": 18,
           "hcp": -0.6
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:00",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -1887,6 +1935,7 @@
       "sex": "M",
       "hcp": 0.7,
       "escIns": "Sub 16 H",
+      "status": "confirmed",
       "totalRounds": 167,
       "last10": [
         {
@@ -1959,6 +2008,14 @@
           "holes": 18,
           "hcp": 0.9
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:00",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -1968,6 +2025,7 @@
       "sex": "M",
       "hcp": 0.8,
       "escIns": "Sub 16 H",
+      "status": "confirmed",
       "totalRounds": 428,
       "last10": [
         {
@@ -2040,6 +2098,14 @@
           "holes": 18,
           "hcp": 0.7
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:00",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -2049,77 +2115,15 @@
       "sex": "M",
       "hcp": 2.2,
       "escIns": "Sub 16 H",
-      "totalRounds": 244,
-      "last10": [
+      "status": "confirmed",
+      "totalRounds": 0,
+      "last10": [],
+      "draws": [
         {
-          "sgd": 4.4,
-          "date": "2026-04-19",
-          "tourn": "30th VILA SOL JUNIOR COMP",
-          "holes": 18,
-          "hcp": 2
-        },
-        {
-          "sgd": 2.7,
-          "date": "2026-04-04",
-          "tourn": "3º Torneio do Circuito Drive Tour - Quinta do Vale",
-          "holes": 18,
-          "hcp": 2.2
-        },
-        {
-          "sgd": 4.1,
-          "date": "2026-03-15",
-          "tourn": "2º Torneio do Circuito Aquapor D2",
-          "holes": 18,
-          "hcp": 2.2
-        },
-        {
-          "sgd": 4.1,
-          "date": "2026-03-14",
-          "tourn": "2º Torneio do Circuito Aquapor - Qtª do Peru",
-          "holes": 18,
-          "hcp": 2.3
-        },
-        {
-          "sgd": 9.4,
-          "date": "2026-03-08",
-          "tourn": "29th VILA SOL JUNIOR COMP",
-          "holes": 18,
-          "hcp": 2.3
-        },
-        {
-          "sgd": -1.5,
-          "date": "2026-02-17",
-          "tourn": "Greatgolf Junior Open with Luis Figo Foundation Di",
-          "holes": 18,
-          "hcp": 3.1
-        },
-        {
-          "sgd": 6,
-          "date": "2026-02-16",
-          "tourn": "Greatgolf Junior Open with Luis Figo Foundation Di",
-          "holes": 18,
-          "hcp": 3.1
-        },
-        {
-          "sgd": 2.7,
-          "date": "2026-02-15",
-          "tourn": "Greatgolf Junior Open with Luis Figo Foundation",
-          "holes": 18,
-          "hcp": 3.5
-        },
-        {
-          "sgd": 5.2,
-          "date": "2026-02-01",
-          "tourn": "2º Torneio Drive Tour Sul – Vila Sol",
-          "holes": 18,
-          "hcp": 3.5
-        },
-        {
-          "sgd": 5.2,
-          "date": "2026-01-18",
-          "tourn": "1º Torneio do Circuito Aquapor D2",
-          "holes": 18,
-          "hcp": 3.6
+          "round": 1,
+          "teeTime": "09:10",
+          "startHole": 1,
+          "tee": "Brancas"
         }
       ]
     },
@@ -2130,6 +2134,7 @@
       "sex": "M",
       "hcp": 2.5,
       "escIns": "Sub 16 H",
+      "status": "confirmed",
       "totalRounds": 152,
       "last10": [
         {
@@ -2202,6 +2207,14 @@
           "holes": 18,
           "hcp": 1
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:10",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -2211,77 +2224,15 @@
       "sex": "M",
       "hcp": 3.6,
       "escIns": "Sub 16 H",
-      "totalRounds": 166,
-      "last10": [
+      "status": "confirmed",
+      "totalRounds": 0,
+      "last10": [],
+      "draws": [
         {
-          "sgd": 1.8,
-          "date": "2026-04-19",
-          "tourn": "30th VILA SOL JUNIOR COMP",
-          "holes": 18,
-          "hcp": 4.1
-        },
-        {
-          "sgd": 8.8,
-          "date": "2026-04-04",
-          "tourn": "3º Torneio do Circuito Drive Tour - Quinta do Vale",
-          "holes": 18,
-          "hcp": 4.1
-        },
-        {
-          "sgd": 5.2,
-          "date": "2026-03-08",
-          "tourn": "29th VILA SOL JUNIOR COMP",
-          "holes": 18,
-          "hcp": 4.1
-        },
-        {
-          "sgd": 9.4,
-          "date": "2026-02-01",
-          "tourn": "2º Torneio Drive Tour Sul – Vila Sol",
-          "holes": 18,
-          "hcp": 4.1
-        },
-        {
-          "sgd": 12.8,
-          "date": "2026-01-18",
-          "tourn": "1º Torneio do Circuito Aquapor D2",
-          "holes": 18,
-          "hcp": 4.1
-        },
-        {
-          "sgd": 13.7,
-          "date": "2026-01-17",
-          "tourn": "1º Torneio do Circuito Aquapor-Morgado Golf",
-          "holes": 18,
-          "hcp": 4
-        },
-        {
-          "sgd": 4.4,
-          "date": "2026-01-11",
-          "tourn": "1º Torneio Drive Tour Sul – Laguna G.C.",
-          "holes": 18,
-          "hcp": 4
-        },
-        {
-          "sgd": 4.1,
-          "date": "2025-12-07",
-          "tourn": "VILA SOL JNR CLUB CHAMPIONSHIP",
-          "holes": 18,
-          "hcp": 4.2
-        },
-        {
-          "sgd": 5,
-          "date": "2025-11-30",
-          "tourn": "28th VILA SOL JUNIOR COMP",
-          "holes": 18,
-          "hcp": 4.3
-        },
-        {
-          "sgd": 4.3,
-          "date": "2025-10-30",
-          "tourn": "EDC",
-          "holes": 9,
-          "hcp": 4.6
+          "round": 1,
+          "teeTime": "09:10",
+          "startHole": 1,
+          "tee": "Brancas"
         }
       ]
     },
@@ -2292,6 +2243,7 @@
       "sex": "M",
       "hcp": 3.7,
       "escIns": "Sub 16 H",
+      "status": "confirmed",
       "totalRounds": 174,
       "last10": [
         {
@@ -2364,6 +2316,14 @@
           "holes": 18,
           "hcp": 3.2
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:20",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -2373,6 +2333,7 @@
       "sex": "M",
       "hcp": 3.8,
       "escIns": "Sub 16 H",
+      "status": "confirmed",
       "totalRounds": 188,
       "last10": [
         {
@@ -2445,6 +2406,14 @@
           "holes": 18,
           "hcp": 4.3
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:20",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -2454,6 +2423,7 @@
       "sex": "M",
       "hcp": 3.9,
       "escIns": "Sub 16 H",
+      "status": "confirmed",
       "totalRounds": 348,
       "last10": [
         {
@@ -2526,6 +2496,14 @@
           "holes": 18,
           "hcp": 2.8
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:30",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -2535,6 +2513,7 @@
       "sex": "M",
       "hcp": 3.9,
       "escIns": "Sub 16 H",
+      "status": "confirmed",
       "totalRounds": 150,
       "last10": [
         {
@@ -2607,6 +2586,14 @@
           "holes": 18,
           "hcp": 4.6
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:20",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -2616,6 +2603,7 @@
       "sex": "M",
       "hcp": 4.2,
       "escIns": "Sub 16 H",
+      "status": "confirmed",
       "totalRounds": 185,
       "last10": [
         {
@@ -2688,6 +2676,14 @@
           "holes": 18,
           "hcp": 3.7
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:30",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -2697,6 +2693,7 @@
       "sex": "M",
       "hcp": 5.4,
       "escIns": "Sub 16 H",
+      "status": "confirmed",
       "totalRounds": 84,
       "last10": [
         {
@@ -2769,6 +2766,14 @@
           "holes": 18,
           "hcp": 4.3
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:30",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -2778,6 +2783,7 @@
       "sex": "M",
       "hcp": 6,
       "escIns": "Sub 16 H",
+      "status": "confirmed",
       "totalRounds": 197,
       "last10": [
         {
@@ -2850,6 +2856,14 @@
           "holes": 18,
           "hcp": 5.6
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:40",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -2859,6 +2873,7 @@
       "sex": "M",
       "hcp": 6.8,
       "escIns": "Sub 16 H",
+      "status": "confirmed",
       "totalRounds": 158,
       "last10": [
         {
@@ -2931,6 +2946,14 @@
           "holes": 18,
           "hcp": 6.1
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:40",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -2940,6 +2963,7 @@
       "sex": "M",
       "hcp": 7,
       "escIns": "Sub 16 H",
+      "status": "confirmed",
       "totalRounds": 155,
       "last10": [
         {
@@ -3012,6 +3036,14 @@
           "holes": 18,
           "hcp": 5.8
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:40",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -3021,6 +3053,7 @@
       "sex": "M",
       "hcp": 7,
       "escIns": "Sub 16 H",
+      "status": "confirmed",
       "totalRounds": 196,
       "last10": [
         {
@@ -3093,6 +3126,14 @@
           "holes": 18,
           "hcp": 6.9
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:50",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -3102,6 +3143,7 @@
       "sex": "M",
       "hcp": 7.2,
       "escIns": "Sub 16 H",
+      "status": "confirmed",
       "totalRounds": 71,
       "last10": [
         {
@@ -3174,6 +3216,14 @@
           "holes": 18,
           "hcp": 5.5
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:50",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -3183,6 +3233,7 @@
       "sex": "M",
       "hcp": 7.5,
       "escIns": "Sub 16 H",
+      "status": "confirmed",
       "totalRounds": 68,
       "last10": [
         {
@@ -3255,6 +3306,14 @@
           "holes": 18,
           "hcp": 6.4
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:50",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -3264,6 +3323,7 @@
       "sex": "M",
       "hcp": 7.6,
       "escIns": "Sub 16 H",
+      "status": "confirmed",
       "totalRounds": 57,
       "last10": [
         {
@@ -3336,6 +3396,14 @@
           "holes": 18,
           "hcp": 8.3
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "10:00",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -3345,77 +3413,15 @@
       "sex": "M",
       "hcp": 8,
       "escIns": "Sub 16 H",
-      "totalRounds": 143,
-      "last10": [
+      "status": "confirmed",
+      "totalRounds": 0,
+      "last10": [],
+      "draws": [
         {
-          "sgd": 11.9,
-          "date": "2026-04-19",
-          "tourn": "30th VILA SOL JUNIOR COMP",
-          "holes": 18,
-          "hcp": 8
-        },
-        {
-          "sgd": 5.5,
-          "date": "2026-04-17",
-          "tourn": "Handicap round ",
-          "holes": 18,
-          "hcp": 8.6
-        },
-        {
-          "sgd": 7.3,
-          "date": "2026-04-12",
-          "tourn": "Handicap round",
-          "holes": 18,
-          "hcp": 8.6
-        },
-        {
-          "sgd": 10,
-          "date": "2026-04-11",
-          "tourn": "4º Torneio Drive Challenge Sul–Penina-Sub16",
-          "holes": 9,
-          "hcp": 8.4
-        },
-        {
-          "sgd": 10.5,
-          "date": "2026-04-04",
-          "tourn": "3º Torneio do Circuito Drive Tour - Quinta do Vale",
-          "holes": 18,
-          "hcp": 8.4
-        },
-        {
-          "sgd": 12.5,
-          "date": "2026-04-02",
-          "tourn": "Campeonato Nacional de Clubes Sub 18 D3",
-          "holes": 18,
-          "hcp": 8.4
-        },
-        {
-          "sgd": 9.9,
-          "date": "2026-04-01",
-          "tourn": "Campeonato Nacional de Clubes Sub 18 D2",
-          "holes": 18,
-          "hcp": 8.4
-        },
-        {
-          "sgd": 11.6,
-          "date": "2026-03-31",
-          "tourn": "Campeonato Nacional de Clubes Sub 18",
-          "holes": 18,
-          "hcp": 8.4
-        },
-        {
-          "sgd": 9.6,
-          "date": "2026-03-22",
-          "tourn": "3º Torneio Drive Challenge Sul-Pinh. Altos-Sub 16",
-          "holes": 9,
-          "hcp": 8.4
-        },
-        {
-          "sgd": 11.3,
-          "date": "2026-03-15",
-          "tourn": "2º Torneio do Circuito Aquapor D2",
-          "holes": 18,
-          "hcp": 8.4
+          "round": 1,
+          "teeTime": "10:00",
+          "startHole": 1,
+          "tee": "Brancas"
         }
       ]
     },
@@ -3426,6 +3432,7 @@
       "sex": "M",
       "hcp": 8.4,
       "escIns": "Sub 16 H",
+      "status": "confirmed",
       "totalRounds": 71,
       "last10": [
         {
@@ -3498,6 +3505,14 @@
           "holes": 18,
           "hcp": 9.4
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "10:10",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -3507,6 +3522,7 @@
       "sex": "M",
       "hcp": 8.4,
       "escIns": "Sub 16 H",
+      "status": "confirmed",
       "totalRounds": 88,
       "last10": [
         {
@@ -3579,6 +3595,14 @@
           "holes": 18,
           "hcp": 8.2
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "10:00",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -3588,6 +3612,7 @@
       "sex": "M",
       "hcp": 8.5,
       "escIns": "Sub 16 H",
+      "status": "confirmed",
       "totalRounds": 151,
       "last10": [
         {
@@ -3660,6 +3685,14 @@
           "holes": 18,
           "hcp": 7.5
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "10:10",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -3669,6 +3702,7 @@
       "sex": "M",
       "hcp": 8.9,
       "escIns": "Sub 16 H",
+      "status": "confirmed",
       "totalRounds": 102,
       "last10": [
         {
@@ -3741,6 +3775,14 @@
           "holes": 18,
           "hcp": 10.3
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "10:10",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -3750,6 +3792,7 @@
       "sex": "M",
       "hcp": 9.6,
       "escIns": "Sub 16 H",
+      "status": "confirmed",
       "totalRounds": 186,
       "last10": [
         {
@@ -3822,6 +3865,14 @@
           "holes": 18,
           "hcp": 9.8
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "10:20",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -3831,6 +3882,7 @@
       "sex": "M",
       "hcp": 9.7,
       "escIns": "Sub 16 H",
+      "status": "confirmed",
       "totalRounds": 184,
       "last10": [
         {
@@ -3903,6 +3955,14 @@
           "holes": 18,
           "hcp": 8.8
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "10:20",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -3912,6 +3972,7 @@
       "sex": "M",
       "hcp": 9.9,
       "escIns": "Sub 16 H",
+      "status": "confirmed",
       "totalRounds": 94,
       "last10": [
         {
@@ -3984,6 +4045,14 @@
           "holes": 18,
           "hcp": 10.7
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "10:20",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -3993,6 +4062,7 @@
       "sex": "M",
       "hcp": 10,
       "escIns": "Sub 16 H",
+      "status": "confirmed",
       "totalRounds": 45,
       "last10": [
         {
@@ -4065,6 +4135,14 @@
           "holes": 9,
           "hcp": 11
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "10:30",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -4074,77 +4152,15 @@
       "sex": "M",
       "hcp": 10.1,
       "escIns": "Sub 16 H",
-      "totalRounds": 101,
-      "last10": [
+      "status": "confirmed",
+      "totalRounds": 0,
+      "last10": [],
+      "draws": [
         {
-          "sgd": 16.1,
-          "date": "2026-04-19",
-          "tourn": "30th VILA SOL JUNIOR COMP",
-          "holes": 18,
-          "hcp": 10.1
-        },
-        {
-          "sgd": 13.7,
-          "date": "2026-04-11",
-          "tourn": "4º Torneio Drive Challenge Sul–Penina-Sub16",
-          "holes": 9,
-          "hcp": 10.1
-        },
-        {
-          "sgd": 13.1,
-          "date": "2026-04-04",
-          "tourn": "3º Torneio do Circuito Drive Tour - Quinta do Vale",
-          "holes": 18,
-          "hcp": 10.1
-        },
-        {
-          "sgd": 15.4,
-          "date": "2026-03-22",
-          "tourn": "3º Torneio Drive Challenge Sul-Pinh. Altos-Sub 16",
-          "holes": 9,
-          "hcp": 10.1
-        },
-        {
-          "sgd": 11.9,
-          "date": "2026-03-08",
-          "tourn": "29th VILA SOL JUNIOR COMP",
-          "holes": 18,
-          "hcp": 10.2
-        },
-        {
-          "sgd": 14.8,
-          "date": "2026-02-21",
-          "tourn": "2º Torneio Drive Challenge Sul - Laguna G C Sub 16",
-          "holes": 9,
-          "hcp": 10.2
-        },
-        {
-          "sgd": 16.1,
-          "date": "2026-02-17",
-          "tourn": "Greatgolf Junior Open with Luis Figo Foundation Di",
-          "holes": 18,
-          "hcp": 9.9
-        },
-        {
-          "sgd": 21.1,
-          "date": "2026-02-16",
-          "tourn": "Greatgolf Junior Open with Luis Figo Foundation Di",
-          "holes": 18,
-          "hcp": 9.9
-        },
-        {
-          "sgd": 15.2,
-          "date": "2026-02-15",
-          "tourn": "Greatgolf Junior Open with Luis Figo Foundation",
-          "holes": 18,
-          "hcp": 9.9
-        },
-        {
-          "sgd": 6.9,
-          "date": "2026-02-01",
-          "tourn": "2º Torneio Drive Tour Sul – Vila Sol",
-          "holes": 18,
-          "hcp": 10.1
+          "round": 1,
+          "teeTime": "10:30",
+          "startHole": 1,
+          "tee": "Brancas"
         }
       ]
     },
@@ -4155,6 +4171,7 @@
       "sex": "M",
       "hcp": 11.1,
       "escIns": "Sub 16 H",
+      "status": "confirmed",
       "totalRounds": 90,
       "last10": [
         {
@@ -4227,6 +4244,14 @@
           "holes": 18,
           "hcp": 17.2
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "10:40",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -4236,6 +4261,7 @@
       "sex": "M",
       "hcp": 11.6,
       "escIns": "Sub 16 H",
+      "status": "confirmed",
       "totalRounds": 53,
       "last10": [
         {
@@ -4308,6 +4334,14 @@
           "holes": 18,
           "hcp": 17
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "10:40",
+          "startHole": 1,
+          "tee": "Brancas"
+        }
       ]
     },
     {
@@ -4317,6 +4351,7 @@
       "sex": "F",
       "hcp": -1.6,
       "escIns": "Sub 16 S",
+      "status": "confirmed",
       "totalRounds": 287,
       "last10": [
         {
@@ -4389,6 +4424,14 @@
           "holes": 18,
           "hcp": -1.9
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "11:30",
+          "startHole": 1,
+          "tee": "Azuis"
+        }
       ]
     },
     {
@@ -4398,6 +4441,7 @@
       "sex": "F",
       "hcp": 1.7,
       "escIns": "Sub 16 S",
+      "status": "confirmed",
       "totalRounds": 290,
       "last10": [
         {
@@ -4470,6 +4514,14 @@
           "holes": 18,
           "hcp": 1.6
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "11:30",
+          "startHole": 1,
+          "tee": "Azuis"
+        }
       ]
     },
     {
@@ -4479,6 +4531,7 @@
       "sex": "F",
       "hcp": 3.5,
       "escIns": "Sub 16 S",
+      "status": "confirmed",
       "totalRounds": 58,
       "last10": [
         {
@@ -4551,6 +4604,14 @@
           "holes": 18,
           "hcp": 4.1
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "11:30",
+          "startHole": 1,
+          "tee": "Azuis"
+        }
       ]
     },
     {
@@ -4560,6 +4621,7 @@
       "sex": "F",
       "hcp": 4.2,
       "escIns": "Sub 16 S",
+      "status": "confirmed",
       "totalRounds": 264,
       "last10": [
         {
@@ -4632,6 +4694,14 @@
           "holes": 18,
           "hcp": 1.9
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "11:20",
+          "startHole": 1,
+          "tee": "Azuis"
+        }
       ]
     },
     {
@@ -4641,6 +4711,7 @@
       "sex": "F",
       "hcp": 4.2,
       "escIns": "Sub 16 S",
+      "status": "confirmed",
       "totalRounds": 103,
       "last10": [
         {
@@ -4713,6 +4784,14 @@
           "holes": 18,
           "hcp": 3.9
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "11:20",
+          "startHole": 1,
+          "tee": "Azuis"
+        }
       ]
     },
     {
@@ -4722,6 +4801,7 @@
       "sex": "F",
       "hcp": 4.6,
       "escIns": "Sub 16 S",
+      "status": "confirmed",
       "totalRounds": 209,
       "last10": [
         {
@@ -4794,6 +4874,14 @@
           "holes": 18,
           "hcp": 4.7
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "11:20",
+          "startHole": 1,
+          "tee": "Azuis"
+        }
       ]
     },
     {
@@ -4803,6 +4891,7 @@
       "sex": "F",
       "hcp": 5.5,
       "escIns": "Sub 16 S",
+      "status": "confirmed",
       "totalRounds": 164,
       "last10": [
         {
@@ -4875,6 +4964,14 @@
           "holes": 18,
           "hcp": 6.7
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "11:10",
+          "startHole": 1,
+          "tee": "Azuis"
+        }
       ]
     },
     {
@@ -4884,6 +4981,7 @@
       "sex": "F",
       "hcp": 6,
       "escIns": "Sub 16 S",
+      "status": "confirmed",
       "totalRounds": 203,
       "last10": [
         {
@@ -4956,6 +5054,14 @@
           "holes": 18,
           "hcp": 4.6
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "11:10",
+          "startHole": 1,
+          "tee": "Azuis"
+        }
       ]
     },
     {
@@ -4965,6 +5071,7 @@
       "sex": "F",
       "hcp": 7.2,
       "escIns": "Sub 16 S",
+      "status": "confirmed",
       "totalRounds": 151,
       "last10": [
         {
@@ -5037,6 +5144,14 @@
           "holes": 18,
           "hcp": 7.9
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "11:10",
+          "startHole": 1,
+          "tee": "Azuis"
+        }
       ]
     },
     {
@@ -5046,6 +5161,7 @@
       "sex": "F",
       "hcp": 7.2,
       "escIns": "Sub 16 S",
+      "status": "confirmed",
       "totalRounds": 69,
       "last10": [
         {
@@ -5118,6 +5234,14 @@
           "holes": 18,
           "hcp": 8.8
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "11:00",
+          "startHole": 1,
+          "tee": "Azuis"
+        }
       ]
     },
     {
@@ -5127,6 +5251,7 @@
       "sex": "M",
       "hcp": -0.3,
       "escIns": "Sub 14 H",
+      "status": "confirmed",
       "totalRounds": 301,
       "last10": [
         {
@@ -5199,6 +5324,14 @@
           "holes": 18,
           "hcp": 1
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "11:50",
+          "startHole": 1,
+          "tee": "Amarelas"
+        }
       ]
     },
     {
@@ -5208,6 +5341,7 @@
       "sex": "M",
       "hcp": 3.3,
       "escIns": "Sub 14 H",
+      "status": "confirmed",
       "totalRounds": 172,
       "last10": [
         {
@@ -5280,6 +5414,14 @@
           "holes": 18,
           "hcp": 3.9
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "11:50",
+          "startHole": 1,
+          "tee": "Amarelas"
+        }
       ]
     },
     {
@@ -5289,6 +5431,7 @@
       "sex": "M",
       "hcp": 4.2,
       "escIns": "Sub 14 H",
+      "status": "confirmed",
       "totalRounds": 188,
       "last10": [
         {
@@ -5361,6 +5504,14 @@
           "holes": 18,
           "hcp": 5.5
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "11:50",
+          "startHole": 1,
+          "tee": "Amarelas"
+        }
       ]
     },
     {
@@ -5370,6 +5521,7 @@
       "sex": "M",
       "hcp": 5.8,
       "escIns": "Sub 14 H",
+      "status": "confirmed",
       "totalRounds": 297,
       "last10": [
         {
@@ -5442,6 +5594,14 @@
           "holes": 18,
           "hcp": 6.1
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "12:00",
+          "startHole": 1,
+          "tee": "Amarelas"
+        }
       ]
     },
     {
@@ -5451,6 +5611,7 @@
       "sex": "M",
       "hcp": 6.9,
       "escIns": "Sub 14 H",
+      "status": "confirmed",
       "totalRounds": 70,
       "last10": [
         {
@@ -5523,6 +5684,14 @@
           "holes": 18,
           "hcp": 6.1
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "12:00",
+          "startHole": 1,
+          "tee": "Amarelas"
+        }
       ]
     },
     {
@@ -5532,6 +5701,7 @@
       "sex": "M",
       "hcp": 7.5,
       "escIns": "Sub 14 H",
+      "status": "confirmed",
       "totalRounds": 94,
       "last10": [
         {
@@ -5604,6 +5774,14 @@
           "holes": 18,
           "hcp": 9.5
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "12:00",
+          "startHole": 1,
+          "tee": "Amarelas"
+        }
       ]
     },
     {
@@ -5613,6 +5791,7 @@
       "sex": "M",
       "hcp": 8.1,
       "escIns": "Sub 14 H",
+      "status": "confirmed",
       "totalRounds": 172,
       "last10": [
         {
@@ -5685,6 +5864,14 @@
           "holes": 18,
           "hcp": 9.5
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "12:10",
+          "startHole": 1,
+          "tee": "Amarelas"
+        }
       ]
     },
     {
@@ -5694,6 +5881,7 @@
       "sex": "M",
       "hcp": 8.7,
       "escIns": "Sub 14 H",
+      "status": "confirmed",
       "totalRounds": 264,
       "last10": [
         {
@@ -5766,6 +5954,14 @@
           "holes": 18,
           "hcp": 7.9
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "12:20",
+          "startHole": 1,
+          "tee": "Amarelas"
+        }
       ]
     },
     {
@@ -5775,6 +5971,7 @@
       "sex": "M",
       "hcp": 7.9,
       "escIns": "Sub 14 H",
+      "status": "confirmed",
       "totalRounds": 221,
       "last10": [
         {
@@ -5847,6 +6044,14 @@
           "holes": 18,
           "hcp": 6.9
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "12:10",
+          "startHole": 1,
+          "tee": "Amarelas"
+        }
       ]
     },
     {
@@ -5856,6 +6061,7 @@
       "sex": "M",
       "hcp": 8.8,
       "escIns": "Sub 14 H",
+      "status": "confirmed",
       "totalRounds": 234,
       "last10": [
         {
@@ -5928,6 +6134,14 @@
           "holes": 18,
           "hcp": 7.9
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "12:20",
+          "startHole": 1,
+          "tee": "Amarelas"
+        }
       ]
     },
     {
@@ -5937,6 +6151,7 @@
       "sex": "M",
       "hcp": 9.6,
       "escIns": "Sub 14 H",
+      "status": "confirmed",
       "totalRounds": 94,
       "last10": [
         {
@@ -6009,6 +6224,14 @@
           "holes": 9,
           "hcp": 9.7
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "12:30",
+          "startHole": 1,
+          "tee": "Amarelas"
+        }
       ]
     },
     {
@@ -6018,6 +6241,7 @@
       "sex": "M",
       "hcp": 9.5,
       "escIns": "Sub 14 H",
+      "status": "confirmed",
       "totalRounds": 150,
       "last10": [
         {
@@ -6090,6 +6314,14 @@
           "holes": 18,
           "hcp": 10.3
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "12:30",
+          "startHole": 1,
+          "tee": "Amarelas"
+        }
       ]
     },
     {
@@ -6099,6 +6331,7 @@
       "sex": "M",
       "hcp": 9.9,
       "escIns": "Sub 14 H",
+      "status": "confirmed",
       "totalRounds": 215,
       "last10": [
         {
@@ -6171,6 +6404,14 @@
           "holes": 18,
           "hcp": 10.8
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "12:40",
+          "startHole": 1,
+          "tee": "Amarelas"
+        }
       ]
     },
     {
@@ -6180,6 +6421,7 @@
       "sex": "M",
       "hcp": 10.9,
       "escIns": "Sub 14 H",
+      "status": "confirmed",
       "totalRounds": 120,
       "last10": [
         {
@@ -6252,6 +6494,14 @@
           "holes": 18,
           "hcp": 13.2
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "12:40",
+          "startHole": 1,
+          "tee": "Amarelas"
+        }
       ]
     },
     {
@@ -6261,6 +6511,7 @@
       "sex": "M",
       "hcp": 9.8,
       "escIns": "Sub 14 H",
+      "status": "confirmed",
       "totalRounds": 71,
       "last10": [
         {
@@ -6333,6 +6584,14 @@
           "holes": 18,
           "hcp": 10.7
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "12:30",
+          "startHole": 1,
+          "tee": "Amarelas"
+        }
       ]
     },
     {
@@ -6342,6 +6601,7 @@
       "sex": "M",
       "hcp": 8.9,
       "escIns": "Sub 14 H",
+      "status": "confirmed",
       "totalRounds": 98,
       "last10": [
         {
@@ -6414,6 +6674,14 @@
           "holes": 18,
           "hcp": 11.9
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "12:20",
+          "startHole": 1,
+          "tee": "Amarelas"
+        }
       ]
     },
     {
@@ -6423,6 +6691,7 @@
       "sex": "M",
       "hcp": 12.4,
       "escIns": "Sub 14 H",
+      "status": "confirmed",
       "totalRounds": 91,
       "last10": [
         {
@@ -6495,6 +6764,14 @@
           "holes": 18,
           "hcp": 16.8
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "13:00",
+          "startHole": 1,
+          "tee": "Amarelas"
+        }
       ]
     },
     {
@@ -6504,6 +6781,7 @@
       "sex": "M",
       "hcp": 10.2,
       "escIns": "Sub 14 H",
+      "status": "confirmed",
       "totalRounds": 43,
       "last10": [
         {
@@ -6576,6 +6854,14 @@
           "holes": 18,
           "hcp": 12.1
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "12:40",
+          "startHole": 1,
+          "tee": "Amarelas"
+        }
       ]
     },
     {
@@ -6585,6 +6871,7 @@
       "sex": "M",
       "hcp": 11,
       "escIns": "Sub 14 H",
+      "status": "confirmed",
       "totalRounds": 43,
       "last10": [
         {
@@ -6657,6 +6944,14 @@
           "holes": 18,
           "hcp": 15.7
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "12:50",
+          "startHole": 1,
+          "tee": "Amarelas"
+        }
       ]
     },
     {
@@ -6666,6 +6961,7 @@
       "sex": "M",
       "hcp": 11.8,
       "escIns": "Sub 14 H",
+      "status": "confirmed",
       "totalRounds": 104,
       "last10": [
         {
@@ -6738,6 +7034,14 @@
           "holes": 18,
           "hcp": 15
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "12:50",
+          "startHole": 1,
+          "tee": "Amarelas"
+        }
       ]
     },
     {
@@ -6747,6 +7051,7 @@
       "sex": "M",
       "hcp": 12.3,
       "escIns": "Sub 14 H",
+      "status": "confirmed",
       "totalRounds": 91,
       "last10": [
         {
@@ -6819,6 +7124,14 @@
           "holes": 18,
           "hcp": 15.4
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "12:50",
+          "startHole": 1,
+          "tee": "Amarelas"
+        }
       ]
     },
     {
@@ -6828,6 +7141,7 @@
       "sex": "M",
       "hcp": 13.8,
       "escIns": "Sub 14 H",
+      "status": "confirmed",
       "totalRounds": 75,
       "last10": [
         {
@@ -6900,6 +7214,14 @@
           "holes": 18,
           "hcp": 17.4
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "13:00",
+          "startHole": 1,
+          "tee": "Amarelas"
+        }
       ]
     },
     {
@@ -6909,6 +7231,7 @@
       "sex": "M",
       "hcp": 15.5,
       "escIns": "Sub 14 H",
+      "status": "confirmed",
       "totalRounds": 48,
       "last10": [
         {
@@ -6981,6 +7304,14 @@
           "holes": 18,
           "hcp": 17.6
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "13:10",
+          "startHole": 1,
+          "tee": "Amarelas"
+        }
       ]
     },
     {
@@ -6990,6 +7321,7 @@
       "sex": "M",
       "hcp": 14.5,
       "escIns": "Sub 14 H",
+      "status": "confirmed",
       "totalRounds": 43,
       "last10": [
         {
@@ -7062,6 +7394,14 @@
           "holes": 18,
           "hcp": 19
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "13:00",
+          "startHole": 1,
+          "tee": "Amarelas"
+        }
       ]
     },
     {
@@ -7071,6 +7411,7 @@
       "sex": "M",
       "hcp": 15.7,
       "escIns": "Sub 14 H",
+      "status": "confirmed",
       "totalRounds": 72,
       "last10": [
         {
@@ -7143,6 +7484,14 @@
           "holes": 18,
           "hcp": 16.8
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "13:10",
+          "startHole": 1,
+          "tee": "Amarelas"
+        }
       ]
     },
     {
@@ -7152,6 +7501,7 @@
       "sex": "M",
       "hcp": 8.6,
       "escIns": "Sub 14 H",
+      "status": "confirmed",
       "totalRounds": 296,
       "last10": [
         {
@@ -7224,6 +7574,14 @@
           "holes": 18,
           "hcp": 8.1
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "12:10",
+          "startHole": 1,
+          "tee": "Amarelas"
+        }
       ]
     },
     {
@@ -7233,6 +7591,7 @@
       "sex": "M",
       "hcp": 15.7,
       "escIns": "Sub 14 H",
+      "status": "confirmed",
       "totalRounds": 56,
       "last10": [
         {
@@ -7305,6 +7664,14 @@
           "holes": 9,
           "hcp": 20.4
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "13:10",
+          "startHole": 1,
+          "tee": "Amarelas"
+        }
       ]
     },
     {
@@ -7314,6 +7681,7 @@
       "sex": "F",
       "hcp": 1.4,
       "escIns": "Sub 14 S",
+      "status": "confirmed",
       "totalRounds": 185,
       "last10": [
         {
@@ -7386,6 +7754,14 @@
           "holes": 9,
           "hcp": 2.5
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "13:20",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -7395,6 +7771,7 @@
       "sex": "F",
       "hcp": 3.7,
       "escIns": "Sub 14 S",
+      "status": "confirmed",
       "totalRounds": 108,
       "last10": [
         {
@@ -7467,6 +7844,14 @@
           "holes": 18,
           "hcp": 4.7
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "13:20",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -7476,6 +7861,7 @@
       "sex": "F",
       "hcp": 4,
       "escIns": "Sub 14 S",
+      "status": "confirmed",
       "totalRounds": 174,
       "last10": [
         {
@@ -7548,6 +7934,14 @@
           "holes": 18,
           "hcp": 4.4
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "13:30",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -7557,6 +7951,7 @@
       "sex": "F",
       "hcp": 10.1,
       "escIns": "Sub 14 S",
+      "status": "confirmed",
       "totalRounds": 134,
       "last10": [
         {
@@ -7629,6 +8024,14 @@
           "holes": 18,
           "hcp": 11
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "13:30",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -7638,6 +8041,7 @@
       "sex": "F",
       "hcp": 13,
       "escIns": "Sub 14 S",
+      "status": "confirmed",
       "totalRounds": 22,
       "last10": [
         {
@@ -7710,6 +8114,14 @@
           "holes": 18,
           "hcp": 20.5
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "13:40",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -7719,6 +8131,7 @@
       "sex": "F",
       "hcp": 14.9,
       "escIns": "Sub 14 S",
+      "status": "confirmed",
       "totalRounds": 60,
       "last10": [
         {
@@ -7791,6 +8204,14 @@
           "holes": 18,
           "hcp": 19
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "13:40",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -7800,6 +8221,7 @@
       "sex": "F",
       "hcp": 15.6,
       "escIns": "Sub 14 S",
+      "status": "confirmed",
       "totalRounds": 131,
       "last10": [
         {
@@ -7872,6 +8294,14 @@
           "holes": 18,
           "hcp": 19.5
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "13:40",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -7881,6 +8311,7 @@
       "sex": "M",
       "hcp": 6.2,
       "escIns": "Sub 12 H",
+      "status": "confirmed",
       "totalRounds": 69,
       "last10": [
         {
@@ -7953,6 +8384,14 @@
           "holes": 18,
           "hcp": 8.9
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "13:50",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -7962,6 +8401,7 @@
       "sex": "M",
       "hcp": 6.9,
       "escIns": "Sub 12 H",
+      "status": "confirmed",
       "totalRounds": 183,
       "last10": [
         {
@@ -8034,6 +8474,14 @@
           "holes": 18,
           "hcp": 7.4
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "13:50",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -8043,6 +8491,7 @@
       "sex": "M",
       "hcp": 9.8,
       "escIns": "Sub 12 H",
+      "status": "confirmed",
       "totalRounds": 142,
       "last10": [
         {
@@ -8115,6 +8564,14 @@
           "holes": 18,
           "hcp": 10.7
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "13:50",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -8124,6 +8581,7 @@
       "sex": "M",
       "hcp": 11.9,
       "escIns": "Sub 12 H",
+      "status": "confirmed",
       "totalRounds": 32,
       "last10": [
         {
@@ -8196,6 +8654,14 @@
           "holes": 18,
           "hcp": 11.4
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "14:00",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -8205,6 +8671,7 @@
       "sex": "M",
       "hcp": 14.5,
       "escIns": "Sub 12 H",
+      "status": "confirmed",
       "totalRounds": 62,
       "last10": [
         {
@@ -8277,6 +8744,14 @@
           "holes": 18,
           "hcp": 17.3
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "14:00",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -8286,6 +8761,7 @@
       "sex": "M",
       "hcp": 14.8,
       "escIns": "Sub 12 H",
+      "status": "confirmed",
       "totalRounds": 46,
       "last10": [
         {
@@ -8358,6 +8834,14 @@
           "holes": 9,
           "hcp": 16.8
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "14:00",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -8367,6 +8851,7 @@
       "sex": "M",
       "hcp": 18,
       "escIns": "Sub 12 H",
+      "status": "confirmed",
       "totalRounds": 45,
       "last10": [
         {
@@ -8439,6 +8924,14 @@
           "holes": 18,
           "hcp": 20.7
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "14:10",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -8448,6 +8941,7 @@
       "sex": "M",
       "hcp": 18.3,
       "escIns": "Sub 12 H",
+      "status": "confirmed",
       "totalRounds": 64,
       "last10": [
         {
@@ -8520,6 +9014,14 @@
           "holes": 9,
           "hcp": 21.3
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "14:10",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -8529,6 +9031,7 @@
       "sex": "M",
       "hcp": 19.3,
       "escIns": "Sub 12 H",
+      "status": "confirmed",
       "totalRounds": 61,
       "last10": [
         {
@@ -8601,6 +9104,14 @@
           "holes": 18,
           "hcp": 21.5
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "14:10",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -8610,6 +9121,7 @@
       "sex": "M",
       "hcp": 22.9,
       "escIns": "Sub 12 H",
+      "status": "confirmed",
       "totalRounds": 68,
       "last10": [
         {
@@ -8682,6 +9194,14 @@
           "holes": 18,
           "hcp": 22.7
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "14:20",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -8691,77 +9211,15 @@
       "sex": "M",
       "hcp": 22.6,
       "escIns": "Sub 12 H",
-      "totalRounds": 48,
-      "last10": [
+      "status": "confirmed",
+      "totalRounds": 0,
+      "last10": [],
+      "draws": [
         {
-          "sgd": 25.4,
-          "date": "2026-04-19",
-          "tourn": "30th VILA SOL JUNIOR COMP",
-          "holes": 18,
-          "hcp": 23.3
-        },
-        {
-          "sgd": 22.7,
-          "date": "2026-04-11",
-          "tourn": "VS Practice",
-          "holes": 18,
-          "hcp": 24.4
-        },
-        {
-          "sgd": 25.7,
-          "date": "2026-04-11",
-          "tourn": "4º Torneio Drive Challenge Sul–Penina-Sub12",
-          "holes": 9,
-          "hcp": 25.2
-        },
-        {
-          "sgd": 27.4,
-          "date": "2026-03-22",
-          "tourn": "3º Torneio Drive Challenge Sul-Pinh. Altos-Sub 12",
-          "holes": 9,
-          "hcp": 25.8
-        },
-        {
-          "sgd": 33.5,
-          "date": "2026-03-08",
-          "tourn": "29th VILA SOL JUNIOR COMP",
-          "holes": 18,
-          "hcp": 25.8
-        },
-        {
-          "sgd": 18.1,
-          "date": "2026-02-26",
-          "tourn": "Daily Mail WJGC Villa Padierna Marbella",
-          "holes": 18,
-          "hcp": 27.9
-        },
-        {
-          "sgd": 17.2,
-          "date": "2026-02-25",
-          "tourn": "Daily Mail WJGC Villa Padierna Marbella",
-          "holes": 18,
-          "hcp": 30.1
-        },
-        {
-          "sgd": 14.6,
-          "date": "2026-02-24",
-          "tourn": "Daily Mail WJGC Villa Padierna Marbella",
-          "holes": 18,
-          "hcp": 32.7
-        },
-        {
-          "sgd": 31.3,
-          "date": "2026-02-21",
-          "tourn": "2º Torneio Drive Challenge Sul – Laguna G.C Sub 12",
-          "holes": 9,
-          "hcp": 33.3
-        },
-        {
-          "sgd": 35.4,
-          "date": "2026-02-17",
-          "tourn": "Handicap rnd",
-          "holes": 9,
-          "hcp": 33.5
+          "round": 1,
+          "teeTime": "14:20",
+          "startHole": 1,
+          "tee": "Vermelhas"
         }
       ]
     },
@@ -8772,6 +9230,7 @@
       "sex": "M",
       "hcp": 26,
       "escIns": "Sub 12 H",
+      "status": "confirmed",
       "totalRounds": 96,
       "last10": [
         {
@@ -8844,6 +9303,14 @@
           "holes": 9,
           "hcp": 28.4
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "14:30",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -8853,6 +9320,7 @@
       "sex": "M",
       "hcp": 26.2,
       "escIns": "Sub 12 H",
+      "status": "confirmed",
       "totalRounds": 63,
       "last10": [
         {
@@ -8925,6 +9393,14 @@
           "holes": 9,
           "hcp": 27.6
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "14:30",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -8934,6 +9410,7 @@
       "sex": "M",
       "hcp": 26,
       "escIns": "Sub 12 H",
+      "status": "confirmed",
       "totalRounds": 29,
       "last10": [
         {
@@ -9006,6 +9483,14 @@
           "holes": 9,
           "hcp": 40.7
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "14:20",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -9015,6 +9500,7 @@
       "sex": "M",
       "hcp": 30.5,
       "escIns": "Sub 12 H",
+      "status": "confirmed",
       "totalRounds": 23,
       "last10": [
         {
@@ -9087,6 +9573,14 @@
           "holes": 9,
           "hcp": 31.7
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "14:40",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -9096,6 +9590,7 @@
       "sex": "M",
       "hcp": 35.9,
       "escIns": "Sub 12 H",
+      "status": "confirmed",
       "totalRounds": 13,
       "last10": [
         {
@@ -9168,6 +9663,14 @@
           "holes": 9,
           "hcp": 53.3
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "14:40",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -9177,6 +9680,7 @@
       "sex": "M",
       "hcp": 31.3,
       "escIns": "Sub 12 H",
+      "status": "confirmed",
       "totalRounds": 51,
       "last10": [
         {
@@ -9249,6 +9753,14 @@
           "holes": 18,
           "hcp": 33.1
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "14:40",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -9258,6 +9770,7 @@
       "sex": "M",
       "hcp": 29.2,
       "escIns": "Sub 12 H",
+      "status": "confirmed",
       "totalRounds": 36,
       "last10": [
         {
@@ -9330,86 +9843,13 @@
           "holes": 9,
           "hcp": 37.5
         }
-      ]
-    },
-    {
-      "fed": "51896",
-      "name": "Vicente Rodrigues",
-      "escalao": "Sub-12",
-      "sex": "M",
-      "hcp": 35.7,
-      "escIns": "Sub 12 H",
-      "totalRounds": 14,
-      "last10": [
+      ],
+      "draws": [
         {
-          "sgd": 22.9,
-          "date": "2026-04-28",
-          "tourn": "Extra Day Score",
-          "holes": 9,
-          "hcp": 31.4
-        },
-        {
-          "sgd": 27.1,
-          "date": "2026-04-21",
-          "tourn": "Extra Day Score",
-          "holes": 9,
-          "hcp": 34.5
-        },
-        {
-          "sgd": 32.6,
-          "date": "2026-04-19",
-          "tourn": "Campeonato Regional de Jovens Sub 10&12 2026 Dia 2",
-          "holes": 9,
-          "hcp": 35.1
-        },
-        {
-          "sgd": 35.2,
-          "date": "2026-04-18",
-          "tourn": "Campeonato Regional de Jovens Sub 10&12 2026",
-          "holes": 9,
-          "hcp": 35.7
-        },
-        {
-          "sgd": 40.7,
-          "date": "2026-04-12",
-          "tourn": "4º Torn.Drive Challenge Madeira-Porto Santo-Sub 12",
-          "holes": 9,
-          "hcp": 35.7
-        },
-        {
-          "sgd": 39,
-          "date": "2024-09-15",
-          "tourn": "Final Drive Challenge Madeira Porto Santo -Sub 10",
-          "holes": 9,
-          "hcp": 35.1
-        },
-        {
-          "sgd": 34.5,
-          "date": "2024-09-07",
-          "tourn": "4º Torn.Drive Challenge Madeira-Sto.da Serra-Sub10",
-          "holes": 9,
-          "hcp": 36
-        },
-        {
-          "sgd": 37.6,
-          "date": "2024-07-28",
-          "tourn": "6º Torn.Drive Challenge Madeira-Palheiro-Sub10",
-          "holes": 9,
-          "hcp": 35.3
-        },
-        {
-          "sgd": 35.7,
-          "date": "2024-06-23",
-          "tourn": "Torneio Junior Major - Academia Junior - 9 buracos",
-          "holes": 9,
-          "hcp": 36.9
-        },
-        {
-          "sgd": 36.9,
-          "date": "2024-06-16",
-          "tourn": "5º Torn.Drive Challenge Madeira-Porto Santo-Sub10",
-          "holes": 9,
-          "hcp": 41.7
+          "round": 1,
+          "teeTime": "14:30",
+          "startHole": 1,
+          "tee": "Vermelhas"
         }
       ]
     },
@@ -9420,6 +9860,7 @@
       "sex": "F",
       "hcp": 10,
       "escIns": "Sub 12 S",
+      "status": "confirmed",
       "totalRounds": 184,
       "last10": [
         {
@@ -9492,6 +9933,14 @@
           "holes": 18,
           "hcp": 7.9
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "14:50",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -9501,6 +9950,7 @@
       "sex": "F",
       "hcp": 18.1,
       "escIns": "Sub 12 S",
+      "status": "confirmed",
       "totalRounds": 66,
       "last10": [
         {
@@ -9573,6 +10023,14 @@
           "holes": 18,
           "hcp": 20.1
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "14:50",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -9582,6 +10040,7 @@
       "sex": "F",
       "hcp": 24.9,
       "escIns": "Sub 12 S",
+      "status": "confirmed",
       "totalRounds": 26,
       "last10": [
         {
@@ -9654,6 +10113,14 @@
           "holes": 9,
           "hcp": 26.2
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "14:50",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -9663,6 +10130,7 @@
       "sex": "F",
       "hcp": 27.1,
       "escIns": "Sub 12 S",
+      "status": "confirmed",
       "totalRounds": 6,
       "last10": [
         {
@@ -9700,6 +10168,14 @@
           "holes": 9,
           "hcp": 25.9
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "15:00",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -9709,6 +10185,7 @@
       "sex": "F",
       "hcp": 27.3,
       "escIns": "Sub 12 S",
+      "status": "confirmed",
       "totalRounds": 40,
       "last10": [
         {
@@ -9781,6 +10258,14 @@
           "holes": 9,
           "hcp": 30.1
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "15:00",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -9790,6 +10275,7 @@
       "sex": "F",
       "hcp": 29.3,
       "escIns": "Sub 12 S",
+      "status": "confirmed",
       "totalRounds": 40,
       "last10": [
         {
@@ -9862,6 +10348,14 @@
           "holes": 9,
           "hcp": 37.8
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "15:00",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -9871,6 +10365,7 @@
       "sex": "F",
       "hcp": 30.5,
       "escIns": "Sub 12 S",
+      "status": "confirmed",
       "totalRounds": 51,
       "last10": [
         {
@@ -9943,6 +10438,14 @@
           "holes": 9,
           "hcp": 35
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "15:10",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -9952,6 +10455,7 @@
       "sex": "F",
       "hcp": 33.1,
       "escIns": "Sub 12 S",
+      "status": "confirmed",
       "totalRounds": 22,
       "last10": [
         {
@@ -10024,6 +10528,14 @@
           "holes": 9,
           "hcp": 53
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "15:10",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -10033,77 +10545,15 @@
       "sex": "F",
       "hcp": 34.7,
       "escIns": "Sub 12 S",
-      "totalRounds": 49,
-      "last10": [
+      "status": "confirmed",
+      "totalRounds": 0,
+      "last10": [],
+      "draws": [
         {
-          "sgd": 38.1,
-          "date": "2026-04-19",
-          "tourn": "30th VILA SOL JUNIOR COMP",
-          "holes": 18,
-          "hcp": 34.7
-        },
-        {
-          "sgd": 33.6,
-          "date": "2026-03-22",
-          "tourn": "3º Torneio Drive Challenge Sul-Pinh. Altos-Sub 12",
-          "holes": 9,
-          "hcp": 35.4
-        },
-        {
-          "sgd": 40.3,
-          "date": "2026-03-08",
-          "tourn": "29th VILA SOL JUNIOR COMP - 9 HOLES",
-          "holes": 9,
-          "hcp": 35.4
-        },
-        {
-          "sgd": 36.9,
-          "date": "2026-02-21",
-          "tourn": "2º Torneio Drive Challenge Sul – Laguna G.C Sub 12",
-          "holes": 9,
-          "hcp": 35.6
-        },
-        {
-          "sgd": 30.6,
-          "date": "2026-02-16",
-          "tourn": "9 hole, Friendly_Prestige",
-          "holes": 9,
-          "hcp": 36.5
-        },
-        {
-          "sgd": 33.4,
-          "date": "2026-02-14",
-          "tourn": "9 hole, Friendly ",
-          "holes": 9,
-          "hcp": 37.2
-        },
-        {
-          "sgd": 40.9,
-          "date": "2025-12-07",
-          "tourn": "VILA SOL JNR CLUB CHAMPIONSHIP - 9 HOLES",
-          "holes": 9,
-          "hcp": 37.2
-        },
-        {
-          "sgd": 45.2,
-          "date": "2025-11-30",
-          "tourn": "28th VILA SOL JUNIOR COMP - 9 HOLES",
-          "holes": 9,
-          "hcp": 37.2
-        },
-        {
-          "sgd": 34.7,
-          "date": "2025-11-08",
-          "tourn": "3 ball friendly",
-          "holes": 9,
-          "hcp": 37.8
-        },
-        {
-          "sgd": 39.4,
-          "date": "2025-11-01",
-          "tourn": "3 ball friendly",
-          "holes": 9,
-          "hcp": 37.8
+          "round": 1,
+          "teeTime": "15:20",
+          "startHole": 1,
+          "tee": "Vermelhas"
         }
       ]
     },
@@ -10114,6 +10564,7 @@
       "sex": "F",
       "hcp": 40.4,
       "escIns": "Sub 12 S",
+      "status": "confirmed",
       "totalRounds": 33,
       "last10": [
         {
@@ -10186,6 +10637,14 @@
           "holes": 9,
           "hcp": 47.9
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "15:20",
+          "startHole": 1,
+          "tee": "Vermelhas"
+        }
       ]
     },
     {
@@ -10195,6 +10654,7 @@
       "sex": "M",
       "hcp": 13,
       "escIns": "Sub 10 H",
+      "status": "confirmed",
       "totalRounds": 41,
       "last10": [
         {
@@ -10267,6 +10727,14 @@
           "holes": 18,
           "hcp": 16.9
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:00",
+          "startHole": 10,
+          "tee": "Verdes"
+        }
       ]
     },
     {
@@ -10276,6 +10744,7 @@
       "sex": "M",
       "hcp": 13.9,
       "escIns": "Sub 10 H",
+      "status": "confirmed",
       "totalRounds": 44,
       "last10": [
         {
@@ -10348,6 +10817,14 @@
           "holes": 9,
           "hcp": 21.5
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:20",
+          "startHole": 10,
+          "tee": "Verdes"
+        }
       ]
     },
     {
@@ -10357,77 +10834,15 @@
       "sex": "M",
       "hcp": 20.8,
       "escIns": "Sub 10 H",
-      "totalRounds": 22,
-      "last10": [
+      "status": "confirmed",
+      "totalRounds": 0,
+      "last10": [],
+      "draws": [
         {
-          "sgd": 26.3,
-          "date": "2026-04-19",
-          "tourn": "30th VILA SOL JUNIOR COMP",
-          "holes": 18,
-          "hcp": 20.8
-        },
-        {
-          "sgd": 17.3,
-          "date": "2026-04-13",
-          "tourn": "Casual",
-          "holes": 9,
-          "hcp": 21.8
-        },
-        {
-          "sgd": 21.9,
-          "date": "2026-04-11",
-          "tourn": "4º Torneio Drive Challenge Sul–Penina-Sub10",
-          "holes": 9,
-          "hcp": 21.8
-        },
-        {
-          "sgd": 25.2,
-          "date": "2026-04-04",
-          "tourn": "3º Torneio do Circuito Drive Tour - Quinta do Vale",
-          "holes": 18,
-          "hcp": 21.2
-        },
-        {
-          "sgd": 21.2,
-          "date": "2026-03-28",
-          "tourn": "Casual",
-          "holes": 18,
-          "hcp": 22
-        },
-        {
-          "sgd": 24.1,
-          "date": "2026-03-22",
-          "tourn": "3º Torneio Drive Challenge Sul-Pinh. Altos-Sub 10",
-          "holes": 9,
-          "hcp": 21.6
-        },
-        {
-          "sgd": 22.7,
-          "date": "2026-03-08",
-          "tourn": "29th VILA SOL JUNIOR COMP",
-          "holes": 18,
-          "hcp": 22.7
-        },
-        {
-          "sgd": 20.8,
-          "date": "2026-02-21",
-          "tourn": "2º Torneio Drive Challenge Sul – Laguna G.C Sub 10",
-          "holes": 9,
-          "hcp": 23.2
-        },
-        {
-          "sgd": 19.2,
-          "date": "2026-02-17",
-          "tourn": "Greatgolf Junior Open w/ Luis Figo Foundation -U12",
-          "holes": 18,
-          "hcp": 27.2
-        },
-        {
-          "sgd": 29.3,
-          "date": "2026-02-16",
-          "tourn": "Greatgolf Junior Open w/ Luis Figo Foundation -U12",
-          "holes": 18,
-          "hcp": 28.6
+          "round": 1,
+          "teeTime": "09:20",
+          "startHole": 10,
+          "tee": "Verdes"
         }
       ]
     },
@@ -10438,6 +10853,7 @@
       "sex": "M",
       "hcp": 27.9,
       "escIns": "Sub 10 H",
+      "status": "confirmed",
       "totalRounds": 63,
       "last10": [
         {
@@ -10510,6 +10926,14 @@
           "holes": 18,
           "hcp": 28.7
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:40",
+          "startHole": 10,
+          "tee": "Verdes"
+        }
       ]
     },
     {
@@ -10519,6 +10943,7 @@
       "sex": "M",
       "hcp": 29.4,
       "escIns": "Sub 10 H",
+      "status": "confirmed",
       "totalRounds": 28,
       "last10": [
         {
@@ -10591,6 +11016,14 @@
           "holes": 9,
           "hcp": 35.2
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:10",
+          "startHole": 10,
+          "tee": "Verdes"
+        }
       ]
     },
     {
@@ -10600,6 +11033,7 @@
       "sex": "M",
       "hcp": 30.7,
       "escIns": "Sub 10 H",
+      "status": "confirmed",
       "totalRounds": 14,
       "last10": [
         {
@@ -10672,6 +11106,14 @@
           "holes": 9,
           "hcp": 42.8
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:50",
+          "startHole": 10,
+          "tee": "Verdes"
+        }
       ]
     },
     {
@@ -10681,6 +11123,7 @@
       "sex": "M",
       "hcp": 33.4,
       "escIns": "Sub 10 H",
+      "status": "confirmed",
       "totalRounds": 6,
       "last10": [
         {
@@ -10718,6 +11161,14 @@
           "holes": 9,
           "hcp": 54
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:50",
+          "startHole": 10,
+          "tee": "Verdes"
+        }
       ]
     },
     {
@@ -10727,6 +11178,7 @@
       "sex": "M",
       "hcp": 34.1,
       "escIns": "Sub 10 H",
+      "status": "confirmed",
       "totalRounds": 7,
       "last10": [
         {
@@ -10771,6 +11223,14 @@
           "holes": 9,
           "hcp": 54
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:00",
+          "startHole": 10,
+          "tee": "Verdes"
+        }
       ]
     },
     {
@@ -10780,6 +11240,7 @@
       "sex": "M",
       "hcp": 36.8,
       "escIns": "Sub 10 H",
+      "status": "confirmed",
       "totalRounds": 32,
       "last10": [
         {
@@ -10852,6 +11313,14 @@
           "holes": 9,
           "hcp": 46
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:10",
+          "startHole": 10,
+          "tee": "Verdes"
+        }
       ]
     },
     {
@@ -10861,6 +11330,7 @@
       "sex": "M",
       "hcp": 37.9,
       "escIns": "Sub 10 H",
+      "status": "confirmed",
       "totalRounds": 20,
       "last10": [
         {
@@ -10933,6 +11403,14 @@
           "holes": 9,
           "hcp": 49.7
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:10",
+          "startHole": 10,
+          "tee": "Verdes"
+        }
       ]
     },
     {
@@ -10942,6 +11420,7 @@
       "sex": "M",
       "hcp": 38,
       "escIns": "Sub 10 H",
+      "status": "confirmed",
       "totalRounds": 5,
       "last10": [
         {
@@ -10972,6 +11451,14 @@
           "holes": 9,
           "hcp": 48
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:40",
+          "startHole": 10,
+          "tee": "Verdes"
+        }
       ]
     },
     {
@@ -10981,6 +11468,7 @@
       "sex": "M",
       "hcp": 40.7,
       "escIns": "Sub 10 H",
+      "status": "confirmed",
       "totalRounds": 54,
       "last10": [
         {
@@ -11053,86 +11541,13 @@
           "holes": 9,
           "hcp": 44.3
         }
-      ]
-    },
-    {
-      "fed": "52045",
-      "name": "António Trinité",
-      "escalao": "Sub-10",
-      "sex": "M",
-      "hcp": 42.5,
-      "escIns": "Sub 10 H",
-      "totalRounds": 18,
-      "last10": [
+      ],
+      "draws": [
         {
-          "sgd": 42.8,
-          "date": "2026-04-25",
-          "tourn": "4º Torneio Drive Challenge Tejo-Quinta Peru-Sub 10",
-          "holes": 9,
-          "hcp": 42.5
-        },
-        {
-          "sgd": 36.7,
-          "date": "2025-06-22",
-          "tourn": "Extra Day Score",
-          "holes": 9,
-          "hcp": 44.9
-        },
-        {
-          "sgd": 35.1,
-          "date": "2025-02-16",
-          "tourn": "4º Torneio LGS - 8/12",
-          "holes": 9,
-          "hcp": 50.5
-        },
-        {
-          "sgd": 45.7,
-          "date": "2024-12-08",
-          "tourn": "2ºTorneio LGS - 8/12",
-          "holes": 9,
-          "hcp": 51.7
-        },
-        {
-          "sgd": 50.4,
-          "date": "2024-09-22",
-          "tourn": "9º Torneio LGS - 9B",
-          "holes": 9,
-          "hcp": 52.4
-        },
-        {
-          "sgd": 53.1,
-          "date": "2024-06-26",
-          "tourn": "Campeonato Nacional Sub 10 - 2024 - Rapazes Dia 2",
-          "holes": 9,
-          "hcp": 52.6
-        },
-        {
-          "sgd": 53.1,
-          "date": "2024-06-25",
-          "tourn": "Campeonato Nacional Sub 10 - 2024 - Rapazes",
-          "holes": 9,
-          "hcp": 52.6
-        },
-        {
-          "sgd": 54.4,
-          "date": "2024-06-23",
-          "tourn": "5º Torn. Drive Challenge Tejo - Lisbon SC - Sub10",
-          "holes": 9,
-          "hcp": 53.8
-        },
-        {
-          "sgd": 58.1,
-          "date": "2024-06-09",
-          "tourn": "4º Torn. Drive Challenge Tejo - Estoril - Sub10",
-          "holes": 9,
-          "hcp": 54
-        },
-        {
-          "sgd": 53.1,
-          "date": "2024-05-26",
-          "tourn": "3º Torn. Drive Challenge Tejo-Campo Real-Sub10",
-          "holes": 9,
-          "hcp": 54
+          "round": 1,
+          "teeTime": "09:40",
+          "startHole": 10,
+          "tee": "Verdes"
         }
       ]
     },
@@ -11143,6 +11558,7 @@
       "sex": "M",
       "hcp": 41.5,
       "escIns": "Sub 10 H",
+      "status": "confirmed",
       "totalRounds": 25,
       "last10": [
         {
@@ -11215,6 +11631,14 @@
           "holes": 18,
           "hcp": 46.9
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:20",
+          "startHole": 10,
+          "tee": "Verdes"
+        }
       ]
     },
     {
@@ -11224,6 +11648,7 @@
       "sex": "M",
       "hcp": 47.9,
       "escIns": "Sub 10 H",
+      "status": "confirmed",
       "totalRounds": 27,
       "last10": [
         {
@@ -11296,6 +11721,14 @@
           "holes": 9,
           "hcp": 52.3
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:00",
+          "startHole": 10,
+          "tee": "Verdes"
+        }
       ]
     },
     {
@@ -11305,6 +11738,7 @@
       "sex": "M",
       "hcp": 48.1,
       "escIns": "Sub 10 H",
+      "status": "confirmed",
       "totalRounds": 17,
       "last10": [
         {
@@ -11377,6 +11811,14 @@
           "holes": 9,
           "hcp": 54
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:50",
+          "startHole": 10,
+          "tee": "Verdes"
+        }
       ]
     },
     {
@@ -11386,6 +11828,7 @@
       "sex": "M",
       "hcp": 48.1,
       "escIns": "Sub 10 H",
+      "status": "confirmed",
       "totalRounds": 14,
       "last10": [
         {
@@ -11458,6 +11901,14 @@
           "holes": 9,
           "hcp": 54
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:30",
+          "startHole": 10,
+          "tee": "Verdes"
+        }
       ]
     },
     {
@@ -11467,6 +11918,7 @@
       "sex": "M",
       "hcp": 49,
       "escIns": "Sub 10 H",
+      "status": "confirmed",
       "totalRounds": 22,
       "last10": [
         {
@@ -11539,6 +11991,14 @@
           "holes": 9,
           "hcp": 54
         }
+      ],
+      "draws": [
+        {
+          "round": 1,
+          "teeTime": "09:30",
+          "startHole": 10,
+          "tee": "Verdes"
+        }
       ]
     },
     {
@@ -11548,6 +12008,7 @@
       "sex": "M",
       "hcp": 51.2,
       "escIns": "Sub 10 H",
+      "status": "confirmed",
       "totalRounds": 8,
       "last10": [
         {
@@ -11585,30 +12046,13 @@
           "holes": 9,
           "hcp": 54
         }
-      ]
-    },
-    {
-      "fed": "58864",
-      "name": "Mikhail Khontulev",
-      "escalao": "Sub-10",
-      "sex": "M",
-      "hcp": 32.5,
-      "escIns": "Sub 10 H",
-      "totalRounds": 3,
-      "last10": [
+      ],
+      "draws": [
         {
-          "sgd": 32.5,
-          "date": "2026-04-25",
-          "tourn": "4º Torneio Drive Challenge Tejo-Quinta Peru-Sub 10",
-          "holes": 9,
-          "hcp": 37.8
-        },
-        {
-          "sgd": 40.8,
-          "date": "2026-03-28",
-          "tourn": "4º ESTORIL Golf Junior Open by Fausto Figueiredo",
-          "holes": 9,
-          "hcp": 37.8
+          "round": 1,
+          "teeTime": "09:30",
+          "startHole": 10,
+          "tee": "Verdes"
         }
       ]
     }

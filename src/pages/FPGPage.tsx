@@ -2691,26 +2691,3 @@ export default function TorneiosAnalisePage() {
   return <Content />;
 }
 
-                }
-              </>
-            ) : (
-              !jovensLoading && <div className="center-msg muted">{jovensLoaded ? "Selecciona um torneio" : "A carregar…"}</div>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Ranking PJA */}
-      {navMode === "ranking-pja" && (
-        <div className="flex-1" style={{ overflowY: "auto", overflowX: "hidden", minHeight: 0 }}>
-          <PJARankingView pjaList={pjaRankingList} playersDB={playersDB} loading={loading} pjaMembersByYear={pjaMembers} pjaPdfSnapshotByYear={pjaPdfSnapshot} externalFilterName={searchQuery} />
-        </div>
-      )}
-    </div>
-    </DataSourcesProvider>
-  );
-}
-
-export default function TorneiosAnalisePage() {
-  return <Content />;
-}
