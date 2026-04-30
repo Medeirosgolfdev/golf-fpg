@@ -15,7 +15,7 @@
  *   • Suporte a 9H e 18H, 1 a N rondas
  */
 import React, { useEffect, useState, useMemo, useCallback, useRef } from "react";
-import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import { loadPlayers } from "../data/loader";
 import { buildEscLookup, type EscLookup, escCls, escPillCls, formatPlayerName, normalizePlayer } from "../utils/playerUtils";
@@ -63,6 +63,7 @@ import { loadFpgAdmissionsDraws, indexFpgAdmissionsDraws, NACIONAL_2026_META, NA
 import AdmissionsTab from "../ui/AdmissionsTab";
 import DrawTab from "../ui/DrawTab";
 import PrintButton from "../ui/PrintButton";
+import PrintPJAButton from "../ui/PrintPJAButton";
 import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
 // Re-exports para consumidores que ainda importam de FPGPage
 export type { RoundScore, Player, Tournament, ScorecardOptions } from "../data/fpgTypes";
@@ -515,10 +516,11 @@ const CLUBES_GRUPOS_BY_YEAR: Record<string, Record<"sub14" | "sub18", GrupoEntry
  * Adicionar aqui novos torneios conforme necessário.
  */
 const TOURN_PILLS: Record<string, TournPill> = {
-  "10444": "PJA",   // AT&T PEBBLE BEACH PRO-AM BY TITLEIST
-  "10492": "PJA",   // Aroeira Master by Details
+  "10444": "PJA",   // AT&T PEBBLE BEACH PRO-AM BY TITLEIST (Royal Óbidos, 2025-02-01)
+  "10492": "PJA",   // Aroeira Master by Details (Fev 2025)
   "10036": "PJA",   // Ribagolfe Oaks Masters 2025
-  "10019": "PJA",   // Race to Dunas G. Final
+  "10260": "PJA",   // Greatgolf Junior Open w/ Luis Figo Foundation (Vilamoura Millennium, 2025-03-02) — confirmado oficial PJA pelo Excel da comissão técnica
+  "10019": "PJA",   // Race to Dunas G. Final (Comporta Dunas, 2025-11-29) — Grande Final 2025
 };
 
 
@@ -656,13 +658,28 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
     return out;
   }, [hasAdmissions, isMulti, expanded, drawsByRound, hasAnyRounds]);
 
-  const [tab, setTab] = useState(0);
-  // Reset tab when tournament changes
-  const [lastTcode, setLastTcode] = useState(tournament.tcode);
-  if (tournament.tcode !== lastTcode) {
-    setLastTcode(tournament.tcode);
-    setTab(0);
-  }
+  // Tab activa = URL state (?tab=KEY). Permite deep-links como
+  //   /FPG/torneio/000-10935?tab=draw:1   → abre directo no Draw R1
+  //   /FPG/torneio/000-10935?tab=admissions
+  // Quando o URL não traz `tab` (ou traz uma key que não existe neste torneio)
+  // selecciona-se o tab mais avançado na progressão natural do torneio:
+  //   Inscrições → Draw R1 → R1 → Draw R2 → R2 → ... → Resumo
+  // Assim, quem abre o torneio vai sempre para a fase mais recente disponível
+  // (admissions enquanto só houver inscrições, draw R1 quando o sorteio sair,
+  // R1 quando se jogar, draw R2 quando publicado, etc.). Os tabs de agregação
+  // ("📋 Scorecards", "🎯 Análise") são vistas alternativas e ficam fora do
+  // auto-select — quem quer essas vai por link explícito.
+  const [searchParams] = useSearchParams();
+  const urlTabKey = searchParams.get("tab");
+  const urlTabIdx = urlTabKey ? tabs.findIndex(t => t.key === urlTabKey) : -1;
+  const lastProgressionIdx = useMemo(() => {
+    const SKIP = new Set(["scorecards", "analise-aroeira2"]);
+    for (let i = tabs.length - 1; i >= 0; i--) {
+      if (!SKIP.has(tabs[i].key)) return i;
+    }
+    return 0;
+  }, [tabs]);
+  const tab = urlTabIdx >= 0 ? urlTabIdx : lastProgressionIdx;
 
   const activeTab = tabs[Math.min(tab, Math.max(0, tabs.length - 1))];
   const activeKey = activeTab?.key || "";
@@ -795,6 +812,9 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
               </a>
             ))}
             <PrintButton />
+            {/* PrintPJAButton carrega pja-members.json sozinho — só aparece
+                se houver lista para o ano do torneio. */}
+            <PrintPJAButton year={(tournament.date || "").substring(0, 4)} />
           </div>
         </div>
         <div className="detail-sub">
@@ -843,12 +863,25 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
         </div>
       )}
 
-      {/* Tabs (só mostra se há mais do que uma) */}
+      {/* Tabs renderizadas como Link → cada tab tem URL próprio (?tab=KEY),
+          deep-linkable e copiável via right-click. Só mostra se há >1 tab. */}
       {tabs.length > 1 && (
         <div className="tab-bar">
-          {tabs.map((t, i) => (
-            <button key={t.key} className={`tab-under${tab === i ? " active" : ""}`} onClick={() => setTab(i)}>{t.label}</button>
-          ))}
+          {tabs.map((t, i) => {
+            const sp = new URLSearchParams(searchParams);
+            sp.set("tab", t.key);
+            return (
+              <Link
+                key={t.key}
+                to={{ search: `?${sp.toString()}` }}
+                replace
+                className={`tab-under${tab === i ? " active" : ""}`}
+                style={{ textDecoration: "none" }}
+              >
+                {t.label}
+              </Link>
+            );
+          })}
         </div>
       )}
 
@@ -871,6 +904,7 @@ export function TournamentDetail({ tournament, escLookup, playersDB }: { tournam
               tournamentSex={/\bF\b|\bS\b|Feminino/i.test(tournament.name || "") ? "F" : /\bM\b|\bH\b|Masculino/i.test(tournament.name || "") ? "M" : undefined}
               tournamentDate={tournament.date}
               admissions={admissions}
+              fpgUrl={tournament.ccode && tournament.tcode ? `https://scoring.fpg.pt/lists/linkpage.aspx?page=draw&club=${tournament.ccode}&tourn=${tournament.tcode}&round=${drawRoundNum}&ack=8428ACK987` : undefined}
             />
           : isCombined
             ? <AllRoundsScorecardLB tournament={tournament} escLookup={escLookup} playersDB={playersDB} />
@@ -2633,6 +2667,30 @@ function Content() {
                 {curJovens
                   ? <TournamentDetail tournament={curJovens} escLookup={escLookup} playersDB={playersDB} />
                   : <div className="center-msg muted">Selecciona um torneio</div>
+                }
+              </>
+            ) : (
+              !jovensLoading && <div className="center-msg muted">{jovensLoaded ? "Selecciona um torneio" : "A carregar…"}</div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Ranking PJA */}
+      {navMode === "ranking-pja" && (
+        <div className="flex-1" style={{ overflowY: "auto", overflowX: "hidden", minHeight: 0 }}>
+          <PJARankingView pjaList={pjaRankingList} playersDB={playersDB} loading={loading} pjaMembersByYear={pjaMembers} pjaPdfSnapshotByYear={pjaPdfSnapshot} externalFilterName={searchQuery} />
+        </div>
+      )}
+    </div>
+    </DataSourcesProvider>
+  );
+}
+
+export default function TorneiosAnalisePage() {
+  return <Content />;
+}
+
                 }
               </>
             ) : (

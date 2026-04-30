@@ -56,6 +56,8 @@ export interface ScorecardRow {
   sortName?: string;
   /** Posição numérica para sorting interno (quando sortable=true) */
   sortPos?: number | null;
+  /** fedCode do jogador (opcional) — usado para filtrar PDF PJA via data-fed attribute. */
+  fedCode?: string;
 }
 
 interface ScorecardLeaderboardProps {
@@ -281,7 +283,7 @@ export function ScorecardLeaderboard({
               const b9 = !is9 ? scores.slice(9, 18).reduce((a, b) => a + b, 0) : 0;
               const afterScorecard = row.postScorecardCells ?? row.postTotalCells;
               return (
-                <tr key={row.key} className={manuelCls.trim() || undefined} style={row.rowBg && !row.isManuel ? { background: row.rowBg } : undefined}>
+                <tr key={row.key} className={manuelCls.trim() || undefined} style={row.rowBg && !row.isManuel ? { background: row.rowBg } : undefined} data-fed={row.fedCode}>
                   <td className="lb-pos sticky-col-0" style={{ background: sticky, borderTop: row.borderTop }}>{row.pos}</td>
                   <td className="lb-name sticky-col-1" style={{ background: sticky, borderTop: row.borderTop }}>{row.nameContent}</td>
                   {row.prefixCells}

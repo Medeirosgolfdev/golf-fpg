@@ -37,6 +37,9 @@ interface Props {
    *  foi capturado no momento da inscrição/draw e reflecte o HCP com que o
    *  jogador vai entrar em campo (≠ HCP actual, que já pode ter evoluído). */
   admissions?: FpgAdmissions;
+  /** Link para o draw oficial no scoring.fpg.pt. Renderiza-se na toolbar
+   *  como atalho "scoring.fpg.pt ↗" (mesmo padrão do AdmissionsTab). */
+  fpgUrl?: string;
 }
 
 type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "tee" | "nasc" | "hora" | "buraco";
@@ -65,7 +68,7 @@ function teeNameFor(escalao?: string, sex?: "M" | "F"): string | undefined {
 export default function DrawTab({
   draw, roundNum, playersDB,
   tournamentEscalao, tournamentSex, tournamentDate,
-  admissions,
+  admissions, fpgUrl,
 }: Props) {
   const effDate = tournamentDate || draw.date || null;
   const fedCountries = useFedCountries();
@@ -90,12 +93,34 @@ export default function DrawTab({
     return m;
   }, [admissions]);
 
+  // Fed REAL por nome a partir das admissões — fonte autoritativa para este
+  // torneio. Tem de ter prioridade sobre `nameToFed` (playersDB global), porque
+  // o playersDB pode conter entradas virtuais `intl:...` (vindas de
+  // kids-links.json para internacionais) que mascaram o fed português real
+  // com que o jogador se inscreveu. Ex: Joe Short (GB) tem entrada
+  // `intl:joe_short` no playersDB, mas inscreveu-se com fed 51804 — só as
+  // admissões sabem disso. Sem este mapa, o draw mostrava `intl:joe_short`
+  // na coluna FED + ESC vazio + Nasc. vazio (cascata por dob desconhecida).
+  const admFedByName = useMemo(() => {
+    const m = new Map<string, string>();
+    for (const p of (admissions?.players || [])) {
+      if (p.nome && p.fed) m.set(norm(p.nome), p.fed);
+    }
+    return m;
+  }, [admissions]);
+
   const nameToFed = useMemo(() => {
     const m = new Map<string, string>();
     if (!playersDB) return m;
     for (const [fed, bd] of Object.entries(playersDB)) {
       const nm = (bd as any)?.name as string | undefined;
-      if (nm) m.set(norm(nm), fed);
+      if (!nm) continue;
+      const k = norm(nm);
+      // Preferir fed real (numérico) sobre virtual `intl:...`. Se já
+      // existe um fed numérico para este nome, não sobrescrever com intl.
+      const existing = m.get(k);
+      if (existing && !existing.startsWith("intl:") && fed.startsWith("intl:")) continue;
+      m.set(k, fed);
     }
     return m;
   }, [playersDB]);
@@ -126,11 +151,17 @@ export default function DrawTab({
         const nomeFormatted = formatPlayerName(p.nome || "");
         // Obter fed (em ordem de prioridade):
         //   1. Campo `p.fed` — quando a fonte o forneceu (ex: PDFs manuais curados)
-        //   2. Match por nome no playersDB (players.json)
-        //   3. Campo `p.clube` se parecer um fed (erro do scraper datagolf)
+        //   2. Match por nome nas ADMISSÕES (fonte autoritativa para este torneio:
+        //      tem o fed real com que o jogador se inscreveu, mesmo que seja
+        //      internacional registado na FPG)
+        //   3. Match por nome no playersDB (players.json) — pode ter `intl:...`
+        //   4. Campo `p.clube` se parecer um fed (erro do scraper datagolf)
         const pFed = (p as any).fed as string | null | undefined;
         let fed: string | null = pFed && String(pFed).trim() ? String(pFed).trim() : null;
         let clubeRaw = p.clube || "";
+        if (!fed) {
+          fed = admFedByName.get(norm(p.nome)) || admFedByName.get(norm(nomeFormatted)) || null;
+        }
         if (!fed) {
           fed = nameToFed.get(norm(p.nome)) || nameToFed.get(norm(nomeFormatted)) || null;
         }
@@ -183,7 +214,7 @@ export default function DrawTab({
       }
     }
     return out;
-  }, [draw, nameToFed, playersDB, fedBirthdates, effDate, admHcpByFed, admHcpByName]);
+  }, [draw, nameToFed, admFedByName, playersDB, fedBirthdates, effDate, admHcpByFed, admHcpByName]);
 
   // Ordenar por sortKey
   const sorted = useMemo(() => {
@@ -318,11 +349,23 @@ export default function DrawTab({
   if (draw.error) {
     return <div className="detail-toolbar" style={{ padding: 16 }}>
       <span className="muted">Erro a carregar draw: {draw.error}</span>
+      {fpgUrl && (
+        <a href={fpgUrl} target="_blank" rel="noopener noreferrer"
+          className="ml-auto fs-11" style={{ color: "var(--chart-2)" }}>
+          scoring.fpg.pt ↗
+        </a>
+      )}
     </div>;
   }
   if ((draw.groups || []).length === 0) {
     return <div className="detail-toolbar" style={{ padding: 16 }}>
       <span className="muted">{draw.note || "Draw ainda não publicado."}{roundNum ? ` (Ronda ${roundNum})` : ""}</span>
+      {fpgUrl && (
+        <a href={fpgUrl} target="_blank" rel="noopener noreferrer"
+          className="ml-auto fs-11" style={{ color: "var(--chart-2)" }}>
+          scoring.fpg.pt ↗
+        </a>
+      )}
     </div>;
   }
 
@@ -349,6 +392,12 @@ export default function DrawTab({
       <span className="fw-700 fs-14">Draw{roundNum ? ` — Ronda ${roundNum}` : ""}</span>
       <span className="muted fs-12">{(draw.groups || []).length} flights · {total} jogadores</span>
       {draw.date && <span className="muted fs-12">· {draw.date}</span>}
+      {fpgUrl && (
+        <a href={fpgUrl} target="_blank" rel="noopener noreferrer"
+          className="ml-auto fs-11" style={{ color: "var(--chart-2)" }}>
+          scoring.fpg.pt ↗
+        </a>
+      )}
     </div>
   );
 

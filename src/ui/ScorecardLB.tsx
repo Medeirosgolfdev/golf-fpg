@@ -228,6 +228,7 @@ export function ScorecardLB({
       rowBg,
       stickyBg,
       isManuel: rowManuel,
+      fedCode: p.fedCode || undefined,
       nameContent: ((): React.ReactNode => {
         const base: React.ReactNode = nameDecorator_
           ? nameDecorator_(

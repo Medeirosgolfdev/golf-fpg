@@ -157,7 +157,7 @@ export function TournPName({
   const inner = (
     <>
       {truncName}
-      {star && <span className="fs-10" style={{ marginLeft: 3 }}>⭐</span>}
+      {star && <span className="fs-10 print-hide-star" style={{ marginLeft: 3 }}>⭐</span>}
       {sex && <SexBadge sex={sex} size="sm" className="ml-4" />}
     </>
   );

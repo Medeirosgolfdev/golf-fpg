@@ -7,6 +7,7 @@ import SexBadge from "./SexBadge";
 import EmptyState from "./EmptyState";
 import LoadingState from "./LoadingState";
 import FilterChip from "./FilterChip";
+import PrintButton from "./PrintButton";
 import { CrossSeasonTable, SortTh as CSortTh } from "./CrossSeasonTable";
 import { isManuel, fmtTP, tpColor, TournPName, type PlayersDB } from "./tournamentPrimitives";
 import { fmtDate, escalaoAtDate } from "../utils/format";
@@ -17,7 +18,11 @@ import type { RoundScore, Player, Tournament } from "../data/fpgTypes";
    Tabela simples de ranking: # · Jogador · Esc · Clube · Voltas · Pts
    Filtros: escalão + pesquisa nome
    Pontos: par=25, −1 por pancada acima, +1 abaixo (mín 0); GF×1.5
-   Top 14 voltas por ano contam para o total.
+   Top-14 voltas por ano contam para o total (regra 2026+).
+
+   Regra 2025 (legacy): TOP-7 melhores torneios + Grande Final separada.
+   Vale Pisão D1+D2 contam como UM torneio só. Confirmado contra
+   PONTUAÇÕES E RANKINGS 2025.xlsx (comissão técnica PJA).
 
    Regras 2026+ (conforme Regulamento PJA TOUR 2026):
    - Drive Tour (FPG): conta para todos os PJA
@@ -101,7 +106,9 @@ interface PJAPRow {
   sex: string;
   hcp: number | null;
   results: Map<string, PJARoundResult>;
-  allRounds: { roundKey: string; pts: number }[];
+  /** Voltas que contam para o ranking. Inclui tournKey/isGF/tcode para
+   *  permitir agregação por torneio (regra 2025 = top-7 torneios + GF). */
+  allRounds: { roundKey: string; pts: number; tournKey: string; isGF: boolean; tcode: string }[];
   total: number;
   voltas: number;
   eligible: boolean;
@@ -141,12 +148,19 @@ function fmtPts(pts: number): string {
   return pts % 1 === 0 ? String(pts) : pts.toFixed(1);
 }
 
+/** tcodes conhecidos das Grandes Finais PJA. Whitelist preferencial — o nome
+ *  varia: "PJA TOUR Grand Final" (2024 = 10005), "Race to Dunas G. Final"
+ *  (2025 = 10019), etc. */
+const GF_TCODES = new Set<string>(["10005", "10019"]);
+
 function isGFTournament(t: Tournament): boolean {
-  // ATENÇÃO: o regex inicial era /dunas/i || /grande\s*final/i, mas isso
-  // apanhava por engano "PJA Race to Dunas" 2025 (192/10013, 12-Set-2025) que
-  // é torneio regular ×1.0, NÃO Grande Final. A Grande Final tem sempre o
-  // texto "Grande Final" no nome (ex: "PJA TOUR Grand Final" 2024 = 192/10005).
-  return /grande\s*final/i.test(t.name);
+  // Preferir whitelist por tcode (preciso e estável)
+  const tcode = String(t.tcode || "");
+  if (GF_TCODES.has(tcode)) return true;
+  // Fallback: nome com "Grand Final" ou "Grande Final" ou "G. Final"
+  // (NÃO apanhar /dunas/ por si só — havia bug 2026-04-28 onde "PJA Race to
+  // Dunas" 2025 era marcado como GF erradamente.)
+  return /\b(grand[ae]?|g\.)\s*final\b/i.test(t.name || "");
 }
 
 /** Decompõe o nome de um torneio em {circuito, local}. Exemplos:
@@ -275,11 +289,63 @@ export function PJARankingView({
     return `9_pja_excl_${date}`;  // PJA exclusivo / torneios manuais
   };
 
-  const yearTournaments: Tournament[] = useMemo(() =>
-    pjaList
-      .filter(t => (t.date || "").startsWith(year))
-      .sort((a, b) => tournSortKey(a).localeCompare(tournSortKey(b)))
-  , [pjaList, year]);
+  const yearTournaments: Tournament[] = useMemo(() => {
+    let filtered = pjaList.filter(t => (t.date || "").startsWith(year));
+
+    // Caso especial 2025: Vale Pisão D1 (10370) + D2 (10371) foram registados
+    // pela FPG como 2 tcodes distintos, mas a comissão técnica PJA conta como
+    // UM só torneio com 2 rondas. Combinar num torneio sintético antes do
+    // sort/agregação. (Ver pja-members.json _2025_regras + Excel oficial.)
+    if (year === "2025") {
+      const d1 = filtered.find(t => String(t.tcode || "") === "10370");
+      const d2 = filtered.find(t => String(t.tcode || "") === "10371");
+      if (d1 && d2) {
+        // Construir map de player → roundScores combinado [D1.r1, D2.r1]
+        const byPlayer = new Map<string, any>();
+        const addFromSub = (sub: Tournament, ri: number) => {
+          for (const p of (sub.players || [])) {
+            const key = p.fedCode || ("name:" + (p.name || "").toLowerCase().trim());
+            let merged = byPlayer.get(key);
+            if (!merged) {
+              merged = { ...p, roundScores: [] };
+              byPlayer.set(key, merged);
+            }
+            const rs = (p as any).roundScores || [];
+            // O D1/D2 cada um tem 1 ronda só (rs[0])
+            const ronda = rs[0] ? { ...rs[0], round: ri + 1 } : { round: ri + 1, gross: null, scores: [], pars: [], si: [] };
+            merged.roundScores[ri] = ronda;
+          }
+        };
+        addFromSub(d1, 0);
+        addFromSub(d2, 1);
+        // Calcular grossTotal e toPar combinados onde possível
+        const players = Array.from(byPlayer.values()).map((p: any) => {
+          const rondas = p.roundScores || [];
+          const grossSum = rondas.reduce((s: number, r: any) => s + (typeof r.gross === "number" ? r.gross : 0), 0);
+          const parSum = rondas.reduce((s: number, r: any) => s + ((r.pars || []).reduce((a: number,b: number) => a+b, 0) || 0), 0);
+          if (grossSum > 0 && parSum > 0) {
+            p.grossTotal = grossSum;
+            p.toPar = grossSum - parSum;
+            p.parTotal = parSum;
+          }
+          return p;
+        });
+        const synthetic: Tournament = {
+          ...d1,
+          name: "PJA TOUR Vale Pisão",
+          tcode: "10370+10371",
+          rounds: 2,
+          players,
+          _isSynthetic: true,
+          _subRounds: [d1, d2],
+        } as any;
+        filtered = filtered.filter(t => t !== d1 && t !== d2);
+        filtered.push(synthetic);
+      }
+    }
+
+    return filtered.sort((a, b) => tournSortKey(a).localeCompare(tournSortKey(b)));
+  }, [pjaList, year]);
 
   const tournCols: PJATournCol[] = useMemo(() => {
     const cols: PJATournCol[] = [];
@@ -423,7 +489,7 @@ export function PJARankingView({
           else if (aquaporSkipped) excludedReason = "Aquapor: jogador também fez Drive Tour, Aquapor não conta";
 
           row.results.set(roundKey, { toPar: tp, pts, inTop14: false, excluded, excludedReason });
-          if (!excluded) row.allRounds.push({ roundKey, pts });
+          if (!excluded) row.allRounds.push({ roundKey, pts, tournKey, isGF, tcode: String((t as any).tcode || "") });
         };
 
         if (isSynth && subRounds.length > 1 && p.roundScores && p.roundScores.length > 0) {
@@ -447,15 +513,63 @@ export function PJARankingView({
       }
     }
 
+    // Regra de cálculo do total — year-aware:
+    //  • 2025 (legacy): TOP-7 melhores torneios regulares + Grande Final (todas
+    //    rondas da GF) somada à parte. Vale Pisão D1 (10370) + D2 (10371)
+    //    contam como UM torneio único. Confirmado contra o Excel oficial da
+    //    comissão técnica PJA (PONTUAÇÕES E RANKINGS 2025.xlsx).
+    //  • 2026+: TOP-14 melhores rondas (com regras DT/Aquapor/GG_MAIN).
+    //  • Anos anteriores: TOP-14 voltas (legado simples).
     for (const row of map.values()) {
-      const sorted = [...row.allRounds].sort((a, b) => b.pts - a.pts);
-      const top14Keys = new Set(sorted.slice(0, 14).map(r => r.roundKey));
-      for (const [rk, res] of row.results.entries()) {
-        res.inTop14 = top14Keys.has(rk);
+      if (year === "2025") {
+        // Agrupar voltas por tournKey. Vale Pisão D1+D2 já vem combinado num
+        // torneio sintético (tcode "10370+10371") graças ao yearTournaments
+        // useMemo, portanto basta agrupar pelo tournKey natural.
+        type TournAgg = { pts: number; isGF: boolean; roundKeys: string[] };
+        const byTourn = new Map<string, TournAgg>();
+        for (const r of row.allRounds) {
+          let agg = byTourn.get(r.tournKey);
+          if (!agg) { agg = { pts: 0, isGF: r.isGF, roundKeys: [] }; byTourn.set(r.tournKey, agg); }
+          agg.pts += r.pts;
+          if (r.isGF) agg.isGF = true;
+          agg.roundKeys.push(r.roundKey);
+        }
+        const regular: TournAgg[] = [];
+        let gfTotal = 0;
+        const acceptedRoundKeys = new Set<string>();
+        for (const agg of byTourn.values()) {
+          if (agg.isGF) {
+            gfTotal += agg.pts;
+            agg.roundKeys.forEach(k => acceptedRoundKeys.add(k));
+          } else {
+            regular.push(agg);
+          }
+        }
+        regular.sort((a, b) => b.pts - a.pts);
+        const top7 = regular.slice(0, 7);
+        let top7Total = 0;
+        for (const t of top7) {
+          top7Total += t.pts;
+          t.roundKeys.forEach(k => acceptedRoundKeys.add(k));
+        }
+        for (const [rk, res] of row.results.entries()) {
+          res.inTop14 = acceptedRoundKeys.has(rk);
+        }
+        row.total = top7Total + gfTotal;
+        row.voltas = row.allRounds.length;
+        // "Elegível" em 2025: ter participado em ≥7 torneios regulares (≈ campanha completa)
+        row.eligible = regular.length >= 7;
+      } else {
+        // 2026+ e legado: TOP-14 voltas
+        const sorted = [...row.allRounds].sort((a, b) => b.pts - a.pts);
+        const top14Keys = new Set(sorted.slice(0, 14).map(r => r.roundKey));
+        for (const [rk, res] of row.results.entries()) {
+          res.inTop14 = top14Keys.has(rk);
+        }
+        row.total = sorted.slice(0, 14).reduce((s, r) => s + r.pts, 0);
+        row.voltas = row.allRounds.length;
+        row.eligible = row.voltas >= 14;
       }
-      row.total = sorted.slice(0, 14).reduce((s, r) => s + r.pts, 0);
-      row.voltas = row.allRounds.length;
-      row.eligible = row.voltas >= 14;
     }
 
     // Membership mode: injectar rows "esqueleto" (0 voltas, 0 pts) para TODOS
@@ -567,14 +681,6 @@ export function PJARankingView({
   }, [tournCols, yearTournaments, pjaMembersByYear, year]);
 
   // Map fedCode → entry do PDF oficial (para comparar e destacar disparidades).
-  const pdfByFed = useMemo(() => {
-    const map = new Map<string, PjaPdfEntry>();
-    const arr = pjaPdfSnapshotByYear?.[year];
-    if (arr) for (const e of arr) if (e.fed) map.set(String(e.fed), e);
-    return map;
-  }, [pjaPdfSnapshotByYear, year]);
-  const hasPdfSnapshot = pdfByFed.size > 0;
-
   // Divide em 2 grupos: inscritos (ranking principal) e não-inscritos (lista
   // à parte, só para referência — estes não competem pelo troféu PJA).
   const { rowsInscritos, rowsNaoInscritos } = useMemo(() => {
@@ -658,6 +764,8 @@ export function PJARankingView({
         </button>
       ))}
     </div>
+    {/* Botão PDF — exporta ranking completo com colunas dos torneios */}
+    <PrintButton label="PDF" className="tourn-ext-link print-hide" title={`Exportar ranking ${year} para PDF — usa A3 landscape ou multi-page automático`} />
     {/* Search removido — a FPGPage renderiza um search único na sua toolbar
         e passa o valor via `externalFilterName`. Fallback inline quando o
         componente é usado standalone (sem externalFilterName). */}
@@ -679,12 +787,12 @@ export function PJARankingView({
       <span className="muted fs-10">{sortedRows.length} de {allRows.length}</span>
       <FilterChip active={false} onClick={() => { setFilterEsc([]); if (externalFilterName === undefined) setFilterName(""); }}>✕ limpar</FilterChip>
     </>}
-    <span className="muted fs-10 ml-auto" title="Regras de pontuação PJA 2026 aplicadas" style={{ whiteSpace: "nowrap" }}>
-      Par=25pts · top 14 · GF×1,5
-      {year >= "2026" && " · GG Main R2+R3"}
-      {hasPdfSnapshot && <> · <span style={{ color: "var(--color-danger-dark, #991B1B)" }}>Δ PDF</span></>}
+    <span className="muted fs-10 ml-auto" title={year === "2025" ? "Par=25pts · Top-7 torneios + GF · GF×1,5 · VP D1+D2 combinado" : year >= "2026" ? "Par=25pts · Top-14 voltas · GF×1,5 · GG Main R2+R3" : "Par=25pts · Top-14 voltas · GF×1,5"} style={{ whiteSpace: "nowrap", cursor: "help" }}>
+      ℹ Regras
     </span>
-    <span className="chip">{allRows.length} jog · {visibleTournCols.length} torn</span>
+    <span className="chip" title={`${allRows.length} jogadores PJA · ${visibleTournCols.length} torneios`}>
+      {allRows.length}j · {visibleTournCols.length}t
+    </span>
   </>;
 
   return (
@@ -778,17 +886,12 @@ export function PJARankingView({
                 </>
               ),
             }))}
-            summaryGroupTh={<th className="cs-grp u-fw8-fs12" colSpan={hasPdfSnapshot ? 5 : 2}>
-              Ranking{hasPdfSnapshot && <span className="muted fs-10" style={{ fontWeight: 500, marginLeft: 6 }}>· vs PDF oficial</span>}
+            summaryGroupTh={<th className="cs-grp u-fw8-fs12" colSpan={2}>
+              Ranking
             </th>}
             summarySubHeaders={<>
               <CSortTh k="voltas" s={sortKey} d={sortDir} on={handleSort} className="cs-s-games cs-grp">Voltas</CSortTh>
               <CSortTh k="total"  s={sortKey} d={sortDir} on={handleSort} className="cs-s-pts cs-col" style={{ color: "var(--color-warn-dark)", fontWeight: 800 }}>Total</CSortTh>
-              {hasPdfSnapshot && <>
-                <th className="cs-col" style={{ color: "var(--text-muted)", fontWeight: 700, fontSize: 10 }}>PDF pts</th>
-                <th className="cs-col" style={{ color: "var(--text-muted)", fontWeight: 700, fontSize: 10 }}>Δ pts</th>
-                <th className="cs-col" style={{ color: "var(--text-muted)", fontWeight: 700, fontSize: 10 }}>Δ r</th>
-              </>}
             </>}
           >
             {sortedRows.map((row, idx) => {
@@ -846,37 +949,6 @@ export function PJARankingView({
                   <td className="cs-s-pts cs-col" style={{ fontWeight: 800, color: "var(--color-warn-dark)", fontVariantNumeric: "tabular-nums" }}>
                     {fmtPts(row.total)}
                   </td>
-                  {hasPdfSnapshot && (() => {
-                    const pdf = row.fedCode ? pdfByFed.get(row.fedCode) : null;
-                    if (!pdf) {
-                      return <>
-                        <td className="cs-col muted fs-10" style={{ textAlign: "center" }} title="Jogador não consta no snapshot do PDF oficial">–</td>
-                        <td className="cs-col muted fs-10" style={{ textAlign: "center" }}>–</td>
-                        <td className="cs-col muted fs-10" style={{ textAlign: "center" }}>–</td>
-                      </>;
-                    }
-                    const dPts = row.total - pdf.pts;
-                    const dR = row.voltas - pdf.rounds;
-                    const okPts = dPts === 0;
-                    const okR = dR === 0;
-                    const okBg = "transparent";
-                    const badBg = "var(--bg-danger-subtle, #FFE0E0)";
-                    const fmtDiff = (n: number) => n === 0 ? "±0" : (n > 0 ? `+${n}` : `${n}`);
-                    const title = (okPts && okR)
-                      ? "✓ Bate com o PDF oficial"
-                      : `PDF: ${pdf.pts}pts/${pdf.rounds}r · Cálc: ${row.total}pts/${row.voltas}r`;
-                    return <>
-                      <td className="cs-col fs-10" style={{ textAlign: "center", color: "var(--text-muted)" }} title={title}>
-                        {pdf.pts}<span style={{ fontSize: 9, marginLeft: 2 }}>/{pdf.rounds}r</span>
-                      </td>
-                      <td className="cs-col" style={{ textAlign: "center", fontWeight: 700, background: okPts ? okBg : badBg, color: okPts ? "var(--text-muted)" : "var(--color-danger-dark, #991B1B)" }} title={title}>
-                        {fmtDiff(dPts)}
-                      </td>
-                      <td className="cs-col" style={{ textAlign: "center", fontWeight: 700, background: okR ? okBg : badBg, color: okR ? "var(--text-muted)" : "var(--color-danger-dark, #991B1B)" }} title={title}>
-                        {fmtDiff(dR)}
-                      </td>
-                    </>;
-                  })()}
                 </tr>
               );
             })}
@@ -888,7 +960,7 @@ export function PJARankingView({
           inscreveram no circuito no ano corrente. Pontuam em eventos PJA
           na mesma, mas não entram no ranking oficial. */}
       {sortedNaoInscritos.length > 0 && (
-        <div style={{ marginTop: 24, padding: "0 16px 24px" }}>
+        <div className="print-hide" style={{ marginTop: 24, padding: "0 16px 24px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 0" }}>
             <span className="fw-800 fs-12" style={{ color: "var(--text-2)" }}>
               Não inscritos no circuito {year}

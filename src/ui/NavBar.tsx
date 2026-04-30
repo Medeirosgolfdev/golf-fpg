@@ -14,15 +14,19 @@ import golfBallSvg from "../assets/golf-ball.svg";
 
 type Tab =
   | "campos" | "jogadores" | "comparar" | "simulador" | "calendario"
-  | "drive" | "bjgt" | "kids" | "uskids" | "diversos" | "doral";
+  | "drive" | "bjgt" | "kids" | "uskids" | "diversos" | "doral"
+  | "forma";
 
 // ── Lista de itens de navegação — editar aqui para adicionar/reordenar ──
-const NAV_ITEMS: { tab: Tab; label: string; path: string }[] = [
+// `external: true` → abre em nova aba sem SPA navigation (ficheiros estáticos
+// em public/, dashboards externos, etc.)
+const NAV_ITEMS: { tab: Tab; label: string; path: string; external?: boolean }[] = [
   { tab: "jogadores",  label: "Jogadores",    path: "/jogadores"  },
   { tab: "simulador",  label: "Simulador",    path: "/simulador"  },
   { tab: "calendario", label: "Calendário",   path: "/calendario" },
   { tab: "drive",      label: "🇵🇹 DRIVE",   path: "/drive"      },
   { tab: "diversos",   label: "🇵🇹 FPG",     path: "/FPG"        },
+  { tab: "forma",      label: "📈 Forma Nac.",path: "/forma" },
   { tab: "uskids",     label: "🇺🇸 USKids",  path: "/uskids"     },
   { tab: "doral",      label: "🇺🇸 Doral",   path: "/doral"      },
   { tab: "bjgt",       label: "🇪🇸 BJGT",    path: "/bjgt"       },
@@ -46,6 +50,7 @@ function tabFromPath(pathname: string): Tab {
     uskids: "uskids",
     diversos: "diversos",
     FPG: "diversos",
+    forma: "forma",
     doral: "doral",
   };
   return map[seg] ?? "jogadores";
@@ -64,6 +69,7 @@ const TAB_TITLES: Record<Tab, string> = {
   bjgt:       "Golf Junior – BJGT",
   diversos:   "Golf Junior – Diversos",
   doral:      "Golf Junior – Doral",
+  forma:      "Golf Junior – Forma Nacional",
 };
 
 // ── Componente ─────────────────────────────────────────────────────
@@ -136,14 +142,18 @@ export default function NavBar() {
 
       {/* Nav — elementos <a href> para suportar Ctrl/Cmd+click "abrir em nova
           aba" e right-click "copiar endereço". Click normal faz preventDefault
-          + navigate SPA (sem reload). */}
+          + navigate SPA (sem reload). Itens com `external: true` abrem em nova
+          aba sem SPA — ficheiros estáticos servidos a partir de public/. */}
       <nav ref={navRef} className="nav nav-scroll">
-        {calUnlocked && NAV_ITEMS.map(({ tab: t, label, path }) => (
+        {calUnlocked && NAV_ITEMS.map(({ tab: t, label, path, external }) => (
           <a
             key={t}
             href={path}
+            target={external ? "_blank" : undefined}
+            rel={external ? "noopener" : undefined}
             className={`nav-btn${tab === t ? " active" : ""}`}
             onClick={(e) => {
+              if (external) return; // deixa o browser abrir o link em nova aba
               if (e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
               e.preventDefault();
               go(path);

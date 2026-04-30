@@ -40,7 +40,7 @@
 const fs = require("fs");
 const path = require("path");
 const { execSync } = require("child_process");
-const { writeJsonAtomic } = require("../lib/atomic-write");
+const { writeJsonAtomic, writeJsonAtomicVerified } = require("../lib/atomic-write");
 
 const REPO_ROOT = path.resolve(__dirname, "..");
 const OUTPUT_DIR = path.join(REPO_ROOT, "output");
@@ -168,6 +168,14 @@ async function fetchScorecard(round) {
 // ─── IO helpers ───────────────────────────────────────────
 function ensureDir(dir) { if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true }); }
 function writeJson(file, obj) { writeJsonAtomic(file, obj); }
+// Para ficheiros críticos cuja corrupção silenciosa já bateu (whs.json, scorecards.json):
+// usa a versão que parseia depois de escrever e re-tenta uma vez se vier truncado.
+// Causa histórica: em mounts Windows, renameSync(tmp, target) pode falhar
+// silenciosamente se o target estiver com handle aberto (Vite hot-reload, app a ler) —
+// o tmp é movido mas o conteúdo final fica como o do target antigo. Resultado:
+// summary.json e scorecards.json actualizam, mas whs.json mantém a versão Apr 15
+// truncada. A versão "verified" parseia e detecta isto.
+function writeJsonVerified(file, obj) { writeJsonAtomicVerified(file, obj); }
 function readJsonIfExists(file) {
   if (!fs.existsSync(file)) return null;
   try { return JSON.parse(fs.readFileSync(file, "utf8")); } catch { return null; }
@@ -214,9 +222,10 @@ async function processPlayer(fed) {
     await new Promise(r => setTimeout(r, 80)); // throttle
   }
 
-  // 3) Escrever
-  writeJson(whsFile, rounds);
-  writeJson(scFile, scorecards);
+  // 3) Escrever — whs.json e scorecards.json com verificação pós-escrita
+  //    (detecta + re-tenta truncagem silenciosa em mounts Windows)
+  writeJsonVerified(whsFile, rounds);
+  writeJsonVerified(scFile, scorecards);
 
   // 4) Detectar se data.json (output do pipeline/render) está em falta.
   //    Se sim, marcar para reprocessar mesmo sem scorecards novos —
