@@ -1,14 +1,14 @@
 {
-  "lastUpdated": "2026-04-26T20:29:43.510Z",
+  "lastUpdated": "2026-05-01T20:42:36.522Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
-  "today": "2026-04-26",
+  "today": "2026-05-01",
   "summary": {
     "total": 1132,
-    "complete": 1110,
-    "in_progress": 7,
-    "future": 10,
+    "complete": 1116,
+    "in_progress": 10,
+    "future": 0,
     "missing_admissions": 0,
-    "missing_classif": 0,
+    "missing_classif": 1,
     "missing_scorecards": 1,
     "missing_draws": 4,
     "unknown": 0
@@ -21,16 +21,16 @@
       "date": "2026-05-01",
       "rounds": 1,
       "has_admissions": true,
-      "admissions_count": 17,
-      "has_draws": false,
-      "draws_rounds_with_data": 0,
-      "draws_players_total": 0,
+      "admissions_count": 16,
+      "has_draws": true,
+      "draws_rounds_with_data": 2,
+      "draws_players_total": 31,
       "has_classif": false,
       "player_count": 0,
       "players_with_scorecards": 0,
       "scorecards_source": null,
       "scorecards_ratio": 0,
-      "status": "future"
+      "status": "in_progress"
     },
     {
       "ccode": "000",
@@ -40,15 +40,15 @@
       "rounds": 1,
       "has_admissions": true,
       "admissions_count": 6,
-      "has_draws": false,
-      "draws_rounds_with_data": 0,
-      "draws_players_total": 0,
+      "has_draws": true,
+      "draws_rounds_with_data": 2,
+      "draws_players_total": 10,
       "has_classif": false,
       "player_count": 0,
       "players_with_scorecards": 0,
       "scorecards_source": null,
       "scorecards_ratio": 0,
-      "status": "future"
+      "status": "in_progress"
     },
     {
       "ccode": "000",
@@ -57,16 +57,16 @@
       "date": "2026-05-01",
       "rounds": 1,
       "has_admissions": true,
-      "admissions_count": 30,
-      "has_draws": false,
-      "draws_rounds_with_data": 0,
-      "draws_players_total": 0,
+      "admissions_count": 31,
+      "has_draws": true,
+      "draws_rounds_with_data": 2,
+      "draws_players_total": 60,
       "has_classif": false,
       "player_count": 0,
       "players_with_scorecards": 0,
       "scorecards_source": null,
       "scorecards_ratio": 0,
-      "status": "future"
+      "status": "in_progress"
     },
     {
       "ccode": "000",
@@ -76,15 +76,15 @@
       "rounds": 1,
       "has_admissions": true,
       "admissions_count": 10,
-      "has_draws": false,
-      "draws_rounds_with_data": 0,
-      "draws_players_total": 0,
+      "has_draws": true,
+      "draws_rounds_with_data": 2,
+      "draws_players_total": 20,
       "has_classif": false,
       "player_count": 0,
       "players_with_scorecards": 0,
       "scorecards_source": null,
       "scorecards_ratio": 0,
-      "status": "future"
+      "status": "in_progress"
     },
     {
       "ccode": "000",
@@ -93,16 +93,16 @@
       "date": "2026-05-01",
       "rounds": 1,
       "has_admissions": true,
-      "admissions_count": 28,
-      "has_draws": false,
-      "draws_rounds_with_data": 0,
-      "draws_players_total": 0,
+      "admissions_count": 27,
+      "has_draws": true,
+      "draws_rounds_with_data": 2,
+      "draws_players_total": 54,
       "has_classif": false,
       "player_count": 0,
       "players_with_scorecards": 0,
       "scorecards_source": null,
       "scorecards_ratio": 0,
-      "status": "future"
+      "status": "in_progress"
     },
     {
       "ccode": "000",
@@ -112,15 +112,15 @@
       "rounds": 1,
       "has_admissions": true,
       "admissions_count": 7,
-      "has_draws": false,
-      "draws_rounds_with_data": 0,
-      "draws_players_total": 0,
+      "has_draws": true,
+      "draws_rounds_with_data": 2,
+      "draws_players_total": 14,
       "has_classif": false,
       "player_count": 0,
       "players_with_scorecards": 0,
       "scorecards_source": null,
       "scorecards_ratio": 0,
-      "status": "future"
+      "status": "in_progress"
     },
     {
       "ccode": "000",
@@ -130,15 +130,15 @@
       "rounds": 1,
       "has_admissions": true,
       "admissions_count": 19,
-      "has_draws": false,
-      "draws_rounds_with_data": 0,
-      "draws_players_total": 0,
+      "has_draws": true,
+      "draws_rounds_with_data": 2,
+      "draws_players_total": 36,
       "has_classif": false,
       "player_count": 0,
       "players_with_scorecards": 0,
       "scorecards_source": null,
       "scorecards_ratio": 0,
-      "status": "future"
+      "status": "in_progress"
     },
     {
       "ccode": "000",
@@ -147,16 +147,16 @@
       "date": "2026-05-01",
       "rounds": 1,
       "has_admissions": true,
-      "admissions_count": 8,
-      "has_draws": false,
-      "draws_rounds_with_data": 0,
-      "draws_players_total": 0,
+      "admissions_count": 10,
+      "has_draws": true,
+      "draws_rounds_with_data": 2,
+      "draws_players_total": 19,
       "has_classif": false,
       "player_count": 0,
       "players_with_scorecards": 0,
       "scorecards_source": null,
       "scorecards_ratio": 0,
-      "status": "future"
+      "status": "in_progress"
     },
     {
       "ccode": "000",
@@ -165,16 +165,16 @@
       "date": "2026-05-01",
       "rounds": 1,
       "has_admissions": true,
-      "admissions_count": 18,
-      "has_draws": false,
-      "draws_rounds_with_data": 0,
-      "draws_players_total": 0,
+      "admissions_count": 20,
+      "has_draws": true,
+      "draws_rounds_with_data": 2,
+      "draws_players_total": 36,
       "has_classif": false,
       "player_count": 0,
       "players_with_scorecards": 0,
       "scorecards_source": null,
       "scorecards_ratio": 0,
-      "status": "future"
+      "status": "in_progress"
     },
     {
       "ccode": "000",
@@ -192,7 +192,7 @@
       "players_with_scorecards": 0,
       "scorecards_source": null,
       "scorecards_ratio": 0,
-      "status": "future"
+      "status": "in_progress"
     },
     {
       "ccode": "987",
@@ -210,7 +210,7 @@
       "players_with_scorecards": 8,
       "scorecards_source": "drive-data-2026-04.json",
       "scorecards_ratio": 1,
-      "status": "in_progress"
+      "status": "complete"
     },
     {
       "ccode": "987",
@@ -228,7 +228,7 @@
       "players_with_scorecards": 12,
       "scorecards_source": "drive-data-2026-04.json",
       "scorecards_ratio": 1,
-      "status": "in_progress"
+      "status": "complete"
     },
     {
       "ccode": "987",
@@ -246,7 +246,7 @@
       "players_with_scorecards": 21,
       "scorecards_source": "drive-data-2026-04.json",
       "scorecards_ratio": 0.913,
-      "status": "in_progress"
+      "status": "complete"
     },
     {
       "ccode": "987",
@@ -264,7 +264,7 @@
       "players_with_scorecards": 28,
       "scorecards_source": "drive-data-2026-04.json",
       "scorecards_ratio": 1,
-      "status": "in_progress"
+      "status": "complete"
     },
     {
       "ccode": "987",
@@ -282,25 +282,25 @@
       "players_with_scorecards": 18,
       "scorecards_source": "drive-data-2026-04.json",
       "scorecards_ratio": 0.947,
-      "status": "in_progress"
+      "status": "complete"
     },
     {
       "ccode": "PJA",
       "tcode": "pja_aroeira2_2026-04-25",
       "name": "PJA Aroeira 2",
       "date": "2026-04-25",
-      "rounds": 2,
+      "rounds": 1,
       "has_admissions": false,
       "admissions_count": 0,
       "has_draws": false,
       "draws_rounds_with_data": 0,
       "draws_players_total": 0,
-      "has_classif": true,
-      "player_count": 21,
+      "has_classif": false,
+      "player_count": 0,
       "players_with_scorecards": 0,
-      "scorecards_source": "pull-torneios003.json",
+      "scorecards_source": null,
       "scorecards_ratio": 0,
-      "status": "in_progress"
+      "status": "missing_classif"
     },
     {
       "ccode": "985",
@@ -397,18 +397,18 @@
       "tcode": "10543",
       "name": "PJA  Aroeira Masters 2026",
       "date": "2026-04-24",
-      "rounds": 1,
+      "rounds": 2,
       "has_admissions": false,
       "admissions_count": 0,
       "has_draws": false,
       "draws_rounds_with_data": 0,
       "draws_players_total": 0,
-      "has_classif": false,
-      "player_count": 0,
-      "players_with_scorecards": 0,
-      "scorecards_source": null,
-      "scorecards_ratio": 0,
-      "status": "in_progress"
+      "has_classif": true,
+      "player_count": 21,
+      "players_with_scorecards": 21,
+      "scorecards_source": "jovens_2026.json",
+      "scorecards_ratio": 1,
+      "status": "complete"
     },
     {
       "ccode": "987",
