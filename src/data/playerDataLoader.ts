@@ -1,10 +1,12 @@
 /**
  * playerDataLoader.ts
- * 
+ *
  * Extrai os dados embebidos no HTML standalone gerado por make-scorecards-ui.js.
  * O HTML contém um bloco <script> com variáveis JS (DATA, HOLES, etc.)
  * geradas via JSON.stringify — podemos extraí-las com regex e fazer JSON.parse.
  */
+
+import { canonicalCourseName, rotateAroeira2HolesIfNeeded } from "../utils/courseAliases";
 
 /* ─── Tipos (espelham a estrutura gerada pelo pipeline Node) ─── */
 
@@ -205,6 +207,177 @@ function parseVar<T>(scriptText: string, varName: string, fallback: T): T {
 /* ── In-memory cache (avoids re-fetching on navigation) ── */
 const _playerCache = new Map<string, Promise<PlayerPageData>>();
 
+/**
+ * Canoniza nomes de campo (ex: "PGA Aroeira No.2 - CNJ FPG" → "PGA Aroeira No.2")
+ * e funde entradas que ficam com o mesmo nome canónico após a normalização.
+ *
+ * O pipeline FPG ocasionalmente atribui sufixos específicos do torneio ao
+ * nome do campo. Sem este merge, a sidebar "Por campo" mostraria o mesmo
+ * percurso duas vezes (uma com cada nome).
+ */
+function mergeCanonicalCourses(input: CourseData[]): CourseData[] {
+  const byName = new Map<string, CourseData>();
+  for (const c of input) {
+    const canon = canonicalCourseName(c.course) || c.course;
+    const prev = byName.get(canon);
+    if (prev) {
+      prev.rounds = [...prev.rounds, ...(c.rounds || [])];
+      prev.count = prev.rounds.length;
+      prev.lastDateSort = Math.max(prev.lastDateSort, c.lastDateSort);
+    } else {
+      byName.set(canon, { ...c, course: canon });
+    }
+  }
+  // Re-ordenar rondas dentro de cada bucket (mais recentes primeiro)
+  const out = [...byName.values()];
+  for (const c of out) {
+    c.rounds.sort((a, b) => b.dateSort - a.dateSort);
+  }
+  // Reordenar campos por última ronda (mais recente primeiro)
+  out.sort((a, b) => b.lastDateSort - a.lastDateSort);
+  return out;
+}
+
+/**
+ * Recalcula EC (eclético resumido) e ECDET (eclético detalhado por tee) a
+ * partir dos HOLES já rotacionados e do `data` já fundido por canonicalCourseName.
+ *
+ * Razão de existir: o pipeline Node (`make-scorecards-ui.js`) calcula o EC
+ * posição-a-posição no array `g[]` sem se aperceber de que, em campos com
+ * renumeração (ex: PGA Aroeira No.2 reconfigurado em 2025), rondas pré- e
+ * pós-renumeração no mesmo bucket de campo têm os arrays deslocados +12.
+ * Isto produz "eagles fictícios" — best=2 num par 4 quando o 2 vem de uma
+ * ronda em config antiga onde a posição 4 era um par 3.
+ *
+ * A `rotateAroeira2HolesIfNeeded` (já aplicada antes desta função) alinha
+ * todos os HOLES na config nova. Aqui refazemos o EC sobre os dados alinhados,
+ * garantindo consistência par/best e from-pointers válidos.
+ *
+ * Mutates `ec` e `ecdet` in-place.
+ */
+function recomputeECForAllCourses(
+  data: CourseData[],
+  holes: Record<string, HoleScores>,
+  ec: Record<string, EclecticEntry[]>,
+  ecdet: Record<string, Record<string, EclecticEntry>>,
+): void {
+  for (const course of data) {
+    if (!course.rounds || course.rounds.length === 0) continue;
+    const courseKey = (course.course || "").toLowerCase();
+    if (!courseKey) continue;
+
+    // Agrupar rondas por (teeKey, holeCount). Um mesmo tee pode ter
+    // entradas separadas para 9 e 18 buracos.
+    type Bucket = { teeName: string; teeKey: string; holeCount: number; rounds: RoundData[] };
+    const buckets = new Map<string, Bucket>();
+    for (const r of course.rounds) {
+      if (r._isTreino || r._isExtra || r._isTeamEvent) continue;
+      const h = holes[r.scoreId];
+      if (!h || !h.g || !h.p) continue;
+      const teeKey = r.teeKey || "";
+      const teeName = r.tee || "";
+      const holeCount = r.holeCount || (h.g.length === 9 ? 9 : 18);
+      const k = `${teeKey}|${holeCount}`;
+      if (!buckets.has(k)) {
+        buckets.set(k, { teeName, teeKey, holeCount, rounds: [] });
+      }
+      buckets.get(k)!.rounds.push(r);
+    }
+    if (buckets.size === 0) continue;
+
+    const newEntries: EclecticEntry[] = [];
+    const newDet: Record<string, EclecticEntry> = {};
+
+    for (const b of buckets.values()) {
+      // O array `g` em HOLES tem sempre 18 posições (pos 0-17). Para 9-hole
+      // rounds, podem usar pos 0-8 (front-9) ou 9-17 (back-9); o valor que
+      // está fora é null/0.
+      const ROW_SIZE = 18;
+      const bestArr: (number | null)[] = new Array(ROW_SIZE).fill(null);
+      const parArr: (number | null)[] = new Array(ROW_SIZE).fill(null);
+      const siArr: (number | null)[] = new Array(ROW_SIZE).fill(null);
+      const fromArr: (EclecticHole["from"])[] = new Array(ROW_SIZE).fill(null);
+
+      // 1) par/si: usar o primeiro valor não-nulo (todos devem coincidir
+      //    após rotação; se houver discrepância, fica o primeiro encontrado).
+      for (const r of b.rounds) {
+        const h = holes[r.scoreId]!;
+        for (let i = 0; i < ROW_SIZE; i++) {
+          if (parArr[i] == null && h.p?.[i] != null) parArr[i] = Number(h.p[i]);
+          if (siArr[i] == null && h.si?.[i] != null) siArr[i] = Number(h.si[i]);
+        }
+      }
+
+      // 2) best: min de g[i] entre as rondas com valor > 0
+      const wins: Record<string, number> = {};
+      for (let i = 0; i < ROW_SIZE; i++) {
+        if (parArr[i] == null) continue;
+        let best: number | null = null;
+        let from: EclecticHole["from"] = null;
+        for (const r of b.rounds) {
+          const h = holes[r.scoreId]!;
+          const g = h.g?.[i];
+          if (g == null || Number(g) <= 0) continue;
+          const v = Number(g);
+          if (best == null || v < best) {
+            best = v;
+            from = { scoreId: r.scoreId, date: r.date };
+          }
+        }
+        bestArr[i] = best;
+        fromArr[i] = from;
+        if (from) wins[from.scoreId] = (wins[from.scoreId] || 0) + 1;
+      }
+
+      // 3) Construir EclecticEntry. Para 9-hole, slice ao range correcto.
+      const startHole = b.holeCount === 9
+        ? (parArr.slice(0, 9).every(p => p != null) ? 1 : 10)
+        : 1;
+      const sliceStart = startHole === 10 ? 9 : 0;
+      const sliceEnd = sliceStart + b.holeCount;
+
+      const holesArr: EclecticHole[] = [];
+      for (let pos = sliceStart; pos < sliceEnd; pos++) {
+        holesArr.push({
+          h: pos + 1,
+          best: bestArr[pos],
+          par: parArr[pos],
+          from: fromArr[pos],
+        });
+      }
+      const totalGross = holesArr.reduce((s, x) => s + (x.best ?? 0), 0);
+      const totalPar = holesArr.reduce((s, x) => s + (x.par ?? 0), 0);
+      const allBest = holesArr.every(x => x.best != null);
+
+      const entry: EclecticEntry = {
+        teeName: b.teeName,
+        teeKey: b.teeKey,
+        holeCount: b.holeCount,
+        totalGross: allBest ? totalGross : 0,
+        totalPar,
+        toPar: allBest ? (totalGross - totalPar) : null,
+        holes: holesArr,
+        si: siArr.slice(sliceStart, sliceEnd),
+        wins,
+      };
+      newEntries.push(entry);
+      // Se houver múltiplos buckets no mesmo tee (9H + 18H), o ECDET fica
+      // com o último (maior holeCount preferido — assumimos 18H > 9H por
+      // ordenação implícita das chaves).
+      newDet[b.teeKey] = entry;
+    }
+
+    // Ordenar entries: 18H primeiro, depois 9H; dentro de cada, por holeCount desc + tee
+    newEntries.sort((a, b) =>
+      b.holeCount - a.holeCount ||
+      a.teeName.localeCompare(b.teeName)
+    );
+
+    ec[courseKey] = newEntries;
+    ecdet[courseKey] = newDet;
+  }
+}
+
 export async function loadPlayerData(fedId: string): Promise<PlayerPageData> {
   const cached = _playerCache.get(fedId);
   if (cached) return cached;
@@ -234,7 +407,20 @@ async function _loadPlayerDataImpl(fedId: string): Promise<PlayerPageData> {
       const club = typeof clubRaw === "string" ? clubRaw
         : (clubRaw?.short || clubRaw?.long || "");
 
-      const data: CourseData[] = raw.DATA || [];
+      const data: CourseData[] = mergeCanonicalCourses(raw.DATA || []);
+      // Rotacionar +12 os scorecards do Aroeira No.2 que vieram na sequência
+      // antiga (ex: Campeonato Nacional Jovens 2026). Detectado pelo `p` de
+      // cada bucket de HOLES — não depende de data nem de mapeamento de tcode.
+      const holes: Record<string, HoleScores> = raw.HOLES || {};
+      for (const sid of Object.keys(holes)) {
+        rotateAroeira2HolesIfNeeded(holes[sid]);
+      }
+      // Recalcular EC/ECDET a partir dos HOLES rotacionados — corrige bug
+      // do pipeline que misturava configs antigas/novas no mesmo bucket de
+      // campo (gerando "eagles fictícios" em par 4/5).
+      const ec: Record<string, EclecticEntry[]> = raw.EC || {};
+      const ecdet: Record<string, Record<string, EclecticEntry>> = raw.ECDET || {};
+      recomputeECForAllCourses(data, holes, ec, ecdet);
       // Calcular totalRounds e roundsCurrentYear directamente de DATA
       // (fonte canónica). Se data.json estiver vazio/truncado, ficam a 0
       // e o sidebar usa o player-stats.json como fallback.
@@ -249,9 +435,9 @@ async function _loadPlayerDataImpl(fedId: string): Promise<PlayerPageData> {
       }
       const result: PlayerPageData = {
         DATA: data,
-        HOLES: raw.HOLES || {},
-        EC: raw.EC || {},
-        ECDET: raw.ECDET || {},
+        HOLES: holes,
+        EC: ec,
+        ECDET: ecdet,
         HOLE_STATS: raw.HOLE_STATS || {},
         TEE: raw.TEE || [],
         CROSS_DATA: raw.CROSS_DATA || {},
@@ -284,7 +470,7 @@ async function _loadPlayerDataImpl(fedId: string): Promise<PlayerPageData> {
   const script = scriptMatch[1];
 
   const result = {
-    DATA: parseVar<CourseData[]>(script, "DATA", []),
+    DATA: mergeCanonicalCourses(parseVar<CourseData[]>(script, "DATA", [])),
     HOLES: parseVar<Record<string, HoleScores>>(script, "HOLES", {}),
     EC: parseVar<Record<string, EclecticEntry[]>>(script, "EC", {}),
     ECDET: parseVar<Record<string, Record<string, EclecticEntry>>>(script, "ECDET", {}),

@@ -12,6 +12,8 @@
  *   - getHandicaps(fed)            → histórico de HCP
  */
 
+import { rotateAroeira2ScorecardIfNeeded } from "../utils/courseAliases";
+
 /* ── Tipos ──────────────────────────────────────────────────── */
 
 /** Uma ronda na lista WHS do jogador (sem hole-by-hole).
@@ -179,10 +181,16 @@ export async function getScorecard(
   scoringType: string | number = 1,
   competitionType: string | number = 10,
 ): Promise<Scorecard[]> {
-  return call<Scorecard[]>(
+  const result = await call<Scorecard[]>(
     `/api/datagolf?action=scorecard&score_id=${encodeURIComponent(String(scoreId))}&scoringtype=${encodeURIComponent(String(scoringType))}&competitiontype=${encodeURIComponent(String(competitionType))}`,
     `sc:${scoreId}:${scoringType}:${competitionType}`,
   );
+  // Rotacionar in-place scorecards no Aroeira No.2 que vieram na config antiga
+  // (ex: Campeonato Nacional Jovens 2026). Detecção pelos pars — robusto.
+  for (const sc of result || []) {
+    rotateAroeira2ScorecardIfNeeded(sc as unknown as Record<string, unknown>);
+  }
+  return result;
 }
 
 /** Perfil FPG do jogador (32 campos de cadastro). */

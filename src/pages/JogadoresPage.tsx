@@ -14,6 +14,7 @@ import {
 } from "../data/playerDataLoader";
 import { usePlayerData } from "../data/usePlayerData";
 import SexBadge from "../ui/SexBadge";
+import RotatedNotice from "../ui/RotatedNotice";
 import TeePill from "../ui/TeePill";
 import TeeDate from "../ui/TeeDate";
 import ScoreCircle from "../ui/ScoreCircle";
@@ -2776,6 +2777,8 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
                 title="Fechar"
               >✕</button>
             </div>
+            {/* Nota se a ronda foi rotacionada (Aroeira No.2 config antiga) */}
+            <RotatedNotice rotated={(scorecardModal.data as { _rotated?: number } | null)?._rotated} />
 
             {scorecardModal.loading && <div className="muted p-16 ta-c">⏳ A carregar scorecard…</div>}
             {scorecardModal.error && (

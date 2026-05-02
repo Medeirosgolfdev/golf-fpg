@@ -19,6 +19,7 @@ import { Link, useLocation, useNavigate, useParams, useSearchParams } from "reac
 import { useAppContext } from "../context/AppContext";
 import { loadPlayers } from "../data/loader";
 import { buildEscLookup, type EscLookup, escCls, escPillCls, formatPlayerName, normalizePlayer } from "../utils/playerUtils";
+import { normalizeTournamentCourseNames, rotateAroeira2TournamentIfNeeded } from "../utils/courseAliases";
 import { TORNEIOS_CONFIG } from "../constants/config";
 import { PILL_SSERRA, SIDEBAR_ACCENT, EscPill, PillBadge, RoundPill, NineHPill, SserraPill, NacionalPill, JuniorPill, ClubePill, ManuelPill } from "../ui/PillBadge";
 import { TournSidebarItem, SSERRA_CCODE, type SidebarItemTournament } from "../ui/TournSidebarItem";
@@ -555,12 +556,21 @@ async function loadAllFiles(): Promise<{ tournaments: Tournament[]; meta: FileMe
     if (!resp.ok) break;  // 404 ou outro erro → parar
 
     const d: DriveData = await resp.json();
-    const normalised = (d.tournaments || []).map(t => ({
-      ...t,
-      _sourceFile: url,
-      _sourceIndex: i,
-      players: t.players.map(normalizePlayer),
-    }));
+    const normalised = (d.tournaments || []).map(t => {
+      const out = {
+        ...t,
+        _sourceFile: url,
+        _sourceIndex: i,
+        players: t.players.map(normalizePlayer),
+      };
+      // Canonicar nome do campo (ex: "PGA Aroeira No.2 - CNJ FPG" → "PGA Aroeira No.2")
+      // para evitar split na CamposPage / sidebar de campos da JogadoresPage.
+      normalizeTournamentCourseNames(out);
+      // Aroeira No.2 — rotação +12 das rondas que vieram na config antiga
+      // (ex: Campeonato Nacional Jovens 2026). Vê comentário em courseAliases.ts.
+      rotateAroeira2TournamentIfNeeded(out);
+      return out;
+    });
     allTournaments.push(...normalised);
     meta.push({
       file: url,
