@@ -1626,17 +1626,24 @@ function Content() {
     //      já que são competições juvenis, mesmo que de clubes não-FPG.
     //      PJA e Greatgolf já têm os seus tabs próprios — excluídos por
     //      terem pill PJA em vez de pill JUNIOR genérica.
-    const jovensKeys = new Set(
-      jovensTournaments.map(j => (j.ccode || "") + "/" + String(j.tcode || ""))
-    );
-    const juniorExtras = tournaments.filter(t => {
-      if (!/\bjunior\b/i.test(t.name || "")) return false;
-      if (/PJA/i.test(t.name || "")) return false;                // já em tab PJA
-      if (/greatgolf.*junior/i.test(t.name || "")) return false;  // já em tab PJA (excepção)
-      const k = (t.ccode || "") + "/" + String(t.tcode || "");
-      return !jovensKeys.has(k);
-    });
-    const combined = [...jovensTournaments, ...juniorExtras];
+    //
+    //   Dedup robusto via Map (primeira ocorrência ganha) — garante que mesmo
+    //   se `tournaments` ou `jovensTournaments` contiverem entradas duplicadas,
+    //   só aparece uma por (ccode/tcode) na sidebar e nos tabs de escalão.
+    const dedupMap = new Map<string, Tournament>();
+    const keyOf = (t: Tournament) => (t.ccode || "") + "/" + String(t.tcode || "");
+    for (const j of jovensTournaments) {
+      const k = keyOf(j);
+      if (!dedupMap.has(k)) dedupMap.set(k, j);
+    }
+    for (const t of tournaments) {
+      if (!/\bjunior\b/i.test(t.name || "")) continue;
+      if (/PJA/i.test(t.name || "")) continue;                // já em tab PJA
+      if (/greatgolf.*junior/i.test(t.name || "")) continue;  // já em tab PJA (excepção)
+      const k = keyOf(t);
+      if (!dedupMap.has(k)) dedupMap.set(k, t);
+    }
+    const combined = [...dedupMap.values()];
 
     // Para torneios pré-jogo o Manuel só aparece em _admissions.players ou
     // _draws.*.groups.*.players. `tournamentHasManuel` cobre todos os sítios.
@@ -1678,20 +1685,30 @@ function Content() {
   /** Lista unificada que alimenta o tab "Todos":
    *  - tournaments (pull-torneios + clubes merged no loader principal)
    *  - jovensTournaments (jovens_YYYY.json + Nacional 2026 sintético) — dedup por ccode/tcode
-   *  Clubes (seriesFilter === "clubes") mantém sidebar própria, mas também fazem parte de `tournaments`. */
+   *  Clubes (seriesFilter === "clubes") mantém sidebar própria, mas também fazem parte de `tournaments`.
+   *
+   *  ⚠ Dedup robusto: usa Map para garantir UMA entrada por (ccode/tcode), eliminando
+   *  duplicações que possam existir DENTRO de `tournaments` (ex: o mesmo torneio em
+   *  dois pull-torneios*.json) ou entre `tournaments` e `jovensTournaments`.
+   *  Sem isto, o Campeonato Nacional aparecia com cada escalão duplicado quando o
+   *  mesmo torneio existia em pull-torneios006.json E em jovens_2026.json (via
+   *  algum re-merge defeituoso, ou se o mesmo ficheiro fosse carregado duas vezes).
+   *  Política: primeira ocorrência ganha; jovens só entra se ccode/tcode novo. */
   const displayList = useMemo(() => {
-    const base: Tournament[] = [...tournaments];
-    const seen = new Set<string>(base.map(t => (t.ccode || "?") + "/" + String(t.tcode ?? "?")));
+    const dedupMap = new Map<string, Tournament>();
+    const keyOf = (t: Tournament) => (t.ccode || "?") + "/" + String(t.tcode ?? "?");
+    for (const t of tournaments) {
+      const k = keyOf(t);
+      if (!dedupMap.has(k)) dedupMap.set(k, t);
+    }
     for (const j of jovensTournaments) {
-      const k = (j.ccode || "?") + "/" + String(j.tcode ?? "?");
-      if (seen.has(k)) continue;
-      seen.add(k);
-      base.push(j);
+      const k = keyOf(j);
+      if (!dedupMap.has(k)) dedupMap.set(k, j);
     }
     // Drive Tour + Aquapor NÃO entram aqui — esses torneios estão na DrivePage
     // e os deep-links usam /drive/torneio/{ccode}-{tcode} (não /FPG/torneio/...).
     // pjaExtraTournaments só é usado internamente pelo Ranking PJA.
-    return buildDisplayList(base);
+    return buildDisplayList([...dedupMap.values()]);
   }, [tournaments, jovensTournaments]);
   const cur = displayList[selected];
 
@@ -2701,3 +2718,42 @@ export default function TorneiosAnalisePage() {
   return <Content />;
 }
 
+on key={e.tcode + "_" + ri}
+                          className={`tourn-tab tourn-tab-sm${active ? " active" : ""}`}
+                          onClick={() => setJovensEscIdx(ri)}
+                          style={{ marginBottom: 6 }}>
+                          {label}
+                          <span className="fs-10" style={{ marginLeft: 3, opacity: 0.8 }}>
+                            ({(e.playerCount || e.players.length)} jog)
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+                {curJovens
+                  ? <TournamentDetail tournament={curJovens} escLookup={escLookup} playersDB={playersDB} />
+                  : <div className="center-msg muted">Selecciona um torneio</div>
+                }
+              </>
+            ) : (
+              !jovensLoading && <div className="center-msg muted">{jovensLoaded ? "Selecciona um torneio" : "A carregar…"}</div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Ranking PJA */}
+      {navMode === "ranking-pja" && (
+        <div className="flex-1" style={{ overflowY: "auto", overflowX: "hidden", minHeight: 0 }}>
+          <PJARankingView pjaList={pjaRankingList} playersDB={playersDB} loading={loading} pjaMembersByYear={pjaMembers} pjaPdfSnapshotByYear={pjaPdfSnapshot} externalFilterName={searchQuery} />
+        </div>
+      )}
+    </div>
+    </DataSourcesProvider>
+  );
+}
+
+export default function TorneiosAnalisePage() {
+  return <Content />;
+}
