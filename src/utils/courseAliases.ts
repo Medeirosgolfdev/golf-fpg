@@ -39,9 +39,68 @@ const SUFFIX_PATTERNS: RegExp[] = [
 ];
 
 /**
- * Devolve o nome canónico do campo, removendo sufixos específicos de torneio.
+ * Mapeamento explícito de nomes alternativos → nome canónico do campo.
+ * Match case-insensitive e tolerante a whitespace múltiplo (a key é normalizada
+ * para lowercase + colapso de espaços antes do lookup).
  *
- * Devolve a string vazia/null/undefined inalterada.
+ * Adicionar aqui sempre que descobrirmos que dois nomes referem o mesmo
+ * percurso físico. Verificado para "Aroeira Challenge" — 292 rondas em 91
+ * jogadores entre Jul-2021 e Jan-2025, todas com par/SI/metros idênticos
+ * ao "PGA Aroeira No.2" config antiga (rotação +12 aplicada automaticamente
+ * por rotateAroeira2RecordIfNeeded).
+ */
+const COURSE_NAME_ALIASES: Record<string, string> = {
+  // Nome FPG histórico até 19-Jan-2025; mesmo percurso físico do No.2 cfg antiga.
+  "aroeira challenge": "PGA  Aroeira No.2",
+  // Nomes históricos do PGA Aroeira No.1 (par[] = Cfg-NO1). Confirmado em 488
+  // jogadores: 350 rondas "Pines Classic" (2021-2024) + 250 rondas "Aroeira I"
+  // (2004-2024) com par idêntico ao No.1 actual (41 rondas Nov-2024+).
+  "aroeira pines classic": "PGA  Aroeira No.1",
+  "aroeira i": "PGA  Aroeira No.1",
+};
+
+/* ── Resolução por par[] para nomes ambíguos ──────────────────────────── */
+// "Aroeira II" foi historicamente usado para BOTH PGA Aroeira No.1 e No.2 —
+// algumas rondas têm par do No.1, outras do No.2. Resolver caso a caso pelo
+// par[] é a única forma de não perder nenhuma ronda.
+const AROEIRA_PAR_TO_COURSE: Record<string, string> = {
+  // Cfg 2 (No.2 antiga, pré-renumeração)
+  "[4,5,4,5,3,4,4,3,4,4,5,3,4,3,4,4,4,5]": "PGA  Aroeira No.2",
+  // Cfg 1 (No.2 nova, pós-renumeração 2025)
+  "[4,3,4,4,4,5,4,5,4,5,3,4,4,3,4,4,5,3]": "PGA  Aroeira No.2",
+  // Par único do PGA Aroeira No.1
+  "[5,4,4,3,4,4,4,3,5,5,4,4,4,3,5,3,4,4]": "PGA  Aroeira No.1",
+};
+
+/** Nomes ambíguos cujo destino correcto se decide pelo par[] da ronda. */
+const AMBIGUOUS_AROEIRA_NAMES = new Set(["aroeira ii"]);
+
+/**
+ * Resolve um nome ambíguo (ex: "Aroeira II") para o nome canónico correcto
+ * comparando o `pars[]` da ronda contra os pars conhecidos dos campos Aroeira.
+ *
+ * Devolve `name` inalterado se:
+ *   - O nome não está na lista ambígua
+ *   - `pars` está em falta ou tem tamanho ≠ 18
+ *   - O par[] não bate com nenhum padrão conhecido
+ */
+export function resolveAroeiraIIByPar(name: string, pars: number[] | null | undefined): string {
+  if (!name || !AMBIGUOUS_AROEIRA_NAMES.has(aliasKey(name))) return name;
+  if (!pars || pars.length !== 18) return name;
+  return AROEIRA_PAR_TO_COURSE[JSON.stringify(pars)] || name;
+}
+
+/** Normaliza key para lookup em COURSE_NAME_ALIASES. */
+function aliasKey(s: string): string {
+  return s.toLowerCase().replace(/\s+/g, " ").trim();
+}
+
+/**
+ * Devolve o nome canónico do campo:
+ *   1) Remove sufixos de torneio (CNJ FPG, CN, CNS).
+ *   2) Faz lookup em COURSE_NAME_ALIASES para resolver nomes históricos.
+ *
+ * Devolve string vazia/null/undefined inalterada.
  */
 export function canonicalCourseName<T extends string | null | undefined>(name: T): T {
   if (!name || typeof name !== "string") return name;
@@ -52,6 +111,9 @@ export function canonicalCourseName<T extends string | null | undefined>(name: T
       break;
     }
   }
+  // Resolver alias histórico (ex: "Aroeira Challenge" → "PGA  Aroeira No.2")
+  const alias = COURSE_NAME_ALIASES[aliasKey(out)];
+  if (alias) out = alias;
   return (out as T);
 }
 

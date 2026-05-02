@@ -6,7 +6,7 @@
  * geradas via JSON.stringify — podemos extraí-las com regex e fazer JSON.parse.
  */
 
-import { canonicalCourseName, rotateAroeira2HolesIfNeeded } from "../utils/courseAliases";
+import { canonicalCourseName, rotateAroeira2HolesIfNeeded, resolveAroeiraIIByPar } from "../utils/courseAliases";
 
 /* ─── Tipos (espelham a estrutura gerada pelo pipeline Node) ─── */
 
@@ -215,6 +215,49 @@ const _playerCache = new Map<string, Promise<PlayerPageData>>();
  * nome do campo. Sem este merge, a sidebar "Por campo" mostraria o mesmo
  * percurso duas vezes (uma com cada nome).
  */
+/**
+ * "Aroeira II" é um nome historicamente usado pela FPG para AMBOS os campos
+ * Aroeira (No.1 e No.2). Algumas rondas marcadas assim são na verdade do No.1.
+ * Esta função pega num bucket "Aroeira II" e split-a as rondas em buckets
+ * separados conforme o par[] de cada uma:
+ *   - par = Cfg 2 antiga ou Cfg 1 nova → "PGA  Aroeira No.2"
+ *   - par = par único do No.1 → "PGA  Aroeira No.1"
+ *   - par desconhecido → fica no bucket "Aroeira II" residual
+ *
+ * Devolve novo array de CourseData com os buckets reescritos. Não muta input.
+ */
+function splitAmbiguousAroeiraCourses(
+  input: CourseData[],
+  holes: Record<string, HoleScores>,
+): CourseData[] {
+  const out: CourseData[] = [];
+  for (const c of input) {
+    const canon = canonicalCourseName(c.course) || c.course;
+    // Só processar buckets ambíguos (após canonicalização)
+    if (!/^aroeira\s+ii$/i.test(canon)) {
+      out.push(c);
+      continue;
+    }
+    // Split por par[] de cada ronda
+    const byTarget = new Map<string, RoundData[]>();
+    for (const r of c.rounds || []) {
+      const h = holes[r.scoreId];
+      const pars = h?.p?.map(v => Number(v)) as number[] | undefined;
+      const target = pars && pars.length === 18
+        ? resolveAroeiraIIByPar(canon, pars)
+        : canon; // sem par → fica no original
+      if (!byTarget.has(target)) byTarget.set(target, []);
+      byTarget.get(target)!.push(r);
+    }
+    // Emitir um CourseData por bucket-destino
+    for (const [target, rounds] of byTarget) {
+      const lastDateSort = rounds.reduce((m, r) => Math.max(m, r.dateSort || 0), 0);
+      out.push({ course: target, count: rounds.length, lastDateSort, rounds });
+    }
+  }
+  return out;
+}
+
 function mergeCanonicalCourses(input: CourseData[]): CourseData[] {
   const byName = new Map<string, CourseData>();
   for (const c of input) {
@@ -255,6 +298,28 @@ function mergeCanonicalCourses(input: CourseData[]): CourseData[] {
  *
  * Mutates `ec` e `ecdet` in-place.
  */
+/**
+ * Normalização equivalente ao `norm()` do pipeline Node (`lib/helpers.js`):
+ *   lowercase + remover diacríticos + remover apóstrofes + colapsar whitespace.
+ *
+ * CRÍTICO: o pipeline indexa EC/ECDET com esta normalização. Se usarmos só
+ * `toLowerCase()` aqui, o nome canónico "PGA  Aroeira No.2" (com 2 espaços
+ * no master-courses.json) gera key "pga  aroeira no.2", diferente da key do
+ * pipeline "pga aroeira no.2" — `ec[ck] = ...` cria nova chave em vez de
+ * substituir a bugada, e a UI continua a ler o EC original (errado).
+ */
+function normCourseKey(s: string): string {
+  return String(s || "")
+    .toLowerCase()
+    // Remover diacríticos (combining chars U+0300..U+036F)
+    .normalize("NFD").replace(/[̀-ͯ]/g, "")
+    // Remover apóstrofes curvas (U+2018, U+2019) e simples
+    .replace(/[‘’']/g, "")
+    // Colapsar whitespace múltiplo
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 function recomputeECForAllCourses(
   data: CourseData[],
   holes: Record<string, HoleScores>,
@@ -263,7 +328,7 @@ function recomputeECForAllCourses(
 ): void {
   for (const course of data) {
     if (!course.rounds || course.rounds.length === 0) continue;
-    const courseKey = (course.course || "").toLowerCase();
+    const courseKey = normCourseKey(course.course || "");
     if (!courseKey) continue;
 
     // Agrupar rondas por (teeKey, holeCount). Um mesmo tee pode ter
@@ -373,6 +438,21 @@ function recomputeECForAllCourses(
       a.teeName.localeCompare(b.teeName)
     );
 
+    // Apagar TODAS as variantes antigas de keys (com sufixos como "- cnj fpg",
+    // ou whitespace duplicado) que canonicalizem para o mesmo courseKey. Sem
+    // isto, a UI poderia ler a versão bugada do EC original em vez do nosso
+    // recálculo. Match: normCourseKey + canonicalCourseName → courseKey.
+    for (const k of [...Object.keys(ec)]) {
+      if (k === courseKey) continue;
+      const norm = normCourseKey(canonicalCourseName(k) || k);
+      if (norm === courseKey) delete ec[k];
+    }
+    for (const k of [...Object.keys(ecdet)]) {
+      if (k === courseKey) continue;
+      const norm = normCourseKey(canonicalCourseName(k) || k);
+      if (norm === courseKey) delete ecdet[k];
+    }
+
     ec[courseKey] = newEntries;
     ecdet[courseKey] = newDet;
   }
@@ -407,11 +487,15 @@ async function _loadPlayerDataImpl(fedId: string): Promise<PlayerPageData> {
       const club = typeof clubRaw === "string" ? clubRaw
         : (clubRaw?.short || clubRaw?.long || "");
 
-      const data: CourseData[] = mergeCanonicalCourses(raw.DATA || []);
-      // Rotacionar +12 os scorecards do Aroeira No.2 que vieram na sequência
-      // antiga (ex: Campeonato Nacional Jovens 2026). Detectado pelo `p` de
-      // cada bucket de HOLES — não depende de data nem de mapeamento de tcode.
       const holes: Record<string, HoleScores> = raw.HOLES || {};
+      // 1) Split de buckets ambíguos ("Aroeira II" → No.1 ou No.2 por par[]).
+      //    Tem de correr ANTES da rotação porque usa o par[] original.
+      const splitData = splitAmbiguousAroeiraCourses(raw.DATA || [], holes);
+      // 2) Merge por nome canónico (Challenge, Pines Classic, "- CNJ FPG", etc.)
+      const data: CourseData[] = mergeCanonicalCourses(splitData);
+      // 3) Rotacionar +12 os scorecards do Aroeira No.2 que vieram na sequência
+      //    antiga (ex: Campeonato Nacional Jovens 2026). Detectado pelo `p` de
+      //    cada bucket de HOLES — não depende de data nem de mapeamento de tcode.
       for (const sid of Object.keys(holes)) {
         rotateAroeira2HolesIfNeeded(holes[sid]);
       }

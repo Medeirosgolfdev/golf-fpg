@@ -15,6 +15,8 @@ import {
 import { usePlayerData } from "../data/usePlayerData";
 import SexBadge from "../ui/SexBadge";
 import RotatedNotice from "../ui/RotatedNotice";
+import AroeiraNotice, { countRotatedRounds } from "../ui/AroeiraNotice";
+import { canonicalCourseName } from "../utils/courseAliases";
 import TeePill from "../ui/TeePill";
 import TeeDate from "../ui/TeeDate";
 import ScoreCircle from "../ui/ScoreCircle";
@@ -544,6 +546,12 @@ function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId 
             <button type="button" className="courseBtn" onClick={() => setOpen(v => !v)}>{course.course}</button>
  {courseLinkKey && <a href={`/campos/${courseLinkKey}`} className="courseLink fs-10 ml-4" title="Ver campo" target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}>↗</a>}
             <PillBadge pill={course.rounds.map(r => effectivePill(r, course.course)).find(Boolean) || ""} />
+            <AroeiraNotice
+              compact
+              courseName={course.course}
+              rotatedCount={countRotatedRounds(course.rounds, data.HOLES as Record<string, { _rotated?: number }>)}
+              totalRounds={course.rounds.length}
+            />
           </div>
         </td>
         <td className="r"><b>{course.count}</b></td>
@@ -561,6 +569,12 @@ function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId 
         <tr className="details open">
           <td className="inner" colSpan={10}>
             <div className="innerWrap">
+              {/* Nota de unificação + rotação para campos Aroeira (No.1 e No.2) */}
+              <AroeiraNotice
+                courseName={course.course}
+                rotatedCount={countRotatedRounds(course.rounds, data.HOLES as Record<string, { _rotated?: number }>)}
+                totalRounds={course.rounds.length}
+              />
               {isAnalysis && (
                 <>
                   {activeTee && (
@@ -2779,6 +2793,12 @@ function FederadoOnlyDetail({ player }: { player: MergedPlayer & { fed: string }
             </div>
             {/* Nota se a ronda foi rotacionada (Aroeira No.2 config antiga) */}
             <RotatedNotice rotated={(scorecardModal.data as { _rotated?: number } | null)?._rotated} />
+            {/* Nota geral para campos Aroeira (mesmo se esta ronda específica não foi rotacionada) */}
+            <AroeiraNotice
+              courseName={canonicalCourseName(scorecardModal.round.course_description || "") || ""}
+              rotatedCount={(scorecardModal.data as { _rotated?: number } | null)?._rotated ? 1 : 0}
+              totalRounds={1}
+            />
 
             {scorecardModal.loading && <div className="muted p-16 ta-c">⏳ A carregar scorecard…</div>}
             {scorecardModal.error && (
