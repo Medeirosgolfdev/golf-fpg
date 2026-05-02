@@ -95,6 +95,85 @@ function aliasKey(s: string): string {
   return s.toLowerCase().replace(/\s+/g, " ").trim();
 }
 
+/* ─────────────────────────────────────────────────────────────────────────
+ * Santo da Serra — 3 nines (Machico/Desertas/Serras), cada um par 36.
+ *
+ * A FPG mistura as combinações 18H em buckets que não correspondem ao que
+ * foi realmente jogado (e.g. `Serras-Machico` pode conter `Machico+Serras`,
+ * `Serras+Machico` OU `Serras+Serras`). E rondas 9H ficam etiquetadas com
+ * o nome de um nine mas o par[] mostra que jogaram outro.
+ *
+ * Resolvemos por par[] em runtime (loaders TS + pipeline Node), produzindo
+ * buckets canónicos:
+ *   9H  → "Santo da Serra - {Nine}"
+ *   18H → "Santo da Serra - {A}+{B}"  (ordem alfabética, F9/B9 colapsados)
+ *   18H → "Santo da Serra - Serras×2" (caso especial: jogou-se Serras 2×)
+ * ───────────────────────────────────────────────────────────────────────── */
+const SDS_NINES: Record<string, string> = {
+  "[4,4,5,3,4,4,5,3,4]": "Machico",
+  "[4,5,4,4,4,3,5,3,4]": "Desertas",
+  "[5,4,4,4,3,4,4,3,5]": "Serras",
+};
+const SDS_BASE = "Santo da Serra";
+
+function _identifyNine(parsArr9: number[]): string | null {
+  if (!Array.isArray(parsArr9) || parsArr9.length !== 9) return null;
+  return SDS_NINES[JSON.stringify(parsArr9)] || null;
+}
+
+/** Reconhece qualquer variante "Santo da Serra"/"Sto da Serra"/"S. da Serra". */
+function isSantoDaSerraName(name: string | null | undefined): boolean {
+  return /santo\s+da\s+serra|sto\.?\s+da\s+serra|s\.\s*da\s+serra/i.test(String(name || ""));
+}
+
+/**
+ * Resolve o nome canónico de uma ronda no Santo da Serra pelo par[]:
+ *   9H  → "Santo da Serra - {Nine}"
+ *   18H → "Santo da Serra - {A}+{B}" ou "Santo da Serra - Serras×2"
+ *
+ * Devolve `name` inalterado se não é Santo da Serra ou par é desconhecido.
+ */
+export function resolveSantoDaSerraByPar(name: string, pars: number[] | null | undefined): string {
+  if (!isSantoDaSerraName(name)) return name;
+  if (!Array.isArray(pars)) return canonicalSantoDaSerraNameOnly(name);
+
+  if (pars.length === 9) {
+    const nine = _identifyNine(pars);
+    return nine ? `${SDS_BASE} - ${nine}` : canonicalSantoDaSerraNameOnly(name);
+  }
+
+  if (pars.length === 18) {
+    const f9 = _identifyNine(pars.slice(0, 9));
+    const b9 = _identifyNine(pars.slice(9, 18));
+    if (!f9 || !b9) return canonicalSantoDaSerraNameOnly(name);
+    if (f9 === b9) return `${SDS_BASE} - ${f9}×2`;
+    const [a, b] = [f9, b9].sort();
+    return `${SDS_BASE} - ${a}+${b}`;
+  }
+
+  return canonicalSantoDaSerraNameOnly(name);
+}
+
+/**
+ * Fallback para rondas Santo da Serra sem par[]: canoniza só pelo nome,
+ * ordenando os nines alfabeticamente em 18H. Não consegue corrigir nines
+ * mal-etiquetados em 9H.
+ */
+export function canonicalSantoDaSerraNameOnly(name: string): string {
+  if (!isSantoDaSerraName(name)) return name;
+  const m = String(name).match(/-\s*([A-Za-zÀ-ÿ]+)\s*[-/]\s*([A-Za-zÀ-ÿ]+)\s*$/);
+  if (m) {
+    const a = m[1].trim();
+    const b = m[2].trim();
+    if (a.toLowerCase() === b.toLowerCase()) return `${SDS_BASE} - ${a}×2`;
+    const [first, second] = [a, b].sort((x, y) => x.localeCompare(y, "pt"));
+    return `${SDS_BASE} - ${first}+${second}`;
+  }
+  const m2 = String(name).match(/-\s*([A-Za-zÀ-ÿ]+)\s*$/);
+  if (m2) return `${SDS_BASE} - ${m2[1].trim()}`;
+  return name;
+}
+
 /**
  * Devolve o nome canónico do campo:
  *   1) Remove sufixos de torneio (CNJ FPG, CN, CNS).

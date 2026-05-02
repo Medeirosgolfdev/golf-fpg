@@ -1,15 +1,17 @@
 /**
  * AroeiraNotice.tsx
  *
- * Nota informativa que aparece quando se está a ver scorecards de campos
- * PGA Aroeira (No.1 ou No.2). Explica:
+ * Nota informativa que aparece em scorecards de campos com agrupamento /
+ * unificação aplicados:
  *
- *   1. Que rondas com nomes históricos diferentes foram unificadas neste
- *      bucket de campo (Challenge, Pines Classic, Aroeira I, Aroeira II).
- *   2. Que rondas em config antiga foram rotacionadas +6 buracos para alinhar
- *      com a numeração actual (só relevante para o No.2).
+ *   - PGA Aroeira No.1 / No.2 — agrupa nomes alternativos (Challenge, Pines
+ *     Classic, Aroeira I, Aroeira II) e, para o No.2, indica rondas que
+ *     foram rotacionadas +6 buracos (config antiga).
+ *   - Santo da Serra — explica que rondas com diferentes ordens F9/B9 dos 3
+ *     nines (Machico/Desertas/Serras) foram colapsadas e que rondas 9H mal-
+ *     etiquetadas são re-distribuídas pelo nine real (par[]).
  *
- * Renderiza nada se courseName não for um dos dois Aroeira canónicos.
+ * Renderiza nada se courseName não for um dos campos suportados.
  */
 import React from "react";
 
@@ -27,13 +29,27 @@ interface Props {
 const ALIASES_NO1 = ["Aroeira I", "Aroeira Pines Classic", "Aroeira II (par No.1)"];
 const ALIASES_NO2 = ["Aroeira II (par No.2)", "Aroeira Challenge", "PGA Aroeira No.2 (configuração antiga)", "PGA Aroeira No.2 — CNJ FPG"];
 
-export default function AroeiraNotice({ courseName, rotatedCount, totalRounds, compact }: Props) {
-  const isNo1 = /^pga\s+aroeira\s+no\.?\s*1$/i.test((courseName || "").trim());
-  const isNo2 = /^pga\s+aroeira\s+no\.?\s*2$/i.test((courseName || "").trim());
-  if (!isNo1 && !isNo2) return null;
+/* Santo da Serra — todas as variantes que a FPG usa */
+const ALIASES_SDS_18H = ["F9 + B9 em qualquer ordem (Serras-Machico ≡ Machico-Serras → Machico+Serras)"];
+const ALIASES_SDS_9H = ["Rondas mal-etiquetadas (par real ≠ nine no nome) re-distribuídas pelo nine correcto"];
 
-  const title = isNo1 ? "PGA Aroeira No.1" : "PGA Aroeira No.2";
-  const aliases = isNo1 ? ALIASES_NO1 : ALIASES_NO2;
+export default function AroeiraNotice({ courseName, rotatedCount, totalRounds, compact }: Props) {
+  const trimmed = (courseName || "").trim();
+  const isNo1 = /^pga\s+aroeira\s+no\.?\s*1$/i.test(trimmed);
+  const isNo2 = /^pga\s+aroeira\s+no\.?\s*2$/i.test(trimmed);
+  // Santo da Serra reconhece-se por prefixo (qualquer variante de nines/combo)
+  const isSDS = /^santo\s+da\s+serra\s*-/i.test(trimmed) || /^sto\.?\s+da\s+serra\s*-/i.test(trimmed);
+  if (!isNo1 && !isNo2 && !isSDS) return null;
+
+  let title: string;
+  let aliases: string[];
+  if (isNo1) { title = "PGA Aroeira No.1"; aliases = ALIASES_NO1; }
+  else if (isNo2) { title = "PGA Aroeira No.2"; aliases = ALIASES_NO2; }
+  else {
+    title = trimmed;
+    // Detectar 18H combination ("X+Y" / "X×2") vs 9H (single nine)
+    aliases = /\+|×2/.test(trimmed) ? ALIASES_SDS_18H : ALIASES_SDS_9H;
+  }
   const showRotation = isNo2 && (rotatedCount ?? 0) > 0;
 
   if (compact) {

@@ -6,7 +6,7 @@
  * geradas via JSON.stringify — podemos extraí-las com regex e fazer JSON.parse.
  */
 
-import { canonicalCourseName, rotateAroeira2HolesIfNeeded, resolveAroeiraIIByPar } from "../utils/courseAliases";
+import { canonicalCourseName, rotateAroeira2HolesIfNeeded, resolveAroeiraIIByPar, resolveSantoDaSerraByPar } from "../utils/courseAliases";
 
 /* ─── Tipos (espelham a estrutura gerada pelo pipeline Node) ─── */
 
@@ -216,13 +216,14 @@ const _playerCache = new Map<string, Promise<PlayerPageData>>();
  * percurso duas vezes (uma com cada nome).
  */
 /**
- * "Aroeira II" é um nome historicamente usado pela FPG para AMBOS os campos
- * Aroeira (No.1 e No.2). Algumas rondas marcadas assim são na verdade do No.1.
- * Esta função pega num bucket "Aroeira II" e split-a as rondas em buckets
- * separados conforme o par[] de cada uma:
- *   - par = Cfg 2 antiga ou Cfg 1 nova → "PGA  Aroeira No.2"
- *   - par = par único do No.1 → "PGA  Aroeira No.1"
- *   - par desconhecido → fica no bucket "Aroeira II" residual
+ * Split de buckets de campo cujo nome é ambíguo ou genérico — re-distribui
+ * cada ronda para o bucket-destino correcto baseado no par[] da ronda.
+ *
+ * Casos cobertos:
+ *   - "Aroeira II" → "PGA  Aroeira No.1" ou "PGA  Aroeira No.2" (par[] decide)
+ *   - "Santo da Serra - {qualquer}" → re-etiquetagem pelo nine real e, em 18H,
+ *     colapso de permutações F9/B9 ("Serras-Machico" ≡ "Machico-Serras" →
+ *     "Santo da Serra - Machico+Serras")
  *
  * Devolve novo array de CourseData com os buckets reescritos. Não muta input.
  */
@@ -233,23 +234,30 @@ function splitAmbiguousAroeiraCourses(
   const out: CourseData[] = [];
   for (const c of input) {
     const canon = canonicalCourseName(c.course) || c.course;
-    // Só processar buckets ambíguos (após canonicalização)
-    if (!/^aroeira\s+ii$/i.test(canon)) {
-      out.push(c);
+    const isAroeiraII = /^aroeira\s+ii$/i.test(canon);
+    const isSantoDaSerra = /santo\s+da\s+serra|sto\.?\s+da\s+serra|s\.\s*da\s+serra/i.test(canon);
+    if (!isAroeiraII && !isSantoDaSerra) {
+      out.push({ ...c, course: canon });
       continue;
     }
     // Split por par[] de cada ronda
     const byTarget = new Map<string, RoundData[]>();
     for (const r of c.rounds || []) {
       const h = holes[r.scoreId];
-      const pars = h?.p?.map(v => Number(v)) as number[] | undefined;
-      const target = pars && pars.length === 18
-        ? resolveAroeiraIIByPar(canon, pars)
-        : canon; // sem par → fica no original
+      const parsAll = h?.p?.map(v => Number(v)).filter(v => Number.isFinite(v)) as number[] | undefined;
+      const pars = parsAll && (parsAll.length === 9 || parsAll.length === 18) ? parsAll : null;
+      let target = canon;
+      if (isAroeiraII && pars && pars.length === 18) {
+        target = resolveAroeiraIIByPar(canon, pars);
+      }
+      if (isSantoDaSerra) {
+        // Sempre resolve, mesmo sem par[] — fallback name-only colapsa
+        // permutações F9/B9 em 18H pelo nome.
+        target = resolveSantoDaSerraByPar(canon, pars);
+      }
       if (!byTarget.has(target)) byTarget.set(target, []);
       byTarget.get(target)!.push(r);
     }
-    // Emitir um CourseData por bucket-destino
     for (const [target, rounds] of byTarget) {
       const lastDateSort = rounds.reduce((m, r) => Math.max(m, r.dateSort || 0), 0);
       out.push({ course: target, count: rounds.length, lastDateSort, rounds });
