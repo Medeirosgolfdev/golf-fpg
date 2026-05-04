@@ -46,6 +46,7 @@ function argVal(flag, def) { const i = args.indexOf(flag); return i >= 0 ? args[
 
 const CLI_TCLUB = argVal("--tclub", null);
 const CLI_TCODE = argVal("--tcode", null);
+const CLI_TCODES = argVal("--tcodes", null);
 const SCOPE_FILE = argVal("--scope", null);
 const AUTO_FROM_TRACKING = args.includes("--auto-from-tracking");
 // Default: pull-torneios002.json (próximo número livre depois do 001.json).
@@ -119,11 +120,15 @@ if (AUTO_FROM_TRACKING) {
   const raw = JSON.parse(fs.readFileSync(fp, "utf8"));
   scope = Array.isArray(raw) ? raw : (raw.torneios || raw.tournaments || []);
   console.log(`[classif] Scope de ${fp}: ${scope.length} torneios`);
+} else if (CLI_TCODES) {
+  const tclub = CLI_TCLUB || "000";
+  scope = CLI_TCODES.split(",").map(t => t.trim()).filter(Boolean).map(tcode => ({ tclub, tcode }));
+  console.log(`[classif] Batch tcodes: tclub=${tclub} | ${scope.length} torneios`);
 } else if (CLI_TCLUB && CLI_TCODE) {
   scope = [{ tclub: CLI_TCLUB, tcode: CLI_TCODE }];
   console.log(`[classif] Single: tclub=${CLI_TCLUB} tcode=${CLI_TCODE}`);
 } else {
-  console.error("[classif] ERRO: usa --auto-from-tracking, --scope <ficheiro.json> ou --tclub X --tcode Y");
+  console.error("[classif] ERRO: usa --auto-from-tracking, --scope <ficheiro.json>, --tcodes A,B,C ou --tclub X --tcode Y");
   process.exit(1);
 }
 
@@ -376,9 +381,12 @@ async function processOne(spec, idx, total) {
   console.log(`${label} ${t.name.slice(0, 60)} → ${t.playerCount} jogadores${nRounds > 1 ? ` (${nRounds}R)` : ""}`);
 
   // 3. scorecards
-  let scOk = 0, scFail = 0;
+  let scOk = 0, scFail = 0, scSkipped = 0;
   for (const p of t.players) {
-    if (["NS","DQ","WD"].includes(p.pos) || !p.scoreId || p.scoreId === "0") continue;
+    if (["NS","DQ","WD"].includes(p.pos) || !p.scoreId || p.scoreId === "0") {
+      scSkipped++;
+      continue;
+    }
 
     if (nRounds > 1) {
       const recs = await fetchScorecardAggregate(p.scoreId, t.ccode, t.tcode);
@@ -426,7 +434,8 @@ async function processOne(spec, idx, total) {
     await sleep(DELAY_MS);
   }
   t.scOk = scOk; t.scFail = scFail;
-  console.log(`${label}   scorecards: ${scOk} ok, ${scFail} falhas`);
+  const skipNote = scSkipped > 0 ? `, ${scSkipped} saltados (NS/DQ/WD)` : "";
+  console.log(`${label}   scorecards: ${scOk} ok, ${scFail} falhas${skipNote}`);
   return t;
 }
 
@@ -546,7 +555,7 @@ async function runPool(items, workerFn, concurrency) {
   const tmp = OUT_FILE + ".tmp";
   fs.writeFileSync(tmp, JSON.stringify(output, null, 2));
   fs.renameSync(tmp, OUT_FILE);
-  console.log(`[classif] ✓ Gravado ${OUT_FILE}`);
+  console.log(`[classif] \u2713 Gravado ${OUT_FILE}`);
   process.exit(0);
 })().catch(e => {
   console.error("[classif] ERRO fatal:", e);

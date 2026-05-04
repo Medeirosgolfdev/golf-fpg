@@ -34,6 +34,17 @@ import SortableHdr from "./SortableHdr";
 
 const ESC_ORDER = ["Sub 10", "Sub 12", "Sub 14", "Sub 16", "Sub 18", "Sub 24"];
 
+// Agrupamento em 2 níveis para reduzir altura das grelhas — pedido user
+// 2026-05-04 ("divide em 2 tabelas: sub 10, sub 12 e sub 14 e outra com os
+// outros escaloes ... tanto no nacional como regional"). Aplicado em
+// ChampionsGrid quer em modo splitByEscalao (Nacional) quer em modo regional.
+const ESC_LOWER = new Set(["Sub 10", "Sub 12", "Sub 14"]);
+const ESC_UPPER = new Set(["Sub 16", "Sub 18", "Sub 20", "Sub 21", "Sub 24"]);
+const ESC_GROUPS: Array<{ key: string; label: string; set: Set<string> }> = [
+  { key: "lower", label: "🟢 Sub-10 · Sub-12 · Sub-14", set: ESC_LOWER },
+  { key: "upper", label: "🔵 Sub-16 · Sub-18 · Sub-24", set: ESC_UPPER },
+];
+
 /** Escalões obrigatórios por região (do regulamento do organizador).
  *  Linhas com estes escalões aparecem SEMPRE na tabela, mesmo sem campeões
  *  num determinado ano (mostra "Sem jogadores"). */
@@ -84,12 +95,16 @@ function PodiumLine({ p, columnEsc, expectedPos, highlightManuel = true }: {
       <div className="fs-12" style={{ display: "flex", alignItems: "center", gap: 4, flexWrap: "wrap" }}>
         <YearInEscBadge year={p.yearInEscalao} escalao={columnEsc} />
         {p.fed ? (
-          <Link to={`/jogadores/${p.fed}`}
-            title={`${p.name} — ver perfil completo`}
+          <a
+            href={`/jogadores/${p.fed}?view=federado`}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={`${p.name} — ver perfil federado (abre em nova janela)`}
             className="fw-700"
-            style={{ textDecoration: "none", color: "inherit", borderBottom: "1px dotted currentColor" }}>
+            style={{ textDecoration: "none", color: "inherit", borderBottom: "1px dotted currentColor" }}
+          >
             {abreviarNome(p.name || "—", 22)}
-          </Link>
+          </a>
         ) : (
           <span className="fw-700" title={p.name}>{abreviarNome(p.name || "—", 22)}</span>
         )}
@@ -175,6 +190,16 @@ function PodiumCell({ ch, isChampion }: { ch: Champion | null; isChampion: boole
                 R{ch.roundsPlayed}/{ch.roundsExpected}
               </span>
             )}
+            {!isProvisional && ch.roundsTotal && ch.roundsTotal >= 2 && (
+              <span title={`${ch.roundsTotal} rondas — gross é o total.`}
+                className="fs-10 fw-700" style={{
+                  padding: "1px 4px", borderRadius: 3,
+                  background: "var(--bg-muted)", color: "var(--text-2)",
+                  whiteSpace: "nowrap", letterSpacing: 0.3,
+                }}>
+                {ch.roundsTotal}R
+              </span>
+            )}
             {scoringUrl && (
               <a href={scoringUrl} target="_blank" rel="noopener noreferrer"
                 title="Ver resultados oficiais na FPG ↗"
@@ -222,8 +247,10 @@ function PodiumLabelCell({ label, isChampion }: { label: string; isChampion: boo
   return (
     <td style={{
       padding: "4px 8px", verticalAlign: "middle",
-      position: "sticky", left: 0, background: "var(--bg-card)",
+      // sticky ao lado da coluna Escalão (que é width 90px @ left:0)
+      position: "sticky", left: 90, background: "var(--bg-card)",
       borderRight: "1px solid var(--border-light)",
+      zIndex: 1,
     }}>
       <div style={{
         display: "flex", flexDirection: "column", alignItems: "flex-start",
@@ -240,12 +267,16 @@ function PodiumLabelCell({ label, isChampion }: { label: string; isChampion: boo
 
 /** Tabela TRANSPOSTA: colunas=anos, linhas=(escalão × sexo).
  *  Cada célula mostra campeão PT + sub-campeão PT.  */
-function ChampionsGrid({ title, champions, years, showRegion = false, typeLabel }: {
+function ChampionsGrid({ title, champions, years, showRegion = false, typeLabel, splitByEscalao = false }: {
   title: string;
   champions: Champion[];
   years: number[];
   showRegion?: boolean;
   typeLabel: string;   // "NACIONAL" ou "REGIONAL"
+  /** Quando true, renderiza uma tabela separada por escalão (em vez de uma
+   *  única tabela com todos os escalões empilhados). Cada tabela tem rows
+   *  M+F do escalão e cols=anos. Mais fácil de navegar para datasets grandes. */
+  splitByEscalao?: boolean;
 }) {
   // Index por região → (escalão|sexo|ano) → champion
   const byRegion = useMemo(() => {
@@ -257,6 +288,21 @@ function ChampionsGrid({ title, champions, years, showRegion = false, typeLabel 
     }
     return m;
   }, [champions, showRegion]);
+
+  // Escalões presentes — usados quando splitByEscalao=true. Mantemos a mesma
+  // ordem canónica (Sub-10 → Sub-24).
+  // ⚠ Hook tem de ser chamado SEMPRE (mesmo quando champions vazio) para
+  // não violar Rules of Hooks (ordem deve ser estável entre renders).
+  const escaloesPresentes = useMemo(() => {
+    if (!splitByEscalao) return [];
+    const set = new Set<string>();
+    for (const ch of champions) set.add(ch.escalao);
+    return [...set].sort((a, b) => {
+      const ea = ESC_ORDER.indexOf(a);
+      const eb = ESC_ORDER.indexOf(b);
+      return (ea < 0 ? 99 : ea) - (eb < 0 ? 99 : eb);
+    });
+  }, [champions, splitByEscalao]);
 
   if (champions.length === 0) {
     return (
@@ -296,22 +342,132 @@ function ChampionsGrid({ title, champions, years, showRegion = false, typeLabel 
     "Norte":    { note: "Sem edição em 2025." },
   };
 
+  // Renderer de uma secção de grupo (Sub 10/12/14 ou Sub 16/18/24).
+  const renderGroup = (
+    groupLabel: string,
+    groupSet: Set<string>,
+    keyPrefix: string,
+  ) => {
+    const groupChamps = champions.filter((c) => groupSet.has(c.escalao));
+    if (groupChamps.length === 0) return null;
+    const groupYears = [
+      ...new Set(groupChamps.map((c) => c.year)),
+    ].sort((a, b) => a - b);
+
+    return (
+      <div
+        key={keyPrefix}
+        style={{
+          marginBottom: 28,
+          padding: "10px 12px 16px",
+          background: "var(--bg-card)",
+          border: "1px solid var(--border-light)",
+          borderRadius: 8,
+        }}
+      >
+        <h4
+          className="fs-13 fw-800"
+          style={{
+            margin: "0 0 10px",
+            paddingBottom: 8,
+            borderBottom: "1px solid var(--border-light)",
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+          }}
+        >
+          <span>{groupLabel}</span>
+          <span className="muted fs-11" style={{ fontWeight: 400 }}>
+            · {groupChamps.length} campeões · {groupYears.length}{" "}
+            {groupYears.length === 1 ? "ano" : "anos"}
+          </span>
+        </h4>
+
+        {splitByEscalao ? (
+          // ── Uma tabela por escalão dentro do grupo ─────────────
+          escaloesPresentes
+            .filter((esc) => groupSet.has(esc))
+            .map((esc) => {
+              const escChamps = groupChamps.filter((c) => c.escalao === esc);
+              const escYears = [
+                ...new Set(escChamps.map((c) => c.year)),
+              ].sort((a, b) => a - b);
+              if (escChamps.length === 0) return null;
+              return (
+                <div key={esc} style={{ marginBottom: 18 }}>
+                  <h5
+                    className="fs-12 fw-700"
+                    style={{
+                      marginBottom: 6,
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                    }}
+                  >
+                    <EscPill esc={esc} />
+                    <span className="muted fs-11" style={{ fontWeight: 400 }}>
+                      · {escChamps.length} campeões · {escYears.length}{" "}
+                      {escYears.length === 1 ? "ano" : "anos"}
+                    </span>
+                  </h5>
+                  <RegionChampionsBlock
+                    region="*"
+                    showRegion={false}
+                    champions={escChamps}
+                    byRegionMap={
+                      new Map(
+                        escChamps.map((c) => [
+                          `${c.escalao}|${c.sex}|${c.year}`,
+                          c,
+                        ]),
+                      )
+                    }
+                    allYears={escYears}
+                    typeLabel={typeLabel}
+                    regionOverrides={{}}
+                    defaultOpen
+                  />
+                </div>
+              );
+            })
+        ) : (
+          // ── Layout regional: uma tabela por região (filtrada ao grupo de
+          //    escalões via prop escFilter, que filtra rows e requiredEscList).
+          regions.map((region) => {
+            // Calcular se a região tem qualquer champion no grupo — caso
+            // contrário não renderiza secção vazia.
+            const hasAny = groupChamps.some(
+              (c) => !showRegion || c.region === region,
+            );
+            if (!hasAny) return null;
+            return (
+              <RegionChampionsBlock
+                key={`${keyPrefix}-${region}`}
+                region={region}
+                showRegion={showRegion}
+                champions={champions}
+                byRegionMap={byRegion.get(region) || new Map<string, Champion>()}
+                allYears={years}
+                typeLabel={typeLabel}
+                regionOverrides={regionOverrides}
+                defaultOpen={
+                  !showRegion || (REGION_DEFAULT_OPEN[region] ?? false)
+                }
+                escFilter={groupSet}
+              />
+            );
+          })
+        )}
+      </div>
+    );
+  };
+
   return (
     <section style={{ margin: "16px 12px" }}>
-      <h3 className="fs-14 fw-700" style={{ marginBottom: 8 }}>{title}</h3>
-      {regions.map(region => (
-        <RegionChampionsBlock
-          key={region}
-          region={region}
-          showRegion={showRegion}
-          champions={champions}
-          byRegionMap={byRegion.get(region) || new Map<string, Champion>()}
-          allYears={years}
-          typeLabel={typeLabel}
-          regionOverrides={regionOverrides}
-          defaultOpen={!showRegion || (REGION_DEFAULT_OPEN[region] ?? false)}
-        />
-      ))}
+      <h3 className="fs-14 fw-700" style={{ marginBottom: 8 }}>
+        {title}
+      </h3>
+      {ESC_GROUPS.map((g) => renderGroup(g.label, g.set, g.key))}
     </section>
   );
 }
@@ -321,7 +477,7 @@ function ChampionsGrid({ title, champions, years, showRegion = false, typeLabel 
  *  independente, sem um estado global a contaminar). */
 function RegionChampionsBlock({
   region, showRegion, champions, byRegionMap, allYears, typeLabel, regionOverrides,
-  defaultOpen = true,
+  defaultOpen = true, escFilter,
 }: {
   region: string;
   showRegion: boolean;
@@ -331,6 +487,9 @@ function RegionChampionsBlock({
   typeLabel: string;
   regionOverrides: Record<string, { hideYears?: number[]; note?: string }>;
   defaultOpen?: boolean;
+  /** Quando definido, restringe as linhas (escalões) ao subset indicado.
+   *  Usado para split em 2 grupos (Sub-10/12/14 e Sub-16/18+). */
+  escFilter?: Set<string>;
 }) {
   const { sortKey, sortDir, toggleSort } = useSort<"esc" | "sex" | "year">("esc", "asc");
   const [open, setOpen] = useState(defaultOpen);
@@ -358,6 +517,7 @@ function RegionChampionsBlock({
   const rowsMap = new Map<string, { esc: string; sex: Sex }>();
   if (requiredEscList) {
     for (const esc of requiredEscList) {
+      if (escFilter && !escFilter.has(esc)) continue;
       for (const sx of ["M", "F"] as Sex[]) {
         rowsMap.set(`${esc}|${sx}`, { esc, sex: sx });
       }
@@ -366,6 +526,7 @@ function RegionChampionsBlock({
   for (const ch of champions) {
     if (showRegion && ch.region !== region) continue;
     if (hideYearsSet.has(ch.year)) continue;
+    if (escFilter && !escFilter.has(ch.escalao)) continue;
     const k = `${ch.escalao}|${ch.sex}`;
     if (!rowsMap.has(k)) rowsMap.set(k, { esc: ch.escalao, sex: ch.sex });
   }
@@ -435,16 +596,16 @@ function RegionChampionsBlock({
         </p>
       )}
       {open && <>
-      <div style={{ overflowX: "auto" }}>
+      <div style={{ overflowX: "auto", paddingBottom: 14 }}>
         <table style={{ borderCollapse: "collapse", fontSize: 12, minWidth: "100%" }}>
           <thead>
             <tr>
               <SortableHdr k="esc" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort as any}
-                style={{ padding: "6px 8px", borderBottom: "2px solid var(--border)", textAlign: "left", position: "sticky", left: 0, background: "var(--bg-card)", minWidth: 90, zIndex: 2, cursor: "pointer" }}>
+                style={{ padding: "6px 8px", borderBottom: "2px solid var(--border)", textAlign: "left", position: "sticky", left: 0, background: "var(--bg-card)", minWidth: 90, width: 90, zIndex: 3, cursor: "pointer" }}>
                 Escalão
               </SortableHdr>
               <SortableHdr k="sex" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort as any}
-                style={{ padding: "6px 8px", borderBottom: "2px solid var(--border)", textAlign: "left", minWidth: 90, cursor: "pointer" }}>
+                style={{ padding: "6px 8px", borderBottom: "2px solid var(--border)", textAlign: "left", position: "sticky", left: 90, background: "var(--bg-card)", minWidth: 90, zIndex: 3, cursor: "pointer", borderRight: "1px solid var(--border-light)" }}>
                 Tipo
               </SortableHdr>
               {yearCols.map(y => (
@@ -465,7 +626,7 @@ function RegionChampionsBlock({
                   <tr style={{ borderTop: newEscGroup ? "2px solid var(--border)" : "1px solid var(--border-light)" }}>
                     <td rowSpan={2} style={{
                       padding: "6px 8px", position: "sticky", left: 0, background: "var(--bg-card)",
-                      verticalAlign: "middle",
+                      verticalAlign: "middle", width: 90, minWidth: 90, zIndex: 2,
                     }}>
                       <span style={{ display: "inline-flex", alignItems: "center", gap: 5 }}>
                         <EscPill esc={esc} />
@@ -504,9 +665,16 @@ function RegionChampionsBlock({
 }
 
 /** Top jogadores mais frequentes */
-function TopPlayers({ players, years }: { players: PlayerStats[]; years: number[] }) {
+function TopPlayers({ players, years, mode = "all" }: { players: PlayerStats[]; years: number[]; mode?: "all" | "nacional" | "regional" }) {
   const [limit, setLimit] = useState(20);
-  const top = players.slice(0, limit);
+  // Filtrar players por modo: em "regional" só quem tem aparições regionais,
+  // em "nacional" só quem tem aparições nacionais. Ordenação preservada.
+  const filteredByMode = useMemo(() => {
+    if (mode === "regional") return players.filter((p) => p.regionalAppearances > 0);
+    if (mode === "nacional") return players.filter((p) => p.nacionalAppearances > 0);
+    return players;
+  }, [players, mode]);
+  const top = filteredByMode.slice(0, limit);
 
   if (top.length === 0) return null;
 
@@ -540,7 +708,16 @@ function TopPlayers({ players, years }: { players: PlayerStats[]; years: number[
                 }}>
                   <td style={{ padding: "5px 8px", textAlign: "right" }} className="fw-600">{i + 1}</td>
                   <td style={{ padding: "5px 8px" }}>
-                    <span className="fw-600">{p.displayName || p.name}</span>
+                    {p.fed ? (
+                      <a href={`/jogadores/${p.fed}?view=federado`} target="_blank" rel="noopener noreferrer"
+                        className="fw-600"
+                        style={{ color: "inherit", textDecoration: "none", borderBottom: "1px dotted currentColor" }}
+                        title={`${p.displayName || p.name} — perfil federado (nova janela)`}>
+                        {p.displayName || p.name}
+                      </a>
+                    ) : (
+                      <span className="fw-600">{p.displayName || p.name}</span>
+                    )}
                     {manuel && <span style={{ marginLeft: 4, fontSize: 10 }}>★</span>}
                   </td>
                   <td style={{ padding: "5px 8px" }} className="fs-11 muted">{p.fed || "—"}</td>
@@ -558,7 +735,7 @@ function TopPlayers({ players, years }: { players: PlayerStats[]; years: number[
                   <td style={{ padding: "5px 8px" }} className="fs-11">
                     <span style={{ display: "inline-flex", gap: 3, flexWrap: "wrap" }}>
                       {[...p.escaloes].sort((a, b) => ESC_ORDER.indexOf(a) - ESC_ORDER.indexOf(b)).map(e =>
-                        <EscPill key={e} esc={e} size="xs" />
+                        <EscPill key={e} esc={e} />
                       )}
                     </span>
                   </td>
@@ -571,14 +748,14 @@ function TopPlayers({ players, years }: { players: PlayerStats[]; years: number[
           </tbody>
         </table>
       </div>
-      {limit < players.length && (
+      {limit < filteredByMode.length && (
         <button className="fs-11" onClick={() => setLimit(limit + 20)}
           style={{
             marginTop: 8, padding: "4px 10px", borderRadius: 4,
             border: "1px solid var(--border)", background: "var(--bg-muted)",
             cursor: "pointer",
           }}>
-          Mostrar mais ({players.length - limit} restantes)
+          Mostrar mais ({filteredByMode.length - limit} restantes)
         </button>
       )}
     </section>
@@ -586,23 +763,48 @@ function TopPlayers({ players, years }: { players: PlayerStats[]; years: number[
 }
 
 /** Timeline visual de um jogador: escalão em cada ano + títulos */
-function PlayerTimeline({ player, years }: { player: PlayerStats; years: number[] }) {
+function PlayerTimeline({ player, years, mode = "all" }: { player: PlayerStats; years: number[]; mode?: "all" | "nacional" | "regional" }) {
   if (!player.dob) return null;
+  // Filtrar títulos por modo activo (Regional só vê títulos Regional, etc.)
+  const filteredTitles = player.titles.filter((t) =>
+    mode === "regional" ? t.type === "Regional" :
+    mode === "nacional" ? t.type === "Nacional" :
+    true,
+  );
   const titlesByYear = new Map<number, Champion[]>();
-  for (const t of player.titles) {
+  for (const t of filteredTitles) {
     if (!titlesByYear.has(t.year)) titlesByYear.set(t.year, []);
     titlesByYear.get(t.year)!.push(t);
   }
-  const sortedYears = [...years].sort();
+  // Filtrar para só mostrar anos onde o jogador tinha pelo menos 9 anos
+  // (idade mínima do Sub-10). Pré-pubertário: 8 anos = ainda não compete.
+  // Evita pills "2005 Sub-10" para um jogador nascido em 2008.
+  const yob = parseInt(String(player.dob).slice(0, 4));
+  const minYear = isNaN(yob) ? -Infinity : yob + 9;
+  const sortedYears = [...years].sort().filter((y) => y >= minYear);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 4, padding: "8px 12px",
       borderBottom: "1px solid var(--border-light)" }}>
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        <span className="fw-700 fs-13">{player.displayName || player.name}</span>
+        {player.fed ? (
+          <a href={`/jogadores/${player.fed}?view=federado`} target="_blank" rel="noopener noreferrer"
+            className="fw-700 fs-13"
+            style={{ color: "inherit", textDecoration: "none", borderBottom: "1px dotted currentColor" }}
+            title={`${player.displayName || player.name} — perfil federado (nova janela)`}>
+            {player.displayName || player.name}
+          </a>
+        ) : (
+          <span className="fw-700 fs-13">{player.displayName || player.name}</span>
+        )}
         <span className="fs-10 muted">{player.fed || "—"}</span>
         {player.dob && <span className="fs-10 muted">· nasc. {player.dob.slice(0, 4)}</span>}
-        <span className="fs-11 muted">· {player.appearances} participações · {player.titles.length} títulos</span>
+        <span className="fs-11 muted">
+          · {mode === "regional" ? player.regionalAppearances :
+              mode === "nacional" ? player.nacionalAppearances :
+              player.appearances} participações
+          · {filteredTitles.length} títulos
+        </span>
       </div>
       <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
         {sortedYears.map(y => {
@@ -615,7 +817,9 @@ function PlayerTimeline({ player, years }: { player: PlayerStats; years: number[
               border: "1px solid " + (played ? "var(--border)" : "var(--border-light)"),
               borderRadius: 4,
               padding: "3px 6px",
-              background: titles.length > 0 ? "var(--bg-success-subtle)" : (played ? undefined : "var(--bg-muted)"),
+              background: titles.length > 0
+                ? "var(--medal-gold-bg, #fef3c7)"  // amber/dourado para anos com título (🏆)
+                : (played ? undefined : "var(--bg-muted)"),
               opacity: played ? 1 : 0.6,
               fontSize: 11,
               display: "inline-flex", alignItems: "center", gap: 3,
@@ -625,9 +829,17 @@ function PlayerTimeline({ player, years }: { player: PlayerStats; years: number[
               {esc && <EscPill esc={esc} />}
               {yrIn && <YearInEscBadge year={yrIn} />}
               {titles.map((t, i) => (
-                <span key={i} title={`Campeão ${t.type} ${t.escalao} ${t.sex} (${t.region})`} style={{ fontSize: 11 }}>
-                  🏆
-                </span>
+                t.ccode && t.tcode ? (
+                  <a key={i} href={fpgScoringUrl(t.ccode, t.tcode.split("+")[0])} target="_blank" rel="noopener noreferrer"
+                    title={`Campeão ${t.type} ${t.escalao} ${t.sex} (${t.region}) — abrir torneio na FPG ↗`}
+                    style={{ fontSize: 11, textDecoration: "none" }}>
+                    🏆
+                  </a>
+                ) : (
+                  <span key={i} title={`Campeão ${t.type} ${t.escalao} ${t.sex} (${t.region})`} style={{ fontSize: 11 }}>
+                    🏆
+                  </span>
+                )
               ))}
             </div>
           );
@@ -638,10 +850,16 @@ function PlayerTimeline({ player, years }: { player: PlayerStats; years: number[
 }
 
 /** Secção de timelines dos top jogadores */
-function PlayerTimelines({ players, years }: { players: PlayerStats[]; years: number[] }) {
+function PlayerTimelines({ players, years, mode = "all" }: { players: PlayerStats[]; years: number[]; mode?: "all" | "nacional" | "regional" }) {
   const [limit, setLimit] = useState(8);
+  // Filtrar por modo: regional só vê quem participou em regionais, etc.
+  const filteredByMode = useMemo(() => {
+    if (mode === "regional") return players.filter((p) => p.regionalAppearances > 0);
+    if (mode === "nacional") return players.filter((p) => p.nacionalAppearances > 0);
+    return players;
+  }, [players, mode]);
   // Só jogadores com dob conhecida (para calcular escalão evolutivo)
-  const withDob = players.filter(p => p.dob).slice(0, limit);
+  const withDob = filteredByMode.filter(p => p.dob).slice(0, limit);
   if (withDob.length === 0) return null;
 
   return (
@@ -654,10 +872,10 @@ function PlayerTimelines({ players, years }: { players: PlayerStats[]; years: nu
         background: "var(--bg-card)",
       }}>
         {withDob.map((p, i) => (
-          <PlayerTimeline key={(p.fed || p.name) + "_" + i} player={p} years={years} />
+          <PlayerTimeline key={(p.fed || p.name) + "_" + i} player={p} years={years} mode={mode} />
         ))}
       </div>
-      {limit < players.filter(p => p.dob).length && (
+      {limit < filteredByMode.filter(p => p.dob).length && (
         <button className="fs-11" onClick={() => setLimit(limit + 8)}
           style={{
             marginTop: 8, padding: "4px 10px", borderRadius: 4,
@@ -676,9 +894,23 @@ function PlayerTimelines({ players, years }: { players: PlayerStats[]; years: nu
 export function JovensAnaliseView({
   jovensTournaments,
   playersDB,
+  splitByEscalao = false,
+  mode = "all",
+  hideHeader = false,
+  hideTopPlayers = false,
+  hideTimelines = false,
 }: {
   jovensTournaments: Tournament[];
   playersDB: PlayersDB;
+  /** Se true, renderiza Nacional como uma tabela por escalão (mais legível
+   *  para datasets grandes como o histórico Nacionais 2005-2026). */
+  splitByEscalao?: boolean;
+  /** "all" (default) mostra Nacional + Regional. "nacional" só Nacional.
+   *  "regional" só Regional. */
+  mode?: "all" | "nacional" | "regional";
+  hideHeader?: boolean;
+  hideTopPlayers?: boolean;
+  hideTimelines?: boolean;
 }) {
   // Carregar mapeamento fed → {country, dob, sex, name} (federados activos +
   // inactivos consolidados). Ficheiro leve (~38KB), cacheado globalmente.
@@ -702,9 +934,7 @@ export function JovensAnaliseView({
   );
 
   // Anos com dados — Nacional e Regional separadamente. Mostramos TODOS os
-  // anos disponíveis (scroll horizontal), não só os últimos 4. Isto foi
-  // pedido explicitamente pela user (2026-04-18) — quer ver histórico
-  // completo da Madeira que vai desde 2019.
+  // anos disponíveis (scroll horizontal), não só os últimos 4.
   const nacYears = useMemo(() => {
     const ys = [...new Set(analise.nacionalChampions.map(c => c.year))];
     return ys.sort((a, b) => a - b);
@@ -713,48 +943,76 @@ export function JovensAnaliseView({
     const ys = [...new Set(analise.regionalChampions.map(c => c.year))];
     return ys.sort((a, b) => a - b);
   }, [analise.regionalChampions]);
-  // Para texto/estatísticas: anos cobertos pelo conjunto, descendente
   const allYearsCovered = useMemo(() => {
     const s = new Set<number>([...nacYears, ...regYears]);
     return [...s].sort((a, b) => b - a);
   }, [nacYears, regYears]);
 
+  const showNacional = mode === "all" || mode === "nacional";
+  const showRegional = mode === "all" || mode === "regional";
+
   return (
     <div style={{ padding: "8px 0 32px", overflowY: "auto" }}>
-      <div style={{ padding: "12px 16px", borderBottom: "1px solid var(--border-light)" }}>
-        <h2 className="fs-18 fw-800" style={{ marginBottom: 4 }}>
-          📊 Análise — Campeonatos Jovens
-        </h2>
-        <p className="fs-12 muted">
-          Campeões e participações entre Nacional e Regional.
-          {" "}Nacional: {nacYears.length > 0 ? `${nacYears[0]}–${nacYears[nacYears.length-1]}` : "—"}.
-          {" "}Regional: {regYears.length > 0 ? `${regYears[0]}–${regYears[regYears.length-1]}` : "—"}.
-          {" "}A atribuição de escalão segue a regra FPG year-based (idade no ano civil).
-          Badge <strong>A1</strong> / <strong>A2</strong> indica primeiro ou segundo ano do escalão.
-          {" "}Em <strong>Nacionais</strong> só jogadores portugueses podem ser campeões;
-          em <strong>Regionais</strong> qualquer participante elegível pode ser campeão.
-          A tabela arrasta-se horizontalmente para mostrar todos os anos.
-        </p>
-      </div>
+      {!hideHeader && (
+        <div style={{ padding: "12px 16px", borderBottom: "1px solid var(--border-light)" }}>
+          <h2 className="fs-18 fw-800" style={{ marginBottom: 4 }}>
+            📊 Análise — Campeonatos Jovens
+          </h2>
+          <p className="fs-12 muted">
+            Campeões e participações entre Nacional e Regional.
+            {" "}Nacional: {nacYears.length > 0 ? `${nacYears[0]}–${nacYears[nacYears.length-1]}` : "—"}.
+            {" "}Regional: {regYears.length > 0 ? `${regYears[0]}–${regYears[regYears.length-1]}` : "—"}.
+          </p>
+        </div>
+      )}
 
-      <ChampionsGrid
-        title="🏆 Campeões — Nacional"
-        champions={analise.nacionalChampions}
-        years={nacYears}
-        showRegion={false}
-        typeLabel="NACIONAL"
-      />
+      {showNacional && (
+        <ChampionsGrid
+          title="🏆 Campeões — Nacional"
+          champions={analise.nacionalChampions}
+          years={nacYears}
+          showRegion={false}
+          typeLabel="NACIONAL"
+          splitByEscalao={splitByEscalao}
+        />
+      )}
 
-      <ChampionsGrid
-        title="🏆 Campeões — Regional (por região)"
-        champions={analise.regionalChampions}
-        years={regYears}
-        showRegion={true}
-        typeLabel="REGIONAL"
-      />
+      {showRegional && (
+        <ChampionsGrid
+          title="🏆 Campeões — Regional (por região)"
+          champions={analise.regionalChampions}
+          years={regYears}
+          showRegion={true}
+          typeLabel="REGIONAL"
+        />
+      )}
 
-      <TopPlayers players={analise.topPlayers} years={allYearsCovered} />
-      <PlayerTimelines players={analise.topPlayers} years={allYearsCovered} />
+      {!hideTopPlayers && (
+        <TopPlayers
+          players={analise.topPlayers}
+          years={
+            mode === "regional"
+              ? regYears
+              : mode === "nacional"
+                ? nacYears
+                : allYearsCovered
+          }
+          mode={mode}
+        />
+      )}
+      {!hideTimelines && (
+        <PlayerTimelines
+          players={analise.topPlayers}
+          years={
+            mode === "regional"
+              ? regYears
+              : mode === "nacional"
+                ? nacYears
+                : allYearsCovered
+          }
+          mode={mode}
+        />
+      )}
     </div>
   );
 }

@@ -15,7 +15,7 @@
  *   • Suporte a 9H e 18H, 1 a N rondas
  */
 import React, { useEffect, useState, useMemo, useCallback, useRef } from "react";
-import { Link, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import { loadPlayers } from "../data/loader";
 import { buildEscLookup, type EscLookup, escCls, escPillCls, formatPlayerName, normalizePlayer } from "../utils/playerUtils";
@@ -1063,10 +1063,11 @@ function Content() {
   const [jovensGroupKey, setJovensGroupKey]        = useState<string | null>(null);
   const [jovensEscIdx, setJovensEscIdx]            = useState<number>(0);
   const [jovensShowInscricoes, setJovensShowInscricoes] = useState(startInscritos);
-  // /FPG/jovens sem sub-segmento → abre directamente na vista de Análise.
-  // /FPG/jovens/inscritosCN → Inscrições. /FPG/torneio/X-Y → torneio específico.
-  const startAnalise = urlSeg === "jovens" && !urlSub && !params.tkey;
-  const [jovensShowAnalise, setJovensShowAnalise] = useState(startAnalise);
+  // /FPG/jovens sem sub-segmento → abre na lista de torneios (a Análise foi
+  // migrada para /titulos em 2026-05-04). jovensShowAnalise mantém-se no
+  // código apenas para desactivar manualmente caso futuras edições queiram
+  // reactivar — sempre `false` por default agora.
+  const [jovensShowAnalise, setJovensShowAnalise] = useState(false);
 
   // ── Sync URL→seriesFilter quando o utilizador navega entre /FPG, /FPG/jovens,
   //     /FPG/sto, /FPG/clubes, /FPG/pja sem remontar a página.
@@ -2539,29 +2540,9 @@ function Content() {
             {jovensLoaded && jovensGroups.length === 0 && !jovensLoading && (
               <div className="muted fs-11 u-pad-italic">Ficheiro não encontrado (ainda)</div>
             )}
-            {/* Entrada especial: Análise (landing/landing page) */}
-            <a
-              href="/FPG/jovens"
-              onClick={e => {
-                if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
-                  e.preventDefault();
-                  setJovensShowAnalise(true);
-                  setJovensShowInscricoes(false);
-                  setJovensGroupKey(null);
-                  md.onSelect();
-                  if (location.pathname !== "/FPG/jovens") navigate("/FPG/jovens");
-                }
-              }}
-              className={`course-item${jovensShowAnalise ? " active" : ""}`}
-              style={{
-                borderLeft: `4px solid ${SIDEBAR_ACCENT.tour}`, borderRadius: "0 6px 6px 0",
-              }}
-            >
-              <div className="fw-700 fs-12">
-                📊 Análise 4 anos
-              </div>
-              <div className="muted fs-11">Campeões Regional + Nacional · jogadores frequentes</div>
-            </a>
+            {/* A entrada "📊 Análise" foi REMOVIDA de /FPG/jovens em 2026-05-04
+                — a análise agora vive exclusivamente na página dedicada /titulos
+                (acessível via tab "🏆 Títulos" da NavBar de topo). */}
             {/* Entrada "📋 Inscrições 2026" DESACTIVADA 2026-04-27 — inscrições do
                 Nacional Sub-12 fecharam, todos 19 inscritos confirmados (sem reservas).
                 A rota /FPG/jovens/inscritosCN, o InscricoesPanel e o jovensShowInscricoes
@@ -2658,7 +2639,9 @@ function Content() {
           </div>
           <div className="course-detail" ref={md.detailRef}>
             {jovensShowAnalise ? (
-              <JovensAnaliseView jovensTournaments={jovensTournaments} playersDB={playersDB} />
+              // Análise foi migrada para /titulos em 2026-05-04 — qualquer
+              // entrada residual nesta vista redirecciona automaticamente.
+              <Navigate to="/titulos/nacional" replace />
             ) : jovensShowInscricoes ? (
               <InscricoesPanel />
             ) : curJovensGroup ? (

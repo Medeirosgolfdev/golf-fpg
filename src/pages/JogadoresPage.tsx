@@ -28,7 +28,7 @@ import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { useSort } from "../hooks/useSort";
 import { loadPlayerStats, daysSince, type PlayerStatsDb } from "../data/playerStatsTypes";
-import { loadFederados, mergePlayersWithFederados, loadInativosStats, normalizeAgeLevel, type FederadoRaw, type MergedPlayer, type InativosStats } from "../data/federadosLoader";
+import { loadFederados, federadoToPlayer, mergePlayersWithFederados, loadInativosStats, normalizeAgeLevel, type FederadoRaw, type MergedPlayer, type InativosStats } from "../data/federadosLoader";
 import { getPlayerHistory, getScorecard, type WhsRound, type Scorecard } from "../data/datagolfClient";
 import { gf } from "../utils/flagUtils";
 import SortableHdr from "../ui/SortableHdr";
@@ -4185,8 +4185,27 @@ export default function JogadoresPage() {
 
   const selected = useMemo(() => {
     if (!selectedFed) return null;
-    return allPlayers.find(p => p.fed === selectedFed) ?? null;
-  }, [allPlayers, selectedFed]);
+    const inAll = allPlayers.find(p => p.fed === selectedFed);
+    if (inAll) return inAll;
+    // Fallback: jogador não está em allPlayers (ex: cheguei de /nacionais-jovens
+    // com fed externo que não foi carregado pelo modo Nossos). Procurar
+    // directamente em federados.json e construir entry sintético — assim
+    // a página renderiza sempre, mostrando vista federado mínima.
+    if (federados && federados.length > 0) {
+      const fp = federados.find(f => String(f.federation_code) === String(selectedFed));
+      if (fp) {
+        const baseP = federadoToPlayer(fp);
+        const synth = {
+          ...baseP,
+          fed: String(selectedFed),
+          _source: "feds" as const,
+          _federadoRaw: fp,
+        } as MergedPlayer & { fed: string };
+        return synth;
+      }
+    }
+    return null;
+  }, [allPlayers, selectedFed, federados]);
 
   return (
     <div className="jogadores-page">

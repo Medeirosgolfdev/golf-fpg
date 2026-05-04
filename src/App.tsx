@@ -39,6 +39,8 @@ const DrivePage = lazy(() => import("./pages/DrivePage"));
 const USKIDSPage = lazy(() => import("./pages/USKIDSPage"));
 const FPGPage = lazy(() => import("./pages/FPGPage"));
 const DORALPage = lazy(() => import("./pages/DORALPage"));
+const NacionaisJovensPage = lazy(() => import("./pages/NacionaisJovensPage"));
+const TitulosPage = lazy(() => import("./pages/TitulosPage"));
 
 type Status =
   | { kind: "loading" }
@@ -283,6 +285,14 @@ export default function App() {
                 <Route path="/diversos" element={<Navigate to="/FPG" replace />} />
                 <Route path="/diversos/inscritos" element={<Navigate to="/FPG/jovens/inscritosCN" replace />} />
                 <Route path="/doral" element={<DORALPage />} />
+                {/* Pagina Titulos - tabs Nacional/Regional/Atleta */}
+                <Route path="/titulos" element={<TitulosPage />} />
+                <Route path="/titulos/:tab" element={<TitulosPage />} />
+                {/* Compat: URLs antigas continuam a funcionar (redirect) */}
+                <Route path="/nacionais-jovens" element={<Navigate to="/titulos/nacional" replace />} />
+                <Route path="/nacionais" element={<Navigate to="/titulos/nacional" replace />} />
+                {/* Manter NacionaisJovensPage acessivel via rota antiga (caso de bookmarks) */}
+                <Route path="/nacionais-jovens-legacy" element={<NacionaisJovensPage />} />
                 <Route path="*" element={<Navigate to={`/jogadores/${MANUEL_FED}`} replace />} />
               </Routes>
             </Suspense>

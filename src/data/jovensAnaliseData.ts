@@ -60,6 +60,9 @@ export interface Champion {
   provisional?: boolean;
   roundsPlayed?: number;
   roundsExpected?: number;
+  // Total de rondas EFECTIVAS jogadas (sempre preenchido). Usado para mostrar
+  // pill "2R" / "3R" no pódio para indicar quantas rondas o gross representa.
+  roundsTotal?: number;
 
   // ── Campos legacy (mantidos para retrocompatibilidade — rs. timelines) ──
   championName: string;
@@ -229,12 +232,20 @@ export function parseEscaloes(s: string): string[] {
   const asEsc = (n: number) => `Sub ${n === 25 ? 24 : n}`;
 
   // Caso 1: range "Sub N1-N2" (hífen ou "–") OU "Sub N1 a (Sub )?N2"
+  // ⚠ Apenas considerar range quando AMBOS os números são valores plausíveis
+  // de escalão (≤ 30). Caso contrário "Sub 10 - 2024 - Rapazes" seria
+  // interpretado como Sub-10 a Sub-2024 → todos os escalões.
   const rangeMatch = s.match(/Sub\s*(\d+)\s*(?:[-–]|\sa\s)\s*(?:Sub\s*)?(\d+)/i);
   if (rangeMatch) {
     let n1 = parseInt(rangeMatch[1]);
     let n2 = parseInt(rangeMatch[2]);
     if (n1 === 25) n1 = 24;
     if (n2 === 25) n2 = 24;
+    // Se n2 é claramente um ano (≥31 — fora do espaço de escalões), ignorar e
+    // tratar como mono-escalão (apenas n1).
+    if (n2 >= 31) {
+      return [`Sub ${n1}`];
+    }
     const lo = Math.min(n1, n2);
     const hi = Math.max(n1, n2);
     return ESC_BRACKETS.filter(b => b >= lo && b <= hi).map(b => `Sub ${b}`);
@@ -280,6 +291,14 @@ export function buildJovensAnalise(
     if (pinfo?.dob) return pinfo.dob;
     const info = playerInfo[String(fed)];
     return info?.dob || null;
+  };
+  // Versão que aceita Player directamente: prefere `p.dob` no registo (usado
+  // em dados sintéticos sem federados activos no playersDB) com fallback ao
+  // lookup tradicional por fed code.
+  const getDobFromPlayer = (p: Player): string | null => {
+    const own = (p as { dob?: string }).dob;
+    if (own) return own;
+    return getDob((p as { fedCode?: string }).fedCode);
   };
   const getSex = (fed: string | null | undefined): Sex => {
     if (!fed) return "?";
@@ -340,7 +359,15 @@ export function buildJovensAnalise(
     };
 
     // Sexo de um jogador: playersDB primeiro, depois playerInfo (inativos).
-    const playerSex = (p: Player): Sex => getSex((p as any).fedCode);
+    // playerSex: aceita sex directamente no registo do jogador (p.sex), usado
+    // por dados sem fed real (NacionaisJovensPage / fpg-nacionais-historico —
+    // torneios pré-2018 mistos onde o sexo veio do ClassifLST mas sem fedCode).
+    // Fallback ao lookup playersDB[fedCode].
+    const playerSex = (p: Player): Sex => {
+      const ownSex = (p as { sex?: string }).sex;
+      if (ownSex === "M" || ownSex === "F") return ownSex as Sex;
+      return getSex((p as any).fedCode);
+    };
 
     // ── Escalões designados pelo organizador (parseEscaloes) ────────────
     //
@@ -443,7 +470,7 @@ export function buildJovensAnalise(
       if (!px) return null;
       const p = px.p;
       const fed = (p as any).fedCode || null;
-      const dob = getDob(fed);
+      const dob = getDobFromPlayer(p);
       const age = dob ? (year - parseInt(String(dob).slice(0, 4))) : null;
       // toPar recalculado a partir do gross efectivo vs parTotal × rondas
       const par1 = typeof p.parTotal === "number" ? p.parTotal : null;
@@ -473,7 +500,7 @@ export function buildJovensAnalise(
           !filterByPlayerSex || forSex === "?" || playerSex(x.p) === forSex
         ) && (
           // Filtrar por escalão quando é combinado — usar escalão real do jogador
-          !forEscalao || escalaoInYear(getDob((x.p as any).fedCode), year) === forEscalao
+          !forEscalao || escalaoInYear(getDobFromPlayer(x.p), year) === forEscalao
         )
       );
       const championEntry = ptOfSex[0] || null;
@@ -513,6 +540,7 @@ export function buildJovensAnalise(
         provisional: isProvisional || undefined,
         roundsPlayed: isProvisional ? expectedRounds : undefined,
         roundsExpected: isProvisional ? expectedRoundsMeta : undefined,
+        roundsTotal: expectedRounds,
         // ── Campos legacy (retrocompat) ──
         championName: champion.name,
         championFed: champion.fed,
@@ -532,7 +560,7 @@ export function buildJovensAnalise(
       if (applyForeignerRule) {
         const allOfSubLeader = ordered.filter(x =>
           (forSex === "?" || !filterByPlayerSex || playerSex(x.p) === forSex) &&
-          (!forEscalao || escalaoInYear(getDob((x.p as any).fedCode), year) === forEscalao)
+          (!forEscalao || escalaoInYear(getDobFromPlayer(x.p), year) === forEscalao)
         );
         const defactoForSub = allOfSubLeader[0]?.p || null;
         if (defactoForSub && defactoForSub !== championEntry.p) {
@@ -628,7 +656,13 @@ export function buildJovensAnalise(
     if (ps) ps.titles.push(ch);
   }
 
-  // Ordenar
+  // Ordenar — compareEsc usa ESC_BRACKETS para ordem canónica Sub-10..Sub-24
+  const compareEsc = (a: string, b: string): number => {
+    const m = (s: string) => {
+      const x = s.match(/(\d+)/); return x ? parseInt(x[1]) : 99;
+    };
+    return m(a) - m(b);
+  };
   nacionalChampions.sort((a, b) => b.year - a.year || compareEsc(a.escalao, b.escalao) || a.sex.localeCompare(b.sex));
   regionalChampions.sort((a, b) =>
     b.year - a.year ||
@@ -638,7 +672,14 @@ export function buildJovensAnalise(
   );
 
   const topPlayers: PlayerStats[] = [...playerMap.values()]
-    .sort((a, b) => b.appearances - a.appearances || b.titles.length - a.titles.length)
+    .sort((a, b) =>
+      // Ordem 1: títulos (mais campeões primeiro) — pedido user 2026-05-04
+      b.titles.length - a.titles.length ||
+      // Ordem 2: aparições totais (desempate)
+      b.appearances - a.appearances ||
+      // Ordem 3: nome para estabilidade
+      a.name.localeCompare(b.name, "pt"),
+    )
     .slice(0, 100);
 
   return {
@@ -648,12 +689,4 @@ export function buildJovensAnalise(
     years: [...years].sort().reverse(),
     regionsSeen: [...regionsSeen].sort(),
   };
-}
-
-// ── Helper: ordenação de escalão ───────────────────────────────────────
-const ESC_ORDER = ["Sub 10", "Sub 12", "Sub 14", "Sub 16", "Sub 18", "Sub 24"];
-function compareEsc(a: string, b: string): number {
-  const ia = ESC_ORDER.indexOf(a);
-  const ib = ESC_ORDER.indexOf(b);
-  return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
 }

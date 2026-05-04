@@ -3045,131 +3045,169 @@ tr.cross-current { background: var(--bg-success); }
     size: A4 landscape;
     margin: 10mm 8mm;
   }
-
-  /* Garantir que sections que normalmente scrollam mostram tudo */
-  .scroll, .x-scroll, [class*="scroll"] {
-    overflow: visible !important;
-    max-height: none !important;
-  }
-
-  /* Esconder elementos interactivos irrelevantes em papel */
-  input, select {
-    display: none !important;
-  }
-
-  /* Ranking PJA — ocultar highlight do Manuel (.row-manuel) durante export PDF */
-  .row-manuel,
-  .row-manuel:hover,
-  .row-manuel.row-selected {
-    background: transparent !important;
-  }
-  .row-manuel .sticky-col-0,
-  .row-manuel .sticky-col-1,
-  .row-manuel.row-selected .sticky-col-0,
-  .row-manuel.row-selected .sticky-col-1 {
-    background: transparent !important;
-  }
-
-  /* Ranking PJA — esconder colunas dos torneios (mantém só identity + Voltas/Total) */
-  /* Comentado por default — descomentar se queres exportar SÓ a tabela de ranking */
-  /*
-  .cs-grp:not(.cs-pos):not(.cs-name):not(.cs-esc):not(.cs-club):not(.cs-s-games):not(.cs-s-pts) {
-    display: none !important;
-  }
-  */
-
-  /* Modo PDF PJA: quando body tem .print-pja-mode, esconder linhas com
-     data-fed que NÃO estão marcadas com .print-pja-keep. As linhas de Par
-     e SI (sem data-fed) continuam visíveis. */
-  body.print-pja-mode tr[data-fed]:not(.print-pja-keep) {
-    display: none !important;
-  }
-
-  /* Em qualquer print: esconder estrela Manuel (highlight não interessa em PDF) */
-  .print-hide-star {
-    display: none !important;
-  }
-
-  /* PJA Ranking print: tabela completa polida.
-     - Identity cols (Pos, Nome, Esc, Clube) bem visíveis
-     - Cells de torneios pequenas para caber colunas todas
-     - thead repete em cada página (display: table-header-group já default)
-     - <tr> não quebra a meio (page-break-inside: avoid)
-     - Cores semânticas dos scorecards preservadas (-webkit-print-color-adjust: exact)
-   */
-  .cs-name { font-size: 8.5pt !important; font-weight: 600 !important; padding: 2pt 4pt !important; }
-  .cs-club { font-size: 7.5pt !important; padding: 2pt 4pt !important; color: #555 !important; }
-  .cs-pos  { font-size: 9pt !important; font-weight: 800 !important; padding: 2pt 4pt !important; }
-  .cs-esc  { font-size: 7pt !important; padding: 2pt 3pt !important; }
-  .cs-grp, .cs-col { font-size: 6pt !important; padding: 1pt 2pt !important; }
-  .cs-t-topar, .cs-t-gross { font-size: 6pt !important; padding: 1pt !important; text-align: center !important; }
-  .cs-s-games { font-size: 8pt !important; font-weight: 600 !important; padding: 2pt 3pt !important; }
-  .cs-s-pts   { font-size: 10pt !important; font-weight: 900 !important; padding: 2pt 4pt !important; color: #C00000 !important; }
-  /* Cabeçalhos dos torneios no thead — pequenos mas legíveis */
-  thead th { background: #f0f0f0 !important; }
-  thead .cs-grp, thead .cs-col {
-    font-size: 6pt !important;
-    padding: 2pt 1pt !important;
-    line-height: 1.2 !important;
-    font-weight: 700 !important;
-  }
-  /* Evitar quebrar linhas a meio */
-  tbody tr { page-break-inside: avoid !important; }
-  /* Repetir cabeçalho em cada página */
-  thead { display: table-header-group !important; }
-  /* Forçar preservação de cores das células coloridas (eagle/birdie/etc.) */
-  .sc-score, [class*="score-"], [class*="-tp-"], .lb-acc-bird, .lb-acc-bog, .lb-acc-par {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-  /* Melhor visual da linha do título do torneio */
-  .row-manuel { background: transparent !important; }
-
-  /* Esconder Sex badge e ⭐ Manuel também no Ranking */
-  .sex-badge, [class*="badge-male"], [class*="badge-female"] {
-    display: none !important;
-  }
-
-  /* Modo print PJA: compactar para caber tudo em 1 página */
-  body.print-pja-mode {
-    /* Margens menores e A4 landscape (já no @page global) */
-    font-size: 7pt !important;
-  }
-  body.print-pja-mode .lb-name,
-  body.print-pja-mode .cs-name {
-    font-size: 8pt !important;
-  }
-  body.print-pja-mode th,
-  body.print-pja-mode td {
-    padding: 1pt 2pt !important;
-    font-size: 7pt !important;
-  }
-  /* Esconder sex badge e pills de escalão em print PJA (já temos a tabela
-     dedicada por escalão; aqui só nos interessa o ranking compacto) */
-  body.print-pja-mode .sex-badge,
-  body.print-pja-mode [class*="badge-"] {
-    display: none !important;
-  }
-  /* Pills de escalão mais compactas — não esconder, só reduzir */
-  body.print-pja-mode .p,
-  body.print-pja-mode .p-sm {
-    font-size: 6pt !important;
-    padding: 0 2pt !important;
-    border-width: 0.3pt !important;
-  }
-
-  /* Margens muito pequenas no modo PJA para maximizar espaço da tabela */
-  body.print-pja-mode {
-    /* Forçar @page específico para este modo */
-  }
 }
-@media print {
-  body.print-pja-mode { /* nada — placeholder */ }
+
+/* ═══════════════════════════════════════════════════════════════════
+   NACIONAIS DE JOVENS — page styles (NacionaisJovensPage)
+   ═══════════════════════════════════════════════════════════════════ */
+
+.njov-page { padding-bottom: 60px; }
+
+.njov-filters {
+  display: flex; flex-wrap: wrap; gap: 16px; align-items: center;
+  padding: 12px 0; border-bottom: 1px solid var(--border-light);
 }
-@page {
-  /* A3 landscape para caber a tabela com 19+ colunas. Para A4, o browser
-     vai espalhar por múltiplas páginas. O user pode mudar no diálogo Print. */
-  size: A3 landscape;
-  margin: 5mm 5mm;
+.njov-filter-group {
+  display: flex; gap: 6px; align-items: center; flex-wrap: wrap;
 }
+.njov-filter-label {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.04em; color: var(--text-3);
+}
+.njov-chip {
+  cursor: pointer; user-select: none;
+  border: 1px solid var(--border);
+  background: var(--bg-1);
+  color: var(--text-2);
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.njov-chip:hover { background: var(--bg-hover); }
+.njov-chip-on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.njov-chip-on:hover { background: var(--accent); opacity: 0.9; }
+.njov-chip-clear {
+  cursor: pointer;
+  color: var(--text-3);
+  background: transparent;
+  border: 1px dashed var(--border);
+}
+
+.hoc-wrap { margin: 20px 0 28px; }
+.hoc-title {
+  font-size: 14px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--text-2);
+  margin: 0 0 10px;
+}
+.hoc-tablewrap {
+  overflow-x: auto; border: 1px solid var(--border);
+  border-radius: 6px; background: var(--bg-1);
+}
+.hoc-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 12px; font-variant-numeric: tabular-nums;
+}
+.hoc-table th {
+  padding: 6px 8px; text-align: center;
+  background: var(--bg-header);
+  border-bottom: 2px solid var(--border);
+  font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.04em;
+  color: var(--text-3); white-space: nowrap;
+}
+.hoc-th-year { width: 60px; }
+.hoc-th-esc { font-size: 11px; }
+.hoc-th-sex { font-weight: 600; padding: 4px; }
+.hoc-table tbody tr { border-bottom: 1px solid var(--border-light); }
+.hoc-year {
+  padding: 8px; text-align: center;
+  font-weight: 800; color: var(--text-1);
+  background: var(--bg-header);
+  white-space: nowrap;
+}
+.hoc-cell {
+  padding: 6px 8px;
+  vertical-align: middle;
+  border-left: 1px solid var(--border-light);
+  text-align: center;
+}
+.hoc-cell-empty {
+  color: var(--text-3); font-style: italic;
+}
+.hoc-cell-active {
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.hoc-cell-active:hover {
+  background: var(--bg-hover);
+}
+.hoc-name {
+  font-weight: 600; color: var(--text-1);
+  white-space: nowrap; max-width: 150px;
+  overflow: hidden; text-overflow: ellipsis;
+  font-size: 12px;
+}
+.hoc-score {
+  font-size: 11px; color: var(--text-3);
+  margin-top: 2px;
+}
+.hoc-gross { font-weight: 700; color: var(--text-2); margin-right: 4px; }
+.hoc-topar { font-weight: 500; }
+
+.njov-list {
+  display: flex; flex-direction: column; gap: 16px;
+  margin-top: 24px;
+}
+.njov-card {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-1);
+  overflow: hidden;
+}
+.njov-card-head {
+  padding: 10px 14px;
+  background: var(--bg-header);
+  border-bottom: 1px solid var(--border);
+}
+.njov-card-title {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 16px; font-weight: 700;
+}
+.njov-card-year {
+  font-weight: 800; color: var(--accent);
+  background: var(--bg-1); padding: 2px 8px;
+  border-radius: 4px; font-size: 14px;
+}
+.njov-card-esc {
+  font-weight: 700; color: var(--text-1);
+}
+.njov-card-meta {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  font-size: 12px; color: var(--text-3);
+  margin-top: 4px;
+}
+.njov-dot { color: var(--text-3); opacity: 0.6; }
+
+.njov-table { margin: 0; }
+.njov-table th { background: transparent; }
+.njov-th-club { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-3); padding: 6px 10px; text-align: left; background: transparent; border-bottom: 2px solid var(--border); white-space: nowrap; }
+.njov-th-round { color: var(--text-3); font-weight: 600; }
+.njov-td-pos { font-weight: 700; color: var(--text-2); }
+.njov-td-name { font-weight: 600; color: var(--text-1); white-space: nowrap; }
+.njov-td-club {
+  color: var(--text-3); font-size: 12px;
+  max-width: 220px; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap;
+}
+.njov-td-round { color: var(--text-2); font-size: 12px; }
+.njov-td-gross { font-weight: 700; color: var(--text-1); }
+.njov-td-topar { color: var(--text-2); font-size: 12px; }
+.njov-row-gold { background: rgba(255, 215, 0, 0.06); }
+.njov-row-gold:hover { background: rgba(255, 215, 0, 0.12); }
+
+.njov-footer {
+  margin-top: 32px; padding-top: 16px;
+  border-top: 1px solid var(--border-light);
+  font-size: 11px; color: var(--text-3);
+  line-height: 1.6;
+}
+.njov-footer code {
+  font-size: 11px;
+  background: var(--bg-header);
+  padding: 1px 4px; border-radius: 3px;
+}
+.njov-footer p { margin: 0 0 6px; }
+
 /* end of file */

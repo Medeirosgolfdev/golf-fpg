@@ -14,7 +14,7 @@ import golfBallSvg from "../assets/golf-ball.svg";
 
 type Tab =
   | "campos" | "jogadores" | "comparar" | "simulador" | "calendario"
-  | "drive" | "bjgt" | "kids" | "uskids" | "diversos" | "doral";
+  | "drive" | "bjgt" | "kids" | "uskids" | "diversos" | "doral" | "nacionais";
 
 // ── Lista de itens de navegação — editar aqui para adicionar/reordenar ──
 // `external: true` → abre em nova aba sem SPA navigation (ficheiros estáticos
@@ -25,6 +25,7 @@ const NAV_ITEMS: { tab: Tab; label: string; path: string; external?: boolean }[]
   { tab: "calendario", label: "Calendário",   path: "/calendario" },
   { tab: "drive",      label: "🇵🇹 DRIVE",   path: "/drive"      },
   { tab: "diversos",   label: "🇵🇹 FPG",     path: "/FPG"        },
+  { tab: "nacionais",  label: "🏆 Títulos",   path: "/titulos"          },
   { tab: "uskids",     label: "🇺🇸 USKids",  path: "/uskids"     },
   { tab: "doral",      label: "🇺🇸 Doral",   path: "/doral"      },
   { tab: "bjgt",       label: "🇪🇸 BJGT",    path: "/bjgt"       },
@@ -49,6 +50,8 @@ function tabFromPath(pathname: string): Tab {
     diversos: "diversos",
     FPG: "diversos",
     doral: "doral",
+    "nacionais-jovens": "nacionais",
+    titulos: "nacionais",
   };
   return map[seg] ?? "jogadores";
 }
@@ -66,6 +69,7 @@ const TAB_TITLES: Record<Tab, string> = {
   bjgt:       "Golf Junior – BJGT",
   diversos:   "Golf Junior – Diversos",
   doral:      "Golf Junior – Doral",
+  nacionais:  "Golf Junior – Títulos",
 };
 
 // ── Componente ─────────────────────────────────────────────────────
