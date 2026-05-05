@@ -7,7 +7,7 @@
   "gg_page": "11578271987637727893",
   "gg_league": "11566611988914156467",
   "stats_page": "11566612017871630938",
-  "scrapedAt": "2026-05-05T17:45:27.493Z",
+  "scrapedAt": "2026-05-05T18:06:40.698Z",
   "course": {
     "name": "",
     "tee": "",
@@ -74,7 +74,75 @@
     "parTotal": 71,
     "metersTotal": 5256
   },
-  "rounds": 2,
-  "format": "stroke-play (qualifiers; match-play knockout excluído)",
-  "players": []
+  "rounds": 0,
+  "format": "11 eventos (0 stroke + 11 match)",
+  "players": [],
+  "events": [
+    {
+      "id": "11566616020982477586",
+      "name": "1st Qualifying stage (Thu,...",
+      "format": "stroke",
+      "players": []
+    },
+    {
+      "id": "11566623109624673043",
+      "name": "2nd Qualifying stage (Fri,...",
+      "format": "stroke",
+      "error": "page.evaluate: Target page, context or browser has been closed"
+    },
+    {
+      "id": "11566624298223317780",
+      "name": "Esmond - Round of 32 (Sat,...",
+      "format": "match",
+      "error": "page.goto: Target page, context or browser has been closed"
+    },
+    {
+      "id": "11566626823060108053",
+      "name": "Esmond - Round of 16 (Sat,...",
+      "format": "match",
+      "error": "page.goto: Target page, context or browser has been closed"
+    },
+    {
+      "id": "11578065129631167106",
+      "name": "Cartier - Round of 16 (Sat...",
+      "format": "match",
+      "error": "page.goto: Target page, context or browser has been closed"
+    },
+    {
+      "id": "11566627935020430102",
+      "name": "Esmond - Quarterfinals (Su...",
+      "format": "match",
+      "error": "page.goto: Target page, context or browser has been closed"
+    },
+    {
+      "id": "11566628983495766807",
+      "name": "Esmond - Semi-finals (Sun,...",
+      "format": "match",
+      "error": "page.goto: Target page, context or browser has been closed"
+    },
+    {
+      "id": "11578065884505223811",
+      "name": "Cartier - Quaterfinals (Su...",
+      "format": "match",
+      "error": "page.goto: Target page, context or browser has been closed"
+    },
+    {
+      "id": "11578067051259933316",
+      "name": "Cartier - Semi-finals (Sun...",
+      "format": "match",
+      "error": "page.goto: Target page, context or browser has been closed"
+    },
+    {
+      "id": "11566629820880171800",
+      "name": "Esmond - Final (Mon, April...",
+      "format": "match",
+      "error": "page.goto: Target page, context or browser has been closed"
+    },
+    {
+      "id": "11578068125739954821",
+      "name": "Cartier - Final (Mon, Apri...",
+      "format": "match",
+      "error": "page.goto: Target page, context or browser has been closed"
+    }
+  ]
 }

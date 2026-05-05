@@ -76,6 +76,7 @@ const CALENDARS: CalendarSource[] = [
   { id: "dest_bjgt",      name: "BJGT",                color: C.cal.dest_bjgt, group: "DESTAQUE" },
   { id: "dest_pja",       name: "PJA Tour",            color: C.cal.dest_pja, group: "DESTAQUE" },
   { id: "pessoal",        name: "🎂 Pessoal",          color: C.cal.pessoal, group: "DESTAQUE" },
+  { id: "profissao_fe",   name: "✝ Profissão de Fé",   color: C.cal.profissao_fe, group: "DESTAQUE" },
 
   // ── Aniversários por escalão ──
   { id: "bday_sub10",     name: "🎂 Sub-10",            color: C.cal.bday_sub10, group: "ANIVER" },
@@ -283,6 +284,7 @@ const EVENTS: CalEvent[] = [
      🎂 PESSOAL
      ══════════════════════════════════════ */
   ev("pessoal", "MANUEL 12 ANOS", new Date(2026,3,29), "", ""),
+  ev("profissao_fe", "Profissão de Fé — 18:30", new Date(2026,5,6), "", ""),
   ev("ferias",  "🐣 Férias da Páscoa", new Date(2026,2,28), "", "", new Date(2026,3,12)),
 
   /* ══════════════════════════════════════
@@ -380,8 +382,9 @@ const HIGHLIGHT: Record<string, { bg: string; border: string; text: string; icon
 };
 /* Events that get animated bars (pulse/glow/shine) but NOT full-cell */
 const HL_BAR: Record<string, string> = {
-  treino:      "hl-teal",
-  dest_nac_jr: "hl-red",
+  treino:       "hl-teal",
+  dest_nac_jr:  "hl-red",
+  profissao_fe: "hl-gold",
 };
 function isHighlight(e: CalEvent) { return e.calId in HIGHLIGHT; }
 

@@ -7,7 +7,7 @@
   "gg_page": "11842494001062130351",
   "gg_league": "11842493965527987030",
   "stats_page": "11842494002907624113",
-  "scrapedAt": "2026-05-05T17:43:56.375Z",
+  "scrapedAt": "2026-05-05T18:00:06.166Z",
   "course": {
     "name": "",
     "tee": "",
@@ -75,7 +75,7 @@
     "metersTotal": 5244
   },
   "rounds": 2,
-  "format": "stroke-play (qualifiers; match-play knockout excluído)",
+  "format": "7 eventos (2 stroke + 5 match)",
   "players": [
     {
       "id": "11863102233199555466",
@@ -130,6 +130,260 @@
           ]
         }
       ]
+    }
+  ],
+  "events": [
+    {
+      "id": "11842504869644645298",
+      "name": "Qualification T1 (Mon, Jul...",
+      "format": "stroke",
+      "headers": [
+        ""
+      ],
+      "players": [
+        {
+          "id": "11863102233199555466",
+          "pos": 1,
+          "name": "FERBUS-BOISDET Althys",
+          "country": "FR",
+          "club": "GOLF DE MARCILLY-ORLEANS",
+          "hcp": 1.8,
+          "toPar": 4,
+          "roundScores": []
+        },
+        {
+          "id": "11863102233199555468",
+          "pos": 2,
+          "name": "PETIT-DUBOUSQUET Arthur",
+          "country": "FR",
+          "club": "GOLF DE LA PREE - LA ROCHELLE",
+          "hcp": 0.8,
+          "toPar": 5,
+          "roundScores": []
+        }
+      ],
+      "scorecardsByPlayerId": {
+        "11863102233199555466": [
+          {
+            "scores": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9
+            ],
+            "gross": 10,
+            "nineHole": true
+          }
+        ],
+        "11863102233199555468": [
+          {
+            "scores": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9
+            ],
+            "gross": 10,
+            "nineHole": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "11842504961650897843",
+      "name": "Qualification T2 (Tue, Jul...",
+      "format": "stroke",
+      "headers": [
+        ""
+      ],
+      "players": [
+        {
+          "id": "11863102233199555466",
+          "pos": 1,
+          "name": "FERBUS-BOISDET Althys",
+          "country": "FR",
+          "club": "GOLF DE MARCILLY-ORLEANS",
+          "hcp": 1.8,
+          "toPar": 4,
+          "roundScores": []
+        },
+        {
+          "id": "11863102233199555468",
+          "pos": 2,
+          "name": "PETIT-DUBOUSQUET Arthur",
+          "country": "FR",
+          "club": "GOLF DE LA PREE - LA ROCHELLE",
+          "hcp": 0.8,
+          "toPar": 5,
+          "roundScores": []
+        }
+      ],
+      "scorecardsByPlayerId": {}
+    },
+    {
+      "id": "11842505112511624116",
+      "name": "1/16e de Finale (Wed, July...",
+      "format": "match",
+      "headers": [
+        ""
+      ],
+      "players": [
+        {
+          "id": "11863102233199555466",
+          "pos": 1,
+          "name": "FERBUS-BOISDET Althys",
+          "country": "FR",
+          "club": "GOLF DE MARCILLY-ORLEANS",
+          "hcp": 1.8,
+          "toPar": 4,
+          "roundScores": []
+        },
+        {
+          "id": "11863102233199555468",
+          "pos": 2,
+          "name": "PETIT-DUBOUSQUET Arthur",
+          "country": "FR",
+          "club": "GOLF DE LA PREE - LA ROCHELLE",
+          "hcp": 0.8,
+          "toPar": 5,
+          "roundScores": []
+        }
+      ],
+      "scorecardsByPlayerId": {}
+    },
+    {
+      "id": "11842505217268560821",
+      "name": "1/8e de Finale (Thu, July 24)",
+      "format": "match",
+      "headers": [
+        ""
+      ],
+      "players": [
+        {
+          "id": "11863102233199555466",
+          "pos": 1,
+          "name": "FERBUS-BOISDET Althys",
+          "country": "FR",
+          "club": "GOLF DE MARCILLY-ORLEANS",
+          "hcp": 1.8,
+          "toPar": 4,
+          "roundScores": []
+        },
+        {
+          "id": "11863102233199555468",
+          "pos": 2,
+          "name": "PETIT-DUBOUSQUET Arthur",
+          "country": "FR",
+          "club": "GOLF DE LA PREE - LA ROCHELLE",
+          "hcp": 0.8,
+          "toPar": 5,
+          "roundScores": []
+        }
+      ],
+      "scorecardsByPlayerId": {}
+    },
+    {
+      "id": "11842505337024328630",
+      "name": "1/4 de Finale (Fri, July 25)",
+      "format": "match",
+      "headers": [
+        ""
+      ],
+      "players": [
+        {
+          "id": "11863102233199555466",
+          "pos": 1,
+          "name": "FERBUS-BOISDET Althys",
+          "country": "FR",
+          "club": "GOLF DE MARCILLY-ORLEANS",
+          "hcp": 1.8,
+          "toPar": 4,
+          "roundScores": []
+        },
+        {
+          "id": "11863102233199555468",
+          "pos": 2,
+          "name": "PETIT-DUBOUSQUET Arthur",
+          "country": "FR",
+          "club": "GOLF DE LA PREE - LA ROCHELLE",
+          "hcp": 0.8,
+          "toPar": 5,
+          "roundScores": []
+        }
+      ],
+      "scorecardsByPlayerId": {}
+    },
+    {
+      "id": "11842505562241676215",
+      "name": "1/2 Finale (Sat, July 26)",
+      "format": "match",
+      "headers": [
+        ""
+      ],
+      "players": [
+        {
+          "id": "11863102233199555466",
+          "pos": 1,
+          "name": "FERBUS-BOISDET Althys",
+          "country": "FR",
+          "club": "GOLF DE MARCILLY-ORLEANS",
+          "hcp": 1.8,
+          "toPar": 4,
+          "roundScores": []
+        },
+        {
+          "id": "11863102233199555468",
+          "pos": 2,
+          "name": "PETIT-DUBOUSQUET Arthur",
+          "country": "FR",
+          "club": "GOLF DE LA PREE - LA ROCHELLE",
+          "hcp": 0.8,
+          "toPar": 5,
+          "roundScores": []
+        }
+      ],
+      "scorecardsByPlayerId": {}
+    },
+    {
+      "id": "11842505637772702648",
+      "name": "Finale (Sat, July 26)",
+      "format": "match",
+      "headers": [
+        ""
+      ],
+      "players": [
+        {
+          "id": "11863102233199555466",
+          "pos": 1,
+          "name": "FERBUS-BOISDET Althys",
+          "country": "FR",
+          "club": "GOLF DE MARCILLY-ORLEANS",
+          "hcp": 1.8,
+          "toPar": 4,
+          "roundScores": []
+        },
+        {
+          "id": "11863102233199555468",
+          "pos": 2,
+          "name": "PETIT-DUBOUSQUET Arthur",
+          "country": "FR",
+          "club": "GOLF DE LA PREE - LA ROCHELLE",
+          "hcp": 0.8,
+          "toPar": 5,
+          "roundScores": []
+        }
+      ],
+      "scorecardsByPlayerId": {}
     }
   ]
 }

@@ -2382,6 +2382,10 @@ tr.cross-current { background: var(--bg-success); }
  0%, 100% { box-shadow: 0 0  4px 1px rgba(220,38,38,0.4); }
  50%       { box-shadow: 0 0 14px 5px rgba(220,38,38,0.5); }
 }
+@keyframes hlGlowGold {
+ 0%, 100% { box-shadow: 0 0  4px 1px rgba(251,191,36,0.5); }
+ 50%       { box-shadow: 0 0 16px 6px rgba(251,191,36,0.7); }
+}
 .hl-cell {
  border-radius: 4px; position: relative; overflow: hidden;
 }
@@ -2403,6 +2407,7 @@ tr.cross-current { background: var(--bg-success); }
 .hl-green { animation: hlGlowGreen 2s ease-in-out infinite; }
 .hl-teal  { animation: hlGlowTeal  2s ease-in-out infinite; }
 .hl-red   { animation: hlGlowRed   2s ease-in-out infinite; }
+.hl-gold  { animation: hlGlowGold  1.5s ease-in-out infinite; }
 
 
 /* Comparar */

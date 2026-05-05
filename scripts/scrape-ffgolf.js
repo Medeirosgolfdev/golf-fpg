@@ -185,6 +185,90 @@ async function detectCourseInfo(page) {
 }
 
 /* ─────────────────────────────────────────────────────────────────
+   Detectar categorias/divisões dentro do widget (Boys/Girls/etc.)
+   Algumas torneios têm múltiplas categorias no MESMO gg_page —
+   precisamos de iterar todas (não só a default).
+   ───────────────────────────────────────────────────────────────── */
+async function detectDivisions(page) {
+  return page.evaluate(() => {
+    const ifr = document.querySelectorAll("iframe")[0];
+    const doc = ifr?.contentDocument;
+    if (!doc) return [];
+    const opts = [];
+    const seen = new Set();
+    // 1) Tabs/links com nomes de divisão
+    const tabSelectors = [
+      ".tournament_name a",
+      "a.tournament_name",
+      ".tournament_selector a",
+      ".event-tab",
+      "[data-tournament-id]",
+      "[data-event-id]",
+    ];
+    for (const sel of tabSelectors) {
+      doc.querySelectorAll(sel).forEach((el) => {
+        const t = el.textContent.replace(/\s+/g, " ").trim();
+        const did = el.dataset?.tournamentId || el.dataset?.eventId;
+        if (!t || t.length > 80 || seen.has(t)) return;
+        // Filtrar Round/Day labels
+        if (/^Round\s+\d|^\d{1,2}\s+(jan|fev|mar|apr|mai|jun|jul|aug|sep|oct|nov|dec)/i.test(t)) return;
+        seen.add(t);
+        opts.push({ type: "tab", label: t, divId: did, selector: sel });
+      });
+    }
+    // 2) Selects que não sejam o "round" principal (já tratado em fetchLeaderboard)
+    doc.querySelectorAll("select").forEach((s) => {
+      if (s.name === "round") return;
+      [...s.options].forEach((o) => {
+        const t = o.textContent.trim();
+        if (!t || seen.has(t)) return;
+        if (/^Round\s+\d/i.test(t)) return;
+        seen.add(t);
+        opts.push({ type: "select", label: t, value: o.value, selectName: s.name || s.id });
+      });
+    });
+    // 3) Botões/links com palavras-chave de categoria
+    if (opts.length === 0) {
+      doc.querySelectorAll("a, button, div[onclick]").forEach((el) => {
+        const t = el.textContent.replace(/\s+/g, " ").trim();
+        if (!t || t.length > 60 || seen.has(t)) return;
+        if (
+          /\b(boys|girls|garçons?|filles?|men|women|messieurs|dames|cadets?|cadettes?|benjamins?|benjamines?|minimes?|équipe|mixed|mixte)\b/i.test(t)
+        ) {
+          seen.add(t);
+          opts.push({ type: "clickable", label: t });
+        }
+      });
+    }
+    return opts;
+  });
+}
+
+/* Tenta seleccionar uma divisão (clicar tab ou mudar select) */
+async function selectDivision(page, division) {
+  return page.evaluate((div) => {
+    const ifr = document.querySelectorAll("iframe")[0];
+    const doc = ifr?.contentDocument;
+    if (!doc) return false;
+    if (div.type === "select") {
+      const sel = [...doc.querySelectorAll("select")].find((s) => s.name === div.selectName || s.id === div.selectName);
+      if (!sel) return false;
+      sel.value = div.value;
+      sel.dispatchEvent(new Event("change", { bubbles: true }));
+      return true;
+    }
+    // type === tab/clickable: encontrar pelo label
+    const candidates = [...doc.querySelectorAll("a, button, [role='tab'], div[onclick]")];
+    const target = candidates.find((el) => el.textContent.replace(/\s+/g, " ").trim() === div.label);
+    if (target) {
+      target.click();
+      return true;
+    }
+    return false;
+  }, division);
+}
+
+/* ─────────────────────────────────────────────────────────────────
    Switch dropdown e extrai leaderboard
    ───────────────────────────────────────────────────────────────── */
 async function fetchLeaderboard(page, ggPage, eventId) {
@@ -441,8 +525,11 @@ async function scrapeOne(browser, t) {
       }
     }
 
-    // 4. Para CADA evento do dropdown, capturar leaderboard + scorecards
+    // 4. Para CADA evento do dropdown, capturar leaderboard + scorecards.
+    //    DENTRO de cada evento, também detectar e iterar divisões/categorias
+    //    (ex: Boys/Girls num torneio que partilha gg_page).
     const events = [];
+    const divisionsSet = new Set();
     let allPlayerIds = new Set();
     let teamDetected = false;
 
@@ -451,7 +538,13 @@ async function scrapeOne(browser, t) {
       console.log(`   ▶ ${ev.name} [${fmt}]`);
       try {
         const lb = await fetchLeaderboard(page, t.gg_page, ev.id);
-        console.log(`     ${lb.players.length} jogadores`);
+        // Após carregar o evento, detectar tabs/selects de categoria
+        const divs = await detectDivisions(page);
+        if (divs.length > 1) {
+          if (events.length === 0) console.log(`     divisões detectadas: ${divs.map((d) => d.label).join(" | ")}`);
+          divs.forEach((d) => divisionsSet.add(d.label));
+        }
+        console.log(`     ${lb.players.length} jogadores (default division)`);
         if (!lb.players.length) {
           events.push({ id: ev.id, name: ev.name, format: fmt, players: [] });
           continue;
@@ -485,19 +578,85 @@ async function scrapeOne(browser, t) {
           roundScores: p.roundScores,
         }));
 
-        events.push({
+        // Capturar a divisão default
+        const eventEntry = {
           id: ev.id,
           name: ev.name,
           format: fmt,
           headers: lb.headers,
           players: eventPlayers,
-          // Scorecards só para novos players (evita duplicação)
+          division: divs[0]?.label || "default",
           scorecardsByPlayerId: Object.fromEntries(
             newPlayers
               .filter((p) => newScs[p.id]?.rounds?.length)
               .map((p) => [p.id, newScs[p.id].rounds])
           ),
-        });
+        };
+        events.push(eventEntry);
+
+        // Se houver mais divisões além da default, iterar todas
+        if (divs.length > 1) {
+          for (const div of divs.slice(1)) {
+            console.log(`     → switch divisão "${div.label}"`);
+            const switched = await selectDivision(page, div);
+            if (!switched) { console.log(`     ⚠ falha switch para ${div.label}`); continue; }
+            await sleep(3500);
+            // Re-extrair leaderboard
+            const lbDiv = await page.evaluate(() => {
+              const ifr = document.querySelectorAll("iframe")[0];
+              const doc = ifr?.contentDocument;
+              if (!doc) return { players: [] };
+              const players = [];
+              let rowIdx = 0;
+              for (const tr of doc.querySelectorAll("tr")) {
+                const link = tr.querySelector('a[href*="tournaments2/details"]');
+                if (!link) continue;
+                const idM = (link.getAttribute("href") || "").match(/details\/(\d+)/);
+                if (!idM) continue;
+                rowIdx++;
+                const flagSpan = tr.querySelector("span.flag-icon");
+                const cc = flagSpan?.className.match(/flag-icon-([a-z\-]+)/i)?.[1]?.toUpperCase();
+                const nameClone = link.cloneNode(true);
+                nameClone.querySelectorAll("span.flag-icon, i, img, .flag, .flags").forEach((el) => el.remove());
+                const name = nameClone.textContent.replace(/\s+/g, " ").trim();
+                const cells = [...tr.querySelectorAll("td")].map((td) => td.textContent.replace(/\s+/g, " ").trim());
+                const playerCell = link.closest("td");
+                const cellText = playerCell?.textContent.replace(/\s+/g, " ").trim() || "";
+                const afterName = cellText.replace(name, "").trim().replace(/^,\s*/, "");
+                const hcpMatch = afterName.match(/,\s*([+-]?\d+\.?\d*)\s*$/);
+                let club = "", hcp = null;
+                if (hcpMatch) { hcp = parseFloat(hcpMatch[1]); club = afterName.replace(hcpMatch[0], "").trim(); }
+                else club = afterName.trim();
+                const nameCellIdx = cells.findIndex((c) => c.includes(name));
+                const after = cells.slice(nameCellIdx + 1);
+                const toPar = after[0] === "E" ? 0 : parseInt(after[0], 10);
+                const numerics = after.slice(1).map((c) => { const n = parseInt(c, 10); return isNaN(n) ? null : n; });
+                const validNums = numerics.filter((n) => n !== null && n >= 30);
+                let total = null, roundScores = [];
+                if (validNums.length === 1) { total = validNums[0]; roundScores = [validNums[0]]; }
+                else { total = validNums[validNums.length - 1]; roundScores = validNums.slice(0, -1); }
+                let pos = parseInt(cells[0], 10);
+                if (isNaN(pos)) { const m = cells[0]?.match(/^T?(\d+)/); pos = m ? parseInt(m[1], 10) : rowIdx; }
+                players.push({ id: idM[1], pos, name, country: cc || "", club, hcp, toPar: isNaN(toPar) ? null : toPar, roundScores, total });
+              }
+              return { players };
+            });
+            console.log(`     ${div.label}: ${lbDiv.players.length} jogadores`);
+            const newDivPlayers = lbDiv.players.filter((p) => !allPlayerIds.has(p.id));
+            const newDivScs = newDivPlayers.length ? await fetchScorecards(page, newDivPlayers, 10) : {};
+            for (const p of newDivPlayers) allPlayerIds.add(p.id);
+            events.push({
+              id: ev.id + "_" + div.label.replace(/\s+/g, "_"),
+              name: ev.name + " — " + div.label,
+              format: fmt,
+              players: lbDiv.players,
+              division: div.label,
+              scorecardsByPlayerId: Object.fromEntries(
+                newDivPlayers.filter((p) => newDivScs[p.id]?.rounds?.length).map((p) => [p.id, newDivScs[p.id].rounds])
+              ),
+            });
+          }
+        }
       } catch (e) {
         console.log(`     ⚠ erro: ${e.message.slice(0, 60)}`);
         events.push({ id: ev.id, name: ev.name, format: fmt, error: e.message.slice(0, 100) });
@@ -563,9 +722,11 @@ async function scrapeOne(browser, t) {
       },
       rounds: strokeEvents.length,
       format: `${events.length} eventos (${strokeEvents.length} stroke + ${events.length - strokeEvents.length} match)`,
+      divisions: [...divisionsSet],
       // Vista consolidada (jogadores do ÚLTIMO evento stroke + scorecards de todo o torneio)
       players: consolidatedPlayers,
       // Vista por evento — todos os 7+ eventos do dropdown com leaderboard própria
+      // Se há múltiplas divisões, há um event entry POR divisão por evento (ex: "Qualif T1 — Boys", "Qualif T1 — Girls")
       events,
     };
   } finally {

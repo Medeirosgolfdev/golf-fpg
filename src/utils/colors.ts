@@ -198,6 +198,7 @@ export const C = {
     ferias:         "#a3e635",   /* lima — Férias */
     treino:         "#10b981",   /* esmeralda — Campo / Treino */
     colonias:       "#374151",   /* cinzento escuro — Colónias (sem animação) */
+    profissao_fe:   "#fbbf24",   /* dourado — Profissão de Fé (full-cell pulse) */
     // Viagens
     viag_alg_fev:   "#f59e0b",
     viag_malaga:    "#f97316",
@@ -216,6 +217,10 @@ export const C = {
     hl_pessoal_bg:     "#39ff14",
     hl_pessoal_border: "#2ecc40",
     hl_pessoal_text:   "#1a1a1a",
+    // Highlight full-cell (Profissão de Fé)
+    hl_fe_bg:          "#fbbf24",
+    hl_fe_border:      "#d97706",
+    hl_fe_text:        "#1a1a1a",
   },
 
 } as const;
