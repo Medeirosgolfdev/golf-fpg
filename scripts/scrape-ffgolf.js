@@ -96,24 +96,12 @@ async function openClassement(page, ggPage) {
 /* ─────────────────────────────────────────────────────────────────
    Abre Stats page e captura par+meters+SI para um evento (course_statistics)
    ───────────────────────────────────────────────────────────────── */
-async function fetchCourseStats(page, statsPageId, eventId) {
-  await page.goto(`${GG}/pages/${statsPageId}`, { waitUntil: "domcontentloaded" });
-  // Poll até existirem forms course_statistics no iframe
-  const start = Date.now();
-  while (Date.now() - start < 30000) {
-    const ready = await page.evaluate(() => {
-      const ifr = document.querySelectorAll("iframe")[0];
-      const doc = ifr?.contentDocument;
-      return doc?.querySelectorAll('form[id^="course_statistics_"]').length || 0;
-    });
-    if (ready > 0) break;
-    await sleep(800);
-  }
+/* Fetch UM course_statistics form (par/meters/SI por buraco) */
+async function fetchOneCourseStats(page, eventId) {
   return page.evaluate(async (eId) => {
     const ifr = document.querySelectorAll("iframe")[0];
     const doc = ifr?.contentDocument;
     if (!doc) return null;
-    // 1ª tentativa: form que contém o eventId. 2ª tentativa: qualquer form course_statistics
     const allForms = [...doc.querySelectorAll('form[id^="course_statistics_"]')];
     const someForm = allForms.find((f) => f.id.includes(eId)) || allForms[0];
     if (!someForm) return null;
@@ -160,6 +148,95 @@ async function fetchCourseStats(page, statsPageId, eventId) {
       metersTotal: meters.reduce((s, v) => s + v, 0),
     };
   }, eventId);
+}
+
+/* Fetch TODOS os course_statistics forms da Stats page —
+   captura TODAS as combinações (event × course × tee),
+   deduplicado por (par, meters) para identificar tees distintos.
+   Devolve um array de courses únicos, cada um com par/meters/SI. */
+async function fetchAllCourseStats(page, statsPageId) {
+  await page.goto(`${GG}/pages/${statsPageId}`, { waitUntil: "domcontentloaded" });
+  const start = Date.now();
+  while (Date.now() - start < 30000) {
+    const ready = await page.evaluate(() => {
+      const ifr = document.querySelectorAll("iframe")[0];
+      const doc = ifr?.contentDocument;
+      return doc?.querySelectorAll('form[id^="course_statistics_"]').length || 0;
+    });
+    if (ready > 0) break;
+    await sleep(800);
+  }
+  return page.evaluate(async () => {
+    const ifr = document.querySelectorAll("iframe")[0];
+    const doc = ifr?.contentDocument;
+    if (!doc) return [];
+    const forms = [...doc.querySelectorAll('form[id^="course_statistics_"]')];
+    const allResults = await Promise.all(
+      forms.map(async (f) => {
+        try {
+          const idParts = f.id.replace(/^course_statistics_/, "").split("_");
+          const fd = new FormData(f);
+          const r = await fetch(f.action, { method: "POST", body: fd, credentials: "include" });
+          const html = await r.text();
+          const trs = [...html.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/g)];
+          const rows = [];
+          let teeName = "";
+          // Procurar texto do tee ("Blancs", "Bleus", etc) na resposta
+          const teeMatch = html.match(/(?:Tee|Marqueurs|Marques)\s*[:<][\s\S]{0,200}?>([^<]+?)<\/(?:a|td|span|h[1-6])/i);
+          if (teeMatch) teeName = teeMatch[1].replace(/\s+/g, " ").trim();
+          // Course header: "Course: Golf du Gouverneur - Le Breuil"
+          const courseHeader = html.match(/Course:\s*([^<]+)/);
+          for (const tr of trs) {
+            const cells = [...tr[1].matchAll(/<t[hd][^>]*>([\s\S]*?)<\/t[hd]>/g)]
+              .map((m) => m[1].replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ").replace(/\s+/g, " ").trim())
+              .filter((x) => x);
+            if (cells.length >= 11 && /^\d+$/.test(cells[0]) && /^\d+$/.test(cells[2])) {
+              rows.push({ hole: +cells[0], meters: +cells[1], par: +cells[2], rank: +cells[4] });
+            }
+          }
+          if (!rows.length) return null;
+          const par = rows.map((r) => r.par);
+          const meters = rows.map((r) => r.meters);
+          const si = rows.map((r) => r.rank);
+          return {
+            formId: f.id,
+            eventId: idParts.length >= 2 ? idParts[0] : null,
+            courseId: idParts.length >= 2 ? idParts[1] : idParts[0],
+            teeId: idParts.length >= 3 ? idParts[2] : null,
+            teeName,
+            courseName: courseHeader?.[1]?.replace(/\s+/g, " ").trim() || "",
+            par, meters, si,
+            parTotal: par.reduce((s, v) => s + v, 0),
+            metersTotal: meters.reduce((s, v) => s + v, 0),
+          };
+        } catch (e) { return null; }
+      })
+    );
+    // Deduplicar por (parTotal, metersTotal) — combinações únicas de tees
+    const seen = new Map();
+    for (const r of allResults) {
+      if (!r || !isFinite(r.metersTotal) || r.metersTotal === 0) continue;
+      const key = `${r.parTotal}-${r.metersTotal}`;
+      if (!seen.has(key)) seen.set(key, r);
+    }
+    return [...seen.values()];
+  });
+}
+
+/* Wrapper compatibility: devolve só o 1º course (para chamadas legadas) */
+async function fetchCourseStats(page, statsPageId, eventId) {
+  await page.goto(`${GG}/pages/${statsPageId}`, { waitUntil: "domcontentloaded" });
+  const start = Date.now();
+  while (Date.now() - start < 30000) {
+    const ready = await page.evaluate(() => {
+      const ifr = document.querySelectorAll("iframe")[0];
+      const doc = ifr?.contentDocument;
+      return doc?.querySelectorAll('form[id^="course_statistics_"]').length || 0;
+    });
+    if (ready > 0) break;
+    await sleep(800);
+  }
+  return fetchOneCourseStats(page, eventId);
 }
 
 /* ─────────────────────────────────────────────────────────────────
@@ -516,10 +593,16 @@ async function scrapeOne(browser, t) {
     // 3. Course stats (par/meters/SI) — usa o primeiro evento stroke
     let courseStats = null;
     const firstStroke = allEvents.find((e) => isStrokePlay(e.name));
-    if (meta.statsPageId && firstStroke) {
-      courseStats = await fetchCourseStats(page, meta.statsPageId, firstStroke.id);
-      if (courseStats) {
-        console.log(`   par=${courseStats.parTotal} meters=${courseStats.metersTotal}`);
+    let allCourses = [];
+    if (meta.statsPageId) {
+      // NOVO: apanhar TODOS os course_statistics forms — múltiplos tees/categorias
+      allCourses = await fetchAllCourseStats(page, meta.statsPageId);
+      if (allCourses.length) {
+        console.log(`   ${allCourses.length} configurações de campo (par/metros únicos):`);
+        allCourses.forEach((c) =>
+          console.log(`     • par=${c.parTotal} meters=${c.metersTotal}${c.teeName ? ` tee="${c.teeName}"` : ""}`)
+        );
+        courseStats = allCourses[0]; // 1º para retro-compat
       } else {
         console.log(`   ⚠ course_statistics vazio`);
       }
@@ -712,14 +795,24 @@ async function scrapeOne(browser, t) {
       stats_page: meta.statsPageId,
       scrapedAt: new Date().toISOString(),
       course: {
-        name: courseInfo.name || "",
-        tee: courseInfo.tee || "",
+        name: courseInfo.name || allCourses[0]?.courseName || "",
+        tee: courseInfo.tee || allCourses[0]?.teeName || "",
         par: courseStats?.par || [],
         meters: courseStats?.meters || [],
         si: courseStats?.si || [],
         parTotal: courseStats?.parTotal || 0,
         metersTotal: courseStats?.metersTotal || 0,
       },
+      // NOVO: array com TODAS as configurações de tees/categorias (multi-categoria torneios)
+      courses: allCourses.map((c) => ({
+        teeName: c.teeName || "",
+        courseName: c.courseName || "",
+        par: c.par,
+        meters: c.meters,
+        si: c.si,
+        parTotal: c.parTotal,
+        metersTotal: c.metersTotal,
+      })),
       rounds: strokeEvents.length,
       format: `${events.length} eventos (${strokeEvents.length} stroke + ${events.length - strokeEvents.length} match)`,
       divisions: [...divisionsSet],
