@@ -1464,6 +1464,43 @@ function whsQtyCalc(nSds: number): number {
 /* ──── — data loading + view switching
    ──────────────────────────────────────────────────────────────────────────────────────── */
 
+/** Constrói um FederadoRaw vazio a partir SÓ do fed code — para quando o
+ *  utilizador chega via /jogadores/{fed}?view=federado mas o fed code não
+ *  existe nem em allPlayers nem em federados.json (jogador inactivo histórico
+ *  ou novo). A ficha live (rondas WHS) funciona porque só precisa do
+ *  federation_code; o cadastro fica todo a vazio até a chamada live trazer
+ *  algum dado. */
+function syntheticFederadoFromFedCode(fed: string): FederadoRaw {
+  return {
+    federation_code:    fed,
+    federation_number:  fed.padStart(7, "0"),
+    name:               "",
+    gender:             "",
+    birthdate:          null,
+    admission_date:     null,
+    club_code:          "",
+    club_name:          "",
+    acronym:            "",
+    country_prefix:     "PT",
+    country:            "Portugal",
+    hcp_exact:          null,
+    hcp_index:          null,
+    hcp_status:         "",
+    hcp_status_id:      0,
+    hcp_type:           "",
+    age_level:          "",
+    age_level_id:       0,
+    player_type:        "",
+    player_type_id:     0,
+    federated_status:   "",
+    federated_status_id: 0,
+    rounds_current_year: 0,
+    photo:              null,
+    last_hcp_date:      null,
+    encryptedfedcode:   "",
+  };
+}
+
 /** Constrói um FederadoRaw mínimo a partir de um Player "Nossos" — para
  *  poder renderizar FederadoOnlyDetail no modo "ver como federado". Os campos
  *  ausentes são preenchidos de forma neutra; o cadastro fica esparso mas a
@@ -3816,11 +3853,18 @@ export default function JogadoresPage() {
      IMPORTANTE: deps APENAS [urlFed]. Antes tinha [urlFed, players] mas
      `players` (do AppContext) é um objecto re-criado em cada render do App.tsx,
      fazendo este effect disparar em loop e re-aplicar o urlFed mesmo após
-     o user clicar TODOS / outro filtro. */
+     o user clicar TODOS / outro filtro.
+
+     Sincroniza SEMPRE quando urlFed muda — mesmo que o player não esteja em
+     `players` (Nossos). Para fed codes externos (jogadores de federados.json
+     ou stubs sintéticos vindos de /nacionais-jovens/históricos), o `selected`
+     useMemo abaixo trata de construir um stub e renderizar FederadoOnlyDetail. */
   useEffect(() => {
-    if (urlFed && players[urlFed]) {
+    if (urlFed) {
       setSelectedFed(urlFed);
-      if (!internalNav.current) {
+      if (!internalNav.current && players[urlFed]) {
+        // Só limpar a pesquisa quando o fed pertence a Nossos — evita
+        // resetar o filtro do user em navegações externas para feds desconhecidos.
         setQ("");
       }
       internalNav.current = false;
@@ -4187,7 +4231,7 @@ export default function JogadoresPage() {
     if (!selectedFed) return null;
     const inAll = allPlayers.find(p => p.fed === selectedFed);
     if (inAll) return inAll;
-    // Fallback: jogador não está em allPlayers (ex: cheguei de /nacionais-jovens
+    // Fallback 1: jogador não está em allPlayers (ex: cheguei de /nacionais-jovens
     // com fed externo que não foi carregado pelo modo Nossos). Procurar
     // directamente em federados.json e construir entry sintético — assim
     // a página renderiza sempre, mostrando vista federado mínima.
@@ -4204,7 +4248,28 @@ export default function JogadoresPage() {
         return synth;
       }
     }
-    return null;
+    // Fallback 2: nem em allPlayers nem em federados (jogador inactivo
+    // histórico, fed code antigo, ou ainda por carregar). Construir stub
+    // mínimo a partir do fed code para que `FederadoOnlyDetail` renderize
+    // e faça fetch live a `getPlayerHistory(fed)` — se o fed existir mesmo
+    // na FPG, o user vê as rondas WHS reais; senão vê erro amigável.
+    // Sem esta entry sintética, o user clicava num nome antigo e caía
+    // numa página em branco / FilteredStatsCard genérico.
+    const fedStr = String(selectedFed);
+    const stub: MergedPlayer & { fed: string } = {
+      fed:            fedStr,
+      name:           `Federado ${fedStr}`,
+      sex:            "",
+      escalao:        "",
+      club:           { short: "", long: "", code: "" },
+      hcp:            null,
+      hcpExact:       null,
+      region:         "",
+      dob:            null,
+      _source:        "feds" as const,
+      _federadoRaw:   syntheticFederadoFromFedCode(fedStr),
+    } as unknown as MergedPlayer & { fed: string };
+    return stub;
   }, [allPlayers, selectedFed, federados]);
 
   return (

@@ -16,6 +16,7 @@
 import { useMemo, useState } from "react";
 import { fmtToPar, fpgScoringUrl } from "../utils/format";
 import type { Tournament } from "../data/fpgTypes";
+import { RoundPill, EscPill } from "./PillBadge";
 
 interface PlayerEntry {
   pos: number | string | null;
@@ -468,13 +469,15 @@ export default function AtletaSearchPanel({
                     >
                       {r.date}
                     </td>
-                    <td style={{ padding: "6px 12px" }}>{r.escalao || "—"}</td>
+                    <td style={{ padding: "6px 12px" }}>{r.escalao ? <EscPill esc={r.escalao} /> : "—"}</td>
                     <td style={{ padding: "6px 12px" }}>
                       <PosBadge pos={r.pos} />
                     </td>
                     <td style={{ padding: "6px 12px", fontSize: 11, color: "var(--text-3)" }}>
-                      {r.isClubes ? "Clubes" : "Jovens"}
-                      {r.rounds > 1 ? ` · ${r.rounds}R` : ""}
+                      <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+                        <span>{r.isClubes ? "Clubes" : "Jovens"}</span>
+                        {r.rounds > 1 && <RoundPill nR={r.rounds} />}
+                      </span>
                     </td>
                     <td
                       style={{

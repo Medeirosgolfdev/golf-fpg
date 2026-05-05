@@ -88,6 +88,21 @@ export interface PlayerInfo {
 }
 export type PlayerInfoMap = Record<string, PlayerInfo>;
 
+/** Resultado individual num torneio (uma aparição). Usado para enriquecer
+ *  PlayerStats com a posição/total para mostrar nos anos sem título. */
+export interface PlayerAppearance {
+  year: number;
+  type: ChampionshipType;          // "Nacional" | "Regional"
+  region: string;                  // "Nacional" | "Madeira" | ...
+  pos: number | null;              // posição real no leaderboard
+  total: number;                   // total de PT elegíveis no torneio (denominador)
+  ccode: string;
+  tcode: string;
+  tournamentName: string;
+  escalao: string;
+  sex: Sex;
+}
+
 export interface PlayerStats {
   fed: string | null;
   name: string;
@@ -100,6 +115,9 @@ export interface PlayerStats {
   years: Set<number>;            // anos em que participou
   escaloes: Set<string>;         // escalões em que jogou (pela idade)
   sexesSeen: Set<Sex>;
+  /** Lista de TODAS as aparições com pos/total. Permite mostrar na timeline
+   *  o lugar/total nos anos onde não houve título (em vez de só o 🏆). */
+  appearancesList: PlayerAppearance[];
 }
 
 export interface AnaliseData {
@@ -384,9 +402,41 @@ export function buildJovensAnalise(
     // criava um champion "Sub 14" para o 13yo no evento Sub 14-24 — mas
     // esse torneio nem sequer tinha a categoria Sub 14 na regulamentação.
     const tabLabel = (t as any)._tabLabel || "";
-    const designatedEscList = parseEscaloes(tabLabel) .length > 0
+    const designatedEscListExplicit = parseEscaloes(tabLabel) .length > 0
       ? parseEscaloes(tabLabel)
       : parseEscaloes(t.name || "");
+
+    // ⚠ Auto-detect de torneios IMPLICITAMENTE combinados (sem indicação no
+    // nome / tabLabel — caso Madeira 2024 onde tcode 10554 tem só
+    // "Campeonato Regional de Jovens 2024" mas joga-se Sub-10 e Sub-12
+    // na mesma rodada com 1 campeão por escalão).
+    //
+    // Heurística: se ≥2 escalões diferentes (pela DOB dos jogadores) têm ≥2
+    // jogadores cada, considerar combinado e atribuir um campeão por cada
+    // escalão real presente. Pedido user 2026-05-04: "os sub10&sub12 estão
+    // agrupados, mas há um vencedor em cada escalão".
+    const escCounts = new Map<string, number>();
+    for (const p of players) {
+      const dob = getDobFromPlayer(p);
+      if (!dob) continue;
+      const escReal = escalaoInYear(dob, year);
+      if (!escReal) continue;
+      escCounts.set(escReal, (escCounts.get(escReal) || 0) + 1);
+    }
+    const significantEsc = [...escCounts.entries()]
+      .filter(([, n]) => n >= 2)
+      .map(([e]) => e);
+    const isImplicitlyCombined =
+      designatedEscListExplicit.length <= 1 && significantEsc.length >= 2;
+    const designatedEscList = isImplicitlyCombined
+      ? significantEsc.sort((a, b) => {
+          const m = (s: string) => {
+            const x = s.match(/(\d+)/);
+            return x ? parseInt(x[1]) : 99;
+          };
+          return m(a) - m(b);
+        })
+      : designatedEscListExplicit;
     const combinedEscalao = designatedEscList.length > 1;
 
     // ⚠ Filtrar jogadores INCOMPLETOS — em torneios multi-ronda só consideramos
@@ -618,6 +668,18 @@ export function buildJovensAnalise(
     }
 
     // ── Estatísticas de participação ──────────────────────────────────
+    // Construir um índice fed→pos para olhar a posição real no leaderboard
+    // ordered (já calculado acima na construção dos campeões deste torneio).
+    // Usado para enriquecer appearancesList com pos/total e mostrar na
+    // timeline em anos sem título.
+    const posIdx = new Map<string, number>();
+    for (const x of ordered) {
+      const fed = (x.p as any).fedCode;
+      if (fed) posIdx.set(`fed:${String(fed)}`, x.pos);
+      else posIdx.set(`name:${(x.p.name || "").toLowerCase()}`, x.pos);
+    }
+    const totalPlayers = ordered.length;
+
     for (const p of players) {
       const k = keyFor(p);
       let ps = playerMap.get(k);
@@ -635,6 +697,7 @@ export function buildJovensAnalise(
           years: new Set<number>(),
           escaloes: new Set<string>(),
           sexesSeen: new Set<Sex>(),
+          appearancesList: [],
         };
         playerMap.set(k, ps);
       }
@@ -645,6 +708,21 @@ export function buildJovensAnalise(
       const pEsc = ps.dob ? escalaoInYear(ps.dob, year) : (esc || null);
       if (pEsc) ps.escaloes.add(pEsc);
       ps.sexesSeen.add(sex);
+      // Posição real (do ordered) — pode não existir se o jogador não tiver
+      // scorecard completo (filtrado por isComplete antes do ordered).
+      const pos = posIdx.get(k) ?? null;
+      ps.appearancesList.push({
+        year,
+        type,
+        region,
+        pos,
+        total: totalPlayers,
+        ccode: t.ccode || "",
+        tcode: t.tcode || "",
+        tournamentName: t.name || "",
+        escalao: pEsc || "",
+        sex,
+      });
     }
   }
 

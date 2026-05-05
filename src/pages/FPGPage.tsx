@@ -81,6 +81,22 @@ const DATA_MAX      = 50;                       // segurança: parar após N fic
 
 type TournPill = "REGIONAL" | "NACIONAL" | "INTL" | "PJA" | "SSERRA";
 
+/** Chave especial do filtro de ano que agrupa tudo o que é anterior a 2020.
+ *  Evita ter 15+ botões individuais para anos com 1 entrada cada (Nacionais
+ *  Jovens históricos 2005-2019). */
+const PRE_2020_KEY = "<2020";
+
+/** Verifica se um ano (string "YYYY") corresponde ao filtro activo.
+ *  - filter null → sempre true (sem filtro)
+ *  - filter "<2020" → ano < 2020
+ *  - filter "YYYY" → ano === filter */
+function yearMatchesFilter(year: string | undefined | null, filter: string | null): boolean {
+  if (!filter) return true;
+  const y = String(year ?? "");
+  if (filter === PRE_2020_KEY) return !!y && y < "2020";
+  return y === filter;
+}
+
 /* ─────────────────────────────────────────────
    TIPOS + DADOS — Campeonato Nacional de Clubes
    ───────────────────────────────────────────── */
@@ -998,12 +1014,16 @@ function Content() {
   const [loading, setLoading] = useState(true);
   const [loadingMsg, setLoadingMsg] = useState("A carregar ficheiros...");
   const [error, setError] = useState<string | null>(null);
-  // Deep-link em curso → começar com selected=-1 para que `cur = displayList[selected]`
-  // fique undefined até o URL→state encontrar o match correcto e chamar setSelected(idx).
-  // Sem esta guarda, selected=0 faz o render mostrar displayList[0] (torneio aleatório,
-  // dependendo de qual ficheiro pull-torneios carregou primeiro) enquanto pjaExtra
-  // ou jovens ainda carregam — dando a ilusão de "várias páginas a piscar".
-  const [selected, setSelected] = useState<number>(() => params.tkey ? -1 : 0);
+  // selected=-1 inicial (independente de haver ou não params.tkey):
+  // - Com deep-link: URL→state encontra o match e chama setSelected(idx).
+  // - Sem deep-link (utilizador entra em /FPG): `cur = displayList[-1] = undefined`
+  //   → o render mostra "Selecciona um torneio" em vez de auto-seleccionar
+  //   o primeiro torneio (que ficaria em branco se não tiver scorecards).
+  // Sem esta guarda, selected=0 fazia o render mostrar displayList[0] (torneio
+  // aleatório, dependendo de qual ficheiro pull-torneios carregou primeiro)
+  // enquanto pjaExtra ou jovens ainda carregam — dando a ilusão de "várias
+  // páginas a piscar".
+  const [selected, setSelected] = useState<number>(-1);
     const md = useMasterDetail();
   // Filtros sincronizados com URL query params para partilha directa.
   // Ex: `/FPG?year=2026&manuel=0&q=pedro`. Declarado ANTES dos useStates que
@@ -1474,6 +1494,13 @@ function Content() {
       { url: "/data/jovens_2020.json", year: "2020" },
       { url: "/data/jovens_2019.json", year: "2019" },
     ];
+    // Histórico dos Campeonatos Nacionais Jovens (2005-2026, 206 torneios) —
+    // o mesmo ficheiro que alimenta a TitulosPage e a NacionaisJovensPage.
+    // Carregado aqui para que os Nacionais históricos apareçam na sidebar
+    // de /FPG/jovens (anos pré-2019 não estão em jovens_YYYY.json).
+    // Tcodes que coincidam com jovens_YYYY perdem para a entrada existente
+    // (dedup por ccode/tcode no loop "seen" abaixo).
+    const HISTORICO_URL = "/data/fpg-nacionais-historico.json";
     const jovensMetaLocal: DataSource[] = [];
     Promise.all([
       ...JOVENS_FILES.map(async ({ url, year }) => {
@@ -1495,6 +1522,32 @@ function Content() {
           return [];
         }
       }),
+      // Carrega o ficheiro histórico dos Nacionais Jovens — mesma forma que os
+      // jovens_YYYY mas cobre 2005-2026 (incluindo Drive Tour Finals e Sub-10/12
+      // 2025 Santo Estevão ccode=988). Filtra "de Clubes" (têm tab própria).
+      (async () => {
+        try {
+          const r = await fetch(HISTORICO_URL);
+          if (!r.ok) {
+            jovensMetaLocal.push({ path: HISTORICO_URL, status: "error", error: `HTTP ${r.status}`, group: "jovens" });
+            return [];
+          }
+          const d: any = await r.json();
+          const rows = ((d.tournaments || []) as any[])
+            .filter((t: any) => !/de\s+clubes/i.test(t.name || ""))
+            .map((t: any) => ({
+              ...t,
+              _jovensYear: (t.date || "").substring(0, 4),
+              _sourceFile: HISTORICO_URL,
+              players: (t.players || []).map(normalizePlayer),
+            }));
+          jovensMetaLocal.push({ path: HISTORICO_URL, status: "loaded", count: rows.length, source: d.source, lastUpdated: d.lastUpdated, group: "jovens" });
+          return rows;
+        } catch (e) {
+          jovensMetaLocal.push({ path: HISTORICO_URL, status: "error", error: String(e), group: "jovens" });
+          return [];
+        }
+      })(),
       // Carrega também admissions + draws (107 torneios) para enriquecer existentes
       // e injectar sinteticamente os 10 Nacional 2026 (que ainda não estão em jovens_2026).
       loadFpgAdmissionsDraws().catch(() => null),
@@ -1595,7 +1648,7 @@ function Content() {
   const clubesList = useMemo(
     () => clubesTournaments
       .filter(t => !filterManuel || t.players.some(p => isManuel(p)))
-      .filter(t => !yearFilter || ((t as any)._clubesYear ?? t.date?.substring(0, 4)) === yearFilter)
+      .filter(t => yearMatchesFilter((t as any)._clubesYear ?? t.date?.substring(0, 4), yearFilter))
       .filter(t => matchesSearch(t))
       .sort((a, b) => {
         const yCmp = ((b as any)._clubesYear ?? "").localeCompare((a as any)._clubesYear ?? "");
@@ -1650,7 +1703,7 @@ function Content() {
     // _draws.*.groups.*.players. `tournamentHasManuel` cobre todos os sítios.
     const filtered = combined
       .filter(t => !filterManuel || tournamentHasManuel(t))
-      .filter(t => !yearFilter || ((t as any)._jovensYear ?? t.date?.substring(0, 4)) === yearFilter)
+      .filter(t => yearMatchesFilter((t as any)._jovensYear ?? t.date?.substring(0, 4), yearFilter))
       .filter(t => matchesSearch(t));
     return buildJovensGroups(filtered);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -1902,14 +1955,25 @@ function Content() {
     return [...main, ...clubesMeta, ...jovensMeta, ...admissionsMeta];
   }, [fileMeta, clubesMeta, jovensMeta, admissionsMeta]);
 
-  // Anos disponíveis no modo Torneios
+  // Anos disponíveis no modo Torneios.
+  // Anos 2020+ aparecem como botões individuais; tudo o que é <2020 (1 entrada
+  // por ano dos Nacionais Jovens históricos) fica agrupado num único bucket
+  // "<2020" — evita 15+ botões para uma entrada cada.
   const availYears = useMemo(() => {
     const s = new Set<string>();
-    for (const t of displayList) if (t.date) s.add(t.date.substring(0, 4));
-    return [...s].sort().reverse();
+    let hasPre2020 = false;
+    for (const t of displayList) {
+      if (!t.date) continue;
+      const y = t.date.substring(0, 4);
+      if (y < "2020") hasPre2020 = true;
+      else s.add(y);
+    }
+    const out = [...s].sort().reverse();
+    if (hasPre2020) out.push(PRE_2020_KEY);
+    return out;
   }, [displayList]);
   const activeYear = yearFilter ?? null;
-  const inYear = (t: Tournament) => !activeYear || (t.date || "").startsWith(activeYear);
+  const inYear = (t: Tournament) => yearMatchesFilter((t.date || "").substring(0, 4), activeYear);
 
   // Event-groups globais — os mesmos torneios agrupados por (date+ccode) com
   // nome simplificado e split por Jaccard<0.5. Usado pelos tabs "Todos",

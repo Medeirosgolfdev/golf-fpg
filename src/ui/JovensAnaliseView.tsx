@@ -335,11 +335,12 @@ function ChampionsGrid({ title, champions, years, showRegion = false, typeLabel,
       })
     : ["*"];
 
-  // Notas por região — edições que não existiram em certos anos.
+  // Notas por região — edições que não existiram em certos anos OU em que
+  // não houve todos os escalões (ex: Norte 2024 só Sub-10/12/14).
   const regionOverrides: Record<string, { hideYears?: number[]; note?: string }> = {
-    "Madeira":  { note: "Sem edição em 2021, 2022 e 2025." },
+    "Madeira":  { note: "Sem edição em 2021, 2022 e 2025. Em 2024 alguns jogadores jogaram simultaneamente no Campeonato Regional de Clubes Absoluto (ccode 059, tcode 10483) que decorreu nas mesmas datas; as suas classificações foram acrescentadas aqui pelo escalão que lhes corresponde. Esses jogadores estão marcados com uma nota no detalhe." },
     "Açores":   { note: "Sem edição em 2022." },
-    "Norte":    { note: "Sem edição em 2025." },
+    "Norte":    { note: "Sem edição em 2025. Em 2024 só houve Sub-10/12/14 (sem Sub-16/18)." },
   };
 
   // Renderer de uma secção de grupo (Sub 10/12/14 ou Sub 16/18/24).
@@ -776,12 +777,28 @@ function PlayerTimeline({ player, years, mode = "all" }: { player: PlayerStats; 
     if (!titlesByYear.has(t.year)) titlesByYear.set(t.year, []);
     titlesByYear.get(t.year)!.push(t);
   }
+  // Aparições do jogador filtradas por modo. Usado para:
+  //  1. Determinar `played` (se houve aparição daquele tipo nesse ano)
+  //  2. Filtrar os anos a mostrar na timeline (só anos com aparições do
+  //     jogador no modo activo — pedido user 2026-05-04: "não houve regional
+  //     em 2025, porque é que colocas o ano na tabela")
+  const filteredAppearances = (player.appearancesList || []).filter((a) =>
+    mode === "regional" ? a.type === "Regional" :
+    mode === "nacional" ? a.type === "Nacional" :
+    true,
+  );
+  const playerYearsInMode = new Set<number>(filteredAppearances.map((a) => a.year));
   // Filtrar para só mostrar anos onde o jogador tinha pelo menos 9 anos
   // (idade mínima do Sub-10). Pré-pubertário: 8 anos = ainda não compete.
   // Evita pills "2005 Sub-10" para um jogador nascido em 2008.
+  // E também filtrar para só anos onde o jogador participou em torneios do
+  // modo activo (em modo Regional/Nacional não mostrar anos vazios).
   const yob = parseInt(String(player.dob).slice(0, 4));
   const minYear = isNaN(yob) ? -Infinity : yob + 9;
-  const sortedYears = [...years].sort().filter((y) => y >= minYear);
+  const sortedYears = [...years]
+    .sort()
+    .filter((y) => y >= minYear)
+    .filter((y) => mode === "all" || playerYearsInMode.has(y));
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 4, padding: "8px 12px",
@@ -811,7 +828,15 @@ function PlayerTimeline({ player, years, mode = "all" }: { player: PlayerStats; 
           const esc = escalaoInYear(player.dob, y);
           const yrIn = yearInEscalao(player.dob, y);
           const titles = titlesByYear.get(y) || [];
-          const played = player.years.has(y);
+          // played derivado das aparições filtradas por modo — se o jogador
+          // não jogou regional em 2025, played=false em modo Regional (mesmo
+          // que tenha jogado nacional nesse ano).
+          const yearAppearances = filteredAppearances.filter((a) => a.year === y);
+          const played = mode === "all" ? player.years.has(y) : yearAppearances.length > 0;
+          // Melhor pos do ano (menor número = melhor) — para o pill quando sem título.
+          const bestApp = yearAppearances
+            .filter(a => a.pos != null && a.pos > 1)  // não duplicar com 🏆
+            .sort((a, b) => (a.pos as number) - (b.pos as number))[0] || null;
           return (
             <div key={y} style={{
               border: "1px solid " + (played ? "var(--border)" : "var(--border-light)"),
@@ -841,6 +866,42 @@ function PlayerTimeline({ player, years, mode = "all" }: { player: PlayerStats; 
                   </span>
                 )
               ))}
+              {/* Pos/total — só quando jogou e não ganhou (sem 🏆 redundante).
+                  Linka ao torneio na FPG. */}
+              {titles.length === 0 && bestApp && bestApp.ccode && bestApp.tcode && (
+                <a
+                  href={fpgScoringUrl(bestApp.ccode, bestApp.tcode.split("+")[0])}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={`${bestApp.pos}º de ${bestApp.total} em ${bestApp.tournamentName} — abrir torneio na FPG ↗`}
+                  style={{
+                    fontSize: 10,
+                    fontWeight: 700,
+                    color: "var(--text-3)",
+                    textDecoration: "none",
+                    background: "var(--bg-muted)",
+                    padding: "1px 4px",
+                    borderRadius: 3,
+                  }}
+                >
+                  {bestApp.pos}/{bestApp.total}
+                </a>
+              )}
+              {titles.length === 0 && bestApp && (!bestApp.ccode || !bestApp.tcode) && (
+                <span
+                  title={`${bestApp.pos}º de ${bestApp.total} em ${bestApp.tournamentName}`}
+                  style={{
+                    fontSize: 10,
+                    fontWeight: 700,
+                    color: "var(--text-3)",
+                    background: "var(--bg-muted)",
+                    padding: "1px 4px",
+                    borderRadius: 3,
+                  }}
+                >
+                  {bestApp.pos}/{bestApp.total}
+                </span>
+              )}
             </div>
           );
         })}

@@ -87,10 +87,18 @@ export const NACIONAL_2026_META: Record<string, {
   "10941": { escalao: "Sub 12", sex: "M", name: "Campeonato Nacional de Jovens Sub 12 M" },
   "10942": { escalao: "Sub 12", sex: "F", name: "Campeonato Nacional de Jovens Sub 12 F" },
   "10943": { escalao: "Sub 10", sex: "M", name: "Campeonato Nacional de Jovens Sub 10 M" },
-  "10944": { escalao: "Sub 10", sex: "F", name: "Campeonato Nacional de Jovens Sub 10 F" },
+  // 10944 (Sub 10 F) — REMOVIDO 2026-05-05: o torneio não teve participantes,
+  // ficaria sozinho na sidebar e a tab Admissões mostraria 0 jogadores. Excluído
+  // aqui para evitar injecção sintética; também filtrado no loader.
 };
 
 export const NACIONAL_2026_TCODES = Object.keys(NACIONAL_2026_META);
+
+/** Tcodes a SUPRIMIR das admissions/draws — torneios sem participantes ou
+ *  cancelados que não devem aparecer em sidebars nem tabs de Admissões. */
+const ADMISSIONS_SKIP_TCODES = new Set<string>([
+  "10944",  // Sub 10 F 2026 — sem inscrições
+]);
 
 // ── Loader ─────────────────────────────────────────────────────────
 
@@ -123,6 +131,12 @@ export async function loadFpgAdmissionsDraws(opts: { force?: boolean } = {}): Pr
   try {
     const raw = await cachedFetchJson<FpgAdmissionsDrawsFile>("/data/fpg-admissions-draws.json");
     if (raw) {
+      // Filtra torneios suprimidos (ver ADMISSIONS_SKIP_TCODES). Aplicado aqui
+      // ao carregar para garantir que NENHUM consumidor (sidebar, Admissões,
+      // Draw, índices) os vê. O ficheiro JSON em disco mantém-se intacto.
+      if (Array.isArray(raw.tournaments)) {
+        raw.tournaments = raw.tournaments.filter(t => !ADMISSIONS_SKIP_TCODES.has(String(t.tcode)));
+      }
       for (const t of (raw.tournaments || [])) {
         if (t.admissions && Array.isArray(t.admissions.players)) {
           t.admissions.players = t.admissions.players.map(normalizePlayer);

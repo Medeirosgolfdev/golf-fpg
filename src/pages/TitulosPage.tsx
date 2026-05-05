@@ -228,7 +228,7 @@ export default function TitulosPage() {
   });
 
   return (
-    <div className="page-full">
+    <div className="page-full" style={{ maxWidth: "none" }}>
       <Toolbar>
         <ToolbarTitle>🏆 Titulos - Campeonatos de Jovens</ToolbarTitle>
         <ToolbarMeta>
