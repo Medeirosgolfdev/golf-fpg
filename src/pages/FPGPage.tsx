@@ -1540,6 +1540,11 @@ function Content() {
               _jovensYear: (t.date || "").substring(0, 4),
               _sourceFile: HISTORICO_URL,
               players: (t.players || []).map(normalizePlayer),
+              // Quando o historico contém admissions/draws (consolidação 2026-05-05
+              // do Nacional Jovens 2026), promove-os para _admissions/_draws para
+              // o detalhe do torneio mostrar tabs de Inscrições/Pairings.
+              ...(t.admissions ? { _admissions: t.admissions } : {}),
+              ...(t.draws ? { _draws: t.draws } : {}),
             }));
           jovensMetaLocal.push({ path: HISTORICO_URL, status: "loaded", count: rows.length, source: d.source, lastUpdated: d.lastUpdated, group: "jovens" });
           return rows;
