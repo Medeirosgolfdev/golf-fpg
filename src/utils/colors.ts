@@ -197,6 +197,7 @@ export const C = {
     pessoal:        "#39ff14",   /* neon verde — pessoal (intencional) */
     ferias:         "#a3e635",   /* lima — Férias */
     treino:         "#10b981",   /* esmeralda — Campo / Treino */
+    colonias:       "#374151",   /* cinzento escuro — Colónias (sem animação) */
     // Viagens
     viag_alg_fev:   "#f59e0b",
     viag_malaga:    "#f97316",

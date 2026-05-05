@@ -39,6 +39,7 @@ const DrivePage = lazy(() => import("./pages/DrivePage"));
 const USKIDSPage = lazy(() => import("./pages/USKIDSPage"));
 const FPGPage = lazy(() => import("./pages/FPGPage"));
 const DORALPage = lazy(() => import("./pages/DORALPage"));
+const FFGPage = lazy(() => import("./pages/FFGPage"));
 const NacionaisJovensPage = lazy(() => import("./pages/NacionaisJovensPage"));
 const TitulosPage = lazy(() => import("./pages/TitulosPage"));
 
@@ -285,7 +286,8 @@ export default function App() {
                 <Route path="/diversos" element={<Navigate to="/FPG" replace />} />
                 <Route path="/diversos/inscritos" element={<Navigate to="/FPG/jovens/inscritosCN" replace />} />
                 <Route path="/doral" element={<DORALPage />} />
-                {/* Pagina Titulos - tabs Nacional/Regional/Atleta */}
+                <Route path="/ffg" element={<FFGPage />} />
+                {/* Página Títulos — tabs Nacional/Regional/Atleta */}
                 <Route path="/titulos" element={<TitulosPage />} />
                 <Route path="/titulos/:tab" element={<TitulosPage />} />
                 {/* Compat: URLs antigas continuam a funcionar (redirect) */}

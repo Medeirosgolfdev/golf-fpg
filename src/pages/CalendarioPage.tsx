@@ -87,6 +87,7 @@ const CALENDARS: CalendarSource[] = [
   { id: "bday_outros",    name: "🎂 Outros",            color: C.cal.bday_outros, group: "ANIVER" },
   { id: "ferias",         name: "🏖 Férias",            color: C.cal.ferias, group: "DESTAQUE" },
   { id: "treino",         name: "⛳ Campo / Treino",    color: C.cal.treino, group: "DESTAQUE" },
+  { id: "colonias",       name: "🏕 Colónias",          color: C.cal.colonias, group: "DESTAQUE" },
 
   // ── Viagens — laranja / âmbar ──
   { id: "viag_alg_fev",   name: "✈ Algarve (Fev)",      color: C.cal.jr_cgss, group: "VIAGENS" },
@@ -239,6 +240,7 @@ const EVENTS: CalEvent[] = [
   ev("dest_intl", "63º Open de Portugal PGA",                          new Date(2026,8,17), "Aroeira I",                   "Strokeplay", new Date(2026,8,20)),
   ev("dest_intl", "2nd Castro Marim Portuguese International U14",     new Date(2026,11,4), "Championship Quinta do Vale", "Strokeplay", new Date(2026,11,6)),
   ev("dest_intl", "Greatgolf Junior Open — Luis Figo Foundation",      new Date(2026,1,15), "Vilamoura",                   "Strokeplay", new Date(2026,1,17)),
+  ev("dest_intl", "World Kids Golf 2026 by Amendoeira",                new Date(2026,6,29), "Amendoeira",                  "3R Strokeplay (jantar de encerramento)", new Date(2026,6,31)),
 
   /* ══════════════════════════════════════
      DESTAQUE — Camp. Nacional Sub14 & 18 (laranja)
@@ -259,6 +261,7 @@ const EVENTS: CalEvent[] = [
   // ev("dest_uskids", "Vallarta Open 2026",             new Date(2026,3,30), "Puerto Vallarta (MX)",             "", new Date(2026,4,1)),
   ev("dest_uskids_tbc", "Irish Open 2026",                   new Date(2026,6,1),  "Mountwolseley, Tullow (IE)",       "", new Date(2026,6,2)),
   ev("dest_uskids_tbc", "Paris Invitational 2026",           new Date(2026,6,4),  "Magny-le-Hongre (FR)",             "", new Date(2026,6,6)),
+  ev("dest_uskids", "Venice Open 2026",                      new Date(2026,7,13), "Venice (IT)",                      "3R Strokeplay", new Date(2026,7,15)),
   // ev("dest_uskids", "Canadian Invitational 2026",     new Date(2026,6,6),  "Canadá",                           "", new Date(2026,6,7)),
 
   /* ══════════════════════════════════════
@@ -271,7 +274,7 @@ const EVENTS: CalEvent[] = [
      ══════════════════════════════════════ */
   // CANCELADO: ev("dest_pja", "PJA — Quinta da Marinha", new Date(2026,0,24), "Quinta da Marinha", "Strokeplay", new Date(2026,0,25)),
   ev("dest_pja", "PJA — Great Golf Júnior Open 2026", new Date(2026,1,15), "Vilamoura",         "Strokeplay", new Date(2026,1,17)),
-  ev("dest_pja", "PJA — Miramar Open",               new Date(2026,7,19), "CG Miramar",         "Strokeplay", new Date(2026,7,21)),
+  ev("dest_pja", "VIII Miramar Internacional Open U25", new Date(2026,7,19), "CG Miramar",       "3R Strokeplay", new Date(2026,7,21)),
   ev("dest_pja", "PJA — Quinta do Peru",             new Date(2026,5,27), "Quinta do Peru",     "Strokeplay", new Date(2026,5,28)),
   ev("dest_pja", "PJA — Torre",                      new Date(2026,8,5),  "Torre",              "Strokeplay", new Date(2026,8,6)),
   ev("dest_pja", "PJA — Dunas — Grande Final",       new Date(2026,10,28),"Dunas",              "Strokeplay", new Date(2026,10,29)),
@@ -285,7 +288,12 @@ const EVENTS: CalEvent[] = [
   /* ══════════════════════════════════════
      ⛳ CAMPO / TREINO
      ══════════════════════════════════════ */
-  ev("treino", "Mypro Golf Algarve — Campo de Golf", new Date(2026,2,28), "Algarve", "", new Date(2026,3,4)),
+  ev("treino", "Mypro Golf Algarve — Campo de Golf",          new Date(2026,2,28), "Algarve",     "", new Date(2026,3,4)),
+  ev("treino", "Volta de treino — World Kids Golf 2026",      new Date(2026,6,28), "Amendoeira",  ""),
+  ev("treino", "Volta de treino — Venice Open 2026",          new Date(2026,7,12), "Venice (IT)", ""),
+  ev("treino", "Volta de treino — VIII Miramar Open U25",     new Date(2026,7,18), "CG Miramar",  ""),
+  ev("colonias", "Aranhiços 1 — Colónia",                     new Date(2026,6,17), "",            "", new Date(2026,6,26)),
+  ev("colonias", "Mosquitos 2 — Colónia (irmã)",              new Date(2026,7,19), "Tona",        "", new Date(2026,7,26)),
 
   /* ══════════════════════════════════════
      ✈ VIAGENS — Voos
