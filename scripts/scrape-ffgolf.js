@@ -45,27 +45,35 @@ const isStrokePlay = (name) => /qualif|round\s+\d|stroke/i.test(name || "");
 /* ─────────────────────────────────────────────────────────────────
    Poll-wait até o dropdown do iframe ter opções (max maxMs)
    ───────────────────────────────────────────────────────────────── */
-async function waitForIframeReady(page, maxMs = 30000) {
+async function waitForIframeReady(page, maxMs = 60000) {
   const start = Date.now();
+  let lastDiag = null;
   while (Date.now() - start < maxMs) {
     const ready = await page.evaluate(() => {
-      const ifr = document.querySelectorAll("iframe")[0];
+      const iframes = [...document.querySelectorAll("iframe")];
+      // Procurar o iframe golfgenius (pode haver iframes de ads que vêm primeiro)
+      const ifr = iframes.find((f) => /golfgenius/i.test(f.src || "")) || iframes[0];
       const doc = ifr?.contentDocument;
       const sel = doc?.querySelector("select");
-      // Algumas páginas (sem dropdown) só têm leaderboard directo —
-      // aceitar se já há linhas de tournaments2/details
       const hasPlayers = doc?.querySelector('a[href*="tournaments2/details"]');
+      const hasV2event = doc?.querySelector('.v2tournament-event');
       return {
         hasIframe: !!ifr,
+        ifrSrc: ifr?.src?.slice(0, 80) || "",
         hasDoc: !!doc,
         selectOptions: sel ? sel.options.length : -1,
         hasPlayerLinks: !!hasPlayers,
+        hasV2event: !!hasV2event,
       };
     });
-    if (ready.selectOptions > 0 || ready.hasPlayerLinks) return ready;
-    if (!ready.hasIframe) await sleep(1000);
-    else await sleep(700);
+    lastDiag = ready;
+    // Aceitar se: dropdown carregado OU jogadores visíveis OU v2tournament-event div presente
+    if (ready.selectOptions > 0 || ready.hasPlayerLinks || ready.hasV2event) return ready;
+    if (!ready.hasIframe) await sleep(1500);
+    else await sleep(800);
   }
+  // Log diagnostic on failure
+  if (lastDiag) console.log(`   ⚠ diagnostic: ${JSON.stringify(lastDiag)}`);
   return null;
 }
 
@@ -73,7 +81,10 @@ async function waitForIframeReady(page, maxMs = 30000) {
    Abre Classement page e extrai metadados (league, stats, dates)
    ───────────────────────────────────────────────────────────────── */
 async function openClassement(page, ggPage) {
-  await page.goto(`${GG}/pages/${ggPage}`, { waitUntil: "domcontentloaded" });
+  await page.goto(`${GG}/pages/${ggPage}`, { waitUntil: "networkidle", timeout: 60000 }).catch(() => {
+    // networkidle pode timeout em sites com tracking constante — fallback para domcontentloaded
+    return page.goto(`${GG}/pages/${ggPage}`, { waitUntil: "domcontentloaded", timeout: 60000 });
+  });
   // Poll até ao iframe estar pronto (dropdown carregado OU jogadores visíveis)
   const ready = await waitForIframeReady(page, 30000);
   if (!ready) console.log(`   ⚠ iframe não ficou pronto em 30s`);
@@ -89,7 +100,69 @@ async function openClassement(page, ggPage) {
       (a) => a.textContent.trim() === "Statistiques du parcours de golf"
     );
     const statsPageId = statsLink?.getAttribute("href")?.match(/pages\/(\d+)/)?.[1] || null;
-    return { leagueId, statsPageId, dates };
+    // Pages auxiliares para captura completa
+    const departsLink = [...document.querySelectorAll("a")].find((a) => a.textContent.trim() === "Départs");
+    const departsPageId = departsLink?.getAttribute("href")?.match(/pages\/(\d+)/)?.[1] || null;
+    const groupViewLink = [...document.querySelectorAll("a")].find((a) => a.textContent.trim() === "Group View");
+    const groupViewPageId = groupViewLink?.getAttribute("href")?.match(/pages\/(\d+)/)?.[1] || null;
+    return { leagueId, statsPageId, departsPageId, groupViewPageId, dates };
+  });
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Fetch pairings/brackets da página Départs para um evento.
+   Retorna: [{teeTime, players: [{name, hcp, club}, {name, hcp, club}]}]
+   ───────────────────────────────────────────────────────────────── */
+async function fetchPairings(page, departsPageId, eventId) {
+  await page.goto(`${GG}/pages/${departsPageId}`, { waitUntil: "domcontentloaded" });
+  await waitForIframeReady(page, 30000);
+  // Switch to event
+  await page.evaluate((eId) => {
+    const ifr = document.querySelectorAll("iframe")[0];
+    const doc = ifr?.contentDocument;
+    const sel = doc?.querySelector("select");
+    if (sel && sel.value !== eId) {
+      sel.value = eId;
+      sel.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+  }, eventId);
+  await sleep(5000);
+  return page.evaluate(() => {
+    const ifr = document.querySelectorAll("iframe")[0];
+    const doc = ifr?.contentDocument;
+    if (!doc) return [];
+    const pairings = [];
+    // Cada linha de tee time tem: tee time + cells com player names+hcp+club
+    const trs = [...doc.querySelectorAll("tr")];
+    let currentTeeTime = "";
+    for (const tr of trs) {
+      const cells = [...tr.querySelectorAll("td")].map((td) => td.textContent.replace(/\s+/g, " ").trim());
+      // Detectar tee time
+      const teeTime = cells[0]?.match(/^\d{1,2}:\d{2}/)?.[0];
+      if (teeTime) currentTeeTime = teeTime;
+      // Cells com nome de jogador (formato "APELIDO Nome (hcp) CLUBE")
+      for (const cell of cells) {
+        // Pode ter múltiplos jogadores num só cell (match play A vs B)
+        const playerMatches = [...cell.matchAll(/([A-ZÀ-Ý][A-ZÀ-Ý' \-]+?\s+[A-ZÀ-Ýa-zà-ý][\w'\-]+)\s*\(([+-]?[\d.]+)\)\s+([A-ZÀ-Ý][A-ZÀ-Ý' \-]+?)(?=\s+[A-ZÀ-Ý]{3,}|$)/g)];
+        if (playerMatches.length >= 1) {
+          const players = playerMatches.map((m) => ({
+            name: m[1].replace(/\s+/g, " ").trim(),
+            hcp: parseFloat(m[2]),
+            club: m[3].replace(/\s+/g, " ").trim(),
+          }));
+          if (players.length > 0) pairings.push({ teeTime: currentTeeTime, players });
+        }
+      }
+    }
+    // Dedup pairings
+    const seen = new Set();
+    const unique = pairings.filter((p) => {
+      const k = p.teeTime + "|" + p.players.map((pl) => pl.name).join(",");
+      if (seen.has(k)) return false;
+      seen.add(k);
+      return true;
+    });
+    return unique;
   });
 }
 
@@ -268,49 +341,54 @@ async function detectCourseInfo(page) {
    ───────────────────────────────────────────────────────────────── */
 async function detectDivisions(page) {
   return page.evaluate(() => {
-    const ifr = document.querySelectorAll("iframe")[0];
+    const ifr = [...document.querySelectorAll("iframe")].find((f) => /golfgenius/i.test(f.src || "")) || document.querySelectorAll("iframe")[0];
     const doc = ifr?.contentDocument;
     if (!doc) return [];
     const opts = [];
     const seen = new Set();
-    // 1) Tabs/links com nomes de divisão
-    const tabSelectors = [
-      ".tournament_name a",
-      "a.tournament_name",
-      ".tournament_selector a",
-      ".event-tab",
-      "[data-tournament-id]",
-      "[data-event-id]",
-    ];
-    for (const sel of tabSelectors) {
-      doc.querySelectorAll(sel).forEach((el) => {
-        const t = el.textContent.replace(/\s+/g, " ").trim();
-        const did = el.dataset?.tournamentId || el.dataset?.eventId;
-        if (!t || t.length > 80 || seen.has(t)) return;
-        // Filtrar Round/Day labels
-        if (/^Round\s+\d|^\d{1,2}\s+(jan|fev|mar|apr|mai|jun|jul|aug|sep|oct|nov|dec)/i.test(t)) return;
-        seen.add(t);
-        opts.push({ type: "tab", label: t, divId: did, selector: sel });
-      });
-    }
-    // 2) Selects que não sejam o "round" principal (já tratado em fetchLeaderboard)
+    // Filtros de UI/lixo (NÃO são divisões)
+    const isJunk = (t) => {
+      const lt = t.toLowerCase();
+      return (
+        /^(expand|collapse|show|hide|view|select|all|toggle|close|open)\b/i.test(t) ||
+        /^(round|tour|jour|day|day\s*\d|\d+(st|nd|rd|th))\b/i.test(t) ||
+        /^\d{1,2}\s+(jan|fev|mar|apr|mai|jun|jul|aug|sep|oct|nov|dec)/i.test(t) ||
+        /^\d+\s*$/.test(t) ||
+        lt === "all" || lt === "default" || lt === "men" || lt === "women" || lt.length < 4
+      );
+    };
+    // 1) Selects (só os que NÃO sejam o "round" principal, e que tenham >1 opção real)
     doc.querySelectorAll("select").forEach((s) => {
       if (s.name === "round") return;
-      [...s.options].forEach((o) => {
-        const t = o.textContent.trim();
-        if (!t || seen.has(t)) return;
-        if (/^Round\s+\d/i.test(t)) return;
+      const realOpts = [...s.options].filter((o) => o.value && !isJunk(o.textContent.trim()));
+      if (realOpts.length < 2) return; // só uma opção = não é divisão
+      realOpts.forEach((o) => {
+        const t = o.textContent.replace(/\s+/g, " ").trim();
+        if (!t || seen.has(t) || isJunk(t)) return;
         seen.add(t);
         opts.push({ type: "select", label: t, value: o.value, selectName: s.name || s.id });
       });
     });
-    // 3) Botões/links com palavras-chave de categoria
+    // 2) Tabs específicos do GolfGenius com data-tournament-id (mais fiável que classes)
     if (opts.length === 0) {
-      doc.querySelectorAll("a, button, div[onclick]").forEach((el) => {
+      doc.querySelectorAll("[data-tournament-id], [data-event-id]").forEach((el) => {
         const t = el.textContent.replace(/\s+/g, " ").trim();
-        if (!t || t.length > 60 || seen.has(t)) return;
+        const did = el.dataset?.tournamentId || el.dataset?.eventId;
+        if (!t || t.length > 80 || seen.has(t) || isJunk(t)) return;
+        seen.add(t);
+        opts.push({ type: "tab", label: t, divId: did });
+      });
+    }
+    // 3) Links com palavras-chave de categoria EXACTAS (não substring)
+    if (opts.length === 0) {
+      doc.querySelectorAll("a, button").forEach((el) => {
+        const t = el.textContent.replace(/\s+/g, " ").trim();
+        if (!t || t.length > 80 || seen.has(t) || isJunk(t)) return;
+        // Match: divisão clara (ex: "Boys", "Girls Division", "Garçons U12", "Boys 11")
         if (
-          /\b(boys|girls|garçons?|filles?|men|women|messieurs|dames|cadets?|cadettes?|benjamins?|benjamines?|minimes?|équipe|mixed|mixte)\b/i.test(t)
+          /\b(boys|girls|gar[çc]ons?|filles?|cadets?|cadettes?|benjamins?|benjamines?|minimes?)\b/i.test(t) &&
+          // E tem mais de uma palavra OU é seguido de número (Boys 11, U14 Filles, etc.)
+          (t.split(/\s+/).length >= 2 || /\d/.test(t))
         ) {
           seen.add(t);
           opts.push({ type: "clickable", label: t });
@@ -324,35 +402,80 @@ async function detectDivisions(page) {
 /* Tenta seleccionar uma divisão (clicar tab ou mudar select) */
 async function selectDivision(page, division) {
   return page.evaluate((div) => {
-    const ifr = document.querySelectorAll("iframe")[0];
+    const ifr = [...document.querySelectorAll("iframe")].find((f) => /golfgenius/i.test(f.src || "")) || document.querySelectorAll("iframe")[0];
     const doc = ifr?.contentDocument;
-    if (!doc) return false;
+    if (!doc) return { ok: false, err: "no doc" };
     if (div.type === "select") {
       const sel = [...doc.querySelectorAll("select")].find((s) => s.name === div.selectName || s.id === div.selectName);
-      if (!sel) return false;
+      if (!sel) return { ok: false, err: "select not found" };
       sel.value = div.value;
       sel.dispatchEvent(new Event("change", { bubbles: true }));
-      return true;
+      // jQuery se houver
+      try { ifr.contentWindow.jQuery && ifr.contentWindow.jQuery(sel).trigger("change"); } catch {}
+      return { ok: true, via: "select" };
     }
-    // type === tab/clickable: encontrar pelo label
-    const candidates = [...doc.querySelectorAll("a, button, [role='tab'], div[onclick]")];
-    const target = candidates.find((el) => el.textContent.replace(/\s+/g, " ").trim() === div.label);
-    if (target) {
+    // type === tab/clickable: encontrar pelo texto (várias estratégias)
+    const candidates = [...doc.querySelectorAll("a, button, [role='tab'], div[onclick], li, span")];
+    // 1. match exacto
+    let target = candidates.find((el) => el.textContent.replace(/\s+/g, " ").trim() === div.label);
+    // 2. match prefix (Boys, Girls, etc.)
+    if (!target) target = candidates.find((el) => el.textContent.replace(/\s+/g, " ").trim().startsWith(div.label));
+    // 3. match contém (caso o label tenha sido truncado)
+    if (!target) target = candidates.find((el) => {
+      const t = el.textContent.replace(/\s+/g, " ").trim();
+      return t.length > 5 && t.length < 200 && t.includes(div.label.split(" - ")[0]);
+    });
+    if (!target) return { ok: false, err: "no candidate found", candidateCount: candidates.length };
+    // Tentar click + dispatch mouse events
+    try {
+      target.scrollIntoView();
       target.click();
-      return true;
+      target.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true, view: ifr.contentWindow }));
+      // Se for link com data-href, tentar trigger via attr
+      if (target.dataset?.href) target.click();
+      return { ok: true, via: "click", tag: target.tagName };
+    } catch (e) {
+      return { ok: false, err: e.message };
     }
-    return false;
   }, division);
 }
 
 /* ─────────────────────────────────────────────────────────────────
    Switch dropdown e extrai leaderboard
    ───────────────────────────────────────────────────────────────── */
+/* Expand TODAS as divisões clicando em a.expand-tournament — necessário para
+   carregar todos os jogadores quando há múltiplas categorias num gg_page. */
+async function expandAllDivisions(page) {
+  return page.evaluate(async () => {
+    const ifr = [...document.querySelectorAll("iframe")].find((f) => /golfgenius/i.test(f.src || "")) || document.querySelectorAll("iframe")[0];
+    const doc = ifr?.contentDocument;
+    if (!doc) return 0;
+    // Click TODOS os links em paralelo (cada um dispara seu próprio AJAX)
+    const links = [...doc.querySelectorAll("a.expand-tournament")];
+    if (!links.length) return 0;
+    for (const link of links) {
+      try { link.click(); } catch {}
+    }
+    // Esperar uma vez 3s após todos os clicks
+    await new Promise((r) => setTimeout(r, 3000));
+    return links.length;
+  });
+}
+
 async function fetchLeaderboard(page, ggPage, eventId) {
-  await page.goto(`${GG}/pages/${ggPage}`, { waitUntil: "domcontentloaded" });
-  await waitForIframeReady(page, 30000);
+  // Só navega se URL diferente — caso contrário reutiliza tab
+  const targetUrl = `${GG}/pages/${ggPage}`;
+  const currentUrl = page.url();
+  if (!currentUrl.startsWith(targetUrl)) {
+    await page.goto(targetUrl, { waitUntil: "domcontentloaded", timeout: 60000 });
+    await waitForIframeReady(page, 60000);
+    // Expandir divisões só na 1ª vez
+    const expandedCount = await expandAllDivisions(page);
+    if (expandedCount > 0) await sleep(2000);
+  }
+  // Mudar dropdown
   await page.evaluate((eId) => {
-    const ifr = document.querySelectorAll("iframe")[0];
+    const ifr = [...document.querySelectorAll("iframe")].find((f) => /golfgenius/i.test(f.src || "")) || document.querySelectorAll("iframe")[0];
     const doc = ifr?.contentDocument;
     const sel = doc?.querySelector("select");
     if (sel && sel.value !== eId) {
@@ -360,6 +483,9 @@ async function fetchLeaderboard(page, ggPage, eventId) {
       sel.dispatchEvent(new Event("change", { bubbles: true }));
     }
   }, eventId);
+  await sleep(2500);
+  // Expand de novo após dropdown change (alguns torneios re-renderizam divisões)
+  await expandAllDivisions(page);
   // Poll até a leaderboard ter recarregado para o evento certo
   const start = Date.now();
   while (Date.now() - start < 20000) {
@@ -372,11 +498,11 @@ async function fetchLeaderboard(page, ggPage, eventId) {
     await sleep(800);
   }
   return page.evaluate(() => {
-    const ifr = document.querySelectorAll("iframe")[0];
+    const ifr = [...document.querySelectorAll("iframe")].find((f) => /golfgenius/i.test(f.src || "")) || document.querySelectorAll("iframe")[0];
     const doc = ifr?.contentDocument;
     if (!doc) return { players: [], headers: [] };
 
-    // Detectar cabeçalhos de coluna para saber quantas rondas e o que cada coluna é
+    // Detectar cabeçalhos de coluna
     const headerCells = [];
     const headerRow = doc.querySelector("thead tr") || doc.querySelector("table tr");
     if (headerRow) {
@@ -384,10 +510,8 @@ async function fetchLeaderboard(page, ggPage, eventId) {
         headerCells.push(c.textContent.replace(/\s+/g, " ").trim())
       );
     }
-    // Detectar quantas colunas são rondas (R1/R2/T1/T2/Round 1/etc)
-    const isRoundHeader = (h) => /^(R|T|Round|Tour)\s*\d|^J\d/i.test(h.trim());
-    const isTotalHeader = (h) => /^Total/i.test(h.trim());
 
+    // Capturar texto da divisão (header do v2tournament-event div) para CADA jogador
     const players = [];
     let rowIdx = 0;
     for (const tr of doc.querySelectorAll("tr")) {
@@ -396,6 +520,19 @@ async function fetchLeaderboard(page, ggPage, eventId) {
       const idM = (link.getAttribute("href") || "").match(/details\/(\d+)/);
       if (!idM) continue;
       rowIdx++;
+      // Detectar a divisão: procurar tournament_container ancestor (contém tanto título como tabela)
+      let division = null;
+      let ancestor = tr.parentElement;
+      while (ancestor) {
+        const cls = ancestor.className || "";
+        if (typeof cls === "string" && cls.includes("tournament_container")) {
+          // O título .expand-tournament/.tournament_name está dentro deste container
+          const titleEl = ancestor.querySelector(".expand-tournament, .tournament_name, h1, h2, h3, h4");
+          if (titleEl) division = titleEl.textContent.replace(/\s+/g, " ").trim().slice(0, 100);
+          break;
+        }
+        ancestor = ancestor.parentElement;
+      }
 
       const flagSpan = tr.querySelector("span.flag-icon");
       const cc = flagSpan?.className.match(/flag-icon-([a-z\-]+)/i)?.[1]?.toUpperCase();
@@ -465,6 +602,7 @@ async function fetchLeaderboard(page, ggPage, eventId) {
         toPar: isNaN(toPar) ? null : toPar,
         roundScores,
         total,
+        division,
       });
     }
     return { players, headers: headerCells };
@@ -564,11 +702,48 @@ async function fetchScorecards(page, players, batchSize = 10) {
 /* ─────────────────────────────────────────────────────────────────
    Scrape completo de 1 torneio
    ───────────────────────────────────────────────────────────────── */
+/* Auto-dismiss de cookie banners (GolfGenius/FFGolf usam Didomi e CookieScript) */
+async function dismissCookieBanners(page) {
+  try {
+    await page.evaluate(() => {
+      // Didomi (golfgenius/ffgolf)
+      const didomi = document.querySelector('#didomi-notice-agree-button, [aria-label*="Accept"], [data-action="agree"]');
+      if (didomi) didomi.click();
+      // CookieScript / OneTrust
+      document.querySelectorAll('button').forEach((b) => {
+        const t = (b.textContent || '').trim().toLowerCase();
+        if (/(accept|tout|ok|agree|j’accepte|continuer)/i.test(t)) {
+          try { b.click(); } catch {}
+        }
+      });
+      // Generic close X buttons em iframes
+      document.querySelectorAll('iframe[id*="cookie"], iframe[id*="consent"], iframe[id*="didomi"]').forEach((f) => {
+        try { f.style.display = 'none'; f.remove(); } catch {}
+      });
+    });
+  } catch {
+    /* ignore */
+  }
+}
+
 async function scrapeOne(browser, t) {
   console.log(`\n🏌️  ${t.title || t.slug} (${t.year})`);
   console.log(`   gg_page=${t.gg_page}`);
-  const ctx = await browser.newContext();
+  const ctx = await browser.newContext({
+    viewport: { width: 1280, height: 1024 },
+    userAgent:
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36",
+    locale: "fr-FR",
+    timezoneId: "Europe/Paris",
+  });
   const page = await ctx.newPage();
+  // Disfarçar headless: remover navigator.webdriver e mais
+  await ctx.addInitScript(() => {
+    Object.defineProperty(navigator, "webdriver", { get: () => undefined });
+    Object.defineProperty(navigator, "languages", { get: () => ["fr-FR", "fr", "en-US", "en"] });
+    Object.defineProperty(navigator, "plugins", { get: () => [1, 2, 3, 4, 5] });
+    window.chrome = { runtime: {} };
+  });
   try {
     // 1. Classement page → metadados
     const meta = await openClassement(page, t.gg_page);
@@ -576,7 +751,7 @@ async function scrapeOne(browser, t) {
       console.log(`   ⚠ sem leagueId — saltar`);
       return null;
     }
-    console.log(`   league=${meta.leagueId} statsPage=${meta.statsPageId} events=${meta.dates.length}`);
+    console.log(`   league=${meta.leagueId} statsPage=${meta.statsPageId} departsPage=${meta.departsPageId} events=${meta.dates.length}`);
     if (!meta.dates.length) {
       console.log(`   ⚠ dropdown sem eventos — saltar`);
       return null;
@@ -618,9 +793,11 @@ async function scrapeOne(browser, t) {
 
     for (const ev of allEvents) {
       const fmt = isStrokePlay(ev.name) ? "stroke" : "match";
-      console.log(`   ▶ ${ev.name} [${fmt}]`);
+      const evStart = Date.now();
+      process.stdout.write(`   ▶ ${ev.name} [${fmt}] ... `);
       try {
         const lb = await fetchLeaderboard(page, t.gg_page, ev.id);
+        process.stdout.write(`(${Math.round((Date.now() - evStart) / 1000)}s) `);
         // Após carregar o evento, detectar tabs/selects de categoria
         const divs = await detectDivisions(page);
         if (divs.length > 1) {
@@ -649,6 +826,17 @@ async function scrapeOne(browser, t) {
           }
         }
 
+        // 4b. Fetch pairings/brackets para este evento (Départs page)
+        let pairings = [];
+        if (meta.departsPageId) {
+          try {
+            pairings = await fetchPairings(page, meta.departsPageId, ev.id);
+            if (pairings.length) console.log(`     ${pairings.length} pairings/grupos capturados`);
+          } catch (e) {
+            console.log(`     ⚠ pairings erro: ${e.message.slice(0, 50)}`);
+          }
+        }
+
         const eventPlayers = lb.players.map((p) => ({
           id: p.id,
           pos: p.pos,
@@ -659,7 +847,16 @@ async function scrapeOne(browser, t) {
           total: p.total,
           toPar: p.toPar,
           roundScores: p.roundScores,
+          division: p.division,  // tag com divisão real (Boys/Girls)
         }));
+        // Resumo das divisões neste evento
+        const divCounts = {};
+        for (const p of lb.players) {
+          const k = p.division || "default";
+          divCounts[k] = (divCounts[k] || 0) + 1;
+        }
+        const divSummary = Object.entries(divCounts).map(([d, c]) => `${d.slice(0, 30)}=${c}`).join(", ");
+        console.log(`     divisões: ${divSummary}`);
 
         // Capturar a divisão default
         const eventEntry = {
@@ -668,6 +865,7 @@ async function scrapeOne(browser, t) {
           format: fmt,
           headers: lb.headers,
           players: eventPlayers,
+          pairings,
           division: divs[0]?.label || "default",
           scorecardsByPlayerId: Object.fromEntries(
             newPlayers
@@ -677,69 +875,9 @@ async function scrapeOne(browser, t) {
         };
         events.push(eventEntry);
 
-        // Se houver mais divisões além da default, iterar todas
-        if (divs.length > 1) {
-          for (const div of divs.slice(1)) {
-            console.log(`     → switch divisão "${div.label}"`);
-            const switched = await selectDivision(page, div);
-            if (!switched) { console.log(`     ⚠ falha switch para ${div.label}`); continue; }
-            await sleep(3500);
-            // Re-extrair leaderboard
-            const lbDiv = await page.evaluate(() => {
-              const ifr = document.querySelectorAll("iframe")[0];
-              const doc = ifr?.contentDocument;
-              if (!doc) return { players: [] };
-              const players = [];
-              let rowIdx = 0;
-              for (const tr of doc.querySelectorAll("tr")) {
-                const link = tr.querySelector('a[href*="tournaments2/details"]');
-                if (!link) continue;
-                const idM = (link.getAttribute("href") || "").match(/details\/(\d+)/);
-                if (!idM) continue;
-                rowIdx++;
-                const flagSpan = tr.querySelector("span.flag-icon");
-                const cc = flagSpan?.className.match(/flag-icon-([a-z\-]+)/i)?.[1]?.toUpperCase();
-                const nameClone = link.cloneNode(true);
-                nameClone.querySelectorAll("span.flag-icon, i, img, .flag, .flags").forEach((el) => el.remove());
-                const name = nameClone.textContent.replace(/\s+/g, " ").trim();
-                const cells = [...tr.querySelectorAll("td")].map((td) => td.textContent.replace(/\s+/g, " ").trim());
-                const playerCell = link.closest("td");
-                const cellText = playerCell?.textContent.replace(/\s+/g, " ").trim() || "";
-                const afterName = cellText.replace(name, "").trim().replace(/^,\s*/, "");
-                const hcpMatch = afterName.match(/,\s*([+-]?\d+\.?\d*)\s*$/);
-                let club = "", hcp = null;
-                if (hcpMatch) { hcp = parseFloat(hcpMatch[1]); club = afterName.replace(hcpMatch[0], "").trim(); }
-                else club = afterName.trim();
-                const nameCellIdx = cells.findIndex((c) => c.includes(name));
-                const after = cells.slice(nameCellIdx + 1);
-                const toPar = after[0] === "E" ? 0 : parseInt(after[0], 10);
-                const numerics = after.slice(1).map((c) => { const n = parseInt(c, 10); return isNaN(n) ? null : n; });
-                const validNums = numerics.filter((n) => n !== null && n >= 30);
-                let total = null, roundScores = [];
-                if (validNums.length === 1) { total = validNums[0]; roundScores = [validNums[0]]; }
-                else { total = validNums[validNums.length - 1]; roundScores = validNums.slice(0, -1); }
-                let pos = parseInt(cells[0], 10);
-                if (isNaN(pos)) { const m = cells[0]?.match(/^T?(\d+)/); pos = m ? parseInt(m[1], 10) : rowIdx; }
-                players.push({ id: idM[1], pos, name, country: cc || "", club, hcp, toPar: isNaN(toPar) ? null : toPar, roundScores, total });
-              }
-              return { players };
-            });
-            console.log(`     ${div.label}: ${lbDiv.players.length} jogadores`);
-            const newDivPlayers = lbDiv.players.filter((p) => !allPlayerIds.has(p.id));
-            const newDivScs = newDivPlayers.length ? await fetchScorecards(page, newDivPlayers, 10) : {};
-            for (const p of newDivPlayers) allPlayerIds.add(p.id);
-            events.push({
-              id: ev.id + "_" + div.label.replace(/\s+/g, "_"),
-              name: ev.name + " — " + div.label,
-              format: fmt,
-              players: lbDiv.players,
-              division: div.label,
-              scorecardsByPlayerId: Object.fromEntries(
-                newDivPlayers.filter((p) => newDivScs[p.id]?.rounds?.length).map((p) => [p.id, newDivScs[p.id].rounds])
-              ),
-            });
-          }
-        }
+        // (NOTA: o switch redundante foi removido — expandAllDivisions já carregou
+        //  TODAS as divisões na página, e o parser tag cada jogador com a sua divisão
+        //  via ancestor .tournament_container)
       } catch (e) {
         console.log(`     ⚠ erro: ${e.message.slice(0, 60)}`);
         events.push({ id: ev.id, name: ev.name, format: fmt, error: e.message.slice(0, 100) });
@@ -756,14 +894,22 @@ async function scrapeOne(browser, t) {
       }
     }
 
-    // 6. Para a vista "consolidada" (compatibilidade com FFGPage actual): usar o LEADERBOARD
-    //    do último evento stroke (tem totais cumulativos) e juntar todos os scorecards do torneio.
+    // 6. Vista consolidada — um jogador por player ID (não por evento×divisão)
+    //    Pega no MELHOR registo do jogador (último stroke event onde aparece)
     const strokeEvents = events.filter((e) => e.format === "stroke" && e.players?.length);
-    const lastStroke = strokeEvents[strokeEvents.length - 1] || null;
-    const consolidatedPlayers = (lastStroke?.players || []).map((p) => {
+    const playerLatestRecord = new Map(); // id → mais recente stroke entry
+    const playerDivision = new Map();      // id → division da entry
+    for (const ev of strokeEvents) {
+      for (const p of ev.players) {
+        // Se já temos um registo, mantemos. O LAST stroke event tem totais cumulativos.
+        playerLatestRecord.set(p.id, p);
+        if (ev.division && ev.division !== "default") playerDivision.set(p.id, ev.division);
+      }
+    }
+    const nRounds = new Set(strokeEvents.map((e) => e.name.replace(/ — .*$/, ""))).size; // únicos nomes de eventos
+    const consolidatedPlayers = [...playerLatestRecord.values()].map((p) => {
       const scRounds = allScorecards[p.id] || [];
-      const nRounds = strokeEvents.length;
-      const rounds = [...scRounds].reverse().slice(0, nRounds).map((r, i) => ({
+      const rounds = [...scRounds].reverse().slice(0, nRounds || 1).map((r, i) => ({
         round: i + 1,
         gross: r.gross,
         scores: r.scores,
@@ -780,9 +926,15 @@ async function scrapeOne(browser, t) {
         total: p.total,
         toPar: p.toPar,
         roundScores: p.roundScores,
+        division: playerDivision.get(p.id) || null,
         rounds,
       };
+    }).sort((a, b) => {
+      if (a.total == null) return 1;
+      if (b.total == null) return -1;
+      return a.total - b.total;
     });
+    console.log(`   ✓ ${consolidatedPlayers.length} jogadores consolidados (todas as divisões)`);
 
     return {
       tournament: t.title || t.slug,
@@ -831,9 +983,11 @@ async function scrapeOne(browser, t) {
    MAIN
    ───────────────────────────────────────────────────────────────── */
 function parseArgs(argv) {
-  const args = { headless: false, slug: null, year: null, ggPage: null, title: null };
+  // Headless é DEFAULT — mais rápido e sem popups. --no-headless mostra browser para debug.
+  const args = { headless: true, slug: null, year: null, ggPage: null, title: null };
   for (let i = 2; i < argv.length; i++) {
     if (argv[i] === "--headless") args.headless = true;
+    else if (argv[i] === "--no-headless" || argv[i] === "--show-browser") args.headless = false;
     else if (argv[i] === "--slug") args.slug = argv[++i];
     else if (argv[i] === "--year") args.year = parseInt(argv[++i], 10);
     else if (argv[i] === "--gg-page") args.ggPage = argv[++i];

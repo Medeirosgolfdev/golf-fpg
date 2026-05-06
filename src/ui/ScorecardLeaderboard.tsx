@@ -89,6 +89,8 @@ interface ScorecardLeaderboardProps {
   activeSortDir?: "asc" | "desc";
   /** Sorting interno — usa sortName/sortPos de ScorecardRow. Ignora onSortPos/onSortName. */
   sortable?: boolean;
+  /** Esconder colunas ± e Tot (built-in). Útil para fontes sem par real (PDFs LGPIDF). */
+  hideTotals?: boolean;
 }
 
 type SCSortKey = "pos" | "name" | "gross" | "toPar";
@@ -105,6 +107,7 @@ export function ScorecardLeaderboard({
   metaLine, filterBar,
   onSortPos, onSortName, activeSortKey, activeSortDir,
   sortable = false,
+  hideTotals = false,
 }: ScorecardLeaderboardProps) {
   const startHole = startHoleProp ?? 1;
   const nh = par.length;
@@ -255,12 +258,16 @@ export function ScorecardLeaderboard({
                 Jogador<SortArrow col="name" />
               </th>
               {prefixHeaderCells}
-              <th className={"lb-topar" + (sortable ? " lb-sortable" : "")} onClick={sortable ? () => intToggle("toPar") : undefined}>
-                ±<SortArrow col="toPar" />
-              </th>
-              <th className={"lb-gross" + (sortable ? " lb-sortable" : "")} onClick={sortable ? () => intToggle("gross") : undefined}>
-                Tot<SortArrow col="gross" />
-              </th>
+              {!hideTotals && (
+                <>
+                  <th className={"lb-topar" + (sortable ? " lb-sortable" : "")} onClick={sortable ? () => intToggle("toPar") : undefined}>
+                    ±<SortArrow col="toPar" />
+                  </th>
+                  <th className={"lb-gross" + (sortable ? " lb-sortable" : "")} onClick={sortable ? () => intToggle("gross") : undefined}>
+                    Tot<SortArrow col="gross" />
+                  </th>
+                </>
+              )}
               {showScorecard && <>
                 {Array.from({ length: Math.min(9, nh) }, (_, i) => (
                   <th key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{startHole + i}</th>
@@ -287,8 +294,12 @@ export function ScorecardLeaderboard({
                   <td className="lb-pos sticky-col-0" style={{ background: sticky, borderTop: row.borderTop }}>{row.pos}</td>
                   <td className="lb-name sticky-col-1" style={{ background: sticky, borderTop: row.borderTop }}>{row.nameContent}</td>
                   {row.prefixCells}
-                  <td className="lb-topar" style={{ color: tpColor(row.toPar), borderTop: row.borderTop }}>{fmtToPar(row.toPar)}</td>
-                  <td className="lb-gross" style={{ borderTop: row.borderTop }}>{row.gross > 0 && row.toPar != null ? row.gross : "–"}</td>
+                  {!hideTotals && (
+                    <>
+                      <td className="lb-topar" style={{ color: tpColor(row.toPar), borderTop: row.borderTop }}>{fmtToPar(row.toPar)}</td>
+                      <td className="lb-gross" style={{ borderTop: row.borderTop }}>{row.gross > 0 ? row.gross : "–"}</td>
+                    </>
+                  )}
                   {showScorecard && <>
                     {scores.slice(0, 9).map((sc, i) => (
                       <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")} style={{ borderTop: row.borderTop }}>
