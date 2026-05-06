@@ -92,10 +92,36 @@
     }
   ],
   "distancesParCategorie": {
-    "_source": "Cahier des charges des Grands Prix Jeunes (Vademecum FFG)",
-    "_extractedAt": "2026-05-06T18:11:11.544Z",
+    "_source": "Vademecum FFG — §3-6-3 Marques de départs et catégories d'âge (+ §3-6-4)",
+    "_extractedAt": "2026-05-06T19:00:08.657Z",
     "_pdfPath": "C:\\golf-fpg\\public\\data\\Vademecum2024.pdf",
-    "_note": "Extraído heuristicamente do PDF — pode precisar de revisão manual.",
-    "matches": {}
+    "_note": "Distâncias máximas em metros (par 72 indicativo). Categoria → {trous, Garcons, Filles}.",
+    "matches": {
+      "U10": {
+        "trous": 18,
+        "Garcons": 4390,
+        "Filles": 3740
+      },
+      "U8": {
+        "trous": 9,
+        "Garcons": 1975,
+        "Filles": 1640
+      },
+      "Minimes": {
+        "trous": 18,
+        "Garcons": 5945,
+        "Filles": 5035
+      },
+      "Benjamins": {
+        "trous": 18,
+        "Garcons": 5540,
+        "Filles": 4660
+      },
+      "U12": {
+        "trous": 18,
+        "Garcons": 4910,
+        "Filles": 4275
+      }
+    }
   }
 }

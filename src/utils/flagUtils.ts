@@ -112,6 +112,9 @@ const CODE_ALIAS: Record<string, string> = {
   svn:"si", hrv:"hr", mne:"me", bih:"ba", alb:"al", mac:"ma",
   tun:"tn", geo:"ge", arm:"am", aze:"az", tur:"tr", isl:"is",
   irl:"ie", fin:"fi", eng:"gb", sct:"gb", wls:"gb", nir:"gb",
+  // ISO 3166-1 alpha-3 codes (FFG/FFGolf usa estes em vez dos IOC)
+  gbr:"gb", deu:"de", nld:"nl", nzl:"nz", prt:"pt", swe:"se", zaf:"za",
+  che:"ch", dnk:"dk", jpn:"jp", lux:"lu", ncl:"nc", en1:"gb", cod:"cd",
 };
 
 /** Normaliza país para código ISO-2 */

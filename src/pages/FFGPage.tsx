@@ -32,6 +32,7 @@ import { KidsLinkCtx } from "../ui/KidsLink";
 import { ScorecardLeaderboard, type ScorecardRow } from "../ui/ScorecardLeaderboard";
 import SortableHdr from "../ui/SortableHdr";
 import { useSort } from "../hooks/useSort";
+import SexBadge from "../ui/SexBadge";
 
 /* ── Tipos do ficheiro novo (1 torneio = 1 ficheiro) ──────────── */
 interface CourseInfo {
@@ -319,7 +320,7 @@ interface FFGCategoriesData {
     _source?: string;
     _extractedAt?: string;
     _note?: string;
-    matches?: Record<string, Array<{ line: string; nums: number[] }>>;
+    matches?: Record<string, { trous: number; Garcons: number; Filles: number }>;
     _status?: string;
   };
 }
@@ -336,6 +337,26 @@ function normalizeName(raw: string): string {
     return `${rest} ${last}`;
   }
   return trimmed;
+}
+
+/* Normalize um apelido em CAPS para Title Case (ex: "MARCINIAK" → "Marciniak", "DE LOS RIOS" → "De Los Rios") */
+function toTitleCase(s: string): string {
+  return s
+    .toLowerCase()
+    .split(/(\s+|-)/)
+    .map((part) => part.match(/^[a-zà-ÿ]/) ? part.charAt(0).toUpperCase() + part.slice(1) : part)
+    .join("");
+}
+
+/* Construir nome canónico "Nome Apelido" para um FFG player.
+ * Cruza com KIDS page: o KIDS usa "Nome Apelido" (ex: "Valentina Marciniak").
+ * O FFG dá `nameNom: "MARCINIAK"` (caps) e `namePrenom: "Valentina"`. */
+function ffgPlayerName(p: { name?: string; nameNom?: string | null; namePrenom?: string | null }): string {
+  if (p.namePrenom && p.nameNom) {
+    const apelido = toTitleCase(p.nameNom.trim());
+    return `${p.namePrenom.trim()} ${apelido}`;
+  }
+  return normalizeName(p.name || "");
 }
 
 /* ── Legenda das siglas de divisão / categoria FFG ─────────────
@@ -382,10 +403,16 @@ function shortTitle(t: FFGTournament | CatalogEntry): string {
 
 /* ── Adaptador FFG Resultats → FPGTournament (reusa IntlTournView com par real) ── */
 function ffgResToFPGTournament(data: FFGResTournament, serieFilter?: string): FPGTournament {
-  // Filtrar série específica ou agregar tudo
-  const seriesToUse = serieFilter && serieFilter !== "all"
-    ? data.details.series.filter((s) => s.serieId === serieFilter)
-    : data.details.series;
+  // Filtrar série específica ou agregar tudo. Se o filtro não corresponde a
+  // nenhuma série (caso comum quando vimos de outro torneio), faz fallback
+  // para todas as séries em vez de devolver tournament vazio.
+  let seriesToUse: FFGResSerie[];
+  if (serieFilter && serieFilter !== "all") {
+    const matched = data.details.series.filter((s) => s.serieId === serieFilter);
+    seriesToUse = matched.length > 0 ? matched : data.details.series;
+  } else {
+    seriesToUse = data.details.series;
+  }
 
   // Pegar par/curso da primeira série (todos partilham o mesmo curso geralmente)
   const firstSerie = seriesToUse[0] || data.details.series[0];
@@ -426,11 +453,13 @@ function ffgResToFPGTournament(data: FFGResTournament, serieFilter?: string): FP
       rounds.push({ round: 4, gross: p.t4, scores: p.scoresR4, pars: par, si: [], meters: [] });
     }
     const incomplete = rounds.length < numRounds;
+    const playerCountry = p.nationality || p.flag || "FRA";
+    const clubLabel = (p.club && p.club.trim()) ? p.club.trim() : playerCountry;
     return {
       scoreId: p.license || `${data.trnId}-${p._serieId}-${idx}`,
       pos: p.pos ?? idx + 1,
-      name: normalizeName(p.name),
-      club: p.club ? `${gf("FR")} ${p.club}` : "",
+      name: ffgPlayerName(p),
+      club: `${gf(playerCountry)} ${clubLabel}`,
       grossTotal: p.total,
       toPar: p.total != null && parTotal > 0 ? p.total - (parTotal * numRounds) : null,
       hcpExact: p.hcp ?? undefined,
@@ -571,31 +600,52 @@ function CategoriesView({ data }: { data: FFGCategoriesData }) {
           Definidas no <em>Cahier des charges des Grands Prix Jeunes</em> (Vademecum FFG, secção 1.2.x).
         </p>
         {data.distancesParCategorie?.matches && Object.keys(data.distancesParCategorie.matches).length > 0 ? (
-          <div style={{ overflowX: "auto" }}>
+          <>
             <table className="data-table" style={{ width: "100%" }}>
               <thead>
                 <tr>
                   <th style={{ textAlign: "left" }}>Categoria</th>
-                  <th>Distâncias detectadas (m)</th>
-                  <th style={{ textAlign: "left" }}>Linha original</th>
+                  <th style={{ textAlign: "left" }}>FFG</th>
+                  <th style={{ textAlign: "center" }}>#Trous</th>
+                  <th style={{ textAlign: "right" }}>Garçons (m)</th>
+                  <th style={{ textAlign: "right" }}>Filles (m)</th>
                 </tr>
               </thead>
               <tbody>
-                {Object.entries(data.distancesParCategorie.matches).map(([cat, hits]) => (
-                  <tr key={cat}>
-                    <td><strong>{cat}</strong></td>
-                    <td style={{ textAlign: "center", fontFamily: "monospace" }}>
-                      {hits[0]?.nums.join(" / ") || "—"}
-                    </td>
-                    <td className="fs-11 muted">{hits[0]?.line.slice(0, 100) || "—"}</td>
-                  </tr>
-                ))}
+                {([
+                  { uCode: "U8",  ffgLabel: "Enfant",    keys: ["U8"] },
+                  { uCode: "U10", ffgLabel: "Poucet",    keys: ["U10", "Poucets", "Poucet"] },
+                  { uCode: "U12", ffgLabel: "Poussin",   keys: ["U12", "Poussins", "Poussin"] },
+                  { uCode: "U14", ffgLabel: "Benjamins", keys: ["Benjamins", "Benjamin", "U14"] },
+                  { uCode: "U16", ffgLabel: "Minimes",   keys: ["Minimes", "Minime", "U16"] },
+                  { uCode: "U18", ffgLabel: "Cadets",    keys: ["Cadets", "Cadet", "U18"] },
+                ]).map(({ uCode, ffgLabel, keys }) => {
+                  const matches = data.distancesParCategorie!.matches!;
+                  const m = keys.map((k) => matches[k]).find((v) => v != null);
+                  return (
+                    <tr key={uCode}>
+                      <td><strong>{uCode}</strong></td>
+                      <td className="muted">{ffgLabel}</td>
+                      <td style={{ textAlign: "center" }}>{m?.trous ?? "—"}</td>
+                      <td style={{ textAlign: "right", fontFamily: "monospace" }}>
+                        {m?.Garcons ? m.Garcons.toLocaleString("pt-PT") : "—"}
+                      </td>
+                      <td style={{ textAlign: "right", fontFamily: "monospace" }}>
+                        {m?.Filles ? m.Filles.toLocaleString("pt-PT") : "—"}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
             <div className="fs-10 muted mt-8">
-              <em>Extraído heuristicamente do PDF — pode necessitar revisão manual.</em>
+              <em>
+                Distâncias máximas em metros (par 72 indicativo). Extraído do{" "}
+                <a href={data._vademecumUrl} target="_blank" rel="noopener noreferrer">Vademecum FFG</a>
+                {data.distancesParCategorie._source ? ` — ${data.distancesParCategorie._source}` : ""}.
+              </em>
             </div>
-          </div>
+          </>
         ) : (
           <div style={{ padding: 16, background: "var(--bg-muted, #f5f5f5)", borderRadius: 6, marginTop: 8 }}>
             <p className="fs-12">
@@ -720,7 +770,7 @@ function FFGResView({ data, lgpidfSupp }: { data: FFGResTournament; lgpidfSupp?:
       sortName: normalizeName(p.name),
       nameContent: (
         <>
-          <span style={{ marginRight: 4 }}>{gf("FR")}</span>
+          <span style={{ marginRight: 4 }}>{gf(p.nationality || p.flag || "FRA")}</span>
           <span className="fw-700">{normalizeName(p.name)}</span>
           {manuel && <> {" "}<ManuelPill /></>}
         </>
@@ -813,13 +863,23 @@ function FFGResView({ data, lgpidfSupp }: { data: FFGResTournament; lgpidfSupp?:
             {data.details.series.length > 1 && (
               <>
                 <span className="fs-12 fw-700">Série:</span>
-                <select className="input" value={serieFilter} onChange={(e) => setSerieFilter(e.target.value)} style={{ maxWidth: 240 }}>
-                  {data.details.series.map((s) => (
-                    <option key={s.serieId} value={s.serieId}>
-                      {s.serieId} ({s.players.length} jog · par {s.parTotal || "?"})
-                    </option>
-                  ))}
+                <select className="input" value={serieFilter} onChange={(e) => setSerieFilter(e.target.value)} style={{ maxWidth: 320 }}>
+                  {data.details.series.map((s) => {
+                    // Inferir sex (todos jogadores da série partilham)
+                    const sex = s.players[0]?.sex;
+                    const sexLabel = sex === "F" ? "Filles (F)" : sex === "M" ? "Garçons (M)" : "";
+                    return (
+                      <option key={s.serieId} value={s.serieId}>
+                        Série {s.serieId}{sexLabel ? ` · ${sexLabel}` : ""} · {s.players.length} jog · par {s.parTotal || "?"}
+                      </option>
+                    );
+                  })}
                 </select>
+                {(() => {
+                  const sx = firstSerie?.players[0]?.sex;
+                  if (sx === "F" || sx === "M") return <SexBadge sex={sx} />;
+                  return null;
+                })()}
               </>
             )}
             <span className="muted fs-12">
@@ -1648,7 +1708,7 @@ function Content() {
   const ffgCurMeta = ffgCur ? ffgResIndex?.tournaments.find((t) => t.trnId === ffgCur.trnId) : null;
 
   // Agrupar GG por ano para sidebar
-  const ggYears = [...new Set(visibleEntries.map((e) => e.year))].sort((a, b) => b - a);
+  // const ggYears = [...new Set(visibleEntries.map((e) => e.year))].sort((a, b) => b - a); // GG section removed
   const lgYears = [...new Set(lgVisible.map((e) => e.year))].sort((a, b) => b - a);
 
   return (
@@ -1670,6 +1730,52 @@ function Content() {
               </span>
             )}
           </Toolbar>
+
+          {/* ── Barra de filtros FFG (estilo FPGPage) ── */}
+          {ffgResAll.length > 0 && (
+            <div className="detail-toolbar" style={{ flexWrap: "nowrap", gap: 8, padding: "8px 12px", borderBottom: "1px solid var(--border)", background: "var(--bg-muted, #fafafa)", overflowX: "auto", whiteSpace: "nowrap", alignItems: "center" }}>
+              <div style={{ position: "relative", flex: "1 1 220px", minWidth: 180, maxWidth: 320 }}>
+                <input
+                  className="input"
+                  placeholder="🔍 Pesquisar torneio..."
+                  value={ffgFilterText}
+                  onChange={(e) => setFfgFilterText(e.target.value)}
+                  style={{ padding: "5px 26px 5px 10px", fontSize: 13, width: "100%", boxSizing: "border-box" }}
+                />
+                {ffgFilterText && (
+                  <button
+                    onClick={() => setFfgFilterText("")}
+                    style={{ position: "absolute", right: 4, top: 4, border: "none", background: "transparent", cursor: "pointer", color: "var(--text-muted)", fontSize: 16 }}
+                    aria-label="Limpar pesquisa"
+                  >×</button>
+                )}
+              </div>
+              <select className="input" value={ffgFilterYear} onChange={(e) => setFfgFilterYear(e.target.value)} style={{ padding: "5px 8px", fontSize: 13 }}>
+                <option value="all">📅 Todos os anos</option>
+                {ffgYears.map((y) => <option key={y} value={y}>{y} ({ffgResAll.filter((t) => String(t.year) === y).length})</option>)}
+              </select>
+              <select className="input" value={ffgFilterType} onChange={(e) => setFfgFilterType(e.target.value)} style={{ padding: "5px 8px", fontSize: 13 }}>
+                <option value="all">🏆 Todos os tipos</option>
+                {ffgTypes.map((t) => <option key={t} value={t}>{TYPE_LABELS[t] || t} ({ffgResAll.filter((x) => x.typeCompetition === t).length})</option>)}
+              </select>
+              <select className="input" value={ffgFilterLigue} onChange={(e) => setFfgFilterLigue(e.target.value)} style={{ padding: "5px 8px", fontSize: 13 }}>
+                <option value="all">🇫🇷 Todas as ligas</option>
+                {ffgLigues.map((l) => <option key={l} value={l}>{LIGUE_LABELS[l] || l} ({ffgResAll.filter((t) => t.ligue === l).length})</option>)}
+              </select>
+              <span className="muted fs-12" style={{ marginLeft: 4 }}>
+                {ffgResVisible.length} de {ffgResAll.length} torneios
+              </span>
+              {(ffgFilterText || ffgFilterYear !== "all" || ffgFilterLigue !== "all" || ffgFilterType !== "all") && (
+                <button
+                  onClick={() => { setFfgFilterText(""); setFfgFilterYear("all"); setFfgFilterLigue("all"); setFfgFilterType("all"); }}
+                  className="chip"
+                  style={{ cursor: "pointer", fontSize: 11 }}
+                >
+                  ✕ Limpar
+                </button>
+              )}
+            </div>
+          )}
 
           <div className="master-detail">
             <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
@@ -1693,116 +1799,6 @@ function Content() {
                 </button>
               )}
 
-              {/* ── Secção GG (FFGolf nacional/GP Jeunes via GolfGenius) ── */}
-              {visibleEntries.length > 0 && ggYears.map((year) => {
-                const yearEntries = visibleEntries.filter((e) => e.year === year);
-                return (
-                  <React.Fragment key={`gg-${year}`}>
-                    <SidebarSectionTitle
-                      dark
-                      color="var(--color-ffg-dark)"
-                      textColor="var(--color-ffg-text)"
-                      borderColor="var(--color-ffg-mid)"
-                      letterSpacing="0.08em"
-                    >
-                      🇫🇷 FFGolf — Torneios juvenis
-                    </SidebarSectionTitle>
-                    <div
-                      className="sidebar-year-label"
-                      style={{
-                        padding: "2px 10px",
-                        fontSize: 10,
-                        fontWeight: 700,
-                        letterSpacing: "0.05em",
-                        color: "#ffffff",
-                        textTransform: "uppercase",
-                        marginTop: 4,
-                        background: "var(--color-ffg-dark)",
-                      }}
-                    >
-                      {year}
-                    </div>
-                    {yearEntries.map((entry) => {
-                      const key = `${entry.year}_${entry.slug}`;
-                      const t = data.get(key);
-                      if (!t) return null;
-                      const full = t.players.filter((p) => p.rounds.length === t.rounds).length;
-                      const manuelPlayed = t.players.some((p) => isM(p.name));
-                      const active = effectiveSelection.kind === "gg" && effectiveSelection.key === key;
-                      return (
-                        <button
-                          key={entry.slug}
-                          className={`course-item ${active ? "active" : ""}`}
-                          onClick={() => {
-                            setSelection({ kind: "gg", key });
-                            md.onSelect();
-                          }}
-                        >
-                          <div className="course-item-name">{shortTitle(t)}</div>
-                          {t.course?.name && (
-                            <div className="course-item-meta" style={{ fontWeight: 600, color: "var(--text-2)" }}>
-                              ⛳ {t.course.name}
-                              {t.course.tee ? ` · ${t.course.tee}` : ""}
-                            </div>
-                          )}
-                          <div className="course-item-meta">
-                            {full} jog{t.rounds > 1 && (
-                              <>
-                                {" "}· <RoundPill nR={t.rounds} />
-                              </>
-                            )}
-                            {t.course?.parTotal ? ` · Par ${t.course.parTotal}` : ""}
-                            {t.course?.metersTotal ? ` · ${t.course.metersTotal.toLocaleString("pt-PT")} m` : ""}
-                          </div>
-                          {manuelPlayed && (
-                            <span style={{ display: "inline-block", marginTop: 4 }}>
-                              <ManuelPill />
-                            </span>
-                          )}
-                          <ExtLink
-                            href={t.source}
-                            className="tourn-ext-link"
-                            style={{ marginTop: 4 }}
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            🔗 Leaderboard oficial
-                          </ExtLink>
-                        </button>
-                      );
-                    })}
-                  </React.Fragment>
-                );
-              })}
-
-              {/* ── Filtros FFG ── */}
-              {ffgResAll.length > 0 && (
-                <div style={{ padding: "8px 10px", borderBottom: "1px solid var(--border)", background: "var(--bg-card, #fff)" }}>
-                  <div style={{ display: "flex", gap: 4, flexDirection: "column", fontSize: 11 }}>
-                    <input
-                      className="input fs-11"
-                      placeholder="Pesquisar (nome torneio)..."
-                      value={ffgFilterText}
-                      onChange={(e) => setFfgFilterText(e.target.value)}
-                      style={{ padding: "4px 8px", fontSize: 11 }}
-                    />
-                    <select className="input fs-11" value={ffgFilterYear} onChange={(e) => setFfgFilterYear(e.target.value)} style={{ padding: "4px 8px", fontSize: 11 }}>
-                      <option value="all">📅 Todos os anos</option>
-                      {ffgYears.map((y) => <option key={y} value={y}>{y}</option>)}
-                    </select>
-                    <select className="input fs-11" value={ffgFilterLigue} onChange={(e) => setFfgFilterLigue(e.target.value)} style={{ padding: "4px 8px", fontSize: 11 }}>
-                      <option value="all">🇫🇷 Todas as ligas</option>
-                      {ffgLigues.map((l) => <option key={l} value={l}>{LIGUE_LABELS[l] || l}</option>)}
-                    </select>
-                    <select className="input fs-11" value={ffgFilterType} onChange={(e) => setFfgFilterType(e.target.value)} style={{ padding: "4px 8px", fontSize: 11 }}>
-                      <option value="all">🏆 Todos os tipos</option>
-                      {ffgTypes.map((t) => <option key={t} value={t}>{TYPE_LABELS[t] || t}</option>)}
-                    </select>
-                    <span className="muted" style={{ fontSize: 10 }}>
-                      {ffgResVisible.length} de {ffgResAll.length} torneios
-                    </span>
-                  </div>
-                </div>
-              )}
 
               {/* ── Secção FFG Resultats (sistema central FFG, todas ligas) ── */}
               {ffgResVisible.length > 0 && [...new Set(ffgResVisible.map((t) => t.year || 0))].sort((a, b) => b - a).map((year) => {
@@ -1848,14 +1844,31 @@ function Content() {
                           }}
                         >
                           <div className="course-item-name">{entry.name}</div>
+                          <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginTop: 4 }}>
+                            <span className="chip" style={{
+                              fontSize: 9,
+                              background: entry.typeCompetition === "01" ? "var(--color-ffg-dark)" : "var(--color-ffg-mid)",
+                              color: "#fff",
+                              padding: "1px 6px",
+                              borderRadius: 8,
+                            }}>
+                              {entry.typeCompetition === "01" ? "Federal" : "GP Jeunes"}
+                            </span>
+                            <span className="chip" style={{
+                              fontSize: 9,
+                              background: "var(--bg-muted, #e5e7eb)",
+                              color: "var(--text-2)",
+                              padding: "1px 6px",
+                              borderRadius: 8,
+                            }}>
+                              📍 {LIGUE_LABELS[entry.ligue] || entry.ligue}
+                            </span>
+                          </div>
                           {entry.date && (
-                            <div className="course-item-meta" style={{ fontSize: 11 }}>📅 {entry.date}</div>
+                            <div className="course-item-meta" style={{ fontSize: 11, marginTop: 4 }}>📅 {entry.date}</div>
                           )}
                           <div className="course-item-meta">
                             🏆 {entry.totalPlayers} jog · {entry.seriesCount} séries
-                            {entry.divisions.length > 0 && (
-                              <> · {entry.divisions.map((d) => d.serieId).join("/")}</>
-                            )}
                           </div>
                           {manuelPlayed && (
                             <span style={{ display: "inline-block", marginTop: 4 }}>
@@ -1998,7 +2011,7 @@ function Content() {
                     title={`${ffgCurMeta.year || ""} // ${ffgCur.name}`}
                     sub={
                       <>
-                        <span className="muted">
+                          <span className="muted">
                           🇫🇷 FFG Officiel · {ffgCur.formule} · 📅 {ffgCur.date} · {ffgCur.details.series.length} séries
                         </span>
                         <ExtLink
