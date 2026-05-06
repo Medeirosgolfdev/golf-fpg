@@ -882,9 +882,10 @@ function FFGResView({ data, lgpidfSupp }: { data: FFGResTournament; lgpidfSupp?:
                 })()}
               </>
             )}
-            <span className="muted fs-12">
-              {firstSerie?.players.length || 0} jogadores · {firstSerie?.parTotal ? `Par ${firstSerie.parTotal}` : "Par desconhecido"} · {numRounds} ronda{numRounds > 1 ? "s" : ""}
-              {firstSerie?.courseTerrain && ` · ${firstSerie.courseTerrain}`}
+            <span className="muted fs-12" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+              {firstSerie?.players.length || 0} jogadores · {firstSerie?.parTotal ? `Par ${firstSerie.parTotal}` : "Par desconhecido"} ·
+              <RoundPill nR={numRounds} />
+              {firstSerie?.courseTerrain && <>· {firstSerie.courseTerrain}</>}
             </span>
           </div>
           {hasHbh && fpgTournament ? (
@@ -1833,6 +1834,10 @@ function Content() {
                       const t = ffgResData.get(entry.trnId);
                       if (!t) return null;
                       const manuelPlayed = t.details.series.some((s) => s.players.some((p) => isM(p.name)));
+                      const allPlayers = t.details.series.flatMap((s) => s.players);
+                      const tHasT4 = allPlayers.some((p) => p.t4 != null);
+                      const tHasT3 = allPlayers.some((p) => p.t3 != null);
+                      const tRounds = tHasT4 ? 4 : tHasT3 ? 3 : 2;
                       const active = effectiveSelection.kind === "ffgres" && effectiveSelection.key === entry.trnId;
                       return (
                         <button
@@ -1844,7 +1849,7 @@ function Content() {
                           }}
                         >
                           <div className="course-item-name">{entry.name}</div>
-                          <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginTop: 4 }}>
+                          <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginTop: 4, alignItems: "center" }}>
                             <span className="chip" style={{
                               fontSize: 9,
                               background: entry.typeCompetition === "01" ? "var(--color-ffg-dark)" : "var(--color-ffg-mid)",
@@ -1863,6 +1868,7 @@ function Content() {
                             }}>
                               📍 {LIGUE_LABELS[entry.ligue] || entry.ligue}
                             </span>
+                            <RoundPill nR={tRounds} />
                           </div>
                           {entry.date && (
                             <div className="course-item-meta" style={{ fontSize: 11, marginTop: 4 }}>📅 {entry.date}</div>
