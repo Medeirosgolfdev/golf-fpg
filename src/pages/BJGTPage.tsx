@@ -22,6 +22,7 @@ import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/Dat
 import DetailHeader from "../ui/DetailHeader";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import LoadingState from "../ui/LoadingState";
+import Counter from "../ui/Counter";
 import { useKidsLinkMap } from "../hooks/useKidsLinkMap";
 import { KidsLinkCtx } from "../ui/KidsLink";
 import { RoundPill, ManuelPill } from "../ui/PillBadge";
@@ -461,7 +462,7 @@ function Content() {
         }</ToolbarMeta>}
         {cur && (() => {
           const nR = Math.max(...cur.data.players.map(p => p.rounds.length));
-          return <span className="chip ml-auto" >{fmtFieldInfo(cur.data.players.filter(p => p.rounds.length === nR).length, nR, cur.category)}</span>;
+          return <Counter ml="auto">{fmtFieldInfo(cur.data.players.filter(p => p.rounds.length === nR).length, nR, cur.category)}</Counter>;
         })()}
       </Toolbar>
 

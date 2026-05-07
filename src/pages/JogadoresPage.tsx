@@ -23,6 +23,7 @@ import EmptyState from "../ui/EmptyState";
 import DetailHeader from "../ui/DetailHeader";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar } from "../ui/Toolbar";
+import Counter from "../ui/Counter";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { useSort } from "../hooks/useSort";
 import { loadPlayerStats, daysSince, type PlayerStatsDb } from "../data/playerStatsTypes";
@@ -272,7 +273,6 @@ function ByDateView({ data, search }: {
   const { sortKey, sortDir, toggleSort } = useSort<"date" | "course" | "event" | "holes" | "hcp" | "tee" | "meters" | "gross" | "stb" | "sd">("date", "desc", {
     gross: "asc", sd: "asc", hcp: "asc", meters: "desc", stb: "desc", holes: "desc",
   });
-  const onSort = toggleSort as (k: string) => void;
 
   const all = useMemo(() => {
     const term = norm(search);
@@ -319,16 +319,16 @@ function ByDateView({ data, search }: {
         </colgroup>
         <thead>
           <tr>
-            <SortableHdr k="date" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Data</SortableHdr>
-            <SortableHdr k="course" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Campo</SortableHdr>
-            <SortableHdr k="event" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Prova</SortableHdr>
-            <SortableHdr k="holes" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Bur.</SortableHdr>
-            <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">HCP</SortableHdr>
-            <SortableHdr k="tee" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Tee</SortableHdr>
-            <SortableHdr k="meters" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Dist.</SortableHdr>
-            <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Gross</SortableHdr>
-            <SortableHdr k="stb" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Stb</SortableHdr>
-            <SortableHdr k="sd" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">SD</SortableHdr>
+            <SortableHdr k="date" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Data</SortableHdr>
+            <SortableHdr k="course" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Campo</SortableHdr>
+            <SortableHdr k="event" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Prova</SortableHdr>
+            <SortableHdr k="holes" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Bur.</SortableHdr>
+            <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">HCP</SortableHdr>
+            <SortableHdr k="tee" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Tee</SortableHdr>
+            <SortableHdr k="meters" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Dist.</SortableHdr>
+            <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Gross</SortableHdr>
+            <SortableHdr k="stb" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Stb</SortableHdr>
+            <SortableHdr k="sd" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">SD</SortableHdr>
           </tr>
         </thead>
         <tbody>
@@ -418,7 +418,6 @@ function TeeSummaryTable({ rounds }: { rounds: RoundData[] }) {
   const { sortKey, sortDir, toggleSort } = useSort<"rondas" | "melhor" | "media_gr" | "media_stb" | "media_sd">("rondas", "desc", {
     melhor: "asc", media_gr: "asc", media_sd: "asc", media_stb: "desc",
   });
-  const onSort = toggleSort as (k: string) => void;
 
   const tees = useMemo(() => {
     const map: Record<string, { tee: string; count: number; gross: number[]; stb: number[]; sd: number[]; hi: (number | null)[] }> = {};
@@ -460,11 +459,11 @@ function TeeSummaryTable({ rounds }: { rounds: RoundData[] }) {
         <thead>
           <tr>
             <th>Tee</th>
-            <SortableHdr k="rondas" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Rondas</SortableHdr>
-            <SortableHdr k="melhor" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Melhor</SortableHdr>
-            <SortableHdr k="media_gr" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Média Gr.</SortableHdr>
-            <SortableHdr k="media_stb" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Média Stb</SortableHdr>
-            <SortableHdr k="media_sd" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Média SD</SortableHdr>
+            <SortableHdr k="rondas" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Rondas</SortableHdr>
+            <SortableHdr k="melhor" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Melhor</SortableHdr>
+            <SortableHdr k="media_gr" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Média Gr.</SortableHdr>
+            <SortableHdr k="media_stb" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Média Stb</SortableHdr>
+            <SortableHdr k="media_sd" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Média SD</SortableHdr>
           </tr>
         </thead>
         <tbody>
@@ -736,7 +735,6 @@ function ByCourseView({ data, search, sort, isAnalysis }: {
     if (k === sortKey) setSortDir(d => d === "asc" ? "desc" : "asc");
     else { setSortKey(k); setSortDir(defaultDirMap[k]); }
   }, [sortKey]);
-  const onSort = toggleSort as (k: string) => void;
 
   const list = useMemo(() => {
     const term = norm(search);
@@ -777,14 +775,14 @@ function ByCourseView({ data, search, sort, isAnalysis }: {
           </colgroup>
           <thead>
             <tr>
-              <SortableHdr k="course" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Campo</SortableHdr>
-              <SortableHdr k="voltas" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Voltas</SortableHdr>
-              <SortableHdr k="ultima" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Última</SortableHdr>
+              <SortableHdr k="course" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Campo</SortableHdr>
+              <SortableHdr k="voltas" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Voltas</SortableHdr>
+              <SortableHdr k="ultima" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Última</SortableHdr>
               <th className="r">Bur.</th><th className="r">HCP</th><th>Tee</th>
               <th className="r">Dist.</th>
-              <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Gross</SortableHdr>
-              <SortableHdr k="stb" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Stb</SortableHdr>
-              <SortableHdr k="sd" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">SD</SortableHdr>
+              <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Gross</SortableHdr>
+              <SortableHdr k="stb" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Stb</SortableHdr>
+              <SortableHdr k="sd" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">SD</SortableHdr>
             </tr>
           </thead>
           <tbody>
@@ -2290,7 +2288,6 @@ function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, extraMap, localI
   const { sortKey, sortDir, toggleSort } = useSort<FRTSortKey>("date", "desc", {
     sd: "asc", hcp: "asc", stb: "desc", holes: "desc", par: "asc", gross: "asc",
   });
-  const onSort = toggleSort as (k: string) => void;
 
   const sorted = useMemo(() => {
     const arr = [...rounds];
@@ -2338,17 +2335,17 @@ function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, extraMap, localI
       <table className="dtable-lg">
         <thead>
           <tr>
-            <SortableHdr k="date"   sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Data</SortableHdr>
-            <SortableHdr k="course" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Campo</SortableHdr>
-            <SortableHdr k="event"  sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Prova</SortableHdr>
-            <SortableHdr k="holes"  sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Bur.</SortableHdr>
-            <SortableHdr k="hcp"    sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">HCP</SortableHdr>
-            {hasExtra && <SortableHdr k="tee" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Tee</SortableHdr>}
-            <SortableHdr k="par"    sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Par</SortableHdr>
-            {hasExtra && <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Gross</SortableHdr>}
-            <SortableHdr k="stb"    sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Stb</SortableHdr>
-            <SortableHdr k="sd"     sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">SD</SortableHdr>
-            <SortableHdr k="origin" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Tipo</SortableHdr>
+            <SortableHdr k="date"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Data</SortableHdr>
+            <SortableHdr k="course" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Campo</SortableHdr>
+            <SortableHdr k="event"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Prova</SortableHdr>
+            <SortableHdr k="holes"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Bur.</SortableHdr>
+            <SortableHdr k="hcp"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">HCP</SortableHdr>
+            {hasExtra && <SortableHdr k="tee" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Tee</SortableHdr>}
+            <SortableHdr k="par"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Par</SortableHdr>
+            {hasExtra && <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Gross</SortableHdr>}
+            <SortableHdr k="stb"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Stb</SortableHdr>
+            <SortableHdr k="sd"     sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">SD</SortableHdr>
+            <SortableHdr k="origin" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Tipo</SortableHdr>
           </tr>
         </thead>
         <tbody>
@@ -4495,7 +4492,7 @@ export default function JogadoresPage() {
             ✕ Limpar <span className="p-filter-count">{activeFiltersCount}</span>
           </button>
         )}
-        <div className="chip ml-auto" >{filtered.length} jogadores</div>
+        <Counter ml="auto">{filtered.length} jogadores</Counter>
       </Toolbar>
 
       <div className="master-detail">

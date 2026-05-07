@@ -187,7 +187,7 @@ function MultiTeeSDTable({
     for (const t of sorted) {
       let cr: number | undefined, slope: number | undefined, par: number | undefined;
       if (is9h) {
-        const r9 = get9hRatings(t as unknown as Parameters<typeof get9hRatings>[0], holesMode as "front9" | "back9");
+        const r9 = get9hRatings(t, holesMode as "front9" | "back9");
         if (!r9) continue;
         cr = r9.cr; slope = r9.slope; par = r9.par ?? 36;
       } else {
@@ -1148,7 +1148,7 @@ export default function SimuladorPage() {
     const tees = filterTees(selected.master.tees, sexFilter);
     return sortTees(tees.filter((t) => {
       if (is9h) {
-        const r9 = get9hRatings(t as unknown as Parameters<typeof get9hRatings>[0], holesMode as "front9" | "back9");
+        const r9 = get9hRatings(t, holesMode as "front9" | "back9");
         return r9 !== null;
       }
       return t.ratings?.holes18?.courseRating && t.ratings?.holes18?.slopeRating;
@@ -1177,7 +1177,7 @@ export default function SimuladorPage() {
     if (!selectedTee) return null;
 
     if (is9h) {
-      const r9 = get9hRatings(selectedTee as unknown as Parameters<typeof get9hRatings>[0], holesMode as "front9" | "back9");
+      const r9 = get9hRatings(selectedTee, holesMode as "front9" | "back9");
       if (!r9) return null;
       return { cr: r9.cr, slope: r9.slope, par: r9.par ?? 36 };
     }
@@ -1329,7 +1329,7 @@ export default function SimuladorPage() {
           {filtered.map((c) => {
             const active = selected?.courseKey === c.courseKey;
             const tees = filterTees(c.master.tees, sexFilter).filter((t) => {
-              if (is9h) return get9hRatings(t as unknown as Parameters<typeof get9hRatings>[0], holesMode as "front9" | "back9") !== null;
+              if (is9h) return get9hRatings(t, holesMode as "front9" | "back9") !== null;
               return t.ratings?.holes18?.courseRating && t.ratings?.holes18?.slopeRating;
             });
             return (
@@ -1432,7 +1432,7 @@ export default function SimuladorPage() {
                   let crDisp: number | undefined, slDisp: number | undefined;
                   let distDisp: number | null = null;
                   if (is9h) {
-                    const r9 = get9hRatings(t as unknown as Parameters<typeof get9hRatings>[0], holesMode as "front9" | "back9");
+                    const r9 = get9hRatings(t, holesMode as "front9" | "back9");
                     crDisp = r9?.cr;
                     slDisp = r9?.slope;
                     distDisp = (holesMode === "front9" ? t.distances?.front9 : t.distances?.back9) ?? null;

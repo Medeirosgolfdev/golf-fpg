@@ -89,13 +89,24 @@ export function calcStrokesPerHole(
     .sort((a, b) => a.hole - b.hole);
 }
 
-/** Obtém ratings de 9 buracos (front ou back) de um tee */
+/** Obtém ratings de 9 buracos (front ou back) de um tee.
+ *
+ *  Aceita qualquer objecto com `ratings.holes9Front` / `ratings.holes9Back`
+ *  do shape `{ courseRating?, slopeRating?, par? }` — compatível com o tipo
+ *  `Tee` (data/types.ts) e com qualquer subset estrutural. */
+type Maybe<T> = T | null | undefined;
+type RatingsLike = { courseRating?: Maybe<number>; slopeRating?: Maybe<number>; par?: Maybe<number> };
+
 export function get9hRatings(
-  tee: { ratings?: Record<string, { courseRating?: number; slopeRating?: number; par?: number } | null> },
+  tee: {
+    ratings?: {
+      holes9Front?: Maybe<RatingsLike>;
+      holes9Back?: Maybe<RatingsLike>;
+    };
+  },
   nine: "front9" | "back9"
 ): { cr: number; slope: number; par: number } | null {
-  const key = nine === "front9" ? "holes9Front" : "holes9Back";
-  const r = tee.ratings?.[key];
+  const r = nine === "front9" ? tee.ratings?.holes9Front : tee.ratings?.holes9Back;
   if (!r?.courseRating || !r?.slopeRating) return null;
   return { cr: r.courseRating, slope: r.slopeRating, par: r.par ?? 36 };
 }

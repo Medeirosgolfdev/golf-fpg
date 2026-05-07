@@ -16,6 +16,7 @@ import { TORNEIOS_CONFIG } from "../constants/config";
 import PlayerLink from "../ui/PlayerLink";
 import EmptyState from "../ui/EmptyState";
 import LoadingState from "../ui/LoadingState";
+import Counter from "../ui/Counter";
 import SexBadge from "../ui/SexBadge";
 import ExtLink from "../ui/ExternalLink";
 import SortableHdr from "../ui/SortableHdr";
@@ -1182,7 +1183,7 @@ export default function NacionaisPage() {
             onClick={() => setActiveTcode(t.tcode)} />
         ))}
         {totalNossosInscritos > 0 && (
-          <div className="chip ml-auto" >{totalNossosInscritos} na BD</div>
+          <Counter ml="auto">{totalNossosInscritos} na BD</Counter>
         )}
       </Toolbar>
 
@@ -1226,3 +1227,4 @@ CSS a adicionar em App.css:
 .nac-row-match { background: color-mix(in srgb, var(--color-good) 8%, transparent); }
 .nac-row-match:hover { background: color-mix(in srgb, var(--color-good) 14%, transparent); }
 */
+

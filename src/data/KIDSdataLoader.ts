@@ -75,7 +75,9 @@ export function normName(n: string): string {
 }
 
 export interface AutoTournResult {
-  p: number | null;
+  /** Posição final. `"WD"` quando o jogador não terminou todas as rondas
+   *  (caso típico FFGolf — o `pos` raw seria parcial mid-tournament). */
+  p: number | "WD" | null;
   t: number | null;
   tp: number | null;
   rd: number[];

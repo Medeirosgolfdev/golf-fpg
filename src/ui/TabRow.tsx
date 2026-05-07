@@ -1,18 +1,22 @@
 /**
  * src/ui/TabRow.tsx
  *
- * Linha de tabs (tourn-tab tourn-tab-sm) com estado activo.
- * Substitui o padrão <div className="escalao-pills mb-8"> em
- * DORALPage, BJGTPage, BJGTAnalysisPage, CalendarioPage, etc.
+ * Linha de tabs (`tourn-tab tourn-tab-sm`) com estado activo.
+ * Substitui o padrão `<div className="escalao-pills">` repetido em
+ * BJGTAnalysisPage, FPGPage, USKIDSPage, NacionaisPage, etc.
  *
  * Uso:
- *   <TabRow<string>
- *     tabs={[{ key: "all", label: "Acumulado" }, { key: "r1", label: "R1" }]}
+ *   <TabRow
+ *     tabs={[
+ *       { key: "all", label: "Acumulado" },
+ *       { key: "r1", label: "R1", count: 32 },
+ *       { key: "r2", label: "R2", disabled: true, title: "Ainda não decorreu" },
+ *     ]}
  *     active={dt}
  *     onChange={setDt}
  *   />
  *
- *   // Com children livres (quando os labels são computados externamente):
+ *   // Children livres (quando os labels são computados externamente):
  *   <TabRow active={tab} onChange={setTab}>
  *     <TabRow.Tab value="all">Acumulado</TabRow.Tab>
  *     {rounds.map((_, i) => <TabRow.Tab key={i} value={i}>R{i+1}</TabRow.Tab>)}
@@ -23,6 +27,8 @@ import React from "react";
 interface TabDef<K> {
   key: K;
   label: React.ReactNode;
+  /** Badge numérico opcional ao lado do label (ex: `45` jogadores). */
+  count?: number;
   disabled?: boolean;
   title?: string;
 }
@@ -42,20 +48,30 @@ function TabRow<K>({ tabs, active, onChange, children, className, style }: TabRo
       className={`escalao-pills mb-8${className ? " " + className : ""}`}
       style={{ gap: 4, ...style }}
     >
-      {tabs?.map(({ key, label, disabled, title }) => (
-        <button
-          key={String(key)}
-          className={`tourn-tab tourn-tab-sm${active === key ? " active" : ""}`}
-          onClick={() => !disabled && onChange(key)}
-          disabled={disabled}
-          title={title}
-          style={active === key
-            ? { flexShrink: 0 }
-            : { flexShrink: 0, background: "var(--bg-muted)", color: disabled ? "var(--text-3)" : "var(--text-2)", borderColor: "var(--border)", cursor: disabled ? "not-allowed" : "pointer", opacity: disabled ? 0.5 : 1 }}
-        >
-          {label}
-        </button>
-      ))}
+      {tabs?.map(({ key, label, count, disabled, title }) => {
+        const isActive = active === key;
+        return (
+          <button
+            key={String(key)}
+            className={`tourn-tab tourn-tab-sm${isActive ? " active" : ""}`}
+            onClick={() => !disabled && onChange(key)}
+            disabled={disabled}
+            title={title}
+            style={isActive
+              ? { flexShrink: 0 }
+              : { flexShrink: 0, background: "var(--bg-muted)", color: disabled ? "var(--text-3)" : "var(--text-2)", borderColor: "var(--border)", cursor: disabled ? "not-allowed" : "pointer", opacity: disabled ? 0.5 : 1 }}
+          >
+            {label}
+            {count != null && count > 0 && (
+              <span className="fs-10 fw-700" style={{
+                marginLeft: 4, padding: "0 5px", borderRadius: 8,
+                background: isActive ? "rgba(255,255,255,0.25)" : "var(--bg-hover)",
+                color: isActive ? "#fff" : "var(--text-3)",
+              }}>{count}</span>
+            )}
+          </button>
+        );
+      })}
       {children}
     </div>
   );

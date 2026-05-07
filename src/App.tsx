@@ -42,6 +42,7 @@ const DORALPage = lazy(() => import("./pages/DORALPage"));
 const FFGPage = lazy(() => import("./pages/FFGPage"));
 const NacionaisJovensPage = lazy(() => import("./pages/NacionaisJovensPage"));
 const TitulosPage = lazy(() => import("./pages/TitulosPage"));
+const JogadoresListPage = lazy(() => import("./pages/JogadoresListPage"));
 
 type Status =
   | { kind: "loading" }
@@ -263,8 +264,8 @@ export default function App() {
               <Routes>
                 <Route path="/campos/:courseKey?" element={<CamposPage />} />
                 <Route path="/jogadores/:fed" element={<JogadoresPage />} />
-                {/* Entry point: abre na página do Manuel por defeito */}
-                <Route path="/jogadores" element={<Navigate to={`/jogadores/${MANUEL_FED}`} replace />} />
+                {/* Landing page: lista tipo FPG FederatedsList com tabela ordenável + filtros */}
+                <Route path="/jogadores" element={<JogadoresListPage />} />
                 <Route path="/simulador" element={<SimuladorPage />} />
                 <Route path="/comparar" element={<CompararPage />} />
                 <Route path="/calendario" element={<CalendarioPage />} />

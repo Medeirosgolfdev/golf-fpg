@@ -19,6 +19,7 @@ import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/Dat
 import DetailHeader from "../ui/DetailHeader";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import LoadingState from "../ui/LoadingState";
+import Counter from "../ui/Counter";
 import { RoundPill, ManuelPill } from "../ui/PillBadge";
 import { type Tournament as FPGTournament, type Player as FPGPlayer, type RoundScore as FPGRoundScore, type ScorecardOptions } from "./FPGPage";
 import EvoBadge from "../ui/EvoBadge";
@@ -421,7 +422,7 @@ function Content() {
         {cur && <ToolbarMeta>📍 Doral Golf Resort</ToolbarMeta>}
         {cur && (() => {
           const nR = Math.max(...cur.players.map(p => p.rounds.length));
-          return <span className="chip ml-auto" >{fmtFieldInfo(cur.players.filter(p => p.rounds.length === nR).length, nR, cur.category)}</span>;
+          return <Counter ml="auto">{fmtFieldInfo(cur.players.filter(p => p.rounds.length === nR).length, nR, cur.category)}</Counter>;
         })()}
       </Toolbar>
 

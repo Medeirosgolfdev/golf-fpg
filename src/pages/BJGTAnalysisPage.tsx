@@ -27,6 +27,8 @@ import LoadingState from "../ui/LoadingState";
 import { COURSE_KEYWORDS, TOURN } from "../data/rivalData";
 import FieldPlayerDetail from "../ui/FieldPlayerDetail";
 import ContestLeaderboard from "../ui/ContestLeaderboard";
+import TabRow from "../ui/TabRow";
+import Counter from "../ui/Counter";
 import type {
   RivalPlayer,
   TournDef,
@@ -1045,15 +1047,12 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
         <ToolbarMeta>📅 {TOURN.dates}</ToolbarMeta>
         <ToolbarMeta>🏷️ {PLAYER_NAME} · Sub-12</ToolbarMeta>
         <ToolbarSep />
-        <div className="escalao-pills">
-          {CONTEST_KEYS.map(k => (
-            <button key={k} onClick={() => setTab(k)}
-              className={`tourn-tab tourn-tab-sm${tab === k ? " active" : ""}`}>
-              {CONTEST_LABELS[k]}
-            </button>
-          ))}
-        </div>
-        <span className="chip ml-auto" >{fmtFieldInfo(CONTEST_MAP[tab].players.filter(p=>typeof p.p==="number").length, CONTEST_MAP[tab].nRounds, `Par ${CONTEST_MAP[tab].par}`)}</span>
+        <TabRow
+          tabs={CONTEST_KEYS.map(k => ({ key: k, label: CONTEST_LABELS[k] }))}
+          active={tab}
+          onChange={setTab}
+        />
+        <Counter ml="auto">{fmtFieldInfo(CONTEST_MAP[tab].players.filter(p=>typeof p.p==="number").length, CONTEST_MAP[tab].nRounds, `Par ${CONTEST_MAP[tab].par}`)}</Counter>
       </Toolbar>
 
       {/* ── Master-detail ── */}

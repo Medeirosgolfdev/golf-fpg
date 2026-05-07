@@ -9,18 +9,20 @@ import { useSort } from "../hooks/useSort";
 import PrintButton from "../ui/PrintButton";
 import { loadPlayers } from "../data/loader";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from "recharts";
-import { SC, sdClassByHcp, scClass, medalColor } from "../utils/scoreDisplay";
+import { sdClassByHcp, medalColor } from "../utils/scoreDisplay";
 import { calcAGS, expectedSD9 } from "../utils/whsCalc";
-import { fmtToPar, fmtDateShort, fmtHcp, medal, fpgDrawUrl, fpgScoringUrl, fpgAdmissionsUrl, shortDateSlash, tournamentUrl, parseTournKey } from "../utils/format";
+import { fmtToPar, fmtDateShort, fmtHcp, medal, shortDateSlash, tournamentUrl, parseTournKey, fpgAdmissionsUrl } from "../utils/format";
+import TournExtLinks from "../ui/TournExtLinks";
+import TabRow from "../ui/TabRow";
+import { FilterPills } from "../ui/FilterPills";
 import { useParams, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
-import { resolveFedsInTournaments , buildEscLookup, escPillCls, normalizePlayer } from "../utils/playerUtils";
+import { resolveFedsInTournaments , buildEscLookup, normalizePlayer } from "../utils/playerUtils";
 import { resolveEsc, buildTemporalEscLookup, type TemporalEscLookup } from "../data/fpgUtils";
-import { escalaoAtDate } from "../utils/format";
 import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
 import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
-import { PILL_TCODE, EscPill, SIDEBAR_ACCENT, RoundPill } from "../ui/PillBadge";
+import { PILL_TCODE, EscPill, SIDEBAR_ACCENT } from "../ui/PillBadge";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
 import PlayerLink from "../ui/PlayerLink";
@@ -32,9 +34,6 @@ import LoadingState from "../ui/LoadingState";
 import { ScorecardLeaderboard } from "../ui/ScorecardLeaderboard";
 import SexBadge from "../ui/SexBadge";
 import { C } from "../utils/colors";
-import { CrossSeasonTable, SortTh as _CSortTh } from "../ui/CrossSeasonTable";
-// Wrapper que aceita style (não incluído nos props originais de SortTh)
-const CSortTh = _CSortTh as React.ComponentType<React.ComponentProps<typeof _CSortTh> & { style?: React.CSSProperties }>;
 import { MultiRoundLeaderboard } from "../ui/MultiRoundLeaderboard";
 import type { MRRound, MultiRoundRow } from "../ui/multiRoundTypes";
 import {
@@ -58,7 +57,6 @@ import type {
   Player,
   DriveData,
   SDLookup,
-  RoundScore,
   TStats,
 } from "../ui/driveTypes";
 
@@ -69,7 +67,6 @@ import type {
 function normalizeTournament(t: any): Tournament {
   return { ...t, players: (t.players || []).map(normalizePlayer) };
 }
-type SortKey = string;
 
 /* ── Constants ── */
 const REGIONS = [
@@ -285,20 +282,6 @@ const shortCampo = (c: string) =>
 const PName = (props: { name: string; fed?: string; playersDB?: PlayersDB; highlight?: boolean }) =>
   <TournPName name={props.name} fed={props.fed} playersDB={props.playersDB} highlight={props.highlight} />;
 
-/* ── SD cell ── */
-function SDCell(props: { sd: number | null; sdSource: string | null; hcp: number | null; nholes: number; style?: React.CSSProperties }) {
-  if (props.sd == null) return <td className="r" style={props.style}>–</td>;
-  const cls = sdClassByHcp(props.sd, props.hcp);
-  const is9 = props.nholes <= 9;
-  const tip = props.sdSource === "fpg" ? "" : props.sdSource === "ags" ? "~" : "≈";
-  return (
-    <td className="r" style={props.style}>
-      <span className={"p p-sm p-" + cls}>{props.sd.toFixed(1)}</span>
-      {(is9 || tip) && <span style={{ fontSize: 10, color: "var(--text-muted)", marginLeft: 1 }}>{is9 && "*"}{tip}</span>}
-    </td>
-  );
-}
-
 /* ── Drive Tour Points table ── */
 const DRIVE_POINTS: Record<number, number> = {
   1: 250, 2: 165, 3: 94, 4: 75, 5: 64, 6: 53, 7: 45,
@@ -447,8 +430,6 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
     return 0;
   });
 
-  const _bS = "1px solid var(--border-light)";
-
   const rows: import("../ui/ScorecardLeaderboard").ScorecardRow[] = sorted.map((p, idx) => {
     const gross = typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : (p.grossTotal as number);
     const dp = p._dp;
@@ -497,7 +478,7 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
       onToggleScorecard={() => setShowScorecard(v => !v)}
       metaLine={<>
         {sorted.length} jogadores · Par {parTotal} · {nh}h · Média: {avg.toFixed(1)} ({fmtTP(Math.round(avg - parTotal))})
-        {refP.course && <> · 📍 {refP.course}</>}
+        {(refP as { course?: string }).course && <> · 📍 {(refP as { course?: string }).course}</>}
         {refP.courseRating && <> · CR {refP.courseRating}</>}
         {refP.slope && <> · Slope {refP.slope}</>}
       </>}
@@ -631,10 +612,10 @@ function DriveAccumulatedLB({ tournament, nRounds, escLookup, playersDB, sdLooku
 interface TournGroup {
   key: string;
   label: string;       // tab label
-  campo: string;
-  num: number;
+  campo?: string;
+  num?: number;
   date: string;
-  escalao: string | null; // para Challenge single-escalão ou null quando evento agrupa vários
+  escalao: string | null | undefined; // para Challenge single-escalão ou null quando evento agrupa vários
   isMulti: boolean;    // multi-ronda (R1/R2/Total)
   isEvent: boolean;    // Challenge: vários escalões no mesmo dia/campo → tabs por escalão
   totalRounds: number;
@@ -642,7 +623,7 @@ interface TournGroup {
 }
 
 function buildGroups(tournaments: Tournament[]): TournGroup[] {
-  const escIdx = (esc: string | null) => {
+  const escIdx = (esc: string | null | undefined) => {
     const i = ESCALOES.indexOf(esc || "");
     return i >= 0 ? i : 99;
   };
@@ -771,38 +752,6 @@ function isSub12(esc: string): boolean {
   const n = esc.toLowerCase().replace(/[\s-]/g, "");
   return n === "sub10" || n === "sub12";
 }
-function _computeSDWithSource(p: Player, sdLookup: SDLookup): { sd: number | null; source: "fpg" | "ags" | "raw" | null } {
-  const fed = p.fed || p.fedCode;
-  if (fed && sdLookup[fed] != null) return { sd: sdLookup[fed], source: "fpg" };
-  // Fall back to roundScores[0] for single-round tournaments with no flat fields
-  const rs0 = p.roundScores?.[0];
-  const scores = p.scores?.length ? p.scores : rs0?.scores || [];
-  const parArr = p.par?.length ? p.par : rs0?.pars || [];
-  const si = p.si?.length ? p.si : rs0?.si || [];
-  const nholes = p.nholes || scores.length || parArr.length || 18;
-  const parT = p.parTotal || (parArr.length ? parArr.reduce((a,b)=>a+b,0) : 72);
-  const gross = typeof p.grossTotal === "string" ? parseInt(p.grossTotal) : (p.grossTotal as number);
-  if (gross == null || isNaN(gross)) return { sd: null, source: null };
-  const cr = p.courseRating ?? rs0?.courseRating;
-  const slope = p.slope ?? rs0?.slope;
-  const hcp = p.hcpExact;
-  if (cr && slope && hcp != null && scores.length >= nholes && parArr.length >= nholes && si.length >= nholes) {
-    const ags = calcAGS(scores, parArr, si, cr, slope, hcp, nholes);
-    // Fórmula WHS 2024 — idêntica a computeStats:
-    // 18h: SD = (113/slope) × (AGS − CR)
-    // 9h:  SD = rawSD + expectedSD9(hcp)  (regra 2024: SD dos 9h + expected dos restantes 9h)
-    const rawSD = (113 / slope) * (ags - cr);
-    const sd18 = nholes <= 9 ? rawSD + expectedSD9(hcp) : rawSD;
-    return { sd: Math.round(sd18 * 10) / 10, source: "ags" };
-  }
-  // Fallback sem SI: raw gross (sem clip — SD pode ser negativo para jogadores de elite)
-  if (cr && slope) {
-    const rawSD = (113 / slope) * (gross - cr);
-    const sd18 = nholes <= 9 && hcp != null ? rawSD + expectedSD9(hcp) : rawSD;
-    return { sd: Math.round(sd18 * 10) / 10, source: "raw" };
-  }
-  return { sd: null, source: null };
-}
 function tournShort(t: Tournament): string {
   const num = t.num || "?";
   const isAq = t.series === "aquapor";
@@ -867,7 +816,7 @@ function buildSub12Data(
       row.results.push({
         tournKey, tournName: t.name, tournShort: tournShort(t),
         date: t.date, dateSort: dateToSort(t.date),
-        campo: t.campo || "", region: t.region, series: t.series,
+        campo: t.campo || "", region: t.region || "", series: (t.series || "tour") as "tour" | "challenge" | "aquapor",
         gross: g, toPar: tp,
         sd: sd18 != null ? Math.round(sd18 * 10) / 10 : null, sdSource,
         pos: p.pos, totalPlayers: t.playerCount,
@@ -992,13 +941,6 @@ function ToParSpan({ tp }: { tp: number | null }) {
   return <span className="fw-700 fs-11" style={{ color }}>{fmtToPar(tp)}</span>;
 }
 
-const _STICKY_HCP_W  = 48;
-const STICKY_BG      = "var(--bg-card)";
-const STICKY_BG_HEAD = "var(--bg-topbar)";
-const _stickyBase     = (left: number, isLast?: boolean): React.CSSProperties => ({ position: "sticky", left, zIndex: 2, background: STICKY_BG, ...(isLast ? { borderRight: "2px solid var(--border)", boxShadow: "2px 0 4px rgba(0,0,0,0.06)" } : {}) });
-const _stickyHeadBase = (left: number, isLast?: boolean): React.CSSProperties => ({ position: "sticky", left, zIndex: 3, background: STICKY_BG_HEAD, ...(isLast ? { borderRight: "2px solid var(--border)", boxShadow: "2px 0 4px rgba(0,0,0,0.06)" } : {}) });
-
-
 function RankingView({ rows, onPlayerClick }: { rows: Sub12Row[]; onPlayerClick: (fed: string) => void }) {
   const ranked = [...rows].filter(p => p.totalPts > 0).sort((a, b) => b.totalPts - a.totalPts);
   const zeroPts = rows.filter(p => p.totalPts === 0);
@@ -1091,7 +1033,7 @@ function EvolutionChart({ rows }: { rows: Sub12Row[] }) {
             <XAxis dataKey="date" tick={{ fontSize: 10 }} />
             <YAxis tick={{ fontSize: 10 }} domain={["dataMin - 2", "dataMax + 2"]} />
             <Tooltip contentStyle={{ background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 6, fontSize: 11 }}
-              formatter={(value: number | undefined, name: string) => { const p = top.find(x => x.fed===name); return [value != null ? value.toFixed(1) : "", p?.name||name]; }} />
+              formatter={(((value: number | undefined, name: string) => { const p = top.find(x => x.fed===name); return [value != null ? value.toFixed(1) : "", p?.name||name]; }) as any)} />
             <Legend formatter={(value: string) => { const p = top.find(x => x.fed===value); return <span className="fs-10">{p?.name||value}</span>; }} />
             <ReferenceLine y={36} stroke="var(--color-danger)" strokeDasharray="4 4" strokeWidth={1} />
             {top.map((p, i) => (
@@ -1440,7 +1382,7 @@ function DriveContent() {
     // Para Challenge (isEvent), NÃO filtrar por escalão aqui — o grupo agrupa todos os escalões
     // O escFilter é aplicado ao nível dos entries do grupo em filteredGroups
     if (escFilter.length > 0 && series !== "challenge") ts = filterTournByEsc(ts, escFilter, escLookup, pdb, temporalEscLookup, fedBirthdates);
-    if (filterManuel) ts = ts.filter(t => t.players.some(p => isManuel(p)));
+    if (filterManuel) ts = ts.filter(t => t.players.some((p: Player) => isManuel(p)));
     return ts;
   }, [series, seriesT, regionFilter, escFilter, escLookup, pdb, temporalEscLookup, filterManuel, fedBirthdates]);
 
@@ -1484,7 +1426,6 @@ function DriveContent() {
   const countTour         = useMemo(() => countEvents(tourT), [tourT]);
   const countChall        = useMemo(() => countEvents(challT), [challT]);
   const countAquapor      = useMemo(() => countEvents(aquaporT), [aquaporT]);
-  const countSeries       = useMemo(() => countEvents(seriesT), [seriesT]);
 
   // Para series="all" mostramos sempre todos os escalões (fixo) — evita iterar todos os jogadores
   const availEscs = useMemo(() => {
@@ -1583,15 +1524,17 @@ function DriveContent() {
       const region = g.entries[0]?.region || "";
       if (!m.has(region)) m.set(region, new Map());
       const rm = m.get(region)!;
-      rm.set(g.num, (rm.get(g.num) || 0) + 1);
+      const numKey = g.num ?? 0;
+      rm.set(numKey, (rm.get(numKey) || 0) + 1);
     }
     return m;
   }, [filteredGroups]);
 
   const sidebarItemLabel = (g: TournGroup) => {
     const region = g.entries[0]?.region || "";
-    const isDup = (sidebarNumCount.get(region)?.get(g.num) || 0) > 1;
-    const base = `T${g.num}${isDup ? " · " + fmtDateShort(g.date) : ""} · ${g.label}`;
+    const numKey = g.num ?? 0;
+    const isDup = (sidebarNumCount.get(region)?.get(numKey) || 0) > 1;
+    const base = `T${g.num ?? "?"}${isDup ? " · " + fmtDateShort(g.date) : ""} · ${g.label}`;
     if (g.isEvent) return base; // Challenge evento — escalões mostrados como sub-badges
     if (g.escalao) return base + " · " + g.escalao;
     return base;
@@ -1644,7 +1587,7 @@ function DriveContent() {
       date:        g.date,
       playerCount: nJog,
       rounds:      g.isMulti ? g.totalRounds : 1,
-      nholes:      t0?.nholes || t0?.par?.length || 18,
+      nholes:      (t0 as { nholes?: number; par?: number[] } | undefined)?.nholes || (t0 as { par?: number[] } | undefined)?.par?.length || 18,
       series:      grpSeries,
       escalao:     (!g.isEvent && !g.isMulti) ? g.escalao : null,
       players:     g.entries.flatMap(e => e.players),
@@ -1693,36 +1636,26 @@ function DriveContent() {
           <ToolbarTitle>🏁 DRIVE</ToolbarTitle>
           <DataSourcesChip sources={allSources} />
           <ToolbarSep />
-          {([
-            { key: "torneios",      label: "Torneios" },
-            { key: "ranking-sub12", label: "🏅 Ranking Sub-12" },
-          ] as const).map(({ key, label }) => (
-            <button key={key}
-              className={"tourn-tab tourn-tab-sm" + (navMode === key ? " active" : " tourn-tab-muted")}
-              onClick={() => { setNavMode(key); setSeries("tour"); setYearFilter(null); setSelectedGroupKey(null); setRoundIdx(0); }}
-              style={navMode === key
-                ? { flexShrink: 0 }
-                : { flexShrink: 0 }}>
-              {label}
-            </button>
-          ))}
+          <TabRow
+            tabs={[
+              { key: "torneios",      label: "Torneios" },
+              { key: "ranking-sub12", label: "🏅 Ranking Sub-12" },
+            ]}
+            active={navMode}
+            onChange={(k) => { setNavMode(k as typeof navMode); setSeries("tour"); setYearFilter(null); setSelectedGroupKey(null); setRoundIdx(0); }}
+          />
           {navMode === "torneios" && (<>
             <ToolbarSep />
-            {([
-              { key: "all",       label: "Todos" },
-              { key: "tour",      label: "🏌️ Tour" },
-              { key: "challenge", label: "⚡ Challenge" },
-              { key: "aquapor",   label: "💧 AQUAPOR" },
-            ] as const).map(({ key, label }) => (
-              <button key={key}
-                className={"tourn-tab tourn-tab-sm" + (series === key ? " active" : " tourn-tab-muted")}
-                onClick={() => { setSeries(key); setRegionFilter(null); setEscFilter([]); setSelectedGroupKey(null); setRoundIdx(0); if (key === "all" && !yearFilter) setYearFilter(availYears[0] ?? null); }}
-                style={series === key
-                  ? { flexShrink: 0 }
-                  : { flexShrink: 0 }}>
-                {label}{key !== "all" ? ` (${key === "tour" ? countTour : key === "challenge" ? countChall : countAquapor})` : ""}
-              </button>
-            ))}
+            <TabRow
+              tabs={[
+                { key: "all",       label: "Todos" },
+                { key: "tour",      label: "🏌️ Tour", count: countTour },
+                { key: "challenge", label: "⚡ Challenge", count: countChall },
+                { key: "aquapor",   label: "💧 AQUAPOR", count: countAquapor },
+              ]}
+              active={series}
+              onChange={(k) => { const kk = k as typeof series; setSeries(kk); setRegionFilter(null); setEscFilter([]); setSelectedGroupKey(null); setRoundIdx(0); if (kk === "all" && !yearFilter) setYearFilter(availYears[0] ?? null); }}
+            />
             {availYears.length > 1 && (<>
               <ToolbarSep />
               {availYears.map(y => (
@@ -1788,26 +1721,15 @@ function DriveContent() {
               onClick={() => setEscFilter([])}>
               Todos ({uniquePCRegion} jog)
             </button>
-            {(["Sub 10","Sub 12","Sub 14","Sub 16","Sub 18","Absoluto","Sénior"] as const).map(e => {
-              const available = availEscs.includes(e);
-              const on = escFilter.includes(e);
-              if (!available) return (
-                <span key={e} className="tourn-tab tourn-tab-sm"
-                  style={{ flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-muted)", borderColor: "var(--border)", opacity: 0.35, cursor: "default", pointerEvents: "none" }}>
-                  {e}
-                </span>
-              );
-              return (
-                <button key={e}
-                  className={"tourn-tab tourn-tab-sm" + (on ? " active" : " tourn-tab-muted")}
-                  onClick={() => setEscFilter(prev => on ? prev.filter(x => x !== e) : [...prev, e])}
-                  style={on
-                    ? { flexShrink: 0 }
-                    : { flexShrink: 0 }}>
-                  {e}
-                </button>
-              );
-            })}
+            <FilterPills
+              items={(["Sub 10","Sub 12","Sub 14","Sub 16","Sub 18","Absoluto","Sénior"] as const).map(e => ({
+                key: e,
+                label: e,
+                disabled: !availEscs.includes(e),
+              }))}
+              active={escFilter}
+              onToggle={(e) => setEscFilter(prev => prev.includes(e) ? prev.filter(x => x !== e) : [...prev, e])}
+            />
           </div>
         )}
       </div>
@@ -2066,24 +1988,7 @@ function DriveContent() {
                           </a>
                         ) : <span>{content}</span>;
                       })()}
-                      <a href={fpgAdmissionsUrl(curTournament.ccode, curTournament.tcode)}
-                        target="_blank" rel="noopener noreferrer"
-                        className="tourn-ext-link"
-                        title="Inscrições (tournAdmissions) na Federação">
-                        Inscrições ↗
-                      </a>
-                      <a href={fpgDrawUrl(curTournament.ccode, curTournament.tcode)}
-                        target="_blank" rel="noopener noreferrer"
-                        className="tourn-ext-link"
-                        title="Emparelhamentos (Draw) na Federação">
-                        Draw ↗
-                      </a>
-                      <a href={fpgScoringUrl(curTournament.ccode, curTournament.tcode)}
-                        target="_blank" rel="noopener noreferrer"
-                        className="tourn-ext-link"
-                        title="Classificação (Scoring) na Federação">
-                        Scoring ↗
-                      </a>
+                      <TournExtLinks ccode={curTournament.ccode} tcode={curTournament.tcode} />
                       <PrintButton />
                     </div>
                     <div className="muted fs-11 mb-4">

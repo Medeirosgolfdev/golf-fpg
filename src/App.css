@@ -3215,4 +3215,108 @@ tr.cross-current { background: var(--bg-success); }
 }
 .njov-footer p { margin: 0 0 6px; }
 
+/* ════════════════════════════════════════════════════════════════════
+   JogadoresListPage — landing page de /jogadores (lista tipo FPG)
+   ════════════════════════════════════════════════════════════════════ */
+.filter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 8px;
+  padding: 8px 8px 4px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  margin: 8px 0;
+}
+.filter-field {
+  display: flex; flex-direction: column; gap: 3px;
+  min-width: 0;
+}
+.filter-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.04em; color: var(--text-muted);
+  padding-left: 2px;
+}
+.filter-input {
+  width: 100%;
+  padding: 5px 8px;
+  font: inherit; font-size: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--text);
+  box-sizing: border-box;
+}
+.filter-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.btn-pill {
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg-card);
+  color: var(--text);
+  cursor: pointer;
+  font: inherit; font-size: 12px; font-weight: 500;
+  transition: background 0.15s, border-color 0.15s;
+}
+.btn-pill:hover:not(:disabled) {
+  background: var(--bg-hover, var(--bg-card));
+  border-color: var(--accent);
+}
+.btn-pill:disabled {
+  opacity: 0.4; cursor: not-allowed;
+}
+
+.player-list-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 12px;
+}
+.player-list-table thead th {
+  position: sticky; top: 0; z-index: 1;
+  background: var(--bg-header, var(--bg-card));
+  color: var(--text-muted);
+  font-weight: 600; text-align: left;
+  padding: 6px 8px;
+  border-bottom: 2px solid var(--border);
+  white-space: nowrap;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.player-list-table tbody td {
+  padding: 5px 8px;
+  border-bottom: 1px solid var(--border-light, var(--border));
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.player-list-row:hover {
+  background: var(--bg-hover, rgba(0, 0, 0, 0.03));
+}
+.player-list-row:nth-child(even) {
+  background: rgba(0, 0, 0, 0.015);
+}
+.player-list-row:nth-child(even):hover {
+  background: var(--bg-hover, rgba(0, 0, 0, 0.05));
+}
+.player-list-name-link {
+  color: var(--accent, #0d61a8);
+  text-decoration: none;
+  cursor: pointer;
+}
+.player-list-name-link:hover {
+  text-decoration: underline;
+}
+.player-list-name-link::after {
+  content: "↗";
+  font-size: 9px;
+  margin-left: 3px;
+  opacity: 0.5;
+  vertical-align: super;
+}
+
 /* end of file */

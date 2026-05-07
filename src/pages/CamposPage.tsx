@@ -1,6 +1,7 @@
 import { useMemo, useState, useEffect } from "react";
 import SidebarToggle from "../ui/SidebarToggle";
 import EmptyState from "../ui/EmptyState";
+import Counter from "../ui/Counter";
 import { Toolbar } from "../ui/Toolbar";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { useParams, useNavigate } from "react-router-dom";
@@ -201,7 +202,6 @@ type RatingsSortKey = "tee" | "sex" | "dist" | "par" | "cr" | "slope" | "crF9" |
 function RatingsTable({ tees }: { tees: Tee[] }) {
   const defaultSorted = sortTees(tees);
   const { sortKey, sortDir, toggleSort } = useSort<RatingsSortKey>("tee");
-  const onSort = toggleSort as (k: string) => void;
 
   const sorted = useMemo(() => {
     if (sortKey === "tee") {
@@ -236,16 +236,16 @@ function RatingsTable({ tees }: { tees: Tee[] }) {
       <table className="ratings-table">
         <thead>
           <tr>
-            <SortableHdr k="tee"   sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Tee</SortableHdr>
-            <SortableHdr k="sex"   sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Sexo</SortableHdr>
-            <SortableHdr k="dist"  sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r-num">Dist (m)</SortableHdr>
-            <SortableHdr k="par"   sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r-num">Par</SortableHdr>
-            <SortableHdr k="cr"    sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r-num">CR</SortableHdr>
-            <SortableHdr k="slope" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r-num">Slope</SortableHdr>
-            <SortableHdr k="crF9"  sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r-num">CR F9</SortableHdr>
-            <SortableHdr k="slF9"  sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r-num">Sl F9</SortableHdr>
-            <SortableHdr k="crB9"  sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r-num">CR B9</SortableHdr>
-            <SortableHdr k="slB9"  sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r-num">Sl B9</SortableHdr>
+            <SortableHdr k="tee"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Tee</SortableHdr>
+            <SortableHdr k="sex"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Sexo</SortableHdr>
+            <SortableHdr k="dist"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">Dist (m)</SortableHdr>
+            <SortableHdr k="par"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">Par</SortableHdr>
+            <SortableHdr k="cr"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">CR</SortableHdr>
+            <SortableHdr k="slope" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">Slope</SortableHdr>
+            <SortableHdr k="crF9"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">CR F9</SortableHdr>
+            <SortableHdr k="slF9"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">Sl F9</SortableHdr>
+            <SortableHdr k="crB9"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">CR B9</SortableHdr>
+            <SortableHdr k="slB9"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">Sl B9</SortableHdr>
           </tr>
         </thead>
         <tbody>
@@ -530,9 +530,9 @@ export default function CamposPage() {
             <option key={t.hex} value={t.hex}>{t.label}</option>
           ))}
         </select>
-        <div className="chip ml-auto" >{filtered.length} campos</div>
-          <div className="chip">{totalTees} tees</div>
-          {intlCount > 0 && <div className="chip">{"\ud83c\udf0d"} {intlCount} intl</div>}
+        <Counter ml="auto">{filtered.length} campos</Counter>
+        <Counter>{totalTees} tees</Counter>
+        {intlCount > 0 && <Counter icon="\ud83c\udf0d">{intlCount} intl</Counter>}
       </Toolbar>
 
       {/* Master-detail */}
@@ -659,4 +659,3 @@ export default function CamposPage() {
     </div>
   );
 }
-

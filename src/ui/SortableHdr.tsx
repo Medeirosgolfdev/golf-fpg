@@ -1,21 +1,27 @@
 import React from "react";
 
-interface SortableHdrProps {
-  k: string;
-  sortKey: string;
+interface SortableHdrProps<K extends string = string> {
+  k: K;
+  sortKey: K;
   sortDir: "asc" | "desc";
-  onSort: (k: string) => void;
+  onSort: (k: K) => void;
   children: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
   title?: string;
 }
 
-export default function SortableHdr({
+const ARROW_UP = "▲";
+const ARROW_DOWN = "▼";
+
+export default function SortableHdr<K extends string = string>({
   k, sortKey, sortDir, onSort, children, className, style, title,
-}: SortableHdrProps) {
+}: SortableHdrProps<K>) {
   const active = sortKey === k;
-  const defaultTitle = active ? (sortDir === "asc" ? "Ordenado crescente" : "Ordenado decrescente") : "Clique para ordenar";
+  const arrow = sortDir === "asc" ? ARROW_UP : ARROW_DOWN;
+  const defaultTitle = active
+    ? (sortDir === "asc" ? "Ordenado crescente" : "Ordenado decrescente")
+    : "Clique para ordenar";
   return (
     <th
       className={"lb-sortable " + (className || "")}
@@ -23,7 +29,8 @@ export default function SortableHdr({
       title={title ?? defaultTitle}
       onClick={() => onSort(k)}
     >
-      {children}{active && <span className="fs-10" style={{ marginLeft: 2 }}>{sortDir === "asc" ? "▲" : "▼"}</span>}
+      {children}
+      {active && <span className="fs-10" style={{ marginLeft: 2 }}>{arrow}</span>}
     </th>
   );
 }
