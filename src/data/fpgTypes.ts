@@ -36,6 +36,9 @@ export interface Player extends BasePlayer {
 
 /** FPG-specific tournament with full structure and metadata */
 export interface Tournament extends BaseTournament {
+  /** Override BaseTournament.players (BasePlayer[]) com o tipo FPG completo,
+   *  para que `t.players[i].roundScores` etc. tipem correctamente em fpgUtils. */
+  players: Player[];
   ccode?: string;
   clube?: string;
   circuit?: string;
@@ -77,12 +80,18 @@ export interface ScorecardOptions {
   hideTee?: boolean;      // ocultar coluna TEE
   clubLabel?: string;     // label alternativo para coluna Clube (ex: "País")
   startHole?: number;     // buraco inicial (default 1, back-9: 10)
-  /** Decorador que envolve o conteúdo do nome (ex: para adicionar ↗ Kids link) */
+  /** Decorador que envolve o conteúdo do nome (ex: para adicionar ↗ Kids link). */
   nameDecorator?: (name: string, content: React.ReactNode) => React.ReactNode;
 }
 
-export interface SDResult { sd: number | null; source: "ags" | "raw" | null }
+export interface SDResult {
+  sd: number | null;
+  source: "ags" | "raw" | null;
+}
 
 export interface PlayerFilter {
-  name: string; escs: string[]; tees: string[]; club: string;
+  name: string;
+  escs: string[];
+  tees: string[];
+  club: string;
 }

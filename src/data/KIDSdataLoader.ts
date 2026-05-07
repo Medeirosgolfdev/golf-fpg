@@ -3,6 +3,7 @@
  * Carrega todos os JSON de torneios via fetch (public/data/)
  * e converte em AutoRivalPlayer[] para merge na RivaisIntlPage.
  */
+import { normPaisDisplay } from "../utils/flagUtils";
 
 const CC: Record<string, string> = {
   US:"United States",GB:"United Kingdom",ES:"Spain",IT:"Italy",
@@ -30,9 +31,32 @@ const CC: Record<string, string> = {
   UY:"Uruguay",VE:"Venezuela",
 };
 
+/**
+ * Normaliza qualquer representação de país (código ISO-2/3, nome EN ou PT,
+ * com/sem acentos, PT-PT ou PT-BR) num único nome canónico em inglês.
+ * Garante que dados de fontes diferentes (USKids ISO-2, BlueGolf PT, FPG)
+ * ficam dedup'áveis pelo mesmo valor de `co`.
+ *
+ *   co("PT") → "Portugal"
+ *   co("US") → "United States"
+ *   co("UK") → "United Kingdom"
+ *   co("França") → "France"
+ *   co("Franca") → "France"
+ *   co("Federação Russa") → "Russia"
+ *   co("Estônia") → "Estonia"  (PT-BR)
+ *   co("XYZ") → "XYZ"  (não mapeado: devolve input)
+ *   co("") → ""
+ */
 export function co(raw: string): string {
-  const t = (raw||"").trim();
-  return CC[t] || CC[t.toUpperCase()] || CC[t.toLowerCase()] || t;
+  const t = (raw || "").trim();
+  if (!t) return "";
+  // Sempre canonicaliza via normPaisDisplay para garantir UM nome único por
+  // país (evita "Russia" + "Russian Federation", "Vietnam" + "Viet Nam", etc.).
+  // Se normPaisDisplay devolver o input inalterado (não-mapeado), tenta CC como
+  // último recurso (códigos ISO-2 que possam não estar no normPaisDisplay).
+  const canon = normPaisDisplay(t);
+  if (canon !== t) return canon;
+  return CC[t] || CC[t.toUpperCase()] || t;
 }
 
 import { MONTHS_PT } from "../utils/format";
@@ -41,7 +65,12 @@ import { MANUEL_BIRTH_YEAR } from "../constants/manuel";
 
 export function normName(n: string): string {
   return n.trim().toLowerCase()
+    // Tratar hífens, apóstrofes e pontos como espaços para que variantes como
+    // "Castro-Ferreira" / "Castro Ferreira", "D'Souza" / "D Souza" resolvam para
+    // a mesma chave canónica.
+    .replace(/[-'’.·]+/g, " ")
     .replace(/\s+/g," ")
+    .trim()
     .normalize("NFD").replace(/[\u0300-\u036f]/g,"");
 }
 
@@ -475,6 +504,336 @@ const PULL_TCODE_TO_TID: Record<string, string> = {
   "10294": "gg26_open", // Greatgolf Junior Open 2026 - open (todos escalões)
 };
 
+// ── FFGolf (Fédération Française de Golf) — registo de torneios juniores FR ──
+// Cada torneio FR vira tid "ff{trnId}" para os ficheiros gg_*.json (golf-genius)
+// e "ffr{file_basename}_s{serieId}" para os ficheiros ffgolf-resultats/*.json.
+export const ffgolfTournNames: Map<string, {
+  name: string; short: string; date: string; dateExact: string;
+  ageGroup?: string;
+  // Identificadores para reconstruir URL FFGolf (pages.ffgolf.org/resultats/)
+  trnId?: string;
+  partKey?: string;
+  typeCompetition?: string;
+  ligue?: string;
+}> = new Map();
+
+/** Torneios FFGolf relevantes para o tracker (formato gg_*.json — golf-genius scrape).
+ *  Só os de stroke-play (skip match-play que retorna scores 1..N). */
+const FFGOLF_GG_TOURNAMENTS: Array<{ file: string; tid: string; name: string; short: string; date: string; dateExact: string; ageMin: number; ageMax: number }> = [
+  { file: "gg_champ_france_benjamins_2025.json",        tid: "ffcfbenj25",  name: "Champ. France Benjamins 2025",  short: "CF Benj 25",  date: "Jul 2025", dateExact: "2025-07-08", ageMin: 11, ageMax: 12 },
+  { file: "gg_champ_france_benjamines_2025.json",       tid: "ffcfbenf25",  name: "Champ. France Benjamines 2025", short: "CF Benf 25",  date: "Jul 2025", dateExact: "2025-07-08", ageMin: 11, ageMax: 12 },
+  { file: "gg_internationaux_france_u18_gar_ons_2026.json", tid: "ffintu18g26", name: "Internationaux France U18 Garçons 2026", short: "Int FR U18 26", date: "Abr 2026", dateExact: "2026-04-09", ageMin: 17, ageMax: 18 },
+];
+
+/** Abreviatura curta para nomes de torneios FFGolf (ffgolf-resultats/*.json). */
+function shortenFfgolfName(name: string): string {
+  return (name || "")
+    .replace(/GRAND\s+PRIX\s+JEUNES?/i, "GP Jeunes")
+    .replace(/CHAMPIONNAT/i, "Champ.")
+    .replace(/INTERNATIONAUX/i, "Int.")
+    .replace(/U(\d+)/gi, "U$1")
+    .replace(/\s+/g, " ").trim().slice(0, 24);
+}
+
+/**
+ * Processa o ffgolf-juniors-slim.json — consolidação de ~560 torneios juniores
+ * franceses (U10/U12/U14) extraídos do ffgolf-resultats/* (1771 ficheiros).
+ *
+ * Cada torneio×escalão gera um tid único: "ff{trnId}_{ageGroup}".
+ * Names já vêm capitalizados pelo build script.
+ */
+export function processFfgolfSlim(d: unknown): AutoRivalPlayer[] {
+  const data = d as {
+    tournaments?: Array<{
+      trnId: string; name: string; dateIso: string; year: number;
+      ageGroup: "U10" | "U12" | "U14"; ageMin: number; ageMax: number;
+      serieLabel: string; courseTerrain: string;
+      parTotal: number | null; parPerHole: number[] | null;
+      partKey?: string; typeCompetition?: string; ligue?: string;
+      players: Array<{
+        name: string; flag?: string; license?: string;
+        hcp?: number | null; club?: string;
+        pos: number | null; total: number | null;
+        rounds: Array<{ r: number; gross: number; scores?: number[] }>;
+      }>;
+    }>;
+  };
+  if (!data?.tournaments?.length) return [];
+
+  const all: AutoRivalPlayer[] = [];
+  for (const tourn of data.tournaments) {
+    const tid = `ff${tourn.trnId}_${tourn.ageGroup}`;
+
+    if (!ffgolfTournNames.has(tid)) {
+      const isoMatch = tourn.dateIso.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+      const dateLabel = isoMatch
+        ? `${MONTHS_PT[parseInt(isoMatch[2]) - 1]} ${isoMatch[1]}`
+        : "";
+      const short = tourn.name
+        .replace(/GRAND\s+PRIX\s+JEUNES?/i, "GP")
+        .replace(/CHAMPIONNAT/i, "Champ.")
+        .replace(/QUALIFICATION/i, "Qualif.")
+        .replace(/DE\s+LA\s+LIGUE/i, "")
+        .replace(/PARIS\s+ILE-DE-FRANCE/i, "PIDF")
+        .replace(/\s+/g, " ").trim().slice(0, 22);
+      ffgolfTournNames.set(tid, {
+        name: tourn.name,
+        short: `${short} ${tourn.ageGroup}`.trim(),
+        date: dateLabel,
+        dateExact: tourn.dateIso,
+        ageGroup: tourn.ageGroup,
+        trnId: tourn.trnId,
+        partKey: tourn.partKey,
+        typeCompetition: tourn.typeCompetition,
+        ligue: tourn.ligue,
+      });
+    }
+
+    let validPlayers = 0;
+    for (const player of tourn.players) {
+      if (!player.name) continue;
+      const rounds = (player.rounds || []).slice().sort((a, b) => a.r - b.r);
+      const validRounds = rounds.filter(rs => typeof rs.gross === "number" && rs.gross >= 30 && rs.gross <= 200);
+      if (!validRounds.length && !player.total) continue;
+
+      const rd = validRounds.map(rs => rs.gross);
+      const t  = player.total ?? rd.reduce((a, b) => a + b, 0);
+      const tp = (tourn.parTotal && t)
+        ? t - tourn.parTotal * validRounds.length
+        : null;
+
+      const r0 = validRounds.find(rs => rs.scores?.length === 18);
+      if (r0 && r0.scores && tourn.parPerHole?.length === 18) {
+        const holeRounds = validRounds
+          .map(rs => rs.scores || [])
+          .filter(s => s.length === 18 && s.some(v => v > 0));
+        if (holeRounds.length > 0) {
+          addScorecard(normName(player.name), {
+            tid, playerName: player.name,
+            par: tourn.parPerHole, si: [], meters: [],
+            rounds: holeRounds,
+          });
+        }
+      }
+
+      all.push({
+        n: player.name,
+        co: "France",
+        r: { [tid]: { p: player.pos, t, tp, rd, ageGroup: tourn.ageGroup, nholes: 18 } },
+      });
+      validPlayers++;
+    }
+    if (validPlayers > 0) uskFieldSizes.set(tid, validPlayers);
+  }
+  return all;
+}
+
+/**
+ * Processa ficheiros gg_*.json (golf-genius FFGolf scrape).
+ * Heurística: aceita rondas com gross válido (>=27 numa ronda 9H, >=50 numa 18H);
+ * rejeita match-play (scores [1,2,3,4,5...] são tally de buracos ganhos, não strokes).
+ */
+export function processFfgolfGG(d: unknown, meta: typeof FFGOLF_GG_TOURNAMENTS[number]): AutoRivalPlayer[] {
+  const data = d as {
+    tournament?: string;
+    players?: Array<{
+      name: string; country?: string; pos?: number | null;
+      total?: number | null; toPar?: number | null;
+      rounds?: Array<{ day?: number; gross?: number; scores?: number[]; course?: string }>;
+    }>;
+  };
+  if (!data?.players?.length) return [];
+
+  // Registar metadata do torneio
+  if (!ffgolfTournNames.has(meta.tid)) {
+    ffgolfTournNames.set(meta.tid, {
+      name: meta.name, short: meta.short, date: meta.date, dateExact: meta.dateExact,
+      ageGroup: `U${meta.ageMax}`,
+    });
+  }
+
+  const all: AutoRivalPlayer[] = [];
+  let validPlayers = 0;
+  for (const player of data.players) {
+    if (!player.name) continue;
+    const rounds = (player.rounds || []).slice().sort((a, b) => (a.day ?? 0) - (b.day ?? 0));
+    // Filtra rondas com gross plausível (golf real)
+    const validRounds = rounds.filter(rs => typeof rs.gross === "number" && rs.gross >= 50 && rs.gross <= 200);
+    if (!validRounds.length) continue;
+
+    const rd = validRounds.map(rs => rs.gross!);
+    const t  = player.total ?? rd.reduce((a, b) => a + b, 0);
+    const tp = typeof player.toPar === "number" ? player.toPar : null;
+    const p  = player.pos ?? null;
+
+    // Capitalizar: nomes FFGolf vêm como "LEPETIT Leopold" → "Lepetit Leopold"
+    const niceName = player.name.replace(/^([A-ZÉÈÊËÀÂÔÛÇ]{2,})/, m => m.charAt(0) + m.slice(1).toLowerCase());
+
+    // Scorecard hole-by-hole (se disponível)
+    const r0 = validRounds.find(rs => rs.scores?.length === 18);
+    if (r0 && r0.scores) {
+      const holeRounds = validRounds.map(rs => rs.scores || []).filter(s => s.length === 18 && s.every(v => v >= 1 && v <= 12));
+      if (holeRounds.length > 0) {
+        addScorecard(normName(niceName), {
+          tid: meta.tid, playerName: niceName,
+          par: [], si: [], meters: [],  // FFGolf gg_ não expõe par buraco-a-buraco
+          rounds: holeRounds,
+        });
+      }
+    }
+
+    all.push({
+      n: niceName,
+      co: "France",  // FFGolf é federação francesa — players são franceses por default
+      r: { [meta.tid]: { p, t, tp, rd, ageGroup: `U${meta.ageMax}`, nholes: 18 } },
+    });
+    validPlayers++;
+  }
+  if (validPlayers > 0) uskFieldSizes.set(meta.tid, validPlayers);
+  return all;
+}
+
+// ── FPG (Federação Portuguesa de Golfe) — registo de torneios juniores ────
+// Cada torneio FPG vira tid "fpg{tcode}" (escalão é implícito porque cada
+// torneio FPG tem um único escalão definido no campo `escalao` do JSON).
+export const fpgTournNames: Map<string, {
+  name: string; short: string; date: string; dateExact: string;
+  escalao: string; ageMin: number; ageMax: number;
+  ccode: string; tcode: string;
+}> = new Map();
+
+// Escalões FPG considerados juniores relevantes para a KIDSPage.
+// Manuel está actualmente no Sub-12 → incluímos Sub-10/12/13/14 (±2 escalões).
+const FPG_JUNIOR_ESCALOES: Record<string, { ageMin: number; ageMax: number }> = {
+  "Sub 10": { ageMin: 8,  ageMax: 10 },
+  "Sub 12": { ageMin: 11, ageMax: 12 },
+  "Sub 13": { ageMin: 11, ageMax: 13 },
+  "Sub 14": { ageMin: 13, ageMax: 14 },
+};
+
+/** Abreviatura curta de nomes de torneios FPG (cabeçalho da tabela). */
+function shortenFpgTournName(name: string, escalao: string): string {
+  let s = (name || "")
+    .replace(/Campeonato\s+Nacional\s+(de\s+)?/i, "Nac. ")
+    .replace(/Campeonato\s+Regional\s+(de\s+)?/i, "Reg. ")
+    .replace(/\bDrive\s+Tour\b/i, "Drive")
+    .replace(/\bAquapor\b/i, "Aquapor")
+    .replace(/\bJunior\s+Open\b/i, "Jr Open")
+    .replace(/\bJovens\b/gi, "")
+    .replace(/\bSub\s*\d+(?:\s*[&e]\s*\d+)?\b/gi, "")
+    .replace(/[—-]\s*[HFMS]?\s*$/, "")
+    .replace(/\s+/g, " ").trim();
+  s = s.slice(0, 16).trim();
+  const escNorm = escalao.replace(/Sub\s*/i, "U");
+  return `${s} ${escNorm}`.trim();
+}
+
+/** Converte "YYYY-MM-DD" em "Mês YYYY". */
+function fpgDateToLabel(iso: string): string {
+  const m = iso.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (!m) return "";
+  const yr = parseInt(m[1]); const mo = parseInt(m[2]);
+  if (mo < 1 || mo > 12) return "";
+  return `${MONTHS_PT[mo - 1]} ${yr}`;
+}
+
+/**
+ * Processa qualquer ficheiro pull-style FPG (jovens_*.json, clubes_sub_*.json,
+ * pull-torneios*.json, drive-data-*.json, aquapor-data-*.json) e extrai os
+ * torneios juniores (Sub-10/12/13/14) como AutoRivalPlayer.
+ *
+ * - Cada torneio gera um tid único: "fpg{tcode}".
+ * - Players assumem co="Portugal" (refinado depois por players.json).
+ * - Suporta rondas de 9 ou 18 buracos.
+ * - Tcodes em PULL_TCODE_TO_TID são ignorados aqui (geridos pelo
+ *   processPullTorneios com tid curado).
+ */
+export function processFpgJuniorTourns(d: unknown): AutoRivalPlayer[] {
+  const data = d as {
+    tournaments?: Array<{
+      name: string; ccode?: string; tcode?: string; date?: string; campo?: string;
+      escalao?: string; rounds?: number;
+      players?: Array<{
+        pos?: number; name: string; club?: string; fedCode?: string;
+        grossTotal?: number; toPar?: number; nholes?: number;
+        roundScores?: Array<{
+          round: number; gross: number;
+          scores?: number[]; pars?: number[]; si?: number[]; meters?: number[];
+        }>;
+      }>;
+    }>;
+  };
+  if (!data?.tournaments?.length) return [];
+
+  const all: AutoRivalPlayer[] = [];
+  for (const tourn of data.tournaments) {
+    const escalao = (tourn.escalao || "").trim();
+    const ageInfo = FPG_JUNIOR_ESCALOES[escalao];
+    if (!ageInfo) continue;
+    if (!tourn.tcode) continue;
+    if (PULL_TCODE_TO_TID[tourn.tcode]) continue;
+
+    const tid = `fpg${tourn.tcode}`;
+    const dateExact = (tourn.date || "").slice(0, 10);
+
+    if (!fpgTournNames.has(tid)) {
+      fpgTournNames.set(tid, {
+        name: tourn.name || `t${tourn.tcode}`,
+        short: shortenFpgTournName(tourn.name || "", escalao),
+        date: fpgDateToLabel(dateExact),
+        dateExact,
+        escalao,
+        ageMin: ageInfo.ageMin,
+        ageMax: ageInfo.ageMax,
+        ccode: tourn.ccode || "000",
+        tcode: tourn.tcode,
+      });
+    }
+
+    let validPlayers = 0;
+    for (const player of tourn.players || []) {
+      if (!player.name) continue;
+      const rounds = (player.roundScores || []).slice().sort((a, b) => a.round - b.round);
+      const validRounds = rounds.filter(rs => typeof rs.gross === "number" && rs.gross > 0);
+      if (!validRounds.length && !player.grossTotal) continue;
+
+      const rd = validRounds.map(rs => rs.gross);
+      const t  = player.grossTotal ?? (rd.length ? rd.reduce((a, b) => a + b, 0) : null);
+      const tp = typeof player.toPar === "number" ? player.toPar : null;
+      const p  = player.pos ?? null;
+
+      const r0 = validRounds.find(rs => rs.scores?.length && rs.pars?.length);
+      if (r0 && r0.scores && r0.pars && r0.pars.length === r0.scores.length) {
+        const holeRounds = validRounds
+          .map(rs => rs.scores || [])
+          .filter(s => s.length === r0.scores!.length && s.some(v => v > 0));
+        if (holeRounds.length > 0) {
+          addScorecard(normName(player.name), {
+            tid, playerName: player.name,
+            par: r0.pars,
+            si: r0.si || [],
+            meters: r0.meters || [],
+            rounds: holeRounds,
+          });
+        }
+      }
+
+      all.push({
+        n: player.name,
+        co: "",  // sem assumir nacionalidade — players.json refina para os FPG-federados
+        r: { [tid]: {
+          p, t, tp, rd,
+          ageGroup: escalao,
+          nholes: player.nholes || (r0?.scores?.length ?? 18),
+        } },
+      });
+      validPlayers++;
+    }
+    if (validPlayers > 0) uskFieldSizes.set(tid, validPlayers);
+  }
+  return all;
+}
+
 export function processPullTorneios(d: unknown): AutoRivalPlayer[] {
   const data = d as {
     tournaments: Array<{
@@ -524,7 +883,7 @@ export function processPullTorneios(d: unknown): AutoRivalPlayer[] {
 
       all.push({
         n: player.name,
-        co: player.club || "",
+        co: "",  // sem inferir nacionalidade — players.json refina, USKids/BlueGolf prevalecem
         r: { [tid]: { p, t, tp, rd } },
       });
     }
@@ -969,9 +1328,12 @@ export async function buildAutoRivals(
   onProgress?: (p: LoadProgress) => void,
   opts?: { force?: boolean; onUpdate?: (players: AutoRivalPlayer[]) => void; ageGroups?: string[] }
 ): Promise<AutoRivalPlayer[]> {
-  if (!opts?.force && !onProgress && !opts?.onUpdate && _autoRivalsCache) {
-    return _autoRivalsCache;
-  }
+  // Reutilizar a Promise em cache mesmo quando há onProgress/onUpdate.
+  // Razão: React.StrictMode em dev faz o useEffect correr 2× → sem reuso, o
+  // loader fazia tudo duas vezes (incl. push em _loadedFiles → ficheiros
+  // duplicados na lista de fontes). Em cache hits, o callback de progresso
+  // simplesmente não dispara (a Promise já estava resolvida).
+  if (!opts?.force && _autoRivalsCache) return _autoRivalsCache;
   _autoRivalsCache = _buildAutoRivalsInternal(onProgress, opts?.onUpdate, opts);
   return _autoRivalsCache;
 }
@@ -1046,6 +1408,8 @@ async function _buildAutoRivalsInternal(
 ): Promise<AutoRivalPlayer[]> {
   _scorecards.clear();
   uskTournNames.clear();
+  fpgTournNames.clear();
+  ffgolfTournNames.clear();
   _loadedFiles = [];  // reset file tracker por cada reload
   for (const [tcode, meta] of Object.entries(USKIDS_TCODE_META as Record<string, { name: string; short: string; dateExact: string }>)) {
     const [yr, mo] = meta.dateExact.split("-").map(Number);
@@ -1157,6 +1521,9 @@ async function _buildAutoRivalsInternal(
     const path = `${base}pull-torneios000.json`;
     try {
       const d = await fetchJson(path);
+      // Só processa os tids mapeados em PULL_TCODE_TO_TID (gg25, qdl25, gg26, etc.) —
+      // torneios FPG locais (Sub-10/12/14 Nacionais) NÃO entram no tracker de rivais
+      // internacionais, conforme decisão de produto (KIDSPage = juniores estrangeiros).
       mergeInto(map, processPullTorneios(d), PULL_TIDS);
       _loadedFiles.push({ path, status: "loaded", group: "phase 3 pull" });
     } catch (e) {
@@ -1164,6 +1531,35 @@ async function _buildAutoRivalsInternal(
     }
     report("Torneios PT");
   }
+
+  // [Fase 4 FPG-locais removida — KIDSPage foca em juniores internacionais.
+  //  processFpgJuniorTourns continua exportada para uso ad-hoc, mas não corre aqui.]
+
+  // ── Fase 4: FFGolf (Fédération Française de Golf) — torneios juniores FR ──
+  // (a) ffgolf-juniors-slim.json: ~560 torneios consolidados U10/U12/U14 desde 2022.
+  //     Inclui Grand Prix Jeunes regionais, Qualifications CFJ, etc.
+  // (b) gg_*.json: campeonatos majores (Champ. France Benjamins, Internationaux U18).
+  {
+    const path = `${base}ffgolf-juniors-slim.json`;
+    try {
+      const d = await fetchJson(path);
+      mergeInto(map, processFfgolfSlim(d));
+      _loadedFiles.push({ path, status: "loaded", group: "phase 4 ffgolf" });
+    } catch (e) {
+      _loadedFiles.push({ path, status: "error", error: String(e), group: "phase 4 ffgolf" });
+    }
+  }
+
+  await Promise.all(FFGOLF_GG_TOURNAMENTS.map(async meta => {
+    const path = `${base}${meta.file}`;
+    try {
+      const d = await fetchJson(path);
+      mergeInto(map, processFfgolfGG(d, meta));
+      _loadedFiles.push({ path, status: "loaded", group: "phase 4 ffgolf" });
+    } catch (e) {
+      _loadedFiles.push({ path, status: "error", error: String(e), group: "phase 4 ffgolf" });
+    }
+  }));
 
   // ── Enriquecimento FPG: players.json → corrigir co + adicionar fpgClub e dob ──
   // Jogadores portugueses no USKids podem ter o nome do clube como país.

@@ -9,7 +9,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import { useLocation } from "react-router-dom";
 import { fmtToPar, fmtSign, MONTHS_PT, MONTHS_PT_FULL, isoDate, medal, sortArrow } from "../utils/format";
 /* useSort movido para ./kids/H2HSortableTable.tsx */
-import { FL } from "../utils/flagUtils";
+import { FL, normPaisDisplay, flag as flagOf } from "../utils/flagUtils";
 import { getTrend, getAvgZ } from "../utils/mathUtils";
 import { scClass, toParClass, tpColorDark } from "../utils/scoreDisplay";
 import { usePasswordGate } from "../hooks/usePasswordGate";
@@ -23,7 +23,7 @@ import DetailHeader from "../ui/DetailHeader";
 import KpiCard from "../ui/KpiCard";
 import ExtLink from "../ui/ExternalLink";
 import SidebarSectionTitle from "../ui/SidebarSectionTitle";
-import { buildAutoRivals, normName, getScorecards, uskTournNames, uskFieldSizes, getLoadedKidsFiles, type KidsFileMeta } from "../data/KIDSdataLoader";
+import { buildAutoRivals, normName, getScorecards, uskTournNames, uskFieldSizes, fpgTournNames, ffgolfTournNames, getLoadedKidsFiles, type KidsFileMeta } from "../data/KIDSdataLoader";
 import { cachedFetchJson } from "../data/fetchCache";
 import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
 import { FIELD_2025, VP_PAR, VP_SI, VP_M, VP_WJGC26_PAR, VP_WJGC26_SI, VP_WJGC26_M, VP_ALFERINI_PAR, VP_ALFERINI_SI, VP_ALFERINI_M, LT_FORET_PAR, LT_FORET_SI, LT_FORET_M, MS_USKIDS_M_B1011, MS_USKIDS_M_B12, DORAL_GP_M_B1011, DORAL_SF_M_B1213, FIELD_CARDS } from "../data/rivalData";
@@ -220,16 +220,61 @@ function getSignupanytimeUrl(tid: string): string | undefined {
 
 /** Devolve os links de resultados para um tid:
  *  - signupanytimeUrl: sempre disponível para tids usk{tcode}_b{n}
- *  - uskidsUrl: quando existe no T[] ou AUTO_TOURN_META */
-function getTournLinks(tid: string, manualUrl?: string): { signupanytimeUrl?: string; uskidsUrl?: string } {
+ *  - uskidsUrl: quando existe no T[] ou AUTO_TOURN_META
+ *  - fpgUrl: classif FPG pública para tids fpg{tcode}
+ *  - ffgolfUrl: página resultats-details do FFGolf para tids ff{trnId}_U{N} */
+function getTournLinks(tid: string, manualUrl?: string): { signupanytimeUrl?: string; uskidsUrl?: string; fpgUrl?: string; ffgolfUrl?: string } {
   const uskidsUrl = manualUrl ?? AUTO_TOURN_META[tid]?.url;
   const signupanytimeUrl = getSignupanytimeUrl(tid);
-  return { signupanytimeUrl, uskidsUrl };
+  const fpgUrl = getFpgUrl(tid);
+  const ffgolfUrl = getFfgolfUrl(tid);
+  return { signupanytimeUrl, uskidsUrl, fpgUrl, ffgolfUrl };
 }
 
-/** @deprecated usar getTournLinks — mantido para não quebrar chamadas existentes */
+/** Para tids FPG ("fpg{tcode}"), constrói URL para a classif pública FPG.
+ *  Aceita tcodes simples ("10647") ou pré-fundidos ("10674+10676") — neste caso
+ *  usa o primeiro tcode da combinação. */
+function getFpgUrl(tid: string): string | undefined {
+  const m = tid.match(/^fpg([\d+]+)$/);
+  if (!m) return undefined;
+  const fpg = fpgTournNames.get(tid);
+  const ccode = fpg?.ccode || "000";
+  const tcode = m[1].split("+")[0];  // se houver "+", usa só o primeiro
+  return `https://scoring.fpg.pt/lists/linkpage.aspx?page=classif&club=${ccode}&tourn=${tcode}&ack=8428ACK987`;
+}
+
+/** Para tids FFGolf ("ff{trnId}_U{N}") devolve URL útil para o utilizador.
+ *
+ *  CONTEXTO: pages.ffgolf.org/resultats/ é uma SPA (Single-Page App) sem URLs
+ *  públicas directas para torneios individuais — todos os links usam
+ *  `javascript:void(0)` e carregam dados via XHR com cookies de sessão. O
+ *  endpoint iframe (resultats-details) só responde dentro do contexto da SPA.
+ *
+ *  SOLUÇÃO: Google search com nome do torneio + ano + "ffgolf". Cobre todos os
+ *  tipos (GP Jeunes regionais, Champ. France, Internationaux, Qualifs CFJ).
+ *  O Google indexa as páginas das ligues regionais (ex: lgpidf.com) que têm
+ *  resultados publicados. Funciona consistentemente; user clica primeiro
+ *  resultado e chega lá. */
+function getFfgolfUrl(tid: string): string | undefined {
+  if (!tid.startsWith("ff")) return undefined;
+  const ff = ffgolfTournNames.get(tid);
+  if (!ff?.name) return undefined;
+  const yr = ff.dateExact?.slice(0, 4) || "";
+  // Google search restrito aos sites das ligues regionais + ffgolf.org —
+  // estes têm os resultados realmente publicados. O cpi.ffgolf.org
+  // é a página de inscrição (com link aos resultados), o lgpidf.com
+  // é a Ligue Paris IDF (cobre ~30% dos GP Jeunes).
+  const sites = "site:ffgolf.org OR site:lgpidf.com OR site:cpi.ffgolf.org";
+  const q = `${ff.name} ${yr} ${sites}`.trim();
+  return `https://www.google.com/search?q=${encodeURIComponent(q)}`;
+}
+
+/** @deprecated usar getTournLinks — mantido para não quebrar chamadas existentes.
+ *  Nota: NÃO inclui getFfgolfUrl porque o link FFGolf é renderizado separadamente
+ *  via getTournLinks().ffgolfUrl (botão ↗ FFG). Caso contrário, t.url e ffgolfUrl
+ *  apontariam para o mesmo URL e apareceriam dois botões idênticos. */
 function getTournUrl(tid: string, existingUrl?: string): string | undefined {
-  return existingUrl ?? AUTO_TOURN_META[tid]?.url;
+  return existingUrl ?? AUTO_TOURN_META[tid]?.url ?? getFpgUrl(tid);
 }
 
 /** Lookup tournament display info by id (works for manual T and auto tourns) */
@@ -244,6 +289,16 @@ function getTournInfo(tid: string): { name: string; short: string; date: string;
   if (uskMatch) {
     const base = uskTournNames.get(uskMatch[1]);
     if (base) return { name: base.name, short: base.short, date: base.date, dateExact: base.dateExact };
+  }
+  // FPG juniores: "fpg{tcode}" — tcode pode conter + para torneios pré-fundidos (jovens_2023)
+  if (/^fpg[\d+]+$/.test(tid)) {
+    const fpg = fpgTournNames.get(tid);
+    if (fpg) return { name: fpg.name, short: fpg.short, date: fpg.date, dateExact: fpg.dateExact };
+  }
+  // FFGolf (Fédération Française): "ff{nome}" — Champ. France, Internationaux, etc.
+  if (tid.startsWith("ff")) {
+    const ff = ffgolfTournNames.get(tid);
+    if (ff) return { name: ff.name, short: ff.short, date: ff.date, dateExact: ff.dateExact };
   }
   return { name: tid, short: tid, date: "?", dateExact: "9999" };
 }
@@ -399,6 +454,23 @@ function computeDobInfo(p: RivalPlayer, mhPlayer?: MHPlayer | null): DobInfo {
         const base = uskTournNames.get(m[1]);
         const age = Number(m[2]);
         if (base) td = { dateExact: base.dateExact, ageMin: age, ageMax: age };
+      }
+    }
+    // FPG juniores: "fpg{tcode}" — tcode pode conter + para torneios pré-fundidos
+    if (!td && /^fpg[\d+]+$/.test(tid)) {
+      const fpg = fpgTournNames.get(tid);
+      if (fpg) td = { dateExact: fpg.dateExact, ageMin: fpg.ageMin, ageMax: fpg.ageMax };
+    }
+    // FFGolf: "ff{trnId}_{U10|U12|U14}" → dateExact + age range derivado do escalão
+    if (!td && tid.startsWith("ff")) {
+      const ff = ffgolfTournNames.get(tid);
+      if (ff) {
+        const ag = ff.ageGroup || "";
+        const aMin = ag === "U10" ? 8 : ag === "U12" ? 11 : ag === "U14" ? 13 : null;
+        const aMax = ag === "U10" ? 10 : ag === "U12" ? 12 : ag === "U14" ? 14 : null;
+        if (aMin != null && aMax != null) {
+          td = { dateExact: ff.dateExact, ageMin: aMin, ageMax: aMax };
+        }
       }
     }
     if (!td?.dateExact) continue;
@@ -745,6 +817,122 @@ const D: RivalPlayer[]=[
   {n:"Alessandro Zhang",co:"Great Britain",r:{},up:["marco26"]},
 ];
 
+/* ═══════════════════════════════════
+   COHERENCE CHECKS — prevenir merges errados de jogadores diferentes
+   ═══════════════════════════════════ */
+
+/**
+ * Devolve a janela DOB inferida das tids de um jogador (ou DOB exacta se p.dob).
+ * Versão STRICT: tenta intersectar todas as constraints. Se não há informação
+ * suficiente, retorna [null, null] — caller assume "não conclusivo".
+ *
+ * Usa as registries uskTournNames, fpgTournNames, ffgolfTournNames + T_MAP.
+ */
+function dobRangeStrict(p: RivalPlayer): [Date | null, Date | null] {
+  if (p.dob) {
+    const d = parseDob(p.dob);
+    return [d, d];
+  }
+  let lo: Date | null = null, hi: Date | null = null;
+  for (const [tid, res] of Object.entries(p.r)) {
+    let td: { dateExact?: string; ageMin?: number; ageMax?: number } | undefined = T_MAP[tid];
+    if (!td) {
+      const m = tid.match(/^(usk\d+)_b(\d+)$/);
+      if (m) {
+        const base = uskTournNames.get(m[1]);
+        const age = Number(m[2]);
+        if (base) td = { dateExact: base.dateExact, ageMin: age, ageMax: age };
+      }
+    }
+    if (!td && /^fpg[\d+]+$/.test(tid)) {
+      const fpg = fpgTournNames.get(tid);
+      if (fpg) td = { dateExact: fpg.dateExact, ageMin: fpg.ageMin, ageMax: fpg.ageMax };
+    }
+    if (!td && tid.startsWith("ff")) {
+      const ff = ffgolfTournNames.get(tid);
+      if (ff) {
+        const ag = ff.ageGroup || "";
+        const aMin = ag === "U10" ? 8 : ag === "U12" ? 11 : ag === "U14" ? 13 : null;
+        const aMax = ag === "U10" ? 10 : ag === "U12" ? 12 : ag === "U14" ? 14 : null;
+        if (aMin != null && aMax != null) td = { dateExact: ff.dateExact, ageMin: aMin, ageMax: aMax };
+      }
+    }
+    if (!td?.dateExact) continue;
+
+    let ageMin = td.ageMin ?? null;
+    let ageMax = td.ageMax ?? null;
+    const agStr = (res as any).ageGroup as string | undefined;
+    if (agStr) {
+      const exact = parseExactAge(agStr);
+      if (exact != null) {
+        ageMin = ageMin == null ? exact : Math.max(ageMin, exact);
+        ageMax = ageMax == null ? exact : Math.min(ageMax, exact);
+      }
+    }
+    // Aceitar constraints parciais: só ageMin (≥X anos) ou só ageMax (≤X anos)
+    if (ageMin == null && ageMax == null) continue;
+
+    const tDate = new Date(td.dateExact);
+    if (ageMin != null) {
+      // Tinha PELO MENOS ageMin → DOB ≤ tDate - ageMin anos (latest possível)
+      const latest = new Date(tDate); latest.setFullYear(latest.getFullYear() - ageMin);
+      if (!hi || latest < hi) hi = latest;
+    }
+    if (ageMax != null) {
+      // Tinha NO MÁXIMO ageMax → DOB > tDate - (ageMax+1) anos (earliest possível)
+      const earliest = new Date(tDate); earliest.setFullYear(earliest.getFullYear() - ageMax - 1);
+      earliest.setDate(earliest.getDate() + 1);
+      if (!lo || earliest > lo) lo = earliest;
+    }
+  }
+  return [lo, hi];
+}
+
+/**
+ * Verifica se dois jogadores podem coerentemente ser a mesma pessoa.
+ * Conservador: SÓ bloqueia merge quando há evidência FORTE de pessoas diferentes.
+ *
+ * Bloqueia se:
+ *   1. memberId definido em ambos e diferente
+ *   2. DOB explícita em ambos e diferem por > 30 dias
+ *
+ * NÃO bloqueia em janelas DOB inferidas (demasiado ruidosas — kids jogam em
+ * escalões adjacentes, dados podem ter pequenas inconsistências). Janelas
+ * com gap > 1 ano contra DOB explícita vão soltar a flag.
+ *
+ * Para Manuel: nunca bloqueia (resolvePlayerKey + isM já tratam dele).
+ */
+function arePlayersCompatible(a: RivalPlayer, b: RivalPlayer): boolean {
+  if (a.isM || b.isM) return true;
+
+  const aMid = (a as any).memberId, bMid = (b as any).memberId;
+  if (aMid && bMid && aMid !== bMid) return false;
+
+  // DOB explícita em ambos: têm de coincidir (tolerância 30 dias)
+  if (a.dob && b.dob) {
+    const da = parseDob(a.dob), db = parseDob(b.dob);
+    const diffDays = Math.abs(da.getTime() - db.getTime()) / 86400000;
+    if (diffDays > 30) return false;
+  }
+
+  // DOB explícita vs janela inferida do outro: bloqueia só se gap > 12 meses
+  const explicit = a.dob ? parseDob(a.dob) : (b.dob ? parseDob(b.dob) : null);
+  const other = a.dob ? b : (b.dob ? a : null);
+  if (explicit && other) {
+    const [lo, hi] = dobRangeStrict(other);
+    if (lo && explicit < lo) {
+      const months = (lo.getTime() - explicit.getTime()) / (30.44 * 86400000);
+      if (months > 12) return false;
+    }
+    if (hi && explicit > hi) {
+      const months = (explicit.getTime() - hi.getTime()) / (30.44 * 86400000);
+      if (months > 12) return false;
+    }
+  }
+
+  return true;  // default: permitir merge
+}
+
 const manuel = D.find(x => x.isM)!;
 
 /** Hook: carrega todos os ficheiros JSON e faz merge com D */
@@ -763,32 +951,73 @@ function useAutoRivals() {
   React.useEffect(() => {
     buildAutoRivals((p) => setProgress({ ...p })).then(autoPlayers => {
       setFileMeta(getLoadedKidsFiles());
-      // Trabalhar sobre uma cópia profunda de D
+      // Trabalhar sobre uma cópia profunda de D — canonicalizar `co` na origem
+      // para que entradas estáticas ("Russian Federation", "Great Britain")
+      // dedupem com as canonicalizadas pelo loader ("Russia", "United Kingdom").
       const map = new Map<string, RivalPlayer>(
-        D.map(p => [normName(p.n), { ...p, r: { ...p.r } }])
+        D.map(p => [normName(p.n), { ...p, co: normPaisDisplay(p.co), r: { ...p.r } }])
       );
+      // Helper: aplica os dados do `ap` num player existente
+      const applyApIntoExisting = (ex: RivalPlayer, ap: AutoRivalPlayer, apCoCanon: string) => {
+        for (const [tid, res] of Object.entries(ap.r)) {
+          if (!ex.r[tid] || res.rd.length > (ex.r[tid]?.rd.length ?? 0))
+            ex.r[tid] = { ...res, p: res.p ?? "WD" } as TournResult;
+        }
+        if (ap.fpgClub) (ex as any).fpgClub = ap.fpgClub;
+        if (ap.dob && !ex.dob) ex.dob = fpgDobToPt(ap.dob);
+        if (apCoCanon === "Portugal" && !ex.isM) ex.co = "Portugal";
+        if (ap.memberId && !(ex as any).memberId) (ex as any).memberId = ap.memberId;
+      };
+
+      // Helper: cria um novo RivalPlayer a partir de um AutoRivalPlayer
+      const buildNewPlayer = (ap: AutoRivalPlayer, apCoCanon: string): RivalPlayer => {
+        const convertedR: Record<string, TournResult> = Object.fromEntries(
+          Object.entries(ap.r).map(([k, v]) => [k, { ...v, p: v.p ?? "WD" } as TournResult])
+        );
+        const newPlayer: RivalPlayer = { n: ap.n, co: apCoCanon, r: convertedR, up: [] };
+        if (ap.fpgClub) (newPlayer as any).fpgClub = ap.fpgClub;
+        if (ap.dob) newPlayer.dob = fpgDobToPt(ap.dob);
+        if (ap.memberId) (newPlayer as any).memberId = ap.memberId;
+        return newPlayer;
+      };
+
       for (const ap of autoPlayers) {
-        const key = resolvePlayerKey(ap.n);
-        if (map.has(key)) {
-          const ex = map.get(key)!;
-          for (const [tid, res] of Object.entries(ap.r)) {
-            if (!ex.r[tid] || res.rd.length > (ex.r[tid]?.rd.length ?? 0))
-              ex.r[tid] = { ...res, p: res.p ?? "WD" } as TournResult;
-          }
-          // Enriquecer com dados FPG se disponíveis
-          if (ap.fpgClub) (ex as any).fpgClub = ap.fpgClub;
-          if (ap.dob && !ex.dob) ex.dob = fpgDobToPt(ap.dob);
-          if (ap.co === "Portugal" && !ex.isM) ex.co = "Portugal";
-          if (ap.memberId && !(ex as any).memberId) (ex as any).memberId = ap.memberId;
-        } else {
-          const convertedR: Record<string, TournResult> = Object.fromEntries(
+        const baseKey = resolvePlayerKey(ap.n);
+        const apCoCanon = normPaisDisplay(ap.co || "");
+
+        // Pseudo-jogador a partir do ap, para usar arePlayersCompatible
+        const apAsRP: RivalPlayer = {
+          n: ap.n,
+          co: apCoCanon,
+          dob: ap.dob ? fpgDobToPt(ap.dob) : undefined,
+          r: Object.fromEntries(
             Object.entries(ap.r).map(([k, v]) => [k, { ...v, p: v.p ?? "WD" } as TournResult])
-          );
-          const newPlayer: RivalPlayer = { n: ap.n, co: ap.co, r: convertedR, up: [] };
-          if (ap.fpgClub) (newPlayer as any).fpgClub = ap.fpgClub;
-          if (ap.dob) newPlayer.dob = fpgDobToPt(ap.dob);
-          if (ap.memberId) (newPlayer as any).memberId = ap.memberId;
-          map.set(key, newPlayer);
+          ),
+          up: [],
+        };
+        if (ap.memberId) (apAsRP as any).memberId = ap.memberId;
+
+        // Tenta merge na chave principal. Se incompatível por evidência forte
+        // (memberId mismatch ou DOB explícitas distintas), abre 1 slot alternativo.
+        // Para mais raros (evidência ainda mais clara), última fallback.
+        if (!map.has(baseKey)) {
+          map.set(baseKey, buildNewPlayer(ap, apCoCanon));
+        } else {
+          const ex = map.get(baseKey)!;
+          if (arePlayersCompatible(ex, apAsRP)) {
+            applyApIntoExisting(ex, ap, apCoCanon);
+          } else {
+            const altKey = `${baseKey}__alt2`;
+            if (!map.has(altKey)) {
+              map.set(altKey, buildNewPlayer(ap, apCoCanon));
+            } else {
+              const exAlt = map.get(altKey)!;
+              if (arePlayersCompatible(exAlt, apAsRP)) {
+                applyApIntoExisting(exAlt, ap, apCoCanon);
+              }
+              // sem alt3+ — caso seja preciso, prefere ignorar a fundir errado
+            }
+          }
         }
       }
       setMerged(Array.from(map.values()));
@@ -1027,7 +1256,15 @@ function tornCanonK(name: string): string {
     .replace(/[^a-z0-9]/g, "").trim();
 }
 
-/* ── Player type classification — adapta USKIDSPage ── */
+/* ── Player type classification — adapta USKIDSPage ──
+ *
+ * Camadas de elegibilidade:
+ *   1. Mínimo de torneios jogados — sample size pequeno não dá tier.
+ *   2. Idade Manuel-relevante — kids fora do range ±2 anos não dão "rival" no
+ *      sentido prático (ele nunca joga com eles), pelo que não recebem tier.
+ *      Implementação: usa janela DOB inferida; se a janela está completamente
+ *      fora do range Manuel±2 anos, descarta. Se for ambígua (parcial), aceita.
+ */
 function getPlayerType(rival: RivalPlayer): { label: string; bg: string; fg: string } | null {
   if (rival.isM) return null;
   const hidden = hiddenTids(rival);
@@ -1035,6 +1272,32 @@ function getPlayerType(rival: RivalPlayer): { label: string; bg: string; fg: str
     .filter(([tid, r]) => !hidden.has(tid) && typeof r?.p === "number" && (r.p as number) > 0)
     .map(([, r]) => r.p as number);
   if (!positions.length) return null;
+
+  const total   = nPlayed(rival);
+  // Camada 1 — sample size mínimo para Tiers 'top'. Sem isto, 1 vitória num
+  // único torneio seria suficiente para "Top Contender".
+  const MIN_TOURNAMENTS_TIER = 3;
+
+  // Camada 2 — gate por idade. Manuel nasceu MANUEL_BIRTH_YEAR (2014) → rival
+  // tem de poder ter idade ±2 anos da do Manuel HOJE.
+  // Se a janela DOB inferida do rival estiver completamente fora desse range,
+  // não atribuir tier.
+  const MANUEL_DOB = parseDob("29/04/2014");
+  const todayMs = Date.now();
+  const manuelAgeYears = (todayMs - MANUEL_DOB.getTime()) / (365.25 * 86400000);
+  const minPlausibleAge = manuelAgeYears - 2;  // até 2 anos mais novo
+  const maxPlausibleAge = manuelAgeYears + 2;  // até 2 anos mais velho
+  const [rLo, rHi] = dobRangeStrict(rival);
+  // Calcular idade actual do rival a partir da janela DOB
+  if (rLo) {
+    const ageFromLo = (todayMs - rLo.getTime()) / (365.25 * 86400000); // idade máxima
+    if (ageFromLo > maxPlausibleAge + 0.5) return null; // demasiado velho
+  }
+  if (rHi) {
+    const ageFromHi = (todayMs - rHi.getTime()) / (365.25 * 86400000); // idade mínima
+    if (ageFromHi < minPlausibleAge - 0.5) return null; // demasiado novo
+  }
+
   const wins   = positions.filter(p => p === 1).length;
   const avgPos = positions.reduce((a, b) => a + b, 0) / positions.length;
   const pcts   = Object.entries(rival.r)
@@ -1045,15 +1308,18 @@ function getPlayerType(rival: RivalPlayer): { label: string; bg: string; fg: str
       return fi > 0 ? Math.round((r.p as number) / fi * 100) : null;
     }).filter((v): v is number => v != null);
   const avgPct  = pcts.length ? Math.round(pcts.reduce((a, b) => a + b, 0) / pcts.length) : null;
-  const total   = nPlayed(rival);
   const years   = Object.keys(rival.r).map(tid => parseInt((getTournInfo(tid).dateExact ?? "0").slice(0, 4))).filter(y => y > 2010);
   const anosActivo = years.length ? Math.max(...years) - Math.min(...years) + 1 : 0;
 
-  if (wins >= 3 && avgPos <= 4)                        return { label: "🏆 Elite",            bg: "var(--score-eagle)",    fg: "#fff" };
-  if (wins >= 1 && avgPos <= 5)                        return { label: "⭐ Top Contender",     bg: "var(--medal-gold)",     fg: "#fff" };
-  if (avgPos <= 8 && (avgPct == null || avgPct <= 25)) return { label: "🎯 Forte Competidor",  bg: "var(--color-good-dark)", fg: "#fff" };
-  if (total >= 20 && anosActivo >= 4)                  return { label: "🔁 Assíduo",           bg: "var(--text-dark)",      fg: "#fff" };
-  if (avgPos <= 12 && total >= 10)                     return { label: "✅ Consistente",        bg: "var(--accent)",         fg: "#fff" };
+  // Tiers altos (Elite/Top/Forte) exigem amostra mínima
+  if (total >= MIN_TOURNAMENTS_TIER) {
+    if (wins >= 3 && avgPos <= 4)                        return { label: "🏆 Elite",            bg: "var(--score-eagle)",    fg: "#fff" };
+    if (wins >= 1 && avgPos <= 5)                        return { label: "⭐ Top Contender",     bg: "var(--medal-gold)",     fg: "#fff" };
+    if (avgPos <= 8 && (avgPct == null || avgPct <= 25)) return { label: "🎯 Forte Competidor",  bg: "var(--color-good-dark)", fg: "#fff" };
+  }
+  // Tiers de volume já têm os seus próprios mínimos
+  if (total >= 20 && anosActivo >= 4)                    return { label: "🔁 Assíduo",           bg: "var(--text-dark)",      fg: "#fff" };
+  if (avgPos <= 12 && total >= 10)                       return { label: "✅ Consistente",        bg: "var(--accent)",         fg: "#fff" };
   return null;
 }
 
@@ -1108,6 +1374,102 @@ function hiddenTids(p: RivalPlayer): Set<string> {
       hidden.add(toHide);
   }
   return hidden;
+}
+
+/**
+ * Mapa explícito auto tid → manual T id que o cobre.
+ * Necessário quando o id manual não deriva trivialmente do auto tid.
+ * (Movido de dentro do componente para topo — usado por sidebar e detail.)
+ */
+const AUTO_COVERED_BY: Record<string, string> = {
+  // brjgt25 (manual) é coberto por wjgc25_b{N} — preferimos o auto (escalão específico)
+  // mas o tournResults inverte: prefer manual T se ambos. Para H2H usamos o canonical_tid
+  // unificado: brjgt25 cobre wjgc25_b89/b1011/b1213.
+  "wjgc25_b89":    "brjgt25",
+  "wjgc25_b1011":  "brjgt25",
+  "wjgc25_b1213":  "brjgt25",
+  // wjgc26_1213 (manual) cobre o auto
+  "wjgc26_b1213":  "wjgc26_1213",
+  // Venice 2025
+  "venice25_b11":  "venice25",
+  "venice25_b12":  "venice25",
+  "venice25_b9":   "venice25",
+  "venice25_b10":  "venice25",
+  // Rome 2025
+  "rome25_b11":    "rome25",
+  "rome25_b12":    "rome25",
+  "rome25_b9":     "rome25",
+  "rome25_b10":    "rome25",
+  // Doral 2025
+  "doral25_b1011": "doral25",
+  "doral25_b89":   "doral25",
+  "doral25_b1213": "doral25",
+};
+
+const _MANUAL_TIDS_SET = new Set(T.map(t => t.id));
+
+const _T_BY_NAME = (() => {
+  const m = new Map<string, string>();
+  const norm = (s: string) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, " ").trim();
+  for (const t of T) {
+    const k1 = norm(t.name);
+    const k2 = norm(t.name).replace(/\s*\d{4}$/, "").trim();
+    m.set(k1, t.id); m.set(k2, t.id);
+  }
+  return m;
+})();
+
+/**
+ * Devolve os tids "canónicos" de um jogador — um por torneio real, sem
+ * duplicação manual/auto. Usado para deduplicar tanto na sidebar (h2hMap)
+ * como no detail (confrontosH2H), garantindo que o número de confrontos
+ * directos é consistente.
+ *
+ * Regra:
+ *   1. Para cada T[] manual com dados → incluir, EXCEPTO brjgt25 quando
+ *      wjgc25_b1011 também existe (preferimos o auto com escalão específico).
+ *   2. Para cada auto tid não coberto por manual:
+ *      - AUTO_COVERED_BY[tid] aponta para um manual com dados → skip
+ *      - usk{tcode}_b{n} cujo info.name corresponde a um T[] com dados → skip
+ *      - Caso contrário → incluir.
+ */
+function getCanonicalTids(p: RivalPlayer): Set<string> {
+  const out = new Set<string>();
+  // 1. T[] manuais com dados
+  for (const t of T) {
+    if (!(p.r[t.id]?.rd?.length)) continue;
+    if (t.id === "brjgt25" && p.r["wjgc25_b1011"]?.rd?.length) continue;
+    out.add(t.id);
+  }
+  // 2. Auto tids não cobertos por manual
+  const norm = (s: string) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, " ").trim();
+  for (const [tid, res] of Object.entries(p.r)) {
+    if (_MANUAL_TIDS_SET.has(tid)) continue;
+    if (!res?.rd?.length) continue;
+    // 2a) AUTO_COVERED_BY explícito
+    if (AUTO_COVERED_BY[tid]) {
+      const manualTid = AUTO_COVERED_BY[tid];
+      if (p.r[manualTid]?.rd?.length) continue;
+    }
+    // 2b) usk{tcode}_b{n} → match por nome em T[]
+    const uskMatch = tid.match(/^(usk\d+)_b\d+$/);
+    if (uskMatch) {
+      const info = uskTournNames.get(uskMatch[1]);
+      if (info) {
+        const k1 = norm(info.name);
+        const k2 = k1.replace(/\s*\d{4}$/, "").trim();
+        const manualTid = _T_BY_NAME.get(k1) ?? _T_BY_NAME.get(k2);
+        if (manualTid && p.r[manualTid]?.rd?.length) continue;
+      }
+    }
+    // 2c) Strip _b\d+ suffix → manual T?
+    const base = tid.replace(/_b\d+$/, "");
+    if (_MANUAL_TIDS_SET.has(base) && p.r[base]?.rd?.length) continue;
+    out.add(tid);
+  }
+  return out;
 }
 
 function nPlayed(p: RivalPlayer) {
@@ -1190,6 +1552,7 @@ const SIDEBAR_FILTERS = [
   { id: "euro_usk",  label: "🌍 USKids Euro" },
   { id: "doral",    label: "🇺🇸 Doral" },
   { id: "pt",       label: "🇵🇹 Nacional" },
+  { id: "fr",       label: "🇫🇷 França" },
 ];
 
 
@@ -1203,7 +1566,8 @@ function playerMatchesFilter(p: RivalPlayer, fids: Set<string>): boolean {
         t.startsWith("wjgc") || t.startsWith("brjgt") ||
         t.startsWith("eowagr") || t.startsWith("venice") ||
         t.startsWith("rome") || t.startsWith("doral") ||
-        t.startsWith("gg") || t.startsWith("qdl") || t.startsWith("marco");
+        t.startsWith("gg") || t.startsWith("qdl") || t.startsWith("marco") ||
+        t.startsWith("fpg");
     });
     if (fid === "usk_circ") return !p.isM && tids.some(t => /^usk\d+_b\d+$/.test(t));
     if (fid === "wjgc")     return tids.some(t => t.startsWith("wjgc") || t.startsWith("brjgt"));
@@ -1213,7 +1577,10 @@ function playerMatchesFilter(p: RivalPlayer, fids: Set<string>): boolean {
       t.startsWith("marco") || t.startsWith("elprat")
     );
     if (fid === "doral")    return tids.some(t => t.startsWith("doral"));
-    if (fid === "pt")       return tids.some(t => t.startsWith("gg") || t.startsWith("qdl"));
+    if (fid === "pt")       return tids.some(t =>
+      t.startsWith("gg") || t.startsWith("qdl") || t.startsWith("fpg")
+    );
+    if (fid === "fr")       return tids.some(t => t.startsWith("ff"));
     return true;
   });
 }
@@ -1249,13 +1616,18 @@ function RivaisSidebar({ selected, onSelect, fids, q, paisFilter, tierFilter, mi
   const h2hMap = useMemo<Map<string, { w: number; l: number; d: number }>>(() => {
     const m = new Map<string, { w: number; l: number; d: number }>();
     if (!manuelMerged) return m;
+    // Usa getCanonicalTids — mesma deduplicação que tournResults/confrontosH2H
+    // no detail. Garante que sidebar e detail mostram o mesmo nº de confrontos.
+    const manuelTids = getCanonicalTids(manuelMerged);
     for (const p of rivals) {
       if (p.isM) continue;
-      const hidden = hiddenTids(p), mHidden = hiddenTids(manuelMerged);
-      const shared = Object.keys(p.r).filter(tid => {
-        if (hidden.has(tid) || mHidden.has(tid)) return false;
-        return typeof manuelMerged.r[tid]?.p === "number" && typeof p.r[tid]?.p === "number";
-      });
+      const playerTids = getCanonicalTids(p);
+      const shared: string[] = [];
+      for (const tid of playerTids) {
+        if (!manuelTids.has(tid)) continue;
+        if (typeof manuelMerged.r[tid]?.p !== "number" || typeof p.r[tid]?.p !== "number") continue;
+        shared.push(tid);
+      }
       if (!shared.length) continue;
       const w = shared.filter(tid => (manuelMerged.r[tid].p as number) < (p.r[tid].p as number)).length;
       const l = shared.filter(tid => (manuelMerged.r[tid].p as number) > (p.r[tid].p as number)).length;
@@ -1291,7 +1663,7 @@ function RivaisSidebar({ selected, onSelect, fids, q, paisFilter, tierFilter, mi
   }, [q, fids, paisFilter, tierFilter, minTorn, apenasDirectos, rivals, h2hMap, playerTypeMap]);
 
   const renderItem = (p: RivalPlayer) => {
-    const flagEmoji = FL[p.co] || "🏳️";
+    const flagEmoji = flagOf(p.co);
     const rank = rankMap[p.n];
     const played = nPlayed(p);
     const isActive = selected === p.n;
@@ -1746,7 +2118,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
     return next;
   });
 
-  const flag = rival ? (FL[rival.co] || "🏳️") : "";
+  const flag = rival ? flagOf(rival.co) : "";
   const rank = rankMap[playerName];
   const tr = rival ? (getTrend as (p: RivalPlayer) => string | null)(rival) : null;
   const played = rival ? nPlayed(rival) : 0;
@@ -2196,11 +2568,13 @@ function RivalDetail({ playerName }: { playerName: string }) {
   }, [rival, isManuel, played, palmares, tournResults]);
 
   // ── H2H data ─────────────────────────────────────────────────────
-  // h2hData deriva de confrontosH2H (tournResults deduplicado) para ser consistente com a tabela
+  // Perspectiva MANUEL — alinhada com sidebar (h2hMap) e tabela H2HTable.
+  // V = vitórias do Manuel (manPos < rivalPos = Manuel finished better)
+  // D = derrotas do Manuel (manPos > rivalPos)
   const h2hData = React.useMemo(() => {
     if (!rival || isManuel || !confrontosH2H.length) return null;
-    const w = confrontosH2H.filter(c => c.rivalPos < c.manPos).length;
-    const l = confrontosH2H.filter(c => c.rivalPos > c.manPos).length;
+    const w = confrontosH2H.filter(c => c.manPos < c.rivalPos).length;
+    const l = confrontosH2H.filter(c => c.manPos > c.rivalPos).length;
     return {
       tids: confrontosH2H.map(c => c.tid),
       wins: w, losses: l, draws: confrontosH2H.length - w - l,
@@ -2588,7 +2962,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
                         )}
                         {/* Links */}
                         {(() => {
-                          const { signupanytimeUrl, uskidsUrl } = getTournLinks(t.id, t.url);
+                          const { signupanytimeUrl, uskidsUrl, fpgUrl, ffgolfUrl } = getTournLinks(t.id, t.url);
                           const linkStyle: React.CSSProperties = {
                             display:"inline-flex", alignItems:"center", gap:2, fontSize:10,
                             fontWeight:600, textDecoration:"none", padding:"1px 5px",
@@ -2608,6 +2982,20 @@ function RivalDetail({ playerName }: { playerName: string }) {
                                   onClick={e => e.stopPropagation()} title="Ver resultados"
                                   style={{ ...linkStyle, color:"var(--accent)", border:"1px solid var(--accent)" }}>
                                   ↗ result
+                                </ExtLink>
+                              )}
+                              {fpgUrl && (
+                                <ExtLink href={fpgUrl}
+                                  onClick={e => e.stopPropagation()} title="Classif. FPG"
+                                  style={{ ...linkStyle, color:"var(--accent)", border:"1px solid var(--accent)" }}>
+                                  ↗ FPG
+                                </ExtLink>
+                              )}
+                              {ffgolfUrl && (
+                                <ExtLink href={ffgolfUrl}
+                                  onClick={e => e.stopPropagation()} title="Resultados FFGolf"
+                                  style={{ ...linkStyle, color:"var(--accent)", border:"1px solid var(--accent)" }}>
+                                  ↗ FFG
                                 </ExtLink>
                               )}
                             </>
@@ -2828,8 +3216,14 @@ function RivaisIntlContent() {
 
   // Países disponíveis
   const paises = useMemo(() => {
+    // Defensive: canonicalize one final time at display level. Garante que
+    // mesmo que algum fluxo escape ao merge, o dropdown nunca tem variantes.
     const s = new Set<string>();
-    for (const p of rivals) { if (!p.isM && p.co) s.add(p.co); }
+    for (const p of rivals) {
+      if (p.isM || !p.co) continue;
+      const canon = normPaisDisplay(p.co);
+      if (canon) s.add(canon);
+    }
     return [...s].sort();
   }, [rivals]);
 
@@ -2885,7 +3279,7 @@ function RivaisIntlContent() {
         <select className="select fs-11 shrink-0" value={paisFilter} onChange={e => setPaisFilter(e.target.value)}
           style={{ height: 26, minWidth: 85 }}>
           <option value="">🌍 País</option>
-          {paises.map(p => <option key={p} value={p}>{FL[p] || "🏳️"} {p}</option>)}
+          {paises.map(p => <option key={p} value={p}>{flagOf(p)} {p}</option>)}
         </select>
         {[
           { emoji: "🏆", label: "Elite" }, { emoji: "⭐", label: "Top" },

@@ -21,9 +21,11 @@ import {
   processWjgc,
   processDoral,
   processPullTorneios,
+  processFpgJuniorTourns,
   processManuelOverrides,
   uskTournNames,
   uskFieldSizes,
+  fpgTournNames,
   type AutoRivalPlayer,
 } from "../../data/KIDSdataLoader";
 
@@ -51,6 +53,18 @@ describe("normName", () => {
   it("string vazia", () => {
     expect(normName("")).toBe("");
     expect(normName("   ")).toBe("");
+  });
+
+  it("hífens são tratados como espaços (Castro-Ferreira ≡ Castro Ferreira)", () => {
+    expect(normName("Ricardo Castro-Ferreira")).toBe(normName("Ricardo Castro Ferreira"));
+    expect(normName("RICARDO CASTRO-FERREIRA")).toBe(normName("Ricardo Castro Ferreira"));
+    expect(normName("Marie-Claire Dubois")).toBe(normName("Marie Claire Dubois"));
+  });
+
+  it("apóstrofes e pontos são tratados como espaços", () => {
+    expect(normName("D'Souza")).toBe(normName("D Souza"));
+    expect(normName("O'Neill")).toBe(normName("O Neill"));
+    expect(normName("Jr.")).toBe("jr");
   });
 });
 
@@ -81,6 +95,109 @@ describe("co", () => {
     expect(co("")).toBe("");
     expect(co(null as unknown as string)).toBe("");
     expect(co(undefined as unknown as string)).toBe("");
+  });
+
+  // ─── Deduplicação cross-source: USKids ISO-2 vs BlueGolf PT vs FPG ───
+  it("dedup'a Russia (RU vs Russian Federation vs Federação Russa)", () => {
+    expect(co("RU")).toBe(co("Russian Federation"));
+    expect(co("RU")).toBe(co("Federação Russa"));
+    expect(co("RU")).toBe("Russia");
+  });
+
+  it("dedup'a Vietnam (VN vs Viet Nam vs Vietname vs Vietnã)", () => {
+    expect(co("VN")).toBe(co("Vietname"));
+    expect(co("VN")).toBe(co("Vietnã"));
+    expect(co("VN")).toBe("Vietnam");
+  });
+
+  it("dedup'a France (FR vs França vs Franca)", () => {
+    expect(co("FR")).toBe(co("França"));
+    expect(co("FR")).toBe(co("Franca"));
+    expect(co("FR")).toBe("France");
+  });
+
+  it("dedup'a UK (GB vs UK vs England vs Inglaterra vs Reino Unido)", () => {
+    expect(co("GB")).toBe(co("UK"));
+    expect(co("GB")).toBe(co("England"));
+    expect(co("GB")).toBe(co("Inglaterra"));
+    expect(co("GB")).toBe(co("Reino Unido"));
+    expect(co("GB")).toBe("United Kingdom");
+  });
+
+  it("dedup'a Estonia (PT-PT Estónia vs PT-BR Estônia vs Estonia)", () => {
+    expect(co("EE")).toBe(co("Estónia"));
+    expect(co("EE")).toBe(co("Estônia"));
+    expect(co("EE")).toBe("Estonia");
+  });
+});
+
+/* ═══════════════════════════════════════════
+   processFpgJuniorTourns — torneios FPG juniores
+   ═══════════════════════════════════════════ */
+describe("processFpgJuniorTourns", () => {
+  beforeEach(() => fpgTournNames.clear());
+
+  it("regista torneios Sub-10/12/14 e ignora Sub-18", () => {
+    const data = {
+      tournaments: [
+        { name: "Nacional Sub 10 H", tcode: "10647", date: "2023-07-04",
+          escalao: "Sub 10",
+          players: [{ name: "Player A", grossTotal: 70, toPar: -2, pos: 1,
+            roundScores: [{ round: 1, gross: 70, scores: [], pars: [] }] }] },
+        { name: "Nacional Sub 18", tcode: "10999", date: "2023-07-04",
+          escalao: "Sub 18", players: [] },
+      ],
+    };
+    const out = processFpgJuniorTourns(data);
+    expect(out.length).toBe(1);
+    expect(out[0].r["fpg10647"]).toBeDefined();
+    expect(fpgTournNames.has("fpg10647")).toBe(true);
+    expect(fpgTournNames.has("fpg10999")).toBe(false);
+  });
+
+  it("aceita tcodes pré-fundidos com '+' (jovens_2023 H+S num só registo)", () => {
+    const data = {
+      tournaments: [
+        { name: "Nacional Sub 10", tcode: "10674+10676", date: "2023-09-15",
+          escalao: "Sub 10",
+          players: [{ name: "P", grossTotal: 75, pos: 1,
+            roundScores: [{ round: 1, gross: 75, scores: [], pars: [] }] }] },
+      ],
+    };
+    const out = processFpgJuniorTourns(data);
+    expect(out.length).toBe(1);
+    expect(out[0].r["fpg10674+10676"]).toBeDefined();
+    const meta = fpgTournNames.get("fpg10674+10676");
+    expect(meta?.escalao).toBe("Sub 10");
+    expect(meta?.dateExact).toBe("2023-09-15");
+  });
+
+  it("não duplica jogadores entre múltiplas chamadas", () => {
+    const data = {
+      tournaments: [
+        { name: "Sub 12", tcode: "10100", date: "2024-01-15", escalao: "Sub 12",
+          players: [{ name: "Test", grossTotal: 80, pos: 1,
+            roundScores: [{ round: 1, gross: 80, scores: [], pars: [] }] }] },
+      ],
+    };
+    const out1 = processFpgJuniorTourns(data);
+    const out2 = processFpgJuniorTourns(data);
+    expect(out1.length).toBe(out2.length);
+    // co default deve ser "" (não inferir Portugal)
+    expect(out1[0].co).toBe("");
+  });
+
+  it("não invade tcodes do PULL_TCODE_TO_TID (gg25, qdl25, etc.)", () => {
+    const data = {
+      tournaments: [
+        { name: "QDL Junior Open", tcode: "10080", date: "2025-11-08", escalao: "Sub 12",
+          players: [{ name: "X", grossTotal: 75, pos: 1,
+            roundScores: [{ round: 1, gross: 75, scores: [], pars: [] }] }] },
+      ],
+    };
+    const out = processFpgJuniorTourns(data);
+    expect(out.length).toBe(0); // tcode 10080 já é processado por processPullTorneios como qdl25
+    expect(fpgTournNames.has("fpg10080")).toBe(false);
   });
 });
 

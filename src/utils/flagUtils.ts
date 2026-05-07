@@ -30,6 +30,8 @@ export const FLAG: Record<string, string> = {
   AZ:"🇦🇿",BA:"🇧🇦",BM:"🇧🇲",CD:"🇨🇩",CU:"🇨🇺",
   JO:"🇯🇴",MC:"🇲🇨",MT:"🇲🇹",QA:"🇶🇦",RE:"🇷🇪",
   TN:"🇹🇳",ZM:"🇿🇲",ZW:"🇿🇼",NN:"🏳️",XX:"🏳️",
+  SA:"🇸🇦",  // Arábia Saudita
+  KY:"🇰🇾",  // Ilhas Caimão
   AL:"🇦🇱", ME:"🇲🇪",   // Albânia, Montenegro
   // Países adicionais encontrados em federados.json (FPG)
   MZ:"🇲🇿",  // Moçambique
@@ -78,6 +80,16 @@ const COUNTRY_TO_CODE: Record<string, string> = {
   cambodia:"kh",nicaragua:"ni",panama:"pa",peru:"pe","el salvador":"sv",
   uganda:"ug",uruguay:"uy",venezuela:"ve",greece:"gr",israel:"il",
   croatia:"hr",serbia:"rs",luxembourg:"lu",iceland:"is",malaysia:"my",
+  // Lookup reverso: nomes EN canónicos que ainda não tinham entrada
+  tunisia:"tn",czechia:"cz","dr congo":"cd",bermuda:"bm","cayman islands":"ky",
+  "bosnia & herzegovina":"ba","trinidad & tobago":"tt","cabo verde":"cv",
+  "são tomé & príncipe":"st","guinea-bissau":"gw","timor-leste":"tl",
+  uae:"ae",mozambique:"mz",macao:"mo",mauritius:"mu",belarus:"by",
+  kyrgyzstan:"kg",eswatini:"sz",moldova:"md",ethiopia:"et",bhutan:"bt",
+  jordan:"jo",monaco:"mc",georgia:"ge",azerbaijan:"az",albania:"al",
+  montenegro:"me","saudi arabia":"sa",dominica:"dm",grenada:"gd",
+  reunion:"re","réunion":"re",zambia:"zm",zimbabwe:"zw",qatar:"qa",
+  malta:"mt",cuba:"cu","dominican rep.":"do",
   // Português
   espanha:"es",frança:"fr",alemanha:"de",itália:"it","países baixos":"nl",
   holanda:"nl",suécia:"se",noruega:"no",dinamarca:"dk",finlândia:"fi",
@@ -91,6 +103,21 @@ const COUNTRY_TO_CODE: Record<string, string> = {
   eslovénia:"si",bulgária:"bg",lituânia:"lt",letónia:"lv",
   estónia:"ee",turquia:"tr",marrocos:"ma",
   "emirados árabes unidos":"ae",cazaquistão:"kz",vietname:"vn",
+  // Variantes PT-BR (acentos diferentes do PT-PT)
+  estônia:"ee",polônia:"pl",vietnã:"vn",letônia:"lv",
+  // Variantes ASCII (sem acentos — dados antigos com diacríticos perdidos).
+  // NOTA: bolivia, nicaragua, panama já existem em inglês acima — não duplicar aqui.
+  franca:"fr",suecia:"se",finlandia:"fi",japao:"jp",suica:"ch",
+  belgica:"be",polonia:"pl",eslovaquia:"sk","federacao russa":"ru",
+  "republica checa":"cz",escocia:"gb",tailandia:"th",romenia:"ro",
+  ucrania:"ua",eslovenia:"si",lituania:"lt",letonia:"lv",
+  "emirados arabes unidos":"ae",cazaquistao:"kz",vietna:"vn",
+  oma:"om",libano:"lb","nova zelandia":"nz","republica dominicana":"do",
+  argelia:"dz",quenia:"ke",grecia:"gr",croacia:"hr",servia:"rs",
+  islandia:"is",malasia:"my","africa do sul":"za",
+  // Países adicionais (BlueGolf, FPG)
+  azerbaijão:"az",azerbaijao:"az","arabia saudita":"sa","arábia saudita":"sa",
+  jordânia:"jo",jordania:"jo",mónaco:"mc",monaco:"mc",
   áustria:"at",paraguai:"py",nigéria:"ng",omã:"om","porto rico":"pr",
   chipre:"cy",líbano:"lb",indonésia:"id","nova zelândia":"nz",arménia:"am",
   bolívia:"bo","república dominicana":"do",argélia:"dz",equador:"ec",
@@ -145,13 +172,27 @@ const CODE_TO_DISPLAY: Record<string, string> = {
   kh:"Cambodia", ni:"Nicaragua", pa:"Panama", pe:"Peru", sv:"El Salvador",
   ug:"Uganda", uy:"Uruguay", ve:"Venezuela", gr:"Greece", il:"Israel",
   hr:"Croatia", rs:"Serbia", lu:"Luxembourg", is:"Iceland", my:"Malaysia",
-  sc:"Scotland",
+  sc:"Scotland", sa:"Saudi Arabia", ge:"Georgia", mc:"Monaco", jo:"Jordan",
+  az:"Azerbaijan", al:"Albania", me:"Montenegro", ba:"Bosnia & Herzegovina",
+  mz:"Mozambique", ao:"Angola", cv:"Cabo Verde", st:"São Tomé & Príncipe",
+  gw:"Guinea-Bissau", tl:"Timor-Leste", tt:"Trinidad & Tobago",
+  bj:"Benin", et:"Ethiopia", bt:"Bhutan", md:"Moldova", mo:"Macao",
+  mu:"Mauritius", kg:"Kyrgyzstan", by:"Belarus", dm:"Dominica", gd:"Grenada",
+  np:"Nepal", sz:"Eswatini", tn:"Tunisia", qa:"Qatar", mt:"Malta",
+  bm:"Bermuda", cd:"DR Congo", cu:"Cuba", re:"Réunion", zm:"Zambia",
+  zw:"Zimbabwe",
 };
 
+/** Placeholders FPG/USKids para "sem nacionalidade conhecida" — devem ficar fora do dropdown. */
+const COUNTRY_PLACEHOLDERS = new Set(["nn", "xx", "@1", "@2", "@3", "@4", "?", "-", "n/a"]);
+
 /** Converte qualquer formato de país para nome canónico de display.
- *  "US" → "United States", "Russian Federation" → "Russia", "england" → "United Kingdom" */
+ *  "US" → "United States", "Russian Federation" → "Russia", "england" → "United Kingdom"
+ *  "NN"/"XX" → "" (placeholders, não são países). */
 export function normPaisDisplay(raw: string): string {
   if (!raw) return "";
+  const lower = raw.trim().toLowerCase();
+  if (!lower || COUNTRY_PLACEHOLDERS.has(lower)) return "";
   const code = normCountry(raw); // → "us", "ru", "gb", etc.
   if (code.length === 2) return CODE_TO_DISPLAY[code] ?? raw;
   // normCountry didn't resolve → devolve o original capitalizado

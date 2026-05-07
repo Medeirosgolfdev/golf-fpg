@@ -424,11 +424,14 @@ function ffgResToFPGTournament(data: FFGResTournament, serieFilter?: string): FP
     ? `Parcours ${firstSerie.courseTerrain}`
     : "";
 
-  // Detectar nº de rondas (qualquer player tem t3/t4 não-null?)
+  // Detectar nº de rondas REALMENTE jogadas (algum player tem tN não-null).
+  // Importante: torneios futuros ou em curso podem ter t2/t3/t4 todos null
+  // — nesse caso numRounds=1 para não marcar todos como WD.
   const allPlayers = seriesToUse.flatMap((s) => s.players.map((p) => ({ ...p, _serieId: s.serieId })));
+  const hasT2 = allPlayers.some((p) => p.t2 != null);
   const hasT3 = allPlayers.some((p) => p.t3 != null);
   const hasT4 = allPlayers.some((p) => p.t4 != null);
-  const numRounds = hasT4 ? 4 : hasT3 ? 3 : 2;
+  const numRounds = hasT4 ? 4 : hasT3 ? 3 : hasT2 ? 2 : 1;
 
   // Sort por total
   const sorted = [...allPlayers].sort((a, b) => {
@@ -546,6 +549,121 @@ function ffgScorecardOptions(): ScorecardOptions {
     hideTee: true,
     clubLabel: "Clube",
   };
+}
+
+/* ── FFGTeeTimesTab — horas de saída a partir do JSON FFG oficial ── */
+function FFGTeeTimesTab({ data }: { data: FFGResTournament }) {
+  type SortKey = "tee" | "pos" | "nome" | "club" | "category" | "hcp";
+  const { sortKey, sortDir, toggleSort } = useSort<SortKey>("tee");
+
+  // Flatten — todos os jogadores de todas as séries com teeTime
+  const allFlat = useMemo(() => {
+    const list: Array<FFGResPlayer & { _serieId: string }> = [];
+    for (const s of data.details.series) {
+      for (const p of s.players) {
+        if (p.teeTime) list.push({ ...p, _serieId: s.serieId });
+      }
+    }
+    return list;
+  }, [data]);
+
+  const sorted = useMemo(() => {
+    const list = [...allFlat];
+    const mult = sortDir === "asc" ? 1 : -1;
+    list.sort((a, b) => {
+      let v = 0;
+      switch (sortKey) {
+        case "tee":      v = (a.teeTime || "99:99").localeCompare(b.teeTime || "99:99"); break;
+        case "pos":      v = (a.pos ?? 999) - (b.pos ?? 999); break;
+        case "nome":     v = ffgPlayerName(a).localeCompare(ffgPlayerName(b)); break;
+        case "club":     v = (a.club || "").localeCompare(b.club || ""); break;
+        case "category": v = a._serieId.localeCompare(b._serieId); break;
+        case "hcp":      v = (a.hcp ?? 99) - (b.hcp ?? 99); break;
+      }
+      return mult * v;
+    });
+    return list;
+  }, [allFlat, sortKey, sortDir]);
+
+  const rows: ScorecardRow[] = useMemo(() => sorted.map((p, i) => {
+    const manuel = isM(p.name);
+    return {
+      key: `${p.license || p.name}-${i}`,
+      pos: p.pos ?? (i + 1),
+      gross: 0,
+      toPar: null,
+      scores: [],
+      isManuel: manuel,
+      sortPos: p.pos,
+      sortName: ffgPlayerName(p),
+      nameContent: (
+        <>
+          <span style={{ marginRight: 4 }}>{gf(p.nationality || p.flag || "FRA")}</span>
+          <span className="fw-700">{ffgPlayerName(p)}</span>
+          {manuel && <> {" "}<ManuelPill /></>}
+        </>
+      ),
+      prefixCells: (
+        <>
+          <td className="lb-club" title={p.club}>{p.club?.trim() || "—"}</td>
+          <td className="lb-hcp">{p.hcp != null ? p.hcp.toFixed(1) : "—"}</td>
+          <td className="lb-tee" style={{ fontSize: 11 }}>{p._serieId}</td>
+        </>
+      ),
+      postScorecardCells: (
+        <>
+          <td style={{ padding: "6px 8px", textAlign: "center", fontWeight: 600 }}>{p.teeTime || "—"}</td>
+          <td style={{ padding: "6px 8px", textAlign: "center", fontSize: 11, fontFamily: "monospace" }}>
+            {p.license || "—"}
+          </td>
+        </>
+      ),
+    } as ScorecardRow;
+  }), [sorted]);
+
+  if (!allFlat.length) return <div className="muted">Sem horas de saída disponíveis neste torneio.</div>;
+
+  const prefixHeaderCells = (
+    <>
+      <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-club">CLUBE</SortableHdr>
+      <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">Idx</SortableHdr>
+      <SortableHdr k="category" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-tee">SÉRIE</SortableHdr>
+    </>
+  );
+
+  const postScorecardHeaderCells = (
+    <>
+      <SortableHdr k="tee" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px", textAlign: "center" }}>HORA</SortableHdr>
+      <th style={{ padding: "7px 8px", textAlign: "center", fontSize: 11 }}>Licence</th>
+    </>
+  );
+
+  // Agrupar por hora — útil para visualização rápida do número de saídas
+  const teeTimes = [...new Set(allFlat.map((p) => p.teeTime!).filter(Boolean))].sort();
+
+  const filterBar = (
+    <div className="detail-toolbar">
+      <span className="muted fs-12">
+        {allFlat.length} jogadores · {teeTimes.length} horas de saída · {data.details.series.length} séries
+      </span>
+    </div>
+  );
+
+  return (
+    <ScorecardLeaderboard
+      par={[]}
+      rows={rows}
+      prefixHeaderCells={prefixHeaderCells}
+      postScorecardHeaderCells={postScorecardHeaderCells}
+      postScorecardColCount={2}
+      showScorecard={false}
+      filterBar={filterBar}
+      onSortPos={() => toggleSort("pos")}
+      onSortName={() => toggleSort("nome")}
+      activeSortKey={sortKey}
+      activeSortDir={sortDir}
+    />
+  );
 }
 
 /* ── CategoriesView (Catégories d'âge FFG — info no body) ─────── */
@@ -709,22 +827,33 @@ function FFGResView({ data, lgpidfSupp }: { data: FFGResTournament; lgpidfSupp?:
   const allSeries = data.details.series;
   const supp = lgpidfSupp;
   const inscritosCount = supp?.inscritosPdfs.reduce((s, p) => s + p.players.length, 0) || 0;
-  const teeTimeCount = supp?.teeTimePdfs.length || 0;
+  const teeTimeCountSupp = supp?.teeTimePdfs.length || 0;
+  // Contar jogadores FFG com teeTime — fonte primária quando não há PDF supp
+  const teeTimeCountFFG = data.details.series.reduce(
+    (s, ser) => s + ser.players.filter((p) => p.teeTime).length, 0,
+  );
   const courseMapCount = supp?.courseMapPdfs.length || 0;
   const pdfCount = supp?.allPdfs?.length || 0;
   const hasSupp = !!supp;
   const tabs: Array<{ key: Tab; label: string; count: number; show: boolean }> = [
     { key: "leaderboard", label: "🏆 Leaderboard FFG", count: data.details.series.reduce((s, x) => s + x.players.length, 0), show: true },
     { key: "inscritos", label: "📋 Inscritos (PDF)", count: inscritosCount, show: inscritosCount > 0 },
-    { key: "tee-times", label: "🕐 Tee times (PDF)", count: teeTimeCount, show: teeTimeCount > 0 },
+    {
+      key: "tee-times",
+      label: teeTimeCountSupp > 0 ? "🕐 Tee times (PDF)" : "🕐 Horas de saída",
+      count: teeTimeCountSupp > 0 ? teeTimeCountSupp : teeTimeCountFFG,
+      show: teeTimeCountSupp > 0 || teeTimeCountFFG > 0,
+    },
     { key: "course-map", label: "📐 Mapa do campo (PDF)", count: courseMapCount, show: courseMapCount > 0 },
     { key: "pdfs", label: "📁 PDFs", count: pdfCount, show: pdfCount > 0 },
   ];
 
-  // Detectar nº de rondas a partir dos jogadores (qualquer t3/t4 não-null)
+  // Detectar nº de rondas REALMENTE jogadas (não usar default 2 — para
+  // não marcar todos como WD em torneios de R1 só).
+  const hasT2 = allSeries.some((s) => s.players.some((p) => p.t2 != null));
   const hasT3 = allSeries.some((s) => s.players.some((p) => p.t3 != null));
   const hasT4 = allSeries.some((s) => s.players.some((p) => p.t4 != null));
-  const numRounds = hasT4 ? 4 : hasT3 ? 3 : 2;
+  const numRounds = hasT4 ? 4 : hasT3 ? 3 : hasT2 ? 2 : 1;
   const ASSUMED_PAR = 72 * numRounds;
 
   // Filtrar jogadores pela série seleccionada
@@ -767,11 +896,11 @@ function FFGResView({ data, lgpidfSupp }: { data: FFGResTournament; lgpidfSupp?:
       scores: [],
       isManuel: manuel,
       sortPos: p.pos,
-      sortName: normalizeName(p.name),
+      sortName: ffgPlayerName(p),
       nameContent: (
         <>
           <span style={{ marginRight: 4 }}>{gf(p.nationality || p.flag || "FRA")}</span>
-          <span className="fw-700">{normalizeName(p.name)}</span>
+          <span className="fw-700">{ffgPlayerName(p)}</span>
           {manuel && <> {" "}<ManuelPill /></>}
         </>
       ),
@@ -840,8 +969,8 @@ function FFGResView({ data, lgpidfSupp }: { data: FFGResTournament; lgpidfSupp?:
         <span>· {allSeries.length} séries · {data.details.series.reduce((s, x) => s + x.players.length, 0)} jogadores</span>
       </div>
 
-      {/* Tabs (só se há LGPIDF supp data) */}
-      {hasSupp && tabs.filter((t) => t.show).length > 1 && (
+      {/* Tabs — mostrar quando há mais que 1 (Leaderboard + algo extra) */}
+      {tabs.filter((t) => t.show).length > 1 && (
         <div className="mb-12" style={{ display: "flex", gap: 8, borderBottom: "1px solid var(--border)", flexWrap: "wrap" }}>
           {tabs.filter((t) => t.show).map((t) => (
             <button
@@ -915,7 +1044,11 @@ function FFGResView({ data, lgpidfSupp }: { data: FFGResTournament; lgpidfSupp?:
         </>
       )}
       {tab === "inscritos" && supp && <LGPIDFInscritosTab data={supp} />}
-      {tab === "tee-times" && supp && <LGPIDFTeeTimesTab data={supp} />}
+      {tab === "tee-times" && (
+        supp && supp.teeTimePdfs.length > 0
+          ? <LGPIDFTeeTimesTab data={supp} />
+          : <FFGTeeTimesTab data={data} />
+      )}
       {tab === "course-map" && supp && <LGPIDFCourseMapTab data={supp} />}
       {tab === "pdfs" && supp?.allPdfs && (
         <div style={{ display: "flex", flexWrap: "wrap", gap: 8, padding: 8 }}>
@@ -1837,7 +1970,8 @@ function Content() {
                       const allPlayers = t.details.series.flatMap((s) => s.players);
                       const tHasT4 = allPlayers.some((p) => p.t4 != null);
                       const tHasT3 = allPlayers.some((p) => p.t3 != null);
-                      const tRounds = tHasT4 ? 4 : tHasT3 ? 3 : 2;
+                      const tHasT2 = allPlayers.some((p) => p.t2 != null);
+                      const tRounds = tHasT4 ? 4 : tHasT3 ? 3 : tHasT2 ? 2 : 1;
                       const active = effectiveSelection.kind === "ffgres" && effectiveSelection.key === entry.trnId;
                       return (
                         <button
