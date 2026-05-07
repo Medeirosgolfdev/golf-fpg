@@ -24,7 +24,7 @@ import {
   type HoleScores,
 } from "../data/playerDataLoader";
 import { loadPlayerStats, type PlayerStatsDb, type PlayerStats } from "../data/playerStatsTypes";
-import { norm, fD, fD2, firstName, shortName } from "../utils/format";
+import { norm, fD2, firstName, shortName } from "../utils/format";
 import { clubShort, hcpDisplay } from "../utils/playerUtils";
 import { deepFixMojibake } from "../utils/fixEncoding";
 import { sc3, sc3m, SC } from "../utils/scoreDisplay";
@@ -105,7 +105,6 @@ function aggregateStats(data: PlayerPageData, inPeriod?: RoundInPeriod): AggStat
       if (inPeriod && !inPeriod(r)) continue;
       // Filtro unificado (18h torneio + 9h credíveis). Ver isValidForStats().
       if (!isValidForStats(r)) continue;
-      const is9h = r.holeCount === 9;
       const g = Number(r.gross);
       grossSum += g;
       grossAll.push(g);
@@ -254,7 +253,7 @@ function buildTourneyHoleStats(data: PlayerPageData, inPeriod?: RoundInPeriod): 
       grouped.get(key)!.scoreIds.push(r.scoreId);
     }
   }
-  for (const [key, { tee, course, nH, scoreIds }] of grouped) {
+  for (const [key, { tee, nH, scoreIds }] of grouped) {
     if (scoreIds.length < 2) continue;
     const holeSums = Array.from({ length: nH }, () => ({ gSum: 0, pSum: 0, n: 0 }));
     let grossTotal = 0, grossN = 0;
@@ -737,7 +736,7 @@ function HoleProfileSection({ slots, refTee, holesMode, period }: {
       {/* ── Tabela resumo do período seleccionado ── */}
       {(() => {
         // Calcular resumo por jogador: rondas e buracos por par
-        const summary = loaded.map((s, i) => {
+        const summary = loaded.map((s) => {
           if (!s.data) return { name: s.player.name, nRondasTorneio: 0, nRondas9h: 0, nEDS: 0, nTreino: 0, nRondas: 0, nHolesTotal: 0, holesWithCard: 0, parTotals: { 3:0, 4:0, 5:0 } };
 
           // Selector do período (mesmo universo do buildHoleProfile: 18h torneio)
@@ -790,6 +789,7 @@ function HoleProfileSection({ slots, refTee, holesMode, period }: {
 
         // Sorting for data summary table
         const { sortKey, sortDir, toggleSort } = useSort<"name" | "9h" | "eds" | "outros" | "tourn18" | "buracos" | "par3" | "par4" | "par5" | "scorecard">("tourn18", "desc");
+        const onSort = toggleSort as (k: string) => void;
 
         const sortedSummary = [...summary].sort((a, b) => {
           let aVal: any = a.name, bVal: any = b.name;
@@ -859,16 +859,16 @@ function HoleProfileSection({ slots, refTee, holesMode, period }: {
               <table className="dtable-lg fs-12" style={{ width:"100%" }}>
                 <thead>
                   <tr>
-                    <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Jogador</SortableHdr>
-                    <SortableHdr k="9h" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="Rondas de 9 buracos (Drive Challenge, etc.)">9h</SortableHdr>
-                    <SortableHdr k="eds" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="Rondas EDS (Equalized Differential Score)">EDS</SortableHdr>
-                    <SortableHdr k="outros" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" title="Treinos, individuais e outras rondas não competitivas">Outros</SortableHdr>
-                    <SortableHdr k="tourn18" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" style={{ background:"var(--bg-info-subtle)", borderLeft:"2px solid var(--color-info)" }} title="Rondas de torneio 18 buracos — usadas na análise abaixo">Torneio 18h</SortableHdr>
-                    <SortableHdr k="buracos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" style={{ background:"var(--bg-info-subtle)" }}>Buracos</SortableHdr>
-                    <SortableHdr k="par3" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" style={{ background:"var(--bg-info-subtle)" }} title="Buracos na análise (c/distância) / totais do scorecard">Par 3</SortableHdr>
-                    <SortableHdr k="par4" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" style={{ background:"var(--bg-info-subtle)" }} title="Buracos na análise (c/distância) / totais do scorecard">Par 4</SortableHdr>
-                    <SortableHdr k="par5" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" style={{ background:"var(--bg-info-subtle)" }} title="Buracos na análise (c/distância) / totais do scorecard">Par 5</SortableHdr>
-                    <SortableHdr k="scorecard" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" style={{ background:"var(--bg-info-subtle)" }}>Com scorecard</SortableHdr>
+                    <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Jogador</SortableHdr>
+                    <SortableHdr k="9h" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r" title="Rondas de 9 buracos (Drive Challenge, etc.)">9h</SortableHdr>
+                    <SortableHdr k="eds" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r" title="Rondas EDS (Equalized Differential Score)">EDS</SortableHdr>
+                    <SortableHdr k="outros" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r" title="Treinos, individuais e outras rondas não competitivas">Outros</SortableHdr>
+                    <SortableHdr k="tourn18" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r" style={{ background:"var(--bg-info-subtle)", borderLeft:"2px solid var(--color-info)" }} title="Rondas de torneio 18 buracos — usadas na análise abaixo">Torneio 18h</SortableHdr>
+                    <SortableHdr k="buracos" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r" style={{ background:"var(--bg-info-subtle)" }}>Buracos</SortableHdr>
+                    <SortableHdr k="par3" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r" style={{ background:"var(--bg-info-subtle)" }} title="Buracos na análise (c/distância) / totais do scorecard">Par 3</SortableHdr>
+                    <SortableHdr k="par4" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r" style={{ background:"var(--bg-info-subtle)" }} title="Buracos na análise (c/distância) / totais do scorecard">Par 4</SortableHdr>
+                    <SortableHdr k="par5" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r" style={{ background:"var(--bg-info-subtle)" }} title="Buracos na análise (c/distância) / totais do scorecard">Par 5</SortableHdr>
+                    <SortableHdr k="scorecard" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r" style={{ background:"var(--bg-info-subtle)" }}>Com scorecard</SortableHdr>
                   </tr>
                 </thead>
                 <tbody>
@@ -1174,7 +1174,7 @@ function RoundPrepSection({ slots, period }: { slots: Slot[]; period: PeriodKey 
   const availableTees: Tee[] = useMemo(() => {
     if (!selectedCourse) return [];
     return sortTees(selectedCourse.master.tees.filter(t => {
-      if (is9h) return get9hRatings(t, holesMode as "front9" | "back9") !== null;
+      if (is9h) return get9hRatings(t as unknown as Parameters<typeof get9hRatings>[0], holesMode as "front9" | "back9") !== null;
       return t.ratings?.holes18?.courseRating && t.ratings?.holes18?.slopeRating;
     }));
   }, [selectedCourse, holesMode, is9h]);
@@ -1220,7 +1220,7 @@ function RoundPrepSection({ slots, period }: { slots: Slot[]; period: PeriodKey 
       if (!r?.courseRating || !r?.slopeRating) return null;
       return { cr: r.courseRating, slope: r.slopeRating, par: r.par ?? 72 };
     }
-    const r9 = get9hRatings(tee, holesMode as "front9" | "back9");
+    const r9 = get9hRatings(tee as unknown as Parameters<typeof get9hRatings>[0], holesMode as "front9" | "back9");
     return r9 ? { cr: r9.cr, slope: r9.slope, par: r9.par } : null;
   };
 
@@ -1535,7 +1535,7 @@ function CategoryScorecardSection({ slots, allAgg, statsDb }: { slots: Slot[]; a
     { label: "Rondas", emoji: "🏟️", getValue: a => a.nRounds, dir: "high" },
     { label: "Front 9", emoji: "➡️", getValue: a => a.f9sl, dir: "low" },
     { label: "Back 9", emoji: "⬅️", getValue: a => a.b9sl, dir: "low" },
-    { label: "Forma", emoji: "🔥", getValue: (a, ps) => ps?.formAlert === "hot" ? 1 : ps?.formAlert === "cold" ? -1 : 0, dir: "high" },
+    { label: "Forma", emoji: "🔥", getValue: (_a, ps) => ps?.formAlert === "hot" ? 1 : ps?.formAlert === "cold" ? -1 : 0, dir: "high" },
   ];
 
   const medals = loaded.map(() => 0);
@@ -1582,7 +1582,7 @@ function CategoryScorecardSection({ slots, allAgg, statsDb }: { slots: Slot[]; a
             borderColor: winnerIdx >= 0 ? COLORS[winnerIdx] : undefined,
           }}>
             <div className="fs-11 fw-600 c-text-3 mb-4">{cat.emoji} {cat.label}</div>
-            {loaded.map((x, i) => {
+            {loaded.map((_x, i) => {
               const v = values[i];
               const isWinner = winnerIdx === i;
               return (
@@ -1778,6 +1778,7 @@ function HeadToHeadSection({ slots, period }: { slots: Slot[]; period: PeriodKey
 
   // Sorting for H2H table
   const { sortKey, sortDir, toggleSort } = useSort<"date" | "tourn" | "p0" | "p1" | "p2" | "p3" | "delta">("date", "desc");
+  const onSort = toggleSort as (k: string) => void;
 
   const sortedMatches = [...matches].sort((a, b) => {
     let aVal: any = a.dateSort, bVal: any = b.dateSort;
@@ -1911,13 +1912,13 @@ function HeadToHeadSection({ slots, period }: { slots: Slot[]; period: PeriodKey
       <div className="scroll-x cmp-result-list">
         <table className="dtable-lg">
           <thead><tr>
-            <SortableHdr k="date" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Data</SortableHdr>
-            <SortableHdr k="tourn" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Torneio</SortableHdr>
+            <SortableHdr k="date" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Data</SortableHdr>
+            <SortableHdr k="tourn" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Torneio</SortableHdr>
             {loaded.map((s, i) => {
               const pKey = `p${i}` as "p0" | "p1" | "p2" | "p3";
-              return <SortableHdr key={i} k={pKey} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r" style={{ color: COLORS[i] }}>{firstName(s.player.name)}</SortableHdr>;
+              return <SortableHdr key={i} k={pKey} sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r" style={{ color: COLORS[i] }}>{firstName(s.player.name)}</SortableHdr>;
             })}
-            <SortableHdr k="delta" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Δ</SortableHdr>
+            <SortableHdr k="delta" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Δ</SortableHdr>
             <th className="r">Vencedor</th>
           </tr></thead>
           <tbody>
@@ -2454,7 +2455,8 @@ export default function CompararPage() {
       {slots.length === 1 && !anyLoading && (
         <div className="card ta-c p-24">
           <div className="mb-8 fs-24">👆</div>
-          <div className="muted">Adiciona mais jogadores para ver a comparação completa</div>
+          <div className="muted">Adiciona
+ outro jogador para começar a comparar.</div>
         </div>
       )}
     </div>

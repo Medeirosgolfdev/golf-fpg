@@ -14,51 +14,35 @@
  *   • Tabs por ronda (R1, R2, ... + Acumulado para multi-ronda)
  *   • Suporte a 9H e 18H, 1 a N rondas
  */
-import React, { useEffect, useState, useMemo, useCallback, useRef } from "react";
+import React, { useEffect, useState, useMemo, useRef } from "react";
 import { Link, Navigate, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import { loadPlayers } from "../data/loader";
-import { buildEscLookup, type EscLookup, escCls, escPillCls, formatPlayerName, normalizePlayer } from "../utils/playerUtils";
-import { normalizeTournamentCourseNames, rotateAroeira2TournamentIfNeeded } from "../utils/courseAliases";
-import { TORNEIOS_CONFIG } from "../constants/config";
+import { buildEscLookup, type EscLookup, normalizePlayer } from "../utils/playerUtils";
 import { PILL_SSERRA, SIDEBAR_ACCENT, EscPill, PillBadge, RoundPill, NineHPill, SserraPill, NacionalPill, JuniorPill, ClubePill, ManuelPill } from "../ui/PillBadge";
 import { TournSidebarItem, SSERRA_CCODE, type SidebarItemTournament } from "../ui/TournSidebarItem";
-import SexBadge from "../ui/SexBadge";
 import SidebarToggle from "../ui/SidebarToggle";
-import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
-import SortableHdr from "../ui/SortableHdr";
-import DetailHeader from "../ui/DetailHeader";
+import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
 import ExtLink from "../ui/ExternalLink";
-import EmptyState from "../ui/EmptyState";
 import LoadingState from "../ui/LoadingState";
-import PlayerLink from "../ui/PlayerLink";
 import { useMasterDetail } from "../hooks/useMasterDetail";
-import { C } from "../utils/colors";
-import { fmtDate, fmtToPar, MONTHS_PT, norm, monthLabel, fmtHcp, escShort, fmtTime, fmtDataInscricao, anoEscalao, abreviarNome, medal, fpgDrawUrl, fpgScoringUrl, fpgAdmissionsUrl, tournamentKey, tournamentUrl, parseTournKey } from "../utils/format";
-import { AnoEscalaoPill, TrendBadge } from "../ui/AnoEscalaoPill";
-import { CrossSeasonTable, SortTh as CSortTh } from "../ui/CrossSeasonTable";
+import { fmtDate, monthLabel, fpgDrawUrl, fpgScoringUrl, fpgAdmissionsUrl, tournamentUrl, parseTournKey } from "../utils/format";
 import {
-  MANUEL_FED,
   isManuel,
-  fmtTP,
-  tpColor,
-  TeeDot,
-  TournPName,
-  SDPill,
   type PlayersDB,
 } from "../ui/tournamentPrimitives";
 import { PJARankingView } from "../ui/PJARankingView";
 import ClubesGruposView from "../ui/ClubesGruposView";
 // Tipos e utilitários FPG — fonte canónica em ../data/fpgTypes.ts e ../data/fpgUtils.ts
-import type { RoundScore, Player, Tournament, ScorecardOptions, SDResult, PlayerFilter, GrupoJogador, GrupoEntry } from "../data/fpgTypes";
-import { numGross, resolveEsc, computeSD, filterPlayers, expandMultiRound, buildDisplayList, tournamentHasManuel } from "../data/fpgUtils";
+import type { Tournament, GrupoEntry } from "../data/fpgTypes";
+import { expandMultiRound, buildDisplayList, tournamentHasManuel } from "../data/fpgUtils";
+import { isDNS } from "../ui/driveUtils";
 // Leaderboard components — extraídos para fpg/LeaderboardComponents.tsx
 import { ScorecardLB, AccumulatedLB, AllRoundsScorecardLB } from "../ui/LeaderboardComponents";
 import Aroeira2AnaliseView from "../ui/Aroeira2AnaliseView";
 import { LinksBar } from "../ui/LinksBar";
 // Inscrições e Jovens — extraídos para fpg/InscricoesComponents.tsx
-import { InscricoesPanel, buildJovensGroups, buildEventGroups, TERMOS_COMPETICAO, type JovensGroup, type EventGroup } from "../ui/InscricoesComponents";
-import { JovensAnaliseView } from "../ui/JovensAnaliseView";
+import { InscricoesPanel, buildJovensGroups, buildEventGroups, type JovensGroup, type EventGroup } from "../ui/InscricoesComponents";
 // Admissions + draws (browser scrape + merge) — ver CLAUDE.md
 import { loadFpgAdmissionsDraws, indexFpgAdmissionsDraws, NACIONAL_2026_META, NACIONAL_2026_TCODES, type FpgTournamentData } from "../data/nacional2026Loader";
 import AdmissionsTab from "../ui/AdmissionsTab";
@@ -101,11 +85,6 @@ function yearMatchesFilter(year: string | undefined | null, filter: string | nul
    TIPOS + DADOS — Campeonato Nacional de Clubes
    ───────────────────────────────────────────── */
 // GrupoJogador e GrupoEntry importados de fpgTypes
-
-/** Quantos scores por ronda contam para o total de equipa */
-const CLUBES_BEST_N = 3;
-/** Score máximo por buraco (regra do torneio) */
-const MAX_HOLE_SCORE = 10;
 
 const CLUBES_GRUPOS: Record<"sub14" | "sub18", GrupoEntry[]> = {
   sub14: [
@@ -541,63 +520,9 @@ const TOURN_PILLS: Record<string, TournPill> = {
 };
 
 
-function TournPillBadge({ tcode, dynamicPills }: { tcode?: string; dynamicPills?: Record<string, TournPill> }) {
-  if (!tcode) return null;
-  const tcodes = tcode.split("+");
-  const pill = tcodes.map(tc => TOURN_PILLS[tc] || dynamicPills?.[tc]).find(Boolean);
-  if (!pill) return null;
-  if (pill === "PJA")    return <span className="p p-sm p-tourn p-pja">PJA</span>;
-  if (pill === "SSERRA") return <span className="p p-sm p-tourn" style={PILL_SSERRA}>SSerra</span>;
-  return <PillBadge pill={pill} />;
-}
-
 /** Constrói o URL de um índice: 0 → /data/pull-torneios000.json */
 function dataUrl(idx: number): string {
   return DATA_BASE_URL + String(idx).padStart(DATA_DIGITS, "0") + DATA_EXT;
-}
-
-/**
- * Carrega todos os ficheiros sequencialmente até 404 (ou DATA_MAX).
- * Retorna array com todos os torneios de todos os ficheiros, preservando
- * o campo _sourceFile para referência futura.
- */
-async function loadAllFiles(): Promise<{ tournaments: Tournament[]; meta: FileMeta[] }> {
-  const allTournaments: Tournament[] = [];
-  const meta: FileMeta[] = [];
-
-  for (let i = 0; i < DATA_MAX; i++) {
-    const url = dataUrl(i);
-    let resp: Response;
-    try { resp = await fetch(url); } catch { break; }
-    if (!resp.ok) break;  // 404 ou outro erro → parar
-
-    const d: DriveData = await resp.json();
-    const normalised = (d.tournaments || []).map(t => {
-      const out = {
-        ...t,
-        _sourceFile: url,
-        _sourceIndex: i,
-        players: t.players.map(normalizePlayer),
-      };
-      // Canonicar nome do campo (ex: "PGA Aroeira No.2 - CNJ FPG" → "PGA Aroeira No.2")
-      // para evitar split na CamposPage / sidebar de campos da JogadoresPage.
-      normalizeTournamentCourseNames(out);
-      // Aroeira No.2 — rotação +12 das rondas que vieram na config antiga
-      // (ex: Campeonato Nacional Jovens 2026). Vê comentário em courseAliases.ts.
-      rotateAroeira2TournamentIfNeeded(out);
-      return out;
-    });
-    allTournaments.push(...normalised);
-    meta.push({
-      file: url,
-      index: i,
-      lastUpdated: d.lastUpdated,
-      source: d.source,
-      count: normalised.length,
-    });
-  }
-
-  return { tournaments: allTournaments, meta };
 }
 
 interface FileMeta {
@@ -1052,7 +977,7 @@ function Content() {
   const [clubesLoading, setClubesLoading]         = useState(false);
   const [clubesLoaded, setClubesLoaded]           = useState(false);
   const [clubesSelected, setClubesSelected]       = useState<number>(0);
-  const [clubesEsc, setClubesEsc]                 = useState<string>("sub14"); // "sub14" | "sub18"
+  const [clubesEsc] = useState<string>("sub14"); // "sub14" | "sub18"
   const [clubesView, setClubesView]               = useState<"individual" | "grupos">("grupos");
 
   // ── Estado PJA (drive/aquapor mensais, para o Ranking PJA 2026+) ─────────
@@ -1178,7 +1103,7 @@ function Content() {
             }
           } catch { /* ignore */ }
         }
-        if (alive) { setEscLookup(buildEscLookup(pdb)); setPlayersDB(pdb); }
+        if (alive) { setEscLookup(buildEscLookup(pdb)); setPlayersDB(pdb as PlayersDB); }
         let externalLinks: Record<string, Record<string, string>> = {};
         if (linksResp?.ok) {
           externalLinks = await linksResp.json().catch(() => ({}));
@@ -1562,7 +1487,7 @@ function Content() {
       setAdmissionsMeta([{
         path: "/data/fpg-admissions-draws.json",
         status: admLoaded ? "loaded" : "error",
-        count: admLoaded ? (admLoaded.tournaments?.length || 0) : undefined,
+        count: admLoaded ? ((admLoaded as any).tournaments?.length || 0) : undefined,
         source: (admLoaded as any)?.source,
         lastUpdated: (admLoaded as any)?.scrapedAt,
         group: "admissions",
@@ -2684,7 +2609,7 @@ function Content() {
                         <span className="flex-wrap" style={{ display: "inline-flex", gap: 3, marginTop: 2 }}>
                           {g.isRegional && !g.isNacional && <PillBadge pill="REGIONAL" />}
                           {g.entries.map(e => (
-                            <EscPill key={e.tcode} escalao={e.escalao ?? ""} size="xs" />
+                            <EscPill key={e.tcode} esc={e.escalao ?? ""} />
                           ))}
                         </span>
                       }

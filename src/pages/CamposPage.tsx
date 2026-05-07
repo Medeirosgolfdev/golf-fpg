@@ -1,8 +1,7 @@
 import { useMemo, useState, useEffect } from "react";
 import SidebarToggle from "../ui/SidebarToggle";
 import EmptyState from "../ui/EmptyState";
-import DetailHeader from "../ui/DetailHeader";
-import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
+import { Toolbar } from "../ui/Toolbar";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { useParams, useNavigate } from "react-router-dom";
 import type { Course, Tee, SexFilter } from "../data/types";
@@ -202,6 +201,7 @@ type RatingsSortKey = "tee" | "sex" | "dist" | "par" | "cr" | "slope" | "crF9" |
 function RatingsTable({ tees }: { tees: Tee[] }) {
   const defaultSorted = sortTees(tees);
   const { sortKey, sortDir, toggleSort } = useSort<RatingsSortKey>("tee");
+  const onSort = toggleSort as (k: string) => void;
 
   const sorted = useMemo(() => {
     if (sortKey === "tee") {
@@ -236,16 +236,16 @@ function RatingsTable({ tees }: { tees: Tee[] }) {
       <table className="ratings-table">
         <thead>
           <tr>
-            <SortableHdr k="tee"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Tee</SortableHdr>
-            <SortableHdr k="sex"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Sexo</SortableHdr>
-            <SortableHdr k="dist"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">Dist (m)</SortableHdr>
-            <SortableHdr k="par"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">Par</SortableHdr>
-            <SortableHdr k="cr"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">CR</SortableHdr>
-            <SortableHdr k="slope" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">Slope</SortableHdr>
-            <SortableHdr k="crF9"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">CR F9</SortableHdr>
-            <SortableHdr k="slF9"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">Sl F9</SortableHdr>
-            <SortableHdr k="crB9"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">CR B9</SortableHdr>
-            <SortableHdr k="slB9"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r-num">Sl B9</SortableHdr>
+            <SortableHdr k="tee"   sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Tee</SortableHdr>
+            <SortableHdr k="sex"   sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Sexo</SortableHdr>
+            <SortableHdr k="dist"  sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r-num">Dist (m)</SortableHdr>
+            <SortableHdr k="par"   sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r-num">Par</SortableHdr>
+            <SortableHdr k="cr"    sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r-num">CR</SortableHdr>
+            <SortableHdr k="slope" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r-num">Slope</SortableHdr>
+            <SortableHdr k="crF9"  sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r-num">CR F9</SortableHdr>
+            <SortableHdr k="slF9"  sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r-num">Sl F9</SortableHdr>
+            <SortableHdr k="crB9"  sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r-num">CR B9</SortableHdr>
+            <SortableHdr k="slB9"  sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r-num">Sl B9</SortableHdr>
           </tr>
         </thead>
         <tbody>
@@ -272,7 +272,7 @@ function RatingsTable({ tees }: { tees: Tee[] }) {
 }
 /* ——— Componente: Quem jogou neste campo ——— */
 
-function CoursePlayersSection({ course }: { course: Course }) {
+function CoursePlayersSection({ course, onSelectPlayer }: { course: Course; onSelectPlayer?: (fed: string) => void }) {
   const { players } = useAppContext();
 
   const entries = useMemo(() => {
@@ -300,14 +300,24 @@ function CoursePlayersSection({ course }: { course: Course }) {
       <div className="course-players-list">
         {entries.map(({ nfed, name, date }) => (
           <div key={nfed} className="course-player-row">
-            <a
-              href={`/jogadores/${nfed}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="tourn-pname tourn-pname-link"
-            >
-              {name}
-            </a>
+            {onSelectPlayer ? (
+              <button
+                type="button"
+                onClick={() => onSelectPlayer(nfed)}
+                className="tourn-pname tourn-pname-link"
+              >
+                {name}
+              </button>
+            ) : (
+              <a
+                href={`/jogadores/${nfed}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="tourn-pname tourn-pname-link"
+              >
+                {name}
+              </a>
+            )}
             {date && <span className="course-player-date muted">{date}</span>}
           </div>
         ))}
@@ -649,3 +659,4 @@ export default function CamposPage() {
     </div>
   );
 }
+

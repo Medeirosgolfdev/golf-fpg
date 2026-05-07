@@ -3,7 +3,7 @@
  * 3 tournaments · day sub-tabs (Acumulado, R1, R2, R3)
  */
 import React, { useEffect, useState, useMemo } from "react";
-import { cachedFetch } from "../data/fetchCache";
+import { cachedFetchJson } from "../data/fetchCache";
 import { scClass, SC } from "../utils/scoreDisplay";
 import { isManuelByName as isM } from "../constants/manuel";
 import EvoBadge from "../ui/EvoBadge";
@@ -17,12 +17,11 @@ import type { MultiRoundRow, ExtraColumn } from "../ui/multiRoundTypes";
 import { type Tournament as FPGTournament, type Player as FPGPlayer, type RoundScore as FPGRoundScore, type ScorecardOptions } from "./FPGPage";
 import { IntlTournView } from "../ui/IntlTournView";
 import SidebarToggle from "../ui/SidebarToggle";
-import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
+import { Toolbar, ToolbarTitle, ToolbarMeta } from "../ui/Toolbar";
 import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
 import DetailHeader from "../ui/DetailHeader";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import LoadingState from "../ui/LoadingState";
-import EmptyState from "../ui/EmptyState";
 import { useKidsLinkMap } from "../hooks/useKidsLinkMap";
 import { KidsLinkCtx } from "../ui/KidsLink";
 import { RoundPill, ManuelPill } from "../ui/PillBadge";
@@ -69,7 +68,8 @@ function loadT(raw: any, reverseRounds?: boolean): TData {
   let pos = 1;
   players.forEach((p: any, i: number) => {
     if (p.rounds.length < maxR) { p.pos = null; return; }
-    if (i > 0 && p.total > players[i - 1]!.total && players[i - 1]!.rounds.length === maxR) pos = i + 1;
+    const prev = players[i - 1];
+    if (i > 0 && p.total != null && prev != null && prev.total != null && p.total > prev.total && prev.rounds.length === maxR) pos = i + 1;
     p.pos = pos;
   });
   return { ...d, players };
@@ -88,9 +88,10 @@ function tDataToTournament(data: TData, def: TDef): FPGTournament {
       const roundScores: FPGRoundScore[] = p.rounds.map((r, ri) => ({
         round: ri + 1,
         gross: r.gross,
-        scores: r.scores ?? undefined,
+        scores: r.scores ?? [],
         pars: par,
-        si: si && si.length >= par.length ? si : undefined,
+        si: si && si.length >= par.length ? si : [],
+        meters: [],
       }));
       const incomplete = p.rounds.length < nR;
       return {
@@ -372,21 +373,23 @@ function Content() {
   const md = useMasterDetail();
 
   useEffect(() => {
-    Promise.all(URLS.map(async (m) => {
+    type FileResult = { def: TDef | null; meta: DataSource };
+    Promise.all(URLS.map(async (m): Promise<FileResult> => {
       try {
-        const res = await cachedFetch(m.url);
-        if (!res.ok) {
-          setFileMeta(prev => [...prev, { path: m.url, status: "error", error: `HTTP ${res.status}`, group: m.series }]);
-          return null;
+        const raw = await cachedFetchJson<unknown>(m.url);
+        if (raw == null) {
+          return { def: null, meta: { path: m.url, status: "error", error: "Ficheiro não encontrado (404)", group: m.series } };
         }
-        const raw = await res.json();
-        setFileMeta(prev => [...prev, { path: m.url, status: "loaded", group: m.series }]);
-        return { id: m.id, label: m.label, shortLabel: m.shortLabel, data: loadT(raw, (m as any).reverseRounds), manuelName: m.manuelName, year: m.year, category: m.category, roundDates: m.roundDates, series: m.series } as TDef;
+        const def = { id: m.id, label: m.label, shortLabel: m.shortLabel, data: loadT(raw, (m as any).reverseRounds), manuelName: m.manuelName, year: m.year, category: m.category, roundDates: m.roundDates, series: m.series } as TDef;
+        return { def, meta: { path: m.url, status: "loaded", group: m.series } };
       } catch (e) {
-        setFileMeta(prev => [...prev, { path: m.url, status: "error", error: String(e), group: m.series }]);
-        return null;
+        return { def: null, meta: { path: m.url, status: "error", error: String(e), group: m.series } };
       }
-    })).then(r => { setAll(r); setLoading(false); });
+    })).then(results => {
+      setAll(results.map(r => r.def));
+      setFileMeta(results.map(r => r.meta));
+      setLoading(false);
+    });
   }, []);
 
   const cur = all[ti];

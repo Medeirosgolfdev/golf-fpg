@@ -4,13 +4,13 @@
  * Boys 8-9: 9 buracos (H10-H18) · Boys 10-11 / 12-13: 18 buracos
  */
 import React, { useEffect, useState, useMemo } from "react";
-import { cachedFetch } from "../data/fetchCache";
+import { cachedFetchJson } from "../data/fetchCache";
 import { SC } from "../utils/scoreDisplay";
 import { isManuelByName as isM } from "../constants/manuel";
 import ExtLink from "../ui/ExternalLink";
 import SidebarSectionTitle from "../ui/SidebarSectionTitle";
 import { gf } from "../utils/flagUtils";
-import { norm, fmtFieldInfo } from "../utils/format";
+import { fmtFieldInfo } from "../utils/format";
 import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
 import SidebarToggle from "../ui/SidebarToggle";
@@ -268,31 +268,6 @@ function doralScorecardOptions(entry: Entry): ScorecardOptions {
 
 /* DoralScorecard removido — lógica inline no DivView */
 
-/* ── FStats — resumo do field ───────────────────────────────── */
-function FStats({ entry, ri }: { entry: Entry; ri: number | "all" }) {
-  const { players } = entry;
-  const nR = Math.max(...players.map(p => p.rounds.length), 0);
-  const full = players.filter(p => p.rounds.length === nR);
-  if (ri === "all") {
-    const avg = full.length ? full.reduce((s, p) => s + (p.total ?? 0), 0) / full.length : 0;
-    return (
-      <div className="muted fs-10 mb-8">
-        {full.length} jogadores{nR > 1 && <> (<RoundPill nR={nR} />)</>}{players.length > full.length ? ` + ${players.length - full.length} WD` : ""}
-        {" · "}Média total: {avg.toFixed(1)}
-        {" · "}Líder: {full[0]?.name} ({full[0]?.total})
-      </div>
-    );
-  }
-  const scores = players.filter(p => p.rounds[ri as number]).map(p => p.rounds[ri as number].gross);
-  if (!scores.length) return null;
-  const avg = scores.reduce((s, v) => s + v, 0) / scores.length;
-  return (
-    <div className="muted fs-10 mb-8">
-      {scores.length} jogadores{" · "}Média R{(ri as number)+1}: {avg.toFixed(1)}
-    </div>
-  );
-}
-
 /* ── DivView — usa IntlTournView (abas R1·R2·Resumo·📋 Scorecards) ── */
 function DivView({ entry, evo }: { entry: Entry; evo?: Map<string, EvoEntry> }) {
   const tournament = useMemo(() => entryToTournament(entry), [entry]);
@@ -374,26 +349,23 @@ function Content() {
   const [fileMeta, setFileMeta] = useState<DataSource[]>([]);
 
   useEffect(() => {
+    type FileResult = { entries: Entry[]; meta: DataSource };
     Promise.all(
-      DATA_FILES.map(async ({ url, sourceUrl }) => {
+      DATA_FILES.map(async ({ url, sourceUrl }): Promise<FileResult> => {
         try {
-          const res = await cachedFetch(url);  // fetchCache: partilhado com KIDSdataLoader
-          if (!res.ok) {
-            setFileMeta(prev => [...prev, { path: url, status: "error", error: `HTTP ${res.status}`, group: "doral" }]);
-            return [] as Entry[];
+          const raw = await cachedFetchJson<RawGG>(url);  // fetchCache: partilhado com KIDSdataLoader
+          if (raw == null) {
+            return { entries: [], meta: { path: url, status: "error", error: "Ficheiro não encontrado (404)", group: "doral" } };
           }
-          const raw: RawGG = await res.json();
           const entries = normalizeFile(raw, sourceUrl);
-          setFileMeta(prev => [...prev, { path: url, status: "loaded", count: entries.length, group: "doral" }]);
-          return entries;
+          return { entries, meta: { path: url, status: "loaded", count: entries.length, group: "doral" } };
         } catch (e) {
-          setFileMeta(prev => [...prev, { path: url, status: "error", error: String(e), group: "doral" }]);
-          return [] as Entry[];
+          return { entries: [], meta: { path: url, status: "error", error: String(e), group: "doral" } };
         }
       })
     ).then(results => {
-      const all = results.flat();
-      setEntries(all);
+      setEntries(results.flatMap(r => r.entries));
+      setFileMeta(results.map(r => r.meta));
       setLoading(false);
     });
   }, []);
@@ -568,4 +540,3 @@ export default function DORALPage() {
   if (!unlocked) return <PasswordGate onUnlock={unlock} />;
   return <Content />;
 }
-      

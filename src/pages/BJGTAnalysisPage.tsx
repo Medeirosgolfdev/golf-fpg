@@ -5,8 +5,8 @@
  * Usa HOLE_STATS pré-calculado + HOLES/EC para eclético.
  * Inclui secção de rivais internacionais.
  */
-import React, { useMemo, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useMemo, useState } from "react";
+import { useParams } from "react-router-dom";
 import {
   type RoundData,
   type HoleScores,
@@ -15,37 +15,19 @@ import {
   type EclecticEntry,
 } from "../data/playerDataLoader";
 import { usePlayerData } from "../data/usePlayerData";
-import { norm, fmtToPar, firstName, fmtSign, MONTHS_PT, fmtFieldInfo, MONTH_MAP, sortArrow } from "../utils/format";
-import { FL } from "../utils/flagUtils";
-import { zTier, getTrend, getAvgZ } from "../utils/mathUtils";
+import { norm, fmtToPar, firstName, MONTHS_PT, fmtFieldInfo, MONTH_MAP } from "../utils/format";
 import { meanArr } from "../utils/mathUtils";
-import { scClass, toParClass, sc3m, SC, tpColorDark } from "../utils/scoreDisplay";
 import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
 import { useMasterDetail } from "../hooks/useMasterDetail";
-import { tpColor , MANUEL_FED } from "../ui/tournamentPrimitives";
-import EvoBadge from "../ui/EvoBadge";
+import { MANUEL_FED } from "../ui/tournamentPrimitives";
 import LoadingState from "../ui/LoadingState";
-import EmptyState from "../ui/EmptyState";
-import WdBadge from "../ui/WdBadge";
-import EvoBadge from "../ui/EvoBadge";
-import DetailHeader from "../ui/DetailHeader";
-import TabRow from "../ui/TabRow";
-import KpiCard from "../ui/KpiCard";
-import { COURSE_KEYWORDS, TOURN, FIELD_2025, VP_PAR, TIER, FIELD_CARDS } from "../data/rivalData";
-import { TIER_L, TR_I } from "../constants/config";
-import { RoundPill } from "../ui/PillBadge";
-import _RivaisDashboard from "../ui/RivaisDashboard";
+import { COURSE_KEYWORDS, TOURN } from "../data/rivalData";
 import FieldPlayerDetail from "../ui/FieldPlayerDetail";
-import ContestLeaderboard, {
-  type ContestData,
-  type ContestPlayer,
-  type EvoEntry as ContestEvoEntry,
-} from "../ui/ContestLeaderboard";
+import ContestLeaderboard from "../ui/ContestLeaderboard";
 import type {
-  TournResult,
   RivalPlayer,
   TournDef,
   RoundAvg,
@@ -56,92 +38,10 @@ import type {
    ═══════════════════════════════════ */
 // TournResult, RivalPlayer, TournDef, RoundAvg exported from bjgt-analysis/types.ts
 
-/** Shape of a single hole sample for distance-band analysis */
-interface HoleSample { ds: number; par: number; meters: number | null; gross: number }
-
-/** Shape of a distance band definition */
-interface BandDef { par: number; minM: number; maxM: number; label: string }
-
-/** Filtered band result */
-interface FilteredBand { key?: string; label: string; n: number; avg: number; pob: number; dbl: number; pobPct?: number; dblPct?: number; par?: number; minM?: number; maxM?: number; samples?: HoleSample[]; allAvg?: number; allN?: number; col?: string }
-
-/** Monthly stats entry */
-interface MonthStat {
-  key: string; label: string; avgGross: number; n: number;
-  grossStdDev: number; avgSD?: number; parOrBetter: number; doubleOrWorse: number;
-  bounceRate: number | null; bestRound?: number;
-  birdieRate?: number; bestStreak?: number;
-  first3VsPar?: number; last3VsPar?: number;
-  last3Avg?: number;
-}
-
-/** Coach monthly entry */
-interface CoachMonth { key: string; label: string; avgGross: number; n: number; grossStdDev: number }
-
 /* ═══════════════════════════════════
    CONFIG
    ═══════════════════════════════════ */
 const PLAYER_NAME = "Manuel";
-
-/* Field data from 2025 BJGT VP Flamingos — 12 players × 3 days = 36 scorecards */
-const _FIELD_TOTAL = 35; // total de jogadores no torneio
-
-/* ═══ WJGC 2026 — R1 data (Villa Padierna Flamingos, par 72) ═══ */
-const _VP26_PAR = [5,3,4,3,4,5,4,3,4, 5,5,3,4,4,5,3,4,4];
-const _VP26_SI  = [4,10,6,18,16,8,14,12,2, 1,7,9,15,11,5,13,17,3];
-const _VP26_PAR_F = 35, _VP26_PAR_B = 37, VP26_PAR_T = 72;
-interface VP26Player { n:string; co:string; flag:string; s:number[]|null; f9:number; b9:number; gross:number; tp:number; pos:number|string }
-const VP26_RAW: {n:string;co:string;flag:string;s:number[]|null}[] = [
-  {n:"Dmitrii Elchaninov",co:"Russian Federation",flag:"🇷🇺",s:[6,3,4,3,3,5,5,2,4,5,5,2,4,4,5,3,4,5]},
-  {n:"Manuel Medeiros",co:"Portugal",flag:"🇵🇹",s:[5,3,3,3,4,7,3,3,4,4,6,3,5,4,6,4,4,4]},
-  {n:"William Harran",co:"Switzerland",flag:"🇨🇭",s:[4,3,4,3,5,4,4,4,4,5,6,2,5,4,5,3,5,5]},
-  {n:"Weilian Sun",co:"China",flag:"🇨🇳",s:[8,3,3,4,4,4,5,2,4,5,5,3,4,3,7,3,3,5]},
-  {n:"Henry Bucys",co:"England",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",s:[4,3,4,3,3,4,4,4,4,6,5,5,5,4,6,4,4,4]},
-  {n:"Myles Jones",co:"Wales",flag:"🏴󠁧󠁢󠁷󠁬󠁳󠁿",s:[5,4,4,4,4,6,5,3,4,4,6,3,4,4,5,3,5,5]},
-  {n:"Christian Chepishev",co:"Bulgaria",flag:"🇧🇬",s:[5,4,4,3,4,5,6,4,3,6,5,3,5,6,5,3,4,4]},
-  {n:"Sean Wilding",co:"Thailand",flag:"🇹🇭",s:[6,4,5,3,3,5,5,2,4,5,5,4,6,4,6,3,5,4]},
-  {n:"Leon Schneitter",co:"Switzerland",flag:"🇨🇭",s:[5,4,5,3,4,5,5,4,5,4,5,4,5,4,8,2,3,5]},
-  {n:"Dylan Dedaj Ungureanu",co:"Spain",flag:"🇪🇸",s:[5,3,4,2,4,6,5,3,4,5,7,3,4,5,7,4,5,4]},
-  {n:"Philippe Xiao",co:"France",flag:"🇫🇷",s:[6,4,4,3,5,6,5,2,4,5,5,4,5,6,6,2,4,4]},
-  {n:"Diego Gross Paneque",co:"Spain",flag:"🇪🇸",s:[5,3,5,5,5,4,5,4,5,5,5,4,4,4,5,3,5,5]},
-  {n:"Alexis Beringer",co:"Switzerland",flag:"🇨🇭",s:[4,5,5,4,4,5,7,4,3,5,5,3,5,4,5,3,5,5]},
-  {n:"Aineon Hiram Jabonero",co:"Philippines",flag:"🇵🇭",s:[5,6,5,4,3,6,5,4,4,4,5,4,4,4,5,4,5,5]},
-  {n:"Niko Alvarez Van Der Walt",co:"Spain",flag:"🇪🇸",s:[5,3,6,3,3,5,4,4,4,6,7,4,5,4,5,3,6,5]},
-  {n:"Hugo Strasser",co:"Switzerland",flag:"🇨🇭",s:[5,3,3,4,5,6,3,3,5,5,6,4,6,4,7,3,5,5]},
-  {n:"Álex Carrón",co:"Spain",flag:"🇪🇸",s:[5,3,4,3,4,6,4,4,4,7,7,4,5,4,6,3,5,5]},
-  {n:"Oscar Bunt",co:"England",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",s:[5,5,4,3,4,8,4,4,3,4,5,5,4,5,6,4,5,5]},
-  {n:"Benji Botham",co:"Northern Ireland",flag:"🇬🇧",s:[6,3,4,4,5,5,4,3,7,5,6,4,5,4,6,3,5,4]},
-  {n:"Lukas Doherty",co:"Norway",flag:"🇳🇴",s:[6,4,5,3,4,5,5,3,4,5,6,4,5,4,7,3,6,5]},
-  {n:"Elias Didjurgis",co:"Germany",flag:"🇩🇪",s:[7,5,4,3,4,6,6,2,6,5,6,3,5,4,7,3,5,5]},
-  {n:"Maddox Tiemann",co:"Sweden",flag:"🇸🇪",s:[5,3,6,3,4,6,5,3,4,7,5,3,6,4,7,3,5,8]},
-  {n:"Elijah Gibbons",co:"England",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",s:[6,4,4,3,5,6,3,4,4,9,5,4,6,3,7,5,4,5]},
-  {n:"Buster Airey",co:"England",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",s:[7,3,5,3,5,5,5,4,4,8,5,4,6,4,6,4,5,5]},
-  {n:"Aron Klinkenberg",co:"Netherlands",flag:"🇳🇱",s:[7,5,5,5,4,6,4,4,4,6,4,5,5,5,7,5,4,3]},
-  {n:"Hermes Stuart Cañizares Plaja",co:"Spain",flag:"🇪🇸",s:[5,4,5,2,5,5,4,4,8,4,6,3,10,3,7,3,5,5]},
-  {n:"Miroslavs Bogdanovs",co:"Spain",flag:"🇪🇸",s:[6,5,4,4,4,5,4,3,4,6,7,4,6,4,8,4,5,5]},
-  {n:"Henry Liechti",co:"Switzerland",flag:"🇨🇭",s:[7,6,5,4,4,6,4,4,4,7,5,4,4,5,7,3,6,4]},
-  {n:"Joe Short",co:"Portugal",flag:"🇵🇹",s:[6,4,6,3,3,8,6,4,3,5,6,3,5,5,6,7,4,6]},
-  {n:"Zeyn Lababedi",co:"England",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",s:[8,5,5,3,4,6,5,3,4,6,7,4,5,5,9,3,4,5]},
-  {n:"Rodrigo Palacios Bauer",co:"Spain",flag:"🇪🇸",s:[6,4,4,5,4,6,7,4,3,5,10,3,6,4,8,2,5,6]},
-  {n:"Arthur Lamblin",co:"France",flag:"🇫🇷",s:[8,4,5,4,4,8,4,3,5,6,6,3,5,5,6,3,6,7]},
-  {n:"Kai Russell",co:"England",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",s:[6,4,5,6,4,5,3,4,4,11,5,3,5,5,9,3,6,4]},
-  {n:"James Doyle",co:"Ireland",flag:"🇮🇪",s:[8,8,6,3,4,7,4,3,5,3,9,6,3,5,8,6,6,4]},
-  {n:"Joseph Robinson",co:"England",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",s:[8,6,4,4,4,8,7,3,5,5,6,4,6,4,4,4,12,5]},
-  {n:"Kevin Canton",co:"Italy",flag:"🇮🇹",s:[4,3,8,4,5,6,7,2,4,7,6,4,6,5,8,5,9,7]},
-  {n:"Isaac Cawrey",co:"England",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",s:null},
-  {n:"Travis Reaves",co:"United States",flag:"🇺🇸",s:null},
-];
-const _VP26_PLAYERS: VP26Player[] = (() => {
-  const valid = VP26_RAW.filter(p => p.s).map(p => {
-    const f9 = p.s!.slice(0,9).reduce((a,b)=>a+b,0);
-    const b9 = p.s!.slice(9,18).reduce((a,b)=>a+b,0);
-    return { ...p, f9, b9, gross: f9+b9, tp: f9+b9-VP26_PAR_T, pos: 0 as number|string };
-  });
-  valid.sort((a,b) => a.gross - b.gross);
-  valid.forEach((v,i) => { v.pos = i===0 ? 1 : v.gross===valid[i-1].gross ? valid[i-1].pos : i+1; });
-  const dns = VP26_RAW.filter(p => !p.s).map(p => ({ ...p, f9:0, b9:0, gross:0, tp:0, pos:"DNS" as number|string }));
-  return [...valid, ...dns];
-})();
 
 /* ═══ WJGC Cross-Year Evolution Data ═══ */
 interface EvoEntry { n:string; co:string; from:string; to:string; y25:number; y26:number; delta:number; pill:string }
@@ -172,62 +72,6 @@ const EVOLUTION: EvoEntry[] = [
   {n:"Elijah Gibbons",co:"Inglaterra",from:"8-9",to:"10-11",y25:233,y26:253,delta:20,pill:"UP"},
 ];
 
-const _AGE_GROUP_26: Record<string, "ex89"|"ex1011"|"new"> = {
-  "Dmitrii Elchaninov":"ex1011","William Harran":"new","Sean Wilding":"new","Weilian Sun":"new",
-  "Philippe Xiao":"new","Hugo Strasser":"new","Christian Chepishev":"ex1011","Henry Bucys":"new",
-  "Manuel Medeiros":"ex1011","Diego Gross Paneque":"ex1011","Leon Schneitter":"new",
-  "Dylan Dedaj Ungureanu":"new","Alexis Beringer":"ex1011","Oscar Bunt":"new",
-  "Benji Botham":"ex89","Álex Carrón":"ex1011","Myles Jones":"new",
-  "Niko Alvarez Van Der Walt":"ex1011","Aineon Hiram Jabonero":"ex89","Lukas Doherty":"ex89",
-  "Elijah Gibbons":"ex89","Hermes Stuart Cañizares Plaja":"new","Buster Airey":"ex89",
-  "Joe Short":"ex89","Miroslavs Bogdanovs":"ex1011","Elias Didjurgis":"new",
-  "Kai Russell":"new","Henry Liechti":"ex1011","Maddox Tiemann":"ex89","Aron Klinkenberg":"new",
-  "Zeyn Lababedi":"new","Rodrigo Palacios bauer":"new","James Doyle":"ex1011",
-  "Kevin Canton":"ex1011","Arthur Lamblin":"new","Joseph Robinson":"new",
-};
-
-/* ═══ WJGC 2026 — Final Leaderboard (3R) ═══ */
-interface VP26Final { n:string; co:string; flag:string; p:number|string; t:number; tp:number; rd:number[]; ag?:string }
-const _VP26_FINAL: VP26Final[] = [
-  {n:"Dmitrii Elchaninov",co:"Fed. Russa",flag:"🇷🇺",p:1,t:210,tp:-6,rd:[69,69,72],ag:"ex1011"},
-  {n:"William Harran",co:"Suíça",flag:"🇨🇭",p:2,t:221,tp:5,rd:[75,71,75],ag:"new"},
-  {n:"Sean Wilding",co:"Tailândia",flag:"🇹🇭",p:3,t:224,tp:8,rd:[71,74,79],ag:"new"},
-  {n:"Weilian Sun",co:"China",flag:"🇨🇳",p:4,t:225,tp:9,rd:[77,73,75],ag:"new"},
-  {n:"Philippe Xiao",co:"França",flag:"🇫🇷",p:5,t:227,tp:11,rd:[74,73,80],ag:"new"},
-  {n:"Hugo Strasser",co:"Suíça",flag:"🇨🇭",p:6,t:228,tp:12,rd:[73,73,82],ag:"new"},
-  {n:"Christian Chepishev",co:"Bulgária",flag:"🇧🇬",p:7,t:230,tp:14,rd:[75,76,79],ag:"ex1011"},
-  {n:"Henry Bucys",co:"Inglaterra",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",p:8,t:231,tp:15,rd:[79,76,76],ag:"new"},
-  {n:"Manuel Medeiros",co:"Portugal",flag:"🇵🇹",p:9,t:232,tp:16,rd:[79,78,75],ag:"ex1011"},
-  {n:"Diego Gross Paneque",co:"Espanha",flag:"🇪🇸",p:9,t:232,tp:16,rd:[76,75,81],ag:"ex1011"},
-  {n:"Leon Schneitter",co:"Suíça",flag:"🇨🇭",p:11,t:236,tp:20,rd:[76,80,80],ag:"new"},
-  {n:"Álex Carrón",co:"Espanha",flag:"🇪🇸",p:12,t:241,tp:25,rd:[76,82,83],ag:"ex1011"},
-  {n:"Benji Botham",co:"Irlanda N.",flag:"🇬🇧",p:13,t:244,tp:28,rd:[81,80,83],ag:"ex89"},
-  {n:"Dylan Dedaj Ungureanu",co:"Espanha",flag:"🇪🇸",p:14,t:245,tp:29,rd:[84,81,80],ag:"new"},
-  {n:"Oscar Bunt",co:"Inglaterra",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",p:14,t:245,tp:29,rd:[82,80,83],ag:"new"},
-  {n:"Myles Jones",co:"Gales",flag:"🏴󠁧󠁢󠁷󠁬󠁳󠁿",p:14,t:245,tp:29,rd:[79,88,78],ag:"new"},
-  {n:"Alexis Beringer",co:"Suíça",flag:"🇨🇭",p:17,t:246,tp:30,rd:[83,82,81],ag:"ex1011"},
-  {n:"Hermes S.C. Plaja",co:"Espanha",flag:"🇪🇸",p:18,t:248,tp:32,rd:[77,83,88],ag:"new"},
-  {n:"Niko Alvarez",co:"Espanha",flag:"🇪🇸",p:19,t:249,tp:33,rd:[81,86,82],ag:"ex1011"},
-  {n:"Buster Airey",co:"Inglaterra",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",p:20,t:252,tp:36,rd:[79,85,88],ag:"ex89"},
-  {n:"Miroslavs Bogdanovs",co:"Espanha",flag:"🇪🇸",p:20,t:252,tp:36,rd:[78,86,88],ag:"ex1011"},
-  {n:"Elijah Gibbons",co:"Inglaterra",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",p:22,t:253,tp:37,rd:[83,83,87],ag:"ex89"},
-  {n:"Henry Liechti",co:"Suíça",flag:"🇨🇭",p:23,t:255,tp:39,rd:[79,87,89],ag:"ex1011"},
-  {n:"Kai Russell",co:"Inglaterra",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",p:24,t:256,tp:40,rd:[81,83,92],ag:"new"},
-  {n:"Aineon H. Jabonero",co:"Filipinas",flag:"🇵🇭",p:25,t:257,tp:41,rd:[88,87,82],ag:"ex89"},
-  {n:"Lukas Doherty",co:"Noruega",flag:"🇳🇴",p:26,t:258,tp:42,rd:[89,85,84],ag:"ex89"},
-  {n:"Elias Didjurgis",co:"Alemanha",flag:"🇩🇪",p:27,t:259,tp:43,rd:[84,89,86],ag:"new"},
-  {n:"Joe Short",co:"Portugal",flag:"🇵🇹",p:28,t:266,tp:50,rd:[93,83,90],ag:"ex89"},
-  {n:"Rodrigo P. Bauer",co:"Espanha",flag:"🇪🇸",p:29,t:267,tp:51,rd:[82,93,92],ag:"new"},
-  {n:"Kevin Canton",co:"Itália",flag:"🇮🇹",p:30,t:273,tp:57,rd:[85,88,100],ag:"ex1011"},
-  {n:"James Doyle",co:"Irlanda",flag:"🇮🇪",p:31,t:276,tp:60,rd:[91,87,98],ag:"ex1011"},
-  {n:"Joseph Robinson",co:"Inglaterra",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",p:32,t:277,tp:61,rd:[85,93,99],ag:"new"},
-  {n:"Arthur Lamblin",co:"França",flag:"🇫🇷",p:33,t:279,tp:63,rd:[89,98,92],ag:"new"},
-  {n:"Zeyn Lababedi",co:"Inglaterra",flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",p:34,t:280,tp:64,rd:[95,94,91],ag:"new"},
-  {n:"Maddox Tiemann",co:"Suécia",flag:"🇸🇪",p:"WD",t:176,tp:32,rd:[89,87],ag:"ex89"},
-  {n:"Aron Klinkenberg",co:"Holanda",flag:"🇳🇱",p:"WD",t:179,tp:35,rd:[91,88],ag:"new"},
-];
-const _MANUEL_POS_26 = 9;
-const _FIELD_TOTAL_26 = 36;
 /* ═══ ALL CONTEST DATA (4 age groups) ═══ */
 interface RdData { g:number; s:number[] }
 interface ContestPlayer { n:string; co:string; fl:string; p:number|string; t:number; tp:number; rd:RdData[]; isM?:boolean }
@@ -404,7 +248,6 @@ const C26_1213: ContestData = {
   ]
 };
 
-const _ALL_CONTESTS: ContestData[] = [C25_89, C25_1011, C26_1011, C26_1213];
 const CONTEST_KEYS = ["25_89","25_1011","26_1011","26_1213"] as const;
 type ContestKey = typeof CONTEST_KEYS[number];
 const CONTEST_MAP: Record<ContestKey, ContestData> = {"25_89":C25_89,"25_1011":C25_1011,"26_1011":C26_1011,"26_1213":C26_1213};
@@ -443,24 +286,6 @@ const T: TournDef[]=[
   {id:"gg26",name:"Greatgolf Junior Open",short:"GG",date:"Fev 2026",rounds:2,par:72,field:12,nations:4,url:"https://scoring-pt.datagolf.pt/scripts/classif.asp?tourn=10296&club=935&ack=OT342GH16T"},
   {id:"wjgc26",name:"WJGC 2026",short:"WJGC26",date:"Fev 2026",rounds:3,par:72,field:36,nations:19,url:"https://brjgt.bluegolf.com/bluegolf/brjgt25/event/brjgt2537/contest/73/leaderboard.htm"},
 ];
-
-// Tournament prestige weight: rounds (40%) + field size (35%) + internationality (25%)
-// Uses intendedRounds when available (e.g. QDL reduced by weather)
-const T_WEIGHTS: Record<string, number> = (() => {
-  const maxR = Math.max(...T.map(t => t.intendedRounds || t.rounds));
-  const maxF = Math.max(...T.map(t => t.field));
-  const maxN = Math.max(...T.map(t => t.nations));
-  const w: Record<string, number> = {};
-  for (const t of T) {
-    const rNorm = (t.intendedRounds || t.rounds) / maxR;
-    const fNorm = t.field / maxF;
-    const nNorm = t.nations / maxN;
-    w[t.id] = 0.40 * rNorm + 0.35 * fNorm + 0.25 * nNorm;
-  }
-  return w;
-})();
-
-const UP=[{id:"marco26",name:"Marco Simone Inv.",short:"M.SIMONE",url:"https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/516989/marco-simone-invitational-2026/field"}];
 
 const D: RivalPlayer[]=[
   {n:"Manuel Medeiros",co:"Portugal",isM:true,r:{brjgt25:{p:26,t:265,tp:52,rd:[90,85,90]},eowagr25:{p:7,t:238,tp:22,rd:[85,77,76]},venice25:{p:28,t:237,tp:21,rd:[78,76,83]},rome25:{p:10,t:166,tp:22,rd:[89,77]},doral25:{p:29,t:177,tp:35,rd:[98,79]},qdl25:{p:11,t:90,tp:18,rd:[90]},gg26:{p:4,t:169,tp:25,rd:[87,82]},wjgc26:{p:9,t:232,tp:16,rd:[79,78,75]}},up:["marco26"]},
@@ -615,10 +440,6 @@ const D: RivalPlayer[]=[
   {n:"Alessandro Zhang",co:"Great Britain",r:{},up:["marco26"]},
 ];
 
-const manuel = D.find(x => x.isM)!;
-
-
-
 // Compute field averages per round and per total
 const AVG_R: Record<string, Array<RoundAvg>> = {};
 const AVG_T: Record<string, RoundAvg> = {};
@@ -640,9 +461,6 @@ for (const t of T) {
   }
 }
 
-// Average z-score across all rounds played
-const allCountries = [...new Set(D.map(p => p.co))].sort();
-
 export default function BJGTAnalysisPage({ playerFed }: { playerFed?: string }) {
   const { unlocked, unlock } = usePasswordGate();
 
@@ -656,9 +474,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
   const fed = urlFed || playerFed || MANUEL_FED;
   const { data, loading, error } = usePlayerData(fed);
   const [tab, setTab] = useState<ContestKey>("26_1011");
-  const [distPeriod, setDistPeriod] = useState<number>(12); void setDistPeriod;
-  const [expandedPlayers, setExpandedPlayers] = useState<Set<number>>(new Set()); void expandedPlayers; void setExpandedPlayers;
-    const md = useMasterDetail();
+  const md = useMasterDetail();
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
 
   /* ── Analysis ── */
@@ -712,21 +528,20 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
     // 3) Find HOLE_STATS for this course (try each VP course name as key)
     let hs: HoleStatsData | null = null;
-    let _hsKey = "";
     for (const c of vpCourses) {
       // HOLE_STATS is keyed by course name → tee key
       const courseStats = data.HOLE_STATS?.[c.course];
       if (courseStats) {
         // Pick first tee with data
         const firstTee = Object.values(courseStats)[0];
-        if (firstTee) { hs = firstTee; _hsKey = c.course; break; }
+        if (firstTee) { hs = firstTee; break; }
       }
       // Try normalized key too
       const nk = norm(c.course);
       for (const [k, v] of Object.entries(data.HOLE_STATS || {})) {
         if (norm(k) === nk || norm(k).includes("villa padierna") || norm(k).includes("flamingos")) {
           const firstTee = Object.values(v)[0];
-          if (firstTee) { hs = firstTee; _hsKey = k; break; }
+          if (firstTee) { hs = firstTee; break; }
         }
       }
       if (hs) break;
@@ -992,8 +807,8 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
     const worstDay = daySummaries.length > 0 ? daySummaries.reduce((a, b) => a.gross > b.gross ? a : b) : null;
     const f9avg = avgOf(daySummaries.map(d => d.f9));
     const b9avg = avgOf(daySummaries.map(d => d.b9));
-    const f9par = parArr.slice(0, 9).reduce((a, b) => a + (b ?? 0), 0);
-    const b9par = nH >= 18 ? parArr.slice(9, 18).reduce((a, b) => a + (b ?? 0), 0) : 0;
+    const f9par = parArr.slice(0, 9).reduce((a: number, b) => a + (b ?? 0), 0);
+    const b9par = nH >= 18 ? parArr.slice(9, 18).reduce((a: number, b) => a + (b ?? 0), 0) : 0;
 
     // Recovery after double
     let goodRecovery = 0, badRecovery = 0, totalRecovery = 0;
@@ -1177,44 +992,6 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
     return { stats, cards, ecl, allR, hcp, holePatterns, trapHoles, strongHoles, volatileHoles, daySummaries, bestDay, worstDay, f9avg, b9avg, f9par, b9par, recoveryRate, goodRecovery, badRecovery, totalRecovery, vpCards, nH, parArr, vpHoleProfiles, bands, bandDefs, distEvolution, metersGrowing, metersDiff, avgGrossShort, avgGrossLong, medianMeters, allHoleSamples, monthlyStats, roundDetails, coachMonthly, coachRounds };
   }, [data]);
 
-  /* ── Filtered distance bands by period (must be before early returns!) ── */
-  const filteredBandsResult = useMemo(() => {
-    if (!A || "err" in A) return { filteredBands: [] as FilteredBand[], filteredN: 0, periodLabel: "all-time" };
-    const { allHoleSamples: ahs, bandDefs: bd, bands: b } = (A as unknown) as { allHoleSamples: HoleSample[]; bandDefs: BandDef[]; bands: FilteredBand[] };
-    if (!ahs || !bd) return { filteredBands: [] as FilteredBand[], filteredN: 0, periodLabel: "all-time" };
-    if (distPeriod === 0) return { filteredBands: b, filteredN: ahs.length, periodLabel: "all-time" };
-    const now = new Date();
-    const cutoff = new Date(now.getFullYear(), now.getMonth() - distPeriod, now.getDate()).getTime();
-    const filtered = ahs.filter((h: HoleSample) => h.ds >= cutoff);
-    const fb: FilteredBand[] = [];
-    for (const bdef of bd) {
-      const s = filtered.filter((h: HoleSample) => h.par === bdef.par && h.meters != null && h.meters >= bdef.minM && h.meters < bdef.maxM);
-      if (s.length < 3) continue;
-      const avg = s.reduce((a: number, b: HoleSample) => a + b.gross, 0) / s.length;
-      const pob = s.filter((h: HoleSample) => h.gross <= bdef.par).length / s.length * 100;
-      const dbl = s.filter((h: HoleSample) => h.gross >= bdef.par + 2).length / s.length * 100;
-      fb.push({ key: `${bdef.par}-${bdef.minM}`, label: bdef.label, par: bdef.par, minM: bdef.minM, maxM: bdef.maxM, samples: s, avg, pobPct: pob, dblPct: dbl, n: s.length });
-    }
-    return { filteredBands: fb, filteredN: filtered.length, periodLabel: `${distPeriod}m` };
-  }, [A, distPeriod]);
-
-  /* ── Period-filtered monthly & coach data (must be before early returns!) ── */
-  const _filteredMonthly = useMemo(() => {
-    if (!A || "err" in A) return [];
-    const ms = ((A as unknown) as { monthlyStats: MonthStat[] }).monthlyStats;
-    if (!ms) return [];
-    if (distPeriod === 0) return ms;
-    return ms.slice(-distPeriod);
-  }, [A, distPeriod]);
-
-  const _filteredCoach = useMemo(() => {
-    if (!A || "err" in A) return [];
-    const cm = ((A as unknown) as { coachMonthly: CoachMonth[] }).coachMonthly;
-    if (!cm) return [];
-    if (distPeriod === 0) return cm;
-    return cm.slice(-distPeriod);
-  }, [A, distPeriod]);
-
   /* ═══ RENDER ═══ */
   if (loading) return (
     <div className="tourn-layout">
@@ -1256,19 +1033,6 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
       </div>
     );
   }
-
-  const { stats, cards: _cards, ecl: _ecl, allR: _allR, hcp: _hcp, holePatterns: _holePatterns, trapHoles: _trapHoles, strongHoles: _strongHoles, volatileHoles: _volatileHoles, daySummaries: _daySummaries, bestDay: _bestDay, worstDay: _worstDay, f9avg: _f9avg, b9avg: _b9avg, f9par: _f9par, b9par: _b9par, recoveryRate: _recoveryRate, goodRecovery: _goodRecovery, badRecovery: _badRecovery, totalRecovery: _totalRecovery, vpCards: _vpCards, nH: _nH, parArr: _parArr, vpHoleProfiles: _vpHoleProfiles, bands: _bands, bandDefs: _bandDefs, distEvolution: _distEvolution, metersGrowing: _metersGrowing, metersDiff: _metersDiff, avgGrossShort: _avgGrossShort, avgGrossLong: _avgGrossLong, medianMeters: _medianMeters, allHoleSamples: _allHoleSamples, monthlyStats: _monthlyStats, roundDetails: _roundDetails, coachMonthly: _coachMonthly, coachRounds: _coachRounds } = A;
-  const S = stats;
-  const _tp = S.totalPar; void _tp;
-  const pobN = S.totalDist.eagle + S.totalDist.birdie + S.totalDist.par;
-  const dowN = S.totalDist.double + S.totalDist.triple;
-  const totN = S.totalDist.total || (pobN + S.totalDist.bogey + dowN);
-  const _pobP = totN > 0 ? pobN / totN * 100 : 0;
-  const _dowP = totN > 0 ? dowN / totN * 100 : 0;
-  const _worstPT = Object.values(S.byParType).length > 1
-    ? Object.values(S.byParType).reduce((a, b) => (b.avgVsPar ?? 0) > (a.avgVsPar ?? 0) ? b : a) : null;
-
-  const { filteredBands: _fb, filteredN: _fn } = filteredBandsResult;
 
   return (
     <div className="tourn-layout">
@@ -1317,7 +1081,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
 
       {/* ═══ PLAYER DETAIL (from sidebar click) ═══ */}
       {selectedPlayer && (
-        <FieldPlayerDetail playerName={selectedPlayer} onBack={() => setSelectedPlayer(null)} />
+        <FieldPlayerDetail playerName={selectedPlayer} onBack={() => setSelectedPlayer(null)} T={T} D={D} />
       )}
 
       {/* ═══ CONTEST LEADERBOARD (all 4 tabs) ═══ */}

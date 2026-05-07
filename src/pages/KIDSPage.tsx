@@ -9,7 +9,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import { useLocation } from "react-router-dom";
 import { fmtToPar, fmtSign, MONTHS_PT, MONTHS_PT_FULL, isoDate, medal, sortArrow } from "../utils/format";
 /* useSort movido para ./kids/H2HSortableTable.tsx */
-import { FL, normPaisDisplay, flag as flagOf } from "../utils/flagUtils";
+import { normPaisDisplay, flag as flagOf } from "../utils/flagUtils";
 import { getTrend, getAvgZ } from "../utils/mathUtils";
 import { scClass, toParClass, tpColorDark } from "../utils/scoreDisplay";
 import { usePasswordGate } from "../hooks/usePasswordGate";
@@ -23,7 +23,7 @@ import DetailHeader from "../ui/DetailHeader";
 import KpiCard from "../ui/KpiCard";
 import ExtLink from "../ui/ExternalLink";
 import SidebarSectionTitle from "../ui/SidebarSectionTitle";
-import { buildAutoRivals, normName, getScorecards, uskTournNames, uskFieldSizes, fpgTournNames, ffgolfTournNames, getLoadedKidsFiles, type KidsFileMeta } from "../data/KIDSdataLoader";
+import { buildAutoRivals, normName, getScorecards, uskTournNames, uskFieldSizes, fpgTournNames, ffgolfTournNames, getLoadedKidsFiles, type KidsFileMeta, type AutoRivalPlayer } from "../data/KIDSdataLoader";
 import { cachedFetchJson } from "../data/fetchCache";
 import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
 import { FIELD_2025, VP_PAR, VP_SI, VP_M, VP_WJGC26_PAR, VP_WJGC26_SI, VP_WJGC26_M, VP_ALFERINI_PAR, VP_ALFERINI_SI, VP_ALFERINI_M, LT_FORET_PAR, LT_FORET_SI, LT_FORET_M, MS_USKIDS_M_B1011, MS_USKIDS_M_B12, DORAL_GP_M_B1011, DORAL_SF_M_B1213, FIELD_CARDS } from "../data/rivalData";
@@ -32,7 +32,7 @@ import { TR_I } from "../constants/config";
 import TournScorecard from "./kids/TournScorecard";
 import H2HSortableTable from "./kids/H2HSortableTable";
 import AnaliseSection from "./kids/AnaliseSection";
-import type { ScRound, H2HConfronto, H2HSortKey } from "./kids/types";
+import type { H2HConfronto } from "./kids/types";
 
 
 /* ═══════════════════════════════════
@@ -64,9 +64,6 @@ function ageLabel(ageMin?: number, ageMax?: number): string | null {
   if (ageMin === ageMax) return `Boys ${ageMin}`;
   return `Boys ${ageMin}-${ageMax}`;
 }
-
-/** Round average entry */
-type RoundAvg = { m: number; s: number } | null;
 
 /* ── Member History (USKids) types ── */
 interface MHTournRound { gross: number }
@@ -245,25 +242,31 @@ function getFpgUrl(tid: string): string | undefined {
 
 /** Para tids FFGolf ("ff{trnId}_U{N}") devolve URL útil para o utilizador.
  *
- *  CONTEXTO: pages.ffgolf.org/resultats/ é uma SPA (Single-Page App) sem URLs
- *  públicas directas para torneios individuais — todos os links usam
- *  `javascript:void(0)` e carregam dados via XHR com cookies de sessão. O
- *  endpoint iframe (resultats-details) só responde dentro do contexto da SPA.
- *
- *  SOLUÇÃO: Google search com nome do torneio + ano + "ffgolf". Cobre todos os
- *  tipos (GP Jeunes regionais, Champ. France, Internationaux, Qualifs CFJ).
- *  O Google indexa as páginas das ligues regionais (ex: lgpidf.com) que têm
- *  resultados publicados. Funciona consistentemente; user clica primeiro
- *  resultado e chega lá. */
+ *  Estratégia em duas camadas:
+ *  1. Se temos partKey + typeCompetition + ligue (vêm do scraper FFGolf) →
+ *     URL com query params para a SPA `pages.ffgolf.org/resultats/`. A SPA
+ *     pode ou não auto-carregar (depende de cookies), mas pelo menos abre
+ *     no portal certo e o user encontra rapidamente.
+ *  2. Caso contrário, fallback: pesquisa Google restrita aos sites oficiais. */
 function getFfgolfUrl(tid: string): string | undefined {
   if (!tid.startsWith("ff")) return undefined;
   const ff = ffgolfTournNames.get(tid);
   if (!ff?.name) return undefined;
+
+  // Tentar URL directa quando temos os identificadores completos
+  const trnId = ff.trnId;
+  const partKey = ff.partKey;
+  const tc = ff.typeCompetition;
+  const lg = ff.ligue;
+  if (trnId && partKey && tc && lg) {
+    const params = new URLSearchParams({
+      trnId, glfPartKey: partKey, typeCompetition: tc, ligue: lg, iframe: "1",
+    });
+    return `https://pages.ffgolf.org/resultats/?${params.toString()}`;
+  }
+
+  // Fallback: pesquisa Google restrita
   const yr = ff.dateExact?.slice(0, 4) || "";
-  // Google search restrito aos sites das ligues regionais + ffgolf.org —
-  // estes têm os resultados realmente publicados. O cpi.ffgolf.org
-  // é a página de inscrição (com link aos resultados), o lgpidf.com
-  // é a Ligue Paris IDF (cobre ~30% dos GP Jeunes).
   const sites = "site:ffgolf.org OR site:lgpidf.com OR site:cpi.ffgolf.org";
   const q = `${ff.name} ${yr} ${sites}`.trim();
   return `https://www.google.com/search?q=${encodeURIComponent(q)}`;
@@ -318,20 +321,6 @@ function ageAt(dob: Date, at: Date): number {
   const m = at.getMonth() - dob.getMonth();
   if (m < 0 || (m === 0 && at.getDate() < dob.getDate())) age--;
   return age;
-}
-
-/** Format age string for an EXACT DOB — includes countdown to next birthday */
-function fmtAge(dob: Date): string {
-  const today = new Date();
-  const a = ageAt(dob, today);
-  const nextBday = new Date(today.getFullYear(), dob.getMonth(), dob.getDate());
-  if (nextBday <= today) nextBday.setFullYear(nextBday.getFullYear() + 1);
-  const diffMs = nextBday.getTime() - today.getTime();
-  const diffDays = Math.ceil(diffMs / 86400000);
-  const diffMonths = Math.round(diffDays / 30.5);
-  if (diffDays <= 60) return `${a} anos · faz ${a+1} em ${diffDays}d`;
-  if (diffMonths <= 3) return `${a} anos · faz ${a+1} em ~${diffMonths}m`;
-  return `${a} anos`;
 }
 
 /** Format age string for an ESTIMATED DOB (midpoint) — no countdown */
@@ -1476,23 +1465,6 @@ function nPlayed(p: RivalPlayer) {
   const total = Object.values(p.r).filter(r => r && (r.tp != null || r.rd?.length > 0)).length;
   return total - hiddenTids(p).size;
 }
-function nRounds(p: RivalPlayer) {
-  const hidden = hiddenTids(p);
-  return Object.entries(p.r).reduce((acc, [tid, res]) => {
-    if (hidden.has(tid)) return acc;
-    return acc + (res?.rd ? res.rd.filter((x: number | null) => x != null && x > 0).length : 0);
-  }, 0);
-}
-function getVsAvg(p: RivalPlayer, manuelRef?: RivalPlayer | null) {
-  const m = manuelRef ?? manuel;
-  if (p.isM) return null;
-  const ds: number[] = [];
-  Object.keys(p.r).forEach(tid => {
-    const mr = m?.r[tid];
-    if (mr && p.r[tid].tp != null && mr.tp != null) ds.push(p.r[tid].tp - mr.tp);
-  });
-  return ds.length ? Math.round(ds.reduce((a, b) => a + b, 0) / ds.length) : null;
-}
 
 /* ─────────────────────────────────────────────────────────────
    Generic scorecard table (WJGC26, GG26, QDL25)
@@ -1503,45 +1475,6 @@ function getVsAvg(p: RivalPlayer, manuelRef?: RivalPlayer | null) {
 /* ═══════════════════════════════════
    SIDEBAR
    ═══════════════════════════════════ */
-/* ── DOB Pill ── */
-function DobPill({ player }: { player: RivalPlayer }) {
-  const mh = useMH();
-  const mhPlayer = React.useMemo(() => {
-    if (!mh) return null;
-    const key = player.n.toLowerCase().trim().replace(/\s+/g, " ");
-    return (Object.values(mh.jogadores) as MHPlayer[]).find(
-      m => m.name && m.name.toLowerCase().trim().replace(/\s+/g, " ") === key
-    ) ?? null;
-  }, [mh, player.n]);
-
-  const info = computeDobInfo(player, mhPlayer);
-  if (!info.exact && info.rangeStr === "?") return null;
-
-  if (info.exact) {
-    return (
-      <span style={{ fontSize: 10, color: "var(--color-good-dark)", marginLeft: 4, fontWeight: 600 }}
-        title={`Nasceu em ${info.dobStr}`}>
-        🎂 {info.dobStr}
-      </span>
-    );
-  }
-
-  const spanDays = info.rangeMin && info.rangeMax
-    ? Math.round((info.rangeMax.getTime() - info.rangeMin.getTime()) / 86400000) : 999;
-  const color = spanDays <= 60  ? "var(--color-good-dark)"
-              : spanDays <= 180 ? "var(--text-2)"
-              : "var(--text-3)";
-  const fw = spanDays <= 180 ? 600 : 400;
-  const icon = spanDays <= 60 ? "🎯" : "📅";
-  const tooltip = `Estimativa: ${info.rangeStr} · janela de ${spanDays}d`;
-
-  return (
-    <span className="fs-10 ml-4" style={{ color, fontWeight: fw }} title={tooltip}>
-      {icon} ~{info.rangeStr}
-    </span>
-  );
-}
-
 // Filtros de circuito para o toolbar (row 2)
 const SIDEBAR_FILTERS = [
   { id: "all",       label: "Todos" },
@@ -1742,20 +1675,20 @@ function RivaisSidebar({ selected, onSelect, fids, q, paisFilter, tierFilter, mi
     <div className="flex-col" style={{ display: "flex", height: "100%" }}>
       {/* Lista agrupada — sem pesquisa nem filtros (estão no toolbar) */}
       <div className="flex-1" style={{ overflowY: "auto" }}>
-        {/* Grupo ⚔️ Directos */}
+        {/* Jogadores com quem já se cruzou (directos) */}
         {directos.length > 0 && (
           <>
-            <SidebarSectionTitle dark>⚔️ Directos ({directos.length})</SidebarSectionTitle>
-            {directos.map((p, i) => renderItem(p))}
+            <SidebarSectionTitle dark>Jogadores com quem já se cruzou ({directos.length})</SidebarSectionTitle>
+            {directos.map((p) => renderItem(p))}
           </>
         )}
-        {/* Grupo 🌍 Circuito */}
+        {/* Todos (circuito alargado) */}
         {circuito.length > 0 && !apenasDirectos && (
           <>
             <SidebarSectionTitle dark color="var(--color-info-dark)">
-              🎯 Torneios USKids ({circuito.length})
+              Todos ({circuito.length})
             </SidebarSectionTitle>
-            {circuito.map((p, i) => renderItem(p))}
+            {circuito.map((p) => renderItem(p))}
           </>
         )}
         {total === 0 && (
@@ -1808,8 +1741,8 @@ function MemberHistTable({ mhTorneios, memberId }: {
     });
   }, [mhTorneios, sortCol, sortDir]);
 
-  const ThS = ({ col, label, style }: { col: MHSortCol; label: string; style?: React.CSSProperties }) => (
-    <th onClick={() => doSort(col)} style={{ cursor: "pointer", userSelect: "none", ...style }}>
+  const ThS = ({ col, label, style, className }: { col: MHSortCol; label: string; style?: React.CSSProperties; className?: string }) => (
+    <th onClick={() => doSort(col)} className={className} style={{ cursor: "pointer", userSelect: "none", ...style }}>
       {label}{sortArrow(col, sortCol, sortDir)}
     </th>
   );
@@ -1942,7 +1875,7 @@ function EvolucaoChart({
           <XAxis dataKey="name" tick={{ fontSize: 10, fill: "var(--text-3)" }} />
           <YAxis reversed={mode === "pos"} tickFormatter={yFormat} tick={{ fontSize: 10, fill: "var(--text-3)" }} width={42} />
           <Tooltip
-            formatter={(val: number, name: string) => [yFormat(val), name === "rival" ? "Jogador" : "Manuel"]}
+            formatter={((val: number, name: string) => [yFormat(val), name === "rival" ? "Jogador" : "Manuel"]) as any}
             contentStyle={{ fontSize: 11, background: "var(--bg-card)", border: "1px solid var(--border)" }}
           />
           {hasManuel && <Legend formatter={v => v === "rival" ? "Jogador" : "Manuel"} wrapperStyle={{ fontSize: 11 }} />}
@@ -2708,7 +2641,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
               <div className="gap-4 flex-wrap" style={{ display: "flex", alignItems: "flex-start" }}>
                 {palmares.slice(0, 5).map(({ t, res }) => {
                   const ag = (res as any).ageGroup as string | null;
-                  const mdl2 = medal(res.p) ?? "🥉";
+                  const mdl2 = typeof res.p === "number" ? (medal(res.p) ?? "🥉") : "🥉";
                   const bg = res.p === 1 ? "#fffbea" : res.p === 2 ? "#f0f4ff" : "#fff4f0";
                   const border = res.p === 1 ? "var(--medal-gold)" : res.p === 2 ? "var(--medal-silver)" : "var(--medal-bronze)";
                   const shortName = t.name.replace(/\s*\d{4}$/, "").replace(/\s*'\d{2}$/, "");
@@ -2921,7 +2854,6 @@ function RivalDetail({ playerName }: { playerName: string }) {
               const agCls = agNum<=10?"p-sub10":agNum<=12?"p-sub12":agNum<=14?"p-sub14":"p-sub18";
               const wOrd  = getTournWeight(t.id);
               const stars = wOrd>=1.3?"★★★★★":wOrd>=1.1?"★★★★":wOrd>=0.9?"★★★":wOrd>=0.6?"★★":wOrd>=0.4?"★":null;
-              const trend = rds.length>=2 ? rds[rds.length-1]-rds[0] : null;
 
               return (
                 <React.Fragment key={t.id}>
@@ -3099,7 +3031,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
                             si={autoCard.si as unknown as readonly number[]}
                             meters={(METERS_FALLBACK[t.id]??autoCard.meters??[]) as unknown as readonly number[]}
                             rounds={autoCard.rounds.map((sc,i)=>({label:`R${i+1}`,scores:sc}))}
-                            siLabel="m" />
+                          />
                         );
                       })()}
                     </div>

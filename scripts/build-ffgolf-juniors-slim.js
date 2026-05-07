@@ -30,6 +30,19 @@ function ageGroupOf(label) {
   return null;
 }
 
+/** Fallback: extrair escalão do nome do torneio quando a label da série
+ *  é genérica (ex.: "Simple Stroke play"). Aplica-se a torneios como
+ *  "Internationaux U14", "Championnat de France U12", "GP Jeunes U10/U12", etc. */
+function ageGroupFromTournName(name) {
+  const u = (name || "").toUpperCase();
+  if (/\bU10\b/.test(u)) return "U10";
+  if (/\bU12\b/.test(u)) return "U12";
+  if (/\bU14\b/.test(u)) return "U14";
+  if (/BENJAMIN/.test(u)) return "U12";
+  if (/MINIME/.test(u)) return "U14";
+  return null;
+}
+
 function ageMin(ag) { return ag === "U10" ? 8 : ag === "U12" ? 11 : 13; }
 function ageMax(ag) { return ag === "U10" ? 10 : ag === "U12" ? 12 : 14; }
 
@@ -82,9 +95,13 @@ for (const t of tournaments) {
   const partKey = d.partKey || "";
 
   const series = d?.details?.series || [];
+  // Fallback de escalão pelo nome do torneio (ex.: "Internationaux U14" tem
+  // séries com label genérica "Simple Stroke play"). Quando o torneio inteiro
+  // já dita o escalão, usamos esse para todas as suas séries.
+  const tournNameAg = ageGroupFromTournName(t.name || "");
   for (const s of series) {
     const label = (s.label || "").trim();
-    const ag = ageGroupOf(label);
+    const ag = ageGroupOf(label) || tournNameAg;
     if (!ag) continue;
     // Filtrar séries cujos kids já passaram a idade Manuel-relevante
     if ((t.year || 0) < minTournYearForAge(ag)) continue;

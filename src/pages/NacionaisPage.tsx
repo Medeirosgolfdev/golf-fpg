@@ -2,8 +2,8 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
 import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine,
-  ScatterChart, Scatter, ResponsiveContainer, Cell, LabelList,
+  XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine,
+  ScatterChart, Scatter, ResponsiveContainer, LabelList,
 } from "recharts";
 import { useAppContext } from "../context/AppContext";
 import { sdClassByHcp } from "../utils/scoreDisplay";
@@ -21,7 +21,7 @@ import ExtLink from "../ui/ExternalLink";
 import SortableHdr from "../ui/SortableHdr";
 import AroeiraBurTable from "./nacionais/AroeiraBurTable";
 import FieldIntelligence from "./nacionais/FieldIntelligence";
-import type { InscricaoJogador, TorneioData, BdPlayer, PlayerStats, StatsDb, AggStats, PlayerLoad, ScoutingReport } from "./nacionais/types";
+import type { TorneioData, BdPlayer, StatsDb, AggStats, PlayerLoad, ScoutingReport } from "./nacionais/types";
 import { usePlayerStats as useSharedPlayerStats } from "../hooks/usePlayerStats";
 
 // Hook partilhado em src/hooks/usePlayerStats.ts — usa loadPlayerStats()
@@ -635,7 +635,7 @@ function ProfileRadar({ r, all }: { r: ScoutingReport; all: ScoutingReport[] }) 
     const ang = (i / n) * 2 * Math.PI - Math.PI / 2;
     return { x: cx + Math.cos(ang) * R * a.v, y: cy + Math.sin(ang) * R * a.v, lx: cx + Math.cos(ang) * (R + 10), ly: cy + Math.sin(ang) * (R + 10), l: a.l };
   });
-  const bg = axes.map((a, i) => { const ang = (i / n) * 2 * Math.PI - Math.PI / 2; return `${cx + Math.cos(ang) * R},${cy + Math.sin(ang) * R}`; }).join(' ');
+  const bg = axes.map((_a, i) => { const ang = (i / n) * 2 * Math.PI - Math.PI / 2; return `${cx + Math.cos(ang) * R},${cy + Math.sin(ang) * R}`; }).join(' ');
   const poly = pts.map(p => `${p.x},${p.y}`).join(' ');
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="shrink-0">
@@ -679,8 +679,6 @@ function PlayerScoutCard({ r, fitScore, allReports, bdPlayer }: {
   // Contexto relativo ao campo
   const fieldAvgPar5   = allReports.filter(x => x.par5avg != null).reduce((s,x) => s + x.par5avg!, 0) / (allReports.filter(x => x.par5avg != null).length || 1);
   const fieldAvgBlowup = allReports.reduce((s,x) => s + x.blowupPct, 0) / (allReports.length || 1);
-  const fieldAvgSD     = allReports.filter(x => x.sdAvg != null).reduce((s,x) => s + x.sdAvg!, 0) / (allReports.filter(x => x.sdAvg != null).length || 1);
-
   // Pontos fortes e fracos derivados
   const edges: string[] = [];
   const risks: string[] = [];
@@ -1157,9 +1155,9 @@ export default function NacionaisPage() {
         <DataSourcesChip sources={allSources} />
         <ToolbarSep />
         {([
-          { key: "inscricoes", label: "Inscrições" },
-          { key: "analise",    label: "📊 Análise" },
-          { key: "resultados", label: "🏅 Resultados", disabled: true },
+          { key: "inscricoes", label: "Inscrições", disabled: false as boolean },
+          { key: "analise",    label: "📊 Análise",  disabled: false as boolean },
+          { key: "resultados", label: "🏅 Resultados", disabled: true as boolean },
         ] as const).map(({ key, label, disabled }) => (
           <button key={key}
             className={"tourn-tab tourn-tab-sm" + (view === key ? " active" : "")}

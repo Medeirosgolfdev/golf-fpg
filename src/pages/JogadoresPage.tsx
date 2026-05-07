@@ -1,16 +1,15 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useParams, useNavigate, useSearchParams, Link } from "react-router-dom";
-import type { Player, Course, SexFilter } from "../data/types";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
+import type { Player, SexFilter } from "../data/types";
 import { useAppContext } from "../context/AppContext";
-import { norm, shortDate, firstName, fmtSign, fmtToPar } from "../utils/format";
+import { norm, shortDate, fmtSign, fmtToPar } from "../utils/format";
 import { getTeeHex, textOnColor, normKey, teeBorder } from "../utils/teeColors";
 import { clubShort, clubLong, hcpDisplay, escCls } from "../utils/playerUtils";
 import { numSafe, meanArr, stdevArr, minArr, maxArr, linearSlope } from "../utils/mathUtils";
 import { scClass, fmtGrossDelta, fmtStb, sdClassByHcp, fmtSdVal, sc3m, SC, toParClass } from "../utils/scoreDisplay";
 import {
   type PlayerPageData, type CourseData, type RoundData,
-  type HoleStatsData,
-  type CrossPlayerData, type HcpInfo, type HoleScores,
+  type HcpInfo,
 } from "../data/playerDataLoader";
 import { usePlayerData } from "../data/usePlayerData";
 import SexBadge from "../ui/SexBadge";
@@ -19,12 +18,11 @@ import AroeiraNotice, { countRotatedRounds } from "../ui/AroeiraNotice";
 import { canonicalCourseName } from "../utils/courseAliases";
 import TeePill from "../ui/TeePill";
 import TeeDate from "../ui/TeeDate";
-import ScoreCircle from "../ui/ScoreCircle";
 import LoadingState from "../ui/LoadingState";
 import EmptyState from "../ui/EmptyState";
 import DetailHeader from "../ui/DetailHeader";
 import SidebarToggle from "../ui/SidebarToggle";
-import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
+import { Toolbar } from "../ui/Toolbar";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { useSort } from "../hooks/useSort";
 import { loadPlayerStats, daysSince, type PlayerStatsDb } from "../data/playerStatsTypes";
@@ -32,7 +30,7 @@ import { loadFederados, federadoToPlayer, mergePlayersWithFederados, loadInativo
 import { getPlayerHistory, getScorecard, type WhsRound, type Scorecard } from "../data/datagolfClient";
 import { gf } from "../utils/flagUtils";
 import SortableHdr from "../ui/SortableHdr";
-import { PillBadge, EscPill, ClubePill, SIDEBAR_ACCENT } from "../ui/PillBadge";
+import { PillBadge, EscPill, SIDEBAR_ACCENT } from "../ui/PillBadge";
 import { RoundSimulator } from "../ui/RoundSimulator";
 import HoleStatsSection from "../ui/HoleStatsSection";
 import { ScorecardTable } from "../ui/ScorecardTable";
@@ -274,6 +272,7 @@ function ByDateView({ data, search }: {
   const { sortKey, sortDir, toggleSort } = useSort<"date" | "course" | "event" | "holes" | "hcp" | "tee" | "meters" | "gross" | "stb" | "sd">("date", "desc", {
     gross: "asc", sd: "asc", hcp: "asc", meters: "desc", stb: "desc", holes: "desc",
   });
+  const onSort = toggleSort as (k: string) => void;
 
   const all = useMemo(() => {
     const term = norm(search);
@@ -320,16 +319,16 @@ function ByDateView({ data, search }: {
         </colgroup>
         <thead>
           <tr>
-            <SortableHdr k="date" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Data</SortableHdr>
-            <SortableHdr k="course" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Campo</SortableHdr>
-            <SortableHdr k="event" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Prova</SortableHdr>
-            <SortableHdr k="holes" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Bur.</SortableHdr>
-            <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">HCP</SortableHdr>
-            <SortableHdr k="tee" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Tee</SortableHdr>
-            <SortableHdr k="meters" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Dist.</SortableHdr>
-            <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Gross</SortableHdr>
-            <SortableHdr k="stb" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Stb</SortableHdr>
-            <SortableHdr k="sd" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">SD</SortableHdr>
+            <SortableHdr k="date" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Data</SortableHdr>
+            <SortableHdr k="course" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Campo</SortableHdr>
+            <SortableHdr k="event" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Prova</SortableHdr>
+            <SortableHdr k="holes" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Bur.</SortableHdr>
+            <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">HCP</SortableHdr>
+            <SortableHdr k="tee" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Tee</SortableHdr>
+            <SortableHdr k="meters" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Dist.</SortableHdr>
+            <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Gross</SortableHdr>
+            <SortableHdr k="stb" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Stb</SortableHdr>
+            <SortableHdr k="sd" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">SD</SortableHdr>
           </tr>
         </thead>
         <tbody>
@@ -419,6 +418,7 @@ function TeeSummaryTable({ rounds }: { rounds: RoundData[] }) {
   const { sortKey, sortDir, toggleSort } = useSort<"rondas" | "melhor" | "media_gr" | "media_stb" | "media_sd">("rondas", "desc", {
     melhor: "asc", media_gr: "asc", media_sd: "asc", media_stb: "desc",
   });
+  const onSort = toggleSort as (k: string) => void;
 
   const tees = useMemo(() => {
     const map: Record<string, { tee: string; count: number; gross: number[]; stb: number[]; sd: number[]; hi: (number | null)[] }> = {};
@@ -460,11 +460,11 @@ function TeeSummaryTable({ rounds }: { rounds: RoundData[] }) {
         <thead>
           <tr>
             <th>Tee</th>
-            <SortableHdr k="rondas" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Rondas</SortableHdr>
-            <SortableHdr k="melhor" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Melhor</SortableHdr>
-            <SortableHdr k="media_gr" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Média Gr.</SortableHdr>
-            <SortableHdr k="media_stb" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Média Stb</SortableHdr>
-            <SortableHdr k="media_sd" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Média SD</SortableHdr>
+            <SortableHdr k="rondas" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Rondas</SortableHdr>
+            <SortableHdr k="melhor" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Melhor</SortableHdr>
+            <SortableHdr k="media_gr" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Média Gr.</SortableHdr>
+            <SortableHdr k="media_stb" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Média Stb</SortableHdr>
+            <SortableHdr k="media_sd" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Média SD</SortableHdr>
           </tr>
         </thead>
         <tbody>
@@ -655,15 +655,6 @@ function ByCourseRow({ course, data, isAnalysis, openScorecard, openScorecardId 
   );
 }
 
-/* ─── Native Scorecard Table ─── */
-
-const linkLabels: Record<string, string> = {
-  classificacao: "Classificação", classificacao_d1: "Classif. D1", classificacao_d2: "Classif. D2",
-  leaderboard: "Leaderboard", scorecard: "Scorecard", resultados: "Resultados",
-  fpg_scoring: "FPG Scoring", noticia_teetimes: "Notícia", link: "Ver torneio",
-};
-
-
 /* ─── Scorecard wrapper that resolves HOLES data and renders ScorecardTable ─── */
 
 function RoundRow({ r, data, courseName, isOpen, onToggle }: {
@@ -745,6 +736,7 @@ function ByCourseView({ data, search, sort, isAnalysis }: {
     if (k === sortKey) setSortDir(d => d === "asc" ? "desc" : "asc");
     else { setSortKey(k); setSortDir(defaultDirMap[k]); }
   }, [sortKey]);
+  const onSort = toggleSort as (k: string) => void;
 
   const list = useMemo(() => {
     const term = norm(search);
@@ -785,14 +777,14 @@ function ByCourseView({ data, search, sort, isAnalysis }: {
           </colgroup>
           <thead>
             <tr>
-              <SortableHdr k="course" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Campo</SortableHdr>
-              <SortableHdr k="voltas" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Voltas</SortableHdr>
-              <SortableHdr k="ultima" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Última</SortableHdr>
+              <SortableHdr k="course" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Campo</SortableHdr>
+              <SortableHdr k="voltas" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Voltas</SortableHdr>
+              <SortableHdr k="ultima" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Última</SortableHdr>
               <th className="r">Bur.</th><th className="r">HCP</th><th>Tee</th>
               <th className="r">Dist.</th>
-              <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Gross</SortableHdr>
-              <SortableHdr k="stb" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Stb</SortableHdr>
-              <SortableHdr k="sd" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">SD</SortableHdr>
+              <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Gross</SortableHdr>
+              <SortableHdr k="stb" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Stb</SortableHdr>
+              <SortableHdr k="sd" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">SD</SortableHdr>
             </tr>
           </thead>
           <tbody>
@@ -1030,13 +1022,8 @@ function AnalysisView({ data }: { data: PlayerPageData }) {
   // KPIs
   const last5 = rounds18g.slice(0, 5);
   const last20 = rounds18g.slice(0, 20);
-  const grossAll = rounds18g.map(r => Number(r.gross));
   const kpiGross5 = meanArr(last5.map(r => r.gross));
   const kpiGross20 = meanArr(last20.map(r => r.gross));
-  const _kpiSigma = stdevArr(grossAll);
-  const sorted = [...grossAll].sort((a, b) => a - b);
-  const n20 = sorted.length ? Math.max(1, Math.floor(sorted.length * 0.2)) : 0;
-  const _best20 = n20 ? meanArr(sorted.slice(0, n20)) : null;
 
   // whs20 = last 20 rounds WITH a valid SD (real WHS window — treino rounds count too)
   const whs20 = useMemo(() =>
@@ -1444,19 +1431,6 @@ function WHSDetail({ hcp, bare }: { hcp: HcpInfo; bare?: boolean }) {
   );
 }
 
-/* ─── SD Simulator ─── */
-function whsQtyCalc(nSds: number): number {
-  if (nSds < 3) return 0;
-  if (nSds <= 5) return 1;
-  if (nSds <= 8) return 2;
-  if (nSds <= 11) return 3;
-  if (nSds <= 14) return 4;
-  if (nSds <= 16) return 5;
-  if (nSds <= 18) return 6;
-  if (nSds === 19) return 7;
-  return 8;
-}
-
 /* ─── Last 20 Table with scorecard expansion ─── */
 /* ──── View
    ──────────────────────────────────────────────────────────────────────────────────────── */
@@ -1624,7 +1598,7 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
   // rondas WHS live em tempo real, sem o overlay rico de análise.
   if (federadoView) {
     // Preferência: federado real do FPG (com foto, country, etc.) > _federadoRaw já anexado > synthetic
-    const fedSrc = realFederado || (selected as MergedPlayer)._federadoRaw || syntheticFederadoFromPlayer(selected);
+    const fedSrc = realFederado || (selected as unknown as MergedPlayer)._federadoRaw || syntheticFederadoFromPlayer(selected);
     const fakePlayer = { ...selected, _source: "both" as const, _federadoRaw: fedSrc } as MergedPlayer & { fed: string };
     return (
       <div className="pa-page">
@@ -1650,8 +1624,8 @@ function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; select
       <div className="detail-header">
         <div className="detail-header-top">
           <h2 className="detail-title" style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            {(selected as MergedPlayer)._federadoRaw?.photo && (
-              <img src={`https://hcp-portugal.datagolf.pt/photos/${(selected as MergedPlayer)._federadoRaw!.photo}`}
+            {(selected as unknown as MergedPlayer)._federadoRaw?.photo && (
+              <img src={`https://hcp-portugal.datagolf.pt/photos/${(selected as unknown as MergedPlayer)._federadoRaw!.photo}`}
                 alt="" style={{ width: 44, height: 56, borderRadius: 4, objectFit: "cover", flexShrink: 0 }}
                 onError={e => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />
             )}
@@ -1846,7 +1820,7 @@ function ClubsTable({ stats, onDrillDown, maxClub, pct, COL_M, COL_F }: {
   );
 }
 
-function FederadosStatsPanel({ stats, inativosStats, drillDown, onDrillDown, hcpBinDrill, onHcpBinDrill, federados, onClose, onPickPlayer }: {
+function FederadosStatsPanel({ stats, inativosStats: _inativosStats, drillDown, onDrillDown, hcpBinDrill, onHcpBinDrill, federados, onClose, onPickPlayer }: {
   stats: GlobalStats;
   inativosStats: InativosStats | null;
   drillDown: { type: "club" | "age"; key: string } | null;
@@ -2316,6 +2290,7 @@ function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, extraMap, localI
   const { sortKey, sortDir, toggleSort } = useSort<FRTSortKey>("date", "desc", {
     sd: "asc", hcp: "asc", stb: "desc", holes: "desc", par: "asc", gross: "asc",
   });
+  const onSort = toggleSort as (k: string) => void;
 
   const sorted = useMemo(() => {
     const arr = [...rounds];
@@ -2363,17 +2338,17 @@ function FederadoRoundsTable({ rounds, hcpRef, onOpenScorecard, extraMap, localI
       <table className="dtable-lg">
         <thead>
           <tr>
-            <SortableHdr k="date"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Data</SortableHdr>
-            <SortableHdr k="course" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Campo</SortableHdr>
-            <SortableHdr k="event"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Prova</SortableHdr>
-            <SortableHdr k="holes"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Bur.</SortableHdr>
-            <SortableHdr k="hcp"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">HCP</SortableHdr>
-            {hasExtra && <SortableHdr k="tee" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Tee</SortableHdr>}
-            <SortableHdr k="par"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Par</SortableHdr>
-            {hasExtra && <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Gross</SortableHdr>}
-            <SortableHdr k="stb"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Stb</SortableHdr>
-            <SortableHdr k="sd"     sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">SD</SortableHdr>
-            <SortableHdr k="origin" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Tipo</SortableHdr>
+            <SortableHdr k="date"   sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Data</SortableHdr>
+            <SortableHdr k="course" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Campo</SortableHdr>
+            <SortableHdr k="event"  sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Prova</SortableHdr>
+            <SortableHdr k="holes"  sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Bur.</SortableHdr>
+            <SortableHdr k="hcp"    sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">HCP</SortableHdr>
+            {hasExtra && <SortableHdr k="tee" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Tee</SortableHdr>}
+            <SortableHdr k="par"    sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Par</SortableHdr>
+            {hasExtra && <SortableHdr k="gross" sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Gross</SortableHdr>}
+            <SortableHdr k="stb"    sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">Stb</SortableHdr>
+            <SortableHdr k="sd"     sortKey={sortKey} sortDir={sortDir} onSort={onSort} className="r">SD</SortableHdr>
+            <SortableHdr k="origin" sortKey={sortKey} sortDir={sortDir} onSort={onSort}>Tipo</SortableHdr>
           </tr>
         </thead>
         <tbody>

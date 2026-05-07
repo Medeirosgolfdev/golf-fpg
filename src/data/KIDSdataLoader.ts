@@ -590,6 +590,15 @@ export function processFfgolfSlim(d: unknown): AutoRivalPlayer[] {
     }
 
     let validPlayers = 0;
+    // Detectar nº de rondas "esperado" do torneio: máximo de rondas válidas
+    // entre jogadores que têm pelo menos 2 rondas (filtra outliers que não
+    // jogaram). Permite marcar como WD jogadores que pararam a meio.
+    const roundsCounts = tourn.players
+      .map(p => (p.rounds || []).filter(r => typeof r.gross === "number" && r.gross >= 30 && r.gross <= 200).length);
+    const expectedRounds = roundsCounts.length
+      ? Math.max(...roundsCounts.filter(c => c >= 2), ...roundsCounts)
+      : 0;
+
     for (const player of tourn.players) {
       if (!player.name) continue;
       const rounds = (player.rounds || []).slice().sort((a, b) => a.r - b.r);
@@ -601,6 +610,13 @@ export function processFfgolfSlim(d: unknown): AutoRivalPlayer[] {
       const tp = (tourn.parTotal && t)
         ? t - tourn.parTotal * validRounds.length
         : null;
+
+      // Pos: se o jogador não terminou todas as rondas do torneio (WD após
+      // R1/R2), o `pos` do FFGolf é apenas o ranking parcial da última ronda
+      // jogada — pode estar artificialmente alto. Marcar como "WD" para
+      // distinguir de classificações finais reais.
+      const isIncomplete = expectedRounds > 0 && validRounds.length < expectedRounds;
+      const finalPos: number | "WD" | null = isIncomplete ? "WD" : (player.pos ?? null);
 
       const r0 = validRounds.find(rs => rs.scores?.length === 18);
       if (r0 && r0.scores && tourn.parPerHole?.length === 18) {
@@ -619,7 +635,7 @@ export function processFfgolfSlim(d: unknown): AutoRivalPlayer[] {
       all.push({
         n: player.name,
         co: "France",
-        r: { [tid]: { p: player.pos, t, tp, rd, ageGroup: tourn.ageGroup, nholes: 18 } },
+        r: { [tid]: { p: finalPos, t, tp, rd, ageGroup: tourn.ageGroup, nholes: 18 } },
       });
       validPlayers++;
     }
