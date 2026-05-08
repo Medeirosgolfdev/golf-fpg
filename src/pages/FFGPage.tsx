@@ -302,8 +302,11 @@ interface FFGResTournament {
   /** Enriquecimento com metros/SI vindos do scrape GolfGenius (course statistics widget).
    *  Injectado pelo load effect quando há um ficheiro `public/data/ffgolf/{year}_{slug}.json`
    *  correspondente. Quando presente, o adapter `ffgResToFPGTournament` usa-o para
-   *  popular RoundScore.meters e RoundScore.si na vista hole-by-hole. */
-  _ggCourse?: { par: number[]; meters: number[]; si: number[]; parTotal?: number; metersTotal?: number; name?: string } | null;
+   *  popular RoundScore.meters e RoundScore.si na vista hole-by-hole.
+   *  `courses` contém todas as variantes de tee (ex: Black/Garçons, Blue/Filles) — o
+   *  adapter selecciona o tee certo pela maioria de sex da série. */
+  _ggCourse?: { par: number[]; meters: number[]; si: number[]; parTotal?: number; metersTotal?: number; name?: string;
+                courses?: Array<{ teeName?: string; par: number[]; meters: number[]; si: number[]; parTotal?: number; metersTotal?: number }> } | null;
   details: {
     trnId: string;
     series: FFGResSerie[];
@@ -478,23 +481,40 @@ function ffgResToFPGTournament(data: FFGResTournament, serieFilter?: string): FP
   });
 
   // Enriquecimento GG (metros/SI por buraco) injectado pelo load effect, se disponível.
-  const ggC = (data as any)._ggCourse as { par?: number[]; meters?: number[]; si?: number[] } | undefined;
-  const ggMeters = ggC?.meters && ggC.meters.length === 18 ? ggC.meters : [];
-  const ggSi = ggC?.si && ggC.si.length === 18 ? ggC.si : [];
+  // Quando há múltiplos tees no curso (Black/Garçons + Blue/Filles), seleccionar o correcto
+  // baseado em sex maioritário dos jogadores da série filtrada.
+  const ggC = (data as any)._ggCourse as { par?: number[]; meters?: number[]; si?: number[]; metersTotal?: number;
+    courses?: Array<{ teeName?: string; par?: number[]; meters?: number[]; si?: number[]; metersTotal?: number }> } | undefined;
+  let chosenCourse: { par?: number[]; meters?: number[]; si?: number[]; metersTotal?: number } | undefined = ggC;
+  if (ggC?.courses && ggC.courses.length > 1) {
+    // Maioria sex da série: M → tee mais longo (Black), F → tee mais curto (Blue)
+    const seriePlayers = sorted; // já filtrados pela série visível
+    const males = seriePlayers.filter((p) => p.sex === "M").length;
+    const females = seriePlayers.filter((p) => p.sex === "F").length;
+    const sortedByMeters = [...ggC.courses].sort((a, b) => (b.metersTotal || 0) - (a.metersTotal || 0));
+    if (males > females) chosenCourse = sortedByMeters[0]; // tee mais longo
+    else if (females > males) chosenCourse = sortedByMeters[sortedByMeters.length - 1]; // tee mais curto
+    // Empate ou só 1 tee → fica com o ggC default (primeiro do scrape)
+  }
+  const ggMeters = chosenCourse?.meters && chosenCourse.meters.length === 18 ? chosenCourse.meters : [];
+  const ggSi = chosenCourse?.si && chosenCourse.si.length === 18 ? chosenCourse.si : [];
 
+  // teeName fictício "FFG" para que o ScorecardLB inclua a linha de metros.
+  // Sem teeName, o teeMetersMap não é populado e a linha "m" por buraco fica vazia.
+  const ffgTeeName = ggC?.name || "Tees";
   const players: FPGPlayer[] = sorted.map((p, idx) => {
     const rounds: FPGRoundScore[] = [];
     if (p.scoresR1 && p.scoresR1.length === 18 && p.t1 != null) {
-      rounds.push({ round: 1, gross: p.t1, scores: p.scoresR1, pars: par, si: ggSi, meters: ggMeters });
+      rounds.push({ round: 1, gross: p.t1, scores: p.scoresR1, pars: par, si: ggSi, meters: ggMeters, teeName: ggMeters.length ? ffgTeeName : undefined });
     }
     if (p.scoresR2 && p.scoresR2.length === 18 && p.t2 != null) {
-      rounds.push({ round: 2, gross: p.t2, scores: p.scoresR2, pars: par, si: ggSi, meters: ggMeters });
+      rounds.push({ round: 2, gross: p.t2, scores: p.scoresR2, pars: par, si: ggSi, meters: ggMeters, teeName: ggMeters.length ? ffgTeeName : undefined });
     }
     if (p.scoresR3 && p.scoresR3.length === 18 && p.t3 != null) {
-      rounds.push({ round: 3, gross: p.t3, scores: p.scoresR3, pars: par, si: ggSi, meters: ggMeters });
+      rounds.push({ round: 3, gross: p.t3, scores: p.scoresR3, pars: par, si: ggSi, meters: ggMeters, teeName: ggMeters.length ? ffgTeeName : undefined });
     }
     if (p.scoresR4 && p.scoresR4.length === 18 && p.t4 != null) {
-      rounds.push({ round: 4, gross: p.t4, scores: p.scoresR4, pars: par, si: ggSi, meters: ggMeters });
+      rounds.push({ round: 4, gross: p.t4, scores: p.scoresR4, pars: par, si: ggSi, meters: ggMeters, teeName: ggMeters.length ? ffgTeeName : undefined });
     }
     const incomplete = rounds.length < numRounds;
     const playerCountry = p.nationality || p.flag || "FRA";
@@ -513,6 +533,7 @@ function ffgResToFPGTournament(data: FFGResTournament, serieFilter?: string): FP
       par,
       si: ggSi,
       meters: ggMeters,
+      teeName: ggMeters.length ? ffgTeeName : undefined,
       roundScores: rounds,
       _wd: incomplete,
       _roundsPlayed: rounds.length,
@@ -1005,19 +1026,43 @@ function FFGResView({ data, lgpidfSupp }: { data: FFGResTournament; lgpidfSupp?:
 
   return (
     <>
-      <div className="muted fs-10 mb-8" style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
+      <div className="muted fs-12 mb-8" style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
         <span>🇫🇷 FFG Officiel · {data.formule} · 📅 {data.date}</span>
         {/* Nome do campo: prioridade LGPIDF supp > GG enrichment */}
         {hasSupp && supp?.course?.name && <span>· 📍 {supp.course.name}</span>}
         {!supp?.course?.name && data._ggCourse?.name && <span>· 📍 {data._ggCourse.name}</span>}
-        {/* Distância total: prioridade LGPIDF supp > GG enrichment */}
+        {/* Distância total: prioridade LGPIDF supp > GG (single tee total). */}
         {hasSupp && supp?.course && supp.course.metersTotal > 0 && (
           <span>· {supp.course.metersTotal.toLocaleString("pt-PT")} m</span>
         )}
-        {!supp?.course?.metersTotal && data._ggCourse?.metersTotal && data._ggCourse.metersTotal > 0 && (
-          <span title="Distância total do campo (via GolfGenius course statistics)">· {data._ggCourse.metersTotal.toLocaleString("pt-PT")} m</span>
-        )}
         <span>· {allSeries.length} séries · {data.details.series.reduce((s, x) => s + x.players.length, 0)} jogadores</span>
+        {/* Tees com contagem de jogadores por tee — calcula sexo maioritário e mapeia tee.
+            Usa courses[] do _ggCourse quando há multi-tee (Black/Blue), senão usa o tee único. */}
+        {!supp?.course?.metersTotal && data._ggCourse && (() => {
+          const ggC = data._ggCourse!;
+          const allPlayers = data.details.series.flatMap(s => s.players);
+          const males = allPlayers.filter(p => p.sex === "M").length;
+          const females = allPlayers.filter(p => p.sex === "F").length;
+          const courses = (ggC.courses && ggC.courses.length > 0)
+            ? [...ggC.courses].sort((a, b) => (b.metersTotal || 0) - (a.metersTotal || 0))
+            : [{ teeName: undefined, metersTotal: ggC.metersTotal, parTotal: ggC.parTotal, par: ggC.par, meters: ggC.meters, si: ggC.si }];
+          return courses.map((c, i) => {
+            // Heurística para label: tee mais longo → "Garçons" (M), tee mais curto → "Filles" (F)
+            const isLongest = i === 0;
+            const isShortest = i === courses.length - 1;
+            const teeLabel = c.teeName || (courses.length > 1 && isLongest ? "Garçons" : courses.length > 1 && isShortest ? "Filles" : "Tees");
+            const count = courses.length === 1 ? (males + females)
+              : isLongest ? males
+              : isShortest ? females
+              : 0;
+            const meters = c.metersTotal || 0;
+            return (
+              <span key={i} title={`Tee ${teeLabel} — ${meters} m, par ${c.parTotal || "?"}`}>
+                · 🚩 {teeLabel}: {meters.toLocaleString("pt-PT")} m{count > 0 ? ` (${count} jog)` : ""}
+              </span>
+            );
+          });
+        })()}
       </div>
 
       {/* Tabs — mostrar quando há mais que 1 (Leaderboard + algo extra) */}
@@ -1771,6 +1816,17 @@ function Content() {
                   try {
                     const ggData = await cachedFetchJson<any>(`/data/ffgolf/${t.year}_${t.ffgolfSlug}.json`);
                     if (ggData && ggData.course && Array.isArray(ggData.course.meters) && ggData.course.meters.length === 18) {
+                      // Extrair TODOS os tees válidos do array `courses` (Black/Garçons, Blue/Filles, etc.)
+                      const allCourses = Array.isArray(ggData.courses) ? ggData.courses
+                        .filter((c: any) => Array.isArray(c?.meters) && c.meters.length === 18)
+                        .map((c: any) => ({
+                          teeName: c.teeName,
+                          par: c.par || [],
+                          meters: c.meters,
+                          si: c.si || [],
+                          parTotal: c.parTotal,
+                          metersTotal: c.metersTotal,
+                        })) : [];
                       td._ggCourse = {
                         par: ggData.course.par || [],
                         meters: ggData.course.meters,
@@ -1778,6 +1834,7 @@ function Content() {
                         parTotal: ggData.course.parTotal,
                         metersTotal: ggData.course.metersTotal,
                         name: ggData.course.name,
+                        courses: allCourses.length > 0 ? allCourses : undefined,
                       };
                       ggEnrichCount++;
                     }
@@ -2284,7 +2341,7 @@ function Content() {
                           <span className="muted">
                           🇫🇷 FFG Officiel · {ffgCur.formule} · 📅 {ffgCur.date} · {ffgCur.details.series.length} séries
                         </span>
-                        {/* Links contextuais — injectados pelo build-ffgolf-resultats-index.js (cross-ref com ffgolf-catalog.json).
+                        {/* Links contextuais — preenchidos pelo build-ffgolf-resultats-index.js (cross-ref com ffgolf-catalog.json).
                             Quando o torneio tem GolfGenius (majeurs), mostramos atalho directo às scorecards hole-by-hole + distâncias.
                             ffgolfOfficialUrl aponta à página oficial em ffgolf.org com o iframe GG embebido.
                             pagesFfgolfUrl é fallback genérico (portal SPA, sem deep-link). */}

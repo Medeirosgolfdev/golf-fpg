@@ -88,19 +88,23 @@ async function openClassement(page, ggPage) {
   // Poll até ao iframe estar pronto (dropdown carregado OU jogadores visíveis)
   const ready = await waitForIframeReady(page, 30000);
   if (!ready) console.log(`   ⚠ iframe não ficou pronto em 30s`);
-  // O menu lateral "Statistics" carrega lazy — o sub-link "Statistiques du parcours de golf"
-  // está no DOM mas hidden. Faz polling até o `<a>` aparecer (até 8s) para apanhar o statsPageId.
-  // Funciona mesmo com elemento hidden — basta estar presente no DOM.
-  const STATS_TXT = "Statistiques du parcours de golf";
-  for (let i = 0; i < 16; i++) {
-    const found = await page.evaluate((txt) => {
-      const a = [...document.querySelectorAll("a")].find(x => x.textContent.trim() === txt);
-      return !!a && /\/pages\/\d+/.test(a.getAttribute("href") || "");
-    }, STATS_TXT);
-    if (found) break;
-    await sleep(500);
-  }
-  return page.evaluate(() => {
+  // Extrair statsPageId via REGEX no HTML cru (server-side rendered, não depende
+  // do menu lateral lazy-loaded que falha em headless). Idem para os outros IDs.
+  const rawHtml = await page.content();
+  // Helper: regex tolerante — substitui espaços por \s+ para apanhar HTML com tabs/newlines
+  // entre palavras (template Rails costuma indentar). Funciona com texto acentuado.
+  const _re = (text) => {
+    const escaped = text
+      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+      .replace(/\s+/g, "\\s+");
+    const r = new RegExp(`href="\\/pages\\/(\\d+)"[^>]*>\\s*${escaped}\\s*<`, "i");
+    const m = rawHtml.match(r);
+    return m ? m[1] : null;
+  };
+  const _statsPageIdRaw    = _re("Statistiques du parcours de golf") || _re("Course Stats");
+  const _departsPageIdRaw  = _re("Départs")     || _re("Tee Times");
+  const _groupViewPageIdRaw= _re("Group View");
+  return page.evaluate(({ statsPageIdRaw, departsPageIdRaw, groupViewPageIdRaw }) => {
     const ifr = document.querySelectorAll("iframe")[0];
     const ifrSrc = ifr?.src || "";
     const leagueId = ifrSrc.match(/leagues\/(\d+)/)?.[1] || null;
@@ -111,14 +115,14 @@ async function openClassement(page, ggPage) {
     const statsLink = [...document.querySelectorAll("a")].find(
       (a) => a.textContent.trim() === "Statistiques du parcours de golf"
     );
-    const statsPageId = statsLink?.getAttribute("href")?.match(/pages\/(\d+)/)?.[1] || null;
+    const statsPageId = statsLink?.getAttribute("href")?.match(/pages\/(\d+)/)?.[1] || statsPageIdRaw;
     // Pages auxiliares para captura completa
     const departsLink = [...document.querySelectorAll("a")].find((a) => a.textContent.trim() === "Départs");
-    const departsPageId = departsLink?.getAttribute("href")?.match(/pages\/(\d+)/)?.[1] || null;
+    const departsPageId = departsLink?.getAttribute("href")?.match(/pages\/(\d+)/)?.[1] || departsPageIdRaw;
     const groupViewLink = [...document.querySelectorAll("a")].find((a) => a.textContent.trim() === "Group View");
-    const groupViewPageId = groupViewLink?.getAttribute("href")?.match(/pages\/(\d+)/)?.[1] || null;
+    const groupViewPageId = groupViewLink?.getAttribute("href")?.match(/pages\/(\d+)/)?.[1] || groupViewPageIdRaw;
     return { leagueId, statsPageId, departsPageId, groupViewPageId, dates };
-  });
+  }, { statsPageIdRaw: _statsPageIdRaw, departsPageIdRaw: _departsPageIdRaw, groupViewPageIdRaw: _groupViewPageIdRaw });
 }
 
 /* ─────────────────────────────────────────────────────────────────
@@ -239,73 +243,130 @@ async function fetchOneCourseStats(page, eventId) {
    captura TODAS as combinações (event × course × tee),
    deduplicado por (par, meters) para identificar tees distintos.
    Devolve um array de courses únicos, cada um com par/meters/SI. */
-async function fetchAllCourseStats(page, statsPageId) {
-  await page.goto(`${GG}/pages/${statsPageId}`, { waitUntil: "domcontentloaded" });
-  const start = Date.now();
-  while (Date.now() - start < 30000) {
-    const ready = await page.evaluate(() => {
-      const ifr = document.querySelectorAll("iframe")[0];
-      const doc = ifr?.contentDocument;
-      return doc?.querySelectorAll('form[id^="course_statistics_"]').length || 0;
-    });
-    if (ready > 0) break;
-    await sleep(800);
+async function fetchAllCourseStats(page, statsPageIdOrLeagueId, mode = "statsPage") {
+  // Usa HTTP fetch directo via page.context().request (NÃO renderiza página).
+  // Mais robusto que page.goto + page.evaluate: sem detecção headless, sem timing
+  // do iframe, sem cross-origin issues. Funciona para TODOS os torneios testados.
+  // Cookies do contexto Playwright são automaticamente enviadas.
+  const ctx = page.context();
+  const widgetUrl = mode === "league"
+    ? `${GG}/leagues/${statsPageIdOrLeagueId}/widgets/course_analytics?shared=false`
+    : `${GG}/pages/${statsPageIdOrLeagueId}`; // statsPage tem iframe — vamos seguir o iframe abaixo
+  let html;
+  // Headers que imitam browser real (alguns servidores GG são picky)
+  const browserHeaders = {
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "fr-FR,fr;q=0.9,en;q=0.8",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36",
+    "Referer": `${GG}/pages/${statsPageIdOrLeagueId}`,
+  };
+  try {
+    const resp = await ctx.request.get(widgetUrl, { headers: browserHeaders });
+    html = await resp.text();
+    const formCount = (html.match(/<form[^>]*id="course_statistics_/g) || []).length;
+    console.log(`   [debug] ${mode} fetch ${widgetUrl.slice(GG.length)} → ${html.length} bytes, ${formCount} forms`);
+  } catch (e) {
+    console.log(`   ⚠ fetch widget falhou: ${e.message}`);
+    return [];
   }
-  return page.evaluate(async () => {
-    const ifr = document.querySelectorAll("iframe")[0];
-    const doc = ifr?.contentDocument;
-    if (!doc) return [];
-    const forms = [...doc.querySelectorAll('form[id^="course_statistics_"]')];
-    const allResults = await Promise.all(
-      forms.map(async (f) => {
-        try {
-          const idParts = f.id.replace(/^course_statistics_/, "").split("_");
-          const fd = new FormData(f);
-          const r = await fetch(f.action, { method: "POST", body: fd, credentials: "include" });
-          const html = await r.text();
-          const trs = [...html.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/g)];
-          const rows = [];
-          let teeName = "";
-          // Procurar texto do tee ("Blancs", "Bleus", etc) na resposta
-          const teeMatch = html.match(/(?:Tee|Marqueurs|Marques)\s*[:<][\s\S]{0,200}?>([^<]+?)<\/(?:a|td|span|h[1-6])/i);
-          if (teeMatch) teeName = teeMatch[1].replace(/\s+/g, " ").trim();
-          // Course header: "Course: Golf du Gouverneur - Le Breuil"
-          const courseHeader = html.match(/Course:\s*([^<]+)/);
-          for (const tr of trs) {
-            const cells = [...tr[1].matchAll(/<t[hd][^>]*>([\s\S]*?)<\/t[hd]>/g)]
-              .map((m) => m[1].replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ").replace(/\s+/g, " ").trim())
-              .filter((x) => x);
-            if (cells.length >= 11 && /^\d+$/.test(cells[0]) && /^\d+$/.test(cells[2])) {
-              rows.push({ hole: +cells[0], meters: +cells[1], par: +cells[2], rank: +cells[4] });
+  // Em mode "statsPage" o HTML retornado é a parent page com <iframe src="...course_analytics?...">.
+  // Extrair o iframe URL e fazer fetch a esse.
+  if (mode === "statsPage") {
+    const iframeMatch = html.match(/<iframe[^>]*src="([^"]*\/widgets\/course_analytics[^"]*)"/);
+    if (!iframeMatch) {
+      console.log("   ⚠ statsPage sem iframe course_analytics — skip");
+      return [];
+    }
+    const iframeUrl = iframeMatch[1].startsWith("http") ? iframeMatch[1] : `${GG}${iframeMatch[1]}`;
+    try {
+      const resp2 = await ctx.request.get(iframeUrl);
+      html = await resp2.text();
+    } catch (e) {
+      console.log(`   ⚠ fetch iframe falhou: ${e.message}`);
+      return [];
+    }
+  }
+  // Extrair forms via regex no HTML cru (evita parsing DOM)
+  const formBlocks = [...html.matchAll(/<form[^>]*id="(course_statistics_[^"]+)"[^>]*action="([^"]+)"[^>]*>([\s\S]*?)<\/form>/g)];
+  if (!formBlocks.length) return [];
+  const allResults = [];
+  // Processar até 24 forms; cada POST é independente.
+  // Limitamos concorrência a 4 para não sobrecarregar o servidor.
+  const concurrency = 4;
+  for (let i = 0; i < formBlocks.length; i += concurrency) {
+    const batch = formBlocks.slice(i, i + concurrency);
+    const results = await Promise.all(batch.map(async (fm) => {
+      const formId = fm[1];
+      const action = fm[2].startsWith("http") ? fm[2] : `${GG}${fm[2]}`;
+      const body = fm[3];
+      // Extrair inputs do form
+      const inputs = [...body.matchAll(/<input[^>]*name="([^"]+)"[^>]*value="([^"]*)"/g)];
+      const formData = {};
+      for (const inp of inputs) formData[inp[1]] = inp[2];
+      try {
+        const resp = await ctx.request.post(action, { form: formData, headers: browserHeaders });
+        const respHtml = await resp.text();
+        const idParts = formId.replace(/^course_statistics_/, "").split("_");
+        const trs = [...respHtml.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/g)];
+        // Debug do PRIMEIRO form — ver o que o servidor responde
+        if (i === 0 && fm === batch[0]) {
+          const sample = respHtml.slice(0, 400).replace(/\s+/g, " ");
+          console.log(`   [debug-post] form0 → ${respHtml.length} bytes, ${trs.length} <tr>, status=${resp.status()}`);
+          console.log(`   [debug-post] sample: ${sample.slice(0, 250)}`);
+        }
+        const rows = [];
+        const teeMatch = respHtml.match(/(?:Tee|Marqueurs|Marques)\s*[:<][\s\S]{0,200}?>([^<]+?)<\/(?:a|td|span|h[1-6])/i);
+        const teeName = teeMatch ? teeMatch[1].replace(/\s+/g, " ").trim() : "";
+        const courseHeader = respHtml.match(/Course:\s*([^<]+)/);
+        // Helper: extrai primeiro inteiro de uma cell que pode ser "354" ou "354-407" (range entre 2 tees).
+        // Usar o MAIOR (back/longer tee) — é geralmente o tee dos Garçons (NOIR/black).
+        const firstInt = (s) => {
+          const nums = (String(s).match(/\d+/g) || []).map(Number);
+          return nums.length ? Math.max(...nums) : NaN;
+        };
+        for (const tr of trs) {
+          const cells = [...tr[1].matchAll(/<t[hd][^>]*>([\s\S]*?)<\/t[hd]>/g)]
+            .map((mm) => mm[1].replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ").replace(/\s+/g, " ").trim())
+            .filter((x) => x);
+          // Aceita "Hole|Meters|Par|..." (EN) ou "Trou|Mètre|Par|..." (FR).
+          // cells[0] = hole number (1-18), cells[1] = meters (range ou inteiro), cells[2] = par.
+          if (cells.length >= 11 && /^\d+$/.test(cells[0]) && /^\d+$/.test(cells[2])) {
+            const meters = firstInt(cells[1]);
+            const rank = firstInt(cells[4]);
+            if (Number.isFinite(meters)) {
+              rows.push({ hole: +cells[0], meters, par: +cells[2], rank: Number.isFinite(rank) ? rank : 0 });
             }
           }
-          if (!rows.length) return null;
-          const par = rows.map((r) => r.par);
-          const meters = rows.map((r) => r.meters);
-          const si = rows.map((r) => r.rank);
-          return {
-            formId: f.id,
-            eventId: idParts.length >= 2 ? idParts[0] : null,
-            courseId: idParts.length >= 2 ? idParts[1] : idParts[0],
-            teeId: idParts.length >= 3 ? idParts[2] : null,
-            teeName,
-            courseName: courseHeader?.[1]?.replace(/\s+/g, " ").trim() || "",
-            par, meters, si,
-            parTotal: par.reduce((s, v) => s + v, 0),
-            metersTotal: meters.reduce((s, v) => s + v, 0),
-          };
-        } catch (e) { return null; }
-      })
-    );
-    // Deduplicar por (parTotal, metersTotal) — combinações únicas de tees
-    const seen = new Map();
-    for (const r of allResults) {
-      if (!r || !isFinite(r.metersTotal) || r.metersTotal === 0) continue;
-      const key = `${r.parTotal}-${r.metersTotal}`;
-      if (!seen.has(key)) seen.set(key, r);
-    }
-    return [...seen.values()];
-  });
+        }
+        if (!rows.length) return null;
+        const par = rows.map((r) => r.par);
+        const meters = rows.map((r) => r.meters);
+        const si = rows.map((r) => r.rank);
+        return {
+          formId,
+          eventId: idParts.length >= 2 ? idParts[0] : null,
+          courseId: idParts.length >= 2 ? idParts[1] : idParts[0],
+          teeId: idParts.length >= 3 ? idParts[2] : null,
+          teeName,
+          courseName: courseHeader ? courseHeader[1].replace(/\s+/g, " ").trim() : "",
+          par, meters, si,
+          parTotal: par.reduce((s, v) => s + v, 0),
+          metersTotal: meters.reduce((s, v) => s + v, 0),
+        };
+      } catch (e) {
+        return null;
+      }
+    }));
+    allResults.push(...results);
+  }
+  // Deduplicar por (parTotal, metersTotal) — combinações únicas de tees
+  const seen = new Map();
+  for (const r of allResults) {
+    if (!r || !isFinite(r.metersTotal) || r.metersTotal === 0) continue;
+    const key = `${r.parTotal}-${r.metersTotal}`;
+    if (!seen.has(key)) seen.set(key, r);
+  }
+  return [...seen.values()];
 }
 
 /* Wrapper compatibility: devolve só o 1º course (para chamadas legadas) */
@@ -781,9 +842,20 @@ async function scrapeOne(browser, t) {
     let courseStats = null;
     const firstStroke = allEvents.find((e) => isStrokePlay(e.name));
     let allCourses = [];
-    if (meta.statsPageId) {
-      // NOVO: apanhar TODOS os course_statistics forms — múltiplos tees/categorias
-      allCourses = await fetchAllCourseStats(page, meta.statsPageId);
+    // Preferir leagueId (acede DIRECTO ao widget course_analytics — sempre funciona,
+    // não depende do iframe nested que pode falhar a carregar). Fallback para statsPage
+    // só se leagueId estiver indisponível (raro).
+    if (meta.leagueId) {
+      allCourses = await fetchAllCourseStats(page, meta.leagueId, "league");
+      // Se o widget directo não devolveu nada e temos statsPageId, tentar via /pages/
+      if (allCourses.length === 0 && meta.statsPageId) {
+        console.log(`   ⚠ widget directo vazio — tentar via statsPageId=${meta.statsPageId}`);
+        allCourses = await fetchAllCourseStats(page, meta.statsPageId, "statsPage");
+      }
+    } else if (meta.statsPageId) {
+      allCourses = await fetchAllCourseStats(page, meta.statsPageId, "statsPage");
+    }
+    if (meta.statsPageId || meta.leagueId) {
       if (allCourses.length) {
         console.log(`   ${allCourses.length} configurações de campo (par/metros únicos):`);
         allCourses.forEach((c) =>
@@ -1075,7 +1147,11 @@ function parseArgs(argv) {
           skippedEmpty++;
           continue;
         }
-        fs.writeFileSync(outPath, JSON.stringify(result, null, 2), "utf-8");
+        // Atomic write: escrever para .tmp e renomear no fim. Evita ficheiros truncados
+        // se o processo for interrompido (Ctrl+C) durante a escrita.
+        const tmpPath = outPath + ".tmp";
+        fs.writeFileSync(tmpPath, JSON.stringify(result, null, 2), "utf-8");
+        fs.renameSync(tmpPath, outPath);
         console.log("   gravado " + outPath + " (" + result.players.length + " jogadores, " + (hasMeters ? "metros OK" : "sem metros") + ")");
         ok++;
       } else {
