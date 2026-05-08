@@ -93,6 +93,8 @@ export function AccumulatedLB({
         isIncomplete: !!p._incomplete,
         isWD: !!p._wd,
         isHighlighted: isManuel(p),
+        // Marca conterrâneo (.row-portuguese) — usado em FFG e outras páginas intl.
+        isPortuguese: !isManuel(p) && !!(p as any)._isPortuguese,
         rounds: mappedRounds,
       };
     });

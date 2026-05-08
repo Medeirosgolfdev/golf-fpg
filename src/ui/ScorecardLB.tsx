@@ -204,6 +204,8 @@ export function ScorecardLB({
     const esc = resolveEsc(p, escLookup, { tournamentDate: tournament.date, playersDB, fedBirthdates }) || tournament.escalao || "";
     const { sd, source } = computeSD(p);
     const rowManuel = isManuel(p);
+    // Conterrâneo (FFG, etc.) — adaptador de página marca via _isPortuguese.
+    const rowPortuguese = !rowManuel && !!(p as any)._isPortuguese;
     const rowBg = rowManuel ? "var(--bg-success-subtle)" : undefined;
     const stickyBg = rowManuel ? "var(--bg-manuel-sticky)" : undefined;
 
@@ -228,6 +230,7 @@ export function ScorecardLB({
       rowBg,
       stickyBg,
       isManuel: rowManuel,
+      isPortuguese: rowPortuguese,
       fedCode: p.fedCode || undefined,
       nameContent: ((): React.ReactNode => {
         const base: React.ReactNode = nameDecorator_

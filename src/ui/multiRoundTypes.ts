@@ -42,6 +42,8 @@ export interface MultiRoundRow {
   parTotal?: number;
   /** Linha de destaque (Manuel) */
   isHighlighted?: boolean;
+  /** Linha de destaque PT (verde néon) — usado em páginas internacionais. */
+  isPortuguese?: boolean;
   /** Jogador incompleto (não jogou todas as rondas) */
   isIncomplete?: boolean;
   /** Jogador desistiu */

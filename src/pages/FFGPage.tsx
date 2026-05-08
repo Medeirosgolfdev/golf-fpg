@@ -12,6 +12,31 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { cachedFetchJson, invalidateCache } from "../data/fetchCache";
 import { isManuelByName as isM } from "../constants/manuel";
+
+/** Lista de excepções de jogadores portugueses cuja nacionalidade no portal FFG
+ *  está marcada como FRA (porque jogam num clube francês) mas que sabemos serem
+ *  portugueses. Comparação feita por nome normalizado (sem acentos, lowercase),
+ *  match em qualquer ordem das palavras (apelido pode vir 1º).
+ *
+ *  Para adicionar: incluir o nome conforme aparece nos dados, ou em qualquer ordem
+ *  desde que todas as palavras estejam presentes na string normalizada. */
+const PT_NAME_EXCEPTIONS: ReadonlyArray<string[]> = [
+  ["castro", "ferreira", "ricardo"], // Ricardo Castro Ferreira — St Germain (FR) desde 2026
+];
+
+const ptNorm = (s: string | null | undefined) =>
+  String(s || "").toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/\s+/g, " ").trim();
+
+const isPTByName = (name: string | null | undefined): boolean => {
+  const n = ptNorm(name);
+  if (!n) return false;
+  return PT_NAME_EXCEPTIONS.some((tokens) => tokens.every((t) => n.includes(t)));
+};
+
+/** Detecta jogador português via nacionalidade ISO-3 (PRT) ou variantes,
+ *  ou via lista de excepções de nome (jogadores PT que migraram para clubes FR). */
+const isPT = (nat: string | null | undefined, flag?: string | null, name?: string | null): boolean =>
+  /^(PRT|POR|PT|PORTUGAL)$/i.test(String(nat || flag || "").trim()) || isPTByName(name);
 import ExtLink from "../ui/ExternalLink";
 import SidebarSectionTitle from "../ui/SidebarSectionTitle";
 import { gf } from "../utils/flagUtils";
@@ -24,7 +49,7 @@ import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/Dat
 import DetailHeader from "../ui/DetailHeader";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import LoadingState from "../ui/LoadingState";
-import { RoundPill, ManuelPill } from "../ui/PillBadge";
+import { RoundPill, ManuelPill, PillBadge } from "../ui/PillBadge";
 import { type Tournament as FPGTournament, type Player as FPGPlayer, type RoundScore as FPGRoundScore, type ScorecardOptions } from "./FPGPage";
 import { IntlTournView } from "../ui/IntlTournView";
 import { useKidsLinkMap } from "../hooks/useKidsLinkMap";
@@ -274,6 +299,11 @@ interface FFGResTournament {
   name: string;
   formule: string;
   date: string;
+  /** Enriquecimento com metros/SI vindos do scrape GolfGenius (course statistics widget).
+   *  Injectado pelo load effect quando há um ficheiro `public/data/ffgolf/{year}_{slug}.json`
+   *  correspondente. Quando presente, o adapter `ffgResToFPGTournament` usa-o para
+   *  popular RoundScore.meters e RoundScore.si na vista hole-by-hole. */
+  _ggCourse?: { par: number[]; meters: number[]; si: number[]; parTotal?: number; metersTotal?: number; name?: string } | null;
   details: {
     trnId: string;
     series: FFGResSerie[];
@@ -295,6 +325,12 @@ interface FFGResIndexEntry {
   seriesCount: number;
   totalPlayers: number;
   divisions: { serieId: string; label: string | null; players: number }[];
+  // Links cruzados pelo build-ffgolf-resultats-index.js (a partir do catálogo).
+  pagesFfgolfUrl?: string | null;
+  ffgolfOfficialUrl?: string | null;
+  ggPage?: string | null;
+  ffgolfSlug?: string | null;
+  ffgolfSection?: string | null;
 }
 interface FFGResIndex {
   generatedAt: string;
@@ -441,19 +477,24 @@ function ffgResToFPGTournament(data: FFGResTournament, serieFilter?: string): FP
     return a.total - b.total;
   });
 
+  // Enriquecimento GG (metros/SI por buraco) injectado pelo load effect, se disponível.
+  const ggC = (data as any)._ggCourse as { par?: number[]; meters?: number[]; si?: number[] } | undefined;
+  const ggMeters = ggC?.meters && ggC.meters.length === 18 ? ggC.meters : [];
+  const ggSi = ggC?.si && ggC.si.length === 18 ? ggC.si : [];
+
   const players: FPGPlayer[] = sorted.map((p, idx) => {
     const rounds: FPGRoundScore[] = [];
     if (p.scoresR1 && p.scoresR1.length === 18 && p.t1 != null) {
-      rounds.push({ round: 1, gross: p.t1, scores: p.scoresR1, pars: par, si: [], meters: [] });
+      rounds.push({ round: 1, gross: p.t1, scores: p.scoresR1, pars: par, si: ggSi, meters: ggMeters });
     }
     if (p.scoresR2 && p.scoresR2.length === 18 && p.t2 != null) {
-      rounds.push({ round: 2, gross: p.t2, scores: p.scoresR2, pars: par, si: [], meters: [] });
+      rounds.push({ round: 2, gross: p.t2, scores: p.scoresR2, pars: par, si: ggSi, meters: ggMeters });
     }
     if (p.scoresR3 && p.scoresR3.length === 18 && p.t3 != null) {
-      rounds.push({ round: 3, gross: p.t3, scores: p.scoresR3, pars: par, si: [], meters: [] });
+      rounds.push({ round: 3, gross: p.t3, scores: p.scoresR3, pars: par, si: ggSi, meters: ggMeters });
     }
     if (p.scoresR4 && p.scoresR4.length === 18 && p.t4 != null) {
-      rounds.push({ round: 4, gross: p.t4, scores: p.scoresR4, pars: par, si: [], meters: [] });
+      rounds.push({ round: 4, gross: p.t4, scores: p.scoresR4, pars: par, si: ggSi, meters: ggMeters });
     }
     const incomplete = rounds.length < numRounds;
     const playerCountry = p.nationality || p.flag || "FRA";
@@ -470,11 +511,13 @@ function ffgResToFPGTournament(data: FFGResTournament, serieFilter?: string): FP
       parTotal,
       scores: rounds[0]?.scores || [],
       par,
-      si: [],
-      meters: [],
+      si: ggSi,
+      meters: ggMeters,
       roundScores: rounds,
       _wd: incomplete,
       _roundsPlayed: rounds.length,
+      // Marca conterrâneos para o ScorecardLB/AccumulatedLB aplicar .row-portuguese.
+      _isPortuguese: isPT(p.nationality, p.flag, p.name),
     } as FPGPlayer;
   });
 
@@ -594,6 +637,7 @@ function FFGTeeTimesTab({ data }: { data: FFGResTournament }) {
       toPar: null,
       scores: [],
       isManuel: manuel,
+      isPortuguese: !manuel && isPT(p.nationality, p.flag, p.name),
       sortPos: p.pos,
       sortName: ffgPlayerName(p),
       nameContent: (
@@ -895,6 +939,7 @@ function FFGResView({ data, lgpidfSupp }: { data: FFGResTournament; lgpidfSupp?:
       toPar,
       scores: [],
       isManuel: manuel,
+      isPortuguese: !manuel && isPT(p.nationality, p.flag, p.name),
       sortPos: p.pos,
       sortName: ffgPlayerName(p),
       nameContent: (
@@ -962,9 +1007,15 @@ function FFGResView({ data, lgpidfSupp }: { data: FFGResTournament; lgpidfSupp?:
     <>
       <div className="muted fs-10 mb-8" style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
         <span>🇫🇷 FFG Officiel · {data.formule} · 📅 {data.date}</span>
+        {/* Nome do campo: prioridade LGPIDF supp > GG enrichment */}
         {hasSupp && supp?.course?.name && <span>· 📍 {supp.course.name}</span>}
+        {!supp?.course?.name && data._ggCourse?.name && <span>· 📍 {data._ggCourse.name}</span>}
+        {/* Distância total: prioridade LGPIDF supp > GG enrichment */}
         {hasSupp && supp?.course && supp.course.metersTotal > 0 && (
           <span>· {supp.course.metersTotal.toLocaleString("pt-PT")} m</span>
+        )}
+        {!supp?.course?.metersTotal && data._ggCourse?.metersTotal && data._ggCourse.metersTotal > 0 && (
+          <span title="Distância total do campo (via GolfGenius course statistics)">· {data._ggCourse.metersTotal.toLocaleString("pt-PT")} m</span>
         )}
         <span>· {allSeries.length} séries · {data.details.series.reduce((s, x) => s + x.players.length, 0)} jogadores</span>
       </div>
@@ -1205,6 +1256,7 @@ function LGPIDFInscritosTab({ data }: { data: LGPIDFTournament }) {
       toPar: null,
       scores: [],
       isManuel: manuel,
+      isPortuguese: !manuel && isPT(p.nationality, p.flag, p.name),
       sortPos: p.rank,
       sortName: normalizeName(p.name),
       nameContent: (
@@ -1333,6 +1385,7 @@ function LGPIDFTeeTimesTab({ data }: { data: LGPIDFTournament }) {
       toPar: null,
       scores: [],
       isManuel: manuel,
+      isPortuguese: !manuel && isPT(p.nationality, p.flag, p.name),
       sortPos: p.groupNumber,
       sortName: normalizeName(p.name),
       nameContent: (
@@ -1500,6 +1553,7 @@ function LGPIDFLeaderboardTab({ data }: { data: LGPIDFTournament }) {
       toPar,  // gross - par(72×rondas) — PAR ASSUMIDO, ver nota no filterBar
       scores: [],
       isManuel: manuel,
+      isPortuguese: !manuel && isPT(p.nationality, p.flag, p.name),
       sortPos: p.pos,
       sortName: normalizeName(p.name),
       nameContent: (
@@ -1632,6 +1686,7 @@ function Content() {
   const [ffgFilterLigue, setFfgFilterLigue] = useState<string>("all");
   const [ffgFilterType, setFfgFilterType] = useState<string>("all");
   const [ffgFilterText, setFfgFilterText] = useState<string>("");
+  const [ffgFilterIntl, setFfgFilterIntl] = useState<boolean>(false);
   const [loading, setLoading] = useState(true);
   const [selection, setSelection] = useState<Selection | null>(null);
   const { kidsMap } = useKidsLinkMap();
@@ -1704,15 +1759,39 @@ function Content() {
             setFfgResIndex(ffgIdx);
             setFileMeta((p) => [...p, { path: "/data/ffgolf-resultats-index.json", status: "loaded", count: ffgIdx.total, group: "ffg" }]);
             const fMap = new Map<string, FFGResTournament>();
+            let ggEnrichCount = 0;
             await Promise.all(ffgIdx.tournaments.map(async (t) => {
               try {
                 const td = await cachedFetchJson<FFGResTournament>(`/data/ffgolf-resultats/${t.file}`);
-                if (td) fMap.set(t.trnId, td);
+                if (!td) return;
+                // Enriquecer com metros/SI do GolfGenius quando disponível.
+                // Os ficheiros `ffgolf/{year}_{slug}.json` foram gerados pelo scrape-ffgolf.js
+                // (Playwright + course statistics widget) e contêm course.meters[18] + course.si[18].
+                if (t.ffgolfSlug && t.year) {
+                  try {
+                    const ggData = await cachedFetchJson<any>(`/data/ffgolf/${t.year}_${t.ffgolfSlug}.json`);
+                    if (ggData && ggData.course && Array.isArray(ggData.course.meters) && ggData.course.meters.length === 18) {
+                      td._ggCourse = {
+                        par: ggData.course.par || [],
+                        meters: ggData.course.meters,
+                        si: ggData.course.si || [],
+                        parTotal: ggData.course.parTotal,
+                        metersTotal: ggData.course.metersTotal,
+                        name: ggData.course.name,
+                      };
+                      ggEnrichCount++;
+                    }
+                  } catch { /* GG file não existe — tudo bem, fallback sem metros */ }
+                }
+                fMap.set(t.trnId, td);
               } catch { /* skip */ }
             }));
             if (alive) {
               setFfgResData(fMap);
               setFileMeta((p) => [...p, { path: "/data/ffgolf-resultats/*.json", status: "loaded", count: fMap.size, group: "ffg" }]);
+              if (ggEnrichCount > 0) {
+                setFileMeta((p) => [...p, { path: "/data/ffgolf/*.json (enriquecimento metros/SI)", status: "loaded", count: ggEnrichCount, group: "ffg" }]);
+              }
             }
           }
         } catch { /* ffg resultats index opcional */ }
@@ -1750,12 +1829,39 @@ function Content() {
 
   // Lista visível FFG Resultats: ordenada por dateIso DESC (mais recente primeiro)
   const ffgResAll = (ffgResIndex?.tournaments || []).filter((t) => ffgResData.has(t.trnId));
-  const ffgResVisible = ffgResAll
+  // Detecta torneios "Internationaux/International..." (juvenis FFG que aceitam estrangeiros).
+  const isIntl = (name: string | undefined) => /\binternationa(l|ux?)\b/i.test(name || "");
+  const normSearch = (v: unknown) => String(v ?? "").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "");
+  // Tokenizar — apanha "santiago dias" mesmo quando o nome é "Dias Santiago" (apelido primeiro).
+  const ffgSearchTokens = normSearch(ffgFilterText).split(/\s+/).filter(Boolean);
+  const matchesFfgSearch = (entry: FFGResIndexEntry): boolean => {
+    if (!ffgSearchTokens.length) return true;
+    const tournName = normSearch(entry.name);
+    if (ffgSearchTokens.every((tok) => tournName.includes(tok))) return true;
+    const tData = ffgResData.get(entry.trnId);
+    if (!tData) return false;
+    return tData.details.series.some((s) =>
+      s.players.some((p) => {
+        const n = normSearch(p.name);
+        return ffgSearchTokens.every((tok) => n.includes(tok));
+      })
+    );
+  };
+  // Dedup por trnId — o índice tem entradas duplicadas para torneios nacionais
+  // que aparecem em várias ligas (ex: Chiberta em ligue=03 e ligue=19).
+  const ffgResVisibleRaw = ffgResAll
     .filter((t) => ffgFilterYear === "all" || String(t.year) === ffgFilterYear)
     .filter((t) => ffgFilterLigue === "all" || t.ligue === ffgFilterLigue)
     .filter((t) => ffgFilterType === "all" || t.typeCompetition === ffgFilterType)
-    .filter((t) => !ffgFilterText || t.name.toLowerCase().includes(ffgFilterText.toLowerCase()))
+    .filter((t) => !ffgFilterIntl || isIntl(t.name))
+    .filter(matchesFfgSearch)
     .sort((a, b) => (b.dateIso || "").localeCompare(a.dateIso || ""));
+  const ffgResVisibleSeen = new Set<string>();
+  const ffgResVisible = ffgResVisibleRaw.filter((t) => {
+    if (ffgResVisibleSeen.has(t.trnId)) return false;
+    ffgResVisibleSeen.add(t.trnId);
+    return true;
+  });
 
   // Listas únicas de filtro
   const ffgYears = [...new Set(ffgResAll.map((t) => String(t.year || "?")))].sort((a, b) => b.localeCompare(a));
@@ -1871,7 +1977,7 @@ function Content() {
               <div style={{ position: "relative", flex: "1 1 220px", minWidth: 180, maxWidth: 320 }}>
                 <input
                   className="input"
-                  placeholder="🔍 Pesquisar torneio..."
+                  placeholder="🔍 Pesquisar torneio ou jogador..."
                   value={ffgFilterText}
                   onChange={(e) => setFfgFilterText(e.target.value)}
                   style={{ padding: "5px 26px 5px 10px", fontSize: 13, width: "100%", boxSizing: "border-box" }}
@@ -1896,12 +2002,29 @@ function Content() {
                 <option value="all">🇫🇷 Todas as ligas</option>
                 {ffgLigues.map((l) => <option key={l} value={l}>{LIGUE_LABELS[l] || l} ({ffgResAll.filter((t) => t.ligue === l).length})</option>)}
               </select>
+              <button
+                type="button"
+                onClick={() => setFfgFilterIntl((v) => !v)}
+                aria-pressed={ffgFilterIntl}
+                title={ffgFilterIntl ? "A mostrar apenas Internationaux/International. Clica para ver todos." : "Filtrar apenas torneios Internationaux/International"}
+                className="chip"
+                style={{
+                  cursor: "pointer", fontSize: 12, padding: "5px 10px",
+                  fontWeight: 700, letterSpacing: "0.04em",
+                  background: ffgFilterIntl ? "var(--pill-intl-bg)" : "var(--bg-card)",
+                  color: ffgFilterIntl ? "var(--pill-regional-bg)" : "var(--text)",
+                  border: "1px solid " + (ffgFilterIntl ? "var(--pill-regional-bg)" : "var(--border)"),
+                  borderRadius: 6,
+                }}
+              >
+                INTL ({ffgResAll.filter((t) => isIntl(t.name)).length})
+              </button>
               <span className="muted fs-12" style={{ marginLeft: 4 }}>
                 {ffgResVisible.length} de {ffgResAll.length} torneios
               </span>
-              {(ffgFilterText || ffgFilterYear !== "all" || ffgFilterLigue !== "all" || ffgFilterType !== "all") && (
+              {(ffgFilterText || ffgFilterYear !== "all" || ffgFilterLigue !== "all" || ffgFilterType !== "all" || ffgFilterIntl) && (
                 <button
-                  onClick={() => { setFfgFilterText(""); setFfgFilterYear("all"); setFfgFilterLigue("all"); setFfgFilterType("all"); }}
+                  onClick={() => { setFfgFilterText(""); setFfgFilterYear("all"); setFfgFilterLigue("all"); setFfgFilterType("all"); setFfgFilterIntl(false); }}
                   className="chip"
                   style={{ cursor: "pointer", fontSize: 11 }}
                 >
@@ -1935,19 +2058,21 @@ function Content() {
 
 
               {/* ── Secção FFG Resultats (sistema central FFG, todas ligas) ── */}
-              {ffgResVisible.length > 0 && [...new Set(ffgResVisible.map((t) => t.year || 0))].sort((a, b) => b - a).map((year) => {
+              {ffgResVisible.length > 0 && [...new Set(ffgResVisible.map((t) => t.year || 0))].sort((a, b) => b - a).map((year, yIdx) => {
                 const yearEntries = ffgResVisible.filter((e) => (e.year || 0) === year);
                 return (
                   <React.Fragment key={`ffgres-${year}`}>
-                    <SidebarSectionTitle
-                      dark
-                      color="var(--color-ffg-dark)"
-                      textColor="#ffffff"
-                      borderColor="var(--color-ffg-mid)"
-                      letterSpacing="0.08em"
-                    >
-                      🇫🇷 FFG Officiel — Grand Prix Jeunes
-                    </SidebarSectionTitle>
+                    {yIdx === 0 && (
+                      <SidebarSectionTitle
+                        dark
+                        color="var(--color-ffg-dark)"
+                        textColor="#ffffff"
+                        borderColor="var(--color-ffg-mid)"
+                        letterSpacing="0.08em"
+                      >
+                        🇫🇷 FFG Officiel — Grand Prix Jeunes
+                      </SidebarSectionTitle>
+                    )}
                     <div
                       className="sidebar-year-label"
                       style={{
@@ -1993,6 +2118,11 @@ function Content() {
                             }}>
                               {entry.typeCompetition === "01" ? "Federal" : "GP Jeunes"}
                             </span>
+                            {isIntl(entry.name) && (
+                              <span title="Torneio Internationaux/International — aceita jogadores estrangeiros">
+                                <PillBadge pill="INTL" />
+                              </span>
+                            )}
                             <span className="chip" style={{
                               fontSize: 9,
                               background: "var(--bg-muted, #e5e7eb)",
@@ -2154,13 +2284,40 @@ function Content() {
                           <span className="muted">
                           🇫🇷 FFG Officiel · {ffgCur.formule} · 📅 {ffgCur.date} · {ffgCur.details.series.length} séries
                         </span>
-                        <ExtLink
-                          href={`https://pages.ffgolf.org/resultats/`}
-                          className="tourn-ext-link"
-                          style={{ marginLeft: 8 }}
-                        >
-                          🔗 Ver no FFG (scorecards hole-by-hole)
-                        </ExtLink>
+                        {/* Links contextuais — injectados pelo build-ffgolf-resultats-index.js (cross-ref com ffgolf-catalog.json).
+                            Quando o torneio tem GolfGenius (majeurs), mostramos atalho directo às scorecards hole-by-hole + distâncias.
+                            ffgolfOfficialUrl aponta à página oficial em ffgolf.org com o iframe GG embebido.
+                            pagesFfgolfUrl é fallback genérico (portal SPA, sem deep-link). */}
+                        {ffgCurMeta?.ggPage && (
+                          <ExtLink
+                            href={`https://www.golfgenius.com/pages/${ffgCurMeta.ggPage}`}
+                            className="tourn-ext-link"
+                            style={{ marginLeft: 8 }}
+                            title="Scorecards hole-by-hole + distâncias por buraco no GolfGenius"
+                          >
+                            🏌️ GolfGenius
+                          </ExtLink>
+                        )}
+                        {ffgCurMeta?.ffgolfOfficialUrl && (
+                          <ExtLink
+                            href={ffgCurMeta.ffgolfOfficialUrl}
+                            className="tourn-ext-link"
+                            style={{ marginLeft: 8 }}
+                            title="Página oficial do torneio em ffgolf.org"
+                          >
+                            🔗 Página FFG
+                          </ExtLink>
+                        )}
+                        {!ffgCurMeta?.ffgolfOfficialUrl && (
+                          <ExtLink
+                            href={ffgCurMeta?.pagesFfgolfUrl || "https://pages.ffgolf.org/resultats/"}
+                            className="tourn-ext-link"
+                            style={{ marginLeft: 8 }}
+                            title="Portal de resultados FFG (lista de competições)"
+                          >
+                            🔗 Portal FFG
+                          </ExtLink>
+                        )}
                       </>
                     }
                   />

@@ -984,7 +984,7 @@ async function scrapeOne(browser, t) {
    ───────────────────────────────────────────────────────────────── */
 function parseArgs(argv) {
   // Headless é DEFAULT — mais rápido e sem popups. --no-headless mostra browser para debug.
-  const args = { headless: true, slug: null, year: null, ggPage: null, title: null };
+  const args = { headless: true, slug: null, year: null, ggPage: null, title: null, onlyEmpty: false };
   for (let i = 2; i < argv.length; i++) {
     if (argv[i] === "--headless") args.headless = true;
     else if (argv[i] === "--no-headless" || argv[i] === "--show-browser") args.headless = false;
@@ -992,6 +992,8 @@ function parseArgs(argv) {
     else if (argv[i] === "--year") args.year = parseInt(argv[++i], 10);
     else if (argv[i] === "--gg-page") args.ggPage = argv[++i];
     else if (argv[i] === "--title") args.title = argv[++i];
+    // --only-empty: re-scrape só de torneios cujo ficheiro está vazio (course.meters.length !== 18).
+    else if (argv[i] === "--only-empty") args.onlyEmpty = true;
   }
   return args;
 }
@@ -1034,14 +1036,35 @@ function parseArgs(argv) {
   if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
 
   let ok = 0,
-    fail = 0;
+    fail = 0,
+    skippedEmpty = 0,
+    skippedExisting = 0;
   for (const t of tournaments) {
     try {
+      const outPath = path.join(outDir, `${t.year}_${t.slug}.json`);
+      if (args.onlyEmpty && fs.existsSync(outPath)) {
+        try {
+          const existing = JSON.parse(fs.readFileSync(outPath, "utf-8"));
+          const meters = existing && existing.course && existing.course.meters || [];
+          if (meters.length === 18) {
+            console.log("   skip " + t.slug + ": ja tem distancias completas (--only-empty)");
+            skippedExisting++;
+            continue;
+          }
+        } catch (e) { /* JSON invalido — re-scrape */ }
+      }
       const result = await scrapeOne(browser, t);
       if (result) {
-        const outPath = path.join(outDir, `${t.year}_${t.slug}.json`);
+        const hasMeters = Array.isArray(result.course && result.course.meters) && result.course.meters.length === 18;
+        const hasPlayers = Array.isArray(result.players) && result.players.length > 0;
+        const hasCourses = Array.isArray(result.courses) && result.courses.length > 0;
+        if (!hasMeters && !hasPlayers && !hasCourses) {
+          console.log("   nao grava " + t.slug + ": resultado vazio (sem stats/players/courses)");
+          skippedEmpty++;
+          continue;
+        }
         fs.writeFileSync(outPath, JSON.stringify(result, null, 2), "utf-8");
-        console.log(`   💾 ${outPath} (${result.players.length} jogadores)`);
+        console.log("   gravado " + outPath + " (" + result.players.length + " jogadores, " + (hasMeters ? "metros OK" : "sem metros") + ")");
         ok++;
       } else {
         fail++;

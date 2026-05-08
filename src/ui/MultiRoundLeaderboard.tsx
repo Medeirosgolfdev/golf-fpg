@@ -321,9 +321,11 @@ export function MultiRoundLeaderboard({
                 : (isInc || isWD) ? "var(--bg-hover)"
                 : "var(--bg-card,#fff)";
 
+              // Manuel toma precedência sobre Portuguese (só uma classe é aplicada).
+              const rowCls = row.isHighlighted ? "row-manuel" : (row.isPortuguese ? "row-portuguese" : undefined);
               return (
                 <tr key={row.key || row.name + idx}
-                  className={row.isHighlighted ? "row-manuel" : undefined}
+                  className={rowCls}
                   style={(isInc || isWD) ? { background: rowBg, opacity: isWD ? 0.55 : 0.7 } : row.isHighlighted ? { background: rowBg } : undefined}>
                   <td className="lb-pos sticky-col-0" style={row.isHighlighted ? undefined : { background: stickyBg }}>
                     {isWD

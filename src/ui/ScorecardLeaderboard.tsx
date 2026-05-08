@@ -43,6 +43,9 @@ export interface ScorecardRow {
   stickyBg?: string;
   /** True quando a linha é do Manuel — aplica .row-manuel (highlight verde). */
   isManuel?: boolean;
+  /** True quando o jogador é português — aplica .row-portuguese (highlight verde néon).
+   *  Usado nas páginas internacionais (FFG, etc.) para destacar conterrâneos. */
+  isPortuguese?: boolean;
   /** Border-top style para linha (aplicado a pos, name, e scorecard cells) */
   borderTop?: string;
   nameContent: React.ReactNode;
@@ -284,13 +287,14 @@ export function ScorecardLeaderboard({
           <tbody>
             {sortedRows.map(row => {
               const sticky = row.stickyBg || "var(--bg-card,#fff)";
-              const manuelCls = row.isManuel ? " row-manuel" : "";
+              // Manuel toma precedência sobre Portuguese (só uma classe é aplicada).
+              const highlightCls = row.isManuel ? " row-manuel" : (row.isPortuguese ? " row-portuguese" : "");
               const scores = row.scores ?? [];
               const f9 = scores.slice(0, 9).reduce((a, b) => a + b, 0);
               const b9 = !is9 ? scores.slice(9, 18).reduce((a, b) => a + b, 0) : 0;
               const afterScorecard = row.postScorecardCells ?? row.postTotalCells;
               return (
-                <tr key={row.key} className={manuelCls.trim() || undefined} style={row.rowBg && !row.isManuel ? { background: row.rowBg } : undefined} data-fed={row.fedCode}>
+                <tr key={row.key} className={highlightCls.trim() || undefined} style={row.rowBg && !row.isManuel && !row.isPortuguese ? { background: row.rowBg } : undefined} data-fed={row.fedCode}>
                   <td className="lb-pos sticky-col-0" style={{ background: sticky, borderTop: row.borderTop }}>{row.pos}</td>
                   <td className="lb-name sticky-col-1" style={{ background: sticky, borderTop: row.borderTop }}>{row.nameContent}</td>
                   {row.prefixCells}
