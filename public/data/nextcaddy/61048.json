@@ -1,0 +1,6964 @@
+{
+  "tourId": 61048,
+  "url": "https://www.nextcaddy.com/tour/61048",
+  "scrapedAt": "2026-05-08T17:37:11.321Z",
+  "meta": {
+    "name": "Copa Andalucía Masculina",
+    "organizer": "Real Federacion Andaluza de Golf",
+    "course": "Montecastillo Barceló Golf Club",
+    "courseCode": "AM29",
+    "dateStart": null,
+    "dateEnd": null,
+    "format": "Medal Play (Scratch)  Caballeros C. Masc",
+    "categories": [
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ]
+  },
+  "course": {
+    "par": [
+      4,
+      3,
+      5,
+      4,
+      4,
+      4,
+      4,
+      3,
+      5,
+      4,
+      3,
+      5,
+      4,
+      3,
+      4,
+      5,
+      4,
+      4
+    ],
+    "si": [
+      17,
+      11,
+      3,
+      12,
+      7,
+      13,
+      9,
+      8,
+      4,
+      5,
+      14,
+      15,
+      2,
+      18,
+      1,
+      16,
+      6,
+      10
+    ],
+    "meters": [
+      316,
+      202,
+      516,
+      348,
+      386,
+      378,
+      395,
+      174,
+      473,
+      362,
+      214,
+      477,
+      396,
+      157,
+      424,
+      465,
+      342,
+      386
+    ]
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "J3",
+        "HcpJuego J3",
+        "J4",
+        "HcpJuego J4",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Gonzalo Baños Ramos",
+          "licencia": "AM11165742",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 69
+            },
+            {
+              "round": 2,
+              "gross": 69
+            },
+            {
+              "round": 3,
+              "gross": 68
+            },
+            {
+              "round": 4,
+              "gross": 68
+            }
+          ],
+          "total": 274,
+          "toPar": -14,
+          "inscribedId": 2222401,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                4,
+                3,
+                4,
+                4,
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                4,
+                3,
+                3,
+                5,
+                4,
+                4
+              ],
+              "total": 69
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                3,
+                4,
+                4,
+                4,
+                5,
+                4,
+                3,
+                4,
+                3,
+                3,
+                4,
+                5,
+                3,
+                4,
+                4,
+                4,
+                4
+              ],
+              "total": 69
+            },
+            {
+              "round": 3,
+              "scores": [
+                5,
+                2,
+                3,
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                5,
+                2,
+                6,
+                4,
+                4,
+                4
+              ],
+              "total": 68
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                4,
+                4,
+                3,
+                2,
+                4,
+                3,
+                4,
+                3,
+                4,
+                4
+              ],
+              "total": 68
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Yago Horno Mateo",
+          "licencia": "AM03167881",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 67
+            },
+            {
+              "round": 2,
+              "gross": 71
+            },
+            {
+              "round": 3,
+              "gross": 73
+            },
+            {
+              "round": 4,
+              "gross": 67
+            }
+          ],
+          "total": 278,
+          "toPar": -10,
+          "inscribedId": 2224818,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                4,
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                2,
+                4,
+                4,
+                3,
+                4,
+                4,
+                4,
+                4
+              ],
+              "total": 67
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                3,
+                4,
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                3,
+                4,
+                5,
+                6,
+                3,
+                3,
+                4,
+                5,
+                4
+              ],
+              "total": 71
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                8,
+                4,
+                3,
+                5,
+                3,
+                4,
+                3,
+                4,
+                4,
+                4
+              ],
+              "total": 73
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                2,
+                5,
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                5,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                3
+              ],
+              "total": 67
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Nicolas Vidal Reig",
+          "licencia": "CP01811935",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 69
+            },
+            {
+              "round": 2,
+              "gross": 71
+            },
+            {
+              "round": 3,
+              "gross": 70
+            },
+            {
+              "round": 4,
+              "gross": 71
+            }
+          ],
+          "total": 281,
+          "toPar": -7,
+          "inscribedId": 2222391,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                5,
+                3,
+                4,
+                4,
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                4,
+                2,
+                4,
+                4,
+                4,
+                4
+              ],
+              "total": 69
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                2,
+                5,
+                4,
+                3,
+                4,
+                6,
+                4,
+                4
+              ],
+              "total": 71
+            },
+            {
+              "round": 3,
+              "scores": [
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                2,
+                5,
+                3,
+                3,
+                5,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4
+              ],
+              "total": 70
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                5,
+                3,
+                4,
+                3,
+                5,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5,
+                3,
+                4,
+                5
+              ],
+              "total": 71
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Sergio Jimenez Romero",
+          "licencia": "CM60771433",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 73
+            },
+            {
+              "round": 2,
+              "gross": 67
+            },
+            {
+              "round": 3,
+              "gross": 70
+            },
+            {
+              "round": 4,
+              "gross": 73
+            }
+          ],
+          "total": 283,
+          "toPar": -5,
+          "inscribedId": 2229382,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                3,
+                3,
+                4,
+                5,
+                4,
+                5,
+                4,
+                4,
+                6
+              ],
+              "total": 73
+            },
+            {
+              "round": 2,
+              "scores": [
+                3,
+                3,
+                4,
+                4,
+                4,
+                3,
+                5,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                3,
+                4,
+                4,
+                5
+              ],
+              "total": 67
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                3,
+                4,
+                3,
+                5,
+                4,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                6,
+                2,
+                4,
+                4,
+                4,
+                4
+              ],
+              "total": 70
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                3,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                5,
+                4,
+                4
+              ],
+              "total": 73
+            }
+          ]
+        },
+        {
+          "pos": 5,
+          "name": "Pol Teruel Roca",
+          "licencia": "CB19915430",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 71
+            },
+            {
+              "round": 2,
+              "gross": 71
+            },
+            {
+              "round": 3,
+              "gross": 68
+            },
+            {
+              "round": 4,
+              "gross": 74
+            }
+          ],
+          "total": 284,
+          "toPar": -4,
+          "inscribedId": 2221553,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                4,
+                6,
+                3,
+                4,
+                4,
+                5,
+                3,
+                3,
+                4,
+                3,
+                4,
+                5,
+                3,
+                4,
+                4,
+                3,
+                4
+              ],
+              "total": 71
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                3,
+                5,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                2,
+                5,
+                5,
+                3,
+                4,
+                4,
+                4,
+                4
+              ],
+              "total": 71
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                4,
+                4,
+                4,
+                3,
+                3,
+                5,
+                2,
+                4,
+                4,
+                2,
+                4,
+                5,
+                3,
+                4,
+                4,
+                4,
+                5
+              ],
+              "total": 68
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                3,
+                4,
+                4,
+                4,
+                5,
+                5,
+                3,
+                5,
+                4,
+                3,
+                4,
+                4,
+                5,
+                6,
+                3,
+                4,
+                4
+              ],
+              "total": 74
+            }
+          ]
+        },
+        {
+          "pos": 6,
+          "name": "Alvaro Pastor Roman",
+          "licencia": "CM60163399",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 73
+            },
+            {
+              "round": 2,
+              "gross": 70
+            },
+            {
+              "round": 3,
+              "gross": 72
+            },
+            {
+              "round": 4,
+              "gross": 70
+            }
+          ],
+          "total": 285,
+          "toPar": -3,
+          "inscribedId": 2229867,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                3,
+                5,
+                4,
+                4,
+                4,
+                5,
+                3,
+                5,
+                4,
+                4,
+                5,
+                4,
+                3,
+                4,
+                4,
+                4,
+                5
+              ],
+              "total": 73
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                3,
+                5,
+                3,
+                4,
+                4,
+                4,
+                3,
+                5,
+                4,
+                3,
+                4,
+                5,
+                3,
+                4,
+                4,
+                4,
+                4
+              ],
+              "total": 70
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                3,
+                6,
+                4,
+                5,
+                4,
+                4,
+                3,
+                5,
+                4,
+                3,
+                5,
+                3,
+                3,
+                4,
+                4,
+                4,
+                4
+              ],
+              "total": 72
+            },
+            {
+              "round": 4,
+              "scores": [
+                3,
+                3,
+                4,
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5,
+                5,
+                3,
+                5,
+                4,
+                4,
+                4
+              ],
+              "total": 70
+            }
+          ]
+        },
+        {
+          "pos": 7,
+          "name": "Oliver De Wint Senussi",
+          "licencia": "AM15919173",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 70
+            },
+            {
+              "round": 2,
+              "gross": 69
+            },
+            {
+              "round": 3,
+              "gross": 69
+            },
+            {
+              "round": 4,
+              "gross": 77
+            }
+          ],
+          "total": 285,
+          "toPar": -3,
+          "inscribedId": 2222671,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5,
+                4,
+                3,
+                5,
+                5,
+                4,
+                3
+              ],
+              "total": 70
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                6,
+                4,
+                3,
+                5,
+                3,
+                3,
+                4,
+                4,
+                4,
+                4
+              ],
+              "total": 69
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                3,
+                4,
+                4,
+                3,
+                3,
+                6,
+                3,
+                4,
+                3,
+                3,
+                5,
+                4,
+                3,
+                4,
+                5,
+                4,
+                4
+              ],
+              "total": 69
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                4,
+                5,
+                5,
+                4,
+                4,
+                5,
+                5,
+                5,
+                6,
+                3,
+                3,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4
+              ],
+              "total": 77
+            }
+          ]
+        },
+        {
+          "pos": 8,
+          "name": "Ivan Enguita Alonso",
+          "licencia": "0106898178",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 71
+            },
+            {
+              "round": 2,
+              "gross": 71
+            },
+            {
+              "round": 3,
+              "gross": 76
+            },
+            {
+              "round": 4,
+              "gross": 69
+            }
+          ],
+          "total": 287,
+          "toPar": -1,
+          "inscribedId": 2223125,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                4,
+                5,
+                5,
+                2,
+                4,
+                4,
+                3,
+                4,
+                3,
+                3,
+                4,
+                6,
+                4,
+                3,
+                6,
+                4,
+                3
+              ],
+              "total": 71
+            },
+            {
+              "round": 2,
+              "scores": [
+                3,
+                3,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                7,
+                4,
+                4,
+                4,
+                3,
+                4
+              ],
+              "total": 71
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                3,
+                5,
+                4,
+                3,
+                6,
+                3,
+                3,
+                5,
+                5,
+                5,
+                4,
+                4,
+                5,
+                5
+              ],
+              "total": 76
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                2,
+                4,
+                5,
+                3,
+                4,
+                5,
+                2,
+                4,
+                4,
+                2,
+                4,
+                6,
+                4,
+                4,
+                4,
+                4,
+                4
+              ],
+              "total": 69
+            }
+          ]
+        },
+        {
+          "pos": 9,
+          "name": "Jorge Martin Sampedro",
+          "licencia": "CM05162093",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 71
+            },
+            {
+              "round": 2,
+              "gross": 70
+            },
+            {
+              "round": 3,
+              "gross": 76
+            },
+            {
+              "round": 4,
+              "gross": 71
+            }
+          ],
+          "total": 288,
+          "toPar": null,
+          "inscribedId": 2226053,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                3,
+                4,
+                4,
+                3,
+                6,
+                4,
+                3,
+                5,
+                5,
+                4,
+                5,
+                4,
+                2,
+                4,
+                4,
+                3,
+                5
+              ],
+              "total": 71
+            },
+            {
+              "round": 2,
+              "scores": [
+                3,
+                3,
+                5,
+                3,
+                3,
+                6,
+                4,
+                3,
+                5,
+                4,
+                3,
+                5,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ],
+              "total": 70
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                5,
+                5,
+                3,
+                5,
+                4,
+                4,
+                4,
+                5,
+                3,
+                5,
+                4,
+                5,
+                4
+              ],
+              "total": 76
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                2,
+                5,
+                5,
+                4,
+                4,
+                3,
+                3,
+                4,
+                4,
+                4,
+                4,
+                4,
+                3,
+                5,
+                4,
+                5,
+                4
+              ],
+              "total": 71
+            }
+          ]
+        },
+        {
+          "pos": 10,
+          "name": "Yago Lopez Alvarez",
+          "licencia": "GC02896148",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 73
+            },
+            {
+              "round": 3,
+              "gross": 72
+            },
+            {
+              "round": 4,
+              "gross": 70
+            }
+          ],
+          "total": 290,
+          "toPar": 2,
+          "inscribedId": 2226349,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                4,
+                4,
+                5,
+                4,
+                4,
+                6,
+                3,
+                4,
+                4,
+                3,
+                7,
+                4,
+                3,
+                5,
+                4,
+                4,
+                4
+              ],
+              "total": 75
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                4,
+                5,
+                5,
+                4,
+                4,
+                6,
+                3,
+                4,
+                4,
+                3,
+                5,
+                3,
+                3,
+                4,
+                4,
+                4,
+                4
+              ],
+              "total": 73
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                3,
+                3,
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                6,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4
+              ],
+              "total": 72
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                3,
+                3,
+                3,
+                5,
+                4,
+                4,
+                3,
+                5,
+                4,
+                3,
+                5,
+                4,
+                3,
+                4,
+                5,
+                5,
+                3
+              ],
+              "total": 70
+            }
+          ]
+        },
+        {
+          "pos": 11,
+          "name": "Pablo Perez Gracia",
+          "licencia": "RL06820689",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 73
+            },
+            {
+              "round": 2,
+              "gross": 72
+            },
+            {
+              "round": 3,
+              "gross": 72
+            },
+            {
+              "round": 4,
+              "gross": 73
+            }
+          ],
+          "total": 290,
+          "toPar": 2,
+          "inscribedId": 2228338,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                5,
+                5,
+                4,
+                4
+              ],
+              "total": 73
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                5,
+                5,
+                3,
+                4,
+                4,
+                3,
+                5,
+                3,
+                3,
+                4,
+                4,
+                4,
+                5
+              ],
+              "total": 72
+            },
+            {
+              "round": 3,
+              "scores": [
+                3,
+                3,
+                6,
+                4,
+                4,
+                4,
+                4,
+                3,
+                5,
+                5,
+                3,
+                5,
+                4,
+                2,
+                4,
+                4,
+                5,
+                4
+              ],
+              "total": 72
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                4,
+                5,
+                5,
+                4,
+                4,
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                4,
+                3
+              ],
+              "total": 73
+            }
+          ]
+        },
+        {
+          "pos": 12,
+          "name": "Jorge Sanchez Gutierrez",
+          "licencia": "AM75161292",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 71
+            },
+            {
+              "round": 2,
+              "gross": 70
+            },
+            {
+              "round": 3,
+              "gross": 77
+            },
+            {
+              "round": 4,
+              "gross": 72
+            }
+          ],
+          "total": 290,
+          "toPar": 2,
+          "inscribedId": 2224324,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                3,
+                5,
+                4,
+                3,
+                4,
+                4,
+                4,
+                3,
+                3,
+                4,
+                4,
+                4,
+                4,
+                4,
+                6,
+                5,
+                4
+              ],
+              "total": 71
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                3,
+                4,
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                3,
+                3,
+                4
+              ],
+              "total": 70
+            },
+            {
+              "round": 3,
+              "scores": [
+                5,
+                4,
+                5,
+                4,
+                3,
+                4,
+                3,
+                4,
+                5,
+                4,
+                3,
+                5,
+                6,
+                3,
+                4,
+                7,
+                4,
+                4
+              ],
+              "total": 77
+            },
+            {
+              "round": 4,
+              "scores": [
+                3,
+                3,
+                5,
+                3,
+                5,
+                6,
+                4,
+                2,
+                5,
+                4,
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                4,
+                4
+              ],
+              "total": 72
+            }
+          ]
+        },
+        {
+          "pos": 13,
+          "name": "Niilo Maki-Petaja",
+          "licencia": "EXX1911279",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 70
+            },
+            {
+              "round": 2,
+              "gross": 70
+            },
+            {
+              "round": 3,
+              "gross": 74
+            },
+            {
+              "round": 4,
+              "gross": 76
+            }
+          ],
+          "total": 290,
+          "toPar": 2,
+          "inscribedId": 2227100,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                3,
+                5,
+                3,
+                3,
+                4,
+                5,
+                2,
+                5,
+                4,
+                4,
+                4
+              ],
+              "total": 70
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                4,
+                5,
+                4,
+                4,
+                4,
+                4,
+                2,
+                5,
+                3,
+                3,
+                6,
+                4,
+                2,
+                3,
+                4,
+                5,
+                4
+              ],
+              "total": 70
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                5,
+                4,
+                3,
+                4,
+                4,
+                3,
+                6,
+                5,
+                3,
+                4,
+                4,
+                5,
+                4
+              ],
+              "total": 74
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                2,
+                6,
+                4,
+                5,
+                4,
+                4,
+                3,
+                5,
+                5,
+                3,
+                4,
+                4,
+                3,
+                5,
+                5,
+                4,
+                6
+              ],
+              "total": 76
+            }
+          ]
+        },
+        {
+          "pos": 14,
+          "name": "Samuel Love Li",
+          "licencia": "AM51164111",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 73
+            },
+            {
+              "round": 2,
+              "gross": 69
+            },
+            {
+              "round": 3,
+              "gross": 77
+            },
+            {
+              "round": 4,
+              "gross": 72
+            }
+          ],
+          "total": 291,
+          "toPar": 3,
+          "inscribedId": 2222396,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                4,
+                6,
+                4,
+                4,
+                3,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                4,
+                6
+              ],
+              "total": 73
+            },
+            {
+              "round": 2,
+              "scores": [
+                3,
+                3,
+                5,
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                3,
+                3,
+                5,
+                5,
+                2,
+                5,
+                4,
+                5,
+                4
+              ],
+              "total": 69
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                3,
+                6,
+                4,
+                4,
+                4,
+                6,
+                4,
+                4,
+                5,
+                3,
+                5,
+                6,
+                3,
+                6,
+                3,
+                4,
+                3
+              ],
+              "total": 77
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                4,
+                4,
+                6,
+                4,
+                4,
+                3,
+                4,
+                3,
+                4,
+                4,
+                4,
+                4
+              ],
+              "total": 72
+            }
+          ]
+        },
+        {
+          "pos": 15,
+          "name": "Miguel Fuertes Burdeos",
+          "licencia": "LV06820540",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 72
+            },
+            {
+              "round": 2,
+              "gross": 77
+            },
+            {
+              "round": 3,
+              "gross": 75
+            },
+            {
+              "round": 4,
+              "gross": 69
+            }
+          ],
+          "total": 293,
+          "toPar": 5,
+          "inscribedId": 2229294,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                3,
+                5,
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                6,
+                4,
+                3,
+                4,
+                6,
+                4,
+                4
+              ],
+              "total": 72
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                4,
+                8,
+                3,
+                4,
+                4,
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                5,
+                5,
+                5,
+                3,
+                4,
+                4
+              ],
+              "total": 77
+            },
+            {
+              "round": 3,
+              "scores": [
+                5,
+                4,
+                6,
+                3,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5,
+                5,
+                3,
+                4,
+                5,
+                4,
+                5
+              ],
+              "total": 75
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                4,
+                6,
+                4,
+                3,
+                4,
+                3,
+                3,
+                4,
+                4,
+                3,
+                3,
+                3,
+                3,
+                5,
+                5,
+                4,
+                4
+              ],
+              "total": 69
+            }
+          ]
+        },
+        {
+          "pos": 16,
+          "name": "Vicente Mestre Carceller",
+          "licencia": "CB23770060",
+          "hcp": null,
+          "nivel": "M",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 71
+            },
+            {
+              "round": 2,
+              "gross": 73
+            },
+            {
+              "round": 3,
+              "gross": 78
+            },
+            {
+              "round": 4,
+              "gross": 71
+            }
+          ],
+          "total": 293,
+          "toPar": 5,
+          "inscribedId": 2222170,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4
+              ],
+              "total": 71
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                4,
+                5,
+                5,
+                4,
+                4,
+                4,
+                2,
+                5,
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                6,
+                4
+              ],
+              "total": 73
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                3,
+                5,
+                5,
+                4,
+                5,
+                5,
+                3,
+                6,
+                3,
+                3,
+                5,
+                5,
+                4,
+                4,
+                6,
+                4,
+                4
+              ],
+              "total": 78
+            },
+            {
+              "round": 4,
+              "scores": [
+                3,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                3,
+                5,
+                4,
+                4,
+                6,
+                4,
+                3,
+                4,
+                4,
+                4,
+                3
+              ],
+              "total": 71
+            }
+          ]
+        },
+        {
+          "pos": 17,
+          "name": "Alvaro Trujillano Cardenas",
+          "licencia": "AM11163031",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 77
+            },
+            {
+              "round": 2,
+              "gross": 70
+            },
+            {
+              "round": 3,
+              "gross": 74
+            },
+            {
+              "round": 4,
+              "gross": 73
+            }
+          ],
+          "total": 294,
+          "toPar": 6,
+          "inscribedId": 2221955,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                5,
+                3,
+                5,
+                4,
+                4,
+                3,
+                4,
+                4,
+                4,
+                4,
+                4,
+                5,
+                6,
+                4,
+                6,
+                5
+              ],
+              "total": 77
+            },
+            {
+              "round": 2,
+              "scores": [
+                3,
+                2,
+                5,
+                3,
+                4,
+                4,
+                3,
+                3,
+                5,
+                4,
+                3,
+                7,
+                5,
+                3,
+                5,
+                3,
+                4,
+                4
+              ],
+              "total": 70
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                3,
+                4,
+                4,
+                4,
+                4,
+                5,
+                3,
+                5,
+                4,
+                4,
+                7,
+                4,
+                2,
+                5,
+                4,
+                4,
+                4
+              ],
+              "total": 74
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                6,
+                4,
+                3,
+                5,
+                4,
+                3,
+                4,
+                5,
+                2,
+                4,
+                4,
+                5,
+                4
+              ],
+              "total": 73
+            }
+          ]
+        },
+        {
+          "pos": 18,
+          "name": "Javier Domingo Calvo",
+          "licencia": "VB04725275",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 67
+            },
+            {
+              "round": 3,
+              "gross": 72
+            },
+            {
+              "round": 4,
+              "gross": 76
+            }
+          ],
+          "total": 294,
+          "toPar": 6,
+          "inscribedId": 2222394,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                4,
+                5,
+                6,
+                3,
+                9,
+                4,
+                5,
+                5
+              ],
+              "total": 79
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                2,
+                4,
+                4,
+                4,
+                3
+              ],
+              "total": 67
+            },
+            {
+              "round": 3,
+              "scores": [
+                5,
+                3,
+                5,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                4,
+                4,
+                5,
+                3,
+                4
+              ],
+              "total": 72
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                3,
+                6,
+                4,
+                4,
+                5,
+                4,
+                3,
+                4,
+                5,
+                3,
+                4,
+                7,
+                3,
+                4,
+                5,
+                4,
+                4
+              ],
+              "total": 76
+            }
+          ]
+        },
+        {
+          "pos": 19,
+          "name": "Marcel Fonseca Aguilar",
+          "licencia": "CB05752371",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 76
+            },
+            {
+              "round": 2,
+              "gross": 76
+            },
+            {
+              "round": 3,
+              "gross": 72
+            },
+            {
+              "round": 4,
+              "gross": 71
+            }
+          ],
+          "total": 295,
+          "toPar": 7,
+          "inscribedId": 2222984,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                3,
+                4,
+                3,
+                5,
+                6,
+                4,
+                5,
+                5,
+                3,
+                4,
+                6,
+                5,
+                3
+              ],
+              "total": 76
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                3,
+                4,
+                3,
+                4,
+                4,
+                5,
+                4,
+                5,
+                5,
+                3,
+                4,
+                7,
+                4,
+                4,
+                4,
+                5,
+                4
+              ],
+              "total": 76
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                3,
+                5,
+                5,
+                5,
+                4,
+                3,
+                3,
+                4,
+                4,
+                4,
+                3,
+                3,
+                4,
+                5,
+                4,
+                4,
+                5
+              ],
+              "total": 72
+            },
+            {
+              "round": 4,
+              "scores": [
+                3,
+                3,
+                6,
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                4,
+                4,
+                5,
+                3,
+                5,
+                4,
+                3,
+                4
+              ],
+              "total": 71
+            }
+          ]
+        },
+        {
+          "pos": 20,
+          "name": "Sebastian Desoisa",
+          "licencia": "AM84813195",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 73
+            },
+            {
+              "round": 2,
+              "gross": 73
+            },
+            {
+              "round": 3,
+              "gross": 72
+            },
+            {
+              "round": 4,
+              "gross": 77
+            }
+          ],
+          "total": 295,
+          "toPar": 7,
+          "inscribedId": 2227359,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                3,
+                6,
+                4,
+                4,
+                3,
+                6,
+                3,
+                5,
+                4,
+                2,
+                4,
+                3,
+                3,
+                5,
+                5,
+                4,
+                4
+              ],
+              "total": 73
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                3,
+                5,
+                5,
+                3,
+                5,
+                4,
+                3,
+                4,
+                4,
+                4,
+                5,
+                5,
+                3,
+                4,
+                4,
+                4,
+                4
+              ],
+              "total": 73
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                4,
+                6,
+                5,
+                4,
+                4,
+                3,
+                3,
+                5,
+                3,
+                2,
+                4,
+                4,
+                3,
+                5,
+                5,
+                4,
+                4
+              ],
+              "total": 72
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                3,
+                5,
+                5,
+                4,
+                5,
+                5,
+                3,
+                5,
+                6,
+                4,
+                3,
+                5,
+                3,
+                4,
+                4,
+                4,
+                5
+              ],
+              "total": 77
+            }
+          ]
+        },
+        {
+          "pos": 21,
+          "name": "Fernando Cobo Delgado",
+          "licencia": "LV35918089",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 69
+            },
+            {
+              "round": 2,
+              "gross": 71
+            },
+            {
+              "round": 3,
+              "gross": 79
+            },
+            {
+              "round": 4,
+              "gross": 76
+            }
+          ],
+          "total": 295,
+          "toPar": 7,
+          "inscribedId": 2226177,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                5,
+                3,
+                4,
+                3,
+                4,
+                3,
+                4,
+                4,
+                3,
+                3,
+                4,
+                3,
+                6,
+                5,
+                4,
+                4
+              ],
+              "total": 69
+            },
+            {
+              "round": 2,
+              "scores": [
+                3,
+                3,
+                6,
+                4,
+                4,
+                5,
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                5,
+                4,
+                4
+              ],
+              "total": 71
+            },
+            {
+              "round": 3,
+              "scores": [
+                5,
+                3,
+                5,
+                4,
+                4,
+                5,
+                6,
+                2,
+                4,
+                4,
+                4,
+                5,
+                5,
+                4,
+                5,
+                4,
+                6,
+                4
+              ],
+              "total": 79
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                6,
+                3,
+                4,
+                4,
+                4,
+                4,
+                5,
+                4,
+                4,
+                5,
+                5,
+                4
+              ],
+              "total": 76
+            }
+          ]
+        },
+        {
+          "pos": 22,
+          "name": "Ivan Ponsdomenech Kamenev",
+          "licencia": "CB65815156",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 80
+            },
+            {
+              "round": 2,
+              "gross": 71
+            },
+            {
+              "round": 3,
+              "gross": 74
+            },
+            {
+              "round": 4,
+              "gross": 71
+            }
+          ],
+          "total": 296,
+          "toPar": 8,
+          "inscribedId": 2224179,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                4,
+                8,
+                3,
+                4,
+                4,
+                4,
+                4,
+                7,
+                5,
+                2,
+                5,
+                4,
+                3,
+                4,
+                6,
+                4,
+                5
+              ],
+              "total": 80
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                5,
+                4,
+                3,
+                4,
+                5,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                4,
+                4
+              ],
+              "total": 71
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                4,
+                6,
+                4,
+                4,
+                4,
+                5,
+                3,
+                5,
+                4,
+                3,
+                4,
+                5,
+                3,
+                3,
+                4,
+                5,
+                4
+              ],
+              "total": 74
+            },
+            {
+              "round": 4,
+              "scores": [
+                5,
+                3,
+                5,
+                4,
+                4,
+                3,
+                4,
+                3,
+                4,
+                4,
+                4,
+                4,
+                4,
+                2,
+                5,
+                4,
+                4,
+                5
+              ],
+              "total": 71
+            }
+          ]
+        },
+        {
+          "pos": 23,
+          "name": "Juan Ballester Asesio",
+          "licencia": "CM02791829",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 77
+            },
+            {
+              "round": 3,
+              "gross": 74
+            },
+            {
+              "round": 4,
+              "gross": 71
+            }
+          ],
+          "total": 297,
+          "toPar": 9,
+          "inscribedId": 2229322,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                5,
+                3,
+                6,
+                4,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                4,
+                5
+              ],
+              "total": 75
+            },
+            {
+              "round": 2,
+              "scores": [
+                5,
+                4,
+                5,
+                4,
+                4,
+                6,
+                4,
+                4,
+                5,
+                3,
+                3,
+                4,
+                4,
+                3,
+                6,
+                5,
+                4,
+                4
+              ],
+              "total": 77
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                3,
+                4,
+                4,
+                5,
+                4,
+                4,
+                2,
+                5,
+                4,
+                3,
+                6,
+                4,
+                3,
+                4,
+                4,
+                6,
+                5
+              ],
+              "total": 74
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                3,
+                4,
+                5,
+                2,
+                4,
+                4,
+                4,
+                4,
+                4,
+                3,
+                5,
+                4,
+                5,
+                4
+              ],
+              "total": 71
+            }
+          ]
+        },
+        {
+          "pos": 24,
+          "name": "Pedro Garcia Armenteros",
+          "licencia": "CMA8162965",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 76
+            },
+            {
+              "round": 2,
+              "gross": 75
+            },
+            {
+              "round": 3,
+              "gross": 75
+            },
+            {
+              "round": 4,
+              "gross": 71
+            }
+          ],
+          "total": 297,
+          "toPar": 9,
+          "inscribedId": 2222218,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                6,
+                4,
+                3,
+                6,
+                4,
+                3,
+                4,
+                4,
+                3,
+                7,
+                4,
+                3,
+                4,
+                6,
+                4,
+                4
+              ],
+              "total": 76
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                3,
+                4,
+                5,
+                3,
+                6,
+                6,
+                3,
+                4,
+                3,
+                4,
+                4
+              ],
+              "total": 75
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                4,
+                2,
+                7,
+                5,
+                3,
+                4,
+                4,
+                4,
+                5,
+                6,
+                4,
+                4
+              ],
+              "total": 75
+            },
+            {
+              "round": 4,
+              "scores": [
+                5,
+                3,
+                4,
+                4,
+                3,
+                4,
+                5,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5,
+                5,
+                4,
+                4
+              ],
+              "total": 71
+            }
+          ]
+        },
+        {
+          "pos": 25,
+          "name": "Arian Rodriguez Burgos",
+          "licencia": "AM62167615",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 73
+            },
+            {
+              "round": 2,
+              "gross": 75
+            },
+            {
+              "round": 3,
+              "gross": 76
+            },
+            {
+              "round": 4,
+              "gross": 73
+            }
+          ],
+          "total": 297,
+          "toPar": 9,
+          "inscribedId": 2222399,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                4,
+                6,
+                4,
+                4,
+                6,
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                4,
+                4
+              ],
+              "total": 73
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                3,
+                3,
+                6,
+                4,
+                4,
+                4,
+                3,
+                4,
+                3,
+                3,
+                6,
+                6,
+                2,
+                4,
+                5,
+                6,
+                5
+              ],
+              "total": 75
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                4,
+                4,
+                4,
+                5,
+                4,
+                4,
+                3,
+                4,
+                4,
+                4,
+                6,
+                4,
+                3,
+                4,
+                5,
+                6,
+                4
+              ],
+              "total": 76
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                5,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                5,
+                3,
+                3,
+                5,
+                4,
+                4,
+                4
+              ],
+              "total": 73
+            }
+          ]
+        },
+        {
+          "pos": 26,
+          "name": "Jose Maria Vidal Vallejo",
+          "licencia": "AM29928477",
+          "hcp": null,
+          "nivel": "M",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 72
+            },
+            {
+              "round": 2,
+              "gross": 79
+            },
+            {
+              "round": 3,
+              "gross": 71
+            },
+            {
+              "round": 4,
+              "gross": 76
+            }
+          ],
+          "total": 298,
+          "toPar": 10,
+          "inscribedId": 2228255,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                4,
+                5,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                5,
+                4,
+                4
+              ],
+              "total": 72
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                3,
+                4,
+                7,
+                3,
+                5,
+                4,
+                4,
+                5,
+                3,
+                3,
+                5,
+                5,
+                3,
+                5,
+                6,
+                6,
+                4
+              ],
+              "total": 79
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                3,
+                5,
+                3,
+                4,
+                4,
+                4,
+                3,
+                5,
+                4,
+                3,
+                4,
+                5,
+                3,
+                5,
+                4,
+                4,
+                4
+              ],
+              "total": 71
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                4,
+                5,
+                5,
+                6,
+                4,
+                5,
+                3,
+                4,
+                5,
+                3,
+                5,
+                5,
+                2,
+                4,
+                4,
+                4,
+                4
+              ],
+              "total": 76
+            }
+          ]
+        },
+        {
+          "pos": 27,
+          "name": "Daniel Martinez Regal",
+          "licencia": "CM11756842",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 73
+            },
+            {
+              "round": 2,
+              "gross": 72
+            },
+            {
+              "round": 3,
+              "gross": 81
+            },
+            {
+              "round": 4,
+              "gross": 72
+            }
+          ],
+          "total": 298,
+          "toPar": 10,
+          "inscribedId": 2229007,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                3,
+                4,
+                6,
+                3,
+                5,
+                4,
+                1,
+                4,
+                4,
+                3,
+                4,
+                7,
+                5,
+                4
+              ],
+              "total": 73
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                3,
+                3,
+                4,
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                4,
+                5,
+                5
+              ],
+              "total": 72
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                3,
+                5,
+                5,
+                4,
+                4,
+                4,
+                3,
+                5,
+                4,
+                4,
+                6,
+                6,
+                3,
+                7,
+                4,
+                5,
+                5
+              ],
+              "total": 81
+            },
+            {
+              "round": 4,
+              "scores": [
+                3,
+                3,
+                5,
+                4,
+                4,
+                4,
+                4,
+                3,
+                5,
+                4,
+                3,
+                5,
+                4,
+                3,
+                4,
+                6,
+                4,
+                4
+              ],
+              "total": 72
+            }
+          ]
+        },
+        {
+          "pos": 28,
+          "name": "Benjamin Van Braak Hammer",
+          "licencia": "AM58066441",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 83
+            },
+            {
+              "round": 2,
+              "gross": 71
+            },
+            {
+              "round": 3,
+              "gross": 73
+            },
+            {
+              "round": 4,
+              "gross": 72
+            }
+          ],
+          "total": 299,
+          "toPar": 11,
+          "inscribedId": 2231173,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                4,
+                5,
+                4,
+                4,
+                4,
+                4,
+                4,
+                5,
+                4,
+                3,
+                5,
+                6,
+                4,
+                7,
+                7,
+                4,
+                5
+              ],
+              "total": 83
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                3,
+                5,
+                3,
+                5,
+                4,
+                4,
+                4,
+                5,
+                4,
+                3,
+                4,
+                5,
+                2,
+                5,
+                3,
+                4,
+                4
+              ],
+              "total": 71
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                2,
+                4,
+                4,
+                4,
+                4,
+                4,
+                3,
+                5,
+                3,
+                3,
+                7,
+                4,
+                3,
+                5,
+                5,
+                5,
+                4
+              ],
+              "total": 73
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                3,
+                5,
+                4,
+                3,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4
+              ],
+              "total": 72
+            }
+          ]
+        },
+        {
+          "pos": 29,
+          "name": "Jan Farre Ariño",
+          "licencia": "CB23898061",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 74
+            },
+            {
+              "round": 2,
+              "gross": 77
+            },
+            {
+              "round": 3,
+              "gross": 73
+            },
+            {
+              "round": 4,
+              "gross": 75
+            }
+          ],
+          "total": 299,
+          "toPar": 11,
+          "inscribedId": 2224088,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                6,
+                3,
+                4,
+                4,
+                4,
+                5,
+                5,
+                3,
+                5,
+                4,
+                4,
+                4
+              ],
+              "total": 74
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                3,
+                5,
+                5,
+                4,
+                4,
+                4,
+                5,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                5,
+                4,
+                5,
+                3
+              ],
+              "total": 77
+            },
+            {
+              "round": 3,
+              "scores": [
+                3,
+                3,
+                4,
+                4,
+                5,
+                4,
+                5,
+                3,
+                5,
+                4,
+                3,
+                4,
+                5,
+                2,
+                5,
+                5,
+                4,
+                5
+              ],
+              "total": 73
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                3,
+                4,
+                5,
+                5,
+                6,
+                4,
+                4,
+                4,
+                4,
+                3,
+                5,
+                4,
+                3,
+                5,
+                4,
+                4,
+                4
+              ],
+              "total": 75
+            }
+          ]
+        },
+        {
+          "pos": 30,
+          "name": "Nicolas Garcia Gamez",
+          "licencia": "CB01812529",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 77
+            },
+            {
+              "round": 2,
+              "gross": 72
+            },
+            {
+              "round": 3,
+              "gross": 77
+            },
+            {
+              "round": 4,
+              "gross": 73
+            }
+          ],
+          "total": 299,
+          "toPar": 11,
+          "inscribedId": 2222981,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                4,
+                5,
+                5,
+                4,
+                3,
+                4,
+                4,
+                4,
+                4,
+                3,
+                7,
+                4,
+                4,
+                4,
+                5,
+                5,
+                4
+              ],
+              "total": 77
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                5,
+                3,
+                4,
+                4,
+                4,
+                5,
+                4,
+                3,
+                4,
+                5,
+                4,
+                4
+              ],
+              "total": 72
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                6,
+                4,
+                5,
+                5,
+                3,
+                4,
+                4,
+                4,
+                4,
+                5,
+                5,
+                4
+              ],
+              "total": 77
+            },
+            {
+              "round": 4,
+              "scores": [
+                5,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                3,
+                5,
+                5,
+                4,
+                5,
+                4,
+                3,
+                4,
+                3,
+                4,
+                4
+              ],
+              "total": 73
+            }
+          ]
+        },
+        {
+          "pos": 31,
+          "name": "Joaquin Beltran Ruiz",
+          "licencia": "AM05926608",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 72
+            },
+            {
+              "round": 2,
+              "gross": 74
+            },
+            {
+              "round": 3,
+              "gross": 75
+            },
+            {
+              "round": 4,
+              "gross": 78
+            }
+          ],
+          "total": 299,
+          "toPar": 11,
+          "inscribedId": 2221649,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                2,
+                5,
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                4,
+                5,
+                4,
+                3,
+                4,
+                5,
+                5,
+                4
+              ],
+              "total": 72
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                2,
+                5,
+                5,
+                4,
+                4,
+                6,
+                4,
+                4,
+                4,
+                3,
+                5,
+                4,
+                3,
+                4,
+                5,
+                4,
+                4
+              ],
+              "total": 74
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                5,
+                4,
+                4,
+                3,
+                5,
+                4,
+                3,
+                5,
+                5,
+                4,
+                4,
+                4,
+                4,
+                5
+              ],
+              "total": 75
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                6,
+                5,
+                5,
+                4,
+                4,
+                3,
+                3,
+                5,
+                5,
+                3,
+                5,
+                4,
+                3,
+                5,
+                6,
+                4,
+                4
+              ],
+              "total": 78
+            }
+          ]
+        },
+        {
+          "pos": 32,
+          "name": "Jose Antonio Salas Lopez",
+          "licencia": "1128162301",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 72
+            },
+            {
+              "round": 2,
+              "gross": 72
+            },
+            {
+              "round": 3,
+              "gross": 79
+            },
+            {
+              "round": 4,
+              "gross": 76
+            }
+          ],
+          "total": 299,
+          "toPar": 11,
+          "inscribedId": 2222397,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                4,
+                4,
+                4,
+                6,
+                4,
+                4,
+                4,
+                5,
+                3,
+                4,
+                3,
+                5,
+                4,
+                4,
+                3,
+                4
+              ],
+              "total": 72
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                3,
+                3,
+                5,
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                5,
+                5,
+                5
+              ],
+              "total": 72
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                4,
+                7,
+                4,
+                4,
+                4,
+                4,
+                4,
+                6,
+                5,
+                3,
+                4,
+                5,
+                3,
+                4,
+                4,
+                4,
+                6
+              ],
+              "total": 79
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                4,
+                5,
+                4,
+                4,
+                4,
+                6,
+                3,
+                5,
+                5,
+                3,
+                5,
+                4,
+                3,
+                5,
+                4,
+                4,
+                4
+              ],
+              "total": 76
+            }
+          ]
+        },
+        {
+          "pos": 33,
+          "name": "Youp Orsel",
+          "licencia": "AM15962129",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 77
+            },
+            {
+              "round": 2,
+              "gross": 77
+            },
+            {
+              "round": 3,
+              "gross": 70
+            },
+            {
+              "round": 4,
+              "gross": 76
+            }
+          ],
+          "total": 300,
+          "toPar": 12,
+          "inscribedId": 2222109,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                3,
+                5,
+                6,
+                5,
+                4,
+                4,
+                4,
+                5,
+                6,
+                2,
+                5,
+                5,
+                3,
+                5,
+                5,
+                4,
+                3
+              ],
+              "total": 77
+            },
+            {
+              "round": 2,
+              "scores": [
+                3,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                4,
+                4,
+                4,
+                5,
+                7,
+                3,
+                5,
+                4,
+                4,
+                4
+              ],
+              "total": 77
+            },
+            {
+              "round": 3,
+              "scores": [
+                3,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                5,
+                3,
+                3,
+                4,
+                4,
+                3,
+                5,
+                5,
+                4,
+                3
+              ],
+              "total": 70
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                4,
+                5,
+                4,
+                3,
+                5,
+                3,
+                3,
+                6,
+                4,
+                2,
+                5,
+                4,
+                4,
+                6,
+                5,
+                5,
+                4
+              ],
+              "total": 76
+            }
+          ]
+        },
+        {
+          "pos": 34,
+          "name": "Mateo Hidalgo Elizalde",
+          "licencia": "CM11974375",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 78
+            },
+            {
+              "round": 2,
+              "gross": 73
+            },
+            {
+              "round": 3,
+              "gross": 76
+            },
+            {
+              "round": 4,
+              "gross": 73
+            }
+          ],
+          "total": 300,
+          "toPar": 12,
+          "inscribedId": 2226471,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                3,
+                5,
+                6,
+                6,
+                4,
+                4,
+                5,
+                5
+              ],
+              "total": 78
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                3,
+                5,
+                5,
+                4,
+                3,
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                5,
+                3,
+                4,
+                5,
+                5,
+                5
+              ],
+              "total": 73
+            },
+            {
+              "round": 3,
+              "scores": [
+                5,
+                4,
+                6,
+                4,
+                4,
+                5,
+                4,
+                3,
+                4,
+                4,
+                3,
+                6,
+                4,
+                3,
+                4,
+                4,
+                4,
+                5
+              ],
+              "total": 76
+            },
+            {
+              "round": 4,
+              "scores": [
+                5,
+                4,
+                6,
+                4,
+                4,
+                4,
+                4,
+                3,
+                6,
+                4,
+                3,
+                4,
+                3,
+                3,
+                4,
+                4,
+                4,
+                4
+              ],
+              "total": 73
+            }
+          ]
+        },
+        {
+          "pos": 35,
+          "name": "Eduardo Alvarez Gonzalez",
+          "licencia": "7776896416",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 77
+            },
+            {
+              "round": 3,
+              "gross": 76
+            },
+            {
+              "round": 4,
+              "gross": 73
+            }
+          ],
+          "total": 301,
+          "toPar": 13,
+          "inscribedId": 2224094,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                4,
+                5,
+                4,
+                5,
+                5,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5,
+                5,
+                4,
+                5,
+                5,
+                3,
+                3
+              ],
+              "total": 75
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                3,
+                5,
+                5,
+                5,
+                4,
+                3,
+                3,
+                5,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                6,
+                4,
+                4
+              ],
+              "total": 77
+            },
+            {
+              "round": 3,
+              "scores": [
+                3,
+                3,
+                4,
+                4,
+                4,
+                4,
+                5,
+                4,
+                5,
+                4,
+                3,
+                6,
+                7,
+                3,
+                4,
+                4,
+                5,
+                4
+              ],
+              "total": 76
+            },
+            {
+              "round": 4,
+              "scores": [
+                5,
+                3,
+                5,
+                4,
+                4,
+                3,
+                5,
+                3,
+                4,
+                4,
+                3,
+                4,
+                6,
+                4,
+                4,
+                4,
+                4,
+                4
+              ],
+              "total": 73
+            }
+          ]
+        },
+        {
+          "pos": 36,
+          "name": "Juan Miro Asorey",
+          "licencia": "LV35057688",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 76
+            },
+            {
+              "round": 3,
+              "gross": 78
+            },
+            {
+              "round": 4,
+              "gross": 72
+            }
+          ],
+          "total": 301,
+          "toPar": 13,
+          "inscribedId": 2222101,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                3,
+                3,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                4,
+                6,
+                5,
+                4
+              ],
+              "total": 75
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                3,
+                4,
+                5,
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                3,
+                5,
+                6,
+                4,
+                5,
+                6,
+                4,
+                3
+              ],
+              "total": 76
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                6,
+                4,
+                3,
+                6,
+                4,
+                3,
+                5,
+                5,
+                3,
+                5,
+                5,
+                5,
+                4
+              ],
+              "total": 78
+            },
+            {
+              "round": 4,
+              "scores": [
+                3,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                3,
+                4,
+                4,
+                3,
+                6,
+                4,
+                4,
+                4,
+                4,
+                3,
+                4
+              ],
+              "total": 72
+            }
+          ]
+        },
+        {
+          "pos": 37,
+          "name": "Gonzalo Cuellar Gago",
+          "licencia": "CM60063846",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 74
+            },
+            {
+              "round": 2,
+              "gross": 77
+            },
+            {
+              "round": 3,
+              "gross": 72
+            },
+            {
+              "round": 4,
+              "gross": 78
+            }
+          ],
+          "total": 301,
+          "toPar": 13,
+          "inscribedId": 2222850,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                5,
+                3,
+                4,
+                5,
+                7,
+                3,
+                5,
+                4,
+                3,
+                5,
+                4,
+                3,
+                4,
+                5,
+                4,
+                3
+              ],
+              "total": 74
+            },
+            {
+              "round": 2,
+              "scores": [
+                3,
+                4,
+                6,
+                4,
+                4,
+                4,
+                4,
+                4,
+                8,
+                4,
+                3,
+                5,
+                5,
+                2,
+                4,
+                4,
+                4,
+                5
+              ],
+              "total": 77
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                3,
+                6,
+                3,
+                4,
+                4,
+                4,
+                2,
+                5,
+                4,
+                3,
+                5,
+                4,
+                3,
+                5,
+                4,
+                5,
+                4
+              ],
+              "total": 72
+            },
+            {
+              "round": 4,
+              "scores": [
+                5,
+                4,
+                5,
+                4,
+                6,
+                4,
+                4,
+                3,
+                4,
+                6,
+                3,
+                4,
+                7,
+                3,
+                4,
+                4,
+                4,
+                4
+              ],
+              "total": 78
+            }
+          ]
+        },
+        {
+          "pos": 38,
+          "name": "Pelayo Fernandez Mortera",
+          "licencia": "0219788172",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 81
+            },
+            {
+              "round": 3,
+              "gross": 72
+            },
+            {
+              "round": 4,
+              "gross": 74
+            }
+          ],
+          "total": 302,
+          "toPar": 14,
+          "inscribedId": 2222402,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                3,
+                5,
+                4,
+                4,
+                4,
+                5,
+                2,
+                6,
+                4,
+                3,
+                7,
+                4,
+                3,
+                4,
+                3,
+                4,
+                4
+              ],
+              "total": 75
+            },
+            {
+              "round": 2,
+              "scores": [
+                5,
+                4,
+                7,
+                5,
+                4,
+                5,
+                4,
+                3,
+                4,
+                5,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                5,
+                5
+              ],
+              "total": 81
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                3,
+                4,
+                4,
+                4,
+                5,
+                4,
+                3,
+                5,
+                5,
+                4,
+                4,
+                3,
+                2,
+                4,
+                4,
+                4,
+                6
+              ],
+              "total": 72
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                5,
+                4,
+                3,
+                4,
+                4,
+                4,
+                6,
+                4,
+                3,
+                4,
+                5,
+                4,
+                4
+              ],
+              "total": 74
+            }
+          ]
+        },
+        {
+          "pos": 39,
+          "name": "Aitor Macias Lopez",
+          "licencia": "AM51819426",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 77
+            },
+            {
+              "round": 2,
+              "gross": 75
+            },
+            {
+              "round": 3,
+              "gross": 77
+            },
+            {
+              "round": 4,
+              "gross": 73
+            }
+          ],
+          "total": 302,
+          "toPar": 14,
+          "inscribedId": 2221951,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                5,
+                5,
+                5,
+                4,
+                4,
+                3,
+                5,
+                4,
+                3,
+                5,
+                5,
+                5,
+                4,
+                3,
+                5,
+                5
+              ],
+              "total": 77
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                3,
+                5,
+                4,
+                3,
+                4,
+                4,
+                4,
+                6
+              ],
+              "total": 75
+            },
+            {
+              "round": 3,
+              "scores": [
+                3,
+                4,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                5,
+                3,
+                5,
+                5,
+                4,
+                4,
+                6,
+                5,
+                5
+              ],
+              "total": 77
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5,
+                3,
+                3,
+                5,
+                6,
+                3,
+                4
+              ],
+              "total": 73
+            }
+          ]
+        },
+        {
+          "pos": 40,
+          "name": "Martin Cervera Garcia",
+          "licencia": "AM03916013",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 72
+            },
+            {
+              "round": 2,
+              "gross": 76
+            },
+            {
+              "round": 3,
+              "gross": 75
+            },
+            {
+              "round": 4,
+              "gross": 79
+            }
+          ],
+          "total": 302,
+          "toPar": 14,
+          "inscribedId": 2222063,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                4,
+                6,
+                5,
+                3,
+                5,
+                4,
+                2,
+                4,
+                3,
+                4,
+                5,
+                4,
+                3,
+                5,
+                4,
+                4,
+                3
+              ],
+              "total": 72
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                4,
+                4,
+                5,
+                5,
+                4,
+                5,
+                4,
+                3,
+                4,
+                4,
+                4,
+                6
+              ],
+              "total": 76
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                4,
+                6,
+                4,
+                4,
+                4,
+                6,
+                3,
+                5,
+                3,
+                3,
+                5,
+                4,
+                4,
+                4,
+                3,
+                5,
+                4
+              ],
+              "total": 75
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                4,
+                5,
+                4,
+                4,
+                4,
+                6,
+                4,
+                6,
+                5,
+                3,
+                5,
+                5,
+                3,
+                5,
+                4,
+                4,
+                4
+              ],
+              "total": 79
+            }
+          ]
+        },
+        {
+          "pos": 41,
+          "name": "Jacobo Knuth Alorda",
+          "licencia": "CB01169372",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 77
+            },
+            {
+              "round": 3,
+              "gross": 72
+            },
+            {
+              "round": 4,
+              "gross": 75
+            }
+          ],
+          "total": 303,
+          "toPar": 15,
+          "inscribedId": 2221562,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                4,
+                5,
+                5,
+                4,
+                6,
+                4,
+                3,
+                4,
+                4,
+                5,
+                4,
+                4,
+                4,
+                4,
+                4,
+                6,
+                5
+              ],
+              "total": 79
+            },
+            {
+              "round": 2,
+              "scores": [
+                3,
+                3,
+                4,
+                5,
+                5,
+                4,
+                5,
+                3,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                3,
+                5,
+                7,
+                4
+              ],
+              "total": 77
+            },
+            {
+              "round": 3,
+              "scores": [
+                3,
+                3,
+                4,
+                4,
+                5,
+                4,
+                3,
+                4,
+                7,
+                4,
+                3,
+                5,
+                4,
+                3,
+                4,
+                4,
+                4,
+                4
+              ],
+              "total": 72
+            },
+            {
+              "round": 4,
+              "scores": [
+                5,
+                3,
+                4,
+                4,
+                4,
+                4,
+                4,
+                3,
+                5,
+                4,
+                3,
+                5,
+                4,
+                3,
+                5,
+                7,
+                4,
+                4
+              ],
+              "total": 75
+            }
+          ]
+        },
+        {
+          "pos": 42,
+          "name": "Alvaro Huidobro Liñero",
+          "licencia": "0201454589",
+          "hcp": null,
+          "nivel": "M",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 78
+            },
+            {
+              "round": 2,
+              "gross": 70
+            },
+            {
+              "round": 3,
+              "gross": 75
+            },
+            {
+              "round": 4,
+              "gross": 80
+            }
+          ],
+          "total": 303,
+          "toPar": 15,
+          "inscribedId": 2222169,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                2,
+                5,
+                4,
+                4,
+                4,
+                6,
+                4,
+                5,
+                4,
+                3,
+                5,
+                4,
+                3,
+                5,
+                5,
+                5,
+                7
+              ],
+              "total": 78
+            },
+            {
+              "round": 2,
+              "scores": [
+                3,
+                4,
+                5,
+                6,
+                4,
+                4,
+                4,
+                3,
+                5,
+                4,
+                3,
+                4,
+                4,
+                2,
+                3,
+                5,
+                3,
+                4
+              ],
+              "total": 70
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                4,
+                5,
+                5,
+                4,
+                4,
+                4,
+                3,
+                5,
+                4,
+                2,
+                5,
+                7,
+                3,
+                4,
+                4,
+                4,
+                4
+              ],
+              "total": 75
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                2,
+                5,
+                3,
+                5,
+                7,
+                4,
+                3,
+                4,
+                5,
+                4,
+                4,
+                6,
+                3,
+                5,
+                8,
+                4,
+                4
+              ],
+              "total": 80
+            }
+          ]
+        },
+        {
+          "pos": 43,
+          "name": "Ignacio Yrizar Tejada",
+          "licencia": "VB09725298",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 78
+            },
+            {
+              "round": 2,
+              "gross": 77
+            },
+            {
+              "round": 3,
+              "gross": 73
+            },
+            {
+              "round": 4,
+              "gross": 76
+            }
+          ],
+          "total": 304,
+          "toPar": 16,
+          "inscribedId": 2224810,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                4,
+                5,
+                4,
+                4,
+                4,
+                4,
+                3,
+                6,
+                3,
+                4,
+                5,
+                5,
+                3,
+                5,
+                4,
+                5,
+                4
+              ],
+              "total": 78
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                4,
+                3,
+                5,
+                6,
+                4,
+                3,
+                6,
+                3,
+                4,
+                5,
+                6,
+                4
+              ],
+              "total": 77
+            },
+            {
+              "round": 3,
+              "scores": [
+                5,
+                3,
+                4,
+                4,
+                4,
+                4,
+                5,
+                2,
+                5,
+                4,
+                4,
+                5,
+                4,
+                3,
+                4,
+                4,
+                5,
+                4
+              ],
+              "total": 73
+            },
+            {
+              "round": 4,
+              "scores": [
+                3,
+                3,
+                6,
+                5,
+                4,
+                6,
+                5,
+                3,
+                6,
+                4,
+                2,
+                5,
+                4,
+                3,
+                4,
+                4,
+                5,
+                4
+              ],
+              "total": 76
+            }
+          ]
+        },
+        {
+          "pos": 44,
+          "name": "Francisco Gavilan Fernandez",
+          "licencia": "LV05794220",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 78
+            },
+            {
+              "round": 2,
+              "gross": 77
+            },
+            {
+              "round": 3,
+              "gross": 69
+            },
+            {
+              "round": 4,
+              "gross": 80
+            }
+          ],
+          "total": 304,
+          "toPar": 16,
+          "inscribedId": 2233892,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                6,
+                4,
+                3,
+                7,
+                4,
+                3,
+                4,
+                4,
+                4,
+                5,
+                4,
+                4,
+                5,
+                6,
+                4,
+                4
+              ],
+              "total": 78
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                3,
+                5,
+                5,
+                4,
+                3,
+                4,
+                3,
+                6,
+                4,
+                3,
+                5,
+                6,
+                3,
+                5,
+                6,
+                3,
+                5
+              ],
+              "total": 77
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                3,
+                3,
+                3,
+                4,
+                4,
+                4,
+                5,
+                5,
+                4,
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                2,
+                4
+              ],
+              "total": 69
+            },
+            {
+              "round": 4,
+              "scores": [
+                7,
+                4,
+                6,
+                4,
+                5,
+                4,
+                5,
+                3,
+                4,
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                5,
+                6,
+                4
+              ],
+              "total": 80
+            }
+          ]
+        },
+        {
+          "pos": 45,
+          "name": "Luis Del Rosal Reina",
+          "licencia": "AM11885804",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 76
+            },
+            {
+              "round": 2,
+              "gross": 78
+            },
+            {
+              "round": 3,
+              "gross": 74
+            },
+            {
+              "round": 4,
+              "gross": 77
+            }
+          ],
+          "total": 305,
+          "toPar": 17,
+          "inscribedId": 2222398,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                3,
+                4,
+                3,
+                4,
+                4,
+                6,
+                3,
+                5,
+                4,
+                4,
+                5,
+                7,
+                3,
+                5,
+                5,
+                4,
+                4
+              ],
+              "total": 76
+            },
+            {
+              "round": 2,
+              "scores": [
+                5,
+                5,
+                5,
+                4,
+                4,
+                4,
+                3,
+                3,
+                4,
+                4,
+                3,
+                5,
+                4,
+                3,
+                6,
+                4,
+                5,
+                7
+              ],
+              "total": 78
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                4,
+                6,
+                4,
+                3,
+                5,
+                4,
+                2,
+                5,
+                4,
+                4,
+                4,
+                5,
+                2,
+                5,
+                5,
+                4,
+                4
+              ],
+              "total": 74
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                2,
+                6,
+                4,
+                5,
+                5,
+                4,
+                4,
+                4,
+                4,
+                4,
+                6,
+                4,
+                3,
+                5,
+                5,
+                4,
+                4
+              ],
+              "total": 77
+            }
+          ]
+        },
+        {
+          "pos": 46,
+          "name": "Iñigo Aguirre Garay",
+          "licencia": "CM01903677",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 75
+            },
+            {
+              "round": 3,
+              "gross": 75
+            },
+            {
+              "round": 4,
+              "gross": 77
+            }
+          ],
+          "total": 306,
+          "toPar": 18,
+          "inscribedId": 2227314,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                5,
+                5,
+                5,
+                4,
+                6,
+                4,
+                3,
+                4,
+                4,
+                4,
+                5,
+                6,
+                4,
+                4
+              ],
+              "total": 79
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                3,
+                6,
+                4,
+                3,
+                5,
+                6,
+                3,
+                6,
+                3,
+                4,
+                4,
+                4,
+                3,
+                5,
+                4,
+                4,
+                4
+              ],
+              "total": 75
+            },
+            {
+              "round": 3,
+              "scores": [
+                3,
+                3,
+                5,
+                5,
+                5,
+                7,
+                4,
+                3,
+                5,
+                4,
+                3,
+                4,
+                5,
+                2,
+                4,
+                4,
+                5,
+                4
+              ],
+              "total": 75
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                3,
+                6,
+                5,
+                3,
+                4,
+                4,
+                3,
+                4,
+                5,
+                5,
+                5
+              ],
+              "total": 77
+            }
+          ]
+        },
+        {
+          "pos": 47,
+          "name": "Mario Enguita Alonso",
+          "licencia": "0106898190",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 80
+            },
+            {
+              "round": 2,
+              "gross": 73
+            },
+            {
+              "round": 3,
+              "gross": 76
+            },
+            {
+              "round": 4,
+              "gross": 78
+            }
+          ],
+          "total": 307,
+          "toPar": 19,
+          "inscribedId": 2221664,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                4,
+                4,
+                5,
+                5,
+                4,
+                4,
+                5,
+                4,
+                3,
+                8,
+                5,
+                2,
+                4,
+                6,
+                5,
+                5
+              ],
+              "total": 80
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                4,
+                2,
+                4,
+                5,
+                4,
+                5,
+                7,
+                3,
+                4,
+                4,
+                4,
+                3
+              ],
+              "total": 73
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                3,
+                4,
+                5,
+                3,
+                5,
+                5,
+                4,
+                4,
+                6,
+                2,
+                5,
+                5,
+                4,
+                5
+              ],
+              "total": 76
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                4,
+                5,
+                6,
+                4,
+                3,
+                6,
+                3,
+                4,
+                3,
+                4,
+                5,
+                5,
+                3,
+                5,
+                4,
+                5,
+                5
+              ],
+              "total": 78
+            }
+          ]
+        },
+        {
+          "pos": 48,
+          "name": "Eric Diaz Miñon",
+          "licencia": "CB01892776",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 73
+            },
+            {
+              "round": 2,
+              "gross": 81
+            },
+            {
+              "round": 3,
+              "gross": 75
+            },
+            {
+              "round": 4,
+              "gross": 79
+            }
+          ],
+          "total": 308,
+          "toPar": 20,
+          "inscribedId": 2224059,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                3,
+                6,
+                4,
+                5,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                5,
+                4,
+                3,
+                4,
+                4,
+                6
+              ],
+              "total": 73
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                4,
+                7,
+                5,
+                4,
+                4,
+                5,
+                4,
+                7,
+                3,
+                3,
+                4,
+                7,
+                3,
+                4,
+                5,
+                4,
+                4
+              ],
+              "total": 81
+            },
+            {
+              "round": 3,
+              "scores": [
+                3,
+                3,
+                4,
+                4,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                3,
+                4,
+                6,
+                4,
+                4,
+                4,
+                7,
+                4
+              ],
+              "total": 75
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                3,
+                6,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                7,
+                4,
+                5,
+                6,
+                3,
+                4,
+                5,
+                4,
+                4
+              ],
+              "total": 79
+            }
+          ]
+        },
+        {
+          "pos": 49,
+          "name": "Manuel Martin Alvarez",
+          "licencia": "AM23895679",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 78
+            },
+            {
+              "round": 3,
+              "gross": 73
+            },
+            {
+              "round": 4,
+              "gross": 82
+            }
+          ],
+          "total": 308,
+          "toPar": 20,
+          "inscribedId": 2221826,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                3,
+                5,
+                4,
+                5,
+                4,
+                6,
+                3,
+                4,
+                4,
+                3,
+                5,
+                4,
+                3,
+                4,
+                6,
+                4,
+                5
+              ],
+              "total": 75
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                3,
+                5,
+                7,
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                3,
+                5,
+                5,
+                3,
+                5,
+                4,
+                6,
+                4
+              ],
+              "total": 78
+            },
+            {
+              "round": 3,
+              "scores": [
+                3,
+                3,
+                5,
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                3,
+                4,
+                4,
+                5,
+                4,
+                6,
+                3,
+                4,
+                6
+              ],
+              "total": 73
+            },
+            {
+              "round": 4,
+              "scores": [
+                5,
+                3,
+                6,
+                4,
+                6,
+                6,
+                5,
+                4,
+                5,
+                4,
+                3,
+                4,
+                4,
+                4,
+                5,
+                6,
+                4,
+                4
+              ],
+              "total": 82
+            }
+          ]
+        },
+        {
+          "pos": 50,
+          "name": "Javier Perez-Tasso Rodriguez",
+          "licencia": "AM11942917",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 78
+            },
+            {
+              "round": 2,
+              "gross": 72
+            },
+            {
+              "round": 3,
+              "gross": 79
+            },
+            {
+              "round": 4,
+              "gross": 79
+            }
+          ],
+          "total": 308,
+          "toPar": 20,
+          "inscribedId": 2222154,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                4,
+                5,
+                4,
+                6,
+                7,
+                4,
+                2,
+                4,
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                5,
+                5,
+                4
+              ],
+              "total": 78
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                4,
+                5,
+                4,
+                3,
+                5,
+                5,
+                3,
+                5,
+                4,
+                4,
+                4
+              ],
+              "total": 72
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                5,
+                5,
+                4,
+                5,
+                4,
+                5,
+                3,
+                4,
+                4,
+                3,
+                5,
+                6,
+                2,
+                5,
+                6,
+                4,
+                5
+              ],
+              "total": 79
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                6,
+                5,
+                4,
+                3,
+                4,
+                4,
+                3,
+                4,
+                6,
+                4,
+                4,
+                5,
+                5,
+                5,
+                5,
+                4,
+                4
+              ],
+              "total": 79
+            }
+          ]
+        },
+        {
+          "pos": 51,
+          "name": "Alvaro Gomez De Linares",
+          "licencia": "AM83815525",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 74
+            },
+            {
+              "round": 3,
+              "gross": 78
+            },
+            {
+              "round": 4,
+              "gross": 82
+            }
+          ],
+          "total": 309,
+          "toPar": 21,
+          "inscribedId": 2231229,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                8,
+                3,
+                4,
+                3,
+                4,
+                4,
+                4,
+                5,
+                3,
+                5,
+                4,
+                2,
+                5,
+                4,
+                6,
+                4
+              ],
+              "total": 75
+            },
+            {
+              "round": 2,
+              "scores": [
+                3,
+                3,
+                5,
+                4,
+                4,
+                5,
+                4,
+                3,
+                5,
+                5,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4
+              ],
+              "total": 74
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                3,
+                5,
+                4,
+                4,
+                4,
+                4,
+                3,
+                7,
+                4,
+                4,
+                6,
+                6,
+                2,
+                5,
+                4,
+                5,
+                4
+              ],
+              "total": 78
+            },
+            {
+              "round": 4,
+              "scores": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                6,
+                4,
+                5,
+                4,
+                4,
+                5,
+                6,
+                5,
+                4,
+                5,
+                5,
+                5
+              ],
+              "total": 82
+            }
+          ]
+        },
+        {
+          "pos": null,
+          "name": "Andreas Roman",
+          "licencia": "AM84895387",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            },
+            {
+              "round": 4,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2232849,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                4,
+                5,
+                4,
+                5,
+                4,
+                7,
+                3,
+                5,
+                5,
+                3,
+                4,
+                4,
+                3,
+                5,
+                5,
+                4,
+                5
+              ],
+              "total": 79
+            },
+            {
+              "round": 2,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null
+            },
+            {
+              "round": 3,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null
+            },
+            {
+              "round": 4,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null
+            }
+          ]
+        },
+        {
+          "pos": null,
+          "name": "Luis De Miñon Garcia",
+          "licencia": "AM05694679",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 74
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            },
+            {
+              "round": 4,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2222046,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                7,
+                4,
+                4,
+                4,
+                6,
+                2,
+                5,
+                4,
+                3,
+                5,
+                3,
+                3,
+                4,
+                5,
+                4,
+                4
+              ],
+              "total": 74
+            },
+            {
+              "round": 2,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null
+            },
+            {
+              "round": 3,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null
+            },
+            {
+              "round": 4,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null
+            }
+          ]
+        },
+        {
+          "pos": null,
+          "name": "Pau Sanchez Marin",
+          "licencia": "0219894301",
+          "hcp": null,
+          "nivel": "M",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 83
+            },
+            {
+              "round": 3,
+              "gross": 72
+            },
+            {
+              "round": 4,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2225124,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                5,
+                5,
+                4,
+                4,
+                5,
+                3,
+                4,
+                3,
+                3,
+                4,
+                4,
+                3,
+                6,
+                5,
+                6,
+                4
+              ],
+              "total": 75
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                4,
+                5,
+                5,
+                4,
+                4,
+                4,
+                4,
+                8,
+                3,
+                4,
+                5,
+                8,
+                3,
+                4,
+                6,
+                4,
+                4
+              ],
+              "total": 83
+            },
+            {
+              "round": 3,
+              "scores": [
+                4,
+                5,
+                3,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                6,
+                4,
+                2,
+                4,
+                5,
+                4,
+                3
+              ],
+              "total": 72
+            }
+          ]
+        },
+        {
+          "pos": null,
+          "name": "David George Schneider Jerez",
+          "licencia": "AMI5792526",
+          "hcp": null,
+          "nivel": "M",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 77
+            },
+            {
+              "round": 3,
+              "gross": 74
+            },
+            {
+              "round": 4,
+              "gross": null
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2224998,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                4,
+                6,
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                6,
+                8,
+                3,
+                5,
+                5,
+                3,
+                6
+              ],
+              "total": 79
+            },
+            {
+              "round": 2,
+              "scores": [
+                4,
+                3,
+                4,
+                4,
+                4,
+                5,
+                4,
+                3,
+                5,
+                4,
+                5,
+                5,
+                5,
+                3,
+                4,
+                4,
+                5
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
