@@ -196,6 +196,43 @@ for (const file of ncFiles) {
   }
 }
 
+
+// ── 3) Livegolfscoring (HTML hbh — fonte rica de scorecards) ─────────
+const LGS_ROOT = path.resolve(__dirname, "../public/data/rfegolf-livegolfscoring");
+const lgsFiles = fs.existsSync(LGS_ROOT)
+  ? fs.readdirSync(LGS_ROOT).filter(f => /^\d+\.json$/.test(f)).sort()
+  : [];
+
+for (const file of lgsFiles) {
+  try {
+    const j = JSON.parse(fs.readFileSync(path.join(LGS_ROOT, file), "utf-8"));
+    if (!j || !j.ok || !j.meta) { skipped++; continue; }
+    const id = j.id || parseInt(file.replace(".json", ""), 10);
+    const name = j.meta.name || "";
+    // Prioridade: meta.year (vindo do enrich-lgs-dates) → year no nome → scrapedAt
+    let year = j.meta.year || extractYearFromName(name);
+    if (!year && j.scrapedAt) year = parseInt(j.scrapedAt.slice(0, 4), 10);
+    const dateIso = j.meta.dateIso || null;
+    const category = extractCategoryFromName(name);
+    const sex = extractSexFromName(name);
+    const totalPlayers = (j.rounds && j.rounds[0]?.players?.length) || 0;
+    tournaments.push({
+      source: "livegolfscoring",
+      id, file,
+      filePath: `rfegolf-livegolfscoring/${file}`,
+      name, year, category, sex,
+      dateStart: j.meta.dateRange || dateIso || null,
+      dateEnd: j.meta.dateRange || dateIso || null,
+      dateStartIso: dateIso, dateEndIso: dateIso,
+      course: j.meta.course || null,
+      counts: { admitidos: totalPlayers, reservas: 0, bajas: 0, invitados: 0, noAdmitidos: 0, provisional: 0 },
+      leaderboardPlayers: totalPlayers,
+      nRounds: (j.rounds || []).length,
+      scrapedAt: j.scrapedAt || null,
+    });
+  } catch (e) { console.warn("skip lgs " + file + ": " + e.message); skipped++; }
+}
+
 tournaments.sort((a, b) => {
   const da = a.dateStartIso || "0";
   const db = b.dateStartIso || "0";

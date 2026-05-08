@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { fmtToPar } from "../../utils/format";
 import { useSort } from "../../hooks/useSort";
+import { RoundPill } from "../../ui/PillBadge";
 import type { H2HConfronto, H2HSortKey } from "./types";
 
 export default function H2HSortableTable({ confrontos, firstName }: { confrontos: H2HConfronto[]; firstName: string }) {
@@ -61,6 +62,11 @@ export default function H2HSortableTable({ confrontos, firstName }: { confrontos
               <td style={{ padding: "7px 12px", fontWeight: 500 }}>
                 {c.tornName.replace(/\s*\d{4}$/, "")}
                 <span style={{ marginLeft: 5, fontSize: 10, color: "var(--text-3)" }}> '{String(c.year).slice(2)}</span>
+                {c.nRounds && c.nRounds > 1 && (
+                  <span style={{ marginLeft: 6 }}>
+                    <RoundPill nR={c.nRounds} />
+                  </span>
+                )}
               </td>
               <td style={{ textAlign: "center", fontSize: 10, color: "var(--text-2)" }}>{c.ageGroup ?? "—"}</td>
               <td className="ta-c">

@@ -220,12 +220,20 @@ function getSignupanytimeUrl(tid: string): string | undefined {
  *  - uskidsUrl: quando existe no T[] ou AUTO_TOURN_META
  *  - fpgUrl: classif FPG pública para tids fpg{tcode}
  *  - ffgolfUrl: página resultats-details do FFGolf para tids ff{trnId}_U{N} */
-function getTournLinks(tid: string, manualUrl?: string): { signupanytimeUrl?: string; uskidsUrl?: string; fpgUrl?: string; ffgolfUrl?: string } {
+function getTournLinks(tid: string, manualUrl?: string): { signupanytimeUrl?: string; uskidsUrl?: string; fpgUrl?: string; ffgolfUrl?: string; lgsUrl?: string } {
   const uskidsUrl = manualUrl ?? AUTO_TOURN_META[tid]?.url;
   const signupanytimeUrl = getSignupanytimeUrl(tid);
   const fpgUrl = getFpgUrl(tid);
   const ffgolfUrl = getFfgolfUrl(tid);
-  return { signupanytimeUrl, uskidsUrl, fpgUrl, ffgolfUrl };
+  const lgsUrl = getLgsUrl(tid);
+  return { signupanytimeUrl, uskidsUrl, fpgUrl, ffgolfUrl, lgsUrl };
+}
+
+/** Para tids LGS ("lgs{id}") devolve URL para clasificacion do livegolfscoring. */
+function getLgsUrl(tid: string): string | undefined {
+  const m = tid.match(/^lgs(\d+)$/);
+  if (!m) return undefined;
+  return `https://rfegolf.livegolfscoring.es/torneos/clasificacion/${m[1]}`;
 }
 
 /** Para tids FPG ("fpg{tcode}"), constrói URL para a classif pública FPG.
@@ -277,7 +285,7 @@ function getFfgolfUrl(tid: string): string | undefined {
  *  via getTournLinks().ffgolfUrl (botão ↗ FFG). Caso contrário, t.url e ffgolfUrl
  *  apontariam para o mesmo URL e apareceriam dois botões idênticos. */
 function getTournUrl(tid: string, existingUrl?: string): string | undefined {
-  return existingUrl ?? AUTO_TOURN_META[tid]?.url ?? getFpgUrl(tid);
+  return existingUrl ?? AUTO_TOURN_META[tid]?.url ?? getFpgUrl(tid) ?? getLgsUrl(tid);
 }
 
 /** Lookup tournament display info by id (works for manual T and auto tourns) */
@@ -302,6 +310,11 @@ function getTournInfo(tid: string): { name: string; short: string; date: string;
   if (tid.startsWith("ff")) {
     const ff = ffgolfTournNames.get(tid);
     if (ff) return { name: ff.name, short: ff.short, date: ff.date, dateExact: ff.dateExact };
+  }
+  // RFEGolf livegolfscoring: "lgs{id}" — registado por processRfegolfRivals em uskTournNames
+  if (tid.startsWith("lgs")) {
+    const lgs = uskTournNames.get(tid);
+    if (lgs) return { name: lgs.name, short: lgs.short, date: lgs.date, dateExact: lgs.dateExact };
   }
   return { name: tid, short: tid, date: "?", dateExact: "9999" };
 }
@@ -1371,12 +1384,10 @@ function hiddenTids(p: RivalPlayer): Set<string> {
  * (Movido de dentro do componente para topo — usado por sidebar e detail.)
  */
 const AUTO_COVERED_BY: Record<string, string> = {
-  // brjgt25 (manual) é coberto por wjgc25_b{N} — preferimos o auto (escalão específico)
-  // mas o tournResults inverte: prefer manual T se ambos. Para H2H usamos o canonical_tid
-  // unificado: brjgt25 cobre wjgc25_b89/b1011/b1213.
-  "wjgc25_b89":    "brjgt25",
-  "wjgc25_b1011":  "brjgt25",
-  "wjgc25_b1213":  "brjgt25",
+  // brjgt25 (manual) era listado aqui mas conflitava com a regra na linha ~1444
+  // que prefere o auto (`wjgc25_b{N}`). Resultado: ambos eram skipados → torneio
+  // desaparecia. Mantemos apenas a preferência pelo auto na getCanonicalTids.
+  // wjgc26_1213 (manual) cobre o auto
   // wjgc26_1213 (manual) cobre o auto
   "wjgc26_b1213":  "wjgc26_1213",
   // Venice 2025
@@ -1486,6 +1497,7 @@ const SIDEBAR_FILTERS = [
   { id: "doral",    label: "🇺🇸 Doral" },
   { id: "pt",       label: "🇵🇹 Nacional" },
   { id: "fr",       label: "🇫🇷 França" },
+  { id: "es",       label: "🇪🇸 Espanha" },
 ];
 
 
@@ -1514,6 +1526,7 @@ function playerMatchesFilter(p: RivalPlayer, fids: Set<string>): boolean {
       t.startsWith("gg") || t.startsWith("qdl") || t.startsWith("fpg")
     );
     if (fid === "fr")       return tids.some(t => t.startsWith("ff"));
+    if (fid === "es")       return tids.some(t => t.startsWith("lgs"));
     return true;
   });
 }
@@ -2063,10 +2076,9 @@ function RivalDetail({ playerName }: { playerName: string }) {
   // Mapa explícito: auto tid → manual T id que o cobre
   // Necessário quando o id manual não deriva trivialmente do auto tid
   const AUTO_COVERED_BY: Record<string,string> = {
-    // brjgt25 (manual) é coberto pelo tid específico do escalão
-    "wjgc25_b89":    "brjgt25",
-    "wjgc25_b1011":  "brjgt25",
-    "wjgc25_b1213":  "brjgt25",
+    // brjgt25 (manual) era listado aqui mas ele próprio é skipado em tournResults
+    // (linha ~2193) quando há wjgc25_b1011 — ambos eram skipados → torneio
+    // sumia. Mantemos só wjgc26_b1213 → wjgc26_1213 e os escalões venice/rome/doral.
     // wjgc26_1213 (manual) é coberto pelo auto tid
     "wjgc26_b1213":  "wjgc26_1213",
     // Venice 2025
@@ -2317,7 +2329,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
   }, [tournResults]);
 
   // ── H2H detalhado ──────────────────────────────────────────────────────────
-  const confrontosH2H = useMemo<{ tid: string; tornName: string; ageGroup: string | null; manPos: number; rivalPos: number; manTp: number | null; rivalTp: number | null; year: number }[]>(() => {
+  const confrontosH2H = useMemo<{ tid: string; tornName: string; ageGroup: string | null; manPos: number; rivalPos: number; manTp: number | null; rivalTp: number | null; year: number; nRounds?: number }[]>(() => {
     if (!rival || isManuel) return [];
     const hidden = hiddenTids(rival);
     const manHidden = hiddenTids(manuelMerged ?? rival);
@@ -2329,11 +2341,14 @@ function RivalDetail({ playerName }: { playerName: string }) {
       })
       .map(({ t, res, ageGroup }) => {
         const mRes = manuelMerged!.r[t.id];
+        // nRounds: usa a definição do torneio (T.rounds) ou o número real de rondas jogadas
+        const nRounds = t.rounds ?? Math.max(res.rd?.length ?? 0, mRes.rd?.length ?? 0);
         return {
           tid: t.id, tornName: t.name, ageGroup,
           manPos:  mRes.p as number, rivalPos: res.p as number,
           manTp:   mRes.tp,          rivalTp:  res.tp,
           year:    yearOf(t.dateExact, t.date),
+          nRounds: nRounds > 0 ? nRounds : undefined,
         };
       })
       .sort((a, b) => b.year - a.year);
@@ -2894,7 +2909,7 @@ function RivalDetail({ playerName }: { playerName: string }) {
                         )}
                         {/* Links */}
                         {(() => {
-                          const { signupanytimeUrl, uskidsUrl, fpgUrl, ffgolfUrl } = getTournLinks(t.id, t.url);
+                          const { signupanytimeUrl, uskidsUrl, fpgUrl, ffgolfUrl, lgsUrl } = getTournLinks(t.id, t.url);
                           const linkStyle: React.CSSProperties = {
                             display:"inline-flex", alignItems:"center", gap:2, fontSize:10,
                             fontWeight:600, textDecoration:"none", padding:"1px 5px",
@@ -2928,6 +2943,13 @@ function RivalDetail({ playerName }: { playerName: string }) {
                                   onClick={e => e.stopPropagation()} title="Resultados FFGolf"
                                   style={{ ...linkStyle, color:"var(--accent)", border:"1px solid var(--accent)" }}>
                                   ↗ FFG
+                                </ExtLink>
+                              )}
+                              {lgsUrl && (
+                                <ExtLink href={lgsUrl}
+                                  onClick={e => e.stopPropagation()} title="Clasificación LiveGolfScoring (RFEGolf)"
+                                  style={{ ...linkStyle, color:"var(--accent)", border:"1px solid var(--accent)" }}>
+                                  ↗ RFEG
                                 </ExtLink>
                               )}
                             </>

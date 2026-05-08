@@ -338,6 +338,199 @@ function parseInscritos(html, kind) {
 }
 
 /* ────────────────────────────────────────────────────────────────
+   ListaResultados.aspx — leaderboard final em PDFs anexos
+   ──────────────────────────────────────────────────────────────── */
+
+let _pdfParseCached = null;
+function getPdfParse() {
+  if (!_pdfParseCached) {
+    try { _pdfParseCached = require("pdf-parse/lib/pdf-parse.js"); }
+    catch (e) { _pdfParseCached = null; }
+  }
+  return _pdfParseCached;
+}
+
+function httpGetBuffer(urlStr, retries = 2) {
+  return new Promise(function (resolve, reject) {
+    function attempt(n) {
+      const url = new URL(urlStr);
+      const req = https.request({
+        method: "GET",
+        hostname: url.hostname,
+        path: url.pathname + url.search,
+        headers: { "User-Agent": UA, "Accept": "*/*", "Referer": "https://rfegolf.es/" },
+        timeout: 30000,
+      }, function (res) {
+        if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+          const next = new URL(res.headers.location, urlStr).toString();
+          res.resume();
+          httpGetBuffer(next, retries).then(resolve, reject);
+          return;
+        }
+        const chunks = [];
+        res.on("data", function (c) { chunks.push(c); });
+        res.on("end", function () { resolve({ status: res.statusCode, buf: Buffer.concat(chunks) }); });
+      });
+      req.on("error", function (err) {
+        if (n > 0) setTimeout(function () { attempt(n - 1); }, 1500);
+        else reject(err);
+      });
+      req.on("timeout", function () { req.destroy(new Error("timeout")); });
+      req.end();
+    }
+    attempt(retries);
+  });
+}
+
+/** Parse leaderboard PDF do RFEGolf. Estrutura repetida confirmada em vários CompIds.
+ *  Header: "Pos.NombreAl ParHoyR1R2..RnTotal"
+ *  Cada linha: {pos?}{NOME, NOMES}{±toPar|E}{±hoy|E}{R1}{R2}..{Rn}{Total}
+ */
+function parseLeaderboardPdfText(text) {
+  const lines = text.split("\n").map(function (l) { return l.trim(); }).filter(Boolean);
+  let nRounds = 0;
+  let courseRating = null, slope = null;
+  let categoria = null, sexo = null, status = null;
+  for (const ln of lines.slice(0, 25)) {
+    if (/Pos\.\s*Nombre/i.test(ln)) {
+      const ms = ln.match(/R\d+/g);
+      if (ms) nRounds = ms.length;
+    }
+    const m1 = ln.match(/Valor del campo:\s*([\d.]+)\s*\|\s*Slope:\s*(\d+)/i);
+    if (m1) { courseRating = parseFloat(m1[1]); slope = parseInt(m1[2], 10); }
+    const m2 = ln.match(/Ronda\s+(\d+)\s+(finalizada|en curso|cancelada)/i);
+    if (m2) status = "ronda" + m2[1] + "_" + m2[2].toLowerCase().replace(/\s+/g, "_");
+    if (/Final|Clasificaci[óo]n\s+Final/i.test(ln) && !categoria) {
+      const cm = ln.match(/(Alev[íi]n|Benjam[íi]n|Infantil|Cadete|Junior|Juvenil|Sub[\s-]?\d+)\b/i);
+      if (cm) categoria = cm[1];
+      const sm = ln.match(/(Masculino|Femenino|Mixto)/i);
+      if (sm) sexo = sm[1];
+    }
+  }
+  if (!nRounds) nRounds = 1;
+
+  function buildRe(n, totalLen) {
+    let re = "^(\\d{1,3})?([A-ZÁ-Ú\\s,'\\.\\-ÑÜ]+?)([+\\-]\\d{1,2}|E|Par)([+\\-]\\d{1,2}|E|Par)";
+    for (let i = 0; i < n; i++) re += "(\\d{2,3})";
+    re += "(\\d{" + totalLen + "})$";
+    return new RegExp(re);
+  }
+  function tryParseLine(ln, nr) {
+    const tryTL = nr <= 1 ? [3, 2] : [3, 4];
+    for (const tl of tryTL) {
+      const re = buildRe(nr, tl);
+      const m = re.exec(ln);
+      if (!m) continue;
+      const rs = [];
+      for (let i = 0; i < nr; i++) rs.push(parseInt(m[5 + i], 10));
+      const total = parseInt(m[5 + nr], 10);
+      const sumR = rs.reduce(function (a, b) { return a + b; }, 0);
+      if (Math.abs(sumR - total) > 5) continue;
+      const tpRaw = m[3];
+      const hoyRaw = m[4];
+      const toPar = (tpRaw === "E" || tpRaw === "Par") ? 0 : parseInt(tpRaw, 10);
+      const hoy = (hoyRaw === "E" || hoyRaw === "Par") ? 0 : parseInt(hoyRaw, 10);
+      return {
+        posRaw: m[1],
+        name: m[2].trim().replace(/\s{2,}/g, " "),
+        toPar, hoy, rounds: rs, total,
+      };
+    }
+    return null;
+  }
+
+  const players = [];
+  let lastPos = null;
+  let pendingPos = null;
+  for (const ln of lines) {
+    if (/Pos\.\s*Nombre/i.test(ln)) continue;
+    if (/Página\s+\d+|Real Federación|Fecha:|finalizada|en curso|cancelada|Valor del campo|^Del\s|Imprimir/i.test(ln)) continue;
+    if (/^\d+\/\d+\/\d+,/.test(ln)) continue;
+    if (/^https?:/.test(ln)) continue;
+
+    // Pos sozinho (estilo B)
+    if (/^\d{1,3}$/.test(ln)) {
+      pendingPos = parseInt(ln, 10);
+      continue;
+    }
+
+    let parsed = tryParseLine(ln, nRounds);
+    // Fallback: prepend pendingPos se a linha não começa com dígito
+    if (!parsed && pendingPos != null && !/^\d/.test(ln)) {
+      parsed = tryParseLine(pendingPos + ln, nRounds);
+    }
+    if (!parsed) {
+      // Tentar com nRounds-1 (algumas linhas podem ser de jogadores DNF)
+      if (nRounds > 1) parsed = tryParseLine(ln, nRounds - 1);
+      if (!parsed && pendingPos != null) parsed = tryParseLine(pendingPos + ln, nRounds - 1);
+    }
+    if (!parsed) {
+      pendingPos = null;
+      continue;
+    }
+
+    if (parsed.posRaw) lastPos = parseInt(parsed.posRaw, 10);
+    else if (pendingPos != null) lastPos = pendingPos;
+    pendingPos = null;
+    players.push({
+      pos: lastPos, name: parsed.name, toPar: parsed.toPar,
+      hoy: parsed.hoy, rounds: parsed.rounds, total: parsed.total,
+    });
+  }
+  return { nRounds, players, courseRating, slope, categoria, sexo, status };
+}
+
+async function scrapeResults(compId) {
+  const url = "https://rfegolf.es/CompetenciaPaginas/ListaResultados.aspx?CompId=" + compId;
+  const r = await httpGet(url);
+  if (r.status !== 200 || r.body.length < 1000) return [];
+  // Encontrar a tabela GridListaResultados e extrair linhas com PDF link + categoria/sexo/categoria
+  const tblM = /GridListaResultados[\s\S]+?<\/table>/.exec(r.body);
+  if (!tblM) return [];
+  const grid = tblM[0];
+  const rowRe = /<tr[^>]*>([\s\S]+?)<\/tr>/gi;
+  const rows = [];
+  let m;
+  while ((m = rowRe.exec(grid)) !== null) rows.push(m[1]);
+  if (rows.length < 2) return [];
+
+  const lbs = [];
+  const pdfParse = getPdfParse();
+  for (const row of rows) {
+    const cells = trCells(row).map(stripTags);
+    if (cells.length < 4) continue;
+    if (/Nombre/i.test(cells[1] || "") && /Sexo/i.test(cells[2] || "")) continue; // header
+    const nombreCol = cells[1] || "";
+    const sexoCol = cells[2] || "";
+    const categoriaCol = cells[3] || "";
+    const hrefM = /href="([^"]+\.pdf[^"]*)"/i.exec(row);
+    if (!hrefM) continue;
+    const pdfUrl = hrefM[1].startsWith("http") ? hrefM[1] : "https://rfegolf.es" + hrefM[1];
+    let parsed = null;
+    if (pdfParse) {
+      try {
+        const buf = await httpGetBuffer(pdfUrl);
+        if (buf.status === 200 && buf.buf.length > 500) {
+          const data = await pdfParse(buf.buf);
+          parsed = parseLeaderboardPdfText(data.text);
+        }
+      } catch (e) { /* ignora PDFs que não dão parse */ }
+    }
+    lbs.push({
+      label: nombreCol,
+      sexo: sexoCol === "Masculino" ? "M" : sexoCol === "Femenino" ? "F" : sexoCol,
+      categoria: categoriaCol,
+      pdfUrl,
+      nRounds: parsed ? parsed.nRounds : null,
+      courseRating: parsed ? parsed.courseRating : null,
+      slope: parsed ? parsed.slope : null,
+      players: parsed ? parsed.players : [],
+    });
+  }
+  return lbs;
+}
+
+/* ────────────────────────────────────────────────────────────────
    Main scrape function
    ──────────────────────────────────────────────────────────────── */
 
@@ -416,7 +609,6 @@ async function scrapeComp(compId) {
     if (m) meta.name = stripTags(m[1]).replace(/^Resultados\/Clasificaciones del Torneo\s*/i, "").trim();
   }
 
-  // Palmarés (vencedores por ano, preserved historically)
   let winners = [];
   try {
     const pal = await httpGet(baseUrl("PalmaresCompleto"));
@@ -425,9 +617,10 @@ async function scrapeComp(compId) {
     }
   } catch (e) { /* ignore */ }
 
-  // Live leaderboard (ONLY exists during the tournament — wiped after).
-  // Try to extract any rows from GridGeneral_GridEnCurso; fallback to empty.
   const liveLeaderboard = parseLiveLeaderboard(liveHtml);
+
+  let results = [];
+  try { results = await scrapeResults(compId); } catch (e) { /* tolerante */ }
 
   return {
     compId,
@@ -445,37 +638,31 @@ async function scrapeComp(compId) {
         provisional: provisional.length,
       },
     },
-    palmares: winners,    // [{year, winner, countryCode}] — vencedores históricos
-    leaderboard: liveLeaderboard,  // [{pos, name, totalToPar, total, ...}] — só durante torneio activo
+    palmares: winners,
+    leaderboard: liveLeaderboard,
+    results,
   };
 }
 
-/** Parse live leaderboard from GridGeneral_GridEnCurso (only populated during tournament). */
 function parseLiveLeaderboard(html) {
   const rows = parseGridRows(html, "GridEnCurso");
   if (!rows || rows.length < 2) return [];
-  // Skip header rows and "no data" placeholder
   const result = [];
   for (const r of rows) {
     const cells = trCells(r).map(stripTags);
     if (cells.length < 4) continue;
     if (cells.some(function (c) { return /Todav[íi]a no/i.test(c); })) continue;
-    // Try to find pos (numeric), name (with comma), total
     const posIdx = cells.findIndex(function (c) { return /^\d+$/.test(c) || /^T\d+$/.test(c); });
     const nameIdx = cells.findIndex(function (c) { return /[A-Z][^,]*,\s*[A-Z]/.test(c) && c.length > 5; });
     if (nameIdx < 0) continue;
     result.push({
       pos: posIdx >= 0 ? cells[posIdx] : null,
       name: cells[nameIdx],
-      cells: cells, // raw cells for downstream parsing
+      cells: cells,
     });
   }
   return result;
 }
-
-/* ────────────────────────────────────────────────────────────────
-   CLI
-   ──────────────────────────────────────────────────────────────── */
 
 async function main() {
   const args = process.argv.slice(2);
@@ -539,8 +726,9 @@ async function main() {
         if (result.ok) okCount++;
         else { failCount++; failures.push({ cid, error: result.error }); }
         const palCount = result.palmares ? result.palmares.length : 0;
+        const resCount = result.results ? result.results.reduce((a, r) => a + (r.players ? r.players.length : 0), 0) : 0;
         const tag = result.ok
-          ? ((result.meta && result.meta.name) || "?") + " (" + (result.inscritos ? result.inscritos.counts.admitidos : 0) + " adm, " + palCount + " palm)"
+          ? ((result.meta && result.meta.name) || "?") + " (" + (result.inscritos ? result.inscritos.counts.admitidos : 0) + " adm, " + palCount + " palm, " + resCount + " res)"
           : "FAIL: " + result.error;
         console.log("  [" + (idx + 1) + "/" + comps.length + "] " + cid + ": " + tag);
       } catch (e) {
@@ -548,20 +736,14 @@ async function main() {
         failures.push({ cid, error: e.message });
         console.log("  [" + (idx + 1) + "/" + comps.length + "] " + cid + ": ERROR " + e.message);
       }
-      await new Promise(function (r) { setTimeout(r, 100); });
     }
   }
-  await Promise.all(Array.from({ length: concurrencyArg }, function () { return worker(); }));
+  const workers = [];
+  for (let i = 0; i < concurrencyArg; i++) workers.push(worker());
+  await Promise.all(workers);
 
   console.log("\nDone: ok=" + okCount + " fail=" + failCount + " skipped=" + skipped);
-  if (failures.length) {
-    console.log("Failures: " + failures.slice(0, 10).map(function (f) { return f.cid + ":" + f.error; }).join(", ") + (failures.length > 10 ? "..." : ""));
-  }
-  process.exit(okCount > 0 ? 0 : (skipped > 0 ? 2 : 1));
+  if (failures.length > 0 && failures.length <= 20) console.log("Failures:", failures);
 }
 
-if (require.main === module) {
-  main().catch(function (e) { console.error(e); process.exit(1); });
-}
-
-module.exports = { scrapeComp, parseMicrosite, parseInscritos, parsePalmares, parseLiveLeaderboard, parseGridRows, stripTags, findTableById };
+main().catch(function (e) { console.error(e); process.exit(1); });

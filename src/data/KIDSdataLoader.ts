@@ -234,6 +234,132 @@ export function processWjgc(data: unknown, tid: string): AutoRivalPlayer[] {
   });
 }
 
+/** Converte nome do RFEGolf/LGS no formato "APELIDO , Nomes" (com vírgula
+ *  e maiúsculas) para o formato canónico "Nomes Apelido" usado pelo USKids/FFG.
+ *  Crítico para o mergeInto bater chaves: senão "GROSS PANEQUE, Diego" e
+ *  "Diego Gross Paneque" ficam como rivais distintos.
+ */
+function rfegolfNameToCanonical(raw: string): string {
+  if (!raw) return "";
+  const s = raw.trim();
+  // Detectar "APELIDO , Nomes" ou "APELIDO, Nomes"
+  const m = s.match(/^([A-ZÁÉÍÓÚÑÜ][A-ZÁÉÍÓÚÑÜ\s'\-.]+?)\s*,\s*(.+)$/);
+  if (!m) return s;
+  const apelido = m[1].trim();
+  const nomes = m[2].trim();
+  function titleCase(str: string): string {
+    return str.toLowerCase().split(/(\s+|-)/).map(part =>
+      part.match(/^[a-zà-ÿ]/) ? part.charAt(0).toUpperCase() + part.slice(1) : part
+    ).join("");
+  }
+  return `${titleCase(nomes)} ${titleCase(apelido)}`;
+}
+
+/** processRfegolfRivals — consolida torneios LGS (livegolfscoring.es) num map de rivais.
+ *  Input: ficheiro `rfegolf-rivals.json` (gerado por scripts/build-rfegolf-rivals.js).
+ *  Cria entries `rival.r["lgs{id}"] = { p, t, tp, rd, ageGroup, nholes }` e regista
+ *  scorecards hole-by-hole para o KIDSdataLoader scorecards map.
+ */
+export function processRfegolfRivals(data: unknown): AutoRivalPlayer[] {
+  const d = data as {
+    torneios?: Record<string, {
+      name: string;
+      year: number | null;
+      ageGroup: string | null;
+      dateIso?: string | null;
+      dateRange?: string | null;
+      par: number[];
+      parTotal: number;
+      nholes: number;
+      nRounds: number;
+      players: Array<{
+        n: string;
+        p: number | null;
+        t: number | null;
+        tp: number | null;
+        rd: number[];
+        sc?: number[][];   // scores hole-by-hole por ronda — alimenta addScorecard
+      }>;
+    }>;
+  };
+  if (!d || !d.torneios) return [];
+
+  /** Formata data em PT amigável: "27 junio 2025" → "27 jun 2025" ou "Jun 2025" */
+  const ES_TO_PT_MONTH: Record<string, string> = {
+    "enero": "jan", "febrero": "fev", "marzo": "mar", "abril": "abr",
+    "mayo": "mai", "junio": "jun", "julio": "jul", "agosto": "ago",
+    "septiembre": "set", "octubre": "out", "noviembre": "nov", "diciembre": "dez",
+  };
+  function formatLgsDate(t: { year: number | null; dateIso?: string | null; dateRange?: string | null }): string {
+    if (t.dateRange && t.year) {
+      // "25 junio - 27 junio" → "27 jun 2025"
+      const m = /(\d+)\s+([a-zá-ú]+)/i.exec(t.dateRange);
+      if (m) {
+        const day = m[1];
+        const monthEn = ES_TO_PT_MONTH[m[2].toLowerCase()] || m[2].slice(0, 3);
+        return `${day} ${monthEn} ${t.year}`;
+      }
+    }
+    if (t.dateIso) {
+      const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(t.dateIso);
+      if (m) {
+        const monthIdx = parseInt(m[2], 10) - 1;
+        const months = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+        return `${parseInt(m[3], 10)} ${months[monthIdx]} ${m[1]}`;
+      }
+    }
+    return t.year ? String(t.year) : "";
+  }
+
+  const all: AutoRivalPlayer[] = [];
+  for (const [tid, t] of Object.entries(d.torneios)) {
+    // Registar nome do torneio em uskTournNames para o KIDSpage exibir bem
+    if (!uskTournNames.has(tid)) {
+      uskTournNames.set(tid, {
+        name: t.name,
+        short: t.name.length > 30 ? t.name.slice(0, 30) + "…" : t.name,
+        date: formatLgsDate(t),
+        dateExact: t.dateIso || (t.year ? `${t.year}-01-01` : ""),
+      });
+    }
+    for (const p of t.players || []) {
+      if (!p.n || !Array.isArray(p.rd) || p.rd.length === 0) continue;
+      // Converter "APELIDO, Nomes" → "Nomes Apelido" para casar com USKids/FFG
+      // (senão Marcus Latt aparece como 2 rivais distintos: "Marcus Latt" e "LATT, Marcus")
+      const canonicalName = rfegolfNameToCanonical(p.n);
+      // Total raw — soma das rondas se o `t` não estiver definido
+      const total = typeof p.t === "number" ? p.t : p.rd.reduce((a, b) => a + b, 0);
+      const toPar = typeof p.tp === "number" ? p.tp : (total - t.parTotal * t.nRounds);
+      // Registar scorecard hole-by-hole quando há scores válidos (18 buracos por ronda)
+      const norm = normName(canonicalName);
+      const validScores = (p.sc || []).filter(s => Array.isArray(s) && s.length === 18);
+      if (validScores.length > 0 && t.par.length === 18) {
+        addScorecard(norm, {
+          tid,
+          playerName: canonicalName,
+          par: t.par,
+          si: [],
+          meters: [],
+          rounds: validScores,
+        });
+      }
+      all.push({
+        n: canonicalName,
+        co: "",   // refinado depois pelo enrich spain-players.json (co=Spain)
+        r: { [tid]: {
+          p: typeof p.p === "number" ? p.p : null,
+          t: total,
+          tp: toPar,
+          rd: p.rd,
+          ageGroup: t.ageGroup || undefined,
+          nholes: t.nholes,
+        }},
+      });
+    }
+  }
+  return all;
+}
+
 export function processDoral(data: unknown): AutoRivalPlayer[] {
   const d = data as {
     year?: number;
@@ -1479,6 +1605,10 @@ async function _buildAutoRivalsInternal(
 
   // Arrancar players.json em paralelo (base de dados FPG para enriquecimento)
   const playersJsonPromise = fetchJson(`${base}players.json`).catch(() => null);
+  // Arrancar spain-players.json em paralelo (DOB+sexo+clube de espanhois RFEGolf)
+  const spainPlayersPromise = fetchJson(`${base}spain-players.json`).catch(() => null);
+  // Arrancar rfegolf-rivals.json em paralelo (66 torneios LGS juvenis consolidados)
+  const rfegRivalsPromise = fetchJson(`${base}rfegolf-rivals.json`).catch(() => null);
 
   const labelFor = (t: FileTask): string => {
     if (t.kind === "wjgc") return t.tid.replace(/_/g," ").toUpperCase();
@@ -1579,6 +1709,58 @@ async function _buildAutoRivalsInternal(
     }
   }));
 
+  // ── Fase 2.5: rfegolf-rivals.json (torneios espanhois LGS consolidados) ──
+  try {
+    const rfegRaw = await rfegRivalsPromise;
+    if (rfegRaw) {
+      _loadedFiles.push({ path: `${base}rfegolf-rivals.json`, status: "loaded", group: "phase 2.5 esp" });
+      mergeInto(map, processRfegolfRivals(rfegRaw));
+
+      // Consolidação por token-set: indexar por sorted-tokens (bucket único)
+      // — match só quando os tokens são idênticos (após sort). Casos como
+      // "Adriana GARCIA TEROL" e "Garcia Terol Adriana" → ambos viram
+      // "adriana garcia terol" sorted → mesmo bucket → fundir.
+      // Performance: O(n) em vez de O(n²).
+      const byTokensSorted = new Map<string, AutoRivalPlayer[]>();
+      for (const r of map.values()) {
+        const tokens = normName(r.n).split(/\s+/).filter(t => t.length >= 2);
+        if (tokens.length < 2) continue;
+        const key = [...tokens].sort().join(" ");
+        const arr = byTokensSorted.get(key) || [];
+        arr.push(r);
+        byTokensSorted.set(key, arr);
+      }
+      let consolidated = 0;
+      for (const [, group] of byTokensSorted) {
+        if (group.length < 2) continue;
+        // Winner: o que tem mais tokens no nome canónico (ou primeiro se empate).
+        // Heurística para "mais detalhado": prefere "Diego Gross Paneque" a "Diego Gross".
+        const winner = group.reduce((best, r) => {
+          const lenR = normName(r.n).split(/\s+/).length;
+          const lenB = normName(best.n).split(/\s+/).length;
+          return lenR > lenB ? r : best;
+        });
+        for (const loser of group) {
+          if (loser === winner) continue;
+          for (const [tid, res] of Object.entries(loser.r)) {
+            if (!winner.r[tid]) winner.r[tid] = res;
+          }
+          if (!winner.dob && loser.dob) winner.dob = loser.dob;
+          if (!winner.co && loser.co) winner.co = loser.co;
+          if (!winner.fpgClub && loser.fpgClub) winner.fpgClub = loser.fpgClub;
+          if (!winner.memberId && loser.memberId) winner.memberId = loser.memberId;
+          map.delete(normName(loser.n));
+          consolidated++;
+        }
+      }
+      _loadedFiles.push({ path: `rfeg-tokenset-merge:${consolidated}`, status: "loaded", group: "phase 2.5 esp" });
+    } else {
+      _loadedFiles.push({ path: `${base}rfegolf-rivals.json`, status: "error", error: "null", group: "phase 2.5 esp" });
+    }
+  } catch (e) {
+    _loadedFiles.push({ path: `${base}rfegolf-rivals.json`, status: "error", error: String(e), group: "phase 2.5 esp" });
+  }
+
   // ── Enriquecimento FPG: players.json → corrigir co + adicionar fpgClub e dob ──
   // Jogadores portugueses no USKids podem ter o nome do clube como país.
   // Cruzamos por nome e sobrescrevemos co="Portugal", fpgClub e dob.
@@ -1605,6 +1787,79 @@ async function _buildAutoRivalsInternal(
     }
   } catch (e) {
     _loadedFiles.push({ path: `${base}players.json`, status: "error", error: String(e), group: "enrich" });
+  }
+
+  // ── Enriquecimento ESP: spain-players.json → DOB + sex + club ──
+  // Cruza por nome com lookup RFEGolf (2186 federados juvenis a jogar em Espanha).
+  // Validação de idade: se o rival já tem `dob` de outra fonte (FPG players.json,
+  // USKids member-history) e o ano de nascimento do RFEGolf difere por >1 ano,
+  // rejeitar — provável homónimo. Se o rival tem ageGroup nos torneios (ex:
+  // "Boys 11" em 2024), inferimos birthYear esperado e aplicamos a mesma regra.
+  // Só não sobrescrevemos `co` quando já está definido (Marcus Latt EST mantém EST).
+  try {
+    const spainRaw = await spainPlayersPromise;
+    if (spainRaw && (spainRaw as any).byName) {
+      _loadedFiles.push({ path: `${base}spain-players.json`, status: "loaded", group: "enrich" });
+      const byName = (spainRaw as any).byName as Record<string, { name: string; dob: string; dobIso: string; sex: string | null; club: string | null; licencia: string }>;
+      function dobYearOf(dobStr: string | undefined): number | null {
+        if (!dobStr) return null;
+        const isoM = /^(\d{4})-(\d{2})-(\d{2})/.exec(dobStr);
+        if (isoM) return parseInt(isoM[1], 10);
+        const ddmm = /^\d{1,2}\/\d{1,2}\/(\d{4})/.exec(dobStr);
+        if (ddmm) return parseInt(ddmm[1], 10);
+        return null;
+      }
+      function estimateBirthYear(rival: AutoRivalPlayer): number | null {
+        const ageGroups: Array<{ age: number; tid: string }> = [];
+        for (const [tid, res] of Object.entries(rival.r || {})) {
+          const ag = res.ageGroup;
+          if (!ag) continue;
+          const m = /\b(\d{1,2})\b/.exec(ag);
+          if (!m) continue;
+          const age = parseInt(m[1], 10);
+          if (age < 6 || age > 19) continue;
+          ageGroups.push({ age, tid });
+        }
+        if (ageGroups.length === 0) return null;
+        let bestYear = 0, bestAge = 0;
+        for (const { age, tid } of ageGroups) {
+          const m4 = /20(\d{2})/.exec(tid);
+          const m2 = /(\d{2})(?:_|$)/.exec(tid);
+          let year: number | null = null;
+          if (m4) year = 2000 + parseInt(m4[1], 10);
+          else if (m2) {
+            const yy = parseInt(m2[1], 10);
+            if (yy >= 18 && yy <= 35) year = 2000 + yy;
+          }
+          if (year && year > bestYear) { bestYear = year; bestAge = age; }
+        }
+        if (bestYear === 0) return null;
+        return bestYear - bestAge;
+      }
+
+      let matched = 0, rejected = 0;
+      for (const rival of map.values()) {
+        const e = byName[normName(rival.n)];
+        if (!e) continue;
+        const espYear = dobYearOf(e.dob);
+        if (!espYear) continue;
+        const existingYear = dobYearOf(rival.dob);
+        const estimatedYear = existingYear ?? estimateBirthYear(rival);
+        if (estimatedYear != null && Math.abs(espYear - estimatedYear) > 1) {
+          rejected++;
+          continue;
+        }
+        if (!rival.dob && e.dob) rival.dob = e.dob;
+        if (!rival.fpgClub && e.club) rival.fpgClub = e.club;
+        if (!rival.co) rival.co = "Spain";
+        matched++;
+      }
+      _loadedFiles.push({ path: `spain-enrich:matched=${matched},rejected=${rejected}`, status: "loaded", group: "enrich" });
+    } else {
+      _loadedFiles.push({ path: `${base}spain-players.json`, status: "error", error: "null", group: "enrich" });
+    }
+  } catch (e) {
+    _loadedFiles.push({ path: `${base}spain-players.json`, status: "error", error: String(e), group: "enrich" });
   }
 
   onUpdate?.(Array.from(map.values()));
