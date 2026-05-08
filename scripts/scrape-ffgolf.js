@@ -88,6 +88,18 @@ async function openClassement(page, ggPage) {
   // Poll até ao iframe estar pronto (dropdown carregado OU jogadores visíveis)
   const ready = await waitForIframeReady(page, 30000);
   if (!ready) console.log(`   ⚠ iframe não ficou pronto em 30s`);
+  // O menu lateral "Statistics" carrega lazy — o sub-link "Statistiques du parcours de golf"
+  // está no DOM mas hidden. Faz polling até o `<a>` aparecer (até 8s) para apanhar o statsPageId.
+  // Funciona mesmo com elemento hidden — basta estar presente no DOM.
+  const STATS_TXT = "Statistiques du parcours de golf";
+  for (let i = 0; i < 16; i++) {
+    const found = await page.evaluate((txt) => {
+      const a = [...document.querySelectorAll("a")].find(x => x.textContent.trim() === txt);
+      return !!a && /\/pages\/\d+/.test(a.getAttribute("href") || "");
+    }, STATS_TXT);
+    if (found) break;
+    await sleep(500);
+  }
   return page.evaluate(() => {
     const ifr = document.querySelectorAll("iframe")[0];
     const ifrSrc = ifr?.src || "";
