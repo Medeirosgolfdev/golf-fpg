@@ -1,0 +1,124 @@
+name: Actualizar FFGolf — Portal Resultats (Node puro)
+
+# Corre:
+#   - Automaticamente Segunda-feira às 02:00 UTC (madrugada Lisboa)
+#   - A pedido (botão "Run workflow" no GitHub)
+#
+# Scrape do portal central FFG (pages.ffgolf.org/resultats/) — 22 ligas × tipos
+# juvenis × histórico. Node puro, sem Playwright, sem secrets/cookies (o portal
+# é público e o bootstrap apanha PHPSESSID via GET).
+#
+# Default do cron: --types 01,03 --since 2025 --skip-existing
+#   01 = Compétitions Fédérales (filtradas para juvenis pelo orquestrador)
+#   03 = Grands Prix Jeunes (regional, todas as 22 ligas)
+#   --since 2025: anos 2025 + 2026 (Manuel-relevant)
+#   --skip-existing: não re-fetch torneios já em disco
+#
+# Para histórico completo: workflow_dispatch com `force_rebuild=true`.
+on:
+  workflow_dispatch:
+    inputs:
+      types:
+        description: 'Tipos de competição (vírgula). 01=Fédérales 02=GP 03=GP Jeunes 04=Trophées Seniors 05=Mid-Am 08=Ligue. Default: "01,03".'
+        required: false
+        default: ''
+      since:
+        description: 'Ano mínimo (ex: 2023). Default: "2025".'
+        required: false
+        default: ''
+      ligues:
+        description: 'Ligas FFG (vírgula). Default: todas (22). Ex: "01,02,09".'
+        required: false
+        default: ''
+      force_rebuild:
+        description: 'Re-fetch torneios existentes? (sem --skip-existing)'
+        required: false
+        default: 'false'
+        type: choice
+        options: ['false', 'true']
+
+  schedule:
+    # Segunda 02:00 UTC ≈ 02:00 Lisboa (inverno) / 03:00 (BST verão)
+    # Madrugada de segunda-feira como pedido. Antes do GolfGenius (03:00 UTC)
+    # para evitar colisões no git push.
+    - cron: '0 2 * * 1'
+
+permissions:
+  contents: write
+
+jobs:
+  update-ffgolf-resultats:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Correr scrape-ffgolf-all-jeunes.js
+        id: scrape
+        run: |
+          ARGS=""
+          # Tipos
+          if [ -n "${{ github.event.inputs.types }}" ]; then
+            ARGS="$ARGS --types ${{ github.event.inputs.types }}"
+          else
+            ARGS="$ARGS --types 01,03"
+          fi
+          # Since (ano mínimo)
+          if [ -n "${{ github.event.inputs.since }}" ]; then
+            ARGS="$ARGS --since ${{ github.event.inputs.since }}"
+          else
+            ARGS="$ARGS --since 2025"
+          fi
+          # Ligas (opcional)
+          if [ -n "${{ github.event.inputs.ligues }}" ]; then
+            ARGS="$ARGS --ligues ${{ github.event.inputs.ligues }}"
+          fi
+          # Skip existing (default true, false se force_rebuild)
+          if [ "${{ github.event.inputs.force_rebuild }}" != "true" ]; then
+            ARGS="$ARGS --skip-existing"
+          fi
+          echo "Args: $ARGS"
+          node scripts/scrape-ffgolf-all-jeunes.js $ARGS
+
+      - name: Regenerar índice agregado
+        run: node scripts/build-ffgolf-resultats-index.js
+
+      - name: Regenerar slim juniors (U10/U12/U14)
+        run: node scripts/build-ffgolf-juniors-slim.js
+
+      - name: Commit e push (se houver mudanças)
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add public/data/ffgolf-resultats/ \
+                  public/data/ffgolf-resultats-index.json \
+                  public/data/ffgolf-juniors-slim.json
+
+          if git diff --staged --quiet; then
+            echo "ℹ️  Nenhuma alteração — sem commit."
+            exit 0
+          fi
+
+          DATE=$(date -u +'%Y-%m-%d %H:%M UTC')
+          git commit -m "data: update FFGolf resultats ${DATE}"
+          # Rebase contra main caso outro workflow tenha commitado entretanto
+          git fetch origin main
+          git rebase origin/main || git rebase --abort
+          git push
+          echo "✓ Commit feito"

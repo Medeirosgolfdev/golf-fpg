@@ -1,0 +1,106 @@
+name: Actualizar FFGolf — GolfGenius (Playwright)
+
+# Corre:
+#   - Automaticamente Segunda-feira às 03:00 UTC (madrugada Lisboa)
+#   - A pedido (botão "Run workflow" no GitHub)
+#
+# Scrape de torneios juvenis FFG hospedados em GolfGenius (Championnats de
+# France, Internationaux U14/U18, etc.). Catálogo em public/data/ffgolf-catalog.json.
+#
+# Usa Playwright (chromium) headless porque o GolfGenius depende de JS para
+# carregar dropdowns de eventos e scorecards.
+#
+# Default do cron: --year <ano corrente> (sem --slug → todos os torneios do
+# catálogo nesse ano). Para correr 1 torneio específico ou re-scrape histórico,
+# usar workflow_dispatch.
+on:
+  workflow_dispatch:
+    inputs:
+      year:
+        description: 'Ano a scrapar (ex: 2026). Vazio = ano corrente.'
+        required: false
+        default: ''
+      slug:
+        description: 'Slug específico de torneio (ex: "internationaux-de-france-u14-garcons-2025"). Vazio = todos do ano.'
+        required: false
+        default: ''
+      gg_page:
+        description: 'GG page ID ad-hoc (ex: "11842510449344033466"). Requer também --slug e --year.'
+        required: false
+        default: ''
+
+  schedule:
+    # Segunda 03:00 UTC ≈ 03:00 Lisboa (inverno) / 04:00 (BST verão)
+    # 1h depois do update-ffgolf-resultats.yml para evitar colisões no git push.
+    - cron: '0 3 * * 1'
+
+permissions:
+  contents: write
+
+jobs:
+  update-ffgolf-golfgenius:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Instalar Playwright Chromium
+        run: npx playwright install chromium --with-deps
+
+      - name: Correr scrape-ffgolf.js
+        id: scrape
+        run: |
+          ARGS="--headless"
+          # Year: input do workflow_dispatch ou ano corrente
+          if [ -n "${{ github.event.inputs.year }}" ]; then
+            ARGS="$ARGS --year ${{ github.event.inputs.year }}"
+          else
+            CURRENT_YEAR=$(date -u +%Y)
+            ARGS="$ARGS --year $CURRENT_YEAR"
+            echo "ℹ️  Default: ano corrente $CURRENT_YEAR"
+          fi
+          # Slug específico (opcional)
+          if [ -n "${{ github.event.inputs.slug }}" ]; then
+            ARGS="$ARGS --slug ${{ github.event.inputs.slug }}"
+          fi
+          # GG page ad-hoc (opcional, requer slug + year)
+          if [ -n "${{ github.event.inputs.gg_page }}" ]; then
+            ARGS="$ARGS --gg-page ${{ github.event.inputs.gg_page }}"
+          fi
+          echo "Args: $ARGS"
+          node scripts/scrape-ffgolf.js $ARGS
+
+      - name: Commit e push (se houver mudanças)
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add public/data/ffgolf/
+
+          if git diff --staged --quiet; then
+            echo "ℹ️  Nenhuma alteração — sem commit."
+            exit 0
+          fi
+
+          DATE=$(date -u +'%Y-%m-%d %H:%M UTC')
+          git commit -m "data: update FFGolf GolfGenius ${DATE}"
+          # Rebase caso outro workflow tenha commitado entretanto
+          git fetch origin main
+          git rebase origin/main || git rebase --abort
+          git push
+          echo "✓ Commit feito"
